@@ -48,9 +48,8 @@ namespace eve::detail
    * is preserved.
    * ====================================================
    */
-#define   EVE_ENDIAN_LITTLE_BYTE 1
 
-#if EVE_ENDIAN_LITTLE_BYTE
+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
 #define LOW_WORD_IDX 0
 #define HIGH_WORD_IDX sizeof(std::uint32_t)
 #else

@@ -71,4 +71,3 @@ namespace eve::detail
       return apply_over3(rempio2, x);
   }
 }
-
