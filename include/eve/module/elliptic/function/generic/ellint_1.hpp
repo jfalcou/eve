@@ -104,7 +104,7 @@ namespace eve::detail
       r = if_else(rphi < smallestposval(as(x)), s*rphi, r);
       auto mgt0 =  is_nez(m) && notdone;
       auto greatphi = eps(as(phi))*phi > one(as(phi))&&notdone;
-      if (any(mgt0||greatphi&&notdone))
+      if (any((mgt0||greatphi)&&notdone))
       {
         auto z = ellint_1(x);
         r += m*z;
