@@ -144,15 +144,15 @@ namespace eve::detail
     }
     if constexpr( std::is_same_v<elt_t, double> )
     {
-        using i32_tl = struct{ int32_t lo; int32_t hi; };
-        using i32_tb = struct{ int32_t hi; int32_t lo; };
-        using i32_ts =  std::conditional_t<std::endian::native == std::endian::little, i32_tl, i32_tb>;
-        using ui64_ts = std::uint64_t;
-        using ui64_tv = as_wide_t<uint64_t, cardinal_t<T>>;
-        using i32_tv  = as_wide_t<int32_t, fixed<2 * cardinal_v<T>>>;
-        using i32_t =  std::conditional_t<scalar_value<T>, i32_ts, i32_tv>;
-        using ui64_t=  std::conditional_t<scalar_value<T>, ui64_ts, ui64_tv>;
-
+      using i32_tl = struct{ int32_t lo; int32_t hi; };
+      using i32_tb = struct{ int32_t hi; int32_t lo; };
+      using i32_ts =  std::conditional_t<std::endian::native == std::endian::little, i32_tl, i32_tb>;
+      using ui64_ts = std::uint64_t;
+      using ui64_tv = as_wide_t<uint64_t, cardinal_t<T>>;
+      using i32_tv  = as_wide_t<int32_t, fixed<2 * cardinal_v<T>>>;
+      using i32_t =  std::conditional_t<scalar_value<T>, i32_ts, i32_tv>;
+      using ui64_t=  std::conditional_t<scalar_value<T>, ui64_ts, ui64_tv>;
+      
       constexpr auto alg = alignof(T);
       alignas(alg) constexpr double toverp[75] = {
           /*  2/ PI base 24*/
