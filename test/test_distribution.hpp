@@ -30,6 +30,8 @@ namespace eve
     {
       T a;
       T b;
+      param_type(T, aa, T bb) : a(aa),  b(bb){};
+
     };
 
     struct internal
