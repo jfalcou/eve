@@ -207,7 +207,7 @@ namespace eve::detail
           auto inds = shr(bit_cast(k, as<ui64_t>()), 32);
           for (int i=0;i<6;++i)
           {
-            auto values = toverp[inds];
+            auto values = gather(&toverp[0], inds);
             inds = inc(inds);
             r[i] = x1*values*gor;
             gor *= tm24;

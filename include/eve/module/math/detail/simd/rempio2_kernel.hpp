@@ -28,6 +28,7 @@
 #include <eve/function/fma.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/gather.hpp>
+#include <eve/function/inc.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/logical_or.hpp>
@@ -37,14 +38,15 @@
 #include <eve/function/shl.hpp>
 #include <eve/function/shr.hpp>
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
-
+#include <eve/module/math/detail/generic/workaround.hpp>
+#include <bit>
 #include <tuple>
 #include <type_traits>
 
 namespace eve::detail
 {
  // up to 255*pi/4 ~200
-  template<floating_real_simd_value T> EVE_FORCEINLINE auto rempio2_small(T const &xx) noexcept
+  template<floating_real_value T> EVE_FORCEINLINE auto rempio2_small(T const &xx) noexcept
   {
     using elt_t             = element_type_t<T>;
     if constexpr( std::is_same_v<elt_t, double> )
@@ -73,7 +75,7 @@ namespace eve::detail
 
   // double use   x < 281474976710656 (2.81476710656e+14)
   /* float use   x < 0x1.7d4998p+38 (4.09404e+11) */
-  template<floating_real_simd_value T> EVE_FORCEINLINE auto rempio2_medium(T const &xx) noexcept
+  template<floating_real_value T> EVE_FORCEINLINE auto rempio2_medium(T const &xx) noexcept
   {
     using elt_t             = element_type_t<T>;
     static const double mp1 = -0x1.921FB58000000p0;   /* -1.5707963407039642      */
@@ -124,7 +126,7 @@ namespace eve::detail
     }
   }
 
-  template<floating_real_simd_value T> EVE_FORCEINLINE auto rempio2_big(T const &xx) noexcept
+  template<floating_real_value T> EVE_FORCEINLINE auto rempio2_big(T const &xx) noexcept
   {
     using elt_t             = element_type_t<T>;
     if (all(xx < Rempio2_limit(restricted_type(), as(xx))))
@@ -142,9 +144,16 @@ namespace eve::detail
     }
     if constexpr( std::is_same_v<elt_t, double> )
     {
-      using ui64_t                             = as_wide_t<uint64_t, cardinal_t<T>>;
-      using i32_t                              = as_wide_t<int32_t, fixed<2 * cardinal_v<T>>>;
-      constexpr auto                alg        = T::static_alignment;
+        using i32_tl = struct{ int32_t lo; int32_t hi; };
+        using i32_tb = struct{ int32_t hi; int32_t lo; };
+        using i32_ts =  std::conditional_t<std::endian::native == std::endian::little, i32_tl, i32_tb>;
+        using ui64_ts = std::uint64_t;
+        using ui64_tv = as_wide_t<uint64_t, cardinal_t<T>>;
+        using i32_tv  = as_wide_t<int32_t, fixed<2 * cardinal_v<T>>>;
+        using i32_t =  std::conditional_t<scalar_value<T>, i32_ts, i32_tv>;
+        using ui64_t=  std::conditional_t<scalar_value<T>, ui64_ts, ui64_tv>;
+
+      constexpr auto alg = alignof(T);
       alignas(alg) constexpr double toverp[75] = {
           /*  2/ PI base 24*/
           10680707.0, 7228996.0,  1387004.0,  2578385.0,  16069853.0, 12639074.0, 9804092.0,
@@ -170,24 +179,40 @@ namespace eve::detail
       T      x2    = x - x1;
       T      sum(0);
 
-      auto pass = [&toverp](T x1, T &b1, T &bb1) {
+      auto pass = [&toverp](auto x1, T &b1, T &bb1) {
         uint64_t t576 = 0x63f0000000000000ULL;                     /* 2 ^ 576  */
         double   tm24 = Constant<double, 0x3e70000000000000ULL>(); /* 2 ^- 24  */
         double   big  = Constant<double, 0x4338000000000000ULL>(); /*  6755399441055744      */
         double   big1 = Constant<double, 0x4358000000000000ULL>(); /* 27021597764222976      */
         T        sum(0);
         ui64_t   zero_lo(0xFFFFFFFF00000000ULL);
-        i32_t    k = bit_cast(bit_and(bit_cast(x1, as_<ui64_t>()), zero_lo), as_<i32_t>());
-        k          = bit_shr(k, 20) & 2047;
-        k          = eve::max((k - 450) / 24, 0);
-        auto tmp   = bit_cast(ui64_t(t576), as_<i32_t>());
-        tmp -= shl(k * 24, 20);
-        T tmp1 = bit_cast(tmp, as_<T>());
-        k      = eve::max(k, 0);
-        T    r[6];
-        auto inds =
-            shr(bit_cast(k, as<ui64_t>()),
-                32); // TODO un shuffle à la place du shr sur les 32bits pour inverser low et hi
+        i32_t k;
+        i32_t tmp;
+        T r[6];
+        if constexpr(scalar_value<T>)
+        {
+          auto z = bit_and(zero_lo, bit_cast(x1, as<ui64_t>()));
+          k.hi = int32_t(z >> 32);
+          k.lo = int32_t(z & 0x00000000FFFFFFFFULL);
+          k.hi =  bit_shr(k.hi, 20) & 2047;
+          k.hi = eve::max((k.hi-450)/24, 0);
+
+          tmp.hi = int32_t(t576 >> 32);
+          tmp.lo = int32_t(t576 & 0x00000000FFFFFFFFULL);
+          tmp.hi -= shl(k.hi*24, 20);
+        }
+        else
+        {
+          k = bit_cast(bit_and(bit_cast(x1, as_<ui64_t>()), zero_lo), as_<i32_t>());
+          k          = bit_shr(k, 20) & 2047;
+          k          = eve::max((k - 450) / 24, 0);
+          tmp   = bit_cast(ui64_t(t576), as_<i32_t>());
+          tmp -= shl(k * 24, 20);
+          k      = eve::max(k, zero(as(k)));
+        }
+        auto inds = shr(bit_cast(k, as<ui64_t>()), 32);
+        auto tmp1 = bit_cast(tmp, as<T>());
+
         for( int i = 0; i < 6; ++i )
         {
           auto values = gather(eve::as_aligned<alg>(&toverp[0]), inds);
@@ -245,10 +270,17 @@ namespace eve::detail
     }
     else if constexpr( std::is_same_v<elt_t, float> )
     {
-      
-      using ui_t         = as_wide_t<uint32_t, cardinal_t<T>>;
-      using  i_t         = as_wide_t< int64_t, cardinal_t<T>>;
-      constexpr auto alg = ui_t::static_alignment;
+      using ui_ts         = std::uint32_t;
+      using wui_ts        = std::uint64_t;
+      using  i_ts         = std::int64_t;
+      using ui_tv         = as_wide_t<uint32_t, cardinal_t<T>>;
+      using wui_tv        = as_wide_t<uint64_t, cardinal_t<T>>;
+      using  i_tv         = as_wide_t< int64_t, cardinal_t<T>>;
+      using i_t           = std::conditional_t<scalar_value<T>, i_ts, i_tv>;
+      using ui_t          = std::conditional_t<scalar_value<T>, ui_ts, ui_tv>;
+      using wui_t         = std::conditional_t<scalar_value<T>, wui_ts, wui_tv>;
+
+      constexpr auto alg = alignof(ui_t);
       // Table with 4/PI to 192 bit precision.  To avoid unaligned accesses
       //   only 8 new bits are added per entry, making the table 4 times larger.
       alignas(alg) constexpr const uint32_t __inv_pio4[24] = {
@@ -271,7 +303,6 @@ namespace eve::detail
       auto xi64   = uint64(xi);
       auto res0   = uint64(xi * arr0);
 
-      using wui_t = as_wide_t<uint64_t, cardinal_t<T>>;
       wui_t res1  = mul(xi64, arr4);
       wui_t res2  = mul(xi64, arr8);
       res0        = bit_or(shr(res2, 32), shl(res0, 32));
