@@ -22,7 +22,6 @@ namespace eve::detail
   {
     return v0 /= v1;
   }
-
 }
 // namespace eve::detail
 // {
