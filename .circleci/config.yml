@@ -117,25 +117,34 @@ jobs:
           name: Running SIMD Tests - Extra-large Wide
           command: CMAKE_OPTIONS="-DEVE_TEST_TYPE=extra_wide" VARIANT="extra" OPTIONS="-O3" . ./.circleci/perform.sh
 
-  arm_aarch64_neon:
+  arm_aarch64_neon128:
     <<: *config_aarch64
     steps:
       - checkout
       - run:
-          name: Running SIMD Tests - AARCH64 NEON
+          name: Running SIMD Tests - AARCH64 NEON 128 bits Registers
           command: VARIANT="aarch64" OPTIONS="-O3 -Wno-psabi" . .circleci/perform.sh
+
+  arm_aarch64_neon64:
+    <<: *config_aarch64
+    steps:
+      - checkout
+      - run:
+          name: Running SIMD Tests - AARCH64 NEON 64 bits Registers
+          command: VARIANT="aarch64" CMAKE_OPTIONS="-DEVE_TEST_TYPE=small_wide" OPTIONS="-O3 -Wno-psabi" . .circleci/perform.sh
 
 workflows:
   version: 2
   build_and_test:
     jobs:
       - x86_scalar
-      - x86_sse2
-      - x86_sse4
-      - x86_avx
-      - x86_avx2
-      - x86_fma
-      - x86_tiny
-      - x86_extra
-      - x86_emulation
-      - arm_aarch64_neon
+      # - x86_sse2
+      # - x86_sse4
+      # - x86_avx
+      # - x86_avx2
+      # - x86_fma
+      # - x86_tiny
+      # - x86_extra
+      # - x86_emulation
+      - arm_aarch64_neon128
+      - arm_aarch64_neon64

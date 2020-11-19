@@ -16,6 +16,9 @@ template<typename T>
 using extra_wide = eve::wide<T,eve::fixed<2*eve::expected_cardinal_v<T>>>;
 
 template<typename T>
+using small_wide = eve::wide<T,eve::fixed<eve::expected_cardinal_v<T>/2>>;
+
+template<typename T>
 using tiny_wide = eve::wide<T,eve::fixed<1>>;
 
 #define EVE_SIMD_TESTS
