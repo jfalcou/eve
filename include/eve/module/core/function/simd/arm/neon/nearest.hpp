@@ -22,13 +22,13 @@ namespace eve::detail
   {
     constexpr auto cat = categorize<wide<T, N, ABI>>();
 
+         if constexpr( cat == category::float32x2) return vrndn_f32(v);
+    else if constexpr( cat == category::float32x4) return vrndnq_f32(v);
 #  if defined(__aarch64__) && __ARM_ARCH >= 8
-    if constexpr( cat == category::float64x1) return vrndn_f64(v);
+    if constexpr( cat == category::float64x1)      return vrndn_f64(v);
     else if constexpr( cat == category::float64x2) return vrndnq_f64(v);
-    else                                           return map(nearest, v);
-#  else
-    return map(nearest, v);
 #  endif
+    else                                           return map(nearest, v);
   }
 }
 // #include <eve/detail/implementation.hpp>
