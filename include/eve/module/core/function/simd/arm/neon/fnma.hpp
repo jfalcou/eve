@@ -30,7 +30,7 @@ namespace eve::detail
     else if constexpr(  cat == category::float64x1) return vfms_f64(v2, v1, v0);
     else if constexpr(  cat == category::float64x2) return vfmsq_f64(v2, v1, v0);
 #endif
-    else                                            return fma(-v0, v1, v2);
+    else                                            return  v2 - v0 * v1;//fma(-v0, v1, v2);
   }
 
   template<decorator D, real_scalar_value T, typename N, arm_abi ABI>
