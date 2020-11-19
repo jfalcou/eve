@@ -65,6 +65,14 @@ message( STATUS "[eve] Source generation  : ${html_status} (via EVE_BUILD_SRC_HT
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/include DESTINATION .)
 
 ## =================================================================================================
+## Exporting atrget for external use
+## =================================================================================================
+add_library(eve_lib INTERFACE)
+target_include_directories(eve_lib INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>)
+target_compile_features(eve_lib INTERFACE cxx_std_20)
+add_library(eve::eve ALIAS eve_lib)
+
+## =================================================================================================
 ## Test and Benchmarks target
 ## =================================================================================================
 include(CTest)
