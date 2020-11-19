@@ -18,8 +18,8 @@ namespace eve::detail
 {
   template<real_scalar_value T, typename N, arm_abi ABI>
   EVE_FORCEINLINE wide<T, N, ABI> bit_ornot_(EVE_SUPPORTS(neon128_),
-                                             wide<T, N, ABI> const &v1,
-                                             wide<T, N, ABI> const &v0) noexcept
+                                             wide<T, N, ABI> const &v0,
+                                             wide<T, N, ABI> const &v1) noexcept
   {
     constexpr auto cat = categorize<wide<T, N, ABI>>();
 
