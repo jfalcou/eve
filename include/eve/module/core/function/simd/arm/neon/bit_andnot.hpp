@@ -33,22 +33,22 @@ namespace eve::detail
     else if constexpr(cat == float64x2)
       return vreinterpretq_f64_u64(vbicq_u64(vreinterpretq_u64_f64(v0), vreinterpretq_u64_f64(v1)));
 #endif
-    else if constexpr(cat == int64x1)  return vbic_s64(v0, v1);
-    else if constexpr(cat == int32x2)  return vbic_s32(v0, v1);
-    else if constexpr(cat == int16x4)  return vbic_s16(v0, v1);
-    else if constexpr(cat == int8x8)   return vbic_s8(v0,  v1);
-    else if constexpr(cat == uint64x1) return vbic_u64(v0, v1);
-    else if constexpr(cat == uint32x2) return vbic_u32(v0, v1);
-    else if constexpr(cat == uint16x4) return vbic_u16(v0, v1);
-    else if constexpr(cat == uint8x8)  return vbic_u8(v0,  v1);
-    else if constexpr(cat == int64x2)  return vbicq_s64(v0, v1);
-    else if constexpr(cat == int32x4)  return vbicq_s32(v0, v1);
-    else if constexpr(cat == int16x8)  return vbicq_s16(v0, v1);
-    else if constexpr(cat == int8x16)  return vbicq_s8(v0, v1);
-    else if constexpr(cat == uint64x2) return vbicq_u64(v0, v1);
-    else if constexpr(cat == uint32x4) return vbicq_u32(v0, v1);
-    else if constexpr(cat == uint16x8) return vbicq_u16(v0, v1);
-    else if constexpr(cat == uint8x16) return vbicq_u8(v0, v1);
+    else if constexpr(cat == category::int64x1)  return vbic_s64(v0, v1);
+    else if constexpr(cat == category::int32x2)  return vbic_s32(v0, v1);
+    else if constexpr(cat == category::int16x4)  return vbic_s16(v0, v1);
+    else if constexpr(cat == category::int8x8)   return vbic_s8(v0,  v1);
+    else if constexpr(cat == category::uint64x1) return vbic_u64(v0, v1);
+    else if constexpr(cat == category::uint32x2) return vbic_u32(v0, v1);
+    else if constexpr(cat == category::uint16x4) return vbic_u16(v0, v1);
+    else if constexpr(cat == category::uint8x8)  return vbic_u8(v0,  v1);
+    else if constexpr(cat == category::int64x2)  return vbicq_s64(v0, v1);
+    else if constexpr(cat == category::int32x4)  return vbicq_s32(v0, v1);
+    else if constexpr(cat == category::int16x8)  return vbicq_s16(v0, v1);
+    else if constexpr(cat == category::int8x16)  return vbicq_s8(v0, v1);
+    else if constexpr(cat == category::uint64x2) return vbicq_u64(v0, v1);
+    else if constexpr(cat == category::uint32x4) return vbicq_u32(v0, v1);
+    else if constexpr(cat == category::uint16x8) return vbicq_u16(v0, v1);
+    else if constexpr(cat == category::uint8x16) return vbicq_u8(v0, v1);
   }
 }
 
