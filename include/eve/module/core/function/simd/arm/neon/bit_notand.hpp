@@ -18,10 +18,10 @@ namespace eve::detail
 {
   template<real_scalar_value T, typename N, arm_abi ABI>
   EVE_FORCEINLINE wide<T, N, ABI> bit_notand_(EVE_SUPPORTS(neon128_),
-                                                      wide<T, N, ABI> const &v0,
-                                                      wide<T, N, ABI> const &v1) noexcept
+                                              wide<T, N, ABI> const &v0,
+                                              wide<T, N, ABI> const &v1) noexcept
   {
-    constexpr auto cat = categorize<wide<T, N, ABI>();
+    constexpr auto cat = categorize<wide<T, N, ABI>>();
 
     if constexpr(cat == float32x4_t>)
       return vreinterpretq_f32_u32(vbicq_u32(vreinterpretq_u32_f32(v1), vreinterpretq_u32_f32(v0)));
