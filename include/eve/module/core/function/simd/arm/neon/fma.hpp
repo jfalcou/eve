@@ -25,7 +25,7 @@ namespace eve::detail
   {
     constexpr auto cat = categorize<wide<T, N, ABI>>();
 
-    else if constexpr(  cat == category::float32x2) return vfma_f32(v2, v1, v0);
+         if constexpr(  cat == category::float32x2) return vfma_f32(v2, v1, v0);
     else if constexpr(  cat == category::float32x4) return vfmaq_f32(v2, v1, v0);
 #if defined(__aarch64__)
     else if constexpr(  cat == category::float64x1) return vfma_f64(v2, v1, v0);
