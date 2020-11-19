@@ -44,7 +44,7 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-      auto x = b-a;
+      auto x = if_else(a == b, zero, b-a);
       auto test = x > -log_2(as(x));
       if (all(test)) return  a+eve::log(-expm1(x));
       else if (any(test)) return a+if_else(test, log(-expm1(x)), log1p(-exp(x)));
