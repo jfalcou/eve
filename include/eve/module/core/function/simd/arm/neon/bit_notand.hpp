@@ -36,11 +36,11 @@ namespace eve::detail
     else if constexpr(cat == category::int64x1)  return vbic_s64(v1, v0);
     else if constexpr(cat == category::int32x2)  return vbic_s32(v1, v0);
     else if constexpr(cat == category::int16x4)  return vbic_s16(v1, v0);
-    else if constexpr(cat == category::int8x8)   return vbic_s8(v0,  v1);
+    else if constexpr(cat == category::int8x8)   return vbic_s8(v1,  v0);
     else if constexpr(cat == category::uint64x1) return vbic_u64(v1, v0);
     else if constexpr(cat == category::uint32x2) return vbic_u32(v1, v0);
     else if constexpr(cat == category::uint16x4) return vbic_u16(v1, v0);
-    else if constexpr(cat == category::uint8x8)  return vbic_u8(v0,  v1);
+    else if constexpr(cat == category::uint8x8)  return vbic_u8(v1,  v0);
     else if constexpr(cat == category::int64x2)  return vbicq_s64(v1, v0);
     else if constexpr(cat == category::int32x4)  return vbicq_s32(v1, v0);
     else if constexpr(cat == category::int16x8)  return vbicq_s16(v1, v0);
