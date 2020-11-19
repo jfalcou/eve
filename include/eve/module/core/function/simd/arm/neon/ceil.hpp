@@ -23,12 +23,12 @@ namespace eve::detail
     constexpr auto cat = categorize<wide<T, N, ABI>>();
 
 #  if defined(__aarch64__) && __ARM_ARCH >= 8
-         if constexpr( cat == category::float64x1) return vrndp_f64(v0);
-    else if constexpr( cat == category::float64x2) return vrndpq_f64(v0);
-    else                                           return map(ceil, v0);
+         if constexpr( cat == category::float64x1) return vrndp_f64(v);
+    else if constexpr( cat == category::float64x2) return vrndpq_f64(v);
+    else                                           return map(ceil, v);
 #  else
-    return map(ceil, v0);
-#  endif 
+    return map(ceil, v);
+#  endif
   }
 }
 

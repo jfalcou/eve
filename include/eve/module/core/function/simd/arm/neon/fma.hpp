@@ -45,6 +45,18 @@ namespace eve::detail
     else  if constexpr( cat == category::int16x4  ) return vmla_u16(v2, v1, v0);
     else  if constexpr( cat == category::int8x8   ) return vmla_u8(v2, v1, v0);
   }
+
+  template<decorator D, real_scalar_value T, typename N, arm_abi ABI>
+  EVE_FORCEINLINE wide<T, N, ABI> fma_(EVE_SUPPORTS(neon128_),
+                                       D const &,
+                                       wide<T, N, ABI> const &v0,
+                                       wide<T, N, ABI> const &v1,
+                                       wide<T, N, ABI> const &v2) noexcept
+  {
+    return fma(v0, v1, v2);
+  }
+
+
 }
 
 // namespace eve::detail
