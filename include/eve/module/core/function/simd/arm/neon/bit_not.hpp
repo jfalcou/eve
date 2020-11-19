@@ -16,15 +16,6 @@
 
 namespace eve::detail
 {
-
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/forward.hpp>
-#include <type_traits>
-
-namespace eve::detail
-{
   template<real_scalar_value T, typename N, arm_abi ABI>
   EVE_FORCEINLINE wide<T, N, ABI_> bit_not_(EVE_SUPPORTS(neon128_),
                                             wide<T, N, ABI> const &v0) noexcept
