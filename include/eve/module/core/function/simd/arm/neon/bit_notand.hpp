@@ -14,6 +14,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
+#include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 
 namespace eve::detail
