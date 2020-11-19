@@ -24,7 +24,7 @@ namespace eve::detail
   {
     constexpr auto cat = categorize<wide<T, N, ABI>>();
 
-          if constexpr( cat == category::int32x4  ) return vceqq_s32(v0, v1);
+    if constexpr( cat == category::int32x4  ) return vceqq_s32(v0, v1);
     else  if constexpr( cat == category::int16x8  ) return vceqq_s16(v0, v1);
     else  if constexpr( cat == category::int8x16  ) return vceqq_s8(v0, v1);
     else  if constexpr( cat == category::uint32x4 ) return vceqq_u32(v0, v1);
@@ -48,6 +48,7 @@ namespace eve::detail
 #else
     else  if constexpr( sizeof(T) == 8 )            return map(is_equal, v0, v1);
 #endif
+  }
 }
 
 // namespace eve::detail
