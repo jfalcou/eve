@@ -36,7 +36,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto cyl_bessel_j_(EVE_SUPPORTS(cpu_), I in, T x) noexcept
   {
     if( in == 0 )  return cyl_bessel_j0(x);
-    else  if( in < 0 == 1 )  return cyl_bessel_j1(x);
+    else  if( in == 1 )  return cyl_bessel_j1(x);
     else return cyl_bessel_j(T(in), x);
   }
 
@@ -44,7 +44,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto cyl_bessel_j_(EVE_SUPPORTS(cpu_), I in, T x) noexcept
   {
     if( in == 0 )  return cyl_bessel_j0(x);
-    else  if( in < 0 == 1 )  return cyl_bessel_j1(x);
+    else  if( in == 1 )  return cyl_bessel_j1(x);
     else return cyl_bessel_j(T(in), x);
   }
 

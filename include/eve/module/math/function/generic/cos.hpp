@@ -29,8 +29,6 @@
 #include <eve/function/trigo_tags.hpp>
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
 #include <eve/module/math/detail/generic/trig_finalize.hpp>
-#include <eve/module/math/detail/scalar/rempio2_kernel.hpp>
-#include <eve/module/math/detail/simd/rempio2_kernel.hpp>
 
 #include <type_traits>
 
@@ -142,4 +140,3 @@ namespace eve::detail
   }
 
 }
-

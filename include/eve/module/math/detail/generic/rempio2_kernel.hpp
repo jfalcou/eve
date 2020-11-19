@@ -28,6 +28,7 @@
 #include <eve/function/fma.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/gather.hpp>
+#include <eve/function/inc.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/logical_or.hpp>
@@ -37,24 +38,18 @@
 #include <eve/function/shl.hpp>
 #include <eve/function/shr.hpp>
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
-
+#include <eve/module/math/detail/generic/workaround.hpp>
+#include <bit>
 #include <tuple>
 #include <type_traits>
 
 namespace eve::detail
 {
  // up to 255*pi/4 ~200
-  template<floating_real_simd_value T> EVE_FORCEINLINE auto rempio2_small(T const &xx) noexcept
+  template<floating_real_value T> EVE_FORCEINLINE auto rempio2_small(T const &xx) noexcept
   {
     using elt_t             = element_type_t<T>;
-    if constexpr(std::is_same_v<elt_t,  float>)
-    {
-      auto x =  float64(xx);
-      auto n =  nearest(x*twoopi(eve::as<double>()));
-      auto dxr = fma(n, -pio_2(eve::as<double>()), x);
-      return std::make_tuple(quadrant(float32(n)), float32(dxr), T(0.0f));
-    }
-    else if constexpr( std::is_same_v<elt_t, double> )
+    if constexpr( std::is_same_v<elt_t, double> )
     {
       /* Reduce range of x to within PI/2 with abs (x) < 105414350. */
       static const double mp1 = -0x1.921FB58000000p0;   /*  -1.5707963407039642      */
@@ -69,11 +64,18 @@ namespace eve::detail
 
       return std::make_tuple(n, a, da);
     }
+    else if constexpr(std::is_same_v<elt_t,  float>)
+    {
+      auto x =  float64(xx);
+      auto n =  nearest(x*twoopi(eve::as<double>()));
+      auto dxr = fma(n, -pio_2(eve::as<double>()), x);
+      return std::make_tuple(quadrant(float32(n)), float32(dxr), T(0.0f));
+    }
   }
 
   // double use   x < 281474976710656 (2.81476710656e+14)
   /* float use   x < 0x1.7d4998p+38 (4.09404e+11) */
-  template<floating_real_simd_value T> EVE_FORCEINLINE auto rempio2_medium(T const &xx) noexcept
+  template<floating_real_value T> EVE_FORCEINLINE auto rempio2_medium(T const &xx) noexcept
   {
     using elt_t             = element_type_t<T>;
     static const double mp1 = -0x1.921FB58000000p0;   /* -1.5707963407039642      */
@@ -124,19 +126,34 @@ namespace eve::detail
     }
   }
 
-  template<floating_real_simd_value T> EVE_FORCEINLINE auto rempio2_big(T const &xx) noexcept
+  template<floating_real_value T> EVE_FORCEINLINE auto rempio2_big(T const &xx) noexcept
   {
     using elt_t             = element_type_t<T>;
+    if (all(xx < Rempio2_limit(restricted_type(), as(xx))))
+    {
+      return std::make_tuple(T(0), xx, T(0));
+    }
+    auto xlerfl = (xx <= Rempio2_limit(small_type(), as<elt_t>()));
+    if( all(xlerfl) )
+    {
+      return rempio2_small(xx);
+    }
+    if (all(xx < Rempio2_limit(medium_type(), as(xx))))
+    {
+      return rempio2_medium(xx);
+    }
     if constexpr( std::is_same_v<elt_t, double> )
     {
-      auto xlerfl = (xx <= Rempio2_limit(small_type(), as<elt_t>()));
-      if( all(xlerfl) )
-      {
-        return rempio2_small(xx);
-      }
-      using ui64_t                             = as_wide_t<uint64_t, cardinal_t<T>>;
-      using i32_t                              = as_wide_t<int32_t, fixed<2 * cardinal_v<T>>>;
-      constexpr auto                alg        = T::static_alignment;
+      using i32_tl = struct{ int32_t lo; int32_t hi; };
+      using i32_tb = struct{ int32_t hi; int32_t lo; };
+      using i32_ts =  std::conditional_t<std::endian::native == std::endian::little, i32_tl, i32_tb>;
+      using ui64_ts = std::uint64_t;
+      using ui64_tv = as_wide_t<uint64_t, cardinal_t<T>>;
+      using i32_tv  = as_wide_t<int32_t, fixed<2 * cardinal_v<T>>>;
+      using i32_t =  std::conditional_t<scalar_value<T>, i32_ts, i32_tv>;
+      using ui64_t=  std::conditional_t<scalar_value<T>, ui64_ts, ui64_tv>;
+      
+      constexpr auto alg = alignof(T);
       alignas(alg) constexpr double toverp[75] = {
           /*  2/ PI base 24*/
           10680707.0, 7228996.0,  1387004.0,  2578385.0,  16069853.0, 12639074.0, 9804092.0,
@@ -162,24 +179,40 @@ namespace eve::detail
       T      x2    = x - x1;
       T      sum(0);
 
-      auto pass = [&toverp](T x1, T &b1, T &bb1) {
+      auto pass = [&toverp](auto x1, T &b1, T &bb1) {
         uint64_t t576 = 0x63f0000000000000ULL;                     /* 2 ^ 576  */
         double   tm24 = Constant<double, 0x3e70000000000000ULL>(); /* 2 ^- 24  */
         double   big  = Constant<double, 0x4338000000000000ULL>(); /*  6755399441055744      */
         double   big1 = Constant<double, 0x4358000000000000ULL>(); /* 27021597764222976      */
         T        sum(0);
         ui64_t   zero_lo(0xFFFFFFFF00000000ULL);
-        i32_t    k = bit_cast(bit_and(bit_cast(x1, as_<ui64_t>()), zero_lo), as_<i32_t>());
-        k          = bit_shr(k, 20) & 2047;
-        k          = eve::max((k - 450) / 24, 0);
-        auto tmp   = bit_cast(ui64_t(t576), as_<i32_t>());
-        tmp -= shl(k * 24, 20);
-        T tmp1 = bit_cast(tmp, as_<T>());
-        k      = eve::max(k, 0);
-        T    r[6];
-        auto inds =
-            shr(bit_cast(k, as<ui64_t>()),
-                32); // TODO un shuffle à la place du shr sur les 32bits pour inverser low et hi
+        i32_t k;
+        i32_t tmp;
+        T r[6];
+        if constexpr(scalar_value<T>)
+        {
+          auto z = bit_and(zero_lo, bit_cast(x1, as<ui64_t>()));
+          k.hi = int32_t(z >> 32);
+          k.lo = int32_t(z & 0x00000000FFFFFFFFULL);
+          k.hi =  bit_shr(k.hi, 20) & 2047;
+          k.hi = eve::max((k.hi-450)/24, 0);
+
+          tmp.hi = int32_t(t576 >> 32);
+          tmp.lo = int32_t(t576 & 0x00000000FFFFFFFFULL);
+          tmp.hi -= shl(k.hi*24, 20);
+        }
+        else
+        {
+          k = bit_cast(bit_and(bit_cast(x1, as_<ui64_t>()), zero_lo), as_<i32_t>());
+          k          = bit_shr(k, 20) & 2047;
+          k          = eve::max((k - 450) / 24, 0);
+          tmp   = bit_cast(ui64_t(t576), as_<i32_t>());
+          tmp -= shl(k * 24, 20);
+          k      = eve::max(k, zero(as(k)));
+        }
+        auto inds = shr(bit_cast(k, as<ui64_t>()), 32);
+        auto tmp1 = bit_cast(tmp, as<T>());
+
         for( int i = 0; i < 6; ++i )
         {
           auto values = gather(eve::as_aligned<alg>(&toverp[0]), inds);
@@ -234,66 +267,59 @@ namespace eve::detail
       t = if_else(xx < Rempio2_limit(restricted_type(), as(xx)), T(0), t);
       auto q = if_else(xx < Rempio2_limit(restricted_type(), as(xx)),T(0), quadrant(sum));
       return  std::make_tuple(q, s, t);
- //      return if_else(xx < Rempio2_limit(restricted_type(), as(xx)),
-//                      std::make_tuple(T(0), xx, T(0)),
-//                      std::make_tuple(quadrant(sum), s, t)
-//                     );
-
-      return std::make_tuple(quadrant(sum), s, t);
     }
     else if constexpr( std::is_same_v<elt_t, float> )
     {
-      auto xlerfl = (xx <= Rempio2_limit(small_type(), as<elt_t>())); // 200.277f;
-      if( all(xlerfl) )
-      {
-        return rempio2_small(xx);
-      }
-      else
-      {
-        using ui_t         = as_wide_t<uint32_t, cardinal_t<T>>;
-        using  i_t         = as_wide_t< int64_t, cardinal_t<T>>;
-        constexpr auto alg = ui_t::static_alignment;
-        // Table with 4/PI to 192 bit precision.  To avoid unaligned accesses
-        //   only 8 new bits are added per entry, making the table 4 times larger.
-        alignas(alg) constexpr const uint32_t __inv_pio4[24] = {
-            0xa2,       0xa2f9,     0xa2f983,   0xa2f9836e, 0xf9836e4e, 0x836e4e44,
-            0x6e4e4415, 0x4e441529, 0x441529fc, 0x1529fc27, 0x29fc2757, 0xfc2757d1,
-            0x2757d1f5, 0x57d1f534, 0xd1f534dd, 0xf534ddc0, 0x34ddc0db, 0xddc0db62,
-            0xc0db6295, 0xdb629599, 0x6295993c, 0x95993c43, 0x993c4390, 0x3c439041};
-        constexpr const double pi63 = 0x1.921FB54442D18p-62; /* 2PI * 2^-64.  */
-        auto [sn, sr, dsr]          = rempio2_small(xx);
-        auto xi                     = bit_cast(xx, as_<ui_t>());
-        auto index                  = bit_and(shr(xi, 26), 15);
-        auto arr0                   = gather(eve::as_aligned<alg>(&__inv_pio4[0]), index);
-        auto arr4 =      uint64(gather(eve::as_aligned<alg>(&__inv_pio4[0]), index + 4));
-        auto arr8 =      uint64(gather(eve::as_aligned<alg>(&__inv_pio4[0]), index + 8));
+      using ui_ts         = std::uint32_t;
+      using wui_ts        = std::uint64_t;
+      using  i_ts         = std::int64_t;
+      using ui_tv         = as_wide_t<uint32_t, cardinal_t<T>>;
+      using wui_tv        = as_wide_t<uint64_t, cardinal_t<T>>;
+      using  i_tv         = as_wide_t< int64_t, cardinal_t<T>>;
+      using i_t           = std::conditional_t<scalar_value<T>, i_ts, i_tv>;
+      using ui_t          = std::conditional_t<scalar_value<T>, ui_ts, ui_tv>;
+      using wui_t         = std::conditional_t<scalar_value<T>, wui_ts, wui_tv>;
 
-        auto shift  = bit_and(shr(xi, 23), 7);
-        auto xii    = bit_or(bit_and(xi, 0xffffff), 0x800000);
-              xi    = shl(xii, shift);
+      constexpr auto alg = alignof(ui_t);
+      // Table with 4/PI to 192 bit precision.  To avoid unaligned accesses
+      //   only 8 new bits are added per entry, making the table 4 times larger.
+      alignas(alg) constexpr const uint32_t __inv_pio4[24] = {
+        0xa2,       0xa2f9,     0xa2f983,   0xa2f9836e, 0xf9836e4e, 0x836e4e44,
+        0x6e4e4415, 0x4e441529, 0x441529fc, 0x1529fc27, 0x29fc2757, 0xfc2757d1,
+        0x2757d1f5, 0x57d1f534, 0xd1f534dd, 0xf534ddc0, 0x34ddc0db, 0xddc0db62,
+        0xc0db6295, 0xdb629599, 0x6295993c, 0x95993c43, 0x993c4390, 0x3c439041};
+      constexpr const double pi63 = 0x1.921FB54442D18p-62; /* 2PI * 2^-64.  */
+      auto [sn, sr, dsr]          = rempio2_small(xx);
+      auto xi                     = bit_cast(xx, as_<ui_t>());
+      auto index                  = bit_and(shr(xi, 26), 15);
+      auto arr0                   = gather(eve::as_aligned<alg>(&__inv_pio4[0]), index);
+      auto arr4 =      uint64(gather(eve::as_aligned<alg>(&__inv_pio4[0]), index + 4));
+      auto arr8 =      uint64(gather(eve::as_aligned<alg>(&__inv_pio4[0]), index + 8));
 
-        auto xi64   = uint64(xi);
-        auto res0   = uint64(xi * arr0);
+      auto shift  = bit_and(shr(xi, 23), 7);
+      auto xii    = bit_or(bit_and(xi, 0xffffff), 0x800000);
+      xi    = shl(xii, shift);
 
-        using wui_t = as_wide_t<uint64_t, cardinal_t<T>>;
-        wui_t res1  = mul(xi64, arr4);
-        wui_t res2  = mul(xi64, arr8);
-        res0        = bit_or(shr(res2, 32), shl(res0, 32));
-        res0 += res1;
+      auto xi64   = uint64(xi);
+      auto res0   = uint64(xi * arr0);
 
-        auto n = shr((res0 + (1ULL << 61)), 62);
-        res0   = res0 - (n << 62); // -= n << 62;
-        auto tmp =  bit_cast(res0, as<i_t>());
-        auto xx1  = float64(tmp);
-        auto bn   = if_else(xlerfl, sn, float32(n));
-        auto z    = xx1 * pi63;
-        auto sr1  = float32(z);
-        auto dsr1 = float32(z - float64(sr1));
-        auto br   = if_else(xlerfl, sr, sr1);
-        auto dbr  = if_else(xlerfl, dsr, dsr1);
-        br        = if_else(is_not_finite(xx), eve::allbits, br);
-        return std::make_tuple(bn, br, dbr);
-      }
+      wui_t res1  = mul(xi64, arr4);
+      wui_t res2  = mul(xi64, arr8);
+      res0        = bit_or(shr(res2, 32), shl(res0, 32));
+      res0 += res1;
+
+      auto n = shr((res0 + (1ULL << 61)), 62);
+      res0   = res0 - (n << 62); // -= n << 62;
+      auto tmp =  bit_cast(res0, as<i_t>());
+      auto xx1  = float64(tmp);
+      auto bn   = if_else(xlerfl, sn, float32(n));
+      auto z    = xx1 * pi63;
+      auto sr1  = float32(z);
+      auto dsr1 = float32(z - float64(sr1));
+      auto br   = if_else(xlerfl, sr, sr1);
+      auto dbr  = if_else(xlerfl, dsr, dsr1);
+      br        = if_else(is_not_finite(xx), eve::allbits, br);
+      return std::make_tuple(bn, br, dbr);
     }
   }
 }

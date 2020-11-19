@@ -54,5 +54,41 @@ namespace eve::detail
   {
     return if_else(cond, gather(ptr.get(), v), zero_);
   }
-}
 
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  // scalar index for genericity
+  //================================================================================================
+  // Unaligned pointer
+  template<typename U, integral_scalar_value T>
+  EVE_FORCEINLINE auto gather_(EVE_SUPPORTS(cpu_), U const *ptr, T const &v) noexcept
+  {
+    return *(ptr+v);
+  }
+
+  template<typename U, value X, integral_scalar_value T>
+  EVE_FORCEINLINE auto gather_(EVE_SUPPORTS(cpu_),
+                               logical<X> const &     cond,
+                               U const *              ptr,
+                               T const &              v) noexcept
+  {
+    return cond ? *(ptr+v) : zero(as<U>());
+  }
+
+  //================================================================================================
+  // Aligned pointer
+  template<typename U, std::size_t S, integral_scalar_value T>
+  EVE_FORCEINLINE auto
+  gather_(EVE_SUPPORTS(cpu_), aligned_ptr<U, S> ptr, T const &v) noexcept
+  {
+    return  *(ptr+v);
+  }
+
+  template<typename U, std::size_t S, value X, integral_scalar_value T>
+  EVE_FORCEINLINE auto gather_(EVE_SUPPORTS(cpu_),
+                               logical<X> const &     cond,
+                               aligned_ptr<U, S>      ptr,
+                               T const &              v) noexcept
+  {
+    return cond ? *(ptr+v) : zero(as<U>());
+  }
+}

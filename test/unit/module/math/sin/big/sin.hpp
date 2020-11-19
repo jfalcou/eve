@@ -50,4 +50,8 @@ TTS_CASE_TPL("Check eve::big(eve::sin) behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::big(eve::sin)(T(-100000000.0))        , T(std::sin(-100000000.0))         , 0.5);
   TTS_ULP_EQUAL(eve::big(eve::sin)(T(eve::valmax(eve::as<T>())))    , T(std::sin(eve::valmax(eve::as<v_t>())))   , 0.5);
   TTS_ULP_EQUAL(eve::big(eve::sin)(T(eve::valmax(eve::as<T>())/10)) , T(std::sin(eve::valmax(eve::as<v_t>())/10)), 0.5);
+  if constexpr(std::is_same_v<v_t, double>)
+  {
+    TTS_ULP_EQUAL(eve::big(eve::sin)(T(+2.8481994e+271)), T(std::sin(+2.8481994e+271)), 1.0);
+  }
 }
