@@ -11,9 +11,8 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/overload.hpp>
-#include <eve/forward.hpp>
+#include <eve/detail/category.hpp>
+#include <eve/detail/implementation.hpp>
 
 namespace eve::detail
 {

@@ -16,10 +16,9 @@
 namespace eve::detail
 {
   template<real_scalar_value T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE wide<T, N, arm_abi>
-                  div_(EVE_SUPPORTS(neon128_)
-                      , wide<T, N, arm_64_> const &v0
-                      , wide<T, N, arm_64_> const &v1) noexcept
+  EVE_FORCEINLINE wide<T, N, ABI> div_(EVE_SUPPORTS(neon128_)
+                                      , wide<T, N, ABI> const &v0
+                                      , wide<T, N, ABI> const &v1) noexcept
   {
     return v0 /= v1;
   }
