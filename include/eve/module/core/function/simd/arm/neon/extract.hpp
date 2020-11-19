@@ -46,9 +46,9 @@ namespace eve::detail
     else  if constexpr( cat == category::int16x4  ) return vget_lane_u16(v0, V);
     else  if constexpr( cat == category::int8x8   ) return vget_lane_u8(v0, V);
 #if defined(__aarch64__)
-    else  if constexpr( cat == category::float64x1) return vget_lane_f32(v0, V);
-    else  if constexpr( cat == category::float32x2) return vget_laneq_f32(v0, V);
-    else  if constexpr( cat && category::float64 2) return vget_laneq_f64(v0, V);
+    else  if constexpr( cat == category::float64x1) return vget_lane_f64(v0, V);
+    else  if constexpr( cat == category::float32x2) return vget_lane_f32(v0, V);
+    else  if constexpr( cat == category::float64x2) return vget_laneq_f64(v0, V);
     else  if constexpr( cat == category::float32x4) return vget_laneq_f32(v0, V);
 #endif
   }
