@@ -31,19 +31,19 @@ namespace eve::detail
 
           if constexpr(std::is_floating_point_v<T>) return fma(v0, half(eve::as(v0)), v1 * half(eve::as(v1)));
     else  if constexpr( sizeof(T) == 8 )            return map(average, v0, v1);
-    else  if constexpr( cat == category::int32x4  ) return vhaddq_s32(v);
-    else  if constexpr( cat == category::int16x8  ) return vhaddq_s16(v);
-    else  if constexpr( cat == category::int8x16  ) return vhaddq_s8(v);
-    else  if constexpr( cat == category::uint32x4 ) return vhaddq_u32(v);
-    else  if constexpr( cat == category::uint16x8 ) return vhaddq_u16(v);
-    else  if constexpr( cat == category::uint8x16 ) return vhaddq_u8(v);
-    else  if constexpr( cat == category::float32x2) return vhadd_f32(v);
-    else  if constexpr( cat == category::int32x2  ) return vhadd_s32(v);
-    else  if constexpr( cat == category::int16x4  ) return vhadd_s16(v);
-    else  if constexpr( cat == category::int8x8   ) return vhadd_s8(v);
-    else  if constexpr( cat == category::uint32x2 ) return vhadd_u32(v);
-    else  if constexpr( cat == category::uint16x4 ) return vhadd_u16(v);
-    else  if constexpr( cat == category::uint8x8  ) return vhadd_u8(v);
+    else  if constexpr( cat == category::int32x4  ) return vhaddq_s32(v0, v1);
+    else  if constexpr( cat == category::int16x8  ) return vhaddq_s16(v0, v1);
+    else  if constexpr( cat == category::int8x16  ) return vhaddq_s8(v0, v1);
+    else  if constexpr( cat == category::uint32x4 ) return vhaddq_u32(v0, v1);
+    else  if constexpr( cat == category::uint16x8 ) return vhaddq_u16(v0, v1);
+    else  if constexpr( cat == category::uint8x16 ) return vhaddq_u8(v0, v1);
+    else  if constexpr( cat == category::float32x2) return vhadd_f32(v0, v1);
+    else  if constexpr( cat == category::int32x2  ) return vhadd_s32(v0, v1);
+    else  if constexpr( cat == category::int16x4  ) return vhadd_s16(v0, v1);
+    else  if constexpr( cat == category::int8x8   ) return vhadd_s8(v0, v1);
+    else  if constexpr( cat == category::uint32x2 ) return vhadd_u32(v0, v1);
+    else  if constexpr( cat == category::uint16x4 ) return vhadd_u16(v0, v1);
+    else  if constexpr( cat == category::uint8x8  ) return vhadd_u8(v0, v1);
   }
 }
 
