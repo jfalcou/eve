@@ -23,14 +23,14 @@ namespace eve::detail
   {
     constexpr auto cat = categorize<wide<T, N, ABI>>();
 
-    if constexpr(cat == float32x4_t>)
+    if constexpr(cat == float32x4)
       return vreinterpretq_f32_u32(vbicq_u32(vreinterpretq_u32_f32(v1), vreinterpretq_u32_f32(v0)));
     else if constexpr( cat == category::float32x2)
       return vreinterpret_f32_u32(vbic_u32(vreinterpret_u32_f32(v1), vreinterpret_u32_f32(v0)));
 #if defined(__aarch64__)
     else if constexpr( cat == category::float64x1)
       return vreinterpret_f64_u64(vbic_u64(vreinterpret_u64_f64(v1), vreinterpret_u64_f64(v0)));
-    else if constexpr(cat == float64x2>)
+    else if constexpr(cat == float64x2)
       return vreinterpretq_f64_u64(vbicq_u64(vreinterpretq_u64_f64(v1), vreinterpretq_u64_f64(v0)));
 #endif
     else if constexpr(cat == int64x1)  return vbic_s64(v1, v0);
