@@ -38,7 +38,7 @@ namespace eve::detail
       return vmulq_f64(vrecpsq_f64(a0, x), x);
     }
 #  endif
-    else                                           return map(ceil, v);
+    else                                           return map(refine_rec_, a0, a1);
   }
 }
 // #include <eve/detail/overload.hpp>
