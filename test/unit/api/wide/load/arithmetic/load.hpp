@@ -80,7 +80,6 @@ TTS_CASE_TPL("Check ctor from const unaligned pointer for wide", EVE_TYPE )
 
 TTS_CASE_TPL("Check ctor from aligned pointer for wide", EVE_TYPE )
 {
-  auto constexpr algt = eve::alignment_v<T>;
   auto [data,idx]     = data_block<EVE_VALUE, eve::fixed<EVE_CARDINAL>>();
   auto* ref_ptr       = &data[idx];
 
@@ -89,22 +88,21 @@ TTS_CASE_TPL("Check ctor from aligned pointer for wide", EVE_TYPE )
   for(std::size_t i=0;i<EVE_CARDINAL;++i)
     ref.set(i, data[idx+i]);
 
-  T constructed(eve::as_aligned<algt>(ref_ptr));
+  T constructed(eve::as_aligned(ref_ptr));
   TTS_EQUAL(constructed, ref);
 
-  T loaded = eve::load(eve::as_aligned<algt>(ref_ptr));
+  T loaded = eve::load(eve::as_aligned(ref_ptr));
   TTS_EQUAL(loaded, ref);
 
-  T loaded_lane = eve::load(eve::as_aligned<algt>(ref_ptr), eve::lane<EVE_CARDINAL>);
+  T loaded_lane = eve::load(eve::as_aligned(ref_ptr), eve::lane<EVE_CARDINAL>);
   TTS_EQUAL(loaded_lane, ref);
 
-  EVE_VALUE loaded_single = eve::load(eve::as_aligned<algt>(ref_ptr), eve::scalar);
+  EVE_VALUE loaded_single = eve::load(eve::as_aligned(ref_ptr), eve::scalar);
   TTS_EQUAL(loaded_single, data[idx]);
 }
 
 TTS_CASE_TPL("Check ctor from const aligned pointer for wide", EVE_TYPE )
 {
-  auto constexpr algt = eve::alignment_v<T>;
   auto [data,idx]     = data_block<EVE_VALUE, eve::fixed<EVE_CARDINAL>>();
   auto const* ref_ptr = &data[idx];
 
@@ -113,16 +111,16 @@ TTS_CASE_TPL("Check ctor from const aligned pointer for wide", EVE_TYPE )
   for(std::size_t i=0;i<EVE_CARDINAL;++i)
     ref.set(i, data[idx+i]);
 
-  T constructed(eve::as_aligned<algt>(ref_ptr));
+  T constructed(eve::as_aligned(ref_ptr));
   TTS_EQUAL(constructed, ref);
 
-  T loaded = eve::load(eve::as_aligned<algt>(ref_ptr));
+  T loaded = eve::load(eve::as_aligned(ref_ptr));
   TTS_EQUAL(loaded, ref);
 
-  T loaded_lane = eve::load(eve::as_aligned<algt>(ref_ptr), eve::lane<EVE_CARDINAL>);
+  T loaded_lane = eve::load(eve::as_aligned(ref_ptr), eve::lane<EVE_CARDINAL>);
   TTS_EQUAL(loaded_lane, ref);
 
-  EVE_VALUE loaded_single = eve::load(eve::as_aligned<algt>(ref_ptr), eve::scalar);
+  EVE_VALUE loaded_single = eve::load(eve::as_aligned(ref_ptr), eve::scalar);
   TTS_EQUAL(loaded_single, data[idx]);
 }
 
