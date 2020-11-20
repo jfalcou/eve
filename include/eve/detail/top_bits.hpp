@@ -25,6 +25,51 @@
 namespace eve::detail
 {
   //================================================================================================
+  // Type agnostic wrapper around various movemask variant
+  //================================================================================================
+  template<typename Pack> EVE_FORCEINLINE auto movemask(Pack const& p)
+  {
+    using e_t = element_type_t<Pack>;
+
+    if constexpr( std::same_as<typename Pack::abi_type,x86_128_>)
+    {
+            if constexpr( std::is_same_v<e_t, float > ) return _mm_movemask_ps(p.storage());
+      else  if constexpr( std::is_same_v<e_t, double> ) return _mm_movemask_pd(p.storage());
+      else  if constexpr( sizeof(e_t) == 8 )            return _mm_movemask_pd((__m128d)p.storage());
+      else  if constexpr( sizeof(e_t) == 4 )            return _mm_movemask_ps((__m128)p.storage());
+      else  if constexpr( sizeof(e_t) == 1 )            return _mm_movemask_epi8(p.storage());
+      else  if constexpr( sizeof(e_t) == 2 )
+      {
+        return _mm_movemask_epi8(_mm_packs_epi16(p.storage(), _mm_setzero_si128()));
+      }
+    }
+    else if constexpr( std::same_as<typename Pack::abi_type,x86_256_>)
+    {
+            if constexpr( std::is_same_v<e_t, float > ) return _mm256_movemask_ps(p.storage());
+      else  if constexpr( std::is_same_v<e_t, double> ) return _mm256_movemask_pd(p.storage());
+      else  if constexpr( sizeof(e_t) == 8 )            return _mm256_movemask_pd((__m256d)p.storage());
+      else  if constexpr( sizeof(e_t) == 4 )            return _mm256_movemask_ps((__m256)p.storage());
+      else if constexpr( sizeof(e_t) == 2 )
+      {
+        auto [l, h] = p.slice();
+        return _mm_movemask_epi8(_mm_packs_epi16(l, h));
+      }
+      else if constexpr( sizeof(e_t) == 1 )
+      {
+        if constexpr( current_api >= avx2 )
+        {
+          return _mm256_movemask_epi8(p.storage());
+        }
+        else
+        {
+          auto [l, h] = p.slice();
+          return  (movemask(h) << h.size()) | movemask(l);
+        }
+      }
+    }
+  }
+
+  //================================================================================================
   // Store the top bits of a logical Pack to optimize some boolean processing
   //================================================================================================
   template<typename Pack>
@@ -78,19 +123,13 @@ namespace eve::detail
 
         [&]<std::size_t... I>(auto const& s, std::index_sequence<I...> const&)
         {
-          ((raw[rep - I] = top_bits<wide_t>(s.template get<I>()) ),...);
+          (((raw[rep - I] = top_bits<wide_t>(s.template get<I>()))),...);
         }(x.storage(), replications_t{});
       }
       else
       {
-        if constexpr( std::same_as<typename Pack::abi_type,x86_128_>)
-        {
-          raw = _mm_movemask_epi8((__m128i)(x.storage()));
-        }
-        else if constexpr( std::same_as<typename Pack::abi_type,x86_256_>)
-        {
-          raw = _mm256_movemask_epi8((__m256i)(x.storage()));
-        }
+        // Retrieve full mask
+        raw = movemask(x);
 
         // Smaller cardinal need one more mask to remove unrequired bits
         constexpr auto ec = expected_cardinal_v<element_type_t<Pack>,typename Pack::abi_type>;
@@ -239,7 +278,7 @@ namespace eve::detail
       {
         offset = x.raw.size() - 1 - offset;
         offset *=  cardinal_v<typename top_bits<Pack>::wide_t>;
-        return offset + std::countr_zero(mask) / sizeof(element_type_t<Pack>);
+        return offset + std::countr_zero(mask);
       }
       else
       {
@@ -249,7 +288,7 @@ namespace eve::detail
     else
     {
       if(!x.raw) return std::nullopt;
-      return std::countr_zero(x.raw) / sizeof(element_type_t<Pack>);
+      return std::countr_zero(x.raw) ;
     }
   }
 
