@@ -54,7 +54,7 @@ namespace eve::detail
   {
     return fma(v0, v1, v2);
   }
-
+}
 
 // }
 
