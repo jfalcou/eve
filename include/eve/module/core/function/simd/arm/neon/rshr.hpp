@@ -30,7 +30,7 @@ namespace eve::detail
                                         I const &v1) noexcept
   {
     using i_t = wide<as_integer_t<T, signed>, N>;
-    return ve::rshr(v0, i_t(v1));
+    return eve::rshr(v0, i_t(v1));
   }
 }
 
