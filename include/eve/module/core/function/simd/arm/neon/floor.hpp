@@ -25,7 +25,7 @@ namespace eve::detail
          if constexpr( cat == category::float32x2) return vrndm_f32(v);
     else if constexpr( cat == category::float32x4) return vrndmq_f32(v);
 #  if defined(__aarch64__) && __ARM_ARCH >= 8
-         if constexpr( cat == category::float64x1) return vrndm_f64(v);
+    else if constexpr( cat == category::float64x1) return vrndm_f64(v);
     else if constexpr( cat == category::float64x2) return vrndmq_f64(v);
 #  endif
     else                                           return map(floor, v);
