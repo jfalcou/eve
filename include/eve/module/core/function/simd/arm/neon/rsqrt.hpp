@@ -50,6 +50,7 @@ namespace eve::detail
                                         , wide<T, N, ABI> const& v0) noexcept
   {
     constexpr auto cat = categorize<wide<T, N, ABI>>();
+    using that_t = wide<T, N, ABI>;
 
           if constexpr( cat == category::float32x2)
     {
@@ -66,7 +67,6 @@ namespace eve::detail
 #  if defined(__aarch64__)
     else if constexpr( cat == category::float64x1)
     {
-      using that_t = wide<T, N, ABI>;
       that_t inv  = vrsqrte_f64(v0);
       inv         = vmul_f64(vrsqrts_f64(v0, inv * inv), inv);
       inv         = vmul_f64(vrsqrts_f64(v0, inv * inv), inv);
@@ -74,7 +74,6 @@ namespace eve::detail
     }
     else if constexpr( cat == category::float64x2)
     {
-      using that_t = wide<T, N, ABI>;
       that_t inv  = vrsqrteq_f64(v0);
       inv         = vmulq_f64(vrsqrtsq_f64(v0, inv * inv), inv);
       inv         = vmulq_f64(vrsqrtsq_f64(v0, inv * inv), inv);
