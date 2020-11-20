@@ -53,7 +53,7 @@ namespace eve::detail
   {
     auto tmp = eve::min(a0, a1);
     if constexpr(eve::platform::supports_invalids) tmp = if_else(is_nan(a1), a0, tmp);
-    return if_else(is_eqz(a0) && is_eqz(a1), bit_and(a0, a1), tmp);
+    return if_else(is_eqz(a0) && is_eqz(a1), bit_or(a0, a1), tmp);
   }
 }
 
