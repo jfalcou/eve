@@ -25,7 +25,7 @@ namespace eve::detail
 
 
          if constexpr( cat == category::float32x2) return vrecpe_f32(v);
-    else if constexpr( cat == category::float32x4) return vrecpe_f32(v);
+    else if constexpr( cat == category::float32x4) return vrecpeq_f32(v);
 #  if defined(__aarch64__)
     else if constexpr( cat == category::float64x1) return vrecpe_f64(v);
     else if constexpr( cat == category::float64x2) return vrecpeq_f64(v);
