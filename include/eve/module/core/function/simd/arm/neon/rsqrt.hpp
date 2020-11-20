@@ -32,7 +32,7 @@ namespace eve::detail
   template<floating_real_scalar_value T, typename N, arm_abi ABI>
   EVE_FORCEINLINE wide<T, N, ABI> rsqrt_(EVE_SUPPORTS(neon128_)
                                         , raw_type const &
-                                        , wide<T, N, ABI> const& v0) noexcept
+                                        , wide<T, N, ABI> const& v) noexcept
   {
     constexpr auto cat = categorize<wide<T, N, ABI>>();
 
@@ -42,7 +42,7 @@ namespace eve::detail
     else if constexpr( cat == category::float64x1) return vrsqrte_f64(v);
     else if constexpr( cat == category::float64x2) return vrsqrteq_f64(v);
 #  endif
-    else                                           return map(rsqrt, v0);
+    else                                           return map(rsqrt, v);
   }
 
   template<floating_real_scalar_value T, typename N, arm_abi ABI>
