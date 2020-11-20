@@ -22,8 +22,8 @@ namespace eve::detail
                                       , wide<T, N, ABI> const& v) noexcept
   {
     constexpr auto cat = categorize<wide<T, N, ABI>>();
-    
-    
+
+
          if constexpr( cat == category::float32x2) return vrecpe_f32(v);
     else if constexpr( cat == category::float32x4) return vrecpe_f32(v);
 #  if defined(__aarch64__)
@@ -32,7 +32,7 @@ namespace eve::detail
 #  endif
     else                                           return map(ceil, v);
   }
-  
+
   template<floating_real_scalar_value T, typename N, arm_abi ABI>
   EVE_FORCEINLINE wide<T, N, ABI> rec_(EVE_SUPPORTS(neon128_),
                                        wide<T, N, ABI> const &v0) noexcept
@@ -41,8 +41,8 @@ namespace eve::detail
       auto a = refine_rec(v0, raw(rec)(v0));
       return refine_rec(v0, a);
   }
+}
 
-  
 // #include <eve/detail/implementation.hpp>
 // #include <eve/function/refine_rec.hpp>
 // #include <eve/function/raw.hpp>
@@ -97,4 +97,3 @@ namespace eve::detail
 //       return refine_rec(v0, a);
 //   }
 // }
-
