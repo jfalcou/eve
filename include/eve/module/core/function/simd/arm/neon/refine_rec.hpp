@@ -34,7 +34,7 @@ namespace eve::detail
     }
     else if constexpr( cat == category::float64x2)
     {
-      auto x = vmul_f64(vrecpsq_f64(a0, a1), a1);
+      auto x = vmulq_f64(vrecpsq_f64(a0, a1), a1);
       return vmulq_f64(vrecpsq_f64(a0, x), x);
     }
 #  endif
