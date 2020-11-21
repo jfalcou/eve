@@ -21,7 +21,7 @@ namespace eve::detail
                              , wide<T, N, ABI> const &value
                              , T *ptr) noexcept
   {
-    if constexpr( std::is_same<ABI,arm_64_> &&  (ABI N::value * sizeof(T) != arm_64_::bytes ))
+    if constexpr( std::is_same<ABI,arm_64_> &&  (N::value * sizeof(T) != arm_64_::bytes ))
     {
       apply<N::value>([&](auto... I) { ((*ptr++ = value[I]), ...); });
     }
