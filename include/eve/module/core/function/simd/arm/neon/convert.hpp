@@ -13,19 +13,17 @@
 #include <eve/as.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-
-#include <type_traits>
+#include <eve/detail/category.hpp>
 
 namespace eve::detail
 {
   template<real_scalar_value T, typename N, real_scalar_value U, arm_abi ABI>
-  EVE_FORCEINLINE wide<U, N>
-                  convert_(EVE_SUPPORTS(neon128_), wide<T, N, ABI> const &v0, as_<U> const &tgt) noexcept
+  EVE_FORCEINLINE wide<U, N>  convert_(EVE_SUPPORTS(neon128_)
+                                      , wide<T, N, ABI> const &v0
+                                      , as_<U> const &tgt) noexcept
   {
     constexpr auto catin = categorize<wide<T, N, ABI>>();
     constexpr auto catou = categorize<wide<U, N>;
-//     using in_t  = typename wide<T, N, arm_64_>::storage_type;
-//     using tgt_t = typename wide<U, N>::storage_type;
 
     // Idempotent call
     if constexpr( std::is_same_v<T, U> ) return v0;
@@ -487,8 +485,7 @@ namespace eve::detail
 //       else if constexpr( std::is_same_v<tgt_t, uint16x8_t> )
 //         return vreinterpretq_u16_s16(vmovl_s8(v0));
 //       else if constexpr( std::is_same_v<tgt_t, uint8x8_t> )
-//         return vreinterpret_u8_s8(v0);
-//       else
+//         return vreinterpret//       else
 //         return convert_(EVE_RETARGET(simd_), v0, tgt);
 //     }
 //     //==============================================================================================
