@@ -104,7 +104,7 @@ namespace eve::detail
            if constexpr( catou == category::float64x2 )     return vcvtq_f64_u64(v0);
       else
 #endif
-      else if constexpr( catou == category::int64x2 )          return vreinterpretq_s64_u64(v0);
+           if constexpr( catou == category::int64x2 )          return vreinterpretq_s64_u64(v0);
       else if constexpr( catou == category::float32x2 )        return vcvt_f32_u32(vmovn_u64(v0));
       else if constexpr( catou == category::uint32x2 )         return vmovn_u64(v0);
       else if constexpr( catou == category::int32x2 )          return vreinterpret_s32_u32(vmovn_u64(v0));
