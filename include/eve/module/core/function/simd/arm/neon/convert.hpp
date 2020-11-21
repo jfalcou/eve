@@ -107,7 +107,7 @@ namespace eve::detail
     // uint32 -> ?
     else if constexpr( catin == category::uint32x2 )
     {
-           if constexpr( catou == category::loat32x2 )   return vcvt_f32_u32(v0);
+           if constexpr( catou == category::float32x2 )   return vcvt_f32_u32(v0);
       else if constexpr( catou == category::int32x2 )    return vreinterpret_s32_u32(v0);
       else if constexpr( catou == category::int64x2 )    return vreinterpretq_s64_u64(vmovl_u32(v0));
       else if constexpr( catou == category::uint64x2 )   return vmovl_u32(v0);
