@@ -14,6 +14,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
 #include <type_traits>
+
 namespace eve::detail
 {
   template<real_scalar_value T, typename N,  arm_abi ABI>
@@ -21,7 +22,7 @@ namespace eve::detail
                              , wide<T, N, ABI> const &value
                              , T *ptr) noexcept
   {
-    if constexpr( std::is_same<ABI,arm_64_> &&  ((N::value * sizeof(T)) != arm_64_::bytes ))
+    if constexpr( std::is_same_v<ABI,arm_64_> &&  (sizeof(wide<T, N, ABI>) != arm_64_::bytes ))
     {
       apply<N::value>([&](auto... I) { ((*ptr++ = value[I]), ...); });
     }
