@@ -166,39 +166,6 @@ TTS_CASE_TPL("keep_first behavior", TTS_NUMERIC_TYPES)
   TTS_EQUAL( (if_else(keep_first(0),value, type(69))) , type(69)                  );
 }
 
-TTS_CASE_TPL("ignore_between behavior", TTS_NUMERIC_TYPES)
-{
-  using eve::wide;
-  using eve::logical;
-  using eve::conditional_expr;
-  using eve::ignore_between;
-  using eve::if_else;
-  using eve::as_;
-
-  TTS_EXPECT( conditional_expr<eve::ignore_between_>  );
-
-  using type = wide<T>;
-  type value = [](auto i, auto) { return 1+i; };
-
-  TTS_EQUAL ( ignore_between(type::static_size,type::static_size).mask(as_<type>())
-            , eve::true_( as_<type>() )
-            );
-  TTS_EQUAL( (if_else(ignore_between(type::static_size,type::static_size),value,type(69))), value);
-  TTS_EQUAL( ignore_between(0,type::static_size).mask(as_<type>())          , eve::false_( as_<type>() ) );
-  TTS_EQUAL( (if_else(ignore_between(0,type::static_size),value, type(69))) , type(69)                  );
-
-  for(int fi = 0;fi < type::static_size;fi++)
-  {
-    for(int li = 0;li < type::static_size;li++)
-    {
-      logical<type> mref  = [&](auto j, auto)       { return !(j >= fi && j <= li); };
-      type          ref   = [&](auto j, auto) { return !(j >= fi && j <= li) ? value[j] : 69.f; };
-
-      TTS_EQUAL( ignore_between(fi,li).mask(as_<type>()), mref );
-      TTS_EQUAL( (if_else(ignore_between(fi,li),value, type(69))), ref);
-    }
-  }
-}
 
 TTS_CASE_TPL("keep_between behavior", TTS_NUMERIC_TYPES)
 {

@@ -43,6 +43,71 @@ namespace eve::detail
     return as_wide_t<std::remove_cvref_t<decltype(*ptr)>, typename Cardinal::type>(ptr);
   }
 
+  template<conditional_expr C, scalar_pointer Ptr>
+  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), C const &cond, Ptr ptr) noexcept
+                  -> as_wide_t<std::remove_cvref_t<decltype(*std::declval<Ptr>())>>
+  {
+    using e_t = std::remove_cvref_t<decltype(*ptr)>;
+    using r_t = as_wide_t< e_t >;
+
+    if constexpr( !std::is_pointer_v<Ptr> )
+    {
+      return eve::load[cond](ptr.get());
+    }
+    else
+    {
+      // If the ignore/keep is complete we can jump over if_else
+      if constexpr( C::is_complete )
+      {
+        if constexpr(C::is_inverted)  { return eve::load(ptr);  }
+        else                          { return r_t{};           }
+      }
+      else if constexpr( relative_conditional_expr<C> )
+      {
+        [[maybe_unused]] r_t that;
+
+        auto* dst   = (e_t*)(&that.storage());
+        auto offset = cond.offset( as_<r_t>{} );
+        std::memcpy( dst + offset, ptr + offset, cond.count( as_<r_t>{} ) );
+        return that;
+      }
+    }
+  }
+
+  template<conditional_expr C, scalar_pointer Ptr, typename Cardinal>
+  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), C const &cond, Ptr ptr, Cardinal const&) noexcept
+                  -> as_wide_t<std::remove_cvref_t< decltype(*std::declval<Ptr>())>
+                                                  , typename Cardinal::type
+                                                  >
+  {
+    using e_t = std::remove_cvref_t<decltype(*ptr)>;
+    using r_t = as_wide_t< e_t, typename Cardinal::type >;
+
+    if constexpr( !std::is_pointer_v<Ptr> )
+    {
+      return eve::load[cond](ptr.get(), Cardinal{});
+    }
+    else
+    {
+      // If the ignore/keep is complete we can jump over if_else
+      if constexpr( C::is_complete )
+      {
+        if constexpr(C::is_inverted)  { return eve::load(ptr);  }
+        else                          { return r_t{};           }
+      }
+      else if constexpr( relative_conditional_expr<C> )
+      {
+        [[maybe_unused]] r_t that;
+
+        auto* dst   = (e_t*)(&that.storage());
+        auto offset = cond.offset( as_<r_t>{} );
+        std::memcpy( dst + offset, ptr + offset, cond.count( as_<r_t>{} ));
+
+        return that;
+      }
+    }
+  }
+
   //================================================================================================
   // Scalar support
   //================================================================================================

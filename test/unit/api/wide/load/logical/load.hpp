@@ -37,105 +37,191 @@ auto data_block()
   return std::pair{ref,start};
 }
 
-TTS_CASE_TPL( "Check ctor from unaligned pointer for wide", EVE_TYPE )
+TTS_CASE_TPL("Check load for scalar", EVE_TYPE)
 {
-  auto  [data,idx]  = data_block<EVE_VALUE, eve::fixed<EVE_CARDINAL>>();
-  auto* ref_ptr     = &data[idx];
+  auto [data,idx]           = data_block<EVE_VALUE, eve::fixed<EVE_CARDINAL>>();
+  auto* ref_ptr             = &data[idx];
+  auto const* ref_const_ptr = &data[idx];
 
-  logical<T> ref;
-  for(std::size_t i=0;i<EVE_CARDINAL;++i)
-    ref.set(i, data[idx+i]);
-
-  logical<T> constructed(ref_ptr);
-  TTS_EQUAL(constructed, ref);
-
-  logical<T> loaded = eve::load(ref_ptr);
-  TTS_EQUAL(loaded, ref);
-
-  logical<T> loaded_lane = eve::load(ref_ptr, eve::lane<EVE_CARDINAL>);
-  TTS_EQUAL(loaded_lane, ref);
-
-  logical<EVE_VALUE> loaded_single = eve::load(ref_ptr, eve::scalar);
-  TTS_EQUAL(loaded_single, data[idx]);
+  TTS_EQUAL((eve::load(ref_ptr                        , eve::scalar)) , data[idx]);
+  TTS_EQUAL((eve::load(ref_const_ptr                  , eve::scalar)) , data[idx]);
+  TTS_EQUAL((eve::load(eve::as_aligned(ref_ptr)       , eve::scalar)) , data[idx]);
+  TTS_EQUAL((eve::load(eve::as_aligned(ref_const_ptr) , eve::scalar)) , data[idx]);
 }
 
-TTS_CASE_TPL( "Check ctor from const unaligned pointer for wide", EVE_TYPE )
+TTS_CASE_TPL("Check load from for wide", EVE_TYPE)
 {
-  auto        [data,idx]  = data_block<EVE_VALUE, eve::fixed<EVE_CARDINAL>>();
-  auto const* ref_ptr     = &data[idx];
+  auto [data,idx]           = data_block<EVE_VALUE, eve::fixed<EVE_CARDINAL>>();
 
-  logical<T> ref;
-  for(std::size_t i=0;i<EVE_CARDINAL;++i)
-    ref.set(i, data[idx+i]);
+  TTS_WHEN("For some given relative data")
+  {
+    auto* ref_ptr             = &data[idx];
+    auto const* ref_const_ptr = &data[idx];
+    eve::logical<T> ref;
 
-  logical<T> constructed(ref_ptr);
-  TTS_EQUAL( constructed, ref );
+    for(std::size_t i=0;i<EVE_CARDINAL;++i)
+      ref.set(i, data[idx+i]);
 
-  logical<T> loaded = eve::load(ref_ptr);
-  TTS_EQUAL(loaded, ref);
+    TTS_AND_THEN("we load from unaligned pointers")
+    {
+      TTS_EQUAL(eve::logical<T>(ref_ptr)                      , ref);
+      TTS_EQUAL(eve::load(ref_ptr)                            , ref);
+      TTS_EQUAL((eve::load(ref_ptr, eve::lane<EVE_CARDINAL>)) , ref);
+    }
 
-  logical<T> loaded_lane = eve::load(ref_ptr, eve::lane<EVE_CARDINAL>);
-  TTS_EQUAL(loaded_lane, ref);
+    TTS_AND_THEN("we load from unaligned pointers to constant")
+    {
+      TTS_EQUAL(eve::logical<T>(ref_const_ptr)                      , ref);
+      TTS_EQUAL(eve::load(ref_const_ptr)                            , ref);
+      TTS_EQUAL((eve::load(ref_const_ptr, eve::lane<EVE_CARDINAL>)) , ref);
+    }
 
-  logical<EVE_VALUE> loaded_single = eve::load(ref_ptr, eve::scalar);
-  TTS_EQUAL(loaded_single, data[idx]);
+    TTS_AND_THEN("we load from aligned pointers")
+    {
+      TTS_EQUAL(eve::logical<T>(eve::as_aligned(ref_ptr))                      , ref);
+      TTS_EQUAL(eve::load(eve::as_aligned(ref_ptr))                            , ref);
+      TTS_EQUAL((eve::load(eve::as_aligned(ref_ptr), eve::lane<EVE_CARDINAL>)) , ref);
+    }
+
+    TTS_AND_THEN("we load from aligned pointers to constant")
+    {
+      TTS_EQUAL(eve::logical<T>(eve::as_aligned(ref_const_ptr))                      , ref);
+      TTS_EQUAL(eve::load(eve::as_aligned(ref_const_ptr))                            , ref);
+      TTS_EQUAL((eve::load(eve::as_aligned(ref_const_ptr), eve::lane<EVE_CARDINAL>)) , ref);
+    }
+  }
 }
 
-TTS_CASE_TPL( "Check ctor from aligned pointer for wide", EVE_TYPE )
+TTS_CASE_TPL("Check conditional load from unaligned pointer for wide", EVE_TYPE)
 {
-  auto            [data,idx]  = data_block<EVE_VALUE, eve::fixed<EVE_CARDINAL>>();
-  auto*           ref_ptr     = &data[idx];
+  auto [data,idx] = data_block<EVE_VALUE, eve::fixed<EVE_CARDINAL>>();
+  auto* ref_ptr             = &data[idx];
+  auto const* ref_const_ptr = &data[idx];
 
-  logical<T> ref;
+  TTS_WHEN("For some given relative masks")
+  {
+    // Conditional selectors
+    auto il = eve::ignore_last(EVE_CARDINAL/4);
+    auto i1 = eve::ignore_first(EVE_CARDINAL/4);
+    auto kf = eve::keep_first(EVE_CARDINAL/4);
+    auto kl = eve::keep_last(EVE_CARDINAL/4);
+    auto kb = eve::keep_between(1,EVE_CARDINAL-2);
 
-  for(std::size_t i=0;i<EVE_CARDINAL;++i)
-    ref.set(i, data[idx+i]);
+    // Conditional selectors' masks
+    auto ml   = il.mask( eve::as_<eve::logical<T>>() );
+    auto m1   = i1.mask( eve::as_<eve::logical<T>>() );
+    auto mkf  = kf.mask( eve::as_<eve::logical<T>>() );
+    auto mkl  = kl.mask( eve::as_<eve::logical<T>>() );
+    auto mkb  = kb.mask( eve::as_<eve::logical<T>>() );
 
-  logical<T> constructed(eve::as_aligned(ref_ptr));
-  TTS_EQUAL( constructed, ref );
+    // Reference values
+    eve::logical<T> full_ref(ref_ptr);
+    eve::logical<T> ignore_last_ref   = full_ref && ml.mask();
+    eve::logical<T> ignore_first_ref  = full_ref && m1.mask();
+    eve::logical<T> keep_first_ref    = full_ref && mkf.mask();
+    eve::logical<T> keep_last_ref     = full_ref && mkl.mask();
+    eve::logical<T> keep_between_ref  = full_ref && mkb.mask();
 
-  logical<T> loaded = eve::load(eve::as_aligned(ref_ptr));
-  TTS_EQUAL(loaded, ref);
+    TTS_AND_THEN("load is applied on unaligned pointer for default cardinal")
+    {
+      TTS_EQUAL(eve::load[eve::ignore_none](ref_ptr)  , full_ref        );
+      TTS_EQUAL((eve::load[il](ref_ptr) && ml.mask() ), ignore_last_ref );
+      TTS_EQUAL((eve::load[i1](ref_ptr) && m1.mask() ), ignore_first_ref);
+      TTS_EQUAL((eve::load[kf](ref_ptr) && mkf.mask()), keep_first_ref  );
+      TTS_EQUAL((eve::load[kl](ref_ptr) && mkl.mask()), keep_last_ref   );
+      TTS_EQUAL((eve::load[kb](ref_ptr) && mkb.mask()), keep_between_ref);
+      TTS_EQUAL(eve::load[eve::ignore_all](ref_ptr)   , eve::logical<T>{false});
+    }
 
-  logical<T> loaded_lane = eve::load(eve::as_aligned(ref_ptr), eve::lane<EVE_CARDINAL>);
-  TTS_EQUAL(loaded_lane, ref);
+    TTS_AND_THEN("load is applied on unaligned pointer for a specific cardinal")
+    {
+      TTS_EQUAL(eve::load[eve::ignore_none](ref_ptr, eve::lane<EVE_CARDINAL>)  , full_ref        );
+      TTS_EQUAL((eve::load[il](ref_ptr, eve::lane<EVE_CARDINAL>) && ml.mask() ), ignore_last_ref );
+      TTS_EQUAL((eve::load[i1](ref_ptr, eve::lane<EVE_CARDINAL>) && m1.mask() ), ignore_first_ref);
+      TTS_EQUAL((eve::load[kf](ref_ptr, eve::lane<EVE_CARDINAL>) && mkf.mask()), keep_first_ref  );
+      TTS_EQUAL((eve::load[kl](ref_ptr, eve::lane<EVE_CARDINAL>) && mkl.mask()), keep_last_ref   );
+      TTS_EQUAL((eve::load[kb](ref_ptr, eve::lane<EVE_CARDINAL>) && mkb.mask()), keep_between_ref);
+      TTS_EQUAL(eve::load[eve::ignore_all](ref_ptr, eve::lane<EVE_CARDINAL>)   , eve::logical<T>{false});
+    }
 
-  logical<EVE_VALUE> loaded_single = eve::load(eve::as_aligned(ref_ptr), eve::scalar);
-  TTS_EQUAL(loaded_single, data[idx]);
+    TTS_AND_THEN("load is applied on unaligned constant pointer for default cardinal")
+    {
+      TTS_EQUAL(eve::load[eve::ignore_none](ref_const_ptr)  , full_ref        );
+      TTS_EQUAL((eve::load[il](ref_const_ptr) && ml.mask() ), ignore_last_ref );
+      TTS_EQUAL((eve::load[i1](ref_const_ptr) && m1.mask() ), ignore_first_ref);
+      TTS_EQUAL((eve::load[kf](ref_const_ptr) && mkf.mask()), keep_first_ref  );
+      TTS_EQUAL((eve::load[kl](ref_const_ptr) && mkl.mask()), keep_last_ref   );
+      TTS_EQUAL((eve::load[kb](ref_const_ptr) && mkb.mask()), keep_between_ref);
+      TTS_EQUAL(eve::load[eve::ignore_all](ref_const_ptr)   , eve::logical<T>{false});
+    }
+
+    TTS_AND_THEN("load is applied on unaligned constant pointer for default cardinal")
+    {
+      TTS_EQUAL(eve::load[eve::ignore_none](ref_const_ptr, eve::lane<EVE_CARDINAL>)  , full_ref        );
+      TTS_EQUAL((eve::load[il](ref_const_ptr, eve::lane<EVE_CARDINAL>) && ml.mask() ), ignore_last_ref );
+      TTS_EQUAL((eve::load[i1](ref_const_ptr, eve::lane<EVE_CARDINAL>) && m1.mask() ), ignore_first_ref);
+      TTS_EQUAL((eve::load[kf](ref_const_ptr, eve::lane<EVE_CARDINAL>) && mkf.mask()), keep_first_ref  );
+      TTS_EQUAL((eve::load[kl](ref_const_ptr, eve::lane<EVE_CARDINAL>) && mkl.mask()), keep_last_ref   );
+      TTS_EQUAL((eve::load[kb](ref_const_ptr, eve::lane<EVE_CARDINAL>) && mkb.mask()), keep_between_ref);
+      TTS_EQUAL(eve::load[eve::ignore_all](ref_const_ptr, eve::lane<EVE_CARDINAL>)   , eve::logical<T>{false});
+    }
+
+    TTS_AND_THEN("load is applied on aligned pointer for default cardinal")
+    {
+      TTS_EQUAL(eve::load[eve::ignore_none](eve::as_aligned(ref_ptr))  , full_ref        );
+      TTS_EQUAL((eve::load[il](eve::as_aligned(ref_ptr)) && ml.mask() ), ignore_last_ref );
+      TTS_EQUAL((eve::load[i1](eve::as_aligned(ref_ptr)) && m1.mask() ), ignore_first_ref);
+      TTS_EQUAL((eve::load[kf](eve::as_aligned(ref_ptr)) && mkf.mask()), keep_first_ref  );
+      TTS_EQUAL((eve::load[kl](eve::as_aligned(ref_ptr)) && mkl.mask()), keep_last_ref   );
+      TTS_EQUAL((eve::load[kb](eve::as_aligned(ref_ptr)) && mkb.mask()), keep_between_ref);
+      TTS_EQUAL(eve::load[eve::ignore_all](eve::as_aligned(ref_ptr))   , eve::logical<T>{false});
+    }
+
+    TTS_AND_THEN("load is applied on aligned pointer for a specific cardinal")
+    {
+      TTS_EQUAL(eve::load[eve::ignore_none](eve::as_aligned(ref_ptr), eve::lane<EVE_CARDINAL>)  , full_ref        );
+      TTS_EQUAL((eve::load[il](eve::as_aligned(ref_ptr), eve::lane<EVE_CARDINAL>) && ml.mask() ), ignore_last_ref );
+      TTS_EQUAL((eve::load[i1](eve::as_aligned(ref_ptr), eve::lane<EVE_CARDINAL>) && m1.mask() ), ignore_first_ref);
+      TTS_EQUAL((eve::load[kf](eve::as_aligned(ref_ptr), eve::lane<EVE_CARDINAL>) && mkf.mask()), keep_first_ref  );
+      TTS_EQUAL((eve::load[kl](eve::as_aligned(ref_ptr), eve::lane<EVE_CARDINAL>) && mkl.mask()), keep_last_ref   );
+      TTS_EQUAL((eve::load[kb](eve::as_aligned(ref_ptr), eve::lane<EVE_CARDINAL>) && mkb.mask()), keep_between_ref);
+      TTS_EQUAL(eve::load[eve::ignore_all](eve::as_aligned(ref_ptr), eve::lane<EVE_CARDINAL>)   , eve::logical<T>{false});
+    }
+
+    TTS_AND_THEN("load is applied on aligned constant pointer for default cardinal")
+    {
+      TTS_EQUAL(eve::load[eve::ignore_none](eve::as_aligned(ref_const_ptr))  , full_ref        );
+      TTS_EQUAL((eve::load[il](eve::as_aligned(ref_const_ptr)) && ml.mask() ) , ignore_last_ref );
+      TTS_EQUAL((eve::load[i1](eve::as_aligned(ref_const_ptr)) && m1.mask() ) , ignore_first_ref);
+      TTS_EQUAL((eve::load[kf](eve::as_aligned(ref_const_ptr)) && mkf.mask()) , keep_first_ref  );
+      TTS_EQUAL((eve::load[kl](eve::as_aligned(ref_const_ptr)) && mkl.mask()) , keep_last_ref   );
+      TTS_EQUAL((eve::load[kb](eve::as_aligned(ref_const_ptr)) && mkb.mask()) , keep_between_ref);
+      TTS_EQUAL(eve::load[eve::ignore_all](eve::as_aligned(ref_const_ptr))   , eve::logical<T>{false}    );
+    }
+
+    TTS_AND_THEN("load is applied on aligned constant pointer for default cardinal")
+    {
+      TTS_EQUAL(eve::load[eve::ignore_none](eve::as_aligned(ref_const_ptr), eve::lane<EVE_CARDINAL>)  , full_ref        );
+      TTS_EQUAL((eve::load[il](eve::as_aligned(ref_const_ptr), eve::lane<EVE_CARDINAL>) && ml.mask() ) , ignore_last_ref );
+      TTS_EQUAL((eve::load[i1](eve::as_aligned(ref_const_ptr), eve::lane<EVE_CARDINAL>) && m1.mask() ) , ignore_first_ref);
+      TTS_EQUAL((eve::load[kf](eve::as_aligned(ref_const_ptr), eve::lane<EVE_CARDINAL>) && mkf.mask()) , keep_first_ref  );
+      TTS_EQUAL((eve::load[kl](eve::as_aligned(ref_const_ptr), eve::lane<EVE_CARDINAL>) && mkl.mask()) , keep_last_ref   );
+      TTS_EQUAL((eve::load[kb](eve::as_aligned(ref_const_ptr), eve::lane<EVE_CARDINAL>) && mkb.mask()) , keep_between_ref);
+      TTS_EQUAL(eve::load[eve::ignore_all](eve::as_aligned(ref_const_ptr), eve::lane<EVE_CARDINAL>)   , eve::logical<T>{false}    );
+    }
+  }
 }
 
-TTS_CASE_TPL("Check ctor from const aligned pointer for wide", EVE_TYPE)
-{
-  auto            [data,idx]  = data_block<EVE_VALUE, eve::fixed<EVE_CARDINAL>>();
-  auto const*     ref_ptr     = &data[idx];
-
-  logical<T> ref;
-
-  for(std::size_t i=0;i<EVE_CARDINAL;++i)
-    ref.set(i, data[idx+i]);
-
-  logical<T> constructed(eve::as_aligned(ref_ptr));
-  TTS_EQUAL( constructed, ref );
-
-  logical<T> loaded = eve::load(eve::as_aligned(ref_ptr));
-  TTS_EQUAL(loaded, ref);
-
-  logical<T> loaded_lane = eve::load(eve::as_aligned(ref_ptr), eve::lane<EVE_CARDINAL>);
-  TTS_EQUAL(loaded_lane, ref);
-
-  logical<EVE_VALUE> loaded_single = eve::load(eve::as_aligned(ref_ptr), eve::scalar);
-  TTS_EQUAL(loaded_single, data[idx]);
-}
-
-TTS_CASE_TPL( "Check ctor from range for wide", EVE_TYPE )
+TTS_CASE_TPL("Check load from range for wide", EVE_TYPE )
 {
   std::list<eve::logical<EVE_VALUE>> ref_ptr(EVE_CARDINAL);
 
   eve::logical<EVE_VALUE> k(true);
   for(auto &e : ref_ptr) e = (k = !k);
 
-  k = true;
   eve::logical<T> ref;
+
+  k = true;
 
   for(std::size_t i=0;i<EVE_CARDINAL;++i)
     ref.set(i, (k = !k));
