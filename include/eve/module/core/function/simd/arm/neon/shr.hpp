@@ -16,11 +16,12 @@
 #include <type_traits>
 #include <eve/concept/value.hpp>
 
+namespace eve::detail
 {
   template<integral_real_scalar_value T, typename N, integral_real_scalar_value I, arm_abi ABI>
   EVE_FORCEINLINE wide<T, N, ABI> shr_(EVE_SUPPORTS(neon128_),
-                            wide<T, N, ABI> const &v0,
-                            wide<I, N, ABI> const &v1) noexcept
+                                         wide<T, N, ABI> const &v0,
+                                         wide<I, N, ABI> const &v1) noexcept
   {
     return neon_shifter(v0, -v1);
   }
@@ -31,7 +32,7 @@
                             I const &v1) noexcept
   {
     using i_t = wide<as_integer_t<T, signed>, N>;
-    return neon_shifter(v0, v1);
+    return neon_shifter(v0, i_t(v1));
   }
 }
 
