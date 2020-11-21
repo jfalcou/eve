@@ -23,7 +23,7 @@ namespace eve::detail
                                       , as_<U> const &tgt) noexcept
   {
     constexpr auto catin = categorize<wide<T, N, ABI>>();
-    constexpr auto catou = categorize<wide<U, N>;
+    constexpr auto catou = categorize<wide<U, N>>;
 
     // Idempotent call
     if constexpr( std::is_same_v<T, U> ) return v0;
