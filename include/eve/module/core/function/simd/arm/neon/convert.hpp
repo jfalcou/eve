@@ -39,7 +39,7 @@ namespace eve::detail
     }
     else if constexpr( catin == category::float64x2 )
     {
-      else if constexpr( catou == category::int64x2  ) return vcvtq_s64_f64(v0);
+           if constexpr( catou == category::int64x2  ) return vcvtq_s64_f64(v0);
       else if constexpr( catou == category::uint64x2 ) return vcvtq_u64_f64(v0);
       else if constexpr( catou == category::int32x2  ) return vmovn_s64(vcvtq_s64_f64(v0));
       else if constexpr( catou == category::uint32x2 ) return vmovn_u64(vcvtq_u64_f64(v0));
@@ -58,7 +58,7 @@ namespace eve::detail
     }
     else if constexpr( catin == category::float32x4 )
     {
-      else if constexpr( catou == category::int32x4  )      return vcvtq_s32_f32(v0);
+           if constexpr( catou == category::int32x4  )      return vcvtq_s32_f32(v0);
       else if constexpr( catou == category::uint32x4 )      return vcvtq_u32_f32(v0);
       else if constexpr( catou == category::int16x4  )      return vmovn_s32(vcvtq_s32_f32(v0));
       else if constexpr( catou == category::uint16x4 )      return vmovn_u32(vcvtq_u32_f32(v0));
