@@ -100,7 +100,7 @@ namespace eve::detail
       else if constexpr( catou == category::float32x4 )        return vcvtq_f32_s32(v0);
       else if constexpr( catou == category::uint32x4 )         return vreinterpretq_u32_s32(v0);
       else if constexpr( catou == category::int16x4 )          return vmovn_s32(v0);
-      else if constexpr( catou == category::uint16x4> )        return vreinterpret_u16_s16(vmovn_s32(v0));
+      else if constexpr( catou == category::uint16x4 )         return vreinterpret_u16_s16(vmovn_s32(v0));
       else                                                     return convert_(EVE_RETARGET(simd_), v0, tgt);
     }
     //==============================================================================================
