@@ -151,7 +151,7 @@ namespace eve::detail
            if constexpr( catou == category::int16x8 )        return vmovl_s8(v0);
       else if constexpr( catou == category::uint16x8 )       return vreinterpretq_u16_s16(vmovl_s8(v0));
       else if constexpr( catou == category::uint8x8 )        return vreinterpret_u8_s8(v0);
-      else if constexpr( std::is_same_v<tgt_t, int16x8 )     return vmovl_s8(v0);
+      else if constexpr( catou == category::int16x8 )        return vmovl_s8(v0);
       else if constexpr( catou == category::uint16x8 )       return vreinterpretq_u16_s16(vmovl_s8(v0));
       else if constexpr( catou == category::uint8x8 )        return vreinterpret_u8_s8(v0);
       else                                                   return convert_(EVE_RETARGET(simd_), v0, tgt);
