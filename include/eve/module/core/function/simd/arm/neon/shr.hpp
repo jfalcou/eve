@@ -32,7 +32,7 @@ namespace eve::detail
                             I const &v1) noexcept
   {
     using i_t = wide<as_integer_t<T, signed>, N>;
-    return neon_shifter(v0, i_t(v1));
+    return shr(v0, i_t(v1));
   }
 }
 
