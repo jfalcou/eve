@@ -23,6 +23,7 @@ namespace eve::detail
                                         wide<T, N, ABI> const &v1,
                                         wide<T, N, ABI> const &v2) noexcept
   {
+    constexpr auto cat = categorize<wide<T, N, ABI>>();
 
          if constexpr(  cat == category::float32x2) return vfms_f32(v2, v1, v0);
     else if constexpr(  cat == category::float32x4) return vfmsq_f32(v2, v1, v0);
