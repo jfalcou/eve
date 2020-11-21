@@ -64,7 +64,7 @@ namespace eve::detail
   template<typename T, typename N>
   EVE_FORCEINLINE auto store_(EVE_SUPPORTS(avx_), wide<T, N, x86_256_> const &value, T *ptr) noexcept
   {
-    if constexpr(N::value * sizeof(T) == x86_128_::bytes)
+    if constexpr(N::value * sizeof(T) == x86_256_::bytes)
     {
       if constexpr(std::is_same_v<T, double>)
         _mm256_storeu_pd(ptr, value);
@@ -85,7 +85,7 @@ namespace eve::detail
   {
     static constexpr auto alg = wide<T, N, x86_256_>::static_alignment;
 
-    if constexpr(N::value * sizeof(T) == x86_128_::bytes && A >= alg)
+    if constexpr(N::value * sizeof(T) == x86_256_::bytes && A >= alg)
     {
       if constexpr(std::is_same_v<T, double>)
         _mm256_store_pd(ptr.get(), value);
@@ -101,4 +101,3 @@ namespace eve::detail
   }
 
 }
-
