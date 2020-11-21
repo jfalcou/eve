@@ -35,6 +35,10 @@ namespace eve::detail
     {
            if constexpr( catou == category::int64x1  ) return vcvt_s64_f64(v0);
       else if constexpr( catou == category::uint64x1 ) return vcvt_u64_f64(v0);
+      else                                            return convert_(EVE_RETARGET(simd_), v0, tgt);
+    }
+    else if constexpr( catin == category::float64x2 )
+    {
       else if constexpr( catou == category::int64x2  ) return vcvtq_s64_f64(v0);
       else if constexpr( catou == category::uint64x2 ) return vcvtq_u64_f64(v0);
       else if constexpr( catou == category::int32x2  ) return vmovn_s64(vcvtq_s64_f64(v0));
@@ -51,6 +55,9 @@ namespace eve::detail
       else if constexpr( catou == category::uint32x2 )      return vcvt_u32_f32(v0);
       else if constexpr( catou == category::int64x2  )      return vmovl_s32(vcvt_s32_f32(v0));
       else if constexpr( catou == category::uint64x2 )      return vmovl_u32(vcvt_u32_f32(v0));
+    }
+    else if constexpr( catin == category::float32x4 )
+    {
       else if constexpr( catou == category::int32x4  )      return vcvtq_s32_f32(v0);
       else if constexpr( catou == category::uint32x4 )      return vcvtq_u32_f32(v0);
       else if constexpr( catou == category::int16x4  )      return vmovn_s32(vcvtq_s32_f32(v0));
@@ -63,10 +70,17 @@ namespace eve::detail
     {
 #if defined(__aarch64__)
            if constexpr( catou == category::float64x1 )     return vcvt_f64_s64(v0);
-      else if constexpr( catou == category::float64x2 )     return vcvtq_f64_s64(v0);
       else
 #endif
            if constexpr( catou == category::uint64x1  )     return vreinterpret_u64_s64(v0);
+           else                                             return convert_(EVE_RETARGET(simd_), v0, tgt);
+    }
+    else if constexpr( catin == category::int64x2 )
+    {
+#if defined(__aarch64__)
+           if constexpr( catou == category::float64x2 )     return vcvtq_f64_s64(v0);
+      else
+#endif
       else if constexpr( catou == category::uint64x2  )     return vreinterpretq_u64_s64(v0);
       else if constexpr( catou == category::float32x2 )     return vcvt_f32_s32(vmovn_s64(v0));
       else if constexpr( catou == category::int32x2   )     return vmovn_s64(v0);
@@ -78,11 +92,18 @@ namespace eve::detail
     else if constexpr( catin == category::uint64x1 )
     {
 #if defined(__aarch64__)
-      if constexpr( catou == category::float64x1 )        return vcvt_f64_u64(v0);
-      else if constexpr( catou == category::float64x2 )   return vcvtq_f64_u64(v0);
+      if constexpr( catou == category::float64x1 )          return vcvt_f64_u64(v0);
       else
 #endif
-           if constexpr( catou == category::int64x1 )          return vreinterpret_s64_u64(v0);
+           if constexpr( catou == category::int64x1 )       return vreinterpret_s64_u64(v0);
+      else                                                  return convert_(EVE_RETARGET(simd_), v0, tgt);
+    }
+    else if constexpr( catin == category::uint64x2 )
+    {
+#if defined(__aarch64__)
+           if constexpr( catou == category::float64x2 )     return vcvtq_f64_u64(v0);
+      else
+#endif
       else if constexpr( catou == category::int64x2 )          return vreinterpretq_s64_u64(v0);
       else if constexpr( catou == category::float32x2 )        return vcvt_f32_u32(vmovn_u64(v0));
       else if constexpr( catou == category::uint32x2 )         return vmovn_u64(v0);
@@ -97,7 +118,11 @@ namespace eve::detail
       else if constexpr( catou == category::uint32x2 )         return vreinterpret_u32_s32(v0);
       else if constexpr( catou == category::int64x2 )          return vmovl_s32(v0);
       else if constexpr( catou == category::uint64x2 )         return vreinterpretq_u64_s64(vmovl_s32(v0));
-      else if constexpr( catou == category::float32x4 )        return vcvtq_f32_s32(v0);
+      else                                                     return convert_(EVE_RETARGET(simd_), v0, tgt);
+    }
+    else if constexpr( catin == category::int32x4 )
+    {
+           if constexpr( catou == category::float32x4 )        return vcvtq_f32_s32(v0);
       else if constexpr( catou == category::uint32x4 )         return vreinterpretq_u32_s32(v0);
       else if constexpr( catou == category::int16x4 )          return vmovn_s32(v0);
       else if constexpr( catou == category::uint16x4 )         return vreinterpret_u16_s16(vmovn_s32(v0));
@@ -107,15 +132,19 @@ namespace eve::detail
     // uint32 -> ?
     else if constexpr( catin == category::uint32x2 )
     {
-           if constexpr( catou == category::float32x2 )   return vcvt_f32_u32(v0);
-      else if constexpr( catou == category::int32x2 )    return vreinterpret_s32_u32(v0);
-      else if constexpr( catou == category::int64x2 )    return vreinterpretq_s64_u64(vmovl_u32(v0));
-      else if constexpr( catou == category::uint64x2 )   return vmovl_u32(v0);
-      else if constexpr( catou == category::float32x4 )  return vcvtq_f32_u32(v0);
-      else if constexpr( catou == category::int32x4 )    return vreinterpretq_s32_u32(v0);
-      else if constexpr( catou == category::int16x4 )    return vreinterpret_s16_u16(vmovn_u32(v0));
-      else if constexpr( catou == category::uint16x4 )   return vmovn_u32(v0);
-      else                                               return convert_(EVE_RETARGET(simd_), v0, tgt);
+           if constexpr( catou == category::float32x2 )        return vcvt_f32_u32(v0);
+      else if constexpr( catou == category::int32x2 )          return vreinterpret_s32_u32(v0);
+      else if constexpr( catou == category::int64x2 )          return vreinterpretq_s64_u64(vmovl_u32(v0));
+      else if constexpr( catou == category::uint64x2 )         return vmovl_u32(v0);
+      else                                                     return convert_(EVE_RETARGET(simd_), v0, tgt);
+    }
+    else if constexpr( catin == category::uint32x4 )
+    {
+           if constexpr( catou == category::float32x4 )        return vcvtq_f32_u32(v0);
+      else if constexpr( catou == category::int32x4 )          return vreinterpretq_s32_u32(v0);
+      else if constexpr( catou == category::int16x4 )          return vreinterpret_s16_u16(vmovn_u32(v0));
+      else if constexpr( catou == category::uint16x4 )         return vmovn_u32(v0);
+      else                                                     return convert_(EVE_RETARGET(simd_), v0, tgt);
     }
     //==============================================================================================
     // int16 -> ?
@@ -124,10 +153,6 @@ namespace eve::detail
            if constexpr( catou == category::int32x4 )        return vmovl_s16(v0);
       else if constexpr( catou == category::float32x4 )      return vcvtq_f32_s32(vmovl_s16(v0));
       else if constexpr( catou == category::uint32x4 )       return vreinterpretq_u32_s32(vmovl_s16(v0));
-      else if constexpr( catou == category::uint16x4 )       return vreinterpret_u16_s16(v0);
-      else if constexpr( catou == category::uint32x4 )       return vreinterpretq_u32_s32(vmovl_s16(v0));
-      else if constexpr( catou == category::int32x4 )        return vmovl_s16(v0);
-      else if constexpr( catou == category::float32x4 )      return vcvtq_f32_s32(movl_s16(v0));
       else if constexpr( catou == category::uint16x4 )       return vreinterpret_u16_s16(v0);
       else                                                   return convert_(EVE_RETARGET(simd_), v0, tgt);
     }
@@ -139,9 +164,6 @@ namespace eve::detail
       else if constexpr( catou == category::float32x4 )      return vcvtq_f32_u32(vmovl_u16(v0));
       else if constexpr( catou == category::uint32x4 )       return vmovl_u16(v0);
       else if constexpr( catou == category::int16x4 )        return vreinterpret_s16_u16(v0);
-      else if constexpr( catou == category::int16x8 )        return vmovl_s8(v0);
-      else if constexpr( catou == category::uint16x8 )       return vreinterpretq_u16_s16(vmovl_s8(v0));
-      else if constexpr( catou == category::uint8x8 )        return vreinterpret_u8_s8(v0);
       else                                                   return convert_(EVE_RETARGET(simd_), v0, tgt);
     }
     //==============================================================================================
@@ -151,9 +173,6 @@ namespace eve::detail
            if constexpr( catou == category::int16x8 )        return vmovl_s8(v0);
       else if constexpr( catou == category::uint16x8 )       return vreinterpretq_u16_s16(vmovl_s8(v0));
       else if constexpr( catou == category::uint8x8 )        return vreinterpret_u8_s8(v0);
-      else if constexpr( catou == category::int16x8 )        return vmovl_s8(v0);
-      else if constexpr( catou == category::uint16x8 )       return vreinterpretq_u16_s16(vmovl_s8(v0));
-      else if constexpr( catou == category::uint8x8 )        return vreinterpret_u8_s8(v0);
       else                                                   return convert_(EVE_RETARGET(simd_), v0, tgt);
     }
     //==============================================================================================
@@ -161,9 +180,6 @@ namespace eve::detail
     else if constexpr( catin == category::uint8x8 )
     {
            if constexpr( catou == category::int16x8 )        return vreinterpretq_s16_u16(vmovl_u8(v0));
-      else if constexpr( catou == category::uint16x8 )       return vmovl_u8(v0);
-      else if constexpr( catou == category::int8x8 )         return vreinterpret_s8_u8(v0);
-      else if constexpr( catou == category::int16x8 )        return vreinterpretq_s16_u16(vmovl_u8(v0));
       else if constexpr( catou == category::uint16x8 )       return vmovl_u8(v0);
       else if constexpr( catou == category::int8x8 )         return vreinterpret_s8_u8(v0);
       else                                                   return convert_(EVE_RETARGET(simd_), v0, tgt);
