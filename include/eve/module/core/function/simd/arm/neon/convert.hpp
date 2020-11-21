@@ -55,6 +55,7 @@ namespace eve::detail
       else if constexpr( catou == category::uint32x2 )      return vcvt_u32_f32(v0);
       else if constexpr( catou == category::int64x2  )      return vmovl_s32(vcvt_s32_f32(v0));
       else if constexpr( catou == category::uint64x2 )      return vmovl_u32(vcvt_u32_f32(v0));
+      else                                                  return convert_(EVE_RETARGET(simd_), v0, tgt);
     }
     else if constexpr( catin == category::float32x4 )
     {
@@ -187,7 +188,7 @@ namespace eve::detail
     //==============================================================================================
     // other -> ?
     else                                                     return convert_(EVE_RETARGET(simd_), v0, tgt);
-  }
+   }
 }
 
 // namespace eve::detail
