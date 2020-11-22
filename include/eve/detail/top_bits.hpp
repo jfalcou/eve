@@ -301,7 +301,8 @@ namespace eve::detail
     }
     else
     {
-      constexpr std::uint32_t mask = (1ULL << cardinal_v<Pack>) - 1ULL;
+      constexpr auto s16_fix = sizeof(element_type_t<Pack>) == 2 ? 2 : 1;
+      constexpr std::uint32_t mask = (1ULL << (s16_fix*cardinal_v<Pack>)) - 1ULL;
       return x.raw == mask;
     }
   }
