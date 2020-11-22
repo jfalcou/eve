@@ -37,11 +37,7 @@ namespace eve::detail
       else  if constexpr( std::is_same_v<e_t, double> ) return _mm_movemask_pd(p.storage());
       else  if constexpr( sizeof(e_t) == 8 )            return _mm_movemask_pd((__m128d)p.storage());
       else  if constexpr( sizeof(e_t) == 4 )            return _mm_movemask_ps((__m128)p.storage());
-      else  if constexpr( sizeof(e_t) == 1 )            return _mm_movemask_epi8(p.storage());
-      else  if constexpr( sizeof(e_t) == 2 )
-      {
-        return _mm_movemask_epi8(_mm_packs_epi16(p.storage(), _mm_setzero_si128()));
-      }
+      else                                              return _mm_movemask_epi8(p.storage());
     }
     else if constexpr( std::same_as<typename Pack::abi_type,x86_256_>)
     {
@@ -49,17 +45,9 @@ namespace eve::detail
       else  if constexpr( std::is_same_v<e_t, double> ) return _mm256_movemask_pd(p.storage());
       else  if constexpr( sizeof(e_t) == 8 )            return _mm256_movemask_pd((__m256d)p.storage());
       else  if constexpr( sizeof(e_t) == 4 )            return _mm256_movemask_ps((__m256)p.storage());
-      else if constexpr( sizeof(e_t) == 2 )
+      else
       {
-        auto [l, h] = p.slice();
-        return _mm_movemask_epi8(_mm_packs_epi16(l, h));
-      }
-      else if constexpr( sizeof(e_t) == 1 )
-      {
-        if constexpr( current_api >= avx2 )
-        {
-          return _mm256_movemask_epi8(p.storage());
-        }
+        if constexpr( current_api >= avx2 ) return _mm256_movemask_epi8(p.storage());
         else
         {
           auto [l, h] = p.slice();
@@ -288,7 +276,8 @@ namespace eve::detail
     else
     {
       if(!x.raw) return std::nullopt;
-      return std::countr_zero(x.raw) ;
+      if constexpr(sizeof(element_type_t<Pack>) == 2)  return std::countr_zero(x.raw) >> 1;
+      else                                             return std::countr_zero(x.raw) ;
     }
   }
 
