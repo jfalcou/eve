@@ -17,70 +17,70 @@
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fnma.hpp>
-#include <eve/function/raw.hpp>
+#include <eve/function/is_ordered.hpp>
+#include <eve/function/min.hpp>
+#include <eve/constant/half.hpp>
 
 #include <type_traits>
-
-
-// TODO revision to:
-// pedantic will call pedantic fma and fnma
-// and the no extrapolation will be obtained through named parameter no_extrap = t
 
 namespace eve::detail
 {
   template<floating_real_value T, floating_real_value U, floating_real_value V>
-  EVE_FORCEINLINE auto lerp_(EVE_SUPPORTS(cpu_), T const &a, U const &b, V const &t) noexcept
+  EVE_FORCEINLINE auto nenr_(EVE_SUPPORTS(cpu_), T const &a, U const &b, V const &t) noexcept
       requires compatible_values<T, U> &&compatible_values<T, V>
   {
-    return arithmetic_call(lerp, a, b, t);
+    return arithmetic_call(nenr, a, b, t);
   }
 
   template<floating_real_value T>
-  EVE_FORCEINLINE T lerp_(EVE_SUPPORTS(cpu_), T const &a, T const &b, T const &t) noexcept
+  EVE_FORCEINLINE T nenr_(EVE_SUPPORTS(cpu_), T const &a, T const &b, T const &t) noexcept
   {
-    if constexpr(has_native_abi_v<T>) return fma(t, b, fnma(t, a, a));
-    else return apply_over(lerp, a, b, t);
+    if constexpr(has_native_abi_v<T>)
+    {
+      return if_else(t < half(as(t)), a, b); ;
+    }
+    else return apply_over(nenr, a, b, t);
   }
 
   ////////////////////////////////////////////////////////////////////////////
   // pedantic/numeric
   template<floating_real_value T, floating_real_value U, floating_real_value V, decorator D>
   EVE_FORCEINLINE auto
-  lerp_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const &a, U const &b, V const &t) noexcept
+  nenr_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const &a, U const &b, V const &t) noexcept
       requires compatible_values<T, U> &&compatible_values<T, V>
   {
-    return arithmetic_call(pedantic(lerp), a, b, t);
+    return arithmetic_call(pedantic(nenr), a, b, t);
   }
 
   template<floating_real_value T>
   EVE_FORCEINLINE T
-  lerp_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const &a, T const &b, T const &t) noexcept
+  nenr_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const &a, T const &b, T const &t) noexcept
   {
     if constexpr(has_native_abi_v<T>)
     {
       auto test = is_gez(t) && (t <= one(as(t)));
-      return if_else(test, lerp(a, b, t), allbits);
+      return if_else(test, nenr(a, b, t), allbits);
     }
-    else return apply_over(pedantic(lerp), a, b, t);
+    else return apply_over(pedantic(nenr), a, b, t);
   }
 
   template<floating_real_value T>
   EVE_FORCEINLINE T
-  lerp_(EVE_SUPPORTS(cpu_), numeric_type const &, T const &a, T const &b, T const &t) noexcept
+  nenr_(EVE_SUPPORTS(cpu_), numeric_type const &, T const &a, T const &b, T const &t) noexcept
   {
     if constexpr(has_native_abi_v<T>)
     {
-      auto test = a == b;
-      return if_else(test, a, lerp(a, b, t));
+       auto test = is_ordered(a, b);
+       return if_else(test, nenr(a, b, t), numeric(min)(a, b));
     }
-    else return apply_over(numeric(lerp), a, b, t);
+    else return apply_over(numeric(nenr), a, b, t);
   }
 
   template<floating_real_value T, decorator D>
   EVE_FORCEINLINE T
-  lerp_(EVE_SUPPORTS(cpu_), D const &, T const &a, T const &b, T const &t) noexcept
+  nenr_(EVE_SUPPORTS(cpu_), D const &, T const &a, T const &b, T const &t) noexcept
   {
     if constexpr(has_native_abi_v<T>) return D()(fma)(t, b, D()(fnma)(t, a, a));
-    else return apply_over(D()(lerp), a, b, t);
+    else return apply_over(D()(nenr), a, b, t);
   }
 }

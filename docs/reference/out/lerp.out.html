@@ -1,0 +1,21 @@
+ <meta charset="utf-8">
+**Possible Output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+ <- oi                         = (3, 3, 2, -3, 4, 4, 4, inf)
+ <- pi                         = (2, 2, 3, -2, 6, 6, 6, inf)
+ <- qi                         = (0.2, 0.8, 0.2, 0.5, 0, 1, 2, 0.5)
+ -> pedantic(lerp)(oi, pi, qi) = (2.8, 2.2, 2.2, -2.5, 4, 6, -nan, -nan)
+ -> numeric(lerp)(oi, pi, qi)  = (2.8, 2.2, 2.2, -2.5, 4, 6, 8, inf)
+ -> lerp(oi, pi, qi)           = (2.8, 2.2, 2.2, -2.5, 4, 6, 8, -nan)
+---- scalar
+ <- x                          = 1
+ <- y                          = 2
+ <- t                          = 0.1
+ -> lerp(x, y, t)              = 1.1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
