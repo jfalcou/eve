@@ -235,6 +235,7 @@ add_custom_target(exhaustive.exe        )
 add_custom_target(exhaustive.scalar.exe )
 add_custom_target(exhaustive.simd.exe   )
 
+add_dependencies(unit.exe       doc.exe               )
 add_dependencies(unit.exe       unit.scalar.exe       )
 add_dependencies(unit.exe       unit.simd.exe         )
 add_dependencies(random.exe     random.scalar.exe     )
