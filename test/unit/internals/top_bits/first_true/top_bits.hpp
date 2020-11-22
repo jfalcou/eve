@@ -9,9 +9,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/detail/spy.hpp>
 
-#if defined(SPY_ARCH_IS_AMD64)
+#if defined(SPY_ARCH_IS_AMD64) && !defined(EVE_NO_SIMD)
 
 #include <eve/logical.hpp>
 #include <eve/detail/top_bits.hpp>
