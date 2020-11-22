@@ -263,9 +263,17 @@ namespace eve::detail
 
       if(offset < x.raw.size())
       {
-        offset = x.raw.size() - 1 - offset;
-        offset *=  cardinal_v<typename top_bits<Pack>::wide_t>;
-        return offset + std::countr_zero(mask);
+        offset  = x.raw.size() - 1 - offset;
+        offset *= cardinal_v<typename top_bits<Pack>::wide_t>;
+
+        if constexpr(sizeof(element_type_t<Pack>) == 2)
+        {
+          return ((offset<<1) + std::countr_zero(mask)) >> 1;
+        }
+        else
+        {
+          return offset + std::countr_zero(mask);
+        }
       }
       else
       {
