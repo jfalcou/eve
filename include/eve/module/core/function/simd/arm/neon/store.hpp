@@ -22,35 +22,35 @@ namespace eve::detail
                              , wide<T, N, ABI> const &value
                              , T *ptr) noexcept
   {
-    if constexpr( std::is_same_v<ABI,arm_64_> &&  (sizeof(wide<T, N, ABI>) != arm_64_::bytes ))
+    if constexpr( std::is_same_v<ABI,arm_64_> &&  (N::value * sizeof(T) != arm_64_::bytes ))
     {
       apply<N::value>([&](auto... I) { ((*ptr++ = value[I]), ...); });
     }
     else
     {
       constexpr auto cat = categorize<wide<T, N, ABI>>();
-           if constexpr( cat == category::float32x2)  vst1_f32(ptr, value);
-      else if constexpr( cat == category::float32x4)  vst1q_f32(ptr, value);
+           if constexpr( cat == category::float32x2) vst1_f32(ptr, value);
+      else if constexpr( cat == category::float32x4) vst1q_f32(ptr, value);
 #if defined(__aarch64__)
-      else if constexpr(  cat == category::float64x1) vst1_f64(ptr, value);
-      else if constexpr(  cat == category::float64x2) vst1_f64q(ptr, value);
+      else if constexpr( cat == category::float64x1) vst1_f64(ptr, value);
+      else if constexpr( cat == category::float64x2) vst1q_f64(ptr, value);
 #endif
-      else if constexpr(  cat == category::int64x1) vst1_s64(ptr, value);
-      else if constexpr(  cat == category::int64x2) vst1q_s64(ptr, value);
-      else if constexpr(  cat == category::uint64x1) vst1_u64(ptr, value);
-      else if constexpr(  cat == category::uint64x2) vst1q_u64(ptr, value);
-      else if constexpr(  cat == category::int32x2) vst1_s32(ptr, value);
-      else if constexpr(  cat == category::int32x4) vst1q_s32(ptr, value);
-      else if constexpr(  cat == category::uint32x2) vst1_u32(ptr, value);
-      else if constexpr(  cat == category::uint32x4) vst1q_u32(ptr, value);
-      else if constexpr(  cat == category::int16x8) vst1_s16(ptr, value);
-      else if constexpr(  cat == category::int16x16) vst1q_s16(ptr, value);
-      else if constexpr(  cat == category::uint16x8) vst1_u16(ptr, value);
-      else if constexpr(  cat == category::uint16x16) vst1q_u16(ptr, value);
-      else if constexpr(  cat == category::int8x16) vst1_s8(ptr, value);
-      else if constexpr(  cat == category::int8x32) vst1q_s8(ptr, value);
-      else if constexpr(  cat == category::uint8x16) vst1_u8(ptr, value);
-      else if constexpr(  cat == category::uint8x32) vst1q_u8(ptr, value);
+      else if constexpr( cat == category::int64x1)   vst1_s64(ptr, value);
+      else if constexpr( cat == category::int64x2)   vst1q_s64(ptr, value);
+      else if constexpr( cat == category::uint64x1)  vst1_u64(ptr, value);
+      else if constexpr( cat == category::uint64x2)  vst1q_u64(ptr, value);
+      else if constexpr( cat == category::int32x2)   vst1_s32(ptr, value);
+      else if constexpr( cat == category::int32x4)   vst1q_s32(ptr, value);
+      else if constexpr( cat == category::uint32x2)  vst1_u32(ptr, value);
+      else if constexpr( cat == category::uint32x4)  vst1q_u32(ptr, value);
+      else if constexpr( cat == category::int16x8)   vst1_s16(ptr, value);
+      else if constexpr( cat == category::int16x16)  vst1q_s16(ptr, value);
+      else if constexpr( cat == category::uint16x8)  vst1_u16(ptr, value);
+      else if constexpr( cat == category::uint16x16) vst1q_u16(ptr, value);
+      else if constexpr( cat == category::int8x16)   vst1_s8(ptr, value);
+      else if constexpr( cat == category::int8x32)   vst1q_s8(ptr, value);
+      else if constexpr( cat == category::uint8x16)  vst1_u8(ptr, value);
+      else if constexpr( cat == category::uint8x32)  vst1q_u8(ptr, value);
     }
   }
 
@@ -67,28 +67,28 @@ namespace eve::detail
     else
     {
       constexpr auto cat = categorize<wide<T, N, ABI>>();
-           if constexpr( cat == category::float32x2)  vst1_f32_ex(ptr, value, 64);
-      else if constexpr( cat == category::float32x4)  vst1_f32_ex(ptr, value, 128);
+           if constexpr( cat == category::float32x2) vst1_f32_ex(ptr, value, 64);
+      else if constexpr( cat == category::float32x4) vst1_f32_ex(ptr, value, 128);
 #if defined(__aarch64__)
-      else if constexpr(  cat == category::float64x1) vst1_f64_ex(ptr, value, 64);
-      else if constexpr(  cat == category::float64x2) vst1_f64_ex(ptr, value, 128);
+      else if constexpr( cat == category::float64x1) vst1_f64_ex(ptr, value, 64);
+      else if constexpr( cat == category::float64x2) vst1_f64_ex(ptr, value, 128);
 #endif
-      else if constexpr(  cat == category::int64x1) vst1_s64_ex(ptr, value, 64);
-      else if constexpr(  cat == category::int64x2) vst1_s64_ex(ptr, value, 128);
-      else if constexpr(  cat == category::uint64x1) vst1_u64_ex(ptr, value, 64);
-      else if constexpr(  cat == category::uint64x2) vst1_u64_ex(ptr, value, 128);
-      else if constexpr(  cat == category::int32x2) vst1_s32_ex(ptr, value, 64);
-      else if constexpr(  cat == category::int32x4) vst1_s32_ex(ptr, value, 128);
-      else if constexpr(  cat == category::uint32x2) vst1_u32_ex(ptr, value, 64);
-      else if constexpr(  cat == category::uint32x4) vst1_u32_ex(ptr, value, 128);
-      else if constexpr(  cat == category::int16x8) vst1_s16_ex(ptr, value, 64);
-      else if constexpr(  cat == category::int16x16) vst1_s16_ex(ptr, value, 128);
-      else if constexpr(  cat == category::uint16x8) vst1_u16_ex(ptr, value, 64);
-      else if constexpr(  cat == category::uint16x16) vst1_u16_ex(ptr, value, 128);
-      else if constexpr(  cat == category::int8x16) vst1_s8_ex(ptr, value, 64);
-      else if constexpr(  cat == category::int8x32) vst1_s8_ex(ptr, value, 128);
-      else if constexpr(  cat == category::uint8x16) vst1_u8_ex(ptr, value, 64);
-      else if constexpr(  cat == category::uint8x32) vst1_u8_ex(ptr, value, 128);
+      else if constexpr( cat == category::int64x1)   vst1_s64_ex(ptr, value, 64);
+      else if constexpr( cat == category::int64x2)   vst1_s64_ex(ptr, value, 128);
+      else if constexpr( cat == category::uint64x1)  vst1_u64_ex(ptr, value, 64);
+      else if constexpr( cat == category::uint64x2)  vst1_u64_ex(ptr, value, 128);
+      else if constexpr( cat == category::int32x2)   vst1_s32_ex(ptr, value, 64);
+      else if constexpr( cat == category::int32x4)   vst1_s32_ex(ptr, value, 128);
+      else if constexpr( cat == category::uint32x2)  vst1_u32_ex(ptr, value, 64);
+      else if constexpr( cat == category::uint32x4)  vst1_u32_ex(ptr, value, 128);
+      else if constexpr( cat == category::int16x8)   vst1_s16_ex(ptr, value, 64);
+      else if constexpr( cat == category::int16x16)  vst1_s16_ex(ptr, value, 128);
+      else if constexpr( cat == category::uint16x8)  vst1_u16_ex(ptr, value, 64);
+      else if constexpr( cat == category::uint16x16) vst1_u16_ex(ptr, value, 128);
+      else if constexpr( cat == category::int8x16)   vst1_s8_ex(ptr, value, 64);
+      else if constexpr( cat == category::int8x32)   vst1_s8_ex(ptr, value, 128);
+      else if constexpr( cat == category::uint8x16)  vst1_u8_ex(ptr, value, 64);
+      else if constexpr( cat == category::uint8x32)  vst1_u8_ex(ptr, value, 128);
     }
   }
 #else
