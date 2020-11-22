@@ -92,6 +92,7 @@ namespace eve::detail
         auto [s, rs] = two_add(p, c);
         return s + (rp + rs);
       }
+      else return fma(a, b, c);
     }
     else if constexpr( std::is_integral_v<elt_t> )
     {
