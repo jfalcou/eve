@@ -404,11 +404,22 @@ namespace eve
             : first_count_(b), last_count_(e)
     {}
 
+    template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
+
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
       auto const i = detail::linear_ramp(eve::as_<as_arithmetic_t<T>>());
-      constexpr std::ptrdiff_t card = cardinal_v<T>;
-      return (i >= first_count_) && (i < (card-last_count_));
+      return (i >= first_count_) && (i < (cardinal_v<T>-last_count_));
+    }
+
+    template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const
+    {
+      return first_count_;
+    }
+
+    template<typename T> EVE_FORCEINLINE auto count(eve::as_<T> const&) const
+    {
+      return sizeof(element_type_t<T>) * (cardinal_v<T> - last_count_ - first_count_);
     }
 
     friend std::ostream& operator<<(std::ostream& os, ignore_extrema_ const& c)
