@@ -30,6 +30,8 @@ namespace eve
     {
       T a;
       T b;
+      param_type(T, aa, T bb) : a(aa),  b(bb){};
+
     };
 
     struct internal
@@ -187,7 +189,7 @@ namespace eve
         {
           return initp(T(0), T(0));
         }
-      }
+       }
       else
       {
         return initp(T(0), -a);
