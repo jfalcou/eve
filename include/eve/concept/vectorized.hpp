@@ -33,5 +33,6 @@ namespace eve
   template<typename T> concept real_simd_value            = simd_value<T> && std::same_as< detail::value_type_t<T>, element_type_t<T>>;
   template<typename T> concept floating_real_simd_value   = real_simd_value<T> && std::floating_point<detail::value_type_t<T>>;
   template<typename T> concept integral_real_simd_value   = real_simd_value<T> && std::integral<detail::value_type_t<T>>;
-}
 
+  template<typename T> struct is_simd_value : std::bool_constant<simd_value<T>> {};
+}

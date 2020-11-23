@@ -25,7 +25,37 @@ namespace eve::detail
   {
   };
 
-  // Check if a type is contained in a types list
+  // Return the first type in a type list matching a trait
+  template<bool Done, template<typename> typename Pred, typename TL>
+  struct first_with_impl;
+
+  template<template<typename> typename Pred, typename TL>
+  struct first_with;
+
+  template<template<typename> typename Pred,typename T>
+  struct first_with<Pred,types<T>> : std::conditional< Pred<T>::value, T, struct no_type_>
+  {};
+
+  template<template<typename> typename Pred,typename T>
+  using first_with_t = typename first_with<Pred,T>::type;
+
+  template<template<typename> typename Pred,typename T,typename... Ts>
+  struct first_with_impl<true,Pred,types<T,Ts...>>
+  {
+    using type = T;
+  };
+
+  template<template<typename> typename Pred,typename T,typename... Ts>
+  struct first_with_impl<false,Pred,types<T,Ts...>>
+    : first_with<Pred,types<Ts...>>
+  {};
+
+  template<template<typename> typename Pred,typename T,typename... Ts>
+  struct  first_with<Pred,types<T,Ts...>>
+    : first_with_impl<Pred<T>::value,Pred,types<T,Ts...>>
+  {};
+
+// Check if a type is contained in a types list
   template<typename T, typename... Ts>
   constexpr bool is_one_of(types<Ts...> const&) noexcept
   {
