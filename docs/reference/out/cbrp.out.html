@@ -1,0 +1,24 @@
+ <meta charset="utf-8">
+**Possible Output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+ <- a                              = (3, 3, 2, -3, 4, 4, 4, inf)
+ <- ap                             = (0, 2, 3, -2, 6, 6, 6, inf)
+ <- b                              = (3, 3, 2, -3, 4, 4, 4, inf)
+ <- bp                             = (0, -2, 3, -2, 6, 6, 6, inf)
+ <- t                              = (0.2, 0.8, 0.2, 0.5, 0, 1, 2, 0.5)
+ -> pedantc(cbrp)(a, ap, b, bp, t) = (3, 3.32, 2.288, -3, 4, 4, -nan, -nan)
+ -> cbrp(a, ap, b, bp, t)          = (3, 3.32, 2.288, -3, 4, 4, 40, -nan)
+---- scalar
+ <- x                              = 1
+ <- xp                             = 1
+ <- y                              = 2
+ <- yp                             = -1
+ <- t                              = 0.1
+ -> cbrp(x, xp, y, yp, ts)         = 1.118
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

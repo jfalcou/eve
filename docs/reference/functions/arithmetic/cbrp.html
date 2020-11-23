@@ -1,0 +1,80 @@
+<!--
+  EVE -  Expressive Vector Engine
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+ -->
+<meta charset="utf-8" lang="en">
+                       **Expressive Vector Engine**
+                           `eve::cbrp`
+<br>
+
+  (insert ../../../crumbs.html here)
+
+Synopsis
+====================================================================================================
+**Required header:** <script type="preformatted">`#include <eve/function/cbrp.hpp>`</script>
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+namespace eve
+{
+  inline constexpr /*unspecified*/ cbrp = /*unspecified*/;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+Function object representing the cbrp operation.
+
+Member functions
+====================================================================================================
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+template< value T, value U, value V , value X, value Y > auto operator()( T x, U xp, V y, W yp, X t ) const noexcept
+requires compatible< T,U> && compatible< T, V> && compatible< T, W> && compatible< T, X>;
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+Performs the [element-wise](../../../glossary.html#regular) cubic interpolation on its parameters.
+
+Parameters
+----------------------------------------------------------------------------------------------------
+`x`, `y`, `xp`, `yp`, `t`
+:   [values](../../concepts.html#value)
+
+Return value
+----------------------------------------------------------------------------------------------------
+<span class="smallskip"></span>
+The call `cbrp(x, xp, y, yp,t)` computes elementwise at `t` the value of the cubic polynomial $p$ such that
+$p(0)=x$, $p(1)=y$, $p^\prime(0)=xp$ and $p^\prime(1)=yp$.
+
+The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
+
+When `x` and `y` are finite:
+
+    - If `t == 0`, the result is equal to a.
+    - If `t == 1`, the result is equal to b.
+    - If `t >= 0` and `t <= 1`, the result is finite but generally of no use.
+
+Supported Decorators
+====================================================================================================
+[`pedantic`](../decorators.html#pedantic)
+:   The call `pedantic(cbrp)(x,y,z)` return nan for `t` outside of $[0,1]$ (i.e. no extrapolation).
+
+   (insert ../../src/cbrp.src.html here)
+
+   (insert ../../out/cbrp.out.html here)
+
+See Also
+====================================================================================================
+[eve::lerp](./lerp.html), [eve::nenr](./nenr.html)
+
+
+
+<!-- End of Document -->
+<link rel="stylesheet" href="../../../eve.css">
+<!-- Markdeep: -->
+<script>markdeepOptions={tocStyle:'none'};</script>
+<script src="../../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

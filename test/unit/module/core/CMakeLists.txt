@@ -58,6 +58,7 @@ make_all_units(ROOT unit.core NAME bit_shl               ARCH scalar simd TYPES 
 make_all_units(ROOT unit.core NAME bit_shr               ARCH scalar simd TYPES ${integral_types})
 make_all_units(ROOT unit.core NAME bit_xor               ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.core NAME bit_width             ARCH scalar simd TYPES ${uint_types}    )
+make_all_units(ROOT unit.core NAME cbrp                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.core NAME cbrt                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.core NAME ceil                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.core NAME clamp                 ARCH scalar simd TYPES ${all_types}     )

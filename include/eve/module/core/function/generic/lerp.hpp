@@ -44,7 +44,7 @@ namespace eve::detail
 
   ////////////////////////////////////////////////////////////////////////////
   // pedantic/numeric
-  template<floating_real_value T, floating_real_value U, floating_real_value V, decorator D>
+  template<floating_real_value T, floating_real_value U, floating_real_value V>
   EVE_FORCEINLINE auto
   lerp_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const &a, U const &b, V const &t) noexcept
       requires compatible_values<T, U> &&compatible_values<T, V>
