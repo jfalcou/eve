@@ -11,6 +11,7 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/category.hpp>
 #include <eve/function/rsqrt.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_not_finite.hpp>

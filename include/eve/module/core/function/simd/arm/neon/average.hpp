@@ -10,14 +10,15 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/concept/value.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/detail/skeleton.hpp>
+#include <eve/detail/category.hpp>
 #include <eve/constant/half.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/forward.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/category.hpp>
-#include <eve/detail/implementation.hpp>
 #include <type_traits>
+
 namespace eve::detail
 {
   template<real_scalar_value T, typename N, arm_abi ABI>

@@ -138,13 +138,13 @@ workflows:
   build_and_test:
     jobs:
       - x86_scalar
-      # - x86_sse2
-      # - x86_sse4
-      # - x86_avx
-      # - x86_avx2
-      # - x86_fma
-      # - x86_tiny
-      # - x86_extra
-      # - x86_emulation
+      - x86_sse2
+      - x86_sse4
+      - x86_avx
+      - x86_avx2
+      - x86_fma
+      - x86_tiny
+      - x86_extra
+      - x86_emulation
       - arm_aarch64_neon128
       - arm_aarch64_neon64

@@ -11,18 +11,8 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
-#include <eve/function/ifrexp.hpp>
-#include <eve/function/ldexp.hpp>
-#include <eve/function/ifrexp.hpp>
-#include <eve/function/is_denormal.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/is_odd.hpp>
-#include <eve/function/ldexp.hpp>
-#include <eve/concept/value.hpp>
-
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
-#include <eve/detail/implementation.hpp>
 #include <eve/function/rsqrt.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_not_finite.hpp>

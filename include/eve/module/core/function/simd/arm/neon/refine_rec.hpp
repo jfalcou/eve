@@ -23,7 +23,6 @@ namespace eve::detail
   {
     constexpr auto cat = categorize<wide<T, N, ABI>>();
 
-
          if constexpr( cat == category::float32x2) return vmul_f32(vrecps_f32(a0, a1), a1);
     else if constexpr( cat == category::float32x4) return vmulq_f32(vrecpsq_f32(a0, a1), a1);
 #  if defined(__aarch64__)
