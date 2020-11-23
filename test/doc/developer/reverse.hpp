@@ -1,3 +1,13 @@
+//==================================================================================================
+/**
+  EVE - Expressive Vector Engine
+  Copyright 2020 Denis YAROSHEVSKIY
+  Copyright 2020 Joel FALCOU
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+**/
+//==================================================================================================
 #pragma once
 
 #if defined(EVE_HW_X86) && !defined(SPY_SIMD_IS_X86_AVX512)
@@ -24,7 +34,8 @@ eve::wide<T, N, ABI> actual_reverse(eve::wide<T, N, ABI> x) requires(sizeof(T) =
 }
 
 template <typename N>
-constexpr std::uint32_t mm_shuffle() {
+constexpr std::uint32_t mm_shuffle()
+{
   if constexpr(N() == 4) return _MM_SHUFFLE(0, 1, 2, 3);
   if constexpr(N() == 2) return _MM_SHUFFLE(3, 2, 0, 1);
 }
@@ -33,8 +44,8 @@ template <typename T, typename N, eve::x86_abi ABI>
 eve::wide<T, N, ABI> actual_reverse(eve::wide<T, N, ABI> x) requires(sizeof(T) == 4)
 {
   auto raw = x.storage();
-
-       if constexpr(std::same_as<ABI, eve::x86_128_>) return {_mm_shuffle_epi32(raw, mm_shuffle<N>())};
+  constexpr auto mask = mm_shuffle<N>();
+       if constexpr(std::same_as<ABI, eve::x86_128_>) return {_mm_shuffle_epi32(raw, mask)};
   else if constexpr(std::same_as<ABI, eve::x86_256_>)
   {
     using mask_type = eve::wide<int, eve::fixed<8>>;
@@ -49,7 +60,7 @@ inline __m256i reverse_256_using_128_mask(__m256i x, __m128i mask_128)
   __m256i mask_256 = _mm256_set_m128i(mask_128, mask_128);
   __m256i each_half = _mm256_shuffle_epi8(x, mask_256);
 
-  return {_mm256_permute4x64_epi64(each_half, _MM_SHUFFLE(1, 0, 3, 2))};
+  return _mm256_permute4x64_epi64(each_half, _MM_SHUFFLE(1, 0, 3, 2));
 }
 
 template <typename N>
