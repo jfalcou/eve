@@ -11,49 +11,30 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/overload.hpp>
-#include <eve/forward.hpp>
+#include <eve/detail/category.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/minus.hpp>
+#include <eve/function/fma.hpp>
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, arm_64_> fms_(EVE_SUPPORTS(neon128_),
-                                           wide<T, N, arm_64_> const &v0,
-                                           wide<T, N, arm_64_> const &v1,
-                                           wide<T, N, arm_64_> const &v2) noexcept
+  template<real_scalar_value T, typename N, arm_abi ABI>
+  EVE_FORCEINLINE wide<T, N, ABI> fms_(EVE_SUPPORTS(neon128_),
+                                           wide<T, N, ABI> const &v0,
+                                           wide<T, N, ABI> const &v1,
+                                           wide<T, N, ABI> const &v2) noexcept
   {
     return fma(v0, v1, -v2);
   }
 
-  template<decorator D, real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, arm_64_> fms_(EVE_SUPPORTS(neon128_),
+  template<decorator D, real_scalar_value T, typename N, arm_abi ABI>
+  EVE_FORCEINLINE wide<T, N, ABI> fms_(EVE_SUPPORTS(neon128_),
                                            D const &,
-                                           wide<T, N, arm_64_> const &v0,
-                                           wide<T, N, arm_64_> const &v1,
-                                           wide<T, N, arm_64_> const &v2) noexcept
+                                           wide<T, N, ABI> const &v0,
+                                           wide<T, N, ABI> const &v1,
+                                           wide<T, N, ABI> const &v2) noexcept
   {
     return fma(v0, v1, -v2);
   }
 
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, arm_128_> fms_(EVE_SUPPORTS(neon128_),
-                                            wide<T, N, arm_128_> const &v0,
-                                            wide<T, N, arm_128_> const &v1,
-                                            wide<T, N, arm_128_> const &v2) noexcept
-  {
-    return fma(v0, v1, -v2);
-  }
-
-  template<decorator D, real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, arm_128_> fms_(EVE_SUPPORTS(neon128_),
-                                            D const &,
-                                            wide<T, N, arm_128_> const &v0,
-                                            wide<T, N, arm_128_> const &v1,
-                                            wide<T, N, arm_128_> const &v2) noexcept
-  {
-    return fma(v0, v1, -v2);
-  }
 }
-

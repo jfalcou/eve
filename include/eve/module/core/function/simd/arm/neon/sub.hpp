@@ -15,18 +15,10 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, arm_64_>
-                  sub_(EVE_SUPPORTS(neon128_), wide<T, N, arm_64_> v0, wide<T, N, arm_64_> const &v1) noexcept
-  {
-    return v0 -= v1;
-  }
-
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, arm_128_>
-                  sub_(EVE_SUPPORTS(neon128_), wide<T, N, arm_128_> v0, wide<T, N, arm_128_> const &v1) noexcept
+  template<real_scalar_value T, typename N, arm_abi ABI>
+  EVE_FORCEINLINE auto
+  sub_(EVE_SUPPORTS(neon128_), wide<T, N, ABI> v0, wide<T, N, ABI> const &v1) noexcept
   {
     return v0 -= v1;
   }
 }
-
