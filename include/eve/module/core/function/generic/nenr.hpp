@@ -46,10 +46,10 @@ namespace eve::detail
   // pedantic/numeric
   template<floating_real_value T, floating_real_value U, floating_real_value V, decorator D>
   EVE_FORCEINLINE auto
-  nenr_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const &a, U const &b, V const &t) noexcept
+  nenr_(EVE_SUPPORTS(cpu_), D const &, T const &a, U const &b, V const &t) noexcept
       requires compatible_values<T, U> &&compatible_values<T, V>
   {
-    return arithmetic_call(pedantic(nenr), a, b, t);
+    return arithmetic_call(D()(nenr), a, b, t);
   }
 
   template<floating_real_value T>
@@ -74,13 +74,5 @@ namespace eve::detail
        return if_else(test, nenr(a, b, t), numeric(min)(a, b));
     }
     else return apply_over(numeric(nenr), a, b, t);
-  }
-
-  template<floating_real_value T, decorator D>
-  EVE_FORCEINLINE T
-  nenr_(EVE_SUPPORTS(cpu_), D const &, T const &a, T const &b, T const &t) noexcept
-  {
-    if constexpr(has_native_abi_v<T>) return D()(fma)(t, b, D()(fnma)(t, a, a));
-    else return apply_over(D()(nenr), a, b, t);
   }
 }

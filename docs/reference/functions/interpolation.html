@@ -1,0 +1,40 @@
+<!--
+  EVE -  Expressive Vector Engine
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+ -->
+<meta charset="utf-8" lang="en"><style class="fallback">body{visibility:hidden;}</style>
+                       **Expressive Vector Engine**
+
+  (insert ../../crumbs.html here)
+
+# Arithmetic Functions
+These functions provide scalar and SIMD version of basic interpolation functions. To keep the
+results homogeneous and coherent between SIMD and scalar mode, the types usable in those functions
+are required to satisfy [`eve::compatible_values`](../concepts/compatible.html).
+Ranges and precision issues are documented in a per function basis.
+
+## Functions
+
+**Convenience header:** <script type="preformatted">`#include <eve/function/interpolation.hpp>`</script>
+
+[`eve::cbrp`](interpolation/cbrp.html)
+:   computes the cubic Hermite interpolant
+[`eve::lerp`](interpolation/lerp.html)
+:   computes the linear interpolant
+[`eve::nenr`](interpolation/nenr.html)
+:   computes the nearest neighbour interpolant
+
+----------------------------------------------------------------------------------------------------
+<!-- Shortcuts -->
+
+<!-- Footnotes -->
+
+<!-- End of Document -->
+<link rel="stylesheet" href="../../eve.css">
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?" charset="utf-8"></script>

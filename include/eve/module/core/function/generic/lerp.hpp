@@ -44,12 +44,12 @@ namespace eve::detail
 
   ////////////////////////////////////////////////////////////////////////////
   // pedantic/numeric
-  template<floating_real_value T, floating_real_value U, floating_real_value V>
+  template<floating_real_value T, floating_real_value U, floating_real_value V, decorator D>
   EVE_FORCEINLINE auto
-  lerp_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const &a, U const &b, V const &t) noexcept
+  lerp_(EVE_SUPPORTS(cpu_), D const &, T const &a, U const &b, V const &t) noexcept
       requires compatible_values<T, U> &&compatible_values<T, V>
   {
-    return arithmetic_call(pedantic(lerp), a, b, t);
+    return arithmetic_call(D()(lerp), a, b, t);
   }
 
   template<floating_real_value T>
@@ -74,13 +74,5 @@ namespace eve::detail
       return if_else(test, a, lerp(a, b, t));
     }
     else return apply_over(numeric(lerp), a, b, t);
-  }
-
-  template<floating_real_value T, decorator D>
-  EVE_FORCEINLINE T
-  lerp_(EVE_SUPPORTS(cpu_), D const &, T const &a, T const &b, T const &t) noexcept
-  {
-    if constexpr(has_native_abi_v<T>) return D()(fma)(t, b, D()(fnma)(t, a, a));
-    else return apply_over(D()(lerp), a, b, t);
   }
 }

@@ -71,7 +71,7 @@ namespace eve::detail
   // pedantic/numeric
   template<floating_real_value T
            , floating_real_value U, floating_real_value V
-           , floating_real_value W, floating_real_value X>
+           , floating_real_value W, floating_real_value X, decorator D>
   EVE_FORCEINLINE auto cbrp_(EVE_SUPPORTS(cpu_)
                             , pedantic_type const &
                             , T const &a
@@ -80,14 +80,14 @@ namespace eve::detail
                             , W const &bp
                             , X const &t) noexcept
   requires compatible_values<T, U> && compatible_values<T, V> &&
-           compatible_values<T, W> && compatible_values<T, X>
+  compatible_values<T, W> && compatible_values<T, X>
   {
-    return arithmetic_call(pedantic(cbrp), a, ap, b, bp, t);
+    return arithmetic_call(D()(cbrp), a, ap, b, bp, t);
   }
 
   template<floating_real_value T>
   EVE_FORCEINLINE T cbrp_(EVE_SUPPORTS(cpu_)
-                         , pedantic_type const &
+                         , numeric_type const &
                          , T const &a
                          , T const &ap
                          , T const &b
@@ -100,18 +100,5 @@ namespace eve::detail
       return if_else(test, cbrp(a, ap, b, bp, t), allbits);
     }
     else return apply_over(pedantic(cbrp), a, ap, b, bp, t);
-  }
-
-  template<floating_real_value T, decorator D>
-  EVE_FORCEINLINE T cbrp_(EVE_SUPPORTS(cpu_)
-                         , D const &
-                         , T const &a
-                         , T const &ap
-                         , T const &b
-                         , T const &bp
-                         , T const &t) noexcept
-  {return apply_over(cbrp, a, ap, b, bp, t);
-//     if constexpr(has_native_abi_v<T>) return D()(fma)(t, b, D()(fnma)(t, a, a));
-//     else return apply_over(D()(cbrp), a, ap, b, bp, t);
   }
 }
