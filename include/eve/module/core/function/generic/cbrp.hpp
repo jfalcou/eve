@@ -73,7 +73,7 @@ namespace eve::detail
            , floating_real_value U, floating_real_value V
            , floating_real_value W, floating_real_value X, decorator D>
   EVE_FORCEINLINE auto cbrp_(EVE_SUPPORTS(cpu_)
-                            , pedantic_type const &
+                            , D const &
                             , T const &a
                             , U const &ap
                             , V const &b
@@ -82,12 +82,12 @@ namespace eve::detail
   requires compatible_values<T, U> && compatible_values<T, V> &&
   compatible_values<T, W> && compatible_values<T, X>
   {
-    return arithmetic_call(D()(cbrp), a, ap, b, bp, t);
+    return arithmetic_call(D(cbrp), a, ap, b, bp, t);
   }
 
   template<floating_real_value T>
   EVE_FORCEINLINE T cbrp_(EVE_SUPPORTS(cpu_)
-                         , numeric_type const &
+                         , pedantic_type const &
                          , T const &a
                          , T const &ap
                          , T const &b
@@ -99,6 +99,6 @@ namespace eve::detail
       auto test = is_gez(t) && (t <= one(as(t)));
       return if_else(test, cbrp(a, ap, b, bp, t), allbits);
     }
-    else return apply_over(pedantic(cbrp), a, ap, b, bp, t);
+    else return apply_over(numeric(cbrp), a, ap, b, bp, t);
   }
 }
