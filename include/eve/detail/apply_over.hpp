@@ -26,7 +26,7 @@ namespace eve::detail
   EVE_FORCEINLINE  auto apply_over(Obj f
                                   , T0 const & arg0
                                   , T const &... args ) noexcept
-  requires (simd_value<T> ||  ...)
+  requires simd_value<T0> || (simd_value<T> ||  ...)
   {
     constexpr bool any_aggregated = has_aggregated_abi_v<T0> || (has_aggregated_abi_v<T> || ...);
     constexpr bool any_emulated   = has_emulated_abi_v<T0>   || (has_emulated_abi_v<T>   || ...);
