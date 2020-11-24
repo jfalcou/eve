@@ -31,7 +31,7 @@ namespace eve::detail
     template<typename Idx>      struct eval_n;
     template<std::size_t... N>  struct eval_n<std::index_sequence<N...>>
     {
-      static constexpr bool value = (is_wide<std::tuple_element_t<N,Type>>::value || ...);
+      static constexpr bool value = (is_wide<std::tuple_element_t<N,Type>>::value && ...);
     };
 
     using size = std::tuple_size<Type>;
