@@ -52,11 +52,15 @@ namespace eve
   template<typename T, typename Size> requires( rebindable<T> && !detail::is_wide<T>::value )
   struct as_wide<T,Size>
   {
+    template<typename U,std::size_t N> struct aw
+    {
+      using type = typename eve::as_wide<std::tuple_element_t<N,U>,Size>::type;
+    };
+
     template<typename Idx>      struct rebuild;
     template<std::size_t... N>  struct rebuild<std::index_sequence<N...>>
     {
-      template<typename U> using aw_t = typename eve::as_wide<U,Size>::type;
-      using type = std::tuple< aw_t<std::tuple_element_t<N,T>>... >;
+      using type = std::tuple< typename aw<T,N>::type... >;
     };
 
     using size = std::tuple_size<T>;
