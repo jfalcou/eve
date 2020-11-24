@@ -13,6 +13,7 @@
 #include <eve/function/next.hpp>
 #include <eve/function/prev.hpp>
 #include <eve/constant/eps.hpp>
+#include <eve/constant/half.hpp>
 
 TTS_CASE_TPL("Check eve::lerp return type", EVE_TYPE)
 {
@@ -30,9 +31,10 @@ TTS_CASE_TPL("Check eve::pedantic(eve::lerp) behavior", EVE_TYPE)
                 );
 
   // test monotonicity
-  auto e0 = eve::pedantic(eve::lerp)(v_t(1), v_t(2), eve::prev(1 - 10 * eve::eps(eve::as<v_t>())));
+  auto hlf = eve::half(eve::as<v_t>());
+  auto e0 = eve::pedantic(eve::lerp)(v_t(1), v_t(2), eve::prev(hlf - 10 * eve::eps(eve::as<v_t>())));
 
-  for ( v_t i = 1 - 10 * eve::eps(eve::as<v_t>()); i <= 1 + 10 * eve::eps(eve::as<v_t>());
+  for ( v_t i = hlf - 10 * eve::eps(eve::as<v_t>()); i <= hlf + 10 * eve::eps(eve::as<v_t>());
         i     = eve::next(i)
       )
   {

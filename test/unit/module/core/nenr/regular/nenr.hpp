@@ -25,6 +25,6 @@ TTS_CASE_TPL("Check eve::(eve::nenr) behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::nenr(T(12.73), T(27.6666), T(1)), T(27.6666)                           , 0 );
   TTS_ULP_EQUAL(eve::nenr(T(12.73), T(27.6666), T(0)), T(12.73)                             , 0 );
   TTS_ULP_EQUAL(eve::nenr(T(12.73), T(27.6666), T(0.4)), T(12.73)                           , 0 );
-  TTS_ULP_EQUAL(eve::nenr(T(12.73), T(27.6666), T(0.5)), T(12.73)                           , 0 );
+  TTS_ULP_EQUAL(eve::nenr(T(12.73), T(27.6666), T(0.5)), T(27.6666)                         , 0 );
   TTS_ULP_EQUAL(eve::nenr(T(12.73), T(27.6666), T(0.6)), T(27.6666)                         , 0 );
 }
