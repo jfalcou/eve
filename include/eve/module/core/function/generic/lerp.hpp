@@ -17,10 +17,8 @@
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fnma.hpp>
-#include <eve/function/raw.hpp>
 
 #include <type_traits>
-
 
 // TODO revision to:
 // pedantic will call pedantic fma and fnma
