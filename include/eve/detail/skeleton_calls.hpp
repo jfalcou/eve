@@ -26,103 +26,32 @@ namespace eve::detail
   // ones.
 
   // -----------------------------------------------------------------------------------------------
-  // binary arithmetic operators scheme
-  template<typename Obj, value T, value U>
+  // N parameters arithmetic operators scheme
+  template<typename Obj, value T0, value ... T>
   EVE_FORCEINLINE  auto arithmetic_call(Obj op
-                                       , T const &a
-                                       , U const &b) noexcept
-  requires compatible_values<T, U>
+                                       , T0 const &arg0
+                                       , T const &... args ) noexcept
+  requires (compatible_values<T0, T> &&  ...)
   {
-    if constexpr(scalar_value<T> && scalar_value<U>)    //both are scalar so of the same type
+    constexpr bool all_scalar = (scalar_value<T0>) &&  (scalar_value<T> && ...);
+    constexpr bool all_simd   = (simd_value<T0>) && (simd_value<T> && ...);
+    if constexpr(all_scalar)    //all are scalar so of the same type
     {
-      return op(a, b);
+      return op(arg0, args...);
     }
-    else
-    if constexpr(scalar_value<T> != scalar_value<U>) //  one is scalar and one simd
+    else if constexpr(all_simd)    //all are simd so of the same type
     {
-      if constexpr(!(native<T> && native<U>)) return apply_over(op, a, b);    // no one is_native aggregate to avoid an early splat
-      else if constexpr(scalar_value<T>)      return apply_over(op, U(a), b);
-      else if constexpr(scalar_value<U>)      return apply_over(op, a, T(b));
+      if constexpr(has_native_abi_v<T0>)  return op(arg0, args...); // generally already taken by arch specific intrisicss
+      else                                return apply_over(op, arg0, args...);
     }
-    else if constexpr(simd_value<T> && simd_value<U>) // both are simd so of the same type
+    else //   one is simd
     {
-      if constexpr(has_native_abi_v<T>) return op(a, b); // generally already taken by arch specific intrisicss
-      else                              return apply_over(op, a, b);
+      using w_t = first_with_t<is_simd_value, types<T0, T...>>;
+      return apply_over(op, w_t(arg0), w_t(args)...);
     }
   }
 
-  // -----------------------------------------------------------------------------------------------
-  // ternary arithmetic operators scheme
-  template<typename Obj, value T, value U, value V>
-  EVE_FORCEINLINE  auto arithmetic_call(Obj op
-                                       , T const &a
-                                       , U const &b
-                                       , V const &c) noexcept
-  requires compatible_values<T, U> && compatible_values<T, V>
-  {
-    if constexpr(scalar_value<T> && scalar_value<U> &&  scalar_value<V>)    //all are scalar so of the same type
-    {
-      return op(a, b, c);
-    }
-    else
-    if constexpr(simd_value<T> && simd_value<U> && simd_value<V>)    //all three are simd so of the same type
-    {
-      if constexpr(has_native_abi_v<T>) return op(a, b, c); // generally already taken by arch specific intrisicss
-      else                              return apply_over(op, a, b, c);
-    }
-    else if constexpr(scalar_value<T>) //  T is scalar and one simd
-    {
-      using c_t = std::conditional_t<simd_value<U>, cardinal_t<U>, cardinal_t<V>>;
-      using r_t = as_wide_t<T, c_t>;
-      return apply_over(op, r_t(a), r_t(b), r_t(c));
-    }
-    else // T is simd
-    {
-      if constexpr(scalar_value<U> &&  scalar_value<V>) return apply_over(op, a, T(b), T(c));
-      else if constexpr(scalar_value<U>)                return apply_over(op, a, V(b), c);
-      else if constexpr(scalar_value<V>)                return apply_over(op, a, b, U(c));
-    }
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // four parameters arithmetic operators scheme
-  template<typename Obj, value T, value U, value V, value W>
-  EVE_FORCEINLINE  auto arithmetic_call(Obj op
-                                       , T const &a
-                                       , U const &b
-                                       , V const &c
-                                       , W const &d) noexcept
-  requires compatible_values<T, U> && compatible_values<T, V>&& compatible_values<W, V>
-  {
-    if constexpr(scalar_value<T> && scalar_value<U> &&  scalar_value<V> &&  scalar_value<W>)    //all are scalar so of the same type
-    {
-      return op(a, b, c, d);
-    }
-    else
-    if constexpr(simd_value<T> && simd_value<U> && simd_value<V> && simd_value<W>)    //all are simd so of the same type
-    {
-      if constexpr(has_native_abi_v<T>) return op(a, b, c, d); // generally already taken by arch specific intrisicss
-      else                              return apply_over(op, a, b, c, d);
-    }
-    else if constexpr(scalar_value<T>) //  T is scalar and one simd
-    {
-      using c_t = std::conditional_t<simd_value<U>
-                                     , cardinal_t<U>
-                                     , std::conditional_t<simd_value<V>
-                                                          , cardinal_t<V>
-                                                          , cardinal_t<W>>>;
-      using r_t = as_wide_t<T, c_t>;
-      return apply_over(op, r_t(a), r_t(b), r_t(c), r_t(d));
-    }
-    else // T is simd
-    {
-      return apply_over(op, T(a), T(b), T(c));
-//       if constexpr(scalar_value<U> &&  scalar_value<V> &&  scalar_value<W>) return apply_over(op, T(a), T(b), T(c));
-//       else if constexpr(scalar_value<U>)                return apply_over(op, a, V(b), c);
-//       else if constexpr(scalar_value<V>)                return apply_over(op, a, b, U(c));
-//       else if constexpr(scalar_value<W>)                return apply_over(op, a, b, U(c));
-    }
-  }
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
    // -----------------------------------------------------------------------------------------------
   // binary bit operators scheme
@@ -160,10 +89,10 @@ namespace eve::detail
     }
   }
 
-
   template<typename Obj, value T, value U, value V>
   EVE_FORCEINLINE auto bit_call(Obj op
-                               , T const &a                               , U const &b
+                               , T const &a
+                               , U const &b
                                , V const &c) noexcept
   requires bit_compatible_values<T, U> && bit_compatible_values<T, V> && bit_compatible_values<U, V>  && (!(std::same_as<U,T> && std::same_as<T,V>))
   {
