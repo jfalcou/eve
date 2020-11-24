@@ -82,7 +82,7 @@ namespace eve::detail
   requires compatible_values<T, U> && compatible_values<T, V> &&
   compatible_values<T, W> && compatible_values<T, X>
   {
-    return arithmetic_call(D(cbrp), a, ap, b, bp, t);
+    return arithmetic_call(D()(cbrp), a, ap, b, bp, t);
   }
 
   template<floating_real_value T>
