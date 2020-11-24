@@ -34,10 +34,6 @@ TTS_CASE_TPL("Check  eve::logspace_sub behavior", EVE_TYPE)
     TTS_ULP_EQUAL(logspace_sub(eve::minf(as<T>()),eve::zero(as<T>())), eve::nan(as<T>()), 0);
     TTS_ULP_EQUAL(logspace_sub(eve::inf(as<T>()),eve::nan (as<T>())), eve::nan(as<T>()), 0);
     TTS_ULP_EQUAL(logspace_sub(eve::minf(as<T>()),eve::minf(as<T>())), eve::minf(as<T>()), 0);
-<<<<<<< HEAD
-=======
-    std::cout << logspace_sub(eve::minf(as<T>()),eve::minf(as<T>())) << std::endl;
->>>>>>> tests unitaires pour logspace_add/sub
     TTS_ULP_EQUAL(logspace_sub(eve::nan(as<T>()),eve::nan(as<T>())), eve::nan(as<T>()), 0);
   }
 
