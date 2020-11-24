@@ -68,7 +68,7 @@ namespace eve::detail
   }
 
   ////////////////////////////////////////////////////////////////////////////
-  // pedantic/numeric
+  // pedantic
   template<floating_real_value T
            , floating_real_value U, floating_real_value V
            , floating_real_value W, floating_real_value X, decorator D>
@@ -99,6 +99,6 @@ namespace eve::detail
       auto test = is_gez(t) && (t <= one(as(t)));
       return if_else(test, cbrp(a, ap, b, bp, t), allbits);
     }
-    else return apply_over(numeric(cbrp), a, ap, b, bp, t);
+    else return apply_over(pedantic(cbrp), a, ap, b, bp, t);
   }
 }
