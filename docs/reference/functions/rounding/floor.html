@@ -47,6 +47,21 @@ Return value
 <span class="smallskip"></span>
 Computes  [element-wise](../../../glossary.html#elment-wise) the greatest integer not greater than `x`.
 
+Supported Decorators
+====================================================================================================
+[`tolerant`](../decorators.html#tolerant)
+:   The expression `tolerant(floor)(x, y)` computes a floor value of `x` with a tolerance decided by `y`.
+    `y` can be a floating or integral value.
+
+     - If `y` is floating the tolerance is relative and is computed by the classical Hagerty FL5 function.
+       I.e. if an integral value has a relative difference with `x` less than `y`, it is returned.
+
+       By default `y` is equal to `3*eps(as(x))` and should not by greater than 1.8820.
+
+     - If `y` is integral then the least integral value in the interval `[next(x,n) x+1]`
+       is returned, where `next(a,n)` is the `n`-th representable floating value greater than `a`.
+       and the tolerance is the double of the ulp distance to an integer.
+
   (insert ../../src/floor.src.html here)
 
   (insert ../../out/floor.out.html here)
@@ -54,7 +69,7 @@ Computes  [element-wise](../../../glossary.html#elment-wise) the greatest intege
 See Also
 ====================================================================================================
 [eve::ceil](./ceil.html), [eve::trunc](./trunc.html),
-[eve::nearest](./nearest.html), [eve::round](./round.html).
+[eve::nearest](./nearest.html), [eve::round](./round.html), [eve::prev](./prev.html)
 
 
 <!-- End of Document -->

@@ -38,5 +38,17 @@ namespace eve::detail
     return eve::nearest(a);
   }
 
-}
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto round_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
+  {
+    return mask_op( EVE_CURRENT_API{}, cond, eve::round, t);
+  }
 
+  template<conditional_expr C, real_value U, decorator D>
+  EVE_FORCEINLINE auto round_(EVE_SUPPORTS(cpu_), C const &cond, D const &, U const &t) noexcept
+  {
+    return mask_op( EVE_CURRENT_API{}, cond, D()(eve::round), t);
+  }
+}

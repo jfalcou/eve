@@ -269,6 +269,7 @@
 #include <eve/function/tan.hpp>
 #include <eve/function/tanpi.hpp>
 #include <eve/function/tgamma.hpp>
+#include <eve/function/tolerant.hpp>
 #include <eve/function/trigonometric.hpp>
 #include <eve/function/trigo_tags.hpp>
 #include <eve/function/trunc.hpp>
