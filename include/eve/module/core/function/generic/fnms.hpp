@@ -17,8 +17,6 @@
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/add.hpp>
 #include <eve/function/fma.hpp>
-#include <eve/function/minus.hpp>
-#include <eve/function/mul.hpp>
 #include <eve/function/numeric.hpp>
 #include <eve/function/pedantic.hpp>
 
@@ -56,4 +54,3 @@ namespace eve::detail
     return -D()(fma)(a, b, c);
   }
 }
-

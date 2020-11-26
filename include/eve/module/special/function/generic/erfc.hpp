@@ -24,7 +24,6 @@
 #include <eve/function/is_less.hpp>
 #include <eve/function/is_ltz.hpp>
 #include <eve/function/logical_andnot.hpp>
-#include <eve/function/minus.hpp>
 #include <eve/function/nbtrue.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/sign.hpp>

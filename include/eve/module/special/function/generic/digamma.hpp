@@ -14,7 +14,6 @@
 #include <eve/concept/value.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/add.hpp>
-#include <eve/function/sub.hpp>
 #include <eve/function/any.hpp>
 #include <eve/function/cotpi.hpp>
 #include <eve/function/dec.hpp>

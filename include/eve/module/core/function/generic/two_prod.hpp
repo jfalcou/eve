@@ -12,9 +12,6 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/platform.hpp>
-#include <eve/function/add.hpp>
-#include <eve/function/sub.hpp>
-#include <eve/function/mul.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/two_split.hpp>

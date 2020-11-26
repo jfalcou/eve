@@ -35,7 +35,6 @@
 #include <eve/function/negate.hpp>
 #include <eve/function/negatenz.hpp>
 #include <eve/function/oneminus.hpp>
-#include <eve/function/plus.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/rsqrt.hpp>
 #include <eve/function/saturate.hpp>

@@ -13,7 +13,6 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/branch.hpp>
 #include <eve/function/abs.hpp>
-#include <eve/function/div.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fms.hpp>
 #include <eve/function/if_else.hpp>

@@ -13,7 +13,6 @@
 #include <eve/traits/as_logical.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/constant/signmask.hpp>
-#include <eve/function/sub.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <type_traits>

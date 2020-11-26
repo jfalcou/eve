@@ -12,12 +12,10 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/constant/half.hpp>
-#include <eve/function/add.hpp>
 #include <eve/function/bit_and.hpp>
 #include <eve/detail/function/conditional.hpp>
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/fma.hpp>
-#include <eve/function/mul.hpp>
 #include <eve/function/shr.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/skeleton_calls.hpp>
@@ -43,7 +41,7 @@ namespace eve::detail
   requires has_native_abi_v<T>
   {
     if constexpr(integral_value<T>) return (a & b) + ((a ^ b) >> 1);
-    else                            return fma(a, half(eve::as(a)), mul(b, half(eve::as(a))));
+    else                            return fma(a, half(eve::as(a)),b*half(eve::as(a)));
   }
 
   //================================================================================================

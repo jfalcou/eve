@@ -11,7 +11,6 @@
 #include <eve/function/nb_values.hpp>
 #include <eve/function/is_even.hpp>
 #include <eve/function/is_odd.hpp>
-#include <eve/function/minus.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/all.hpp>

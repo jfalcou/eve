@@ -11,8 +11,6 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
-#include <eve/function/add.hpp>
-#include <eve/function/sub.hpp>
 #include <eve/function/is_infinite.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
@@ -37,4 +35,3 @@ namespace eve::detail
     else return apply_over2(two_add, a, b);
   }
 }
-

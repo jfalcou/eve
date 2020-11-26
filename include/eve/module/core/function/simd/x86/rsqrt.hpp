@@ -29,6 +29,7 @@
 #include <eve/function/rec.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/fma.hpp>
+#include <eve/function/mul.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/half.hpp>

@@ -18,8 +18,6 @@
 #include <eve/function/fma.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/add.hpp>
-#include <eve/function/div.hpp>
-#include <eve/function/mul.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/is_equal.hpp>
 #include <eve/function/is_eqz.hpp>
@@ -28,7 +26,6 @@
 #include <eve/function/is_greater_equal.hpp>
 #include <eve/function/logical_and.hpp>
 #include <eve/function/sqr.hpp>
-#include <eve/function/minus.hpp>
 #include <eve/constant/half.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/pio_2.hpp>

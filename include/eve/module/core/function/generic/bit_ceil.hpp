@@ -18,7 +18,6 @@
 #include <eve/function/is_less.hpp>
 #include <eve/function/is_less_equal.hpp>
 #include <eve/function/ldexp.hpp>
-#include <eve/function/mul.hpp>
 #include <eve/constant/one.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>

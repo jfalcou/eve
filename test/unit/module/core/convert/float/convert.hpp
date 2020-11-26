@@ -11,7 +11,6 @@
 #include <eve/function/convert.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <eve/function/plus.hpp>
 #include <eve/function/converter.hpp>
 #include <eve/function/sqr.hpp>
 #include <type_traits>

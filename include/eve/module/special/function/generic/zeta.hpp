@@ -31,7 +31,6 @@
 #include <eve/function/rec.hpp>
 #include <eve/function/rsqrt.hpp>
 #include <eve/function/sqrt.hpp>
-#include <eve/function/sub.hpp>
 #include <eve/detail/hz_device.hpp>
 
 

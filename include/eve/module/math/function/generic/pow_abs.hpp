@@ -33,7 +33,6 @@
 #include <eve/function/logical_and.hpp>
 #include <eve/function/logical_andnot.hpp>
 #include <eve/function/logical_or.hpp>
-#include <eve/function/minus.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/shr.hpp>
 #include <eve/function/sqr.hpp>
