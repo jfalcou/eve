@@ -11,8 +11,8 @@
 // **=======================================================
 // helper file to include all ieee754 related functions
 #include <eve/function/bitofsign.hpp>
-#include <eve/function/bit_exponent.hpp>
-#include <eve/function/bit_mantissa.hpp>
+//#include <eve/function/bit_exponent.hpp>
+//#include <eve/function/bit_mantissa.hpp>
 #include <eve/function/exponent.hpp>
 #include <eve/function/frexp.hpp>
 #include <eve/function/ifrexp.hpp>
