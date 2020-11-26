@@ -28,7 +28,7 @@ namespace eve
 
   template<typename Size,typename ABI,typename T,std::size_t Align>
   EVE_FORCEINLINE auto load(aligned_ptr<T, Align> ptr, as_<wide<T, Size, ABI>> const &) noexcept
-  requires(Align >= wide<T, Size>::static_alignment)
+  requires(Align >= alignof(wide<T, Size>))
   {
     return wide<T, Size>(ptr);
   }
@@ -44,7 +44,7 @@ namespace eve
   template<typename Size,typename ABI,typename T,std::size_t Align>
   EVE_FORCEINLINE auto load(aligned_ptr<logical<T>, Align> ptr,
                             as_<logical<wide<T, Size, ABI>>> const &) noexcept
-  requires(Align >= wide<T, Size>::static_alignment)
+  requires(Align >= alignof(wide<T, Size>))
   {
     return logical<wide<T, Size, ABI>>(ptr);
   }

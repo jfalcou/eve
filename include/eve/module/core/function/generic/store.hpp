@@ -68,7 +68,7 @@ namespace eve::detail
   template<real_scalar_value T, typename S, std::size_t N>
   EVE_FORCEINLINE void
   store_(EVE_SUPPORTS(cpu_), wide<T, S, emulated_> const &value, aligned_ptr<T, N> ptr) noexcept
-      requires(wide<T, S, emulated_>::static_alignment <= N)
+      requires(alignof(wide<T, S, emulated_>) <= N)
   {
     store(value, ptr.get());
   }
@@ -76,7 +76,7 @@ namespace eve::detail
   template<real_scalar_value T, typename S, std::size_t N>
   EVE_FORCEINLINE void
   store_(EVE_SUPPORTS(cpu_), wide<T, S, aggregated_> const &value, aligned_ptr<T, N> ptr) noexcept
-      requires(wide<T, S, aggregated_>::static_alignment <= N)
+      requires(alignof(wide<T, S, aggregated_>) <= N)
   {
     value.storage().apply
     ( [&]<typename... Sub>(Sub&... v)
@@ -91,7 +91,7 @@ namespace eve::detail
   EVE_FORCEINLINE void store_(EVE_SUPPORTS(cpu_),
                               logical<wide<T, S, ABI>> const &value,
                               aligned_ptr<logical<T>, N>      ptr) noexcept
-      requires(logical<wide<T, S, ABI>>::static_alignment <= N)
+      requires(alignof(logical<wide<T, S, ABI>>) <= N)
   {
     auto rawdata = bit_cast(value, as_<wide<T, S, ABI>> {});
     store(rawdata, (T *)(ptr.get()));

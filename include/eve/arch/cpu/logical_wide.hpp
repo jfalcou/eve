@@ -39,7 +39,6 @@ namespace eve
     using target_type            = typename parent::target_type;
 
     static constexpr size_type   static_size      = parent::static_size;
-    static constexpr std::size_t static_alignment = parent::static_alignment;
 
     template<typename T, typename C = expected_cardinal_t<T>>
     using rebind = logical<wide<T,C>>;
@@ -109,14 +108,12 @@ namespace eve
 
     template<std::size_t Alignment>
     EVE_FORCEINLINE explicit logical(aligned_ptr<logical<Type>, Alignment> ptr) noexcept
-                    requires(Alignment >= static_alignment)
                   : data_(detail::load(eve::as_<logical>{}, abi_type{}, ptr))
     {
     }
 
     template<std::size_t Alignment>
     EVE_FORCEINLINE explicit logical(aligned_ptr<logical<Type> const, Alignment> ptr) noexcept
-                    requires(Alignment >= static_alignment)
                   : data_(detail::load(eve::as_<logical>{}, abi_type{}, ptr))
     {
     }
@@ -206,7 +203,6 @@ namespace eve
     //==============================================================================================
     // alignment interface
     //==============================================================================================
-    static EVE_FORCEINLINE constexpr size_type alignment() noexcept { return static_alignment; }
 
     //==============================================================================================
     // array-like interface

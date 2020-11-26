@@ -56,19 +56,6 @@ namespace eve
     using rebind = wide<T,N>;
 
     static constexpr size_type    static_size = Size::value;
-    static constexpr std::size_t  static_alignment = []()
-    {
-      if constexpr( std::is_same_v<aggregated_,ABI> )
-      {
-        return storage_type::value_type::static_alignment;
-      }
-      else
-      {
-        std::size_t native = alignof(storage_type);
-        std::size_t limit  = Size::value * sizeof(Type);
-        return std::min(limit, native);
-      }
-    }();
 
     //==============================================================================================
     // Default constructor
@@ -111,14 +98,14 @@ namespace eve
 
     template<std::size_t Alignment>
     EVE_FORCEINLINE explicit wide(aligned_ptr<Type const, Alignment> ptr) noexcept
-                    requires(Alignment >= static_alignment)
+                    requires(Alignment >= alignof(storage_type))
                   : data_(detail::load(eve::as_<wide>{}, abi_type{}, ptr))
     {
     }
 
     template<std::size_t Alignment>
     EVE_FORCEINLINE explicit wide(aligned_ptr<Type, Alignment> ptr) noexcept
-                    requires(Alignment >= static_alignment)
+                    requires(Alignment >= alignof(storage_type))
                   : data_(detail::load(eve::as_<wide>{}, abi_type{}, ptr))
     {
     }
@@ -203,7 +190,7 @@ namespace eve
     //==============================================================================================
     // alignment interface
     //==============================================================================================
-    static EVE_FORCEINLINE constexpr size_type alignment() noexcept { return static_alignment; }
+    static EVE_FORCEINLINE constexpr size_type alignment() noexcept { return alignof(storage_type); }
 
     //==============================================================================================
     // array-like interface

@@ -34,14 +34,14 @@ namespace eve::detail
     using elt_t = element_type_t<T>;
 
     static constexpr uint32_t                            size = cardinal_v<T>;
-    alignas(T::static_alignment) std::array<elt_t, size> tmp;
-    alignas(T::static_alignment) std::array<elt_t, size> txr;
-    alignas(T::static_alignment) std::array<elt_t, size> tyr;
+    alignas(T) std::array<elt_t, size> tmp;
+    alignas(T) std::array<elt_t, size> txr;
+    alignas(T) std::array<elt_t, size> tyr;
     for( uint32_t i = 0; i != size; ++i )
     { std::tie(tmp[i], txr[i], tyr[i]) = eve::rem_pio2(a0[i]); }
-    return std::make_tuple(eve::load(eve::as_aligned<T::static_alignment>(&tmp[0]), eve::as_<T>()),
-                           eve::load(eve::as_aligned<T::static_alignment>(&txr[0]), eve::as_<T>()),
-                           eve::load(eve::as_aligned<T::static_alignment>(&tyr[0]), eve::as_<T>()));
+    return std::make_tuple(eve::load(eve::as_aligned<alignof(T)>(&tmp[0]), eve::as_<T>()),
+                           eve::load(eve::as_aligned<alignof(T)>(&txr[0]), eve::as_<T>()),
+                           eve::load(eve::as_aligned<alignof(T)>(&tyr[0]), eve::as_<T>()));
   }
 
   EVE_FORCEINLINE auto rem_pio2_(EVE_SUPPORTS(cpu_), double const &a0) noexcept
