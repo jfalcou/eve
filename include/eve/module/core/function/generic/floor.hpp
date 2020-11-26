@@ -44,6 +44,8 @@ namespace eve::detail
     else return apply_over(floor, a0);
   }
 
+  // -----------------------------------------------------------------------------------------------
+  // tolerant case
   template<floating_real_value T, floating_real_value U>
   EVE_FORCEINLINE constexpr T floor_(EVE_SUPPORTS(cpu_)
                                     , tolerant_type const &
@@ -51,14 +53,14 @@ namespace eve::detail
                                     , U const &n) noexcept
   requires compatible_values<T, U>
   {
-    return arithmetic_call(tolerant_type()(floor), a0, n);
+    return arithmetic_call(tolerant(floor), a0, n);
   }
 
-  template<floating_real_value T, integral_real_value U>
+  template<real_value T, integral_real_value U>
   EVE_FORCEINLINE constexpr T floor_(EVE_SUPPORTS(cpu_)
                                     , tolerant_type const &
                                     , T const &a0
-                                    , U const &n) noexcept
+                                    , [[maybe_unused]] U const &n) noexcept
   {
     if constexpr(integral_real_value<T>) return a0;
     else if constexpr(has_native_abi_v<T>)
