@@ -21,6 +21,7 @@
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/abs.hpp>
+#include <eve/function/add.hpp>
 #include <eve/function/asin.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/if_else.hpp>
