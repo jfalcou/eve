@@ -57,20 +57,6 @@ namespace eve::detail
     }
   }
 
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto nearest_(EVE_SUPPORTS(cpu_), T const &a0) noexcept
-  {
-    if constexpr(has_native_abi_v<T>)
-    {
-      return tolerant(floor)(a0+copysign(half(as(a0), a0));
-    }
-    else
-    {
-      return apply_over(nearest, a0);
-    }
-  }
-
-
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<conditional_expr C, real_value U>
@@ -78,11 +64,4 @@ namespace eve::detail
   {
     return mask_op( EVE_CURRENT_API{}, cond, eve::nearest, t);
   }
-
-  template<conditional_expr C, real_value U>
-  EVE_FORCEINLINE auto nearest_(EVE_SUPPORTS(cpu_), C const &cond, tolerant_type const &, U const &t) noexcept
-  {
-    return mask_op( EVE_CURRENT_API{}, cond, tolerant(eve::nearest), t);
-  }
-
 }
