@@ -16,6 +16,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/function/add.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/is_greater.hpp>
