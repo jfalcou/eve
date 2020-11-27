@@ -11,7 +11,6 @@
 #pragma once
 
 #include <eve/function/log.hpp>
-#include <eve/function/cospi.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/factorial.hpp>
 #include <eve/function/if_else.hpp>

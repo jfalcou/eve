@@ -19,8 +19,3 @@ namespace eve
 }
 
 #include <eve/module/math/function/generic/log_abs.hpp>
-
-#if defined(EVE_HW_X86)
-#  include <eve/module/math/function/simd/x86/log_abs.hpp>
-#endif
-

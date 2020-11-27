@@ -1,4 +1,4 @@
-#include <eve/function/derivative/log.hpp>
+#include <eve/function/derivative/log_abs.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
