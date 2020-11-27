@@ -24,10 +24,11 @@ using eve::fixed;
 template<typename T, typename N>
 auto data_block()
 {
-  using alloc_t = eve::aligned_allocator<logical<T>, alignof(logical<eve::wide<T, N>>)>;
+  constexpr std::ptrdiff_t algt = alignof(eve::wide<T, N>);
+  using alloc_t = eve::aligned_allocator<T, algt>;
 
   auto nb_elem  = 4096/sizeof(T);
-  auto start    = nb_elem - N::value;
+  auto start    = nb_elem - std::max(algt,N::value);
   std::vector<logical<T>, alloc_t> ref(nb_elem);
 
   bool k = true;

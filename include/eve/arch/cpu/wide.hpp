@@ -188,11 +188,6 @@ namespace eve
     EVE_FORCEINLINE auto  end() const  noexcept { return begin() + static_size; }
 
     //==============================================================================================
-    // alignment interface
-    //==============================================================================================
-    static EVE_FORCEINLINE constexpr size_type alignment() noexcept { return alignof(storage_type); }
-
-    //==============================================================================================
     // array-like interface
     //==============================================================================================
     static EVE_FORCEINLINE constexpr size_type size()     noexcept { return static_size; }
