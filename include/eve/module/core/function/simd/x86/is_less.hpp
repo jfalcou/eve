@@ -18,7 +18,6 @@
 #include <eve/traits/as_logical.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/is_greater.hpp>
-#include <eve/function/sub.hpp>
 #include <eve/constant/signmask.hpp>
 #include <type_traits>
 

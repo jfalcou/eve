@@ -15,7 +15,6 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/add.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/function/exponent.hpp>
@@ -23,7 +22,6 @@
 #include <eve/function/max.hpp>
 #include <eve/function/maxmag.hpp>
 #include <eve/function/minmag.hpp>
-#include <eve/function/mul.hpp>
 #include <eve/function/numeric.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/function/shr.hpp>

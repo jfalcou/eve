@@ -14,8 +14,6 @@
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_gez.hpp>
-#include <eve/function/is_positive.hpp>
-#include <eve/function/sub.hpp>
 #include <eve/constant/signmask.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
@@ -28,7 +26,7 @@ namespace eve::detail
   {
     using r_t = as_integer_t<T>;
     r_t a0 = bit_cast(a, as<r_t>());
-    return if_else(is_gez(a0), a0, sub(signmask(eve::as<r_t>()), a0) );
+    return if_else(is_gez(a0), a0, signmask(eve::as<r_t>())- a0 );
   }
 
   template<typename T>
@@ -41,4 +39,3 @@ namespace eve::detail
   }
 
 }
-

@@ -15,7 +15,6 @@
 #include <eve/constant/nan.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/dec.hpp>
-#include <eve/function/minus.hpp>
 #include <type_traits>
 
 TTS_CASE_TPL("Check eve::ulpdist return type", EVE_TYPE)

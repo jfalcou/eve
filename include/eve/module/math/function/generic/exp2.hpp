@@ -24,7 +24,6 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/function/converter.hpp>
-#include <eve/function/add.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_or.hpp>
 #include <eve/function/fma.hpp>

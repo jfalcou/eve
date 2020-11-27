@@ -12,7 +12,6 @@
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/traits/as_logical.hpp>
-#include <eve/function/div.hpp>
 #include <eve/function/trunc.hpp>
 #include "producers.hpp"
 #include <cmath>

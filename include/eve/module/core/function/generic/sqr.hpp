@@ -11,8 +11,8 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
-#include <eve/function/mul.hpp>
 #include <eve/function/is_greater.hpp>
+#include <eve/function/abs.hpp>
 #include <eve/constant/sqrtvalmax.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/concept/value.hpp>

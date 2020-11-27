@@ -25,7 +25,6 @@
 #include <eve/function/ldexp.hpp>
 #include <eve/function/minus.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
-#include <eve/function/div.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/concept/value.hpp>
@@ -82,6 +81,5 @@ namespace eve::detail
   {
     return mask_op( EVE_CURRENT_API{}, cond, eve::cbrt, t);
   }
-  
-}
 
+}

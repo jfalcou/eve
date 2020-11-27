@@ -12,7 +12,6 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/function/simd/arm/neon/detail/shift.hpp>
-#include <eve/function/minus.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
 

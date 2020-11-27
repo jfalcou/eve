@@ -13,7 +13,6 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/bitofsign.hpp>
-#include <eve/function/div.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/log1p.hpp>

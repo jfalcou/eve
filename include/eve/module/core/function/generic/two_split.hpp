@@ -13,8 +13,6 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/function/sub.hpp>
-#include <eve/function/mul.hpp>
 #include <eve/constant/ieee_constant.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>

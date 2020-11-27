@@ -190,9 +190,9 @@ namespace eve::detail
                                           eve::callable_one_ const
                                           &) noexcept
   {
-    if constexpr(scalar_value<T>)       return  static_cast<bool>(cond) ? t : one(eve::as(t));
-    else if constexpr(std::is_integral_v<U>) return minus(bit_ornot(minus(t), bit_mask(cond)));
-    else                                return if_else(cond, t, one(eve::as(t)));
+    if constexpr(scalar_value<T>)            return  static_cast<bool>(cond) ? t : one(eve::as(t));
+    else if constexpr(std::is_integral_v<U>) return -bit_ornot(-t, bit_mask(cond));
+    else                                     return if_else(cond, t, one(eve::as(t)));
   }
 
   template<typename T, typename U>
@@ -201,8 +201,8 @@ namespace eve::detail
                                           eve::callable_one_ const &,
                                           U const &t) noexcept
   {
-    if constexpr(scalar_value<T>)       return  static_cast<bool>(cond) ? one(eve::as(t)) : t;
-    else if constexpr(std::is_integral_v<U>) return minus(bit_or(minus(t), bit_mask(cond)));
-    else                                return if_else(cond, one(eve::as(t)), t);
+    if constexpr(scalar_value<T>)             return  static_cast<bool>(cond) ? one(eve::as(t)) : t;
+     else if constexpr(std::is_integral_v<U>) return -bit_or(-t, bit_mask(cond));
+    else                                      return if_else(cond, one(eve::as(t)), t);
   }
 }

@@ -14,8 +14,6 @@
 #include <eve/function/abs.hpp>
 #include <eve/function/average.hpp>
 #include <eve/function/exp.hpp>
-#include <eve/function/mul.hpp>
-#include <eve/function/none.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/constant/half.hpp>
 #include <eve/constant/one.hpp>

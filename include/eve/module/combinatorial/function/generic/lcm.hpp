@@ -17,7 +17,6 @@
 #include <eve/function/converter.hpp>
 #include <eve/function/gcd.hpp>
 #include <eve/function/if_else.hpp>
-#include <eve/function/mul.hpp>
 
 #include <type_traits>
 #include <eve/detail/apply_over.hpp>
@@ -45,7 +44,7 @@ namespace eve::detail
       }
       else
       {
-        return abs(mul(a, (b / gcd(a, if_else(b, b, eve::mone)))));
+        return abs(a* (b / gcd(a, if_else(b, b, eve::mone))));
       }
     }
     else
@@ -73,7 +72,7 @@ namespace eve::detail
       }
       else
       {
-        return abs(mul(a, (b / D()(gcd)(a, if_else(b, b, eve::mone)))));
+        return abs(a*(b / D()(gcd)(a, if_else(b, b, eve::mone))));
       }
     }
     else

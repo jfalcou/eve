@@ -13,7 +13,6 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/minus.hpp>
 #include <eve/function/fma.hpp>
 
 namespace eve::detail

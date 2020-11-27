@@ -15,6 +15,8 @@
 #include <eve/constant/twoopi.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/function/add.hpp>
+#include <eve/function/sub.hpp>
 #include <eve/function/all.hpp>
 #include <eve/function/any.hpp>
 #include <eve/function/bit_and.hpp>
@@ -303,8 +305,8 @@ namespace eve::detail
       auto xi64   = uint64(xi);
       auto res0   = uint64(xi * arr0);
 
-      wui_t res1  = mul(xi64, arr4);
-      wui_t res2  = mul(xi64, arr8);
+      wui_t res1  = xi64*arr4;
+      wui_t res2  = xi64*arr8;
       res0        = bit_or(shr(res2, 32), shl(res0, 32));
       res0 += res1;
 

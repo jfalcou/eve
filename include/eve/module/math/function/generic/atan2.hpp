@@ -17,14 +17,12 @@
 #include <eve/constant/nan.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/copysign.hpp>
-#include <eve/function/div.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/is_infinite.hpp>
 #include <eve/function/is_nan.hpp>
 #include <eve/function/is_positive.hpp>
 #include <eve/function/is_negative.hpp>
 #include <eve/function/is_unordered.hpp>
-#include <eve/function/mul.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/signnz.hpp>

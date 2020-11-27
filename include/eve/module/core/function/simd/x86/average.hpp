@@ -14,7 +14,6 @@
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 #include <eve/detail/skeleton.hpp>
-#include <eve/function/add.hpp>
 #include <eve/function/bit_and.hpp>
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/shr.hpp>
