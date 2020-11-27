@@ -13,7 +13,7 @@
 
 int main()
 {
-  constexpr auto alg = EVE_TYPE::static_alignment;
+  constexpr auto alg = alignof(EVE_TYPE);
   using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
   using I_VALUE =  eve::detail::as_integer_t<EVE_VALUE>;
   using I_TYPE =  eve::detail::as_integer_t<EVE_TYPE>;
