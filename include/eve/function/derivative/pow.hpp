@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/pow.hpp>
-#include <eve/module/math/function/generic/derivative/pow.hpp>
+#include <eve/module/math/function/derivative/generic/pow.hpp>

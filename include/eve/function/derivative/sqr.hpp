@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/sqr.hpp>
-#include <eve/module/math/function/generic/derivative/sqr.hpp>
+#include <eve/module/core/function/derivative/generic/sqr.hpp>

@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/exp2.hpp>
-#include <eve/module/math/function/generic/derivative/exp2.hpp>
+#include <eve/module/math/function/derivative/generic/exp2.hpp>
