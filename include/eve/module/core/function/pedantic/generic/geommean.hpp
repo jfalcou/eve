@@ -26,26 +26,6 @@
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // regular case
-  template<floating_real_value T, floating_real_value U>
-  EVE_FORCEINLINE  auto geommean_(EVE_SUPPORTS(cpu_)
-                            , T a
-                            , U b) noexcept
-  requires compatible_values<T, U>
-  {
-    return arithmetic_call(geommean, a, b);
-  }
-
-  template<floating_real_value T>
-  EVE_FORCEINLINE  T geommean_(EVE_SUPPORTS(cpu_)
-                            , T a
-                            , T b) noexcept
-  requires has_native_abi_v<T>
-  {
-    return if_else(is_nltz(a) || is_nltz(b), sqrt(a)*sqrt(b), allbits);
-  }
-
   template<floating_real_value T, floating_real_value U>
   EVE_FORCEINLINE  auto geommean_(EVE_SUPPORTS(cpu_)
                                  ,  pedantic_type const&
@@ -72,10 +52,11 @@ namespace eve::detail
   // Masked case
   //================================================================================================
   template<conditional_expr C, floating_real_value U, floating_real_value V>
-  EVE_FORCEINLINE auto geommean_(EVE_SUPPORTS(cpu_), C const &cond, U const &t, V const &f) noexcept
+  EVE_FORCEINLINE auto geommean_(EVE_SUPPORTS(cpu_), C const &cond, pedantic_type const &
+                                , U const &t, V const &f) noexcept
       requires compatible_values<U, V>
   {
-    return mask_op( EVE_CURRENT_API{}, cond, eve::geommean, t, f);
+    return mask_op( EVE_CURRENT_API{}, cond, pedantic_type(eve::geommean), t, f);
   }
 
 }

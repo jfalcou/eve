@@ -19,8 +19,7 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_nan.hpp>
 #include <eve/function/is_not_greater_equal.hpp>
-#include <eve/function/max.hpp>
-#include <eve/function/numeric.hpp>
+#include <eve/function/pedantic/max.hpp>
 #include <eve/function/regular.hpp>
 #include <eve/function/saturated.hpp>
 #include <eve/platform.hpp>
@@ -29,28 +28,18 @@
 
 namespace eve::detail
 {
-  template<real_value T, real_value U, decorator D>
-  EVE_FORCEINLINE auto maxmag_(EVE_SUPPORTS(cpu_), D const &, T const &a, U const &b) noexcept
+  template<real_value T, real_value U>
+  EVE_FORCEINLINE auto maxmag_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const &a, U const &b) noexcept
       requires compatible_values<T, U>
   {
-    return arithmetic_call(D()(maxmag), a, b);
+    return arithmetic_call(pedantic(maxmag), a, b);
   }
 
-  template<real_value T, decorator D>
-  EVE_FORCEINLINE auto maxmag_(EVE_SUPPORTS(cpu_), D const &, T const &a, T const &b) noexcept
+  template<real_value T>
+  EVE_FORCEINLINE auto maxmag_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const &a, T const &b) noexcept
   {
-    if constexpr( std::is_same_v<D, numeric_type> )
-    {
-      auto aa = if_else(is_nan(a), b, a);
-      auto bb = if_else(is_nan(b), a, b);
-      auto z  = maxmag(aa, bb);
-      return z;
-    }
-    else
-    {
-      using D1 = std::conditional_t<std::is_same_v<D, pedantic_type>, saturated_type, regular_type>;
-      auto aa  = D1()(eve::abs)(a);
-      auto bb  = D1()(eve::abs)(b);
+      auto aa  = pedantic(eve::abs)(a);
+      auto bb  = pedantic(eve::abs)(b);
       if constexpr( simd_value<T> )
       {
         auto tmp = if_else(is_not_greater_equal(aa, bb), b, D()(eve::max)(a, b));
@@ -58,22 +47,8 @@ namespace eve::detail
       }
       else
       {
-        return aa < bb ? b : bb < aa ? a : D()(eve::max)(a, b);
+        return aa < bb ? b : bb < aa ? a : pedantic(eve::max)(a, b);
       }
     }
   }
-
-  template<real_value T, real_value U>
-  EVE_FORCEINLINE auto maxmag_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-      requires compatible_values<T, U>
-  {
-    return arithmetic_call(regular_type()(maxmag), a, b);
-  }
-
-  template<real_value T>
-  EVE_FORCEINLINE auto maxmag_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
-  {
-    return maxmag(regular_type(), a, b);
-  }
 }
-

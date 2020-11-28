@@ -23,15 +23,6 @@ namespace eve::detail
 {
   template<real_value T>
   EVE_FORCEINLINE constexpr auto is_flint_(EVE_SUPPORTS(cpu_)
-                                          , T const &a) noexcept
-  {
-    if constexpr(integral_value<T>)        return true_(eve::as<T>());
-    else if constexpr(has_native_abi_v<T>) return is_eqz(frac(a));
-    else                                   return apply_over(is_flint, a);
-  }
-
-  template<real_value T>
-  EVE_FORCEINLINE constexpr auto is_flint_(EVE_SUPPORTS(cpu_)
                                           , pedantic_type const &
                                           , T const &a) noexcept
   {

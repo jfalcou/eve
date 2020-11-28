@@ -23,26 +23,6 @@
 
 namespace eve::detail
 {
-  template<real_value T> EVE_FORCEINLINE constexpr auto modf_(EVE_SUPPORTS(cpu_), T a) noexcept
-  {
-    if constexpr( has_native_abi_v<T> )
-    {
-      if constexpr( floating_real_value<T> )
-      {
-        auto t = trunc(a);
-        return std::make_tuple(a - t, t);
-      }
-      else
-      {
-        return std::make_tuple(zero(eve::as(a)), a);
-      }
-    }
-    else
-    {
-      return apply_over2(modf, a);
-    }
-  }
-
   template<real_value T>
   EVE_FORCEINLINE constexpr auto modf_(EVE_SUPPORTS(cpu_), pedantic_type const &, T a) noexcept
   {
@@ -76,4 +56,3 @@ namespace eve::detail
   }
 
 }
-

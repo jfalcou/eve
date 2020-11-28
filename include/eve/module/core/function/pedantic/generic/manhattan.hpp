@@ -19,50 +19,6 @@
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // regular case
-  template<floating_value T, floating_value U>
-  EVE_FORCEINLINE  auto manhattan_(EVE_SUPPORTS(cpu_)
-                              , T const &a
-                              , U const &b) noexcept
-  requires compatible_values<T, U>
-  {
-    return arithmetic_call(manhattan, a, b);
-  }
-
-  template<floating_value T>
-  EVE_FORCEINLINE auto manhattan_( EVE_SUPPORTS(cpu_)
-                             , T const &a
-                             , T const &b
-                             ) noexcept
-
-  {
-    return eve::abs(a)+eve::abs(b);
-  }
-
-  template<floating_value T, floating_value U, floating_value V>
-  EVE_FORCEINLINE  auto manhattan_(EVE_SUPPORTS(cpu_)
-                              , T const &a
-                              , U const &b
-                              , V const &c) noexcept
-  requires compatible_values<T, U> &&  compatible_values<T, V>
-  {
-    return arithmetic_call(manhattan, a, b, c);
-  }
-
-  template<floating_value T>
-  EVE_FORCEINLINE auto manhattan_( EVE_SUPPORTS(cpu_)
-                             , T const &a
-                             , T const &b
-                             , T const &c
-                             ) noexcept
-
-  {
-    return  eve::abs(a)+eve::abs(b)+eve::abs(c);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // pedantic case
   template<floating_value T, floating_value U>
   EVE_FORCEINLINE  auto manhattan_(EVE_SUPPORTS(cpu_)
                             , pedantic_type const &

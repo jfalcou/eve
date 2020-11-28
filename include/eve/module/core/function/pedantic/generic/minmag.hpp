@@ -19,38 +19,28 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_nan.hpp>
 #include <eve/function/is_not_greater_equal.hpp>
-#include <eve/function/min.hpp>
-#include <eve/function/numeric.hpp>
-#include <eve/function/regular.hpp>
-#include <eve/function/saturated.hpp>
+#include <eve/function/pedantic/min.hpp>
+#include <eve/function/pedantic.hpp>
 #include <eve/platform.hpp>
 
 #include <type_traits>
 
 namespace eve::detail
 {
-  template<real_value T, real_value U, decorator D>
-  EVE_FORCEINLINE auto minmag_(EVE_SUPPORTS(cpu_), D const &, T const &a, U const &b) noexcept
+  template<real_value T, real_value U>
+  EVE_FORCEINLINE auto minmag_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const &a, U const &b) noexcept
       requires compatible_values<T, U>
   {
-    return arithmetic_call(D()(minmag), a, b);
+    return arithmetic_call(pedantic(minmag), a, b);
   }
 
-  template<real_value T, decorator D>
+  template<real_value T>
   EVE_FORCEINLINE auto minmag_(EVE_SUPPORTS(cpu_), D const &, T const &a, T const &b) noexcept
   {
     if constexpr( std::is_same_v<D, numeric_type> )
     {
-      auto aa = if_else(is_nan(a), b, a);
-      auto bb = if_else(is_nan(b), a, b);
-      auto z  = minmag(aa, bb);
-      return z;
-    }
-    else
-    {
-      using D1 = std::conditional_t<std::is_same_v<D, pedantic_type>, saturated_type, regular_type>;
-      auto aa  = D1()(eve::abs)(a);
-      auto bb  = D1()(eve::abs)(b);
+      auto aa  = pedantic(eve::abs)(a);
+      auto bb  = pedantic(eve::abs)(b);
       if constexpr( simd_value<T> )
       {
         auto tmp = if_else(is_not_greater_equal(bb, aa), b, D()(eve::min)(a, b));
@@ -58,22 +48,8 @@ namespace eve::detail
       }
       else
       {
-        return aa < bb ? a : bb < aa ? b : D()(eve::min)(a, b);
+        return aa < bb ? a : bb < aa ? b : pedantic(eve::min)(a, b);
       }
     }
   }
-
-  template<real_value T, real_value U>
-  EVE_FORCEINLINE auto minmag_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-      requires compatible_values<T, U>
-  {
-    return arithmetic_call(regular_type()(minmag), a, b);
-  }
-
-  template<real_value T>
-  EVE_FORCEINLINE auto minmag_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
-  {
-    return minmag(regular_type(), a, b);
-  }
 }
-

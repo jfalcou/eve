@@ -32,36 +32,9 @@
 
 namespace eve::detail
 {
-
-  //////////////////////////////////////////////////////////////
-  // regular call
   template<real_value T>
   EVE_FORCEINLINE constexpr auto prev_(EVE_SUPPORTS(cpu_)
-                                      , T const &a) noexcept
-  {
-    if constexpr(has_native_abi_v<T>)
-    {
-      if constexpr(floating_value<T>)
-      {
-        return bitfloating(dec(bitinteger(a)));
-      }
-      else if constexpr(integral_value<T>)
-      {
-        return dec(a);
-      }
-    }
-    else
-    {
-      return apply_over(prev, a);
-    }
-  }
-
-
-//////////////////////////////////////////////////////////////
-  // pedantic call
-  template<real_value T>
-  EVE_FORCEINLINE constexpr auto prev_(EVE_SUPPORTS(cpu_)
-                                      ,  pedantic_type const &
+                                      , pedantic_type const &
                                       , T const &a) noexcept
   {
     if constexpr(has_native_abi_v<T>)
@@ -88,56 +61,9 @@ namespace eve::detail
     else  { return apply_over(pedantic(prev), a);    }
   }
 
-  ////////////////////////////////////////////////
-  // saturated
-  template<real_value T>
-  EVE_FORCEINLINE constexpr auto prev_(EVE_SUPPORTS(cpu_)
-                                      , saturated_type const &
-                                      , T const &a) noexcept
-  {
-    if constexpr(has_native_abi_v<T>)
-    {
-      if constexpr(floating_value<T>)
-      {
-        auto z =  prev(a);
-        if constexpr(eve::platform::supports_nans) return if_else(is_nan(a), eve::allbits, z);
-        else                                       return z;
-      }
-      else if constexpr(integral_value<T>)
-      {
-        return saturated(dec)(a);
-      }
-    }
-    else  { return apply_over(saturated(prev), a);    }
-  }
-
   //////////////////////////////////////////////////////////////
   // two parameters
   //////////////////////////////////////////////////////////////
-  // regular call
-  template<real_value T, integral_real_value U>
-  EVE_FORCEINLINE constexpr auto prev_(EVE_SUPPORTS(cpu_)
-                                      , T const &a
-                                      , U const &n) noexcept
-  {
-    if constexpr(has_native_abi_v<T>)
-    {
-      if constexpr(floating_value<T>)
-      {
-        using i_t = as_integer_t<T>;
-        return bitfloating(bitinteger(a) -  to_<i_t>(n));
-      }
-      else if constexpr(integral_value<T>)
-      {
-        return sub(a, to_<T>(n));
-      }
-    }
-    else  { return apply_over(prev, a, n);    }
-  }
-
-
-  //////////////////////////////////////////////////////////////
-  // pedantic call
   template<real_value T, integral_real_value U>
   EVE_FORCEINLINE constexpr auto prev_(EVE_SUPPORTS(cpu_)
                                       ,  pedantic_type const &
@@ -167,29 +93,5 @@ namespace eve::detail
       }
     }
     else  { return apply_over(pedantic(prev), a, n);    }
-  }
-
-
-
-  template<real_value T, integral_real_value U>
-  EVE_FORCEINLINE constexpr auto prev_(EVE_SUPPORTS(cpu_)
-                                      , saturated_type const &
-                                      , T const &a
-                                      , U const &n) noexcept
-  {
-    if constexpr(has_native_abi_v<T>)
-    {
-      if constexpr(floating_value<T>)
-      {
-        auto z =  prev(a, n);
-        if constexpr(eve::platform::supports_nans) return if_else(is_nan(a), eve::allbits, z);
-        else                                       return z;
-      }
-      else if constexpr(integral_value<T>)
-      {
-        return saturated(sub)(a, to_<T>(n));
-      }
-    }
-    else  { return apply_over(saturated(prev), a, n);    }
   }
 }

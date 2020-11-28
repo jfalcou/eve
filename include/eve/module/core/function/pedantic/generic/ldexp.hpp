@@ -32,36 +32,6 @@
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // regular case
-  template<real_value T, real_value U>
-  EVE_FORCEINLINE T ldexp_(EVE_SUPPORTS(cpu_)
-                               , T const &a
-                               , U const &b) noexcept
-  {
-    if constexpr(has_native_abi_v<T> && has_native_abi_v<U>)
-    {
-      using elt_t = element_type_t<T>;
-      if constexpr(integral_value<U>)
-      {
-        auto ik =  b+maxexponent(eve::as<elt_t>());
-        ik = shl(ik, nbmantissabits(eve::as<elt_t>()));
-        if constexpr(scalar_value<decltype(ik)>)
-          return a*bit_cast(ik, as<elt_t>());
-        else
-          return a*bit_cast(ik, as<T>());
-
-      }
-      else if constexpr(floating_value<U>)
-      {
-        return ldexp(a, int_(trunc)(b));
-      }
-    }
-    else  return apply_over(ldexp, a, b);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // pedantic case
   template<real_value T, real_value U>
   EVE_FORCEINLINE T ldexp_(EVE_SUPPORTS(cpu_)
                                , pedantic_type const &
@@ -100,6 +70,4 @@ namespace eve::detail
     }
     else  return apply_over(pedantic(ldexp), a, b);
   }
-
-
 }

@@ -22,7 +22,6 @@
 #include <eve/function/max.hpp>
 #include <eve/function/maxmag.hpp>
 #include <eve/function/minmag.hpp>
-#include <eve/function/numeric.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/function/shr.hpp>
 #include <eve/function/two_add.hpp>
@@ -33,37 +32,15 @@
 namespace eve::detail
 {
   template<real_value T, real_value U, real_value V>
-  EVE_FORCEINLINE auto fma_(EVE_SUPPORTS(cpu_), T const &a, U const &b, V const &c) noexcept
-      requires compatible_values<T, U> &&compatible_values<T, V>
-  {
-    return arithmetic_call(fma, a, b, c);
-  }
-
-  template<real_scalar_value T>
-  EVE_FORCEINLINE T fma_(EVE_SUPPORTS(cpu_), T const &a, T const &b, T const &c) noexcept
-  {
-    return a * b + c;
-  }
-
-  template<real_simd_value T>
-  EVE_FORCEINLINE auto fma_(EVE_SUPPORTS(cpu_), T const &a, T const &b, T const &c) noexcept
-  requires has_native_abi_v<T>
-  {
-    return a * b + c; // fallback never taken if proper intrinsics are at hand
-  }
-
-  ////////////////////////////////////////////////////////////////////////////
-  // pedantic/numeric
-  template<real_value T, real_value U, real_value V, decorator D>
   EVE_FORCEINLINE auto
-  fma_(EVE_SUPPORTS(cpu_), D const &, T const &a, U const &b, V const &c) noexcept
+  fma_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const &a, U const &b, V const &c) noexcept
       requires compatible_values<T, U> &&compatible_values<T, V>
   {
-    return arithmetic_call(D()(fma), a, b, c);
+    return arithmetic_call(pedantic_type(fma), a, b, c);
   }
 
   template<real_value T, decorator D>
-  EVE_FORCEINLINE T fma_(EVE_SUPPORTS(cpu_), D const &, T const &a, T const &b, T const &c) noexcept
+  EVE_FORCEINLINE T fma_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const &a, T const &b, T const &c) noexcept
       requires has_native_abi_v<T>
   {
     using elt_t = element_type_t<T>;
@@ -73,23 +50,9 @@ namespace eve::detail
     }
     else if constexpr( std::is_same_v<elt_t, double> )
     {
-      if constexpr( std::is_same_v<D, numeric_type> )
-      {
-        auto amax    = maxmag(a, b);
-        auto amin    = minmag(a, b);
-        auto e0      = -shr(exponent(amax), 1);
-        amax         = pedantic(ldexp)(amax, e0);
-        auto c0      = pedantic(ldexp)(c, e0);
-        auto [p, rp] = two_prod(amax, amin);
-        auto [s, rs] = two_add(p, c0);
-        return pedantic(ldexp)(s + (rp + rs), -e0);
-      }
-      else if constexpr( std::is_same_v<D, pedantic_type> )
-      {
-        auto [p, rp] = two_prod(a, b);
-        auto [s, rs] = two_add(p, c);
-        return s + (rp + rs);
-      }
+      auto [p, rp] = two_prod(a, b);
+      auto [s, rs] = two_add(p, c);
+      return s + (rp + rs);
     }
     else if constexpr( std::is_integral_v<elt_t> )
     {
