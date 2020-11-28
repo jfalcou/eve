@@ -36,16 +36,6 @@ namespace eve::detail
     return fma(t, b, fnma(t, a, a));
   }
 
-  ////////////////////////////////////////////////////////////////////////////
-  // pedantic/numeric/raw
-  template<floating_real_value T, floating_real_value U, floating_real_value V, decorator D>
-  EVE_FORCEINLINE auto
-  lerp_(EVE_SUPPORTS(cpu_), D const &, T const &a, U const &b, V const &t) noexcept
-      requires compatible_values<T, U> &&compatible_values<T, V>
-  {
-    return arithmetic_call(D()(lerp), a, b, t);
-  }
-
   template<floating_real_value T>
   EVE_FORCEINLINE T
   lerp_(EVE_SUPPORTS(cpu_), raw_type const &, T const &a, T const &b, T const &t) noexcept
@@ -54,13 +44,4 @@ namespace eve::detail
     return fma(t, b, fnma(t, a, a));
     ;
   }
-
-  template<floating_real_value T, decorator D>
-  EVE_FORCEINLINE T
-  lerp_(EVE_SUPPORTS(cpu_), D const &, T const &a, T const &b, T const &t) noexcept
-      requires has_native_abi_v<T>
-  {
-    return D()(fma)(t, b, D()(fnma)(t, a, a));
-  }
 }
-
