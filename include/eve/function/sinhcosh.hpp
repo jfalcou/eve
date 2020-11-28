@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(sinhcosh_, sinhcosh);
 }
 
-#include <eve/module/math/function/generic/sinhcosh.hpp>
+#include <eve/module/math/function/regular/generic/sinhcosh.hpp>
 

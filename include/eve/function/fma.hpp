@@ -18,17 +18,17 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/function/generic/fma.hpp>
+#include <eve/module/core/function/regular/generic/fma.hpp>
 
 #if defined(EVE_HW_X86)
-#  include <eve/module/core/function/simd/x86/fma.hpp>
+#  include <eve/module/core/function/regular/simd/x86/fma.hpp>
 #endif
 
 #if defined(EVE_HW_POWERPC)
-#  include <eve/module/core/function/simd/ppc/fma.hpp>
+#  include <eve/module/core/function/regular/simd/ppc/fma.hpp>
 #endif
 
 #if defined(EVE_HW_ARM)
-#  include <eve/module/core/function/simd/arm/neon/fma.hpp>
+#  include <eve/module/core/function/regular/simd/arm/neon/fma.hpp>
 #endif
 

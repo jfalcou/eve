@@ -18,5 +18,5 @@ namespace eve
 }
 
 #include <eve/module/core/function/scalar/shuffle.hpp>
-//#include <eve/module/core/function/simd/shuffle.hpp>
+//#include <eve/module/core/function/regular/simd/shuffle.hpp>
 

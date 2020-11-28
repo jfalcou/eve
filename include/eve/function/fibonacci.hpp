@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(fibonacci_, fibonacci);
 }
 
-#include <eve/module/combinatorial/function/generic/fibonacci.hpp>
+#include <eve/module/combinatorial/function/regular/generic/fibonacci.hpp>

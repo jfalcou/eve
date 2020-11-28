@@ -14,7 +14,6 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/add.hpp>
 
 namespace eve::detail
 {
@@ -27,7 +26,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto plus_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
       requires compatible_values<T, U>
   {
-    return add(a, b);
+    return a+b;
   }
 
   //================================================================================================
@@ -39,15 +38,6 @@ namespace eve::detail
   {
     return mask_op( EVE_CURRENT_API{}, cond, eve::add, t, f);
   }
-
-  template<conditional_expr C, real_value U, real_value V>
-  EVE_FORCEINLINE auto
-  plus_(EVE_SUPPORTS(cpu_), C const &cond, saturated_type const &, U const &t, V const &f) noexcept
-      requires compatible_values<U, V>
-  {
-    return mask_op( EVE_CURRENT_API{}, cond, saturated(add), t, f);
-  }
-
 }
 
 // -------------------------------------------------------------------------------------------------

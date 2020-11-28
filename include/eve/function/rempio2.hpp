@@ -32,4 +32,4 @@ namespace eve
   EVE_MAKE_CALLABLE(rempio2_, rempio2);
 }
 
-#include <eve/module/math/function/generic/rempio2.hpp>
+#include <eve/module/math/function/regular/generic/rempio2.hpp>

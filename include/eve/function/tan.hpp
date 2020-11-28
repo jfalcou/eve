@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(tan_, tan);
 }
 
-#include <eve/module/math/function/generic/tan.hpp>
+#include <eve/module/math/function/regular/generic/tan.hpp>
 

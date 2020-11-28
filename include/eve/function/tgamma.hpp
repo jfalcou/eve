@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(tgamma_, tgamma);
 }
 
-#include <eve/module/special/function/generic/tgamma.hpp>
+#include <eve/module/special/function/regular/generic/tgamma.hpp>

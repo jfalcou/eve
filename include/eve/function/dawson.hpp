@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(dawson_, dawson);
 }
 
-#include <eve/module/special/function/generic/dawson.hpp>
+#include <eve/module/special/function/regular/generic/dawson.hpp>

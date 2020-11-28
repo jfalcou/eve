@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(sec_, sec);
 }
 
-#include <eve/module/math/function/generic/sec.hpp>
+#include <eve/module/math/function/regular/generic/sec.hpp>
 

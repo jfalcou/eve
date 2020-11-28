@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(is_lez_, is_lez);
 }
 
-#include <eve/module/core/function/generic/is_lez.hpp>
+#include <eve/module/core/function/regular/generic/is_lez.hpp>
 

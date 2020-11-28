@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(zeta_, zeta);
 }
 
-#include <eve/module/special/function/generic/zeta.hpp>
+#include <eve/module/special/function/regular/generic/zeta.hpp>

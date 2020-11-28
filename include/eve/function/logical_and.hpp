@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(logical_and_, logical_and);
 }
 
-#include <eve/module/core/function/generic/logical_and.hpp>
+#include <eve/module/core/function/regular/generic/logical_and.hpp>
 

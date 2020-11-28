@@ -40,12 +40,12 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/function/generic/rshl.hpp>
+#include <eve/module/core/function/regular/generic/rshl.hpp>
 
 #if defined(EVE_HW_X86)
-#  include <eve/module/core/function/simd/x86/rshl.hpp>
+#  include <eve/module/core/function/regular/simd/x86/rshl.hpp>
 #endif
 
 #if defined(EVE_HW_ARM)
-#  include <eve/module/core/function/simd/arm/neon/rshl.hpp>
+#  include <eve/module/core/function/regular/simd/arm/neon/rshl.hpp>
 #endif

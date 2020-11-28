@@ -18,5 +18,5 @@ namespace eve
 }
 
 #include <eve/module/core/function/scalar/broadcast.hpp>
-//#include <eve/module/core/function/simd/broadcast.hpp>
+//#include <eve/module/core/function/regular/simd/broadcast.hpp>
 

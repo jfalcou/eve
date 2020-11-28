@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(is_ngez_, is_ngez);
 }
 
-#include <eve/module/core/function/generic/is_ngez.hpp>
+#include <eve/module/core/function/regular/generic/is_ngez.hpp>
 

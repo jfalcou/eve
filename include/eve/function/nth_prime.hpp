@@ -22,4 +22,4 @@ namespace eve
   EVE_MAKE_CALLABLE(nth_prime_, nth_prime);
 }
 
-#include <eve/module/combinatorial/function/generic/nth_prime.hpp>
+#include <eve/module/combinatorial/function/regular/generic/nth_prime.hpp>

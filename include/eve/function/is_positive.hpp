@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(is_positive_, is_positive);
 }
 
-#include <eve/module/core/function/generic/is_positive.hpp>
+#include <eve/module/core/function/regular/generic/is_positive.hpp>
 

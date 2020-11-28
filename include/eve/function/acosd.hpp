@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(acosd_, acosd);
 }
 
-#include <eve/module/math/function/generic/acosd.hpp>
+#include <eve/module/math/function/regular/generic/acosd.hpp>

@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(is_nan_, is_nan);
 }
 
-#include <eve/module/core/function/generic/is_nan.hpp>
+#include <eve/module/core/function/regular/generic/is_nan.hpp>
 

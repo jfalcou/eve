@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(sqr_abs_, sqr_abs);
 }
 
-#include <eve/module/core/function/generic/sqr_abs.hpp>
+#include <eve/module/core/function/regular/generic/sqr_abs.hpp>
 

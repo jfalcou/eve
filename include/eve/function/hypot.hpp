@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(hypot_, hypot);
 }
 
-#include <eve/module/core/function/generic/hypot.hpp>
+#include <eve/module/core/function/regular/generic/hypot.hpp>
 

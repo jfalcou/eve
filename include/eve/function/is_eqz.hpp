@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(is_eqz_, is_eqz);
 }
 
-#include <eve/module/core/function/generic/is_eqz.hpp>
+#include <eve/module/core/function/regular/generic/is_eqz.hpp>
 

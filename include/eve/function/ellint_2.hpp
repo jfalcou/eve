@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(ellint_2_, ellint_2);
 }
 
-#include <eve/module/elliptic/function/generic/ellint_2.hpp>
+#include <eve/module/elliptic/function/regular/generic/ellint_2.hpp>

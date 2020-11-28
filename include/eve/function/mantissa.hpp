@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(mantissa_, mantissa);
 }
 
-#include <eve/module/core/function/generic/mantissa.hpp>
+#include <eve/module/core/function/regular/generic/mantissa.hpp>
 

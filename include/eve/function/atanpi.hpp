@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(atanpi_, atanpi);
 }
 
-#include <eve/module/math/function/generic/atanpi.hpp>
+#include <eve/module/math/function/regular/generic/atanpi.hpp>
 

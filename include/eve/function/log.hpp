@@ -18,9 +18,9 @@ namespace eve
   EVE_MAKE_CALLABLE(log_, log);
 }
 
-#include <eve/module/math/function/generic/log.hpp>
+#include <eve/module/math/function/regular/generic/log.hpp>
 
 #if defined(EVE_HW_X86)
-#  include <eve/module/math/function/simd/x86/log.hpp>
+#  include <eve/module/math/function/regular/simd/x86/log.hpp>
 #endif
 

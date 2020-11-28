@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(jacobi_elliptic_, jacobi_elliptic);
 }
 
-#include <eve/module/elliptic/function/generic/jacobi_elliptic.hpp>
+#include <eve/module/elliptic/function/regular/generic/jacobi_elliptic.hpp>

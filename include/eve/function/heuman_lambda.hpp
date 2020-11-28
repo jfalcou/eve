@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(heuman_lambda_, heuman_lambda);
 }
 
-#include <eve/module/elliptic/function/generic/heuman_lambda.hpp>
+#include <eve/module/elliptic/function/regular/generic/heuman_lambda.hpp>

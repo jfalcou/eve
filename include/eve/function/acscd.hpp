@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(acscd_, acscd);
 }
 
-#include <eve/module/math/function/generic/acscd.hpp>
+#include <eve/module/math/function/regular/generic/acscd.hpp>
 

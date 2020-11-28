@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(logical_notand_, logical_notand);
 }
 
-#include <eve/module/core/function/generic/logical_notand.hpp>
+#include <eve/module/core/function/regular/generic/logical_notand.hpp>
 
