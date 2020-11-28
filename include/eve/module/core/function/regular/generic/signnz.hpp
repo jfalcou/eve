@@ -16,17 +16,13 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/function/bit_or.hpp>
 #include <eve/function/bitofsign.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_nan.hpp>
-#include <eve/function/pedantic.hpp>
-#include <eve/function/regular.hpp>
 #include <eve/function/shr.hpp>
 #include <eve/platform.hpp>
 
 namespace eve::detail
 {
   template<real_value T, decorator D>
-  EVE_FORCEINLINE T signnz_(EVE_SUPPORTS(cpu_), D const &, T const &a) noexcept
+  EVE_FORCEINLINE T signnz_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {
@@ -36,22 +32,7 @@ namespace eve::detail
       }
       else if constexpr( floating_value<T> )
       {
-        auto r = bit_or(one(eve::as(a)), bitofsign(a));
-        if constexpr( eve::platform::supports_nans && std::is_same_v<D, pedantic_type> )
-        {
-          if constexpr( scalar_value<T> )
-          {
-            return is_nan(a) ? a : r;
-          }
-          else
-          {
-            return if_else(is_nan(a), eve::allbits, r);
-          }
-        }
-        else
-        {
-          return r;
-        }
+        return bit_or(one(eve::as(a)), bitofsign(a));
       }
       else if constexpr( signed_value<T> )
       {
@@ -64,11 +45,4 @@ namespace eve::detail
       return apply_over(signnz, a);
     }
   }
-
-  template<real_value T> EVE_FORCEINLINE T signnz_(EVE_SUPPORTS(cpu_), T const &a) noexcept
-  {
-    return signnz(regular_type(), a);
-  }
-
 }
-
