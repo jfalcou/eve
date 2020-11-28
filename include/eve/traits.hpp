@@ -10,6 +10,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/traits/alignment.hpp>
 #include <eve/traits/as_arithmetic.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/traits/as_wide.hpp>
