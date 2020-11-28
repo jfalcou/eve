@@ -41,6 +41,7 @@
 #include <eve/function/shr.hpp>
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
 #include <eve/module/math/detail/generic/workaround.hpp>
+#include <eve/traits/alignment.hpp>
 #include <bit>
 #include <tuple>
 #include <type_traits>
@@ -154,8 +155,8 @@ namespace eve::detail
       using i32_tv  = as_wide_t<int32_t, fixed<2 * cardinal_v<T>>>;
       using i32_t =  std::conditional_t<scalar_value<T>, i32_ts, i32_tv>;
       using ui64_t=  std::conditional_t<scalar_value<T>, ui64_ts, ui64_tv>;
-      
-      constexpr auto alg = alignof(T);
+
+      constexpr auto alg = alignment_v<T>;
       alignas(alg) constexpr double toverp[75] = {
           /*  2/ PI base 24*/
           10680707.0, 7228996.0,  1387004.0,  2578385.0,  16069853.0, 12639074.0, 9804092.0,
@@ -282,7 +283,7 @@ namespace eve::detail
       using ui_t          = std::conditional_t<scalar_value<T>, ui_ts, ui_tv>;
       using wui_t         = std::conditional_t<scalar_value<T>, wui_ts, wui_tv>;
 
-      constexpr auto alg = alignof(ui_t);
+      constexpr auto alg = alignment_v<ui_t>;
       // Table with 4/PI to 192 bit precision.  To avoid unaligned accesses
       //   only 8 new bits are added per entry, making the table 4 times larger.
       alignas(alg) constexpr const uint32_t __inv_pio4[24] = {

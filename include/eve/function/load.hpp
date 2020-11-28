@@ -13,6 +13,7 @@
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/traits/alignment.hpp>
 #include <eve/forward.hpp>
 #include <eve/as.hpp>
 
@@ -45,7 +46,9 @@ namespace eve
     return *ptr;
   }
 
-  template<typename T, std::size_t Align, typename = std::enable_if_t<(Align >= alignof(T))>>
+  template< typename T, std::size_t Align
+          , typename = std::enable_if_t<(Align >= alignment_v<T>)>
+          >
   EVE_FORCEINLINE auto load(aligned_ptr<T const, Align> ptr, as_<T> const &) noexcept
   {
     return *ptr;
@@ -53,7 +56,7 @@ namespace eve
 
   template<typename T, std::size_t Align>
   EVE_FORCEINLINE auto load(aligned_ptr<T, Align> ptr, as_<T> const &) noexcept
-  requires(Align >= alignof(T))
+  requires(Align >= alignment_v<T>)
   {
     return *ptr;
   }
@@ -88,14 +91,14 @@ namespace eve
 
   template<typename Size,typename ABI,typename T,std::size_t Align>
   EVE_FORCEINLINE auto load(aligned_ptr<T const, Align> ptr, as_<wide<T, Size, ABI>> const &) noexcept
-  requires(Align >= alignof(wide<T, Size>))
+  requires(Align >= wide<T, Size>::static_alignment)
   {
     return wide<T, Size>(ptr);
   }
 
   template<typename Size,typename ABI,typename T,std::size_t Align>
   EVE_FORCEINLINE auto load(aligned_ptr<T, Align> ptr, as_<wide<T, Size, ABI>> const &) noexcept
-  requires(Align >= alignof(wide<T, Size>))
+  requires(Align >= wide<T, Size>::static_alignment)
   {
     return wide<T, Size>(ptr);
   }
@@ -111,7 +114,7 @@ namespace eve
   template<typename Size,typename ABI,typename T,std::size_t Align>
   EVE_FORCEINLINE auto load ( aligned_ptr<logical<T> const, Align> ptr,
                               as_<logical<wide<T, Size, ABI>>> const&
-                            ) noexcept requires(Align >= alignof(wide<T, Size>))
+                            ) noexcept requires(Align >= wide<T, Size>::static_alignment)
   {
     return logical<wide<T, Size, ABI>>(ptr);
   }
@@ -119,7 +122,7 @@ namespace eve
   template<typename Size,typename ABI,typename T,std::size_t Align>
   EVE_FORCEINLINE auto load ( aligned_ptr<logical<T>, Align> ptr,
                               as_<logical<wide<T, Size, ABI>>> const&
-                            ) noexcept requires(Align >= alignof(wide<T, Size>))
+                            ) noexcept requires(Align >= wide<T, Size>::static_alignment)
   {
     return logical<wide<T, Size, ABI>>(ptr);
   }

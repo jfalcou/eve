@@ -36,7 +36,7 @@ TTS_CASE_TPL("Check store behavior to unaligned arithmetic pointer", EVE_TYPE)
 
 TTS_CASE_TPL("Check store behavior to aligned arithmetic pointer", EVE_TYPE)
 {
-  constexpr auto algt = alignof(T);
+  constexpr auto algt = eve::alignment_v<T>;
 
   std::array<EVE_VALUE, 3 * EVE_CARDINAL> ref;
   T value([](auto i, auto) { return 1 + i * 3; });
@@ -48,7 +48,7 @@ TTS_CASE_TPL("Check store behavior to aligned arithmetic pointer", EVE_TYPE)
     ref[ i + 2*EVE_CARDINAL ] =  1 + i * 3;
   }
 
-  alignas(T) std::array<EVE_VALUE, 3 * EVE_CARDINAL> target;
+  alignas(algt) std::array<EVE_VALUE, 3 * EVE_CARDINAL> target;
 
   eve::store(value, eve::as_aligned<algt>(&target[ 0                ]) );
   eve::store(value, eve::as_aligned<algt>(&target[ EVE_CARDINAL     ]) );

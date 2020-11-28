@@ -38,7 +38,8 @@ namespace eve
     using size_type              = typename parent::size_type;
     using target_type            = typename parent::target_type;
 
-    static constexpr size_type   static_size      = parent::static_size;
+    static constexpr size_type  static_size       = parent::static_size;
+    static constexpr size_type  static_alignment  = parent::static_alignment;
 
     template<typename T, typename C = expected_cardinal_t<T>>
     using rebind = logical<wide<T,C>>;
@@ -200,9 +201,14 @@ namespace eve
     EVE_FORCEINLINE operator storage_type&       () &        noexcept { return data_; }
     EVE_FORCEINLINE operator storage_type        () &&       noexcept { return data_; }
 
+
     //==============================================================================================
     // alignment interface
     //==============================================================================================
+    static EVE_FORCEINLINE constexpr size_type alignment() noexcept
+    {
+      return static_alignment;
+    }
 
     //==============================================================================================
     // array-like interface

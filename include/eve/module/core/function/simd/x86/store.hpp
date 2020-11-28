@@ -42,7 +42,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   store_(EVE_SUPPORTS(sse2_), wide<T, N, x86_128_> const &value, aligned_ptr<T, A> ptr) noexcept
   {
-    if constexpr(N::value * sizeof(T) == x86_128_::bytes && A >= alignof(wide<T, N, x86_128_>))
+    if constexpr(N::value * sizeof(T) == x86_128_::bytes && A >= wide<T, N, x86_128_>::static_alignment)
     {
       if constexpr(std::is_same_v<T, double>)
         _mm_store_pd(ptr.get(), value);
@@ -81,7 +81,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   store_(EVE_SUPPORTS(avx_), wide<T, N, x86_256_> const &value, aligned_ptr<T, A> ptr) noexcept
   {
-    if constexpr(N::value * sizeof(T) == x86_256_::bytes && A >= alignof(wide<T, N, x86_256_>))
+    if constexpr(N::value * sizeof(T) == x86_256_::bytes && A >= wide<T, N, x86_256_>::static_alignment)
     {
       if constexpr(std::is_same_v<T, double>)
         _mm256_store_pd(ptr.get(), value);

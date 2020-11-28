@@ -85,7 +85,7 @@ TTS_CASE("aligned_ptr provides pointer-like interface")
 
     TTS_AND_THEN("we check the proper default alignment")
     {
-      TTS_EQUAL(ptr.alignment(), alignof(type));
+      TTS_EQUAL(ptr.alignment(), eve::alignment_v<type>);
     }
 
     TTS_AND_THEN("we check access to its pointee members")

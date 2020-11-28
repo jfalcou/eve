@@ -55,7 +55,10 @@ namespace eve
     template<typename T, typename N = expected_cardinal_t<T>>
     using rebind = wide<T,N>;
 
-    static constexpr size_type    static_size = Size::value;
+    static constexpr size_type  static_size       = Size::value;
+    static constexpr size_type  static_alignment  = std::min( sizeof(Type)*Size::value
+                                                            , alignof(storage_type)
+                                                            );
 
     //==============================================================================================
     // Default constructor
@@ -67,9 +70,9 @@ namespace eve
     //==============================================================================================
     EVE_FORCEINLINE wide(storage_type const &r) noexcept : data_(r) {}
 
-    //==============================================================================================
+    //====================================================²==========================================
     // Constructs a wide from a Range
-    //==============================================================================================
+    //====================================================²==========================================
     template<std::input_iterator Iterator>
     EVE_FORCEINLINE explicit wide(Iterator b, Iterator e) noexcept
                   : data_(detail::load(eve::as_<wide>{}, abi_type{}, b, e))
@@ -98,14 +101,14 @@ namespace eve
 
     template<std::size_t Alignment>
     EVE_FORCEINLINE explicit wide(aligned_ptr<Type const, Alignment> ptr) noexcept
-                    requires(Alignment >= alignof(storage_type))
+                    requires(Alignment >= static_alignment)
                   : data_(detail::load(eve::as_<wide>{}, abi_type{}, ptr))
     {
     }
 
     template<std::size_t Alignment>
     EVE_FORCEINLINE explicit wide(aligned_ptr<Type, Alignment> ptr) noexcept
-                    requires(Alignment >= alignof(storage_type))
+                    requires(Alignment >= static_alignment)
                   : data_(detail::load(eve::as_<wide>{}, abi_type{}, ptr))
     {
     }
@@ -186,6 +189,14 @@ namespace eve
 
     EVE_FORCEINLINE auto  end()        noexcept { return begin() + static_size; }
     EVE_FORCEINLINE auto  end() const  noexcept { return begin() + static_size; }
+
+    //==============================================================================================
+    // alignment interface
+    //==============================================================================================
+    static EVE_FORCEINLINE constexpr size_type alignment() noexcept
+    {
+      return static_alignment;
+    }
 
     //==============================================================================================
     // array-like interface

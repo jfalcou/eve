@@ -18,6 +18,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/function/load.hpp>
 #include <eve/function/abs.hpp>
+#include <eve/traits/alignemnt.hpp>
 #include <eve/module/math/detail/scalar/ieee_754_rem_pio2.hpp>
 
 #include <tuple>
@@ -39,9 +40,9 @@ namespace eve::detail
     alignas(T) std::array<elt_t, size> tyr;
     for( uint32_t i = 0; i != size; ++i )
     { std::tie(tmp[i], txr[i], tyr[i]) = eve::rem_pio2(a0[i]); }
-    return std::make_tuple(eve::load(eve::as_aligned<alignof(T)>(&tmp[0]), eve::as_<T>()),
-                           eve::load(eve::as_aligned<alignof(T)>(&txr[0]), eve::as_<T>()),
-                           eve::load(eve::as_aligned<alignof(T)>(&tyr[0]), eve::as_<T>()));
+    return std::make_tuple(eve::load(eve::as_aligned<alignment_v<T>>(&tmp[0]), eve::as_<T>()),
+                           eve::load(eve::as_aligned<alignment_v<T>>(&txr[0]), eve::as_<T>()),
+                           eve::load(eve::as_aligned<alignment_v<T>>(&tyr[0]), eve::as_<T>()));
   }
 
   EVE_FORCEINLINE auto rem_pio2_(EVE_SUPPORTS(cpu_), double const &a0) noexcept

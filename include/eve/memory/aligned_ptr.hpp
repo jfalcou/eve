@@ -10,14 +10,18 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/memory/is_aligned.hpp>
 #include <eve/detail/concepts.hpp>
+#include <eve/memory/is_aligned.hpp>
+#include <eve/traits/alignment.hpp>
 #include <eve/assert.hpp>
 #include <compare>
 
 namespace eve
 {
-  template<typename Type, std::size_t Alignment = alignof(Type)> requires(is_power_of_2(Alignment))
+  template< typename Type
+          , std::size_t Alignment = alignment_v<Type>
+          >
+  requires(is_power_of_2(Alignment))
   struct aligned_ptr
   {
     using pointer = std::add_pointer_t<Type>;
@@ -51,7 +55,6 @@ namespace eve
       pointer_ = static_cast<pointer>(p.get());
       return *this;
     }
-
 
     template<std::size_t A>
     aligned_ptr &operator=(aligned_ptr<void, A> p) noexcept  requires(A >= Alignment)
