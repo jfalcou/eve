@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(sinh_, sinh);
 }
 
-#include <eve/module/math/function/generic/sinh.hpp>
+#include <eve/module/math/function/regular/generic/sinh.hpp>
 

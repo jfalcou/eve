@@ -18,9 +18,9 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/algorithm/function/generic/nbtrue.hpp>
+#include <eve/module/algorithm/function/regular/generic/nbtrue.hpp>
 
 #if defined(EVE_HW_X86)
-#  include <eve/module/algorithm/function/simd/x86/nbtrue.hpp>
+#  include <eve/module/algorithm/function/regular/simd/x86/nbtrue.hpp>
 #endif
 

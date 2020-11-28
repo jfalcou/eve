@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(is_not_imag_, is_not_imag);
 }
 
-#include <eve/module/core/function/generic/is_not_imag.hpp>
+#include <eve/module/core/function/regular/generic/is_not_imag.hpp>
 

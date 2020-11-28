@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(atan2d_, atan2d);
 }
 
-#include <eve/module/math/function/generic/atan2d.hpp>
+#include <eve/module/math/function/regular/generic/atan2d.hpp>
 

@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(bit_ceil_, bit_ceil);
 }
 
-#include <eve/module/core/function/generic/bit_ceil.hpp>
+#include <eve/module/core/function/regular/generic/bit_ceil.hpp>
 

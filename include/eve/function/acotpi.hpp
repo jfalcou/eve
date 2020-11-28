@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(acotpi_, acotpi);
 }
 
-#include <eve/module/math/function/generic/acotpi.hpp>
+#include <eve/module/math/function/regular/generic/acotpi.hpp>
 

@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(stirling_, stirling);
 }
 
-#include <eve/module/special/function/generic/stirling.hpp>
+#include <eve/module/special/function/regular/generic/stirling.hpp>
 

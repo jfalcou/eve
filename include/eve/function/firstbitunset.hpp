@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(firstbitunset_, firstbitunset);
 }
 
-#include <eve/module/core/function/generic/firstbitunset.hpp>
+#include <eve/module/core/function/regular/generic/firstbitunset.hpp>
 

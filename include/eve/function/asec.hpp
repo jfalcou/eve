@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(asec_, asec);
 }
 
-#include <eve/module/math/function/generic/asec.hpp>
+#include <eve/module/math/function/regular/generic/asec.hpp>
 

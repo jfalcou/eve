@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(gcd_, gcd);
 }
 
-#include <eve/module/combinatorial/function/generic/gcd.hpp>
+#include <eve/module/combinatorial/function/regular/generic/gcd.hpp>

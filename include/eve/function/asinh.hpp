@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(asinh_, asinh);
 }
 
-#include <eve/module/math/function/generic/asinh.hpp>
+#include <eve/module/math/function/regular/generic/asinh.hpp>
 

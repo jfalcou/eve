@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(is_finite_, is_finite);
 }
 
-#include <eve/module/core/function/generic/is_finite.hpp>
+#include <eve/module/core/function/regular/generic/is_finite.hpp>
 

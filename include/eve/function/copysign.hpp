@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(copysign_, copysign);
 }
 
-#include <eve/module/core/function/generic/copysign.hpp>
+#include <eve/module/core/function/regular/generic/copysign.hpp>
 

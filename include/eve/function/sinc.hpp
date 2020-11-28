@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(sinc_, sinc);
 }
 
-#include <eve/module/math/function/generic/sinc.hpp>
+#include <eve/module/math/function/regular/generic/sinc.hpp>

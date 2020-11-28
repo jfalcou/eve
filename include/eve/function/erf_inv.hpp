@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(erf_inv_, erf_inv);
 }
 
-#include <eve/module/special/function/generic/erf_inv.hpp>
+#include <eve/module/special/function/regular/generic/erf_inv.hpp>

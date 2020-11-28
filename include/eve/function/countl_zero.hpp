@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(countl_zero_, countl_zero);
 }
 
-#include <eve/module/core/function/generic/countl_zero.hpp>
+#include <eve/module/core/function/regular/generic/countl_zero.hpp>
 

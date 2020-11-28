@@ -18,9 +18,9 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/function/generic/negate.hpp>
+#include <eve/module/core/function/regular/generic/negate.hpp>
 
 #if defined(EVE_HW_X86)
-#  include <eve/module/core/function/simd/x86/negate.hpp>
+#  include <eve/module/core/function/regular/simd/x86/negate.hpp>
 #endif
 

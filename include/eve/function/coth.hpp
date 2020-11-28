@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(coth_, coth);
 }
 
-#include <eve/module/math/function/generic/coth.hpp>
+#include <eve/module/math/function/regular/generic/coth.hpp>
 

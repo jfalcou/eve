@@ -22,4 +22,4 @@ namespace eve
   EVE_MAKE_CALLABLE(prime_ceil_, prime_ceil);
 }
 
-#include <eve/module/combinatorial/function/generic/prime_ceil.hpp>
+#include <eve/module/combinatorial/function/regular/generic/prime_ceil.hpp>

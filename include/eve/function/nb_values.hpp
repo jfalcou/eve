@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(nb_values_, nb_values);
 }
 
-#include <eve/module/core/function/generic/nb_values.hpp>
+#include <eve/module/core/function/regular/generic/nb_values.hpp>
 

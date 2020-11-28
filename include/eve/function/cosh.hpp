@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(cosh_, cosh);
 }
 
-#include <eve/module/math/function/generic/cosh.hpp>
+#include <eve/module/math/function/regular/generic/cosh.hpp>
 

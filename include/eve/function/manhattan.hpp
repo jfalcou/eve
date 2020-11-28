@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(manhattan_, manhattan);
 }
 
-#include <eve/module/core/function/generic/manhattan.hpp>
+#include <eve/module/core/function/regular/generic/manhattan.hpp>
 

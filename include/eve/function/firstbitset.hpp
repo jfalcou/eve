@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(firstbitset_, firstbitset);
 }
 
-#include <eve/module/core/function/generic/firstbitset.hpp>
+#include <eve/module/core/function/regular/generic/firstbitset.hpp>
 

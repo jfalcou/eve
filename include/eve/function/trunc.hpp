@@ -18,18 +18,18 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/function/generic/trunc.hpp>
+#include <eve/module/core/function/regular/generic/trunc.hpp>
 
 #if defined(EVE_HW_X86)
-#  include <eve/module/core/function/simd/x86/trunc.hpp>
+#  include <eve/module/core/function/regular/simd/x86/trunc.hpp>
 #endif
 
 #if defined(EVE_HW_POWERPC)
-#  include <eve/module/core/function/simd/ppc/trunc.hpp>
+#  include <eve/module/core/function/regular/simd/ppc/trunc.hpp>
 #endif
 
 #if defined(EVE_HW_ARM)
-#  include <eve/module/core/function/simd/arm/neon/trunc.hpp>
+#  include <eve/module/core/function/regular/simd/arm/neon/trunc.hpp>
 #endif
 
 

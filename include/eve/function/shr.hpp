@@ -37,16 +37,16 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/function/generic/shr.hpp>
+#include <eve/module/core/function/regular/generic/shr.hpp>
 
 #if defined(EVE_HW_X86)
-#  include <eve/module/core/function/simd/x86/shr.hpp>
+#  include <eve/module/core/function/regular/simd/x86/shr.hpp>
 #endif
 
 #if defined(EVE_HW_POWERPC)
-#  include <eve/module/core/function/simd/ppc/shr.hpp>
+#  include <eve/module/core/function/regular/simd/ppc/shr.hpp>
 #endif
 
 #if defined(EVE_HW_ARM)
-#  include <eve/module/core/function/simd/arm/neon/shr.hpp>
+#  include <eve/module/core/function/regular/simd/arm/neon/shr.hpp>
 #endif

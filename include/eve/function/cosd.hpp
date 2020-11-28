@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(cosd_, cosd);
 }
 
-#include <eve/module/math/function/generic/cosd.hpp>
+#include <eve/module/math/function/regular/generic/cosd.hpp>
 

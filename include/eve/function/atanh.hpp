@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(atanh_, atanh);
 }
 
-#include <eve/module/math/function/generic/atanh.hpp>
+#include <eve/module/math/function/regular/generic/atanh.hpp>
 

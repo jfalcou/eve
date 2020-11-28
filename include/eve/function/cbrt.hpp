@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(cbrt_, cbrt);
 }
 
-#include <eve/module/core/function/generic/cbrt.hpp>
+#include <eve/module/core/function/regular/generic/cbrt.hpp>
 

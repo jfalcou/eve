@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(bit_xor_, bit_xor);
 }
 
-#include <eve/module/core/function/generic/bit_xor.hpp>
+#include <eve/module/core/function/regular/generic/bit_xor.hpp>
 

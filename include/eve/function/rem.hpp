@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(rem_, rem);
 }
 
-#include <eve/module/core/function/generic/rem.hpp>
+#include <eve/module/core/function/regular/generic/rem.hpp>
 

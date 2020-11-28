@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(dist_, dist);
 }
 
-#include <eve/module/core/function/generic/dist.hpp>
+#include <eve/module/core/function/regular/generic/dist.hpp>
 

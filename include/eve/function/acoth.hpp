@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(acoth_, acoth);
 }
 
-#include <eve/module/math/function/generic/acoth.hpp>
+#include <eve/module/math/function/regular/generic/acoth.hpp>
 

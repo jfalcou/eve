@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(acsch_, acsch);
 }
 
-#include <eve/module/math/function/generic/acsch.hpp>
+#include <eve/module/math/function/regular/generic/acsch.hpp>
 

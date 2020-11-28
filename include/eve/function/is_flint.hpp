@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(is_flint_, is_flint);
 }
 
-#include <eve/module/core/function/generic/is_flint.hpp>
+#include <eve/module/core/function/regular/generic/is_flint.hpp>
 

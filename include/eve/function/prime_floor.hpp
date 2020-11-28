@@ -22,4 +22,4 @@ namespace eve
   EVE_MAKE_CALLABLE(prime_floor_, prime_floor);
 }
 
-#include <eve/module/combinatorial/function/generic/prime_floor.hpp>
+#include <eve/module/combinatorial/function/regular/generic/prime_floor.hpp>

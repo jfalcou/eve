@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(exp_, exp);
 }
 
-#include <eve/module/math/function/generic/exp.hpp>
+#include <eve/module/math/function/regular/generic/exp.hpp>
 

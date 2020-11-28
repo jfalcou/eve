@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(ellint_rd_, ellint_rd);
 }
 
-#include <eve/module/elliptic/function/generic/ellint_rd.hpp>
+#include <eve/module/elliptic/function/regular/generic/ellint_rd.hpp>

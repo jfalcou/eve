@@ -26,6 +26,9 @@
 #include <eve/function/is_gez.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/saturated.hpp>
+#include <eve/function/saturated/convert.hpp>
+#include <eve/function/saturated/div.hpp>
+#include <eve/function/saturated/inc.hpp>
 
 namespace eve::detail
 {

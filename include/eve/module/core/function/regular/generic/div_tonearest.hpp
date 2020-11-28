@@ -30,6 +30,8 @@
 #include <eve/function/logical_ornot.hpp>
 #include <eve/function/nearest.hpp>
 #include <eve/function/saturated.hpp>
+#include <eve/function/saturated/convert.hpp>
+#include <eve/function/saturated/div.hpp>
 
 namespace eve::detail
 {
@@ -128,5 +130,5 @@ namespace eve::detail
         }
       }
     }
-  } 
+  }
 }

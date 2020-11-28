@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(sinpic_, sinpic);
 }
 
-#include <eve/module/math/function/generic/sinpic.hpp>
+#include <eve/module/math/function/regular/generic/sinpic.hpp>

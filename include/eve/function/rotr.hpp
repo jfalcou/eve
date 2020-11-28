@@ -38,4 +38,4 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/function/generic/rotr.hpp>
+#include <eve/module/core/function/regular/generic/rotr.hpp>

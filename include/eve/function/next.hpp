@@ -40,4 +40,4 @@ namespace eve
   EVE_MAKE_CALLABLE(next_, next);
 }
 
-#include <eve/module/core/function/generic/next.hpp>
+#include <eve/module/core/function/regular/generic/next.hpp>

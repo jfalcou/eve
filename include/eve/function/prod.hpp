@@ -18,5 +18,5 @@ namespace eve
 }
 
 #include <eve/module/core/function/scalar/prod.hpp>
-//#include <eve/module/core/function/simd/prod.hpp>
+//#include <eve/module/core/function/regular/simd/prod.hpp>
 

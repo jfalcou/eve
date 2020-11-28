@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(asin_, asin);
 }
 
-#include <eve/module/math/function/generic/asin.hpp>
+#include <eve/module/math/function/regular/generic/asin.hpp>

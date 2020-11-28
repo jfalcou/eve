@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(plus_, plus);
 }
 
-#include <eve/module/core/function/generic/plus.hpp>
+#include <eve/module/core/function/regular/generic/plus.hpp>
 
