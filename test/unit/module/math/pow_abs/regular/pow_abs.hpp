@@ -9,6 +9,7 @@
 **/
 //==================================================================================================
 #include <eve/function/pow_abs.hpp>
+#include <eve/function/pedantic/pow_abs.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/inf.hpp>
