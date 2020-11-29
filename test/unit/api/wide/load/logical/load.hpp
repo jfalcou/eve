@@ -122,7 +122,9 @@ TTS_CASE_TPL("Check conditional load from unaligned pointer for wide", EVE_TYPE)
     auto i1 = eve::ignore_first(EVE_CARDINAL/4);
     auto kf = eve::keep_first(EVE_CARDINAL/4);
     auto kl = eve::keep_last(EVE_CARDINAL/4);
-    auto kb = eve::keep_between(1,EVE_CARDINAL-2);
+    auto kb = eve::keep_between ( std::min(0L,EVE_CARDINAL)
+                                , std::max(0L,EVE_CARDINAL-2)
+                                );
     auto ie = i1 && il;
 
     // Conditional selectors' masks
