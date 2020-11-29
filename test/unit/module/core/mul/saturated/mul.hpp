@@ -10,7 +10,7 @@
 //==================================================================================================
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
-#include <eve/function/mul.hpp>
+#include <eve/function/saturated/mul.hpp>
 
 #include <type_traits>
 
