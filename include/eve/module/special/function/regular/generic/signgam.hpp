@@ -15,6 +15,7 @@
 #include <eve/constant/minf.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/function/binarize.hpp>
 #include <eve/function/bitofsign.hpp>
 #include <eve/function/bit_or.hpp>
 #include <eve/function/floor.hpp>
