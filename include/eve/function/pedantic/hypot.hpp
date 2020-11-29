@@ -10,5 +10,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/include/function/hypot.hpp>
+#include <eve/function/hypot.hpp>
 #include <eve/module/core/function/pedantic/generic/hypot.hpp>

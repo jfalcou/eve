@@ -25,6 +25,7 @@
 #include <eve/function/asin.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/function/inc.hpp>
 #include <eve/function/is_equal.hpp>
 #include <eve/function/is_greater.hpp>
 #include <eve/function/is_less.hpp>

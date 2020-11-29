@@ -16,14 +16,13 @@
 #include <eve/constant/smallestposval.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/any.hpp>
-#include <eve/function/frexp.hpp>
+#include <eve/function/pedantic/ifrexp.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_denormal.hpp>
 #include <eve/function/is_equal.hpp>
 #include <eve/function/is_odd.hpp>
-#include <eve/function/ifrexp.hpp>
 #include <eve/function/is_less.hpp>
-#include <eve/function/ldexp.hpp>
+#include <eve/function/pedantic/ldexp.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/rec.hpp>
@@ -94,16 +93,6 @@ namespace eve::detail
   }
 
   //------------------------------------------------------------------------------------------------
-  // Pedantic 128 bits rsqrt
-  template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE auto rsqrt_(EVE_SUPPORTS(sse2_)
-                             , pedantic_type const &
-                             , wide<T, N, x86_128_> const &a0) noexcept
-  {
-     return rsqrt_x86_pedantic(a0);
-  }
-
-  //------------------------------------------------------------------------------------------------
   // Regular 256 bits rsqrt
   template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE auto rsqrt_(EVE_SUPPORTS(avx_), wide<T, N, x86_256_> const &a0) noexcept
@@ -112,15 +101,6 @@ namespace eve::detail
     else return rsqrt_x86(a0);
   }
 
-  //------------------------------------------------------------------------------------------------
-  // Pedantic 256 bits rsqrt
-  template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE auto rsqrt_(EVE_SUPPORTS(avx_)
-                             , pedantic_type const &
-                             , wide<T, N, x86_256_> const &a0) noexcept
-  {
-    return rsqrt_x86_pedantic(a0);
-  }
 
 //------------------------------------------------------------------------------------------------
   // 128 bits raw rsqrt

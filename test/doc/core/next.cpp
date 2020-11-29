@@ -1,4 +1,5 @@
 #include <eve/function/next.hpp>
+#include <eve/function/pedantic/next.hpp>
 #include <eve/constant/bitincrement.hpp>
 #include <eve/constant/eps.hpp>
 #include <eve/wide.hpp>
@@ -15,7 +16,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                  = " << std::setprecision(12) << pf << '\n'
             << "-> next(pf)            = " << eve::next(pf) << '\n'
-            << "-> pedantic(next)(pf) = " << eve::pedantic(eve::next)(pf) << '\n'
+            << "-> pedantic(next)(pf)  = " << eve::pedantic(eve::next)(pf) << '\n'
             << "<- pi                  = " << pi << '\n'
             << "-> next(pi)            = " << eve::next(pi) << '\n';
 

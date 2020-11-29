@@ -19,6 +19,7 @@
 #include <eve/function/exp.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/function/is_gez.hpp>
 #include <eve/function/is_less_equal.hpp>
 #include <eve/function/is_ltz.hpp>
 #include <eve/function/pow_abs.hpp>
@@ -115,4 +116,3 @@ namespace eve::detail
     return stirling(regular_type(), x);
   }
 }
-

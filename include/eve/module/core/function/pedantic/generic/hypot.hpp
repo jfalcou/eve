@@ -18,7 +18,7 @@
 #include <eve/function/fma.hpp>
 #include <eve/function/is_infinite.hpp>
 #include <eve/function/is_nan.hpp>
-#include <eve/function/ldexp.hpp>
+#include <eve/function/pedantic/ldexp.hpp>
 #include <eve/function/logical_or.hpp>
 #include <eve/function/logical_and.hpp>
 #include <eve/function/min.hpp>

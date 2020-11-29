@@ -30,13 +30,14 @@
 #include <eve/function/is_less.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/is_ngez.hpp>
+#include <eve/function/pedantic.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/sub.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
 
 namespace eve::detail
 {
-  template<floating_real_value TD>
+  template<floating_real_value T>
   EVE_FORCEINLINE constexpr T log10_(EVE_SUPPORTS(cpu_), pedantic_type const &, T a0) noexcept
   {
     if constexpr( has_native_abi_v<T> )
@@ -188,7 +189,7 @@ namespace eve::detail
       }
     }
     else
-      return apply_over(pedantic_type(log10), a0);
+      return apply_over(pedantic(log10), a0);
   }
 
   template<floating_real_scalar_value T, decorator D>

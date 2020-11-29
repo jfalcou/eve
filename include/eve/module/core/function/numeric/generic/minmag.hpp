@@ -18,11 +18,7 @@
 #include <eve/function/abs.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_nan.hpp>
-#include <eve/function/is_not_greater_equal.hpp>
-#include <eve/function/min.hpp>
 #include <eve/function/numeric.hpp>
-#include <eve/function/regular.hpp>
-#include <eve/function/saturated.hpp>
 #include <eve/platform.hpp>
 
 #include <type_traits>
@@ -30,14 +26,16 @@
 namespace eve::detail
 {
   template<real_value T, real_value U>
-  EVE_FORCEINLINE auto minmag_(EVE_SUPPORTS(cpu_), numeric_type const &, T const &a, U const &b) noexcept
+  EVE_FORCEINLINE auto minmag_(EVE_SUPPORTS(cpu_), numeric_type const &
+                              , T const &a, U const &b) noexcept
       requires compatible_values<T, U>
   {
     return arithmetic_call(numeric(minmag), a, b);
   }
 
   template<real_value T, decorator D>
-  EVE_FORCEINLINE auto minmag_(EVE_SUPPORTS(cpu_), numeric_type const &, T const &a, T const &b) noexcept
+  EVE_FORCEINLINE auto minmag_(EVE_SUPPORTS(cpu_), numeric_type const &
+                              , T const &a, T const &b) noexcept
   {
     auto aa = if_else(is_nan(a), b, a);
     auto bb = if_else(is_nan(b), a, b);

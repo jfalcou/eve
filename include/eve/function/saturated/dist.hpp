@@ -10,5 +10,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/include/function/dist.hpp>
+#include <eve/function/dist.hpp>
 #include <eve/module/core/function/saturated/generic/dist.hpp>

@@ -10,5 +10,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/include/function/log.hpp>
+#include <eve/function/log.hpp>
 #include <eve/module/math/function/pedantic/generic/log.hpp>

@@ -32,7 +32,7 @@
 #include <eve/function/is_less.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/is_ngez.hpp>
-#include <eve/function/musl.hpp>
+#include <eve/function/regular.hpp>
 #include <eve/function/plain.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/sub.hpp>
@@ -194,6 +194,6 @@ namespace eve::detail
     if constexpr( current_api < avx2 )
       return plain(log10)(v);
     else
-      return musl_(log10)(v);
+      return log10_(EVE_RETARGET(cpu_), regular_type{}, v);//regular(log10)(v);
   }
 }

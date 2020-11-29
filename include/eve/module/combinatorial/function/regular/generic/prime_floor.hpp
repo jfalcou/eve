@@ -17,6 +17,7 @@
 #include <eve/function/average.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/function/converter.hpp>
+#include <eve/function/inc.hpp>
 #include <eve/function/nth_prime.hpp>
 #include <eve/function/if_else.hpp>
 #include <type_traits>

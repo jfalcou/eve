@@ -22,6 +22,7 @@
 #include <eve/function/abs.hpp>
 #include <eve/function/binarize.hpp>
 #include <eve/function/bit_xor.hpp>
+#include <eve/function/is_less_equal.hpp>
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/is_not_less_equal.hpp>
 #include <eve/function/rempio2.hpp>

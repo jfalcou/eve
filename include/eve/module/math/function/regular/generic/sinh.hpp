@@ -17,6 +17,7 @@
 #include <eve/function/exp.hpp>
 #include <eve/function/expm1.hpp>
 #include <eve/function/inc.hpp>
+#include <eve/function/is_gtz.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/constant/half.hpp>
 #include <eve/constant/one.hpp>

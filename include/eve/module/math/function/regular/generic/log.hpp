@@ -24,12 +24,14 @@
 #include <eve/function/bit_and.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_or.hpp>
+#include <eve/function/converter.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/is_ngez.hpp>
+#include <eve/function/regular.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/sub.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
@@ -165,9 +167,8 @@ namespace eve::detail
       return apply_over(D()(log), a0);
   }
 
-  template<floating_real_scalar_value T, decorator D>
-  /*EVE_FORCEINLINE*/ constexpr auto log_(EVE_SUPPORTS(cpu_), D const &, T x) noexcept
-      requires(is_one_of<D>(types<regular_type, pedantic_type> {}))
+  template<floating_real_scalar_value T>
+  /*EVE_FORCEINLINE*/ constexpr auto log_(EVE_SUPPORTS(cpu_), T x) noexcept
   {
     using uiT = as_integer_t<T, unsigned>;
     using iT  = as_integer_t<T, signed>;
@@ -285,6 +286,6 @@ namespace eve::detail
   template<floating_real_value T>
   /*EVE_FORCEINLINE*/ constexpr T log_(EVE_SUPPORTS(cpu_), T x) noexcept
   {
-    return log(regular_type(), x);
+    return log(regular_type{}, x);
   }
 }

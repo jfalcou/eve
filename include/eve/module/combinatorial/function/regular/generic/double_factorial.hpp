@@ -20,7 +20,7 @@
 #include <eve/function/inc.hpp>
 #include <eve/function/factorial.hpp>
 #include <eve/function/fma.hpp>
-#include <eve/function/ldexp.hpp>
+#include <eve/function/pedantic/ldexp.hpp>
 #include <eve/function/tgamma.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/converter.hpp>

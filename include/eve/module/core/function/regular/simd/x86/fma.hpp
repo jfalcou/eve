@@ -89,40 +89,4 @@ namespace eve::detail
     else
       return fma_(EVE_RETARGET(cpu_), a, b, c);
   }
-
-  /////////////////////////////////////////////////////////////////////////////////
-  /// pedantic numeric
-  template<decorator D, real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, x86_128_> fma_(EVE_SUPPORTS(avx2_),
-                                        D const &,
-                                        wide<T, N, x86_128_> const &a,
-                                        wide<T, N, x86_128_> const &b,
-                                        wide<T, N, x86_128_> const &c) noexcept
-  {
-    if constexpr( supports_fma3 || supports_fma4  )
-    {
-      return fma(a, b, c);
-    }
-    else
-    {
-      return fma_(EVE_RETARGET(cpu_), D(), a, b, c);
-    }
-  }
-
-  template<decorator D, real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, x86_256_> fma_(EVE_SUPPORTS(avx2_),
-                                        D const &,
-                                        wide<T, N, x86_256_> const &a,
-                                        wide<T, N, x86_256_> const &b,
-                                        wide<T, N, x86_256_> const &c) noexcept
-  {
-    if constexpr( supports_fma3 || supports_fma4  )
-    {
-      return fma(a, b, c);
-    }
-    else
-    {
-      return fma_(EVE_RETARGET(cpu_), D(), a, b, c);
-    }
-  }
 }

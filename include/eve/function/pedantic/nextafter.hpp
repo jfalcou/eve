@@ -10,5 +10,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/include/function/nextafter.hpp>
+#include <eve/function/nextafter.hpp>
 #include <eve/module/core/function/pedantic/generic/nextafter.hpp>

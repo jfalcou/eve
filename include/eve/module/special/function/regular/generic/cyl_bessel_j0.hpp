@@ -15,6 +15,7 @@
 #include <eve/function/all.hpp>
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/function/is_infinite.hpp>
 #include <eve/function/none.hpp>
 #include <eve/function/sincos.hpp>
 #include <eve/function/cos.hpp>

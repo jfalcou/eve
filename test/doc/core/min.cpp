@@ -1,4 +1,6 @@
 #include <eve/function/min.hpp>
+#include <eve/function/pedantic/min.hpp>
+#include <eve/function/numeric/min.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>

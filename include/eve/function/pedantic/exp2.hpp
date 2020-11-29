@@ -10,5 +10,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/include/function/exp2.hpp>
+#include <eve/function/exp2.hpp>
 #include <eve/module/math/function/pedantic/generic/exp2.hpp>

@@ -21,6 +21,7 @@
 #include <eve/function/fms.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/function/is_ltz.hpp>
 #include <eve/function/is_nltz.hpp>
 #include <eve/function/is_nlez.hpp>
 #include <eve/function/is_flint.hpp>

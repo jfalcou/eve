@@ -25,6 +25,7 @@
 #include <eve/function/fms.hpp>
 #include <eve/function/frexp.hpp>
 #include <eve/function/is_flint.hpp>
+#include <eve/function/is_gtz.hpp>
 #include <eve/function/is_infinite.hpp>
 #include <eve/function/is_negative.hpp>
 #include <eve/function/is_nez.hpp>

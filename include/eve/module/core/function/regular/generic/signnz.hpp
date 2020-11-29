@@ -21,7 +21,7 @@
 
 namespace eve::detail
 {
-  template<real_value T, decorator D>
+  template<real_value T>
   EVE_FORCEINLINE T signnz_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   {
     if constexpr( has_native_abi_v<T> )

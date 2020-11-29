@@ -12,6 +12,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/constant/zero.hpp>
+#include <eve/constant/valmax.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/abs.hpp>
@@ -74,4 +75,3 @@ namespace eve::detail
   }
 
 }
-

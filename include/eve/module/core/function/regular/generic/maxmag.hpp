@@ -39,7 +39,7 @@ namespace eve::detail
       auto bb  = eve::abs(b);
       if constexpr( simd_value<T> )
       {
-        auto tmp = if_else(is_not_greater_equal(aa, bb), b, D()(eve::max)(a, b));
+        auto tmp = if_else(is_not_greater_equal(aa, bb), b, eve::max(a, b));
         return if_else(is_not_greater_equal(bb, aa), a, tmp);
       }
       else

@@ -19,7 +19,6 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_greater_equal.hpp>
 #include <eve/function/oneminus.hpp>
-#include <eve/function/rec.hpp>
 #include <eve/function/shl.hpp>
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/fma.hpp>
@@ -31,6 +30,8 @@
 #include <eve/constant/nan.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
+
+#include <eve/function/rec.hpp>
 
 namespace eve::detail
 {
@@ -232,7 +233,7 @@ namespace eve::detail
       auto test = is_eqz(swap_bit);
       y = if_else(test,rec(y),-y);
       y = fma(dxr, fma(y, y, one(eve::as<T>())), y);
-      return if_else(aa0lteps, pedantic(rec)(a0), bit_xor(y, bitofsign(a0)));
+      return if_else(aa0lteps, /*pedantic*/(rec)(a0), bit_xor(y, bitofsign(a0)));
     }
   }
 }
