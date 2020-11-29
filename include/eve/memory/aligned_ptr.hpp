@@ -19,7 +19,7 @@
 namespace eve
 {
   template< typename Type
-          , std::size_t Alignment = alignment_v<Type>
+          , std::size_t Alignment = sizeof(Type) * expected_cardinal_v<Type>
           >
   requires(is_power_of_2(Alignment))
   struct aligned_ptr
@@ -74,8 +74,9 @@ namespace eve
 
     aligned_ptr &operator-=(std::ptrdiff_t o) noexcept
     {
-      EVE_ASSERT(is_aligned<Alignment>(pointer_ - o),
-                 (void *)(pointer_) << " - " << o << " is not aligned on " << Alignment << ".");
+      EVE_ASSERT( is_aligned<Alignment>(pointer_ - o)
+                , (void *)(pointer_) << " - " << o << " is not aligned on " << Alignment << "."
+                );
 
       pointer_ -= o;
       return *this;
