@@ -55,20 +55,10 @@ namespace eve
     template<typename T, typename N = expected_cardinal_t<T>>
     using rebind = wide<T,N>;
 
-    static constexpr size_type    static_size = Size::value;
-    static constexpr std::size_t  static_alignment = []()
-    {
-      if constexpr( std::is_same_v<aggregated_,ABI> )
-      {
-        return storage_type::value_type::static_alignment;
-      }
-      else
-      {
-        std::size_t native = alignof(storage_type);
-        std::size_t limit  = Size::value * sizeof(Type);
-        return std::min(limit, native);
-      }
-    }();
+    static constexpr size_type  static_size       = Size::value;
+    static constexpr size_type  static_alignment  = std::min( sizeof(Type)*Size::value
+                                                            , alignof(storage_type)
+                                                            );
 
     //==============================================================================================
     // Default constructor
@@ -80,9 +70,9 @@ namespace eve
     //==============================================================================================
     EVE_FORCEINLINE wide(storage_type const &r) noexcept : data_(r) {}
 
-    //==============================================================================================
+    //====================================================²==========================================
     // Constructs a wide from a Range
-    //==============================================================================================
+    //====================================================²==========================================
     template<std::input_iterator Iterator>
     EVE_FORCEINLINE explicit wide(Iterator b, Iterator e) noexcept
                   : data_(detail::load(eve::as_<wide>{}, abi_type{}, b, e))
@@ -203,7 +193,10 @@ namespace eve
     //==============================================================================================
     // alignment interface
     //==============================================================================================
-    static EVE_FORCEINLINE constexpr size_type alignment() noexcept { return static_alignment; }
+    static EVE_FORCEINLINE constexpr size_type alignment() noexcept
+    {
+      return static_alignment;
+    }
 
     //==============================================================================================
     // array-like interface

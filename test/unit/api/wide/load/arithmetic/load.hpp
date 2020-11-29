@@ -19,10 +19,11 @@
 template<typename T, typename N>
 auto data_block()
 {
-  using alloc_t = eve::aligned_allocator<T, eve::wide<T, N>::static_alignment>;
+  constexpr std::ptrdiff_t algt = eve::alignment_v<eve::wide<T, N>>;
+  using alloc_t = eve::aligned_allocator<T, algt>;
 
   auto nb_elem  = 4096/sizeof(T);
-  auto start    = nb_elem - N::value;
+  auto start    = nb_elem - std::max(algt,N::value);
   std::vector<T, alloc_t> ref(nb_elem);
 
   T k = {};
@@ -67,7 +68,7 @@ TTS_CASE_TPL("Check ctor from const unaligned pointer for wide", EVE_TYPE )
 
 TTS_CASE_TPL("Check ctor from aligned pointer for wide", EVE_TYPE )
 {
-  auto constexpr algt = T::static_alignment;
+  auto constexpr algt = eve::alignment_v<T>;
   auto [data,idx]     = data_block<EVE_VALUE, eve::fixed<EVE_CARDINAL>>();
   auto* ref_ptr       = &data[idx];
 
@@ -85,7 +86,7 @@ TTS_CASE_TPL("Check ctor from aligned pointer for wide", EVE_TYPE )
 
 TTS_CASE_TPL("Check ctor from const aligned pointer for wide", EVE_TYPE )
 {
-  auto constexpr algt = T::static_alignment;
+  auto constexpr algt = eve::alignment_v<T>;
   auto [data,idx]     = data_block<EVE_VALUE, eve::fixed<EVE_CARDINAL>>();
   auto const* ref_ptr = &data[idx];
 

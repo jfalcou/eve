@@ -13,6 +13,7 @@
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/traits/alignment.hpp>
 #include <eve/forward.hpp>
 #include <eve/as.hpp>
 
@@ -45,7 +46,9 @@ namespace eve
     return *ptr;
   }
 
-  template<typename T, std::size_t Align, typename = std::enable_if_t<(Align >= alignof(T))>>
+  template< typename T, std::size_t Align
+          , typename = std::enable_if_t<(Align >= alignment_v<T>)>
+          >
   EVE_FORCEINLINE auto load(aligned_ptr<T const, Align> ptr, as_<T> const &) noexcept
   {
     return *ptr;
@@ -53,7 +56,7 @@ namespace eve
 
   template<typename T, std::size_t Align>
   EVE_FORCEINLINE auto load(aligned_ptr<T, Align> ptr, as_<T> const &) noexcept
-  requires(Align >= alignof(T))
+  requires(Align >= alignment_v<T>)
   {
     return *ptr;
   }

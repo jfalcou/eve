@@ -8,18 +8,26 @@
  -->
 <meta charset="utf-8" lang="en"><style class="fallback">body{visibility:hidden;}</style>
                       **Expressive Vector Engine**
-                        Type traits
-<br>
-Using **EVE** types and functions may requires informations about some properties of the processed
-types that are accessible through the following traits.
-
-The header `eve/traits.hpp` allows the inclusion of all **EVE** specific traits.
 
   (insert ../../crumbs.html here)
 
-  (insert traits/cardinal.html        here)
-  (insert traits/element_type.html    here)
-  (insert traits/as_wide.html         here)
+# Type Traits
+
+Using **EVE** types and functions may requires informations about some properties of the processed
+types that are accessible through the following traits.
+
+## Types and Helpers
+
+**Convenience header:** <script type="preformatted">`#include <eve/traits.hpp>`</script>
+
+[`eve::alignment`<br>`eve::alignment_v` ](traits/alignment.html)
+:   computes the proper alignment of a given type
+[`eve::cardinal`<br>`eve::cardinal_t`<br>`eve::cardinal-v`](traits/cardinal.html)
+:   computes the cardinal of a given type
+[`eve::element_type`<br>`eve::element_type_t`](traits/element_type.html)
+:   retrieves the most fundamental type of a given type
+[`eve::as_wide`<br>`eve::as_wide_t`](traits/as_wide.html)
+:   converts a type into the proper SIMD type
 
 <!-- End of Document -->
 <style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'none'};</script>

@@ -24,10 +24,11 @@ using eve::fixed;
 template<typename T, typename N>
 auto data_block()
 {
-  using alloc_t = eve::aligned_allocator<logical<T>, logical<eve::wide<T, N>>::static_alignment>;
+  constexpr std::ptrdiff_t algt = eve::logical<eve::wide<T, N>>::alignment();
+  using alloc_t = eve::aligned_allocator<eve::logical<T>, algt>;
 
   auto nb_elem  = 4096/sizeof(T);
-  auto start    = nb_elem - N::value;
+  auto start    = nb_elem - std::max(algt,N::value);
   std::vector<logical<T>, alloc_t> ref(nb_elem);
 
   bool k = true;
@@ -70,7 +71,7 @@ TTS_CASE_TPL( "Check ctor from const unaligned pointer for wide", EVE_TYPE )
 
 TTS_CASE_TPL( "Check ctor from aligned pointer for wide", EVE_TYPE )
 {
-  auto constexpr  algt        = logical<T>::static_alignment;
+  auto constexpr  algt        = eve::alignment_v<eve::logical<T>>;
   auto            [data,idx]  = data_block<EVE_VALUE, eve::fixed<EVE_CARDINAL>>();
   auto*           ref_ptr     = &data[idx];
 
@@ -88,7 +89,7 @@ TTS_CASE_TPL( "Check ctor from aligned pointer for wide", EVE_TYPE )
 
 TTS_CASE_TPL("Check ctor from const aligned pointer for wide", EVE_TYPE)
 {
-  auto constexpr  algt        = logical<T>::static_alignment;
+  auto constexpr  algt        = eve::alignment_v<eve::logical<T>>;
   auto            [data,idx]  = data_block<EVE_VALUE, eve::fixed<EVE_CARDINAL>>();
   auto const*     ref_ptr     = &data[idx];
 

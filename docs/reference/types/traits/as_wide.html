@@ -7,8 +7,13 @@
   SPDX-License-Identifier: MIT
  -->
 <meta charset="utf-8" lang="en"><style class="fallback">body{visibility:hidden;}</style>
+                            **Expressive Vector Engine**
+                              `eve::as_wide`
+<br>
 
-eve::as_wide
+(insert ../../../crumbs.html here)
+
+Synopsis
 ====================================================================================================
 
 **Required header:**
@@ -37,10 +42,13 @@ Build a [SIMD type](../../../concept.html#simd_value) from a given [element type
    evaluates to `wide&lt;eve::element_t&lt;Type>,Cardinal>`, i.e it overwrites the initial type's cardinal.
 
  - If `Type` is a template type satisfies Rebindable, `eve::as_wide&lt;Type,Cardinal>::type`
-   evaluates to `std::tuple&lt;eve::as_wide_t&lt;Ts>...>`.
+   evaluates to `std::tuple&lt;eve::as_wide_t&lt;Ts,Cardinal>...>`.
 
- - If `Type` is an instance of `std::pair` or `std::array`, evaluates and instance of the
-   same type but with its parameters replaced by the proper evaluation of `eve::as_wide_t`.
+ - If `Type` is an instance of `std::pair&lt;T,U>`, evaluates `std::pair&lt;eve::as_wide_t&lt;T>,eve::as_wide_t&lt;U>>`.
+
+ - If `Type` is an instance of `std::array&lt;T,N>`, evaluates `std::array&lt;eve::as_wide_t&lt;T>,N>`.
+
+
 
 **Member types:**
 
@@ -118,7 +126,7 @@ true
 
 <!-- End of Document -->
 <style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'none'};</script>
-<link rel="stylesheet" href="../../eve.css">
+<link rel="stylesheet" href="../../../eve.css">
 <!-- Markdeep: -->
-<script src="../../markdeep.min.js"></script>
+<script src="../../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?" charset="utf-8"></script>

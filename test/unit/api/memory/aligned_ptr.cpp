@@ -21,15 +21,19 @@ TTS_CASE("aligned_ptr constructor from nullptr")
   TTS_EQUAL(nullptr_constructed_ptr       , nullptr);
 }
 
-TTS_CASE("aligned_ptr factory functions")
+TTS_CASE("aligned_ptr factory functions - Default SIMD alignment")
 {
-  alignas(8) std::array<char, 10> values;
+  alignas(32) std::array<char, 64> values;
   TTS_EQUAL(eve::as_aligned(&values[ 0 ]).get()   , &values[ 0 ]);
   TTS_EQUAL(eve::as_aligned(&values[ 0 ])         , &values[ 0 ]);
   TTS_EQUAL(eve::as_aligned(&values[ 0 ])         , eve::as_aligned(&values[ 0 ]));
   TTS_NOT_EQUAL(eve::as_aligned(&values[ 0 ])     , &values[ 3 ]);
-  TTS_NOT_EQUAL(eve::as_aligned(&values[ 0 ])     , eve::as_aligned(&values[ 3 ]));
+  TTS_NOT_EQUAL(eve::as_aligned(&values[ 0 ])     , eve::as_aligned(&values[ 32 ]));
+}
 
+TTS_CASE("aligned_ptr factory functions - Specific alignment")
+{
+  alignas(8) std::array<char, 64> values;
   TTS_EQUAL(eve::as_aligned<8>(&values[ 0 ]).get(), &values[ 0 ]);
   TTS_EQUAL(eve::as_aligned<8>(&values[ 0 ])      , &values[ 0 ]);
   TTS_EQUAL(eve::as_aligned<8>(&values[ 0 ])      , eve::as_aligned<8>(&values[ 0 ]));
@@ -42,13 +46,15 @@ TTS_CASE("aligned_ptr ordering")
   char                      values[ 2 ];
   eve::aligned_ptr<char, 1> ptr = &values[ 0 ];
   eve::aligned_ptr<char, 1> ptr1= ptr;
+
   ptr1++;
   TTS_EXPECT(ptr < ptr1);
+
   ptr1--;
   TTS_EXPECT(ptr ==  ptr1);
+
   ptr1--;
   TTS_EXPECT(ptr >  ptr1);
-
 }
 
 TTS_CASE("aligned_ptr pre/post increment & decrement")
@@ -58,10 +64,13 @@ TTS_CASE("aligned_ptr pre/post increment & decrement")
 
   ptr++;
   TTS_EQUAL(ptr.get(), &values[ 1 ]);
+
   ptr--;
   TTS_EQUAL(ptr.get(), &values[ 0 ]);
+
   ++ptr;
   TTS_EQUAL(ptr.get(), &values[ 1 ]);
+
   --ptr;
   TTS_EQUAL(ptr.get(), &values[ 0 ]);
 }
@@ -79,13 +88,13 @@ TTS_CASE("aligned_ptr provides pointer-like interface")
     type values[2] = {{42},{17}};
     alignas(8) type extra_aligned_value{87};
 
-    eve::aligned_ptr<type>    ptr           = &values[0];
-    eve::aligned_ptr<type>    other_ptr     = &values[1];
+    eve::aligned_ptr<type, 1> ptr           = &values[0];
+    eve::aligned_ptr<type, 1> other_ptr     = &values[1];
     eve::aligned_ptr<type, 8> realigned_ptr = &extra_aligned_value;
 
     TTS_AND_THEN("we check the proper default alignment")
     {
-      TTS_EQUAL(ptr.alignment(), alignof(type));
+      TTS_EQUAL(ptr.alignment(), eve::alignment_v<type>);
     }
 
     TTS_AND_THEN("we check access to its pointee members")

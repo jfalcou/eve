@@ -37,7 +37,7 @@ TTS_CASE_TPL("Check store behavior to unaligned logical pointer",EVE_TYPE)
 
 TTS_CASE_TPL("Check store behavior to aligned logical pointer",EVE_TYPE)
 {
-  constexpr auto algt = T::alignment();
+  constexpr auto algt = eve::alignment_v<T>;
   std::array<eve::logical<EVE_VALUE>, 3 * EVE_CARDINAL> ref;
   eve::logical<T> value([](auto i, auto) { return i % 3 == 0; });
 
@@ -48,7 +48,7 @@ TTS_CASE_TPL("Check store behavior to aligned logical pointer",EVE_TYPE)
     ref[ i + 2*EVE_CARDINAL ] = (i % 3 == 0);
   }
 
-  alignas(T::alignment()) std::array<eve::logical<EVE_VALUE>, 3 * EVE_CARDINAL> target;
+  alignas(algt) std::array<eve::logical<EVE_VALUE>, 3 * EVE_CARDINAL> target;
 
   eve::store(value, eve::as_aligned<algt>(&target[ 0                ]) );
   eve::store(value, eve::as_aligned<algt>(&target[ EVE_CARDINAL     ]) );
