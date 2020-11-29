@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/min.hpp>
+#include <eve/function/numeric/min.hpp>
 #include <eve/function/numeric.hpp>
 #include <eve/function/all.hpp>
 #include <eve/function/is_negative.hpp>
