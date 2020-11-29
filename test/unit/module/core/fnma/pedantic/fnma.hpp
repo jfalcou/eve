@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/fnma.hpp>
+#include <eve/function/pedantic/fnma.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/sqr.hpp>

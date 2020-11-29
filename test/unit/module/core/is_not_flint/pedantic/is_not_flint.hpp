@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/is_not_flint.hpp>
+#include <eve/function/pedantic/is_not_flint.hpp>
 #include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>
 #include <eve/constant/maxflint.hpp>

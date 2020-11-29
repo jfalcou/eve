@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/lerp.hpp>
+#include <eve/function/pedantic/lerp.hpp>
 #include <eve/function/average.hpp>
 #include <eve/function/next.hpp>
 #include <eve/function/prev.hpp>
