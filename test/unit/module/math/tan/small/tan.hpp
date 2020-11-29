@@ -14,6 +14,8 @@
 #include <eve/constant/minf.hpp>
 #include <eve/constant/pio_4.hpp>
 #include <eve/constant/pio_2.hpp>
+#include <eve/function/is_negative.hpp>
+#include <eve/function/is_positive.hpp>
 #include <eve/function/prev.hpp>
 #include <eve/function/ulpdist.hpp>
 #include <eve/platform.hpp>

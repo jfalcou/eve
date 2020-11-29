@@ -20,7 +20,7 @@
 #include <eve/function/is_unordered.hpp>
 #include <eve/function/next.hpp>
 #include <eve/function/prev.hpp>
-#include <eve/function/regular.hpp>
+#include <eve/function/pedantic.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -46,7 +46,7 @@ namespace eve::detail
     }
     else if constexpr( simd_value<T> )
     {
-      auto tmp = if_else(a < b, next(a), if_else(b < a, prev(a), a));
+      return if_else( is_unordered(a, b), allbits, if_else(a < b, next(a), if_else(b < a, prev(a), a)));
     }
   }
 }

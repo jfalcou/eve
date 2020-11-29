@@ -32,6 +32,7 @@
 #include <eve/function/saturated.hpp>
 #include <eve/function/saturated/convert.hpp>
 #include <eve/function/saturated/div.hpp>
+#include <eve/function/saturated/abs.hpp>
 
 namespace eve::detail
 {

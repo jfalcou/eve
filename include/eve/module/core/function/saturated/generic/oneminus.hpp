@@ -15,6 +15,7 @@
 #include <eve/constant/valmin.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/function/binarize.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/saturated.hpp>
 

@@ -9,6 +9,7 @@
 **/
 //==================================================================================================
 #include <eve/function/nearest.hpp>
+#include <eve/function/converter.hpp>
 #include <type_traits>
 
 TTS_CASE_TPL("Check inearest return type", EVE_TYPE)

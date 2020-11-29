@@ -13,6 +13,8 @@
 #include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/pi.hpp>
+#include <eve/constant/valmax.hpp>
+#include <eve/constant/valmin.hpp>
 #include <cmath>
 
 TTS_CASE_TPL("Check sincos return type", EVE_TYPE)

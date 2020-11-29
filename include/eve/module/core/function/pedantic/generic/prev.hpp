@@ -21,7 +21,6 @@
 #include <eve/function/is_nan.hpp>
 #include <eve/function/is_negative.hpp>
 #include <eve/function/is_positive.hpp>
-#include <eve/function/dec.hpp>
 #include <eve/function/next.hpp>
 #include <eve/function/sub.hpp>
 #include <eve/constant/allbits.hpp>
@@ -31,6 +30,8 @@
 #include <type_traits>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
+#include <eve/function/saturated/dec.hpp>
+#include <eve/function/saturated/sub.hpp>
 
 namespace eve::detail
 {

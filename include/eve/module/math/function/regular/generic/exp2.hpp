@@ -32,8 +32,9 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_greater_equal.hpp>
 #include <eve/function/is_less_equal.hpp>
+#include <eve/function/is_ltz.hpp>
 #include <eve/function/is_nez.hpp>
-#include <eve/function/ldexp.hpp>
+#include <eve/function/pedantic/ldexp.hpp>
 #include <eve/function/min.hpp>
 #include <eve/function/nearest.hpp>
 #include <eve/function/oneminus.hpp>
@@ -85,7 +86,7 @@ namespace eve::detail
         T    c = fnma(t, h, x); // x-h*t
         x      = oneminus(((-(x * c) / (T(2) - c)) - x));
       }
-      auto z = D()(ldexp)(x, k);
+      auto z = pedantic(ldexp)(x, k);
       if constexpr( simd_value<T> )
       {
         z = if_else(xltminlog2, eve::zero, z);

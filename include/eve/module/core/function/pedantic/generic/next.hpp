@@ -15,7 +15,7 @@
 #include <eve/function/saturated.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/function/regular.hpp>
-#include <eve/function/add.hpp>
+#include <eve/function/saturated/add.hpp>
 #include <eve/function/logical_and.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/function/if_else.hpp>
@@ -23,7 +23,7 @@
 #include <eve/function/is_negative.hpp>
 #include <eve/function/is_positive.hpp>
 #include <eve/function/is_nan.hpp>
-#include <eve/function/inc.hpp>
+#include <eve/function/saturated/inc.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/constant/allbits.hpp>
 #include <eve/constant/zero.hpp>

@@ -190,12 +190,4 @@ namespace eve::detail
     z = pedantic(ldexp)(z, i);
     return z;
   }
-
-  template<floating_real_value T, floating_real_value U>
-  EVE_FORCEINLINE auto
-  pow_abs_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const &a, U const &b) noexcept
-      requires compatible_values<T, U>
-  {
-    return arithmetic_call(pedantic(pow_abs), a, b);
-  }
 }
