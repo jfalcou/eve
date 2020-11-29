@@ -11,37 +11,30 @@
 #pragma once
 
 #include <eve/concept/compatible.hpp>
-#include <eve/detail/concepts.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/pedantic/signnz.hpp>
+#include <eve/function/pedantic/fma.hpp>
+#include <eve/function/pedantic/fnma.hpp>
 #include <eve/function/pedantic.hpp>
+
+#include <type_traits>
 
 namespace eve::detail
 {
-  template<real_value T>
-  EVE_FORCEINLINE T negatenz_(EVE_SUPPORTS(cpu_), pedantic_type const &
-                             , T const &a, T const &b) noexcept
-  requires has_native_abi_v<T>
+  template<floating_real_value T, floating_real_value U, floating_real_value V>
+  EVE_FORCEINLINE auto lerp_(EVE_SUPPORTS(cpu_), pedantic_type const &
+                            , T const &a, U const &b, V const &t) noexcept
+      requires compatible_values<T, U> &&compatible_values<T, V>
   {
-    if constexpr( signed_value<T> )
-    {
-      return a*pedantic(signnz)(b);
-    }
-    else
-    {
-      return a;
-    }
+    return arithmetic_call(pedantic(lerp), a, b, t);
   }
 
-  template<real_value T, real_value U>
-  EVE_FORCEINLINE auto negatenz_(EVE_SUPPORTS(cpu_), pedantic_type const &
-                                , T const &a, U const &b) noexcept
-  requires std::same_as<element_type_t<T>, element_type_t<U>>
+  template<floating_real_value T>
+  EVE_FORCEINLINE T lerp_(EVE_SUPPORTS(cpu_), pedantic_type const &
+                         , T const &a, T const &b, T const &t) noexcept
   {
-    return arithmetic_call(pedantic(negatenz), a, b);
+    return pedantic(fma)(t, b, pedantic(fnma)(t, a, a));
   }
-
 }

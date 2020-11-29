@@ -28,7 +28,7 @@
 #include <eve/function/inc.hpp>
 #include <eve/function/is_greater_equal.hpp>
 #include <eve/function/is_less_equal.hpp>
-#include <eve/function/ldexp.hpp>
+#include <eve/function/pedantic/ldexp.hpp>
 #include <eve/function/nearest.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/pedantic.hpp>
@@ -88,7 +88,7 @@ namespace eve::detail
                   - px);
         c = inc(x2 + x2);
       }
-      auto z = D()(ldexp)(c, k);
+      auto z = pedantic(ldexp)(c, k);
       if constexpr( simd_value<T> )
       {
         z = if_else(xltminlog10, eve::zero, z);

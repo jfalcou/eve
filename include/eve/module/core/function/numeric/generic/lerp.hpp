@@ -15,29 +15,26 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_nan.hpp>
+#include <eve/function/numeric/fma.hpp>
+#include <eve/function/numeric/fnma.hpp>
 #include <eve/function/numeric.hpp>
-#include <eve/platform.hpp>
 
 #include <type_traits>
 
 namespace eve::detail
 {
-  template<real_value T, real_value U>
-  EVE_FORCEINLINE auto maxmag_(EVE_SUPPORTS(cpu_), numeric_type const &, T const &a, U const &b) noexcept
-      requires compatible_values<T, U>
+  template<floating_real_value T, floating_real_value U, floating_real_value V>
+  EVE_FORCEINLINE auto lerp_(EVE_SUPPORTS(cpu_), numeric_type const&
+                            , T const &a, U const &b, V const &t) noexcept
+      requires compatible_values<T, U> &&compatible_values<T, V>
   {
-    return arithmetic_call(numeric(maxmag), a, b);
+    return arithmetic_call(numeric(lerp), a, b, t);
   }
 
-  template<real_value T>
-  EVE_FORCEINLINE auto maxmag_(EVE_SUPPORTS(cpu_), numeric_type const &, T const &a, T const &b) noexcept
+  template<floating_real_value T>
+  EVE_FORCEINLINE T lerp_(EVE_SUPPORTS(cpu_), numeric_type const&
+                         , T const &a, T const &b, T const &t) noexcept
   {
-    auto aa = if_else(is_nan(a), b, a);
-    auto bb = if_else(is_nan(b), a, b);
-    auto z  = maxmag(aa, bb);
-    return z;
+    return numeric(fma)(t, b, numeric(fnma)(t, a, a));
   }
 }

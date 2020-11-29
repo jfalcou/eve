@@ -77,48 +77,6 @@ namespace eve::detail
   {
     return bit_cast(is_not_equal(a.bits(), b.bits()),as<logical<T>>());
   }
-
-  ///////////////////////////////////////////////////////////////////////////
-  // numeric decoarator -> nans are considered equal
-  template<real_value T, real_value U>
-  EVE_FORCEINLINE auto is_not_equal_(EVE_SUPPORTS(cpu_)
-                                , numeric_type const &
-                                , T const &a
-                                , U const &b) noexcept
-  requires compatible_values<T, U>
-  {
-    return arithmetic_call(numeric(is_not_equal), a, b);
-  }
-
-  template<real_value T, real_value U>
-  EVE_FORCEINLINE auto is_not_equal_(EVE_SUPPORTS(cpu_)
-                                , numeric_type const &
-                                , logical<T> const &a
-                                , logical<U> const &b) noexcept
-  requires compatible_values<T, U>
-  {
-    return arithmetic_call(is_not_equal, a, b);
-  }
-
-  template<real_value T>
-  EVE_FORCEINLINE auto is_not_equal_(EVE_SUPPORTS(cpu_)
-                                , numeric_type const &
-                                , T const &a
-                                , T const &b) noexcept
-   {
-     auto tmp = is_not_equal(a, b);
-     if constexpr(floating_value<T>)  return tmp && (is_not_nan(a) || is_not_nan(b));
-     else                             return tmp;
-   }
-
-  template<real_value T>
-  EVE_FORCEINLINE auto is_not_equal_(EVE_SUPPORTS(cpu_)
-                                , numeric_type const &
-                                , logical<T> const &a
-                                , logical<T> const &b) noexcept
-  {
-    return is_not_equal(a, b);
-  }
 }
 
 namespace eve
@@ -139,5 +97,3 @@ namespace eve
                                     , U const &b) noexcept
   requires different_value_type<T, U> = delete;
 }
-
-

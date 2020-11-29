@@ -28,18 +28,17 @@ namespace eve::detail
   template<real_value T, real_value U>
   EVE_FORCEINLINE auto minmag_(EVE_SUPPORTS(cpu_), numeric_type const &
                               , T const &a, U const &b) noexcept
-      requires compatible_values<T, U>
+  requires compatible_values<T, U>
   {
     return arithmetic_call(numeric(minmag), a, b);
   }
 
-  template<real_value T, decorator D>
+  template<real_value T>
   EVE_FORCEINLINE auto minmag_(EVE_SUPPORTS(cpu_), numeric_type const &
                               , T const &a, T const &b) noexcept
   {
     auto aa = if_else(is_nan(a), b, a);
     auto bb = if_else(is_nan(b), a, b);
-    auto z  = minmag(aa, bb);
-    return z;
+    return minmag(aa, bb);
   }
 }

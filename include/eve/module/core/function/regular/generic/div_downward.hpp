@@ -28,6 +28,7 @@
 #include <eve/function/saturated.hpp>
 #include <eve/function/saturated/convert.hpp>
 #include <eve/function/saturated/div.hpp>
+#include <eve/function/saturated/dec.hpp>
 
 namespace eve::detail
 {

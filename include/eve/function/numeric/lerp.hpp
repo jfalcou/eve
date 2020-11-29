@@ -10,5 +10,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/geommean.hpp>
-#include <eve/module/core/function/pedantic/generic/geommean.hpp>
+#include <eve/function/lerp.hpp>
+#include <eve/module/core/function/numeric/generic/lerp.hpp>

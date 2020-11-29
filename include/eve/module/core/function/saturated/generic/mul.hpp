@@ -24,6 +24,7 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/saturate.hpp>
 #include <eve/function/saturated.hpp>
+#include <eve/function/converter.hpp>
 
 namespace eve::detail
 {

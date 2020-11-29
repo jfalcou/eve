@@ -53,8 +53,8 @@ namespace eve::detail
   }
 
   template<floating_real_simd_value T>
-  EVE_FORCEINLINE auto pow_abs_(EVE_SUPPORTS(cpu_), pedantic_type const &,
-                               T const &a, T const &b) noexcept
+  EVE_FORCEINLINE auto pow_abs_(EVE_SUPPORTS(cpu_)
+                              , T const &a, T const &b) noexcept
   requires(has_native_abi_v<T>)
   {
     const T Oneo_16 = T(0.0625);
@@ -121,8 +121,8 @@ namespace eve::detail
   }
 
   template<floating_real_scalar_value T>
-  EVE_FORCEINLINE constexpr auto pow_abs_(EVE_SUPPORTS(cpu_), pedantic_type const &,
-                                          T const &a0, T const &a1) noexcept
+  EVE_FORCEINLINE constexpr auto pow_abs_(EVE_SUPPORTS(cpu_)
+                                         , T const &a0, T const &a1) noexcept
   {
     const T Oneo_16 = T(0.0625);
     using i_t       = as_integer_t<T>;

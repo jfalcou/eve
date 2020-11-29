@@ -56,7 +56,7 @@ namespace eve::detail
       }
       else if constexpr(integral_value<T>)
       {
-        return a+to_<T>(n);
+        return to_<T>(a+to_<T>(n));
       }
     }
     else
