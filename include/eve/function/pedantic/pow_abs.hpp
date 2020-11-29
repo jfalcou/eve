@@ -10,5 +10,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/include/function/pow_abs.hpp>
+#include <eve/function/pow_abs.hpp>
 #include <eve/module/math/function/pedantic/generic/pow_abs.hpp>

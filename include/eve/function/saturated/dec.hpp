@@ -10,5 +10,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/include/function/dec.hpp>
+#include <eve/function/dec.hpp>
 #include <eve/module/core/function/saturated/generic/dec.hpp>

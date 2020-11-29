@@ -17,6 +17,7 @@
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/convert.hpp>
+#include <eve/function/converter.hpp>
 #include <eve/function/exponent.hpp>
 #include <eve/function/pedantic/ldexp.hpp>
 #include <eve/function/max.hpp>
@@ -31,18 +32,18 @@
 
 namespace eve::detail
 {
-  ////////////////////////////////////////////////////////////////////////////
-  // pedantic/numeric
   template<real_value T, real_value U, real_value V>
   EVE_FORCEINLINE auto
-  fma_(EVE_SUPPORTS(cpu_), numeric_type const &, T const &a, U const &b, V const &c) noexcept
+  fma_(EVE_SUPPORTS(cpu_), numeric_type const &
+      , T const &a, U const &b, V const &c) noexcept
       requires compatible_values<T, U> &&compatible_values<T, V>
   {
-    return arithmetic_call(D()(fma), a, b, c);
+    return arithmetic_call(numeric(fma), a, b, c);
   }
 
   template<real_value T>
-  EVE_FORCEINLINE T fma_(EVE_SUPPORTS(cpu_), numeric_type const &, T const &a, T const &b, T const &c) noexcept
+  EVE_FORCEINLINE T fma_(EVE_SUPPORTS(cpu_), numeric_type const &
+                        , T const &a, T const &b, T const &c) noexcept
   requires has_native_abi_v<T>
   {
     using elt_t = element_type_t<T>;
@@ -68,7 +69,9 @@ namespace eve::detail
       // to perform the computations in a guaranted 2-complement environment
       // since signed integer overflows in C++ produce "undefined results"
       using u_t = as_integer_t<T, unsigned>;
-      return bit_cast(fma(bit_cast(a, as<u_t>()), bit_cast(b, as<u_t>()), bit_cast(c, as<u_t>())),
+      return bit_cast(fma(bit_cast(a, as<u_t>())
+                         , bit_cast(b, as<u_t>())
+                         , bit_cast(c, as<u_t>())),
                       as<T>());
     }
   }

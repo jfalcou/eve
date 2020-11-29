@@ -10,5 +10,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/include/function/rsqrt.hpp>
+#include <eve/function/rsqrt.hpp>
 #include <eve/module/core/function/pedantic/generic/rsqrt.hpp>
+
+#if defined(EVE_HW_X86)
+#  include <eve/module/core/function/pedantic/simd/x86/rsqrt.hpp>
+#endif

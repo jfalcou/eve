@@ -10,15 +10,15 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/function/dec.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/trunc.hpp>
 #include <eve/function/shl.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/function/bit_cast.hpp>
+#include <eve/function/converter.hpp>
+#include <eve/function/dec.hpp>
 #include <eve/constant/limitexponent.hpp>
 #include <eve/constant/minexponent.hpp>
 #include <eve/constant/maxexponent.hpp>

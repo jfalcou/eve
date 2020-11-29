@@ -15,7 +15,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/abs.hpp>
+#include <eve/function/saturated/abs.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_nan.hpp>
 #include <eve/function/is_not_greater_equal.hpp>
@@ -38,17 +38,16 @@ namespace eve::detail
   template<real_value T>
   EVE_FORCEINLINE auto maxmag_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const &a, T const &b) noexcept
   {
-      auto aa  = pedantic(eve::abs)(a);
-      auto bb  = pedantic(eve::abs)(b);
-      if constexpr( simd_value<T> )
-      {
-        auto tmp = if_else(is_not_greater_equal(aa, bb), b, D()(eve::max)(a, b));
-        return if_else(is_not_greater_equal(bb, aa), a, tmp);
-      }
-      else
-      {
-        return aa < bb ? b : bb < aa ? a : pedantic(eve::max)(a, b);
-      }
+    auto aa  = saturated(eve::abs)(a);
+    auto bb  = saturated(eve::abs)(b);
+    if constexpr( simd_value<T> )
+    {
+      auto tmp = if_else(is_not_greater_equal(aa, bb), b, pedantic(eve::max)(a, b));
+      return if_else(is_not_greater_equal(bb, aa), a, tmp);
+    }
+    else
+    {
+      return aa < bb ? b : bb < aa ? a : pedantic(eve::max)(a, b);
     }
   }
 }

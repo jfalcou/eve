@@ -10,5 +10,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/include/function/mul.hpp>
+#include <eve/function/mul.hpp>
 #include <eve/module/core/function/saturated/generic/mul.hpp>
+
+#if defined(EVE_HW_X86)
+#  include <eve/module/core/function/saturated/simd/x86/mul.hpp>
+#endif

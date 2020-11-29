@@ -42,7 +42,7 @@ namespace eve::detail
     }
     else if constexpr( simd_value<T> )
     {
-      return = if_else(a < b, next(a), if_else(b < a, prev(a), a));
+      return if_else(a < b, next(a), if_else(b < a, prev(a), a));
     }
   }
 }

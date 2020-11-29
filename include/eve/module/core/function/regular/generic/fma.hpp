@@ -32,7 +32,7 @@ namespace eve::detail
   }
 
   template<real_simd_value T>
-  EVE_FORCEINLINE auto fma_(EVE_SUPPORTS(cpu_), T const &a, T const &b, T const &c) noexcept
+  EVE_FORCEINLINE T fma_(EVE_SUPPORTS(cpu_), T const &a, T const &b, T const &c) noexcept
   requires has_native_abi_v<T>
   {
     return a * b + c; // fallback never taken if proper intrinsics are at hand

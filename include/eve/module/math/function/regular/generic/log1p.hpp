@@ -24,13 +24,16 @@
 #include <eve/function/bit_and.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_or.hpp>
+#include <eve/function/converter.hpp>
 #include <eve/function/dec.hpp>
+#include <eve/function/inc.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/is_ngez.hpp>
 #include <eve/function/oneminus.hpp>
+#include <eve/function/regular.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/sub.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>

@@ -42,7 +42,7 @@ namespace eve::detail
     }
     else
     {
-      return apply_over(pedantic_type(arg), a);
+      return apply_over(pedantic(arg), a);
     }
   }
 }

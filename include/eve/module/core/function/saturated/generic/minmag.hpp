@@ -19,7 +19,7 @@
 #include <eve/function/is_nan.hpp>
 #include <eve/function/is_not_greater_equal.hpp>
 #include <eve/function/saturated/abs.hpp>
-#include <eve/function/saturated/min.hpp>
+#include <eve/function/min.hpp>
 #include <eve/function/saturated.hpp>
 
 
@@ -29,23 +29,22 @@ namespace eve::detail
   EVE_FORCEINLINE auto minmag_(EVE_SUPPORTS(cpu_), saturated_type const &, T const &a, U const &b) noexcept
       requires compatible_values<T, U>
   {
-    return arithmetic_call(saturated_type(minmag), a, b);
+    return arithmetic_call(saturated(minmag), a, b);
   }
 
   template<real_value T>
-  EVE_FORCEINLINE auto minmag_(EVE_SUPPORTS(cpu_), D const &, T const &a, T const &b) noexcept
+  EVE_FORCEINLINE auto minmag_(EVE_SUPPORTS(cpu_), saturated_type const &, T const &a, T const &b) noexcept
   {
-      auto aa  = saturated(eve::abs)(a);
-      auto bb  = saturated(eve::abs)(b);
-      if constexpr( simd_value<T> )
-      {
-        auto tmp = if_else(is_not_greater_equal(bb, aa), b, saturated(eve::min)(a, b));
-        return if_else(is_not_greater_equal(aa, bb), a, tmp);
-      }
-      else
-      {
-        return aa < bb ? a : bb < aa ? b : saturated(eve::min)(a, b);
-      }
+    auto aa  = saturated(eve::abs)(a);
+    auto bb  = saturated(eve::abs)(b);
+    if constexpr( simd_value<T> )
+    {
+      auto tmp = if_else(is_not_greater_equal(bb, aa), b, eve::min(a, b));
+      return if_else(is_not_greater_equal(aa, bb), a, tmp);
+    }
+    else
+    {
+      return aa < bb ? a : bb < aa ? b : eve::min(a, b);
     }
   }
 }

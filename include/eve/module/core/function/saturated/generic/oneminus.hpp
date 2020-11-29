@@ -22,7 +22,7 @@ namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Decorated
-  template<real_value T, decorator D>
+  template<real_value T>
   EVE_FORCEINLINE constexpr T oneminus_(EVE_SUPPORTS(cpu_), saturated_type const &, T const &v) noexcept
   {
     if constexpr( has_native_abi_v<T> )
@@ -50,7 +50,7 @@ namespace eve::detail
     }
     else
     {
-      return apply_over(D()(oneminus), v);
+      return apply_over(saturated(oneminus), v);
     }
   }
 

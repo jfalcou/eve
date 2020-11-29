@@ -1,4 +1,5 @@
 #include <eve/function/sqr.hpp>
+#include <eve/function/saturated/sqr.hpp>
 #include <eve/wide.hpp>
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;

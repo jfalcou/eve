@@ -10,5 +10,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/include/function/fma.hpp>
+#include <eve/function/fma.hpp>
 #include <eve/module/core/function/pedantic/generic/fma.hpp>

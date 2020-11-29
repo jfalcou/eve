@@ -26,6 +26,7 @@
 #include <eve/function/fnms.hpp>
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/is_not_less_equal.hpp>
+#include <eve/function/is_less_equal.hpp>
 #include <eve/function/nearest.hpp>
 #include <eve/function/rempio2.hpp>
 #include <eve/function/sqr.hpp>
@@ -158,4 +159,3 @@ namespace eve::detail
     }
   }
 }
-

@@ -34,3 +34,4 @@ namespace eve::detail
   {
     return mask_op( EVE_CURRENT_API{}, cond, eve::inc, t);
   }
+}

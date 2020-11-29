@@ -10,5 +10,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/include/function/is_flint.hpp>
+#include <eve/function/is_flint.hpp>
 #include <eve/module/core/function/pedantic/generic/is_flint.hpp>

@@ -10,5 +10,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/include/function/min.hpp>
+#include <eve/function/min.hpp>
 #include <eve/module/core/function/numeric/generic/min.hpp>

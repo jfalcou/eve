@@ -10,5 +10,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/include/function/sqr.hpp>
+#include <eve/function/sqr.hpp>
 #include <eve/module/core/function/saturated/generic/sqr.hpp>

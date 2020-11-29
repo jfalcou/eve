@@ -24,6 +24,7 @@
 #include <eve/function/bit_and.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_or.hpp>
+#include <eve/function/converter.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/if_else.hpp>
@@ -192,9 +193,8 @@ namespace eve::detail
       return apply_over(D()(log10), a0);
   }
 
-  template<floating_real_scalar_value T, decorator D>
-  EVE_FORCEINLINE constexpr auto log10_(EVE_SUPPORTS(cpu_), D const &, T x) noexcept
-      requires(is_one_of<D>(types<regular_type, pedantic_type> {}))
+  template<floating_real_scalar_value T>
+  EVE_FORCEINLINE constexpr auto log10_(EVE_SUPPORTS(cpu_), T x) noexcept
   {
     using uiT     = as_integer_t<T, unsigned>;
     using iT      = as_integer_t<T, signed>;
@@ -335,11 +335,5 @@ namespace eve::detail
       val_hi = w1;
       return val_lo + val_hi;
     }
-  }
-
-  template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T log10_(EVE_SUPPORTS(cpu_), T const &x) noexcept
-  {
-    return log10(regular_type(), x);
   }
 }

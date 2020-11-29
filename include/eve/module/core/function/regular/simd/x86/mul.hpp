@@ -25,19 +25,6 @@ namespace eve::detail
     return v0 *= v1;
   }
 
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, x86_128_>
-                  mul_(EVE_SUPPORTS(avx_), saturated_type const &, wide<T, N, x86_128_> v0, wide<T, N, x86_128_> const &v1) noexcept
-  {
-    if constexpr(supports_xop)
-    {
-           if constexpr(std::is_same_v<T, std::int32_t>) return  _mm_maccs_epi32(v0,v1,zero(eve::as(v0)));
-      else if constexpr(std::is_same_v<T, std::int16_t>) return  _mm_maccs_epi16(v0,v1,zero(eve::as(v0)));
-      else return mul_(EVE_RETARGET(cpu_), saturated_type(), v0, v1);
-    }
-    else return mul_(EVE_RETARGET(cpu_), saturated_type(), v0, v1);
-  }
-
   // -----------------------------------------------------------------------------------------------
   // 256 bits implementation
   template<real_scalar_value T, typename N>

@@ -10,5 +10,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/include/function/minmag.hpp>
+#include <eve/function/minmag.hpp>
 #include <eve/module/core/function/numeric/generic/minmag.hpp>

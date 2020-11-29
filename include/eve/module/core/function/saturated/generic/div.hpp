@@ -32,9 +32,9 @@
 #  pragma warning(disable : 4723) // potential divide by 0
 #endif
 
-#include <eve/module/core/function/generic/div_downward.hpp>
-#include <eve/module/core/function/generic/div_tonearest.hpp>
-#include <eve/module/core/function/generic/div_upward.hpp>
+#include <eve/module/core/function/regular/generic/div_downward.hpp>
+#include <eve/module/core/function/regular/generic/div_tonearest.hpp>
+#include <eve/module/core/function/regular/generic/div_upward.hpp>
 
 namespace eve::detail
 {
@@ -102,7 +102,7 @@ namespace eve::detail
   //================================================================================================
   template<conditional_expr C, saturated_type const &, real_value U, real_value V>
   EVE_FORCEINLINE auto
-  div_(EVE_SUPPORTS(cpu_), C const &cond, D const &, U const &t, V const &f) noexcept
+  div_(EVE_SUPPORTS(cpu_), C const &cond, saturated_type const &, U const &t, V const &f) noexcept
       requires compatible_values<U, V>
   {
     return mask_op( EVE_CURRENT_API{}, cond, saturated(div), t, f);

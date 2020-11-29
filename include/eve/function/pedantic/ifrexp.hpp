@@ -10,5 +10,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/include/function/ifrexp.hpp>
+#include <eve/function/ifrexp.hpp>
 #include <eve/module/core/function/pedantic/generic/ifrexp.hpp>

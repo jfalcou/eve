@@ -10,5 +10,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/include/function/fma.hpp>
+#include <eve/function/fma.hpp>
 #include <eve/module/core/function/numeric/generic/fma.hpp>
+
+#if defined(EVE_HW_X86)
+#  include <eve/module/core/function/numeric/simd/x86/fma.hpp>
+#endif

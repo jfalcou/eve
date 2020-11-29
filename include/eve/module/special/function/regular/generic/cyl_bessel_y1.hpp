@@ -17,6 +17,7 @@
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/function/is_infinite.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fms.hpp>
 #include <eve/function/cyl_bessel_j1.hpp>
