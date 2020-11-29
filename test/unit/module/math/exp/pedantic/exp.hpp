@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/exp.hpp>
+#include <eve/function/pedantic/exp.hpp>
 #include <eve/function/prev.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>

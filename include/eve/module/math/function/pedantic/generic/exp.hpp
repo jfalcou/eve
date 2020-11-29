@@ -27,7 +27,7 @@
 #include <eve/function/inc.hpp>
 #include <eve/function/is_greater_equal.hpp>
 #include <eve/function/is_less_equal.hpp>
-#include <eve/function/ldexp.hpp>
+#include <eve/function/pedantic/ldexp.hpp>
 #include <eve/function/nearest.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/pedantic.hpp>
@@ -38,7 +38,8 @@
 namespace eve::detail
 {
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T exp_(EVE_SUPPORTS(cpu_), pedantic_type const &, T x) noexcept
+  EVE_FORCEINLINE constexpr T exp_(EVE_SUPPORTS(cpu_), pedantic_type const &
+                                  , T x) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {
@@ -88,7 +89,7 @@ namespace eve::detail
                  x); // x-h*t
         c       = oneminus((((lo - (x * c) / (T(2) - c)) - hi)));
       }
-      auto z = D()(ldexp)(c, k);
+      auto z = pedantic(ldexp)(c, k);
       if constexpr( simd_value<T> )
       {
         z = if_else(xltminlog, eve::zero, z);

@@ -10,6 +10,7 @@
 //==================================================================================================
 #pragma once
 
+
 #include <eve/concept/compatible.hpp>
 #include <eve/detail/concepts.hpp>
 #include <eve/concept/value.hpp>
@@ -20,10 +21,19 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
+#include <eve/function/binarize.hpp>
 #include <eve/function/exp.hpp>
 #include <eve/function/floor.hpp>
 #include <eve/function/fms.hpp>
-#include <eve/function/frexp.hpp>
+#include <eve/function/pedantic/frexp.hpp>
+#include <eve/function/pedantic/ldexp.hpp>
+#include <eve/function/if_else.hpp>
+#include <eve/function/is_flint.hpp>
+#include <eve/function/is_equal.hpp>
+#include <eve/function/is_eqz.hpp>
+#include <eve/function/is_greater.hpp>
+#include <eve/function/is_gez.hpp>
+#include <eve/function/is_gtz.hpp>
 #include <eve/function/is_flint.hpp>
 #include <eve/function/is_infinite.hpp>
 #include <eve/function/is_negative.hpp>
@@ -40,6 +50,7 @@
 #include <eve/platform.hpp>
 #include <eve/function/modf.hpp>
 #include <eve/function/converter.hpp>
+#include <eve/function/pedantic.hpp>
 
 namespace eve::detail
 {
@@ -189,5 +200,13 @@ namespace eve::detail
     z = fma(w, z, w);
     z = pedantic(ldexp)(z, i);
     return z;
+  }
+
+  template<floating_real_value T, floating_real_value U>
+  EVE_FORCEINLINE auto
+  pow_abs_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const &a, U const &b) noexcept
+      requires compatible_values<T, U>
+  {
+    return arithmetic_call(pedantic(pow_abs), a, b);
   }
 }

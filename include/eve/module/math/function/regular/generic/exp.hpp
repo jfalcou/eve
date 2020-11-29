@@ -38,22 +38,14 @@
 
 namespace eve::detail
 {
-  template<floating_real_value T, decorator D>
-  EVE_FORCEINLINE constexpr T exp_(EVE_SUPPORTS(cpu_), D const &, T x) noexcept
-      requires(is_one_of<D>(types<regular_type, pedantic_type> {}))
+  template<floating_real_value T>
+  EVE_FORCEINLINE constexpr T exp_(EVE_SUPPORTS(cpu_), T x) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {
       using elt_t       = element_type_t<T>;
       auto minlogval = [](){
-        if constexpr((!eve::platform::supports_denormals) || std::is_same_v<D,regular_type> )
-        {
-          return  minlog(eve::as<T>());
-        }
-        else
-        {
-          return minlogdenormal(eve::as<T>());
-        }
+        return  minlog(eve::as<T>());
       };
       const T Log_2hi   = Ieee_constant<T, 0x3f318000U, 0x3fe62e42fee00000ULL>();
       const T Log_2lo   = Ieee_constant<T, 0xb95e8083U, 0x3dea39ef35793c76ULL>();
@@ -90,7 +82,7 @@ namespace eve::detail
                  x); // x-h*t
         c       = oneminus((((lo - (x * c) / (T(2) - c)) - hi)));
       }
-      auto z = pedantic(ldexp)(c, k);
+      auto z = /*pedantic*/(ldexp)(c, k);
       if constexpr( simd_value<T> )
       {
         z = if_else(xltminlog, eve::zero, z);
@@ -99,12 +91,6 @@ namespace eve::detail
       return z;
     }
     else
-      return apply_over(D()(exp), x);
-  }
-
-  template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T exp_(EVE_SUPPORTS(cpu_), T const &x) noexcept
-  {
-    return exp(regular_type(), x);
+      return apply_over(exp, x);
   }
 }
