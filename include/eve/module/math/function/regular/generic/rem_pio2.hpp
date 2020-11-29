@@ -40,9 +40,9 @@ namespace eve::detail
     alignas(T) std::array<elt_t, size> tyr;
     for( uint32_t i = 0; i != size; ++i )
     { std::tie(tmp[i], txr[i], tyr[i]) = eve::rem_pio2(a0[i]); }
-    return std::make_tuple( eve::load(eve::as_aligned(&tmp[0]))
-                          , eve::load(eve::as_aligned(&txr[0]))
-                          , eve::load(eve::as_aligned(&tyr[0]))
+    return std::make_tuple( eve::load(eve::as_aligned(&tmp[0]), cardinal_t<T>{})
+                          , eve::load(eve::as_aligned(&txr[0]), cardinal_t<T>{})
+                          , eve::load(eve::as_aligned(&tyr[0]), cardinal_t<T>{})
                           );
   }
 
