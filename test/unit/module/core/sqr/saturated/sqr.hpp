@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/sqr.hpp>
+#include <eve/function/saturated/sqr.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/saturated.hpp>
 #include <eve/constant/sqrtvalmax.hpp>

@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/inc.hpp>
+#include <eve/function/saturated/inc.hpp>
 #include <eve/constant/valmax.hpp>
 
 TTS_CASE_TPL("Check conditional saturated(eve::inc) return type", EVE_TYPE)

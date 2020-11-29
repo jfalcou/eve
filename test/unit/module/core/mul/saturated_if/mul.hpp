@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/mul.hpp>
+#include <eve/function/saturated/mul.hpp>
 
 TTS_CASE_TPL("Check conditional saturated(eve::mul) return type", EVE_TYPE)
 {
