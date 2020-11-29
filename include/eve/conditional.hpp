@@ -358,7 +358,9 @@ namespace eve
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
-    constexpr keep_between_(std::ptrdiff_t b, std::ptrdiff_t e) noexcept : begin_(b), end_(e) {}
+    constexpr keep_between_(std::ptrdiff_t b, std::ptrdiff_t e) noexcept
+    : begin_(std::min(b,e)), end_(std::max(b,e))
+    {}
 
     template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
 
