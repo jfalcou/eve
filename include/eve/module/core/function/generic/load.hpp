@@ -106,7 +106,7 @@ namespace eve::detail
       // If the ignore/keep is complete we can jump over if_else
       if constexpr( C::is_complete )
       {
-        if constexpr(C::is_inverted)  { return eve::load(ptr);  }
+        if constexpr(C::is_inverted)  { return eve::load(ptr, Cardinal{});  }
         else
         {
           if constexpr(C::has_alternative)  return r_t{cond.alternative};
