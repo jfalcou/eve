@@ -10,7 +10,7 @@
 //==================================================================================================
 #include <eve/constant/eps.hpp>
 #include <eve/function/average.hpp>
-#include <eve/function/lerp.hpp>
+#include <eve/function/numeric/lerp.hpp>
 #include <eve/function/next.hpp>
 #include <eve/function/prev.hpp>
 
