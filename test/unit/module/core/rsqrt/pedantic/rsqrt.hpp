@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/rsqrt.hpp>
+#include <eve/function/pedantic/rsqrt.hpp>
 #include <eve/constant/mindenormal.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>

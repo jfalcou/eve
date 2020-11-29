@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/minmag.hpp>
+#include <eve/function/pedantic/minmag.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/constant/nan.hpp>
 
