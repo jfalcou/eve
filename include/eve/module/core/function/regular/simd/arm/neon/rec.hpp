@@ -14,6 +14,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/refine_rec.hpp>
+#include <eve/function/raw.hpp>
 
 namespace eve::detail
 {
