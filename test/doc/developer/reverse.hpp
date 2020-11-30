@@ -30,7 +30,7 @@ template <typename T, typename N, eve::x86_abi ABI>
 eve::wide<T, N, ABI> actual_reverse(eve::wide<T, N, ABI> x) requires(sizeof(T) == 8)
 {
        if constexpr(std::same_as<ABI, eve::x86_128_>) return {_mm_shuffle_epi32(x.storage(), _MM_SHUFFLE(1, 0, 3, 2))};
-  else if constexpr(std::same_as<ABI, eve::x86_256_>) return {_mm256_permutevar8x32_epi32(x.storage(), _MM_SHUFFLE(3, 2, 1, 0))};
+  else if constexpr(std::same_as<ABI, eve::x86_256_>) return {_mm256_permute4x64_epi64(x.storage(), _MM_SHUFFLE(0, 1, 2, 3))};
 }
 
 template <typename N>
@@ -43,15 +43,17 @@ constexpr std::uint32_t mm_shuffle()
 template <typename T, typename N, eve::x86_abi ABI>
 eve::wide<T, N, ABI> actual_reverse(eve::wide<T, N, ABI> x) requires(sizeof(T) == 4)
 {
-  auto raw = x.storage();
-  constexpr auto mask = mm_shuffle<N>();
-       if constexpr(std::same_as<ABI, eve::x86_128_>) return {_mm_shuffle_epi32(raw, mask)};
+       if constexpr(std::same_as<ABI, eve::x86_128_>)
+  {
+    constexpr auto mask = mm_shuffle<N>();
+    return {_mm_shuffle_epi32(x.storage(), mask)};
+  }
   else if constexpr(std::same_as<ABI, eve::x86_256_>)
   {
     using mask_type = eve::wide<int, eve::fixed<8>>;
     auto mask = mask_type([](int i, int) { return 7 - i; }).storage();
 
-    return {_mm256_permutevar8x32_epi32(raw, mask)};
+    return {_mm256_permutevar8x32_epi32(x.storage(), mask)};
   }
 }
 
@@ -114,8 +116,7 @@ constexpr bool treat_like_aggregated()
 
        if constexpr(eve::has_aggregated_abi_v<Wide>)        return true;
   else if constexpr(eve::current_api == eve::avx &&
-                    std::same_as<ABI, eve::x86_256_> &&
-                    sizeof(eve::element_type_t<Wide>) <= 4) return true;
+                    std::same_as<ABI, eve::x86_256_>)       return true;
   else                                                      return false;
 }
 
