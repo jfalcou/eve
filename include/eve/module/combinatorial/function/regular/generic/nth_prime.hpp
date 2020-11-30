@@ -18,6 +18,7 @@
 #include <eve/function/convert.hpp>
 #include <eve/function/converter.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/function/is_eqz.hpp>
 #include <type_traits>
 #include <eve/detail/apply_over.hpp>
 
