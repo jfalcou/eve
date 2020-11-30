@@ -25,15 +25,4 @@ namespace eve::detail
   {
     return fma(v0, v1, -v2);
   }
-
-  template<decorator D, real_scalar_value T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE wide<T, N, ABI> fms_(EVE_SUPPORTS(neon128_),
-                                           D const &,
-                                           wide<T, N, ABI> const &v0,
-                                           wide<T, N, ABI> const &v1,
-                                           wide<T, N, ABI> const &v2) noexcept
-  {
-    return fma(v0, v1, -v2);
-  }
-
 }
