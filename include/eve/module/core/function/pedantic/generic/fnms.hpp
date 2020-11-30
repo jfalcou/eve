@@ -15,7 +15,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/fma.hpp>
+#include <eve/function/pedantic/fma.hpp>
 #include <eve/function/pedantic.hpp>
 
 #include <type_traits>
@@ -35,6 +35,6 @@ namespace eve::detail
                          , T const &a, T const &b, T const &c) noexcept
       requires has_native_abi_v<T>
   {
-    return pedantic(fma)(T(-a), b, c);
+    return -pedantic(fma)(a, b, c);
   }
 }

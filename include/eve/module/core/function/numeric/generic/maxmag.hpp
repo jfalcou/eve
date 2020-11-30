@@ -26,18 +26,18 @@
 namespace eve::detail
 {
   template<real_value T, real_value U>
-  EVE_FORCEINLINE auto maxmag_(EVE_SUPPORTS(cpu_), numeric_type const &, T const &a, U const &b) noexcept
-      requires compatible_values<T, U>
+  EVE_FORCEINLINE auto maxmag_(EVE_SUPPORTS(cpu_), numeric_type const &
+                              , T const &a, U const &b) noexcept
+  requires compatible_values<T, U>
   {
     return arithmetic_call(numeric(maxmag), a, b);
   }
-
+  
   template<real_value T>
   EVE_FORCEINLINE auto maxmag_(EVE_SUPPORTS(cpu_), numeric_type const &, T const &a, T const &b) noexcept
   {
     auto aa = if_else(is_nan(a), b, a);
     auto bb = if_else(is_nan(b), a, b);
-    auto z  = maxmag(aa, bb);
-    return z;
+    return maxmag(aa, bb);
   }
 }

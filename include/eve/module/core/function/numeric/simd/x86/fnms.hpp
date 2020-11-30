@@ -21,29 +21,12 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, x86_128_> fnms_(EVE_SUPPORTS(avx2_),
+  template<real_scalar_value T, typename N, x86_abi ABI>
+  EVE_FORCEINLINE wide<T, N, ABI> fnms_(EVE_SUPPORTS(avx2_),
                                         numeric_type const &,
-                                        wide<T, N, x86_128_> const &a,
-                                        wide<T, N, x86_128_> const &b,
-                                        wide<T, N, x86_128_> const &c) noexcept
-  {
-    if constexpr( supports_fma3 || supports_fma4  )
-    {
-      return fnms(a, b, c);
-    }
-    else
-    {
-      return fnms_(EVE_RETARGET(cpu_), pedantic_type(), a, b, c);
-    }
-  }
-
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, x86_256_> fnms_(EVE_SUPPORTS(avx2_),
-                                        numeric_type const &,
-                                        wide<T, N, x86_256_> const &a,
-                                        wide<T, N, x86_256_> const &b,
-                                        wide<T, N, x86_256_> const &c) noexcept
+                                        wide<T, N, ABI> const &a,
+                                        wide<T, N, ABI> const &b,
+                                        wide<T, N, ABI> const &c) noexcept
   {
     if constexpr( supports_fma3 || supports_fma4  )
     {

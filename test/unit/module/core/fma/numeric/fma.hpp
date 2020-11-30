@@ -13,6 +13,8 @@
 #include <eve/function/inc.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/constant/eps.hpp>
+#include <eve/constant/valmax.hpp>
+#include <eve/constant/valmin.hpp>
 
 TTS_CASE_TPL("Check eve::fma return type", EVE_TYPE)
 {
