@@ -15,6 +15,7 @@
 #include <eve/detail/branch.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/function/abs.hpp>
 #include <eve/function/add.hpp>
 #include <eve/function/average.hpp>
 #include <eve/function/bitofsign.hpp>
