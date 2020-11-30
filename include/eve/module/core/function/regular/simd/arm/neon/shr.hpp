@@ -11,7 +11,7 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
-#include <eve/module/core/function/simd/arm/neon/detail/shift.hpp>
+#include <eve/module/core/function/regular/simd/arm/neon/detail/shift.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
 

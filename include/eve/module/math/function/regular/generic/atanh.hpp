@@ -11,6 +11,7 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
+#include <eve/function/abs.hpp>
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/bitofsign.hpp>
 #include <eve/function/fma.hpp>
@@ -41,4 +42,3 @@ namespace eve::detail
     else return apply_over(atanh, x);
   }
 }
-
