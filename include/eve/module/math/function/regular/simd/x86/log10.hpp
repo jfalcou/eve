@@ -194,6 +194,6 @@ namespace eve::detail
     if constexpr( current_api < avx2 )
       return plain(log10)(v);
     else
-      return log10_(EVE_RETARGET(cpu_), regular_type{}, v);//regular(log10)(v);
+      return log10_(EVE_RETARGET(cpu_), v);//regular(log10)(v);
   }
 }
