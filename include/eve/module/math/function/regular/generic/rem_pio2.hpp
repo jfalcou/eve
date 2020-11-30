@@ -34,15 +34,17 @@ namespace eve::detail
   {
     using elt_t = element_type_t<T>;
 
-    static constexpr uint32_t                            size = cardinal_v<T>;
-    alignas(T) std::array<elt_t, size> tmp;
-    alignas(T) std::array<elt_t, size> txr;
-    alignas(T) std::array<elt_t, size> tyr;
+    constexpr uint32_t size = cardinal_v<T>;
+    constexpr auto algt = alignment_v<T>;
+
+    alignas(algt) std::array<elt_t, size> tmp;
+    alignas(algt) std::array<elt_t, size> txr;
+    alignas(algt) std::array<elt_t, size> tyr;
     for( uint32_t i = 0; i != size; ++i )
     { std::tie(tmp[i], txr[i], tyr[i]) = eve::rem_pio2(a0[i]); }
-    return std::make_tuple( eve::load(eve::as_aligned(&tmp[0]), cardinal_t<T>{})
-                          , eve::load(eve::as_aligned(&txr[0]), cardinal_t<T>{})
-                          , eve::load(eve::as_aligned(&tyr[0]), cardinal_t<T>{})
+    return std::make_tuple( eve::load(eve::as_aligned<algt>(&tmp[0]), cardinal_t<T>{})
+                          , eve::load(eve::as_aligned<algt>(&txr[0]), cardinal_t<T>{})
+                          , eve::load(eve::as_aligned<algt>(&tyr[0]), cardinal_t<T>{})
                           );
   }
 
