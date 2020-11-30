@@ -17,6 +17,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/function/binarize.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/function/is_eqz.hpp>
 #include <eve/function/saturated.hpp>
 
 namespace eve::detail
@@ -58,7 +59,8 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<conditional_expr C, real_value U>
-  EVE_FORCEINLINE auto oneminus_(EVE_SUPPORTS(cpu_), C const &cond, saturated_type const &, U const &t) noexcept
+  EVE_FORCEINLINE auto oneminus_(EVE_SUPPORTS(cpu_), C const &cond
+                                , saturated_type const &, U const &t) noexcept
   {
     return mask_op( EVE_CURRENT_API{}, cond, saturated(eve::oneminus), t);
   }
