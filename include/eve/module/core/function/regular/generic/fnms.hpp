@@ -30,6 +30,6 @@ namespace eve::detail
   EVE_FORCEINLINE T fnms_(EVE_SUPPORTS(cpu_), T const &a, T const &b, T const &c) noexcept
       requires has_native_abi_v<T>
   {
-    return -fma(a, b, c);
+    return T(-fma(a, b, c));
   }
 }

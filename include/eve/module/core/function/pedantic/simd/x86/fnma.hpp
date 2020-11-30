@@ -21,37 +21,20 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, x86_128_> fms_(EVE_SUPPORTS(avx2_),
+  template<real_scalar_value T, typename N, x86_abi ABI>
+  EVE_FORCEINLINE wide<T, N, ABI> fnma_(EVE_SUPPORTS(avx2_),
                                         pedantic_type const &,
-                                        wide<T, N, x86_128_> const &a,
-                                        wide<T, N, x86_128_> const &b,
-                                        wide<T, N, x86_128_> const &c) noexcept
+                                        wide<T, N, ABI> const &a,
+                                        wide<T, N, ABI> const &b,
+                                        wide<T, N, ABI> const &c) noexcept
   {
     if constexpr( supports_fma3 || supports_fma4  )
     {
-      return fms(a, b, c);
+      return fnma(a, b, c);
     }
     else
     {
-      return fms_(EVE_RETARGET(cpu_), pedantic_type(), a, b, c);
-    }
-  }
-
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, x86_256_> fms_(EVE_SUPPORTS(avx2_),
-                                        pedantic_type const &,
-                                        wide<T, N, x86_256_> const &a,
-                                        wide<T, N, x86_256_> const &b,
-                                        wide<T, N, x86_256_> const &c) noexcept
-  {
-    if constexpr( supports_fma3 || supports_fma4  )
-    {
-      return fms(a, b, c);
-    }
-    else
-    {
-      return fms_(EVE_RETARGET(cpu_), pedantic_type(), a, b, c);
+      return fnma_(EVE_RETARGET(cpu_), pedantic_type(), a, b, c);
     }
   }
 }

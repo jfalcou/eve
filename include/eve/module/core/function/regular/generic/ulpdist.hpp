@@ -14,7 +14,7 @@
 #include <eve/module/core/detail/generic/next_kernel.hpp>
 #include <eve/function/converter.hpp>
 #include <eve/function/dist.hpp>
-#include <eve/function/is_equal.hpp>
+#include <eve/function/numeric/is_equal.hpp>
 #include <eve/function/is_unordered.hpp>
 #include <eve/function/nb_values.hpp>
 #include <eve/constant/half.hpp>

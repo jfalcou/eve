@@ -41,7 +41,7 @@ namespace eve::detail
     return arithmetic_call(pedantic(fma), a, b, c);
   }
 
-  template<real_value T, decorator D>
+  template<real_value T>
   EVE_FORCEINLINE T fma_(EVE_SUPPORTS(cpu_), pedantic_type const &
                         , T const &a, T const &b, T const &c) noexcept
   requires has_native_abi_v<T>
