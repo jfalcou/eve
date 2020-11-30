@@ -16,6 +16,7 @@
 #include <eve/function/bit_notand.hpp>
 #include <eve/function/bit_shr.hpp>
 #include <eve/function/is_denormal.hpp>
+#include <eve/function/is_greater.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/logical_notand.hpp>
