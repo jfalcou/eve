@@ -28,6 +28,7 @@
 #include <eve/function/dec.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/function/is_eqz.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/is_ngez.hpp>

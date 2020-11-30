@@ -18,6 +18,7 @@
 #include <eve/function/ldexp.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/sqrt.hpp>
+#include <eve/function/pedantic.hpp>
 #include <eve/traits.hpp>
 
 namespace eve::detail
