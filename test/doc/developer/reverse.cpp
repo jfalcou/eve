@@ -16,7 +16,7 @@
 template<typename T, typename Test>
 void check_all_sizes(Test test)
 {
-  constexpr int number_of_packs = std::countr_zero(256u >> sizeof(T)) + 2;
+  constexpr int number_of_packs = std::countr_zero(256u / sizeof(T));
   [&]<int... idx>(std::integer_sequence<int, idx...>)
   {
     (test(eve::wide<T, eve::fixed<static_cast<size_t>(1 << idx)>> {}), ...);
