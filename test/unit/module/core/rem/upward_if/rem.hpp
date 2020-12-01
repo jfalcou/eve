@@ -12,14 +12,14 @@
 #include <eve/constant/true.hpp>
 #include <eve/constant/false.hpp>
 
-TTS_CASE_TPL("Check conditional saturated(eve::rem) return type", EVE_TYPE)
+TTS_CASE_TPL("Check conditional upward(eve::rem) return type", EVE_TYPE)
 {
   TTS_EXPR_IS( (eve::upward(eve::rem[ T()              ])(T(), T())), T);
   TTS_EXPR_IS( (eve::upward(eve::rem[ eve::logical<T>()])(T(), T())), T);
   TTS_EXPR_IS( (eve::upward(eve::rem[ true             ])(T(), T())), T);
 }
 
-TTS_CASE_TPL("Check conditional saturated(eve::rem) behavior", EVE_TYPE)
+TTS_CASE_TPL("Check conditional upward(eve::rem) behavior", EVE_TYPE)
 {
   T tv(eve::valmax(eve::as<T>()));
   T fv(3);

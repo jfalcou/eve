@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/atan2pi.hpp>
+#include <eve/function/pedantic/atan2pi.hpp>
 #include <eve/function/radinpi.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>

@@ -10,5 +10,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/atan2d.hpp>
-#include <eve/module/math/function/pedantic/generic/atan2d.hpp>
+#include <eve/function/atan2pi.hpp>
+#include <eve/module/math/function/pedantic/generic/atan2pi.hpp>

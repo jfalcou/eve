@@ -14,7 +14,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/atan2.hpp>
+#include <eve/function/pedantic/atan2.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/function/radinpi.hpp>
 

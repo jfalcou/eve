@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/rem.hpp>
+#include <eve/function/pedantic/rem.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <cmath>
@@ -22,6 +22,6 @@ int main()
   auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
   eve::bench::experiment xp;
-  run<EVE_VALUE>(EVE_NAME(saturated(eve::rem)) , xp, eve::saturated(eve::rem), arg0, arg1);
-  run<EVE_TYPE> (EVE_NAME(saturated(eve::rem)) , xp, eve::saturated(eve::rem), arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(pedantic(eve::rem)) , xp, eve::pedantic(eve::rem), arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(pedantic(eve::rem)) , xp, eve::pedantic(eve::rem), arg0, arg1);
 }
