@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(binarize_, binarize);
 }
 
-#include <eve/module/core/function/generic/binarize.hpp>
+#include <eve/module/core/function/regular/generic/binarize.hpp>
 

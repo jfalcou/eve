@@ -18,17 +18,17 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/function/generic/max.hpp>
+#include <eve/module/core/function/regular/generic/max.hpp>
 
 #if defined(EVE_HW_X86)
-#  include <eve/module/core/function/simd/x86/max.hpp>
+#  include <eve/module/core/function/regular/simd/x86/max.hpp>
 #endif
 
 #if defined(EVE_HW_POWERPC)
-#  include <eve/module/core/function/simd/ppc/max.hpp>
+#  include <eve/module/core/function/regular/simd/ppc/max.hpp>
 #endif
 
 #if defined(EVE_HW_ARM)
-#  include <eve/module/core/function/simd/arm/neon/max.hpp>
+#  include <eve/module/core/function/regular/simd/arm/neon/max.hpp>
 #endif
 

@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(csc_, csc);
 }
 
-#include <eve/module/core/function/generic/csc.hpp>
+#include <eve/module/core/function/regular/generic/csc.hpp>
 

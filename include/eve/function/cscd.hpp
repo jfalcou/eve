@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(cscd_, cscd);
 }
 
-#include <eve/module/math/function/generic/cscd.hpp>
+#include <eve/module/math/function/regular/generic/cscd.hpp>

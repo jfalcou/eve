@@ -18,5 +18,5 @@ namespace eve
 }
 
 #include <eve/module/core/function/scalar/minimum.hpp>
-//#include <eve/module/core/function/simd/minimum.hpp>
+//#include <eve/module/core/function/regular/simd/minimum.hpp>
 

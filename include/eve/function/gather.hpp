@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(gather_, gather);
 }
 
-#include <eve/module/core/function/simd/gather.hpp>
+#include <eve/module/core/function/regular/simd/gather.hpp>
 

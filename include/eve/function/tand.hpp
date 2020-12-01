@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(tand_, tand);
 }
 
-#include <eve/module/math/function/generic/tand.hpp>
+#include <eve/module/math/function/regular/generic/tand.hpp>
 

@@ -18,13 +18,13 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/function/generic/bit_not.hpp>
+#include <eve/module/core/function/regular/generic/bit_not.hpp>
 
 #if defined(EVE_HW_POWERPC)
-#  include <eve/module/core/function/simd/ppc/bit_not.hpp>
+#  include <eve/module/core/function/regular/simd/ppc/bit_not.hpp>
 #endif
 
 #if defined(EVE_HW_ARM)
-#  include <eve/module/core/function/simd/arm/neon/bit_not.hpp>
+#  include <eve/module/core/function/regular/simd/arm/neon/bit_not.hpp>
 #endif
 

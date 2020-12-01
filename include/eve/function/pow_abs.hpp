@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(pow_abs_, pow_abs);
 }
 
-#include <eve/module/math/function/generic/pow_abs.hpp>
+#include <eve/module/math/function/regular/generic/pow_abs.hpp>
 

@@ -18,5 +18,5 @@ namespace eve
 }
 
 #include <eve/module/core/function/scalar/sum.hpp>
-//#include <eve/module/core/function/simd/sum.hpp>
+//#include <eve/module/core/function/regular/simd/sum.hpp>
 

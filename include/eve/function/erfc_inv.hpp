@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(erfc_inv_, erfc_inv);
 }
 
-#include <eve/module/special/function/generic/erfc_inv.hpp>
+#include <eve/module/special/function/regular/generic/erfc_inv.hpp>

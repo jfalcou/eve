@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/abs.hpp>
+#include <eve/function/saturated/abs.hpp>
 #include <type_traits>
 
 TTS_CASE_TPL("Check eve::saturated(eve::abs) conditional return type", EVE_TYPE)

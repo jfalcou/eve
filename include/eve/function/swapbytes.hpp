@@ -18,5 +18,5 @@ namespace eve
 }
 
 #include <eve/module/core/function/scalar/swapbytes.hpp>
-//#include <eve/module/core/function/simd/swapbytes.hpp>
+//#include <eve/module/core/function/regular/simd/swapbytes.hpp>
 

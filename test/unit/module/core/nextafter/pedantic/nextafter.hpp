@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/nextafter.hpp>
+#include <eve/function/pedantic/nextafter.hpp>
 #include <eve/constant/eps.hpp>
 #include <eve/constant/nan.hpp>
 

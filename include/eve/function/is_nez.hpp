@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(is_nez_, is_nez);
 }
 
-#include <eve/module/core/function/generic/is_nez.hpp>
+#include <eve/module/core/function/regular/generic/is_nez.hpp>
 

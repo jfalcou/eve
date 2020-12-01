@@ -34,4 +34,4 @@ namespace eve
 
 }
 
-#include <eve/module/core/function/generic/clamp.hpp>
+#include <eve/module/core/function/regular/generic/clamp.hpp>

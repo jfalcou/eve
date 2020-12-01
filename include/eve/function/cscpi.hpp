@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(cscpi_, cscpi);
 }
 
-#include <eve/module/math/function/generic/cscpi.hpp>
+#include <eve/module/math/function/regular/generic/cscpi.hpp>

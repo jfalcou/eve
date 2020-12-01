@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(asind_, asind);
 }
 
-#include <eve/module/math/function/generic/asind.hpp>
+#include <eve/module/math/function/regular/generic/asind.hpp>
 

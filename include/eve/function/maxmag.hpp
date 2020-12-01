@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(maxmag_, maxmag);
 }
 
-#include <eve/module/core/function/generic/maxmag.hpp>
+#include <eve/module/core/function/regular/generic/maxmag.hpp>
 

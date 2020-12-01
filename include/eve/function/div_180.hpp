@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(div_180_, div_180);
 }
 
-#include <eve/module/core/function/generic/div_180.hpp>
+#include <eve/module/core/function/regular/generic/div_180.hpp>
 

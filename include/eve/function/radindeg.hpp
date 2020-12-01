@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(radindeg_, radindeg);
 }
 
-#include <eve/module/core/function/generic/radindeg.hpp>
+#include <eve/module/core/function/regular/generic/radindeg.hpp>
 

@@ -17,8 +17,8 @@ namespace eve
   EVE_MAKE_CALLABLE(frac_, frac);
 }
 
-#include <eve/module/core/function/generic/frac.hpp>
+#include <eve/module/core/function/regular/generic/frac.hpp>
 
 #if defined(EVE_HW_X86)
-#  include <eve/module/core/function/simd/x86/frac.hpp>
+#  include <eve/module/core/function/regular/simd/x86/frac.hpp>
 #endif

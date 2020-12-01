@@ -1,4 +1,5 @@
 #include <eve/function/abs.hpp>
+#include <eve/function/saturated/abs.hpp>
 #include <eve/wide.hpp>
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;

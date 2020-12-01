@@ -17,6 +17,6 @@ namespace eve
   EVE_MAKE_CALLABLE(cotpi_, cotpi);
 }
 
-#include <eve/module/math/function/generic/cotpi.hpp>
+#include <eve/module/math/function/regular/generic/cotpi.hpp>
 
 

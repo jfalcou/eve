@@ -1,4 +1,6 @@
 #include <eve/function/maxmag.hpp>
+#include <eve/function/pedantic/maxmag.hpp>
+#include <eve/function/numeric/maxmag.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>

@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/modf.hpp>
+#include <eve/function/pedantic/modf.hpp>
 #include <tuple>
 
 TTS_CASE_TPL("Check modf return type", EVE_TYPE)

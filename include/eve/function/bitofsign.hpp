@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(bitofsign_, bitofsign);
 }
 
-#include <eve/module/core/function/generic/bitofsign.hpp>
+#include <eve/module/core/function/regular/generic/bitofsign.hpp>
 

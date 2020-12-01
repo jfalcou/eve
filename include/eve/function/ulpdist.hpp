@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(ulpdist_, ulpdist);
 }
 
-#include <eve/module/core/function/generic/ulpdist.hpp>
+#include <eve/module/core/function/regular/generic/ulpdist.hpp>
 

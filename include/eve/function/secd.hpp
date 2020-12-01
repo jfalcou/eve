@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(secd_, secd);
 }
 
-#include <eve/module/math/function/generic/secd.hpp>
+#include <eve/module/math/function/regular/generic/secd.hpp>
 

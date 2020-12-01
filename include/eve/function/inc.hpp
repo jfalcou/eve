@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(inc_, inc);
 }
 
-#include <eve/module/core/function/generic/inc.hpp>
+#include <eve/module/core/function/regular/generic/inc.hpp>
 

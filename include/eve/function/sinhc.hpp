@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(sinhc_, sinhc);
 }
 
-#include <eve/module/math/function/generic/sinhc.hpp>
+#include <eve/module/math/function/regular/generic/sinhc.hpp>

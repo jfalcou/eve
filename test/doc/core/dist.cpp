@@ -1,4 +1,5 @@
 #include <eve/function/dist.hpp>
+#include <eve/function/saturated/dist.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>

@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(atand_, atand);
 }
 
-#include <eve/module/math/function/generic/atand.hpp>
+#include <eve/module/math/function/regular/generic/atand.hpp>
 

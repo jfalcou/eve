@@ -26,16 +26,9 @@ namespace eve
       if constexpr(std::is_floating_point_v<value_type_t<U>>)
         EVE_ASSERT(all(is_flint(b)), "[eve::ldexp] argument 2 is floating but not a flint");
     }
-
-    template<typename T, typename U>
-    EVE_FORCEINLINE void check(EVE_SUPPORTS(eve::tag::ldexp_), pedantic_type const&, T const&,  [[maybe_unused]] U const& b)
-    {
-      if constexpr(std::is_floating_point_v<value_type_t<U>>)
-        EVE_ASSERT(all(is_flint(b)), "ldexp argument 2 is floating but not a flint");
-    }
   }
 
   EVE_MAKE_CALLABLE(ldexp_, ldexp);
 }
 
-#include <eve/module/core/function/generic/ldexp.hpp>
+#include <eve/module/core/function/regular/generic/ldexp.hpp>

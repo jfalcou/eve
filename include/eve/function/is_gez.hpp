@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(is_gez_, is_gez);
 }
 
-#include <eve/module/core/function/generic/is_gez.hpp>
+#include <eve/module/core/function/regular/generic/is_gez.hpp>
 

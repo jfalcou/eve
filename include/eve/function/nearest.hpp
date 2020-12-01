@@ -18,17 +18,17 @@ namespace eve
   EVE_MAKE_CALLABLE(nearest_, nearest);
 }
 
-#include <eve/module/core/function/generic/nearest.hpp>
+#include <eve/module/core/function/regular/generic/nearest.hpp>
 
 #  if defined(EVE_HW_X86)
-#    include <eve/module/core/function/simd/x86/nearest.hpp>
+#    include <eve/module/core/function/regular/simd/x86/nearest.hpp>
 #  endif
 
 #  if defined(EVE_HW_POWERPC)
-#    include <eve/module/core/function/simd/ppc/nearest.hpp>
+#    include <eve/module/core/function/regular/simd/ppc/nearest.hpp>
 #  endif
 
 #  if defined(EVE_HW_ARM)
-#    include <eve/module/core/function/simd/arm/neon/nearest.hpp>
+#    include <eve/module/core/function/regular/simd/arm/neon/nearest.hpp>
 #  endif
 

@@ -18,16 +18,16 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/function/generic/div.hpp>
+#include <eve/module/core/function/regular/generic/div.hpp>
 
 #if defined(EVE_HW_X86)
-#  include <eve/module/core/function/simd/x86/div.hpp>
+#  include <eve/module/core/function/regular/simd/x86/div.hpp>
 #endif
 
 #if defined(EVE_HW_POWERPC)
-#  include <eve/module/core/function/simd/ppc/div.hpp>
+#  include <eve/module/core/function/regular/simd/ppc/div.hpp>
 #endif
 
 #if defined(EVE_HW_ARM)
-#  include <eve/module/core/function/simd/arm/neon/div.hpp>
+#  include <eve/module/core/function/regular/simd/arm/neon/div.hpp>
 #endif

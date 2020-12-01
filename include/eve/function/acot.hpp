@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(acot_, acot);
 }
 
-#include <eve/module/math/function/generic/acot.hpp>
+#include <eve/module/math/function/regular/generic/acot.hpp>

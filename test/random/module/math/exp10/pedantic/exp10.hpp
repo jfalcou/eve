@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/exp10.hpp>
+#include <eve/function/pedantic/exp10.hpp>
 #include <eve/constant/minlog10.hpp>
 #include <eve/constant/maxlog10.hpp>
 #include "producers.hpp"

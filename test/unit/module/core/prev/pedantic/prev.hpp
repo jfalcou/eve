@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/prev.hpp>
+#include <eve/function/pedantic/prev.hpp>
 #include <eve/function/is_negative.hpp>
 #include <eve/function/all.hpp>
 #include <eve/constant/mindenormal.hpp>

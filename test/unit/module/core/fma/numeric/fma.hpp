@@ -8,11 +8,13 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/fma.hpp>
+#include <eve/function/numeric/fma.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/constant/eps.hpp>
+#include <eve/constant/valmax.hpp>
+#include <eve/constant/valmin.hpp>
 
 TTS_CASE_TPL("Check eve::fma return type", EVE_TYPE)
 {

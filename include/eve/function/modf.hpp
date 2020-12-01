@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(modf_, modf);
 }
 
-#include <eve/module/core/function/generic/modf.hpp>
+#include <eve/module/core/function/regular/generic/modf.hpp>
 

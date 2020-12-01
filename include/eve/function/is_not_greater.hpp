@@ -18,8 +18,8 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/function/generic/is_not_greater.hpp>
+#include <eve/module/core/function/regular/generic/is_not_greater.hpp>
 
 #if defined(EVE_HW_X86)
-#  include <eve/module/core/function/simd/x86/is_not_greater.hpp>
+#  include <eve/module/core/function/regular/simd/x86/is_not_greater.hpp>
 #endif

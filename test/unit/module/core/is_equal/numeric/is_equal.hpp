@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/is_equal.hpp>
+#include <eve/function/numeric/is_equal.hpp>
 #include <eve/function/numeric.hpp>
 #include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>

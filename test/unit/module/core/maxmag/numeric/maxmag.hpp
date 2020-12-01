@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/maxmag.hpp>
+#include <eve/function/numeric/maxmag.hpp>
 #include <eve/function/numeric.hpp>
 #include <eve/constant/nan.hpp>
 

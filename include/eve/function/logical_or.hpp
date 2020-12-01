@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(logical_or_, logical_or);
 }
 
-#include <eve/module/core/function/generic/logical_or.hpp>
+#include <eve/module/core/function/regular/generic/logical_or.hpp>
 

@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(dec_, dec);
 }
 
-#include <eve/module/core/function/generic/dec.hpp>
+#include <eve/module/core/function/regular/generic/dec.hpp>
 

@@ -13,6 +13,7 @@
 #include <eve/function/cosh.hpp>
 #include <eve/function/next.hpp>
 #include <eve/function/all.hpp>
+#include <eve/function/is_negative.hpp>
 #include <eve/function/next.hpp>
 #include <eve/function/ulpdist.hpp>
 #include <eve/constant/inf.hpp>
