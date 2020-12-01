@@ -10,6 +10,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/function/saturated.hpp>
 
 namespace eve::detail
 {

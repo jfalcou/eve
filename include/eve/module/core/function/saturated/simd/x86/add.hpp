@@ -13,6 +13,7 @@
 #include <eve/detail/concepts.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/function/saturated.hpp>
 
 namespace eve::detail
 {
