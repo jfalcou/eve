@@ -28,12 +28,12 @@ TTS_CASE_TPL("wide rng check on prev", EVE_TYPE)
                             : std::nextafter(e, eve::minf(eve::as<v_t>()));
                     };
     eve::uniform_prng<v_t> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
-    TTS_RANGE_CHECK(p, std_prev, eve::saturated(eve::prev));
+    TTS_RANGE_CHECK(p, std_prev, eve::prev);
   }
   else
   {
     auto std_prev = [](auto e) -> v_t { return e == eve::valmin(eve::as<v_t>()) ? e : e-1; };
     eve::uniform_prng<v_t> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
-    TTS_RANGE_CHECK(p, std_prev, eve::saturated(eve::prev));
+    TTS_RANGE_CHECK(p, std_prev, eve::prev);
   }
 }

@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/pow_abs.hpp>
+#include <eve/function/pedantic/pow_abs.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/detail/function/iota.hpp>
 #include <eve/constant/valmin.hpp>

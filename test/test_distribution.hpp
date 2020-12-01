@@ -10,8 +10,8 @@
 //==================================================================================================
 #pragma once
 #include <eve/function/abs.hpp>
-#include <eve/function/ldexp.hpp>
-#include <eve/function/frexp.hpp>
+#include <eve/function/pedantic/ldexp.hpp>
+#include <eve/function/pedantic/frexp.hpp>
 #include <eve/function/sign.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/constant/minexponent.hpp>
@@ -30,7 +30,7 @@ namespace eve
     {
       T a;
       T b;
-      param_type(T, aa, T bb) : a(aa),  b(bb){};
+      param_type(T aa, T bb) : a(aa),  b(bb){};
 
     };
 
