@@ -77,23 +77,38 @@ namespace eve::detail
       else  if constexpr( cat == category::float32x4 )  that = _mm_maskload_ps    (ptr,mask);
       else  if constexpr( current_api >= avx2 )
       {
-        constexpr auto any64x4 = category::int64x4 | category::uint64x4;
-        constexpr auto any64x2 = category::int64x2 | category::uint64x2;
-        constexpr auto any32x8 = category::int32x8 | category::uint32x8;
-        constexpr auto any32x4 = category::int32x4 | category::uint32x4;
+        constexpr auto m64x4 = match(cat, category::int64x4, category::uint64x4);
+        constexpr auto m64x2 = match(cat, category::int64x2, category::uint64x2);
+        constexpr auto m32x8 = match(cat, category::int32x8, category::uint32x8);
+        constexpr auto m32x4 = match(cat, category::int32x4, category::uint32x4);
 
-              if constexpr( cat && any64x4 )  that = _mm256_maskload_epi64 (ptr,mask);
-        else  if constexpr( cat && any64x2 )  that = _mm_maskload_epi64    (ptr,mask);
-        else  if constexpr( cat && any32x8 )  that = _mm256_maskload_epi32 (ptr,mask);
-        else  if constexpr( cat && any32x4 )  that = _mm_maskload_epi32    (ptr,mask);
-        else                                  that = load_(EVE_RETARGET(cpu_), cond, ptr);
+              if constexpr( m64x4 ) that = _mm256_maskload_epi64 (ptr,mask);
+        else  if constexpr( m64x2 ) that = _mm_maskload_epi64    (ptr,mask);
+        else  if constexpr( m32x8 ) that = _mm256_maskload_epi32 (ptr,mask);
+        else  if constexpr( m32x4 ) that = _mm_maskload_epi32    (ptr,mask);
+        else                        return load_(EVE_RETARGET(cpu_), cond, ptr);
       }
       else
       {
-        that = load_(EVE_RETARGET(cpu_), cond, ptr);
+        return  load_(EVE_RETARGET(cpu_), cond, ptr);
       }
 
-      if constexpr( C::has_alternative )  that |= cond.alternative;
+      if constexpr( C::has_alternative )
+      {
+        constexpr auto blender = [](auto a, auto b, auto m)
+        {
+          auto mm = typename r_t::storage_type(m.storage());
+                if constexpr( cat == category::float64x4 )  return _mm256_blendv_pd(a,b,mm);
+          else  if constexpr( cat == category::float32x8 )  return _mm256_blendv_ps(a,b,mm);
+          else  if constexpr( cat == category::float64x2 )  return _mm_blendv_pd(a,b,mm);
+          else  if constexpr( cat == category::float32x4 )  return _mm_blendv_ps(a,b,mm);
+          else  if constexpr( sizeof(a) == 32)              return _mm256_blendv_epi8(a,b,mm);
+          else  if constexpr( sizeof(a) == 16)              return _mm_blendv_epi8(a,b,mm);
+        };
+
+        r_t alt(cond.alternative);
+        that = blender(alt,that,mask);
+      }
 
       return that;
     }

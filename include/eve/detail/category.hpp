@@ -109,6 +109,12 @@ namespace eve::detail
     return (to_int(a) & to_int(b)) != 0;
   }
 
+  template<typename... Cat>
+  EVE_FORCEINLINE constexpr bool match(category a, Cat... tst) noexcept
+  {
+    return ((a == tst) || ...);
+  }
+
   template<typename W> EVE_FORCEINLINE constexpr category categorize() noexcept
   {
     if constexpr( has_native_abi_v<W> )
