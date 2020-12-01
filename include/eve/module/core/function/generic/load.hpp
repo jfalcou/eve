@@ -11,16 +11,8 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
+#include <eve/concept/memory.hpp>
 #include <type_traits>
-
-namespace eve
-{
-  template<typename T> concept scalar_pointer = requires(T a)
-  {
-    { *a };
-    requires scalar_value<std::remove_cvref_t<decltype(*a)>>;
-  };
-}
 
 namespace eve::detail
 {

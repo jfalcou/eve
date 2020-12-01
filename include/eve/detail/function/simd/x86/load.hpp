@@ -11,125 +11,95 @@
 #pragma once
 
 #include <eve/as.hpp>
+#include <eve/concept/memory.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/memory/aligned_ptr.hpp>
+#include <eve/detail/category.hpp>
 
 namespace eve::detail
 {
   //================================================================================================
-  // 128 bits loads
+  // Regular loads
   //================================================================================================
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE auto load(eve::as_<wide<T, N>> const &, eve::x86_128_ const &, T const* p)
+  template<scalar_pointer Ptr, typename T, typename N, x86_abi ABI>
+  EVE_FORCEINLINE auto load(eve::as_<wide<T, N>> const &, ABI const &, Ptr p)
+  requires( std::same_as<T, std::remove_cvref_t<decltype(*p)>> )
   {
-    if constexpr( N::value * sizeof(T) == x86_128_::bytes )
+    if constexpr( !std::is_pointer_v<Ptr> )
     {
-      if constexpr( std::is_same_v<T, double> )
+      return load(eve::as_<wide<T, N>>{}, ABI{}, p.get());
+    }
+    else
+    {
+      constexpr auto cat = categorize<wide<T, N>>();
+
+            if constexpr( cat == category::float64x4 )  return _mm256_loadu_pd(p);
+      else  if constexpr( cat == category::float64x2 )  return _mm_loadu_pd(p);
+      else  if constexpr( cat == category::float32x8 )  return _mm256_loadu_ps(p);
+      else  if constexpr( cat == category::float32x4 )  return _mm_loadu_ps(p);
+      else  if constexpr( cat && category::integer_ && N::value*sizeof(T) == x86_256_::bytes)
       {
-        return _mm_loadu_pd(p);
+        return _mm256_loadu_si256((__m256i *)p);
       }
-      else if constexpr( std::is_same_v<T, float> )
-      {
-        return _mm_loadu_ps(p);
-      }
-      else if constexpr( std::is_integral_v<T> )
+      else  if constexpr( cat && category::integer_ && N::value*sizeof(T) == x86_128_::bytes)
       {
         return _mm_loadu_si128((__m128i *)p);
       }
+      else
+      {
+        typename wide<T, N>::storage_type that;
+        std::memcpy(&that, p, N::value * sizeof(T));
+        return that;
+      }
     }
-    else
+  }
+
+  //================================================================================================
+  // Conditional loads
+  //================================================================================================
+  template<relative_conditional_expr C, typename T>
+  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(avx_), C const &cond, T* ptr) noexcept
+                  -> as_wide_t<std::remove_cvref_t<T>>
+  {
+    using r_t = as_wide_t<std::remove_cvref_t<T>>;
+
+    // If the ignore/keep is complete we can jump over if_else
+    if constexpr( !C::is_complete )
     {
-      typename wide<T, N>::storage_type that;
-      std::memcpy(&that, p, N::value * sizeof(T));
+      r_t that;
+      auto mask = cond.mask( as_<r_t>{} ).bits();
+
+      constexpr auto cat = categorize<r_t>();
+
+            if constexpr( cat == category::float64x4 )  that = _mm256_maskload_pd (ptr,mask);
+      else  if constexpr( cat == category::float64x2 )  that = _mm_maskload_pd    (ptr,mask);
+      else  if constexpr( cat == category::float32x8 )  that = _mm256_maskload_ps (ptr,mask);
+      else  if constexpr( cat == category::float32x4 )  that = _mm_maskload_ps    (ptr,mask);
+      else  if constexpr( current_api >= avx2 )
+      {
+        constexpr auto any64x4 = category::int64x4 | category::uint64x4;
+        constexpr auto any64x2 = category::int64x2 | category::uint64x2;
+        constexpr auto any32x8 = category::int32x8 | category::uint32x8;
+        constexpr auto any32x4 = category::int32x4 | category::uint32x4;
+
+              if constexpr( cat && any64x4 )  that = _mm256_maskload_epi64 (ptr,mask);
+        else  if constexpr( cat && any64x2 )  that = _mm_maskload_epi64    (ptr,mask);
+        else  if constexpr( cat && any32x8 )  that = _mm256_maskload_epi32 (ptr,mask);
+        else  if constexpr( cat && any32x4 )  that = _mm_maskload_epi32    (ptr,mask);
+        else                                  that = load_(EVE_RETARGET(cpu_), cond, ptr);
+      }
+      else
+      {
+        that = load_(EVE_RETARGET(cpu_), cond, ptr);
+      }
+
+      if constexpr( C::has_alternative )  that |= cond.alternative;
+
       return that;
     }
-  }
-
-  template<real_scalar_value T, typename N, std::size_t A>
-  EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N>> const &tgt, eve::x86_128_ const &mode, aligned_ptr<T const, A> p) noexcept
-  {
-    if constexpr( A >= 16 && N::value * sizeof(T) == x86_128_::bytes )
-    {
-      if constexpr( std::is_same_v<T, double> )
-      {
-        return _mm_load_pd(p.get());
-      }
-      else if constexpr( std::is_same_v<T, float> )
-      {
-        return _mm_load_ps(p.get());
-      }
-      else if constexpr( std::is_integral_v<T> )
-      {
-        return _mm_load_si128((__m128i *)p.get());
-      }
-    }
     else
     {
-      return load(tgt, mode, p.get());
+      return load_(EVE_RETARGET(cpu_), cond, ptr);
     }
   }
-
-  template<real_scalar_value T, typename N, std::size_t A>
-  EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N>> const &tgt, eve::x86_128_ const & mode, aligned_ptr<T, A> p) noexcept
-  {
-    return load(tgt,mode, aligned_ptr<T const, A>(p));
-  }
-
-  //================================================================================================
-  // 256 bits loads
-  //================================================================================================
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE auto load(eve::as_<wide<T, N>> const &, eve::x86_256_ const &, T const* p) noexcept
-  {
-    if constexpr( std::is_same_v<T, double> )
-    {
-      return _mm256_loadu_pd(p);
-    }
-    else if constexpr( std::is_same_v<T, float> )
-    {
-      return _mm256_loadu_ps(p);
-    }
-    else if constexpr( std::is_integral_v<T> )
-    {
-      return _mm256_loadu_si256((__m256i *)p);
-    }
-  }
-
-  template<real_scalar_value T, typename N, std::size_t A>
-  EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N>> const &tgt, eve::x86_256_ const &mode, aligned_ptr<T const, A> p) noexcept
-  {
-    if constexpr( A >= 32 )
-    {
-      if constexpr( std::is_same_v<T, double> )
-      {
-        return _mm256_load_pd(p.get());
-      }
-      else if constexpr( std::is_same_v<T, float> )
-      {
-        return _mm256_load_ps(p.get());
-      }
-      else if constexpr( std::is_integral_v<T> )
-      {
-        return _mm256_load_si256((__m256i *)p.get());
-      }
-    }
-    else
-    {
-      return load(tgt, mode, p.get());
-    }
-  }
-
-  template<real_scalar_value T, typename N, std::size_t A>
-  EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N>> const &tgt, eve::x86_256_ const & mode, aligned_ptr<T, A> p) noexcept
-  {
-    return load(tgt, mode, aligned_ptr<T const, A>(p));
-  }
-
 }
-
