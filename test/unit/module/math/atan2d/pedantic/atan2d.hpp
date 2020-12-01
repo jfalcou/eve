@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/atan2d.hpp>
+#include <eve/function/pedantic/atan2d.hpp>
 #include <eve/function/is_positive.hpp>
 #include <eve/function/is_negative.hpp>
 #include <eve/function/pedantic.hpp>
