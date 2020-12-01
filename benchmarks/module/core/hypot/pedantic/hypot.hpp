@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/hypot.hpp>
+#include <eve/function/pedantic/hypot.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
 #include <cmath>

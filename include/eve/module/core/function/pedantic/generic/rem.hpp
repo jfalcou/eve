@@ -20,6 +20,7 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/roundings.hpp>
+#include <eve/function/pedantic.hpp>
 
 namespace eve::detail
 {
