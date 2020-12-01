@@ -13,27 +13,44 @@
 #if defined(EVE_HW_X86) && !defined(SPY_SIMD_IS_X86_AVX512)
 #include "reverse.hpp"
 
-TTS_CASE_TPL( "Check for reverse behavior", float,double )
+template<typename T, typename Test>
+void check_all_sizes(Test test)
 {
-  using type = eve::wide<T>;
+  constexpr int number_of_packs = std::countr_zero(256u >> sizeof(T)) + 2;
+  [&]<int... idx>(std::integer_sequence<int, idx...>)
+  {
+    (test(eve::wide<T, eve::fixed<static_cast<size_t>(1 << idx)>> {}), ...);
+  } (std::make_integer_sequence<int, number_of_packs>());
+}
 
-  type input( [](auto i, auto size)
-              {
-                if(i == 0     ) return std::numeric_limits<T>::min();
-                if(i == size-1) return std::numeric_limits<T>::max();
-                return static_cast<T>(i);
-              }
-            );
+TTS_CASE_TPL( "Check for reverse behavior", TTS_NUMERIC_TYPES )
+{
+  check_all_sizes<T>
+  (
+    [&]<typename Type>(Type const&)
+    {
+      std::cout << tts::green("Size: ") << eve::cardinal_v<Type> << " - ";
+      using value_type = eve::element_type_t<Type>;
 
-  type expected( [](auto i, auto size)
-              {
-                if(i == 0     ) return std::numeric_limits<T>::max();
-                if(i == size-1) return std::numeric_limits<T>::min();
-                return static_cast<T>(size - 1 - i);
-              }
-            );
+      Type input( [](auto i, auto size)
+                    {
+                      if(i == size-1) return std::numeric_limits<value_type>::max();
+                      if(i == 0     ) return std::numeric_limits<value_type>::min();
+                      return static_cast<T>(i);
+                    }
+                  );
 
-  TTS_EQUAL(eve_extra::reverse(input), expected);
+      Type expected( [](auto i, auto size)
+                  {
+                    if(i == 0     ) return std::numeric_limits<value_type>::max();
+                    if(i == size-1) return std::numeric_limits<value_type>::min();
+                    return static_cast<T>(size - 1 - i);
+                  }
+                );
+
+      TTS_EQUAL(eve_extra::reverse(input), expected);
+    }
+  );
 }
 
 #endif
