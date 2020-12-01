@@ -96,54 +96,5 @@ namespace eve::detail
     {
       return apply_over(D()(exp2), x);
     }
-
-  }
-
-  template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T exp2_(EVE_SUPPORTS(cpu_), T const &x) noexcept
-  {
-    return exp2(regular_type(), x);
-  }
-
-////////////////////////////////////////////////////////////////////////////////////
-// integral types
-
-  template<integral_real_value T, typename D>
-  EVE_FORCEINLINE constexpr auto exp2_(EVE_SUPPORTS(cpu_), D const &, T xx) noexcept
-  requires(is_one_of<D>(types<converter_type<float>
-                             , converter_type<double>
-                             , pedantic_type
-                             , raw_type
-                             , regular_type>{}))
-  {
-    if constexpr( has_native_abi_v<T> )
-    {
-      if constexpr(is_one_of<D>(types<converter_type<float>, converter_type<double>>{}))
-      {
-        using vd_t = value_type_t<D>;
-        using i_t  = as_integer_t<vd_t>;
-        auto x = to_<i_t>(xx);
-        auto z = is_nez(x);
-        auto zz =  eve::min(x+maxexponent(eve::as<vd_t>()), 2*maxexponent(eve::as<vd_t>())+1) & z.mask();
-        zz = zz << nbmantissabits(eve::as<vd_t>());
-        using r_t   = std::conditional_t<scalar_value<T>, vd_t, wide<vd_t, cardinal_t<T>>>;
-        return bit_cast(zz, as<r_t>());
-      }
-      else
-      {
-        auto tmp =  if_else(is_ltz(xx), eve::zero, shl(one(eve::as(xx)), xx));
-        if constexpr(std::is_same_v<D, saturated_type>)
-        {
-          using elt_t =  element_type_t<T>;
-          return if_else(is_gez(xx, T(sizeof(elt_t))), valmax(eve::as<T>()), tmp);
-        }
-        else
-          return tmp;
-      }
-    }
-    else
-    {
-      return apply_over(pedantic(exp2), xx);
-    }
   }
 }

@@ -10,7 +10,7 @@
 //==================================================================================================
 #include <eve/constant/maxlog.hpp>
 #include <eve/constant/minlog.hpp>
-#include <eve/function/tgamma.hpp>
+#include <eve/function/pedantic/tgamma.hpp>
 #include "producers.hpp"
 #include <cmath>
 
