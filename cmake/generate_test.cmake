@@ -27,7 +27,7 @@ function(generate_test root rootpath dep file precompiled_target)
 
   if (NOT ${precompiled_target} STREQUAL "")
     if(${precompiled_target} STREQUAL "GENERATE")
-        target_precompile_headers(${test} PRIVATE "/home/dyarosh/space/eve/test/test.hpp")
+        target_precompile_headers(${test} PRIVATE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/test/test.hpp>)
         set(precompiled_target ${test} PARENT_SCOPE)
     else()
         target_precompile_headers(${test} REUSE_FROM ${precompiled_target})
