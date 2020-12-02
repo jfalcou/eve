@@ -11,11 +11,10 @@
 ##==================================================================================================
 ## Setup a test with many option
 ##==================================================================================================
-function(generate_test root rootpath dep file precompiled_target)
+function(generate_test root rootpath dep file)
   string(REPLACE ".cpp" ".exe" base ${file})
   string(REPLACE "/"    "." base ${base})
   string(REPLACE "\\"   "." base ${base})
-
 
   if( NOT root STREQUAL "")
     set(test "${root}.${base}")
@@ -24,15 +23,6 @@ function(generate_test root rootpath dep file precompiled_target)
   endif()
 
   add_executable( ${test}  "${rootpath}${file}")
-
-  if (NOT ${precompiled_target} STREQUAL "")
-    if(${precompiled_target} STREQUAL "GENERATE")
-        target_precompile_headers(${test} PRIVATE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/test/test.hpp>)
-        set(precompiled_target ${test} PARENT_SCOPE)
-    else()
-        target_precompile_headers(${test} REUSE_FROM ${precompiled_target})
-    endif()
-  endif()
 
   if( ${ARGC} EQUAL 5)
     target_compile_definitions( ${test} PUBLIC ${ARGV4})
@@ -68,17 +58,26 @@ function(generate_test root rootpath dep file precompiled_target)
                   COMMAND sh -c "${PROJECT_SOURCE_DIR}/cmake/txt2html.sh $<TARGET_FILE:${test}> ${PROJECT_SOURCE_DIR}/test/${doc_path}/${file} > ${PROJECT_SOURCE_DIR}/docs/reference/src/${doc_source}"
                 )
       else()
-        add_test( NAME ${test}
+
+      add_test( NAME ${test}
                   WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
                   COMMAND "$<TARGET_FILE:${test}>"
                 )
       endif()
 
+      target_precompile_headers(${test} REUSE_FROM doc_pch)
+      add_dependencies(${test} doc_pch)
+
     else()
+    target_precompile_headers(${test} REUSE_FROM test_pch)
+
     add_test( NAME ${test}
               WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
               COMMAND $<TARGET_FILE:${test}> --no-color --pass
             )
+
+    add_dependencies(${test} test_pch)
+
     endif()
   endif()
 
