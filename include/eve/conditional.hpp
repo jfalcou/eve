@@ -13,6 +13,7 @@
 #include <eve/as.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/function/iota.hpp>
+#include <eve/assert.hpp>
 #include <eve/traits.hpp>
 #include <iosfwd>
 
@@ -361,9 +362,10 @@ namespace eve
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
-    constexpr keep_between_(std::ptrdiff_t b, std::ptrdiff_t e) noexcept
-    : begin_(std::min(b,e)), end_(std::max(b,e))
-    {}
+    keep_between_(std::ptrdiff_t b, std::ptrdiff_t e) noexcept : begin_(b), end_(e)
+    {
+      EVE_ASSERT(b<=e, "[eve::keep_between] Index mismatch for begin/end");
+    }
 
     template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
 
@@ -371,7 +373,7 @@ namespace eve
     {
       using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
       auto const i = detail::linear_ramp(eve::as_<i_t>());
-      return (i >= begin_) && (i <= end_);
+      return (i >= begin_) && (i < end_);
     }
 
     template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const
@@ -381,7 +383,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE auto count(eve::as_<T> const&) const
     {
-      return sizeof(element_type_t<T>) * (end_ - begin_ + 1);
+      return sizeof(element_type_t<T>) * (end_ - begin_);
     }
 
     friend std::ostream& operator<<(std::ostream& os, keep_between_ const& c)
