@@ -240,9 +240,9 @@ namespace eve
 
     template<typename T> auto mask(eve::as_<T> const&) const
     {
-      using i_t = detail::as_integer_t<T>;
+      using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
       constexpr std::ptrdiff_t card = cardinal_v<T>;
-      return detail::linear_ramp(eve::as_<as_arithmetic_t<i_t>>()) >= i_t(card-count_);
+      return detail::linear_ramp(eve::as_<i_t>()) >= i_t(card-count_);
     }
 
     friend std::ostream& operator<<(std::ostream& os, keep_last_ const& c)
@@ -283,8 +283,8 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
-      using i_t = detail::as_integer_t<T>;
-      return detail::linear_ramp(eve::as_<as_arithmetic_t<i_t>>()) >= i_t(count_);
+      using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
+      return detail::linear_ramp(eve::as_<i_t>()) >= i_t(count_);
     }
 
     template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const
@@ -325,8 +325,8 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
-      using i_t = detail::as_integer_t<T>;
-      return detail::linear_ramp(eve::as_<as_arithmetic_t<i_t>>()) < i_t(count_);
+      using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
+      return detail::linear_ramp(eve::as_<i_t>()) < i_t(count_);
     }
 
     friend std::ostream& operator<<(std::ostream& os, keep_first_ const& c)
@@ -369,7 +369,8 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
-      auto const i = detail::linear_ramp(eve::as_<as_arithmetic_t<T>>());
+      using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
+      auto const i = detail::linear_ramp(eve::as_<i_t>());
       return (i >= begin_) && (i <= end_);
     }
 
@@ -413,7 +414,8 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
-      auto const i = detail::linear_ramp(eve::as_<as_arithmetic_t<T>>());
+      using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
+      auto const i = detail::linear_ramp(eve::as_<i_t>());
       return (i >= first_count_) && (i < (cardinal_v<T>-last_count_));
     }
 

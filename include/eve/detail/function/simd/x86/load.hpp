@@ -25,25 +25,44 @@ namespace eve::detail
   EVE_FORCEINLINE auto load(eve::as_<wide<T, N>> const &, ABI const &, Ptr p)
   requires( std::same_as<T, std::remove_cvref_t<decltype(*p)>> )
   {
+    constexpr auto cat = categorize<wide<T, N>>();
+    constexpr bool isfull256 = N::value*sizeof(T) == x86_256_::bytes;
+    constexpr bool isfull128 = N::value*sizeof(T) == x86_128_::bytes;
+
     if constexpr( !std::is_pointer_v<Ptr> )
     {
-      return load(eve::as_<wide<T, N>>{}, ABI{}, p.get());
+      if constexpr( isfull256 )
+      {
+              if constexpr( cat == category::float64x4 )  return _mm256_load_pd(p.get());
+        else  if constexpr( cat == category::float32x8 )  return _mm256_load_ps(p.get());
+        else return _mm256_load_si256((__m256i *)p.get());
+      }
+      else  if constexpr( isfull128 )
+      {
+              if constexpr( cat == category::float64x2 )  return _mm_load_pd(p.get());
+        else  if constexpr( cat == category::float32x4 )  return _mm_load_ps(p.get());
+        else  return _mm_load_si128((__m128i *)p.get());
+      }
+      else
+      {
+        typename wide<T, N>::storage_type that;
+        std::memcpy(&that, p.get(), N::value * sizeof(T));
+        return that;
+      }
     }
     else
     {
-      constexpr auto cat = categorize<wide<T, N>>();
-
-            if constexpr( cat == category::float64x4 )  return _mm256_loadu_pd(p);
-      else  if constexpr( cat == category::float64x2 )  return _mm_loadu_pd(p);
-      else  if constexpr( cat == category::float32x8 )  return _mm256_loadu_ps(p);
-      else  if constexpr( cat == category::float32x4 )  return _mm_loadu_ps(p);
-      else  if constexpr( cat && category::integer_ && N::value*sizeof(T) == x86_256_::bytes)
+      if constexpr( isfull256 )
       {
-        return _mm256_loadu_si256((__m256i *)p);
+              if constexpr( cat == category::float64x4 )  return _mm256_loadu_pd(p);
+        else  if constexpr( cat == category::float32x8 )  return _mm256_loadu_ps(p);
+        else return _mm256_loadu_si256((__m256i *)p);
       }
-      else  if constexpr( cat && category::integer_ && N::value*sizeof(T) == x86_128_::bytes)
+      else  if constexpr( isfull128 )
       {
-        return _mm_loadu_si128((__m128i *)p);
+              if constexpr( cat == category::float64x2 )  return _mm_loadu_pd(p);
+        else  if constexpr( cat == category::float32x4 )  return _mm_loadu_ps(p);
+        else  return _mm_loadu_si128((__m128i *)p);
       }
       else
       {
@@ -82,10 +101,10 @@ namespace eve::detail
         constexpr auto m32x8 = match(cat, category::int32x8, category::uint32x8);
         constexpr auto m32x4 = match(cat, category::int32x4, category::uint32x4);
 
-              if constexpr( m64x4 ) that = _mm256_maskload_epi64 (ptr,mask);
-        else  if constexpr( m64x2 ) that = _mm_maskload_epi64    (ptr,mask);
-        else  if constexpr( m32x8 ) that = _mm256_maskload_epi32 (ptr,mask);
-        else  if constexpr( m32x4 ) that = _mm_maskload_epi32    (ptr,mask);
+              if constexpr( m64x4 ) that = _mm256_maskload_epi64 ((long long const int*)ptr,mask);
+        else  if constexpr( m64x2 ) that = _mm_maskload_epi64    ((long long const int*)ptr,mask);
+        else  if constexpr( m32x8 ) that = _mm256_maskload_epi32 ((std::int32_t const*)ptr,mask);
+        else  if constexpr( m32x4 ) that = _mm_maskload_epi32    ((std::int32_t const*)ptr,mask);
         else                        return load_(EVE_RETARGET(cpu_), cond, ptr);
       }
       else
