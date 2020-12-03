@@ -35,8 +35,21 @@ TTS_CASE_TPL( "Check that wide<T,N,x86*> satisfies abi_compatible_with with any 
   TTS_EXPECT((eve::abi_compatible_with<wide<T>          , eve::x86_128_ , eve::x86_256_> ));
   TTS_EXPECT((eve::abi_compatible_with<logical<wide<T>> , eve::x86_128_ , eve::x86_256_> ));
 }
+
+TTS_CASE_TPL( "Check that wide<T,N,x86*> does not satisfy abi_compatible_with with other ABI"
+            , TTS_NUMERIC_TYPES
+            )
+{
+  using eve::wide;
+  using eve::logical;
+
+  TTS_EXPECT_NOT((eve::abi_compatible_with<wide<T>          , eve::arm_64_ , eve::arm_128_> ));
+  TTS_EXPECT_NOT((eve::abi_compatible_with<wide<T>          , eve::ppc_> ));
+  TTS_EXPECT_NOT((eve::abi_compatible_with<logical<wide<T>> , eve::arm_64_ , eve::arm_128_> ));
+  TTS_EXPECT_NOT((eve::abi_compatible_with<logical<wide<T>> , eve::ppc_> ));
+}
 #elif defined(SPY_SIMD_IS_PPC)
-TTS_CASE_TPL( "Check that wide<T,N,x86*> satisfies abi_compatible_with with any PPC ABI"
+TTS_CASE_TPL( "Check that wide<T,N,ppc*> satisfies abi_compatible_with with any PPC ABI"
             , TTS_NUMERIC_TYPES
             )
 {
@@ -46,8 +59,21 @@ TTS_CASE_TPL( "Check that wide<T,N,x86*> satisfies abi_compatible_with with any 
   TTS_EXPECT((eve::abi_compatible_with<wide<T>          , eve::ppc_> ));
   TTS_EXPECT((eve::abi_compatible_with<logical<wide<T>> , eve::ppc_> ));
 }
+
+TTS_CASE_TPL( "Check that wide<T,N,ppc*> does not satisfy abi_compatible_with with other ABI"
+            , TTS_NUMERIC_TYPES
+            )
+{
+  using eve::wide;
+  using eve::logical;
+
+  TTS_EXPECT_NOT((eve::abi_compatible_with<wide<T>          , eve::arm_64_ , eve::arm_128_  > ));
+  TTS_EXPECT_NOT((eve::abi_compatible_with<wide<T>          , eve::x86_128_ , eve::x86_256_ > ));
+  TTS_EXPECT_NOT((eve::abi_compatible_with<logical<wide<T>> , eve::arm_64_ , eve::arm_128_  > ));
+  TTS_EXPECT_NOT((eve::abi_compatible_with<logical<wide<T>> , eve::x86_128_ , eve::x86_256_ > ));
+}
 #elif defined(SPY_SIMD_IS_ARM)
-TTS_CASE_TPL( "Check that wide<T,N,x86*> satisfies abi_compatible_with with any ARM ABI"
+TTS_CASE_TPL( "Check that wide<T,N,arm*> satisfies abi_compatible_with with any ARM ABI"
             , TTS_NUMERIC_TYPES
             )
 {
@@ -56,5 +82,18 @@ TTS_CASE_TPL( "Check that wide<T,N,x86*> satisfies abi_compatible_with with any 
 
   TTS_EXPECT((eve::abi_compatible_with<wide<T>          , eve::arm_64_ , eve::arm_128_> ));
   TTS_EXPECT((eve::abi_compatible_with<logical<wide<T>> , eve::arm_64_ , eve::arm_128_> ));
+}
+
+TTS_CASE_TPL( "Check that wide<T,N,arm*> does not satisfy abi_compatible_with with other ABI"
+            , TTS_NUMERIC_TYPES
+            )
+{
+  using eve::wide;
+  using eve::logical;
+
+  TTS_EXPECT_NOT((eve::abi_compatible_with<wide<T>          , eve::x86_128_ , eve::x86_256_ > ));
+  TTS_EXPECT_NOT((eve::abi_compatible_with<wide<T>          , eve::ppc_> ));
+  TTS_EXPECT_NOT((eve::abi_compatible_with<logical<wide<T>> , eve::x86_128_ , eve::x86_256_ > ));
+  TTS_EXPECT_NOT((eve::abi_compatible_with<logical<wide<T>> , eve::ppc_> ));
 }
 #endif
