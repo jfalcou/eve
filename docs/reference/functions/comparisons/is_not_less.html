@@ -50,6 +50,18 @@ between `x` and `y`.
 
 The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
 
+Supported Decorators
+====================================================================================================
+[`almost`](../decorators.html#almost)
+:   The expression `almost(is_not_less)(x, y, t)` where `x` and `y` must be
+    floating point values, evals to true if and only if and only if `x` is not almost less than `y`.
+    This means that:
+
+    - if `t` is a floating_value then  $(x > y - t \max(|x|, |y|))$
+    - if `t` is a positive integral_value then $(x > \mbox{prev}(y, t)$;
+    - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
+
+
   (insert ../../src/is_not_less.src.html here)
 
   (insert ../../out/is_not_less.out.html here)

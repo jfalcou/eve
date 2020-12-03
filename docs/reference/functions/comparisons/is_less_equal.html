@@ -45,8 +45,8 @@ Parameters
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Returns the logical value containing the [element-wise](../../../glossary.html#value) comparison test result
-between `x` and `y`. The infix notation `x <= y` can also be used.
+Returns the logical value containing the [element-wise](../../../glossary.html#value)
+ comparison test result between `x` and `y`. The infix notation `x <= y` can also be used.
 
 The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
 
@@ -57,6 +57,17 @@ The result type is the [compatibility result](../../concept.html#compatibility) 
   (insert ../../src/is_less_equal.src.html here)
 
   (insert ../../out/is_less_equal.out.html here)
+
+Supported Decorators
+====================================================================================================
+[`almost`](../decorators.html#almost)
+:   The expression `almost(is_less_equal)(x, y, t)` where `x` and `y` must be
+    floating point values, evals to true if and only if `x` is almost less or equal to `y`.
+    This means that:
+
+    - if `t` is a floating_value then  $x <= y + t \max(|x|, |y|)$
+    - if `t` is a positive integral_value then $x <= next(y, t)$;
+    - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
 
 See Also
 ====================================================================================================

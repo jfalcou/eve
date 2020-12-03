@@ -52,6 +52,14 @@ The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `F
 
 The call to `trunc(a)` is equivalent to the call `toward_zero(round)(a)`.
 
+Supported Decorators
+====================================================================================================
+[`tolerant`](../decorators.html#tolerant)
+:   The expression `tolerant(trunc)(x, tol)` computes a tolerant truncated value for `x`, where `x` must be a floating value.
+
+    - If `tol` is a floating_value computes the floor with a tolerance `tol` using Hagerty's FL5 function.
+    - If `tol` is an integral_value n compute the floor of the next nth representable value in the `x` type.
+    - If `tol` is omitted the tolerance is taken to 3 times the machine $\epsilon$ in the `x` type (`3*eps(as(x))`).
 
   (insert ../../src/trunc.src.html here)
 

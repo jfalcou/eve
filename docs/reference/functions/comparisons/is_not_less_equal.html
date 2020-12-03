@@ -41,6 +41,16 @@ Parameters
 `x`, `y`
 :   [values](../../concepts.html#value).
 
+Supported Decorators
+====================================================================================================
+[`definitely`](../decorators.html#definitely)
+:   The expression `definitely(is_not_less_equal)(x, y, t)` where `x` and `y` must be
+    floating point values, evals to true if and only if and only if `x` is definitely not less or equal to `y`.
+    This means that`x` and `y` are unordered or:
+
+    - if `t` is a floating_value then  $(x \ge y + t \max(|x|, |y|))$
+    - if `t` is a positive integral_value then $(x \ge \mbox{next}(y, t)$;
+    - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
 
 Return value
 ----------------------------------------------------------------------------------------------------
