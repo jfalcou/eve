@@ -125,7 +125,7 @@ namespace eve
 
     void swap(aligned_ptr &that) noexcept { std::swap(pointer_, that.pointer_); }
 
-  private:
+    private:
     pointer pointer_;
   };
 
@@ -293,9 +293,15 @@ namespace eve
   template<std::size_t A, typename T, std::size_t B>
   constexpr bool is_aligned(aligned_ptr<T, B> const &ptr) noexcept
   {
-    if constexpr(A <= B)
-      return true;
-    else
-      return is_aligned(ptr.get());
+    if constexpr(A <= B)  return true;
+    else                  return is_aligned(ptr.get());
   }
+
+  //================================================================================================
+  //  Specialisation for pointer_alignment
+  //================================================================================================
+  template<typename Type, std::size_t Alignment>
+  struct  pointer_alignment<aligned_ptr<Type, Alignment>>
+        : std::integral_constant<std::size_t,Alignment>
+  {};
 }

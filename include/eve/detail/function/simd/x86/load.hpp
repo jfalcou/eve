@@ -23,7 +23,9 @@ namespace eve::detail
   //================================================================================================
   template<scalar_pointer Ptr, typename T, typename N, x86_abi ABI>
   EVE_FORCEINLINE auto load(eve::as_<wide<T, N>> const &, ABI const &, Ptr p)
-  requires( std::same_as<T, std::remove_cvref_t<decltype(*p)>> )
+  requires(   std::same_as<T, std::remove_cvref_t<decltype(*p)>>
+          &&  pointer_alignment_v<Ptr> >= alignment_v<wide<T, N>>
+          )
   {
     constexpr auto cat = categorize<wide<T, N>>();
     constexpr bool isfull256 = N::value*sizeof(T) == x86_256_::bytes;
@@ -37,7 +39,7 @@ namespace eve::detail
         else  if constexpr( cat == category::float32x8 )  return _mm256_load_ps(p.get());
         else return _mm256_load_si256((__m256i *)p.get());
       }
-      else  if constexpr( isfull128 )
+      else if constexpr( isfull128 )
       {
               if constexpr( cat == category::float64x2 )  return _mm_load_pd(p.get());
         else  if constexpr( cat == category::float32x4 )  return _mm_load_ps(p.get());
@@ -58,7 +60,7 @@ namespace eve::detail
         else  if constexpr( cat == category::float32x8 )  return _mm256_loadu_ps(p);
         else return _mm256_loadu_si256((__m256i *)p);
       }
-      else  if constexpr( isfull128 )
+      else if constexpr( isfull128 )
       {
               if constexpr( cat == category::float64x2 )  return _mm_loadu_pd(p);
         else  if constexpr( cat == category::float32x4 )  return _mm_loadu_ps(p);
