@@ -8,14 +8,14 @@
 **/
 //==================================================================================================
 
+#include "test.hpp"
 #include <eve/arch/tags.hpp>
 #include <eve/arch/spec.hpp>
 #include <iostream>
 #include <iomanip>
 
-int main()
+TTS_CASE("Static detections of API")
 {
-  std::cout << "Static detections:\n";
   std::cout << "========================\n";
   std::cout << "Current API: " << eve::current_api << "\n";
   std::cout << "========================\n";
@@ -42,7 +42,13 @@ int main()
   std::cout << "AARCH64: " << std::boolalpha << eve::supports_aarch64              << "\n";
   std::cout << "\n";
 
-  std::cout << "Dynamic detections:\n";
+  TTS_PASS("All static detections - done");
+}
+
+TTS_CASE("Dynamic detections of API")
+{
+  std::cout << "========================\n";
+  std::cout << "Current API: " << eve::current_api << "\n";
   std::cout << "========================\n";
   std::cout << "X86-like SIMD extensions\n";
   std::cout << "SSE2   : " << std::boolalpha << eve::is_supported(eve::sse2) << "\n";
@@ -66,5 +72,5 @@ int main()
   std::cout << "NEON  : " << std::boolalpha << eve::is_supported(eve::neon) << "\n";
   std::cout << "ASIMD : " << std::boolalpha << eve::is_supported(eve::aarch64) << "\n";
 
-  return 0;
+  TTS_PASS("All dynamic detections - done");
 }

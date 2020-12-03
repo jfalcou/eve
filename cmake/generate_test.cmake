@@ -58,17 +58,26 @@ function(generate_test root rootpath dep file)
                   COMMAND sh -c "${PROJECT_SOURCE_DIR}/cmake/txt2html.sh $<TARGET_FILE:${test}> ${PROJECT_SOURCE_DIR}/test/${doc_path}/${file} > ${PROJECT_SOURCE_DIR}/docs/reference/src/${doc_source}"
                 )
       else()
-        add_test( NAME ${test}
+
+      add_test( NAME ${test}
                   WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
                   COMMAND "$<TARGET_FILE:${test}>"
                 )
       endif()
 
+      target_precompile_headers(${test} REUSE_FROM doc_pch)
+      add_dependencies(${test} doc_pch)
+
     else()
+    target_precompile_headers(${test} REUSE_FROM test_pch)
+
     add_test( NAME ${test}
               WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
               COMMAND $<TARGET_FILE:${test}> --no-color --pass
             )
+
+    add_dependencies(${test} test_pch)
+
     endif()
   endif()
 

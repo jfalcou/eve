@@ -98,6 +98,7 @@ function(make_all_units)
           set(file_to_compile "${_TestSrcDir}/${GEN_TEST_ROOT}.${base_file}.scalar.cpp")
 
           configure_file( "${_TestCurrentDir}/scalar.cpp.in" "${file_to_compile}" )
+
           generate_test ( "" "${_TestSrcDir}/" "${GEN_TEST_ROOT}.scalar.exe"
                           "${GEN_TEST_ROOT}.${base_file}.scalar.cpp"
                         )
@@ -122,9 +123,11 @@ function(make_all_units)
           set(file_to_compile "${_TestSrcDir}/${GEN_TEST_ROOT}.${base_file}.simd.cpp")
 
           configure_file( "${_TestCurrentDir}/simd.cpp.in" "${file_to_compile}" )
+
           generate_test ( "" "${_TestSrcDir}/" "${GEN_TEST_ROOT}.simd.exe"
                           "${GEN_TEST_ROOT}.${base_file}.simd.cpp"
                         )
+
         endif()
       endforeach()
     endif()
@@ -220,6 +223,47 @@ FetchContent_MakeAvailable(tts)
 add_custom_target(tests)
 add_custom_target(unit)
 add_dependencies(tests unit)
+
+##==================================================================================================
+## Setup PCH
+##==================================================================================================
+add_executable(test_pch $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/test/test_pch.cpp>)
+add_executable(doc_pch $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/test/doc_pch.cpp>)
+
+target_compile_options( test_pch PUBLIC ${_TestOptions} )
+target_compile_options( doc_pch PUBLIC ${_TestOptions} )
+
+set_property( TARGET test_pch PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/unit" )
+set_property( TARGET doc_pch PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/unit" )
+
+set_target_properties ( test_pch PROPERTIES
+                        EXCLUDE_FROM_DEFAULT_BUILD TRUE
+                        EXCLUDE_FROM_ALL TRUE
+                        ${MAKE_UNIT_TARGET_PROPERTIES}
+                      )
+
+set_target_properties ( doc_pch PROPERTIES
+                        EXCLUDE_FROM_DEFAULT_BUILD TRUE
+                        EXCLUDE_FROM_ALL TRUE
+                        ${MAKE_UNIT_TARGET_PROPERTIES}
+                      )
+
+target_include_directories( test_pch PRIVATE
+                            ${tts_SOURCE_DIR}/include
+                            ${PROJECT_SOURCE_DIR}/test
+                            ${PROJECT_SOURCE_DIR}/include
+                            ${Boost_INCLUDE_DIRS}
+                          )
+
+target_include_directories( doc_pch PRIVATE
+                            ${tts_SOURCE_DIR}/include
+                            ${PROJECT_SOURCE_DIR}/test
+                            ${PROJECT_SOURCE_DIR}/include
+                            ${Boost_INCLUDE_DIRS}
+                          )
+
+target_precompile_headers(test_pch PRIVATE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/test/test.hpp>)
+target_precompile_headers(doc_pch PRIVATE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include/eve/wide.hpp>)
 
 ##==================================================================================================
 ## Setup aggregation of tests

@@ -19,7 +19,7 @@ set(_BenchSrcDir     "${PROJECT_BINARY_DIR}/tmp-src")
 ##==================================================================================================
 function(make_bench root)
   foreach(file ${ARGN})
-    generate_test(${root} "" "" ${file})
+    generate_test(${root} "" "" ${file} )
   endforeach()
 endfunction()
 
