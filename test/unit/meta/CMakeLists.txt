@@ -18,6 +18,7 @@ make_unit( "unit.meta" sign_of.cpp )
 make_unit( "unit.meta.concept" rebindable.cpp )
 make_unit( "unit.meta.concept" decorator.cpp )
 make_unit( "unit.meta.concept" value.cpp )
+make_unit( "unit.meta.concept" abi_compatible_with.cpp )
 
 ##==================================================================================================
 ## Traits tests
