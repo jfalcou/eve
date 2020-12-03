@@ -47,7 +47,17 @@ Return value
 <span class="smallskip"></span>
 Computes  [element-wise](../../../glossary.html#elment-wise) the smallest integer not less than `x`.
 
-  (insert ../../src/ceil.src.html here)
+
+Supported Decorators
+====================================================================================================
+[`tolerant`](../decorators.html#tolerant)
+:   The expression `tolerant(ceil)(x, tol)` computes a tolerant ceil value for `x`, where `x` must be a floating value.
+
+    - If `tol` is a floating_value computes the floor with a tolerance `tol` using Hagerty's FL5 function.
+    - If `tol` is an integral_value n compute the floor of the next nth representable value in the `x` type.
+    - If `tol` is omitted the tolerance is taken to 3 times the machine $\epsilon$ in the `x` type (`3*eps(as(x))`).
+
+ (insert ../../src/ceil.src.html here)
 
   (insert ../../out/ceil.out.html here)
 
