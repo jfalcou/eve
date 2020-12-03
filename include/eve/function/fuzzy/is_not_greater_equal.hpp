@@ -10,5 +10,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/is_is_not_equal.hpp>
-#include <eve/module/core/function/fuzzy/generic/is_is_not_equal.hpp>
+#include <eve/function/is_not_greater_equal.hpp>
+#include <eve/module/core/function/fuzzy/generic/is_not_greater_equal.hpp>

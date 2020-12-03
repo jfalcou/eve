@@ -62,7 +62,7 @@ Supported Decorators
 [`definitely`](../decorators.html#definitely)
 :   The expression `definitely(is_not_equal)(x, y, t)` where `x` and `y` must be floating point values, evals
     to true if and only if `x` is definitely not equal to `y`.
-    This means that `x` and `y` are unordered or:
+    This means that the pair `x,y` is unordered or:
 
     - if `t` is a floating_value then the relative error of confusing is `x` and `y` is greater than `t` $|x-y| > t \max(|x|, |y|)$.
     - if `t` is an integral_value then there at least `t` values of the type of `x` representable in the interval $[x,y[$.

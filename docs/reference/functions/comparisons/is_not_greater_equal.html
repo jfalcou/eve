@@ -53,7 +53,7 @@ Supported Decorators
 [`definitely`](../decorators.html#definitely)
 :   The expression `definitely(is_not_greater_equal)(x, y, t)` where `x` and `y` must be
     floating point values, evals to true if and only if and only if `x` is definitely not greater or equal to `y`.
-    This means that`x` and `y` are unordered or:
+    This means that the pair `x, y` is unordered or:
 
     - if `t` is a floating_value then  $(x \le y - t \max(|x|, |y|))$
     - if `t` is a positive integral_value then $(x \le \mbox{prev}(y, t)$;
