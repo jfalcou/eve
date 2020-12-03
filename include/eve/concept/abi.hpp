@@ -52,5 +52,5 @@ namespace eve
   }
 
   template<typename Wide, typename... ABI>
-  concept abi_compatible_with = detail::is_abi_compatible<Wide,ABI...>::value;
+  concept native_simd_for_abi = detail::is_abi_compatible<Wide,ABI...>::value;
 }
