@@ -45,11 +45,6 @@ jobs:
   ##================================================================================================
   ## SIMD tests
   ##================================================================================================
-  sync1:
-    <<: *config_clang_x86
-    steps:
-      - run: echo "Test arch.unit completed"
-
   x86_scalar:
     <<: *config_clang_x86
     steps:
@@ -146,29 +141,22 @@ workflows:
       - arm_aarch64_neon64
       - x86_sse2
       - x86_avx
-      - x86_extra
-      - sync1:
-          requires:
-            - arm_aarch64_neon128
-            - arm_aarch64_neon64
-            - x86_sse2
-            - x86_avx
-            - x86_extra
+      - x86_fma
       - x86_sse4:
           requires:
-            - sync1
+            - x86_sse2
       - x86_avx2:
           requires:
-            - sync1
-      - x86_fma:
-          requires:
-            - sync1
+            - x86_avx
       - x86_tiny:
           requires:
-            - sync1
+            - x86_fma
+      - x86_extra:
+          requires:
+            - arm_aarch64_neon128
       - x86_emulation:
           requires:
-            - sync1
+            - arm_aarch64_neon64
       - x86_scalar:
           requires:
-            - sync1
+            - x86_sse4
