@@ -63,9 +63,11 @@ auto r = abs(x-y);
 
    The result type is the [compatibility result](../../../glossary.html#compatibility) of the two parameters.
 
-Supported Decorators
+Supported decorators
 ====================================================================================================
 [`saturated`](../decorators.html#saturated)
+:   **Required header: **<script type="preformatted">` #include <eve/function/saturated/dist.hpp>`</script>
+
 :   The call `saturated(dist)(x, y)` computes a saturated distance. Contrary to the [regular case](../decorator/regular.html), it guarantees
     that the result is always defined. If $|x-y|$ is not representable
     [the greatest representable positive value](../../constants.html#valmax) is returned

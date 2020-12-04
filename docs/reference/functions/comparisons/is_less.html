@@ -54,9 +54,11 @@ The result type is the [compatibility result](../../concept.html#compatibility) 
    Although the infix notation with `<` is supported, the `<` operator on
    standard scalar types is the original one and so returns bool result, not `logical`.
 
-Supported Decorators
+Supported decorators
 ====================================================================================================
 [`definitely`](../decorators.html#definitely)
+:   **Required header: **<script type="preformatted">` #include <eve/function/definitely/is_less.hpp>`</script>
+
 :   The expression `definitely(is_less)(x, y, t)` where `x` and `y` must be
     floating point values, evals to true if and only if and only if `x` is definitely less than `y`.
     This means that:

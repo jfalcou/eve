@@ -51,9 +51,11 @@ Return value
 
     However, the cases $x = \pm\infty$ or is a Nan or a denormal are undefined.
 
-Supported Decorators
+Supported decorators
 ====================================================================================================
 [`pedantic`](../decorators.html#pedantic)
+:   **Required header: **<script type="preformatted">` #include <eve/function/pedantic/ifrexp.hpp>`</script>
+
 :   The call `pedantic(ifrexp)(x)` takes also properly care of the cases where $x = \pm0, \pm\infty$ or is a Nan,
     where $m=x$ and $e=0$ and of the denormal cases.
 

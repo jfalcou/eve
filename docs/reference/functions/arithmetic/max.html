@@ -51,14 +51,18 @@ The result type is the [compatibility result](../../concept.html#compatibility) 
 !!! WARNING
    If any element of the inputs is a `Nan`, the corresponding output element is system-dependent.
 
-supported Decorators
+Supported decorators
 ====================================================================================================
 [`pedantic`](../decorators.html#pedantic)
+:   **Required header: **<script type="preformatted">` #include <eve/function/pedantic/max.hpp>`</script>
+
 :   The call `pedantic(max)(x,y)`  ensures the conformity to the standard behaviour, that is
     (on an  [element-wise](../../../glossary.html#value) basis) semanticaly equivalent to:
     `(x < y) ? y : x`.
 
 [`numeric`](../decorators.html#numeric)
+:   **Required header: **<script type="preformatted">` #include <eve/function/numeric/max.hpp>`</script>
+
 :   The call `numeric(max)(x,y)`  ensures that  if any element of the inputs is a `Nan`, the corresponding
     output element is the corresponding element of the other parameter (i.e. the not invalid parameter wins)
 

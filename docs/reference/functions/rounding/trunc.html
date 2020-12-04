@@ -52,9 +52,11 @@ The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `F
 
 The call to `trunc(a)` is equivalent to the call `toward_zero(round)(a)`.
 
-Supported Decorators
+Supported decorators
 ====================================================================================================
 [`tolerant`](../decorators.html#tolerant)
+:   **Required header: **<script type="preformatted">` #include <eve/function/tolerant/trunc.hpp>`</script>
+
 :   The expression `tolerant(trunc)(x, tol)` computes a tolerant truncated value for `x`, where `x` must be a floating value.
 
     - If `tol` is a floating_value computes the floor with a tolerance `tol` using Hagerty's FL5 function.

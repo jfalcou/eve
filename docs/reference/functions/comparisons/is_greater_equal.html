@@ -54,9 +54,11 @@ The result type is the [compatibility result](../../concept.html#compatibility) 
    Although the infix notation with `>=` is supported, the `>=` operator on
    standard scalar types is the original one and so returns bool result, not `logical`.
 
-Supported Decorators
+Supported decorators
 ====================================================================================================
 [`almost`](../decorators.html#almost)
+:   **Required header: **<script type="preformatted">` #include <eve/function/almost/is_greater_equal.hpp>`</script>
+
 :   The expression `almost(is_greater_equal)(x, y, t)` where `x` and `y` must be
     floating point values, evals to true if and only if `x` is almost greater or equal to `y`.
     This means that:

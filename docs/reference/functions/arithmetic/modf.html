@@ -51,9 +51,11 @@ In particular:
   * If `x` is infinite `{Nan, x}` is returned.
   * If `x` is a `Nan`  `{Nan, Nan}` is returned.
 
-Supported Decorators
+Supported decorators
 ====================================================================================================
 [`pedantic`](../decorators.html#pedantic)
+:   **Required header: **<script type="preformatted">` #include <eve/function/pedantic/modf.hpp>`</script>
+
 :   The call `pedantic(modf)(x)` ensures standard conformity : if `x` is infinite, `{0, x}` is returned.
 
   (insert ../../src/modf.src.html here)

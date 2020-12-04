@@ -66,7 +66,7 @@ Returns [element-wise](../../../glossary.html#value) $|x|^y$.
   *  pow_abs($+\infty$, y) returns $+\infty$ for any positive y.
   *  except where specified above, if any argument is NaN, NaN is returned.
 
-Supported Decorators
+Supported decorators
 ====================================================================================================
 [`raw`](../decorators.html#raw)
 :   The expression `raw(pow_abs)(x,y)` merely returns `exp(y*log(|x|)` which is must faster way to compute the result

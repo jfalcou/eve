@@ -54,9 +54,11 @@ Return the sum of `x` and `y`.
    Although the infix notation with `+` is supported, the `+` operator on
    standard scalar type is the original one and so can lead to automatic promotion.
 
-Supported Decorators
+Supported decorators
 ====================================================================================================
 [`saturated`](../decorator/saturated.html)
+:   **Required header: **<script type="preformatted">` #include <eve/function/saturated/add.hpp>`</script>
+
 :   The call `saturated(add)(x,y)` computes the saturated  sum of `x` and `y`. The saturation is obtained in the
      [compatibility result](../../concept.html#compatibility) of the two parameters. No overflow occurs.
 

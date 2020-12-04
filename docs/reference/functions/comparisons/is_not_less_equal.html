@@ -41,9 +41,11 @@ Parameters
 `x`, `y`
 :   [values](../../concepts.html#value).
 
-Supported Decorators
+Supported decorators
 ====================================================================================================
 [`definitely`](../decorators.html#definitely)
+:   **Required header: **<script type="preformatted">` #include <eve/function/definitely/is_not_less_equal.hpp>`</script>
+
 :   The expression `definitely(is_not_less_equal)(x, y, t)` where `x` and `y` must be
     floating point values, evals to true if and only if and only if `x` is definitely not less or equal to `y`.
     This means that the pair `x, y` is unordered or:

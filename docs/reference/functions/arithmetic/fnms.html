@@ -56,12 +56,16 @@ The result type is the [compatibility result](../../concept.html#compatibility) 
     This `fnms` implementation provides those properties for all [real integral values](../../concepts.html#integral_value)
      and when possible for [real floating values](../../concepts.html#value).
 
-Supported Decorators
+Supported decorators
 ====================================================================================================
 [`pedantic`](../decorators.html#pedantic)
+:   **Required header: **<script type="preformatted">` #include <eve/function/pedantic/fnms.hpp>`</script>
+
 :   The call `pedantic(fnms)(x,y,z)` ensures the one rounding property. This can be very expensive if the
     system has no hardware capability.
 [`numeric`](../decorators.html#numeric)
+:   **Required header: **<script type="preformatted">` #include <eve/function/numeric/fnms.hpp>`</script>
+
 :   The call `numeric(fnms)(x,y,z)` ensures the full compliance to fnms properties. This can be very expensive if the
     system has no hardware capability.
 

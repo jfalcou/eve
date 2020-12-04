@@ -18,6 +18,6 @@ TTS_CASE_TPL("wide random check on cospi", EVE_TYPE)
 {
   auto my_stdcospi = [](auto x) -> EVE_VALUE {return boost::math::cos_pi(x); };
 
-  eve::uniform_prng<EVE_VALUE> p(EVE_VALUE(-100000.0), EVE_VALUE(100000.0));
+  eve::uniform_prng<EVE_VALUE> p(EVE_VALUE(-1000.0), EVE_VALUE(1000.0));
   TTS_RANGE_CHECK(p, my_stdcospi, eve::medium(eve::cospi));
 }

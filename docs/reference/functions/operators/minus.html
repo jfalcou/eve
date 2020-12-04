@@ -54,9 +54,11 @@ is not representable and the result is undefined behaviour.
    Although the operator notation with `-` is supported, the `-` operator on
    standard scalar type is the original one and so can lead to automatic promotion.
 
-Supported Decorators
+Supported decorators
 ====================================================================================================
 [`saturated`](../decorator/saturated.html)
+:   **Required header: **<script type="preformatted">` #include <eve/function/saturated/minus.hpp>`</script>
+
 :   The call `saturated(minus)(x)` computes the saturated opposite of `x`. The only interest of this behaviour is that
     for integral signed type T  `saturated(minus)(Valmin< T >())` returns `Valmax< T >()` and is not u.b.
 
