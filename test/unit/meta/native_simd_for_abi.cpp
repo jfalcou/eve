@@ -13,16 +13,14 @@
 #include <eve/wide.hpp>
 #include <eve/logical.hpp>
 
-TTS_CASE_TPL( "Check that wide<T,N> satisfies native_simd_for_abi with their own ABI"
-            , TTS_NUMERIC_TYPES
-            )
-{
-  using eve::wide;
-  using eve::logical;
+template<typename T>
+using extra_wide = eve::wide<T,eve::fixed<2*eve::expected_cardinal_v<T>>>;
 
-  TTS_EXPECT((eve::native_simd_for_abi<wide<T>          , typename wide<T>::abi_type>          ));
-  TTS_EXPECT((eve::native_simd_for_abi<logical<wide<T>> , typename logical<wide<T>>::abi_type> ));
-}
+template<typename T>
+using small_wide = eve::wide<T,eve::fixed<eve::expected_cardinal_v<T>/2>>;
+
+template<typename T>
+using tiny_wide = eve::wide<T,eve::fixed<1>>;
 
 #if defined(SPY_SIMD_IS_X86)
 TTS_CASE_TPL( "Check that wide<T,N,x86*> satisfies native_simd_for_abi with any X86 ABI"
@@ -97,3 +95,34 @@ TTS_CASE_TPL( "Check that wide<T,N,arm*> does not satisfy native_simd_for_abi wi
   TTS_EXPECT_NOT((eve::native_simd_for_abi<logical<wide<T>> , eve::ppc_> ));
 }
 #endif
+
+TTS_CASE_TPL( "Check that wide<T,k*N> does not satisfy any native_simd_for_abi"
+            , TTS_NUMERIC_TYPES
+            )
+{
+  using eve::logical;
+
+  TTS_EXPECT_NOT((eve::native_simd_for_abi<extra_wide<T>, eve::x86_128_ , eve::x86_256_>  ));
+  TTS_EXPECT_NOT((eve::native_simd_for_abi<extra_wide<T>, eve::arm_64_ , eve::arm_128_>  ));
+  TTS_EXPECT_NOT((eve::native_simd_for_abi<extra_wide<T>, eve::ppc_>  ));
+
+  TTS_EXPECT_NOT((eve::native_simd_for_abi<small_wide<T>, eve::x86_128_ , eve::x86_256_>  ));
+  TTS_EXPECT_NOT((eve::native_simd_for_abi<small_wide<T>, eve::arm_64_ , eve::arm_128_>  ));
+  TTS_EXPECT_NOT((eve::native_simd_for_abi<small_wide<T>, eve::ppc_>  ));
+
+  TTS_EXPECT_NOT((eve::native_simd_for_abi<tiny_wide<T>, eve::x86_128_ , eve::x86_256_>  ));
+  TTS_EXPECT_NOT((eve::native_simd_for_abi<tiny_wide<T>, eve::arm_64_ , eve::arm_128_>  ));
+  TTS_EXPECT_NOT((eve::native_simd_for_abi<tiny_wide<T>, eve::ppc_>  ));
+
+  TTS_EXPECT_NOT((eve::native_simd_for_abi<logical<extra_wide<T>>, eve::x86_128_ , eve::x86_256_>  ));
+  TTS_EXPECT_NOT((eve::native_simd_for_abi<logical<extra_wide<T>>, eve::arm_64_ , eve::arm_128_>  ));
+  TTS_EXPECT_NOT((eve::native_simd_for_abi<logical<extra_wide<T>>, eve::ppc_>  ));
+
+  TTS_EXPECT_NOT((eve::native_simd_for_abi<logical<small_wide<T>>, eve::x86_128_ , eve::x86_256_>  ));
+  TTS_EXPECT_NOT((eve::native_simd_for_abi<logical<small_wide<T>>, eve::arm_64_ , eve::arm_128_>  ));
+  TTS_EXPECT_NOT((eve::native_simd_for_abi<logical<small_wide<T>>, eve::ppc_>  ));
+
+  TTS_EXPECT_NOT((eve::native_simd_for_abi<logical<tiny_wide<T>>, eve::x86_128_ , eve::x86_256_>  ));
+  TTS_EXPECT_NOT((eve::native_simd_for_abi<logical<tiny_wide<T>>, eve::arm_64_ , eve::arm_128_>  ));
+  TTS_EXPECT_NOT((eve::native_simd_for_abi<logical<tiny_wide<T>>, eve::ppc_>  ));
+}
