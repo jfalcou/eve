@@ -53,9 +53,11 @@ The result type is the [compatibility result](../../concept.html#compatibility) 
 !!! WARNING
    If any element of the inputs is a `Nan`, the corresponding output element is system-dependent.
 
-supported Decorators
+Supported decorators
 ====================================================================================================
 [`pedantic`](../decorators.html#pedantic)
+:   **Required header: **<script type="preformatted">` #include <eve/function/pedantic/maxmag.hpp>`</script>
+
 :   The call `pedantic(maxmag)(x,y)` is  semantically equivalent to:
 
   * If `|x| >  |y|`,  `x` is returned.
@@ -64,6 +66,8 @@ supported Decorators
 
 
 [`numeric`](../decorators.html#numeric)
+:   **Required header: **<script type="preformatted">` #include <eve/function/numeric/maxmag.hpp>`</script>
+
 :   The call `numeric(maxmag)(x,y)`  ensures that  if any element of the inputs is a `Nan`, the corresponding
     output element is the corresponding element of the other parameter (i.e. the not invalid parameter wins):
 

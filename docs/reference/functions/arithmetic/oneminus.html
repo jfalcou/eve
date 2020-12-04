@@ -53,6 +53,8 @@ Computes  [element-wise](../../../glossary.html#elment-wise) `1-x` with the type
 Supported Decorators
 ====================================================================================================
 [`saturated`](../decorators.html#saturated)
+:   **Required header: **<script type="preformatted">` #include <eve/function/saturated/oneminus.hpp>`</script>
+
 :   The call `saturated(oneminus)(x)` is semantically equivalent to `saturated(sub)(One(as(x)), x)`
     and is never undefined.
 

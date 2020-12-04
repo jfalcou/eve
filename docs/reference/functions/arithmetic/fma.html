@@ -59,9 +59,13 @@ The result type is the [compatibility result](../../concept.html#compatibility) 
 Supported Decorators
 ====================================================================================================
 [`pedantic`](../decorators.html#pedantic)
+:   **Required header: **<script type="preformatted">` #include <eve/function/pedantic/fma.hpp>`</script>
+
 :   The call `pedantic(fma)(x,y,z)` ensures the one rounding property. This can be very expensive if the
     system has no hardware capability.
 [`numeric`](../decorators.html#numeric)
+:   **Required header: **<script type="preformatted">` #include <eve/function/numeric/fma.hpp>`</script>
+
 :   The call `numeric(fma)(x,y,z)` ensures the full compliance to fma properties. This can be very expensive if the
     system has no hardware capability.
 

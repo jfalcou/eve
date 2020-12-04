@@ -55,9 +55,11 @@ For each  [`element`](../../../glossary.html#element-wise) of the input:
  2.  $|x|+|y|+|z|$ is returned.
 The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
 
-supported Decorators
+Supported decorators
 ====================================================================================================
 [`pedantic`](../decorators.html#pedantic)
+:   **Required header: **<script type="preformatted">` #include <eve/function/pedantic/manhattan.hpp>`</script>
+
 :   The call `pedantic(manhattan)(x,y)`  or `pedantic(manhattan)(x,y,z)` computes the sum of the absolute values of its parameters
     returning $\infty$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
 

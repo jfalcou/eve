@@ -54,6 +54,8 @@ type. More specifically, for signed integers the absolute value of [their lowest
 Supported Decorators
 ====================================================================================================
 [`saturated`](../decorators.html#saturated)
+:   **Required header: **<script type="preformatted">` #include <eve/function/saturated/rampio2.hpp>`</script>
+
 :   The expression `saturated(abs)(x)` computes a saturated absolute value of `x`. Contrary to the [regular case](../decorator/regular.html), this guarantees
     that the result is [`element-wise`](../../../glossary.html#element-wise) greater or equal than 0. More specifically, for any signed integer value
     `x`, the expression:
