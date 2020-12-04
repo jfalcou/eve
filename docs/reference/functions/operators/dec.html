@@ -52,6 +52,8 @@ The result is `x-1`.
 Supported Decorators
 ====================================================================================================
 [`saturated`](../decorator/saturated.html)
+:   **Required header: **<script type="preformatted">` #include <eve/function/saturated/dec.hpp>`</script>
+
 :   The call `saturated(dec)(x)` computes the saturated opposite of `x`. The only interest of this behaviour is that
     for integral type T  `saturated(dec)(Valmin< T >())` returns `Valmin< T >()`.
 
