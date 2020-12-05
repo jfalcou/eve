@@ -15,6 +15,8 @@
 #include <eve/function/dec.hpp>
 #include <eve/function/log.hpp>
 #include <eve/function/pow.hpp>
+#include <eve/function/tgamma.hpp>
+#include <eve/function/converter.hpp>
 #include <eve/function/derivative.hpp>
 #include <eve/constant/log_2.hpp>
 
@@ -27,10 +29,26 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return pow(x, y)*pow(-log_2(as(x)), n);
+      return pow(x, y)*pow(log(y), n);
     }
     else
-      return apply_over(derivative(pow), x, y, n);
+      return apply_over(derivative1(pow), x, y, n);
+  }
+
+  template<floating_real_value T, unsigned_value N>
+  EVE_FORCEINLINE constexpr T pow_(EVE_SUPPORTS(cpu_)
+                                   , derivative_type<2> const &
+                                   , T x, T y, N p) noexcept
+  {
+    if constexpr( has_native_abi_v<T> )
+    {
+      using elt_t =  element_type_t<T>;
+      auto yp1 = inc(y);
+      auto fp = to_<elt_t>(p);
+      return (tgamma(yp1)/tgamma(yp1-fp))*pow(x, y-fp); // TO DO better eval
+    }
+    else
+      return apply_over(derivative2(pow), x, y, p);
   }
 
   template<floating_real_value T>
