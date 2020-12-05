@@ -24,21 +24,31 @@ Extra options can be passed through: $CXX_OPTIONS
     compilation_arguments(parser)
     return parser.parse_args()
 
+def print_func_arch(f, func_arch):
+  longest_func_len = len(max(func_arch, key=len))
+  for func, arch in func_arch.items():
+    f.write(func)
+    f.write(' ' * (longest_func_len - len(func)))
+    f.write(f'  # {", ".join(arch)}\n')
+
+
 
 def write_compiled_results(where, compiled):
     dir_path = pathlib.Path(where)
     pathlib.Path(dir_path).mkdir(parents=True, exist_ok=True)
 
-    for file, contents in compiled.items():
-        with open(dir_path.joinpath(file), 'w') as f:
-            f.write(contents)
+    for overload, asm_func_arch in compiled.items():
+        with open(dir_path.joinpath(overload + '.s'), 'w') as f:
+            for asm, func_arch in asm_func_arch.items():
+              print_func_arch(f, func_arch)
+              f.write(asm)
+              f.write('\n\n')
 
 
 def main():
     options = parse_options()
     compiled = run_compilation(options)
     write_compiled_results(options.output_dir, compiled)
-
 
 if __name__ == '__main__':
     main()

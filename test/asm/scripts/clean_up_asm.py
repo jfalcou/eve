@@ -37,22 +37,32 @@ def clean_up_GLOBAL_section(lines):
             break
         yield line
 
+def _read_asm(lines):
+  asm = ''
+
+  for line in lines:
+    if line[0] != ' ':
+       return line, asm
+    asm += line + '\n'
+
+  return None, asm
 
 def _split_by_function(lines):
-    asm_by_function = {}
+    res = {}
 
-    current_function = ''
-    for line in lines:
-        if line[0] != ' ':
-            current_function = line.split('(')[0]
-            if current_function not in asm_by_function:
-                asm_by_function[current_function] = ''
-            else:
-                asm_by_function[current_function] += '\n'
-        asm_by_function[current_function] += line
-        asm_by_function[current_function] += '\n'
+    line = next(lines, None)
+    while line:
+      overload = line.split('(')[0]
+      res.setdefault(overload, {})
 
-    return asm_by_function
+      function = line
+      line, asm = _read_asm(lines)
+
+      res[overload].setdefault(asm, [])
+      res[overload][asm].append(function.strip())
+
+
+    return res
 
 
 def clean_up_asm(asm):

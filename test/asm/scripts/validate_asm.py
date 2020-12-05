@@ -6,6 +6,7 @@ import constants
 from compilation_driver import run_compilation, compilation_arguments
 from read_expected import read_expected_results
 
+
 def parse_options():
     parser = argparse.ArgumentParser(
         description='''
@@ -22,68 +23,65 @@ Extra options can be passed through: $CXX_OPTIONS
     compilation_arguments(parser)
     return parser.parse_args()
 
-def _split_by_function(file):
-  cur_function = ''
-  for line in file.split('\n'):
-    if len(line) == 0:
-      continue
 
-    if line[0] != ' ':
-      if len(cur_function):
-        yield cur_function
-      cur_function = ''
-    cur_function += line + '\n'
+def invert_overload(overload):
+    res = {}
+    for asm, func_arches in overload.items():
+        for func, arches in func_arches.items():
+            for arch in arches:
+                res[f'{func} for {arch}'] = asm
+    return res
 
-def _file_mismatch(expected, actual):
-  expected = list(_split_by_function(expected))
-  actual = list(_split_by_function(actual))
 
-  i = 0
-  while i < len(expected) and i < len(actual):
-    if expected[i] != actual[i]:
-      return f'Mismatch:\nExpected:\n{expected[i]}\nActual:\n{actual[i]}'
-    i += 1
+def _overload_mismatch(expected, actual, missing_is_ok):
+    expected = invert_overload(expected)
+    actual = invert_overload(actual)
 
-  if i < len(expected):
-    return f'Expected has an unmacthed function:\n{expected[i]}'
+    if not missing_is_ok:
+        for f_a in expected:
+            if not f_a in actual:
+                return f'{f_a} was not generated!'
 
-  if i < len(actual):
-    return f'Actual has an unmacthed function:\n{actual[i]}'
+    for f_a in actual:
+        if not f_a in expected:
+            return f'{f_a} has no expected!'
 
-  return None
+        if expected[f_a] != actual[f_a]:
+            return f'Mismatch for {f_a}:\nExpected:\n{expected[f_a]}\nActual:\n{actual[f_a]}'
 
+    return None
 
 
 def _compare(expected, actual, missing_is_ok):
     if expected == actual:
-      return None
+        return None
 
     if not missing_is_ok:
-      for file in expected.keys():
-        if not file in actual:
-          return f'{file} was not generated!'
+        for overload in expected.keys():
+            if not overload in actual:
+                return f'{overload} was not generated!'
 
-    for file in actual.keys():
-      if not file in expected:
-        return f'{file} has no expected!'
+    for overload in actual.keys():
+        if not overload in expected:
+            return f'{overload} has no expected!'
 
-      if expected[file] == actual[file]:
-        continue
+        if expected[overload] == actual[overload]:
+            continue
 
-      return _file_mismatch(expected[file], actual[file])
-
+        return _overload_mismatch(expected[overload], actual[overload], missing_is_ok)
 
 
 def main():
     options = parse_options()
     actual = run_compilation(options)
-    expected = dict(read_expected_results(options.arches))
+    expected = read_expected_results(options.arches)
     test = _compare(expected, actual, options.missing_is_ok)
     if not test:
-      exit(0)
+        exit(0)
     print('\n\nFailure!!!===========\n')
     print(test)
     exit(1)
+
 
 if __name__ == '__main__':
     main()

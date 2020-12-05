@@ -7,12 +7,15 @@ from generate_build_tasks import generate_build_tasks
 
 def _rearrange_parts(parts):
     res = {}
-    for arch, func_to_asm in parts:
-        for func, asm in func_to_asm.items():
-            key = f'{func}_{arch}.s'
-            if not key in res:
-                res[key] = ''
-            res[key] += asm
+    for arch, overload_asm_funcs in parts:
+        for overload, asm_funcs in overload_asm_funcs.items():
+            res.setdefault(overload, {})
+            for asm, funcs in asm_funcs.items():
+                res[overload].setdefault(asm, {})
+                for func in funcs:
+                    res[overload][asm].setdefault(func, [])
+                    res[overload][asm][func].append(arch)
+
     return res
 
 
