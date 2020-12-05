@@ -10,42 +10,31 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/constant/one.hpp>
 #include <eve/function/is_equal.hpp>
+#include <eve/constant/one.hpp>
+#include <eve/function/if_else.hpp>
 #include <eve/function/derivative.hpp>
-#include <eve/function/derivative/plus.hpp>
 
 namespace eve::detail
 {
-  template<floating_real_value T, unsigned_value N, unsigned_value P>
-  EVE_FORCEINLINE constexpr T add_(EVE_SUPPORTS(cpu_)
+  template<floating_real_value T, unsigned_value N>
+  EVE_FORCEINLINE constexpr T plus_(EVE_SUPPORTS(cpu_)
                                    , derivative_type<1> const &
                                    , T x
-                                   , T y
-                                   , N n
-                                   , P p) noexcept
+                                   , N n) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return derivative(plus)(x, n)+derivative(plus)(y, p);
+      return if_else(is_eqz(n), x, if_else(is_equal(n, 1u), one(as(x)), zero));
     }
     else
-      return apply_over(derivative1(add), x, y, n, p);
+      return apply_over(derivative1(plus), x, n);
   }
 
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T add_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr T plus_(EVE_SUPPORTS(cpu_)
                                     , derivative_type<1> const &
-                                    , T x, T ) noexcept
-  {
-
-    return one(as(x));
-  }
-
-  template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T add_(EVE_SUPPORTS(cpu_)
-                                    , derivative_type<2> const &
-                                    , T x, T ) noexcept
+                                    , T x) noexcept
   {
 
     return one(as(x));

@@ -18,7 +18,7 @@
 namespace eve::detail
 {
   template<floating_real_value T, unsigned_value N, unsigned_value P>
-  EVE_FORCEINLINE constexpr T add_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr T mul_(EVE_SUPPORTS(cpu_)
                                    , derivative_type<1> const &
                                    , T x
                                    , T y
@@ -27,27 +27,27 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return derivative(plus)(x, n)+derivative(plus)(y, p);
+      return derivative(plus)(x, n)*derivative(plus)(y, p);
     }
     else
-      return apply_over(derivative1(add), x, y, n, p);
+      return apply_over(derivative1(mul), x, y, n, p);
   }
 
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T add_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr T mul_(EVE_SUPPORTS(cpu_)
                                     , derivative_type<1> const &
-                                    , T x, T ) noexcept
+                                    , T , T y ) noexcept
   {
 
-    return one(as(x));
+    return y;
   }
 
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T add_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr T mul_(EVE_SUPPORTS(cpu_)
                                     , derivative_type<2> const &
                                     , T x, T ) noexcept
   {
 
-    return one(as(x));
+    return x;
   }
 }
