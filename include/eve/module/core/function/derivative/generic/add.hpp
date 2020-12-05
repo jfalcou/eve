@@ -13,7 +13,6 @@
 #include <eve/constant/one.hpp>
 #include <eve/function/is_equal.hpp>
 #include <eve/function/derivative.hpp>
-#include <eve/function/derivative/plus.hpp>
 
 namespace eve::detail
 {
@@ -27,7 +26,8 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return derivative(plus)(x, n)+derivative(plus)(y, p);
+      auto np = n+p;
+      return if_else(np == 0, x+y, if_else(np == 1,  one(as(x)), zero));
     }
     else
       return apply_over(derivative1(add), x, y, n, p);

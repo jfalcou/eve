@@ -28,8 +28,7 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
     {
       return if_else(is_eqz(n), abs(x),
-                     if_else(is_equal(n, one(as(n))), eve::abs(x+x),
-                             if_else(is_equal(n, N(2)), sign(x)*T(2), zero)));
+                     if_else(is_equal(n, one(as(n))), sign(x), zero));
     }
     else
       return apply_over(derivative1(abs), x, n);
@@ -41,6 +40,6 @@ namespace eve::detail
                                     , T x) noexcept
   {
 
-    return eve::abs(x+x);
+    return sign(x);
   }
 }
