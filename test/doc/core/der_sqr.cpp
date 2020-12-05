@@ -1,4 +1,4 @@
-#include <eve/function/derivative/rec.hpp>
+#include <eve/function/derivative/sqr.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
@@ -14,14 +14,14 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf                                = " << pf << '\n'
-            << "-> eve::derivative(eve::rec)(pf)     = " << eve::derivative(eve::rec)(pf) << '\n'
-            << "-> eve::derivative(eve::rec)(pf, 2u) = " << eve::derivative(eve::rec)(pf, 2u) << '\n'
-            << "-> eve::derivative(eve::rec)(pf, 3u) = " << eve::derivative(eve::rec)(pf, 3u) << '\n';
+            << "-> eve::derivative(eve::sqr)(pf)     = " << eve::derivative(eve::sqr)(pf) << '\n'
+            << "-> eve::derivative(eve::sqr)(pf, 2u) = " << eve::derivative(eve::sqr)(pf, 2u) << '\n'
+            << "-> eve::derivative(eve::sqr)(pf, 3u) = " << eve::derivative(eve::sqr)(pf, 3u) << '\n';
 
   float xf = 1.0f;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf                            = " << xf << '\n'
-            << "-> eve::derivative(eve::rec)(xf) = " << eve::derivative(eve::rec)(xf) << '\n';
+            << "-> eve::derivative(eve::sqr)(xf) = " << eve::derivative(eve::sqr)(xf) << '\n';
   return 0;
 }

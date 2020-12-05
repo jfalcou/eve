@@ -1,4 +1,4 @@
-#include <eve/function/derivative/rec.hpp>
+#include <eve/function/derivative/abs.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
@@ -9,19 +9,19 @@ using wide_ft = eve::wide<float, eve::fixed<8>>;
 
 int main()
 {
-  wide_ft pf = {0.0f, 1.0f, 2.0f, 10.0f, 200.0f, 1000.0f,
+  wide_ft pf = {0.0f, 1.0f, -2.0f, 10.0f, 200.0f, -1000.0f,
                eve::inf(eve::as<float>()), eve::nan(eve::as<float>())};
 
   std::cout << "---- simd" << '\n'
             << "<- pf                                = " << pf << '\n'
-            << "-> eve::derivative(eve::rec)(pf)     = " << eve::derivative(eve::rec)(pf) << '\n'
-            << "-> eve::derivative(eve::rec)(pf, 2u) = " << eve::derivative(eve::rec)(pf, 2u) << '\n'
-            << "-> eve::derivative(eve::rec)(pf, 3u) = " << eve::derivative(eve::rec)(pf, 3u) << '\n';
+            << "-> eve::derivative(eve::abs)(pf)     = " << eve::derivative(eve::abs)(pf) << '\n'
+            << "-> eve::derivative(eve::abs)(pf, 2u) = " << eve::derivative(eve::abs)(pf, 2u) << '\n'
+            << "-> eve::derivative(eve::abs)(pf, 3u) = " << eve::derivative(eve::abs)(pf, 3u) << '\n';
 
   float xf = 1.0f;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf                            = " << xf << '\n'
-            << "-> eve::derivative(eve::rec)(xf) = " << eve::derivative(eve::rec)(xf) << '\n';
+            << "-> eve::derivative(eve::abs)(xf) = " << eve::derivative(eve::abs)(xf) << '\n';
   return 0;
 }
