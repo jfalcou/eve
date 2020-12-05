@@ -68,6 +68,12 @@ Supported decorators
     the division of [`eve::Valmin(as(x))`](../../constants/limits/valmin.html)
     by -1 that produces [`eve::Valmax(as(x))`](../../constants/limits/valmax.html).
 
+[`derivative`](../decorators.html#derivative)
+:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/div.hpp>`</script>
+
+:   The expression `derivative(div)(x,y,n,p)` computes $\frac{\partial^{n+p}f}{\partial x^n\partial y^p}(x,y)$,
+    where f is the function $(x,y) \rightarrow \ x/y$.
+
 Masked calls
 ====================================================================================================
  The [masked](../../../tutorial/masking.html) calls `div[cond](x,y)` and `saturated(div[cond])(x,y)` where `cond` satisfies the
