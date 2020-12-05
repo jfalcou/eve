@@ -58,6 +58,12 @@ Supported decorators
 :   The call `saturated(oneminus)(x)` is semantically equivalent to `saturated(sub)(One(as(x)), x)`
     and is never undefined.
 
+[`derivative`](../decorators.html#derivative)
+:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/oneminus.hpp>`</script>
+
+:   The expression `derivative(oneminus)(x,n)` computes the nth derivative of the function at `x`.
+    If `n` is omitted it defaults to one.
+
   (insert ../../src/oneminus.src.html here)
 
   (insert ../../out/oneminus.out.html here)
