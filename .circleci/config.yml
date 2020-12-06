@@ -117,6 +117,14 @@ jobs:
           name: Running SIMD Tests - Extra-large Wide
           command: CMAKE_OPTIONS="-DEVE_TEST_TYPE=extra_wide" VARIANT="extra" OPTIONS="-O3" . ./.circleci/perform.sh
 
+  x86_half:
+    <<: *config_clang_x86
+    steps:
+      - checkout
+      - run:
+          name: Running SIMD Tests - Half_size Wide
+          command: CMAKE_OPTIONS="-DEVE_TEST_TYPE=small_wide" VARIANT="half" OPTIONS="-O3" . ./.circleci/perform.sh
+
   arm_aarch64_neon128:
     <<: *config_aarch64
     steps:
@@ -160,3 +168,6 @@ workflows:
       - x86_scalar:
           requires:
             - x86_sse4
+      - x86_half:
+          requires:
+            - x86_tiny

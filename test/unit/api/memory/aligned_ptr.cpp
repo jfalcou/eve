@@ -37,7 +37,7 @@ TTS_CASE("aligned_ptr factory functions - Specific alignment")
   TTS_EQUAL(eve::as_aligned<8>(&values[ 0 ]).get(), &values[ 0 ]);
   TTS_EQUAL(eve::as_aligned<8>(&values[ 0 ])      , &values[ 0 ]);
   TTS_EQUAL(eve::as_aligned<8>(&values[ 0 ])      , eve::as_aligned<8>(&values[ 0 ]));
-  TTS_NOT_EQUAL(eve::as_aligned<8>(&values[ 0 ])  , &values[ 8 ]);
+  TTS_NOT_EQUAL(eve::as_aligned<8>(&values[ 0 ])  , &values[ 3 ]);
   TTS_NOT_EQUAL(eve::as_aligned<8>(&values[ 0 ])  , eve::as_aligned<8>(&values[ 8 ]));
 }
 

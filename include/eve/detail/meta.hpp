@@ -264,10 +264,8 @@ namespace eve::detail
 
   // Turn a type into an floating_point point one
   template<typename T>
-  struct as_floating_point
-  {
-    using type = make_floating_point_t<(sizeof(T) < 4) ? 4: sizeof(T)>;
-  };
+  struct as_floating_point : make_floating_point<(sizeof(T) <= 4) ? 4: sizeof(T)>
+  {};
 
   template<typename T>
   using as_floating_point_t = typename as_floating_point<T>::type;

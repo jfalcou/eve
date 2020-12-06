@@ -10,6 +10,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/memory/is_aligned.hpp>
+#include <eve/traits/element_type.hpp>
 #include <eve/detail/concepts.hpp>
 #include <eve/memory/is_aligned.hpp>
 #include <eve/traits/alignment.hpp>
@@ -25,6 +27,8 @@ namespace eve
   struct aligned_ptr
   {
     using pointer = std::add_pointer_t<Type>;
+
+    template<typename T> using rebind = aligned_ptr<T,Alignment>;
 
     static constexpr std::size_t alignment() { return Alignment; }
 
@@ -123,7 +127,7 @@ namespace eve
 
     void swap(aligned_ptr &that) noexcept { std::swap(pointer_, that.pointer_); }
 
-  private:
+    private:
     pointer pointer_;
   };
 
@@ -131,6 +135,8 @@ namespace eve
   struct aligned_ptr<void, Alignment>
   {
     using pointer = void *;
+
+    template<typename T> using rebind = aligned_ptr<T,Alignment>;
 
     static constexpr std::size_t alignment() { return Alignment; }
 
@@ -170,6 +176,9 @@ namespace eve
   private:
     pointer pointer_;
   };
+
+  template<typename T, std::size_t A> struct element_type<aligned_ptr<T,A>> { using type = T; };
+  template<typename T>                struct element_type<aligned_ptr<T>>   { using type = T; };
 
   template<typename T1, std::size_t A1, typename T2, std::size_t A2>
   bool operator==(aligned_ptr<T1, A1> lhs, aligned_ptr<T2, A2> rhs) noexcept
@@ -288,9 +297,15 @@ namespace eve
   template<std::size_t A, typename T, std::size_t B>
   constexpr bool is_aligned(aligned_ptr<T, B> const &ptr) noexcept
   {
-    if constexpr(A <= B)
-      return true;
-    else
-      return is_aligned(ptr.get());
+    if constexpr(A <= B)  return true;
+    else                  return is_aligned(ptr.get());
   }
+
+  //================================================================================================
+  //  Specialisation for pointer_alignment
+  //================================================================================================
+  template<typename Type, std::size_t Alignment>
+  struct  pointer_alignment<aligned_ptr<Type, Alignment>>
+        : std::integral_constant<std::size_t,Alignment>
+  {};
 }

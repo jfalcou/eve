@@ -60,7 +60,7 @@ TTS_CASE_TPL("ignore_last behavior", TTS_NUMERIC_TYPES)
   using type = wide<T>;
   type value = [](auto i, auto) { return 1+i; };
 
-  TTS_EQUAL( ignore_last(0).mask(as_<type>())         , eve::true_( as_<type>() ));
+  TTS_EQUAL( ignore_last(0).mask(as_<type>()).bits(), eve::true_(as_<type>()).bits());
   TTS_EQUAL( (if_else(ignore_last(0),value, type(69))), value                   );
 
   for(int i = 1;i <= type::static_size;i++)
@@ -68,7 +68,7 @@ TTS_CASE_TPL("ignore_last behavior", TTS_NUMERIC_TYPES)
     logical<type> mref  = [i](auto j, auto c) { return j < c-i; };
     type          ref   = [i,&value](auto j, auto c) { return (j < c-i) ? value[j] : 69; };
 
-    TTS_EQUAL( ignore_last(i).mask(as_<type>()), mref );
+    TTS_EQUAL( ignore_last(i).mask(as_<type>()).bits(), mref.bits() );
     TTS_EQUAL( (if_else(ignore_last(i),value, type(69))), ref);
   }
 
@@ -90,7 +90,7 @@ TTS_CASE_TPL("keep_last behavior", TTS_NUMERIC_TYPES)
   using type = wide<T>;
   type value = [](auto i, auto) { return 1+i; };
 
-  TTS_EQUAL( keep_last(type::static_size).mask(as_<type>())         , eve::true_( as_<type>() ));
+  TTS_EQUAL( keep_last(type::static_size).mask(as_<type>()).bits(), eve::true_(as_<type>()).bits());
   TTS_EQUAL( (if_else(keep_last(type::static_size),value, type(69))), value                   );
 
   for(int i = 1;i < type::static_size;i++)
@@ -98,12 +98,12 @@ TTS_CASE_TPL("keep_last behavior", TTS_NUMERIC_TYPES)
     logical<type> mref  = [i](auto j, auto c) { return j >= c-i; };
     type          ref   = [i,&value](auto j, auto c) { return (j >= c-i) ? value[j] : 69.f; };
 
-    TTS_EQUAL( keep_last(i).mask(as_<type>()), mref );
+    TTS_EQUAL( keep_last(i).mask(as_<type>()).bits(), mref.bits() );
     TTS_EQUAL( (if_else(keep_last(i),value, type(69))), ref);
   }
 
-  TTS_EQUAL( keep_last(0).mask(as_<type>())          , eve::false_( as_<type>() ) );
-  TTS_EQUAL( (if_else(keep_last(0),value, type(69))) , type(69)                  );
+  TTS_EQUAL( keep_last(0).mask(as_<type>()).bits(), eve::false_(as_<type>()).bits() );
+  TTS_EQUAL( (if_else(keep_last(0),value, type(69))) , type(69)                     );
 }
 
 TTS_CASE_TPL("ignore_first behavior", TTS_NUMERIC_TYPES)
@@ -120,20 +120,20 @@ TTS_CASE_TPL("ignore_first behavior", TTS_NUMERIC_TYPES)
   using type = wide<T>;
   type value = [](auto i, auto) { return 1+i; };
 
-  TTS_EQUAL( ignore_first(0).mask(as_<type>())         , eve::true_( as_<type>() ));
-  TTS_EQUAL( (if_else(ignore_first(0),value, type(69))), value                   );
+  TTS_EQUAL( ignore_first(0).mask(as_<type>()).bits(), eve::true_(as_<type>()).bits());
+  TTS_EQUAL( (if_else(ignore_first(0),value, type(69))), value  );
 
   for(int i = 1;i < type::static_size;i++)
   {
     logical<type> mref  = [i](auto j, auto) { return j >= i; };
     type          ref   = [i,&value](auto j, auto) { return (j >= i) ? value[j] : 69.f; };
 
-    TTS_EQUAL( ignore_first(i).mask(as_<type>()), mref );
+    TTS_EQUAL( ignore_first(i).mask(as_<type>()).bits(), mref.bits() );
     TTS_EQUAL( (if_else(ignore_first(i),value, type(69))), ref);
   }
 
-  TTS_EQUAL( ignore_first(type::static_size).mask(as_<type>())          , eve::false_( as_<type>() ) );
-  TTS_EQUAL( (if_else(ignore_first(type::static_size),value, type(69))) , type(69)                  );
+  TTS_EQUAL( ignore_first(type::static_size).mask(as_<type>()).bits(), eve::false_(as_<type>()).bits());
+  TTS_EQUAL( (if_else(ignore_first(type::static_size),value, type(69))) , type(69)                );
 }
 
 TTS_CASE_TPL("keep_first behavior", TTS_NUMERIC_TYPES)
@@ -150,7 +150,7 @@ TTS_CASE_TPL("keep_first behavior", TTS_NUMERIC_TYPES)
   using type = wide<T>;
   type value = [](auto i, auto) { return 1+i; };
 
-  TTS_EQUAL( keep_first(type::static_size).mask(as_<type>())         , eve::true_( as_<type>() ));
+  TTS_EQUAL( keep_first(type::static_size).mask(as_<type>()).bits(), eve::true_(as_<type>()).bits());
   TTS_EQUAL( (if_else(keep_first(type::static_size),value, type(69))), value                   );
 
   for(int i = 1;i < type::static_size;i++)
@@ -158,46 +158,12 @@ TTS_CASE_TPL("keep_first behavior", TTS_NUMERIC_TYPES)
     logical<type> mref  = [i](auto j, auto) { return j < i; };
     type          ref   = [i,&value](auto j, auto) { return (j < i) ? value[j] : 69.f; };
 
-    TTS_EQUAL( keep_first(i).mask(as_<type>()), mref );
+    TTS_EQUAL( keep_first(i).mask(as_<type>()).bits(), mref.bits() );
     TTS_EQUAL( (if_else(keep_first(i),value, type(69))), ref);
   }
 
-  TTS_EQUAL( keep_first(0).mask(as_<type>())          , eve::false_( as_<type>() ) );
-  TTS_EQUAL( (if_else(keep_first(0),value, type(69))) , type(69)                  );
-}
-
-TTS_CASE_TPL("ignore_between behavior", TTS_NUMERIC_TYPES)
-{
-  using eve::wide;
-  using eve::logical;
-  using eve::conditional_expr;
-  using eve::ignore_between;
-  using eve::if_else;
-  using eve::as_;
-
-  TTS_EXPECT( conditional_expr<eve::ignore_between_>  );
-
-  using type = wide<T>;
-  type value = [](auto i, auto) { return 1+i; };
-
-  TTS_EQUAL ( ignore_between(type::static_size,type::static_size).mask(as_<type>())
-            , eve::true_( as_<type>() )
-            );
-  TTS_EQUAL( (if_else(ignore_between(type::static_size,type::static_size),value,type(69))), value);
-  TTS_EQUAL( ignore_between(0,type::static_size).mask(as_<type>())          , eve::false_( as_<type>() ) );
-  TTS_EQUAL( (if_else(ignore_between(0,type::static_size),value, type(69))) , type(69)                  );
-
-  for(int fi = 0;fi < type::static_size;fi++)
-  {
-    for(int li = 0;li < type::static_size;li++)
-    {
-      logical<type> mref  = [&](auto j, auto)       { return !(j >= fi && j <= li); };
-      type          ref   = [&](auto j, auto) { return !(j >= fi && j <= li) ? value[j] : 69.f; };
-
-      TTS_EQUAL( ignore_between(fi,li).mask(as_<type>()), mref );
-      TTS_EQUAL( (if_else(ignore_between(fi,li),value, type(69))), ref);
-    }
-  }
+  TTS_EQUAL( keep_first(0).mask(as_<type>()).bits(), eve::false_(as_<type>()).bits());
+  TTS_EQUAL( (if_else(keep_first(0),value, type(69))) , type(69)                    );
 }
 
 TTS_CASE_TPL("keep_between behavior", TTS_NUMERIC_TYPES)
@@ -214,23 +180,18 @@ TTS_CASE_TPL("keep_between behavior", TTS_NUMERIC_TYPES)
   using type = wide<T>;
   type value = [](auto i, auto) { return 1+i; };
 
-  TTS_EQUAL ( keep_between(0,type::static_size).mask(as_<type>())
-            , eve::true_( as_<type>() )
-            );
-  TTS_EQUAL( (if_else(keep_between(0,type::static_size),value,type(69))), value);
-
-  TTS_EQUAL( keep_between(type::static_size,type::static_size).mask(as_<type>())          , eve::false_( as_<type>() ) );
-  TTS_EQUAL( (if_else(keep_between(type::static_size,type::static_size),value, type(69))) , type(69)                  );
-
   for(int fi = 0;fi < type::static_size;fi++)
   {
-    for(int li = 0;li < type::static_size;li++)
+    for(int li = 0;li <= type::static_size;li++)
     {
-      logical<type> mref  = [=](auto j, auto)       { return (j >= fi && j <= li); };
-      type          ref   = [=](auto j, auto) { return (j >= fi && j <= li) ? value[j] : 69.f; };
+      if(fi<=li)
+      {
+        logical<type> mref  = [&](auto j, auto) { return (j >= fi && j < li); };
+        type          ref   = [&](auto j, auto) { return mref[j] ? value[j] : 69.f; };
 
-      TTS_EQUAL( keep_between(fi,li).mask(as_<type>()), mref );
-      TTS_EQUAL( (if_else(keep_between(fi,li),value, type(69))), ref);
+        TTS_EQUAL( keep_between(fi,li).mask(as_<type>()).bits(), mref.bits() );
+        TTS_EQUAL( (if_else(keep_between(fi,li),value, type(69))), ref);
+      }
     }
   }
 }
@@ -253,20 +214,20 @@ TTS_CASE_TPL("ignore_first/last combination", TTS_NUMERIC_TYPES)
   // Check that ignore_first(i) === ignore_first(i) && ignore_last(0)
   for(int i = 0;i <= type::static_size; i++)
   {
-    logical<type> mref  = ignore_first(i).mask(as_<type>());
-    type          ref   = if_else(ignore_first(i), value, T(69));
+    auto mref  = ignore_first(i).mask(as_<type>());
+    type ref   = if_else(ignore_first(i), value, T(69));
 
-    TTS_EQUAL( (ignore_first(i) && ignore_last(0)).mask(as_<type>()), mref );
+    TTS_EQUAL( (ignore_first(i) && ignore_last(0)).mask(as_<type>()).bits(), mref.bits() );
     TTS_EQUAL( (if_else(ignore_first(i) && ignore_last(0),value, type(69))), ref);
   }
 
   // Check that ignore_last(i) === ignore_first(0) && ignore_last(i)
   for(int i = 0;i <= type::static_size; i++)
   {
-    logical<type> mref  = ignore_last(i).mask(as_<type>());
-    type          ref   = if_else(ignore_last(i), value, T(69));
+    auto mref  = ignore_last(i).mask(as_<type>());
+    type ref   = if_else(ignore_last(i), value, T(69));
 
-    TTS_EQUAL( (ignore_first(0) && ignore_last(i)).mask(as_<type>()), mref );
+    TTS_EQUAL( (ignore_first(0) && ignore_last(i)).mask(as_<type>()).bits(), mref.bits() );
     TTS_EQUAL( (if_else(ignore_first(0) && ignore_last(i),value, type(69))), ref);
   }
 
@@ -275,10 +236,10 @@ TTS_CASE_TPL("ignore_first/last combination", TTS_NUMERIC_TYPES)
   {
     for(int li = 1;li <= type::static_size;li++)
     {
-      logical<type> mref  = ignore_first(fi).mask(as_<type>()) && ignore_last(li).mask(as_<type>());
-      type          ref   = if_else(mref, value, T(69));
+      auto mref  = ignore_first(fi).mask(as_<type>()) && ignore_last(li).mask(as_<type>());
+      type ref   = if_else(mref, value, T(69));
 
-      TTS_EQUAL( (ignore_first(fi) && ignore_last(li)).mask(as_<type>()), mref );
+      TTS_EQUAL( (ignore_first(fi) && ignore_last(li)).mask(as_<type>()).bits(), mref.bits() );
       TTS_EQUAL( (if_else(ignore_first(fi) && ignore_last(li),value, type(69))), ref);
     }
   }

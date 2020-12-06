@@ -102,27 +102,21 @@ namespace eve
     {
     }
 
-    EVE_FORCEINLINE explicit logical(logical<Type>* ptr) noexcept
+
+    //==============================================================================================
+    // Constructs a wide from a pointer or an aligned pointer
+    //==============================================================================================
+    template<simd_compatible_ptr<logical> Ptr>
+    EVE_FORCEINLINE explicit logical(Ptr ptr) noexcept
+    requires( is_logical_v<std::decay_t<decltype(*ptr)>> )
         : data_(detail::load(eve::as_<logical>{}, abi_type{}, ptr))
-    {
-    }
-
-    template<std::size_t Alignment>
-    EVE_FORCEINLINE explicit logical(aligned_ptr<logical<Type>, Alignment> ptr) noexcept
-                  : data_(detail::load(eve::as_<logical>{}, abi_type{}, ptr))
-    {
-    }
-
-    template<std::size_t Alignment>
-    EVE_FORCEINLINE explicit logical(aligned_ptr<logical<Type> const, Alignment> ptr) noexcept
-                  : data_(detail::load(eve::as_<logical>{}, abi_type{}, ptr))
     {
     }
 
     //==============================================================================================
     // Constructs a wide  from a single value
     //==============================================================================================
-    template<typename T>
+    template<scalar_value T>
     EVE_FORCEINLINE explicit logical(T const &v) noexcept
                     requires( std::convertible_to<T, logical<Type>> )
                   : data_(detail::make(eve::as_<target_type>{}, abi_type{}, v))

@@ -15,6 +15,30 @@
 
 namespace eve
 {
+  template<typename Type> struct pointer_alignment : std::integral_constant<std::size_t,0ULL>
+  {};
+
+  template<typename Type>
+  struct  pointer_alignment<Type*>
+        : std::integral_constant<std::size_t,alignof(Type)>
+  {};
+
+  template<typename Type>
+  struct  pointer_alignment<Type const*>
+        : std::integral_constant<std::size_t,alignof(Type)>
+  {};
+
+  template<typename Type>
+  struct pointer_alignment<logical<Type>> : pointer_alignment<Type>
+  {
+  };
+
+  template<typename Type>
+  using pointer_alignment_t = typename pointer_alignment<Type>::type;
+
+  template<typename Type>
+  inline constexpr auto pointer_alignment_v = pointer_alignment<Type>::value;
+
   template<typename Type>
   struct alignment : std::integral_constant<std::size_t,alignof(Type)>
   {};
