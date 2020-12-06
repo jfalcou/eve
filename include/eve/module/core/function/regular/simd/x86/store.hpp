@@ -25,7 +25,22 @@ namespace eve::detail
   {
     if constexpr( !std::is_pointer_v<Ptr> )
     {
-      store(value, ptr.get());
+      if constexpr(N::value * sizeof(T) == x86_256_::bytes)
+      {
+              if constexpr(std::is_same_v<T, double>) _mm256_store_pd(ptr.get(), value);
+        else  if constexpr(std::is_same_v<T, float> ) _mm256_store_ps(ptr.get(), value);
+        else  if constexpr(std::is_integral_v<T>    ) _mm256_store_si256((__m256i *)(ptr.get()), value);
+      }
+      else if constexpr(N::value * sizeof(T) == x86_128_::bytes)
+      {
+              if constexpr(std::is_same_v<T, double>) _mm_store_pd(ptr.get(), value);
+        else  if constexpr(std::is_same_v<T, float> ) _mm_store_ps(ptr.get(), value);
+        else  if constexpr(std::is_integral_v<T>    ) _mm_store_si128((__m128i *)(ptr.get()), value);
+      }
+      else
+      {
+        memcpy(ptr.get(), (T const*)(&value), N::value * sizeof(T));
+      }
     }
     else if constexpr(N::value * sizeof(T) == x86_256_::bytes)
     {
