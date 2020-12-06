@@ -24,7 +24,7 @@ namespace eve::detail
   {
     if constexpr( std::is_same_v<ABI,arm_64_> &&  (N::value * sizeof(T) != arm_64_::bytes ))
     {
-      apply<N::value>([&](auto... I) { ((*ptr++ = value[I]), ...); });
+      memcpy(ptr, (T const*)(&value), N::value * sizeof(T));
     }
     else
     {
@@ -62,7 +62,7 @@ namespace eve::detail
   {
     if constexpr( std::is_same<ABI,arm_64_> &&  (ABI N::value * sizeof(T) != arm_64_::bytes ))
     {
-      apply<N::value>([&](auto... I) { ((*ptr++ = value[I]), ...); });
+      memcpy(ptr, (T const*)(&value), N::value * sizeof(T));
     }
     else
     {
