@@ -87,29 +87,12 @@ namespace eve
     }
 
     //==============================================================================================
-    // Constructs a wide from a pointer
+    // Constructs a wide from a pointer or an aligned pointer
     //==============================================================================================
-    EVE_FORCEINLINE explicit wide(Type const *ptr) noexcept
+    template<scalar_pointer Ptr>
+    EVE_FORCEINLINE explicit wide(Ptr ptr) noexcept
+    requires( std::is_pointer_v<Ptr> || pointer_alignment_v<Ptr> >= static_alignment )
         : data_(detail::load(eve::as_<wide>{}, abi_type{}, ptr))
-    {
-    }
-
-    EVE_FORCEINLINE explicit wide(Type *ptr) noexcept
-        : data_(detail::load(eve::as_<wide>{}, abi_type{}, ptr))
-    {
-    }
-
-    template<std::size_t Alignment>
-    EVE_FORCEINLINE explicit wide(aligned_ptr<Type const, Alignment> ptr) noexcept
-                    requires(Alignment >= static_alignment)
-                  : data_(detail::load(eve::as_<wide>{}, abi_type{}, ptr))
-    {
-    }
-
-    template<std::size_t Alignment>
-    EVE_FORCEINLINE explicit wide(aligned_ptr<Type, Alignment> ptr) noexcept
-                    requires(Alignment >= static_alignment)
-                  : data_(detail::load(eve::as_<wide>{}, abi_type{}, ptr))
     {
     }
 
