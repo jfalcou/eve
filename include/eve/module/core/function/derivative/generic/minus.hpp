@@ -10,38 +10,33 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/derivative/rec.hpp>
-#include <eve/function/derivative/pow.hpp>
-#include <eve/function/is_equal.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/if_else.hpp>
 #include <eve/function/derivative.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/constant/mhalf.hpp>
+#include <eve/function/if_else.hpp>
+#include <eve/function/is_equal.hpp>
+#include <eve/constant/mone.hpp>
 
 namespace eve::detail
 {
   template<floating_real_value T, unsigned_value N>
-  EVE_FORCEINLINE constexpr T sqrt_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr T minus_(EVE_SUPPORTS(cpu_)
                                    , derivative_type<1> const &
                                    , T x
                                    , N n) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return derivative1(pow)(x, half(as(x)), n);
+      return if_else(is_eqz(n), minus(x), if_else(is_equal(n, one(as(n))), mone(as(x)), zero));
     }
     else
-      return apply_over(derivative1(sqrt), x, n);
+      return apply_over(derivative1(minus), x, n);
   }
 
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T sqrt_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr T minus_(EVE_SUPPORTS(cpu_)
                                     , derivative_type<1> const &
                                     , T x) noexcept
   {
 
-    return mhalf(as(x))*rsqrt(x);
+    return mone(as(x));
   }
 }
