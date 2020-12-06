@@ -17,10 +17,9 @@ namespace eve
   template<std::ptrdiff_t Cardinal>
   struct fixed : std::integral_constant<std::ptrdiff_t, Cardinal>
   {
-    static constexpr bool is_pow2(std::ptrdiff_t v) { return !v || (!(v & (v - 1)) && v); }
+    static constexpr bool is_pow2(std::ptrdiff_t v) { return !v || ( !(v & (v - 1)) ); }
     static_assert(is_pow2(Cardinal), "Cardinal must be a power of 2");
 
-    static constexpr bool is_default = false;
     using type          = fixed<Cardinal>;
     using split_type    = fixed<Cardinal / 2>;
     using combined_type = fixed<Cardinal * 2>;
@@ -29,14 +28,12 @@ namespace eve
   template<>
   struct fixed<1ULL> : std::integral_constant<std::ptrdiff_t, 1ULL>
   {
-    static constexpr bool is_default = false;
     using type          = fixed<1ULL>;
     using combined_type = fixed<2>;
   };
 
   struct scalar_cardinal : std::integral_constant<std::ptrdiff_t, 1ULL>
   {
-    static constexpr bool is_default = false;
     using type          = scalar_cardinal;
     using combined_type = fixed<2>;
   };

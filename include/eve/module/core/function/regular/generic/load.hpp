@@ -19,23 +19,28 @@ namespace eve::detail
   //================================================================================================
   // SIMD
   //================================================================================================
-  template<scalar_pointer Ptr>
+  template<typename Ptr>
   EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), Ptr ptr) noexcept
-  -> decltype( as_wide_t<std::remove_cvref_t<decltype(*ptr)>>(ptr) )
+  requires( simd_compatible_ptr<Ptr, as_wide_t<std::remove_cvref_t<decltype(*ptr)>> > )
   {
     return as_wide_t<std::remove_cvref_t<decltype(*ptr)>>(ptr);
   }
 
-  template<scalar_pointer Ptr, typename Cardinal>
+  template<typename Ptr, typename Cardinal>
   EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), Ptr ptr, Cardinal const &) noexcept
-  -> decltype( as_wide_t<std::remove_cvref_t<decltype(*ptr)>, typename Cardinal::type>(ptr) )
+  requires( simd_compatible_ptr < Ptr
+                                , as_wide_t < std::remove_cvref_t<decltype(*ptr)>
+                                            , typename Cardinal::type
+                                            >
+                                >
+          )
   {
     return as_wide_t<std::remove_cvref_t<decltype(*ptr)>, typename Cardinal::type>(ptr);
   }
 
-  template<relative_conditional_expr C, scalar_pointer Ptr>
+  template<relative_conditional_expr C, typename Ptr>
   EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), C const &cond, Ptr ptr) noexcept
-  -> decltype( as_wide_t<std::remove_cvref_t<decltype(*ptr)>>(ptr) )
+  requires( simd_compatible_ptr<Ptr, as_wide_t<std::remove_cvref_t<decltype(*ptr)>> > )
   {
     using e_t = std::remove_cvref_t<decltype(*ptr)>;
     using r_t = as_wide_t< e_t >;
@@ -78,9 +83,12 @@ namespace eve::detail
     }
   }
 
-  template<relative_conditional_expr C, scalar_pointer Ptr, typename Cardinal>
+  template<relative_conditional_expr C, typename Ptr, typename Cardinal>
   EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), C const &cond, Ptr ptr, Cardinal const&) noexcept
-  -> decltype( as_wide_t<std::remove_cvref_t<decltype(*ptr)>, typename Cardinal::type>(ptr) )
+  requires( simd_compatible_ptr<Ptr, as_wide_t< std::remove_cvref_t<decltype(*ptr)>
+                                              , typename Cardinal::type>
+                                              >
+          )
   {
     using e_t = std::remove_cvref_t<decltype(*ptr)>;
     using r_t = as_wide_t< e_t, typename Cardinal::type >;
@@ -126,13 +134,13 @@ namespace eve::detail
   //================================================================================================
   // Scalar support
   //================================================================================================
-  template<scalar_pointer Ptr>
+  template<typename Ptr>
   EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), Ptr p, scalar_cardinal const&) noexcept
   {
     return *p;
   }
 
-  template<scalar_pointer Ptr, scalar_value T>
+  template<typename Ptr, scalar_value T>
   EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_)
                             , converter_type<T> const&, Ptr p, scalar_cardinal const&
                             ) noexcept

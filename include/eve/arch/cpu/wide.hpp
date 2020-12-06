@@ -89,9 +89,8 @@ namespace eve
     //==============================================================================================
     // Constructs a wide from a pointer or an aligned pointer
     //==============================================================================================
-    template<scalar_pointer Ptr>
+    template<simd_compatible_ptr<wide> Ptr>
     EVE_FORCEINLINE explicit wide(Ptr ptr) noexcept
-    requires( std::is_pointer_v<Ptr> || pointer_alignment_v<Ptr> >= static_alignment )
         : data_(detail::load(eve::as_<wide>{}, abi_type{}, ptr))
     {
     }

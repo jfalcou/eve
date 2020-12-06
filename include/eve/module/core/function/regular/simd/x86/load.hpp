@@ -21,7 +21,7 @@ namespace eve::detail
   //================================================================================================
   // Conditional loads
   //================================================================================================
-  template<relative_conditional_expr C, scalar_pointer Ptr>
+  template<relative_conditional_expr C, typename Ptr>
   EVE_FORCEINLINE auto load_(EVE_SUPPORTS(avx_), C const &cond, Ptr ptr) noexcept
                   -> as_wide_t<std::remove_cvref_t<decltype(*std::declval<Ptr>())>>
   {

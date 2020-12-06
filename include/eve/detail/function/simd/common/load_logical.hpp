@@ -19,7 +19,7 @@ namespace eve::detail
   //================================================================================================
   // Logical
   //================================================================================================
-  template<value T, scalar_pointer Ptr, native ABI>
+  template<value T, native ABI, simd_compatible_ptr<logical<T>> Ptr>
   EVE_FORCEINLINE auto load(eve::as_<logical<T>> const &,
                             ABI const & mode,
                             Ptr ptr) noexcept

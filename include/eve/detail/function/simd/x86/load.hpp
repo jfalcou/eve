@@ -21,11 +21,9 @@ namespace eve::detail
   //================================================================================================
   // Regular loads
   //================================================================================================
-  template<scalar_pointer Ptr, typename T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE auto load(eve::as_<wide<T, N>> const &, ABI const &, Ptr p)
-  requires(   std::same_as<T, std::remove_cvref_t<decltype(*p)>>
-          &&  ( std::is_pointer_v<Ptr> || pointer_alignment_v<Ptr> >= alignment_v<wide<T, N>> )
-          )
+  template<typename T, typename N, x86_abi ABI, simd_compatible_ptr<wide<T,N,ABI>> Ptr >
+  EVE_FORCEINLINE auto load(eve::as_<wide<T, N, ABI>> const &, ABI const &, Ptr p)
+  requires( std::same_as<T, std::remove_cvref_t<decltype(*p)>> )
   {
     constexpr auto cat = categorize<wide<T, N>>();
     constexpr bool isfull256 = N::value*sizeof(T) == x86_256_::bytes;

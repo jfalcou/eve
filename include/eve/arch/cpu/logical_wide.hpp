@@ -106,11 +106,9 @@ namespace eve
     //==============================================================================================
     // Constructs a wide from a pointer or an aligned pointer
     //==============================================================================================
-    template<scalar_pointer Ptr>
+    template<simd_compatible_ptr<logical> Ptr>
     EVE_FORCEINLINE explicit logical(Ptr ptr) noexcept
-    requires(  (std::is_pointer_v<Ptr> || pointer_alignment_v<Ptr> >= static_alignment )
-            && is_logical_v< std::decay_t<decltype(*ptr)> >
-            )
+    requires( is_logical_v<std::decay_t<decltype(*ptr)>> )
         : data_(detail::load(eve::as_<logical>{}, abi_type{}, ptr))
     {
     }
