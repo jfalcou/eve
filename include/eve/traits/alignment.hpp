@@ -15,10 +15,6 @@
 
 namespace eve
 {
-/*
-  template<typename Type> struct pointer_alignment;
-*/
-
   template<typename Type> struct pointer_alignment : std::integral_constant<std::size_t,0ULL>
   {};
 
