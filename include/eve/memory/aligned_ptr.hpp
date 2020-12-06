@@ -28,6 +28,8 @@ namespace eve
   {
     using pointer = std::add_pointer_t<Type>;
 
+    template<typename T> using rebind = aligned_ptr<T,Alignment>;
+
     static constexpr std::size_t alignment() { return Alignment; }
 
     aligned_ptr() noexcept {}
@@ -133,6 +135,8 @@ namespace eve
   struct aligned_ptr<void, Alignment>
   {
     using pointer = void *;
+
+    template<typename T> using rebind = aligned_ptr<T,Alignment>;
 
     static constexpr std::size_t alignment() { return Alignment; }
 
