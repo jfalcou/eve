@@ -21,23 +21,21 @@ namespace eve::detail
   //================================================================================================
   template<scalar_pointer Ptr>
   EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), Ptr ptr) noexcept
-                  -> as_wide_t<std::remove_cvref_t<decltype(*std::declval<Ptr>())>>
+  -> decltype( as_wide_t<std::remove_cvref_t<decltype(*ptr)>>(ptr) )
   {
     return as_wide_t<std::remove_cvref_t<decltype(*ptr)>>(ptr);
   }
 
   template<scalar_pointer Ptr, typename Cardinal>
   EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), Ptr ptr, Cardinal const &) noexcept
-                  -> as_wide_t<std::remove_cvref_t< decltype(*std::declval<Ptr>())>
-                                                  , typename Cardinal::type
-                                                  >
+  -> decltype( as_wide_t<std::remove_cvref_t<decltype(*ptr)>, typename Cardinal::type>(ptr) )
   {
     return as_wide_t<std::remove_cvref_t<decltype(*ptr)>, typename Cardinal::type>(ptr);
   }
 
   template<relative_conditional_expr C, scalar_pointer Ptr>
   EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), C const &cond, Ptr ptr) noexcept
-                  -> as_wide_t<std::remove_cvref_t<decltype(*std::declval<Ptr>())>>
+  -> decltype( as_wide_t<std::remove_cvref_t<decltype(*ptr)>>(ptr) )
   {
     using e_t = std::remove_cvref_t<decltype(*ptr)>;
     using r_t = as_wide_t< e_t >;
@@ -82,9 +80,7 @@ namespace eve::detail
 
   template<relative_conditional_expr C, scalar_pointer Ptr, typename Cardinal>
   EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), C const &cond, Ptr ptr, Cardinal const&) noexcept
-                  -> as_wide_t<std::remove_cvref_t< decltype(*std::declval<Ptr>())>
-                                                  , typename Cardinal::type
-                                                  >
+  -> decltype( as_wide_t<std::remove_cvref_t<decltype(*ptr)>, typename Cardinal::type>(ptr) )
   {
     using e_t = std::remove_cvref_t<decltype(*ptr)>;
     using r_t = as_wide_t< e_t, typename Cardinal::type >;

@@ -20,4 +20,9 @@ namespace eve
   template<> struct supports_optimized_conversion<tag::load_> : std::true_type {};
 }
 
-#include <eve/module/core/function/generic/load.hpp>
+#include <eve/module/core/function/regular/generic/load.hpp>
+
+#if defined(EVE_HW_X86)
+#  include <eve/module/core/function/regular/simd/x86/load.hpp>
+#endif
+
