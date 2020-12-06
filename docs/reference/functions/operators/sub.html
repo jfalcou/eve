@@ -67,8 +67,8 @@ Supported decorators
 [`derivative`](../decorators.html#derivative)
 :   **Required header: **<script type="preformatted">` #include <eve/function/derivative/sub.hpp>`</script>
 
-:   The expression `derivative(sub)(x,y,n,p)` computes $\frac{\partial^{n+p}f}{\partial x^n\partial y^p}(x,y)$,
-    where f is the function $(x,y) \rightarrow \ x-y$.
+:   The expression `derivative_1st(sub)(x,y)` and `derivative_2nd(sub)(x,y)` computes the partial
+    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ x-y/2$.
 
 Masked calls
 ====================================================================================================

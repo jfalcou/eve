@@ -66,8 +66,9 @@ Supported decorators
 [`derivative`](../decorators.html#derivative)
 :   **Required header: **<script type="preformatted">` #include <eve/function/derivative/mul.hpp>`</script>
 
-:   The expression `derivative(mul)(x,y,n,p)` computes $\frac{\partial^{n+p}f}{\partial x^n\partial y^p}(x,y)$,
-    where f is the function $(x,y) \rightarrow \ xy$.
+:   The expression `derivative_1st(mul)(x,y)` and `derivative_2nd(mul)(x,y)` computes the partial
+    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ xy$.
+
 
 Masked calls
 ====================================================================================================
