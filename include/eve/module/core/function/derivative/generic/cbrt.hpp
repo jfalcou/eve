@@ -26,7 +26,7 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return if_else(n == 0, cbrt(x), derivative2(pow)(x,T(1.0/3.0), n));
+      return if_else(n == 0, cbrt(x), derivative1(pow)(x,T(1.0/3.0), n));
     }
     else
       return apply_over(derivative1(cbrt), x, n);

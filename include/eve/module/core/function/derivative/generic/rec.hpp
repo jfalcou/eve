@@ -10,11 +10,12 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/function/converter.hpp>
 #include <eve/function/derivative/rec.hpp>
 #include <eve/function/derivative/pow.hpp>
-#include <eve/function/is_equal.hpp>
-#include <eve/function/is_eqz.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/function/is_odd.hpp>
+#include <eve/function/factorial.hpp>
 #include <eve/function/derivative.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/rec.hpp>
@@ -30,10 +31,14 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return derivative1(pow)(x, mone(as(x)), n);
+      using i_t =  as_integer_t<element_type_t<N>, signed>;
+      using f_t =  element_type_t<T>;
+      auto sn = -to_<i_t>(n);
+      auto res = to_<f_t>(factorial(n))*pow(x, sn-1);
+      return if_else(is_odd(n), mone, one(as(x)))*res;
     }
     else
-      return apply_over(derivative1(rec), x, n);
+      return apply_over(derivative2(rec), x, n);
   }
 
   template<floating_real_value T>

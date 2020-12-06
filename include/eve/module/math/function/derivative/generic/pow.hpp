@@ -24,12 +24,12 @@ namespace eve::detail
 {
   template<floating_real_value T, unsigned_value N>
   EVE_FORCEINLINE constexpr T pow_(EVE_SUPPORTS(cpu_)
-                                   , derivative_type<1> const &
+                                   , derivative_type<2> const &
                                    , T x, T y, N n) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return pow(x, y)*pow(log(y), n);
+      return pow(x, y)*pow(log(x), n);
     }
     else
       return apply_over(derivative1(pow), x, y, n);
@@ -37,7 +37,7 @@ namespace eve::detail
 
   template<floating_real_value T, unsigned_value N>
   EVE_FORCEINLINE constexpr T pow_(EVE_SUPPORTS(cpu_)
-                                   , derivative_type<2> const &
+                                   , derivative_type<1> const &
                                    , T x, T y, N p) noexcept
   {
     if constexpr( has_native_abi_v<T> )

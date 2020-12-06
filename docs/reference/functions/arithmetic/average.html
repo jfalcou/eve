@@ -56,6 +56,12 @@ Half the sum of `x` and `y`. No overflow occurs.
     simd intrinsics to perform the operation, the scalar results may differ by one unit from
     simd ones and is system dependent.
 
+[`derivative`](../decorators.html#derivative)
+:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/average.hpp>`</script>
+
+:   The expression `derivative(average)(x,y,n,p)` computes $\frac{\partial^{n+p}f}{\partial x^n\partial y^p}(x,y)$,
+    where f is the function $(x,y) \rightarrow \ (x+y)/2$.
+
   (insert ../../src/average.src.html here)
 
   (insert ../../out/average.out.html here)
