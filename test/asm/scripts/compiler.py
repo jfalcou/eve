@@ -18,7 +18,8 @@ BASIC_FLAGS = [
     '-o /dev/stdout',
     '-S',
     '-mllvm',
-    '--x86-asm-syntax=intel'
+    '--x86-asm-syntax=intel',
+    '-x c++ -- - '
 ]
 
 ARCH_TO_COMMAND = {
@@ -42,9 +43,6 @@ class Compiler:
             f'{" ".join(BASIC_FLAGS)}'
         print(f'Initialized compiler: {self._command}')
 
-    def __call__(self, file):
-        return subprocess.check_output(f'{self._command} {file} | c++filt', shell=True, encoding='ascii')
-
-
-def compile(file):
-    return Compiler('avx2')(file)
+    def __call__(self, code):
+        compile_command =  f'echo \'{code}\' | {self._command} | c++filt'
+        return subprocess.check_output(compile_command, shell=True, encoding='ascii')

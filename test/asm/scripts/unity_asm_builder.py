@@ -1,6 +1,5 @@
 #!/usr/bin/env python3.9
 import os
-import tempfile
 
 from compiler import Compiler
 from clean_up_asm import clean_up_asm
@@ -18,18 +17,5 @@ class UnityAsmBuilder:
         return self.__repr__()
 
     def __call__(self, sources):
-        file = tempfile.NamedTemporaryFile(
-            mode='w', suffix='.cc', delete=False)
-        with file as unity:
-            for s in sources:
-                unity.write(f'#include "{s}"\n')
-
-        res = None
-        try:
-            res = clean_up_asm(self._compiler(file.name))
-        except:
-            os.remove(file.name)
-            raise
-
-        os.remove(file.name)
-        return (self._arch, res)
+        source = ''.join((f'#include "{s}"\n' for s in sources))
+        return (self._arch, clean_up_asm(self._compiler(source)))
