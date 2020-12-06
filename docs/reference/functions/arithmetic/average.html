@@ -59,8 +59,8 @@ Half the sum of `x` and `y`. No overflow occurs.
 [`derivative`](../decorators.html#derivative)
 :   **Required header: **<script type="preformatted">` #include <eve/function/derivative/average.hpp>`</script>
 
-:   The expression `derivative(average)(x,y,n,p)` computes $\frac{\partial^{n+p}f}{\partial x^n\partial y^p}(x,y)$,
-    where f is the function $(x,y) \rightarrow \ (x+y)/2$.
+:   The expression `derivative_1st(average)(x,y)` and `derivative_2nd(average)(x,y)` computes the partial
+    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ (x+y)/2$.
 
   (insert ../../src/average.src.html here)
 
