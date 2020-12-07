@@ -10,32 +10,29 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/pow.hpp>
-
-#include <eve/function/dec.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/pow.hpp>
+#include <eve/function/pow_abs.hpp>
+#include <eve/function/log_abs.hpp>
+#include <eve/function/derivative.hpp>
 #include <eve/function/tgamma.hpp>
 #include <eve/function/converter.hpp>
-#include <eve/function/derivative.hpp>
 
 namespace eve::detail
 {
   template<floating_real_value T, unsigned_value N>
-  EVE_FORCEINLINE constexpr T pow_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr T pow_abs_(EVE_SUPPORTS(cpu_)
                                    , derivative_type<2> const &
                                    , T x, T y, N n) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return pow(x, y)*pow(log(x), n);
+      return pow_abs(x, y)*pow_abs(log_abs(x), n);
     }
     else
-      return apply_over(derivative1(pow), x, y, n);
+      return apply_over(derivative1(pow_abs), x, y, n);
   }
 
   template<floating_real_value T, unsigned_value N>
-  EVE_FORCEINLINE constexpr T pow_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr T pow_abs_(EVE_SUPPORTS(cpu_)
                                    , derivative_type<1> const &
                                    , T x, T y, N p) noexcept
   {
@@ -44,27 +41,27 @@ namespace eve::detail
       using elt_t =  element_type_t<T>;
       auto yp1 = inc(y);
       auto fp = to_<elt_t>(p);
-      return (tgamma(yp1)/tgamma(yp1-fp))*pow(x, y-fp); // TO DO better eval
+      return (tgamma(yp1)/tgamma(yp1-fp))*pow_abs(x, y-fp); // TO DO better eval
     }
     else
-      return apply_over(derivative2(pow), x, y, p);
+      return apply_over(derivative2(pow_abs), x, y, p);
   }
 
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T pow_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr T pow_abs_(EVE_SUPPORTS(cpu_)
                                    , derivative_type<1> const &
                                    , T const &x
                                    , T const &y) noexcept
   {
-    return pow(x, dec(y))*y;
+    return pow_abs(x, dec(y))*y;
   }
 
    template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T pow_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr T pow_abs_(EVE_SUPPORTS(cpu_)
                                    , derivative_type<2> const &
                                    , T const &x
                                    , T const &y) noexcept
   {
-    return pow(x, y)*log(x);
+    return pow_abs(x, y)*log_abs(x);
   }
 }
