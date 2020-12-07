@@ -7,22 +7,21 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
-//=lo=================================================================================================
+//==================================================================================================
 #pragma once
 
-#include <eve/function/secd.hpp>
-#include <eve/function/tand.hpp>
+#include <eve/function/log.hpp>
 #include <eve/function/derivative.hpp>
-#include <eve/function/deginrad.hpp>
 
 namespace eve::detail
 {
 
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T cscd_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr T log10_(EVE_SUPPORTS(cpu_)
                                   , derivative_type<1> const &
                                   , T const &x) noexcept
   {
-    return deginrad(secd(x)*tand(x));
+    auto invlog10 = T(0.4342944819032518276511289189);
+    return derivative(log)(x)*inlog10;
   }
 }
