@@ -16,10 +16,17 @@
 
 namespace eve::detail
 {
-  template<scalar_value T, typename N>
-  EVE_FORCEINLINE void store_(EVE_SUPPORTS(vmx_), wide<T, N, ppc_> const &value, T *ptr) noexcept
+  template< scalar_value T, typename N
+          , simd_compatible_ptr<wide<T, N, ppc_>> Ptr
+          >
+  EVE_FORCEINLINE void store_(EVE_SUPPORTS(vmx_), wide<T, N, ppc_> const &value, Ptr ptr) noexcept
   {
-    if constexpr( N::value * sizeof(T) == ppc_::bytes )
+    if constexpr( !std::is_pointer_v<Ptr> )
+    {
+      if constexpr( current_api == eve::vmx ) vec_st(value.storage(), 0, ptr.get());
+      else                                    store(value, ptr.get());
+    }
+    else if constexpr( N::value * sizeof(T) == ppc_::bytes )
     {
       if constexpr( current_api == eve::vmx )
       {
@@ -39,20 +46,8 @@ namespace eve::detail
       }
     }
     else
-      apply<N::value>([&](auto... I) { ((*ptr++ = value[I]), ...); });
-  }
-
-  template<scalar_value T, typename S, std::size_t N>
-  EVE_FORCEINLINE void
-  store_(EVE_SUPPORTS(vmx_), wide<T, S, ppc_> const &value, aligned_ptr<T, N> ptr)
-  {
-    if constexpr( (N >= ppc_::bytes) && current_api == eve::vmx )
     {
-      vec_st(value.storage(), 0, ptr.get());
-    }
-    else
-    {
-      store(value, ptr.get());
+      memcpy(ptr, (T const*)(&value), N::value * sizeof(T));
     }
   }
 }

@@ -10,90 +10,53 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/concept/vectorizable.hpp>
+#include <eve/concept/memory.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // 128 bits implementation
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto store_(EVE_SUPPORTS(sse2_), wide<T, N, x86_128_> const &value, T *ptr) noexcept
+  template< scalar_value T, typename N, x86_abi ABI
+          , simd_compatible_ptr<wide<T, N, ABI>> Ptr
+          >
+  EVE_FORCEINLINE auto store_(EVE_SUPPORTS(sse2_), wide<T, N, ABI> const &value, Ptr ptr) noexcept
   {
-    if constexpr(N::value * sizeof(T) == x86_128_::bytes)
+    if constexpr( !std::is_pointer_v<Ptr> )
     {
-      if constexpr(std::is_same_v<T, double>)
-        _mm_storeu_pd(ptr, value);
-      else if constexpr(std::is_same_v<T, float>)
-        _mm_storeu_ps(ptr, value);
-      else if constexpr(std::is_integral_v<T>)
-        _mm_storeu_si128((__m128i *)(ptr), value);
+      if constexpr(N::value * sizeof(T) == x86_256_::bytes)
+      {
+              if constexpr(std::is_same_v<T, double>) _mm256_store_pd(ptr.get(), value);
+        else  if constexpr(std::is_same_v<T, float> ) _mm256_store_ps(ptr.get(), value);
+        else  if constexpr(std::is_integral_v<T>    ) _mm256_store_si256((__m256i *)(ptr.get()), value);
+      }
+      else if constexpr(N::value * sizeof(T) == x86_128_::bytes)
+      {
+              if constexpr(std::is_same_v<T, double>) _mm_store_pd(ptr.get(), value);
+        else  if constexpr(std::is_same_v<T, float> ) _mm_store_ps(ptr.get(), value);
+        else  if constexpr(std::is_integral_v<T>    ) _mm_store_si128((__m128i *)(ptr.get()), value);
+      }
+      else
+      {
+        memcpy(ptr.get(), (T const*)(&value), N::value * sizeof(T));
+      }
+    }
+    else if constexpr(N::value * sizeof(T) == x86_256_::bytes)
+    {
+            if constexpr(std::is_same_v<T, double>) _mm256_storeu_pd(ptr, value);
+      else  if constexpr(std::is_same_v<T, float> ) _mm256_storeu_ps(ptr, value);
+      else  if constexpr(std::is_integral_v<T>    ) _mm256_storeu_si256((__m256i *)(ptr), value);
+    }
+    else if constexpr(N::value * sizeof(T) == x86_128_::bytes)
+    {
+            if constexpr(std::is_same_v<T, double>) _mm_storeu_pd(ptr, value);
+      else  if constexpr(std::is_same_v<T, float> ) _mm_storeu_ps(ptr, value);
+      else  if constexpr(std::is_integral_v<T>    ) _mm_storeu_si128((__m128i *)(ptr), value);
     }
     else
     {
-      apply<N::value>([&](auto... I) { ((*ptr++ = value[ I ]), ...); });
+      memcpy(ptr, (T const*)(&value), N::value * sizeof(T));
     }
   }
-
-  template<typename T, typename N, std::size_t A>
-  EVE_FORCEINLINE auto
-  store_(EVE_SUPPORTS(sse2_), wide<T, N, x86_128_> const &value, aligned_ptr<T, A> ptr) noexcept
-  {
-    if constexpr(N::value * sizeof(T) == x86_128_::bytes && A >= wide<T, N, x86_128_>::static_alignment)
-    {
-      if constexpr(std::is_same_v<T, double>)
-        _mm_store_pd(ptr.get(), value);
-      else if constexpr(std::is_same_v<T, float>)
-        _mm_store_ps(ptr.get(), value);
-      else if constexpr(std::is_integral_v<T>)
-        _mm_store_si128((__m128i *)(ptr.get()), value);
-    }
-    else
-    {
-      store(value, ptr.get());
-    }
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // 256 bits implementation
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto store_(EVE_SUPPORTS(avx_), wide<T, N, x86_256_> const &value, T *ptr) noexcept
-  {
-    if constexpr(N::value * sizeof(T) == x86_256_::bytes)
-    {
-      if constexpr(std::is_same_v<T, double>)
-        _mm256_storeu_pd(ptr, value);
-      else if constexpr(std::is_same_v<T, float>)
-        _mm256_storeu_ps(ptr, value);
-      else if constexpr(std::is_integral_v<T>)
-        _mm256_storeu_si256((__m256i *)(ptr), value);
-    }
-    else
-    {
-      apply<N::value>([&](auto... I) { ((*ptr++ = value[ I ]), ...); });
-    }
-  }
-
-  template<typename T, typename N, std::size_t A>
-  EVE_FORCEINLINE auto
-  store_(EVE_SUPPORTS(avx_), wide<T, N, x86_256_> const &value, aligned_ptr<T, A> ptr) noexcept
-  {
-    if constexpr(N::value * sizeof(T) == x86_256_::bytes && A >= wide<T, N, x86_256_>::static_alignment)
-    {
-      if constexpr(std::is_same_v<T, double>)
-        _mm256_store_pd(ptr.get(), value);
-      else if constexpr(std::is_same_v<T, float>)
-        _mm256_store_ps(ptr.get(), value);
-      else if constexpr(std::is_integral_v<T>)
-        _mm256_store_si256((__m256i *)(ptr.get()), value);
-    }
-    else
-    {
-      store(value, ptr.get());
-    }
-  }
-
 }
