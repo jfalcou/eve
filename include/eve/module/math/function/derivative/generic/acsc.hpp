@@ -25,6 +25,6 @@ namespace eve::detail
                                   , derivative_type<1> const &
                                   , T const &x) noexcept
   {
-    return rec(eve::abs(x)*sqrt(dec(sqr(x))));
+    return -rec(eve::abs(x)*sqrt(dec(sqr(x))));
   }
 }
