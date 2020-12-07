@@ -14,8 +14,8 @@
 #include <eve/function/derivative.hpp>
 #include <eve/function/log.hpp>
 #include <eve/constant/half.hpp>
-#include <eve/constant/inc.hpp>
-#include <eve/constant/oneminus.hpp>
+#include <eve/function/inc.hpp>
+#include <eve/function/oneminus.hpp>
 
 namespace eve::detail
 {

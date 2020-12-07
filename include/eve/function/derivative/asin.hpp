@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/asin.hpp>
-#include <eve/module/core/function/derivative/generic/asin.hpp>
+#include <eve/module/math/function/derivative/generic/asin.hpp>

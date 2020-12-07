@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/secd.hpp>
-#include <eve/module/core/function/derivative/generic/secd.hpp>
+#include <eve/module/math/function/derivative/generic/secd.hpp>

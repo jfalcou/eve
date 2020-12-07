@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/cospi.hpp>
-#include <eve/module/core/function/derivative/generic/cospi.hpp>
+#include <eve/module/math/function/derivative/generic/cospi.hpp>

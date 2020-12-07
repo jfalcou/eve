@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/cos.hpp>
-#include <eve/module/core/function/derivative/generic/cos.hpp>
+#include <eve/module/math/function/derivative/generic/cos.hpp>

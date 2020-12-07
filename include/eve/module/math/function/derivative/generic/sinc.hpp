@@ -25,7 +25,7 @@ namespace eve::detail
                                   , derivative_type<1> const &
                                   , T const &x) noexcept
   {
-    [s, c] = sincos(x);
+    auto [s, c] = sincos(x);
     return if_else(is_eqz(x), zero, fma(x, c, s)/sqr(x));
   }
 }

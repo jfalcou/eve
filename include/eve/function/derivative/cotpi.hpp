@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/cotpi.hpp>
-#include <eve/module/core/function/derivative/generic/cotpi.hpp>
+#include <eve/module/math/function/derivative/generic/cotpi.hpp>

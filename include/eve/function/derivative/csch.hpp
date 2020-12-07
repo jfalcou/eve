@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/csch.hpp>
-#include <eve/module/core/function/derivative/generic/csch.hpp>
+#include <eve/module/math/function/derivative/generic/csch.hpp>

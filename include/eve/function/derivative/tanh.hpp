@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/tanh.hpp>
-#include <eve/module/core/function/derivative/generic/tanh.hpp>
+#include <eve/module/math/function/derivative/generic/tanh.hpp>

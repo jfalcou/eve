@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/atanpi.hpp>
-#include <eve/module/core/function/derivative/generic/atanpi.hpp>
+#include <eve/module/math/function/derivative/generic/atanpi.hpp>

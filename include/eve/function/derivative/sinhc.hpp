@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/sinhc.hpp>
-#include <eve/module/core/function/derivative/generic/sinhc.hpp>
+#include <eve/module/math/function/derivative/generic/sinhc.hpp>

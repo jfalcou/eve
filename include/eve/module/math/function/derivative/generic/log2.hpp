@@ -10,7 +10,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/log2.hpp>
+#include <eve/function/derivative/log.hpp>
 #include <eve/function/derivative.hpp>
 
 namespace eve::detail
@@ -22,6 +22,6 @@ namespace eve::detail
                                   , T const &x) noexcept
   {
     auto invlog2 = T(1.4426950408889634073599);
-    return derivative(log)(x)*inlog2;
+    return derivative(log)(x)*invlog2;
   }
 }

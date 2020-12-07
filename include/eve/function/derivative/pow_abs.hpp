@@ -10,5 +10,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/plus.hpp>
-#include <eve/module/core/function/derivative/generic/plus.hpp>
+#include <eve/function/pow_abs.hpp>
+#include <eve/module/math/function/derivative/generic/pow_abs.hpp>

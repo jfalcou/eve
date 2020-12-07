@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/asind.hpp>
-#include <eve/module/core/function/derivative/generic/asind.hpp>
+#include <eve/module/math/function/derivative/generic/asind.hpp>
