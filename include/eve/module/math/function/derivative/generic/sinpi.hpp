@@ -23,6 +23,6 @@ namespace eve::detail
                                   , derivative_type<1> const &
                                   , T const &x) noexcept
   {
-    return pi(as(x))*sinpi(x);
+    return pi(as(x))*cospi(x);
   }
 }
