@@ -12,10 +12,9 @@
 
 #include <eve/function/acoth.hpp>
 #include <eve/function/derivative.hpp>
-#include <eve/function/log.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/function/inc.hpp>
+#include <eve/function/sqr.hpp>
 #include <eve/function/oneminus.hpp>
+#include <eve/function/rec.hpp>
 
 namespace eve::detail
 {
@@ -25,6 +24,6 @@ namespace eve::detail
                                   , derivative_type<1> const &
                                   , T const &x) noexcept
   {
-    return half(as(x))*log(inc(x)/oneminus(x));
+    return rec(oneminus(sqr(x)));
   }
 }

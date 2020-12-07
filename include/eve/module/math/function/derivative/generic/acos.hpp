@@ -24,6 +24,6 @@ namespace eve::detail
                                   , derivative_type<1> const &
                                   , T const &x) noexcept
   {
-    return rsqrt(oneminus(sqr((x))));
+    return -rsqrt(oneminus(sqr(x)));
   }
 }

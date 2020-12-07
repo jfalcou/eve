@@ -10,7 +10,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/derivative/acotd.hpp>
+#include <eve/function/derivative/acot.hpp>
 #include <eve/function/derivative.hpp>
 #include <eve/function/radinpi.hpp>
 
@@ -23,6 +23,6 @@ namespace eve::detail
                                   , derivative_type<1> const &
                                   , T const &x) noexcept
   {
-    return  radinpi(derivative(acotd)(x));
+    return  radinpi(derivative(acot)(x));
   }
 }
