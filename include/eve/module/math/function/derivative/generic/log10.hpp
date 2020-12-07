@@ -22,6 +22,6 @@ namespace eve::detail
                                   , T const &x) noexcept
   {
     auto invlog10 = T(0.4342944819032518276511289189);
-    return derivative(log)(x)*inlog10;
+    return derivative(log)(x)*invlog10;
   }
 }

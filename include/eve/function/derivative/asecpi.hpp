@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/asecpi.hpp>
-#include <eve/module/core/function/derivative/generic/asecpi.hpp>
+#include <eve/module/math/function/derivative/generic/asecpi.hpp>

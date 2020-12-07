@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/cosd.hpp>
-#include <eve/module/core/function/derivative/generic/cosd.hpp>
+#include <eve/module/math/function/derivative/generic/cosd.hpp>

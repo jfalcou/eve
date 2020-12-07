@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/acosd.hpp>
-#include <eve/module/core/function/derivative/generic/acosd.hpp>
+#include <eve/module/math/function/derivative/generic/acosd.hpp>

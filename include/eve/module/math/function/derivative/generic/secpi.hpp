@@ -10,8 +10,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/secpi.hpp>
+#include <eve/function/cscpi.hpp>
+#include <eve/function/cotpi.hpp>
 #include <eve/function/derivative.hpp>
+#include <eve/constant/pi.hpp>
 
 namespace eve::detail
 {

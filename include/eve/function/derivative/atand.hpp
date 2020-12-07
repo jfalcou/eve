@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/atand.hpp>
-#include <eve/module/core/function/derivative/generic/atand.hpp>
+#include <eve/module/math/function/derivative/generic/atand.hpp>

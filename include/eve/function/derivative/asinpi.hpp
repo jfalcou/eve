@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/asinpi.hpp>
-#include <eve/module/core/function/derivative/generic/asinpi.hpp>
+#include <eve/module/math/function/derivative/generic/asinpi.hpp>

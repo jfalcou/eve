@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/acos.hpp>
-#include <eve/module/core/function/derivative/generic/acos.hpp>
+#include <eve/module/math/function/derivative/generic/acos.hpp>

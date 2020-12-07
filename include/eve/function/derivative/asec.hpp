@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/asec.hpp>
-#include <eve/module/core/function/derivative/generic/asec.hpp>
+#include <eve/module/math/function/derivative/generic/asec.hpp>

@@ -22,6 +22,6 @@ namespace eve::detail
                                   , derivative_type<1> const &
                                   , T const &x) noexcept
   {
-    return radindeg(derivative(acotd)(x));
+    return radindeg(derivative(acot)(x));
   }
 }

@@ -10,7 +10,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/sinpic.hpp>
+#include <eve/function/sinpicospi.hpp>
 #include <eve/function/derivative.hpp>
 #include <eve/constant/pi.hpp>
 
@@ -22,7 +22,7 @@ namespace eve::detail
                                   , derivative_type<1> const &
                                   , T const &x) noexcept
   {
-    [s, c] = sincospi(x);
+    auto [s, c] = sinpicospi(x);
     return if_else(is_eqz(x), zero, fma(x, c, s)/(pi(as(x))*sqr(x)));
   }
 }

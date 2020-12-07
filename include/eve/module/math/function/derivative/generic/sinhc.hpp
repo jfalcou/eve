@@ -10,7 +10,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/sinhc.hpp>
+#include <eve/function/sinhcosh.hpp>
 #include <eve/function/derivative.hpp>
 
 namespace eve::detail
@@ -21,7 +21,7 @@ namespace eve::detail
                                   , derivative_type<1> const &
                                   , T const &x) noexcept
   {
-    [s, c] = sincosh(x);
+    auto [s, c] = sinhcosh(x);
     return if_else(is_eqz(x), zero, fms(x, c, s)/sqr(x));
   }
 }

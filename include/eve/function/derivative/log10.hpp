@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/log10.hpp>
-#include <eve/module/core/function/derivative/generic/log10.hpp>
+#include <eve/module/math/function/derivative/generic/log10.hpp>

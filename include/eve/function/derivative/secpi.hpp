@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/secpi.hpp>
-#include <eve/module/core/function/derivative/generic/secpi.hpp>
+#include <eve/module/math/function/derivative/generic/secpi.hpp>

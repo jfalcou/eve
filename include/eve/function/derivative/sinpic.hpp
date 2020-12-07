@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/sinpic.hpp>
-#include <eve/module/core/function/derivative/generic/sinpic.hpp>
+#include <eve/module/math/function/derivative/generic/sinpic.hpp>

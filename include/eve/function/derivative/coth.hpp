@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/coth.hpp>
-#include <eve/module/core/function/derivative/generic/coth.hpp>
+#include <eve/module/math/function/derivative/generic/coth.hpp>
