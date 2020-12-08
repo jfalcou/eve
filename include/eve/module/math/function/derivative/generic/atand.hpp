@@ -10,8 +10,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/atand.hpp>
-#include <eve/function/derivative.hpp>
+#include <eve/function/derivative/atan.hpp>
 
 namespace eve::detail
 {
@@ -21,6 +20,6 @@ namespace eve::detail
                                   , derivative_type<1> const &
                                   , T const &x) noexcept
   {
-    return atand(x);
+    return  radindeg(derivative(atan)(x));
   }
 }
