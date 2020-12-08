@@ -10,8 +10,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/log.hpp>
+#include <eve/function/derivative/log.hpp>
 #include <eve/function/derivative.hpp>
+#include <eve/function/is_gtz.hpp>
+#include <eve/function/rec.hpp>
 
 namespace eve::detail
 {
@@ -22,6 +24,6 @@ namespace eve::detail
                                   , T const &x) noexcept
   {
     auto invlog10 = T(0.4342944819032518276511289189);
-    return derivative(log)(x)*invlog10;
+    return if_else(is_gtz(x), rec(x)*invlog10, allbits); ;
   }
 }
