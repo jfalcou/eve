@@ -10,7 +10,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/sind.hpp>
+#include <eve/function/cosd.hpp>
 #include <eve/function/derivative.hpp>
 #include <eve/function/deginrad.hpp>
 
@@ -22,6 +22,6 @@ namespace eve::detail
                                   , derivative_type<1> const &
                                   , T const &x) noexcept
   {
-    return deginrad(sind(x));
+    return deginrad(cosd(x));
   }
 }

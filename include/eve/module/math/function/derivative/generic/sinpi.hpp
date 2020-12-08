@@ -10,7 +10,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/sinpi.hpp>
+#include <eve/function/cospi.hpp>
 #include <eve/function/derivative.hpp>
 #include <eve/constant/pi.hpp>
 
