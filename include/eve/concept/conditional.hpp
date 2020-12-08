@@ -11,6 +11,7 @@
 #pragma once
 
 #include <eve/as.hpp>
+#include <eve/forward.hpp>
 
 namespace eve
 {

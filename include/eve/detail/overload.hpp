@@ -15,10 +15,12 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/concepts.hpp>
 #include <eve/concept/conditional.hpp>
+#include <eve/concept/value.hpp>
 #include <utility>
 
 #define EVE_DECLARE_CALLABLE(TAG)                                                                  \
   namespace tag { struct TAG {}; }                                                                 \
+  template<typename C> struct if_;                                                                 \
   namespace detail                                                                                 \
   {                                                                                                \
     template<typename Dummy>                                                                       \
