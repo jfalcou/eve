@@ -10,8 +10,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/secpi.hpp>
-#include <eve/function/tanpi.hpp>
+#include <eve/function/cscpi.hpp>
+#include <eve/function/cotpi.hpp>
 #include <eve/function/derivative.hpp>
 #include <eve/constant/pi.hpp>
 
@@ -23,6 +23,6 @@ namespace eve::detail
                                   , derivative_type<1> const &
                                   , T const &x) noexcept
   {
-    return pi(as(x))*secpi(x)*tanpi(x);
+    return -pi(as(x))*cscpi(x)*cotpi(x);
   }
 }
