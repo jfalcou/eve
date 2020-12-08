@@ -17,14 +17,17 @@
 TTS_CASE_TPL("ignore_all behavior", TTS_NUMERIC_TYPES)
 {
   using eve::wide;
-  using eve::conditional_expr;
+  using eve::logical;
+  using eve::relative_conditional_expr;
   using eve::ignore_all;
   using eve::if_else;
   using eve::as_;
 
-  TTS_EXPECT( conditional_expr<eve::ignore_all_>  );
+  TTS_EXPECT( relative_conditional_expr<eve::ignore_all_>  );
 
   using type = wide<T>;
+
+  TTS_EXPR_IS(ignore_all.mask( as_<type>() ), logical<type> );
 
   TTS_EQUAL( ignore_all.mask( as_<type>() )           , eve::false_( as_<type>() ) );
   TTS_EQUAL( (if_else(ignore_all,type(42), type(69))) , type(69)                  );
@@ -33,14 +36,17 @@ TTS_CASE_TPL("ignore_all behavior", TTS_NUMERIC_TYPES)
 TTS_CASE_TPL("ignore_none behavior", TTS_NUMERIC_TYPES)
 {
   using eve::wide;
-  using eve::conditional_expr;
+  using eve::logical;
+  using eve::relative_conditional_expr;
   using eve::ignore_none;
   using eve::if_else;
   using eve::as_;
 
-  TTS_EXPECT( conditional_expr<eve::ignore_none_>  );
+  TTS_EXPECT( relative_conditional_expr<eve::ignore_none_>  );
 
   using type = wide<T>;
+
+  TTS_EXPR_IS(ignore_none.mask( as_<type>() ), logical<type> );
 
   TTS_EQUAL( ignore_none.mask( as_<type>() )            , eve::true_( as_<type>() )  );
   TTS_EQUAL( (if_else(ignore_none,type(42), type(69)))  , type(42)                  );
@@ -50,15 +56,17 @@ TTS_CASE_TPL("ignore_last behavior", TTS_NUMERIC_TYPES)
 {
   using eve::wide;
   using eve::logical;
-  using eve::conditional_expr;
+  using eve::relative_conditional_expr;
   using eve::ignore_last;
   using eve::if_else;
   using eve::as_;
 
-  TTS_EXPECT( conditional_expr<eve::ignore_last_>  );
+  TTS_EXPECT( relative_conditional_expr<eve::ignore_last_>  );
 
   using type = wide<T>;
   type value = [](auto i, auto) { return 1+i; };
+
+  TTS_EXPR_IS(ignore_last(0).mask( as_<type>() ), logical<type> );
 
   TTS_EQUAL( ignore_last(0).mask(as_<type>()).bits(), eve::true_(as_<type>()).bits());
   TTS_EQUAL( (if_else(ignore_last(0),value, type(69))), value                   );
@@ -80,15 +88,17 @@ TTS_CASE_TPL("keep_last behavior", TTS_NUMERIC_TYPES)
 {
   using eve::wide;
   using eve::logical;
-  using eve::conditional_expr;
+  using eve::relative_conditional_expr;
   using eve::keep_last;
   using eve::if_else;
   using eve::as_;
 
-  TTS_EXPECT( conditional_expr<eve::keep_last_>  );
+  TTS_EXPECT( relative_conditional_expr<eve::keep_last_>  );
 
   using type = wide<T>;
   type value = [](auto i, auto) { return 1+i; };
+
+  TTS_EXPR_IS(keep_last(0).mask( as_<type>() ), logical<type> );
 
   TTS_EQUAL( keep_last(type::static_size).mask(as_<type>()).bits(), eve::true_(as_<type>()).bits());
   TTS_EQUAL( (if_else(keep_last(type::static_size),value, type(69))), value                   );
@@ -110,15 +120,17 @@ TTS_CASE_TPL("ignore_first behavior", TTS_NUMERIC_TYPES)
 {
   using eve::wide;
   using eve::logical;
-  using eve::conditional_expr;
+  using eve::relative_conditional_expr;
   using eve::ignore_first;
   using eve::if_else;
   using eve::as_;
 
-  TTS_EXPECT( conditional_expr<eve::ignore_first_>  );
+  TTS_EXPECT( relative_conditional_expr<eve::ignore_first_>  );
 
   using type = wide<T>;
   type value = [](auto i, auto) { return 1+i; };
+
+  TTS_EXPR_IS(ignore_first(0).mask( as_<type>() ), logical<type> );
 
   TTS_EQUAL( ignore_first(0).mask(as_<type>()).bits(), eve::true_(as_<type>()).bits());
   TTS_EQUAL( (if_else(ignore_first(0),value, type(69))), value  );
@@ -140,15 +152,17 @@ TTS_CASE_TPL("keep_first behavior", TTS_NUMERIC_TYPES)
 {
   using eve::wide;
   using eve::logical;
-  using eve::conditional_expr;
+  using eve::relative_conditional_expr;
   using eve::keep_first;
   using eve::if_else;
   using eve::as_;
 
-  TTS_EXPECT( conditional_expr<eve::keep_first_>  );
+  TTS_EXPECT( relative_conditional_expr<eve::keep_first_>  );
 
   using type = wide<T>;
   type value = [](auto i, auto) { return 1+i; };
+
+  TTS_EXPR_IS(keep_first(0).mask( as_<type>() ), logical<type> );
 
   TTS_EQUAL( keep_first(type::static_size).mask(as_<type>()).bits(), eve::true_(as_<type>()).bits());
   TTS_EQUAL( (if_else(keep_first(type::static_size),value, type(69))), value                   );
@@ -170,15 +184,17 @@ TTS_CASE_TPL("keep_between behavior", TTS_NUMERIC_TYPES)
 {
   using eve::wide;
   using eve::logical;
-  using eve::conditional_expr;
+  using eve::relative_conditional_expr;
   using eve::keep_between;
   using eve::if_else;
   using eve::as_;
 
-  TTS_EXPECT( conditional_expr<eve::keep_between_>  );
+  TTS_EXPECT( relative_conditional_expr<eve::keep_between_>  );
 
   using type = wide<T>;
   type value = [](auto i, auto) { return 1+i; };
+
+  TTS_EXPR_IS(keep_between(0,1).mask( as_<type>() ), logical<type> );
 
   for(int fi = 0;fi < type::static_size;fi++)
   {
@@ -200,16 +216,18 @@ TTS_CASE_TPL("ignore_first/last combination", TTS_NUMERIC_TYPES)
 {
   using eve::wide;
   using eve::logical;
-  using eve::conditional_expr;
+  using eve::relative_conditional_expr;
   using eve::ignore_first;
   using eve::ignore_last;
   using eve::if_else;
   using eve::as_;
 
-  TTS_EXPECT( conditional_expr<eve::ignore_extrema_>  );
+  TTS_EXPECT( relative_conditional_expr<eve::ignore_extrema_>  );
 
   using type = wide<T>;
   type value = [](auto i, auto) { return 1+i; };
+
+  TTS_EXPR_IS( ((ignore_first(1) && ignore_last(0)).mask( as_<type>() )), logical<type> );
 
   // Check that ignore_first(i) === ignore_first(i) && ignore_last(0)
   for(int i = 0;i <= type::static_size; i++)

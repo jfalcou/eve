@@ -14,6 +14,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/has_abi.hpp>
+#include <eve/traits/as_wide.hpp>
 
 namespace eve::detail
 {
