@@ -14,7 +14,7 @@
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/sincos.hpp>
 #include <eve/function/sqr.hpp>
-#include <eve/function/fma.hpp>
+#include <eve/function/fms.hpp>
 #include <eve/function/derivative.hpp>
 
 namespace eve::detail
@@ -26,6 +26,6 @@ namespace eve::detail
                                   , T const &x) noexcept
   {
     auto [s, c] = sincos(x);
-    return if_else(is_eqz(x), zero, fma(x, c, s)/sqr(x));
+    return if_else(is_eqz(x), zero, fms(x, c, s)/sqr(x));
   }
 }
