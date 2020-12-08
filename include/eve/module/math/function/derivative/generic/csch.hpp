@@ -10,8 +10,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/sech.hpp>
-#include <eve/function/tanh.hpp>
+#include <eve/function/csch.hpp>
+#include <eve/function/coth.hpp>
 #include <eve/function/derivative.hpp>
 
 namespace eve::detail
@@ -22,6 +22,6 @@ namespace eve::detail
                                   , derivative_type<1> const &
                                   , T const &x) noexcept
   {
-    return -sech(x)*tanh(x);
+    return -csch(x)*coth(x);
   }
 }

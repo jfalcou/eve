@@ -10,8 +10,8 @@
 //=lo=================================================================================================
 #pragma once
 
-#include <eve/function/secd.hpp>
-#include <eve/function/tand.hpp>
+#include <eve/function/cscd.hpp>
+#include <eve/function/cotd.hpp>
 #include <eve/function/derivative.hpp>
 #include <eve/function/deginrad.hpp>
 
@@ -23,6 +23,6 @@ namespace eve::detail
                                   , derivative_type<1> const &
                                   , T const &x) noexcept
   {
-    return deginrad(secd(x)*tand(x));
+    return -deginrad(cscd(x)*cotd(x));
   }
 }
