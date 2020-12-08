@@ -11,6 +11,7 @@
 #pragma once
 
 #include <eve/as.hpp>
+#include <eve/concept/conditional.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/function/iota.hpp>
 #include <eve/assert.hpp>
@@ -19,23 +20,6 @@
 
 namespace eve
 {
-  //================================================================================================
-  // Concept for conditional expression
-  //================================================================================================
-  template<typename T> concept conditional_expr = requires(T a)
-  {
-    { T::has_alternative  };
-    { T::is_inverted      };
-    { T::is_complete      };
-    { a.mask(eve::as_<int>())  };
-  };
-
-  template<typename T> concept relative_conditional_expr = conditional_expr<T> && requires(T a)
-  {
-    { a.offset(eve::as_<int>()) };
-    { a.count(eve::as_<int>())  };
-  };
-
   //================================================================================================
   // Helper structure to encode conditional expression with alternative
   //================================================================================================
@@ -201,7 +185,11 @@ namespace eve
     {
       constexpr std::ptrdiff_t card = cardinal_v<T>;
       using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
-      return as_logical_t<T>(detail::linear_ramp(eve::as_<i_t>()) < (card-count_));
+
+      auto const m = detail::linear_ramp(eve::as_<i_t>()) < (card-count_);
+
+      if constexpr ( simd_value<T> )  return bit_cast(m, as_<as_logical_t<T>>());
+      else                            return as_logical_t<T>(m);
     }
 
     friend std::ostream& operator<<(std::ostream& os, ignore_last_ const& c)
@@ -244,7 +232,11 @@ namespace eve
     {
       using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
       constexpr std::ptrdiff_t card = cardinal_v<T>;
-      return as_logical_t<T>(detail::linear_ramp(eve::as_<i_t>()) >= i_t(card-count_));
+
+      auto const m = detail::linear_ramp(eve::as_<i_t>()) >= i_t(card-count_);
+
+      if constexpr ( simd_value<T> )  return bit_cast(m, as_<as_logical_t<T>>());
+      else                            return as_logical_t<T>(m);
     }
 
     friend std::ostream& operator<<(std::ostream& os, keep_last_ const& c)
@@ -286,7 +278,10 @@ namespace eve
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
       using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
-      return as_logical_t<T>(detail::linear_ramp(eve::as_<i_t>()) >= i_t(count_));
+      auto const m = detail::linear_ramp(eve::as_<i_t>()) >= i_t(count_);
+
+      if constexpr ( simd_value<T> )  return bit_cast(m, as_<as_logical_t<T>>());
+      else                            return as_logical_t<T>(m);
     }
 
     template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const
@@ -328,7 +323,10 @@ namespace eve
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
       using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
-      return as_logical_t<T>(detail::linear_ramp(eve::as_<i_t>()) < i_t(count_));
+      auto const m = detail::linear_ramp(eve::as_<i_t>()) < i_t(count_);
+
+      if constexpr ( simd_value<T> )  return bit_cast(m, as_<as_logical_t<T>>());
+      else                            return as_logical_t<T>(m);
     }
 
     friend std::ostream& operator<<(std::ostream& os, keep_first_ const& c)
@@ -374,7 +372,10 @@ namespace eve
     {
       using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
       auto const i = detail::linear_ramp(eve::as_<i_t>());
-      return as_logical_t<T>((i >= begin_) && (i < end_));
+      auto const m = (i >= begin_) && (i < end_);
+
+      if constexpr ( simd_value<T> )  return bit_cast(m, as_<as_logical_t<T>>());
+      else                            return as_logical_t<T>(m);
     }
 
     template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const
@@ -419,7 +420,10 @@ namespace eve
     {
       using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
       auto const i = detail::linear_ramp(eve::as_<i_t>());
-      return as_logical_t<T>((i >= first_count_) && (i < (cardinal_v<T>-last_count_)));
+      auto const m = (i >= first_count_) && (i < (cardinal_v<T>-last_count_));
+
+      if constexpr ( simd_value<T> )  return bit_cast(m, as_<as_logical_t<T>>());
+      else                            return as_logical_t<T>(m);
     }
 
     template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const

@@ -14,7 +14,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/concepts.hpp>
-#include <eve/conditional.hpp>
+#include <eve/concept/conditional.hpp>
 #include <utility>
 
 #define EVE_DECLARE_CALLABLE(TAG)                                                                  \
