@@ -187,9 +187,7 @@ namespace eve
       using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
 
       auto const m = detail::linear_ramp(eve::as_<i_t>()) < (card-count_);
-
-      if constexpr ( simd_value<T> )  return bit_cast(m, as_<as_logical_t<T>>());
-      else                            return as_logical_t<T>(m);
+      return bit_cast(m, as_<as_logical_t<T>>());
     }
 
     friend std::ostream& operator<<(std::ostream& os, ignore_last_ const& c)
@@ -235,8 +233,7 @@ namespace eve
 
       auto const m = detail::linear_ramp(eve::as_<i_t>()) >= i_t(card-count_);
 
-      if constexpr ( simd_value<T> )  return bit_cast(m, as_<as_logical_t<T>>());
-      else                            return as_logical_t<T>(m);
+      return bit_cast(m, as_<as_logical_t<T>>());
     }
 
     friend std::ostream& operator<<(std::ostream& os, keep_last_ const& c)
@@ -280,8 +277,7 @@ namespace eve
       using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
       auto const m = detail::linear_ramp(eve::as_<i_t>()) >= i_t(count_);
 
-      if constexpr ( simd_value<T> )  return bit_cast(m, as_<as_logical_t<T>>());
-      else                            return as_logical_t<T>(m);
+      return bit_cast(m, as_<as_logical_t<T>>());
     }
 
     template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const
@@ -325,8 +321,7 @@ namespace eve
       using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
       auto const m = detail::linear_ramp(eve::as_<i_t>()) < i_t(count_);
 
-      if constexpr ( simd_value<T> )  return bit_cast(m, as_<as_logical_t<T>>());
-      else                            return as_logical_t<T>(m);
+      return bit_cast(m, as_<as_logical_t<T>>());
     }
 
     friend std::ostream& operator<<(std::ostream& os, keep_first_ const& c)
@@ -374,8 +369,7 @@ namespace eve
       auto const i = detail::linear_ramp(eve::as_<i_t>());
       auto const m = (i >= begin_) && (i < end_);
 
-      if constexpr ( simd_value<T> )  return bit_cast(m, as_<as_logical_t<T>>());
-      else                            return as_logical_t<T>(m);
+      return bit_cast(m, as_<as_logical_t<T>>());
     }
 
     template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const
@@ -422,8 +416,7 @@ namespace eve
       auto const i = detail::linear_ramp(eve::as_<i_t>());
       auto const m = (i >= first_count_) && (i < (cardinal_v<T>-last_count_));
 
-      if constexpr ( simd_value<T> )  return bit_cast(m, as_<as_logical_t<T>>());
-      else                            return as_logical_t<T>(m);
+      return bit_cast(m, as_<as_logical_t<T>>());
     }
 
     template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const

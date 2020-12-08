@@ -22,12 +22,12 @@ namespace eve
     { T::has_alternative  };
     { T::is_inverted      };
     { T::is_complete      };
-    { a.mask(eve::as_<int>())  };
+    { a.mask(eve::as_<eve::wide<int>>())  };
   };
 
   template<typename T> concept relative_conditional_expr = conditional_expr<T> && requires(T a)
   {
-    { a.offset(eve::as_<int>()) };
-    { a.count(eve::as_<int>())  };
+    { a.offset(eve::as_<eve::wide<int>>()) };
+    { a.count(eve::as_<eve::wide<int>>())  };
   };
 }
