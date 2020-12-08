@@ -200,7 +200,8 @@ namespace eve
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
       constexpr std::ptrdiff_t card = cardinal_v<T>;
-      return detail::linear_ramp(eve::as_<as_arithmetic_t<T>>()) < (card-count_);
+      using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
+      return as_logical_t<T>(detail::linear_ramp(eve::as_<i_t>()) < (card-count_));
     }
 
     friend std::ostream& operator<<(std::ostream& os, ignore_last_ const& c)
@@ -243,7 +244,7 @@ namespace eve
     {
       using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
       constexpr std::ptrdiff_t card = cardinal_v<T>;
-      return detail::linear_ramp(eve::as_<i_t>()) >= i_t(card-count_);
+      return as_logical_t<T>(detail::linear_ramp(eve::as_<i_t>()) >= i_t(card-count_));
     }
 
     friend std::ostream& operator<<(std::ostream& os, keep_last_ const& c)
@@ -285,7 +286,7 @@ namespace eve
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
       using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
-      return detail::linear_ramp(eve::as_<i_t>()) >= i_t(count_);
+      return as_logical_t<T>(detail::linear_ramp(eve::as_<i_t>()) >= i_t(count_));
     }
 
     template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const
@@ -327,7 +328,7 @@ namespace eve
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
       using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
-      return detail::linear_ramp(eve::as_<i_t>()) < i_t(count_);
+      return as_logical_t<T>(detail::linear_ramp(eve::as_<i_t>()) < i_t(count_));
     }
 
     friend std::ostream& operator<<(std::ostream& os, keep_first_ const& c)
@@ -373,7 +374,7 @@ namespace eve
     {
       using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
       auto const i = detail::linear_ramp(eve::as_<i_t>());
-      return (i >= begin_) && (i < end_);
+      return as_logical_t<T>((i >= begin_) && (i < end_));
     }
 
     template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const
@@ -418,7 +419,7 @@ namespace eve
     {
       using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
       auto const i = detail::linear_ramp(eve::as_<i_t>());
-      return (i >= first_count_) && (i < (cardinal_v<T>-last_count_));
+      return as_logical_t<T>((i >= first_count_) && (i < (cardinal_v<T>-last_count_)));
     }
 
     template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const

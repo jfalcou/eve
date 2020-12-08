@@ -30,7 +30,7 @@
       EVE_FORCEINLINE constexpr auto operator[](Condition const &c) const noexcept                 \
       requires( eve::supports_conditionnal<tag::TAG>::value )                                      \
       {                                                                                            \
-        return  [cond = eve::if_(c)](auto const&... args) EVE_LAMBDA_FORCEINLINE                   \
+        return  [cond = if_(c)](auto const&... args) EVE_LAMBDA_FORCEINLINE                        \
                 {                                                                                  \
                   return callable_object{}(cond, args...);                                         \
                 };                                                                                 \
