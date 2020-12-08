@@ -12,6 +12,8 @@
 
 #include <eve/function/log1p.hpp>
 #include <eve/function/derivative.hpp>
+#include <eve/function/rec.hpp>
+#include <eve/function/inc.hpp>
 
 namespace eve::detail
 {
@@ -21,6 +23,6 @@ namespace eve::detail
                                   , derivative_type<1> const &
                                   , T const &x) noexcept
   {
-    return log1p(x);
+    return rec(inc(x));
   }
 }
