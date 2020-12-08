@@ -12,6 +12,10 @@
 
 #include <eve/function/asinh.hpp>
 #include <eve/function/derivative.hpp>
+#include <eve/function/inc.hpp>
+#include <eve/function/rec.hpp>
+#include <eve/function/sqr.hpp>
+#include <eve/function/sqrt.hpp>
 
 namespace eve::detail
 {
@@ -21,6 +25,6 @@ namespace eve::detail
                                   , derivative_type<1> const &
                                   , T const &x) noexcept
   {
-    return asinh(x);
+    return rec(sqrt(inc(sqr(x))));
   }
 }
