@@ -11,7 +11,7 @@
 #pragma once
 
 #include <eve/function/derivative.hpp>
-#include <eve/function/dec.hpp>
+#include <eve/function/oneminus.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/sqr.hpp>
 
@@ -23,6 +23,6 @@ namespace eve::detail
                                   , derivative_type<1> const &
                                   , T const &x) noexcept
   {
-      return rec(dec(sqr(x)));
+      return rec(oneminus(sqr(x)));
   }
 }
