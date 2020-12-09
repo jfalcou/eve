@@ -49,3 +49,11 @@ TTS_CASE("Check for 256 bits ABI expected cardinal")
   TTS_EQUAL( (eve::expected_cardinal_v<short , eve::x86_256_>), 16 );
   TTS_EQUAL( (eve::expected_cardinal_v<char  , eve::x86_256_>), 32 );
 }
+
+TTS_CASE("Check for 512 bits ABI expected cardinal")
+{
+  TTS_EQUAL( (eve::expected_cardinal_v<double, eve::x86_512_>), 8  );
+  TTS_EQUAL( (eve::expected_cardinal_v<float , eve::x86_512_>), 16 );
+  TTS_EQUAL( (eve::expected_cardinal_v<short , eve::x86_512_>), 32 );
+  TTS_EQUAL( (eve::expected_cardinal_v<char  , eve::x86_512_>), 64 );
+}

@@ -26,12 +26,14 @@ namespace eve
   };
 }
 
-// TODO: AVX512 ABI
-
 //==================================================================================================
 // X86 SIMD API/ABI
 # if !defined(EVE_CURRENT_API) && defined(SPY_SIMD_IS_X86)
 #  include <immintrin.h>
+#  if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_X86_AVX512)
+#    define EVE_CURRENT_ABI ::eve::x86_512_
+#    define EVE_CURRENT_API ::eve::avx512_
+#  endif
 #  if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_X86_AVX2)
 #    define EVE_CURRENT_ABI ::eve::x86_256_
 #    define EVE_CURRENT_API ::eve::avx2_
@@ -88,4 +90,3 @@ namespace eve
 #    include <xopintrin.h>
 #  endif
 #endif
-

@@ -17,6 +17,15 @@
 
 namespace eve
 {
+  namespace detail
+  {
+# if defined(SPY_SIMD_IS_X86_AVX512)
+    static inline constexpr bool x86_logical_status = false;
+# else
+    static inline constexpr bool x86_logical_status = true;
+# endif
+  }
+
   // clang-format off
   //================================================================================================
   // ABI tags for all X86 bits SIMD registers
@@ -33,6 +42,7 @@ namespace eve
 
   struct x86_128_ : x86_abi_<128, true> {};
   struct x86_256_ : x86_abi_<256, true> {};
+  struct x86_512_ : x86_abi_<512, true> {};
 
   //================================================================================================
   // Dispatching tag for SSE* SIMD implementation
@@ -42,8 +52,28 @@ namespace eve
   struct ssse3_   : sse3_   {};
   struct sse4_1_  : ssse3_  {};
   struct sse4_2_  : sse4_1_ {};
-  struct avx_     : sse4_2_ {};
-  struct avx2_    : avx_    {};
+
+  struct avx_     : sse4_2_
+  {
+    static constexpr std::size_t bits           = 256;
+    static constexpr std::size_t bytes          = 32;
+    static constexpr bool        is_bit_logical = detail::x86_logical_status;
+
+    template<typename Type>
+    static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
+  };
+
+  struct avx2_    : avx_ {};
+
+  struct avx512_  : avx2_
+  {
+    static constexpr std::size_t bits               = 512;
+    static constexpr std::size_t bytes              = 64;
+    static constexpr bool        is_bitwise_logical = detail::x86_logical_status;
+
+    template<typename Type>
+    static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
+  };
 
   //================================================================================================
   // SSE* extension tag objects - Forwarded from SPY
@@ -55,6 +85,7 @@ namespace eve
   inline constexpr auto sse4_2 = spy::sse42_;
   inline constexpr auto avx    = spy::avx_;
   inline constexpr auto avx2   = spy::avx2_;
+  inline constexpr auto avx512 = spy::avx512_;
 
   //================================================================================================
   // Specific ISA tags
@@ -79,6 +110,7 @@ namespace eve
     else  if constexpr( Version == sse4_2.version ) return detail::cpuid_states.supports_sse4_2();
     else  if constexpr( Version == avx.version    ) return detail::cpuid_states.supports_avx();
     else  if constexpr( Version == avx2.version   ) return detail::cpuid_states.supports_avx2();
+    else  if constexpr( Version == avx512.version ) return detail::cpuid_states.supports_avx512F();
     else                                            return false;
   }
 
@@ -90,6 +122,5 @@ namespace eve
   // x86 ABI concept
   //================================================================================================
   template<typename T>
-  concept x86_abi = detail::is_one_of<T>(detail::types<x86_128_, x86_256_> {});
+  concept x86_abi = detail::is_one_of<T>(detail::types<x86_128_, x86_256_, x86_512_> {});
 }
-
