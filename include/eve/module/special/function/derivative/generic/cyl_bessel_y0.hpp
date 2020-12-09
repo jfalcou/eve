@@ -10,19 +10,17 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/exp_int.hpp>
+#include <eve/function/cyl_bessel_y1.hpp>
 #include <eve/function/derivative.hpp>
-#include <eve/function/inc.hpp>
 
 namespace eve::detail
 {
 
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T exp_int_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr T cyl_bessel_y0_(EVE_SUPPORTS(cpu_)
                                   , derivative_type<1> const &
-                                  , N const &n
                                   , T const &x) noexcept
   {
-    return -exp_int(inc(n), x);
+    return -cyl_bessel_y1(x);
   }
 }

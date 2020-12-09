@@ -10,22 +10,20 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/cyl_bessel_y.hpp>
+#include <eve/function/erf_inv.hpp>
+#include <eve/function/exp.hpp>
+#include <eve/function/sqr.hpp>
 #include <eve/function/derivative.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/converter.hpp>
-
 
 namespace eve::detail
 {
 
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T cyl_bessel_y_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr T erf_inv_(EVE_SUPPORTS(cpu_)
                                   , derivative_type<1> const &
                                   , T const &x) noexcept
   {
-    using elt_t = element_type_t<T>;
-    return -cyl_bessel_y(inc(n), x)+cyl_bessel_y(n, x)*to_<elt_t>(n)/x;
-//    return average(cyl_bessel_y(dec(n), x), -cyl_bessel_y(inc(n), x));//is it better ?
+    auto sqrt_pi_2 = T(0.886226925452758013649);
+    return sqrt_pi_2*exp(sqr(erf_inv(x)));
   }
 }

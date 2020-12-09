@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/tgamma.hpp>
-#include <eve/module/core/function/derivative/generic/tgamma.hpp>
+#include <eve/module/special/function/derivative/generic/tgamma.hpp>

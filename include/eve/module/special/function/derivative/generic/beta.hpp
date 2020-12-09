@@ -11,7 +11,9 @@
 #pragma once
 
 #include <eve/function/beta.hpp>
+#include <eve/function/digamma.hpp>
 #include <eve/function/derivative.hpp>
+#include <eve/function/fnma.hpp>
 
 namespace eve::detail
 {
@@ -32,7 +34,7 @@ namespace eve::detail
                                   , T const &y) noexcept
   requires(has_native_abi_v<T>)
   {
-    return fnma(digamma(x)), beta(x, y), digamma(x + y));
+    return fnma(digamma(x), beta(x, y), digamma(x + y));
   }
 
   template<floating_real_value T>
@@ -42,6 +44,6 @@ namespace eve::detail
                                   , T const &y) noexcept
   requires(has_native_abi_v<T>)
   {
-    return  fnma(digamma(y)), beta(x, y), digamma(x + y));
+    return  fnma(digamma(y), beta(x, y), digamma(x + y));
   }
 }

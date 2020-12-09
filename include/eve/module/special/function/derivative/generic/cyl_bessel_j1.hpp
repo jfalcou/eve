@@ -12,6 +12,7 @@
 
 #include <eve/function/cyl_bessel_j.hpp>
 #include <eve/function/cyl_bessel_j0.hpp>
+#include <eve/function/average.hpp>
 #include <eve/function/derivative.hpp>
 
 namespace eve::detail

@@ -9,7 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/derivative/acos.hpp>
-#include <eve/function/derivative/sin.hpp>
 #include <eve/constant/eps.hpp>
 #include <eve/function/sqrt.hpp>
 #include <type_traits>
@@ -31,8 +30,6 @@ TTS_CASE_TPL("Check eve::derivative(eve::acos) behavior", EVE_TYPE)
     auto e = eve::sqrt(eve::eps(eve::as<T>()));
     auto df = [e](auto f, auto x){return (f(x+e)-f(x-e))/(2*e); };
     TTS_ULP_EQUAL(eve::derivative(eve::acos)(T{0.25}), df(eve::acos, T(0.25))  , ulp);
-    std::cout << eve::derivative(eve::acos)(T{0.25}) << std::endl;
-    std::cout << df(eve::acos, T(0.25)) << std::endl;
     TTS_ULP_EQUAL(eve::derivative(eve::acos)(T{0}), df(eve::acos, T(0))        , ulp);
     TTS_ULP_EQUAL(eve::derivative(eve::acos)(T{-0.25}), df(eve::acos, T(-0.25)), ulp);
   }
