@@ -8,6 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include <eve/detail/diff_div.hpp>
 #include <eve/function/derivative/acotd.hpp>
 #include <eve/function/derivative/sin.hpp>
 #include <eve/constant/eps.hpp>
@@ -28,15 +29,10 @@ TTS_CASE_TPL("Check eve::derivative(eve::acotd) behavior", EVE_TYPE)
   if constexpr(eve::floating_value<T>)
   {
     using elt_t = eve::element_type_t<T>;
+    auto df = [](auto f, auto x){return eve::detail::centered_diffdiv(f, x); };
     auto ulp =  (sizeof(elt_t) == 4) ? 1.0e4 : 1.0e8;
-    auto e = eve::sqrt(eve::eps(eve::as<T>()));
-    auto df = [e](auto f, auto x){return (f(x+e)-f(x-e))/(2*e); };
     TTS_ULP_EQUAL(eve::derivative(eve::acotd)(T{0.25}), df(eve::acotd, T(0.25))  , ulp);
-    std::cout << eve::derivative(eve::acotd)(T{0.25}) << std::endl;
-    std::cout << df(eve::acotd, T(0.25)) << std::endl;
     TTS_ULP_EQUAL(eve::derivative(eve::acotd)(T{0}), eve::radindeg(T(-1.0))        , 0.5);
     TTS_ULP_EQUAL(eve::derivative(eve::acotd)(T{-0.25}), df(eve::acotd, T(-0.25)), ulp);
-    std::cout << eve::derivative(eve::acotd)(T{0}) << std::endl;
-    std::cout << eve::derivative(eve::acotd)(-T(0)) << std::endl;
   }
 }

@@ -8,6 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include <eve/detail/diff_div.hpp>
 #include <eve/function/derivative/acosd.hpp>
 #include <eve/function/derivative/sin.hpp>
 #include <eve/constant/eps.hpp>
@@ -28,11 +29,8 @@ TTS_CASE_TPL("Check eve::derivative(eve::acosd) behavior", EVE_TYPE)
   {
     using elt_t = eve::element_type_t<T>;
     auto ulp =  (sizeof(elt_t) == 4) ? 1.0e4 : 1.0e8;
-    auto e = eve::sqrt(eve::eps(eve::as<T>()));
-    auto df = [e](auto f, auto x){return (f(x+e)-f(x-e))/(2*e); };
+    auto df = [](auto f, auto x){return eve::detail::centered_diffdiv(f, x); };
     TTS_ULP_EQUAL(eve::derivative(eve::acosd)(T{0.25}), df(eve::acosd, T(0.25))  , ulp);
-    std::cout << eve::derivative(eve::acosd)(T{0.25}) << std::endl;
-    std::cout << df(eve::acosd, T(0.25)) << std::endl;
     TTS_ULP_EQUAL(eve::derivative(eve::acosd)(T{0}), df(eve::acosd, T(0))        , ulp);
     TTS_ULP_EQUAL(eve::derivative(eve::acosd)(T{-0.25}), df(eve::acosd, T(-0.25)), ulp);
   }
