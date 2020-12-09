@@ -8,6 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include <eve/detail/diff_div.hpp>
 #include <eve/function/derivative/exp_int.hpp>
 #include <eve/constant/eps.hpp>
 #include <eve/constant/inf.hpp>
@@ -28,11 +29,8 @@ TTS_CASE_TPL("Check derivative(exp_int) return type", EVE_TYPE)
 //   {
 //     using elt_t = eve::element_type_t<T>;
 //     auto ulp =  (sizeof(elt_t) == 4) ? 1.0e4 : 1.0e8;
-//     auto e = eve::sqrt(eve::eps(eve::as<T>()));
-//     auto df = [e](auto f, auto n, auto x){return (f(n, x+e)-f(n, x-e))/(2*e); };
+    auto df = [](auto f, auto x){return eve::detail::centered_diffdiv(f, x); };
 //     TTS_ULP_EQUAL(eve::derivative(eve::exp_int)(1, T{2.0}), df(eve::exp_int, 1, T(2.0))  , ulp);
-//     std::cout << eve::derivative(eve::exp_int)(1, T{2.0}) << std::endl;
-//     std::cout << df(eve::exp_int, 1, T(2.0)) << std::endl;
 //     TTS_ULP_EQUAL(eve::derivative(eve::exp_int)(2, T{1.0}), df(eve::exp_int, 2, T(1.0))  , ulp);
 //   }
 // }
