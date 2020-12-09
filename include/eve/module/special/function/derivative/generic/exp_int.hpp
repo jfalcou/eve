@@ -10,18 +10,21 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/cyl_bessel_y0.hpp>
-#include <eve/function/cyl_bessel_y.hpp>
+#include <eve/function/exp_int.hpp>
 #include <eve/function/derivative.hpp>
+#include <eve/function/dec.hpp>
 
 namespace eve::detail
 {
 
-  template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T cyl_bessel_y1_(EVE_SUPPORTS(cpu_)
+  template<floating_real_value T, integral_real_value N>
+  EVE_FORCEINLINE constexpr T exp_int_(EVE_SUPPORTS(cpu_)
                                   , derivative_type<1> const &
+                                  , N const &n
                                   , T const &x) noexcept
   {
-    return  average(cyl_bessel_y0(x), -cyl_bessel_y(2, x));
+    using elt_t = element_type_t<T>;
+    auto nf = convert(dec(n), as<elt_t>());
+    return -exp_int(nf, x);
   }
 }

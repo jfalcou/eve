@@ -11,13 +11,13 @@ int main()
   std::cout
     << "---- simd" << '\n'
     << "<- pf                   = " << pf << '\n'
-    << "-> derivative(cyl_bessel_y)(pf) = " << eve::derivative(eve::cyl_bessel_y)(pf) << '\n';
+    << "-> derivative(cyl_bessel_y)(1, pf) = " << eve::derivative(eve::cyl_bessel_y)(1, pf) << '\n';
 
   float xf = 1.0f;
 
   std::cout
     << "---- scalar"  << '\n'
     << "<- xf                   = " << xf << '\n'
-    << "-> derivative(cyl_bessel_y)(xf) = " << eve::derivative(eve::cyl_bessel_y)(xf) << '\n'
+    << "-> derivative(cyl_bessel_y)(1, xf) = " << eve::derivative(eve::cyl_bessel_y)(1, xf) << '\n';
   return 0;
 }

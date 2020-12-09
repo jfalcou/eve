@@ -10,19 +10,18 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/erfcx.hpp>
+#include <eve/function/dawson.hpp>
 #include <eve/function/derivative.hpp>
-#include <eve/function/fma.hpp>
+#include <eve/function/oneminus.hpp>
 
 namespace eve::detail
 {
 
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T erfcx_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr T dawson_(EVE_SUPPORTS(cpu_)
                                   , derivative_type<1> const &
                                   , T const &x) noexcept
   {
-    auto twoosqrtpi = T(1.1283791670955125738961589);
-    return fma(2*x, erfcx(x),  twoosqrtpi);
+    return oneminus(2*x*dawson(x));
   }
 }

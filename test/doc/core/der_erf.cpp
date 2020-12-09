@@ -18,6 +18,6 @@ int main()
   std::cout
     << "---- scalar"  << '\n'
     << "<- xf                   = " << xf << '\n'
-    << "-> derivative(erf)(xf) = " << eve::derivative(eve::erf)(xf) << '\n'
+    << "-> derivative(erf)(xf) = " << eve::derivative(eve::erf)(xf) << '\n'; 
   return 0;
 }

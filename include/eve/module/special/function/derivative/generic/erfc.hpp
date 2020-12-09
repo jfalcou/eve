@@ -10,17 +10,17 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/cyl_bessel_y0.hpp>
+#include <eve/function/derivative/erf.hpp>
 #include <eve/function/derivative.hpp>
 
 namespace eve::detail
 {
 
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T cyl_bessel_y0_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr T erfc_(EVE_SUPPORTS(cpu_)
                                   , derivative_type<1> const &
                                   , T const &x) noexcept
   {
-    return -cyl_bessel_y1(x);
+    return -derivative(erf)(x);
   }
 }

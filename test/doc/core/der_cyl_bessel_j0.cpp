@@ -18,6 +18,6 @@ int main()
   std::cout
     << "---- scalar"  << '\n'
     << "<- xf                   = " << xf << '\n'
-    << "-> derivative(cyl_bessel_j0)(xf) = " << eve::derivative(eve::cyl_bessel_j0)(xf) << '\n'
+    << "-> derivative(cyl_bessel_j0)(xf) = " << eve::derivative(eve::cyl_bessel_j0)(xf) << '\n'; 
   return 0;
 }

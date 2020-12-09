@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/lgamma.hpp>
-#include <eve/module/core/function/derivative/generic/lgamma.hpp>
+#include <eve/module/special/function/derivative/generic/lgamma.hpp>
