@@ -30,7 +30,6 @@ namespace eve::detail
       auto dy = derivative(rec)(y, p);
       auto res = if_else(n > 1,  zero,
                          if_else(n == 0, dy*x, dy));
-     std::cout << "res "<< res << std::endl;
       return res;
     }
     else
