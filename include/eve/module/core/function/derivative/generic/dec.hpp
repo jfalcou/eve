@@ -29,7 +29,7 @@ namespace eve::detail
       return if_else(is_eqz(n), dec(x), if_else(n == 1, one(as(x)), zero));
     }
     else
-      return apply_over(derivative1(dec), x, n);
+      return apply_over(derivative_1st(dec), x, n);
   }
 
   template<floating_real_value T>

@@ -30,6 +30,6 @@ namespace eve::detail
                                     , T const &x
                                     , T const &y) noexcept
   {
-    return derivative2_nd(pow)(x, y);
+    return derivative_2nd(pow)(x, y);
   }
 }

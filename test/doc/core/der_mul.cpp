@@ -18,8 +18,8 @@ int main()
             << "<- pf          = " << pf << '\n'
             << "<- qf          = " << qf << '\n'
             << "-> mul(pf, qf) = " << eve::mul(pf, qf) << '\n'
-            << "-> derivative1(mul)(pf, qf) = " <<  eve::derivative1(eve::mul)(pf, qf) << std::endl
-            << "-> derivative2(mul)(pf, qf) = " <<  eve::derivative2(eve::mul)(pf, qf) << std::endl
+            << "-> derivative_1st(mul)(pf, qf) = " <<  eve::derivative_1st(eve::mul)(pf, qf) << std::endl
+            << "-> derivative_2nd(mul)(pf, qf) = " <<  eve::derivative_2nd(eve::mul)(pf, qf) << std::endl
             << "-> derivative(mul)(pf, qf, 0u, 2u) = " <<  eve::derivative(eve::mul)(pf, qf, 0u, 2u) << std::endl
             << "-> derivative(mul)(pf, qf, 2u, 0u) = " <<  eve::derivative(eve::mul)(pf, qf, 2u, 0u) << std::endl;
 
@@ -30,7 +30,7 @@ int main()
             << "<- xf          = " << xf << '\n'
             << "<- yf          = " << yf << '\n'
             << "-> mul(xf, yf) = " << eve::mul(xf, yf) << '\n'
-            << "-> derivative1(mul)(xf, yf) = " <<  eve::derivative1(eve::mul)(xf, yf) << std::endl
-            << "-> derivative2(mul)(xf, yf) = " <<  eve::derivative2(eve::mul)(xf, yf) << std::endl;
+            << "-> derivative_1st(mul)(xf, yf) = " <<  eve::derivative_1st(eve::mul)(xf, yf) << std::endl
+            << "-> derivative_2nd(mul)(xf, yf) = " <<  eve::derivative_2nd(eve::mul)(xf, yf) << std::endl;
   return 0;
 }

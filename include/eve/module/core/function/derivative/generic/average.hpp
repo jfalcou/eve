@@ -30,7 +30,7 @@ namespace eve::detail
       return if_else(np == 0, average(x, y), if_else(np == 1,  half(as(x)), zero));
     }
     else
-      return apply_over(derivative1(average), x, y, n, p);
+      return apply_over(derivative_1st(average), x, y, n, p);
   }
 
   template<floating_real_value T>

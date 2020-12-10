@@ -35,5 +35,5 @@ namespace eve
   inline constexpr derivative_type<1>  const derivative = {};
   inline constexpr derivative_type<1> const derivative_1st = {};
   inline constexpr derivative_type<2> const derivative_2nd = {};
-  inline constexpr derivative_type<3> const derivative_3rd
+  inline constexpr derivative_type<3> const derivative_3rd = {};
 }

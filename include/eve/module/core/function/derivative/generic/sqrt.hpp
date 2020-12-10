@@ -30,10 +30,10 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return derivative1(pow)(x, half(as(x)), n);
+      return derivative_1st(pow)(x, half(as(x)), n);
     }
     else
-      return apply_over(derivative1(sqrt), x, n);
+      return apply_over(derivative_1st(sqrt), x, n);
   }
 
   template<floating_real_value T>
@@ -41,7 +41,9 @@ namespace eve::detail
                                     , derivative_type<1> const &
                                     , T x) noexcept
   {
-
-    return mhalf(as(x))*rsqrt(x);
+    if constexpr( has_native_abi_v<T> )
+      return mhalf(as(x))*rsqrt(x);
+    else
+      return apply_over(derivative_1st(rsqrt), x );
   }
 }

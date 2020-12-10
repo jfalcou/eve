@@ -39,7 +39,7 @@ namespace eve::detail
 
     }
     else
-      return apply_over(derivative1(manhattan), x, y, n, p);
+      return apply_over(derivative_1st(manhattan), x, y, n, p);
   }
 
   template<floating_real_value T>

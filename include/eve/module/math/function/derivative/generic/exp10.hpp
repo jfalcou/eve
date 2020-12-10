@@ -29,7 +29,7 @@ namespace eve::detail
       return exp10(x)*pow(l10, n);
     }
     else
-      return apply_over(derivative1(exp10), x, n);
+      return apply_over(derivative_1st(exp10), x, n);
   }
 
   template<floating_real_value T>

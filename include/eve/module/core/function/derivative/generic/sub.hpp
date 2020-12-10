@@ -31,7 +31,7 @@ namespace eve::detail
       return if_else(np == 0, x-y, if_else(n+p == 1, if_else(n == 1, one(as(x)), mone), zero));
     }
     else
-      return apply_over(derivative1(sub), x, y, n, p);
+      return apply_over(derivative_1st(sub), x, y, n, p);
   }
 
   template<floating_real_value T>

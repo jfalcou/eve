@@ -38,7 +38,7 @@ namespace eve::detail
       return if_else(is_odd(n), mone, one(as(x)))*res;
     }
     else
-      return apply_over(derivative2(rec), x, n);
+      return apply_over(derivative(rec), x, n);
   }
 
   template<floating_real_value T>
@@ -46,7 +46,9 @@ namespace eve::detail
                                     , derivative_type<1> const &
                                     , T x) noexcept
   {
-
-    return -rec(sqr(x));
+    if constexpr( has_native_abi_v<T> )
+      return -rec(sqr(x));
+    else
+      return apply_over(derivative(rec), x);
   }
 }

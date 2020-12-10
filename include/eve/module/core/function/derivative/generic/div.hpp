@@ -33,7 +33,7 @@ namespace eve::detail
       return res;
     }
     else
-      return apply_over(derivative1(div), x, y, n, p);
+      return apply_over(derivative_1st(div), x, y, n, p);
   }
 
   template<floating_real_value T>

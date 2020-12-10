@@ -38,7 +38,7 @@ namespace eve::detail
       return if_else(is_gtz(n), tmp, log(x));
     }
     else
-      return apply_over(derivative1(log), x, n);
+      return apply_over(derivative_1st(log), x, n);
   }
 
   template<floating_real_value T>

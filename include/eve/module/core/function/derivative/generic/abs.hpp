@@ -31,7 +31,7 @@ namespace eve::detail
                      if_else(is_equal(n, one(as(n))), sign(x), zero));
     }
     else
-      return apply_over(derivative1(abs), x, n);
+      return apply_over(derivative_1st(abs), x, n);
   }
 
   template<floating_real_value T>

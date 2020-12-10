@@ -10,37 +10,29 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/function/exp.hpp>
 #include <eve/function/rec.hpp>
+#include <eve/function/oneminus.hpp>
 #include <eve/function/derivative.hpp>
 
 namespace eve::detail
 {
+
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T hypot_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr T logspace_sub_(EVE_SUPPORTS(cpu_)
                                    , derivative_type<1> const &
                                    , T const &x
                                    , T const &y) noexcept
   {
-   if constexpr( has_native_abi_v<T> )
-    {
-     return rec(hypot(x, y))*x;
-    }
-   else
-     return apply_over(derivative_1st(hypot), x, y);
+    return rec(oneminus(exp(y-x)));
   }
 
-
    template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T hypot_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr T logspace_sub_(EVE_SUPPORTS(cpu_)
                                    , derivative_type<2> const &
                                    , T const &x
                                    , T const &y) noexcept
   {
-   if constexpr( has_native_abi_v<T> )
-    {
-    return rec(hypot(x, y))*y;
-    }
-   else
-     return apply_over(derivative_2nd(hypot), x, y);
+    return  rec(oneminus(exp(x-y)));
   }
 }
