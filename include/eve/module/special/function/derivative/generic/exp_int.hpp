@@ -17,14 +17,12 @@
 namespace eve::detail
 {
 
-  template<floating_real_value T, integral_real_value N>
+  template<floating_real_value T, real_value N>
   EVE_FORCEINLINE constexpr T exp_int_(EVE_SUPPORTS(cpu_)
                                   , derivative_type<1> const &
                                   , N const &n
                                   , T const &x) noexcept
   {
-    using elt_t = element_type_t<T>;
-    auto nf = convert(dec(n), as<elt_t>());
-    return -exp_int(nf, x);
+    return -exp_int(dec(n), x);
   }
 }
