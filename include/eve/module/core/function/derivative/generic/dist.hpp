@@ -10,44 +10,30 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/constant/half.hpp>
-#include <eve/function/is_equal.hpp>
+#include <eve/function/sign.hpp>
 #include <eve/function/derivative.hpp>
 
 namespace eve::detail
 {
-  template<floating_real_value T, unsigned_value N, unsigned_value P>
-  EVE_FORCEINLINE constexpr T average_(EVE_SUPPORTS(cpu_)
-                                   , derivative_type<1> const &
-                                   , T x
-                                   , T y
-                                   , N n
-                                   , P p) noexcept
+  template<floating_real_value T>
+  EVE_FORCEINLINE constexpr T dist_(EVE_SUPPORTS(cpu_)
+                                    , derivative_type<1> const &
+                                    , T x, T y) noexcept
   {
     if constexpr( has_native_abi_v<T> )
-    {
-      auto np = n+p;
-      return if_else(np == 0, average(x, y), if_else(np == 1,  half(as(x)), zero));
-    }
+      return sign(x-y);
     else
-      return apply_over(derivative1(average), x, y, n, p);
+      return apply_over(derivative_1st(dist), x, y), n);
   }
 
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T average_(EVE_SUPPORTS(cpu_)
-                                    , derivative_type<1> const &
-                                    , T x, T ) noexcept
-  {
-
-    return half(as(x));
-  }
-
-  template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T average_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr T dist_(EVE_SUPPORTS(cpu_)
                                     , derivative_type<2> const &
-                                    , T x, T ) noexcept
+                                    , T x, T y) noexcept
   {
-
-    return half(as(x));
+    if constexpr( has_native_abi_v<T> )
+      return -sign(x-y);
+    else
+      return apply_over(derivative_1st(dist), x, y);
   }
 }

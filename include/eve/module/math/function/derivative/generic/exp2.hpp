@@ -28,7 +28,7 @@ namespace eve::detail
       return exp2(x)*pow(log_2(as(x)), n);
     }
     else
-      return apply_over(derivative1(exp2), x, n);
+      return apply_over(derivative_1st(exp2), x, n);
   }
 
   template<floating_real_value T>

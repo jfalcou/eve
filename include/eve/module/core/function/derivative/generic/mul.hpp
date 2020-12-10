@@ -30,7 +30,7 @@ namespace eve::detail
       return derivative(plus)(x, n)*derivative(plus)(y, p);
     }
     else
-      return apply_over(derivative1(mul), x, y, n, p);
+      return apply_over(derivative_1st(mul), x, y, n, p);
   }
 
   template<floating_real_value T>

@@ -18,8 +18,8 @@ int main()
             << "<- pf                                  = " << pf << '\n'
             << "<- qf                                  = " << qf << '\n'
             << "-> average(pf, qf)                     = " << eve::average(pf, qf) << '\n'
-            << "-> derivative1(average)(pf, qf)        = " <<  eve::derivative1(eve::average)(pf, qf) << std::endl
-            << "-> derivative2(average)(pf, qf)        = " <<  eve::derivative2(eve::average)(pf, qf) << std::endl
+            << "-> derivative_1st(average)(pf, qf)        = " <<  eve::derivative_1st(eve::average)(pf, qf) << std::endl
+            << "-> derivative_2nd(average)(pf, qf)        = " <<  eve::derivative_2nd(eve::average)(pf, qf) << std::endl
             << "-> derivative(average)(pf, qf, 0u, 2u) = " <<  eve::derivative(eve::average)(pf, qf, 0u, 2u) << std::endl
             << "-> derivative(average)(pf, qf, 2u, 0u) = " <<  eve::derivative(eve::average)(pf, qf, 2u, 0u) << std::endl;
 
@@ -30,7 +30,7 @@ int main()
             << "<- xf                           = " << xf << '\n'
             << "<- yf                           = " << yf << '\n'
             << "-> average(xf, yf)              = " << eve::average(xf, yf) << '\n'
-            << "-> derivative1(average)(xf, yf) = " <<  eve::derivative1(eve::average)(xf, yf) << std::endl
-            << "-> derivative2(average)(xf, yf) = " <<  eve::derivative2(eve::average)(xf, yf) << std::endl;
+            << "-> derivative_1st(average)(xf, yf) = " <<  eve::derivative_1st(eve::average)(xf, yf) << std::endl
+            << "-> derivative_2nd(average)(xf, yf) = " <<  eve::derivative_2nd(eve::average)(xf, yf) << std::endl;
   return 0;
 }
