@@ -32,10 +32,10 @@ namespace eve::detail
                             , T const &a
                             , T const &b
                             , T const &c) noexcept
-  requires(has_native_abi<T>)
+  requires(has_native_abi_v<T>)
   {
     if constexpr(N == 1) return -b;
     if constexpr(N == 2) return -a;
-    if constexpr(N == 2) return mone(as(c));
+    if constexpr(N == 3) return mone(as(c));
   }
 }

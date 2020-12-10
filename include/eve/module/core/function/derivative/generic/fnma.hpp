@@ -17,7 +17,7 @@
 namespace eve::detail
 {
   template<floating_value T, floating_value U, floating_value V, auto N>
-  EVE_FORCEINLINE  auto fnms_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE  auto fnma_(EVE_SUPPORTS(cpu_)
                             , derivative_type<N> const &
                             , T const &a
                             , U const &b
@@ -28,7 +28,7 @@ namespace eve::detail
   }
 
   template<floating_value T, auto N>
-  EVE_FORCEINLINE  auto fnms_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE  auto fnma_(EVE_SUPPORTS(cpu_)
                             , derivative_type<N> const &
                             , T const &a
                             , T const &b
@@ -37,6 +37,6 @@ namespace eve::detail
   {
     if constexpr(N == 1) return -b;
     if constexpr(N == 2) return -a;
-    if constexpr(N == 2) return one(as(c));
+    if constexpr(N == 3) return one(as(c));
   }
 }
