@@ -11,6 +11,7 @@
 #pragma once
 
 #include <eve/function/pow_abs.hpp>
+#include <eve/function/pow.hpp>
 #include <eve/function/log_abs.hpp>
 #include <eve/function/derivative.hpp>
 #include <eve/function/tgamma.hpp>
@@ -25,7 +26,7 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return pow_abs(x, y)*pow_abs(log_abs(x), n);
+      return pow_abs(x, y)*pow(log_abs(x), n);
     }
     else
       return apply_over(derivative_1st(pow_abs), x, y, n);

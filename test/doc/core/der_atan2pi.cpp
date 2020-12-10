@@ -1,4 +1,4 @@
-#include <eve/function/derivative/atan2.hpp>
+#include <eve/function/derivative/atan2pi.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/wide.hpp>
@@ -17,7 +17,7 @@ int main()
     << "---- simd" << '\n'
     << "<- pf                    = " << pf << '\n'
     << "<- qf                    = " << qf << '\n'
-    << "-> derivative(atan2)(pf) = " << eve::derivative(eve::atan2)(pf, qf) << '\n';
+    << "-> derivative(atan2pi)(pf) = " << eve::derivative(eve::atan2pi)(pf, qf) << '\n';
 
   float xf = 1.0f;
   float yf = -1.0f;
@@ -26,6 +26,6 @@ int main()
     << "---- scalar"  << '\n'
     << "<- xf                    = " << xf << '\n'
     << "<- yf                    = " << yf << '\n'
-    << "-> derivative(atan2)(xf) = " << eve::derivative(eve::atan2)(xf, yf) << '\n';
+    << "-> derivative(atan2pi)(xf) = " << eve::derivative(eve::atan2pi)(xf, yf) << '\n';
   return 0;
 }

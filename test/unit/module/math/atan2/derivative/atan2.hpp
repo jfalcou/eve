@@ -8,22 +8,23 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#pragma once
-
 #include <eve/function/derivative/atan2.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/radindeg.hpp>
+#include <type_traits>
 
-namespace eve::detail
+TTS_CASE_TPL("Check derivative(atan2) return type", EVE_TYPE)
+{
+  if constexpr(eve::floating_value<T>)
+  {
+    TTS_EXPR_IS(eve::derivative(eve::atan2)(T(), T()), T);
+  }
+}
+
+TTS_CASE_TPL("Check eve::derivative(eve::atan2) behavior", EVE_TYPE)
 {
 
-  template<floating_real_value T, auto N>
-  EVE_FORCEINLINE constexpr T atan2d_(EVE_SUPPORTS(cpu_)
-                                   , derivative_type<N> const &
-                                   , T const &x
-                                   , T const &y) noexcept
+  if constexpr(eve::floating_value<T>)
   {
-    return radindeg(derivative_type<N>()(atan2)(x, y));
+    TTS_EQUAL(eve::derivative_1st(eve::atan2)(T{3},T{4}), T(4.0/25.0));
+    TTS_EQUAL(eve::derivative_2nd(eve::atan2)(T{3},T{4}), T(3.0/25.0));
   }
-
 }
