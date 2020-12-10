@@ -17,7 +17,7 @@ namespace eve
 {
   //================================================================================================
   // Function decorators mark-up used in function overloads
-  template < unsigned PARAM = 1u>
+  template <auto PARAM>
   struct derivative_type : decorator_
   {
     template<typename Function>

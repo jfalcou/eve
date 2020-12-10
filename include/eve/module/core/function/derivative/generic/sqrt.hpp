@@ -44,6 +44,6 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
       return mhalf(as(x))*rsqrt(x);
     else
-      return apply_over(derivative_1st(rsqrt), x );
+      return apply_over(derivative_1st(sqrt), x );
   }
 }

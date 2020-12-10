@@ -36,6 +36,6 @@ namespace eve::detail
   {
     if constexpr(N == 1) return b;
     if constexpr(N == 2) return a;
-    if constexpr(N == 2) return mone(as(c));
+    if constexpr(N == 3) return mone(as(c));
   }
 }
