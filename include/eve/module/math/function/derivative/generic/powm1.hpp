@@ -16,20 +16,12 @@
 namespace eve::detail
 {
 
-  template<floating_real_value T>
+  template<floating_real_value T, auto N>
   EVE_FORCEINLINE constexpr T powm1_(EVE_SUPPORTS(cpu_)
-                                    , derivative_type<1> const &
+                                    , derivative_type<N> const &
                                     , T const &x
                                     , T const &y) noexcept
   {
-    return derivative_1st(pow)(x, y);
-  }
-  template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T powm1_(EVE_SUPPORTS(cpu_)
-                                    , derivative_type<2> const &
-                                    , T const &x
-                                    , T const &y) noexcept
-  {
-    return derivative_2nd(pow)(x, y);
+    return derivative_type<N>()(eve::pow)(x, y);
   }
 }

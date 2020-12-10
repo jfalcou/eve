@@ -23,7 +23,7 @@ namespace eve::detail
                                    , T const &x
                                    , T const &y) noexcept
   {
-    returnradinpi(derivative_type<N>(atan2)(x, y)));
+    return radinpi(derivative_type<N>()(atan2)(x, y));
   }
 
 }
