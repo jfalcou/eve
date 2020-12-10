@@ -28,6 +28,7 @@
 #include <eve/function/rec.hpp>
 #include <eve/function/log.hpp>
 #include <eve/function/maximum.hpp>
+#include <eve/function/min.hpp>
 #include <eve/function/pow.hpp>
 #include <eve/function/tgamma.hpp>
 #include <eve/function/sqr.hpp>
@@ -40,7 +41,7 @@
 
 namespace eve::detail
 {
-  template<floating_real_scalar_value T>
+  template<floating_real_value T>
   EVE_FORCEINLINE T exp_int_(EVE_SUPPORTS(cpu_), T x) noexcept
   {
     return exp_int(T(1), x);
@@ -112,8 +113,8 @@ namespace eve::detail
            auto eqzx = is_eqz(x);
            x = inc[eqzx](x); //loop is infinite for x == 0
            auto psi1 = zero(as(x));
-           int32_t maxn = maximum(n);
-           for( int32_t i=dec(maxn); i; --i )  psi1 = add[T(i) < n](psi1, rec(T(i)));
+           int32_t maxn = dec(max(1, int32_t(eve::maximum(n))));
+           for( int32_t i=maxn; i != 0; --i )  psi1 = add[T(i) < n](psi1, rec(T(i)));
            auto euler = Ieee_constant<T, 0x3f13c468U, 0x3fe2788cfc6fb619ULL>();
            auto psi = -euler-log(x)+psi1;
            T t; ;

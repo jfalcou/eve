@@ -32,5 +32,8 @@ TTS_CASE_TPL("Check eve::derivative(eve::pow) behavior", EVE_TYPE)
     TTS_EQUAL(eve::derivative1(eve::pow)(T{2},T{3}, 2u), T(12));
     TTS_EQUAL(eve::derivative2(eve::pow)(T{2},T{3}, 1u), T(8*eve::log_2(eve::as<T>())));
     TTS_EQUAL(eve::derivative2(eve::pow)(T{2},T{3}, 2u), T(8*eve::sqr(eve::log_2(eve::as<T>()))));
-  }
+
+    TTS_EQUAL(eve::derivative1(eve::pow)(T{2},T{3}), T(12));
+    TTS_EQUAL(eve::derivative2(eve::pow)(T{2},T{3}), T(8*eve::log_2(eve::as<T>())));
+ }
 }
