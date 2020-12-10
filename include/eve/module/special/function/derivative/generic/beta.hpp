@@ -18,7 +18,7 @@
 namespace eve::detail
 {
   template<floating_value T, floating_value U, auto N>
-  EVE_FORCEINLINE  auto atan2_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE  auto beta_(EVE_SUPPORTS(cpu_)
                               , derivative_type<N> const &
                               , T const &a
                               , U const &b) noexcept
