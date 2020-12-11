@@ -16,6 +16,7 @@
 template<typename T> using extra_wide = eve::wide<T,eve::fixed<2*eve::expected_cardinal_v<T>>>;
 template<typename T> using tiny_wide  = eve::wide<T,eve::fixed<1>>;
 
+#if !defined(EVE_NO_SIMD)
 #if defined(SPY_SIMD_IS_X86)
 TTS_CASE_TPL( "Check that wide<T,N,x86*> satisfies native_simd_for_abi with any X86 ABI"
             , TTS_NUMERIC_TYPES
@@ -88,6 +89,7 @@ TTS_CASE_TPL( "Check that wide<T,N,arm*> does not satisfy native_simd_for_abi wi
   TTS_EXPECT_NOT((eve::native_simd_for_abi<logical<wide<T>> , eve::x86_128_ , eve::x86_256_ > ));
   TTS_EXPECT_NOT((eve::native_simd_for_abi<logical<wide<T>> , eve::ppc_> ));
 }
+#endif
 #endif
 
 TTS_CASE_TPL( "Check that wide<T,k*N> does not satisfy any native_simd_for_abi"
