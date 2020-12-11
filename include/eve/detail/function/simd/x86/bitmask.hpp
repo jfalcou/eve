@@ -82,5 +82,9 @@ namespace eve::detail
         }
       }
     }
+    else if constexpr( std::is_same_v<ABI,x86_512_> )
+    {
+      return std::bitset<N::value>(p.storage().value);
+    }
   }
 }
