@@ -63,6 +63,12 @@ Supported decorators
 :   The call `pedantic(manhattan)(x,y)`  or `pedantic(manhattan)(x,y,z)` computes the sum of the absolute values of its parameters
     returning $\infty$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
 
+[`derivative`](../decorators.html#derivative)
+:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/average.hpp>`</script>
+
+:   The expression `derivative_1st(average)(x,y)` and `derivative_2nd(average)(x,y)` computes the partial
+    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ (x+y)/2$.
+
 
 </script>
 

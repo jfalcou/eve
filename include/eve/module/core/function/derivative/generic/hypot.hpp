@@ -12,35 +12,64 @@
 
 #include <eve/function/rec.hpp>
 #include <eve/function/derivative.hpp>
+#include <eve/concept/compatible.hpp>
 
 namespace eve::detail
 {
-  template<floating_real_value T>
+  template<floating_real_value T, floating_real_value U, auto N>
   EVE_FORCEINLINE constexpr T hypot_(EVE_SUPPORTS(cpu_)
-                                   , derivative_type<1> const &
+                                   , derivative_type<N> const &
+                                   , T const &x
+                                   , U const &y) noexcept
+  requires(compatible_values<T, U>)
+  {
+    return arithmetic_call(derivative_type<N>()(hypot), x, y);
+  }
+
+  template<floating_real_value T, floating_real_value U, floating_real_value V, auto N>
+  EVE_FORCEINLINE constexpr T hypot_(EVE_SUPPORTS(cpu_)
+                                   , derivative_type<N> const &
+                                   , T const &x
+                                   , U const &y
+                                   , V const &z) noexcept
+  requires(compatible_values<T, U> && compatible_values<T, V>)
+  {
+    return arithmetic_call(derivative_type<N>()(hypot), x, y, z);
+  }
+
+  template<floating_real_value T, auto N>
+  EVE_FORCEINLINE constexpr T hypot_(EVE_SUPPORTS(cpu_)
+                                   , derivative_type<N> const &
                                    , T const &x
                                    , T const &y) noexcept
   {
    if constexpr( has_native_abi_v<T> )
     {
-     return rec(hypot(x, y))*x;
+     auto k = rec(hypot(x, y));
+     if constexpr(N == 1) return x*k;
+     if constexpr(N == 2) return y*k;
     }
    else
-     return apply_over(derivative_1st(hypot), x, y);
+     return apply_over(derivative_type<N>()(hypot), x, y);
   }
 
-
-   template<floating_real_value T>
+  template<floating_real_value T, auto N>
   EVE_FORCEINLINE constexpr T hypot_(EVE_SUPPORTS(cpu_)
-                                   , derivative_type<2> const &
+                                   , derivative_type<N> const &
                                    , T const &x
-                                   , T const &y) noexcept
+                                   , T const &y
+                                   , T const &z) noexcept
   {
    if constexpr( has_native_abi_v<T> )
     {
-    return rec(hypot(x, y))*y;
+     auto k = rec(hypot(x, y, z));
+     if constexpr(N == 1) return x*k;
+     if constexpr(N == 2) return y*k;
+     if constexpr(N == 3) return z*k;
     }
    else
-     return apply_over(derivative_2nd(hypot), x, y);
+     return apply_over(derivative_type<N>()(hypot), x, y, z);
   }
+
+
 }

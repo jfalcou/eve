@@ -50,6 +50,16 @@ Similar to  `log(exp(x) + exp(y))`;.
 
  The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
 
+Supported decorators
+====================================================================================================
+[`derivative`](../decorators.html#derivative)
+:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/logspace_add.hpp>`</script>
+
+:   The expression `derivative_1st(logspace_add)(x,y)` and `derivative_2nd(logspace_add)(x,y)` computes the partial
+    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ \mbox{logspace_add}(x,y)$.
+
+
+
   (insert ../../src/logspace_add.src.html here)
 
   (insert ../../out/logspace_add.out.html here)
