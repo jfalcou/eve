@@ -133,8 +133,7 @@ namespace eve
                     &&  (static_size == 2 + sizeof...(Ts))
                   )
         : data_(detail::make(eve::as_<target_type>{}, abi_type{}, v0, v1, vs...))
-    {
-    }
+    {}
 
     //==============================================================================================
     // Constructs a wide with a generator function
@@ -160,8 +159,7 @@ namespace eve
                             ) noexcept
                     requires( static_size == 2 * halfSize::value )
                   : logical(detail::combine(EVE_CURRENT_API{}, l, h))
-    {
-    }
+    {}
 
     //==============================================================================================
     // Assignment
@@ -267,11 +265,10 @@ namespace eve
     //==============================================================================================
     friend std::ostream &operator<<(std::ostream &os, logical const &p)
     {
-      constexpr auto sz = sizeof(storage_type)/sizeof(logical<Type>);
-      auto that = bit_cast( p, as_<std::array<logical<Type>,sz>>());
-      os << '(' << that[0];
-      for(size_type i = 1; i != p.size(); ++i) os << ", " << that[i];
-      return os << ')';
+      auto that = p.bitmap();
+      os << '(' << std::boolalpha << that[0];
+      for(size_type i = 1; i < p.size(); ++i) os << ", " << that[i];
+      return os << std::noboolalpha << ')';
     }
 
     private:
