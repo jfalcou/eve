@@ -34,7 +34,7 @@ Member functions
 template< floating_value T, floating_value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs  the computation of $\displaystyle B(x,y)=\int_0^1 t^{x-1}(1-t)^{y-1}\mbox{d}t$, or equivalently
+Performs  the computation of $\displaystyle \mbox{B}(x,y)=\int_0^1 t^{x-1}(1-t)^{y-1}\mbox{d}t$, or equivalently
 $\displaystyle \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}$
 
 Parameters
@@ -49,6 +49,12 @@ Return value
 Returns [element-wise](../../../glossary.html#value) $\displaystyle \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}$.
 
  The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+
+[`derivative`](../decorators.html#derivative)
+:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/beta.hpp>`</script>
+
+:   The expression `derivative_1st(beta)(x,y)` and `derivative_2nd(beta)(x,y)` computes the partial
+    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ \mbox{B}(x+y)/2$.
 
   (insert ../../src/beta.src.html here)
 
