@@ -11,20 +11,24 @@
 #pragma once
 
 #include <eve/wide.hpp>
-#include <eve/function/all.hpp>
 
 namespace eve
 {
   template<typename T, typename N, typename ABI>
   inline bool compare_equal(wide<T, N, ABI> const &l, wide<T, N, ABI> const &r)
   {
-    return eve::all(l == r);
+    auto check = [=]<std::size_t... I>(std::index_sequence<I...> const&)
+    {
+      return (true && ... && (l[I] == r[I]));
+    };
+
+    return check( std::make_index_sequence<N::value>{});
   }
 
   template<typename T>
   inline bool compare_equal(logical<T> const &l, logical<T> const &r)
   {
-    if constexpr(eve::simd_value<T>)  return eve::all(l == r);
+    if constexpr(eve::simd_value<T>)  return l.bitmap() == r.bitmap();
     else                              return l == r;
   }
 
@@ -52,7 +56,7 @@ namespace tts
   template<typename T>
   inline double ulp_distance(eve::logical<T> const &l, eve::logical<T>const &r)
   {
-    return eve::all(l==r) ? 0. : std::numeric_limits<double>::infinity();
+    return eve::compare_equal(l,r) ? 0. : std::numeric_limits<double>::infinity();
   }
 
   template<typename T, typename N, typename ABI>
@@ -68,7 +72,7 @@ namespace tts
   template<typename T>
   inline double relative_distance(eve::logical<T> const &l, eve::logical<T>const &r)
   {
-    return eve::all(l==r) ? 0. : 1;
+    return eve::compare_equal(l,r) ? 0. : 1;
   }
 
   template<typename T, typename N, typename ABI>
@@ -84,6 +88,6 @@ namespace tts
   template<typename T>
   inline double absolute_distance(eve::logical<T> const &l, eve::logical<T>const &r)
   {
-    return eve::all(l==r) ? 0. : 1;
+    return eve::compare_equal(l,r) ? 0. : 1;
   }
 }
