@@ -32,6 +32,7 @@ namespace eve
         {
                if constexpr( width <= 16) return x86_128_{};
           else if constexpr( width == 32) return x86_256_{};
+          else if constexpr( width == 64) return x86_512_{};
           else                            return aggregated_{};
         }
         else if constexpr( spy::simd_instruction_set == spy::vmx_ )
@@ -83,4 +84,3 @@ namespace eve
   template<typename Type, int Cardinal>
   using abi_of_t = typename abi_of<Type, Cardinal>::type;
 }
-
