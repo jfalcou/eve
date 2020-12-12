@@ -24,7 +24,7 @@ namespace eve::detail
                             , V const &c) noexcept
   requires compatible_values<T, U>&&compatible_values<T, V>
   {
-    return arithmetic_call(derivative_type<N>()(fnma), a, b, c);
+    return arithmetic_call(derivative_type<N>(fnma), a, b, c);
   }
 
   template<floating_value T, auto N>
