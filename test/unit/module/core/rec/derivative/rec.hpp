@@ -15,9 +15,7 @@ TTS_CASE_TPL("Check derivative(rec) return type", EVE_TYPE)
 {
   if constexpr(eve::floating_value<T>)
   {
-    using ui_t = eve::detail::as_integer_t<T, unsigned>;
-    TTS_EXPR_IS(eve::derivative(eve::rec)(T(), unsigned()), T);
-    TTS_EXPR_IS(eve::derivative(eve::rec)(T(), ui_t()), T);
+    TTS_EXPR_IS(eve::derivative(eve::rec)(T()), T);
   }
 }
 
