@@ -16,7 +16,7 @@
 #include <eve/function/sqr.hpp>
 #include <eve/function/rsqrt.hpp>
 #include <eve/function/rec.hpp>
-#include <eve/constant/mhalf.hpp>
+#include <eve/constant/half.hpp>
 
 namespace eve::detail
 {
@@ -27,7 +27,7 @@ namespace eve::detail
                                     , T x) noexcept
   {
     if constexpr( has_native_abi_v<T> )
-      return mhalf(as(x))*rsqrt(x);
+      return half(as(x))*rsqrt(x);
     else
       return apply_over(derivative_1st(sqrt), x );
   }
