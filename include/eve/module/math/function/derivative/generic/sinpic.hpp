@@ -14,6 +14,8 @@
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/sinpicospi.hpp>
 #include <eve/function/derivative.hpp>
+#include <eve/function/fms.hpp>
+#include <eve/function/sqr.hpp>
 #include <eve/constant/pi.hpp>
 
 namespace eve::detail
