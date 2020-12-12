@@ -19,9 +19,7 @@ int main()
             << "<- qf          = " << qf << '\n'
             << "-> div(pf, qf) = " << eve::div(pf, qf) << '\n'
             << "-> derivative_1st(div)(pf, qf) = " <<  eve::derivative_1st(eve::div)(pf, qf) << std::endl
-            << "-> derivative_2nd(div)(pf, qf) = " <<  eve::derivative_2nd(eve::div)(pf, qf) << std::endl
-            << "-> derivative(div)(pf, qf, 0u, 2u) = " <<  eve::derivative(eve::div)(pf, qf, 0u, 2u) << std::endl
-            << "-> derivative(div)(pf, qf, 2u, 0u) = " <<  eve::derivative(eve::div)(pf, qf, 2u, 0u) << std::endl;
+            << "-> derivative_2nd(div)(pf, qf) = " <<  eve::derivative_2nd(eve::div)(pf, qf) << std::endl;
 
   float xf = 4.0f;
   float yf = -1.0f;
