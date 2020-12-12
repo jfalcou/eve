@@ -14,6 +14,7 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/derivative.hpp>
 #include <eve/function/sqr.hpp>
+#include <eve/function/rsqrt.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/constant/mhalf.hpp>
 
