@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check eve::derivative(eve::frac) behavior", EVE_TYPE)
     auto ulp =  (sizeof(elt_t) == 4) ? 1.0e4 : 1.0e8;
     auto df = [](auto f, auto x){return eve::detail::centered_diffdiv(f, x); };
     TTS_ULP_EQUAL(eve::derivative(eve::frac)(T{0.25}), df(eve::frac, T(0.25))  , ulp);
-    TTS_ULP_EQUAL(eve::derivative(eve::frac)(T{0}), df(eve::frac, T(0))        , ulp);
+    TTS_ULP_EQUAL(eve::derivative(eve::frac)(T{1.2}), df(eve::frac, T(1.2))        , ulp);
     TTS_ULP_EQUAL(eve::derivative(eve::frac)(T{-0.25}), df(eve::frac, T(-0.25)), ulp);
   }
 }
