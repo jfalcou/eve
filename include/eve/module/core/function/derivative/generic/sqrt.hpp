@@ -10,10 +10,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/derivative/rec.hpp>
-#include <eve/function/derivative/pow.hpp>
-#include <eve/function/is_equal.hpp>
-#include <eve/function/is_eqz.hpp>
+
 #include <eve/function/if_else.hpp>
 #include <eve/function/derivative.hpp>
 #include <eve/function/sqr.hpp>
@@ -22,19 +19,6 @@
 
 namespace eve::detail
 {
-  template<floating_real_value T, unsigned_value N>
-  EVE_FORCEINLINE constexpr T sqrt_(EVE_SUPPORTS(cpu_)
-                                   , derivative_type<1> const &
-                                   , T x
-                                   , N n) noexcept
-  {
-    if constexpr( has_native_abi_v<T> )
-    {
-      return derivative_1st(pow)(x, half(as(x)), n);
-    }
-    else
-      return apply_over(derivative_1st(sqrt), x, n);
-  }
 
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr T sqrt_(EVE_SUPPORTS(cpu_)
