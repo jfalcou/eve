@@ -26,11 +26,7 @@ TTS_CASE_TPL("Check eve::derivative(eve::rec) behavior", EVE_TYPE)
 
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::derivative(eve::rec)(T{10}, 0u), T(1.0/10));
-    TTS_EQUAL(eve::derivative(eve::rec)(T{10}, 1u), T(-1.0/100));
-    TTS_EQUAL(eve::derivative(eve::rec)(T{10}, 2u), T(2.0/1000));
-    TTS_EQUAL(eve::derivative(eve::rec)(T{-10}, 0u), T(-1.0/10));
-    TTS_EQUAL(eve::derivative(eve::rec)(T{-10}, 1u), T(-1.0/100));
-    TTS_EQUAL(eve::derivative(eve::rec)(T{-10}, 2u), T(-2.0/1000));
+    TTS_EQUAL(eve::derivative(eve::rec)(T{10}), T(-1.0/100));
+    TTS_EQUAL(eve::derivative(eve::rec)(T{-10}), T(-1.0/100));
   }
 }
