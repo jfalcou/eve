@@ -12,7 +12,7 @@
 
 #include <eve/constant/one.hpp>
 #include <eve/function/derivative.hpp>
-#include <eve/function/fnms.hpp>
+#include <eve/function/fnma.hpp>
 
 namespace eve::detail
 {
