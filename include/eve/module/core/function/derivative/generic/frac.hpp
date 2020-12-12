@@ -11,7 +11,7 @@
 #pragma once
 
 #include <eve/function/derivative.hpp>
-#include <eve/constant/zero.hpp>
+#include <eve/constant/one.hpp>
 
 namespace eve::detail
 {
@@ -22,6 +22,6 @@ namespace eve::detail
                                     , T x) noexcept
   {
 
-    return zero(as(x));
+    return one(as(x));
   }
 }
