@@ -18,19 +18,6 @@
 
 namespace eve::detail
 {
-  template<floating_real_value T, unsigned_value N>
-  EVE_FORCEINLINE constexpr T cbrt_(EVE_SUPPORTS(cpu_)
-                                   , derivative_type<1> const &
-                                   , T x
-                                   , N n) noexcept
-  {
-    if constexpr( has_native_abi_v<T> )
-    {
-      return if_else(n == 0, cbrt(x), derivative_1st(pow)(x,T(1.0/3.0), n));
-    }
-    else
-      return apply_over(derivative_1st(cbrt), x, n);
-  }
 
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr T cbrt_(EVE_SUPPORTS(cpu_)

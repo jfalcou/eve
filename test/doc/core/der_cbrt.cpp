@@ -14,9 +14,7 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf                                = " << pf << '\n'
-            << "-> eve::derivative(eve::cbrt)(pf)     = " << eve::derivative(eve::cbrt)(pf) << '\n'
-            << "-> eve::derivative(eve::cbrt)(pf, 2u) = " << eve::derivative(eve::cbrt)(pf, 2u) << '\n'
-            << "-> eve::derivative(eve::cbrt)(pf, 3u) = " << eve::derivative(eve::cbrt)(pf, 3u) << '\n';
+            << "-> eve::derivative(eve::cbrt)(pf)     = " << eve::derivative(eve::cbrt)(pf) << '\n';
 
   float xf = 1.0f;
 
