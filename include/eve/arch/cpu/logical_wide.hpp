@@ -177,10 +177,10 @@ namespace eve
     //==============================================================================================
     template<typename Slice> EVE_FORCEINLINE auto slice(Slice const &s) const
     {
-      return detail::slice(*this, s);
+      return detail::slice(EVE_CURRENT_API{},*this, s);
     }
 
-    EVE_FORCEINLINE auto slice() const { return detail::slice(*this); }
+    EVE_FORCEINLINE auto slice() const { return detail::slice(EVE_CURRENT_API{},*this); }
 
     //==============================================================================================
     // Raw storage access

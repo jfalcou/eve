@@ -83,10 +83,10 @@ namespace eve
   {
     template<int N> struct as_mask;
 
-    struct mask8  { __mmask8  value; };
-    struct mask16 { __mmask16 value; };
-    struct mask32 { __mmask32 value; };
-    struct mask64 { __mmask64 value; };
+    struct mask8  { using type = __mmask8;  type value; };
+    struct mask16 { using type = __mmask16; type value; };
+    struct mask32 { using type = __mmask32; type value; };
+    struct mask64 { using type = __mmask64; type value; };
 
     template<> struct as_mask<8>  { using type = mask8; };
     template<> struct as_mask<16> { using type = mask16; };
