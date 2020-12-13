@@ -48,6 +48,11 @@ simd   : {1, 1, 1, 1}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 
+It must be noted that without parameter these constant are proper function objects and can be used in
+specialiazation of functions to allow possibility of an optimized call : the `if_else` object
+is  optimized in such a way for parameters that can be `mone`, `allbits` or `one`.
+
+
 In the following tables:
   * `T` represents the requested type for the generated constant.
   * `E` represents the [element type](../../glossary.html#elementtype#elementtype) associated to `T`
@@ -63,15 +68,15 @@ $$\newcommand{\choosefd}[2]{\left\{
 <center>
 Constant      | Callable object | Value                     | Constraints on `T`   |
 :-------------|:----------------|:--------------------------|:---------------------|
-All bits set  | `eve::allbits`  |  see below                | `arithmetic_value`   |
+All bits set  | `eve::allbits`  | all bits set to 1         | `arithmetic_value`   |
 True          | `eve::true_`    | `as_logical_t<T>(true)`    | `value`              |
 False         | `eve::false_`   | `as_logical_t<T>(false)`   | `value`              |
 Half          | `eve::half`     | `T(0.5)`                  | `floating_value`     |
 Minus half    | `eve::mhalf`    | `T(-0.5)`                 | `floating_value`     |
 One           | `eve::one`      | `T(1)`                    | `arithmetic_value`   |
-Minus one     | `eve::mone`     | `T(-1)`                   | `arithmetic_value`   |
+Minus one     | `eve::mone`     | `T(-1)`                   | `signed_value`       |
 Zero          | `eve::zero`     | `T(0)`                    | `arithmetic_value`   |
-Minus Zero    | `eve::mzero`    | `T(-0.0)`                 | `arithmetic_value`   |
+Minus Zero    | `eve::mzero`    | `T(-0.0)`                 | `floating_value`     |
 </center>
 
 ## IEEE Constants
@@ -89,6 +94,7 @@ Constant                                        | Callable object        | Value
 :-----------------------------------------------|:-----------------------|:---------------------------------------------------|:-------------------|
 Smallest value increment                        | `eve::bitincrement`    | `bit_cast(1,as<`T`>())`                            | `value`            |
 Machine $\epsilon$                              | `eve::eps`             | $$\choosefdi{2^{-23}}{2^{-52}}{1}$$                | `value`            |
+One over two machine $\epsilon$                 | `eve::oneotwoeps`      | $$\tchoosefd{4194304.0f}{2251799813685248.0}$$ | `floating_value`   |
 Mask for the exponent bits                      | `eve::expobits_mask`   | $$\tchoosefd{0x7f800000U}{0x7ff0000000000000ULL}$$ | `floating_value`   |
 Largest possible exponent plus one              | `eve::limitexponent`   | $$\tchoosefd{128}{1024}$$                          | `floating_value`   |
  $\log\epsilon$                                 | `eve::logeps`          | $$\tchoosefd{-15.9424f}{-36.0436533891172}$$       | `floating_value`   |
@@ -98,9 +104,9 @@ Largest possible exponent                       | `eve::maxexponent`     | $$\ch
 Largest possible exponent minus one             | `eve::maxexponentm1`   | $$\choosefd{126}{1022}$$                           | `floating_value`   |
 Smallest positive denormal value                | `eve::mindenormal`     | `bit_cast(1,as<T>())`                              | `floating_value`   |
 Smallest possible exponent                      | `eve::minexponent`     | $$\choosefd{-126}{-1022}$$                         | `floating_value`   |
-Not a Number                                    | `eve::nan`             | The quiet representation of IEE NaN                | `floating_value`   |
+Not a Number                                    | `eve::nan`             | The (all one) quiet representation of IEEE NaN     | `floating_value`   |
 Number of mantissa bits                         | `eve::nbmantissabits`  | $$\choosefd{23}{52}$$                              | `floating_value`   |
-Bit mask for sign bit extraction                | `eve::signmask`        | `bit_cast(I(1) << (sizeof(E)*8-1),as<T>())`        | `floating_value`   |
+Bit mask for sign bit extraction                | `eve::signmask`        | `bit_cast(I(1) << (sizeof(E)*8-1),as<T>())`         | `floating_value`   |
 Square root of the machine $\epsilon$           | `eve::sqrteps`         | $$\sqrt{\epsilon}$$                                | `value`            |
 Two at the power of the number of mantissa bits | `eve::twotonmb`        | $$\choosefdi{2^{23}}{2^{52}}{1}$$                  | `floating_value`   |
 </center>
@@ -123,7 +129,6 @@ Square root of greatest value               | `eve::sqrtvalmax`     | $$\tchoose
 Constant                | Callable object        | Value                                          | Constraints on `T` |
 :-----------------------|:-----------------------|:-----------------------------------------------|:-------------------|
  $1/\pi$                | `eve::invpi`           | `T(0.318309886183791)`                         | `value`            |
- $1/(2\epsilon)$        | `eve::oneotwoeps`      | $$\tchoosefd{4194304.0f}{2251799813685248.0}$$ | `floating_value`   |
  ${\pi}$                | `eve::pi`              | `T(3.141592653589793e)`                        | `floating_value`   |
  $\pi/2$                | `eve::pio_2`           | `T(1.570796326794897e)`                        | `floating_value`   |
  $\pi/4$                | `eve::pio_4`           | `T(0.78539816339)`                             | `floating_value`   |
