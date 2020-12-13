@@ -66,8 +66,10 @@ Supported decorators
 [`derivative`](../decorators.html#derivative)
 :   **Required header: **<script type="preformatted">` #include <eve/function/derivative/average.hpp>`</script>
 
-:   The expression `derivative_1st(average)(x,y)` and `derivative_2nd(average)(x,y)` computes the partial
-    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ (x+y)/2$.
+:   The expression `derivative_1st(manhattan)(x,y)` and `derivative_2nd(manhattan)(x,y)` computes the partial
+    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ |x|+|y|$. Of course 3 analogous calls
+    can be made in the three parameters case.
+
 
 
 </script>

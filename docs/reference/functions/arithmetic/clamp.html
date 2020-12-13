@@ -60,6 +60,13 @@ The result type is the [compatibility result](../../concept.html#compatibility) 
 !!! WARNING
     Contrary to the standard implementation `clamp` does not return a reference.
 
+Supported decorators
+====================================================================================================
+[`derivative`](../decorators.html#derivative)
+:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/clam.hpp>`</script>
+
+:   The expression `derivative_1st(clamp)(x,y,z)`, `derivative_2nd(clam)(x,y,z)` and `derivative_3rd(clam)(x,y,z)` computes the partial
+    derivatives of $f$, where $f$ is the function $(x,y,z) \rightarrow \ \mbox{clamp}(x,y,z)$.
 
   (insert ../../src/clamp.src.html here)
 
