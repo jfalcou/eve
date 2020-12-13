@@ -22,7 +22,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto to_bits( sse2_ const&, logical<wide<T, N, ABI>> const& p ) noexcept
   {
     using type = typename logical<wide<T, N, ABI>>::bits_type;
-    return bit_cast(to_mask(sse2_{},p), as_<type>{});
+    return bit_cast(p.mask(), as_<type>{});
   }
 
   //================================================================================================
@@ -67,7 +67,7 @@ namespace eve::detail
     }
     else
     {
-      return to_bitmap(cpu_{},p);
+      return to_mask(cpu_{},p);
     }
   }
 
