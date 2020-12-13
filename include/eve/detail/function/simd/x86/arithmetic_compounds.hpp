@@ -22,11 +22,11 @@ namespace eve::detail
   //================================================================================================
   // +=
   //================================================================================================
-  template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_add(wide<T, N, x86_128_> &self, U const &other) noexcept
-      requires(scalar_value<U> || std::same_as<wide<T, N, x86_128_>, U>)
+  template<scalar_value T, value U, typename N, x86_abi ABI>
+  EVE_FORCEINLINE decltype(auto) self_add(wide<T, N, ABI> &self, U const &other) noexcept
+      requires(scalar_value<U> || std::same_as<wide<T, N, ABI>, U>)
   {
-    using type = wide<T, N, x86_128_>;
+    using type = wide<T, N, ABI>;
 
     if constexpr( scalar_value<U> )
     {
@@ -34,87 +34,50 @@ namespace eve::detail
     }
     else if constexpr( std::same_as<type, U> )
     {
-      if constexpr( std::same_as<T, double> )
-      {
-        self = _mm_add_pd(self, other);
-      }
-      else if constexpr( std::same_as<T, float> )
-      {
-        self = _mm_add_ps(self, other);
-      }
-      else if constexpr( std::integral<T> )
-      {
-        if constexpr( sizeof(T) == 1 )
-        {
-          self = _mm_add_epi8(self, other);
-        }
-        else if constexpr( sizeof(T) == 2 )
-        {
-          self = _mm_add_epi16(self, other);
-        }
-        else if constexpr( sizeof(T) == 4 )
-        {
-          self = _mm_add_epi32(self, other);
-        }
-        else if constexpr( sizeof(T) == 8 )
-        {
-          self = _mm_add_epi64(self, other);
-        }
-      }
-      return self;
-    }
-  }
+      constexpr auto c = categorize<type>();
 
-  template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_add(wide<T, N, x86_256_> &self, U const &other) noexcept
-      requires(scalar_value<U> || std::same_as<wide<T, N, x86_256_>, U>)
-  {
-    using type = wide<T, N, x86_256_>;
+            if constexpr  ( c == category::float64x8  ) self = _mm512_add_pd(self, other);
+      else  if constexpr  ( c == category::float32x16 ) self = _mm512_add_ps(self, other);
+      else  if constexpr  ( c == category::int64x8    ) self = _mm512_add_epi64(self, other);
+      else  if constexpr  ( c == category::int32x16   ) self = _mm512_add_epi32(self, other);
+      else  if constexpr  ( c == category::int16x32   ) self = _mm512_add_epi16(self, other);
+      else  if constexpr  ( c == category::int8x64    ) self = _mm512_add_epi8(self, other);
+      else  if constexpr  ( c == category::uint64x8   ) self = _mm512_add_epi64(self, other);
+      else  if constexpr  ( c == category::uint32x16  ) self = _mm512_add_epi32(self, other);
+      else  if constexpr  ( c == category::uint16x32  ) self = _mm512_add_epi16(self, other);
+      else  if constexpr  ( c == category::uint8x64   ) self = _mm512_add_epi8(self, other);
+      else  if constexpr  ( c == category::float64x2  ) self = _mm_add_pd(self, other);
+      else  if constexpr  ( c == category::float32x4  ) self = _mm_add_ps(self, other);
+      else  if constexpr  ( c == category::int64x2    ) self = _mm_add_epi64(self, other);
+      else  if constexpr  ( c == category::int32x4    ) self = _mm_add_epi32(self, other);
+      else  if constexpr  ( c == category::int16x8    ) self = _mm_add_epi16(self, other);
+      else  if constexpr  ( c == category::int8x16    ) self = _mm_add_epi8(self, other);
+      else  if constexpr  ( c == category::uint64x2   ) self = _mm_add_epi64(self, other);
+      else  if constexpr  ( c == category::uint32x4   ) self = _mm_add_epi32(self, other);
+      else  if constexpr  ( c == category::uint16x8   ) self = _mm_add_epi16(self, other);
+      else  if constexpr  ( c == category::uint8x16   ) self = _mm_add_epi8(self, other);
+      else  if constexpr  ( c == category::float64x4  ) self = _mm256_add_pd(self, other);
+      else  if constexpr  ( c == category::float32x8  ) self = _mm256_add_ps(self, other);
+      else  if constexpr  ( current_api >= avx2 )
+      {
+              if constexpr  ( c == category::int64x4  ) self = _mm256_add_epi64(self, other);
+        else  if constexpr  ( c == category::uint64x4 ) self = _mm256_add_epi64(self, other);
+        else  if constexpr  ( c == category::int32x8  ) self = _mm256_add_epi32(self, other);
+        else  if constexpr  ( c == category::uint32x8 ) self = _mm256_add_epi32(self, other);
+        else  if constexpr  ( c == category::int16x16 ) self = _mm256_add_epi16(self, other);
+        else  if constexpr  ( c == category::uint16x16) self = _mm256_add_epi16(self, other);
+        else  if constexpr  ( c == category::int8x32  ) self = _mm256_add_epi8(self, other);
+        else  if constexpr  ( c == category::uint8x32 ) self = _mm256_add_epi8(self, other);
+      }
+      else
+      {
+        auto [s1, s2] = self.slice();
+        auto [o1, o2] = other.slice();
+        s1 += o1;
+        s2 += o2;
+        self = type {s1, s2};
+      }
 
-    if constexpr( scalar_value<U> )
-    {
-      return self_add(self, type {other});
-    }
-    else if constexpr( std::same_as<type, U> )
-    {
-      if constexpr( std::same_as<T, double> )
-      {
-        self = _mm256_add_pd(self, other);
-      }
-      else if constexpr( std::same_as<T, float> )
-      {
-        self = _mm256_add_ps(self, other);
-      }
-      else if constexpr( std::integral<T> )
-      {
-        if constexpr( current_api >= avx2 )
-        {
-          if constexpr( sizeof(T) == 1 )
-          {
-            self = _mm256_add_epi8(self, other);
-          }
-          else if constexpr( sizeof(T) == 2 )
-          {
-            self = _mm256_add_epi16(self, other);
-          }
-          else if constexpr( sizeof(T) == 4 )
-          {
-            self = _mm256_add_epi32(self, other);
-          }
-          else if constexpr( sizeof(T) == 8 )
-          {
-            self = _mm256_add_epi64(self, other);
-          }
-        }
-        else
-        {
-          auto [s1, s2] = self.slice();
-          auto [o1, o2] = other.slice();
-          s1 += o1;
-          s2 += o2;
-          self = type {s1, s2};
-        }
-      }
       return self;
     }
   }
@@ -122,11 +85,11 @@ namespace eve::detail
   //================================================================================================
   // -=
   //================================================================================================
-  template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_sub(wide<T, N, x86_128_> &self, U const &other) noexcept
-      requires(scalar_value<U> || std::same_as<wide<T, N, x86_128_>, U>)
+  template<scalar_value T, value U, typename N, x86_abi ABI>
+  EVE_FORCEINLINE decltype(auto) self_sub(wide<T, N, ABI> &self, U const &other) noexcept
+      requires(scalar_value<U> || std::same_as<wide<T, N, ABI>, U>)
   {
-    using type = wide<T, N, x86_128_>;
+    using type = wide<T, N, ABI>;
 
     if constexpr( scalar_value<U> )
     {
@@ -134,87 +97,50 @@ namespace eve::detail
     }
     else if constexpr( std::same_as<type, U> )
     {
-      if constexpr( std::same_as<T, double> )
-      {
-        self = _mm_sub_pd(self, other);
-      }
-      else if constexpr( std::same_as<T, float> )
-      {
-        self = _mm_sub_ps(self, other);
-      }
-      else if constexpr( std::integral<T> )
-      {
-        if constexpr( sizeof(T) == 1 )
-        {
-          self = _mm_sub_epi8(self, other);
-        }
-        else if constexpr( sizeof(T) == 2 )
-        {
-          self = _mm_sub_epi16(self, other);
-        }
-        else if constexpr( sizeof(T) == 4 )
-        {
-          self = _mm_sub_epi32(self, other);
-        }
-        else if constexpr( sizeof(T) == 8 )
-        {
-          self = _mm_sub_epi64(self, other);
-        }
-      }
-      return self;
-    }
-  }
+      constexpr auto c = categorize<type>();
 
-  template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_sub(wide<T, N, x86_256_> &self, U const &other) noexcept
-      requires(scalar_value<U> || std::same_as<wide<T, N, x86_256_>, U>)
-  {
-    using type = wide<T, N, x86_256_>;
+            if constexpr  ( c == category::float64x8  ) self = _mm512_sub_pd(self, other);
+      else  if constexpr  ( c == category::float32x16 ) self = _mm512_sub_ps(self, other);
+      else  if constexpr  ( c == category::int64x8    ) self = _mm512_sub_epi64(self, other);
+      else  if constexpr  ( c == category::int32x16   ) self = _mm512_sub_epi32(self, other);
+      else  if constexpr  ( c == category::int16x32   ) self = _mm512_sub_epi16(self, other);
+      else  if constexpr  ( c == category::int8x64    ) self = _mm512_sub_epi8(self, other);
+      else  if constexpr  ( c == category::uint64x8   ) self = _mm512_sub_epi64(self, other);
+      else  if constexpr  ( c == category::uint32x16  ) self = _mm512_sub_epi32(self, other);
+      else  if constexpr  ( c == category::uint16x32  ) self = _mm512_sub_epi16(self, other);
+      else  if constexpr  ( c == category::uint8x64   ) self = _mm512_sub_epi8(self, other);
+      else  if constexpr  ( c == category::float64x2  ) self = _mm_sub_pd(self, other);
+      else  if constexpr  ( c == category::float32x4  ) self = _mm_sub_ps(self, other);
+      else  if constexpr  ( c == category::int64x2    ) self = _mm_sub_epi64(self, other);
+      else  if constexpr  ( c == category::int32x4    ) self = _mm_sub_epi32(self, other);
+      else  if constexpr  ( c == category::int16x8    ) self = _mm_sub_epi16(self, other);
+      else  if constexpr  ( c == category::int8x16    ) self = _mm_sub_epi8(self, other);
+      else  if constexpr  ( c == category::uint64x2   ) self = _mm_sub_epi64(self, other);
+      else  if constexpr  ( c == category::uint32x4   ) self = _mm_sub_epi32(self, other);
+      else  if constexpr  ( c == category::uint16x8   ) self = _mm_sub_epi16(self, other);
+      else  if constexpr  ( c == category::uint8x16   ) self = _mm_sub_epi8(self, other);
+      else  if constexpr  ( c == category::float64x4  ) self = _mm256_sub_pd(self, other);
+      else  if constexpr  ( c == category::float32x8  ) self = _mm256_sub_ps(self, other);
+      else  if constexpr  ( current_api >= avx2 )
+      {
+              if constexpr  ( c == category::int64x4  ) self = _mm256_sub_epi64(self, other);
+        else  if constexpr  ( c == category::uint64x4 ) self = _mm256_sub_epi64(self, other);
+        else  if constexpr  ( c == category::int32x8  ) self = _mm256_sub_epi32(self, other);
+        else  if constexpr  ( c == category::uint32x8 ) self = _mm256_sub_epi32(self, other);
+        else  if constexpr  ( c == category::int16x16 ) self = _mm256_sub_epi16(self, other);
+        else  if constexpr  ( c == category::uint16x16) self = _mm256_sub_epi16(self, other);
+        else  if constexpr  ( c == category::int8x32  ) self = _mm256_sub_epi8(self, other);
+        else  if constexpr  ( c == category::uint8x32 ) self = _mm256_sub_epi8(self, other);
+      }
+      else
+      {
+        auto [s1, s2] = self.slice();
+        auto [o1, o2] = other.slice();
+        s1 -= o1;
+        s2 -= o2;
+        self = type {s1, s2};
+      }
 
-    if constexpr( scalar_value<U> )
-    {
-      return self_sub(self, type {other});
-    }
-    else if constexpr( std::same_as<type, U> )
-    {
-      if constexpr( std::same_as<T, double> )
-      {
-        self = _mm256_sub_pd(self, other);
-      }
-      else if constexpr( std::same_as<T, float> )
-      {
-        self = _mm256_sub_ps(self, other);
-      }
-      else if constexpr( std::integral<T> )
-      {
-        if constexpr( current_api >= avx2 )
-        {
-          if constexpr( sizeof(T) == 1 )
-          {
-            self = _mm256_sub_epi8(self, other);
-          }
-          else if constexpr( sizeof(T) == 2 )
-          {
-            self = _mm256_sub_epi16(self, other);
-          }
-          else if constexpr( sizeof(T) == 4 )
-          {
-            self = _mm256_sub_epi32(self, other);
-          }
-          else if constexpr( sizeof(T) == 8 )
-          {
-            self = _mm256_sub_epi64(self, other);
-          }
-        }
-        else
-        {
-          auto [s1, s2] = self.slice();
-          auto [o1, o2] = other.slice();
-          s1 -= o1;
-          s2 -= o2;
-          self = type {s1, s2};
-        }
-      }
       return self;
     }
   }
@@ -409,4 +335,3 @@ namespace eve::detail
     }
   }
 }
-
