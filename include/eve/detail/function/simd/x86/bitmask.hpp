@@ -16,6 +16,62 @@
 namespace eve::detail
 {
   //================================================================================================
+  // Logical to Bits
+  //================================================================================================
+  template<typename T, typename N, x86_abi ABI>
+  EVE_FORCEINLINE auto to_bits( sse2_ const&, logical<wide<T, N, ABI>> const& p ) noexcept
+  {
+    using type = typename logical<wide<T, N, ABI>>::bits_type;
+    return bit_cast(to_mask(sse2_{},p), as_<type>{});
+  }
+
+  //================================================================================================
+  // Logical to Mask
+  //================================================================================================
+  template<typename T, typename N, x86_abi ABI>
+  EVE_FORCEINLINE wide<T, N, ABI> to_mask(sse2_ const&, logical<wide<T, N, ABI>> const& p ) noexcept
+  {
+    if constexpr( !ABI::regular_logical_register )
+    {
+      auto z = wide<T, N, ABI>(0);
+      auto a = allbits(as_<wide<T, N, ABI>>());
+      auto m = p.storage().value;
+
+      if constexpr( std::same_as<ABI,x86_128_>)
+      {
+              if constexpr( std::same_as<T,double > ) return _mm_mask_blend_pd(m,z,a);
+        else  if constexpr( std::same_as<T,float  > ) return _mm_mask_blend_ps(m,z,a);
+        else  if constexpr( sizeof(T) == 8          ) return _mm_mask_blend_epi64(m,z,a);
+        else  if constexpr( sizeof(T) == 4          ) return _mm_mask_blend_epi32(m,z,a);
+        else  if constexpr( sizeof(T) == 2          ) return _mm_mask_blend_epi16(m,z,a);
+        else  if constexpr( sizeof(T) == 1          ) return _mm_mask_blend_epi8(m,z,a);
+      }
+      else if constexpr( std::same_as<ABI,x86_256_>)
+      {
+              if constexpr( std::same_as<T,double > ) return _mm256_mask_blend_pd(m,z,a);
+        else  if constexpr( std::same_as<T,float  > ) return _mm256_mask_blend_ps(m,z,a);
+        else  if constexpr( sizeof(T) == 8          ) return _mm256_mask_blend_epi64(m,z,a);
+        else  if constexpr( sizeof(T) == 4          ) return _mm256_mask_blend_epi32(m,z,a);
+        else  if constexpr( sizeof(T) == 2          ) return _mm256_mask_blend_epi16(m,z,a);
+        else  if constexpr( sizeof(T) == 1          ) return _mm256_mask_blend_epi8(m,z,a);
+      }
+      else if constexpr( std::same_as<ABI,x86_512_>)
+      {
+              if constexpr( std::same_as<T,double > ) return _mm512_mask_blend_pd(m,z,a);
+        else  if constexpr( std::same_as<T,float  > ) return _mm512_mask_blend_ps(m,z,a);
+        else  if constexpr( sizeof(T) == 8          ) return _mm512_mask_blend_epi64(m,z,a);
+        else  if constexpr( sizeof(T) == 4          ) return _mm512_mask_blend_epi32(m,z,a);
+        else  if constexpr( sizeof(T) == 2          ) return _mm512_mask_blend_epi16(m,z,a);
+        else  if constexpr( sizeof(T) == 1          ) return _mm512_mask_blend_epi8(m,z,a);
+      }
+    }
+    else
+    {
+      return to_bitmap(cpu_{},p);
+    }
+  }
+
+  //================================================================================================
   // Logical to Bitmap - use movemask variant
   //================================================================================================
   template<typename T, typename N, x86_abi ABI> EVE_FORCEINLINE

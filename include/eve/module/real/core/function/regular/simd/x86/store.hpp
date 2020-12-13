@@ -13,6 +13,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/concept/memory.hpp>
+#include <eve/constant/allbits.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 
@@ -21,11 +22,17 @@ namespace eve::detail
   template< scalar_value T, typename N, x86_abi ABI
           , simd_compatible_ptr<wide<T, N, ABI>> Ptr
           >
-  EVE_FORCEINLINE auto store_(EVE_SUPPORTS(sse2_), wide<T, N, ABI> const &value, Ptr ptr) noexcept
+  EVE_FORCEINLINE void store_(EVE_SUPPORTS(sse2_), wide<T, N, ABI> const &value, Ptr ptr) noexcept
   {
     if constexpr( !std::is_pointer_v<Ptr> )
     {
-      if constexpr(N::value * sizeof(T) == x86_256_::bytes)
+      if constexpr(N::value * sizeof(T) == x86_512_::bytes)
+      {
+              if constexpr(std::is_same_v<T, double>) _mm512_store_pd(ptr.get(), value);
+        else  if constexpr(std::is_same_v<T, float> ) _mm512_store_ps(ptr.get(), value);
+        else  if constexpr(std::is_integral_v<T>    ) _mm512_store_si512((__m512i *)(ptr.get()), value);
+      }
+      else if constexpr(N::value * sizeof(T) == x86_256_::bytes)
       {
               if constexpr(std::is_same_v<T, double>) _mm256_store_pd(ptr.get(), value);
         else  if constexpr(std::is_same_v<T, float> ) _mm256_store_ps(ptr.get(), value);
@@ -42,6 +49,12 @@ namespace eve::detail
         memcpy(ptr.get(), (T const*)(&value), N::value * sizeof(T));
       }
     }
+    else  if constexpr(N::value * sizeof(T) == x86_512_::bytes)
+    {
+            if constexpr(std::is_same_v<T, double>) _mm512_storeu_pd(ptr, value);
+      else  if constexpr(std::is_same_v<T, float> ) _mm512_storeu_ps(ptr, value);
+      else  if constexpr(std::is_integral_v<T>    ) _mm512_storeu_si512((__m512i *)(ptr), value);
+    }
     else if constexpr(N::value * sizeof(T) == x86_256_::bytes)
     {
             if constexpr(std::is_same_v<T, double>) _mm256_storeu_pd(ptr, value);
@@ -57,6 +70,32 @@ namespace eve::detail
     else
     {
       memcpy(ptr, (T const*)(&value), N::value * sizeof(T));
+    }
+  }
+
+  template< scalar_value T, typename N, x86_abi ABI
+          , simd_compatible_ptr<logical<wide<T, N, ABI>>> Ptr
+          >
+  EVE_FORCEINLINE void store_(EVE_SUPPORTS(sse2_), logical<wide<T,N,ABI>> const &value, Ptr ptr) noexcept
+  {
+    if constexpr( !ABI::regular_logical_register )
+    {
+      auto[l,h] = value.mask().slice();
+
+      if constexpr( !std::is_pointer_v<Ptr> )
+      {
+        store(l, aligned_ptr<T,Ptr::alignment()/2>((T*)ptr.get())             );
+        store(h, aligned_ptr<T,Ptr::alignment()/2>((T*)(ptr.get()+N::value/2)));
+      }
+      else
+      {
+        store(l, (T*)ptr);
+        store(h, (T*)(ptr+N::value/2));
+      }
+    }
+    else
+    {
+      store_(EVE_RETARGET(cpu_), value, ptr) ;
     }
   }
 }
