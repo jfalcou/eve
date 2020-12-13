@@ -41,7 +41,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto upper(T &&t) noexcept
   {
     using u_t = std::remove_cvref_t<T>;
-    if constexpr(simd_value<u_t>) return eve::detail::slice(std::forward<T>(t), upper_);
+    if constexpr(simd_value<u_t>) return std::forward<T>(t).slice(upper_);
     else                          return std::forward<T>(t);
   }
 
@@ -50,7 +50,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto lower(T &&t) noexcept
   {
     using u_t = std::remove_cvref_t<T>;
-    if constexpr(simd_value<u_t>) return eve::detail::slice(std::forward<T>(t), lower_);
+    if constexpr(simd_value<u_t>) return std::forward<T>(t).slice(lower_);
     else                          return std::forward<T>(t);
   }
 
@@ -208,4 +208,3 @@ namespace eve::detail
     }
   }
 }
-

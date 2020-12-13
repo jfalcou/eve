@@ -194,12 +194,12 @@ namespace eve::detail
   {
     if constexpr( !ABI::regular_logical_register )
     {
-      std::bitset<ABI::bytes/sizeof(T)> that;
+      detail::as_mask_t<sizeof...(vs)> that{};
 
-      [&]<std::size_t... N>(std::index_sequence<N...>) { ((that[N] = !!vs),...); }
-      (std::make_index_sequence<ABI::bytes/sizeof(T)>{});
+      [&]<std::size_t... N>(auto& v, std::index_sequence<N...>){ (( v |= vs?(1ULL<<N):0),...); }
+      (that.value, std::make_index_sequence<sizeof...(vs)>{});
 
-      return detail::as_mask_t<ABI::bytes/sizeof(T)>(that.to_ulong());
+      return that;
     }
     else
     {
