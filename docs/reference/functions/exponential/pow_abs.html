@@ -72,15 +72,16 @@ Supported decorators
 :   The expression `raw(pow_abs)(x,y)` merely returns `exp(y*log(|x|)` which is must faster way to compute the result
     than the regular implemention, but does not fullfill all the boundary requisites of IEC 60559 and has not always a good accuracy.
 
-  (insert ../../src/pow_abs.src.html here)
-
-  (insert ../../out/pow_abs.out.html here)
-
 [`derivative`](../decorators.html#derivative)
 :   **Required header: **<script type="preformatted">` #include <eve/function/derivative/pow.hpp>`</script>
 
 :   The expression `derivative_1st(pow_abs)(x,y)` and `derivative_2nd(pow_abs)(x,y)` computes the partial
     derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ |x|^y$.
+
+  (insert ../../src/pow_abs.src.html here)
+
+  (insert ../../out/pow_abs.out.html here)
+
 
 
 <!-- End of Document -->
