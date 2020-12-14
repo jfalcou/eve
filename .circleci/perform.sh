@@ -32,7 +32,8 @@ fi
 if [[ "$VARIANT" == "avx512" ]]
 then
   ninja unit.arch.exe -k 0      && ctest -R "^unit.arch\..*\.exe"               && \
-  ninja unit.meta.exe -k 0 -j 8 && ctest -R "^unit.meta\..*\.exe"         -j 8
+  ninja unit.meta.exe -k 0 -j 8 && ctest -R "^unit.meta\..*\.exe"         -j 8  && \
+  ninja unit.api.exe  -k 0 -j 8 && ctest -R "^unit.api\..*\.exe"          -j 8
 else
   ninja unit.arch.exe -k 0      && ctest -R "^unit.arch\..*\.exe"               && \
   ninja unit.meta.exe -k 0 -j 8 && ctest -R "^unit.meta\..*\.exe"         -j 8  && \

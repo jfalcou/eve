@@ -123,7 +123,7 @@ jobs:
       - checkout
       - run:
           name: Running SIMD Tests - SSE4 with AVX512
-          command: VARIANT="avx512"  OPTIONS="-march=skylake-avx512 -O3 CMAKE_OPTIONS=-DEVE_TEST_TYPE=smaller_wide" . ./.circleci/perform.sh
+          command: VARIANT="avx512"  OPTIONS="-march=skylake-avx512 -O3" CMAKE_OPTIONS="-DEVE_TEST_TYPE=smaller_wide" . ./.circleci/perform.sh
 
   x86_tiny:
     <<: *config_clang_x86
