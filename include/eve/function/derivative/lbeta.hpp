@@ -10,5 +10,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/nthroot.hpp>
-#include <eve/module/core/function/derivative/generic/nthroot.hpp>
+#include <eve/function/lbeta.hpp>
+#include <eve/module/core/function/derivative/generic/lbeta.hpp>

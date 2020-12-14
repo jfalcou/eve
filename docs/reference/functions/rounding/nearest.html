@@ -54,6 +54,10 @@ The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `F
 
 The call to `nearest(a)` is equivalent to the call `round(a, to_nearest)`.
 
+[`derivative`](../decorators.html#derivative)
+:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/nearest.hpp>`</script>
+
+:   The expression `derivative(nearest)(x)` computes the derivative of the function at `x`.
 
   (insert ../../src/nearest.src.html here)
 
@@ -61,7 +65,7 @@ The call to `nearest(a)` is equivalent to the call `round(a, to_nearest)`.
 
 See Also
 ====================================================================================================
-[eve::ceil](./ceil.html), [eve::trunc](./trunc.html),
+[eve::nearest](./nearest.html), [eve::trunc](./trunc.html),
 [eve::floor](./floor.html), [eve::round](./round.html).
 
 

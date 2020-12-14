@@ -8,58 +8,57 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::negate`
+                           `eve::lbeta`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/negate.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/lbeta.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  inline constexpr /*unspecified*/ negate = /*unspecified*/;
+  inline constexpr /*unspecified*/ lbeta = /*unspecified*/;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing the negate operation.
+Function object representing the lbeta operation.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template< value T> auto operator()( T x ) const noexcept;
+template< floating_value T, floating_value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs the  [element-wise](../../../glossary.html#regular) negate operation on its parameters.
+Performs  the computation of $\displaystyle the logarithm of \mbox{B}(x,y)=\int_0^1 t^{x-1}(1-t)^{y-1}\mbox{d}t$.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`
-:   [value](../../concepts.html#value) to negate.
-`y`
-:   [value](../../concepts.html#value) whose sign will be used to negate `x`.
+`x`, `y`
+:   [values](../../concepts.html#value).
+
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Returns the [`element-wise`](../../../glossary.html#element-wise) product of the first parameter by the sign of the second.
+Returns [element-wise](../../../glossary.html#value) $\displaystyle \log[\frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}}$.
+
+ The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
 
 [`derivative`](../decorators.html#derivative)
-:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/negate.hpp>`</script>
+:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/lbeta.hpp>`</script>
 
-:   The expression `derivative(negate)(x)` computes the derivative of the function at `x` .
+:   The expression `derivative_1st(lbeta)(x,y)` and `derivative_2nd(lbeta)(x,y)` computes the partial
+derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ \log(\mbox{B}(x,y))$.
 
-  (insert ../../src/negate.src.html here)
+  (insert ../../src/lbeta.src.html here)
 
-  (insert ../../out/negate.out.html here)
+  (insert ../../out/lbeta.out.html here)
 
-See Also
-====================================================================================================
-[eve::negatenz](./negatenz.html), [eve::copysign](./copysign.html)
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">

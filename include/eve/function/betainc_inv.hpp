@@ -14,7 +14,7 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(lbeta_, lbeta);
+  EVE_MAKE_CALLABLE(betainc_inv_, betainc_inv);
 }
 
-#include <eve/module/special/function/regular/generic/lbeta.hpp>
+#include <eve/module/special/function/regular/generic/betainc_inv.hpp>
