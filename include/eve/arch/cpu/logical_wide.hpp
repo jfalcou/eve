@@ -95,15 +95,6 @@ namespace eve
     }
 
     //==============================================================================================
-    // Constructs a wide from a pointer
-    //==============================================================================================
-    EVE_FORCEINLINE explicit logical(logical<Type> const* ptr) noexcept
-        : data_(detail::load(eve::as_<logical>{}, abi_type{}, ptr))
-    {
-    }
-
-
-    //==============================================================================================
     // Constructs a wide from a pointer or an aligned pointer
     //==============================================================================================
     template<simd_compatible_ptr<logical> Ptr>

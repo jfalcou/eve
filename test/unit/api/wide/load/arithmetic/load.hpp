@@ -109,6 +109,7 @@ TTS_CASE_TPL("Check load from for wide", EVE_TYPE)
   }
 }
 
+/*
 TTS_CASE_TPL("Check conditional load from pointer for wide", EVE_TYPE)
 {
   constexpr std::ptrdiff_t algt = eve::alignment_v<T>;
@@ -272,6 +273,7 @@ TTS_CASE_TPL("Check conditional load from pointer for wide", EVE_TYPE)
     }
   }
 }
+*/
 
 TTS_CASE_TPL("Check load from range for wide", EVE_TYPE )
 {

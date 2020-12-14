@@ -37,7 +37,7 @@ namespace eve::detail
       else  if constexpr( cat == category::uint16x16  ) return mask16(_mm256_cmpeq_epu16_mask(v0,v1));
       else  if constexpr( cat == category::uint16x8   ) return mask8(_mm_cmpeq_epu16_mask    (v0,v1));
       else  if constexpr( cat == category::uint8x64   ) return mask64(_mm512_cmpeq_epu8_mask (v0,v1));
-      else  if constexpr( cat == category::uint8x32   ) return mask32(_mm256_cmpeq_epu_mask  (v0,v1));
+      else  if constexpr( cat == category::uint8x32   ) return mask32(_mm256_cmpeq_epu8_mask (v0,v1));
       else  if constexpr( cat == category::uint8x16   ) return mask16(_mm_cmpeq_epu8_mask    (v0,v1));
       else  if constexpr( cat == category::int64x8    ) return mask8 (_mm512_cmpeq_epi64_mask(v0,v1));
       else  if constexpr( cat == category::int64x4    ) return mask8 (_mm256_cmpeq_epi64_mask(v0,v1));
@@ -49,7 +49,7 @@ namespace eve::detail
       else  if constexpr( cat == category::int16x16   ) return mask16(_mm256_cmpeq_epi16_mask(v0,v1));
       else  if constexpr( cat == category::int16x8    ) return mask8 (_mm_cmpeq_epi16_mask   (v0,v1));
       else  if constexpr( cat == category::int8x64    ) return mask64(_mm512_cmpeq_epi8_mask (v0,v1));
-      else  if constexpr( cat == category::int8x32    ) return mask32(_mm256_cmpeq_epi_mask  (v0,v1));
+      else  if constexpr( cat == category::int8x32    ) return mask32(_mm256_cmpeq_epi8_mask (v0,v1));
       else  if constexpr( cat == category::int8x16    ) return mask16(_mm_cmpeq_epi8_mask    (v0,v1));
     }
     else
