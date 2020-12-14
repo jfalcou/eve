@@ -8,13 +8,22 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#pragma once
+#include <eve/function/derivative/ceil.hpp>
+#include <type_traits>
 
-#include <eve/detail/overload.hpp>
-
-namespace eve
+TTS_CASE_TPL("Check derivative(ceil) return type", EVE_TYPE)
 {
-  EVE_MAKE_CALLABLE(beta_, beta);
+  if constexpr(eve::floating_value<T>)
+  {
+    TTS_EXPR_IS(eve::derivative(eve::ceil)(T()), T);
+  }
 }
 
-#include <eve/module/special/function/regular/generic/beta.hpp>
+TTS_CASE_TPL("Check eve::derivative(eve::ceil) behavior", EVE_TYPE)
+{
+
+  if constexpr(eve::floating_value<T>)
+  {
+    TTS_EQUAL(eve::derivative(eve::ceil)(T{10.4}), T(0));
+  }
+}

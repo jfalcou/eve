@@ -10,11 +10,16 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/function/lgamma.hpp>
+#include <eve/concept/value.hpp>
 
-namespace eve
+namespace eve::detail
 {
-  EVE_MAKE_CALLABLE(beta_, beta);
+  template<floating_real_value T>
+  EVE_FORCEINLINE T beta_(EVE_SUPPORTS(cpu_), T a0,  T a1) noexcept
+  {
+    auto y = a0+a1;
+    return lgamma(a0)+lgamma(a1)-lgamma(y);
+  }
 }
-
-#include <eve/module/special/function/regular/generic/beta.hpp>

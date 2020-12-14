@@ -8,20 +8,22 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#pragma once
+#include <eve/function/derivative/nearest.hpp>
+#include <type_traits>
 
-#include <eve/constant/zero.hpp>
-#include <eve/function/derivative.hpp>
+TTS_CASE_TPL("Check derivative(nearest) return type", EVE_TYPE)
+{
+  if constexpr(eve::floating_value<T>)
+  {
+    TTS_EXPR_IS(eve::derivative(eve::nearest)(T()), T);
+  }
+}
 
-namespace eve::detail
+TTS_CASE_TPL("Check eve::derivative(eve::nearest) behavior", EVE_TYPE)
 {
 
-  template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T ceil_(EVE_SUPPORTS(cpu_)
-                                   , derivative_type<1> const &
-                                   , T x) noexcept
+  if constexpr(eve::floating_value<T>)
   {
-
-    return zero(as(x));
+    TTS_EQUAL(eve::derivative(eve::nearest)(T{10.4}), T(0));
   }
 }

@@ -10,5 +10,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/trunc.hpp>
-#include <eve/module/core/function/derivative/generic/trunc.hpp>
+#include <eve/function/nearest.hpp>
+#include <eve/module/core/function/derivative/generic/nearest.hpp>
