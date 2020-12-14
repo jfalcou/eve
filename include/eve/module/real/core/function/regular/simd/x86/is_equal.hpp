@@ -10,106 +10,66 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
-#include <type_traits>
 #include <eve/concept/value.hpp>
+#include <eve/detail/function/simd/x86/flags.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/forward.hpp>
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // 128 bits implementation
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE auto  is_equal_(EVE_SUPPORTS(sse2_)
-                                 , wide<T, N, x86_128_> const &v0
-                                 , wide<T, N, x86_128_> const &v1) noexcept
+  template<real_value T, typename N, x86_abi ABI>
+  EVE_FORCEINLINE as_logical_t<wide<T, N, ABI>>
+  is_equal_(EVE_SUPPORTS(sse2_), wide<T,N,ABI> const &v0, wide<T,N,ABI> const &v1) noexcept
   {
-    using t_t = wide<T, N, x86_128_>;
-    using l_t = as_logical_t<t_t>;
-    if constexpr(supports_xop)
+    constexpr auto cat = categorize<wide<T, N, ABI>>();
+
+    if constexpr( !ABI::regular_logical_register )
     {
-#if defined(__clang__)
-#  if !defined(_MM_PCOMCTRL_EQ)
-#    define _MM_PCOMCTRL_EQ 4
-#    define _MM_PCOMCTRL_EQ_MISSING
-#  endif
-        if(std::is_signed_v<T>)
-        {
-          if constexpr(sizeof(T) == 1)      return l_t(_mm_com_epi8(v0, v1, _MM_PCOMCTRL_EQ));
-          else if constexpr(sizeof(T) == 2) return l_t(_mm_com_epi16(v0, v1, _MM_PCOMCTRL_EQ));
-          else if constexpr(sizeof(T) == 4) return l_t(_mm_com_epi32(v0, v1, _MM_PCOMCTRL_EQ));
-          else if constexpr(sizeof(T) == 8) return l_t(_mm_com_epi64(v0, v1, _MM_PCOMCTRL_EQ));
-        }
-        else
-        {
-          if constexpr(sizeof(T) == 1)      return l_t(_mm_com_epu8(v0, v1, _MM_PCOMCTRL_EQ));
-          else if constexpr(sizeof(T) == 2) return l_t(_mm_com_epu16(v0, v1, _MM_PCOMCTRL_EQ));
-          else if constexpr(sizeof(T) == 4) return l_t(_mm_com_epu32(v0, v1, _MM_PCOMCTRL_EQ));
-          else if constexpr(sizeof(T) == 8) return l_t(_mm_com_epu64(v0, v1, _MM_PCOMCTRL_EQ));
-        }
-#  ifdef _MM_PCOMCTRL_EQ_MISSING
-#    undef _MM_PCOMCTRL_EQ
-#    undef _MM_PCOMCTRL_EQ_MISSING
-#  endif
-#else
-        if(std::is_signed_v<T>)
-        {
-          if constexpr(sizeof(T) == 1)      return l_t(_mm_comeq_epi8(v0, v1));
-          else if constexpr(sizeof(T) == 2) return l_t(_mm_comeq_epi16(v0, v1));
-          else if constexpr(sizeof(T) == 4) return l_t(_mm_comeq_epi32(v0, v1));
-          else if constexpr(sizeof(T) == 8) return l_t(_mm_comeq_epi64(v0, v1));
-        }
-        else
-        {
-          if constexpr(sizeof(T) == 1)      return l_t(_mm_comeq_epu8(v0, v1));
-          else if constexpr(sizeof(T) == 2) return l_t(_mm_comeq_epu16(v0, v1));
-          else if constexpr(sizeof(T) == 4) return l_t(_mm_comeq_epu32(v0, v1));
-          else if constexpr(sizeof(T) == 8) return l_t(_mm_comeq_epu64(v0, v1));
-        }
-#endif
+            if constexpr( cat == category::float32x16 ) return mask16(_mm512_cmpeq_ps_mask   (v0,v1));
+      else  if constexpr( cat == category::float64x8  ) return mask8 (_mm512_cmpeq_pd_mask   (v0,v1));
+      else  if constexpr( cat == category::uint64x8   ) return mask8 (_mm512_cmpeq_epu64_mask(v0,v1));
+      else  if constexpr( cat == category::uint64x4   ) return mask8 (_mm256_cmpeq_epu64_mask(v0,v1));
+      else  if constexpr( cat == category::uint64x2   ) return mask8 (_mm_cmpeq_epu64_mask   (v0,v1));
+      else  if constexpr( cat == category::uint32x16  ) return mask16(_mm512_cmpeq_epu32_mask(v0,v1));
+      else  if constexpr( cat == category::uint32x8   ) return mask8 (_mm256_cmpeq_epu32_mask(v0,v1));
+      else  if constexpr( cat == category::uint32x4   ) return mask8 (_mm_cmpeq_epu32_mask   (v0,v1));
+      else  if constexpr( cat == category::uint16x32  ) return mask32(_mm512_cmpeq_epu16_mask(v0,v1));
+      else  if constexpr( cat == category::uint16x16  ) return mask16(_mm256_cmpeq_epu16_mask(v0,v1));
+      else  if constexpr( cat == category::uint16x8   ) return mask8(_mm_cmpeq_epu16_mask    (v0,v1));
+      else  if constexpr( cat == category::uint8x64   ) return mask64(_mm512_cmpeq_epu8_mask (v0,v1));
+      else  if constexpr( cat == category::uint8x32   ) return mask32(_mm256_cmpeq_epu_mask  (v0,v1));
+      else  if constexpr( cat == category::uint8x16   ) return mask16(_mm_cmpeq_epu8_mask    (v0,v1));
+      else  if constexpr( cat == category::int64x8    ) return mask8 (_mm512_cmpeq_epi64_mask(v0,v1));
+      else  if constexpr( cat == category::int64x4    ) return mask8 (_mm256_cmpeq_epi64_mask(v0,v1));
+      else  if constexpr( cat == category::int64x2    ) return mask8 (_mm_cmpeq_epi64_mask   (v0,v1));
+      else  if constexpr( cat == category::int32x16   ) return mask16(_mm512_cmpeq_epi32_mask(v0,v1));
+      else  if constexpr( cat == category::int32x8    ) return mask8 (_mm256_cmpeq_epi32_mask(v0,v1));
+      else  if constexpr( cat == category::int32x4    ) return mask8 (_mm_cmpeq_epi32_mask   (v0,v1));
+      else  if constexpr( cat == category::int16x32   ) return mask32(_mm512_cmpeq_epi16_mask(v0,v1));
+      else  if constexpr( cat == category::int16x16   ) return mask16(_mm256_cmpeq_epi16_mask(v0,v1));
+      else  if constexpr( cat == category::int16x8    ) return mask8 (_mm_cmpeq_epi16_mask   (v0,v1));
+      else  if constexpr( cat == category::int8x64    ) return mask64(_mm512_cmpeq_epi8_mask (v0,v1));
+      else  if constexpr( cat == category::int8x32    ) return mask32(_mm256_cmpeq_epi_mask  (v0,v1));
+      else  if constexpr( cat == category::int8x16    ) return mask16(_mm_cmpeq_epi8_mask    (v0,v1));
     }
     else
     {
-           if constexpr(std::is_same_v<T, float>)      return l_t(_mm_cmpeq_ps(v0, v1));
-      else if constexpr(std::is_same_v<T, double>)     return l_t(_mm_cmpeq_pd(v0, v1));
-      else if constexpr(integral_value<T>)
+            if constexpr( cat == category::float32x8  ) return _mm256_cmp_ps(v0,v1,to_integer(cmp_flt::eq_oq));
+      else  if constexpr( cat == category::float64x4  ) return _mm256_cmp_pd(v0,v1,to_integer(cmp_flt::eq_oq));
+      else  if constexpr( cat == category::float32x4  ) return _mm_cmpeq_ps(v0,v1);
+      else  if constexpr( cat == category::float64x2  ) return _mm_cmpeq_pd(v0,v1);
+      else  if constexpr(supports_xop)
       {
-        if constexpr(sizeof(T) == 1)                   return l_t(_mm_cmpeq_epi8(v0, v1));
-        else if constexpr(sizeof(T) == 2)              return l_t(_mm_cmpeq_epi16(v0, v1));
-        else if constexpr(sizeof(T) == 4)              return l_t(_mm_cmpeq_epi32(v0, v1));
-        else if constexpr(sizeof(T) == 8)
-        {
-          if constexpr(current_api >= sse4_1)          return l_t(_mm_cmpeq_epi64(v0, v1));
-          else                                         return map(is_equal, v0, v1);
-        }
+              if constexpr( cat == category::uint64x2 ) return _mm_comeq_epu64(v0,v1);
+        else  if constexpr( cat == category::uint32x4 ) return _mm_comeq_epu32(v0,v1);
+        else  if constexpr( cat == category::uint16x8 ) return _mm_comeq_epu16(v0,v1);
+        else  if constexpr( cat == category::uint8x16 ) return _mm_comeq_epu8 (v0,v1);
+        else  if constexpr( cat == category::int64x2  ) return _mm_comeq_epi64(v0,v1);
+        else  if constexpr( cat == category::int32x4  ) return _mm_comeq_epi32(v0,v1);
+        else  if constexpr( cat == category::int16x8  ) return _mm_comeq_epi16(v0,v1);
+        else  if constexpr( cat == category::int8x16  ) return _mm_comeq_epi8 (v0,v1);
       }
-    }
-  }
-
-
-  // -----------------------------------------------------------------------------------------------
-  // 256 bits implementation
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto is_equal_(EVE_SUPPORTS(avx_)
-                                , wide<T, N, x86_256_> const &v0
-                                , wide<T, N, x86_256_> const &v1) noexcept
-  {
-    using t_t = wide<T, N, x86_256_>;
-    using l_t = as_logical_t<t_t>;
-
-         if constexpr(std::is_same_v<T, float>)    return l_t(_mm256_cmp_ps(v0, v1, _CMP_EQ_OQ));
-    else if constexpr(std::is_same_v<T, double>)   return l_t(_mm256_cmp_pd(v0, v1, _CMP_EQ_OQ));
-    else if constexpr(integral_value<T>)
-    {
-      if constexpr(  current_api >= avx2)
-      {
-             if constexpr(sizeof(T) == 1)          return l_t(_mm256_cmpeq_epi8(v0, v1));
-        else if constexpr(sizeof(T) == 2)          return l_t(_mm256_cmpeq_epi16(v0, v1));
-        else if constexpr(sizeof(T) == 4)          return l_t(_mm256_cmpeq_epi32(v0, v1));
-        else if constexpr(sizeof(T) == 8)          return l_t(_mm256_cmpeq_epi64(v0, v1));
-      }
-      else                                         return aggregate(is_equal, v0, v1);
+      else return map(is_equal, v0, v1);
     }
   }
 }

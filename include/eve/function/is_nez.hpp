@@ -19,3 +19,6 @@ namespace eve
 
 #include <eve/module/real/core/function/regular/generic/is_nez.hpp>
 
+#if defined(EVE_HW_X86)
+#  include <eve/module/core/function/regular/simd/x86/is_nez.hpp>
+#endif
