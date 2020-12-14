@@ -10,5 +10,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/betaln.hpp>
-#include <eve/module/core/function/derivative/generic/betaln.hpp>
+#include <eve/function/betainc.hpp>
+#include <eve/module/special/function/derivative/generic/betainc.hpp>

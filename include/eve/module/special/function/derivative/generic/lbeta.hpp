@@ -26,7 +26,7 @@ namespace eve::detail
   {
     return arithmetic_call(derivative_type<N>{}(lbeta), a, b);
   }
-  
+
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr T lbeta_(EVE_SUPPORTS(cpu_)
                                     , derivative_type<1> const &
@@ -34,7 +34,7 @@ namespace eve::detail
                                     , T const &y) noexcept
   requires(has_native_abi_v<T>)
   {
-    return digamma(x) - digamma(x + y));
+    return digamma(x) - digamma(x + y);
 }
 
 template<floating_real_value T>
@@ -44,6 +44,6 @@ EVE_FORCEINLINE constexpr T lbeta_(EVE_SUPPORTS(cpu_)
                                   , T const &y) noexcept
 requires(has_native_abi_v<T>)
   {
-    return  digamma(y) - digamma(x + y));
+    return  digamma(y) - digamma(x + y);
   }
 }
