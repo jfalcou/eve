@@ -25,9 +25,9 @@ The naming of these functions tries to follow the standard.
 **Convenience header:** <script type="preformatted">`#include <eve/function/special.hpp>`</script>
 
 [`eve::beta`](special/beta.html)
-:   computes $\displaystyle B(x,y)=\int_0^1 t^{x-1}(1-t)^{y-1}\mbox{d}t$
+:   computes $\displaystyle \mbox{B}(x,y)=\int_0^1 t^{x-1}(1-t)^{y-1}\mbox{d}t$
 [`eve::betainc`](special/betainc.html)
-:   computes $\displaystyle B(s,x,y)=\int_0^s t^{x-1}(1-t)^{y-1}\mbox{d}t$
+:   computes the lower normalized beta function: $\displaystyle \mbox{B}(s,x,y)=\frac{1}{\mbox{B}(x,y)}\int_0^s t^{x-1}(1-t)^{y-1}\mbox{d}t$
 [`eve::betainc_inv`](special/betainc.html)
 :   computes the inverse of the incomplete beta function relative to the first parameter.
 [`eve::cyl_bessel_j`](special/cyl_bessel_j.html)
@@ -59,7 +59,7 @@ The naming of these functions tries to follow the standard.
 [`eve::lgamma`](special/lgamma.html)
 :   computes the logarithm of the absolute value of the $\Gamma$ function: $\log(|\Gamma(x)|)$
 [`eve::exp_int`](special/exp_int.html)
-:   computes the exponential integral $\displaystyle E_{n}(x)=\int_0^\infty \frac{e^{-xt}}{t^{n}} \mbox{d}t$
+:   computes the exponential integral $\displaystyle \mbox{E}_{n}(x)=\int_0^\infty \frac{e^{-xt}}{t^{n}} \mbox{d}t$
 [`eve::tgamma`](special/tgamma.html)
 :   computes the (true) $\Gamma$ function: $\displaystyle \Gamma(x)=\int_0^\infty t^{x-1}e^{-t}\mbox{d}t$
 [`eve::gamma_p`](special/gamma_p.html)

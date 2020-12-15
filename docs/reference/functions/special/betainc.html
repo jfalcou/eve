@@ -34,8 +34,7 @@ Member functions
 template< floating_value T, floating_value U, floating_value V > auto operator()( T s, U x, V y ) const noexcept requires compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs  the computation of $\displaystyle \mbox{B}(s,x,y)=\int_0^s t^{x-1}(1-t)^{y-1}\mbox{d}t$, or equivalently
-$\displaystyle \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}$
+Performs  the computation of $\displaystyle \mbox{B}(s,x,y)=\frac{1}{\mbox{B}(x,y)}\int_0^s t^{x-1}(1-t)^{y-1}\mbox{d}t$
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -53,12 +52,11 @@ Returns [element-wise](../../../glossary.html#value) the value of the incomplete
 [`derivative`](../decorators.html#derivative)
 :   **Required header: **<script type="preformatted">` #include <eve/function/derivative/betainc.hpp>`</script>
 
-:   The expression `derivative_1st(betainc)(s,x,y)`,  `derivative_2nd(betainc)(s,x,y)` and  `derivative_3rd(betainc)(s,x,y)` computes the partial
-    derivatives of $f$, where $f$ is the function $(s,x,y) \rightarrow \ \mbox{B}(s,x,y)$.
+:   The expression `derivative(betainc)(s,x,y)`,  computes the
+    derivative of $f_{x,y}$, where $f_{x,y}$ is the function $s \rightarrow \ \mbox{B}(s,x,y)$.
 
-  (insert ../../src/betainc.src.html here)
+    The other partial derivative are still unimplemented.
 
-  (insert ../../out/betainc.out.html here)
 
 
 <!-- End of Document -->

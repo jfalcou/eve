@@ -11,6 +11,7 @@
 #pragma once
 
 #include <eve/function/betainc.hpp>
+#include <eve/function/derivative/beta.hpp>
 #include <eve/function/derivative.hpp>
 #include <eve/function/pow.hpp>
 #include <eve/function/oneminus.hpp>
@@ -36,30 +37,6 @@ namespace eve::detail
                                    , T const &y) noexcept
   requires(has_native_abi_v<T>)
   {
-    return pow(s, dec(x))*pow(oneminus(s), dec(y));
-  }
-
-  template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T betainc_(EVE_SUPPORTS(cpu_)
-                                   , derivative_type<2> const &
-                                   , T const &s
-                                   , T const &x
-                                   , T const &y) noexcept
-  requires(has_native_abi_v<T>)
-  {
-    auto am1 = dec(x);
-    return  betainc(s, am1, y)*am1;
-  }
-
-  template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T betainc_(EVE_SUPPORTS(cpu_)
-                                   , derivative_type<3> const &
-                                   , T const &s
-                                   , T const &x
-                                   , T const &y) noexcept
-  requires(has_native_abi_v<T>)
-  {
-    auto bm1 = dec(y);
-    return  -betainc(s, x, bm1)*bm1;
+    return pow(s, dec(x))*pow(oneminus(s), dec(y))/beta(x, y);
   }
 }

@@ -27,6 +27,6 @@ TTS_CASE_TPL("Check eve::betainc behavior", EVE_TYPE)
 {
   TTS_EQUAL(eve::betainc(T(0), T(0), T(0)), T(0)  );
   TTS_EQUAL(eve::betainc(T(0), T(0), T(7)), T(0)  );
-  TTS_ULP_EQUAL(eve::betainc(T(0.5), T(0.5), T(0.5)), T(0.5) , 0.5 );
+  TTS_ULP_EQUAL(eve::betainc(T(0.5), T(0.5), T(0.5)), T(0.5) , 1.5 );
   TTS_ULP_EQUAL(eve::betainc(T(0.2), T(0.3), T(2)), T(7.651219897728122e-01), 3);
 }
