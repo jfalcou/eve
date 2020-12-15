@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/betainc_inv.hpp>
-#include <eve/module/core/function/derivative/generic/betainc_inv.hpp>
+#include <eve/module/special/function/derivative/generic/betainc_inv.hpp>

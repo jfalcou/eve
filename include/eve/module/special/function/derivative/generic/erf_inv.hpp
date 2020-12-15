@@ -23,7 +23,12 @@ namespace eve::detail
                                   , derivative_type<1> const &
                                   , T const &x) noexcept
   {
-    auto sqrt_pi_2 = T(0.886226925452758013649);
-    return sqrt_pi_2*exp(sqr(erf_inv(x)));
+    if constexpr(has_native_abi_v<T>)
+    {
+      auto sqrt_pi_2 = T(0.886226925452758013649);
+      return sqrt_pi_2*exp(sqr(erf_inv(x)));
+    }
+    else
+      return apply_over(derivative(erf_inv), x);
   }
 }
