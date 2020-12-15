@@ -37,7 +37,6 @@ namespace eve::detail
                                     , derivative_type<1> const &
                                     , T x) noexcept
   {
-
     return zero(as(x));
   }
 }

@@ -36,8 +36,8 @@ namespace eve::detail
                             , T const &c) noexcept
   requires(has_native_abi_v<T>)
   {
-    if constexpr(N == 1) return derivative_1st(min)(max(a, b), c)*derivative_1st(max)(a, b);
-    if constexpr(N == 2) return derivative_1st(min)(max(a, b), c)*derivative_2nd(max)(a, b);
-    if constexpr(N == 3) return derivative_2nd(min)(max(a, b), c);
+         if constexpr(N == 1) return derivative_1st(min)(max(a, b), c)*derivative_1st(max)(a, b);
+    else if constexpr(N == 2) return derivative_1st(min)(max(a, b), c)*derivative_2nd(max)(a, b);
+    else if constexpr(N == 3) return derivative_2nd(min)(max(a, b), c);
   }
 }

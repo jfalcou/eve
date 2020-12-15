@@ -39,7 +39,7 @@ namespace eve::detail
       auto ax = eve::abs(x);
       auto ay = eve::abs(y);
       if constexpr(N == 1) return if_else(ax > ay,  one(as(x)), zero);
-      if constexpr(N == 2) return if_else(ax < ay,  one(as(x)), zero);
+      else if constexpr(N == 2) return if_else(ax < ay,  one(as(x)), zero);
     }
    else
      return apply_over(derivative_type<N>()(maxmag), x, y);

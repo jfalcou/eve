@@ -38,7 +38,6 @@ namespace eve::detail
                                     , derivative_type<1> const &
                                     , T x, T ) noexcept
   {
-
     return half(as(x));
   }
 
@@ -47,7 +46,6 @@ namespace eve::detail
                                     , derivative_type<2> const &
                                     , T x, T ) noexcept
   {
-
     return half(as(x));
   }
 }

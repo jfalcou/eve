@@ -52,7 +52,7 @@ namespace eve::detail
     {
      auto k = rec(manhattan(x, y));
      if constexpr(N == 1) return sign(x);
-     if constexpr(N == 2) return sign(y);
+     else if constexpr(N == 2) return sign(y);
     }
    else
      return apply_over(derivative_type<N>()(manhattan), x, y);
@@ -69,8 +69,8 @@ namespace eve::detail
     {
      auto k = rec(manhattan(x, y, z));
      if constexpr(N == 1) return sign(x);
-     if constexpr(N == 2) return sign(y);
-     if constexpr(N == 3) return sign(z);
+     else if constexpr(N == 2) return sign(y);
+     else if constexpr(N == 3) return sign(z);
     }
    else
      return apply_over(derivative_type<N>()(manhattan), x, y, z);

@@ -35,7 +35,7 @@ namespace eve::detail
   //  requires(has_native_abi_v<T>)
   {
     if constexpr(N == 1) return b;
-    if constexpr(N == 2) return a;
-    if constexpr(N == 3) return one(as(c));
+    else if constexpr(N == 2) return a;
+    else if constexpr(N == 3) return one(as(c));
   }
 }

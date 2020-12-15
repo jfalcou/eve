@@ -48,11 +48,6 @@ simd   : {1, 1, 1, 1}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 
-It must be noted that without parameter these constant are proper function objects and can be used in
-specialiazation of functions to allow possibility of an optimized call : the `if_else` object
-is  optimized in such a way for parameters that can be `mone`, `allbits` or `one`.
-
-
 In the following tables:
   * `T` represents the requested type for the generated constant.
   * `E` represents the [element type](../../glossary.html#elementtype#elementtype) associated to `T`

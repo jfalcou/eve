@@ -37,7 +37,7 @@ namespace eve::detail
    if constexpr( has_native_abi_v<T> )
     {
      if constexpr(N == 1) return if_else(x < y,  one(as(x)), zero);
-     if constexpr(N == 2) return if_else(x > y,  one(as(x)), zero);
+     else if constexpr(N == 2) return if_else(x > y,  one(as(x)), zero);
     }
    else
      return apply_over(derivative_type<N>()(min), x, y);

@@ -47,7 +47,7 @@ namespace eve::detail
     {
      auto k = rec(hypot(x, y));
      if constexpr(N == 1) return x*k;
-     if constexpr(N == 2) return y*k;
+     else if constexpr(N == 2) return y*k;
     }
    else
      return apply_over(derivative_type<N>()(hypot), x, y);
@@ -64,8 +64,8 @@ namespace eve::detail
     {
      auto k = rec(hypot(x, y, z));
      if constexpr(N == 1) return x*k;
-     if constexpr(N == 2) return y*k;
-     if constexpr(N == 3) return z*k;
+     else if constexpr(N == 2) return y*k;
+     else if constexpr(N == 3) return z*k;
     }
    else
      return apply_over(derivative_type<N>()(hypot), x, y, z);
