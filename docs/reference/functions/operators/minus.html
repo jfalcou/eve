@@ -62,6 +62,11 @@ Supported decorators
 :   The call `saturated(minus)(x)` computes the saturated opposite of `x`. The only interest of this behaviour is that
     for integral signed type T  `saturated(minus)(Valmin< T >())` returns `Valmax< T >()` and is not u.b.
 
+[`derivative`](../decorators.html#derivative)
+:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/minus.hpp>`</script>
+
+:   The expression `derivative(minus)(x)` computes the derivative of the function at `x`.
+
 Masked calls
 ====================================================================================================
  The [masked](../../../tutorial/masking.html) calls `minus[cond](x)` and `saturated(minus[cond])(x)` where `cond` satisfies the

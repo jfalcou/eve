@@ -82,7 +82,13 @@ Supported decorators
      -  If `x` is $\pm0$ and `y` is $\pm-0$, $-90$ is returned
      -  If `x` is $\pm0$ and `y` is $\pm+0$, $+90$  is returned
 
-</script>
+
+[`derivative`](../decorators.html#derivative)
+:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/atan2d.hpp>`</script>
+
+:   The expression `derivative_1st(atan2d)(x,y)` and `derivative_2nd(atan2d)(x,y)` computes the partial
+    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ \mbox{atan2d}(x,y)$.
+
 
   (insert ../../src/atan2d.src.html here)
 

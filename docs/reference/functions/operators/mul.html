@@ -63,6 +63,13 @@ Supported decorators
 :   The call `saturated(mul)(x,y)` computes the saturated  multiplication of `x` and `y`. The saturation is obtained in the
      [compatibility result](../../concept.html#compatibility) of the two parameters. No overflow occurs.
 
+[`derivative`](../decorators.html#derivative)
+:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/mul.hpp>`</script>
+
+:   The expression `derivative_1st(mul)(x,y)` and `derivative_2nd(mul)(x,y)` computes the partial
+    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ xy$.
+
+
 Masked calls
 ====================================================================================================
  The [masked](../../../tutorial/masking.html) calls `mul[cond](x,y)` and `saturated(mul[cond])(x,y)` where `cond` satisfies the

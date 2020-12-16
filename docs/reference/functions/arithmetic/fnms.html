@@ -69,6 +69,13 @@ Supported decorators
 :   The call `numeric(fnms)(x,y,z)` ensures the full compliance to fnms properties. This can be very expensive if the
     system has no hardware capability.
 
+
+[`derivative`](../decorators.html#derivative)
+:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/fnms.hpp>`</script>
+
+:   The expression `derivative_1st(fnms)(x,y,z)`, `derivative_2nd(fnms)(x,y,z)` and `derivative_3rd(fnms)(x,y,z)` computes the partial
+    derivatives of $f$, where $f$ is the function $(x,y,z) \rightarrow \ -xy-z$.
+
    (insert ../../src/fnms.src.html here)
 
    (insert ../../out/fnms.out.html here)

@@ -75,6 +75,12 @@ Supported decorators
   * If `|x| <  |y|`,  `y` is returned.
   * Otherwise `numeric(max)(x, y)` is returned.
 
+[`derivative`](../decorators.html#derivative)
+:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/maxmag.hpp>`</script>
+
+:   The expression `derivative_1st(maxmag)(x,y)` and `derivative_2nd(maxmag)(x,y)` computes the partial
+    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ \mbox{maxmag}(x,y)$.
+
 </script>
 
   (insert ../../src/maxmag.src.html here)

@@ -30,7 +30,7 @@ namespace eve
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 
-Type wrapping structure. Various **EVE** functions requires to be configured by a type. This type
+Various **EVE** functions require to be configured by a type. This type
 argument is used for selecting or configuring the output type of the functions (i.e the various
 [conversions] functions).
 
@@ -125,8 +125,8 @@ Predefined Type Wrappers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  inline constexpr as_<double>        float64 = {};   // (1
-  inline constexpr as_<float>         float32 = {};   // (2
+  inline constexpr as_<double>       float64 = {};  // (1
+  inline constexpr as_<float>        float32 = {};  // (2
   inline constexpr as_<std::uint8t>  uint8  = {};   // (3
   inline constexpr as_<std::uint16t> uint16 = {};   // (4
   inline constexpr as_<std::uint32t> uint32 = {};   // (5

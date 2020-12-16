@@ -55,6 +55,11 @@ Supported Incorators
 :   The call `saturated(inc)(x)` computes the saturated opposite of `x`. The only interest of this behaviour is that
     for integral type T  `saturated(inc)(Valmax< T >())` returns `Valmax< T >()`.
 
+[`derivative`](../decorators.html#derivative)
+:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/inc.hpp>`</script>
+
+:   The expression `derivative(inc)(x)` computes the derivative of the function at `x`.
+
 Masked calls
 ====================================================================================================
  The [masked](../../../tutorial/masking.html) calls `inc[cond](x)` and `saturated(inc[cond])(x)` where `cond` satisfies the

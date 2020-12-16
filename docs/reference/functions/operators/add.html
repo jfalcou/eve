@@ -62,6 +62,12 @@ Supported decorators
 :   The call `saturated(add)(x,y)` computes the saturated  sum of `x` and `y`. The saturation is obtained in the
      [compatibility result](../../concept.html#compatibility) of the two parameters. No overflow occurs.
 
+[`derivative`](../decorators.html#derivative)
+:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/add.hpp>`</script>
+
+:   The expression `derivative_1st(add)(x,y)` and `derivative_2nd(add)(x,y)` computes the partial
+    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ x+y$.
+:
 Masked calls
 ====================================================================================================
  The [masked](../../../tutorial/masking.html) calls `add[cond](x,y)` and `saturated(add[cond])(x,y)` where `cond` satisfies the

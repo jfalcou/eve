@@ -66,6 +66,12 @@ Supported decorators
 :   The call `numeric(max)(x,y)`  ensures that  if any element of the inputs is a `Nan`, the corresponding
     output element is the corresponding element of the other parameter (i.e. the not invalid parameter wins)
 
+[`derivative`](../decorators.html#derivative)
+:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/max.hpp>`</script>
+
+:   The expression `derivative_1st(max)(x,y)` and `derivative_2nd(max)(x,y)` computes the partial
+    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ \max(x,y)$.
+
 </script>
 
   (insert ../../src/max.src.html here)

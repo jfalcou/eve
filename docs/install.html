@@ -20,7 +20,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This retrieves the `master` branch which contains the latest stable version.
-You can also use the `develop`branch if you prefer using bleeding edge unstable vesion
+You can also use the `develop` branch if you prefer using bleeding edge unstable vesion
 or any tagged versions.
 
 Once retrieved, you should have a ``eve`` folder which contains the whole source code.
@@ -111,8 +111,8 @@ The `-DNDEBUG` setting can be omitted but then asserts will be inserted into the
 # Instruction Set Selection
 
 The SIMD instruction sets that **EVE** used is decided at compile time. You can use `-march=native`
-of you're sure your code won't be executed anywhere else. You can also select a specific instructions
-set by using the proper options from your compiler. For example, let's compile for exactly SSE4.1.
+if you're sure your code won't be executed anywhere else. You can also select a specific instructions
+set by using the proper option(s) from your compiler. For example, let's compile for exactly SSE4.1.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
  $ g++-10 test.cpp -std=c++20  -msse4.1 -O3 -DNDEBUG -I/path/to/install/include -o output

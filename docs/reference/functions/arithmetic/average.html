@@ -56,6 +56,14 @@ Half the sum of `x` and `y`. No overflow occurs.
     simd intrinsics to perform the operation, the scalar results may differ by one unit from
     simd ones and is system dependent.
 
+Supported decorators
+====================================================================================================
+[`derivative`](../decorators.html#derivative)
+:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/average.hpp>`</script>
+
+:   The expression `derivative_1st(average)(x,y)` and `derivative_2nd(average)(x,y)` computes the partial
+    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ (x+y)/2$.
+
   (insert ../../src/average.src.html here)
 
   (insert ../../out/average.out.html here)

@@ -66,6 +66,13 @@ Supported decorators
 
     Morever it returns $\infty$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
 
+[`derivative`](../decorators.html#derivative)
+:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/manhattan.hpp>`</script>
+
+:   The expression `derivative_1st(manhattan)(x,y)` and `derivative_2nd(manhattan)(x,y)` computes the partial
+    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ \sqrt{x^2+y^2}$. Of course 3 analogous calls
+    can be made in the three parameters case.
+
 </script>
 
   (insert ../../src/hypot.src.html here)

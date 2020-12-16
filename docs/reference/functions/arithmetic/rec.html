@@ -58,6 +58,12 @@ Supported decorators
 :   The call `raw(rec)(x)`, call a proper system intrinsic if one exists, but with possibly very poor accuracy in return.
     Otherwise it uses the [`regular`](../decorators.html#regular) call.
 
+[`derivative`](../decorators.html#derivative)
+:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/rec.hpp>`</script>
+
+:   The expression `derivative(rec)(x)` computes the derivative of the function at `x`.
+   
+
   (insert ../../src/rec.src.html here)
 
   (insert ../../out/rec.out.html here)

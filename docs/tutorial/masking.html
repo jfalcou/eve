@@ -16,13 +16,13 @@
 [doc_if_else]: ../reference/functions/logical/if_else.html
 
 When you call a function on one or more [SIMD values](reference/concepts.html#simd_value), you
-expect the computation to be performed on every element of its parameters. Sometimes, you may want
+expect the computation to be performed on every elements of its parameters. Sometimes, you may want
 to make the application of a given function dependent on some condition. Let's explore the
 functionalities **EVE** provides for this kind of task.
 
 Explicit Selection
 ====================================================================================================
-Let's say the function we want to write computes the product of two value `a` and `b`
+Let's say the function we want to write computes the product of two values `a` and `b`
 if `a` is equal to `b` and their difference otherwise. The straightforward approach is to
 use the [if_else][doc_if_else] function.
 

@@ -16,6 +16,7 @@
 #include <eve/function/add.hpp>
 #include <eve/function/any.hpp>
 #include <eve/function/converter.hpp>
+#include <eve/function/convert.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/fma.hpp>
@@ -27,6 +28,7 @@
 #include <eve/function/rec.hpp>
 #include <eve/function/log.hpp>
 #include <eve/function/maximum.hpp>
+#include <eve/function/min.hpp>
 #include <eve/function/pow.hpp>
 #include <eve/function/tgamma.hpp>
 #include <eve/function/sqr.hpp>
@@ -42,11 +44,10 @@ namespace eve::detail
   template<floating_real_value T>
   EVE_FORCEINLINE T exp_int_(EVE_SUPPORTS(cpu_), T x) noexcept
   {
-
     return exp_int(T(1), x);
   }
 
-  template<integral_scalar_value I, floating_real_scalar_value T>
+  template<scalar_value I, floating_real_scalar_value T>
   EVE_FORCEINLINE T exp_int_(EVE_SUPPORTS(cpu_), I in, T x) noexcept
   {
     if( in == 0 )  return exp(-x)/x;
@@ -54,9 +55,19 @@ namespace eve::detail
     return exp_int(T(in), x);
   }
 
+  template<integral_scalar_value I, floating_real_simd_value T>
+  EVE_FORCEINLINE auto exp_int_(EVE_SUPPORTS(cpu_), I in, T x) noexcept
+  //  requires compatible_values<T, I>
+  {
+    using elt_t =  element_type_t<T>;
+
+    auto n = T(convert(in, as<elt_t>()));
+    return exp_int(n, x);
+  }
+
   template<integral_simd_value I, floating_real_simd_value T>
-  EVE_FORCEINLINE T exp_int_(EVE_SUPPORTS(cpu_), I in, T x) noexcept
-  requires compatible_values<T, I>
+  EVE_FORCEINLINE auto exp_int_(EVE_SUPPORTS(cpu_), I in, T x) noexcept
+  //  requires compatible_values<T, I>
   {
     using elt_t =  element_type_t<T>;
     return exp_int(convert(in, as<elt_t>()), x);
@@ -102,8 +113,8 @@ namespace eve::detail
            auto eqzx = is_eqz(x);
            x = inc[eqzx](x); //loop is infinite for x == 0
            auto psi1 = zero(as(x));
-           int32_t maxn = maximum(n);
-           for( int32_t i=dec(maxn); i; --i )  psi1 = add[T(i) < n](psi1, rec(T(i)));
+           int32_t maxn = dec(max(1, int32_t(eve::maximum(n))));
+           for( int32_t i=maxn; i != 0; --i )  psi1 = add[T(i) < n](psi1, rec(T(i)));
            auto euler = Ieee_constant<T, 0x3f13c468U, 0x3fe2788cfc6fb619ULL>();
            auto psi = -euler-log(x)+psi1;
            T t; ;
