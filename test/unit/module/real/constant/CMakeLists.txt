@@ -10,25 +10,24 @@
 ##==================================================================================================
 ## Setup aggregation of tests
 ##==================================================================================================
-add_custom_target(unit.constant.exe       )
-add_custom_target(unit.constant.scalar.exe)
-add_custom_target(unit.constant.simd.exe  )
+add_custom_target(unit.real.constant.exe       )
+add_custom_target(unit.real.constant.scalar.exe)
+add_custom_target(unit.real.constant.simd.exe  )
 
-add_dependencies(unit.scalar.exe    unit.constant.scalar.exe )
-add_dependencies(unit.simd.exe      unit.constant.simd.exe   )
-add_dependencies(unit.constant.exe unit.constant.scalar.exe   )
-add_dependencies(unit.constant.exe unit.constant.simd.exe     )
+add_dependencies(unit.real.scalar.exe   unit.real.constant.scalar.exe )
+add_dependencies(unit.real.simd.exe     unit.real.constant.simd.exe   )
+add_dependencies(unit.real.constant.exe unit.real.constant.scalar.exe )
+add_dependencies(unit.real.constant.exe unit.real.constant.simd.exe   )
 
 ##==================================================================================================
 ## Regular constant function unit tests
 ##==================================================================================================
 
-make_all_units(ROOT unit.constant NAME basic                ARCH scalar simd TYPES ${all_types}    )
-make_all_units(ROOT unit.constant NAME ieee754              ARCH scalar simd TYPES ${real_types}   )
-make_all_units(ROOT unit.constant NAME limit                ARCH scalar simd TYPES ${all_types}    )
-make_all_units(ROOT unit.constant NAME math                 ARCH scalar simd TYPES ${real_types}   )
+make_all_units(ROOT unit.real.constant NAME basic                ARCH scalar simd TYPES ${all_types}    )
+make_all_units(ROOT unit.real.constant NAME ieee754              ARCH scalar simd TYPES ${real_types}   )
+make_all_units(ROOT unit.real.constant NAME limit                ARCH scalar simd TYPES ${all_types}    )
+make_all_units(ROOT unit.real.constant NAME math                 ARCH scalar simd TYPES ${real_types}   )
 
 ##==================================================================================================
 ## Other Constant tests
-make_unit( "unit.constant" constant.cpp     )
-make_unit( "unit.constant" conditional.cpp  )
+make_unit( "unit.real.constant" constant.cpp     )
