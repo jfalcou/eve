@@ -10,144 +10,103 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/traits/as_logical.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/constant/signmask.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/constant/signmask.hpp>
+#include <eve/detail/function/simd/x86/flags.hpp>
 #include <eve/detail/implementation.hpp>
-#include <type_traits>
+#include <eve/forward.hpp>
+
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // 128 bits implementation
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE auto is_greater_(EVE_SUPPORTS(sse2_)
-                                  , wide<T, N, x86_128_> const &v0
-                                  , wide<T, N, x86_128_> const &v1) noexcept
+  template<real_value T, typename N, x86_abi ABI>
+  EVE_FORCEINLINE as_logical_t<wide<T, N, ABI>>
+  is_greater_(EVE_SUPPORTS(sse2_), wide<T,N,ABI> const &v0, wide<T,N,ABI> const &v1) noexcept
   {
-    using t_t = wide<T, N, x86_128_>;
-    using l_t = as_logical_t<t_t>;
+    constexpr auto c = categorize<wide<T, N, ABI>>();
+    constexpr auto f = to_integer(cmp_flt::gt_oq);
 
-         if constexpr(std::is_same_v<T, float>)  return l_t(_mm_cmpgt_ps(v0, v1));
-    else if constexpr(std::is_same_v<T, double>) return l_t(_mm_cmpgt_pd(v0, v1));
-    else if constexpr(std::is_integral_v<T>)
+    if constexpr( !ABI::regular_logical_register )
     {
-      if constexpr(std::is_signed_v<T>)
-      {
-        if constexpr(sizeof(T) == 1)      return l_t(_mm_cmpgt_epi8(v0, v1));
-        else if constexpr(sizeof(T) == 2) return l_t(_mm_cmpgt_epi16(v0, v1));
-        else if constexpr(sizeof(T) == 4) return l_t(_mm_cmpgt_epi32(v0, v1));
-        else if constexpr(sizeof(T) == 8)
-        {
-          if constexpr(current_api >= sse4_2) return l_t(_mm_cmpgt_epi64(v0, v1));
-          else                                return map(eve::is_greater, v0, v1);
-        }
-      }
-      else if constexpr(std::is_unsigned_v<T>)
-      {
-        using s_t    = eve::wide<eve::detail::as_integer_t<T, signed>, N, x86_128_>;
-        s_t const sm = signmask(eve::as<s_t>());
-
-        return eve::bit_cast( eve::is_greater ( eve::bit_cast(v0,as(sm)) - sm,
-                                                eve::bit_cast(v1,as(sm)) - sm
-                                              ),
-                              as_<l_t>{}
-                            );
-      }
+            if constexpr( c == category::float32x16 ) return mask16(_mm512_cmp_ps_mask(v0, v1, f) );
+      else  if constexpr( c == category::float32x8  ) return mask8 (_mm256_cmp_ps_mask(v0, v1, f) );
+      else  if constexpr( c == category::float32x4  ) return mask8 (_mm_cmp_ps_mask   (v0, v1, f) );
+      else  if constexpr( c == category::float64x8  ) return mask8 (_mm512_cmp_pd_mask(v0, v1, f) );
+      else  if constexpr( c == category::float64x4  ) return mask8 (_mm256_cmp_pd_mask(v0, v1, f) );
+      else  if constexpr( c == category::float64x2  ) return mask8 (_mm_cmp_pd_mask   (v0, v1, f) );
+      else  if constexpr( c == category::uint64x8   ) return mask8 (_mm512_cmpgt_epu64_mask(v0,v1));
+      else  if constexpr( c == category::uint64x4   ) return mask8 (_mm256_cmpgt_epu64_mask(v0,v1));
+      else  if constexpr( c == category::uint64x2   ) return mask8 (_mm_cmpgt_epu64_mask   (v0,v1));
+      else  if constexpr( c == category::uint32x16  ) return mask16(_mm512_cmpgt_epu32_mask(v0,v1));
+      else  if constexpr( c == category::uint32x8   ) return mask8 (_mm256_cmpgt_epu32_mask(v0,v1));
+      else  if constexpr( c == category::uint32x4   ) return mask8 (_mm_cmpgt_epu32_mask   (v0,v1));
+      else  if constexpr( c == category::uint16x32  ) return mask32(_mm512_cmpgt_epu16_mask(v0,v1));
+      else  if constexpr( c == category::uint16x16  ) return mask16(_mm256_cmpgt_epu16_mask(v0,v1));
+      else  if constexpr( c == category::uint16x8   ) return mask8(_mm_cmpgt_epu16_mask    (v0,v1));
+      else  if constexpr( c == category::uint8x64   ) return mask64(_mm512_cmpgt_epu8_mask (v0,v1));
+      else  if constexpr( c == category::uint8x32   ) return mask32(_mm256_cmpgt_epu8_mask (v0,v1));
+      else  if constexpr( c == category::uint8x16   ) return mask16(_mm_cmpgt_epu8_mask    (v0,v1));
+      else  if constexpr( c == category::int64x8    ) return mask8 (_mm512_cmpgt_epi64_mask(v0,v1));
+      else  if constexpr( c == category::int64x4    ) return mask8 (_mm256_cmpgt_epi64_mask(v0,v1));
+      else  if constexpr( c == category::int64x2    ) return mask8 (_mm_cmpgt_epi64_mask   (v0,v1));
+      else  if constexpr( c == category::int32x16   ) return mask16(_mm512_cmpgt_epi32_mask(v0,v1));
+      else  if constexpr( c == category::int32x8    ) return mask8 (_mm256_cmpgt_epi32_mask(v0,v1));
+      else  if constexpr( c == category::int32x4    ) return mask8 (_mm_cmpgt_epi32_mask   (v0,v1));
+      else  if constexpr( c == category::int16x32   ) return mask32(_mm512_cmpgt_epi16_mask(v0,v1));
+      else  if constexpr( c == category::int16x16   ) return mask16(_mm256_cmpgt_epi16_mask(v0,v1));
+      else  if constexpr( c == category::int16x8    ) return mask8 (_mm_cmpgt_epi16_mask   (v0,v1));
+      else  if constexpr( c == category::int8x64    ) return mask64(_mm512_cmpgt_epi8_mask (v0,v1));
+      else  if constexpr( c == category::int8x32    ) return mask32(_mm256_cmpgt_epi8_mask (v0,v1));
+      else  if constexpr( c == category::int8x16    ) return mask16(_mm_cmpgt_epi8_mask    (v0,v1));
     }
-  }
-
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE auto is_greater_(EVE_SUPPORTS(avx_),
-                                   wide<T, N, x86_128_> const &v0,
-                                   wide<T, N, x86_128_> const &v1) noexcept
-  {
-    using t_t = wide<T, N, x86_128_>;
-    using l_t = as_logical_t<t_t>;
-
-    if constexpr(supports_xop)
+    else
     {
-#if defined(__clang__)
-#  if !defined(_MM_PCOMCTRL_GT)
-#    define _MM_PCOMCTRL_GT 2
-#    define _MM_PCOMCTRL_GT_MISSING
-#  endif
-      if(std::is_signed_v<T>)
+            if constexpr( c == category::float32x8  ) return _mm256_cmp_ps(v0,v1,f);
+      else  if constexpr( c == category::float64x4  ) return _mm256_cmp_pd(v0,v1,f);
+      else  if constexpr( c == category::float32x4  ) return _mm_cmpgt_ps(v0,v1);
+      else  if constexpr( c == category::float64x2  ) return _mm_cmpgt_pd(v0,v1);
+      else  if constexpr(supports_xop)
       {
-        if constexpr(sizeof(T) == 1)      return l_t(_mm_com_epi8(v0, v1, _MM_PCOMCTRL_GT));
-        else if constexpr(sizeof(T) == 2) return l_t(_mm_com_epi16(v0, v1, _MM_PCOMCTRL_GT));
-        else if constexpr(sizeof(T) == 4) return l_t(_mm_com_epi32(v0, v1, _MM_PCOMCTRL_GT));
-        else if constexpr(sizeof(T) == 8) return l_t(_mm_com_epi64(v0, v1, _MM_PCOMCTRL_GT));
+              if constexpr( c == category::uint64x2 ) return _mm_comgt_epu64(v0,v1);
+        else  if constexpr( c == category::uint32x4 ) return _mm_comgt_epu32(v0,v1);
+        else  if constexpr( c == category::uint16x8 ) return _mm_comgt_epu16(v0,v1);
+        else  if constexpr( c == category::uint8x16 ) return _mm_comgt_epu8 (v0,v1);
+        else  if constexpr( c == category::int64x2  ) return _mm_comgt_epi64(v0,v1);
+        else  if constexpr( c == category::int32x4  ) return _mm_comgt_epi32(v0,v1);
+        else  if constexpr( c == category::int16x8  ) return _mm_comgt_epi16(v0,v1);
+        else  if constexpr( c == category::int8x16  ) return _mm_comgt_epi8 (v0,v1);
       }
       else
       {
-        if constexpr(sizeof(T) == 1)      return l_t(_mm_com_epu8(v0, v1, _MM_PCOMCTRL_GT));
-        else if constexpr(sizeof(T) == 2) return l_t(_mm_com_epu16(v0, v1, _MM_PCOMCTRL_GT));
-        else if constexpr(sizeof(T) == 4) return l_t(_mm_com_epu32(v0, v1, _MM_PCOMCTRL_GT));
-        else if constexpr(sizeof(T) == 8) return l_t(_mm_com_epu64(v0, v1, _MM_PCOMCTRL_GT));
-      }
-#  ifdef _MM_PCOMCTRL_GT_MISSING
-#    undef _MM_PCOMCTRL_GT
-#    undef _MM_PCOMCTRL_GT_MISSING
-#  endif
-#else
-      if(std::is_signed_v<T>)
-      {
-        if constexpr(sizeof(T) == 1)      return l_t(_mm_comgt_epi8(v0, v1));
-        else if constexpr(sizeof(T) == 2) return l_t(_mm_comgt_epi16(v0, v1));
-        else if constexpr(sizeof(T) == 4) return l_t(_mm_comgt_epi32(v0, v1));
-        else if constexpr(sizeof(T) == 8) return l_t(_mm_comgt_epi64(v0, v1));
-      }
-      else
-      {
-        if constexpr(sizeof(T) == 1)      return l_t(_mm_comgt_epu8(v0, v1));
-        else if constexpr(sizeof(T) == 2) return l_t(_mm_comgt_epu16(v0, v1));
-        else if constexpr(sizeof(T) == 4) return l_t(_mm_comgt_epu32(v0, v1));
-        else if constexpr(sizeof(T) == 8) return l_t(_mm_comgt_epu64(v0, v1));
-      }
-#endif
-    }
-    else                                  return is_greater_(EVE_RETARGET(sse2_), v0, v1);
-  }
+        constexpr auto use_avx2 = current_api >= avx2;
+        constexpr auto use_sse4 = current_api >= sse4_2;
 
-  // -----------------------------------------------------------------------------------------------
-  // 256 bits implementation
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE auto is_greater_(EVE_SUPPORTS(avx_)
-                                  , wide<T, N, x86_256_> const &v0
-                                  , wide<T, N, x86_256_> const &v1) noexcept
-  {
-    using t_t = wide<T, N, x86_256_>;
-    using l_t = as_logical_t<t_t>;
-
-    if constexpr(std::is_same_v<T, float>)       return as_logical_t<t_t>(_mm256_cmp_ps(v0, v1, _CMP_GT_OQ));
-    else if constexpr(std::is_same_v<T, double>) return as_logical_t<t_t>(_mm256_cmp_pd(v0, v1, _CMP_GT_OQ));
-    else if  constexpr(std::is_integral_v<T>)
-    {
-      if constexpr(current_api >= avx2)
-      {
-        if constexpr(std::is_signed_v<T>)
+        [[maybe_unused]]  auto unsigned_cmp = [](auto v0, auto v1)
         {
-          if constexpr(sizeof(T) == 1)      return l_t(_mm256_cmpgt_epi8(v0, v1));
-          else if constexpr(sizeof(T) == 2) return l_t(_mm256_cmpgt_epi16(v0, v1));
-          else if constexpr(sizeof(T) == 4) return l_t(_mm256_cmpgt_epi32(v0, v1));
-          else if constexpr(sizeof(T) == 8) return l_t(_mm256_cmpgt_epi64(v0, v1));
-        }
-        else
-        {
-          using s_t    = eve::wide<eve::detail::as_integer_t<T, signed>, N, x86_256_>;
-          s_t const sm = signmask(eve::as<s_t>());
+          using l_t = logical<wide<T, N, ABI>>;
+          auto const sm = signmask(as_<as_integer_t<wide<T, N, ABI>, signed>>());
+          return bit_cast( eve::is_greater( bit_cast(v0,as(sm))-sm, bit_cast(v1,as(sm))-sm),
+                           as_<l_t>{}
+                         );
+        };
 
-          return eve::bit_cast( eve::is_greater ( eve::bit_cast(v0,as(sm)) - sm,
-                                                  eve::bit_cast(v1,as(sm)) - sm
-                                                ),
-                                as_<l_t>{}
-                              );
-        }
-      }
-      else
-      {
-        return aggregate(eve::is_greater, v0, v1);
+              if constexpr(use_avx2 && c == category::int64x4  )  return _mm256_cmpgt_epi64(v0,v1);
+        else  if constexpr(use_avx2 && c == category::uint64x4 )  return unsigned_cmp(v0,v1);
+        else  if constexpr(use_avx2 && c == category::int32x8  )  return _mm256_cmpgt_epi32(v0,v1);
+        else  if constexpr(use_avx2 && c == category::uint32x8 )  return unsigned_cmp(v0,v1);
+        else  if constexpr(use_avx2 && c == category::int16x16 )  return _mm256_cmpgt_epi16(v0,v1);
+        else  if constexpr(use_avx2 && c == category::uint16x16)  return unsigned_cmp(v0,v1);
+        else  if constexpr(use_avx2 && c == category::int8x32  )  return _mm256_cmpgt_epi8 (v0,v1);
+        else  if constexpr(use_avx2 && c == category::uint8x32 )  return unsigned_cmp(v0,v1);
+        else  if constexpr(use_sse4 && c == category::int64x2  )  return _mm_cmpgt_epi64(v0,v1);
+        else  if constexpr( c == category::int64x2  )             return map(is_greater, v0, v1);
+        else  if constexpr( c == category::int32x4  )             return _mm_cmpgt_epi32(v0,v1);
+        else  if constexpr( c == category::int16x8  )             return _mm_cmpgt_epi16(v0,v1);
+        else  if constexpr( c == category::int8x16  )             return _mm_cmpgt_epi8 (v0,v1);
+        else  if constexpr( c == category::uint64x2 )             return unsigned_cmp(v0,v1);
+        else  if constexpr( c == category::uint32x4 )             return unsigned_cmp(v0,v1);
+        else  if constexpr( c == category::uint16x8 )             return unsigned_cmp(v0,v1);
+        else  if constexpr( c == category::uint8x16 )             return unsigned_cmp(v0,v1);
+        else                                                      return aggregate(is_greater,v0,v1);
       }
     }
   }
