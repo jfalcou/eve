@@ -10,20 +10,16 @@
 ##==================================================================================================
 ## Setup aggregation of tests
 ##==================================================================================================
-add_custom_target(exhaustive.special.exe)
-add_custom_target(exhaustive.special.scalar.exe)
-add_custom_target(exhaustive.special.simd.exe)
-add_dependencies(exhaustive.special.exe exhaustive.special.scalar.exe)
-add_dependencies(exhaustive.special.exe exhaustive.special.simd.exe)
-add_dependencies(exhaustive.scalar.exe exhaustive.special.scalar.exe)
-add_dependencies(exhaustive.simd.exe exhaustive.special.simd.exe)
-add_dependencies(exhaustive.exe exhaustive.special.exe)
+add_custom_target(exhaustive.real.algorithm.exe)
+add_custom_target(exhaustive.real.algorithm.scalar.exe)
+add_custom_target(exhaustive.real.algorithm.simd.exe)
+add_dependencies(exhaustive.real.algorithm.exe exhaustive.real.algorithm.scalar.exe)
+add_dependencies(exhaustive.real.algorithm.exe exhaustive.real.algorithm.simd.exe)
+add_dependencies(exhaustive.real.scalar.exe exhaustive.real.algorithm.scalar.exe)
+add_dependencies(exhaustive.real.simd.exe exhaustive.real.algorithm.simd.exe)
+add_dependencies(exhaustive.real.exe exhaustive.real.algorithm.exe)
 
 ##==================================================================================================
-## Elementwise function unit tests
+## Algorithms function exhaustive tests
 ##==================================================================================================
-
-### TEMPORARY MEASURE
-### make_all_units(ROOT exhaustive.special NAME gamma                ARCH scalar simd TYPES ${real_types}    )
-### make_all_units(ROOT exhaustive.special NAME stirling             ARCH scalar simd TYPES ${real_types}    )
-### TEMPORARY MEASURE
+#empty yet
