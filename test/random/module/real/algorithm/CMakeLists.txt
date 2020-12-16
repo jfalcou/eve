@@ -10,18 +10,16 @@
 ##==================================================================================================
 ## Setup aggregation of tests
 ##==================================================================================================
-add_custom_target(random.special.exe)
-add_custom_target(random.special.scalar.exe)
-add_custom_target(random.special.simd.exe)
-add_dependencies(random.special.exe random.special.scalar.exe)
-add_dependencies(random.special.exe random.special.simd.exe)
-add_dependencies(random.scalar.exe random.special.scalar.exe)
-add_dependencies(random.simd.exe random.special.simd.exe)
-add_dependencies(random.exe random.special.exe)
+add_custom_target(random.real.algorithm.exe)
+add_custom_target(random.real.algorithm.scalar.exe)
+add_custom_target(random.real.algorithm.simd.exe)
+add_dependencies(random.real.algorithm.exe random.real.algorithm.scalar.exe)
+add_dependencies(random.real.algorithm.exe random.real.algorithm.simd.exe)
+add_dependencies(random.real.scalar.exe random.real.algorithm.scalar.exe)
+add_dependencies(random.real.simd.exe random.real.algorithm.simd.exe)
+add_dependencies(random.real.exe random.real.algorithm.exe)
 
 ##==================================================================================================
-## Elementwise function unit tests
+## Algoritms function random tests
 ##==================================================================================================
-
-## make_all_units(ROOT random.special NAME tgamma ARCH scalar simd TYPES ${real_types}    )
-## make_all_units(ROOT random.special NAME stirling  ARCH scalar simd TYPES ${real_types}    )
+#empty yet

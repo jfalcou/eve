@@ -10,19 +10,18 @@
 ##==================================================================================================
 ## Setup aggregation of tests
 ##==================================================================================================
-add_custom_target(random.algorithm.exe)
-add_custom_target(random.algorithm.scalar.exe)
-add_custom_target(random.algorithm.simd.exe)
-add_dependencies(random.algorithm.exe random.algorithm.scalar.exe)
-add_dependencies(random.algorithm.exe random.algorithm.simd.exe)
-add_dependencies(random.scalar.exe random.algorithm.scalar.exe)
-add_dependencies(random.simd.exe random.algorithm.simd.exe)
-add_dependencies(random.exe random.algorithm.exe)
+add_custom_target(random.real.special.exe)
+add_custom_target(random.real.special.scalar.exe)
+add_custom_target(random.real.special.simd.exe)
+add_dependencies(random.real.special.exe random.real.special.scalar.exe)
+add_dependencies(random.real.special.exe random.real.special.simd.exe)
+add_dependencies(random.real.scalar.exe random.real.special.scalar.exe)
+add_dependencies(random.real.simd.exe random.real.special.simd.exe)
+add_dependencies(random.real.exe random.real.special.exe)
 
 ##==================================================================================================
-## Algoritms function unit tests
+## Elementwise function unit tests
 ##==================================================================================================
-make_all_units(ROOT random.algorithm NAME all     ARCH scalar simd TYPES ${all_types} )
-make_all_units(ROOT random.algorithm NAME any     ARCH scalar simd TYPES ${all_types} )
-make_all_units(ROOT random.algorithm NAME nbtrue  ARCH scalar simd TYPES ${all_types} )
-make_all_units(ROOT random.algorithm NAME none    ARCH scalar simd TYPES ${all_types} )
+
+## make_all_units(ROOT random.real.special NAME tgamma ARCH scalar simd TYPES ${real_types}    )
+## make_all_units(ROOT random.real.special NAME stirling  ARCH scalar simd TYPES ${real_types}    )
