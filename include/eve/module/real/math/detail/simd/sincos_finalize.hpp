@@ -13,8 +13,8 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/module/math/detail/generic/cos_kernel.hpp>
-#include <eve/module/math/detail/generic/sin_kernel.hpp>
+#include <eve/module/real/math/detail/generic/cos_kernel.hpp>
+#include <eve/module/real/math/detail/generic/sin_kernel.hpp>
 #include <eve/function/binarize.hpp>
 #include <eve/function/shl.hpp>
 #include <eve/function/bit_xor.hpp>

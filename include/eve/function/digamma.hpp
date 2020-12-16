@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(digamma_, digamma);
 }
 
-#include <eve/module/special/function/regular/generic/digamma.hpp>
+#include <eve/module/real/special/function/regular/generic/digamma.hpp>
 

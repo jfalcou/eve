@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(logical_notor_, logical_notor);
 }
 
-#include <eve/module/core/function/regular/generic/logical_notor.hpp>
+#include <eve/module/real/core/function/regular/generic/logical_notor.hpp>
 

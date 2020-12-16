@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/lbeta.hpp>
-#include <eve/module/core/function/derivative/generic/lbeta.hpp>
+#include <eve/module/real/core/function/derivative/generic/lbeta.hpp>

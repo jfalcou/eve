@@ -17,6 +17,6 @@ namespace eve
   EVE_MAKE_CALLABLE(sum_, sum);
 }
 
-#include <eve/module/core/function/scalar/sum.hpp>
-//#include <eve/module/core/function/regular/simd/sum.hpp>
+#include <eve/module/real/core/function/scalar/sum.hpp>
+//#include <eve/module/real/core/function/regular/simd/sum.hpp>
 

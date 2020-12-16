@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(betainc_, betainc);
 }
 
-#include <eve/module/special/function/regular/generic/betainc.hpp>
+#include <eve/module/real/special/function/regular/generic/betainc.hpp>

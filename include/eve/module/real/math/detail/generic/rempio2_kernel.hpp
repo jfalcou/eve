@@ -39,8 +39,8 @@
 #include <eve/function/quadrant.hpp>
 #include <eve/function/shl.hpp>
 #include <eve/function/shr.hpp>
-#include <eve/module/math/detail/constant/rempio2_limits.hpp>
-#include <eve/module/math/detail/generic/workaround.hpp>
+#include <eve/module/real/math/detail/constant/rempio2_limits.hpp>
+#include <eve/module/real/math/detail/generic/workaround.hpp>
 #include <eve/traits/alignment.hpp>
 #include <bit>
 #include <tuple>

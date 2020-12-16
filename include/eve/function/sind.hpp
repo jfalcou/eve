@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(sind_, sind);
 }
 
-#include <eve/module/math/function/regular/generic/sind.hpp>
+#include <eve/module/real/math/function/regular/generic/sind.hpp>
 

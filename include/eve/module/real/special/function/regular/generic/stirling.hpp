@@ -24,7 +24,7 @@
 #include <eve/function/is_ltz.hpp>
 #include <eve/function/pow_abs.hpp>
 #include <eve/function/rec.hpp>
-#include <eve/module/core/detail/generic/horn.hpp>
+#include <eve/module/real/core/detail/generic/horn.hpp>
 
 #include <type_traits>
 

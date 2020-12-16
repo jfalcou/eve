@@ -12,7 +12,7 @@
 
 #include <eve/detail/hz_device.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/module/core/detail/generic/horn.hpp>
+#include <eve/module/real/core/detail/generic/horn.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/function/copysign.hpp>
 #include <eve/function/if_else.hpp>

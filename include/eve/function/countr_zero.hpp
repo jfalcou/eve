@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(countr_zero_, countr_zero);
 }
 
-#include <eve/module/core/function/regular/generic/countr_zero.hpp>
+#include <eve/module/real/core/function/regular/generic/countr_zero.hpp>
 

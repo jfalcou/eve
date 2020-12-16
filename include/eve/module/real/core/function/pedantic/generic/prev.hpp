@@ -11,7 +11,7 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
-#include <eve/module/core/detail/generic/next_kernel.hpp>
+#include <eve/module/real/core/detail/generic/next_kernel.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/function/saturated.hpp>
 #include <eve/function/regular.hpp>

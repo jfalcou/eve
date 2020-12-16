@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(is_denormal_, is_denormal);
 }
 
-#include <eve/module/core/function/regular/generic/is_denormal.hpp>
+#include <eve/module/real/core/function/regular/generic/is_denormal.hpp>
 

@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(sech_, sech);
 }
 
-#include <eve/module/math/function/regular/generic/sech.hpp>
+#include <eve/module/real/math/function/regular/generic/sech.hpp>
 

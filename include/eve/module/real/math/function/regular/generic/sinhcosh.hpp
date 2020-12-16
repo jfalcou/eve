@@ -11,8 +11,8 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
-#include <eve/module/math/detail/generic/trig_finalize.hpp>
-#include <eve/module/math/detail/constant/rempio2_limits.hpp>
+#include <eve/module/real/math/detail/generic/trig_finalize.hpp>
+#include <eve/module/real/math/detail/constant/rempio2_limits.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/average.hpp>
 #include <eve/function/exp.hpp>

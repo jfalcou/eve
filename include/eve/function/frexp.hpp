@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(frexp_, frexp);
 }
 
-#include <eve/module/core/function/regular/generic/frexp.hpp>
+#include <eve/module/real/core/function/regular/generic/frexp.hpp>
 

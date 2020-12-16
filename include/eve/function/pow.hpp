@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(pow_, pow);
 }
 
-#include <eve/module/math/function/regular/generic/pow.hpp>
+#include <eve/module/real/math/function/regular/generic/pow.hpp>
 

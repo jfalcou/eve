@@ -36,16 +36,16 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/function/regular/generic/sqrt.hpp>
+#include <eve/module/real/core/function/regular/generic/sqrt.hpp>
 
 #if defined(EVE_HW_X86)
-#  include <eve/module/core/function/regular/simd/x86/sqrt.hpp>
+#  include <eve/module/real/core/function/regular/simd/x86/sqrt.hpp>
 #endif
 
 #if defined(EVE_HW_POWERPC)
-#  include <eve/module/core/function/regular/simd/ppc/sqrt.hpp>
+#  include <eve/module/real/core/function/regular/simd/ppc/sqrt.hpp>
 #endif
 
 #if defined(EVE_HW_ARM)
-#  include <eve/module/core/function/regular/simd/arm/neon/sqrt.hpp>
+#  include <eve/module/real/core/function/regular/simd/arm/neon/sqrt.hpp>
 #endif

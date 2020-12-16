@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(binarize_not_, binarize_not);
 }
 
-#include <eve/module/core/function/regular/generic/binarize_not.hpp>
+#include <eve/module/real/core/function/regular/generic/binarize_not.hpp>
 

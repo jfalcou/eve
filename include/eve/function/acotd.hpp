@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(acotd_, acotd);
 }
 
-#include <eve/module/math/function/regular/generic/acotd.hpp>
+#include <eve/module/real/math/function/regular/generic/acotd.hpp>

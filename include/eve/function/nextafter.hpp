@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(nextafter_, nextafter);
 }
 
-#include <eve/module/core/function/regular/generic/nextafter.hpp>
+#include <eve/module/real/core/function/regular/generic/nextafter.hpp>
 

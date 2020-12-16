@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/gamma_p.hpp>
-#include <eve/module/core/function/derivative/generic/gamma_p.hpp>
+#include <eve/module/real/core/function/derivative/generic/gamma_p.hpp>

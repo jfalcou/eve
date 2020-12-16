@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/exp_int.hpp>
-#include <eve/module/special/function/derivative/generic/exp_int.hpp>
+#include <eve/module/real/special/function/derivative/generic/exp_int.hpp>

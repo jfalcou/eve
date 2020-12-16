@@ -19,7 +19,7 @@
 #include <eve/function/load.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/traits/alignment.hpp>
-#include <eve/module/math/detail/scalar/ieee_754_rem_pio2.hpp>
+#include <eve/module/real/math/detail/scalar/ieee_754_rem_pio2.hpp>
 
 #include <tuple>
 #include <type_traits>

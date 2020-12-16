@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(quadrant_, quadrant);
 }
 
-#include <eve/module/core/function/regular/generic/quadrant.hpp>
+#include <eve/module/real/core/function/regular/generic/quadrant.hpp>
 

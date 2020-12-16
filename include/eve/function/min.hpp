@@ -18,17 +18,17 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/function/regular/generic/min.hpp>
+#include <eve/module/real/core/function/regular/generic/min.hpp>
 
 #if defined(EVE_HW_X86)
-#  include <eve/module/core/function/regular/simd/x86/min.hpp>
+#  include <eve/module/real/core/function/regular/simd/x86/min.hpp>
 #endif
 
 #if defined(EVE_HW_POWERPC)
-#  include <eve/module/core/function/regular/simd/ppc/min.hpp>
+#  include <eve/module/real/core/function/regular/simd/ppc/min.hpp>
 #endif
 
 #if defined(EVE_HW_ARM)
-#  include <eve/module/core/function/regular/simd/arm/neon/min.hpp>
+#  include <eve/module/real/core/function/regular/simd/arm/neon/min.hpp>
 #endif
 

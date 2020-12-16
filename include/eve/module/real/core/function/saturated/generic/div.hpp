@@ -32,9 +32,9 @@
 #  pragma warning(disable : 4723) // potential divide by 0
 #endif
 
-#include <eve/module/core/function/regular/generic/div_downward.hpp>
-#include <eve/module/core/function/regular/generic/div_tonearest.hpp>
-#include <eve/module/core/function/regular/generic/div_upward.hpp>
+#include <eve/module/real/core/function/regular/generic/div_downward.hpp>
+#include <eve/module/real/core/function/regular/generic/div_tonearest.hpp>
+#include <eve/module/real/core/function/regular/generic/div_upward.hpp>
 
 namespace eve::detail
 {

@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(is_normal_, is_normal);
 }
 
-#include <eve/module/core/function/regular/generic/is_normal.hpp>
+#include <eve/module/real/core/function/regular/generic/is_normal.hpp>
 

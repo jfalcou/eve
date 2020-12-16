@@ -39,10 +39,10 @@
 #include <eve/function/signnz.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/sqrt.hpp>
-#include <eve/module/math/detail/generic/erf_kernel.hpp>
+#include <eve/module/real/math/detail/generic/erf_kernel.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
-#include <eve/module/core/detail/generic/horn.hpp>
+#include <eve/module/real/core/detail/generic/horn.hpp>
 namespace eve::detail
 {
 

@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(sinpicospi_, sinpicospi);
 }
 
-#include <eve/module/math/function/regular/generic/sinpicospi.hpp>
+#include <eve/module/real/math/function/regular/generic/sinpicospi.hpp>
 

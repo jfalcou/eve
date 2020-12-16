@@ -17,6 +17,6 @@ namespace eve
   EVE_MAKE_CALLABLE(prod_, prod);
 }
 
-#include <eve/module/core/function/scalar/prod.hpp>
-//#include <eve/module/core/function/regular/simd/prod.hpp>
+#include <eve/module/real/core/function/scalar/prod.hpp>
+//#include <eve/module/real/core/function/regular/simd/prod.hpp>
 

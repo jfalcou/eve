@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(tanh_, tanh);
 }
 
-#include <eve/module/math/function/regular/generic/tanh.hpp>
+#include <eve/module/real/math/function/regular/generic/tanh.hpp>
 

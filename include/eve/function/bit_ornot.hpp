@@ -18,10 +18,10 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/function/regular/generic/bit_ornot.hpp>
+#include <eve/module/real/core/function/regular/generic/bit_ornot.hpp>
 
 #if defined(EVE_HW_ARM)
-#  include <eve/module/core/function/regular/simd/arm/neon/bit_ornot.hpp>
+#  include <eve/module/real/core/function/regular/simd/arm/neon/bit_ornot.hpp>
 #endif
 
 

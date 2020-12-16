@@ -18,9 +18,9 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/function/regular/generic/is_ordered.hpp>
+#include <eve/module/real/core/function/regular/generic/is_ordered.hpp>
 
 #if defined(EVE_HW_X86)
-#  include <eve/module/core/function/regular/simd/x86/is_ordered.hpp>
+#  include <eve/module/real/core/function/regular/simd/x86/is_ordered.hpp>
 #endif
 

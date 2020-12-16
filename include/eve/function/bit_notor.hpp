@@ -18,9 +18,9 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/function/regular/generic/bit_notor.hpp>
+#include <eve/module/real/core/function/regular/generic/bit_notor.hpp>
 
 #if defined(EVE_HW_ARM)
-#  include <eve/module/core/function/regular/simd/arm/neon/bit_notor.hpp>
+#  include <eve/module/real/core/function/regular/simd/arm/neon/bit_notor.hpp>
 #endif
 

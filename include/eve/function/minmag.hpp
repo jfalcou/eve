@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(minmag_, minmag);
 }
 
-#include <eve/module/core/function/regular/generic/minmag.hpp>
+#include <eve/module/real/core/function/regular/generic/minmag.hpp>
 

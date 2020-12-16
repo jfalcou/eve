@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(secpi_, secpi);
 }
 
-#include <eve/module/math/function/regular/generic/secpi.hpp>
+#include <eve/module/real/math/function/regular/generic/secpi.hpp>
 

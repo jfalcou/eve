@@ -13,8 +13,8 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/module/core/detail/generic/horn.hpp>
-#include <eve/module/core/detail/generic/horn1.hpp>
+#include <eve/module/real/core/detail/generic/horn.hpp>
+#include <eve/module/real/core/detail/generic/horn1.hpp>
 #include <eve/function/binarize.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_greater_equal.hpp>

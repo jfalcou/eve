@@ -42,4 +42,4 @@ namespace eve
   EVE_MAKE_CALLABLE(exp10_, exp10);
 }
 
-#include <eve/module/math/function/regular/generic/exp10.hpp>
+#include <eve/module/real/math/function/regular/generic/exp10.hpp>

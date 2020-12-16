@@ -10,7 +10,7 @@
 //==================================================================================================
 #include <eve/function/rempio2.hpp>
 #include <eve/function/rem_pio2.hpp>
-#include <eve/module/math/detail/constant/rempio2_limits.hpp>
+#include <eve/module/real/math/detail/constant/rempio2_limits.hpp>
 
 TTS_CASE_TPL("Check eve::rempio2 behavior", EVE_TYPE)
 {

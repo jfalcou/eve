@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(cot_, cot);
 }
 
-#include <eve/module/math/function/regular/generic/cot.hpp>
+#include <eve/module/real/math/function/regular/generic/cot.hpp>
 

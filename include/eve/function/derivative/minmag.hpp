@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/minmag.hpp>
-#include <eve/module/core/function/derivative/generic/minmag.hpp>
+#include <eve/module/real/core/function/derivative/generic/minmag.hpp>

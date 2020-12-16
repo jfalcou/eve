@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(logical_ornot_, logical_ornot);
 }
 
-#include <eve/module/core/function/regular/generic/logical_ornot.hpp>
+#include <eve/module/real/core/function/regular/generic/logical_ornot.hpp>
 

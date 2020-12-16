@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(bit_exponent_, bit_exponent);
 }
 
-#include <eve/module/core/function/regular/generic/bit_exponent.hpp>
+#include <eve/module/real/core/function/regular/generic/bit_exponent.hpp>
 

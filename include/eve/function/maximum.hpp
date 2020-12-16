@@ -18,5 +18,5 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/algorithm/function/regular/generic/maximum.hpp>
+#include <eve/module/real/algorithm/function/regular/generic/maximum.hpp>
 

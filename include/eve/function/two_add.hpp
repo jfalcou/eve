@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(two_add_, two_add);
 }
 
-#include <eve/module/core/function/regular/generic/two_add.hpp>
+#include <eve/module/real/core/function/regular/generic/two_add.hpp>
 

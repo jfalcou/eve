@@ -30,7 +30,7 @@
 #include <eve/function/nbtrue.hpp>
 #include <eve/function/sinpi.hpp>
 #include <eve/function/stirling.hpp>
-#include <eve/module/core/detail/generic/horn.hpp>
+#include <eve/module/real/core/detail/generic/horn.hpp>
 #include <eve/platform.hpp>
 
 #include <type_traits>
