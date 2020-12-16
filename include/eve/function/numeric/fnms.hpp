@@ -11,8 +11,8 @@
 #pragma once
 
 #include <eve/function/fnms.hpp>
-#include <eve/module/core/function/numeric/generic/fnms.hpp>
+#include <eve/module/real/core/function/numeric/generic/fnms.hpp>
 
 #if defined(EVE_HW_X86)
-#  include <eve/module/core/function/numeric/simd/x86/fnms.hpp>
+#  include <eve/module/real/core/function/numeric/simd/x86/fnms.hpp>
 #endif

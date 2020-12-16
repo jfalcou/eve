@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/maxmag.hpp>
-#include <eve/module/core/function/derivative/generic/maxmag.hpp>
+#include <eve/module/real/core/function/derivative/generic/maxmag.hpp>

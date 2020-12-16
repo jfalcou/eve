@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(sin_, sin);
 }
 
-#include <eve/module/math/function/regular/generic/sin.hpp>
+#include <eve/module/real/math/function/regular/generic/sin.hpp>
 

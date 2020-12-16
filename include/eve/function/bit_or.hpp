@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(bit_or_, bit_or);
 }
 
-#include <eve/module/core/function/regular/generic/bit_or.hpp>
+#include <eve/module/real/core/function/regular/generic/bit_or.hpp>
 

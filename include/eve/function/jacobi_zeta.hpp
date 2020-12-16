@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(jacobi_zeta_, jacobi_zeta);
 }
 
-#include <eve/module/elliptic/function/regular/generic/jacobi_zeta.hpp>
+#include <eve/module/real/elliptic/function/regular/generic/jacobi_zeta.hpp>

@@ -18,17 +18,17 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/function/regular/generic/is_greater_equal.hpp>
+#include <eve/module/real/core/function/regular/generic/is_greater_equal.hpp>
 
 #if defined(EVE_HW_X86)
-#  include <eve/module/core/function/regular/simd/x86/is_greater_equal.hpp>
+#  include <eve/module/real/core/function/regular/simd/x86/is_greater_equal.hpp>
 #endif
 
 #if defined(EVE_HW_POWERPC)
-#  include <eve/module/core/function/regular/simd/ppc/is_greater_equal.hpp>
+#  include <eve/module/real/core/function/regular/simd/ppc/is_greater_equal.hpp>
 #endif
 
 #if defined(EVE_HW_ARM)
-#  include <eve/module/core/function/regular/simd/arm/neon/is_greater_equal.hpp>
+#  include <eve/module/real/core/function/regular/simd/arm/neon/is_greater_equal.hpp>
 #endif
 

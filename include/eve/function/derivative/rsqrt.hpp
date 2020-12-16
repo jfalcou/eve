@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/rsqrt.hpp>
-#include <eve/module/core/function/derivative/generic/rsqrt.hpp>
+#include <eve/module/real/core/function/derivative/generic/rsqrt.hpp>

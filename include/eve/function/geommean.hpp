@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(geommean_, geommean);
 }
 
-#include <eve/module/core/function/regular/generic/geommean.hpp>
+#include <eve/module/real/core/function/regular/generic/geommean.hpp>

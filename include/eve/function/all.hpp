@@ -18,16 +18,16 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/algorithm/function/regular/generic/all.hpp>
+#include <eve/module/real/algorithm/function/regular/generic/all.hpp>
 
 #if defined(EVE_HW_X86)
-#  include <eve/module/algorithm/function/regular/simd/x86/all.hpp>
+#  include <eve/module/real/algorithm/function/regular/simd/x86/all.hpp>
 #endif
 
 #if defined(EVE_HW_POWERPC)
-#  include <eve/module/algorithm/function/regular/simd/ppc/all.hpp>
+#  include <eve/module/real/algorithm/function/regular/simd/ppc/all.hpp>
 #endif
 
 #if defined(EVE_HW_ARM)
-#  include <eve/module/algorithm/function/regular/simd/arm/neon/all.hpp>
+#  include <eve/module/real/algorithm/function/regular/simd/arm/neon/all.hpp>
 #endif

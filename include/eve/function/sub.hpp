@@ -18,17 +18,17 @@ namespace eve
   EVE_MAKE_CALLABLE(sub_, sub);
 }
 
-#include <eve/module/core/function/regular/generic/sub.hpp>
+#include <eve/module/real/core/function/regular/generic/sub.hpp>
 
 #if defined(EVE_HW_X86)
-#  include <eve/module/core/function/regular/simd/x86/sub.hpp>
+#  include <eve/module/real/core/function/regular/simd/x86/sub.hpp>
 #endif
 
 #if defined(EVE_HW_POWERPC)
-#  include <eve/module/core/function/regular/simd/ppc/sub.hpp>
+#  include <eve/module/real/core/function/regular/simd/ppc/sub.hpp>
 #endif
 
 #if defined(EVE_HW_ARM)
-#  include <eve/module/core/function/regular/simd/arm/neon/sub.hpp>
+#  include <eve/module/real/core/function/regular/simd/arm/neon/sub.hpp>
 #endif
 

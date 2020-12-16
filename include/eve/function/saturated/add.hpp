@@ -11,8 +11,8 @@
 #pragma once
 
 #include <eve/function/add.hpp>
-#include <eve/module/core/function/saturated/generic/add.hpp>
+#include <eve/module/real/core/function/saturated/generic/add.hpp>
 
 #if defined(EVE_HW_X86)
-#  include <eve/module/core/function/saturated/simd/x86/add.hpp>
+#  include <eve/module/real/core/function/saturated/simd/x86/add.hpp>
 #endif

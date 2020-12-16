@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(negatenz_, negatenz);
 }
 
-#include <eve/module/core/function/regular/generic/negatenz.hpp>
+#include <eve/module/real/core/function/regular/generic/negatenz.hpp>
 

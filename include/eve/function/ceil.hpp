@@ -18,17 +18,17 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/function/regular/generic/ceil.hpp>
+#include <eve/module/real/core/function/regular/generic/ceil.hpp>
 
 #if defined(EVE_HW_X86)
-#  include <eve/module/core/function/regular/simd/x86/ceil.hpp>
+#  include <eve/module/real/core/function/regular/simd/x86/ceil.hpp>
 #endif
 
 #if defined(EVE_HW_POWERPC)
-#  include <eve/module/core/function/regular/simd/ppc/ceil.hpp>
+#  include <eve/module/real/core/function/regular/simd/ppc/ceil.hpp>
 #endif
 
 #if defined(EVE_HW_ARM)
-#  include <eve/module/core/function/regular/simd/arm/neon/ceil.hpp>
+#  include <eve/module/real/core/function/regular/simd/arm/neon/ceil.hpp>
 #endif
 

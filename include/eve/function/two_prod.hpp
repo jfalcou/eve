@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(two_prod_, two_prod);
 }
 
-#include <eve/module/core/function/regular/generic/two_prod.hpp>
+#include <eve/module/real/core/function/regular/generic/two_prod.hpp>
 

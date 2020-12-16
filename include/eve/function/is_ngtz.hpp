@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(is_ngtz_, is_ngtz);
 }
 
-#include <eve/module/core/function/regular/generic/is_ngtz.hpp>
+#include <eve/module/real/core/function/regular/generic/is_ngtz.hpp>
 

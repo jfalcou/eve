@@ -18,9 +18,9 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/function/regular/generic/refine_rec.hpp>
+#include <eve/module/real/core/function/regular/generic/refine_rec.hpp>
 
 #if defined(EVE_HW_ARM)
-#  include <eve/module/core/function/regular/simd/arm/neon/refine_rec.hpp>
+#  include <eve/module/real/core/function/regular/simd/arm/neon/refine_rec.hpp>
 #endif
 

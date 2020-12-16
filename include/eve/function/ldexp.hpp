@@ -31,4 +31,4 @@ namespace eve
   EVE_MAKE_CALLABLE(ldexp_, ldexp);
 }
 
-#include <eve/module/core/function/regular/generic/ldexp.hpp>
+#include <eve/module/real/core/function/regular/generic/ldexp.hpp>

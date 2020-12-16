@@ -1,0 +1,27 @@
+##==================================================================================================
+##  EVE - Expressive Vector Engine
+##  Copyright 2019 Joel FALCOU
+##  Copyright 2019 Jean-Thierry Lapreste
+##
+##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+##  SPDX-License-Identifier: MIT
+##==================================================================================================
+
+##==================================================================================================
+## Setup aggregation of tests
+##==================================================================================================
+add_custom_target(random.real.special.exe)
+add_custom_target(random.real.special.scalar.exe)
+add_custom_target(random.real.special.simd.exe)
+add_dependencies(random.real.special.exe random.real.special.scalar.exe)
+add_dependencies(random.real.special.exe random.real.special.simd.exe)
+add_dependencies(random.real.scalar.exe random.real.special.scalar.exe)
+add_dependencies(random.real.simd.exe random.real.special.simd.exe)
+add_dependencies(random.real.exe random.real.special.exe)
+
+##==================================================================================================
+## Elementwise function unit tests
+##==================================================================================================
+
+## make_all_units(ROOT random.real.special NAME tgamma ARCH scalar simd TYPES ${real_types}    )
+## make_all_units(ROOT random.real.special NAME stirling  ARCH scalar simd TYPES ${real_types}    )

@@ -15,5 +15,5 @@
 #include <eve/logical.hpp>
 #include <eve/version.hpp>
 #include <eve/traits/cardinal.hpp>
-#include <eve/module/core.hpp>
+#include <eve/module/real/core.hpp>
 

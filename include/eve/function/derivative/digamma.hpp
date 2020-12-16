@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/digamma.hpp>
-#include <eve/module/special/function/derivative/generic/digamma.hpp>
+#include <eve/module/real/special/function/derivative/generic/digamma.hpp>

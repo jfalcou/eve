@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(logical_andnot_, logical_andnot);
 }
 
-#include <eve/module/core/function/regular/generic/logical_andnot.hpp>
+#include <eve/module/real/core/function/regular/generic/logical_andnot.hpp>
 

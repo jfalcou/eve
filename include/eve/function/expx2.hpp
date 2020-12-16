@@ -18,4 +18,4 @@ namespace eve
   EVE_MAKE_CALLABLE(expx2_, expx2);
 }
 
-#include <eve/module/math/function/regular/generic/expx2.hpp>
+#include <eve/module/real/math/function/regular/generic/expx2.hpp>

@@ -17,6 +17,6 @@ namespace eve
   EVE_MAKE_CALLABLE(minimum_, minimum);
 }
 
-#include <eve/module/core/function/scalar/minimum.hpp>
-//#include <eve/module/core/function/regular/simd/minimum.hpp>
+#include <eve/module/real/core/function/scalar/minimum.hpp>
+//#include <eve/module/real/core/function/regular/simd/minimum.hpp>
 

@@ -17,9 +17,9 @@ namespace eve
   EVE_MAKE_CALLABLE(is_unordered_, is_unordered);
 }
 
-#include <eve/module/core/function/regular/generic/is_unordered.hpp>
+#include <eve/module/real/core/function/regular/generic/is_unordered.hpp>
 #include <eve/arch.hpp>
 
 #if defined(EVE_HW_X86)
-#  include <eve/module/core/function/regular/simd/x86/is_unordered.hpp>
+#  include <eve/module/real/core/function/regular/simd/x86/is_unordered.hpp>
 #endif

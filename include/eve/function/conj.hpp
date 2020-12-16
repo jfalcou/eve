@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(conj_, conj);
 }
 
-#include <eve/module/core/function/regular/generic/conj.hpp>
+#include <eve/module/real/core/function/regular/generic/conj.hpp>
 

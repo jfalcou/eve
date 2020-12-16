@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(deginrad_, deginrad);
 }
 
-#include <eve/module/core/function/regular/generic/deginrad.hpp>
+#include <eve/module/real/core/function/regular/generic/deginrad.hpp>
 

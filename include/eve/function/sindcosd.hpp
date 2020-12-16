@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(sindcosd_, sindcosd);
 }
 
-#include <eve/module/math/function/regular/generic/sindcosd.hpp>
+#include <eve/module/real/math/function/regular/generic/sindcosd.hpp>
 

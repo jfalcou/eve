@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(cospi_, cospi);
 }
 
-#include <eve/module/math/function/regular/generic/cospi.hpp>
+#include <eve/module/real/math/function/regular/generic/cospi.hpp>
 

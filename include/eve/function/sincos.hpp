@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(sincos_, sincos);
 }
 
-#include <eve/module/math/function/regular/generic/sincos.hpp>
+#include <eve/module/real/math/function/regular/generic/sincos.hpp>
 

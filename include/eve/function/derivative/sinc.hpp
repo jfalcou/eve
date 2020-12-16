@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/sinc.hpp>
-#include <eve/module/math/function/derivative/generic/sinc.hpp>
+#include <eve/module/real/math/function/derivative/generic/sinc.hpp>

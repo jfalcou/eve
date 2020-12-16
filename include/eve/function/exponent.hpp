@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(exponent_, exponent);
 }
 
-#include <eve/module/core/function/regular/generic/exponent.hpp>
+#include <eve/module/real/core/function/regular/generic/exponent.hpp>
 

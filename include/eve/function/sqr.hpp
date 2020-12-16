@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(sqr_, sqr);
 }
 
-#include <eve/module/core/function/regular/generic/sqr.hpp>
+#include <eve/module/real/core/function/regular/generic/sqr.hpp>
 

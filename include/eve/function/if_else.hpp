@@ -18,13 +18,13 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/function/regular/generic/if_else.hpp>
+#include <eve/module/real/core/function/regular/generic/if_else.hpp>
 
 #if defined(EVE_HW_X86)
-#  include <eve/module/core/function/regular/simd/x86/if_else.hpp>
+#  include <eve/module/real/core/function/regular/simd/x86/if_else.hpp>
 #endif
 
 #if defined(EVE_HW_POWERPC)
-#  include <eve/module/core/function/regular/simd/ppc/if_else.hpp>
+#  include <eve/module/real/core/function/regular/simd/ppc/if_else.hpp>
 #endif
 

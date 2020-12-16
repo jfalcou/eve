@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(exp_int_, exp_int);
 }
 
-#include <eve/module/special/function/regular/generic/exp_int.hpp>
+#include <eve/module/real/special/function/regular/generic/exp_int.hpp>

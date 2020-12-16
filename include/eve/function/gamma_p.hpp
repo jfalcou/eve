@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(gamma_p_, gamma_p);
 }
 
-#include <eve/module/special/function/regular/generic/gamma_p.hpp>
+#include <eve/module/real/special/function/regular/generic/gamma_p.hpp>

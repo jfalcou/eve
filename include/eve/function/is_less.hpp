@@ -18,17 +18,17 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/function/regular/generic/is_less.hpp>
+#include <eve/module/real/core/function/regular/generic/is_less.hpp>
 
 #if defined(EVE_HW_X86)
-#  include <eve/module/core/function/regular/simd/x86/is_less.hpp>
+#  include <eve/module/real/core/function/regular/simd/x86/is_less.hpp>
 #endif
 
 #if defined(EVE_HW_POWERPC)
-#  include <eve/module/core/function/regular/simd/ppc/is_less.hpp>
+#  include <eve/module/real/core/function/regular/simd/ppc/is_less.hpp>
 #endif
 
 #if defined(EVE_HW_ARM)
-#  include <eve/module/core/function/regular/simd/arm/neon/is_less.hpp>
+#  include <eve/module/real/core/function/regular/simd/arm/neon/is_less.hpp>
 #endif
 

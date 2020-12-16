@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(ifrexp_, ifrexp);
 }
 
-#include <eve/module/core/function/regular/generic/ifrexp.hpp>
+#include <eve/module/real/core/function/regular/generic/ifrexp.hpp>
 

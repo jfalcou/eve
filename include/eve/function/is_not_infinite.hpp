@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(is_not_infinite_, is_not_infinite);
 }
 
-#include <eve/module/core/function/regular/generic/is_not_infinite.hpp>
+#include <eve/module/real/core/function/regular/generic/is_not_infinite.hpp>
 

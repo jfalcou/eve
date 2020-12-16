@@ -18,4 +18,4 @@ namespace eve
   EVE_MAKE_CALLABLE(lgamma_, lgamma);
 }
 
-#include <eve/module/special/function/regular/generic/lgamma.hpp>
+#include <eve/module/real/special/function/regular/generic/lgamma.hpp>

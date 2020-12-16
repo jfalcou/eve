@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(logspace_sub_, logspace_sub);
 }
 
-#include <eve/module/math/function/regular/generic/logspace_sub.hpp>
+#include <eve/module/real/math/function/regular/generic/logspace_sub.hpp>

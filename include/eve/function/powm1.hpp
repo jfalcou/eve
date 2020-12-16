@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(powm1_, powm1);
 }
 
-#include <eve/module/math/function/regular/generic/powm1.hpp>
+#include <eve/module/real/math/function/regular/generic/powm1.hpp>

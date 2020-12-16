@@ -17,5 +17,5 @@ namespace eve
   EVE_MAKE_CALLABLE(bit_and_, bit_and);
 }
 
-#include <eve/module/core/function/regular/generic/bit_and.hpp>
+#include <eve/module/real/core/function/regular/generic/bit_and.hpp>
 
