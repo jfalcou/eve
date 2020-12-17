@@ -24,11 +24,14 @@ namespace eve::detail
     constexpr auto c = categorize<wide<T, N, ABI>>();
     constexpr auto m = fpclass::poszero | fpclass::negzero;
 
-          if constexpr( c == category::float32x16 ) return mask16(~(_mm512_fpclass_ps_mask(v, m)));
-    else  if constexpr( c == category::float64x8  ) return mask8 (~(_mm512_fpclass_pd_mask(v, m)));
-    else  if constexpr( c == category::float32x8  ) return mask8 (~(_mm256_fpclass_ps_mask(v, m)));
-    else  if constexpr( c == category::float64x4  ) return mask8 (~(_mm256_fpclass_pd_mask(v, m)));
-    else  if constexpr( c == category::float32x4  ) return mask8 (~(_mm_fpclass_ps_mask   (v, m)));
-    else  if constexpr( c == category::float64x2  ) return mask8 (~(_mm_fpclass_pd_mask   (v, m)));
+    using storage_t = typename logical<wide<T, N, ABI>>::storage_type;
+    using i_t       = typename storage_t::type;
+
+          if constexpr( c == category::float32x16 ) return mask16{i_t(~(_mm512_fpclass_ps_mask(v, m)))};
+    else  if constexpr( c == category::float64x8  ) return mask8 {i_t(~(_mm512_fpclass_pd_mask(v, m)))};
+    else  if constexpr( c == category::float32x8  ) return mask8 {i_t(~(_mm256_fpclass_ps_mask(v, m)))};
+    else  if constexpr( c == category::float64x4  ) return mask8 {i_t(~(_mm256_fpclass_pd_mask(v, m)))};
+    else  if constexpr( c == category::float32x4  ) return mask8 {i_t(~(_mm_fpclass_ps_mask   (v, m)))};
+    else  if constexpr( c == category::float64x2  ) return mask8 {i_t(~(_mm_fpclass_pd_mask   (v, m)))};
   }
 }

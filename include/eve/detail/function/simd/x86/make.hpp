@@ -212,7 +212,8 @@ namespace eve::detail
   {
     if constexpr( !ABI::regular_logical_register )
     {
-      detail::as_mask_t<ABI::bytes/sizeof(T)> that{!!v ? ~0ULL : 0ULL};
+      using i_t = typename detail::as_mask_t<ABI::bytes/sizeof(T)>::type;
+      detail::as_mask_t<ABI::bytes/sizeof(T)> that{ i_t(!!v ? ~0ULL : 0ULL) };
       return that;
     }
     else
