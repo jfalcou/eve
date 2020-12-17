@@ -12,6 +12,7 @@
 
 #include <cstddef>
 #include <eve/detail/concepts.hpp>
+#include <eve/detail/meta.hpp>
 
 namespace eve
 {
@@ -36,23 +37,29 @@ namespace eve
   };
 
   //================================================================================================
-  // Concept for discriminatig aggregated from non-agrgegated ABI
+  // Concept for discriminatig aggregated from non-agregated ABI
+  //================================================================================================
   template<typename T> concept regular_abi = !std::same_as<T,aggregated_>;
 
   //================================================================================================
   // Dispatching tag for emulated SIMD implementation
   struct emulated_ : cpu_
   {
-    static constexpr std::size_t bits           = 128;
-    static constexpr std::size_t bytes          = 16;
-    static constexpr bool        is_bit_logical = true;
+    static constexpr std::size_t bits                     = 128;
+    static constexpr std::size_t bytes                    = 16;
+    static constexpr bool        regular_logical_register = true;
 
     template<typename Type>
     static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
   };
 
+  template<typename T>
+  concept non_native_abi = detail::is_one_of<T>(detail::types<aggregated_, emulated_> {});
+
+  template<typename T>
+  concept native_abi = !detail::is_one_of<T>(detail::types<aggregated_, emulated_> {});
+
   //================================================================================================
   // Runtime detection of CPU support
   inline bool is_supported(cpu_ const &) noexcept { return true; }
 }
-
