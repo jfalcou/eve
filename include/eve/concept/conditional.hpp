@@ -24,6 +24,7 @@ namespace eve
     { T::is_inverted      };
     { T::is_complete      };
     { a.mask(eve::as_<eve::wide<int>>())  };
+    { a.bitmap(eve::as_<eve::wide<int>>()) };
   };
 
   template<typename T> concept relative_conditional_expr = conditional_expr<T> && requires(T a)
