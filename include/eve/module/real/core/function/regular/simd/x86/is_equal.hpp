@@ -26,36 +26,36 @@ namespace eve::detail
 
     if constexpr( !ABI::regular_logical_register )
     {
-            if constexpr( c == category::float32x16 ) return mask16(_mm512_cmp_ps_mask(v0, v1, f ));
-      else  if constexpr( c == category::float32x8  ) return mask8 (_mm256_cmp_ps_mask(v0, v1, f ));
-      else  if constexpr( c == category::float32x4  ) return mask8 (_mm_cmp_ps_mask   (v0, v1, f ));
-      else  if constexpr( c == category::float64x8  ) return mask8 (_mm512_cmp_pd_mask(v0, v1, f ));
-      else  if constexpr( c == category::float64x4  ) return mask8 (_mm256_cmp_pd_mask(v0, v1, f ));
-      else  if constexpr( c == category::float64x2  ) return mask8 (_mm_cmp_pd_mask   (v0, v1, f ));
-      else  if constexpr( c == category::uint64x8   ) return mask8 (_mm512_cmpeq_epu64_mask(v0,v1));
-      else  if constexpr( c == category::uint64x4   ) return mask8 (_mm256_cmpeq_epu64_mask(v0,v1));
-      else  if constexpr( c == category::uint64x2   ) return mask8 (_mm_cmpeq_epu64_mask   (v0,v1));
-      else  if constexpr( c == category::uint32x16  ) return mask16(_mm512_cmpeq_epu32_mask(v0,v1));
-      else  if constexpr( c == category::uint32x8   ) return mask8 (_mm256_cmpeq_epu32_mask(v0,v1));
-      else  if constexpr( c == category::uint32x4   ) return mask8 (_mm_cmpeq_epu32_mask   (v0,v1));
-      else  if constexpr( c == category::uint16x32  ) return mask32(_mm512_cmpeq_epu16_mask(v0,v1));
-      else  if constexpr( c == category::uint16x16  ) return mask16(_mm256_cmpeq_epu16_mask(v0,v1));
-      else  if constexpr( c == category::uint16x8   ) return mask8(_mm_cmpeq_epu16_mask    (v0,v1));
-      else  if constexpr( c == category::uint8x64   ) return mask64(_mm512_cmpeq_epu8_mask (v0,v1));
-      else  if constexpr( c == category::uint8x32   ) return mask32(_mm256_cmpeq_epu8_mask (v0,v1));
-      else  if constexpr( c == category::uint8x16   ) return mask16(_mm_cmpeq_epu8_mask    (v0,v1));
-      else  if constexpr( c == category::int64x8    ) return mask8 (_mm512_cmpeq_epi64_mask(v0,v1));
-      else  if constexpr( c == category::int64x4    ) return mask8 (_mm256_cmpeq_epi64_mask(v0,v1));
-      else  if constexpr( c == category::int64x2    ) return mask8 (_mm_cmpeq_epi64_mask   (v0,v1));
-      else  if constexpr( c == category::int32x16   ) return mask16(_mm512_cmpeq_epi32_mask(v0,v1));
-      else  if constexpr( c == category::int32x8    ) return mask8 (_mm256_cmpeq_epi32_mask(v0,v1));
-      else  if constexpr( c == category::int32x4    ) return mask8 (_mm_cmpeq_epi32_mask   (v0,v1));
-      else  if constexpr( c == category::int16x32   ) return mask32(_mm512_cmpeq_epi16_mask(v0,v1));
-      else  if constexpr( c == category::int16x16   ) return mask16(_mm256_cmpeq_epi16_mask(v0,v1));
-      else  if constexpr( c == category::int16x8    ) return mask8 (_mm_cmpeq_epi16_mask   (v0,v1));
-      else  if constexpr( c == category::int8x64    ) return mask64(_mm512_cmpeq_epi8_mask (v0,v1));
-      else  if constexpr( c == category::int8x32    ) return mask32(_mm256_cmpeq_epi8_mask (v0,v1));
-      else  if constexpr( c == category::int8x16    ) return mask16(_mm_cmpeq_epi8_mask    (v0,v1));
+            if constexpr( c == category::float32x16 ) return mask16{_mm512_cmp_ps_mask(v0, v1, f )};
+      else  if constexpr( c == category::float32x8  ) return mask8 {_mm256_cmp_ps_mask(v0, v1, f )};
+      else  if constexpr( c == category::float32x4  ) return mask8 {_mm_cmp_ps_mask   (v0, v1, f )};
+      else  if constexpr( c == category::float64x8  ) return mask8 {_mm512_cmp_pd_mask(v0, v1, f )};
+      else  if constexpr( c == category::float64x4  ) return mask8 {_mm256_cmp_pd_mask(v0, v1, f )};
+      else  if constexpr( c == category::float64x2  ) return mask8 {_mm_cmp_pd_mask   (v0, v1, f )};
+      else  if constexpr( c == category::uint64x8   ) return mask8 {_mm512_cmpeq_epu64_mask(v0,v1)};
+      else  if constexpr( c == category::uint64x4   ) return mask8 {_mm256_cmpeq_epu64_mask(v0,v1)};
+      else  if constexpr( c == category::uint64x2   ) return mask8 {_mm_cmpeq_epu64_mask   (v0,v1)};
+      else  if constexpr( c == category::uint32x16  ) return mask16{_mm512_cmpeq_epu32_mask(v0,v1)};
+      else  if constexpr( c == category::uint32x8   ) return mask8 {_mm256_cmpeq_epu32_mask(v0,v1)};
+      else  if constexpr( c == category::uint32x4   ) return mask8 {_mm_cmpeq_epu32_mask   (v0,v1)};
+      else  if constexpr( c == category::uint16x32  ) return mask32{_mm512_cmpeq_epu16_mask(v0,v1)};
+      else  if constexpr( c == category::uint16x16  ) return mask16{_mm256_cmpeq_epu16_mask(v0,v1)};
+      else  if constexpr( c == category::uint16x8   ) return mask8 {_mm_cmpeq_epu16_mask    (v0,v1)};
+      else  if constexpr( c == category::uint8x64   ) return mask64{_mm512_cmpeq_epu8_mask (v0,v1)};
+      else  if constexpr( c == category::uint8x32   ) return mask32{_mm256_cmpeq_epu8_mask (v0,v1)};
+      else  if constexpr( c == category::uint8x16   ) return mask16{_mm_cmpeq_epu8_mask    (v0,v1)};
+      else  if constexpr( c == category::int64x8    ) return mask8 {_mm512_cmpeq_epi64_mask(v0,v1)};
+      else  if constexpr( c == category::int64x4    ) return mask8 {_mm256_cmpeq_epi64_mask(v0,v1)};
+      else  if constexpr( c == category::int64x2    ) return mask8 {_mm_cmpeq_epi64_mask   (v0,v1)};
+      else  if constexpr( c == category::int32x16   ) return mask16{_mm512_cmpeq_epi32_mask(v0,v1)};
+      else  if constexpr( c == category::int32x8    ) return mask8 {_mm256_cmpeq_epi32_mask(v0,v1)};
+      else  if constexpr( c == category::int32x4    ) return mask8 {_mm_cmpeq_epi32_mask   (v0,v1)};
+      else  if constexpr( c == category::int16x32   ) return mask32{_mm512_cmpeq_epi16_mask(v0,v1)};
+      else  if constexpr( c == category::int16x16   ) return mask16{_mm256_cmpeq_epi16_mask(v0,v1)};
+      else  if constexpr( c == category::int16x8    ) return mask8 {_mm_cmpeq_epi16_mask   (v0,v1)};
+      else  if constexpr( c == category::int8x64    ) return mask64{_mm512_cmpeq_epi8_mask (v0,v1)};
+      else  if constexpr( c == category::int8x32    ) return mask32{_mm256_cmpeq_epi8_mask (v0,v1)};
+      else  if constexpr( c == category::int8x16    ) return mask16{_mm_cmpeq_epi8_mask    (v0,v1)};
     }
     else
     {

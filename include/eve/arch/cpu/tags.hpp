@@ -34,6 +34,7 @@ namespace eve
   struct aggregated_ : cpu_
   {
     using parent = cpu_;
+    static constexpr bool regular_logical_register = true;
   };
 
   //================================================================================================
@@ -58,6 +59,12 @@ namespace eve
 
   template<typename T>
   concept native_abi = !detail::is_one_of<T>(detail::types<aggregated_, emulated_> {});
+
+  //================================================================================================
+  // Checks for logical status in ABI
+  template<typename ABI>
+  struct use_regular_logical_register : std::integral_constant<bool,ABI::regular_logical_register>
+  {};
 
   //================================================================================================
   // Runtime detection of CPU support

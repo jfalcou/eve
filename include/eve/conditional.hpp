@@ -33,11 +33,6 @@ namespace eve
     template<typename T>
     EVE_FORCEINLINE auto mask(eve::as_<T> const& tgt) const { return C::mask(tgt); }
 
-    template<typename T> EVE_FORCEINLINE auto bitmap(eve::as_<T> const& tgt) const
-    {
-      return C::condition_.bitmap(tgt);
-    }
-
     friend std::ostream& operator<<(std::ostream& os, or_ const& c)
     {
       return os << c.condition_ << " else ( " << c.alternative << " )";
@@ -58,11 +53,6 @@ namespace eve
 
     template<typename T>
     EVE_FORCEINLINE auto mask(eve::as_<T> const& tgt) const { return C::mask(tgt); }
-
-    template<typename T> EVE_FORCEINLINE auto bitmap(eve::as_<T> const& tgt) const
-    {
-      return C::condition_.bitmap(tgt);
-    }
 
     friend std::ostream& operator<<(std::ostream& os, not_or_ const& c)
     {
@@ -86,11 +76,6 @@ namespace eve
     template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&)  const { return condition_; }
 
-    template<typename T> EVE_FORCEINLINE auto bitmap(eve::as_<T> const& tgt) const
-    {
-      return C::condition_.bitmap();
-    }
-
     friend std::ostream& operator<<(std::ostream& os, if_ const& c)
     {
       return os << "if( " << c.condition_ << " )";
@@ -112,11 +97,6 @@ namespace eve
 
     template<typename V> EVE_FORCEINLINE auto else_(V v) const { return not_or_(*this,v); }
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&)  const { return condition_;  }
-
-    template<typename T> EVE_FORCEINLINE auto bitmap(eve::as_<T> const& tgt) const
-    {
-      return C::condition_.bitmap();
-    }
 
     friend std::ostream& operator<<(std::ostream& os, if_not_ const& c)
     {

@@ -29,9 +29,9 @@ namespace eve
   //================================================================================================
   template<std::size_t Size, bool Logical> struct arm_abi_
   {
-    static constexpr std::size_t bits           = Size;
-    static constexpr std::size_t bytes          = Size/8;
-    static constexpr bool        is_bit_logical = Logical;
+    static constexpr std::size_t bits                     = Size;
+    static constexpr std::size_t bytes                    = Size/8;
+    static constexpr bool        regular_logical_register = Logical;
 
     template<typename Type>
     static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);

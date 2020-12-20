@@ -100,9 +100,4 @@ namespace eve
   //================================================================================================
   template<typename T>
   concept x86_abi = detail::is_one_of<T>(detail::types<x86_128_, x86_256_, x86_512_> {});
-
-  template<x86_abi ABI>
-  struct use_regular_logical_register : std::integral_constant<bool,ABI::regular_logical_register>
-  {};
-
 }
