@@ -12,9 +12,11 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/constant/half.hpp>
+#include <eve/function/add.hpp>
 #include <eve/function/bit_and.hpp>
 #include <eve/detail/function/conditional.hpp>
 #include <eve/function/bit_xor.hpp>
+#include <eve/function/inc.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/shr.hpp>
 #include <eve/detail/apply_over.hpp>
@@ -54,4 +56,17 @@ namespace eve::detail
     return mask_op( EVE_CURRENT_API{}, cond, eve::average, t, f);
   }
 
+  //================================================================================================
+  //N parameters
+  //================================================================================================
+  template<floating_real_value T0, floating_real_value ...Ts>
+  auto average_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args)
+  {
+    auto that = a0;
+    auto t = 2;
+    auto next = [&t](auto avg,  auto x){
+      return avg + (x - avg) / t++; };
+    ((that = next(that,args)),...);
+    return that;
+  }
 }

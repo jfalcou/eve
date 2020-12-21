@@ -24,4 +24,36 @@ namespace eve::detail
   {
     return mask_op( EVE_CURRENT_API{}, cond, eve::add, t, f);
   }
+
+  //================================================================================================
+  //N parameters
+  //================================================================================================
+//   template<decorator D, real_value T0, real_value ...T>
+//   EVE_FORCEINLINE auto add_(EVE_SUPPORTS(cpu_), D const & , T0 const& t, T const&... f) noexcept
+//   {
+//     return D()(add)(t, D()(add)(f...));
+//   }
+
+//   template<real_value T0, real_value ...T>
+//   EVE_FORCEINLINE auto add_(EVE_SUPPORTS(cpu_), T0 const& t, T const&... f) noexcept
+//   {
+//     return add(t, add(f...));
+//   }
+
+
+  template<decorator D, real_value T0, real_value T1, real_value ...Ts>
+  auto add_(EVE_SUPPORTS(cpu_), D const &, T0 a0, T1 a1, Ts... args)
+  {
+    auto that = D()(add)(a0,a1);
+    ((that = D()(add)(that,args)),...);
+    return that;
+  }
+
+  template<real_value T0, real_value T1, real_value ...Ts>
+  auto add_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
+  {
+    auto that = add(a0,a1);
+    ((that = add(that,args)),...);
+    return that;
+  }
 }

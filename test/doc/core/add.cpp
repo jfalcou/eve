@@ -1,4 +1,5 @@
 #include <eve/function/add.hpp>
+#include <eve/function/saturated/add.hpp>
 #include <eve/wide.hpp>
 
 int main()
@@ -15,9 +16,13 @@ int main()
   std::int16_t xi = 100, yi = 32700;
 
   std::cout << "---- scalar" << '\n'
-            << " xi             = " << xi << '\n'
-            << " yi             = " << yi << '\n'
+            << " <- xi          = " << xi << '\n'
+            << " <- yi          = " << yi << '\n'
             << " -> add(xi, yi) = " << eve::add(xi, yi) << '\n'
             << " -> xi + yi     = " << xi + yi << '\n'; // C++ promotion to int
+
+  std::cout << "---- multi parameters" << '\n'
+            << " -> add(pi, pi, pi, 1)                = " << eve::add(pi, pi, pi, 1) << '\n'
+            << " -> saturated(eve::add)(pi,12, pi,pi) = " << eve::saturated(eve::add)(pi, 12, pi,pi) << '\n';
   return 0;
 }
