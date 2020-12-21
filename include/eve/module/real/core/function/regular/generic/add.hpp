@@ -12,6 +12,7 @@
 
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/traits/common_compatible.hpp>
 
 namespace eve::detail
 {
@@ -31,7 +32,7 @@ namespace eve::detail
   template<decorator D, real_value T0, real_value T1, real_value ...Ts>
   auto add_(EVE_SUPPORTS(cpu_), D const &, T0 a0, T1 a1, Ts... args)
   {
-    auto that = D()(add)(a0,a1);
+    common_compatible_t<T0,T1,Ts...> that(D()(add)(a0,a1));
     ((that = D()(add)(that,args)),...);
     return that;
   }
@@ -39,7 +40,7 @@ namespace eve::detail
   template<real_value T0, real_value T1, real_value ...Ts>
   auto add_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
   {
-    auto that = add(a0,a1);
+    common_compatible_t<T0,T1,Ts...> that(add(a0,a1));
     ((that = add(that,args)),...);
     return that;
   }
