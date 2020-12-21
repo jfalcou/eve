@@ -73,6 +73,7 @@ make_all_units(ROOT unit.real.math NAME log1p                 ARCH scalar simd T
 make_all_units(ROOT unit.real.math NAME log2                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME logspace_add          ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME logspace_sub          ARCH scalar simd TYPES ${real_types}    )
+make_all_units(ROOT unit.real.math NAME nthroot               ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME pow                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.math NAME pow_abs               ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME powm1                 ARCH scalar simd TYPES ${real_types}    )
