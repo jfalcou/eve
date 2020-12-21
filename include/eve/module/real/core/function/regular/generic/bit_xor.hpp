@@ -29,4 +29,16 @@ namespace eve::detail
   {
     return mask_op( EVE_CURRENT_API{}, cond, eve::bit_xor, t, f);
   }
+
+  //================================================================================================
+  //N parameters
+  //================================================================================================
+  template<real_value T0, real_value T1, real_value ...Ts>
+  auto bit_xor_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
+    requires bit_compatible_values<T0, T1> && (bit_compatible_values<T1, Ts> && ...)
+  {
+    auto that = bit_xor(a0,a1);
+    ((that = bit_xor(that, args)),...);
+    return that;
+  }
 }

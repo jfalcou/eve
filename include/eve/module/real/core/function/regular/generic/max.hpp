@@ -45,4 +45,23 @@ namespace eve::detail
   {
     return apply_over(max, a, b);
   }
+
+  //================================================================================================
+  //N parameters
+  //================================================================================================
+  template<decorator D, real_value T0, real_value T1, real_value ...Ts>
+  auto max_(EVE_SUPPORTS(cpu_), D const &, T0 a0, T1 a1, Ts... args)
+  {
+    auto that = D()(max)(a0,a1);
+    ((that = D()(max)(that,args)),...);
+    return that;
+  }
+
+  template<real_value T0, real_value T1, real_value ...Ts>
+  auto max_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
+  {
+    auto that = max(a0,a1);
+    ((that = max(that,args)),...);
+    return that;
+  } 
 }

@@ -11,6 +11,7 @@
 #pragma once
 
 #include <eve/constant/one.hpp>
+#include <eve/function/add.hpp>
 #include <eve/function/is_equal.hpp>
 #include <eve/function/derivative.hpp>
 
@@ -33,19 +34,12 @@ namespace eve::detail
       return apply_over(derivative_1st(add), x, y, n, p);
   }
 
-  template<floating_real_value T>
+  template<auto N, floating_real_value T, floating_real_value... Ts>
   EVE_FORCEINLINE constexpr T add_(EVE_SUPPORTS(cpu_)
-                                    , derivative_type<1> const &
-                                    , T x, T ) noexcept
+                                    , derivative_type<N> const &
+                                    , T x, Ts ... args ) noexcept
   {
-    return one(as(x));
-  }
-
-  template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T add_(EVE_SUPPORTS(cpu_)
-                                    , derivative_type<2> const &
-                                    , T x, T ) noexcept
-  {
-    return one(as(x));
+    using r_t = decltype(add(x, args...));   //compatibility_t <T, Ts...>;
+    return (N > sizeof...(Ts)+1) ? zero(as < r_t>()) : one(as<r_t>());
   }
 }

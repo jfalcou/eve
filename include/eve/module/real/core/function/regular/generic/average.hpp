@@ -18,6 +18,7 @@
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/fma.hpp>
+#include <eve/function/raw.hpp>
 #include <eve/function/shr.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/skeleton_calls.hpp>
@@ -59,14 +60,25 @@ namespace eve::detail
   //================================================================================================
   //N parameters
   //================================================================================================
+
   template<floating_real_value T0, floating_real_value ...Ts>
   auto average_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args)
   {
+//    using compat_t = std::conditional<simd_value<T>, T, wide<T>
     auto that = a0;
     auto t = 2;
     auto next = [&t](auto avg,  auto x){
-      return avg + (x - avg) / t++; };
+      return avg + (x - avg) / t++;
+    };
     ((that = next(that,args)),...);
     return that;
+  }
+
+  template<floating_real_value T0, floating_real_value ...Ts>
+  auto average_(EVE_SUPPORTS(cpu_), raw_type const &, T0 a0, Ts... args)
+  {
+    auto that = a0;
+    ((that = add(that,args)),...);
+    return that/(sizeof...(args)+1);
   }
 }

@@ -28,19 +28,6 @@ namespace eve::detail
   //================================================================================================
   //N parameters
   //================================================================================================
-//   template<decorator D, real_value T0, real_value ...T>
-//   EVE_FORCEINLINE auto add_(EVE_SUPPORTS(cpu_), D const & , T0 const& t, T const&... f) noexcept
-//   {
-//     return D()(add)(t, D()(add)(f...));
-//   }
-
-//   template<real_value T0, real_value ...T>
-//   EVE_FORCEINLINE auto add_(EVE_SUPPORTS(cpu_), T0 const& t, T const&... f) noexcept
-//   {
-//     return add(t, add(f...));
-//   }
-
-
   template<decorator D, real_value T0, real_value T1, real_value ...Ts>
   auto add_(EVE_SUPPORTS(cpu_), D const &, T0 a0, T1 a1, Ts... args)
   {

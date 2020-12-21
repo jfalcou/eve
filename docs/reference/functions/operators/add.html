@@ -31,42 +31,44 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
+template< value T, value ...Ts> auto operator()( T x,Ts... args ) const noexcept requires (compatiblevalues< T, Ts > && ...);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs  the  [element-wise](../../../glossary.html#regular) arithmetic sum of the two [values](../../concepts.html#value).
+Performs  the  [element-wise](../../../glossary.html#regular) arithmetic sum of the parameter [values](../../concepts.html#value).
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`, `y`
+`x`, `args`, ...
 :   [values](../../concepts.html#value).
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Return the sum of `x` and `y`.
+Return the sum of `x` and the `args`.
 
- The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+ The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
 
- The call `add(x, y)` is equivalent to `x + y` if `x` or  `y` is an  [simd value](../../concepts.html#value).
+ The call `add(x, args, ...)` is equivalent to `(x + args + ...)` if `x` or one of the `args` is an  [simd value](../../concepts.html#value).
 
 !!! WARNING
    Although the infix notation with `+` is supported, the `+` operator on
-   standard scalar type is the original one and so can lead to automatic promotion.
+   standard scalar types is the original one and so can lead to automatic promotion.
 
 Supported decorators
 ====================================================================================================
 [`saturated`](../decorator/saturated.html)
 :   **Required header: **<script type="preformatted">` #include <eve/function/saturated/add.hpp>`</script>
 
-:   The call `saturated(add)(x,y)` computes the saturated  sum of `x` and `y`. The saturation is obtained in the
+:   The call `saturated(add)(x, ys, ...)` computes the saturated  sum of `x` and the `args`. The saturation is obtained in the
      [compatibility result](../../concept.html#compatibility) of the two parameters. No overflow occurs.
 
 [`derivative`](../decorators.html#derivative)
 :   **Required header: **<script type="preformatted">` #include <eve/function/derivative/add.hpp>`</script>
 
-:   The expression `derivative_1st(add)(x,y)` and `derivative_2nd(add)(x,y)` computes the partial
-    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ x+y$.
+:   The expression `derivative< N >(add)(x,ys,...)` computes the partial relative to the Nth parameter
+    derivatives of $f$, where $f$ is the function $(x,ys,...) \rightarrow \ x + ys\  +\  ...$.
+
+    This means 1 if N is less or equal to the actual total parameter number, and 0 otherwise.
 :
 Masked calls
 ====================================================================================================

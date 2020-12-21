@@ -149,16 +149,4 @@ namespace eve::detail
     return mask_op( EVE_CURRENT_API{}, cond, saturated(add), t, f);
   }
 
-
-//   //================================================================================================
-//   // N params
-//   //================================================================================================
-//   template<decorator D, real_value T0, real_value T1, real_value ...Ts>
-//   auto add_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
-//   {
-//     auto that = D()(add)(a0,a1);
-//     ((that = D()(add)(that,args)),...);
-//     return that;
-//   }
-  
 }

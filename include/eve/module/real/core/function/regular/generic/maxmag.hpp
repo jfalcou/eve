@@ -47,4 +47,23 @@ namespace eve::detail
         return aa < bb ? b : bb < aa ? a : eve::max(a, b);
       }
   }
+
+  //================================================================================================
+  //N parameters
+  //================================================================================================
+  template<decorator D, real_value T0, real_value T1, real_value ...Ts>
+  auto maxmag_(EVE_SUPPORTS(cpu_), D const &, T0 a0, T1 a1, Ts... args)
+  {
+    auto that = D()(maxmag)(a0,a1);
+    ((that = D()(maxmag)(that,args)),...);
+    return that;
+  }
+
+  template<real_value T0, real_value T1, real_value ...Ts>
+  auto maxmag_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
+  {
+    auto that = maxmag(a0,a1);
+    ((that = maxmag(that,args)),...);
+    return that;
+  }
 }
