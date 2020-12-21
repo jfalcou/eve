@@ -66,7 +66,7 @@ Supported decorators
 :   **Required header: **<script type="preformatted">` #include <eve/function/derivative/add.hpp>`</script>
 
 :   The expression `derivative< N >(add)(x,args...)` computes the partial relative to the Nth parameter
-    derivatives of $f$, where $f$ is the function $(x,ys,...) \rightarrow \ x + ys\  +\  ...$.
+    derivatives of $f$, where $f$ is the function $(x,args,...) \rightarrow \ x + args\  +\  ...$.
 
     This means 1 if N is less or equal to the actual total parameter number, and 0 otherwise.
 :

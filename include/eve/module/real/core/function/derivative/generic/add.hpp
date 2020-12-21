@@ -14,6 +14,7 @@
 #include <eve/function/add.hpp>
 #include <eve/function/is_equal.hpp>
 #include <eve/function/derivative.hpp>
+#include <eve/traits/common_compatible.hpp>
 
 namespace eve::detail
 {
@@ -39,7 +40,7 @@ namespace eve::detail
                                     , derivative_type<N> const &
                                     , T x, Ts ... args ) noexcept
   {
-    using r_t = decltype(add(x, args...));   //compatibility_t <T, Ts...>;
+    using r_t = common_compatible_t<T,Ts...>;
     return (N > sizeof...(Ts)+1) ? zero(as < r_t>()) : one(as<r_t>());
   }
 }

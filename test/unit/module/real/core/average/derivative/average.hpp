@@ -15,9 +15,8 @@ TTS_CASE_TPL("Check derivative(average) return type", EVE_TYPE)
 {
   if constexpr(eve::floating_value<T>)
   {
-    using ui_t = eve::detail::as_integer_t<T, unsigned>;
-    TTS_EXPR_IS(eve::derivative(eve::average)(T(), T(), unsigned(), unsigned()), T);
-    TTS_EXPR_IS(eve::derivative(eve::average)(T(), T(), ui_t(), ui_t()), T);
+    TTS_EXPR_IS(eve::derivative(eve::average)(T(), T()), T);
+    TTS_EXPR_IS(eve::derivative(eve::average)(T(), T()), T);
   }
   else
   {
@@ -29,12 +28,13 @@ TTS_CASE_TPL("Check eve::derivative(eve::average) behavior", EVE_TYPE)
 {
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::derivative(eve::average)(T{10},T{6}, 0u, 0u), T(8));
-    TTS_EQUAL(eve::derivative(eve::average)(T{10},T{6}, 1u, 0u), T(0.5));
-    TTS_EQUAL(eve::derivative(eve::average)(T{10},T{6}, 2u, 0u), T(0));
-    TTS_EQUAL(eve::derivative(eve::average)(T{-10},T{6}, 0u, 1u), T(0.5));
-    TTS_EQUAL(eve::derivative(eve::average)(T{-10},T{6}, 1u, 1u), T(0));
-    TTS_EQUAL(eve::derivative(eve::average)(T{-10},T{6}, 0u, 2u), T(0));
+    TTS_EQUAL(eve::derivative_1st(eve::average)(T{10},T{6}), T(0.5));
+    TTS_EQUAL(eve::derivative_2nd(eve::average)(T{-10},T{6}), T(0.5));
+    TTS_EQUAL(eve::derivative_3rd(eve::average)(T{-10},T{6}), T(0.0));
+
+    TTS_EQUAL(eve::derivative_1st(eve::average)(T{10},T{6},T{4}), T(1.0/3));
+    TTS_EQUAL(eve::derivative_2nd(eve::average)(T{-10},T{6},T{4}), T(1.0/3));
+    TTS_EQUAL(eve::derivative_3rd(eve::average)(T{-10},T{6},T{4}), T(1.0/3));
   }
   else
   {

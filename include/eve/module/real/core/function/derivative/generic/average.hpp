@@ -11,41 +11,22 @@
 #pragma once
 
 #include <eve/constant/half.hpp>
+#include <eve/function/if_else.hpp>
 #include <eve/function/is_equal.hpp>
 #include <eve/function/derivative.hpp>
+#include <eve/function/rec.hpp>
+#include <eve/traits/common_compatible.hpp>
 
 namespace eve::detail
 {
-  template<floating_real_value T, unsigned_value N, unsigned_value P>
+  template<auto N, floating_real_value T, floating_real_value... Ts>
   EVE_FORCEINLINE constexpr T average_(EVE_SUPPORTS(cpu_)
-                                   , derivative_type<1> const &
-                                   , T x
-                                   , T y
-                                   , N n
-                                   , P p) noexcept
+                                    , derivative_type<N> const &
+                                    , T , Ts ... ys ) noexcept
   {
-    if constexpr( has_native_abi_v<T> )
-    {
-      auto np = n+p;
-      return if_else(np == 0, average(x, y), if_else(np == 1,  half(as(x)), zero));
-    }
-    else
-      return apply_over(derivative_1st(average), x, y, n, p);
+    using r_t = common_compatible_t<T,Ts...>;
+    using elt_t = element_type_t<r_t>;
+    return (N > sizeof...(Ts)+1) ? zero(as < r_t>()) : r_t(rec(elt_t(sizeof...(ys)+1)));
   }
 
-  template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T average_(EVE_SUPPORTS(cpu_)
-                                    , derivative_type<1> const &
-                                    , T x, T ) noexcept
-  {
-    return half(as(x));
-  }
-
-  template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T average_(EVE_SUPPORTS(cpu_)
-                                    , derivative_type<2> const &
-                                    , T x, T ) noexcept
-  {
-    return half(as(x));
-  }
 }
