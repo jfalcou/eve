@@ -25,7 +25,7 @@ namespace eve::detail
     constexpr auto c = categorize<wide<T, N, ABI>>();
     constexpr auto f = to_integer(cmp_flt::lt_oq);
 
-    if constexpr( !ABI::regular_logical_register )
+    if constexpr( !ABI::is_wide_logical )
     {
             if constexpr( c == category::float32x16 ) return mask16{_mm512_cmp_ps_mask(v0, v1, f) };
       else  if constexpr( c == category::float32x8  ) return mask8 {_mm256_cmp_ps_mask(v0, v1, f) };

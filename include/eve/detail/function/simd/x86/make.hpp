@@ -192,7 +192,7 @@ namespace eve::detail
   template<real_scalar_value T, x86_abi ABI, typename... Vs>
   EVE_FORCEINLINE auto make(eve::as_<logical<T>> const &, ABI const &, Vs... vs) noexcept
   {
-    if constexpr( !ABI::regular_logical_register )
+    if constexpr( !ABI::is_wide_logical )
     {
       detail::as_mask_t<sizeof...(vs)> that{};
 
@@ -210,7 +210,7 @@ namespace eve::detail
   template<real_scalar_value T, typename V, x86_abi ABI>
   EVE_FORCEINLINE auto make(eve::as_<logical<T>> const &, ABI const &, V v) noexcept
   {
-    if constexpr( !ABI::regular_logical_register )
+    if constexpr( !ABI::is_wide_logical )
     {
       using i_t = typename detail::as_mask_t<ABI::bytes/sizeof(T)>::type;
       detail::as_mask_t<ABI::bytes/sizeof(T)> that{ !!v ? ~i_t(0) : i_t(0) };

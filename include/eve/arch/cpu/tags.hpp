@@ -34,7 +34,7 @@ namespace eve
   struct aggregated_ : cpu_
   {
     using parent = cpu_;
-    static constexpr bool regular_logical_register = true;
+    static constexpr bool is_wide_logical = true;
   };
 
   //================================================================================================
@@ -48,7 +48,7 @@ namespace eve
   {
     static constexpr std::size_t bits                     = 128;
     static constexpr std::size_t bytes                    = 16;
-    static constexpr bool        regular_logical_register = true;
+    static constexpr bool        is_wide_logical = true;
 
     template<typename Type>
     static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
@@ -63,7 +63,7 @@ namespace eve
   //================================================================================================
   // Checks for logical status in ABI
   template<typename ABI>
-  struct use_regular_logical_register : std::integral_constant<bool,ABI::regular_logical_register>
+  struct use_is_wide_logical : std::integral_constant<bool,ABI::is_wide_logical>
   {};
 
   //================================================================================================

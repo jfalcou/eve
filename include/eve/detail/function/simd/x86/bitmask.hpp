@@ -31,7 +31,7 @@ namespace eve::detail
   template<typename T, typename N, x86_abi ABI>
   EVE_FORCEINLINE wide<T, N, ABI> to_mask(sse2_ const&, logical<wide<T, N, ABI>> const& p ) noexcept
   {
-    if constexpr( !ABI::regular_logical_register )
+    if constexpr( !ABI::is_wide_logical )
     {
       auto z = wide<T, N, ABI>(0);
       auto a = allbits(as_<wide<T, N, ABI>>());
@@ -77,7 +77,7 @@ namespace eve::detail
   template<typename T, typename N, x86_abi ABI> EVE_FORCEINLINE
   std::bitset<N::value> to_bitmap(sse2_ const&, logical<wide<T, N, ABI>> const& p ) noexcept
   {
-    if constexpr( !ABI::regular_logical_register )
+    if constexpr( !ABI::is_wide_logical )
     {
       return p.storage().value;
     }

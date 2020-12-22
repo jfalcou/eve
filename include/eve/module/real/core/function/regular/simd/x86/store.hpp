@@ -78,7 +78,7 @@ namespace eve::detail
           >
   EVE_FORCEINLINE void store_(EVE_SUPPORTS(sse2_), logical<wide<T,N,ABI>> const &value, Ptr ptr) noexcept
   {
-    if constexpr( !ABI::regular_logical_register )
+    if constexpr( !ABI::is_wide_logical )
     {
       auto[l,h] = value.mask().slice();
 

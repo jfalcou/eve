@@ -46,7 +46,7 @@ namespace eve::detail
 
       return is_nez(block).storage();
     }
-    else if constexpr( !abi_t::regular_logical_register )
+    else if constexpr( !abi_t::is_wide_logical )
     {
       if constexpr( C::is_complete )
       {

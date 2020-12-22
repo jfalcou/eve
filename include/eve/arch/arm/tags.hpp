@@ -31,7 +31,7 @@ namespace eve
   {
     static constexpr std::size_t bits                     = Size;
     static constexpr std::size_t bytes                    = Size/8;
-    static constexpr bool        regular_logical_register = Logical;
+    static constexpr bool        is_wide_logical = Logical;
 
     template<typename Type>
     static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);

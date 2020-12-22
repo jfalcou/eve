@@ -83,7 +83,7 @@ namespace eve::detail
   EVE_FORCEINLINE logical<wide<T, typename N::split_type>>
   slice(sse2_ const&, logical<wide<T,N,ABI>> const &a, Slice const &) noexcept requires(N::value > 1)
   {
-    if constexpr( !ABI::regular_logical_register )
+    if constexpr( !ABI::is_wide_logical )
     {
       using type  = logical<wide<T, typename N::split_type>>;
       using mask  = typename type::storage_type;
