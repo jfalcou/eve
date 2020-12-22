@@ -257,9 +257,9 @@ namespace eve
     friend std::ostream &operator<<(std::ostream &os, logical const &p)
     {
       auto that = p.bitmap();
-      os << '(' << std::boolalpha << that[0];
-      for(size_type i = 1; i < p.size(); ++i) os << ", " << that[i];
-      return os << std::noboolalpha << ')';
+      os << '(' << (that[0] ? "true" : "false");
+      for(size_type i = 1; i < p.size(); ++i) os << ", " << (that[i] ? "true" : "false");
+      return os << ')';
     }
 
     private:
