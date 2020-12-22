@@ -32,14 +32,14 @@ auto data_block()
   std::vector<logical<T>, alloc_t> ref(nb_elem);
 
   bool k = true;
-  for(std::size_t i=start;i<nb_elem;++i) ref[i] = (k = !k);
+  for(std::size_t i=start-1;i<nb_elem;++i) ref[i] = (k = !k);
 
   return std::pair{ref,start};
 }
 
 TTS_CASE_TPL("Check load for scalar", EVE_TYPE)
 {
-  constexpr std::ptrdiff_t algt = eve::alignment_v<T>;
+  constexpr std::ptrdiff_t algt = eve::alignment_v<logical<T>>;
 
   auto [data,idx]             = data_block<EVE_VALUE, eve::fixed<EVE_CARDINAL>>();
   auto* ref_ptr               = &data[idx];
@@ -55,7 +55,7 @@ TTS_CASE_TPL("Check load for scalar", EVE_TYPE)
 
 TTS_CASE_TPL("Check load from for wide", EVE_TYPE)
 {
-  constexpr std::ptrdiff_t algt = eve::alignment_v<T>;
+  constexpr std::ptrdiff_t algt = eve::alignment_v<logical<T>>;
   auto [data,idx]               = data_block<EVE_VALUE, eve::fixed<EVE_CARDINAL>>();
 
   TTS_WHEN("For some given relative data")
@@ -64,13 +64,8 @@ TTS_CASE_TPL("Check load from for wide", EVE_TYPE)
     auto* uref_ptr              = ref_ptr - 1;
     auto const* ref_const_ptr   = &data[idx];
     auto const* uref_const_ptr  = ref_const_ptr - 1;
-    eve::logical<T> ref, uref;
-
-    for(std::size_t i=0;i<EVE_CARDINAL;++i)
-    {
-      ref.set (i, ref_ptr[i]);
-      uref.set(i, uref_ptr[i]);
-    }
+    eve::logical<T> ref( [](auto i, auto) { return i%2==0; })
+                  , uref( [](auto i, auto) { return (i-1)%2==0; });
 
     TTS_AND_THEN("we load from unaligned pointers")
     {
@@ -116,7 +111,7 @@ TTS_CASE_TPL("Check load from for wide", EVE_TYPE)
 
 TTS_CASE_TPL("Check conditional load from  pointer for logical<wide>", EVE_TYPE)
 {
-  constexpr std::ptrdiff_t algt = eve::alignment_v<T>;
+  constexpr std::ptrdiff_t algt = eve::alignment_v<logical<T>>;
   auto [data,idx]               = data_block<EVE_VALUE, eve::fixed<EVE_CARDINAL>>();
   auto* ref_ptr                 = &data[idx];
   auto const* ref_const_ptr     = ref_ptr;
@@ -285,12 +280,7 @@ TTS_CASE_TPL("Check load from range for wide", EVE_TYPE )
   eve::logical<EVE_VALUE> k(true);
   for(auto &e : ref_ptr) e = (k = !k);
 
-  eve::logical<T> ref;
-
-  k = true;
-
-  for(std::size_t i=0;i<EVE_CARDINAL;++i)
-    ref.set(i, (k = !k));
+  eve::logical<T> ref( [](auto i, auto) { return i%2==1; });
 
   eve::logical<T> from_range(ref_ptr);
   TTS_EQUAL( from_range, ref );

@@ -20,7 +20,14 @@ inline constexpr auto small_size  = (eve::expected_cardinal_v<T>/2 !=0 )
                                   ? eve::expected_cardinal_v<T>/2 : 1;
 
 template<typename T>
+inline constexpr auto smaller_size  = (eve::expected_cardinal_v<T>/4 !=0 )
+                                    ? eve::expected_cardinal_v<T>/4 : 1;
+
+template<typename T>
 using small_wide = eve::wide<T,eve::fixed<small_size<T>>>;
+
+template<typename T>
+using smaller_wide = eve::wide<T,eve::fixed<smaller_size<T>>>;
 
 template<typename T>
 using tiny_wide = eve::wide<T,eve::fixed<1>>;

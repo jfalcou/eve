@@ -15,6 +15,7 @@
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
+#include <eve/function/is_nez.hpp>
 
 namespace eve::detail
 {
@@ -26,12 +27,19 @@ namespace eve::detail
   requires( std::same_as<T, std::remove_cvref_t<decltype(*p)>> )
   {
     constexpr auto cat = categorize<wide<T, N>>();
+    constexpr bool isfull512 = N::value*sizeof(T) == x86_512_::bytes;
     constexpr bool isfull256 = N::value*sizeof(T) == x86_256_::bytes;
     constexpr bool isfull128 = N::value*sizeof(T) == x86_128_::bytes;
 
     if constexpr( !std::is_pointer_v<Ptr> )
     {
-      if constexpr( isfull256 )
+      if constexpr( isfull512 )
+      {
+              if constexpr( cat == category::float64x8 )   return _mm512_load_pd(p.get());
+        else  if constexpr( cat == category::float32x16 )  return _mm512_load_ps(p.get());
+        else return _mm512_load_si512((__m512i *)p.get());
+      }
+      else if constexpr( isfull256 )
       {
               if constexpr( cat == category::float64x4 )  return _mm256_load_pd(p.get());
         else  if constexpr( cat == category::float32x8 )  return _mm256_load_ps(p.get());
@@ -52,7 +60,13 @@ namespace eve::detail
     }
     else
     {
-      if constexpr( isfull256 )
+      if constexpr( isfull512 )
+      {
+              if constexpr( cat == category::float64x8 )   return _mm512_loadu_pd(p);
+        else  if constexpr( cat == category::float32x16 )  return _mm512_loadu_ps(p);
+        else return _mm512_loadu_si512((__m512i *)p);
+      }
+      else if constexpr( isfull256 )
       {
               if constexpr( cat == category::float64x4 )  return _mm256_loadu_pd(p);
         else  if constexpr( cat == category::float32x8 )  return _mm256_loadu_ps(p);
@@ -71,5 +85,37 @@ namespace eve::detail
         return that;
       }
     }
+  }
+
+  //================================================================================================
+  // logical loads require some specific setup
+  //================================================================================================
+  template<typename T, typename N, typename Ptr, x86_abi ABI>
+  EVE_FORCEINLINE
+  auto load(eve::as_<logical<wide<T, N, ABI>>> const &, ABI const & abi, Ptr p)
+  requires( std::same_as<logical<T>, std::remove_cvref_t<decltype(*p)>> )
+  {
+    auto block = [&]() -> wide<T, N, ABI>
+    {
+      using tgt = eve::as_<wide<T, N, ABI>>;
+      if constexpr( !std::is_pointer_v<Ptr> ) return load(tgt(), abi, (T const*)(p.get()));
+      else                                    return load(tgt(), abi, (T const*)(p));
+    }();
+
+    return is_nez(block).storage();
+  }
+
+  template<typename Iterator, typename T, typename N, x86_abi ABI>
+  EVE_FORCEINLINE auto load ( eve::as_<logical<wide<T, N, ABI>>> const &
+                            , ABI const &, Iterator b, Iterator e
+                            ) noexcept
+  {
+    auto block = [&]() -> wide<T, N, ABI>
+    {
+      using tgt = eve::as_<wide<T, N, ABI>>;
+      return load(tgt(), ABI{}, b, e);
+    }();
+
+    return is_nez(block).storage();
   }
 }

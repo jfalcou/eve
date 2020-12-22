@@ -95,15 +95,6 @@ namespace eve
     }
 
     //==============================================================================================
-    // Constructs a wide from a pointer
-    //==============================================================================================
-    EVE_FORCEINLINE explicit logical(logical<Type> const* ptr) noexcept
-        : data_(detail::load(eve::as_<logical>{}, abi_type{}, ptr))
-    {
-    }
-
-
-    //==============================================================================================
     // Constructs a wide from a pointer or an aligned pointer
     //==============================================================================================
     template<simd_compatible_ptr<logical> Ptr>
@@ -133,8 +124,7 @@ namespace eve
                     &&  (static_size == 2 + sizeof...(Ts))
                   )
         : data_(detail::make(eve::as_<target_type>{}, abi_type{}, v0, v1, vs...))
-    {
-    }
+    {}
 
     //==============================================================================================
     // Constructs a wide with a generator function
@@ -160,8 +150,7 @@ namespace eve
                             ) noexcept
                     requires( static_size == 2 * halfSize::value )
                   : logical(detail::combine(EVE_CURRENT_API{}, l, h))
-    {
-    }
+    {}
 
     //==============================================================================================
     // Assignment
@@ -179,10 +168,10 @@ namespace eve
     //==============================================================================================
     template<typename Slice> EVE_FORCEINLINE auto slice(Slice const &s) const
     {
-      return detail::slice(*this, s);
+      return detail::slice(EVE_CURRENT_API{},*this, s);
     }
 
-    EVE_FORCEINLINE auto slice() const { return detail::slice(*this); }
+    EVE_FORCEINLINE auto slice() const { return detail::slice(EVE_CURRENT_API{},*this); }
 
     //==============================================================================================
     // Raw storage access
@@ -267,10 +256,9 @@ namespace eve
     //==============================================================================================
     friend std::ostream &operator<<(std::ostream &os, logical const &p)
     {
-      constexpr auto sz = sizeof(storage_type)/sizeof(logical<Type>);
-      auto that = bit_cast( p, as_<std::array<logical<Type>,sz>>());
-      os << '(' << that[0];
-      for(size_type i = 1; i != p.size(); ++i) os << ", " << that[i];
+      auto that = p.bitmap();
+      os << '(' << (that[0] ? "true" : "false");
+      for(size_type i = 1; i < p.size(); ++i) os << ", " << (that[i] ? "true" : "false");
       return os << ')';
     }
 

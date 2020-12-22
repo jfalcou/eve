@@ -36,15 +36,9 @@ namespace eve::detail
     //==============================================================================================
     else if constexpr( 2 * N::value * sizeof(T) == eve::x86_128_::bytes )
     {
-      if constexpr( std::is_same_v<T, double> )
-      {
-        return _mm_shuffle_pd(l, h, 0);
-      }
-      if constexpr( std::is_same_v<T, float> )
-      {
-        return _mm_shuffle_ps(l, h, 0x44);
-      }
-      if constexpr( std::is_integral_v<T> )
+            if constexpr( std::same_as<T, double> ) return _mm_shuffle_pd(l, h, 0);
+      else  if constexpr( std::same_as<T, float > ) return _mm_shuffle_ps(l, h, 0x44);
+      else  if constexpr( std::integral<T> )
       {
         return _mm_castps_si128(
             _mm_shuffle_ps(_mm_castsi128_ps(l.storage()), _mm_castsi128_ps(h.storage()), 0x44));
@@ -55,14 +49,13 @@ namespace eve::detail
     //==============================================================================================
     else if constexpr( 4 * N::value * sizeof(T) == eve::x86_128_::bytes )
     {
-      if constexpr( std::is_same_v<T, float> )
+      if constexpr( std::same_as<T, float> )
       {
         t_t that = l.storage();
         that.set(1,h[0]);
         return that.storage();
       }
-
-      if constexpr( std::is_integral_v<T> )
+      else if constexpr( std::integral<T> )
       {
         return _mm_shuffle_epi32(
             _mm_castps_si128(
@@ -73,11 +66,11 @@ namespace eve::detail
     //==============================================================================================
     // Handle 1/8th and 1/16th -storage - Those cases are obviously integrals
     //==============================================================================================
-    else if constexpr( std::is_integral_v<T> && ((sizeof(T) != 8) && (N::value == 2)) )
+    else if constexpr( std::integral<T> && ((sizeof(T) != 8) && (N::value == 2)) )
     {
       return make(eve::as_<T> {}, eve::x86_128_ {}, l[0], l[1], h[0], h[1]);
     }
-    else if constexpr( std::is_integral_v<T> && (sizeof(T) != 8) && (N::value == 1) )
+    else if constexpr( std::integral<T> && (sizeof(T) != 8) && (N::value == 1) )
     {
       return make(eve::as_<T> {}, eve::x86_128_ {}, l[0], h[0]);
     }
@@ -95,6 +88,27 @@ namespace eve::detail
   }
 
   //================================================================================================
+  // 512-bits combine
+  //================================================================================================
+  template<typename T, typename N>
+  EVE_FORCEINLINE auto
+  combine(avx512_ const &, wide<T, N, x86_512_> const &l, wide<T, N, x86_512_> const &h) noexcept
+  {
+    using that_t = typename wide<T, typename N::combined_type>::storage_type;
+    return that_t {l, h};
+  }
+
+  template<typename T, typename N>
+  EVE_FORCEINLINE auto
+  combine ( avx512_ const & , logical<wide<T, N, x86_512_>> const &l
+                            , logical<wide<T, N, x86_512_>> const &h
+          ) noexcept
+  {
+    using that_t = typename logical<wide<T, typename N::combined_type>>::storage_type;
+    return that_t{l, h};
+  }
+
+  //================================================================================================
   // 2*128-bits to 256-bits combine
   //================================================================================================
   template<typename T, typename N>
@@ -103,22 +117,49 @@ namespace eve::detail
   {
     if constexpr( N::value * sizeof(T) == eve::x86_128_::bytes )
     {
-      if constexpr( std::is_same_v<T, double> )
-      {
-        return _mm256_insertf128_pd(_mm256_castpd128_pd256(l), h, 1);
-      }
-      else if constexpr( std::is_same_v<T, float> )
-      {
-        return _mm256_insertf128_ps(_mm256_castps128_ps256(l), h, 1);
-      }
-      else if constexpr( std::is_integral_v<T> )
-      {
-        return _mm256_insertf128_si256(_mm256_castsi128_si256(l), h, 1);
-      }
+            if constexpr( std::same_as<T, double>) return _mm256_insertf128_pd(_mm256_castpd128_pd256(l), h, 1);
+      else  if constexpr( std::same_as<T, float> ) return _mm256_insertf128_ps(_mm256_castps128_ps256(l), h, 1);
+      else  if constexpr( std::integral<T>       ) return _mm256_insertf128_si256(_mm256_castsi128_si256(l), h, 1);
     }
     else
     {
       return combine(sse2_ {}, l, h);
     }
+  }
+
+  //================================================================================================
+  // 2*256-bits to 512-bits combine
+  //================================================================================================
+  template<typename T, typename N>
+  EVE_FORCEINLINE auto
+  combine(avx512_ const &, wide<T, N, x86_256_> const &l, wide<T, N, x86_256_> const &h) noexcept
+  {
+    if constexpr( std::same_as<T, double> )
+    {
+      auto il = _mm512_castpd_si512(_mm512_castpd256_pd512(l));
+      return _mm512_castsi512_pd(_mm512_inserti64x4(il, _mm256_castpd_si256(h), 1));
+    }
+    else if constexpr( std::same_as<T, float> )
+    {
+      auto il = _mm512_castps_si512(_mm512_castps256_ps512(l));
+      return _mm512_castsi512_ps(_mm512_inserti32x8(il, _mm256_castps_si256(h), 1));
+    }
+    else if constexpr( std::integral<T> )
+    {
+      return _mm512_inserti64x4(_mm512_castsi256_si512(l), h, 1);
+    }
+  }
+
+  //================================================================================================
+  // 2*256-bits to 512-bits combine
+  //================================================================================================
+  template<typename T, typename N, x86_abi ABI>
+  EVE_FORCEINLINE auto
+  combine ( avx512_ const & , logical<wide<T, N, ABI>> const &l
+                            , logical<wide<T, N, ABI>> const &h
+          ) noexcept
+  {
+    using type = typename logical<wide<T, typename N::combined_type>>::storage_type;
+    return type((h.bitmap().to_ullong() << h.size()) | l.bitmap().to_ullong());
   }
 }

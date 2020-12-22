@@ -29,11 +29,6 @@ namespace eve
   {};
 
   template<typename Type>
-  struct pointer_alignment<logical<Type>> : pointer_alignment<Type>
-  {
-  };
-
-  template<typename Type>
   using pointer_alignment_t = typename pointer_alignment<Type>::type;
 
   template<typename Type>
@@ -52,6 +47,11 @@ namespace eve
   struct alignment<logical<Type>> : alignment<Type>
   {
   };
+
+  template<typename Type, typename Size, typename ABI>
+  struct  alignment<logical<wide<Type, Size, ABI>>>
+        : std::integral_constant<std::size_t,logical<wide<Type, Size, ABI>>::static_alignment>
+  {};
 
   template<typename Type>
   using alignment_t = typename alignment<Type>::type;

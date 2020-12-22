@@ -18,7 +18,7 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename Slice>
-  EVE_FORCEINLINE auto slice(wide<T, N, ppc_> const &a, Slice const &) noexcept
+  EVE_FORCEINLINE auto slice(vmx_ const&, wide<T, N, ppc_> const &a, Slice const &) noexcept
       requires(N::value > 1)
   {
     if constexpr( Slice::value )
@@ -42,10 +42,11 @@ namespace eve::detail
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE auto slice(wide<T, N, ppc_> const &a) noexcept requires(N::value > 1)
+  EVE_FORCEINLINE auto slice(vmx_ const&, wide<T, N, ppc_> const &a) noexcept requires(N::value > 1)
   {
-    std::array<wide<T, typename N::split_type>, 2> that {slice(a, lower_), slice(a, upper_)};
+    std::array<wide<T, typename N::split_type>, 2> that { slice(vmx_{},a, lower_)
+                                                        , slice(vmx_{},a, upper_)
+                                                        };
     return that;
   }
 }
-

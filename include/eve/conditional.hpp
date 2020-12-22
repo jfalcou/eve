@@ -16,6 +16,7 @@
 #include <eve/detail/function/iota.hpp>
 #include <eve/assert.hpp>
 #include <eve/traits.hpp>
+#include <bitset>
 #include <iosfwd>
 
 namespace eve
@@ -121,6 +122,13 @@ namespace eve
       return eve::as_logical_t<T>(false);
     }
 
+    template<typename T> EVE_FORCEINLINE auto bitmap(eve::as_<T> const&) const
+    {
+      constexpr auto sz = cardinal_v<T> < 8 ? 8 : cardinal_v<T>;
+      detail::make_integer_t<sz/8,unsigned> mask = 0;
+      return mask;
+    }
+
     template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const
     {
       return 0;
@@ -148,6 +156,13 @@ namespace eve
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
       return eve::as_logical_t<T>(true);
+    }
+
+    template<typename T> EVE_FORCEINLINE auto bitmap(eve::as_<T> const&) const
+    {
+      constexpr auto sz = cardinal_v<T> < 8 ? 8 : cardinal_v<T>;
+      detail::make_integer_t<sz/8,unsigned> mask = ~0ULL;
+      return mask;
     }
 
     template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const
@@ -188,6 +203,13 @@ namespace eve
 
       auto const m = detail::linear_ramp(eve::as_<i_t>()) < (card-count_);
       return bit_cast(m, as_<as_logical_t<T>>());
+    }
+
+    template<typename T> EVE_FORCEINLINE auto bitmap(eve::as_<T> const&) const
+    {
+      constexpr auto sz = cardinal_v<T> < 8 ? 8 : cardinal_v<T>;
+      detail::make_integer_t<sz/8,unsigned> mask = ~(((1ULL << count_)-1) << (cardinal_v<T> - count_));
+      return mask;
     }
 
     friend std::ostream& operator<<(std::ostream& os, ignore_last_ const& c)
@@ -236,6 +258,13 @@ namespace eve
       return bit_cast(m, as_<as_logical_t<T>>());
     }
 
+    template<typename T> EVE_FORCEINLINE auto bitmap(eve::as_<T> const&) const
+    {
+      constexpr auto sz = cardinal_v<T> < 8 ? 8 : cardinal_v<T>;
+      detail::make_integer_t<sz/8,unsigned> mask = (((1ULL << count_)-1) << (cardinal_v<T> - count_));
+      return mask;
+    }
+
     friend std::ostream& operator<<(std::ostream& os, keep_last_ const& c)
     {
       return os << "keep_last( " << c.count_ << " )";
@@ -280,6 +309,13 @@ namespace eve
       return bit_cast(m, as_<as_logical_t<T>>());
     }
 
+    template<typename T> EVE_FORCEINLINE auto bitmap(eve::as_<T> const&) const
+    {
+      constexpr auto sz = cardinal_v<T> < 8 ? 8 : cardinal_v<T>;
+      detail::make_integer_t<sz/8,unsigned> mask = ~count_;
+      return mask;
+    }
+
     template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const
     {
       return count_;
@@ -322,6 +358,13 @@ namespace eve
       auto const m = detail::linear_ramp(eve::as_<i_t>()) < i_t(count_);
 
       return bit_cast(m, as_<as_logical_t<T>>());
+    }
+
+    template<typename T> EVE_FORCEINLINE auto bitmap(eve::as_<T> const&) const
+    {
+      constexpr auto sz = cardinal_v<T> < 8 ? 8 : cardinal_v<T>;
+      detail::make_integer_t<sz/8,unsigned> mask = (1ULL << count_) - 1;
+      return mask;
     }
 
     friend std::ostream& operator<<(std::ostream& os, keep_first_ const& c)
@@ -372,6 +415,14 @@ namespace eve
       return bit_cast(m, as_<as_logical_t<T>>());
     }
 
+    template<typename T> EVE_FORCEINLINE auto bitmap(eve::as_<T> const&) const
+    {
+      constexpr auto sz = cardinal_v<T> < 8 ? 8 : cardinal_v<T>;
+      auto const cnt = end_ - begin_;
+      detail::make_integer_t<sz/8,unsigned> mask = (1ULL << cnt) - 1;
+      return mask << begin_;
+    }
+
     template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const
     {
       return begin_;
@@ -417,6 +468,14 @@ namespace eve
       auto const m = (i >= first_count_) && (i < (cardinal_v<T>-last_count_));
 
       return bit_cast(m, as_<as_logical_t<T>>());
+    }
+
+    template<typename T> EVE_FORCEINLINE auto bitmap(eve::as_<T> const&) const
+    {
+      constexpr auto sz = cardinal_v<T> < 8 ? 8 : cardinal_v<T>;
+      auto const cnt = (cardinal_v<T>-last_count_) - first_count_;
+      detail::make_integer_t<sz/8,unsigned> mask = (1ULL << cnt) - 1;
+      return mask << first_count_;
     }
 
     template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const

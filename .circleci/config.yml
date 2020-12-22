@@ -109,6 +109,22 @@ jobs:
           name: Running SIMD Tests - AVX512
           command: VARIANT="avx512" OPTIONS="-march=skylake-avx512 -O3" . ./.circleci/perform.sh
 
+  x86_avx512_256:
+    <<: *config_gcc_x86
+    steps:
+      - checkout
+      - run:
+          name: Running SIMD Tests - AVX2 with AVX512
+          command: VARIANT="avx512" OPTIONS="-march=skylake-avx512 -O3" CMAKE_OPTIONS="-DEVE_TEST_TYPE=small_wide" . ./.circleci/perform.sh
+
+  x86_avx512_128:
+    <<: *config_gcc_x86
+    steps:
+      - checkout
+      - run:
+          name: Running SIMD Tests - SSE4 with AVX512
+          command: VARIANT="avx512"  OPTIONS="-march=skylake-avx512 -O3" CMAKE_OPTIONS="-DEVE_TEST_TYPE=smaller_wide" . ./.circleci/perform.sh
+
   x86_tiny:
     <<: *config_clang_x86
     steps:
@@ -164,7 +180,7 @@ workflows:
       - x86_avx2:
           requires:
             - x86_avx
-      - x86_tiny:
+      - x86_avx512_256:
           requires:
             - x86_avx512
       - x86_extra:
@@ -176,9 +192,15 @@ workflows:
       - x86_scalar:
           requires:
             - x86_sse4
+      - x86_avx512_128:
+          requires:
+            - x86_avx512_256
       - x86_half:
           requires:
-            - x86_tiny
+            - x86_extra
+      - x86_tiny:
+          requires:
+            - x86_emulation
       - x86_fma:
           requires:
             - x86_avx2

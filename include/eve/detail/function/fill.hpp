@@ -10,11 +10,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/forward.hpp>
 #include <eve/traits/cardinal.hpp>
+#include <eve/forward.hpp>
+#include <eve/arch.hpp>
 
 namespace eve::detail
 {
@@ -43,13 +42,10 @@ namespace eve::detail
     }
     else
     {
-      static constexpr typename Pack::size_type sz = cardinal_v<Pack>;
-      Pack  that;
-
-      for( typename Pack::size_type i = 0; i < sz; ++i ) that.set(i, g(i, sz) );
-
-      return that;
+      return  [&g]<std::size_t... N>(std::index_sequence<N...>)
+              {
+                return Pack( g(N,cardinal_v<Pack>)... );
+              }( std::make_index_sequence<cardinal_v<Pack>>{});
     }
   }
 }
-

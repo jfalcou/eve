@@ -9,10 +9,16 @@
 **/
 //==================================================================================================
 #pragma once
-
-
-#include <eve/logical.hpp>
 #include <eve/wide.hpp>
+#include <eve/logical.hpp>
+
+TTS_CASE_TPL("Check splatting constructor for arithmetic wide", EVE_TYPE)
+{
+  T simd(42);
+  T ref([](auto, auto) { return 42; } );
+
+  TTS_ALL_EQUAL(simd, ref);
+}
 
 TTS_CASE_TPL("Check splatting constructor for logical wide", EVE_TYPE )
 {
@@ -24,14 +30,8 @@ TTS_CASE_TPL("Check splatting constructor for logical wide", EVE_TYPE )
   eve::logical<T> from_logical_f{eve::logical<T>(false)};
   eve::logical<T> from_value_f{EVE_VALUE{0}};
 
-  eve::logical<T> all_t;
-  eve::logical<T> all_f;
-
-  for(std::size_t i = 0; i < EVE_CARDINAL; ++i)
-  {
-    all_t.set(i, true);
-    all_f.set(i, false);
-  }
+  eve::logical<T> all_t([](auto, auto) { return true; } );
+  eve::logical<T> all_f([](auto, auto) { return false; } );
 
   TTS_EQUAL(from_bool_t   , all_t);
   TTS_EQUAL(from_logical_t, all_t);

@@ -14,7 +14,7 @@
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 
-TTS_CASE_TPL("Check store behavior to unaligned logical pointer",EVE_TYPE)
+TTS_CASE_TPL("Check store behavior to unaligned logical pointer", EVE_TYPE)
 {
   std::array<eve::logical<EVE_VALUE>, 3 * EVE_CARDINAL> ref;
   eve::logical<T> value([](auto i, auto) { return i % 3 == 0; });

@@ -69,7 +69,6 @@ namespace eve
   //================================================================================================
   // Cardinal template inline object for passing cardinal values to functions like load/store
   //================================================================================================
-  template<typename Type, typename API = EVE_CURRENT_API>
+  template<typename Type, typename API = EVE_CURRENT_ABI>
   inline constexpr expected_cardinal<Type,API> const expected = {};
 }
-

@@ -23,12 +23,14 @@ TTS_CASE("aligned_ptr constructor from nullptr")
 
 TTS_CASE("aligned_ptr factory functions - Default SIMD alignment")
 {
-  alignas(32) std::array<char, 64> values;
+  constexpr auto size = EVE_CURRENT_ABI::bytes;
+
+  alignas(size) std::array<char, 2*size> values;
   TTS_EQUAL(eve::as_aligned(&values[ 0 ]).get()   , &values[ 0 ]);
   TTS_EQUAL(eve::as_aligned(&values[ 0 ])         , &values[ 0 ]);
   TTS_EQUAL(eve::as_aligned(&values[ 0 ])         , eve::as_aligned(&values[ 0 ]));
   TTS_NOT_EQUAL(eve::as_aligned(&values[ 0 ])     , &values[ 3 ]);
-  TTS_NOT_EQUAL(eve::as_aligned(&values[ 0 ])     , eve::as_aligned(&values[ 32 ]));
+  TTS_NOT_EQUAL(eve::as_aligned(&values[ 0 ])     , eve::as_aligned(&values[ size ]));
 }
 
 TTS_CASE("aligned_ptr factory functions - Specific alignment")

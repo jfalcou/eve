@@ -71,10 +71,10 @@ TTS_CASE_TPL("ignore_last behavior", TTS_NUMERIC_TYPES)
   TTS_EQUAL( ignore_last(0).mask(as_<type>()).bits(), eve::true_(as_<type>()).bits());
   TTS_EQUAL( (if_else(ignore_last(0),value, type(69))), value                   );
 
-  for(int i = 1;i <= type::static_size;i++)
+  for(std::size_t i = 1;i <= type::static_size;i++)
   {
-    logical<type> mref  = [i](auto j, auto c) { return j < c-i; };
-    type          ref   = [i,&value](auto j, auto c) { return (j < c-i) ? value[j] : 69; };
+    logical<type> mref  = [i](std::size_t j, std::size_t c) { return j < c-i; };
+    type          ref   = [i,&value](std::size_t j, std::size_t c) { return (j < c-i) ? value[j] : 69; };
 
     TTS_EQUAL( ignore_last(i).mask(as_<type>()).bits(), mref.bits() );
     TTS_EQUAL( (if_else(ignore_last(i),value, type(69))), ref);
@@ -103,10 +103,10 @@ TTS_CASE_TPL("keep_last behavior", TTS_NUMERIC_TYPES)
   TTS_EQUAL( keep_last(type::static_size).mask(as_<type>()).bits(), eve::true_(as_<type>()).bits());
   TTS_EQUAL( (if_else(keep_last(type::static_size),value, type(69))), value                   );
 
-  for(int i = 1;i < type::static_size;i++)
+  for(std::size_t i = 1;i < type::static_size;i++)
   {
-    logical<type> mref  = [i](auto j, auto c) { return j >= c-i; };
-    type          ref   = [i,&value](auto j, auto c) { return (j >= c-i) ? value[j] : 69.f; };
+    logical<type> mref  = [i](std::size_t j, std::size_t c) { return j >= c-i; };
+    type          ref   = [i,&value](std::size_t j, std::size_t c) { return (j >= c-i) ? value[j] : 69.f; };
 
     TTS_EQUAL( keep_last(i).mask(as_<type>()).bits(), mref.bits() );
     TTS_EQUAL( (if_else(keep_last(i),value, type(69))), ref);
@@ -135,10 +135,10 @@ TTS_CASE_TPL("ignore_first behavior", TTS_NUMERIC_TYPES)
   TTS_EQUAL( ignore_first(0).mask(as_<type>()).bits(), eve::true_(as_<type>()).bits());
   TTS_EQUAL( (if_else(ignore_first(0),value, type(69))), value  );
 
-  for(int i = 1;i < type::static_size;i++)
+  for(std::size_t i = 1;i < type::static_size;i++)
   {
-    logical<type> mref  = [i](auto j, auto) { return j >= i; };
-    type          ref   = [i,&value](auto j, auto) { return (j >= i) ? value[j] : 69.f; };
+    logical<type> mref  = [i](std::size_t j, auto) { return j >= i; };
+    type          ref   = [i,&value](std::size_t j, auto) { return (j >= i) ? value[j] : 69.f; };
 
     TTS_EQUAL( ignore_first(i).mask(as_<type>()).bits(), mref.bits() );
     TTS_EQUAL( (if_else(ignore_first(i),value, type(69))), ref);
@@ -167,10 +167,10 @@ TTS_CASE_TPL("keep_first behavior", TTS_NUMERIC_TYPES)
   TTS_EQUAL( keep_first(type::static_size).mask(as_<type>()).bits(), eve::true_(as_<type>()).bits());
   TTS_EQUAL( (if_else(keep_first(type::static_size),value, type(69))), value                   );
 
-  for(int i = 1;i < type::static_size;i++)
+  for(std::size_t i = 1;i < type::static_size;i++)
   {
-    logical<type> mref  = [i](auto j, auto) { return j < i; };
-    type          ref   = [i,&value](auto j, auto) { return (j < i) ? value[j] : 69.f; };
+    logical<type> mref  = [i](std::size_t j, auto) { return j < i; };
+    type          ref   = [i,&value](std::size_t j, auto) { return (j < i) ? value[j] : 69.f; };
 
     TTS_EQUAL( keep_first(i).mask(as_<type>()).bits(), mref.bits() );
     TTS_EQUAL( (if_else(keep_first(i),value, type(69))), ref);
@@ -203,7 +203,7 @@ TTS_CASE_TPL("keep_between behavior", TTS_NUMERIC_TYPES)
       if(fi<=li)
       {
         logical<type> mref  = [&](auto j, auto) { return (j >= fi && j < li); };
-        type          ref   = [&](auto j, auto) { return mref[j] ? value[j] : 69.f; };
+        type          ref   = [&](auto j, auto) { return (j >= fi && j < li) ? 1+j : 69.f; };
 
         TTS_EQUAL( keep_between(fi,li).mask(as_<type>()).bits(), mref.bits() );
         TTS_EQUAL( (if_else(keep_between(fi,li),value, type(69))), ref);
@@ -230,7 +230,7 @@ TTS_CASE_TPL("ignore_first/last combination", TTS_NUMERIC_TYPES)
   TTS_EXPR_IS( ((ignore_first(1) && ignore_last(0)).mask( as_<type>() )), logical<type> );
 
   // Check that ignore_first(i) === ignore_first(i) && ignore_last(0)
-  for(int i = 0;i <= type::static_size; i++)
+  for(std::size_t i = 0;i <= type::static_size; i++)
   {
     auto mref  = ignore_first(i).mask(as_<type>());
     type ref   = if_else(ignore_first(i), value, T(69));
@@ -240,7 +240,7 @@ TTS_CASE_TPL("ignore_first/last combination", TTS_NUMERIC_TYPES)
   }
 
   // Check that ignore_last(i) === ignore_first(0) && ignore_last(i)
-  for(int i = 0;i <= type::static_size; i++)
+  for(std::size_t i = 0;i <= type::static_size; i++)
   {
     auto mref  = ignore_last(i).mask(as_<type>());
     type ref   = if_else(ignore_last(i), value, T(69));
@@ -250,9 +250,9 @@ TTS_CASE_TPL("ignore_first/last combination", TTS_NUMERIC_TYPES)
   }
 
   // All masks combo
-  for(int fi = 1;fi <= type::static_size;fi++)
+  for(std::size_t fi = 1;fi <= type::static_size;fi++)
   {
-    for(int li = 1;li <= type::static_size;li++)
+    for(std::size_t li = 1;li <= type::static_size;li++)
     {
       auto mref  = ignore_first(fi).mask(as_<type>()) && ignore_last(li).mask(as_<type>());
       type ref   = if_else(mref, value, T(69));
