@@ -113,7 +113,7 @@ namespace eve::detail
         else
         {
           auto [l, h] = p.slice();
-          return  (h.bitmap().to_ullong() << h.size()) | l.bitmap().to_ullong() ;
+          return (h.bitmap().to_ullong() << h.size()) | l.bitmap().to_ullong();
         }
       }
     }
