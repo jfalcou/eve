@@ -34,10 +34,10 @@ TTS_CASE_TPL("Check eve::derivative(eve::maxmag) behavior", EVE_TYPE)
     TTS_EQUAL(eve::derivative_2nd(eve::maxmag)(T{-4},T{3}), T(0));
     using v_t = eve::element_type_t<T>;
     TTS_EQUAL(eve::derivative_1st(eve::maxmag)(T(1), T(2), T(3), T(4), T(5)),T(0));
-    TTS_EQUAL(eve::derivative_3rd(eve::maxmag)(T(1), T(2), T(0), T(4), T(5)),T(1));
+    TTS_EQUAL(eve::derivative_3rd(eve::maxmag)(T(1), T(2), T(10), T(4), T(5)),T(1));
     TTS_EQUAL(eve::derivative_<3>(eve::maxmag)(T(1), T(2), T(3), T(4), T(5)),T(0));
     TTS_EQUAL(eve::derivative_<6>(eve::maxmag)(T(1), T(2), T(3), T(4), T(5)),T(0));
-    TTS_EQUAL(eve::derivative_<4>(eve::maxmag)(v_t(1), T(3), T(3), T(1), T(5)),T(1));
+    TTS_EQUAL(eve::derivative_<4>(eve::maxmag)(v_t(1), T(3), T(3), T(7), T(5)),T(1));
   }
   else
   {

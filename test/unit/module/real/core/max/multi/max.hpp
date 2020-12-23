@@ -41,7 +41,7 @@ TTS_CASE_TPL("Check eve::max behavior", EVE_TYPE)
   TTS_EQUAL(eve::max(T{2}, v_t{2}, T{4})  , T(4));
   TTS_EQUAL(eve::max(T{7}, v_t{2}, v_t{1} ), T(7));
 
-  TTS_EQUAL(eve::max(v_t{0},   T{0}, v_t{1}),   T(0));
+  TTS_EQUAL(eve::max(v_t{0},   T{0}, v_t{1}),   T(1));
   TTS_EQUAL(eve::max(v_t{1},   T{1},   T{4}),   T(4));
   TTS_EQUAL(eve::max(v_t{2}, v_t{2}, v_t{1}), v_t(2));
   TTS_EQUAL(eve::max(v_t{2}, v_t{2},   T{1}),   T(2));
@@ -53,7 +53,7 @@ TTS_CASE_TPL("Check eve::max behavior", EVE_TYPE)
 
 
   TTS_EQUAL(eve::pedantic(eve::max)(v_t{0}, T{0}, T{0}), T(0));
-  TTS_EQUAL(eve::pedantic(eve::max)(v_t{1}, T{1}, T{4}), T(1));
+  TTS_EQUAL(eve::pedantic(eve::max)(v_t{1}, T{1}, T{4}), T(4));
   TTS_EQUAL(eve::pedantic(eve::max)(v_t{2}, T{2}, T{1}), T(2));
   TTS_EQUAL(eve::pedantic(eve::max)(v_t{2}, v_t{2}, T{1}), T(2));
 
@@ -64,7 +64,7 @@ TTS_CASE_TPL("Check eve::max behavior", EVE_TYPE)
 
 
   TTS_EQUAL(eve::numeric(eve::max)(v_t{0}, T{0}, T{0}), T(0));
-  TTS_EQUAL(eve::numeric(eve::max)(v_t{1}, T{1}, T{4}), T(1));
+  TTS_EQUAL(eve::numeric(eve::max)(v_t{1}, T{1}, T{4}), T(4));
   TTS_EQUAL(eve::numeric(eve::max)(v_t{2}, T{2}, T{1}), T(2));
   TTS_EQUAL(eve::numeric(eve::max)(v_t{2}, v_t{2}, T{1}), T(2));
 }
