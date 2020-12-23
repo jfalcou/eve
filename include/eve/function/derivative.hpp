@@ -34,6 +34,6 @@ namespace eve
   inline constexpr derivative_type<1> const derivative_1st = {};
   inline constexpr derivative_type<2> const derivative_2nd = {};
   inline constexpr derivative_type<3> const derivative_3rd = {};
-  template < auto N > inline constexpr derivative_type<N> const deriv = derivative_type<N>{};
+  template < auto N > inline constexpr derivative_type<N> const derivative_ = derivative_type<N>{};
 
 }

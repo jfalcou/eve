@@ -32,7 +32,7 @@ namespace eve::detail
   {
     return arithmetic_call(maxmag, a, b);
   }
-  
+
   template<real_value T>
   EVE_FORCEINLINE auto maxmag_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
   {
@@ -48,7 +48,7 @@ namespace eve::detail
       return aa < bb ? b : bb < aa ? a : eve::max(a, b);
     }
   }
-  
+
   //================================================================================================
   //N parameters
   //================================================================================================
@@ -59,7 +59,7 @@ namespace eve::detail
     ((that = D()(maxmag)(that,args)),...);
     return that;
   }
-  
+
   template<real_value T0, real_value T1, real_value ...Ts>
   common_compatible_t<T0,T1,Ts...> maxmag_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
   {

@@ -56,8 +56,8 @@ TTS_CASE_TPL("Check eve::mul behavior", EVE_TYPE)
     using v_t = eve::element_type_t<T>;
     std::cout << eve::derivative_1st(eve::mul)(T(1), T(2), T(3), T(4), T(5)) << std::endl;
     std::cout << eve::derivative_3rd(eve::mul)(T(1), T(2), T(3), T(4), T(5)) << std::endl;
-    std::cout << eve::deriv<3>(eve::mul)(T(1), T(2), T(3), T(4), T(5)) << std::endl;
-    std::cout << eve::deriv<6>(eve::mul)(T(1), T(2), T(3), T(4), T(5)) << std::endl;
-    std::cout << eve::deriv<4>(eve::mul)(v_t(1), T(2), T(3), T(4), T(5)) << std::endl;
+    std::cout << eve::derivative_<3>(eve::mul)(T(1), T(2), T(3), T(4), T(5)) << std::endl;
+    std::cout << eve::derivative_<6>(eve::mul)(T(1), T(2), T(3), T(4), T(5)) << std::endl;
+    std::cout << eve::derivative_<4>(eve::mul)(v_t(1), T(2), T(3), T(4), T(5)) << std::endl;
   }
 }
