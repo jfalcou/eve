@@ -32,6 +32,12 @@ TTS_CASE_TPL("Check eve::derivative(eve::min) behavior", EVE_TYPE)
     TTS_EQUAL(eve::derivative_2nd(eve::min)(T{2},T{3}), T(0));
     TTS_EQUAL(eve::derivative_1st(eve::min)(T{4},T{3}), T(0));
     TTS_EQUAL(eve::derivative_2nd(eve::min)(T{4},T{3}), T(1));
+    using v_t = eve::element_type_t<T>;
+    std::cout << eve::derivative_1st(eve::min)(T(1), T(2), T(3), T(4), T(5)) << std::endl;
+    std::cout << eve::derivative_3rd(eve::min)(T(1), T(2), T(3), T(4), T(5)) << std::endl;
+    std::cout << eve::deriv<3>(eve::min)(T(1), T(2), T(3), T(4), T(5)) << std::endl;
+    std::cout << eve::deriv<6>(eve::min)(T(1), T(2), T(3), T(4), T(5)) << std::endl;
+    std::cout << eve::deriv<4>(eve::min)(v_t(1), T(3), T(3), T(1), T(5)) << std::endl;
   }
   else
   {

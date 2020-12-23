@@ -10,35 +10,18 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/if_else.hpp>
 #include <eve/function/derivative.hpp>
-#include <eve/concept/compatible.hpp>
-#include <eve/constant/one.hpp>
+#include <eve/function/max.hpp>
+#include <eve/module/real/core/function/derivative/detail/minmax_kernel.hpp>
 
 namespace eve::detail
 {
-  template<floating_real_value T, floating_real_value U, auto N>
-  EVE_FORCEINLINE constexpr T max_(EVE_SUPPORTS(cpu_)
-                                   , derivative_type<N> const &
-                                   , T const &x
-                                   , U const &y) noexcept
-  requires(compatible_values<T, U>)
+
+  template<int N, typename T0, typename T1, typename... Ts>
+  auto max_(EVE_SUPPORTS(cpu_), derivative_type<N>
+           , T0 arg0, T1 arg1, Ts... args) noexcept
   {
-    return arithmetic_call(derivative_type<N>()(max), x, y);
+    return minmax_kernel<N>(eve::max, arg0, arg1, args...);
   }
 
-  template<floating_real_value T, auto N>
-  EVE_FORCEINLINE constexpr T max_(EVE_SUPPORTS(cpu_)
-                                   , derivative_type<N> const &
-                                   , T const &x
-                                   , T const &y) noexcept
-  {
-   if constexpr( has_native_abi_v<T> )
-    {
-      if constexpr(N == 1) return if_else(x > y,  one(as(x)), zero);
-      else if constexpr(N == 2) return if_else(x < y,  one(as(x)), zero);
-    }
-   else
-     return apply_over(derivative_type<N>()(max), x, y);
-  }
 }

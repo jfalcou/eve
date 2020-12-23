@@ -31,6 +31,7 @@ namespace eve::detail
   //================================================================================================
   template<decorator D, real_value T0, real_value T1, real_value ...Ts>
   auto add_(EVE_SUPPORTS(cpu_), D const &, T0 a0, T1 a1, Ts... args)
+    requires (compatible_values<T0, T1> && (compatible_values<T0, Ts> && ...))
   {
     common_compatible_t<T0,T1,Ts...> that(D()(add)(a0,a1));
     ((that = D()(add)(that,args)),...);
@@ -39,6 +40,7 @@ namespace eve::detail
 
   template<real_value T0, real_value T1, real_value ...Ts>
   auto add_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
+    requires (compatible_values<T0, T1> && (compatible_values<T0, Ts> && ...))
   {
     common_compatible_t<T0,T1,Ts...> that(add(a0,a1));
     ((that = add(that,args)),...);

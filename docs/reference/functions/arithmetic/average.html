@@ -32,22 +32,28 @@ Member functions
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
+template< floating_value T, floating_value ...Ts> auto operator()( T x,Ts... args ) const noexcept
+                                                  requires (compatiblevalues< T, Ts > && ...);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs  the  [element-wise](../../../glossary.html#regular) arithmetic average of the two [values](../../concepts.html#value).
+Performs  the  [element-wise](../../../glossary.html#regular) arithmetic average of the [values](../../concepts.html#value).
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`, `y`
+`x`, `y` or `x`, `args`, ...
 :   [values](../../concepts.html#value).
 
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Half the sum of `x` and `y`. No overflow occurs.
+For two parameters half the sum of `x` and `y`. No overflow occurs.
 
- The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+For more than two parameters only floating entries are allowed and overflow is  generally avoided using Knuth algorithm.
+However, problems can arise if the difference of two parameters
+is not representable in the output type.
+
+ The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
 
 !!! WARNING
     If `x` and `y` are [real integral values](../../concepts.html#value) and the sum is odd, the result is a rounded value at a distance guaranteed
@@ -61,8 +67,14 @@ Supported decorators
 [`derivative`](../decorators.html#derivative)
 :   **Required header: **<script type="preformatted">` #include <eve/function/derivative/average.hpp>`</script>
 
-:   The expression `derivative_1st(average)(x,y)` and `derivative_2nd(average)(x,y)` computes the partial
-    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ (x+y)/2$.
+:   The expression `deriv<N>(average)(x,y)` computes the Nth partial
+    derivative of $f$, where $f$ is the function $(x,) \rightarrow \ (x + args\  +\  ...$.)/n$.
+    Where n is the number of parameters.
+
+    This means $1/n$ if $N <= n$ otherwise 0.
+
+[`raw`](../decorators.html#derivative)
+:   when `raw(average)(x, args, ...)` is used, no provision is made to avoid overflows for more than 2 parameters.
 
   (insert ../../src/average.src.html here)
 

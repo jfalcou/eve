@@ -31,25 +31,27 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
+template< value T, value ...Ts> auto operator()( T x,Ts... args ) const noexcept
+                                requires (compatiblevalues< T, Ts > && ...);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs  the  [element-wise](../../../glossary.html#regular) arithmetic multiplication  of the two [values](../../concepts.html#value).
+Performs  the  [element-wise](../../../glossary.html#regular) arithmetic multiplication  of the [values](../../concepts.html#value).
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`, `y`
+`x`, `args`
 :   [values](../../concepts.html#value).
 
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Return the multiplication of `x` by `y`.
+Return the multiplication of the [values](../../concepts.html#value).
 
- The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+ The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
 
- The call `mul(x, y)` is equivalent to `x * y` if `x` or  `y` is an  [simd value](../../concepts.html#value).
+ The call `mul(x, args, ...)` is equivalent to `(x * args * ...)` if `x` or one of the `args`
+ is an  [simd value](../../concepts.html#value).
 
 !!! WARNING
    Although the infix notation with `*` is supported, the `*` operator on
@@ -60,14 +62,17 @@ Supported decorators
 [`saturated`](../decorator/saturated.html)
 :   **Required header: **<script type="preformatted">` #include <eve/function/saturated/mul.hpp>`</script>
 
-:   The call `saturated(mul)(x,y)` computes the saturated  multiplication of `x` and `y`. The saturation is obtained in the
+:   The call `saturated(mul)(x, args...)` computes the saturated  multiplication of `x` and `y`. The saturation is obtained in the
      [compatibility result](../../concept.html#compatibility) of the two parameters. No overflow occurs.
 
 [`derivative`](../decorators.html#derivative)
 :   **Required header: **<script type="preformatted">` #include <eve/function/derivative/mul.hpp>`</script>
 
-:   The expression `derivative_1st(mul)(x,y)` and `derivative_2nd(mul)(x,y)` computes the partial
-    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ xy$.
+:   The expression `derivative< N >(mul)(x,args,...)` computes the partial
+    derivative of $f$, where $f$ is the function $(x,args,...) \rightarrow \ mul(x, args, ...)$
+    relative to the Nth parameter.
+
+    I.e. if the parameters are $x_1, ... x_n$ the value returned is  $\prod_{i \neq N} x_i$ if $1\le N \le n$ otherwise 0.
 
 
 Masked calls

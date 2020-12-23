@@ -15,6 +15,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/conditional.hpp>
 #include <eve/detail/function/operators.hpp>
+#include <eve/traits/common_compatible.hpp>
 
 namespace eve::detail
 {
@@ -32,17 +33,17 @@ namespace eve::detail
   //N parameters
   //================================================================================================
   template<decorator D, real_value T0, real_value T1, real_value ...Ts>
-  auto mul_(EVE_SUPPORTS(cpu_), D const &, T0 a0, T1 a1, Ts... args)
+  common_compatible_t<T0,T1,Ts...> mul_(EVE_SUPPORTS(cpu_), D const &, T0 a0, T1 a1, Ts... args)
   {
-    auto that = D()(mul)(a0,a1);
+    common_compatible_t<T0,T1,Ts...> that(D()(mul)(a0,a1));
     ((that = D()(mul)(that,args)),...);
     return that;
   }
 
   template<real_value T0, real_value T1, real_value ...Ts>
-  auto mul_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
+  common_compatible_t<T0,T1,Ts...> mul_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
   {
-    auto that = mul(a0,a1);
+    common_compatible_t<T0,T1,Ts...> that(mul(a0,a1));
     ((that = mul(that,args)),...);
     return that;
   }

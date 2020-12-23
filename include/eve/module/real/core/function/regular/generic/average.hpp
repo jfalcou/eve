@@ -48,6 +48,18 @@ namespace eve::detail
     else                            return fma(a, half(eve::as(a)),b*half(eve::as(a)));
   }
 
+  // -----------------------------------------------------------------------------------------------
+  // raw case
+  template<real_value T, real_value U>
+  EVE_FORCEINLINE  auto average_(EVE_SUPPORTS(cpu_)
+                            , raw_type const &
+                            , T const &a
+                            , U const &b) noexcept
+  requires compatible_values<T, U>
+  {
+    return average(a, b);
+  }
+
   //================================================================================================
   // Masked case
   //================================================================================================
@@ -81,4 +93,5 @@ namespace eve::detail
     ((that = add(that,args)),...);
     return that/(sizeof...(args)+1);
   }
+
 }

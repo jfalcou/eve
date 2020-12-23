@@ -31,7 +31,8 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template< value T, value ...Ts> auto operator()( T x,Ts... args ) const noexcept requires (compatiblevalues< T, Ts > && ...);
+template< value T, value ...Ts> auto operator()( T x,Ts... args ) const noexcept
+                                requires (compatiblevalues< T, Ts > && ...);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 Performs  the  [element-wise](../../../glossary.html#regular) arithmetic sum of the parameter [values](../../concepts.html#value).

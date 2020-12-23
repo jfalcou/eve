@@ -11,6 +11,7 @@
 #include <eve/constant/sqrtvalmax.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/function/mul.hpp>
+#include <eve/function/derivative/mul.hpp>
 
 #include <type_traits>
 
@@ -49,5 +50,14 @@ TTS_CASE_TPL("Check eve::mul behavior", EVE_TYPE)
 
     TTS_EQUAL(eve::mul(T(-1), v_t(1)) , (T(-1)));
     TTS_EQUAL(eve::mul(T(-6), v_t(-2)), (T(12)));
+  }
+  if constexpr(eve::floating_real_value<T>)
+  {
+    using v_t = eve::element_type_t<T>;
+    std::cout << eve::derivative_1st(eve::mul)(T(1), T(2), T(3), T(4), T(5)) << std::endl;
+    std::cout << eve::derivative_3rd(eve::mul)(T(1), T(2), T(3), T(4), T(5)) << std::endl;
+    std::cout << eve::deriv<3>(eve::mul)(T(1), T(2), T(3), T(4), T(5)) << std::endl;
+    std::cout << eve::deriv<6>(eve::mul)(T(1), T(2), T(3), T(4), T(5)) << std::endl;
+    std::cout << eve::deriv<4>(eve::mul)(v_t(1), T(2), T(3), T(4), T(5)) << std::endl;
   }
 }

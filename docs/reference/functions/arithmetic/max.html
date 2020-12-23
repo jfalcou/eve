@@ -31,22 +31,22 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  c++
-template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
-
+template< value T, value ...Ts> auto operator()( T x,Ts... args ) const noexcept
+                                     requires (compatible_values< T, Ts > && ...);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 Performs the [element-wise](../../../glossary.html#regular) max operation on its parameters.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`, `y`
+`x`, `args`
 :   [values](../../concepts.html#value)
 
 Return value
 ----------------------------------------------------------------------------------------------------
-For each pair of corresponding [`elements`](../../../glossary.html#element-wise), the greater is returned.
+For each tuple of corresponding [`elements`](../../../glossary.html#element-wise), the greater is returned.
 
-The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
 
 !!! WARNING
    If any element of the inputs is a `Nan`, the corresponding output element is system-dependent.
@@ -58,19 +58,25 @@ Supported decorators
 
 :   The call `pedantic(max)(x,y)`  ensures the conformity to the standard behaviour, that is
     (on an  [element-wise](../../../glossary.html#value) basis) semanticaly equivalent to:
-    `(x < y) ? y : x`.
+    `(x < y) ? y : x` and this behaviour is also ensured on n parameters calls as if this scheme
+    was recursively used.
 
 [`numeric`](../decorators.html#numeric)
 :   **Required header: **<script type="preformatted">` #include <eve/function/numeric/max.hpp>`</script>
 
 :   The call `numeric(max)(x,y)`  ensures that  if any element of the inputs is a `Nan`, the corresponding
     output element is the corresponding element of the other parameter (i.e. the not invalid parameter wins)
+    and this behaviour is also ensured on n parameters calls as if this scheme
+    was recursively used.
 
 [`derivative`](../decorators.html#derivative)
 :   **Required header: **<script type="preformatted">` #include <eve/function/derivative/max.hpp>`</script>
 
-:   The expression `derivative_1st(max)(x,y)` and `derivative_2nd(max)(x,y)` computes the partial
-    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ \max(x,y)$.
+:   The expression `derivative< N >(max)(x,args,...)` computes the partial
+    derivative relative to the Nth parameter. If the parameters are $x_1, ..., x_n$ and
+    their maximum is $m$, the value returned is elementwise 1 if $m$ is equal to $x_N$ else 0.
+
+
 
 </script>
 

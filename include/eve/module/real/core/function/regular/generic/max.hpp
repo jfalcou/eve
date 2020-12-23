@@ -16,6 +16,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/detail/apply_over.hpp>
+#include <eve/traits/common_compatible.hpp>
 
 namespace eve::detail
 {
@@ -52,7 +53,7 @@ namespace eve::detail
   template<decorator D, real_value T0, real_value T1, real_value ...Ts>
   auto max_(EVE_SUPPORTS(cpu_), D const &, T0 a0, T1 a1, Ts... args)
   {
-    auto that = D()(max)(a0,a1);
+    common_compatible_t<T0,T1,Ts...> that = D()(max)(a0,a1);
     ((that = D()(max)(that,args)),...);
     return that;
   }
@@ -60,8 +61,8 @@ namespace eve::detail
   template<real_value T0, real_value T1, real_value ...Ts>
   auto max_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
   {
-    auto that = max(a0,a1);
+    common_compatible_t<T0,T1,Ts...> that = max(a0,a1);
     ((that = max(that,args)),...);
     return that;
-  } 
+  }
 }

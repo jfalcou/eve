@@ -38,9 +38,10 @@ namespace eve::detail
   template<auto N, floating_real_value T, floating_real_value... Ts>
   EVE_FORCEINLINE constexpr T add_(EVE_SUPPORTS(cpu_)
                                     , derivative_type<N> const &
-                                    , T x, Ts ... args ) noexcept
+                                    , T, Ts ... ) noexcept
   {
     using r_t = common_compatible_t<T,Ts...>;
-    return (N > sizeof...(Ts)+1) ? zero(as < r_t>()) : one(as<r_t>());
+    if constexpr(N > sizeof...(Ts)+1) return zero(as < r_t>());
+    else return one(as<r_t>());
   }
 }
