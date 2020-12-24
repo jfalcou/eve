@@ -25,7 +25,7 @@ namespace eve::detail
       (
         [&]<typename... Sub>(Sub&... v)
         {
-          int k = 0;
+          std::ptrdiff_t k = 0;
 
           ( ( v = Sub([&](auto i, auto) { return g(i + k, Pack::static_size); })
             , k += Sub::static_size
