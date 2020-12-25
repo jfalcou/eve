@@ -56,18 +56,16 @@ Supported decorators
 [`pedantic`](../decorators.html#pedantic)
 :   **Required header: **<script type="preformatted">` #include <eve/function/pedantic/min.hpp>`</script>
 
-:   The call `pedantic(min)(x, y)`  ensures the conformity to the standard behaviour, that is
-    (on an  [element-wise](../../../glossary.html#value) basis) semanticaly equivalent to:
+:   The call `pedantic(min)(x, args, ...)`  ensures the conformity to the standard behaviour, that is
+    for two parameters (on an  [element-wise](../../../glossary.html#value) basis) semanticaly equivalent to:
     `(x < y) ? x : y` and this behaviour is also ensured on n parameters calls as if this scheme
     was recursively used.
 
 [`numeric`](../decorators.html#numeric)
 :   **Required header: **<script type="preformatted">` #include <eve/function/numeric/min.hpp>`</script>
 
-:   The call `numeric(min)(x,y)`  ensures that  if any element of the inputs is a `Nan`, the corresponding
-    output element is the corresponding element of the other parameter (i.e. the not invalid parameter wins)
-    and this behaviour is also ensured on n parameters calls as if this scheme
-    was recursively used.
+:   The call `numeric(max)(x,args,...)`  ensures that  if any element of the inputs is not a `Nan`, the corresponding
+    output element will not be a `Nan`.
 
 [`derivative`](../decorators.html#derivative)
 :   **Required header: **<script type="preformatted">` #include <eve/function/derivative/min.hpp>`</script>

@@ -111,4 +111,5 @@ TTS_CASE_TPL("Check pedantic 3 params eve::hypot behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::pedantic(eve::hypot)(T( 0), T( 0) , T( 0) ) , T(0), 0.5 );
 
   TTS_ULP_EQUAL(eve::pedantic(eve::hypot)(T( 1), T( 1), T( 1)) , T(std::sqrt(v_t(3))), 0.5);
+  TTS_ULP_EQUAL(eve::pedantic(eve::hypot)(T( 1), T( 1), T( 1), T( 1)) , T(2), 0.5);
 }

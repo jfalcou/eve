@@ -67,11 +67,11 @@ Supported decorators
 [`derivative`](../decorators.html#derivative)
 :   **Required header: **<script type="preformatted">` #include <eve/function/derivative/average.hpp>`</script>
 
-:   The expression `deriv<N>(average)(x,y)` computes the Nth partial
-    derivative of $f$, where $f$ is the function $(x,) \rightarrow \ (x + args\  +\  ...$.)/n$.
-    Where n is the number of parameters.
+:   The expression `derivative_< N >(average)(x,args...)` computes the partial
+    derivative of the function relative to its Nth parameter. The returned value is 0 if N is
+    greater that the actual number of parameters, otherwise it is the inverse of the number of parameters.
 
-    This means $1/n$ if $N <= n$ otherwise 0.
+    This is only available for floating point entries.
 
 [`raw`](../decorators.html#derivative)
 :   when `raw(average)(x, args, ...)` is used, no provision is made to avoid overflows for more than 2 parameters.

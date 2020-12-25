@@ -66,10 +66,14 @@ Supported decorators
 [`derivative`](../decorators.html#derivative)
 :   **Required header: **<script type="preformatted">` #include <eve/function/derivative/add.hpp>`</script>
 
-:   The expression `derivative< N >(add)(x,args...)` computes the partial relative to the Nth parameter
-    derivatives of $f$, where $f$ is the function $(x,args,...) \rightarrow \ x + args\  +\  ...$.
+:   The expression `derivative< N >(add)(x,args...)` computes the partial derivative of the function
+    relative to its Nth parameter.
 
-    This means 1 if N is less or equal to the actual total parameter number, and 0 otherwise.
+    The returned value is 1 if N is less or equal to the actual total parameter number, and 0 otherwise.
+
+!!! Warning
+    This is only available for floating point entries.
+
 :
 Masked calls
 ====================================================================================================
@@ -82,6 +86,9 @@ Masked calls
 
  *  `if_else(cond, add(x,y),x)`,
  *  `if_else(cond, saturated(add)(x,y),x)`;
+
+!!! Warning
+    This is only available for two parameters.
 
   (insert ../../src/add.src.html here)
 

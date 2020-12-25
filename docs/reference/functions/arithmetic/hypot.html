@@ -31,27 +31,24 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  c++
-1. template< value T, value U > auto operator()( T x, U y ) const noexcept
-requires compatible< T,U>;
-
-2. template< value T, value U, value V > auto operator()( T x, U y, V z ) const noexcept;
-requires compatible< T, U > && compatible< T, V >;
+template< floating_value T, floating_value ...Ts> auto operator()( T x,Ts... args ) const noexcept
+                                                  requires (compatiblevalues< T, Ts > && ...);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 Performs the [element-wise](../../../glossary.html#regular) hypot operation on its parameters.
 
-The value computed is the $l_2$ euclidian norm in $\mathbb{R}^2$ or $\mathbb{R}^3$ respectively.
+The value computed is the $l_2$ euclidian norm in $\mathbb{R}^n$ (where $n$ is the number of
+parameters : `sizeof...(args)+1`).
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`, `y`, `z`
+`x`, `args`
 :   [value](../../concepts.html#value)
 
 Return value
 ----------------------------------------------------------------------------------------------------
-For each  [`element`](../../../glossary.html#element-wise) of the input:
- 1. $\sqrt{x^2+y^2}$ is returned.
- 2. $\sqrt{x^2+y^2+z^2}$ is returned.
+For each  [`element`](../../../glossary.html#element-wise) of the input: $\sqrt{x^2 + args^2...}$ is returned.
+
 The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
 
 
@@ -60,18 +57,22 @@ Supported decorators
 [`pedantic`](../decorators.html#pedantic)
 :   **Required header: **<script type="preformatted">` #include <eve/function/pedantic/hypot.hpp>`</script>
 
-:   The call `pedantic(hypot)(x,y)`  or `pedantic(hypot)(x,y,z)` computes the square root of the sum of the
-     squares of `x` and `y`, (and `z`) without undue overflow or underflow at intermediate stages of the computation
+:   The call `pedantic(hypot)(x,args...)`  computes the square root of the sum of the parameters
+    without undue overflow or underflow at intermediate stages of the computation
     and can be more accurate than the [`regular`](../decorators.html#regular) call.
 
     Morever it returns $\infty$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
 
 [`derivative`](../decorators.html#derivative)
-:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/manhattan.hpp>`</script>
+:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/hypot.hpp>`</script>
 
-:   The expression `derivative_1st(manhattan)(x,y)` and `derivative_2nd(manhattan)(x,y)` computes the partial
-    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ \sqrt{x^2+y^2}$. Of course 3 analogous calls
-    can be made in the three parameters case.
+:   The expression `derivative_< N >(hypot)(x,args...)` computes the partial
+    derivative of the function relative to its Nth parameter. The returned value is 0 if N is
+    greater that the actual number of parameters, otherwise it is the
+    `N`th parameter value divided by the `hypot` value.
+
+!!! Warning
+    This is only available for floating point entries.
 
 </script>
 

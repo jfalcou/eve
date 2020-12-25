@@ -31,28 +31,25 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  c++
-1. template< value T, value U > auto operator()( T x, U y ) const noexcept;
-requires compatible< T,U>;
-
-2. template< value T, value U, value V > auto operator()( T x, U y, V z ) const noexcept
-requires compatible< T, U > && compatible< T, V >;
+template< floating_value T, floating_value ...Ts> auto operator()( T x,Ts... args ) const noexcept
+                                                  requires (compatiblevalues< T, Ts > && ...);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 Performs the [element-wise](../../../glossary.html#element-wise) manhattan operation on its parameters.
 
-The value computed is the $l_1$ norm in $\mathbb{R}^2$ or $\mathbb{R}^3$ respectively.
+The value computed is the $l_1$ norm in $\mathbb{R}^n$ (where $n$ is the number of
+parameters : `sizeof...(args)+1`)..
 
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`, `y`, `z`
+`x`, `args`
 :   [value](../../concepts.html#value)
 
 Return value
 ----------------------------------------------------------------------------------------------------
-For each  [`element`](../../../glossary.html#element-wise) of the input:
- 1.  $|x|+|y|$ is returned.
- 2.  $|x|+|y|+|z|$ is returned.
+For each  [`element`](../../../glossary.html#element-wise) of the input: $|x|+|args|...$ is returned.
+
 The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
 
 Supported decorators
@@ -60,17 +57,18 @@ Supported decorators
 [`pedantic`](../decorators.html#pedantic)
 :   **Required header: **<script type="preformatted">` #include <eve/function/pedantic/manhattan.hpp>`</script>
 
-:   The call `pedantic(manhattan)(x,y)`  or `pedantic(manhattan)(x,y,z)` computes the sum of the absolute values of its parameters
+:   The call `pedantic(manhattan)(x,args...`  computes the sum of the absolute values of its parameters
     returning $\infty$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
 
 [`derivative`](../decorators.html#derivative)
-:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/average.hpp>`</script>
+:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/manhattan.hpp>`</script>
 
-:   The expression `derivative_1st(manhattan)(x,y)` and `derivative_2nd(manhattan)(x,y)` computes the partial
-    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ |x|+|y|$. Of course 3 analogous calls
-    can be made in the three parameters case.
+:   The expression `derivative_< N >(manhattan)(x,args...)` computes the partial
+    derivative of the function relative to its Nth parameter. The returned value is 0 if N is
+    greater that the actual number of parameters, otherwise it is the [sign](./sign.html) of the `N`th parameter value.
 
-
+!!! Warning
+    This is only available for floating point entries.
 
 </script>
 
