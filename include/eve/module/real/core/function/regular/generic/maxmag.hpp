@@ -55,7 +55,7 @@ namespace eve::detail
   template<decorator D, real_value T0, real_value T1, real_value ...Ts>
   auto maxmag_(EVE_SUPPORTS(cpu_), D const &, T0 a0, T1 a1, Ts... args)
   {
-    common_compatible_t<T0,T1,Ts...> that = D()(maxmag)(a0,a1);
+    common_compatible_t<T0,T1,Ts...> that(D()(maxmag)(a0,a1));
     ((that = D()(maxmag)(that,args)),...);
     return that;
   }
@@ -63,7 +63,7 @@ namespace eve::detail
   template<real_value T0, real_value T1, real_value ...Ts>
   common_compatible_t<T0,T1,Ts...> maxmag_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
   {
-    common_compatible_t<T0,T1,Ts...> that = maxmag(a0,a1);
+    common_compatible_t<T0,T1,Ts...> that(maxmag(a0,a1));
     ((that = maxmag(that,args)),...);
     return that;
   }

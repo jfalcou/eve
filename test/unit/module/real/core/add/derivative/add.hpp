@@ -15,9 +15,8 @@ TTS_CASE_TPL("Check derivative(add) return type", EVE_TYPE)
 {
   if constexpr(eve::floating_value<T>)
   {
-    using ui_t = eve::detail::as_integer_t<T, unsigned>;
-    TTS_EXPR_IS(eve::derivative(eve::add)(T(), T(), unsigned(), unsigned()), T);
-    TTS_EXPR_IS(eve::derivative(eve::add)(T(), T(), ui_t(), ui_t()), T);
+    TTS_EXPR_IS(eve::derivative_1st(eve::add)(T(), T()), T);
+    TTS_EXPR_IS(eve::derivative_2nd(eve::add)(T(), T()), T);
   }
   else
   {
@@ -29,12 +28,12 @@ TTS_CASE_TPL("Check eve::derivative(eve::add) behavior", EVE_TYPE)
 {
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::derivative(eve::add)(T{10},T{5}, 0u, 0u), T(15));
-    TTS_EQUAL(eve::derivative(eve::add)(T{10},T{5}, 1u, 0u), T(1));
-    TTS_EQUAL(eve::derivative(eve::add)(T{10},T{5}, 2u, 0u), T(0));
-    TTS_EQUAL(eve::derivative(eve::add)(T{-10},T{5}, 0u, 1u), T(1));
-    TTS_EQUAL(eve::derivative(eve::add)(T{-10},T{5}, 1u, 1u), T(0));
-    TTS_EQUAL(eve::derivative(eve::add)(T{-10},T{5}, 0u, 2u), T(0));
+    TTS_EQUAL(eve::derivative_1st(eve::add)(T{10},T{5} ), T(1));
+    TTS_EQUAL(eve::derivative_2nd(eve::add)(T{10},T{5} ), T(1));
+    TTS_EQUAL(eve::derivative_3rd(eve::add)(T{10},T{5} ), T(0));
+    TTS_EQUAL(eve::derivative_1st(eve::add)(T{10},T{5},T{2} ), T(1));
+    TTS_EQUAL(eve::derivative_2nd(eve::add)(T{10},T{5},T{2} ), T(1));
+    TTS_EQUAL(eve::derivative_3rd(eve::add)(T{10},T{5},T{2} ), T(1));
   }
   else
   {

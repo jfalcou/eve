@@ -54,7 +54,7 @@ namespace eve::detail
   template<decorator D, real_value T0, real_value T1, real_value ...Ts>
   auto minmag_(EVE_SUPPORTS(cpu_), D const &, T0 a0, T1 a1, Ts... args)
   {
-    common_compatible_t<T0,T1,Ts...> that = D()(minmag)(a0,a1);
+    common_compatible_t<T0,T1,Ts...> that(D()(minmag)(a0,a1));
     ((that = D()(minmag)(that,args)),...);
     return that;
   }
@@ -62,7 +62,7 @@ namespace eve::detail
   template<real_value T0, real_value T1, real_value ...Ts>
   auto minmag_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
   {
-    common_compatible_t<T0,T1,Ts...> that = minmag(a0,a1);
+    common_compatible_t<T0,T1,Ts...> that(minmag(a0,a1));
     ((that = minmag(that,args)),...);
     return that;
   }

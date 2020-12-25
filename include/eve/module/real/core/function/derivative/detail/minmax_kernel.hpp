@@ -31,7 +31,6 @@ namespace eve::detail
 
         ((iff(vs, std::integral_constant<std::size_t,I+3>{})),...);
       };
-    using r_t = common_compatible_t<T0,T1, Ts...>;
     if constexpr(N > sizeof...(Ts)+2)
     {
       return zero(as<r_t >());
