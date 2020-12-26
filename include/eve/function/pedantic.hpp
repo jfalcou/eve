@@ -14,8 +14,6 @@
 
 namespace eve
 {
-  template < decorator D >
-  struct pedanticd_type;
   //================================================================================================
   // Function decorator - pedantic mode
   struct pedantic_
