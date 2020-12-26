@@ -29,7 +29,11 @@ TTS_CASE_TPL("Check eve::derivative(eve::hypot) behavior", EVE_TYPE)
     TTS_ULP_EQUAL(eve::derivative_1st(eve::hypot)(T{4},T{3}), T(4.0/5), 0.5);
     TTS_ULP_EQUAL(eve::derivative_2nd(eve::hypot)(T{4},T{3}), T(3.0/5), 0.5);
     TTS_ULP_EQUAL(eve::derivative_3rd(eve::hypot)(T{2},T{2},T{4}), T(4.0/eve::sqrt(24.0)), 0.5);
-    TTS_ULP_EQUAL(eve::derivative_<4> (eve::hypot)(T{1},T{2},T{3},T{4}), T(4.0/eve::sqrt(30.0)), 0.5);
+    TTS_ULP_EQUAL(eve::derivative_<4>(eve::hypot)(T{1},T{2},T{3},T{4}), T(4.0/eve::sqrt(30.0)), 0.5);
+    TTS_ULP_EQUAL(eve::pedantic(eve::derivative_1st)(eve::hypot)(T{4},T{3}), T(4.0/5), 0.5);
+    TTS_ULP_EQUAL(eve::pedantic(eve::derivative_2nd)(eve::hypot)(T{4},T{3}), T(3.0/5), 0.5);
+    TTS_ULP_EQUAL(eve::pedantic(eve::derivative_3rd)(eve::hypot)(T{2},T{2},T{4}), T(4.0/eve::sqrt(24.0)), 0.5);
+    TTS_ULP_EQUAL(eve::pedantic(eve::derivative_<4>)(eve::hypot)(T{1},T{2},T{3},T{4}), T(4.0/eve::sqrt(30.0)), 0.5);
 
   }
 }
