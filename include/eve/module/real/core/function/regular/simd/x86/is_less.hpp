@@ -10,8 +10,10 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/arch/as_register.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/constant/signmask.hpp>
+#include <eve/detail/category.hpp>
 #include <eve/detail/function/simd/x86/flags.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/forward.hpp>
@@ -78,7 +80,6 @@ namespace eve::detail
       else
       {
         constexpr auto use_avx2 = current_api >= avx2;
-        constexpr auto use_sse4 = current_api >= sse4_2;
 
         [[maybe_unused]]  auto unsigned_cmp = [](auto v0, auto v1)
         {

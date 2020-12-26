@@ -10,6 +10,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/arch/as_register.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/function/simd/x86/flags.hpp>
 #include <eve/detail/implementation.hpp>
