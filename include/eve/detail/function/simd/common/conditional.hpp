@@ -55,4 +55,40 @@ namespace eve::detail
       }
     }
   }
+
+  template<conditional_expr C, typename BaseOp, typename MaskOp, typename Arg0, typename... Args>
+  EVE_FORCEINLINE auto mask_op( x86_512_ const&, C const& c
+                              , [[maybe_unused]] BaseOp f
+                              , [[maybe_unused]] MaskOp g
+                              , [[maybe_unused]] Arg0 const& a0
+                              , [[maybe_unused]] Args const&... as
+                              )
+  {
+    using r_t = decltype(f(a0,as...));
+
+    // If the ignore/keep is complete we can jump over calling the masked operations
+    if constexpr( C::is_complete )
+    {
+      if constexpr(C::is_inverted)  { return f(a0,as...); }
+      else                          { return r_t(a0);     }
+    }
+    else
+    {
+      // Extract bitmap then use the function with mask support
+      auto mask = [&](auto const& cx)
+      {
+        auto m = cx.bitmap( as_<r_t>{} );
+        if constexpr( C::is_inverted )  return ~m;
+        else                            return m;
+      };
+
+      // Prepare the source value
+      auto src = [&](auto const& cx, auto const& s)
+      {
+        if constexpr( C::has_alternative )  return r_t{cx.alternative}; else return s;
+      };
+
+      return g( mask(c), src(c,a0), a0, as...);
+    }
+  }
 }
