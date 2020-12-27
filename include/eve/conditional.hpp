@@ -11,10 +11,11 @@
 #pragma once
 
 #include <eve/as.hpp>
+#include <eve/assert.hpp>
 #include <eve/concept/conditional.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/function/iota.hpp>
-#include <eve/assert.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/traits.hpp>
 #include <bitset>
 #include <iosfwd>
