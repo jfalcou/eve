@@ -17,38 +17,85 @@
 namespace eve::detail
 {
   template<real_scalar_value T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE wide<T, N, ABI> abs_(EVE_SUPPORTS(ssse3_), wide<T, N, ABI> const &v) noexcept
+  EVE_FORCEINLINE wide<T, N, ABI> abs_(EVE_SUPPORTS(sse2_), wide<T, N, ABI> const &v) noexcept
   {
-    constexpr auto cat = categorize<wide<T, N, ABI>>();
+    constexpr auto c = categorize<wide<T, N, ABI>>();
 
-          if constexpr( cat && category::unsigned_) return v;
-    else  if constexpr( cat && category::float_   ) return bit_notand(mzero(eve::as(v)), v);
-    else  if constexpr( cat && category::size64_  ) return map(eve::abs, v);
-    else  if constexpr( cat == category::int32x4  ) return _mm_abs_epi32(v);
-    else  if constexpr( cat == category::int16x8  ) return _mm_abs_epi16(v);
-    else  if constexpr( cat == category::int8x16  ) return _mm_abs_epi8(v);
-    else  if constexpr(current_api >= avx2)
+          if constexpr(c && category::unsigned_  )  return v;
+    else  if constexpr(c == category::float32x16 )  return _mm512_abs_ps(v);
+    else  if constexpr(c == category::float64x8  )  return _mm512_abs_pd(v);
+    else  if constexpr(c && category::float_     )  return bit_notand(mzero(as(v)), v);
+    else  if constexpr(c == category::int64x8 )     return _mm512_abs_epi64(v);
+    else  if constexpr(c && category::size64_ )     return map(eve::abs, v);
+    else  if constexpr(c == category::int32x16)     return _mm512_abs_epi32(v);
+    else  if constexpr(c == category::int32x8 )
     {
-          if constexpr( cat == category::int32x8  ) return _mm256_abs_epi32(v);
-    else  if constexpr( cat == category::int16x16 ) return _mm256_abs_epi16(v);
-    else  if constexpr( cat == category::int8x32  ) return _mm256_abs_epi8(v);
+      if constexpr(current_api >= avx2 )            return _mm256_abs_epi32(v);
+      else                                          return aggregate(eve::abs, v);
     }
-    else                                            return aggregate(eve::abs, v);
+    else  if constexpr(c == category::int32x4 )
+    {
+      if constexpr(current_api >= ssse3 )           return _mm_abs_epi32(v);
+      else                                          return map(eve::abs, v);
+    }
+    else  if constexpr(c == category::int16x32)     return _mm512_abs_epi16(v);
+    else  if constexpr(c == category::int16x16 )
+    {
+      if constexpr(current_api >= avx2 )            return _mm256_abs_epi16(v);
+      else                                          return aggregate(eve::abs, v);
+    }
+    else  if constexpr(c == category::int16x8 )
+    {
+      if constexpr(current_api >= ssse3 )           return _mm_abs_epi16(v);
+      else                                          return map(eve::abs, v);
+    }
+    else  if constexpr(c == category::int8x64 )     return _mm512_abs_epi8(v);
+    else  if constexpr(c == category::int8x32 )
+    {
+      if constexpr(current_api >= avx2 )            return _mm256_abs_epi8(v);
+      else                                          return aggregate(eve::abs, v);
+    }
+    else  if constexpr(c == category::int8x16 )
+    {
+      if constexpr(current_api >= ssse3 )           return _mm_abs_epi8(v);
+      else                                          return map(eve::abs, v);
+    }
   }
-
-// -----------------------------------------------------------------------------------------------
-  // 512 bits implementation
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, x86_512_> abs_(EVE_SUPPORTS(avx512_), wide<T, N, x86_512_> const &v) noexcept
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, real_scalar_value T, typename N, x86_abi ABI>
+  EVE_FORCEINLINE
+  wide<T, N, ABI> abs_(EVE_SUPPORTS(sse2_), C const &cx, wide<T, N, ABI> const &v) noexcept
   {
-    constexpr auto c = categorize<wide<T, N, x86_512_>>();
+    if constexpr( !ABI::is_wide_logical )
+    {
+      auto m_abs = [&](auto m, auto src, auto a0)
+      {
+        constexpr auto c = categorize<wide<T, N, ABI>>();
 
-         if constexpr ( c && category::unsigned_  ) return v;
-         if constexpr ( c == category::float64x8  ) return _mm512_abs_pd(v);
-    else if constexpr ( c == category::float32x16 ) return _mm512_abs_ps(v);
-    else if constexpr ( c == category::int64x8    ) return _mm512_abs_epi64(v);
-    else if constexpr ( c == category::int32x16   ) return _mm512_abs_epi32(v);
-    else if constexpr ( c == category::int16x32   ) return _mm512_abs_epi16(v);
-    else if constexpr ( c == category::int8x64    ) return _mm512_abs_epi8(v);
+              if constexpr(c && category::unsigned_ ) return if_else(cx,a0,src);
+        else  if constexpr(c == category::float32x16) return _mm512_mask_abs_ps   (src,m,a0);
+        else  if constexpr(c == category::float64x8 ) return _mm512_mask_abs_pd   (src,m,a0);
+        else  if constexpr(c && category::float_    ) return if_else(cx,a0,src);
+        else  if constexpr(c == category::int64x8   ) return _mm512_mask_abs_epi64(src,m,a0);
+        else  if constexpr(c == category::int64x8   ) return _mm256_mask_abs_epi64(src,m,a0);
+        else  if constexpr(c == category::int64x8   ) return _mm_mask_abs_epi64   (src,m,a0);
+        else  if constexpr(c == category::int32x16  ) return _mm512_mask_abs_epi32(src,m,a0);
+        else  if constexpr(c == category::int32x8   ) return _mm256_mask_abs_epi32(src,m,a0);
+        else  if constexpr(c == category::int32x4   ) return _mm_mask_abs_epi32   (src,m,a0);
+        else  if constexpr(c == category::int16x32  ) return _mm512_mask_abs_epi16(src,m,a0);
+        else  if constexpr(c == category::int16x16  ) return _mm256_mask_abs_epi16(src,m,a0);
+        else  if constexpr(c == category::int16x8   ) return _mm_mask_abs_epi16   (src,m,a0);
+        else  if constexpr(c == category::int8x64   ) return _mm512_mask_abs_epi8 (src,m,a0);
+        else  if constexpr(c == category::int8x32   ) return _mm256_mask_abs_epi8 (src,m,a0);
+        else  if constexpr(c == category::int8x16   ) return _mm_mask_abs_epi8    (src,m,a0);
+      };
+
+      return mask_op( x86_512_{}, cx, eve::abs, m_abs, v );
+    }
+    else
+    {
+      return mask_op( cpu_{}, cx, eve::abs, v);
+    }
   }
 }

@@ -29,14 +29,7 @@ namespace eve
     static constexpr bool has_alternative = true;
     using alternative_type = V;
 
-    or_(C const& c, V const& v) : C(c), alternative(v) {}
-
-    using C::mask;
-    using C::mask_inverted;
-    using C::bitmap;
-    using C::offset;
-    using C::roffset;
-    using C::count;
+    or_(C c, V v) : C(c), alternative(v) {}
 
     template<typename T> auto rebase(T v) const
     {
@@ -61,14 +54,7 @@ namespace eve
     static constexpr bool is_inverted     = true;
     using alternative_type = V;
 
-    not_or_(C const& c, V const& v) : C(c), alternative(v) {}
-
-    using C::mask;
-    using C::mask_inverted;
-    using C::bitmap;
-    using C::offset;
-    using C::roffset;
-    using C::count;
+    not_or_(C c, V v) : C(c), alternative(v) {}
 
     template<typename T> auto rebase(T v) const
     {
@@ -93,10 +79,15 @@ namespace eve
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
-    if_(C const& c) : condition_(c) {}
+    if_(C c) : condition_(c) {}
 
     template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&)  const { return condition_; }
+
+    template<typename T> EVE_FORCEINLINE auto bitmap(eve::as_<T> const&) const
+    {
+      return condition_.bitmap().to_ullong();
+    }
 
     friend std::ostream& operator<<(std::ostream& os, if_ const& c)
     {
@@ -119,6 +110,11 @@ namespace eve
 
     template<typename V> EVE_FORCEINLINE auto else_(V v) const { return not_or_(*this,v); }
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&)  const { return condition_;  }
+
+    template<typename T> EVE_FORCEINLINE auto bitmap(eve::as_<T> const&) const
+    {
+      return ~(condition_.bitmap()).to_ullong();
+    }
 
     friend std::ostream& operator<<(std::ostream& os, if_not_ const& c)
     {
