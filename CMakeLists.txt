@@ -14,6 +14,9 @@ project(eve LANGUAGES CXX)
 set(PROJECT_VERSION 1.20.5.0)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake )
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+
 ## =================================================================================================
 ## No in-source build
 ## =================================================================================================
