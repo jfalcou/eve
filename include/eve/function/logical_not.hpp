@@ -19,3 +19,6 @@ namespace eve
 
 #include <eve/module/real/core/function/regular/generic/logical_not.hpp>
 
+#if defined(EVE_HW_X86)
+#include <eve/module/real/core/function/regular/simd/x86/logical_not.hpp>
+#endif
