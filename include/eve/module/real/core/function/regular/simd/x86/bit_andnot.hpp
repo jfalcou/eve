@@ -18,8 +18,6 @@
 
 namespace eve ::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // 128 bits implementation
   template<real_scalar_value T, typename N, x86_abi ABI>
   EVE_FORCEINLINE wide<T, N, ABI> bit_andnot_ ( EVE_SUPPORTS(sse2_)
                                               , wide<T, N, ABI> const &v0
