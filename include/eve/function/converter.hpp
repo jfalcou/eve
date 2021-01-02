@@ -19,16 +19,20 @@
 namespace eve
 {
   //================================================================================================
-  // Function decorators mark-up used in function overloads
-  template <typename T>
-  struct converter_type : decorator_
+  // Function decorator based on concrete type
+  //================================================================================================
+  template<scalar_value T> struct convert_to_
   {
     using value_type = element_type_t<T>;
+
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
+
     template<value Val>
     constexpr EVE_FORCEINLINE auto operator()(Val const & val) const noexcept
     {
       return convert(val, as<T>());
     }
+
     template<typename Function>
     EVE_FORCEINLINE constexpr  auto operator()(Function const & f) const noexcept
     {
@@ -36,7 +40,7 @@ namespace eve
       {
         if constexpr( supports_optimized_conversion<typename Function::tag_type>::value )
         {
-          return f(converter_type<T>(), std::forward<Ts>(args)...);
+          return f(decorated<convert_to_<T>()>(), std::forward<Ts>(args)...);
         }
         else
         {
@@ -47,146 +51,75 @@ namespace eve
   };
 
   //================================================================================================
-  // Function decorators for all basic type
-  inline constexpr converter_type<float>          const float32   = {};
-  inline constexpr converter_type<double>         const float64   = {};
-  inline constexpr converter_type<std::uint8_t >  const uint8    = {};
-  inline constexpr converter_type<std::uint16_t>  const uint16   = {};
-  inline constexpr converter_type<std::uint32_t>  const uint32   = {};
-  inline constexpr converter_type<std::uint64_t>  const uint64   = {};
-  inline constexpr converter_type<std::int8_t >   const int8     = {};
-  inline constexpr converter_type<std::int16_t>   const int16    = {};
-  inline constexpr converter_type<std::int32_t>   const int32    = {};
-  inline constexpr converter_type<std::int64_t>   const int64    = {};
+  // Function decorator based on type transformation
+  //================================================================================================
+  template<template<class...> class Meta, bool isDirect = true> struct convert_by_
+  {
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
 
+    template<value Val>
+    constexpr EVE_FORCEINLINE auto operator()(Val const & val) const noexcept
+    {
+      using value_type = typename Meta<element_type_t<Val>>::type;
+      return convert(val, as<value_type>());
+    }
+
+    template<typename Function>
+    EVE_FORCEINLINE constexpr  auto operator()(Function const & f) const noexcept
+    {
+      return  [f]<typename T, typename... Ts>(T&& arg0, Ts&&... args)
+      {
+        using value_type = typename Meta<element_type_t<std::remove_cvref_t<T>>>::type;
+
+        if constexpr( supports_optimized_conversion<typename Function::tag_type>::value )
+        {
+          if constexpr(isDirect)
+          {
+            return f( decorated<convert_to_<value_type>()>()
+                    , std::forward<T>(arg0), std::forward<Ts>(args)...
+                    );
+          }
+          else
+          {
+            return f( decorated<convert_by_<Meta,isDirect>()>()
+                    , std::forward<T>(arg0), std::forward<Ts>(args)...
+                    );
+          }
+        }
+        else
+        {
+          return convert(f(std::forward<T>(arg0), std::forward<Ts>(args)...), as_<value_type>());
+        }
+      };
+    }
+  };
 
   //================================================================================================
-  // Function decorator for template conversion
+  // Function decorators for conversion
+  //================================================================================================
+  template<scalar_value T> using converter_type = decorated<convert_to_<T>()>;
+
+  inline constexpr converter_type<float>              const float32  = {};
+  inline constexpr converter_type<double>             const float64  = {};
+  inline constexpr converter_type<std::uint8_t >      const uint8    = {};
+  inline constexpr converter_type<std::uint16_t>      const uint16   = {};
+  inline constexpr converter_type<std::uint32_t>      const uint32   = {};
+  inline constexpr converter_type<std::uint64_t>      const uint64   = {};
+  inline constexpr converter_type<std::int8_t >       const int8     = {};
+  inline constexpr converter_type<std::int16_t>       const int16    = {};
+  inline constexpr converter_type<std::int32_t>       const int32    = {};
+  inline constexpr converter_type<std::int64_t>       const int64    = {};
+
   template<typename T>
-  inline constexpr converter_type<element_type_t<T>> const to_ = {};
+  inline constexpr converter_type<element_type_t<T>>  const to_ = {};
 
-  struct int_converter
-  {
-    template<value Val>
-    constexpr EVE_FORCEINLINE auto operator()(Val const & val) const noexcept
-    {
-      using value_type = detail::as_integer_t<element_type_t<Val>>;
-      return convert(val, as<value_type>());
-    }
+  using int_converter       = decorated<convert_by_<detail::as_integer>()>;
+  using uint_converter      = decorated<convert_by_<detail::as_uinteger>()>;
+  using floating_converter  = decorated<convert_by_<detail::as_floating_point>()>;
+  using upgrade_converter   = decorated<convert_by_<detail::upgrade,false>()>;
 
-    template<typename Function>
-    EVE_FORCEINLINE constexpr  auto operator()(Function const & f) const noexcept
-    {
-      return  [f]<typename T, typename... Ts>(T&& arg0, Ts&&... args)
-      {
-        using value_type = detail::as_integer_t<element_type_t<std::remove_cvref_t<T>>>;
-
-        if constexpr( supports_optimized_conversion<typename Function::tag_type>::value )
-        {
-          return f(converter_type<value_type>(), std::forward<T>(arg0), std::forward<Ts>(args)...);
-        }
-        else
-        {
-          return convert(f(std::forward<T>(arg0), std::forward<Ts>(args)...), as_<value_type>());
-        }
-      };
-    }
-  };
-
-  inline constexpr int_converter const int_ = {};
-
-  struct uint_converter
-  {
-    template<value Val>
-    constexpr EVE_FORCEINLINE auto operator()(Val const & val) const noexcept
-    {
-      using value_type = detail::as_integer_t<element_type_t<Val>, unsigned>;
-      return convert(val, as<value_type>());
-    }
-
-    template<typename Function>
-    EVE_FORCEINLINE constexpr  auto operator()(Function const & f) const noexcept
-    {
-      return  [f]<typename T, typename... Ts>(T&& arg0, Ts&&... args)
-      {
-        using value_type = detail::as_integer_t<element_type_t<std::remove_cvref_t<T>>, unsigned>;
-
-        if constexpr( supports_optimized_conversion<typename Function::tag_type>::value )
-        {
-          return f(converter_type<value_type>(), std::forward<T>(arg0), std::forward<Ts>(args)...);
-        }
-        else
-        {
-          return convert(f(std::forward<T>(arg0), std::forward<Ts>(args)...), as_<value_type>());
-        }
-      };
-    }
-  };
-
-  inline constexpr uint_converter const uint_ = {};
-
-  struct floating_converter
-  {
-    template<value Val>
-    constexpr EVE_FORCEINLINE auto operator()(Val const & val) const noexcept
-    {
-      using value_type = detail::as_floating_point_t<element_type_t<Val>>;
-      return convert(val, as<value_type>());
-    }
-
-    template<typename Function>
-    EVE_FORCEINLINE constexpr  auto operator()(Function const & f) const noexcept
-    {
-      return  [f]<typename T, typename... Ts>(T&& arg0, Ts&&... args)
-      {
-        using value_type = detail::as_floating_point_t<element_type_t<std::remove_cvref_t<T>>>;
-
-        if constexpr( supports_optimized_conversion<typename Function::tag_type>::value )
-        {
-          return f(converter_type<value_type>(), std::forward<T>(arg0), std::forward<Ts>(args)...);
-        }
-        else
-        {
-          return convert(f(std::forward<T>(arg0), std::forward<Ts>(args)...), as_<value_type>());
-        }
-      };
-    }
-  };
-
+  inline constexpr int_converter      const int_      = {};
+  inline constexpr uint_converter     const uint_     = {};
   inline constexpr floating_converter const floating_ = {};
-
-
-//   template<typename T>
-//   inline constexpr converter_type<element_type_t<T>> const  upgrade = to_<detail::upgrade_t<element_type_t>> {};
-
-
-  struct upgrade_converter
-  {
-    template<value Val>
-    constexpr EVE_FORCEINLINE auto operator()(Val const & val) const noexcept
-    {
-      using value_type = detail::upgrade_t<element_type_t<Val>>;
-      return convert(val, as<value_type>());
-    }
-
-    template<typename Function>
-    EVE_FORCEINLINE constexpr  auto operator()(Function const & f) const noexcept
-    {
-      return  [f]<typename T, typename... Ts>(T&& arg0, Ts&&... args)
-      {
-        using value_type = detail::upgrade_t<element_type_t<std::remove_cvref_t<T>>>;
-
-        if constexpr( supports_optimized_conversion<typename Function::tag_type>::value )
-        {
-          return f(upgrade_converter(), std::forward<T>(arg0), std::forward<Ts>(args)...);
-        }
-        else
-        {
-          return convert(f(std::forward<T>(arg0), std::forward<Ts>(args)...), as_<value_type>());
-        }
-      };
-    }
-  };
-
-  inline constexpr upgrade_converter const upgrade_ = {};
+  inline constexpr upgrade_converter  const upgrade_  = {};
 }

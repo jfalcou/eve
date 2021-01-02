@@ -10,65 +10,39 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/abi.hpp>
+#include <eve/detail/overload.hpp>
 
 namespace eve
 {
   //================================================================================================
-  // Rounding decorator types
-  struct upward_type : decorator_
-  {
-    template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
-    {
-      return  [f](auto const&... args)
-              {
-                return f(upward_type{}, args...);
-              };
-    }
-  };
-
-  struct downward_type : decorator_
-  {
-    template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
-    {
-      return  [f](auto const&... args)
-              {
-                return f(downward_type{}, args...);
-              };
-    }
-  };
-
-  struct to_nearest_type : decorator_
-  {
-    template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
-    {
-      return  [f](auto const&... args)
-              {
-                return f(to_nearest_type{}, args...);
-              };
-    }
-  };
-
-  struct toward_zero_type : decorator_
-  {
-    template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
-    {
-      return  [f](auto const&... args)
-              {
-                return f(toward_zero_type{}, args...);
-              };
-    }
-  };
-
-  //================================================================================================
   // Rounding decorator objects
+  struct upward_
+  {
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
+  };
+
+  struct downward_
+  {
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
+  };
+
+  struct to_nearest_
+  {
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
+  };
+
+  struct toward_zero_
+  {
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
+  };
+
+  using upward_type      = decorated<upward_()>;
+  using downward_type    = decorated<downward_()>;
+  using to_nearest_type  = decorated<to_nearest_()>;
+  using toward_zero_type = decorated<toward_zero_()>;
+
   inline constexpr upward_type      const upward       = {};
   inline constexpr downward_type    const downward     = {};
   inline constexpr to_nearest_type  const to_nearest   = {};
   inline constexpr toward_zero_type const toward_zero  = {};
 }
-

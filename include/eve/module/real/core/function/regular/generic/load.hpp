@@ -19,6 +19,10 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 #endif
+namespace eve
+{
+  template<scalar_value T> struct convert_to_;
+}
 
 namespace eve::detail
 {
@@ -111,7 +115,7 @@ namespace eve::detail
 
   template<typename Ptr, scalar_value T>
   EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_)
-                            , converter_type<T> const&, Ptr p, scalar_cardinal const&
+                            , decorated<convert_to_<T>()> const&, Ptr p, scalar_cardinal const&
                             ) noexcept
   {
     return static_cast<T>(*p);

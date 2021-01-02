@@ -23,7 +23,4 @@ namespace eve
            typename Size = expected_cardinal_t<Type>,
            typename ABI  = expected_abi_t<Type, Size>>
   struct wide;
-
-  template <typename T> struct converter_type;
 }
-
