@@ -14,7 +14,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/has_abi.hpp>
-#include <eve/function/is_nez.hpp>
+#include <eve/detail/function/to_logical.hpp>
 
 namespace eve::detail
 {
@@ -44,9 +44,8 @@ namespace eve::detail
       }
       else
       {
-        return any(is_nez(v));
+        return any(to_logical(v));
       }
     }
   }
 }
-
