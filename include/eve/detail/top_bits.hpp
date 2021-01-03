@@ -184,11 +184,12 @@ auto movemask_raw(Logical p)
     else if constexpr( sizeof(e_t) == 8 )            return (std::uint32_t)_mm256_movemask_pd((__m256d)p.storage());
     else if constexpr( sizeof(e_t) == 4 )            return (std::uint32_t)_mm256_movemask_ps((__m256)p.storage());
     else if constexpr( current_api >= avx2 )         return (std::uint32_t)_mm256_movemask_epi8(p.storage());
-    else if constexpr( current_api == avx ) {
+    else if constexpr( current_api == avx )
+    {
       auto [l, h] = p.slice();
       auto s = h.size();
       if constexpr(sizeof(e_t) == 2) s *= 2;
-      return  {(movemask(h) << s) | movemask(l)};
+      return  (movemask_raw(h) << s) | movemask_raw(l);
     }
   }
 }
