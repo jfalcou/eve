@@ -17,6 +17,8 @@
 #include <eve/detail/meta.hpp>
 
 #include <array>
+#include <compare>
+#include <ostream>
 
 namespace eve::detail
 {
@@ -72,17 +74,36 @@ struct top_bits
 
     storage_type storage;
 
+    constexpr top_bits() = default;
+
+    constexpr top_bits(storage_type storage) : storage(storage) {}
+
+    constexpr top_bits(ignore_none_)
+    {
+      if constexpr( is_aggregated )
+      {
+        using half_logical = typename logical_type::storage_type::subvalue_type;
+        top_bits<half_logical> half {ignore_none_{}};
+        storage[0] = half;
+        storage[1] = half;
+      }
+      else storage = set_lower_n_bits<storage_type>(static_size * bits_per_element);
+    }
+
     constexpr bool get(std::ptrdiff_t i) const
     {
       if constexpr ( !is_aggregated ) return storage & (1 << (i * bits_per_element));
       else
       {
-        using half_logical = typename logical_type::storage_type::subvalue_type;
-
         if (i < static_size / 2) return storage[0].get(i);
         else                     return storage[1].get(i - static_size / 2);
       }
     }
+
+    friend bool operator==(const top_bits& x, const top_bits& y) {
+      return x.storage == y.storage;
+    }
+
 
     constexpr top_bits& operator&=(const top_bits& x)
     {
@@ -91,10 +112,7 @@ struct top_bits
         storage[0] &= x.storage[0];
         storage[1] &= x.storage[1];
       }
-      else
-      {
-        storage &= x.storage;
-      }
+      else storage &= x.storage;
       return *this;
     }
 
@@ -103,25 +121,47 @@ struct top_bits
       tmp &= y;
       return tmp;
     }
-};
 
-template <logical_simd_value Logical>
-constexpr top_bits<Logical> ignore_to_top_bits(ignore_none_)
-{
-  if constexpr ( top_bits<Logical>::is_aggregated )
-  {
-    using half_logical = typename Logical::storage_type::subvalue_type;
-    auto half = ignore_to_top_bits<half_logical>(ignore_none_{});
-    return { half, half };
-  }
-  else
-  {
-    using storage_type = typename top_bits<Logical>::storage_type;
-    return { set_lower_n_bits<storage_type>(
-      top_bits<Logical>::static_size * top_bits<Logical>::bits_per_element)
-    };
-  }
-}
+    constexpr top_bits& operator|=(const top_bits& x)
+    {
+      if constexpr ( is_aggregated )
+      {
+        storage[0] |= x.storage[0];
+        storage[1] |= x.storage[1];
+      }
+      else storage |= x.storage;
+      return *this;
+    }
+
+    constexpr friend top_bits operator|(const top_bits& x, const top_bits& y)
+    {
+      top_bits tmp(x);
+      tmp |= y;
+      return tmp;
+    }
+
+    constexpr top_bits& operator^=(const top_bits& x)
+    {
+      if constexpr ( is_aggregated )
+      {
+        storage[0] ^= x.storage[0];
+        storage[1] ^= x.storage[1];
+      }
+      else storage ^= x.storage;
+      return *this;
+    }
+
+    constexpr friend top_bits operator~(const top_bits& x)
+    {
+      return top_bits{~x.storage} & top_bits{ignore_none_{}};
+    }
+
+    friend std::ostream& operator<<(std::ostream& o, const top_bits& x)
+    {
+      if constexpr ( is_aggregated ) return o << '[' << x.storage[0] << ", " << x.storage[1] << ']';
+      else                           return o << x.storage;
+    }
+};
 
 template <logical_simd_value Logical>
 auto movemask_raw(Logical p)
@@ -169,7 +209,7 @@ top_bits<Logical> movemask(Logical p)
     else                                                  mmask = { movemask_raw(p)} ;
 
     // clearing the garbage for smaller than expected wides.
-    return mmask & ignore_to_top_bits<Logical>(ignore_none_{});
+    return mmask & top_bits<Logical>(ignore_none_{});
   }
 }
 
