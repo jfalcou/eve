@@ -20,6 +20,8 @@
 #include <compare>
 #include <ostream>
 
+#include <iostream>
+
 namespace eve::detail
 {
 
@@ -41,7 +43,44 @@ constexpr std::uint32_t set_lower_n_bits(std::ptrdiff_t n) {
   return static_cast<N>(res);
 }
 
-// ~bit utilities --------------------
+// movemask_raw --------------------
+
+template <logical_simd_value Logical>
+auto movemask_raw(Logical p)
+{
+  using ABI = abi_type_t<Logical>;
+  using e_t = element_type_t<Logical>;
+
+  if constexpr( std::same_as<ABI, x86_128_>)
+  {
+         if constexpr( std::is_same_v<e_t, float > ) return (std::uint16_t)_mm_movemask_ps(p.storage());
+    else if constexpr( std::is_same_v<e_t, double> ) return (std::uint16_t)_mm_movemask_pd(p.storage());
+    else if constexpr( sizeof(e_t) == 8 )            return (std::uint16_t)_mm_movemask_pd((__m128d)p.storage());
+    else if constexpr( sizeof(e_t) == 4 )            return (std::uint16_t)_mm_movemask_ps((__m128)p.storage());
+    else                                             return (std::uint16_t)_mm_movemask_epi8(p.storage());
+  }
+  else if constexpr( std::same_as<ABI ,x86_256_>)
+  {
+         if constexpr( std::is_same_v<e_t, float > ) return (std::uint32_t)_mm256_movemask_ps(p.storage());
+    else if constexpr( std::is_same_v<e_t, double> ) return (std::uint32_t)_mm256_movemask_pd(p.storage());
+    else if constexpr( sizeof(e_t) == 8 )            return (std::uint32_t)_mm256_movemask_pd((__m256d)p.storage());
+    else if constexpr( sizeof(e_t) == 4 )            return (std::uint32_t)_mm256_movemask_ps((__m256)p.storage());
+    else if constexpr( current_api >= avx2 )         return (std::uint32_t)_mm256_movemask_epi8(p.storage());
+    else if constexpr( current_api == avx )
+    {
+      auto [l, h] = p.slice();
+      auto s = h.size();
+      if constexpr(sizeof(e_t) == 2) s *= 2;
+
+      auto top = (std::uint32_t)movemask_raw(h);
+      auto bottom = movemask_raw(l);
+
+      return (top << s) | bottom;
+    }
+  }
+}
+
+// top_bits ---------------------------------
 
 template <logical_simd_value Logical>
 struct top_bits
@@ -74,11 +113,31 @@ struct top_bits
 
     storage_type storage;
 
+    // basic constructors ---------------------------------
+
     constexpr top_bits() = default;
 
-    constexpr top_bits(storage_type storage) : storage(storage) {}
+    constexpr explicit top_bits(storage_type storage) : storage(storage) {}
 
-    constexpr top_bits(ignore_none_)
+    explicit top_bits(const logical_type& p)
+    {
+        if constexpr ( is_aggregated )
+        {
+          using half_logical = typename logical_type::storage_type::subvalue_type;
+          auto [l, h] = p.slice();
+
+          storage = {{ top_bits<half_logical>(l), top_bits<half_logical>(h) }};
+        }
+        else
+        {
+          if constexpr ( is_avx512_logical ) storage = p.storage();
+          else                               storage = movemask_raw(p);
+
+          *this &= top_bits(ignore_none_{});
+        }
+    }
+
+    constexpr explicit top_bits(ignore_none_)
     {
       if constexpr( is_aggregated )
       {
@@ -88,6 +147,18 @@ struct top_bits
         storage[1] = half;
       }
       else storage = set_lower_n_bits<storage_type>(static_size * bits_per_element);
+    }
+
+    constexpr explicit top_bits(ignore_all_)
+    {
+      if constexpr( is_aggregated )
+      {
+        using half_logical = typename logical_type::storage_type::subvalue_type;
+        top_bits<half_logical> half {ignore_all_{}};
+        storage[0] = half;
+        storage[1] = half;
+      }
+      else storage = 0;
     }
 
     constexpr bool get(std::ptrdiff_t i) const
@@ -100,10 +171,10 @@ struct top_bits
       }
     }
 
-    friend bool operator==(const top_bits& x, const top_bits& y) {
-      return x.storage == y.storage;
-    }
+    // ordering
+    std::strong_ordering operator<=>(const top_bits&) const = default;
 
+    // bit operators =============================================
 
     constexpr top_bits& operator&=(const top_bits& x)
     {
@@ -151,10 +222,20 @@ struct top_bits
       return *this;
     }
 
+    constexpr friend top_bits operator^(const top_bits& x, const top_bits& y)
+    {
+      top_bits tmp(x);
+      tmp ^= y;
+      return tmp;
+    }
+
     constexpr friend top_bits operator~(const top_bits& x)
     {
-      return top_bits{~x.storage} & top_bits{ignore_none_{}};
+      if constexpr ( !is_aggregated ) return top_bits{(storage_type)~x.storage} & top_bits{ignore_none_{}};
+      else return top_bits{{ ~x.storage[0], ~x.storage[1] }};
     }
+
+    // streaming ==============================================
 
     friend std::ostream& operator<<(std::ostream& o, const top_bits& x)
     {
@@ -163,55 +244,50 @@ struct top_bits
     }
 };
 
-template <logical_simd_value Logical>
-auto movemask_raw(Logical p)
-{
-  using ABI = abi_type_t<Logical>;
-  using e_t = element_type_t<Logical>;
+// ---------------------------------------------------------------------------------
+// spread(top_bits)
+//
+// relevant stack overflow:
+//   https://stackoverflow.com/a/24242696/5021064
+//   https://stackoverflow.com/a/36491672/5021064
 
-  if constexpr( std::same_as<ABI, x86_128_>)
-  {
-         if constexpr( std::is_same_v<e_t, float > ) return (std::uint16_t)_mm_movemask_ps(p.storage());
-    else if constexpr( std::is_same_v<e_t, double> ) return (std::uint16_t)_mm_movemask_pd(p.storage());
-    else if constexpr( sizeof(e_t) == 8 )            return (std::uint16_t)_mm_movemask_pd((__m128d)p.storage());
-    else if constexpr( sizeof(e_t) == 4 )            return (std::uint16_t)_mm_movemask_ps((__m128)p.storage());
-    else                                             return (std::uint16_t)_mm_movemask_epi8(p.storage());
-  }
-  else if constexpr( std::same_as<ABI ,x86_256_>)
-  {
-         if constexpr( std::is_same_v<e_t, float > ) return (std::uint32_t)_mm256_movemask_ps(p.storage());
-    else if constexpr( std::is_same_v<e_t, double> ) return (std::uint32_t)_mm256_movemask_pd(p.storage());
-    else if constexpr( sizeof(e_t) == 8 )            return (std::uint32_t)_mm256_movemask_pd((__m256d)p.storage());
-    else if constexpr( sizeof(e_t) == 4 )            return (std::uint32_t)_mm256_movemask_ps((__m256)p.storage());
-    else if constexpr( current_api >= avx2 )         return (std::uint32_t)_mm256_movemask_epi8(p.storage());
-    else if constexpr( current_api == avx )
-    {
-      auto [l, h] = p.slice();
-      auto s = h.size();
-      if constexpr(sizeof(e_t) == 2) s *= 2;
-      return  (movemask_raw(h) << s) | movemask_raw(l);
-    }
-  }
+template <typename Logical>
+EVE_FORCEINLINE Logical spread_one_bit_per_element(top_bits<Logical> mmask)
+{
+  using bits_wide = typename Logical::bits_type;
+
+  // For non chars this will just spread mmask everywhere.
+  // For chars each 8 bits of mmask go into their part
+  const bits_wide spread_mask([&](int i, int) {
+    int shift = 0;
+    shift += (i >= 8);
+    shift += (i >= 16);
+    shift += (i >= 24);
+    return (uint8_t)(mmask.storage >> (shift * 8));
+  });
+
+  // For not chars this just returns i.
+  // For chars index computation is more complex.
+  const bits_wide each_element_idx([&](int i, int) {
+    int shift = 0;
+    shift += (i >= 8);
+    shift += (i >= 16);
+    shift += (i >= 24);
+    return (uint8_t) (1 << (i - 8 * shift));
+  });
+
+  const bits_wide bit_mask = spread_mask & each_element_idx;
+  return Logical{(each_element_idx == bit_mask).storage()};
 }
 
 template <logical_simd_value Logical>
-top_bits<Logical> movemask(Logical p)
+Logical spread(top_bits<Logical> mmask)
 {
-  if constexpr ( top_bits<Logical>::is_aggregated )
-  {
-    auto [l, h] = p.slice();
-    return {{ movemask(l), movemask(h) }};
-  }
-  else
-  {
-    top_bits<Logical> mmask;
-
-    if constexpr ( top_bits<Logical>::is_avx512_logical ) mmask = { p.storage() };
-    else                                                  mmask = { movemask_raw(p)} ;
-
-    // clearing the garbage for smaller than expected wides.
-    return mmask & top_bits<Logical>(ignore_none_{});
-  }
+       if constexpr ( top_bits<Logical>::is_aggregated )         return Logical{{spread(mmask.storage[0]), spread(mmask.storage[1])}};
+  else if constexpr ( top_bits<Logical>::is_avx512_logical )     return Logical(mmask.storage);
+  else if constexpr ( top_bits<Logical>::bits_per_element == 1 ) return spread_one_bit_per_element(mmask);
 }
+
+// ---------------------------------------------------------------------------------
 
 }  // namespace eve::detail
