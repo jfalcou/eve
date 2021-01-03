@@ -10,13 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/detail/function/to_logical.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_mask.hpp>
-#include <eve/forward.hpp>
 #include <type_traits>
-#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
@@ -39,7 +38,7 @@ namespace eve::detail
                                             wide<U, N, x86_128_> const &v1,
                                             wide<U, N, x86_128_> const &v2) noexcept
   {
-    return if_else(is_nez(v0), v1, v2);
+    return if_else(to_logical(v0), v1, v2);
   }
 
   template<real_scalar_value T, typename U, typename N>
@@ -57,7 +56,7 @@ namespace eve::detail
                                             logical<wide<U, N, x86_128_>> const &v1,
                                             logical<wide<U, N, x86_128_>> const &v2) noexcept
   {
-    return if_else(is_nez(v0), v1, v2);
+    return if_else(to_logical(v0), v1, v2);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -95,7 +94,7 @@ namespace eve::detail
                                             wide<U, N, x86_256_> const &v1,
                                             wide<U, N, x86_256_> const &v2) noexcept
   {
-    return if_else(is_nez(v0), v1, v2);
+    return if_else(to_logical(v0), v1, v2);
   }
 
   template<real_scalar_value T, typename U, typename N>
@@ -113,7 +112,7 @@ namespace eve::detail
                                             logical<wide<U, N, x86_256_>> const &v1,
                                             logical<wide<U, N, x86_256_>> const &v2) noexcept
   {
-    return bit_cast(if_else(is_nez(v0), v1.mask(), v2.mask()), as(v2));
+    return bit_cast(if_else(to_logical(v0), v1.mask(), v2.mask()), as(v2));
   }
 
 }
