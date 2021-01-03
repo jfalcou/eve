@@ -42,10 +42,10 @@ namespace eve::detail
     }
     else
     {
-      return  [&g]<std::size_t... N>(std::index_sequence<N...>)
+      return  [&g]<std::ptrdiff_t... N>(std::integer_sequence<std::ptrdiff_t,N...>)
               {
                 return Pack( g(N,cardinal_v<Pack>)... );
-              }( std::make_index_sequence<cardinal_v<Pack>>{});
+              }( std::make_integer_sequence<std::ptrdiff_t,cardinal_v<Pack>>{});
     }
   }
 }
