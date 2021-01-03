@@ -11,6 +11,7 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/function/to_logical.hpp>
 #include <eve/concept/value.hpp>
 
 namespace eve::detail
@@ -30,7 +31,7 @@ namespace eve::detail
                                             wide<U, N, ppc_> const &  v0,
                                             wide<U, N, ppc_> const &  v1) noexcept
   {
-    return if_else(is_nez(m),v0,v1);
+    return if_else(to_logical(m),v0,v1);
   }
 
   template<real_scalar_value T, real_scalar_value U, typename N>
@@ -48,6 +49,6 @@ namespace eve::detail
                                             logical<wide<U, N, ppc_>> const & v0,
                                             logical<wide<U, N, ppc_>> const & v1) noexcept
   {
-    return if_else(is_nez(m),v0,v1);
+    return if_else(to_logical(m),v0,v1);
   }
 }

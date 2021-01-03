@@ -10,12 +10,13 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/detail/function/to_logical.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/mone.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/constant/allbits.hpp>
+#include <eve/constant/mone.hpp>
+#include <eve/constant/one.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/function/bit_and.hpp>
 #include <eve/function/bit_andnot.hpp>
@@ -23,7 +24,6 @@
 #include <eve/function/bit_or.hpp>
 #include <eve/function/bit_ornot.hpp>
 #include <eve/function/bit_select.hpp>
-#include <eve/function/is_nez.hpp>
 #include <eve/function/minus.hpp>
 
 namespace eve::detail
@@ -54,15 +54,15 @@ namespace eve::detail
       else if constexpr(scalar_value<U> && scalar_value<V>)
       {
         using r_t =  as_wide_t<element_type_t<U>, cardinal_t<T>>;
-        return  if_else(is_nez(cond), r_t(t), r_t(f));
+        return  if_else(to_logical(cond), r_t(t), r_t(f));
       }
       else if constexpr(simd_value<U> && scalar_value<V>)
       {
-        return if_else(is_nez(cond), t, U(f));
+        return if_else(to_logical(cond), t, U(f));
       }
       else if constexpr(scalar_value<U> && simd_value<V>)
       {
-        return if_else(is_nez(cond), V(t), f);
+        return if_else(to_logical(cond), V(t), f);
       }
       else if constexpr(simd_value<U> && simd_value<V>)
       {

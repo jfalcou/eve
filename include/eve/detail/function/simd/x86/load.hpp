@@ -15,7 +15,7 @@
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
-#include <eve/function/is_nez.hpp>
+#include <eve/detail/function/to_logical.hpp>
 
 namespace eve::detail
 {
@@ -102,7 +102,7 @@ namespace eve::detail
       else                                    return load(tgt(), abi, (T const*)(p));
     }();
 
-    return is_nez(block).storage();
+    return to_logical(block).storage();
   }
 
   template<typename Iterator, typename T, typename N, x86_abi ABI>
@@ -116,6 +116,6 @@ namespace eve::detail
       return load(tgt(), ABI{}, b, e);
     }();
 
-    return is_nez(block).storage();
+    return to_logical(block).storage();
   }
 }

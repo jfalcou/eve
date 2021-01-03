@@ -10,14 +10,17 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/is_nez.hpp>
+#include <eve/arch.hpp>
+#include <eve/detail/function/simd/common/to_logical.hpp>
 
-namespace eve::detail
-{
-  template<value T> EVE_FORCEINLINE auto bit_mask_(EVE_SUPPORTS(cpu_), T const &v) noexcept
-  {
-    return is_nez(v).mask();
-  }
-}
+#if defined(EVE_HW_X86)
+#  include <eve/detail/function/simd/x86/to_logical.hpp>
+#endif
+
+#if defined(EVE_HW_POWERPC)
+#  include <eve/detail/function/simd/ppc/to_logical.hpp>
+#endif
+
+#if defined(EVE_HW_ARM)
+#  include <eve/detail/function/simd/arm/neon/to_logical.hpp>
+#endif
