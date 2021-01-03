@@ -15,6 +15,7 @@
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
+#include <eve/detail/function/to_logical.hpp>
 
 namespace eve::detail
 {
@@ -44,7 +45,7 @@ namespace eve::detail
         return load_(EVE_RETARGET(sse2_), cond, (a_t const*)(p), Cardinal{});
       }();
 
-      return is_nez(block).storage();
+      return to_logical(block).storage();
     }
     else if constexpr( !abi_t::is_wide_logical )
     {
