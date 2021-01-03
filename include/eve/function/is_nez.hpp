@@ -10,6 +10,9 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/concept/value.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/detail/function/to_logical.hpp>
 #include <eve/detail/overload.hpp>
 
 namespace eve
@@ -17,8 +20,11 @@ namespace eve
   EVE_MAKE_CALLABLE(is_nez_, is_nez);
 }
 
-#include <eve/module/real/core/function/regular/generic/is_nez.hpp>
-
-#if defined(EVE_HW_X86)
-#  include <eve/module/real/core/function/regular/simd/x86/is_nez.hpp>
-#endif
+namespace eve::detail
+{
+  template<value T>
+  EVE_FORCEINLINE constexpr auto is_nez_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  {
+    return detail::to_logical(a);
+  }
+}
