@@ -10,15 +10,15 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/bit_or.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/traits/as_logical.hpp>
-#include <eve/traits/is_logical.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/detail/apply_over.hpp>
+#include <eve/detail/function/to_logical.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/function/bit_or.hpp>
+#include <eve/function/bit_cast.hpp>
+#include <eve/traits/as_logical.hpp>
+#include <eve/traits/is_logical.hpp>
 
 namespace eve::detail
 {
@@ -62,7 +62,7 @@ namespace eve::detail
                                     , wide<U,N,ABI> const &b
                                     ) noexcept
   {
-    return logical_or(a, is_nez(b));
+    return logical_or(a, to_logical(b));
   }
 
   template<typename T, scalar_value U, typename N, native_abi ABI>
@@ -71,7 +71,7 @@ namespace eve::detail
                                     , U const &b
                                     ) noexcept
   {
-    return logical_or(a, logical<wide<T,N,ABI>>(is_nez(b)));
+    return logical_or(a, logical<wide<T,N,ABI>>(!!b));
   }
 
   template<typename T, typename U, typename N, native_abi ABI>
@@ -80,7 +80,7 @@ namespace eve::detail
                                     , wide<U,N,ABI> const &b
                                     ) noexcept
   {
-    return logical_or(is_nez(a), is_nez(b));
+    return logical_or(to_logical(a), to_logical(b));
   }
 
   template<typename T, typename U, typename N, native_abi ABI>
@@ -89,7 +89,7 @@ namespace eve::detail
                                     , U const &b
                                     ) noexcept
   {
-    return logical_or(is_nez(a), logical<wide<T,N,ABI>>(is_nez(b)));
+    return logical_or(to_logical(a), logical<wide<T,N,ABI>>(!!b));
   }
   template<typename T, typename U, typename N, native_abi ABI>
   EVE_FORCEINLINE auto logical_or_ ( EVE_SUPPORTS(cpu_)
