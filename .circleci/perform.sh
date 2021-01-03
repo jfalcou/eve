@@ -31,13 +31,15 @@ fi
 ##==================================================================================================
 if [[ "$VARIANT" == "avx512" ]]
 then
-  ninja unit.arch.exe -k 0      && ctest -R "^unit.arch\..*\.exe"               && \
-  ninja unit.meta.exe -k 0 -j 8 && ctest -R "^unit.meta\..*\.exe"         -j 8  && \
-  ninja unit.api.exe  -k 0 -j 8 && ctest -R "^unit.api\..*\.exe"          -j 8
+  ninja unit.arch.exe       -k 0      && ctest -R "^unit.arch\..*\.exe"       && \
+  ninja unit.meta.exe       -k 0 -j 8 && ctest -R "^unit.meta\..*\.exe"       && \
+  ninja unit.internals.exe  -k 0 -j 8 && ctest -R "^unit.internals\..*\.exe"  && \
+  ninja unit.api.exe        -k 0 -j 8 && ctest -R "^unit.api\..*\.exe"
 else
-  ninja unit.arch.exe -k 0      && ctest -R "^unit.arch\..*\.exe"               && \
-  ninja unit.meta.exe -k 0 -j 8 && ctest -R "^unit.meta\..*\.exe"         -j 8  && \
-  ninja unit.api.exe  -k 0 -j 8 && ctest -R "^unit.api\..*\.exe"          -j 8  && \
-  ninja doc.exe       -k 0 -j 8 && ctest -R "^doc\..*\.exe"               -j 8  && \
-  ninja unit.simd.exe -k 0 -j 6 && ctest -R "^unit\..*\..*\..*\.simd.exe" -j 8
+  ninja unit.arch.exe       -k 0      && ctest -R "^unit.arch\..*\.exe"               && \
+  ninja unit.meta.exe       -k 0 -j 8 && ctest -R "^unit.meta\..*\.exe"               && \
+  ninja unit.internals.exe  -k 0 -j 8 && ctest -R "^unit.internals\..*\.exe"          && \
+  ninja unit.api.exe        -k 0 -j 8 && ctest -R "^unit.api\..*\.exe"          -j 8  && \
+  ninja doc.exe             -k 0 -j 8 && ctest -R "^doc\..*\.exe"               -j 8  && \
+  ninja unit.simd.exe       -k 0 -j 6 && ctest -R "^unit\..*\..*\..*\.simd.exe" -j 8
 fi

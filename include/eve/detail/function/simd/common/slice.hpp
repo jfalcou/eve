@@ -15,6 +15,7 @@
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/platform.hpp>
 #include <eve/traits/as_wide.hpp>
+#include <eve/as.hpp>
 
 #include <cstddef>
 #include <type_traits>
