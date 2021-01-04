@@ -10,12 +10,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/forward.hpp>
-
-#include <cstddef>
-#include <type_traits>
+#include <eve/detail/category.hpp>
+#include <eve/detail/implementation.hpp>
 
 namespace eve::detail
 {
@@ -24,7 +20,7 @@ namespace eve::detail
   //================================================================================================
   template<typename T, typename N, x86_abi ABI, typename Slice>
   EVE_FORCEINLINE wide<T, typename N::split_type>
-  slice(sse2_ const&, wide<T,N,ABI> const &a, Slice const &) noexcept requires(N::value > 1)
+  slice(wide<T,N,ABI> const &a, Slice const &) noexcept
   {
     constexpr auto s = Slice::value;
 
@@ -81,7 +77,7 @@ namespace eve::detail
 
   template<typename T, typename N, x86_abi ABI, typename Slice>
   EVE_FORCEINLINE logical<wide<T, typename N::split_type>>
-  slice(sse2_ const&, logical<wide<T,N,ABI>> const &a, Slice const &) noexcept requires(N::value > 1)
+  slice(logical<wide<T,N,ABI>> const &a, Slice const &) noexcept
   {
     if constexpr( !ABI::is_wide_logical )
     {
@@ -96,7 +92,9 @@ namespace eve::detail
     }
     else
     {
-      return slice(cpu_{}, a, Slice{});
+      using l_t = logical<wide<T, typename N::split_type>>;
+      using s_t = typename l_t::storage_type;
+      return l_t( bit_cast(a.mask().slice(Slice{}).storage(), as_<s_t>()) );
     }
   }
 
@@ -104,21 +102,16 @@ namespace eve::detail
   // Both slice
   //================================================================================================
   template<typename T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE auto slice(sse2_ const&, wide<T, N, ABI> const &a) noexcept requires(N::value > 1)
+  EVE_FORCEINLINE auto slice(wide<T, N, ABI> const &a) noexcept
   {
-    std::array<wide<T, typename N::split_type>, 2> that { slice(sse2_{}, a, lower_)
-                                                        , slice(sse2_{}, a, upper_)
-                                                        };
+    std::array<wide<T, typename N::split_type>, 2> that{slice(a, lower_), slice(a, upper_)};
     return that;
   }
 
   template<typename T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE auto slice(sse2_ const&, logical<wide<T,N,ABI>> const &a) noexcept
-  requires(N::value > 1)
+  EVE_FORCEINLINE auto slice(logical<wide<T,N,ABI>> const &a) noexcept
   {
-    std::array<logical<wide<T, typename N::split_type>>, 2> that{ slice(sse2_{}, a, lower_)
-                                                                , slice(sse2_{}, a, upper_)
-                                                                };
+    std::array<logical<wide<T, typename N::split_type>>,2> that{slice(a, lower_), slice(a, upper_)};
     return that;
   }
 }
