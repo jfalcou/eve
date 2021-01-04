@@ -23,8 +23,6 @@
 #include <eve/detail/function/load.hpp>
 #include <eve/detail/function/lookup.hpp>
 #include <eve/detail/function/make.hpp>
-#include <eve/detail/function/slice.hpp>
-#include <eve/detail/function/subscript.hpp>
 
 #include <type_traits>
 #include <iosfwd>
@@ -37,6 +35,7 @@ namespace eve
   template<typename Type, typename Size, typename ABI>
   struct  EVE_MAY_ALIAS wide
         : detail::wide_cardinal<Size>
+        , detail::wide_ops<wide<Type,Size,ABI>>
   {
     private:
     //==============================================================================================
@@ -176,17 +175,6 @@ namespace eve
     }
 
     //==============================================================================================
-    // slice interface
-    //==============================================================================================
-    EVE_FORCEINLINE auto slice() const { return detail::slice(EVE_CURRENT_API{},*this); }
-
-    template<typename Slice>
-    EVE_FORCEINLINE auto slice(Slice const &s) const
-    {
-      return detail::slice(EVE_CURRENT_API{},*this, s);
-    }
-
-    //==============================================================================================
     // swap
     //==============================================================================================
     EVE_FORCEINLINE void swap(wide &rhs) noexcept
@@ -204,21 +192,7 @@ namespace eve
       return lookup(*this,idx);
     }
 
-    //==============================================================================================
-    // elementwise access
-    //==============================================================================================
-    EVE_FORCEINLINE void set(std::size_t i, value_type v) noexcept
-    {
-      detail::insert(*this, i, v);
-    }
-
-    EVE_FORCEINLINE value_type operator[](std::size_t i) const noexcept
-    {
-      return detail::extract(*this, i);
-    }
-
-    EVE_FORCEINLINE value_type back()  const noexcept { return this->operator[](card_base::static_size-1); }
-    EVE_FORCEINLINE value_type front() const noexcept { return this->operator[](0);             }
+    using detail::wide_ops<wide>::operator[];
 
     //===============================================================================================
     // Self-increment/decrement operators
