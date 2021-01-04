@@ -13,6 +13,7 @@
 #include <eve/arch/as_register.hpp>
 #include <eve/arch/cpu/logical.hpp>
 #include <eve/arch/expected_cardinal.hpp>
+#include <eve/arch/cpu/base.hpp>
 #include <eve/arch/spec.hpp>
 #include <eve/concept/range.hpp>
 #include <eve/detail/abi.hpp>
@@ -39,7 +40,8 @@ namespace eve
   // Wrapper for SIMD registers holding logical types with compile-time size
   //================================================================================================
   template<typename Type, typename Size, typename ABI>
-  struct EVE_MAY_ALIAS logical<wide<Type,Size,ABI>>
+  struct EVE_MAY_ALIAS  logical<wide<Type,Size,ABI>>
+                      : detail::wide_cardinal<Size>
   {
     private:
     //==============================================================================================
@@ -49,12 +51,13 @@ namespace eve
     template<typename P> struct tgt_<P, emulated_>    { using type = typename P::storage_type;  };
     template<typename P> struct tgt_<P, aggregated_>  { using type = P;                         };
 
+    using card_base = detail::wide_cardinal<Size>;
+
     public:
     using storage_type  = as_logical_register_t<Type, Size, ABI>;
-    using cardinal_type = Size;
     using abi_type      = ABI;
     using value_type    = logical<Type>;
-    using size_type     = std::ptrdiff_t;
+    using size_type     = typename card_base::size_type;
     using target_type   = typename tgt_<logical, abi_type>::type;
 
     using bits_type = wide<detail::as_integer_t<Type, unsigned>, Size>;
@@ -63,7 +66,6 @@ namespace eve
     template<typename T, typename N = expected_cardinal_t<T>>
     using rebind = logical<wide<T,N>>;
 
-    static constexpr size_type  static_size       = Size::value;
     static constexpr size_type  static_alignment  = std::min( sizeof(Type)*Size::value
                                                             , alignof(storage_type)
                                                             );
@@ -140,7 +142,7 @@ namespace eve
     EVE_FORCEINLINE logical(T0 const &v0, T1 const &v1, Ts const &... vs) noexcept
           requires(     std::convertible_to<T0,logical<Type>> && std::convertible_to<T0,logical<Type>>
                     &&  (... && std::convertible_to<Ts,logical<Type>>)
-                    &&  (static_size == 2 + sizeof...(Ts))
+                    &&  (card_base::static_size == 2 + sizeof...(Ts))
                   )
         : data_(detail::make(eve::as_<target_type>{}, abi_type{}, v0, v1, vs...))
     {}
@@ -167,7 +169,7 @@ namespace eve
     EVE_FORCEINLINE logical ( logical<wide<Type, halfSize>> const &l
                             , logical<wide<Type, halfSize>> const &h
                             ) noexcept
-                    requires( static_size == 2 * halfSize::value )
+                    requires( card_base::static_size == 2 * halfSize::value )
                   : data_(detail::combine(EVE_CURRENT_API{}, l, h))
     {
     }
@@ -201,13 +203,6 @@ namespace eve
     {
       return static_alignment;
     }
-
-    //==============================================================================================
-    // array-like interface
-    //==============================================================================================
-    static EVE_FORCEINLINE constexpr size_type size()     noexcept { return static_size; }
-    static EVE_FORCEINLINE constexpr size_type max_size() noexcept { return static_size; }
-    static EVE_FORCEINLINE constexpr bool      empty()    noexcept { return false; }
 
     //==============================================================================================
     // slice interface
@@ -250,7 +245,7 @@ namespace eve
       return detail::extract(*this, i);
     }
 
-    EVE_FORCEINLINE value_type back()  const noexcept { return this->operator[](static_size-1); }
+    EVE_FORCEINLINE value_type back()  const noexcept { return this->operator[](card_base::static_size-1); }
     EVE_FORCEINLINE value_type front() const noexcept { return this->operator[](0);             }
 
     //==============================================================================================
