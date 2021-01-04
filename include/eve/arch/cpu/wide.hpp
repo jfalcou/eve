@@ -21,7 +21,6 @@
 #include <eve/detail/function/compounds.hpp>
 #include <eve/detail/function/fill.hpp>
 #include <eve/detail/function/load.hpp>
-#include <eve/detail/function/lookup.hpp>
 #include <eve/detail/function/make.hpp>
 
 #include <type_traits>
@@ -145,7 +144,7 @@ namespace eve
     EVE_FORCEINLINE wide &operator=(Type v) noexcept
     {
       wide that(v);
-      swap(that);
+      detail::wide_ops<wide>::swap(that);
       return *this;
     }
 
@@ -165,32 +164,6 @@ namespace eve
 
     EVE_FORCEINLINE auto  end()        noexcept { return begin() + card_base::static_size; }
     EVE_FORCEINLINE auto  end() const  noexcept { return begin() + card_base::static_size; }
-
-    //==============================================================================================
-    // alignment interface
-    //==============================================================================================
-    static EVE_FORCEINLINE constexpr size_type alignment() noexcept
-    {
-      return static_alignment;
-    }
-
-    //==============================================================================================
-    // swap
-    //==============================================================================================
-    EVE_FORCEINLINE void swap(wide &rhs) noexcept
-    {
-      using std::swap;
-      swap(data_, rhs.data_);
-    }
-
-    //==============================================================================================
-    // Dynamic index lookup
-    //==============================================================================================
-    template<typename Index>
-    EVE_FORCEINLINE wide operator[](wide<Index,Size> const& idx) noexcept
-    {
-      return lookup(*this,idx);
-    }
 
     using detail::wide_ops<wide>::operator[];
 

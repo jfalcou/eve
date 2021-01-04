@@ -22,10 +22,8 @@
 #include <eve/detail/function/bitmask.hpp>
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/function/combine.hpp>
-#include <eve/detail/function/compounds.hpp>
 #include <eve/detail/function/fill.hpp>
 #include <eve/detail/function/load.hpp>
-#include <eve/detail/function/lookup.hpp>
 #include <eve/detail/function/make.hpp>
 
 #include <cstring>
@@ -176,9 +174,7 @@ namespace eve
     //==============================================================================================
     // Assign a single value to a logical<wide>
     //==============================================================================================
-    EVE_FORCEINLINE logical &operator=(bool b) { return (*this = logical<Type>{b}); }
-
-    EVE_FORCEINLINE logical &operator=(logical<Type> const &v) noexcept
+    EVE_FORCEINLINE logical &operator=(logical<Type> v) noexcept
     {
       data_ = detail::make(eve::as_<target_type>{}, abi_type{}, v);
       return *this;
@@ -194,31 +190,6 @@ namespace eve
     EVE_FORCEINLINE operator storage_type const& () const &  noexcept { return data_; }
     EVE_FORCEINLINE operator storage_type&       () &        noexcept { return data_; }
     EVE_FORCEINLINE operator storage_type        () &&       noexcept { return data_; }
-
-    //==============================================================================================
-    // alignment interface
-    //==============================================================================================
-    static EVE_FORCEINLINE constexpr size_type alignment() noexcept
-    {
-      return static_alignment;
-    }
-
-    //==============================================================================================
-    // swap
-    //==============================================================================================
-    EVE_FORCEINLINE void swap(logical &rhs) noexcept
-    {
-      std::swap(data_, rhs.data_);
-    }
-
-    //==============================================================================================
-    // Dynamic index lookup
-    //==============================================================================================
-    template<typename Index>
-    EVE_FORCEINLINE logical operator[](wide<Index,Size> const& idx) noexcept
-    {
-      return bit_cast(lookup(bits(),idx), as(*this));
-    }
 
     using detail::wide_ops<logical>::operator[];
 
