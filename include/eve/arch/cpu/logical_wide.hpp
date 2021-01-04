@@ -242,12 +242,12 @@ namespace eve
     //==============================================================================================
     EVE_FORCEINLINE void set(std::size_t i, value_type v) noexcept
     {
-      detail::insert(EVE_CURRENT_ABI{}, as_<logical>{}, data_, i, v);
+      detail::insert(*this, i, v);
     }
 
     EVE_FORCEINLINE value_type operator[](std::size_t i) const noexcept
     {
-      return detail::extract(EVE_CURRENT_ABI{}, as_<logical>{}, data_, i);
+      return detail::extract(*this, i);
     }
 
     EVE_FORCEINLINE value_type back()  const noexcept { return this->operator[](static_size-1); }

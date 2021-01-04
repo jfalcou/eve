@@ -159,15 +159,8 @@ namespace eve
     EVE_FORCEINLINE operator storage_type&       () &        noexcept { return data_; }
     EVE_FORCEINLINE operator storage_type        () &&       noexcept { return data_; }
 
-    EVE_FORCEINLINE auto  begin() noexcept
-    {
-      return detail::at_begin(EVE_CURRENT_API{}, as_<wide>{}, data_);
-    }
-
-    EVE_FORCEINLINE auto  begin() const  noexcept
-    {
-      return detail::at_begin(EVE_CURRENT_API{}, as_<wide>{}, data_);
-    }
+    EVE_FORCEINLINE auto  begin()       noexcept { return detail::at_begin(*this); }
+    EVE_FORCEINLINE auto  begin() const noexcept { return detail::at_begin(*this); }
 
     EVE_FORCEINLINE auto  end()        noexcept { return begin() + static_size; }
     EVE_FORCEINLINE auto  end() const  noexcept { return begin() + static_size; }
@@ -221,12 +214,12 @@ namespace eve
     //==============================================================================================
     EVE_FORCEINLINE void set(std::size_t i, value_type v) noexcept
     {
-      detail::insert(EVE_CURRENT_ABI{}, as_<wide>{}, data_, i, v);
+      detail::insert(*this, i, v);
     }
 
     EVE_FORCEINLINE value_type operator[](std::size_t i) const noexcept
     {
-      return detail::extract(EVE_CURRENT_ABI{}, as_<wide>{}, data_, i);
+      return detail::extract(*this, i);
     }
 
     EVE_FORCEINLINE value_type back()  const noexcept { return this->operator[](static_size-1); }

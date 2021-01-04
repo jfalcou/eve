@@ -11,47 +11,43 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
-#include <eve/detail/alias.hpp>
-#include <eve/detail/has_abi.hpp>
-#include <eve/traits/element_type.hpp>
 
 namespace eve::detail
 {
    //================================================================================================
   // Extract value
   //================================================================================================
-  template<typename Storage, typename Wide, x86_abi ABI>
-  EVE_FORCEINLINE element_type_t<Wide> extract( ABI const& arch, as_<logical<Wide>> const& tgt
-                                              , Storage const& p, std::size_t i
-                                              ) noexcept
+  template<typename T, typename N, x86_abi ABI>
+  EVE_FORCEINLINE logical<T> extract(logical<wide<T,N,ABI>> const& p, std::size_t i) noexcept
   {
     if constexpr( !ABI::is_wide_logical )
     {
-      using i_t = typename Storage::type;
-      return p.value & (i_t(1) << i);
+      using i_t = typename logical<wide<T,N,ABI>>::storage_type::type;
+      return p.storage().value & (i_t(1) << i);
     }
     else
     {
-      return extract(cpu_{},tgt,p,i);
+      return at_begin(p)[i];
     }
   }
 
   //================================================================================================
   // Insert value
   //================================================================================================
-  template<typename Storage, typename Wide, typename Value, x86_abi ABI>
-  EVE_FORCEINLINE void insert ( ABI const&, as_<logical<Wide>> const& tgt
-                              , Storage& p, std::size_t i, Value v
-                              ) noexcept
+  template<typename T, typename N, x86_abi ABI>
+  EVE_FORCEINLINE void insert(logical<wide<T,N,ABI>>& p, std::size_t i, auto v) noexcept
+
   {
     if constexpr( !ABI::is_wide_logical )
     {
-      using i_t = typename Storage::type;
-      p.value |= (v ? (i_t(1)<<i) : 0);
+      using i_t = typename logical<wide<T,N,ABI>>::storage_type::type;
+      p.storage().value |= (v ? (i_t(1)<<i) : 0);
     }
     else
     {
-      insert(cpu_{},tgt,p,i,v);
+      [[maybe_unused]] auto& s = p.storage();
+      auto ptr = reinterpret_cast<detail::alias_t<logical<T>>*>(&p);
+      ptr[i] = v;
     }
   }
 }
