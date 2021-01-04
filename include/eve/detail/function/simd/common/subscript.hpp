@@ -85,7 +85,7 @@ namespace eve::detail
     }
     else if constexpr( has_emulated_abi_v<Wide> )
     {
-      p[i] = v;
+      p.storage()[i] = v;
     }
     else
     {

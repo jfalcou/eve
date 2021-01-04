@@ -10,8 +10,14 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/concept/vectorizable.hpp>
+#include <eve/detail/function/lookup.hpp>
+#include <eve/detail/function/slice.hpp>
+#include <eve/detail/function/subscript.hpp>
+
 namespace eve::detail
 {
+  // Size-only element of wide/logical
   template<typename Size> struct wide_cardinal
   {
     using cardinal_type = Size;
@@ -22,5 +28,52 @@ namespace eve::detail
     static EVE_FORCEINLINE constexpr size_type size()     noexcept { return static_size; }
     static EVE_FORCEINLINE constexpr size_type max_size() noexcept { return static_size; }
     static EVE_FORCEINLINE constexpr bool      empty()    noexcept { return false; }
+  };
+
+  // Common operations on wide/logical
+  template<typename Derived> struct wide_ops
+  {
+    static EVE_FORCEINLINE constexpr auto alignment() noexcept
+    {
+      return Derived::static_alignment;
+    }
+
+    EVE_FORCEINLINE auto slice() const requires(cardinal_v<Derived> > 1)
+    {
+      return detail::slice(self());
+    }
+
+    EVE_FORCEINLINE auto slice(auto s) const requires(cardinal_v<Derived> > 1)
+    {
+      return detail::slice(self(), s);
+    }
+
+    EVE_FORCEINLINE void set(std::size_t i, scalar_value auto v) noexcept
+    {
+      detail::insert(self(), i, v);
+    }
+
+    template<typename Index>
+    EVE_FORCEINLINE auto operator[](wide<Index,cardinal_t<Derived>> const& idx) noexcept
+    {
+      return lookup(self(),idx);
+    }
+
+    EVE_FORCEINLINE auto operator[](std::size_t i) const noexcept
+    {
+      return detail::extract(self(), i);
+    }
+
+    EVE_FORCEINLINE void swap(Derived& other) noexcept
+    {
+      std::swap(self().storage(), other.storage());
+    }
+
+    EVE_FORCEINLINE auto back()  const noexcept { return (*this)[cardinal_v<Derived>-1]; }
+    EVE_FORCEINLINE auto front() const noexcept { return (*this)[0]; }
+
+    private:
+    EVE_FORCEINLINE Derived&        self()        { return static_cast<Derived&>(*this); }
+    EVE_FORCEINLINE Derived const&  self() const  { return static_cast<Derived const&>(*this); }
   };
 }

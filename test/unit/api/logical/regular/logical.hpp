@@ -30,6 +30,27 @@ TTS_CASE_TPL("logical constructors", EVE_TYPE)
   TTS_EXPECT_NOT(from_value_f);
   TTS_EXPECT_NOT(from_bool_f);
 }
+
+TTS_CASE_TPL("logical assignment", EVE_TYPE)
+{
+  eve::logical<T> from_bool_t;
+  from_bool_t = true;
+
+  eve::logical<T> from_bool_f;
+  from_bool_f = false;
+
+  eve::logical<T> from_value_t;
+  from_value_t = T{123};
+
+  eve::logical<T> from_value_f;
+  from_value_f = T{0};
+
+  TTS_EXPECT(from_bool_t);
+  TTS_EXPECT(from_value_t);
+
+  TTS_EXPECT_NOT(from_value_f);
+  TTS_EXPECT_NOT(from_bool_f);
+}
 #endif
 
 /*

@@ -41,7 +41,7 @@ namespace eve::detail
     if constexpr( !ABI::is_wide_logical )
     {
       using i_t = typename logical<wide<T,N,ABI>>::storage_type::type;
-      p.storage().value |= (v ? (i_t(1)<<i) : 0);
+      p.storage().value = (p.storage().value & ~(i_t(1)<<i)) | ((v ? i_t(1) : 0)<<i);
     }
     else
     {
