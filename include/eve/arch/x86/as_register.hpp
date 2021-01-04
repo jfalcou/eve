@@ -98,7 +98,7 @@ namespace eve
 
   // logical uses different registers in AVX512
   template<typename Type, typename Size>
-  struct as_register<logical<Type>, Size, eve::x86_512_>
+  struct as_logical_register<Type, Size, eve::x86_512_>
   {
     static constexpr auto find()
     {
@@ -112,7 +112,7 @@ namespace eve
 
 # if defined(SPY_SIMD_IS_X86_AVX512)
   template<typename Type, typename Size>
-  struct as_register<logical<Type>, Size, eve::x86_128_>
+  struct as_logical_register<Type, Size, eve::x86_128_>
   {
     static constexpr auto find()
     {
@@ -129,7 +129,7 @@ namespace eve
   };
 
   template<typename Type, typename Size>
-  struct as_register<logical<Type>, Size, eve::x86_256_>
+  struct as_logical_register<Type, Size, eve::x86_256_>
   {
     static constexpr auto find()
     {
@@ -149,12 +149,12 @@ namespace eve
 # else
   // logical uses same registers
   template<typename T, typename Size>
-  struct as_register<logical<T>, Size, eve::x86_128_> : as_register<T, Size, eve::x86_128_>
+  struct as_logical_register<T, Size, eve::x86_128_> : as_register<T, Size, eve::x86_128_>
   {
   };
 
   template<typename T, typename Size>
-  struct as_register<logical<T>, Size, eve::x86_256_> : as_register<T, Size, eve::x86_256_>
+  struct as_logical_register<T, Size, eve::x86_256_> : as_register<T, Size, eve::x86_256_>
   {
   };
 

@@ -65,7 +65,7 @@ namespace eve
     static_assert( !std::is_void_v<type>, "[eve ppc] - Type is not usable in a SIMD register");
   };
 
-  template<typename T, typename Size> struct as_register<logical<T>, Size, eve::ppc_>
+  template<typename T, typename Size> struct as_logical_register<T, Size, eve::ppc_>
   {
     static constexpr bool size_check(std::size_t t, std::size_t s)
     {
@@ -108,4 +108,3 @@ namespace eve
   };
 }
 #endif
-

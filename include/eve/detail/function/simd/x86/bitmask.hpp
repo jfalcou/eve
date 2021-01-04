@@ -67,7 +67,7 @@ namespace eve::detail
     }
     else
     {
-      return to_mask(cpu_{},p);
+      return p.storage();
     }
   }
 

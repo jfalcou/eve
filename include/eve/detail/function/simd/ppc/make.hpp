@@ -49,7 +49,7 @@ namespace eve::detail
   template<real_scalar_value T, typename... Vs>
   EVE_FORCEINLINE auto make(eve::as_<logical<T>> const &, eve::ppc_ const &, Vs... vs) noexcept
   {
-    using type = as_register_t<logical<T>, fixed<sizeof...(vs)>, eve::ppc_>;
+    using type = as_logical_register_t<T, fixed<sizeof...(vs)>, eve::ppc_>;
     type that  = {logical<T>(vs).bits()...};
     return that;
   }
@@ -57,11 +57,10 @@ namespace eve::detail
   template<real_scalar_value T, typename V>
   EVE_FORCEINLINE auto make(eve::as_<logical<T>> const &, eve::ppc_ const &, V v) noexcept
   {
-    using ltype = logical<T>;
     auto impl   = [&](auto... I) {
-      using type = as_register_t<ltype, expected_cardinal_t<ltype>, eve::ppc_>;
+      using type = as_logical_register_t<T, expected_cardinal_t<T>, eve::ppc_>;
 
-      auto u   = ltype(v).bits();
+      auto u   = logical<T>(v).bits();
       auto val = [](auto vv, auto const &) { return vv; };
 
       return type {val(u, I)...};
@@ -70,4 +69,3 @@ namespace eve::detail
     return apply<expected_cardinal_v<T>>(impl);
   }
 }
-

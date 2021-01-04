@@ -20,8 +20,8 @@ namespace eve::detail
   //================================================================================================
   // Extract value
   //================================================================================================
-  template<typename Storage, typename Wide>
-  EVE_FORCEINLINE auto at_begin ( cpu_ const&, as_<Wide> const&, Storage const& p ) noexcept
+  template<typename Storage, typename Wide, typename ABI>
+  EVE_FORCEINLINE auto at_begin ( ABI const&, as_<Wide> const&, Storage const& p ) noexcept
   {
     using type = element_type_t<Wide>;
 
@@ -39,8 +39,8 @@ namespace eve::detail
     }
   }
 
-  template<typename Storage, typename Wide>
-  EVE_FORCEINLINE auto at_begin ( cpu_ const&, as_<Wide> const&, Storage & p ) noexcept
+  template<typename Storage, typename Wide, typename ABI>
+  EVE_FORCEINLINE auto at_begin ( ABI const&, as_<Wide> const&, Storage & p ) noexcept
   {
     using type = element_type_t<Wide>;
 
@@ -61,8 +61,8 @@ namespace eve::detail
   //================================================================================================
   // Extract value
   //================================================================================================
-  template<typename Storage, typename Wide>
-  EVE_FORCEINLINE element_type_t<Wide> extract( cpu_ const& arch, as_<Wide> const& tgt
+  template<typename Storage, typename Wide, typename ABI>
+  EVE_FORCEINLINE element_type_t<Wide> extract( ABI const& arch, as_<Wide> const& tgt
                                               , Storage const& p, std::size_t i
                                               ) noexcept
   {
@@ -72,8 +72,8 @@ namespace eve::detail
   //================================================================================================
   // Insert value
   //================================================================================================
-  template<typename Storage, typename Wide, typename Value>
-  EVE_FORCEINLINE void insert ( cpu_ const&, as_<Wide> const&
+  template<typename Storage, typename Wide, typename Value, typename ABI>
+  EVE_FORCEINLINE void insert ( ABI const&, as_<Wide> const&
                               , Storage& p, std::size_t i, Value v
                               ) noexcept
   {
