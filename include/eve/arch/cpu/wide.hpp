@@ -14,6 +14,7 @@
 #include <eve/arch/expected_cardinal.hpp>
 #include <eve/arch/cpu/base.hpp>
 #include <eve/arch/spec.hpp>
+#include <eve/concept/memory.hpp>
 #include <eve/concept/range.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/concepts.hpp>
@@ -75,7 +76,7 @@ namespace eve
     //==============================================================================================
     template<std::input_iterator Iterator>
     EVE_FORCEINLINE explicit wide(Iterator b, Iterator e) noexcept
-                  : data_(detail::load(eve::as_<wide>{}, abi_type{}, b, e))
+                  : data_(detail::load(eve::as_<wide>{}, b, e))
     {
     }
 
@@ -90,8 +91,7 @@ namespace eve
     // Constructs a wide from a pointer or an aligned pointer
     //==============================================================================================
     template<simd_compatible_ptr<wide> Ptr>
-    EVE_FORCEINLINE explicit wide(Ptr ptr) noexcept
-        : data_(detail::load(eve::as_<wide>{}, abi_type{}, ptr))
+    EVE_FORCEINLINE explicit wide(Ptr ptr) noexcept : data_(detail::load(eve::as_<wide>{}, ptr))
     {
     }
 

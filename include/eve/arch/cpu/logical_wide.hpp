@@ -15,6 +15,7 @@
 #include <eve/arch/expected_cardinal.hpp>
 #include <eve/arch/cpu/base.hpp>
 #include <eve/arch/spec.hpp>
+#include <eve/concept/memory.hpp>
 #include <eve/concept/range.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/alias.hpp>
@@ -102,7 +103,7 @@ namespace eve
     //==============================================================================================
     template<std::input_iterator Iterator>
     EVE_FORCEINLINE explicit logical(Iterator b, Iterator e) noexcept
-                  : data_(detail::load(eve::as_<logical>{}, abi_type{}, b, e))
+                  : data_(detail::load(eve::as_<logical>{}, b, e))
     {
     }
 
@@ -118,7 +119,7 @@ namespace eve
     //==============================================================================================
     template<simd_compatible_ptr<logical> Ptr>
     EVE_FORCEINLINE explicit logical(Ptr ptr) noexcept
-        : data_(detail::load(eve::as_<logical>{}, abi_type{}, ptr))
+        : data_(detail::load(eve::as_<logical>{}, ptr))
     {
     }
 
@@ -150,13 +151,7 @@ namespace eve
     template<typename Generator>
     EVE_FORCEINLINE logical(Generator &&g) noexcept
                     requires( std::invocable<Generator,size_type,size_type>)
-                  : data_ ( detail::fill( as_<logical>{}, abi_type{},
-                            [&](auto i, auto c)
-                            {
-                              return static_cast<logical<Type>>(std::forward<Generator>(g)(i,c));
-                            }
-                          )
-            )
+                  : data_(detail::fill(as_<logical>{}, abi_type{},std::forward<Generator>(g)))
     {}
 
     //==============================================================================================
@@ -176,7 +171,8 @@ namespace eve
     //==============================================================================================
     EVE_FORCEINLINE logical &operator=(logical<Type> v) noexcept
     {
-      data_ = detail::make(eve::as_<target_type>{}, abi_type{}, v);
+      logical that(v);
+      detail::wide_ops<logical>::swap(that);
       return *this;
     }
 

@@ -23,7 +23,7 @@ namespace eve::detail
   // Regular loads
   //================================================================================================
   template<typename T, typename N, x86_abi ABI, simd_compatible_ptr<wide<T,N,ABI>> Ptr >
-  EVE_FORCEINLINE auto load(eve::as_<wide<T, N, ABI>> const &, ABI const &, Ptr p)
+  EVE_FORCEINLINE auto load(eve::as_<wide<T, N, ABI>> const &, Ptr p)
   requires( std::same_as<T, std::remove_cvref_t<decltype(*p)>> )
   {
     constexpr auto cat = categorize<wide<T, N>>();
@@ -92,14 +92,14 @@ namespace eve::detail
   //================================================================================================
   template<typename T, typename N, typename Ptr, x86_abi ABI>
   EVE_FORCEINLINE
-  auto load(eve::as_<logical<wide<T, N, ABI>>> const &, ABI const & abi, Ptr p)
+  auto load(eve::as_<logical<wide<T, N, ABI>>> const &, Ptr p)
   requires( std::same_as<logical<T>, std::remove_cvref_t<decltype(*p)>> )
   {
     auto block = [&]() -> wide<T, N, ABI>
     {
       using tgt = eve::as_<wide<T, N, ABI>>;
-      if constexpr( !std::is_pointer_v<Ptr> ) return load(tgt(), abi, (T const*)(p.get()));
-      else                                    return load(tgt(), abi, (T const*)(p));
+      if constexpr( !std::is_pointer_v<Ptr> ) return load(tgt{}, (T const*)(p.get()));
+      else                                    return load(tgt{}, (T const*)(p));
     }();
 
     return to_logical(block).storage();
@@ -107,13 +107,13 @@ namespace eve::detail
 
   template<typename Iterator, typename T, typename N, x86_abi ABI>
   EVE_FORCEINLINE auto load ( eve::as_<logical<wide<T, N, ABI>>> const &
-                            , ABI const &, Iterator b, Iterator e
+                            , Iterator b, Iterator e
                             ) noexcept
   {
     auto block = [&]() -> wide<T, N, ABI>
     {
       using tgt = eve::as_<wide<T, N, ABI>>;
-      return load(tgt(), ABI{}, b, e);
+      return load(tgt(), b, e);
     }();
 
     return to_logical(block).storage();
