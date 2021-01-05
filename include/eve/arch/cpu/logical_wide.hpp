@@ -12,8 +12,8 @@
 
 #include <eve/arch/as_register.hpp>
 #include <eve/arch/cpu/logical.hpp>
-#include <eve/arch/expected_cardinal.hpp>
 #include <eve/arch/cpu/base.hpp>
+#include <eve/arch/expected_cardinal.hpp>
 #include <eve/arch/spec.hpp>
 #include <eve/concept/memory.hpp>
 #include <eve/concept/range.hpp>
@@ -24,7 +24,6 @@
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/function/combine.hpp>
 #include <eve/detail/function/fill.hpp>
-#include <eve/detail/function/load.hpp>
 #include <eve/detail/function/make.hpp>
 
 #include <cstring>
@@ -40,6 +39,7 @@ namespace eve
   struct  EVE_MAY_ALIAS  logical<wide<Type,Size,ABI>>
         : detail::wide_cardinal<Size>
         , detail::wide_ops<logical<wide<Type,Size,ABI>>>
+        , detail::wide_storage<as_logical_register_t<Type, Size, ABI>>
   {
     private:
     //==============================================================================================
@@ -50,11 +50,12 @@ namespace eve
     template<typename P> struct tgt_<P, aggregated_>  { using type = P;                         };
 
     using card_base = detail::wide_cardinal<Size>;
+    using storage_base  = detail::wide_storage<as_logical_register_t<Type, Size, ABI>>;
 
     public:
-    using storage_type  = as_logical_register_t<Type, Size, ABI>;
     using abi_type      = ABI;
     using value_type    = logical<Type>;
+    using storage_type  = typename storage_base::storage_type;
     using size_type     = typename card_base::size_type;
     using target_type   = typename tgt_<logical, abi_type>::type;
 
@@ -78,22 +79,22 @@ namespace eve
     //==============================================================================================
     EVE_FORCEINLINE logical(storage_type const &r) noexcept
 #if !defined(__aarch64__)
-          : data_ ( [&r]()
-                    {
-                      if constexpr( Size::value == 1 && sizeof(Type) == 8 &&
-                                    std::is_same_v<ABI, neon64_>
-                                  )
-                      {
-                        return logical<Type>(r);
-                      }
-                      else
-                      {
-                       return r;
-                      }
-                    }()
-                  )
+          : storage_base( [&r]()
+                          {
+                            if constexpr( Size::value == 1 && sizeof(Type) == 8 &&
+                                          std::is_same_v<ABI, neon64_>
+                                        )
+                            {
+                              return logical<Type>(r);
+                            }
+                            else
+                            {
+                            return r;
+                            }
+                          }()
+                        )
 #else
-        : data_(r)
+        : storage_base(r)
 #endif
     {
     }
@@ -103,7 +104,7 @@ namespace eve
     //==============================================================================================
     template<std::input_iterator Iterator>
     EVE_FORCEINLINE explicit logical(Iterator b, Iterator e) noexcept
-                  : data_(detail::load(eve::as_<logical>{}, b, e))
+                  : storage_base(detail::load(eve::as_<logical>{}, b, e))
     {
     }
 
@@ -119,7 +120,7 @@ namespace eve
     //==============================================================================================
     template<simd_compatible_ptr<logical> Ptr>
     EVE_FORCEINLINE explicit logical(Ptr ptr) noexcept
-        : data_(detail::load(eve::as_<logical>{}, ptr))
+        : storage_base(detail::load(eve::as_<logical>{}, ptr))
     {
     }
 
@@ -129,7 +130,7 @@ namespace eve
     template<scalar_value T>
     EVE_FORCEINLINE explicit logical(T const &v) noexcept
                     requires( std::convertible_to<T, logical<Type>> )
-                  : data_(detail::make(eve::as_<target_type>{}, abi_type{}, v))
+                  : storage_base(detail::make(eve::as_<target_type>{}, abi_type{}, v))
     {
     }
 
@@ -142,7 +143,7 @@ namespace eve
                     &&  (... && std::convertible_to<Ts,logical<Type>>)
                     &&  (card_base::static_size == 2 + sizeof...(Ts))
                   )
-        : data_(detail::make(eve::as_<target_type>{}, abi_type{}, v0, v1, vs...))
+        : storage_base(detail::make(eve::as_<target_type>{}, abi_type{}, v0, v1, vs...))
     {}
 
     //==============================================================================================
@@ -151,7 +152,7 @@ namespace eve
     template<typename Generator>
     EVE_FORCEINLINE logical(Generator &&g) noexcept
                     requires( std::invocable<Generator,size_type,size_type>)
-                  : data_(detail::fill(as_<logical>{}, abi_type{},std::forward<Generator>(g)))
+                  : storage_base(detail::fill(as_<logical>{}, abi_type{},std::forward<Generator>(g)))
     {}
 
     //==============================================================================================
@@ -162,7 +163,7 @@ namespace eve
                             , logical<wide<Type, halfSize>> const &h
                             ) noexcept
                     requires( card_base::static_size == 2 * halfSize::value )
-                  : data_(detail::combine(EVE_CURRENT_API{}, l, h))
+                  : storage_base(detail::combine(EVE_CURRENT_API{}, l, h))
     {
     }
 
@@ -175,17 +176,6 @@ namespace eve
       detail::wide_ops<logical>::swap(that);
       return *this;
     }
-
-    //==============================================================================================
-    // Raw storage access
-    //==============================================================================================
-    EVE_FORCEINLINE storage_type const& storage() const & noexcept { return data_; }
-    EVE_FORCEINLINE storage_type &      storage() &       noexcept { return data_; }
-    EVE_FORCEINLINE storage_type        storage() &&      noexcept { return data_; }
-
-    EVE_FORCEINLINE operator storage_type const& () const &  noexcept { return data_; }
-    EVE_FORCEINLINE operator storage_type&       () &        noexcept { return data_; }
-    EVE_FORCEINLINE operator storage_type        () &&       noexcept { return data_; }
 
     using detail::wide_ops<logical>::operator[];
 
@@ -223,11 +213,5 @@ namespace eve
       for(size_type i = 1; i < p.size(); ++i) os << ", " << (that[i] ? "true" : "false");
       return os << ')';
     }
-
-    //==============================================================================================
-    // SIMD register storage
-    //==============================================================================================
-    private:
-    storage_type data_;
   };
 }

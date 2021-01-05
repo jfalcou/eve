@@ -18,10 +18,10 @@
 #include <eve/concept/range.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/concepts.hpp>
+#include <eve/detail/function/load.hpp>
 #include <eve/detail/function/combine.hpp>
 #include <eve/detail/function/compounds.hpp>
 #include <eve/detail/function/fill.hpp>
-#include <eve/detail/function/load.hpp>
 #include <eve/detail/function/make.hpp>
 
 #include <type_traits>
@@ -36,6 +36,7 @@ namespace eve
   struct  EVE_MAY_ALIAS wide
         : detail::wide_cardinal<Size>
         , detail::wide_ops<wide<Type,Size,ABI>>
+        , detail::wide_storage<as_register_t<Type, Size, ABI>>
   {
     private:
     //==============================================================================================
@@ -45,17 +46,17 @@ namespace eve
     template<typename P> struct tgt_<P, emulated_>    { using type = typename P::storage_type;  };
     template<typename P> struct tgt_<P, aggregated_>  { using type = P;                         };
 
-    using card_base = detail::wide_cardinal<Size>;
+    using card_base     = detail::wide_cardinal<Size>;
+    using storage_base  = detail::wide_storage<as_register_t<Type, Size, ABI>>;
 
     public:
-    using storage_type  = as_register_t<Type, Size, ABI>;
-    using abi_type      = ABI;
     using value_type    = Type;
+    using abi_type      = ABI;
+    using storage_type  = typename storage_base::storage_type;
     using size_type     = typename card_base::size_type;
     using target_type   = typename tgt_<wide, abi_type>::type;
 
-    template<typename T, typename N = expected_cardinal_t<T>>
-    using rebind = wide<T,N>;
+    template<typename T, typename N = expected_cardinal_t<T>> using rebind = wide<T,N>;
 
     static constexpr auto  static_alignment  = std::min ( sizeof(Type)*Size::value
                                                         , alignof(storage_type)
@@ -69,40 +70,38 @@ namespace eve
     //==============================================================================================
     // Constructs a wide from a native SIMD storage
     //==============================================================================================
-    EVE_FORCEINLINE wide(storage_type const &r) noexcept : data_(r) {}
+    EVE_FORCEINLINE wide(storage_type const &r) noexcept : storage_base(r) {}
 
     //==============================================================================================
     // Constructs a wide from a Range
     //==============================================================================================
-    template<std::input_iterator Iterator>
-    EVE_FORCEINLINE explicit wide(Iterator b, Iterator e) noexcept
-                  : data_(detail::load(eve::as_<wide>{}, b, e))
-    {
-    }
+    template<std::input_iterator It>
+    EVE_FORCEINLINE explicit  wide(It b, It e) noexcept
+                            : storage_base(detail::load(eve::as_<wide>{}, b, e))
+    {}
 
     template<detail::range Range>
-    EVE_FORCEINLINE explicit wide(Range &&r) noexcept
-          requires( !std::same_as<storage_type, Range> )
-        : wide(std::begin(std::forward<Range>(r)), std::end(std::forward<Range>(r)))
-    {
-    }
+    EVE_FORCEINLINE explicit  wide(Range &&r) noexcept requires(!std::same_as<storage_type, Range>)
+                            : wide( std::begin(std::forward<Range>(r))
+                                  , std::end  (std::forward<Range>(r))
+                                  )
+    {}
 
     //==============================================================================================
     // Constructs a wide from a pointer or an aligned pointer
     //==============================================================================================
     template<simd_compatible_ptr<wide> Ptr>
-    EVE_FORCEINLINE explicit wide(Ptr ptr) noexcept : data_(detail::load(eve::as_<wide>{}, ptr))
-    {
-    }
+    EVE_FORCEINLINE explicit  wide(Ptr ptr) noexcept
+                            : storage_base(detail::load(eve::as_<wide>{}, ptr))
+    {}
 
     //==============================================================================================
     // Constructs a wide from a single value
     //==============================================================================================
     template<typename T>
     EVE_FORCEINLINE explicit  wide(T const &v)  noexcept requires( std::convertible_to<T, Type> )
-                            : data_(detail::make(eve::as_<target_type>{}, abi_type{}, v))
-    {
-    }
+                            : storage_base(detail::make(eve::as_<target_type>{}, abi_type{}, v))
+    {}
 
     //==============================================================================================
     // Constructs a wide from a sequence of values
@@ -113,7 +112,7 @@ namespace eve
                     &&  (... && std::convertible_to<Ts,Type>)
                     &&  (card_base::static_size == 2 + sizeof...(Ts))
                   )
-        : data_(detail::make(eve::as_<target_type>{}, abi_type{}, v0, v1, vs...))
+        : storage_base(detail::make(eve::as_<target_type>{}, abi_type{}, v0, v1, vs...))
     {
     }
 
@@ -123,7 +122,7 @@ namespace eve
     template<typename Generator>
     EVE_FORCEINLINE wide(Generator &&g) noexcept
                     requires( std::invocable<Generator,size_type,size_type>)
-                  : data_( detail::fill(eve::as_<wide>{}, abi_type{}, std::forward<Generator>(g)) )
+                  : storage_base( detail::fill(eve::as_<wide>{}, abi_type{}, std::forward<Generator>(g)) )
     {}
 
     //==============================================================================================
@@ -134,7 +133,7 @@ namespace eve
                         , wide<Type, halfSize> const &h
                         ) noexcept
                     requires( card_base::static_size == 2 * halfSize::value )
-                  : data_(detail::combine(EVE_CURRENT_API{}, l, h))
+                  : storage_base(detail::combine(EVE_CURRENT_API{}, l, h))
     {
     }
 
@@ -148,24 +147,16 @@ namespace eve
       return *this;
     }
 
-    //==============================================================================================
-    // Raw storage access
-    //==============================================================================================
-    EVE_FORCEINLINE storage_type const& storage() const & noexcept { return data_; }
-    EVE_FORCEINLINE storage_type &      storage() &       noexcept { return data_; }
-    EVE_FORCEINLINE storage_type        storage() &&      noexcept { return data_; }
+    using detail::wide_ops<wide>::operator[];
 
-    EVE_FORCEINLINE operator storage_type const& () const &  noexcept { return data_; }
-    EVE_FORCEINLINE operator storage_type&       () &        noexcept { return data_; }
-    EVE_FORCEINLINE operator storage_type        () &&       noexcept { return data_; }
-
+    //==============================================================================================
+    // begin/end interface
+    //==============================================================================================
     EVE_FORCEINLINE auto  begin()       noexcept { return detail::at_begin(*this); }
     EVE_FORCEINLINE auto  begin() const noexcept { return detail::at_begin(*this); }
 
     EVE_FORCEINLINE auto  end()        noexcept { return begin() + card_base::static_size; }
     EVE_FORCEINLINE auto  end() const  noexcept { return begin() + card_base::static_size; }
-
-    using detail::wide_ops<wide>::operator[];
 
     //===============================================================================================
     // Self-increment/decrement operators
@@ -266,12 +257,6 @@ namespace eve
       for(size_type i = 1; i != p.size(); ++i) os << ", " << +that[ i ];
       return os << ')';
     }
-
-    //==============================================================================================
-    // SIMD register storage
-    //==============================================================================================
-    private:
-    storage_type data_;
   };
 
   template<typename T, typename N, typename ABI>

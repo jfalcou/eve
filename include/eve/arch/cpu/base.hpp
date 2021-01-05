@@ -10,6 +10,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/as.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/function/lookup.hpp>
 #include <eve/detail/function/slice.hpp>
@@ -17,6 +18,26 @@
 
 namespace eve::detail
 {
+  // Storage-only element of wide/logical
+  template<typename Storage> struct wide_storage
+  {
+    using storage_type = Storage;
+
+    wide_storage() {}
+    wide_storage(storage_type const &r) : data_(r) {}
+
+    EVE_FORCEINLINE storage_type const& storage() const & noexcept { return data_; }
+    EVE_FORCEINLINE storage_type &      storage() &       noexcept { return data_; }
+    EVE_FORCEINLINE storage_type        storage() &&      noexcept { return data_; }
+
+    EVE_FORCEINLINE operator storage_type const& () const &  noexcept { return data_; }
+    EVE_FORCEINLINE operator storage_type&       () &        noexcept { return data_; }
+    EVE_FORCEINLINE operator storage_type        () &&       noexcept { return data_; }
+
+    private:
+    Storage data_;
+  };
+
   // Size-only element of wide/logical
   template<typename Size> struct wide_cardinal
   {
