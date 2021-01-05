@@ -20,19 +20,20 @@ namespace eve::detail
   //================================================================================================
   // arithmetic cases
   //================================================================================================
-  template<real_scalar_value T, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as_<T> const &, eve::ppc_ const &, Vs... vs) noexcept
+  template<real_scalar_value T, typename N, typename... Vs>
+  EVE_FORCEINLINE auto make(eve::as_<wide<T,N,ppc_>> const &, Vs... vs) noexcept
   {
-    using type = as_register_t<T, fixed<sizeof...(vs)>, eve::ppc_>;
+    using type = as_register_t<T, N, ppc_>;
     type that  = {static_cast<T>(vs)...};
     return that;
   }
 
-  template<real_scalar_value T, typename V>
-  EVE_FORCEINLINE auto make(eve::as_<T> const &, eve::ppc_ const &, V v) noexcept
+  template<real_scalar_value T, typename N, typename V>
+  EVE_FORCEINLINE auto make(eve::as_<wide<T,N,ppc_>> const &, V v) noexcept
   {
-    auto impl = [&](auto... I) {
-      using type = as_register_t<T, expected_cardinal_t<T>, eve::ppc_>;
+    auto impl = [&](auto... I)
+    {
+      using type = as_register_t<T, N, ppc_>;
 
       auto u   = static_cast<T>(v);
       auto val = [](auto vv, auto const &) { return vv; };
@@ -46,19 +47,20 @@ namespace eve::detail
   //================================================================================================
   // logical cases
   //================================================================================================
-  template<real_scalar_value T, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as_<logical<T>> const &, eve::ppc_ const &, Vs... vs) noexcept
+  template<real_scalar_value T, typename N, typename... Vs>
+  EVE_FORCEINLINE auto make(eve::as_<logical<wide<T,N,ppc_>>> const &, Vs... vs) noexcept
   {
-    using type = as_logical_register_t<T, fixed<sizeof...(vs)>, eve::ppc_>;
+    using type = as_logical_register_t<T, N, ppc_>;
     type that  = {logical<T>(vs).bits()...};
     return that;
   }
 
-  template<real_scalar_value T, typename V>
-  EVE_FORCEINLINE auto make(eve::as_<logical<T>> const &, eve::ppc_ const &, V v) noexcept
+  template<real_scalar_value T, typename N, typename V>
+  EVE_FORCEINLINE auto make(eve::as_<logical<wide<T,N,ppc_>>> const &, V v) noexcept
   {
-    auto impl   = [&](auto... I) {
-      using type = as_logical_register_t<T, expected_cardinal_t<T>, eve::ppc_>;
+    auto impl   = [&](auto... I)
+    {
+      using type = as_logical_register_t<T, N, ppc_>;
 
       auto u   = logical<T>(v).bits();
       auto val = [](auto vv, auto const &) { return vv; };
