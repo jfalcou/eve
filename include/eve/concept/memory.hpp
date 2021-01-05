@@ -10,7 +10,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/vectorizable.hpp>
+#include <eve/concept/vectorized.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/traits/alignment.hpp>
 #include <type_traits>

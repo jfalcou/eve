@@ -14,6 +14,11 @@
 #include <eve/concept/memory.hpp>
 #include <type_traits>
 
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+#endif
+
 namespace eve::detail
 {
   //================================================================================================
@@ -148,3 +153,7 @@ namespace eve::detail
     return static_cast<T>(*p);
   }
 }
+
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif

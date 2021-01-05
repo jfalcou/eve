@@ -24,6 +24,3 @@
 #if defined(EVE_HW_ARM)
 #  include <eve/detail/function/simd/arm/neon/load.hpp>
 #endif
-
-#include <eve/detail/function/simd/common/load_logical.hpp>
-
