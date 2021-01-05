@@ -25,22 +25,17 @@ namespace eve::detail
   EVE_FORCEINLINE Pack make(eve::as_<Pack> const &, eve::emulated_ const &, V0 v0, Values... vs) noexcept
   {
     using type = typename Pack::value_type;
-    Pack        that;
-    std::size_t i = 0;
-
-    that[i++] = static_cast<type>(v0);
-    ((that[i++] = vs), ...);
-
-    return that;
+    return Pack{static_cast<type>(v0), static_cast<type>(vs)...};
   }
 
   template<typename Pack, typename Value>
-  EVE_FORCEINLINE Pack make(eve::as_<Pack> const &, eve::emulated_ const &, Value vs) noexcept
+  EVE_FORCEINLINE Pack make(eve::as_<Pack> const &, eve::emulated_ const &, Value v) noexcept
   {
     using type = typename Pack::value_type;
-    Pack that;
-    for( auto &e : that ) e = static_cast<type>(vs);
-    return that;
+    return [&]<std::size_t... N>( std::index_sequence<N...> )
+    {
+      return Pack{ (N,static_cast<type>(v))... };
+    }(std::make_index_sequence<Pack{}.size()>{});
   }
 
   //================================================================================================
@@ -51,11 +46,14 @@ namespace eve::detail
   make(eve::as_<Pack> const &, eve::aggregated_ const &, V0 v0, Values... vs) noexcept
   {
     using type = typename Pack::value_type;
-    Pack        that;
-    std::size_t i = 0;
 
-    that.set(i++, static_cast<type>(v0));
-    ((that.set(i++, vs)), ...);
+    Pack        that;
+    that.set(0, static_cast<type>(v0));
+
+    [&]<std::size_t... N>( std::index_sequence<N...> )
+    {
+      (that.set(N+1, static_cast<type>(vs)),...);
+    }(std::make_index_sequence<sizeof...(Values)>{});
 
     return that;
   }
@@ -71,4 +69,3 @@ namespace eve::detail
     return that;
   }
 }
-
