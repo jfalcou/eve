@@ -41,16 +41,10 @@ namespace eve::detail
     }
   };
 
-  template<real_scalar_value T, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as_<T> const &, eve::arm_64_ const &, Vs... vs) noexcept
+  template<real_scalar_value T, typename N, arm_abi ABI, typename... Vs>
+  EVE_FORCEINLINE auto make(eve::as_<wide<T,N,ABI>> const &, Vs... vs) noexcept
   {
-    return neon_maker<T, eve::arm_64_> {}(vs...);
-  }
-
-  template<real_scalar_value T, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as_<T> const &, eve::arm_128_ const &, Vs... vs) noexcept
-  {
-    return neon_maker<T, eve::arm_128_> {}(vs...);
+    return neon_maker<T, ABI> {}(vs...);
   }
 
   //================================================================================================
@@ -60,38 +54,29 @@ namespace eve::detail
   {
     template<typename... Vs> auto operator()(Vs... vs) const
     {
-      using ltype = logical<T>;
-      using type  = as_register_t<logical<T>, fixed<sizeof...(vs)>, ABI>;
-      type that {ltype(vs).bits()...};
+      using type  = as_logical_register_t<T, fixed<sizeof...(vs)>, ABI>;
+      type that {logical<T>(vs).bits()...};
       return that;
     }
 
     template<typename V> auto operator()(V v) const
     {
-      using ltype = logical<T>;
       auto impl   = [&](auto... I) {
-        using type = as_register_t<ltype, expected_cardinal_t<ltype, ABI>, ABI>;
+        using type = as_logical_register_t<T, expected_cardinal_t<T, ABI>, ABI>;
 
-        auto u   = ltype(v).bits();
+        auto u   = logical<T>(v).bits();
         auto val = [](auto vv, auto const &) { return vv; };
 
         return type {val(u, I)...};
       };
 
-      return apply<expected_cardinal_v<ltype, ABI>>(impl);
+      return apply<expected_cardinal_v<T, ABI>>(impl);
     }
   };
 
-  template<real_scalar_value T, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as_<logical<T>> const &, eve::arm_64_ const &, Vs... vs) noexcept
+  template<real_scalar_value T, typename N, arm_abi ABI, typename... Vs>
+  EVE_FORCEINLINE auto make(eve::as_<logical<wide<T,N,ABI>>> const &, Vs... vs) noexcept
   {
-    return neon_maker<logical<T>, eve::arm_64_> {}(vs...);
-  }
-
-  template<real_scalar_value T, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as_<logical<T>> const &, eve::arm_128_ const &, Vs... vs) noexcept
-  {
-    return neon_maker<logical<T>, eve::arm_128_> {}(vs...);
+    return neon_maker<logical<T>, ABI> {}(vs...);
   }
 }
-

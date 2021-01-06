@@ -95,15 +95,9 @@ namespace eve
 
   // ---------------------------------------------------------------------------------------------
   // logical cases
-  template<typename T, typename Size>
-  struct as_register<logical<T>, Size, eve::arm_128_>
-      : as_register<detail::as_integer_t<T, unsigned>, Size, eve::arm_128_>
-  {};
-
-  template<typename T, typename Size>
-  struct as_register<logical<T>, Size, eve::arm_64_>
-      : as_register<detail::as_integer_t<T, unsigned>, Size, eve::arm_64_>
+  template<typename T, typename Size, arm_abi ABI>
+  struct  as_logical_register<T, Size, ABI>
+        : as_register<detail::as_integer_t<T, unsigned>, Size, ABI>
   {};
 }
 #endif
-

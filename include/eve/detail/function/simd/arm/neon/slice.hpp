@@ -12,16 +12,11 @@
 
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/meta.hpp>
-
-#include <cstddef>
-#include <type_traits>
 
 namespace eve::detail
 {
   template<typename T, typename N, typename Slice, arm_abi ABI>
-  EVE_FORCEINLINE auto slice(neon128_ const&, wide<T, N, ABI> const &a, Slice const &) noexcept
-      requires(N::value > 1)
+  EVE_FORCEINLINE auto slice(wide<T, N, ABI> const &a, Slice const &) noexcept
   {
     using type = wide<T, typename N::split_type>;
     constexpr auto c = categorize<wide<T, N, ABI>>();
@@ -76,11 +71,9 @@ namespace eve::detail
   }
 
   template<typename T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE auto slice(neon128_ const&, wide<T, N, ABI> const &a) noexcept requires(N::value > 1)
+  EVE_FORCEINLINE auto slice(wide<T, N, ABI> const &a) noexcept
   {
-    std::array<wide<T, typename N::split_type>, 2> that { slice(neon128_{},a, lower_)
-                                                        , slice(neon128_{},a, upper_)
-                                                        };
+    std::array<wide<T, typename N::split_type>, 2> that{ slice(a, lower_), slice(a, upper_) };
     return that;
   }
 }

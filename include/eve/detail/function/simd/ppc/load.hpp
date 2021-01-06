@@ -18,8 +18,8 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE auto load(eve::as_<wide<T, N>> const &tgt, eve::ppc_ const &, T const* ptr) noexcept
+  template<real_scalar_value T, typename N, ppc_abi ABI>
+  EVE_FORCEINLINE auto load(eve::as_<wide<T, N, ABI>> const &tgt, T const* ptr) noexcept
   {
     if constexpr( N::value * sizeof(T) >= ppc_::bytes )
     {
@@ -55,9 +55,9 @@ namespace eve::detail
     }
   }
 
-  template<real_scalar_value T, typename N, std::size_t Align>
+  template<real_scalar_value T, typename N, ppc_abi ABI, std::size_t Align>
   EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N>> const &tgt, eve::ppc_ const &mode, aligned_ptr<T const, Align> ptr) noexcept
+  load(eve::as_<wide<T, N, ABI>> const &tgt, aligned_ptr<T const, Align> ptr) noexcept
   {
     if constexpr( N::value * sizeof(T) >= ppc_::bytes )
     {
@@ -65,14 +65,8 @@ namespace eve::detail
       {
         if constexpr( sizeof(T) <= 8 )
         {
-          if constexpr( Align >= 16 )
-          {
-            return vec_ld(0, ptr.get());
-          }
-          else
-          {
-            return load(tgt, mode, ptr.get());
-          }
+          if constexpr( Align >= 16 ) return vec_ld(0, ptr.get());
+          else                        return load(tgt, ptr.get());
         }
       }
       else if constexpr( current_api == spy::vsx_ )
@@ -96,11 +90,10 @@ namespace eve::detail
     }
   }
 
-  template<real_scalar_value T, typename N, std::size_t Align>
+  template<real_scalar_value T, typename N, ppc_abi ABI, std::size_t Align>
   EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N>> const &tgt, eve::ppc_ const & mode, aligned_ptr<T, Align>  ptr) noexcept
+  load(eve::as_<wide<T, N, ABI>> const &tgt, aligned_ptr<T, Align>  ptr) noexcept
   {
-    return load(tgt, mode, aligned_ptr<T const, Align>(ptr));
+    return load(tgt, aligned_ptr<T const, Align>(ptr));
   }
 }
-

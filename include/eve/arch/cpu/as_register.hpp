@@ -23,12 +23,24 @@ namespace eve
   struct as_register;
 
   template<typename Type, typename Cardinal, typename ABI>
+  struct as_logical_register;
+
+  template<typename Type, typename Cardinal, typename ABI>
   using as_register_t = typename as_register<Type, Cardinal, ABI>::type;
+
+  template<typename Type, typename Cardinal, typename ABI>
+  using as_logical_register_t = typename as_logical_register<Type, Cardinal, ABI>::type;
 
   template<typename Type, typename Cardinal>
   struct as_register<Type, Cardinal, eve::emulated_>
   {
     using type = std::array<Type, Cardinal::value>;
+  };
+
+  template<typename Type, typename Cardinal>
+  struct as_logical_register<Type, Cardinal, eve::emulated_>
+  {
+    using type = std::array<logical<Type>, Cardinal::value>;
   };
 
   namespace detail
@@ -126,5 +138,10 @@ namespace eve
   {
     using type = detail::blob<Type,Cardinal>;
   };
-}
 
+  template<typename Type, typename Cardinal>
+  struct as_logical_register<Type, Cardinal, eve::aggregated_>
+  {
+    using type = detail::blob<logical<Type>,Cardinal>;
+  };
+}

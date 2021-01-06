@@ -41,6 +41,13 @@ namespace eve::detail
     return data;
   }
 
+  template<scalar_value T, integral_scalar_value I, typename N, typename X, typename Y>
+  EVE_FORCEINLINE auto
+  lookup_(EVE_SUPPORTS(cpu_), logical<wide<T, N, X>> const &a, wide<I, N, Y> const &ind) noexcept
+  {
+    return bit_cast(lookup(a.bits(),ind), as(a));
+  }
+
   template<scalar_value T, integral_scalar_value I, typename N, typename X>
   EVE_FORCEINLINE auto
   lookup_(EVE_SUPPORTS(cpu_), wide<T, N, X> const &a, wide<I, N, aggregated_> const &ind) noexcept
@@ -68,4 +75,3 @@ namespace eve::detail
     return data;
   }
 }
-

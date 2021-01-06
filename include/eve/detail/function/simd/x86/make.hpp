@@ -20,14 +20,14 @@ namespace eve::detail
   //================================================================================================
   // enumerated make - 128bits
   //================================================================================================
-  template<real_scalar_value T, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as_<T> const &, x86_128_ const &, Vs... vs) noexcept
+  template<real_scalar_value T, typename S, typename... Vs>
+  EVE_FORCEINLINE auto make(eve::as_<wide<T,S,x86_128_>> const &, Vs... vs) noexcept
   {
-    static_assert ( sizeof...(Vs) <= x86_128_::bytes/sizeof(T)
+    static_assert ( sizeof...(Vs) <= S::value
                   , "[eve::make] - Invalid number of arguments"
                   );
 
-    constexpr auto c = categorize< wide<T, expected_cardinal_t<T,x86_128_>> >();
+    constexpr auto c = categorize<wide<T,S,x86_128_>>();
 
           if constexpr( c == category::float64x2) return _mm_setr_pd(static_cast<T>(vs)...);
     else  if constexpr( c == category::float32x4)
@@ -75,14 +75,14 @@ namespace eve::detail
   //================================================================================================
   // enumerated make - 256bits
   //================================================================================================
-  template<real_scalar_value T, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as_<T> const &, x86_256_ const &, Vs... vs) noexcept
+  template<real_scalar_value T, typename S, typename... Vs>
+  EVE_FORCEINLINE auto make(eve::as_<wide<T,S,x86_256_>> const &, Vs... vs) noexcept
   {
-    static_assert ( sizeof...(Vs) <= x86_256_::bytes/sizeof(T)
+    static_assert ( sizeof...(Vs) <= S::value
                   , "[eve::make] - Invalid number of arguments"
                   );
 
-    constexpr auto c = categorize<wide<T, expected_cardinal_t<T,x86_256_>> >();
+    constexpr auto c = categorize<wide<T,S,x86_256_>>();
 
           if constexpr( c == category::float64x4) return _mm256_setr_pd(vs...);
     else  if constexpr( c == category::float32x8) return _mm256_setr_ps(vs...);
@@ -95,14 +95,14 @@ namespace eve::detail
   //================================================================================================
   // enumerated make - 512bits
   //================================================================================================
-  template<real_scalar_value T, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as_<T> const &, x86_512_ const &, Vs... vs) noexcept
+  template<real_scalar_value T, typename S, typename... Vs>
+  EVE_FORCEINLINE auto make(eve::as_<wide<T,S,x86_512_>> const &, Vs... vs) noexcept
   {
-    static_assert ( sizeof...(Vs) <= x86_512_::bytes/sizeof(T)
+    static_assert ( sizeof...(Vs) <= S::value
                   , "[eve::make] - Invalid number of arguments"
                   );
 
-    constexpr auto c = categorize<wide<T, expected_cardinal_t<T,x86_512_>> >();
+    constexpr auto c = categorize<wide<T,S,x86_512_>>();
 
     /*
       Please take a minute to acknowledge the effect of deciding _mm512_setr should be
@@ -155,10 +155,10 @@ namespace eve::detail
   //================================================================================================
   // splat make
   //================================================================================================
-  template<real_scalar_value T, typename V, x86_abi ABI>
-  EVE_FORCEINLINE auto make(eve::as_<T> const &, ABI const &, V v) noexcept
+  template<real_scalar_value T, typename S, typename V, x86_abi ABI>
+  EVE_FORCEINLINE auto make(eve::as_<wide<T,S,ABI>> const &, V v) noexcept
   {
-    constexpr auto c = categorize<wide<T, expected_cardinal_t<T,ABI>> >();
+    constexpr auto c = categorize<wide<T,S,ABI>>();
 
          if constexpr( c == category::float64x8                        ) return _mm512_set1_pd(v);
     else if constexpr( c == category::float64x4                        ) return _mm256_set1_pd(v);
@@ -189,8 +189,8 @@ namespace eve::detail
   //================================================================================================
   // logical cases
   //================================================================================================
-  template<real_scalar_value T, x86_abi ABI, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as_<logical<T>> const &, ABI const &, Vs... vs) noexcept
+  template<real_scalar_value T, typename S, x86_abi ABI, typename... Vs>
+  EVE_FORCEINLINE auto make(as_<logical<wide<T,S,ABI>>> const &, Vs... vs) noexcept
   {
     if constexpr( !ABI::is_wide_logical )
     {
@@ -203,12 +203,12 @@ namespace eve::detail
     }
     else
     {
-      return make(eve::as_<T> {}, ABI {}, logical<T>(vs).mask()...);
+      return make(as_<wide<T,S,ABI>> {}, logical<T>(vs).mask()...);
     }
   }
 
-  template<real_scalar_value T, typename V, x86_abi ABI>
-  EVE_FORCEINLINE auto make(eve::as_<logical<T>> const &, ABI const &, V v) noexcept
+  template<real_scalar_value T, typename S, x86_abi ABI,typename V>
+  EVE_FORCEINLINE auto make(as_<logical<wide<T,S,ABI>>> const &, V v) noexcept
   {
     if constexpr( !ABI::is_wide_logical )
     {
@@ -218,7 +218,7 @@ namespace eve::detail
     }
     else
     {
-      return make(eve::as_<T> {}, ABI {}, logical<T>(v).mask());
+      return make(as_<wide<T,S,ABI>> {}, logical<T>(v).mask());
     }
   }
 }

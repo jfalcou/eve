@@ -162,8 +162,8 @@ namespace eve
     template<typename T> EVE_FORCEINLINE auto bitmap(eve::as_<T> const&) const
     {
       constexpr auto sz = cardinal_v<T> < 8 ? 8 : cardinal_v<T>;
-      detail::make_integer_t<sz/8,unsigned> mask = ~0ULL;
-      return mask;
+      using mask_t = detail::make_integer_t<sz/8,unsigned>;
+      return static_cast<mask_t>(~0ULL);
     }
 
     template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const

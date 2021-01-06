@@ -18,52 +18,40 @@
 
 namespace eve::detail
 {
-  //================================================================================================
-  // Emulation
-  //================================================================================================
   template<typename Pack, typename Iterator>
-  EVE_FORCEINLINE Pack load(eve::as_<Pack> const &, eve::emulated_ const &, Iterator ptr) noexcept
+  EVE_FORCEINLINE auto piecewise_load(eve::as_<Pack> const &, Iterator ptr) noexcept
   {
-    auto impl = [&](auto... I) {
-      auto deref = [&](auto p, auto const &i) {
-        std::advance(p, i);
-        return *p;
-      };
+    auto impl = [&](auto... I)
+    {
+      auto deref = [&](auto p, auto const &i) { std::advance(p, i); return *p; };
       return Pack(deref(ptr, static_cast<std::ptrdiff_t>(I))...);
     };
 
     return apply<Pack::size()>(impl);
   }
 
-  template<typename T, typename Pack, std::size_t N>
-  EVE_FORCEINLINE Pack load(eve::as_<Pack> const &     tgt,
-                            eve::emulated_ const &mode,
-                            aligned_ptr<T, N>     ptr) noexcept
+  //================================================================================================
+  // Emulation
+  //================================================================================================
+  template<typename Wide, typename Iterator>
+  EVE_FORCEINLINE auto load(eve::as_<Wide> const& tgt, Iterator i) noexcept
   {
-    return load(tgt, mode, ptr.get());
-  }
+    auto const get = [](auto p)
+    {
+      if constexpr( !std::input_iterator<Iterator> )  return p.get();
+      else                                            return p;
+    };
 
-  template<typename T, typename Pack, std::size_t N>
-  EVE_FORCEINLINE Pack load(eve::as_<Pack> const &     tgt,
-                            eve::emulated_ const &mode,
-                            aligned_ptr<T const, N>     ptr) noexcept
-  {
-    return load(tgt, mode, ptr.get());
-  }
-
-  template<typename Iterator, typename ABI, typename Pack>
-  EVE_FORCEINLINE Pack load(eve::as_<Pack> const &tgt, ABI const &, Iterator b, Iterator) noexcept
-  {
-    return load(tgt, eve::emulated_ {}, b);
+    return piecewise_load(tgt, get(i));
   }
 
   //================================================================================================
   // Aggregation
   //================================================================================================
-  template<typename Pack, typename Pointer>
-  EVE_FORCEINLINE Pack load(eve::as_<Pack> const &, eve::aggregated_ const &, Pointer ptr) noexcept
+  template<typename T, typename N, typename Pointer>
+  EVE_FORCEINLINE auto load(eve::as_<wide<T,N,aggregated_>> const &, Pointer ptr) noexcept
   {
-    Pack that;
+    wide<T,N,aggregated_> that;
 
     that.storage().apply
     (
@@ -76,5 +64,14 @@ namespace eve::detail
 
     return that.storage();
   }
-}
 
+  //================================================================================================
+  // Common case for iterator based load
+  //================================================================================================
+  template<std::input_iterator Iterator, typename Pack>
+  EVE_FORCEINLINE Pack load(eve::as_<Pack> const &tgt, Iterator b, Iterator) noexcept
+  {
+    return piecewise_load(tgt,b);
+  }
+
+}
