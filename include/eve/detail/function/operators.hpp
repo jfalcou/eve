@@ -44,7 +44,7 @@ namespace eve
   template<value T, value U>
   EVE_FORCEINLINE auto operator-( T a, U b) noexcept requires compatible_values<T, U>
   {
-    if constexpr( scalar_value<T> ) return U{a} -= b;
+    if constexpr( scalar_value<T> ) { U u{a}; return u -= b; }
     else                            return a    -= b;
   }
 
@@ -75,7 +75,7 @@ namespace eve
   template<value T, value U>
   EVE_FORCEINLINE auto operator/( T a, U b) noexcept requires compatible_values<T, U>
   {
-    if constexpr( scalar_value<T> ) return U{a} /= b;
+    if constexpr( scalar_value<T> ) { U u{a}; return u /= b; }
     else                            return a    /= b;
   }
 
@@ -90,7 +90,7 @@ namespace eve
   template<integral_value T, integral_value U>
   EVE_FORCEINLINE auto operator%( T a, U b) noexcept requires compatible_values<T, U>
   {
-    if constexpr( scalar_value<T> ) return U{a} %= b;
+    if constexpr( scalar_value<T> ) { U u{a}; return u %= b; }
     else                            return a    %= b;
   }
 
@@ -106,7 +106,11 @@ namespace eve
   template<value T, value U>
   EVE_FORCEINLINE auto operator&( T a, U b) noexcept requires bit_compatible_values<T,U>
   {
-    if constexpr( scalar_value<T> ) return bit_cast(b, as<as_wide_t<T, cardinal_t<U>>>()) &= a;
+    if constexpr( scalar_value<T> )
+    {
+      auto u = bit_cast(b, as<as_wide_t<T, cardinal_t<U>>>());
+      return u &= a;
+    }
     else                            return a &= b;
   }
 
@@ -116,7 +120,11 @@ namespace eve
   template<value T, value U>
   EVE_FORCEINLINE auto operator|( T a, U b) noexcept requires bit_compatible_values<T,U>
   {
-    if constexpr( scalar_value<T> ) return bit_cast(b, as<as_wide_t<T, cardinal_t<U>>>()) |= a;
+    if constexpr( scalar_value<T> )
+    {
+      auto u = bit_cast(b, as<as_wide_t<T, cardinal_t<U>>>());
+      return u |= a;
+    }
     else                            return a |= b;
   }
 
@@ -126,7 +134,11 @@ namespace eve
   template<value T, value U>
   EVE_FORCEINLINE auto operator^( T a, U b) noexcept requires bit_compatible_values<T,U>
   {
-    if constexpr( scalar_value<T> ) return bit_cast(b, as<as_wide_t<T, cardinal_t<U>>>()) ^= a;
+    if constexpr( scalar_value<T> )
+    {
+      auto u = bit_cast(b, as<as_wide_t<T, cardinal_t<U>>>());
+      return u ^= a;
+    }
     else                            return a ^= b;
   }
 }
