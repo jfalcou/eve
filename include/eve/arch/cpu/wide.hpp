@@ -54,18 +54,11 @@ namespace eve
                                                         );
 
     //==============================================================================================
-    // Default constructor
+    // Constructors
     //==============================================================================================
     EVE_FORCEINLINE wide() noexcept {}
-
-    //==============================================================================================
-    // Constructs a wide from a native SIMD storage
-    //==============================================================================================
     EVE_FORCEINLINE wide(storage_type const &r) noexcept : storage_base(r) {}
 
-    //==============================================================================================
-    // Constructs a wide from a Range
-    //==============================================================================================
     template<std::input_iterator It>
     EVE_FORCEINLINE explicit  wide(It b, It e) noexcept
                             : storage_base(detail::load(eve::as_<wide>{}, b, e))
@@ -78,55 +71,41 @@ namespace eve
                                   )
     {}
 
-    //==============================================================================================
-    // Constructs a wide from a pointer or an aligned pointer
-    //==============================================================================================
     EVE_FORCEINLINE explicit  wide(simd_compatible_ptr<wide> auto ptr) noexcept
                             : storage_base(detail::load(eve::as_<wide>{}, ptr))
     {}
 
-    //==============================================================================================
-    // Constructs a wide from a single value
-    //==============================================================================================
     EVE_FORCEINLINE explicit  wide(scalar_value auto v)  noexcept
                             : storage_base(detail::make(eve::as_<wide>{}, v))
     {}
 
-    //==============================================================================================
-    // Constructs a wide from a sequence of values
-    //==============================================================================================
     EVE_FORCEINLINE wide( scalar_value auto v0, scalar_value auto v1
                         , scalar_value auto... vs
                         ) noexcept requires( card_base::static_size == 2 + sizeof...(vs) )
                   : storage_base(detail::make(eve::as_<wide>{}, v0, v1, vs...))
     {}
 
-    //==============================================================================================
-    // Constructs a wide with a generator function
-    //==============================================================================================
     template<std::invocable<size_type,size_type> Generator>
     EVE_FORCEINLINE wide(Generator &&g) noexcept
                   : storage_base( detail::fill(eve::as_<wide>{}, std::forward<Generator>(g)) )
     {}
 
-    //==============================================================================================
-    // Constructs a wide from a pair of sub-wide
-    //==============================================================================================
     template<typename halfSize>
-    EVE_FORCEINLINE wide( wide<Type, halfSize> const &l
-                        , wide<Type, halfSize> const &h
-                        ) noexcept
+    EVE_FORCEINLINE wide( wide<Type, halfSize> const &l, wide<Type, halfSize> const &h) noexcept
                     requires( card_base::static_size == 2 * halfSize::value )
                   : storage_base(detail::combine(EVE_CURRENT_API{}, l, h))
-    {
-    }
+    {}
 
+    //==============================================================================================
+    // Assignments
+    //==============================================================================================
     using detail::wide_ops<wide>::operator=;
+
+    //==============================================================================================
+    // array-like interface - only available on wide
+    //==============================================================================================
     using detail::wide_ops<wide>::operator[];
 
-    //==============================================================================================
-    // begin/end interface
-    //==============================================================================================
     EVE_FORCEINLINE auto  begin()       noexcept { return detail::at_begin(*this); }
     EVE_FORCEINLINE auto  begin() const noexcept { return detail::at_begin(*this); }
 
@@ -136,93 +115,68 @@ namespace eve
     //===============================================================================================
     // Self-increment/decrement operators
     //==============================================================================================
-    EVE_FORCEINLINE wide &operator++() noexcept
-    {
-      return detail::self_add(*this, Type{1});
-    }
-
-    EVE_FORCEINLINE wide operator++(int) noexcept
-    {
-      auto that(*this);
-           operator++();
-      return that;
-    }
-
-    EVE_FORCEINLINE wide &operator--() noexcept
-    {
-      return detail::self_sub(*this, Type{1});
-      return *this;
-    }
-
-    EVE_FORCEINLINE wide operator--(int) noexcept
-    {
-      auto that(*this);
-           operator--();
-      return that;
-    }
+    EVE_FORCEINLINE wide &operator++()    noexcept  { return detail::self_add(*this, wide{1}); }
+    EVE_FORCEINLINE wide &operator--()    noexcept  { return detail::self_sub(*this, wide{1}); }
+    EVE_FORCEINLINE wide operator++(int)  noexcept  { auto that(*this); operator++(); return that; }
+    EVE_FORCEINLINE wide operator--(int)  noexcept  { auto that(*this); operator--(); return that; }
 
     //==============================================================================================
     // Compound operators
     //==============================================================================================
-    template<typename Other>
-    EVE_FORCEINLINE   auto operator+=(Other const &other) noexcept
-                  ->  decltype(detail::self_add(*this, other))
+    friend  EVE_FORCEINLINE auto operator+=(wide& w, value auto o) noexcept
+                        ->  decltype(detail::self_add(w, o))
     {
-      return detail::self_add(*this, other);
+      return detail::self_add(w, o);
     }
 
-    template<typename Other>
-    EVE_FORCEINLINE   auto operator-=(Other const &other) noexcept
-                  ->  decltype(detail::self_sub(*this, other))
+    friend  EVE_FORCEINLINE auto operator-=(wide& w, value auto o) noexcept
+                        ->  decltype(detail::self_sub(w, o))
     {
-      return detail::self_sub(*this, other);
+      return detail::self_sub(w, o);
     }
 
-    template<typename Other>
-    EVE_FORCEINLINE   auto operator*=(Other const &other) noexcept
-                  ->  decltype(detail::self_mul(*this, other))
+    friend  EVE_FORCEINLINE auto operator*=(wide& w, value auto o) noexcept
+                        ->  decltype(detail::self_mul(w, o))
     {
-      return detail::self_mul(*this, other);
+      return detail::self_mul(w, o);
     }
 
-    template<typename Other>
-    EVE_FORCEINLINE   auto operator/=(Other const &other) noexcept
-                  ->  decltype(detail::self_div(*this, other))
+    friend  EVE_FORCEINLINE auto operator/=(wide& w, value auto o) noexcept
+                        ->  decltype(detail::self_div(w, o))
     {
-      return detail::self_div(*this, other);
+      return detail::self_div(w, o);
     }
 
-    template<typename Other>
-    EVE_FORCEINLINE   auto operator%=(Other const &other) noexcept
-                  ->  decltype(detail::self_rem(*this, other))
+    friend  EVE_FORCEINLINE auto operator%=(wide& w, value auto o) noexcept
+                        ->  decltype(detail::self_rem(w, o))
     {
-      return detail::self_rem(*this, other);
+      return detail::self_rem(w, o);
     }
 
     // TODO
     // >>= <<=
 
-    template<typename Other>
-    EVE_FORCEINLINE   auto operator&=(Other const &other) noexcept
-                  ->  decltype(detail::self_bitand(*this, other))
+    friend  EVE_FORCEINLINE auto operator&=(wide& w, value auto o) noexcept
+                        ->  decltype(detail::self_bitand(w, o))
     {
-      return detail::self_bitand(*this, other);
+      return detail::self_bitand(w, o);
     }
 
-    template<typename Other>
-    EVE_FORCEINLINE   auto operator|=(Other const &other) noexcept
-                  ->  decltype(detail::self_bitor(*this, other))
+    friend  EVE_FORCEINLINE auto operator|=(wide& w, value auto o) noexcept
+                        ->  decltype(detail::self_bitor(w, o))
     {
-      return detail::self_bitor(*this, other);
+      return detail::self_bitor(w, o);
     }
 
-    template<typename Other>
-    EVE_FORCEINLINE   auto operator^=(Other const &other) noexcept
-                  ->  decltype(detail::self_bitxor(*this, other))
+    friend  EVE_FORCEINLINE auto operator^=(wide& w, value auto o) noexcept
+                        ->  decltype(detail::self_bitxor(w, o))
     {
-      return detail::self_bitxor(*this, other);
+      return detail::self_bitxor(w, o);
     }
 
+    //==============================================================================================
+    // Inserting a logical<wide> into a stream
+    //==============================================================================================
     friend std::ostream &operator<<(std::ostream &os, wide const &p)
     {
       constexpr auto sz = sizeof(storage_type)/sizeof(Type);
