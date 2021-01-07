@@ -120,12 +120,12 @@ namespace eve::detail
       return detail::self_eq(v.self(),w.self());
     }
 
-    friend EVE_FORCEINLINE auto operator==(wide_ops const& v, element_type_t<Derived> w) noexcept
+    friend EVE_FORCEINLINE auto operator==(wide_ops const& v, scalar_value auto w) noexcept
     {
       return v == Derived{w};
     }
 
-    friend EVE_FORCEINLINE auto operator==(element_type_t<Derived> v, wide_ops const& w) noexcept
+    friend EVE_FORCEINLINE auto operator==(scalar_value auto v, wide_ops const& w) noexcept
     {
       return w == v;
     }

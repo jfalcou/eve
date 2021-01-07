@@ -22,9 +22,8 @@ namespace eve
   {
     template<value T, value U>
     EVE_FORCEINLINE   auto is_equal_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-                  ->  decltype(as_logical_t<T>(a == b))
     {
-      return as_logical_t<T>(a == b);
+      return a == b;
     }
   }
 }

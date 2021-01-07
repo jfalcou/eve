@@ -83,7 +83,7 @@ namespace eve::detail
       else
       {
         constexpr auto use_avx2 = current_api >= avx2;
-        constexpr auto eq = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e == f); };
+        constexpr auto eq = []<typename E>(E e, E f) { return as_logical_t<E>(e == f); };
 
               if constexpr(use_avx2 && c == category::int64x4  )  return _mm256_cmpeq_epi64(v,w);
         else  if constexpr(use_avx2 && c == category::uint64x4 )  return _mm256_cmpeq_epi64(v,w);
@@ -93,14 +93,30 @@ namespace eve::detail
         else  if constexpr(use_avx2 && c == category::uint16x16)  return _mm256_cmpeq_epi16(v,w);
         else  if constexpr(use_avx2 && c == category::int8x32  )  return _mm256_cmpeq_epi8 (v,w);
         else  if constexpr(use_avx2 && c == category::uint8x32 )  return _mm256_cmpeq_epi8 (v,w);
+        else  if constexpr( c == category::int64x2  )             return map(eq,v,w);
         else  if constexpr( c == category::int32x4  )             return _mm_cmpeq_epi32(v,w);
         else  if constexpr( c == category::int16x8  )             return _mm_cmpeq_epi16(v,w);
         else  if constexpr( c == category::int8x16  )             return _mm_cmpeq_epi8 (v,w);
+        else  if constexpr( c == category::uint64x2 )             return map(eq,v,w);
         else  if constexpr( c == category::uint32x4 )             return _mm_cmpeq_epi32(v,w);
         else  if constexpr( c == category::uint16x8 )             return _mm_cmpeq_epi16(v,w);
         else  if constexpr( c == category::uint8x16 )             return _mm_cmpeq_epi8 (v,w);
-        else                                                      return apply_over(eq,v,w);
+        else                                                      return aggregate(eq,v,w);
       }
+    }
+  }
+
+  template<real_value T, typename N, x86_abi ABI>
+  EVE_FORCEINLINE auto self_eq(logical<wide<T,N,ABI>> v, logical<wide<T,N,ABI>> w) noexcept
+  {
+    if constexpr( !ABI::is_wide_logical )
+    {
+      using s_t = typename logical<wide<T,N,ABI>>::storage_type;
+      return logical<wide<T,N,ABI>>{ s_t(~(v.storage().value ^ w.storage().value)) };
+    }
+    else
+    {
+      return bit_cast(v.bits() == w.bits(), as(v));
     }
   }
 }
