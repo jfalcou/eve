@@ -59,12 +59,13 @@ namespace eve
       return *this;
     }
 
+    EVE_FORCEINLINE constexpr logical operator!() const noexcept { return {!value_}; }
+
     //==============================================================================================
     // Convertion from logical to other formats (mask, bits, bitmap)
     //==============================================================================================
     EVE_FORCEINLINE constexpr operator bool()   const noexcept { return !!value_; }
     EVE_FORCEINLINE constexpr bool value()      const noexcept { return !!value_; }
-    EVE_FORCEINLINE constexpr bool not_value()  const noexcept { return !value_; }
     EVE_FORCEINLINE constexpr auto bitmap()     const noexcept { return std::bitset<1>(value_ & 1); }
     EVE_FORCEINLINE constexpr auto bits()       const noexcept { return value_; }
 

@@ -12,6 +12,7 @@
 
 #include <eve/as.hpp>
 #include <eve/concept/vectorizable.hpp>
+#include <eve/detail/function/friends.hpp>
 #include <eve/detail/function/lookup.hpp>
 #include <eve/detail/function/slice.hpp>
 #include <eve/detail/function/subscript.hpp>
@@ -54,11 +55,27 @@ namespace eve::detail
   // Common operations on wide/logical
   template<typename Derived> struct wide_ops
   {
+    //==============================================================================================
+    // Misc.
     static EVE_FORCEINLINE constexpr auto alignment() noexcept
     {
       return Derived::static_alignment;
     }
 
+    EVE_FORCEINLINE Derived& operator=(scalar_value auto v) noexcept
+    {
+      Derived that(v);
+      swap(that);
+      return self();
+    }
+
+    EVE_FORCEINLINE void swap(Derived& other) noexcept
+    {
+      std::swap(self().storage(), other.storage());
+    }
+
+    //==============================================================================================
+    // Shape related functions
     EVE_FORCEINLINE auto slice() const requires(cardinal_v<Derived> > 1)
     {
       return detail::slice(self());
@@ -69,15 +86,17 @@ namespace eve::detail
       return detail::slice(self(), s);
     }
 
-    EVE_FORCEINLINE void set(std::size_t i, scalar_value auto v) noexcept
-    {
-      detail::insert(self(), i, v);
-    }
-
     template<typename Index>
     EVE_FORCEINLINE auto operator[](wide<Index,cardinal_t<Derived>> const& idx) const noexcept
     {
       return lookup(self(),idx);
+    }
+
+    //==============================================================================================
+    // Value access functions
+    EVE_FORCEINLINE void set(std::size_t i, scalar_value auto v) noexcept
+    {
+      detail::insert(self(), i, v);
     }
 
     EVE_FORCEINLINE auto operator[](std::size_t i) const noexcept
@@ -85,20 +104,15 @@ namespace eve::detail
       return detail::extract(self(), i);
     }
 
-    EVE_FORCEINLINE void swap(Derived& other) noexcept
-    {
-      std::swap(self().storage(), other.storage());
-    }
-
-    EVE_FORCEINLINE Derived& operator=(scalar_value auto v) noexcept
-    {
-      Derived that(v);
-      swap(that);
-      return self();
-    }
-
     EVE_FORCEINLINE auto back()  const noexcept { return (*this)[cardinal_v<Derived>-1]; }
     EVE_FORCEINLINE auto front() const noexcept { return (*this)[0]; }
+
+    //==============================================================================================
+    // Common hidden friend operators
+    friend EVE_FORCEINLINE auto operator!(wide_ops const& v) noexcept
+    {
+      return detail::self_lognot(v.self());
+    }
 
     private:
     EVE_FORCEINLINE Derived&        self()        { return static_cast<Derived&>(*this); }
