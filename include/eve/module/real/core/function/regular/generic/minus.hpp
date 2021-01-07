@@ -62,13 +62,3 @@ namespace eve::detail
     return mask_op( EVE_CURRENT_API{}, cond, substract, t, f);
   }
 }
-
-// Infix operator support
-namespace eve
-{
-  template<value T>
-  EVE_FORCEINLINE auto operator-(T const &v) noexcept
-  {
-    return minus(v);
-  }
-}

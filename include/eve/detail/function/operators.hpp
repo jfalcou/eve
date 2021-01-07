@@ -18,88 +18,8 @@
 #include <eve/function/bit_cast.hpp>
 #include <eve/traits/as_wide.hpp>
 
-// In this file deleted versions are present to prevent clang using an internally defined
-// operator over simd vector types with different value types, but same storage.
-
 namespace eve
 {
-  //================================================================================================
-  // operator+
-  //================================================================================================
-  template<value T, value U>
-  EVE_FORCEINLINE auto operator+( T a, U b) noexcept requires compatible_values<T, U>
-  {
-    if constexpr( scalar_value<T> ) return b += a;
-    else                            return a += b;
-  }
-
-  template<real_simd_value T, real_simd_value U>
-  EVE_FORCEINLINE  auto operator + (T const &a
-                                  , U const &b) noexcept
-  requires different_value_type<T, U> = delete;
-
-  //================================================================================================
-  // operator-
-  //================================================================================================
-  template<value T, value U>
-  EVE_FORCEINLINE auto operator-( T a, U b) noexcept requires compatible_values<T, U>
-  {
-    if constexpr( scalar_value<T> ) { U u{a}; return u -= b; }
-    else                            return a    -= b;
-  }
-
-
-  template<real_simd_value T, real_simd_value U>
-  EVE_FORCEINLINE  auto operator - (T const &a
-                                  , U const &b) noexcept
-  requires different_value_type<T, U> = delete;
-
-  //================================================================================================
-  // operator*
-  //================================================================================================
-  template<value T, value U>
-  EVE_FORCEINLINE auto operator*( T a, U b) noexcept requires compatible_values<T, U>
-  {
-    if constexpr( scalar_value<T> ) return b *= a;
-    else                            return a *= b;
-  }
-
-  template<real_simd_value T, real_simd_value U>
-  EVE_FORCEINLINE  auto operator * (T const &a
-                                  , U const &b) noexcept
-  requires different_value_type<T, U> = delete;
-
-  //================================================================================================
-  // operator/
-  //================================================================================================
-  template<value T, value U>
-  EVE_FORCEINLINE auto operator/( T a, U b) noexcept requires compatible_values<T, U>
-  {
-    if constexpr( scalar_value<T> ) { U u{a}; return u /= b; }
-    else                            return a    /= b;
-  }
-
-  template<real_simd_value T, real_simd_value U>
-  EVE_FORCEINLINE  auto operator / (T const &a
-                                  , U const &b) noexcept
-  requires different_value_type<T, U> = delete;
-
-  //================================================================================================
-  // operator%
-  //================================================================================================
-  template<integral_value T, integral_value U>
-  EVE_FORCEINLINE auto operator%( T a, U b) noexcept requires compatible_values<T, U>
-  {
-    if constexpr( scalar_value<T> ) { U u{a}; return u %= b; }
-    else                            return a    %= b;
-  }
-
-  template<real_simd_value T, real_simd_value U>
-  EVE_FORCEINLINE  auto operator % (T const &a
-                                  , U const &b) noexcept
-  requires different_value_type<T, U> = delete;
-
-
   //================================================================================================
   // operator&
   //================================================================================================
