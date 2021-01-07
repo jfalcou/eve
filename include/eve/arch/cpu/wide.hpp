@@ -121,12 +121,39 @@ namespace eve
     EVE_FORCEINLINE wide operator--(int)  noexcept  { auto that(*this); operator--(); return that; }
 
     //==============================================================================================
-    // Compound operators
+    // Bitwise operators
     //==============================================================================================
+    friend EVE_FORCEINLINE auto operator~(wide const& v) noexcept
+    {
+      return detail::self_bitnot(v);
+    }
+
     friend  EVE_FORCEINLINE auto operator&=(wide& w, value auto o) noexcept
                         ->  decltype(detail::self_bitand(w, o))
     {
       return detail::self_bitand(w, o);
+    }
+
+    template<scalar_value U>
+    friend EVE_FORCEINLINE auto operator&(wide const& v, wide<U,Size> const& w) noexcept
+    {
+      auto that = v;
+      return that &= w;
+    }
+
+    friend EVE_FORCEINLINE auto operator&(wide const& v, scalar_value auto w) noexcept
+    requires (sizeof(w) == sizeof(Type))
+    {
+      auto    that  = v;
+      return  that &= bit_cast(w, as_<Type>{});
+    }
+
+    template<scalar_value S>
+    friend EVE_FORCEINLINE auto operator&(S v, wide const& w) noexcept
+    requires (sizeof(v) == sizeof(Type))
+    {
+      auto    u  = bit_cast(w, as_<typename wide::template rebind<S>>());
+      return  u &= v;
     }
 
     friend  EVE_FORCEINLINE auto operator|=(wide& w, value auto o) noexcept
@@ -139,14 +166,6 @@ namespace eve
                         ->  decltype(detail::self_bitxor(w, o))
     {
       return detail::self_bitxor(w, o);
-    }
-
-    //==============================================================================================
-    // Bitwise operators
-    //==============================================================================================
-    friend EVE_FORCEINLINE auto operator~(wide const& v) noexcept
-    {
-      return detail::self_bitnot(v);
     }
 
     //==============================================================================================

@@ -56,7 +56,7 @@ namespace eve::detail
 
     if constexpr(has_native_abi_v<Wide>)
     {
-      if constexpr(is_logical_v<Wide>)  return bit_cast(is_equal(v.bits(), w.bits()), as<Wide>());
+      if constexpr(is_logical_v<Wide>)  return bit_cast(v.bits() == w.bits(), as(v));
       else                              return apply_over(eq, v, w);
     }
     else
