@@ -14,7 +14,7 @@
 #include <eve/detail/function/simd/common/friends.hpp>
 
 #if defined(EVE_HW_X86)
-//#  include <eve/detail/function/simd/x86/friends.hpp>
+#  include <eve/detail/function/simd/x86/friends.hpp>
 #endif
 
 #if defined(EVE_HW_POWERPC)

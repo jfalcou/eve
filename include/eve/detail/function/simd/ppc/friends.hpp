@@ -10,10 +10,10 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/concept/value.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
-#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
@@ -23,6 +23,12 @@ namespace eve::detail
   template<real_scalar_value T, typename N, ppc_abi ABI>
   EVE_FORCEINLINE wide<T,N,ABI> self_bitnot(wide<T,N,ABI> const& v) noexcept
   {
-    return vec_nor(v0storage(), v.storage());
+    return vec_nor(v.storage(), v.storage());
+  }
+
+  template<real_scalar_value T, typename N, ppc_abi ABI>
+  EVE_FORCEINLINE wide<T,N,ABI> self_eq(wide<T, N, ABI> const &v, wide<T, N, ABI> const &w) noexcept
+  {
+    return logical<wide<T,N,ABI>>(vec_cmpeq(v.storage(), w.storage()));
   }
 }

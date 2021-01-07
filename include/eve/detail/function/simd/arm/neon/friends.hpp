@@ -43,4 +43,39 @@ namespace eve::detail
     else  if constexpr(c == category::uint8x16) return vmvnq_u8(v);
     else                                        return bit_cast(~bit_cast(v,as_<i_t>{}), as(v));
   }
+
+  //================================================================================================
+  // operator== implementation
+  //================================================================================================
+  template<real_value T, typename N, arm_abi ABI>
+  EVE_FORCEINLINE as_logical_t<wide<T, N, ABI>> self_eq(wide<T,N,ABI> v, wide<T,N,ABI> w) noexcept
+  {
+    constexpr auto cat = categorize<wide<T, N, ABI>>();
+    constexpr auto eq = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e == f); };
+
+          if constexpr( cat == category::int32x4  ) return vceqq_s32(v, w);
+    else  if constexpr( cat == category::int16x8  ) return vceqq_s16(v, w);
+    else  if constexpr( cat == category::int8x16  ) return vceqq_s8 (v, w);
+    else  if constexpr( cat == category::uint32x4 ) return vceqq_u32(v, w);
+    else  if constexpr( cat == category::uint16x8 ) return vceqq_u16(v, w);
+    else  if constexpr( cat == category::uint8x16 ) return vceqq_u8 (v, w);
+    else  if constexpr( cat == category::float32x4) return vceqq_f32(v, w);
+    else  if constexpr( cat == category::int32x2  ) return vceq_s32 (v, w);
+    else  if constexpr( cat == category::int16x4  ) return vceq_s16 (v, w);
+    else  if constexpr( cat == category::int8x8   ) return vceq_s8  (v, w);
+    else  if constexpr( cat == category::uint32x2 ) return vceq_u32 (v, w);
+    else  if constexpr( cat == category::uint16x4 ) return vceq_u16 (v, w);
+    else  if constexpr( cat == category::uint8x8  ) return vceq_u8  (v, w);
+    else  if constexpr( cat == category::float32x2) return vceq_f32 (v, w);
+#if defined(__aarch64__)
+    else  if constexpr( cat == category::float64x1) return vceq_f64 (v, w);
+    else  if constexpr( cat == category::int64x1)   return vceq_s64 (v, w);
+    else  if constexpr( cat == category::uint64x1)  return vceq_u64 (v, w);
+    else  if constexpr( cat == category::float64x2) return vceqq_f64(v, w);
+    else  if constexpr( cat == category::int64x2)   return vceqq_s64(v, w);
+    else  if constexpr( cat == category::uint64x2)  return vceqq_u64(v, w);
+#else
+    else  if constexpr( sizeof(T) == 8 )            return map(eq, v, w);
+#endif
+  }
 }

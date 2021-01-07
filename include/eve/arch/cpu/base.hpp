@@ -16,6 +16,7 @@
 #include <eve/detail/function/lookup.hpp>
 #include <eve/detail/function/slice.hpp>
 #include <eve/detail/function/subscript.hpp>
+#include <eve/traits/element_type.hpp>
 
 namespace eve::detail
 {
@@ -112,6 +113,21 @@ namespace eve::detail
     friend EVE_FORCEINLINE auto operator!(wide_ops const& v) noexcept
     {
       return detail::self_lognot(v.self());
+    }
+
+    friend EVE_FORCEINLINE auto operator==(wide_ops const& v, wide_ops const& w) noexcept
+    {
+      return detail::self_eq(v.self(),w.self());
+    }
+
+    friend EVE_FORCEINLINE auto operator==(wide_ops const& v, element_type_t<Derived> w) noexcept
+    {
+      return v == Derived{w};
+    }
+
+    friend EVE_FORCEINLINE auto operator==(element_type_t<Derived> v, wide_ops const& w) noexcept
+    {
+      return w == v;
     }
 
     private:

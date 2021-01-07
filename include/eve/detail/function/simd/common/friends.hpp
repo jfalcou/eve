@@ -48,4 +48,20 @@ namespace eve::detail
       return apply_over([]<typename E>(E const& e){ return as_logical_t<E>(!e); }, v);
     }
   }
+  //================================================================================================
+  template<real_simd_value Wide>
+  EVE_FORCEINLINE auto self_eq(Wide const& v,Wide const& w) noexcept
+  {
+    constexpr auto eq = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e == f); };
+
+    if constexpr(has_native_abi_v<Wide>)
+    {
+      if constexpr(is_logical_v<Wide>)  return bit_cast(is_equal(v.bits(), w.bits()), as<Wide>());
+      else                              return apply_over(eq, v, w);
+    }
+    else
+    {
+      return apply_over(eq, v, w);
+    }
+  }
 }

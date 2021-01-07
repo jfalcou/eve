@@ -79,6 +79,25 @@ namespace eve
     void swap( logical& other ) { std::swap(value_,other.value_); }
 
     //==============================================================================================
+    // Comparison operators
+    //==============================================================================================
+    template<typename U>
+    friend EVE_FORCEINLINE auto operator==(logical const& v, logical<U> const& w) noexcept
+    {
+      return v.value() == w.value();
+    }
+
+    friend EVE_FORCEINLINE auto operator==(logical const& v, bool w) noexcept
+    {
+      return v.value() == w;
+    }
+
+    friend EVE_FORCEINLINE auto operator==(bool v, logical const& w) noexcept
+    {
+      return w.value() == v;
+    }
+
+    //==============================================================================================
     // Stream insertion operator
     //==============================================================================================
     friend EVE_FORCEINLINE std::ostream &operator<<(std::ostream &os, logical const &v)
