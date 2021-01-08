@@ -12,6 +12,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/forward.hpp>
 
 namespace eve::detail
@@ -19,7 +20,8 @@ namespace eve::detail
   template<real_value T>
   EVE_FORCEINLINE auto bit_not_(EVE_SUPPORTS(cpu_), T const &v) noexcept
   {
-    return T(~v);
+    if constexpr(floating_scalar_value<T>)  return bit_cast( ~bit_cast(v, as_<as_integer_t<T>>{}), as(v));
+    else                                    return T(~v);
   }
 
   // Masked case

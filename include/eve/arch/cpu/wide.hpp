@@ -134,11 +134,12 @@ namespace eve
       return detail::self_bitand(w, o);
     }
 
-    template<scalar_value U>
-    friend EVE_FORCEINLINE auto operator&(wide const& v, wide<U,Size> const& w) noexcept
+    template<scalar_value U,typename M>
+    friend EVE_FORCEINLINE    auto operator&(wide const& v, wide<U,M> const& w) noexcept
+                          ->  decltype( std::declval<wide&>() &= w)
     {
-      auto that = v;
-      return that &= w;
+      auto    that  = v;
+      return  that &= w;
     }
 
     friend EVE_FORCEINLINE auto operator&(wide const& v, scalar_value auto w) noexcept
@@ -162,10 +163,56 @@ namespace eve
       return detail::self_bitor(w, o);
     }
 
+    template<scalar_value U,typename M>
+    friend EVE_FORCEINLINE    auto operator|(wide const& v, wide<U,M> const& w) noexcept
+                          ->  decltype( std::declval<wide&>() &= w)
+    {
+      auto    that  = v;
+      return  that |= w;
+    }
+
+    friend EVE_FORCEINLINE auto operator|(wide const& v, scalar_value auto w) noexcept
+    requires (sizeof(w) == sizeof(Type))
+    {
+      auto    that  = v;
+      return  that |= bit_cast(w, as_<Type>{});
+    }
+
+    template<scalar_value S>
+    friend EVE_FORCEINLINE auto operator|(S v, wide const& w) noexcept
+    requires (sizeof(v) == sizeof(Type))
+    {
+      auto    u  = bit_cast(w, as_<typename wide::template rebind<S>>());
+      return  u |= v;
+    }
+
     friend  EVE_FORCEINLINE auto operator^=(wide& w, value auto o) noexcept
                         ->  decltype(detail::self_bitxor(w, o))
     {
       return detail::self_bitxor(w, o);
+    }
+
+    template<scalar_value U, typename M>
+    friend EVE_FORCEINLINE    auto operator^(wide const& v, wide<U,M> const& w) noexcept
+                          ->  decltype( std::declval<wide&>() &= w)
+    {
+      auto    that  = v;
+      return  that ^= w;
+    }
+
+    friend EVE_FORCEINLINE auto operator^(wide const& v, scalar_value auto w) noexcept
+    requires (sizeof(w) == sizeof(Type))
+    {
+      auto    that  = v;
+      return  that ^= bit_cast(w, as_<Type>{});
+    }
+
+    template<scalar_value S>
+    friend EVE_FORCEINLINE auto operator^(S v, wide const& w) noexcept
+    requires (sizeof(v) == sizeof(Type))
+    {
+      auto    u  = bit_cast(w, as_<typename wide::template rebind<S>>());
+      return  u ^= v;
     }
 
     //==============================================================================================
@@ -201,7 +248,7 @@ namespace eve
       return detail::self_sub(w, o);
     }
 
-    //friend EVE_FORCEINLINE auto operator-(wide const& v) noexcept { return v;     }
+    friend EVE_FORCEINLINE auto operator-(wide const& v) noexcept { return Type{0} - v; }
 
     friend EVE_FORCEINLINE auto operator-(wide const& v, wide const& w) noexcept
     {
