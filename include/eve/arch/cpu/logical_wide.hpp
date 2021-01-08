@@ -64,6 +64,7 @@ namespace eve
     // Constructors
     //==============================================================================================
     EVE_FORCEINLINE logical() noexcept {}
+    EVE_FORCEINLINE logical(logical const& w) noexcept : storage_base(w.storage()) {}
 
     EVE_FORCEINLINE logical(storage_type const &r) noexcept
 #if !defined(__aarch64__)

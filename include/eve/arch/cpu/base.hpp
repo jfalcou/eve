@@ -28,6 +28,8 @@ namespace eve::detail
     wide_storage() {}
     wide_storage(storage_type const &r) : data_(r) {}
 
+    wide_storage& operator=(storage_type const &r) { data_ = r; return *this; }
+
     EVE_FORCEINLINE storage_type const& storage() const & noexcept { return data_; }
     EVE_FORCEINLINE storage_type &      storage() &       noexcept { return data_; }
     EVE_FORCEINLINE storage_type        storage() &&      noexcept { return data_; }
@@ -73,6 +75,11 @@ namespace eve::detail
     EVE_FORCEINLINE void swap(Derived& other) noexcept
     {
       std::swap(self().storage(), other.storage());
+    }
+
+    EVE_FORCEINLINE void swap(wide_ops &lhs, wide_ops &rhs) noexcept
+    {
+      lhs.self().swap(rhs);
     }
 
     //==============================================================================================

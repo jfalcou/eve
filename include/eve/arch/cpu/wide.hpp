@@ -56,7 +56,8 @@ namespace eve
     //==============================================================================================
     // Constructors
     //==============================================================================================
-    EVE_FORCEINLINE wide() noexcept {}
+    EVE_FORCEINLINE wide() noexcept : storage_base{} {}
+    EVE_FORCEINLINE wide(wide const& w) noexcept : storage_base(w.storage()) {}
     EVE_FORCEINLINE wide(storage_type const &r) noexcept : storage_base(r) {}
 
     template<std::input_iterator It>
@@ -136,7 +137,7 @@ namespace eve
 
     template<scalar_value U,typename M>
     friend EVE_FORCEINLINE    auto operator&(wide const& v, wide<U,M> const& w) noexcept
-                          ->  decltype( std::declval<wide&>() &= w)
+                          ->  std::decay_t<decltype(std::declval<wide&>() &= w)>
     {
       auto    that  = v;
       return  that &= w;
@@ -153,7 +154,7 @@ namespace eve
     friend EVE_FORCEINLINE auto operator&(S v, wide const& w) noexcept
     requires (sizeof(v) == sizeof(Type))
     {
-      auto    u  = bit_cast(w, as_<typename wide::template rebind<S>>());
+      auto    u  = bit_cast(w, as_<typename wide::template rebind<S,Size>>());
       return  u &= v;
     }
 
@@ -165,9 +166,9 @@ namespace eve
 
     template<scalar_value U,typename M>
     friend EVE_FORCEINLINE    auto operator|(wide const& v, wide<U,M> const& w) noexcept
-                          ->  decltype( std::declval<wide&>() &= w)
+                          ->  std::decay_t<decltype(std::declval<wide&>() |= w)>
     {
-      auto    that  = v;
+      wide    that  = v;
       return  that |= w;
     }
 
@@ -182,7 +183,7 @@ namespace eve
     friend EVE_FORCEINLINE auto operator|(S v, wide const& w) noexcept
     requires (sizeof(v) == sizeof(Type))
     {
-      auto    u  = bit_cast(w, as_<typename wide::template rebind<S>>());
+      auto    u  = bit_cast(w, as_<typename wide::template rebind<S,Size>>());
       return  u |= v;
     }
 
@@ -194,7 +195,7 @@ namespace eve
 
     template<scalar_value U, typename M>
     friend EVE_FORCEINLINE    auto operator^(wide const& v, wide<U,M> const& w) noexcept
-                          ->  decltype( std::declval<wide&>() &= w)
+                          ->  std::decay_t<decltype(std::declval<wide&>() |= w)>
     {
       auto    that  = v;
       return  that ^= w;
@@ -211,7 +212,7 @@ namespace eve
     friend EVE_FORCEINLINE auto operator^(S v, wide const& w) noexcept
     requires (sizeof(v) == sizeof(Type))
     {
-      auto    u  = bit_cast(w, as_<typename wide::template rebind<S>>());
+      auto    u  = bit_cast(w, as_<typename wide::template rebind<S,Size>>());
       return  u ^= v;
     }
 
@@ -248,7 +249,10 @@ namespace eve
       return detail::self_sub(w, o);
     }
 
-    friend EVE_FORCEINLINE auto operator-(wide const& v) noexcept { return Type{0} - v; }
+    friend EVE_FORCEINLINE auto operator-(wide const& v) noexcept
+    {
+      return self_negate(v);
+    }
 
     friend EVE_FORCEINLINE auto operator-(wide const& v, wide const& w) noexcept
     {
@@ -351,10 +355,4 @@ namespace eve
       return os << ')';
     }
   };
-
-  template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE void swap(wide<T, N, ABI> &lhs, wide<T, N, ABI> &rhs) noexcept
-  {
-    lhs.swap(rhs);
-  }
 }
