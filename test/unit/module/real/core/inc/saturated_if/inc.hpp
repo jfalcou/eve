@@ -10,6 +10,8 @@
 //==================================================================================================
 #include <eve/function/saturated/inc.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/constant/false.hpp>
+#include <eve/constant/true.hpp>
 
 TTS_CASE_TPL("Check conditional saturated(eve::inc) return type", EVE_TYPE)
 {

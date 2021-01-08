@@ -9,6 +9,8 @@
 **/
 //==================================================================================================
 #include <eve/function/saturated/mul.hpp>
+#include <eve/constant/false.hpp>
+#include <eve/constant/true.hpp>
 
 TTS_CASE_TPL("Check conditional saturated(eve::mul) return type", EVE_TYPE)
 {

@@ -12,12 +12,29 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/constant/allbits.hpp>
+#include <eve/constant/signmask.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/is_native.hpp>
 #include <eve/forward.hpp>
 
 namespace eve::detail
 {
+  //================================================================================================
+  template<real_scalar_value T, typename N, typename ABI>
+  EVE_FORCEINLINE auto self_negate(wide<T,N,ABI> const& v) noexcept
+  {
+    if constexpr(floating_value<T>)
+    {
+      auto that = v;
+      that ^= signmask(eve::as(v));
+      return that;
+    }
+    else
+    {
+      return T{0} - v;
+    }
+  }
+
   //================================================================================================
   template<real_scalar_value T, typename N, typename ABI>
   EVE_FORCEINLINE auto self_bitnot(wide<T,N,ABI> const& v) noexcept
@@ -41,7 +58,7 @@ namespace eve::detail
     if constexpr(has_native_abi_v<Wide>)
     {
       if constexpr( is_logical_v<Wide> )  return bit_cast(~v.bits(), as_<Wide>{});
-      else                                return v != 0;
+      else                                return !to_logical(v);
     }
     else
     {

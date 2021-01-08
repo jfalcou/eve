@@ -18,6 +18,6 @@ namespace eve::detail
   template<value T>
   EVE_FORCEINLINE auto logical_not_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   {
-    return !a;
+    return as_logical_t<T>(!a);
   }
 }
