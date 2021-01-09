@@ -31,5 +31,6 @@ namespace eve
     { a.bitmap(eve::as_<eve::wide<int>>()) };
     { a.count(eve::as_<eve::wide<int>>())  };
     { a.offset(eve::as_<eve::wide<int>>()) };
+    { a.roffset(eve::as_<eve::wide<int>>()) };
   };
 }

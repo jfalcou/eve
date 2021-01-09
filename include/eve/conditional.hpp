@@ -135,6 +135,11 @@ namespace eve
       return 0;
     }
 
+    template<typename T> EVE_FORCEINLINE std::ptrdiff_t roffset(eve::as_<T> const&) const
+    {
+      return cardinal_v<T>;
+    }
+
     template<typename T> EVE_FORCEINLINE auto count(eve::as_<T> const&) const
     {
       return 0ULL;
@@ -167,6 +172,11 @@ namespace eve
     }
 
     template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const
+    {
+      return 0;
+    }
+
+    template<typename T> EVE_FORCEINLINE std::ptrdiff_t roffset(eve::as_<T> const&) const
     {
       return 0;
     }
@@ -223,6 +233,11 @@ namespace eve
       return 0;
     }
 
+    template<typename T> EVE_FORCEINLINE std::ptrdiff_t roffset(eve::as_<T> const&) const
+    {
+      return count_;
+    }
+
     template<typename T> EVE_FORCEINLINE auto count(eve::as_<T> const&) const
     {
       return cardinal_v<T> - count_;
@@ -276,6 +291,11 @@ namespace eve
       return cardinal_v<T> - count_;
     }
 
+    template<typename T> EVE_FORCEINLINE std::ptrdiff_t roffset(eve::as_<T> const&) const
+    {
+      return 0;
+    }
+
     template<typename T> EVE_FORCEINLINE auto count(eve::as_<T> const&) const
     {
       return count_;
@@ -320,6 +340,11 @@ namespace eve
     template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const
     {
       return count_;
+    }
+
+    template<typename T> EVE_FORCEINLINE std::ptrdiff_t roffset(eve::as_<T> const&) const
+    {
+      return 0;
     }
 
     template<typename T> EVE_FORCEINLINE auto count(eve::as_<T> const&) const
@@ -378,6 +403,11 @@ namespace eve
       return 0;
     }
 
+    template<typename T> EVE_FORCEINLINE std::ptrdiff_t roffset(eve::as_<T> const&) const
+    {
+      return cardinal_v<T> - count_;
+    }
+
     template<typename T> EVE_FORCEINLINE auto count(eve::as_<T> const&) const
     {
       return count_;
@@ -427,6 +457,11 @@ namespace eve
     template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const
     {
       return begin_;
+    }
+
+    template<typename T> EVE_FORCEINLINE std::ptrdiff_t roffset(eve::as_<T> const&) const
+    {
+      return end_;
     }
 
     template<typename T> EVE_FORCEINLINE auto count(eve::as_<T> const&) const
@@ -482,6 +517,11 @@ namespace eve
     template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const
     {
       return first_count_;
+    }
+
+    template<typename T> EVE_FORCEINLINE std::ptrdiff_t roffset(eve::as_<T> const&) const
+    {
+      return last_count_;
     }
 
     template<typename T> EVE_FORCEINLINE auto count(eve::as_<T> const&) const
