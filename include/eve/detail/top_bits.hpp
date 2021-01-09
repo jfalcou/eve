@@ -113,11 +113,13 @@ struct top_bits
 
     storage_type storage;
 
-    // basic constructors ---------------------------------
+    // constructors ---------------------------------
 
     constexpr top_bits() = default;
 
     constexpr explicit top_bits(storage_type storage) : storage(storage) {}
+
+    // -- constructor(logical)
 
     explicit top_bits(const logical_type& p)
     {
@@ -136,6 +138,8 @@ struct top_bits
           *this &= top_bits(ignore_none_{});
         }
     }
+
+    // -- constructor(ignore)
 
     constexpr explicit top_bits(ignore_none_)
     {
@@ -161,6 +165,48 @@ struct top_bits
       else storage = 0;
     }
 
+    constexpr explicit top_bits(ignore_extrema_ ignore)
+    {
+      if constexpr( is_aggregated )
+      {
+        using half_logical = typename logical_type::storage_type::subvalue_type;
+
+        if (ignore.first_count_ >= static_size / 2)
+        {
+          ignore.first_count_ -= static_size / 2;
+          storage = { top_bits<half_logical>(ignore_all), top_bits<half_logical>(ignore) };
+          return;
+        }
+
+        if (ignore.last_count_ >= static_size / 2)
+        {
+          ignore.last_count_ -= static_size / 2;
+          storage = { top_bits<half_logical>(ignore), top_bits<half_logical>(ignore_all) };
+          return;
+        }
+
+        storage = {
+          top_bits<half_logical>(ignore_first(ignore.first_count_)),
+          top_bits<half_logical>(ignore_last(ignore.last_count_))
+        };
+      }
+      else
+      {
+        storage = ~set_lower_n_bits<storage_type>(ignore.first_count_ * bits_per_element);
+        storage &= set_lower_n_bits<storage_type>((static_size - ignore.last_count_) * bits_per_element);
+        *this &= top_bits(ignore_none);
+      }
+    }
+
+    constexpr explicit top_bits(relative_conditional_expr auto ignore)
+     : top_bits{ignore_extrema_(
+        ignore.offset(eve::as_<logical_type>{}),
+        ignore.roffset(eve::as_<logical_type>{}))}
+    {
+    }
+
+    // getters/setter ----------------------
+
     constexpr bool get(std::ptrdiff_t i) const
     {
       if constexpr ( !is_aggregated ) return storage & (1 << (i * bits_per_element));
@@ -171,10 +217,11 @@ struct top_bits
       }
     }
 
-    // ordering
+    // ordering -----------------------------------
+
     std::strong_ordering operator<=>(const top_bits&) const = default;
 
-    // bit operators =============================================
+    // bit operators ------------------------------
 
     constexpr top_bits& operator&=(const top_bits& x)
     {
@@ -235,7 +282,7 @@ struct top_bits
       else return top_bits{{ ~x.storage[0], ~x.storage[1] }};
     }
 
-    // streaming ==============================================
+    // streaming ----------------------------------
 
     friend std::ostream& operator<<(std::ostream& o, const top_bits& x)
     {
