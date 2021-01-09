@@ -207,13 +207,28 @@ struct top_bits
 
     // getters/setter ----------------------
 
+    constexpr void set(std::ptrdiff_t i, bool x)
+    {
+      if constexpr ( !is_aggregated )
+      {
+        storage_type bit_mask = set_lower_n_bits<int>(bits_per_element) << (i * bits_per_element);
+        if ( x ) storage |= bit_mask;
+        else     storage &= ~bit_mask;
+      }
+      else
+      {
+        if ( i < static_size / 2 ) storage[0].set(i, x);
+        else                       storage[1].set(i - static_size / 2, x);
+      }
+    }
+
     constexpr bool get(std::ptrdiff_t i) const
     {
       if constexpr ( !is_aggregated ) return storage & (1 << (i * bits_per_element));
       else
       {
-        if (i < static_size / 2) return storage[0].get(i);
-        else                     return storage[1].get(i - static_size / 2);
+        if ( i < static_size / 2 ) return storage[0].get(i);
+        else                       return storage[1].get(i - static_size / 2);
       }
     }
 

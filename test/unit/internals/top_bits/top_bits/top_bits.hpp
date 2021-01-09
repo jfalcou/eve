@@ -55,6 +55,30 @@ TTS_CASE_TPL("Check top bits from logical", EVE_TYPE)
   }
 }
 
+TTS_CASE_TPL("top_bits, set", EVE_TYPE)
+{
+  using logical = eve::logical<T>;
+
+  logical expected(false);
+  top_bits<logical> actual(eve::ignore_all);
+
+  for (std::ptrdiff_t i = 0; i != expected.static_size; ++i)
+  {
+    expected.set(i, true);
+    actual.set(i, true);
+
+    TTS_EQUAL(expected, eve::detail::to_logical(actual));
+  }
+
+  for (std::ptrdiff_t i = 0; i != expected.static_size; ++i)
+  {
+    expected.set(i, false);
+    actual.set(i, false);
+    TTS_EQUAL(expected, eve::detail::to_logical(actual));
+  }
+}
+
+
 TTS_CASE_TPL("Top bits are little endian", EVE_TYPE)
 {
   using logical = eve::logical<T>;
@@ -67,7 +91,6 @@ TTS_CASE_TPL("Top bits are little endian", EVE_TYPE)
     TTS_EXPECT((top_bits{test}.storage & 1u));
   }
 }
-
 
 TTS_CASE_TPL("bit operations", EVE_TYPE)
 {
@@ -148,6 +171,19 @@ TTS_CASE_TPL("from ignore", EVE_TYPE)
     TTS_EQUAL(logical(true), eve::detail::to_logical(mmask));
   }
 
+  // ignore_extrema_
+  {
+    for (int i = 0; i < logical::static_size + 1; ++i)
+    {
+      for (int j = logical::static_size - i; j ; --j)
+      {
+        logical expected([&](int k, int) { return (k >= i) && (logical::static_size - k) > j; });
+        top_bits<logical> actual(eve::ignore_extrema_(i, j));
+        TTS_EQUAL(expected, eve::detail::to_logical(actual));
+      }
+    }
+  }
+
   // ignore first
   {
     for (int i = 0; i < logical::static_size + 1; ++i)
@@ -167,20 +203,6 @@ TTS_CASE_TPL("from ignore", EVE_TYPE)
       TTS_EQUAL(expected, eve::detail::to_logical(actual));
     }
   }
-
-  // ignore_extrema_
-  {
-    for (int i = 0; i < logical::static_size + 1; ++i)
-    {
-      for (int j = logical::static_size - i; j ; --j)
-      {
-        logical expected([&](int k, int) { return (k >= i) && (logical::static_size - k) > j; });
-        top_bits<logical> actual(eve::ignore_extrema_(i, j));
-        TTS_EQUAL(expected, eve::detail::to_logical(actual));
-      }
-    }
-  }
 }
-
 
 #endif  // defined(SPY_ARCH_IS_AMD64) && !defined(EVE_NO_SIMD)
