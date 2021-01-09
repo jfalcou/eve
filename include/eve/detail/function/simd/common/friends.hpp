@@ -14,6 +14,7 @@
 #include <eve/constant/allbits.hpp>
 #include <eve/constant/signmask.hpp>
 #include <eve/detail/apply_over.hpp>
+#include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/is_native.hpp>
 #include <eve/forward.hpp>
 
@@ -47,7 +48,14 @@ namespace eve::detail
     }
     else
     {
-      return apply_over([]<typename E>(E const& e) { return E(~e); }, v);
+      return  apply_over([]<typename E>(E const& e)
+              {
+                if constexpr(floating_scalar_value<E>)
+                  return bit_cast( ~bit_cast(e, as_<as_integer_t<E>>{}), as(e));
+                else
+                  return E(~e);
+              }, v
+              );
     }
   }
 

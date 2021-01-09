@@ -32,7 +32,7 @@ namespace eve::detail
     else if constexpr( cat == category::float64x1) return vrecpe_f64(v);
     else if constexpr( cat == category::float64x2) return vrecpeq_f64(v);
 #  endif
-    else                                           return map(ceil, v);
+    else                                           return map(rec, v);
   }
 
   template<floating_real_scalar_value T, typename N, arm_abi ABI>

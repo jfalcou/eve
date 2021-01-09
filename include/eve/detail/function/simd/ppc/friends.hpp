@@ -27,8 +27,8 @@ namespace eve::detail
   }
 
   template<real_scalar_value T, typename N, ppc_abi ABI>
-  EVE_FORCEINLINE wide<T,N,ABI> self_eq(wide<T, N, ABI> const &v, wide<T, N, ABI> const &w) noexcept
+  EVE_FORCEINLINE auto self_eq(wide<T, N, ABI> const &v, wide<T, N, ABI> const &w) noexcept
   {
-    return logical<wide<T,N,ABI>>(vec_cmpeq(v.storage(), w.storage()));
+    return as_logical_t<wide<T,N,ABI>>(vec_cmpeq(v.storage(), w.storage()));
   }
 }

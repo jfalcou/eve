@@ -11,14 +11,15 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/constant/inf.hpp>
+#include <eve/function/raw.hpp>
 #include <eve/function/refine_rec.hpp>
-#include <eve/function/bit_or.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_eqz.hpp>
+#include <eve/function/is_infinite.hpp>
 #include <eve/forward.hpp>
 #include <eve/platform.hpp>
-#include <eve/function/raw.hpp>
-#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
@@ -35,7 +36,7 @@ namespace eve::detail
     auto constexpr fix_inf = [](auto v, auto e)
     {
       if constexpr(platform::supports_infinites)
-        return if_else(is_infinite(v), bit_and(v, mzero(eve::as(v))), e);
+        return if_else(is_infinite(v), v & mzero(eve::as(v)), e);
       else
         return e;
     };
@@ -44,15 +45,14 @@ namespace eve::detail
     {
       auto    estimate  = refine_rec(v0, raw(rec)(v0));
               estimate  = refine_rec(v0, estimate);
-              estimate  = if_else(is_eqz(v0), bit_or(v0, inf(eve::as(v0))), estimate);
+              estimate  = if_else(is_eqz(v0), v0 | inf(eve::as(v0)), estimate);
       return  fix_inf(v0,estimate);
     }
     else if constexpr(std::is_same_v<float, T>)
     {
       auto    estimate  = refine_rec(v0, raw(rec)(v0));
-              estimate  = if_else(is_eqz(v0), bit_or(v0, inf(eve::as(v0))), estimate);
+              estimate  = if_else(is_eqz(v0), v0 | inf(eve::as(v0)), estimate);
       return  fix_inf(v0,estimate);
     }
   }
 }
-

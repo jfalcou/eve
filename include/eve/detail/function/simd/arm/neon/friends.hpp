@@ -51,7 +51,10 @@ namespace eve::detail
   EVE_FORCEINLINE as_logical_t<wide<T, N, ABI>> self_eq(wide<T,N,ABI> v, wide<T,N,ABI> w) noexcept
   {
     constexpr auto cat = categorize<wide<T, N, ABI>>();
-    constexpr auto eq = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e == f); };
+    [[maybe_unused]] constexpr auto eq  = []<typename E>(E const& e, E const& f)
+                                          {
+                                            return as_logical_t<E>(e == f);
+                                          };
 
           if constexpr( cat == category::int32x4  ) return vceqq_s32(v, w);
     else  if constexpr( cat == category::int16x8  ) return vceqq_s16(v, w);
