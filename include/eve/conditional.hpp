@@ -130,12 +130,17 @@ namespace eve
       return mask;
     }
 
-    template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as_<T> const&) const
     {
       return 0;
     }
 
-    template<typename T> EVE_FORCEINLINE auto count(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as_<T> const&) const
+    {
+      return cardinal_v<T>;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as_<T> const&) const
     {
       return 0ULL;
     }
@@ -166,14 +171,19 @@ namespace eve
       return static_cast<mask_t>(~0ULL);
     }
 
-    template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as_<T> const&) const
     {
       return 0;
     }
 
-    template<typename T> EVE_FORCEINLINE auto count(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as_<T> const&) const
     {
-      return sizeof(T);
+      return 0;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as_<T> const&) const
+    {
+      return cardinal_v<T>;
     }
 
     friend std::ostream& operator<<(std::ostream& os, ignore_none_ const&)
@@ -218,20 +228,25 @@ namespace eve
       return os << "ignore_last( " << c.count_ << " )";
     }
 
-    template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as_<T> const&) const
     {
       return 0;
     }
 
-    template<typename T> EVE_FORCEINLINE auto count(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as_<T> const&) const
     {
-      return sizeof(T) - sizeof(element_type_t<T>) * count_;
+      return count_;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as_<T> const&) const
+    {
+      return cardinal_v<T> - count_;
     }
 
     std::ptrdiff_t count_;
   };
 
-  EVE_FORCEINLINE ignore_last_ ignore_last(std::ptrdiff_t n) noexcept
+  EVE_FORCEINLINE constexpr ignore_last_ ignore_last(std::ptrdiff_t n) noexcept
   {
     return {n};
   }
@@ -271,20 +286,25 @@ namespace eve
       return os << "keep_last( " << c.count_ << " )";
     }
 
-    template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as_<T> const&) const
     {
       return cardinal_v<T> - count_;
     }
 
-    template<typename T> EVE_FORCEINLINE auto count(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as_<T> const&) const
     {
-      return sizeof(element_type_t<T>) * count_;
+      return 0;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as_<T> const&) const
+    {
+      return count_;
     }
 
     std::ptrdiff_t count_;
   };
 
-  EVE_FORCEINLINE keep_last_ keep_last(std::ptrdiff_t n) noexcept
+  EVE_FORCEINLINE constexpr keep_last_ keep_last(std::ptrdiff_t n) noexcept
   {
     return {n};
   }
@@ -317,14 +337,19 @@ namespace eve
       return mask;
     }
 
-    template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as_<T> const&) const
     {
       return count_;
     }
 
-    template<typename T> EVE_FORCEINLINE auto count(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as_<T> const&) const
     {
-      return sizeof(T) - sizeof(element_type_t<T>) * count_;
+      return 0;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as_<T> const&) const
+    {
+      return cardinal_v<T> - count_;
     }
 
     friend std::ostream& operator<<(std::ostream& os, ignore_first_ const& c)
@@ -335,7 +360,7 @@ namespace eve
     std::ptrdiff_t count_;
   };
 
-  EVE_FORCEINLINE ignore_first_ ignore_first(std::ptrdiff_t n) noexcept
+  EVE_FORCEINLINE constexpr ignore_first_ ignore_first(std::ptrdiff_t n) noexcept
   {
     return {n};
   }
@@ -373,20 +398,25 @@ namespace eve
       return os << "keep_first( " << c.count_ << " )";
     }
 
-    template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as_<T> const&) const
     {
       return 0;
     }
 
-    template<typename T> EVE_FORCEINLINE auto count(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as_<T> const&) const
     {
-      return sizeof(element_type_t<T>) * count_;
+      return cardinal_v<T> - count_;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as_<T> const&) const
+    {
+      return count_;
     }
 
     std::ptrdiff_t count_;
   };
 
-  EVE_FORCEINLINE keep_first_ keep_first(std::ptrdiff_t n) noexcept
+  EVE_FORCEINLINE constexpr keep_first_ keep_first(std::ptrdiff_t n) noexcept
   {
     return {n};
   }
@@ -400,7 +430,7 @@ namespace eve
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
-    keep_between_(std::ptrdiff_t b, std::ptrdiff_t e) noexcept : begin_(b), end_(e)
+    constexpr keep_between_(std::ptrdiff_t b, std::ptrdiff_t e) noexcept : begin_(b), end_(e)
     {
       EVE_ASSERT(b<=e, "[eve::keep_between] Index mismatch for begin/end");
     }
@@ -424,14 +454,19 @@ namespace eve
       return mask << begin_;
     }
 
-    template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as_<T> const&) const
     {
       return begin_;
     }
 
-    template<typename T> EVE_FORCEINLINE auto count(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as_<T> const&) const
     {
-      return sizeof(element_type_t<T>) * (end_ - begin_);
+      return end_;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as_<T> const&) const
+    {
+      return end_ - begin_;
     }
 
     friend std::ostream& operator<<(std::ostream& os, keep_between_ const& c)
@@ -442,7 +477,7 @@ namespace eve
     std::ptrdiff_t begin_, end_;
   };
 
-  EVE_FORCEINLINE keep_between_ keep_between(std::ptrdiff_t b, std::ptrdiff_t e)
+  EVE_FORCEINLINE constexpr keep_between_ keep_between(std::ptrdiff_t b, std::ptrdiff_t e)
   {
     return {b,e};
   }
@@ -479,14 +514,19 @@ namespace eve
       return mask << first_count_;
     }
 
-    template<typename T> EVE_FORCEINLINE std::ptrdiff_t offset(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as_<T> const&) const
     {
       return first_count_;
     }
 
-    template<typename T> EVE_FORCEINLINE auto count(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as_<T> const&) const
     {
-      return sizeof(element_type_t<T>) * (cardinal_v<T> - last_count_ - first_count_);
+      return last_count_;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as_<T> const&) const
+    {
+      return cardinal_v<T> - last_count_ - first_count_;
     }
 
     friend std::ostream& operator<<(std::ostream& os, ignore_extrema_ const& c)

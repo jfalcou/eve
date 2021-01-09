@@ -74,14 +74,14 @@ namespace eve::detail
         {
           r_t that(cond.alternative);
           auto* dst   = (e_t*)(&that.storage());
-          std::memcpy( dst + offset, ptr + offset, cond.count( as_<r_t>{} ) );
+          std::memcpy( dst + offset, ptr + offset, sizeof(e_t) * cond.count( as_<r_t>{} ) );
           return that;
         }
         else
         {
           [[maybe_unused]] r_t that;
           auto* dst   = (e_t*)(&that.storage());
-          std::memcpy( dst + offset, ptr + offset, cond.count( as_<r_t>{} ) );
+          std::memcpy( dst + offset, ptr + offset, sizeof(e_t) * cond.count( as_<r_t>{} ) );
           return that;
         }
       }
@@ -122,14 +122,14 @@ namespace eve::detail
         {
           [[maybe_unused]] r_t that(cond.alternative);
           auto* dst   = (e_t*)(&that.storage());
-          std::memcpy( dst + offset, ptr + offset, cond.count( as_<r_t>{} ) );
+          std::memcpy( dst + offset, ptr + offset, sizeof(e_t) * cond.count( as_<r_t>{} ) );
           return that;
         }
         else
         {
           [[maybe_unused]] r_t that;
           auto* dst   = (e_t*)(&that.storage());
-          std::memcpy( dst + offset, ptr + offset, cond.count( as_<r_t>{} ) );
+          std::memcpy( dst + offset, ptr + offset, sizeof(e_t) * cond.count( as_<r_t>{} ) );
           return that;
         }
       }
