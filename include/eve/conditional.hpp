@@ -173,7 +173,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE auto count(eve::as_<T> const&) const
     {
-      return sizeof(T);
+      return cardinal_v<T>;
     }
 
     friend std::ostream& operator<<(std::ostream& os, ignore_none_ const&)
@@ -225,7 +225,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE auto count(eve::as_<T> const&) const
     {
-      return sizeof(T) - sizeof(element_type_t<T>) * count_;
+      return cardinal_v<T> - count_;
     }
 
     std::ptrdiff_t count_;
@@ -278,7 +278,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE auto count(eve::as_<T> const&) const
     {
-      return sizeof(element_type_t<T>) * count_;
+      return count_;
     }
 
     std::ptrdiff_t count_;
@@ -324,7 +324,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE auto count(eve::as_<T> const&) const
     {
-      return sizeof(T) - sizeof(element_type_t<T>) * count_;
+      return cardinal_v<T> - count_;
     }
 
     friend std::ostream& operator<<(std::ostream& os, ignore_first_ const& c)
@@ -380,7 +380,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE auto count(eve::as_<T> const&) const
     {
-      return sizeof(element_type_t<T>) * count_;
+      return count_;
     }
 
     std::ptrdiff_t count_;
@@ -431,7 +431,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE auto count(eve::as_<T> const&) const
     {
-      return sizeof(element_type_t<T>) * (end_ - begin_);
+      return end_ - begin_;
     }
 
     friend std::ostream& operator<<(std::ostream& os, keep_between_ const& c)
@@ -486,7 +486,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE auto count(eve::as_<T> const&) const
     {
-      return sizeof(element_type_t<T>) * (cardinal_v<T> - last_count_ - first_count_);
+      return cardinal_v<T> - last_count_ - first_count_;
     }
 
     friend std::ostream& operator<<(std::ostream& os, ignore_extrema_ const& c)
