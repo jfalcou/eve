@@ -245,47 +245,56 @@ struct top_bits
 };
 
 // ---------------------------------------------------------------------------------
-// spread(top_bits)
+// to_logical(top_bits)
 //
-// relevant stack overflow:
-//   https://stackoverflow.com/a/24242696/5021064
-//   https://stackoverflow.com/a/36491672/5021064
-
-template <typename Logical>
-EVE_FORCEINLINE Logical spread_one_bit_per_element(top_bits<Logical> mmask)
-{
-  using bits_wide = typename Logical::bits_type;
-
-  // For non chars this will just spread mmask everywhere.
-  // For chars each 8 bits of mmask go into their part
-  const bits_wide spread_mask([&](int i, int) {
-    int shift = 0;
-    shift += (i >= 8);
-    shift += (i >= 16);
-    shift += (i >= 24);
-    return (uint8_t)(mmask.storage >> (shift * 8));
-  });
-
-  // For not chars this just returns i.
-  // For chars index computation is more complex.
-  const bits_wide each_element_idx([&](int i, int) {
-    int shift = 0;
-    shift += (i >= 8);
-    shift += (i >= 16);
-    shift += (i >= 24);
-    return (uint8_t) (1 << (i - 8 * shift));
-  });
-
-  const bits_wide bit_mask = spread_mask & each_element_idx;
-  return Logical{(each_element_idx == bit_mask).storage()};
-}
 
 template <logical_simd_value Logical>
-Logical spread(top_bits<Logical> mmask)
+Logical to_logical(top_bits<Logical> mmask)
 {
-       if constexpr ( top_bits<Logical>::is_aggregated )         return Logical{{spread(mmask.storage[0]), spread(mmask.storage[1])}};
+       if constexpr ( top_bits<Logical>::is_aggregated )         return Logical{{to_logical(mmask.storage[0]), to_logical(mmask.storage[1])}};
   else if constexpr ( top_bits<Logical>::is_avx512_logical )     return Logical(mmask.storage);
-  else if constexpr ( top_bits<Logical>::bits_per_element == 1 ) return spread_one_bit_per_element(mmask);
+  else
+  {
+    // Idea is: put a corresponding part of mmask in each element
+    //          prepopulate an index in each element (as if true)
+    //          bitwise &
+    //
+    // relevant stack overflow:
+    //   https://stackoverflow.com/a/24242696/5021064
+    //   https://stackoverflow.com/a/36491672/5021064
+    using bits_wide = typename Logical::bits_type;
+    using bits_et   = element_type_t<bits_wide>;
+
+    static constexpr auto bits_per_element = top_bits<Logical>::bits_per_element;
+    static constexpr int element_mask = set_lower_n_bits<int>(bits_per_element);
+
+    bits_wide true_mmask([&](int i, int) {
+      int shift = 0;
+
+      shift += (i >= 8);   // only true for short on avx (second uint16_t) and chars (second uint8_t)
+      shift += (i >= 16);  // only true for chars on avx (third uint8_t)
+      shift += (i >= 24);  // only true for chars on avx (4th uint8_t)
+
+      i -= 8 * shift;
+
+      return (bits_et)(element_mask << (i * bits_per_element));
+    });
+
+    bits_wide actual_mmask([&](int i, int) {
+      int shift = 0;
+
+      shift += (i >= 8);  // second uint16_t or uint8_t
+      shift += (i >= 16); // third uint8_t
+      shift += (i >= 24); // 4th uint8_t
+
+      shift *= 8 * bits_per_element;
+
+      return (bits_et)(mmask.storage >> shift);
+    });
+
+    bits_wide test = actual_mmask & true_mmask;
+    return Logical{ (test == true_mmask).storage() };
+  }
 }
 
 // ---------------------------------------------------------------------------------

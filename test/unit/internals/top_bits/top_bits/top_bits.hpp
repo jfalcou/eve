@@ -22,9 +22,6 @@ using eve::detail::top_bits;
 template <typename T, std::size_t N>
 void expect_array(const std::array<T, N>&) {}
 
-template <typename T>
-void expect_same(T, T) {}
-
 
 TTS_CASE_TPL("Check top bits raw type", EVE_TYPE)
 {
@@ -33,9 +30,9 @@ TTS_CASE_TPL("Check top bits raw type", EVE_TYPE)
   using ABI = typename logical::abi_type;
 
        if constexpr (eve::has_aggregated_abi_v<logical>) expect_array(storage_type{});
-  else if constexpr (!ABI::is_wide_logical)              expect_same(storage_type{}, typename logical::storage_type{});
-  else if constexpr (std::same_as<ABI, eve::x86_128_>)   expect_same(storage_type{}, std::uint16_t{});
-  else                                                   expect_same(storage_type{}, std::uint32_t{});
+  else if constexpr (!ABI::is_wide_logical)              TTS_TYPE_IS(storage_type, typename logical::storage_type);
+  else if constexpr (std::same_as<ABI, eve::x86_128_>)   TTS_TYPE_IS(storage_type, std::uint16_t);
+  else                                                   TTS_TYPE_IS(storage_type, std::uint32_t);
 }
 
 TTS_CASE_TPL("Check top bits from logical", EVE_TYPE)
@@ -113,8 +110,6 @@ void top_bits_interesting_cases(Test test)
 
   logical x(false);
 
-
-
   for (int i = 0; i != logical::static_size; ++i) {
     x.set(i, true);
     test(x);
@@ -129,15 +124,12 @@ void top_bits_interesting_cases(Test test)
   }
 }
 
-TTS_CASE_TPL("spread top bits", EVE_TYPE)
+TTS_CASE_TPL("to_logical", EVE_TYPE)
 {
-  if constexpr ((sizeof(typename T::value_type) != 2)) {
-    top_bits_interesting_cases<T>([&](auto x){
-      top_bits mmask{x};
-      TTS_EQUAL(x, eve::detail::spread(mmask));
+    top_bits_interesting_cases<T>([&](auto x) {
+      top_bits mmask {x};
+      TTS_EQUAL(x, eve::detail::to_logical(mmask));
     });
-  }
 }
-
 
 #endif  // defined(SPY_ARCH_IS_AMD64) && !defined(EVE_NO_SIMD)
