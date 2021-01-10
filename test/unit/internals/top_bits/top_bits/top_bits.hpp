@@ -90,7 +90,8 @@ TTS_CASE_TPL("Top bits are little endian", EVE_TYPE)
 
   if constexpr( eve::has_native_abi_v<logical> )
   {
-    TTS_EXPECT((top_bits{test}.storage & 1u));
+    top_bits test_top(test);
+    TTS_EXPECT((test_top.storage & 1u));
   }
   else
   {
@@ -115,7 +116,7 @@ TTS_CASE_TPL("bit operations", EVE_TYPE)
       TTS_EQUAL(top_bits{x && y}, (top_bits{x} & top_bits{y}));
       TTS_EQUAL(top_bits{x || y}, (top_bits{x} | top_bits{y}));
 
-      TTS_EQUAL(top_bits{!x}, ~top_bits(x));
+      TTS_EQUAL(top_bits{!x}, ~top_bits<logical>(x));
 
       // xor
       {
@@ -129,7 +130,7 @@ TTS_CASE_TPL("bit operations", EVE_TYPE)
 
   if constexpr( eve::has_native_abi_v<logical> )
   {
-    TTS_EQUAL(0, (~top_bits{logical{true}}).storage);
+    TTS_EQUAL(0, (~top_bits<logical>{logical{true}}).storage);
   }
 }
 
