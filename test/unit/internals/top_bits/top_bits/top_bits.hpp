@@ -11,7 +11,7 @@
 
 #include "test.hpp"
 
-#if defined(SPY_ARCH_IS_AMD64) && !defined(EVE_NO_SIMD)
+#if defined(SPY_ARCH_IS_AMD64) && !defined(EVE_NO_SIMD) && !defined(SPY_SIMD_IS_X86_AVX512)
 
 #include <eve/detail/top_bits.hpp>
 
@@ -20,8 +20,10 @@
 using eve::detail::top_bits;
 
 template <typename T, std::size_t N>
-void expect_array(const std::array<T, N>&) {}
-
+bool expect_array(const std::array<T, N>&)
+{
+  return true;
+}
 
 TTS_CASE_TPL("Check top bits raw type", EVE_TYPE)
 {
@@ -29,7 +31,7 @@ TTS_CASE_TPL("Check top bits raw type", EVE_TYPE)
   using storage_type = typename top_bits<logical>::storage_type;
   using ABI = typename logical::abi_type;
 
-       if constexpr (eve::has_aggregated_abi_v<logical>) expect_array(storage_type{});
+       if constexpr (eve::has_aggregated_abi_v<logical>) TTS_EXPECT(expect_array(storage_type{}));
   else if constexpr (!ABI::is_wide_logical)              TTS_TYPE_IS(storage_type, typename logical::storage_type);
   else if constexpr (std::same_as<ABI, eve::x86_128_>)   TTS_TYPE_IS(storage_type, std::uint16_t);
   else                                                   TTS_TYPE_IS(storage_type, std::uint32_t);
@@ -90,6 +92,11 @@ TTS_CASE_TPL("Top bits are little endian", EVE_TYPE)
   {
     TTS_EXPECT((top_bits{test}.storage & 1u));
   }
+  else
+  {
+    TTS_PASS("no test for aggregated");
+  }
+
 }
 
 TTS_CASE_TPL("bit operations", EVE_TYPE)
@@ -284,4 +291,4 @@ TTS_CASE_TPL("top_bits first_true", EVE_TYPE)
   TTS_EXPECT_NOT(eve::detail::first_true(top_bits(x)));
 }
 
-#endif  // defined(SPY_ARCH_IS_AMD64) && !defined(EVE_NO_SIMD)
+#endif  // defined(SPY_ARCH_IS_AMD64) && !defined(EVE_NO_SIMD) && !defined(SPY_SIMD_IS_X86_AVX512)

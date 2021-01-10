@@ -1,4 +1,3 @@
-
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
@@ -35,7 +34,7 @@ namespace eve::detail
 // bit utilities ---------------------
 
 template <typename N>
-constexpr std::uint32_t set_lower_n_bits(std::ptrdiff_t n) {
+EVE_FORCEINLINE constexpr std::uint32_t set_lower_n_bits(std::ptrdiff_t n) {
   std::uint64_t res{1};
   res <<= n;
   res -= 1;
@@ -45,7 +44,7 @@ constexpr std::uint32_t set_lower_n_bits(std::ptrdiff_t n) {
 // movemask_raw --------------------
 
 template <logical_simd_value Logical>
-auto movemask_raw(Logical p)
+EVE_FORCEINLINE auto movemask_raw(Logical p)
 {
   using ABI = abi_type_t<Logical>;
   using e_t = element_type_t<Logical>;
@@ -91,7 +90,7 @@ struct top_bits
     sizeof(element_type_t<Logical>) == 2 ? 2 : 1;
 
   private:
-    static auto storage_type_impl()
+    EVE_FORCEINLINE static auto storage_type_impl()
     {
       using ABI = abi_type_t<Logical>;
 
@@ -114,13 +113,13 @@ struct top_bits
 
     // constructors ---------------------------------
 
-    constexpr top_bits() = default;
+    EVE_FORCEINLINE constexpr top_bits() = default;
 
-    constexpr explicit top_bits(storage_type storage) : storage(storage) {}
+    EVE_FORCEINLINE constexpr explicit top_bits(storage_type storage) : storage(storage) {}
 
     // -- constructor(logical)
 
-    explicit top_bits(const logical_type& p)
+    EVE_FORCEINLINE explicit top_bits(const logical_type& p)
     {
         if constexpr ( is_aggregated )
         {
@@ -134,39 +133,45 @@ struct top_bits
           if constexpr ( is_avx512_logical ) storage = p.storage();
           else                               storage = movemask_raw(p);
 
-          *this &= top_bits(ignore_none_{});
+          operator&=(top_bits(ignore_none_{}));
         }
     }
 
     // -- constructor(ignore)
 
-    constexpr explicit top_bits(ignore_none_)
+    EVE_FORCEINLINE constexpr explicit top_bits(ignore_none_)
     {
-      if constexpr( is_aggregated )
+      if constexpr( !is_aggregated ) storage = set_lower_n_bits<storage_type>(static_size * bits_per_element);
+      else
       {
         using half_logical = typename logical_type::storage_type::subvalue_type;
         top_bits<half_logical> half {ignore_none_{}};
         storage[0] = half;
         storage[1] = half;
       }
-      else storage = set_lower_n_bits<storage_type>(static_size * bits_per_element);
     }
 
-    constexpr explicit top_bits(ignore_all_)
+    EVE_FORCEINLINE constexpr explicit top_bits(ignore_all_)
     {
-      if constexpr( is_aggregated )
+      if constexpr( !is_aggregated ) storage = 0;
+      else
       {
         using half_logical = typename logical_type::storage_type::subvalue_type;
         top_bits<half_logical> half {ignore_all_{}};
         storage[0] = half;
         storage[1] = half;
       }
-      else storage = 0;
     }
 
-    constexpr explicit top_bits(ignore_extrema_ ignore)
+    EVE_FORCEINLINE constexpr explicit top_bits(ignore_extrema_ ignore)
     {
-      if constexpr( is_aggregated )
+      if constexpr( !is_aggregated )
+      {
+        storage = ~set_lower_n_bits<storage_type>(ignore.first_count_ * bits_per_element);
+        storage &= set_lower_n_bits<storage_type>((static_size - ignore.last_count_) * bits_per_element);
+        operator&=(top_bits(ignore_none));
+      }
+      else
       {
         using half_logical = typename logical_type::storage_type::subvalue_type;
 
@@ -189,37 +194,35 @@ struct top_bits
           top_bits<half_logical>(ignore_last(ignore.last_count_))
         };
       }
-      else
-      {
-        storage = ~set_lower_n_bits<storage_type>(ignore.first_count_ * bits_per_element);
-        storage &= set_lower_n_bits<storage_type>((static_size - ignore.last_count_) * bits_per_element);
-        *this &= top_bits(ignore_none);
-      }
     }
 
-    constexpr explicit top_bits(relative_conditional_expr auto ignore)
-    {
-      if constexpr( decltype(ignore)::is_complete )
-      {
-        *this = ignore.is_inverted ? top_bits(ignore_none) : top_bits(ignore_all);
+    template <relative_conditional_expr Ignore>
+      requires(Ignore::is_complete && !Ignore::is_inverted)
+    EVE_FORCEINLINE constexpr explicit top_bits(Ignore) : top_bits{ignore_all} {}
+
+    template <relative_conditional_expr Ignore>
+      requires(Ignore::is_complete && Ignore::is_inverted)
+    EVE_FORCEINLINE constexpr explicit top_bits(Ignore) : top_bits{ignore_none} {}
+
+    template <relative_conditional_expr Ignore>
+    EVE_FORCEINLINE constexpr explicit top_bits(Ignore ignore):
+      top_bits{
+        ignore_extrema_(
+          ignore.offset(eve::as_<logical_type>{}),
+          ignore.roffset(eve::as_<logical_type>{}))
       }
-      else
-      {
-        eve::as_<logical_type> as{};
-        *this = top_bits {ignore_extrema_(ignore.offset(as), ignore.roffset(as))};
-      }
-    }
+    {}
 
     // -- constructor: logical + ignore
 
-    explicit top_bits(const logical_type &p, relative_conditional_expr auto ignore) : top_bits(p)
+    EVE_FORCEINLINE explicit top_bits(const logical_type &p, relative_conditional_expr auto ignore) : top_bits(p)
     {
-      *this &= top_bits(ignore);
+      operator&=(top_bits(ignore));
     }
 
     // getters/setter ----------------------
 
-    constexpr void set(std::ptrdiff_t i, bool x)
+    EVE_FORCEINLINE constexpr void set(std::ptrdiff_t i, bool x)
     {
       if constexpr ( !is_aggregated )
       {
@@ -234,7 +237,7 @@ struct top_bits
       }
     }
 
-    constexpr bool get(std::ptrdiff_t i) const
+    EVE_FORCEINLINE constexpr bool get(std::ptrdiff_t i) const
     {
       if constexpr ( !is_aggregated ) return storage & (1 << (i * bits_per_element));
       else
@@ -246,7 +249,7 @@ struct top_bits
 
     // miscellaneous -----------------------------------
 
-    constexpr explicit operator bool()
+    EVE_FORCEINLINE constexpr explicit operator bool()
     {
       if constexpr ( !is_aggregated ) return storage;
       else
@@ -255,11 +258,11 @@ struct top_bits
       }
     }
 
-    constexpr std::strong_ordering operator<=>(const top_bits&) const = default;
+    EVE_FORCEINLINE constexpr std::strong_ordering operator<=>(const top_bits&) const = default;
 
     // bit operators ------------------------------
 
-    constexpr top_bits& operator&=(const top_bits& x)
+    EVE_FORCEINLINE constexpr top_bits& operator&=(const top_bits& x)
     {
       if constexpr ( is_aggregated )
       {
@@ -270,13 +273,13 @@ struct top_bits
       return *this;
     }
 
-    constexpr friend top_bits operator&(const top_bits& x, const top_bits& y) {
+    EVE_FORCEINLINE constexpr friend top_bits operator&(const top_bits& x, const top_bits& y) {
       top_bits tmp(x);
       tmp &= y;
       return tmp;
     }
 
-    constexpr top_bits& operator|=(const top_bits& x)
+    EVE_FORCEINLINE constexpr top_bits& operator|=(const top_bits& x)
     {
       if constexpr ( is_aggregated )
       {
@@ -287,14 +290,14 @@ struct top_bits
       return *this;
     }
 
-    constexpr friend top_bits operator|(const top_bits& x, const top_bits& y)
+    EVE_FORCEINLINE constexpr friend top_bits operator|(const top_bits& x, const top_bits& y)
     {
       top_bits tmp(x);
       tmp |= y;
       return tmp;
     }
 
-    constexpr top_bits& operator^=(const top_bits& x)
+    EVE_FORCEINLINE constexpr top_bits& operator^=(const top_bits& x)
     {
       if constexpr ( is_aggregated )
       {
@@ -305,14 +308,14 @@ struct top_bits
       return *this;
     }
 
-    constexpr friend top_bits operator^(const top_bits& x, const top_bits& y)
+    EVE_FORCEINLINE constexpr friend top_bits operator^(const top_bits& x, const top_bits& y)
     {
       top_bits tmp(x);
       tmp ^= y;
       return tmp;
     }
 
-    constexpr friend top_bits operator~(const top_bits& x)
+    EVE_FORCEINLINE constexpr friend top_bits operator~(const top_bits& x)
     {
       if constexpr ( !is_aggregated ) return top_bits{(storage_type)~x.storage} & top_bits{ignore_none_{}};
       else return top_bits{{ ~x.storage[0], ~x.storage[1] }};
@@ -320,7 +323,7 @@ struct top_bits
 
     // streaming ----------------------------------
 
-    friend std::ostream& operator<<(std::ostream& o, const top_bits& x)
+    EVE_FORCEINLINE friend std::ostream& operator<<(std::ostream& o, const top_bits& x)
     {
       if constexpr ( is_aggregated ) return o << '[' << x.storage[0] << ", " << x.storage[1] << ']';
       else                           return o << x.storage;
@@ -332,7 +335,7 @@ struct top_bits
 //
 
 template <logical_simd_value Logical>
-Logical to_logical(top_bits<Logical> mmask)
+EVE_FORCEINLINE Logical to_logical(top_bits<Logical> mmask)
 {
        if constexpr ( top_bits<Logical>::is_aggregated )         return Logical{{to_logical(mmask.storage[0]), to_logical(mmask.storage[1])}};
   else if constexpr ( top_bits<Logical>::is_avx512_logical )     return Logical(mmask.storage);
@@ -384,19 +387,19 @@ Logical to_logical(top_bits<Logical> mmask)
 // all/any/first_true
 
 template <logical_simd_value Logical>
-bool all(top_bits<Logical> mmask)
+EVE_FORCEINLINE bool all(top_bits<Logical> mmask)
 {
   return mmask == top_bits<Logical>(ignore_none);
 }
 
 template <logical_simd_value Logical>
-bool any(top_bits<Logical> mmask)
+EVE_FORCEINLINE bool any(top_bits<Logical> mmask)
 {
   return (bool)mmask;
 }
 
 template <logical_simd_value Logical>
-std::ptrdiff_t first_true_guaranteed(top_bits<Logical> mmask)
+EVE_FORCEINLINE std::ptrdiff_t first_true_guaranteed(top_bits<Logical> mmask)
 {
   if constexpr ( !top_bits<Logical>::is_aggregated )
   {
@@ -419,7 +422,7 @@ std::ptrdiff_t first_true_guaranteed(top_bits<Logical> mmask)
 }
 
 template <logical_simd_value Logical>
-std::optional<std::ptrdiff_t> first_true(top_bits<Logical> mmask)
+EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true(top_bits<Logical> mmask)
 {
   if ( !detail::any(mmask) ) return {};
   return first_true_guaranteed(mmask);
