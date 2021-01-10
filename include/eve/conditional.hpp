@@ -461,7 +461,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as_<T> const&) const
     {
-      return end_;
+      return cardinal_v<T> - end_;
     }
 
     template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as_<T> const&) const

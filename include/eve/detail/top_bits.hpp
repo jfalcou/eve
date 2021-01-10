@@ -199,10 +199,16 @@ struct top_bits
     }
 
     constexpr explicit top_bits(relative_conditional_expr auto ignore)
-     : top_bits{ignore_extrema_(
-        ignore.offset(eve::as_<logical_type>{}),
-        ignore.roffset(eve::as_<logical_type>{}))}
     {
+      if constexpr( decltype(ignore)::is_complete )
+      {
+        *this = ignore.is_inverted ? top_bits(ignore_none) : top_bits(ignore_all);
+      }
+      else
+      {
+        eve::as_<logical_type> as{};
+        *this = top_bits {ignore_extrema_(ignore.offset(as), ignore.roffset(as))};
+      }
     }
 
     // getters/setter ----------------------
