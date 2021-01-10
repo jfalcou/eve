@@ -18,9 +18,8 @@
 
 #include <array>
 #include <compare>
+#include <optional>
 #include <ostream>
-
-#include <iostream>
 
 namespace eve::detail
 {
@@ -211,6 +210,13 @@ struct top_bits
       }
     }
 
+    // -- constructor: logical + ignore
+
+    explicit top_bits(const logical_type &p, relative_conditional_expr auto ignore) : top_bits(p)
+    {
+      *this &= top_bits(ignore);
+    }
+
     // getters/setter ----------------------
 
     constexpr void set(std::ptrdiff_t i, bool x)
@@ -238,9 +244,18 @@ struct top_bits
       }
     }
 
-    // ordering -----------------------------------
+    // miscellaneous -----------------------------------
 
-    std::strong_ordering operator<=>(const top_bits&) const = default;
+    constexpr explicit operator bool()
+    {
+      if constexpr ( !is_aggregated ) return storage;
+      else
+      {
+        return (bool)storage[0] || (bool)storage[1];
+      }
+    }
+
+    constexpr std::strong_ordering operator<=>(const top_bits&) const = default;
 
     // bit operators ------------------------------
 
@@ -366,5 +381,48 @@ Logical to_logical(top_bits<Logical> mmask)
 }
 
 // ---------------------------------------------------------------------------------
+// all/any/first_true
+
+template <logical_simd_value Logical>
+bool all(top_bits<Logical> mmask)
+{
+  return mmask == top_bits<Logical>(ignore_none);
+}
+
+template <logical_simd_value Logical>
+bool any(top_bits<Logical> mmask)
+{
+  return (bool)mmask;
+}
+
+template <logical_simd_value Logical>
+std::ptrdiff_t first_true_guaranteed(top_bits<Logical> mmask)
+{
+  if constexpr ( !top_bits<Logical>::is_aggregated )
+  {
+    return std::countr_zero(mmask.storage) / top_bits<Logical>::bits_per_element;
+  }
+  else
+  {
+    auto half_mmask = mmask.storage[1];
+    int offset = Logical::static_size / 2;
+
+    // trying to make a cmove (otherwise does not cmove, I think I tested)
+    if (mmask.storage[0])
+    {
+      offset = 0;
+      half_mmask = mmask.storage[0];
+    }
+
+    return first_true_guaranteed(half_mmask) + offset;
+  }
+}
+
+template <logical_simd_value Logical>
+std::optional<std::ptrdiff_t> first_true(top_bits<Logical> mmask)
+{
+  if ( !detail::any(mmask) ) return {};
+  return first_true_guaranteed(mmask);
+}
 
 }  // namespace eve::detail

@@ -155,7 +155,7 @@ TTS_CASE_TPL("to_logical", EVE_TYPE)
     });
 }
 
-TTS_CASE_TPL("from ignore", EVE_TYPE)
+TTS_CASE_TPL("top_bits from ignore", EVE_TYPE)
 {
   using logical = eve::logical<T>;
 
@@ -212,6 +212,76 @@ TTS_CASE_TPL("from ignore", EVE_TYPE)
       TTS_EQUAL(expected, eve::detail::to_logical(actual));
     }
   }
+}
+
+TTS_CASE_TPL("top_bits from logical + ignore", EVE_TYPE)
+{
+  using logical = eve::logical<T>;
+
+  logical expected(true);
+
+  top_bits actual(expected, eve::ignore_first(1));
+
+  expected.set(0, false);
+
+  TTS_EQUAL(expected, eve::detail::to_logical(actual));
+}
+
+TTS_CASE_TPL("top_bits all", EVE_TYPE)
+{
+  using logical = eve::logical<T>;
+
+  logical x(true);
+
+  TTS_EXPECT(eve::detail::all(top_bits(x)));
+
+  for (int i = 0; i != x.static_size; ++i)
+  {
+    x.set(i, false);
+    TTS_EXPECT_NOT(eve::detail::all(top_bits(x)));
+    x.set(i, true);
+  }
+}
+
+TTS_CASE_TPL("top_bits any", EVE_TYPE)
+{
+  using logical = eve::logical<T>;
+
+  logical x(false);
+
+  TTS_EXPECT_NOT(eve::detail::any(top_bits(x)));
+
+  for (int i = 0; i != x.static_size; ++i)
+  {
+    x.set(i, true);
+    TTS_EXPECT(eve::detail::any(top_bits(x)));
+    x.set(i, false);
+  }
+}
+
+TTS_CASE_TPL("top_bits first_true", EVE_TYPE)
+{
+  using logical = eve::logical<T>;
+
+  logical x(true);
+
+  TTS_EQUAL(0, eve::detail::first_true(top_bits(x)));
+
+  for (int i = 0; i != x.static_size - 1; ++i)
+  {
+    x.set(i, false);
+
+    std::optional res = eve::detail::first_true(top_bits(x));
+
+    TTS_EXPECT(res);
+
+    int expected = i + 1;
+    TTS_EQUAL(expected, *res);
+  }
+
+  x = false;
+
+  TTS_EXPECT_NOT(eve::detail::first_true(top_bits(x)));
 }
 
 #endif  // defined(SPY_ARCH_IS_AMD64) && !defined(EVE_NO_SIMD)
