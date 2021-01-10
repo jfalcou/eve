@@ -16,10 +16,10 @@
 #include <eve/detail/meta.hpp>
 
 #include <array>
+#include <bit>
 #include <compare>
 #include <optional>
 #include <ostream>
-#include <bit>
 
 namespace eve::detail
 {
