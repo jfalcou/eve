@@ -19,6 +19,7 @@
 #include <compare>
 #include <optional>
 #include <ostream>
+#include <bit>
 
 namespace eve::detail
 {
@@ -379,7 +380,7 @@ EVE_FORCEINLINE Logical to_logical(top_bits<Logical> mmask)
     });
 
     bits_wide test = actual_mmask & true_mmask;
-    return Logical{ (test == true_mmask).storage() };
+    return bit_cast( test == true_mmask, as_<Logical>{} );
   }
 }
 
