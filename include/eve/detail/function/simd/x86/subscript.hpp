@@ -36,7 +36,6 @@ namespace eve::detail
   //================================================================================================
   template<typename T, typename N, x86_abi ABI>
   EVE_FORCEINLINE void insert(logical<wide<T,N,ABI>>& p, std::size_t i, auto v) noexcept
-
   {
     if constexpr( !ABI::is_wide_logical )
     {
@@ -45,9 +44,9 @@ namespace eve::detail
     }
     else
     {
-      [[maybe_unused]] auto& s = p.storage();
-      auto ptr = reinterpret_cast<detail::alias_t<logical<T>>*>(&p);
-      ptr[i] = v;
+      auto m = p.bits();
+      m.set(i, logical<T>(v).bits());
+      p = bit_cast(m, as(p));
     }
   }
 }
