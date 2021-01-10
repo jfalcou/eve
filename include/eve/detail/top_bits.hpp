@@ -35,7 +35,7 @@ namespace eve::detail
 // bit utilities ---------------------
 
 template <typename N>
-EVE_FORCEINLINE constexpr std::uint32_t set_lower_n_bits(std::ptrdiff_t n) {
+EVE_FORCEINLINE constexpr N set_lower_n_bits(std::ptrdiff_t n) {
   std::uint64_t res{1};
   res <<= n;
   res -= 1;
@@ -76,6 +76,10 @@ EVE_FORCEINLINE auto movemask_raw(Logical p)
 
       return (top << s) | bottom;
     }
+  }
+  else
+  {
+    return p.storage();
   }
 }
 
@@ -131,9 +135,7 @@ struct top_bits
         }
         else
         {
-          if constexpr ( is_avx512_logical ) storage = p.storage();
-          else                               storage = movemask_raw(p);
-
+          storage = movemask_raw(p);
           operator&=(top_bits(ignore_none_{}));
         }
     }
@@ -154,7 +156,7 @@ struct top_bits
 
     EVE_FORCEINLINE constexpr explicit top_bits(ignore_all_)
     {
-      if constexpr( !is_aggregated ) storage = 0;
+      if constexpr( !is_aggregated ) storage = storage_type{0};
       else
       {
         using half_logical = typename logical_type::storage_type::subvalue_type;
@@ -240,7 +242,7 @@ struct top_bits
 
     EVE_FORCEINLINE constexpr bool get(std::ptrdiff_t i) const
     {
-      if constexpr ( !is_aggregated ) return storage & (1 << (i * bits_per_element));
+      if constexpr ( !is_aggregated ) return (storage & (1 << (i * bits_per_element))) != 0;
       else
       {
         if ( i < static_size / 2 ) return storage[0].get(i);
@@ -252,7 +254,7 @@ struct top_bits
 
     EVE_FORCEINLINE constexpr explicit operator bool()
     {
-      if constexpr ( !is_aggregated ) return storage;
+      if constexpr ( !is_aggregated ) return storage != storage_type(0);
       else
       {
         return (bool)storage[0] || (bool)storage[1];
@@ -404,7 +406,12 @@ EVE_FORCEINLINE std::ptrdiff_t first_true_guaranteed(top_bits<Logical> mmask)
 {
   if constexpr ( !top_bits<Logical>::is_aggregated )
   {
-    return std::countr_zero(mmask.storage) / top_bits<Logical>::bits_per_element;
+    auto st = [](auto m)
+    {
+      if constexpr(!Logical::abi_type::is_wide_logical) return m.value; else return m;
+    }(mmask.storage);
+
+    return std::countr_zero(st) / top_bits<Logical>::bits_per_element;
   }
   else
   {
