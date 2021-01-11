@@ -75,7 +75,7 @@ namespace eve::detail
     }
 
     template<typename Index>
-    EVE_FORCEINLINE auto operator[](wide<Index,cardinal_t<Derived>> const& idx) noexcept
+    EVE_FORCEINLINE auto operator[](wide<Index,cardinal_t<Derived>> const& idx) const noexcept
     {
       return lookup(self(),idx);
     }
