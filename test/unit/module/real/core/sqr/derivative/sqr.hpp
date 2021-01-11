@@ -19,11 +19,14 @@ TTS_CASE_TPL("Check derivative(sqr) return type", EVE_TYPE)
     TTS_EXPR_IS(eve::derivative(eve::sqr)(T(), unsigned()), T);
     TTS_EXPR_IS(eve::derivative(eve::sqr)(T(), ui_t()), T);
   }
+  else
+  {
+    TTS_PASS("Unsupported type");
+  }
 }
 
 TTS_CASE_TPL("Check eve::derivative(eve::sqr) behavior", EVE_TYPE)
 {
-
   if constexpr(eve::floating_value<T>)
   {
     TTS_EQUAL(eve::derivative(eve::sqr)(T{10}, 0u), T(100));
@@ -32,5 +35,9 @@ TTS_CASE_TPL("Check eve::derivative(eve::sqr) behavior", EVE_TYPE)
     TTS_EQUAL(eve::derivative(eve::sqr)(T{-10}, 0u), T(100));
     TTS_EQUAL(eve::derivative(eve::sqr)(T{-10}, 1u), T(-20));
     TTS_EQUAL(eve::derivative(eve::sqr)(T{-10}, 2u), T(2));
+  }
+  else
+  {
+    TTS_PASS("Unsupported type");
   }
 }

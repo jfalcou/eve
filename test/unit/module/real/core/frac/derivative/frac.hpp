@@ -19,6 +19,10 @@ TTS_CASE_TPL("Check derivative(frac) return type", EVE_TYPE)
   {
     TTS_EXPR_IS(eve::derivative(eve::frac)(T()), T);
   }
+  else
+  {
+    TTS_PASS("Unsupported type");
+  }
 }
 
 TTS_CASE_TPL("Check eve::derivative(eve::frac) behavior", EVE_TYPE)
@@ -31,5 +35,9 @@ TTS_CASE_TPL("Check eve::derivative(eve::frac) behavior", EVE_TYPE)
     TTS_ULP_EQUAL(eve::derivative(eve::frac)(T{0.25}), df(eve::frac, T(0.25))  , ulp);
     TTS_ULP_EQUAL(eve::derivative(eve::frac)(T{1.2}), df(eve::frac, T(1.2))        , ulp);
     TTS_ULP_EQUAL(eve::derivative(eve::frac)(T{-0.25}), df(eve::frac, T(-0.25)), ulp);
+  }
+  else
+  {
+    TTS_PASS("Unsupported type");
   }
 }

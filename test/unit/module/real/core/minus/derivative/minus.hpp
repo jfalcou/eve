@@ -19,11 +19,14 @@ TTS_CASE_TPL("Check derivative(minus) return type", EVE_TYPE)
     TTS_EXPR_IS(eve::derivative(eve::minus)(T(), unsigned()), T);
     TTS_EXPR_IS(eve::derivative(eve::minus)(T(), ui_t()), T);
   }
+  else
+  {
+    TTS_PASS("Unsupported type");
+  }
 }
 
 TTS_CASE_TPL("Check eve::derivative(eve::minus) behavior", EVE_TYPE)
 {
-
   if constexpr(eve::floating_value<T>)
   {
     TTS_EQUAL(eve::derivative(eve::minus)(T{10}, 0u), T(-10));
@@ -32,5 +35,9 @@ TTS_CASE_TPL("Check eve::derivative(eve::minus) behavior", EVE_TYPE)
     TTS_EQUAL(eve::derivative(eve::minus)(T{-10}, 0u), T(10));
     TTS_EQUAL(eve::derivative(eve::minus)(T{-10}, 1u), T(-1));
     TTS_EQUAL(eve::derivative(eve::minus)(T{-10}, 2u), T(0));
+  }
+  else
+  {
+    TTS_PASS("Unsupported type");
   }
 }

@@ -63,7 +63,9 @@ TTS_CASE_TPL("Check eve::tolerant(eve::floor) behavior", EVE_TYPE)
    TTS_EQUAL(eve::tolerant(eve::floor)(eve::prev(T(-45), 2), 3), T(-45));
    TTS_EQUAL(eve::tolerant(eve::floor)(eve::prev(T(-45), 3), 3), T(-45));
    TTS_EQUAL(eve::tolerant(eve::floor)(eve::prev(T(-45), 4), 3), T(-46));
-
-
+  }
+  else
+  {
+    TTS_PASS("Unsupported type");
   }
 }

@@ -22,6 +22,10 @@ TTS_CASE_TPL("Check derivative(cospi) return type", EVE_TYPE)
   {
     TTS_EXPR_IS(eve::derivative(eve::cospi)(T()), T);
   }
+  else
+  {
+    TTS_PASS("Unsupported type");
+  }
 }
 
 TTS_CASE_TPL("Check eve::derivative(eve::cospi) behavior", EVE_TYPE)
@@ -33,5 +37,9 @@ TTS_CASE_TPL("Check eve::derivative(eve::cospi) behavior", EVE_TYPE)
     auto ulp =  (sizeof(elt_t) == 4) ? 1.0e4 : 1.0e8;
     TTS_ULP_EQUAL(eve::derivative(eve::cospi)(T{2.0}), df(eve::cospi, T(2.0))  , ulp);
     TTS_ULP_EQUAL(eve::derivative(eve::cospi)(T{1}), df(eve::cospi, T(2.0))  , ulp);
+  }
+  else
+  {
+    TTS_PASS("Unsupported type");
   }
 }

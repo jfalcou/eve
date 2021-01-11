@@ -12,11 +12,8 @@
 #include <eve/constant/eps.hpp>
 #include <type_traits>
 
-
 TTS_CASE_TPL("Check eve::tolerant(eve::trunc) behavior", EVE_TYPE)
 {
-
-
   if constexpr(eve::floating_value<T>)
   {
     TTS_EQUAL(eve::tolerant(eve::trunc)(T(-1)), T(-1));
@@ -41,5 +38,8 @@ TTS_CASE_TPL("Check eve::tolerant(eve::trunc) behavior", EVE_TYPE)
     TTS_EQUAL(eve::tolerant(eve::trunc)(eve::dec(3*eve::eps(eve::as<T>()))), T(-1));
     TTS_EQUAL(eve::tolerant(eve::trunc)(eve::dec(4*eve::eps(eve::as<T>()))), T(0));
   }
-
+  else
+  {
+    TTS_PASS("Unsupported type");
+  }
 }

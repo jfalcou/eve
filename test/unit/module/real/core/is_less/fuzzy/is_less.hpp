@@ -38,6 +38,10 @@ TTS_CASE_TPL("Check eve::definitely(eve::is_less) return type", EVE_TYPE)
     TTS_EXPR_IS( eve::definitely(eve::is_less)(  T()         , v_t(), ui_t() ) , logical<T>);
     TTS_EXPR_IS( eve::definitely(eve::is_less)(v_t()         ,   T(), ui_t() ) , logical<T>);
   }
+  else
+  {
+    TTS_PASS("Unsupported type");
+  }
 }
 
 TTS_CASE_TPL("Check eve::definitely(eve::is_less) behavior", EVE_TYPE)
@@ -71,5 +75,8 @@ TTS_CASE_TPL("Check eve::definitely(eve::is_less) behavior", EVE_TYPE)
     TTS_EQUAL(eve::definitely(eve::is_less)(v_t(-4*md)             , T(0)                 , ui_t(3))   , eve::true_(eve::as<T>()) );
     TTS_EQUAL(eve::definitely(eve::is_less)(v_t(1)                , v_t(1)               , ui_t(3))   , eve::false_(eve::as<T>()) );
   }
-
+  else
+  {
+    TTS_PASS("Unsupported type");
+  }
 }
