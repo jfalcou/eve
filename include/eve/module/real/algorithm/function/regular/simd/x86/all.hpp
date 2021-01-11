@@ -13,6 +13,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/concepts.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/function/bit_cast.hpp>
 
 namespace eve::detail
 {
