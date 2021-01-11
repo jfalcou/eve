@@ -10,11 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
 #include <eve/concept/memory.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/detail/spy.hpp>
 #include <type_traits>
 
-#ifdef __GNUC__
+#ifdef SPY_COMPILER_IS_GCC
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 #endif
@@ -154,6 +155,6 @@ namespace eve::detail
   }
 }
 
-#ifdef __GNUC__
+#ifdef SPY_COMPILER_IS_GCC
 #pragma GCC diagnostic pop
 #endif
