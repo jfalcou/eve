@@ -122,7 +122,7 @@ namespace eve::detail
     {
       if constexpr(is_one_of<D>(types<converter_type<float>, converter_type<double>>{}))
       {
-        using vd_t = value_type_t<D>;
+        using vd_t = value_type_t<typename D::base_type>;
         using i_t  = as_integer_t<vd_t>;
         auto x = to_<i_t>(xx);
         auto z = is_nez(x);

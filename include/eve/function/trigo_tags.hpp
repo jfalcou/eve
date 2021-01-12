@@ -10,48 +10,39 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/abi.hpp>
+#include <eve/detail/overload.hpp>
 
 namespace eve
 {
   //================================================================================================
-  // Trigonometric decorators
-  struct restricted_type : decorator_
+  // Rounding decorator objects
+  struct restricted_
   {
-    template<typename Function> constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
-    {
-      return [f](auto const &... args) { return f(restricted_type {}, args...); };
-    }
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
   };
 
-  struct small_type : decorator_
+  struct small_
   {
-    template<typename Function> constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
-    {
-      return [f](auto const &... args) { return f(small_type {}, args...); };
-    }
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
   };
 
-  struct medium_type : decorator_
+  struct medium_
   {
-    template<typename Function> constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
-    {
-      return [f](auto const &... args) { return f(medium_type {}, args...); };
-    }
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
   };
 
-  struct big_type : decorator_
+  struct big_
   {
-    template<typename Function> constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
-    {
-      return [f](auto const &... args) { return f(big_type {}, args...); };
-    }
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
   };
 
-  //================================================================================================
-  // Trigonometric decorator objects
-  inline constexpr restricted_type  const restricted = {};
-  inline constexpr small_type       const small      = {};
-  inline constexpr medium_type      const medium     = {};
-  inline constexpr big_type         const big        = {};
+  using restricted_type = decorated<restricted_()>;
+  using small_type      = decorated<small_()>;
+  using medium_type     = decorated<medium_()>;
+  using big_type        = decorated<big_()>;
+
+  inline constexpr restricted_type  const restricted  = {};
+  inline constexpr small_type       const small       = {};
+  inline constexpr medium_type      const medium      = {};
+  inline constexpr big_type         const big         = {};
 }

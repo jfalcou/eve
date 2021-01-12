@@ -11,26 +11,16 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
 
 namespace eve
 {
   //================================================================================================
-  // Function decorators mark-up used in function overloads
-  struct numeric_type : decorator_
+  // Function decorator - numeric mode
+  struct numeric_
   {
-    template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
-    {
-      return  [f](auto&&... args)
-              {
-                return f(numeric_type{}, std::forward<decltype(args)>(args)...);
-              };
-    }
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
   };
 
-  //================================================================================================
-  // Function decorator - numeric mode
+  using numeric_type = decorated<numeric_()>;
   inline constexpr numeric_type const numeric = {};
 }
-

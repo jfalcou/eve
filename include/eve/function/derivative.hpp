@@ -11,28 +11,26 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
 
 namespace eve
 {
-  //================================================================================================
-  // Function decorators mark-up used in function overloads
-  template <auto PARAM>
-  struct derivative_type : decorator_
-  {
-    template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
-    {
-      return  [f](auto&&... args)
-              {
-                return f(derivative_type<PARAM>{}, std::forward<decltype(args)>(args)...);
-              };
-    }
-  };
+  struct pedantic_;
 
   //================================================================================================
   // Function decorator - derivative mode
-  inline constexpr derivative_type<1>  const derivative = {};
+  template<auto Param> struct derivative_
+  {
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
+
+    template<auto N> static constexpr auto combine( decorated<pedantic_> const& ) noexcept
+    {
+      return decorated<derivative_(pedantic_)>{};
+    }
+  };
+
+  template<auto Param> using derivative_type = decorated<derivative_<Param>()>;
+
+  inline constexpr derivative_type<1> const derivative = {};
   inline constexpr derivative_type<1> const derivative_1st = {};
   inline constexpr derivative_type<2> const derivative_2nd = {};
   inline constexpr derivative_type<3> const derivative_3rd = {};

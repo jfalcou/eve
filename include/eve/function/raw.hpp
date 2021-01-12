@@ -11,26 +11,16 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
 
 namespace eve
 {
   //================================================================================================
-  // Function decorators mark-up used in function overloads
-  struct raw_type : decorator_
+  // Function decorator - raw mode
+  struct raw_
   {
-    template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
-    {
-      return  [f](auto&&... args)
-              {
-                return f(raw_type{}, std::forward<decltype(args)>(args)...);
-              };
-    }
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
   };
 
-  //================================================================================================
-  // Function decorator - raw mode
+  using raw_type = decorated<raw_()>;
   inline constexpr raw_type const raw = {};
 }
-

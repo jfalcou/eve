@@ -108,10 +108,33 @@
 namespace eve
 {
   //================================================================================================
-  // decorator mark-up and detection
+  // decorator definition, detection, combination and application to callables
   //================================================================================================
   struct decorator_ {};
   template<typename ID> concept decorator = std::derived_from<ID,decorator_>;
+
+  template<typename Decoration> struct decorated;
+  template<typename Decoration, typename... Args>
+  struct decorated<Decoration(Args...)> : decorator_
+  {
+    using base_type = Decoration;
+
+    template<decorator Decorator>
+    constexpr EVE_FORCEINLINE auto operator()(Decorator d) const noexcept
+    {
+      return Decoration::combine(d);
+    }
+
+    template<typename Function>
+    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
+    {
+      if constexpr( requires{ Decoration{}(f); } )  return Decoration{}(f);
+      else
+      {
+        return [f]<typename... X>(X&&... x) { return f(decorated{}, std::forward<X>(x)...); };
+      }
+    }
+  };
 
   namespace detail
   {

@@ -13,6 +13,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
+#include <eve/detail/apply_over.hpp>
 #include <eve/function/any.hpp>
 #include <eve/function/average.hpp>
 #include <eve/function/convert.hpp>
@@ -21,12 +22,9 @@
 #include <eve/function/nth_prime.hpp>
 #include <eve/function/if_else.hpp>
 #include <type_traits>
-#include <typeinfo>
-#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
-
   template<unsigned_value T>
   EVE_FORCEINLINE auto prime_floor_(EVE_SUPPORTS(cpu_), T n) noexcept
   {
@@ -50,26 +48,16 @@ namespace eve::detail
       return apply_over(prime_floor, n);
   }
 
-  template<unsigned_value T, typename D>
-  EVE_FORCEINLINE constexpr auto prime_floor_(EVE_SUPPORTS(cpu_), D const &, T n) noexcept
-  requires(is_one_of<D>(types<
-                        converter_type<std::uint8_t>
-                       , converter_type<std::uint16_t>
-                       , converter_type<std::uint32_t>
-                       , converter_type<std::uint64_t>
-                       , converter_type<float>
-                       , converter_type<double>>{}))
+  template<unsigned_value T, unsigned_scalar_value D>
+  EVE_FORCEINLINE constexpr auto prime_floor_(EVE_SUPPORTS(cpu_), converter_type<D> d, T n) noexcept
   {
-    if constexpr(is_one_of<D>(types<converter_type<float>, converter_type<double>>{}))
-    {
-      auto r =  D()(prime_floor(n));
-      return if_else(is_eqz(r), allbits, r);
-    }
-    else
-    {
-      return prime_floor(D()(n));
-    }
+    return prime_floor(d(n));
   }
 
-
+  template<unsigned_value T, floating_scalar_value D>
+  EVE_FORCEINLINE constexpr auto prime_floor_(EVE_SUPPORTS(cpu_), converter_type<D> d, T n) noexcept
+  {
+    auto r = d(prime_floor(n));
+    return if_else(is_eqz(r), allbits, r);
+  }
 }

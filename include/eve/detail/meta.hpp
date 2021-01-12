@@ -157,13 +157,13 @@ namespace eve::detail
   // Upgrade a type (u)int(xx) -> (u)int(min(2xx, 64)
   //                float -> double,  double -> double
   template < typename T, bool is = std::is_integral_v<T>>
-  struct upgrade
+  struct upgrader
   {
     using type = T;
   };
 
   template < typename T>
-  struct upgrade < T, true>
+  struct upgrader < T, true>
   {
     template<std::size_t Size, bool Sign, typename Dummy = void>
     struct fetch;
@@ -216,9 +216,14 @@ namespace eve::detail
   };
 
   template < typename T>
-  struct upgrade < T, false>
+  struct upgrader< T, false>
   {
     using type = double;
+  };
+
+  template<typename T>
+  struct upgrade : upgrader<T>
+  {
   };
 
   template<typename T>
@@ -240,8 +245,15 @@ namespace eve::detail
     using type = make_integer_t<sizeof(T), Sign>;
   };
 
+  template<typename T>
+  struct as_uinteger : as_integer<T,unsigned>
+  {};
+
   template<typename T, typename Sign = sign_of_t<T>>
   using as_integer_t = typename as_integer<T, Sign>::type;
+
+  template<typename T>
+  using as_uinteger_t = typename as_uinteger<T>::type;
 
   // Generate integral types from sign + size
   template<std::size_t Size>

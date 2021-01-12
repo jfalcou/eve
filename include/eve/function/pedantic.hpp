@@ -11,26 +11,16 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
 
 namespace eve
 {
   //================================================================================================
-  // Function decorators mark-up used in function overloads
-  struct pedantic_type : decorator_
+  // Function decorator - pedantic mode
+  struct pedantic_
   {
-    template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
-    {
-      return  [f](auto&&... args)
-              {
-                return f(pedantic_type{}, std::forward<decltype(args)>(args)...);
-              };
-    }
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
   };
 
-  //================================================================================================
-  // Function decorator - pedantic mode
+  using pedantic_type = decorated<pedantic_()>;
   inline constexpr pedantic_type const pedantic = {};
 }
-

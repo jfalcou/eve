@@ -11,6 +11,7 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/binarize.hpp>
@@ -20,11 +21,9 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <type_traits>
-#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
-
   template<unsigned_value T>
   EVE_FORCEINLINE auto nth_prime_(EVE_SUPPORTS(cpu_), T n) noexcept
   {
@@ -36,9 +35,6 @@ namespace eve::detail
     // That gives us the first 10000 nth_prime with the largest
     // being 104729:
     //
-//     constexpr unsigned b1 = 53;
-//     constexpr unsigned b2 = 6541;
-//     constexpr unsigned b3 = 10000;
     constexpr std::array<std::uint16_t, 10001> a1 = {
       0u, //this is the overflow value
       2u, 3u, 5u, 7u, 11u, 13u, 17u, 19u, 23u, 29u, 31u,
@@ -1242,25 +1238,16 @@ namespace eve::detail
       return apply_over(nth_prime, n);
   }
 
-  template<unsigned_value T, typename D>
-  EVE_FORCEINLINE constexpr auto nth_prime_(EVE_SUPPORTS(cpu_), D const &, T n) noexcept
-  requires(is_one_of<D>(types<
-                        converter_type<std::uint8_t>
-                       , converter_type<std::uint16_t>
-                       , converter_type<std::uint32_t>
-                       , converter_type<std::uint64_t>
-                       , converter_type<float>
-                       , converter_type<double>>{}))
+  template<unsigned_value T, unsigned_scalar_value D>
+  EVE_FORCEINLINE constexpr auto nth_prime_(EVE_SUPPORTS(cpu_), converter_type<D> d, T n) noexcept
   {
-    if constexpr(is_one_of<D>(types<converter_type<float>, converter_type<double>>{}))
-    {
-      auto r =  D()(nth_prime(uint32(n)));
-      return if_else(is_eqz(r), allbits, r);
-    }
-    else
-    {
-      return nth_prime(D()(n));
-    }
+    return nth_prime(d(n));
   }
 
+  template<unsigned_value T, floating_scalar_value D>
+  EVE_FORCEINLINE constexpr auto nth_prime_(EVE_SUPPORTS(cpu_), converter_type<D> d, T n) noexcept
+  {
+    auto r = d(nth_prime(n));
+    return if_else(is_eqz(r), allbits, r);
+  }
 }

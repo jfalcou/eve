@@ -11,26 +11,19 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
 
 namespace eve
 {
   //================================================================================================
   // Function decorators mark-up used in function overloads
-  struct saturated_type : decorator_
+  struct saturated_
   {
-    template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
-    {
-      return  [f](auto&&... args)
-              {
-                return f(saturated_type{}, std::forward<decltype(args)>(args)...);
-              };
-    }
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
   };
+
+  using saturated_type = decorated<saturated_()>;
 
   //================================================================================================
   // Function decorator - saturated mode
   inline constexpr saturated_type const saturated = {};
 }
-
