@@ -168,11 +168,11 @@ namespace eve::detail
             else  if constexpr( c == category::uint32x8) that = _mm256_maskload_epi32 ((std::int32_t const*)p,mask);
             else  if constexpr( c == category::int32x4 ) that = _mm_maskload_epi32    ((std::int32_t const*)p,mask);
             else  if constexpr( c == category::uint32x4) that = _mm_maskload_epi32    ((std::int32_t const*)p,mask);
-            else                                         return load_(EVE_RETARGET(cpu_), cond, p);
+            else                                         return load_(EVE_RETARGET(cpu_), cond, p, Cardinal{});
           }
           else
           {
-            return  load_(EVE_RETARGET(cpu_), cond, p);
+            return  load_(EVE_RETARGET(cpu_), cond, p, Cardinal{});
           }
 
           if constexpr( C::has_alternative )
@@ -206,6 +206,6 @@ namespace eve::detail
   EVE_FORCEINLINE auto load_(EVE_SUPPORTS(sse2_), C const &cond, Ptr p) noexcept
   {
     using type = std::remove_cvref_t<decltype(*p)>;
-    return load_(EVE_RETARGET(sse2_), cond, p, expected<type>);
+    return load_(EVE_RETARGET(sse2_), cond, p, expected_cardinal_t<type>{});
   }
 }
