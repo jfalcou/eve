@@ -44,7 +44,13 @@ namespace eve
     //==============================================================================================
     // Assignment
     //==============================================================================================
-    EVE_FORCEINLINE constexpr logical &operator=(bool v) noexcept
+    EVE_FORCEINLINE constexpr logical &operator=(logical v) & noexcept
+    {
+      value_ = v.value_;
+      return *this;
+    }
+
+    EVE_FORCEINLINE constexpr logical &operator=(bool v) & noexcept
     {
       value_ = v ? true_mask : false_mask;
       return *this;
