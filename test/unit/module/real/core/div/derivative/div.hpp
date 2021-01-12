@@ -17,14 +17,21 @@ TTS_CASE_TPL("Check derivative(div) return type", EVE_TYPE)
   {
     TTS_EXPR_IS(eve::derivative(eve::div)(T(), T()), T);
   }
+  else
+  {
+    TTS_PASS("Unsupported type");
+  }
 }
 
 TTS_CASE_TPL("Check eve::derivative(eve::div) behavior", EVE_TYPE)
 {
-
   if constexpr(eve::floating_value<T>)
   {
     TTS_ULP_EQUAL(eve::derivative_1st(eve::div)(T{10},T{5}), T(0.2), 0.5);
     TTS_ULP_EQUAL(eve::derivative_2nd(eve::div)(T{10},T{5}), T(-10/25.0), 0.5);
+  }
+  else
+  {
+    TTS_PASS("Unsupported type");
   }
 }
