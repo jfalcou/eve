@@ -48,45 +48,8 @@ namespace eve::detail
   EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), C const &cond, Ptr ptr) noexcept
   requires( simd_compatible_ptr<Ptr, as_wide_t<std::remove_cvref_t<decltype(*ptr)>> > )
   {
-    using e_t = std::remove_cvref_t<decltype(*ptr)>;
-    using r_t = as_wide_t< e_t >;
-
-    if constexpr( !std::is_pointer_v<Ptr> )
-    {
-      return eve::load[cond](ptr.get());
-    }
-    else
-    {
-      // If the ignore/keep is complete we can jump over if_else
-      if constexpr( C::is_complete )
-      {
-        if constexpr(C::is_inverted)  { return eve::load(ptr);  }
-        else
-        {
-          if constexpr(C::has_alternative)  return r_t{cond.alternative};
-          else                              return r_t{};
-        }
-      }
-      else
-      {
-        auto offset = cond.offset( as_<r_t>{} );
-
-        if constexpr(C::has_alternative)
-        {
-          r_t that(cond.alternative);
-          auto* dst   = (e_t*)(&that.storage());
-          std::memcpy( dst + offset, ptr + offset, sizeof(e_t) * cond.count( as_<r_t>{} ) );
-          return that;
-        }
-        else
-        {
-          [[maybe_unused]] r_t that;
-          auto* dst   = (e_t*)(&that.storage());
-          std::memcpy( dst + offset, ptr + offset, sizeof(e_t) * cond.count( as_<r_t>{} ) );
-          return that;
-        }
-      }
-    }
+    using T = std::remove_cvref_t<decltype(*ptr)>;
+    return eve::load[cond](ptr, expected_cardinal_t<T>{});
   }
 
   template<relative_conditional_expr C, typename Ptr, typename Cardinal>
