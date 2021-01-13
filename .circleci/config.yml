@@ -21,6 +21,8 @@ docker_clang: &docker_clang
     - image: compilaction/clang-dev:latest
       environment:
         COMPILER: clang++
+        COMMON_CXX_FLAGS: -g -fno-omit-frame-pointer -fsanitize=address
+        COMMON_LINKER_OPTIONS: -fsanitize=address
 docker_aarch64: &docker_aarch64
   docker:
     - image: compilaction/cpp-20:latest
