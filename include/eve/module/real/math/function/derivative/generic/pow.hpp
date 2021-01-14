@@ -23,7 +23,7 @@ namespace eve::detail
 {
   template<floating_real_value T, unsigned_value N>
   EVE_FORCEINLINE constexpr T pow_(EVE_SUPPORTS(cpu_)
-                                   , derivative_type<2> const &
+                                   , diff_type<2> const &
                                    , T x, T y, N n) noexcept
   {
     if constexpr( has_native_abi_v<T> )
@@ -31,12 +31,12 @@ namespace eve::detail
       return pow(x, y)*pow(log(x), n);
     }
     else
-      return apply_over(derivative_1st(pow), x, y, n);
+      return apply_over(diff_1st(pow), x, y, n);
   }
 
   template<floating_real_value T, unsigned_value N>
   EVE_FORCEINLINE constexpr T pow_(EVE_SUPPORTS(cpu_)
-                                   , derivative_type<1> const &
+                                   , diff_type<1> const &
                                    , T x, T y, N p) noexcept
   {
     if constexpr( has_native_abi_v<T> )
@@ -47,12 +47,12 @@ namespace eve::detail
       return (tgamma(yp1)/tgamma(yp1-fp))*pow(x, y-fp); // TO DO better eval
     }
     else
-      return apply_over(derivative_2nd(pow), x, y, p);
+      return apply_over(diff_2nd(pow), x, y, p);
   }
 
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr T pow_(EVE_SUPPORTS(cpu_)
-                                   , derivative_type<1> const &
+                                   , diff_type<1> const &
                                    , T const &x
                                    , T const &y) noexcept
   {
@@ -61,7 +61,7 @@ namespace eve::detail
 
    template<floating_real_value T>
   EVE_FORCEINLINE constexpr T pow_(EVE_SUPPORTS(cpu_)
-                                   , derivative_type<2> const &
+                                   , diff_type<2> const &
                                    , T const &x
                                    , T const &y) noexcept
   {

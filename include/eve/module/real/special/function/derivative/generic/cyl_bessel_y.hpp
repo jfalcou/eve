@@ -21,7 +21,7 @@ namespace eve::detail
 
   template<floating_real_value T, integral_real_value N>
   EVE_FORCEINLINE constexpr T cyl_bessel_y_(EVE_SUPPORTS(cpu_)
-                                  , derivative_type<1> const &
+                                  , diff_type<1> const &
                                   , N const &n
                                   , T const &x) noexcept
   {

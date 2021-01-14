@@ -16,15 +16,15 @@
 #include <eve/function/sqrt.hpp>
 #include <type_traits>
 
-TTS_CASE_TPL("Check derivative(cyl_bessel_y) return type", EVE_TYPE)
+TTS_CASE_TPL("Check diff(cyl_bessel_y) return type", EVE_TYPE)
 {
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EXPR_IS(eve::derivative(eve::cyl_bessel_y)(int(), T()), T);
+    TTS_EXPR_IS(eve::diff(eve::cyl_bessel_y)(int(), T()), T);
   }
 }
 
-TTS_CASE_TPL("Check eve::derivative(eve::cyl_bessel_y) behavior", EVE_TYPE)
+TTS_CASE_TPL("Check eve::diff(eve::cyl_bessel_y) behavior", EVE_TYPE)
 {
   if constexpr(eve::floating_value<T>)
   {
@@ -34,9 +34,9 @@ TTS_CASE_TPL("Check eve::derivative(eve::cyl_bessel_y) behavior", EVE_TYPE)
       return eve::detail::centered_diffdiv(cy, x);
     };
     auto ulp =  (sizeof(elt_t) == 4) ? 1.0e4 : 1.0e9;
-    TTS_ULP_EQUAL(eve::derivative(eve::cyl_bessel_y)(2, T{2.0}), df2(2, T(2.0))  , ulp);
-    TTS_ULP_EQUAL(eve::derivative(eve::cyl_bessel_y)(2, T{1.0}), df2(2, T(1.0))  , ulp);
-    TTS_ULP_EQUAL(eve::derivative(eve::cyl_bessel_y)(3, T{2.0}), df2(3, T(2.0))  , ulp);
-    TTS_ULP_EQUAL(eve::derivative(eve::cyl_bessel_y)(3, T{1.0}), df2(3, T(1.0))  , ulp);
+    TTS_ULP_EQUAL(eve::diff(eve::cyl_bessel_y)(2, T{2.0}), df2(2, T(2.0))  , ulp);
+    TTS_ULP_EQUAL(eve::diff(eve::cyl_bessel_y)(2, T{1.0}), df2(2, T(1.0))  , ulp);
+    TTS_ULP_EQUAL(eve::diff(eve::cyl_bessel_y)(3, T{2.0}), df2(3, T(2.0))  , ulp);
+    TTS_ULP_EQUAL(eve::diff(eve::cyl_bessel_y)(3, T{1.0}), df2(3, T(1.0))  , ulp);
   }
 }

@@ -15,9 +15,9 @@ int main()
     << "<- pf                          = " << pf << '\n'
     << "<- qf                          = " << qf << '\n'
     << "<- rf                          = " << rf << '\n'
-    << "-> derivative_1st(fnms)(pf, qf, rf) = " << eve::derivative_1st(eve::fnms)(pf, qf, rf) << '\n'
-    << "-> derivative_2nd(fnms)(pf, qf, rf) = " << eve::derivative_2nd(eve::fnms)(pf, qf, rf) << '\n'
-    << "-> derivative_3rd(fnms)(pf, qf, rf) = " << eve::derivative_3rd(eve::fnms)(pf, qf, rf) << '\n';
+    << "-> diff_1st(fnms)(pf, qf, rf) = " << eve::diff_1st(eve::fnms)(pf, qf, rf) << '\n'
+    << "-> diff_2nd(fnms)(pf, qf, rf) = " << eve::diff_2nd(eve::fnms)(pf, qf, rf) << '\n'
+    << "-> diff_3rd(fnms)(pf, qf, rf) = " << eve::diff_3rd(eve::fnms)(pf, qf, rf) << '\n';
 
 
   float xf = 0.5f;
@@ -28,8 +28,8 @@ int main()
     << "<- xf                      = " << xf << '\n'
     << "<- yf                      = " << yf << '\n'
     << "<- zf                      = " << yf << '\n'
-    << "-> derivative_1st(fnms)(xf, yf, zf) = " << eve::derivative_1st(eve::fnms)(xf, yf, zf) << '\n'
-    << "-> derivative_2nd(fnms)(xf, yf, zf) = " << eve::derivative_2nd(eve::fnms)(xf, yf, zf) << '\n'
-    << "-> derivative_3rd(fnms)(xf, yf, zf) = " << eve::derivative_3rd(eve::fnms)(xf, yf, zf) << '\n';
+    << "-> diff_1st(fnms)(xf, yf, zf) = " << eve::diff_1st(eve::fnms)(xf, yf, zf) << '\n'
+    << "-> diff_2nd(fnms)(xf, yf, zf) = " << eve::diff_2nd(eve::fnms)(xf, yf, zf) << '\n'
+    << "-> diff_3rd(fnms)(xf, yf, zf) = " << eve::diff_3rd(eve::fnms)(xf, yf, zf) << '\n';
   return 0;
 }

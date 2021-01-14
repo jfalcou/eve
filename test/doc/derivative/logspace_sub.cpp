@@ -18,8 +18,8 @@ int main()
             << "<- pf                                   = " << pf << '\n'
             << "<- qf                                   = " << qf << '\n'
             << "-> logspace_sub(pf, qf)                 = " << eve::logspace_sub(pf, qf) << '\n'
-            << "-> derivative_1st(logspace_sub)(pf, qf) = " <<  eve::derivative_1st(eve::logspace_sub)(pf, qf) << std::endl
-            << "-> derivative_2nd(logspace_sub)(pf, qf) = " <<  eve::derivative_2nd(eve::logspace_sub)(pf, qf) << std::endl;
+            << "-> diff_1st(logspace_sub)(pf, qf) = " <<  eve::diff_1st(eve::logspace_sub)(pf, qf) << std::endl
+            << "-> diff_2nd(logspace_sub)(pf, qf) = " <<  eve::diff_2nd(eve::logspace_sub)(pf, qf) << std::endl;
 
   float xf = 4.0f;
   float yf = -1.0f;
@@ -28,7 +28,7 @@ int main()
             << "<- xf                                   = " << xf << '\n'
             << "<- yf                                   = " << yf << '\n'
             << "-> logspace_sub(xf, yf)                 = " << eve::logspace_sub(xf, yf) << '\n'
-            << "-> derivative_1st(logspace_sub)(xf, yf) = " <<  eve::derivative_1st(eve::logspace_sub)(xf, yf) << std::endl
-            << "-> derivative_2nd(logspace_sub)(xf, yf) = " <<  eve::derivative_2nd(eve::logspace_sub)(xf, yf) << std::endl;
+            << "-> diff_1st(logspace_sub)(xf, yf) = " <<  eve::diff_1st(eve::logspace_sub)(xf, yf) << std::endl
+            << "-> diff_2nd(logspace_sub)(xf, yf) = " <<  eve::diff_2nd(eve::logspace_sub)(xf, yf) << std::endl;
   return 0;
 }

@@ -15,15 +15,15 @@
 #include <eve/function/sqrt.hpp>
 #include <type_traits>
 
-TTS_CASE_TPL("Check derivative(exp_int) return type", EVE_TYPE)
+TTS_CASE_TPL("Check diff(exp_int) return type", EVE_TYPE)
 {
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EXPR_IS(eve::derivative(eve::exp_int)(int(), T()), T);
+    TTS_EXPR_IS(eve::diff(eve::exp_int)(int(), T()), T);
   }
 }
 
-TTS_CASE_TPL("Check eve::derivative(eve::exp_int) behavior", EVE_TYPE)
+TTS_CASE_TPL("Check eve::diff(eve::exp_int) behavior", EVE_TYPE)
 {
   if constexpr(eve::floating_value<T>)
   {
@@ -31,7 +31,7 @@ TTS_CASE_TPL("Check eve::derivative(eve::exp_int) behavior", EVE_TYPE)
     auto ulp =  (sizeof(elt_t) == 4) ? 1.0e4 : 1.0e8;
     auto expi = [](auto x){return eve::exp_int(2, x); };
     auto df = [](auto f, auto x){return eve::detail::centered_diffdiv(f, x); };
-    TTS_ULP_EQUAL(eve::derivative(eve::exp_int)(2, T{2.0}), df(expi, T(2.0))  , 2*ulp);
-    TTS_ULP_EQUAL(eve::derivative(eve::exp_int)(2, T{1.0}), df(expi, T(1.0))  , 2*ulp);
+    TTS_ULP_EQUAL(eve::diff(eve::exp_int)(2, T{2.0}), df(expi, T(2.0))  , 2*ulp);
+    TTS_ULP_EQUAL(eve::diff(eve::exp_int)(2, T{1.0}), df(expi, T(1.0))  , 2*ulp);
   }
 }

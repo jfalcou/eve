@@ -17,7 +17,7 @@ int main()
     << "---- simd" << '\n'
     << "<- pf                    = " << pf << '\n'
     << "<- qf                    = " << qf << '\n'
-    << "-> derivative(atan2)(pf) = " << eve::derivative(eve::atan2)(pf, qf) << '\n';
+    << "-> diff(atan2)(pf) = " << eve::diff(eve::atan2)(pf, qf) << '\n';
 
   float xf = 1.0f;
   float yf = -1.0f;
@@ -26,6 +26,6 @@ int main()
     << "---- scalar"  << '\n'
     << "<- xf                    = " << xf << '\n'
     << "<- yf                    = " << yf << '\n'
-    << "-> derivative(atan2)(xf) = " << eve::derivative(eve::atan2)(xf, yf) << '\n';
+    << "-> diff(atan2)(xf) = " << eve::diff(eve::atan2)(xf, yf) << '\n';
   return 0;
 }

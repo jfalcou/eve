@@ -11,11 +11,11 @@
 #include <eve/function/derivative/nearest.hpp>
 #include <type_traits>
 
-TTS_CASE_TPL("Check derivative(nearest) return type", EVE_TYPE)
+TTS_CASE_TPL("Check diff(nearest) return type", EVE_TYPE)
 {
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EXPR_IS(eve::derivative(eve::nearest)(T()), T);
+    TTS_EXPR_IS(eve::diff(eve::nearest)(T()), T);
   }
   else
   {
@@ -23,11 +23,11 @@ TTS_CASE_TPL("Check derivative(nearest) return type", EVE_TYPE)
   }
 }
 
-TTS_CASE_TPL("Check eve::derivative(eve::nearest) behavior", EVE_TYPE)
+TTS_CASE_TPL("Check eve::diff(eve::nearest) behavior", EVE_TYPE)
 {
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::derivative(eve::nearest)(T{10.4}), T(0));
+    TTS_EQUAL(eve::diff(eve::nearest)(T{10.4}), T(0));
   }
   else
   {

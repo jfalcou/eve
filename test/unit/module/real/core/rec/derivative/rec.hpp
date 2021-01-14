@@ -11,11 +11,11 @@
 #include <eve/function/derivative/rec.hpp>
 #include <type_traits>
 
-TTS_CASE_TPL("Check derivative(rec) return type", EVE_TYPE)
+TTS_CASE_TPL("Check diff(rec) return type", EVE_TYPE)
 {
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EXPR_IS(eve::derivative(eve::rec)(T()), T);
+    TTS_EXPR_IS(eve::diff(eve::rec)(T()), T);
   }
   else
   {
@@ -23,12 +23,12 @@ TTS_CASE_TPL("Check derivative(rec) return type", EVE_TYPE)
   }
 }
 
-TTS_CASE_TPL("Check eve::derivative(eve::rec) behavior", EVE_TYPE)
+TTS_CASE_TPL("Check eve::diff(eve::rec) behavior", EVE_TYPE)
 {
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::derivative(eve::rec)(T{10}), T(-1.0/100));
-    TTS_EQUAL(eve::derivative(eve::rec)(T{-10}), T(-1.0/100));
+    TTS_EQUAL(eve::diff(eve::rec)(T{10}), T(-1.0/100));
+    TTS_EQUAL(eve::diff(eve::rec)(T{-10}), T(-1.0/100));
   }
   else
   {

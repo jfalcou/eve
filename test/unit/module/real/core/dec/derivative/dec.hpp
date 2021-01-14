@@ -11,13 +11,13 @@
 #include <eve/function/derivative/dec.hpp>
 #include <type_traits>
 
-TTS_CASE_TPL("Check derivative(dec) return type", EVE_TYPE)
+TTS_CASE_TPL("Check diff(dec) return type", EVE_TYPE)
 {
   if constexpr(eve::floating_value<T>)
   {
     using ui_t = eve::detail::as_integer_t<T, unsigned>;
-    TTS_EXPR_IS(eve::derivative(eve::dec)(T(), unsigned()), T);
-    TTS_EXPR_IS(eve::derivative(eve::dec)(T(), ui_t()), T);
+    TTS_EXPR_IS(eve::diff(eve::dec)(T(), unsigned()), T);
+    TTS_EXPR_IS(eve::diff(eve::dec)(T(), ui_t()), T);
   }
   else
   {
@@ -25,16 +25,16 @@ TTS_CASE_TPL("Check derivative(dec) return type", EVE_TYPE)
   }
 }
 
-TTS_CASE_TPL("Check eve::derivative(eve::dec) behavior", EVE_TYPE)
+TTS_CASE_TPL("Check eve::diff(eve::dec) behavior", EVE_TYPE)
 {
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::derivative(eve::dec)(T{10}, 0u), T(9));
-    TTS_EQUAL(eve::derivative(eve::dec)(T{10}, 1u), T(1));
-    TTS_EQUAL(eve::derivative(eve::dec)(T{10}, 2u), T(0));
-    TTS_EQUAL(eve::derivative(eve::dec)(T{-10}, 0u), T(-11));
-    TTS_EQUAL(eve::derivative(eve::dec)(T{-10}, 1u), T(1));
-    TTS_EQUAL(eve::derivative(eve::dec)(T{-10}, 2u), T(0));
+    TTS_EQUAL(eve::diff(eve::dec)(T{10}, 0u), T(9));
+    TTS_EQUAL(eve::diff(eve::dec)(T{10}, 1u), T(1));
+    TTS_EQUAL(eve::diff(eve::dec)(T{10}, 2u), T(0));
+    TTS_EQUAL(eve::diff(eve::dec)(T{-10}, 0u), T(-11));
+    TTS_EQUAL(eve::diff(eve::dec)(T{-10}, 1u), T(1));
+    TTS_EQUAL(eve::diff(eve::dec)(T{-10}, 2u), T(0));
   }
   else
   {

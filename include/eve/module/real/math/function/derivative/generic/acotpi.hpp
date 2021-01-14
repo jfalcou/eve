@@ -20,9 +20,9 @@ namespace eve::detail
 
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr T acotpi_(EVE_SUPPORTS(cpu_)
-                                  , derivative_type<1> const &
+                                  , diff_type<1> const &
                                   , T const &x) noexcept
   {
-    return  radinpi(derivative(acot)(x));
+    return  radinpi(diff(acot)(x));
   }
 }

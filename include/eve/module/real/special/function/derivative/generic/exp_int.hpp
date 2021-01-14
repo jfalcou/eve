@@ -19,7 +19,7 @@ namespace eve::detail
 
   template<floating_real_value T, real_value N>
   EVE_FORCEINLINE constexpr T exp_int_(EVE_SUPPORTS(cpu_)
-                                  , derivative_type<1> const &
+                                  , diff_type<1> const &
                                   , N const &n
                                   , T const &x) noexcept
   {

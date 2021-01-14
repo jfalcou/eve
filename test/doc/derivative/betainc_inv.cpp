@@ -15,7 +15,7 @@ int main()
     << "<- pf                                      = " << pf << '\n'
     << "<- qf                                      = " << qf << '\n'
     << "<- rf                                      = " << rf << '\n'
-    << "-> derivative_1st(betainc_inv)(pf, qf, rf) = " << eve::derivative_1st(eve::betainc_inv)(pf, qf, rf) << '\n';
+    << "-> diff_1st(betainc_inv)(pf, qf, rf) = " << eve::diff_1st(eve::betainc_inv)(pf, qf, rf) << '\n';
 
 
   float xf = 0.5f;
@@ -26,6 +26,6 @@ int main()
     << "<- xf                                      = " << xf << '\n'
     << "<- yf                                      = " << yf << '\n'
     << "<- zf                                      = " << yf << '\n'
-    << "-> derivative_1st(betainc_inv)(xf, yf, zf) = " << eve::derivative_1st(eve::betainc_inv)(xf, yf, zf) << '\n';
+    << "-> diff_1st(betainc_inv)(xf, yf, zf) = " << eve::diff_1st(eve::betainc_inv)(xf, yf, zf) << '\n';
   return 0;
 }

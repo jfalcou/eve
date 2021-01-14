@@ -17,23 +17,22 @@ namespace eve
   struct pedantic_;
 
   //================================================================================================
-  // Function decorator - derivative mode
-  template<auto Param> struct derivative_
+  // Function decorator - differential mode
+  template<auto Param> struct diff_
   {
     template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
 
     template<auto N> static constexpr auto combine( decorated<pedantic_> const& ) noexcept
     {
-      return decorated<derivative_(pedantic_)>{};
+      return decorated<diff_(pedantic_)>{};
     }
   };
 
-  template<auto Param> using derivative_type = decorated<derivative_<Param>()>;
+  template<auto Param> using diff_type = decorated<diff_<Param>()>;
 
-  inline constexpr derivative_type<1> const derivative = {};
-  inline constexpr derivative_type<1> const derivative_1st = {};
-  inline constexpr derivative_type<2> const derivative_2nd = {};
-  inline constexpr derivative_type<3> const derivative_3rd = {};
-  template < auto N > inline constexpr derivative_type<N> const derivative_ = derivative_type<N>{};
-
+  inline constexpr diff_type<1> const diff      = {};
+  inline constexpr diff_type<1> const diff_1st  = {};
+  inline constexpr diff_type<2> const diff_2nd  = {};
+  inline constexpr diff_type<3> const diff_3rd  = {};
+  template<auto N> inline constexpr diff_type<N> const diff_ = diff_type<N>{};
 }

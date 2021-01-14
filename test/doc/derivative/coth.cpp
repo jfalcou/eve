@@ -11,13 +11,13 @@ int main()
   std::cout
     << "---- simd" << '\n'
     << "<- pf                   = " << pf << '\n'
-    << "-> derivative(coth)(pf) = " << eve::derivative(eve::coth)(pf) << '\n';
+    << "-> diff(coth)(pf) = " << eve::diff(eve::coth)(pf) << '\n';
 
   float xf = 1.0f;
 
   std::cout
     << "---- scalar"  << '\n'
     << "<- xf                   = " << xf << '\n'
-    << "-> derivative(coth)(xf) = " << eve::derivative(eve::coth)(xf) << '\n';
+    << "-> diff(coth)(xf) = " << eve::diff(eve::coth)(xf) << '\n';
   return 0;
 }

@@ -22,7 +22,7 @@ namespace eve::detail
 
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr T div_(EVE_SUPPORTS(cpu_)
-                                    , derivative_type<1> const &
+                                    , diff_type<1> const &
                                     , T , T y ) noexcept
   {
 
@@ -31,7 +31,7 @@ namespace eve::detail
 
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr T div_(EVE_SUPPORTS(cpu_)
-                                    , derivative_type<2> const &
+                                    , diff_type<2> const &
                                     , T x, T y ) noexcept
   {
 

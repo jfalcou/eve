@@ -11,11 +11,11 @@
 #include <eve/function/derivative/div.hpp>
 #include <type_traits>
 
-TTS_CASE_TPL("Check derivative(div) return type", EVE_TYPE)
+TTS_CASE_TPL("Check diff(div) return type", EVE_TYPE)
 {
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EXPR_IS(eve::derivative(eve::div)(T(), T()), T);
+    TTS_EXPR_IS(eve::diff(eve::div)(T(), T()), T);
   }
   else
   {
@@ -23,12 +23,12 @@ TTS_CASE_TPL("Check derivative(div) return type", EVE_TYPE)
   }
 }
 
-TTS_CASE_TPL("Check eve::derivative(eve::div) behavior", EVE_TYPE)
+TTS_CASE_TPL("Check eve::diff(eve::div) behavior", EVE_TYPE)
 {
   if constexpr(eve::floating_value<T>)
   {
-    TTS_ULP_EQUAL(eve::derivative_1st(eve::div)(T{10},T{5}), T(0.2), 0.5);
-    TTS_ULP_EQUAL(eve::derivative_2nd(eve::div)(T{10},T{5}), T(-10/25.0), 0.5);
+    TTS_ULP_EQUAL(eve::diff_1st(eve::div)(T{10},T{5}), T(0.2), 0.5);
+    TTS_ULP_EQUAL(eve::diff_2nd(eve::div)(T{10},T{5}), T(-10/25.0), 0.5);
   }
   else
   {

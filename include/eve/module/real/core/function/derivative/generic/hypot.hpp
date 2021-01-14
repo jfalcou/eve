@@ -18,7 +18,7 @@
 namespace eve::detail
 {
   template<int N, typename T0, typename T1, typename... Ts>
-  auto hypot_(EVE_SUPPORTS(cpu_), derivative_type<N>
+  auto hypot_(EVE_SUPPORTS(cpu_), diff_type<N>
              , T0 arg0, T1 arg1, Ts... args) noexcept
   {
     using r_t = common_compatible_t<T0,T1, Ts...>;
@@ -54,7 +54,7 @@ namespace eve::detail
   }
 
   template<int N, typename T0, typename T1, typename... Ts>
-  auto hypot_(EVE_SUPPORTS(cpu_), derivative_type<N>, pedantic_type const &
+  auto hypot_(EVE_SUPPORTS(cpu_), diff_type<N>, pedantic_type const &
              , T0 arg0, T1 arg1, Ts... args) noexcept
   {
     using r_t = common_compatible_t<T0,T1, Ts...>;

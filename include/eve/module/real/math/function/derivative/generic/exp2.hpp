@@ -19,7 +19,7 @@ namespace eve::detail
 {
   template<floating_real_value T, unsigned_value N>
   EVE_FORCEINLINE constexpr T exp2_(EVE_SUPPORTS(cpu_)
-                                   , derivative_type<1> const &
+                                   , diff_type<1> const &
                                    , T x
                                    , N n) noexcept
   {
@@ -28,12 +28,12 @@ namespace eve::detail
       return exp2(x)*pow(log_2(as(x)), n);
     }
     else
-      return apply_over(derivative_1st(exp2), x, n);
+      return apply_over(diff_1st(exp2), x, n);
   }
 
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr T exp2_(EVE_SUPPORTS(cpu_)
-                                   , derivative_type<1> const &
+                                   , diff_type<1> const &
                                    , T x) noexcept
   {
     return exp2(x)*log_2(as(x));

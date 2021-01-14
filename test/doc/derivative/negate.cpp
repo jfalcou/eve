@@ -18,8 +18,8 @@ int main()
             << "<- pf                                  = " << pf << '\n'
             << "<- qf                                  = " << qf << '\n'
             << "-> negate(pf, qf)                      = " << eve::negate(pf, qf) << '\n'
-            << "-> derivative_1st(negate)(pf, qf)      = " <<  eve::derivative_1st(eve::negate)(pf, qf) << std::endl
-            << "-> derivative_2nd(negate)(pf, qf)      = " <<  eve::derivative_2nd(eve::negate)(pf, qf) << std::endl;
+            << "-> diff_1st(negate)(pf, qf)      = " <<  eve::diff_1st(eve::negate)(pf, qf) << std::endl
+            << "-> diff_2nd(negate)(pf, qf)      = " <<  eve::diff_2nd(eve::negate)(pf, qf) << std::endl;
 
   float xf = 4.0f;
   float yf = -1.0f;
@@ -28,7 +28,7 @@ int main()
             << "<- xf                             = " << xf << '\n'
             << "<- yf                             = " << yf << '\n'
             << "-> negate(xf, yf)                 = " << eve::negate(xf, yf) << '\n'
-            << "-> derivative_1st(negate)(xf, yf) = " <<  eve::derivative_1st(eve::negate)(xf, yf) << std::endl
-            << "-> derivative_2nd(negate)(xf, yf) = " <<  eve::derivative_2nd(eve::negate)(xf, yf) << std::endl;
+            << "-> diff_1st(negate)(xf, yf) = " <<  eve::diff_1st(eve::negate)(xf, yf) << std::endl
+            << "-> diff_2nd(negate)(xf, yf) = " <<  eve::diff_2nd(eve::negate)(xf, yf) << std::endl;
   return 0;
 }

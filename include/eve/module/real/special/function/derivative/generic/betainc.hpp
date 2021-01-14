@@ -20,18 +20,18 @@ namespace eve::detail
 {
   template<floating_value S, floating_value T, floating_value U, auto N>
   EVE_FORCEINLINE  auto betainc_(EVE_SUPPORTS(cpu_)
-                              , derivative_type<N> const &
+                              , diff_type<N> const &
                               , S const &s
                               , T const &a
                               , U const &b) noexcept
   requires compatible_values<T, U> && compatible_values<T, S>
   {
-    return arithmetic_call(derivative_type<N>{}(betainc), s, a, b);
+    return arithmetic_call(diff_type<N>{}(betainc), s, a, b);
   }
 
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr T betainc_(EVE_SUPPORTS(cpu_)
-                                   , derivative_type<1> const &
+                                   , diff_type<1> const &
                                    , T const &s
                                    , T const &x
                                    , T const &y) noexcept

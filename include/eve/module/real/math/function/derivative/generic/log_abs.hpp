@@ -28,16 +28,16 @@ namespace eve::detail
 {
   template<floating_real_value T, unsigned_value N>
   EVE_FORCEINLINE constexpr T log_abs_(EVE_SUPPORTS(cpu_)
-                                     , derivative_type<1> const &
+                                     , diff_type<1> const &
                                      , T x
                                      , N n) noexcept
   {
-    return derivative(log)(eve::abs(x), n);
+    return diff(log)(eve::abs(x), n);
   }
 
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr T log_abs_(EVE_SUPPORTS(cpu_)
-                                     , derivative_type<1> const &
+                                     , diff_type<1> const &
                                      , T x) noexcept
   {
     return rec(x);

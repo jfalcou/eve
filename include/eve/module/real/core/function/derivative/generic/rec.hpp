@@ -21,12 +21,12 @@ namespace eve::detail
 {
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr T rec_(EVE_SUPPORTS(cpu_)
-                                    , derivative_type<1> const &
+                                    , diff_type<1> const &
                                     , T x) noexcept
   {
     if constexpr( has_native_abi_v<T> )
       return -rec(sqr(x));
     else
-      return apply_over(derivative(rec), x);
+      return apply_over(diff(rec), x);
   }
 }

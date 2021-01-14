@@ -19,11 +19,11 @@ namespace eve::detail
 
   template<floating_real_value T, auto N>
   EVE_FORCEINLINE constexpr T atan2pi_(EVE_SUPPORTS(cpu_)
-                                   , derivative_type<N> const &
+                                   , diff_type<N> const &
                                    , T const &x
                                    , T const &y) noexcept
   {
-    return radinpi(derivative_type<N>()(atan2)(x, y));
+    return radinpi(diff_type<N>()(atan2)(x, y));
   }
 
 }

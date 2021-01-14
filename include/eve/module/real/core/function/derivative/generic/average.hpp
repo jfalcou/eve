@@ -21,7 +21,7 @@ namespace eve::detail
 {
   template<auto N, floating_real_value T, floating_real_value... Ts>
   EVE_FORCEINLINE constexpr T average_(EVE_SUPPORTS(cpu_)
-                                    , derivative_type<N> const &
+                                    , diff_type<N> const &
                                     , T , Ts ... ys ) noexcept
   {
     using r_t = common_compatible_t<T,Ts...>;

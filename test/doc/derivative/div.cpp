@@ -18,8 +18,8 @@ int main()
             << "<- pf          = " << pf << '\n'
             << "<- qf          = " << qf << '\n'
             << "-> div(pf, qf) = " << eve::div(pf, qf) << '\n'
-            << "-> derivative_1st(div)(pf, qf) = " <<  eve::derivative_1st(eve::div)(pf, qf) << std::endl
-            << "-> derivative_2nd(div)(pf, qf) = " <<  eve::derivative_2nd(eve::div)(pf, qf) << std::endl;
+            << "-> diff_1st(div)(pf, qf) = " <<  eve::diff_1st(eve::div)(pf, qf) << std::endl
+            << "-> diff_2nd(div)(pf, qf) = " <<  eve::diff_2nd(eve::div)(pf, qf) << std::endl;
 
   float xf = 4.0f;
   float yf = -1.0f;
@@ -28,7 +28,7 @@ int main()
             << "<- xf          = " << xf << '\n'
             << "<- yf          = " << yf << '\n'
             << "-> div(xf, yf) = " << eve::div(xf, yf) << '\n'
-            << "-> derivative_1st(div)(xf, yf) = " <<  eve::derivative_1st(eve::div)(xf, yf) << std::endl
-            << "-> derivative_2nd(div)(xf, yf) = " <<  eve::derivative_2nd(eve::div)(xf, yf) << std::endl;
+            << "-> diff_1st(div)(xf, yf) = " <<  eve::diff_1st(eve::div)(xf, yf) << std::endl
+            << "-> diff_2nd(div)(xf, yf) = " <<  eve::diff_2nd(eve::div)(xf, yf) << std::endl;
   return 0;
 }

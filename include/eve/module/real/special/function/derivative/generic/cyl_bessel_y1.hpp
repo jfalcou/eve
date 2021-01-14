@@ -20,7 +20,7 @@ namespace eve::detail
 
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr T cyl_bessel_y1_(EVE_SUPPORTS(cpu_)
-                                  , derivative_type<1> const &
+                                  , diff_type<1> const &
                                   , T const &x) noexcept
   {
     return average(cyl_bessel_y0(x), -cyl_bessel_y(2, x));

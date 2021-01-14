@@ -22,7 +22,7 @@ namespace eve::detail
 
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr T asinh_(EVE_SUPPORTS(cpu_)
-                                  , derivative_type<1> const &
+                                  , diff_type<1> const &
                                   , T const &x) noexcept
   {
     return rec(sqrt(inc(sqr(x))));

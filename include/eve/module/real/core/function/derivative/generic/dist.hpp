@@ -17,23 +17,23 @@ namespace eve::detail
 {
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr T dist_(EVE_SUPPORTS(cpu_)
-                                    , derivative_type<1> const &
+                                    , diff_type<1> const &
                                     , T x, T y) noexcept
   {
     if constexpr( has_native_abi_v<T> )
       return sign(x-y);
     else
-      return apply_over(derivative_1st(dist), x, y), n);
+      return apply_over(diff_1st(dist), x, y), n);
   }
 
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr T dist_(EVE_SUPPORTS(cpu_)
-                                    , derivative_type<2> const &
+                                    , diff_type<2> const &
                                     , T x, T y) noexcept
   {
     if constexpr( has_native_abi_v<T> )
       return -sign(x-y);
     else
-      return apply_over(derivative_1st(dist), x, y);
+      return apply_over(diff_1st(dist), x, y);
   }
 }

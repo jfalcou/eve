@@ -20,7 +20,7 @@ namespace eve::detail
 
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr T erf_inv_(EVE_SUPPORTS(cpu_)
-                                  , derivative_type<1> const &
+                                  , diff_type<1> const &
                                   , T const &x) noexcept
   {
     if constexpr(has_native_abi_v<T>)
@@ -29,6 +29,6 @@ namespace eve::detail
       return sqrt_pi_2*exp(sqr(erf_inv(x)));
     }
     else
-      return apply_over(derivative(erf_inv), x);
+      return apply_over(diff(erf_inv), x);
   }
 }

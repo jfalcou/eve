@@ -18,10 +18,10 @@ int main()
             << "<- pf          = " << pf << '\n'
             << "<- qf          = " << qf << '\n'
             << "-> sub(pf, qf) = " << eve::sub(pf, qf) << '\n'
-            << "-> derivative_1st(sub)(pf, qf) = " <<  eve::derivative_1st(eve::sub)(pf, qf) << std::endl
-            << "-> derivative_2nd(sub)(pf, qf) = " <<  eve::derivative_2nd(eve::sub)(pf, qf) << std::endl
-            << "-> derivative(sub)(pf, qf, 0u, 2u) = " <<  eve::derivative(eve::sub)(pf, qf, 0u, 2u) << std::endl
-            << "-> derivative(sub)(pf, qf, 2u, 0u) = " <<  eve::derivative(eve::sub)(pf, qf, 2u, 0u) << std::endl;
+            << "-> diff_1st(sub)(pf, qf) = " <<  eve::diff_1st(eve::sub)(pf, qf) << std::endl
+            << "-> diff_2nd(sub)(pf, qf) = " <<  eve::diff_2nd(eve::sub)(pf, qf) << std::endl
+            << "-> diff(sub)(pf, qf, 0u, 2u) = " <<  eve::diff(eve::sub)(pf, qf, 0u, 2u) << std::endl
+            << "-> diff(sub)(pf, qf, 2u, 0u) = " <<  eve::diff(eve::sub)(pf, qf, 2u, 0u) << std::endl;
 
   float xf = 4.0f;
   float yf = -1.0f;
@@ -30,7 +30,7 @@ int main()
             << "<- xf          = " << xf << '\n'
             << "<- yf          = " << yf << '\n'
             << "-> sub(xf, yf) = " << eve::sub(xf, yf) << '\n'
-            << "-> derivative_1st(sub)(xf, yf) = " <<  eve::derivative_1st(eve::sub)(xf, yf) << std::endl
-            << "-> derivative_2nd(sub)(xf, yf) = " <<  eve::derivative_2nd(eve::sub)(xf, yf) << std::endl;
+            << "-> diff_1st(sub)(xf, yf) = " <<  eve::diff_1st(eve::sub)(xf, yf) << std::endl
+            << "-> diff_2nd(sub)(xf, yf) = " <<  eve::diff_2nd(eve::sub)(xf, yf) << std::endl;
   return 0;
 }

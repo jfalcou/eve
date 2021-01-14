@@ -21,7 +21,7 @@
 namespace eve::detail
 {
   template<int N, typename T0, typename T1, typename... Ts>
-  auto mul_(EVE_SUPPORTS(cpu_), derivative_type<N>
+  auto mul_(EVE_SUPPORTS(cpu_), diff_type<N>
            , T0 arg0, T1 arg1, Ts... args) noexcept
   {
     auto mmul = []<std::size_t... I>(std::index_sequence<I...>, auto& that, auto... vs)

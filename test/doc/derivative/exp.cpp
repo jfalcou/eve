@@ -16,12 +16,12 @@ wide_ft pf = {0.0f, -0.0f, -1.0f, 1.0f, 2.0f,
 
   std::cout << "---- simd" << '\n'
             << "<- pf      = " << pf << '\n'
-            << "-> eve::derivative(eve::exp)(pf) = " << eve::derivative(eve::exp)(pf) << '\n';
+            << "-> eve::diff(eve::exp)(pf) = " << eve::diff(eve::exp)(pf) << '\n';
 
   float xf = 1.0f;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf      = " << xf << '\n'
-            << "-> eve::derivative(eve::exp)(xf) = " << eve::derivative(eve::exp)(xf) << '\n';
+            << "-> eve::diff(eve::exp)(xf) = " << eve::diff(eve::exp)(xf) << '\n';
   return 0;
 }

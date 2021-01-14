@@ -16,22 +16,22 @@
 #include <eve/function/sqrt.hpp>
 #include <type_traits>
 
-TTS_CASE_TPL("Check derivative(sinh) return type", EVE_TYPE)
+TTS_CASE_TPL("Check diff(sinh) return type", EVE_TYPE)
 {
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EXPR_IS(eve::derivative(eve::sinh)(T()), T);
+    TTS_EXPR_IS(eve::diff(eve::sinh)(T()), T);
   }
 }
 
-TTS_CASE_TPL("Check eve::derivative(eve::sinh) behavior", EVE_TYPE)
+TTS_CASE_TPL("Check eve::diff(eve::sinh) behavior", EVE_TYPE)
 {
   if constexpr(eve::floating_value<T>)
   {
     using elt_t = eve::element_type_t<T>;
     auto df = [](auto f, auto x){return eve::detail::centered_diffdiv(f, x); };
     auto ulp =  (sizeof(elt_t) == 4) ? 1.0e4 : 1.0e8;
-    TTS_ULP_EQUAL(eve::derivative(eve::sinh)(T{2.0}), df(eve::sinh, T(2.0))  , ulp);
-    TTS_ULP_EQUAL(eve::derivative(eve::sinh)(T{1}), df(eve::sinh, T(1.0))  , ulp);
+    TTS_ULP_EQUAL(eve::diff(eve::sinh)(T{2.0}), df(eve::sinh, T(2.0))  , ulp);
+    TTS_ULP_EQUAL(eve::diff(eve::sinh)(T{1}), df(eve::sinh, T(1.0))  , ulp);
   }
 }

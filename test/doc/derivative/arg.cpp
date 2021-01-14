@@ -14,12 +14,12 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf                                = " << pf << '\n'
-            << "-> eve::derivative(eve::arg)(pf)     = " << eve::derivative(eve::arg)(pf) << '\n';
+            << "-> eve::diff(eve::arg)(pf)     = " << eve::diff(eve::arg)(pf) << '\n';
 
   float xf = 1.0f;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf                            = " << xf << '\n'
-            << "-> eve::derivative(eve::arg)(xf) = " << eve::derivative(eve::arg)(xf) << '\n';
+            << "-> eve::diff(eve::arg)(xf) = " << eve::diff(eve::arg)(xf) << '\n';
   return 0;
 }

@@ -13,7 +13,7 @@ int main()
     << "---- simd" << '\n'
     << "<- pf                        = " << pf << '\n'
     << "<- qf                        = " << qf << '\n'
-    << "-> derivative(powm1)(pf, qf) = " << eve::derivative(eve::powm1)(pf, qf) << '\n';
+    << "-> diff(powm1)(pf, qf) = " << eve::diff(eve::powm1)(pf, qf) << '\n';
 
   float xf = 3.0f;
   float yf = 2.0f;
@@ -22,6 +22,6 @@ int main()
     << "---- scalar"  << '\n'
     << "<- xf                        = " << xf << '\n'
     << "<- yf                        = " << yf << '\n'
-    << "-> derivative(powm1)(xf, yf) = " << eve::derivative(eve::powm1)(xf, yf) << '\n';
+    << "-> diff(powm1)(xf, yf) = " << eve::diff(eve::powm1)(xf, yf) << '\n';
   return 0;
 }

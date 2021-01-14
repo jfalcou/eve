@@ -14,14 +14,14 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf                                = " << pf << '\n'
-            << "-> eve::derivative(eve::rsqrt)(pf)     = " << eve::derivative(eve::rsqrt)(pf) << '\n'
-            << "-> eve::derivative(eve::rsqrt)(pf, 2u) = " << eve::derivative(eve::rsqrt)(pf, 2u) << '\n'
-            << "-> eve::derivative(eve::rsqrt)(pf, 3u) = " << eve::derivative(eve::rsqrt)(pf, 3u) << '\n';
+            << "-> eve::diff(eve::rsqrt)(pf)     = " << eve::diff(eve::rsqrt)(pf) << '\n'
+            << "-> eve::diff(eve::rsqrt)(pf, 2u) = " << eve::diff(eve::rsqrt)(pf, 2u) << '\n'
+            << "-> eve::diff(eve::rsqrt)(pf, 3u) = " << eve::diff(eve::rsqrt)(pf, 3u) << '\n';
 
   float xf = 1.0f;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf                            = " << xf << '\n'
-            << "-> eve::derivative(eve::rsqrt)(xf) = " << eve::derivative(eve::rsqrt)(xf) << '\n';
+            << "-> eve::diff(eve::rsqrt)(xf) = " << eve::diff(eve::rsqrt)(xf) << '\n';
   return 0;
 }

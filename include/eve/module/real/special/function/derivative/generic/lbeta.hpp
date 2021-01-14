@@ -19,17 +19,17 @@ namespace eve::detail
 {
   template<floating_value T, floating_value U, auto N>
   EVE_FORCEINLINE  auto lbeta_(EVE_SUPPORTS(cpu_)
-                              , derivative_type<N> const &
+                              , diff_type<N> const &
                               , T const &a
                               , U const &b) noexcept
   requires compatible_values<T, U>
   {
-    return arithmetic_call(derivative_type<N>{}(lbeta), a, b);
+    return arithmetic_call(diff_type<N>{}(lbeta), a, b);
   }
 
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr T lbeta_(EVE_SUPPORTS(cpu_)
-                                    , derivative_type<1> const &
+                                    , diff_type<1> const &
                                     , T const &x
                                     , T const &y) noexcept
   requires(has_native_abi_v<T>)
@@ -39,7 +39,7 @@ namespace eve::detail
 
 template<floating_real_value T>
 EVE_FORCEINLINE constexpr T lbeta_(EVE_SUPPORTS(cpu_)
-                                  , derivative_type<2> const &
+                                  , diff_type<2> const &
                                   , T const &x
                                   , T const &y) noexcept
 requires(has_native_abi_v<T>)

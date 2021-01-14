@@ -18,8 +18,8 @@ int main()
             << "<- pf                              = " << pf << '\n'
             << "<- qf                              = " << qf << '\n'
             << "-> minmag(pf, qf)                     = " << eve::minmag(pf, qf) << '\n'
-            << "-> derivative_1st(minmag)(pf, qf)     = " << eve::derivative_1st(eve::minmag)(pf, qf) << std::endl
-            << "-> derivative_2nd(minmag)(pf, qf)     = " << eve::derivative_2nd(eve::minmag)(pf, qf) << std::endl;
+            << "-> diff_1st(minmag)(pf, qf)     = " << eve::diff_1st(eve::minmag)(pf, qf) << std::endl
+            << "-> diff_2nd(minmag)(pf, qf)     = " << eve::diff_2nd(eve::minmag)(pf, qf) << std::endl;
 
   float xf = 4.0f;
   float yf = -1.0f;
@@ -28,7 +28,7 @@ int main()
             << "<- xf                          = " << xf << '\n'
             << "<- yf                          = " << yf << '\n'
             << "-> minmag(xf, yf)                 = " << eve::minmag(xf, yf) << '\n'
-            << "-> derivative_1st(minmag)(xf, yf) = " << eve::derivative_1st(eve::minmag)(xf, yf) << std::endl
-            << "-> derivative_2nd(minmag)(xf, yf) = " << eve::derivative_2nd(eve::minmag)(xf, yf) << std::endl;
+            << "-> diff_1st(minmag)(xf, yf) = " << eve::diff_1st(eve::minmag)(xf, yf) << std::endl
+            << "-> diff_2nd(minmag)(xf, yf) = " << eve::diff_2nd(eve::minmag)(xf, yf) << std::endl;
   return 0;
 }
