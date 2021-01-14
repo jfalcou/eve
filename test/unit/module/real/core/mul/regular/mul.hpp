@@ -11,7 +11,7 @@
 #include <eve/constant/sqrtvalmax.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/function/mul.hpp>
-#include <eve/function/derivative/mul.hpp>
+#include <eve/function/diff/mul.hpp>
 
 #include <type_traits>
 
