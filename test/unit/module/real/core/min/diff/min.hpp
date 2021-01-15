@@ -35,9 +35,9 @@ TTS_CASE_TPL("Check eve::diff(eve::min) behavior", EVE_TYPE)
     using v_t = eve::element_type_t<T>;
     TTS_EQUAL(eve::diff_1st(eve::min)(T(0), T(2), T(3), T(4), T(5)),T(1));
     TTS_EQUAL(eve::diff_3rd(eve::min)(T(1), T(2), T(0), T(4), T(5)),T(1));
-    TTS_EQUAL(eve::diff_<3>(eve::min)(T(1), T(2), T(3), T(4), T(5)),T(0));
-    TTS_EQUAL(eve::diff_<6>(eve::min)(T(1), T(2), T(3), T(4), T(5)),T(0));
-    TTS_EQUAL(eve::diff_<4>(eve::min)(v_t(1), T(3), T(0), T(0), T(5)),T(1));
+    TTS_EQUAL(eve::diff_nth<3>(eve::min)(T(1), T(2), T(3), T(4), T(5)),T(0));
+    TTS_EQUAL(eve::diff_nth<6>(eve::min)(T(1), T(2), T(3), T(4), T(5)),T(0));
+    TTS_EQUAL(eve::diff_nth<4>(eve::min)(v_t(1), T(3), T(0), T(0), T(5)),T(1));
   }
   else
   {

@@ -20,9 +20,7 @@ namespace eve
   // Function decorator - differential mode
   template<auto Param> struct diff_
   {
-    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
-
-    template<auto N> static constexpr auto combine( decorated<pedantic_> const& ) noexcept
+    template<auto N> static constexpr auto combine( decorated<pedantic_()> const& ) noexcept
     {
       return decorated<diff_(pedantic_)>{};
     }
@@ -34,5 +32,5 @@ namespace eve
   inline constexpr diff_type<1> const diff_1st  = {};
   inline constexpr diff_type<2> const diff_2nd  = {};
   inline constexpr diff_type<3> const diff_3rd  = {};
-  template<auto N> inline constexpr diff_type<N> const diff_ = diff_type<N>{};
+  template<auto N> inline constexpr diff_type<N> const diff_nth = diff_type<N>{};
 }

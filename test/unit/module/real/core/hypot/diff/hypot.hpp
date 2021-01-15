@@ -29,11 +29,11 @@ TTS_CASE_TPL("Check eve::diff(eve::hypot) behavior", EVE_TYPE)
     TTS_ULP_EQUAL(eve::diff_1st(eve::hypot)(T{4},T{3}), T(4.0/5), 0.5);
     TTS_ULP_EQUAL(eve::diff_2nd(eve::hypot)(T{4},T{3}), T(3.0/5), 0.5);
     TTS_ULP_EQUAL(eve::diff_3rd(eve::hypot)(T{2},T{2},T{4}), T(4.0/eve::sqrt(24.0)), 0.5);
-    TTS_ULP_EQUAL(eve::diff_<4>(eve::hypot)(T{1},T{2},T{3},T{4}), T(4.0/eve::sqrt(30.0)), 0.5);
+    TTS_ULP_EQUAL(eve::diff_nth<4>(eve::hypot)(T{1},T{2},T{3},T{4}), T(4.0/eve::sqrt(30.0)), 0.5);
     TTS_ULP_EQUAL(eve::pedantic(eve::diff_1st)(eve::hypot)(T{4},T{3}), T(4.0/5), 0.5);
     TTS_ULP_EQUAL(eve::pedantic(eve::diff_2nd)(eve::hypot)(T{4},T{3}), T(3.0/5), 0.5);
     TTS_ULP_EQUAL(eve::pedantic(eve::diff_3rd)(eve::hypot)(T{2},T{2},T{4}), T(4.0/eve::sqrt(24.0)), 0.5);
-    TTS_ULP_EQUAL(eve::pedantic(eve::diff_<4>)(eve::hypot)(T{1},T{2},T{3},T{4}), T(4.0/eve::sqrt(30.0)), 0.5);
+    TTS_ULP_EQUAL(eve::pedantic(eve::diff_nth<4>)(eve::hypot)(T{1},T{2},T{3},T{4}), T(4.0/eve::sqrt(30.0)), 0.5);
 
   }
 }

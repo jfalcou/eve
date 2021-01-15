@@ -56,8 +56,8 @@ TTS_CASE_TPL("Check eve::mul behavior", EVE_TYPE)
     using v_t = eve::element_type_t<T>;
     std::cout << eve::diff_1st(eve::mul)(T(1), T(2), T(3), T(4), T(5)) << std::endl;
     std::cout << eve::diff_3rd(eve::mul)(T(1), T(2), T(3), T(4), T(5)) << std::endl;
-    std::cout << eve::diff_<3>(eve::mul)(T(1), T(2), T(3), T(4), T(5)) << std::endl;
-    std::cout << eve::diff_<6>(eve::mul)(T(1), T(2), T(3), T(4), T(5)) << std::endl;
-    std::cout << eve::diff_<4>(eve::mul)(v_t(1), T(2), T(3), T(4), T(5)) << std::endl;
+    std::cout << eve::diff_nth<3>(eve::mul)(T(1), T(2), T(3), T(4), T(5)) << std::endl;
+    std::cout << eve::diff_nth<6>(eve::mul)(T(1), T(2), T(3), T(4), T(5)) << std::endl;
+    std::cout << eve::diff_nth<4>(eve::mul)(v_t(1), T(2), T(3), T(4), T(5)) << std::endl;
   }
 }

@@ -14,13 +14,18 @@
 
 namespace eve
 {
+  template<auto Param> struct diff_;
+
   //================================================================================================
   // Function decorator - pedantic mode
   struct pedantic_
   {
-    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
+    template<auto N> static constexpr auto combine( decorated<diff_<N>()> const& ) noexcept
+    {
+      return decorated<diff_<N>(pedantic_)>{};
+    }
   };
 
   using pedantic_type = decorated<pedantic_()>;
-  inline constexpr pedantic_type const pedantic = {};
+  [[maybe_unused]] inline constexpr pedantic_type const pedantic = {};
 }
