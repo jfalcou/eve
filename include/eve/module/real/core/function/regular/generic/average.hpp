@@ -12,14 +12,18 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/constant/half.hpp>
+#include <eve/function/add.hpp>
 #include <eve/function/bit_and.hpp>
 #include <eve/detail/function/conditional.hpp>
 #include <eve/function/bit_xor.hpp>
+#include <eve/function/inc.hpp>
 #include <eve/function/fma.hpp>
+#include <eve/function/raw.hpp>
 #include <eve/function/shr.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/traits/common_compatible.hpp>
 
 namespace eve::detail
 {
@@ -44,6 +48,18 @@ namespace eve::detail
     else                            return fma(a, half(eve::as(a)),b*half(eve::as(a)));
   }
 
+  // -----------------------------------------------------------------------------------------------
+  // raw case
+  template<real_value T, real_value U>
+  EVE_FORCEINLINE  auto average_(EVE_SUPPORTS(cpu_)
+                            , raw_type const &
+                            , T const &a
+                            , U const &b) noexcept
+  requires compatible_values<T, U>
+  {
+    return average(a, b);
+  }
+
   //================================================================================================
   // Masked case
   //================================================================================================
@@ -52,6 +68,30 @@ namespace eve::detail
       requires compatible_values<U, V>
   {
     return mask_op( EVE_CURRENT_API{}, cond, eve::average, t, f);
+  }
+
+  //================================================================================================
+  //N parameters
+  //================================================================================================
+
+  template<floating_real_value T0, floating_real_value ...Ts>
+  auto average_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args)
+  {
+    common_compatible_t<T0, Ts...> that(a0);
+    auto t = 2;
+    auto next = [&t](auto avg,  auto x){
+      return avg + (x - avg) / t++;
+    };
+    ((that = next(that,args)),...);
+    return that;
+  }
+
+  template<floating_real_value T0, floating_real_value ...Ts>
+  auto average_(EVE_SUPPORTS(cpu_), raw_type const &, T0 a0, Ts... args)
+  {
+    common_compatible_t<T0, Ts...> that(a0);
+    ((that = add(that,args)),...);
+    return that/(sizeof...(args)+1);
   }
 
 }

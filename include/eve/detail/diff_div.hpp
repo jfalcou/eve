@@ -21,7 +21,7 @@ namespace eve::detail
 {
 
   // -----------------------------------------------------------------------------------------------
-  // centered approximate derivative
+  // centered approximate diff
   template<typename Obj, floating_value T>
   EVE_FORCEINLINE  auto centered_diffdiv(Obj f
                                        , T const &x

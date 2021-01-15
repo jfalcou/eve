@@ -31,6 +31,7 @@
 #include <eve/constant/maxexponentm1.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
+#include <eve/traits/common_compatible.hpp>
 
 namespace eve::detail
 {
@@ -114,4 +115,30 @@ namespace eve::detail
       else  return res;
     }
   }
+
+//   template<real_value T0, real_value ...Ts>
+//   auto hypot_(EVE_SUPPORTS(cpu_), pedantic_type const &, T0 a0, Ts... args)
+//   {
+//     using r_t = common_compatible_t<T0,Ts...>;
+//     if constexpr(has_native_abi_v<r_t>)
+//     {
+//       auto e = -maxmag(exponent(a0), exponent(args)...);
+//       r_t that(sqr(pedantic(ldexp)(a0, e)));
+//       auto inf_found = is_infinite(that);
+//       auto addsqr = [&inf_found, e](auto that, auto next)->r_t{
+//         inf_found = inf_found || is_infinite(next);
+//         next = pedantic(ldexp)(next, e);
+//         that = fma(next, next, that);
+//         return that;
+//       };
+//       ((that = addsqr(that,args)),...);
+//       return if_else(inf_found, inf(as<r_t>()), ldexp(eve::sqrt(that), -e));
+//     }
+//     else
+//     {
+//       return apply_over(hypot, a0, args...);
+//     }
+//   }
+
+
 }

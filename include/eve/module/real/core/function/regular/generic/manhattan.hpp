@@ -12,50 +12,42 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/function/abs.hpp>
+#include <eve/function/is_infinite.hpp>
+#include <eve/function/pedantic.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // regular case
-  template<floating_value T, floating_value U>
-  EVE_FORCEINLINE  auto manhattan_(EVE_SUPPORTS(cpu_)
-                              , T const &a
-                              , U const &b) noexcept
-  requires compatible_values<T, U>
+  //================================================================================================
+  //N parameters
+  //================================================================================================
+  template<real_value T0, real_value ...Ts>
+  auto manhattan_(EVE_SUPPORTS(cpu_), pedantic_type const &, T0 a0, Ts... args)
   {
-    return arithmetic_call(manhattan, a, b);
+    using r_t = common_compatible_t<T0,Ts...>;
+    r_t that(eve::abs(a0));
+    auto inf_found = is_infinite(that);
+    auto addabs = [&inf_found](auto that, auto next)->r_t{
+      auto z = eve::abs(next);
+      inf_found = inf_found || is_infinite(z);
+      that+= z;
+      return that;
+    };
+    ((that = addabs(that,args)),...);
+    return if_else(inf_found, inf(as<r_t>()), that);
   }
 
-  template<floating_value T>
-  EVE_FORCEINLINE auto manhattan_( EVE_SUPPORTS(cpu_)
-                             , T const &a
-                             , T const &b
-                             ) noexcept
-
+  template<real_value T0, real_value ...Ts>
+  common_compatible_t<T0,Ts...> manhattan_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args)
   {
-    return eve::abs(a)+eve::abs(b);
-  }
-
-  template<floating_value T, floating_value U, floating_value V>
-  EVE_FORCEINLINE  auto manhattan_(EVE_SUPPORTS(cpu_)
-                              , T const &a
-                              , U const &b
-                              , V const &c) noexcept
-  requires compatible_values<T, U> &&  compatible_values<T, V>
-  {
-    return arithmetic_call(manhattan, a, b, c);
-  }
-
-  template<floating_value T>
-  EVE_FORCEINLINE auto manhattan_( EVE_SUPPORTS(cpu_)
-                             , T const &a
-                             , T const &b
-                             , T const &c
-                             ) noexcept
-
-  {
-    return  eve::abs(a)+eve::abs(b)+eve::abs(c);
+    using r_t = common_compatible_t<T0,Ts...>;
+    r_t that(eve::abs(a0));
+    auto addabs = [](auto that, auto next)->r_t{
+      that+= eve::abs(next);
+      return that;
+    };
+    ((that = addabs(that,args)),...);
+    return that;
   }
 }

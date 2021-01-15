@@ -148,4 +148,5 @@ namespace eve::detail
   {
     return mask_op( EVE_CURRENT_API{}, cond, saturated(add), t, f);
   }
+
 }

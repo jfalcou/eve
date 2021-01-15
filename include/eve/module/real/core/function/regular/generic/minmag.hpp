@@ -20,6 +20,7 @@
 #include <eve/function/is_nan.hpp>
 #include <eve/function/is_not_greater_equal.hpp>
 #include <eve/function/min.hpp>
+#include <eve/traits/common_compatible.hpp>
 
 
 namespace eve::detail
@@ -45,5 +46,24 @@ namespace eve::detail
     {
       return aa < bb ? a : bb < aa ? b : eve::min(a, b);
     }
+  }
+
+  //================================================================================================
+  //N parameters
+  //================================================================================================
+  template<decorator D, real_value T0, real_value T1, real_value ...Ts>
+  auto minmag_(EVE_SUPPORTS(cpu_), D const &, T0 a0, T1 a1, Ts... args)
+  {
+    common_compatible_t<T0,T1,Ts...> that(D()(minmag)(a0,a1));
+    ((that = D()(minmag)(that,args)),...);
+    return that;
+  }
+
+  template<real_value T0, real_value T1, real_value ...Ts>
+  auto minmag_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
+  {
+    common_compatible_t<T0,T1,Ts...> that(minmag(a0,a1));
+    ((that = minmag(that,args)),...);
+    return that;
   }
 }

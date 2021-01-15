@@ -12,6 +12,7 @@
 
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/traits/common_compatible.hpp>
 
 namespace eve::detail
 {
@@ -23,5 +24,26 @@ namespace eve::detail
       requires compatible_values<U, V>
   {
     return mask_op( EVE_CURRENT_API{}, cond, eve::add, t, f);
+  }
+
+  //================================================================================================
+  //N parameters
+  //================================================================================================
+  template<decorator D, real_value T0, real_value ...Ts>
+  auto add_(EVE_SUPPORTS(cpu_), D const &, T0 a0, Ts... args)
+    requires (compatible_values<T0, Ts> && ...)
+  {
+    common_compatible_t<T0,Ts...> that(a0);
+    ((that = D()(add)(that,args)),...);
+    return that;
+  }
+
+  template<real_value T0, real_value ...Ts>
+  auto add_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args)
+    requires (compatible_values<T0, Ts> && ...)
+  {
+    common_compatible_t<T0,Ts...> that(a0);
+    ((that = add(that,args)),...);
+    return that;
   }
 }

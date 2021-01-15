@@ -31,24 +31,31 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  c++
-template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
-
+template< value T, value ...Ts> auto operator()( T x,Ts... args ) const noexcept
+                                     requires (compatible_values< T, Ts > && ...);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 Performs the [element-wise](../../../glossary.html#regular) maxmag operation on its parameters.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`, `y`
+`x`, `args`
 :   [values](../../concepts.html#value)
 
 Return value
 ----------------------------------------------------------------------------------------------------
-For each pair of corresponding [`elements`](../../../glossary.html#element-wise):
+For each tuple of corresponding [`elements`](../../../glossary.html#element-wise), the element of
+the greatest absolute value is returned.
+
+For instance for two elemnts:
+
   * If `|x| >  |y|`,  `x` is returned.
   * If `|x| <  |y|`,  `y` is returned.
   * Otherwise `max(x, y)` is returned.
-The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+
+For n parameters the result is computed as if this scheme was recursively used.
+
+The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
 
 !!! WARNING
    If any element of the inputs is a `Nan`, the corresponding output element is system-dependent.
@@ -58,30 +65,20 @@ Supported decorators
 [`pedantic`](../decorators.html#pedantic)
 :   **Required header: **<script type="preformatted">` #include <eve/function/pedantic/maxmag.hpp>`</script>
 
-:   The call `pedantic(maxmag)(x,y)` is  semantically equivalent to:
-
-  * If `|x| >  |y|`,  `x` is returned.
-  * If `|x| <  |y|`,  `y` is returned.
-  * Otherwise `pedantic(max)(x, y)` is returned.
-
+The behaviour is the same except that if  `|x| == |y|`, `pedantic(max)` is used.
 
 [`numeric`](../decorators.html#numeric)
 :   **Required header: **<script type="preformatted">` #include <eve/function/numeric/maxmag.hpp>`</script>
 
-:   The call `numeric(maxmag)(x,y)`  ensures that  if any element of the inputs is a `Nan`, the corresponding
-    output element is the corresponding element of the other parameter (i.e. the not invalid parameter wins):
-
-  * If `|x| >  |y|`,  `x` is returned.
-  * If `|x| <  |y|`,  `y` is returned.
-  * Otherwise `numeric(max)(x, y)` is returned.
+The behaviour is the same except that if  `|x| == |y|`, `numeric(max)` is used.
 
 [`derivative`](../decorators.html#derivative)
 :   **Required header: **<script type="preformatted">` #include <eve/function/derivative/maxmag.hpp>`</script>
 
-:   The expression `derivative_1st(maxmag)(x,y)` and `derivative_2nd(maxmag)(x,y)` computes the partial
-    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ \mbox{maxmag}(x,y)$.
+:   The expression `derivative< N >(maxmag)(x,args,...)` computes the partial
+    derivative relative to the Nth parameter. If the parameters are $x_1, ..., x_n$ and
+    their maxmag is $m$, the value returned is elementwise 1 if $m$ is equal to $x_N$ else 0.
 
-</script>
 
   (insert ../../src/maxmag.src.html here)
 
