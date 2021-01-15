@@ -12,6 +12,7 @@
 #include <eve/memory/aligned_ptr.hpp>
 
 #include <array>
+#include <memory>
 
 TTS_CASE("aligned_ptr constructor from nullptr")
 {
@@ -25,7 +26,7 @@ TTS_CASE("aligned_ptr factory functions - Default SIMD alignment")
 {
   constexpr auto size = EVE_CURRENT_ABI::bytes;
 
-  alignas(size) std::array<char, 2*size> values;
+  alignas(size) std::array<std::byte, 2 * size> values;
   TTS_EQUAL(eve::as_aligned(&values[ 0 ]).get()   , &values[ 0 ]);
   TTS_EQUAL(eve::as_aligned(&values[ 0 ])         , &values[ 0 ]);
   TTS_EQUAL(eve::as_aligned(&values[ 0 ])         , eve::as_aligned(&values[ 0 ]));
@@ -35,7 +36,7 @@ TTS_CASE("aligned_ptr factory functions - Default SIMD alignment")
 
 TTS_CASE("aligned_ptr factory functions - Specific alignment")
 {
-  alignas(8) std::array<char, 64> values;
+  alignas(8) std::array<std::byte, 64> values;
   TTS_EQUAL(eve::as_aligned<8>(&values[ 0 ]).get(), &values[ 0 ]);
   TTS_EQUAL(eve::as_aligned<8>(&values[ 0 ])      , &values[ 0 ]);
   TTS_EQUAL(eve::as_aligned<8>(&values[ 0 ])      , eve::as_aligned<8>(&values[ 0 ]));
@@ -45,9 +46,9 @@ TTS_CASE("aligned_ptr factory functions - Specific alignment")
 
 TTS_CASE("aligned_ptr ordering")
 {
-  char                      values[ 2 ];
-  eve::aligned_ptr<char, 1> ptr = &values[ 0 ];
-  eve::aligned_ptr<char, 1> ptr1= ptr;
+  std::byte                      values[ 2 ];
+  eve::aligned_ptr<std::byte, 1> ptr = &values[ 0 ];
+  eve::aligned_ptr<std::byte, 1> ptr1= ptr;
 
   ptr1++;
   TTS_EXPECT(ptr < ptr1);
@@ -61,8 +62,8 @@ TTS_CASE("aligned_ptr ordering")
 
 TTS_CASE("aligned_ptr pre/post increment & decrement")
 {
-  char                      values[ 2 ];
-  eve::aligned_ptr<char, 1> ptr = &values[ 0 ];
+  std::byte                            values[ 2 ];
+  eve::aligned_ptr<std::byte, 1> ptr = &values[ 0 ];
 
   ptr++;
   TTS_EQUAL(ptr.get(), &values[ 1 ]);
