@@ -1199,6 +1199,7 @@ namespace eve::detail
       39124u, 39142u, 39146u, 39148u, 39158u, 39166u, 39172u, 39176u,
       39182u, 39188u, 39194u
     };
+
     if constexpr(has_native_abi_v<T>)
     {
       if constexpr(scalar_value<T>)
@@ -1230,7 +1231,7 @@ namespace eve::detail
         else
         {
           auto nn = convert(n, as<elt_t>());
-          nn = if_else(n > 10000, nn, zero(as(n)));
+          nn = if_else(nn <= 10000, nn, zero(as(n)));
           return convert(gather(&a1[0], nn), as<elt_t>()) + if_else(nn > 6542, T(0xffffu), zero) ;
         }
       }
@@ -1248,7 +1249,8 @@ namespace eve::detail
   template<unsigned_value T, floating_scalar_value D>
   EVE_FORCEINLINE constexpr auto nth_prime_(EVE_SUPPORTS(cpu_), converter_type<D> d, T n) noexcept
   {
-    auto r = d(nth_prime(n));
+    auto nn = uint32(n);
+    auto r = d(nth_prime(nn));
     return if_else(is_eqz(r), allbits, r);
   }
 }
