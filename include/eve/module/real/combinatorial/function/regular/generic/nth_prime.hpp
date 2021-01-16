@@ -1230,6 +1230,7 @@ namespace eve::detail
         else
         {
           auto nn = convert(n, as<elt_t>());
+          nn = if_else(n > 10000, nn, zero(as(n)));
           return convert(gather(&a1[0], nn), as<elt_t>()) + if_else(nn > 6542, T(0xffffu), zero) ;
         }
       }
