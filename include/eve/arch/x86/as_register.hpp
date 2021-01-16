@@ -11,7 +11,9 @@
 #pragma once
 
 #include <eve/arch/x86/predef.hpp>
+#include <compare>
 #include <type_traits>
+#include <ostream>
 
 namespace eve
 {
@@ -95,24 +97,41 @@ namespace eve
       using type = typename inner_mask<N>::type;
 
       explicit constexpr operator type() const { return value; }
+      explicit constexpr operator bool() const { return (bool)value; }
 
       // != and reverse are generated.
-      friend constexpr bool operator==(mask_n m, mask_n n)  { return m.value == n.value; }
-      friend constexpr bool operator==(mask_n m, type  n)  { return m.value == n;       }
+      // <=> didn't work for some reason for ==
+      friend bool operator==(mask_n, mask_n) = default;
+      friend bool operator==(mask_n m, type n) { return m == mask_n{n}; }
+      friend auto operator<=>(mask_n, mask_n) = default;
 
-      friend constexpr mask_n operator~(mask_n m)  { return mask_n{type{~m.value}}; }
 
-      friend constexpr mask_n& operator&=(mask_n& m, mask_n n)  { m.value &= n.value; return m;     }
-      friend constexpr mask_n& operator&=(mask_n& m, type  n)  { m.value &= n;       return m;     }
-      friend constexpr mask_n operator& (mask_n  m, mask_n n)  { return mask_n{m.value & n.value};  }
-      friend constexpr mask_n operator& (mask_n  m, type  n)  { return mask_n{m.value & n};        }
-      friend constexpr mask_n operator& (type   m, mask_n n)  { return mask_n{n.value & n.value};  }
+      friend constexpr mask_n operator~(mask_n m) { return mask_n{type{~m.value}}; }
 
-      friend constexpr mask_n& operator|=(mask_n& m, mask_n n)  { m.value |= n.value; return m;     }
-      friend constexpr mask_n& operator|=(mask_n& m, type  n)  { m.value |= n;       return m;     }
-      friend constexpr mask_n operator| (mask_n  m, mask_n n)  { return mask_n{m.value | n.value};  }
-      friend constexpr mask_n operator| (mask_n  m, type  n)  { return mask_n{m.value | n};        }
-      friend constexpr mask_n operator| (type   m, mask_n n)  { return mask_n{n.value | n.value};  }
+      friend constexpr mask_n& operator&=(mask_n& m, mask_n n) { m.value &= n.value; return m;     }
+      friend constexpr mask_n& operator&=(mask_n& m, type  n) { m.value &= n;       return m;     }
+      friend constexpr mask_n operator& (mask_n  m, mask_n n) { return mask_n{m.value & n.value};  }
+      friend constexpr mask_n operator& (mask_n  m, type  n) { return mask_n{m.value & n};        }
+      friend constexpr mask_n operator& (type   m, mask_n n) { return mask_n{n.value & n.value};  }
+
+      friend constexpr mask_n& operator|=(mask_n& m, mask_n n) { m.value |= n.value; return m;     }
+      friend constexpr mask_n& operator|=(mask_n& m, type  n) { m.value |= n;       return m;     }
+      friend constexpr mask_n operator| (mask_n  m, mask_n n) { return mask_n{m.value | n.value};  }
+      friend constexpr mask_n operator| (mask_n  m, type  n) { return mask_n{m.value | n};        }
+      friend constexpr mask_n operator| (type   m, mask_n n) { return mask_n{n.value | n.value};  }
+
+      friend constexpr mask_n& operator^=(mask_n& m, mask_n n) { m.value ^= n.value; return m;     }
+      friend constexpr mask_n& operator^=(mask_n& m, type  n) {  m.value ^= n;       return m;     }
+      friend constexpr mask_n operator^ (mask_n  m, mask_n n) { return mask_n{m.value ^ n.value};  }
+      friend constexpr mask_n operator^ (mask_n  m, type  n) { return mask_n{m.value ^ n};        }
+      friend constexpr mask_n operator^ (type   m, mask_n n) { return mask_n{n.value ^ n.value};  }
+
+      friend constexpr mask_n& operator<<=(mask_n& m, std::ptrdiff_t shift) { m.value <<= shift; return m; }
+      friend constexpr mask_n operator<<(mask_n m, std::ptrdiff_t shift) { return mask_n{m.value << shift}; }
+      friend constexpr mask_n& operator>>=(mask_n& m, std::ptrdiff_t shift) { m.value >>= shift; return m; }
+      friend constexpr mask_n operator>>(mask_n m, std::ptrdiff_t shift) { return mask_n{m.value >> shift}; }
+
+      friend std::ostream& operator<<(std::ostream& out, const mask_n& m) { return out << m.value; }
 
       type value;
     };
