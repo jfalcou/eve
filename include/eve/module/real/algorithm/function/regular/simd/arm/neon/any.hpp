@@ -24,22 +24,9 @@ namespace eve::detail
     {
       return static_cast<bool>(m[0]);
     }
-    else if constexpr( sizeof(T) == 4 )
+    else
     {
       m = vorr_u32(m, vrev64_u32(m));
-      return static_cast<bool>(m[0]);
-    }
-    else if constexpr( sizeof(T) == 2 )
-    {
-      if constexpr( N::value == 4) { m = vorr_u16(m, vrev64_u16(m)); }
-      m = vorr_u16(m, vrev32_u16(m));
-      return static_cast<bool>(m[0]);
-    }
-    else //if constexpr( sizeof(T) == 1 )
-    {
-      if constexpr( N::value == 8)  { m = vorr_u8(m, vrev64_u8(m)); }
-      if constexpr( N::value >= 4)  { m = vorr_u8(m, vrev32_u8(m)); }
-      m = vorr_u8(m, vrev16_u8(m));
       return static_cast<bool>(m[0]);
     }
   }
@@ -51,4 +38,3 @@ namespace eve::detail
     return any(l) || any(h);
   }
 }
-
