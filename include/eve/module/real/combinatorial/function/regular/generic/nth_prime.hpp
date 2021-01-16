@@ -19,13 +19,14 @@
 #include <eve/function/convert.hpp>
 #include <eve/function/converter.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/function/inc.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
   template<unsigned_value T>
-  EVE_FORCEINLINE auto nth_prime_(EVE_SUPPORTS(cpu_), T n) noexcept
+  EVE_FORCEINLINE auto nth_prime_(EVE_SUPPORTS(cpu_), T nn) noexcept
   {
     //
     // This is basically three big tables which together
@@ -1199,18 +1200,18 @@ namespace eve::detail
       39124u, 39142u, 39146u, 39148u, 39158u, 39166u, 39172u, 39176u,
       39182u, 39188u, 39194u
     };
-
+    auto n = uint32(inc(nn));
     if constexpr(has_native_abi_v<T>)
     {
       if constexpr(scalar_value<T>)
       {
         if constexpr(sizeof(T) == 1)
         {
-          return a1[n > 54 ? 0 :n];
+          return a1[n > 54u ? 0 :n];
         }
         else
         {
-          n =  if_else(n > 10000, T(0), n);
+          n =  (n > 10000u) ? 0u : n;
           return a1[n]+(n> 6542)*0xffffu;
         }
 
@@ -1220,7 +1221,7 @@ namespace eve::detail
         using elt_t =  element_type_t<T>;
         if constexpr(sizeof(elt_t) == 1)
         {
-          n = if_else(n < 54, n, zero(as(n)));
+          n = if_else(n < 54u, n, zero(as(n)));
           return gather(&a1[0], uint8(n));
         }
         else if constexpr(sizeof(elt_t) == 2)
@@ -1231,7 +1232,7 @@ namespace eve::detail
         else
         {
           auto nn = convert(n, as<elt_t>());
-          nn = if_else(nn <= 10000, nn, zero(as(n)));
+          nn = if_else(nn <= elt_t(10000), nn, zero(as(nn)));
           return convert(gather(&a1[0], nn), as<elt_t>()) + if_else(nn > 6542, T(0xffffu), zero) ;
         }
       }
