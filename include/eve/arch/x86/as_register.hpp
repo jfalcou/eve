@@ -90,45 +90,37 @@ namespace eve
     template<> struct inner_mask<32>  { using type = __mmask32; };
     template<> struct inner_mask<64>  { using type = __mmask64; };
 
-    template<int N> struct mmask
+    template<int N> struct mask_n
     {
       using type = typename inner_mask<N>::type;
 
-      constexpr mmask() {}
-      constexpr mmask(type v) : value(v) {}
-
-      constexpr mmask& operator=(type v ) { value = v; return *this; }
       explicit constexpr operator type() const { return value; }
 
-      friend constexpr bool operator==(mmask m, mmask n)  { return m.value == n.value; }
-      friend constexpr bool operator==(mmask m, type  n)  { return m.value == n;       }
-      friend constexpr bool operator==(type  m, mmask n)  { return m       == n.value; }
+      // != and reverse are generated.
+      friend constexpr bool operator==(mask_n m, mask_n n)  { return m.value == n.value; }
+      friend constexpr bool operator==(mask_n m, type  n)  { return m.value == n;       }
 
-      friend constexpr bool operator!=(mmask m, mmask n)  { return m.value != n.value; }
-      friend constexpr bool operator!=(mmask m, type  n)  { return m.value != n;       }
-      friend constexpr bool operator!=(type  m, mmask n)  { return m       != n.value; }
+      friend constexpr mask_n operator~(mask_n m)  { return mask_n{type{~m.value}}; }
 
-      friend constexpr mmask operator~(mmask m)  { return mmask{type{~m.value}}; }
+      friend constexpr mask_n& operator&=(mask_n& m, mask_n n)  { m.value &= n.value; return m;     }
+      friend constexpr mask_n& operator&=(mask_n& m, type  n)  { m.value &= n;       return m;     }
+      friend constexpr mask_n operator& (mask_n  m, mask_n n)  { return mask_n{m.value & n.value};  }
+      friend constexpr mask_n operator& (mask_n  m, type  n)  { return mask_n{m.value & n};        }
+      friend constexpr mask_n operator& (type   m, mask_n n)  { return mask_n{n.value & n.value};  }
 
-      friend constexpr mmask operator&=(mmask& m, mmask n)  { m.value &= n.value; return m;     }
-      friend constexpr mmask operator&=(mmask& m, type  n)  { m.value &= n;       return m;     }
-      friend constexpr mmask operator& (mmask  m, mmask n)  { return mmask{m.value & n.value};  }
-      friend constexpr mmask operator& (mmask  m, type  n)  { return mmask{m.value & n};        }
-      friend constexpr mmask operator& (type   m, mmask n)  { return mmask{n.value & n.value};  }
-
-      friend constexpr mmask operator|=(mmask& m, mmask n)  { m.value |= n.value; return m;     }
-      friend constexpr mmask operator|=(mmask& m, type  n)  { m.value |= n;       return m;     }
-      friend constexpr mmask operator| (mmask  m, mmask n)  { return mmask{m.value | n.value};  }
-      friend constexpr mmask operator| (mmask  m, type  n)  { return mmask{m.value | n};        }
-      friend constexpr mmask operator| (type   m, mmask n)  { return mmask{n.value | n.value};  }
+      friend constexpr mask_n& operator|=(mask_n& m, mask_n n)  { m.value |= n.value; return m;     }
+      friend constexpr mask_n& operator|=(mask_n& m, type  n)  { m.value |= n;       return m;     }
+      friend constexpr mask_n operator| (mask_n  m, mask_n n)  { return mask_n{m.value | n.value};  }
+      friend constexpr mask_n operator| (mask_n  m, type  n)  { return mask_n{m.value | n};        }
+      friend constexpr mask_n operator| (type   m, mask_n n)  { return mask_n{n.value | n.value};  }
 
       type value;
     };
 
-    using mask8  = mmask<8>;
-    using mask16 = mmask<16>;
-    using mask32 = mmask<32>;
-    using mask64 = mmask<64>;
+    using mask8  = mask_n<8>;
+    using mask16 = mask_n<16>;
+    using mask32 = mask_n<32>;
+    using mask64 = mask_n<64>;
 
     template<> struct as_mask<8>  { using type = mask8; };
     template<> struct as_mask<16> { using type = mask16; };
