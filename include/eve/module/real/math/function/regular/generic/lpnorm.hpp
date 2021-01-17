@@ -38,44 +38,39 @@ namespace eve::detail
       auto fp = floating_(p);
       return lpnorm(fp, a0, args...);
     }
-    else if constexpr(scalar_value<P>)
-    {
-////        std::cout << " === p " << p << std::endl;
-      if (p == P(2)) return hypot(a0, args...);
-      else if (p == P(1)) return manhattan(a0, args...);
-      else if (p == eve::inf(as(p))) return max(abs(a0), abs(args)...);
-      else
-      {
-        using r_t = common_compatible_t<T0, Ts...>;
-        return lpnorm(r_t(p), a0, args...);
-      }
-    }
     else
     {
-////      std::cout << "*** p " << p << std::endl;
-      using r_t = common_compatible_t<T0,Ts...>;
-      if constexpr(has_native_abi_v<r_t>)
-      {
-        r_t that(sqr(eve::abs(a0)));
-        auto addppow = [p](auto that, auto next)->r_t{
-          that +=  pow_abs(next, p);
-          return that;
-        };
-        ((that = addppow(that,args)),...);
-        auto isinfp = is_infinite(p);
-        if (any(isinfp))
-        {
-          auto r = max(abs(a0), abs(args)...);
-          if (all(isinfp)) return r;
-          return if_else(isinfp, r, pow_abs(that, rec(p)));
-        }
-        return pow_abs(that, rec(p));
-      }
+////        std::cout << " === p " << p << std::endl;
+      if (all(p == P(2))) return hypot(a0, args...);
+      else if (all(p == P(1))) return manhattan(a0, args...);
+      else if (all(p == eve::inf(as(p)))) return max(abs(a0), abs(args)...);
       else
       {
-        return apply_over(lpnorm, a0, args...);
+////      std::cout << "*** p " << p << std::endl;
+        using r_t = common_compatible_t<T0,Ts...>;
+        if constexpr(has_native_abi_v<r_t>)
+        {
+          auto rp =  r_t(p);
+          r_t that(sqr(eve::abs(a0)));
+          auto addppow = [rp](auto that, auto next)->r_t{
+            that +=  pow_abs(next, rp);
+            return that;
+          };
+          ((that = addppow(that,args)),...);
+          auto isinfp = is_infinite(rp);
+          if (any(isinfp))
+          {
+            auto r = max(abs(a0), abs(args)...);
+            if (all(isinfp)) return r;
+            return if_else(isinfp, r, pow_abs(that, rec(rp)));
+          }
+          return pow_abs(that, rec(rp));
+        }
+        else
+        {
+          return apply_over(lpnorm, a0, args...);
+        }
       }
     }
   }
-
 }

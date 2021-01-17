@@ -25,7 +25,7 @@ namespace eve::detail
   auto lpnorm_(EVE_SUPPORTS(cpu_), diff_type<N>
             , P const & p, T0 arg0, T1 arg1, Ts... args) noexcept
   {
-    using r_t = common_compatible_t<T0,T1, Ts...>;
+    using r_t = common_compatible_t<T0, T1, Ts...>;
     if constexpr(N > sizeof...(Ts)+2)
     {
       return zero(as<r_t >());
@@ -41,8 +41,7 @@ namespace eve::detail
       else
       {
         auto tmp = lpnorm(p, arg0, arg1, args...);
-        //    auto h = pow_abs(tmp, oneminus(p));
-        auto h =         tmp;
+        auto h = pow_abs(tmp, r_t(oneminus(p)));
         if constexpr(N==1)       return arg0*h;
         else if constexpr(N==2)  return arg1*h;
         else
@@ -84,8 +83,7 @@ namespace eve::detail
       else
       {
         auto tmp = pedantic(lpnorm)(p, arg0, arg1, args...);
-//        auto h =  pow_abs(tmp, oneminus(p));
-        auto h =          tmp;
+        auto h =  pow_abs(tmp, r_t(oneminus(p)));
         if constexpr(N==1)       return arg0*h;
         else if constexpr(N==2)  return  arg1*h;
         else
