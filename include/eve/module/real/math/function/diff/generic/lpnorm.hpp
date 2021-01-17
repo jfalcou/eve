@@ -21,7 +21,7 @@ namespace eve::detail
 {
 
 
-  template<int N, floating_real_value P, typename T0, typename T1, typename... Ts>
+  template<int N, real_value P, typename T0, typename T1, typename... Ts>
   auto lpnorm_(EVE_SUPPORTS(cpu_), diff_type<N>
             , P const & p, T0 arg0, T1 arg1, Ts... args) noexcept
   {
@@ -30,6 +30,11 @@ namespace eve::detail
     {
       return zero(as<r_t >());
     }
+    else if constexpr(integral_value<P>)
+    {
+      auto fp = floating_(p);
+      return diff_type<N>(lpnorm)(fp, a0, args...);      
+    }
     else
     {
       if constexpr(N > sizeof...(Ts)+2) return zero(as<r_t>());
@@ -37,7 +42,7 @@ namespace eve::detail
       {
         auto h = pow_abs(lpnorm(p, arg0, arg1, args...), oneminus(p));
         if constexpr(N==1)       return arg0*h;
-        else if constexpr(N==2)  return  arg1*h;
+        else if constexpr(N==2)  return arg1*h;
         else
         {
           auto getNth = []<std::size_t... I>(std::index_sequence<I...>, auto& that, auto... vs)
@@ -71,7 +76,7 @@ namespace eve::detail
       if constexpr(N > sizeof...(Ts)+2) return zero(as<r_t>());
       else
       {
-        auto h =  pow_abs(pedantic(lpnorm)(arg0, arg1, args...), oneminus(p));;
+        auto h =  pow_abs(pedantic(lpnorm)(p, arg0, arg1, args...), oneminus(p));;
         if constexpr(N==1)       return arg0*h;
         else if constexpr(N==2)  return  arg1*h;
         else

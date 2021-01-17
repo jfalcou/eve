@@ -16,8 +16,8 @@ TTS_CASE_TPL("Check diff(lpnorm) return type", EVE_TYPE)
 {
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EXPR_IS(eve::diff_1st(eve::lpnorm)(T(), T()), T);
-    TTS_EXPR_IS(eve::diff_2nd(eve::lpnorm)(T(), T()), T);
+    TTS_EXPR_IS(eve::diff_1st(eve::lpnorm)(T(), T(), T()), T);
+    TTS_EXPR_IS(eve::diff_2nd(eve::lpnorm)(T(), T(), T()), T);
   }
 }
 
