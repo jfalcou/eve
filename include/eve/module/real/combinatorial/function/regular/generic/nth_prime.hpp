@@ -1222,7 +1222,7 @@ namespace eve::detail
         if constexpr(sizeof(elt_t) == 1)
         {
           n = if_else(n < 54u, n, zero(as(n)));
-          return gather(&a1[0], uint8(n));
+          return uint8(gather(&a1[0], uint8(n)));
         }
         else if constexpr(sizeof(elt_t) == 2)
         {
