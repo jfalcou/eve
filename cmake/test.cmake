@@ -15,7 +15,7 @@ set(_TestCurrentDir "${CMAKE_CURRENT_LIST_DIR}")
 set(_TestSrcDir     "${PROJECT_BINARY_DIR}/tmp-src")
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-  set( _TestOptions -std=c++20 -Wall -Werror=unused-parameter)
+  set( _TestOptions -std=c++20 -Werror -Wall -Wpedantic -Wextra -Wno-gnu-zero-variadic-macro-arguments)
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   set( _TestOptions -std=c++20 -Wall -Werror=unused-parameter)
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")

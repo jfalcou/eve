@@ -41,6 +41,9 @@ namespace eve
                   : value_((v != 0) ? true_mask : false_mask)
     {}
 
+    EVE_FORCEINLINE constexpr logical(const logical&) = default;
+    EVE_FORCEINLINE constexpr logical(logical&&) noexcept = default;
+
     //==============================================================================================
     // Assignment
     //==============================================================================================

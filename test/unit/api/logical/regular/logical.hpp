@@ -97,3 +97,19 @@ TTS_CASE_TPL("logical bits conversion", EVE_TYPE)
   TTS_EQUAL(bool_f.bits(), bits_t(0));
   TTS_IEEE_EQUAL(bool_t.bits(), eve::allbits(eve::as<bits_t>()));
 }
+
+
+#if defined(EVE_SIMD_TESTS)
+TTS_CASE_TPL("logical getters and setters", EVE_TYPE)
+{
+  eve::logical<T> x{false};
+
+  for (int i = 0; i != T::static_size; ++i) {
+    TTS_EXPECT_NOT(x[i]);
+    x.set(i, true);
+    TTS_EXPECT(x[i]);
+    x.set(i, false);
+    TTS_EXPECT_NOT(x[i]);
+  }
+}
+#endif  // defined(EVE_SIMD_TESTS)
