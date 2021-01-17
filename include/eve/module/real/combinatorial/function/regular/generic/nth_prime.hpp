@@ -1200,9 +1200,9 @@ namespace eve::detail
       39124u, 39142u, 39146u, 39148u, 39158u, 39166u, 39172u, 39176u,
       39182u, 39188u, 39194u
     };
-    auto n = uint16(inc(nn));
     if constexpr(has_native_abi_v<T>)
     {
+      auto n = uint16(inc(nn));
       if constexpr(scalar_value<T>)
       {
         if constexpr(sizeof(T) == 1)
@@ -1242,7 +1242,7 @@ namespace eve::detail
       }
     }
     else
-      return apply_over(nth_prime, n);
+      return apply_over(nth_prime, nn);
   }
 
   template<unsigned_value T, unsigned_scalar_value D>
