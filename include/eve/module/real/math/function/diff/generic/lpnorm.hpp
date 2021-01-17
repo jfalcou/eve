@@ -33,14 +33,16 @@ namespace eve::detail
     else if constexpr(integral_value<P>)
     {
       auto fp = floating_(p);
-      return diff_type<N>(lpnorm)(fp, a0, args...);      
+      return diff_type<N>()(lpnorm)(fp, arg0, arg1, args...);
     }
     else
     {
       if constexpr(N > sizeof...(Ts)+2) return zero(as<r_t>());
       else
       {
-        auto h = pow_abs(lpnorm(p, arg0, arg1, args...), oneminus(p));
+        auto tmp = lpnorm(p, arg0, arg1, args...);
+        //    auto h = pow_abs(tmp, oneminus(p));
+        auto h =         tmp;
         if constexpr(N==1)       return arg0*h;
         else if constexpr(N==2)  return arg1*h;
         else
@@ -62,7 +64,7 @@ namespace eve::detail
     }
   }
 
-  template<int N, floating_real_value P, typename T0, typename T1, typename... Ts>
+  template<int N, real_value P, typename T0, typename T1, typename... Ts>
   auto lpnorm_(EVE_SUPPORTS(cpu_), decorated<diff_<N>(pedantic_)> const &, P const & p
              , T0 arg0, T1 arg1, Ts... args) noexcept
   {
@@ -71,12 +73,19 @@ namespace eve::detail
     {
       return zero(as<r_t >());
     }
+    else if constexpr(integral_value<P>)
+    {
+      auto fp = floating_(p);
+      return decorated<diff_<N>(pedantic_)>()(lpnorm)(fp, arg0, arg1, args...);
+    }
     else
     {
       if constexpr(N > sizeof...(Ts)+2) return zero(as<r_t>());
       else
       {
-        auto h =  pow_abs(pedantic(lpnorm)(p, arg0, arg1, args...), oneminus(p));;
+        auto tmp = pedantic(lpnorm)(p, arg0, arg1, args...);
+//        auto h =  pow_abs(tmp, oneminus(p));
+        auto h =          tmp;
         if constexpr(N==1)       return arg0*h;
         else if constexpr(N==2)  return  arg1*h;
         else

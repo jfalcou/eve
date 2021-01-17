@@ -16,6 +16,7 @@
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/pedantic/max.hpp>
 #include <eve/function/maxmag.hpp>
+#include <eve/function/pedantic.hpp>
 #include <eve/function/pedantic/manhattan.hpp>
 #include <eve/function/hypot.hpp>
 #include <eve/function/pedantic/ldexp.hpp>
@@ -46,7 +47,7 @@ namespace eve::detail
       else
       {
         using r_t = common_compatible_t<T0, Ts...>;
-        return pedantic(lpnorm)(r_t(p), a0, args...);
+        return lpnorm(pedantic_type(), r_t(p), a0, args...);
       }
     }
     else
