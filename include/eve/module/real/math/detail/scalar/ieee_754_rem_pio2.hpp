@@ -366,9 +366,9 @@ namespace eve::detail
       twon24  =  5.96046447753906250000e-08; /* 0x3E700000, 0x00000000 */
 
     std::int32_t jz,jx,jv,jp,jk,carry,n,iq[20],i,j,k,m,q0,ih;
-    double z,fw,f[20],fq[20],q[20];
+    double z,fw,f[20],fq[20]={},q[20];
 
-    for(int i=0; i < 20 ; ++i) fq[i] = 0; // to avoid warnings from some compilers
+
     /* initialize jk*/
     jk = init_jk[prec];
     jp = jk;
