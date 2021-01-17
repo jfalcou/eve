@@ -1209,10 +1209,14 @@ namespace eve::detail
         {
           return uint8(a1[n > 54u ? 0 :n]);
         }
+        else if constexpr(sizeof(T) == 2)
+        {
+          return a1[n > 6542u ? 0 :n];
+        }
         else
         {
           n =  (n > 10000u) ? 0u : n;
-          return T(a1[n]+(n> 6542)*0xffffu);
+          return T(a1[n]+(n>6542u)*0xffffu);
         }
 
       }
