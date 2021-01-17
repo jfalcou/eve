@@ -14,7 +14,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/binarize.hpp>
+#include <eve/function/add.hpp>
 #include <eve/function/gather.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/function/converter.hpp>
@@ -38,12 +38,12 @@ namespace eve::detail
     //
     constexpr std::array<std::uint16_t, 10001> a1 = {
       0u, //this is the overflow value
-      2u, 3u, 5u, 7u, 11u, 13u, 17u, 19u, 23u, 29u, 31u,
-      37u, 41u, 43u, 47u, 53u, 59u, 61u, 67u, 71u, 73u,
-      79u, 83u, 89u, 97u, 101u, 103u, 107u, 109u, 113u,
-      127u, 131u, 137u, 139u, 149u, 151u, 157u, 163u,
-      167u, 173u, 179u, 181u, 191u, 193u, 197u, 199u,
-      211u, 223u, 227u, 229u, 233u, 239u, 241u, 251u, //last to fit in uint8_t
+      2u, 3u, 5u, 7u, 11u, 13u, 17u, 19u, 23u, 29u, 31u, // 1->11
+      37u, 41u, 43u, 47u, 53u, 59u, 61u, 67u, 71u, 73u,  // 12->21
+      79u, 83u, 89u, 97u, 101u, 103u, 107u, 109u, 113u,  // 22->30
+      127u, 131u, 137u, 139u, 149u, 151u, 157u, 163u,    // 31->38
+      167u, 173u, 179u, 181u, 191u, 193u, 197u, 199u,    // 39->46
+      211u, 223u, 227u, 229u, 233u, 239u, 241u, 251u,    // 47->54  //last to fit in uint8_t
       257u, 263u, 269u, 271u, 277u, 281u, 283u, 293u,
       307u, 311u, 313u, 317u, 331u, 337u, 347u, 349u, 353u,
       359u, 367u, 373u, 379u, 383u, 389u, 397u, 401u, 409u,
@@ -1200,40 +1200,40 @@ namespace eve::detail
       39124u, 39142u, 39146u, 39148u, 39158u, 39166u, 39172u, 39176u,
       39182u, 39188u, 39194u
     };
-    auto n = uint32(inc(nn));
+    auto n = uint16(inc(nn));
     if constexpr(has_native_abi_v<T>)
     {
       if constexpr(scalar_value<T>)
       {
         if constexpr(sizeof(T) == 1)
         {
-          return a1[n > 54u ? 0 :n];
+          return uint8(a1[n > 54u ? 0 :n]);
         }
         else
         {
           n =  (n > 10000u) ? 0u : n;
-          return a1[n]+(n> 6542)*0xffffu;
+          return T(a1[n]+(n> 6542)*0xffffu);
         }
 
       }
       else
       {
         using elt_t =  element_type_t<T>;
+        if constexpr(sizeof(elt_t) >= 1) n = if_else(n > 10000u, zero, n);
+        auto tmp = gather(&a1[0], n);
         if constexpr(sizeof(elt_t) == 1)
         {
-          n = if_else(n < 54u, n, zero(as(n)));
-          return uint8(gather(&a1[0], uint8(n)));
+          tmp =  if_else(n > 54u, zero, tmp);
+          return uint8(tmp);
         }
         else if constexpr(sizeof(elt_t) == 2)
         {
-          n = if_else(n < 6542, n, zero(as(n)));
-          return gather(&a1[0], n);
+          tmp =  if_else(n >  6542u, zero, tmp);
+          return uint16(tmp);
         }
         else
         {
-          auto nn = convert(n, as<elt_t>());
-          nn = if_else(nn <= elt_t(10000), nn, zero(as(nn)));
-          return convert(gather(&a1[0], nn), as<elt_t>()) + if_else(nn > 6542, T(0xffffu), zero) ;
+          return add[convert(n, as<elt_t>()) > 6542u](convert(tmp, as<elt_t>()), T(0xffffu));
         }
       }
     }
