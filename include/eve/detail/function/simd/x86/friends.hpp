@@ -20,6 +20,21 @@
 namespace eve::detail
 {
   //================================================================================================
+  template<real_value T, typename N, x86_abi ABI>
+  EVE_FORCEINLINE auto self_lognot(logical<wide<T, N, ABI>> const& v) noexcept
+  {
+    if constexpr( !ABI::is_wide_logical )
+    {
+      using m_t = typename logical<wide<T, N, ABI>>::storage_type;
+      return m_t(~v.storage().value);
+    }
+    else
+    {
+      return bit_cast(~v.bits(), as(v));
+    }
+  }
+
+  //================================================================================================
   // operator== implementation
   //================================================================================================
   template<real_value T, typename N, x86_abi ABI>
