@@ -18,7 +18,7 @@
 #include <eve/function/maxmag.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/function/pedantic/manhattan.hpp>
-#include <eve/function/hypot.hpp>
+#include <eve/function/pedantic/hypot.hpp>
 #include <eve/function/pedantic/ldexp.hpp>
 #include <eve/function/pow_abs.hpp>
 #include <eve/function/rec.hpp>

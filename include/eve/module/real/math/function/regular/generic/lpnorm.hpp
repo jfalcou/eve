@@ -41,16 +41,16 @@ namespace eve::detail
     }
     else
     {
-////        std::cout << " === p " << p << std::endl;
-      if (all(p == P(2))) return hypot(a0, args...);
-      else if (all(p == P(1))) return manhattan(a0, args...);
-      else if (all(p == eve::inf(as(p)))) return max(abs(a0), abs(args)...);
-      else
+      using r_t = common_compatible_t<T0,Ts...>;
+      if constexpr(has_native_abi_v<r_t>)
       {
-////      std::cout << "*** p " << p << std::endl;
-        using r_t = common_compatible_t<T0,Ts...>;
-        if constexpr(has_native_abi_v<r_t>)
+////        std::cout << " === p " << p << std::endl;
+        if (all(p == P(2))) return hypot(r_t(a0), r_t(args)...);
+        else if (all(p == P(1))) return manhattan(r_t(a0), r_t(args)...);
+//        else if (all(p == eve::inf(as(p)))) return pedantic(max)(abs(r_t(a0)), abs(r_t(args))...);
+        else
         {
+////      std::cout << "*** p " << p << std::endl;
           auto rp =  r_t(p);
           r_t that(sqr(eve::abs(a0)));
           auto addppow = [rp](auto that, auto next)->r_t{
@@ -61,16 +61,16 @@ namespace eve::detail
           auto isinfp = is_infinite(rp);
           if (any(isinfp))
           {
-            auto r = max(abs(a0), abs(args)...);
+            auto r = max(abs(r_t(a0)), abs(r_t(args))...);
             if (all(isinfp)) return r;
             return if_else(isinfp, r, pow_abs(that, rec(rp)));
           }
           return pow_abs(that, rec(rp));
         }
-        else
-        {
-          return apply_over(lpnorm, a0, args...);
-        }
+      }
+      else
+      {
+        return apply_over(lpnorm, a0, args...);
       }
     }
   }
