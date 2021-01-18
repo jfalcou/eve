@@ -20,6 +20,16 @@
 namespace eve::detail
 {
   //================================================================================================
+  template<typename T, typename U, typename N, x86_abi ABI>
+  EVE_FORCEINLINE auto self_logand(logical<wide<T,N,ABI>> v, logical<wide<U,N,ABI>> w) noexcept
+  requires( !use_is_wide_logical<ABI>::value )
+  {
+    using storage_t = typename logical<wide<T, N, ABI>>::storage_type;
+    typename storage_t::type that = v.storage().value & w.storage().value;
+    return logical<wide<T, N, ABI>>(storage_t{that});
+  }
+
+  //================================================================================================
   template<real_value T, typename N, x86_abi ABI>
   EVE_FORCEINLINE auto self_lognot(logical<wide<T, N, ABI>> v) noexcept
   {
@@ -35,8 +45,6 @@ namespace eve::detail
     }
   }
 
-  //================================================================================================
-  // operator== implementation
   //================================================================================================
   template<real_value T, typename N, x86_abi ABI>
   EVE_FORCEINLINE as_logical_t<wide<T, N, ABI>> self_eq(wide<T,N,ABI> v, wide<T,N,ABI> w) noexcept
@@ -137,8 +145,6 @@ namespace eve::detail
   }
 
   //================================================================================================
-  // operator!= implementation
-  //================================================================================================
   template<real_value T, typename N, x86_abi ABI>
   EVE_FORCEINLINE as_logical_t<wide<T, N, ABI>> self_neq(wide<T,N,ABI> v, wide<T,N,ABI> w) noexcept
   {
@@ -213,8 +219,6 @@ namespace eve::detail
     }
   }
 
-  //================================================================================================
-  // operator!= implementation
   //================================================================================================
   template<real_value T, typename N, x86_abi ABI>
   EVE_FORCEINLINE as_logical_t<wide<T, N, ABI>> self_less(wide<T,N,ABI> v, wide<T,N,ABI> w) noexcept
@@ -305,6 +309,7 @@ namespace eve::detail
     }
   }
 
+  //================================================================================================
   template<real_value T, typename N, x86_abi ABI>
   EVE_FORCEINLINE as_logical_t<wide<T, N, ABI>> self_greater(wide<T,N,ABI> v, wide<T,N,ABI> w) noexcept
   {
@@ -397,6 +402,7 @@ namespace eve::detail
     }
   }
 
+  //================================================================================================
   template<real_value T, typename N, x86_abi ABI>
   EVE_FORCEINLINE as_logical_t<wide<T, N, ABI>> self_geq(wide<T,N,ABI> v, wide<T,N,ABI> w) noexcept
   {

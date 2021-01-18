@@ -136,6 +136,25 @@ namespace eve
     EVE_FORCEINLINE auto bitmap() const noexcept { return detail::to_bitmap(EVE_CURRENT_API{},*this); }
 
     //==============================================================================================
+    // Logical operations
+    //==============================================================================================
+    template<typename U, typename A2>
+    friend EVE_FORCEINLINE auto operator&&(logical const& v, logical<wide<U,Size,A2>> const& w) noexcept
+    {
+      return detail::self_logand(v,w);
+    }
+
+    friend EVE_FORCEINLINE auto operator&&(logical const& v, scalar_value auto w) noexcept
+    {
+      return v && logical{w};
+    }
+
+    friend EVE_FORCEINLINE auto operator&&(scalar_value auto v, logical const& w) noexcept
+    {
+      return w && v;
+    }
+
+    //==============================================================================================
     // Inserting a logical<wide> into a stream
     //==============================================================================================
     friend std::ostream &operator<<(std::ostream &os, logical const &p)

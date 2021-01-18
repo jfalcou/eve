@@ -24,7 +24,7 @@ namespace eve
     EVE_FORCEINLINE auto is_greater_equal_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
     {
       if constexpr( scalar_value<T> && scalar_value<U> )  return as_logical_t<T>(a >= b);
-      else                                                return a <= b;
+      else                                                return a >= b;
     }
   }
 }

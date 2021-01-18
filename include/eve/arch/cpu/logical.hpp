@@ -59,7 +59,20 @@ namespace eve
       return *this;
     }
 
+    //==============================================================================================
+    // Logical operators
+    //==============================================================================================
     EVE_FORCEINLINE constexpr logical operator!() const noexcept { return {!value_}; }
+
+    friend EVE_FORCEINLINE logical operator&&(logical const& v, logical const& w) noexcept
+    {
+      return logical{v.value() && w.value()};
+    }
+
+    friend EVE_FORCEINLINE logical operator||(logical const& v, logical const& w) noexcept
+    {
+      return logical{v.value() || w.value()};
+    }
 
     //==============================================================================================
     // Convertion from logical to other formats (mask, bits, bitmap)

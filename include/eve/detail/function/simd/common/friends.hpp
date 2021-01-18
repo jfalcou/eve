@@ -11,6 +11,7 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
+#include <eve/concept/compatible.hpp>
 #include <eve/constant/allbits.hpp>
 #include <eve/constant/signmask.hpp>
 #include <eve/detail/apply_over.hpp>
@@ -56,6 +57,20 @@ namespace eve::detail
                   return E(~e);
               }, v
               );
+    }
+  }
+
+  //================================================================================================
+  template<typename T, typename U, typename N>
+  EVE_FORCEINLINE auto self_logand(logical<wide<T,N>> v, logical<wide<U,N>> w) noexcept
+  {
+    if constexpr(sizeof(T) == sizeof(U))
+    {
+      return bit_cast ( v.bits() & w.bits(), as(v) );
+    }
+    else
+    {
+      return map([]<typename E>(E e,auto f){ return as_logical_t<E>(e && f); }, v, w);
     }
   }
 
