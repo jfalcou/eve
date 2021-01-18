@@ -81,4 +81,13 @@ namespace eve::detail
     else  if constexpr( sizeof(T) == 8 )            return map(eq, v, w);
 #endif
   }
+
+  //================================================================================================
+  // operator!= implementation
+  //================================================================================================
+  template<real_value T, typename N, arm_abi ABI>
+  EVE_FORCEINLINE as_logical_t<wide<T, N, ABI>> self_neq(wide<T,N,ABI> v, wide<T,N,ABI> w) noexcept
+  {
+    return !(v == w);
+  }
 }
