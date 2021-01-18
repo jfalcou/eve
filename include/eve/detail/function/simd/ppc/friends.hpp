@@ -52,4 +52,13 @@ namespace eve::detail
   {
     return as_logical_t<wide<T,N,ABI>>(vec_cmplt(v.storage(), w.storage()));
   }
+
+  //================================================================================================
+  // operator> implementation
+  //================================================================================================
+  template<real_scalar_value T, typename N, ppc_abi ABI>
+  EVE_FORCEINLINE auto self_greater(wide<T, N, ABI> const &v, wide<T, N, ABI> const &w) noexcept
+  {
+    return as_logical_t<wide<T,N,ABI>>(vec_cmpgt(v.storage(), w.storage()));
+  }
 }

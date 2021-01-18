@@ -115,4 +115,12 @@ namespace eve::detail
     constexpr auto lt = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e < f); };
     return apply_over(lt, v, w);
   }
+
+  //================================================================================================
+  template<real_simd_value Wide>
+  EVE_FORCEINLINE auto self_greater(Wide const& v,Wide const& w) noexcept
+  {
+    constexpr auto gt = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e > f); };
+    return apply_over(gt, v, w);
+  }
 }
