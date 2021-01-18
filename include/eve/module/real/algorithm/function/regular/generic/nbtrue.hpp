@@ -17,11 +17,12 @@
 namespace eve::detail
 {
   template<value T>
-  EVE_FORCEINLINE size_t nbtrue_(EVE_SUPPORTS(cpu_), T const &v) noexcept
+  EVE_FORCEINLINE std::size_t nbtrue_(EVE_SUPPORTS(cpu_), T const &v) noexcept
   {
     if constexpr(scalar_value<T>)
     {
-      return  v != 0;
+      if constexpr(is_logical_v<T>) return v.value() ? 1 : 0;
+      else                          return (v != 0) ? 1 : 0;
     }
     else if constexpr(is_logical_v<T>)
     {

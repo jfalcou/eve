@@ -40,10 +40,3 @@ namespace eve::detail
     return mask_op( EVE_CURRENT_API{}, cond, eve::add, t, f);
   }
 }
-
-// -------------------------------------------------------------------------------------------------
-// Infix operator support
-namespace eve
-{
-  template<simd_value T> EVE_FORCEINLINE auto operator+(T const &v) noexcept { return v; }
-}

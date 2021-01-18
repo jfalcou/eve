@@ -17,8 +17,8 @@
 #include <eve/function/abs.hpp>
 #include <eve/function/dist.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/function/is_nan.hpp>
 #include <eve/function/next.hpp>
-#include <eve/function/if_else.hpp>
 
 namespace eve::detail
 {
@@ -34,5 +34,4 @@ namespace eve::detail
       return apply_over(eve::epsilon, a);
     }
   }
-
 }

@@ -65,6 +65,14 @@ TTS_CASE_TPL("Check eve::is_equal behavior", EVE_TYPE)
   TTS_EQUAL(eve::is_equal(eve::true_(eve::as<T>())  , eve::false_(eve::as<v_t>())), eve::false_(eve::as<T>()));
   TTS_EQUAL(eve::is_equal(eve::true_(eve::as<v_t>()), eve::true_(eve::as<T>()))   , eve::true_(eve::as<T>()) );
   TTS_EQUAL(eve::is_equal(eve::true_(eve::as<v_t>()), eve::false_(eve::as<T>()))  , eve::false_(eve::as<T>()));
+
+  #if defined(EVE_SIMD_TESTS)
+  logical<T> mixed1([](auto i, auto) { return i%3 == 0; });
+  logical<T> mixed2([](auto i, auto) { return i%2 == 0; });
+  logical<T> ref([mixed1,mixed2](auto i, auto) { return mixed1[i] == mixed2[i]; });
+
+  TTS_EQUAL( eve::is_equal(mixed1,mixed2), ref);
+  #endif
 }
 
 TTS_CASE_TPL("Check eve::operator== behavior", EVE_TYPE)
@@ -85,4 +93,12 @@ TTS_CASE_TPL("Check eve::operator== behavior", EVE_TYPE)
   TTS_EQUAL((T(3)           == v_t(1)         ), eve::false_(eve::as<T>()));
   TTS_EQUAL((eve::true_(eve::as<T>()) == eve::true_(eve::as<T>()) ), eve::true_(eve::as<T>()) );
   TTS_EQUAL((eve::true_(eve::as<T>()) == eve::false_(eve::as<T>())), eve::false_(eve::as<T>()));
+
+  #if defined(EVE_SIMD_TESTS)
+  logical<T> mixed1([](auto i, auto) { return i%3 == 0; });
+  logical<T> mixed2([](auto i, auto) { return i%2 == 0; });
+  logical<T> ref([mixed1,mixed2](auto i, auto) { return mixed1[i] == mixed2[i]; });
+
+  TTS_EQUAL( (mixed1 == mixed2), ref);
+  #endif
 }

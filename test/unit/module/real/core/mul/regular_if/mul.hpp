@@ -9,6 +9,8 @@
 **/
 //==================================================================================================
 #include <eve/function/mul.hpp>
+#include <eve/constant/false.hpp>
+#include <eve/constant/true.hpp>
 
 TTS_CASE_TPL("Check eve::mul[condition] return type", EVE_TYPE)
 {

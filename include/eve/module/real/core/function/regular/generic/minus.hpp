@@ -10,40 +10,21 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/bit_xor.hpp>
-#include <eve/detail/function/conditional.hpp>
-#include <eve/constant/signmask.hpp>
-#include <eve/constant/zero.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
+#include <eve/constant/signmask.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/detail/function/conditional.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
   template<real_value T>
-  EVE_FORCEINLINE constexpr T minus_(EVE_SUPPORTS(cpu_)
-                                    , T const &a) noexcept
+  EVE_FORCEINLINE constexpr T minus_(EVE_SUPPORTS(cpu_), T v) noexcept
   {
-    if constexpr(has_native_abi_v<T>)
-    {
-      if constexpr(scalar_value<T>)
-      {
-        return static_cast<T>(-a);
-      }
-      else if constexpr(simd_value<T>)
-      {
-        if (std::is_floating_point_v<value_type_t<T>>)
-        {
-          return  bit_xor(a, signmask(eve::as(a)));
-        }
-        else
-        {
-          return zero(eve::as(a)) - a;
-        }
-      }
-    }
-    else  { return apply_over(minus, a); }
+          if constexpr(simd_value<T>)     return -v;
+    else  if constexpr(floating_value<T>) return bit_xor(v, signmask(eve::as(v)));
+    else                                  return T{0} - v;
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -60,15 +41,5 @@ namespace eve::detail
   {
     auto substract =  [](auto x, auto y){return x-y;};
     return mask_op( EVE_CURRENT_API{}, cond, substract, t, f);
-  }
-}
-
-// Infix operator support
-namespace eve
-{
-  template<value T>
-  EVE_FORCEINLINE auto operator-(T const &v) noexcept
-  {
-    return minus(v);
   }
 }

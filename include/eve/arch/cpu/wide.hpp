@@ -56,7 +56,8 @@ namespace eve
     //==============================================================================================
     // Constructors
     //==============================================================================================
-    EVE_FORCEINLINE wide() noexcept {}
+    EVE_FORCEINLINE wide() noexcept : storage_base{} {}
+    EVE_FORCEINLINE wide(wide const& w) noexcept : storage_base(w.storage()) {}
     EVE_FORCEINLINE wide(storage_type const &r) noexcept : storage_base(r) {}
 
     template<std::input_iterator It>
@@ -121,45 +122,40 @@ namespace eve
     EVE_FORCEINLINE wide operator--(int)  noexcept  { auto that(*this); operator--(); return that; }
 
     //==============================================================================================
-    // Compound operators
+    // Bitwise operators
     //==============================================================================================
-    friend  EVE_FORCEINLINE auto operator+=(wide& w, value auto o) noexcept
-                        ->  decltype(detail::self_add(w, o))
+    friend EVE_FORCEINLINE auto operator~(wide const& v) noexcept
     {
-      return detail::self_add(w, o);
+      return detail::self_bitnot(v);
     }
-
-    friend  EVE_FORCEINLINE auto operator-=(wide& w, value auto o) noexcept
-                        ->  decltype(detail::self_sub(w, o))
-    {
-      return detail::self_sub(w, o);
-    }
-
-    friend  EVE_FORCEINLINE auto operator*=(wide& w, value auto o) noexcept
-                        ->  decltype(detail::self_mul(w, o))
-    {
-      return detail::self_mul(w, o);
-    }
-
-    friend  EVE_FORCEINLINE auto operator/=(wide& w, value auto o) noexcept
-                        ->  decltype(detail::self_div(w, o))
-    {
-      return detail::self_div(w, o);
-    }
-
-    friend  EVE_FORCEINLINE auto operator%=(wide& w, value auto o) noexcept
-                        ->  decltype(detail::self_rem(w, o))
-    {
-      return detail::self_rem(w, o);
-    }
-
-    // TODO
-    // >>= <<=
 
     friend  EVE_FORCEINLINE auto operator&=(wide& w, value auto o) noexcept
                         ->  decltype(detail::self_bitand(w, o))
     {
       return detail::self_bitand(w, o);
+    }
+
+    template<scalar_value U,typename M>
+    friend EVE_FORCEINLINE    auto operator&(wide const& v, wide<U,M> const& w) noexcept
+                          ->  std::decay_t<decltype(std::declval<wide&>() &= w)>
+    {
+      auto    that  = v;
+      return  that &= w;
+    }
+
+    friend EVE_FORCEINLINE auto operator&(wide const& v, scalar_value auto w) noexcept
+    requires (sizeof(w) == sizeof(Type))
+    {
+      auto    that  = v;
+      return  that &= bit_cast(w, as_<Type>{});
+    }
+
+    template<scalar_value S>
+    friend EVE_FORCEINLINE auto operator&(S v, wide const& w) noexcept
+    requires (sizeof(v) == sizeof(Type))
+    {
+      auto    u  = bit_cast(w, as_<typename wide::template rebind<S,Size>>());
+      return  u &= v;
     }
 
     friend  EVE_FORCEINLINE auto operator|=(wide& w, value auto o) noexcept
@@ -168,11 +164,183 @@ namespace eve
       return detail::self_bitor(w, o);
     }
 
+    template<scalar_value U,typename M>
+    friend EVE_FORCEINLINE    auto operator|(wide const& v, wide<U,M> const& w) noexcept
+                          ->  std::decay_t<decltype(std::declval<wide&>() |= w)>
+    {
+      wide    that  = v;
+      return  that |= w;
+    }
+
+    friend EVE_FORCEINLINE auto operator|(wide const& v, scalar_value auto w) noexcept
+    requires (sizeof(w) == sizeof(Type))
+    {
+      auto    that  = v;
+      return  that |= bit_cast(w, as_<Type>{});
+    }
+
+    template<scalar_value S>
+    friend EVE_FORCEINLINE auto operator|(S v, wide const& w) noexcept
+    requires (sizeof(v) == sizeof(Type))
+    {
+      auto    u  = bit_cast(w, as_<typename wide::template rebind<S,Size>>());
+      return  u |= v;
+    }
+
     friend  EVE_FORCEINLINE auto operator^=(wide& w, value auto o) noexcept
                         ->  decltype(detail::self_bitxor(w, o))
     {
       return detail::self_bitxor(w, o);
     }
+
+    template<scalar_value U, typename M>
+    friend EVE_FORCEINLINE    auto operator^(wide const& v, wide<U,M> const& w) noexcept
+                          ->  std::decay_t<decltype(std::declval<wide&>() |= w)>
+    {
+      auto    that  = v;
+      return  that ^= w;
+    }
+
+    friend EVE_FORCEINLINE auto operator^(wide const& v, scalar_value auto w) noexcept
+    requires (sizeof(w) == sizeof(Type))
+    {
+      auto    that  = v;
+      return  that ^= bit_cast(w, as_<Type>{});
+    }
+
+    template<scalar_value S>
+    friend EVE_FORCEINLINE auto operator^(S v, wide const& w) noexcept
+    requires (sizeof(v) == sizeof(Type))
+    {
+      auto    u  = bit_cast(w, as_<typename wide::template rebind<S,Size>>());
+      return  u ^= v;
+    }
+
+    //==============================================================================================
+    // Arithmetic operators
+    //==============================================================================================
+    friend  EVE_FORCEINLINE auto operator+=(wide& w, value auto o) noexcept
+                        ->  decltype(detail::self_add(w, o))
+    {
+      return detail::self_add(w, o);
+    }
+
+    friend EVE_FORCEINLINE auto operator+(wide const& v) noexcept { return v; }
+
+    friend EVE_FORCEINLINE auto operator+(wide const& v, wide const& w) noexcept
+    {
+      auto that = v;
+      return that += w;
+    }
+
+    friend EVE_FORCEINLINE auto operator+(real_scalar_value auto s, wide const& v) noexcept
+    {
+      return v + wide(s);
+    }
+
+    friend EVE_FORCEINLINE auto operator+(wide const& v, real_scalar_value auto s) noexcept
+    {
+      return v + wide(s);
+    }
+
+    friend  EVE_FORCEINLINE auto operator-=(wide& w, value auto o) noexcept
+                        ->  decltype(detail::self_sub(w, o))
+    {
+      return detail::self_sub(w, o);
+    }
+
+    friend EVE_FORCEINLINE auto operator-(wide const& v) noexcept
+    {
+      return self_negate(v);
+    }
+
+    friend EVE_FORCEINLINE auto operator-(wide const& v, wide const& w) noexcept
+    {
+      auto that = v;
+      return that -= w;
+    }
+
+    friend EVE_FORCEINLINE auto operator-(real_scalar_value auto s, wide const& v) noexcept
+    {
+      return wide(s) - v;
+    }
+
+    friend EVE_FORCEINLINE auto operator-(wide const& v, real_scalar_value auto s) noexcept
+    {
+      return v - wide(s);
+    }
+
+    friend  EVE_FORCEINLINE auto operator*=(wide& w, value auto o) noexcept
+                        ->  decltype(detail::self_mul(w, o))
+    {
+      return detail::self_mul(w, o);
+    }
+
+    friend EVE_FORCEINLINE auto operator*(wide const& v, wide const& w) noexcept
+    {
+      auto that = v;
+      return that *= w;
+    }
+
+    friend EVE_FORCEINLINE auto operator*(real_scalar_value auto s, wide const& v) noexcept
+    {
+      return v * wide(s);
+    }
+
+    friend EVE_FORCEINLINE auto operator*(wide const& v, real_scalar_value auto s) noexcept
+    {
+      return v * wide(s);
+    }
+
+    friend  EVE_FORCEINLINE auto operator/=(wide& w, value auto o) noexcept
+                        ->  decltype(detail::self_div(w, o))
+    {
+      return detail::self_div(w, o);
+    }
+
+    friend EVE_FORCEINLINE auto operator/(wide const& v, wide const& w) noexcept
+    {
+      auto that = v;
+      return that /= w;
+    }
+
+    friend EVE_FORCEINLINE auto operator/(real_scalar_value auto s, wide const& v) noexcept
+    {
+      return wide(s) / v;
+    }
+
+    friend EVE_FORCEINLINE auto operator/(wide const& v, real_scalar_value auto s) noexcept
+    {
+      return v / wide(s);
+    }
+
+    friend  EVE_FORCEINLINE auto operator%=(wide& w, value auto o) noexcept
+                        ->  decltype(detail::self_rem(w, o))
+    {
+      return detail::self_rem(w, o);
+    }
+
+    friend EVE_FORCEINLINE  auto operator%(wide const& v, wide const& w) noexcept
+                            requires( integral_scalar_value<Type> )
+    {
+      auto that = v;
+      return that %= w;
+    }
+
+    friend EVE_FORCEINLINE  auto operator%(integral_scalar_value auto s, wide const& v) noexcept
+                            requires( integral_scalar_value<Type> )
+    {
+      return wide(s) % v;
+    }
+
+    friend EVE_FORCEINLINE  auto operator%(wide const& v, integral_scalar_value auto s) noexcept
+                            requires( integral_scalar_value<Type> )
+    {
+      return v % wide(s);
+    }
+
+    // TODO
+    // >>= <<=
 
     //==============================================================================================
     // Inserting a logical<wide> into a stream
@@ -187,10 +355,4 @@ namespace eve
       return os << ')';
     }
   };
-
-  template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE void swap(wide<T, N, ABI> &lhs, wide<T, N, ABI> &rhs) noexcept
-  {
-    lhs.swap(rhs);
-  }
 }

@@ -10,18 +10,17 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
-#include <eve/concept/value.hpp>
+#include <eve/arch.hpp>
+#include <eve/detail/function/simd/common/friends.hpp>
 
-namespace eve::detail
-{
-  template<real_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, ppc_> bit_not_(EVE_SUPPORTS(vmx_),
-                                                wide<T, N, ppc_> const &v0) noexcept
-  {
-    return vec_nor(v0.storage(), v0.storage());
-  }
-}
+#if defined(EVE_HW_X86)
+#  include <eve/detail/function/simd/x86/friends.hpp>
+#endif
 
+#if defined(EVE_HW_POWERPC)
+#  include <eve/detail/function/simd/ppc/friends.hpp>
+#endif
+
+#if defined(EVE_HW_ARM)
+#  include <eve/detail/function/simd/arm/neon/friends.hpp>
+#endif

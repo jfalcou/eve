@@ -55,7 +55,7 @@ TTS_CASE_TPL("Check eve::erf behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve__erf(T(0.5)), T(0.520499877813046537682746653892), 0.5);
   TTS_ULP_EQUAL(eve__erf(-T(0.5)), -T(0.520499877813046537682746653892), 0.5);
   TTS_ULP_EQUAL(eve__erf(T(-0.1)), -T(0.112462916018284892203275071744), 0);
-  TTS_ULP_EQUAL(eve__erf(eve::halfeps(eve::as<T>())), eve::eps(eve::as<T>())*eve::rsqrt(eve::pi(eve::as<T>())), 0);
-  TTS_ULP_EQUAL(eve__erf(-eve::halfeps(eve::as<T>())), -eve::eps(eve::as<T>())*eve::rsqrt(eve::pi(eve::as<T>() )), 0);
+  TTS_ULP_EQUAL(eve__erf(eve::halfeps(eve::as<T>())), eve::eps(eve::as<T>())*eve::rsqrt(eve::pi(eve::as<T>())), 0.5);
+  TTS_ULP_EQUAL(eve__erf(-eve::halfeps(eve::as<T>())), -eve::eps(eve::as<T>())*eve::rsqrt(eve::pi(eve::as<T>() )), 0.5);
   TTS_ULP_EQUAL(eve__erf(T(20)), T(1), 0);
 }

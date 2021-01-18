@@ -13,11 +13,6 @@
 #include <eve/function/min.hpp>
 #include <eve/module/real/core/function/pedantic/generic/min.hpp>
 
-
-#if defined(EVE_HW_POWERPC)
-#  include <eve/module/real/core/function/pedantic/simd/ppc/min.hpp>
-#endif
-
 #if defined(EVE_HW_ARM)
 #  include <eve/module/real/core/function/pedantic/simd/arm/neon/min.hpp>
 #endif

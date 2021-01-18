@@ -23,9 +23,8 @@ namespace eve::detail
   // &=
   //================================================================================================
   template<scalar_value T, value U, typename N, non_native_abi ABI>
-  EVE_FORCEINLINE decltype(auto)
-  self_bitand(wide<T, N, ABI> &self, U const &other) requires((sizeof(wide<T, N, ABI>) == sizeof(U))
-                                                              || (sizeof(T) == sizeof(U)))
+  EVE_FORCEINLINE decltype(auto) self_bitand(wide<T, N, ABI> &self, U const &other) noexcept
+  requires((sizeof(wide<T, N, ABI>) == sizeof(U)) || (sizeof(T) == sizeof(U)))
   {
     using type = wide<T, N, ABI>;
 
