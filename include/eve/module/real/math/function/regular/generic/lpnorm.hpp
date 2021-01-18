@@ -30,23 +30,23 @@
 namespace eve::detail
 {
 
-  template<real_value P, floating_value T0, floating_value ...Ts>
-  auto lpnorm_(EVE_SUPPORTS(cpu_), const P & p, T0 a0, Ts... args)
+  template<real_value P, floating_value T0, floating_value T1, floating_value ...Ts>
+  auto lpnorm_(EVE_SUPPORTS(cpu_), const P & p, T0 a0, T1 a1, Ts... args)
     requires(!decorator<P>)
   {
     if constexpr(integral_value<P>)
     {
       auto fp = floating_(p);
-      return lpnorm(fp, a0, args...);
+      return lpnorm(fp, a0, a1, args...);
     }
     else
     {
-      using r_t = common_compatible_t<T0,Ts...>;
+      using r_t = common_compatible_t<T0,T1,Ts...>;
       if constexpr(has_native_abi_v<r_t>)
       {
-        if (all(p == P(2))) return hypot(r_t(a0), r_t(args)...);
-        else if (all(p == P(1))) return manhattan(r_t(a0), r_t(args)...);
-        else if (all(p == eve::inf(as(p)))) return max(abs(r_t(a0)), abs(r_t(args))...);
+        if (all(p == P(2))) return hypot(r_t(a0), r_t(a1), r_t(args)...);
+        else if (all(p == P(1))) return manhattan(r_t(a0), r_t(a1), r_t(args)...);
+        else if (all(p == eve::inf(as(p)))) return eve::max(eve::abs(r_t(a0)), eve::abs(r_t(a1)), eve::abs(r_t(args))...);
         else
         {
           auto rp =  r_t(p);
@@ -55,11 +55,12 @@ namespace eve::detail
             that +=  pow_abs(next, rp);
             return that;
           };
+          that = addppow(that,  r_t(a1));
           ((that = addppow(that,args)),...);
           auto isinfp = is_infinite(rp);
           if (any(isinfp))
           {
-            auto r = max(abs(r_t(a0)), abs(r_t(args))...);
+            auto r = eve::max(eve::abs(r_t(a0)), eve::abs(r_t(a1)), eve::abs(r_t(args))...);
             if (all(isinfp)) return r;
             return if_else(isinfp, r, pow_abs(that, rec(rp)));
           }
@@ -68,7 +69,7 @@ namespace eve::detail
       }
       else
       {
-        return apply_over(lpnorm, a0, args...);
+        return apply_over(lpnorm, p, a0, a1, args...);
       }
     }
   }

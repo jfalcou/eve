@@ -18,26 +18,26 @@
 #include <eve/platform.hpp>
 
 
-// TTS_CASE_TPL("Check lpnorm return type", EVE_TYPE)
-// {
-//   using v_t = eve::element_type_t<T>;
+TTS_CASE_TPL("Check lpnorm return type", EVE_TYPE)
+{
+  using v_t = eve::element_type_t<T>;
 
-//   TTS_EXPR_IS(eve::pedantic(eve::lpnorm)(2,    T(0),   T(0)), T);
-//   TTS_EXPR_IS(eve::pedantic(eve::lpnorm)(2,  v_t(0),   T(0)), T);
-//   TTS_EXPR_IS(eve::pedantic(eve::lpnorm)(2,    T(0), v_t(0)), T);
+  TTS_EXPR_IS(eve::pedantic(eve::lpnorm)(2,    T(0),   T(0)), T);
+  TTS_EXPR_IS(eve::pedantic(eve::lpnorm)(2,  v_t(0),   T(0)), T);
+  TTS_EXPR_IS(eve::pedantic(eve::lpnorm)(2,    T(0), v_t(0)), T);
 
-//   TTS_EXPR_IS(eve::pedantic(eve::lpnorm)(2,    T(0),   T(0),   T(0)), T);
-//   TTS_EXPR_IS(eve::pedantic(eve::lpnorm)(2,    T(0),   T(0), v_t(0)), T);
-//   TTS_EXPR_IS(eve::pedantic(eve::lpnorm)(2,    T(0), v_t(0),   T(0)), T);
-//   TTS_EXPR_IS(eve::pedantic(eve::lpnorm)(2,    T(0), v_t(0), v_t(0)), T);
-//   TTS_EXPR_IS(eve::pedantic(eve::lpnorm)(2,  v_t(0),   T(0),   T(0)), T);
-//   TTS_EXPR_IS(eve::pedantic(eve::lpnorm)(2,  v_t(0),   T(0), v_t(0)), T);
-//   TTS_EXPR_IS(eve::pedantic(eve::lpnorm)(2,  v_t(0), v_t(0),   T(0)), T);
-// }
+  TTS_EXPR_IS(eve::pedantic(eve::lpnorm)(2,    T(0),   T(0),   T(0)), T);
+  TTS_EXPR_IS(eve::pedantic(eve::lpnorm)(2,    T(0),   T(0), v_t(0)), T);
+  TTS_EXPR_IS(eve::pedantic(eve::lpnorm)(2,    T(0), v_t(0),   T(0)), T);
+  TTS_EXPR_IS(eve::pedantic(eve::lpnorm)(2,    T(0), v_t(0), v_t(0)), T);
+  TTS_EXPR_IS(eve::pedantic(eve::lpnorm)(2,  v_t(0),   T(0),   T(0)), T);
+  TTS_EXPR_IS(eve::pedantic(eve::lpnorm)(2,  v_t(0),   T(0), v_t(0)), T);
+  TTS_EXPR_IS(eve::pedantic(eve::lpnorm)(2,  v_t(0), v_t(0),   T(0)), T);
+}
 
 TTS_CASE_TPL("Check eve::pedantic(eve::lpnorm) behavior", EVE_TYPE)
 {
-  using v_t = eve::element_type_t<T>;
+ using v_t = eve::element_type_t<T>;
 
   if constexpr(eve::platform::supports_invalids)
   {
@@ -62,7 +62,7 @@ TTS_CASE_TPL("Check eve::pedantic(eve::lpnorm) behavior", EVE_TYPE)
   TTS_IEEE_EQUAL(eve::pedantic(eve::lpnorm)(3, T(0)  , vmax  ) , tmax);
 
 
-  TTS_ULP_EQUAL(eve::pedantic(eve::lpnorm)(3, tmax/2, tmax/2), tmax/cbrt4, 0.5 );
+ TTS_ULP_EQUAL(eve::pedantic(eve::lpnorm)(3, tmax/2, tmax/2), tmax/cbrt4, 0.5 );
   TTS_ULP_EQUAL(eve::pedantic(eve::lpnorm)(3, vmax/2, tmax/2), tmax/cbrt4, 0.5 );
   TTS_ULP_EQUAL(eve::pedantic(eve::lpnorm)(3, tmax/2, vmax/2), tmax/cbrt4, 0.5 );
 
