@@ -107,4 +107,12 @@ namespace eve::detail
       return apply_over(eq, v, w);
     }
   }
+
+  //================================================================================================
+  template<real_simd_value Wide>
+  EVE_FORCEINLINE auto self_less(Wide const& v,Wide const& w) noexcept
+  {
+    constexpr auto lt = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e < f); };
+    return apply_over(lt, v, w);
+  }
 }

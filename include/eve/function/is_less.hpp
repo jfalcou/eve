@@ -10,25 +10,21 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/traits/as_logical.hpp>
+#include <eve/concept/value.hpp>
 
 namespace eve
 {
   EVE_MAKE_CALLABLE(is_less_, is_less);
+
+  namespace detail
+  {
+    template<value T, value U>
+    EVE_FORCEINLINE auto is_less_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
+    {
+      if constexpr( scalar_value<T> && scalar_value<U> )  return as_logical_t<T>(a < b);
+      else                                                return a < b;
+    }
+  }
 }
-
-#include <eve/arch.hpp>
-#include <eve/module/real/core/function/regular/generic/is_less.hpp>
-
-#if defined(EVE_HW_X86)
-#  include <eve/module/real/core/function/regular/simd/x86/is_less.hpp>
-#endif
-
-#if defined(EVE_HW_POWERPC)
-#  include <eve/module/real/core/function/regular/simd/ppc/is_less.hpp>
-#endif
-
-#if defined(EVE_HW_ARM)
-#  include <eve/module/real/core/function/regular/simd/arm/neon/is_less.hpp>
-#endif
-
