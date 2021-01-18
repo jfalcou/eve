@@ -375,6 +375,21 @@ namespace eve
       return wide{v} > w;
     }
 
+    friend EVE_FORCEINLINE auto operator>=(wide const& v, wide const& w) noexcept
+    {
+      return detail::self_geq(v,w);
+    }
+
+    friend EVE_FORCEINLINE auto operator>=(wide const& v, scalar_value auto w) noexcept
+    {
+      return v >= wide{w};
+    }
+
+    friend EVE_FORCEINLINE auto operator>=(scalar_value auto v, wide const& w) noexcept
+    {
+      return wide{v} >= w;
+    }
+
     //==============================================================================================
     // Inserting a logical<wide> into a stream
     //==============================================================================================

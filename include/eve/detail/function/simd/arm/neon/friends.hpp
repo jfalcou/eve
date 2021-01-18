@@ -95,8 +95,8 @@ namespace eve::detail
   // operator!= implementation
   //================================================================================================
   template<typename T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE as_logical_t<wide<T, N>> self_less( wide<T, N, ABI> const &v
-                                                    , wide<T, N, ABI> const &w
+  EVE_FORCEINLINE as_logical_t<wide<T, N>> self_less( wide<T, N, ABI> v
+                                                    , wide<T, N, ABI> w
                                                     ) noexcept
   {
     constexpr auto cat = categorize<wide<T, N, ABI>>();
@@ -132,15 +132,11 @@ namespace eve::detail
   }
 
   template<typename T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE as_logical_t<wide<T, N>> self_greater ( wide<T, N, ABI> const &v
-                                                        , wide<T, N, ABI> const &w
+  EVE_FORCEINLINE as_logical_t<wide<T, N>> self_greater ( wide<T, N, ABI> v
+                                                        , wide<T, N, ABI> w
                                                         ) noexcept
   {
     constexpr auto cat = categorize<wide<T, N, ABI>>();
-    [[maybe_unused]] constexpr auto gt  = []<typename E>(E const& e, E const& f)
-                                          {
-                                            return as_logical_t<E>(e > f);
-                                          };
 
           if constexpr( cat == category::int32x4  ) return vcgtq_s32(v, w);
     else  if constexpr( cat == category::int16x8  ) return vcgtq_s16(v, w);
@@ -164,7 +160,40 @@ namespace eve::detail
     else  if constexpr( cat == category::int64x2)   return vcgtq_s64(v, w);
     else  if constexpr( cat == category::uint64x2)  return vcgtq_u64(v, w);
 #else
-    else  if constexpr( sizeof(T) == 8 )            return map(gt, v, w);
+    else  if constexpr( sizeof(T) == 8 )
+      return map([]<typename E>(E const& e, E const& f){ return as_logical_t<E>(e > f); }, v, w);
+#endif
+  }
+
+  template<typename T, typename N, arm_abi ABI>
+  EVE_FORCEINLINE as_logical_t<wide<T, N>> self_geq(wide<T, N, ABI> v, wide<T, N, ABI> w) noexcept
+  {
+    constexpr auto cat = categorize<wide<T, N, ABI>>();
+
+          if constexpr( cat == category::int32x4  ) return vcgeq_s32(v, w);
+    else  if constexpr( cat == category::int16x8  ) return vcgeq_s16(v, w);
+    else  if constexpr( cat == category::int8x16  ) return vcgeq_s8(v, w);
+    else  if constexpr( cat == category::uint32x4 ) return vcgeq_u32(v, w);
+    else  if constexpr( cat == category::uint16x8 ) return vcgeq_u16(v, w);
+    else  if constexpr( cat == category::uint8x16 ) return vcgeq_u8(v, w);
+    else  if constexpr( cat == category::float32x4) return vcgeq_f32(v, w);
+    else  if constexpr( cat == category::int32x2  ) return vcge_s32(v, w);
+    else  if constexpr( cat == category::int16x4  ) return vcge_s16(v, w);
+    else  if constexpr( cat == category::int8x8   ) return vcge_s8(v, w);
+    else  if constexpr( cat == category::uint32x2 ) return vcge_u32(v, w);
+    else  if constexpr( cat == category::uint16x4 ) return vcge_u16(v, w);
+    else  if constexpr( cat == category::uint8x8  ) return vcge_u8(v, w);
+    else  if constexpr( cat == category::float32x2) return vcge_f32(v, w);
+#if defined(__aarch64__)
+    else  if constexpr( cat == category::float64x1) return vcge_f64(v, w);
+    else  if constexpr( cat == category::int64x1)   return vcge_s64(v, w);
+    else  if constexpr( cat == category::uint64x1)  return vcge_u64(v, w);
+    else  if constexpr( cat == category::float64x2) return vcgeq_f64(v, w);
+    else  if constexpr( cat == category::int64x2)   return vcgeq_s64(v, w);
+    else  if constexpr( cat == category::uint64x2)  return vcgeq_u64(v, w);
+#else
+    else  if constexpr( sizeof(T) == 8 )
+        return map([]<typename E>(E const& e, E const& f){ return as_logical_t<E>(e >= f); }, v, w);
 #endif
   }
 }

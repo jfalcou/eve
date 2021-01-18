@@ -21,7 +21,7 @@ namespace eve::detail
 {
   //================================================================================================
   template<real_value T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE auto self_lognot(logical<wide<T, N, ABI>> const& v) noexcept
+  EVE_FORCEINLINE auto self_lognot(logical<wide<T, N, ABI>> v) noexcept
   {
     if constexpr( !ABI::is_wide_logical )
     {
@@ -217,8 +217,7 @@ namespace eve::detail
   // operator!= implementation
   //================================================================================================
   template<real_value T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE as_logical_t<wide<T, N, ABI>>
-  self_less(wide<T,N,ABI> const &v, wide<T,N,ABI> const &w) noexcept
+  EVE_FORCEINLINE as_logical_t<wide<T, N, ABI>> self_less(wide<T,N,ABI> v, wide<T,N,ABI> w) noexcept
   {
     constexpr auto c = categorize<wide<T, N, ABI>>();
     constexpr auto f = to_integer(cmp_flt::lt_oq);
@@ -307,8 +306,7 @@ namespace eve::detail
   }
 
   template<real_value T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE as_logical_t<wide<T, N, ABI>>
-  self_greater(wide<T,N,ABI> const &v, wide<T,N,ABI> const &w) noexcept
+  EVE_FORCEINLINE as_logical_t<wide<T, N, ABI>> self_greater(wide<T,N,ABI> v, wide<T,N,ABI> w) noexcept
   {
     constexpr auto c = categorize<wide<T, N, ABI>>();
     constexpr auto f = to_integer(cmp_flt::gt_oq);
@@ -396,6 +394,66 @@ namespace eve::detail
         else  if constexpr( c == category::uint8x16 )             return unsigned_cmp(v,w);
         else                                                      return aggregate(gt,v,w);
       }
+    }
+  }
+
+  template<real_value T, typename N, x86_abi ABI>
+  EVE_FORCEINLINE as_logical_t<wide<T, N, ABI>> self_geq(wide<T,N,ABI> v, wide<T,N,ABI> w) noexcept
+  {
+    constexpr auto c = categorize<wide<T, N, ABI>>();
+    constexpr auto f = to_integer(cmp_flt::ge_oq);
+
+    if constexpr( !ABI::is_wide_logical )
+    {
+            if constexpr( c == category::float32x16 ) return mask16{_mm512_cmp_ps_mask(v, w, f) };
+      else  if constexpr( c == category::float32x8  ) return mask8 {_mm256_cmp_ps_mask(v, w, f) };
+      else  if constexpr( c == category::float32x4  ) return mask8 {_mm_cmp_ps_mask   (v, w, f) };
+      else  if constexpr( c == category::float64x8  ) return mask8 {_mm512_cmp_pd_mask(v, w, f) };
+      else  if constexpr( c == category::float64x4  ) return mask8 {_mm256_cmp_pd_mask(v, w, f) };
+      else  if constexpr( c == category::float64x2  ) return mask8 {_mm_cmp_pd_mask   (v, w, f) };
+      else  if constexpr( c == category::uint64x8   ) return mask8 {_mm512_cmpge_epu64_mask(v,w)};
+      else  if constexpr( c == category::uint64x4   ) return mask8 {_mm256_cmpge_epu64_mask(v,w)};
+      else  if constexpr( c == category::uint64x2   ) return mask8 {_mm_cmpge_epu64_mask   (v,w)};
+      else  if constexpr( c == category::uint32x16  ) return mask16{_mm512_cmpge_epu32_mask(v,w)};
+      else  if constexpr( c == category::uint32x8   ) return mask8 {_mm256_cmpge_epu32_mask(v,w)};
+      else  if constexpr( c == category::uint32x4   ) return mask8 {_mm_cmpge_epu32_mask   (v,w)};
+      else  if constexpr( c == category::uint16x32  ) return mask32{_mm512_cmpge_epu16_mask(v,w)};
+      else  if constexpr( c == category::uint16x16  ) return mask16{_mm256_cmpge_epu16_mask(v,w)};
+      else  if constexpr( c == category::uint16x8   ) return mask8 {_mm_cmpge_epu16_mask    (v,w)};
+      else  if constexpr( c == category::uint8x64   ) return mask64{_mm512_cmpge_epu8_mask (v,w)};
+      else  if constexpr( c == category::uint8x32   ) return mask32{_mm256_cmpge_epu8_mask (v,w)};
+      else  if constexpr( c == category::uint8x16   ) return mask16{_mm_cmpge_epu8_mask    (v,w)};
+      else  if constexpr( c == category::int64x8    ) return mask8 {_mm512_cmpge_epi64_mask(v,w)};
+      else  if constexpr( c == category::int64x4    ) return mask8 {_mm256_cmpge_epi64_mask(v,w)};
+      else  if constexpr( c == category::int64x2    ) return mask8 {_mm_cmpge_epi64_mask   (v,w)};
+      else  if constexpr( c == category::int32x16   ) return mask16{_mm512_cmpge_epi32_mask(v,w)};
+      else  if constexpr( c == category::int32x8    ) return mask8 {_mm256_cmpge_epi32_mask(v,w)};
+      else  if constexpr( c == category::int32x4    ) return mask8 {_mm_cmpge_epi32_mask   (v,w)};
+      else  if constexpr( c == category::int16x32   ) return mask32{_mm512_cmpge_epi16_mask(v,w)};
+      else  if constexpr( c == category::int16x16   ) return mask16{_mm256_cmpge_epi16_mask(v,w)};
+      else  if constexpr( c == category::int16x8    ) return mask8 {_mm_cmpge_epi16_mask   (v,w)};
+      else  if constexpr( c == category::int8x64    ) return mask64{_mm512_cmpge_epi8_mask (v,w)};
+      else  if constexpr( c == category::int8x32    ) return mask32{_mm256_cmpge_epi8_mask (v,w)};
+      else  if constexpr( c == category::int8x16    ) return mask16{_mm_cmpge_epi8_mask    (v,w)};
+    }
+    else
+    {
+            if constexpr( c == category::float32x8  ) return _mm256_cmp_ps(v,w,f);
+      else  if constexpr( c == category::float64x4  ) return _mm256_cmp_pd(v,w,f);
+      else  if constexpr( c == category::float32x4  ) return _mm_cmpge_ps(v,w);
+      else  if constexpr( c == category::float64x2  ) return _mm_cmpge_pd(v,w);
+      else  if constexpr(supports_xop)
+      {
+              if constexpr( c == category::uint64x2 ) return _mm_comge_epu64(v,w);
+        else  if constexpr( c == category::uint32x4 ) return _mm_comge_epu32(v,w);
+        else  if constexpr( c == category::uint16x8 ) return _mm_comge_epu16(v,w);
+        else  if constexpr( c == category::uint8x16 ) return _mm_comge_epu8 (v,w);
+        else  if constexpr( c == category::int64x2  ) return _mm_comge_epi64(v,w);
+        else  if constexpr( c == category::int32x4  ) return _mm_comge_epi32(v,w);
+        else  if constexpr( c == category::int16x8  ) return _mm_comge_epi16(v,w);
+        else  if constexpr( c == category::int8x16  ) return _mm_comge_epi8 (v,w);
+      }
+      else                                            return !(v < w);
     }
   }
 }
