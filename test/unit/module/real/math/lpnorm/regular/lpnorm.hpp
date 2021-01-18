@@ -71,4 +71,5 @@ TTS_CASE_TPL("Check 3 params eve::lpnorm p = 3 behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::lpnorm(3,  T(-1), T(-1), T(-1) ) , T(eve::nthroot(3.0, 3.0))                , 0.5);
   TTS_ULP_EQUAL(eve::lpnorm(3,  T( 0), T( 0), T( 0)            ) , T(0)                , 0.5);
   TTS_ULP_EQUAL(eve::lpnorm(3,  T( 1), T( 1), T( 1)            ) , T(eve::nthroot(v_t(3), 3)), 0.5);
+  TTS_ULP_EQUAL(eve::lpnorm(3,  T( 4), T( 3)                   ) , T(4.497941445275415), 0.5);
 }

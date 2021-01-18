@@ -12,6 +12,7 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/function/abs.hpp>
+#include <eve/function/all.hpp>
 #include <eve/function/converter.hpp>
 #include <eve/function/is_infinite.hpp>
 #include <eve/function/max.hpp>
@@ -33,7 +34,6 @@ namespace eve::detail
   auto lpnorm_(EVE_SUPPORTS(cpu_), const P & p, T0 a0, Ts... args)
     requires(!decorator<P>)
   {
-////      std::cout << "+++ p " << p << std::endl;
     if constexpr(integral_value<P>)
     {
       auto fp = floating_(p);
@@ -44,15 +44,13 @@ namespace eve::detail
       using r_t = common_compatible_t<T0,Ts...>;
       if constexpr(has_native_abi_v<r_t>)
       {
-////        std::cout << " === p " << p << std::endl;
         if (all(p == P(2))) return hypot(r_t(a0), r_t(args)...);
         else if (all(p == P(1))) return manhattan(r_t(a0), r_t(args)...);
-//        else if (all(p == eve::inf(as(p)))) return pedantic(max)(abs(r_t(a0)), abs(r_t(args))...);
+        else if (all(p == eve::inf(as(p)))) return max(abs(r_t(a0)), abs(r_t(args))...);
         else
         {
-////      std::cout << "*** p " << p << std::endl;
           auto rp =  r_t(p);
-          r_t that(sqr(eve::abs(a0)));
+          r_t that(pow_abs(r_t(a0), rp));
           auto addppow = [rp](auto that, auto next)->r_t{
             that +=  pow_abs(next, rp);
             return that;

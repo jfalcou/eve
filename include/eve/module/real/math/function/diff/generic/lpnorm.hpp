@@ -37,13 +37,14 @@ namespace eve::detail
     }
     else
     {
+      auto rp = r_t(p);
       if constexpr(N > sizeof...(Ts)+2) return zero(as<r_t>());
       else
       {
         auto tmp = lpnorm(p, arg0, arg1, args...);
         auto h = pow_abs(tmp, r_t(oneminus(p)));
-        if constexpr(N==1)       return arg0*h;
-        else if constexpr(N==2)  return arg1*h;
+        if constexpr(N==1)       return pow_abs(arg0, dec(rp))*h;
+        else if constexpr(N==2)  return pow_abs(arg1, dec(rp))*h;
         else
         {
           auto getNth = []<std::size_t... I>(std::index_sequence<I...>, auto& that, auto... vs)
@@ -57,7 +58,7 @@ namespace eve::detail
             };
           r_t that(0);
           getNth(std::make_index_sequence<sizeof...(args)>{},that,args...);
-          return that*h;
+          return pow_abs(that, dec(rp))*h;
         }
       }
     }
@@ -82,10 +83,11 @@ namespace eve::detail
       if constexpr(N > sizeof...(Ts)+2) return zero(as<r_t>());
       else
       {
+        auto rp = r_t(p);
         auto tmp = pedantic(lpnorm)(p, arg0, arg1, args...);
         auto h =  pow_abs(tmp, r_t(oneminus(p)));
-        if constexpr(N==1)       return arg0*h;
-        else if constexpr(N==2)  return  arg1*h;
+        if constexpr(N==1)       return pow_abs(arg0, dec(rp))*h;
+        else if constexpr(N==2)  return pow_abs(arg1, dec(rp))*h;
         else
         {
           auto getNth = []<std::size_t... I>(std::index_sequence<I...>, auto& that, auto... vs)
@@ -99,7 +101,7 @@ namespace eve::detail
             };
           r_t that(0);
           getNth(std::make_index_sequence<sizeof...(args)>{},that,args...);
-          return that*h;
+          return pow_abs(that, dec(rp))*h;
         }
       }
     }
