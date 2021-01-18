@@ -17,6 +17,7 @@
 #include <eve/function/max.hpp>
 #include <eve/function/hypot.hpp>
 #include <eve/function/manhattan.hpp>
+#include <eve/function/max.hpp>
 #include <eve/function/pow_abs.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/concept/value.hpp>
