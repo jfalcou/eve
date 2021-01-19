@@ -75,6 +75,20 @@ namespace eve::detail
   }
 
   //================================================================================================
+  template<typename T, typename U, typename N>
+  EVE_FORCEINLINE auto self_logor(logical<wide<T,N>> v, logical<wide<U,N>> w) noexcept
+  {
+    if constexpr(sizeof(T) == sizeof(U))
+    {
+      return bit_cast ( v.bits() | w.bits(), as(v) );
+    }
+    else
+    {
+      return map([]<typename E>(E e,auto f){ return as_logical_t<E>(e || f); }, v, w);
+    }
+  }
+
+  //================================================================================================
   template<real_simd_value Wide>
   EVE_FORCEINLINE auto self_lognot(Wide const& v) noexcept
   {

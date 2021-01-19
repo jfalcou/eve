@@ -30,6 +30,16 @@ namespace eve::detail
   }
 
   //================================================================================================
+  template<typename T, typename U, typename N, x86_abi ABI>
+  EVE_FORCEINLINE auto self_logor(logical<wide<T,N,ABI>> v, logical<wide<U,N,ABI>> w) noexcept
+  requires( !use_is_wide_logical<ABI>::value )
+  {
+    using storage_t = typename logical<wide<T, N, ABI>>::storage_type;
+    typename storage_t::type that = v.storage().value | w.storage().value;
+    return logical<wide<T, N, ABI>>(storage_t{that});
+  }
+
+  //================================================================================================
   template<real_value T, typename N, x86_abi ABI>
   EVE_FORCEINLINE auto self_lognot(logical<wide<T, N, ABI>> v) noexcept
   {

@@ -69,9 +69,29 @@ namespace eve
       return logical{v.value() && w.value()};
     }
 
+    friend EVE_FORCEINLINE logical operator&&(logical const& v, bool const& w) noexcept
+    {
+      return logical{v.value() && w};
+    }
+
+    friend EVE_FORCEINLINE logical operator&&(bool const& v, logical const& w) noexcept
+    {
+      return logical{v && w.value()};
+    }
+
     friend EVE_FORCEINLINE logical operator||(logical const& v, logical const& w) noexcept
     {
       return logical{v.value() || w.value()};
+    }
+
+    friend EVE_FORCEINLINE logical operator||(logical const& v, bool const& w) noexcept
+    {
+      return logical{v.value() || w};
+    }
+
+    friend EVE_FORCEINLINE logical operator||(bool const& v, logical const& w) noexcept
+    {
+      return logical{v || w.value()};
     }
 
     //==============================================================================================
