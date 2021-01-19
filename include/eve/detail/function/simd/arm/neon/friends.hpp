@@ -193,4 +193,36 @@ namespace eve::detail
         return map([]<typename E>(E const& e, E const& f){ return as_logical_t<E>(e >= f); }, v, w);
 #endif
   }
+
+  template<typename T, typename N, arm_abi ABI>
+  EVE_FORCEINLINE logical<wide<T,N,ABI>> self_leq(wide<T, N, ABI> v,wide<T, N, ABI> w) noexcept
+  {
+    constexpr auto cat = categorize<wide<T, N, ABI>>();
+
+          if constexpr( cat == category::int32x4  ) return vcleq_s32(v, w);
+    else  if constexpr( cat == category::int16x8  ) return vcleq_s16(v, w);
+    else  if constexpr( cat == category::int8x16  ) return vcleq_s8(v, w);
+    else  if constexpr( cat == category::uint32x4 ) return vcleq_u32(v, w);
+    else  if constexpr( cat == category::uint16x8 ) return vcleq_u16(v, w);
+    else  if constexpr( cat == category::uint8x16 ) return vcleq_u8(v, w);
+    else  if constexpr( cat == category::float32x4) return vcleq_f32(v, w);
+    else  if constexpr( cat == category::int32x2  ) return vcle_s32(v, w);
+    else  if constexpr( cat == category::int16x4  ) return vcle_s16(v, w);
+    else  if constexpr( cat == category::int8x8   ) return vcle_s8(v, w);
+    else  if constexpr( cat == category::uint32x2 ) return vcle_u32(v, w);
+    else  if constexpr( cat == category::uint16x4 ) return vcle_u16(v, w);
+    else  if constexpr( cat == category::uint8x8  ) return vcle_u8(v, w);
+    else  if constexpr( cat == category::float32x2) return vcle_f32(v, w);
+#if defined(__aarch64__)
+    else  if constexpr( cat == category::float64x1) return vcle_f64(v, w);
+    else  if constexpr( cat == category::int64x1)   return vcle_s64(v, w);
+    else  if constexpr( cat == category::uint64x1)  return vcle_u64(v, w);
+    else  if constexpr( cat == category::float64x2) return vcleq_f64(v, w);
+    else  if constexpr( cat == category::int64x2)   return vcleq_s64(v, w);
+    else  if constexpr( cat == category::uint64x2)  return vcleq_u64(v, w);
+#else
+    else  if constexpr( sizeof(T) == 8 )
+        return map([]<typename E>(E const& e, E const& f){ return as_logical_t<E>(e <= f); }, v, w);
+#endif
+  }
 }

@@ -147,6 +147,14 @@ namespace eve::detail
 
   //================================================================================================
   template<real_simd_value Wide>
+  EVE_FORCEINLINE auto self_leq(Wide const& v,Wide const& w) noexcept
+  {
+    constexpr auto ge = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e <= f); };
+    return apply_over(ge, v, w);
+  }
+
+  //================================================================================================
+  template<real_simd_value Wide>
   EVE_FORCEINLINE auto self_greater(Wide const& v,Wide const& w) noexcept
   {
     constexpr auto gt = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e > f); };
