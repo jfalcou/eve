@@ -18,8 +18,6 @@
 #include <eve/constant/false.hpp>
 #include <eve/function/any.hpp>
 #include <eve/function/if_else.hpp>
-#include <eve/function/logical_not.hpp>
-#include <eve/function/logical_and.hpp>
 #include <eve/function/logical_notand.hpp>
 
 // This is a help for programming efiicient horizontal branching
@@ -33,7 +31,7 @@ namespace eve
   template <typename F, typename L, typename L1, typename R, typename ...Ts>
   auto next_interval(F const & f, L notdone, L1 test, R& r, Ts ... ts) noexcept
   {
-    auto todo =  logical_and(notdone, test);
+    auto todo = notdone && test;
     if constexpr(eve::scalar_value<R>)
     {
       if(todo) { r =  f(ts...); return false_(as(todo)); }

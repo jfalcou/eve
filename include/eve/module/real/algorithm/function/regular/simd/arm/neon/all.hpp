@@ -39,7 +39,7 @@ namespace eve::detail
   EVE_FORCEINLINE bool all_(EVE_SUPPORTS(neon128_),
                             logical<wide<T, N, arm_128_>> const &v0) noexcept
   {
-    auto [l, h] = v0.mask().slice();
+    auto [l, h] = v0.slice();
     return all(l && h);
   }
 }

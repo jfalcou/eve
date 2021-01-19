@@ -24,6 +24,7 @@
 #include <eve/function/tgamma.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/function/is_not_nan.hpp>
 #include <eve/function/ldexp.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/pow_abs.hpp>

@@ -25,7 +25,7 @@ namespace eve::detail
   template<integral_real_scalar_value T, typename N, arm_abi ABI, integral_real_scalar_value U>
   EVE_FORCEINLINE decltype(auto) self_shl(wide<T,N,ABI>& v, wide<U,N,ABI> s) noexcept
   {
-    using i_t = typename wide<T,N,ABI>::template rebind <as_integer_t<T, signed>>;
+    using i_t = typename wide<T,N,ABI>::template rebind <as_integer_t<T, signed>,N>;
     auto const si   = bit_cast(s,as_<i_t>()).storage();
 
     constexpr auto c = categorize<wide<T, N, ABI>>();
@@ -53,7 +53,7 @@ namespace eve::detail
   template<integral_real_scalar_value T, typename N, arm_abi ABI, integral_real_scalar_value U>
   EVE_FORCEINLINE auto self_shl(wide<T,N,ABI>& v, U s) noexcept
   {
-    using i_t = typename wide<T,N,ABI>::template rebind <as_integer_t<T, signed>>;
+    using i_t = typename wide<T,N,ABI>::template rebind <as_integer_t<T, signed>,N>;
     v <<= i_t(s);
     return v;
   }

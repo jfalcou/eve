@@ -64,7 +64,8 @@ namespace eve
     //==============================================================================================
     EVE_FORCEINLINE constexpr logical operator!() const noexcept { return {!value_}; }
 
-    friend EVE_FORCEINLINE logical operator&&(logical const& v, logical const& w) noexcept
+    template<real_scalar_value U>
+    friend EVE_FORCEINLINE logical operator&&(logical const& v, logical<U> const& w) noexcept
     {
       return logical{v.value() && w.value()};
     }
@@ -79,7 +80,8 @@ namespace eve
       return logical{v && w.value()};
     }
 
-    friend EVE_FORCEINLINE logical operator||(logical const& v, logical const& w) noexcept
+    template<real_scalar_value U>
+    friend EVE_FORCEINLINE logical operator||(logical const& v, logical<U> const& w) noexcept
     {
       return logical{v.value() || w.value()};
     }

@@ -22,7 +22,7 @@ namespace eve::detail
   // <<=
   //================================================================================================
   template<integral_real_scalar_value T, typename N, x86_abi ABI, integral_real_scalar_value U>
-  EVE_FORCEINLINE auto self_shr(wide<T,N,ABI>& v, U s) noexcept
+  EVE_FORCEINLINE decltype(auto) self_shr(wide<T,N,ABI>& v, U s) noexcept
   {
     constexpr auto c          = categorize<wide<T, N, ABI>>();
     constexpr bool is_avx2    = current_api >= avx2;
@@ -47,7 +47,7 @@ namespace eve::detail
     else  if constexpr(              c == category::uint16x8 ) v = _mm_srli_epi16(v,s);
     else
     {
-      v = map( []<typename V>(V a, auto b) { return static_cast<V>(a >> b); }, v, s);
+      v = map( []<typename V>(V const& a, auto b) { return static_cast<V>(a >> b); }, v, s);
     }
 
     return v;
@@ -111,7 +111,7 @@ namespace eve::detail
     else  if constexpr(                 c == category::uint16x32) v = _mm512_srlv_epi16(v, s);
     else
     {
-      v = map( []<typename V>(V a, auto b) { return static_cast<V>(a << b); }, v, s);
+      v = map( []<typename V>(V a, auto b) { return static_cast<V>(a >> b); }, v, s);
     }
 
     return v;

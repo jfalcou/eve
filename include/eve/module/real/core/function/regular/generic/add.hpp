@@ -11,6 +11,7 @@
 #pragma once
 
 #include <eve/concept/compatible.hpp>
+#include <eve/detail/function/simd/common/conditional.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/traits/common_compatible.hpp>
 

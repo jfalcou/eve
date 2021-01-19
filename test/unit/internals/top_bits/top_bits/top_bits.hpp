@@ -14,6 +14,7 @@
 #if defined(SPY_ARCH_IS_AMD64) && !defined(EVE_NO_SIMD)
 
 #include <eve/detail/top_bits.hpp>
+#include <eve/function/is_nez.hpp>
 
 #include <array>
 

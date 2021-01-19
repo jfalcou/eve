@@ -13,12 +13,9 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/bit_and.hpp>
 #include <eve/function/dec.hpp>
-#include <eve/function/is_equal.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/is_gtz.hpp>
-#include <eve/function/logical_and.hpp>
 #include <eve/traits/as_logical.hpp>
 
 namespace eve::detail
@@ -34,4 +31,3 @@ namespace eve::detail
       return apply_over(is_pow2, a);
   }
 }
-

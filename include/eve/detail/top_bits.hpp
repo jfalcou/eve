@@ -14,6 +14,7 @@
 #include <eve/arch/logical.hpp>
 #include <eve/concept/vectorized.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/conditional.hpp>
 
 #include <array>
 #include <bit>

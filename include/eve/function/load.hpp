@@ -12,6 +12,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
+#include <eve/conditional.hpp>
 
 namespace eve
 {
@@ -25,4 +26,3 @@ namespace eve
 #if defined(EVE_HW_X86)
 #  include <eve/module/real/core/function/regular/simd/x86/load.hpp>
 #endif
-
