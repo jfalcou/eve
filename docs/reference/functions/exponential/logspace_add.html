@@ -31,33 +31,35 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
+template< floating_value T, floating_value U, floating_value ...Ts> auto operator()( T arg0, U arg1, Ts... args ) const noexcept
+                                                  requires (compatiblevalues< T, U, Ts > && ...);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 Performs  the  [element-wise](../../../glossary.html#regular)  logarithm of a sum from the
-logarithms of the two terms.
+logarithms of the terms.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`, `y`
+`arg0`, `arg1`, `args`, ...
 :   [values](../../concepts.html#value).
 
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Similar to  `log(exp(x) + exp(y))`;.
+Similar to  `log(exp(arg0) + exp(arg1) + exp(args)...)`;.
 
- The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+ The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
 
 Supported decorators
 ====================================================================================================
 [`derivative`](../decorators.html#derivative)
 :   **Required header: **<script type="preformatted">` #include <eve/function/derivative/logspace_add.hpp>`</script>
 
-:   The expression `derivative_1st(logspace_add)(x,y)` and `derivative_2nd(logspace_add)(x,y)` computes the partial
-    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ \mbox{logspace_add}(x,y)$.
-
+:   The expression `diff_type< N >(logspace_add)(arg0,arg1,args...)` computes the partial
+    derivative of the function relative to its Nth parameter. The returned value is 0 if N is
+    greater that the actual number of parameters, otherwise if the parameters are $x_1, ... x_n$ returns $\displaystyle\frac{e^{x_N}}{e^{x_1} + ... + e^{x_n}}$
+_
 
 
   (insert ../../src/logspace_add.src.html here)
