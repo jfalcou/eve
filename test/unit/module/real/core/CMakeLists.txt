@@ -190,6 +190,7 @@ make_all_units(ROOT unit.real.core NAME shl                   ARCH scalar simd T
 make_all_units(ROOT unit.real.core NAME shr                   ARCH scalar simd TYPES ${integral_types})
 # make_all_units(ROOT unit.real.core NAME shuffle                   ARCH scalar simd TYPES ${integral_types})
 make_all_units(ROOT unit.real.core NAME sign                  ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT unit.real.core NAME significants          ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.core NAME signnz                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME sqr                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME sqr_abs               ARCH scalar simd TYPES ${real_types}    )
