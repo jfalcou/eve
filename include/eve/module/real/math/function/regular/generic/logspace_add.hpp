@@ -56,7 +56,7 @@ namespace eve::detail
   // Multi case
   //================================================================================================
   template<floating_real_value T0, floating_real_value T1, real_value ...Ts>
-  common_compatible_t<T0,T1, Ts...> hypot_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
+  common_compatible_t<T0,T1, Ts...> logspace_add_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
   {
     using r_t = common_compatible_t<T0,T1,Ts...>;
     if constexpr(has_native_abi_v<r_t>)
