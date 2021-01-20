@@ -28,7 +28,7 @@ namespace eve::detail
     using i_t = typename wide<T,N,ABI>::template rebind <as_integer_t<T, signed>>;
     auto const si   = bit_cast(s,as_<i_t>()).storage();
 
-    constexpr auto cat = categorize<wide<T, N, ABI>>();
+    constexpr auto c = categorize<wide<T, N, ABI>>();
 
           if constexpr( c == category::int64x1  ) v = vshl_s64(v, si);
     else  if constexpr( c == category::int32x2  ) v = vshl_s32(v, si);
@@ -56,6 +56,21 @@ namespace eve::detail
     using i_t = typename wide<T,N,ABI>::template rebind <as_integer_t<T, signed>>;
     v <<= i_t(s);
     return v;
+  }
+
+  //================================================================================================
+  // >>=
+  //================================================================================================
+  template<integral_real_scalar_value T, typename N, arm_abi ABI, integral_real_scalar_value U>
+  EVE_FORCEINLINE decltype(auto) self_shr(wide<T,N,ABI>& v, wide<U,N,ABI> s) noexcept
+  {
+    return self_shl(v, -s);
+  }
+
+  template<integral_real_scalar_value T, typename N, arm_abi ABI, integral_real_scalar_value U>
+  EVE_FORCEINLINE auto self_shr(wide<T,N,ABI>& v, U s) noexcept
+  {
+    return self_shl(v, -s);
   }
 
   //================================================================================================
