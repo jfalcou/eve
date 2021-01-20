@@ -101,35 +101,34 @@ namespace eve
 
       // != and reverse are generated.
       // <=> didn't work for some reason for ==
-      friend bool operator==(mask_n, mask_n) = default;
-      friend bool operator==(mask_n m, type n) { return m == mask_n{n}; }
-      friend auto operator<=>(mask_n, mask_n) = default;
-
+      friend bool operator== (mask_n m, type n) { return m == mask_n{n}; }
+      friend bool operator== (mask_n  , mask_n) = default;
+      friend auto operator<=>(mask_n  , mask_n) = default;
 
       friend constexpr mask_n operator~(mask_n m) { return mask_n{type{~m.value}}; }
 
       friend constexpr mask_n& operator&=(mask_n& m, mask_n n) { m.value &= n.value; return m;     }
-      friend constexpr mask_n& operator&=(mask_n& m, type  n) { m.value &= n;       return m;     }
-      friend constexpr mask_n operator& (mask_n  m, mask_n n) { return mask_n{m.value & n.value};  }
-      friend constexpr mask_n operator& (mask_n  m, type  n) { return mask_n{m.value & n};        }
-      friend constexpr mask_n operator& (type   m, mask_n n) { return mask_n{n.value & n.value};  }
+      friend constexpr mask_n& operator&=(mask_n& m, type   n) { m.value &= n;       return m;     }
+      friend constexpr mask_n  operator& (mask_n  m, mask_n n) { mask_n t{m.value}; return t &= n; }
+      friend constexpr mask_n  operator& (mask_n  m, type   n) { mask_n t{n}; return t &= m;       }
+      friend constexpr mask_n  operator& (type    m, mask_n n) { mask_n t{m}; return t &= n;       }
 
       friend constexpr mask_n& operator|=(mask_n& m, mask_n n) { m.value |= n.value; return m;     }
-      friend constexpr mask_n& operator|=(mask_n& m, type  n) { m.value |= n;       return m;     }
-      friend constexpr mask_n operator| (mask_n  m, mask_n n) { return mask_n{m.value | n.value};  }
-      friend constexpr mask_n operator| (mask_n  m, type  n) { return mask_n{m.value | n};        }
-      friend constexpr mask_n operator| (type   m, mask_n n) { return mask_n{n.value | n.value};  }
+      friend constexpr mask_n& operator|=(mask_n& m, type   n) { m.value |= n;       return m;     }
+      friend constexpr mask_n  operator| (mask_n  m, mask_n n) { mask_n t{m.value}; return t |= n; }
+      friend constexpr mask_n  operator| (mask_n  m, type   n) { mask_n t{n}; return t |= m;       }
+      friend constexpr mask_n  operator| (type    m, mask_n n) { mask_n t{m}; return t |= n;       }
 
       friend constexpr mask_n& operator^=(mask_n& m, mask_n n) { m.value ^= n.value; return m;     }
-      friend constexpr mask_n& operator^=(mask_n& m, type  n) {  m.value ^= n;       return m;     }
-      friend constexpr mask_n operator^ (mask_n  m, mask_n n) { return mask_n{m.value ^ n.value};  }
-      friend constexpr mask_n operator^ (mask_n  m, type  n) { return mask_n{m.value ^ n};        }
-      friend constexpr mask_n operator^ (type   m, mask_n n) { return mask_n{n.value ^ n.value};  }
+      friend constexpr mask_n& operator^=(mask_n& m, type   n) { m.value ^= n;       return m;     }
+      friend constexpr mask_n  operator^ (mask_n  m, mask_n n) { mask_n t{m.value}; return t ^= n; }
+      friend constexpr mask_n  operator^ (mask_n  m, type   n) { mask_n t{n}; return t ^= m;       }
+      friend constexpr mask_n  operator^ (type    m, mask_n n) { mask_n t{m}; return t ^= n;       }
 
-      friend constexpr mask_n& operator<<=(mask_n& m, std::ptrdiff_t shift) { m.value <<= shift; return m; }
-      friend constexpr mask_n operator<<(mask_n m, std::ptrdiff_t shift) { return mask_n{m.value << shift}; }
-      friend constexpr mask_n& operator>>=(mask_n& m, std::ptrdiff_t shift) { m.value >>= shift; return m; }
-      friend constexpr mask_n operator>>(mask_n m, std::ptrdiff_t shift) { return mask_n{m.value >> shift}; }
+      friend constexpr mask_n&  operator<<=(mask_n& m, std::ptrdiff_t s) { m.value <<= s; return m; }
+      friend constexpr mask_n   operator<< (mask_n  m, std::ptrdiff_t s) { mask_n t{m.value}; return t <<= s; }
+      friend constexpr mask_n&  operator>>=(mask_n& m, std::ptrdiff_t s) { m.value >>= s; return m; }
+      friend constexpr mask_n   operator>> (mask_n  m, std::ptrdiff_t s) { mask_n t{m.value}; return t >>= s; }
 
       friend std::ostream& operator<<(std::ostream& out, const mask_n& m) { return out << m.value; }
 

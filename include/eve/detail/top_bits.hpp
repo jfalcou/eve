@@ -32,27 +32,9 @@ namespace eve::detail
 
 //================================================================================================
 
-// bit utilities ---------------------
-
-template <std::size_t N>
-auto uint_t_impl() {
-  if constexpr (N == 8) {
-    return std::uint8_t{};
-  } else if constexpr (N == 16) {
-    return std::uint16_t{};
-  } else if constexpr (N == 32) {
-    return std::uint32_t{};
-  } else if constexpr (N == 64) {
-    return std::uint64_t{};
-  }
-}
-
-template <std::size_t N>
-using uint_t = decltype(uint_t_impl<N>());
-
 template <typename N>
 EVE_FORCEINLINE constexpr N set_lower_n_bits(std::ptrdiff_t n) {
-  using uint_res = uint_t<sizeof(N) * 8>;
+  using uint_res = make_integer_t<sizeof(N), unsigned>;
 
   if constexpr (std::same_as<std::uint64_t, uint_res>) {
     if (n == 64) return { static_cast<std::uint64_t>(-1) };
@@ -72,7 +54,7 @@ EVE_FORCEINLINE auto movemask_raw(Logical p)
   using ABI = abi_type_t<Logical>;
   using e_t = element_type_t<Logical>;
 
-       if constexpr( eve::current_api == avx512 ) return p.storage();
+       if constexpr( !ABI::is_wide_logical ) return p.storage();
   else if constexpr( std::same_as<ABI, x86_128_> )
   {
          if constexpr( std::is_same_v<e_t, float > ) return (std::uint16_t)_mm_movemask_ps(p.storage());
