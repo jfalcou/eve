@@ -339,8 +339,19 @@ namespace eve
       return v % wide(s);
     }
 
-    // TODO
-    // >>= <<=
+    friend  EVE_FORCEINLINE auto operator<<=(wide& w, integral_value auto s) noexcept
+                        ->  decltype(detail::self_shl(w, s))
+    {
+      return detail::self_shl(w, s);
+    }
+
+    friend EVE_FORCEINLINE  auto operator<<(wide v, integral_value auto s) noexcept
+    {
+      auto that = v;
+      return that <<= s;
+    }
+
+    // <<=
 
     //==============================================================================================
     // Numerical comparisons
