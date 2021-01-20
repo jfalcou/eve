@@ -112,6 +112,14 @@ TTS_CASE_TPL("Check pedantic 3 params eve::lpnorm behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::pedantic(eve::lpnorm)(3, T( 0), T( 0) , T( 0) ) , T(0), 0.5 );
 
   TTS_ULP_EQUAL(eve::pedantic(eve::lpnorm)(3, T( 1), T( 1), T( 1), T( 1)) , eve::cbrt(T(4)), 0.5);
+
+  TTS_ULP_EQUAL(eve::pedantic(eve::lpnorm)(T(3), tmax , T(0)  , T(0)  ) , tmax, 0.5 );
+  TTS_ULP_EQUAL(eve::pedantic(eve::lpnorm)(T(3), T(0) , tmax  , T(0)  ) , tmax, 0.5 );
+  TTS_ULP_EQUAL(eve::pedantic(eve::lpnorm)(T(3), T(-1), T(-1) , T(-1) ) , cbrt3, 0.5 );
+  TTS_ULP_EQUAL(eve::pedantic(eve::lpnorm)(T(3), T( 1), T( 1) , T(1)  ) , cbrt3, 0.5 );
+  TTS_ULP_EQUAL(eve::pedantic(eve::lpnorm)(T(3), T( 0), T( 0) , T( 0) ) , T(0), 0.5 );
+
+  TTS_ULP_EQUAL(eve::pedantic(eve::lpnorm)(T(3), T( 1), T( 1), T( 1), T( 1)) , eve::cbrt(T(4)), 0.5);
 }
 
 
