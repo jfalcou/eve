@@ -11,7 +11,7 @@
 
 #include "test.hpp"
 
-#if defined(SPY_ARCH_IS_AMD64) && !defined(EVE_NO_SIMD) && !defined(SPY_SIMD_IS_X86_AVX512)
+#if defined(SPY_ARCH_IS_AMD64) && !defined(EVE_NO_SIMD)
 
 #include <eve/detail/top_bits.hpp>
 
@@ -80,7 +80,6 @@ TTS_CASE_TPL("top_bits, set", EVE_TYPE)
   }
 }
 
-
 TTS_CASE_TPL("Top bits are little endian", EVE_TYPE)
 {
   using logical = eve::logical<T>;
@@ -97,7 +96,6 @@ TTS_CASE_TPL("Top bits are little endian", EVE_TYPE)
   {
     TTS_PASS("no test for aggregated");
   }
-
 }
 
 TTS_CASE_TPL("bit operations", EVE_TYPE)

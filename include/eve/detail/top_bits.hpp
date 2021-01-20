@@ -32,14 +32,18 @@ namespace eve::detail
 
 //================================================================================================
 
-// bit utilities ---------------------
-
 template <typename N>
 EVE_FORCEINLINE constexpr N set_lower_n_bits(std::ptrdiff_t n) {
+  using uint_res = make_integer_t<sizeof(N), unsigned>;
+
+  if constexpr (std::same_as<std::uint64_t, uint_res>) {
+    if (n == 64) return { static_cast<std::uint64_t>(-1) };
+  }
+
   std::uint64_t res{1};
   res <<= n;
   res -= 1;
-  return static_cast<N>(res);
+  return { static_cast<uint_res>(res) };
 }
 
 // movemask_raw --------------------
@@ -50,7 +54,8 @@ EVE_FORCEINLINE auto movemask_raw(Logical p)
   using ABI = abi_type_t<Logical>;
   using e_t = element_type_t<Logical>;
 
-  if constexpr( std::same_as<ABI, x86_128_>)
+       if constexpr( !ABI::is_wide_logical ) return p.storage();
+  else if constexpr( std::same_as<ABI, x86_128_> )
   {
          if constexpr( std::is_same_v<e_t, float > ) return (std::uint16_t)_mm_movemask_ps(p.storage());
     else if constexpr( std::is_same_v<e_t, double> ) return (std::uint16_t)_mm_movemask_pd(p.storage());
@@ -64,7 +69,7 @@ EVE_FORCEINLINE auto movemask_raw(Logical p)
     else if constexpr( std::is_same_v<e_t, double> ) return (std::uint32_t)_mm256_movemask_pd(p.storage());
     else if constexpr( sizeof(e_t) == 8 )            return (std::uint32_t)_mm256_movemask_pd((__m256d)p.storage());
     else if constexpr( sizeof(e_t) == 4 )            return (std::uint32_t)_mm256_movemask_ps((__m256)p.storage());
-    else if constexpr( current_api >= avx2 )         return (std::uint32_t)_mm256_movemask_epi8(p.storage());
+    else if constexpr( current_api == avx2 )         return (std::uint32_t)_mm256_movemask_epi8(p.storage());
     else if constexpr( current_api == avx )
     {
       auto [l, h] = p.slice();
@@ -77,10 +82,6 @@ EVE_FORCEINLINE auto movemask_raw(Logical p)
       return (top << s) | bottom;
     }
   }
-  else
-  {
-    return p.storage();
-  }
 }
 
 // top_bits ---------------------------------
@@ -92,7 +93,7 @@ struct top_bits
   static constexpr bool is_avx512_logical = !abi_type_t<Logical>::is_wide_logical;
   static constexpr std::ptrdiff_t static_size = Logical::static_size;
   static constexpr std::ptrdiff_t bits_per_element =
-    sizeof(element_type_t<Logical>) == 2 ? 2 : 1;
+    sizeof(element_type_t<Logical>) == 2 && !is_avx512_logical ? 2 : 1;
 
   private:
     EVE_FORCEINLINE static auto storage_type_impl()
@@ -229,7 +230,7 @@ struct top_bits
     {
       if constexpr ( !is_aggregated )
       {
-        storage_type bit_mask = set_lower_n_bits<int>(bits_per_element) << (i * bits_per_element);
+        storage_type bit_mask = set_lower_n_bits<storage_type>(bits_per_element) << (i * bits_per_element);
         if ( x ) storage |= bit_mask;
         else     storage &= ~bit_mask;
       }
@@ -242,7 +243,7 @@ struct top_bits
 
     EVE_FORCEINLINE constexpr bool get(std::ptrdiff_t i) const
     {
-      if constexpr ( !is_aggregated ) return (storage & (1 << (i * bits_per_element))) != 0;
+      if constexpr ( !is_aggregated ) return (storage & (storage_type{1} << (i * bits_per_element))) != 0;
       else
       {
         if ( i < static_size / 2 ) return storage[0].get(i);
@@ -254,7 +255,7 @@ struct top_bits
 
     EVE_FORCEINLINE constexpr explicit operator bool()
     {
-      if constexpr ( !is_aggregated ) return storage != storage_type(0);
+      if constexpr ( !is_aggregated ) return storage != storage_type{0};
       else
       {
         return (bool)storage[0] || (bool)storage[1];
@@ -355,7 +356,7 @@ EVE_FORCEINLINE Logical to_logical(top_bits<Logical> mmask)
     using bits_et   = element_type_t<bits_wide>;
 
     static constexpr auto bits_per_element = top_bits<Logical>::bits_per_element;
-    static constexpr int element_mask = set_lower_n_bits<int>(bits_per_element);
+    static constexpr auto element_mask = set_lower_n_bits<bits_et>(bits_per_element);
 
     bits_wide true_mmask([&](int i, int) {
       int shift = 0;
