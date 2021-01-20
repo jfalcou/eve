@@ -56,6 +56,29 @@ namespace eve::detail
     }
   }
 
+  //===============================================================================================
+  // Multi case
+  //================================================================================================
+  template<floating_real_value T0, floating_real_value T1, real_value ...Ts>
+  common_compatible_t<T0,T1, Ts...> logspace_sub_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
+  {
+    using r_t = common_compatible_t<T0,T1,Ts...>;
+    if constexpr(has_native_abi_v<r_t>)
+    {
+      r_t that(logspace_sub(a0, a1));
+      auto lsub = [](auto that, auto next)->r_t{
+        that = logspace_sub(that, next);
+        return that;
+      };
+      ((that = lsub(that,args)),...);
+      return that;
+    }
+    else
+    {
+      return apply_over(logspace_sub, a0, a1, args...);
+    }
+  }
+
   //================================================================================================
   // Masked case
   //================================================================================================

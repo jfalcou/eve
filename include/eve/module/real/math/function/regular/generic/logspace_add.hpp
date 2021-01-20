@@ -71,7 +71,7 @@ namespace eve::detail
     }
     else
     {
-      return apply_over(hypot, a0, a1, args...);
+      return apply_over(logspace_add, a0, a1, args...);
     }
   }
 
