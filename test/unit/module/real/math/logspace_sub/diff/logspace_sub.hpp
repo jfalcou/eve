@@ -9,6 +9,7 @@
 **/
 //==================================================================================================
 #include <eve/function/diff/logspace_sub.hpp>
+#include <eve/function/diff/logspace_add.hpp>
 #include <type_traits>
 
 TTS_CASE_TPL("Check diff(logspace_sub) return type", EVE_TYPE)
@@ -29,32 +30,21 @@ TTS_CASE_TPL("Check eve::diff(eve::logspace_sub) behavior", EVE_TYPE)
 {
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::diff_1st(eve::logspace_sub)(T{3},T{1}), T(0.5));
-    TTS_EQUAL(eve::diff_2nd(eve::logspace_sub)(T{6},T{2}), T(0.5));
-    TTS_EQUAL(eve::diff_3rd(eve::logspace_sub)(T{10},T{-16}), T(0));
+    TTS_ULP_EQUAL(eve::diff_1st(eve::logspace_sub)(T{3},T{1}), T(1.156517642749666), 1);
+    TTS_ULP_EQUAL(eve::diff_2nd(eve::logspace_sub)(T{6},T{2}), T(-1.865736036377405e-02), 1);
+    TTS_ULP_EQUAL(eve::diff_3rd(eve::logspace_sub)(T{10},T{-16}), T(0), 1);
 
-    TTS_EQUAL(eve::diff_1st(eve::logspace_sub)(T{5},T{1},T{1}), T(1.0/3));
-    TTS_EQUAL(eve::diff_2nd(eve::logspace_sub)(T{-10},T{6},T{3}), T(9.525740247083118e-01));
-    TTS_EQUAL(eve::diff_3rd(eve::logspace_sub)(T{-10},T{6},T{3}), T(4.742586809360403e-02));
-    TTS_EQUAL(eve::diff_nth<4>(eve::logspace_sub)(T{-10},T{6},T{3}), T(0.0));
+    TTS_ULP_EQUAL(eve::diff_1st(eve::logspace_sub)(T{5},T{1},T{1}), T(1.038024151015572), 1);
+    TTS_ULP_EQUAL(eve::diff_2nd(eve::logspace_sub)(T{-10},T{6},T{3}), T(9.525742289365767e-01), 1);
+    TTS_ULP_EQUAL(eve::diff_3rd(eve::logspace_sub)(T{-10},T{6},T{3}), T(4.742587826153062e-02), 1);
+    TTS_ULP_EQUAL(eve::diff_nth<4>(eve::logspace_sub)(T{-10},T{6},T{3}), T(0.0), 1);
 
-    TTS_ULP_EQUAL(eve::diff_1st(eve::logspace_sub)(T{10},T{6},T{4},T{3}), T(9.787548793582700e-01), 1);
-    TTS_ULP_EQUAL(eve::diff_2nd(eve::logspace_sub)(T{-10},T{6},T{4},T{3}), T(8.437946543574784e-01), 1);
-    TTS_ULP_EQUAL(eve::diff_3rd(eve::logspace_sub)(T{-10},T{6},T{4},T{3}), T(1.141951885410090e-01), 1);
-    TTS_ULP_EQUAL(eve::diff_nth<4>(eve::logspace_sub)(T{-10},T{6},T{4},T{3}), T(4.201006214493389e-02), 1);
+    TTS_ULP_EQUAL(eve::diff_1st(eve::logspace_sub)(T{10},T{6},T{4},T{3}), T(1.022187889416613), 1);
+    TTS_ULP_EQUAL(eve::diff_2nd(eve::logspace_sub)(T{-10},T{6},T{4},T{3}), T(8.437948146052159e-01), 1);
+    TTS_ULP_EQUAL(eve::diff_3rd(eve::logspace_sub)(T{-10},T{6},T{4},T{3}), T(1.141952102281820e-01), 1);
+    TTS_ULP_EQUAL(eve::diff_nth<4>(eve::logspace_sub)(T{-10},T{6},T{4},T{3}), T(4.201007012319897e-02), 1);
     TTS_ULP_EQUAL(eve::diff_nth<5>(eve::logspace_sub)(T{-10},T{6},T{4},T{3}), T(0), 0);
 
-    for(int k=10; k < 15; ++k)
-    {
-      for(int i=1; i < 5; ++i)
-      {
-        for(int j=1; i < 5; ++i)
-        {
-          TTS_ULP_EQUAL(logspace_sub(eve::log(T(k)), eve::log(T(i)), eve::log(T(j))), eve::log(T(i+j+k)), 0.5);
-          TTS_ULP_EQUAL(logspace_sub(-eve::log(T(k)), eve::log(T(i)), eve::log(T(j))), eve::log(T(-eve::rec(T(k))+eve::rec(T(j))+eve::rec(T(k)))), 1);
-        }
-      }
-    }
   }
   else
   {
