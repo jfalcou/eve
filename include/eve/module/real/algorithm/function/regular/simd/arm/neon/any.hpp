@@ -37,7 +37,7 @@ namespace eve::detail
   template<real_scalar_value T, typename N>
   EVE_FORCEINLINE bool any_(EVE_SUPPORTS(neon128_), logical<wide<T,N,arm_128_>> const &v0) noexcept
   {
-    auto[l,h] = v0.mask().slice();
+    auto[l,h] = v0.slice();
     return any(l || h);
   }
 }

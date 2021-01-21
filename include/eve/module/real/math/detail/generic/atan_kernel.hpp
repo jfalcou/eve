@@ -19,12 +19,7 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/add.hpp>
 #include <eve/function/inc.hpp>
-#include <eve/function/is_equal.hpp>
 #include <eve/function/is_eqz.hpp>
-#include <eve/function/is_less.hpp>
-#include <eve/function/is_greater.hpp>
-#include <eve/function/is_greater_equal.hpp>
-#include <eve/function/logical_and.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/constant/half.hpp>
 #include <eve/constant/zero.hpp>
@@ -42,12 +37,12 @@ namespace eve::detail
   auto atan_kernel( T const & x,  T const & recx ) noexcept
   {
     const auto flag1 = x <  Ieee_constant<T,  0X401A827AU, 0X4003504F333F9DE6ULL>(); //tan(3pi/8)
-    const auto flag2 = eve::logical_and(x >= Ieee_constant<T, 0x3ed413cdU, 0X3FDA827999FCEF31ULL>(), flag1); // tan(pi/8)
-    T yy =  eve::if_else(flag1, eve::zero, pio_2(eve::as(x)));
-    yy =  eve::if_else(flag2, pio_4(eve::as(x)), yy);
-    T xx =   eve::if_else(flag1, x, -recx);
-    xx =  eve::if_else(flag2, eve::dec(x)/eve::inc(x),xx);
-    T z = eve::sqr(xx);
+    const auto flag2 = x >= Ieee_constant<T, 0x3ed413cdU, 0X3FDA827999FCEF31ULL>() && flag1; // tan(pi/8)
+    T yy  = eve::if_else(flag1, eve::zero, pio_2(eve::as(x)));
+      yy  = eve::if_else(flag2, pio_4(eve::as(x)), yy);
+    T xx  = eve::if_else(flag1, x, -recx);
+      xx  = eve::if_else(flag2, eve::dec(x)/eve::inc(x),xx);
+    T z   = eve::sqr(xx);
     using vt_t =  value_type_t<T>;
     if constexpr(std::is_same_v<vt_t, float>)
     {

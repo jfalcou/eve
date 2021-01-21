@@ -137,6 +137,21 @@ namespace eve::detail
       return w == v;
     }
 
+    friend EVE_FORCEINLINE auto operator!=(wide_ops const& v, wide_ops const& w) noexcept
+    {
+      return detail::self_neq(v.self(),w.self());
+    }
+
+    friend EVE_FORCEINLINE auto operator!=(wide_ops const& v, scalar_value auto w) noexcept
+    {
+      return v != Derived{w};
+    }
+
+    friend EVE_FORCEINLINE auto operator!=(scalar_value auto v, wide_ops const& w) noexcept
+    {
+      return w != v;
+    }
+
     private:
     EVE_FORCEINLINE Derived&        self()        { return static_cast<Derived&>(*this); }
     EVE_FORCEINLINE Derived const&  self() const  { return static_cast<Derived const&>(*this); }

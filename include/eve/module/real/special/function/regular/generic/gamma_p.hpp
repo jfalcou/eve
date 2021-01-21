@@ -19,6 +19,7 @@
 #include <eve/function/exp.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_infinite.hpp>
+#include <eve/function/is_not_nan.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fms.hpp>
 #include <eve/function/lgamma.hpp>

@@ -10,24 +10,20 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/function/is_nan.hpp>
-#include <eve/function/logical_or.hpp>
-#include <eve/function/logical_and.hpp>
-#include <eve/function/numeric.hpp>
-#include <eve/function/fuzzy.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/function/nb_values.hpp>
-#include <eve/function/dist.hpp>
-#include <eve/function/is_greater.hpp>
-#include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/constant/eps.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/skeleton_calls.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/function/abs.hpp>
+#include <eve/function/convert.hpp>
+#include <eve/function/dist.hpp>
+#include <eve/function/fuzzy.hpp>
+#include <eve/function/is_not_equal.hpp>
+#include <eve/function/is_greater.hpp>
+#include <eve/function/nb_values.hpp>
+#include <eve/traits/as_logical.hpp>
 
 namespace eve::detail
 {

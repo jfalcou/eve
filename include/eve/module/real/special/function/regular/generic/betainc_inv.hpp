@@ -16,9 +16,7 @@
 #include <eve/function/dec.hpp>
 #include <eve/function/exp.hpp>
 #include <eve/function/fma.hpp>
-#include <eve/function/is_equal.hpp>
-#include <eve/function/is_less.hpp>
-#include <eve/function/is_greater.hpp>
+#include <eve/function/is_not_nan.hpp>
 #include <eve/function/is_ltz.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/lbeta.hpp>

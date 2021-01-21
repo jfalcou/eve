@@ -34,19 +34,14 @@ namespace eve
   }
 
   EVE_MAKE_CALLABLE(shl_, shl);
+
+  namespace detail
+  {
+    template<integral_value T, integral_value U>
+    EVE_FORCEINLINE auto shl_(EVE_SUPPORTS(cpu_), T a, U s) noexcept
+    {
+      if constexpr( scalar_value<T> && scalar_value<U> )  return  static_cast<T>(a << s);
+      else                                                return a << s;
+    }
+  }
 }
-
-#include <eve/arch.hpp>
-#include <eve/module/real/core/function/regular/generic/shl.hpp>
-
-#if defined(EVE_HW_X86)
-#  include <eve/module/real/core/function/regular/simd/x86/shl.hpp>
-#endif
-
-#if defined(EVE_HW_POWERPC)
-#  include <eve/module/real/core/function/regular/simd/ppc/shl.hpp>
-#endif
-
-#if defined(EVE_HW_ARM)
-#  include <eve/module/real/core/function/regular/simd/arm/neon/shl.hpp>
-#endif

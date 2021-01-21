@@ -11,6 +11,7 @@
 #pragma once
 
 #include <eve/function/if_else.hpp>
+#include <eve/conditional.hpp>
 
 namespace eve::detail
 {

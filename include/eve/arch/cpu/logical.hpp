@@ -59,7 +59,42 @@ namespace eve
       return *this;
     }
 
+    //==============================================================================================
+    // Logical operators
+    //==============================================================================================
     EVE_FORCEINLINE constexpr logical operator!() const noexcept { return {!value_}; }
+
+    template<real_scalar_value U>
+    friend EVE_FORCEINLINE logical operator&&(logical const& v, logical<U> const& w) noexcept
+    {
+      return logical{v.value() && w.value()};
+    }
+
+    friend EVE_FORCEINLINE logical operator&&(logical const& v, bool const& w) noexcept
+    {
+      return logical{v.value() && w};
+    }
+
+    friend EVE_FORCEINLINE logical operator&&(bool const& v, logical const& w) noexcept
+    {
+      return logical{v && w.value()};
+    }
+
+    template<real_scalar_value U>
+    friend EVE_FORCEINLINE logical operator||(logical const& v, logical<U> const& w) noexcept
+    {
+      return logical{v.value() || w.value()};
+    }
+
+    friend EVE_FORCEINLINE logical operator||(logical const& v, bool const& w) noexcept
+    {
+      return logical{v.value() || w};
+    }
+
+    friend EVE_FORCEINLINE logical operator||(bool const& v, logical const& w) noexcept
+    {
+      return logical{v || w.value()};
+    }
 
     //==============================================================================================
     // Convertion from logical to other formats (mask, bits, bitmap)

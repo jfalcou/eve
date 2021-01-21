@@ -20,6 +20,56 @@
 namespace eve::detail
 {
   //================================================================================================
+  // <<=
+  //================================================================================================
+  template<integral_real_scalar_value T, typename N, typename ABI, integral_real_scalar_value U>
+  EVE_FORCEINLINE decltype(auto) self_shl(wide<T,N,ABI>& v, wide<U,N,ABI> s) noexcept
+  {
+    auto ss = []<typename V>(V a, auto b) { return static_cast<V>(a << b); };
+
+    if constexpr(has_aggregated_abi_v<T> || has_aggregated_abi_v<U>)  v = aggregate(ss, v, s);
+    else                                                              v = map(ss, v, s);
+
+    return v;
+  }
+
+  template<integral_real_scalar_value T, typename N, typename ABI, integral_real_scalar_value U>
+  EVE_FORCEINLINE decltype(auto) self_shl(wide<T,N,ABI>& v, U s) noexcept
+  {
+    auto ss = []<typename V>(V a, auto b) { return static_cast<V>(a << b); };
+
+    if constexpr(has_aggregated_abi_v<T>) v = aggregate(ss, v, s);
+    else                                  v = map(ss, v, s);
+
+    return v;
+  }
+
+  //================================================================================================
+  // >>=
+  //================================================================================================
+  template<integral_real_scalar_value T, typename N, typename ABI, integral_real_scalar_value U>
+  EVE_FORCEINLINE decltype(auto) self_shr(wide<T,N,ABI>& v, wide<U,N,ABI> s) noexcept
+  {
+    auto ss = []<typename V>(V a, auto b) { return static_cast<V>(a >> b); };
+
+    if constexpr(has_aggregated_abi_v<T> || has_aggregated_abi_v<U>)  v = aggregate(ss, v, s);
+    else                                                              v = map(ss, v, s);
+
+    return v;
+  }
+
+  template<integral_real_scalar_value T, typename N, typename ABI, integral_real_scalar_value U>
+  EVE_FORCEINLINE decltype(auto) self_shr(wide<T,N,ABI>& v, U s) noexcept
+  {
+    auto ss = []<typename V>(V a, auto b) { return static_cast<V>(a >> b); };
+
+    if constexpr(has_aggregated_abi_v<T>) v = aggregate(ss, v, s);
+    else                                  v = map(ss, v, s);
+
+    return v;
+  }
+
+  //================================================================================================
   // &=
   //================================================================================================
   template<scalar_value T, value U, typename N, non_native_abi ABI>
