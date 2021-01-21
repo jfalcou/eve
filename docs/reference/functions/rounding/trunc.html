@@ -63,10 +63,10 @@ Supported decorators
     - If `tol` is an integral_value n compute the floor of the next nth representable value in the `x` type.
     - If `tol` is omitted the tolerance is taken to 3 times the machine $\epsilon$ in the `x` type (`3*eps(as(x))`).
 
-[`derivative`](../decorators.html#derivative)
-:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/trunc.hpp>`</script>
+[`diff`](../decorators.html#diff)
+:   **Required header: **<script type="preformatted">` #include <eve/function/diff/trunc.hpp>`</script>
 
-:   The expression `derivative(trunc)(x)` computes the derivative of the function at `x` .
+:   The expression `diff(trunc)(x)` computes the derivative of the function at `x` .
 
   (insert ../../src/trunc.src.html here)
 

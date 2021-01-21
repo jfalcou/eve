@@ -65,11 +65,11 @@ Supported decorators
 :   The call `saturated(mul)(x, args...)` computes the saturated  multiplication of `x` and `y`. The saturation is obtained in the
      [compatibility result](../../concept.html#compatibility) of the two parameters. No overflow occurs.
 
-[`derivative`](../decorators.html#derivative)
-:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/mul.hpp>`</script>
+[`diff`](../decorators.html#diff)
+:   **Required header: **<script type="preformatted">` #include <eve/function/diff/mul.hpp>`</script>
 
-:   The expression `derivative_< N >(mul)(x,args,...)` computes the partial
-    derivative of the function relative to the Nth parameter.
+:   The expression `diff_< N >(mul)(x,args,...)` computes the partial
+    diff of the function relative to the Nth parameter.
 
     If the actual parameters are $x_1, ... x_n$ the value returned is
     $\prod_{i \neq N} x_i$ if $1\le N \le n$ otherwise 0.

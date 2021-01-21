@@ -55,7 +55,7 @@ int main()
 The [if_else][doc_if_else] call explicitly requests we pass:
  - the condition, i.e the comparison between `a` and `b`
  - the value to use whenever an element of said condition evaluates to `true`, here the product of `a` and `b`
- - the value to use whenever an element of said condition evaluates to `false`, here the difference of `a` and `b`
+ - the value to use whenever an element of said condition evaluates to `false`, here the derivativeerence of `a` and `b`
 
 The expected result of this program is:
 
@@ -255,7 +255,7 @@ element index inside a [SIMD value](reference/concepts.html#simd_value) rather t
 One may want for example to not compute an expression on the first and last element of such
 [SIMD values](reference/concepts.html#simd_value).
 
-Let's write a function that computes the differences between two vectors in multiple scenarios: not
+Let's write a function that computes the derivativeerences between two vectors in multiple scenarios: not
 using the first elements and not using the last elements.
 
 

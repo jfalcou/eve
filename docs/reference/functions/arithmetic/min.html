@@ -67,11 +67,11 @@ Supported decorators
 :   The call `numeric(max)(x,args,...)`  ensures that  if any element of the inputs is not a `Nan`, the corresponding
     output element will not be a `Nan`.
 
-[`derivative`](../decorators.html#derivative)
-:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/min.hpp>`</script>
+[`diff`](../decorators.html#diff)
+:   **Required header: **<script type="preformatted">` #include <eve/function/diff/min.hpp>`</script>
 
-:   The expression `derivative< N >(min)(x,args,...)` computes the partial
-    derivative relative to the Nth parameter. If the parameters are $x_1, ..., x_n$ and
+:   The expression `diff< N >(min)(x,args,...)` computes the partial
+    diff relative to the Nth parameter. If the parameters are $x_1, ..., x_n$ and
     their minimum is $m$, the value returned is elementwise 1 if $m$ is equal to $x_N$ else 0.
 
   (insert ../../src/min.src.html here)

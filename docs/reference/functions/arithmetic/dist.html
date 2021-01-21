@@ -72,11 +72,11 @@ Supported decorators
     that the result is always defined. If $|x-y|$ is not representable
     [the greatest representable positive value](../../constants.html#valmax) is returned
 
-[`derivative`](../decorators.html#derivative)
-:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/dist.hpp>`</script>
+[`diff`](../decorators.html#diff)
+:   **Required header: **<script type="preformatted">` #include <eve/function/diff/dist.hpp>`</script>
 
-:   The expression `derivative_1st(dist)(x,y)` and `derivative_2nd(dist)(x,y)` computes the partial
-    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ |x-y|$.
+:   The expression `diff_1st(dist)(x,y)` and `diff_2nd(dist)(x,y)` computes the partial
+    diffs of $f$, where $f$ is the function $(x,y) \rightarrow \ |x-y|$.
 
   (insert ../../src/dist.src.html here)
 
