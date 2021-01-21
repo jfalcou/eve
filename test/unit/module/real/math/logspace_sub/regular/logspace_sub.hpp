@@ -16,6 +16,7 @@
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/log_2.hpp>
+
 #include <type_traits>
 
 TTS_CASE_TPL("Check logspace_sub return type", EVE_TYPE)

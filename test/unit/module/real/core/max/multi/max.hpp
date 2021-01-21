@@ -67,4 +67,9 @@ TTS_CASE_TPL("Check eve::max behavior", EVE_TYPE)
   TTS_EQUAL(eve::numeric(eve::max)(v_t{1}, T{1}, T{4}), T(4));
   TTS_EQUAL(eve::numeric(eve::max)(v_t{2}, T{2}, T{1}), T(2));
   TTS_EQUAL(eve::numeric(eve::max)(v_t{2}, v_t{2}, T{1}), T(2));
+
+
+   TTS_ULP_EQUAL(eve::max(T( 4), T( 3)) , T(4), 0.5);
+   TTS_ULP_EQUAL(eve::max(T( 3), T( 4)) , T(4), 0.5);
+
 }
