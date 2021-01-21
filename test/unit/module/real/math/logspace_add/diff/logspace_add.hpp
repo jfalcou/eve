@@ -34,7 +34,7 @@ TTS_CASE_TPL("Check eve::diff(eve::logspace_add) behavior", EVE_TYPE)
     TTS_EQUAL(eve::diff_3rd(eve::logspace_add)(T{-10},T{6}), T(0));
 
     TTS_EQUAL(eve::diff_1st(eve::logspace_add)(T{1},T{1},T{1}), T(1.0/3));
-    TTS_EQUAL(eve::diff_2nd(eve::logspace_add)(T{-10},T{6},T{3}), T(9.525740247083118e-01));
+    TTS_ULP_EQUAL(eve::diff_2nd(eve::logspace_add)(T{-10},T{6},T{3}), T(9.525740247083118e-01), 0.5);
     TTS_EQUAL(eve::diff_3rd(eve::logspace_add)(T{-10},T{6},T{3}), T(4.742586809360403e-02));
     TTS_EQUAL(eve::diff_nth<4>(eve::logspace_add)(T{-10},T{6},T{3}), T(0.0));
 
