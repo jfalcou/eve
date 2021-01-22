@@ -109,7 +109,7 @@ namespace eve::detail
 
     auto russian = [](T base, i_t expo){
       T result(1);
-      while( any(expo) )
+      while( eve::any(expo) )
       {
         result *= if_else(is_odd(expo), base, T(1));
         expo = shr(expo, 1);

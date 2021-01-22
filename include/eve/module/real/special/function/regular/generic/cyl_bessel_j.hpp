@@ -79,24 +79,24 @@ namespace eve::detail
       auto isneza1 =  is_nez(a1);
       auto notdone = (!is_odd(a0) || is_nltz(a1)) && is_flint(a0) && isneza1;
       T r = if_else(isneza1, nan(as(a1)), zero);
-      if (any(notdone))
+      if (eve::any(notdone))
       {
         auto j0 = cyl_bessel_j0(a1);
         auto br_0 =  [](auto j0) { return j0;};
         notdone = next_interval(br_0, notdone, is_eqz(a0), r, j0);
-        if (any(notdone))
+        if (eve::any(notdone))
         {
           auto j1 = cyl_bessel_j1(a1);
           auto br_1 =  [](auto j1) { return j1;};
           notdone = next_interval(br_1, notdone, a0 == 1, r, j1);
-          if (any(notdone))
+          if (eve::any(notdone))
           {
             auto br_2 =  [](auto a1, auto j0,  auto j1)
               {
                 return fms(T(2)*j1, rec(a1), j0);
               };
             notdone = next_interval(br_2, notdone, a0 == 2, r, a1, j0, j1);
-            if (any(notdone))
+            if (eve::any(notdone))
             {
               auto br_last = [](auto a0,  auto a1,  auto j0, auto j1)
                 {
@@ -125,7 +125,7 @@ namespace eve::detail
                     r = r-T(2);
                     k = dec(k);
                   }
-                  while( any(is_gtz(k)) );
+                  while( eve::any(is_gtz(k)) );
                   return if_else(abs(pk) > pkm1, j1/pk, j0/pkm1);
                 };
               last_interval(br_last, notdone, r, a0, a1, j0, j1);

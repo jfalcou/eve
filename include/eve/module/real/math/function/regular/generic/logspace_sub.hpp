@@ -46,8 +46,8 @@ namespace eve::detail
     {
       auto x = if_else(a == b, zero, b-a);
       auto test = x > -log_2(as(x));
-      if (all(test)) return  a+eve::log(-expm1(x));
-      else if (any(test)) return a+if_else(test, log(-expm1(x)), log1p(-exp(x)));
+      if (eve::all(test)) return  a+eve::log(-expm1(x));
+      else if (eve::any(test)) return a+if_else(test, log(-expm1(x)), log1p(-exp(x)));
       else return a + log1p(-exp(x));
     }
     else

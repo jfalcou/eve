@@ -205,13 +205,13 @@ namespace eve::detail
       auto notdone =  is_not_nan(x);
       notdone = next_interval(dawson1, notdone, x < elt_t(3.25), r, xx, x);
       rx = rec(x); xx = sqr(rx);
-      if(any(notdone))
+      if(eve::any(notdone))
       {
         notdone = next_interval(dawson2,  notdone, x < elt_t(6.25), r, xx, rx, x);
-        if(any(notdone))
+        if(eve::any(notdone))
         {
           notdone = next_interval(dawson3,  notdone, x < elt_t(1.0e9), r, xx, rx, x);
-          if(any(notdone))
+          if(eve::any(notdone))
           {
             last_interval(dawson4, x >= elt_t(1.0e9), r, rx);
           }

@@ -45,9 +45,9 @@ namespace eve::detail
 
       if constexpr(has_native_abi_v<r_t>)
       {
-        if (all(p == P(2))) return pedantic(hypot)(r_t(a0), r_t(a1), r_t(args)...);
-        else if (all(p == P(1))) return pedantic(manhattan)(r_t(a0), r_t(a1), r_t(args)...);
-        else if (all(p == eve::inf(as(p)))) return numeric(max)(abs(r_t(a0)), r_t(a1), abs(r_t(args))...);
+        if (eve::all(p == P(2))) return pedantic(hypot)(r_t(a0), r_t(a1), r_t(args)...);
+        else if (eve::all(p == P(1))) return pedantic(manhattan)(r_t(a0), r_t(a1), r_t(args)...);
+        else if (eve::all(p == eve::inf(as(p)))) return numeric(max)(abs(r_t(a0)), r_t(a1), abs(r_t(args))...);
         else
         {
           auto rp =  r_t(p);
@@ -62,10 +62,10 @@ namespace eve::detail
           };
           that = addppow(that,r_t(a1));
           auto isinfp = is_infinite(rp);
-          if (any(isinfp))
+          if (eve::any(isinfp))
           {
             auto r = numeric(max)(abs(r_t(a0)), abs(r_t(a1)), abs(r_t(args))...);
-            if (all(isinfp)) return r;
+            if (eve::all(isinfp)) return r;
             ((that = addppow(that,r_t(args))),...);
             return if_else(isinfp, r,  if_else(inf_found, inf(as<r_t>()),
                                                pedantic(ldexp)(pow_abs(that, rec(rp)), -e)));

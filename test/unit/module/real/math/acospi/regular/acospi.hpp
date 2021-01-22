@@ -40,7 +40,7 @@ TTS_CASE_TPL("Check eve::acospi behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::acospi(T( 1. )), T(0)    , 0  );
   TTS_ULP_EQUAL(eve::acospi(T( 0. )), T(0.5)  , 0.5);
 
-  TTS_EXPECT( all(eve::is_positive(eve::acospi(T(1.)))) );
+  TTS_EXPECT( eve::all(eve::is_positive(eve::acospi(T(1.)))) );
 
   TTS_ULP_EQUAL(eve::acospi(T(8.414715528e-01)), T(radinpi(std::acos(v_t(8.414715528e-01)))), 1);
   TTS_ULP_EQUAL(eve::acospi(T(9.689134359e-01)), T(radinpi(std::acos(v_t(9.689134359e-01)))), 1);

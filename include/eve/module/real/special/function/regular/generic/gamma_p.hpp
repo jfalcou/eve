@@ -52,7 +52,7 @@ namespace eve::detail
     auto notdone =  is_not_nan(x);
     const auto amax = T(1048576);
     auto test = (a > amax);
-    if (any(test))
+    if (eve::any(test))
     {
       auto z = eve::fma( 1024*rsqrt(a), x-(a-third), amax-third);
       x =  eve::max(z, zero(as(x)));
@@ -68,7 +68,7 @@ namespace eve::detail
       auto del = one(as(ap));
       auto sum = del;
 
-      while ( any(abs(del) >=  T(100)*epsilon(maximum(abs(sum)))))
+      while ( eve::any(abs(del) >=  T(100)*epsilon(maximum(abs(sum)))))
       {
         ap  += one(as(ap));
         del  = x*del/ap;
@@ -114,7 +114,7 @@ namespace eve::detail
 
     test = x < inc(a);
     notdone = next_interval(lginc, notdone, test, res, x, a, test);
-    if (any(notdone)) last_interval(uginc, notdone, res, x, a, !test);
+    if (eve::any(notdone)) last_interval(uginc, notdone, res, x, a, !test);
     return res;
   }
 }

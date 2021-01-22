@@ -99,7 +99,7 @@ namespace eve::detail
       r = if_else(testz, phi, r);
       r = if_else(test1, sinp, r);
       auto mgt0 =  is_nez(m) && notdone;
-      if (any(mgt0))
+      if (eve::any(mgt0))
       {
         m =  if_else(test1 || testz, zero, m);
         r += m*ellint_2(x);

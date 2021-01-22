@@ -29,10 +29,10 @@ namespace eve
       using vt_t = value_type_t<T>;
       if constexpr(std::is_integral_v<vt_t>)
       {
-        EVE_ASSERT( all(is_gez(s)),
+        EVE_ASSERT( eve::all(is_gez(s)),
                     "[eve::exp10] - with integral entries the parameter element(s) must be greater then 0"
                   );
-        EVE_ASSERT( all(is_less(s, maxlog10(eve::as<T>()))),
+        EVE_ASSERT( eve::all(is_less(s, maxlog10(eve::as<T>()))),
                     "[eve::exp10]  - overflow caused by too large integral entry"
                   );
       }

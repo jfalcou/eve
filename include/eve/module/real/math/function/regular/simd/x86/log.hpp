@@ -59,7 +59,7 @@ namespace eve::detail
         if constexpr( eve::platform::supports_denormals )
         {
           auto test = is_less(a0, smallestposval(eve::as<T>())) && isnez;
-          if( any(test) )
+          if( eve::any(test) )
           {
             dk = sub[test](dk, T(23));
             xx = if_else(test, xx * T(8388608ul), xx);
@@ -111,7 +111,7 @@ namespace eve::detail
         logical<T> test = is_less(a0, smallestposval(eve::as<T>())) && isnez;
         if constexpr( eve::platform::supports_denormals )
         {
-          if( any(test) )
+          if( eve::any(test) )
           {
             dk = sub[test](dk, T(54));
             xx = if_else(test, xx * T(18014398509481984ull), xx);

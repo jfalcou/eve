@@ -27,13 +27,13 @@ namespace eve
     template<real_value T, integral_real_value U>
     EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::next_), T const&, [[ maybe_unused ]] U const & n)
     {
-      EVE_ASSERT(all(is_gez(n)), "[eve::next] : second parameter must be positive");
+      EVE_ASSERT(eve::all(is_gez(n)), "[eve::next] : second parameter must be positive");
     }
 
     template<real_value T, integral_real_value U>
     EVE_FORCEINLINE void check(EVE_MATCH_CALL(saturated_type, eve::tag::next_), T const&,[[ maybe_unused ]]  U const & n)
     {
-      EVE_ASSERT(all(is_gez(n)), "[eve::saturated(eve::next)] : second parameter must be positive");
+      EVE_ASSERT(eve::all(is_gez(n)), "[eve::saturated(eve::next)] : second parameter must be positive");
     }
   }
 

@@ -44,7 +44,7 @@ TTS_CASE_TPL("Check raw(eve::acos) behavior", EVE_TYPE)
   TTS_ULP_EQUAL(raw(eve::acos)(T( 1. )) , T(0)             , 0   );
   TTS_ULP_EQUAL(raw(eve::acos)(T( 0. )) , eve::pio_2(eve::as<T>())  , 0   );
 
-  TTS_EXPECT( all(eve::is_positive(eve::acos(T(1)))) );
+  TTS_EXPECT( eve::all(eve::is_positive(eve::acos(T(1)))) );
 
   TTS_ULP_EQUAL(raw(eve::acos)(T(8.414715528e-01)), T(std::acos(v_t(8.414715528e-01))), 1.5 );
   TTS_ULP_EQUAL(raw(eve::acos)(T(9.689134359e-01)), T(std::acos(v_t(9.689134359e-01))), 4.0 );

@@ -41,7 +41,7 @@ namespace eve::detail
     {
       T r = dec(pow(x, y));
       auto test = (abs(y * dec(x)) < T(0.5) || (abs(y) < T(0.2)));
-      if (any(test))
+      if ( eve::any(test) )
       {
         // We don't have any good/quick approximation for log(x) * y
         // so just try it and see:

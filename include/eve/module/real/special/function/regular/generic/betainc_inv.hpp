@@ -89,7 +89,7 @@ namespace eve::detail
     auto x = nan(as(p));
     auto notdone =  is_not_nan(p);
     notdone = next_interval(large, notdone, test, x, p, a, b);
-    if(any(notdone))
+    if(eve::any(notdone))
     {
       last_interval(small, notdone, x, p, a, b);
     }
@@ -103,7 +103,7 @@ namespace eve::detail
       x -= u/inc( -0.5*m);
       auto tt = inc[x >= o](t);
       x = if_else(is_lez(x) && (x >= o), average(x, tt), x);
-      if (all(eve::abs(t) <= epsi*x) && j) break;
+      if (eve::all(eve::abs(t) <= epsi*x) && j) break;
     }
     return if_else(is_lez(p),  zero, if_else(p >= o, one, x));
   }

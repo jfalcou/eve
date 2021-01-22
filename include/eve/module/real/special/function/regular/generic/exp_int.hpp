@@ -95,7 +95,7 @@ namespace eve::detail
        return exp(-x)/x;
      };
      notdone = next_interval(br_zeron, notdone, is_eqz(n), r, x); // n == 0
-     if (any(notdone))
+     if (eve::any(notdone))
      {
        auto br_largen = [](auto n,  auto x){ //n >  5000
          auto xk = x + n;
@@ -107,7 +107,7 @@ namespace eve::detail
          return inc(ans)*exp(-x)/xk;
        };
        notdone = next_interval(br_largen, notdone, n > 5000, r, n, x); // n >  5000
-       if (any(notdone))
+       if (eve::any(notdone))
        {
          auto br_xlt1 = [](auto n,  auto x){ // here x is always le 1
            auto eqzx = is_eqz(x);
@@ -131,14 +131,14 @@ namespace eve::detail
              ans = add[is_nez(pk)](ans, yk/pk);
              t = if_else(is_nez(ans), abs(yk/ans), one);
            }
-           while( any(t > halfeps(as(x))));
+           while( eve::any(t > halfeps(as(x))));
            auto in = int_(n);
            return add[eqzx]((eve::pow(z, dec(in)) * psi / tgamma(n)) - ans, inf(as(x)));
          };
          auto xlt1 = x < 1;
          T xx = if_else(xlt1, x, one);
          notdone = next_interval(br_xlt1, notdone, xlt1, r, n, xx); // x <  1
-         if(any(notdone))
+         if(eve::any(notdone))
          {
            auto br_xge1 = [](auto n,  auto x){ // here x is always gt 1
              auto exp_intbig = (sizeof(elt_t) == 8) ? T(1ull << 57) : T(1ull << 24);
@@ -173,7 +173,7 @@ namespace eve::detail
                qkm2 *= fac;
                qkm1 *= fac;
              }
-             while(any(t > eps(as(x))));
+             while(eve::any(t > eps(as(x))));
              return  add[x < maxlog(as(x))](zero(as(x)), ans*exp(-x));
 
            };

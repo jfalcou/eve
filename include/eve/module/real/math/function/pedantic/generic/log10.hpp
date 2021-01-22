@@ -69,7 +69,7 @@ namespace eve::detail
         if constexpr( eve::platform::supports_denormals )
         {
           test = is_less(a0, smallestposval(eve::as<T>())) && isnez;
-          if( any(test) )
+          if( eve::any(test) )
           {
             k = sub[test](k, iT(25));
             x = if_else(test, x * T(33554432ul), x);
@@ -131,7 +131,7 @@ namespace eve::detail
         if constexpr( eve::platform::supports_denormals )
         {
           test = is_less(a0, smallestposval(eve::as<T>())) && isnez;
-          if( any(test) )
+          if( eve::any(test) )
           {
             k = sub[test](k, iT(54));
             x = if_else(test, x * T(18014398509481984ull), x);

@@ -70,7 +70,7 @@ namespace eve::detail
   EVE_FORCEINLINE Pack rsqrt_x86_pedantic(Pack const &x) noexcept
   {
     using v_t =  typename Pack::value_type;
-    if(any(is_denormal(x)) || (std::is_same_v<v_t, double> && any(eve::abs(x) < smallestposval(eve::as<float>()) || eve::abs(x) > valmax(eve::as<float>()))))
+    if(eve::any(is_denormal(x)) || (std::is_same_v<v_t, double> && eve::any(eve::abs(x) < smallestposval(eve::as<float>()) || eve::abs(x) > valmax(eve::as<float>()))))
       // this is necessary because of the poor initialisation by float intrinsic
     {
       auto [a00, nn] =  pedantic(ifrexp)(x);

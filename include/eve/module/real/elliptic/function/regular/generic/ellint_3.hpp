@@ -79,7 +79,7 @@ namespace eve::detail
       auto sphi2= sqr(sphi);
       auto notdone  = (k2*sphi2 < one(as(phi))) && (v*sphi2 <   one(as(phi)));
       auto r = nan(as(v));
-      if (any(notdone))
+      if (eve::any(notdone))
       {
         auto br_v0 =  [](auto phi, auto k) //v == 0
           {
@@ -87,7 +87,7 @@ namespace eve::detail
             return if_else(is_eqz(k), phi, ellint_1(phi, k));
           };
         notdone = next_interval(br_v0, notdone, is_eqz(v), r, phi, k);
-        if (any(notdone))
+        if (eve::any(notdone))
         {
           auto vis1 = v == one(as(v));
           auto tanphi = tan(phi);
@@ -96,7 +96,7 @@ namespace eve::detail
               return tanphi;
             };
           notdone = next_interval(br_v1k0, notdone, vis1 && is_eqz(k), r);
-          if (any(notdone))
+          if (eve::any(notdone))
           {
             auto br_v1 =  [sphi2, k2, tanphi](auto phi, auto k) //p < 0
               {
@@ -105,14 +105,14 @@ namespace eve::detail
                 return result + ellint_1(phi, k);
               };
             notdone = next_interval(br_v1, notdone, vis1, r, phi, k);
-            if (any(notdone))
+            if (eve::any(notdone))
             {
               auto br_philarge =  [aphi, vc](auto v,  auto phi,  auto k) //aphi*eps(as(aphi)) > one(as(aphi))
                 {
                   return copysign(aphi*ellint_3(v, k, vc)/pio_2(as(phi)), phi);
                 };
               notdone = next_interval(br_philarge, notdone, aphi*eps(as(aphi)) > one(as(aphi)), r, v, phi, k);
-              if (any(notdone))
+              if (eve::any(notdone))
               {
                  auto br_phigepio2 =  [aphi, vc](auto v,  auto phi,  auto k) //phi >= pi/2 || phi < 0
                 {
@@ -129,7 +129,7 @@ namespace eve::detail
                   return copysign(result, phi);
                 };
                  notdone = next_interval(br_phigepio2, notdone, (phi >= pio_2(as(phi))) || (phi < 0) , r, v, phi, k);
-                 if (any(notdone))
+                 if (eve::any(notdone))
                  {
                    auto br_k0 =  [tanphi](auto vc) ///k == 0
                      {
@@ -139,7 +139,7 @@ namespace eve::detail
                        return if_else(test, atan(arg), average(log1p(arg), -log1p(-arg)))/vcr;
                      };
                    notdone = next_interval(br_k0, notdone, k == 0, r, vc);
-                   if (any(notdone))
+                   if (eve::any(notdone))
                    {
                      auto br_vlt0k2le1 =  [k2, sphi2](auto phi, auto k, auto v, auto vc) /// (v < 0) && (k2 <= 1)
                        {
@@ -158,7 +158,7 @@ namespace eve::detail
                          return result;
                        };
                      notdone = next_interval(br_vlt0k2le1, notdone, k == 0, r, phi, k, v, vc);
-                     if (any(notdone))
+                     if (eve::any(notdone))
                      {
                        auto br_k1 =  [tanphi](auto phi, auto v, auto vc) /// (v >=  0) && (k == 1)
                          {
@@ -170,7 +170,7 @@ namespace eve::detail
                            return result;
                          };
                        notdone = next_interval(br_k1, notdone, k == 1, r, phi, v, vc); // v is already >= 0 here
-                       if (any(notdone))
+                       if (eve::any(notdone))
                        {
                          auto br_last =  [k2, sphi2, sphi](auto phi, auto v, auto vc) /// (v >=  0) && (k == 1)
                            {
@@ -222,7 +222,7 @@ namespace eve::detail
       auto k2 = sqr(k);
       auto notdone  = (k2 < one(as(k))) && (v < one(as(k)));
       auto r = nan(as(k));
-      if (any(notdone))
+      if (eve::any(notdone))
       {
         auto br_v0 =  [](auto k) //v == 0
           {
@@ -230,7 +230,7 @@ namespace eve::detail
             return if_else(is_eqz(k), pio_2(as(k)), ellint_1(k));
           };
         notdone = next_interval(br_v0, notdone, is_eqz(v), r, k);
-        if (any(notdone))
+        if (eve::any(notdone))
         {
           auto br_vlt0 =  [k2](auto k, auto v) //v <  0
             {
@@ -246,7 +246,7 @@ namespace eve::detail
               return result;
             };
           notdone = next_interval(br_vlt0, notdone, is_ltz(v), r, k, v);
-          if (any(notdone))
+          if (eve::any(notdone))
           {
             auto br_last =  [k2](auto v)
               {

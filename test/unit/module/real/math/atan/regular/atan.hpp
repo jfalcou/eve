@@ -45,6 +45,6 @@ TTS_CASE_TPL("Check eve::eve::atan behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::atan(T(1.))   ,  eve::pio_4(eve::as<T>())         , 0.5);
   TTS_ULP_EQUAL(eve::atan(T(0.))   , T(0)                     , 0.5);
 
-  TTS_EXPECT(all(eve::is_positive(eve::atan((T(0))))) );
-  TTS_EXPECT(all(eve::is_negative(eve::atan(T(-0.)))) );
+  TTS_EXPECT(eve::all(eve::is_positive(eve::atan((T(0))))) );
+  TTS_EXPECT(eve::all(eve::is_negative(eve::atan(T(-0.)))) );
 }

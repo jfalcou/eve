@@ -44,7 +44,7 @@ namespace eve::detail
       }
       else
       {
-        return any(to_logical(v));
+        return eve::any(to_logical(v));
       }
     }
   }

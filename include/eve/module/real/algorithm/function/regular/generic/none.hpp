@@ -26,8 +26,7 @@ namespace eve::detail
     }
     else if constexpr(simd_value<T>)
     {
-      return !any(v);
+      return !eve::any(v);
     }
   }
 }
-

@@ -78,17 +78,17 @@ namespace eve::detail
       auto isneza1 =  is_nez(a1);
       auto notdone = is_nlez(a1) && is_flint(a0);
       T r = if_else(isneza1, allbits, minf(as(a1)));
-      if (any(notdone))
+      if (eve::any(notdone))
       {
         auto y0 = cyl_bessel_y0(a1);
         auto br_0 =  [](auto y0) { return y0;};
         notdone = next_interval(br_0, notdone, is_eqz(a0), r, y0);
-        if (any(notdone))
+        if (eve::any(notdone))
         {
           auto y1 = cyl_bessel_y1(a1);
           auto br_1 =  [](auto y1) { return y1;};
           notdone = next_interval(br_1, notdone, a0 == 1, r, y1);
-          if (any(notdone))
+          if (eve::any(notdone))
           {
             auto br_last = [](auto n1,  auto x,  auto y0, auto y1)
               {
@@ -106,7 +106,7 @@ namespace eve::detail
                   r += T(2);
                   test = (r < n1);
                 }
-                while(any(test) );
+                while(eve::any(test) );
                 return an;
               };
             last_interval(br_last, notdone, r, 2*abs(a0), a1, y0, y1);

@@ -71,7 +71,7 @@ namespace eve::detail
         c = maxmag(fma(aa, rec(c), o), fpmin);
         auto del=d*c;
         h *= del;
-        if (all(eve::abs(oneminus(del)) < epsi)) return h; //Are we done?
+        if (eve::all(eve::abs(oneminus(del)) < epsi)) return h; //Are we done?
       }
       return h;
     };

@@ -244,7 +244,7 @@ namespace eve::detail
               auto    txgt250 = is_greater(tx, _250);
 
               // x >= 1.5
-              while( any(logical_and(xge150, txgt250)) )
+              while( eve::any(logical_and(xge150, txgt250)) )
               {
                 nx      = dec[txgt250](nx);
                 tx      = if_else(txgt250, x + nx, tx);
@@ -258,7 +258,7 @@ namespace eve::detail
               // x >= 1.25 && x < 1.5
               auto xge125  = is_greater_equal(x, _125);
               auto xge125t = logical_andnot(xge125, xge150);
-              if( any(xge125) )
+              if( eve::any(xge125) )
               {
                 r0x = if_else(xge125t, dec(x), r0x);
                 r0z = if_else(xge125t, z * x, r0z);
@@ -267,7 +267,7 @@ namespace eve::detail
               // x >= 0.75&& x < 1.5
               auto xge075  = is_greater_equal(x, _075);
               auto xge075t = logical_andnot(xge075, xge125);
-              if( any(xge075t) )
+              if( eve::any(xge075t) )
               {
                 kernelC = xge075t;
                 r0x     = if_else(xge075t, dec(x), r0x);
@@ -277,10 +277,10 @@ namespace eve::detail
               }
               // tx < 1.5 && x < 0.75
               auto txlt150 = logical_andnot(is_less(tx, _150), xge075);
-              if( any(txlt150) )
+              if( eve::any(txlt150) )
               {
                 auto orig = txlt150;
-                while( any(txlt150) )
+                while( eve::any(txlt150) )
                 {
                   z       = if_else(txlt150, z * tx, z);
                   nx      = inc[txlt150](nx);
@@ -409,7 +409,7 @@ namespace eve::detail
               T    p     = zero(as<T>());
               T    u     = if_else(test, x, eve::zero);
               auto test1 = is_greater_equal(u, T(3));
-              while( any(test1) )
+              while( eve::any(test1) )
               {
                 p     = dec[test1](p);
                 u     = if_else(test1, x + p, u);
@@ -419,7 +419,7 @@ namespace eve::detail
               // all u are less than 3
               auto test2 = is_less(u, T(2));
 
-              while( any(test2) )
+              while( eve::any(test2) )
               {
                 z     = if_else(test2, z / u, z);
                 p     = inc[test2](p);

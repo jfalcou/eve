@@ -48,7 +48,7 @@ namespace eve::detail
       auto k2 = sqr(k);
       auto kp = oneminus(k2);
       T r1(zero(as(k))), r2(zero(as(k)));
-      if (any(test))
+      if (eve::any(test))
       {
         auto [sinp, cosp] = sincos(phi);
         auto s2 = sqr(sinp);
@@ -59,7 +59,7 @@ namespace eve::detail
         auto z2 =  ellint_rj(zero(as(k)), kp, one(as(k)), oneminus(k2*invsqrdelta))*invsqrdelta/3;
         r1 *= fma(k2, z2, z1);
       }
-      if (any(!test))
+      if (eve::any(!test))
       {
         auto rkp = sqrt(kp);
         auto  ratio = ellint_1(phi, rkp) / ellint_1(rkp);

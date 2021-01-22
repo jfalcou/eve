@@ -49,8 +49,8 @@ TTS_CASE_TPL("Check eve::atan2pi behavior", EVE_TYPE)
     TTS_ULP_EQUAL(eve::atan2pi((T( 1.)) , inf         ), (T(0.))  , 0.5);
     TTS_ULP_EQUAL(eve::atan2pi((T(-1.)) , inf         ), mzero       , 0.5);
 
-    TTS_EXPECT( all(is_negative(eve::atan2pi((T(-1.)), inf))) );
-    TTS_EXPECT( all(is_positive(eve::atan2pi((T(1.)) , inf))) );
+    TTS_EXPECT( eve::all(is_negative(eve::atan2pi((T(-1.)), inf))) );
+    TTS_EXPECT( eve::all(is_positive(eve::atan2pi((T(1.)) , inf))) );
 
     TTS_ULP_EQUAL(eve::atan2pi(minf, minf      ),  eve::nan(eve::as<T>()) , 0.5);
     TTS_ULP_EQUAL(eve::atan2pi(inf , minf      ),  eve::nan(eve::as<T>()) , 0.5);

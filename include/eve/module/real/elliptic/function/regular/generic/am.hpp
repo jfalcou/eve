@@ -112,8 +112,8 @@ namespace eve::detail
         int n = 0;
         for (; n < N; n++)
         {
-          if (all(is_not_greater_equal(abs(c[n]), tol))) break;
-//          if (all(is_not_greater_equal(eve::abs(a[n] - g[n]),tol*a[n]))) break;
+          if (eve::all(is_not_greater_equal(abs(c[n]), tol))) break;
+//          if (eve::all(is_not_greater_equal(eve::abs(a[n] - g[n]),tol*a[n]))) break;
           two_n += two_n;
           a[n+1] = average(a[n], g[n]);
           g[n+1] = sqrt(a[n] * g[n]);
@@ -129,8 +129,8 @@ namespace eve::detail
         return phi;
       };
       T r;
-      if (any(xxisone)) r = fms(T(2), atan(exp(u)), pio_2(as(xx)));
-      if (all(xxisone)) return r;
+      if (eve::any(xxisone)) r = fms(T(2), atan(exp(u)), pio_2(as(xx)));
+      if (eve::all(xxisone)) return r;
       return if_else(xxisone, r, am_kernel());
     }
     else

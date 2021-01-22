@@ -39,7 +39,7 @@ TTS_CASE_TPL("Check eve::raw(eve::acosd) behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::raw(eve::acosd)(T( 1. )), T(0)   , 0  );
   TTS_ULP_EQUAL(eve::raw(eve::acosd)(T( 0. )), T(90)  , 0.5);
 
-  TTS_EXPECT( all(eve::is_positive(eve::raw(eve::acosd)(T(1.)))) );
+  TTS_EXPECT( eve::all(eve::is_positive(eve::raw(eve::acosd)(T(1.)))) );
 
   TTS_ULP_EQUAL(eve::raw(eve::acosd)(T(8.414715528e-01)), T(radindeg(std::acos(v_t(8.414715528e-01)))), 1.5 );
   TTS_ULP_EQUAL(eve::raw(eve::acosd)(T(9.689134359e-01)), T(radindeg(std::acos(v_t(9.689134359e-01)))), 4.0 );
