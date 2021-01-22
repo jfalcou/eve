@@ -9,7 +9,7 @@
 **/
 //==================================================================================================
 #pragma once
-
+#define TTS_MAIN
 #include "test_distribution.hpp"
 #include <tts/ranges.hpp>
 #include <eve/memory/align.hpp>

@@ -9,7 +9,7 @@
 **/
 //==================================================================================================
 #pragma once
-
+#define TTS_MAIN
 #define TTS_CUSTOM_DRIVER_FUNCTION eve_entry_point
 #include <tts/tts.hpp>
 #include "measures.hpp"
