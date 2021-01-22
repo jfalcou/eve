@@ -1,0 +1,63 @@
+<!--
+  EVE -  Expressive Vector Engine
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+ -->
+<meta charset="utf-8" lang="en"><style class="fallback">body{visibility:hidden;}</style>
+                       **Expressive Vector Engine**
+
+  (insert ../../crumbs.html here)
+
+# Statistics Functions
+These functions provide scalar and SIMD version of basic statistics distributions. To keep the
+results homogeneous and coherent between SIMD and scalar mode, the types usable in those functions
+are required to satisfy [`eve::compatible_values`](../concepts/compatible.html) and must be floating and real.
+
+Each of the distributions can be decorated.
+
+The function itself computes the cdf of the distribution
+
+The diff decorator allows to compute the cdf partial derivatives relatives to each parameter
+
+However there is a family of properly statistic-related decorator that provides easy access to all
+the attributes of a distribution, namely up to now:
+
+ - scalar attributes:
+   - mean
+   - median
+   - mode
+   - stdev
+   - var
+   - scale
+   - entropy
+   - fischer
+ - functionnal attributes
+   - pdf (probability density function)
+   - cdf (cumulative distribution function)
+   - invcdf (inverse of cdf)
+
+Each scalar attributes returns a floating value (a Nan if the value is not computable),
+ and each functionnal attribute returns a lambda function
+capturing the distribution parameters. This lambda can be assigned and reused.
+
+## Functions
+
+**Convenience header:** <script type="preformatted">`#include <eve/function/statistics.hpp>`</script>
+
+[`eve::cauchy`](statistics/cauchy.html)
+:   cauchy distribution
+
+
+----------------------------------------------------------------------------------------------------
+<!-- Shortcuts -->
+
+<!-- Footnotes -->
+
+<!-- End of Document -->
+<link rel="stylesheet" href="../../eve.css">
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?" charset="utf-8"></script>

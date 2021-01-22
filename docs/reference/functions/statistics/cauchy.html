@@ -1,0 +1,79 @@
+<!--
+  EVE -  Expressive Vector Engine
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+ -->
+<meta charset="utf-8" lang="en">
+                       **Expressive Vector Engine**
+                           `eve::cauchy`
+<br>
+
+  (insert ../../../crumbs.html here)
+
+Synopsis
+====================================================================================================
+**Required header:** <script type="preformatted">`#include <eve/function/cauchy.hpp>`</script>
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+namespace eve
+{
+  inline constexpr /*unspecified*/ cauchy = /*unspecified*/;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+Function object representing the  computation of cauchy.
+
+Member functions
+====================================================================================================
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+template< floating_real_value T, floating_real_value U, floating_real_value V>
+ auto operator()( T x, U m, V s ) const noexcept;
+
+template< Decorator D, floating_real_value T, floating_real_value U>
+ auto operator()( D const, U m, V s ) const noexcept;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+Performs the computation of the cauchy distribution attributes
+
+Parameters
+----------------------------------------------------------------------------------------------------
+`x`
+:   [floating real value](../../concepts.html#value).
+`m`
+:   [floating real value](../../concepts.html#value). median of the distribution (default to 0)
+`s`
+:   [floating real value](../../concepts.html#value). scale (>0)  of the distribution (default to 1)
+
+Return value
+----------------------------------------------------------------------------------------------------
+<span class="smallskip"></span>
+The regular call computes the cdf of the cauchy distribution of median `m` and scale `s` at `x`.
+In partucular:
+
+Supported decorators
+====================================================================================================
+[`diff`](../decorators.html#diff)
+
+    The expression `diff_nth< N >(cauchy)(x,m,s)` computes the partial derivatives of the cdf
+    function relative to the Nth parameter.
+
+[`attributes`](../decorators.html#diff)
+
+all the statistics attributes are supported. See the examples below.
+
+  (insert ../../src/cauchy.src.html here)
+
+  (insert ../../out/cauchy.out.html here)
+
+
+<!-- End of Document -->
+<link rel="stylesheet" href="../../../eve.css">
+<!-- Markdeep: -->
+<script>markdeepOptions={tocStyle:'none'};</script>
+<script src="../../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

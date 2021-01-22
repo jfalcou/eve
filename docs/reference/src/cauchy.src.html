@@ -1,3 +1,8 @@
+ <meta charset="utf-8">
+Example
+====================================================================================================
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 #include <eve/function/cauchy.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
@@ -27,7 +32,7 @@ int main()
     << "-> c_pdf(x)            = " << c_pdf(x) << '\n'
     << "-> c_invcdf(x)         = " << c_invcdf(x)  << '\n'
     << "-> c_cdf(x)            = " << c_cdf(x)  << '\n'
-    << "-> cauchy(x, 1.0, 2.0) = " << eve::cauchy(x, 1.0, 2.0) << '\n';
+    << "-> cauchy(1.0, 2.0, x) = " << eve::cauchy(x, 1.0, 2.0) << '\n';
    ;
 
   float xf = 9.0f;
@@ -36,9 +41,15 @@ int main()
 
   std::cout
     << "---- scalar"  << '\n'
-    << "<- xf                  = " << xf << '\n'
-    << "<- mf                  = " << mf << '\n'
-    << "<- sf                  = " << sf << '\n'
-    << "-> cauchy(xf, mf, sf)  = " << eve::cauchy(xf, mf, sf) << '\n';
+    << "<- xf                 = " << xf << '\n'
+    << "<- mf                 = " << mf << '\n'
+    << "<- sf                 = " << sf << '\n'
+    << "-> cauchy(xf, mf, sf) = " << eve::cauchy(xf, mf, sf) << '\n';
   return 0;
 }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ </script>
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
+
