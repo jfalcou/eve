@@ -81,9 +81,14 @@ add_library(eve::eve ALIAS eve_lib)
 include(CTest)
 
 if( EVE_BUILD_TEST )
-  include(test)
+  include(add_parent_target)
+  include(configuration)
+  include(pch)
+
+  add_subdirectory(${PROJECT_SOURCE_DIR}/test/)
+  add_subdirectory(${PROJECT_SOURCE_DIR}/validation/)
 endif()
 
-if( EVE_BUILD_BENCHMARKS )
-  include(benchmark)
-endif()
+# if( EVE_BUILD_BENCHMARKS )
+#   include(benchmark)
+# endif()

@@ -28,11 +28,6 @@ add_dependencies(unit.real.core.exe          unit.real.core.scalar.exe          
 add_dependencies(unit.real.core.exe          unit.real.core.simd.exe            )
 
 ##==================================================================================================
-## Other tests
-##==================================================================================================
-add_subdirectory(failure)
-
-##==================================================================================================
 ## Elementwise function unit tests
 ##==================================================================================================
 make_all_units(ROOT unit.real.core NAME abs                   ARCH scalar simd TYPES ${all_types}     )

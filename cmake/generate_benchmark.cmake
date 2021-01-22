@@ -7,16 +7,7 @@
 ##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
-
 include(add_parent_target)
-
-if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-  set( _BenchOptions -std=c++20 -Wall)
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-  set( _BenchOptions -std=c++20 -Wall)
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-  set( _BenchOptions /std:c++latest -W3 -EHsc)
-endif()
 
 ##==================================================================================================
 ## Setup a bench with many option
@@ -38,7 +29,7 @@ function(generate_bench root rootpath dep file)
     target_compile_definitions( ${bench} PUBLIC ${ARGV4})
   endif()
 
-  target_compile_options  ( ${bench} PUBLIC ${_BenchOptions} )
+  target_link_libraries(${test} PUBLIC eve_test)
 
   set_property( TARGET ${bench}
                 PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bench"
