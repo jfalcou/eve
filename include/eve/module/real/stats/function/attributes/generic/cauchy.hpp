@@ -18,6 +18,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/is_eqz.hpp>
+#include <eve/function/is_ltz.hpp>
 #include <eve/function/tanpi.hpp>
 #include <eve/function/stats.hpp>
 #include <eve/constant/half.hpp>
@@ -104,8 +105,10 @@ namespace eve::detail
     {
       auto cauchy_invcdf = [m, s](auto x){
         auto tmp = fma(tanpi(x-half(as(x))), s, m);
+        // as x is restricted to [0,  1] limits values at 0 and 1 are properly defined 
         tmp = if_else(is_eqz(x), minf(as(x)), tmp);
-        return if_else(x == one(as(x)), inf(as(x)), tmp);
+        tmp = if_else(x == one(as(x)), inf(as(x)), tmp);
+        return if_else(is_ltz(x) || x > one(as(x)), allbits, tmp); 
       };
       return cauchy_invcdf;
     }
