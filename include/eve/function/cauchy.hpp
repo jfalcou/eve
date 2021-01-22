@@ -18,3 +18,5 @@ namespace eve
 }
 
 #include <eve/module/real/stats/function/regular/generic/cauchy.hpp>
+#include <eve/module/real/stats/function/diff/generic/cauchy.hpp>
+#include <eve/module/real/stats/function/attributes/generic/cauchy.hpp>
