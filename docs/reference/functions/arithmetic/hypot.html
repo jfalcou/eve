@@ -63,11 +63,11 @@ Supported decorators
 
     Morever it returns $\infty$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
 
-[`derivative`](../decorators.html#derivative)
-:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/hypot.hpp>`</script>
+[`diff`](../decorators.html#diff)
+:   **Required header: **<script type="preformatted">` #include <eve/function/diff/hypot.hpp>`</script>
 
-:   The expression `derivative_< N >(hypot)(x,args...)` computes the partial
-    derivative of the function relative to its Nth parameter. The returned value is 0 if N is
+:   The expression `diff_< N >(hypot)(x,args...)` computes the partial
+    diff of the function relative to its Nth parameter. The returned value is 0 if N is
     greater that the actual number of parameters, otherwise it is the
     `N`th parameter value divided by the `hypot` value.
 

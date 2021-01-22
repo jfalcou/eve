@@ -71,11 +71,11 @@ The behaviour is the same except that if  `|x| == |y|`, `pedantic(min)` is used.
 
 The behaviour is the same except that if  `|x| == |y|`, `numeric(min)` is used.
 
-[`derivative`](../decorators.html#derivative)
-:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/minmag.hpp>`</script>
+[`diff`](../decorators.html#diff)
+:   **Required header: **<script type="preformatted">` #include <eve/function/diff/minmag.hpp>`</script>
 
-:   The expression `derivative< N >(minmag)(x,args,...)` computes the partial
-    derivative relative to the Nth parameter. If the parameters are $x_1, ..., x_n$ and
+:   The expression `diff< N >(minmag)(x,args,...)` computes the partial
+    diff relative to the Nth parameter. If the parameters are $x_1, ..., x_n$ and
     their minmag is $m$, the value returned is elementwise 1 if $m$ is equal to $x_N$ else 0.
 
 

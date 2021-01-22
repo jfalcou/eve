@@ -49,11 +49,11 @@ even when `y` is very small, or when `x` is close to 1.
 
 Supported decorators
 ====================================================================================================
-[`derivative`](../decorators.html#derivative)
-:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/pow.hpp>`</script>
+[`diff`](../decorators.html#diff)
+:   **Required header: **<script type="preformatted">` #include <eve/function/diff/pow.hpp>`</script>
 
-:   The expression `derivative_1st(powm1)(x,y)` and `derivative_2nd(powm1)(x,y)` computes the partial
-    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ x^y-1$.
+:   The expression `diff_1st(powm1)(x,y)` and `diff_2nd(powm1)(x,y)` computes the partial
+    diffs of $f$, where $f$ is the function $(x,y) \rightarrow \ x^y-1$.
 
 
   (insert ../../src/powm1.src.html here)

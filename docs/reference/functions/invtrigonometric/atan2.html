@@ -82,11 +82,11 @@ Supported decorators
      -  If `x` is $\pm0$ and `y` is $\pm-0$, $-\frac\pi2$ is returned
      -  If `x` is $\pm0$ and `y` is $\pm+0$, $+\frac\pi2$  is returned
 
-[`derivative`](../decorators.html#derivative)
-:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/atan2.hpp>`</script>
+[`diff`](../decorators.html#diff)
+:   **Required header: **<script type="preformatted">` #include <eve/function/diff/atan2.hpp>`</script>
 
-:   The expression `derivative_1st(atan2)(x,y)` and `derivative_2nd(atan2)(x,y)` computes the partial
-    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ \mbox{atan2}(x,y)$.
+:   The expression `diff_1st(atan2)(x,y)` and `diff_2nd(atan2)(x,y)` computes the partial
+    diffs of $f$, where $f$ is the function $(x,y) \rightarrow \ \mbox{atan2}(x,y)$.
 
   (insert ../../src/atan2.src.html here)
 

@@ -63,10 +63,10 @@ Supported decorators
 :   The call `saturated(add)(x, args...)` computes the saturated  sum of `x` and the `args`. The saturation is obtained in the
      [compatibility result](../../concept.html#compatibility) of the two parameters. No overflow occurs.
 
-[`derivative`](../decorators.html#derivative)
-:   **Required header: **<script type="preformatted">` #include <eve/function/derivative/add.hpp>`</script>
+[`diff`](../decorators.html#diff)
+:   **Required header: **<script type="preformatted">` #include <eve/function/diff/add.hpp>`</script>
 
-:   The expression `derivative< N >(add)(x,args...)` computes the partial derivative of the function
+:   The expression `diff< N >(add)(x,args...)` computes the partial diff of the function
     relative to its Nth parameter.
 
     The returned value is 1 if N is less or equal to the actual total parameter number, and 0 otherwise.
