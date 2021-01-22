@@ -17,8 +17,15 @@
 #include <type_traits>
 #include <eve/concept/value.hpp>
 #include <eve/function/fma.hpp>
+#include <eve/function/is_eqz.hpp>
 #include <eve/function/tanpi.hpp>
 #include <eve/function/stats.hpp>
+#include <eve/constant/half.hpp>
+#include <eve/constant/inf.hpp>
+#include <eve/constant/minf.hpp>
+#include <eve/constant/nan.hpp>
+#include <eve/constant/one.hpp>
+
 
 namespace eve::detail
 {
@@ -58,45 +65,66 @@ namespace eve::detail
   ////////////////////////////////////////////////////////////////////////////
   template<decorator D, floating_value T>
   EVE_FORCEINLINE auto cauchy_( EVE_SUPPORTS(cpu_)
-                              , D const & d
+                              , D const &
                               , T const &m
                               , T const &s
                               ) noexcept
-  // requires(is_one_of<D>(types<pdf_type, cdf_type, invcdf_type> {})) && has_native_abi_v<T>
   {
-    if constexpr(same_as>D, mean_type>)
+    if constexpr(std::same_as<D, mean_type>)
     {
-      return inf(as(x));
+      return inf(as(m));
     }
-    else if constexpr(same_as>D, median_type>)
+    else if constexpr(std::same_as<D, median_type>)
     {
       return m;
     }
-    else if constexpr(same_as>D, stdev_type>)
+    else if constexpr(std::same_as<D, scale_type>)
     {
-      return nan(as(x));
+      return s;
     }
-    else if constexpr(same_as>D, var_type>)
+    else if constexpr(std::same_as<D, stdev_type>)
     {
-      return nan(as(x));
+      return nan(as(m));
     }
-    else if constexpr(same_as>D, cdf_type>)
+    else if constexpr(std::same_as<D, var_type>)
+    {
+      return nan(as(m));
+    }
+    else if constexpr(std::same_as<D, cdf_type>)
     {
       auto cauchy_cdf = [m, s](auto x){ return cauchy(x, m, s);};
       return cauchy_cdf;
     }
-    else if constexpr(same_as>D, pdf_type>)
+    else if constexpr(std::same_as<D, pdf_type>)
     {
        auto cauchy_pdf = [m, s](auto x){ return diff(cauchy)(x, m, s);};
        return cauchy_pdf;
     }
-    else if constexpr(same_as>D, invcdf_type>)
+    else if constexpr(std::same_as<D, invcdf_type>)
     {
       auto cauchy_invcdf = [m, s](auto x){
         auto tmp = fma(tanpi(x-half(as(x))), s, m);
-        return if_else(eve::abs(x) == half(as(x)), copysign(inf(as(x)), x), tmp);
+        tmp = if_else(is_eqz(x), minf(as(x)), tmp);
+        return if_else(x == one(as(x)), inf(as(x)), tmp);
       };
       return cauchy_invcdf;
     }
+  }
+
+  template<decorator D, floating_value T>
+  EVE_FORCEINLINE auto cauchy_( EVE_SUPPORTS(cpu_)
+                              , D const & d
+                              , T const &m
+                              ) noexcept
+  {
+    return d(cauchy)(m, one(as(m)));
+  }
+
+  template<floating_value T, decorator D>
+  EVE_FORCEINLINE auto cauchy_( EVE_SUPPORTS(cpu_)
+                              , D const & d
+                              ) noexcept
+  {
+    return d(cauchy)(T(0), T(1));
   }
 }

@@ -64,6 +64,16 @@ namespace eve
   using median_type = decorated<median_()>;
   inline constexpr median_type const median = {};
 
+  //================================================================================================
+  // Function decorator - scale mode
+  struct scale_
+  {
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
+  };
+
+  using scale_type = decorated<scale_()>;
+  inline constexpr scale_type const scale = {};
+
 
   //================================================================================================
   // Function decorator - var mode
