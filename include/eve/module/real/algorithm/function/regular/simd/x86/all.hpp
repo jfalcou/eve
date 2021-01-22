@@ -28,8 +28,7 @@ namespace eve::detail
   }
 
   template<logical_simd_value T, relative_conditional_expr C>
-    requires (!eve::has_emulated_abi_v<T>)
-  EVE_FORCEINLINE bool all_(EVE_SUPPORTS(sse2_), C const &cond, T const &v) noexcept
+  EVE_FORCEINLINE bool all_ignore_impl(C const& cond, T const &v) noexcept
   {
     eve::detail::top_bits mmask{v};
     eve::detail::top_bits<T> ignore_mmask{cond};
@@ -37,5 +36,19 @@ namespace eve::detail
     mmask |= ~ignore_mmask; // we need 1 in ignored elements;
 
     return eve::detail::all(mmask);
+  }
+
+  template<real_scalar_value T, typename N, x86_abi ABI, relative_conditional_expr C>
+  EVE_FORCEINLINE bool all_(EVE_SUPPORTS(sse2_), C const &cond,
+                            logical<wide<T, N, ABI>> const &v) noexcept
+  {
+    return all_ignore_impl(cond, v);
+  }
+
+  template<real_scalar_value T, typename N, relative_conditional_expr C>
+  EVE_FORCEINLINE bool all_(EVE_SUPPORTS(sse2_), C const &cond,
+                            logical<wide<T, N, aggregated_>> const &v) noexcept
+  {
+    return all_ignore_impl(cond, v);
   }
 }
