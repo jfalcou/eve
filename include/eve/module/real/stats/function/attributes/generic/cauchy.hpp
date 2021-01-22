@@ -26,7 +26,7 @@
 #include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/one.hpp>
-
+#include <eve/as.hpp>
 
 namespace eve::detail
 {
@@ -105,10 +105,10 @@ namespace eve::detail
     {
       auto cauchy_invcdf = [m, s](auto x){
         auto tmp = fma(tanpi(x-half(as(x))), s, m);
-        // as x is restricted to [0,  1] limits values at 0 and 1 are properly defined 
+        // as x is restricted to [0,  1] limits values at 0 and 1 are properly defined
         tmp = if_else(is_eqz(x), minf(as(x)), tmp);
         tmp = if_else(x == one(as(x)), inf(as(x)), tmp);
-        return if_else(is_ltz(x) || x > one(as(x)), allbits, tmp); 
+        return if_else(is_ltz(x) || x > one(as(x)), allbits, tmp);
       };
       return cauchy_invcdf;
     }
@@ -117,15 +117,16 @@ namespace eve::detail
   template<decorator D, floating_value T>
   EVE_FORCEINLINE auto cauchy_( EVE_SUPPORTS(cpu_)
                               , D const & d
-                              , T const &m
+                              , T const & m
                               ) noexcept
   {
-    return d(cauchy)(m, one(as(m)));
+    return d(cauchy)(m, T(1));
   }
 
-  template<floating_value T, decorator D>
+  template<decorator D, floating_value T>
   EVE_FORCEINLINE auto cauchy_( EVE_SUPPORTS(cpu_)
                               , D const & d
+                              , as_<T> const &
                               ) noexcept
   {
     return d(cauchy)(T(0), T(1));
