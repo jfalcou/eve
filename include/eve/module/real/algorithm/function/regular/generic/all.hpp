@@ -1,4 +1,4 @@
-//==================================================================================================
+  //==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright 2020 Joel FALCOU
@@ -29,7 +29,8 @@ namespace eve::detail
       {
         if constexpr( has_aggregated_abi_v<T> )
         {
-          return v.storage().apply( [](auto const &... e) { return eve::all((e && ...)); } );
+          auto [l, h] = v.slice();
+          return eve::all(l && h);
         }
         else
         {
@@ -51,11 +52,11 @@ namespace eve::detail
   template<simd_value T, relative_conditional_expr C>
   EVE_FORCEINLINE bool all_(EVE_SUPPORTS(cpu_), C const &cond, T const &v) noexcept
   {
-         if constexpr (! is_logical_v<T>) return all[cond](to_logical(v));
-    else if constexpr (C::is_complete)
+         if constexpr ( !is_logical_v<T> ) return all[cond](to_logical(v));
+    else if constexpr ( C::is_complete )
     {
-      if constexpr (!C::is_inverted) return false;
-      else                           return all(v);
+      if constexpr ( !C::is_inverted ) return true;
+      else                             return all(v);
     }
     else
     {

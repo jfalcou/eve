@@ -78,7 +78,9 @@ TTS_CASE_TPL("Check eve::all[ignore]", EVE_TYPE)
     eve::logical<T> mask(true);
 
     TTS_EXPECT(eve::all[eve::ignore_none](mask));
-    TTS_EXPECT_NOT(eve::all[eve::ignore_all](mask));
+
+    mask = eve::logical<T>{false};
+    TTS_EXPECT(eve::all[eve::ignore_all](mask));
   }
 
   // some special cases
