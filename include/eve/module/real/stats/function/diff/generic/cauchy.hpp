@@ -19,8 +19,9 @@
 #include <eve/function/inc.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/sqr.hpp>
+#include <eve/function/rec.hpp>
 #include <eve/function/derivative.hpp>
-#include <eve/constant/invpi.hpp>
+#include <eve/constant/pi.hpp>
 
 namespace eve::detail
 {
@@ -46,11 +47,11 @@ namespace eve::detail
                               ) noexcept
   requires  has_native_abi_v<T>
   {
-    auto xmm = x-m;
-    auto tmp =  invpi(as(x))/(fma(xmm, xmm, sqr(s)));
-         if constexpr(N == 1) return s*tmp;
+    auto xmm = pi(as(x))*(x-m);
+    auto tmp =  pi(as(x))*rec(fma(xmm, xmm, sqr(s)));
+    if constexpr(N == 1) return s*tmp;
     else if constexpr(N == 2) return -s*tmp;
-    else if constexpr(N == 3) return -tmp/s;
+    else if constexpr(N == 3) return -tmp*xmm;
     else                      return zero(as(x));
   }
 
@@ -74,7 +75,7 @@ namespace eve::detail
 
   requires  has_native_abi_v<T>
   {
-    auto tmp =  invpi(as(x))/inc(sqr(x-m));
+    auto tmp =  pi(as(x))*rec(inc(sqr(pi(as(x))*(x-m))));
          if constexpr(N == 1) return tmp;
     else if constexpr(N == 2) return -tmp;
     else                      return zero(as(x));
@@ -89,7 +90,7 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-      if constexpr(N == 1) return invpi(as(x))/(inc(sqr(x)));
+      if constexpr(N == 1) return pi(as(x))*rec(inc(sqr(pi(as(x))*x)));
       else                 return zero(as(x));
     }
     else return apply_over(d(cauchy), x);

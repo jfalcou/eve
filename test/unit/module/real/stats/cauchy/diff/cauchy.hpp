@@ -11,7 +11,7 @@
 #include <eve/function/diff/cauchy.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/inf.hpp>
-#include <eve/constant/mzero.hpp>
+#include <eve/constant/pi.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/platform.hpp>
 #include <cmath>
@@ -42,7 +42,8 @@ TTS_CASE_TPL("Check eve::cauchy behavior", EVE_TYPE)
     TTS_ULP_EQUAL(eve::diff_1st(eve::cauchy)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()), 0.5);
   }
 
-   TTS_ULP_EQUAL(eve::diff_1st(eve::cauchy)(T(0))                 , T(0)  , 0.5);
-  TTS_ULP_EQUAL(eve::diff_1st(eve::cauchy)(T(1), T(1))           , T(0)  , 0.5);
- TTS_ULP_EQUAL(eve::diff_1st(eve::cauchy)(T(1), T(1), T(2))     , T(0)  , 0.5);
+  TTS_ULP_EQUAL(eve::diff_1st(eve::cauchy)(T(0))                 , eve::pi(eve::as<T>())  , 0.5);
+  TTS_ULP_EQUAL(eve::diff_1st(eve::cauchy)(T(1), T(1))           , eve::pi(eve::as<T>())  , 0.5);
+  TTS_ULP_EQUAL(eve::diff_2nd(eve::cauchy)(T(1), T(1))           , -eve::pi(eve::as<T>())  , 0.5);
+  TTS_ULP_EQUAL(eve::diff_3rd(eve::cauchy)(T(1), T(1), T(2))     , T(0)  , 1);
 }
