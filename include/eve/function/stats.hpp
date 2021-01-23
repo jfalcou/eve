@@ -65,6 +65,16 @@ namespace eve
   inline constexpr median_type const median = {};
 
   //================================================================================================
+  // Function decorator - mode mode
+  struct mode_
+  {
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
+  };
+
+  using mode_type = decorated<mode_()>;
+  inline constexpr mode_type const mode = {};
+
+  //================================================================================================
   // Function decorator - scale mode
   struct scale_
   {
@@ -95,5 +105,53 @@ namespace eve
   using stdev_type = decorated<stdev_()>;
   inline constexpr stdev_type const stdev = {};
 
+  //================================================================================================
+  // Function decorator - entropy mode
+  struct entropy_
+  {
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
+  };
 
+  using entropy_type = decorated<entropy_()>;
+  inline constexpr entropy_type const entropy = {};
+
+  //================================================================================================
+  // Function decorator - fisher mode
+  struct fisher_
+  {
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
+  };
+
+  using fisher_type = decorated<fisher_()>;
+  inline constexpr fisher_type const fisher = {};
+
+  //================================================================================================
+  // Function decorator - quantile mode
+  struct quantile_
+  {
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
+  };
+
+  using quantile_type = decorated<quantile_()>;
+  inline constexpr quantile_type const quantile = {};
+
+  //================================================================================================
+  // Function decorator - skewness mode
+  struct skewness_
+  {
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
+  };
+
+  using skewness_type = decorated<skewness_()>;
+  inline constexpr skewness_type const skewness = {};
+
+  //================================================================================================
+  // Function decorator - kurtosis mode
+  struct kurtosis_
+  {
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
+  };
+
+  using kurtosis_type = decorated<kurtosis_()>;
+  inline constexpr kurtosis_type const kurtosis = {};
 }

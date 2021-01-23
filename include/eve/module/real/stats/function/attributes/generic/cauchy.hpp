@@ -19,6 +19,8 @@
 #include <eve/function/fma.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/is_ltz.hpp>
+#include <eve/function/log.hpp>
+#include <eve/function/rec.hpp>
 #include <eve/function/tanpi.hpp>
 #include <eve/function/stats.hpp>
 #include <eve/constant/half.hpp>
@@ -71,9 +73,29 @@ namespace eve::detail
                               , T const &s
                               ) noexcept
   {
-    if constexpr(std::same_as<D, mean_type>)
+    if constexpr(std::same_as<D, kurtosis_type>)
     {
-      return inf(as(m));
+      return nan(as<T>());
+    }
+    else if constexpr(std::same_as<D, skewness_type>)
+    {
+      return na(as<T>());
+    }
+    else if constexpr(std::same_as<D, fisher_type>)
+    {
+      return rec(2*sqr(s));
+    }
+    else    if constexpr(std::same_as<D, entropy_type>)
+    {
+      return log(4*pi(as(s))*s);
+    }
+    else if constexpr(std::same_as<D, mean_type>)
+    {
+      return nan(as<T>());
+    }
+    else if constexpr(std::same_as<D, mode_type>)
+    {
+      return m;
     }
     else if constexpr(std::same_as<D, median_type>)
     {
@@ -85,11 +107,11 @@ namespace eve::detail
     }
     else if constexpr(std::same_as<D, stdev_type>)
     {
-      return nan(as(m));
+      return  nan(as<T>());
     }
     else if constexpr(std::same_as<D, var_type>)
     {
-      return nan(as(m));
+      return  nan(as<T>());
     }
     else if constexpr(std::same_as<D, cdf_type>)
     {

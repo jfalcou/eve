@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check eve::cauchy behavior", EVE_TYPE)
 
   TTS_ULP_EQUAL(eve::median(eve::cauchy)(T(1.0), T(2.0))  , T(1)  , 0.5);
   TTS_ULP_EQUAL(eve::scale (eve::cauchy)(T(1.0), T(2.0))  , T(2)  , 0.5);
-  TTS_ULP_EQUAL(eve::mean  (eve::cauchy)(T(1.0), T(2.0))  , inf   , 0.5);
+  TTS_ULP_EQUAL(eve::mean  (eve::cauchy)(T(1.0), T(2.0))  , nan   , 0.5);
   TTS_ULP_EQUAL(eve::var   (eve::cauchy)(T(1.0), T(2.0))  , nan   , 0.5);
   TTS_ULP_EQUAL(eve::stdev (eve::cauchy)(T(1.0), T(2.0))  , nan   , 0.5);
   auto c_cdf =  eve::cdf(eve::cauchy)(T(1.0), T(2.0));
