@@ -17,7 +17,7 @@
 namespace eve::detail
 {
   template<value T>
-  EVE_FORCEINLINE std::size_t nbtrue_(EVE_SUPPORTS(cpu_), T const &v) noexcept
+  EVE_FORCEINLINE std::ptrdiff_t nbtrue_(EVE_SUPPORTS(cpu_), T const &v) noexcept
   {
     if constexpr(scalar_value<T>)
     {
@@ -33,7 +33,7 @@ namespace eve::detail
       }
       else
       {
-        std::size_t r = 0u;
+        std::ptrdiff_t r = 0u;
 
         [&]<std::size_t... I>( std::index_sequence<I...> const& )
         {
