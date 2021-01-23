@@ -1,7 +1,7 @@
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
-##  Copyright 2018-2020 Joel FALCOU
-##  Copyright 2018-2020 Jean-Thierry LAPRESTE
+##  Copyright 2018-2021 Joel FALCOU
+##  Copyright 2018-2021 Jean-Thierry LAPRESTE
 ##
 ##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 ##  SPDX-License-Identifier: MIT
@@ -31,11 +31,18 @@ include(config/install)
 ## =================================================================================================
 ## Test and Benchmarks target
 ## =================================================================================================
+include(CTest)
 include(target/add_parent_target)
+include(target/targets)
 include(config/dependencies)
 include(config/compiler)
+include(config/types)
 include(config/pch)
 
 if( EVE_BUILD_TEST )
   add_subdirectory(${PROJECT_SOURCE_DIR}/test/)
+endif()
+
+if( EVE_BUILD_BENCHMARKS )
+  add_subdirectory(${PROJECT_SOURCE_DIR}/benchmarks/)
 endif()

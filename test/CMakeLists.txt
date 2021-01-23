@@ -6,8 +6,6 @@
 ##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
-include(CTest)
-include(target/targets)
 include(test)
 
 add_subdirectory(doc)

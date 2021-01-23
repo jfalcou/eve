@@ -1,28 +1,28 @@
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
-##
-##  Copyright 2019 Joel FALCOU
-##  Copyright 2019 Jean-Thierry LAPRESTE
+##  Copyright 2018-2021 Joel FALCOU
+##  Copyright 2018-2021 Jean-Thierry LAPRESTE
 ##
 ##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 
-include(add_parent_target)
-
-if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-  set( _BenchOptions -std=c++20 -Wall)
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-  set( _BenchOptions -std=c++20 -Wall)
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-  set( _BenchOptions /std:c++latest -W3 -EHsc)
-endif()
-
 ##==================================================================================================
 ## Setup a bench with many option
 ##==================================================================================================
 function(generate_bench root rootpath dep file)
-  string(REPLACE ".cpp" ".bench" base ${file})
+  # string(REPLACE ".cpp" ".bench" base ${file})
+  # string(REPLACE "/"    "." base ${base})
+  # string(REPLACE "\\"   "." base ${base})
+
+  # if( NOT root STREQUAL "")
+  #   set(bench "${root}.${base}")
+  # else()
+  #   set(bench "${base}")
+  # endif()
+
+
+  string(REPLACE ".cpp" ".exe" base ${file})
   string(REPLACE "/"    "." base ${base})
   string(REPLACE "\\"   "." base ${base})
 
@@ -38,12 +38,16 @@ function(generate_bench root rootpath dep file)
     target_compile_definitions( ${bench} PUBLIC ${ARGV4})
   endif()
 
-  target_compile_options  ( ${bench} PUBLIC ${_BenchOptions} )
+  target_link_libraries(${bench} PUBLIC eve_test)
+
+  if( EVE_USE_PCH )
+    target_precompile_headers(${bench} REUSE_FROM doc_pch)
+    add_dependencies(${bench} doc_pch)
+  endif()
 
   set_property( TARGET ${bench}
                 PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bench"
               )
-
 
     add_test( NAME ${bench}
               WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/bench"

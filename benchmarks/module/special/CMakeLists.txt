@@ -10,19 +10,19 @@
 ##==================================================================================================
 ## Setup aggregation of tests
 ##==================================================================================================
-add_custom_target(special.bench)
+add_custom_target(bench.special.exe)
 
 ##==================================================================================================
-## Elementwise function bench tests
+## Special function bench tests
 ##==================================================================================================
 
 ### TEMPORARY MEASURE
-make_all_benchs(ROOT special NAME beta               TYPES ${real_types}    )
-make_all_benchs(ROOT special NAME erf                TYPES ${real_types}    )
-make_all_benchs(ROOT special NAME erfc               TYPES ${real_types}    )
-make_all_benchs(ROOT special NAME erfcx              TYPES ${real_types}    )
-make_all_benchs(ROOT special NAME cyl_bessel_j0      TYPES ${real_types}    )
-make_all_benchs(ROOT special NAME cyl_bessel_j1      TYPES ${real_types}    )
-### make_all_benchs(ROOT special NAME gamma          TYPES ${real_types}    )
-### make_all_benchs(ROOT special NAME stirling       TYPES ${real_types}    )
+make_all_benchs(ROOT bench.special NAME beta               TYPES ${real_types}    )
+make_all_benchs(ROOT bench.special NAME erf                TYPES ${real_types}    )
+make_all_benchs(ROOT bench.special NAME erfc               TYPES ${real_types}    )
+make_all_benchs(ROOT bench.special NAME erfcx              TYPES ${real_types}    )
+make_all_benchs(ROOT bench.special NAME cyl_bessel_j0      TYPES ${real_types}    )
+make_all_benchs(ROOT bench.special NAME cyl_bessel_j1      TYPES ${real_types}    )
+### make_all_benchs(ROOT bench.special NAME gamma          TYPES ${real_types}    )
+### make_all_benchs(ROOT bench.special NAME stirling       TYPES ${real_types}    )
 ### TEMPORARY MEASURE

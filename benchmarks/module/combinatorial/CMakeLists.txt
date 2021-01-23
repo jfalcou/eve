@@ -10,11 +10,11 @@
 ##==================================================================================================
 ## Setup aggregation of tests
 ##==================================================================================================
-add_custom_target(combinatorial.bench)
+add_custom_target(bench.combinatorial.exe)
 
 ##==================================================================================================
-## Elementwise function bench tests
+## Combinatorial function bench tests
 ##==================================================================================================
 
 ### TEMPORARY MEASURE
-make_all_benchs(ROOT combinatorial NAME gcd               TYPES ${signed_types}    )
+make_all_benchs(ROOT bench.combinatorial NAME gcd TYPES ${signed_types}    )
