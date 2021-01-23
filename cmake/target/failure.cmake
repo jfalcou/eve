@@ -19,7 +19,7 @@ function(check_failure root)
 
     set( test_lib "${test}_lib")
     add_library( ${test_lib} OBJECT EXCLUDE_FROM_ALL ${file})
-    target_link_libraries(${test} PUBLIC eve_test)
+    target_link_libraries(${test_lib} PUBLIC eve_test)
 
     add_test( NAME ${test}
               COMMAND ${CMAKE_COMMAND} --build . --target ${test_lib} --config $<CONFIGURATION>
