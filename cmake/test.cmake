@@ -35,6 +35,9 @@ macro(to_std type output)
   endif()
 endmacro()
 
+set(_TestCurrentDir "${CMAKE_CURRENT_LIST_DIR}")
+set(_TestSrcDir      "${PROJECT_BINARY_DIR}/tmp-src")
+
 ##==================================================================================================
 ## Generate a complete family of test
 ##==================================================================================================
@@ -73,7 +76,7 @@ function(make_all_units)
 
           set(file_to_compile "${_TestSrcDir}/${GEN_TEST_ROOT}.${base_file}.scalar.cpp")
 
-          configure_file( "${${CMAKE_CURRENT_LIST_DIR}}/scalar.cpp.in" "${file_to_compile}" )
+          configure_file( "${_TestCurrentDir}/scalar.cpp.in" "${file_to_compile}" )
 
           generate_test ( "" "${_TestSrcDir}/" "${GEN_TEST_ROOT}.scalar.exe"
                           "${GEN_TEST_ROOT}.${base_file}.scalar.cpp"
@@ -98,7 +101,7 @@ function(make_all_units)
 
           set(file_to_compile "${_TestSrcDir}/${GEN_TEST_ROOT}.${base_file}.simd.cpp")
 
-          configure_file( "${${CMAKE_CURRENT_LIST_DIR}}/simd.cpp.in" "${file_to_compile}" )
+          configure_file( "${_TestCurrentDir}/simd.cpp.in" "${file_to_compile}" )
 
           generate_test ( "" "${_TestSrcDir}/" "${GEN_TEST_ROOT}.simd.exe"
                           "${GEN_TEST_ROOT}.${base_file}.simd.cpp"

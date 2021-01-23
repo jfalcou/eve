@@ -89,14 +89,6 @@ function(generate_test root rootpath dep file)
                           ${MAKE_UNIT_TARGET_PROPERTIES}
                         )
 
-  target_include_directories( ${test}
-                              PRIVATE
-                                ${tts_SOURCE_DIR}/include
-                                ${PROJECT_SOURCE_DIR}/test
-                                ${PROJECT_SOURCE_DIR}/include
-                                ${Boost_INCLUDE_DIRS}
-                            )
-
   add_dependencies(unit ${test})
 
   if( NOT dep STREQUAL "")

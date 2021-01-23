@@ -31,19 +31,5 @@ set_target_properties ( doc_pch PROPERTIES
                         ${MAKE_UNIT_TARGET_PROPERTIES}
                       )
 
-target_include_directories( test_pch PRIVATE
-                            ${tts_SOURCE_DIR}/include
-                            ${PROJECT_SOURCE_DIR}/test
-                            ${PROJECT_SOURCE_DIR}/include
-                            ${Boost_INCLUDE_DIRS}
-                          )
-
-target_include_directories( doc_pch PRIVATE
-                            ${tts_SOURCE_DIR}/include
-                            ${PROJECT_SOURCE_DIR}/test
-                            ${PROJECT_SOURCE_DIR}/include
-                            ${Boost_INCLUDE_DIRS}
-                          )
-
 target_precompile_headers(test_pch PRIVATE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/test/test.hpp>)
 target_precompile_headers(doc_pch  PRIVATE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include/eve/wide.hpp>)

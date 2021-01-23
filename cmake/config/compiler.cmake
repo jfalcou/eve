@@ -17,3 +17,10 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 else()
   target_compile_options( eve_test INTERFACE -std=c++20 -Werror -Wall -Wpedantic -Wextra)
 endif()
+
+target_include_directories( eve_test INTERFACE
+                            ${tts_SOURCE_DIR}/include
+                            ${PROJECT_SOURCE_DIR}/test
+                            ${PROJECT_SOURCE_DIR}/include
+                            ${Boost_INCLUDE_DIRS}
+                          )

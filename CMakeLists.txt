@@ -31,11 +31,11 @@ include(config/install)
 ## =================================================================================================
 ## Test and Benchmarks target
 ## =================================================================================================
+include(target/add_parent_target)
+include(config/dependencies)
+include(config/compiler)
+include(config/pch)
+
 if( EVE_BUILD_TEST )
-
-  include(target/add_parent_target)
-  include(config/compiler)
-  include(config/pch)
-
   add_subdirectory(${PROJECT_SOURCE_DIR}/test/)
 endif()
