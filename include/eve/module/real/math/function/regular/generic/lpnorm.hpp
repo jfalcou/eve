@@ -44,9 +44,9 @@ namespace eve::detail
       using r_t = common_compatible_t<T0,T1,Ts...>;
       if constexpr(has_native_abi_v<r_t>)
       {
-        if (all(p == P(2))) return hypot(r_t(a0), r_t(a1), r_t(args)...);
-        else if (all(p == P(1))) return manhattan(r_t(a0), r_t(a1), r_t(args)...);
-        else if (all(p == eve::inf(as(p)))) return eve::max(eve::abs(r_t(a0)), eve::abs(r_t(a1)), eve::abs(r_t(args))...);
+        if (eve::all(p == P(2))) return hypot(r_t(a0), r_t(a1), r_t(args)...);
+        else if (eve::all(p == P(1))) return manhattan(r_t(a0), r_t(a1), r_t(args)...);
+        else if (eve::all(p == eve::inf(as(p)))) return eve::max(eve::abs(r_t(a0)), eve::abs(r_t(a1)), eve::abs(r_t(args))...);
         else
         {
           auto rp =  r_t(p);
@@ -58,10 +58,10 @@ namespace eve::detail
           that = addppow(that,  r_t(a1));
           ((that = addppow(that,args)),...);
           auto isinfp = is_infinite(rp);
-          if (any(isinfp))
+          if (eve::any(isinfp))
           {
             auto r = eve::max(eve::abs(r_t(a0)), eve::abs(r_t(a1)), eve::abs(r_t(args))...);
-            if (all(isinfp)) return r;
+            if (eve::all(isinfp)) return r;
             return if_else(isinfp, r, pow_abs(that, rec(rp)));
           }
           return pow_abs(that, rec(rp));

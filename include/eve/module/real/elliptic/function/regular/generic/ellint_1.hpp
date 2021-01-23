@@ -49,7 +49,7 @@ namespace eve::detail
       auto a = one(as(x));
       auto b = sqrt(oneminus(sqr(xx)));
       auto c = xx;
-      while (any((eve::abs(c) > eps(as(x)))))
+      while (eve::any((eve::abs(c) > eps(as(x)))))
       {
         auto an=average(a, b);
         auto bn=sqrt(a*b);
@@ -97,14 +97,14 @@ namespace eve::detail
       auto c = if_else(notdone, rec(sinp), allbits);
       auto r = s*ellint_rf(cosp*c, c-sqr(x), c);
       auto xis1 = x == one(as(x));
-      if (any(xis1))
+      if (eve::any(xis1))
       {
         r = if_else(xis1, if_else(phi == pio_2(as(x)), inf(as(x)), asinh(tan(phi0))), r);
       }
       r = if_else(rphi < smallestposval(as(x)), s*rphi, r);
       auto mgt0 =  is_nez(m) && notdone;
       auto greatphi = eps(as(phi))*phi > one(as(phi))&&notdone;
-      if (any((mgt0||greatphi)&&notdone))
+      if (eve::any((mgt0||greatphi)&&notdone))
       {
         auto z = ellint_1(x);
         r += m*z;

@@ -24,7 +24,7 @@ namespace eve
     EVE_FORCEINLINE void check(EVE_SUPPORTS(eve::tag::ldexp_), T const&, [[maybe_unused]]  U const& b)
     {
       if constexpr(std::is_floating_point_v<value_type_t<U>>)
-        EVE_ASSERT(all(is_flint(b)), "[eve::ldexp] argument 2 is floating but not a flint");
+        EVE_ASSERT(eve::all(is_flint(b)), "[eve::ldexp] argument 2 is floating but not a flint");
     }
   }
 

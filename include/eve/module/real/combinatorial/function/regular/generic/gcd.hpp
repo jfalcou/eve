@@ -61,7 +61,7 @@ namespace eve::detail
       {
         auto test = is_nez(b);
         T r(0);
-        while (any(test))
+        while (eve::any(test))
         {
           b = if_else(test, b, allbits);
           r = a % b;
@@ -131,7 +131,7 @@ namespace eve::detail
         b = if_else(valid, b, zero);
         auto test = is_nez(b);
         T r(0);
-        while (any(test))
+        while (eve::any(test))
         {
           r = rem(a, b);
           a = if_else(test, b, a);
@@ -167,7 +167,7 @@ namespace eve::detail
       {
         auto test = is_nez(b);
         T r(0);
-        while (any(test))
+        while (eve::any(test))
         {
           r = rem(a, b);
           a = if_else(test, b, a);

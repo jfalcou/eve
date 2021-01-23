@@ -117,7 +117,7 @@ namespace eve::detail
       da       = (t - a) + da;
       auto fa  = float32(a);
       auto dfa = float32((a - float64(fa)) + da);
-      if( any(fa >= pio_4(eve::as<float>()) || fa < -pio_4(eve::as<float>())) )
+      if( eve::any(fa >= pio_4(eve::as<float>()) || fa < -pio_4(eve::as<float>())) )
       {
         T n1;
         std::tie(n1, fa, dfa) = rempio2_small(fa);
@@ -132,16 +132,16 @@ namespace eve::detail
   template<floating_real_value T> EVE_FORCEINLINE auto rempio2_big(T const &xx) noexcept
   {
     using elt_t             = element_type_t<T>;
-    if (all(xx < Rempio2_limit(restricted_type(), as(xx))))
+    if ( eve::all(xx < Rempio2_limit(restricted_type(), as(xx))) )
     {
       return std::make_tuple(T(0), xx, T(0));
     }
     auto xlerfl = (xx <= Rempio2_limit(small_type(), as<elt_t>()));
-    if( all(xlerfl) )
+    if( eve::all(xlerfl) )
     {
       return rempio2_small(xx);
     }
-    if (all(xx < Rempio2_limit(medium_type(), as(xx))))
+    if ( eve::all(xx < Rempio2_limit(medium_type(), as(xx))) )
     {
       return rempio2_medium(xx);
     }

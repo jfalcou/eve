@@ -71,7 +71,7 @@ namespace eve::detail
     {
       auto r =  nan(as(x));
       auto notdone = is_nltz(x) &&  is_nltz(y) && is_nltz(z) && is_nez(p) && is_nez(x+y) && is_nez(z+y) && is_nez(x+z);
-      if (any(notdone))
+      if (eve::any(notdone))
       {
         auto br_pneg =  [](auto x,  auto y, auto z, auto p) //p < 0
           {
@@ -96,7 +96,7 @@ namespace eve::detail
             return v;
           };
         notdone = next_interval(br_pneg, notdone, is_ltz(p), r, x, y, z, p);
-        if  (any(notdone))
+        if  (eve::any(notdone))
         {
           auto br_eqxy =  [](auto x,  auto p) // (x == y) && (x == z)
             {
@@ -104,14 +104,14 @@ namespace eve::detail
               return if_else(x == p, rsqtx/x, 3*ellint_rc(x, p) - rsqtx/(x - p));
             };
           notdone = next_interval(br_eqxy, notdone, (x == y) && (x == z), r, x, p);
-          if  (any(notdone))
+          if  (eve::any(notdone))
           {
             auto br_eqzp =  [](auto x,  auto y, auto z) //  (p == z)
               {
                 return ellint_rd(x, y, z);
               };
             notdone = next_interval(br_eqzp, notdone, (z == p), r, x, y, z);
-           if  (any(notdone))
+           if  (eve::any(notdone))
             {
               x = if_else(notdone, x, one);
               y = if_else(notdone, y, one);
@@ -168,15 +168,15 @@ namespace eve::detail
           {
             auto r =  zero(as(y));
             auto notdone = true_(as(y)); //!= mone(as(y));
-            if(any(notdone))
+            if(eve::any(notdone))
             {
               auto br_yltm1 =  [](auto my){ return rsqrt(my)*ellint_rc(my, dec(my)); };
               notdone = next_interval(br_yltm1, notdone, y < mone(as(y)), r, -y);
-              if(any(notdone))
+              if(eve::any(notdone))
               {
                 auto br_ygt0 =  [](auto y){ return  atan(sqrt(y))*rsqrt(y);; };
                 notdone = next_interval(br_ygt0, notdone, is_gtz(y), r, y);
-                if(any(notdone))
+                if(eve::any(notdone))
                 {
                   auto arg = sqrt(-y);
                   auto log1parg = log1p(arg);
@@ -185,7 +185,7 @@ namespace eve::detail
                       return  if_else(is_eqz(arg), T(1), (log1parg-log1p(-arg))/(2*arg));
                     };
                   notdone = next_interval(br_ygtmhf, notdone, y > T(-0.5), r);
-                  if(any(notdone))
+                  if(eve::any(notdone))
                   {
                    auto br_last =  [arg, log1parg](auto y)
                       {
@@ -199,7 +199,7 @@ namespace eve::detail
             return r;
           };
 
-        if(any(test))
+        if(eve::any(test))
         {
           //
           // occationally en ~ -1, we then have no means of calculating
@@ -231,7 +231,7 @@ namespace eve::detail
         an = (an + lambda)*T(0.25); // / 4;
         fmn /= 4;
 
-        if(all(fmn * q < an)) break;
+        if(eve::all(fmn * q < an)) break;
 
         xn = (xn + lambda)*T(0.25); // / 4;
         yn = (yn + lambda)*T(0.25); // / 4;

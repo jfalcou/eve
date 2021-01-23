@@ -134,11 +134,11 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
     {
       auto x = eve::abs(a0);
-      if( all(x <= pio_4(eve::as(x))) )
+      if( eve::all(x <= pio_4(eve::as(x))) )
         return restricted(cot)(a0);
-      else if( all(x <= pio_2(eve::as(x))) )
+      else if( eve::all(x <= pio_2(eve::as(x))) )
         return small(cot)(a0);
-      else if( all(x <= Rempio2_limit(eve::medium_type(), as(a0))) )
+      else if( eve::all(x <= Rempio2_limit(eve::medium_type(), as(a0))) )
         return medium(cot)(a0);
       else
         return big(cot)(a0);

@@ -87,10 +87,10 @@ namespace eve::detail
         };
       auto r = nan(as(x));
       auto notdone = x != one(as(x)) || is_not_nan(x);
-      if (any(notdone))
+      if ( eve::any(notdone) )
       {
         notdone =  next_interval(zetp, notdone, is_gez(x), r, x);
-        if  (any(notdone))
+        if  ( eve::any(notdone) )
         {
           auto reflec = [zetp](auto x)
             {

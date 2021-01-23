@@ -38,7 +38,7 @@ namespace eve
     }
     else
     {
-      if(any(todo))
+      if(eve::any(todo))
       {
         r = if_else(todo, f(ts...), r);
         return logical_notand(todo, notdone);
@@ -57,7 +57,7 @@ namespace eve
     }
     else
     {
-      if(any(todo))  r = if_else(todo, f(ts...), r);
+      if(eve::any(todo))  r = if_else(todo, f(ts...), r);
       return eve::false_(as(r));
     }
   }

@@ -52,7 +52,7 @@ namespace eve::detail
           > (w);
         };
         notdone = next_interval(br_wlt5, notdone, test, r, w);
-        if (any(notdone))
+        if (eve::any(notdone))
         {
           auto br_wge5 = [a00](auto w)
             {
@@ -111,7 +111,7 @@ namespace eve::detail
           > (w);
         };
         notdone = next_interval(br_wlt6_25, notdone, wlt6_25, r, w);
-        if (any(notdone))
+        if (eve::any(notdone))
         {
           auto br_wlt16 = [](auto w)
             {
@@ -138,7 +138,7 @@ namespace eve::detail
               > (w);
             };
           notdone = next_interval(br_wlt16, notdone, wlt16, r, w);
-          if (any(notdone))
+          if (eve::any(notdone))
           {
             auto br_wge16 = [](auto w)
               {

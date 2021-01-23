@@ -125,7 +125,7 @@ namespace eve::detail
     r = fma (e, r, q);
     if (eve::any(a > ll)) r =  if_else(a > ll, invsqrtpi*rec(a), r);
     auto xpos = (x >= 0);
-    if (all(xpos)) return r;
+    if (eve::all(xpos)) return r;
     /* Handle negative arguments: erfcx(x) = 2*exp(x*x) - erfcx(|x|) */
     auto r1 = fms(T(2), expx2(x), r);
     r1 =  if_else(is_nan(r1), inf(as<T>()), r1);

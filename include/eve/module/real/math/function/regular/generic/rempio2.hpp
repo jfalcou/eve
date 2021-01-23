@@ -57,11 +57,11 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      if( all(x <= Rempio2_limit(restricted_type(), as(x))) )
+      if( eve::all(x <= Rempio2_limit(restricted_type(), as(x))) )
         return std::make_tuple(T(0), x, T(0));
-      else if( all(x <= Rempio2_limit(small_type(), as(x))) )
+      else if( eve::all(x <= Rempio2_limit(small_type(), as(x))) )
         return small(rempio2)(x);
-      else if( all(x <= Rempio2_limit(medium_type(), as(x))) )
+      else if( eve::all(x <= Rempio2_limit(medium_type(), as(x))) )
         return medium(rempio2)(x);
       else
         return big(rempio2)(x);

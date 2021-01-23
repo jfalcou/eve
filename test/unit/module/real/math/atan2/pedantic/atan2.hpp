@@ -46,8 +46,8 @@ TTS_CASE_TPL("Check pedantic(eve::atan2) behavior", EVE_TYPE)
     TTS_ULP_EQUAL(pedantic(eve::atan2)((T( 1.)) , eve::inf(eve::as<T>())        ), T(0.)         , 0.5);
     TTS_ULP_EQUAL(pedantic(eve::atan2)((T(-1.)) , eve::inf(eve::as<T>())        ), T(-0.)          , 0.5);
 
-    TTS_EXPECT( all(is_negative(pedantic(eve::atan2)((T(-1.)), eve::inf(eve::as<T>())))) );
-    TTS_EXPECT( all(is_positive(pedantic(eve::atan2)((T(1.)) , eve::inf(eve::as<T>())))) );
+    TTS_EXPECT( eve::all(is_negative(pedantic(eve::atan2)((T(-1.)), eve::inf(eve::as<T>())))) );
+    TTS_EXPECT( eve::all(is_positive(pedantic(eve::atan2)((T(1.)) , eve::inf(eve::as<T>())))) );
 
     TTS_ULP_EQUAL(pedantic(eve::atan2)(eve::minf(eve::as<T>()), eve::minf(eve::as<T>())), -3*eve::pio_4(eve::as<T>()), 0.5);
     TTS_ULP_EQUAL(pedantic(eve::atan2)(eve::inf(eve::as<T>()) , eve::minf(eve::as<T>())),  3*eve::pio_4(eve::as<T>()), 0.5);

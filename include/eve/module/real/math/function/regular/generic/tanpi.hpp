@@ -76,7 +76,7 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
     {
       auto x = abs(a0);
-      if( all(eve::abs(x) <= T(0.25)) )
+      if( eve::all(eve::abs(x) <= T(0.25)) )
         return restricted(tanpi)(a0);
       else
         return big(tanpi)(a0);
@@ -86,4 +86,3 @@ namespace eve::detail
   }
 
 }
-

@@ -43,6 +43,6 @@ TTS_CASE_TPL("Check eve::eve::cbrt behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::cbrt(T(0))   , T( 0), 0  );
   TTS_ULP_EQUAL(eve::cbrt(T(-0.)) , T( 0), 0.5);
 
-  TTS_EXPECT( all(is_negative(eve::cbrt(T(-0.)))) );
-  TTS_EXPECT( all(is_positive(eve::cbrt(T(0)))  ) );
+  TTS_EXPECT( eve::all(is_negative(eve::cbrt(T(-0.)))) );
+  TTS_EXPECT( eve::all(is_positive(eve::cbrt(T(0)))  ) );
 }

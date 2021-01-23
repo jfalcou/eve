@@ -85,7 +85,7 @@ namespace eve::detail
         };
 
         auto xlt2 = x < T(2);
-        if (all(xlt2))        return branch1(x);
+        if (eve::all(xlt2))        return branch1(x);
         else if (none(xlt2))  return branch2(x);
         else                  return if_else(xlt2, branch1(x), branch2(x));
       }
@@ -170,7 +170,7 @@ namespace eve::detail
         };
 
         auto xlt5 = x < T(5);
-        if (all(xlt5))        return branch1(x);
+        if (eve::all(xlt5))        return branch1(x);
         else if (none(xlt5))  return branch2(x);
         else                  return if_else(xlt5, branch1(x), branch2(x));
       }

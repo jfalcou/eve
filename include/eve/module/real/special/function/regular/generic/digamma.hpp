@@ -168,7 +168,7 @@ namespace eve::detail
         auto notdone = is_not_nan(x);
         auto result = zero(as(x));
         auto test = is_lez(x);
-        if(any(test))
+        if( eve::any(test) )
         {
           auto a = x;
           x = oneminus[test](x);
@@ -180,22 +180,22 @@ namespace eve::detail
           result = if_else(test, result, zero);
         }
         auto r = nan(as<T>()); //nan case treated here
-        if(any(notdone))
+        if( eve::any(notdone) )
         {
           notdone = next_interval(br_large,  notdone, x > dlarge, r, x, result);
-          if(any(notdone))
+          if( eve::any(notdone) )
           {
             // If x > 2 reduce to the interval [1,2]:
             x = if_else(x > dlarge, one, x);
             auto cond = x > 2;
-            while(any(cond))
+            while( eve::any(cond) )
             {
               x =  dec[cond](x);
               result = add[cond](result,rec(x));
               cond = x > 2;
             }
             cond = x < 1;
-            if(any(cond)) // back one step
+            if( eve::any(cond) ) // back one step
             {
               result = add[cond](-rec(x), result);
               x =  inc[cond](x);

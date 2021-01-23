@@ -41,6 +41,6 @@ TTS_CASE_TPL("Check eve::eve::asinpi behavior", EVE_TYPE)
 
   TTS_ULP_EQUAL(eve::asinpi(T(-0.)), T(0), 0.5);
 
-  TTS_EXPECT( all(is_negative(eve::asinpi(T(-0.)))) );
-  TTS_EXPECT( all(is_positive(eve::asinpi(T(0))))   );
+  TTS_EXPECT( eve::all(is_negative(eve::asinpi(T(-0.)))) );
+  TTS_EXPECT( eve::all(is_positive(eve::asinpi(T(0))))   );
 }

@@ -47,7 +47,7 @@ namespace eve::detail
           auto n = i >> 1;
           auto r =  (factorial(i) / ldexp(factorial(n), n));
           auto test =  i <= 171;
-          if (all(test)) return r;
+          if (eve::all(test)) return r;
           else
           {
             constexpr double invsqrtpi = 0.564189583547756286948079451560772585844050629329;
@@ -65,7 +65,7 @@ namespace eve::detail
       auto r = inf(as<decltype(factorial(i))>()); //perhaps 0 should be fine
       auto notdone =  i <= 300;
       notdone = next_interval(odd, notdone, is_odd(i), r, i);
-      if(any(notdone))
+      if(eve::any(notdone))
       {
         last_interval(even, notdone, r, i);
       }

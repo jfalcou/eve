@@ -44,6 +44,6 @@ TTS_CASE_TPL("Check eve::eve::atanpi behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::atanpi(T(1.))   ,  T(0.25)                                 , 0.5);
   TTS_ULP_EQUAL(eve::atanpi(T(0.))   ,  T(0)                                    , 0.5);
 
-  TTS_EXPECT(all(eve::is_positive(eve::atanpi((T(0)))))  );
-  TTS_EXPECT(all(eve::is_negative(eve::atanpi(T(-0.)))) );
+  TTS_EXPECT(eve::all(eve::is_positive(eve::atanpi((T(0)))))  );
+  TTS_EXPECT(eve::all(eve::is_negative(eve::atanpi(T(-0.)))) );
 }

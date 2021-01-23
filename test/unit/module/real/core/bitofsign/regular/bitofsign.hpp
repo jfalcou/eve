@@ -38,20 +38,20 @@ TTS_CASE_TPL("Check eve::bitofsign behavior", EVE_TYPE)
     {
       TTS_EQUAL( bitofsign(eve::inf(eve::as<T>()) ), T(0)           );
       TTS_EQUAL( bitofsign(eve::minf(eve::as<T>())), T(-0.));
-      TTS_EXPECT( all(is_positive(bitofsign( eve::inf(eve::as<T>())))) );
-      TTS_EXPECT( all(is_negative(bitofsign(eve::minf(eve::as<T>())))) );
+      TTS_EXPECT( eve::all(is_positive(bitofsign( eve::inf(eve::as<T>())))) );
+      TTS_EXPECT( eve::all(is_negative(bitofsign(eve::minf(eve::as<T>())))) );
     }
 
     TTS_EQUAL (bitofsign(T(0))  , T(0));
     TTS_EQUAL (bitofsign(T(-0.)), T(-0.));
-    TTS_EXPECT( all(is_positive(bitofsign(T(0)))) );
-    TTS_EXPECT( all(is_negative(bitofsign(T(-0.)))) );
+    TTS_EXPECT( eve::all(is_positive(bitofsign(T(0)))) );
+    TTS_EXPECT( eve::all(is_negative(bitofsign(T(-0.)))) );
 
     TTS_EQUAL (bitofsign(T(1)), T(0));
-    TTS_EXPECT( all(is_positive(bitofsign(T(1)))) );
+    TTS_EXPECT( eve::all(is_positive(bitofsign(T(1)))) );
 
     TTS_EQUAL (bitofsign(T(-1)), T(-0.));
-    TTS_EXPECT( all(is_negative(bitofsign(T(-1)))) );
+    TTS_EXPECT( eve::all(is_negative(bitofsign(T(-1)))) );
   }
   else if constexpr( eve::unsigned_value<T> )
   {

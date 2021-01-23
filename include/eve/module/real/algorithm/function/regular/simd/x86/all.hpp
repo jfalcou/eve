@@ -12,8 +12,8 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/concepts.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/bit_cast.hpp>
+#include <eve/detail/top_bits.hpp>
+
 
 namespace eve::detail
 {
@@ -23,20 +23,32 @@ namespace eve::detail
   template<real_scalar_value T, typename N, x86_abi ABI>
   EVE_FORCEINLINE bool all_(EVE_SUPPORTS(sse2_), logical<wide<T, N, ABI>> const &v) noexcept
   {
-    if constexpr( N::value == 1)
-    {
-      return v[0];
-    }
-    else if constexpr(sizeof(T) == 2)
-    {
-      using tgt = typename logical<wide<T, N, ABI>>::template rebind< std::uint8_t
-                                                                    , typename N::combined_type
-                                                                    >;
-      return bit_cast(v, as_<tgt>()).bitmap().all();
-    }
-    else
-    {
-      return v.bitmap().all();
-    }
+    if constexpr( N::value == 1) return v[0];
+    else                         return eve::detail::all(eve::detail::top_bits{v});
+  }
+
+  template<logical_simd_value T, relative_conditional_expr C>
+  EVE_FORCEINLINE bool all_ignore_impl(C const& cond, T const &v) noexcept
+  {
+    eve::detail::top_bits mmask{v};
+    eve::detail::top_bits<T> ignore_mmask{cond};
+
+    mmask |= ~ignore_mmask; // we need 1 in ignored elements;
+
+    return eve::detail::all(mmask);
+  }
+
+  template<real_scalar_value T, typename N, x86_abi ABI, relative_conditional_expr C>
+  EVE_FORCEINLINE bool all_(EVE_SUPPORTS(sse2_), C const &cond,
+                            logical<wide<T, N, ABI>> const &v) noexcept
+  {
+    return all_ignore_impl(cond, v);
+  }
+
+  template<real_scalar_value T, typename N, relative_conditional_expr C>
+  EVE_FORCEINLINE bool all_(EVE_SUPPORTS(sse2_), C const &cond,
+                            logical<wide<T, N, aggregated_>> const &v) noexcept
+  {
+    return all_ignore_impl(cond, v);
   }
 }

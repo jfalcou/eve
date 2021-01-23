@@ -43,6 +43,6 @@ TTS_CASE_TPL("Check eve::eve::asin behavior", EVE_TYPE)
 
   TTS_ULP_EQUAL(eve::asin(T(-0.)), T(0), 0.5);
 
-  TTS_EXPECT( all(is_negative(eve::asin(T(-0.)))) );
-  TTS_EXPECT( all(is_positive(eve::asin(T(0))))   );
+  TTS_EXPECT( eve::all(is_negative(eve::asin(T(-0.)))) );
+  TTS_EXPECT( eve::all(is_positive(eve::asin(T(0))))   );
 }

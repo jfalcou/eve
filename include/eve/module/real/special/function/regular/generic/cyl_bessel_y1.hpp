@@ -95,10 +95,10 @@ namespace eve::detail
 
         auto r = nan(as<T>()); //nan case treated here
         auto notdone =  is_nltz(a0);
-        if(any(notdone))
+        if(eve::any(notdone))
         {
           notdone = next_interval(branch1, notdone, a0 < T(2), r, a0);
-          if (any(notdone))
+          if (eve::any(notdone))
           {
             last_interval(branch2, notdone, r, a0);
           }
@@ -185,10 +185,10 @@ namespace eve::detail
 
         auto r = nan(as<T>()); //nan case treated here
         auto notdone =  is_nltz(a0);
-        if(any(notdone))
+        if(eve::any(notdone))
         {
           notdone = next_interval(branch1, notdone, a0 < T(5), r, a0);
-          if (any(notdone))
+          if (eve::any(notdone))
           {
             last_interval(branch2, notdone, r, a0);
           }

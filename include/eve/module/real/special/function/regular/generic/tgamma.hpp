@@ -170,7 +170,7 @@ namespace eve::detail
           }
           auto z     = one(eve::as<T>());
           auto test1 = is_greater_equal(x, T(3));
-          while( any(test1) )
+          while( eve::any(test1) )
           {
             x     = dec[test1](x);
             z     = if_else(test1, z * x, z);
@@ -178,7 +178,7 @@ namespace eve::detail
           }
           // all x are less than 3
           test1 = is_ltz(x);
-          while( any(test1) )
+          while( eve::any(test1) )
           {
             z     = if_else(test1, z / x, z);
             x     = inc[test1](x);
@@ -186,7 +186,7 @@ namespace eve::detail
           }
           // all x are greater than 0 and less than 3
           auto test2 = is_less(x, T(2));
-          while( any(test2) )
+          while( eve::any(test2) )
           {
             z     = if_else(test2, z / x, z);
             x     = inc[test2](x);
@@ -232,4 +232,3 @@ namespace eve::detail
     return tgamma(regular_type(), x);
   }
 }
-

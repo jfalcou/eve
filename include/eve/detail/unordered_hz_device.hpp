@@ -35,7 +35,7 @@ namespace eve
     }
     else
     {
-      if(any(todo)) {r = if_else(todo, f(ts...), r); return !todo &&  notdone; };
+      if(eve::any(todo)) {r = if_else(todo, f(ts...), r); return !todo &&  notdone; };
     }
     return notdone;
   }
@@ -50,7 +50,7 @@ namespace eve
     }
     else
     {
-      if(any(todo)){  r = if_else(todo, f(ts...), r); return !todo && notdone; };
+      if(eve::any(todo)){  r = if_else(todo, f(ts...), r); return !todo && notdone; };
     }
     return notdone;
   }
@@ -65,7 +65,7 @@ namespace eve
     }
     else
     {
-      if(any(todo))  r = if_else(todo, f(ts...), r);
+      if(eve::any(todo))  r = if_else(todo, f(ts...), r);
       return eve::false_(as(r));
     }
   }

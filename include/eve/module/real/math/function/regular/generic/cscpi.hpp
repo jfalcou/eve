@@ -73,7 +73,7 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      if( all(eve::abs(a0) <= T(0.25)) )
+      if( eve::all(eve::abs(a0) <= T(0.25)) )
         return restricted(cscpi)(a0);
       else
         return big(cscpi)(a0);
@@ -82,4 +82,3 @@ namespace eve::detail
       return apply_over(cscpi, a0);
   }
 }
-

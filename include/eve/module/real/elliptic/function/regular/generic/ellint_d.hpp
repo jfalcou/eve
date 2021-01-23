@@ -77,14 +77,14 @@ namespace eve::detail
       auto r = nan(as(aphi));
       auto notdone  = is_finite(aphi); //&& test;
       r = if_else(notdone, r, inf(as(phi0)));
-      if (any(notdone))
+      if (eve::any(notdone))
       {
         auto br_philarge =  [aphi](auto k) //aphi*eps(as(aphi)) > one(as(aphi))
         {
           return  aphi * ellint_d(k) / pio_2(as(aphi));
         };
         notdone = next_interval(br_philarge, notdone, aphi*eps(as(aphi)) > one(as(aphi)), r, k);
-        if (any(notdone))
+        if (eve::any(notdone))
         {
           auto rphi = rem(aphi, pio_2(as(aphi)));
           auto m = nearest((aphi - rphi) /pio_2(as(aphi)));
@@ -100,7 +100,7 @@ namespace eve::detail
             {
               auto z = if_else(is_finite(c), s * ellint_rd(cm1, c - k2, c) / 3, zero);
               auto test =  is_nez(m);
-              if(any(test)){
+              if(eve::any(test)){
                 return z+m*ellint_d(k);
               }
               else return z;

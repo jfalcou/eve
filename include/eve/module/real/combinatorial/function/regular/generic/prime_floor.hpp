@@ -33,7 +33,7 @@ namespace eve::detail
     {
       auto first = T(0);
       auto last = sizeof(elt_t) == 1 ? T(53u) : T(10000);
-      while (any(inc(first) < last))
+      while (eve::any(inc(first) < last))
       {
          auto mid = average(first, last);
          auto pmid = convert(nth_prime(mid), as<elt_t>());

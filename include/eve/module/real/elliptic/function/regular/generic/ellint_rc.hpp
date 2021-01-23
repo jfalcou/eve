@@ -53,7 +53,7 @@ namespace eve::detail
     {
       auto ylt0 = is_ltz(y);
       auto prefix = one(as(x));
-      if (any(ylt0)) //provisions for y < 0
+      if (eve::any(ylt0)) //provisions for y < 0
       {
         prefix = if_else(ylt0, sqrt(x / (x - y)), one);
         x =  sub[ ylt0](x, y);
@@ -62,7 +62,7 @@ namespace eve::detail
       // now all y are >= 0
       auto r =  nan(as(x));
       auto notdone = is_nltz(x) && is_nez(y);
-      if (any(notdone))
+      if (eve::any(notdone))
       {
         auto tmp0 = rsqrt(y);
         auto br_0 =  [tmp0](auto x,  auto y) // x == y || x == 0
@@ -71,7 +71,7 @@ namespace eve::detail
             return z;  //if_else(x == y, tmp0, tmp0*pio_2(as(y)));
           };
         notdone = next_interval(br_0, notdone, (x == y) || is_eqz(x), r, x, y);
-        if  (any(notdone))
+        if  (eve::any(notdone))
         {
           auto tmp1 = sqrt(eve::abs(x - y));
           auto tmp2 = rsqrt(x);
@@ -81,14 +81,14 @@ namespace eve::detail
               return atan(tmp3)/tmp1;
             };
           notdone = next_interval(br_1, notdone, y > x, r);
-          if  (any(notdone))
+          if  (eve::any(notdone))
           {
             auto br_2 =  [tmp1, tmp3]() // y > 0.5*x
               {
                 return atanh(tmp3)/tmp1;
               };
             notdone = next_interval(br_2, notdone, y > T(0.5)*x , r);
-            if(any(notdone))
+            if(eve::any(notdone))
             {
               auto br_3 = [tmp0, tmp1](auto x)
                 {
