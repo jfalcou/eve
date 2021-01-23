@@ -11,7 +11,6 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
-#include <eve/function/is_equal.hpp>
 #include <eve/constant/true.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>

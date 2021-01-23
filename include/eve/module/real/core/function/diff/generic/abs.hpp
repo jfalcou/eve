@@ -11,7 +11,6 @@
 #pragma once
 
 #include <eve/function/abs.hpp>
-#include <eve/function/is_equal.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/sign.hpp>
@@ -28,7 +27,7 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
     {
       return if_else(is_eqz(n), abs(x),
-                     if_else(is_equal(n, one(as(n))), sign(x), zero));
+                     if_else((n ==  one(as(n))), sign(x), zero));
     }
     else
       return apply_over(diff_1st(abs), x, n);

@@ -1,4 +1,4 @@
-#include <eve/function/predicate.hpp>
+#include <eve/function/is_equal.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 
@@ -12,7 +12,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf               = " << pf << '\n'
             << "<- qf               = " << qf << '\n'
-            << "-> is_equal(pf, qf) = " << eve::is_equal(pf, qf) << '\n';
+            << "-> is_equal(pf ==  qf) = " << eve::is_equal(pf, qf) << '\n';
 
   float xf = 1.0f;
   float yf = 2.0f;

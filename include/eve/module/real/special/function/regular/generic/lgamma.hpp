@@ -24,18 +24,12 @@
 #include <eve/function/floor.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/inc.hpp>
-#include <eve/function/is_equal.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/is_flint.hpp>
-#include <eve/function/is_greater.hpp>
-#include <eve/function/is_greater_equal.hpp>
 #include <eve/function/is_infinite.hpp>
-#include <eve/function/is_less.hpp>
 #include <eve/function/is_lez.hpp>
 #include <eve/function/log.hpp>
-#include <eve/function/logical_and.hpp>
 #include <eve/function/logical_andnot.hpp>
-#include <eve/function/logical_or.hpp>
 #include <eve/function/nbtrue.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/sinpi.hpp>
@@ -216,7 +210,7 @@ namespace eve::detail
           T    q          = abs(x);
           if constexpr( eve::platform::supports_infinites )
           {
-            inf_result = is_equal(x, inf(as<T>())) || inf_result;
+            inf_result = (x ==  inf(as<T>())) || inf_result;
           }
           auto   ltza0 = is_ltz(a0);
           size_t nb    = nbtrue(ltza0);
@@ -240,8 +234,8 @@ namespace eve::detail
               const T _150    = T(1.50);
               const T _125    = T(1.25);
               const T _250    = T(2.50);
-              auto    xge150  = is_greater_equal(x, _150);
-              auto    txgt250 = is_greater(tx, _250);
+              auto    xge150  = (x >= _150);
+              auto    txgt250 = (tx > _250);
 
               // x >= 1.5
               while( eve::any(logical_and(xge150, txgt250)) )
@@ -249,14 +243,14 @@ namespace eve::detail
                 nx      = dec[txgt250](nx);
                 tx      = if_else(txgt250, x + nx, tx);
                 z       = if_else(txgt250, z * tx, z);
-                txgt250 = is_greater(tx, _250);
+                txgt250 = (tx > _250);
               }
               r0x = add[xge150](x, nx - T(2));
               r0z = if_else(xge150, z, r0z);
               r0s = if_else(xge150, one(as<T>()), r0s);
 
               // x >= 1.25 && x < 1.5
-              auto xge125  = is_greater_equal(x, _125);
+              auto xge125  = (x >= _125);
               auto xge125t = logical_andnot(xge125, xge150);
               if( eve::any(xge125) )
               {
@@ -265,7 +259,7 @@ namespace eve::detail
                 r0s = if_else(xge125t, mone(as<T>()), r0s);
               }
               // x >= 0.75&& x < 1.5
-              auto xge075  = is_greater_equal(x, _075);
+              auto xge075  = (x >=  _075);
               auto xge075t = logical_andnot(xge075, xge125);
               if( eve::any(xge075t) )
               {
@@ -308,7 +302,7 @@ namespace eve::detail
             auto negative = [](T q, T w) {
               T    p     = floor(q);
               T    z     = q - p;
-              auto test2 = is_less(z, half(as<T>()));
+              auto test2 = (z < half(as<T>()));
               z          = dec[test2](z);
               z          = q * sinpi(z);
               z          = abs(z);
@@ -400,7 +394,7 @@ namespace eve::detail
         {
           auto other = [Logsqrt2pi](T xx) {
             T      x    = xx;
-            auto   test = is_less(x, T(13.0));
+            auto   test = (x < T(13.0));
             size_t nb   = nbtrue(test);
             T      r1   = zero(as<T>());
             if( nb > 0 )
@@ -408,23 +402,23 @@ namespace eve::detail
               T    z     = one(as<T>());
               T    p     = zero(as<T>());
               T    u     = if_else(test, x, eve::zero);
-              auto test1 = is_greater_equal(u, T(3));
+              auto test1 = (u > T(3));
               while( eve::any(test1) )
               {
                 p     = dec[test1](p);
                 u     = if_else(test1, x + p, u);
                 z     = if_else(test1, z * u, z);
-                test1 = is_greater_equal(u, T(3));
+                test1 = (u >=  T(3));
               }
               // all u are less than 3
-              auto test2 = is_less(u, T(2));
+              auto test2 = (u < T(2));
 
               while( eve::any(test2) )
               {
                 z     = if_else(test2, z / u, z);
                 p     = inc[test2](p);
                 u     = if_else(test2, x + p, u);
-                test2 = is_less(u, T(2));
+                test2 = (u < T(2));
               }
               z = abs(z);
               x += p - T(2);
@@ -441,18 +435,18 @@ namespace eve::detail
             T    w     = lgamma(q);
             T    p     = floor(q);
             T    z     = q - p;
-            auto test2 = is_less(z, half(as<T>()));
+            auto test2 = (z < half(as<T>()));
             z          = dec[test2](z);
             z          = q * sinpi(z);
             z          = abs(z);
             return Logpi - log(z) - w;
           };
 
-          auto inf_result = logical_and(is_lez(a0), is_flint(a0)) || is_infinite(a0);;
+          auto inf_result = (is_lez(a0) && is_flint(a0)) || is_infinite(a0);;
           T    x          = if_else(inf_result, eve::allbits, a0);
           T    q          = abs(x);
-          if (eve::platform::supports_infinites) inf_result = inf_result || is_equal(q, inf(as<T>()));
-          auto   test = is_less(a0, T(-34.0));
+          if (eve::platform::supports_infinites) inf_result = inf_result || (q ==  inf(as<T>()));
+          auto   test = (a0 < T(-34.0));
           size_t nb   = nbtrue(test);
           T      r    = nan(as<T>());
           if( nb > 0 )

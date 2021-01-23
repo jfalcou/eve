@@ -52,7 +52,7 @@ namespace eve::detail
           e = sub[denormal]( e, minexponent(eve::as<elt_t>()));
           f = if_else(denormal, smallestposval(eve::as<elt_t>()), eve::one);
         }
-        auto test = is_equal(e, limitexponent(eve::as<elt_t>()));
+        auto test = (e == limitexponent(eve::as<elt_t>()));
         f = inc[test](f);
         e = dec[test](e);
         e += maxexponent(eve::as<elt_t>());

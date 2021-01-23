@@ -76,7 +76,7 @@ namespace eve::detail
       {
         T r = eve::if_else(gtmxlg,eve::inf(as<T>()), eve::exp(u)*eve::exp(u1));
         if constexpr(eve::platform::supports_infinites)
-          r =  eve::if_else(is_equal(x, inf(as<T>())), x, r);
+          r =  eve::if_else((x == inf(as<T>())), x, r);
         if constexpr(eve::platform::supports_invalids)
           r =  eve::if_else(is_nan(a0), eve::allbits, r);
         return r;
@@ -118,7 +118,7 @@ namespace eve::detail
         auto valinf = if_else(sgn > 0, inf(as<T>()), eve::zero);
         T r = eve::if_else(gtmxlg, valinf, eve::exp(u)*eve::exp(u1));
         if constexpr(eve::platform::supports_infinites)
-          r =  eve::if_else(is_equal(x, inf(as<T>())), x, r);
+          r =  eve::if_else(x == inf(as<T>()), x, r);
         if constexpr(eve::platform::supports_invalids)
           r =  eve::if_else(is_nan(a0), eve::allbits, r);
         return r;

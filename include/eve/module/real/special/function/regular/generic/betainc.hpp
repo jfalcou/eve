@@ -14,9 +14,6 @@
 #include <eve/function/dec.hpp>
 #include <eve/function/exp.hpp>
 #include <eve/function/fma.hpp>
-#include <eve/function/is_equal.hpp>
-#include <eve/function/is_less.hpp>
-#include <eve/function/is_greater.hpp>
 #include <eve/function/is_ltz.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/log.hpp>
@@ -76,7 +73,7 @@ namespace eve::detail
       return h;
     };
     auto bt = exp(fma(a, log(x), b*log1p(-x))-lbeta(a, b));
-    auto test = is_greater(x, inc(a)/(a+b+T(2)));
+    auto test = (x > inc(a)/(a+b+T(2)));
     auto xx = oneminus[test](x);
     auto aa = if_else(test, b, a);
     auto bb = if_else(test, a, b);

@@ -146,7 +146,7 @@ namespace eve::detail
         T r2 = exp(-sqr(x))*kernel_erfc2(z);
         r1 = if_else(test1, r1, r2);
         if constexpr(eve::platform::supports_infinites)
-          r1 = if_else (is_equal(x, inf(as<T>())), zero, r1);
+          r1 = if_else (x == inf(as<T>()), zero, r1);
 
         return eve::if_else(test0, T(2)-r1, r1);
       }

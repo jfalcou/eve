@@ -14,7 +14,6 @@
 #include <eve/constant/one.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_eqz.hpp>
-#include <eve/function/is_equal.hpp>
 #include <eve/function/derivative.hpp>
 
 namespace eve::detail
@@ -27,7 +26,7 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return if_else(is_eqz(n), x, if_else(is_equal(n, one(as(n))), one(as(x)), zero));
+      return if_else(is_eqz(n), x, if_else((n == one(as(n))), one(as(x)), zero));
     }
     else
       return apply_over(diff_1st(plus), x, n);

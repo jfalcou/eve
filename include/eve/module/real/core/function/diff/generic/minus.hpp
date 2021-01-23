@@ -13,7 +13,6 @@
 #include <eve/function/derivative.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_eqz.hpp>
-#include <eve/function/is_equal.hpp>
 #include <eve/constant/mone.hpp>
 
 namespace eve::detail
@@ -26,7 +25,7 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return if_else(is_eqz(n), minus(x), if_else(is_equal(n, one(as(n))), mone(as(x)), zero));
+      return if_else(is_eqz(n), minus(x), if_else((n == one(as(n))), mone(as(x)), zero));
     }
     else
       return apply_over(diff_1st(minus), x, n);

@@ -11,7 +11,6 @@
 #pragma once
 
 #include <eve/constant/one.hpp>
-#include <eve/function/is_equal.hpp>
 #include <eve/function/derivative.hpp>
 #include <eve/function/diff/plus.hpp>
 #include <eve/function/mul.hpp>

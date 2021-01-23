@@ -16,7 +16,6 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/abs.hpp>
-#include <eve/function/is_equal.hpp>
 #include <eve/traits/as_logical.hpp>
 
 namespace eve::detail
@@ -25,7 +24,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr as_logical_t<T> is_infinite_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   {
           if constexpr(integral_value<T>)   return false_(eve::as(a));
-    else  if constexpr(has_native_abi_v<T>) return is_equal(eve::abs(a), inf(eve::as(a)));
+    else  if constexpr(has_native_abi_v<T>) return (eve::abs(a) == inf(eve::as(a)));
     else                                    return apply_over(is_infinite, a);
   }
 }

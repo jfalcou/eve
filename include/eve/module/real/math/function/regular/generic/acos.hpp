@@ -26,9 +26,6 @@
 #include <eve/function/fma.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/inc.hpp>
-#include <eve/function/is_equal.hpp>
-#include <eve/function/is_greater.hpp>
-#include <eve/function/is_less.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/raw.hpp>
 #include <eve/function/sqrt.hpp>
@@ -60,12 +57,12 @@ namespace eve::detail
         auto const mhalf = eve::mhalf(eve::as(a0));
 
         auto x           = eve::abs(a0);
-        auto x_larger_05 = is_greater(x, half);
+        auto x_larger_05 = (x > half);
 
         x = if_else(x_larger_05, eve::sqrt(fma(mhalf, x, half)), a0);
         x = asin(x);
         x = add[x_larger_05](x, x);
-        x = eve::if_else(is_less(a0, mhalf), eve::pi(eve::as(a0)) - x, x);
+        x = eve::if_else((a0 < mhalf), eve::pi(eve::as(a0)) - x, x);
 
         return eve::if_else(x_larger_05, x, eve::pio_2(eve::as(a0)) - x);
       }
