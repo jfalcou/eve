@@ -1,7 +1,7 @@
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
-##  Copyright 2018-2020 Joel FALCOU
-##  Copyright 2018-2020 Jean-Thierry LAPRESTE
+##  Copyright 2018-2021 Joel FALCOU
+##  Copyright 2018-2021 Jean-Thierry LAPRESTE
 ##
 ##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 ##  SPDX-License-Identifier: MIT
@@ -52,3 +52,5 @@ message( STATUS "[eve] Unit tests         : ${test_status} (via EVE_BUILD_TEST)"
 message( STATUS "[eve] Random tests       : ${random_status} (via EVE_BUILD_RANDOM)"    )
 message( STATUS "[eve] Benchmarks tests   : ${bench_status} (via EVE_BUILD_BENCHMARKS)" )
 message( STATUS "[eve] Source generation  : ${html_status} (via EVE_BUILD_SRC_HTML)"    )
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)

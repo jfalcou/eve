@@ -32,5 +32,10 @@ include(config/install)
 ## Test and Benchmarks target
 ## =================================================================================================
 if( EVE_BUILD_TEST )
-add_subdirectory(test)
+
+  include(target/add_parent_target)
+  include(config/compiler)
+  include(config/pch)
+
+  add_subdirectory(${PROJECT_SOURCE_DIR}/test/)
 endif()

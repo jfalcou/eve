@@ -1,28 +1,17 @@
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
-##  Copyright 2018 Joel FALCOU
+##  Copyright 2018-2021 Joel FALCOU
+##  Copyright 2018-2021 Jean-Thierry LAPRESTE
 ##
 ##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
-include(generate_test)
-include(add_parent_target)
+include(target/generate_test)
 
 ##==================================================================================================
 ## Common variables
 ##==================================================================================================
 set(_TestCurrentDir "${CMAKE_CURRENT_LIST_DIR}")
-set(_TestSrcDir     "${PROJECT_BINARY_DIR}/tmp-src")
-
-if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-  set( _TestOptions -std=c++20 -Werror -Wall -Wpedantic -Wextra -Wno-gnu-zero-variadic-macro-arguments)
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-  set( _TestOptions -std=c++20 -Wall -Werror=unused-parameter)
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-  set( _TestOptions /std:c++latest -W3 -EHsc)
-endif()
-
-message( STATUS "[eve] Compiler base options: ${_TestOptions}")
 
 ##==================================================================================================
 ## Basic type roots
@@ -204,66 +193,11 @@ function (check_failures root unit)
 endfunction()
 
 ##==================================================================================================
-## Setup TTS
-##==================================================================================================
-set(TTS_BUILD_TEST    OFF CACHE INTERNAL "OFF")
-set(TTS_IS_DEPENDENT  ON  CACHE INTERNAL "ON")
-
-include(FetchContent)
-FetchContent_Declare( tts
-                      GIT_REPOSITORY https://github.com/jfalcou/tts.git
-                      GIT_TAG main
-                    )
-
-FetchContent_MakeAvailable(tts)
-
-##==================================================================================================
 ## Setup our tests
 ##==================================================================================================
 add_custom_target(tests)
 add_custom_target(unit)
 add_dependencies(tests unit)
-
-##==================================================================================================
-## Setup PCH
-##==================================================================================================
-add_executable(test_pch $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/test/test_pch.cpp>)
-add_executable(doc_pch $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/test/doc_pch.cpp>)
-
-target_compile_options( test_pch PUBLIC ${_TestOptions} )
-target_compile_options( doc_pch PUBLIC ${_TestOptions} )
-
-set_property( TARGET test_pch PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/unit" )
-set_property( TARGET doc_pch PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/unit" )
-
-set_target_properties ( test_pch PROPERTIES
-                        EXCLUDE_FROM_DEFAULT_BUILD TRUE
-                        EXCLUDE_FROM_ALL TRUE
-                        ${MAKE_UNIT_TARGET_PROPERTIES}
-                      )
-
-set_target_properties ( doc_pch PROPERTIES
-                        EXCLUDE_FROM_DEFAULT_BUILD TRUE
-                        EXCLUDE_FROM_ALL TRUE
-                        ${MAKE_UNIT_TARGET_PROPERTIES}
-                      )
-
-target_include_directories( test_pch PRIVATE
-                            ${tts_SOURCE_DIR}/include
-                            ${PROJECT_SOURCE_DIR}/test
-                            ${PROJECT_SOURCE_DIR}/include
-                            ${Boost_INCLUDE_DIRS}
-                          )
-
-target_include_directories( doc_pch PRIVATE
-                            ${tts_SOURCE_DIR}/include
-                            ${PROJECT_SOURCE_DIR}/test
-                            ${PROJECT_SOURCE_DIR}/include
-                            ${Boost_INCLUDE_DIRS}
-                          )
-
-target_precompile_headers(test_pch PRIVATE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/test/test.hpp>)
-target_precompile_headers(doc_pch PRIVATE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include/eve/wide.hpp>)
 
 ##==================================================================================================
 ## Setup aggregation of tests
@@ -279,7 +213,7 @@ add_custom_target(exhaustive.exe        )
 add_custom_target(exhaustive.scalar.exe )
 add_custom_target(exhaustive.simd.exe   )
 
-add_dependencies(unit.exe       doc.exe               )
+#add_dependencies(unit.exe       doc.exe               )
 add_dependencies(unit.exe       unit.scalar.exe       )
 add_dependencies(unit.exe       unit.simd.exe         )
 add_dependencies(random.exe     random.scalar.exe     )
@@ -287,11 +221,6 @@ add_dependencies(random.exe     random.simd.exe       )
 add_dependencies(exhaustive.exe exhaustive.scalar.exe )
 add_dependencies(exhaustive.exe exhaustive.simd.exe   )
 
-add_dependencies(unit.basic.exe unit.arch.exe   )
-add_dependencies(unit.basic.exe unit.api.exe    )
-add_dependencies(unit.basic.exe unit.meta.exe   )
-
-##==================================================================================================
-## Incldue tests themselves
-##==================================================================================================
-add_subdirectory(${PROJECT_SOURCE_DIR}/test/)
+#add_dependencies(unit.basic.exe unit.arch.exe   )
+#add_dependencies(unit.basic.exe unit.api.exe    )
+#add_dependencies(unit.basic.exe unit.meta.exe   )

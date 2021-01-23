@@ -1,8 +1,7 @@
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
-##
-##  Copyright 2019 Joel FALCOU
-##  Copyright 2019 Jean-Thierry LAPRESTE
+##  Copyright 2018-2021 Joel FALCOU
+##  Copyright 2018-2021 Jean-Thierry LAPRESTE
 ##
 ##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 ##  SPDX-License-Identifier: MIT
@@ -65,19 +64,22 @@ function(generate_test root rootpath dep file)
                 )
       endif()
 
-      target_precompile_headers(${test} REUSE_FROM doc_pch)
-      add_dependencies(${test} doc_pch)
+      if( EVE_USE_PCH )
+        target_precompile_headers(${test} REUSE_FROM doc_pch)
+        add_dependencies(${test} doc_pch)
+      endif()
 
     else()
-    target_precompile_headers(${test} REUSE_FROM test_pch)
 
-    add_test( NAME ${test}
-              WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
-              COMMAND $<TARGET_FILE:${test}> --no-color --pass
-            )
+      add_test( NAME ${test}
+                WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
+                COMMAND $<TARGET_FILE:${test}> --no-color --pass
+              )
 
-    add_dependencies(${test} test_pch)
-
+      if( EVE_USE_PCH )
+        target_precompile_headers(${test} REUSE_FROM test_pch)
+        add_dependencies(${test} test_pch)
+      endif()
     endif()
   endif()
 
