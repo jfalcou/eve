@@ -48,4 +48,26 @@ namespace eve::detail
       }
     }
   }
+
+  template<simd_value T, relative_conditional_expr C>
+  EVE_FORCEINLINE bool any_(EVE_SUPPORTS(cpu_), C const &cond, T const &v) noexcept
+  {
+         if constexpr ( !is_logical_v<T> ) return eve::any[cond](to_logical(v));
+    else if constexpr ( C::is_complete )
+    {
+      if constexpr ( !C::is_inverted ) return false;
+      else                             return eve::any(v);
+    }
+    else
+    {
+      bool res = false;
+
+      std::ptrdiff_t first = cond.offset(eve::as_<T>{});
+      std::ptrdiff_t last = first + cond.count(eve::as_<T>{});
+      while (first != last) res = res || v[first++];
+
+      return res;
+    }
+  }
+
 }

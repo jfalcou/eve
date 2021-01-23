@@ -44,7 +44,7 @@ namespace eve::detail
       }
       else
       {
-        return all(to_logical(v));
+        return eve::all(to_logical(v));
       }
     }
   }
@@ -52,11 +52,11 @@ namespace eve::detail
   template<simd_value T, relative_conditional_expr C>
   EVE_FORCEINLINE bool all_(EVE_SUPPORTS(cpu_), C const &cond, T const &v) noexcept
   {
-         if constexpr ( !is_logical_v<T> ) return all[cond](to_logical(v));
+         if constexpr ( !is_logical_v<T> ) return eve::all[cond](to_logical(v));
     else if constexpr ( C::is_complete )
     {
       if constexpr ( !C::is_inverted ) return true;
-      else                             return all(v);
+      else                             return eve::all(v);
     }
     else
     {
