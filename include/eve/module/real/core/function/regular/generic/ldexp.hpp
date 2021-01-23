@@ -14,7 +14,6 @@
 #include <eve/function/is_less.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/trunc.hpp>
-#include <eve/function/shl.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/converter.hpp>
@@ -43,7 +42,7 @@ namespace eve::detail
       if constexpr(integral_value<U>)
       {
         auto ik =  b+maxexponent(eve::as<elt_t>());
-        ik = shl(ik, nbmantissabits(eve::as<elt_t>()));
+        ik <<= nbmantissabits(eve::as<elt_t>());
         if constexpr(scalar_value<decltype(ik)>)
           return a*bit_cast(ik, as<elt_t>());
         else

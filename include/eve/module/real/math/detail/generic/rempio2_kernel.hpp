@@ -306,7 +306,7 @@ namespace eve::detail
 
       wui_t res1  = xi64*arr4;
       wui_t res2  = xi64*arr8;
-      res0        = ((res2 >> 32) | shl(res0, 32));
+      res0        = ((res2 >> 32) | (res0 << 32));
       res0 += res1;
 
       auto n = ((res0 + (1ULL << 61)) >> 62);

@@ -23,7 +23,6 @@
 #include <eve/function/is_less.hpp>
 #include <eve/function/logical_and.hpp>
 #include <eve/function/pedantic.hpp>
-#include <eve/function/shl.hpp>
 #include <eve/function/trunc.hpp>
 #include <concepts>
 
@@ -51,7 +50,7 @@ namespace eve::detail
       auto          z     = v00 * 1.52587890625000e-05; // v0*2^(-16);
       auto          t2    = trunc(z);
       auto          t1    = z - t2;
-      auto          z1    = convert(t1 * 65536.0, as<OUT>()) + shl(convert(t2, as<OUT>()), 16);
+      auto          z1    = convert(t1 * 65536.0, as<OUT>()) + (convert(t2, as<OUT>()) <<  16);
       return if_else(logical_and(z1 == Vim, is_gtz(v00)), Vax, z1);
     }
     else if constexpr( floating_real_value<
