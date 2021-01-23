@@ -149,4 +149,4 @@ TTS_CASE_TPL("Check eve::none[ignore]", EVE_TYPE)
   }
 }
 
-#endif  // defined(EVE_SIMD_TESTS)
+#endif

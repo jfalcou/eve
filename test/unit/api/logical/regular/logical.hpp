@@ -112,4 +112,4 @@ TTS_CASE_TPL("logical getters and setters", EVE_TYPE)
     TTS_EXPECT_NOT(x[i]);
   }
 }
-#endif  // defined(EVE_SIMD_TESTS)
+#endif
