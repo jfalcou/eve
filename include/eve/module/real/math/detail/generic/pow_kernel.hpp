@@ -16,7 +16,6 @@
 #include <eve/function/gather.hpp>
 #include <eve/function/is_less_equal.hpp>
 #include <eve/function/is_greater_equal.hpp>
-#include <eve/function/shr.hpp>
 #include <eve/concept/value.hpp>
 #include <type_traits>
 #include <tuple>
@@ -198,10 +197,9 @@ namespace eve::detail
     i = inc(i);
     T tmp = twomio16(i);
     auto x = xx-tmp;
-    x -= continuation(shr(i, 1));
+    x -= continuation(i >> 1);
     x /= tmp;
     return std::make_tuple(x, i);
   }
 
 }
-

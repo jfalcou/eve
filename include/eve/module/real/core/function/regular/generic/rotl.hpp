@@ -17,8 +17,6 @@
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_or.hpp>
 #include <eve/function/converter.hpp>
-#include <eve/function/shl.hpp>
-#include <eve/function/shr.hpp>
 
 #include <type_traits>
 

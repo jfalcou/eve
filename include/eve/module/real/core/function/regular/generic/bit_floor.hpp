@@ -14,7 +14,6 @@
 #include <eve/constant/one.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/function/bit_shr.hpp>
-#include <eve/function/bit_or.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/ifrexp.hpp>
@@ -60,4 +59,3 @@ namespace eve::detail
     else return apply_over(bit_floor, v);
   }
 }
-

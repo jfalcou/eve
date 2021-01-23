@@ -18,14 +18,12 @@
 #include <eve/detail/function/operators.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/bit_xor.hpp>
 #include <eve/function/bitofsign.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/roundings.hpp>
 #include <eve/function/saturate.hpp>
 #include <eve/function/saturated.hpp>
-#include <eve/function/shr.hpp>
 
 #ifdef EVE_COMP_IS_MSVC
 #  pragma warning(push)
@@ -75,7 +73,7 @@ namespace eve::detail
         auto x = inc[logical_not(inc(b) | (a + valmin(eve::as<T>())))](a);
         // negative -> valmin
         // positive -> valmax
-        auto x2 = bit_xor(valmax(eve::as<T>()), shr(x, shft));
+        auto x2 = valmax(eve::as<T>()) ^ (x >> shft);
         x       = if_else(logical_and(iseqzb, is_nez(x)), x2, x);
         auto y  = if_else(iseqzb, one(eve::as<T>()), b);
         return div(x, y);

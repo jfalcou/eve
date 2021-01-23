@@ -17,7 +17,6 @@
 #include <eve/function/bit_and.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_shr.hpp>
-#include <eve/function/shl.hpp>
 
 #if defined(SPY_COMPILER_IS_MSVC)
 #  include <intrin.h>
@@ -55,7 +54,7 @@ namespace eve::detail
       else if constexpr(sizeof(T) == 1)
       {
         const i16_t masklow(0xff);
-        return bit_cast(popcount(xx&masklow)+ shl(popcount(bit_shr(xx, 8)&masklow), 8), as<r_t>());
+        return bit_cast(popcount(xx&masklow)+ (popcount(bit_shr(xx, 8)&masklow) << 8), as<r_t>());
       }
     }
     else if constexpr(sizeof(T) == 4 || sizeof(T) == 2)
@@ -106,7 +105,7 @@ namespace eve::detail
         else if constexpr(sizeof(T) == 1)
         {
           const i16_t masklow(0xff);
-          return bit_cast(popcount(xx&masklow)+ shl(popcount(bit_shr(xx, 8)&masklow), 8), as<r_t>());
+          return bit_cast(popcount(xx&masklow)+ (popcount(bit_shr(xx, 8)&masklow) <<  8), as<r_t>());
         }
       }
       else if constexpr( sizeof(T) == 4 || sizeof(T) == 2)

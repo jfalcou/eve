@@ -237,8 +237,6 @@
 #include <eve/function/sech.hpp>
 #include <eve/function/sec.hpp>
 #include <eve/function/secpi.hpp>
-#include <eve/function/shl.hpp>
-#include <eve/function/shr.hpp>
 #include <eve/function/shuffle.hpp>
 #include <eve/function/sign.hpp>
 #include <eve/function/signnz.hpp>

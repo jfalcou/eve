@@ -14,9 +14,6 @@
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 #include <eve/detail/skeleton.hpp>
-#include <eve/function/bit_and.hpp>
-#include <eve/function/bit_xor.hpp>
-#include <eve/function/shr.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 
@@ -51,4 +48,3 @@ namespace eve::detail
 
   }
 }
-

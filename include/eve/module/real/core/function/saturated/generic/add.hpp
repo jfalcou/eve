@@ -28,7 +28,6 @@
 #include <eve/function/is_less.hpp>
 #include <eve/function/saturate.hpp>
 #include <eve/function/saturated.hpp>
-#include <eve/function/shr.hpp>
 #include <limits>
 
 namespace eve::detail
@@ -119,7 +118,7 @@ namespace eve::detail
           auto uy    = bit_cast(b, as(ux));
           u_t  res   = ux + uy;
 
-          ux = shr(ux, sizeof(vt_t) * 8 - 1) + u_t(valmax(eve::as<vt_t>()));
+          ux = (ux >> (sizeof(vt_t) * 8 - 1)) + u_t(valmax(eve::as<vt_t>()));
           return bit_cast(
               if_else(
                   is_gez(bit_cast(bit_ornot(bit_xor(ux, uy), bit_xor(uy, res)), as(a))), ux, res),

@@ -19,15 +19,10 @@
 #include <eve/function/bit_floor.hpp>
 #include <eve/function/is_pow2.hpp>
 #include <eve/function/bit_mask.hpp>
-#include <eve/function/bit_not.hpp>
 #include <eve/function/bit_notand.hpp>
 #include <eve/function/bit_notor.hpp>
-#include <eve/function/bit_or.hpp>
 #include <eve/function/bit_ornot.hpp>
 #include <eve/function/bit_select.hpp>
-#include <eve/function/bit_shr.hpp>
-#include <eve/function/bit_shl.hpp>
-#include <eve/function/bit_xor.hpp>
 #include <eve/function/countl_one.hpp>
 #include <eve/function/countr_one.hpp>
 #include <eve/function/countl_zero.hpp>

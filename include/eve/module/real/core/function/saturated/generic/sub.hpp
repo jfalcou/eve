@@ -29,7 +29,6 @@
 #include <eve/function/is_ltz.hpp>
 #include <eve/function/saturate.hpp>
 #include <eve/function/saturated.hpp>
-#include <eve/function/shr.hpp>
 
 #include <limits>
 
@@ -111,7 +110,7 @@ namespace eve::detail
           auto uy   = bit_cast(b, as(ux));
           u_t  res  = ux - uy;
 
-          ux = shr(ux, sizeof(elt_t) * 8 - 1) + u_t(valmax(eve::as<elt_t>()));
+          ux = (ux >> (sizeof(elt_t) * 8 - 1)) + u_t(valmax(eve::as<elt_t>()));
           return bit_cast(
               if_else(is_ltz(bit_cast(bit_and(bit_xor(ux, uy), bit_xor(ux, res)), as(a))), ux, res),
               as(a));
