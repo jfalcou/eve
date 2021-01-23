@@ -27,7 +27,7 @@ function(generate_test root rootpath dep file)
     target_compile_definitions( ${test} PUBLIC ${ARGV4})
   endif()
 
-  target_compile_options  ( ${test} PUBLIC ${_TestOptions} )
+  target_link_libraries(${test} PUBLIC eve_test)
 
   set_property( TARGET ${test}
                 PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
@@ -104,4 +104,13 @@ function(generate_test root rootpath dep file)
   endif()
 
   add_parent_target(${test})
+endfunction()
+
+##==================================================================================================
+## Setup a basic test
+##==================================================================================================
+function(make_unit root)
+  foreach(file ${ARGN})
+    generate_test(${root} "" "" ${file})
+  endforeach()
 endfunction()

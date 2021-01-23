@@ -8,9 +8,10 @@
 ##==================================================================================================
 include(CTest)
 include(config/dependencies)
+include(target/targets)
 include(test)
 
-# add_subdirectory(doc)
+add_subdirectory(doc)
 # add_subdirectory(exhaustive)
 
 # if( EVE_BUILD_RANDOM )

@@ -36,9 +36,6 @@ make_unit( "unit.api" memory/is_aligned.cpp )
 ## Function tests
 make_all_units(ROOT unit.api  NAME function/load  ARCH scalar simd TYPES ${all_types} )
 
-# make_units("function/simd/load/arithmetic"    "unit.api" ${all_types})
-# make_units("function/simd/load/logical"       "unit.api" ${all_types})
-
 ##==================================================================================================
 ## logical API tests
 make_all_units(ROOT unit.api      NAME logical  ARCH scalar simd  TYPES ${all_types} )
