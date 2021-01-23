@@ -11,8 +11,15 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/spy.hpp>
 #include <eve/as.hpp>
 #include <cstring>
+
+#if defined(SPY_COMPILER_IS_GCC)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wuninitialized"
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+#endif
 
 namespace eve
 {
@@ -37,3 +44,7 @@ namespace eve::detail
     }
   }
 }
+
+#if defined(SPY_COMPILER_IS_GCC)
+#pragma GCC diagnostic pop
+#endif

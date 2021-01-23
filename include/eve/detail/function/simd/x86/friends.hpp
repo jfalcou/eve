@@ -46,7 +46,6 @@ namespace eve::detail
     if constexpr( !ABI::is_wide_logical )
     {
       using l_t = logical<wide<T, N, ABI>>;
-      using m_t = typename l_t::storage_type;
       return l_t{~v.storage()};
     }
     else

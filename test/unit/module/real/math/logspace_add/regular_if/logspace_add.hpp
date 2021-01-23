@@ -44,16 +44,16 @@ TTS_CASE_TPL("Check eve::logspace_add[condition] behavior", EVE_TYPE)
   TTS_EQUAL(eve::logspace_add[ f ](tv, fv)     , tv);
 
   // Mixed case
-  eve::as_logical_t<T> m;
   bool k = true;
   #if defined(EVE_SIMD_TESTS)
+  eve::as_logical_t<T> m{false};
   for(std::size_t i=0;i<eve::cardinal_v<T>;++i)
   {
     m.set(i, k);
     k = !k;
   }
   #else
-  m = k;
+  eve::as_logical_t<T> m{k};
   #endif
 
   TTS_EQUAL(eve::logspace_add[ m ](tv, fv) , eve::if_else(m, eve::logspace_add(tv, fv), tv) );
