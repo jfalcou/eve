@@ -291,4 +291,15 @@ TTS_CASE_TPL("top_bits first_true", EVE_TYPE)
   TTS_EXPECT_NOT(eve::detail::first_true(top_bits(x)));
 }
 
+TTS_CASE_TPL("top_bits count_true", EVE_TYPE)
+{
+  top_bits_interesting_cases<T>([&](auto x) {
+    std::ptrdiff_t expected = 0;
+    for (int i = 0; i != x.static_size; ++i) expected += x[i];
+
+    top_bits mmask{x};
+    TTS_EQUAL(expected, eve::detail::count_true(mmask));
+  });
+}
+
 #endif  // defined(SPY_ARCH_IS_AMD64) && !defined(EVE_NO_SIMD) && !defined(SPY_SIMD_IS_X86_AVX512)
