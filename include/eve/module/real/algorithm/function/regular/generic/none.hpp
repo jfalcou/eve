@@ -29,4 +29,10 @@ namespace eve::detail
       return !eve::any(v);
     }
   }
+
+  template<simd_value T, relative_conditional_expr C>
+  EVE_FORCEINLINE bool none_(EVE_SUPPORTS(cpu_), C const &cond, T const &v) noexcept
+  {
+    return !eve::any[cond](v);
+  }
 }

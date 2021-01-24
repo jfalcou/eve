@@ -18,13 +18,13 @@
 
 TTS_CASE_TPL("Check eve::nbtrue return type", EVE_TYPE)
 {
-  TTS_EXPR_IS( (eve::nbtrue(eve::logical<T>())) , std::size_t);
-  TTS_EXPR_IS( (eve::nbtrue(T()))               , std::size_t);
+  TTS_EXPR_IS( (eve::nbtrue(eve::logical<T>())) , std::ptrdiff_t);
+  TTS_EXPR_IS( (eve::nbtrue(T()))               , std::ptrdiff_t);
 }
 
 TTS_CASE_TPL("Check eve::nbtrue behavior on arithmetic", EVE_TYPE)
 {
-  auto cardinal = static_cast<std::size_t>(EVE_CARDINAL);
+  auto cardinal = EVE_CARDINAL;
 
   TTS_EQUAL(eve::nbtrue(T(1)), cardinal);
   TTS_EQUAL(eve::nbtrue(T(0)), 0u);
@@ -40,11 +40,11 @@ TTS_CASE_TPL("Check eve::nbtrue behavior on arithmetic", EVE_TYPE)
   }
 
 #if defined(EVE_SIMD_TESTS)
-  for(std::size_t j=0; j<cardinal; ++j)
+  for(std::ptrdiff_t j=0; j<cardinal; ++j)
   {
     T rhs1,rhs2, rhs3, rhs4;
 
-    for(std::size_t i=0; i<cardinal; ++i)
+    for(std::ptrdiff_t i=0; i<cardinal; ++i)
     {
       rhs1.set(i, i >= j ? 1 : 0);
       rhs2.set(i, i <= j ? 0 : 1);
@@ -52,17 +52,17 @@ TTS_CASE_TPL("Check eve::nbtrue behavior on arithmetic", EVE_TYPE)
       rhs4.set(i, i == j ? 0 : 1);
     }
 
-    TTS_EQUAL(eve::nbtrue(rhs1), std::size_t(cardinal-j)  );
-    TTS_EQUAL(eve::nbtrue(rhs2), std::size_t(cardinal-j-1));
+    TTS_EQUAL(eve::nbtrue(rhs1), (cardinal-j)  );
+    TTS_EQUAL(eve::nbtrue(rhs2), (cardinal-j-1));
     TTS_EQUAL(eve::nbtrue(rhs3), 1u                       );
-    TTS_EQUAL(eve::nbtrue(rhs4), std::size_t(cardinal-1u) );
+    TTS_EQUAL(eve::nbtrue(rhs4), (cardinal-1u) );
   }
 #endif
 }
 
 TTS_CASE_TPL("Check eve::nbtrue behavior on logical", EVE_TYPE)
 {
-  auto cardinal = static_cast<std::size_t>(EVE_CARDINAL);
+  auto cardinal = EVE_CARDINAL;
 
   TTS_EQUAL(eve::nbtrue(eve::true_(eve::as<T>())) , cardinal);
   TTS_EQUAL(eve::nbtrue(eve::false_(eve::as<T>())), 0u      );
