@@ -11,7 +11,6 @@
 #pragma once
 
 #include <eve/function/sqr.hpp>
-#include <eve/function/is_equal.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/derivative.hpp>
@@ -27,8 +26,8 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
     {
       return if_else(is_eqz(n), sqr(x),
-                     if_else(is_equal(n, one(as(n))), x+x,
-                             if_else(is_equal(n, N(2)), T(2), zero)));
+                     if_else(n == one(as(n)), x+x,
+                             if_else(n == N(2), T(2), zero)));
     }
     else
       return apply_over(diff_1st(sqr), x, n);

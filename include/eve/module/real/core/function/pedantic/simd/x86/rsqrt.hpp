@@ -13,20 +13,6 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
-#include <eve/constant/smallestposval.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/frexp.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_denormal.hpp>
-#include <eve/function/is_equal.hpp>
-#include <eve/function/is_odd.hpp>
-#include <eve/function/ifrexp.hpp>
-#include <eve/function/pedantic/ldexp.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/mul.hpp>
-#include <eve/constant/inf.hpp>
-#include <type_traits>
 #include <eve/concept/value.hpp>
 
 namespace eve::detail

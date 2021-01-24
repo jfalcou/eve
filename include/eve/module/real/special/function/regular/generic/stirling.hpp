@@ -72,7 +72,7 @@ namespace eve::detail
         y = if_else(test, y, y * v); /* Avoid overflow in pow() */
         y *= Sqrt_2pi * w;
 #ifndef BOOST_SIMD_NO_INFINITIES
-        y = if_else(is_equal(a0, inf(eve::as<T>())), a0, y);
+        y = if_else(a0 == inf(eve::as<T>()), a0, y);
 #endif
         return if_else(a0 > Stirlinglargelim, inf(eve::as<T>()), y);
       }

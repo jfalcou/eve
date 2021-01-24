@@ -19,9 +19,7 @@
 #include <eve/function/pedantic/ifrexp.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_denormal.hpp>
-#include <eve/function/is_equal.hpp>
 #include <eve/function/is_odd.hpp>
-#include <eve/function/is_less.hpp>
 #include <eve/function/pedantic/ldexp.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/dec.hpp>

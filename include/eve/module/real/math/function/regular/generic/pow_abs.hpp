@@ -26,9 +26,7 @@
 #include <eve/function/frexp.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_flint.hpp>
-#include <eve/function/is_equal.hpp>
 #include <eve/function/is_eqz.hpp>
-#include <eve/function/is_greater.hpp>
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/is_infinite.hpp>
 #include <eve/function/is_nan.hpp>
@@ -36,9 +34,7 @@
 #include <eve/function/is_nez.hpp>
 #include <eve/function/is_odd.hpp>
 #include <eve/function/log.hpp>
-#include <eve/function/logical_and.hpp>
 #include <eve/function/logical_andnot.hpp>
-#include <eve/function/logical_or.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/module/real/math/detail/generic/pow_kernel.hpp>
@@ -101,7 +97,7 @@ namespace eve::detail
     auto large = (yi > T(largelimit));
     if constexpr(real_scalar_value<T> )
     {
-      if(large) return is_less(ax, one(as(x))) ? T(0) : inf(as(x));
+      if(large) return (ax < one(as(x))) ? T(0) : inf(as(x));
     }
     else
       yi =  if_else(large, eve::one, yi);
@@ -119,7 +115,7 @@ namespace eve::detail
     z *= russian(ax, uint_(yi));
     if constexpr(!real_scalar_value<T> )
     {
-      z =  if_else(large, if_else(is_less(ax, one(as(x))), zero, inf(as(x))), z);
+      z =  if_else(large, if_else(ax < one(as(x)), zero, inf(as(x))), z);
       z =  if_else(iseqzx && ylt0, zero, z);
       z =  if_else(is_infinite(ax), inf(as(x)), z);
       z =  if_else(ylt0, rec(z), z);

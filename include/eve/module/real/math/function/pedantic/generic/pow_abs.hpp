@@ -29,9 +29,7 @@
 #include <eve/function/pedantic/ldexp.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_flint.hpp>
-#include <eve/function/is_equal.hpp>
 #include <eve/function/is_eqz.hpp>
-#include <eve/function/is_greater.hpp>
 #include <eve/function/is_gez.hpp>
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/is_flint.hpp>
@@ -40,9 +38,7 @@
 #include <eve/function/is_nez.hpp>
 #include <eve/function/is_odd.hpp>
 #include <eve/function/log.hpp>
-#include <eve/function/logical_and.hpp>
 #include <eve/function/logical_andnot.hpp>
-#include <eve/function/logical_or.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/module/real/math/detail/generic/pow_kernel.hpp>
@@ -89,8 +85,8 @@ namespace eve::detail
     // Test the power of 2 for over/underflow
     const T Powlargelim = Ieee_constant<T, 0x44ffe000U, 0x40cfff8000000000ULL>();
     const T Powlowlim   = Ieee_constant<T, 0xc5160000U, 0xc0d0c7c000000000ULL>();
-    auto    inf_ret     = is_greater(w, Powlargelim);
-    auto    zer_ret     = is_less(w, Powlowlim);
+    auto    inf_ret     = (w > Powlargelim);
+    auto    zer_ret     = (w < Powlowlim);
     auto    e           = int_(w);
     Wb                  = W - Wb;
     auto test           = is_gtz(Wb);
@@ -104,14 +100,14 @@ namespace eve::detail
     z                   = pedantic(ldexp)(z, i);
     if constexpr( eve::platform::supports_infinites )
     {
-      auto gtax1 = is_greater(ax, one(eve::as<T>()));
-      z          = if_else(is_equal(b, inf(eve::as<T>())), if_else(gtax1, inf(eve::as<T>()), eve::zero), z);
-      z          = if_else(is_equal(b, minf(eve::as<T>())), if_else(gtax1, eve::zero, inf(eve::as<T>())), z);
-      z = if_else(is_equal(ax, inf(eve::as<T>())), if_else(is_gtz(b), inf(eve::as<T>()), binarize(is_gez(b))), z);
+      auto gtax1 = (ax > one(eve::as<T>()));
+      z          = if_else(b == inf(eve::as<T>()), if_else(gtax1, inf(eve::as<T>()), eve::zero), z);
+      z          = if_else(b == minf(eve::as<T>()), if_else(gtax1, eve::zero, inf(eve::as<T>())), z);
+      z = if_else(ax == inf(eve::as<T>()), if_else(is_gtz(b), inf(eve::as<T>()), binarize(is_gez(b))), z);
     }
     z = if_else(zer_ret, eve::zero, z);
     z = if_else(inf_ret, inf(eve::as<T>()), z);
-    z = if_else(is_equal(ax, one(eve::as<T>())), ax, z);
+    z = if_else(ax ==  one(eve::as<T>()), ax, z);
 
     z = if_else(is_eqz(a), if_else(is_ltz(b), eve::inf(eve::as<T>()), binarize(is_eqz(b))), z);
     if constexpr( eve::platform::supports_invalids )
