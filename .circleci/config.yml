@@ -99,7 +99,7 @@ jobs:
       - checkout
       - run:
           name: Running SIMD Tests - AVX2
-          command: VARIANT="avx2" OPTIONS="-mavx2 -O3" . ./.circleci/perform.sh
+          command: VARIANT="avx2" OPTIONS="-mavx2 -O3 -fsanitize=address" LINKER_OPTIONS="-fsanitize=address" . ./.circleci/perform.sh
 
   x86_avx512:
     <<: *config_gcc_x86
@@ -172,14 +172,14 @@ workflows:
       - arm_aarch64_neon128
       - arm_aarch64_neon64
       - x86_sse2
-      - x86_avx
+      - x86_avx2
       - x86_avx512
       - x86_sse4:
           requires:
             - x86_sse2
-      - x86_avx2:
+      - x86_avx:
           requires:
-            - x86_avx
+            - x86_avx2
       - x86_avx512_256:
           requires:
             - x86_avx512
@@ -203,4 +203,4 @@ workflows:
             - x86_emulation
       - x86_fma:
           requires:
-            - x86_avx2
+            - x86_avx
