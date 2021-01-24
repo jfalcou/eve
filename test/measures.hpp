@@ -19,7 +19,7 @@ namespace eve
   {
     auto check = [=]<std::size_t... I>(std::index_sequence<I...> const&)
     {
-      return (true && ... && (l[I] == r[I]));
+      return (true && ... && (l.get(I) == r.get(I)));
     };
 
     return check( std::make_index_sequence<N::value>{});
@@ -48,7 +48,7 @@ namespace tts
   {
     double max_ulp = 0;
     for(auto i = 0; i < l.size(); ++i)
-      max_ulp = std::max(max_ulp, tts::ulp_distance(T(l[ i ]), T(r[ i ])));
+      max_ulp = std::max(max_ulp, tts::ulp_distance(T(l.get(i)), T(r.get(i))));
 
     return max_ulp;
   }
@@ -64,7 +64,7 @@ namespace tts
   {
     double max_ulp = 0;
     for(auto i = 0; i < l.size(); ++i)
-      max_ulp = std::max(max_ulp, tts::relative_distance(T(l[ i ]), T(r[ i ])));
+      max_ulp = std::max(max_ulp, tts::relative_distance(T(l.get(i)), T(r.get(i))));
 
     return max_ulp;
   }
@@ -80,7 +80,7 @@ namespace tts
   {
     double max_ulp = 0;
     for(auto i = 0; i < l.size(); ++i)
-      max_ulp = std::max(max_ulp, tts::absolute_distance(T(l[ i ]), T(r[ i ])));
+      max_ulp = std::max(max_ulp, tts::absolute_distance(T(l.get(i)), T(r.get(i))));
 
     return max_ulp;
   }
