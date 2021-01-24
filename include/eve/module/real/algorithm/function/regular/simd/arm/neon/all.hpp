@@ -21,7 +21,7 @@ namespace eve::detail
   {
     if constexpr( N::value == 1 )
     {
-      return v0[0];
+      return v0.get(0);
     }
     else
     {

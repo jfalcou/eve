@@ -59,14 +59,14 @@ namespace eve::detail
       else
       {
         std::size_t res{0};
-        detail::apply<Wide::static_size>( [&](auto... I) { ((res|=(p[I] << I)),...); });
+        detail::apply<Wide::static_size>( [&](auto... I) { ((res|=(p.get(I) << I)),...); });
         return std::bitset<Wide::static_size>{res};
       }
     }
     else
     {
       std::bitset<Wide::static_size> res{0};
-      detail::apply<Wide::static_size>( [&](auto... I) { (res.set(I,p[I]),...); });
+      detail::apply<Wide::static_size>( [&](auto... I) { (res.set(I,p.get(I)),...); });
       return res;
     }
   }

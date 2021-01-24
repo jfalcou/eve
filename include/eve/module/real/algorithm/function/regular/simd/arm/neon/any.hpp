@@ -21,7 +21,7 @@ namespace eve::detail
   {
     if constexpr( N::value == 1 )
     {
-      return v0[0];
+      return v0.get(0);
     }
     else
     {
@@ -30,7 +30,7 @@ namespace eve::detail
 
       auto m = as_uint32.bits();
       m = vorr_u32(m, vrev64_u32(m));
-      return static_cast<bool>(m[0]);
+      return static_cast<bool>(m.get(0));
     }
   }
 

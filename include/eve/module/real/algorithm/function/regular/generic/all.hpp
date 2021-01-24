@@ -64,7 +64,7 @@ namespace eve::detail
 
       std::ptrdiff_t first = cond.offset(eve::as_<T>{});
       std::ptrdiff_t last = first + cond.count(eve::as_<T>{});
-      while (first != last) res = res && v[first++];
+      while (first != last) res = res && v.get(first++);
 
       return res;
     }
