@@ -106,8 +106,6 @@ namespace eve
     //==============================================================================================
     // array-like interface - only available on wide
     //==============================================================================================
-    using detail::wide_ops<wide>::operator[];
-
     EVE_FORCEINLINE auto  begin()       noexcept { return detail::at_begin(*this); }
     EVE_FORCEINLINE auto  begin() const noexcept { return detail::at_begin(*this); }
 

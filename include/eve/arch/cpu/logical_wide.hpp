@@ -125,11 +125,6 @@ namespace eve
     using detail::wide_ops<logical>::operator=;
 
     //==============================================================================================
-    // array-like interface
-    //==============================================================================================
-    using detail::wide_ops<logical>::operator[];
-
-    //==============================================================================================
     // Convertion from logical to other formats (mask, bits, bitmap)
     //==============================================================================================
     EVE_FORCEINLINE auto bits()   const noexcept { return detail::to_bits(EVE_CURRENT_API{},*this); }

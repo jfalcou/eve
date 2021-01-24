@@ -114,7 +114,7 @@ namespace eve::detail
       detail::insert(self(), i, v);
     }
 
-    EVE_FORCEINLINE auto operator[](std::size_t i) const noexcept
+    EVE_FORCEINLINE auto get(std::size_t i) const noexcept
     {
       return detail::extract(self(), i);
     }
