@@ -51,7 +51,7 @@ TTS_CASE_TPL("Check top bits from logical", EVE_TYPE)
 
     for (std::ptrdiff_t j = 0; j != test.static_size; ++j)
     {
-      TTS_EQUAL(test[j], mmask.get(j));
+      TTS_EQUAL(test.get(j), mmask.get(j));
     }
 
     test.set(i, false);

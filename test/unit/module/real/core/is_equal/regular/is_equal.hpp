@@ -69,7 +69,7 @@ TTS_CASE_TPL("Check eve::is_equal behavior", EVE_TYPE)
   #if defined(EVE_SIMD_TESTS)
   logical<T> mixed1([](auto i, auto) { return i%3 == 0; });
   logical<T> mixed2([](auto i, auto) { return i%2 == 0; });
-  logical<T> ref([mixed1,mixed2](auto i, auto) { return mixed1[i] == mixed2[i]; });
+  logical<T> ref([mixed1,mixed2](auto i, auto) { return mixed1.get(i) == mixed2.get(i); });
 
   TTS_EQUAL( eve::is_equal(mixed1,mixed2), ref);
   #endif
@@ -97,7 +97,7 @@ TTS_CASE_TPL("Check eve::operator== behavior", EVE_TYPE)
   #if defined(EVE_SIMD_TESTS)
   logical<T> mixed1([](auto i, auto) { return i%3 == 0; });
   logical<T> mixed2([](auto i, auto) { return i%2 == 0; });
-  logical<T> ref([mixed1,mixed2](auto i, auto) { return mixed1[i] == mixed2[i]; });
+  logical<T> ref([mixed1,mixed2](auto i, auto) { return mixed1.get(i) == mixed2.get(i); });
 
   TTS_EQUAL( (mixed1 == mixed2), ref);
   #endif
