@@ -10,5 +10,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/cauchy.hpp>
-#include <eve/module/real/stats/function/diff/generic/exponential.hpp>
+#include <eve/arch.hpp>
+#include <eve/detail/overload.hpp>
+
+#include <eve/function/probas_attributes.hpp>
+#include <eve/module/real/proba/function/regular/generic/cauchy.hpp>

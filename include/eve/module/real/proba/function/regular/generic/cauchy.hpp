@@ -17,64 +17,157 @@
 #include <type_traits>
 #include <eve/concept/value.hpp>
 #include <eve/function/atanpi.hpp>
+#include <eve/function/is_gtz.hpp>
+#include <eve/function/is_eqz.hpp>
+#include <eve/function/is_ltz.hpp>
+#include <eve/function/fma.hpp>
+#include <eve/function/rec.hpp>
+#include <eve/function/sqr.hpp>
+#include <eve/function/tanpi.hpp>
+#include <eve/constant/one.hpp>
+#include <eve/constant/inf.hpp>
+#include <eve/constant/pi.hpp>
 
-namespace eve::detail
+namespace eve
 {
 
-  //  3 params x, m, s
-  template<floating_value T, floating_value U, floating_value V>
-  EVE_FORCEINLINE  auto cauchy_(EVE_SUPPORTS(cpu_)
-                              , T const &x
-                              , U const &m
-                              , V const &s ) noexcept
-  requires compatible_values<T, U> && compatible_values<T, V>
+  template < floating_real_value T>
+  struct cauchy
   {
-    return arithmetic_call(cauchy,x, m, s);
-  }
+    using is_distribution_t = void;
 
-  template<floating_value T>
-  EVE_FORCEINLINE auto cauchy_( EVE_SUPPORTS(cpu_)
-                             , T const &x
-                             , T const &m
-                             , T const &s
-                             ) noexcept
-
-  requires  has_native_abi_v<T>
-  {
-    return half(as(x)) + atanpi((x-m)/s);
-  }
-
-  //  2 params x,  m with s = 1
-  template<floating_value T, floating_value U>
-  EVE_FORCEINLINE  auto cauchy_(EVE_SUPPORTS(cpu_)
-                              , T const &x
-                              , U const &m) noexcept
-  requires compatible_values<T, U>
-  {
-    return arithmetic_call(cauchy,x,m);
-  }
-
-  template<floating_value T>
-  EVE_FORCEINLINE auto cauchy_( EVE_SUPPORTS(cpu_)
-                             , T const &x
-                             , T const &m
-                             ) noexcept
-
-  requires  has_native_abi_v<T>
-  {
-    return half(as(x)) + atanpi((x-m));
-  }
-
-  //  1 param x with s = 1,  m = 0
-  template<floating_value T>
-  EVE_FORCEINLINE auto cauchy_( EVE_SUPPORTS(cpu_)
-                             , T const &x
-                              ) noexcept
-  {
-    if constexpr(has_native_abi_v<T>)
+    template <  floating_real_value U>>
+    cauchy(T m_,  U s_)
+      requires  std::convertible_to<T, U>
+      : m(m_), s(T(s_))
     {
-      return half(as(x)) + atanpi(x);
+      EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
+      EVE_ASSERT(all(s_finite(m)), "m must be finite");
     }
-    else return apply_over(cauchy, x);
+
+    template <  floating_real_value U>>
+    cauchy(U m_,  T s_)
+      requires  std::convertible_to<T, U>
+      : m(T(m_)), s(s_)
+    {
+      EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
+      EVE_ASSERT(all(s_finite(m)), "m must be finite");
+    }
+
+    cauchy(T m_,  T s_) : m(m_), s(s_){
+      EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
+      EVE_ASSERT(all(s_finite(m)), "m must be finite");
+    }
+
+    cauchy(T m__) : m(m_), s(T(1)){
+      EVE_ASSERT(all(s_finite(m)), "m must be finite");
+    }
+
+    cauchy() : m(T(0)), s(T(1))   {}
+
+    T m, s;
+  };
+
+
+  namespace detail
+  {
+   //////////////////////////////////////////////////////
+    /// cdf
+    template<floating_value T, floating_value U>
+    EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
+                              , cauchy<T> const &expo
+                              , U const &x ) noexcept
+    requires compatible_values<T, U>
+    {
+      return arithmetic_call(cdf, expo, x);
+    }
+
+    template<floating_value T>
+    EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
+                              , cauchy<T> const &expo
+                              , T const &x ) noexcept
+    {
+      return half(as(x)) + atanpi((x-expo.m)/expo.s);;
+    }
+
+    //////////////////////////////////////////////////////
+    /// pdf
+    template<floating_value T, floating_value U>
+    EVE_FORCEINLINE  auto pdf_(EVE_SUPPORTS(cpu_)
+                              , cauchy<T> const &expo
+                              , U const &x ) noexcept
+    requires compatible_values<T, U>
+    {
+      return arithmetic_call(pdf, expo, x);
+    }
+
+    template<floating_value T>
+    EVE_FORCEINLINE  auto pdf_(EVE_SUPPORTS(cpu_)
+                              , cauchy<T> const &expo
+                              , T const &x ) noexcept
+    {
+      auto xmm = pi(as(x))*(x-expo.m);
+      auto tmp = pi(as(x))*rec(fma(xmm, xmm, sqr(expo.s)));
+    }
+
+    //////////////////////////////////////////////////////
+    /// invcdf
+    template<floating_value T, floating_value U>
+    EVE_FORCEINLINE  auto invcdf_(EVE_SUPPORTS(cpu_)
+                                 , cauchy<T> const &expo
+                                 , U const &x ) noexcept
+    requires compatible_values<T, U>
+    {
+      return arithmetic_call(invcdf, expo, x);
+    }
+
+    template<floating_value T>
+    EVE_FORCEINLINE  auto invcdf_(EVE_SUPPORTS(cpu_)
+                                 , cauchy<T> const &expo
+                                 , T const &x ) noexcept
+    {
+      auto tmp = fma(tanpi(x-half(as(x))), expo.s, expo.m);
+      // as x is restricted to [0,  1] limits values at 0 and 1 are properly defined
+      tmp = if_else(is_eqz(x), minf(as(x)), tmp);
+      tmp = if_else(x == one(as(x)), inf(as(x)), tmp);
+      return if_else(is_ltz(x) || x > one(as(x)), allbits, tmp);
+    }
+
+    //////////////////////////////////////////////////////
+    /// median
+    template<floating_value T>
+    EVE_FORCEINLINE  auto median_(EVE_SUPPORTS(cpu_)
+                                 , cauchy<T> const &expo) noexcept
+    {
+      return expo.m;
+    }
+
+    //////////////////////////////////////////////////////
+    /// mode
+    template<floating_value T>
+    EVE_FORCEINLINE  auto mode_(EVE_SUPPORTS(cpu_)
+                               , cauchy<T> const &) noexcept
+    {
+      return expo.m;
+    }
+
+    //////////////////////////////////////////////////////
+    /// entropy
+    template<floating_value T>
+    EVE_FORCEINLINE  auto entropy_(EVE_SUPPORTS(cpu_)
+                                  , cauchy<T> const & expo) noexcept
+    {
+      return log(4*pi(as(expo.s))*expo.s);
+    }
+
+    //////////////////////////////////////////////////////
+    /// fisher
+    template<floating_value T>
+    EVE_FORCEINLINE  auto fisher_(EVE_SUPPORTS(cpu_)
+                                 , cauchy<T> const & expo) noexcept
+    {
+      return rec(2*sqr(expo.s));
+    }
+
   }
 }
