@@ -1,7 +1,6 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
   Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
@@ -9,14 +8,13 @@
 **/
 //==================================================================================================
 #pragma once
-
-#include <eve/detail/overload.hpp>
-
-namespace eve
-{
-  EVE_MAKE_CALLABLE(exponential_, exponential);
-}
-
-#include <eve/module/real/stats/function/regular/generic/exponential.hpp>
-#include <eve/module/real/stats/function/diff/generic/exponential.hpp>
-#include <eve/module/real/stats/function/attributes/generic/exponential.hpp>
+// **=======================================================
+// helper file to include all arithmetic functions
+#include <eve/function/exp.hpp>
+#include <eve/function/exp10.hpp>
+#include <eve/function/exp2.hpp>
+#include <eve/function/expm1.hpp>
+#include <eve/function/log.hpp>
+#include <eve/function/log10.hpp>
+#include <eve/function/log2.hpp>
+#include <eve/function/log1p.hpp>
