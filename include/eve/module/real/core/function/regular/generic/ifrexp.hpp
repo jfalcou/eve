@@ -43,7 +43,7 @@ namespace eve::detail
     if constexpr(has_native_abi_v<T>)
     {
       using elt_t = element_type_t<T>;
-      auto r1   = bit_and(exponentmask(as<T>()), a0);
+      auto r1   = bit_and(exponentmask(as<T>()),  a0);
       auto x    = bit_notand(exponentmask(as<T>()), a0);
       return  std::make_tuple( bit_or(half(eve::as<T>()), x)
                              , bit_shr(r1,nbmantissabits(eve::as<elt_t>())) - maxexponentm1(eve::as<elt_t>()));

@@ -30,7 +30,7 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-      auto z =  bit_and(exponentmask(as<T>()), a);
+      auto z = bit_and(exponentmask(as<T>()), a);
       if constexpr(scalar_value<T>)
       {
         if (is_not_finite(a)) return as_integer_t<T>(0);

@@ -11,7 +11,6 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
-#include <eve/function/bit_and.hpp>
 #include <eve/function/trunc.hpp>
 #include <eve/function/floor.hpp>
 #include <eve/concept/value.hpp>
@@ -30,7 +29,7 @@ namespace eve::detail
         return (b-floor(b))*T(4);
       }
       else if constexpr(integral_value<T>)
-        return bit_and(a, T(3));
+        return (a & T(3));
     }
     else
       return apply_over(quadrant, a);

@@ -11,12 +11,9 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
-#include <eve/function/bit_and.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/is_even.hpp>
 #include <eve/function/is_nez.hpp>
-#include <eve/function/logical_and.hpp>
-#include <eve/function/logical_not.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
@@ -41,4 +38,3 @@ namespace eve::detail
     else return apply_over(is_odd, a);
   }
 }
-

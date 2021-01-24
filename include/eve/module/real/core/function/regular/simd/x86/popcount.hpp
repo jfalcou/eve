@@ -14,7 +14,6 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/as.hpp>
-#include <eve/function/bit_and.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_shr.hpp>
 

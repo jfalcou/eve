@@ -11,7 +11,6 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
-#include <eve/function/bit_and.hpp>
 #include <eve/constant/mantissa_bits.hpp>
 #include <eve/detail/apply_over.hpp>
 
@@ -23,7 +22,7 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-      return bit_and(Mantissabits_mask<T>(), a);
+      return (Mantissabits_mask<T>()&& a);
     }
     else return apply_over(bit_mantissa, a);
   }
