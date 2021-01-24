@@ -74,7 +74,7 @@ TTS_CASE_TPL("ignore_last behavior", TTS_NUMERIC_TYPES)
   for(std::size_t i = 1;i <= type::static_size;i++)
   {
     logical<type> mref  = [i](std::size_t j, std::size_t c) { return j < c-i; };
-    type          ref   = [i,&value](std::size_t j, std::size_t c) { return (j < c-i) ? value[j] : 69; };
+    type          ref   = [i,&value](std::size_t j, std::size_t c) { return (j < c-i) ? value.get(j) : 69; };
 
     TTS_EQUAL( ignore_last(i).mask(as_<type>()).bits(), mref.bits() );
     TTS_EQUAL( (if_else(ignore_last(i),value, type(69))), ref);
@@ -106,7 +106,7 @@ TTS_CASE_TPL("keep_last behavior", TTS_NUMERIC_TYPES)
   for(std::size_t i = 1;i < type::static_size;i++)
   {
     logical<type> mref  = [i](std::size_t j, std::size_t c) { return j >= c-i; };
-    type          ref   = [i,&value](std::size_t j, std::size_t c) { return (j >= c-i) ? value[j] : 69.f; };
+    type          ref   = [i,&value](std::size_t j, std::size_t c) { return (j >= c-i) ? value.get(j) : 69.f; };
 
     TTS_EQUAL( keep_last(i).mask(as_<type>()).bits(), mref.bits() );
     TTS_EQUAL( (if_else(keep_last(i),value, type(69))), ref);
@@ -138,7 +138,7 @@ TTS_CASE_TPL("ignore_first behavior", TTS_NUMERIC_TYPES)
   for(std::size_t i = 1;i < type::static_size;i++)
   {
     logical<type> mref  = [i](std::size_t j, auto) { return j >= i; };
-    type          ref   = [i,&value](std::size_t j, auto) { return (j >= i) ? value[j] : 69.f; };
+    type          ref   = [i,&value](std::size_t j, auto) { return (j >= i) ? value.get(j) : 69.f; };
 
     TTS_EQUAL( ignore_first(i).mask(as_<type>()).bits(), mref.bits() );
     TTS_EQUAL( (if_else(ignore_first(i),value, type(69))), ref);
@@ -170,7 +170,7 @@ TTS_CASE_TPL("keep_first behavior", TTS_NUMERIC_TYPES)
   for(std::size_t i = 1;i < type::static_size;i++)
   {
     logical<type> mref  = [i](std::size_t j, auto) { return j < i; };
-    type          ref   = [i,&value](std::size_t j, auto) { return (j < i) ? value[j] : 69.f; };
+    type          ref   = [i,&value](std::size_t j, auto) { return (j < i) ? value.get(j) : 69.f; };
 
     TTS_EQUAL( keep_first(i).mask(as_<type>()).bits(), mref.bits() );
     TTS_EQUAL( (if_else(keep_first(i),value, type(69))), ref);
