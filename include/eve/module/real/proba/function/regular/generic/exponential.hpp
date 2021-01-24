@@ -19,6 +19,8 @@
 #include <eve/function/exp.hpp>
 #include <eve/function/expm1.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/function/is_gtz.hpp>
+#include <eve/function/is_finite.hpp>
 #include <eve/function/log.hpp>
 #include <eve/function/log1p.hpp>
 #include <eve/function/rec.hpp>
@@ -32,7 +34,15 @@ namespace eve::detail
   template < real_floating_value T>
   struct exponential
   {
-    T lambda = T(1);
+    using is_distribution_t = void;
+
+    exponential(T l) : lambda(l) {
+      EVE_ASSERT(all(is_gtz(l) && is_finite(l)), "lambda must be strictly positive and finite"); 
+    }
+    
+    exponential()    : lambda(T(1))   {}
+    
+    T lambda;
   };
 
   //////////////////////////////////////////////////////
