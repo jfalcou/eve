@@ -14,9 +14,9 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(cauchy_, cauchy);
+  EVE_MAKE_CALLABLE(exponential_, exponential);
 }
 
-#include <eve/module/real/stats/function/regular/generic/cauchy.hpp>
-#include <eve/module/real/stats/function/diff/generic/cauchy.hpp>
-#include <eve/module/real/stats/function/attributes/generic/cauchy.hpp>
+#include <eve/module/real/stats/function/regular/generic/exponential.hpp>
+#include <eve/module/real/stats/function/diff/generic/exponential.hpp>
+#include <eve/module/real/stats/function/attributes/generic/exponential.hpp>

@@ -11,4 +11,4 @@
 #pragma once
 
 #include <eve/function/cauchy.hpp>
-#include <eve/module/real/stats/function/diff/generic/cauchy.hpp>
+#include <eve/module/real/stats/function/diff/generic/exponential.hpp>

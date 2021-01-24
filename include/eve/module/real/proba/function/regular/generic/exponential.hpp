@@ -16,65 +16,180 @@
 #include <eve/platform.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
-#include <eve/function/atanpi.hpp>
+#include <eve/function/exp.hpp>
+#include <eve/function/expm1.hpp>
+#include <eve/function/if_else.hpp>
+#include <eve/function/log.hpp>
+#include <eve/function/log1p.hpp>
+#include <eve/function/rec.hpp>
+#include <eve/function/sqr.hpp>
+#include <eve/function/is_ltz.hpp>
+#include <eve/constant/log_2.hpp>
 
 namespace eve::detail
 {
 
-  //  3 params x, m, s
-  template<floating_value T, floating_value U, floating_value V>
-  EVE_FORCEINLINE  auto cauchy_(EVE_SUPPORTS(cpu_)
-                              , T const &x
-                              , U const &m
-                              , V const &s ) noexcept
-  requires compatible_values<T, U> && compatible_values<T, V>
+  template < real_floating_value T>
+  struct exponential
   {
-    return arithmetic_call(cauchy,x, m, s);
-  }
+    T lambda = T(1);
+  };
 
-  template<floating_value T>
-  EVE_FORCEINLINE auto cauchy_( EVE_SUPPORTS(cpu_)
-                             , T const &x
-                             , T const &m
-                             , T const &s
-                             ) noexcept
-
-  requires  has_native_abi_v<T>
-  {
-    return half(as(x)) + atanpi((x-m)/s);
-  }
-
-  //  2 params x,  m with s = 1
+  //////////////////////////////////////////////////////
+  /// cdf
   template<floating_value T, floating_value U>
-  EVE_FORCEINLINE  auto cauchy_(EVE_SUPPORTS(cpu_)
-                              , T const &x
-                              , U const &m) noexcept
+  EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
+                            , exponential<T> const &expo
+                            , U const &x ) noexcept
   requires compatible_values<T, U>
   {
-    return arithmetic_call(cauchy,x,m);
+    return arithmetic_call(cdf, expo, x);
   }
 
   template<floating_value T>
-  EVE_FORCEINLINE auto cauchy_( EVE_SUPPORTS(cpu_)
-                             , T const &x
-                             , T const &m
-                             ) noexcept
-
-  requires  has_native_abi_v<T>
+  EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
+                            , exponential<T> const &expo
+                            , T const &x ) noexcept
   {
-    return half(as(x)) + atanpi((x-m));
+    return expm1(-if_else(nt2::is_ltz(a0), zero, x*expo.lambda));
   }
 
-  //  1 param x with s = 1,  m = 0
+  //////////////////////////////////////////////////////
+  /// pdf
+  template<floating_value T, floating_value U>
+  EVE_FORCEINLINE  auto pdf_(EVE_SUPPORTS(cpu_)
+                            , exponential<T> const &expo
+                            , U const &x ) noexcept
+  requires compatible_values<T, U>
+  {
+    return arithmetic_call(pdf, expo, x);
+  }
+
   template<floating_value T>
-  EVE_FORCEINLINE auto cauchy_( EVE_SUPPORTS(cpu_)
-                             , T const &x
-                              ) noexcept
+  EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
+                            , exponential<T> const &expo
+                            , T const &x ) noexcept
   {
-    if constexpr(has_native_abi_v<T>)
-    {
-      return half(as(x)) + atanpi(x);
-    }
-    else return apply_over(cauchy, x);
+    return expo.lambda*exp(-expo.lambda*x);
   }
+
+  //////////////////////////////////////////////////////
+  /// invcdf
+  template<floating_value T, floating_value U>
+  EVE_FORCEINLINE  auto invcdf_(EVE_SUPPORTS(cpu_)
+                               , exponential<T> const &expo
+                               , U const &x ) noexcept
+  requires compatible_values<T, U>
+  {
+    return arithmetic_call(invcdf, expo, x);
+  }
+
+  template<floating_value T>
+  EVE_FORCEINLINE  auto invcdf_(EVE_SUPPORTS(cpu_)
+                               , exponential<T> const &expo
+                               , T const &p ) noexcept
+  {
+    return -log1p(-p)/expo.lambda;
+  }
+
+  //////////////////////////////////////////////////////
+  /// mgf
+  template<floating_value T, floating_value U>
+  EVE_FORCEINLINE  auto mgf_(EVE_SUPPORTS(cpu_)
+                            , exponential<T> const &expo
+                            , U const &x ) noexcept
+  requires compatible_values<T, U>
+  {
+    return arithmetic_call(mgf, expo, x);
+  }
+
+  template<floating_value T>
+  EVE_FORCEINLINE  auto mgf_(EVE_SUPPORTS(cpu_)
+                            , exponential<T> const &expo
+                            , T const &t ) noexcept
+  {
+    return if_else(t < expo.lambda, expo.lambda/(expo.lambda-t),  allbits);
+  }
+
+  //////////////////////////////////////////////////////
+  /// mean
+  template<floating_value T, floating_value U>
+  EVE_FORCEINLINE  auto mean_(EVE_SUPPORTS(cpu_)
+                             , exponential<T> const &expo) noexcept
+  requires compatible_values<T, U>
+  {
+    return rec(expo.lambda);
+  }
+
+
+  //////////////////////////////////////////////////////
+  /// median
+  template<floating_value T, floating_value U>
+  EVE_FORCEINLINE  auto median_(EVE_SUPPORTS(cpu_)
+                               , exponential<T> const &expo) noexcept
+  requires compatible_values<T, U>
+  {
+    return log_2(as<T>())*rec(expo.lambda);
+  }
+
+  //////////////////////////////////////////////////////
+  /// mode
+  template<floating_value T, floating_value U>
+  EVE_FORCEINLINE  auto mode_(EVE_SUPPORTS(cpu_)
+                             , exponential<T> const &expo) noexcept
+  requires compatible_values<T, U>
+  {
+    return zero(as<T>());
+  }
+
+  //////////////////////////////////////////////////////
+  /// mode
+  template<floating_value T, floating_value U>
+  EVE_FORCEINLINE  auto var_(EVE_SUPPORTS(cpu_)
+                            , exponential<T> const &expo) noexcept
+  requires compatible_values<T, U>
+  {
+    return sqr(rec(expo.lambda));
+  }
+
+  //////////////////////////////////////////////////////
+  /// skewness
+  template<floating_value T, floating_value U>
+  EVE_FORCEINLINE  auto skewness_(EVE_SUPPORTS(cpu_)
+                                 , exponential<T> const &) noexcept
+  requires compatible_values<T, U>
+  {
+    return T(2);
+  }
+
+  //////////////////////////////////////////////////////
+  /// kurtosis
+  template<floating_value T, floating_value U>
+  EVE_FORCEINLINE  auto kurtosis_(EVE_SUPPORTS(cpu_)
+                                 , exponential<T> const &) noexcept
+  requires compatible_values<T, U>
+  {
+    return T(6);
+  }
+
+  //////////////////////////////////////////////////////
+  /// entropy
+  template<floating_value T, floating_value U>
+  EVE_FORCEINLINE  auto entropy_(EVE_SUPPORTS(cpu_)
+                                , exponential<T> const & expo) noexcept
+  requires compatible_values<T, U>
+  {
+    return oneminus(log(expo.lambda));
+  }
+
+  //////////////////////////////////////////////////////
+  /// fisher
+  template<floating_value T, floating_value U>
+  EVE_FORCEINLINE  auto fisher_(EVE_SUPPORTS(cpu_)
+                               , exponential<T> const & expo) noexcept
+  requires compatible_values<T, U>
+  {
+    return  return sqr(rec(expo.lambda));
+  }
+
 }
