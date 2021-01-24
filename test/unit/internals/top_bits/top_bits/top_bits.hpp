@@ -121,7 +121,8 @@ TTS_CASE_TPL("bit operations", EVE_TYPE)
       // test bits to prevent NaN shenanigans
       {
         auto expected = eve::is_nez(x.bits() ^ y.bits());
-        TTS_EQUAL(top_bits{expected}.storage, (top_bits{x} ^ top_bits{y}).storage);
+        auto expected_tops = top_bits{expected};
+        TTS_EQUAL(expected_tops.storage, (top_bits{x} ^ top_bits{y}).storage);
       }
     }
   }
