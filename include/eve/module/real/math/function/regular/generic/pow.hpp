@@ -250,29 +250,35 @@ namespace eve::detail
         result *= a0;
       a1 >>= 1;
       a0 *= a0;
+      [[fallthrough]];
     case 5:
       if( a1 & 1 )
         result *= a0;
       a1 >>= 1;
       a0 *= a0;
+      [[fallthrough]];
     case 4:
       if( a1 & 1 )
         result *= a0;
       a1 >>= 1;
       a0 *= a0;
+      [[fallthrough]];
     case 3:
       if( a1 & 1 )
         result *= a0;
       a1 >>= 1;
       a0 *= a0;
+      [[fallthrough]];
     case 2:
       if( a1 & 1 )
         result *= a0;
       a1 >>= 1;
       a0 *= a0;
+      [[fallthrough]];
     case 1:
       if( a1 & 1 )
         result *= a0;
+      [[fallthrough]];
     default: return result;
     }
   }

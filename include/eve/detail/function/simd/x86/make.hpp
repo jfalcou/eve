@@ -13,7 +13,13 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/alias.hpp>
 #include <eve/detail/category.hpp>
+#include <eve/detail/spy.hpp>
 #include <eve/as.hpp>
+
+#if defined(SPY_COMPILER_IS_GCC)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wuninitialized"
+#endif
 
 namespace eve::detail
 {
@@ -222,3 +228,7 @@ namespace eve::detail
     }
   }
 }
+
+#if defined(SPY_COMPILER_IS_GCC)
+#pragma GCC diagnostic pop
+#endif

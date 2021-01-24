@@ -17,6 +17,13 @@
 #include <eve/detail/function/slice.hpp>
 #include <eve/detail/function/subscript.hpp>
 #include <eve/traits/element_type.hpp>
+#include <eve/detail/spy.hpp>
+
+#if defined(SPY_COMPILER_IS_GCC)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wuninitialized"
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+#endif
 
 namespace eve::detail
 {
@@ -157,3 +164,7 @@ namespace eve::detail
     EVE_FORCEINLINE Derived const&  self() const  { return static_cast<Derived const&>(*this); }
   };
 }
+
+#if defined(SPY_COMPILER_IS_GCC)
+#pragma GCC diagnostic pop
+#endif
