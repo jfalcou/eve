@@ -16,12 +16,9 @@
 namespace eve::detail
 {
   template<value T, integral_scalar_value I>
-  EVE_FORCEINLINE auto extract_(EVE_SUPPORTS(cpu_)
-                               , T const &a
-                               , I i) noexcept
+  EVE_FORCEINLINE auto extract_(EVE_SUPPORTS(cpu_), T const &a, I i) noexcept
   {
     if constexpr(scalar_value<T>) return a;
-    else                          return a[i];
+    else                          return a.get(i);
   }
 }
-
