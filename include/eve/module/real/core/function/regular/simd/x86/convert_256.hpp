@@ -37,7 +37,7 @@ namespace eve::detail
       auto[l,h] = v0.slice();
       auto ll = eve::convert(l,tgt);
       auto hh = eve::convert(h,tgt);
-      return eve::combine(ll,hh);
+      return wide<Out, N>(ll,hh);
     }
   }
 
@@ -197,7 +197,7 @@ namespace eve::detail
           auto[l,h] = v0.slice();
           auto ll = eve::convert(l,tgt);
           auto hh = eve::convert(h,tgt);
-          return eve::combine(ll,hh);
+          return wide<Out, N>(ll,hh);
         }
         else
         {
@@ -211,4 +211,3 @@ namespace eve::detail
     }
   }
 }
-

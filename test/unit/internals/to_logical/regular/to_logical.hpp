@@ -24,9 +24,9 @@ TTS_CASE_TPL("Check detail::to_logical over wide", EVE_TYPE)
   eve::as_logical_t<T> all_false(false);
   eve::as_logical_t<T> mixed_bool([](auto i, auto) { return i%2 == 0; });
 
-  TTS_EQUAL( eve::detail::to_logical(all_non_zero)   , all_true  );
-  TTS_EQUAL( eve::detail::to_logical(all_zero)  , all_false );
-  TTS_EQUAL( eve::detail::to_logical(mixed_values) , mixed_bool);
+  TTS_EQUAL( eve::detail::to_logical(all_non_zero), all_true  );
+  TTS_EQUAL( eve::detail::to_logical(all_zero)    , all_false );
+  TTS_EQUAL( eve::detail::to_logical(mixed_values), mixed_bool);
 }
 
 TTS_CASE_TPL("Check detail::to_logical over logical", EVE_TYPE)

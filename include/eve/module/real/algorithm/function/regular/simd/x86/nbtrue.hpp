@@ -14,6 +14,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/detail/concepts.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/top_bits.hpp>
 
 namespace eve::detail
 {

@@ -35,12 +35,12 @@ namespace eve::detail
       using storage_t = typename logical<wide<T, N, ABI>>::storage_type;
       using i_t       = typename storage_t::type;
 
-            if constexpr( c == category::float32x16 ) return mask16{i_t(~(_mm512_fpclass_ps_mask(v, m)))};
-      else  if constexpr( c == category::float64x8  ) return mask8 {i_t(~(_mm512_fpclass_pd_mask(v, m)))};
-      else  if constexpr( c == category::float32x8  ) return mask8 {i_t(~(_mm256_fpclass_ps_mask(v, m)))};
-      else  if constexpr( c == category::float64x4  ) return mask8 {i_t(~(_mm256_fpclass_pd_mask(v, m)))};
-      else  if constexpr( c == category::float32x4  ) return mask8 {i_t(~(_mm_fpclass_ps_mask   (v, m)))};
-      else  if constexpr( c == category::float64x2  ) return mask8 {i_t(~(_mm_fpclass_pd_mask   (v, m)))};
+            if constexpr( c == category::float32x16 ) return mask16{_mm512_cmpneq_ps_mask(v,z)};
+      else  if constexpr( c == category::float64x8  ) return mask8 {_mm512_cmpneq_pd_mask(v,z)};
+      else  if constexpr( c == category::float32x8  ) return mask8 {~i_t(_mm256_fpclass_ps_mask(v, m))};
+      else  if constexpr( c == category::float64x4  ) return mask8 {~i_t(_mm256_fpclass_pd_mask(v, m))};
+      else  if constexpr( c == category::float32x4  ) return mask8 {~i_t(_mm_fpclass_ps_mask   (v, m))};
+      else  if constexpr( c == category::float64x2  ) return mask8 {~i_t(_mm_fpclass_pd_mask   (v, m))};
       else  if constexpr( c == category::uint64x8   ) return mask8 {_mm512_cmpneq_epu64_mask(v,z)};
       else  if constexpr( c == category::uint64x4   ) return mask8 {_mm256_cmpneq_epu64_mask(v,z)};
       else  if constexpr( c == category::uint64x2   ) return mask8 {_mm_cmpneq_epu64_mask   (v,z)};

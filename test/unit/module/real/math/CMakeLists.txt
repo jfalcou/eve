@@ -14,6 +14,7 @@ add_custom_target(unit.real.math.exe                      )
 add_custom_target(unit.real.math.scalar.exe               )
 add_custom_target(unit.real.math.simd.exe                 )
 
+
 add_dependencies(unit.real.scalar.exe    unit.real.math.scalar.exe )
 add_dependencies(unit.real.simd.exe      unit.real.math.simd.exe   )
 add_dependencies(unit.real.math.exe      unit.real.math.scalar.exe )
@@ -64,7 +65,6 @@ make_all_units(ROOT unit.real.math NAME cscpi                 ARCH scalar simd T
 make_all_units(ROOT unit.real.math NAME deginrad              ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME exp                   ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME exp10                 ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME exp2                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.math NAME expm1                 ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME expx2                 ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME log                   ARCH scalar simd TYPES ${real_types}    )
@@ -72,10 +72,6 @@ make_all_units(ROOT unit.real.math NAME log10                 ARCH scalar simd T
 make_all_units(ROOT unit.real.math NAME log1p                 ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME log2                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME logspace_add          ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME logspace_sub          ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME lpnorm                ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME nthroot               ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME pow                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.math NAME pow_abs               ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME powm1                 ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME radindeg              ARCH scalar simd TYPES ${real_types}    )
@@ -100,3 +96,23 @@ make_all_units(ROOT unit.real.math NAME tan                   ARCH scalar simd T
 make_all_units(ROOT unit.real.math NAME tand                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME tanh                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME tanpi                 ARCH scalar simd TYPES ${real_types}    )
+
+## ================================================================================================
+# Targets that require more RAM to compile
+
+add_custom_target(unit.real.math.heavy.scalar.exe         )
+add_custom_target(unit.real.math.heavy.simd.exe           )
+add_custom_target(unit.real.math.heavy.exe                )
+
+add_dependencies(unit.real.math.heavy.exe      unit.real.math.heavy.scalar.exe )
+add_dependencies(unit.real.math.heavy.exe      unit.real.math.heavy.simd.exe   )
+add_dependencies(unit.real.math.scalar.exe     unit.real.math.heavy.scalar.exe )
+add_dependencies(unit.real.math.simd.exe       unit.real.math.heavy.simd.exe   )
+
+##=================================================================================================
+make_all_units(ROOT unit.real.math.heavy NAME nthroot       ARCH scalar simd TYPES ${real_types}    )
+make_all_units(ROOT unit.real.math.heavy NAME exp2          ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT unit.real.math.heavy NAME lpnorm        ARCH scalar simd TYPES ${real_types}    )
+make_all_units(ROOT unit.real.math.heavy NAME pow           ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT unit.real.math.heavy NAME logspace_sub  ARCH scalar simd TYPES ${real_types}    )
+##===================================================================================================

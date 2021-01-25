@@ -38,15 +38,16 @@ constexpr std::uint32_t mm_shuffle()
 {
   if constexpr(N() == 4) return _MM_SHUFFLE(0, 1, 2, 3);
   if constexpr(N() == 2) return _MM_SHUFFLE(3, 2, 0, 1);
+  return 0;
 }
 
 template <typename T, typename N, eve::x86_abi ABI>
 eve::wide<T, N, ABI> actual_reverse(eve::wide<T, N, ABI> x) requires(sizeof(T) == 4)
 {
-       if constexpr(std::same_as<ABI, eve::x86_128_>)
+  if constexpr(std::same_as<ABI, eve::x86_128_>)
   {
-    constexpr auto mask = mm_shuffle<N>();
-    return {_mm_shuffle_epi32(x.storage(), mask)};
+    using mask_t = std::integral_constant<std::uint32_t, mm_shuffle<N>()>;
+    return {_mm_shuffle_epi32(x.storage(), mask_t::value)};
   }
   else if constexpr(std::same_as<ABI, eve::x86_256_>)
   {
@@ -78,7 +79,9 @@ eve::wide<T, N, ABI> actual_reverse(eve::wide<T, N, ABI> x) requires(sizeof(T) =
 {
   auto raw = x.storage();
 
-       if constexpr(N() < 8) return {_mm_shufflelo_epi16(raw, mm_shuffle<N>())};
+    using mask_t = std::integral_constant<std::uint32_t, mm_shuffle<N>()>;
+
+       if constexpr(N() < 8) return {_mm_shufflelo_epi16(raw, mask_t::value)};
   else if constexpr(eve::current_api <= eve::sse3)  // N == 8
   {
      raw = _mm_shufflehi_epi16(raw, _MM_SHUFFLE(0, 1, 2, 3));

@@ -115,7 +115,7 @@ namespace eve::detail
             // clang can generate this from aggregate+above, but not gcc nor msvc
             wide<Out, fixed<4>> l = _mm_unpacklo_epi16( v0, mask );
             wide<Out, fixed<4>> h = _mm_unpackhi_epi16( v0, mask );
-            return eve::combine(l,h);
+            return wide<Out, N>(l,h);
           }
         }
         else if constexpr ( std::is_signed_v<In> )                      return _mm_cvtepi16_epi32(v0);
@@ -166,7 +166,7 @@ namespace eve::detail
             // clang can generate this from aggregate+above, but not gcc nor msvc
             wide<Out, fixed<8>> l = _mm_unpacklo_epi8( v0, mask );
             wide<Out, fixed<8>> h = _mm_unpackhi_epi8( v0, mask );
-            return eve::combine(l,h);
+            return wide<Out, N>(l,h);
           }
         }
       }
