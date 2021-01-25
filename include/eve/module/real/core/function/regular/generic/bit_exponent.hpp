@@ -23,7 +23,7 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-      return bit_and(exponentmask(as<T>()), a);
+      return (exponentmask(as<T>())&& a);
     }
     else return apply_over(bit_exponent, a);
   }

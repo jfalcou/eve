@@ -19,7 +19,6 @@
 #include <eve/function/fuzzy/floor.hpp>
 #include <eve/function/is_ltz.hpp>
 #include <eve/function/is_not_less_equal.hpp>
-#include <eve/function/minus.hpp>
 #include <eve/function/next.hpp>
 #include <eve/function/fuzzy.hpp>
 #include <eve/constant/maxflint.hpp>

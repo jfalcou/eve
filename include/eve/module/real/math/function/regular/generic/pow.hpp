@@ -32,7 +32,6 @@
 #include <eve/function/minus.hpp>
 #include <eve/function/pow_abs.hpp>
 #include <eve/function/rec.hpp>
-#include <eve/function/shr.hpp>
 #include <eve/function/sqr.hpp>
 
 namespace eve::detail
@@ -127,7 +126,7 @@ namespace eve::detail
       while( eve::any(expo) )
       {
         result *= if_else(is_odd(expo), base, T(1));
-        expo = shr(expo, 1);
+        expo = (expo >>1);
         base = sqr(base);
       }
       return result;

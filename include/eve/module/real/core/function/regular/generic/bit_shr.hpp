@@ -15,7 +15,7 @@
 #include <eve/detail/function/conditional.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/bit_cast.hpp>
-#include <eve/function/shr.hpp>
+
 
 #include <type_traits>
 
@@ -32,7 +32,7 @@ namespace eve::detail
         if constexpr( scalar_value<T> )
           return static_cast<T>(u_t(a) >> b);
         else if constexpr( simd_value<T> )
-          return bit_cast(shr(bit_cast(a, as_<u_t>()), int(b)), as(a));
+          return bit_cast(bit_cast(a, as_<u_t>()) >> int(b), as(a));
       }
       else
       {

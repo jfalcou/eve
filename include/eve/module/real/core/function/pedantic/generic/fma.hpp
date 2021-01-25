@@ -24,7 +24,6 @@
 #include <eve/function/maxmag.hpp>
 #include <eve/function/minmag.hpp>
 #include <eve/function/pedantic.hpp>
-#include <eve/function/shr.hpp>
 #include <eve/function/two_add.hpp>
 #include <eve/function/two_prod.hpp>
 

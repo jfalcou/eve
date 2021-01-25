@@ -19,7 +19,6 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_nan.hpp>
 #include <eve/function/pedantic.hpp>
-#include <eve/function/shr.hpp>
 #include <eve/platform.hpp>
 
 namespace eve::detail

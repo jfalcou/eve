@@ -11,8 +11,6 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
-#include <eve/function/bit_and.hpp>
-#include <eve/function/bit_not.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/concept/value.hpp>
@@ -27,17 +25,9 @@ namespace eve::detail
   {
    if constexpr(has_native_abi_v<T>)
     {
-      if constexpr(scalar_value<T>)
-      {
-        return a0 & inc(~a0);
-      }
-      else
-      {
-        return bit_and(a0, inc(bit_not(a0)));
-      }
+      return a0 & inc(~a0);
     }
     else return apply_over(firstbitset, a0);
   }
 
 }
-

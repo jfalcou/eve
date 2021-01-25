@@ -16,6 +16,7 @@
 #include <eve/function/dist.hpp>
 #include <eve/function/numeric/is_equal.hpp>
 #include <eve/function/is_unordered.hpp>
+#include <eve/function/numeric/is_equal.hpp>
 #include <eve/function/nb_values.hpp>
 #include <eve/constant/half.hpp>
 #include <eve/constant/nan.hpp>

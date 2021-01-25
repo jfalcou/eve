@@ -25,9 +25,9 @@ namespace eve
     {
       EVE_ASSERT( assert_good_shift<T>(s),
                   "[eve::bit_shr] Shifting by " << s
-                                                    << " is out of the range [0, "
-                                                    << sizeof(value_type_t<T>) * 8
-                                                    << "[."
+                                                << " is out of the range [0, "
+                                                << sizeof(value_type_t<T>) * 8
+                                                << "[."
                 );
     }
   }

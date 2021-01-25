@@ -12,7 +12,6 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/function/add.hpp>
-#include <eve/function/bit_and.hpp>
 #include <eve/function/bit_notand.hpp>
 #include <eve/function/bit_shr.hpp>
 #include <eve/function/is_denormal.hpp>

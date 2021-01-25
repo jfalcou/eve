@@ -24,7 +24,6 @@
 #include <eve/function/any.hpp>
 #include <eve/function/bit_and.hpp>
 #include <eve/function/bit_cast.hpp>
-#include <eve/function/bit_or.hpp>
 #include <eve/function/converter.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/fma.hpp>
@@ -36,8 +35,6 @@
 #include <eve/function/is_ngez.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/regular.hpp>
-#include <eve/function/shl.hpp>
-#include <eve/function/shr.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/sub.hpp>
 #include <eve/module/real/core/detail/generic/horn.hpp>
@@ -101,7 +98,7 @@ namespace eve::detail
         // Moreover all log2(exp2(i)) i =  1..31 are flint
         // I leave the code here in case an exotic proc will not play the game.
         //       T  hi = f - hfsq;
-        //       hi =  bit_and(hi, uiT(0xfffff000ull));
+        //       hi =  (hi & uiT(0xfffff000ull));
         //       T  lo = fma(s, hfsq+R, f - hi - hfsq);
         //       T r = (lo+hi)*detail::Invlog_2lo<T>() + lo*detail::Invlog_2hi<T>() +
         //       hi*detail::Invlog_2hi<T>() + k;
@@ -146,7 +143,7 @@ namespace eve::detail
         uiT hx = bit_cast(x, as<uiT>()) >> 32;
         hx += 0x3ff00000 - 0x3fe6a09e;
         k += bit_cast(hx >> 20, as<iT>()) - 0x3ff;
-        hx = (bit_and(hx, 0x000fffffull)) + 0x3fe6a09e;
+        hx = ((hx & 0x000fffffull)) + 0x3fe6a09e;
         x  = bit_cast(hx << 32 | (bit_and(bit_cast(x, as<uiT>()), 0xffffffffull)), as<T>());
 
         T f  = dec(x);
@@ -200,7 +197,7 @@ namespace eve::detail
         T Invlog_2lo = Ieee_constant<T, 0xb9389ad4U, 0x3de705fc2eefa200ULL>();
         T Invlog_2hi = Ieee_constant<T, 0x3fb8b000U, 0x3ff7154765200000ULL>();
         T hi         = f - hfsq;
-        hi           = bit_and(hi, (allbits(eve::as<uiT>()) << 32));
+        hi           = (hi & (allbits(eve::as<uiT>()) << 32));
         T lo         = fma(s, hfsq + R, f - hi - hfsq);
 
         T val_hi = hi * Invlog_2hi;
@@ -330,7 +327,7 @@ namespace eve::detail
       hx += 0x3ff00000 - 0x3fe6a09e;
       k += bit_cast(hx >> 20, as<iT>()) - 0x3ff;
       hx = (hx & 0x000fffff) + 0x3fe6a09e;
-      x  = bit_cast((uint64_t)hx << 32 | (bit_and(bit_cast(x, as<uiT>()), 0xffffffffull)), as<T>());
+      x  = bit_cast((uint64_t)hx << 32 | ((bit_cast(x, as<uiT>()) & 0xffffffffull)), as<T>());
       T f    = dec(x);
       T hfsq = 0.5 * sqr(f);
       T s    = f / (2.0f + f);

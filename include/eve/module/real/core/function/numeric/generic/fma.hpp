@@ -24,7 +24,6 @@
 #include <eve/function/maxmag.hpp>
 #include <eve/function/minmag.hpp>
 #include <eve/function/numeric.hpp>
-#include <eve/function/shr.hpp>
 #include <eve/function/two_add.hpp>
 #include <eve/function/two_prod.hpp>
 
@@ -55,7 +54,7 @@ namespace eve::detail
     {
       auto amax    = maxmag(a, b);
       auto amin    = minmag(a, b);
-      auto e0      = -shr(exponent(amax), 1);
+      auto e0      = -(exponent(amax) >> 1);
       amax         = pedantic(ldexp)(amax, e0);
       auto c0      = pedantic(ldexp)(c, e0);
       auto [p, rp] = two_prod(amax, amin);

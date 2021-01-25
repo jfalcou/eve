@@ -18,7 +18,6 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_not_less_equal.hpp>
 #include <eve/function/max.hpp>
-#include <eve/function/shr.hpp>
 #include <eve/platform.hpp>
 
 namespace eve::detail

@@ -37,8 +37,6 @@
 #include <eve/function/max.hpp>
 #include <eve/function/nearest.hpp>
 #include <eve/function/quadrant.hpp>
-#include <eve/function/shl.hpp>
-#include <eve/function/shr.hpp>
 #include <eve/module/real/math/detail/constant/rempio2_limits.hpp>
 #include <eve/module/real/math/detail/generic/workaround.hpp>
 #include <eve/traits/alignment.hpp>
@@ -202,7 +200,7 @@ namespace eve::detail
 
           tmp.hi = int32_t(t576 >> 32);
           tmp.lo = int32_t(t576 & 0x00000000FFFFFFFFULL);
-          tmp.hi -= shl(k.hi*24, 20);
+          tmp.hi -= (k.hi*24 << 20);
         }
         else
         {
@@ -210,10 +208,10 @@ namespace eve::detail
           k          = bit_shr(k, 20) & 2047;
           k          = eve::max((k - 450) / 24, 0);
           tmp   = bit_cast(ui64_t(t576), as_<i32_t>());
-          tmp -= shl(k * 24, 20);
+          tmp -= (k * 24 << 20);
           k      = eve::max(k, zero(as(k)));
         }
-        auto inds = shr(bit_cast(k, as<ui64_t>()), 32);
+        auto inds = (bit_cast(k, as<ui64_t>()) >> 32);
         auto tmp1 = bit_cast(tmp, as<T>());
 
         for( int i = 0; i < 6; ++i )
@@ -294,24 +292,24 @@ namespace eve::detail
       constexpr const double pi63 = 0x1.921FB54442D18p-62; /* 2PI * 2^-64.  */
       auto [sn, sr, dsr]          = rempio2_small(xx);
       auto xi                     = bit_cast(xx, as_<ui_t>());
-      auto index                  = bit_and(shr(xi, 26), 15);
+      auto index                  = ((xi >> 26) & 15);
       auto arr0                   = gather(eve::as_aligned<alg>(&__inv_pio4[0]), index);
       auto arr4 =      uint64(gather(eve::as_aligned<alg>(&__inv_pio4[0]), index + 4));
       auto arr8 =      uint64(gather(eve::as_aligned<alg>(&__inv_pio4[0]), index + 8));
 
-      auto shift  = bit_and(shr(xi, 23), 7);
+      auto shift  = ((xi >> 23) & 7);
       auto xii    = bit_or(bit_and(xi, 0xffffff), 0x800000);
-      xi    = shl(xii, shift);
+      xi    = (xii <<  shift);
 
       auto xi64   = uint64(xi);
       auto res0   = uint64(xi * arr0);
 
       wui_t res1  = xi64*arr4;
       wui_t res2  = xi64*arr8;
-      res0        = bit_or(shr(res2, 32), shl(res0, 32));
+      res0        = ((res2 >> 32) | (res0 << 32));
       res0 += res1;
 
-      auto n = shr((res0 + (1ULL << 61)), 62);
+      auto n = ((res0 + (1ULL << 61)) >> 62);
       res0   = res0 - (n << 62); // -= n << 62;
       auto tmp =  bit_cast(res0, as<i_t>());
       auto xx1  = float64(tmp);

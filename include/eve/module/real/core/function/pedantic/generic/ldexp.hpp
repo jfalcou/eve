@@ -19,7 +19,6 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/trunc.hpp>
 #include <eve/function/pedantic.hpp>
-#include <eve/function/shl.hpp>
 #include <eve/function/sub.hpp>
 #include <eve/constant/limitexponent.hpp>
 #include <eve/constant/minexponent.hpp>
@@ -53,11 +52,11 @@ namespace eve::detail
           e = sub[denormal]( e, minexponent(eve::as<elt_t>()));
           f = if_else(denormal, smallestposval(eve::as<elt_t>()), eve::one);
         }
-        auto test = is_equal(e, limitexponent(eve::as<elt_t>()));
+        auto test = (e == limitexponent(eve::as<elt_t>()));
         f = inc[test](f);
         e = dec[test](e);
         e += maxexponent(eve::as<elt_t>());
-        e = shl(e, nbmantissabits(eve::as<elt_t>()));
+        e <<=  nbmantissabits(eve::as<elt_t>());
         if constexpr(scalar_value<decltype(e)>)
           return a*bit_cast(e, as(elt_t()))*f;
         else

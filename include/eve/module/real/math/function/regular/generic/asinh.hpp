@@ -23,8 +23,6 @@
 #include <eve/function/hypot.hpp>
 #include <eve/function/log1p.hpp>
 #include <eve/function/log.hpp>
-#include <eve/function/is_equal.hpp>
-#include <eve/function/is_greater.hpp>
 #include <eve/function/nbtrue.hpp>
 #include <eve/constant/half.hpp>
 #include <eve/constant/log_2.hpp>
@@ -57,7 +55,7 @@ namespace eve::detail
         // remaining scalar case and all simd cases to avoid multiple computations as
         // this one is always ok
         T z = if_else(x_gt_oneosqrteps,dec(x), x+sqr(x)/eve::inc(hypot(one(eve::as<T>()), x)));
-        if constexpr(eve::platform::supports_infinites) z = if_else(is_equal(x, inf(eve::as<T>())), x, z);
+        if constexpr(eve::platform::supports_infinites) z = if_else((x == inf(eve::as<T>())), x, z);
         z =  add[x_gt_oneosqrteps](eve::log1p(z), log_2(eve::as<T>()));
         return bit_xor(z, bts);
       }

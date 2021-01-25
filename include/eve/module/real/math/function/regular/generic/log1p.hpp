@@ -21,9 +21,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/any.hpp>
-#include <eve/function/bit_and.hpp>
 #include <eve/function/bit_cast.hpp>
-#include <eve/function/bit_or.hpp>
 #include <eve/function/converter.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/inc.hpp>
@@ -34,8 +32,6 @@
 #include <eve/function/is_ngez.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/regular.hpp>
-#include <eve/function/shl.hpp>
-#include <eve/function/shr.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/sub.hpp>
 #include <eve/module/real/core/detail/generic/horn.hpp>
@@ -105,7 +101,7 @@ namespace eve::detail
         T c = if_else(k >= 2, oneminus(uf - a0), a0 - dec(uf)) / uf;
         hu  = (hu & 0x000fffffull) + 0x3fe6a09e;
         T f = bit_cast(bit_cast(hu << 32, as<uiT>())
-                           | (bit_and(bit_cast(uf, as<uiT>()), 0xffffffffull)),
+                           | ((bit_cast(uf, as<uiT>()) & 0xffffffffull)),
                        as<T>());
         f   = dec(f);
 
@@ -263,7 +259,7 @@ namespace eve::detail
         }
         hu = (hu & 0x000fffff) + 0x3fe6a09e;
         f  = bit_cast(bit_cast(hu << 32, as<uiT>())
-                         | (bit_and(bit_cast(uf, as<uiT>()), 0xffffffffull)),
+                         | ((bit_cast(uf, as<uiT>())& 0xffffffffull)),
                      as<T>());
         f  = dec(f);
       }

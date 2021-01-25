@@ -165,16 +165,16 @@ namespace eve::detail
           auto x = if_else(test, T(2), q);
           if constexpr( eve::platform::supports_nans )
           {
-            auto inf_result = is_equal(q, inf(eve::as<T>()));
+            auto inf_result = q == inf(eve::as<T>());
             x               = if_else(inf_result, T(2), x);
           }
           auto z     = one(eve::as<T>());
-          auto test1 = is_greater_equal(x, T(3));
+          auto test1 = (x >= T(3));
           while( eve::any(test1) )
           {
             x     = dec[test1](x);
             z     = if_else(test1, z * x, z);
-            test1 = is_greater_equal(x, T(3));
+            test1 = (x >= T(3));
           }
           // all x are less than 3
           test1 = is_ltz(x);
@@ -196,7 +196,7 @@ namespace eve::detail
           x = z * tgamma1(x - T(2));
           if constexpr( eve::platform::supports_infinites )
           {
-            auto inf_result = is_equal(q, inf(eve::as<T>()));
+            auto inf_result = (q == inf(eve::as<T>()));
             return if_else(inf_result, q, x);
           }
           else

@@ -16,7 +16,6 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/abs.hpp>
-#include <eve/function/bit_and.hpp>
 #include <eve/function/bit_mask.hpp>
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/is_not_less_equal.hpp>

@@ -13,13 +13,10 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/constant/half.hpp>
 #include <eve/function/add.hpp>
-#include <eve/function/bit_and.hpp>
 #include <eve/detail/function/conditional.hpp>
-#include <eve/function/bit_xor.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/raw.hpp>
-#include <eve/function/shr.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/concept/value.hpp>

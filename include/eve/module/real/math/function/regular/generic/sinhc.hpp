@@ -92,7 +92,7 @@ namespace eve::detail
         T tmp1 = (half(eve::as<T>())*tmp)/x;
         T r =  if_else(test1, tmp1*tmp, average(tmp, -rec(tmp))/x);
         if constexpr(eve::platform::supports_infinites)
-          r = if_else(is_equal(x, inf(eve::as<T>())), x, r);
+          r = if_else(x == inf(eve::as<T>()), x, r);
         return if_else(lt1, z, r);
       }
     }

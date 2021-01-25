@@ -32,8 +32,6 @@
 #include <eve/function/is_less.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/is_ngez.hpp>
-#include <eve/function/shl.hpp>
-#include <eve/function/shr.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/sub.hpp>
 #include <eve/module/real/core/detail/generic/horn.hpp>
