@@ -38,7 +38,7 @@ function(generate_bench root rootpath dep file)
     target_compile_definitions( ${bench} PUBLIC ${ARGV4})
   endif()
 
-  target_link_libraries(${bench} PUBLIC eve_test)
+  target_link_libraries(${bench} PUBLIC eve_bench)
 
   if( EVE_USE_PCH )
     target_precompile_headers(${bench} REUSE_FROM doc_pch)
