@@ -36,3 +36,4 @@ add_dependencies(unit.real.probas.exe          unit.real.probas.simd.exe        
 ## Elementwise function unit tests
 ##==================================================================================================
 make_all_units(ROOT unit.real.probas NAME exponential         ARCH scalar simd TYPES ${real_types}     )
+make_all_units(ROOT unit.real.probas NAME cauchy              ARCH scalar simd TYPES ${real_types}     )

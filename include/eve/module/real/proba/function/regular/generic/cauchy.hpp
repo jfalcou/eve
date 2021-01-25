@@ -26,6 +26,7 @@
 #include <eve/function/tanpi.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/inf.hpp>
+#include <eve/constant/minf.hpp>
 #include <eve/constant/pi.hpp>
 
 namespace eve
@@ -36,7 +37,7 @@ namespace eve
   {
     using is_distribution_t = void;
 
-    template <  floating_real_value U>>
+    template < floating_real_value U>
     cauchy(T m_,  U s_)
       requires  std::convertible_to<T, U>
       : m(m_), s(T(s_))
@@ -45,7 +46,7 @@ namespace eve
       EVE_ASSERT(all(s_finite(m)), "m must be finite");
     }
 
-    template <  floating_real_value U>>
+    template <  floating_real_value U>
     cauchy(U m_,  T s_)
       requires  std::convertible_to<T, U>
       : m(T(m_)), s(s_)
@@ -59,7 +60,7 @@ namespace eve
       EVE_ASSERT(all(s_finite(m)), "m must be finite");
     }
 
-    cauchy(T m__) : m(m_), s(T(1)){
+    cauchy(T m_) : m(m_), s(T(1)){
       EVE_ASSERT(all(s_finite(m)), "m must be finite");
     }
 
@@ -106,9 +107,9 @@ namespace eve
                               , cauchy<T> const &expo
                               , T const &x ) noexcept
     {
-      auto xmm = pi(as(x))*(x-expo.m);
-      auto tmp = pi(as(x))*rec(fma(xmm, xmm, sqr(expo.s)));
-    }
+      auto xmm = (x-expo.m);
+      return expo.s/(pi(as(x))*(sqr(expo.s)+sqr(xmm)));
+}
 
     //////////////////////////////////////////////////////
     /// invcdf
@@ -143,10 +144,18 @@ namespace eve
     }
 
     //////////////////////////////////////////////////////
+    /// scale
+    template<floating_value T>
+    EVE_FORCEINLINE  auto scale_(EVE_SUPPORTS(cpu_)
+                                 , cauchy<T> const &expo) noexcept
+    {
+      return expo.s;
+    }
+    //////////////////////////////////////////////////////
     /// mode
     template<floating_value T>
     EVE_FORCEINLINE  auto mode_(EVE_SUPPORTS(cpu_)
-                               , cauchy<T> const &) noexcept
+                               , cauchy<T> const & expo) noexcept
     {
       return expo.m;
     }
