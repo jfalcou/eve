@@ -265,6 +265,16 @@ struct top_bits
 
     EVE_FORCEINLINE constexpr std::strong_ordering operator<=>(const top_bits&) const = default;
 
+    template<typename X>
+    EVE_FORCEINLINE friend constexpr auto operator==(top_bits const& a, top_bits<X> const& b)
+    {
+      if constexpr ( !is_aggregated ) return a.storage == b.storage;
+      else
+      {
+        return (a.storage[0] == b.storage[0]) &&  (a.storage[1] == b.storage[1]);
+      }
+    }
+
     // bit operators ------------------------------
 
     EVE_FORCEINLINE constexpr top_bits& operator&=(const top_bits& x)
