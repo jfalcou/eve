@@ -35,9 +35,9 @@ namespace eve
   EVE_MAKE_CALLABLE(mean_, mean);            // mean
   EVE_MAKE_CALLABLE(median_, median);        // median
   EVE_MAKE_CALLABLE(mode_, mode);            // mode
-  EVE_MAKE_CALLABLE(mad_, mad); ;            // mean absolute deviation
+  EVE_MAKE_CALLABLE(mad_, mad);              // mean absolute deviation
   EVE_MAKE_CALLABLE(stdev_, stdev);          // standard deviation
-  EVE_MAKE_CALLABLE(var_, var);   ;          // variance
+  EVE_MAKE_CALLABLE(var_, var);              // variance
   EVE_MAKE_CALLABLE(entropy_, entropy);      // entropy
   EVE_MAKE_CALLABLE(fisher_, fisher);        // fisher information
   EVE_MAKE_CALLABLE(skewness_, skewness);    // skewness
