@@ -16,9 +16,11 @@
 #include <eve/platform.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
+#include <eve/function/all.hpp>
 #include <eve/function/atanpi.hpp>
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/is_eqz.hpp>
+#include <eve/function/is_finite.hpp>
 #include <eve/function/is_ltz.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/rec.hpp>
