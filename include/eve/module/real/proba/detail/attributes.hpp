@@ -26,10 +26,11 @@ namespace eve
   };
 
   EVE_MAKE_CALLABLE(cdf_, cdf);              // cumulative distribution function
-  EVE_MAKE_CALLABLE(pdf_, pdf);              // density function
+  EVE_MAKE_CALLABLE(pdf_, pdf);              // density function (derivable distributions)
   EVE_MAKE_CALLABLE(invcdf_, invcdf);        // inverse of cumulative distribution function (quantile)
   EVE_MAKE_CALLABLE(mgf_, mgf);              // moment generating function
   EVE_MAKE_CALLABLE(cf_, cf);                // characteristic function
+  EVE_MAKE_CALLABLE(pmf_, pmf);              // probability mass function (discrete distributions)
   EVE_MAKE_CALLABLE(parameters_, parameters);//parameters stored in struct
   EVE_MAKE_CALLABLE(kullback_, kullback);    // kullback-leiber divergence
   EVE_MAKE_CALLABLE(mean_, mean);            // mean
@@ -56,6 +57,8 @@ namespace eve
     EVE_FORCEINLINE  auto mgf_(EVE_SUPPORTS(cpu_), D const &d, U const &x ) noexcept  = delete;
     template < distribution D,  floating_real_value U>
     EVE_FORCEINLINE  auto  cf_(EVE_SUPPORTS(cpu_), D const &d, U const &x ) noexcept  = delete;
+    template < distribution D,  value U>
+    EVE_FORCEINLINE  auto  pmf_(EVE_SUPPORTS(cpu_), D const &d, U const &x ) noexcept  = delete;
 
     template < distribution D>
     EVE_FORCEINLINE  auto scale_(EVE_SUPPORTS(cpu_), D const &d ) noexcept  = delete;

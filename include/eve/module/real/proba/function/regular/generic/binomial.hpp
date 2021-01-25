@@ -15,20 +15,21 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
+#include <eve/module/real/proba/detail/attributes.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/function/abs.hpp>
 #include <eve/function/all.hpp>
-#include <eve/function/erfc.hpp>
-#include <eve/function/erfc_inv.hpp>
+#include <eve/function/inc.hpp>
 #include <eve/function/exp.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/raw.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/constant/sqrt_2o_2.hpp>
-#include <eve/constant/sqrt_2.hpp>
+#include <eve/function/is_gez.hpp>
+#include <eve/function/is_gtz.hpp>
+#include <eve/function/is_flint.hpp>
+#include <eve/function/beta.hpp>
+#include <eve/function/betainc.hpp>
+#include <eve/function/log.hpp>
+#include <eve/function/oneminus.hpp>
+#include <eve/function/pow_abs.hpp>
+#include <eve/function/sqrt.hpp>
 #include <eve/constant/half.hpp>
-#include <eve/constant/mhalf.hpp>
 #include <eve/module/real/core/detail/generic/horn.hpp>
 
 namespace eve
@@ -38,23 +39,24 @@ namespace eve
   struct binomial
   {
     using is_distribution_t = void;
-    using ui_t = sa_integer_t<T,  unsigned>;
 
-    template < unsigned_value U floating_real_value T>
+    template < integral_value U>
     binomial(U n_,  T p_)
       requires  std::convertible_to<T, U>
-      : n(n_), p(p_)
+    : n(n_), p(p_), q(oneminus(p))
     {
       EVE_ASSERT(all(is_gtz(n_)), "n must be strictly positive");
       EVE_ASSERT(all(p < one(as(p)) && is_gez(p)), "p must be in [0, 1]");
     }
 
-    binomial(T n_,  T p_) : n(n_), p(p_){
+    binomial(T n_,  T p_)
+      : n(n_), p(p_), q(oneminus(p))
+    {
       EVE_ASSERT(all(is_flint(n_) && is_gtz(n_)), "s must be strictly positive and integral");
      EVE_ASSERT(all(p < one(as(p)) && is_gez(p)), "p must be in [0, 1]");
     }
 
-    T n, p;
+    T n, p, q;
   };
 
 
@@ -76,74 +78,31 @@ namespace eve
                               , binomial<T> const &d
                               , T const &x ) noexcept
     {
-      return half(as(x))*erfc(sqrt_2o_2(as(x))*((d.m-x)/d.s));
+      return betainc(d.q, d.n-x, inc(x));
     }
 
     //////////////////////////////////////////////////////
-    /// raw cdf
-    template<floating_value T, floating_value U>
-    EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
-                              , raw_type const &
+    /// pmf
+    template<floating_value U, floating_value T>
+    EVE_FORCEINLINE  auto pmf_(EVE_SUPPORTS(cpu_)
                               , binomial<T> const &d
-                              , U const &x ) noexcept
+                              , U const &k ) noexcept
+    {
+
+      auto fk = floor(k);
+      auto nmk = d.n-fk;
+      auto tmp = pow_abs(d.p, k)*pow_abs(d.q, nmk)*beta(inc(fk), inc(nmk))/inc(d.n);
+      return if_else(is_flint(k) && is_gez(k) && (k <= d.n), tmp, zero);
+    }
+
+    template<floating_value T, integral_value U>
+    EVE_FORCEINLINE  auto pmf_(EVE_SUPPORTS(cpu_)
+                              , binomial<T> const &d
+                              , U const &k ) noexcept
     requires compatible_values<T, U>
     {
-      return arithmetic_call(raw(cdf), d, x);
+      return pmf(d, T(k));
     }
-
-    template<floating_value T>
-    EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
-                              , raw_type const &
-                              , binomial<T> const &d
-                              , T const &x ) noexcept
-    {
-      using elt_t =  element_type_t<T>;
-      if constexpr(std::same_as<elt_t, float>)
-      {
-        std::cout << "icitte" << std::endl;
-        auto l = eve::abs((x-d.m)/d.s);
-        auto k = rec(fma(T(0.2316419f),l,one(as(x))));
-        auto w = horn<T
-//           , 0x3faa466f   //           1.330274429f,
-//           , 0xbfe91eea   //           -1.821255978f,
-//           , 0x3fe40778   //           1.781477937f,
-//           , 0xbeb68f87   //           -0.356563782f,
-//           , 0x3ea385fa   //           0.31938153f
-
-          , 0x3ea385fa   //           0.31938153f
-          , 0xbeb68f87   //           -0.356563782f,
-          , 0x3fe40778   //           1.781477937f,
-          , 0xbfe91eea   //           -1.821255978f,
-          , 0x3faa466f   //           1.330274429f,
-
-          >(k);
-        auto invsqrt_2pi = T(0.39894228040143267793994605993438186847585863116493);
-        w*=k*invsqrt_2pi*eve::exp(-sqr(l)*half(as(x)));
-        return if_else(is_gtz(x),oneminus(w),w);
-      }
-      else return cdf(d, x);
-    }
-
-    //////////////////////////////////////////////////////
-    /// pdf
-    template<floating_value T, floating_value U>
-    EVE_FORCEINLINE  auto pdf_(EVE_SUPPORTS(cpu_)
-                              , binomial<T> const &d
-                              , U const &x ) noexcept
-    requires compatible_values<T, U>
-    {
-      return arithmetic_call(pdf, d, x);
-    }
-
-    template<floating_value T>
-    EVE_FORCEINLINE  auto pdf_(EVE_SUPPORTS(cpu_)
-                              , binomial<T> const &d
-                              , T const &x ) noexcept
-    {
-      auto invsig = rec(d.s);
-      auto invsqrt_2pi = T(0.39894228040143267793994605993438186847585863116493);
-      return eve::exp(mhalf(as(x))*sqr((x-d.m)*invsig))*invsqrt_2pi*invsig;
-}
 
     //////////////////////////////////////////////////////
     /// mgf
@@ -161,26 +120,7 @@ namespace eve
                                  , binomial<T> const &d
                                  , T const &x ) noexcept
     {
-      return eve::exp(d.m*x+sqr(d.s*x)*half(as(x)));
-    }
-
-    //////////////////////////////////////////////////////
-    /// invcdf
-    template<floating_value T, floating_value U>
-    EVE_FORCEINLINE  auto invcdf_(EVE_SUPPORTS(cpu_)
-                                 , binomial<T> const &d
-                                 , U const &x ) noexcept
-    requires compatible_values<T, U>
-    {
-      return arithmetic_call(invcdf, d, x);
-    }
-
-    template<floating_value T>
-    EVE_FORCEINLINE  auto invcdf_(EVE_SUPPORTS(cpu_)
-                                 , binomial<T> const &d
-                                 , T const &x ) noexcept
-    {
-      return fma(-sqrt_2(as(x))*erfc_inv( T(2)*x), d.s, d.m);
+      return pow_abs(fma(d.p, eve::exp(x), d.q), d.n);
     }
 
     //////////////////////////////////////////////////////
@@ -189,7 +129,7 @@ namespace eve
     EVE_FORCEINLINE  auto median_(EVE_SUPPORTS(cpu_)
                                  , binomial<T> const &d) noexcept
     {
-      return d.m;
+      return floor(d.p*d.n);
     }
 
     //////////////////////////////////////////////////////
@@ -198,7 +138,7 @@ namespace eve
     EVE_FORCEINLINE  auto mean_(EVE_SUPPORTS(cpu_)
                                , binomial<T> const &d) noexcept
     {
-      return d.m;
+      return d.p*d.n;
     }
     //////////////////////////////////////////////////////
     /// mode
@@ -206,7 +146,7 @@ namespace eve
     EVE_FORCEINLINE  auto mode_(EVE_SUPPORTS(cpu_)
                                , binomial<T> const & d) noexcept
     {
-      return d.m;
+      return floor(d.p*inc(d.n));
     }
 
     //////////////////////////////////////////////////////
@@ -215,8 +155,9 @@ namespace eve
     EVE_FORCEINLINE  auto entropy_(EVE_SUPPORTS(cpu_)
                                   , binomial<T> const & d) noexcept
     {
+      // approximate
       auto twopie = T(17.0794684453471341309271017390931489900697770715304);
-        return half(as<T>())*log(twopie*sqr(d.s));
+      return half(as<T>())*eve::log(twopie*d.n*d.p*d.q); // + ô(1/n)
     }
 
     //////////////////////////////////////////////////////
@@ -232,19 +173,10 @@ namespace eve
     /// kurtosis
     template<floating_value T>
     EVE_FORCEINLINE  auto kurtosis_(EVE_SUPPORTS(cpu_)
-                                  , binomial<T> const & ) noexcept
-    {
-      return T(0);
-    }
-
-    //////////////////////////////////////////////////////
-    /// mad
-    template<floating_value T>
-    EVE_FORCEINLINE  auto mad_(EVE_SUPPORTS(cpu_)
                                   , binomial<T> const & d) noexcept
     {
-      auto sqrt_2o_pi = T(0.79788456080286535587989211986876373695171726232986);
-      return d.s*sqrt_2o_pi;
+      auto pq = d.p*d.q;
+      return oneminus(6*pq)/(d.n*pq);
     }
 
     //////////////////////////////////////////////////////
@@ -253,7 +185,7 @@ namespace eve
     EVE_FORCEINLINE  auto var_(EVE_SUPPORTS(cpu_)
                                   , binomial<T> const & d) noexcept
     {
-      return sqr(d.s);
+      return sqr(d.n*d.p*d.q);
     }
 
     //////////////////////////////////////////////////////
@@ -262,28 +194,7 @@ namespace eve
     EVE_FORCEINLINE  auto stdev_(EVE_SUPPORTS(cpu_)
                                   , binomial<T> const & d) noexcept
     {
-      return d.s;
+      return sqrt(var(d));
     }
-
-    //    //////////////////////////////////////////////////////
-    //     /// fisher
-    //     template<floating_value T>
-    //     EVE_FORCEINLINE  auto fisher_(EVE_SUPPORTS(cpu_)
-    //                                  , binomial<T> const & d) noexcept
-    //     {
-    //       return rec(2*sqr(d.s));
-    //     }
-
-    //////////////////////////////////////////////////////
-    /// stdev
-    template<floating_value T>
-    EVE_FORCEINLINE  auto kullback_(EVE_SUPPORTS(cpu_)
-                                  , binomial<T> const & d1
-                                  , binomial<T> const & d2 ) noexcept
-    {
-      auto srap = d1.s/d2.s;
-      return half(as<T>())*(dec(sqr(srap)+sqr((d1.m-d2.m)/d2.s))+T(2)*eve::log(srap));
-    }
-
   }
 }

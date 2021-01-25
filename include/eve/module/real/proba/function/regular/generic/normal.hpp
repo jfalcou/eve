@@ -15,6 +15,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
+#include <eve/module/real/proba/detail/attributes.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/all.hpp>

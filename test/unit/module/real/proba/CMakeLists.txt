@@ -38,3 +38,4 @@ add_dependencies(unit.real.probas.exe          unit.real.probas.simd.exe        
 make_all_units(ROOT unit.real.probas NAME exponential         ARCH scalar simd TYPES ${real_types}     )
 make_all_units(ROOT unit.real.probas NAME cauchy              ARCH scalar simd TYPES ${real_types}     )
 make_all_units(ROOT unit.real.probas NAME normal              ARCH scalar simd TYPES ${real_types}     )
+make_all_units(ROOT unit.real.probas NAME binomial            ARCH scalar simd TYPES ${real_types}     )
