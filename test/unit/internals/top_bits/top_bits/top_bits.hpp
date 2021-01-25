@@ -297,7 +297,7 @@ TTS_CASE_TPL("top_bits count_true", EVE_TYPE)
 {
   top_bits_interesting_cases<T>([&](auto x) {
     std::ptrdiff_t expected = 0;
-    for (int i = 0; i != x.static_size; ++i) expected += x[i];
+    for (int i = 0; i != x.static_size; ++i) expected += x.get(i);
 
     top_bits mmask{x};
     TTS_EQUAL(expected, eve::detail::count_true(mmask));
