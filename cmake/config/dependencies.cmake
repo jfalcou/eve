@@ -1,21 +1,35 @@
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
-##  Copyright 2019 Joel FALCOU
-##  Copyright 2019 Jean-Thierry Lapreste
+##  Copyright 2018-2021 Joel FALCOU
+##  Copyright 2018-2021 Jean-Thierry LAPRESTE
 ##
 ##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 
 ##==================================================================================================
-## Setup aggregation of tests
+## Find Boost
 ##==================================================================================================
-add_custom_target(bench.algorithm.exe)
+find_package(Boost 1.65.0 QUIET)
+
+if(Boost_FOUND)
+  set(EVE_USE_BOOST 1)
+  message( STATUS "[eve] Boost found in ${Boost_INCLUDE_DIRS} - Boost dependent tests activated")
+  string(REPLACE "/usr/include" "" Boost_INCLUDE_DIRS ${Boost_INCLUDE_DIRS})
+else()
+  set(Boost_INCLUDE_DIRS "")
+endif()
 
 ##==================================================================================================
-## Algoritms function bench tests
+## Fetch TTS
 ##==================================================================================================
-make_all_benchs(ROOT bench.algorithm NAME all    ARCH scalar simd TYPES ${all_types})
-make_all_benchs(ROOT bench.algorithm NAME any    ARCH scalar simd TYPES ${all_types})
-make_all_benchs(ROOT bench.algorithm NAME nbtrue ARCH scalar simd TYPES ${all_types})
-make_all_benchs(ROOT bench.algorithm NAME none   ARCH scalar simd TYPES ${all_types})
+set(TTS_BUILD_TEST    OFF CACHE INTERNAL "OFF")
+set(TTS_IS_DEPENDENT  ON  CACHE INTERNAL "ON")
+
+include(FetchContent)
+FetchContent_Declare( tts
+                      GIT_REPOSITORY https://github.com/jfalcou/tts.git
+                      GIT_TAG main
+                    )
+
+FetchContent_MakeAvailable(tts)

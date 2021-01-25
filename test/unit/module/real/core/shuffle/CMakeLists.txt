@@ -9,5 +9,4 @@
 
 ##==================================================================================================
 ## shuffle tests
-## make_units("cardinal_1" "core.simd.shuffle" ${all_types})
 make_unit( "core.simd.shuffle" sandbox.cpp )

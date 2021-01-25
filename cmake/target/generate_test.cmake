@@ -1,8 +1,7 @@
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
-##
-##  Copyright 2019 Joel FALCOU
-##  Copyright 2019 Jean-Thierry LAPRESTE
+##  Copyright 2018-2021 Joel FALCOU
+##  Copyright 2018-2021 Jean-Thierry LAPRESTE
 ##
 ##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 ##  SPDX-License-Identifier: MIT
@@ -28,7 +27,7 @@ function(generate_test root rootpath dep file)
     target_compile_definitions( ${test} PUBLIC ${ARGV4})
   endif()
 
-  target_compile_options  ( ${test} PUBLIC ${_TestOptions} )
+  target_link_libraries(${test} PUBLIC eve_test)
 
   set_property( TARGET ${test}
                 PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
@@ -65,19 +64,22 @@ function(generate_test root rootpath dep file)
                 )
       endif()
 
-      target_precompile_headers(${test} REUSE_FROM doc_pch)
-      add_dependencies(${test} doc_pch)
+      if( EVE_USE_PCH )
+        target_precompile_headers(${test} REUSE_FROM doc_pch)
+        add_dependencies(${test} doc_pch)
+      endif()
 
     else()
-    target_precompile_headers(${test} REUSE_FROM test_pch)
 
-    add_test( NAME ${test}
-              WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
-              COMMAND $<TARGET_FILE:${test}> --no-color --pass
-            )
+      add_test( NAME ${test}
+                WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
+                COMMAND $<TARGET_FILE:${test}> --no-color --pass
+              )
 
-    add_dependencies(${test} test_pch)
-
+      if( EVE_USE_PCH )
+        target_precompile_headers(${test} REUSE_FROM test_pch)
+        add_dependencies(${test} test_pch)
+      endif()
     endif()
   endif()
 
@@ -87,14 +89,6 @@ function(generate_test root rootpath dep file)
                           ${MAKE_UNIT_TARGET_PROPERTIES}
                         )
 
-  target_include_directories( ${test}
-                              PRIVATE
-                                ${tts_SOURCE_DIR}/include
-                                ${PROJECT_SOURCE_DIR}/test
-                                ${PROJECT_SOURCE_DIR}/include
-                                ${Boost_INCLUDE_DIRS}
-                            )
-
   add_dependencies(unit ${test})
 
   if( NOT dep STREQUAL "")
@@ -102,4 +96,13 @@ function(generate_test root rootpath dep file)
   endif()
 
   add_parent_target(${test})
+endfunction()
+
+##==================================================================================================
+## Setup a basic test
+##==================================================================================================
+function(make_unit root)
+  foreach(file ${ARGN})
+    generate_test(${root} "" "" ${file})
+  endforeach()
 endfunction()
