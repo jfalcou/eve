@@ -46,7 +46,7 @@ namespace eve
       : m(m_), s(T(s_))
     {
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
-      EVE_ASSERT(all(s_finite(m)), "m must be finite");
+      EVE_ASSERT(all(is_finite(m)), "m must be finite");
     }
 
     template <  floating_real_value U>
