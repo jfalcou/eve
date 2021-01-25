@@ -55,16 +55,16 @@ namespace eve
       : m(T(m_)), s(s_)
     {
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
-      EVE_ASSERT(all(s_finite(m)), "m must be finite");
+      EVE_ASSERT(all(is_finite(m)), "m must be finite");
     }
 
     cauchy(T m_,  T s_) : m(m_), s(s_){
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
-      EVE_ASSERT(all(s_finite(m)), "m must be finite");
+      EVE_ASSERT(all(is_finite(m)), "m must be finite");
     }
 
     cauchy(T m_) : m(m_), s(T(1)){
-      EVE_ASSERT(all(s_finite(m)), "m must be finite");
+      EVE_ASSERT(all(is_finite(m)), "m must be finite");
     }
 
     cauchy() : m(T(0)), s(T(1))   {}
