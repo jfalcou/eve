@@ -29,9 +29,22 @@ namespace eve::detail
       auto as_uint32 = eve::bit_cast(v0, eve::as_<eve::logical<wide_u32>>{});
 
       auto m = as_uint32.bits();
-      m = vand_u32(m, vrev64_u32(m));
-      if constexpr (sizeof(T) >= 4) return static_cast<bool>(m[0]);
-      else                          return m[0] == (std::uint32_t)(-1);
+
+      if constexpr ( sizeof( eve::element_type_t<T> ) >= 4 )
+      {
+        m = vreinterpret_u32_u64(vpaddl_u32(m));
+        uint32_t top = vget_lane_u32(m, 1);
+
+        return static_cast<bool>(top);
+      }
+      else
+      {
+        m = vmvn_u32(m);
+        m = vorr_u32(m, vrev64_u32(m));
+        uint32_t top = vget_lane_u32(m, 1);
+
+        return top == 0;
+      }
     }
   }
 
