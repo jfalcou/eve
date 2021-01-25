@@ -26,11 +26,6 @@ int main()
     << "-> invcdf(ca, p)       = " << eve::invcdf(ca, p)  << '\n'
     << "-> cdf(ca, x)          = " << eve::cdf(ca, x)  << '\n';
 
-  auto [mm, ss] =  eve::parameters(ca);
-  std::cout << "mm             = " << mm << std::endl;
-  std::cout << "ss             = " << ss << std::endl;
-  ;
-
   float xf = 9.0f;
   float mf = 10.0f;
   float sf = 2.0;

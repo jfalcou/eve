@@ -30,11 +30,6 @@ int main()
     << "-> cdf(ex, x)          = " << eve::cdf(ex, x)  << '\n'
     << "-> mgf(ex, x)          = " << eve::mgf(ex, x)  << '\n';
 
-  auto ll =  eve::parameters(ex);
-  std::cout
-    << "-> ll                  = " << ll << std::endl;
-
-
   float xf = 9.0f;
   float lf = 10.0f;
   auto exf = eve::exponential(lf);

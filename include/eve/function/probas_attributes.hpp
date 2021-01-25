@@ -46,44 +46,42 @@ namespace eve
 
   namespace detail
   {
+    template < distribution D,  floating_real_value U>
+    EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_), D const &d, U const &x ) noexcept  = delete;
+    template < distribution D,  floating_real_value U>
+    EVE_FORCEINLINE  auto pdf_(EVE_SUPPORTS(cpu_), D const &d, U const &x ) noexcept  = delete;
+    template < distribution D,  floating_real_value U>
+    EVE_FORCEINLINE  auto invcdf_(EVE_SUPPORTS(cpu_), D const &d, U const &x ) noexcept  = delete;
+    template < distribution D,  floating_real_value U>
+    EVE_FORCEINLINE  auto mgf_(EVE_SUPPORTS(cpu_), D const &d, U const &x ) noexcept  = delete;
+    template < distribution D,  floating_real_value U>
+    EVE_FORCEINLINE  auto  cf_(EVE_SUPPORTS(cpu_), D const &d, U const &x ) noexcept  = delete;
 
-    template < distribution D,  floating_real_value U>
-    EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_), D const &expo, U const &x ) noexcept  = delete;
-    template < distribution D,  floating_real_value U>
-    EVE_FORCEINLINE  auto pdf_(EVE_SUPPORTS(cpu_), D const &expo, U const &x ) noexcept  = delete;
-    template < distribution D,  floating_real_value U>
-    EVE_FORCEINLINE  auto invcdf_(EVE_SUPPORTS(cpu_), D const &expo, U const &x ) noexcept  = delete;
-    template < distribution D,  floating_real_value U>
-    EVE_FORCEINLINE  auto mgf_(EVE_SUPPORTS(cpu_), D const &expo, U const &x ) noexcept  = delete;
-    template < distribution D,  floating_real_value U>
-    EVE_FORCEINLINE  auto  cf_(EVE_SUPPORTS(cpu_), D const &expo, U const &x ) noexcept  = delete;
-
     template < distribution D>
-    EVE_FORCEINLINE  auto scale_(EVE_SUPPORTS(cpu_), D const &expo ) noexcept  = delete;
+    EVE_FORCEINLINE  auto scale_(EVE_SUPPORTS(cpu_), D const &d ) noexcept  = delete;
     template < distribution D>
-    EVE_FORCEINLINE  auto mean_(EVE_SUPPORTS(cpu_), D const &expo ) noexcept  = delete;
+    EVE_FORCEINLINE  auto mean_(EVE_SUPPORTS(cpu_), D const &d ) noexcept  = delete;
     template < distribution D>
-    EVE_FORCEINLINE  auto median_(EVE_SUPPORTS(cpu_), D const &expo ) noexcept  = delete;
+    EVE_FORCEINLINE  auto median_(EVE_SUPPORTS(cpu_), D const &d ) noexcept  = delete;
     template < distribution D>
-    EVE_FORCEINLINE  auto mode_(EVE_SUPPORTS(cpu_), D const &expo ) noexcept  = delete;
+    EVE_FORCEINLINE  auto mode_(EVE_SUPPORTS(cpu_), D const &d ) noexcept  = delete;
     template < distribution D>
-    EVE_FORCEINLINE  auto mad_(EVE_SUPPORTS(cpu_), D const &expo ) noexcept  = delete;
+    EVE_FORCEINLINE  auto mad_(EVE_SUPPORTS(cpu_), D const &d ) noexcept  = delete;
     template < distribution D>
-    EVE_FORCEINLINE  auto kullback_(EVE_SUPPORTS(cpu_), D const &expo ) noexcept  = delete;
+    EVE_FORCEINLINE  auto kullback_(EVE_SUPPORTS(cpu_), D const &d ) noexcept  = delete;
     template < distribution D>
-    EVE_FORCEINLINE  auto stdev_(EVE_SUPPORTS(cpu_), D const &expo ) noexcept  = delete;
+    EVE_FORCEINLINE  auto stdev_(EVE_SUPPORTS(cpu_), D const &d ) noexcept  = delete;
     template < distribution D>
-    EVE_FORCEINLINE  auto var_(EVE_SUPPORTS(cpu_), D const &expo ) noexcept  = delete;
+    EVE_FORCEINLINE  auto var_(EVE_SUPPORTS(cpu_), D const &d ) noexcept  = delete;
     template < distribution D>
-    EVE_FORCEINLINE  auto skewness_(EVE_SUPPORTS(cpu_), D const &expo ) noexcept  = delete;
+    EVE_FORCEINLINE  auto skewness_(EVE_SUPPORTS(cpu_), D const &d ) noexcept  = delete;
     template < distribution D>
-    EVE_FORCEINLINE  auto kurtosis_(EVE_SUPPORTS(cpu_), D const &expo ) noexcept  = delete;
+    EVE_FORCEINLINE  auto kurtosis_(EVE_SUPPORTS(cpu_), D const &d ) noexcept  = delete;
     template < distribution D>
-    EVE_FORCEINLINE  auto fisher_(EVE_SUPPORTS(cpu_), D const &expo ) noexcept  = delete;
+    EVE_FORCEINLINE  auto fisher_(EVE_SUPPORTS(cpu_), D const &d ) noexcept  = delete;
     template < distribution D>
-    EVE_FORCEINLINE  auto entropy_(EVE_SUPPORTS(cpu_), D const &expo ) noexcept  = delete;
+    EVE_FORCEINLINE  auto entropy_(EVE_SUPPORTS(cpu_), D const &d ) noexcept  = delete;
     template < distribution D>
-    EVE_FORCEINLINE  auto parameters_(EVE_SUPPORTS(cpu_), D const &expo ) noexcept  = delete;
-
+    EVE_FORCEINLINE  auto parameters_(EVE_SUPPORTS(cpu_), D const &d ) noexcept  = delete;
   }
 }
