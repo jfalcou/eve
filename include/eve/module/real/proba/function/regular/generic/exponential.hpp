@@ -17,7 +17,7 @@
 #include <eve/platform.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
-#include <eve/function/probas_attributes.hpp>
+#include <eve/module/real/proba/detail/attributes.hpp>
 #include <eve/function/exp.hpp>
 #include <eve/function/expm1.hpp>
 #include <eve/function/if_else.hpp>

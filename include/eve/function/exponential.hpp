@@ -13,5 +13,4 @@
 #include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
 
-#include <eve/function/probas_attributes.hpp>
 #include <eve/module/real/proba/function/regular/generic/exponential.hpp>
