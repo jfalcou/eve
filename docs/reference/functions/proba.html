@@ -1,0 +1,65 @@
+<!--
+  EVE -  Expressive Vector Engine
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+ -->
+<meta charset="utf-8" lang="en"><style class="fallback">body{visibility:hidden;}</style>
+                       **Expressive Vector Engine**
+
+  (insert ../../crumbs.html here)
+
+# Probability distribution Functions
+These functions provide scalar and SIMD version of basic real probability distributions. To keep the
+results homogeneous and coherent between SIMD and scalar mode, the types usable in those functions
+are required to satisfy [`eve::compatible_values`](../concepts/compatible.html) and must be floating and real.
+
+Each of the distributions bring a set of attributes.
+
+Once created a distribution object can be called using a set of EVE object functions namely:
+
+ - constant attributes:
+   - parameters: parameters stored in the object (always defined)
+   - mean: expectation
+   - median: median value
+   - mode:   maximum location of the pdf
+   - stdev: standard deviation
+   - var: variance
+   - scale
+   - entropy
+   - fischer; Fisher information
+ - functional attributes
+   - cdf; cumulative distribution function (always defined)
+   - pdf; probability density function
+   - invcdf; inverse of cdf
+   - mgf; moment generating function
+   - cf: characteristic function
+
+Each constant attribute takes the distribution as input and returns a value or a set of values.
+Each functionnal  attribute takes the distribution and a floating value as inputs and returns a floating value.
+
+Note that some of the attributes (not marked as always defined) may not exist because they are undefined for the distribution used
+or currently still not implemented (for instance cf which is waiting for **EVE** complex implementation ist still not present).
+
+## Functions
+
+**Convenience header:** <script type="preformatted">`#include <eve/function/statistics.hpp>`</script>
+
+[`eve::cauchy`](proba/cauchy.html)
+:   cauchy distribution
+[`eve::exponential`](proba/exponential.html)
+:   exponential distribution
+
+
+----------------------------------------------------------------------------------------------------
+<!-- Shortcuts -->
+
+<!-- Footnotes -->
+
+<!-- End of Document -->
+<link rel="stylesheet" href="../../eve.css">
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?" charset="utf-8"></script>

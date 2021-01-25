@@ -128,6 +128,15 @@ namespace eve
     }
 
     //////////////////////////////////////////////////////
+    /// parameters
+    template<floating_value T>
+    EVE_FORCEINLINE  auto parameters_(EVE_SUPPORTS(cpu_)
+                                     , exponential<T> const &expo) noexcept
+    {
+      return expo.lambda; 
+    }
+
+    //////////////////////////////////////////////////////
     /// mean
     template<floating_value T>
     EVE_FORCEINLINE  auto mean_(EVE_SUPPORTS(cpu_)

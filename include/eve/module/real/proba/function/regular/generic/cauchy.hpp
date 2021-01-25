@@ -28,6 +28,7 @@
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/pi.hpp>
+#include <utility>
 
 namespace eve
 {
@@ -135,6 +136,15 @@ namespace eve
     }
 
     //////////////////////////////////////////////////////
+    /// parameters
+    template<floating_value T>
+    EVE_FORCEINLINE  auto parameters_(EVE_SUPPORTS(cpu_)
+                                     , cauchy<T> const &expo) noexcept
+    {
+      return std::make_tuple(expo.m,  expo.s);
+    }
+
+     //////////////////////////////////////////////////////
     /// median
     template<floating_value T>
     EVE_FORCEINLINE  auto median_(EVE_SUPPORTS(cpu_)
