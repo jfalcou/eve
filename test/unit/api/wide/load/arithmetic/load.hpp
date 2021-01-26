@@ -9,9 +9,11 @@
 **/
 //==================================================================================================
 #pragma once
+#include <eve/function/load.hpp>
+
+#include <eve/function/any.hpp>
 #include <eve/memory/aligned_allocator.hpp>
 #include <eve/memory/aligned_ptr.hpp>
-#include <eve/function/load.hpp>
 #include <eve/wide.hpp>
 
 #include <array>
@@ -327,4 +329,41 @@ TTS_CASE_TPL("load for different alignment", EVE_TYPE )
     test(eve::lane<8>);
     test(eve::lane<4>);
   }
+}
+
+TTS_CASE_TPL("Check load unsafe, wide", EVE_TYPE)
+{
+  using e_t = eve::element_type_t<T>;
+  const e_t x = 123;
+
+  {
+    using expected = eve::wide<e_t>;
+    auto ptr = eve::previous_aligned_address(
+      &x, eve::lane<sizeof(e_t) * expected::static_size>);
+
+    auto loaded = eve::unsafe(eve::load)(ptr);
+    TTS_EXPECT(eve::any(loaded == x));
+
+    loaded = eve::unsafe(eve::load)(ptr.get());
+    TTS_EXPECT(eve::any(loaded == x));
+  }
+
+  auto test_n = [&](auto n) {
+    auto ptr = eve::previous_aligned_address(
+      &x,
+      eve::lane<decltype(n)() * sizeof(e_t)>);
+
+    auto loaded = eve::unsafe(eve::load)(ptr, n);
+    TTS_EXPECT(eve::any(loaded == x));
+
+    loaded = eve::unsafe(eve::load)(ptr.get(), n);
+    TTS_EXPECT(eve::any(loaded == x));
+  };
+
+  test_n(eve::lane<1>);
+  test_n(eve::lane<2>);
+  test_n(eve::lane<4>);
+  test_n(eve::lane<8>);
+  test_n(eve::lane<16>);
+  test_n(eve::lane<32>);
 }

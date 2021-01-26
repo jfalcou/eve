@@ -49,6 +49,16 @@
                 };                                                                                 \
       }                                                                                            \
                                                                                                    \
+      template<attribute_conditional Condition>                                                    \
+      EVE_FORCEINLINE constexpr auto operator[](Condition const &c) const noexcept                 \
+      {                                                                                            \
+        return  [c](auto const&... args) EVE_LAMBDA_FORCEINLINE                                    \
+                {                                                                                  \
+                  return callable_object{}(c, args...);                                            \
+                };                                                                                 \
+      }                                                                                            \
+                                                                                                   \
+                                                                                                   \
       template<typename Arg, typename... Args>                                                     \
       EVE_FORCEINLINE constexpr auto operator()(Arg&& d, Args &&... args) const noexcept           \
           -> decltype ( TAG(delay_t{}, EVE_CURRENT_API{},                                          \

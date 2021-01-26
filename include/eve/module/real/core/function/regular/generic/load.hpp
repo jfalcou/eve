@@ -11,6 +11,7 @@
 #pragma once
 
 #include <eve/concept/memory.hpp>
+#include <eve/function/unsafe.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/spy.hpp>
 #include <type_traits>
@@ -68,7 +69,7 @@ namespace eve::detail
 
     if constexpr( !std::is_pointer_v<Ptr> )
     {
-      return eve::load[cond](ptr.get(), Cardinal{});
+      return eve::unsafe(eve::load)(ptr, Cardinal{});
     }
     else
     {
@@ -120,7 +121,47 @@ namespace eve::detail
   {
     return static_cast<T>(*p);
   }
+
+#if defined(SPY_COMPILER_IS_CLANG) or defined(SPY_COMPILER_IS_GCC)
+#define DISABLE_SANITIZERS __attribute__((no_sanitize_address)) __attribute__((no_sanitize_thread))
+#elif defined(SPY_COMPILER_IS_MSVC)
+#define DISABLE_SANITIZERS __declspec(no_sanitize_address)
+#else
+#define DISABLE_SANITIZERS
+#endif
+
+  template<typename Ptr>
+  DISABLE_SANITIZERS auto load_(EVE_SUPPORTS(cpu_), unsafe_type, Ptr ptr) noexcept
+    requires requires(Ptr ptr) { eve::load(ptr); }
+  {
+    return eve::load(ptr);
+  }
+
+  template<typename Ptr, typename Cardinal>
+  DISABLE_SANITIZERS auto load_(EVE_SUPPORTS(cpu_), unsafe_type, Ptr ptr, Cardinal const & cardinal) noexcept
+    requires requires(Ptr ptr, Cardinal cardinal) { eve::load(ptr, cardinal); }
+  {
+    using e_t = std::remove_cvref_t<decltype(*ptr)>;
+    using r_t = as_wide_t< e_t, typename Cardinal::type >;
+
+    if constexpr ( !has_aggregated_abi_v<r_t> ) return eve::load(ptr, cardinal);
+    else
+    {
+      constexpr eve::fixed< Cardinal() / 2 > half;
+
+      auto half_ptr = [&]{
+        using half_aligned_t = eve::aligned_ptr< e_t const, half() * sizeof(e_t) >;
+        if constexpr( !std::is_pointer_v<Ptr> ) return half_aligned_t{ptr.get()};
+        else                                    return ptr;
+      }();
+
+      auto lo = eve::unsafe(eve::load)(half_ptr, half);
+      auto hi = eve::unsafe(eve::load)(half_ptr + half(), half);
+      return r_t{lo, hi};
+    }
+  }
 }
+
 
 #ifdef SPY_COMPILER_IS_GCC
 #pragma GCC diagnostic pop
