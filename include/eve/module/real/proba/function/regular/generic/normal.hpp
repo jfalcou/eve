@@ -23,6 +23,8 @@
 #include <eve/function/erfc_inv.hpp>
 #include <eve/function/exp.hpp>
 #include <eve/function/fma.hpp>
+#include <eve/function/is_finite.hpp>
+#include <eve/function/is_gtz.hpp>
 #include <eve/function/raw.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/sqr.hpp>
@@ -279,15 +281,6 @@ namespace eve
     {
       return d.s;
     }
-
-    //    //////////////////////////////////////////////////////
-    //     /// fisher
-    //     template<floating_value T>
-    //     EVE_FORCEINLINE  auto fisher_(EVE_SUPPORTS(cpu_)
-    //                                  , normal<T> const & d) noexcept
-    //     {
-    //       return rec(2*sqr(d.s));
-    //     }
 
     //////////////////////////////////////////////////////
     /// stdev
