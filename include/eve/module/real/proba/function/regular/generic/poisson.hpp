@@ -25,6 +25,7 @@
 #include <eve/function/expm1.hpp>
 #include <eve/function/floor.hpp>
 #include <eve/function/pow_abs.hpp>
+#include <eve/function/rsqrt.hpp>
 #include <eve/function/tgamma.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_gez.hpp>
@@ -169,14 +170,14 @@ namespace eve
     {
       return rec(d.lambda);
     }
-
+    
     //////////////////////////////////////////////////////
-    /// fisher
+    /// skewness
     template<floating_value T>
-    EVE_FORCEINLINE  auto fisher_(EVE_SUPPORTS(cpu_)
-                                 , poisson<T> const & d) noexcept
+    EVE_FORCEINLINE  auto skewness_(EVE_SUPPORTS(cpu_)
+                                   , poisson<T> const & d) noexcept
     {
-      return sqr(rec(d.lambda));
+      return rsqrt(d.lambda);
     }
   }
 }

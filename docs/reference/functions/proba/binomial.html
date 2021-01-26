@@ -1,0 +1,76 @@
+<!--
+  EVE -  Expressive Vector Engine
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+ -->
+<meta charset="utf-8" lang="en">
+                       **Expressive Vector Engine**
+                           `eve::binomial`
+<br>
+
+  (insert ../../../crumbs.html here)
+
+Synopsis
+====================================================================================================
+**Required header:** <script type="preformatted">`#include <eve/function/binomial.hpp>`</script>
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+namespace eve
+{
+  template< floating_real_value T> struct binomial;
+}
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+Object representing the Binomial distribution.
+
+Constructor
+====================================================================================================
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+  template < typename U> binomial( U const & n, T const & p ) requires std:convertible_to< T , U >;
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+construct the binomial object
+
+Parameters
+----------------------------------------------------------------------------------------------------
+`n`
+:   [floating real value](../../concepts.html#value). integral or flint positive value
+`p`
+:   [floating real value](../../concepts.html#value). must be between 0 and 1
+
+Supported attributes
+====================================================================================================
+  - functional attributes
+    - cdf
+    - pdf
+    - mgf
+
+  - constant attributes
+    - median (approximate)
+    - mean
+    - mode
+    - skewness
+    - kurtosis
+    - stdev
+    - var
+
+ See the example below.
+
+  (insert ../../src/binomial.src.html here)
+
+  (insert ../../out/binomial.out.html here)
+
+
+<!-- End of Document -->
+<link rel="stylesheet" href="../../../eve.css">
+<!-- Markdeep: -->
+<script>markdeepOptions={tocStyle:'none'};</script>
+<script src="../../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
