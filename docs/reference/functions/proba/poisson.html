@@ -8,35 +8,35 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::exponential`
+                           `eve::poisson`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/exponential.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/poisson.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  template< floating_real_value T> struct exponential;
+  template< floating_real_value T> struct poisson;
 }
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Object representing the Exponential distribution.
+Object representing the Poisson distribution.
 
 Constructor
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  exponential( T const & lambda );
+  poisson( T const & lambda );
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-construct the exponential object
+construct the poisson object
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -48,25 +48,22 @@ Supported attributes
   - functional attributes
     - cdf
     - pdf
-    - invcdf
     - mgf
 
   - constant attributes
-    - median
+    - median (approximate)
     - mean
     - mode
     - skewness
     - kurtosis
     - stdev
     - var
-    - entropy
-    - fisher
 
  See the example below.
 
-  (insert ../../src/exponential.src.html here)
+  (insert ../../src/poisson.src.html here)
 
-  (insert ../../out/exponential.out.html here)
+  (insert ../../out/poisson.out.html here)
 
 
 <!-- End of Document -->
