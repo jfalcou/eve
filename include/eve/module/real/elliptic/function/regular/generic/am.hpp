@@ -30,65 +30,24 @@
 #include <eve/concept/value.hpp>
 
 #include <eve/detail/overload.hpp>
+#include <eve/detail/raberu.hpp>
 #include <eve/detail/abi.hpp>
 
 namespace eve
 {
-  //================================================================================================
-  // Function decorators mark-up used in function overloads
-  struct ell_angle_type : decorator_
-  {
-    template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
-    {
-      return  [f](auto&&... args)
-      {
-        return f(ell_angle_type{}, std::forward<decltype(args)>(args)...);
-      };
-    }
-  };
+  inline constexpr auto tolerance = ::rbr::keyword<struct tolerance_tag>;
+  inline constexpr auto mode      = ::rbr::keyword<struct mode_tag>;
 
-  //================================================================================================
-  // Function decorator - ell_angle mode
-  inline constexpr ell_angle_type const ell_angle = {};
+  struct angle_   { auto apply(auto x) const { return eve::sin(x);  } };
+  struct modulus_ { auto apply(auto x) const { return eve::sqrt(x); } };
 
-  //================================================================================================
-  // Function decorators mark-up used in function overloads
-  struct ell_modulus_type : decorator_
-  {
-    template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
-    {
-      return  [f](auto&&... args)
-      {
-        return f(ell_modulus_type{}, std::forward<decltype(args)>(args)...);
-      };
-    }
-  };
-
-  //================================================================================================
-  // Function decorator - modulus mode
-  inline constexpr ell_modulus_type const ell_modulus = {};
-
+  inline constexpr angle_   angle   = {};
+  inline constexpr modulus_ modulus = {};
 }
-
 
 namespace eve::detail
 {
-  template<floating_real_value T, floating_real_value U,  floating_real_value V>
-  EVE_FORCEINLINE T am_(EVE_SUPPORTS(cpu_)
-                       , T u
-                       , T x
-                       , T tol = eps(as<T>())) noexcept
-  {
-    return arithmetic_call(am, u, x, tol);
-  }
-
-  template<floating_real_value T>
-  EVE_FORCEINLINE T am_(EVE_SUPPORTS(cpu_)
-                       , T u
-                       , T x
-                       , T tol = eps(as<T>())) noexcept
+  template<floating_real_value T> EVE_FORCEINLINE T am_impl(T u, T x, T tol) noexcept
   {
     if constexpr(has_native_abi_v<T>)
     {
@@ -113,14 +72,15 @@ namespace eve::detail
         for (; n < N; n++)
         {
           if (eve::all(is_not_greater_equal(abs(c[n]), tol))) break;
-//          if (eve::all(is_not_greater_equal(eve::abs(a[n] - g[n]),tol*a[n]))) break;
           two_n += two_n;
           a[n+1] = average(a[n], g[n]);
           g[n+1] = sqrt(a[n] * g[n]);
           c[n+1] = average(a[n], -g[n]);
         }
+
         // Prepare for the inverse transformation of phi = x * cm.
         auto phi = two_n * a[n] * u;
+
         // Perform backward substitution
         for (; n > 0; --n)
         {
@@ -128,46 +88,32 @@ namespace eve::detail
         }
         return phi;
       };
+
       T r;
       if (eve::any(xxisone)) r = fms(T(2), atan(exp(u)), pio_2(as(xx)));
       if (eve::all(xxisone)) return r;
       return if_else(xxisone, r, am_kernel());
     }
     else
+    {
       return apply_over(am, u, x, tol);
     }
-
-  template<floating_real_value T, floating_real_value U /*, *floating_real_value V*/,  decorator D>
-  EVE_FORCEINLINE T am_(EVE_SUPPORTS(cpu_)
-                       , D const &
-                       , T u
-                       , U x
-                       ) noexcept
-  {
-    return D()(am)(u, x, eps(as<element_type_t<T>>()));
   }
 
-  template<floating_real_value T, floating_real_value U, floating_real_value V,  decorator D>
-  EVE_FORCEINLINE T am_(EVE_SUPPORTS(cpu_)
-                       , D const &
-                       , T u
-                       , U x
-                       , V tol
-                       ) noexcept
-  {
-    x = eve::abs(x);
-    if constexpr(std::is_same_v<D, regular_type>)
-    {
-      return am(u,x,tol);
-    }
-    else if constexpr(std::is_same_v<D, ell_modulus_type>)
-    {
-      return am(u,sqrt(x),tol);
-    }
-    else if constexpr(std::is_same_v<D, ell_angle_type>)
-    {
-      return am(u,sin(x),tol);
-    }
-  }
+  struct am_nope  { auto apply(auto x) const { return x;  } };
 
+  template< floating_real_value U, floating_real_value X
+          , typename... Settings
+          >
+  EVE_FORCEINLINE U am_(EVE_SUPPORTS(cpu_), U u, X x, Settings... s) noexcept
+  requires( sizeof...(Settings) <= 2)
+  {
+    auto const option = rbr::settings{s...};
+
+    return arithmetic_call( [](auto a,auto b,auto t) { return am_impl(a,b,t); }
+                          , u
+                          , option[mode | am_nope{}].apply(x)
+                          , option[tolerance | eps(as<element_type_t<U>>())]
+                          );
+  }
 }
