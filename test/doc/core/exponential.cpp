@@ -10,7 +10,7 @@ int main()
   wide_ft p = { 0.0f, 0.5f, 0.75f, 1.0f };
   wide_ft lambda = { 1.0f,  2.0f, 3.0f, 4.0f };
 
-  auto ex = eve::exponential(lambda);
+  auto ex = eve::exponential<wide_ft>(lambda);
 
   std::cout
     << "---- simd" << '\n'
@@ -32,7 +32,7 @@ int main()
 
   float xf = 9.0f;
   float lf = 10.0f;
-  auto exf = eve::exponential(lf);
+  auto exf = eve::exponential<float>(lf);
 
   std::cout
     << "---- scalar"  << '\n'
