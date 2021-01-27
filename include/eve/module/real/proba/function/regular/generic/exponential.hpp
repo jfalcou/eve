@@ -59,14 +59,6 @@ namespace eve
                               , U const &x ) noexcept
     requires compatible_values<T, U>
     {
-      return arithmetic_call(cdf, expo, x);
-    }
-
-    template<floating_value T>
-    EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
-                              , exponential<T> const &expo
-                              , T const &x ) noexcept
-    {
       return -expm1(if_else(is_ltz(x), zero, -x*expo.lambda));
     }
 
@@ -78,14 +70,6 @@ namespace eve
                               , U const &x ) noexcept
     requires compatible_values<T, U>
     {
-      return arithmetic_call(pdf, expo, x);
-    }
-
-    template<floating_value T>
-    EVE_FORCEINLINE  auto pdf_(EVE_SUPPORTS(cpu_)
-                              , exponential<T> const &expo
-                              , T const &x ) noexcept
-    {
       return expo.lambda*exp(-expo.lambda*x);
     }
 
@@ -94,16 +78,8 @@ namespace eve
     template<floating_value T, floating_value U>
     EVE_FORCEINLINE  auto invcdf_(EVE_SUPPORTS(cpu_)
                                  , exponential<T> const &expo
-                                 , U const &x ) noexcept
+                                 , U const &p ) noexcept
     requires compatible_values<T, U>
-    {
-      return arithmetic_call(invcdf, expo, x);
-    }
-
-    template<floating_value T>
-    EVE_FORCEINLINE  auto invcdf_(EVE_SUPPORTS(cpu_)
-                                 , exponential<T> const &expo
-                                 , T const &p ) noexcept
     {
       return -log1p(-p)/expo.lambda;
     }
@@ -209,6 +185,143 @@ namespace eve
     {
       return sqr(rec(expo.lambda));
     }
+  }
 
+  template < floating_real_value T>
+  struct exponential_1
+  {
+    using is_distribution_t = void;
+
+    exponential_1(as_<T> const &)  {}
+
+  };
+
+  namespace detail
+  {
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // optimzation for static lambda = 1
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// cdf
+    template<floating_value T, floating_value U>
+    EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
+                              , exponential_1<T> const &
+                              , U const &x ) noexcept
+    {
+      return -expm1(if_else(is_ltz(x), zero, -x));
+    }
+
+    //////////////////////////////////////////////////////
+    /// pdf
+    template<floating_value T, floating_value U>
+    EVE_FORCEINLINE  auto pdf_(EVE_SUPPORTS(cpu_)
+                              , exponential_1<T> const &
+                              , U const &x ) noexcept
+    {
+      return exp(-x);
+    }
+
+    //////////////////////////////////////////////////////
+    /// invcdf
+    template<floating_value T, floating_value U>
+    EVE_FORCEINLINE  auto invcdf_(EVE_SUPPORTS(cpu_)
+                                 , exponential_1<T> const &
+                                 , U const &p ) noexcept
+    {
+      return -log1p(-p);
+    }
+
+    //////////////////////////////////////////////////////
+    /// mgf
+    template<floating_value T, floating_value U>
+    EVE_FORCEINLINE  auto mgf_(EVE_SUPPORTS(cpu_)
+                              , exponential_1<T> const &
+                              , U const &t ) noexcept
+    {
+      return if_else(t < one(as<T>()), rec(-t),  allbits);
+    }
+
+    //////////////////////////////////////////////////////
+    /// mean
+    template<floating_value T>
+    EVE_FORCEINLINE  auto mean_(EVE_SUPPORTS(cpu_)
+                               , exponential_1<T> const &) noexcept
+    {
+      return one(as<T>());
+    }
+
+
+    //////////////////////////////////////////////////////
+    /// median
+    template<floating_value T>
+    EVE_FORCEINLINE  auto median_(EVE_SUPPORTS(cpu_)
+                                 , exponential_1<T> const &) noexcept
+    {
+      return log_2(as<T>());
+    }
+
+    //////////////////////////////////////////////////////
+    /// mode
+    template<floating_value T>
+    EVE_FORCEINLINE  auto mode_(EVE_SUPPORTS(cpu_)
+                               , exponential_1<T> const &) noexcept
+    {
+      return zero(as<T>());
+    }
+
+    //////////////////////////////////////////////////////
+    /// var
+    template<floating_value T>
+    EVE_FORCEINLINE  auto var_(EVE_SUPPORTS(cpu_)
+                              , exponential_1<T> const &) noexcept
+    {
+      return one(as<T>());
+    }
+
+
+    //////////////////////////////////////////////////////
+    /// stdev
+    template<floating_value T>
+    EVE_FORCEINLINE  auto stdev_(EVE_SUPPORTS(cpu_)
+                              , exponential_1<T> const &) noexcept
+    {
+      return  one(as<T>());
+    }
+
+    //////////////////////////////////////////////////////
+    /// skewness
+    template<floating_value T>
+    EVE_FORCEINLINE  auto skewness_(EVE_SUPPORTS(cpu_)
+                                   , exponential_1<T> const &) noexcept
+    {
+      return T(2);
+    }
+
+    //////////////////////////////////////////////////////
+    /// kurtosis
+    template<floating_value T>
+    EVE_FORCEINLINE  auto kurtosis_(EVE_SUPPORTS(cpu_)
+                                   , exponential_1<T> const &) noexcept
+    {
+      return T(6);
+    }
+
+    //////////////////////////////////////////////////////
+    /// entropy
+    template<floating_value T>
+    EVE_FORCEINLINE  auto entropy_(EVE_SUPPORTS(cpu_)
+                                  , exponential_1<T> const &) noexcept
+    {
+      return one(as<T>());
+    }
+
+    //////////////////////////////////////////////////////
+    /// fisher
+    template<floating_value T>
+    EVE_FORCEINLINE  auto fisher_(EVE_SUPPORTS(cpu_)
+                                 , exponential_1<T> const &) noexcept
+    {
+      return one(as<T>());
+    }
   }
 }
