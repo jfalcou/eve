@@ -38,7 +38,7 @@
 namespace eve
 {
   template < typename T, typename U, typename Internal = T>
-  struct cauchy {} ;
+  struct cauchy{};
 
   template < floating_real_value T, floating_real_value U>
   requires  compatible_values<T, U>
@@ -56,7 +56,7 @@ namespace eve
     }
 
     template < floating_real_value TT,  floating_real_value UU>
-    requires  std::convertible_to<T, TT> && std::convertible_to<U, UU>
+    requires  std::constructible_from<T, TT> && std::constructible_from<U, UU>
     cauchy(TT m_,  UU s_)
       : m(T(m_)), s(U(s_))
     {
@@ -69,20 +69,20 @@ namespace eve
   };
 
   template < floating_real_value U>
-  struct cauchy<zero_t, U>
+  struct cauchy<callable_zero_, U>
   {
     using is_distribution_t = void;
-    using m_type = decltype(zero);
+    using m_type = callable_zero_;
     using s_type = U;
-    cauchy(U s_)
+    cauchy(callable_zero_ const&, U s_)
       : s(s_)
     {
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
     }
 
     template < floating_real_value UU>
-      requires  std::convertible_to<U, UU>
-    cauchy(UU s_)
+      requires  std::constructible_from<U, UU>
+    cauchy(callable_zero_ const &, UU s_)
       : s(U(s_))
     {
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
@@ -93,21 +93,21 @@ namespace eve
   };
 
   template < floating_real_value T>
-  struct cauchy<T, one_t>
+  struct cauchy<T, callable_one_>
   {
     using is_distribution_t = void;
     using m_type = T;
     using s_type = decltype(eve::one);
 
-    cauchy(T m_)
+    cauchy(T m_, callable_one_ const &)
       : m(m_)
     {
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
     }
 
     template < floating_real_value TT>
-      requires  std::convertible_to<T, TT>
-    cauchy(TT m_)
+      requires  std::constructible_from<T, TT>
+    cauchy(TT m_, callable_one_ const &)
       : m(T(m_))
     {
       EVE_ASSERT(all(is_finite(m)), "m must be finite");
@@ -118,148 +118,87 @@ namespace eve
   };
 
   template < floating_real_value Internal>
-  struct cauchy<zero_t, one_t, Internal>
+  struct cauchy<callable_zero_, callable_one_, Internal>
   {
     using is_distribution_t = void;
-    using m_type = zero_t;
-    using s_type = one_t;
+    using m_type = callable_zero_;
+    using s_type = callable_one_;
     using value_type = Internal;
 
     cauchy(){}
+    cauchy(callable_zero_ const &, callable_one_ const&){}
 
     m_type m;
     s_type s;
   };
 
-  template < floating_real_value T> using cauchy_01 = cauchy<zero_t, one_t, T>;
+  template < floating_real_value T> using cauchy_01 = cauchy<callable_zero_, callable_one_, T>;
 
   namespace detail
   {
     //////////////////////////////////////////////////////
     /// cdf
-    template<floating_real_value T, floating_real_value U,  floating_real_value V>
+    template<typename T, typename U, floating_value V
+             , typename I = T>
     EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
-                              , cauchy<T, U> const &ca
-                              , V const &x ) noexcept
-    requires compatible_values<T, V>
+                                 , cauchy<T, U, I> const & ca
+                                 , V const &x ) noexcept
     {
-      return half(as(x)) + atanpi((x-ca.m)/ca.s);;
-    }
-
-    template<floating_real_value U,  floating_real_value V>
-    EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
-                              , cauchy<zero_t, U> const &ca
-                              , V const &x ) noexcept
-    requires compatible_values<U, V>
-    {
-      return half(as(x)) + atanpi(x/ca.s);;
-    }
-
-    template<floating_real_value T,  floating_real_value V>
-    EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
-                              , cauchy<T, one_t> const &ca
-                              , V const &x ) noexcept
-    requires compatible_values<T, V>
-    {
-      return half(as(x)) + atanpi(x-ca.m);;
-    }
-
-    template<floating_real_value T, floating_real_value V>
-    EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
-                              , cauchy_01<T> const &
-                              , V const &x ) noexcept
-    requires compatible_values<T, V>
-    {
-      return half(as(x)) + atanpi(x);;
+      if constexpr(floating_value<T> && floating_value<U>)
+        return half(as(x)) + atanpi((x-ca.m)/ca.s);
+      else if constexpr(std::same_as<T, callable_zero_> && floating_value<U>)
+        return half(as(x)) + atanpi(x/ca.s);
+      else if constexpr(std::same_as<U, callable_one_> && floating_value<T>)
+        return half(as(x)) + atanpi(x-ca.m);
+      else
+        return half(as(x)) + atanpi(x);
     }
 
     //////////////////////////////////////////////////////
     /// pdf
-    template<floating_value T, floating_value U, floating_value V>
+    template<typename T, typename U, floating_value V
+             , typename I = T>
     EVE_FORCEINLINE  auto pdf_(EVE_SUPPORTS(cpu_)
-                              , cauchy<T, U> const &ca
-                              , V const &x ) noexcept
-    requires compatible_values<U, V>
+                                 , cauchy<T, U, I> const & ca
+                                 , V const &x ) noexcept
     {
-      auto xmm = (x-ca.m);
-      return ca.s/(pi(as(x))*(sqr(ca.s)+sqr(xmm)));
-    }
-
-    template<floating_value U, floating_value V>
-    EVE_FORCEINLINE  auto pdf_(EVE_SUPPORTS(cpu_)
-                              , cauchy<zero_t, U> const &ca
-                              , V const &x ) noexcept
-    requires compatible_values<U, V>
-    {
-      return ca.s/(pi(as(x))*(sqr(ca.s)+sqr(x)));
-    }
-
-    template<floating_value T, floating_value V>
-    EVE_FORCEINLINE  auto pdf_(EVE_SUPPORTS(cpu_)
-                              , cauchy<T, one_t> const & ca
-                              , V const &x ) noexcept
-    requires compatible_values<T, V>
-    {
-      auto xmm = (x-ca.m);
-      return rec(pi(as(x))*(inc(sqr(xmm))));
-    }
-    template<floating_real_value T, floating_real_value V>
-    EVE_FORCEINLINE  auto pdf_(EVE_SUPPORTS(cpu_)
-                              , cauchy_01<T> const &
-                              , V const &x ) noexcept
-    requires compatible_values<T, V>
-    {
-      return  rec(pi(as(x))*(inc(sqr(x))));
+      if constexpr(floating_value<T> && floating_value<U>)
+      {
+        auto xmm = (x-ca.m);
+        return ca.s/(pi(as(x))*(sqr(ca.s)+sqr(xmm)));
+      }
+      else if constexpr(std::same_as<T, callable_zero_> && floating_value<U>)
+        return ca.s/(pi(as(x))*(sqr(ca.s)+sqr(x)));
+      else if constexpr(std::same_as<U, callable_one_> && floating_value<T>)
+      {
+        auto xmm = (x-ca.m);
+        return rec(pi(as(x))*(inc(sqr(xmm))));
+      }
+      else
+        return  rec(pi(as(x))*(inc(sqr(x))));
     }
 
     //////////////////////////////////////////////////////
     /// invcdf
-    template<floating_value T, floating_value U, floating_value V>
+    template<typename T, typename U, floating_value V
+             , typename I = T>
     EVE_FORCEINLINE  auto invcdf_(EVE_SUPPORTS(cpu_)
-                                 , cauchy<T, U> const &ca
+                                 , cauchy<T, U, I> const & ca
                                  , V const &x ) noexcept
-    requires compatible_values<T, V>
     {
-      auto tmp = fma(tanpi(x-half(as(x))), ca.s, ca.m);
-      // as x is restricted to [0,  1] limits values at 0 and 1 are properly defined
-      tmp = if_else(is_eqz(x), minf(as(x)), tmp);
-      tmp = if_else(x == one(as(x)), inf(as(x)), tmp);
-      return if_else(is_ltz(x) || x > one(as(x)), allbits, tmp);
-    }
+      using  U1 =   std::conditional_t<bool(floating_value<U>), U, I>;
+      using  T1 =   std::conditional_t<bool(floating_value<T>),T, U1>;
+      using r_t = common_compatible_t<T1, V>;
+      r_t tmp;
+      if constexpr(floating_value<T> && floating_value<U>)
+        tmp = fma(tanpi(x-half(as(x))), ca.s, ca.m);
+      else if constexpr(std::same_as<T, callable_zero_> && floating_value<U>)
+        tmp = tanpi(x-half(as(x)))*ca.s;
+      else if constexpr(std::same_as<U, callable_one_> && floating_value<T>)
+        tmp = tanpi(x-half(as(x)))+ca.m;
+      else
+        tmp = tanpi(x-half(as(x)));
 
-    template<floating_value U, floating_value V>
-    EVE_FORCEINLINE  auto invcdf_(EVE_SUPPORTS(cpu_)
-                                 , cauchy<zero_t, U> const &ca
-                                 , V const &x ) noexcept
-    requires compatible_values<U, V>
-    {
-      auto tmp = tanpi(x-half(as(x)))*ca.s;
-      // as x is restricted to [0,  1] limits values at 0 and 1 are properly defined
-      tmp = if_else(is_eqz(x), minf(as(x)), tmp);
-      tmp = if_else(x == one(as(x)), inf(as(x)), tmp);
-      return if_else(is_ltz(x) || x > one(as(x)), allbits, tmp);
-    }
-
-    template<floating_value T, floating_value V>
-    EVE_FORCEINLINE  auto invcdf_(EVE_SUPPORTS(cpu_)
-                                 , cauchy<T, one_t> const &ca
-                                 , V const &x ) noexcept
-    requires compatible_values<T, V>
-    {
-      auto tmp = tanpi(x-half(as(x)))+ca.m;
-      // as x is restricted to [0,  1] limits values at 0 and 1 are properly defined
-      tmp = if_else(is_eqz(x), minf(as(x)), tmp);
-      tmp = if_else(x == one(as(x)), inf(as(x)), tmp);
-      return if_else(is_ltz(x) || x > one(as(x)), allbits, tmp);
-    }
-
-    template<floating_value T, floating_value V>
-    EVE_FORCEINLINE  auto invcdf_(EVE_SUPPORTS(cpu_)
-                                 , cauchy_01<T> const &
-                                 , V const &x ) noexcept
-    requires compatible_values<T, V>
-    {
-      auto tmp = tanpi(x-half(as<T>()));
       // as x is restricted to [0,  1] limits values at 0 and 1 are properly defined
       tmp = if_else(is_eqz(x), minf(as(x)), tmp);
       tmp = if_else(x == one(as(x)), inf(as(x)), tmp);
@@ -268,154 +207,65 @@ namespace eve
 
     //////////////////////////////////////////////////////
     /// median
-    template<floating_value T, floating_value U>
+    template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto median_(EVE_SUPPORTS(cpu_)
-                                 , cauchy<T, U> const &ca) noexcept
+                                  , cauchy<T,U,I> const & ca) noexcept
     {
-      return ca.m;
+      if constexpr (floating_value<T>)
+        return  ca.m;
+      else if constexpr (floating_value<U>)
+        return zero(as<U>());
+      else
+        return zero(as<I>());
     }
 
-    template<floating_value U>
-    EVE_FORCEINLINE  auto median_(EVE_SUPPORTS(cpu_)
-                                 , cauchy<zero_t, U> const &) noexcept
-    {
-      return zero(as<U>());
-    }
-
-    template<floating_value T>
-    EVE_FORCEINLINE  auto median_(EVE_SUPPORTS(cpu_)
-                                 , cauchy<T, one_t> const & ca) noexcept
-    {
-      return ca.m;
-    }
-
-    template<floating_value T>
-    EVE_FORCEINLINE  auto median_(EVE_SUPPORTS(cpu_)
-                                 , cauchy_01<T> const &) noexcept
-    {
-      return zero(as<T>());
-    }
 
     //////////////////////////////////////////////////////
     /// scale
-    template<floating_value T, floating_value U>
+    template<typename T, typename U, typename I = U>
     EVE_FORCEINLINE  auto scale_(EVE_SUPPORTS(cpu_)
-                                 , cauchy<T,U> const &ca) noexcept
+                                , cauchy<T,U,I> const & ca) noexcept
     {
-      return ca.s;
-    }
-
-
-    template<floating_value U>
-    EVE_FORCEINLINE  auto scale_(EVE_SUPPORTS(cpu_)
-                                 , cauchy<zero_t, U> const & ca) noexcept
-    {
-      return ca.s;
-    }
-
-    template<floating_value T>
-    EVE_FORCEINLINE  auto scale_(EVE_SUPPORTS(cpu_)
-                                 , cauchy<T, one_t> const & ) noexcept
-    {
-      return one(as<T>());
-    }
-
-    template<floating_value T>
-    EVE_FORCEINLINE  auto scale_(EVE_SUPPORTS(cpu_)
-                                 , cauchy_01<T> const &) noexcept
-    {
-      return one(as<T>());
+      if constexpr (floating_value<U>)
+        return  ca.s;
+      else if constexpr (floating_value<T>)
+        return one(as<T>());
+      else
+        return one(as<I>());
     }
 
     //////////////////////////////////////////////////////
     /// mode
-    template<floating_value T, floating_value U>
+    template<typename T, typename U,  typename I = U>
     EVE_FORCEINLINE  auto mode_(EVE_SUPPORTS(cpu_)
-                               , cauchy<T,U> const & ca) noexcept
+                               , cauchy<T,U,I> const & ca) noexcept
     {
-      return ca.m;
+      return median(ca);
     }
 
-    template<floating_value U>
-    EVE_FORCEINLINE  auto mode_(EVE_SUPPORTS(cpu_)
-                                 , cauchy<zero_t, U> const &) noexcept
-    {
-      return zero(as<U>());
-    }
-
-    template<floating_value T>
-    EVE_FORCEINLINE  auto mode_(EVE_SUPPORTS(cpu_)
-                                 , cauchy<T, one_t> const & ca) noexcept
-    {
-      return ca.m;
-    }
-
-
-    template<floating_value T>
-    EVE_FORCEINLINE  auto mode_(EVE_SUPPORTS(cpu_)
-                                 , cauchy_01<T> const &) noexcept
-    {
-      return zero(as<T>());
-    }
 
     //////////////////////////////////////////////////////
     /// entropy
-    template<floating_value T, floating_value U>
+    template<typename T,  typename U,  typename I = T>
     EVE_FORCEINLINE  auto entropy_(EVE_SUPPORTS(cpu_)
-                                  , cauchy<T,U> const & ca) noexcept
+                                 , cauchy<T,U,I> const & ca) noexcept
     {
-      return log(4*pi(as(ca.s))*ca.s);
-    }
-
-    template<floating_value U>
-    EVE_FORCEINLINE  auto entropy__(EVE_SUPPORTS(cpu_)
-                                 , cauchy<zero_t, U> const & ca) noexcept
-    {
-      return  log(4*pi(as(ca.s))*ca.s);
-    }
-
-    template<floating_value T>
-    EVE_FORCEINLINE  auto entropy__(EVE_SUPPORTS(cpu_)
-                                 , cauchy<T, one_t> const &) noexcept
-    {
-      return  T(2.531024246969291);
-    }
-
-    template<floating_value T>
-    EVE_FORCEINLINE  auto entropy_(EVE_SUPPORTS(cpu_)
-                                 , cauchy_01<T> const &) noexcept
-    {
-      return  T(2.531024246969291);
+      if constexpr (floating_value<U>)
+        return  log(4*pi(as(ca.s))*ca.s);
+      else
+        return  I(2.531024246969291);
     }
 
     //////////////////////////////////////////////////////
     /// fisher
-    template<floating_value T, floating_value U>
+    template<typename T,  typename U,  typename I = T>
     EVE_FORCEINLINE  auto fisher_(EVE_SUPPORTS(cpu_)
-                                 , cauchy<T,U> const & ca) noexcept
+                                 , cauchy<T,U,I> const & ca) noexcept
     {
-      return rec(2*sqr(ca.s));
-    }
-
-    template<floating_value U>
-    EVE_FORCEINLINE  auto fisher_(EVE_SUPPORTS(cpu_)
-                                 , cauchy<zero_t, U> const & ca) noexcept
-    {
-      return  rec(2*sqr(ca.s));
-    }
-
-    template<floating_value T>
-    EVE_FORCEINLINE  auto fisher_(EVE_SUPPORTS(cpu_)
-                                 , cauchy<T, one_t> const &) noexcept
-    {
-      return  T(0.5);
-    }
-
-    template<floating_value T>
-    EVE_FORCEINLINE  auto fisher_(EVE_SUPPORTS(cpu_)
-                                 , cauchy_01<T> const &) noexcept
-    {
-      return  T(0.5);
+      if constexpr (floating_value<U>)
+        return rec(2*sqr(ca.s));
+      else
+        return I(0.5);
     }
   }
 }

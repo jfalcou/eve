@@ -33,295 +33,199 @@
 
 namespace eve
 {
+  template < typename T, typename Internal = T>
+  struct exponential{};
 
   template < floating_real_value T>
-  struct exponential
+  struct exponential<T>
   {
     using is_distribution_t = void;
+    using lambda_type = T;
 
-    exponential(T l) : lambda(l) {
-      EVE_ASSERT(all(is_gtz(l) && is_finite(l)), "lambda must be strictly positive and finite");
+    exponential(T lambda_) : lambda(lambda_) {
+      EVE_ASSERT(all(is_gtz(lambda) && is_finite(lambda)), "lambda must be strictly positive and finite");
+    }
+    template < floating_real_value TT>
+    requires  std::constructible_from<T, TT>
+    exponential(TT lambda_)
+      : lambda(T(lambda_))
+    {
+      EVE_ASSERT(all(is_gtz(lambda) && is_finite(lambda)), "lambda must be strictly positive and finite");
     }
 
     exponential()    : lambda(T(1))   {}
 
-    T lambda;
+    lambda_type lambda;
   };
 
 
-  namespace detail
-  {
-    //////////////////////////////////////////////////////
-    /// cdf
-    template<floating_value T, floating_value U>
-    EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
-                              , exponential<T> const &expo
-                              , U const &x ) noexcept
-    requires compatible_values<T, U>
-    {
-      return -expm1(if_else(is_ltz(x), zero, -x*expo.lambda));
-    }
-
-    //////////////////////////////////////////////////////
-    /// pdf
-    template<floating_value T, floating_value U>
-    EVE_FORCEINLINE  auto pdf_(EVE_SUPPORTS(cpu_)
-                              , exponential<T> const &expo
-                              , U const &x ) noexcept
-    requires compatible_values<T, U>
-    {
-      return expo.lambda*exp(-expo.lambda*x);
-    }
-
-    //////////////////////////////////////////////////////
-    /// invcdf
-    template<floating_value T, floating_value U>
-    EVE_FORCEINLINE  auto invcdf_(EVE_SUPPORTS(cpu_)
-                                 , exponential<T> const &expo
-                                 , U const &p ) noexcept
-    requires compatible_values<T, U>
-    {
-      return -log1p(-p)/expo.lambda;
-    }
-
-    //////////////////////////////////////////////////////
-    /// mgf
-    template<floating_value T, floating_value U>
-    EVE_FORCEINLINE  auto mgf_(EVE_SUPPORTS(cpu_)
-                              , exponential<T> const &expo
-                              , U const &x ) noexcept
-    requires compatible_values<T, U>
-    {
-      return arithmetic_call(mgf, expo, x);
-    }
-
-    template<floating_value T>
-    EVE_FORCEINLINE  auto mgf_(EVE_SUPPORTS(cpu_)
-                              , exponential<T> const &expo
-                              , T const &t ) noexcept
-    {
-      return if_else(t < expo.lambda, expo.lambda/(expo.lambda-t),  allbits);
-    }
-
-    //////////////////////////////////////////////////////
-    /// mean
-    template<floating_value T>
-    EVE_FORCEINLINE  auto mean_(EVE_SUPPORTS(cpu_)
-                               , exponential<T> const &expo) noexcept
-    {
-      return rec(expo.lambda);
-    }
-
-
-    //////////////////////////////////////////////////////
-    /// median
-    template<floating_value T>
-    EVE_FORCEINLINE  auto median_(EVE_SUPPORTS(cpu_)
-                                 , exponential<T> const &expo) noexcept
-    {
-      return log_2(as<T>())*rec(expo.lambda);
-    }
-
-    //////////////////////////////////////////////////////
-    /// mode
-    template<floating_value T>
-    EVE_FORCEINLINE  auto mode_(EVE_SUPPORTS(cpu_)
-                               , exponential<T> const &) noexcept
-    {
-      return zero(as<T>());
-    }
-
-    //////////////////////////////////////////////////////
-    /// var
-    template<floating_value T>
-    EVE_FORCEINLINE  auto var_(EVE_SUPPORTS(cpu_)
-                              , exponential<T> const &expo) noexcept
-    {
-      return sqr(rec(expo.lambda));
-    }
-
-
-    //////////////////////////////////////////////////////
-    /// stdev
-    template<floating_value T>
-    EVE_FORCEINLINE  auto stdev_(EVE_SUPPORTS(cpu_)
-                              , exponential<T> const &expo) noexcept
-    {
-      return rec(expo.lambda);
-    }
-
-    //////////////////////////////////////////////////////
-    /// skewness
-    template<floating_value T>
-    EVE_FORCEINLINE  auto skewness_(EVE_SUPPORTS(cpu_)
-                                   , exponential<T> const &) noexcept
-    {
-      return T(2);
-    }
-
-    //////////////////////////////////////////////////////
-    /// kurtosis
-    template<floating_value T>
-    EVE_FORCEINLINE  auto kurtosis_(EVE_SUPPORTS(cpu_)
-                                   , exponential<T> const &) noexcept
-    {
-      return T(6);
-    }
-
-    //////////////////////////////////////////////////////
-    /// entropy
-    template<floating_value T>
-    EVE_FORCEINLINE  auto entropy_(EVE_SUPPORTS(cpu_)
-                                  , exponential<T> const & expo) noexcept
-    {
-      return oneminus(log(expo.lambda));
-    }
-
-    //////////////////////////////////////////////////////
-    /// fisher
-    template<floating_value T>
-    EVE_FORCEINLINE  auto fisher_(EVE_SUPPORTS(cpu_)
-                                 , exponential<T> const & expo) noexcept
-    {
-      return sqr(rec(expo.lambda));
-    }
-  }
-
-  template < floating_real_value T>
-  struct exponential_1
+  template < typename T>
+  struct exponential < callable_one_, T>
   {
     using is_distribution_t = void;
+    using lambda_type = callable_one_;
 
-    exponential_1(as_<T> const &)  {}
+    exponential(){ };
+    exponential(callable_one_ const &) { };
 
+    lambda_type lambda;
   };
+
+  template < floating_real_value T> using exponential_1 = exponential< callable_one_, T>;
 
   namespace detail
   {
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // optimzation for static lambda = 1
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
     /// cdf
-    template<floating_value T, floating_value U>
+    template<typename T, typename U, typename I = T>
     EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
-                              , exponential_1<T> const &
+                              , exponential<T, I> const &expo
                               , U const &x ) noexcept
     {
-      return -expm1(if_else(is_ltz(x), zero, -x));
+      if constexpr(floating_value<T>)
+        return -expm1(if_else(is_ltz(x), zero, -x*expo.lambda));
+      else
+        return -expm1(if_else(is_ltz(x), zero, -x));
     }
 
     //////////////////////////////////////////////////////
     /// pdf
-    template<floating_value T, floating_value U>
+    template<typename T, typename U, typename I = T>
     EVE_FORCEINLINE  auto pdf_(EVE_SUPPORTS(cpu_)
-                              , exponential_1<T> const &
+                              , exponential<T, I> const &expo
                               , U const &x ) noexcept
     {
-      return exp(-x);
+      if constexpr(floating_value<T>)
+        return expo.lambda*exp(-expo.lambda*x);
+      else
+        return exp(-x);
     }
 
     //////////////////////////////////////////////////////
     /// invcdf
-    template<floating_value T, floating_value U>
+    template<typename T, typename U, typename I = T>
     EVE_FORCEINLINE  auto invcdf_(EVE_SUPPORTS(cpu_)
-                                 , exponential_1<T> const &
+                                 , exponential<T, I> const &expo
                                  , U const &p ) noexcept
     {
-      return -log1p(-p);
+      if constexpr(floating_value<T>)
+        return -log1p(-p)/expo.lambda;
+      else
+        return -log1p(-p);
     }
 
     //////////////////////////////////////////////////////
     /// mgf
-    template<floating_value T, floating_value U>
+    template<typename T, typename U, typename I = T>
     EVE_FORCEINLINE  auto mgf_(EVE_SUPPORTS(cpu_)
-                              , exponential_1<T> const &
+                              , exponential<T, I> const &expo
                               , U const &t ) noexcept
     {
-      return if_else(t < one(as<T>()), rec(-t),  allbits);
+      if constexpr(floating_value<T>)
+        return if_else(t < expo.lambda, expo.lambda/(expo.lambda-t),  allbits);
+      else
+        return if_else(t <one(as(t)), rec(oneminus(t)),  allbits);
     }
 
     //////////////////////////////////////////////////////
     /// mean
-    template<floating_value T>
+    template<typename T, typename I = T>
     EVE_FORCEINLINE  auto mean_(EVE_SUPPORTS(cpu_)
-                               , exponential_1<T> const &) noexcept
+                               , exponential<T, I> const &expo) noexcept
     {
-      return one(as<T>());
+      if constexpr(floating_value<T>)
+        return rec(expo.lambda);
+      else
+        return one(as<I>());
     }
 
 
     //////////////////////////////////////////////////////
     /// median
-    template<floating_value T>
+    template<typename T, typename I = T>
     EVE_FORCEINLINE  auto median_(EVE_SUPPORTS(cpu_)
-                                 , exponential_1<T> const &) noexcept
+                                 , exponential<T, I> const &expo) noexcept
     {
-      return log_2(as<T>());
+      if constexpr(floating_value<T>)
+        return log_2(as<T>())*rec(expo.lambda);
+      else
+        return log_2(as<I>());
     }
 
     //////////////////////////////////////////////////////
     /// mode
-    template<floating_value T>
+    template<typename T, typename I = T>
     EVE_FORCEINLINE  auto mode_(EVE_SUPPORTS(cpu_)
-                               , exponential_1<T> const &) noexcept
+                               , exponential<T, I> const &) noexcept
     {
-      return zero(as<T>());
+      return zero(as<I>());
     }
 
     //////////////////////////////////////////////////////
     /// var
-    template<floating_value T>
+    template<typename T, typename I = T>
     EVE_FORCEINLINE  auto var_(EVE_SUPPORTS(cpu_)
-                              , exponential_1<T> const &) noexcept
+                              , exponential<T, I> const &expo) noexcept
     {
-      return one(as<T>());
+      if constexpr(floating_value<T>)
+        return sqr(rec(expo.lambda));
+      else
+        return one(as<I>());
     }
 
 
     //////////////////////////////////////////////////////
     /// stdev
-    template<floating_value T>
+    template<typename T, typename I = T>
     EVE_FORCEINLINE  auto stdev_(EVE_SUPPORTS(cpu_)
-                              , exponential_1<T> const &) noexcept
+                                , exponential<T, I> const &expo) noexcept
     {
-      return  one(as<T>());
+      if constexpr(floating_value<T>)
+        return rec(expo.lambda);
+      else
+        return one(as<I>());
     }
 
     //////////////////////////////////////////////////////
     /// skewness
-    template<floating_value T>
+    template<typename T, typename I = T>
     EVE_FORCEINLINE  auto skewness_(EVE_SUPPORTS(cpu_)
-                                   , exponential_1<T> const &) noexcept
+                                   , exponential<T, I> const &) noexcept
     {
-      return T(2);
+      return I(2);
     }
 
     //////////////////////////////////////////////////////
     /// kurtosis
-    template<floating_value T>
+    template<typename T, typename I = T>
     EVE_FORCEINLINE  auto kurtosis_(EVE_SUPPORTS(cpu_)
-                                   , exponential_1<T> const &) noexcept
+                                   , exponential<T, I> const &) noexcept
     {
-      return T(6);
+      return I(6);
     }
 
     //////////////////////////////////////////////////////
     /// entropy
-    template<floating_value T>
+    template<typename T, typename I = T>
     EVE_FORCEINLINE  auto entropy_(EVE_SUPPORTS(cpu_)
-                                  , exponential_1<T> const &) noexcept
+                                  , exponential<T, I> const & expo) noexcept
     {
-      return one(as<T>());
+      if constexpr(floating_value<T>)
+        return oneminus(log(expo.lambda));
+      else
+        return one(as<I>());
     }
 
     //////////////////////////////////////////////////////
     /// fisher
-    template<floating_value T>
+    template<typename T, typename I = T>
     EVE_FORCEINLINE  auto fisher_(EVE_SUPPORTS(cpu_)
-                                 , exponential_1<T> const &) noexcept
+                                 , exponential<T, I> const & expo) noexcept
     {
-      return one(as<T>());
+      if constexpr(floating_value<T>)
+        return sqr(rec(expo.lambda));
+      else
+        return one(as<I>());
     }
   }
 }
