@@ -16,7 +16,7 @@
 namespace eve
 {
   EVE_MAKE_CALLABLE(one_, one);
-
+  using one_t = decltype(one);
   namespace detail
   {
     template<typename T>
