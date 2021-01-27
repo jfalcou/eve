@@ -68,7 +68,6 @@ namespace eve
     exponential(){ };
     exponential(callable_one_ const &) { };
 
-    lambda_type lambda;
   };
 
   template < floating_real_value T> using exponential_1 = exponential< callable_one_, T>;

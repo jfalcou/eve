@@ -82,13 +82,12 @@ namespace eve
 
     template < floating_real_value UU>
       requires  std::constructible_from<U, UU>
-    cauchy(callable_zero_ const &, UU s_)
+    cauchy(callable_zero_ const & , UU s_)
       : s(U(s_))
     {
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
     }
 
-    m_type m;
     s_type s;
   };
 
@@ -114,7 +113,6 @@ namespace eve
     }
 
     m_type m;
-    s_type s;
   };
 
   template < floating_real_value Internal>
@@ -127,9 +125,6 @@ namespace eve
 
     cauchy(){}
     cauchy(callable_zero_ const &, callable_one_ const&){}
-
-    m_type m;
-    s_type s;
   };
 
   template < floating_real_value T> using cauchy_01 = cauchy<callable_zero_, callable_one_, T>;
