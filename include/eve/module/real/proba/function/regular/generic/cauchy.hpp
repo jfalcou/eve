@@ -102,7 +102,7 @@ namespace eve
     cauchy(T m_, callable_one_ const &)
       : m(m_)
     {
-      EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
+      EVE_ASSERT(all(is_finite(m)), "m must be finite");
     }
 
     template < floating_real_value TT>
