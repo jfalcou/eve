@@ -194,7 +194,7 @@ namespace eve
                                  , normal<T, U, I> const & d
                                  , V const &x ) noexcept
     {
-      auto invsqrt_2pi = T(0.39894228040143267793994605993438186847585863116493);
+      auto invsqrt_2pi = V(0.39894228040143267793994605993438186847585863116493);
       if constexpr(floating_value<T> && floating_value<U>)
       {
         auto invsig = rec(d.s);
@@ -221,7 +221,7 @@ namespace eve
                                  , normal<T, U, I> const & d
                                  , V const &x ) noexcept
     {
-      auto invsqrt_2pi = T(0.39894228040143267793994605993438186847585863116493);
+      auto invsqrt_2pi = V(0.39894228040143267793994605993438186847585863116493);
       if constexpr(floating_value<T> && floating_value<U>)
       {
         return eve::exp(d.m*x+sqr(d.s*x)*half(as(x)));
@@ -252,14 +252,14 @@ namespace eve
       }
       else if constexpr(std::same_as<T, callable_zero_> && floating_value<U>)
       {
-        return -sqrt_2(as(x))*erfc_inv( T(2)*x)*d.s;
+        return -sqrt_2(as(x))*erfc_inv(2*x)*d.s;
       }
       else if constexpr(std::same_as<U, callable_one_> && floating_value<T>)
       {
-        return -sqrt_2(as(x))*erfc_inv( T(2)*x)+d.m;
+        return -sqrt_2(as(x))*erfc_inv(2*x)+d.m;
       }
       else
-        return -sqrt_2(as(x))*erfc_inv( T(2)*x);
+        return -sqrt_2(as(x))*erfc_inv(2*x);
     }
 
     //////////////////////////////////////////////////////
@@ -279,15 +279,16 @@ namespace eve
 
     //////////////////////////////////////////////////////
     /// mean
-    template<floating_value T, typename U,  typename I = T>
+    template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto mean_(EVE_SUPPORTS(cpu_)
                                , normal<T,U,I> const &d) noexcept
     {
       return median(d);
     }
+
     //////////////////////////////////////////////////////
     /// mode
-    template<floating_value T, typename U,  typename I = T>
+    template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto mode_(EVE_SUPPORTS(cpu_)
                                , normal<T,U,I> const & d) noexcept
     {
@@ -296,7 +297,7 @@ namespace eve
 
     //////////////////////////////////////////////////////
     /// entropy
-    template<floating_value T, typename U,  typename I = T>
+    template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto entropy_(EVE_SUPPORTS(cpu_)
                                   , normal<T,U,I> const & d) noexcept
     {
@@ -310,7 +311,7 @@ namespace eve
 
     //////////////////////////////////////////////////////
     /// skewness
-    template<floating_value T, typename U,  typename I = T>
+    template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto skewness_(EVE_SUPPORTS(cpu_)
                                   , normal<T,U,I> const & ) noexcept
     {
@@ -319,7 +320,7 @@ namespace eve
 
     //////////////////////////////////////////////////////
     /// kurtosis
-    template<floating_value T, typename U,  typename I = T>
+    template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto kurtosis_(EVE_SUPPORTS(cpu_)
                                   , normal<T,U,I> const & ) noexcept
     {
@@ -328,7 +329,7 @@ namespace eve
 
     //////////////////////////////////////////////////////
     /// mad
-    template<floating_value T, typename U,  typename I = T>
+    template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto mad_(EVE_SUPPORTS(cpu_)
                                   , normal<T,U,I> const & d) noexcept
     {
@@ -341,7 +342,7 @@ namespace eve
 
     //////////////////////////////////////////////////////
     /// var
-    template<floating_value T, typename U,  typename I = T>
+    template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto var_(EVE_SUPPORTS(cpu_)
                                   , normal<T,U,I> const & d) noexcept
     {
@@ -353,7 +354,7 @@ namespace eve
 
     //////////////////////////////////////////////////////
     /// stdev
-    template<floating_value T, typename U,  typename I = T>
+    template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto stdev_(EVE_SUPPORTS(cpu_)
                                   , normal<T,U,I> const & d) noexcept
     {
@@ -365,7 +366,7 @@ namespace eve
 
     //////////////////////////////////////////////////////
     /// kullback
-    template<floating_value T, typename U,  typename I = T>
+    template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto kullback_(EVE_SUPPORTS(cpu_)
                                   , normal<T,U,I> const & d1
                                   , normal<T,U,I> const & d2 ) noexcept
