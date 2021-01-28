@@ -32,7 +32,11 @@ Constructor
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  template < typename U> binomial( U const & n, T const & p ) requires std:convertible_to< T , U >;
+  template< floating_real_value N, floating_real_value P> binomial( T const & n, U const & p )
+  template< integral_value N, floating_real_value P>      binomial( T const & n, U const & p )
+  template< floating_real_value U>                        binomial( callable_one_ const &, U const & s );
+  template< floating_real_value T                         binomial( T const & m,  callable_half_ const & );
+
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
@@ -41,9 +45,22 @@ construct the binomial object
 Parameters
 ----------------------------------------------------------------------------------------------------
 `n`
-:   [floating real value](../../concepts.html#value). integral or flint positive value
+:   [floating real value](../../concepts.html#value) (integral or flint positive value) or callable_one object
+    (number of experiments)
 `p`
-:   [floating real value](../../concepts.html#value). must be between 0 and 1
+:   [floating real value](../../concepts.html#value) (must be between 0 and 1) or callable_half object
+    (probability of success)
+
+Optimizations
+====================================================================================================
+If the number of experiments is one or the probabilty of success $\frac12$, the third and fourth
+ constructors can be used with the parameters
+eve::one or eve::half, providing some optimization in further computations of the attributes.
+
+Also the constexpr template variable bernouilli< T >
+is provided to optimize the case of fair coin tossing (n = 1, p = 0.5).
+
+In this case, T must be provided to allow choosing the output type of the constant attributes.
 
 Supported attributes
 ====================================================================================================

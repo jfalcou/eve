@@ -21,7 +21,8 @@ Synopsis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  template< floating_real_value T> struct cauchy;
+  template< floating_real_value T, floating_real_value U> struct cauchy
+  requires compatible_values< T, U >;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
@@ -31,9 +32,10 @@ Constructor
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  template< floating_real_value U>  cauchy( T const & m, U const & s ) requires std:convertible_to<T,U>;
-  template< floating_real_value U>  cauchy( U const & m, T const & s ) requires std:convertible_to<T,U>;
-                                    cauchy( T const & m, T const & s );
+  cauchy( T const & m, U const & s )
+  cauchy( callable_zero_ const &, U const & s );
+  cauchy( T const & m,  callable_one_ const & );
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 construct the cauchy object
@@ -41,9 +43,18 @@ construct the cauchy object
 Parameters
 ----------------------------------------------------------------------------------------------------
 `m`
-:   [floating real value](../../concepts.html#value). median of the distribution (default to 0)
+:   [floating real value](../../concepts.html#value) or callable_zero object (median of the distribution)
 `s`
-:   [floating real value](../../concepts.html#value). scale (>0)  of the distribution (default to 1)
+:   [floating real value](../../concepts.html#value) or callable_one object (scale (>0)  of the distribution)
+
+Optimizations
+====================================================================================================
+If the scale is one or the median zero the second and third constructors can be used with the parameters
+eve::one or eve::zero, providing some optimization in further computations of the attributes.
+
+Also the constexpr template variable cauchy_01< T > is provided to optimize the standard reduced case (median 0, scale 1).
+
+In this case, T must be provided to allow choosing the output type of the constant attributes.
 
 Supported attributes
 ====================================================================================================

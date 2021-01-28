@@ -21,7 +21,8 @@ Synopsis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  template< floating_real_value T> struct normal;
+  template< floating_real_value T> struct normal
+  requires std:convertible_to< T, U >;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
@@ -31,9 +32,10 @@ Constructor
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  template< floating_real_value U>  normal( T const & m, U const & s ) requires std:convertible_to<T,U>;
-  template< floating_real_value U>  normal( U const & m, T const & s ) requires std:convertible_to<T,U>;
-                                    normal( T const & m, T const & s );
+  normal( T const & m, U const & s ) requires std:convertible_to<T,U>;
+  normal( callable_zero_ const &, U const & s );
+  normal( T const & m,  callable_one_ const & );
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 construct the normal object
@@ -41,9 +43,18 @@ construct the normal object
 Parameters
 ----------------------------------------------------------------------------------------------------
 `m`
-:   [floating real value](../../concepts.html#value). mean of the distribution (default to 0)
+:   [floating real value](../../concepts.html#value) or callable_zero object (mean of the distribution)
 `s`
-:   [floating real value](../../concepts.html#value). standard deviation  (>0) of the distribution (default to 1)
+:   [floating real value](../../concepts.html#value) or callable_one object (standard deviation  (>0) of the distribution)
+
+Optimizations
+====================================================================================================
+If the standard deviation is one or the mean zero the second and third constructors can be used with the parameters
+eve::one or eve::zero, providing some optimization in further computations of the attributes.
+
+Also the constexpr template variable normal_01< T > is provided to optimize the standard reduced case (mean 0, stdev 1).
+
+In this case, T must be provided to allow choosing the output type of the constant attributes.
 
 Supported attributes
 ====================================================================================================

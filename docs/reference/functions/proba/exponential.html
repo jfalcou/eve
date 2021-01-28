@@ -41,7 +41,14 @@ construct the exponential object
 Parameters
 ----------------------------------------------------------------------------------------------------
 `lambda`
-:   [floating real value](../../concepts.html#value). parameter of the distribution (default to 1)
+:   [floating real value](../../concepts.html#value)  (mean of the distribution)
+
+Optimizations
+====================================================================================================
+If the parameter lambda is one the constexpr template variable exponential_1< T > is provided
+to optimize the standard reduced case (mean 1).
+
+In this case, T must be provided to allow choosing the output type of the constant attributes.
 
 Supported attributes
 ====================================================================================================
