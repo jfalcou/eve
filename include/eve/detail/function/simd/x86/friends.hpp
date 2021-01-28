@@ -220,7 +220,7 @@ namespace eve::detail
     if constexpr( !ABI::is_wide_logical )
     {
       using s_t = typename logical<wide<T,N,ABI>>::storage_type;
-      return logical<wide<T,N,ABI>>{ s_t(~v.storage().value ^ w.storage().value) };
+      return logical<wide<T,N,ABI>>{ s_t(v.storage().value ^ w.storage().value) };
     }
     else
     {
