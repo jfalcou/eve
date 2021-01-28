@@ -37,7 +37,7 @@
 
 namespace eve
 {
-  template < typename T, typename U, typename Internal = T>
+  template<typename T, typename U, typename Internal = T>
   struct cauchy{};
 
   template < floating_real_value T, floating_real_value U>
@@ -68,7 +68,7 @@ namespace eve
     s_type s;
   };
 
-  template < floating_real_value U>
+  template<floating_real_value U>
   struct cauchy<callable_zero_, U>
   {
     using is_distribution_t = void;
@@ -115,26 +115,28 @@ namespace eve
     m_type m;
   };
 
-  template < floating_real_value Internal>
-  struct cauchy<callable_zero_, callable_one_, Internal>
+  template<typename T, typename U>  cauchy(T,U) -> cauchy<T,U>;
+
+  template < floating_real_value T>
+  struct cauchy<callable_zero_, callable_one_, T>
   {
     using is_distribution_t = void;
     using m_type = callable_zero_;
     using s_type = callable_one_;
-    using value_type = Internal;
-
-    cauchy(){}
-    cauchy(callable_zero_ const &, callable_one_ const&){}
+    using value_type = T;
+    constexpr cauchy( as_<T> const&) {}
   };
 
-  template < floating_real_value T> using cauchy_01 = cauchy<callable_zero_, callable_one_, T>;
+  template<typename T>  cauchy(as_<T> const&) -> cauchy<callable_zero_, callable_one_, T>;
+
+  template<floating_real_value T>
+  inline constexpr auto cauchy_01 = cauchy<callable_zero_, callable_one_, T>(as_<T>{});
 
   namespace detail
   {
     //////////////////////////////////////////////////////
     /// cdf
-    template<typename T, typename U, floating_value V
-             , typename I = T>
+    template<typename T, typename U, floating_value V, typename I = T>
     EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
                                  , cauchy<T, U, I> const & ca
                                  , V const &x ) noexcept

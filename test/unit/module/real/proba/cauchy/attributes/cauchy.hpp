@@ -19,7 +19,7 @@ TTS_CASE_TPL("Check eve::cauchy behavior", EVE_TYPE)
 {
   auto inf  = eve::inf(eve::as<T>());
 
-  auto ca = eve::cauchy<T, T>{T(1.0), T(2.0)};
+  auto ca = eve::cauchy{T(1.0), T(2.0)};
   TTS_ULP_EQUAL(eve::cdf(ca, T(0.0))     , T(3.524163823495667e-01)   , 0.5);
   TTS_ULP_EQUAL(eve::pdf(ca, T(1.0))     , T(1.591549430918953e-01)   , 1.0);
   TTS_ULP_EQUAL(eve::invcdf(ca, T(0.0))  , -inf   , 0.5);
@@ -34,7 +34,7 @@ TTS_CASE_TPL("Check eve::cauchy behavior", EVE_TYPE)
 {
   auto inf  = eve::inf(eve::as<T>());
 
-  auto ca = eve::cauchy<eve::callable_zero_, T>(eve::zero, T(2.0));
+  auto ca = eve::cauchy(eve::zero, T(2.0));
   TTS_ULP_EQUAL(eve::cdf(ca, T(0.0))     , T(0.5)   , 0.5);
   TTS_ULP_EQUAL(eve::pdf(ca, T(1.0))     , T(1.273239544735163e-01)   , 1.0);
   TTS_ULP_EQUAL(eve::invcdf(ca, T(0.0))  , -inf   , 0.5);
@@ -49,7 +49,7 @@ TTS_CASE_TPL("Check eve::cauchy behavior", EVE_TYPE)
 {
   auto inf  = eve::inf(eve::as<T>());
 
-  auto ca = eve::cauchy<T, eve::callable_one_>(T(2.0), eve::one);
+  auto ca = eve::cauchy(T(2.0), eve::one);
   TTS_ULP_EQUAL(eve::cdf(ca, T(0.0))     , T(1.475836176504333e-01)   , 0.5);
   TTS_ULP_EQUAL(eve::pdf(ca, T(1.0))     , T(1.591549430918953e-01)   , 1.0);
   TTS_ULP_EQUAL(eve::invcdf(ca, T(0.0))  , -inf   , 0.5);
@@ -64,7 +64,8 @@ TTS_CASE_TPL("Check eve::cauchy behavior", EVE_TYPE)
 {
   auto inf  = eve::inf(eve::as<T>());
 
-  auto ca = eve::cauchy_01<T>(eve::zero, eve::one); // ou eve::cauchy_01<T>()
+  auto ca = eve::cauchy_01<T>;
+
   TTS_ULP_EQUAL(eve::cdf(ca, T(0.0))     , T(0.5)   , 0.5);
   TTS_ULP_EQUAL(eve::pdf(ca, T(1.0))     , T(1.591549430918953e-01)   , 1.0);
   TTS_ULP_EQUAL(eve::invcdf(ca, T(0.0))  , -inf   , 0.5);
