@@ -207,21 +207,20 @@ namespace eve
                               , binomial<T, U, I> const & d
                               , V const &x ) noexcept
     {
-      auto invsqrt_2pi = V(0.39894228040143267793994605993438186847585863116493);
       if constexpr(floating_value<T> && floating_value<U>)
       {
-        return eve::exp(d.m*x+sqr(d.s*x)*half(as(x)));
+        return pow_abs(fma(d.p, exp(x), d.q), d.n);
       }
-      else if constexpr(std::same_as<T, callable_zero_> && floating_value<U>)
+      else if constexpr(std::same_as<T, callable_one_> && floating_value<U>)
       {
-        return eve::exp(sqr(d.s*x)*half(as(x)));
+        return fma(d.p, exp(x), d.q);
       }
-      else if constexpr(std::same_as<U, callable_one_> && floating_value<T>)
+      else if constexpr(std::same_as<U, callable_half_> && floating_value<T>)
       {
-        return eve::exp(d.m*x+sqr(x)*half(as(x)));
+        return eve::sqrt(fma(d.p, exp(x), d.q));
       }
       else
-        return eve::exp(sqr(d)*half(as(x)));
+        return half(as(x))*inc(exp(x));
     }
 
     //////////////////////////////////////////////////////
