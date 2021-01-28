@@ -171,8 +171,8 @@ namespace eve
       constexpr auto width = sizeof(Type)*Size::value;
       if constexpr(width <= 16)
       {
-        if constexpr(Size::value <= 8 )  return detail::mask8{};
-        if constexpr(Size::value == 16)  return detail::mask16{};
+        if constexpr(sizeof(Type) == 1) return detail::mask16{};
+        else                            return detail::mask8{};
       }
     }
 
