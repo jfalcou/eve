@@ -118,7 +118,7 @@ namespace eve
     binomial(T n_, callable_one_ const &)
       : n(n_)
     {
-      EVE_ASSERT(all(is_finite(m)), "m must be finite");
+      EVE_ASSERT(all(is_finite(n) && is_gtz(n)), "n must be finite and strictly positive");
     }
 
     template < floating_real_value TT>
@@ -126,7 +126,7 @@ namespace eve
     binomial(TT n_, callable_half_ const &)
       : n(T(n_))
     {
-      EVE_ASSERT(all(is_finite(n)), "m must be finite");
+     EVE_ASSERT(all(is_finite(n) && is_gtz(n)), "n must be finite and strictly positive");
     }
 
     n_type n;
