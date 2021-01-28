@@ -19,7 +19,7 @@ TTS_CASE_TPL("Check eve::normal behavior", EVE_TYPE)
 {
   auto inf  = eve::inf(eve::as<T>());
 
-  auto no = eve::normal{T(1.0), T(2.0)};
+  auto no = eve::normal<T, T>{T(1.0), T(2.0)};
   TTS_ULP_EQUAL(eve::median(no)               , T(1.0)  , 0);
   TTS_ULP_EQUAL(eve::mean(no)                 , T(1.0)  , 0);
   TTS_ULP_EQUAL(eve::var(no)                  , T(4.0)  , 0);
