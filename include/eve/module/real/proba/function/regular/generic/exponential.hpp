@@ -59,18 +59,22 @@ namespace eve
   };
 
 
-  template < typename T>
+  template<typename T>  exponential(T) -> exponential<T>;
+
+  template < floating_real_value T>
   struct exponential < callable_one_, T>
   {
     using is_distribution_t = void;
     using lambda_type = callable_one_;
-
-    exponential(){ };
-    exponential(callable_one_ const &) { };
-
+    using value_type = T;
+    constexpr exponential( as_<T> const&) {}
   };
 
-  template < floating_real_value T> using exponential_1 = exponential< callable_one_, T>;
+  template<typename T>  exponential(as_<T> const&) -> exponential<callable_one_, T>;
+
+  template<floating_real_value T>
+  inline constexpr auto exponential_1 = exponential<callable_one_, T>(as_<T>{});
+
 
   namespace detail
   {

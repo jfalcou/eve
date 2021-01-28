@@ -19,7 +19,7 @@ TTS_CASE_TPL("Check eve::exponential behavior", EVE_TYPE)
 {
   auto inf  = eve::inf(eve::as<T>());
 
-  auto ex = eve::exponential<T>{T(2.0)};
+  auto ex = eve::exponential{T(2.0)};
   TTS_ULP_EQUAL(eve::median(ex)  , T(eve::log_2(eve::as<T>())/2)  , 0.5);
   TTS_ULP_EQUAL(eve::mean  (ex)  , T(0.5)   , 0.5);
   TTS_ULP_EQUAL(eve::var   (ex)  , T(0.25)   , 0.5);
@@ -37,7 +37,7 @@ TTS_CASE_TPL("Check eve::exponential behavior", EVE_TYPE)
 
   auto inf  = eve::inf(eve::as<T>());
 
-  auto ex = eve::exponential<T>{T(2.0)};
+  auto ex = eve::exponential{T(2.0)};
   TTS_ULP_EQUAL(eve::median(ex)  , T(eve::log_2(eve::as<T>())/2)  , 0.5);
   TTS_ULP_EQUAL(eve::mean  (ex)  , T(0.5)   , 0.5);
   TTS_ULP_EQUAL(eve::var   (ex)  , T(0.25)   , 0.5);
@@ -54,7 +54,7 @@ TTS_CASE_TPL("Check eve::exponential behavior", EVE_TYPE)
 {
   auto inf  = eve::inf(eve::as<T>());
 
-  auto ex = eve::exponential_1<T>();
+  auto ex = eve::exponential_1<T>;
   TTS_ULP_EQUAL(eve::median(ex)  , T(eve::log_2(eve::as<T>()))  , 0.5);
   TTS_ULP_EQUAL(eve::mean  (ex)  , T(1)   , 0.5);
   TTS_ULP_EQUAL(eve::var   (ex)  , T(1)   , 0.5);
