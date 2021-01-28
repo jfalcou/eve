@@ -18,14 +18,18 @@
 #include <eve/module/real/proba/detail/attributes.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/function/all.hpp>
+#include <eve/function/convert.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/exp.hpp>
+#include <eve/function/exp2.hpp>
 #include <eve/function/is_gez.hpp>
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/is_flint.hpp>
 #include <eve/function/beta.hpp>
 #include <eve/function/betainc.hpp>
 #include <eve/function/log.hpp>
+#include <eve/function/min.hpp>
+#include <eve/function/max.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/pow_abs.hpp>
 #include <eve/function/sqrt.hpp>
@@ -34,165 +38,302 @@
 
 namespace eve
 {
+  template < typename T, typename U, typename Internal = T>
+  struct binomial{};
 
-  template < floating_real_value T>
-  struct binomial
+  template < floating_real_value T, floating_real_value U>
+  requires  compatible_values<T, U>
+  struct binomial<T, U>
   {
     using is_distribution_t = void;
+    using n_type = T;
+    using p_type = U;
 
-    template < integral_value U>
-    binomial(U n_,  T p_)
-      requires  std::convertible_to<T, U>
-    : n(n_), p(p_), q(oneminus(p))
-    {
-      EVE_ASSERT(all(is_gtz(n_)), "n must be strictly positive");
-      EVE_ASSERT(all(p < one(as(p)) && is_gez(p)), "p must be in [0, 1]");
-    }
-
-    binomial(T n_,  T p_)
+    binomial(T n_,  U p_)
       : n(n_), p(p_), q(oneminus(p))
     {
-      EVE_ASSERT(all(is_flint(n_) && is_gtz(n_)), "s must be strictly positive and integral");
-     EVE_ASSERT(all(p < one(as(p)) && is_gez(p)), "p must be in [0, 1]");
+      EVE_ASSERT(all(is_gtz(n_)), "n must be strictly positive");
+      EVE_ASSERT(all(p <= one(as(p)) && is_gez(p)), "p must be in [0, 1]");
     }
 
-    T n, p, q;
+    template < floating_real_value TT,  floating_real_value UU>
+    requires  std::constructible_from<T, TT> && std::constructible_from<U, UU>
+    binomial(TT n_,  UU p_)
+      : n(T(n_)), p(U(p_)), q(oneminus(p))
+    {
+      EVE_ASSERT(all(is_gtz(n_)), "n must be strictly positive");
+      EVE_ASSERT(all(p <= one(as(p)) && is_gez(p)), "p must be in [0, 1]");
+    }
+
+    template < integral_scalar_value N,  floating_real_value UU>
+    requires  std::convertible_to<T, N> && std::constructible_from<U, UU>
+    binomial(N n_,  UU p_)
+      : n(T(n_)), p(U(p_)), q(oneminus(p))
+    {
+      EVE_ASSERT(all(p < one(as(p)) && is_gez(p)), "p must be in [0, 1]");
+    }
+    template < integral_simd_value N,  floating_real_value UU>
+    requires  std::convertible_to<T, N> && std::constructible_from<U, UU>
+    binomial(N n_,  UU p_)
+      : n(convert(n_, as<element_type_t<T>>())), p(U(p_)), q(oneminus(p))
+    {
+      EVE_ASSERT(all(p <= one(as(p)) && is_gez(p)), "p must be in [0, 1]");
+    }
+
+    n_type n;
+    p_type p, q;
   };
 
+  template < floating_real_value U>
+  struct binomial<callable_one_, U>
+  {
+    using is_distribution_t = void;
+    using n_type = callable_one_;
+    using p_type = U;
+
+    binomial(callable_one_ const&, U p_)
+      : p(p_), q(oneminus(p))
+    {
+      EVE_ASSERT(all(p <= one(as(p)) && is_gez(p)), "p must be in [0, 1]");
+    }
+
+    template < floating_real_value UU>
+    requires  std::constructible_from<U, UU>
+    binomial(callable_zero_ const & , UU p_)
+      : p(U(p_))
+    {
+      EVE_ASSERT(all(p <= one(as(p)) && is_gez(p)), "p must be in [0, 1]");
+    }
+
+    p_type p, q;
+  };
+
+  template < floating_real_value T>
+  struct binomial<T, callable_half_>
+  {
+    using is_distribution_t = void;
+    using n_type = T;
+    using p_type = callable_half_;
+
+    binomial(T n_, callable_one_ const &)
+      : n(n_)
+    {
+      EVE_ASSERT(all(is_finite(m)), "m must be finite");
+    }
+
+    template < floating_real_value TT>
+    requires  std::constructible_from<T, TT>
+    binomial(TT n_, callable_half_ const &)
+      : n(T(n_))
+    {
+      EVE_ASSERT(all(is_finite(n)), "m must be finite");
+    }
+
+    n_type n;
+  };
+
+  template<typename T, typename U>  binomial(T,U) -> binomial<T,U>;
+
+  template < floating_real_value T>
+  struct binomial<callable_one_, callable_half_, T>
+  {
+    using is_distribution_t = void;
+    using n_type = callable_one_;
+    using p_type = callable_half_;
+    using value_type = T;
+    constexpr binomial( as_<T> const&) {}
+  };
+
+  template<typename T>  binomial(as_<T> const&) -> binomial<callable_one_, callable_half_, T>;
+
+  template<floating_real_value T>
+  inline constexpr auto bernouilli = binomial<callable_one_, callable_half_, T>(as_<T>{});
 
   namespace detail
   {
     //////////////////////////////////////////////////////
     /// cdf
-    template<floating_value T, floating_value U>
+    template<typename T, typename U, floating_value V
+             , typename I = T>
     EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
-                              , binomial<T> const &d
-                              , U const &x ) noexcept
-    requires compatible_values<T, U>
+                              , binomial<T, U, I> const & d
+                              , V const &x ) noexcept
     {
-      return arithmetic_call(cdf, d, x);
-    }
-
-    template<floating_value T>
-    EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
-                              , binomial<T> const &d
-                              , T const &x ) noexcept
-    {
-      return betainc(d.q, d.n-x, inc(x));
+      auto k = floor(x);
+      if constexpr(floating_value<T> && floating_value<U>)
+        return if_else(is_ltz(x), zero, if_else(x < one(as(x)),  betainc(d.q, d.n-k, inc(k)), one));
+      else if constexpr(std::same_as<T, callable_one_> && floating_value<U>)
+        return if_else(is_ltz(x), zero, if_else(x < one(as(x)), d.q, one));
+      else if constexpr(std::same_as<U, callable_half_> && floating_value<T>)
+        return  betainc(half(as(x)), d.n-k, inc(k));
+      else
+        return if_else(is_ltz(x), zero, if_else(x < one(as(x)), half(as(x)), one));
     }
 
     //////////////////////////////////////////////////////
     /// pmf
-    template<floating_value U, floating_value T>
+    template<typename T, typename U, floating_value V
+             , typename I = T>
     EVE_FORCEINLINE  auto pmf_(EVE_SUPPORTS(cpu_)
-                              , binomial<T> const &d
-                              , U const &k ) noexcept
+                              , binomial<T, U, I> const & d
+                              , V const &x ) noexcept
     {
-
-      auto fk = floor(k);
-      auto nmk = d.n-fk;
-      auto tmp = pow_abs(d.p, k)*pow_abs(d.q, nmk)*beta(inc(fk), inc(nmk))/inc(d.n);
-      return if_else(is_flint(k) && is_gez(k) && (k <= d.n), tmp, zero);
-    }
-
-    template<floating_value T, integral_value U>
-    EVE_FORCEINLINE  auto pmf_(EVE_SUPPORTS(cpu_)
-                              , binomial<T> const &d
-                              , U const &k ) noexcept
-    requires compatible_values<T, U>
-    {
-      return pmf(d, T(k));
+      if constexpr(floating_value<T> && floating_value<U>)
+      {
+        auto fk = eve::min(eve::max(floor(x), zero(as(x))), d.n);
+        auto nmk = d.n-fk;
+        return pow_abs(d.p, fk)*pow_abs(d.q, nmk)*beta(inc(fk), inc(nmk))/inc(d.n);
+      }
+      else if constexpr(std::same_as<T, callable_one_> && floating_value<U>)
+      {
+        auto fk = eve::min(eve::max(floor(x), zero(as(x))), one(as(x)));
+        return if_else(is_eqz(fk), d.q, if_else(fk == one(as(fk)), d.p, zero));
+      }
+      else if constexpr(std::same_as<U, callable_half_> && floating_value<T>)
+      {
+        auto fk = eve::min(eve::max(floor(x), zero(as(x))), d.n);
+        auto nmk = d.n-fk;
+        return exp2(-d.n)*beta(inc(fk), inc(nmk)*half(as(x)));
+      }
+      else
+        return if_else(is_eqz(x) || (x == one(as(x))), half(as(x)), zero);
     }
 
     //////////////////////////////////////////////////////
     /// mgf
-    template<floating_value T, floating_value U>
+    template<typename T, typename U, floating_value V
+             , typename I = T>
     EVE_FORCEINLINE  auto mgf_(EVE_SUPPORTS(cpu_)
-                                 , binomial<T> const &d
-                                 , U const &x ) noexcept
-    requires compatible_values<T, U>
+                              , binomial<T, U, I> const & d
+                              , V const &x ) noexcept
     {
-      return arithmetic_call(mgf, d, x);
-    }
-
-    template<floating_value T>
-    EVE_FORCEINLINE  auto mgf_(EVE_SUPPORTS(cpu_)
-                                 , binomial<T> const &d
-                                 , T const &x ) noexcept
-    {
-      return pow_abs(fma(d.p, eve::exp(x), d.q), d.n);
+      auto invsqrt_2pi = V(0.39894228040143267793994605993438186847585863116493);
+      if constexpr(floating_value<T> && floating_value<U>)
+      {
+        return eve::exp(d.m*x+sqr(d.s*x)*half(as(x)));
+      }
+      else if constexpr(std::same_as<T, callable_zero_> && floating_value<U>)
+      {
+        return eve::exp(sqr(d.s*x)*half(as(x)));
+      }
+      else if constexpr(std::same_as<U, callable_one_> && floating_value<T>)
+      {
+        return eve::exp(d.m*x+sqr(x)*half(as(x)));
+      }
+      else
+        return eve::exp(sqr(d)*half(as(x)));
     }
 
     //////////////////////////////////////////////////////
     /// median
-    template<floating_value T>
+    template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto median_(EVE_SUPPORTS(cpu_)
-                                 , binomial<T> const &d) noexcept
+                                 , binomial<T,U,I> const & d) noexcept
     {
-      return floor(d.p*d.n);
+      if constexpr (floating_value<T> && floating_value<U>)
+        return  floor(d.p*d.n);
+      else if constexpr (floating_value<U>)
+        return  floor(d.p);
+      else if constexpr (floating_value<T>)
+        return  floor(half(as<T>())*d.n);
+      else
+        return zero(as<I>());
     }
+
 
     //////////////////////////////////////////////////////
     /// mean
-    template<floating_value T>
+    template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto mean_(EVE_SUPPORTS(cpu_)
-                               , binomial<T> const &d) noexcept
+                               , binomial<T,U,I> const &d) noexcept
     {
-      return d.p*d.n;
+      if constexpr (floating_value<T> && floating_value<U>)
+        return  d.p*d.n;
+      else if constexpr (floating_value<U>)
+        return  d.p;
+      else if constexpr (floating_value<T>)
+        return  half(as<T>())*d.n ;
+      else
+        return half(as<I>());
     }
+
     //////////////////////////////////////////////////////
     /// mode
-    template<floating_value T>
+    template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto mode_(EVE_SUPPORTS(cpu_)
-                               , binomial<T> const & d) noexcept
+                               , binomial<T,U,I> const & d) noexcept
     {
-      return floor(d.p*inc(d.n));
+      return median(d);
     }
 
     //////////////////////////////////////////////////////
     /// entropy
-    template<floating_value T>
+    template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto entropy_(EVE_SUPPORTS(cpu_)
-                                  , binomial<T> const & d) noexcept
+                                  , binomial<T,U,I> const & d) noexcept
     {
-      // approximate
       auto twopie = T(17.0794684453471341309271017390931489900697770715304);
-      return half(as<T>())*eve::log(twopie*d.n*d.p*d.q); // + ô(1/n)
+      if constexpr (floating_value<U> && floating_value<T>)
+        return half(as<T>())*eve::log(twopie*d.n*d.p*d.q); // + ô(1/n)
+      else if constexpr (floating_value<U>)
+        return half(as<U>())*eve::log(twopie*d.n*U(0.25)); // + ô(1/n)
+      else if constexpr (floating_value<T>)
+        return half(as<T>())*eve::log(twopie*d.p*d.q); // + ô(1/n)
+      else
+        return half(as<I>())*eve::log(twopie*I(0.25)); // + ô(1/n)
+
     }
+
 
     //////////////////////////////////////////////////////
     /// skewness
-    template<floating_value T>
+    template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto skewness_(EVE_SUPPORTS(cpu_)
-                                  , binomial<T> const & ) noexcept
+                                   , binomial<T,U,I> const & d ) noexcept
     {
-      return T(0);
+      if constexpr (floating_value<T>)
+        return (d.q-d.p)/stdev(d);
+      else if constexpr (floating_value<U>)
+        return zero(as<U>());
+      else
+        return zero(as<I>());
     }
 
     //////////////////////////////////////////////////////
     /// kurtosis
-    template<floating_value T>
+    template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto kurtosis_(EVE_SUPPORTS(cpu_)
-                                  , binomial<T> const & d) noexcept
+                                   , binomial<T,U,I> const & d) noexcept
     {
-      auto pq = d.p*d.q;
-      return oneminus(6*pq)/(d.n*pq);
+      if constexpr (floating_value<T>)
+        return oneminus(6*d.p*d.q)/var(d);
+      else if constexpr (floating_value<U>)
+        return half(as<T>())/var(d);
+      else
+        return I(-2);
     }
 
     //////////////////////////////////////////////////////
     /// var
-    template<floating_value T>
+    template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto var_(EVE_SUPPORTS(cpu_)
-                                  , binomial<T> const & d) noexcept
+                              , binomial<T,U,I> const & d) noexcept
     {
-      return sqr(d.n*d.p*d.q);
+      if constexpr (floating_value<T>&&(floating_value<U>))
+        return d.n*d.p*d.q;
+      else if constexpr (floating_value<T>)
+        return T(0.25)*d.n;
+      else if constexpr (floating_value<U>)
+        return d.p*d.q;
+      else
+        return I(0.25);
     }
 
     //////////////////////////////////////////////////////
     /// stdev
-    template<floating_value T>
+    template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto stdev_(EVE_SUPPORTS(cpu_)
-                                  , binomial<T> const & d) noexcept
+                                , binomial<T,U,I> const & d) noexcept
     {
       return sqrt(var(d));
     }
