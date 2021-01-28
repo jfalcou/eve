@@ -50,7 +50,7 @@ namespace eve::detail
     {
       auto eval = [&](auto... I) {
         using that_t = std::array<sub_t, 2>;
-        return that_t {sub_t {a[I]...}, sub_t {a[I + card_t::value / 2]...}};
+        return that_t {sub_t {a.get(I)...}, sub_t {a.get(I + card_t::value / 2)...}};
       };
 
       return apply<card_t::value / 2>(eval);
@@ -75,7 +75,7 @@ namespace eve::detail
 
     if constexpr( is_emulated_v<abi_t> )
     {
-      auto eval = [&](auto... I) { return sub_t {a[I + (Slice::value * sub_t::static_size)]...}; };
+      auto eval = [&](auto... I) { return sub_t {a.get(I + (Slice::value * sub_t::static_size))...}; };
 
       return apply<card_t::value / 2>(eval);
     }

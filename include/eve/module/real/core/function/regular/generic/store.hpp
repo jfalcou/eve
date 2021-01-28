@@ -39,7 +39,7 @@ namespace eve::detail
   EVE_FORCEINLINE void
   store_(EVE_SUPPORTS(cpu_), wide<T, N, emulated_> const &value, T *ptr) noexcept
   {
-    apply<N::value>([&](auto... I) { ((*ptr++ = value[I]), ...); });
+    apply<N::value>([&](auto... I) { ((*ptr++ = value.get(I)), ...); });
   }
 
   template<real_scalar_value T, typename N>
