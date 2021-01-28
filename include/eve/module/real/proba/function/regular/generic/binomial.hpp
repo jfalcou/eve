@@ -24,6 +24,7 @@
 #include <eve/function/exp2.hpp>
 #include <eve/function/is_gez.hpp>
 #include <eve/function/is_gtz.hpp>
+#include <eve/function/is_finite.hpp>
 #include <eve/function/is_flint.hpp>
 #include <eve/function/beta.hpp>
 #include <eve/function/betainc.hpp>
