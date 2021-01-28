@@ -34,150 +34,177 @@
 
 namespace eve
 {
+  template < typename T, typename Internal = T>
+  struct poisson{};
 
   template < floating_real_value T>
-  struct poisson
+  struct poisson<T, T>
   {
     using is_distribution_t = void;
+    using lambda_type = T;
 
-    poisson(T l) : lambda(l), expmlambda(eve::exp(-lambda))  {
-      EVE_ASSERT(all(is_gez(l) && is_finite(l)), "lambda must be strictly positive and finite");
+    poisson(T lambda_) : lambda(lambda_), expmlambda(eve::exp(-lambda)){
+      EVE_ASSERT(all(is_gtz(lambda) && is_finite(lambda)), "lambda must be strictly positive and finite");
     }
 
-    poisson()    : lambda(T(1)), expmlambda(eve::exp(-lambda))  {}
+    template < floating_real_value TT>
+    requires  std::constructible_from<T, TT>
+    poisson(TT lambda_)
+      : lambda(T(lambda_))
+    {
+      EVE_ASSERT(all(is_gtz(lambda) && is_finite(lambda)), "lambda must be strictly positive and finite");
+    }
 
-    T lambda;
-    T expmlambda;
+    poisson()    : lambda(T(1))   {}
+
+    lambda_type lambda;
+    lambda_type expmlambda;
   };
 
 
+  template < floating_real_value T>
+  struct poisson < callable_one_, T>
+  {
+    using is_distribution_t = void;
+    using lambda_type = callable_one_;
+
+    poisson(){ };
+    poisson(callable_one_ const &) { };
+
+  };
+
+  template < floating_real_value T> using poisson_1 = poisson< callable_one_, T>;
+
   namespace detail
   {
+
     //////////////////////////////////////////////////////
     /// cdf
-    template<floating_value T, floating_value U>
+    template<typename T, typename U, typename I = T>
     EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
-                              , poisson<T> const &d
+                              , poisson<T, I> const &d
                               , U const &x ) noexcept
-    requires compatible_values<T, U>
     {
-      return arithmetic_call(cdf, d, x);
-    }
-
-    template<floating_value T>
-    EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
-                              , poisson<T> const &d
-                              , T const &x ) noexcept
-    {
-      auto tmp = gamma_p(floor(x+1), d.lambda);
+      U l = one(as<U>());
+      if constexpr(floating_real_value<T>) l = U(d.lambda);
+      auto tmp = gamma_p(floor(x+1), l);
       return if_else(is_flint(x) && is_gez(x), tmp, zero);
     }
 
     //////////////////////////////////////////////////////
     /// pmf
-    template<floating_value T, floating_value U>
+    template<typename T, typename U, typename I = T>
     EVE_FORCEINLINE  auto pmf_(EVE_SUPPORTS(cpu_)
-                              , poisson<T> const &d
+                              , poisson<T, I> const &d
                               , U const &x ) noexcept
-    requires compatible_values<T, U>
     {
-      return arithmetic_call(pmf, d, x);
+      if constexpr(floating_value<T>)
+        return if_else(is_flint(x) && is_gez(x)
+                      , d.expmlambda*pow_abs(d.lambda, x)/tgamma(inc(x))
+                      , zero);
+      else
+       return if_else(is_flint(x) && is_gez(x)
+                     , rec(tgamma(inc(x)))
+                      , zero);
     }
-
-    template<floating_value T>
-    EVE_FORCEINLINE  auto pmf_(EVE_SUPPORTS(cpu_)
-                              , poisson<T> const &d
-                              , T const &x ) noexcept
-    {
-      return if_else(is_flint(x) && is_gez(x)
-                    , d.expmlambda*pow_abs(d.lambda, x)/tgamma(inc(x))
-                    , zero);
-    }
-
 
     //////////////////////////////////////////////////////
     /// mgf
-    template<floating_value T, floating_value U>
+    template<typename T, typename U, typename I = T>
     EVE_FORCEINLINE  auto mgf_(EVE_SUPPORTS(cpu_)
-                              , poisson<T> const &d
-                              , U const &x ) noexcept
-    requires compatible_values<T, U>
+                              , poisson<T, I> const &d
+                              , U const &t ) noexcept
     {
-      return arithmetic_call(mgf, d, x);
-    }
-
-    template<floating_value T>
-    EVE_FORCEINLINE  auto mgf_(EVE_SUPPORTS(cpu_)
-                              , poisson<T> const &d
-                              , T const &t ) noexcept
-    {
-      return eve::exp(d.lambda*expm1(t));
+      if constexpr(floating_value<T>)
+        return eve::exp(d.lambda*expm1(t));
+      else
+        return eve::exp(expm1(t));
     }
 
     //////////////////////////////////////////////////////
     /// mean
-    template<floating_value T>
+    template<typename T, typename I = T>
     EVE_FORCEINLINE  auto mean_(EVE_SUPPORTS(cpu_)
-                               , poisson<T> const &d) noexcept
+                               , poisson<T, I> const &d) noexcept
     {
-      return d.lambda;
+      if constexpr(floating_value<T>)
+        return d.lambda;
+      else
+        return one(as<I>());
     }
 
 
     //////////////////////////////////////////////////////
     /// median
-    template<floating_value T>
+    template<typename T, typename I = T>
     EVE_FORCEINLINE  auto median_(EVE_SUPPORTS(cpu_)
-                                 , poisson<T> const &d) noexcept
+                                 , poisson<T, I> const &d) noexcept
     {
-      //approximate
-      return floor(d.lambda + T(1/3.0) - T(0.02/d.lambda));
+      if constexpr(floating_value<T>)
+        return floor(d.lambda + T(1/3.0) - T(0.02/d.lambda));  //approximate (exact for integral lambda)
+      else
+        return one(as<I>());
     }
 
     //////////////////////////////////////////////////////
     /// mode
-    template<floating_value T>
+    template<typename T, typename I = T>
     EVE_FORCEINLINE  auto mode_(EVE_SUPPORTS(cpu_)
-                               , poisson<T> const & d) noexcept
+                               , poisson<T, I> const & d) noexcept
     {
-      return if_else(is_flint(d.lambda), dec(d.lambda), floor(d.lambda));
+      if constexpr(floating_value<T>)
+        return if_else(is_flint(d.lambda), dec(d.lambda), floor(d.lambda));
+      else
+        return zero(as<I>());
     }
 
     //////////////////////////////////////////////////////
     /// var
-    template<floating_value T>
+    template<typename T, typename I = T>
     EVE_FORCEINLINE  auto var_(EVE_SUPPORTS(cpu_)
-                              , poisson<T> const &d) noexcept
+                              , poisson<T, I> const &d) noexcept
     {
-      return d.lambda;
+      if constexpr(floating_value<T>)
+        return d.lambda;
+      else
+        return one(as<I>());
     }
 
 
     //////////////////////////////////////////////////////
     /// stdev
-    template<floating_value T>
+    template<typename T, typename I = T>
     EVE_FORCEINLINE  auto stdev_(EVE_SUPPORTS(cpu_)
-                                , poisson<T> const &d) noexcept
+                                , poisson<T, I> const &d) noexcept
     {
-      return sqrt(d.lambda);
+      if constexpr(floating_value<T>)
+        return eve::sqrt(d.lambda);
+      else
+        return one(as<I>());
+    }
+
+    //////////////////////////////////////////////////////
+    /// skewness
+    template<typename T, typename I = T>
+    EVE_FORCEINLINE  auto skewness_(EVE_SUPPORTS(cpu_)
+                                   , poisson<T, I> const & d) noexcept
+    {
+     if constexpr(floating_value<T>)
+       return rsqrt(d.lambda);
+      else
+        return one(as<I>());
     }
 
     //////////////////////////////////////////////////////
     /// kurtosis
-    template<floating_value T>
+    template<typename T, typename I = T>
     EVE_FORCEINLINE  auto kurtosis_(EVE_SUPPORTS(cpu_)
-                                   , poisson<T> const & d) noexcept
+                                   , poisson<T, I> const & d) noexcept
     {
-      return rec(d.lambda);
-    }
-    
-    //////////////////////////////////////////////////////
-    /// skewness
-    template<floating_value T>
-    EVE_FORCEINLINE  auto skewness_(EVE_SUPPORTS(cpu_)
-                                   , poisson<T> const & d) noexcept
-    {
-      return rsqrt(d.lambda);
+      if constexpr(floating_value<T>)
+       return rec(d.lambda);
+      else
+        return one(as<I>());
     }
   }
 }

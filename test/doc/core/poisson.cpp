@@ -11,7 +11,7 @@ int main()
 
 
 
-  auto po = eve::poisson(lambda);
+  auto po = eve::poisson<wide_ft>(lambda);
 
   std::cout
     << "---- simd" << '\n'
@@ -27,7 +27,7 @@ int main()
 
   float xf = 2.0f;
   float lf = 1.0f;
-  auto pof = eve::poisson(lf);
+  auto pof = eve::poisson<float>(lf);
 
   std::cout
     << "---- scalar"  << '\n'
