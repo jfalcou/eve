@@ -11,13 +11,13 @@ int main()
 
 
 
-  auto po = eve::poisson<wide_ft>(lambda);
+  auto po = eve::poisson(lambda);
 
   std::cout
     << "---- simd" << '\n'
     << "<- x                   = " << x << '\n'
     << "<- lambda              = " << lambda << '\n'
-    << "-> median(po)          = " << eve::median(po) << "  \\\\  approximate\n"
+    << "-> median(po)          = " << eve::median(po) << "  \\\\  possibly approximate\n"
     << "-> mode(po)            = " << eve::mode(po) << '\n'
     << "-> mean(po)            = " << eve::mean(po) << '\n'
     << "-> var(po)             = " << eve::var(po) << '\n'
@@ -27,7 +27,7 @@ int main()
 
   float xf = 2.0f;
   float lf = 1.0f;
-  auto pof = eve::poisson<float>(lf);
+  auto pof = eve::poisson(lf);
 
   std::cout
     << "---- scalar"  << '\n'

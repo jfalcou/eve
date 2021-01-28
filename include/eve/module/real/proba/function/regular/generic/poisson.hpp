@@ -31,6 +31,7 @@
 #include <eve/function/is_gez.hpp>
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/is_finite.hpp>
+#include <eve/constant/one.hpp>
 
 namespace eve
 {
@@ -62,18 +63,21 @@ namespace eve
   };
 
 
+  template<typename T>  poisson(T) -> poisson<T>;
+
+
   template < floating_real_value T>
   struct poisson < callable_one_, T>
   {
     using is_distribution_t = void;
     using lambda_type = callable_one_;
-
-    poisson(){ };
-    poisson(callable_one_ const &) { };
-
+    constexpr poisson( as_<T> const&) {}
   };
 
-  template < floating_real_value T> using poisson_1 = poisson< callable_one_, T>;
+  template<typename T>  poisson(as_<T> const&) -> poisson<callable_one_, T>;
+
+  template<floating_real_value T>
+  inline constexpr auto poisson_1 = poisson<callable_one_, T>(as_<T>{});
 
   namespace detail
   {

@@ -11,7 +11,7 @@ int main()
   wide_ft m = { 0.0f, -1.0f, 1.0f, 2.0f };
   wide_ft s = { 1.0f,  2.0f, 3.0f, 4.0f };
 
-  auto ca = eve::cauchy<wide_ft, wide_ft>(0.0f, s);
+  auto ca = eve::cauchy(0.0f, s);
 
   std::cout
     << "---- simd" << '\n'
@@ -29,7 +29,7 @@ int main()
   float xf = 9.0f;
   float mf = 10.0f;
   float sf = 2.0;
-  auto caf = eve::cauchy<float, float>(mf, sf);
+  auto caf = eve::cauchy(mf, sf);
 
   std::cout
     << "---- scalar"  << '\n'
@@ -39,7 +39,7 @@ int main()
     << "-> cdf(caf, xf)        = " << eve::cdf(caf, xf) << '\n'
     << "-> mode(caf)           = " << eve::mode(caf)    << '\n';
 
-  auto ca0= eve::cauchy<eve::callable_zero_, wide_ft>{eve::zero, s};
+  auto ca0= eve::cauchy{eve::zero, s};
 
   std::cout
     << "---- simd" << '\n'

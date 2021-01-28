@@ -11,7 +11,7 @@ int main()
   wide_ft m = { 0.0f, -1.0f, 1.0f, 2.0f };
   wide_ft s = { 1.0f,  2.0f, 3.0f, 4.0f };
 
-  auto no = eve::normal<wide_ft, wide_ft>(m, s);
+  auto no = eve::normal(m, s);
 
   std::cout
     << "---- simd" << '\n'
@@ -31,7 +31,7 @@ int main()
   float xf = 9.0f;
   float mf = 10.0f;
   float sf = 2.0;
-  auto nof = eve::normal<float, float>(mf, sf);
+  auto nof = eve::normal(mf, sf);
 
   std::cout
     << "---- scalar"  << '\n'

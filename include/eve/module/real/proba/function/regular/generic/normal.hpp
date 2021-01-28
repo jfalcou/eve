@@ -33,6 +33,9 @@
 #include <eve/constant/half.hpp>
 #include <eve/constant/mhalf.hpp>
 #include <eve/module/real/core/detail/generic/horn.hpp>
+#include <eve/constant/zero.hpp>
+#include <eve/constant/one.hpp>
+#include <concepts>
 
 namespace eve
 {
@@ -114,19 +117,23 @@ namespace eve
     m_type m;
   };
 
-  template < floating_real_value Internal>
-  struct normal<callable_zero_, callable_one_, Internal>
+  template<typename T, typename U>  normal(T,U) -> normal<T,U>;
+
+  template < floating_real_value T>
+  struct normal<callable_zero_, callable_one_, T>
   {
     using is_distribution_t = void;
     using m_type = callable_zero_;
     using s_type = callable_one_;
-    using value_type = Internal;
-
-    normal(){}
-    normal(callable_zero_ const &, callable_one_ const&){}
+    using value_type = T;
+    constexpr normal( as_<T> const&) {}
   };
 
-  template < floating_real_value T> using normal_01 = normal<callable_zero_, callable_one_, T>;
+
+  template<typename T>  normal(as_<T> const&) -> normal<callable_zero_, callable_one_, T>;
+
+  template<floating_real_value T>
+  inline constexpr auto normal_01 = normal<callable_zero_, callable_one_, T>(as_<T>{});
 
   namespace detail
   {

@@ -18,7 +18,7 @@
 TTS_CASE_TPL("Check eve::poisson behavior", EVE_TYPE)
 {
 
-  auto ex = eve::poisson<T>{T(2.0)};
+  auto ex = eve::poisson{T(2.0)};
   TTS_ULP_EQUAL(eve::median(ex)  , T(2)  , 0.5);
   TTS_ULP_EQUAL(eve::mean  (ex)  , T(2)   , 0.5);
   TTS_ULP_EQUAL(eve::var   (ex)  , T(2)   , 0.5);
@@ -30,7 +30,7 @@ TTS_CASE_TPL("Check eve::poisson behavior", EVE_TYPE)
 TTS_CASE_TPL("Check eve::poisson behavior", EVE_TYPE)
 {
 
-  auto ex = eve::poisson_1<T>{};
+  auto ex = eve::poisson_1<T>;
   TTS_ULP_EQUAL(eve::median(ex)  , T(1)  , 0.5);
   TTS_ULP_EQUAL(eve::mean  (ex)  , T(1)   , 0.5);
   TTS_ULP_EQUAL(eve::var   (ex)  , T(1)   , 0.5);

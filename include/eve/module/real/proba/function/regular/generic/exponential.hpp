@@ -30,6 +30,7 @@
 #include <eve/function/sqr.hpp>
 #include <eve/function/is_ltz.hpp>
 #include <eve/constant/log_2.hpp>
+#include <eve/constant/one.hpp>
 
 namespace eve
 {
