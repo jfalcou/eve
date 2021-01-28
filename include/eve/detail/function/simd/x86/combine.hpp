@@ -52,7 +52,7 @@ namespace eve::detail
       if constexpr( std::same_as<T, float> )
       {
         t_t that = l.storage();
-        that.set(1,h[0]);
+        that.set(1,h.get(0));
         return that.storage();
       }
       else if constexpr( std::integral<T> )
@@ -68,11 +68,11 @@ namespace eve::detail
     //==============================================================================================
     else if constexpr( std::integral<T> && ((sizeof(T) != 8) && (N::value == 2)) )
     {
-      return make(eve::as_<t_t> {}, l[0], l[1], h[0], h[1]);
+      return make(eve::as_<t_t> {}, l.get(0), l.get(1), h.get(0), h.get(1));
     }
     else if constexpr( std::integral<T> && (sizeof(T) != 8) && (N::value == 1) )
     {
-      return make(eve::as_<t_t> {}, l[0], h[0]);
+      return make(eve::as_<t_t> {}, l.get(0), h.get(0));
     }
   }
 

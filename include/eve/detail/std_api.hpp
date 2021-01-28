@@ -47,16 +47,9 @@ namespace std
 
 namespace eve
 {
-  template<std::size_t I, typename T, typename N, typename ABI>
-  auto get(wide<T, N, ABI> const &w)
+  template<std::size_t I, typename Derived>
+  auto get(detail::wide_ops<Derived> const &w)
   {
-    return w[ I ];
-  }
-
-  template<std::size_t I, typename T, typename N, typename ABI>
-  auto get(logical<wide<T, N, ABI>> const &w)
-  {
-    return w[ I ];
+    return w.get(I);
   }
 }
-

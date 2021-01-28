@@ -24,15 +24,15 @@ namespace eve::detail
   template<integral_real_scalar_value T, typename N, ppc_abi ABI, integral_real_scalar_value U>
   EVE_FORCEINLINE decltype(auto) self_shl(wide<T,N,ABI>& v, wide<U,N,ABI> s) noexcept
   {
-    using i_t = typename wide<T,N,ABI>::template rebind <as_integer_t<T, unsigned>>;
-    v = vec_sl(v.storage(), bit_cast(s,as_<i_t>()).storage())
+    using i_t = typename wide<T,N,ABI>::template rebind <as_integer_t<T, unsigned>,N>;
+    v = vec_sl(v.storage(), bit_cast(s,as_<i_t>()).storage());
     return v;
   }
 
   template<integral_real_scalar_value T, typename N, ppc_abi ABI, integral_real_scalar_value U>
   EVE_FORCEINLINE auto self_shl(wide<T,N,ABI>& v, U s) noexcept
   {
-    using i_t = typename wide<T,N,ABI>::template rebind <as_integer_t<T, unsigned>>;
+    using i_t = typename wide<T,N,ABI>::template rebind <as_integer_t<T, unsigned>,N>;
     v <<= i_t(s);
     return v;
   }
@@ -43,11 +43,10 @@ namespace eve::detail
   template<integral_real_scalar_value T, typename N, ppc_abi ABI, integral_real_scalar_value U>
   EVE_FORCEINLINE decltype(auto) self_shr(wide<T,N,ABI>& v, wide<U,N,ABI> s) noexcept
   {
-    using i_t = typename wide<T,N,ABI>::template rebind <as_integer_t<T, unsigned>>;
-    v = vec_sl(v.storage(), bit_cast(s,as_<i_t>()).storage())
+    using i_t = typename wide<T,N,ABI>::template rebind <as_integer_t<T, unsigned>,N>;
 
     if constexpr(std::is_signed_v<T>) v = vec_sra(v.storage(), bit_cast(s,as_<i_t>()).storage());
-    else                              v = vec_sr(v.storage(), bit_cast(s,as_<i_t>()).storage()));
+    else                              v = vec_sr (v.storage(), bit_cast(s,as_<i_t>()).storage());
 
     return v;
   }
@@ -55,7 +54,7 @@ namespace eve::detail
   template<integral_real_scalar_value T, typename N, ppc_abi ABI, integral_real_scalar_value U>
   EVE_FORCEINLINE auto self_shr(wide<T,N,ABI>& v, U s) noexcept
   {
-    using i_t = typename wide<T,N,ABI>::template rebind <as_integer_t<T, unsigned>>;
+    using i_t = typename wide<T,N,ABI>::template rebind <as_integer_t<T, unsigned>,N>;
     v >>= i_t(s);
     return v;
   }

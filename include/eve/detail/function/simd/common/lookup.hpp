@@ -34,7 +34,7 @@ namespace eve::detail
 
     // Rebuild as scalar
     wide<T, N, X> data;
-    apply<N::value>([&](auto... v) { (data.set(v,a[idx[v]]),...); });
+    apply<N::value>([&](auto... v) { (data.set(v,a.get(idx.get(v))),...); });
 
     // Apply mask as SIMD
     data &= msk;
@@ -67,8 +67,8 @@ namespace eve::detail
     wide<T, N, X> data;
 
     constexpr auto const half = N::value / 2;
-    apply<half>([&, lx = idx.slice(lower_)](auto... v) { (data.set(v     , a[lx[v]]),...); } );
-    apply<half>([&, hx = idx.slice(upper_)](auto... v) { (data.set(v+half, a[hx[v]]),...); } );
+    apply<half>([&, lx = idx.slice(lower_)](auto... v) { (data.set(v     , a.get(lx.get(v))),...); } );
+    apply<half>([&, hx = idx.slice(upper_)](auto... v) { (data.set(v+half, a.get(hx.get(v))),...); } );
 
     // Apply mask as SIMD
     data &= msk;

@@ -26,10 +26,10 @@ namespace eve::detail
     else if constexpr( simd_value<T> )
     {
       using elt_t =  element_type_t<T>;
-      elt_t r = v[0];
+      elt_t r = v.get(0);
       for(size_t i=1; i < T::static_size ; ++i)
       {
-        r = max(r, v[i]);
+        r = max(r, v.get(i));
       }
       return r;
     }

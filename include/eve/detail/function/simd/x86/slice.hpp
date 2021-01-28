@@ -42,7 +42,7 @@ namespace eve::detail
         {
           constexpr auto size = N::value * sizeof(T);
 
-          if constexpr( N::value == 2          )  return wide<T, typename N::split_type>{a[1]};
+          if constexpr( N::value == 2          )  return wide<T, typename N::split_type>{a.get(1)};
           if constexpr( size == ABI::bytes     )  return _mm_shuffle_epi32(a, 0xEE);
           if constexpr( 2 * size == ABI::bytes )  return _mm_shuffle_epi32(a, 0x01);
           else                                    return _mm_shufflelo_epi16(a, 0x01);

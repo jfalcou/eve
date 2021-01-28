@@ -50,12 +50,12 @@ TTS_CASE("wide supports structured binding")
 
   auto [ a0, a1, a2, a3, a4, a5, a6, a7 ] = w;
 
-  TTS_EQUAL(a0, w[ 0 ]);
-  TTS_EQUAL(a1, w[ 1 ]);
-  TTS_EQUAL(a2, w[ 2 ]);
-  TTS_EQUAL(a3, w[ 3 ]);
-  TTS_EQUAL(a4, w[ 4 ]);
-  TTS_EQUAL(a5, w[ 5 ]);
-  TTS_EQUAL(a6, w[ 6 ]);
-  TTS_EQUAL(a7, w[ 7 ]);
+  TTS_EQUAL(a0, w.get(0));
+  TTS_EQUAL(a1, w.get(1));
+  TTS_EQUAL(a2, w.get(2));
+  TTS_EQUAL(a3, w.get(3));
+  TTS_EQUAL(a4, w.get(4));
+  TTS_EQUAL(a5, w.get(5));
+  TTS_EQUAL(a6, w.get(6));
+  TTS_EQUAL(a7, w.get(7));
 }

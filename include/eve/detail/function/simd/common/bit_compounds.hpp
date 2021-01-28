@@ -90,7 +90,7 @@ namespace eve::detail
         auto& data = self.storage();
 
         apply<N::value>([&](auto... I) {
-          ((data[I] = bit_and_(EVE_RETARGET(cpu_), self[I], other[I])), ...);
+          ((data[I] = bit_and_(EVE_RETARGET(cpu_), self.get(I), other.get(I))), ...);
         });
 
         return self;
@@ -125,7 +125,7 @@ namespace eve::detail
         auto& data = self.storage();
 
         apply<N::value>([&](auto... I) {
-          ((data[I] = bit_or_(EVE_RETARGET(cpu_), self[I], other[I])), ...);
+          ((data[I] = bit_or_(EVE_RETARGET(cpu_), self.get(I), other.get(I))), ...);
         });
 
         return self;
@@ -160,7 +160,7 @@ namespace eve::detail
         auto& data = self.storage();
 
         apply<N::value>([&](auto... I) {
-          ((data[I] = bit_xor_(EVE_RETARGET(cpu_), self[I], other[I])), ...);
+          ((data[I] = bit_xor_(EVE_RETARGET(cpu_), self.get(I), other.get(I))), ...);
         });
 
         return self;

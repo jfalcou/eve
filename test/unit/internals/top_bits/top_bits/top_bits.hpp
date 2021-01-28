@@ -51,7 +51,7 @@ TTS_CASE_TPL("Check top bits from logical", EVE_TYPE)
 
     for (std::ptrdiff_t j = 0; j != test.static_size; ++j)
     {
-      TTS_EQUAL(test[j], mmask.get(j));
+      TTS_EQUAL(test.get(j), mmask.get(j));
     }
 
     test.set(i, false);
@@ -297,7 +297,7 @@ TTS_CASE_TPL("top_bits count_true", EVE_TYPE)
 {
   top_bits_interesting_cases<T>([&](auto x) {
     std::ptrdiff_t expected = 0;
-    for (int i = 0; i != x.static_size; ++i) expected += x[i];
+    for (int i = 0; i != x.static_size; ++i) expected += x.get(i);
 
     top_bits mmask{x};
     TTS_EQUAL(expected, eve::detail::count_true(mmask));

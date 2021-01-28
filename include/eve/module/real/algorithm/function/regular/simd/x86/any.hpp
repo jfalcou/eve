@@ -22,7 +22,7 @@ namespace eve::detail
   template<real_scalar_value T, typename N, x86_abi ABI>
   EVE_FORCEINLINE bool any_(EVE_SUPPORTS(sse2_), logical<wide<T, N, ABI>> const &v) noexcept
   {
-    if constexpr( N::value == 1) return v[0];
+    if constexpr( N::value == 1) return v.get(0);
     else                         return eve::detail::any(eve::detail::top_bits{v});
   }
 

@@ -26,7 +26,7 @@ namespace eve::detail
 
     if constexpr( is_emulated_v<ABI> )
     {
-      return apply<N::value>([&](auto... I) { return that_t {l[I]..., h[I]...}; });
+      return apply<N::value>([&](auto... I) { return that_t {l.get(I)..., h.get(I)...}; });
     }
     else if constexpr( is_aggregated_v<ABI> )
     {
@@ -47,7 +47,7 @@ namespace eve::detail
 
     if constexpr( is_emulated_v<ABI> )
     {
-      return apply<N::value>([&](auto... I) { return that_t {l[I]..., h[I]...}; });
+      return apply<N::value>([&](auto... I) { return that_t {l.get(I)..., h.get(I)...}; });
     }
     else if constexpr( is_aggregated_v<ABI> )
     {
@@ -65,4 +65,3 @@ namespace eve::detail
     }
   }
 }
-

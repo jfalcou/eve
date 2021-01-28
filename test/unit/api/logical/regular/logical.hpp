@@ -105,11 +105,11 @@ TTS_CASE_TPL("logical getters and setters", EVE_TYPE)
   eve::logical<T> x{false};
 
   for (int i = 0; i != T::static_size; ++i) {
-    TTS_EXPECT_NOT(x[i]);
+    TTS_EXPECT_NOT(x.get(i));
     x.set(i, true);
-    TTS_EXPECT(x[i]);
+    TTS_EXPECT(x.get(i));
     x.set(i, false);
-    TTS_EXPECT_NOT(x[i]);
+    TTS_EXPECT_NOT(x.get(i));
   }
 }
 #endif
