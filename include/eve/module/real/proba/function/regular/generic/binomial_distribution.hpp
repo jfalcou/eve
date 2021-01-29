@@ -40,18 +40,18 @@
 namespace eve
 {
   template < typename T, typename U, typename Internal = T>
-  struct binomial{};
+  struct binomial_distribution{};
 
   template < floating_real_value T, floating_real_value U>
   requires  compatible_values<T, U>
-  struct binomial<T, U>
+  struct binomial_distribution<T, U>
   {
     using is_distribution_t = void;
     using n_type = T;
     using p_type = U;
     using value_type = common_compatible_t<T, U>;
 
-    binomial(T n_,  U p_)
+    binomial_distribution(T n_,  U p_)
       : n(n_), p(p_), q(oneminus(p))
     {
       EVE_ASSERT(all(is_gtz(n_)), "n must be strictly positive");
@@ -60,7 +60,7 @@ namespace eve
 
     template < floating_real_value TT,  floating_real_value UU>
     requires  std::constructible_from<T, TT> && std::constructible_from<U, UU>
-    binomial(TT n_,  UU p_)
+    binomial_distribution(TT n_,  UU p_)
       : n(T(n_)), p(U(p_)), q(oneminus(p))
     {
       EVE_ASSERT(all(is_gtz(n_)), "n must be strictly positive");
@@ -69,7 +69,7 @@ namespace eve
 
     template < integral_scalar_value N,  floating_real_value UU>
     requires  std::convertible_to<T, N> && std::constructible_from<U, UU>
-    binomial(N n_,  UU p_)
+    binomial_distribution(N n_,  UU p_)
       : n(T(n_)), p(U(p_)), q(oneminus(p))
     {
       EVE_ASSERT(all(is_gtz(n_)), "n must be strictly positive");
@@ -78,7 +78,7 @@ namespace eve
 
     template < integral_simd_value N,  floating_real_value UU>
     requires  std::convertible_to<T, N> && std::constructible_from<U, UU>
-    binomial(N n_,  UU p_)
+    binomial_distribution(N n_,  UU p_)
       : n(convert(n_, as<element_type_t<T>>())), p(U(p_)), q(oneminus(p))
     {
       EVE_ASSERT(all(p <= one(as(p)) && is_gez(p)), "p must be in [0, 1]");
@@ -89,14 +89,14 @@ namespace eve
   };
 
   template < floating_real_value U>
-  struct binomial<callable_one_, U>
+  struct binomial_distribution<callable_one_, U>
   {
     using is_distribution_t = void;
     using n_type = callable_one_;
     using p_type = U;
     using value_type = U;
 
-    binomial(callable_one_ const&, U p_)
+    binomial_distribution(callable_one_ const&, U p_)
       : p(p_), q(oneminus(p))
     {
       EVE_ASSERT(all(p <= one(as(p)) && is_gez(p)), "p must be in [0, 1]");
@@ -104,7 +104,7 @@ namespace eve
 
     template < floating_real_value UU>
     requires  std::constructible_from<U, UU>
-    binomial(callable_zero_ const & , UU p_)
+    binomial_distribution(callable_zero_ const & , UU p_)
       : p(U(p_))
     {
       EVE_ASSERT(all(p <= one(as(p)) && is_gez(p)), "p must be in [0, 1]");
@@ -114,14 +114,14 @@ namespace eve
   };
 
   template < floating_real_value T>
-  struct binomial<T, callable_half_>
+  struct binomial_distribution<T, callable_half_>
   {
     using is_distribution_t = void;
     using n_type = T;
     using p_type = callable_half_;
     using value_type = T;
 
-    binomial(T n_, callable_one_ const &)
+    binomial_distribution(T n_, callable_one_ const &)
       : n(n_)
     {
       EVE_ASSERT(all(is_finite(n) && is_gtz(n)), "n must be finite and strictly positive");
@@ -129,7 +129,7 @@ namespace eve
 
     template < floating_real_value TT>
     requires  std::constructible_from<T, TT>
-    binomial(TT n_, callable_half_ const &)
+    binomial_distribution(TT n_, callable_half_ const &)
       : n(T(n_))
     {
      EVE_ASSERT(all(is_finite(n) && is_gtz(n)), "n must be finite and strictly positive");
@@ -138,22 +138,22 @@ namespace eve
     n_type n;
   };
 
-  template<typename T, typename U>  binomial(T,U) -> binomial<T,U>;
+  template<typename T, typename U>  binomial_distribution(T,U) -> binomial_distribution<T,U>;
 
   template < floating_real_value T>
-  struct binomial<callable_one_, callable_half_, T>
+  struct binomial_distribution<callable_one_, callable_half_, T>
   {
     using is_distribution_t = void;
     using n_type = callable_one_;
     using p_type = callable_half_;
     using value_type = T;
-    constexpr binomial( as_<T> const&) {}
+    constexpr binomial_distribution( as_<T> const&) {}
   };
 
-  template<typename T>  binomial(as_<T> const&) -> binomial<callable_one_, callable_half_, T>;
+  template<typename T>  binomial_distribution(as_<T> const&) -> binomial_distribution<callable_one_, callable_half_, T>;
 
   template<floating_real_value T>
-  inline constexpr auto bernouilli = binomial<callable_one_, callable_half_, T>(as_<T>{});
+  inline constexpr auto bernouilli = binomial_distribution<callable_one_, callable_half_, T>(as_<T>{});
 
   namespace detail
   {
@@ -162,7 +162,7 @@ namespace eve
     template<typename T, typename U, floating_value V
              , typename I = T>
     EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
-                              , binomial<T, U, I> const & d
+                              , binomial_distribution<T, U, I> const & d
                               , V const &x ) noexcept
     {
       auto k = floor(x);
@@ -181,7 +181,7 @@ namespace eve
     template<typename T, typename U, floating_value V
              , typename I = T>
     EVE_FORCEINLINE  auto pmf_(EVE_SUPPORTS(cpu_)
-                              , binomial<T, U, I> const & d
+                              , binomial_distribution<T, U, I> const & d
                               , V const &x ) noexcept
     {
       if constexpr(floating_value<T> && floating_value<U>)
@@ -210,7 +210,7 @@ namespace eve
     template<typename T, typename U, floating_value V
              , typename I = T>
     EVE_FORCEINLINE  auto mgf_(EVE_SUPPORTS(cpu_)
-                              , binomial<T, U, I> const & d
+                              , binomial_distribution<T, U, I> const & d
                               , V const &x ) noexcept
     {
       if constexpr(floating_value<T> && floating_value<U>)
@@ -233,7 +233,7 @@ namespace eve
     /// median
     template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto median_(EVE_SUPPORTS(cpu_)
-                                 , binomial<T,U,I> const & d) noexcept
+                                 , binomial_distribution<T,U,I> const & d) noexcept
     {
       if constexpr (floating_value<T> && floating_value<U>)
         return  floor(d.p*d.n);
@@ -250,7 +250,7 @@ namespace eve
     /// mean
     template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto mean_(EVE_SUPPORTS(cpu_)
-                               , binomial<T,U,I> const &d) noexcept
+                               , binomial_distribution<T,U,I> const &d) noexcept
     {
       if constexpr (floating_value<T> && floating_value<U>)
         return  d.p*d.n;
@@ -266,7 +266,7 @@ namespace eve
     /// mode
     template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto mode_(EVE_SUPPORTS(cpu_)
-                               , binomial<T,U,I> const & d) noexcept
+                               , binomial_distribution<T,U,I> const & d) noexcept
     {
       return median(d);
     }
@@ -275,7 +275,7 @@ namespace eve
     /// entropy
     template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto entropy_(EVE_SUPPORTS(cpu_)
-                                  , binomial<T,U,I> const & d) noexcept
+                                  , binomial_distribution<T,U,I> const & d) noexcept
     {
       auto twopie = T(17.0794684453471341309271017390931489900697770715304);
       if constexpr (floating_value<U> && floating_value<T>)
@@ -294,7 +294,7 @@ namespace eve
     /// skewness
     template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto skewness_(EVE_SUPPORTS(cpu_)
-                                   , binomial<T,U,I> const & d ) noexcept
+                                   , binomial_distribution<T,U,I> const & d ) noexcept
     {
       if constexpr (floating_value<T>)
         return (d.q-d.p)/stdev(d);
@@ -308,7 +308,7 @@ namespace eve
     /// kurtosis
     template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto kurtosis_(EVE_SUPPORTS(cpu_)
-                                   , binomial<T,U,I> const & d) noexcept
+                                   , binomial_distribution<T,U,I> const & d) noexcept
     {
       if constexpr (floating_value<T>)
         return oneminus(6*d.p*d.q)/var(d);
@@ -322,7 +322,7 @@ namespace eve
     /// var
     template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto var_(EVE_SUPPORTS(cpu_)
-                              , binomial<T,U,I> const & d) noexcept
+                              , binomial_distribution<T,U,I> const & d) noexcept
     {
       if constexpr (floating_value<T>&&(floating_value<U>))
         return d.n*d.p*d.q;
@@ -338,7 +338,7 @@ namespace eve
     /// stdev
     template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto stdev_(EVE_SUPPORTS(cpu_)
-                                , binomial<T,U,I> const & d) noexcept
+                                , binomial_distribution<T,U,I> const & d) noexcept
     {
       if constexpr (floating_value<T>&&(floating_value<U>))
         return eve::sqrt(d.n*d.p*d.q);

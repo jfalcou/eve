@@ -3,7 +3,7 @@ Example
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-#include <eve/function/binomial.hpp>
+#include <eve/function/binomial_distribution.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 
@@ -15,7 +15,7 @@ int main()
   wide_ft n = { 2.0f, 3.0f, 6.0, 20.0f };
   wide_ft p = { 0.1f, 0.5f, 0.75, 0.9f };
 
-  auto bi = eve::binomial(n,  p);
+  auto bi = eve::binomial_distribution(n,  p);
 
   std::cout
     << "---- simd" << '\n'
@@ -34,7 +34,7 @@ int main()
   float xf = 9.0f;
   float mf = 10.0f;
   float sf = 0.5;
-  auto bif = eve::binomial(mf, sf);
+  auto bif = eve::binomial_distribution(mf, sf);
 
   std::cout
     << "---- scalar"  << '\n'
