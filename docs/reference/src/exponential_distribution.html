@@ -3,7 +3,7 @@ Example
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-#include <eve/function/exponential.hpp>
+#include <eve/function/exponential_distribution.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 
@@ -15,7 +15,7 @@ int main()
   wide_ft p = { 0.0f, 0.5f, 0.75f, 1.0f };
   wide_ft lambda = { 1.0f,  2.0f, 3.0f, 4.0f };
 
-  auto ex = eve::exponential(lambda);
+  auto ex = eve::exponential_distribution(lambda);
 
   std::cout
     << "---- simd" << '\n'
@@ -37,7 +37,7 @@ int main()
 
   float xf = 9.0f;
   float lf = 10.0f;
-  auto exf = eve::exponential(lf);
+  auto exf = eve::exponential_distribution(lf);
 
   std::cout
     << "---- scalar"  << '\n'

@@ -8,18 +8,18 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/exponential.hpp>
+#include <eve/function/exponential_distribution.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/log_2.hpp>
 #include <eve/platform.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check eve::exponential behavior", EVE_TYPE)
+TTS_CASE_TPL("Check eve::exponential_distribution behavior", EVE_TYPE)
 {
   auto inf  = eve::inf(eve::as<T>());
 
-  auto ex = eve::exponential{T(2.0)};
+  auto ex = eve::exponential_distribution{T(2.0)};
   TTS_ULP_EQUAL(eve::median(ex)  , T(eve::log_2(eve::as<T>())/2)  , 0.5);
   TTS_ULP_EQUAL(eve::mean  (ex)  , T(0.5)   , 0.5);
   TTS_ULP_EQUAL(eve::var   (ex)  , T(0.25)   , 0.5);
@@ -31,13 +31,13 @@ TTS_CASE_TPL("Check eve::exponential behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::invcdf(ex, T(0.5))  , T(3.465735902799726e-01)    , 0.5);
 }
 
-TTS_CASE_TPL("Check eve::exponential behavior", EVE_TYPE)
+TTS_CASE_TPL("Check eve::exponential_distribution behavior", EVE_TYPE)
 {
   using elt_t =  eve::element_type_t<T>;
 
   auto inf  = eve::inf(eve::as<T>());
 
-  auto ex = eve::exponential{T(2.0)};
+  auto ex = eve::exponential_distribution{T(2.0)};
   TTS_ULP_EQUAL(eve::median(ex)  , T(eve::log_2(eve::as<T>())/2)  , 0.5);
   TTS_ULP_EQUAL(eve::mean  (ex)  , T(0.5)   , 0.5);
   TTS_ULP_EQUAL(eve::var   (ex)  , T(0.25)   , 0.5);
@@ -50,11 +50,11 @@ TTS_CASE_TPL("Check eve::exponential behavior", EVE_TYPE)
 }
 
 
-TTS_CASE_TPL("Check eve::exponential behavior", EVE_TYPE)
+TTS_CASE_TPL("Check eve::exponential_distribution behavior", EVE_TYPE)
 {
   auto inf  = eve::inf(eve::as<T>());
 
-  auto ex = eve::exponential_1<T>;
+  auto ex = eve::exponential_distribution_1<T>;
   TTS_ULP_EQUAL(eve::median(ex)  , T(eve::log_2(eve::as<T>()))  , 0.5);
   TTS_ULP_EQUAL(eve::mean  (ex)  , T(1)   , 0.5);
   TTS_ULP_EQUAL(eve::var   (ex)  , T(1)   , 0.5);

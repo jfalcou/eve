@@ -13,4 +13,4 @@
 #include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
 
-#include <eve/module/real/proba/function/regular/generic/exponential.hpp>
+#include <eve/module/real/proba/function/regular/generic/exponential_distribution.hpp>
