@@ -53,12 +53,19 @@ namespace eve::detail
   {
     wide<T,N,aggregated_> that;
 
+    auto cast = []<typename Ptr, typename Sub>(Ptr ptr, as_<Sub>)
+    {
+      using a_p = eve::aligned_ptr<const T, Sub::static_alignment>;
+      if constexpr (std::is_pointer_v<Ptr>) return ptr;
+      else                                  return a_p{ptr.get()};
+    };
+
     that.storage().apply
     (
       [&]<typename... Sub>(Sub&... v)
       {
         int offset = 0;
-        (((v = Sub(ptr + offset), offset += Sub::static_size), ...));
+        (((v = Sub(cast(ptr, as_<Sub>{}) + offset), offset += Sub::static_size), ...));
       }
     );
 
