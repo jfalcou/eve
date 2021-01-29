@@ -49,6 +49,7 @@ namespace eve
     using is_distribution_t = void;
     using m_type = T;
     using s_type = U;
+    using value_type = common_compatible_t<T, U>;
 
     normal(T m_,  U s_)
       : m(m_), s(s_)
@@ -76,6 +77,8 @@ namespace eve
     using is_distribution_t = void;
     using m_type = callable_zero_;
     using s_type = U;
+    using value_type = U;
+
     normal(callable_zero_ const&, U s_)
       : s(s_)
     {
@@ -99,6 +102,7 @@ namespace eve
     using is_distribution_t = void;
     using m_type = T;
     using s_type = decltype(eve::one);
+    using value_type = T;
 
     normal(T m_, callable_one_ const &)
       : m(m_)
@@ -126,6 +130,7 @@ namespace eve
     using m_type = callable_zero_;
     using s_type = callable_one_;
     using value_type = T;
+
     constexpr normal( as_<T> const&) {}
   };
 

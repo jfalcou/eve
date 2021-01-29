@@ -42,6 +42,7 @@ namespace eve
   {
     using is_distribution_t = void;
     using lambda_type = T;
+    using value_type = T;
 
     exponential(T lambda_) : lambda(lambda_) {
       EVE_ASSERT(all(is_gtz(lambda) && is_finite(lambda)), "lambda must be strictly positive and finite");

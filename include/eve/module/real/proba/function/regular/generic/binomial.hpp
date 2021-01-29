@@ -49,6 +49,7 @@ namespace eve
     using is_distribution_t = void;
     using n_type = T;
     using p_type = U;
+    using value_type = common_compatible_t<T, U>;
 
     binomial(T n_,  U p_)
       : n(n_), p(p_), q(oneminus(p))
@@ -71,8 +72,10 @@ namespace eve
     binomial(N n_,  UU p_)
       : n(T(n_)), p(U(p_)), q(oneminus(p))
     {
+      EVE_ASSERT(all(is_gtz(n_)), "n must be strictly positive");
       EVE_ASSERT(all(p < one(as(p)) && is_gez(p)), "p must be in [0, 1]");
     }
+
     template < integral_simd_value N,  floating_real_value UU>
     requires  std::convertible_to<T, N> && std::constructible_from<U, UU>
     binomial(N n_,  UU p_)
@@ -91,6 +94,7 @@ namespace eve
     using is_distribution_t = void;
     using n_type = callable_one_;
     using p_type = U;
+    using value_type = U;
 
     binomial(callable_one_ const&, U p_)
       : p(p_), q(oneminus(p))
@@ -115,6 +119,7 @@ namespace eve
     using is_distribution_t = void;
     using n_type = T;
     using p_type = callable_half_;
+    using value_type = T;
 
     binomial(T n_, callable_one_ const &)
       : n(n_)
@@ -335,7 +340,14 @@ namespace eve
     EVE_FORCEINLINE  auto stdev_(EVE_SUPPORTS(cpu_)
                                 , binomial<T,U,I> const & d) noexcept
     {
-      return sqrt(var(d));
+      if constexpr (floating_value<T>&&(floating_value<U>))
+        return eve::sqrt(d.n*d.p*d.q);
+      else if constexpr (floating_value<T>)
+        return T(0.5)*eve::sqrt(d.n);
+      else if constexpr (floating_value<U>)
+        return eve::sqrt(d.p*d.q);
+      else
+        return I(0.5);
     }
   }
 }
