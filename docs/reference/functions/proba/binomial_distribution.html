@@ -8,45 +8,57 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::exponential`
+                           `eve::binomial_distribution`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/exponential.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/binomial_distribution.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  template< floating_real_value T> struct exponential;
+  template< floating_real_value T> struct binomial_distribution;
 }
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Object representing the Exponential distribution.
+Object representing the Binomial distribution.
 
 Constructor
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  exponential( T const & lambda );
+  template< floating_real_value N, floating_real_value P> binomial_distribution( T const & n, U const & p )
+  template< integral_value N, floating_real_value P>      binomial_distribution( T const & n, U const & p )
+  template< floating_real_value U>                        binomial_distribution( callable_one_ const &, U const & s );
+  template< floating_real_value T                         binomial_distribution( T const & m,  callable_half_ const & );
+
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-construct the exponential object
+construct the binomial_distribution object
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`lambda`
-:   [floating real value](../../concepts.html#value)  (mean of the distribution)
+`n`
+:   [floating real value](../../concepts.html#value) (integral or flint positive value) or callable_one object
+    (number of experiments)
+`p`
+:   [floating real value](../../concepts.html#value) (must be between 0 and 1) or callable_half object
+    (probability of success)
 
 Optimizations
 ====================================================================================================
-If the parameter lambda is one the constexpr template variable exponential_1< T > is provided
-to optimize the standard reduced case (mean 1).
+If the number of experiments is one or the probabilty of success $\frac12$, the third and fourth
+ constructors can be used with the parameters
+eve::one or eve::half, providing some optimization in further computations of the attributes.
+
+Also the constexpr template variable bernouilli< T >
+is provided to optimize the case of fair coin tossing (n = 1, p = 0.5).
 
 In this case, T must be provided to allow choosing the output type of the constant attributes.
 
@@ -54,26 +66,23 @@ Supported attributes
 ====================================================================================================
   - functional attributes
     - cdf
-    - pdf
-    - invcdf
+    - pmf
     - mgf
 
   - constant attributes
-    - median
+    - median (approximate)
     - mean
     - mode
     - skewness
     - kurtosis
     - stdev
     - var
-    - entropy
-    - fisher
 
  See the example below.
 
-  (insert ../../src/exponential.src.html here)
+  (insert ../../src/binomial_distribution.src.html here)
 
-  (insert ../../out/exponential.out.html here)
+  (insert ../../out/binomial_distribution.out.html here)
 
 
 <!-- End of Document -->

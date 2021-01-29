@@ -8,20 +8,20 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::exponential`
+                           `eve::exponential_distribution`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/exponential.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/exponential_distribution.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  template< floating_real_value T> struct exponential;
+  template< floating_real_value T> struct exponential_distribution;
 }
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -32,11 +32,11 @@ Constructor
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  exponential( T const & lambda );
+  exponential_distribution( T const & lambda );
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-construct the exponential object
+construct the exponential_distribution object
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -45,7 +45,7 @@ Parameters
 
 Optimizations
 ====================================================================================================
-If the parameter lambda is one the constexpr template variable exponential_1< T > is provided
+If the parameter lambda is one the constexpr template variable exponential_distribution_1< T > is provided
 to optimize the standard reduced case (mean 1).
 
 In this case, T must be provided to allow choosing the output type of the constant attributes.
@@ -71,9 +71,9 @@ Supported attributes
 
  See the example below.
 
-  (insert ../../src/exponential.src.html here)
+  (insert ../../src/exponential_distribution.src.html here)
 
-  (insert ../../out/exponential.out.html here)
+  (insert ../../out/exponential_distribution.out.html here)
 
 
 <!-- End of Document -->

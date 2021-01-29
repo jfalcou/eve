@@ -8,45 +8,51 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::exponential`
+                           `eve::cauchy_distribution`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/exponential.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/cauchy_distribution.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  template< floating_real_value T> struct exponential;
+  template< floating_real_value T, floating_real_value U> struct cauchy_distribution
+  requires compatible_values< T, U >;
 }
-
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Object representing the Exponential distribution.
+Object representing the Cauchy distribution.
 
 Constructor
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  exponential( T const & lambda );
+  cauchy_distribution( T const & m, U const & s )
+  cauchy_distribution( callable_zero_ const &, U const & s );
+  cauchy_distribution( T const & m,  callable_one_ const & );
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-construct the exponential object
+construct the cauchy_distribution object
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`lambda`
-:   [floating real value](../../concepts.html#value)  (mean of the distribution)
+`m`
+:   [floating real value](../../concepts.html#value) or callable_zero object (median of the distribution)
+`s`
+:   [floating real value](../../concepts.html#value) or callable_one object (scale (>0)  of the distribution)
 
 Optimizations
 ====================================================================================================
-If the parameter lambda is one the constexpr template variable exponential_1< T > is provided
-to optimize the standard reduced case (mean 1).
+If the scale is one or the median zero the second and third constructors can be used with the parameters
+eve::one or eve::zero, providing some optimization in further computations of the attributes.
+
+Also the constexpr template variable cauchy_distribution_01< T > is provided to optimize the standard reduced case (median 0, scale 1).
 
 In this case, T must be provided to allow choosing the output type of the constant attributes.
 
@@ -56,24 +62,21 @@ Supported attributes
     - cdf
     - pdf
     - invcdf
-    - mgf
 
   - constant attributes
     - median
-    - mean
+    - scale
     - mode
-    - skewness
-    - kurtosis
-    - stdev
-    - var
     - entropy
     - fisher
 
+cauchy_distribution distribution have no mean nor variance or standard deviation.
+
  See the example below.
 
-  (insert ../../src/exponential.src.html here)
+  (insert ../../src/cauchy_distribution.src.html here)
 
-  (insert ../../out/exponential.out.html here)
+  (insert ../../out/cauchy_distribution.out.html here)
 
 
 <!-- End of Document -->

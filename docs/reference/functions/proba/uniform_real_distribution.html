@@ -8,45 +8,48 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::exponential`
+                           `eve::uniform_real_distribution`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/exponential.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/uniform_real_distribution.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  template< floating_real_value T> struct exponential;
+  template< floating_real_value T> struct uniform_real_distribution;
 }
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Object representing the Exponential distribution.
+Object representing the Uniform distribution over an interval.
 
 Constructor
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  exponential( T const & lambda );
+  template< floating_real_value A, floating_real_value B> uniform_real_distribution( T const & a, U const & b )
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-construct the exponential object
+construct the uniform_real_distribution object
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`lambda`
-:   [floating real value](../../concepts.html#value)  (mean of the distribution)
+`an`
+:   [floating real value](../../concepts.html#value) lower bound
+`bp`
+:   [floating real value](../../concepts.html#value) upper bound
 
 Optimizations
 ====================================================================================================
-If the parameter lambda is one the constexpr template variable exponential_1< T > is provided
-to optimize the standard reduced case (mean 1).
+
+Also the constexpr template variable uniform_real_distribution_01< T >
+is provided to optimize the case of interval $[0, 1}]$.
 
 In this case, T must be provided to allow choosing the output type of the constant attributes.
 
@@ -55,25 +58,23 @@ Supported attributes
   - functional attributes
     - cdf
     - pdf
-    - invcdf
     - mgf
+    - invcdf
 
   - constant attributes
-    - median
+    - median 
     - mean
     - mode
     - skewness
     - kurtosis
     - stdev
     - var
-    - entropy
-    - fisher
 
  See the example below.
 
-  (insert ../../src/exponential.src.html here)
+  (insert ../../src/uniform_real_distribution.src.html here)
 
-  (insert ../../out/exponential.out.html here)
+  (insert ../../out/uniform_real_distribution.out.html here)
 
 
 <!-- End of Document -->

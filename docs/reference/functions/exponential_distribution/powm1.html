@@ -8,72 +8,61 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::exponential`
+                           `eve::powm1`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/exponential.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/powm1.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  template< floating_real_value T> struct exponential;
+  inline constexpr /*unspecified*/ powm1 = /*unspecified*/;
 }
-
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Object representing the Exponential distribution.
+Function object representing the  computation of powm1.
 
-Constructor
+Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  exponential( T const & lambda );
-
+template< floating_real_value T, floating_real_value T> auto operator()( T x, U y ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-construct the exponential object
+Performs elementwise $x^y-1$.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`lambda`
-:   [floating real value](../../concepts.html#value)  (mean of the distribution)
+`x`, `y`
+:   [floating real value](../../concepts.html#value).
 
-Optimizations
+Return value
+----------------------------------------------------------------------------------------------------
+<span class="smallskip"></span>
+Returns the [element-wise](../../../glossary.html#elment-wise) power minus one, with good accuracy,
+even when `y` is very small, or when `x` is close to 1.
+
+Supported decorators
 ====================================================================================================
-If the parameter lambda is one the constexpr template variable exponential_1< T > is provided
-to optimize the standard reduced case (mean 1).
+[`diff`](../decorators.html#diff)
+:   **Required header: **<script type="preformatted">` #include <eve/function/diff/pow.hpp>`</script>
 
-In this case, T must be provided to allow choosing the output type of the constant attributes.
+:   The expression `diff_1st(powm1)(x,y)` and `diff_2nd(powm1)(x,y)` computes the partial
+    diffs of $f$, where $f$ is the function $(x,y) \rightarrow \ x^y-1$.
 
-Supported attributes
+
+  (insert ../../src/powm1.src.html here)
+
+  (insert ../../out/powm1.out.html here)
+
+See Also
 ====================================================================================================
-  - functional attributes
-    - cdf
-    - pdf
-    - invcdf
-    - mgf
-
-  - constant attributes
-    - median
-    - mean
-    - mode
-    - skewness
-    - kurtosis
-    - stdev
-    - var
-    - entropy
-    - fisher
-
- See the example below.
-
-  (insert ../../src/exponential.src.html here)
-
-  (insert ../../out/exponential.out.html here)
+[exp](exp.html), [exp10](exp10.html), [powm1](powm1.html).
 
 
 <!-- End of Document -->

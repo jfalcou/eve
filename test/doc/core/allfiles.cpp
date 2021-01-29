@@ -7,7 +7,7 @@
 #include <eve/function/predicate.hpp>
 #include <eve/function/conversion.hpp>
 #include <eve/function/ieee754.hpp>
-#include <eve/function/exponential.hpp>
+#include <eve/function/exponentials.hpp>
 #include <eve/function/hyperbolic.hpp>
 #include <eve/function/trigonometric.hpp>
 #include <eve/function/trigonometric.hpp>

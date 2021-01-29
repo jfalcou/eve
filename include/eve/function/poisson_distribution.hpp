@@ -10,18 +10,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/as.hpp>
+#include <eve/arch.hpp>
+#include <eve/detail/overload.hpp>
 
-namespace eve
-{
-  EVE_MAKE_CALLABLE(one_, one);
-  namespace detail
-  {
-    template<typename T>
-    EVE_FORCEINLINE constexpr auto one_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
-    {
-      return T(1);
-    }
-  }
-}
+#include <eve/module/real/proba/function/regular/generic/poisson_distribution.hpp>

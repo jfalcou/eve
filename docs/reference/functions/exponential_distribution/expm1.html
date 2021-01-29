@@ -8,72 +8,66 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::exponential`
+                           `eve::expm1`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/exponential.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/expm1.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  template< floating_real_value T> struct exponential;
+  inline constexpr /*unspecified*/ expm1 = /*unspecified*/;
 }
-
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Object representing the Exponential distribution.
+Function object representing the  computation of expm1.
 
-Constructor
+Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  exponential( T const & lambda );
-
+template< real_value T> auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-construct the exponential object
+Performs $e^x-1$.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`lambda`
-:   [floating real value](../../concepts.html#value)  (mean of the distribution)
+`x`
+:   [floating real value](../../concepts.html#value).
 
-Optimizations
+Return value
+----------------------------------------------------------------------------------------------------
+<span class="smallskip"></span>
+Returns the [element-wise](../../../glossary.html#elment-wise) exponential input minus one, with good accuracy, even for small values of `x`
+In partucular, for floating inputs:
+
+   * If the element is $\pm0$, $\pm0$ is returned
+   * If the element is $-\infty$, $-1$ is returned
+   * If the element is $\infty$, $\infty$ is returned
+   * If the element is a `NaN`, `NaN` is returned
+
+
+Supported decorators
 ====================================================================================================
-If the parameter lambda is one the constexpr template variable exponential_1< T > is provided
-to optimize the standard reduced case (mean 1).
+[`diff`](../decorators.html#diff)
+:   **Required header: **<script type="preformatted">` #include <eve/function/diff/expm1.hpp>`</script>
 
-In this case, T must be provided to allow choosing the output type of the constant attributes.
+:   The expression `diff(expm1)(x)` computes the derivative of the function at `x`.
 
-Supported attributes
+
+  (insert ../../src/expm1.src.html here)
+
+  (insert ../../out/expm1.out.html here)
+
+See Also
 ====================================================================================================
-  - functional attributes
-    - cdf
-    - pdf
-    - invcdf
-    - mgf
-
-  - constant attributes
-    - median
-    - mean
-    - mode
-    - skewness
-    - kurtosis
-    - stdev
-    - var
-    - entropy
-    - fisher
-
- See the example below.
-
-  (insert ../../src/exponential.src.html here)
-
-  (insert ../../out/exponential.out.html here)
+[exp](exp.html), [exp10](exp10.html), [expm1](expm1.html).
 
 
 <!-- End of Document -->

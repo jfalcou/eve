@@ -44,6 +44,8 @@ namespace eve
   EVE_MAKE_CALLABLE(skewness_, skewness);    // skewness
   EVE_MAKE_CALLABLE(kurtosis_, kurtosis);    // kurtosis
   EVE_MAKE_CALLABLE(scale_, scale);          // scale
+  EVE_MAKE_CALLABLE(shape_, shape);          // shape
+  EVE_MAKE_CALLABLE(rate_, rate);            // rate
 
   namespace detail
   {
@@ -85,6 +87,8 @@ namespace eve
     template < distribution D>
     EVE_FORCEINLINE  auto entropy_(EVE_SUPPORTS(cpu_), D const &d ) noexcept  = delete;
     template < distribution D>
-    EVE_FORCEINLINE  auto parameters_(EVE_SUPPORTS(cpu_), D const &d ) noexcept  = delete;
+    EVE_FORCEINLINE  auto shape_(EVE_SUPPORTS(cpu_), D const &d ) noexcept  = delete;
+    template < distribution D>
+    EVE_FORCEINLINE  auto rate_(EVE_SUPPORTS(cpu_), D const &d ) noexcept  = delete;
   }
 }
