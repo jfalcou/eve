@@ -33,9 +33,4 @@ namespace eve
     { a.offset(eve::as_<eve::wide<int>>()) };
     { a.roffset(eve::as_<eve::wide<int>>()) };
   };
-
-  template <typename T> concept attribute_conditional = requires (T)
-  {
-    { typename T::modifier_conditional{} };
-  };
 }
