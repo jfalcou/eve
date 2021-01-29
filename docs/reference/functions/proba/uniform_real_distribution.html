@@ -8,20 +8,20 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::unif`
+                           `eve::uniform_real_distribution`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/unif.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/uniform_real_distribution.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  template< floating_real_value T> struct unif;
+  template< floating_real_value T> struct uniform_real_distribution;
 }
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -32,11 +32,11 @@ Constructor
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  template< floating_real_value A, floating_real_value B> unif( T const & a, U const & b )
+  template< floating_real_value A, floating_real_value B> uniform_real_distribution( T const & a, U const & b )
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-construct the unif object
+construct the uniform_real_distribution object
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -48,7 +48,7 @@ Parameters
 Optimizations
 ====================================================================================================
 
-Also the constexpr template variable unif_01< T >
+Also the constexpr template variable uniform_real_distribution_01< T >
 is provided to optimize the case of interval $[0, 1}]$.
 
 In this case, T must be provided to allow choosing the output type of the constant attributes.
@@ -72,9 +72,9 @@ Supported attributes
 
  See the example below.
 
-  (insert ../../src/unif.src.html here)
+  (insert ../../src/uniform_real_distribution.src.html here)
 
-  (insert ../../out/unif.out.html here)
+  (insert ../../out/uniform_real_distribution.out.html here)
 
 
 <!-- End of Document -->

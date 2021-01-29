@@ -1,4 +1,4 @@
-#include <eve/function/unif.hpp>
+#include <eve/function/uniform_real_distribution.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 
@@ -10,7 +10,7 @@ int main()
   wide_dt b = { 2.0f, 3.0f, 6.0, 20.0f };
   wide_dt a = { 0.1f, 0.5f, 3.75, 10.0f };
 
-  auto d = eve::unif(a,  b);
+  auto d = eve::uniform_real_distribution(a,  b);
 
   std::cout
     << "---- simd" << '\n'
@@ -29,7 +29,7 @@ int main()
   float xf = 9.0f;
   float bf = 10.0f;
   float af = 0.5f;
-  auto df = eve::unif(af, bf);
+  auto df = eve::uniform_real_distribution(af, bf);
 
   std::cout
     << "---- scalar"  << '\n'

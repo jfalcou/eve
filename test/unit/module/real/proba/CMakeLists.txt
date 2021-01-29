@@ -40,4 +40,4 @@ make_all_units(ROOT unit.real.probas NAME cauchy              ARCH scalar simd T
 make_all_units(ROOT unit.real.probas NAME normal              ARCH scalar simd TYPES ${real_types}     )
 make_all_units(ROOT unit.real.probas NAME binomial            ARCH scalar simd TYPES ${real_types}     )
 make_all_units(ROOT unit.real.probas NAME poisson             ARCH scalar simd TYPES ${real_types}     )
-make_all_units(ROOT unit.real.probas NAME unif                ARCH scalar simd TYPES ${real_types}     )
+make_all_units(ROOT unit.real.probas NAME uniform_real_distribution ARCH scalar simd TYPES ${real_types}     )
