@@ -8,20 +8,20 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::poisson`
+                           `eve::poisson_distribution`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/poisson.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/poisson_distribution.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  template< floating_real_value T> struct poisson;
+  template< floating_real_value T> struct poisson_distribution;
 }
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -32,11 +32,11 @@ Constructor
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  poisson( T const & lambda );
+  poisson_distribution( T const & lambda );
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-construct the poisson object
+construct the poisson_distribution object
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -68,9 +68,9 @@ Supported attributes
 
  See the example below.
 
-  (insert ../../src/poisson.src.html here)
+  (insert ../../src/poisson_distribution.src.html here)
 
-  (insert ../../out/poisson.out.html here)
+  (insert ../../out/poisson_distribution.out.html here)
 
 
 <!-- End of Document -->

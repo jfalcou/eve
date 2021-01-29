@@ -1,4 +1,9 @@
-#include <eve/function/poisson.hpp>
+ <meta charset="utf-8">
+Example
+====================================================================================================
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+#include <eve/function/poisson_distribution.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 
@@ -11,7 +16,7 @@ int main()
 
 
 
-  auto po = eve::poisson(lambda);
+  auto po = eve::poisson_distribution(lambda);
 
   std::cout
     << "---- simd" << '\n'
@@ -27,7 +32,7 @@ int main()
 
   float xf = 2.0f;
   float lf = 1.0f;
-  auto pof = eve::poisson(lf);
+  auto pof = eve::poisson_distribution(lf);
 
   std::cout
     << "---- scalar"  << '\n'
@@ -38,3 +43,9 @@ int main()
     << "-> var(pof)            = " << eve::var(pof)    << '\n';
   return 0;
 }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ </script>
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
+

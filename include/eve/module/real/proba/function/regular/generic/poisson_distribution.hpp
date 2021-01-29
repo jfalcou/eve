@@ -36,51 +36,51 @@
 namespace eve
 {
   template < typename T, typename Internal = T>
-  struct poisson{};
+  struct poisson_distribution{};
 
   template < floating_real_value T>
-  struct poisson<T, T>
+  struct poisson_distribution<T, T>
   {
     using is_distribution_t = void;
     using lambda_type = T;
     using value_type = T;
 
-    poisson(T lambda_) : lambda(lambda_), expmlambda(eve::exp(-lambda)){
+    poisson_distribution(T lambda_) : lambda(lambda_), expmlambda(eve::exp(-lambda)){
       EVE_ASSERT(all(is_gtz(lambda) && is_finite(lambda)), "lambda must be strictly positive and finite");
     }
 
     template < floating_real_value TT>
     requires  std::constructible_from<T, TT>
-    poisson(TT lambda_)
+    poisson_distribution(TT lambda_)
       : lambda(T(lambda_))
     {
       EVE_ASSERT(all(is_gtz(lambda) && is_finite(lambda)), "lambda must be strictly positive and finite");
     }
 
-    poisson()    : lambda(T(1))   {}
+    poisson_distribution()    : lambda(T(1))   {}
 
     lambda_type lambda;
     lambda_type expmlambda;
   };
 
 
-  template<typename T>  poisson(T) -> poisson<T>;
+  template<typename T>  poisson_distribution(T) -> poisson_distribution<T>;
 
 
   template < floating_real_value T>
-  struct poisson < callable_one_, T>
+  struct poisson_distribution < callable_one_, T>
   {
     using is_distribution_t = void;
     using lambda_type = callable_one_;
     using value_type = T;
 
-    constexpr poisson( as_<T> const&) {}
+    constexpr poisson_distribution( as_<T> const&) {}
   };
 
-  template<typename T>  poisson(as_<T> const&) -> poisson<callable_one_, T>;
+  template<typename T>  poisson_distribution(as_<T> const&) -> poisson_distribution<callable_one_, T>;
 
   template<floating_real_value T>
-  inline constexpr auto poisson_1 = poisson<callable_one_, T>(as_<T>{});
+  inline constexpr auto poisson_distribution_1 = poisson_distribution<callable_one_, T>(as_<T>{});
 
   namespace detail
   {
@@ -89,7 +89,7 @@ namespace eve
     /// cdf
     template<typename T, typename U, typename I = T>
     EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
-                              , poisson<T, I> const &d
+                              , poisson_distribution<T, I> const &d
                               , U const &x ) noexcept
     {
       U l = one(as<U>());
@@ -102,7 +102,7 @@ namespace eve
     /// pmf
     template<typename T, typename U, typename I = T>
     EVE_FORCEINLINE  auto pmf_(EVE_SUPPORTS(cpu_)
-                              , poisson<T, I> const &d
+                              , poisson_distribution<T, I> const &d
                               , U const &x ) noexcept
     {
       if constexpr(floating_value<T>)
@@ -119,7 +119,7 @@ namespace eve
     /// mgf
     template<typename T, typename U, typename I = T>
     EVE_FORCEINLINE  auto mgf_(EVE_SUPPORTS(cpu_)
-                              , poisson<T, I> const &d
+                              , poisson_distribution<T, I> const &d
                               , U const &t ) noexcept
     {
       if constexpr(floating_value<T>)
@@ -132,7 +132,7 @@ namespace eve
     /// mean
     template<typename T, typename I = T>
     EVE_FORCEINLINE  auto mean_(EVE_SUPPORTS(cpu_)
-                               , poisson<T, I> const &d) noexcept
+                               , poisson_distribution<T, I> const &d) noexcept
     {
       if constexpr(floating_value<T>)
         return d.lambda;
@@ -145,7 +145,7 @@ namespace eve
     /// median
     template<typename T, typename I = T>
     EVE_FORCEINLINE  auto median_(EVE_SUPPORTS(cpu_)
-                                 , poisson<T, I> const &d) noexcept
+                                 , poisson_distribution<T, I> const &d) noexcept
     {
       if constexpr(floating_value<T>)
         return floor(d.lambda + T(1/3.0) - T(0.02/d.lambda));  //approximate (exact for integral lambda)
@@ -157,7 +157,7 @@ namespace eve
     /// mode
     template<typename T, typename I = T>
     EVE_FORCEINLINE  auto mode_(EVE_SUPPORTS(cpu_)
-                               , poisson<T, I> const & d) noexcept
+                               , poisson_distribution<T, I> const & d) noexcept
     {
       if constexpr(floating_value<T>)
         return if_else(is_flint(d.lambda), dec(d.lambda), floor(d.lambda));
@@ -169,7 +169,7 @@ namespace eve
     /// var
     template<typename T, typename I = T>
     EVE_FORCEINLINE  auto var_(EVE_SUPPORTS(cpu_)
-                              , poisson<T, I> const &d) noexcept
+                              , poisson_distribution<T, I> const &d) noexcept
     {
       if constexpr(floating_value<T>)
         return d.lambda;
@@ -182,7 +182,7 @@ namespace eve
     /// stdev
     template<typename T, typename I = T>
     EVE_FORCEINLINE  auto stdev_(EVE_SUPPORTS(cpu_)
-                                , poisson<T, I> const &d) noexcept
+                                , poisson_distribution<T, I> const &d) noexcept
     {
       if constexpr(floating_value<T>)
         return eve::sqrt(d.lambda);
@@ -194,7 +194,7 @@ namespace eve
     /// skewness
     template<typename T, typename I = T>
     EVE_FORCEINLINE  auto skewness_(EVE_SUPPORTS(cpu_)
-                                   , poisson<T, I> const & d) noexcept
+                                   , poisson_distribution<T, I> const & d) noexcept
     {
      if constexpr(floating_value<T>)
        return rsqrt(d.lambda);
@@ -206,7 +206,7 @@ namespace eve
     /// kurtosis
     template<typename T, typename I = T>
     EVE_FORCEINLINE  auto kurtosis_(EVE_SUPPORTS(cpu_)
-                                   , poisson<T, I> const & d) noexcept
+                                   , poisson_distribution<T, I> const & d) noexcept
     {
       if constexpr(floating_value<T>)
        return rec(d.lambda);

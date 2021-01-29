@@ -13,4 +13,4 @@
 #include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
 
-#include <eve/module/real/proba/function/regular/generic/poisson.hpp>
+#include <eve/module/real/proba/function/regular/generic/poisson_distribution.hpp>

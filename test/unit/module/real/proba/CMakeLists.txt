@@ -39,5 +39,5 @@ make_all_units(ROOT unit.real.probas NAME exponential_distribution  ARCH scalar 
 make_all_units(ROOT unit.real.probas NAME cauchy_distribution       ARCH scalar simd TYPES ${real_types}     )
 make_all_units(ROOT unit.real.probas NAME normal_distribution       ARCH scalar simd TYPES ${real_types}     )
 make_all_units(ROOT unit.real.probas NAME binomial_distribution     ARCH scalar simd TYPES ${real_types}     )
-make_all_units(ROOT unit.real.probas NAME poisson             ARCH scalar simd TYPES ${real_types}     )
+make_all_units(ROOT unit.real.probas NAME poisson_distribution      ARCH scalar simd TYPES ${real_types}     )
 make_all_units(ROOT unit.real.probas NAME uniform_real_distribution ARCH scalar simd TYPES ${real_types}     )
