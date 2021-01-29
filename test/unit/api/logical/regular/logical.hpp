@@ -114,7 +114,7 @@ TTS_CASE_TPL("logical getters and setters", EVE_TYPE)
 
 TTS_CASE_TPL("logical internal storage", EVE_TYPE)
 {
-  if constexpr( eve::current_api >= eve::avx512 )
+  if constexpr( (eve::current_api >= eve::avx512) && (EVE_CARDINAL <= 16) )
   {
     eve::logical<T> f{false};
     eve::logical<T> t{true};

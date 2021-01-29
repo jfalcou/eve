@@ -219,7 +219,8 @@ namespace eve::detail
     {
       using s_t = typename logical<wide<T,S,ABI>>::storage_type;
       constexpr auto false_bits = typename s_t::type{0};
-      constexpr auto true_bits  = typename s_t::type{(1ULL << S::value)-1};
+      constexpr auto true_bits  = S::value <= 16  ? typename s_t::type{(1ULL << S::value)-1}
+                                                  : ~typename s_t::type{0};
       return s_t{ !!v ? true_bits : false_bits };
     }
     else
