@@ -8,20 +8,20 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::cauchy`
+                           `eve::cauchy_distribution`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/cauchy.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/cauchy_distribution.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  template< floating_real_value T, floating_real_value U> struct cauchy
+  template< floating_real_value T, floating_real_value U> struct cauchy_distribution
   requires compatible_values< T, U >;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -32,13 +32,13 @@ Constructor
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  cauchy( T const & m, U const & s )
-  cauchy( callable_zero_ const &, U const & s );
-  cauchy( T const & m,  callable_one_ const & );
+  cauchy_distribution( T const & m, U const & s )
+  cauchy_distribution( callable_zero_ const &, U const & s );
+  cauchy_distribution( T const & m,  callable_one_ const & );
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-construct the cauchy object
+construct the cauchy_distribution object
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ Optimizations
 If the scale is one or the median zero the second and third constructors can be used with the parameters
 eve::one or eve::zero, providing some optimization in further computations of the attributes.
 
-Also the constexpr template variable cauchy_01< T > is provided to optimize the standard reduced case (median 0, scale 1).
+Also the constexpr template variable cauchy_distribution_01< T > is provided to optimize the standard reduced case (median 0, scale 1).
 
 In this case, T must be provided to allow choosing the output type of the constant attributes.
 
@@ -70,13 +70,13 @@ Supported attributes
     - entropy
     - fisher
 
-cauchy distribution have no mean nor variance or standard deviation.
+cauchy_distribution distribution have no mean nor variance or standard deviation.
 
  See the example below.
 
-  (insert ../../src/cauchy.src.html here)
+  (insert ../../src/cauchy_distribution.src.html here)
 
-  (insert ../../out/cauchy.out.html here)
+  (insert ../../out/cauchy_distribution.out.html here)
 
 
 <!-- End of Document -->

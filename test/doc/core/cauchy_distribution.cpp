@@ -1,9 +1,4 @@
- <meta charset="utf-8">
-Example
-====================================================================================================
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-#include <eve/function/cauchy.hpp>
+#include <eve/function/cauchy_distribution.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 
@@ -16,7 +11,7 @@ int main()
   wide_ft m = { 0.0f, -1.0f, 1.0f, 2.0f };
   wide_ft s = { 1.0f,  2.0f, 3.0f, 4.0f };
 
-  auto ca = eve::cauchy(0.0f, s);
+  auto ca = eve::cauchy_distribution(0.0f, s);
 
   std::cout
     << "---- simd" << '\n'
@@ -34,7 +29,7 @@ int main()
   float xf = 9.0f;
   float mf = 10.0f;
   float sf = 2.0;
-  auto caf = eve::cauchy(mf, sf);
+  auto caf = eve::cauchy_distribution(mf, sf);
 
   std::cout
     << "---- scalar"  << '\n'
@@ -44,7 +39,7 @@ int main()
     << "-> cdf(caf, xf)        = " << eve::cdf(caf, xf) << '\n'
     << "-> mode(caf)           = " << eve::mode(caf)    << '\n';
 
-  auto ca0= eve::cauchy{eve::zero, s};
+  auto ca0= eve::cauchy_distribution{eve::zero, s};
 
   std::cout
     << "---- simd" << '\n'
@@ -60,9 +55,3 @@ int main()
     << "-> cdf(ca0, x)          = " << eve::cdf(ca0, x)  << '\n';
   return 0;
 }
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- </script>
-<!-- Markdeep: -->
-<script src="../../markdeep.min.js"></script>
-<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
-

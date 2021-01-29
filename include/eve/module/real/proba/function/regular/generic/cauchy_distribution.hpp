@@ -38,18 +38,18 @@
 namespace eve
 {
   template<typename T, typename U, typename Internal = T>
-  struct cauchy{};
+  struct cauchy_distribution{};
 
   template < floating_real_value T, floating_real_value U>
   requires  compatible_values<T, U>
-  struct cauchy<T, U>
+  struct cauchy_distribution<T, U>
   {
     using is_distribution_t = void;
     using m_type = T;
     using s_type = U;
     using value_type = common_compatible_t<T, U>;
 
-    cauchy(T m_,  U s_)
+    cauchy_distribution(T m_,  U s_)
       : m(m_), s(s_)
     {
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
@@ -58,7 +58,7 @@ namespace eve
 
     template < floating_real_value TT,  floating_real_value UU>
     requires  std::constructible_from<T, TT> && std::constructible_from<U, UU>
-    cauchy(TT m_,  UU s_)
+    cauchy_distribution(TT m_,  UU s_)
       : m(T(m_)), s(U(s_))
     {
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
@@ -70,14 +70,14 @@ namespace eve
   };
 
   template<floating_real_value U>
-  struct cauchy<callable_zero_, U>
+  struct cauchy_distribution<callable_zero_, U>
   {
     using is_distribution_t = void;
     using m_type = callable_zero_;
     using s_type = U;
     using value_type = U;
 
-    cauchy(callable_zero_ const&, U s_)
+    cauchy_distribution(callable_zero_ const&, U s_)
       : s(s_)
     {
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
@@ -85,7 +85,7 @@ namespace eve
 
     template < floating_real_value UU>
       requires  std::constructible_from<U, UU>
-    cauchy(callable_zero_ const & , UU s_)
+    cauchy_distribution(callable_zero_ const & , UU s_)
       : s(U(s_))
     {
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
@@ -95,14 +95,14 @@ namespace eve
   };
 
   template < floating_real_value T>
-  struct cauchy<T, callable_one_>
+  struct cauchy_distribution<T, callable_one_>
   {
     using is_distribution_t = void;
     using m_type = T;
     using s_type = decltype(eve::one);
     using value_type = T;
 
-    cauchy(T m_, callable_one_ const &)
+    cauchy_distribution(T m_, callable_one_ const &)
       : m(m_)
     {
       EVE_ASSERT(all(is_finite(m)), "m must be finite");
@@ -110,7 +110,7 @@ namespace eve
 
     template < floating_real_value TT>
       requires  std::constructible_from<T, TT>
-    cauchy(TT m_, callable_one_ const &)
+    cauchy_distribution(TT m_, callable_one_ const &)
       : m(T(m_))
     {
       EVE_ASSERT(all(is_finite(m)), "m must be finite");
@@ -119,22 +119,22 @@ namespace eve
     m_type m;
   };
 
-  template<typename T, typename U>  cauchy(T,U) -> cauchy<T,U>;
+  template<typename T, typename U>  cauchy_distribution(T,U) -> cauchy_distribution<T,U>;
 
   template < floating_real_value T>
-  struct cauchy<callable_zero_, callable_one_, T>
+  struct cauchy_distribution<callable_zero_, callable_one_, T>
   {
     using is_distribution_t = void;
     using m_type = callable_zero_;
     using s_type = callable_one_;
     using value_type = T;
-    constexpr cauchy( as_<T> const&) {}
+    constexpr cauchy_distribution( as_<T> const&) {}
   };
 
-  template<typename T>  cauchy(as_<T> const&) -> cauchy<callable_zero_, callable_one_, T>;
+  template<typename T>  cauchy_distribution(as_<T> const&) -> cauchy_distribution<callable_zero_, callable_one_, T>;
 
   template<floating_real_value T>
-  inline constexpr auto cauchy_01 = cauchy<callable_zero_, callable_one_, T>(as_<T>{});
+  inline constexpr auto cauchy_distribution_01 = cauchy_distribution<callable_zero_, callable_one_, T>(as_<T>{});
 
   namespace detail
   {
@@ -142,7 +142,7 @@ namespace eve
     /// cdf
     template<typename T, typename U, floating_value V, typename I = T>
     EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
-                                 , cauchy<T, U, I> const & ca
+                                 , cauchy_distribution<T, U, I> const & ca
                                  , V const &x ) noexcept
     {
       if constexpr(floating_value<T> && floating_value<U>)
@@ -160,7 +160,7 @@ namespace eve
     template<typename T, typename U, floating_value V
              , typename I = T>
     EVE_FORCEINLINE  auto pdf_(EVE_SUPPORTS(cpu_)
-                                 , cauchy<T, U, I> const & ca
+                                 , cauchy_distribution<T, U, I> const & ca
                                  , V const &x ) noexcept
     {
       if constexpr(floating_value<T> && floating_value<U>)
@@ -184,7 +184,7 @@ namespace eve
     template<typename T, typename U, floating_value V
              , typename I = T>
     EVE_FORCEINLINE  auto invcdf_(EVE_SUPPORTS(cpu_)
-                                 , cauchy<T, U, I> const & ca
+                                 , cauchy_distribution<T, U, I> const & ca
                                  , V const &x ) noexcept
     {
       using  U1 =   std::conditional_t<bool(floating_value<U>), U, I>;
@@ -210,7 +210,7 @@ namespace eve
     /// median
     template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto median_(EVE_SUPPORTS(cpu_)
-                                  , cauchy<T,U,I> const & ca) noexcept
+                                  , cauchy_distribution<T,U,I> const & ca) noexcept
     {
       if constexpr (floating_value<T>)
         return  ca.m;
@@ -224,7 +224,7 @@ namespace eve
     /// scale
     template<typename T, typename U, typename I = U>
     EVE_FORCEINLINE  auto scale_(EVE_SUPPORTS(cpu_)
-                                , cauchy<T,U,I> const & ca) noexcept
+                                , cauchy_distribution<T,U,I> const & ca) noexcept
     {
       if constexpr (floating_value<U>)
         return  ca.s;
@@ -238,7 +238,7 @@ namespace eve
     /// mode
     template<typename T, typename U,  typename I = U>
     EVE_FORCEINLINE  auto mode_(EVE_SUPPORTS(cpu_)
-                               , cauchy<T,U,I> const & ca) noexcept
+                               , cauchy_distribution<T,U,I> const & ca) noexcept
     {
       return median(ca);
     }
@@ -248,7 +248,7 @@ namespace eve
     /// entropy
     template<typename T,  typename U,  typename I = T>
     EVE_FORCEINLINE  auto entropy_(EVE_SUPPORTS(cpu_)
-                                 , cauchy<T,U,I> const & ca) noexcept
+                                 , cauchy_distribution<T,U,I> const & ca) noexcept
     {
       if constexpr (floating_value<U>)
         return  log(4*pi(as(ca.s))*ca.s);
@@ -260,7 +260,7 @@ namespace eve
     /// fisher
     template<typename T,  typename U,  typename I = T>
     EVE_FORCEINLINE  auto fisher_(EVE_SUPPORTS(cpu_)
-                                 , cauchy<T,U,I> const & ca) noexcept
+                                 , cauchy_distribution<T,U,I> const & ca) noexcept
     {
       if constexpr (floating_value<U>)
         return rec(2*sqr(ca.s));
