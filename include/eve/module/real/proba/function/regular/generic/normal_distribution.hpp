@@ -40,18 +40,18 @@
 namespace eve
 {
  template < typename T, typename U, typename Internal = T>
-  struct normal{};
+  struct normal_distribution{};
 
   template < floating_real_value T, floating_real_value U>
   requires  compatible_values<T, U>
-  struct normal<T, U>
+  struct normal_distribution<T, U>
   {
     using is_distribution_t = void;
     using m_type = T;
     using s_type = U;
     using value_type = common_compatible_t<T, U>;
 
-    normal(T m_,  U s_)
+    normal_distribution(T m_,  U s_)
       : m(m_), s(s_)
     {
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
@@ -60,7 +60,7 @@ namespace eve
 
     template < floating_real_value TT,  floating_real_value UU>
     requires  std::constructible_from<T, TT> && std::constructible_from<U, UU>
-    normal(TT m_,  UU s_)
+    normal_distribution(TT m_,  UU s_)
       : m(T(m_)), s(U(s_))
     {
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
@@ -72,14 +72,14 @@ namespace eve
   };
 
   template < floating_real_value U>
-  struct normal<callable_zero_, U>
+  struct normal_distribution<callable_zero_, U>
   {
     using is_distribution_t = void;
     using m_type = callable_zero_;
     using s_type = U;
     using value_type = U;
 
-    normal(callable_zero_ const&, U s_)
+    normal_distribution(callable_zero_ const&, U s_)
       : s(s_)
     {
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
@@ -87,7 +87,7 @@ namespace eve
 
     template < floating_real_value UU>
       requires  std::constructible_from<U, UU>
-    normal(callable_zero_ const & , UU s_)
+    normal_distribution(callable_zero_ const & , UU s_)
       : s(U(s_))
     {
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
@@ -97,14 +97,14 @@ namespace eve
   };
 
   template < floating_real_value T>
-  struct normal<T, callable_one_>
+  struct normal_distribution<T, callable_one_>
   {
     using is_distribution_t = void;
     using m_type = T;
     using s_type = decltype(eve::one);
     using value_type = T;
 
-    normal(T m_, callable_one_ const &)
+    normal_distribution(T m_, callable_one_ const &)
       : m(m_)
     {
       EVE_ASSERT(all(is_finite(m)), "m must be finite");
@@ -112,7 +112,7 @@ namespace eve
 
     template < floating_real_value TT>
       requires  std::constructible_from<T, TT>
-    normal(TT m_, callable_one_ const &)
+    normal_distribution(TT m_, callable_one_ const &)
       : m(T(m_))
     {
       EVE_ASSERT(all(is_finite(m)), "m must be finite");
@@ -121,24 +121,24 @@ namespace eve
     m_type m;
   };
 
-  template<typename T, typename U>  normal(T,U) -> normal<T,U>;
+  template<typename T, typename U>  normal_distribution(T,U) -> normal_distribution<T,U>;
 
   template < floating_real_value T>
-  struct normal<callable_zero_, callable_one_, T>
+  struct normal_distribution<callable_zero_, callable_one_, T>
   {
     using is_distribution_t = void;
     using m_type = callable_zero_;
     using s_type = callable_one_;
     using value_type = T;
 
-    constexpr normal( as_<T> const&) {}
+    constexpr normal_distribution( as_<T> const&) {}
   };
 
 
-  template<typename T>  normal(as_<T> const&) -> normal<callable_zero_, callable_one_, T>;
+  template<typename T>  normal_distribution(as_<T> const&) -> normal_distribution<callable_zero_, callable_one_, T>;
 
   template<floating_real_value T>
-  inline constexpr auto normal_01 = normal<callable_zero_, callable_one_, T>(as_<T>{});
+  inline constexpr auto normal_distribution_01 = normal_distribution<callable_zero_, callable_one_, T>(as_<T>{});
 
   namespace detail
   {
@@ -147,7 +147,7 @@ namespace eve
    template<typename T, typename U, floating_value V
              , typename I = T>
     EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
-                                 , normal<T, U, I> const & d
+                                 , normal_distribution<T, U, I> const & d
                                  , V const &x ) noexcept
     {
       if constexpr(floating_value<T> && floating_value<U>)
@@ -164,7 +164,7 @@ namespace eve
              , typename I = T>
     EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
                               , raw_type const &
-                              , normal<T, U, I> const &d
+                              , normal_distribution<T, U, I> const &d
                               , V const &x ) noexcept
     {
       using elt_t =  element_type_t<T>;
@@ -203,7 +203,7 @@ namespace eve
     template<typename T, typename U, floating_value V
              , typename I = T>
     EVE_FORCEINLINE  auto pdf_(EVE_SUPPORTS(cpu_)
-                                 , normal<T, U, I> const & d
+                                 , normal_distribution<T, U, I> const & d
                                  , V const &x ) noexcept
     {
       auto invsqrt_2pi = V(0.39894228040143267793994605993438186847585863116493);
@@ -230,7 +230,7 @@ namespace eve
     template<typename T, typename U, floating_value V
              , typename I = T>
     EVE_FORCEINLINE  auto mgf_(EVE_SUPPORTS(cpu_)
-                                 , normal<T, U, I> const & d
+                                 , normal_distribution<T, U, I> const & d
                                  , V const &x ) noexcept
     {
       auto invsqrt_2pi = V(0.39894228040143267793994605993438186847585863116493);
@@ -255,7 +255,7 @@ namespace eve
     template<typename T, typename U, floating_value V
              , typename I = T>
     EVE_FORCEINLINE  auto invcdf_(EVE_SUPPORTS(cpu_)
-                                 , normal<T, U, I> const & d
+                                 , normal_distribution<T, U, I> const & d
                                  , V const &x ) noexcept
     {
       if constexpr(floating_value<T> && floating_value<U>)
@@ -278,7 +278,7 @@ namespace eve
     /// median
     template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto median_(EVE_SUPPORTS(cpu_)
-                                  , normal<T,U,I> const & d) noexcept
+                                  , normal_distribution<T,U,I> const & d) noexcept
     {
       if constexpr (floating_value<T>)
         return  d.m;
@@ -293,7 +293,7 @@ namespace eve
     /// mean
     template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto mean_(EVE_SUPPORTS(cpu_)
-                               , normal<T,U,I> const &d) noexcept
+                               , normal_distribution<T,U,I> const &d) noexcept
     {
       return median(d);
     }
@@ -302,7 +302,7 @@ namespace eve
     /// mode
     template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto mode_(EVE_SUPPORTS(cpu_)
-                               , normal<T,U,I> const & d) noexcept
+                               , normal_distribution<T,U,I> const & d) noexcept
     {
       return median(d);
     }
@@ -311,7 +311,7 @@ namespace eve
     /// entropy
     template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto entropy_(EVE_SUPPORTS(cpu_)
-                                  , normal<T,U,I> const & d) noexcept
+                                  , normal_distribution<T,U,I> const & d) noexcept
     {
       auto twopie = T(17.0794684453471341309271017390931489900697770715304);
       if constexpr (floating_value<U>)
@@ -325,7 +325,7 @@ namespace eve
     /// skewness
     template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto skewness_(EVE_SUPPORTS(cpu_)
-                                  , normal<T,U,I> const & ) noexcept
+                                  , normal_distribution<T,U,I> const & ) noexcept
     {
       return I(0);
     }
@@ -334,7 +334,7 @@ namespace eve
     /// kurtosis
     template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto kurtosis_(EVE_SUPPORTS(cpu_)
-                                  , normal<T,U,I> const & ) noexcept
+                                  , normal_distribution<T,U,I> const & ) noexcept
     {
       return I(0);
     }
@@ -343,7 +343,7 @@ namespace eve
     /// mad
     template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto mad_(EVE_SUPPORTS(cpu_)
-                                  , normal<T,U,I> const & d) noexcept
+                                  , normal_distribution<T,U,I> const & d) noexcept
     {
       auto sqrt_2o_pi = T(0.79788456080286535587989211986876373695171726232986);
       if constexpr (floating_value<U>)
@@ -356,7 +356,7 @@ namespace eve
     /// var
     template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto var_(EVE_SUPPORTS(cpu_)
-                                  , normal<T,U,I> const & d) noexcept
+                                  , normal_distribution<T,U,I> const & d) noexcept
     {
       if constexpr (floating_value<U>)
         return sqr(d.s);
@@ -368,7 +368,7 @@ namespace eve
     /// stdev
     template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto stdev_(EVE_SUPPORTS(cpu_)
-                                  , normal<T,U,I> const & d) noexcept
+                                  , normal_distribution<T,U,I> const & d) noexcept
     {
       if constexpr (floating_value<U>)
         return d.s;
@@ -380,8 +380,8 @@ namespace eve
     /// kullback
     template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto kullback_(EVE_SUPPORTS(cpu_)
-                                  , normal<T,U,I> const & d1
-                                  , normal<T,U,I> const & d2 ) noexcept
+                                  , normal_distribution<T,U,I> const & d1
+                                  , normal_distribution<T,U,I> const & d2 ) noexcept
     {
       if constexpr (floating_value<T> && floating_value<U>)
       {

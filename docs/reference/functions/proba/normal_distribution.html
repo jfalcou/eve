@@ -8,20 +8,20 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::normal`
+                           `eve::normal_distribution`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/normal.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/normal_distribution.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  template< floating_real_value T> struct normal
+  template< floating_real_value T> struct normal_distribution
   requires std:convertible_to< T, U >;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -32,13 +32,13 @@ Constructor
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  normal( T const & m, U const & s ) requires std:convertible_to<T,U>;
-  normal( callable_zero_ const &, U const & s );
-  normal( T const & m,  callable_one_ const & );
+  normal_distribution( T const & m, U const & s ) requires std:convertible_to<T,U>;
+  normal_distribution( callable_zero_ const &, U const & s );
+  normal_distribution( T const & m,  callable_one_ const & );
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-construct the normal object
+construct the normal_distribution object
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ Optimizations
 If the standard deviation is one or the mean zero the second and third constructors can be used with the parameters
 eve::one or eve::zero, providing some optimization in further computations of the attributes.
 
-Also the constexpr template variable normal_01< T > is provided to optimize the standard reduced case (mean 0, stdev 1).
+Also the constexpr template variable normal_distribution_01< T > is provided to optimize the standard reduced case (mean 0, stdev 1).
 
 In this case, T must be provided to allow choosing the output type of the constant attributes.
 
@@ -76,9 +76,9 @@ Supported attributes
 
  See the example below.
 
-  (insert ../../src/normal.src.html here)
+  (insert ../../src/normal_distribution.src.html here)
 
-  (insert ../../out/normal.out.html here)
+  (insert ../../out/normal_distribution.out.html here)
 
 
 <!-- End of Document -->
