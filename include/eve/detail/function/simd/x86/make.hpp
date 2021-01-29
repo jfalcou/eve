@@ -218,8 +218,9 @@ namespace eve::detail
     if constexpr( !ABI::is_wide_logical )
     {
       using s_t = typename logical<wide<T,S,ABI>>::storage_type;
-      constexpr auto m = typename s_t::type{0};
-      return s_t{ !!v ? ~m : m };
+      constexpr auto false_bits = typename s_t::type{0};
+      constexpr auto true_bits  = typename s_t::type{(1ULL << S::value)-1};
+      return s_t{ !!v ? true_bits : false_bits };
     }
     else
     {

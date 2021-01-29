@@ -98,7 +98,6 @@ TTS_CASE_TPL("logical bits conversion", EVE_TYPE)
   TTS_IEEE_EQUAL(bool_t.bits(), eve::allbits(eve::as<bits_t>()));
 }
 
-
 #if defined(EVE_SIMD_TESTS)
 TTS_CASE_TPL("logical getters and setters", EVE_TYPE)
 {
@@ -110,6 +109,22 @@ TTS_CASE_TPL("logical getters and setters", EVE_TYPE)
     TTS_EXPECT(x.get(i));
     x.set(i, false);
     TTS_EXPECT_NOT(x.get(i));
+  }
+}
+
+TTS_CASE_TPL("logical internal storage", EVE_TYPE)
+{
+  if constexpr( eve::current_api >= eve::avx512 )
+  {
+    eve::logical<T> f{false};
+    eve::logical<T> t{true};
+
+    TTS_EQUAL(f.storage().value, 0);
+    TTS_EQUAL(t.storage().value, ((1ULL << EVE_CARDINAL) -1) );
+  }
+  else
+  {
+    TTS_PASS("No storage checks");
   }
 }
 #endif
