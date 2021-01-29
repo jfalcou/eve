@@ -41,7 +41,7 @@ namespace eve
         , detail::wide_ops<logical<wide<Type,Size,ABI>>>
         , detail::wide_storage<as_logical_register_t<Type, Size, ABI>>
   {
-    using card_base = detail::wide_cardinal<Size>;
+    using card_base     = detail::wide_cardinal<Size>;
     using storage_base  = detail::wide_storage<as_logical_register_t<Type, Size, ABI>>;
 
     public:

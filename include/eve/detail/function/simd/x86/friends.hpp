@@ -167,7 +167,7 @@ namespace eve::detail
       else  if constexpr( c == category::float32x4  ) return mask8 {_mm_cmp_ps_mask      (v,w,f)};
       else  if constexpr( c == category::float64x8  ) return mask8 {_mm512_cmp_pd_mask   (v,w,f)};
       else  if constexpr( c == category::float64x4  ) return mask8 {_mm256_cmp_pd_mask   (v,w,f)};
-      else  if constexpr( c == category::float64x4  ) return mask8 {_mm_cmp_pd_mask      (v,w,f)};
+      else  if constexpr( c == category::float64x2  ) return mask8 {_mm_cmp_pd_mask      (v,w,f)};
       else  if constexpr( c == category::uint64x8   ) return mask8 {_mm512_cmpneq_epu64_mask(v,w)};
       else  if constexpr( c == category::uint64x4   ) return mask8 {_mm256_cmpneq_epu64_mask(v,w)};
       else  if constexpr( c == category::uint64x2   ) return mask8 {_mm_cmpneq_epu64_mask   (v,w)};
@@ -220,7 +220,7 @@ namespace eve::detail
     if constexpr( !ABI::is_wide_logical )
     {
       using s_t = typename logical<wide<T,N,ABI>>::storage_type;
-      return logical<wide<T,N,ABI>>{ s_t(~v.storage().value ^ w.storage().value) };
+      return logical<wide<T,N,ABI>>{ s_t(v.storage().value ^ w.storage().value) };
     }
     else
     {

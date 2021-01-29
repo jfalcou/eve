@@ -200,8 +200,7 @@ namespace eve::detail
   {
     if constexpr( !ABI::is_wide_logical )
     {
-      detail::as_mask_t<sizeof...(vs)> that{};
-
+      typename logical<wide<T,S,ABI>>::storage_type that{};
       [&]<std::size_t... N>(auto& v, std::index_sequence<N...>){ (( v |= vs?(1ULL<<N):0),...); }
       (that.value, std::make_index_sequence<sizeof...(vs)>{});
 
@@ -218,9 +217,11 @@ namespace eve::detail
   {
     if constexpr( !ABI::is_wide_logical )
     {
-      using i_t = typename detail::as_mask_t<ABI::bytes/sizeof(T)>::type;
-      detail::as_mask_t<ABI::bytes/sizeof(T)> that{ !!v ? ~i_t(0) : i_t(0) };
-      return that;
+      using s_t = typename logical<wide<T,S,ABI>>::storage_type;
+      constexpr auto false_bits = typename s_t::type{0};
+      constexpr auto true_bits  = S::value <= 16  ? typename s_t::type{(1ULL << S::value)-1}
+                                                  : ~typename s_t::type{0};
+      return s_t{ !!v ? true_bits : false_bits };
     }
     else
     {
