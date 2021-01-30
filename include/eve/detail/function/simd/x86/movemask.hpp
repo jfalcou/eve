@@ -58,4 +58,4 @@ namespace eve::detail
     return std::pair{raw,  eve::lane<sizeof(T) == 2 ? 2: 1>};
   }
 
-}  // namespace eve::detail
+}

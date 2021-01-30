@@ -13,6 +13,8 @@
 
 #include <eve/arch.hpp>
 
+#include <eve/detail/function/simd/common/movemask.hpp>
+
 #if defined(EVE_HW_X86)
 #  include <eve/detail/function/simd/x86/movemask.hpp>
 #endif

@@ -11,8 +11,6 @@
 
 #include "test.hpp"
 
-#if defined(SPY_ARCH_IS_AMD64) && !defined(EVE_NO_SIMD)
-
 #include <eve/detail/top_bits.hpp>
 #include <eve/function/is_nez.hpp>
 
@@ -35,7 +33,12 @@ TTS_CASE_TPL("Check top bits raw type", EVE_TYPE)
        if constexpr (eve::has_aggregated_abi_v<logical>) TTS_EXPECT(expect_array(storage_type{}));
   else if constexpr (!ABI::is_wide_logical)              TTS_TYPE_IS(storage_type, typename logical::storage_type);
   else if constexpr (std::same_as<ABI, eve::x86_128_>)   TTS_TYPE_IS(storage_type, std::uint16_t);
-  else                                                   TTS_TYPE_IS(storage_type, std::uint32_t);
+  else if constexpr (std::same_as<ABI, eve::x86_256_>)   TTS_TYPE_IS(storage_type, std::uint32_t);
+  else
+  {
+    if constexpr (logical::static_size < 64)             TTS_TYPE_IS(storage_type, std::uint32_t);
+    else                                                 TTS_TYPE_IS(storage_type, std::uint64_t);
+  }
 }
 
 TTS_CASE_TPL("Check top bits from logical", EVE_TYPE)
@@ -131,7 +134,7 @@ TTS_CASE_TPL("bit operations", EVE_TYPE)
 
   if constexpr( eve::has_native_abi_v<logical> )
   {
-    TTS_EQUAL(0, (~top_bits<logical>{logical{true}}).storage);
+    TTS_EQUAL(0u, (~top_bits<logical>{logical{true}}).storage);
   }
 }
 
@@ -303,5 +306,3 @@ TTS_CASE_TPL("top_bits count_true", EVE_TYPE)
     TTS_EQUAL(expected, eve::detail::count_true(mmask));
   });
 }
-
-#endif  // defined(SPY_ARCH_IS_AMD64) && !defined(EVE_NO_SIMD) && !defined(SPY_SIMD_IS_X86_AVX512)
