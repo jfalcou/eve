@@ -20,6 +20,7 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 #endif
+
 namespace eve
 {
   template<scalar_value T> struct convert_to_;
@@ -27,6 +28,24 @@ namespace eve
 
 namespace eve::detail
 {
+
+#if defined(__has_feature)
+#  if __has_feature(address_sanitizer) or __has_feature(thread_sanitizer)
+#       define EVE_SANITZERS_ARE_ON
+#  endif  // __has_feature
+#endif
+
+#if defined(EVE_SANITZERS_ARE_ON)
+  constexpr bool sanitizers_are_on = true;
+
+#undef EVE_SANITZERS_ARE_ON
+
+#else
+  constexpr bool sanitizers_are_on = false;
+#endif
+
+
+
   //================================================================================================
   // SIMD
   //================================================================================================
@@ -69,8 +88,10 @@ namespace eve::detail
 
     if constexpr( !std::is_pointer_v<Ptr> )
     {
-      if constexpr (Cardinal() * sizeof(e_t) >= Ptr::alignment()) return eve::unsafe(eve::load)(ptr, Cardinal{});
-      else                                                        return eve::load[cond](ptr.get(), Cardinal{});
+      static constexpr bool is_aligned_enough = Cardinal() * sizeof(e_t) >= Ptr::alignment();
+
+      if constexpr (!sanitizers_are_on && is_aligned_enough) return eve::unsafe(eve::load)(ptr, Cardinal{});
+      else                                                   return eve::load[cond](ptr.get(), Cardinal{});
     }
     else
     {
@@ -131,59 +152,39 @@ namespace eve::detail
 #define DISABLE_SANITIZERS
 #endif
 
+  // making unsafe(load) call intinsics requires a lot of work and is not very portable
+  // due to what called functions it will affect.
+  // Since the unsafe is mostly used in corner cases, will do it scalar in asan mode.
   template<typename Ptr, typename Cardinal>
-  DISABLE_SANITIZERS auto load_(EVE_SUPPORTS(cpu_), unsafe_type, Ptr ptr, Cardinal const & cardinal) noexcept
-    requires requires(Ptr ptr, Cardinal cardinal) { eve::load(ptr, cardinal); }
+  DISABLE_SANITIZERS auto load_(EVE_SUPPORTS(cpu_), unsafe_type, Ptr ptr, Cardinal const& N) noexcept
+    requires sanitizers_are_on && (requires(Ptr ptr, Cardinal const& N) { eve::load(ptr, N); })
   {
     using e_t = std::remove_cvref_t<decltype(*ptr)>;
     using r_t = as_wide_t< e_t, typename Cardinal::type >;
 
-         if constexpr ( has_native_abi_v<r_t> ) return eve::load(ptr, cardinal);
-    else if constexpr ( has_emulated_abi_v<r_t> )
-    {
-      r_t res;
-      const e_t* from = &*ptr;
-      e_t* to = res.storage().data();
+    r_t that;
 
-      // can't use C functions, asan will still interrupt.
-      for (std::ptrdiff_t n = Cardinal(); n; --n) *to++ = *from++;
-      return res;
-    }
-    else
-    {
-      // attributes didn't work for aggregated.
-      // They are mostly not guaranteed to work for functions you call
-      // but so far luckily seem to work for non aggregated
-      r_t that;
+    for (std::ptrdiff_t i = 0; i != N(); ++i) that.set(i, ptr[i]);
 
-      auto load_sub = []<typename _Ptr, typename Sub>(_Ptr ptr, std::ptrdiff_t offset, as_<Sub>)
-      {
-        using a_p = eve::aligned_ptr<const e_t, Sub::static_alignment>;
-        if constexpr (std::is_pointer_v<_Ptr>) return unsafe(eve::load)(ptr + offset);
-        else                                   return unsafe(eve::load)(a_p{ptr.get() + offset});
-      };
-
-      that.storage().apply
-      (
-        [&]<typename... Sub>(Sub&... v)
-        {
-          int offset = 0;
-          (((v = load_sub(ptr, offset, as_<Sub>{}), offset += Sub::static_size), ...));
-        }
-      );
-
-      return that;
-    }
+    return that;
   }
 
   template<typename Ptr>
-  DISABLE_SANITIZERS auto load_(EVE_SUPPORTS(cpu_), unsafe_type, Ptr ptr) noexcept
-    requires requires(Ptr ptr) { eve::load(ptr); }
+  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), unsafe_type, Ptr ptr) noexcept
+    requires sanitizers_are_on && requires(Ptr ptr) { eve::load(ptr); }
   {
-    return unsafe(eve::load)(ptr, expected_cardinal_t<std::remove_cvref_t<decltype(*ptr)>>{});
+    using T = std::remove_cvref_t<decltype(*ptr)>;
+    return eve::unsafe(eve::load)(ptr, expected_cardinal_t<T>{});
   }
-}
 
+  template<typename ...Args>
+  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), unsafe_type, Args ... args) noexcept
+    requires (!sanitizers_are_on) && requires(Args ... args) { eve::load(args...); }
+  {
+    return eve::load(args...);
+  }
+
+}
 
 #ifdef SPY_COMPILER_IS_GCC
 #pragma GCC diagnostic pop
