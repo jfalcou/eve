@@ -25,6 +25,24 @@ namespace eve
     typename D::is_distribution_t;
   };
 
+  template<typename D>
+  concept continuous = requires(D)
+  {
+    typename D::continuous_t;
+  };
+
+  template<typename D>
+  concept discrete = requires(D)
+  {
+    typename D::discrete_t;
+  };
+
+  template<typename D>
+  concept mixed = requires(D)
+  {
+    typename D::mixed_t;
+  };
+
   EVE_MAKE_CALLABLE(cdf_, cdf);              // cumulative distribution function
   EVE_MAKE_CALLABLE(pdf_, pdf);              // density function (derivable distributions)
   EVE_MAKE_CALLABLE(invcdf_, invcdf);        // inverse of cumulative distribution function (quantile)

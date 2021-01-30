@@ -2,21 +2,23 @@
 #include <eve/wide.hpp>
 #include <iostream>
 
-using wide_dt = eve::wide <double, eve::fixed<4>>;
 
 int main()
 {
-  wide_dt x = { 0.0f, 1.0f, 5.0f, 12.0f };
-  wide_dt b = { 2.0f, 3.0f, 6.0, 20.0f };
-  wide_dt a = { 0.1f, 0.5f, 3.75, 10.0f };
+  {
+
+    using wide_dt = eve::wide <double, eve::fixed<4>>;
+    wide_dt x = { 0.0f, 1.0f, 5.0f, 12.0f };
+    wide_dt b = { 2, 3, 6, 20 };
+    wide_dt a = { -2, 0, 3, 4};
 
   auto d = eve::uniform_real_distribution(a,  b);
 
   std::cout
-    << "---- simd" << '\n'
+    << "---- simd with wide double initialization continuous distribution" << '\n'
     << "<- x                  = " << x << '\n'
-    << "<- a                  = " << a << '\n'
-    << "<- b                  = " << b << '\n'
+    << "<- a                  = " << d.a << '\n'
+    << "<- b                  = " << d.b << '\n'
     << "-> median(d)          = " << eve::median(d) << '\n'
     << "-> mode(d)            = " << eve::mode(d) << '\n'
     << "-> mean(d)            = " << eve::mean(d) << '\n'
@@ -25,22 +27,31 @@ int main()
     << "-> pdf(d, x)          = " << eve::pdf(d, x) << '\n'
     << "-> cdf(d, x)          = " << eve::cdf(d, x)  << '\n'
     << "-> mgf(d, x)          = " << eve::mgf(d, x)  << '\n';
+  }
 
-  float xf = 9.0f;
-  float bf = 10.0f;
-  float af = 0.5f;
-  auto df = eve::uniform_real_distribution(af, bf);
+  {
+    using wide_dt = eve::wide <float, eve::fixed<4>>;
+    using wide_it = eve::wide <std::int32_t, eve::fixed<4>>;
+    wide_dt x = { 0.0f, 1.0f, 5.0f, 12.0f };
+    wide_it b = { 2, 3, 6, 20 };
+    wide_it a = { -2, 0, 3, 4};
+
+  auto d = eve::uniform_real_distribution(a,  b);
 
   std::cout
-    << "---- scalar"  << '\n'
-    << "<- xf                  = " << xf << '\n'
-    << "<- af                  = " << af << '\n'
-    << "<- bf                  = " << bf << '\n'
-    << "-> cdf(df, xf)        = " << eve::cdf(df, xf) << '\n'
-    << "-> pdf(df, xf)        = " << eve::pdf(df, xf) << '\n'
-    << "-> mgf(df, 2.0f)      = " << eve::mgf(df, 2.0f) << '\n'
-    << "-> mean(df)           = " << eve::mode(df)    << '\n'
-    << "-> mode(df)           = " << eve::mode(df)    << '\n';
-
+    << "---- simd with wide integral initialization : discrete distribution" << '\n'
+    << "<- x                  = " << x << '\n'
+    << "<- a                  = " << d.a << '\n'
+    << "<- b                  = " << d.b << '\n'
+    << "<- n                  = " << d.n << '\n'
+    << "-> median(d)          = " << eve::median(d) << '\n'
+    << "-> mode(d)            = " << eve::mode(d) << '\n'
+    << "-> mean(d)            = " << eve::mean(d) << '\n'
+    << "-> var(d)             = " << eve::var(d) << '\n'
+    << "-> entropy(d)         = " << eve::entropy(d) << '\n'
+    << "-> pdf(d, x)          = " << eve::pdf(d, x) << '\n'
+    << "-> cdf(d, x)          = " << eve::cdf(d, x)  << '\n'
+    << "-> mgf(d, x)          = " << eve::mgf(d, x)  << '\n';
+  }
   return 0;
 }
