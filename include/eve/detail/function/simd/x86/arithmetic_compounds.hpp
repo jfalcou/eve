@@ -334,4 +334,34 @@ namespace eve::detail
       return self;
     }
   }
+
+  template<scalar_value T, value U, typename N>
+  EVE_FORCEINLINE decltype(auto) self_div(wide<T, N, x86_512_> &self, U const &other) noexcept
+      requires(scalar_value<U> || std::same_as<wide<T, N, x86_512_>, U>)
+  {
+    using type = wide<T, N, x86_512_>;
+
+    if constexpr( scalar_value<U> )
+    {
+      return self_div(self, type {other});
+    }
+    else if constexpr( std::same_as<type, U> )
+    {
+      if constexpr( std::same_as<T, double> )
+      {
+        self = _mm512_div_pd(self, other);
+      }
+      else if constexpr( std::same_as<T, float> )
+      {
+        self = _mm512_div_ps(self, other);
+      }
+      else
+      {
+        auto that = self;
+        self      = aggregate([](auto a, auto b) { return a /= b; }, that, other);
+      }
+
+      return self;
+    }
+  }
 }
