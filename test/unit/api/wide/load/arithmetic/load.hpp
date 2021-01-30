@@ -9,6 +9,7 @@
 **/
 //==================================================================================================
 #pragma once
+
 #include <eve/function/load.hpp>
 
 #include <eve/function/any.hpp>
@@ -299,7 +300,7 @@ TTS_CASE_TPL("Check load from range for wide", EVE_TYPE )
   TTS_EQUAL(from_begin_end, ref);
 }
 
-TTS_CASE_TPL("load for different alignment", EVE_TYPE )
+TTS_CASE_TPL("load for different alignment, wide", EVE_TYPE )
 {
   using e_t = EVE_VALUE;
   std::array<e_t, 256> data;
@@ -317,7 +318,10 @@ TTS_CASE_TPL("load for different alignment", EVE_TYPE )
       if constexpr (A >= T::static_alignment)
       {
         eve::aligned_ptr<const e_t, static_cast<std::size_t>(A)> ptr{f};
-        T actual{ptr};
+        eve::wide actual = T{ptr};
+        TTS_EQUAL(actual, expected);
+
+        actual = eve::unsafe(eve::load)(ptr, eve::lane<EVE_CARDINAL>);
         TTS_EQUAL(actual, expected);
       }
     };
@@ -333,13 +337,12 @@ TTS_CASE_TPL("load for different alignment", EVE_TYPE )
 
 TTS_CASE_TPL("Check load unsafe, wide", EVE_TYPE)
 {
-  using e_t = eve::element_type_t<T>;
+  using e_t = EVE_VALUE;
   const e_t x = 123;
 
+  if constexpr (EVE_CARDINAL == eve::expected_cardinal_v<e_t>)
   {
-    using expected = eve::wide<e_t>;
-    auto ptr = eve::previous_aligned_address(
-      &x, eve::lane<sizeof(e_t) * expected::static_size>);
+    auto ptr = eve::previous_aligned_address(&x);
 
     auto loaded = eve::unsafe(eve::load)(ptr);
     TTS_EXPECT(eve::any(loaded == x));
@@ -349,14 +352,9 @@ TTS_CASE_TPL("Check load unsafe, wide", EVE_TYPE)
   }
 
   auto test_n = [&](auto n) {
-    auto ptr = eve::previous_aligned_address(
-      &x,
-      eve::lane<decltype(n)() * sizeof(e_t)>);
-
+    auto ptr = eve::previous_aligned_address(&x, n);
     auto loaded = eve::unsafe(eve::load)(ptr, n);
-    TTS_EXPECT(eve::any(loaded == x));
 
-    loaded = eve::unsafe(eve::load)(ptr.get(), n);
     TTS_EXPECT(eve::any(loaded == x));
   };
 

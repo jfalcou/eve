@@ -69,7 +69,8 @@ namespace eve::detail
 
     if constexpr( !std::is_pointer_v<Ptr> )
     {
-      return eve::unsafe(eve::load)(ptr, Cardinal{});
+      if constexpr (Cardinal() * sizeof(e_t) >= Ptr::alignment()) return eve::unsafe(eve::load)(ptr, Cardinal{});
+      else                                                        return eve::load[cond](ptr.get(), Cardinal{});
     }
     else
     {
@@ -130,13 +131,6 @@ namespace eve::detail
 #define DISABLE_SANITIZERS
 #endif
 
-  template<typename Ptr>
-  DISABLE_SANITIZERS auto load_(EVE_SUPPORTS(cpu_), unsafe_type, Ptr ptr) noexcept
-    requires requires(Ptr ptr) { eve::load(ptr); }
-  {
-    return eve::load(ptr);
-  }
-
   template<typename Ptr, typename Cardinal>
   DISABLE_SANITIZERS auto load_(EVE_SUPPORTS(cpu_), unsafe_type, Ptr ptr, Cardinal const & cardinal) noexcept
     requires requires(Ptr ptr, Cardinal cardinal) { eve::load(ptr, cardinal); }
@@ -144,21 +138,49 @@ namespace eve::detail
     using e_t = std::remove_cvref_t<decltype(*ptr)>;
     using r_t = as_wide_t< e_t, typename Cardinal::type >;
 
-    if constexpr ( !has_aggregated_abi_v<r_t> ) return eve::load(ptr, cardinal);
+         if constexpr ( has_native_abi_v<r_t> ) return eve::load(ptr, cardinal);
+    else if constexpr ( has_emulated_abi_v<r_t> )
+    {
+      r_t res;
+      const e_t* from = &*ptr;
+      e_t* to = res.storage().data();
+
+      // can't use C functions, asan will still interrupt.
+      for (std::ptrdiff_t n = Cardinal(); n; --n) *to++ = *from++;
+      return res;
+    }
     else
     {
-      constexpr eve::fixed< Cardinal() / 2 > half;
+      // attributes didn't work for aggregated.
+      // They are mostly not guaranteed to work for functions you call
+      // but so far luckily seem to work for non aggregated
+      r_t that;
 
-      auto half_ptr = [&]{
-        using half_aligned_t = eve::aligned_ptr< e_t const, half() * sizeof(e_t) >;
-        if constexpr( !std::is_pointer_v<Ptr> ) return half_aligned_t{ptr.get()};
-        else                                    return ptr;
-      }();
+      auto load_sub = []<typename _Ptr, typename Sub>(_Ptr ptr, std::ptrdiff_t offset, as_<Sub>)
+      {
+        using a_p = eve::aligned_ptr<const e_t, Sub::static_alignment>;
+        if constexpr (std::is_pointer_v<_Ptr>) return unsafe(eve::load)(ptr + offset);
+        else                                   return unsafe(eve::load)(a_p{ptr.get() + offset});
+      };
 
-      auto lo = eve::unsafe(eve::load)(half_ptr, half);
-      auto hi = eve::unsafe(eve::load)(half_ptr + half(), half);
-      return r_t{lo, hi};
+      that.storage().apply
+      (
+        [&]<typename... Sub>(Sub&... v)
+        {
+          int offset = 0;
+          (((v = load_sub(ptr, offset, as_<Sub>{}), offset += Sub::static_size), ...));
+        }
+      );
+
+      return that;
     }
+  }
+
+  template<typename Ptr>
+  DISABLE_SANITIZERS auto load_(EVE_SUPPORTS(cpu_), unsafe_type, Ptr ptr) noexcept
+    requires requires(Ptr ptr) { eve::load(ptr); }
+  {
+    return unsafe(eve::load)(ptr, expected_cardinal_t<std::remove_cvref_t<decltype(*ptr)>>{});
   }
 }
 

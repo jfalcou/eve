@@ -9,9 +9,12 @@
 **/
 //==================================================================================================
 #pragma once
+
+#include <eve/function/load.hpp>
+
 #include <eve/memory/aligned_allocator.hpp>
 #include <eve/memory/aligned_ptr.hpp>
-#include <eve/function/load.hpp>
+#include <eve/function/any.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 #include <vector>
@@ -289,7 +292,7 @@ TTS_CASE_TPL("Check load from range for wide", EVE_TYPE )
   TTS_EQUAL( from_begin_end, ref );
 }
 
-TTS_CASE_TPL("load for different alignment", EVE_TYPE )
+TTS_CASE_TPL("load for different alignment, logical", EVE_TYPE )
 {
   using e_t = logical<EVE_VALUE>;
   std::array<e_t, 256> data;
@@ -310,6 +313,9 @@ TTS_CASE_TPL("load for different alignment", EVE_TYPE )
         eve::aligned_ptr<const e_t, static_cast<std::size_t>(A)> ptr{f};
         eve::logical<T> actual{ptr};
         TTS_EQUAL(actual, expected);
+
+        actual = eve::unsafe(eve::load)(ptr, eve::lane<EVE_CARDINAL>);
+        TTS_EQUAL(actual, expected);
       }
     };
 
@@ -320,4 +326,35 @@ TTS_CASE_TPL("load for different alignment", EVE_TYPE )
     test(eve::lane<8>);
     test(eve::lane<4>);
   }
+}
+
+TTS_CASE_TPL("Check load unsafe, logical", EVE_TYPE)
+{
+  using e_t = eve::logical<EVE_VALUE>;
+  const e_t x = true;
+
+  if constexpr (EVE_CARDINAL == eve::expected_cardinal_v<e_t>)
+  {
+    auto ptr = eve::previous_aligned_address(&x);
+
+    auto loaded = eve::unsafe(eve::load)(ptr);
+    TTS_EXPECT(eve::any(loaded == x));
+
+    loaded = eve::unsafe(eve::load)(ptr.get());
+    TTS_EXPECT(eve::any(loaded == x));
+  }
+
+  auto test_n = [&](auto n) {
+    auto ptr = eve::previous_aligned_address(&x, n);
+    auto loaded = eve::unsafe(eve::load)(ptr, n);
+
+    TTS_EXPECT(eve::any(loaded == x));
+  };
+
+  test_n(eve::lane<1>);
+  test_n(eve::lane<2>);
+  test_n(eve::lane<4>);
+  test_n(eve::lane<8>);
+  test_n(eve::lane<16>);
+  test_n(eve::lane<32>);
 }

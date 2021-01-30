@@ -311,8 +311,15 @@ namespace eve
   {};
 
   template <typename T, typename Cardinal>
-  EVE_FORCEINLINE auto previous_aligned_address(T* p, Cardinal cardinal)
+  EVE_FORCEINLINE auto previous_aligned_address(T* p, Cardinal /*width*/) noexcept
   {
-    return eve::aligned_ptr<T, cardinal()>{eve::align(p, eve::under{cardinal()})};
+    static constexpr std::size_t alignment = Cardinal() * sizeof(T);
+    return eve::aligned_ptr<T, alignment>{eve::align(p, eve::under{alignment})};
+  }
+
+  template <typename T>
+  EVE_FORCEINLINE auto previous_aligned_address(T* p) noexcept
+  {
+    return previous_aligned_address(p, eve::expected_cardinal<std::remove_cvref_t<T>>{});
   }
 }

@@ -18,7 +18,7 @@ namespace eve
   // Function decorator - unsafe mode
   struct unsafe_
   {
-    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
+    template<typename D> static constexpr auto combine( D const& ) noexcept = delete;
   };
 
   using unsafe_type = decorated<unsafe_()>;
