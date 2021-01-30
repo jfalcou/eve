@@ -55,14 +55,6 @@ namespace eve::detail
     );
   }
 
-  template<real_scalar_value T, typename N, typename ABI>
-  EVE_FORCEINLINE void
-  store_(EVE_SUPPORTS(cpu_), logical<wide<T, N, ABI>> const &value, logical<T> *ptr) noexcept
-  {
-    auto rawdata = bit_cast(value, as_<wide<T, N, ABI>> {});
-    store(rawdata, (T *)(ptr));
-  }
-
   // -----------------------------------------------------------------------------------------------
   // simd Aligned case
   template<real_scalar_value T, typename S, std::size_t N>
@@ -78,22 +70,36 @@ namespace eve::detail
   store_(EVE_SUPPORTS(cpu_), wide<T, S, aggregated_> const &value, aligned_ptr<T, N> ptr) noexcept
       requires(wide<T, S, aggregated_>::static_alignment <= N)
   {
+    auto cast = []<typename Ptr, typename Sub>(Ptr ptr, as_<Sub>)
+    {
+      return eve::aligned_ptr<T, Sub::static_alignment>{ptr.get()};
+    };
+
     value.storage().apply
     ( [&]<typename... Sub>(Sub&... v)
       {
         int k = 0;
-        ((store(v, ptr + k), k += Sub::static_size), ...);
+        ((store(v, cast(ptr, as_<Sub>{}) + k), k += Sub::static_size), ...);
       }
     );
   }
 
-  template<real_scalar_value T, typename S, std::size_t N, typename ABI>
+  template<real_scalar_value T, typename S, typename ABI>
   EVE_FORCEINLINE void store_(EVE_SUPPORTS(cpu_),
                               logical<wide<T, S, ABI>> const &value,
-                              aligned_ptr<logical<T>, N>      ptr) noexcept
-      requires(logical<wide<T, S, ABI>>::static_alignment <= N)
+                              logical<T>* ptr) noexcept
   {
-    auto rawdata = bit_cast(value, as_<wide<T, S, ABI>> {});
-    store(rawdata, (T *)(ptr.get()));
+    store(value.mask(), (typename logical<T>::mask_type*) ptr);
+  }
+
+  template<real_scalar_value T, typename S, std::size_t A, typename ABI>
+  EVE_FORCEINLINE void store_(EVE_SUPPORTS(cpu_),
+                              logical<wide<T, S, ABI>> const &value,
+                              aligned_ptr<logical<T>, A> ptr) noexcept
+    requires (
+      requires {store(value.mask(), aligned_ptr<typename logical<T>::mask_type, A>{}); } )
+  {
+    using mask_type_t = typename logical<T>::mask_type;
+    store(value.mask(), aligned_ptr<mask_type_t, A>{(mask_type_t*)ptr.get()});
   }
 }

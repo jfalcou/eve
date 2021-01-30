@@ -288,3 +288,36 @@ TTS_CASE_TPL("Check load from range for wide", EVE_TYPE )
   eve::logical<T> from_begin_end(ref_ptr.begin(), ref_ptr.end());
   TTS_EQUAL( from_begin_end, ref );
 }
+
+TTS_CASE_TPL("load for different alignment", EVE_TYPE )
+{
+  using e_t = logical<EVE_VALUE>;
+  std::array<e_t, 256> data;
+
+  data.fill(false);
+  for (int i = 0; i < 256; i += 2) data[i] = true;
+
+  for (const e_t* f =  data.begin();
+                  f != data.end() - EVE_CARDINAL + 1;
+                  ++f)
+  {
+    logical<T> expected(f);
+
+    auto test = [&]<std::ptrdiff_t A>(eve::fixed<A>) {
+      if (!eve::is_aligned<A>(f)) return;
+      if constexpr (A >= T::static_alignment)
+      {
+        eve::aligned_ptr<const e_t, static_cast<std::size_t>(A)> ptr{f};
+        eve::logical<T> actual{ptr};
+        TTS_EQUAL(actual, expected);
+      }
+    };
+
+    test(eve::lane<128>);
+    test(eve::lane<64>);
+    test(eve::lane<32>);
+    test(eve::lane<16>);
+    test(eve::lane<8>);
+    test(eve::lane<4>);
+  }
+}

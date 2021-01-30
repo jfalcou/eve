@@ -56,3 +56,33 @@ TTS_CASE_TPL("Check store behavior to aligned logical pointer",EVE_TYPE)
 
   TTS_ALL_EQUAL(target, ref);
 }
+
+TTS_CASE_TPL("store for different alignment", EVE_TYPE )
+{
+  using e_t = eve::logical<EVE_VALUE>;
+  std::array<e_t, 256> data;
+
+  const eve::logical<T> what{[](int i, int) { return i % 2 == 0; }};
+
+  for (e_t* f =  data.begin();
+            f != data.end() - EVE_CARDINAL + 1;
+          ++f)
+  {
+    auto test = [&]<std::ptrdiff_t A>(eve::fixed<A>) {
+      if (!eve::is_aligned<A>(f)) return;
+      if constexpr (A >= T::static_alignment)
+      {
+        eve::aligned_ptr<e_t, static_cast<std::size_t>(A)> ptr{f};
+        eve::store(what, ptr);
+        TTS_EQUAL(eve::logical<T>{f}, what);
+      }
+    };
+
+    test(eve::lane<128>);
+    test(eve::lane<64>);
+    test(eve::lane<32>);
+    test(eve::lane<16>);
+    test(eve::lane<8>);
+    test(eve::lane<4>);
+  }
+}

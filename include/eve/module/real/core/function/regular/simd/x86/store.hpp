@@ -72,30 +72,4 @@ namespace eve::detail
       memcpy(ptr, (T const*)(&value), N::value * sizeof(T));
     }
   }
-
-  template< scalar_value T, typename N, x86_abi ABI
-          , simd_compatible_ptr<logical<wide<T, N, ABI>>> Ptr
-          >
-  EVE_FORCEINLINE void store_(EVE_SUPPORTS(sse2_), logical<wide<T,N,ABI>> const &value, Ptr ptr) noexcept
-  {
-    if constexpr( !ABI::is_wide_logical )
-    {
-      auto[l,h] = value.mask().slice();
-
-      if constexpr( !std::is_pointer_v<Ptr> )
-      {
-        store(l, aligned_ptr<T,Ptr::alignment()/2>((T*)ptr.get())             );
-        store(h, aligned_ptr<T,Ptr::alignment()/2>((T*)(ptr.get()+N::value/2)));
-      }
-      else
-      {
-        store(l, (T*)ptr);
-        store(h, (T*)(ptr+N::value/2));
-      }
-    }
-    else
-    {
-      store_(EVE_RETARGET(cpu_), value, ptr) ;
-    }
-  }
 }
