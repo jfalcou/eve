@@ -306,3 +306,15 @@ TTS_CASE_TPL("top_bits count_true", EVE_TYPE)
     TTS_EQUAL(expected, eve::detail::count_true(mmask));
   });
 }
+
+TTS_CASE("many chars")
+{
+  // emulated doesn't aggregate even for a big number of elements
+  // but top bits has to.
+  using T = eve::wide<char, eve::fixed<128>>;
+
+  eve::logical<T> x {[] (int i, int) { return i % 2 == 0; }};
+
+  top_bits mmask{x};
+  TTS_EQUAL(x, eve::detail::to_logical(mmask));
+}

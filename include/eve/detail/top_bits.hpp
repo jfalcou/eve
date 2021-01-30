@@ -52,31 +52,35 @@ EVE_FORCEINLINE constexpr N set_lower_n_bits(std::ptrdiff_t n) {
 
 // top_bits ---------------------------------
 
-template <logical_simd_value Logical>
-struct top_bits
+template <typename> struct top_bits;
+
+template <typename T, typename N, typename ABI>
+struct top_bits<logical<wide<T, N, ABI>>>
 {
-  static constexpr bool is_aggregated = has_aggregated_abi_v<Logical>;
-  static constexpr bool is_avx512_logical = !abi_type_t<Logical>::is_wide_logical;
-  static constexpr std::ptrdiff_t static_size = Logical::static_size;
-  static constexpr std::ptrdiff_t bits_per_element = typename decltype(movemask(Logical{}))::second_type{}();
+  using logical_type = logical<wide<T, N, ABI>>;
+
+  static constexpr std::ptrdiff_t static_size = logical_type::static_size;
+  static constexpr bool is_emulated_aggregated = has_emulated_abi_v<logical_type> && static_size > 64;
+  static constexpr bool is_aggregated = has_aggregated_abi_v<logical_type> || is_emulated_aggregated;
+  static constexpr bool is_avx512_logical = !ABI::is_wide_logical;
+  static constexpr std::ptrdiff_t bits_per_element = typename decltype(movemask(logical_type{}))::second_type{}();
+
+  using half_logical = logical<wide<T, eve::fixed<N() / 2>>>;
 
   private:
     EVE_FORCEINLINE static auto storage_type_impl()
     {
       if constexpr ( is_aggregated )
       {
-        using half_logical = typename logical_type::storage_type::subvalue_type;
         return std::array<top_bits<half_logical>, 2>{};
       }
       else
       {
-        return movemask(Logical{}).first;
+        return movemask(logical_type{}).first;
       }
     }
 
   public:
-
-    using logical_type = Logical;
     using storage_type = decltype(top_bits::storage_type_impl());
 
     storage_type storage;
@@ -93,7 +97,6 @@ struct top_bits
     {
         if constexpr ( is_aggregated )
         {
-          using half_logical = typename logical_type::storage_type::subvalue_type;
           auto [l, h] = p.slice();
 
           storage = {{ top_bits<half_logical>(l), top_bits<half_logical>(h) }};
@@ -112,7 +115,6 @@ struct top_bits
       if constexpr( !is_aggregated ) storage = set_lower_n_bits<storage_type>(static_size * bits_per_element);
       else
       {
-        using half_logical = typename logical_type::storage_type::subvalue_type;
         top_bits<half_logical> half {ignore_none_{}};
         storage[0] = half;
         storage[1] = half;
@@ -124,7 +126,6 @@ struct top_bits
       if constexpr( !is_aggregated ) storage = storage_type{0};
       else
       {
-        using half_logical = typename logical_type::storage_type::subvalue_type;
         top_bits<half_logical> half {ignore_all_{}};
         storage[0] = half;
         storage[1] = half;
@@ -141,8 +142,6 @@ struct top_bits
       }
       else
       {
-        using half_logical = typename logical_type::storage_type::subvalue_type;
-
         if (ignore.first_count_ >= static_size / 2)
         {
           ignore.first_count_ -= static_size / 2;
@@ -308,6 +307,12 @@ struct top_bits
     }
 };
 
+template <logical_simd_value Logical>
+top_bits(const Logical&) -> top_bits<Logical>;
+
+template <logical_simd_value Logical, relative_conditional_expr C>
+top_bits(const Logical&, C ignore) -> top_bits<Logical>;
+
 // ---------------------------------------------------------------------------------
 // to_logical(top_bits)
 //
@@ -315,7 +320,7 @@ struct top_bits
 template <logical_simd_value Logical>
 EVE_FORCEINLINE Logical to_logical(top_bits<Logical> mmask)
 {
-       if constexpr ( top_bits<Logical>::is_aggregated )         return Logical{{to_logical(mmask.storage[0]), to_logical(mmask.storage[1])}};
+       if constexpr ( top_bits<Logical>::is_aggregated )         return Logical{to_logical(mmask.storage[0]), to_logical(mmask.storage[1])};
   else if constexpr ( top_bits<Logical>::is_avx512_logical )     return Logical(mmask.storage);
   else
   {
