@@ -89,6 +89,9 @@ TTS_CASE_TPL("Check load from for wide", EVE_TYPE)
 
     TTS_AND_THEN("we load from aligned pointers")
     {
+      std::cout << "ALIGN: " << algt << "\n";
+      std::cout << "eve::logical<T>::ALIGN: " << eve::logical<T>::alignment() << "\n";
+
       TTS_EQUAL(eve::logical<T>(eve::as_aligned<algt>(ref_ptr))                      , ref);
 
       if constexpr(EVE_CARDINAL == eve::expected_cardinal_v<EVE_VALUE>)

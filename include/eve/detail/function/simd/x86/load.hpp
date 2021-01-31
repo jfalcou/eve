@@ -100,7 +100,7 @@ namespace eve::detail
       using tgt = eve::as_<wide<T, N, ABI>>;
       if constexpr( !std::is_pointer_v<Ptr> )
       {
-        using ptr_t = aligned_ptr<T const>;
+        using ptr_t = typename Ptr::template rebind<T const>;
         return load(tgt{}, ptr_t( (T const*)(p.get())) );
       }
       else

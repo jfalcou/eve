@@ -49,9 +49,7 @@ namespace eve
 
     template<typename T, typename N = expected_cardinal_t<T>> using rebind = wide<T,N>;
 
-    static constexpr auto  static_alignment  = std::min ( sizeof(Type)*Size::value
-                                                        , alignof(storage_type)
-                                                        );
+    static constexpr auto  static_alignment = sizeof(Type)*Size::value;
 
     //==============================================================================================
     // Constructors
