@@ -15,6 +15,7 @@
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
+#include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/function/to_logical.hpp>
 
 namespace eve::detail
@@ -40,12 +41,18 @@ namespace eve::detail
       auto block = [&]() -> wide<a_t, typename Cardinal::type>
       {
         if constexpr( !std::is_pointer_v<Ptr> )
-          return load_(EVE_RETARGET(sse2_), cond, (a_t const*)(p.get()), Cardinal{});
+        {
+          using ptr_t = typename Ptr::template rebind<a_t const>;
+          return load_(EVE_RETARGET(sse2_), cond, ptr_t((a_t const*)(p.get())), Cardinal{});
+        }
         else
-        return load_(EVE_RETARGET(sse2_), cond, (a_t const*)(p), Cardinal{});
+        {
+          return load_(EVE_RETARGET(sse2_), cond, (a_t const*)(p), Cardinal{});
+        }
       }();
 
-      return to_logical(block).storage();
+      if constexpr( current_api >= avx512 ) return to_logical(block).storage();
+      else                                  return bit_cast(block, as_<r_t>{});
     }
     else if constexpr( !abi_t::is_wide_logical )
     {

@@ -12,6 +12,7 @@
 
 #include <eve/as.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/detail/function/bit_cast.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 
 #include <iterator>
@@ -30,32 +31,15 @@ namespace eve::detail
     return apply<Pack::size()>(impl);
   }
 
-  //================================================================================================
-  // Emulation
-  //================================================================================================
-  template<typename Wide, typename Iterator>
-  EVE_FORCEINLINE auto load(eve::as_<Wide> const& tgt, Iterator i) noexcept
+  template<typename Wide, typename Pointer>
+  EVE_FORCEINLINE auto aggregate_load(eve::as_<Wide> const &, Pointer ptr) noexcept
   {
-    auto const get = [](auto p)
-    {
-      if constexpr( !std::input_iterator<Iterator> )  return p.get();
-      else                                            return p;
-    };
-
-    return piecewise_load(tgt, get(i));
-  }
-
-  //================================================================================================
-  // Aggregation
-  //================================================================================================
-  template<typename T, typename N, typename Pointer>
-  EVE_FORCEINLINE auto load(eve::as_<wide<T,N,aggregated_>> const &, Pointer ptr) noexcept
-  {
-    wide<T,N,aggregated_> that;
+    Wide that;
 
     auto cast = []<typename Ptr, typename Sub>(Ptr ptr, as_<Sub>)
     {
-      using a_p = eve::aligned_ptr<const T, Sub::static_alignment>;
+      using type = element_type_t<Wide>;
+      using a_p = eve::aligned_ptr<const type, Sub::static_alignment>;
       if constexpr (std::is_pointer_v<Ptr>) return ptr;
       else                                  return a_p{ptr.get()};
     };
@@ -73,6 +57,30 @@ namespace eve::detail
   }
 
   //================================================================================================
+  // Emulation
+  //================================================================================================
+  template<typename T, typename N, typename Pointer>
+  EVE_FORCEINLINE auto load(eve::as_<wide<T,N,emulated_>> const& tgt, Pointer i) noexcept
+  {
+    auto const get = [](auto p)
+    {
+      if constexpr( !std::input_iterator<Pointer> )  return p.get();
+      else                                            return p;
+    };
+
+    return piecewise_load(tgt, get(i));
+  }
+
+  //================================================================================================
+  // Aggregation
+  //================================================================================================
+  template<typename T, typename N, typename Pointer>
+  EVE_FORCEINLINE auto load(eve::as_<wide<T,N,aggregated_>> const & tgt, Pointer ptr) noexcept
+  {
+    return aggregate_load(tgt,ptr);
+  }
+
+  //================================================================================================
   // Common case for iterator based load
   //================================================================================================
   template<std::input_iterator Iterator, typename Pack>
@@ -81,4 +89,37 @@ namespace eve::detail
     return piecewise_load(tgt,b);
   }
 
+  //================================================================================================
+  // Basic logical support
+  //================================================================================================
+  template<typename T, typename N, typename Ptr, typename ABI>
+  EVE_FORCEINLINE
+  auto load(eve::as_<logical<wide<T, N, ABI>>> const & tgt, Ptr p)
+  requires( std::same_as<logical<T>, std::remove_cvref_t<decltype(*p)>> )
+  {
+    return  bit_cast
+            ( [&]() -> wide<T, N, ABI>
+              {
+                using wtg = eve::as_<wide<T, N, ABI>>;
+                if constexpr( !std::is_pointer_v<Ptr> )
+                {
+                  using ptr_t = typename Ptr::template rebind<T const>;
+                  return load(wtg{}, ptr_t( (T const*)(p.get())) );
+                }
+                else
+                {
+                  return load(wtg{}, (T const*)(p));
+                }
+              }()
+            , tgt
+            );
+  }
+
+  template<typename T, typename N, typename Ptr>
+  EVE_FORCEINLINE
+  auto load(eve::as_<logical<wide<T, N, aggregated_>>> const & tgt, Ptr p)
+  requires( std::same_as<logical<T>, std::remove_cvref_t<decltype(*p)>> )
+  {
+    return aggregate_load(tgt,p);
+  }
 }
