@@ -15,6 +15,7 @@
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
+#include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/function/to_logical.hpp>
 
 namespace eve::detail
@@ -50,7 +51,8 @@ namespace eve::detail
         }
       }();
 
-      return to_logical(block).storage();
+      if constexpr( current_api >= avx512 ) return to_logical(block).storage();
+      else                                  return bit_cast(block, as_<r_t>{});
     }
     else if constexpr( !abi_t::is_wide_logical )
     {
