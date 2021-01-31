@@ -16,6 +16,12 @@
 
 #include <array>
 
+# if defined(EVE_NO_SIMD)
+#   define   TOP_BITS_EVE_TYPE eve::wide<std::uint8_t, eve::fixed<128>>
+# else
+#   define TOP_BITS_EVE_TYPE EVE_TYPE
+# endif
+
 using eve::detail::top_bits;
 
 template <typename T, std::size_t N>
@@ -24,7 +30,7 @@ bool expect_array(const std::array<T, N>&)
   return true;
 }
 
-TTS_CASE_TPL("Check top bits raw type", EVE_TYPE)
+TTS_CASE_TPL("Check top bits raw type", TOP_BITS_EVE_TYPE)
 {
   using logical = eve::logical<T>;
   using storage_type = typename top_bits<logical>::storage_type;
@@ -37,11 +43,11 @@ TTS_CASE_TPL("Check top bits raw type", EVE_TYPE)
   else
   {
     if constexpr (logical::static_size < 64)             TTS_TYPE_IS(storage_type, std::uint32_t);
-    else                                                 TTS_TYPE_IS(storage_type, std::uint64_t);
+    else                                                 TTS_EXPECT(expect_array(storage_type{}));
   }
 }
 
-TTS_CASE_TPL("Check top bits from logical", EVE_TYPE)
+TTS_CASE_TPL("Check top bits from logical", TOP_BITS_EVE_TYPE)
 {
   using logical = eve::logical<T>;
 
@@ -54,6 +60,11 @@ TTS_CASE_TPL("Check top bits from logical", EVE_TYPE)
 
     for (std::ptrdiff_t j = 0; j != test.static_size; ++j)
     {
+      if (test.get(j) != mmask.get(j))
+      {
+        std::cout << "i: " << i << std::endl;
+        std::cout << "mmask: " << std::hex << mmask << std::endl;
+      }
       TTS_EQUAL(test.get(j), mmask.get(j));
     }
 
@@ -61,7 +72,9 @@ TTS_CASE_TPL("Check top bits from logical", EVE_TYPE)
   }
 }
 
-TTS_CASE_TPL("top_bits, set", EVE_TYPE)
+#if 0
+
+TTS_CASE_TPL("top_bits, set", TOP_BITS_EVE_TYPE)
 {
   using logical = eve::logical<T>;
 
@@ -84,7 +97,7 @@ TTS_CASE_TPL("top_bits, set", EVE_TYPE)
   }
 }
 
-TTS_CASE_TPL("Top bits are little endian", EVE_TYPE)
+TTS_CASE_TPL("Top bits are little endian", TOP_BITS_EVE_TYPE)
 {
   using logical = eve::logical<T>;
 
@@ -102,7 +115,7 @@ TTS_CASE_TPL("Top bits are little endian", EVE_TYPE)
   }
 }
 
-TTS_CASE_TPL("bit operations", EVE_TYPE)
+TTS_CASE_TPL("bit operations", TOP_BITS_EVE_TYPE)
 {
   using logical = eve::logical<T>;
 
@@ -159,7 +172,7 @@ void top_bits_interesting_cases(Test test)
   }
 }
 
-TTS_CASE_TPL("to_logical", EVE_TYPE)
+TTS_CASE_TPL("to_logical", TOP_BITS_EVE_TYPE)
 {
     top_bits_interesting_cases<T>([&](auto x) {
       top_bits mmask {x};
@@ -167,7 +180,7 @@ TTS_CASE_TPL("to_logical", EVE_TYPE)
     });
 }
 
-TTS_CASE_TPL("top_bits from ignore", EVE_TYPE)
+TTS_CASE_TPL("top_bits from ignore", TOP_BITS_EVE_TYPE)
 {
   using logical = eve::logical<T>;
 
@@ -226,7 +239,7 @@ TTS_CASE_TPL("top_bits from ignore", EVE_TYPE)
   }
 }
 
-TTS_CASE_TPL("top_bits from logical + ignore", EVE_TYPE)
+TTS_CASE_TPL("top_bits from logical + ignore", TOP_BITS_EVE_TYPE)
 {
   using logical = eve::logical<T>;
 
@@ -239,7 +252,7 @@ TTS_CASE_TPL("top_bits from logical + ignore", EVE_TYPE)
   TTS_EQUAL(expected, eve::detail::to_logical(actual));
 }
 
-TTS_CASE_TPL("top_bits all", EVE_TYPE)
+TTS_CASE_TPL("top_bits all", TOP_BITS_EVE_TYPE)
 {
   using logical = eve::logical<T>;
 
@@ -255,7 +268,7 @@ TTS_CASE_TPL("top_bits all", EVE_TYPE)
   }
 }
 
-TTS_CASE_TPL("top_bits any", EVE_TYPE)
+TTS_CASE_TPL("top_bits any", TOP_BITS_EVE_TYPE)
 {
   using logical = eve::logical<T>;
 
@@ -271,7 +284,7 @@ TTS_CASE_TPL("top_bits any", EVE_TYPE)
   }
 }
 
-TTS_CASE_TPL("top_bits first_true", EVE_TYPE)
+TTS_CASE_TPL("top_bits first_true", TOP_BITS_EVE_TYPE)
 {
   using logical = eve::logical<T>;
 
@@ -296,7 +309,7 @@ TTS_CASE_TPL("top_bits first_true", EVE_TYPE)
   TTS_EXPECT_NOT(eve::detail::first_true(top_bits(x)));
 }
 
-TTS_CASE_TPL("top_bits count_true", EVE_TYPE)
+TTS_CASE_TPL("top_bits count_true", TOP_BITS_EVE_TYPE)
 {
   top_bits_interesting_cases<T>([&](auto x) {
     std::ptrdiff_t expected = 0;
@@ -307,14 +320,4 @@ TTS_CASE_TPL("top_bits count_true", EVE_TYPE)
   });
 }
 
-TTS_CASE("many chars")
-{
-  // emulated doesn't aggregate even for a big number of elements
-  // but top bits has to.
-  using T = eve::wide<char, eve::fixed<128>>;
-
-  eve::logical<T> x {[] (int i, int) { return i % 2 == 0; }};
-
-  top_bits mmask{x};
-  TTS_EQUAL(x, eve::detail::to_logical(mmask));
-}
+#endif
