@@ -328,10 +328,13 @@ TTS_CASE_TPL("load for different alignment, logical", EVE_TYPE )
   }
 }
 
+#if 0
 TTS_CASE_TPL("Check load unsafe, logical", EVE_TYPE)
 {
   using e_t = eve::logical<EVE_VALUE>;
   const e_t x = true;
+
+  std::vector<e_t> more_data(128u, false);
 
   if constexpr (EVE_CARDINAL == eve::expected_cardinal_v<e_t>)
   {
@@ -344,11 +347,34 @@ TTS_CASE_TPL("Check load unsafe, logical", EVE_TYPE)
     TTS_EXPECT(eve::any(loaded == x));
   }
 
-  auto test_n = [&](auto n) {
+  auto more_data_test = [&] (auto n)
+  {
+    for (auto& e: more_data)
+    {
+      e = true;
+
+      TTS_EXPECT(e);
+
+      auto ptr = eve::previous_aligned_address(&e, n);
+      auto loaded = eve::unsafe(eve::load)(ptr, n);
+
+      TTS_EXPECT(eve::any(loaded));
+
+      e = false;
+    }
+  };
+
+  auto test_n = [&](auto n)
+  {
+    more_data_test(n);
+
     auto ptr = eve::previous_aligned_address(&x, n);
     auto loaded = eve::unsafe(eve::load)(ptr, n);
 
-    TTS_EXPECT(eve::any(loaded == x));
+    TTS_EXPECT(eve::any(loaded));
+
+    loaded = eve::unsafe(eve::load)(ptr.get(), n);
+    TTS_EXPECT(eve::any(loaded));
   };
 
   test_n(eve::lane<1>);
@@ -358,3 +384,4 @@ TTS_CASE_TPL("Check load unsafe, logical", EVE_TYPE)
   test_n(eve::lane<16>);
   test_n(eve::lane<32>);
 }
+#endif
