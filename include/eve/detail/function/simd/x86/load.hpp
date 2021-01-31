@@ -90,7 +90,7 @@ namespace eve::detail
   //================================================================================================
   // logical loads require some specific setup
   //================================================================================================
-  template<typename T, typename N, typename Ptr, x86_abi ABI>
+  template<typename T, typename N, typename Ptr, typename ABI>
   EVE_FORCEINLINE
   auto load([[maybe_unused]] eve::as_<logical<wide<T, N, ABI>>> const& tgt, Ptr p)
   requires( std::same_as<logical<T>, std::remove_cvref_t<decltype(*p)>> )
@@ -113,7 +113,7 @@ namespace eve::detail
     else                                  return bit_cast(block, tgt);
   }
 
-  template<typename Iterator, typename T, typename N, x86_abi ABI>
+  template<typename Iterator, typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto load ( eve::as_<logical<wide<T, N, ABI>>> const &
                             , Iterator b, Iterator e
                             ) noexcept

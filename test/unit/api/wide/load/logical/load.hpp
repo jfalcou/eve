@@ -328,7 +328,6 @@ TTS_CASE_TPL("load for different alignment, logical", EVE_TYPE )
   }
 }
 
-#if 0
 TTS_CASE_TPL("Check load unsafe, logical", EVE_TYPE)
 {
   using e_t = eve::logical<EVE_VALUE>;
@@ -384,4 +383,3 @@ TTS_CASE_TPL("Check load unsafe, logical", EVE_TYPE)
   test_n(eve::lane<16>);
   test_n(eve::lane<32>);
 }
-#endif
