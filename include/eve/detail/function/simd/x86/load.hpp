@@ -98,8 +98,15 @@ namespace eve::detail
     auto block = [&]() -> wide<T, N, ABI>
     {
       using tgt = eve::as_<wide<T, N, ABI>>;
-      if constexpr( !std::is_pointer_v<Ptr> ) return load(tgt{}, (T const*)(p.get()));
-      else                                    return load(tgt{}, (T const*)(p));
+      if constexpr( !std::is_pointer_v<Ptr> )
+      {
+        using ptr_t = aligned_ptr<T const>;
+        return load(tgt{}, ptr_t( (T const*)(p.get())) );
+      }
+      else
+      {
+        return load(tgt{}, (T const*)(p));
+      }
     }();
 
     if constexpr( current_api >= avx512 ) return to_logical(block).storage();

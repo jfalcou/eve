@@ -40,9 +40,14 @@ namespace eve::detail
       auto block = [&]() -> wide<a_t, typename Cardinal::type>
       {
         if constexpr( !std::is_pointer_v<Ptr> )
-          return load_(EVE_RETARGET(sse2_), cond, (a_t const*)(p.get()), Cardinal{});
+        {
+          using ptr_t = aligned_ptr<a_t const>;
+          return load_(EVE_RETARGET(sse2_), cond, ptr_t{ (a_t const*)(p.get()) }, Cardinal{});
+        }
         else
-        return load_(EVE_RETARGET(sse2_), cond, (a_t const*)(p), Cardinal{});
+        {
+          return load_(EVE_RETARGET(sse2_), cond, (a_t const*)(p), Cardinal{});
+        }
       }();
 
       return to_logical(block).storage();
