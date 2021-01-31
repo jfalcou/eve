@@ -318,7 +318,7 @@ TTS_CASE_TPL("load for different alignment, wide", EVE_TYPE )
       if constexpr (A >= T::static_alignment)
       {
         eve::aligned_ptr<const e_t, static_cast<std::size_t>(A)> ptr{f};
-        eve::wide actual = T{ptr};
+        T actual{ptr};
         TTS_EQUAL(actual, expected);
 
         actual = eve::unsafe(eve::load)(ptr, eve::lane<EVE_CARDINAL>);
