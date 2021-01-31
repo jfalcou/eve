@@ -97,15 +97,15 @@ namespace eve::detail
   {
     auto block = [&]() -> wide<T, N, ABI>
     {
-      using tgt = eve::as_<wide<T, N, ABI>>;
+      using wtg = eve::as_<wide<T, N, ABI>>;
       if constexpr( !std::is_pointer_v<Ptr> )
       {
         using ptr_t = typename Ptr::template rebind<T const>;
-        return load(tgt{}, ptr_t( (T const*)(p.get())) );
+        return load(wtg{}, ptr_t( (T const*)(p.get())) );
       }
       else
       {
-        return load(tgt{}, (T const*)(p));
+        return load(wtg{}, (T const*)(p));
       }
     }();
 
