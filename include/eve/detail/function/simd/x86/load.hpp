@@ -92,7 +92,7 @@ namespace eve::detail
   //================================================================================================
   template<typename T, typename N, typename Ptr, x86_abi ABI>
   EVE_FORCEINLINE
-  auto load(eve::as_<logical<wide<T, N, ABI>>> const &, Ptr p)
+  auto load([[maybe_unused]] eve::as_<logical<wide<T, N, ABI>>> const& tgt, Ptr p)
   requires( std::same_as<logical<T>, std::remove_cvref_t<decltype(*p)>> )
   {
     auto block = [&]() -> wide<T, N, ABI>
@@ -102,7 +102,8 @@ namespace eve::detail
       else                                    return load(tgt{}, (T const*)(p));
     }();
 
-    return to_logical(block).storage();
+    if constexpr( current_api >= avx512 ) return to_logical(block).storage();
+    else                                  return bit_cast(block, tgt);
   }
 
   template<typename Iterator, typename T, typename N, x86_abi ABI>
