@@ -322,6 +322,14 @@ EVE_FORCEINLINE Logical to_logical(top_bits<Logical> mmask)
 {
        if constexpr ( top_bits<Logical>::is_aggregated )         return Logical{to_logical(mmask.storage[0]), to_logical(mmask.storage[1])};
   else if constexpr ( top_bits<Logical>::is_avx512_logical )     return Logical(mmask.storage);
+  else if constexpr ( has_emulated_abi_v<Logical> )
+  {
+    Logical res;
+    for (std::ptrdiff_t i = 0; i != Logical::static_size; ++i) {
+      res.set(i, mmask.get(i));
+    }
+    return res;
+  }
   else
   {
     // Idea is: put a corresponding part of mmask in each element

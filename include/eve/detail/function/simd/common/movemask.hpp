@@ -25,7 +25,10 @@ namespace eve::detail
   EVE_FORCEINLINE auto movemask( eve::logical<eve::wide<T, N, ABI>> const& v ) noexcept
   {
     std::uint64_t res = 0;
-    for (std::uint64_t i = 0; i != (std::uint64_t)N(); ++i) res |= v.get(i) << i;
+    for (std::uint64_t i = 0; i != (std::uint64_t)N(); ++i) {
+      std::uint64_t elem = v.get(i) ? 1 : 0;
+      res |= elem << i;
+    }
     if constexpr (N() < 32) return std::pair{(std::uint32_t) res, eve::lane<1>};
     else                    return std::pair{res, eve::lane<1>};
   }

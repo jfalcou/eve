@@ -14,10 +14,13 @@
 #include <eve/detail/top_bits.hpp>
 #include <eve/function/is_nez.hpp>
 
+#include <eve/function/all.hpp>
+
 #include <array>
+#include <exception>
 
 # if defined(EVE_NO_SIMD)
-#   define   TOP_BITS_EVE_TYPE eve::wide<std::uint8_t, eve::fixed<128>>
+#   define   TOP_BITS_EVE_TYPE EVE_TYPE,eve::wide<std::uint8_t, eve::fixed<128>>
 # else
 #   define TOP_BITS_EVE_TYPE EVE_TYPE
 # endif
@@ -60,19 +63,12 @@ TTS_CASE_TPL("Check top bits from logical", TOP_BITS_EVE_TYPE)
 
     for (std::ptrdiff_t j = 0; j != test.static_size; ++j)
     {
-      if (test.get(j) != mmask.get(j))
-      {
-        std::cout << "i: " << i << std::endl;
-        std::cout << "mmask: " << std::hex << mmask << std::endl;
-      }
       TTS_EQUAL(test.get(j), mmask.get(j));
     }
 
     test.set(i, false);
   }
 }
-
-#if 0
 
 TTS_CASE_TPL("top_bits, set", TOP_BITS_EVE_TYPE)
 {
@@ -104,14 +100,14 @@ TTS_CASE_TPL("Top bits are little endian", TOP_BITS_EVE_TYPE)
   logical test(false);
   test.set(0, true);
 
-  if constexpr( eve::has_native_abi_v<logical> )
+  if constexpr( top_bits<logical>::is_aggregated )
   {
-    top_bits test_top(test);
-    TTS_EXPECT((test_top.storage & 1u));
+    TTS_PASS("no test for aggregated");
   }
   else
   {
-    TTS_PASS("no test for aggregated");
+    top_bits test_top(test);
+    TTS_EXPECT((test_top.storage & 1u));
   }
 }
 
@@ -145,7 +141,7 @@ TTS_CASE_TPL("bit operations", TOP_BITS_EVE_TYPE)
 
   TTS_EQUAL(top_bits<logical>{eve::ignore_none}, ~top_bits<logical>{eve::ignore_all});
 
-  if constexpr( eve::has_native_abi_v<logical> )
+  if constexpr( !top_bits<logical>::is_aggregated )
   {
     TTS_EQUAL(0u, (~top_bits<logical>{logical{true}}).storage);
   }
@@ -319,5 +315,3 @@ TTS_CASE_TPL("top_bits count_true", TOP_BITS_EVE_TYPE)
     TTS_EQUAL(expected, eve::detail::count_true(mmask));
   });
 }
-
-#endif
