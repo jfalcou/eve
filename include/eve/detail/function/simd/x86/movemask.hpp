@@ -1,8 +1,9 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
+  Copyright 2021 Joel FALCOU
+  Copyright 2021 Jean-Thierry LAPRESTE
+  Copyright 2021 Denis YAROSHEVKIY
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -12,17 +13,19 @@
 
 #include <eve/arch/logical.hpp>
 
+#include <utility>
+
 namespace eve::detail
 {
-  template<typename T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE auto movemask( eve::logical<eve::wide<T, N, ABI>> const& v ) noexcept
+  template<real_scalar_value T, typename N, x86_abi ABI>
+  EVE_FORCEINLINE auto movemask( eve::logical<eve::wide<T, N, ABI>> const &v ) noexcept
     requires ( !ABI::is_wide_logical )
   {
     return std::pair{v, eve::lane<1>};
   }
 
   template<typename T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE auto movemask( eve::logical<eve::wide<T, N, ABI>> const& v ) noexcept
+  EVE_FORCEINLINE auto movemask( eve::logical<eve::wide<T, N, ABI>> const &v ) noexcept
     requires ( ABI::is_wide_logical )
   {
     auto raw = [&] {

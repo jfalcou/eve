@@ -315,17 +315,11 @@ struct top_bits
 template <logical_simd_value Logical>
 EVE_FORCEINLINE Logical to_logical(top_bits<Logical> mmask)
 {
+  using abi = typename top_bits<Logical>::abi_type;
+
        if constexpr ( top_bits<Logical>::is_aggregated )         return Logical{to_logical(mmask.storage[0]), to_logical(mmask.storage[1])};
   else if constexpr ( top_bits<Logical>::is_avx512_logical )     return Logical(mmask.storage);
-  else if constexpr ( has_emulated_abi_v<Logical> )
-  {
-    Logical res;
-    for (std::ptrdiff_t i = 0; i != Logical::static_size; ++i) {
-      res.set(i, mmask.get(i));
-    }
-    return res;
-  }
-  else
+  else if constexpr ( x86_abi<abi> )
   {
     // Idea is: put a corresponding part of mmask in each element
     //          prepopulate an index in each element (as if true)
@@ -366,6 +360,15 @@ EVE_FORCEINLINE Logical to_logical(top_bits<Logical> mmask)
 
     bits_wide test = actual_mmask & true_mmask;
     return bit_cast( test == true_mmask, as_<Logical>{} );
+  }
+  else
+  {
+    // For arm and power we can likely do better, but we didn't care thus far.
+    Logical res;
+    for (std::ptrdiff_t i = 0; i != Logical::static_size; ++i) {
+      res.set(i, mmask.get(i));
+    }
+    return res;
   }
 }
 

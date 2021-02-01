@@ -17,7 +17,6 @@
 #include <eve/function/all.hpp>
 
 #include <array>
-#include <exception>
 
 # if defined(EVE_NO_SIMD)
 #   define   TOP_BITS_EVE_TYPE EVE_TYPE,eve::wide<std::uint8_t, eve::fixed<128>>
@@ -43,6 +42,14 @@ TTS_CASE_TPL("Check top bits raw type", TOP_BITS_EVE_TYPE)
   else if constexpr (!ABI::is_wide_logical)              TTS_TYPE_IS(storage_type, typename logical::storage_type);
   else if constexpr (std::same_as<ABI, eve::x86_128_>)   TTS_TYPE_IS(storage_type, std::uint16_t);
   else if constexpr (std::same_as<ABI, eve::x86_256_>)   TTS_TYPE_IS(storage_type, std::uint32_t);
+  else if constexpr (eve::arm_abi<ABI>)
+  {
+         if constexpr ( T::static_size == 1 )                            TTS_TYPE_IS(storage_type, std::uint8_t);
+    else if constexpr ( T::static_size == 2 && sizeof(EVE_VALUE) == 1 )  TTS_TYPE_IS(storage_type, std::uint16_t);
+    else if constexpr ( T::static_size == 16 && sizeof(EVE_VALUE) == 1 ) TTS_TYPE_IS(storage_type, std::uint64_t);
+    else                                                                 TTS_TYPE_IS(storage_type, std::uint32_t);
+
+  }
   else
   {
     if constexpr (logical::static_size < 64)             TTS_TYPE_IS(storage_type, std::uint32_t);
@@ -128,7 +135,6 @@ TTS_CASE_TPL("bit operations", TOP_BITS_EVE_TYPE)
       TTS_EQUAL(top_bits{x || y}, (top_bits{x} | top_bits{y}));
 
       TTS_EQUAL(top_bits{!x}, ~top_bits<logical>(x));
-
       // xor
       // test bits to prevent NaN shenanigans
       {
