@@ -39,28 +39,51 @@
 
 namespace eve
 {
- template < typename T, typename U
-             , typename V = common_compatible_floating_elt_t<T, U> >
-  struct uniform_discrete_distribution_base
-  {
-    using elt_t  = V; //scalar V needed to pseudo alea generation; only one distribution at a time
-    using c_t    = common_compatible_t<T, U>;
-    using value_type = std::conditional_t< scalar_value<c_t>, V, wide<V, cardinal_t<c_t>>>;
+  template < typename T, typename U
+             , typename V = common_compatible_floating_elt_t<T, U>>
+  struct uniform_discrete_distribution{};
 
-    void init(value_type a, value_type b)
-    requires  scalar_value<value_type>
+  template < typename T, typename U, typename V >
+  requires  compatible_values<T, U>
+  struct uniform_discrete_distribution<T, U, V> //: uniform_discrete_distribution_base < T, U, V>
+  {
+    using is_distribution_t = void;
+    using discrete_t = void;
+    using a_type = T;
+    using b_type = U;
+    using elt_t  = V;
+    using i_t    = common_compatible_t<T, U>;
+    using value_type = std::conditional_t< scalar_value<i_t>, V, wide<V, cardinal_t<i_t>>>;
+
+    uniform_discrete_distribution(T a_,  U b_)
+      : a(convert(a_, as<elt_t>())), b(convert(b_, as<elt_t>())), n(inc(b-a))
     {
-      stdu = std::uniform_real_distribution<elt_t>(a, inc(b));
+      check_constraints();
     }
-    void init(value_type , value_type )
-    requires  simd_value<value_type>
+
+    uniform_discrete_distribution(T a_,  U b_, V)
+      : a(convert(a_, as<V>())), b(convert(b_, as<V>())), n(inc(b-a))
     {
+      check_constraints();
+    }
+
+    uniform_discrete_distribution(T a_,  U b_, as_<V>)
+      : a(convert(a_, as<V>())), b(convert(b_, as<V>())), n(inc(b-a))
+    {
+      check_constraints();
+    }
+
+    void check_constraints()
+    {
+      EVE_ASSERT(all(is_flint(a)), "a must be flint");
+      EVE_ASSERT(all(is_flint(b)), "b must be flint");
+      EVE_ASSERT(all(a < b)       , "a must be stricty less than b");
     }
 
     template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
       requires scalar_value<value_type>
     {
-
+      auto  stdu = std::uniform_real_distribution<elt_t>(a, inc(b));
       if constexpr(simd_value<R>)
       {
         return [&]<std::size_t... I>( std::index_sequence<I...>)
@@ -75,155 +98,14 @@ namespace eve
       }
     }
 
-    std::uniform_real_distribution<elt_t> stdu;
-  };
-
-
-  template < typename T, typename U
-             , typename V = common_compatible_floating_elt_t<T, U>>
-  struct uniform_discrete_distribution{};
-
-  template < typename T, typename U, typename V >
-  requires  compatible_values<T, U>
-  struct uniform_discrete_distribution<T, U, V> : uniform_discrete_distribution_base < T, U, V>
-  {
-    using is_distribution_t = void;
-    using discrete_t = void;
-    using a_type = T;
-    using b_type = U;
-    using elt_t  = V;
-    using i_t    = common_compatible_t<T, U>;
-    using value_type = std::conditional_t< scalar_value<i_t>, V, wide<V, cardinal_t<i_t>>>;
-    using base = uniform_discrete_distribution_base< T, U, V>;
-
-    uniform_discrete_distribution(T a_,  U b_)
-      : a(convert(a_, as<elt_t>())), b(convert(b_, as<elt_t>())), n(inc(b-a))
-    {
-      check_constraints();
-      base::init(a, b);
-    }
-
-    uniform_discrete_distribution(T a_,  U b_, V)
-      : a(convert(a_, as<V>())), b(convert(b_, as<V>())), n(inc(b-a))
-    {
-      check_constraints();
-      base::init(a, b);
-    }
-
-    uniform_discrete_distribution(T a_,  U b_, as_<V>)
-      : a(convert(a_, as<V>())), b(convert(b_, as<V>())), n(inc(b-a))
-    {
-      check_constraints();
-      base::init(a, b);
-    }
-
-    void check_constraints()
-    {
-      EVE_ASSERT(all(is_flint(a)), "a must be flint");
-      EVE_ASSERT(all(is_flint(b)), "b must be flint");
-      EVE_ASSERT(all(a < b)       , "a must be stricty less than b");
-    }
-
-//     void init()
-//     {
-//       if constexpr(scalar_value<value_type>)
-//         stdu = std::uniform_real_distribution<>(a, b+1);
-//     }
-
-//     template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
-//       requires scalar_value<value_type>
-//     {
-//       if constexpr(simd_value<R>)
-//       {
-//         return [&]<std::size_t... I>( std::index_sequence<I...>)
-//         {
-//           auto v = [&](auto) { return floor(stdu(gen)); };
-//           return R{ v(I)...};
-//         }( std::make_index_sequence< cardinal_v<R>>{});
-//       }
-//       else if constexpr(scalar_value<R>)
-//       {
-//         return floor(stdu(gen));
-//       }
-//     }
-
-//     std::uniform_real_distribution<elt_t> stdu;
-
     value_type a;
     value_type b;
     value_type n;
   };
 
-//   template < floating_real_value T, floating_real_value U, typename V>
-//   requires  compatible_values<T, U>
-//   struct uniform_discrete_distribution<T, U, V>
-//   {
-//     using is_distribution_t = void;
-//     using discrete_t = void;
-//     using a_type = T;
-//     using b_type = U;
-//     using elt_t  = V;
-//     using value_type = common_compatible_t<T, U>;
-
-//     uniform_discrete_distribution(T a_,  U b_)
-//       : a(convert(a_, as<elt_t>())), b(convert(b_, as<elt_t>())), n(inc(b-a))
-//     {
-//       EVE_ASSERT(all(is_finite(a)), "a must be finite");
-//       EVE_ASSERT(all(is_finite(b)), "b must be finite");
-//       EVE_ASSERT(all(a < b)       , "a must be stricty less than b");
-//       init();
-//     }
-
-//     uniform_discrete_distribution(T a_,  U b_,  V )
-//       : a(convert(a_, as<elt_t>())), b(convert(b_, as<elt_t>())), n(inc(b-a))
-//     {
-//       EVE_ASSERT(all(is_finite(a)), "a must be finite");
-//       EVE_ASSERT(all(is_finite(b)), "b must be finite");
-//       EVE_ASSERT(all(a < b)       , "a must be stricty less than b");
-//       init();
-//     }
-
-//     uniform_discrete_distribution(T a_,  U b_,  as_<V>)
-//       : a(convert(a_, as<elt_t>())), b(convert(b_, as<elt_t>())), n(inc(b-a))
-//     {
-//       EVE_ASSERT(all(is_finite(a)), "a must be finite");
-//       EVE_ASSERT(all(is_finite(b)), "b must be finite");
-//       EVE_ASSERT(all(a < b)       , "a must be stricty less than b");
-//       init();
-//     }
-
-
-//     void init()
-//     {
-//       if constexpr(scalar_value<value_type>)
-//         stdu = std::uniform_real_distribution<>(a, b+1);
-//     }
-
-//     template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
-//       requires scalar_value<value_type>
-//     {
-//       if constexpr(simd_value<R>)
-//       {
-//         return [&]<std::size_t... I>( std::index_sequence<I...>)
-//         {
-//           auto v = [&](auto) { return floor(stdu(gen)); };
-//           return R{ v(I)...};
-//         }( std::make_index_sequence< cardinal_v<R>>{});
-//       }
-//       else if constexpr(scalar_value<R>)
-//       {
-//         return floor(stdu(gen));
-//       }
-//     }
-
-//     std::uniform_real_distribution<elt_t> stdu;
-//     value_type a;
-//     value_type b;
-//     value_type n;
-//   };
 
   template < floating_real_value T>
-  struct uniform_discrete_distribution<callable_zero_, callable_one_, T> : uniform_discrete_distribution_base < T, T, T>
+  struct uniform_discrete_distribution<callable_zero_, callable_one_, T>// : uniform_discrete_distribution_base < T, T, T>
   {
     using is_distribution_t = void;
     using discrete_t = void;
@@ -231,40 +113,28 @@ namespace eve
     using b_type = callable_one_;
     using value_type = T;
     using elt_t  = element_type_t<T>;
-    using base = uniform_discrete_distribution_base <T, T, T>;
 
-    constexpr uniform_discrete_distribution() {base::init(elt_t(0), elt_t(1)); }
-    constexpr uniform_discrete_distribution( as_<T> const&) {base::init(elt_t(0), elt_t(1)); }
+    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+      requires scalar_value<value_type>
+    {
+      auto  stdu = std::uniform_real_distribution<elt_t>(T(0), T(2));
+      if constexpr(simd_value<R>)
+      {
+        return [&]<std::size_t... I>( std::index_sequence<I...>)
+        {
+          auto v = [&](auto) { return floor(stdu(gen)); };
+          return R{ v(I)...};
+        }( std::make_index_sequence< cardinal_v<R>>{});
+      }
+      else if constexpr(scalar_value<R>)
+      {
+        return floor(stdu(gen));
+      }
+    }
 
-//     uniform_discrete_distribution(as_<T> const &)
-//     {
-//       init();
-//     }
+    constexpr uniform_discrete_distribution() { }
+    constexpr uniform_discrete_distribution( as_<T> const&) { }
 
-//     void init()
-//     {
-//       if constexpr(scalar_value<value_type>)
-//         stdu = std::uniform_real_distribution<>(T(0), T(2));
-//     }
-
- //    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
-//       requires scalar_value<value_type>
-//     {
-//       if constexpr(simd_value<R>)
-//       {
-//         return [&]<std::size_t... I>( std::index_sequence<I...>)
-//         {
-//           auto v = [&](auto) { return floor(stdu(gen)); };
-//           return R{ v(I)...};
-//         }( std::make_index_sequence< cardinal_v<R>>{});
-//       }
-//       else if constexpr(scalar_value<R>)
-//       {
-//         return floor(stdu(gen));
-//       }
-//     }
-
-//    std::uniform_real_distribution<elt_t> stdu;
   };
 
   template<floating_real_value T, floating_real_value U>  uniform_discrete_distribution(T,U) -> uniform_discrete_distribution<T,U>;
@@ -279,7 +149,7 @@ namespace eve
   template<typename T>  uniform_discrete_distribution(as_<T> const&) -> uniform_discrete_distribution<callable_zero_, callable_one_, as_<T>>;
 
   template<value T>
-  inline auto uniform_discrete_distribution_01 = uniform_discrete_distribution<callable_zero_, callable_one_, T>();
+  inline constexpr auto uniform_discrete_distribution_01 = uniform_discrete_distribution<callable_zero_, callable_one_, T>();
 
   namespace detail
   {
