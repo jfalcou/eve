@@ -22,8 +22,8 @@ namespace eve::detail
     for(;;) {
       T numerator = static_cast<T>(eng() - (eng.min)());
       T divisor = static_cast<T>((eng.max)() - (eng.min)());
-      EVE_ASSERT(all(divisor > 0), "divisor is negative");
-      EVE_ASSERT(all(numerator >= 0 && numerator <= divisor), "numerator negative or greater than divisor");
+//       EVE_ASSERT(all(divisor > T(0)), "divisor is negative");
+//       EVE_ASSERT(all(numerator >= T(0) && numerator <= divisor), "numerator negative or greater than divisor");
       T result = numerator / divisor;
       if(result < one(as(result))) return result;
     }
