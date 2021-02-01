@@ -33,7 +33,6 @@ namespace eve::detail
   {
     using b_t   = std::remove_cvref_t<decltype(*p)>;
     using r_t   = as_wide_t<b_t, typename Cardinal::type>;
-    using abi_t = typename r_t::abi_type;
 
     if constexpr( is_logical_v<b_t> )
     {
@@ -54,7 +53,7 @@ namespace eve::detail
       if constexpr( current_api >= avx512 ) return to_logical(block).storage();
       else                                  return bit_cast(block, as_<r_t>{});
     }
-    else if constexpr( !abi_t::is_wide_logical )
+    else if constexpr( current_api >= avx512 )
     {
       if constexpr( C::is_complete )
       {

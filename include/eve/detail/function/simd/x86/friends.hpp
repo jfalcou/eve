@@ -61,7 +61,7 @@ namespace eve::detail
     constexpr auto c = categorize<wide<T, N, ABI>>();
     constexpr auto f = to_integer(cmp_flt::eq_oq);
 
-    if constexpr( !ABI::is_wide_logical )
+    if constexpr( current_api >= avx512 )
     {
             if constexpr( c == category::float32x16 ) return mask16{_mm512_cmp_ps_mask(v, w, f )};
       else  if constexpr( c == category::float32x8  ) return mask8 {_mm256_cmp_ps_mask(v, w, f )};
@@ -160,7 +160,7 @@ namespace eve::detail
     constexpr auto c = categorize<wide<T, N, ABI>>();
     constexpr auto f = to_integer(cmp_flt::neq_uq);
 
-    if constexpr( !ABI::is_wide_logical )
+    if constexpr( current_api >= avx512 )
     {
             if constexpr( c == category::float32x16 ) return mask16{_mm512_cmp_ps_mask   (v,w,f)};
       else  if constexpr( c == category::float32x8  ) return mask8 {_mm256_cmp_ps_mask   (v,w,f)};
@@ -220,7 +220,7 @@ namespace eve::detail
     if constexpr( !ABI::is_wide_logical )
     {
       using s_t = typename logical<wide<T,N,ABI>>::storage_type;
-      return logical<wide<T,N,ABI>>{ s_t(v.storage().value ^ w.storage().value) };
+      return logical<wide<T,N,ABI>>{ s_t({v.storage().value ^ w.storage().value}) };
     }
     else
     {
@@ -235,7 +235,7 @@ namespace eve::detail
     constexpr auto c = categorize<wide<T, N, ABI>>();
     constexpr auto f = to_integer(cmp_flt::lt_oq);
 
-    if constexpr( !ABI::is_wide_logical )
+    if constexpr( current_api >= avx512 )
     {
             if constexpr( c == category::float32x16 ) return mask16{_mm512_cmp_ps_mask(v, w, f) };
       else  if constexpr( c == category::float32x8  ) return mask8 {_mm256_cmp_ps_mask(v, w, f) };
@@ -325,7 +325,7 @@ namespace eve::detail
     constexpr auto c = categorize<wide<T, N, ABI>>();
     constexpr auto f = to_integer(cmp_flt::gt_oq);
 
-    if constexpr( !ABI::is_wide_logical )
+    if constexpr( current_api >= avx512 )
     {
             if constexpr( c == category::float32x16 ) return mask16{_mm512_cmp_ps_mask(v, w, f) };
       else  if constexpr( c == category::float32x8  ) return mask8 {_mm256_cmp_ps_mask(v, w, f) };
@@ -418,7 +418,7 @@ namespace eve::detail
     constexpr auto c = categorize<wide<T, N, ABI>>();
     constexpr auto f = to_integer(cmp_flt::ge_oq);
 
-    if constexpr( !ABI::is_wide_logical )
+    if constexpr( current_api >= avx512 )
     {
             if constexpr( c == category::float32x16 ) return mask16{_mm512_cmp_ps_mask(v, w, f) };
       else  if constexpr( c == category::float32x8  ) return mask8 {_mm256_cmp_ps_mask(v, w, f) };
@@ -479,7 +479,7 @@ namespace eve::detail
     constexpr auto c = categorize<wide<T, N, ABI>>();
     constexpr auto f = to_integer(cmp_flt::le_oq);
 
-    if constexpr( !ABI::is_wide_logical )
+    if constexpr( current_api >= avx512 )
     {
             if constexpr( c == category::float32x16 ) return mask16{_mm512_cmp_ps_mask(v, w, f) };
       else  if constexpr( c == category::float32x8  ) return mask8 {_mm256_cmp_ps_mask(v, w, f) };

@@ -28,7 +28,7 @@ namespace eve::detail
     constexpr auto c = categorize<wide<T, N, ABI>>();
     [[maybe_unused]] wide<T,N,ABI> const z{0};
 
-    if constexpr( !ABI::is_wide_logical )
+    if constexpr( current_api >= avx512 )
     {
       constexpr auto m = fpclass::poszero | fpclass::negzero;
 
