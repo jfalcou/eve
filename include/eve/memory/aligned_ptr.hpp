@@ -10,12 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/memory/is_aligned.hpp>
-#include <eve/traits/element_type.hpp>
+#include <eve/assert.hpp>
 #include <eve/detail/concepts.hpp>
+#include <eve/memory/align.hpp>
+#include <eve/memory/is_aligned.hpp>
 #include <eve/memory/is_aligned.hpp>
 #include <eve/traits/alignment.hpp>
-#include <eve/assert.hpp>
+#include <eve/traits/element_type.hpp>
 #include <compare>
 
 namespace eve
@@ -308,4 +309,17 @@ namespace eve
   struct  pointer_alignment<aligned_ptr<Type, Alignment>>
         : std::integral_constant<std::size_t,Alignment>
   {};
+
+  template <typename T, typename Cardinal>
+  EVE_FORCEINLINE auto previous_aligned_address(T* p, Cardinal /*width*/) noexcept
+  {
+    static constexpr std::size_t alignment = Cardinal() * sizeof(T);
+    return eve::aligned_ptr<T, alignment>{eve::align(p, eve::under{alignment})};
+  }
+
+  template <typename T>
+  EVE_FORCEINLINE auto previous_aligned_address(T* p) noexcept
+  {
+    return previous_aligned_address(p, eve::expected_cardinal<std::remove_cvref_t<T>>{});
+  }
 }

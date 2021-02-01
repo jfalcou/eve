@@ -170,3 +170,24 @@ TTS_CASE("aligned_ptr provides pointer-like interface")
     }
   }
 }
+
+TTS_CASE("previous aligned address")
+{
+  alignas(16 * 2) std::array<short, 16 * 4> data;
+
+  for( int i = 0; i != static_cast<int>(data.size()); ++i)
+  {
+    short*            cur = data.begin() + i;
+    short const* expected = data.begin() + (i / 16) * 16;
+
+    eve::aligned_ptr<short, 16 * 2> aligned =
+      eve::previous_aligned_address(cur, eve::lane<16>);
+
+    TTS_EQUAL(aligned.get(), expected);
+
+    eve::aligned_ptr<short const, 16 * 2> aligned_const =
+        eve::previous_aligned_address(( short const *)cur, eve::lane<16>);
+
+    TTS_EQUAL(aligned_const.get(), expected);
+  }
+}
