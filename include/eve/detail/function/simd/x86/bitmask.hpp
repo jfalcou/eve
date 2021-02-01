@@ -31,7 +31,7 @@ namespace eve::detail
   template<typename T, typename N, x86_abi ABI>
   EVE_FORCEINLINE wide<T, N, ABI> to_mask(sse2_ const&, logical<wide<T, N, ABI>> const& p ) noexcept
   {
-    if constexpr( !ABI::is_wide_logical )
+    if constexpr( current_api >= avx512 )
     {
       auto z = wide<T, N, ABI>(0);
       auto a = allbits(as_<wide<T, N, ABI>>());
