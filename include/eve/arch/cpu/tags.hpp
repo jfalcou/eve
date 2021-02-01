@@ -65,8 +65,4 @@ namespace eve
   template<typename ABI>
   struct use_is_wide_logical : std::integral_constant<bool,ABI::is_wide_logical>
   {};
-
-  //================================================================================================
-  // Runtime detection of CPU support
-  inline bool is_supported(cpu_ const &) noexcept { return true; }
 }

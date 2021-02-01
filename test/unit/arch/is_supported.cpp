@@ -9,8 +9,7 @@
 //==================================================================================================
 
 #include "test.hpp"
-#include <eve/arch/tags.hpp>
-#include <eve/arch/spec.hpp>
+#include <eve/detection.hpp>
 #include <iostream>
 #include <iomanip>
 
