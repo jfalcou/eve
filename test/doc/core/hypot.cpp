@@ -2,6 +2,7 @@
 #include <eve/function/pedantic/hypot.hpp>
 #include <eve/wide.hpp>
 #include <iomanip>
+#include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;
 

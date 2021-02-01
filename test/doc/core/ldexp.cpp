@@ -4,6 +4,7 @@
 #include <eve/constant/minf.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/nan.hpp>
+#include <iostream>
 
 using iT      = std::int32_t;
 using wide_it = eve::wide<iT, eve::fixed<4>>;

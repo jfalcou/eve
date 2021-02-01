@@ -1,5 +1,6 @@
 #include <eve/wide.hpp>
 #include <eve/function/lookup.hpp>
+#include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;
 using wide_it = eve::wide<std::int32_t, eve::fixed<4>>;

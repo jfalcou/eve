@@ -3,6 +3,7 @@
 #include <eve/function/converter.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/wide.hpp>
+#include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;
 using wide_it = eve::wide<std::int64_t, eve::fixed<4>>;

@@ -1,5 +1,6 @@
 #include <eve/function/shl.hpp>
 #include <eve/wide.hpp>
+#include <iostream>
 
 using iT      = std::int32_t;
 using wide_it = eve::wide<iT, eve::fixed<4>>;

@@ -2,6 +2,7 @@
 #include <eve/literals.hpp>
 #include <eve/wide.hpp>
 #include <vector>
+#include <iostream>
 
 float mean(std::vector<float>  ary) {
   float avg = 0;

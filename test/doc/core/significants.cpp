@@ -4,6 +4,7 @@
 #include <eve/constant/minf.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/nan.hpp>
+#include <iostream>
 #include <iomanip>
 
 using iT      = std::int32_t;

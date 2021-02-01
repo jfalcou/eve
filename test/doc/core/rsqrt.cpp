@@ -1,6 +1,7 @@
 #include <eve/function/rsqrt.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/wide.hpp>
+#include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;
 

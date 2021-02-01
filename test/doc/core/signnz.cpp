@@ -1,5 +1,6 @@
 #include <eve/function/signnz.hpp>
 #include <eve/wide.hpp>
+#include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;

@@ -9,6 +9,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <iostream>
 
 #if defined(EVE_HW_X86) && !defined(SPY_SIMD_IS_X86_AVX512)
 #include "reverse.hpp"
