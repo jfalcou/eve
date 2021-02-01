@@ -20,18 +20,25 @@
 #else
 
 #  include <cstdlib>
-#  include <iostream>
+#  include <cstdio>
 
-#  define EVE_ASSERT(cond, ...)                                                                    \
-    do                                                                                             \
-    {                                                                                              \
-      if(!(cond))                                                                                  \
-      {                                                                                            \
-        std::cerr << "Assertion '" << #cond << "' failed in " << __FILE__ << ":" << __LINE__       \
-                  << " - " << __VA_ARGS__ << std::endl;                                            \
-        std::abort();                                                                              \
-      }                                                                                            \
-    } while(0) /**/
+#define EVE_ASSERT_STRING(...)   TTS_STRING_((__VA_ARGS__))
+#define EVE_ASSERT_STRING__(...) #__VA_ARGS__
+#define EVE_ASSERT_STRING_(TXT)  TTS_STRING__ TXT
+
+#  define EVE_ASSERT(cond, ...)                                                                     \
+    do                                                                                              \
+    {                                                                                               \
+      if(!(cond))                                                                                   \
+      {                                                                                             \
+        std::fprintf ( stderr                                                                       \
+                     , "Assertion '%s' failed in '%s':%d - %s\n"                                    \
+                     , #cond, __FILE__, __LINE__, EVE_ASSERT_STRING__(__VA_ARGS__)                  \
+                     );                                                                             \
+        std::abort();                                                                               \
+      }                                                                                             \
+    } while(0)                                                                                      \
+/**/
 
 #  define EVE_VERIFY(cond, ...) EVE_ASSERT(cond, __VA_ARGS__)
 

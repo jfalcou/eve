@@ -7,7 +7,7 @@
  */
 //==================================================================================================
 #pragma once
-#include <iostream>
+#include <ostream>
 namespace spy::detail
 {
   enum class archs  { undefined_  = -1
@@ -74,8 +74,8 @@ namespace spy
   constexpr inline auto ppc_    = detail::arch_info<detail::archs::ppc_>{};
   constexpr inline auto arm_    = detail::arch_info<detail::archs::arm_>{};
 }
-#include <iosfwd>
-#include <iostream>
+#include <ostream>
+#include <ostream>
 namespace spy::detail
 {
   template<char... c> constexpr int find(int i0)
@@ -278,7 +278,7 @@ namespace spy::literal
     return detail::literal_wrap<detail::gcc_t,c...>();
   }
 }
-#include <iosfwd>
+#include <ostream>
 namespace spy::detail
 {
   template<int Short, int Integer, int Long, int Pointer>
@@ -328,7 +328,7 @@ namespace spy
   constexpr inline auto lp64_   = detail::data_model_info<2,4,8,8>{};
 }
 #include <cstddef>
-#include <iosfwd>
+#include <ostream>
 namespace spy::detail
 {
   enum class libC  { undefined_  = - 1, cloudabi_, uc_, vms_, zos_, gnu_ };
@@ -431,7 +431,7 @@ namespace spy::literal
   }
 }
 #include <cstddef>
-#include <iosfwd>
+#include <ostream>
 namespace spy::detail
 {
   enum class stdlib { undefined_  = - 1, libcpp_, gnucpp_ };
@@ -497,7 +497,7 @@ namespace spy::literal
     return detail::literal_wrap<detail::gnucpp_t,c...>();
   }
 }
-#include <iostream>
+#include <ostream>
 #if !defined(SPY_SIMD_DETECTED) && defined(__AVX512F__)
 #  define SPY_SIMD_IS_X86_AVX512
 #  define SPY_SIMD_DETECTED ::spy::detail::simd_version::avx512_
@@ -837,7 +837,7 @@ namespace spy
   constexpr inline auto arm_simd_ = arm_simd_info<>{};
   constexpr inline auto neon_     = arm_simd_info<detail::simd_version::neon_ >{};
 }
-#include <iosfwd>
+#include <ostream>
 #if defined(__APPLE__) || defined(__APPLE_CC__) || defined(macintosh)
 #  include <AvailabilityMacros.h>
 #endif

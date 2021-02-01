@@ -25,7 +25,7 @@
 #include <eve/detail/function/make.hpp>
 
 #include <type_traits>
-#include <iosfwd>
+#include <ostream>
 
 namespace eve
 {
