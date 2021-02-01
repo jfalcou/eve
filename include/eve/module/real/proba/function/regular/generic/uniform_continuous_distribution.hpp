@@ -14,6 +14,7 @@
 #include <eve/platform.hpp>
 #include <type_traits>
 #include <eve/module/real/proba/detail/attributes.hpp>
+#include <eve/module/real/proba/detail/urg01.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/all.hpp>
@@ -36,8 +37,6 @@
 #include <eve/constant/one.hpp>
 #include <eve/constant/half.hpp>
 #include <concepts>
-#include <random>
-#include <tts/tts.hpp>
 
 namespace eve
 {
@@ -82,19 +81,7 @@ namespace eve
     template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
       requires scalar_value<value_type>
     {
-      std::uniform_real_distribution<elt_t> stdu(a, b);
-      if constexpr(simd_value<R>)
-      {
-        return [&]<std::size_t... I>( std::index_sequence<I...>)
-        {
-          auto v = [&](auto) { return stdu(gen); };
-          return R{ v(I)...};
-        }( std::make_index_sequence< cardinal_v<R>>{});
-      }
-      else if constexpr(scalar_value<R>)
-      {
-        return stdu(gen);
-      }
+      return fma(detail::urg01(gen, as<R>()), b-a, a);
     }
 
     value_type a;
@@ -118,19 +105,7 @@ namespace eve
     template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
       requires scalar_value<value_type>
     {
-      std::uniform_real_distribution<elt_t> stdu(T(0), T(1));
-      if constexpr(simd_value<R>)
-      {
-        return [&]<std::size_t... I>( std::index_sequence<I...>)
-        {
-          auto v = [&](auto) { return stdu(gen); };
-          return R{ v(I)...};
-        }( std::make_index_sequence< cardinal_v<R>>{});
-      }
-      else if constexpr(scalar_value<R>)
-      {
-        return stdu(gen);
-      }
+      return detail::urg01(gen, as<R>());
     }
 
     constexpr uniform_continuous_distribution() { }

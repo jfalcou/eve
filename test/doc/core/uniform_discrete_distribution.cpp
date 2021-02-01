@@ -1,6 +1,7 @@
 #include <eve/function/uniform_discrete_distribution.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
+#include <random>
 
 
 int main()
@@ -28,19 +29,21 @@ int main()
     << "-> pmf(d, x)          = " << eve::pmf(d, x) << '\n'
     << "-> mgf(d, x)          = " << eve::mgf(d, x)  << '\n'
     ;
-//   auto d0= eve::uniform_discrete_distribution_01(eve::as<double>());
-//   std::cout
-//     << "---- simd0 initialization" << '\n'
-//     << "<- x                  = " << x << '\n'
-//     << "-> median(d0)          = " << eve::median(d0) << '\n'
-//     << "-> mode(d0)            = " << eve::mode(d0) << '\n'
-//     << "-> mean(d0)            = " << eve::mean(d0) << '\n'
-//     << "-> var(d0)             = " << eve::var(d0) << '\n'
-//     << "-> entropy(d0)         = " << eve::entropy(d0) << '\n'
-//     << "-> cdf(d0, x)          = " << eve::cdf(d0, x) << '\n'
-//     << "-> pmf(d0, x)          = " << eve::pmf(d0, x) << '\n'
-//     << "-> mgf(d0, x)          = " << eve::mgf(d0, x)  << '\n'
-//     ;
+
+  auto d0 = eve::uniform_discrete_distribution_01<double>;
+
+  std::cout
+    << "---- 01 version" << '\n'
+    << "<- x                  = " << x << '\n'
+    << "-> median(d0)          = " << eve::median(d0) << '\n'
+    << "-> mode(d0)            = " << eve::mode(d0) << '\n'
+    << "-> mean(d0)            = " << eve::mean(d0) << '\n'
+    << "-> var(d0)             = " << eve::var(d0) << '\n'
+    << "-> entropy(d0)         = " << eve::entropy(d0) << '\n'
+    << "-> cdf(d0, x)          = " << eve::cdf(d0, x) << '\n'
+    << "-> pmf(d0, x)          = " << eve::pmf(d0, x) << '\n'
+    << "-> mgf(d0, x)          = " << eve::mgf(d0, x)  << '\n'
+    ;
 
 
   auto d1 = eve::uniform_discrete_distribution(1.0, 5.0);

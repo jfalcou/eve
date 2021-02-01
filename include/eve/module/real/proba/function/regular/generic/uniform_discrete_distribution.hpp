@@ -14,6 +14,7 @@
 #include <eve/platform.hpp>
 #include <type_traits>
 #include <eve/module/real/proba/detail/attributes.hpp>
+#include <eve/module/real/proba/detail/urg01.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/all.hpp>
@@ -34,18 +35,19 @@
 #include <eve/constant/zero.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/half.hpp>
+#include <eve/assert.hpp>
 #include <concepts>
-#include <random>
 
 namespace eve
 {
+
   template < typename T, typename U
              , typename V = common_compatible_floating_elt_t<T, U>>
   struct uniform_discrete_distribution{};
 
   template < typename T, typename U, typename V >
   requires  compatible_values<T, U>
-  struct uniform_discrete_distribution<T, U, V> //: uniform_discrete_distribution_base < T, U, V>
+  struct uniform_discrete_distribution<T, U, V>
   {
     using is_distribution_t = void;
     using discrete_t = void;
@@ -83,19 +85,7 @@ namespace eve
     template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
       requires scalar_value<value_type>
     {
-      auto  stdu = std::uniform_real_distribution<elt_t>(a, inc(b));
-      if constexpr(simd_value<R>)
-      {
-        return [&]<std::size_t... I>( std::index_sequence<I...>)
-        {
-          auto v = [&](auto) { return floor(stdu(gen)); };
-          return R{ v(I)...};
-        }( std::make_index_sequence< cardinal_v<R>>{});
-      }
-      else if constexpr(scalar_value<R>)
-      {
-        return floor(stdu(gen));
-      }
+      return floor(fma(detail::urg01(gen, as<R>()), n, a));
     }
 
     value_type a;
@@ -117,19 +107,7 @@ namespace eve
     template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
       requires scalar_value<value_type>
     {
-      auto  stdu = std::uniform_real_distribution<elt_t>(T(0), T(2));
-      if constexpr(simd_value<R>)
-      {
-        return [&]<std::size_t... I>( std::index_sequence<I...>)
-        {
-          auto v = [&](auto) { return floor(stdu(gen)); };
-          return R{ v(I)...};
-        }( std::make_index_sequence< cardinal_v<R>>{});
-      }
-      else if constexpr(scalar_value<R>)
-      {
-        return floor(stdu(gen));
-      }
+      return floor(2*detail::urg01(gen, as<R>()));
     }
 
     constexpr uniform_discrete_distribution() { }
@@ -279,7 +257,6 @@ namespace eve
       using v_t = typename uniform_discrete_distribution<T,U,I>::value_type;
       return v_t(-1.2)*inc(sqr(d.n))/dec(sqr(d.n));
     }
-
 
     //////////////////////////////////////////////////////
     /// var discrete
