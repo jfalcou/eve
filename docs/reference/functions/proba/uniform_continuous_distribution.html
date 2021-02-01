@@ -26,13 +26,13 @@ namespace eve
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Object representing the discrete Uniform distribution over a finite seqence of consecutive integers .
+Object representing the Uniform distribution over an interval.
 
 Constructor
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  template< real_value A, real_value B> uniform_discrete_distribution( T const & a, U const & b )
+  template< floating_real_value A, floating_real_value B> uniform_discrete_distribution( T const & a, U const & b )
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
@@ -40,17 +40,16 @@ construct the uniform_discrete_distribution object
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`a`
-:   [floating real value](../../concepts.html#value) lower bound, must be a flint
-`b`
-:   [floating real value](../../concepts.html#value) upper bound, must be a flint strictly greater than a
-`
+`an`
+:   [floating real value](../../concepts.html#value) lower bound
+`bp`
+:   [floating real value](../../concepts.html#value) upper bound
 
 Optimizations
 ====================================================================================================
 
 Also the constexpr template variable uniform_discrete_distribution_01< T >
-is provided to optimize the case of interval of the (0,1) sequence (i.e. fair dice tossing).
+is provided to optimize the case of interval $[0, 1}]$.
 
 In this case, T must be provided to allow choosing the output type of the constant attributes.
 
@@ -63,15 +62,13 @@ Supported attributes
     - invcdf
 
   - constant attributes
-    - median
+    - median 
     - mean
     - mode
     - skewness
     - kurtosis
     - stdev
     - var
-
-  - pseudo random generator if the distribution parameters are scalar.
 
  See the example below.
 

@@ -20,6 +20,7 @@
 #include <eve/function/average.hpp>
 #include <eve/function/exp.hpp>
 #include <eve/function/expm1.hpp>
+#include <eve/function/extract.hpp>
 #include <eve/function/floor.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/is_finite.hpp>
@@ -36,21 +37,53 @@
 #include <eve/constant/half.hpp>
 #include <concepts>
 #include <random>
+#include <tts/tts.hpp>
 
 namespace eve
 {
-  template < typename T,  typename U> using common_compatible_floating_t =
-    detail::as_floating_point_t<common_compatible_t<T, U>>;
-  template < typename T,  typename U> using common_compatible_floating_elt_t =
-    element_type_t<common_compatible_floating_t<T, U>>;
 
   template < typename T, typename U
-             , typename Internal = common_compatible_floating_elt_t<T, U> >
-  struct uniform_continuous_distribution{};
+             , typename V = common_compatible_floating_elt_t<T, U> >
+  struct uniform_continuous_distribution_base
+  {
+    using elt_t  = V; //scalar V needed to pseudo alea generation; only one distribution at a time
+    using c_t    = common_compatible_t<T, U>;
+    using value_type = std::conditional_t< scalar_value<c_t>, V, wide<V, cardinal_t<c_t>>>;
 
-  template < integral_value T, integral_value U, typename V >
-  requires  compatible_values<T, U>
-  struct uniform_continuous_distribution<T, U, V>
+    void init(value_type a, value_type b)
+    requires  scalar_value<value_type>
+    {
+      stdu = std::uniform_real_distribution<elt_t>(a, b);
+    }
+    void init(value_type , value_type )
+    requires  simd_value<value_type>
+    {
+    }
+
+    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+      requires scalar_value<value_type>
+    {
+
+      if constexpr(simd_value<R>)
+      {
+        return [&]<std::size_t... I>( std::index_sequence<I...>)
+        {
+          auto v = [&](auto) { return stdu(gen); };
+          return R{ v(I)...};
+        }( std::make_index_sequence< cardinal_v<R>>{});
+      }
+      else if constexpr(scalar_value<R>)
+      {
+        return stdu(gen);
+      }
+    }
+
+    std::uniform_real_distribution<elt_t> stdu;
+  };
+
+  template < typename T, typename U
+             , typename V = common_compatible_floating_elt_t<T, U> >
+  struct uniform_continuous_distribution : uniform_continuous_distribution_base < T, U, V>
   {
     using is_distribution_t = void;
     using continuous_t = void;
@@ -59,116 +92,38 @@ namespace eve
     using elt_t  = V;
     using i_t    = common_compatible_t<T, U>;
     using value_type = std::conditional_t< scalar_value<i_t>, V, wide<V, cardinal_t<i_t>>>;
+    using base = uniform_continuous_distribution_base < T, U, V>;
 
     uniform_continuous_distribution(T a_,  U b_)
-      : a(convert(a_, as<elt_t>())), b(convert(b_, as<elt_t>())), n(inc(b-a))
+      : a(convert(a_, as<elt_t>())), b(convert(b_, as<elt_t>()))
     {
-      EVE_ASSERT(all(a < b)       , "a must be stricty less than b");
-      init();
+      check_constraints();
+      if constexpr(scalar_value<value_type>)
+        base::init(a, b);
     }
 
     uniform_continuous_distribution(T a_,  U b_, V)
-      : a(convert(a_, as<V>())), b(convert(b_, as<V>())), n(inc(b-a))
+      : a(convert(a_, as<V>())), b(convert(b_, as<V>()))
     {
-      EVE_ASSERT(all(a < b)       , "a must be stricty less than b");
-      init();
+      check_constraints();
+      if constexpr(scalar_value<value_type>)
+        base::init(a, b);
     }
 
     uniform_continuous_distribution(T a_,  U b_, as_<V>)
-      : a(convert(a_, as<V>())), b(convert(b_, as<V>())), n(inc(b-a))
+      : a(convert(a_, as<V>())), b(convert(b_, as<V>()))
     {
-      EVE_ASSERT(all(a < b)       , "a must be stricty less than b");
-      init();
-    }
-
-    void init()
-    {
+      check_constraints();
       if constexpr(scalar_value<value_type>)
-        stdu = std::uniform_real_distribution<>(a, b);
+        base::init(a, b);
     }
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
-      requires scalar_value<value_type>
-    {
-      if constexpr(simd_value<R>)
-      {
-        return [&]<std::size_t... I>( std::index_sequence<I...>)
-        {
-          auto v = [&](auto) { return stdu(gen); };
-          return R{ v(I)...};
-        }( std::make_index_sequence< cardinal_v<R>>{});
-      }
-      else if constexpr(scalar_value<R>)
-      {
-        return stdu(gen);
-      }
-    }
-
-    std::uniform_real_distribution<elt_t> stdu;
-    value_type a;
-    value_type b;
-    value_type n;
-  };
-
-  template < floating_real_value T, floating_real_value U, typename V>
-  requires  compatible_values<T, U>
-  struct uniform_continuous_distribution<T, U, V>
-  {
-    using is_distribution_t = void;
-    using continuous_t = void;
-    using a_type = T;
-    using b_type = U;
-    using elt_t  = V;
-    using value_type = common_compatible_t<T, U>;
-
-    uniform_continuous_distribution(T a_,  U b_)
-      : a(a_), b(b_)
+    void check_constraints()
     {
       EVE_ASSERT(all(is_finite(a)), "a must be finite");
       EVE_ASSERT(all(is_finite(b)), "b must be finite");
       EVE_ASSERT(all(a < b)       , "a must be stricty less than b");
-      init();
     }
-    uniform_continuous_distribution(T a_,  U b_,  V )
-      : a(convert(a_, as<elt_t>())), b(convert(b_, as<elt_t>()))
-    {
-      EVE_ASSERT(all(is_finite(a)), "a must be finite");
-      EVE_ASSERT(all(is_finite(b)), "b must be finite");
-      EVE_ASSERT(all(a < b)       , "a must be stricty less than b");
-      init();
-    }
-    uniform_continuous_distribution(T a_,  U b_,  as_<V>)
-      : a(convert(a_, as<elt_t>())), b(convert(b_, as<elt_t>()))
-    {
-      EVE_ASSERT(all(is_finite(a)), "a must be finite");
-      EVE_ASSERT(all(is_finite(b)), "b must be finite");
-      EVE_ASSERT(all(a < b)       , "a must be stricty less than b");
-      init();
-    }
-
-    void init()
-    {
-      if constexpr(scalar_value<value_type>)
-        stdu = std::uniform_real_distribution<>(a, b);
-    }
-
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
-      requires scalar_value<value_type>
-    {
-      if constexpr(simd_value<R>)
-      {
-        return [&]<std::size_t... I>( std::index_sequence<I...>)
-        {
-          auto v = [&](auto) { return stdu(gen); };
-          return R{ v(I)...};
-        }( std::make_index_sequence< cardinal_v<R>>{});
-      }
-      else if constexpr(scalar_value<R>)
-      {
-        return stdu(gen);
-      }
-    }
-    std::uniform_real_distribution<elt_t> stdu;
 
     value_type a;
     value_type b;
@@ -179,7 +134,7 @@ namespace eve
   template<typename T, typename U, typename V>  uniform_continuous_distribution(T,U,as_<V>) -> uniform_continuous_distribution<T,U,V>;
 
   template < floating_real_value T>
-  struct uniform_continuous_distribution<callable_zero_, callable_one_, T>
+  struct uniform_continuous_distribution<callable_zero_, callable_one_, T> : uniform_continuous_distribution_base <T, T, T>
   {
     using is_distribution_t = void;
     using continuous_t = void;
@@ -187,42 +142,18 @@ namespace eve
     using b_type = callable_one_;
     using value_type = T;
     using elt_t = element_type_t<T>;
-    uniform_continuous_distribution()
-    {
-      init();
-    }
+    using base = uniform_continuous_distribution_base <T, T, T>;
 
-    void init()
-    {
-      if constexpr(scalar_value<value_type>)
-        stdu = std::uniform_real_distribution<>(T(0), T(1));
-    }
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
-      requires scalar_value<value_type>
-    {
-      if constexpr(simd_value<R>)
-      {
-        return [&]<std::size_t... I>( std::index_sequence<I...>)
-        {
-          auto v = [&](auto) { return stdu(gen); };
-          return R{ v(I)...};
-        }( std::make_index_sequence< cardinal_v<R>>{});
-      }
-      else if constexpr(scalar_value<R>)
-      {
-        return stdu(gen);
-      }
-    }
-    constexpr uniform_continuous_distribution( as_<T> const&) {}
-    std::uniform_real_distribution<elt_t> stdu;
+    constexpr uniform_continuous_distribution() {base::init(elt_t(0), elt_t(1)); }
+    constexpr uniform_continuous_distribution( as_<T> const&) {base::init(elt_t(0), elt_t(1)); }
   };
 
 
   template<typename T>  uniform_continuous_distribution(as_<T> const&) -> uniform_continuous_distribution<callable_zero_, callable_one_, T>;
 
   template<floating_real_value T>
-  inline constexpr auto uniform_continuous_distribution_01 = uniform_continuous_distribution<callable_zero_, callable_one_, T>();
+  inline auto uniform_continuous_distribution_01 = uniform_continuous_distribution<callable_zero_, callable_one_, T>();
 
   namespace detail
   {
