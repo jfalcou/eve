@@ -24,8 +24,9 @@ make_unit( "unit.api" conditional.cpp  )
 ##==================================================================================================
 ## wide API tests
 add_subdirectory(wide)
-add_subdirectory(comparisons)
+add_subdirectory(arithmetic)
 add_subdirectory(bitwise)
+add_subdirectory(comparisons)
 
 ##==================================================================================================
 ## General API tests
