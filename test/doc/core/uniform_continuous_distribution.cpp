@@ -31,5 +31,22 @@ int main()
     << "-> pdf(d, x)          = " << eve::pdf(d, x) << '\n'
     << "-> cdf(d, x)          = " << eve::cdf(d, x)  << '\n'
     << "-> mgf(d, x)          = " << eve::mgf(d, x)  << '\n';
+
+  auto d1 = eve::uniform_continuous_distribution(1.0, 5.0);
+  std::random_device rd;  //Will be used to obtain a seed for the random number engine
+  std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+  std::cout
+    << "generator \n"
+    << "-> d1(gen, eve::as<wide_dt>()) "<< d1(gen, eve::as<wide_dt>()) << std::endl
+    << "-> d1(gen)                     "<< d1(gen, eve::as<double>())    << std::endl;
+
+//   auto d2 = eve::uniform_continuous_distribution_01<double>;
+//   std::cout
+//     << "generator \n"
+//     << "-> d1(gen, eve::as<wide_dt>()) "<< d1(gen, eve::as<wide_dt>()) << std::endl
+//     << "-> d1(gen)                     "<< d1(gen, eve::as<double>())    << std::endl;
+
+
+
   return 0;
 }

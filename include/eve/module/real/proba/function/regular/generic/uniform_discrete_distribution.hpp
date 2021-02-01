@@ -35,6 +35,8 @@
 #include <eve/constant/one.hpp>
 #include <eve/constant/half.hpp>
 #include <concepts>
+#include <random>
+
 //#include <tts/tts.hpp>
 namespace eve
 {
@@ -63,27 +65,47 @@ namespace eve
       : a(convert(a_, as<elt_t>())), b(convert(b_, as<elt_t>())), n(inc(b-a))
     {
       EVE_ASSERT(all(a < b)       , "a must be stricty less than b");
+      init();
     }
 
     uniform_discrete_distribution(T a_,  U b_, V)
       : a(convert(a_, as<V>())), b(convert(b_, as<V>())), n(inc(b-a))
     {
       EVE_ASSERT(all(a < b)       , "a must be stricty less than b");
+      init();
     }
 
     uniform_discrete_distribution(T a_,  U b_, as_<V>)
       : a(convert(a_, as<V>())), b(convert(b_, as<V>())), n(inc(b-a))
     {
       EVE_ASSERT(all(a < b)       , "a must be stricty less than b");
+      init();
     }
 
-    template < integral_value TT,  integral_value UU>
-    requires  std::constructible_from<T, TT> && std::constructible_from<U, UU>
-    uniform_discrete_distribution(TT a_,  UU b_)
-      : a(convert(T(a_), as<elt_t>())), b(convert(T(b_), as<elt_t>())), n(inc(b-a))
+    void init()
     {
-      EVE_ASSERT(all(a < b)       , "a must be stricty less than b");
+      if constexpr(scalar_value<value_type>)
+        stdu = std::uniform_real_distribution<>(a, b+1);
     }
+
+    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+      requires scalar_value<value_type>
+    {
+      if constexpr(simd_value<R>)
+      {
+        return [&]<std::size_t... I>( std::index_sequence<I...>)
+        {
+          auto v = [&](auto) { return floor(stdu(gen)); };
+          return R{ v(I)...};
+        }( std::make_index_sequence< cardinal_v<R>>{});
+      }
+      else if constexpr(scalar_value<R>)
+      {
+        return floor(stdu(gen));
+      }
+    }
+
+    std::uniform_real_distribution<elt_t> stdu;
 
     value_type a;
     value_type b;
@@ -107,6 +129,7 @@ namespace eve
       EVE_ASSERT(all(is_finite(a)), "a must be finite");
       EVE_ASSERT(all(is_finite(b)), "b must be finite");
       EVE_ASSERT(all(a < b)       , "a must be stricty less than b");
+      init();
     }
 
     uniform_discrete_distribution(T a_,  U b_,  V )
@@ -115,6 +138,7 @@ namespace eve
       EVE_ASSERT(all(is_finite(a)), "a must be finite");
       EVE_ASSERT(all(is_finite(b)), "b must be finite");
       EVE_ASSERT(all(a < b)       , "a must be stricty less than b");
+      init();
     }
 
     uniform_discrete_distribution(T a_,  U b_,  as_<V>)
@@ -123,8 +147,34 @@ namespace eve
       EVE_ASSERT(all(is_finite(a)), "a must be finite");
       EVE_ASSERT(all(is_finite(b)), "b must be finite");
       EVE_ASSERT(all(a < b)       , "a must be stricty less than b");
+      init();
     }
 
+
+    void init()
+    {
+      if constexpr(scalar_value<value_type>)
+        stdu = std::uniform_real_distribution<>(a, b+1);
+    }
+
+    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+      requires scalar_value<value_type>
+    {
+      if constexpr(simd_value<R>)
+      {
+        return [&]<std::size_t... I>( std::index_sequence<I...>)
+        {
+          auto v = [&](auto) { return floor(stdu(gen)); };
+          return R{ v(I)...};
+        }( std::make_index_sequence< cardinal_v<R>>{});
+      }
+      else if constexpr(scalar_value<R>)
+      {
+        return floor(stdu(gen));
+      }
+    }
+
+    std::uniform_real_distribution<elt_t> stdu;
     value_type a;
     value_type b;
     value_type n;
@@ -134,26 +184,42 @@ namespace eve
   struct uniform_discrete_distribution<callable_zero_, callable_one_, T>
   {
     using is_distribution_t = void;
-    using continuous_t = void;
-    using a_type = callable_zero_;
-    using b_type = callable_one_;
-    using value_type = T;
-
-    constexpr uniform_discrete_distribution( as_<T> const&) {}
-  };
-
-  template < integral_value T>
-  struct uniform_discrete_distribution<callable_zero_, callable_one_, T>
-  {
-    using is_distribution_t = void;
     using discrete_t = void;
     using a_type = callable_zero_;
     using b_type = callable_one_;
     using value_type = T;
+    using elt_t  = element_type_t<T>;
 
-    constexpr uniform_discrete_distribution( as_<T> const&) {}
+    uniform_discrete_distribution(as_<T> const &)
+    {
+      init();
+    }
+
+    void init()
+    {
+      if constexpr(scalar_value<value_type>)
+        stdu = std::uniform_real_distribution<>(T(0), T(2));
+    }
+
+    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+      requires scalar_value<value_type>
+    {
+      if constexpr(simd_value<R>)
+      {
+        return [&]<std::size_t... I>( std::index_sequence<I...>)
+        {
+          auto v = [&](auto) { return floor(stdu(gen)); };
+          return R{ v(I)...};
+        }( std::make_index_sequence< cardinal_v<R>>{});
+      }
+      else if constexpr(scalar_value<R>)
+      {
+        return floor(stdu(gen));
+      }
+    }
+
+    std::uniform_real_distribution<elt_t> stdu;
   };
-
 
   template<floating_real_value T, floating_real_value U>  uniform_discrete_distribution(T,U) -> uniform_discrete_distribution<T,U>;
   template<floating_real_value T, floating_real_value U, floating_real_value V>  uniform_discrete_distribution(T,U,V) -> uniform_discrete_distribution<T,U, V>;
@@ -164,6 +230,7 @@ namespace eve
   template<integral_value T, integral_value U, floating_real_value V>  uniform_discrete_distribution(T,U,as_<V>) -> uniform_discrete_distribution<T,U,V>;
 
   template<typename T>  uniform_discrete_distribution(T const&) -> uniform_discrete_distribution<callable_zero_, callable_one_, T>;
+  template<typename T>  uniform_discrete_distribution(as_<T> const&) -> uniform_discrete_distribution<callable_zero_, callable_one_, as_<T>>;
 
   template<value T>
   inline constexpr auto uniform_discrete_distribution_01 = uniform_discrete_distribution<callable_zero_, callable_one_, T>(as_<T>{});
@@ -180,10 +247,6 @@ namespace eve
      {
       if constexpr(value<T> && value<U>)
       {
-//         std::cout << std::endl << " ================================ "<< std::endl;
-//         std::cout << "x " << tts::typename_of_(x)  << std::endl;
-//         std::cout << "a " << tts::typename_of_(d.a) << std::endl;
-//         std::cout << " ================================ "<< std::endl;
         return inc(floor(x)-d.a)/d.n;
       }
 
