@@ -132,6 +132,9 @@ namespace eve
   namespace detail
   {
     //////////////////////////////////////////////////////
+    // only 3 branches because if U is not a value type b
+    // must be callable_one and so a zero
+    //////////////////////////////////////////////////////
     /// cdf discrete
     template<typename T, typename U, floating_value V, typename I = V>
     EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
@@ -140,10 +143,9 @@ namespace eve
      requires compatible_values<V, typename uniform_discrete_distribution<T, U, I>::value_type>
      {
       if constexpr(value<T> && value<U>)
-      {
         return inc(floor(x)-d.a)/d.n;
-      }
-
+      else if constexpr(floating_value<U>)
+        return inc(floor(x))/inc(d.b);
       else
         return inc(floor(x))*half(as(x));
     }
@@ -159,6 +161,8 @@ namespace eve
     {
       if constexpr(value<T> && value<U>)
         return if_else((x < d.a) || (x > d.b) || is_not_flint(x), zero, rec(d.n));
+      else if constexpr(floating_value<U>)
+        return if_else(is_ltz(x) || (x > d.b) || is_not_flint(x), zero, rec(inc(d.b)));
       else
         return if_else(is_ltz(x) || (x > one(as(x))) || is_not_flint(x), zero, half(as(x)));;
     }
@@ -174,6 +178,8 @@ namespace eve
     {
       if constexpr(value<T> && value<U>)
         return if_else(is_eqz(x), one(as(x)), (eve::exp(x*inc(d.b))-eve::exp(x*d.a))/(d.n*expm1(x)));
+      else if constexpr(floating_value<U>)
+        return if_else(is_eqz(x), one(as(x)), eve::expm1(x*inc(d.b))/inc(d.b)*expm1(x));
       else
         return inc(exp(x))*half(as(x));
     }
@@ -186,6 +192,8 @@ namespace eve
     {
       if constexpr (value<T> && value<U>)
         return average(d.a, d.b);
+      else if constexpr(floating_value<U>)
+        return  average(one(as(d.b)), d.b);
       else
       {
         using v_t = typename uniform_discrete_distribution<T,U,I>::value_type;
@@ -201,6 +209,8 @@ namespace eve
     {
       if constexpr (value<T> && value<U>)
         return  floor(average(d.a, d.b));
+      else if constexpr(floating_value<U>)
+        return floor(average(one(as(d.b)), d.b));
       else
       {
         using v_t = typename uniform_discrete_distribution<T,U,I>::value_type;
@@ -214,7 +224,7 @@ namespace eve
     EVE_FORCEINLINE  auto mode_(EVE_SUPPORTS(cpu_)
                                , uniform_discrete_distribution<T,U,I> const & d) noexcept
     {
-      if constexpr (value<T> && value<U>)
+      if constexpr (value<T>)
         return  d.a;
       else
       {
@@ -231,6 +241,8 @@ namespace eve
     {
       if constexpr (floating_value<U> && floating_value<T>)
         return eve::log(d.n);
+      else if constexpr (floating_value<U>)
+        return eve::log(inc(d.b));
       else
       {
         using v_t = typename uniform_discrete_distribution<T,U,I>::value_type;
@@ -268,6 +280,8 @@ namespace eve
       auto oneo12 = v_t(8.333333333333333e-02);
       if constexpr (value<U> && value<T>)
         return dec(sqr(d.n))*oneo12;
+      else if constexpr (floating_value<U>)
+        return dec(sqr(inc(d.b)))*oneo12;
       else
         return I(0.25);
     }
@@ -282,6 +296,8 @@ namespace eve
       auto s1 = v_t(2.886751345948129e-01);
       if constexpr (value<U> && value<T>)
         return s1*sqrt(dec(sqr(d.n)));
+      else if constexpr (floating_value<U>)
+        return s1*sqrt(dec(sqr(inc(d.b))));
       else
         return I(0.5);
     }

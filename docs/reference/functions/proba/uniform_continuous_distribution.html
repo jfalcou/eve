@@ -8,20 +8,20 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::uniform_discrete_distribution`
+                           `eve::uniform_continuous_distribution`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/uniform_discrete_distribution.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/uniform_continuous_distribution.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  template< floating_real_value T> struct uniform_discrete_distribution;
+  template< floating_real_value T> struct uniform_continuous_distribution;
 }
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -32,11 +32,11 @@ Constructor
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  template< floating_real_value A, floating_real_value B> uniform_discrete_distribution( T const & a, U const & b )
+  template< floating_real_value A, floating_real_value B> uniform_continuous_distribution( T const & a, U const & b )
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-construct the uniform_discrete_distribution object
+construct the uniform_continuous_distribution object
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -48,7 +48,7 @@ Parameters
 Optimizations
 ====================================================================================================
 
-Also the constexpr template variable uniform_discrete_distribution_01< T >
+Also the constexpr template variable uniform_continuous_distribution_01< T >
 is provided to optimize the case of interval $[0, 1}]$.
 
 In this case, T must be provided to allow choosing the output type of the constant attributes.
@@ -62,7 +62,7 @@ Supported attributes
     - invcdf
 
   - constant attributes
-    - median 
+    - median
     - mean
     - mode
     - skewness
@@ -70,11 +70,13 @@ Supported attributes
     - stdev
     - var
 
+  - pseudo random generator if the distribution parameters are scalar.
+
  See the example below.
 
-  (insert ../../src/uniform_discrete_distribution.src.html here)
+  (insert ../../src/uniform_continuous_distribution.src.html here)
 
-  (insert ../../out/uniform_discrete_distribution.out.html here)
+  (insert ../../out/uniform_continuous_distribution.out.html here)
 
 
 <!-- End of Document -->

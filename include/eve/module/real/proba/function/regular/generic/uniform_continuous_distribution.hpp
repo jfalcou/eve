@@ -131,6 +131,10 @@ namespace eve
     {
       if constexpr(floating_value<T> && floating_value<U>)
         return if_else(x < d.a, zero, if_else(x > d.b, one(as(x)), (x-d.a)/(d.b-d.a)));
+      else if constexpr(floating_value<T>)
+        return if_else(x < d.a, zero, if_else(x > one(as(x)), one(as(x)), (x-d.a)/oneminus(d.a)));
+      else if constexpr(floating_value<U>)
+        return if_else(is_ltz(x), zero, if_else(x > d.b, one(as(x)), x/d.b));
       else
         return if_else(is_ltz(x), zero, if_else(x > one(as(x)), one(as(x)), x));;
     }
@@ -147,6 +151,10 @@ namespace eve
     {
       if constexpr(floating_value<T> && floating_value<U>)
         return if_else((x < d.a) || (x > d.b), zero, rec(d.b-d.a));
+      else if constexpr(floating_value<T>)
+        return if_else(x < d.a || x > one(as(x)), one(as(x)), rec(oneminus(d.a)));
+      else if constexpr(floating_value<U>)
+        return if_else(is_ltz(x) || x > d.b, one(as(x)), rec(d.b));
       else
         return if_else(is_ltz(x), zero, if_else(x > one(as(x)), one, x));;
     }
@@ -162,6 +170,10 @@ namespace eve
     && continuous<uniform_continuous_distribution<T, U, I>>    {
       if constexpr(floating_value<T> && floating_value<U>)
         return if_else(is_eqz(x), one(as(x)), (eve::exp(x*d.b)-eve::exp(x*d.a))/(x*(d.b-d.a)));
+      else if constexpr(floating_value<T>)
+        return if_else(is_eqz(x), one(as(x)), (eve::exp(x)-eve::exp(x*d.a))/(x*oneminus(d.a)));
+      else if constexpr(floating_value<U>)
+        return if_else(is_eqz(x), one(as(x)), eve::expm1(x*d.b)/(x*d.b));
       else
         return if_else(is_eqz(x), one(as(x)), eve::expm1(x)/x);
     }
@@ -177,9 +189,11 @@ namespace eve
     && continuous<uniform_continuous_distribution<T, U, I>>    {
       EVE_ASSERT(all(is_gez(x) && x < one(as(x))), " x must be in [0, 1]");
       if constexpr(floating_value<T> && floating_value<U>)
-      {
         return lerp(x, d.a, d.b);
-      }
+      else if constexpr(floating_value<T>)
+        return lerp(x, d.a,  one(as(d.a)));
+      else if constexpr(floating_value<U>)
+        return lerp(x, zero(as(d.b)), d.b);
       else
         return x;
     }
@@ -192,6 +206,10 @@ namespace eve
     {
       if constexpr (value<T> && value<U>)
         return average(d.a, d.b);
+      else if constexpr(floating_value<T>)
+        return average(d.a, one(as(d.a)));
+      else if constexpr(floating_value<U>)
+        return d.b*half(as(d.b));
       else
       {
         using v_t = typename uniform_continuous_distribution<T,U,I>::value_type;
@@ -206,7 +224,7 @@ namespace eve
                                , uniform_continuous_distribution<T,U,I> const &d) noexcept
     requires continuous<uniform_continuous_distribution<T, U, I>>
     {
-      if constexpr (floating_value<T> && floating_value<U>)
+      if constexpr (floating_value<T>)
         return  d.a;
       else
       {
@@ -221,13 +239,7 @@ namespace eve
     EVE_FORCEINLINE  auto mode_(EVE_SUPPORTS(cpu_)
                                , uniform_continuous_distribution<T,U,I> const & d) noexcept
     {
-      if constexpr (value<T> && value<U>)
-        return  d.a;
-      else
-      {
-        using v_t = typename uniform_continuous_distribution<T,U,I>::value_type;
-        return zero(as<v_t>());
-      }
+      return median(d);
     }
 
     //////////////////////////////////////////////////////
@@ -239,6 +251,10 @@ namespace eve
     {
       if constexpr (floating_value<U> && floating_value<T>)
         return eve::log(d.b-d.a);
+      else if constexpr(floating_value<T>)
+        return eve::log1p(-d.a);
+      else if constexpr(floating_value<U>)
+        return log(d.b);
       else
       {
         using v_t = typename uniform_continuous_distribution<T,U,I>::value_type;
@@ -278,8 +294,12 @@ namespace eve
        auto oneo12 = v_t(8.333333333333333e-02);
        if constexpr (floating_value<U> && floating_value<T>)
          return sqr(d.b-d.a)*oneo12;
-       else
-         return oneo12;
+      else if constexpr(floating_value<T>)
+        return sqr(oneminus(d.a))*oneo12;
+      else if constexpr(floating_value<U>)
+        return sqr(d.b)*oneo12;
+      else
+        return oneo12;
     }
 
     //////////////////////////////////////////////////////
@@ -293,6 +313,10 @@ namespace eve
       auto s1 = v_t(2.886751345948129e-01);
       if constexpr (floating_value<U> && floating_value<T>)
         return s1*(d.b-d.a);
+      else if constexpr(floating_value<T>)
+        return s1*oneminus(d.a);
+      else if constexpr(floating_value<U>)
+        return s1*d.b;
       else
         return s1;
     }
