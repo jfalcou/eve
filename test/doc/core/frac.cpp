@@ -2,6 +2,7 @@
 #include <eve/constant/inf.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/wide.hpp>
+#include <iostream>
 #include <iomanip>
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;

@@ -28,7 +28,7 @@
 
 #include <cstring>
 #include <type_traits>
-#include <iosfwd>
+#include <ostream>
 
 namespace eve
 {

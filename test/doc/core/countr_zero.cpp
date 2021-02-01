@@ -1,6 +1,7 @@
 #include <eve/function/countr_zero.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/wide.hpp>
+#include <iostream>
 
 using wide_it = eve::wide<std::uint32_t, eve::fixed<4>>;
 

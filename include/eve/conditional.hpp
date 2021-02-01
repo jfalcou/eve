@@ -18,7 +18,7 @@
 #include <eve/function/bit_cast.hpp>
 #include <eve/traits.hpp>
 #include <bitset>
-#include <iosfwd>
+#include <ostream>
 
 namespace eve
 {

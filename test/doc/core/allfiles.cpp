@@ -15,6 +15,7 @@
 #include <eve/function/decorator.hpp>
 #include <eve/function/reduction.hpp>
 #include <eve/function/swar.hpp>
+#include <iostream>
 
 int main()
 {

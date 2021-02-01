@@ -1,6 +1,7 @@
 #include <eve/function/sqr.hpp>
 #include <eve/function/saturated/sqr.hpp>
 #include <eve/wide.hpp>
+#include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;
 using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;

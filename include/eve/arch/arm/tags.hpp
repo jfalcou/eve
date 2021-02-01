@@ -55,29 +55,6 @@ namespace eve
   inline constexpr auto aarch64 = aarch64_{};
 
   //================================================================================================
-  // Runtime detection of CPU support
-  //================================================================================================
-  inline bool is_supported(spy::arm_simd_info<spy::detail::simd_version::neon_ > const &) noexcept
-  {
-    #if defined( SPY_SIMD_IS_ARM )
-    auto hwcaps = getauxval(AT_HWCAP);
-    return (hwcaps & (1 << 12)) != 0;
-    #else
-      return false;
-    #endif
-  }
-
-  inline bool is_supported(aarch64_ const &) noexcept
-  {
-    #if defined( SPY_SIMD_IS_ARM )
-    auto hwcaps = getauxval(AT_HWCAP);
-    return (hwcaps & HWCAP_ASIMD) != 0;
-    #else
-      return false;
-    #endif
-  }
-
-  //================================================================================================
   // ARM ABI concept
   //================================================================================================
   template<typename T> concept arm_abi = detail::is_one_of<T>(detail::types<arm_64_,arm_128_> {});

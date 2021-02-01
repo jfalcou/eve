@@ -1,6 +1,7 @@
 #include <eve/function/add.hpp>
 #include <eve/function/saturated/add.hpp>
 #include <eve/wide.hpp>
+#include <iostream>
 
 int main()
 {

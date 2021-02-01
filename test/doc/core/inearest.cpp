@@ -1,5 +1,6 @@
 #include <eve/function/inearest.hpp>
 #include <eve/wide.hpp>
+#include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 

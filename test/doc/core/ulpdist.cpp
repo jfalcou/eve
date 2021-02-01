@@ -3,6 +3,7 @@
 #include <eve/constant/inf.hpp>
 #include <eve/constant/smallestposval.hpp>
 #include <eve/wide.hpp>
+#include <iostream>
 #include <iomanip>
 
 int main()

@@ -15,7 +15,7 @@
 
 #include <bitset>
 #include <cstring>
-#include <iosfwd>
+#include <ostream>
 
 namespace eve
 {

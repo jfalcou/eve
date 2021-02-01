@@ -3,6 +3,7 @@
 #include <eve/constant/inf.hpp>
 #include <eve/wide.hpp>
 #include <iomanip>
+#include <iostream>
 
 int main()
 {
