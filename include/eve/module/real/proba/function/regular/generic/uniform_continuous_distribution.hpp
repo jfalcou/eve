@@ -30,6 +30,7 @@
 #include <eve/function/is_gez.hpp>
 #include <eve/function/lerp.hpp>
 #include <eve/function/log.hpp>
+#include <eve/function/log1p.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/sqrt.hpp>
