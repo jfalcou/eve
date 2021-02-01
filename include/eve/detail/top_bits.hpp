@@ -14,8 +14,9 @@
 
 #include <eve/arch/logical.hpp>
 #include <eve/concept/vectorized.hpp>
-#include <eve/detail/meta.hpp>
 #include <eve/conditional.hpp>
+#include <eve/detail/meta.hpp>
+#include <eve/traits/as_arithmetic.hpp>
 
 #include <eve/detail/function/movemask.hpp>
 
@@ -52,20 +53,20 @@ EVE_FORCEINLINE constexpr N set_lower_n_bits(std::ptrdiff_t n) {
 
 // top_bits ---------------------------------
 
-template <typename> struct top_bits;
-
-template <typename T, typename N, typename ABI>
-struct top_bits<logical<wide<T, N, ABI>>>
+template <logical_simd_value Logical>
+struct top_bits
 {
-  using logical_type = logical<wide<T, N, ABI>>;
+  using logical_type = Logical;
+  using scalar_type = typename as_arithmetic_t<logical_type>::value_type;
+  using abi_type = typename as_arithmetic_t<logical_type>::abi_type;
 
   static constexpr std::ptrdiff_t static_size = logical_type::static_size;
   static constexpr bool is_emulated_aggregated = has_emulated_abi_v<logical_type> && static_size > 64;
   static constexpr bool is_aggregated = has_aggregated_abi_v<logical_type> || is_emulated_aggregated;
-  static constexpr bool is_avx512_logical = !ABI::is_wide_logical;
+  static constexpr bool is_avx512_logical = !abi_type::is_wide_logical;
   static constexpr std::ptrdiff_t bits_per_element = typename decltype(movemask(logical_type{}))::second_type{}();
 
-  using half_logical = logical<wide<T, eve::fixed<N() / 2>>>;
+  using half_logical = logical<wide<scalar_type, eve::fixed<static_size / 2>>>;
 
   private:
     EVE_FORCEINLINE static auto storage_type_impl()
@@ -306,12 +307,6 @@ struct top_bits<logical<wide<T, N, ABI>>>
       else                           return o << x.storage;
     }
 };
-
-template <logical_simd_value Logical>
-top_bits(const Logical&) -> top_bits<Logical>;
-
-template <logical_simd_value Logical, relative_conditional_expr C>
-top_bits(const Logical&, C ignore) -> top_bits<Logical>;
 
 // ---------------------------------------------------------------------------------
 // to_logical(top_bits)
