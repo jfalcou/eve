@@ -16,6 +16,7 @@
 #include <eve/platform.hpp>
 #include <type_traits>
 #include <eve/module/real/proba/detail/attributes.hpp>
+#include <eve/module/real/proba/detail/urg01.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/function/all.hpp>
 #include <eve/function/atanpi.hpp>
@@ -65,6 +66,12 @@ namespace eve
       EVE_ASSERT(all(is_finite(m)), "m must be finite");
     }
 
+    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+      requires scalar_value<value_type>
+    {
+      return invcdf(*this, detail::urg01(gen, as<R>()));
+    }
+
     m_type m;
     s_type s;
   };
@@ -89,6 +96,12 @@ namespace eve
       : s(U(s_))
     {
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
+    }
+
+    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+      requires scalar_value<value_type>
+    {
+      return invcdf(*this, detail::urg01(gen, as<R>()));
     }
 
     s_type s;
@@ -116,6 +129,12 @@ namespace eve
       EVE_ASSERT(all(is_finite(m)), "m must be finite");
     }
 
+    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+      requires scalar_value<value_type>
+    {
+      return invcdf(*this, detail::urg01(gen, as<R>()));
+    }
+
     m_type m;
   };
 
@@ -129,6 +148,11 @@ namespace eve
     using s_type = callable_one_;
     using value_type = T;
     constexpr cauchy_distribution( as_<T> const&) {}
+    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+      requires scalar_value<value_type>
+    {
+      return invcdf(*this, detail::urg01(gen, as<R>()));
+    }
   };
 
   template<typename T>  cauchy_distribution(as_<T> const&) -> cauchy_distribution<callable_zero_, callable_one_, T>;

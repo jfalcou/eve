@@ -1,6 +1,7 @@
 #include <eve/function/cauchy_distribution.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
+#include <random>
 
 using wide_ft = eve::wide <float, eve::fixed<4>>;
 
@@ -53,5 +54,15 @@ int main()
     << "-> pdf(ca0, x)          = " << eve::pdf(ca0, x) << '\n'
     << "-> invcdf(ca0, p)       = " << eve::invcdf(ca0, p)  << '\n'
     << "-> cdf(ca0, x)          = " << eve::cdf(ca0, x)  << '\n';
+
+
+  auto d1 = eve::cauchy_distribution(1.0f, 5.0f);
+  std::random_device rd;  //Will be used to obtain a seed for the random number engine
+  std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+  std::cout
+    << "generator \n"
+    << "-> d1(gen, eve::as<wide_ft>()) "<< d1(gen, eve::as<wide_ft>()) << std::endl
+    << "-> d1(gen)                     "<< d1(gen, eve::as<float>())    << std::endl;
+
   return 0;
 }

@@ -1,6 +1,7 @@
 #include <eve/function/normal_distribution.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
+#include <random>
 
 using wide_ft = eve::wide <float, eve::fixed<4>>;
 
@@ -40,5 +41,25 @@ int main()
     << "<- sf                  = " << sf << '\n'
     << "-> cdf(nof, xf)        = " << eve::cdf(nof, xf) << '\n'
     << "-> mode(nof)           = " << eve::mode(nof)    << '\n';
+
+
+  auto d1 = eve::normal_distribution(1.0f, 5.0f);
+  std::random_device rd;  //Will be used to obtain a seed for the random number engine
+  std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+  std::cout
+    << "generator \n"
+    << "-> d1(gen, eve::as<wide_ft>()) "<< d1(gen, eve::as<wide_ft>()) << std::endl
+    << "-> d1(gen)                     "<< d1(gen, eve::as<float>())    << std::endl;
+
+  {
+    auto d2 = eve::normal_distribution_01<double>;
+    std::random_device rd;  //Will be used to obtain a seed for the random number engine
+    std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+    std::cout
+      << "generator \n"
+      << "-> d2(gen, eve::as<wide_ft>()) "<< d2(gen, eve::as<wide_ft>()) << std::endl
+      << "-> d2(gen)                     "<< d2(gen, eve::as<float>())    << std::endl;
+  }
+
   return 0;
 }

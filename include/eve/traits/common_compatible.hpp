@@ -70,4 +70,12 @@ namespace eve
 
   template<typename... Ts>
   using common_compatible_t = typename common_compatible<Ts...>::type;
+
+
+  template < typename... Ts> using common_compatible_floating_t =
+    detail::as_floating_point_t<common_compatible_t<Ts...>>;
+  template < typename... Ts> using common_compatible_floating_elt_t =
+    element_type_t<common_compatible_floating_t<Ts...>>;
+
+
 }
