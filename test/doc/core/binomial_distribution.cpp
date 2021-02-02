@@ -1,6 +1,7 @@
 #include <eve/function/binomial_distribution.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
+#include <random>
 
 using wide_ft = eve::wide <float, eve::fixed<4>>;
 
@@ -38,5 +39,22 @@ int main()
     << "<- sf                  = " << sf << '\n'
     << "-> cdf(bif, xf)        = " << eve::cdf(bif, xf) << '\n'
     << "-> mode(bif)           = " << eve::mode(bif)    << '\n';
+
+
+
+  auto d1 = eve::binomial_distribution(10.0f, eve::half);
+  std::random_device rd;  //Will be used to obtain a seed for the random number engine
+  std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+  std::cout
+    << "generator \n"
+    << "-> d1(gen, eve::as<wide_ft>()) "<< d1(gen, eve::as<wide_ft>()) << std::endl
+    << "-> d1(gen)                     "<< d1(gen, eve::as<float>())    << std::endl;
+
+  auto d2 = eve::binomial_distribution(10.0f, 0.2f);
+  std::cout
+    << "generator \n"
+    << "-> d2(gen, eve::as<wide_ft>()) "<< d2(gen, eve::as<wide_ft>()) << std::endl
+    << "-> d2(gen)                     "<< d2(gen, eve::as<float>())    << std::endl;
+
   return 0;
 }

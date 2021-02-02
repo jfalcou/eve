@@ -18,20 +18,25 @@
 #include <type_traits>
 #include <eve/concept/value.hpp>
 #include <eve/module/real/proba/detail/attributes.hpp>
+#include <eve/module/real/proba/detail/urg01.hpp>
 #include <eve/function/dec.hpp>
+#include <eve/function/div.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/gamma_p.hpp>
 #include <eve/function/exp.hpp>
 #include <eve/function/expm1.hpp>
 #include <eve/function/floor.hpp>
+#include <eve/function/if_else.hpp>
 #include <eve/function/pow_abs.hpp>
 #include <eve/function/rsqrt.hpp>
+#include <eve/function/sub.hpp>
 #include <eve/function/tgamma.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_gez.hpp>
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/is_finite.hpp>
 #include <eve/constant/one.hpp>
+#include <eve/constant/zero.hpp>
 
 namespace eve
 {
@@ -49,18 +54,43 @@ namespace eve
       EVE_ASSERT(all(is_gtz(lambda) && is_finite(lambda)), "lambda must be strictly positive and finite");
     }
 
-    template < floating_real_value TT>
-    requires  std::constructible_from<T, TT>
-    poisson_distribution(TT lambda_)
-      : lambda(T(lambda_))
+    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+      requires scalar_value<value_type>
     {
-      EVE_ASSERT(all(is_gtz(lambda) && is_finite(lambda)), "lambda must be strictly positive and finite");
+      if (lambda < value_type(10))
+      {
+        R p(expmlambda);
+        R x(zero(as<R>()));
+        auto u = detail::urg01(gen, as<R>());
+        auto t = u > p;
+        while(any(t)) {
+          u = sub[t](u, p);
+          x = inc[t](x);
+          p = if_else(t, lambda*p/x, p);
+          t = u > p;
+        }
+        return x;
+      }
+      else
+      {
+        R k(R(0));
+        auto p=detail::urg01(gen, as<R>());
+        auto t = p>expmlambda;
+        while (any(t))
+        {
+          p=mul[t](p, detail::urg01(gen, as<R>()));
+          k = inc[t](k);
+          t = p>expmlambda;
+        }
+        return k;
+      }
     }
 
-    poisson_distribution()    : lambda(T(1))   {}
 
     lambda_type lambda;
     lambda_type expmlambda;
+
+
   };
 
 
@@ -73,8 +103,26 @@ namespace eve
     using is_distribution_t = void;
     using lambda_type = callable_one_;
     using value_type = T;
+    using elt_t = element_type_t<T>;
 
+    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+      requires scalar_value<value_type>
+    {
+      auto p = R(expm1);
+      R x(zero(as<R>()));
+      auto u = detail::urg01(gen, as<R>());
+      auto t = u > p;
+      while(any(t)) {
+        u = sub[t](u, p);
+        x = inc[t](x);
+        p = div[t](p, x);
+        t = u > p;
+      }
+      return x;
+    }
     constexpr poisson_distribution( as_<T> const&) {}
+    static constexpr elt_t expm1 = elt_t(0.36787944117144232159552377016146086744581113103176);
+
   };
 
   template<typename T>  poisson_distribution(as_<T> const&) -> poisson_distribution<callable_one_, T>;

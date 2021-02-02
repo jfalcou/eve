@@ -1,6 +1,7 @@
 #include <eve/function/poisson_distribution.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
+#include <random>
 
 using wide_ft = eve::wide <float, eve::fixed<4>>;
 
@@ -36,5 +37,25 @@ int main()
     << "-> cdf(pof, xf)        = " << eve::cdf(pof, xf) << '\n'
     << "-> mean(pof)           = " << eve::mean(pof)    << '\n'
     << "-> var(pof)            = " << eve::var(pof)    << '\n';
+
+  auto d1 = eve::poisson_distribution(15.0f);
+  std::random_device rd;  //Will be used to obtain a seed for the random number engine
+  std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+  std::cout
+    << "generator \n"
+    << "-> d1(gen, eve::as<wide_ft>()) "<< d1(gen, eve::as<wide_ft>()) << std::endl
+    << "-> d1(gen)                     "<< d1(gen, eve::as<float>())    << std::endl;
+
+  {
+    auto d2 = eve::poisson_distribution_1<double>;
+    std::random_device rd;  //Will be used to obtain a seed for the random number engine
+    std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+    std::cout
+      << "generator \n"
+      << "-> d2(gen, eve::as<wide_ft>()) "<< d2(gen, eve::as<wide_ft>()) << std::endl
+      << "-> d2(gen)                     "<< d2(gen, eve::as<float>())    << std::endl;
+  }
+
+
   return 0;
 }
