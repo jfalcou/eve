@@ -16,6 +16,7 @@
 #include <eve/platform.hpp>
 #include <type_traits>
 #include <eve/module/real/proba/detail/attributes.hpp>
+#include <eve/module/real/proba/detail/urg01.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/all.hpp>
@@ -25,9 +26,14 @@
 #include <eve/function/fma.hpp>
 #include <eve/function/is_finite.hpp>
 #include <eve/function/is_gtz.hpp>
+#include <eve/function/log.hpp>
+#include <eve/function/log1p.hpp>
 #include <eve/function/raw.hpp>
 #include <eve/function/rec.hpp>
+#include <eve/function/cospi.hpp>
+//#include <eve/function/sinpicospi.hpp>
 #include <eve/function/sqr.hpp>
+#include <eve/function/sqrt.hpp>
 #include <eve/constant/sqrt_2o_2.hpp>
 #include <eve/constant/sqrt_2.hpp>
 #include <eve/constant/half.hpp>
@@ -39,6 +45,19 @@
 
 namespace eve
 {
+
+ namespace detail
+ {
+   template < typename G, typename R> EVE_FORCEINLINE
+   auto box_muller(G & gen, as_<R> const & ) noexcept
+   {
+     auto x1 = detail::urg01(gen, as<R>());
+     auto x2 = detail::urg01(gen, as<R>());
+     auto rho = eve::sqrt(-2*eve::log1p(-x1));
+     return rho*small(cospi)(2*x2);
+   }
+ }
+
  template < typename T, typename U, typename Internal = T>
   struct normal_distribution{};
 
@@ -66,33 +85,12 @@ namespace eve
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
       EVE_ASSERT(all(is_finite(m)), "m must be finite");
     }
-    
-//     template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
-//       requires scalar_value<value_type>
-//     {
-//       auto x1 = detail::urg01(gen, as<R>());
-//       auto x2 = detail::urg01(gen, as<R>());  
-//       auto rho = sqrt(-two * log(one-x1));      
-//       //     return invcdf(*this, detail::urg01(gen, as<R>()));
-//     }
-//        BOOST_COMPUTE_FUNCTION(RealType2, box_muller, (const uint2_ x),
-//         {
-//             const RealType one = 1;
-//             const RealType two = 2;
 
-//             // Use nextafter to push values down into [0,1) range; without this, floating point rounding can
-//             // lead to have x1 = 1, but that would lead to taking the log of 0, which would result in negative
-//             // infinities; by pushing the values off 1 towards 0, we ensure this won't happen.
-//             const RealType x1 = nextafter(x.x / (RealType) UINT_MAX, (RealType) 0);
-//             const RealType x2 = x.y / (RealType) UINT_MAX;
-
-//             const RealType rho = sqrt(-two * log(one-x1));
-
-//             const RealType z1 = rho * cos(two * M_PI_F * x2);
-//             const RealType z2 = rho * sin(two * M_PI_F * x2);
-
-//             return (RealType2)(MEAN, MEAN) + (RealType2)(z1, z2) * (RealType2)(STDDEV, STDDEV);
-//         });
+    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+      requires scalar_value<value_type>
+    {
+      return fma(m, detail::box_muller(gen, as<R>()), s);
+    }
 
     m_type m;
     s_type s;
@@ -120,6 +118,13 @@ namespace eve
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
     }
 
+    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+      requires scalar_value<value_type>
+    {
+
+      return detail::box_muller(gen, as<R>())*s;
+    }
+
     s_type s;
   };
 
@@ -145,6 +150,12 @@ namespace eve
       EVE_ASSERT(all(is_finite(m)), "m must be finite");
     }
 
+    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+      requires scalar_value<value_type>
+    {
+      return detail::box_muller(gen, as<R>())+m;
+    }
+
     m_type m;
   };
 
@@ -157,6 +168,12 @@ namespace eve
     using m_type = callable_zero_;
     using s_type = callable_one_;
     using value_type = T;
+
+    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+      requires scalar_value<value_type>
+    {
+      return detail::box_muller(gen, as<R>());
+    }
 
     constexpr normal_distribution( as_<T> const&) {}
   };
@@ -424,6 +441,8 @@ namespace eve
       {
         return half(as<T>())*dec(oneminus(sqr((d1.m-d2.m)/d2.s)));
       }
+      else
+        return zero(as<I>());
     }
   }
 }
