@@ -1,0 +1,267 @@
+//==================================================================================================
+/**
+  EVE - Expressive Vector Engine
+  Copyright 2018-2021 Joel FALCOU
+  Copyright 2018-2021 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+**/
+//==================================================================================================
+#pragma once
+
+#include <eve/detail/abi.hpp>
+#include <eve/detail/category.hpp>
+#include <eve/detail/function/simd/common/swizzle_helpers.hpp>
+#include <eve/detail/function/simd/x86/swizzle_patterns.hpp>
+#include <eve/forward.hpp>
+#include <eve/pattern.hpp>
+
+namespace eve::detail
+{
+  //================================================================================================
+  // shuffle requires cross-api re-targeting (ie AVX512 128bits calling back SSSE3)
+  // so instead of our classical  one-size-fit-all overloads, we need to split it into
+  // API supports overloads
+  //================================================================================================
+
+  //================================================================================================
+  // Unary swizzle - logical on AVX512 ABI
+  //================================================================================================
+  template<typename T, typename N, x86_abi ABI, shuffle_pattern Pattern>
+  EVE_FORCEINLINE auto swizzle( sse2_ const&, logical<wide<T,N,ABI>> const& v, Pattern p) noexcept
+  {
+    if constexpr( current_api >= avx512 ) return to_logical((v.mask())[p]);
+    else                                  return swizzle(cpu_{},v,p);
+  }
+
+  //================================================================================================
+  // Check a pattern fits the half-lane rules for x86 pseudo-shuffle
+  //================================================================================================
+  template<std::ptrdiff_t... I>
+  constexpr bool is_x86_shuffle_compatible(pattern_t<I...> p)
+  {
+    constexpr std::ptrdiff_t c  = sizeof...(I);
+    std::ptrdiff_t idx[c];
+
+    for(int i=0;i<c  ;++i)  idx[i] = p(i,c);
+    for(int i=0;i<c/2;++i)  if(idx[i] >= c/2)                 return false;
+    for(int i=c/2;i<c;++i)  if(idx[i] <  c/2 && idx[i] != -1) return false;
+
+    return true;
+  }
+
+  //================================================================================================
+  // SSE2-SSSE3 variant
+  //================================================================================================
+  template<typename T, typename N, x86_abi ABI, shuffle_pattern Pattern>
+  EVE_FORCEINLINE auto swizzle(sse2_ const&, wide<T,N,ABI> const& v, Pattern const&)
+  {
+    constexpr auto sz = Pattern::size(N::value);
+    using that_t      = as_wide_t<wide<T,N,ABI>,fixed<sz>>;
+
+    constexpr auto q = as_pattern<N::value>(Pattern{});
+
+    // We're swizzling so much we aggregate the output
+    if constexpr( has_aggregated_abi_v<that_t> )
+    {
+      return aggregate_swizzle(v,q);
+    }
+    // Check for patterns
+    else if constexpr( !std::same_as<void, decltype(swizzle_pattern(sse2_{},v,q))> )
+    {
+      return swizzle_pattern(sse2_{},v,q);
+    }
+    else if constexpr( current_api >= ssse3 )
+    {
+      using st_t    = typename that_t::storage_type;
+      using bytes_t = typename that_t::template rebind<std::uint8_t,fixed<16>>;
+      using i_t     = as_integer_t<wide<T,N,ABI>>;
+
+      return that_t ( (st_t)_mm_shuffle_epi8( bit_cast(v,as_<i_t>{}).storage()
+                                            , as_bytes<that_t>(q,as_<bytes_t>())
+                                            )
+                    );
+    }
+    else
+    {
+      if constexpr(sizeof(T) == 8)
+      {
+        using f_t         = as_floating_point_t<that_t>;
+        auto const vv     = bit_cast(v,as_<f_t>{});
+        constexpr auto m  = _MM_SHUFFLE2(q(1,2)&1, q(0,2)&1);
+        return bit_cast(process_zeros(f_t{_mm_shuffle_pd(vv,vv,m)},q),as_<that_t>{});
+      }
+      else if constexpr(sizeof(T) == 4)
+      {
+        constexpr auto m  = _MM_SHUFFLE(q(3,4)&3, q(2,4)&3, q(1,4)&3, q(0,4)&3);
+        if constexpr( std::same_as<T,float> ) return process_zeros(that_t{_mm_shuffle_ps(v,v,m)} ,q);
+        else                                  return process_zeros(that_t{_mm_shuffle_epi32(v,m)},q);
+      }
+      else if constexpr(sizeof(T) == 2)
+      {
+        if constexpr( (sz < 8) && (q < 4) )
+        {
+          constexpr auto m  = _MM_SHUFFLE(q(3,4)&3, q(2,4)&3, q(1,4)&3, q(0,4)&3);
+          return process_zeros(that_t{_mm_shufflelo_epi16(v,m)},q);
+        }
+        else if constexpr( (sz < 8) && (q >= 4) )
+        {
+          constexpr auto m  = _MM_SHUFFLE(q(3,4)&3, q(2,4)&3, q(1,4)&3, q(0,4)&3);
+          return process_zeros(that_t{_mm_bsrli_si128(_mm_shufflehi_epi16(v,m),8)},q);
+        }
+        else
+        {
+          constexpr auto lp = as_pattern<4>(pattern_view<0,4,8>(q));
+          constexpr auto hp = as_pattern<4>(pattern_view<4,8,8>(q));
+
+                if constexpr( lp < 4 && hp >= 4) return process_zeros(that_t{v[lp],v[hp]},q);
+          else  if constexpr( hp < 4 && lp >= 4) return process_zeros(that_t{v[lp],v[hp]},q);
+          else  return swizzle(cpu_{},v,q);
+        }
+      }
+      else
+      {
+        return swizzle(cpu_{},v,q);
+      }
+    }
+  }
+
+  //================================================================================================
+  // AVX+ variant
+  //================================================================================================
+  template<typename T, typename N, x86_abi ABI, shuffle_pattern Pattern>
+  EVE_FORCEINLINE auto swizzle(avx_ const&, wide<T,N,ABI> const& v, Pattern const& p)
+  {
+    constexpr auto cd = N::value;
+    constexpr auto sz = Pattern::size(cd);
+    using that_t      = as_wide_t<wide<T,N,ABI>,fixed<sz>>;
+
+    constexpr auto width_in   = cd*sizeof(T);
+    constexpr auto width_out  = sz*sizeof(T);
+
+    constexpr auto q = as_pattern<N::value>(Pattern{});
+
+    // We're swizzling so much we aggregate the output
+    if constexpr( has_aggregated_abi_v<that_t> )
+    {
+      return aggregate_swizzle(v,q);
+    }
+    // Check for patterns
+    else if constexpr( !std::same_as<void, decltype(swizzle_pattern(avx_{},v,q))> )
+    {
+      return swizzle_pattern(avx_{},v,q);
+    }
+    else if constexpr( width_in == 64 )
+    {
+      /// TODO: AVX512VBMI supports 128-bits permutexvar
+      if constexpr(width_out <= 16)       return swizzle(cpu_{},v,q);
+      else if constexpr(width_out == 32)
+      {
+              if constexpr( q <  cd/2 )  return v.slice(lower_)[ q ];
+        else  if constexpr( q >= cd/2 )  return v.slice(upper_)[ slide_pattern<cd/2,sz>(q) ];
+        /// TODO: optimize using SSSE3 + binary shuffle
+        else                              return swizzle(cpu_{},v,q);
+        return that_t{};
+      }
+      else
+      {
+        constexpr auto c = categorize<that_t>();
+        auto const     m = as_indexes<that_t>(q);
+        that_t s;
+
+              if constexpr(c == category::float64x8 )                       s = _mm512_permutexvar_pd(m,v);
+        else  if constexpr(c == category::float32x16)                       s = _mm512_permutexvar_ps(m,v);
+        else  if constexpr(match(c,category::int32x16,category::uint32x16)) s = _mm512_permutexvar_epi32(m,v);
+        else  if constexpr(match(c,category::int16x32,category::uint16x32)) s = _mm512_permutexvar_epi16(m,v);
+        else  if constexpr(match(c,category::int8x64 ,category::uint8x64) ) s = _mm512_permutexvar_epi8(m,v);
+        else  return swizzle(cpu_{},v,q);
+
+        return process_zeros(s,q);
+      }
+    }
+    else if constexpr( width_in == 32 )
+    {
+      if constexpr(width_out <= 16)
+      {
+              if constexpr( q <  cd/2 )  return v.slice(lower_)[ q ];
+        else  if constexpr( q >= cd/2 )  return v.slice(upper_)[ slide_pattern<cd/2,sz>(q) ];
+        /// TODO: optimize using SSSE3 + binary shuffle
+        else                              return swizzle(cpu_{},v,q);
+      }
+      else
+      {
+        if constexpr(current_api >= avx512)
+        {
+          constexpr auto c = categorize<that_t>();
+          auto const     m = as_indexes<that_t>(q);
+          that_t s;
+
+          if constexpr(match(c,category::int64x4 ,category::uint64x4) )
+          {
+            auto vc = bit_cast(v, as_<as_floating_point_t<that_t>>{});
+            return bit_cast( v[q] , as(s));
+          }
+          else  if constexpr(match(c,category::int32x8 ,category::uint32x8) ) s = _mm256_permutexvar_epi32(m,v);
+          else  if constexpr(match(c,category::int16x16,category::uint16x16)) s = _mm256_permutexvar_epi16(m,v);
+          else  if constexpr(match(c,category::int8x32 ,category::uint8x32) ) s = _mm256_permutexvar_epi8(m,v);
+          else  if constexpr(c == category::float64x4 )                       s = _mm256_permutexvar_pd(m,v);
+          else  if constexpr(c == category::float32x8 )                       s = _mm256_permutexvar_ps(m,v);
+
+          return process_zeros(s,q);
+        }
+        else if constexpr(current_api >= avx2)
+        {
+          if constexpr(sizeof(T) == 8)
+          {
+            constexpr auto m = _MM_SHUFFLE(q(3,4)&3,q(2,4)&3,q(1,4)&3,q(0,4)&3);
+
+            if constexpr(std::same_as<T,double>)
+              return process_zeros(that_t{ _mm256_permute4x64_pd(v, m) },q);
+            else
+              return process_zeros(that_t{ _mm256_permute4x64_epi64(v, m) },q);
+          }
+          else if constexpr(sizeof(T) == 4)
+          {
+            auto m = as_indexes<wide<T,N,ABI>>(q);
+
+            if constexpr(std::same_as<T,float>)
+              return process_zeros(that_t{ _mm256_permutevar8x32_ps(v, m) },q);
+            else
+              return process_zeros(that_t{ _mm256_permutevar8x32_epi32(v, m) },q);
+          }
+          else
+          {
+            /// TODO: optimize sub 32-bits using SSSE3 + binary shuffle
+            return swizzle(cpu_{},v,q);
+          }
+        }
+        else
+        {
+          using f_t     = as_floating_point_t<wide<T,N,ABI>>;
+          auto const m  = as_indexes<wide<T,N,ABI>>(q);
+
+          if constexpr(sizeof(T) == 8 && is_x86_shuffle_compatible(q) )
+          {
+            auto const vv     = bit_cast(v,as_<f_t>{});
+            return bit_cast(process_zeros(f_t{_mm256_permutevar_pd(vv,m)},q),as(v));
+          }
+          else if constexpr(sizeof(T) == 4 && is_x86_shuffle_compatible(q) )
+          {
+            auto const vv = bit_cast(v,as_<f_t>{});
+            return bit_cast(process_zeros(f_t{_mm256_permutevar_ps(vv,m)},q),as(v));
+          }
+          else
+          {
+            /// TODO: optimize sub 32-bits using SSSE3 + shuffle
+            return swizzle(cpu_{},v,q);
+          }
+        }
+      }
+    }
+    else if constexpr( width_in == 16 )
+    {
+      return swizzle(sse2_{}, v, q);
+    }
+  }
+}
