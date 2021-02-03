@@ -41,41 +41,13 @@
 #include <eve/constant/eps.hpp>
 #include <eve/constant/half.hpp>
 #include <eve/constant/inf.hpp>
+#include <eve/constant/one.hpp>
+#include <eve/constant/zero.hpp>
 #include <iostream>
 #include <tts/tts.hpp>
 
 namespace eve
 {
-
-//   // computes the correction factor for the Stirling approximation
-//     // for log(k!)
-//     static RealType fc(IntType k)
-//     {
-//         if(k < 10) return detail::binomial_table<RealType>::table[k];
-//         else {
-//             RealType ikp1 = RealType(1) / (k + 1);
-//             return (RealType(1)/12
-//                  - (RealType(1)/360
-//                  - (RealType(1)/1260)*(ikp1*ikp1))*(ikp1*ikp1))*ikp1;
-//         }
-//     }
-
-
-// template<class RealType>
-// const RealType binomial_table<RealType>::table[10] = {
-//     0.08106146679532726,
-//     0.04134069595540929,
-//     0.02767792568499834,
-//     0.02079067210376509,
-//     0.01664469118982119,
-//     0.01387612882307075,
-//     0.01189670994589177,
-//     0.01041126526197209,
-//     0.009255462182712733,
-//     0.008330563433362871
-// };
-
-  
   template < typename T, typename U, typename Internal = T>
   struct binomial_distribution{};
 
@@ -94,21 +66,40 @@ namespace eve
     {
       EVE_ASSERT(all(is_gtz(n_)), "n must be strictly positive");
       EVE_ASSERT(all(p < one(as(p)) && is_gez(p)), "p must be in ]0, 1[");
+      if constexpr(scalar_value<value_type>) init();
     }
 
-//     template < integral_scalar_value N,  floating_real_value UU>
-//     requires  std::convertible_to<T, N> && std::constructible_from<U, UU>
-//     binomial_distribution(N n_,  UU p_)
-//       : n(T(n_)), p(U(p_)), q(oneminus(p))
-//     {
-//       EVE_ASSERT(all(is_gtz(n_)), "n must be strictly positive");
-//       EVE_ASSERT(all(p < one(as(p)) && is_gez(p)), "p must be in [0, 1]");
-//     }
+    using rejdata = struct
+    {
+      value_type b;
+      value_type a;
+      value_type c;
+      value_type vr;
+      value_type alpha;
+      value_type lpq;
+      value_type m;
+      value_type h;
+    };
+
+    EVE_FORCEINLINE void init() noexcept
+    requires scalar_value<value_type>
+    {
+      auto spq = eve::sqrt(n*p*q);
+      rej.b = fma(spq, value_type(2.53), value_type(1.15));
+      auto invb = rec(rej.b);
+      rej.a = fma(value_type(0.01), eve::min(p, q), fma(rej.b, value_type(0.0248), value_type(-0.0873)));
+      rej.c = fma(n, eve::min(p, q), value_type(0.5));
+      rej.vr = fma(invb,value_type(-4.2), value_type(0.92));
+      rej.alpha = spq*fma(invb, value_type(5.1), value_type(2.83));
+      rej.lpq = eve::log(eve::min(p, q)/eve::max(p, q));
+      rej.m = (floor(inc(n)*eve::min(p, q)));
+      rej.h = (lgamma(inc(rej.m))+lgamma(inc(n-rej.m)));
+     }
 
     template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
       requires scalar_value<value_type>
     {
-//      std::cout << "icitte" << std::endl;
+
       auto flip = half(as(p)) < p;
       auto pp = (flip)? q : p;
       auto qq = oneminus(pp);
@@ -117,12 +108,6 @@ namespace eve
         auto s = pp / qq;
         auto a = inc(n)*s;
         R r(pow_abs(qq, n));//const ?
-//         std::cout << tts::typename_of_(p) << std::endl;
-//         std::cout << std::endl << "p " << p << std::endl;
-//         std::cout << std::endl << "q " <<q << std::endl;
-//         std::cout << std::endl << "pp " << pp << std::endl;
-//          std::cout << std::endl << "qq " << qq << std::endl;
-//         std::cout << "r " << r << std::endl;
         auto u = detail::urg01(gen, as<R>());
         auto x(zero(as<R>()));
         auto r1(inf(as<R>()));
@@ -149,21 +134,11 @@ namespace eve
        }
       else
       {
-        R spq(eve::sqrt(n*pp*qq));
-        R b = fma(spq, R(2.53), R(1.15));
-        R a = fma(R(0.01), pp, fma(b, R(0.0248), R(-0.0873)));
-        R c = fma(n, pp, R(0.5));
-        R vr = R(0.92)-R(4.2)/b;
-        R alpha =  spq*(R(2.83)+R(5.1)/b);
-        R lpq(eve::log(pp/qq));
-        R m(floor(inc(n)*pp));
-        R h(lgamma(inc(m))+lgamma(inc(n-m)));
-
-        auto gen1 = [&a, &b, &c, &vr, &gen](auto v, R& us, R& k){
+        auto gen1 = [this, &gen](auto v, R& us, R& k){
           auto u = detail::urg01(gen, as<R>())-R(0.5);
           us= R(0.5)- eve::abs(u);
-          k = floor(fma(fma(R(2), a/us, b), u, c));
-          auto t = (us >= R(0.07)) && (v <= vr);
+          k = floor(fma(fma(R(2), rej.a/us, rej.b), u, rej.c));
+          auto t = (us >= R(0.07)) && (v <= rej.vr);
           k = if_else(t, k, allbits);
         };
         auto gen2= [&](){
@@ -177,8 +152,8 @@ namespace eve
             isknan = is_nan(k);
           }
 
-          v *= alpha/(a/sqr(us)+b);
-          auto kdone = (v <= (lgamma(inc(k))+lgamma(inc(n-k))-h)+(k-m)*lpq);
+          v *= rej.alpha/(rej.a/sqr(us)+rej.b);
+          auto kdone = (v <= (lgamma(inc(k))+lgamma(inc(n-k))-rej.h)+(k-rej.m)*rej.lpq);
           k =  if_else(kdone, k, allbits);
           return if_else(flip, n-k, k);
         };
@@ -195,8 +170,10 @@ namespace eve
       }
     }
 
+
     n_type n;
     p_type p, q;
+    rejdata rej;
   };
 
   template < floating_real_value U>
@@ -215,6 +192,13 @@ namespace eve
       EVE_ASSERT(all(p <= one(as(p)) && is_gez(p)), "p must be in [0, 1]");
     }
 
+    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+      requires scalar_value<value_type>
+    {
+      return if_else(detail::urg01(gen, as<R>()) < p, zero, one(as<R>()));
+//      return binarize(detail::urg01(gen, as<R>()) < p);
+    }
+
     p_type p, q;
   };
 
@@ -231,7 +215,36 @@ namespace eve
       : n(n_), exp2mn(exp2(-n))
     {
       EVE_ASSERT(all(is_finite(n) && is_gtz(n)), "n must be finite and strictly positive");
+      if constexpr(scalar_value<value_type>) init();
     }
+
+    using rejdata = struct
+    {
+      value_type spq;
+      value_type b;
+      value_type a;
+      value_type c;
+      value_type vr;
+      value_type alpha;
+      value_type lpq;
+      value_type m;
+      value_type h;
+    };
+
+    EVE_FORCEINLINE void init() noexcept
+    requires scalar_value<value_type>
+    {
+      const auto p =  value_type(0.5);
+      auto spq = eve::sqrt(n)*p;
+      rej.b = fma(spq, value_type(2.53), value_type(1.15));
+      auto invb = rec(rej.b);
+      rej.a = fma(value_type(0.01), p, fma(rej.b, value_type(0.0248), value_type(-0.0873)));
+      rej.c = fma(n, p, p);
+      rej.vr = fma(invb,value_type(-4.2), value_type(0.92));
+      rej.alpha = spq*fma(invb, value_type(5.1), value_type(2.83));
+      rej.m = floor(inc(n)*p);
+      rej.h = lgamma(inc(rej.m))+lgamma(inc(n-rej.m));
+     }
 
     template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
       requires scalar_value<value_type>
@@ -266,20 +279,11 @@ namespace eve
        }
       else
       {
-        R spq(eve::sqrt(n)*R(0.5));
-        R b = fma(spq, R(2.53), R(1.15));
-        R a = fma(R(0.01), R(0.5), fma(b, R(0.0248), R(-0.0873)));
-        R c = fma(n, R(0.5), R(0.5));
-        R vr = R(0.92)-R(4.2)/b;
-        R alpha =  spq*(R(2.83)+R(5.1)/b);
-        R m(floor(inc(n)*R(0.5)));
-        R h(lgamma(inc(m))+lgamma(inc(n-m)));
-
-        auto gen1 = [&a, &b, &c, &vr, &gen](auto v, R& us, R& k){
+        auto gen1 = [this, &gen](auto v, R& us, R& k){
           auto u = detail::urg01(gen, as<R>())-R(0.5);
           us= R(0.5)- eve::abs(u);
-          k = floor(fma(fma(R(2), a/us, b), u, c));
-          auto t = (us >= R(0.07)) && (v <= vr);
+          k = floor(fma(fma(R(2), rej.a/us, rej.b), u, rej.c));
+          auto t = (us >= R(0.07)) && (v <= rej.vr);
           k = if_else(t, k, allbits);
         };
         auto gen2= [&](){
@@ -293,8 +297,8 @@ namespace eve
             isknan = is_nan(k);
           }
 
-          v *= alpha/(a/sqr(us)+b);
-          auto kdone = (v <= (lgamma(inc(k))+lgamma(inc(n-k)))-h);
+          v *= rej.alpha/(rej.a/sqr(us)+rej.b);
+          auto kdone = (v <= (lgamma(inc(k))+lgamma(inc(n-k)))-rej.h);
           k =  if_else(kdone, k, allbits);
           return k;
         };
@@ -313,6 +317,7 @@ namespace eve
 
     value_type n;
     value_type exp2mn;
+    rejdata rej;
   };
 
   template<typename T, typename U>  binomial_distribution(T,U) -> binomial_distribution<T,U>;

@@ -61,5 +61,13 @@ int main()
     << "generator \n"
     << "-> d3(gen, eve::as<wide_ft>()) "<< d3(gen, eve::as<wide_ft>()) << std::endl
     << "-> d3(gen)                     "<< d3(gen, eve::as<float>())    << std::endl;
+
+  auto d4 = eve::binomial_distribution(eve::one, 0.3f);
+  std::cout
+    << "generator \n"
+    << "-> d4(gen, eve::as<wide_ft>()) "<< d4(gen, eve::as<wide_ft>()) << std::endl
+    << "-> d4(gen)                     "<< d4(gen, eve::as<float>())    << std::endl;
+
+
   return 0;
 }
