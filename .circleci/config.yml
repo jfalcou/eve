@@ -51,7 +51,7 @@ jobs:
       - checkout
       - run_test:
           desc: Running SIMD Tests - AARCH64 128 bits Registers
-          tool: "../../cmake/toolchain/clang.aarch64.debug.cmake"
+          tool: "../cmake/toolchain/clang.aarch64.debug.cmake"
           options: "-Wno-psabi -DEVE_NO_FORCEINLINE -DEVE_TEST_TYPE=small_wide"
 
   aarch64_clang_64:
@@ -61,7 +61,7 @@ jobs:
       - checkout
       - run_test:
           desc: Running SIMD Tests - AARCH64 64 bits Registers
-          tool: "../../cmake/toolchain/clang.aarch64.debug.cmake"
+          tool: "../cmake/toolchain/clang.aarch64.debug.cmake"
           options: "-Wno-psabi -DEVE_NO_FORCEINLINE"
 
   ##================================================================================================
@@ -74,7 +74,7 @@ jobs:
       - checkout
       - run_test:
           desc: Running SIMD Tests - SSE2
-          tool: "../../cmake/toolchain/clang.x86.debug.cmake"
+          tool: "../cmake/toolchain/clang.x86.debug.cmake"
           options: "-msse2 -DEVE_NO_FORCEINLINE"
 
   x86_clang_sse4:
@@ -84,7 +84,7 @@ jobs:
       - checkout
       - run_test:
           desc: Running SIMD Tests - SSE4
-          tool: "../../cmake/toolchain/clang.x86.debug.cmake"
+          tool: "../cmake/toolchain/clang.x86.debug.cmake"
           options: "-msse4 -DEVE_NO_FORCEINLINE"
 
   x86_clang_emulation:
@@ -94,7 +94,7 @@ jobs:
       - checkout
       - run_test:
           desc: Running SIMD Tests - SSE4
-          tool: "../../cmake/toolchain/clang.x86.debug.cmake"
+          tool: "../cmake/toolchain/clang.x86.debug.cmake"
           options: "-DEVE_NO_SIMD -DEVE_NO_FORCEINLINE"
 
   ##================================================================================================
@@ -107,7 +107,7 @@ jobs:
       - checkout
       - run_test:
           desc: Running SIMD Tests - AVX
-          tool: "../../cmake/toolchain/clang.x86.debug.cmake"
+          tool: "../cmake/toolchain/clang.x86.debug.cmake"
           options: "-mavx -DEVE_NO_FORCEINLINE"
 
   x86_clang_avx2:
@@ -117,7 +117,7 @@ jobs:
       - checkout
       - run_test:
           desc: Running SIMD Tests - AVX2
-          tool: "../../cmake/toolchain/clang.x86.debug.cmake"
+          tool: "../cmake/toolchain/clang.x86.debug.cmake"
           options: "-mavx2 -DEVE_NO_FORCEINLINE"
 
   x86_clang_avx2_fma:
@@ -127,7 +127,7 @@ jobs:
       - checkout
       - run_test:
           desc: Running SIMD Tests - SSE4
-          tool: "../../cmake/toolchain/clang.x86.debug.cmake"
+          tool: "../cmake/toolchain/clang.x86.debug.cmake"
           options: "-mavx2 -mfma -DEVE_NO_FORCEINLINE"
 
   # x86_scalar:
