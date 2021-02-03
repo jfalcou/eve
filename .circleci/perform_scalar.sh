@@ -20,9 +20,9 @@ cd build/$VARIANT
 if [[ -v RUN_COMMAND ]]
 then
   echo "Running tests with $RUN_COMMAND ..."
-  cmake ../.. -G Ninja $CMAKE_OPTIONS -DCMAKE_CXX_COMPILER="$COMPILER" -DCMAKE_CXX_FLAGS="$OPTIONS" -DCMAKE_CROSSCOMPILING_CMD="$RUN_COMMAND"
+  cmake ../.. -G Ninja $CMAKE_OPTIONS -DCMAKE_CXX_COMPILER="$COMPILER" -DCMAKE_CXX_FLAGS="$OPTIONS -DEVE_NO_FORCEINLINE" -DCMAKE_CROSSCOMPILING_CMD="$RUN_COMMAND"
 else
-  cmake ../.. -G Ninja $CMAKE_OPTIONS -DCMAKE_CXX_COMPILER="$COMPILER" -DCMAKE_CXX_FLAGS="$OPTIONS"
+  cmake ../.. -G Ninja $CMAKE_OPTIONS -DCMAKE_CXX_COMPILER="$COMPILER" -DCMAKE_CXX_FLAGS="$OPTIONS -DEVE_NO_FORCEINLINE"
 fi
 
 ##==================================================================================================
