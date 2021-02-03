@@ -24,10 +24,8 @@ namespace eve::detail
   {
     constexpr auto cat = categorize<wide<T, N, ABI>>();
 
-#if defined(__aarch64__)
          if constexpr(cat == category::float64x1) return vbsl_f64(vreinterpret_u64_f64(m), v0, v1);
     else if constexpr(cat == category::float64x2) return vbslq_f64(vreinterpretq_u64_f64(m), v0, v1);
-#endif
     else if constexpr(cat == category::float32x2) return vbsl_f32(vreinterpret_u32_f32(m), v0, v1);
     else if constexpr(cat == category::int64x1)   return vbsl_s64(vreinterpret_u64_s64(m), v0, v1);
     else if constexpr(cat == category::int32x2)   return vbsl_s32(vreinterpret_u32_s32(m), v0, v1);

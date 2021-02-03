@@ -569,23 +569,20 @@ namespace eve::detail
     }
     else if constexpr( std::same_as<type, U> )
     {
-#if defined(__aarch64__)
-      if constexpr( std::is_same_v<T, double> )
+      if constexpr( current_api >= asimd && std::is_same_v<T, double>)
       {
         self = vdivq_f64(self, other);
       }
-      else if constexpr( std::is_same_v<T, float> )
+      else if constexpr( current_api >= asimd && std::is_same_v<T, float> )
       {
         self = vdivq_f32(self, other);
       }
-#else
-      if constexpr( std::is_same_v<T, float> )
+      else if constexpr( std::is_same_v<T, float> )
       {
         // estimate 1/x with an extra NR step for full precision
         auto refiner = [](auto x, auto y) { return vmulq_f32(vrecpsq_f32(x, y), y); };
-        self *= refiner(other, refiner(other, vrecpeq_f32(other)));
+        self *= wide<T, N, arm_128_>{refiner(other, refiner(other, vrecpeq_f32(other)))};
       }
-#endif
       else
       {
         apply<N::value>([&](auto... I) { (self.set(I, self.get(I) / other.get(I)), ...); });
