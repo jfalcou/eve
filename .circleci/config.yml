@@ -1,12 +1,38 @@
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
-##  Copyright 2019 Joel FALCOU
-##  Copyright 2019 Jean-Thierry LAPRESTE
+##  Copyright 2018-2021 Joel FALCOU
+##  Copyright 2018-2021 Jean-Thierry LAPRESTE
 ##
 ##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 version: 2.1
+
+##==================================================================================================
+## Custom commands
+##==================================================================================================
+commands:
+  run_test:
+    description: "Configure and run tests from a CMake Toolchain"
+    parameters:
+      desc:
+        type: string
+      tool:
+        type: string
+      options:
+        type: string
+        default: ""
+      proc:
+        type: integer
+        default: 8
+    steps:
+      - run:
+          name: << parameters.desc >>
+          command:                                                                  |
+            mkdir -p build && cd build                                              &&
+            cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=<< parameters.tool >>          &&
+                              -DCMAKE_CXX_FLAGS=<< parameters.options >>            &&
+            ninja unit -j << parameters.proc >> && ctest  -j << parameters.proc >>
 
 ##==================================================================================================
 ## Docker images
