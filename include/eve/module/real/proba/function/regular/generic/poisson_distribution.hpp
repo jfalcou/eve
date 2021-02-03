@@ -27,6 +27,7 @@
 #include <eve/function/expm1.hpp>
 #include <eve/function/floor.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/function/mul.hpp>
 #include <eve/function/pow_abs.hpp>
 #include <eve/function/rsqrt.hpp>
 #include <eve/function/sub.hpp>
@@ -78,7 +79,7 @@ namespace eve
         auto t = p>expmlambda;
         while (any(t))
         {
-          p=mul[t](p, detail::urg01(gen, as<R>()));
+          p = mul[t](p, detail::urg01(gen, as<R>()));
           k = inc[t](k);
           t = p>expmlambda;
         }
