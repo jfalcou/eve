@@ -50,11 +50,16 @@ int main()
     << "-> d1(gen, eve::as<wide_ft>()) "<< d1(gen, eve::as<wide_ft>()) << std::endl
     << "-> d1(gen)                     "<< d1(gen, eve::as<float>())    << std::endl;
 
-  auto d2 = eve::binomial_distribution(10.0f, 0.2f);
+  auto d2 = eve::binomial_distribution(30.0f, eve::half);
   std::cout
     << "generator \n"
     << "-> d2(gen, eve::as<wide_ft>()) "<< d2(gen, eve::as<wide_ft>()) << std::endl
     << "-> d2(gen)                     "<< d2(gen, eve::as<float>())    << std::endl;
 
+  auto d3 = eve::binomial_distribution(30.0f, 0.3f);
+  std::cout
+    << "generator \n"
+    << "-> d3(gen, eve::as<wide_ft>()) "<< d3(gen, eve::as<wide_ft>()) << std::endl
+    << "-> d3(gen)                     "<< d3(gen, eve::as<float>())    << std::endl;
   return 0;
 }

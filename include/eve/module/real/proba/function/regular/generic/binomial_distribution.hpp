@@ -30,6 +30,7 @@
 #include <eve/function/is_flint.hpp>
 #include <eve/function/beta.hpp>
 #include <eve/function/betainc.hpp>
+#include <eve/function/lgamma.hpp>
 #include <eve/function/log.hpp>
 #include <eve/function/min.hpp>
 #include <eve/function/max.hpp>
@@ -45,6 +46,36 @@
 
 namespace eve
 {
+
+//   // computes the correction factor for the Stirling approximation
+//     // for log(k!)
+//     static RealType fc(IntType k)
+//     {
+//         if(k < 10) return detail::binomial_table<RealType>::table[k];
+//         else {
+//             RealType ikp1 = RealType(1) / (k + 1);
+//             return (RealType(1)/12
+//                  - (RealType(1)/360
+//                  - (RealType(1)/1260)*(ikp1*ikp1))*(ikp1*ikp1))*ikp1;
+//         }
+//     }
+
+
+// template<class RealType>
+// const RealType binomial_table<RealType>::table[10] = {
+//     0.08106146679532726,
+//     0.04134069595540929,
+//     0.02767792568499834,
+//     0.02079067210376509,
+//     0.01664469118982119,
+//     0.01387612882307075,
+//     0.01189670994589177,
+//     0.01041126526197209,
+//     0.009255462182712733,
+//     0.008330563433362871
+// };
+
+  
   template < typename T, typename U, typename Internal = T>
   struct binomial_distribution{};
 
@@ -77,10 +108,12 @@ namespace eve
     template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
       requires scalar_value<value_type>
     {
-      auto pp = (half(as(p)) < p)? q : p;
+//      std::cout << "icitte" << std::endl;
+      auto flip = half(as(p)) < p;
+      auto pp = (flip)? q : p;
+      auto qq = oneminus(pp);
       if (inc(n)*p < value_type(11))
       {
-        auto qq = oneminus(pp);
         auto s = pp / qq;
         auto a = inc(n)*s;
         R r(pow_abs(qq, n));//const ?
@@ -116,7 +149,49 @@ namespace eve
        }
       else
       {
-        return R();
+        R spq(eve::sqrt(n*pp*qq));
+        R b = fma(spq, R(2.53), R(1.15));
+        R a = fma(R(0.01), pp, fma(b, R(0.0248), R(-0.0873)));
+        R c = fma(n, pp, R(0.5));
+        R vr = R(0.92)-R(4.2)/b;
+        R alpha =  spq*(R(2.83)+R(5.1)/b);
+        R lpq(eve::log(pp/qq));
+        R m(floor(inc(n)*pp));
+        R h(lgamma(inc(m))+lgamma(inc(n-m)));
+
+        auto gen1 = [&a, &b, &c, &vr, &gen](auto v, R& us, R& k){
+          auto u = detail::urg01(gen, as<R>())-R(0.5);
+          us= R(0.5)- eve::abs(u);
+          k = floor(fma(fma(R(2), a/us, b), u, c));
+          auto t = (us >= R(0.07)) && (v <= vr);
+          k = if_else(t, k, allbits);
+        };
+        auto gen2= [&](){
+          R v, us, k1, k(nan(as<R>()));
+          auto isknan = is_nan(k);
+          while (any(isknan))
+          {
+            v = detail::urg01(gen, as<R>());
+            gen1(v, us, k1);
+            k = if_else(isknan, k1, k);
+            isknan = is_nan(k);
+          }
+
+          v *= alpha/(a/sqr(us)+b);
+          auto kdone = (v <= (lgamma(inc(k))+lgamma(inc(n-k))-h)+(k-m)*lpq);
+          k =  if_else(kdone, k, allbits);
+          return if_else(flip, n-k, k);
+        };
+
+        R k = nan(as<R>());
+        auto isknan = is_nan(k);
+        while (any(isknan))
+        {
+          auto k1 = gen2();
+          k = if_else(isknan, k1, k);
+          isknan = is_nan(k);
+        }
+        return k;
       }
     }
 
@@ -191,39 +266,48 @@ namespace eve
        }
       else
       {
-        auto sqrtn =  eve::sqrt(n);
-        auto c = half(as<R>())*inc(n);
-        auto b = fma(eve::sqrtn, 1.265, 1.15);
-        auto a = fma(0.01, pp, fma(b, 0.0248, -0.0873));
-        auto alpha = 0.5*(2.83+5.1/b)*sqrtn;
-        auto ur = 0.43;
-        auto vr = 0.92-4.2/b;
-        auto urvr = ur*vr;
-        auto k(mone(as<R>()));
-        auto knotdone = is_ltz(k) || (k >  n);
-        while (any(knotdone))
+        R spq(eve::sqrt(n)*R(0.5));
+        R b = fma(spq, R(2.53), R(1.15));
+        R a = fma(R(0.01), R(0.5), fma(b, R(0.0248), R(-0.0873)));
+        R c = fma(n, R(0.5), R(0.5));
+        R vr = R(0.92)-R(4.2)/b;
+        R alpha =  spq*(R(2.83)+R(5.1)/b);
+        R m(floor(inc(n)*R(0.5)));
+        R h(lgamma(inc(m))+lgamma(inc(n-m)));
+
+        auto gen1 = [&a, &b, &c, &vr, &gen](auto v, R& us, R& k){
+          auto u = detail::urg01(gen, as<R>())-R(0.5);
+          us= R(0.5)- eve::abs(u);
+          k = floor(fma(fma(R(2), a/us, b), u, c));
+          auto t = (us >= R(0.07)) && (v <= vr);
+          k = if_else(t, k, allbits);
+        };
+        auto gen2= [&](){
+          R v, us, k1, k(nan(as<R>()));
+          auto isknan = is_nan(k);
+          while (any(isknan))
+          {
+            v = detail::urg01(gen, as<R>());
+            gen1(v, us, k1);
+            k = if_else(isknan, k1, k);
+            isknan = is_nan(k);
+          }
+
+          v *= alpha/(a/sqr(us)+b);
+          auto kdone = (v <= (lgamma(inc(k))+lgamma(inc(n-k)))-h);
+          k =  if_else(kdone, k, allbits);
+          return k;
+        };
+
+        R k = nan(as<R>());
+        auto isknan = is_nan(k);
+        while (any(isknan))
         {
-
-          auto v = detail::urg01(gen, as<R>());
-
-          auto done = v <= ur*vr;
-          auto vu = v/vr-0.43;
-          auto z1_done = eve::floor(fma(2*a/(half(as<R>())-eve::abs(vu))+b, vu, c));
-
-          auto t1 v >= vr;
-          auto u_t1 = detail::urg01(gen, as<R>())-half(as<R>());
-          auto u_nott1 = v/vr-0.93;
-          auto u_nott1 = sign(u)*0.5-u_nott1
-            auto v_nott1 = detail::urg01(gen, as<R>())*vr;
-
-          auto u = if_else(t1, u_t1, u_nott1);
-
-          auto us = half(as<R>())-eve::abs(u);
-          auto k  = floor(fma(fma(2, a/us, bà), u, c));
-          knotdone = is_ltz(k) || (k >  n);
-
-        auto z2_nott1 =
-        return R();
+          auto k1 = gen2();
+          k = if_else(isknan, k1, k);
+          isknan = is_nan(k);
+        }
+        return k;
       }
     }
 
