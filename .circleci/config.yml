@@ -29,7 +29,7 @@ commands:
             mkdir -p build && cd build                                                                &&
             cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=<< parameters.tool >>                            &&
                               -DCMAKE_CXX_FLAGS=<< parameters.options >>                              &&
-            ninja unit.real.math.heavy.exe  -k 0 -j 2 &&                                              &&
+            ninja unit.real.math.heavy.exe  -k 0 -j 2                                                 &&
             ninja unit.arch.exe             -k 0      && ctest -R "^unit.arch\..*\.exe"               &&
             ninja unit.meta.exe             -k 0 -j 8 && ctest -R "^unit.meta\..*\.exe"               &&
             ninja unit.internals.exe        -k 0 -j 8 && ctest -R "^unit.internals\..*\.exe"    -j 8  &&
