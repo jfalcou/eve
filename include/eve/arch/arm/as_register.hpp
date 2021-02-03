@@ -18,7 +18,6 @@ namespace eve
 {
   template<typename T>
   struct logical;
-  struct neon64_;
   struct neon128_;
 }
 
@@ -37,8 +36,11 @@ namespace eve
       }
       else if constexpr( std::is_same_v<T,double> && Size::value <= 1 )
       {
-        if constexpr(spy::supports::aarch64_) return float64x1_t{};
-        else                                  return emulated_{};
+        #if defined(SPY_SIMD_IS_ARM_ASIMD)
+        return float64x1_t{};
+        #else
+        return emulated_{};
+        #endif
       }
       else if constexpr( std::is_integral_v<T> )
       {
@@ -72,8 +74,11 @@ namespace eve
       }
       else if constexpr( std::is_same_v<T,double> )
       {
-        if constexpr(spy::supports::aarch64_) return float64x2_t{};
-        else                                  return emulated_{};
+        #if defined(SPY_SIMD_IS_ARM_ASIMD)
+        return float64x2_t{};
+        #else
+        return emulated_{};
+        #endif
       }
       else if constexpr( std::is_integral_v<T> )
       {

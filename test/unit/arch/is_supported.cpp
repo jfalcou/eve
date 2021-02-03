@@ -53,8 +53,8 @@ TTS_CASE("Static detections of API")
   std::cout << "\n";
   std::cout << "========================\n";
   std::cout << "ARM SIMD extensions\n";
-  std::cout << "NEON   : " << std::boolalpha << (eve::current_api >= eve::neon   ) << "\n";
-  std::cout << "AARCH64: " << std::boolalpha << eve::supports_aarch64              << "\n";
+  std::cout << "NEON  : " << std::boolalpha << (eve::current_api >= eve::neon   ) << "\n";
+  std::cout << "ASIMD : " << std::boolalpha << (eve::current_api >= eve::asimd  )  << "\n";
   std::cout << "\n";
 
   TTS_PASS("All static detections - done");
@@ -86,7 +86,7 @@ TTS_CASE("Dynamic detections of API")
   std::cout << "========================\n";
   std::cout << "ARM SIMD extensions\n";
   std::cout << "NEON  : " << std::boolalpha << eve::is_supported(eve::neon) << "\n";
-  std::cout << "ASIMD : " << std::boolalpha << eve::is_supported(eve::aarch64) << "\n";
+  std::cout << "ASIMD : " << std::boolalpha << eve::is_supported(eve::asimd) << "\n";
 
   TTS_PASS("All dynamic detections - done");
 }

@@ -14,13 +14,6 @@
 #include <eve/arch/cpu/tags.hpp>
 #include <eve/detail/meta.hpp>
 
-#if defined( SPY_SIMD_IS_ARM )
-  #if defined( SPY_OS_IS_LINUX )
-    #include <asm/hwcap.h>
-    #include <sys/auxv.h>
-  #endif
-#endif
-
 namespace eve
 {
   // clang-format off
@@ -43,16 +36,14 @@ namespace eve
   //================================================================================================
   // Dispatching tag for ARM SIMD implementation
   //================================================================================================
-  struct neon64_  : simd_ {};
-  struct neon128_ : simd_ {};
+  struct neon128_ : simd_     {};
+  struct asimd_   : neon128_  {};
 
   //================================================================================================
   // NEON extension tag objects
   //================================================================================================
-  inline constexpr auto neon = spy::neon_;
-
-  struct aarch64_   {};
-  inline constexpr auto aarch64 = aarch64_{};
+  inline constexpr auto neon  = spy::neon_;
+  inline constexpr auto asimd = spy::asimd_;
 
   //================================================================================================
   // ARM ABI concept

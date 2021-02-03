@@ -68,7 +68,7 @@ namespace eve
 #if !defined(__aarch64__)
       : storage_base( [&]()
                       { constexpr auto  c =   Size::value == 1 && sizeof(Type) == 8
-                                          &&  std::is_same_v<ABI, neon64_>;
+                                          &&  std::is_same_v<ABI, arm_64_>;
                         if constexpr(c) return value_type(r); else  return r;
                       }()
                     )

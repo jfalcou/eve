@@ -30,6 +30,10 @@ namespace eve
 // NEON SIMD ABI
 # if !defined(EVE_CURRENT_API) && defined(SPY_SIMD_IS_ARM)
 #  include <arm_neon.h>
+#  if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_ARM_ASIMD)
+#   define EVE_CURRENT_ABI ::eve::arm_128_
+#   define EVE_CURRENT_API ::eve::asimd_
+#  endif
 #  if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_ARM_NEON)
 #   define EVE_CURRENT_ABI ::eve::arm_128_
 #   define EVE_CURRENT_API ::eve::neon128_
@@ -43,4 +47,3 @@ namespace eve
 # endif
 
 #endif
-
