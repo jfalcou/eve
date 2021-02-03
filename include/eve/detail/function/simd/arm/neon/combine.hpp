@@ -34,12 +34,10 @@ namespace eve::detail
       {
         return vcombine_f32(l, h);
       }
-#if defined(__aarch64__)
-      else if constexpr( std::is_same_v<T, double> )
+      else if constexpr( current_api >= asimd && std::is_same_v<T, double> )
       {
         return vcombine_f64(l, h);
       }
-#endif
       else if constexpr( std::signed_integral<T> )
       {
         if constexpr( sizeof(T) == 8 )

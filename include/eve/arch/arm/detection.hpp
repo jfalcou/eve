@@ -34,9 +34,9 @@ namespace eve
     #endif
   }
 
-  inline bool is_supported(aarch64_ const &) noexcept
+  inline bool is_supported(spy::arm_simd_info<spy::detail::simd_version::asimd_ > const &) noexcept
   {
-    #if defined( SPY_SIMD_IS_ARM )
+    #if defined( SPY_SIMD_IS_ARM_ASIMD )
     auto hwcaps = getauxval(AT_HWCAP);
     return (hwcaps & HWCAP_ASIMD) != 0;
     #else

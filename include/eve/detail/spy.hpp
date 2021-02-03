@@ -1,12 +1,13 @@
 //==================================================================================================
 /*
   SPY - C++ Informations Broker
-  Copyright 2020 Joel FALCOU
+  Copyright 2020-2021 Joel FALCOU
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
  */
 //==================================================================================================
-#pragma once
+#ifndef SPY_SPY_HPP_INCLUDED
+#define SPY_SPY_HPP_INCLUDED
 #include <ostream>
 namespace spy::detail
 {
@@ -74,7 +75,7 @@ namespace spy
   constexpr inline auto ppc_    = detail::arch_info<detail::archs::ppc_>{};
   constexpr inline auto arm_    = detail::arch_info<detail::archs::arm_>{};
 }
-#include <ostream>
+#include <iosfwd>
 #include <ostream>
 namespace spy::detail
 {
@@ -278,7 +279,7 @@ namespace spy::literal
     return detail::literal_wrap<detail::gcc_t,c...>();
   }
 }
-#include <ostream>
+#include <iosfwd>
 namespace spy::detail
 {
   template<int Short, int Integer, int Long, int Pointer>
@@ -328,7 +329,7 @@ namespace spy
   constexpr inline auto lp64_   = detail::data_model_info<2,4,8,8>{};
 }
 #include <cstddef>
-#include <ostream>
+#include <iosfwd>
 namespace spy::detail
 {
   enum class libC  { undefined_  = - 1, cloudabi_, uc_, vms_, zos_, gnu_ };
@@ -431,7 +432,7 @@ namespace spy::literal
   }
 }
 #include <cstddef>
-#include <ostream>
+#include <iosfwd>
 namespace spy::detail
 {
   enum class stdlib { undefined_  = - 1, libcpp_, gnucpp_ };
@@ -706,7 +707,11 @@ namespace avx512
 #endif
 }
 }
-#if !defined(SPY_SIMD_DETECTED) && (defined(__ARM_NEON__) || defined(_M_ARM) || defined(__aarch64__))
+#if !defined(SPY_SIMD_DETECTED) && defined(__aarch64__)
+#  define SPY_SIMD_IS_ARM_ASIMD
+#  define SPY_SIMD_DETECTED ::spy::detail::simd_version::asimd_
+#endif
+#if !defined(SPY_SIMD_DETECTED) && ((defined(__ARM_NEON__) || defined(_M_ARM)) && (__ARM_ARCH == 7))
 #  define SPY_SIMD_IS_ARM_NEON
 #  define SPY_SIMD_DETECTED ::spy::detail::simd_version::neon_
 #endif
@@ -714,15 +719,6 @@ namespace avx512
 #  define SPY_SIMD_IS_ARM
 #  define SPY_SIMD_VENDOR ::spy::detail::simd_isa::arm_
 #endif
-namespace spy::supports
-{
-#if defined(__aarch64__)
-#  define SPY_SIMD_SUPPORTS_AARCH64
-  constexpr inline auto aarch64_ = true;
-#else
-  constexpr inline auto aarch64_ = false;
-#endif
-}
 #if !defined(SPY_SIMD_DETECTED) && defined(__VSX__)
 #  define SPY_SIMD_IS_PPC_VSX
 #  define SPY_SIMD_DETECTED ::spy::detail::simd_version::vsx_
@@ -743,7 +739,7 @@ namespace spy::detail
                           , sse41_  = 1141, sse42_ = 1142, avx_  = 1201, avx2_  = 1202
                           , avx512_ = 1300
                           , vmx_    = 2001, vsx_   = 2002
-                          , neon_   = 3001
+                          , neon_   = 3001, asimd_ = 3002
                           };
   template<simd_isa InsSetArch = simd_isa::undefined_, simd_version Version = simd_version::undefined_>
   struct simd_info
@@ -764,8 +760,8 @@ namespace spy::detail
       else  if constexpr ( Version == simd_version::vmx_    ) os << "PPC VMX";
       else  if constexpr ( Version == simd_version::vsx_    ) os << "PPC VSX";
       else  if constexpr ( Version == simd_version::neon_   ) os << "ARM NEON";
+      else  if constexpr ( Version == simd_version::asimd_  ) os << "ARM ASIMD";
       else return os << "Undefined SIMD instructions set";
-      if constexpr (spy::supports::aarch64_) os << " (with AARCH64 support)";
       if constexpr (spy::supports::fma_)     os << " (with FMA3 support)";
       if constexpr (spy::supports::fma4_)    os << " (with FMA4 support)";
       if constexpr (spy::supports::xop_)     os << " (with XOP support)";
@@ -836,8 +832,9 @@ namespace spy
   using arm_simd_info = detail::simd_info<detail::simd_isa::arm_,V>;
   constexpr inline auto arm_simd_ = arm_simd_info<>{};
   constexpr inline auto neon_     = arm_simd_info<detail::simd_version::neon_ >{};
+  constexpr inline auto asimd_    = arm_simd_info<detail::simd_version::asimd_>{};
 }
-#include <ostream>
+#include <iosfwd>
 #if defined(__APPLE__) || defined(__APPLE_CC__) || defined(macintosh)
 #  include <AvailabilityMacros.h>
 #endif
@@ -930,3 +927,4 @@ namespace spy::supports
   constexpr inline auto posix_ = false;
 #endif
 }
+#endif

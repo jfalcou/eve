@@ -47,7 +47,7 @@ namespace eve
         }
         else if constexpr( spy::simd_instruction_set == spy::arm_simd_ )
         {
-          if constexpr( spy::supports::aarch64_ )
+          if constexpr( spy::simd_instruction_set == spy::asimd_ )
           {
             if constexpr(width <= 8)       return arm_64_{};
             else if constexpr(width == 16) return arm_128_{};
