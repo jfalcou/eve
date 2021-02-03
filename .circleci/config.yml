@@ -22,211 +22,179 @@ commands:
       options:
         type: string
         default: ""
-      proc:
-        type: integer
-        default: 8
     steps:
       - run:
           name: << parameters.desc >>
-          command:                                                                  |
-            mkdir -p build && cd build                                              &&
-            cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=<< parameters.tool >>          &&
-                              -DCMAKE_CXX_FLAGS=<< parameters.options >>            &&
-            ninja unit -j << parameters.proc >> && ctest  -j << parameters.proc >>
-
-##==================================================================================================
-## Docker images
-##==================================================================================================
-docker_gcc: &docker_gcc
-  docker:
-    - image: compilaction/cpp-20:latest
-      environment:
-        COMPILER: g++-10
-docker_clang: &docker_clang
-  docker:
-    - image: compilaction/clang-dev:latest
-      environment:
-        COMPILER: clang++
-docker_aarch64: &docker_aarch64
-  docker:
-    - image: compilaction/cpp-20:latest
-      environment:
-        RUN_COMMAND: qemu-aarch64
-        COMPILER: aarch64-linux-gnu-g++-10
-
-##==================================================================================================
-## Build configurations
-##==================================================================================================
-config_gcc_x86: &config_gcc_x86
-  <<: *docker_gcc
-config_clang_x86: &config_clang_x86
-  <<: *docker_clang
-config_aarch64: &config_aarch64
- <<: *docker_aarch64
+          command:                                                                                    |
+            mkdir -p build && cd build                                                                &&
+            cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=<< parameters.tool >>                            &&
+                              -DCMAKE_CXX_FLAGS=<< parameters.options >>                              &&
+            ninja unit.real.math.heavy.exe  -k 0 -j 2 &&                                              &&
+            ninja unit.arch.exe             -k 0      && ctest -R "^unit.arch\..*\.exe"               &&
+            ninja unit.meta.exe             -k 0 -j 8 && ctest -R "^unit.meta\..*\.exe"               &&
+            ninja unit.internals.exe        -k 0 -j 8 && ctest -R "^unit.internals\..*\.exe"    -j 8  &&
+            ninja unit.api.exe              -k 0 -j 8 && ctest -R "^unit.api\..*\.exe"          -j 8  &&
+            ninja doc.exe                   -k 0 -j 8 && ctest -R "^doc\..*\.exe"               -j 8  &&
+            ninja unit.simd.exe             -k 0 -j 6 && ctest -R "^unit\..*\..*\..*\.simd.exe" -j 8
 
 ##==================================================================================================
 ## Jobs list
 ##==================================================================================================
 jobs:
   ##================================================================================================
-  ## SIMD tests
+  ## ARM tests
   ##================================================================================================
-  x86_scalar:
-    <<: *config_clang_x86
+  aarch64_clang_128:
+    docker:
+      - image: jfalcou/compilers:latest
     steps:
       - checkout
-      - run:
-          name: Running Scalar Tests
-          command: VARIANT="scalar" OPTIONS="" . ./.circleci/perform_scalar.sh
+      - run_test:
+          desc: Running SIMD Tests - AARCH64 128 bits Registers
+          tool: "../test/toolchain/clang.aarch64.debug.cmake"
+          options: "-Wno-psabi -DEVE_NO_FORCEINLINE -DEVE_TEST_TYPE=small_wide"
 
-  x86_emulation:
-    <<: *config_clang_x86
+  aarch64_clang_64:
+    docker:
+      - image: jfalcou/compilers:latest
     steps:
       - checkout
-      - run:
-          name: Running SIMD Tests - Emulation
-          command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD" . ./.circleci/perform.sh
+      - run_test:
+          desc: Running SIMD Tests - AARCH64 64 bits Registers
+          tool: "../test/toolchain/clang.aarch64.debug.cmake"
+          options: "-Wno-psabi -DEVE_NO_FORCEINLINE"
 
-  x86_sse2:
-    <<: *config_clang_x86
+  ##================================================================================================
+  ## X86 tests - SSE like
+  ##================================================================================================
+  x86_clang_sse2:
+    docker:
+      - image: jfalcou/compilers:latest
     steps:
       - checkout
-      - run:
-          name: Running SIMD Tests - SSE2
-          command: VARIANT="sse2" OPTIONS="-msse2" . ./.circleci/perform.sh
+      - run_test:
+          desc: Running SIMD Tests - SSE2
+          tool: "../test/toolchain/clang.x86.debug.cmake"
+          options: "-msse2 -DEVE_NO_FORCEINLINE"
 
-  x86_sse4:
-    <<: *config_clang_x86
+  x86_clang_sse4:
+    docker:
+      - image: jfalcou/compilers:latest
     steps:
       - checkout
-      - run:
-          name: Running SIMD Tests - SSE4
-          command: VARIANT="sse4" OPTIONS="-msse4" . ./.circleci/perform.sh
+      - run_test:
+          desc: Running SIMD Tests - SSE4
+          tool: "../test/toolchain/clang.x86.debug.cmake"
+          options: "-msse4 -DEVE_NO_FORCEINLINE"
 
-  x86_avx:
-    <<: *config_clang_x86
+  x86_clang_emulation:
+    docker:
+      - image: jfalcou/compilers:latest
     steps:
       - checkout
-      - run:
-          name: Running SIMD Tests - AVX
-          command: VARIANT="avx" OPTIONS="-mavx" . ./.circleci/perform.sh
+      - run_test:
+          desc: Running SIMD Tests - SSE4
+          tool: "../test/toolchain/clang.x86.debug.cmake"
+          options: "-DEVE_NO_SIMD -DEVE_NO_FORCEINLINE"
 
-  x86_fma:
-    <<: *config_clang_x86
+  ##================================================================================================
+  ## X86 tests - AVX like
+  ##================================================================================================
+  x86_clang_avx:
+    docker:
+      - image: jfalcou/compilers:latest
     steps:
       - checkout
-      - run:
-          name: Running SIMD Tests - FMA
-          command: VARIANT="fma" OPTIONS="-mavx2 -mfma" . ./.circleci/perform.sh
+      - run_test:
+          desc: Running SIMD Tests - AVX
+          tool: "../test/toolchain/clang.x86.debug.cmake"
+          options: "-mavx -DEVE_NO_FORCEINLINE"
 
-  x86_avx2:
-    <<: *config_clang_x86
+  x86_clang_avx2:
+    docker:
+      - image: jfalcou/compilers:latest
     steps:
       - checkout
-      - run:
-          name: Running SIMD Tests - AVX2
-          command: VARIANT="avx2" OPTIONS="-mavx2" . ./.circleci/perform.sh
+      - run_test:
+          desc: Running SIMD Tests - AVX2
+          tool: "../test/toolchain/clang.x86.debug.cmake"
+          options: "-mavx2 -DEVE_NO_FORCEINLINE"
 
-  x86_avx512:
-    <<: *config_gcc_x86
+  x86_clang_avx2_fma:
+    docker:
+      - image: jfalcou/compilers:latest
     steps:
       - checkout
-      - run:
-          name: Running SIMD Tests - AVX512
-          command: VARIANT="avx512" OPTIONS="-march=skylake-avx512" . ./.circleci/perform.sh
+      - run_test:
+          desc: Running SIMD Tests - SSE4
+          tool: "../test/toolchain/clang.x86.debug.cmake"
+          options: "-mavx2 -mfma -DEVE_NO_FORCEINLINE"
 
-  x86_avx512_256:
-    <<: *config_gcc_x86
-    steps:
-      - checkout
-      - run:
-          name: Running SIMD Tests - AVX2 with AVX512
-          command: VARIANT="avx512" OPTIONS="-march=skylake-avx512" CMAKE_OPTIONS="-DEVE_TEST_TYPE=small_wide" . ./.circleci/perform.sh
+  # x86_scalar:
+  #   <<: *config_clang_x86
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Running Scalar Tests
+  #         command: VARIANT="scalar" OPTIONS="" . ./.circleci/perform_scalar.sh
 
-  x86_avx512_128:
-    <<: *config_gcc_x86
-    steps:
-      - checkout
-      - run:
-          name: Running SIMD Tests - SSE4 with AVX512
-          command: VARIANT="avx512"  OPTIONS="-march=skylake-avx512" CMAKE_OPTIONS="-DEVE_TEST_TYPE=smaller_wide" . ./.circleci/perform.sh
+  # x86_avx512:
+  #   <<: *config_gcc_x86
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Running SIMD Tests - AVX512
+  #         command: VARIANT="avx512" OPTIONS="-march=skylake-avx512" . ./.circleci/perform.sh
 
-  x86_tiny:
-    <<: *config_clang_x86
-    steps:
-      - checkout
-      - run:
-          name: Running SIMD Tests - Tiny Wide
-          command: CMAKE_OPTIONS="-DEVE_TEST_TYPE=tiny_wide" VARIANT="tiny" OPTIONS="" . ./.circleci/perform.sh
+  # x86_avx512_256:
+  #   <<: *config_gcc_x86
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Running SIMD Tests - AVX2 with AVX512
+  #         command: VARIANT="avx512" OPTIONS="-march=skylake-avx512" CMAKE_OPTIONS="-DEVE_TEST_TYPE=small_wide" . ./.circleci/perform.sh
 
-  x86_extra:
-    <<: *config_clang_x86
-    steps:
-      - checkout
-      - run:
-          name: Running SIMD Tests - Extra-large Wide
-          command: CMAKE_OPTIONS="-DEVE_TEST_TYPE=extra_wide" VARIANT="extra" OPTIONS="" . ./.circleci/perform.sh
+  # x86_avx512_128:
+  #   <<: *config_gcc_x86
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Running SIMD Tests - SSE4 with AVX512
+  #         command: VARIANT="avx512"  OPTIONS="-march=skylake-avx512" CMAKE_OPTIONS="-DEVE_TEST_TYPE=smaller_wide" . ./.circleci/perform.sh
 
-  x86_half:
-    <<: *config_clang_x86
-    steps:
-      - checkout
-      - run:
-          name: Running SIMD Tests - Half_size Wide
-          command: CMAKE_OPTIONS="-DEVE_TEST_TYPE=small_wide" VARIANT="half" OPTIONS="" . ./.circleci/perform.sh
+  # x86_tiny:
+  #   <<: *config_clang_x86
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Running SIMD Tests - Tiny Wide
+  #         command: CMAKE_OPTIONS="-DEVE_TEST_TYPE=tiny_wide" VARIANT="tiny" OPTIONS="" . ./.circleci/perform.sh
 
-  arm_aarch64_neon128:
-    <<: *config_aarch64
-    steps:
-      - checkout
-      - run:
-          name: Running SIMD Tests - AARCH64 NEON 128 bits Registers
-          command: VARIANT="aarch64" OPTIONS="-Wno-psabi" . .circleci/perform.sh
+  # x86_extra:
+  #   <<: *config_clang_x86
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Running SIMD Tests - Extra-large Wide
+  #         command: CMAKE_OPTIONS="-DEVE_TEST_TYPE=extra_wide" VARIANT="extra" OPTIONS="" . ./.circleci/perform.sh
 
-  arm_aarch64_neon64:
-    <<: *config_aarch64
-    steps:
-      - checkout
-      - run:
-          name: Running SIMD Tests - AARCH64 NEON 64 bits Registers
-          command: VARIANT="aarch64" CMAKE_OPTIONS="-DEVE_TEST_TYPE=small_wide" OPTIONS="-Wno-psabi" . .circleci/perform.sh
+  # x86_half:
+  #   <<: *config_clang_x86
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Running SIMD Tests - Half_size Wide
+  #         command: CMAKE_OPTIONS="-DEVE_TEST_TYPE=small_wide" VARIANT="half" OPTIONS="" . ./.circleci/perform.sh
 
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - arm_aarch64_neon128
-      - arm_aarch64_neon64
-      - x86_sse2
-      - x86_avx
-      - x86_avx512
-      - x86_sse4:
-          requires:
-            - x86_sse2
-      - x86_avx2:
-          requires:
-            - x86_avx
-      - x86_avx512_256:
-          requires:
-            - x86_avx512
-      - x86_extra:
-          requires:
-            - arm_aarch64_neon128
-      - x86_emulation:
-          requires:
-            - arm_aarch64_neon64
-      - x86_scalar:
-          requires:
-            - x86_sse4
-      - x86_avx512_128:
-          requires:
-            - x86_avx512_256
-      - x86_half:
-          requires:
-            - x86_extra
-      - x86_tiny:
-          requires:
-            - x86_emulation
-      - x86_fma:
-          requires:
-            - x86_avx2
+      - aarch64_clang_128
+      - aarch64_clang_64
+      - x86_clang_sse2
+      - x86_clang_sse4
+      - x86_clang_emulation
+      - x86_clang_avx
+      - x86_clang_avx2
+      - x86_clang_avx2_fma
