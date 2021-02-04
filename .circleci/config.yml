@@ -43,17 +43,17 @@ jobs:
   ##================================================================================================
   ## ARM tests
   ##================================================================================================
-  aarch64_clang_128:
+  aarch64_gcc_128:
     docker:
       - image: jfalcou/compilers:latest
     steps:
       - checkout
       - run_test:
           desc: Running SIMD Tests - AARCH64 128 bits Registers
-          tool: "../cmake/toolchain/clang.aarch64.debug.cmake"
+          tool: "../cmake/toolchain/gcc.aarch64.debug.cmake"
           options: "-Wno-psabi -DEVE_NO_FORCEINLINE -DEVE_TEST_TYPE=small_wide"
 
-  aarch64_clang_64:
+  aarch64_gcc_64:
     docker:
       - image: jfalcou/compilers:latest
     steps:
@@ -189,8 +189,8 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - aarch64_clang_128
-      - aarch64_clang_64
+      - aarch64_gcc_128
+      - aarch64_gcc_64
       - x86_clang_sse2
       - x86_clang_sse4
       - x86_clang_emulation
