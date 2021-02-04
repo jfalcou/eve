@@ -69,6 +69,7 @@ namespace eve
     using m_type = T;
     using s_type = U;
     using value_type = common_compatible_t<T, U>;
+    using parameters = struct { value_type m; value_type s; };
 
     normal_distribution(T m_,  U s_)
       : m(m_), s(s_)
@@ -77,10 +78,8 @@ namespace eve
       EVE_ASSERT(all(is_finite(m)), "m must be finite");
     }
 
-    template < floating_real_value TT,  floating_real_value UU>
-    requires  std::constructible_from<T, TT> && std::constructible_from<U, UU>
-    normal_distribution(TT m_,  UU s_)
-      : m(T(m_)), s(U(s_))
+    normal_distribution(parameters const & p)
+      : m(p.m), s(p.s)
     {
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
       EVE_ASSERT(all(is_finite(m)), "m must be finite");
@@ -90,6 +89,11 @@ namespace eve
       requires scalar_value<value_type>
     {
       return fma(m, detail::box_muller(gen, as<R>()), s);
+    }
+
+    parameters params() const noexcept
+    {
+      return { .m = m, .s = s };
     }
 
     m_type m;
@@ -103,6 +107,7 @@ namespace eve
     using m_type = callable_zero_;
     using s_type = U;
     using value_type = U;
+    using parameters = struct { callable_zero_ m;  value_type s;};
 
     normal_distribution(callable_zero_ const&, U s_)
       : s(s_)
@@ -110,10 +115,8 @@ namespace eve
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
     }
 
-    template < floating_real_value UU>
-      requires  std::constructible_from<U, UU>
-    normal_distribution(callable_zero_ const & , UU s_)
-      : s(U(s_))
+    normal_distribution(parameters const & p)
+      : s(p.s)
     {
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
     }
@@ -123,6 +126,11 @@ namespace eve
     {
 
       return detail::box_muller(gen, as<R>())*s;
+    }
+
+    parameters params() noexcept
+    {
+      return { .m = zero, .s = s };
     }
 
     s_type s;
@@ -135,6 +143,7 @@ namespace eve
     using m_type = T;
     using s_type = decltype(eve::one);
     using value_type = T;
+    using parameters = struct { value_type m;  callable_one_ s;};
 
     normal_distribution(T m_, callable_one_ const &)
       : m(m_)
@@ -142,10 +151,8 @@ namespace eve
       EVE_ASSERT(all(is_finite(m)), "m must be finite");
     }
 
-    template < floating_real_value TT>
-      requires  std::constructible_from<T, TT>
-    normal_distribution(TT m_, callable_one_ const &)
-      : m(T(m_))
+    normal_distribution(parameters const & p)
+      : m(p.m)
     {
       EVE_ASSERT(all(is_finite(m)), "m must be finite");
     }
@@ -154,6 +161,11 @@ namespace eve
       requires scalar_value<value_type>
     {
       return detail::box_muller(gen, as<R>())+m;
+    }
+
+    parameters params() noexcept
+    {
+      return { .m = m, .s = one };
     }
 
     m_type m;
@@ -168,11 +180,20 @@ namespace eve
     using m_type = callable_zero_;
     using s_type = callable_one_;
     using value_type = T;
+    using parameters = struct { callable_zero_ m;  callable_one_ s;};
+
+
+    normal_distribution(parameters const & ) { }
 
     template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
       requires scalar_value<value_type>
     {
       return detail::box_muller(gen, as<R>());
+    }
+
+    parameters params() noexcept
+    {
+      return { .m = zero, .s = one };
     }
 
     constexpr normal_distribution( as_<T> const&) {}
