@@ -22,12 +22,15 @@ commands:
       options:
         type: string
         default: ""
+      setup:
+        type: string
+        default: ""
     steps:
       - run:
           name: << parameters.desc >>
           command:                                                                                    |
             mkdir -p build && cd build                                                                &&
-            cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=<< parameters.tool >> -DCMAKE_CXX_FLAGS="<< parameters.options >>" &&
+            cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=<< parameters.tool >> -DCMAKE_CXX_FLAGS="<< parameters.options >>" << parameters.setup >>&&
             ninja unit.real.math.heavy.exe  -k 0 -j 2                                                 &&
             ninja unit.arch.exe             -k 0      && ctest -R "^unit.arch\..*\.exe"               &&
             ninja unit.meta.exe             -k 0 -j 8 && ctest -R "^unit.meta\..*\.exe"               &&
@@ -50,8 +53,9 @@ jobs:
       - checkout
       - run_test:
           desc: Running SIMD Tests - AARCH64 128 bits Registers
-          tool: "../cmake/toolchain/gcc.aarch64.debug.cmake"
-          options: "-Wno-psabi -DEVE_NO_FORCEINLINE -DEVE_TEST_TYPE=small_wide"
+          tool:     "../cmake/toolchain/gcc.aarch64.debug.cmake"
+          options:  "-Wno-psabi -DEVE_NO_FORCEINLINE"
+          setup:    "-DEVE_TEST_TYPE=small_wide"
 
   aarch64_gcc_64:
     docker:
@@ -125,9 +129,80 @@ jobs:
     steps:
       - checkout
       - run_test:
-          desc: Running SIMD Tests - SSE4
+          desc: Running SIMD Tests - AVX2 + FMA
           tool: "../cmake/toolchain/clang.x86.debug.cmake"
           options: "-mavx2 -mfma -DEVE_NO_FORCEINLINE"
+
+  ##================================================================================================
+  ## X86 tests - AVX512 like
+  ##================================================================================================
+  x86_clang_avx512:
+    docker:
+      - image: jfalcou/compilers:latest
+    steps:
+      - checkout
+      - run_test:
+          desc: Running SIMD Tests - AVX512
+          tool: "../cmake/toolchain/clang.x86.debug.cmake"
+          options: "-march=skylake-avx512 -DEVE_NO_FORCEINLINE"
+
+  x86_clang_avx512_256:
+    docker:
+      - image: jfalcou/compilers:latest
+    steps:
+      - checkout
+      - run_test:
+          desc: Running SIMD Tests - AVX512 - 256bits mode
+          tool: "../cmake/toolchain/clang.x86.debug.cmake"
+          options: "-march=skylake-avx512 -DEVE_NO_FORCEINLINE"
+          setup:    "-DEVE_TEST_TYPE=small_wide"
+
+  x86_clang_avx256_128:
+    docker:
+      - image: jfalcou/compilers:latest
+    steps:
+      - checkout
+      - run_test:
+          desc: Running SIMD Tests - AVX512 - 128bits mode
+          tool: "../cmake/toolchain/clang.x86.debug.cmake"
+          options: "-march=skylake-avx512 -DEVE_NO_FORCEINLINE"
+          setup:    "-DEVE_TEST_TYPE=smaller_wide"
+
+  ##================================================================================================
+  ## X86 tests - special size tests
+  ##================================================================================================
+  x86_clang_tiny:
+    docker:
+      - image: jfalcou/compilers:latest
+    steps:
+      - checkout
+      - run_test:
+          desc: Running SIMD Tests - Tiny register
+          tool:     "../cmake/toolchain/clang.x86.debug.cmake"
+          options:  "-DEVE_NO_FORCEINLINE"
+          setup:    "-DEVE_TEST_TYPE=tiny_wide"
+
+  x86_clang_small:
+    docker:
+      - image: jfalcou/compilers:latest
+    steps:
+      - checkout
+      - run_test:
+          desc: Running SIMD Tests - Small register
+          tool:     "../cmake/toolchain/clang.x86.debug.cmake"
+          options:  "-DEVE_NO_FORCEINLINE"
+          setup:    "-DEVE_TEST_TYPE=small_wide"
+
+  x86_clang_extra:
+    docker:
+      - image: jfalcou/compilers:latest
+    steps:
+      - checkout
+      - run_test:
+          desc: Running SIMD Tests - Extra-large register
+          tool:     "../cmake/toolchain/clang.x86.debug.cmake"
+          options:  "-DEVE_NO_FORCEINLINE"
+          setup:    "-DEVE_TEST_TYPE=extra_wide"
 
   # x86_scalar:
   #   <<: *config_clang_x86
@@ -136,54 +211,6 @@ jobs:
   #     - run:
   #         name: Running Scalar Tests
   #         command: VARIANT="scalar" OPTIONS="" . ./.circleci/perform_scalar.sh
-
-  # x86_avx512:
-  #   <<: *config_gcc_x86
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: Running SIMD Tests - AVX512
-  #         command: VARIANT="avx512" OPTIONS="-march=skylake-avx512" . ./.circleci/perform.sh
-
-  # x86_avx512_256:
-  #   <<: *config_gcc_x86
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: Running SIMD Tests - AVX2 with AVX512
-  #         command: VARIANT="avx512" OPTIONS="-march=skylake-avx512" CMAKE_OPTIONS="-DEVE_TEST_TYPE=small_wide" . ./.circleci/perform.sh
-
-  # x86_avx512_128:
-  #   <<: *config_gcc_x86
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: Running SIMD Tests - SSE4 with AVX512
-  #         command: VARIANT="avx512"  OPTIONS="-march=skylake-avx512" CMAKE_OPTIONS="-DEVE_TEST_TYPE=smaller_wide" . ./.circleci/perform.sh
-
-  # x86_tiny:
-  #   <<: *config_clang_x86
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: Running SIMD Tests - Tiny Wide
-  #         command: CMAKE_OPTIONS="-DEVE_TEST_TYPE=tiny_wide" VARIANT="tiny" OPTIONS="" . ./.circleci/perform.sh
-
-  # x86_extra:
-  #   <<: *config_clang_x86
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: Running SIMD Tests - Extra-large Wide
-  #         command: CMAKE_OPTIONS="-DEVE_TEST_TYPE=extra_wide" VARIANT="extra" OPTIONS="" . ./.circleci/perform.sh
-
-  # x86_half:
-  #   <<: *config_clang_x86
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: Running SIMD Tests - Half_size Wide
-  #         command: CMAKE_OPTIONS="-DEVE_TEST_TYPE=small_wide" VARIANT="half" OPTIONS="" . ./.circleci/perform.sh
 
 workflows:
   version: 2
@@ -207,4 +234,20 @@ workflows:
       - x86_clang_avx2_fma:
           requires:
             - x86_clang_avx2
+      ######################
+      - x86_clang_tiny
+      - x86_clang_small:
+          requires:
+            - x86_clang_tiny
+      - x86_clang_extra:
+          requires:
+            - x86_clang_small
+      ######################
+      - x86_clang_avx512
+      - x86_clang_avx512_256:
+          requires:
+            - x86_clang_avx512
+      - x86_clang_avx512_128:
+          requires:
+            - x86_clang_avx512_256
       ######################
