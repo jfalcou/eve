@@ -16,8 +16,10 @@
 #include <eve/platform.hpp>
 #include <type_traits>
 #include <eve/module/real/proba/detail/attributes.hpp>
+#include <eve/module/real/proba/detail/urg01.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/function/all.hpp>
+#include <eve/function/binarize.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/exp.hpp>
@@ -28,14 +30,21 @@
 #include <eve/function/is_flint.hpp>
 #include <eve/function/beta.hpp>
 #include <eve/function/betainc.hpp>
+#include <eve/function/lgamma.hpp>
 #include <eve/function/log.hpp>
 #include <eve/function/min.hpp>
 #include <eve/function/max.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/pow_abs.hpp>
 #include <eve/function/sqrt.hpp>
+#include <eve/function/sub.hpp>
+#include <eve/constant/eps.hpp>
 #include <eve/constant/half.hpp>
-#include <eve/module/real/core/detail/generic/horn.hpp>
+#include <eve/constant/inf.hpp>
+#include <eve/constant/one.hpp>
+#include <eve/constant/zero.hpp>
+#include <iostream>
+#include <tts/tts.hpp>
 
 namespace eve
 {
@@ -50,42 +59,121 @@ namespace eve
     using n_type = T;
     using p_type = U;
     using value_type = common_compatible_t<T, U>;
+    using elt_t = element_type_t<value_type>;
 
     binomial_distribution(T n_,  U p_)
       : n(n_), p(p_), q(oneminus(p))
     {
       EVE_ASSERT(all(is_gtz(n_)), "n must be strictly positive");
-      EVE_ASSERT(all(p <= one(as(p)) && is_gez(p)), "p must be in [0, 1]");
+      EVE_ASSERT(all(p < one(as(p)) && is_gez(p)), "p must be in ]0, 1[");
+      if constexpr(scalar_value<value_type>) init();
     }
 
-    template < floating_real_value TT,  floating_real_value UU>
-    requires  std::constructible_from<T, TT> && std::constructible_from<U, UU>
-    binomial_distribution(TT n_,  UU p_)
-      : n(T(n_)), p(U(p_)), q(oneminus(p))
+    using rejdata = struct
     {
-      EVE_ASSERT(all(is_gtz(n_)), "n must be strictly positive");
-      EVE_ASSERT(all(p <= one(as(p)) && is_gez(p)), "p must be in [0, 1]");
+      value_type b;
+      value_type a;
+      value_type c;
+      value_type vr;
+      value_type alpha;
+      value_type lpq;
+      value_type m;
+      value_type h;
+    };
+
+    EVE_FORCEINLINE void init() noexcept
+    requires scalar_value<value_type>
+    {
+      auto spq = eve::sqrt(n*p*q);
+      rej.b = fma(spq, value_type(2.53), value_type(1.15));
+      auto invb = rec(rej.b);
+      rej.a = fma(value_type(0.01), eve::min(p, q), fma(rej.b, value_type(0.0248), value_type(-0.0873)));
+      rej.c = fma(n, eve::min(p, q), value_type(0.5));
+      rej.vr = fma(invb,value_type(-4.2), value_type(0.92));
+      rej.alpha = spq*fma(invb, value_type(5.1), value_type(2.83));
+      rej.lpq = eve::log(eve::min(p, q)/eve::max(p, q));
+      rej.m = (floor(inc(n)*eve::min(p, q)));
+      rej.h = (lgamma(inc(rej.m))+lgamma(inc(n-rej.m)));
+     }
+
+    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+      requires scalar_value<value_type>
+    {
+
+      auto flip = half(as(p)) < p;
+      auto pp = (flip)? q : p;
+      auto qq = oneminus(pp);
+      if (inc(n)*p < value_type(11))
+      {
+        auto s = pp / qq;
+        auto a = inc(n)*s;
+        R r(pow_abs(qq, n));//const ?
+        auto u = detail::urg01(gen, as<R>());
+        auto x(zero(as<R>()));
+        auto r1(inf(as<R>()));
+        auto t = u > r;
+        while(any(t))
+        {
+          u = sub[t](u, r);
+          x = inc[t](x);
+          r1 = if_else(t, (a/x-s)*r, r1);
+          if constexpr(std::same_as<elt_t, float>)
+            // If r gets too small then the round-off error
+            // becomes a problem.  At this point, p(i) is
+            // decreasing exponentially, so if we just call
+            // it 0, it's close enough.  Note that the
+            // minimum value of q_n is about 1e-7, so we
+            // may need to be a little careful to make sure that
+            // we don't terminate the first time through the loop
+            // for float.  (Hence the test that r is decreasing)
+            if(all(r1 < eps(as<R>()) && r1 < r)) break;
+          r = r1;
+          t = u > r;
+        }
+        return x;
+       }
+      else
+      {
+        auto gen1 = [this, &gen](auto v, R& us, R& k){
+          auto u = detail::urg01(gen, as<R>())-R(0.5);
+          us= R(0.5)- eve::abs(u);
+          k = floor(fma(fma(R(2), rej.a/us, rej.b), u, rej.c));
+          auto t = (us >= R(0.07)) && (v <= rej.vr);
+          k = if_else(t, k, allbits);
+        };
+        auto gen2= [&](){
+          R v, us, k1, k(nan(as<R>()));
+          auto isknan = is_nan(k);
+          while (any(isknan))
+          {
+            v = detail::urg01(gen, as<R>());
+            gen1(v, us, k1);
+            k = if_else(isknan, k1, k);
+            isknan = is_nan(k);
+          }
+
+          v *= rej.alpha/(rej.a/sqr(us)+rej.b);
+          auto kdone = (v <= (lgamma(inc(k))+lgamma(inc(n-k))-rej.h)+(k-rej.m)*rej.lpq);
+          k =  if_else(kdone, k, allbits);
+          return if_else(flip, n-k, k);
+        };
+
+        R k = nan(as<R>());
+        auto isknan = is_nan(k);
+        while (any(isknan))
+        {
+          auto k1 = gen2();
+          k = if_else(isknan, k1, k);
+          isknan = is_nan(k);
+        }
+        return k;
+      }
     }
 
-    template < integral_scalar_value N,  floating_real_value UU>
-    requires  std::convertible_to<T, N> && std::constructible_from<U, UU>
-    binomial_distribution(N n_,  UU p_)
-      : n(T(n_)), p(U(p_)), q(oneminus(p))
-    {
-      EVE_ASSERT(all(is_gtz(n_)), "n must be strictly positive");
-      EVE_ASSERT(all(p < one(as(p)) && is_gez(p)), "p must be in [0, 1]");
-    }
-
-    template < integral_simd_value N,  floating_real_value UU>
-    requires  std::convertible_to<T, N> && std::constructible_from<U, UU>
-    binomial_distribution(N n_,  UU p_)
-      : n(convert(n_, as<element_type_t<T>>())), p(U(p_)), q(oneminus(p))
-    {
-      EVE_ASSERT(all(p <= one(as(p)) && is_gez(p)), "p must be in [0, 1]");
-    }
 
     n_type n;
     p_type p, q;
+    rejdata rej;
   };
 
   template < floating_real_value U>
@@ -95,6 +183,8 @@ namespace eve
     using n_type = callable_one_;
     using p_type = U;
     using value_type = U;
+    using elt_t = element_type_t<value_type>;
+
 
     binomial_distribution(callable_one_ const&, U p_)
       : p(p_), q(oneminus(p))
@@ -102,12 +192,11 @@ namespace eve
       EVE_ASSERT(all(p <= one(as(p)) && is_gez(p)), "p must be in [0, 1]");
     }
 
-    template < floating_real_value UU>
-    requires  std::constructible_from<U, UU>
-    binomial_distribution(callable_zero_ const & , UU p_)
-      : p(U(p_))
+    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+      requires scalar_value<value_type>
     {
-      EVE_ASSERT(all(p <= one(as(p)) && is_gez(p)), "p must be in [0, 1]");
+      return if_else(detail::urg01(gen, as<R>()) < p, zero, one(as<R>()));
+//      return binarize(detail::urg01(gen, as<R>()) < p);
     }
 
     p_type p, q;
@@ -120,22 +209,115 @@ namespace eve
     using n_type = T;
     using p_type = callable_half_;
     using value_type = T;
+    using elt_t = element_type_t<value_type>;
 
-    binomial_distribution(T n_, callable_one_ const &)
-      : n(n_)
+    binomial_distribution(T n_, callable_half_ const &)
+      : n(n_), exp2mn(exp2(-n))
     {
       EVE_ASSERT(all(is_finite(n) && is_gtz(n)), "n must be finite and strictly positive");
+      if constexpr(scalar_value<value_type>) init();
     }
 
-    template < floating_real_value TT>
-    requires  std::constructible_from<T, TT>
-    binomial_distribution(TT n_, callable_half_ const &)
-      : n(T(n_))
+    using rejdata = struct
     {
-     EVE_ASSERT(all(is_finite(n) && is_gtz(n)), "n must be finite and strictly positive");
+      value_type spq;
+      value_type b;
+      value_type a;
+      value_type c;
+      value_type vr;
+      value_type alpha;
+      value_type lpq;
+      value_type m;
+      value_type h;
+    };
+
+    EVE_FORCEINLINE void init() noexcept
+    requires scalar_value<value_type>
+    {
+      const auto p =  value_type(0.5);
+      auto spq = eve::sqrt(n)*p;
+      rej.b = fma(spq, value_type(2.53), value_type(1.15));
+      auto invb = rec(rej.b);
+      rej.a = fma(value_type(0.01), p, fma(rej.b, value_type(0.0248), value_type(-0.0873)));
+      rej.c = fma(n, p, p);
+      rej.vr = fma(invb,value_type(-4.2), value_type(0.92));
+      rej.alpha = spq*fma(invb, value_type(5.1), value_type(2.83));
+      rej.m = floor(inc(n)*p);
+      rej.h = lgamma(inc(rej.m))+lgamma(inc(n-rej.m));
+     }
+
+    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+      requires scalar_value<value_type>
+    {
+      if (n < value_type(21))
+      {
+        R r(exp2mn);
+        auto a = inc(n);
+        auto u = detail::urg01(gen, as<R>());
+        auto x(zero(as<R>()));
+        auto r1(inf(as<R>()));
+        auto t = u > r;
+        while(any(t))
+        {
+          u = sub[t](u, r);
+          x = inc[t](x);
+          r1 = if_else(t, dec(a/x) * r, r1);
+           if constexpr(std::same_as<elt_t, float>)
+             // If r gets too small then the round-off error
+             // becomes a problem.  At this point, p(i) is
+             // decreasing exponentially, so if we just call
+             // it 0, it's close enough.  Note that the
+             // minimum value of q_n is about 1e-7, so we
+             // may need to be a little careful to make sure that
+             // we don't terminate the first time through the loop
+             // for float.  (Hence the test that r is decreasing)
+             if(all(r1 < eps(as<R>()) && r1 < r)) break;
+          r = r1;
+          t = u > r;
+        }
+        return x;
+       }
+      else
+      {
+        auto gen1 = [this, &gen](auto v, R& us, R& k){
+          auto u = detail::urg01(gen, as<R>())-R(0.5);
+          us= R(0.5)- eve::abs(u);
+          k = floor(fma(fma(R(2), rej.a/us, rej.b), u, rej.c));
+          auto t = (us >= R(0.07)) && (v <= rej.vr);
+          k = if_else(t, k, allbits);
+        };
+        auto gen2= [&](){
+          R v, us, k1, k(nan(as<R>()));
+          auto isknan = is_nan(k);
+          while (any(isknan))
+          {
+            v = detail::urg01(gen, as<R>());
+            gen1(v, us, k1);
+            k = if_else(isknan, k1, k);
+            isknan = is_nan(k);
+          }
+
+          v *= rej.alpha/(rej.a/sqr(us)+rej.b);
+          auto kdone = (v <= (lgamma(inc(k))+lgamma(inc(n-k)))-rej.h);
+          k =  if_else(kdone, k, allbits);
+          return k;
+        };
+
+        R k = nan(as<R>());
+        auto isknan = is_nan(k);
+        while (any(isknan))
+        {
+          auto k1 = gen2();
+          k = if_else(isknan, k1, k);
+          isknan = is_nan(k);
+        }
+        return k;
+      }
     }
 
-    n_type n;
+    value_type n;
+    value_type exp2mn;
+    rejdata rej;
   };
 
   template<typename T, typename U>  binomial_distribution(T,U) -> binomial_distribution<T,U>;
@@ -147,6 +329,13 @@ namespace eve
     using n_type = callable_one_;
     using p_type = callable_half_;
     using value_type = T;
+
+    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+      requires scalar_value<value_type>
+    {
+      return binarize(detail::urg01(gen, as<R>()) > R(0.5));
+    }
+
     constexpr binomial_distribution( as_<T> const&) {}
   };
 
@@ -199,7 +388,7 @@ namespace eve
       {
         auto fk = eve::min(eve::max(floor(x), zero(as(x))), d.n);
         auto nmk = d.n-fk;
-        return exp2(-d.n)*beta(inc(fk), inc(nmk)*half(as(x)));
+        return d.exp2mn*beta(inc(fk), inc(nmk)*half(as(x)));
       }
       else
         return if_else(is_eqz(x) || (x == one(as(x))), half(as(x)), zero);
@@ -286,7 +475,6 @@ namespace eve
         return half(as<T>())*eve::log(twopie*d.p*d.q); // + ô(1/n)
       else
         return half(as<I>())*eve::log(twopie*I(0.25)); // + ô(1/n)
-
     }
 
 

@@ -1,6 +1,7 @@
 #include <eve/function/exponential_distribution.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
+#include <random>
 
 using wide_ft = eve::wide <float, eve::fixed<4>>;
 
@@ -40,5 +41,15 @@ int main()
     << "<- lf                  = " << lf << '\n'
     << "-> cdf(exf, xf)        = " << eve::cdf(exf, xf) << '\n'
     << "-> mode(exf)           = " << eve::mode(exf)    << '\n';
+
+  auto d1 = eve::exponential_distribution(2.0f);
+  std::random_device rd;  //Will be used to obtain a seed for the random number engine
+  std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+  std::cout
+    << "generator \n"
+    << "-> d1(gen, eve::as<wide_ft>()) "<< d1(gen, eve::as<wide_ft>()) << std::endl
+    << "-> d1(gen)                     "<< d1(gen, eve::as<float>())    << std::endl;
+
+  
   return 0;
 }

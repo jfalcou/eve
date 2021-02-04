@@ -18,6 +18,7 @@
 #include <type_traits>
 #include <eve/concept/value.hpp>
 #include <eve/module/real/proba/detail/attributes.hpp>
+#include <eve/module/real/proba/detail/urg01.hpp>
 #include <eve/function/exp.hpp>
 #include <eve/function/expm1.hpp>
 #include <eve/function/if_else.hpp>
@@ -55,6 +56,12 @@ namespace eve
       EVE_ASSERT(all(is_gtz(lambda) && is_finite(lambda)), "lambda must be strictly positive and finite");
     }
 
+    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+      requires scalar_value<value_type>
+    {
+      return invcdf(*this, detail::urg01(gen, as<R>()));
+    }
+
     exponential_distribution()    : lambda(T(1))   {}
 
     lambda_type lambda;
@@ -69,6 +76,13 @@ namespace eve
     using is_distribution_t = void;
     using lambda_type = callable_one_;
     using value_type = T;
+
+    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+      requires scalar_value<value_type>
+    {
+      return invcdf(*this, detail::urg01(gen, as<R>()));
+    }
+
     constexpr exponential_distribution( as_<T> const&) {}
   };
 
