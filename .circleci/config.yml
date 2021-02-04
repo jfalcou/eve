@@ -38,6 +38,30 @@ commands:
             ninja unit.api.exe              -k 0 -j 8 && ctest -R "^unit.api\..*\.exe"          -j 8  &&
             ninja doc.exe                   -k 0 -j 8 && ctest -R "^doc\..*\.exe"               -j 8  &&
             ninja unit.simd.exe             -k 0 -j 6 && ctest -R "^unit\..*\..*\..*\.simd.exe" -j 8
+  run_test_avx512:
+    description: "Configure and run tests from a CMake Toolchain"
+    parameters:
+      desc:
+        type: string
+      tool:
+        type: string
+      options:
+        type: string
+        default: ""
+      setup:
+        type: string
+        default: ""
+    steps:
+      - run:
+          name: << parameters.desc >>
+          command:                                                                                    |
+            mkdir -p build && cd build                                                                &&
+            cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=<< parameters.tool >> -DCMAKE_CXX_FLAGS="<< parameters.options >>" << parameters.setup >>&&
+            ninja unit.arch.exe             -k 0      && ctest -R "^unit.arch\..*\.exe"               &&
+            ninja unit.meta.exe             -k 0 -j 8 && ctest -R "^unit.meta\..*\.exe"               &&
+            ninja unit.internals.exe        -k 0 -j 8 && ctest -R "^unit.internals\..*\.exe" -j 8     &&
+            ninja unit.api.exe              -k 0 -j 8 && ctest -R "^unit.api\..*\.exe"       -j 8     &&
+            ninja unit.real.algorithm.exe   -k 0 -j 8 && ctest -R "^unit.real.algorithm\..*\simd.exe"
 
 ##==================================================================================================
 ## Jobs list
@@ -55,7 +79,6 @@ jobs:
           desc: Running SIMD Tests - AARCH64 128 bits Registers
           tool:     "../cmake/toolchain/gcc.aarch64.debug.cmake"
           options:  "-Wno-psabi -DEVE_NO_FORCEINLINE"
-          setup:    "-DEVE_TEST_TYPE=small_wide"
 
   aarch64_gcc_64:
     docker:
@@ -64,8 +87,9 @@ jobs:
       - checkout
       - run_test:
           desc: Running SIMD Tests - AARCH64 64 bits Registers
-          tool: "../cmake/toolchain/gcc.aarch64.debug.cmake"
-          options: "-Wno-psabi -DEVE_NO_FORCEINLINE"
+          tool:     "../cmake/toolchain/gcc.aarch64.debug.cmake"
+          options:  "-Wno-psabi -DEVE_NO_FORCEINLINE"
+          setup:    "-DEVE_TEST_TYPE=small_wide"
 
   ##================================================================================================
   ## X86 tests - SSE like
@@ -77,8 +101,8 @@ jobs:
       - checkout
       - run_test:
           desc: Running SIMD Tests - SSE2
-          tool: "../cmake/toolchain/clang.x86.debug.cmake"
-          options: "-msse2 -DEVE_NO_FORCEINLINE"
+          tool:     "../cmake/toolchain/clang.x86.debug.cmake"
+          options:  "-msse2 -DEVE_NO_FORCEINLINE"
 
   x86_clang_sse4:
     docker:
@@ -87,8 +111,8 @@ jobs:
       - checkout
       - run_test:
           desc: Running SIMD Tests - SSE4
-          tool: "../cmake/toolchain/clang.x86.debug.cmake"
-          options: "-msse4 -DEVE_NO_FORCEINLINE"
+          tool:     "../cmake/toolchain/clang.x86.debug.cmake"
+          options:  "-msse4 -DEVE_NO_FORCEINLINE"
 
   x86_clang_emulation:
     docker:
@@ -97,8 +121,8 @@ jobs:
       - checkout
       - run_test:
           desc: Running SIMD Tests - SSE4
-          tool: "../cmake/toolchain/clang.x86.debug.cmake"
-          options: "-DEVE_NO_SIMD -DEVE_NO_FORCEINLINE"
+          tool:     "../cmake/toolchain/clang.x86.debug.cmake"
+          options:  "-DEVE_NO_SIMD -DEVE_NO_FORCEINLINE"
 
   ##================================================================================================
   ## X86 tests - AVX like
@@ -110,8 +134,8 @@ jobs:
       - checkout
       - run_test:
           desc: Running SIMD Tests - AVX
-          tool: "../cmake/toolchain/clang.x86.debug.cmake"
-          options: "-mavx -DEVE_NO_FORCEINLINE"
+          tool:     "../cmake/toolchain/clang.x86.debug.cmake"
+          options:  "-mavx -DEVE_NO_FORCEINLINE"
 
   x86_clang_avx2:
     docker:
@@ -120,8 +144,8 @@ jobs:
       - checkout
       - run_test:
           desc: Running SIMD Tests - AVX2
-          tool: "../cmake/toolchain/clang.x86.debug.cmake"
-          options: "-mavx2 -DEVE_NO_FORCEINLINE"
+          tool:     "../cmake/toolchain/clang.x86.debug.cmake"
+          options:  "-mavx2 -DEVE_NO_FORCEINLINE"
 
   x86_clang_avx2_fma:
     docker:
@@ -130,8 +154,8 @@ jobs:
       - checkout
       - run_test:
           desc: Running SIMD Tests - AVX2 + FMA
-          tool: "../cmake/toolchain/clang.x86.debug.cmake"
-          options: "-mavx2 -mfma -DEVE_NO_FORCEINLINE"
+          tool:     "../cmake/toolchain/clang.x86.debug.cmake"
+          options:  "-mavx2 -mfma -DEVE_NO_FORCEINLINE"
 
   ##================================================================================================
   ## X86 tests - AVX512 like
@@ -141,7 +165,7 @@ jobs:
       - image: jfalcou/compilers:latest
     steps:
       - checkout
-      - run_test:
+      - run_test_avx512:
           desc: Running SIMD Tests - AVX512
           tool:    "../cmake/toolchain/clang.x86.debug.cmake"
           options: "-march=skylake-avx512 -DEVE_NO_FORCEINLINE"
@@ -151,7 +175,7 @@ jobs:
       - image: jfalcou/compilers:latest
     steps:
       - checkout
-      - run_test:
+      - run_test_avx512:
           desc: Running SIMD Tests - AVX512 - 256bits mode
           tool:     "../cmake/toolchain/clang.x86.debug.cmake"
           options:  "-march=skylake-avx512 -DEVE_NO_FORCEINLINE"
@@ -162,7 +186,7 @@ jobs:
       - image: jfalcou/compilers:latest
     steps:
       - checkout
-      - run_test:
+      - run_test_avx512:
           desc: Running SIMD Tests - AVX512 - 128bits mode
           tool:     "../cmake/toolchain/clang.x86.debug.cmake"
           options:  "-march=skylake-avx512 -DEVE_NO_FORCEINLINE"
@@ -204,13 +228,20 @@ jobs:
           options:  "-DEVE_NO_FORCEINLINE"
           setup:    "-DEVE_TEST_TYPE=extra_wide"
 
-  # x86_scalar:
-  #   <<: *config_clang_x86
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: Running Scalar Tests
-  #         command: VARIANT="scalar" OPTIONS="" . ./.circleci/perform_scalar.sh
+  ##================================================================================================
+  ## X86 tests - Scalar tests
+  ##================================================================================================
+  x86_clang_scalar:
+    docker:
+      - image: jfalcou/compilers:latest
+    steps:
+      - checkout
+      - run:
+          name: Run SCALAR Tests
+          command:                                                                              |
+            mkdir -p build && cd build                                                          &&
+            cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE="../cmake/toolchain/clang.x86.debug.cmake" &&
+            ninja unit.scalar.exe -k 0 -j 8 && ctest -R "^unit\..*\..*\..*\.scalar.exe" -j 8
 
 workflows:
   version: 2
@@ -218,6 +249,10 @@ workflows:
     jobs:
       - aarch64_gcc_128
       - aarch64_gcc_64
+      ######################
+      - x86_clang_scalar:
+          requires:
+            - aarch64_gcc_128
       ######################
       - x86_clang_sse2
       - x86_clang_sse4:
