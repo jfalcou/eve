@@ -231,7 +231,7 @@ namespace eve
       if constexpr(floating_value<T> || floating_value<U>)
         return eve::exp(invcdf(normal_distribution(m, s), x));
       else
-        return  eve::exp(invcdf(normal_distribution_O1<I>, x));
+        return  eve::exp(invcdf(normal_distribution_01<I>, x));
     }
 
     //////////////////////////////////////////////////////
