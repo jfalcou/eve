@@ -143,7 +143,7 @@ jobs:
       - checkout
       - run_test:
           desc: Running SIMD Tests - AVX512
-          tool: "../cmake/toolchain/clang.x86.debug.cmake"
+          tool:    "../cmake/toolchain/clang.x86.debug.cmake"
           options: "-march=skylake-avx512 -DEVE_NO_FORCEINLINE"
 
   x86_clang_avx512_256:
@@ -153,19 +153,19 @@ jobs:
       - checkout
       - run_test:
           desc: Running SIMD Tests - AVX512 - 256bits mode
-          tool: "../cmake/toolchain/clang.x86.debug.cmake"
-          options: "-march=skylake-avx512 -DEVE_NO_FORCEINLINE"
+          tool:     "../cmake/toolchain/clang.x86.debug.cmake"
+          options:  "-march=skylake-avx512 -DEVE_NO_FORCEINLINE"
           setup:    "-DEVE_TEST_TYPE=small_wide"
 
-  x86_clang_avx256_128:
+  x86_clang_avx512_128:
     docker:
       - image: jfalcou/compilers:latest
     steps:
       - checkout
       - run_test:
           desc: Running SIMD Tests - AVX512 - 128bits mode
-          tool: "../cmake/toolchain/clang.x86.debug.cmake"
-          options: "-march=skylake-avx512 -DEVE_NO_FORCEINLINE"
+          tool:     "../cmake/toolchain/clang.x86.debug.cmake"
+          options:  "-march=skylake-avx512 -DEVE_NO_FORCEINLINE"
           setup:    "-DEVE_TEST_TYPE=smaller_wide"
 
   ##================================================================================================
