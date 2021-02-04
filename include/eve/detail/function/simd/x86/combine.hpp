@@ -160,6 +160,6 @@ namespace eve::detail
           ) noexcept
   {
     using type = typename logical<wide<T, typename N::combined_type>>::storage_type;
-    return type((h.bitmap().to_ullong() << h.size()) | l.bitmap().to_ullong());
+    return type{(h.bitmap().to_ullong() << h.size()) | l.bitmap().to_ullong()};
   }
 }
