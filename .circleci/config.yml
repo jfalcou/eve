@@ -60,7 +60,7 @@ jobs:
       - checkout
       - run_test:
           desc: Running SIMD Tests - AARCH64 64 bits Registers
-          tool: "../cmake/toolchain/clang.aarch64.debug.cmake"
+          tool: "../cmake/toolchain/gcc.aarch64.debug.cmake"
           options: "-Wno-psabi -DEVE_NO_FORCEINLINE"
 
   ##================================================================================================
@@ -191,9 +191,20 @@ workflows:
     jobs:
       - aarch64_gcc_128
       - aarch64_gcc_64
+      ######################
       - x86_clang_sse2
-      - x86_clang_sse4
-      - x86_clang_emulation
+      - x86_clang_sse4:
+          requires:
+            - x86_clang_sse2
+      - x86_clang_emulation:
+          requires:
+            - x86_clang_sse4
+      ######################
       - x86_clang_avx
-      - x86_clang_avx2
-      - x86_clang_avx2_fma
+      - x86_clang_avx2:
+          requires:
+            - x86_clang_avx
+      - x86_clang_avx2_fma:
+          requires:
+            - x86_clang_avx2
+      ######################
