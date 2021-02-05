@@ -52,10 +52,9 @@ int main()
 
   {
     auto d3 = eve::exponential_distribution(1.0);
-    std::array<double, 1> cov = {0.5};
     auto [r, plo, phi] = eve::confidence(d3
                                         , 5.0
-                                        , cov
+                                        , 0.5
                                         , 0.05);
     std::cout
       << "confidence \n"

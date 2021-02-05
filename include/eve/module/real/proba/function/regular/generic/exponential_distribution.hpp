@@ -255,14 +255,14 @@ namespace eve
     EVE_FORCEINLINE  auto confidence_(EVE_SUPPORTS(cpu_)
                                      , exponential_distribution<T,I> const & d
                                      , R const & x
-                                     , std::array<V, 1> const & pcov
+                                     , V const & pcov
                                      , A const & alpha ) noexcept
     {
       using v_t = typename exponential_distribution<T,I>::value_type;
       R z = if_else(is_ltz(x), zero, x);
       if constexpr(floating_real_value<T>) z*= d.lambda;
       auto normz = -invcdf(normal_distribution_01<I>, alpha*v_t(0.5));
-      auto halfwidth = normz*eve::sqrt(pcov[0]);
+      auto halfwidth = normz*eve::sqrt(pcov);
       if constexpr(floating_real_value<T>) halfwidth *= d.lambda;
       auto exp_halfwidth =  eve::exp(halfwidth);
       return std::make_tuple(-expm1(-z), -expm1(-z/exp_halfwidth), -expm1(-z*exp_halfwidth));

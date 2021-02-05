@@ -82,16 +82,20 @@ namespace eve
     template < distribution D,  value U>
     EVE_FORCEINLINE  auto  pmf_(EVE_SUPPORTS(cpu_), D const &d, U const &x ) noexcept  = delete;
 
-//     template < distribution D,  floating_real_value R,  floating_real_value V,  floating_real_value A>
-//     EVE_FORCEINLINE  auto confidence_(EVE_SUPPORTS(cpu_), D const &d
-//                                      , R const & x
-//                                      , V const &v11, V const &v22, V const &v12
-//                                      , A const & alpha ) noexcept = delete;
+    // confidence bounds for N parameters distribution
     template < distribution D,  floating_real_value R,  floating_real_value V,  int N
                , floating_real_value A>
     EVE_FORCEINLINE  auto confidence_(EVE_SUPPORTS(cpu_), D const &d
                                      , R const & x
                                      , std::array<V, N> const &cov
+                                     , A const & alpha ) noexcept = delete;
+
+    // confidence bounds for 1 parameter distribution
+    template < distribution D,  floating_real_value R,  floating_real_value V
+               , floating_real_value A>
+    EVE_FORCEINLINE  auto confidence_(EVE_SUPPORTS(cpu_), D const &d
+                                     , R const & x
+                                     , V const &cov
                                      , A const & alpha ) noexcept = delete;
 
     template < distribution D>
