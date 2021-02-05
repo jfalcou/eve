@@ -19,13 +19,15 @@
 #include <eve/platform.hpp>
 #include <type_traits>
 
-TTS_CASE_TPL("Check eve::all return type", EVE_TYPE)
+#define EVE_ALL_TYPE eve::wide<std::uint32_t, eve::fixed<2>>
+
+TTS_CASE_TPL("Check eve::all return type", EVE_ALL_TYPE)
 {
   TTS_EXPR_IS( (eve::all(eve::logical<T>())) , bool);
   TTS_EXPR_IS( (eve::all(T()))               , bool);
 }
 
-TTS_CASE_TPL("Check eve::all behavior on arithmetic", EVE_TYPE)
+TTS_CASE_TPL("Check eve::all behavior on arithmetic", EVE_ALL_TYPE)
 {
   TTS_EXPECT    ( (eve::all(T{1})) );
   TTS_EXPECT_NOT( (eve::all(T{0})) );
@@ -63,7 +65,7 @@ TTS_CASE_TPL("Check eve::all behavior on arithmetic", EVE_TYPE)
 #endif
 }
 
-TTS_CASE_TPL("Check eve::all behavior on logical", EVE_TYPE)
+TTS_CASE_TPL("Check eve::all behavior on logical", EVE_ALL_TYPE)
 {
   TTS_EXPECT    (eve::all(eve::true_(eve::as<T>())));
   TTS_EXPECT_NOT(eve::all(eve::false_(eve::as<T>())));
@@ -71,7 +73,7 @@ TTS_CASE_TPL("Check eve::all behavior on logical", EVE_TYPE)
 
 #if defined(EVE_SIMD_TESTS)
 
-TTS_CASE_TPL("Check eve::all[ignore]", EVE_TYPE)
+TTS_CASE_TPL("Check eve::all[ignore]", EVE_ALL_TYPE)
 {
   // complete
   {
