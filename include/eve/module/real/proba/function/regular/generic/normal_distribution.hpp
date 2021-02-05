@@ -465,5 +465,33 @@ namespace eve
       else
         return zero(as<I>());
     }
+
+    //////////////////////////////////////////////////////
+    /// confidence
+    template<typename T, typename U, floating_real_value R
+             , floating_real_value V, floating_real_value A,  typename I = T>
+    EVE_FORCEINLINE  auto confidence_(EVE_SUPPORTS(cpu_)
+                                     , normal_distribution<T,U,I> const & d
+                                     , R const & x
+                                     , std::array<V, 4> const & cov
+                                     , A const & alpha ) noexcept
+    {
+      using v_t = typename normal_distribution<T,U,I>::value_type;
+      R z = x;
+      auto normz = -invcdf(normal_distribution_01<I>, alpha*v_t(0.5));
+      auto halfwidth = normz;
+      if constexpr(floating_real_value<T> && floating_real_value<U>)
+        z = (z-d.m)/d.s;
+      else if constexpr(floating_real_value<T>)
+        z -= d.m;
+      else if constexpr(floating_real_value<U>)
+        z /= d.s;
+      auto zvar = fma(fma(cov[3], z, 2*cov[1]), z, cov[0]);
+      halfwidth *= eve::sqrt(zvar);
+     if constexpr(floating_real_value<U>)
+        halfwidth /= d.s;
+      auto d01 =  normal_distribution_01<I>;
+      return std::make_tuple(cdf(d01, z), cdf(d01, z-halfwidth), cdf(d01, z+halfwidth));
+    }
   }
 }

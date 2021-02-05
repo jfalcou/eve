@@ -26,12 +26,15 @@
 #include <eve/function/is_finite.hpp>
 #include <eve/function/log.hpp>
 #include <eve/function/log1p.hpp>
+#include <eve/function/normal_distribution.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/sqr.hpp>
+#include <eve/function/sqrt.hpp>
 #include <eve/function/is_ltz.hpp>
 #include <eve/constant/log_2.hpp>
 #include <eve/constant/one.hpp>
+#include <array>
 
 namespace eve
 {
@@ -246,5 +249,24 @@ namespace eve
       else
         return one(as<I>());
     }
+
+    template<typename T, floating_real_value R, floating_real_value V
+             , floating_real_value A, typename I = T>
+    EVE_FORCEINLINE  auto confidence_(EVE_SUPPORTS(cpu_)
+                                     , exponential_distribution<T,I> const & d
+                                     , R const & x
+                                     , std::array<V, 1> const & pcov
+                                     , A const & alpha ) noexcept
+    {
+      using v_t = typename exponential_distribution<T,I>::value_type;
+      R z = if_else(is_ltz(x), zero, x);
+      if constexpr(floating_real_value<T>) z*= d.lambda;
+      auto normz = -invcdf(normal_distribution_01<I>, alpha*v_t(0.5));
+      auto halfwidth = normz*eve::sqrt(pcov[0]);
+      if constexpr(floating_real_value<T>) halfwidth *= d.lambda;
+      auto exp_halfwidth =  eve::exp(halfwidth);
+      return std::make_tuple(-expm1(-z), -expm1(-z/exp_halfwidth), -expm1(-z*exp_halfwidth));
+    }
+
   }
 }

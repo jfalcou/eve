@@ -50,6 +50,18 @@ int main()
     << "-> d1(gen, eve::as<wide_ft>()) "<< d1(gen, eve::as<wide_ft>()) << std::endl
     << "-> d1(gen)                     "<< d1(gen, eve::as<float>())    << std::endl;
 
-  
+  {
+    auto d3 = eve::exponential_distribution(1.0);
+    std::array<double, 1> cov = {0.5};
+    auto [r, plo, phi] = eve::confidence(d3
+                                        , 5.0
+                                        , cov
+                                        , 0.05);
+    std::cout
+      << "confidence \n"
+      << "r          " << r << std::endl
+      << "plo        " << plo<< std::endl
+      << "phi        " << phi<< std::endl;
+  }
   return 0;
 }
