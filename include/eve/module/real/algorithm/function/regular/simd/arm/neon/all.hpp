@@ -17,35 +17,59 @@
 
 namespace eve::detail
 {
-  template <typename T, typename N, typename ABI, typename C>
-  EVE_FORCEINLINE bool all_arm_impl(logical<wide<T, N, ABI>> const &v0, C const & cond)
+  template <typename T, typename N, typename C>
+  EVE_FORCEINLINE bool all_arm_impl(logical<wide<T, N, arm_64_>> v0, C const & cond)
   {
-         if constexpr ( C::is_complete && !C::is_inverted ) return true;
-    else if constexpr ( std::same_as<ABI, arm_128_> )
+    using l_t = logical<wide<T, N, arm_64_>>;
+    if constexpr ( C::is_complete && !C::is_inverted ) return true;
+    else
     {
-      if constexpr ( sizeof( T ) >= 2 )
-      {
-        using half_e_t = make_integer_t<sizeof(T) / 2, unsigned>;
-        auto halved = eve::convert(v0, eve::as_<eve::logical<half_e_t>>{});
-        return all_arm_impl(halved, cond);
-      }
+      if constexpr ( !C::is_complete ) v0 = v0 || cond.mask_inverted(eve::as_<l_t>{});
+
+      if constexpr( N::value == 1 ) return v0.get(0);
       else
       {
-        auto [l, h] = v0.slice();
-        return all_arm_impl(l && h, cond);
+        using u32_2    = wide<std::uint32_t, eve::fixed<2>, arm_64_>;
+        auto as_uint32 = eve::bit_cast(v0.bits(), eve::as_<u32_2> {});
+
+        if constexpr( sizeof(T) * N() > 4u ) as_uint32 = vpmin_u32(as_uint32, as_uint32);
+
+        std::uint32_t combined = vget_lane_u32(as_uint32, 0);
+
+              if constexpr ( sizeof(T) >= 4 )       return (bool)combined;
+        else  if constexpr ( sizeof(T) * N() == 8 ) return !~combined;
+        else
+        {
+          std::uint32_t expected = [] {
+            std::uint64_t res = 1;
+            res <<= sizeof(T) * N() * 8;
+            res -= 1;
+            return res;
+          }();
+
+          return (combined & expected) == expected;
+        }
       }
     }
-    else if constexpr ( N::value == 1 )                     return v0.get(0);
-    else if constexpr ( std::same_as<ABI, arm_64_> )
+  }
+
+  template <typename T, typename N, typename C>
+  EVE_FORCEINLINE bool all_arm_impl(logical<wide<T, N, arm_128_>> v0, C const & cond)
+  {
+    using l_t = logical<wide<T, N, arm_128_>>;
+
+         if constexpr ( C::is_complete && !C::is_inverted ) return true;
+    else if constexpr ( sizeof( T ) >= 2 )
     {
-      using u32_2 = wide<std::uint32_t, eve::fixed<2>, arm_64_>;
-      auto as_uint32 = eve::bit_cast(v0.bits(), eve::as_<u32_2>{});
-
-      as_uint32 = vpmin_u32(as_uint32, as_uint32);
-      std::uint32_t top = vget_lane_u32(as_uint32, 1);
-
-      if constexpr ( sizeof( T ) >= 4 ) return (bool) top;
-      else                              return !~top;
+      using half_e_t = make_integer_t<sizeof(T) / 2, unsigned>;
+      auto halved = eve::convert(v0, eve::as_<eve::logical<half_e_t>>{});
+      return all_arm_impl(halved, cond);
+    }
+    else
+    {
+      if constexpr ( !C::is_complete ) v0 = v0 || cond.mask_inverted(eve::as_<l_t>{});
+      auto [l, h] = v0.slice();
+      return all_arm_impl(l && h, ignore_none);
     }
   }
 
