@@ -14,7 +14,6 @@
 #include <eve/conditional.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/convert.hpp>
-#include <eve/arch/logical.hpp>
 
 namespace eve::detail
 {
@@ -59,6 +58,6 @@ namespace eve::detail
   template<real_scalar_value T, typename N, arm_abi ABI>
   EVE_FORCEINLINE bool all_(EVE_SUPPORTS(neon128_), logical<wide<T, N, ABI>> const &v0) noexcept
   {
-    return all[ignore_none](v0);
+    return all_arm_impl(v0, ignore_none);
   }
 }
