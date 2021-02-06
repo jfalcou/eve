@@ -2,6 +2,7 @@
 #include <eve/wide.hpp>
 #include <iostream>
 #include <random>
+#include <array>
 
 using wide_ft = eve::wide <float, eve::fixed<4>>;
 
@@ -59,6 +60,20 @@ int main()
       << "generator \n"
       << "-> d2(gen, eve::as<wide_ft>()) "<< d2(gen, eve::as<wide_ft>()) << std::endl
       << "-> d2(gen)                     "<< d2(gen, eve::as<float>())    << std::endl;
+  }
+
+  {
+    auto d3 = eve::lognormal_distribution(0.0, 1.0);
+    std::array<double, 4> cov = {1.0, 0.0, 0.0, 1.0};
+    auto [r, plo, phi] = eve::confidence(d3
+                                        , 5.0
+                                        , cov
+                                        , 0.05);
+    std::cout
+      << "confidence \n"
+      << "r          " << r << std::endl
+      << "plo        " << plo<< std::endl
+      << "phi        " << phi<< std::endl;
   }
 
   return 0;

@@ -363,6 +363,22 @@ namespace eve
     {
       return sqrt(var(d));
     }
- }
 
+
+    //////////////////////////////////////////////////////
+    /// confidence
+    template<typename T, typename U, floating_real_value R
+             , floating_real_value V, floating_real_value A,  typename I = T>
+    EVE_FORCEINLINE  auto confidence_(EVE_SUPPORTS(cpu_)
+                                     , lognormal_distribution<T,U,I> const & d
+                                     , R const & x
+                                     , std::array<V, 4> const & cov
+                                     , A const & alpha ) noexcept
+    {
+      R xx = if_else(is_gtz(x), eve::log(x), zero);
+      auto par = d.params();
+      auto dn = normal_distribution(par.m, par.s);
+      return confidence(dn, xx, cov, alpha);
+    }
+  }
 }
