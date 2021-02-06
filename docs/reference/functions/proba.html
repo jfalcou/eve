@@ -46,10 +46,26 @@ Once created a distribution object can be called using a set of EVE object funct
 
 Each constant attribute takes the distribution as input and returns a value or a set of values.
 
-Each functionnal  attribute takes the distribution and a floating value as inputs and returns a floating value.
+Each functionnal attribute (except confidence) takes the distribution and a
+floating value as inputs and returns a floating value.
 
-Note that some of the attributes (not marked as always defined) may not exist because they are undefined for the distribution used
-or currently still not implemented (for instance cf which is waiting for **EVE** complex implementation ist still not present).
+confidence takes 4 parameters
+
+  - d the distribution
+  - a floating value x where the cdf must be evaluated
+  - the covariance matrix of the distribution parameters (considered as estimated) cov
+  - a confidence alpha (0.05, specifies 100*(1-alpha)% confidence)
+
+and return three values:
+
+  - r the cdf of x
+  - rlo lower confidence bound on r
+  - rhi higher confidence bound on r
+
+
+Note that some of the attributes (not marked as always defined) may not exist because they
+are not defined for the distribution used or currently still not implemented (for instance cf
+ which is waiting for **EVE** complex implementation ist still not present).
 
 ## Functions
 
