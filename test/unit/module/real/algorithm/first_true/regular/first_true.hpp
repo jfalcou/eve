@@ -26,6 +26,12 @@ TTS_CASE_TPL("Check eve::first_true", EVE_TYPE)
     TTS_EQUAL(eve::first_true[eve::ignore_none](x), std::nullopt);
   }
 
+  // ignore_all
+  {
+    l_t x(true);
+    TTS_EQUAL(eve::first_true[eve::ignore_all](x), std::nullopt);
+  }
+
   // no ignore/ignore none
   {
     l_t x(true);

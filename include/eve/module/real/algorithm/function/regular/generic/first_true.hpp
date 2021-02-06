@@ -15,16 +15,34 @@
 #include <eve/logical.hpp>
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/function/any.hpp>
 
 #include <optional>
 
 namespace eve::detail
 {
-
   template<logical_simd_value T, relative_conditional_expr C>
   EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_SUPPORTS(cpu_), C const &cond, T const &v) noexcept
   {
          if constexpr ( C::is_complete && !C::is_inverted ) return {};
+    else if constexpr ( has_aggregated_abi_v<T> && C::is_complete)
+    {
+      if (!eve::any(v)) return {};
+
+      auto [l, h] = v.slice();
+
+      std::ptrdiff_t res;
+
+      if (auto h_res = eve::first_true(h)) res = *h_res + T::static_size / 2;
+      if (auto l_res = eve::first_true(l)) res = *l_res;
+
+      return res;
+    }
+    else if constexpr ( has_aggregated_abi_v<T> )
+    {
+      // Issue #535: improve
+      return eve::first_true(cond.mask(eve::as_<T>{}) && v);
+    }
     else
     {
       std::ptrdiff_t first = cond.offset(eve::as_<T>{});
