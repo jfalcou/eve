@@ -96,7 +96,7 @@ TTS_CASE_TPL("Check eve::all[ignore]", EVE_TYPE)
     TTS_EXPECT_NOT(eve::all[eve::ignore_last(T::static_size - 1)](mask));
   }
 
-  // ignore_first
+  // ignore_first, keep_last
   {
     eve::logical<T> mask(true);
 
@@ -106,6 +106,9 @@ TTS_CASE_TPL("Check eve::all[ignore]", EVE_TYPE)
       mask.set(i, false);
       TTS_EXPECT_NOT(eve::all[eve::ignore_first(i)](mask));
       TTS_EXPECT(eve::all[eve::ignore_first(i + 1)](mask));
+
+      TTS_EXPECT_NOT(eve::all[eve::keep_last(T::static_size - i)](mask));
+      TTS_EXPECT(eve::all[eve::keep_last(T::static_size - i - 1)](mask));
     }
   }
 
@@ -119,10 +122,13 @@ TTS_CASE_TPL("Check eve::all[ignore]", EVE_TYPE)
       mask.set(T::static_size - i - 1, false);
       TTS_EXPECT_NOT(eve::all[eve::ignore_last(i)](mask));
       TTS_EXPECT(eve::all[eve::ignore_last(i + 1)](mask));
+
+      TTS_EXPECT_NOT(eve::all[eve::keep_first(T::static_size - i)](mask));
+      TTS_EXPECT(eve::all[eve::keep_first(T::static_size - i - 1)](mask));
     }
   }
 
-  // ignore_extrema_
+  // ignore_extrema_, keep_between
   {
     for (int i = 0; i < T::static_size + 1; ++i)
     {
@@ -137,11 +143,18 @@ TTS_CASE_TPL("Check eve::all[ignore]", EVE_TYPE)
 
         TTS_EXPECT_NOT(eve::all[eve::ignore_extrema_(i, j)](mask));
         TTS_EXPECT(eve::all[eve::ignore_extrema_(i + 1, j)](mask));
+
+        TTS_EXPECT_NOT(eve::all[eve::keep_between(i, T::static_size - j)](mask));
+        TTS_EXPECT(eve::all[eve::keep_between(i + 1, T::static_size - j)](mask));
+
         mask.set(i, true);
 
         mask.set(T::static_size - j - 1, false);
         TTS_EXPECT_NOT(eve::all[eve::ignore_extrema_(i, j)](mask));
         TTS_EXPECT(eve::all[eve::ignore_extrema_(i, j + 1)](mask));
+
+        TTS_EXPECT_NOT(eve::all[eve::keep_between(i, T::static_size - j)](mask));
+        TTS_EXPECT(eve::all[eve::keep_between(i, T::static_size - j - 1)](mask));
       }
     }
   }
