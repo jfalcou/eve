@@ -11,12 +11,18 @@
 
 #include "test.hpp"
 
-#if defined(SPY_ARCH_IS_AMD64) && !defined(EVE_NO_SIMD)
-
 #include <eve/detail/top_bits.hpp>
 #include <eve/function/is_nez.hpp>
 
+#include <eve/function/all.hpp>
+
 #include <array>
+
+# if defined(EVE_NO_SIMD)
+#   define   TOP_BITS_EVE_TYPE EVE_TYPE,eve::wide<std::uint8_t, eve::fixed<128>>
+# else
+#   define TOP_BITS_EVE_TYPE EVE_TYPE
+# endif
 
 using eve::detail::top_bits;
 
@@ -26,7 +32,7 @@ bool expect_array(const std::array<T, N>&)
   return true;
 }
 
-TTS_CASE_TPL("Check top bits raw type", EVE_TYPE)
+TTS_CASE_TPL("Check top bits raw type", TOP_BITS_EVE_TYPE)
 {
   using logical = eve::logical<T>;
   using storage_type = typename top_bits<logical>::storage_type;
@@ -35,10 +41,23 @@ TTS_CASE_TPL("Check top bits raw type", EVE_TYPE)
        if constexpr (eve::has_aggregated_abi_v<logical>) TTS_EXPECT(expect_array(storage_type{}));
   else if constexpr (!ABI::is_wide_logical)              TTS_TYPE_IS(storage_type, typename logical::storage_type);
   else if constexpr (std::same_as<ABI, eve::x86_128_>)   TTS_TYPE_IS(storage_type, std::uint16_t);
-  else                                                   TTS_TYPE_IS(storage_type, std::uint32_t);
+  else if constexpr (std::same_as<ABI, eve::x86_256_>)   TTS_TYPE_IS(storage_type, std::uint32_t);
+  else if constexpr (eve::arm_abi<ABI>)
+  {
+         if constexpr ( T::static_size == 1 )                            TTS_TYPE_IS(storage_type, std::uint8_t);
+    else if constexpr ( T::static_size == 2 && sizeof(EVE_VALUE) == 1 )  TTS_TYPE_IS(storage_type, std::uint16_t);
+    else if constexpr ( T::static_size == 16 && sizeof(EVE_VALUE) == 1 ) TTS_TYPE_IS(storage_type, std::uint64_t);
+    else                                                                 TTS_TYPE_IS(storage_type, std::uint32_t);
+
+  }
+  else
+  {
+    if constexpr (logical::static_size < 64)             TTS_TYPE_IS(storage_type, std::uint32_t);
+    else                                                 TTS_EXPECT(expect_array(storage_type{}));
+  }
 }
 
-TTS_CASE_TPL("Check top bits from logical", EVE_TYPE)
+TTS_CASE_TPL("Check top bits from logical", TOP_BITS_EVE_TYPE)
 {
   using logical = eve::logical<T>;
 
@@ -58,7 +77,7 @@ TTS_CASE_TPL("Check top bits from logical", EVE_TYPE)
   }
 }
 
-TTS_CASE_TPL("top_bits, set", EVE_TYPE)
+TTS_CASE_TPL("top_bits, set", TOP_BITS_EVE_TYPE)
 {
   using logical = eve::logical<T>;
 
@@ -81,25 +100,25 @@ TTS_CASE_TPL("top_bits, set", EVE_TYPE)
   }
 }
 
-TTS_CASE_TPL("Top bits are little endian", EVE_TYPE)
+TTS_CASE_TPL("Top bits are little endian", TOP_BITS_EVE_TYPE)
 {
   using logical = eve::logical<T>;
 
   logical test(false);
   test.set(0, true);
 
-  if constexpr( eve::has_native_abi_v<logical> )
+  if constexpr( top_bits<logical>::is_aggregated )
+  {
+    TTS_PASS("no test for aggregated");
+  }
+  else
   {
     top_bits test_top(test);
     TTS_EXPECT((test_top.storage & 1u));
   }
-  else
-  {
-    TTS_PASS("no test for aggregated");
-  }
 }
 
-TTS_CASE_TPL("bit operations", EVE_TYPE)
+TTS_CASE_TPL("bit operations", TOP_BITS_EVE_TYPE)
 {
   using logical = eve::logical<T>;
 
@@ -116,7 +135,6 @@ TTS_CASE_TPL("bit operations", EVE_TYPE)
       TTS_EQUAL(top_bits{x || y}, (top_bits{x} | top_bits{y}));
 
       TTS_EQUAL(top_bits{!x}, ~top_bits<logical>(x));
-
       // xor
       // test bits to prevent NaN shenanigans
       {
@@ -129,9 +147,9 @@ TTS_CASE_TPL("bit operations", EVE_TYPE)
 
   TTS_EQUAL(top_bits<logical>{eve::ignore_none}, ~top_bits<logical>{eve::ignore_all});
 
-  if constexpr( eve::has_native_abi_v<logical> )
+  if constexpr( !top_bits<logical>::is_aggregated )
   {
-    TTS_EQUAL(0, (~top_bits<logical>{logical{true}}).storage);
+    TTS_EQUAL(0u, (~top_bits<logical>{logical{true}}).storage);
   }
 }
 
@@ -156,7 +174,7 @@ void top_bits_interesting_cases(Test test)
   }
 }
 
-TTS_CASE_TPL("to_logical", EVE_TYPE)
+TTS_CASE_TPL("to_logical", TOP_BITS_EVE_TYPE)
 {
     top_bits_interesting_cases<T>([&](auto x) {
       top_bits mmask {x};
@@ -164,7 +182,7 @@ TTS_CASE_TPL("to_logical", EVE_TYPE)
     });
 }
 
-TTS_CASE_TPL("top_bits from ignore", EVE_TYPE)
+TTS_CASE_TPL("top_bits from ignore", TOP_BITS_EVE_TYPE)
 {
   using logical = eve::logical<T>;
 
@@ -223,7 +241,7 @@ TTS_CASE_TPL("top_bits from ignore", EVE_TYPE)
   }
 }
 
-TTS_CASE_TPL("top_bits from logical + ignore", EVE_TYPE)
+TTS_CASE_TPL("top_bits from logical + ignore", TOP_BITS_EVE_TYPE)
 {
   using logical = eve::logical<T>;
 
@@ -236,7 +254,7 @@ TTS_CASE_TPL("top_bits from logical + ignore", EVE_TYPE)
   TTS_EQUAL(expected, eve::detail::to_logical(actual));
 }
 
-TTS_CASE_TPL("top_bits all", EVE_TYPE)
+TTS_CASE_TPL("top_bits all", TOP_BITS_EVE_TYPE)
 {
   using logical = eve::logical<T>;
 
@@ -252,7 +270,7 @@ TTS_CASE_TPL("top_bits all", EVE_TYPE)
   }
 }
 
-TTS_CASE_TPL("top_bits any", EVE_TYPE)
+TTS_CASE_TPL("top_bits any", TOP_BITS_EVE_TYPE)
 {
   using logical = eve::logical<T>;
 
@@ -268,7 +286,7 @@ TTS_CASE_TPL("top_bits any", EVE_TYPE)
   }
 }
 
-TTS_CASE_TPL("top_bits first_true", EVE_TYPE)
+TTS_CASE_TPL("top_bits first_true", TOP_BITS_EVE_TYPE)
 {
   using logical = eve::logical<T>;
 
@@ -293,7 +311,7 @@ TTS_CASE_TPL("top_bits first_true", EVE_TYPE)
   TTS_EXPECT_NOT(eve::detail::first_true(top_bits(x)));
 }
 
-TTS_CASE_TPL("top_bits count_true", EVE_TYPE)
+TTS_CASE_TPL("top_bits count_true", TOP_BITS_EVE_TYPE)
 {
   top_bits_interesting_cases<T>([&](auto x) {
     std::ptrdiff_t expected = 0;
@@ -303,5 +321,3 @@ TTS_CASE_TPL("top_bits count_true", EVE_TYPE)
     TTS_EQUAL(expected, eve::detail::count_true(mmask));
   });
 }
-
-#endif  // defined(SPY_ARCH_IS_AMD64) && !defined(EVE_NO_SIMD) && !defined(SPY_SIMD_IS_X86_AVX512)
