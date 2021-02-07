@@ -73,7 +73,7 @@ jobs:
   aarch64_gcc_128:
     docker:
       - image: jfalcou/compilers:latest
-      resource_class: large
+    resource_class: large
     steps:
       - checkout
       - run_test:
@@ -84,7 +84,7 @@ jobs:
   aarch64_gcc_64:
     docker:
       - image: jfalcou/compilers:latest
-      resource_class: large
+    resource_class: large
     steps:
       - checkout
       - run_test:
@@ -99,7 +99,7 @@ jobs:
   x86_clang_sse2:
     docker:
       - image: jfalcou/compilers:latest
-      resource_class: large
+    resource_class: large
     steps:
       - checkout
       - run_test:
@@ -110,7 +110,7 @@ jobs:
   x86_clang_sse4:
     docker:
       - image: jfalcou/compilers:latest
-      resource_class: large
+    resource_class: large
     steps:
       - checkout
       - run_test:
@@ -121,7 +121,7 @@ jobs:
   x86_clang_emulation:
     docker:
       - image: jfalcou/compilers:latest
-      resource_class: large
+    resource_class: large
     steps:
       - checkout
       - run_test:
@@ -135,7 +135,7 @@ jobs:
   x86_clang_avx:
     docker:
       - image: jfalcou/compilers:latest
-      resource_class: large
+    resource_class: large
     steps:
       - checkout
       - run_test:
@@ -146,7 +146,7 @@ jobs:
   x86_clang_avx2:
     docker:
       - image: jfalcou/compilers:latest
-      resource_class: large
+    resource_class: large
     steps:
       - checkout
       - run_test:
@@ -157,7 +157,7 @@ jobs:
   x86_clang_avx2_fma:
     docker:
       - image: jfalcou/compilers:latest
-      resource_class: large
+    resource_class: large
     steps:
       - checkout
       - run_test:
@@ -171,7 +171,7 @@ jobs:
   x86_clang_avx512:
     docker:
       - image: jfalcou/compilers:latest
-      resource_class: large
+    resource_class: large
     steps:
       - checkout
       - run_test_avx512:
@@ -182,7 +182,7 @@ jobs:
   x86_clang_avx512_256:
     docker:
       - image: jfalcou/compilers:latest
-      resource_class: large
+    resource_class: large
     steps:
       - checkout
       - run_test_avx512:
@@ -194,7 +194,7 @@ jobs:
   x86_clang_avx512_128:
     docker:
       - image: jfalcou/compilers:latest
-      resource_class: large
+    resource_class: large
     steps:
       - checkout
       - run_test_avx512:
@@ -209,7 +209,7 @@ jobs:
   x86_clang_tiny:
     docker:
       - image: jfalcou/compilers:latest
-      resource_class: large
+    resource_class: large
     steps:
       - checkout
       - run_test:
@@ -221,7 +221,7 @@ jobs:
   x86_clang_small:
     docker:
       - image: jfalcou/compilers:latest
-      resource_class: large
+    resource_class: large
     steps:
       - checkout
       - run_test:
@@ -233,7 +233,7 @@ jobs:
   x86_clang_extra:
     docker:
       - image: jfalcou/compilers:latest
-      resource_class: large
+    resource_class: large
     steps:
       - checkout
       - run_test:
@@ -248,7 +248,7 @@ jobs:
   x86_clang_scalar:
     docker:
       - image: jfalcou/compilers:latest
-      resource_class: large
+    resource_class: large
     steps:
       - checkout
       - run:
