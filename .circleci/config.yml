@@ -31,13 +31,13 @@ commands:
           command:                                                                                    |
             mkdir -p build && cd build                                                                &&
             cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=<< parameters.tool >> -DCMAKE_CXX_FLAGS="<< parameters.options >>" << parameters.setup >>&&
-            ninja unit.real.math.heavy.exe  -k 0 -j 2                                                 &&
-            ninja unit.arch.exe             -k 0      && ctest -R "^unit.arch\..*\.exe"               &&
-            ninja unit.meta.exe             -k 0 -j 8 && ctest -R "^unit.meta\..*\.exe"               &&
-            ninja unit.internals.exe        -k 0 -j 8 && ctest -R "^unit.internals\..*\.exe"    -j 8  &&
-            ninja unit.api.exe              -k 0 -j 8 && ctest -R "^unit.api\..*\.exe"          -j 8  &&
-            ninja doc.exe                   -k 0 -j 8 && ctest -R "^doc\..*\.exe"               -j 8  &&
-            ninja unit.simd.exe             -k 0 -j 6 && ctest -R "^unit\..*\..*\..*\.simd.exe" -j 8
+            ninja unit.real.math.heavy.exe  -k 0 -j 4                                                 &&
+            ninja unit.arch.exe             -k 0 -j 4 && ctest -R "^unit.arch\..*\.exe"         -j 4  &&
+            ninja unit.meta.exe             -k 0 -j 4 && ctest -R "^unit.meta\..*\.exe"         -j 4  &&
+            ninja unit.internals.exe        -k 0 -j 4 && ctest -R "^unit.internals\..*\.exe"    -j 4  &&
+            ninja unit.api.exe              -k 0 -j 4 && ctest -R "^unit.api\..*\.exe"          -j 4  &&
+            ninja doc.exe                   -k 0 -j 4 && ctest -R "^doc\..*\.exe"               -j 4  &&
+            ninja unit.simd.exe             -k 0 -j 4 && ctest -R "^unit\..*\..*\..*\.simd.exe" -j 4
   run_test_avx512:
     description: "Configure and run tests from a CMake Toolchain"
     parameters:
@@ -57,11 +57,11 @@ commands:
           command:                                                                                    |
             mkdir -p build && cd build                                                                &&
             cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=<< parameters.tool >> -DCMAKE_CXX_FLAGS="<< parameters.options >>" << parameters.setup >>&&
-            ninja unit.arch.exe             -k 0      && ctest -R "^unit.arch\..*\.exe"               &&
-            ninja unit.meta.exe             -k 0 -j 8 && ctest -R "^unit.meta\..*\.exe"               &&
-            ninja unit.internals.exe        -k 0 -j 8 && ctest -R "^unit.internals\..*\.exe" -j 8     &&
-            ninja unit.api.exe              -k 0 -j 8 && ctest -R "^unit.api\..*\.exe"       -j 8     &&
-            ninja unit.real.algorithm.exe   -k 0 -j 8 && ctest -R "^unit.real.algorithm\..*\simd.exe"
+            ninja unit.arch.exe             -k 0 -j 4 && ctest -R "^unit.arch\..*\.exe"      -j 4     &&
+            ninja unit.meta.exe             -k 0 -j 4 && ctest -R "^unit.meta\..*\.exe"      -j 4     &&
+            ninja unit.internals.exe        -k 0 -j 4 && ctest -R "^unit.internals\..*\.exe" -j 4     &&
+            ninja unit.api.exe              -k 0 -j 4 && ctest -R "^unit.api\..*\.exe"       -j 4     &&
+            ninja unit.real.algorithm.exe   -k 0 -j 4 && ctest -R "^unit.real.algorithm\..*\simd.exe"
 
 ##==================================================================================================
 ## Jobs list
@@ -256,7 +256,7 @@ jobs:
           command:                                                                              |
             mkdir -p build && cd build                                                          &&
             cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE="../cmake/toolchain/clang.x86.debug.cmake" &&
-            ninja unit.scalar.exe -k 0 -j 8 && ctest -R "^unit\..*\..*\..*\.scalar.exe" -j 8
+            ninja unit.scalar.exe -k 0 -j 4 && ctest -R "^unit\..*\..*\..*\.scalar.exe" -j 4
 
 workflows:
   version: 2
