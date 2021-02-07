@@ -19,11 +19,11 @@
 
 namespace eve::detail
 {
-  template<typename T>
+  template <typename T>
   EVE_FORCEINLINE std::uint32_t every_2nd_byte_arm64(T const& v) noexcept
   {
-    using u8_8  = wide<std::uint8_t,  eve::fixed<8>, arm_64_>;
-    using u32_2 = wide<std::uint32_t, eve::fixed<2>, arm_64_>;
+    using u8_8  = typename T::template rebind<std::uint8_t,  eve::fixed<8>>;
+    using u32_2 = typename T::template rebind<std::uint32_t, eve::fixed<2>>;
 
     auto bytes    = eve::bit_cast(v, eve::as_<u8_8>{});
     auto selected = vtbl1_u8(bytes, u8_8(0, 2, 4, 6, 0, 0, 0, 0));
@@ -35,9 +35,9 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE std::uint32_t every_4th_byte_arm128(T const& v) noexcept
   {
-    using u8_8  = wide<std::uint8_t,  eve::fixed<8>, arm_64_>;
-    using u8_16 = wide<std::uint8_t,  eve::fixed<16>, arm_128_>;
-    using u32_2 = wide<std::uint32_t, eve::fixed<2>, arm_64_>;
+    using u8_8  = typename T::template rebind<std::uint8_t,  eve::fixed<8>>;
+    using u8_16 = typename T::template rebind<std::uint8_t,  eve::fixed<16>>;
+    using u32_2 = typename T::template rebind<std::uint32_t, eve::fixed<2>>;
 
     auto bytes = eve::bit_cast(v, eve::as_<u8_16>{});
 
@@ -51,8 +51,9 @@ namespace eve::detail
   template<real_scalar_value T, typename N>
   EVE_FORCEINLINE auto movemask (logical<wide<T, N, arm_64_>> const &v) noexcept
   {
-    using u16_4 = wide<std::uint16_t, eve::fixed<2>, arm_64_>;
-    using u32_2 = wide<std::uint32_t, eve::fixed<2>, arm_64_>;
+    using w_t = wide<T, N, arm_64_>;
+    using u16_4 = typename w_t::template rebind<std::uint16_t, eve::fixed<4>>;
+    using u32_2 = typename w_t::template rebind<std::uint32_t, eve::fixed<2>>;
 
          if constexpr ( N() == 1 ) return std::pair{ (std::uint8_t) v.bits().get(0), eve::lane<8> };
     else if constexpr ( sizeof(T) == 1 && N() == 2 )
@@ -67,7 +68,7 @@ namespace eve::detail
     }
     else if constexpr ( sizeof(T) >= 2 )
     {
-      return std::pair{ every_2nd_byte_arm64(v), eve::lane<sizeof(T) * 4> };
+      return std::pair{ every_2nd_byte_arm64(v.bits()), eve::lane<sizeof(T) * 4> };
     }
     else   // chars
     {
@@ -81,14 +82,15 @@ namespace eve::detail
   template<real_scalar_value T, typename N>
   EVE_FORCEINLINE auto movemask (logical<wide<T, N, arm_128_>> const &v) noexcept
   {
-    using u8_8  = wide<std::uint8_t,  eve::fixed<8>,  arm_64_>;
-    using u16_8 = wide<std::uint16_t, eve::fixed<8>,  arm_128_>;
-    using u32_4 = wide<std::uint32_t, eve::fixed<4>,  arm_128_>;
-    using u64_1 = wide<std::uint64_t, eve::fixed<1>,  arm_64_>;
+    using w_t = wide<T, N, arm_128_>;
+    using u8_8  = typename w_t::template rebind <std::uint8_t,  eve::fixed<8>>;
+    using u16_8 = typename w_t::template rebind <std::uint16_t, eve::fixed<8>>;
+    using u32_4 = typename w_t::template rebind <std::uint32_t, eve::fixed<4>>;
+    using u64_1 = typename w_t::template rebind <std::uint64_t, eve::fixed<1>>;
 
     if constexpr ( sizeof(T) >= 4 )
     {
-      return std::pair{ every_4th_byte_arm128(v), eve::lane<sizeof(T) * 2> };
+      return std::pair{ every_4th_byte_arm128(v.bits()), eve::lane<sizeof(T) * 2> };
     }
     else if constexpr ( sizeof(T) == 2 )
     {
