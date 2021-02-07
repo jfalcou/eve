@@ -31,13 +31,13 @@ commands:
           command:                                                                                    |
             mkdir -p build && cd build                                                                &&
             cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=<< parameters.tool >> -DCMAKE_CXX_FLAGS="<< parameters.options >>" << parameters.setup >>&&
-            ninja unit.real.math.heavy.exe  -k 0 -j 4                                                 &&
-            ninja unit.arch.exe             -k 0 -j 4 && ctest -R "^unit.arch\..*\.exe"         -j 4  &&
-            ninja unit.meta.exe             -k 0 -j 4 && ctest -R "^unit.meta\..*\.exe"         -j 4  &&
-            ninja unit.internals.exe        -k 0 -j 4 && ctest -R "^unit.internals\..*\.exe"    -j 4  &&
-            ninja unit.api.exe              -k 0 -j 4 && ctest -R "^unit.api\..*\.exe"          -j 4  &&
-            ninja doc.exe                   -k 0 -j 4 && ctest -R "^doc\..*\.exe"               -j 4  &&
-            ninja unit.simd.exe             -k 0 -j 4 && ctest -R "^unit\..*\..*\..*\.simd.exe" -j 4
+            ninja unit.real.math.heavy.exe  -k 0 -j 2                                                 &&
+            ninja unit.arch.exe             -k 0 -j 8 && ctest -R "^unit.arch\..*\.exe"         -j 8  &&
+            ninja unit.meta.exe             -k 0 -j 8 && ctest -R "^unit.meta\..*\.exe"         -j 8  &&
+            ninja unit.internals.exe        -k 0 -j 8 && ctest -R "^unit.internals\..*\.exe"    -j 8  &&
+            ninja unit.api.exe              -k 0 -j 8 && ctest -R "^unit.api\..*\.exe"          -j 8  &&
+            ninja doc.exe                   -k 0 -j 8 && ctest -R "^doc\..*\.exe"               -j 8  &&
+            ninja unit.simd.exe             -k 0 -j 8 && ctest -R "^unit\..*\..*\..*\.simd.exe" -j 8
   run_test_avx512:
     description: "Configure and run tests from a CMake Toolchain"
     parameters:
@@ -57,11 +57,11 @@ commands:
           command:                                                                                    |
             mkdir -p build && cd build                                                                &&
             cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=<< parameters.tool >> -DCMAKE_CXX_FLAGS="<< parameters.options >>" << parameters.setup >>&&
-            ninja unit.arch.exe             -k 0 -j 4 && ctest -R "^unit.arch\..*\.exe"      -j 4     &&
-            ninja unit.meta.exe             -k 0 -j 4 && ctest -R "^unit.meta\..*\.exe"      -j 4     &&
-            ninja unit.internals.exe        -k 0 -j 4 && ctest -R "^unit.internals\..*\.exe" -j 4     &&
-            ninja unit.api.exe              -k 0 -j 4 && ctest -R "^unit.api\..*\.exe"       -j 4     &&
-            ninja unit.real.algorithm.exe   -k 0 -j 4 && ctest -R "^unit.real.algorithm\..*\simd.exe"
+            ninja unit.arch.exe             -k 0 -j 8 && ctest -R "^unit.arch\..*\.exe"      -j 8     &&
+            ninja unit.meta.exe             -k 0 -j 8 && ctest -R "^unit.meta\..*\.exe"      -j 8     &&
+            ninja unit.internals.exe        -k 0 -j 8 && ctest -R "^unit.internals\..*\.exe" -j 8     &&
+            ninja unit.api.exe              -k 0 -j 8 && ctest -R "^unit.api\..*\.exe"       -j 8     &&
+            ninja unit.real.algorithm.exe   -k 0 -j 8 && ctest -R "^unit.real.algorithm\..*\simd.exe"
 
 ##==================================================================================================
 ## Jobs list
@@ -73,7 +73,6 @@ jobs:
   aarch64_gcc_128:
     docker:
       - image: jfalcou/compilers:latest
-    resource_class: large
     steps:
       - checkout
       - run_test:
@@ -84,7 +83,6 @@ jobs:
   aarch64_gcc_64:
     docker:
       - image: jfalcou/compilers:latest
-    resource_class: large
     steps:
       - checkout
       - run_test:
@@ -99,7 +97,6 @@ jobs:
   x86_clang_sse2:
     docker:
       - image: jfalcou/compilers:latest
-    resource_class: large
     steps:
       - checkout
       - run_test:
@@ -110,7 +107,6 @@ jobs:
   x86_clang_sse4:
     docker:
       - image: jfalcou/compilers:latest
-    resource_class: large
     steps:
       - checkout
       - run_test:
@@ -121,7 +117,6 @@ jobs:
   x86_clang_emulation:
     docker:
       - image: jfalcou/compilers:latest
-    resource_class: large
     steps:
       - checkout
       - run_test:
@@ -135,7 +130,6 @@ jobs:
   x86_clang_avx:
     docker:
       - image: jfalcou/compilers:latest
-    resource_class: large
     steps:
       - checkout
       - run_test:
@@ -146,7 +140,6 @@ jobs:
   x86_clang_avx2:
     docker:
       - image: jfalcou/compilers:latest
-    resource_class: large
     steps:
       - checkout
       - run_test:
@@ -157,7 +150,6 @@ jobs:
   x86_clang_avx2_fma:
     docker:
       - image: jfalcou/compilers:latest
-    resource_class: large
     steps:
       - checkout
       - run_test:
@@ -171,7 +163,6 @@ jobs:
   x86_clang_avx512:
     docker:
       - image: jfalcou/compilers:latest
-    resource_class: large
     steps:
       - checkout
       - run_test_avx512:
@@ -182,7 +173,6 @@ jobs:
   x86_clang_avx512_256:
     docker:
       - image: jfalcou/compilers:latest
-    resource_class: large
     steps:
       - checkout
       - run_test_avx512:
@@ -194,7 +184,6 @@ jobs:
   x86_clang_avx512_128:
     docker:
       - image: jfalcou/compilers:latest
-    resource_class: large
     steps:
       - checkout
       - run_test_avx512:
@@ -209,7 +198,6 @@ jobs:
   x86_clang_tiny:
     docker:
       - image: jfalcou/compilers:latest
-    resource_class: large
     steps:
       - checkout
       - run_test:
@@ -221,7 +209,6 @@ jobs:
   x86_clang_small:
     docker:
       - image: jfalcou/compilers:latest
-    resource_class: large
     steps:
       - checkout
       - run_test:
@@ -233,7 +220,6 @@ jobs:
   x86_clang_extra:
     docker:
       - image: jfalcou/compilers:latest
-    resource_class: large
     steps:
       - checkout
       - run_test:
@@ -248,7 +234,6 @@ jobs:
   x86_clang_scalar:
     docker:
       - image: jfalcou/compilers:latest
-    resource_class: large
     steps:
       - checkout
       - run:
@@ -256,7 +241,7 @@ jobs:
           command:                                                                              |
             mkdir -p build && cd build                                                          &&
             cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE="../cmake/toolchain/clang.x86.debug.cmake" &&
-            ninja unit.scalar.exe -k 0 -j 4 && ctest -R "^unit\..*\..*\..*\.scalar.exe" -j 4
+            ninja unit.scalar.exe -k 0 -j 8 && ctest -R "^unit\..*\..*\..*\.scalar.exe" -j 8
 
 workflows:
   version: 2
