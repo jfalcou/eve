@@ -22,9 +22,8 @@ add_dependencies(unit.real.algorithm.exe  unit.real.algorithm.simd.exe   )
 ##==================================================================================================
 ## Algoritms function unit tests
 ##==================================================================================================
-make_all_units(ROOT unit.real.algorithm NAME all         ARCH scalar simd TYPES ${all_types} )
-make_all_units(ROOT unit.real.algorithm NAME any         ARCH scalar simd TYPES ${all_types} )
-make_all_units(ROOT unit.real.algorithm NAME nbtrue      ARCH scalar simd TYPES ${all_types} )
-make_all_units(ROOT unit.real.algorithm NAME first_true  ARCH scalar simd TYPES ${all_types} )
-make_all_units(ROOT unit.real.algorithm NAME none        ARCH scalar simd TYPES ${all_types} )
-make_all_units(ROOT unit.real.algorithm NAME maximum     ARCH scalar simd TYPES ${all_types} )
+make_all_units(ROOT unit.real.algorithm NAME all      ARCH scalar simd TYPES ${all_types} )
+make_all_units(ROOT unit.real.algorithm NAME any      ARCH scalar simd TYPES ${all_types} )
+make_all_units(ROOT unit.real.algorithm NAME nbtrue   ARCH scalar simd TYPES ${all_types} )
+make_all_units(ROOT unit.real.algorithm NAME none     ARCH scalar simd TYPES ${all_types} )
+make_all_units(ROOT unit.real.algorithm NAME maximum  ARCH scalar simd TYPES ${all_types} )

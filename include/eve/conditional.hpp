@@ -604,9 +604,4 @@ namespace eve
   {
     return {a.count_, b.count_};
   }
-
-  constexpr EVE_FORCEINLINE ignore_extrema_ operator&&( ignore_last_ b, ignore_first_ a) noexcept
-  {
-    return a && b;
-  }
 }
