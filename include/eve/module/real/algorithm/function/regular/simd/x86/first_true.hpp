@@ -23,6 +23,8 @@ namespace eve::detail
     if constexpr ( C::is_complete && !C::is_inverted ) return {};
     else
     {
+      // We override here because there top_bits is already the optimial test
+      // and there is no reason to do any before hand.
       top_bits mmask{v, cond};
       return eve::detail::first_true(mmask);
     }
