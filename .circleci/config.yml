@@ -73,6 +73,7 @@ jobs:
   aarch64_gcc_128:
     docker:
       - image: jfalcou/compilers:latest
+      resource_class: large
     steps:
       - checkout
       - run_test:
@@ -83,6 +84,7 @@ jobs:
   aarch64_gcc_64:
     docker:
       - image: jfalcou/compilers:latest
+      resource_class: large
     steps:
       - checkout
       - run_test:
@@ -97,6 +99,7 @@ jobs:
   x86_clang_sse2:
     docker:
       - image: jfalcou/compilers:latest
+      resource_class: large
     steps:
       - checkout
       - run_test:
@@ -107,6 +110,7 @@ jobs:
   x86_clang_sse4:
     docker:
       - image: jfalcou/compilers:latest
+      resource_class: large
     steps:
       - checkout
       - run_test:
@@ -117,6 +121,7 @@ jobs:
   x86_clang_emulation:
     docker:
       - image: jfalcou/compilers:latest
+      resource_class: large
     steps:
       - checkout
       - run_test:
@@ -130,6 +135,7 @@ jobs:
   x86_clang_avx:
     docker:
       - image: jfalcou/compilers:latest
+      resource_class: large
     steps:
       - checkout
       - run_test:
@@ -140,6 +146,7 @@ jobs:
   x86_clang_avx2:
     docker:
       - image: jfalcou/compilers:latest
+      resource_class: large
     steps:
       - checkout
       - run_test:
@@ -150,6 +157,7 @@ jobs:
   x86_clang_avx2_fma:
     docker:
       - image: jfalcou/compilers:latest
+      resource_class: large
     steps:
       - checkout
       - run_test:
@@ -163,6 +171,7 @@ jobs:
   x86_clang_avx512:
     docker:
       - image: jfalcou/compilers:latest
+      resource_class: large
     steps:
       - checkout
       - run_test_avx512:
@@ -173,6 +182,7 @@ jobs:
   x86_clang_avx512_256:
     docker:
       - image: jfalcou/compilers:latest
+      resource_class: large
     steps:
       - checkout
       - run_test_avx512:
@@ -184,6 +194,7 @@ jobs:
   x86_clang_avx512_128:
     docker:
       - image: jfalcou/compilers:latest
+      resource_class: large
     steps:
       - checkout
       - run_test_avx512:
@@ -198,6 +209,7 @@ jobs:
   x86_clang_tiny:
     docker:
       - image: jfalcou/compilers:latest
+      resource_class: large
     steps:
       - checkout
       - run_test:
@@ -209,6 +221,7 @@ jobs:
   x86_clang_small:
     docker:
       - image: jfalcou/compilers:latest
+      resource_class: large
     steps:
       - checkout
       - run_test:
@@ -220,6 +233,7 @@ jobs:
   x86_clang_extra:
     docker:
       - image: jfalcou/compilers:latest
+      resource_class: large
     steps:
       - checkout
       - run_test:
@@ -234,6 +248,7 @@ jobs:
   x86_clang_scalar:
     docker:
       - image: jfalcou/compilers:latest
+      resource_class: large
     steps:
       - checkout
       - run:
@@ -247,42 +262,69 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - aarch64_gcc_128
-      - aarch64_gcc_64
+      - aarch64_gcc_128:
+          filters:
+            branches:
+              ignore: develop
+      - aarch64_gcc_64:
+          filters:
+            branches:
+              ignore: develop
       ######################
       - x86_clang_scalar:
-          requires:
-            - aarch64_gcc_128
+          filters:
+            branches:
+              ignore: develop
       ######################
-      - x86_clang_sse2
+      - x86_clang_sse2:
+          filters:
+            branches:
+              ignore: develop
       - x86_clang_sse4:
-          requires:
-            - x86_clang_sse2
+          filters:
+            branches:
+              ignore: develop
       - x86_clang_emulation:
-          requires:
-            - x86_clang_sse4
+          filters:
+            branches:
+              ignore: develop
       ######################
-      - x86_clang_avx
+      - x86_clang_avx:
+          filters:
+            branches:
+              ignore: develop
       - x86_clang_avx2:
-          requires:
-            - x86_clang_avx
+          filters:
+            branches:
+              ignore: develop
       - x86_clang_avx2_fma:
-          requires:
-            - x86_clang_avx2
+          filters:
+            branches:
+              ignore: develop
       ######################
-      - x86_clang_tiny
+      - x86_clang_tiny:
+          filters:
+            branches:
+              ignore: develop
       - x86_clang_small:
-          requires:
-            - x86_clang_tiny
+          filters:
+            branches:
+              ignore: develop
       - x86_clang_extra:
-          requires:
-            - x86_clang_small
+          filters:
+            branches:
+              ignore: develop
       ######################
-      - x86_clang_avx512
+      - x86_clang_avx512:
+          filters:
+            branches:
+              ignore: develop
       - x86_clang_avx512_256:
-          requires:
-            - x86_clang_avx512
+          filters:
+            branches:
+              ignore: develop
       - x86_clang_avx512_128:
-          requires:
-            - x86_clang_avx512_256
+          filters:
+            branches:
+              ignore: develop
       ######################
