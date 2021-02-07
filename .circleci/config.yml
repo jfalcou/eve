@@ -32,12 +32,12 @@ commands:
             mkdir -p build && cd build                                                                &&
             cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=<< parameters.tool >> -DCMAKE_CXX_FLAGS="<< parameters.options >>" << parameters.setup >>&&
             ninja unit.real.math.heavy.exe  -k 0 -j 2                                                 &&
-            ninja unit.arch.exe             -k 0      && ctest -R "^unit.arch\..*\.exe"               &&
-            ninja unit.meta.exe             -k 0 -j 8 && ctest -R "^unit.meta\..*\.exe"               &&
+            ninja unit.arch.exe             -k 0 -j 8 && ctest -R "^unit.arch\..*\.exe"         -j 8  &&
+            ninja unit.meta.exe             -k 0 -j 8 && ctest -R "^unit.meta\..*\.exe"         -j 8  &&
             ninja unit.internals.exe        -k 0 -j 8 && ctest -R "^unit.internals\..*\.exe"    -j 8  &&
             ninja unit.api.exe              -k 0 -j 8 && ctest -R "^unit.api\..*\.exe"          -j 8  &&
             ninja doc.exe                   -k 0 -j 8 && ctest -R "^doc\..*\.exe"               -j 8  &&
-            ninja unit.simd.exe             -k 0 -j 6 && ctest -R "^unit\..*\..*\..*\.simd.exe" -j 8
+            ninja unit.simd.exe             -k 0 -j 8 && ctest -R "^unit\..*\..*\..*\.simd.exe" -j 8
   run_test_avx512:
     description: "Configure and run tests from a CMake Toolchain"
     parameters:
@@ -57,8 +57,8 @@ commands:
           command:                                                                                    |
             mkdir -p build && cd build                                                                &&
             cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=<< parameters.tool >> -DCMAKE_CXX_FLAGS="<< parameters.options >>" << parameters.setup >>&&
-            ninja unit.arch.exe             -k 0      && ctest -R "^unit.arch\..*\.exe"               &&
-            ninja unit.meta.exe             -k 0 -j 8 && ctest -R "^unit.meta\..*\.exe"               &&
+            ninja unit.arch.exe             -k 0 -j 8 && ctest -R "^unit.arch\..*\.exe"      -j 8     &&
+            ninja unit.meta.exe             -k 0 -j 8 && ctest -R "^unit.meta\..*\.exe"      -j 8     &&
             ninja unit.internals.exe        -k 0 -j 8 && ctest -R "^unit.internals\..*\.exe" -j 8     &&
             ninja unit.api.exe              -k 0 -j 8 && ctest -R "^unit.api\..*\.exe"       -j 8     &&
             ninja unit.real.algorithm.exe   -k 0 -j 8 && ctest -R "^unit.real.algorithm\..*\simd.exe"
@@ -247,42 +247,69 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - aarch64_gcc_128
-      - aarch64_gcc_64
+      - aarch64_gcc_128:
+          filters:
+            branches:
+              ignore: develop
+      - aarch64_gcc_64:
+          filters:
+            branches:
+              ignore: develop
       ######################
       - x86_clang_scalar:
-          requires:
-            - aarch64_gcc_128
+          filters:
+            branches:
+              ignore: develop
       ######################
-      - x86_clang_sse2
+      - x86_clang_sse2:
+          filters:
+            branches:
+              ignore: develop
       - x86_clang_sse4:
-          requires:
-            - x86_clang_sse2
+          filters:
+            branches:
+              ignore: develop
       - x86_clang_emulation:
-          requires:
-            - x86_clang_sse4
+          filters:
+            branches:
+              ignore: develop
       ######################
-      - x86_clang_avx
+      - x86_clang_avx:
+          filters:
+            branches:
+              ignore: develop
       - x86_clang_avx2:
-          requires:
-            - x86_clang_avx
+          filters:
+            branches:
+              ignore: develop
       - x86_clang_avx2_fma:
-          requires:
-            - x86_clang_avx2
+          filters:
+            branches:
+              ignore: develop
       ######################
-      - x86_clang_tiny
+      - x86_clang_tiny:
+          filters:
+            branches:
+              ignore: develop
       - x86_clang_small:
-          requires:
-            - x86_clang_tiny
+          filters:
+            branches:
+              ignore: develop
       - x86_clang_extra:
-          requires:
-            - x86_clang_small
+          filters:
+            branches:
+              ignore: develop
       ######################
-      - x86_clang_avx512
+      - x86_clang_avx512:
+          filters:
+            branches:
+              ignore: develop
       - x86_clang_avx512_256:
-          requires:
-            - x86_clang_avx512
+          filters:
+            branches:
+              ignore: develop
       - x86_clang_avx512_128:
-          requires:
-            - x86_clang_avx512_256
+          filters:
+            branches:
+              ignore: develop
       ######################
