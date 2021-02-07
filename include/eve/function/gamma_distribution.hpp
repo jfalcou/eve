@@ -10,5 +10,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/gamma_p.hpp>
-#include <eve/module/real/special/function/diff/generic/gamma_p.hpp>
+#include <eve/arch.hpp>
+#include <eve/detail/overload.hpp>
+
+#include <eve/module/real/proba/function/regular/generic/gamma_distribution.hpp>
