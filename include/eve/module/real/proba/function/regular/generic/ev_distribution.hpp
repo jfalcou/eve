@@ -20,24 +20,26 @@
 #include <eve/concept/value.hpp>
 #include <eve/function/all.hpp>
 #include <eve/function/normal_distribution.hpp>
+#include <eve/function/fma.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/exp.hpp>
 #include <eve/function/expm1.hpp>
 #include <eve/function/log.hpp>
-#include <eve/function/log2.hpp>
+#include <eve/function/log1p.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/one.hpp>
 #include <concepts>
+#include <iostream>
 
 namespace eve
 {
  template < typename T, typename U, typename Internal = T>
-  struct lognormal_distribution{};
+  struct ev_distribution{};
 
   template < floating_real_value T, floating_real_value U>
   requires  compatible_values<T, U>
-  struct lognormal_distribution<T, U>
+  struct ev_distribution<T, U>
   {
     using is_distribution_t = void;
     using m_type = T;
@@ -45,7 +47,7 @@ namespace eve
     using value_type = common_compatible_t<T, U>;
     using parameters = struct { value_type m; value_type s;};
 
-    lognormal_distribution(T m_,  U s_)
+    ev_distribution(T m_,  U s_)
       : m(m_), s(s_)
     {
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
@@ -60,8 +62,7 @@ namespace eve
     template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
       requires scalar_value<value_type>
     {
-      auto n = normal_distribution(m, s);
-      return exp(n(gen, as_<R>()));
+      return invcdf(*this, detail::urg01(gen, as_<R>()));
     }
 
     m_type m;
@@ -69,7 +70,7 @@ namespace eve
   };
 
   template < floating_real_value U>
-  struct lognormal_distribution<callable_zero_, U>
+  struct ev_distribution<callable_zero_, U>
   {
     using is_distribution_t = void;
     using m_type = callable_zero_;
@@ -77,13 +78,13 @@ namespace eve
     using value_type = U;
     using parameters = struct { callable_zero_ m;  value_type s; };
 
-    lognormal_distribution(callable_zero_ const&, U s_)
+    ev_distribution(callable_zero_ const&, U s_)
       : s(s_)
     {
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
     }
 
-    lognormal_distribution(parameters const & p)
+    ev_distribution(parameters const & p)
       : s(p.s)
     {
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
@@ -92,8 +93,7 @@ namespace eve
     template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
       requires scalar_value<value_type>
     {
-      auto n = normal_distribution(zero, s);
-      return exp(n(gen, as_<R>()));
+      return invcdf(*this, detail::urg01(gen, as_<R>()));
     }
 
     parameters params() const noexcept
@@ -106,7 +106,7 @@ namespace eve
   };
 
   template < floating_real_value T>
-  struct lognormal_distribution<T, callable_one_>
+  struct ev_distribution<T, callable_one_>
   {
     using is_distribution_t = void;
     using m_type = T;
@@ -114,13 +114,13 @@ namespace eve
     using value_type = T;
     using parameters = struct { value_type m; callable_one_ s; };
 
-    lognormal_distribution(T m_, callable_one_ const &)
+    ev_distribution(T m_, callable_one_ const &)
       : m(m_)
     {
       EVE_ASSERT(all(is_finite(m)), "m must be finite");
     }
 
-    lognormal_distribution(parameters const & p)
+    ev_distribution(parameters const & p)
       : m(p.m)
     {
       EVE_ASSERT(all(is_finite(m)), "m must be finite");
@@ -129,8 +129,7 @@ namespace eve
     template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
       requires scalar_value<value_type>
     {
-      auto n = normal_distribution(m, one);
-      return exp(n(gen, as_<R>()));
+      return invcdf(*this, detail::urg01(gen, as_<R>()));
     }
 
     parameters params() const noexcept
@@ -141,10 +140,10 @@ namespace eve
     m_type m;
   };
 
-  template<typename T, typename U>  lognormal_distribution(T,U) -> lognormal_distribution<T,U>;
+  template<typename T, typename U>  ev_distribution(T,U) -> ev_distribution<T,U>;
 
   template < floating_real_value T>
-  struct lognormal_distribution<callable_zero_, callable_one_, T>
+  struct ev_distribution<callable_zero_, callable_one_, T>
   {
     using is_distribution_t = void;
     using m_type = callable_zero_;
@@ -155,8 +154,7 @@ namespace eve
     template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
       requires scalar_value<value_type>
     {
-      auto n = normal_distribution_01<T>;
-      return exp(n(gen, as_<R>()));
+      return invcdf(*this, detail::urg01(gen, as_<R>()));
     }
 
     parameters params() const noexcept
@@ -164,14 +162,14 @@ namespace eve
       return { .m = zero, .s = one };
     }
 
-    constexpr lognormal_distribution( as_<T> const&) {}
+    constexpr ev_distribution( as_<T> const&) {}
   };
 
 
-  template<typename T>  lognormal_distribution(as_<T> const&) -> lognormal_distribution<callable_zero_, callable_one_, T>;
+  template<typename T>  ev_distribution(as_<T> const&) -> ev_distribution<callable_zero_, callable_one_, T>;
 
   template<floating_real_value T>
-  inline constexpr auto lognormal_distribution_01 = lognormal_distribution<callable_zero_, callable_one_, T>(as_<T>{});
+  inline constexpr auto ev_distribution_01 = ev_distribution<callable_zero_, callable_one_, T>(as_<T>{});
 
   namespace detail
   {
@@ -180,28 +178,17 @@ namespace eve
     template<typename T, typename U, floating_value V
              , typename I = T>
     EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
-                              , lognormal_distribution<T, U, I> const & d
+                              , ev_distribution<T, U, I> const & d
                               , V const &x ) noexcept
     {
-      auto [m, s] = d.params();
-      if constexpr(floating_value<T> || floating_value<U>)
-        return if_else(is_gtz(x), cdf(normal_distribution(m, s), eve::log(x)), zero);
+      if constexpr(floating_value<T> && floating_value<U>)
+        return -expm1(-exp((x-d.m)/d.s));
+      else if constexpr(floating_value<U>)
+        return -expm1(-exp(x/d.s));
+      else if constexpr(floating_value<T>)
+        return -expm1(-exp(x-d.m));
       else
-        return if_else(is_gtz(x), cdf(normal_distribution_01<I>, eve::log(x)), zero);
-    }
-
-    template<typename T, typename U, floating_value V
-             , typename I = T>
-    EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
-                              , raw_type const &
-                              , lognormal_distribution<T, U, I> const &d
-                              , V const &x ) noexcept
-    {
-      auto [m, s] = d.params();
-      if constexpr(floating_value<T> || floating_value<U>)
-        return if_else(is_gtz(x), raw(cdf)(normal_distribution(m, s), eve::log(x)), zero);
-      else
-        return if_else(is_gtz(x), raw(cdf)(normal_distribution_01<I>, eve::log(x)), zero);
+        return -expm1(-exp(x));
     }
 
     //////////////////////////////////////////////////////
@@ -209,14 +196,32 @@ namespace eve
     template<typename T, typename U, floating_value V
              , typename I = T>
     EVE_FORCEINLINE  auto pdf_(EVE_SUPPORTS(cpu_)
-                              , lognormal_distribution<T, U, I> const & d
-                              , V const &x ) noexcept
+                                 , ev_distribution<T, U, I> const & d
+                                 , V const &x ) noexcept
     {
-      auto [m, s] = d.params();
-      if constexpr(floating_value<T> || floating_value<U>)
-        return  if_else(is_gtz(x), pdf(normal_distribution(m, s), eve::log(x))/x,  zero);
+      if constexpr(floating_value<T> && floating_value<U>)
+      {
+        auto invs =  rec(d.s);
+        auto red = exp((x-d.m)*invs);
+        return red*exp(-red)*invs;
+      }
+      else if constexpr(floating_value<U>)
+      {
+        auto invs =  rec(d.s);
+        auto red = exp(x*invs);
+        return red*exp(-red)*invs;
+
+      }
+      else if constexpr(floating_value<T>)
+      {
+        auto red = exp(x-d.m);
+        return red*exp(-red);
+      }
       else
-        return if_else(is_gtz(x), pdf(normal_distribution_01<I>, eve::log(x))/x, zero);
+      {
+        auto red = exp(x);
+        return red*exp(-red);
+      }
     }
 
     //////////////////////////////////////////////////////
@@ -224,27 +229,41 @@ namespace eve
     template<typename T, typename U, floating_value V
              , typename I = T>
     EVE_FORCEINLINE  auto invcdf_(EVE_SUPPORTS(cpu_)
-                                 , lognormal_distribution<T, U, I> const & d
+                                 , ev_distribution<T, U, I> const & d
                                  , V const &x ) noexcept
     {
-      auto [m, s] = d.params();
-      if constexpr(floating_value<T> || floating_value<U>)
-        return eve::exp(invcdf(normal_distribution(m, s), x));
+      if constexpr(floating_value<T> && floating_value<U>)
+      {
+        return fma(log(-log1p(-x)), d.s, d.m);
+      }
+      else if constexpr(std::same_as<T, callable_zero_> && floating_value<U>)
+      {
+        return log(-log1p(-x))*d.s;
+      }
+      else if constexpr(std::same_as<U, callable_one_> && floating_value<T>)
+      {
+        return log(-log1p(-x))+d.m;
+      }
       else
-        return  eve::exp(invcdf(normal_distribution_01<I>, x));
+        return log(-log1p(-x));
     }
 
     //////////////////////////////////////////////////////
     /// median
     template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto median_(EVE_SUPPORTS(cpu_)
-                                 , lognormal_distribution<T,U,I> const & d) noexcept
+                                  , ev_distribution<T,U,I> const & d) noexcept
     {
-      auto [m, s] = d.params();
-      if constexpr(floating_value<T> || floating_value<U>)
-        return exp(median(normal_distribution(m, s)));
+      using v_t = typename ev_distribution<T,U,I>::value_type;
+      v_t mll2 = v_t(3.665129205816643e-01);
+      if constexpr (floating_value<T>)
+        return  fma(d.s, mll2, d.m);
+      else if constexpr (floating_value<U>)
+        return  d.s* mll2;
+      else if constexpr (floating_value<T>)
+        return mll2+d.m;
       else
-        return exp(median(normal_distribution_01<I>));
+        return mll2;
     }
 
 
@@ -252,133 +271,118 @@ namespace eve
     /// mean
     template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto mean_(EVE_SUPPORTS(cpu_)
-                               , lognormal_distribution<T,U,I> const &d) noexcept
+                               , ev_distribution<T,U,I> const &d) noexcept
     {
-      if constexpr (floating_value<U>)
-        return median(d)*exp(sqr(d.s)*half(as<U>()));
+      using v_t = typename ev_distribution<T,U,I>::value_type;
+      v_t gamma(0.57721566490153286);
+      if constexpr (floating_value<T>)
+        return  fma(d.s, gamma, d.m);
+      else if constexpr (floating_value<U>)
+        return  d.s* gamma;
+      else if constexpr (floating_value<T>)
+        return gamma+d.m;
       else
-      {
-        auto sqrte = I(1.64872127070012814684865078781416357165377610071014);
-        return median(d)*sqrte;
-      }
+        return gamma;
     }
 
     //////////////////////////////////////////////////////
     /// mode
     template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto mode_(EVE_SUPPORTS(cpu_)
-                               , lognormal_distribution<T,U,I> const & d) noexcept
+                               , ev_distribution<T,U,I> const & d) noexcept
     {
-      if constexpr (floating_value<U>)
-        return median(d)*exp(-sqr(d.s));
-      else
-      {
-        value_type inve = I(0.36787944117144232159552377016146086744581113103176);
-        return median(d)**inve;
-      }
+      if constexpr (floating_value<T>)
+        return d.m;
+      return
+        zero(as<I>());
     }
 
     //////////////////////////////////////////////////////
-    /// var
+    /// entropy
     template<typename T, typename U,  typename I = T>
-    EVE_FORCEINLINE  auto var_(EVE_SUPPORTS(cpu_)
-                                  , lognormal_distribution<T,U,I> const & d) noexcept
+    EVE_FORCEINLINE  auto entropy_(EVE_SUPPORTS(cpu_)
+                                  , ev_distribution<T,U,I> const & d) noexcept
     {
-      if constexpr (floating_value<U> && floating_value<T>)
-      {
-        auto s2 = sqr(d.s);
-        return eve::expm1(s2)*exp(2*d.m+s2);
-      }
-      else if constexpr (floating_value<T>) // s = 1
-      {
-        auto em1 = T(.7182818284590452353602874713526624977572470937);
-        return em1*eve::exp(2*d.m+1);
-      }
-      else if constexpr (floating_value<U>) // m = 0
-      {
-        auto s2 = sqr(d.s);
-        return eve::expm1(s2)*exp(s2);
-      }
+      using v_t = typename ev_distribution<T,U,I>::value_type;
+      v_t igamma = T(1.57721566490153286);
+      if constexpr (floating_value<U>)
+        return log(d.s)+igamma;
       else
-        return I(4.6707742704716049918701399892223453154230684768519);
+        return igamma;
     }
-
 
     //////////////////////////////////////////////////////
     /// skewness
     template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto skewness_(EVE_SUPPORTS(cpu_)
-                                   , lognormal_distribution<T,U,I> const & d) noexcept
+                                  , ev_distribution<T,U,I> const & ) noexcept
     {
-      if constexpr (floating_value<U>)
-      {
-        auto es2 = exp(sqr(d.s));
-        return (es2+2)*sqrt(dec(es2));
-      }
-      else
-        return I(6.1848771386325547948354157320560072900223261742372);
+      return I(1.13954709940464865749279301890499273124112364236172);
     }
 
     //////////////////////////////////////////////////////
     /// kurtosis
     template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto kurtosis_(EVE_SUPPORTS(cpu_)
-                                   , lognormal_distribution<T,U,I> const & d) noexcept
+                                  , ev_distribution<T,U,I> const & ) noexcept
     {
-      if constexpr (floating_value<U>)
-      {
-        auto s2 = sqr(d.s);
-        return exp(4*s2)+2*exp(3*s2)+3*exp(2*s2)-6;
-      }
-      else
-        return I(10.936392176311525241658602893749337636307499427378);
-
+      return I(2.4);
     }
 
-
     //////////////////////////////////////////////////////
-    /// entropy
+    /// var
     template<typename T, typename U,  typename I = T>
-    EVE_FORCEINLINE  auto entropy_(EVE_SUPPORTS(cpu_)
-                                  , lognormal_distribution<T,U,I> const & d) noexcept
+    EVE_FORCEINLINE  auto var_(EVE_SUPPORTS(cpu_)
+                                  , ev_distribution<T,U,I> const & d) noexcept
     {
-      using v_t = typename lognormal_distribution<T,U,I>::value_type;
-      auto sqrt2pi = v_t(2.50662827463100050241576528481104525300698674061);
-      auto sqrt2pie = v_t(4.1327313541224929384693918842998526494455219169913);
+      using v_t = typename ev_distribution<T,U,I>::value_type;
+      v_t pi2o6(1.644934066848226436472415166646025189218949901206);
       if constexpr (floating_value<U>)
-        return eve::log2(d.s*exp(d.m+half(as(d.m)))*sqrt2pi);
-      else  if constexpr (floating_value<T>) // s = 1
-        return eve::log2(exp(d.m+half(as(d.m)))*sqrt2pi);
-      else if constexpr (floating_value<U>) // m = 0
-        return eve::log2(d.s*sqrt2pie);
+        return sqr(d.s)*pi2o6;
       else
-        return eve::log2(sqrt2pie);
+        return pi2o6;
     }
 
     //////////////////////////////////////////////////////
     /// stdev
     template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto stdev_(EVE_SUPPORTS(cpu_)
-                                , lognormal_distribution<T,U,I> const & d) noexcept
+                                  , ev_distribution<T,U,I> const & d) noexcept
     {
-      return sqrt(var(d));
+      using v_t = typename ev_distribution<T,U,I>::value_type;
+      v_t sqrtpi2o6(1.2825498301618640955440363596710064114672606675640);
+      if constexpr (floating_value<U>)
+        return d.s*sqrtpi2o6;
+      else
+        return sqrtpi2o6;
     }
-
 
     //////////////////////////////////////////////////////
     /// confidence
     template<typename T, typename U, floating_real_value R
              , floating_real_value V, floating_real_value A,  typename I = T>
     EVE_FORCEINLINE  auto confidence_(EVE_SUPPORTS(cpu_)
-                                     , lognormal_distribution<T,U,I> const & d
+                                     , ev_distribution<T,U,I> const & d
                                      , R const & x
                                      , std::array<V, 4> const & cov
                                      , A const & alpha ) noexcept
     {
-      R xx = if_else(is_gtz(x), eve::log(x), zero);
-      auto par = d.params();
-      auto dn = normal_distribution(par.m, par.s);
-      return confidence(dn, xx, cov, alpha);
+      using v_t = typename ev_distribution<T,U,I>::value_type;
+      R z = x;
+      auto normz = -invcdf(normal_distribution_01<I>, alpha*v_t(0.5));
+      auto halfwidth = normz;
+      if constexpr(floating_real_value<T> && floating_real_value<U>)
+        z = (z-d.m)/d.s;
+      else if constexpr(floating_real_value<T>)
+        z -= d.m;
+      else if constexpr(floating_real_value<U>)
+        z /= d.s;
+      auto zvar = fma(fma(cov[3], z, 2*cov[1]), z, cov[0]);
+      halfwidth *= eve::sqrt(zvar);
+      if constexpr(floating_real_value<U>)
+        halfwidth /= d.s;
+      auto d01 =  ev_distribution_01<I>;
+      return std::make_tuple(cdf(d01, z), cdf(d01, z-halfwidth), cdf(d01, z+halfwidth));
     }
   }
 }

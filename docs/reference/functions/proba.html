@@ -24,11 +24,11 @@ Once created a distribution object can be called using a set of EVE object funct
    - parameters: parameters stored in the object (always defined)
    - mean: expectation
    - median: median value
-   - mode:   maximum location of the pdf
+   - mode:   location of the first maximum of the pdf
    - stdev: standard deviation
    - var: variance
-   - scale
-   - entropy
+   - scale: speading factor
+   - entropy; shanon entropy
    - fischer; Fisher information
  - functional attributes
    - cdf; cumulative distribution function (always defined)
@@ -36,27 +36,53 @@ Once created a distribution object can be called using a set of EVE object funct
    - invcdf; inverse of cdf
    - mgf; moment generating function
    - cf: characteristic function
+   - confidence: confidence bounds on parameters
+
+!!! WARNING
+   Note that some of the attributes (not marked as always defined) are not available because they are undefined
+   for the distribution used (as mean for the cauchy distribution) or currently still not implemented (for instance
+   cf which is waiting for **EVE** complex implementation) or probably will never be implemented because no practical
+   algorithm does exist.
 
 Each constant attribute takes the distribution as input and returns a value or a set of values.
-Each functionnal  attribute takes the distribution and a floating value as inputs and returns a floating value.
 
-Note that some of the attributes (not marked as always defined) may not exist because they are undefined for the distribution used
-or currently still not implemented (for instance cf which is waiting for **EVE** complex implementation ist still not present).
+Each functionnal attribute (except confidence) takes the distribution and a
+floating value as inputs and returns a floating value.
+
+confidence takes 4 parameters
+
+  - d the distribution
+  - a floating value x where the cdf must be evaluated
+  - the covariance matrix of the distribution parameters (considered as estimated) cov
+  - a confidence alpha (0.05, specifies 100*(1-alpha)% confidence)
+
+and return three values:
+
+  - r the cdf of x
+  - rlo lower confidence bound on r
+  - rhi higher confidence bound on r
+
+
+Note that some of the attributes (not marked as always defined) may not exist because they
+are not defined for the distribution used or currently still not implemented (for instance cf
+ which is waiting for **EVE** complex implementation ist still not present).
 
 ## Functions
 
-**Convenience header:** <script type="preformatted">`#include <eve/function/statistics.hpp>`</script>
-
-[`eve::cauchy`](proba/cauchy.html)
+[`eve::cauchy_distribution`](proba/cauchy_distribution.html)
 :   cauchy distribution
-[`eve::exponential`](proba/exponential.html)
+[`eve::ev_distribution`](proba/ev_distribution.html)
+:   extreme values distribution
+[`eve::exponential_distribution`](proba/exponential_distribution.html)
 :   exponential distribution
-[`eve::normal`](proba/normal.html)
-:   gaussian distribution
-[`eve::poisson`](proba/poisson.html)
-:   gaussian distribution
-[`eve::binomial`](proba/binomial.html)
-:   gaussian distribution
+[`eve::lognormal_distribution`](proba/lognormal_distribution.html)
+:   lognormal distribution
+[`eve::normal_distribution`](proba/normal_distribution.html)
+:   Laplace-Gauss distribution
+[`eve::poisson_distribution`](proba/poisson_distribution.html)
+:   Poisson distribution
+[`eve::binomial_distribution`](proba/binomial_distribution.html)
+:   binomial distribution
 
 ----------------------------------------------------------------------------------------------------
 <!-- Shortcuts -->

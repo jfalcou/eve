@@ -15,6 +15,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/concepts.hpp>
 #include <eve/detail/implementation.hpp>
+#include <array>
 
 namespace eve
 {
@@ -64,6 +65,7 @@ namespace eve
   EVE_MAKE_CALLABLE(scale_, scale);          // scale
   EVE_MAKE_CALLABLE(shape_, shape);          // shape
   EVE_MAKE_CALLABLE(rate_, rate);            // rate
+  EVE_MAKE_CALLABLE(confidence_, confidence);// confidence bounds
 
   namespace detail
   {
@@ -79,6 +81,22 @@ namespace eve
     EVE_FORCEINLINE  auto  cf_(EVE_SUPPORTS(cpu_), D const &d, U const &x ) noexcept  = delete;
     template < distribution D,  value U>
     EVE_FORCEINLINE  auto  pmf_(EVE_SUPPORTS(cpu_), D const &d, U const &x ) noexcept  = delete;
+
+    // confidence bounds for N parameters distribution
+    template < distribution D,  floating_real_value R,  floating_real_value V,  int N
+               , floating_real_value A>
+    EVE_FORCEINLINE  auto confidence_(EVE_SUPPORTS(cpu_), D const &d
+                                     , R const & x
+                                     , std::array<V, N> const &cov
+                                     , A const & alpha ) noexcept = delete;
+
+    // confidence bounds for 1 parameter distribution
+    template < distribution D,  floating_real_value R,  floating_real_value V
+               , floating_real_value A>
+    EVE_FORCEINLINE  auto confidence_(EVE_SUPPORTS(cpu_), D const &d
+                                     , R const & x
+                                     , V const &cov
+                                     , A const & alpha ) noexcept = delete;
 
     template < distribution D>
     EVE_FORCEINLINE  auto scale_(EVE_SUPPORTS(cpu_), D const &d ) noexcept  = delete;
