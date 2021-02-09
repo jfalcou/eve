@@ -183,7 +183,7 @@ namespace eve::detail
         else
         {
           using htype  = wide<std::int64_t, fixed<N::value / 2>>;
-          htype mhi    = _mm_setr_epi32(0xFFFFFFFFUL, 0x00000000, 0xFFFFFFFFUL, 0x00000000);
+          htype mhi    = _mm_setr_epi32(-1, 0, -1, 0);
           htype mlo    = mhi;
           auto  lself  = _mm_srli_si128(self, 4);
           auto  lother = _mm_srli_si128(other, 4);

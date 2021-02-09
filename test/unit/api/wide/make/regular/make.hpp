@@ -28,7 +28,7 @@ TTS_CASE_TPL( "Check enumerating constructor for arithmetic wide", EVE_TYPE )
 
 TTS_CASE_TPL("Check enumerating constructor for wide of logical", EVE_TYPE)
 {
-  eve::logical<T> ref;
+  eve::logical<T> ref{false};
   for(int i=0;i<EVE_CARDINAL;++i)
     ref.set(i,i % 3 == 0);
 
