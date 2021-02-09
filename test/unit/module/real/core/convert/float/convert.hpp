@@ -53,3 +53,22 @@ TTS_CASE_TPL("float32", EVE_TYPE)
   TTS_EQUAL(eve::convert((T(42.69))    , eve::as<float>()), eve::float32(T(42.69)));
   TTS_EQUAL(eve::convert(eve::sqr(T(2)), eve::as<float>()), eve::float32(eve::sqr)(T(2)));
 }
+
+TTS_CASE_TPL("Check eve::convert logical behavior", EVE_TYPE)
+{
+#if defined(EVE_SIMD_TESTS)
+  using target_t = eve::logical<eve::wide<float, eve::fixed<EVE_CARDINAL>>>;
+#else
+  using target_t = eve::logical<float>;
+#endif
+
+  TTS_EQUAL(eve::convert(eve::logical<T>(true)  , eve::as<eve::logical<float>>()), target_t(true) );
+  TTS_EQUAL(eve::convert(eve::logical<T>(false) , eve::as<eve::logical<float>>()), target_t(false) );
+
+#if defined(EVE_SIMD_TESTS)
+  eve::logical<T> mixed( [](auto i, auto) { return i%2 == 0;});
+  target_t        ref( [](auto i, auto) { return i%2 == 0;});
+
+  TTS_EQUAL(eve::convert(mixed, eve::as<eve::logical<float>>()), ref );
+#endif
+}
