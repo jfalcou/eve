@@ -33,16 +33,16 @@ namespace eve::detail
       {
              if constexpr( std::is_same_v<T, float > ) return (std::uint16_t)_mm_movemask_ps(v);
         else if constexpr( std::is_same_v<T, double> ) return (std::uint16_t)_mm_movemask_pd(v);
-        else if constexpr( sizeof(T) == 8 )            return (std::uint16_t)_mm_movemask_pd((__m128d)v);
-        else if constexpr( sizeof(T) == 4 )            return (std::uint16_t)_mm_movemask_ps((__m128)v);
+        else if constexpr( sizeof(T) == 8 )            return (std::uint16_t)_mm_movemask_pd((__m128d)v.storage());
+        else if constexpr( sizeof(T) == 4 )            return (std::uint16_t)_mm_movemask_ps((__m128)v.storage());
         else                                           return (std::uint16_t)_mm_movemask_epi8(v);
       }
       else
       {
         if constexpr( std::is_same_v<T, float > )  return (std::uint32_t)_mm256_movemask_ps(v);
         else if constexpr( std::is_same_v<T, double> ) return (std::uint32_t)_mm256_movemask_pd(v);
-        else if constexpr( sizeof(T) == 8 )            return (std::uint32_t)_mm256_movemask_pd((__m256d)v);
-        else if constexpr( sizeof(T) == 4 )            return (std::uint32_t)_mm256_movemask_ps((__m256)v);
+        else if constexpr( sizeof(T) == 8 )            return (std::uint32_t)_mm256_movemask_pd((__m256d)v.storage());
+        else if constexpr( sizeof(T) == 4 )            return (std::uint32_t)_mm256_movemask_ps((__m256)v.storage());
         else if constexpr( current_api == avx2 )       return (std::uint32_t)_mm256_movemask_epi8(v);
         else if constexpr( current_api == avx )
         {
