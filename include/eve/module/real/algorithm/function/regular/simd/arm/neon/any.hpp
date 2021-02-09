@@ -59,8 +59,8 @@ namespace eve::detail
      return any_arm_impl(v0, cond);
   }
 
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE bool any_(EVE_SUPPORTS(neon128_), logical<wide<T,N,arm_128_>> const &v0) noexcept
+  template<real_scalar_value T, typename N, arm_abi ABI>
+  EVE_FORCEINLINE bool any_(EVE_SUPPORTS(neon128_), logical<wide<T,N,ABI>> const &v0) noexcept
   {
     return any_arm_impl(v0, ignore_none);
   }
