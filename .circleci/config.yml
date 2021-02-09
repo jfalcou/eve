@@ -255,8 +255,9 @@ workflows:
           filters:
             branches:
               ignore: develop
-      ######################
       - x86_clang_scalar:
+          requires:
+            - aarch64_gcc_64
           filters:
             branches:
               ignore: develop
@@ -266,10 +267,14 @@ workflows:
             branches:
               ignore: develop
       - x86_clang_sse4:
+          requires:
+            - x86_clang_sse2
           filters:
             branches:
               ignore: develop
       - x86_clang_emulation:
+          requires:
+            - x86_clang_sse4
           filters:
             branches:
               ignore: develop
@@ -279,10 +284,14 @@ workflows:
             branches:
               ignore: develop
       - x86_clang_avx2:
+          requires:
+            - x86_clang_avx
           filters:
             branches:
               ignore: develop
       - x86_clang_avx2_fma:
+          requires:
+            - x86_clang_avx2
           filters:
             branches:
               ignore: develop
@@ -292,10 +301,14 @@ workflows:
             branches:
               ignore: develop
       - x86_clang_small:
+          requires:
+            - x86_clang_tiny
           filters:
             branches:
               ignore: develop
       - x86_clang_extra:
+          requires:
+            - x86_clang_small
           filters:
             branches:
               ignore: develop
@@ -305,10 +318,14 @@ workflows:
             branches:
               ignore: develop
       - x86_clang_avx512_256:
+          requires:
+            - x86_clang_avx512
           filters:
             branches:
               ignore: develop
       - x86_clang_avx512_128:
+          requires:
+            - x86_clang_avx512_256
           filters:
             branches:
               ignore: develop
