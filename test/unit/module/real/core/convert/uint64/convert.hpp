@@ -45,3 +45,22 @@ TTS_CASE_TPL("Check eve::convert behavior", EVE_TYPE)
     TTS_EQUAL(eve::convert(eve::valmax(eve::as<T>()), eve::as<std::uint64_t>()), static_cast<target_t>(eve::valmax(eve::as<v_t>())) );
   }
 }
+
+TTS_CASE_TPL("Check eve::convert logical behavior", EVE_TYPE)
+{
+#if defined(EVE_SIMD_TESTS)
+  using target_t = eve::logical<eve::wide<std::uint64_t, eve::fixed<EVE_CARDINAL>>>;
+#else
+  using target_t = eve::logical<std::uint64_t>;
+#endif
+
+  TTS_EQUAL(eve::convert(eve::logical<T>(true)  , eve::as<eve::logical<std::uint64_t>>()), target_t(true) );
+  TTS_EQUAL(eve::convert(eve::logical<T>(false) , eve::as<eve::logical<std::uint64_t>>()), target_t(false) );
+
+#if defined(EVE_SIMD_TESTS)
+  eve::logical<T> mixed( [](auto i, auto) { return i%2 == 0;});
+  target_t        ref( [](auto i, auto) { return i%2 == 0;});
+
+  TTS_EQUAL(eve::convert(mixed, eve::as<eve::logical<std::uint64_t>>()), ref );
+#endif
+}
