@@ -10,6 +10,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
 
 namespace eve

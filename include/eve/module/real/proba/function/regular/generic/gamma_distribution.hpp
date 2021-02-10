@@ -18,9 +18,12 @@
 #include <eve/module/real/proba/detail/attributes.hpp>
 #include <eve/module/real/proba/detail/urg01.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/function/exponential_distribution.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/all.hpp>
 #include <eve/function/tgamma.hpp>
+#include <eve/function/gamma_p.hpp>
+#include <eve/function/gamma_pinv.hpp>
 #include <eve/function/exp.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/is_finite.hpp>
@@ -36,7 +39,6 @@
 #include <eve/constant/sqrt_2.hpp>
 #include <eve/constant/half.hpp>
 #include <eve/constant/mhalf.hpp>
-#include <eve/module/real/core/detail/generic/horn.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/one.hpp>
 #include <concepts>
@@ -84,8 +86,8 @@ namespace eve
     }
 
     k_type k;
-    value_type ingk;
-    s_type theta;
+    theta_type theta;
+    value_type invgk;
   };
 
   template < floating_real_value U>
@@ -95,9 +97,9 @@ namespace eve
     using k_type = callable_one_;
     using theta_type = U;
     using value_type = U;
-    using parameters = struct { callable_zero_ m;  value_type s;};
+    using parameters = struct { callable_one_ m;  value_type s;};
 
-    gamma_distribution(callable_zero_ const&, U theta_)
+    gamma_distribution(callable_one_ const&, U theta_)
       : theta(theta_)
     {
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
@@ -120,7 +122,7 @@ namespace eve
       return { .k = one, .theta = theta };
     }
 
-    s_type s;
+    theta_type theta;
   };
 
   template < floating_real_value T>
@@ -152,10 +154,10 @@ namespace eve
 
     parameters params() noexcept
     {
-      return { .k = k, .s = one };
+      return { .k = k, .theta = one };
     }
 
-    k_type m;
+    k_type k;
   };
 
   template<typename T, typename U>  gamma_distribution(T,U) -> gamma_distribution<T,U>;
@@ -165,7 +167,7 @@ namespace eve
   {
     using is_distribution_t = void;
     using k_type = callable_zero_;
-    using s_type = callable_one_;
+    using theta_type = callable_one_;
     using value_type = T;
     using parameters = struct { callable_one_ m;  callable_one_ s;};
 
@@ -175,8 +177,8 @@ namespace eve
     template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
       requires scalar_value<value_type>
     {
-      exponential_1<I> d;
-      return d(gen, as(R<>()));
+      auto d = exponential_distribution_1<value_type>;
+      return d(gen, as(R()));
     }
 
     parameters params() noexcept
@@ -188,54 +190,78 @@ namespace eve
   };
 
 
-  template<typename T>  gamma_distribution(as_<T> const&) -> gamma_distribution<callable_zero_, callable_one_, T>;
+  template<typename T>  gamma_distribution(as_<T> const&) -> gamma_distribution<callable_one_, callable_one_, T>;
 
   template<floating_real_value T>
-  inline constexpr auto gamma_distribution_01 = gamma_distribution<callable_one_, callable_one_, T>(as_<T>{});
+  inline constexpr auto gamma_distribution_11 = gamma_distribution<callable_one_, callable_one_, T>(as_<T>{});
 
   namespace detail
   {
     //////////////////////////////////////////////////////
-    /// cdf
+    /// pdf
    template<typename T, typename U, floating_value V
+             , typename I = T>
+    EVE_FORCEINLINE  auto pdf_(EVE_SUPPORTS(cpu_)
+                                 , gamma_distribution<T, U, I> const & d
+                                 , V const &x ) noexcept
+    {
+      if constexpr(floating_value<T> && floating_value<U>)
+        return if_else(is_gtz(x), d.invgk*pow_abs(x/d.theta, d.k)*exp(-x/d.theta)/x, zero);
+      else if constexpr(std::same_as<T, callable_one_> && floating_value<U>)
+        return if_else(is_gtz(x), exp(-x/d.theta)/d.theta, zero);
+      else if constexpr(std::same_as<U, callable_one_> && floating_value<T>)
+        return if_else(is_gtz(x), d.invgk*pow_abs(x, dec(d.k))*exp(-x), zero);
+      else
+        return  if_else(is_gtz(x), exp(-x), zero);
+    }
+
+    //////////////////////////////////////////////////////
+    /// cdf
+    template<typename T, typename U, floating_value V
              , typename I = T>
     EVE_FORCEINLINE  auto cdf_(EVE_SUPPORTS(cpu_)
                                  , gamma_distribution<T, U, I> const & d
                                  , V const &x ) noexcept
     {
       if constexpr(floating_value<T> && floating_value<U>)
-        return if_else(is_gtz(x), invgk*pow_abs(x/d.theta, d.k)*exp(-x/d.theta)/x, zero);
-      else if constexpr(std::same_as<T, callable_one_> && floating_value<U>)
-        return if_else(is_gtz(x), exp(-x/d.theta)/d.theta, zero);
-      else if constexpr(std::same_as<U, callable_one_> && floating_value<T>)
-        return if_else(is_gtz(x), invgk*pow_abs(x, dec(d.k))*exp(-x), zero);
+      {
+        return eve::gamma_p(d.k, if_else(is_ltz(x), zero, x/d.theta));
+      }
+      else if constexpr(floating_value<U>)
+      {
+        return eve::gamma_p(U(1), if_else(is_ltz(x), zero, x/d.theta));
+      }
+      else if constexpr(floating_value<T>)
+      {
+        return  eve::gamma_p(d.k, if_else(is_ltz(x), zero, x));
+      }
       else
-        return  if_else(is_gtz(x), exp(-x/d.theta), zero);
+        return -eve::expm1(if_else(is_ltz(x), zero,-x));
     }
 
     //////////////////////////////////////////////////////
-    /// pdf
+    /// mgf
     template<typename T, typename U, floating_value V
              , typename I = T>
-    EVE_FORCEINLINE  auto pdf_(EVE_SUPPORTS(cpu_)
+    EVE_FORCEINLINE  auto mgf_(EVE_SUPPORTS(cpu_)
                                  , gamma_distribution<T, U, I> const & d
                                  , V const &x ) noexcept
     {
       auto invsqrt_2pi = V(0.39894228040143267793994605993438186847585863116493);
       if constexpr(floating_value<T> && floating_value<U>)
       {
-        return eve::gamma_p(d.k, x/d.theta);
+        return pow_abs(oneminus(d.theta*x), -d.k);
       }
       else if constexpr(floating_value<U>)
       {
-        return -eve::expm1(-x/d.theta);
+        return rec(oneminus(x*d.theta));
       }
       else if constexpr(std::same_as<U, callable_one_> && floating_value<T>)
       {
-        return  eve::gamma_p(d.k, x);
+        return pow_abs(oneminus(x), -d.k);;
       }
       else
-        return -eve::expm1(-x);
+        return rec(oneminus(x));
     }
 
     //////////////////////////////////////////////////////
@@ -252,39 +278,32 @@ namespace eve
       }
       else if constexpr(std::same_as<T, callable_one_> && floating_value<U>)
       {
-        return  -log1p(-p)*d.theta
+        return  -log1p(-p)*d.theta;
       }
       else if constexpr(std::same_as<U, callable_one_> && floating_value<T>)
       {
-        return  inc(gamma_pinv(p, d.k);
+        return  inc(gamma_pinv(p, d.k));
       }
       else
         return  -log1p(-p);
     }
 
     //////////////////////////////////////////////////////
-    /// median
-    template<typename T, typename U,  typename I = T>
-    EVE_FORCEINLINE  auto median_(EVE_SUPPORTS(cpu_)
-                                  , gamma_distribution<T,U,I> const & d) noexcept
-    {
-      if constexpr (floating_value<T>)
-        return  d.m;
-      else if constexpr (floating_value<U>)
-        return zero(as<U>());
-      else
-        return zero(as<I>());
-    }
-
-
-    //////////////////////////////////////////////////////
     /// mean
     template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto mean_(EVE_SUPPORTS(cpu_)
-                               , gamma_distribution<T,U,I> const &d) noexcept
+                                  , gamma_distribution<T,U,I> const & d) noexcept
     {
-      return median(d);
+      if constexpr (floating_value<T> && floating_value<U>)
+        return  d.k*d.theta;
+      else if constexpr (floating_value<T>)
+        return d.k;
+      else if constexpr (floating_value<U>)
+        return d.theta;
+      else
+        return one(as<I>());
     }
+
 
     //////////////////////////////////////////////////////
     /// mode
@@ -292,7 +311,12 @@ namespace eve
     EVE_FORCEINLINE  auto mode_(EVE_SUPPORTS(cpu_)
                                , gamma_distribution<T,U,I> const & d) noexcept
     {
-      return median(d);
+      if constexpr (floating_value<T> && floating_value<U>)
+        return if_else(d.k > one(as(d.k)), dec(d.k)*d.theta, zero);
+      else if constexpr (floating_value<T>)
+        return if_else(d.k > one(as(d.k)), dec(d.k), zero);
+      else if constexpr (floating_value<U>)
+        return zero(as<I>());
     }
 
     //////////////////////////////////////////////////////
@@ -301,11 +325,14 @@ namespace eve
     EVE_FORCEINLINE  auto entropy_(EVE_SUPPORTS(cpu_)
                                   , gamma_distribution<T,U,I> const & d) noexcept
     {
-      auto twopie = T(17.0794684453471341309271017390931489900697770715304);
-      if constexpr (floating_value<U>)
-        return half(as<T>())*log(twopie*sqr(d.s));
+      if constexpr (floating_value<U> && floating_value<U>)
+        return d.k+eve::log(d.theta)+ lgamma(d.k)+oneminus(d.k)*digamma(d.k);
+      else if constexpr (floating_value<T>)
+        return d.k+ lgamma(d.k)+oneminus(d.k)*digamma(d.k);
+      else if constexpr (floating_value<U>)
+        return inc(eve::log(d.theta));
       else
-        return half(as<T>())*log(twopie);
+        return one(as<I>());
     }
 
 
@@ -313,31 +340,24 @@ namespace eve
     /// skewness
     template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto skewness_(EVE_SUPPORTS(cpu_)
-                                  , gamma_distribution<T,U,I> const & ) noexcept
+                                  , gamma_distribution<T,U,I> const & d) noexcept
     {
-      return I(0);
+      if constexpr (floating_value<T>)
+        return 2/eve::sqrt(d.k);
+      else
+        return I(2);
     }
 
     //////////////////////////////////////////////////////
     /// kurtosis
     template<typename T, typename U,  typename I = T>
     EVE_FORCEINLINE  auto kurtosis_(EVE_SUPPORTS(cpu_)
-                                  , gamma_distribution<T,U,I> const & ) noexcept
-    {
-      return I(0);
-    }
-
-    //////////////////////////////////////////////////////
-    /// mad
-    template<typename T, typename U,  typename I = T>
-    EVE_FORCEINLINE  auto mad_(EVE_SUPPORTS(cpu_)
                                   , gamma_distribution<T,U,I> const & d) noexcept
     {
-      auto sqrt_2o_pi = T(0.79788456080286535587989211986876373695171726232986);
-      if constexpr (floating_value<U>)
-        return d.s*sqrt_2o_pi;
-       else
-        return sqrt_2o_pi;
+      if constexpr (floating_value<T>)
+        return 6/d.k;
+      else
+        return I(6);
     }
 
     //////////////////////////////////////////////////////
@@ -346,8 +366,12 @@ namespace eve
     EVE_FORCEINLINE  auto var_(EVE_SUPPORTS(cpu_)
                                   , gamma_distribution<T,U,I> const & d) noexcept
     {
-      if constexpr (floating_value<U>)
-        return sqr(d.s);
+      if constexpr (floating_value<T> && floating_value<U>)
+        return  d.k*sqr(d.theta);
+      else if constexpr (floating_value<T>)
+        return d.k;
+      else if constexpr (floating_value<U>)
+        return sqr(d.theta);
       else
         return one(as<I>());
     }
@@ -358,8 +382,12 @@ namespace eve
     EVE_FORCEINLINE  auto stdev_(EVE_SUPPORTS(cpu_)
                                   , gamma_distribution<T,U,I> const & d) noexcept
     {
-      if constexpr (floating_value<U>)
-        return d.s;
+      if constexpr (floating_value<T> && floating_value<U>)
+        return  eve::sqrt(d.k)*d.theta;
+      else if constexpr (floating_value<T>)
+        return  eve::sqrt(d.k);
+      else if constexpr (floating_value<U>)
+        return d.theta;
       else
         return one(as<I>());
     }
