@@ -12,28 +12,23 @@
 
 #include <eve/detail/abi.hpp>
 #include <eve/detail/function/simd/common/swizzle_helpers.hpp>
-#include <eve/detail/function/simd/ppc/swizzle_patterns.hpp>
 #include <eve/forward.hpp>
 #include <eve/pattern.hpp>
 
 namespace eve::detail
 {
   template<typename T, typename N, ppc_abi ABI, shuffle_pattern Pattern>
-  EVE_FORCEINLINE auto swizzle(vmx_ const&, wide<T,N,ABI> const& v, Pattern const& p)
+  EVE_FORCEINLINE auto basic_swizzle_( EVE_SUPPORTS(vmx_), wide<T,N,ABI> const& v, Pattern const&)
   {
     constexpr auto sz = Pattern::size(N::value);
     using that_t      = as_wide_t<wide<T,N,ABI>,fixed<sz>>;
-    constexpr auto q = as_pattern<N::value>(Pattern{});
+
+    constexpr Pattern q = {};
 
     // We're swizzling so much we aggregate the output
     if constexpr( has_aggregated_abi_v<that_t> )
     {
       return aggregate_swizzle(v,q);
-    }
-    // Check for patterns
-    else if constexpr( !std::same_as<void, decltype(swizzle_pattern(vmx_{},v,q))> )
-    {
-      return swizzle_pattern(vmx_{},v,q);
     }
     else
     {

@@ -15,6 +15,7 @@
 #include <eve/concept/conditional.hpp>
 #include <eve/concept/value.hpp>
 #include <utility>
+#include <ostream>
 
 #define EVE_DECLARE_CALLABLE(TAG)                                                                  \
   namespace tag { struct TAG {}; }                                                                 \
@@ -75,10 +76,15 @@
   inline detail::callable_object<tag::TAG> const NAME = {}                                         \
 /**/
 
-#define EVE_MAKE_CALLABLE(TAG, NAME)                                                               \
-  EVE_DECLARE_CALLABLE(TAG)                                                                        \
-  using callable_##TAG  = detail::callable_object<tag::TAG>;                                       \
-  EVE_ALIAS_CALLABLE(TAG, NAME)                                                                    \
+#define EVE_MAKE_CALLABLE(TAG, NAME)                                                                \
+  EVE_DECLARE_CALLABLE(TAG)                                                                         \
+  using callable_##TAG  = detail::callable_object<tag::TAG>;                                        \
+  inline std::ostream& operator<<(std::ostream& os, detail::callable_object<tag::TAG> const&)       \
+  {                                                                                                 \
+    return os << #NAME;                                                                             \
+  }                                                                                                 \
+                                                                                                    \
+  EVE_ALIAS_CALLABLE(TAG, NAME)                                                                     \
 /**/
 
 // Flag a function to support delayed calls on given architecture
@@ -159,5 +165,11 @@ namespace eve
   // Traits for optimized conversion support
   template<typename F>
   struct supports_optimized_conversion : std::false_type
+  {};
+
+  //==============================================================================================
+  // Traits for function working as shuffle pattern
+  template<typename F>
+  struct is_pattern : std::false_type
   {};
 }

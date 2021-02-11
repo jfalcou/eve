@@ -13,7 +13,7 @@
 #include <eve/wide.hpp>
 
 template<int I, int N>
-inline constexpr auto broadcast = eve::swizzle<N>( [](int, int){ return I; } );
+inline constexpr auto broadcast = eve::fix_pattern<N>( [](int, int){ return I; } );
 
 template<typename T, typename Env, typename Filler>
 void test_broadcast(Env& runtime, bool verbose, Filler filler)

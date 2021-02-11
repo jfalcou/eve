@@ -12,29 +12,23 @@
 
 #include <eve/detail/abi.hpp>
 #include <eve/detail/function/simd/common/swizzle_helpers.hpp>
-#include <eve/detail/function/simd/arm/neon/swizzle_patterns.hpp>
 #include <eve/forward.hpp>
 #include <eve/pattern.hpp>
 
 namespace eve::detail
 {
   template<typename T, typename N, arm_abi ABI, shuffle_pattern Pattern>
-  EVE_FORCEINLINE auto swizzle(neon128_ const&, wide<T,N,ABI> const& v, Pattern const&)
+  EVE_FORCEINLINE auto basic_swizzle_( EVE_SUPPORTS(neon128_), wide<T,N,ABI> const& v, Pattern const&)
   {
     constexpr auto sz = Pattern::size(N::value);
     using that_t      = as_wide_t<wide<T,N,ABI>,fixed<sz>>;
 
-    constexpr auto q = as_pattern<N::value>(Pattern{});
+    constexpr Pattern q = {};
 
     // We're swizzling so much we aggregate the output
     if constexpr( has_aggregated_abi_v<that_t> )
     {
       return aggregate_swizzle(v,q);
-    }
-    // Check for patterns
-    else if constexpr( !std::same_as<void, decltype(swizzle_pattern(neon128_{},v,q))> )
-    {
-      return swizzle_pattern(neon128_{},v,q);
     }
     else
     {
@@ -64,21 +58,30 @@ namespace eve::detail
       {
         using bytes_t     = typename that_t::template rebind<std::uint8_t,fixed<16>>;
         bytes_t     b0    = bit_cast(v,as_<bytes_t>());
-        uint8x8x2_t lh    = {{ vget_low_u8(b0), vget_high_u8(b0) }};
         auto        mask  = as_bytes<that_t>(q,as_<bytes_t>());
 
         using that_abi_t  = typename that_t::abi_type;
         if constexpr( std::same_as<that_abi_t, arm_64_> )
         {
           using out_t       = typename that_t::template rebind<std::uint8_t,fixed<8>>;
+          uint8x8x2_t lh    = {{ vget_low_u8(b0), vget_high_u8(b0) }};
           return bit_cast(out_t{vtbl2_u8(lh, vget_low_u8 (mask))},as_<that_t>());
         }
         else
         {
-          bytes_t that  = vcombine_u8 ( vtbl2_u8(lh, vget_low_u8 (mask))
-                                      , vtbl2_u8(lh, vget_high_u8(mask))
-                                      );
-          return bit_cast(that,as_<that_t>());
+          if(current_api >= asimd)
+          {
+            return bit_cast(vqtbl1q_u8(b0, mask),as_<that_t>());
+          }
+          else
+          {
+            uint8x8x2_t lh    = {{ vget_low_u8(b0), vget_high_u8(b0) }};
+            bytes_t that  = vcombine_u8 ( vtbl2_u8(lh, vget_low_u8 (mask))
+                                        , vtbl2_u8(lh, vget_high_u8(mask))
+                                        );
+
+            return bit_cast(that,as_<that_t>());
+          }
         }
       }
     }

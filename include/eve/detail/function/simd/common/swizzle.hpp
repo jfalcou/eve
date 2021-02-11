@@ -11,9 +11,8 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
-#include <eve/detail/function/simd/common/swizzle_patterns.hpp>
-#include <eve/forward.hpp>
 #include <eve/pattern.hpp>
+#include <eve/forward.hpp>
 
 namespace eve::detail
 {
@@ -33,7 +32,9 @@ namespace eve::detail
   // Unary swizzle - logical
   //================================================================================================
   template<typename T, typename N, typename ABI, shuffle_pattern Pattern>
-  EVE_FORCEINLINE auto swizzle( cpu_ const&, logical<wide<T,N,ABI>> const& v, Pattern p) noexcept
+  EVE_FORCEINLINE auto basic_swizzle_ ( EVE_SUPPORTS(cpu_)
+                                      , logical<wide<T,N,ABI>> const& v, Pattern p
+                                      ) noexcept
   {
     constexpr auto sz = Pattern::size(N::value);
     return bit_cast( v.mask()[p], as<logical<wide<T,fixed<sz>>>>() );
@@ -43,13 +44,13 @@ namespace eve::detail
   // Emulation
   //================================================================================================
   template<typename T, typename N, typename ABI, shuffle_pattern Pattern>
-  EVE_FORCEINLINE auto swizzle(cpu_ const&, wide<T,N,ABI> const& v, Pattern const& p)
+  EVE_FORCEINLINE auto basic_swizzle_(EVE_SUPPORTS(cpu_), wide<T,N,ABI> const& v, Pattern const& p)
   {
     constexpr auto cd = N::value;
     constexpr auto sz = Pattern::size(cd);
     using that_t      = as_wide_t<wide<T,N,ABI>,fixed<sz>>;
 
-    constexpr auto q = as_pattern<cd>(Pattern{});
+    constexpr Pattern q = {};
 
     // We're swizzling so much we aggregate the output
     if constexpr( has_aggregated_abi_v<that_t> && !has_aggregated_abi_v<wide<T,N,ABI>> )
@@ -57,42 +58,37 @@ namespace eve::detail
       return aggregate_swizzle(v,q);
     }
     // We're swizzling the first half of an aggregate
-    else if constexpr( has_aggregated_abi_v<wide<T,N,ABI>> && (as_pattern<sz>(Pattern{}) < cd/2) )
+    else if constexpr( has_aggregated_abi_v<wide<T,N,ABI>> && (Pattern{} < cd/2) )
     {
       return v.slice(lower_)[q];
     }
     // We're swizzling the second half of an aggregate
-    else if constexpr( has_aggregated_abi_v<wide<T,N,ABI>> && (as_pattern<sz>(Pattern{}) >= cd/2) )
+    else if constexpr( has_aggregated_abi_v<wide<T,N,ABI>> && (Pattern{} >= cd/2) )
     {
       return v.slice(upper_)[ slide_pattern<cd/2,sz>(q) ];
     }
     // We're swizzling an aggregate in steplock [lo | hi]
     else if constexpr (   has_aggregated_abi_v<wide<T,N,ABI>>
-                      && (as_pattern<sz>(pattern_view<0   ,sz/2,sz>(Pattern{})) <  cd/2)
-                      && (as_pattern<sz>(pattern_view<sz/2,sz  ,sz>(Pattern{})) >= cd/2)
+                      && (pattern_view<0   ,sz/2,sz>(Pattern{}) <  cd/2)
+                      && (pattern_view<sz/2,sz  ,sz>(Pattern{}) >= cd/2)
                       )
     {
       return that_t{ v[pattern_view<0,sz/2,sz>(q)], v[pattern_view<sz/2,sz,sz>(q)] };
     }
     // We're swizzling an aggregate in steplock [hi | lo]
     else if constexpr (   has_aggregated_abi_v<wide<T,N,ABI>>
-                      && (as_pattern<sz>(pattern_view<0   ,sz/2,sz>(Pattern{})) >= cd/2)
-                      && (as_pattern<sz>(pattern_view<sz/2,sz  ,sz>(Pattern{})) <  cd/2)
+                      && (pattern_view<0   ,sz/2,sz>(Pattern{}) >= cd/2)
+                      && (pattern_view<sz/2,sz  ,sz>(Pattern{}) <  cd/2)
                       )
     {
       return that_t{ v[pattern_view<0,sz/2,sz>(q)], v[pattern_view<sz/2,sz,sz>(q)] };
-    }
-    // Check for patterns
-    else if constexpr( !std::same_as<void, decltype(swizzle_pattern(cpu_{},v,q))> )
-    {
-      return swizzle_pattern(cpu_{},v,q);
     }
     else
     {
       return [=]<std::ptrdiff_t... I>(pattern_t<I...> const&)
       {
         return that_t{ (I == -1 ? T{0} : v.get(I))... };
-      }(as_pattern<sz>(p));
+      }(p);
     }
   }
 }

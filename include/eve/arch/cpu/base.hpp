@@ -14,6 +14,7 @@
 #include <eve/detail/function/slice.hpp>
 #include <eve/detail/function/subscript.hpp>
 #include <eve/detail/function/swizzle.hpp>
+#include <eve/detail/function/patterns.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/detail/spy.hpp>
 
@@ -107,11 +108,24 @@ namespace eve::detail
       return lookup(self(),idx);
     }
 
-    template<shuffle_pattern Pattern>
-    EVE_FORCEINLINE auto operator[](Pattern p) const noexcept
-    requires(Pattern{}.validate(cardinal_v<Derived>))
+    template<std::ptrdiff_t... I>
+    EVE_FORCEINLINE auto operator[](pattern_t<I...> p) const noexcept
+    requires(pattern_t<I...>{}.validate(cardinal_v<Derived>))
     {
-      return swizzle(EVE_CURRENT_API{}, self(), p);
+      constexpr auto swizzler = find_optimized_pattern<I...>();
+      return swizzler(self(), p);
+    }
+
+    template<typename F>
+    EVE_FORCEINLINE auto operator[](as_pattern<F> p) const noexcept
+    {
+      return self()[ fix_pattern<cardinal_v<Derived>>(p) ];
+    }
+
+    template<typename F>
+    EVE_FORCEINLINE auto operator[](callable_object<F> p) const noexcept requires( is_pattern<F>::value )
+    {
+      return p(self());
     }
 
     //==============================================================================================

@@ -13,7 +13,6 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/function/simd/common/swizzle_helpers.hpp>
-#include <eve/detail/function/simd/x86/swizzle_patterns.hpp>
 #include <eve/forward.hpp>
 #include <eve/pattern.hpp>
 
@@ -21,25 +20,27 @@ namespace eve::detail
 {
   //================================================================================================
   // shuffle requires cross-api re-targeting (ie AVX512 128bits calling back SSSE3)
-  // so instead of our classical  one-size-fit-all overloads, we need to split it into
+  // so instead of our classical one-size-fit-all overloads, we need to split it into
   // API supports overloads
   //================================================================================================
 
   //================================================================================================
-  // Unary swizzle - logical on AVX512 ABI
+  // Unary swizzle - logical on AVX512 ABI, call general case on others
   //================================================================================================
   template<typename T, typename N, x86_abi ABI, shuffle_pattern Pattern>
-  EVE_FORCEINLINE auto swizzle( sse2_ const&, logical<wide<T,N,ABI>> const& v, Pattern p) noexcept
+  EVE_FORCEINLINE auto basic_swizzle_ ( EVE_SUPPORTS(sse2_)
+                                      , logical<wide<T,N,ABI>> const& v, Pattern p
+                                      ) noexcept
   {
     if constexpr( current_api >= avx512 ) return to_logical((v.mask())[p]);
-    else                                  return swizzle(cpu_{},v,p);
+    else                                  return basic_swizzle_(EVE_RETARGET(cpu_),v,p);
   }
 
   //================================================================================================
   // Check a pattern fits the half-lane rules for x86 pseudo-shuffle
   //================================================================================================
   template<std::ptrdiff_t... I>
-  constexpr bool is_x86_shuffle_compatible(pattern_t<I...> p)
+  consteval bool is_x86_shuffle_compatible(pattern_t<I...> p)
   {
     constexpr std::ptrdiff_t c  = sizeof...(I);
     std::ptrdiff_t idx[c];
@@ -55,22 +56,17 @@ namespace eve::detail
   // SSE2-SSSE3 variant
   //================================================================================================
   template<typename T, typename N, x86_abi ABI, shuffle_pattern Pattern>
-  EVE_FORCEINLINE auto swizzle(sse2_ const&, wide<T,N,ABI> const& v, Pattern const&)
+  EVE_FORCEINLINE auto basic_swizzle_( EVE_SUPPORTS(sse2_), wide<T,N,ABI> const& v, Pattern const&)
   {
     constexpr auto sz = Pattern::size(N::value);
     using that_t      = as_wide_t<wide<T,N,ABI>,fixed<sz>>;
 
-    constexpr auto q = as_pattern<N::value>(Pattern{});
+    constexpr Pattern q = {};
 
     // We're swizzling so much we aggregate the output
     if constexpr( has_aggregated_abi_v<that_t> )
     {
       return aggregate_swizzle(v,q);
-    }
-    // Check for patterns
-    else if constexpr( !std::same_as<void, decltype(swizzle_pattern(sse2_{},v,q))> )
-    {
-      return swizzle_pattern(sse2_{},v,q);
     }
     else if constexpr( current_api >= ssse3 )
     {
@@ -112,17 +108,17 @@ namespace eve::detail
         }
         else
         {
-          constexpr auto lp = as_pattern<4>(pattern_view<0,4,8>(q));
-          constexpr auto hp = as_pattern<4>(pattern_view<4,8,8>(q));
+          constexpr auto lp = pattern_view<0,4,8>(q);
+          constexpr auto hp = pattern_view<4,8,8>(q);
 
                 if constexpr( lp < 4 && hp >= 4) return process_zeros(that_t{v[lp],v[hp]},q);
           else  if constexpr( hp < 4 && lp >= 4) return process_zeros(that_t{v[lp],v[hp]},q);
-          else  return swizzle(cpu_{},v,q);
+          else  return basic_swizzle_(EVE_RETARGET(cpu_),v,q);
         }
       }
       else
       {
-        return swizzle(cpu_{},v,q);
+        return basic_swizzle_(EVE_RETARGET(cpu_),v,q);
       }
     }
   }
@@ -131,7 +127,7 @@ namespace eve::detail
   // AVX+ variant
   //================================================================================================
   template<typename T, typename N, x86_abi ABI, shuffle_pattern Pattern>
-  EVE_FORCEINLINE auto swizzle(avx_ const&, wide<T,N,ABI> const& v, Pattern const& p)
+  EVE_FORCEINLINE auto basic_swizzle_( EVE_SUPPORTS(avx_), wide<T,N,ABI> const& v, Pattern const& p)
   {
     constexpr auto cd = N::value;
     constexpr auto sz = Pattern::size(cd);
@@ -140,29 +136,23 @@ namespace eve::detail
     constexpr auto width_in   = cd*sizeof(T);
     constexpr auto width_out  = sz*sizeof(T);
 
-    constexpr auto q = as_pattern<N::value>(Pattern{});
+    constexpr Pattern q = {};
 
     // We're swizzling so much we aggregate the output
     if constexpr( has_aggregated_abi_v<that_t> )
     {
       return aggregate_swizzle(v,q);
     }
-    // Check for patterns
-    else if constexpr( !std::same_as<void, decltype(swizzle_pattern(avx_{},v,q))> )
-    {
-      return swizzle_pattern(avx_{},v,q);
-    }
     else if constexpr( width_in == 64 )
     {
       /// TODO: AVX512VBMI supports 128-bits permutexvar
-      if constexpr(width_out <= 16)       return swizzle(cpu_{},v,q);
+      if constexpr(width_out <= 16)       return basic_swizzle_(EVE_RETARGET(cpu_),v,q);
       else if constexpr(width_out == 32)
       {
               if constexpr( q <  cd/2 )  return v.slice(lower_)[ q ];
         else  if constexpr( q >= cd/2 )  return v.slice(upper_)[ slide_pattern<cd/2,sz>(q) ];
         /// TODO: optimize using SSSE3 + binary shuffle
-        else                              return swizzle(cpu_{},v,q);
-        return that_t{};
+        else                             return basic_swizzle_(EVE_RETARGET(cpu_),v,q);
       }
       else
       {
@@ -174,8 +164,7 @@ namespace eve::detail
         else  if constexpr(c == category::float32x16)                       s = _mm512_permutexvar_ps(m,v);
         else  if constexpr(match(c,category::int32x16,category::uint32x16)) s = _mm512_permutexvar_epi32(m,v);
         else  if constexpr(match(c,category::int16x32,category::uint16x32)) s = _mm512_permutexvar_epi16(m,v);
-        else  if constexpr(match(c,category::int8x64 ,category::uint8x64) ) s = _mm512_permutexvar_epi8(m,v);
-        else  return swizzle(cpu_{},v,q);
+        else  return basic_swizzle_(EVE_RETARGET(cpu_),v,q);
 
         return process_zeros(s,q);
       }
@@ -184,10 +173,10 @@ namespace eve::detail
     {
       if constexpr(width_out <= 16)
       {
-              if constexpr( q <  cd/2 )  return v.slice(lower_)[ q ];
-        else  if constexpr( q >= cd/2 )  return v.slice(upper_)[ slide_pattern<cd/2,sz>(q) ];
+              if constexpr( q <  (cd/2) ) return v.slice(lower_)[ q ];
+        else  if constexpr( q >= (cd/2) ) return v.slice(upper_)[ slide_pattern<cd/2,sz>(q) ];
         /// TODO: optimize using SSSE3 + binary shuffle
-        else                              return swizzle(cpu_{},v,q);
+        else                              return basic_swizzle_(EVE_RETARGET(cpu_),v,q);
       }
       else
       {
@@ -233,7 +222,7 @@ namespace eve::detail
           else
           {
             /// TODO: optimize sub 32-bits using SSSE3 + binary shuffle
-            return swizzle(cpu_{},v,q);
+            return basic_swizzle_(EVE_RETARGET(cpu_),v,q);
           }
         }
         else
@@ -254,14 +243,14 @@ namespace eve::detail
           else
           {
             /// TODO: optimize sub 32-bits using SSSE3 + shuffle
-            return swizzle(cpu_{},v,q);
+            return basic_swizzle_(EVE_RETARGET(cpu_),v,q);
           }
         }
       }
     }
     else if constexpr( width_in == 16 )
     {
-      return swizzle(sse2_{}, v, q);
+      return basic_swizzle_(EVE_RETARGET(sse2_), v, q);
     }
   }
 }

@@ -11,6 +11,18 @@
 #pragma once
 
 #include <eve/arch.hpp>
+#include <eve/detail/implementation.hpp>
+
+namespace eve
+{
+  EVE_DECLARE_CALLABLE(basic_swizzle_)
+
+  namespace detail
+  {
+    EVE_ALIAS_CALLABLE(basic_swizzle_, basic_swizzle);
+  }
+}
+
 #include <eve/detail/function/simd/common/swizzle.hpp>
 
 #if defined(EVE_HW_X86)
