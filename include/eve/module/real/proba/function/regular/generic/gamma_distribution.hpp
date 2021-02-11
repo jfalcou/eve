@@ -64,15 +64,15 @@ namespace eve
     gamma_distribution(T k_,  U theta_)
       : k(k_), theta(theta_), invgk(tgamma(k_))
     {
-      EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
-      EVE_ASSERT(all(is_gtz(m) && is_finite(m)), "m must be strictly positive and finite");
+      EVE_ASSERT(all(is_gtz(theta) && is_finite(theta)), "theta must be strictly positive and finite");
+      EVE_ASSERT(all(is_gtz(k) && is_finite(k)), "k must be strictly positive and finite");
     }
 
     gamma_distribution(parameters const & p)
       : k(p.k), theta(p.theta)
     {
-      EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
-      EVE_ASSERT(all(is_gtz(m) && is_finite(m)), "m must be strictly positive and finite");
+      EVE_ASSERT(all(is_gtz(theta) && is_finite(theta)), "theta must be strictly positive and finite");
+      EVE_ASSERT(all(is_gtz(k) && is_finite(k)), "k must be strictly positive and finite");
     }
 
     template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
@@ -103,13 +103,13 @@ namespace eve
     gamma_distribution(callable_one_ const&, U theta_)
       : theta(theta_)
     {
-      EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
+      EVE_ASSERT(all(is_gtz(theta) && is_finite(theta)), "theta must be strictly positive and finite");
     }
 
     gamma_distribution(parameters const & p)
       : theta(p.theta)
     {
-      EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
+      EVE_ASSERT(all(is_gtz(theta) && is_finite(theta)), "theta must be strictly positive and finite");
     }
 
     template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
@@ -138,13 +138,13 @@ namespace eve
     gamma_distribution(T k_, callable_one_ const &)
       : k(k_)
     {
-      EVE_ASSERT(all(is_gtz(m) && is_finite(m)), "m must be strictly positive and finite");
+      EVE_ASSERT(all(is_gtz(k) && is_finite(k)), "k must be strictly positive and finite");
     }
 
     gamma_distribution(parameters const & p)
       : k(p.k)
     {
-      EVE_ASSERT(all(is_gtz(m) && is_finite(m)), "m must be strictly positive and finite");
+      EVE_ASSERT(all(is_gtz(k) && is_finite(k)), "k must be strictly positive and finite");
     }
 
     template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
