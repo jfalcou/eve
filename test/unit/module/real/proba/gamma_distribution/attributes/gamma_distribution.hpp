@@ -23,8 +23,8 @@ TTS_CASE_TPL("Check eve::gamma_distribution behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::mean(d)                 , T(4.0)  , 0.5);
   TTS_ULP_EQUAL(eve::var(d)                  , T(8.0)  , 0.5);
   TTS_ULP_EQUAL(eve::stdev(d)                , T(2.828427124746190)  , 0.5);
-  TTS_ULP_EQUAL(eve::cdf(d, T(0.0))          , T(1.0)   , 0.5);
-  TTS_ULP_EQUAL(eve::cdf(d, T(1.0))          , T(9.544997361036417e-01)   , 5);
+  TTS_ULP_EQUAL(eve::cdf(d, T(0.0))          , T(0.0)   , 0.5);
+  TTS_ULP_EQUAL(eve::cdf(d, T(1.0))          , T(9.020401043104986e-02)   , 5);
   TTS_ULP_EQUAL(eve::pdf(d, T(1.0))          , T(1.516326649281584e-01)   , 1.0);
   TTS_ULP_EQUAL(eve::invcdf(d, T(0.0))       , T(0)   , 0.5);
   TTS_ULP_EQUAL(eve::invcdf(d, T(1.0))       , inf    , 0.5);
@@ -39,7 +39,7 @@ TTS_CASE_TPL("Check eve::gamma_distribution behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::mean(d)                 , T(2.0)  , 0.5);
   TTS_ULP_EQUAL(eve::var(d)                  , T(4.0)  , 0.5);
   TTS_ULP_EQUAL(eve::stdev(d)                , T(2.0)  , 0.5);
-  TTS_ULP_EQUAL(eve::cdf(d, T(1.0))          , T(8.427007929497149e-01)   , 2.0);
+  TTS_ULP_EQUAL(eve::cdf(d, T(1.0))          , T(3.934693402873666e-01)   , 2.0);
   TTS_ULP_EQUAL(eve::pdf(d, T(1.0))          , T(3.032653298563167e-01)   , 1.0);
   TTS_ULP_EQUAL(eve::invcdf(d, T(0.0))       , T(0)   , 0.5);
   TTS_ULP_EQUAL(eve::invcdf(d, T(1.0))       , inf    , 0.5);
