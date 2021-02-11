@@ -21,6 +21,7 @@
 #include <eve/function/exponential_distribution.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/all.hpp>
+#include <eve/function/digamma.hpp>
 #include <eve/function/tgamma.hpp>
 #include <eve/function/gamma_p.hpp>
 #include <eve/function/gamma_pinv.hpp>
@@ -390,6 +391,41 @@ namespace eve
         return d.theta;
       else
         return one(as<I>());
+    }
+
+    //////////////////////////////////////////////////////
+    /// confidence
+    template<typename T, typename U, floating_real_value R
+             , floating_real_value V, floating_real_value A,  typename I = T>
+    EVE_FORCEINLINE  auto confidence_(EVE_SUPPORTS(cpu_)
+                                     , gamma_distribution<T,U,I> const & d
+                                     , R const & p
+                                     , std::array<V, 4> const & pcov
+                                     , A const & alpha ) noexcept
+    {
+      using v_t = typename normal_distribution<T,U,I>::value_type;
+      auto z = cdf(d, p);
+      auto l = eve::log(p/(1-p));
+      auto dp = rec(p*(1-p));
+      auto k = one(as<I>());
+      if constexpr(floating_real_value<T>) k = d.k;
+      auto da = diff(gamma_p)(z, k)* dp;
+      R db;
+      if constexpr(floating_real_value<U> && floating_real_value<T>)
+        db = eve::exp(k*eve::log(z)-z-eve::lgamma(k)+eve::log(d.theta))* dp;
+      else if constexpr(floating_real_value<U>)
+        db = -eve::exp(k*eve::log(z)-z-eve::lgamma(k))* dp;
+      else if constexpr(floating_real_value<T>)
+        db  = -eve::exp(eve::log(z)-z+eve::log(d.theta))* dp;
+      else
+        db = -eve::exp(eve::log(z)-z)*dp;
+      auto varL = fma(da, fma(pcov[0], da,  2*pcov[1]*db),  pcov[2]*sqr(db));
+      auto halfwidth = -invcdf(normal_distribution_01<I>, alpha*v_t(0.5))*eve::sqrt(varL);
+      auto expllo = exp(l - halfwidth);
+      auto explup = exp(l + halfwidth);
+      auto plo = expllo/inc(expllo);
+      auto pup = explup/inc(explup);
+      return std::make_tuple(p, plo, pup);
     }
   }
 }

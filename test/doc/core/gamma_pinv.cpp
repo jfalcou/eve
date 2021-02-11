@@ -23,5 +23,5 @@ int main()
             << "<- pf                 = " << pf<< '\n'
             << "-> gamma_pinv(pf, kf) = " << eve::gamma_pinv(pf, kf) << '\n';
 
- return 0;
+  return 0;
 }
