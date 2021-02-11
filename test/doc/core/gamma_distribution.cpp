@@ -10,37 +10,37 @@ int main()
 {
   wide_ft x = { 0.0f, 1.0f, -1.0f, 5.0f };
   wide_ft p = { 0.0f, 0.5f, 0.75f, 1.0f };
-  wide_ft m = { 0.0f, -1.0f, 1.0f, 2.0f };
-  wide_ft s = { 1.0f,  2.0f, 3.0f, 4.0f };
+  wide_ft theta = { 0.5f, 2.0f, 0.3f, 4.0f };
+  wide_ft k = { 1.0f,  2.0f, 3.0f, 0.5f };
 
-  auto no = eve::gamma_distribution(m, s);
+  auto ga = eve::gamma_distribution(k, theta);
 
   std::cout
     << "---- simd" << '\n'
     << "<- x                   = " << x << '\n'
-    << "<- m                   = " << m << '\n'
-    << "<- s                   = " << s << '\n'
+    << "<- theta               = " << theta << '\n'
+    << "<- k                   = " << k << '\n'
     << "<- p                   = " << p << '\n'
-    << "-> mode(no)            = " << eve::mode(no) << '\n'
-    << "-> mean(no)            = " << eve::mean(no) << '\n'
-    << "-> var(no)             = " << eve::var(no) << '\n'
-    << "-> entropy(no)          = " << eve::entropy(no) << '\n'
-    << "-> pdf(no, x)          = " << eve::pdf(no, x) << '\n'
-    << "-> invcdf(no, p)       = " << eve::invcdf(no, p)  << '\n'
-    << "-> cdf(no, x)          = " << eve::cdf(no, x)  << '\n';
+    << "-> mode(ga)            = " << eve::mode(ga) << '\n'
+    << "-> mean(ga)            = " << eve::mean(ga) << '\n'
+    << "-> var(ga)             = " << eve::var(ga) << '\n'
+    << "-> entropy(ga)         = " << eve::entropy(ga) << '\n'
+    << "-> pdf(ga, x)          = " << eve::pdf(ga, x) << '\n'
+    << "-> invcdf(ga, p)       = " << eve::invcdf(ga, p)  << '\n'
+    << "-> cdf(ga, x)          = " << eve::cdf(ga, x)  << '\n';
 
   float xf = 9.0f;
-  float mf = 10.0f;
-  float sf = 2.0;
-  auto nof = eve::gamma_distribution(mf, sf);
+  float thetaf = 10.0f;
+  float kf = 2.0;
+  auto gaf = eve::gamma_distribution(kf, thetaf);
 
   std::cout
     << "---- scalar"  << '\n'
     << "<- xf                  = " << xf << '\n'
-    << "<- mf                  = " << mf << '\n'
-    << "<- sf                  = " << sf << '\n'
-    << "-> cdf(nof, xf)        = " << eve::cdf(nof, xf) << '\n'
-    << "-> mode(nof)           = " << eve::mode(nof)    << '\n';
+    << "<- thetaf              = " << thetaf << '\n'
+    << "<- kf                  = " << kf << '\n'
+    << "-> cdf(gaf, xf)        = " << eve::cdf(gaf, xf) << '\n'
+    << "-> mode(gaf)           = " << eve::mode(gaf)    << '\n';
 
 
   auto d1 = eve::gamma_distribution(2.0f, 5.0f);

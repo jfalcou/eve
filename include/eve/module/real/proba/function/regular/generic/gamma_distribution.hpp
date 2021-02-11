@@ -226,15 +226,15 @@ namespace eve
     {
       if constexpr(floating_value<T> && floating_value<U>)
       {
-        return eve::gamma_p(d.k, if_else(is_ltz(x), zero, x/d.theta));
+        return if_else(is_gtz(x), eve::gamma_p(if_else(is_ltz(x), zero, x/d.theta), d.k), 0);
       }
       else if constexpr(floating_value<U>)
       {
-        return eve::gamma_p(U(1), if_else(is_ltz(x), zero, x/d.theta));
+        return -eve::expm1(if_else(is_ltz(x), zero,-x/d.theta));
       }
       else if constexpr(floating_value<T>)
       {
-        return  eve::gamma_p(d.k, if_else(is_ltz(x), zero, x));
+        return  eve::gamma_p(if_else(is_ltz(x), zero, x), d.k);
       }
       else
         return -eve::expm1(if_else(is_ltz(x), zero,-x));
