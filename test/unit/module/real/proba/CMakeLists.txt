@@ -39,6 +39,7 @@ make_all_units(ROOT unit.real.probas NAME binomial_distribution           ARCH s
 make_all_units(ROOT unit.real.probas NAME cauchy_distribution             ARCH scalar simd TYPES ${real_types} )
 make_all_units(ROOT unit.real.probas NAME ev_distribution                 ARCH scalar simd TYPES ${real_types} )
 make_all_units(ROOT unit.real.probas NAME exponential_distribution        ARCH scalar simd TYPES ${real_types} )
+make_all_units(ROOT unit.real.probas NAME gamma_distribution              ARCH scalar simd TYPES ${real_types} )
 make_all_units(ROOT unit.real.probas NAME lognormal_distribution          ARCH scalar simd TYPES ${real_types} )
 make_all_units(ROOT unit.real.probas NAME normal_distribution             ARCH scalar simd TYPES ${real_types} )
 make_all_units(ROOT unit.real.probas NAME poisson_distribution            ARCH scalar simd TYPES ${real_types} )
