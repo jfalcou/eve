@@ -22,8 +22,9 @@ namespace eve::detail
                                   , diff_type<1> const &
                                   , N const &n
                                   , T const &x) noexcept
+  requires index_compatible_values<N, T>&& has_native_abi_v<T> && has_native_abi_v<N>
   {
-    using elt_t = element_type_t<T>;
-    return 2*convert(n, as(elt_t()))*hermite(dec(n), x);
+     using elt_t = element_type_t<T>;
+     return 2*convert(n, as(elt_t()))*hermite(dec(n), x);
   }
 }

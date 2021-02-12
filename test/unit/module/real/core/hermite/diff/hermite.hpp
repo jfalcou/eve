@@ -14,10 +14,7 @@
 
 TTS_CASE_TPL("Check diff(hermite) return type", EVE_TYPE)
 {
-  if constexpr(eve::floating_value<T>)
-  {
-    TTS_EXPR_IS(eve::diff(eve::hermite)(int(), T()), T);
-  }
+    TTS_EXPR_IS(eve::diff(eve::hermite)((unsigned int)(0), T()), T);
 }
 
 TTS_CASE_TPL("Check eve::diff(eve::hermite) behavior", EVE_TYPE)
@@ -30,9 +27,9 @@ TTS_CASE_TPL("Check eve::diff(eve::hermite) behavior", EVE_TYPE)
       return eve::detail::centered_diffdiv(cy, x);
     };
     auto ulp =  (sizeof(elt_t) == 4) ? 1.0e4 : 1.0e9;
-    TTS_ULP_EQUAL(eve::diff(eve::hermite)(2, T{2.0}), df2(2, T(2.0))  , ulp);
-    TTS_ULP_EQUAL(eve::diff(eve::hermite)(2, T{1.0}), df2(2, T(1.0))  , ulp);
-    TTS_ULP_EQUAL(eve::diff(eve::hermite)(3, T{2.0}), df2(3, T(2.0))  , ulp);
-    TTS_ULP_EQUAL(eve::diff(eve::hermite)(3, T{1.0}), df2(3, T(1.0))  , ulp);
+    TTS_ULP_EQUAL(eve::diff(eve::hermite)(2u, T{2.0}), df2(2, T(2.0))  , ulp);
+    TTS_ULP_EQUAL(eve::diff(eve::hermite)(2u, T{1.0}), df2(2, T(1.0))  , ulp);
+    TTS_ULP_EQUAL(eve::diff(eve::hermite)(3u, T{2.0}), df2(3, T(2.0))  , ulp);
+    TTS_ULP_EQUAL(eve::diff(eve::hermite)(3u, T{1.0}), df2(3, T(1.0))  , ulp);
   }
 }
