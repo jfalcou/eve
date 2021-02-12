@@ -87,6 +87,7 @@ make_all_units(ROOT unit.real.core NAME frexp                 ARCH scalar simd T
 make_all_units(ROOT unit.real.core NAME gather                ARCH        simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME geommean              ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.core NAME has_single_bit        ARCH scalar simd TYPES ${integral_types})
+make_all_units(ROOT unit.real.core NAME hermite               ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.core NAME horn                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.core NAME horn1                 ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.core NAME hypot                 ARCH scalar simd TYPES ${real_types}    )
