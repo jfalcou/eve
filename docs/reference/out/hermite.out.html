@@ -1,0 +1,18 @@
+ <meta charset="utf-8">
+**Possible Output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+<- pd               = (0.5, -1.5, 0.1, -1, 19, 25, 21.5, 10000)
+<- n                = (0, 1, 2, 3, 0, 1, 2, 3)
+-> hermite(n, pd)   = (0.5, -3, 0.2, 4, 19, 50, 43, 8e+12)
+-> hermite(3, pd)   = (-5, -9, -1.192, 4, 54644, 124700, 79249, 8e+12)
+-> hermite(n, 0.1)  = (0.1, 0.2, 0.2, -1.192, 0.1, 0.2, 0.2, -1.192)
+---- scalar
+<- xd               = 3
+-> hermite(4, xd)   = 876
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
