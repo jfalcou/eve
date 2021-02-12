@@ -16,39 +16,21 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, real_scalar_value U, typename N>
+  template<real_scalar_value U, typename N>
   EVE_FORCEINLINE wide<U, N, ppc_> if_else_(EVE_SUPPORTS(vmx_),
-                                            logical<wide<T, N, ppc_>> const &m,
+                                            logical<wide<U, N, ppc_>> const &m,
                                             wide<U, N, ppc_> const &  v0,
                                             wide<U, N, ppc_> const &  v1) noexcept
   {
     return vec_sel(v1.storage(), v0.storage(), bit_cast(m, as_<logical<wide<U,N>>>()).storage());
   }
 
-  template<real_scalar_value T, real_scalar_value U, typename N>
-  EVE_FORCEINLINE wide<U, N, ppc_> if_else_(EVE_SUPPORTS(vmx_),
-                                            wide<T, N, ppc_> const &m,
-                                            wide<U, N, ppc_> const &  v0,
-                                            wide<U, N, ppc_> const &  v1) noexcept
-  {
-    return if_else(to_logical(m),v0,v1);
-  }
-
-  template<real_scalar_value T, real_scalar_value U, typename N>
+  template<real_scalar_value U, typename N>
   EVE_FORCEINLINE logical<wide<U, N, ppc_>> if_else_(EVE_SUPPORTS(vmx_),
-                                            logical<wide<T, N, ppc_>> const & m,
+                                            logical<wide<U, N, ppc_>> const & m,
                                             logical<wide<U, N, ppc_>> const & v0,
                                             logical<wide<U, N, ppc_>> const & v1) noexcept
   {
     return bit_cast(vec_sel(v1.storage(), v0.storage(), bit_cast(m, as_<logical<wide<U,N>>>()).storage()), as(v0));
-  }
-
-  template<real_scalar_value T, real_scalar_value U, typename N>
-  EVE_FORCEINLINE logical<wide<U, N, ppc_>> if_else_(EVE_SUPPORTS(vmx_),
-                                            wide<T, N, ppc_> const & m,
-                                            logical<wide<U, N, ppc_>> const & v0,
-                                            logical<wide<U, N, ppc_>> const & v1) noexcept
-  {
-    return if_else(to_logical(m),v0,v1);
   }
 }

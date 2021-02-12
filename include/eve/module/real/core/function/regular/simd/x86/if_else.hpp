@@ -21,9 +21,9 @@ namespace eve::detail
 {
   //------------------------------------------------------------------------------------------------
   // 128 bits if_else
-  template<real_scalar_value T, typename U, typename N>
+  template< scalar_value U, typename N>
   EVE_FORCEINLINE wide<U, N, x86_128_> if_else_(EVE_SUPPORTS(sse4_1_),
-                                            logical<wide<T, N, x86_128_>> const &v0,
+                                            logical<wide<U, N, x86_128_>> const &v0,
                                             wide<U, N, x86_128_> const &v1,
                                             wide<U, N, x86_128_> const &v2) noexcept
   {
@@ -32,38 +32,11 @@ namespace eve::detail
     else                                          return _mm_blendv_epi8(v2, v1, bit_cast(bit_mask(v0),as(v2)));
   }
 
-  template<real_scalar_value T, typename U, typename N>
-  EVE_FORCEINLINE wide<U, N, x86_128_> if_else_(EVE_SUPPORTS(sse4_1_),
-                                            wide<T, N, x86_128_> const &v0,
-                                            wide<U, N, x86_128_> const &v1,
-                                            wide<U, N, x86_128_> const &v2) noexcept
-  {
-    return if_else(to_logical(v0), v1, v2);
-  }
-
-  template<real_scalar_value T, typename U, typename N>
-  EVE_FORCEINLINE auto if_else_(EVE_SUPPORTS(sse4_1_),
-                                logical<wide<T, N, x86_128_>> const &v0,
-                                logical<wide<U, N, x86_128_>> const &v1,
-                                logical<wide<U, N, x86_128_>> const &v2) noexcept
-  {
-    return bit_cast(if_else(v0, v1.mask(), v2.mask()), as(v2));
-  }
-
-  template<real_scalar_value T, typename U, typename N>
-  EVE_FORCEINLINE logical<wide<U, N, x86_128_>> if_else_(EVE_SUPPORTS(sse4_1_),
-                                            wide<T, N, x86_128_> const &v0,
-                                            logical<wide<U, N, x86_128_>> const &v1,
-                                            logical<wide<U, N, x86_128_>> const &v2) noexcept
-  {
-    return if_else(to_logical(v0), v1, v2);
-  }
-
   //------------------------------------------------------------------------------------------------
   // 256 bits if_else
-  template<real_scalar_value T, typename U, typename N>
+  template<real_scalar_value U, typename N>
   EVE_FORCEINLINE wide<U, N, x86_256_> if_else_(EVE_SUPPORTS(avx_),
-                                            logical<wide<T, N, x86_256_>> const &v0,
+                                            logical<wide<U, N, x86_256_>> const &v0,
                                             wide<U, N, x86_256_> const &v1,
                                             wide<U, N, x86_256_> const &v2) noexcept
   {
@@ -73,7 +46,7 @@ namespace eve::detail
     {
       if constexpr(current_api >= avx2)
       {
-        using a_t = wide<as_integer_t<T>, N>;
+        using a_t = wide<as_integer_t<U>, N>;
         return _mm256_blendv_epi8(v2, v1, bit_cast(v0.bits(),as_<a_t>()));
       }
       else
@@ -88,31 +61,13 @@ namespace eve::detail
     }
   }
 
-  template<real_scalar_value T, typename U, typename N>
-  EVE_FORCEINLINE wide<U, N, x86_256_> if_else_(EVE_SUPPORTS(avx_),
-                                            wide<T, N, x86_256_> const &v0,
-                                            wide<U, N, x86_256_> const &v1,
-                                            wide<U, N, x86_256_> const &v2) noexcept
-  {
-    return if_else(to_logical(v0), v1, v2);
-  }
-
-  template<real_scalar_value T, typename U, typename N>
+  template<real_scalar_value U, typename N>
   EVE_FORCEINLINE auto if_else_(EVE_SUPPORTS(avx_),
-                                            logical<wide<T, N, x86_256_>> const &v0,
+                                            logical<wide<U, N, x86_256_>> const &v0,
                                             logical<wide<U, N, x86_256_>> const &v1,
                                             logical<wide<U, N, x86_256_>> const &v2) noexcept
   {
     return bit_cast(if_else(v0, v1.mask(), v2.mask()), as(v2));
-  }
-
-  template<real_scalar_value T, typename U, typename N>
-  EVE_FORCEINLINE auto if_else_(EVE_SUPPORTS(avx_),
-                                            wide<T, N, x86_256_> const &v0,
-                                            logical<wide<U, N, x86_256_>> const &v1,
-                                            logical<wide<U, N, x86_256_>> const &v2) noexcept
-  {
-    return bit_cast(if_else(to_logical(v0), v1.mask(), v2.mask()), as(v2));
   }
 
 }

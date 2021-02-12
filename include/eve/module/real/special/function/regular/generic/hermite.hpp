@@ -63,13 +63,9 @@ namespace eve::detail
     {
       using elt_t = element_type_t<T>;
       auto p0 = one(as(x));
-      std::cout << "nn " << "  " << nn << std::endl;
       auto iseqzn = is_eqz(nn);
-      std::cout << "iseqzn " << "  " << iseqzn << std::endl;
-      std::cout << "x      " << "  " << x      << std::endl;
       if(eve::all(iseqzn)) return p0;
       auto p1 = if_else(iseqzn, one, x+x);
-      std::cout << "p1 " << p1 << std::endl;
       auto n =  convert(nn, as<elt_t>());
       auto c = one(as(n));
       auto hermite_next = [](auto c,  auto x,  auto hn,  auto hnm1)
@@ -77,7 +73,6 @@ namespace eve::detail
           return 2*eve::fms(x, hn, c*hnm1);
         };
       auto test = c < n;
-      std::cout << "--- " << c << "  " << n << "  " << test << " " << p0<< " " << p1 << std::endl;
       while(eve::any(test))
       {
         auto tmp = p0;
