@@ -36,7 +36,7 @@ namespace eve::detail
                                , U const & t, V const & f )
   requires compatible_values<U, V>
   {
-     if constexpr(scalar_value<T>)
+    if constexpr(scalar_value<T>)
     {
            if constexpr(simd_value<U> && simd_value<V>) return  cond ? t : f;
       else if constexpr(simd_value<U>) return  cond ? t : U(f);
@@ -50,6 +50,10 @@ namespace eve::detail
       if constexpr(std::is_same_v<T, logical<v_t>>)
       {
         return bit_select(cond, t, f);
+      }
+      else if constexpr(is_logical_v<T> && std::is_same_v<U,V> && std::is_same_v<U,T> )
+      {
+        return  bit_select(cond, t, f);
       }
       else if constexpr(is_logical_v<T>)
       {
