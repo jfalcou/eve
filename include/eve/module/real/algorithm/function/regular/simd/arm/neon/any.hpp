@@ -25,7 +25,7 @@ namespace eve::detail
     else
     {
       if constexpr ( !C::is_complete ) v0 = v0 && cond.mask(eve::as_<l_t>{});
-      using wide_u32 = wide<std::uint32_t, fixed<2>, arm_64_>;
+      using wide_u32 = typename wide<T, N, arm_64_>::template rebind<std::uint32_t, eve::fixed<2>>;
       auto as_uint32 = eve::bit_cast(v0, eve::as_<eve::logical<wide_u32>>{});
 
       if constexpr( sizeof(T) * N() > 4u ) as_uint32 = vpmax_u32(as_uint32, as_uint32);
@@ -48,8 +48,11 @@ namespace eve::detail
     else
     {
       if constexpr ( !C::is_complete ) v0 = v0 && cond.mask(eve::as_<l_t>{});
-      auto [l, h] = v0.slice();
-      return any_arm_impl(l || h, ignore_none);
+
+      using u32_4 = typename wide<T, N, arm_128_>::template rebind<std::uint32_t, eve::fixed<4>>;
+
+      auto dwords = eve::bit_cast(v0, eve::as<u32_4>());
+      return any_arm_impl(detail::to_logical(dwords), ignore_none);
     }
   }
 
