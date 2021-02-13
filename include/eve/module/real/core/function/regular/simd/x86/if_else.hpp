@@ -19,55 +19,101 @@
 
 namespace eve::detail
 {
-  //------------------------------------------------------------------------------------------------
-  // 128 bits if_else
-  template< scalar_value U, typename N>
-  EVE_FORCEINLINE wide<U, N, x86_128_> if_else_(EVE_SUPPORTS(sse4_1_),
-                                            logical<wide<U, N, x86_128_>> const &v0,
-                                            wide<U, N, x86_128_> const &v1,
-                                            wide<U, N, x86_128_> const &v2) noexcept
+  //================================================================================================
+  // X86 if_else
+  template<scalar_value T, typename N, x86_abi ABI>
+  EVE_FORCEINLINE wide<T, N, ABI> if_else_ ( EVE_SUPPORTS(sse4_1_)
+                                                , logical<wide<T, N, ABI>> const &v0
+                                                , wide<T, N, ABI> const &v1
+                                                , wide<T, N, ABI> const &v2
+                                                ) noexcept
   {
-    if constexpr(std::is_same_v<U, float>)        return _mm_blendv_ps(v2, v1, bit_cast(bit_mask(v0),as(v2)));
-    else if constexpr(std::is_same_v<U, double>)  return _mm_blendv_pd(v2, v1, bit_cast(bit_mask(v0),as(v2)));
-    else                                          return _mm_blendv_epi8(v2, v1, bit_cast(bit_mask(v0),as(v2)));
-  }
+    constexpr auto c = categorize<wide<T,N,ABI>>();
 
-  //------------------------------------------------------------------------------------------------
-  // 256 bits if_else
-  template<real_scalar_value U, typename N>
-  EVE_FORCEINLINE wide<U, N, x86_256_> if_else_(EVE_SUPPORTS(avx_),
-                                            logical<wide<U, N, x86_256_>> const &v0,
-                                            wide<U, N, x86_256_> const &v1,
-                                            wide<U, N, x86_256_> const &v2) noexcept
-  {
-         if constexpr(std::is_same_v<U, float>)  return _mm256_blendv_ps(v2, v1,  bit_cast(v0.bits(),as(v2)));
-    else if constexpr(std::is_same_v<U, double>) return _mm256_blendv_pd(v2, v1,  bit_cast(v0.bits(),as(v2)));
-    else if constexpr(std::is_integral_v<U>)
+    if constexpr( !ABI::is_wide_logical )
     {
-      if constexpr(current_api >= avx2)
-      {
-        using a_t = wide<as_integer_t<U>, N>;
-        return _mm256_blendv_epi8(v2, v1, bit_cast(v0.bits(),as_<a_t>()));
-      }
+      auto const msk =v0.storage().value;
+      auto const s1 =v1.storage();
+      auto const s2 =v2.storage();
+
+            if constexpr( c == category::float64x8    ) return _mm512_mask_blend_pd(msk,s2,s1);
+      else  if constexpr( c == category::float64x4    ) return _mm256_mask_blend_pd(msk,s2,s1);
+      else  if constexpr( c == category::float64x2    ) return _mm_mask_blend_pd(msk,s2,s1);
+      else  if constexpr( c == category::float32x16   ) return _mm512_mask_blend_ps(msk,s2,s1);
+      else  if constexpr( c == category::float32x8    ) return _mm256_mask_blend_ps(msk,s2,s1);
+      else  if constexpr( c == category::float32x4    ) return _mm_mask_blend_ps(msk,s2,s1);
+      else  if constexpr( c == category::int64x8    ) return _mm512_mask_blend_epi64(msk,s2,s1);
+      else  if constexpr( c == category::uint64x8   ) return _mm512_mask_blend_epi64(msk,s2,s1);
+      else  if constexpr( c == category::int64x4    ) return _mm256_mask_blend_epi64(msk,s2,s1);
+      else  if constexpr( c == category::uint64x4   ) return _mm256_mask_blend_epi64(msk,s2,s1);
+      else  if constexpr( c == category::int64x2    ) return _mm_mask_blend_epi64(msk,s2,s1);
+      else  if constexpr( c == category::uint64x2   ) return _mm_mask_blend_epi64(msk,s2,s1);
+      else  if constexpr( c == category::int32x16   ) return _mm512_mask_blend_epi32(msk,s2,s1);
+      else  if constexpr( c == category::uint32x16  ) return _mm512_mask_blend_epi32(msk,s2,s1);
+      else  if constexpr( c == category::int32x8    ) return _mm256_mask_blend_epi32(msk,s2,s1);
+      else  if constexpr( c == category::uint32x8   ) return _mm256_mask_blend_epi32(msk,s2,s1);
+      else  if constexpr( c == category::int32x4    ) return _mm_mask_blend_epi32(msk,s2,s1);
+      else  if constexpr( c == category::uint32x4   ) return _mm_mask_blend_epi32(msk,s2,s1);
+      else  if constexpr( c == category::int16x32   ) return _mm512_mask_blend_epi16(msk,s2,s1);
+      else  if constexpr( c == category::uint16x32  ) return _mm512_mask_blend_epi16(msk,s2,s1);
+      else  if constexpr( c == category::int16x16   ) return _mm256_mask_blend_epi16(msk,s2,s1);
+      else  if constexpr( c == category::uint16x16  ) return _mm256_mask_blend_epi16(msk,s2,s1);
+      else  if constexpr( c == category::int16x8    ) return _mm_mask_blend_epi16(msk,s2,s1);
+      else  if constexpr( c == category::uint16x8   ) return _mm_mask_blend_epi16(msk,s2,s1);
+      else  if constexpr( c == category::int8x64    ) return _mm512_mask_blend_epi8(msk,s2,s1);
+      else  if constexpr( c == category::uint8x64   ) return _mm512_mask_blend_epi8(msk,s2,s1);
+      else  if constexpr( c == category::int8x32    ) return _mm256_mask_blend_epi8(msk,s2,s1);
+      else  if constexpr( c == category::uint8x32   ) return _mm256_mask_blend_epi8(msk,s2,s1);
+      else  if constexpr( c == category::int8x16    ) return _mm_mask_blend_epi8(msk,s2,s1);
+      else  if constexpr( c == category::uint8x16   ) return _mm_mask_blend_epi8(msk,s2,s1);
+    }
+    else
+    {
+      auto msk = bit_cast(v0.bits(),as(v2));
+
+            if constexpr( c == category::float64x4   ) return _mm256_blendv_pd(v2, v1, msk);
+      else  if constexpr( c == category::float64x2   ) return _mm_blendv_pd   (v2, v1, msk);
+      else  if constexpr( c == category::float32x8   ) return _mm256_blendv_ps(v2, v1, msk);
+      else  if constexpr( c == category::float32x4   ) return _mm_blendv_ps   (v2, v1, msk);
       else
       {
-        if constexpr(std::is_integral_v<U> && sizeof(U) <= 2)      return aggregate(if_else, v0, v1, v2);
-        else if constexpr(std::is_integral_v<U> && sizeof(U) >= 4)
+        if constexpr( std::same_as<ABI,x86_128_> ) return _mm_blendv_epi8(v2, v1, msk);
+        else if constexpr(current_api >= avx2)
         {
-          using f_t = wide<as_floating_point_t<U>, N, x86_256_>;
-          return bit_cast( if_else( v0, bit_cast(v1,as_<f_t>()), bit_cast(v2,as_<f_t>())), as(v2));
+          using a_t = wide<as_integer_t<T>, N>;
+          return _mm256_blendv_epi8(v2, v1, bit_cast(v0.bits(),as_<a_t>()));
+        }
+        else
+        {
+                if constexpr(sizeof(T) <= 2)      return aggregate(if_else, v0, v1, v2);
+          else  if constexpr(sizeof(T) >= 4)
+          {
+            using f_t = wide<as_floating_point_t<T>, N, x86_256_>;
+            return bit_cast( if_else( v0, bit_cast(v1,as_<f_t>()), bit_cast(v2,as_<f_t>())), as(v2));
+          }
         }
       }
     }
   }
 
-  template<real_scalar_value U, typename N>
-  EVE_FORCEINLINE auto if_else_(EVE_SUPPORTS(avx_),
-                                            logical<wide<U, N, x86_256_>> const &v0,
-                                            logical<wide<U, N, x86_256_>> const &v1,
-                                            logical<wide<U, N, x86_256_>> const &v2) noexcept
+  //================================================================================================
+  // Full logical if_else
+  template<real_scalar_value T, typename N, x86_abi ABI>
+  EVE_FORCEINLINE auto if_else_ ( EVE_SUPPORTS(sse2_)
+                                , logical<wide<T, N, ABI>> const &v0
+                                , logical<wide<T, N, ABI>> const &v1
+                                , logical<wide<T, N, ABI>> const &v2
+                                ) noexcept
   {
-    return bit_cast(if_else(v0, v1.mask(), v2.mask()), as(v2));
+    if constexpr( !ABI::is_wide_logical )
+    {
+      using s_t = typename logical<wide<T,N,ABI>>::storage_type;
+      auto    r = bit_select(v0.storage().value,v1.storage().value,v2.storage().value);
+      return logical<wide<T,N,ABI>>( s_t{r} );
+    }
+    else
+    {
+      return bit_cast(if_else(v0, v1.mask(), v2.mask()), as(v0));
+    }
   }
-
 }

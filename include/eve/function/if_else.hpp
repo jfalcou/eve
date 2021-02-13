@@ -28,3 +28,6 @@ namespace eve
 #  include <eve/module/real/core/function/regular/simd/ppc/if_else.hpp>
 #endif
 
+#if defined(EVE_HW_ARM)
+#  include <eve/module/real/core/function/regular/simd/arm/neon/if_else.hpp>
+#endif

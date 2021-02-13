@@ -10,7 +10,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/function/to_logical.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
@@ -18,53 +17,46 @@
 #include <eve/constant/mone.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/zero.hpp>
-#include <eve/function/bit_and.hpp>
 #include <eve/function/bit_andnot.hpp>
 #include <eve/function/bit_mask.hpp>
-#include <eve/function/bit_or.hpp>
 #include <eve/function/bit_ornot.hpp>
 #include <eve/function/bit_select.hpp>
 #include <eve/function/convert.hpp>
-#include <eve/function/minus.hpp>
 #include <eve/traits/common_compatible.hpp>
-#include <iostream>
-#include <tts/tts.hpp>
+
 namespace eve::detail
 {
-  template<value T, value U, value V>
-  EVE_FORCEINLINE auto if_else_(EVE_SUPPORTS(cpu_), T const & cond
-                               , U const & t, V const & f )
+  template<scalar_value T, value U, value V>
+  EVE_FORCEINLINE auto if_else_(EVE_SUPPORTS(cpu_), T const & cond, U const & t, V const & f )
   requires compatible_values<U, V>
   {
-    if constexpr(scalar_value<T>)
+          if constexpr(simd_value<U> && simd_value<V>)  return  cond ? t : f;
+    else  if constexpr(simd_value<U>)                   return  cond ? t : U(f);
+    else  if constexpr(simd_value<V>)                   return  cond ? V(t) : f;
+    else                                                return  cond ? t : f;
+  }
+
+  template<simd_value T, value U, value V>
+  EVE_FORCEINLINE auto if_else_(EVE_SUPPORTS(cpu_), T const & cond, U const & t, V const & f )
+  requires compatible_values<U, V>
+  {
+    if constexpr( !is_logical_v<T> )
     {
-           if constexpr(simd_value<U> && simd_value<V>) return  cond ? t : f;
-      else if constexpr(simd_value<U>) return  cond ? t : U(f);
-      else if constexpr(simd_value<V>) return  cond ? V(t) : f;
-      else                             return  cond ? t : f;
+      return if_else(to_logical(cond),t,f);
     }
-    else if constexpr(simd_value<T>)
+    else
     {
       using v_t = common_compatible_t<U, V>;
-      using elt_t =  element_type_t<v_t>;
-      if constexpr(std::is_same_v<T, logical<v_t>>)
+      using e_t = element_type_t<v_t>;
+      using r_t = as_wide_t<e_t, cardinal_t<T>>;
+
+      if constexpr(std::same_as<logical<e_t>,element_type_t<T>>)
       {
-        return bit_select(cond, t, f);
-      }
-      else if constexpr(is_logical_v<T> && std::is_same_v<U,V> && std::is_same_v<U,T> )
-      {
-        return  bit_select(cond, t, f);
-      }
-      else if constexpr(is_logical_v<T>)
-      {
-        using l_t = logical<elt_t>;
-        using r_t = as_wide_t<elt_t, cardinal_t<T>>;
-        auto c = convert(cond, as<l_t>());
-        return   if_else(c, r_t(t), r_t(f));
+        return  bit_select(cond.mask(), r_t(t), r_t(f));
       }
       else
       {
-        return if_else(is_nez(cond), t, f);
+        return  if_else(convert(cond, as<as_logical_t<e_t>>()), r_t(t), r_t(f));
       }
     }
   }
@@ -101,10 +93,9 @@ namespace eve::detail
                                           eve::callable_zero_ const
                                           &) noexcept
   {
-    if constexpr(scalar_value<T>)
-      return static_cast<bool>(cond) ? t : U(0);
-    else if constexpr(bit_compatible_values<T, U>)
-      return bit_and(t, bit_mask(cond));
+          if constexpr(scalar_value<T>)             return static_cast<bool>(cond) ? t : U(0);
+    else  if constexpr(current_api >= avx512)       return if_else(cond, t, U(0));
+    else  if constexpr(bit_compatible_values<T, U>) return bit_and(t, bit_mask(cond));
     else
     {
       using elt_t = element_type_t<T>;
@@ -119,10 +110,9 @@ namespace eve::detail
                                           eve::callable_zero_ const &,
                                           U const &t) noexcept
   {
-    if constexpr(scalar_value<T>)
-      return static_cast<bool>(cond) ? U(0) : t;
-    else if constexpr(bit_compatible_values<T, U>)
-      return bit_andnot(t, bit_mask(cond));
+          if constexpr(scalar_value<T>)             return static_cast<bool>(cond) ? U(0) : t;
+    else  if constexpr(current_api >= avx512)       return if_else(cond, U(0), t);
+    else  if constexpr(bit_compatible_values<T, U>) return bit_andnot(t, bit_mask(cond));
     else
     {
       using elt_t = element_type_t<T>;
@@ -140,14 +130,13 @@ namespace eve::detail
                                           callable_allbits_ const
                                           &) noexcept
   {
-    if constexpr(scalar_value<T>)
-      return static_cast<bool>(cond) ? t : allbits(eve::as(t));
-    else if constexpr(bit_compatible_values<T, U>)
-      return bit_ornot(t, bit_mask(cond));
+          if constexpr(scalar_value<T>)             return static_cast<bool>(cond) ? t : allbits(eve::as(t));
+    else  if constexpr(current_api >= avx512)       return if_else(cond, t, allbits(eve::as(t)));
+    else  if constexpr(bit_compatible_values<T, U>) return bit_ornot(t, bit_mask(cond));
     else
     {
       using elt_t = element_type_t<T>;
-      using l_t = logical<elt_t>;
+      using l_t = as_logical_t<elt_t>;
       return bit_ornot(convert(is_nez(cond), as<l_t>()), bit_mask(cond));
     }
   }
@@ -158,14 +147,13 @@ namespace eve::detail
                                           callable_allbits_ const &,
                                           U const &t) noexcept
   {
-    if constexpr(scalar_value<T>)
-      return static_cast<bool>(cond) ? allbits(eve::as(t)) : t;
-    else if constexpr(bit_compatible_values<T, U>)
-      return bit_or(t, bit_mask(cond));
+          if constexpr(scalar_value<T>)             return static_cast<bool>(cond) ? allbits(eve::as(t)) : t;
+    else  if constexpr(current_api >= avx512)       return if_else(cond, allbits(eve::as(t)),t);
+    else if constexpr(bit_compatible_values<T, U>)  return bit_or(t, bit_mask(cond));
     else
     {
       using elt_t = element_type_t<T>;
-      using l_t = logical<elt_t>;
+      using l_t = as_logical_t<elt_t>;
       return bit_or(convert(is_nez(cond), as<l_t>()), bit_mask(cond));
     }
   }
@@ -179,16 +167,16 @@ namespace eve::detail
                                           eve::callable_mone_ const
                                           &) noexcept
   {
-    if constexpr(scalar_value<T>)
-      return static_cast<bool>(cond) ? t : mone(eve::as(t));
-    else if constexpr(integral_value<U>)
+          if constexpr(scalar_value<T>)       return static_cast<bool>(cond) ? t : mone(eve::as(t));
+    else  if constexpr(current_api >= avx512) return if_else(cond, t, U(-1));
+    else  if constexpr(integral_value<U>)
     {
       if constexpr(bit_compatible_values<T, U>)
         return bit_ornot(t, bit_mask(cond));
       else
       {
         using elt_t = element_type_t<T>;
-        using l_t = logical<elt_t>;
+        using l_t = as_logical_t<elt_t>;
         return bit_ornot(t, convert(is_nez(cond), as<l_t>()));
       }
     }
@@ -202,16 +190,16 @@ namespace eve::detail
                                           eve::callable_mone_ const &,
                                           U const &t) noexcept
   {
-    if constexpr(scalar_value<T>)
-      return static_cast<bool>(cond) ? mone(eve::as(t)) : t;
-    else if constexpr(integral_value<U>)
+          if constexpr(scalar_value<T>)       return static_cast<bool>(cond) ? mone(eve::as(t)) : t;
+    else  if constexpr(current_api >= avx512) return if_else(cond, U(-1), t);
+    else  if constexpr(integral_value<U>)
     {
       if constexpr(bit_compatible_values<T, U>)
         return bit_or(t, bit_mask(cond));
       else
       {
         using elt_t = element_type_t<T>;
-        using l_t = logical<elt_t>;
+        using l_t = as_logical_t<elt_t>;
         return bit_or(t, convert(is_nez(cond), as<l_t>()));
       }
     }
@@ -228,16 +216,16 @@ namespace eve::detail
                                           eve::callable_one_ const
                                           &) noexcept
   {
-    if constexpr(scalar_value<T>)
-      return static_cast<bool>(cond) ? t : one(eve::as(t));
-    else if constexpr(integral_value<U>)
+          if constexpr(scalar_value<T>)       return static_cast<bool>(cond) ? t : one(eve::as(t));
+    else  if constexpr(current_api >= avx512) return if_else(cond, t, U(1));
+    else  if constexpr(integral_value<U>)
     {
       if constexpr(bit_compatible_values<T, U>)
         return -bit_ornot(-t, bit_mask(cond));
       else
       {
         using elt_t = element_type_t<T>;
-        using l_t = logical<elt_t>;
+        using l_t = as_logical_t<elt_t>;
         return -bit_ornot(-t, convert(is_nez(cond), as<l_t>()));
       }
     }
@@ -251,16 +239,16 @@ namespace eve::detail
                                           eve::callable_one_ const &,
                                           U const &t) noexcept
   {
-   if constexpr(scalar_value<T>)
-     return static_cast<bool>(cond) ? one(eve::as(t)) : t;
-    else if constexpr(integral_value<U>)
+          if constexpr(scalar_value<T>) return static_cast<bool>(cond) ? one(eve::as(t)) : t;
+    else  if constexpr(current_api >= avx512) return if_else(cond, U(1),t);
+    else  if constexpr(integral_value<U>)
     {
       if constexpr(bit_compatible_values<T, U>)
         return -bit_or(-t, bit_mask(cond));
       else
       {
         using elt_t = element_type_t<T>;
-        using l_t = logical<elt_t>;
+        using l_t = as_logical_t<elt_t>;
         return -bit_or(-t, convert(is_nez(cond), as<l_t>()));
       }
     }
