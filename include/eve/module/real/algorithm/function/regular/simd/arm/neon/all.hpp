@@ -29,12 +29,12 @@ namespace eve::detail
       if constexpr( N::value == 1 ) return v0.get(0);
       else
       {
-        using u32_2    = wide<std::uint32_t, eve::fixed<2>, arm_64_>;
-        auto as_uint32 = eve::bit_cast(v0.bits(), eve::as_<u32_2> {});
+        using u32_2 = typename wide<T, N, arm_64_>::template rebind<std::uint32_t, eve::fixed<2>>;
+        auto dwords = eve::bit_cast(v0.bits(), eve::as_<u32_2> {});
 
-        if constexpr( sizeof(T) * N() > 4u ) as_uint32 = vpmin_u32(as_uint32, as_uint32);
+        if constexpr( sizeof(T) * N() > 4u ) dwords = vpmin_u32(dwords, dwords);
 
-        std::uint32_t combined = vget_lane_u32(as_uint32, 0);
+        std::uint32_t combined = vget_lane_u32(dwords, 0);
 
               if constexpr ( sizeof(T) >= 4 )       return (bool)combined;
         else  if constexpr ( sizeof(T) * N() == 8 ) return !~combined;
@@ -68,8 +68,12 @@ namespace eve::detail
     else
     {
       if constexpr ( !C::is_complete ) v0 = v0 || cond.mask_inverted(eve::as_<l_t>{});
-      auto [l, h] = v0.slice();
-      return all_arm_impl(l && h, ignore_none);
+
+      using u32_4 = typename wide<T, N, arm_128_>::template rebind<std::uint32_t, eve::fixed<4>>;
+      auto dwords = eve::bit_cast(v0, eve::as<u32_4>());
+
+      // not the same logic as for uint_32 plain so duplicated.
+      return all_arm_impl(dwords == static_cast<std::uint32_t>(-1), ignore_none);
     }
   }
 
