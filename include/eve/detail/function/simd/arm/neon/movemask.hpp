@@ -88,7 +88,14 @@ namespace eve::detail
     using u32_4 = typename w_t::template rebind <std::uint32_t, eve::fixed<4>>;
     using u64_1 = typename w_t::template rebind <std::uint64_t, eve::fixed<1>>;
 
-    if constexpr ( sizeof(T) >= 4 )
+    if constexpr ( eve::current_api >= eve::asimd && sizeof(T) >= 2 )
+    {
+      using half_e_t = make_integer_t<sizeof(T) / 2, unsigned>;
+      auto halved = eve::convert(v, eve::as_<eve::logical<half_e_t>>{});
+      auto qword  = eve::bit_cast(halved, eve::as_<u64_1>{});
+      return std::pair { vget_lane_u64(qword, 0), eve::lane<sizeof(T) * 4> };
+    }
+    else if constexpr ( sizeof(T) >= 4 )
     {
       return std::pair{ every_4th_byte_arm128(v.bits()), eve::lane<sizeof(T) * 2> };
     }
@@ -110,9 +117,9 @@ namespace eve::detail
 
       // drop top byte
       u8_8  bytes_8  = vmovn_u16(words_16);
-      u64_1 as_u64_1 = eve::bit_cast(bytes_8, eve::as_<u64_1>{});
+      u64_1 qword = eve::bit_cast(bytes_8, eve::as_<u64_1>{});
 
-      return std::pair{ vget_lane_u64(as_u64_1, 0), eve::lane<4> };
+      return std::pair{ vget_lane_u64(qword, 0), eve::lane<4> };
     }
   }
 }
