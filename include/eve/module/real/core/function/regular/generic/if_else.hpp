@@ -54,6 +54,10 @@ namespace eve::detail
       {
         return  bit_select(cond.mask(), r_t(t), r_t(f));
       }
+      else if constexpr(has_emulated_abi_v<T>)
+      {
+        return map(if_else, cond, t, f);
+      }
       else
       {
         return  if_else(convert(cond, as<as_logical_t<e_t>>()), r_t(t), r_t(f));
