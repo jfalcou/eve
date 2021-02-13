@@ -34,3 +34,11 @@ TTS_CASE_TPL("Check begin/end access for wide", EVE_TYPE)
 
   TTS_EQUAL(simd, ref);
 }
+
+TTS_CASE_TPL("Check front/back access for wide", EVE_TYPE)
+{
+  T  simd([](auto i, auto) { return 1+i; });
+
+  TTS_EQUAL(simd.front(), EVE_VALUE(1));
+  TTS_EQUAL(simd.back() , EVE_VALUE(EVE_CARDINAL));
+}

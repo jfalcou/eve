@@ -119,8 +119,8 @@ namespace eve::detail
       return detail::extract(self(), i);
     }
 
-    EVE_FORCEINLINE auto back()  const noexcept { return (*this)[cardinal_v<Derived>-1]; }
-    EVE_FORCEINLINE auto front() const noexcept { return (*this)[0]; }
+    EVE_FORCEINLINE auto back()  const noexcept { return get(cardinal_v<Derived>-1); }
+    EVE_FORCEINLINE auto front() const noexcept { return get(0); }
 
     //==============================================================================================
     // Common hidden friend operators
