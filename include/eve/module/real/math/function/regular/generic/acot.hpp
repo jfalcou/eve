@@ -37,4 +37,3 @@ namespace eve::detail
     }
   }
 }
-
