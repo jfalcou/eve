@@ -21,6 +21,7 @@
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_mask.hpp>
 #include <eve/function/bit_ornot.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/bitofsign.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_gez.hpp>
