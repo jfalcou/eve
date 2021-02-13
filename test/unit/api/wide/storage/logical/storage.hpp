@@ -30,5 +30,5 @@ TTS_CASE_TPL("Check front/back access for wide", EVE_TYPE)
   eve::logical<T> simd([](auto i, auto) { return i%2 == 0; });
 
   TTS_EQUAL(simd.front(), true );
-  TTS_EQUAL(simd.back() , false);
+  TTS_EQUAL(simd.back() , (EVE_CARDINAL == 1));
 }
