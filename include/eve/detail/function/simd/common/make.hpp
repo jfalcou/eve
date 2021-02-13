@@ -35,7 +35,7 @@ namespace eve::detail
     using t_t = typename Pack::value_type;
     return [&]<std::size_t... N>( std::index_sequence<N...> )
     {
-      return s_t{ (N,static_cast<t_t>(v))... };
+      return s_t{ ((void)N,static_cast<t_t>(v))... };
     }(std::make_index_sequence<s_t{}.size()>{});
   }
 
