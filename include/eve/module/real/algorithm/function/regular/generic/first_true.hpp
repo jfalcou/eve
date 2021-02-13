@@ -42,8 +42,11 @@ namespace eve::detail
     {
       // No ignore, we might luck out even if some elements should not be counted.
       if ( !eve::any(v) ) return {};
+
       top_bits mmask{v, cond};
-      return eve::detail::first_true(mmask);
+      if constexpr ( C::is_complete ) return *detail::first_true(mmask); // optimizes a check on clang
+      else                            return detail::first_true(mmask);
+
     }
   }
 
