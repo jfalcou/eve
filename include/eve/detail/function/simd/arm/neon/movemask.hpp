@@ -54,6 +54,7 @@ namespace eve::detail
     using w_t = wide<T, N, arm_64_>;
     using u16_4 = typename w_t::template rebind<std::uint16_t, eve::fixed<4>>;
     using u32_2 = typename w_t::template rebind<std::uint32_t, eve::fixed<2>>;
+    using u64_1 = typename w_t::template rebind<std::uint64_t, eve::fixed<1>>;
 
          if constexpr ( N() == 1 ) return std::pair{ (std::uint8_t) v.bits().get(0), eve::lane<8> };
     else if constexpr ( sizeof(T) == 1 && N() == 2 )
@@ -65,6 +66,11 @@ namespace eve::detail
     {
       auto dwords = eve::bit_cast(v, eve::as_<u32_2>{});
       return std::pair{ vget_lane_u32(dwords, 0), eve::lane<sizeof(T) * 8> };
+    }
+    else if constexpr ( eve::current_api >= eve::asimd )
+    {
+      auto qword  = eve::bit_cast(v, eve::as_<u64_1>{});
+      return std::pair { vget_lane_u64(qword, 0), eve::lane<sizeof(T) * 8> };
     }
     else if constexpr ( sizeof(T) >= 2 )
     {
