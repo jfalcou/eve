@@ -1,0 +1,188 @@
+<!--
+  EVE -  Expressive Vector Engine
+  Copyright 2021 Joel FALCOU
+  Copyright 2021 Jean-Thierry LAPRESTE
+  Copyright 2021 Denis YAROSHEVSKIY
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+ -->
+
+ <meta charset="utf-8" lang="en"><style class="fallback">body{visibility:hidden;}</style>
+ **Expressive Vector Engine**
+
+(insert ../crumbs.html here)
+
+# Building EVE: how to do local development.
+
+*NOTE: this documentation was valid at [commit](https://github.com/jfalcou/eve/commit/2fe1048aa31eb3271666f1cca04bf2f5f34eeb6e) and might get outdated.* <br/>
+
+There are two typical ways to build EVE: you can use your local compilers and tools or you can use the docker we use on CI.
+
+## Building for your architecture with your compiler.
+
+*NOTE: this is for linux/mac os. I have not experimented with EVE on Windows.*
+
+First, let's talk about developing locally. Let's say you just want to optimize something for your compiler.
+The tools we use are pretty standard: it's CMAKE and we support ctest.
+The two tricky pieces are: you need c++20 and you need to specify the architecture (march native works for me).
+
+This is how I do cmake setup for my machine:
+
+<script type="preformatted">
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+  # pwd eve
+  mkdir build && cd build
+  cmake -G Ninja .. '-DCMAKE_CXX_FLAGS=-march=native -g -DEVE_NO_FORCEINLINE' -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+The only non standard option here is -DEVE_NO_FORCEINLINE. EVE force inlines aggressively
+but it is a massive drag on the compilation speed. So, when working on tests we disable it.
+
+Now we need to actually build and run tests.
+To build and run everything you type:<br/>
+*Adjust -j accordingly to your machine.*
+
+<script type="preformatted">
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+  # pwd eve/build
+  time ninja -j 16 unit.exe && ctest -j 16
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+This will run all of the EVE unittests. Which maybe a bit much, depending on what you do.
+
+Individual tests have their own targets, so if you work on a specific target you can build and run just that.
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+# pwd eve/build
+time ninja -j 16 unit.real.algorithm.all.regular.simd.exe && ./unit/unit.real.algorithm.all.regular.simd.exe
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+## Using docker.
+
+1: Get docker.
+
+I used snap packange manager.
+
+<script type="preformatted">
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+  sudo snap install docker
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+2: Make docker work.
+
+Get to the point when "docker run hello-world" is succesfull.
+Google solved my problems reasonably fast
+
+3: Add helper to ~/.bashrc
+
+<script type="preformatted">
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+  # .bashrc
+  dockhere() {
+    docker run -i -t -v${PWD}:${PWD} $@
+  }
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+Restart.
+
+4: Set up in EVE
+
+<script type="preformatted">
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+  # pwd eve
+  dockhere jfalcou/compilers:latest
+  # cd where eve is again
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+5: Now you can use all of the EVE's prepackaged compilers.
+
+You probably want to use our toolchain files for it.
+How we build for certain platforms can be found in: [config](https://github.com/jfalcou/eve/blob/2fe1048aa31eb3271666f1cca04bf2f5f34eeb6e/.circleci/config.yml#L14)<br/>
+Toolchains suppresses the default CMAKE compiler options, so we have EVE_OPTIONS macro you can define instead.<br/>
+For example for different x86 we use the same toolchain, so you need to use EVE_OPTIONS to specify the march.
+
+## Arm v7 Docker Example.
+
+<script type="preformatted">
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+  # pwd eve
+  # in docker to the left I see root@<commit>:
+  mkdir build_arm_v7 && cd build_arm_v7
+  cmake -G Ninja .. -DCMAKE_TOOLCHAIN_FILE=cmake/toolchain/gcc.arm.cmake
+  ninja -j 16 unit.meta.exe
+  ../cmake/toolchain/run_arm.sh ./unit/unit.meta.as_integer.exe
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+## AVX-512 Docker Example
+
+Now, avx-512 is not supported on my machine directly, so I use sde to run it.
+It is supported in our build envirenment so we do not use it for CI.
+I also use the EVE_OPTIONS override to march.
+
+<script type="preformatted">
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+  # pwd eve
+  # in docker to the left I see root@<commit>:
+  mkdir build_avx512 && cd build_avx512
+  cmake -G Ninja .. -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake -DEVE_OPTIONS="-march=skylake-avx512"
+  ninja -j 16 unit.meta.exe
+  sde -- ./unit/unit.meta.as_integer.exe
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+## Other saved examples
+
+I prefer to not work from docker when I don't have to.
+So here are some of the saved options that you might find useful as well.
+
+## AVX-512:
+
+My machine does not support avx-512. So for avx-512 I use [intel sde](https://software.intel.com/content/www/us/en/develop/articles/intel-software-development-emulator.html).
+We have sde in docker, consider building from there as an alternative (example above).
+
+<script type="preformatted">
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+  # pwd eve
+  mkdir build_avx512 && cd build_avx512
+  cmake -G Ninja .. '-DCMAKE_CXX_FLAGS=-march=skylake-avx512 -DEVE_NO_FORCEINLINE'
+  ninja -j 16 unit.real.algorithm.exe
+  sde -- ./unit/unit.real.algorithm.all.regular.simd.exe
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+ctest doesn't work with sde for me and I didn't need it yet.
+
+## Building on x86 for arm-v8/aarch-64.
+
+Probably the docker approach is better here but I have it set up so will write down my commands.
+
+<script type="preformatted">
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+  # pwd eve
+  mkdir build_arm_v8 && cd build_arm_v8
+  cmake -G Ninja .. -DCMAKE_CXX_COMPILER="aarch64-linux-gnu-g++-10" '-DCMAKE_CXX_FLAGS=-Wno-psabi -DEVE_NO_FORCEINLINE' -DCMAKE_CROSSCOMPILING_CMD="qemu-aarch64"
+  ninja -j 16 unit.real.algorithm.exe
+  qemu-aarch64 -L /usr/aarch64-linux-gnu ./unit/unit.real.algorithm.all.regular.simd.exe
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+----------------------------------------------------------------------------------------------------
+<!-- Shortcuts -->
+
+<!-- Footnotes -->
+
+<!-- End of Document -->
+<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'none'};</script>
+<link rel="stylesheet" href="../eve.css">
+<!-- Markdeep: -->
+<script src="../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?" charset="utf-8"></script>

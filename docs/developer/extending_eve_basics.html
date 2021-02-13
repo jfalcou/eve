@@ -18,6 +18,9 @@
 The code samples are compiled but the text might get outdated.*<br/>
 *NOTE: In order to be extensible, EVE exposes a lot of it's internals. However they are subject
 to change even when the rest of the API is stable.*
+*NOTE: instead of using movemask and such as we are going in this tutorial, have a look at top_bits.
+       it's not always optimal to use that to do reductions on logical, but on x86 it is an we made it
+       as good as we can on other platforms. *
 
 ## Intoduction
 
@@ -34,8 +37,9 @@ We are going to see:
 
 ## Example problem
 
-We are going to pick `first_true` function as an example. Let's say that we need it to implement
-a variation on `std::find`. We are going to care about are all x86 from SSE2 to AVX2.
+We are going to pick `first_true` function as an example.
+There is one in eve, but we are going to do it anyways.
+We are going to care about are all x86 from SSE2 to AVX2.
 
 In this tutorial we are only supporting the very basic functionality.
 
