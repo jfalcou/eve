@@ -1,0 +1,3 @@
+{   "unit.api.exe":  "^unit.api\\..*\\.exe"
+  , "unit.simd.exe": "^unit\\..*\\..*\\..*\\.simd.exe"
+}

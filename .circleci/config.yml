@@ -9,17 +9,6 @@
 version: 2.1
 
 ##==================================================================================================
-## Useful constants
-##==================================================================================================
-parameters:
-  target-arch:
-    type: string
-    default: '{ "unit\.arch\.exe": "^unit\.arch\\\.\.*\\\.exe"
-              , "unit\.meta\.exe":  "^unit\.meta\\\.\.*\\\.exe"
-              , "unit\.internals\.exe": "^unit.internals\\\.\.*\\\.exe"
-              }'
-
-##==================================================================================================
 ## Custom commands
 ##==================================================================================================
 commands:
@@ -41,32 +30,34 @@ commands:
             mkdir -p build && cd build                                                                &&
             cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=<< parameters.tool >> -DEVE_OPTIONS="<< parameters.options >>" << parameters.setup >>
 
-  # run_test:
-  #   description: "Configure and run tests from a CMake Toolchain"
-  #   parameters:
-  #     desc:
-  #       type: string
-  #     tool:
-  #       type: string
-  #     options:
-  #       type: string
-  #       default: ""
-  #     setup:
-  #       type: string
-  #       default: ""
-  #   steps:
-  #     - run:
-  #         name: << parameters.desc >>
-  #         command:                                                                                    |
-  #           mkdir -p build && cd build                                                                &&
-  #           cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=<< parameters.tool >> -DEVE_OPTIONS="<< parameters.options >>" << parameters.setup >>&&
-  #           ninja unit.real.math.heavy.exe  -k 0 -j 2                                                 &&
-  #           ninja unit.arch.exe             -k 0 -j 8 && ctest -R "^unit.arch\..*\.exe"         -j 8  &&
-  #           ninja unit.meta.exe             -k 0 -j 8 && ctest -R "^unit.meta\..*\.exe"         -j 8  &&
-  #           ninja unit.internals.exe        -k 0 -j 8 && ctest -R "^unit.internals\..*\.exe"    -j 8  &&
-  #           ninja unit.api.exe              -k 0 -j 8 && ctest -R "^unit.api\..*\.exe"          -j 8  &&
-  #           ninja doc.exe                   -k 0 -j 8 && ctest -R "^doc\..*\.exe"               -j 8  &&
-  #           ninja unit.simd.exe             -k 0 -j 8 && ctest -R "^unit\..*\..*\..*\.simd.exe" -j 8
+  compile:
+    description: "Compile tests from a list of target"
+    parameters:
+      targets:
+        type: string
+      cpu:
+        type: integer
+        default: 8
+    steps:
+      - run:
+          name: Compiling << parameters.targets >> at -j << parameters.cpu >>
+          command:                                                                                    |
+            cd build                                                                                  &&
+            for i in `more << parameters.targets >> | jq 'keys | .[]' | tr -d '\"'`; do ninja $i -j << parameters.cpu >> ; done;
+
+  ctest:
+    description: "Perform tests from a list of target"
+    parameters:
+      targets:
+        type: string
+    steps:
+      - run:
+          name: Run tests for << parameters.targets >>
+          command:                                                                                    |
+            cd build                                                                                  &&
+            for i in `more << parameters.targets >> | jq 'values | .[]' | tr -d '\"'`; do ctest $i -j 8; done;
+
+  # cd build && ninja unit.real.math.heavy.exe  -k 0 -j 2
 
   # run_test_avx512:
   #   description: "Configure and run tests from a CMake Toolchain"
@@ -108,10 +99,25 @@ jobs:
       - configure_toolchain:
           tool:     "../cmake/toolchain/gcc.aarch64.cmake"
           options:  "-Wno-psabi"
+      - compile:
+          targets: "../cmake/toolchain/arch.targets.json"
+          cpu:  8
+      - ctest:
+          targets: "../cmake/toolchain/arch.targets.json"
+      - compile:
+          targets: "../cmake/toolchain/doc.targets.json"
+          cpu:  8
+      - ctest:
+          targets: "../cmake/toolchain/doc.targets.json"
       - run:
-          name: Compile targets
-          command:
-            echo "<< pipeline.parameters.target-arch >>"
+          name: Pre-compiling large math function
+          command: cd build && ninja unit.real.math.heavy.exe  -k 0 -j 2
+      - compile:
+          targets: "../cmake/toolchain/simd.targets.json"
+          cpu:  8
+      - ctest:
+          targets: "../cmake/toolchain/simd.targets.json"
+
 
   # aarch64_gcc_64:
   #   docker:
