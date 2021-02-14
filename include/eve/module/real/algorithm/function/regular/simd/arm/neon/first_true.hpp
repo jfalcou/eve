@@ -29,24 +29,18 @@ namespace eve::detail
     else if constexpr ( sizeof(T) == 1 )                    return first_true_(EVE_RETARGET(cpu_), cond, v0);
     else if constexpr ( std::same_as<ABI, arm_64_> )
     {
-      // top bits for anything but chars on asimd are optimal
+      // top bits for anything but chars on asimd are optimal for 8 byte registers
       // but without it we better do any first
-      if constexpr ( eve::current_api >= eve::asimd )      return first_true(top_bits{v0, cond});
-      else                                                 return first_true_(EVE_RETARGET(cpu_), cond, v0);
+      if constexpr ( eve::current_api >= eve::asimd )       return first_true(top_bits{v0, cond});
+      else                                                  return first_true_(EVE_RETARGET(cpu_), cond, v0);
     }
-    else if constexpr ( sizeof(T) >= 2 )
+    // On arm v7 any will cast to a half type anyway, but on asimd it won't
+    else if ( eve::current_api >= eve::asimd )              return first_true_(EVE_RETARGET(cpu_), cond, v0);
+    else
     {
-      // We override the top_bits implementation here
-      // because any will cast to smaller type anyways
       using half_e_t = make_integer_t<sizeof(T) / 2, unsigned>;
       auto halved = eve::convert(v0, eve::as_<eve::logical<half_e_t>>{});
       return eve::first_true[cond](halved);
-    }
-    else
-    {
-      // For chars on arm-v7 I am not sure what's the best approach is
-      //  - will stick with default.
-      return first_true_(EVE_RETARGET(cpu_), cond, v0);
     }
   }
 }
