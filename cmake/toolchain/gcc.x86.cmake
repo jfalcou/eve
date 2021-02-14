@@ -9,3 +9,5 @@
 set(CMAKE_C_COMPILER    gcc-10  )
 set(CMAKE_CXX_COMPILER  g++-10  )
 set(CMAKE_BUILD_TYPE    Debug   )
+
+set(CMAKE_CXX_FLAGS     "-Wno-psabi -DEVE_NO_FORCEINLINE ${EVE_OPTIONS}" )

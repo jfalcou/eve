@@ -57,33 +57,8 @@ commands:
             cd build                                                                                  &&
             for i in `../cmake/toolchain/filter.sh << parameters.targets >> values`; do ctest -R $i -j 8 ; done;
 
-  # run_test_avx512:
-  #   description: "Configure and run tests from a CMake Toolchain"
-  #   parameters:
-  #     desc:
-  #       type: string
-  #     tool:
-  #       type: string
-  #     options:
-  #       type: string
-  #       default: ""
-  #     setup:
-  #       type: string
-  #       default: ""
-  #   steps:
-  #     - run:
-  #         name: << parameters.desc >>
-  #         command:                                                                                    |
-  #           mkdir -p build && cd build                                                                &&
-  #           cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=<< parameters.tool >> -DEVE_OPTIONS="<< parameters.options >>" << parameters.setup >>&&
-  #           ninja unit.arch.exe             -k 0 -j 8 && ctest -R "^unit.arch\..*\.exe"      -j 8     &&
-  #           ninja unit.meta.exe             -k 0 -j 8 && ctest -R "^unit.meta\..*\.exe"      -j 8     &&
-  #           ninja unit.internals.exe        -k 0 -j 8 && ctest -R "^unit.internals\..*\.exe" -j 8     &&
-  #           ninja unit.api.exe              -k 0 -j 8 && ctest -R "^unit.api\..*\.exe"       -j 8     &&
-  #           ninja unit.real.algorithm.exe   -k 0 -j 8 && ctest -R "^unit.real.algorithm\..*\simd.exe"
-
 ##==================================================================================================
-## Jobs list
+## Jobs setup
 ##==================================================================================================
 base_jobs: &base_jobs
   docker:
@@ -93,6 +68,7 @@ base_jobs: &base_jobs
       type: string
     options:
       type: string
+      default: ""
     setup:
       type: string
       default: ""
@@ -108,6 +84,11 @@ base_jobs: &base_jobs
     - ctest:
         targets: "../cmake/toolchain/arch.targets.json"
     - compile:
+        targets: "../cmake/toolchain/api.targets.json"
+        cpu:  8
+    - ctest:
+        targets: "../cmake/toolchain/api.targets.json"
+    - compile:
         targets: "../cmake/toolchain/doc.targets.json"
         cpu:  8
     - ctest:
@@ -121,6 +102,59 @@ base_jobs: &base_jobs
     - ctest:
         targets: "../cmake/toolchain/simd.targets.json"
 
+wip_jobs: &wip_jobs
+  docker:
+    - image: jfalcou/compilers:latest
+  parameters:
+    tool:
+      type: string
+    options:
+      type: string
+      default: ""
+    setup:
+      type: string
+      default: ""
+  steps:
+    - checkout
+    - configure_toolchain:
+        tool:     << parameters.tool >>
+        options:  << parameters.options >>
+        setup:    << parameters.setup >>
+    - compile:
+        targets: "../cmake/toolchain/arch.targets.json"
+        cpu:  8
+    - ctest:
+        targets: "../cmake/toolchain/arch.targets.json"
+    - compile:
+        targets: "../cmake/toolchain/api.targets.json"
+        cpu:  8
+    - ctest:
+        targets: "../cmake/toolchain/api.targets.json"
+
+scalar_jobs: &scalar_jobs
+  docker:
+    - image: jfalcou/compilers:latest
+  parameters:
+    tool:
+      type: string
+    options:
+      type: string
+      default: ""
+    setup:
+      type: string
+      default: ""
+  steps:
+    - checkout
+    - configure_toolchain:
+        tool:     << parameters.tool >>
+        options:  << parameters.options >>
+        setup:    << parameters.setup >>
+    - compile:
+        targets: "../cmake/toolchain/scalar.targets.json"
+        cpu:  8
+    - ctest:
+        targets: "../cmake/toolchain/scalar.targets.json"
+
 ##==================================================================================================
 ## Jobs list
 ##==================================================================================================
@@ -129,163 +163,43 @@ jobs:
     <<: *base_jobs
   aarch64_64:
     <<: *base_jobs
+  x86_sse2:
+    <<: *base_jobs
+  x86_sse4:
+    <<: *base_jobs
+  x86_avx:
+    <<: *base_jobs
+  x86_avx2:
+    <<: *base_jobs
+  x86_fma:
+    <<: *base_jobs
+  emulation:
+    <<: *base_jobs
+  x86_avx512:
+    <<: *wip_jobs
+  x86_avx512_256:
+    <<: *wip_jobs
+  x86_avx512_128:
+    <<: *wip_jobs
+  tiny:
+    <<: *base_jobs
+  small:
+    <<: *base_jobs
+  extra:
+    <<: *base_jobs
+  scalar:
+    <<: *scalar_jobs
 
-  # ##================================================================================================
-  # ## X86 tests - SSE like
-  # ##================================================================================================
-  # x86_clang_sse2:
-  #   docker:
-  #     - image: jfalcou/compilers:latest
-  #   steps:
-  #     - checkout
-  #     - run_test:
-  #         desc: Running SIMD Tests - SSE2
-  #         tool:     "../cmake/toolchain/clang.x86.cmake"
-  #         options:  "-msse2"
-
-  # x86_clang_sse4:
-  #   docker:
-  #     - image: jfalcou/compilers:latest
-  #   steps:
-  #     - checkout
-  #     - run_test:
-  #         desc: Running SIMD Tests - SSE4
-  #         tool:     "../cmake/toolchain/clang.x86.cmake"
-  #         options:  "-msse4"
-
-  # x86_clang_emulation:
-  #   docker:
-  #     - image: jfalcou/compilers:latest
-  #   steps:
-  #     - checkout
-  #     - run_test:
-  #         desc: Running SIMD Tests - SSE4
-  #         tool:     "../cmake/toolchain/clang.x86.cmake"
-  #         options:  "-DEVE_NO_SIMD"
-
-  # ##================================================================================================
-  # ## X86 tests - AVX like
-  # ##================================================================================================
-  # x86_clang_avx:
-  #   docker:
-  #     - image: jfalcou/compilers:latest
-  #   steps:
-  #     - checkout
-  #     - run_test:
-  #         desc: Running SIMD Tests - AVX
-  #         tool:     "../cmake/toolchain/clang.x86.cmake"
-  #         options:  "-mavx"
-
-  # x86_clang_avx2:
-  #   docker:
-  #     - image: jfalcou/compilers:latest
-  #   steps:
-  #     - checkout
-  #     - run_test:
-  #         desc: Running SIMD Tests - AVX2
-  #         tool:     "../cmake/toolchain/clang.x86.cmake"
-  #         options:  "-mavx2"
-
-  # x86_clang_avx2_fma:
-  #   docker:
-  #     - image: jfalcou/compilers:latest
-  #   steps:
-  #     - checkout
-  #     - run_test:
-  #         desc: Running SIMD Tests - AVX2 + FMA
-  #         tool:     "../cmake/toolchain/clang.x86.cmake"
-  #         options:  "-mavx2 -mfma"
-
-  # ##================================================================================================
-  # ## X86 tests - AVX512 like
-  # ##================================================================================================
-  # x86_clang_avx512:
-  #   docker:
-  #     - image: jfalcou/compilers:latest
-  #   steps:
-  #     - checkout
-  #     - run_test_avx512:
-  #         desc: Running SIMD Tests - AVX512
-  #         tool:    "../cmake/toolchain/clang.x86.cmake"
-  #         options: "-march=skylake-avx512"
-
-  # x86_clang_avx512_256:
-  #   docker:
-  #     - image: jfalcou/compilers:latest
-  #   steps:
-  #     - checkout
-  #     - run_test_avx512:
-  #         desc: Running SIMD Tests - AVX512 - 256bits mode
-  #         tool:     "../cmake/toolchain/clang.x86.cmake"
-  #         options:  "-march=skylake-avx512"
-  #         setup:    "-DEVE_TEST_TYPE=small_wide"
-
-  # x86_clang_avx512_128:
-  #   docker:
-  #     - image: jfalcou/compilers:latest
-  #   steps:
-  #     - checkout
-  #     - run_test_avx512:
-  #         desc: Running SIMD Tests - AVX512 - 128bits mode
-  #         tool:     "../cmake/toolchain/clang.x86.cmake"
-  #         options:  "-march=skylake-avx512"
-  #         setup:    "-DEVE_TEST_TYPE=smaller_wide"
-
-  # ##================================================================================================
-  # ## X86 tests - special size tests
-  # ##================================================================================================
-  # x86_clang_tiny:
-  #   docker:
-  #     - image: jfalcou/compilers:latest
-  #   steps:
-  #     - checkout
-  #     - run_test:
-  #         desc: Running SIMD Tests - Tiny register
-  #         tool:     "../cmake/toolchain/clang.x86.cmake"
-  #         options:  "
-  #         setup:    "-DEVE_TEST_TYPE=tiny_wide"
-
-  # x86_clang_small:
-  #   docker:
-  #     - image: jfalcou/compilers:latest
-  #   steps:
-  #     - checkout
-  #     - run_test:
-  #         desc: Running SIMD Tests - Small register
-  #         tool:     "../cmake/toolchain/clang.x86.cmake"
-  #         options:  "
-  #         setup:    "-DEVE_TEST_TYPE=small_wide"
-
-  # x86_clang_extra:
-  #   docker:
-  #     - image: jfalcou/compilers:latest
-  #   steps:
-  #     - checkout
-  #     - run_test:
-  #         desc: Running SIMD Tests - Extra-large register
-  #         tool:     "../cmake/toolchain/clang.x86.cmake"
-  #         options:  "
-  #         setup:    "-DEVE_TEST_TYPE=extra_wide"
-
-  # ##================================================================================================
-  # ## X86 tests - Scalar tests
-  # ##================================================================================================
-  # x86_clang_scalar:
-  #   docker:
-  #     - image: jfalcou/compilers:latest
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: Run SCALAR Tests
-  #         command:                                                                              |
-  #           mkdir -p build && cd build                                                          &&
-  #           cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE="../cmake/toolchain/clang.x86.cmake" &&
-  #           ninja unit.scalar.exe -k 0 -j 8 && ctest -R "^unit\..*\..*\..*\.scalar.exe" -j 8
-
+##==================================================================================================
+## Workflow & dependencies
+##==================================================================================================
 workflows:
   version: 2
   build_and_test:
     jobs:
+    ##==============================================================================================
+    ## AARCH64
+    ##==============================================================================================
       - aarch64_128:
           tool:     "../cmake/toolchain/gcc.aarch64.cmake"
           options:  "-Wno-psabi"
@@ -299,83 +213,116 @@ workflows:
           filters:
             branches:
               ignore: develop
+      - scalar:
+          requires:
+            - aarch64_64
+          tool:     "../cmake/toolchain/clang.x86.cmake"
+          filters:
+            branches:
+              ignore: develop
 
-              # - aarch64_gcc_64:
-      #     filters:
-      #       branches:
-      #         ignore: develop
-      # - x86_clang_scalar:
-      #     requires:
-      #       - aarch64_gcc_64
-      #     filters:
-      #       branches:
-      #         ignore: develop
-      # ######################
-      # - x86_clang_sse2:
-      #     filters:
-      #       branches:
-      #         ignore: develop
-      # - x86_clang_sse4:
-      #     requires:
-      #       - x86_clang_sse2
-      #     filters:
-      #       branches:
-      #         ignore: develop
-      # - x86_clang_emulation:
-      #     requires:
-      #       - x86_clang_sse4
-      #     filters:
-      #       branches:
-      #         ignore: develop
-      # ######################
-      # - x86_clang_avx:
-      #     filters:
-      #       branches:
-      #         ignore: develop
-      # - x86_clang_avx2:
-      #     requires:
-      #       - x86_clang_avx
-      #     filters:
-      #       branches:
-      #         ignore: develop
-      # - x86_clang_avx2_fma:
-      #     requires:
-      #       - x86_clang_avx2
-      #     filters:
-      #       branches:
-      #         ignore: develop
-      # ######################
-      # - x86_clang_tiny:
-      #     filters:
-      #       branches:
-      #         ignore: develop
-      # - x86_clang_small:
-      #     requires:
-      #       - x86_clang_tiny
-      #     filters:
-      #       branches:
-      #         ignore: develop
-      # - x86_clang_extra:
-      #     requires:
-      #       - x86_clang_small
-      #     filters:
-      #       branches:
-      #         ignore: develop
-      # ######################
-      # - x86_clang_avx512:
-      #     filters:
-      #       branches:
-      #         ignore: develop
-      # - x86_clang_avx512_256:
-      #     requires:
-      #       - x86_clang_avx512
-      #     filters:
-      #       branches:
-      #         ignore: develop
-      # - x86_clang_avx512_128:
-      #     requires:
-      #       - x86_clang_avx512_256
-      #     filters:
-      #       branches:
-      #         ignore: develop
-      # ######################
+    ##==============================================================================================
+    ## X86 - 128 bits
+    ##==============================================================================================
+      - x86_sse2:
+          tool:     "../cmake/toolchain/clang.x86.cmake"
+          options:  "-msse2"
+          filters:
+            branches:
+              ignore: develop
+      - x86_sse4:
+          requires:
+            - x86_sse2
+          tool:     "../cmake/toolchain/clang.x86.cmake"
+          options:  "-msse4"
+          filters:
+            branches:
+              ignore: develop
+      - emulation:
+          requires:
+            - x86_sse4
+          tool:     "../cmake/toolchain/clang.x86.cmake"
+          options:  "-DEVE_NO_SIMD"
+          filters:
+            branches:
+              ignore: develop
+
+    ##==============================================================================================
+    ## X86 - 256 bits
+    ##==============================================================================================
+      - x86_avx:
+          tool:     "../cmake/toolchain/clang.x86.cmake"
+          options:  "-mavx"
+          filters:
+            branches:
+              ignore: develop
+      - x86_avx2:
+          requires:
+            - x86_avx
+          tool:     "../cmake/toolchain/clang.x86.cmake"
+          options:  "-mavx2"
+          filters:
+            branches:
+              ignore: develop
+      - x86_fma:
+          requires:
+            - x86_avx2
+          tool:     "../cmake/toolchain/clang.x86.cmake"
+          options:  "-mavx2 -fma"
+          filters:
+            branches:
+              ignore: develop
+
+    ##==============================================================================================
+    ## X86 - 512 bits
+    ##==============================================================================================
+      - x86_avx512:
+          tool:     "../cmake/toolchain/clang.x86.cmake"
+          options:  "-march=skylake-avx512"
+          filters:
+            branches:
+              ignore: develop
+      - x86_avx512_256:
+          requires:
+            - x86_avx512
+          tool:     "../cmake/toolchain/clang.x86.cmake"
+          options:  "-march=skylake-avx512"
+          setup:    "-DEVE_TEST_TYPE=small_wide"
+          filters:
+            branches:
+              ignore: develop
+      - x86_avx512_128:
+          requires:
+            - x86_avx512_256
+          tool:     "../cmake/toolchain/clang.x86.cmake"
+          options:  "-march=skylake-avx512"
+          setup:    "-DEVE_TEST_TYPE=smaller_wide"
+          filters:
+            branches:
+              ignore: develop
+
+    ##==============================================================================================
+    ## Extra size
+    ##==============================================================================================
+      - tiny:
+          tool:     "../cmake/toolchain/clang.x86.cmake"
+          setup:    "-DEVE_TEST_TYPE=tiny_wide"
+          filters:
+            branches:
+              ignore: develop
+      - small:
+          requires:
+            - tiny
+          tool:     "../cmake/toolchain/clang.x86.cmake"
+          setup:    "-DEVE_TEST_TYPE=small_wide"
+          filters:
+            branches:
+              ignore: develop
+      - extra:
+          requires:
+            - small
+          tool:     "../cmake/toolchain/clang.x86.cmake"
+          setup:    "-DEVE_TEST_TYPE=extra_wide"
+          filters:
+            branches:
+              ignore: develop
