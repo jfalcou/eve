@@ -60,7 +60,7 @@ namespace eve::detail
       }
       else if constexpr(has_aggregated_abi_v<T>)
       {
-        return aggergate(if_else, cond, t, f);
+        return aggregate(if_else, cond, t, f);
       }
        else
       {
