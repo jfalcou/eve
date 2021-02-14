@@ -163,6 +163,10 @@ jobs:
     <<: *base_jobs
   aarch64_64:
     <<: *base_jobs
+  arm_128:
+    <<: *wip_jobs
+  arm_64:
+    <<: *wip_jobs
   x86_sse2:
     <<: *base_jobs
   x86_sse4:
@@ -283,6 +287,24 @@ workflows:
           tool:     "../cmake/toolchain/clang.x86.cmake"
           options:  "-march=skylake-avx512"
           setup:    "-DEVE_TEST_TYPE=smaller_wide"
+          filters:
+            branches:
+              ignore: develop
+
+    ##==============================================================================================
+    ## ARM v7
+    ##==============================================================================================
+      - arm_128:
+          tool:     "../cmake/toolchain/gcc.arm.cmake"
+          filters:
+            branches:
+              ignore: develop
+
+      - arm_64:
+          requires:
+            - arm_128
+          tool:     "../cmake/toolchain/gcc.arm.cmake"
+          setup:    "-DEVE_TEST_TYPE=small_wide"
           filters:
             branches:
               ignore: develop
