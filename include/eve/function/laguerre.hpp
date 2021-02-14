@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(laguerre_, laguerre);
 }
 
-#include <eve/module/real/special/function/regular/generic/laguerre.hpp>
+#include <eve/module/real/math/function/regular/generic/laguerre.hpp>
