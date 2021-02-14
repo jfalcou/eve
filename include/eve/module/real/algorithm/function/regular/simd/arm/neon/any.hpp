@@ -59,7 +59,7 @@ namespace eve::detail
       if constexpr ( !C::is_complete ) return any(top_bits{v0, cond});
       else
       {
-        // There is no max vmaxvq_u64, so we use vmaxvq_u32
+        // There is no vmaxvq_u64, so we use vmaxvq_u32
         auto dwords = eve::bit_cast(v0, eve::as_<u32_4>{});
         return vmaxvq_u32(dwords);
       }

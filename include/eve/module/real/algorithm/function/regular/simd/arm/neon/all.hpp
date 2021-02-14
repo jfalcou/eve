@@ -85,8 +85,21 @@ namespace eve::detail
   EVE_FORCEINLINE bool all_arm_impl(logical<wide<T, N, arm_128_>> v0, C const & cond)
   {
     using l_t = logical<wide<T, N, arm_128_>>;
+    using u32_4 = typename wide<T, N, arm_128_>::template rebind<std::uint32_t, eve::fixed<4>>;
 
          if constexpr ( C::is_complete && !C::is_inverted ) return true;
+    else if constexpr ( eve::current_api >= eve::asimd )
+    {
+           if constexpr ( !C::is_complete ) return all_ignore_top_bits_impl(v0, cond);
+      else if constexpr ( sizeof(T) == 1 )  return vminvq_u8(v0.bits());
+      else if constexpr ( sizeof(T) == 2 )  return vminvq_u16(v0.bits());
+      else
+      {
+        // There is no vminvq_u64, so we use vminvq_u32 for everything bigger.
+        auto dwords = eve::bit_cast(v0, eve::as_<u32_4>{});
+        return vminvq_u32(dwords);
+      }
+    }
     else if constexpr ( sizeof( T ) >= 2 )
     {
       using half_e_t = make_integer_t<sizeof(T) / 2, unsigned>;
