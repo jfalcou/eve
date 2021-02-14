@@ -58,7 +58,11 @@ namespace eve::detail
       {
         return map(if_else, cond, t, f);
       }
-      else
+      else if constexpr(has_aggregated_abi_v<T>)
+      {
+        return aggergate(if_else, cond, t, f);
+      }
+       else
       {
         return  if_else(convert(cond, as<as_logical_t<e_t>>()), r_t(t), r_t(f));
       }
