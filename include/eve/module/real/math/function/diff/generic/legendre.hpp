@@ -11,15 +11,17 @@
 #pragma once
 
 #include <eve/function/legendre.hpp>
+#include <eve/function/abs.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/derivative.hpp>
 #include <eve/function/fms.hpp>
+#include <eve/function/if_else.hpp>
 #include <eve/function/is_odd.hpp>
 #include <eve/function/none.hpp>
+#include <eve/constant/one.hpp>
+#include <eve/constant/nan.hpp>
+#include <utility>
 #include <eve/detail/apply_over.hpp>
-// temporary measure
-#include <eve/detail/diff_div.hpp>
-// temporary measure
 
 namespace eve::detail
 {
@@ -32,23 +34,15 @@ namespace eve::detail
   {
     auto legendre_next = [](auto ll, auto x, auto pl, auto plm1)
       {
-        return fms(inc(2*ll) * x,  pl, ll * plm1) / inc(ll);
+        auto llp1 = inc(ll);
+        return fms((llp1+ll) * x,  pl, ll * plm1) / llp1;
       };
     T p0 = one(as(x));
     T p1 = x;
     T p_prime;
-    bool odd = l & 1;
-    // If the order is odd, we sum all the even polynomials:
-    if (odd)
-    {
-      p_prime = p0;
-    }
-    else // Otherwise we sum the odd polynomials * (2n+1)
-    {
-      p_prime = 3*p1;
-    }
-
-    unsigned n = 1;
+    bool odd = l & one(as(l));
+    p_prime = odd ? p0 : 3*p1;
+    auto n = one(as(l));
     while(n < l - 1)
     {
       std::swap(p0, p1);
@@ -64,7 +58,7 @@ namespace eve::detail
         odd = true;
       }
     }
-    return p_prime;
+    return if_else(eve::abs(x) > one(as(x)), allbits,  p_prime);
   }
 
   template<integral_simd_value I, floating_scalar_value T>
@@ -73,6 +67,7 @@ namespace eve::detail
                                 , I nn
                                 , T x) noexcept
   {
+    if (eve::abs(x) > one(as(x))) return nan(as(x));
     using f_t = as_wide_t<T, cardinal_t<I>>;
     return laguerre(nn, f_t(x));
   }
@@ -92,7 +87,6 @@ namespace eve::detail
     auto ll = convert(l, as<elt_t>());
     auto nn = one(as(ll));
     auto test = nn < dec(ll);
-    if (none(test)) return p_prime;
     auto legendre_next = [](auto ll, auto x, auto pl, auto plm1)
       {
         return fms(inc(2*ll) * x,  pl, ll * plm1) / inc(ll);
@@ -100,14 +94,14 @@ namespace eve::detail
     while(any(test))
     {
       auto p = p0;
-      p1 = p0;
-      p0 = p;
+      p0 = p1;
+      p1 = p;
       p1 = legendre_next(nn, x, p0, p1);
       nn = inc[test](nn);
       p_prime = add[isoddl && test](p_prime, inc(2*nn)*p1);
       isoddl = !isoddl;
       test = nn < dec(ll);
     }
-    return p_prime;
+    return if_else(eve::abs(x) > one(as(x)), allbits, p_prime);
   }
 }

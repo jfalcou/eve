@@ -11,6 +11,7 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
+#include <eve/function/abs.hpp>
 #include <eve/function/add.hpp>
 #include <eve/function/all.hpp>
 #include <eve/function/any.hpp>
@@ -23,6 +24,7 @@
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/constant/one.hpp>
+#include <eve/constant/nan.hpp>
 #include <utility>
 #include <iostream>
 
@@ -33,7 +35,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto legendre_(EVE_SUPPORTS(cpu_), I n, T x) noexcept
   {
     auto p0 = one(as(x));
-    if(is_eqz(n)) return p0;
+    if(is_eqz(n)) return if_else(eve::abs(x) > one(as(x)), allbits, p0);
     auto p1 =x;
     auto vc = one(as(x));
     auto c = one(as(n));
@@ -46,7 +48,7 @@ namespace eve::detail
       vc = vcp1;
       ++c;
     }
-    return p1;
+    return if_else(eve::abs(x) > one(as(x)), allbits, p1);
   }
 
   template<integral_simd_value I, floating_scalar_value T>
@@ -58,14 +60,14 @@ namespace eve::detail
 
   template<integral_simd_value I, floating_simd_value T>
   EVE_FORCEINLINE auto legendre_(EVE_SUPPORTS(cpu_), I nn, T x) noexcept
-  //  requires index_compatible_values<I, T>
+  requires index_compatible_values<I, T>
   {
     if (has_native_abi_v<T>)
     {
       using elt_t = element_type_t<T>;
       auto p0 = one(as(x));
       auto iseqzn = is_eqz(nn);
-      if(eve::all(iseqzn)) return p0;
+      if(eve::all(iseqzn)) return if_else(eve::abs(x) > one(as(x)), allbits, p0);
 
       auto p1 = oneminus(x);
       auto n =  convert(nn, as<elt_t>());
@@ -79,7 +81,7 @@ namespace eve::detail
         p1 = fms((c + cp1)*x, p0, c * p) /cp1;
         c = cp1;
       }
-      return p1;
+      return if_else(eve::abs(x) > one(as(x)), allbits, p1);
     }
     else
       return apply_over(legendre, nn, x);
