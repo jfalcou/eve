@@ -76,7 +76,7 @@ namespace eve::detail
         auto p = p0;
         p0 = p1;
         auto cp1 = inc(c);
-        p1 = (fms(c + cp1 - x), p0, c * p) /cp1;
+        p1 = fms(c + cp1 - x, p0, c * p) /cp1;
         c = cp1;
       }
       return p1;
