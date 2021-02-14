@@ -206,17 +206,11 @@ workflows:
           filters:
             branches:
               ignore: develop
+
       - aarch64_64:
           tool:     "../cmake/toolchain/gcc.aarch64.cmake"
           options:  "-Wno-psabi"
           setup:    "-DEVE_TEST_TYPE=small_wide"
-          filters:
-            branches:
-              ignore: develop
-      - scalar:
-          requires:
-            - aarch64_64
-          tool:     "../cmake/toolchain/clang.x86.cmake"
           filters:
             branches:
               ignore: develop
@@ -235,14 +229,6 @@ workflows:
             - x86_sse2
           tool:     "../cmake/toolchain/clang.x86.cmake"
           options:  "-msse4"
-          filters:
-            branches:
-              ignore: develop
-      - emulation:
-          requires:
-            - x86_sse4
-          tool:     "../cmake/toolchain/clang.x86.cmake"
-          options:  "-DEVE_NO_SIMD"
           filters:
             branches:
               ignore: develop
@@ -268,7 +254,7 @@ workflows:
           requires:
             - x86_avx2
           tool:     "../cmake/toolchain/clang.x86.cmake"
-          options:  "-mavx2 -fma"
+          options:  "-mavx2 -mfma"
           filters:
             branches:
               ignore: develop
@@ -305,6 +291,8 @@ workflows:
     ## Extra size
     ##==============================================================================================
       - tiny:
+          requires:
+            - x86_avx512_128
           tool:     "../cmake/toolchain/clang.x86.cmake"
           setup:    "-DEVE_TEST_TYPE=tiny_wide"
           filters:
@@ -323,6 +311,23 @@ workflows:
             - small
           tool:     "../cmake/toolchain/clang.x86.cmake"
           setup:    "-DEVE_TEST_TYPE=extra_wide"
+          filters:
+            branches:
+              ignore: develop
+
+      - emulation:
+          requires:
+            - aarch64_64
+          tool:     "../cmake/toolchain/clang.x86.cmake"
+          options:  "-DEVE_NO_SIMD"
+          filters:
+            branches:
+              ignore: develop
+
+      - scalar:
+          requires:
+            - emulation
+          tool:     "../cmake/toolchain/clang.x86.cmake"
           filters:
             branches:
               ignore: develop
