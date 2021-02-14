@@ -17,6 +17,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/bitofsign.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/module/real/math/detail/generic/atan_kernel.hpp>
 
@@ -36,4 +37,3 @@ namespace eve::detail
     }
   }
 }
-

@@ -207,6 +207,4 @@ namespace eve::detail
       }
     }
   }
-
-
 }

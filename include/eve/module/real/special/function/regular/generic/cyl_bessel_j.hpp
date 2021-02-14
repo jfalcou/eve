@@ -101,7 +101,7 @@ namespace eve::detail
               auto br_last = [](auto a0,  auto a1,  auto j0, auto j1)
                 {
                   std::int32_t k0 = 24;
-                  auto pk = 2*(a0 + k0);
+                  T pk = 2*(a0 + k0);
                   auto ans = pk;
                   auto xk = sqr(a1);
                   do {
@@ -113,19 +113,20 @@ namespace eve::detail
 
                   pk = T(1);
                   /*pkm1 = 1.0/ans;*/
-                  auto xinv = rec(a1);
-                  auto pkm1 = ans * xinv;
+                  T xinv = rec(a1);
+                  T pkm1 = ans * xinv;
                   auto k = dec(a0);
                   auto r = 2.0*k;
-                  auto test(true_(as(a1)));
+                  auto test(true_(as(pk)));
                   do{
-                    auto pkm2 = (pkm1*r -  pk * a1) * xinv;
+                    T pkm2 = (pkm1*r -  pk * a1) * xinv;
                     pk   = if_else(test, pkm1, pk);
                     pkm1 = if_else(test, pkm2, pkm1);
                     r = r-T(2);
                     k = dec(k);
+                    test = is_gtz(k);
                   }
-                  while( eve::any(is_gtz(k)) );
+                  while( eve::any(test) );
                   return if_else(abs(pk) > pkm1, j1/pk, j0/pkm1);
                 };
               last_interval(br_last, notdone, r, a0, a1, j0, j1);

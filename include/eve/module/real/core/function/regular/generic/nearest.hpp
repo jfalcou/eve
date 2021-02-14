@@ -15,7 +15,7 @@
 #include <eve/function/abs.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/function/bitofsign.hpp>
-#include <eve/function/is_less.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/constant/twotonmb.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>

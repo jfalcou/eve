@@ -14,20 +14,7 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(if_else_, if_else);
+  EVE_MAKE_CALLABLE(hermite_, hermite);
 }
 
-#include <eve/arch.hpp>
-#include <eve/module/real/core/function/regular/generic/if_else.hpp>
-
-#if defined(EVE_HW_X86)
-#  include <eve/module/real/core/function/regular/simd/x86/if_else.hpp>
-#endif
-
-#if defined(EVE_HW_POWERPC)
-#  include <eve/module/real/core/function/regular/simd/ppc/if_else.hpp>
-#endif
-
-#if defined(EVE_HW_ARM)
-#  include <eve/module/real/core/function/regular/simd/arm/neon/if_else.hpp>
-#endif
+#include <eve/module/real/special/function/regular/generic/hermite.hpp>

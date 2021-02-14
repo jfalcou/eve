@@ -226,7 +226,7 @@ namespace eve
     {
       if constexpr(floating_value<T> && floating_value<U>)
       {
-        return if_else(is_gtz(x), eve::gamma_p(if_else(is_ltz(x), zero, x/d.theta), d.k), 0);
+        return eve::gamma_p(if_else(is_ltz(x), zero, x/d.theta), d.k);
       }
       else if constexpr(floating_value<U>)
       {

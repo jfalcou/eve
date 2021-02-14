@@ -51,4 +51,11 @@ namespace eve
 
   template<typename T, typename U>
   concept different_value_type = !std::same_as<element_type_t<U>, element_type_t<T>>;
+
+
+  template<typename I, typename T>
+  concept index_compatible_values = integral_value<I> && floating_value<T> && size_compatible_values<I, T>;
+
+
+
 }
