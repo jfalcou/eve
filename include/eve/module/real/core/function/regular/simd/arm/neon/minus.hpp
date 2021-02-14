@@ -23,10 +23,11 @@ namespace eve::detail
     constexpr auto cat = categorize<wide<T, N, ABI>>();
 
           if constexpr( cat && category::unsigned_) return zero(eve::as(v)) - v;
-#if defined(__aarch64__)
-    else  if constexpr( cat == category::float64x2) return vnegq_f64(v);
-    else  if constexpr( cat == category::float64x1) return vneg_f64(v);
-#endif
+    else if constexpr( current_api >= asimd)
+    {
+            if constexpr( cat == category::float64x2) return vnegq_f64(v);
+      else  if constexpr( cat == category::float64x1) return vneg_f64(v);
+    }
     else  if constexpr( cat && category::size64_  ) return zero(eve::as(v)) - v;
     else  if constexpr( cat == category::float32x4) return vnegq_f32(v);
     else  if constexpr( cat == category::int32x4  ) return vnegq_s32(v);

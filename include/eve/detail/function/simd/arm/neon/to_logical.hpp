@@ -57,15 +57,15 @@ namespace eve::detail
     else  if constexpr( cat == category::uint32x2 ) return vmvn_u32 (vceq_u32(v, z));
     else  if constexpr( cat == category::uint16x4 ) return vmvn_u16 (vceq_u16(v, z));
     else  if constexpr( cat == category::uint8x8  ) return vmvn_u8  (vceq_u8(v, z));
-#if defined(__aarch64__)
-    else  if constexpr( cat == category::float64x1) return nope(vceq_f64 (v, z));
-    else  if constexpr( cat == category::int64x1)   return nope(vceq_s64 (v, z));
-    else  if constexpr( cat == category::uint64x1)  return nope(vceq_u64 (v, z));
-    else  if constexpr( cat == category::float64x2) return nope(vceqq_f64(v, z));
-    else  if constexpr( cat == category::int64x2)   return nope(vceqq_s64(v, z));
-    else  if constexpr( cat == category::uint64x2)  return nope(vceqq_u64(v, z));
-#else
+    else if constexpr( current_api >= asimd)
+    {
+            if constexpr( cat == category::float64x1) return nope(vceq_f64 (v, z));
+      else  if constexpr( cat == category::int64x1)   return nope(vceq_s64 (v, z));
+      else  if constexpr( cat == category::uint64x1)  return nope(vceq_u64 (v, z));
+      else  if constexpr( cat == category::float64x2) return nope(vceqq_f64(v, z));
+      else  if constexpr( cat == category::int64x2)   return nope(vceqq_s64(v, z));
+      else  if constexpr( cat == category::uint64x2)  return nope(vceqq_u64(v, z));
+    }
     else  if constexpr( sizeof(T) == 8 )            return map(nez, v);
-#endif
   }
 }

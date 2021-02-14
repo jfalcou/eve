@@ -26,10 +26,11 @@ namespace eve::detail
 
          if constexpr(  cat == category::float32x2) return  vfma_f32(v2, v1, v0);
     else if constexpr(  cat == category::float32x4) return vfmaq_f32(v2, v1, v0);
-#if defined(__aarch64__)
-    else if constexpr(  cat == category::float64x1) return  vfma_f64(v2, v1, v0);
-    else if constexpr(  cat == category::float64x2) return vfmaq_f64(v2, v1, v0);
-#endif
+    else if constexpr( current_api >= asimd)
+    {
+      if constexpr(  cat == category::float64x1) return  vfma_f64(v2, v1, v0);
+      else if constexpr(  cat == category::float64x2) return vfmaq_f64(v2, v1, v0);
+    }
     else  if constexpr( cat == category::int32x4  ) return vmlaq_s32(v2, v1, v0);
     else  if constexpr( cat == category::int16x8  ) return vmlaq_s16(v2, v1, v0);
     else  if constexpr( cat == category::int8x16  ) return  vmlaq_s8(v2, v1, v0);

@@ -28,10 +28,11 @@ namespace eve::detail
 
          if constexpr( cat == category::float32x2) return vrsqrte_f32(v);
     else if constexpr( cat == category::float32x4) return vrsqrteq_f32(v);
-#  if defined(__aarch64__)
-    else if constexpr( cat == category::float64x1) return vrsqrte_f64(v);
-    else if constexpr( cat == category::float64x2) return vrsqrteq_f64(v);
-#  endif
+    else if constexpr( current_api >= asimd)
+    {
+           if constexpr( cat == category::float64x1) return vrsqrte_f64(v);
+      else if constexpr( cat == category::float64x2) return vrsqrteq_f64(v);
+    }
     else                                           return map(rsqrt, v);
   }
 
@@ -42,7 +43,7 @@ namespace eve::detail
     constexpr auto cat = categorize<wide<T, N, ABI>>();
     using that_t = wide<T, N, ABI>;
 
-          if constexpr( cat == category::float32x2)
+    if constexpr( cat == category::float32x2)
     {
       that_t inv  = vrsqrte_f32(v0);
       inv         = vmul_f32(vrsqrts_f32(v0, inv * inv), inv);
@@ -54,22 +55,23 @@ namespace eve::detail
       inv         = vmulq_f32(vrsqrtsq_f32(v0, inv * inv), inv);
       return that_t(vmulq_f32(vrsqrtsq_f32(v0, inv * inv), inv));
     }
-#  if defined(__aarch64__)
-    else if constexpr( cat == category::float64x1)
+    else if constexpr( current_api >= asimd)
     {
-      that_t inv  = vrsqrte_f64(v0);
-      inv         = vmul_f64(vrsqrts_f64(v0, inv * inv), inv);
-      inv         = vmul_f64(vrsqrts_f64(v0, inv * inv), inv);
-      return that_t(vmul_f64(vrsqrts_f64(v0, inv * inv), inv));
+      if constexpr( cat == category::float64x1)
+      {
+        that_t inv  = vrsqrte_f64(v0);
+        inv         = vmul_f64(vrsqrts_f64(v0, inv * inv), inv);
+        inv         = vmul_f64(vrsqrts_f64(v0, inv * inv), inv);
+        return that_t(vmul_f64(vrsqrts_f64(v0, inv * inv), inv));
+      }
+      else if constexpr( cat == category::float64x2)
+      {
+        that_t inv  = vrsqrteq_f64(v0);
+        inv         = vmulq_f64(vrsqrtsq_f64(v0, inv * inv), inv);
+        inv         = vmulq_f64(vrsqrtsq_f64(v0, inv * inv), inv);
+        return that_t(vmulq_f64(vrsqrtsq_f64(v0, inv * inv), inv));
+      }
     }
-    else if constexpr( cat == category::float64x2)
-    {
-      that_t inv  = vrsqrteq_f64(v0);
-      inv         = vmulq_f64(vrsqrtsq_f64(v0, inv * inv), inv);
-      inv         = vmulq_f64(vrsqrtsq_f64(v0, inv * inv), inv);
-      return that_t(vmulq_f64(vrsqrtsq_f64(v0, inv * inv), inv));
-    }
-#  endif
     else return map(rsqrt, v0);
   }
 }
