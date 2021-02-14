@@ -1,0 +1,4 @@
+{
+  "unit.api.exe": "^unit.api\\..*\\.exe"
+, "unit.real.algorithm.exe": "^unit.real.algorithm\\..*\\simd.exe"
+}
