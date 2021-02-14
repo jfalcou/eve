@@ -43,7 +43,7 @@ commands:
           name: Compiling << parameters.targets >> at -j << parameters.cpu >>
           command:                                                                                    |
             cd build                                                                                  &&
-            for i in `more << parameters.targets >> | jq 'keys | .[]' | tr -d '\"'`; do ninja $i -j << parameters.cpu >> ; done;
+            for i in `../cmake/toolchain/filter.sh << parameters.targets >> keys`; do ninja $i -j << parameters.cpu >> ; done;
 
   ctest:
     description: "Perform tests from a list of target"
@@ -55,9 +55,7 @@ commands:
           name: Run tests for << parameters.targets >>
           command:                                                                                    |
             cd build                                                                                  &&
-            for i in `more << parameters.targets >> | jq 'values | .[]' | tr -d '\"'`; do ctest $i -j 8; done;
-
-  # cd build && ninja unit.real.math.heavy.exe  -k 0 -j 2
+            for i in `../cmake/toolchain/filter.sh << parameters.targets >> values`; do ctest -R $i -j 8 ; done;
 
   # run_test_avx512:
   #   description: "Configure and run tests from a CMake Toolchain"
@@ -89,16 +87,29 @@ commands:
 ##==================================================================================================
 jobs:
   ##================================================================================================
-  ## ARM tests
+  ## Regular tests
   ##================================================================================================
-  aarch64_gcc_128:
+  complete_tests:
     docker:
       - image: jfalcou/compilers:latest
+    parameters:
+      tool:
+        type: string
+      options:
+        type: string
+      setup:
+        type: string
+        default: ""
+      desc:
+        type: string
     steps:
       - checkout
+      - run:
+          name: << parameters.desc >>
       - configure_toolchain:
-          tool:     "../cmake/toolchain/gcc.aarch64.cmake"
-          options:  "-Wno-psabi"
+          tool:     << parameters.tool >>
+          options:  << parameters.options >>
+          setup:    << parameters.setup >>
       - compile:
           targets: "../cmake/toolchain/arch.targets.json"
           cpu:  8
@@ -128,7 +139,7 @@ jobs:
   #         desc: Running SIMD Tests - AARCH64 64 bits Registers
   #         tool:     "../cmake/toolchain/gcc.aarch64.cmake"
   #         options:  "-Wno-psabi"
-  #         setup:    "-DEVE_TEST_TYPE=small_wide"
+  #         setup:
 
   # ##================================================================================================
   # ## X86 tests - SSE like
@@ -286,10 +297,22 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - aarch64_gcc_128:
+      - complete_tests:
+          tool:     "../cmake/toolchain/gcc.aarch64.cmake"
+          options:  "-Wno-psabi"
+          desc:     "AARCH64 - 128 bits registers"
           filters:
             branches:
               ignore: develop
+      - complete_tests:
+          tool:     "../cmake/toolchain/gcc.aarch64.cmake"
+          options:  "-Wno-psabi"
+          desc:     "AARCH64 - 64 bits registers"
+          setup:    "-DEVE_TEST_TYPE=small_wide"
+          filters:
+            branches:
+              ignore: develop
+
       # - aarch64_gcc_64:
       #     filters:
       #       branches:
