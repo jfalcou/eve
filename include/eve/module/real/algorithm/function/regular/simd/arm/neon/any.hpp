@@ -14,6 +14,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/convert.hpp>
+#include <eve/detail/top_bits.hpp>
 
 namespace eve::detail
 {
@@ -21,15 +22,28 @@ namespace eve::detail
   EVE_FORCEINLINE bool any_arm_impl(logical<wide<T, N, arm_64_>> v0, C const & cond)
   {
     using l_t = logical<wide<T, N, arm_64_>>;
-    if constexpr ( C::is_complete && !C::is_inverted ) return false;
+    using u32_2 = typename wide<T, N, arm_64_>::template rebind<std::uint32_t, eve::fixed<2>>;
+    using u64_1 = typename wide<T, N, arm_64_>::template rebind<std::uint64_t, eve::fixed<1>>;
+
+         if constexpr ( C::is_complete && !C::is_inverted ) return false;
+    else if constexpr ( N() == 1 || N() * sizeof(T) <= 4 )  return any(top_bits{v0, cond});
+    else if constexpr ( eve::current_api >= eve::asimd )
+    {
+      if constexpr ( !C::is_complete ) return any(top_bits{v0, cond});
+      else
+      {
+        // We can use u32 max but I don't see why not just use u64?
+        auto qword = eve::bit_cast(v0, eve::as_<u64_1>{});
+        return vget_lane_u64(qword, 0);
+      }
+    }
     else
     {
       if constexpr ( !C::is_complete ) v0 = v0 && cond.mask(eve::as_<l_t>{});
-      using wide_u32 = typename wide<T, N, arm_64_>::template rebind<std::uint32_t, eve::fixed<2>>;
-      auto as_uint32 = eve::bit_cast(v0, eve::as_<eve::logical<wide_u32>>{});
+      auto dwords = eve::bit_cast(v0, eve::as_<u32_2>{});
 
-      if constexpr( sizeof(T) * N() > 4u ) as_uint32 = vpmax_u32(as_uint32, as_uint32);
-      return vget_lane_u32(as_uint32, 0);
+      if constexpr( sizeof(T) * N() > 4u ) dwords = vpmax_u32(dwords, dwords);
+      return vget_lane_u32(dwords, 0);
     }
   }
 
@@ -37,8 +51,19 @@ namespace eve::detail
   EVE_FORCEINLINE bool any_arm_impl(logical<wide<T, N, arm_128_>> v0, C const & cond)
   {
     using l_t = logical<wide<T, N, arm_128_>>;
+    using u32_4 = typename wide<T, N, arm_128_>::template rebind<std::uint32_t, eve::fixed<4>>;
 
          if constexpr ( C::is_complete && !C::is_inverted ) return false;
+    else if constexpr ( eve::current_api >= eve::asimd )
+    {
+      if constexpr ( !C::is_complete ) return any(top_bits{v0, cond});
+      else
+      {
+        // There is no vmaxvq_u64, so we use vmaxvq_u32
+        auto dwords = eve::bit_cast(v0, eve::as_<u32_4>{});
+        return vmaxvq_u32(dwords);
+      }
+    }
     else if constexpr ( sizeof( T ) >= 2 )
     {
       using half_e_t = make_integer_t<sizeof(T) / 2, unsigned>;
@@ -48,8 +73,6 @@ namespace eve::detail
     else
     {
       if constexpr ( !C::is_complete ) v0 = v0 && cond.mask(eve::as_<l_t>{});
-
-      using u32_4 = typename wide<T, N, arm_128_>::template rebind<std::uint32_t, eve::fixed<4>>;
 
       auto dwords = eve::bit_cast(v0, eve::as<u32_4>());
       return any_arm_impl(detail::to_logical(dwords), ignore_none);

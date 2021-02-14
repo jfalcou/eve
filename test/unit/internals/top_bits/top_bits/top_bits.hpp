@@ -46,6 +46,8 @@ TTS_CASE_TPL("Check top bits raw type", TOP_BITS_EVE_TYPE)
   {
          if constexpr ( T::static_size == 1 )                            TTS_TYPE_IS(storage_type, std::uint8_t);
     else if constexpr ( T::static_size == 2 && sizeof(EVE_VALUE) == 1 )  TTS_TYPE_IS(storage_type, std::uint16_t);
+    else if constexpr ( T::static_size * sizeof(EVE_VALUE) == 4 )        TTS_TYPE_IS(storage_type, std::uint32_t);
+    else if constexpr ( eve::current_api == eve::asimd )                 TTS_TYPE_IS(storage_type, std::uint64_t);
     else if constexpr ( T::static_size == 16 && sizeof(EVE_VALUE) == 1 ) TTS_TYPE_IS(storage_type, std::uint64_t);
     else                                                                 TTS_TYPE_IS(storage_type, std::uint32_t);
 
