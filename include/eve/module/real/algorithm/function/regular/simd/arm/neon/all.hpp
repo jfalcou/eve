@@ -14,14 +14,42 @@
 #include <eve/conditional.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/convert.hpp>
+#include <eve/detail/top_bits.hpp>
 
 namespace eve::detail
 {
+  template<logical_simd_value T, relative_conditional_expr C>
+  EVE_FORCEINLINE bool all_ignore_top_bits_impl(T const &v, C const& cond) noexcept
+  {
+    eve::detail::top_bits mmask{v};
+    eve::detail::top_bits<T> ignore_mmask{cond};
+
+    mmask |= ~ignore_mmask; // we need 1 in ignored elements;
+
+    return eve::detail::all(mmask);
+  }
+
   template <typename T, typename N, typename C>
   EVE_FORCEINLINE bool all_arm_impl(logical<wide<T, N, arm_64_>> v0, C const & cond)
   {
     using l_t = logical<wide<T, N, arm_64_>>;
-    if constexpr ( C::is_complete && !C::is_inverted ) return true;
+    using u64_1 = typename wide<T, N, arm_64_>::template rebind<std::uint64_t, eve::fixed<1>>;
+
+         if constexpr ( C::is_complete && !C::is_inverted ) return true;
+    else if constexpr ( N() == 1 || N() * sizeof(T) <= 4 )  return all_ignore_top_bits_impl(v0, cond);
+    else if constexpr ( eve::current_api >= eve::asimd )
+    {
+      if constexpr ( !C::is_complete ) return all_ignore_top_bits_impl(v0, cond);
+      else
+      {
+        // I thought about using min here, unlike any (since we do otherwise 2 tests)
+        // But
+        //   a) I don't have the measurements
+        //   b) I suspect when this pops up, compiler might just load u64 directly.
+        auto qword = eve::bit_cast(v0, eve::as_<u64_1>{});
+        return !~vget_lane_u64(qword, 0);
+      }
+    }
     else
     {
       if constexpr ( !C::is_complete ) v0 = v0 || cond.mask_inverted(eve::as_<l_t>{});
