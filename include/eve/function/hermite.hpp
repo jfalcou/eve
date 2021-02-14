@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(hermite_, hermite);
 }
 
-#include <eve/module/real/special/function/regular/generic/hermite.hpp>
+#include <eve/module/real/math/function/regular/generic/hermite.hpp>
