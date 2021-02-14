@@ -26,15 +26,6 @@ TTS_CASE_TPL("Check eve::legendre behavior", EVE_TYPE)
 
   auto eve__legendre =  [](auto n, auto x) { return eve::legendre(n, x); };
   auto boost_legendre =  [](auto n, auto x) { return boost::math::legendre_p(n, x); };
-  if constexpr( eve::platform::supports_invalids )
-  {
-    TTS_ULP_EQUAL(eve__legendre(2u, eve::minf(eve::as<T>())), eve::inf(eve::as<T>()), 5.0);
-    TTS_ULP_EQUAL(eve__legendre(2u, eve::inf(eve::as<T>())), eve::inf(eve::as<T>()), 5.0);
-    TTS_ULP_EQUAL(eve__legendre(3u, eve::nan(eve::as<T>())), eve::nan(eve::as<T>()), 5.0);
-    TTS_ULP_EQUAL(eve__legendre(3u, eve::inf(eve::as<T>())), eve::nan(eve::as<T>()), 5.0);
-    TTS_ULP_EQUAL(eve__legendre(3u, eve::inf(eve::as<T>())), eve::nan(eve::as<T>()), 5.0);
-  }
-
   using i_t = eve::detail::as_integer_t<T,unsigned>;
   for(unsigned int i=0; i < 5; ++i)
   {
