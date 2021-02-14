@@ -36,7 +36,7 @@ function(generate_test root rootpath dep file)
   if (CMAKE_CROSSCOMPILING_CMD)
     add_test( NAME ${test}
               WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
-              COMMAND ${CMAKE_CROSSCOMPILING_CMD} $<TARGET_FILE:${test}> --no-color --pass
+              COMMAND "${CMAKE_CROSSCOMPILING_CMD}" $<TARGET_FILE:${test}> --no-color --pass
             )
   else()
     if ( ${root} MATCHES "doc.*")
