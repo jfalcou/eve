@@ -85,61 +85,50 @@ commands:
 ##==================================================================================================
 ## Jobs list
 ##==================================================================================================
+base_jobs: &base_jobs
+  docker:
+    - image: jfalcou/compilers:latest
+  parameters:
+    tool:
+      type: string
+    options:
+      type: string
+    setup:
+      type: string
+      default: ""
+  steps:
+    - checkout
+    - configure_toolchain:
+        tool:     << parameters.tool >>
+        options:  << parameters.options >>
+        setup:    << parameters.setup >>
+    - compile:
+        targets: "../cmake/toolchain/arch.targets.json"
+        cpu:  8
+    - ctest:
+        targets: "../cmake/toolchain/arch.targets.json"
+    - compile:
+        targets: "../cmake/toolchain/doc.targets.json"
+        cpu:  8
+    - ctest:
+        targets: "../cmake/toolchain/doc.targets.json"
+    - run:
+        name: Pre-compiling large math function
+        command: cd build && ninja unit.real.math.heavy.exe  -k 0 -j 2
+    - compile:
+        targets: "../cmake/toolchain/simd.targets.json"
+        cpu:  8
+    - ctest:
+        targets: "../cmake/toolchain/simd.targets.json"
+
+##==================================================================================================
+## Jobs list
+##==================================================================================================
 jobs:
-  ##================================================================================================
-  ## Regular tests
-  ##================================================================================================
-  complete_tests:
-    docker:
-      - image: jfalcou/compilers:latest
-    parameters:
-      tool:
-        type: string
-      options:
-        type: string
-      setup:
-        type: string
-        default: ""
-      desc:
-        type: string
-    steps:
-      - checkout
-      - run:
-          name: << parameters.desc >>
-      - configure_toolchain:
-          tool:     << parameters.tool >>
-          options:  << parameters.options >>
-          setup:    << parameters.setup >>
-      - compile:
-          targets: "../cmake/toolchain/arch.targets.json"
-          cpu:  8
-      - ctest:
-          targets: "../cmake/toolchain/arch.targets.json"
-      - compile:
-          targets: "../cmake/toolchain/doc.targets.json"
-          cpu:  8
-      - ctest:
-          targets: "../cmake/toolchain/doc.targets.json"
-      - run:
-          name: Pre-compiling large math function
-          command: cd build && ninja unit.real.math.heavy.exe  -k 0 -j 2
-      - compile:
-          targets: "../cmake/toolchain/simd.targets.json"
-          cpu:  8
-      - ctest:
-          targets: "../cmake/toolchain/simd.targets.json"
-
-
-  # aarch64_gcc_64:
-  #   docker:
-  #     - image: jfalcou/compilers:latest
-  #   steps:
-  #     - checkout
-  #     - run_test:
-  #         desc: Running SIMD Tests - AARCH64 64 bits Registers
-  #         tool:     "../cmake/toolchain/gcc.aarch64.cmake"
-  #         options:  "-Wno-psabi"
-  #         setup:
+  aarch64_128:
+    <<: *base_jobs
+  aarch64_64:
+    <<: *base_jobs
 
   # ##================================================================================================
   # ## X86 tests - SSE like
@@ -297,23 +286,21 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - complete_tests:
+      - aarch64_128:
           tool:     "../cmake/toolchain/gcc.aarch64.cmake"
           options:  "-Wno-psabi"
-          desc:     "AARCH64 - 128 bits registers"
           filters:
             branches:
               ignore: develop
-      - complete_tests:
+      - aarch64_64:
           tool:     "../cmake/toolchain/gcc.aarch64.cmake"
           options:  "-Wno-psabi"
-          desc:     "AARCH64 - 64 bits registers"
           setup:    "-DEVE_TEST_TYPE=small_wide"
           filters:
             branches:
               ignore: develop
 
-      # - aarch64_gcc_64:
+              # - aarch64_gcc_64:
       #     filters:
       #       branches:
       #         ignore: develop
