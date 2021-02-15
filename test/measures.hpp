@@ -39,6 +39,14 @@ namespace eve
     str << l;
     return str.str();
   }
+
+  template<typename T>
+  inline std::string to_string(detail::top_bits<T> const &l)
+  {
+    std::ostringstream str;
+    str << l;
+    return str.str();
+  }
 }
 
 namespace tts
