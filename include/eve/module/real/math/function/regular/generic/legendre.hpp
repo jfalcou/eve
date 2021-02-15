@@ -80,6 +80,7 @@ namespace eve::detail
         auto cp1 = inc(c);
         p1 = fms((c + cp1)*x, p0, c * p) /cp1;
         c = cp1;
+        test = c < n;
       }
       return if_else(eve::abs(x) > one(as(x)), allbits, p1);
     }
