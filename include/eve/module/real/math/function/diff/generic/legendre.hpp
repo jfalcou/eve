@@ -12,6 +12,7 @@
 
 #include <eve/function/legendre.hpp>
 #include <eve/function/abs.hpp>
+#include <eve/function/any.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/derivative.hpp>
 #include <eve/function/fms.hpp>
@@ -91,7 +92,7 @@ namespace eve::detail
       {
         return fms(inc(2*ll) * x,  pl, ll * plm1) / inc(ll);
       };
-    while(any(test))
+    while(eve::any(test))
     {
       auto p = p0;
       p0 = p1;
