@@ -60,7 +60,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto laguerre_(EVE_SUPPORTS(cpu_), I nn, T x) noexcept
   //  requires index_compatible_values<I, T>
   {
-    if (has_native_abi_v<T>)
+   if (has_native_abi_v<T>)
     {
       using elt_t = element_type_t<T>;
       auto p0 = one(as(x));
@@ -78,6 +78,7 @@ namespace eve::detail
         auto cp1 = inc(c);
         p1 = fms(c + cp1 - x, p0, c * p) /cp1;
         c = cp1;
+        test = c < n;
       }
       return p1;
     }
