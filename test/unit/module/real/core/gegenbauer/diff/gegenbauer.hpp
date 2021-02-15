@@ -10,6 +10,7 @@
 //==================================================================================================
 #include <eve/detail/diff_div.hpp>
 #include <eve/function/diff/gegenbauer.hpp>
+#include <boost/math/special_functions/gegenbauer.hpp>
 #include <type_traits>
 
 TTS_CASE_TPL("Check diff(gegenbauer) return type", EVE_TYPE)
@@ -22,7 +23,7 @@ TTS_CASE_TPL("Check eve::diff(eve::gegenbauer) behavior", EVE_TYPE)
   using elt_t = eve::element_type_t<T>;
   elt_t l(-3.0/8.0);
   auto eve__gegenbauer =  [&l](unsigned n, auto x) { return eve::diff(eve::gegenbauer)(n, T(l), x); };
-  auto boost_gegenbauer =  [&l](unsigned n, auto x) { return boost::math::gegenbauer_derivative(n, double(l), x, 1); };
+  auto boost_gegenbauer =  [&l](unsigned n, auto x) { return boost::math::gegenbauer_derivative(n, double(l), x, 1u); };
 
   for(unsigned int i=0; i < 10; ++i)
   {

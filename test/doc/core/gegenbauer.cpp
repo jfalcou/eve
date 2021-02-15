@@ -4,10 +4,10 @@
 #include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
 #include <iostream>
-#include <boost/math/special_functions/gegenbauer.hpp>
+//#include <boost/math/special_functions/gegenbauer.hpp>
 
 using wide_ft = eve::wide<double, eve::fixed<8>>;
-using wide_it = eve::wide<int   , eve::fixed<8>>;
+using wide_it = eve::wide<unsigned, eve::fixed<8>>;
 
 int main()
 {
@@ -15,21 +15,23 @@ int main()
   wide_ft xd = {0.5, -1.5, 0.1, -1.0, 19.0, 25.0, 21.5, 10000.0};
   wide_it n = {0, 1, 2, 3, 4, 5, 6, 7};
   wide_ft x(2.0);
-
+  wide_ft l(-3.0/8.0);
   std::cout << "---- simd" << '\n'
-            << "<- xd               = " << xd << '\n'
-            << "<- n                = " << n  << '\n'
-            << "<- x                = " << x  << '\n'
-            << "-> gegenbauer(n, xd)   = " << eve::gegenbauer(n, xd) << '\n'
-            << "-> gegenbauer(3, xd)   = " << eve::gegenbauer(3, xd) << '\n'
-            << "-> gegenbauer(n, 2.0)  = " << eve::gegenbauer(n, 2.0) << '\n'
-            << "-> gegenbauer(n, x)    = " << eve::gegenbauer(n, x)   << '\n';
+            << "<- xd                     = " << xd << '\n'
+            << "<- n                      = " << n  << '\n'
+            << "<- l                      = " << l  << '\n'
+            << "<- x                      = " << x  << '\n'
+            << "-> gegenbauer(n, l, xd)   = " << eve::gegenbauer(n, l, xd) << '\n'
+            << "-> gegenbauer(3, l, xd)   = " << eve::gegenbauer(3, l, xd) << '\n'
+            << "-> gegenbauer(n, l, 2.0)  = " << eve::gegenbauer(n, l, 2.0) << '\n'
+            << "-> gegenbauer(n, l, x)    = " << eve::gegenbauer(n, l, x)   << '\n';
 
   double xs = 3.0;
-
+  double ll = 0.1;
   std::cout << "---- scalar" << '\n'
-            << "<- xs               = " << xs << '\n'
-            << "-> gegenbauer(4, xs)   = " << eve::gegenbauer(4, xs) << '\n';
+            << "<- xs                     = " << xs << '\n'
+            << "<- ll                     = " << ll  << '\n'
+            << "-> gegenbauer(4, ll, xs)  = " << eve::gegenbauer(4, ll, xs) << '\n';
 
   return 0;
 }

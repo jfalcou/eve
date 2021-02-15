@@ -31,23 +31,24 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<integral_value N, floating_value T > auto operator()( N n, T x) const noexcept;
+template<integral_value N, floating_value T, floating_value U > auto operator()( N n, T l, U x) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs  the computation of $\displaystyle H_n(x) = (-1)^n e^{x^2}\frac{d^n}{dx^n}e^{-x^2}$
+Performs  the computation of ${\displaystyle C_{n}^{(\lambda )}(z)={\frac {(2\lambda )^{\underline {n}}}{n!}}\,_{2}F_{1}\left(-n,2\lambda +n;\lambda +{\frac {1}{2}};{\frac {1-z}{2}}\right)}$ where $\underline {n}$ is the decreasing factorial $\left(\displaystyle x^{\underline {n}}={\frac {x!}{(x-n)!}}\right)$.
 Parameters
 ----------------------------------------------------------------------------------------------------
 `n`
-:   [integral valuex](../../concepts.html#value).
-
+:   [integral values](../../concepts.html#value).
+`l`
+:   [floating values](../../concepts.html#value), elements must be greater than $-\frac12$.
 `x`
-:   [floating valuex](../../concepts.html#value).
+:   [floating values](../../concepts.html#value).
 
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Returns [element-wise](../../../glossary.html#value) the value of the 'physicists' gegenbauer polynomial of order `n` at `x`:
+Returns [element-wise](../../../glossary.html#value) the value of the gegenbauer polynomial of order `n` at `l`, `x`:
 
 The result type is of the compatibility type of the  parameters.
 
@@ -56,7 +57,7 @@ Supported decorators
 [`diff`](../decorators.html#diff)
 :   **Required header: **<script type="preformatted">` #include <eve/function/diff/gegenbauer.hpp>`</script>
 
-:   The expression `diff(gegenbauer)(n,x)` computes the derivative of the function at `x`.
+:   The expression `diff(gegenbauer)(n,l,x)` computes the derivative of the function at `x`.
 
 
   (insert ../../src/gegenbauer.src.html here)

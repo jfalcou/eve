@@ -11,22 +11,24 @@
 #pragma once
 
 #include <eve/function/gegenbauer.hpp>
+#include <eve/function/all.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/derivative.hpp>
+#include <eve/constant/zero.hpp>
 #include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
 
-  template<integral_value N, floating_real_value T>
+  template<integral_value N, floating_real_value T, floating_real_value U>
   EVE_FORCEINLINE constexpr T gegenbauer_(EVE_SUPPORTS(cpu_)
                                   , diff_type<1> const &
                                   , N const &n
-                                  , T const &x) noexcept
-  requires index_compatible_values<N, T>
+                                  , T const &l
+                                  , U const &x) noexcept
+  requires index_compatible_values<N, T> && compatible_values<T, U>
   {
-    using elt_t = element_type_t<T>;
-    auto h = gegenbauer(dec(n), x);
-    return 2*convert(n, as(elt_t()))*h;
+    if (eve::all(n < one(as(n))))   return zero(as(x));
+    return 2*l*gegenbauer(dec(n), inc(l), x);
   }
 }

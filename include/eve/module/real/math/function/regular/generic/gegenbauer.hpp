@@ -34,6 +34,8 @@ namespace eve::detail
   EVE_FORCEINLINE auto gegenbauer_(EVE_SUPPORTS(cpu_), I n, U lambda, T x) noexcept
   requires compatible_values<T, U>
   {
+    using c_t = common_compatible_t<T, U>;
+    using elt_t = element_type_t<c_t>;
     auto p0 = one(as(x));
     if(is_eqz(n)) return p0;
 
@@ -42,10 +44,10 @@ namespace eve::detail
 
     auto yk = y1;
     auto k = 2;
-    auto k_max = n*inc(eps(as(x)));
+    auto k_max = n*inc(eps(as(elt_t())));
     auto gamma = 2*dec(lambda);
     auto test = k < k_max;
-    while(any(test))
+    while(test)
     {
       yk = if_else(test, fms((2+gamma/k)*x, y1, inc(gamma/k)*y0), yk);
       y0 = y1;
@@ -63,9 +65,9 @@ namespace eve::detail
     return gegenbauer(nn, f_t(x));
   }
 
-  template<integral_simd_value I, floating_real_simd_value T, floating_real_simd_value U>
+  template<integral_simd_value I, floating_real_value T, floating_real_value U>
   EVE_FORCEINLINE auto gegenbauer_(EVE_SUPPORTS(cpu_), I nn, U lambda, T x) noexcept
-  requires index_compatible_values<I, T> && compatible_values<T, U>
+  //  requires index_compatible_values<I, T> && compatible_values<T, U>
   {
     using v_t =  common_compatible_t<T, U>;
     return gegenbauer(nn, v_t(lambda), v_t(x));
@@ -80,17 +82,17 @@ namespace eve::detail
     {
       using elt_t = element_type_t<T>;
       auto p0 = one(as(x));
-      if(all(is_eqz(nn))) return p0;
-      auto n =  convert(nn, as<elt_t>());
+      if(eve::all(is_eqz(nn))) return p0;
+      auto n =  convert(nn, as(elt_t()));
       auto y0 = p0;
       auto y1 = 2*lambda*x;
 
       auto yk = y1;
       auto k = T(2);
-      auto k_max = n*inc(eps(as(x)));
+      auto k_max = n*inc(eps(as(elt_t())));
       auto gamma = 2*dec(lambda);
       auto test = k < k_max;
-      while(any(test))
+      while(eve::any(test))
       {
         yk = if_else(test, fms((2+gamma/k)*x, y1, inc(gamma/k)*y0), yk);
         y0 = y1;
@@ -101,6 +103,6 @@ namespace eve::detail
       return yk;
     }
     else
-      return apply_over(gegenbauer, nn, x);
+      return apply_over(gegenbauer, nn, lambda, x);
   }
 }
