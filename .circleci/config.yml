@@ -219,7 +219,7 @@ workflows:
     ## X86 - 128 bits
     ##==============================================================================================
       - x86_sse2:
-          tool:     "../cmake/toolchain/clang.x86.cmake"
+          tool:     "../cmake/toolchain/clang.x86.asan.cmake"
           options:  "-msse2"
           filters:
             branches:
