@@ -4,7 +4,6 @@
 #include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
 #include <iostream>
-#include <boost/math/special_functions/legendre.hpp>
 
 using wide_ft = eve::wide<double, eve::fixed<8>>;
 using wide_it = eve::wide<int   , eve::fixed<8>>;
@@ -24,6 +23,7 @@ int main()
             << "-> legendre(3, xd)   = " << eve::legendre(3, xd) << '\n'
             << "-> legendre(n, 0.5)  = " << eve::legendre(n, 0.5) << '\n'
             << "-> legendre(n, x)    = " << eve::legendre(n, x)   << '\n';
+
 
   double xs = 0.1;
 

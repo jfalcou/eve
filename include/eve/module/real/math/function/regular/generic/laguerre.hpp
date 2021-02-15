@@ -76,11 +76,12 @@ namespace eve::detail
         auto p = p0;
         p0 = p1;
         auto cp1 = inc(c);
-        p1 = fms(c + cp1 - x, p0, c * p) /cp1;
+        //      p1 = if_else(test, fms(c + cp1 - x, p0, c * p) /cp1, p1);
+        p1 = if_else(test,  ((c + cp1 - x)*p0+c*p) /cp1, p1);
         c = cp1;
         test = c < n;
       }
-      return p1;
+      return  if_else(iseqzn,  p0, p1);
     }
     else
       return apply_over(laguerre, nn, x);

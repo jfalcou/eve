@@ -69,7 +69,7 @@ namespace eve::detail
       auto iseqzn = is_eqz(nn);
       if(eve::all(iseqzn)) return if_else(eve::abs(x) > one(as(x)), allbits, p0);
 
-      auto p1 = oneminus(x);
+      auto p1 = x;
       auto n =  convert(nn, as<elt_t>());
       auto c = one(as(n));
       auto test = c < n;
@@ -78,10 +78,11 @@ namespace eve::detail
         auto p = p0;
         p0 = p1;
         auto cp1 = inc(c);
-        p1 = fms((c + cp1)*x, p0, c * p) /cp1;
+        p1 = if_else(test, fms((c + cp1)*x, p0, c * p) /cp1,  p1);
         c = cp1;
         test = c < n;
       }
+      p1 = if_else(iseqzn, one, p1);
       return if_else(eve::abs(x) > one(as(x)), allbits, p1);
     }
     else
