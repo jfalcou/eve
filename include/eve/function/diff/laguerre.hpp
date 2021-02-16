@@ -10,11 +10,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-
-namespace eve
-{
-  EVE_MAKE_CALLABLE(hermite_, hermite);
-}
-
-#include <eve/module/real/math/function/regular/generic/hermite.hpp>
+#include <eve/function/laguerre.hpp>
+#include <eve/module/real/math/function/diff/generic/laguerre.hpp>

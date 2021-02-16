@@ -14,7 +14,7 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(hermite_, hermite);
+  EVE_MAKE_CALLABLE(laguerre_, laguerre);
 }
 
-#include <eve/module/real/math/function/regular/generic/hermite.hpp>
+#include <eve/module/real/math/function/regular/generic/laguerre.hpp>
