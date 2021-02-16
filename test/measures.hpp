@@ -11,6 +11,7 @@
 #pragma once
 
 #include <eve/wide.hpp>
+#include <eve/detail/top_bits.hpp>
 
 namespace eve
 {

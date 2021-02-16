@@ -544,7 +544,7 @@ namespace eve::detail
       if constexpr( std::is_same_v<T, float> )
       {
         // estimate 1/x with an extra NR step for full precision
-        auto refiner = [](auto x, auto y) { return vmul_f32(vrecps_f32(x, y), y); };
+        auto refiner = [](auto x, auto y) -> type { return vmul_f32(vrecps_f32(x, y), y); };
         self *= refiner(other, refiner(other, vrecpe_f32(other)));
       }
 #endif
