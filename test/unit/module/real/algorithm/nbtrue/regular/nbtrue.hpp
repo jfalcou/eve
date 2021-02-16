@@ -27,7 +27,7 @@ TTS_CASE_TPL("Check eve::nbtrue behavior on arithmetic", EVE_TYPE)
   auto cardinal = EVE_CARDINAL;
 
   TTS_EQUAL(eve::nbtrue(T(1)), cardinal);
-  TTS_EQUAL(eve::nbtrue(T(0)), 0u);
+  TTS_EQUAL(eve::nbtrue(T(0)), 0);
 
   if constexpr(eve::floating_value<T>)
   {
@@ -36,7 +36,7 @@ TTS_CASE_TPL("Check eve::nbtrue behavior on arithmetic", EVE_TYPE)
       TTS_EQUAL(eve::nbtrue(eve::nan(eve::as<T>())), cardinal);
     }
 
-    TTS_EQUAL(eve::nbtrue(T(-0.)), 0u);
+    TTS_EQUAL(eve::nbtrue(T(-0.)), 0);
   }
 
 #if defined(EVE_SIMD_TESTS)
@@ -54,8 +54,8 @@ TTS_CASE_TPL("Check eve::nbtrue behavior on arithmetic", EVE_TYPE)
 
     TTS_EQUAL(eve::nbtrue(rhs1), (cardinal-j)  );
     TTS_EQUAL(eve::nbtrue(rhs2), (cardinal-j-1));
-    TTS_EQUAL(eve::nbtrue(rhs3), 1u                       );
-    TTS_EQUAL(eve::nbtrue(rhs4), (cardinal-1u) );
+    TTS_EQUAL(eve::nbtrue(rhs3), 1             );
+    TTS_EQUAL(eve::nbtrue(rhs4), (cardinal-1)  );
   }
 #endif
 }
@@ -65,5 +65,5 @@ TTS_CASE_TPL("Check eve::nbtrue behavior on logical", EVE_TYPE)
   auto cardinal = EVE_CARDINAL;
 
   TTS_EQUAL(eve::nbtrue(eve::true_(eve::as<T>())) , cardinal);
-  TTS_EQUAL(eve::nbtrue(eve::false_(eve::as<T>())), 0u      );
+  TTS_EQUAL(eve::nbtrue(eve::false_(eve::as<T>())), 0       );
 }
