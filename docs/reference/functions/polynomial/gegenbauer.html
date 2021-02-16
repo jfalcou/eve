@@ -34,7 +34,7 @@ Member functions
 template<integral_value N, floating_value T, floating_value U > auto operator()( N n, T l, U x) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs  the computation of ${\displaystyle C_{n}^{(\lambda )}(z)={\frac {(2\lambda )^{\underline {n}}}{n!}}\,_{2}F_{1}\left(-n,2\lambda +n;\lambda +{\frac {1}{2}};{\frac {1-z}{2}}\right)}$ where $\underline {n}$ is the decreasing factorial $\left(\displaystyle x^{\underline {n}}={\frac {x!}{(x-n)!}}\right)$.
+Performs  the computation of ${\displaystyle C_{n}^{(\lambda )}(z)={\frac {(2\lambda )^{\overline {n}}}{n!}}\,_{2}F_{1}\left(-n,2\lambda +n;\lambda +{\frac {1}{2}};{\frac {1-z}{2}}\right)}$ where $x^{\overline {n}}$ is the rising factorial $\displaystyle \prod_{k=0}^{n-1}(x+k)$ and $\,_{2}F_{1}$ the hypergeometric function.
 Parameters
 ----------------------------------------------------------------------------------------------------
 `n`

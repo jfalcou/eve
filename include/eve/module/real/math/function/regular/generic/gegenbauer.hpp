@@ -65,26 +65,17 @@ namespace eve::detail
     return gegenbauer(nn, f_t(x));
   }
 
-  template<integral_simd_value I, floating_real_value T, floating_real_value U>
-  EVE_FORCEINLINE auto gegenbauer_(EVE_SUPPORTS(cpu_), I nn, U lambda, T x) noexcept
-  //  requires index_compatible_values<I, T> && compatible_values<T, U>
-  {
-    using v_t =  common_compatible_t<T, U>;
-    return gegenbauer(nn, v_t(lambda), v_t(x));
-  }
-
-
   template<integral_simd_value I, floating_real_simd_value T>
   EVE_FORCEINLINE auto gegenbauer_(EVE_SUPPORTS(cpu_), I nn, T lambda, T x) noexcept
-  requires index_compatible_values<I, T>
+  //  requires index_compatible_values<I, T>
   {
     if (has_native_abi_v<T>)
     {
       using elt_t = element_type_t<T>;
-      auto p0 = one(as(x));
-      if(eve::all(is_eqz(nn))) return p0;
+      auto y0 = one(as(x));
+      auto iseqzn = is_eqz(nn);
+      if(eve::all(iseqzn)) return y0;
       auto n =  convert(nn, as(elt_t()));
-      auto y0 = p0;
       auto y1 = 2*lambda*x;
 
       auto yk = y1;
@@ -100,9 +91,23 @@ namespace eve::detail
         k = inc(k);
         test = k < k_max;
       }
-      return yk;
+      return if_else(iseqzn, one, yk);
     }
     else
       return apply_over(gegenbauer, nn, lambda, x);
+  }
+
+  template<integral_simd_value I, floating_real_value T, floating_real_value U>
+  EVE_FORCEINLINE auto gegenbauer_(EVE_SUPPORTS(cpu_), I nn, U lambda, T x) noexcept
+  requires index_compatible_values<I, T> && compatible_values<T, U>
+  {
+    using v_t =  common_compatible_t<T, U>;
+    if constexpr(scalar_value<v_t> && simd_value<I>)
+    {
+      using w_t = as_wide_t<v_t, cardinal_t<I>>;
+      return gegenbauer(nn, w_t(lambda), w_t(x));
+    }
+    else
+      return gegenbauer(nn, v_t(lambda), v_t(x));
   }
 }

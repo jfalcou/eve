@@ -27,7 +27,7 @@ TTS_CASE_TPL("Check eve::gegenbauer behavior", EVE_TYPE)
 
   for(unsigned int i=0; i < 10; ++i)
   {
-    TTS_ULP_EQUAL(eve__gegenbauer(i, T(10)), T(boost_gegenbauer(i, 10.0)), 1);
+    TTS_ULP_EQUAL(eve__gegenbauer(i, T(10)), T(boost_gegenbauer(i, 10.0)), 2);
     TTS_ULP_EQUAL(eve__gegenbauer(i, T(5)), T(boost_gegenbauer(i, 5.0)), 1);
     TTS_ULP_EQUAL(eve__gegenbauer(i, T(2)), T(boost_gegenbauer(i, 2.0)), 1);
     TTS_ULP_EQUAL(eve__gegenbauer(i, T(1)), T(boost_gegenbauer(i, 1.0)), 20);
