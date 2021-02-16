@@ -135,15 +135,9 @@ TTS_CASE_TPL("bit operations", TOP_BITS_EVE_TYPE)
     for (auto y : test_inputs) {
       TTS_EQUAL(top_bits{x && y}, (top_bits{x} & top_bits{y}));
       TTS_EQUAL(top_bits{x || y}, (top_bits{x} | top_bits{y}));
+      TTS_EQUAL(top_bits{x != y}, (top_bits{x} ^ top_bits{y}));
 
       TTS_EQUAL(top_bits{!x}, ~top_bits<logical>(x));
-      // xor
-      // test bits to prevent NaN shenanigans
-      {
-        auto expected = eve::is_nez(x.bits() ^ y.bits());
-
-        TTS_EQUAL(top_bits{expected}, (top_bits{x} ^ top_bits{y}));
-      }
     }
   }
 
