@@ -42,5 +42,10 @@ namespace eve
 
   template<std::ptrdiff_t Cardinal>
   inline constexpr fixed<Cardinal> const lane = {};
-}
 
+  //================================================================================================
+  // Template inline object for passing index within a wide
+  //================================================================================================
+  template<std::uint64_t N>
+  inline constexpr auto index = std::integral_constant<std::ptrdiff_t,N>{};
+}
