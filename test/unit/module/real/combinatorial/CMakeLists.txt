@@ -27,4 +27,5 @@ make_all_units(ROOT unit.real.combinatorial NAME double_factorial    ARCH scalar
 make_all_units(ROOT unit.real.combinatorial NAME fibonacci           ARCH scalar simd TYPES ${real_types} )
 make_all_units(ROOT unit.real.combinatorial NAME gcd                 ARCH scalar simd TYPES ${all_types}  )
 make_all_units(ROOT unit.real.combinatorial NAME lcm                 ARCH scalar simd TYPES ${all_types}  )
-make_all_units(ROOT unit.real.combinatorial NAME nth_prime           ARCH scalar simd TYPES ${uint_types}  )
+make_all_units(ROOT unit.real.combinatorial NAME nth_prime           ARCH scalar simd TYPES ${uint_types} )
+make_all_units(ROOT unit.real.combinatorial NAME rising_factorial    ARCH scalar simd TYPES ${real_types} )

@@ -1,0 +1,64 @@
+<!--
+  EVE -  Expressive Vector Engine
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+ -->
+<meta charset="utf-8" lang="en">
+                       **Expressive Vector Engine**
+                           `eve::rising_factorial`
+<br>
+
+  (insert ../../../crumbs.html here)
+
+Synopsis
+====================================================================================================
+**Required header:** <script type="preformatted">`#include <eve/function/rising_factorial.hpp>`</script>
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+namespace eve
+{
+  inline constexpr /*unspecified*/ rising_factorial = /*unspecified*/;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+Function object representing rising_factorial i.e. $x^{\overline n} = \frac{\Gamma(x+n)}{\Gamma(x)}$
+
+Member functions
+====================================================================================================
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+template< integral_value I, floating_value T > auto operator()( I n, T x ) const noexcept;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+Performs  the  [element-wise](../../../glossary.html#regular)  rising_factorial of the [value](../../concepts.html#value).
+
+Parameters
+----------------------------------------------------------------------------------------------------
+`n`
+:   [integral value](../../concepts.html#value).
+
+`x`
+:   [floating value](../../concepts.html#value).
+
+Return value
+----------------------------------------------------------------------------------------------------
+<span class="smallskip"></span>
+
+ The result type is the index compatible value of T and I.
+
+
+  (insert ../../src/rising_factorial.src.html here)
+
+  (insert ../../out/rising_factorial.out.html here)
+
+
+<!-- End of Document -->
+<link rel="stylesheet" href="../../../eve.css">
+<!-- Markdeep: -->
+<script>markdeepOptions={tocStyle:'none'};</script>
+<script src="../../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
