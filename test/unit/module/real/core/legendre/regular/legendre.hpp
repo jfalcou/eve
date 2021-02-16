@@ -31,8 +31,8 @@ TTS_CASE_TPL("Check eve::legendre behavior", EVE_TYPE)
   {
     for(double v = -1.0; v <= 1.0f; v+= 0.1)
     {
-      TTS_ULP_EQUAL(eve__legendre(i, T(v)), T(boost_legendre(i, v)), 5);
-      TTS_ULP_EQUAL(eve__legendre(i_t(i), T(v)), T(boost_legendre(i, v)), 5);
+      TTS_ULP_EQUAL(eve__legendre(i, T(v)), T(boost_legendre(i, v)), 15);
+      TTS_ULP_EQUAL(eve__legendre(i_t(i), T(v)), T(boost_legendre(i, v)), 15);
     }
   }
 }
