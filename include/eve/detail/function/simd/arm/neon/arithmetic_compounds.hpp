@@ -129,10 +129,10 @@ namespace eve::detail
       else  if constexpr( c == category::int16x8    ) self = vmulq_n_s16(self, other);
       else  if constexpr( c == category::uint16x4   ) self = vmul_n_u16 (self, other);
       else  if constexpr( c == category::uint16x8   ) self = vmulq_n_u16(self, other);
-      else  if constexpr( c == category::int8x8     ) self = vmul_n_s8  (self, other);
-      else  if constexpr( c == category::int8x16    ) self = vmulq_n_s8 (self, other);
-      else  if constexpr( c == category::uint8x8    ) self = vmul_u8  (self, type(other));
-      else  if constexpr( c == category::uint8x16   ) self = vmulq_u8 (self, type(other));
+      else  if constexpr( c == category::int8x8     ) self = vmul_s8    (self, type(other));
+      else  if constexpr( c == category::int8x16    ) self = vmulq_s8   (self, type(other));
+      else  if constexpr( c == category::uint8x8    ) self = vmul_u8    (self, type(other));
+      else  if constexpr( c == category::uint8x16   ) self = vmulq_u8   (self, type(other));
       else  if constexpr( c == category::float32x2  ) self = vmul_n_f32 (self, other);
       else  if constexpr( c == category::float32x4  ) self = vmulq_n_f32(self, other);
       else if constexpr( current_api >= asimd )
