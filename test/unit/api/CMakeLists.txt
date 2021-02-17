@@ -20,6 +20,7 @@ add_dependencies(unit.api.exe       unit.api.scalar.exe )
 add_dependencies(unit.api.exe       unit.api.simd.exe   )
 
 make_unit( "unit.api" conditional.cpp  )
+make_unit( "unit.api" replace.cpp  )
 
 ##==================================================================================================
 ## wide API tests
