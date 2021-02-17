@@ -31,9 +31,10 @@ namespace eve::detail
     else  if constexpr( cat == category::int32x2  ) return vabs_s32(v);
     else  if constexpr( cat == category::int16x4  ) return vabs_s16(v);
     else  if constexpr( cat == category::int8x8   ) return vabs_s8(v);
-#if defined(__aarch64__)
-    else  if constexpr( cat == category::float64x2) return vabsq_f64(v);
-    else  if constexpr( cat == category::float64x1) return vabs_f64(v);
-#endif
+    else if constexpr( current_api >= asimd)
+    {
+           if constexpr( cat == category::float64x2) return vabsq_f64(v);
+      else if constexpr( cat == category::float64x1) return vabs_f64(v);
+    }
   }
 }

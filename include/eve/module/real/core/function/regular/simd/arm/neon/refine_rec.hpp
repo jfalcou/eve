@@ -25,18 +25,19 @@ namespace eve::detail
 
          if constexpr( cat == category::float32x2) return vmul_f32(vrecps_f32(a0, a1), a1);
     else if constexpr( cat == category::float32x4) return vmulq_f32(vrecpsq_f32(a0, a1), a1);
-#  if defined(__aarch64__)
-    else if constexpr( cat == category::float64x1)
+    else if constexpr( current_api >= asimd)
     {
-      auto x = vmul_f64(vrecps_f64(a0, a1), a1);
-      return vmul_f64(vrecps_f64(a0, x), x);
+      if constexpr( cat == category::float64x1)
+      {
+        auto x = vmul_f64(vrecps_f64(a0, a1), a1);
+        return vmul_f64(vrecps_f64(a0, x), x);
+      }
+      else if constexpr( cat == category::float64x2)
+      {
+        auto x = vmulq_f64(vrecpsq_f64(a0, a1), a1);
+        return vmulq_f64(vrecpsq_f64(a0, x), x);
+      }
     }
-    else if constexpr( cat == category::float64x2)
-    {
-      auto x = vmulq_f64(vrecpsq_f64(a0, a1), a1);
-      return vmulq_f64(vrecpsq_f64(a0, x), x);
-    }
-#  endif
     else                                           return map(refine_rec_, a0, a1);
   }
 }

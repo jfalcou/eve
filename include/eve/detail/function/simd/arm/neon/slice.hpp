@@ -23,10 +23,7 @@ namespace eve::detail
 
     if constexpr( Slice::value )
     {
-            if constexpr( c == category::float32x4 )  return type{vget_high_f32(a)};
-#if defined(__aarch64__)
-      else  if constexpr( c == category::float64x2 )  return type{vget_high_f64(a)};
-#endif
+      if constexpr( c == category::float32x4 )  return type{vget_high_f32(a)};
       else  if constexpr( c == category::int32x4  )   return type{vget_high_s32(a)};
       else  if constexpr( c == category::int64x2  )   return type{vget_high_s64(a)};
       else  if constexpr( c == category::int16x8  )   return type{vget_high_s16(a)};
@@ -35,6 +32,7 @@ namespace eve::detail
       else  if constexpr( c == category::uint32x4 )   return type{vget_high_u32(a)};
       else  if constexpr( c == category::uint16x8 )   return type{vget_high_u16(a)};
       else  if constexpr( c == category::uint8x16 )   return type{vget_high_u8(a) };
+      else if constexpr( current_api >= asimd && c == category::float64x2 )  return type{vget_high_f64(a)};
       else
       {
         auto select = [](auto const &v, auto size)
@@ -55,9 +53,6 @@ namespace eve::detail
     else
     {
             if constexpr( c == category::float32x4 )  return type{vget_low_f32(a)};
-#if defined(__aarch64__)
-      else  if constexpr( c == category::float64x2 )  return type{vget_low_f64(a)};
-#endif
       else  if constexpr( c == category::int64x2  )   return type{vget_low_s64(a)};
       else  if constexpr( c == category::int32x4  )   return type{vget_low_s32(a)};
       else  if constexpr( c == category::int16x8  )   return type{vget_low_s16(a)};
@@ -66,6 +61,7 @@ namespace eve::detail
       else  if constexpr( c == category::uint32x4 )   return type{vget_low_u32(a)};
       else  if constexpr( c == category::uint16x8 )   return type{vget_low_u16(a)};
       else  if constexpr( c == category::uint8x16 )   return type{vget_low_u8(a) };
+      else if constexpr( current_api >= asimd &&  c == category::float64x2 )  return type{vget_low_f64(a)};
       else                                            return type(a.storage());
     }
   }

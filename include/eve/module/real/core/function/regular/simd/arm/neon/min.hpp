@@ -37,10 +37,12 @@ namespace eve::detail
     else  if constexpr( cat == category::uint16x4 ) return vmin_u16(v0, v1);
     else  if constexpr( cat == category::uint8x8  ) return vmin_u8(v0, v1);
     else  if constexpr( cat == category::float32x2) return vmin_f32(v0, v1);
-#if defined(__aarch64__)
-    else  if constexpr( cat == category::float64x1) return vmin_f64(v0, v1);
-    else  if constexpr( cat == category::float64x2) return vminq_f64(v0, v1);
-#endif
-    else  if constexpr( sizeof(T) == 8 )            return map(min, v0, v1);
+    else  if constexpr( current_api >= asimd)
+    {
+            if constexpr( cat == category::float64x1) return vmin_f64(v0, v1);
+      else  if constexpr( cat == category::float64x2) return vminq_f64(v0, v1);
+      else  if constexpr( sizeof(T) == 8 )            return map(min, v0, v1);
+    }
+    else  if constexpr( sizeof(T) == 8 )              return map(min, v0, v1);
   }
 }

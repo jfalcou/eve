@@ -70,16 +70,16 @@ namespace eve::detail
     else  if constexpr( cat == category::uint16x4 ) return vceq_u16 (v, w);
     else  if constexpr( cat == category::uint8x8  ) return vceq_u8  (v, w);
     else  if constexpr( cat == category::float32x2) return vceq_f32 (v, w);
-#if defined(__aarch64__)
-    else  if constexpr( cat == category::float64x1) return vceq_f64 (v, w);
-    else  if constexpr( cat == category::int64x1)   return vceq_s64 (v, w);
-    else  if constexpr( cat == category::uint64x1)  return vceq_u64 (v, w);
-    else  if constexpr( cat == category::float64x2) return vceqq_f64(v, w);
-    else  if constexpr( cat == category::int64x2)   return vceqq_s64(v, w);
-    else  if constexpr( cat == category::uint64x2)  return vceqq_u64(v, w);
-#else
+    else if constexpr( current_api >= asimd)
+    {
+      if constexpr( cat == category::float64x1) return vceq_f64 (v, w);
+      else  if constexpr( cat == category::int64x1)   return vceq_s64 (v, w);
+      else  if constexpr( cat == category::uint64x1)  return vceq_u64 (v, w);
+      else  if constexpr( cat == category::float64x2) return vceqq_f64(v, w);
+      else  if constexpr( cat == category::int64x2)   return vceqq_s64(v, w);
+      else  if constexpr( cat == category::uint64x2)  return vceqq_u64(v, w);
+    }
     else  if constexpr( sizeof(T) == 8 )            return map(eq, v, w);
-#endif
   }
 
   //================================================================================================
@@ -115,17 +115,18 @@ namespace eve::detail
     else  if constexpr( cat == category::uint16x4 ) return vclt_u16(v, w);
     else  if constexpr( cat == category::uint8x8  ) return vclt_u8(v, w);
     else  if constexpr( cat == category::float32x2) return vclt_f32(v, w);
-#if defined(__aarch64__)
-    else  if constexpr( cat == category::float64x1) return vclt_f64(v, w);
-    else  if constexpr( cat == category::int64x1)   return vclt_s64(v, w);
-    else  if constexpr( cat == category::uint64x1)  return vclt_u64(v, w);
-    else  if constexpr( cat == category::float64x2) return vcltq_f64(v, w);
-    else  if constexpr( cat == category::int64x2)   return vcltq_s64(v, w);
-    else  if constexpr( cat == category::uint64x2)  return vcltq_u64(v, w);
-#else
+    else if constexpr( current_api >= asimd)
+    {
+      if constexpr( cat == category::float64x1) return vclt_f64(v, w);
+      else  if constexpr( cat == category::int64x1)   return vclt_s64(v, w);
+      else  if constexpr( cat == category::uint64x1)  return vclt_u64(v, w);
+      else  if constexpr( cat == category::float64x2) return vcltq_f64(v, w);
+      else  if constexpr( cat == category::int64x2)   return vcltq_s64(v, w);
+      else  if constexpr( cat == category::uint64x2)  return vcltq_u64(v, w);
+    }
     else  if constexpr( sizeof(T) == 8 )
       return map([]<typename E>(E const& e, E const& f){ return as_logical_t<E>(e < f); }, v, w);
-#endif
+
   }
 
   template<typename T, typename N, arm_abi ABI>
@@ -149,17 +150,17 @@ namespace eve::detail
     else  if constexpr( cat == category::uint16x4 ) return vcgt_u16(v, w);
     else  if constexpr( cat == category::uint8x8  ) return vcgt_u8(v, w);
     else  if constexpr( cat == category::float32x2) return vcgt_f32(v, w);
-#if defined(__aarch64__)
-    else  if constexpr( cat == category::float64x1) return vcgt_f64(v, w);
-    else  if constexpr( cat == category::int64x1)   return vcgt_s64(v, w);
-    else  if constexpr( cat == category::uint64x1)  return vcgt_u64(v, w);
-    else  if constexpr( cat == category::float64x2) return vcgtq_f64(v, w);
-    else  if constexpr( cat == category::int64x2)   return vcgtq_s64(v, w);
-    else  if constexpr( cat == category::uint64x2)  return vcgtq_u64(v, w);
-#else
+    else if constexpr( current_api >= asimd)
+    {
+      if constexpr( cat == category::float64x1) return vcgt_f64(v, w);
+      else  if constexpr( cat == category::int64x1)   return vcgt_s64(v, w);
+      else  if constexpr( cat == category::uint64x1)  return vcgt_u64(v, w);
+      else  if constexpr( cat == category::float64x2) return vcgtq_f64(v, w);
+      else  if constexpr( cat == category::int64x2)   return vcgtq_s64(v, w);
+      else  if constexpr( cat == category::uint64x2)  return vcgtq_u64(v, w);
+    }
     else  if constexpr( sizeof(T) == 8 )
       return map([]<typename E>(E const& e, E const& f){ return as_logical_t<E>(e > f); }, v, w);
-#endif
   }
 
   template<typename T, typename N, arm_abi ABI>
@@ -181,17 +182,17 @@ namespace eve::detail
     else  if constexpr( cat == category::uint16x4 ) return vcge_u16(v, w);
     else  if constexpr( cat == category::uint8x8  ) return vcge_u8(v, w);
     else  if constexpr( cat == category::float32x2) return vcge_f32(v, w);
-#if defined(__aarch64__)
-    else  if constexpr( cat == category::float64x1) return vcge_f64(v, w);
-    else  if constexpr( cat == category::int64x1)   return vcge_s64(v, w);
-    else  if constexpr( cat == category::uint64x1)  return vcge_u64(v, w);
-    else  if constexpr( cat == category::float64x2) return vcgeq_f64(v, w);
-    else  if constexpr( cat == category::int64x2)   return vcgeq_s64(v, w);
-    else  if constexpr( cat == category::uint64x2)  return vcgeq_u64(v, w);
-#else
+    else if constexpr( current_api >= asimd)
+    {
+      if constexpr( cat == category::float64x1) return vcge_f64(v, w);
+      else  if constexpr( cat == category::int64x1)   return vcge_s64(v, w);
+      else  if constexpr( cat == category::uint64x1)  return vcge_u64(v, w);
+      else  if constexpr( cat == category::float64x2) return vcgeq_f64(v, w);
+      else  if constexpr( cat == category::int64x2)   return vcgeq_s64(v, w);
+      else  if constexpr( cat == category::uint64x2)  return vcgeq_u64(v, w);
+    }
     else  if constexpr( sizeof(T) == 8 )
         return map([]<typename E>(E const& e, E const& f){ return as_logical_t<E>(e >= f); }, v, w);
-#endif
   }
 
   template<typename T, typename N, arm_abi ABI>
@@ -213,16 +214,16 @@ namespace eve::detail
     else  if constexpr( cat == category::uint16x4 ) return vcle_u16(v, w);
     else  if constexpr( cat == category::uint8x8  ) return vcle_u8(v, w);
     else  if constexpr( cat == category::float32x2) return vcle_f32(v, w);
-#if defined(__aarch64__)
-    else  if constexpr( cat == category::float64x1) return vcle_f64(v, w);
-    else  if constexpr( cat == category::int64x1)   return vcle_s64(v, w);
-    else  if constexpr( cat == category::uint64x1)  return vcle_u64(v, w);
-    else  if constexpr( cat == category::float64x2) return vcleq_f64(v, w);
-    else  if constexpr( cat == category::int64x2)   return vcleq_s64(v, w);
-    else  if constexpr( cat == category::uint64x2)  return vcleq_u64(v, w);
-#else
+    else if constexpr( current_api >= asimd)
+    {
+      if constexpr( cat == category::float64x1) return vcle_f64(v, w);
+      else  if constexpr( cat == category::int64x1)   return vcle_s64(v, w);
+      else  if constexpr( cat == category::uint64x1)  return vcle_u64(v, w);
+      else  if constexpr( cat == category::float64x2) return vcleq_f64(v, w);
+      else  if constexpr( cat == category::int64x2)   return vcleq_s64(v, w);
+      else  if constexpr( cat == category::uint64x2)  return vcleq_u64(v, w);
+    }
     else  if constexpr( sizeof(T) == 8 )
         return map([]<typename E>(E const& e, E const& f){ return as_logical_t<E>(e <= f); }, v, w);
-#endif
   }
 }

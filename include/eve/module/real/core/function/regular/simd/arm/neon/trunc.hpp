@@ -24,10 +24,11 @@ namespace eve::detail
 
          if constexpr( cat == category::float32x2) return vrnd_f32(v);
     else if constexpr( cat == category::float32x4) return vrndq_f32(v);
-#  if defined(__aarch64__) && __ARM_ARCH >= 8
-    else if constexpr( cat == category::float64x1) return vrnd_f64(v);
-    else if constexpr( cat == category::float64x2) return vrndq_f64(v);
-#  endif
+    else if constexpr( current_api >= asimd)
+    {
+      if constexpr( cat == category::float64x1) return vrnd_f64(v);
+      else if constexpr( cat == category::float64x2) return vrndq_f64(v);
+    }
     else                                           return map(trunc, v);
   }
 }
