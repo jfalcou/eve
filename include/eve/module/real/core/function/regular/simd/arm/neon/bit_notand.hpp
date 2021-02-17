@@ -27,13 +27,6 @@ namespace eve::detail
       return vreinterpretq_f32_u32(vbicq_u32(vreinterpretq_u32_f32(v1), vreinterpretq_u32_f32(v0)));
     else if constexpr( cat == category::float32x2)
       return vreinterpret_f32_u32(vbic_u32(vreinterpret_u32_f32(v1), vreinterpret_u32_f32(v0)));
-    else if constexpr( current_api >= asimd)
-    {
-      if constexpr( cat == category::float64x1)
-        return vreinterpret_f64_u64(vbic_u64(vreinterpret_u64_f64(v1), vreinterpret_u64_f64(v0)));
-      else if constexpr(cat == category::float64x2)
-        return vreinterpretq_f64_u64(vbicq_u64(vreinterpretq_u64_f64(v1), vreinterpretq_u64_f64(v0)));
-    }
     else if constexpr(cat == category::int64x1)  return vbic_s64(v1, v0);
     else if constexpr(cat == category::int32x2)  return vbic_s32(v1, v0);
     else if constexpr(cat == category::int16x4)  return vbic_s16(v1, v0);
@@ -50,5 +43,12 @@ namespace eve::detail
     else if constexpr(cat == category::uint32x4) return vbicq_u32(v1, v0);
     else if constexpr(cat == category::uint16x8) return vbicq_u16(v1, v0);
     else if constexpr(cat == category::uint8x16) return vbicq_u8(v1, v0);
+    else if constexpr( current_api >= asimd)
+    {
+      if constexpr( cat == category::float64x1)
+        return vreinterpret_f64_u64(vbic_u64(vreinterpret_u64_f64(v1), vreinterpret_u64_f64(v0)));
+      else if constexpr(cat == category::float64x2)
+        return vreinterpretq_f64_u64(vbicq_u64(vreinterpretq_u64_f64(v1), vreinterpretq_u64_f64(v0)));
+    }
   }
 }

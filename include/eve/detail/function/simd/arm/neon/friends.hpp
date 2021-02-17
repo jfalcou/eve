@@ -225,6 +225,5 @@ namespace eve::detail
     }
     else  if constexpr( sizeof(T) == 8 )
         return map([]<typename E>(E const& e, E const& f){ return as_logical_t<E>(e <= f); }, v, w);
-#endif
   }
 }
