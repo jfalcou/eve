@@ -33,7 +33,7 @@ namespace eve::detail
       }
       else
       {
-        std::ptrdiff_t r = 0u;
+        std::ptrdiff_t r = 0;
 
         [&]<std::size_t... I>( std::index_sequence<I...> const& )
         {

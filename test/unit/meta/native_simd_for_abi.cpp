@@ -73,8 +73,24 @@ TTS_CASE_TPL( "Check that wide<T,N,arm*> satisfies native_simd_for_abi with any 
   using eve::wide;
   using eve::logical;
 
-  TTS_EXPECT((eve::native_simd_for_abi<wide<T>          , eve::arm_64_ , eve::arm_128_> ));
-  TTS_EXPECT((eve::native_simd_for_abi<logical<wide<T>> , eve::arm_64_ , eve::arm_128_> ));
+  if constexpr( eve::current_api >= eve::asimd )
+  {
+    TTS_EXPECT((eve::native_simd_for_abi<wide<T>          , eve::arm_64_ , eve::arm_128_> ));
+    TTS_EXPECT((eve::native_simd_for_abi<logical<wide<T>> , eve::arm_64_ , eve::arm_128_> ));
+  }
+  else
+  {
+    if constexpr( std::same_as<T,double> )
+    {
+      TTS_EXPECT_NOT((eve::native_simd_for_abi<wide<T>          , eve::arm_64_ , eve::arm_128_> ));
+      TTS_EXPECT_NOT((eve::native_simd_for_abi<logical<wide<T>> , eve::arm_64_ , eve::arm_128_> ));
+    }
+    else
+    {
+      TTS_EXPECT((eve::native_simd_for_abi<wide<T>          , eve::arm_64_ , eve::arm_128_> ));
+      TTS_EXPECT((eve::native_simd_for_abi<logical<wide<T>> , eve::arm_64_ , eve::arm_128_> ));
+    }
+  }
 }
 
 TTS_CASE_TPL( "Check that wide<T,N,arm*> does not satisfy native_simd_for_abi with other ABI"

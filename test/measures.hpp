@@ -11,6 +11,7 @@
 #pragma once
 
 #include <eve/wide.hpp>
+#include <eve/detail/top_bits.hpp>
 
 namespace eve
 {
@@ -34,6 +35,14 @@ namespace eve
 
   template<typename T>
   inline std::string to_string(logical<T> const &l)
+  {
+    std::ostringstream str;
+    str << l;
+    return str.str();
+  }
+
+  template<typename T>
+  inline std::string to_string(detail::top_bits<T> const &l)
   {
     std::ostringstream str;
     str << l;
