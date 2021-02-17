@@ -13,6 +13,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
+#include <eve/function/exp.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/is_nan.hpp>
 #include <eve/function/lrising_factorial.hpp>
@@ -24,6 +25,7 @@
 #include <eve/function/exp.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/traits/common_compatible.hpp>
+#include <type_traits>
 
 
 namespace eve::detail
@@ -52,12 +54,6 @@ namespace eve::detail
 
   template<floating_real_value T>
   EVE_FORCEINLINE auto rising_factorial_(EVE_SUPPORTS(cpu_)
-                                        , T n,  T x, ) noexcept
-  {
-  }
-  
-  template<floating_real_value T>
-  EVE_FORCEINLINE auto rising_factorial_(EVE_SUPPORTS(cpu_)
                                         , T n,  T x) noexcept
   {
      if constexpr(has_native_abi_v<T>)
@@ -67,7 +63,8 @@ namespace eve::detail
        auto xeqminf = x == minf(as(x));
        r = if_else(xeqz, one, if_else(xeqminf, zero, x));
        auto done =  is_nan(x)|| xeqz || xeqminf;
-       return if_else(done, r, n*x); //eve::exp(lrising_factorial(n, x))*srising_factorial(n, x));
+       auto tmp = lrising_factorial(n, x); 
+       return if_else(done, r, eve::exp(tmp)); //*srising_factorial(n, x));
      }
     else
       return apply_over(rising_factorial, n, x);
