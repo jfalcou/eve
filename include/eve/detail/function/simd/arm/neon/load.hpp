@@ -30,11 +30,6 @@ namespace eve::detail
 
             if constexpr( c == category::float32x4 )  return vld1q_f32(ptr);
       else  if constexpr( c == category::float32x2 )  return vld1_f32(ptr);
-      else if constexpr( current_api >= asimd)
-      {
-        if constexpr( c == category::float64x2 )  return vld1q_f64(ptr);
-        else  if constexpr( c == category::float64x1 )  return vld1_f64(ptr);
-      }
       else  if constexpr( c == category::int64x2  )   return vld1q_s64(ptr);
       else  if constexpr( c == category::int64x1  )   return vld1_s64(ptr);
       else  if constexpr( c == category::uint64x2 )   return vld1q_u64(ptr);
@@ -51,6 +46,11 @@ namespace eve::detail
       else  if constexpr( c == category::int8x8   )   return vld1_s8(ptr);
       else  if constexpr( c == category::uint8x16 )   return vld1q_u8(ptr);
       else  if constexpr( c == category::uint8x8  )   return vld1_u8(ptr);
+      else if constexpr( current_api >= asimd)
+      {
+              if constexpr( c == category::float64x2 )  return vld1q_f64(ptr);
+        else  if constexpr( c == category::float64x1 )  return vld1_f64(ptr);
+      }
     }
     else
     {
@@ -78,11 +78,6 @@ namespace eve::detail
 
               if constexpr( c == category::float32x4 )  return vld1q_f32_ex(ptr,128);
         else  if constexpr( c == category::float32x2 )  return vld1_f32_ex(ptr,64);
-        else if constexpr( current_api >= asimd)
-        {
-          if constexpr( c == category::float64x2 )  return vld1q_f64_ex(ptr,128);
-          else  if constexpr( c == category::float64x1 )  return vld1_f64_ex(ptr,64);
-        }
         else  if constexpr( c == category::int64x2  )   return vld1q_s64_ex(ptr,128);
         else  if constexpr( c == category::int64x1  )   return vld1_s64_ex(ptr,64);
         else  if constexpr( c == category::uint64x2 )   return vld1q_u64_ex(ptr,128);
@@ -99,6 +94,11 @@ namespace eve::detail
         else  if constexpr( c == category::int8x8   )   return vld1_s8_ex(ptr,64);
         else  if constexpr( c == category::uint8x16 )   return vld1q_u8_ex(ptr,128);
         else  if constexpr( c == category::uint8x8  )   return vld1_u8_ex(ptr,64);
+        else if constexpr( current_api >= asimd)
+        {
+                if constexpr( c == category::float64x2 )  return vld1q_f64_ex(ptr,128);
+          else  if constexpr( c == category::float64x1 )  return vld1_f64_ex(ptr,64);
+        }
       }
       else
       {
