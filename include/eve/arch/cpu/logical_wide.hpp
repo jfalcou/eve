@@ -65,16 +65,13 @@ namespace eve
     EVE_FORCEINLINE logical(logical const& w) noexcept : storage_base(w.storage()) {}
 
     EVE_FORCEINLINE logical(storage_type const &r) noexcept
-#if !defined(__aarch64__)
       : storage_base( [&]()
                       { constexpr auto  c =   Size::value == 1 && sizeof(Type) == 8
-                                          &&  std::is_same_v<ABI, arm_64_>;
+                                          &&  std::is_same_v<ABI, arm_64_>
+                                          && current_api != asimd;
                         if constexpr(c) return value_type(r); else  return r;
                       }()
                     )
-#else
-      : storage_base(r)
-#endif
     {}
 
     template<std::input_iterator Iterator>
