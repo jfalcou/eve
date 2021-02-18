@@ -42,12 +42,5 @@ TTS_CASE_TPL("Check eve::lrising_factorial behavior", EVE_TYPE)
 //  TTS_ULP_EQUAL(eve::raw(eve::lrising_factorial)(1,  T(0.1)) , T(gsl_lnr(1.0, 0.1)) , 20);
   TTS_ULP_EQUAL(eve::raw(eve::lrising_factorial)(T(20.3), T(10.2)) , T(gsl_lnr(20.3, 10.2)), 20);
   TTS_ULP_EQUAL(eve::raw(eve::lrising_factorial)(T(-20),  T(-2.0)) , eve::nan(eve::as<T>()), ulp);
-
-
-//   TTS_ULP_EQUAL(eve::lrising_factorial(T(20),  T(-20))   , T(gsl_lnr(20., -20.)), 20);
-//   TTS_ULP_EQUAL(eve::lrising_factorial(T(-20),  T(20))   , eve::nan(eve::as<T>()), 20);
-//   TTS_ULP_EQUAL(eve::lrising_factorial(T(0), T(10))      , T(gsl_lnr(0., 10.)), 20);
-//   TTS_ULP_EQUAL(eve::lrising_factorial(T(10), T(0))      , T(gsl_lnr(10., 0.)), 20);
-//  TTS_ULP_EQUAL(eve::lrising_factorial(T(-10.3), T(-5.2)), T(gsl_lnr(-10.3, -5.2)), 20);
-  //lgamma doit etre verolé en négatif
+  TTS_ULP_EQUAL(eve::raw(eve::lrising_factorial)(T(20),   T(0.0002)), T(gsl_lnr(20., 0.0002)), ulp);
 }
