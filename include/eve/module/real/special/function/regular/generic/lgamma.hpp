@@ -213,11 +213,11 @@ namespace eve::detail
             inf_result = (x ==  inf(as<T>())) || inf_result;
           }
           auto   ltza0 = is_ltz(a0);
-          size_t nb    = count_true(ltza0);
+          size_t nb    = eve::count_true(ltza0);
           T      r {0};
           auto   other = [Logsqrt2pi](T x) {
             auto   xlt650 = is_less(x, T(6.50));
-            size_t nb     = count_true(xlt650);
+            size_t nb     = eve::count_true(xlt650);
             T      r0x    = x;
             T      r0z    = x;
             T      r0s    = one(as<T>());
@@ -395,7 +395,7 @@ namespace eve::detail
           auto other = [Logsqrt2pi](T xx) {
             T      x    = xx;
             auto   test = (x < T(13.0));
-            size_t nb   = count_true(test);
+            size_t nb   = eve::count_true(test);
             T      r1   = zero(as<T>());
             if( nb > 0 )
             {
@@ -447,7 +447,7 @@ namespace eve::detail
           T    q          = abs(x);
           if (eve::platform::supports_infinites) inf_result = inf_result || (q ==  inf(as<T>()));
           auto   test = (a0 < T(-34.0));
-          size_t nb   = count_true(test);
+          size_t nb   = eve::count_true(test);
           T      r    = nan(as<T>());
           if( nb > 0 )
           {

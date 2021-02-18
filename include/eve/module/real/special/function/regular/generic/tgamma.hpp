@@ -207,7 +207,7 @@ namespace eve::detail
         //       if constexpr(eve::platform::supports_nans) nan_result = is_nan(a0) || nan_result;
         auto        q    = abs(a0);
         auto        test = is_less(a0, T(-33.0));
-        std::size_t nb   = count_true(test);
+        std::size_t nb   = eve::count_true(test);
         auto        r    = nan(eve::as(a0));
         if( nb > 0 )
         {

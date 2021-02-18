@@ -135,7 +135,7 @@ namespace eve::detail
         auto test1 = eve::is_less(x, 6.6666667e-01f);
         T z = x/inc(x);
 
-        std::size_t nb = count_true(test1);
+        std::size_t nb = eve::count_true(test1);
         if(nb > 0)
         {
           r1 = kernel_erfc3(z);

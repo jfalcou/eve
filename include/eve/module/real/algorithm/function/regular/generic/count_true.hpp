@@ -29,7 +29,7 @@ namespace eve::detail
       if constexpr(has_aggregated_abi_v<T>)
       {
         auto [sl, sh] = v.slice();
-        return count_true(sl) + count_true(sh);
+        return eve::count_true(sl) + eve::count_true(sh);
       }
       else
       {
@@ -45,7 +45,7 @@ namespace eve::detail
     }
     else
     {
-      return count_true(to_logical(v));
+      return eve::count_true(to_logical(v));
     }
   }
 }

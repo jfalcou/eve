@@ -135,7 +135,7 @@ namespace eve::detail
         T x =  eve::abs(a0);
         T r1 = eve::zero(as<T>());
         auto test1 = eve::is_less(x, 6.6666667e-01f); //Ratio<T, 2, 3>());
-          std::size_t nb = count_true(test1);
+          std::size_t nb = eve::count_true(test1);
         if(nb > 0)
         {
           r1 =  a0*kernel_erf1(sqr(x));
