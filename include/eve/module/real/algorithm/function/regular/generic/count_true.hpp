@@ -17,7 +17,7 @@
 namespace eve::detail
 {
   template<value T>
-  EVE_FORCEINLINE std::ptrdiff_t nbtrue_(EVE_SUPPORTS(cpu_), T const &v) noexcept
+  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_SUPPORTS(cpu_), T const &v) noexcept
   {
     if constexpr(scalar_value<T>)
     {
@@ -29,7 +29,7 @@ namespace eve::detail
       if constexpr(has_aggregated_abi_v<T>)
       {
         auto [sl, sh] = v.slice();
-        return nbtrue(sl) + nbtrue(sh);
+        return count_true(sl) + count_true(sh);
       }
       else
       {
@@ -45,7 +45,7 @@ namespace eve::detail
     }
     else
     {
-      return nbtrue(to_logical(v));
+      return count_true(to_logical(v));
     }
   }
 }

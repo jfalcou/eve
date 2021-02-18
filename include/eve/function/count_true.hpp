@@ -14,13 +14,12 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(nbtrue_, nbtrue);
+  EVE_MAKE_CALLABLE(count_true_, count_true);
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/real/algorithm/function/regular/generic/nbtrue.hpp>
+#include <eve/module/real/algorithm/function/regular/generic/count_true.hpp>
 
 #if defined(EVE_HW_X86)
-#  include <eve/module/real/algorithm/function/regular/simd/x86/nbtrue.hpp>
+#  include <eve/module/real/algorithm/function/regular/simd/x86/count_true.hpp>
 #endif
-

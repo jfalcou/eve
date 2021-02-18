@@ -1,4 +1,4 @@
-#include <eve/function/nbtrue.hpp>
+#include <eve/function/count_true.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 
@@ -12,17 +12,17 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf         = " << pf << '\n'
-            << "-> nbtrue(pf) = " << eve::nbtrue(pf) << '\n'
+            << "-> count_true(pf) = " << eve::count_true(pf) << '\n'
             << "<- qf         = " << qf << '\n'
-            << "-> nbtrue(qf) = " << eve::nbtrue(qf) << '\n';
+            << "-> count_true(qf) = " << eve::count_true(qf) << '\n';
 
   float        xf = -0.0f;
   float        yf = -3.0f;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf         = " << xf << '\n'
-            << "-> nbtrue(xf) = " << eve::nbtrue(xf) << '\n'
+            << "-> count_true(xf) = " << eve::count_true(xf) << '\n'
             << "<- yf         = " << yf << '\n'
-            << "-> nbtrue(yf) = " << eve::nbtrue(yf) << '\n';
+            << "-> count_true(yf) = " << eve::count_true(yf) << '\n';
   return 0;
 }

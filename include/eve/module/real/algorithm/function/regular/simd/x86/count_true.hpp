@@ -22,7 +22,7 @@ namespace eve::detail
   // X86 implementation
   //================================================================================================
   template<real_scalar_value T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE auto nbtrue_(EVE_SUPPORTS(sse2_), logical<wide<T, N, ABI>> const &v) noexcept
+  EVE_FORCEINLINE auto count_true_(EVE_SUPPORTS(sse2_), logical<wide<T, N, ABI>> const &v) noexcept
   {
     return eve::detail::count_true(eve::detail::top_bits{v});
   }

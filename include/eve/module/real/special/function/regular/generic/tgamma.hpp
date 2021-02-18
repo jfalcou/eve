@@ -27,7 +27,7 @@
 #include <eve/function/is_even.hpp>
 #include <eve/function/is_ltz.hpp>
 #include <eve/function/logical_and.hpp>
-#include <eve/function/nbtrue.hpp>
+#include <eve/function/count_true.hpp>
 #include <eve/function/sinpi.hpp>
 #include <eve/function/stirling.hpp>
 #include <eve/module/real/core/detail/generic/horn.hpp>
@@ -207,7 +207,7 @@ namespace eve::detail
         //       if constexpr(eve::platform::supports_nans) nan_result = is_nan(a0) || nan_result;
         auto        q    = abs(a0);
         auto        test = is_less(a0, T(-33.0));
-        std::size_t nb   = nbtrue(test);
+        std::size_t nb   = count_true(test);
         auto        r    = nan(eve::as(a0));
         if( nb > 0 )
         {
