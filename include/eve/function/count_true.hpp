@@ -19,7 +19,3 @@ namespace eve
 
 #include <eve/arch.hpp>
 #include <eve/module/real/algorithm/function/regular/generic/count_true.hpp>
-
-#if defined(EVE_HW_X86)
-#  include <eve/module/real/algorithm/function/regular/simd/x86/count_true.hpp>
-#endif
