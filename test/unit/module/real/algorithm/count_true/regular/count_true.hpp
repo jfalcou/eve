@@ -19,37 +19,26 @@
 TTS_CASE_TPL("Check eve::count_true return type", EVE_TYPE)
 {
   TTS_EXPR_IS( (eve::count_true(eve::logical<T>())) , std::ptrdiff_t);
-  TTS_EXPR_IS( (eve::count_true(T()))               , std::ptrdiff_t);
 }
 
-TTS_CASE_TPL("Check eve::count_true behavior on arithmetic", EVE_TYPE)
+TTS_CASE_TPL("Check eve::count_true behavior", EVE_TYPE)
 {
   auto cardinal = EVE_CARDINAL;
 
-  TTS_EQUAL(eve::count_true(T(1)), cardinal);
-  TTS_EQUAL(eve::count_true(T(0)), 0);
-
-  if constexpr(eve::floating_value<T>)
-  {
-    if constexpr( eve::platform::supports_nans )
-    {
-      TTS_EQUAL(eve::count_true(eve::nan(eve::as<T>())), cardinal);
-    }
-
-    TTS_EQUAL(eve::count_true(T(-0.)), 0);
-  }
+  TTS_EQUAL(eve::count_true(eve::true_(eve::as<T>())) , cardinal);
+  TTS_EQUAL(eve::count_true(eve::false_(eve::as<T>())), 0       );
 
 #if defined(EVE_SIMD_TESTS)
   for(std::ptrdiff_t j=0; j<cardinal; ++j)
   {
-    T rhs1,rhs2, rhs3, rhs4;
+    eve::logical<T> rhs1,rhs2, rhs3, rhs4;
 
     for(std::ptrdiff_t i=0; i<cardinal; ++i)
     {
-      rhs1.set(i, i >= j ? 1 : 0);
-      rhs2.set(i, i <= j ? 0 : 1);
-      rhs3.set(i, i == j ? 1 : 0);
-      rhs4.set(i, i == j ? 0 : 1);
+      rhs1.set(i, i >= j ? true : false);
+      rhs2.set(i, i <= j ? false : true);
+      rhs3.set(i, i == j ? true : false);
+      rhs4.set(i, i == j ? false : true);
     }
 
     TTS_EQUAL(eve::count_true(rhs1), (cardinal-j)  );
@@ -60,10 +49,16 @@ TTS_CASE_TPL("Check eve::count_true behavior on arithmetic", EVE_TYPE)
 #endif
 }
 
-TTS_CASE_TPL("Check eve::count_true behavior on logical", EVE_TYPE)
+#if defined(EVE_SIMD_TESTS)
+TTS_CASE_TPL("Check eve::count_true behavior with ignore", EVE_TYPE)
 {
-  auto cardinal = EVE_CARDINAL;
+  eve::logical<T> data(true);
 
-  TTS_EQUAL(eve::count_true(eve::true_(eve::as<T>())) , cardinal);
-  TTS_EQUAL(eve::count_true(eve::false_(eve::as<T>())), 0       );
+  TTS_EQUAL( eve::count_true[eve::ignore_none](data)                  , EVE_CARDINAL  );
+  TTS_EQUAL( eve::count_true[eve::ignore_all](data)                   , 0             );
+  TTS_EQUAL( eve::count_true[eve::ignore_first(EVE_CARDINAL-1)](data) , 1             );
+  TTS_EQUAL( eve::count_true[eve::keep_first  (EVE_CARDINAL-1)](data) , EVE_CARDINAL-1);
+  TTS_EQUAL( eve::count_true[eve::ignore_last (EVE_CARDINAL-1)](data) , 1             );
+  TTS_EQUAL( eve::count_true[eve::keep_last   (EVE_CARDINAL-1)](data) , EVE_CARDINAL-1);
 }
+#endif

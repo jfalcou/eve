@@ -17,14 +17,13 @@
 namespace eve::detail
 {
   template<value T>
-  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_SUPPORTS(cpu_), T const &v) noexcept
+  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_SUPPORTS(cpu_), logical<T> const &v) noexcept
   {
     if constexpr(scalar_value<T>)
     {
-      if constexpr(is_logical_v<T>) return v.value() ? 1 : 0;
-      else                          return (v != 0) ? 1 : 0;
+      return v.value() ? 1 : 0;
     }
-    else if constexpr(is_logical_v<T>)
+    else
     {
       if constexpr(has_aggregated_abi_v<T>)
       {
@@ -43,9 +42,14 @@ namespace eve::detail
         return r;
       }
     }
-    else
-    {
-      return eve::count_true(to_logical(v));
-    }
+  }
+
+  template<simd_value T, relative_conditional_expr C>
+  EVE_FORCEINLINE std::ptrdiff_t count_true_( EVE_SUPPORTS(cpu_)
+                                            , C const &cond
+                                            , logical<T> const &v
+                                            ) noexcept
+  {
+    return eve::detail::count_true(eve::detail::top_bits{v,cond});
   }
 }

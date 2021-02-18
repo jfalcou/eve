@@ -3,15 +3,15 @@
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
 ---- simd
-<- pf         = (-1, 0, -3, -0)
+<- pf         = (true, false, true, false)
 -> count_true(pf) = 2
-<- qf         = (-1, 2, -3, -32768)
--> count_true(qf) = 4
+<- qf         = (false, true, true, true)
+-> count_true(qf) = 3
 ---- scalar
-<- xf         = -0
--> count_true(xf) = 0
-<- yf         = -3
--> count_true(yf) = 1
+<- xf         = true
+-> count_true(xf) = 1
+<- yf         = false
+-> count_true(yf) = 0
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 <!-- Markdeep: -->
