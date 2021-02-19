@@ -13,8 +13,11 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
+#include <eve/function/digamma.hpp>
 #include <eve/function/tgamma.hpp>
+#include <eve/function/dist.hpp>
 #include <eve/function/floor.hpp>
+#include <eve/function/fma.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/is_lez.hpp>
@@ -146,70 +149,48 @@ namespace eve::detail
         };
 
       auto lrnegint = [](auto a,  auto x)
-        // Handle the case where both a and a+x are negative integers.
-        // Use the reflection formula AMS6.1.17
-        // rf(-a,-x) = ((-1)^x)*(a/(a+x))/rf(a,x)
+        // a and a+x are negative integers uses reflection.
         {
-          std::cout << "lrnegint a " << a << " x " << x << std::endl;
           auto r = lrising_factorial(-a, -x, std::true_type());
           return -eve::log1p(x/a)-r;
         };
 
-      auto lraeqmx = [](auto a,  auto x)
+      auto lraeqmx = [](auto a,  auto )
+        // a+x = 0
         {
-         std::cout << "lraeqmx a " << a << " x " << x << " lg " << lgamma(inc(a)) << std::endl;
-           // Handle a+x = 0 i.e. Gamma(0)/Gamma(a) */
-           // rf (-a,a) == (-1)^a*Gamma(a+1) */
          return lgamma(inc(a));
         };
 
       auto lraneqmx = [](auto a,  auto )
-        {
-          std::cout << "lraneqmx" << std::endl;
-          //a < 0.0 && a+x < 0.0
-          /* Handle finite numerator, Gamma(a+x) for a+x != 0 or neg int */
+        //a < 0.0 && a+x < 0.0
+       {
           return minf(as(a));
-        };
+       };
 
       auto lrneg = [](auto a,  auto x)
         {
-          std::cout << "lrneg" << std::endl;
           // Reduce to positive case using reflection.
           auto oma = oneminus(a);
-          auto sin_1 = sinpi(oma);
-          auto sin_2 = sinpi(oma-x);
-          //    if(sin_1 == 0.0 || sin_2 == 0.0) return nan
+          auto spioma = sinpi(oma);
+          auto spiomamx = sinpi(oma-x);
           auto r = lrising_factorial(oma, -x, std::true_type());
-          auto lnterm = eve::log(eve::abs(sin_1/sin_2));
-          return lnterm - r;
-          //      *sgn = GSL_SIGN(sin_1*sin_2);
+          auto lnterm = eve::log(eve::abs(spioma/spiomamx));
+          return if_else(is_nez(spiomamx*spioma), lnterm - r, allbits);
+          //      *sgn = GSL_SIGN(spioma*spiomamx);
         };
 
       auto lrlast = [](auto a,  auto x)
         {
-         std::cout << "lrlast" << std::endl;
-//           std::cout << "lrlast" << std::endl;
-//           std::cout << "x " << x <<  "  n " << n << std::endl;
-//           std::cout << "res " << eve::lgamma(n+x)-eve::lgamma(n)<< std::endl;
-//           //          return eve::lgamma(n+x)-eve::lgamma(n);
-//           std::cout << "eve::lgamma(n+x) " << eve::lgamma(n+x)<< std::endl;
-//           std::cout << "eve::lgamma(n)   " << eve::lgamma(n  )<< std::endl;
-//           std::cout << "log(eve::abs(tgamma(n+x)) " << log(eve::abs(tgamma(n+x))) << std::endl;
-//           std::cout << "log(eve::abs(tgamma(n)) " << log(eve::abs(tgamma(n))) << std::endl;
-//          return eve::log(eve::abs(tgamma(n+x))-eve::log(eve::abs(tgamma(n))));
          return eve::lgamma(a+x)-eve::lgamma(a);
         };
 
-      std::cout << "notdone 0 " << notdone << std::endl;
       if( eve::any(notdone) )
       {
         notdone = next_interval(lr0,  notdone, is_eqz(x), r);
-        std::cout << "notdone 00 " << notdone << std::endl;
         if( eve::any(notdone) )
         {
           auto testpos = is_nlez(a) && is_nlez(a+x);
           notdone = next_interval(lrpos, notdone,  testpos, r, a, x);
-          std::cout << "notdone pos " << notdone << " a " << a << " a+x " << a+x << std::endl;
           if( eve::any(notdone) )
           {
             // from here a+x <= 0 ||  x <= 0
@@ -217,23 +198,18 @@ namespace eve::detail
             auto aflint = is_flint(a);
             auto testnegint = aflint && is_flint(a+x) && aneg && is_ltz(a+x) ;
             notdone = next_interval(lrnegint, notdone, testnegint, r, a, x);
-            std::cout << "notdone 2 " << notdone << std::endl;
             if( eve::any(notdone) )
             {
               notdone = next_interval(lraeqmx, notdone, is_eqz(a+x), r, a, x);
-              std::cout << "notdone 3 " << notdone << std::endl;
               if( eve::any(notdone) )
               {
                 notdone = next_interval(lraneqmx, notdone, aflint && !is_eqz(a+x), r, a, x);
-                std::cout << "notdone 4 " << notdone << std::endl;
                 if( eve::any(notdone) )
                 {
                   notdone = next_interval(lrneg, notdone, aneg && is_ltz(a+x), r, a, x);
-                  std::cout << "notdone 5 " << notdone << std::endl;
                   if( eve::any(notdone) )
                   {
                     notdone = last_interval(lrlast, notdone, r, a, x);
-                    std::cout << "notdone 6 " << notdone << std::endl;
                   }
                 }
               }
@@ -247,15 +223,6 @@ namespace eve::detail
       return apply_over(pedantic(lrising_factorial), a, x);
   }
 
-  // utlities for inner computations
-  template<floating_real_value T>
-  EVE_FORCEINLINE auto lrising_factorial_(EVE_SUPPORTS(cpu_)
-                                         , T a,  T x, std::false_type const & ) noexcept
-  {
-    std::cout << "TODO" << std::endl;
-    return nan(as(a+x));
-  }
-
   template<floating_real_value T>
   EVE_FORCEINLINE auto lrising_factorial_(EVE_SUPPORTS(cpu_)
                                          , T a,  T x, std::true_type const & ) noexcept
@@ -266,13 +233,11 @@ namespace eve::detail
     auto r = nan(as(x));
     auto lr0 = [](auto a,  auto x)
       {
-//        std::cout << "lr0 "<< " x " << x << " a " << a << std::endl;
         return lgamma(x+a)-lgamma(a);
       };
 
     auto lr1 = [](auto a,  auto x)
       {
-        std::cout << "lr1 "<< " x " << x << " a " << a << std::endl;
         const auto xoa = x/a;
         const auto den = inc(xoa);
         const auto d2 = sqr(den);
@@ -300,8 +265,7 @@ namespace eve::detail
 
     auto lr2 = [](auto a,  auto x)
       {
-//        std::cout << "lr2 "<< " x " << x << " a " << a << std::endl;
-        return lrising_factorial(a, x, std::false_type());
+       return  if_else(dist(x+a, a) < 10*a*eps(as(a)) , eve::log1p(x*digamma(a)), lgamma(a+x)-lgamma(a));
       };
 
     if( eve::any(notdone) )
@@ -320,111 +284,4 @@ namespace eve::detail
     }
     return r;
   }
-
-//   template<floating_real_value T>
-//   EVE_FORCEINLINE auto lrising_factorial_(EVE_SUPPORTS(cpu_)
-//                                         , T a, T x) noexcept
-//   {
-//      if constexpr(has_native_abi_v<T>)
-//      {
-//        return a+x;
-//     std::cout << "entre x " << x <<  "  n " << n << std::endl;
-//     if constexpr(has_native_abi_v<T>)
-//     {
-//       auto nnez =  is_nez(n);
-//       //   auto xnez =  is_nez(x);
-//       auto r = if_else(nnez, nan(as(x)), minf(as(x)));
-//       auto notdone = is_not_nan(x) || nnez;
-
-//       auto lpos = [](auto n,  auto x)
-//         {
-//           std::cout << "lpos" << std::endl;
-//           return lrising_factorial(n, x, std::true_type());
-//         };
-//       auto lr2 = [](auto n,  auto x)
-//         {
-//           std::cout << "lr2" << std::endl;
-//           /* Handle the case where both a and a+x are negative integers. */
-//           /* Use the reflection formula AMS6.1.17
-//              poch(-a,-x) = (-1)^x (a/(a+x)) 1/poch(a,x) */
-//           auto r = lrising_factorial(-n, -x, std::true_type());
-//           auto f = -eve::log1p(x/n);
-//           return f - r;
-//         };
-//       auto lr3 = [](auto n,  auto)
-//         {
-//            std::cout << "lr3" << std::endl;
-//          /* Handle a+x = 0 i.e. Gamma(0)/Gamma(a) */
-//           /* poch (-a,a) == (-1)^a Gamma(a+1) */
-//            return lgamma(inc(n));
-//         };
-//       auto lr4 = [](auto n,  auto )
-//         {
-//           std::cout << "lr4" << std::endl;
-//           //a < 0.0 && a+x < 0.0
-//           /* Handle finite numerator, Gamma(a+x) for a+x != 0 or neg int */
-//           return minf(as(n));
-//         };
-
-//       auto lr5 = [](auto n ,  auto x)
-//         {
-//           std::cout << "lr5" << std::endl;
-//           // Reduce to positive case using reflection.
-//           auto omn = oneminus(n);
-//           auto sin_1 = sinpi(omn);
-//           auto sin_2 = sinpi(omn-x);
-//           //    if(sin_1 == 0.0 || sin_2 == 0.0) return nan
-//           auto r = lrising_factorial(omn, -x, std::true_type());
-//           auto lnterm = eve::log(eve::abs(sin_1/sin_2));
-//           return lnterm - r;
-//           //      *sgn = GSL_SIGN(sin_1*sin_2);
-//         };
-
-//       auto lr6 = [](auto n,  auto x)
-//         {
-//           std::cout << "lr6" << std::endl;
-//           std::cout << "x " << x <<  "  n " << n << std::endl;
-//           std::cout << "res " << eve::lgamma(n+x)-eve::lgamma(n)<< std::endl;
-//           //          return eve::lgamma(n+x)-eve::lgamma(n);
-//           std::cout << "eve::lgamma(n+x) " << eve::lgamma(n+x)<< std::endl;
-//           std::cout << "eve::lgamma(n)   " << eve::lgamma(n  )<< std::endl;
-//           std::cout << "log(eve::abs(tgamma(n+x)) " << log(eve::abs(tgamma(n+x))) << std::endl;
-//           std::cout << "log(eve::abs(tgamma(n)) " << log(eve::abs(tgamma(n))) << std::endl;
-//           return eve::log(eve::abs(tgamma(n+x))-eve::log(eve::abs(tgamma(n))));
-//           //   return eve::lgamma(n+x)-eve::lgamma(n);
-//         };
-
-//       if( eve::any(notdone) )
-//       {
-//         auto ispos = is_gtz(n) && is_gtz(n+x);
-//         notdone = next_interval(lpos,  notdone, ispos, r, x, n);
-//         if( eve::any(notdone) )
-//         {
-//           auto testz = is_lez(n) && (eve::floor(n) == n);
-//           auto xltz = is_ltz(x);
-//           notdone = next_interval(lr2, notdone, testz && xltz, r, x, n);
-//           if( eve::any(notdone) )
-//           {
-//             notdone = next_interval(lr3, notdone, testz && is_eqz(n+x), r, x, n);
-//             if( eve::any(notdone) )
-//             {
-//               notdone = next_interval(lr4, notdone, testz && xltz, r, x, n);
-//               auto testz1 = xltz && is_ltz(n+x);
-//               if( eve::any(notdone) )
-//               {
-//                 notdone = next_interval(lr5, notdone, testz && testz1, r, x, n);//(n < 0.0 && n+x < 0.0)
-//               }
-//               if( eve::any(notdone) )
-//               {
-//                 notdone = last_interval(lr6, notdone, r, x, n);
-//               }
-//             }
-//           }
-//         }
-//       }
-//       return if_else(is_nez(n), r, minf(as(x)));
- //    }
-//     else
-//       return apply_over(lrising_factorial, a, x);
-//   }
 }
