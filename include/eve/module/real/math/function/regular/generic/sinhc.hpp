@@ -79,7 +79,7 @@ namespace eve::detail
 
         T x = abs(a0);
         auto lt1= is_less(x, one(eve::as<T>()));
-        std::size_t nb = eve::count_true(lt1);
+        auto nb = eve::count_true(lt1);
         T z = zero(eve::as<T>());
         if( nb > 0)
         {
