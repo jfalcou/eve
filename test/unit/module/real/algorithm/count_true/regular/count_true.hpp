@@ -60,5 +60,14 @@ TTS_CASE_TPL("Check eve::count_true behavior with ignore", EVE_TYPE)
   TTS_EQUAL( eve::count_true[eve::keep_first  (EVE_CARDINAL-1)](data) , EVE_CARDINAL-1);
   TTS_EQUAL( eve::count_true[eve::ignore_last (EVE_CARDINAL-1)](data) , 1             );
   TTS_EQUAL( eve::count_true[eve::keep_last   (EVE_CARDINAL-1)](data) , EVE_CARDINAL-1);
+
+  if constexpr(EVE_CARDINAL >= 2)
+  {
+    TTS_EQUAL( eve::count_true[eve::ignore_first(1) && eve::ignore_last(1)](data), EVE_CARDINAL-2);
+  }
+  else
+  {
+    TTS_EQUAL( eve::count_true[eve::ignore_first(1) && eve::ignore_last(1)](data), 0);
+  }
 }
 #endif
