@@ -2,16 +2,13 @@
 **Possible Output:**
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
----- simd
-<- pf         = (true, false, true, false)
--> count_true(pf) = 2
-<- qf         = (false, true, true, true)
--> count_true(qf) = 3
 ---- scalar
 <- xf         = true
 -> count_true(xf) = 1
-<- yf         = false
--> count_true(yf) = 0
+---- simd
+<- pf         = (true, false, true, false)
+-> count_true(pf) = 2
+-> count_true[ignore_first(2)](pf) = 1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 <!-- Markdeep: -->
