@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/nbtrue.hpp>
+#include <eve/function/count_true.hpp>
 
 int main()
 {
@@ -21,6 +21,6 @@ int main()
   auto arg00= eve::bench::bernoulli_<EVE_VALUE>();
 
   eve::bench::experiment xp;
-  run<L_TYPE>(EVE_NAME(nbtrue) , xp, eve::nbtrue, arg00);
-  run<EVE_TYPE> (EVE_NAME(nbtrue) , xp, eve::nbtrue, arg0);
+  run<L_TYPE>(EVE_NAME(count_true) , xp, eve::count_true, arg00);
+  run<EVE_TYPE> (EVE_NAME(count_true) , xp, eve::count_true, arg0);
 }

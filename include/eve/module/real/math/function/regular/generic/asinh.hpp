@@ -23,7 +23,7 @@
 #include <eve/function/hypot.hpp>
 #include <eve/function/log1p.hpp>
 #include <eve/function/log.hpp>
-#include <eve/function/nbtrue.hpp>
+#include <eve/function/count_true.hpp>
 #include <eve/constant/half.hpp>
 #include <eve/constant/log_2.hpp>
 #include <eve/constant/inf.hpp>
@@ -64,7 +64,7 @@ namespace eve::detail
         auto x_lt_half = x < half(eve::as<T>());
         T x2 = sqr(x);
         T z = zero(eve::as<T>());
-        std::size_t nb = nbtrue(x_lt_half);
+        std::size_t nb = eve::count_true(x_lt_half);
         if(nb > 0)
         {
           z = horn<T, 0x3f800000, 0xbe2aa9ad, 0x3d9949b1, 0xbd2ee581, 0x3ca4d6e6> (x2)*x;

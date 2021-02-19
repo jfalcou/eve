@@ -165,7 +165,7 @@ make_all_units(ROOT unit.real.core NAME minmag                ARCH scalar simd T
 make_all_units(ROOT unit.real.core NAME minus                 ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME modf                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME mul                   ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT unit.real.core NAME nbtrue                ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT unit.real.core NAME count_true                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME nb_values             ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME nearest               ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME negate                ARCH scalar simd TYPES ${all_types}     )

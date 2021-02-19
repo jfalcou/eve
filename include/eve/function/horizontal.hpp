@@ -20,5 +20,4 @@ namespace eve
 #include <eve/function/all.hpp>
 #include <eve/function/any.hpp>
 #include <eve/function/none.hpp>
-#include <eve/function/nbtrue.hpp>
-
+#include <eve/function/count_true.hpp>

@@ -295,6 +295,8 @@ workflows:
     ## ARM v7
     ##==============================================================================================
       - arm_128:
+          requires:
+            - x86_avx512_128
           tool:     "../cmake/toolchain/gcc.arm.cmake"
           filters:
             branches:
@@ -314,7 +316,7 @@ workflows:
     ##==============================================================================================
       - tiny:
           requires:
-            - x86_avx512_128
+            - x86_sse4
           tool:     "../cmake/toolchain/clang.x86.cmake"
           setup:    "-DEVE_TEST_TYPE=tiny_wide"
           filters:
@@ -322,7 +324,7 @@ workflows:
               ignore: develop
       - small:
           requires:
-            - tiny
+            - aarch64_128
           tool:     "../cmake/toolchain/clang.x86.cmake"
           setup:    "-DEVE_TEST_TYPE=small_wide"
           filters:

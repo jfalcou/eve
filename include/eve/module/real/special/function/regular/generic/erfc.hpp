@@ -24,7 +24,7 @@
 #include <eve/function/is_less.hpp>
 #include <eve/function/is_ltz.hpp>
 #include <eve/function/logical_andnot.hpp>
-#include <eve/function/nbtrue.hpp>
+#include <eve/function/count_true.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/sign.hpp>
 #include <eve/function/signnz.hpp>
@@ -100,7 +100,7 @@ namespace eve::detail
         T sqry =  sqr(y);
         auto test1 =  eve::is_less(y, T( 0.46875)); // 15/32;
         T r1 = eve::zero(as<T>());
-        std::size_t nb = eve::nbtrue(test1);
+        std::size_t nb = eve::count_true(test1);
         if (nb > 0)  //here y < 0.46875
         {
           T ysq = if_else(y > halfeps(as<T>()), sqry, eve::zero);
@@ -111,7 +111,7 @@ namespace eve::detail
         auto test2 = (y <= T(4));
         auto test3 = logical_andnot(test2, test1);
 
-        auto nb1 =  eve::nbtrue(test3);
+        auto nb1 =  eve::count_true(test3);
         if(nb1 > 0) //here we treat 0.46875 <= y and y <= 4
         {
           T res = kernel1_erf2(a0, y);
@@ -135,7 +135,7 @@ namespace eve::detail
         auto test1 = eve::is_less(x, 6.6666667e-01f);
         T z = x/inc(x);
 
-        std::size_t nb = nbtrue(test1);
+        std::size_t nb = eve::count_true(test1);
         if(nb > 0)
         {
           r1 = kernel_erfc3(z);

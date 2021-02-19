@@ -144,7 +144,7 @@ make_all_benchs(ROOT bench.core NAME minmag                TYPES ${all_types}   
 make_all_benchs(ROOT bench.core NAME minus                 TYPES ${all_types}     )
 make_all_benchs(ROOT bench.core NAME modf                  TYPES ${real_types}     )
 make_all_benchs(ROOT bench.core NAME mul                   TYPES ${all_types}     )
-make_all_benchs(ROOT bench.core NAME nbtrue                TYPES ${all_types}     )
+make_all_benchs(ROOT bench.core NAME count_true                TYPES ${all_types}     )
 make_all_benchs(ROOT bench.core NAME nb_values             TYPES ${all_types}     )
 make_all_benchs(ROOT bench.core NAME nearest               TYPES ${all_types}     )
 make_all_benchs(ROOT bench.core NAME negate                TYPES ${all_types}     )

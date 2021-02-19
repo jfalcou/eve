@@ -17,7 +17,7 @@
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/is_infinite.hpp>
-#include <eve/function/nbtrue.hpp>
+#include <eve/function/count_true.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/sinh.hpp>
@@ -79,7 +79,7 @@ namespace eve::detail
 
         T x = abs(a0);
         auto lt1= is_less(x, one(eve::as<T>()));
-        std::size_t nb = nbtrue(lt1);
+        auto nb = eve::count_true(lt1);
         T z = zero(eve::as<T>());
         if( nb > 0)
         {

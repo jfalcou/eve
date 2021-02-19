@@ -194,7 +194,7 @@
 #include <eve/function/modf.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/function/musl.hpp>
-#include <eve/function/nbtrue.hpp>
+#include <eve/function/count_true.hpp>
 #include <eve/function/nb_values.hpp>
 #include <eve/function/nearest.hpp>
 #include <eve/function/negate.hpp>

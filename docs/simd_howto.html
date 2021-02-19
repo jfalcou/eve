@@ -230,7 +230,7 @@ so that the previous trich is not available. We can write this:
    template<floating_simd_value T> auto maxi(T a, T b)
    {
      auto test = x>0;
-     auto n = eve::nbtrue(test);
+     auto n = eve::count_true(test);
      T r(0);
      if (n>0)                                // some values must return log
      {
@@ -242,7 +242,7 @@ so that the previous trich is not available. We can write this:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 
-Here `eve::nbtrue` is a function returning the number of true values in the vector, and `T::size()` is obvoiusly
+Here `eve::count_true` is a function returning the number of true values in the vector, and `T::size()` is obvoiusly
 the vector number of elements (N).
 
 With this scheme if all the values are satisfying one branch the other is not evaluated.
