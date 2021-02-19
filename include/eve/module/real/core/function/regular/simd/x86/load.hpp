@@ -53,6 +53,8 @@ namespace eve::detail
       if constexpr( current_api >= avx512 ) return to_logical(block).storage();
       else                                  return bit_cast(block, as_<r_t>{});
     }
+    // Hack until a proper FIX-#572
+    else if constexpr ( has_aggregated_abi_v<r_t> ) return load_(EVE_RETARGET(cpu_), cond, p, Cardinal{});
     else if constexpr( current_api >= avx512 )
     {
       if constexpr( C::is_complete )
