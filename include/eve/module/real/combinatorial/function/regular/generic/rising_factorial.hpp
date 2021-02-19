@@ -14,13 +14,9 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/exp.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_nan.hpp>
 #include <eve/function/lrising_factorial.hpp>
-#include <eve/function/srising_factorial.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
+#include <eve/function/raw.hpp>
+#include <eve/function/regular.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/function/exp.hpp>
 #include <eve/detail/apply_over.hpp>
@@ -30,8 +26,9 @@
 
 namespace eve::detail
 {
-  template<real_value I, floating_real_value T>
+  template<real_value I, floating_real_value T, decorator D>
   EVE_FORCEINLINE auto rising_factorial_(EVE_SUPPORTS(cpu_)
+                                        , D const & d
                                         , I n,  T x) noexcept
   {
     if constexpr(integral_simd_value<I>)
@@ -39,34 +36,39 @@ namespace eve::detail
       using elt_t = element_type_t<T>;
       using r_t = as_wide_t<elt_t, cardinal_t<I>>;
       auto nn = convert(n, as(elt_t()));
-      return rising_factorial(nn, r_t(x));
+      return d(rising_factorial)(nn, r_t(x));
     }
     else if  constexpr(integral_scalar_value<I>)
     {
-      return rising_factorial(T(n), x);
+      return d(rising_factorial)(T(n), x);
     }
     else
     {
       using r_t = common_compatible_t<I, T>;
-      return rising_factorial(r_t(n), r_t(x));
+      return d(rising_factorial)(r_t(n), r_t(x));
     }
   }
 
+  // regular wrapping : no decorator
+  template<real_value I,floating_real_value T>
+  EVE_FORCEINLINE auto rising_factorial_(EVE_SUPPORTS(cpu_)
+                                         , I a,  T x) noexcept
+  {
+    return rising_factorial(regular_type(), a, x);
+  }
+
+  // regular  nan if a+x or x is nnegative,  better computation than raw
   template<floating_real_value T>
   EVE_FORCEINLINE auto rising_factorial_(EVE_SUPPORTS(cpu_)
-                                        , T n,  T x) noexcept
+                                        , regular_type const &
+                                        , T a,  T x) noexcept
   {
      if constexpr(has_native_abi_v<T>)
      {
-       auto r = nan(as(x));
-       auto xeqz = is_eqz(x);
-       auto xeqminf = x == minf(as(x));
-       r = if_else(xeqz, one, if_else(xeqminf, zero, x));
-       auto done =  is_nan(x)|| xeqz || xeqminf;
-       auto tmp = lrising_factorial(n, x); 
-       return if_else(done, r, eve::exp(tmp)); //*srising_factorial(n, x));
+       auto lrn = lrising_factorial(a, x);
+       return eve::exp(lrn);
      }
     else
-      return apply_over(rising_factorial, n, x);
+      return apply_over(regular_type()(rising_factorial), a, x);
   }
 }

@@ -48,7 +48,7 @@
 namespace eve::detail
 {
   //general case
-  template<real_value I, floating_real_value T,  decorator D>
+  template<real_value I, floating_real_value T, decorator D>
   EVE_FORCEINLINE auto lrising_factorial_(EVE_SUPPORTS(cpu_)
                                          , D const & d
                                          , I n,  T x) noexcept
