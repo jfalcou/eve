@@ -25,6 +25,7 @@ namespace eve::detail
     constexpr int  c    = sizeof...(I)/2;
 
     bool ok = true;
+
     for(int i=0;i<c;++i) ok = ok && (idx[i] == i+O) && (idx[i+c] == -1);
     if(ok)  return half_mov0;
 
@@ -34,6 +35,7 @@ namespace eve::detail
 
     ok = true;
     for(int i=0;i<c;++i) ok = ok && (idx[i] == i+O) && (idx[i+c] == i+O);
+
     return ok ? regular_mov : 0;
   }();
 

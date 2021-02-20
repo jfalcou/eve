@@ -49,20 +49,34 @@ namespace eve::detail
         using tgt_t = as_<that_t>;
 
         auto const r = bit_cast(v, as_<i_t>() );
-        constexpr auto check = is_mov<0,I...>;
+        constexpr auto m = is_mov<0,I...>;
 
-              if constexpr(check == regular_mov ) return bit_cast( o_t{_mm_movelh_ps(r,r)}, tgt_t{});
-        else  if constexpr(check == half_mov0   ) return bit_cast( o_t{_mm_movelh_ps(r,i_t(0))}, tgt_t{});
-        else  if constexpr(check == half_0mov   ) return bit_cast( o_t{_mm_movelh_ps(i_t(0),r)}, tgt_t{});
+        if constexpr(sz == 4)
+        {
+                if constexpr(m == regular_mov ) return bit_cast( o_t{_mm_movelh_ps(r,r)}, tgt_t{});
+          else  if constexpr(m == half_mov0   ) return bit_cast( o_t{_mm_movelh_ps(r,i_t(0))}, tgt_t{});
+          else  if constexpr(m == half_0mov   ) return bit_cast( o_t{_mm_movelh_ps(i_t(0),r)}, tgt_t{});
+        }
+        else
+        {
+                if constexpr(m == half_mov0) return bit_cast( o_t{_mm_unpacklo_ps(r,i_t(0))}, tgt_t{});
+          else  if constexpr(m == half_0mov) return bit_cast( o_t{_mm_unpacklo_ps(i_t(0),r)}, tgt_t{});
+        }
       }
     }
     // Strict 64bits SSE register only
     else if constexpr(match(c,category::float64x2, category::int64x2, category::uint64x2) )
     {
-      using f_t = as_floating_point_t<wide<T,N,ABI>>;
-      auto const r = bit_cast(v, as_<f_t>() );
+      using i_t = as_floating_point_t<wide<T,N,ABI>>;
+      using o_t = as_floating_point_t<that_t>;
+      using tgt_t = as_<that_t>;
+      auto const r = bit_cast(v, as_<i_t>() );
 
-      return bit_cast( f_t{_mm_unpacklo_pd(r,r)}, as_<that_t>{} );
+      constexpr auto m = is_mov<0,I...>;
+
+            if constexpr(m == regular_mov ) return bit_cast( o_t{_mm_unpacklo_pd(r,r)}, tgt_t{});
+      else  if constexpr(m == half_mov0   ) return bit_cast( o_t{_mm_unpacklo_pd(r,i_t(0))}, tgt_t{});
+      else  if constexpr(m == half_0mov   ) return bit_cast( o_t{_mm_unpacklo_pd(i_t(0),r)}, tgt_t{});
     }
     else
     {
@@ -101,26 +115,26 @@ namespace eve::detail
         constexpr auto c  = categorize<wide<T,N,ABI>>();
         [[maybe_unused]] wide<T,N,ABI> z(0);
 
-        constexpr auto check = is_mov<0,I...>;
+        constexpr auto m = is_mov<0,I...>;
 
         if constexpr( c == category::float64x4 )
         {
-                if constexpr(check == regular_mov) return that_t{_mm256_permute2f128_pd(v,v,0)};
-          else  if constexpr(check == half_mov0  ) return that_t{_mm256_permute2f128_pd(v,z,0)};
-          else  if constexpr(check == half_0mov  ) return that_t{_mm256_permute2f128_pd(z,v,0)};
+                if constexpr(m == regular_mov) return that_t{_mm256_permute2f128_pd(v,v,0)};
+          else  if constexpr(m == half_mov0  ) return that_t{_mm256_permute2f128_pd(v,z,0)};
+          else  if constexpr(m == half_0mov  ) return that_t{_mm256_permute2f128_pd(z,v,0)};
         }
         // AVX double precision
         else if constexpr( c == category::float32x8 )
         {
-                if constexpr(check == regular_mov) return that_t{_mm256_permute2f128_ps(v,v,0x00)};
-          else  if constexpr(check == half_mov0  ) return that_t{_mm256_permute2f128_ps(v,z,0x20)};
-          else  if constexpr(check == half_0mov  ) return that_t{_mm256_permute2f128_ps(z,v,0x20)};
+                if constexpr(m == regular_mov) return that_t{_mm256_permute2f128_ps(v,v,0x00)};
+          else  if constexpr(m == half_mov0  ) return that_t{_mm256_permute2f128_ps(v,z,0x20)};
+          else  if constexpr(m == half_0mov  ) return that_t{_mm256_permute2f128_ps(z,v,0x20)};
         }
         else if constexpr( std::same_as<ABI,x86_256_> )
         {
-                if constexpr(check == regular_mov) return that_t{_mm256_permute2f128_si256(v,v,0x00)};
-          else  if constexpr(check == half_mov0  ) return that_t{_mm256_permute2f128_si256(v,z,0x20)};
-          else  if constexpr(check == half_0mov  ) return that_t{_mm256_permute2f128_si256(z,v,0x20)};
+                if constexpr(m == regular_mov) return that_t{_mm256_permute2f128_si256(v,v,0x00)};
+          else  if constexpr(m == half_mov0  ) return that_t{_mm256_permute2f128_si256(v,z,0x20)};
+          else  if constexpr(m == half_0mov  ) return that_t{_mm256_permute2f128_si256(z,v,0x20)};
         }
       }
       else
