@@ -19,6 +19,34 @@
 
 namespace eve::detail
 {
+  template< typename T, typename N, x86_abi ABI, std::ptrdiff_t... I>
+  EVE_FORCEINLINE auto gather_low_  ( EVE_SUPPORTS(sse2_), logical<wide<T,N,ABI>> v
+                                    , pattern_t<I...> p
+                                    ) noexcept
+  {
+    if constexpr( current_api >= avx512 )
+    {
+      constexpr auto sz = pattern_t<I...>::size(cardinal_v<wide<T,N,ABI>>);
+
+      using that_t  = as_wide_t<logical<wide<T,N,ABI>>,fixed<sz>>;
+      using s_t     = typename that_t::storage_type;
+      using i_t     = typename s_t::type;
+
+      i_t bits = v.storage().value & ((1ULL << (sz/2)) - 1);
+      [[maybe_unused]] i_t sbits = bits << (sz/2);
+
+      constexpr auto m = is_mov<0,I...>;
+
+            if constexpr(m == regular_mov ) return that_t{s_t{i_t(sbits | bits)}};
+      else  if constexpr(m == half_mov0   ) return that_t{s_t{i_t(bits)}};
+      else  if constexpr(m == half_0mov   ) return that_t{s_t{i_t(sbits)}};
+    }
+    else
+    {
+      return basic_swizzle_(EVE_RETARGET(cpu_),v,p);
+    }
+  }
+
   template< typename T, typename N, x86_abi ABI
           , std::ptrdiff_t... I
           >
