@@ -257,14 +257,6 @@ namespace eve::detail
   template<std::size_t Size>
   using make_floating_point_t = typename make_floating_point<Size>::type;
 
-  // Turn a type into an floating_point point one
-  template<typename T>
-  struct as_floating_point : make_floating_point<(sizeof(T) <= 4) ? 4: sizeof(T)>
-  {};
-
-  template<typename T>
-  using as_floating_point_t = typename as_floating_point<T>::type;
-
   // false_ value with dependent type
   template<typename... T>
   inline constexpr bool wrong = false;

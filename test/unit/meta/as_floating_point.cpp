@@ -9,13 +9,14 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/traits/as_floating_point.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 #include <type_traits>
 
 TTS_CASE("Check as_floating_point on scalar")
 {
-  using eve::detail::as_floating_point_t;
+  using eve::as_floating_point_t;
 
   TTS_TYPE_IS((as_floating_point_t<float>         ) , float );
   TTS_TYPE_IS((as_floating_point_t<std::int32_t>  ) , float );
@@ -28,7 +29,7 @@ TTS_CASE("Check as_floating_point on scalar")
 
 TTS_CASE("Check as_floating_point on logical scalar")
 {
-  using eve::detail::as_floating_point_t;
+  using eve::as_floating_point_t;
   using eve::logical;
 
   TTS_TYPE_IS((as_floating_point_t<logical<float>>        ) , logical<float> );
@@ -42,7 +43,7 @@ TTS_CASE("Check as_floating_point on logical scalar")
 
 TTS_CASE("Check as_floating_point on wide")
 {
-  using eve::detail::as_floating_point_t;
+  using eve::as_floating_point_t;
   using eve::wide;
 
   TTS_TYPE_IS((as_floating_point_t<wide<float>>        ) , wide<float> );
@@ -56,7 +57,7 @@ TTS_CASE("Check as_floating_point on wide")
 
 TTS_CASE("Check as_floating_point on logical wide")
 {
-  using eve::detail::as_floating_point_t;
+  using eve::as_floating_point_t;
   using eve::logical;
   using eve::wide;
 
