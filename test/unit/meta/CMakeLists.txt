@@ -10,6 +10,7 @@
 ## General meta tests
 make_unit( "unit.meta" as_floating_point.cpp )
 make_unit( "unit.meta" as_integer.cpp )
+make_unit( "unit.meta" as_uinteger.cpp )
 make_unit( "unit.meta" as_wide.cpp )
 make_unit( "unit.meta" sign_of.cpp )
 

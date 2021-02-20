@@ -52,7 +52,7 @@ TTS_CASE_TPL("Check eve::logical_notand behavior on scalars", EVE_TYPE)
 
   if constexpr(eve::floating_value<T>)
   {
-    using i_t = eve::detail::as_integer_t<T>;
+    using i_t = eve::as_integer_t<T>;
     TTS_EQUAL(eve::logical_notand(i_t(0), T(0)), eve::false_(eve::as<i_t>()));
     TTS_EQUAL(eve::logical_notand(i_t(0), T(1)), eve::true_(eve::as<i_t>()) );
     TTS_EQUAL(eve::logical_notand(i_t(2), T(1)), eve::false_(eve::as<i_t>()));

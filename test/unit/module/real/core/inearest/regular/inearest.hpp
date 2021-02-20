@@ -14,12 +14,12 @@
 
 TTS_CASE_TPL("Check inearest return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::int_(eve::nearest)(T()), eve::detail::as_integer_t<T>);
+  TTS_EXPR_IS(eve::int_(eve::nearest)(T()), eve::as_integer_t<T>);
 }
 
 TTS_CASE_TPL("Check eve::int_(eve::nearest) behavior", EVE_TYPE)
 {
-  using i_t = eve::detail::as_integer_t<T>;
+  using i_t = eve::as_integer_t<T>;
 
   TTS_EQUAL(eve::int_(eve::nearest)(T(0)), i_t(0));
   TTS_EQUAL(eve::int_(eve::nearest)(T(1)), i_t(1));

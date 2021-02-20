@@ -19,10 +19,10 @@
 TTS_CASE_TPL("wide random check on exponent", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
-  using i_t = eve::detail::as_integer_t<v_t>;
+  using i_t = eve::as_integer_t<v_t>;
 
   auto internal_f = [](auto e){  int exp; std::frexp(e, &exp); return i_t(exp); };
-  using vi_t = eve::detail::as_integer_t<T>;
+  using vi_t = eve::as_integer_t<T>;
 
   auto std_exponent = tts::vectorize<vi_t>( [ internal_f ](auto e) { return internal_f(e); } );
 

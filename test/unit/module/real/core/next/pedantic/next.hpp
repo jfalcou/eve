@@ -21,10 +21,10 @@
 TTS_CASE_TPL("Check pedantic next return type", EVE_TYPE)
 {
   using v_t   = eve::element_type_t<T>;
-  using i_t   = eve::detail::as_integer_t<T, signed>;
-  using u_t   = eve::detail::as_integer_t<T, unsigned>;
-  using si_t  = eve::detail::as_integer_t<v_t, signed>;
-  using su_t  = eve::detail::as_integer_t<v_t, unsigned>;
+  using i_t   = eve::as_integer_t<T, signed>;
+  using u_t   = eve::as_integer_t<T, unsigned>;
+  using si_t  = eve::as_integer_t<v_t, signed>;
+  using su_t  = eve::as_integer_t<v_t, unsigned>;
 
   TTS_EXPR_IS(eve::pedantic(eve::next)(T()         ), T);
   TTS_EXPR_IS(eve::pedantic(eve::next)(T(), i_t()  ), T);
@@ -62,8 +62,8 @@ TTS_CASE_TPL("Check eve::pedantic(eve::next) one parameter behavior", EVE_TYPE)
 TTS_CASE_TPL("Check eve::pedantic(eve::next) two parameters behavior", EVE_TYPE)
 {
   using v_t   = eve::element_type_t<T>;
-  using i_t   = eve::detail::as_integer_t<T, signed>;
-  using si_t  = eve::detail::as_integer_t<v_t, signed>;
+  using i_t   = eve::as_integer_t<T, signed>;
+  using si_t  = eve::as_integer_t<v_t, signed>;
 
   if constexpr(eve::integral_value<T>)
   {

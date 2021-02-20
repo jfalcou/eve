@@ -22,7 +22,7 @@ TTS_CASE_TPL("Check eve::diff(eve::legendre) behavior", EVE_TYPE)
 {
   if constexpr(eve::floating_value<T>)
   {
-    using i_t = eve::detail::as_integer_t<T,unsigned>;
+    using i_t = eve::as_integer_t<T,unsigned>;
     TTS_ULP_EQUAL(eve::diff(eve::legendre)(2u, T{0.5}), T(boost::math::legendre_p_prime(2u, 0.5)), 2.0);
     TTS_ULP_EQUAL(eve::diff(eve::legendre)(2u, T{0.1}), T(boost::math::legendre_p_prime(2u, 0.1)), 2.0);
     TTS_ULP_EQUAL(eve::diff(eve::legendre)(3u, T{0.5}), T(boost::math::legendre_p_prime(3u, 0.5)), 2.0);

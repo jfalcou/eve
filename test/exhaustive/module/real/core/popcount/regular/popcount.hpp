@@ -20,7 +20,7 @@
 TTS_CASE_TPL("wide exhaustive check on popcount", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
-  using u_t =  eve::detail::as_integer_t<T, unsigned>;
+  using u_t =  eve::as_integer_t<T, unsigned>;
 
   auto std_popcount = tts::vectorize<u_t>(
     [](auto e) { unsigned int j = 0;

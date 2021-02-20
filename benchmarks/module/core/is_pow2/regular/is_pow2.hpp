@@ -17,7 +17,7 @@ int main()
 {
   auto lmin = eve::valmin(eve::as<EVE_VALUE>());
   auto lmax = eve::valmax(eve::as<EVE_VALUE>());
-  using ui_t =  eve::detail::as_integer_t<EVE_VALUE, unsigned>;
+  using ui_t =  eve::as_integer_t<EVE_VALUE, unsigned>;
   auto const std__is_pow2 = [](EVE_VALUE x) -> eve::logical<EVE_VALUE>  { return std::has_single_bit(ui_t(x)); };
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);

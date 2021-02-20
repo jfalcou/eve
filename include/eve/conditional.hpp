@@ -16,7 +16,9 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/function/iota.hpp>
 #include <eve/function/bit_cast.hpp>
-#include <eve/traits.hpp>
+#include <eve/traits/as_integer.hpp>
+#include <eve/traits/as_arithmetic.hpp>
+#include <eve/traits/cardinal.hpp>
 #include <bitset>
 #include <ostream>
 
@@ -220,7 +222,7 @@ namespace eve
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
       constexpr std::ptrdiff_t card = cardinal_v<T>;
-      using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
+      using i_t = as_arithmetic_t<as_integer_t<T>>;
 
       auto const m = detail::linear_ramp(eve::as_<i_t>()) < (card-count_);
       return bit_cast(m, as_<as_logical_t<T>>());
@@ -229,7 +231,7 @@ namespace eve
     template<typename T> EVE_FORCEINLINE auto mask_inverted(eve::as_<T> const&) const
     {
       constexpr std::ptrdiff_t card = cardinal_v<T>;
-      using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
+      using i_t = as_arithmetic_t<as_integer_t<T>>;
 
       auto const m = detail::linear_ramp(eve::as_<i_t>()) >= (card-count_);
       return bit_cast(m, as_<as_logical_t<T>>());
@@ -285,7 +287,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
-      using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
+      using i_t = as_arithmetic_t<as_integer_t<T>>;
       constexpr std::ptrdiff_t card = cardinal_v<T>;
 
       auto const m = detail::linear_ramp(eve::as_<i_t>()) >= i_t(card-count_);
@@ -295,7 +297,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE auto mask_inverted(eve::as_<T> const&) const
     {
-      using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
+      using i_t = as_arithmetic_t<as_integer_t<T>>;
       constexpr std::ptrdiff_t card = cardinal_v<T>;
 
       auto const m = detail::linear_ramp(eve::as_<i_t>()) < i_t(card-count_);
@@ -353,7 +355,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
-      using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
+      using i_t = as_arithmetic_t<as_integer_t<T>>;
       auto const m = detail::linear_ramp(eve::as_<i_t>()) >= i_t(count_);
 
       return bit_cast(m, as_<as_logical_t<T>>());
@@ -361,7 +363,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE auto mask_inverted(eve::as_<T> const&) const
     {
-      using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
+      using i_t = as_arithmetic_t<as_integer_t<T>>;
       auto const m = detail::linear_ramp(eve::as_<i_t>()) < i_t(count_);
 
       return bit_cast(m, as_<as_logical_t<T>>());
@@ -417,7 +419,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
-      using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
+      using i_t = as_arithmetic_t<as_integer_t<T>>;
       auto const m = detail::linear_ramp(eve::as_<i_t>()) < i_t(count_);
 
       return bit_cast(m, as_<as_logical_t<T>>());
@@ -425,7 +427,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE auto mask_inverted(eve::as_<T> const&) const
     {
-      using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
+      using i_t = as_arithmetic_t<as_integer_t<T>>;
       auto const m = detail::linear_ramp(eve::as_<i_t>()) >= i_t(count_);
 
       return bit_cast(m, as_<as_logical_t<T>>());
@@ -484,7 +486,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
-      using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
+      using i_t = as_arithmetic_t<as_integer_t<T>>;
       auto const i = detail::linear_ramp(eve::as_<i_t>());
       auto const m = (i >= begin_) && (i < end_);
 
@@ -493,7 +495,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE auto mask_inverted(eve::as_<T> const&) const
     {
-      using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
+      using i_t = as_arithmetic_t<as_integer_t<T>>;
       auto const i = detail::linear_ramp(eve::as_<i_t>());
       auto const m = (i < begin_) || (i >= end_);
 
@@ -553,7 +555,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
-      using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
+      using i_t = as_arithmetic_t<as_integer_t<T>>;
       auto const i = detail::linear_ramp(eve::as_<i_t>());
       auto const m = (i >= first_count_) && (i < (cardinal_v<T>-last_count_));
 
@@ -562,7 +564,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE auto mask_inverted(eve::as_<T> const&) const
     {
-      using i_t = as_arithmetic_t<detail::as_integer_t<T>>;
+      using i_t = as_arithmetic_t<as_integer_t<T>>;
       auto const i = detail::linear_ramp(eve::as_<i_t>());
       auto const m = (i < first_count_) || (i >= (cardinal_v<T>-last_count_));
 

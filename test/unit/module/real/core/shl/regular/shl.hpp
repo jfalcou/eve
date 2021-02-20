@@ -14,8 +14,8 @@
 
 TTS_CASE_TPL("Check eve::shl return type", EVE_TYPE)
 {
-  using i_t = eve::detail::as_integer_t<T, signed>;
-  using u_t = eve::detail::as_integer_t<T, unsigned>;
+  using i_t = eve::as_integer_t<T, signed>;
+  using u_t = eve::as_integer_t<T, unsigned>;
 
   TTS_EXPR_IS(eve::shl(T(), T())    , T);
   TTS_EXPR_IS(eve::shl(T(), i_t() ) , T);

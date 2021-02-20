@@ -16,8 +16,8 @@
 
 TTS_CASE_TPL("Check eve::bit_andnot return type", EVE_TYPE)
 {
-  using ut_t = eve::detail::as_integer_t<T, unsigned>;
-  using it_t = eve::detail::as_integer_t<T, signed>;
+  using ut_t = eve::as_integer_t<T, unsigned>;
+  using it_t = eve::as_integer_t<T, signed>;
 
   TTS_EXPR_IS(eve::bit_cast(T(), eve::as<it_t>()), it_t  );
   TTS_EXPR_IS(eve::bit_cast(T(), eve::as<ut_t>()), ut_t  );
@@ -26,8 +26,8 @@ TTS_CASE_TPL("Check eve::bit_andnot return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::bit_cast behavior", EVE_TYPE)
 {
-  using ut_t = eve::detail::as_integer_t<T, unsigned>;
-  using it_t = eve::detail::as_integer_t<T, signed>;
+  using ut_t = eve::as_integer_t<T, unsigned>;
+  using it_t = eve::as_integer_t<T, signed>;
   using v_t = eve::element_type_t<T>;
 
   if constexpr(eve::floating_value<T>)

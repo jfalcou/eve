@@ -20,11 +20,11 @@
 TTS_CASE_TPL("wide random check on inearest", EVE_TYPE)
 {
   using v_t   = eve::element_type_t<T>;
-  using vi_t  = eve::detail::as_integer_t<T>;
+  using vi_t  = eve::as_integer_t<T>;
 
   if constexpr(eve::floating_value<T>)
   {
-    using i_t =  eve::detail::as_integer_t<v_t>;
+    using i_t =  eve::as_integer_t<v_t>;
     auto std_inearest = tts::vectorize<vi_t>( [](auto e) { return i_t(std::nearbyint(e)); } );
 
     eve::exhaustive_producer<T> p(eve::valmin(eve::as<i_t>()), eve::valmax(eve::as<i_t>()));

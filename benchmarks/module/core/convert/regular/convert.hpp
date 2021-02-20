@@ -17,7 +17,7 @@ int main()
 {
   auto lmin = eve::valmin(eve::as<EVE_VALUE>())/2;
   auto lmax = eve::valmax(eve::as<EVE_VALUE>())/2;
-  using i_t = eve::detail::as_integer_t<EVE_VALUE, signed>;
+  using i_t = eve::as_integer_t<EVE_VALUE, signed>;
   auto f =  [](auto x){ return eve::convert(x, eve::as_<i_t>());
   }
  ;

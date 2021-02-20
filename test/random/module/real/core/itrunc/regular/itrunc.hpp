@@ -16,7 +16,7 @@
 
 TTS_CASE_TPL("wide random check on itrunc", EVE_TYPE)
 {
-  using i_t =  eve::detail::as_integer_t<EVE_VALUE>;
+  using i_t =  eve::as_integer_t<EVE_VALUE>;
   if constexpr(eve::floating_value<T>)
   {
     auto std_itrunc =  [](auto e) -> i_t { return i_t(std::trunc(e)); };

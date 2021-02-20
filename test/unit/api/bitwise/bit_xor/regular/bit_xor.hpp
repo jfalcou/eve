@@ -14,8 +14,8 @@
 TTS_CASE_TPL("Check operator^ return type", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
-  using ui_t = eve::detail::as_integer_t<T  , unsigned>;
-  using vi_t = eve::detail::as_integer_t<v_t, unsigned>;
+  using ui_t = eve::as_integer_t<T  , unsigned>;
+  using vi_t = eve::as_integer_t<v_t, unsigned>;
 
   TTS_EXPR_IS(T()    ^ T()    , T   );
   TTS_EXPR_IS(T()    ^ v_t()  , T   );
@@ -32,10 +32,10 @@ TTS_CASE_TPL( "Check operator^ behavior", EVE_TYPE)
   using eve::as;
 
   using v_t  = eve::element_type_t<T>;
-  using ui_t = eve::detail::as_integer_t<T  , unsigned>;
-  using vi_t = eve::detail::as_integer_t<v_t, unsigned>;
-  using si_t = eve::detail::as_integer_t<T  , signed>;
-  using wi_t = eve::detail::as_integer_t<v_t, signed>;
+  using ui_t = eve::as_integer_t<T  , unsigned>;
+  using vi_t = eve::as_integer_t<v_t, unsigned>;
+  using si_t = eve::as_integer_t<T  , signed>;
+  using wi_t = eve::as_integer_t<v_t, signed>;
 
   TTS_EQUAL((T(0) ^ T(0)  ) , T(0) );
   TTS_EQUAL((T(0) ^ v_t(0)) , T(0) );

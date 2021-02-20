@@ -14,13 +14,13 @@
 
 TTS_CASE_TPL("Check eve::popcount return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::popcount(T(0)), (eve::detail::as_integer_t<T, unsigned>) );
+  TTS_EXPR_IS(eve::popcount(T(0)), (eve::as_integer_t<T, unsigned>) );
 }
 
 TTS_CASE_TPL("Check eve::popcount behavior", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
-  using r_t = eve::detail::as_integer_t<T, unsigned>;
+  using r_t = eve::as_integer_t<T, unsigned>;
 
   for(unsigned int a = 1, i=1; i < sizeof(v_t) ; ++i)
   {

@@ -14,13 +14,13 @@ TTS_CASE_TPL("Check eve::lookup return type", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
 
-  TTS_EXPR_IS((eve::lookup(T() , eve::detail::as_integer_t<T >())), T );
-  TTS_EXPR_IS((eve::lookup(v_t(), eve::detail::as_integer_t<v_t>())), (v_t));
+  TTS_EXPR_IS((eve::lookup(T() , eve::as_integer_t<T >())), T );
+  TTS_EXPR_IS((eve::lookup(v_t(), eve::as_integer_t<v_t>())), (v_t));
 }
 
 TTS_CASE_TPL("Check eve::lookup behavior", EVE_TYPE)
 {
-  using index_t = eve::detail::as_integer_t<T>;
+  using index_t = eve::as_integer_t<T>;
 
   #if defined(EVE_SIMD_TESTS)
   using v_t = eve::element_type_t<T>;
@@ -38,4 +38,3 @@ TTS_CASE_TPL("Check eve::lookup behavior", EVE_TYPE)
 
   #endif
 }
-

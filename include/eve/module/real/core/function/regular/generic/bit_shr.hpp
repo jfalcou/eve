@@ -15,7 +15,7 @@
 #include <eve/detail/function/conditional.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/bit_cast.hpp>
-
+#include <eve/traits/as_integer.hpp>
 
 #include <type_traits>
 
@@ -26,7 +26,7 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> && has_native_abi_v<U> )
     {
-      using u_t = eve::detail::as_integer_t<T, unsigned>;
+      using u_t = eve::as_integer_t<T, unsigned>;
       if constexpr( scalar_value<U> )
       {
         if constexpr( scalar_value<T> )

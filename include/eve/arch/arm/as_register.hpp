@@ -10,8 +10,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/meta.hpp>
 #include <eve/arch/arm/predef.hpp>
+#include <eve/traits/as_arithmetic.hpp>
 #include <type_traits>
 
 namespace eve
@@ -102,7 +102,7 @@ namespace eve
   // logical cases
   template<typename T, typename Size, arm_abi ABI>
   struct  as_logical_register<T, Size, ABI>
-        : as_register<detail::as_integer_t<T, unsigned>, Size, ABI>
+        : as_register<as_integer_t<T, unsigned>, Size, ABI>
   {};
 }
 #endif

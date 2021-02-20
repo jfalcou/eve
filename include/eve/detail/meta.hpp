@@ -238,23 +238,6 @@ namespace eve::detail
   template<typename T>
   using sign_of_t = typename sign_of<T>::type;
 
-  // Turn a type into an integer one
-  template<typename T, typename Sign = sign_of_t<T>>
-  struct as_integer
-  {
-    using type = make_integer_t<sizeof(T), Sign>;
-  };
-
-  template<typename T>
-  struct as_uinteger : as_integer<T,unsigned>
-  {};
-
-  template<typename T, typename Sign = sign_of_t<T>>
-  using as_integer_t = typename as_integer<T, Sign>::type;
-
-  template<typename T>
-  using as_uinteger_t = typename as_uinteger<T>::type;
-
   // Generate integral types from sign + size
   template<std::size_t Size>
   struct make_floating_point;
@@ -273,14 +256,6 @@ namespace eve::detail
 
   template<std::size_t Size>
   using make_floating_point_t = typename make_floating_point<Size>::type;
-
-  // Turn a type into an floating_point point one
-  template<typename T>
-  struct as_floating_point : make_floating_point<(sizeof(T) <= 4) ? 4: sizeof(T)>
-  {};
-
-  template<typename T>
-  using as_floating_point_t = typename as_floating_point<T>::type;
 
   // false_ value with dependent type
   template<typename... T>

@@ -26,7 +26,7 @@ TTS_CASE_TPL("Check eve::laguerre behavior", EVE_TYPE)
 
   auto eve__laguerre =  [](auto n, auto x) { return eve::laguerre(n, x); };
   auto boost_laguerre =  [](auto n, auto x) { return boost::math::laguerre(n, x); };
-  using i_t = eve::detail::as_integer_t<T,unsigned>;
+  using i_t = eve::as_integer_t<T,unsigned>;
   using elt_t = eve::element_type_t<T>;
   for(unsigned int i=0; i < 5; ++i)
   {

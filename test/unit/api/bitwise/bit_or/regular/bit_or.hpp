@@ -13,8 +13,8 @@
 TTS_CASE_TPL("Check operator| return type", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
-  using ui_t = eve::detail::as_integer_t<T  , unsigned>;
-  using vi_t = eve::detail::as_integer_t<v_t, unsigned>;
+  using ui_t = eve::as_integer_t<T  , unsigned>;
+  using vi_t = eve::as_integer_t<v_t, unsigned>;
 
   TTS_EXPR_IS(T()    | T()    , T   );
   TTS_EXPR_IS(T()    | v_t()  , T   );
@@ -31,8 +31,8 @@ TTS_CASE_TPL( "Check operator| behavior", EVE_TYPE)
   using eve::as;
 
   using v_t = eve::element_type_t<T>;
-  using ui_t = eve::detail::as_integer_t<T , unsigned>;
-  using vi_t = eve::detail::as_integer_t<v_t, unsigned>;
+  using ui_t = eve::as_integer_t<T , unsigned>;
+  using vi_t = eve::as_integer_t<v_t, unsigned>;
 
   constexpr auto u  = 0x5555555555555555ULL;
 

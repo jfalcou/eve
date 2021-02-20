@@ -14,7 +14,7 @@
 #include <eve/function/saturated.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/traits/as_floating_point.hpp>
 
 namespace eve
 {
@@ -113,9 +113,9 @@ namespace eve
   template<typename T>
   inline constexpr converter_type<element_type_t<T>>  const to_ = {};
 
-  using int_converter       = decorated<convert_by_<detail::as_integer>()>;
-  using uint_converter      = decorated<convert_by_<detail::as_uinteger>()>;
-  using floating_converter  = decorated<convert_by_<detail::as_floating_point>()>;
+  using int_converter       = decorated<convert_by_<as_integer>()>;
+  using uint_converter      = decorated<convert_by_<as_uinteger>()>;
+  using floating_converter  = decorated<convert_by_<as_floating_point>()>;
   using upgrade_converter   = decorated<convert_by_<detail::upgrade,false>()>;
 
   inline constexpr int_converter      const int_      = {};

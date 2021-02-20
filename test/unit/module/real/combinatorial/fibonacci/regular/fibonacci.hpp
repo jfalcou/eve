@@ -14,7 +14,7 @@
 
 TTS_CASE_TPL("Check eve::fibonacci return type", EVE_TYPE)
 {
-    using i_t = eve::detail::as_integer_t<T, unsigned>;
+    using i_t = eve::as_integer_t<T, unsigned>;
     using elt_t = eve::element_type_t<T>;
     TTS_EXPR_IS(eve::fibonacci(i_t(), T(), T()), T);
     TTS_EXPR_IS(eve::fibonacci(std::uint8_t(), T(), T()), T);
@@ -25,7 +25,7 @@ TTS_CASE_TPL("Check eve::fibonacci return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::fibonacci behavior", EVE_TYPE)
 {
-    using i_t = eve::detail::as_integer_t<T, unsigned>;
+    using i_t = eve::as_integer_t<T, unsigned>;
 
   TTS_EQUAL(eve::fibonacci(9u, T(1), T(1)) , T(55));
   TTS_EQUAL(eve::fibonacci(i_t(9), T(1), T(1)) , T(55));

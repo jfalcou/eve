@@ -33,7 +33,7 @@ TTS_CASE_TPL("Check eve::definitely(eve::is_not_equal) return type", EVE_TYPE)
     TTS_EXPR_IS( eve::definitely(eve::is_not_equal)(  T()         ,   T(), T()    ) , logical<T>);
     TTS_EXPR_IS( eve::definitely(eve::is_not_equal)(  T()         , v_t(), T()    ) , logical<T>);
     TTS_EXPR_IS( eve::definitely(eve::is_not_equal)(v_t()         ,   T(), T()    ) , logical<T>);
-    using ui_t = eve::detail::as_integer_t<T, unsigned>;
+    using ui_t = eve::as_integer_t<T, unsigned>;
     TTS_EXPR_IS( eve::definitely(eve::is_not_equal)(  T()         ,   T(), ui_t() ) , logical<T>);
     TTS_EXPR_IS( eve::definitely(eve::is_not_equal)(  T()         , v_t(), ui_t() ) , logical<T>);
     TTS_EXPR_IS( eve::definitely(eve::is_not_equal)(v_t()         ,   T(), ui_t() ) , logical<T>);
@@ -62,7 +62,7 @@ TTS_CASE_TPL("Check eve::definitely(eve::is_not_equal) behavior", EVE_TYPE)
     TTS_EQUAL(eve::definitely(eve::is_not_equal)(T(3)                  , T(1)                  , eve::eps(as<T>()))   , eve::true_(eve::as<T>()));
     TTS_EQUAL(eve::definitely(eve::is_not_equal)(T(3)                  , v_t(1)                , eve::eps(as<T>()))   , eve::true_(eve::as<T>()));
 
-    using ui_t = eve::detail::as_integer_t<T, unsigned>;
+    using ui_t = eve::as_integer_t<T, unsigned>;
 
     TTS_EQUAL(eve::definitely(eve::is_not_equal)(T(1)                  , T(1)                  , ui_t(3))   , eve::false_(eve::as<T>()) );
     TTS_EQUAL(eve::definitely(eve::is_not_equal)(T(1)                  , v_t(1)                , ui_t(3))   , eve::false_(eve::as<T>()) );

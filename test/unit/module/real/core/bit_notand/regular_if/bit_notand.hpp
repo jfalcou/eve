@@ -13,7 +13,7 @@
 
 TTS_CASE_TPL("Check eve::bit_notand return type", EVE_TYPE)
 {
-  using eve::detail::as_integer_t;
+  using eve::as_integer_t;
   using v_t = eve::element_type_t<T>;
   using ui_t = as_integer_t<T, unsigned>;
   using vi_t = as_integer_t<v_t, unsigned>;
@@ -39,7 +39,7 @@ TTS_CASE_TPL("Check eve::bit_notand return type", EVE_TYPE)
 
 TTS_CASE_TPL( "Check eve::bit_notand behavior", EVE_TYPE)
 {
-  using eve::detail::as_integer_t;
+  using eve::as_integer_t;
   using eve::bit_cast;
   using eve::as;
 
@@ -103,5 +103,3 @@ TTS_CASE_TPL( "Check eve::bit_notand behavior", EVE_TYPE)
   TTS_EQUAL(eve::bit_notand[ false  ](td,su),td);
   TTS_EQUAL(eve::bit_notand[ false  ](td,sd),td);
 }
-
-
