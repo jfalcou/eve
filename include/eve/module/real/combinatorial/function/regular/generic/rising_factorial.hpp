@@ -14,6 +14,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/exp.hpp>
+#include <eve/function/tgamma.hpp>
 #include <eve/function/lrising_factorial.hpp>
 #include <eve/function/raw.hpp>
 #include <eve/function/regular.hpp>
@@ -67,6 +68,20 @@ namespace eve::detail
      {
        auto lrn = lrising_factorial(a, x);
        return eve::exp(lrn);
+     }
+    else
+      return apply_over(regular_type()(rising_factorial), a, x);
+  }
+
+  // raw
+  template<floating_real_value T>
+  EVE_FORCEINLINE auto rising_factorial_(EVE_SUPPORTS(cpu_)
+                                        , raw_type const &
+                                        , T a,  T x) noexcept
+  {
+     if constexpr(has_native_abi_v<T>)
+     {
+       return eve::tgamma(x+a)/tgamma(a);
      }
     else
       return apply_over(regular_type()(rising_factorial), a, x);
