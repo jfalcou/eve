@@ -71,7 +71,7 @@ namespace eve
                             : storage_base(detail::load(eve::as_<wide>{}, ptr))
     {}
 
-    EVE_FORCEINLINE explicit  wide(scalar_value auto v)  noexcept
+    EVE_FORCEINLINE explicit  wide(scalar_value auto const& v)  noexcept
                             : storage_base(detail::make(eve::as_<wide>{}, v))
     {}
 

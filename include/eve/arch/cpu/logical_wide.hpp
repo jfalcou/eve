@@ -86,7 +86,7 @@ namespace eve
     EVE_FORCEINLINE explicit logical(Ptr ptr) noexcept
                   : storage_base(detail::load(eve::as_<logical>{}, ptr)) {}
 
-    EVE_FORCEINLINE explicit logical(scalar_value auto v) noexcept
+    EVE_FORCEINLINE explicit logical(scalar_value auto const& v) noexcept
                   : storage_base(detail::make(eve::as_<logical>{}, v)) {}
 
     template<typename T0, typename T1, typename... Ts>

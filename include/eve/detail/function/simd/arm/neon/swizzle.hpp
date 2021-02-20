@@ -69,7 +69,7 @@ namespace eve::detail
         }
         else
         {
-          if(current_api >= asimd)
+          if constexpr(current_api >= asimd)
           {
             return bit_cast(vqtbl1q_u8(b0, mask),as_<that_t>());
           }
