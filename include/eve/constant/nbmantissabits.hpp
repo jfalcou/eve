@@ -12,7 +12,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/constant/constant.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/traits/as_integer.hpp>
 #include <eve/as.hpp>
 #include <type_traits>
 
@@ -26,7 +26,7 @@ namespace eve
     EVE_FORCEINLINE constexpr auto nbmantissabits_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
     {
       using t_t = detail::value_type_t<T>;
-      using i_t = detail::as_integer_t<T>;
+      using i_t = as_integer_t<T>;
 
       if constexpr(std::is_same_v<t_t, float>)
       {

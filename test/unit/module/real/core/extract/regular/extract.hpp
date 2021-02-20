@@ -13,8 +13,8 @@
 TTS_CASE_TPL("Check extract return type", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
-  using i_t = eve::detail::as_integer_t<v_t, signed>;
-  using u_t = eve::detail::as_integer_t<v_t, unsigned>;
+  using i_t = eve::as_integer_t<v_t, signed>;
+  using u_t = eve::as_integer_t<v_t, unsigned>;
 
   TTS_EXPR_IS(eve::extract(T(), i_t()), v_t);
   TTS_EXPR_IS(eve::extract(T(), u_t()), v_t);

@@ -15,7 +15,7 @@ TTS_CASE_TPL("Check diff(minus) return type", EVE_TYPE)
 {
   if constexpr(eve::floating_value<T>)
   {
-    using ui_t = eve::detail::as_integer_t<T, unsigned>;
+    using ui_t = eve::as_integer_t<T, unsigned>;
     TTS_EXPR_IS(eve::diff(eve::minus)(T(), unsigned()), T);
     TTS_EXPR_IS(eve::diff(eve::minus)(T(), ui_t()), T);
   }

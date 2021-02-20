@@ -10,8 +10,9 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/concept/vectorizable.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/traits/as_integer.hpp>
 
 #include <bitset>
 #include <cstring>
@@ -23,7 +24,7 @@ namespace eve
   {
     using value_type  = T;
     using mask_type   = T;
-    using bits_type   = detail::as_integer_t<T, unsigned>;
+    using bits_type   = as_integer_t<T, unsigned>;
 
     static constexpr bits_type true_mask  = ~bits_type{0};
     static constexpr bits_type false_mask = bits_type{0};

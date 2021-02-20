@@ -14,8 +14,8 @@
 
 TTS_CASE_TPL("Check eve::rotl return type", EVE_TYPE)
 {
-  using i_t = eve::detail::as_integer_t<T, signed>;
-  using u_t = eve::detail::as_integer_t<T, unsigned>;
+  using i_t = eve::as_integer_t<T, signed>;
+  using u_t = eve::as_integer_t<T, unsigned>;
 
   TTS_EXPR_IS(eve::rotl(T(), T())   , T);
   TTS_EXPR_IS(eve::rotl(T(), i_t()) , T);
@@ -25,7 +25,7 @@ TTS_CASE_TPL("Check eve::rotl return type", EVE_TYPE)
 TTS_CASE_TPL("Check eve::rotl behavior", EVE_TYPE)
 {
   using v_t   = eve::element_type_t<T>;
-  using ui_t  = eve::detail::as_integer_t<v_t, unsigned>;
+  using ui_t  = eve::as_integer_t<v_t, unsigned>;
 
   TTS_EQUAL(eve::rotl(T(0)              ,  7) , T(std::rotl(ui_t(0)             ,  7)) );
   TTS_EQUAL(eve::rotl(T(1)              ,  4) , T(std::rotl(ui_t(1)             ,  4)) );

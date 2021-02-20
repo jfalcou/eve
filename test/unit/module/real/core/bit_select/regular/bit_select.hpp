@@ -18,7 +18,7 @@
 TTS_CASE_TPL("Check eve::bit_select return type", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
-  using i_t = eve::detail::as_integer_t<T, unsigned>;
+  using i_t = eve::as_integer_t<T, unsigned>;
 
   TTS_EXPR_IS(eve::bit_select(  T() ,   T() ,   T() ), T);
   TTS_EXPR_IS(eve::bit_select(  T() ,   T() , v_t() ), T);
@@ -35,8 +35,8 @@ TTS_CASE_TPL("Check eve::bit_select return type", EVE_TYPE)
 TTS_CASE_TPL( "Check eve::bit_select behavior", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
-  using i_t  = eve::detail::as_integer_t<T, unsigned>;
-  using vi_t = eve::detail::as_integer_t<v_t, unsigned>;
+  using i_t  = eve::as_integer_t<T, unsigned>;
+  using vi_t = eve::as_integer_t<v_t, unsigned>;
   using v_t =  eve::element_type_t<T>;
 
   std::uint64_t base  = 0xF5555552F552F5F2ULL;

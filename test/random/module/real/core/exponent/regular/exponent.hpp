@@ -17,7 +17,7 @@
 
 TTS_CASE_TPL("wide random check on exponent", EVE_TYPE)
 {
-  using i_t = eve::detail::as_integer_t<EVE_VALUE>;
+  using i_t = eve::as_integer_t<EVE_VALUE>;
 
   auto internal_f = [](auto e){  int exp; std::frexp(e, &exp); return i_t(exp); };
 

@@ -20,9 +20,9 @@ TTS_CASE_TPL("Check ieee754 constants behavior", EVE_TYPE)
 {
   using eve::as;
   using elt_t = eve::element_type_t<T>;
-  using ilt_t = eve::detail::as_integer_t<elt_t>;
-//  using ui_t  = eve::detail::as_integer_t<T, unsigned>;
-  using  i_t  = eve::detail::as_integer_t<T,   signed>;
+  using ilt_t = eve::as_integer_t<elt_t>;
+//  using ui_t  = eve::as_integer_t<T, unsigned>;
+  using  i_t  = eve::as_integer_t<T,   signed>;
   TTS_EQUAL(eve::bitincrement(as<T>()), T(eve::bit_cast(eve::one(as<ilt_t>()), as<elt_t>())));
   TTS_IEEE_EQUAL(eve::nan(as<T>()),  T(0.0/0.0));
   TTS_EQUAL(eve::signmask(as<T>()), T(eve::bit_cast(eve::one(as<ilt_t>()) << (sizeof(ilt_t)*8-1) , as<elt_t>())));

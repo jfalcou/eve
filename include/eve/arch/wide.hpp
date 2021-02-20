@@ -20,18 +20,6 @@
 //==================================================================================================
 namespace eve::detail
 {
-  template<typename T, typename N, typename ABI, typename Sign>
-  struct as_integer<wide<T,N,ABI>, Sign>
-  {
-    using type = wide<as_integer_t<T,Sign>, N>;
-  };
-
-  template<typename T, typename Sign>
-  struct as_integer<logical<T>, Sign>
-  {
-    using type = logical< as_integer_t<T,Sign> >;
-  };
-
   template<typename T, typename N, typename ABI>
   struct as_floating_point<wide<T,N,ABI>>
   {
@@ -43,7 +31,4 @@ namespace eve::detail
   {
     using type = logical< as_floating_point_t<T> >;
   };
-
-  template<typename T> struct sign_of<logical<T>> : sign_of<T> {};
 }
-

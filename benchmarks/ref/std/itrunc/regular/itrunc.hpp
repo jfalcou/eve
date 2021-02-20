@@ -15,7 +15,7 @@
 
 int main(int argc, char** argv)
 {
-  using I_TYPE =  eve::detail::as_integer_t<EVE_TYPE>;
+  using I_TYPE =  eve::as_integer_t<EVE_TYPE>;
   auto const std_itrunc = [](auto x) { return static_cast<I_TYPE>(std::trunc(x)); };
   auto lmax = eve::valmax(eve::as<EVE_TYPE>());
   auto lmin = eve::valmin(eve::as<EVE_TYPE>());

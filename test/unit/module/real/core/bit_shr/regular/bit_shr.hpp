@@ -14,8 +14,8 @@
 
 TTS_CASE_TPL("Check eve::bit_shr return type", EVE_TYPE)
 {
-  using ui_t = eve::detail::as_integer_t<T, unsigned>;
-  using si_t = eve::detail::as_integer_t<T, signed>;
+  using ui_t = eve::as_integer_t<T, unsigned>;
+  using si_t = eve::as_integer_t<T, signed>;
 
   TTS_EXPR_IS(eve::bit_shr(T(), int()),  T);
   TTS_EXPR_IS(eve::bit_shr(T(), ui_t()), T);

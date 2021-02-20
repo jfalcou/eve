@@ -17,7 +17,7 @@ int main()
   using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
   if constexpr(std::is_same_v<EVE_VALUE, double>)
   {
-    using i_t =  eve::detail::as_integer_t<EVE_VALUE>;
+    using i_t =  eve::as_integer_t<EVE_VALUE>;
     auto eve__horn1 =  []<typename T>(T z) -> T{
       return eve::detail::horn1<T,
       i_t(0x403c896240f3081dll),
@@ -36,7 +36,7 @@ int main()
   }
   else if constexpr(std::is_same_v<EVE_VALUE, float>)
   {
-    using i_t =  eve::detail::as_integer_t<EVE_VALUE>;
+    using i_t =  eve::as_integer_t<EVE_VALUE>;
     auto eve__horn1 = []<typename T>(T z) -> T{
       return eve::detail::horn1<T,
       i_t(0x3e2aaae4u),

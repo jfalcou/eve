@@ -23,7 +23,7 @@ TTS_CASE_TPL("wide random check on iceil", EVE_TYPE)
 
   if constexpr(eve::floating_value<T>)
   {
-    using vi_t =  eve::detail::as_integer_t<T>;
+    using vi_t =  eve::as_integer_t<T>;
     using i_t = eve::detail::value_type_t<vi_t>;
     auto std_iceil = tts::vectorize<vi_t>( [](auto e) { return i_t(std::ceil(e)); } );
     eve::exhaustive_producer<T> p(eve::valmin(eve::as<i_t>()), eve::valmax(eve::as<i_t>()));

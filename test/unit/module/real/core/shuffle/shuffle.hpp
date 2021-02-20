@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check shuffle behavior",
              fixed<64>)
 {
   using eve::wide;
-  using i_t = eve::detail::as_integer_t<EVE_TYPE>;
+  using i_t = eve::as_integer_t<EVE_TYPE>;
 
   wide<EVE_TYPE, T> arg([](auto i, auto c) { return valmax(eve::as<EVE_VALUE>()); });
   wide<double, T> ref([&](auto i, auto c) { return eve::valmax(eve::as<EVE_VALUE>()); });

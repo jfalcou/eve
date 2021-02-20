@@ -19,7 +19,7 @@
 TTS_CASE_TPL("wide random check on ifrexp", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
-  using i_t = eve::detail::as_integer_t<v_t>;
+  using i_t = eve::as_integer_t<v_t>;
   auto std_ifrexp = tts::vectorize<T>( [](auto e) { int y; auto x = std::frexp(e, &y); return std::make_tuple(x, i_t(y)); } );
 
   eve::exhaustive_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));

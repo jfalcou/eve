@@ -18,7 +18,7 @@ int main()
 {
   auto lmin = eve::valmin(eve::as<EVE_VALUE>());
   auto lmax = eve::valmax(eve::as<EVE_VALUE>());
-  using ui_t = eve::detail::as_integer_t<EVE_VALUE, unsigned>;
+  using ui_t = eve::as_integer_t<EVE_VALUE, unsigned>;
   auto const std__popcount = [](EVE_VALUE x) { return std::popcount(eve::bit_cast(x, eve::as<ui_t>())); };
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);

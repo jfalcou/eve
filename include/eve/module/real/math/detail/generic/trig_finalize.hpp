@@ -11,7 +11,6 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/module/real/core/detail/generic/horn.hpp>
 #include <eve/module/real/core/detail/generic/horn1.hpp>
@@ -28,6 +27,7 @@
 #include <eve/constant/eps.hpp>
 #include <eve/constant/mhalf.hpp>
 #include <eve/constant/nan.hpp>
+#include <eve/traits/as_integer.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
 
@@ -95,7 +95,7 @@ namespace eve::detail
   {
     if constexpr(scalar_value<T>)
     {
-      using i_t =  detail::as_integer_t<T, signed>;
+      using i_t =  as_integer_t<T, signed>;
       i_t n = i_t(fn);
       i_t swap_bit = n&i_t(1);
       i_t sign_bit = shl(bit_xor(swap_bit, (n&i_t(2))>>1), sizeof(i_t)*8-1);
@@ -127,7 +127,7 @@ namespace eve::detail
     auto  ce0 = cos_eval(z);
     if constexpr(scalar_value<T>)
     {
-      using i_t =  detail::as_integer_t<T, signed>;
+      using i_t =  as_integer_t<T, signed>;
       i_t n = int_(fn);
       i_t swap_bit = n&one(eve::as<i_t>());
       auto sin_sign_bit = bit_xor(bitofsign(a0), shl(n&i_t(2), sizeof(i_t)*8-2));
@@ -160,7 +160,7 @@ namespace eve::detail
   {
     if constexpr(scalar_value<T>)
     {
-      using i_t =  detail::as_integer_t<T, signed>;
+      using i_t =  as_integer_t<T, signed>;
       if (is_not_finite(xr)) return nan(eve::as<T>());
       i_t n = int_(fn);
       i_t swap_bit = n&one(eve::as<i_t>());

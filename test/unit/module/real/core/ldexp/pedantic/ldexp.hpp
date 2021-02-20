@@ -20,10 +20,10 @@
 TTS_CASE_TPL("Check eve::pedantic(eve::ldexp) return type", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
-  using i_t = eve::detail::as_integer_t<T, signed>;
-  using u_t = eve::detail::as_integer_t<T, unsigned>;
-  using si_t = eve::detail::as_integer_t<v_t, signed>;
-  using su_t = eve::detail::as_integer_t<v_t, unsigned>;
+  using i_t = eve::as_integer_t<T, signed>;
+  using u_t = eve::as_integer_t<T, unsigned>;
+  using si_t = eve::as_integer_t<v_t, signed>;
+  using su_t = eve::as_integer_t<v_t, unsigned>;
 
   TTS_EXPR_IS(eve::pedantic(eve::ldexp)(T(), i_t())  , T);
   TTS_EXPR_IS(eve::pedantic(eve::ldexp)(T(), u_t())  , T);
@@ -34,8 +34,8 @@ TTS_CASE_TPL("Check eve::pedantic(eve::ldexp) return type", EVE_TYPE)
 TTS_CASE_TPL("Check eve::pedantic(eve::ldexp) behavior", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
-  using i_t = eve::detail::as_integer_t<T, signed>;
-  using si_t = eve::detail::as_integer_t<v_t, signed>;
+  using i_t = eve::as_integer_t<T, signed>;
+  using si_t = eve::as_integer_t<v_t, signed>;
 
   TTS_EXPECT(eve::all(eve::is_negative(eve::pedantic(eve::ldexp)(T(-0.0), i_t(0)))));
   TTS_EXPECT(eve::all(eve::is_positive(eve::pedantic(eve::ldexp)(T( 0.0), i_t(0)))));

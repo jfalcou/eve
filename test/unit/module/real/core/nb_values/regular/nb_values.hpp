@@ -22,13 +22,13 @@
 
 TTS_CASE_TPL("Check eve::nb_values return type", EVE_TYPE)
 {
-  using r_t = eve::detail::as_integer_t<T, unsigned>;
+  using r_t = eve::as_integer_t<T, unsigned>;
   TTS_EXPR_IS((eve::nb_values(T(0), T(0))), (r_t));
 }
 
 TTS_CASE_TPL("Check eve::nb_values  behavior", EVE_TYPE)
 {
-  using r_t = eve::detail::as_integer_t<T, unsigned>;
+  using r_t = eve::as_integer_t<T, unsigned>;
 
   if constexpr(eve::floating_value<T>)
   {

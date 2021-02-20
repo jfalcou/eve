@@ -25,6 +25,7 @@
 #include <eve/detail/function/combine.hpp>
 #include <eve/detail/function/fill.hpp>
 #include <eve/detail/function/make.hpp>
+#include <eve/traits/as_integer.hpp>
 
 #include <cstring>
 #include <type_traits>
@@ -50,7 +51,7 @@ namespace eve
     using storage_type  = typename storage_base::storage_type;
     using size_type     = typename card_base::size_type;
 
-    using bits_type = wide<detail::as_integer_t<Type, unsigned>, Size>;
+    using bits_type = wide<as_integer_t<Type, unsigned>, Size>;
     using mask_type = wide<Type, Size>;
 
     template<typename T, typename N = expected_cardinal_t<T>>

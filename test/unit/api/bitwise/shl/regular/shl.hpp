@@ -13,10 +13,10 @@
 
 TTS_CASE_TPL("Check operator<< return type", EVE_TYPE)
 {
-  using vi_t = eve::detail::as_integer_t<T        , signed  >;
-  using vu_t = eve::detail::as_integer_t<T        , unsigned>;
-  using si_t = eve::detail::as_integer_t<EVE_VALUE, signed  >;
-  using su_t = eve::detail::as_integer_t<EVE_VALUE, unsigned>;
+  using vi_t = eve::as_integer_t<T        , signed  >;
+  using vu_t = eve::as_integer_t<T        , unsigned>;
+  using si_t = eve::as_integer_t<EVE_VALUE, signed  >;
+  using su_t = eve::as_integer_t<EVE_VALUE, unsigned>;
 
   TTS_EXPR_IS((T() << T() )   , T);
   TTS_EXPR_IS((T() << vi_t() ), T);
@@ -29,10 +29,10 @@ TTS_CASE_TPL("Check operator<< return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check operator<< behavior", EVE_TYPE)
 {
-  using vi_t = eve::detail::as_integer_t<T        , signed  >;
-  using vu_t = eve::detail::as_integer_t<T        , unsigned>;
-  using si_t = eve::detail::as_integer_t<EVE_VALUE, signed  >;
-  using su_t = eve::detail::as_integer_t<EVE_VALUE, unsigned>;
+  using vi_t = eve::as_integer_t<T        , signed  >;
+  using vu_t = eve::as_integer_t<T        , unsigned>;
+  using si_t = eve::as_integer_t<EVE_VALUE, signed  >;
+  using su_t = eve::as_integer_t<EVE_VALUE, unsigned>;
 
   TTS_EQUAL((T(0) << T(7)), T( 0));
   TTS_EQUAL((T(1) << T(4)), T(16));

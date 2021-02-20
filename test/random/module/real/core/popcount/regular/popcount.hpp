@@ -17,7 +17,7 @@
 
 TTS_CASE_TPL("wide rng check on popcount", EVE_TYPE)
 {
-  using u_t =  eve::detail::as_integer_t<T, unsigned>;
+  using u_t =  eve::as_integer_t<T, unsigned>;
   using su_t =  eve::element_type_t<u_t>;
   auto std_popcount = [](auto e) -> su_t { unsigned int j = 0;
                                    for(unsigned int i = 0; i < sizeof(EVE_VALUE)*8; ++i)

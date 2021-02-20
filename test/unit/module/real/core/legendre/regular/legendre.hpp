@@ -26,7 +26,7 @@ TTS_CASE_TPL("Check eve::legendre behavior", EVE_TYPE)
 
   auto eve__legendre =  [](auto n, auto x) { return eve::legendre(n, x); };
   auto boost_legendre =  [](auto n, auto x) { return boost::math::legendre_p(n, x); };
-  using i_t = eve::detail::as_integer_t<T,unsigned>;
+  using i_t = eve::as_integer_t<T,unsigned>;
   for(unsigned int i=0; i < 5; ++i)
   {
     for(double v = -1.0; v <= 1.0f; v+= 0.1)

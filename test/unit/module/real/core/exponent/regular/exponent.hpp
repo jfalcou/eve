@@ -15,12 +15,12 @@
 
 TTS_CASE_TPL("Check eve::exponent return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::exponent(T(0)), eve::detail::as_integer_t<T>);
+  TTS_EXPR_IS(eve::exponent(T(0)), eve::as_integer_t<T>);
 }
 
 TTS_CASE_TPL("Check eve::exponent  behavior", EVE_TYPE)
 {
-  using r_t = eve::detail::as_integer_t<T>;
+  using r_t = eve::as_integer_t<T>;
 
   if constexpr(eve::platform::supports_invalids)
   {
@@ -36,4 +36,3 @@ TTS_CASE_TPL("Check eve::exponent  behavior", EVE_TYPE)
   TTS_EQUAL(eve::exponent(T(2.5 )), r_t(1));
   TTS_EQUAL(eve::exponent(T(4.5 )), r_t(2));
 }
-
