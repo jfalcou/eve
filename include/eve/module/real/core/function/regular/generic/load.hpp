@@ -11,9 +11,10 @@
 #pragma once
 
 #include <eve/concept/memory.hpp>
-#include <eve/function/unsafe.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/spy.hpp>
+#include <eve/function/unsafe.hpp>
+#include <eve/wide.hpp>
 #include <type_traits>
 
 #ifdef SPY_COMPILER_IS_GCC
@@ -155,26 +156,43 @@ namespace eve::detail
   // making unsafe(load) call intinsics requires a lot of work and is not very portable
   // due to what called functions it will affect.
   // Since the unsafe is mostly used in corner cases, will do it scalar in asan mode.
-  template<typename Ptr, typename Cardinal>
-  DISABLE_SANITIZERS auto load_(EVE_SUPPORTS(cpu_), unsafe_type, Ptr ptr, Cardinal const& N) noexcept
-    requires sanitizers_are_on && (requires(Ptr ptr, Cardinal const& N) { eve::load(ptr, N); })
+  template<relative_conditional_expr C, typename Ptr, typename Cardinal>
+  DISABLE_SANITIZERS auto load_(EVE_SUPPORTS(cpu_), C const &cond, unsafe_type, Ptr ptr, Cardinal const&) noexcept
+    requires sanitizers_are_on && (requires(Ptr ptr, Cardinal const& N) { eve::load[cond](ptr, N); })
   {
     using e_t = std::remove_cvref_t<decltype(*ptr)>;
     using r_t = as_wide_t< e_t, typename Cardinal::type >;
 
     r_t that;
 
-    for (std::ptrdiff_t i = 0; i != N(); ++i) that.set(i, ptr[i]);
+    auto offset = cond.offset( as_<r_t>{} );
+    auto count  = cond.count( as_<r_t>{} );
+
+    for (std::ptrdiff_t i = offset; i != count + offset; ++i) that.set(i, ptr[i]);
 
     return that;
+  }
+
+  template<relative_conditional_expr C,typename Ptr>
+  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), C const &cond, unsafe_type, Ptr ptr) noexcept
+    requires sanitizers_are_on && requires(Ptr ptr) { eve::load[cond](ptr); }
+  {
+    using T = std::remove_cvref_t<decltype(*ptr)>;
+    return eve::unsafe(eve::load[cond])(ptr, expected_cardinal_t<T>{});
+  }
+
+  template<typename Ptr, typename Cardinal>
+  DISABLE_SANITIZERS auto load_(EVE_SUPPORTS(cpu_), unsafe_type, Ptr ptr, Cardinal const& N) noexcept
+    requires sanitizers_are_on && (requires(Ptr ptr, Cardinal const& N) { eve::load(ptr, N); })
+  {
+    return eve::unsafe(eve::load[eve::ignore_none])(ptr, N);
   }
 
   template<typename Ptr>
   EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), unsafe_type, Ptr ptr) noexcept
     requires sanitizers_are_on && requires(Ptr ptr) { eve::load(ptr); }
   {
-    using T = std::remove_cvref_t<decltype(*ptr)>;
-    return eve::unsafe(eve::load)(ptr, expected_cardinal_t<T>{});
+    return eve::unsafe(eve::load[eve::ignore_none])(ptr);
   }
 
   template<typename ...Args>
@@ -184,8 +202,14 @@ namespace eve::detail
     return eve::load(args...);
   }
 
-}
+  template<relative_conditional_expr C, typename ... Args>
+  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), C const &cond, unsafe_type, Args ... args) noexcept
+    requires (!sanitizers_are_on) && requires(C const &cond, Args ... args) { eve::load[cond](args...); }
+  {
+    return eve::load[cond](args...);
+  }
 
+}
 #ifdef SPY_COMPILER_IS_GCC
 #pragma GCC diagnostic pop
 #endif

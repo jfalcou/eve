@@ -350,6 +350,12 @@ TTS_CASE_TPL("Check load unsafe, wide", EVE_TYPE)
 
     loaded = eve::unsafe(eve::load)(ptr.get());
     TTS_EXPECT(eve::any(loaded == x));
+
+    for (auto ignore_ptr = ptr.get(); (&x - ignore_ptr) < T::static_size; --ignore_ptr)
+    {
+      loaded = eve::unsafe(eve::load[eve::ignore_first(ptr.get() - ignore_ptr)])(ignore_ptr);
+      TTS_EXPECT(eve::any(loaded == x));
+    }
   }
 
   auto test_n = [&](auto n) {
@@ -357,6 +363,12 @@ TTS_CASE_TPL("Check load unsafe, wide", EVE_TYPE)
     auto loaded = eve::unsafe(eve::load)(ptr, n);
 
     TTS_EXPECT(eve::any(loaded == x));
+
+    for (auto ignore_ptr = ptr.get(); (&x - ignore_ptr) < n(); --ignore_ptr)
+    {
+      loaded = eve::unsafe(eve::load[eve::ignore_first(ptr.get() - ignore_ptr)])(ignore_ptr, n);
+      TTS_EXPECT(eve::any(loaded == x));
+    }
   };
 
   test_n(eve::lane<1>);

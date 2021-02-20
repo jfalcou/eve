@@ -345,6 +345,12 @@ TTS_CASE_TPL("Check load unsafe, logical", EVE_TYPE)
 
     loaded = eve::unsafe(eve::load)(ptr.get());
     TTS_EXPECT(eve::any(loaded == x));
+
+    for (auto ignore_ptr = ptr.get(); (&x - ignore_ptr) < T::static_size; --ignore_ptr)
+    {
+      loaded = eve::unsafe(eve::load[eve::ignore_first(ptr.get() - ignore_ptr)])(ignore_ptr);
+      TTS_EXPECT(eve::any(loaded));
+    }
   }
 
   auto more_data_test = [&] (auto n)
@@ -359,6 +365,13 @@ TTS_CASE_TPL("Check load unsafe, logical", EVE_TYPE)
       auto loaded = eve::unsafe(eve::load)(ptr, n);
 
       TTS_EXPECT(eve::any(loaded));
+
+      for (auto ignore_ptr = ptr.get(); (&e - ignore_ptr) < n(); --ignore_ptr)
+      {
+        auto ignore = eve::ignore_first(ptr.get() - ignore_ptr);
+        loaded = eve::unsafe(eve::load[ignore])(ignore_ptr, n);
+        TTS_EXPECT(eve::any(loaded));
+      }
 
       e = false;
     }
@@ -375,6 +388,12 @@ TTS_CASE_TPL("Check load unsafe, logical", EVE_TYPE)
 
     loaded = eve::unsafe(eve::load)(ptr.get(), n);
     TTS_EXPECT(eve::any(loaded));
+
+    for (auto ignore_ptr = ptr.get(); (&x - ignore_ptr) < n(); --ignore_ptr)
+    {
+      loaded = eve::unsafe(eve::load[eve::ignore_first(ptr.get() - ignore_ptr)])(ignore_ptr, n);
+      TTS_EXPECT(eve::any(loaded));
+    }
   };
 
   test_n(eve::lane<1>);
