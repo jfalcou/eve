@@ -13,6 +13,9 @@
 #include <eve/constant/eps.hpp>
 
 #include <type_traits>
+#include <eve/constant/inf.hpp>
+#include <eve/constant/minf.hpp>
+#include <eve/constant/nan.hpp>
 #include <gsl/gsl_math.h>
 
 extern "C" {
@@ -31,7 +34,17 @@ TTS_CASE_TPL("Check eve::rising_factorial behavior", EVE_TYPE)
   auto gsl_r = [](auto a, auto x){
     return gsl_sf_poch(a, x);
   };
-  auto ulp = sizeof(eve::element_type_t<T>) == 4 ? 70 : 70;
+  if constexpr( eve::platform::supports_invalids )
+  {
+  TTS_ULP_EQUAL(eve::pedantic(eve::rising_factorial)(eve::nan(eve::as<T>()), T(2.5))    , eve::nan(eve::as<T>()), 0);
+  TTS_ULP_EQUAL(eve::pedantic(eve::rising_factorial)(T(4.9), eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()), 0);
+  TTS_ULP_EQUAL(eve::pedantic(eve::rising_factorial)(eve::inf(eve::as<T>()), T(2.5))   , eve::nan(eve::as<T>()), 0);
+  TTS_ULP_EQUAL(eve::pedantic(eve::rising_factorial)(T(4.9),eve::inf(eve::as<T>()))      , eve::inf(eve::as<T>()), 0);
+  TTS_ULP_EQUAL(eve::pedantic(eve::rising_factorial)(eve::minf(eve::as<T>()), T(2.5))   , eve::nan(eve::as<T>()), 0);
+  TTS_ULP_EQUAL(eve::pedantic(eve::rising_factorial)(T(4.9),eve::minf(eve::as<T>()))     , eve::nan(eve::as<T>()), 0);
+  }
+
+  auto ulp = 70.0;
   TTS_ULP_EQUAL(eve::pedantic(eve::rising_factorial)(T( 20),   T(2.0))   , T(gsl_r( 20.,  2.)), ulp);
   TTS_ULP_EQUAL(eve::pedantic(eve::rising_factorial)(10, T(0.1))         , T(gsl_r(10.0, 0.1)), ulp);
   TTS_ULP_EQUAL(eve::pedantic(eve::rising_factorial)(5,  T(0.1))         , T(gsl_r(5.0, 0.1)) , ulp);
