@@ -1,4 +1,4 @@
- <meta charset="utf-8">
+<meta charset="utf-8">
 Example
 ====================================================================================================
 <script type="preformatted">
@@ -6,8 +6,9 @@ Example
 #include <eve/function/countr_one.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/wide.hpp>
+#include <iostream>
 
-using wide_it = eve::wide<std::uint32t, eve::fixed<4>>;
+using wide_it = eve::wide<std::uint32_t, eve::fixed<4>>;
 
 int main()
 {
@@ -17,7 +18,7 @@ int main()
             << "<- pi             = " << pi << '\n'
             << "-> countr_one(pi) = " << eve::countr_one(pi) << '\n';
 
-  std::uint32t xf = 48;
+  std::uint32_t xf = 48;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf             = " << xf << '\n'
@@ -25,8 +26,8 @@ int main()
   return 0;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- </script>
+</script>
+
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
-

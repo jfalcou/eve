@@ -1,4 +1,4 @@
- <meta charset="utf-8">
+<meta charset="utf-8">
 Example
 ====================================================================================================
 <script type="preformatted">
@@ -8,6 +8,7 @@ Example
 #include <eve/constant/inf.hpp>
 #include <eve/constant/smallestposval.hpp>
 #include <eve/wide.hpp>
+#include <iostream>
 #include <iomanip>
 
 int main()
@@ -21,7 +22,7 @@ int main()
             << " <- qi              = " << qi << '\n'
             << " -> ulpdist(pi, qi) = " << eve::ulpdist(pi, qi) << '\n';
 
-  std::uint32t xi = 3, yi = 7;
+  std::uint32_t xi = 3, yi = 7;
 
   std::cout << "---- scalar" << '\n'
             << " xi                 = " << xi << '\n'
@@ -30,8 +31,8 @@ int main()
   return 0;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- </script>
+</script>
+
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
-

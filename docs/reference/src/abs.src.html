@@ -1,13 +1,15 @@
- <meta charset="utf-8">
+<meta charset="utf-8">
 Example
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 #include <eve/function/abs.hpp>
+#include <eve/function/saturated/abs.hpp>
 #include <eve/wide.hpp>
+#include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;
-using wide_it = eve::wide<std::int16t, eve::fixed<4>>;
+using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;
 
 int main()
 {
@@ -22,7 +24,7 @@ int main()
             << "-> abs(pi)             = " << eve::abs(pi) << '\n';
 
   float        xf = -32768.0f;
-  std::int16t xi = -32768;
+  std::int16_t xi = -32768;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf                  = " << xf << '\n'
@@ -33,8 +35,8 @@ int main()
   return 0;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- </script>
+</script>
+
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
-

@@ -1,4 +1,4 @@
- <meta charset="utf-8">
+<meta charset="utf-8">
 Example
 ====================================================================================================
 <script type="preformatted">
@@ -6,8 +6,9 @@ Example
 #include <eve/function/bit_mask.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/wide.hpp>
+#include <iostream>
 
-using wide_it = eve::wide<std::uint32t, eve::fixed<8>>;
+using wide_it = eve::wide<std::uint32_t, eve::fixed<8>>;
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 
 int main()
@@ -21,7 +22,7 @@ int main()
             << "-> bit_mask(pi) = " << eve::bit_mask(pi) << '\n'
             << "-> bit_mask(pf) = " << eve::bit_mask(pf) << '\n';
 
-  std::uint32t xf = 48;
+  std::uint32_t xf = 48;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf           = " << xf << '\n'
@@ -29,8 +30,8 @@ int main()
   return 0;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- </script>
+</script>
+
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
-

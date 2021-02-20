@@ -1,40 +1,36 @@
- <meta charset="utf-8">
+<meta charset="utf-8">
 Example
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-#include <eve/function/rec.hpp>
-#include <eve/function/raw.hpp>
+#include <eve/function/diff/rec.hpp>
 #include <eve/wide.hpp>
+#include <eve/constant/inf.hpp>
+#include <eve/constant/minf.hpp>
+#include <eve/constant/nan.hpp>
+#include <iostream>
 
-using wide_ft = eve::wide<float, eve::fixed<4>>;
-using wide_it = eve::wide<std::int16t, eve::fixed<4>>;
+using wide_ft = eve::wide<float, eve::fixed<8>>;
 
 int main()
 {
-  wide_ft pf = {-1.0f, 2.0f, -3.0f, -32768.0f};
-  wide_it pi = {-1, 0, -3, -32768};
+  wide_ft pf = {0.0f, 1.0f, 2.0f, 10.0f, 200.0f, 1000.0f,
+               eve::inf(eve::as<float>()), eve::nan(eve::as<float>())};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf            = " << pf << '\n'
-            << "-> rec(pf)       = " << eve::rec(pf) << '\n'
-            << "-> raw(rec)(pf) = " << eve::raw(eve::rec)(pf) << '\n'
-            << "<- pi            = " << pi << '\n'
-            << "-> rec(pi)       = " << eve::rec(pi) << '\n';
+            << "<- pf                                = " << pf << '\n'
+            << "-> eve::diff(eve::rec)(pf)     = " << eve::diff(eve::rec)(pf) << '\n';
 
-  float        xf = -32768.0f;
-  std::int16t xi = -32768;
+  float xf = 1.0f;
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf      = " << xf << '\n'
-            << "-> rec(xf) = " << eve::rec(xf) << '\n'
-            << "<- xi      = " << xi << '\n'
-            << "-> rec(xi) = " << eve::rec(xi) << '\n';
+            << "<- xf                            = " << xf << '\n'
+            << "-> eve::diff(eve::rec)(xf) = " << eve::diff(eve::rec)(xf) << '\n';
   return 0;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- </script>
+</script>
+
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
-

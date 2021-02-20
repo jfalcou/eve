@@ -1,14 +1,16 @@
- <meta charset="utf-8">
+<meta charset="utf-8">
 Example
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 #include <eve/function/ifrexp.hpp>
+#include <eve/function/pedantic/ifrexp.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/mindenormal.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/nan.hpp>
+#include <iostream>
 
 using wide_ft = eve::wide<double, eve::fixed<8>>;
 
@@ -39,8 +41,8 @@ int main()
   return 0;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- </script>
+</script>
+
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
-

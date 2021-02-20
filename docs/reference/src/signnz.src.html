@@ -1,13 +1,14 @@
- <meta charset="utf-8">
+<meta charset="utf-8">
 Example
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 #include <eve/function/signnz.hpp>
 #include <eve/wide.hpp>
+#include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
-using wide_it = eve::wide<std::int16t, eve::fixed<4>>;
+using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;
 
 int main()
 {
@@ -22,7 +23,7 @@ int main()
             << "-> signnz(pi) = " << eve::signnz(pi) << '\n';
 
   float        xf = -327.68f;
-  std::int16t xi = -328;
+  std::int16_t xi = -328;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf         = " << xf << '\n'
@@ -32,8 +33,8 @@ int main()
   return 0;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- </script>
+</script>
+
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
-
