@@ -29,9 +29,12 @@ namespace eve::detail
   // Detects <0,1,...,N-1> as identity
   template<int... I> inline constexpr bool is_identity = []()
   {
-    int idx[] = {I...};
-    bool ok = true;
-    for(int i=0;i<sizeof...(I);++i) ok = ok && (idx[i]==i);
+    int   idx[] = {I...};
+    int   c     = sizeof...(I);
+    bool ok     = true;
+
+    for(int i=0;i<c;++i) ok = ok && (idx[i]==i);
+
     return ok;
   }();
 

@@ -13,6 +13,8 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/function/simd/common/swizzle_helpers.hpp>
+#include <eve/traits/as_floating_point.hpp>
+#include <eve/traits/as_integer.hpp>
 #include <eve/forward.hpp>
 #include <eve/pattern.hpp>
 

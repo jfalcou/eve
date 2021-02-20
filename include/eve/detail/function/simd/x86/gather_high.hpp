@@ -13,6 +13,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/function/simd/x86/patterns.hpp>
+#include <eve/traits/as_floating_point.hpp>
 #include <eve/pattern.hpp>
 #include <eve/forward.hpp>
 

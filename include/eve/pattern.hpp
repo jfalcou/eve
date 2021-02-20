@@ -88,11 +88,11 @@ namespace eve
   //================================================================================================
   template<std::ptrdiff_t Sz, typename F> consteval auto fix_pattern(F)
   {
-    return []<std::size_t... N>( std::index_sequence<N...> )
+    return []<auto... N>( std::integer_sequence<std::ptrdiff_t,N...> )
     {
       F f;
       return pattern<f(N,Sz)...>;
-    }( std::make_index_sequence<Sz>{} );
+    }( std::make_integer_sequence<std::ptrdiff_t,Sz>{} );
   }
 
   template<std::ptrdiff_t Sz, typename F> consteval auto fix_pattern(as_pattern<F>)
@@ -109,9 +109,9 @@ namespace eve
   // Clamp a pattern to a given size
   //================================================================================================
   template<std::ptrdiff_t N, shuffle_pattern Pattern >
-  constexpr auto pattern_clamp(Pattern const& p) noexcept
+  constexpr auto pattern_clamp(Pattern const&) noexcept
   {
-    return fix_pattern<N>( p );
+    return fix_pattern<N>( Pattern{} );
   }
 
   //================================================================================================

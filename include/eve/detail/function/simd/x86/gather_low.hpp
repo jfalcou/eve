@@ -13,6 +13,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/function/simd/x86/patterns.hpp>
+#include <eve/traits/as_floating_point.hpp>
 #include <eve/pattern.hpp>
 #include <eve/forward.hpp>
 
@@ -119,9 +120,9 @@ namespace eve::detail
 
         if constexpr( c == category::float64x4 )
         {
-                if constexpr(m == regular_mov) return that_t{_mm256_permute2f128_pd(v,v,0)};
-          else  if constexpr(m == half_mov0  ) return that_t{_mm256_permute2f128_pd(v,z,0)};
-          else  if constexpr(m == half_0mov  ) return that_t{_mm256_permute2f128_pd(z,v,0)};
+                if constexpr(m == regular_mov) return that_t{_mm256_permute2f128_pd(v,v,0x00)};
+          else  if constexpr(m == half_mov0  ) return that_t{_mm256_permute2f128_pd(v,z,0x20)};
+          else  if constexpr(m == half_0mov  ) return that_t{_mm256_permute2f128_pd(z,v,0x20)};
         }
         // AVX double precision
         else if constexpr( c == category::float32x8 )

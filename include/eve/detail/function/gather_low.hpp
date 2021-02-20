@@ -22,7 +22,8 @@ namespace eve
 
   // Premade pattern generator
   template<std::ptrdiff_t N>
-  inline constexpr auto gather_low_n = fix_pattern<N>( [](auto i, auto c) { return i%(c/2); } );
+  inline constexpr
+  auto gather_low_n = fix_pattern<N>( [](auto i, auto c) { return i < c/2 ? i : i-c/2;} );
 }
 
 #include <eve/detail/function/simd/common/gather_low.hpp>
