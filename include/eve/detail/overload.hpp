@@ -76,14 +76,17 @@
   inline detail::callable_object<tag::TAG> const NAME = {}                                         \
 /**/
 
-#define EVE_MAKE_CALLABLE(TAG, NAME)                                                                \
-  EVE_DECLARE_CALLABLE(TAG)                                                                         \
+#define EVE_CALLABLE_API(TAG, NAME)                                                                 \
   using callable_##TAG  = detail::callable_object<tag::TAG>;                                        \
   inline std::ostream& operator<<(std::ostream& os, detail::callable_object<tag::TAG> const&)       \
   {                                                                                                 \
     return os << #NAME;                                                                             \
-  }                                                                                                 \
-                                                                                                    \
+  }
+/**/
+
+#define EVE_MAKE_CALLABLE(TAG, NAME)                                                                \
+  EVE_DECLARE_CALLABLE(TAG)                                                                         \
+  EVE_CALLABLE_API(TAG,NAME)                                                                        \
   EVE_ALIAS_CALLABLE(TAG, NAME)                                                                     \
 /**/
 

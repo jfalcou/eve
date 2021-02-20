@@ -21,6 +21,8 @@ namespace eve
   {
     EVE_ALIAS_CALLABLE(basic_swizzle_, basic_swizzle);
   }
+
+  EVE_CALLABLE_API(basic_swizzle_, basic_swizzle)
 }
 
 #include <eve/detail/function/simd/common/swizzle.hpp>

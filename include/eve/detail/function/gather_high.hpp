@@ -15,18 +15,18 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(gather_low_, gather_low);
+  EVE_MAKE_CALLABLE(gather_high_, gather_high);
 
   // Acts as a pattern itself
-  template<> struct is_pattern<tag::gather_low_> : std::true_type {};
+  template<> struct is_pattern<tag::gather_high_> : std::true_type {};
 
   // Premade pattern generator
   template<std::ptrdiff_t N>
-  inline constexpr auto gather_low_n = fix_pattern<N>( [](auto i, auto c) { return i%(c/2); } );
+  inline constexpr auto gather_high_n = fix_pattern<N>([](auto i, auto c) { return c/2 + i%(c/2); });
 }
 
-#include <eve/detail/function/simd/common/gather_low.hpp>
+#include <eve/detail/function/simd/common/gather_high.hpp>
 
 #if defined(EVE_HW_X86)
-#  include <eve/detail/function/simd/x86/gather_low.hpp>
+#  include <eve/detail/function/simd/x86/gather_high.hpp>
 #endif
