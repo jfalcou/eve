@@ -96,7 +96,6 @@ namespace eve::detail
           auto r = lrising_factorial(oma, -x, std::true_type());
           auto lnterm = eve::log(eve::abs(spioma/spiomamx));
           return if_else(is_nez(spiomamx*spioma), lnterm - r, allbits);
-          //      *sgn = GSL_SIGN(spioma*spiomamx);
         };
 
       auto lrlast = [](auto a,  auto x)

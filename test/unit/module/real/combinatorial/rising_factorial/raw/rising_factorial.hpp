@@ -12,7 +12,6 @@
 #include <boost/math/special_functions/factorials.hpp>
 #include <eve/constant/valmin.hpp>
 #include <type_traits>
-#include <gsl/gsl_math.h>
 
 TTS_CASE_TPL("Check eve::rising_factorial return type", EVE_TYPE)
 {
