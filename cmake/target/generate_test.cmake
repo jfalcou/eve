@@ -47,7 +47,7 @@ function(generate_test root rootpath dep file)
       if( EVE_BUILD_SRC_HTML )
         add_test( NAME ${test}
                   WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
-                  COMMAND sh -c "${PROJECT_SOURCE_DIR}/cmake/txt2html.sh $<TARGET_FILE:${test}> > ${PROJECT_SOURCE_DIR}/docs/reference/out/${doc_output}"
+                  COMMAND sh -c "${PROJECT_SOURCE_DIR}/cmake/exe2html.sh $<TARGET_FILE:${test}> \"**Possible output:**\" > ${PROJECT_SOURCE_DIR}/docs/reference/out/${doc_output}"
                 )
 
         set(src_test "src.${test}")
