@@ -26,9 +26,10 @@ void test_broadcast(Env& runtime, bool verbose, Filler filler)
               {
                 ([&]()
                 {
-                  if(verbose) std::cout << "using pattern " << broadcast<V,EVE_CARDINAL> << "\n";
                   eve::as_wide_t<T,eve::fixed<EVE_CARDINAL>> ref(simd.get(V));
+
                   TTS_EQUAL((simd[broadcast<V,EVE_CARDINAL>]), ref);
+                  TTS_EQUAL( (eve::broadcast(simd, eve::index<V>)), ref);
                 }(), ...);
 
               }( std::make_index_sequence<EVE_CARDINAL>{} );

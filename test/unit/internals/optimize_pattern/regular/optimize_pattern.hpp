@@ -15,41 +15,35 @@
 TTS_CASE("Check identity patterns get optimized")
 {
   using eve::detail::find_optimized_pattern;
-  using identity = eve::detail::perform_identity;
 
-  TTS_EXPR_IS( (find_optimized_pattern<0,1>())                                  , identity );
-  TTS_EXPR_IS( (find_optimized_pattern<0,1,2,3>())                              , identity );
-  TTS_EXPR_IS( (find_optimized_pattern<0,1,2,3,4,5,6,7>())                      , identity );
-  TTS_EXPR_IS( (find_optimized_pattern<0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15>()), identity );
-  TTS_EXPR_IS( (find_optimized_pattern< 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15
-                                      ,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31
-                                      >())                                      , identity );
-  TTS_EXPR_IS( (find_optimized_pattern< 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15
-                                      ,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31
-                                      ,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47
-                                      ,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63
-                                      >())                                      , identity );
+  [&]<std::ptrdiff_t... R>(std::integer_sequence<std::ptrdiff_t,R...>)
+  {
+    auto g = [&]<std::ptrdiff_t... N>( std::integer_sequence<std::ptrdiff_t,N...>)
+    {
+      using identity = eve::detail::perform_identity;
+      TTS_EXPR_IS( (find_optimized_pattern< N... >()), identity );
+    };
+
+    (g( std::make_integer_sequence<std::ptrdiff_t,(1<<(R+1))>{}),...);
+
+  }(std::make_integer_sequence<std::ptrdiff_t,6>{});
 }
 
 TTS_CASE("Check zero patterns get optimized")
 {
   using eve::detail::find_optimized_pattern;
-  using eve::callable_zero_;
 
-  TTS_EXPR_IS( (find_optimized_pattern<-1>())                       , callable_zero_ );
-  TTS_EXPR_IS( (find_optimized_pattern<-1,-1>())                    , callable_zero_ );
-  TTS_EXPR_IS( (find_optimized_pattern<-1,-1,-1,-1>())              , callable_zero_ );
-  TTS_EXPR_IS( (find_optimized_pattern<-1,-1,-1,-1,-1,-1,-1,-1>())  , callable_zero_ );
-  TTS_EXPR_IS( (find_optimized_pattern<-1,-1,-1,-1,-1,-1,-1,-1
-                                      ,-1,-1,-1,-1,-1,-1,-1,-1>())  , callable_zero_ );
-  TTS_EXPR_IS( (find_optimized_pattern<-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
-                                      ,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
-                                      >())                          , callable_zero_ );
-  TTS_EXPR_IS( (find_optimized_pattern<-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
-                                      ,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
-                                      , -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
-                                      ,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
-                                      >())                          , callable_zero_ );
+  [&]<std::ptrdiff_t... R>(std::integer_sequence<std::ptrdiff_t,R...>)
+  {
+    auto g = [&]<std::ptrdiff_t... N>( std::integer_sequence<std::ptrdiff_t,N...>)
+    {
+      using eve::callable_zero_;
+      TTS_EXPR_IS( (find_optimized_pattern< (N,-1)... >()), callable_zero_ );
+    };
+
+    (g( std::make_integer_sequence<std::ptrdiff_t,(1<<R)>{}),...);
+
+  }(std::make_integer_sequence<std::ptrdiff_t,7>{});
 }
 
 TTS_CASE("Check broadcast patterns get optimized")
@@ -88,105 +82,44 @@ TTS_CASE("Check gather_low patterns get optimized")
   using eve::detail::find_optimized_pattern;
   using eve::callable_gather_low_;
 
-  // <0 0> is broadcast
   TTS_EXPR_IS( (find_optimized_pattern<-1, 0>()), callable_gather_low_ );
   TTS_EXPR_IS( (find_optimized_pattern< 0,-1>()), callable_gather_low_ );
 
-  TTS_EXPR_IS( (find_optimized_pattern< 0, 1, 0, 1>()), callable_gather_low_ );
-  TTS_EXPR_IS( (find_optimized_pattern<-1,-1, 0, 1>()), callable_gather_low_ );
-  TTS_EXPR_IS( (find_optimized_pattern< 0, 1,-1,-1>()), callable_gather_low_ );
+  [&]<std::ptrdiff_t... R>(std::integer_sequence<std::ptrdiff_t,R...>)
+  {
+    auto g = [&]<std::ptrdiff_t... N>( std::integer_sequence<std::ptrdiff_t,N...>)
+    {
+      TTS_EXPR_IS( (find_optimized_pattern<N...     ,N...     >()), callable_gather_low_ );
+      TTS_EXPR_IS( (find_optimized_pattern<N...     ,(N,-1)...>()), callable_gather_low_ );
+      TTS_EXPR_IS( (find_optimized_pattern<(N,-1)...,N...     >()), callable_gather_low_ );
+    };
 
-  TTS_EXPR_IS( (find_optimized_pattern< 0, 1, 2, 3, 0, 1, 2, 3>()), callable_gather_low_ );
-  TTS_EXPR_IS( (find_optimized_pattern<-1,-1,-1,-1, 0, 1, 2, 3>()), callable_gather_low_ );
-  TTS_EXPR_IS( (find_optimized_pattern< 0, 1, 2, 3,-1,-1,-1,-1>()), callable_gather_low_ );
+    (g( std::make_integer_sequence<std::ptrdiff_t,(1<<(R+1))>{}),...);
 
-  TTS_EXPR_IS( (find_optimized_pattern< 0, 1, 2, 3, 4, 5, 6, 7
-                                      , 0, 1, 2, 3, 4, 5, 6, 7
-                                      >()), callable_gather_low_ );
-  TTS_EXPR_IS( (find_optimized_pattern< 0, 1, 2, 3, 4, 5, 6, 7
-                                      ,-1,-1,-1,-1,-1,-1,-1,-1
-                                      >()), callable_gather_low_ );
-  TTS_EXPR_IS( (find_optimized_pattern<-1,-1,-1,-1,-1,-1,-1,-1
-                                      , 0, 1, 2, 3, 4, 5, 6, 7
-                                      >()), callable_gather_low_ );
-
-  TTS_EXPR_IS( (find_optimized_pattern< 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15
-                                      , 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15
-                                      >()), callable_gather_low_ );
-  TTS_EXPR_IS( (find_optimized_pattern< 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15
-                                      ,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
-                                      >()), callable_gather_low_ );
-  TTS_EXPR_IS( (find_optimized_pattern<-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
-                                      , 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15
-                                      >()), callable_gather_low_ );
-
-  TTS_EXPR_IS( (find_optimized_pattern< 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15
-                                      ,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31
-                                      , 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15
-                                      ,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31
-                                      >()), callable_gather_low_ );
-  TTS_EXPR_IS( (find_optimized_pattern< 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15
-                                      ,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31
-                                      ,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
-                                      ,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
-                                      >()), callable_gather_low_ );
-  TTS_EXPR_IS( (find_optimized_pattern<-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
-                                      ,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
-                                      , 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15
-                                      ,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31
-                                      >()), callable_gather_low_ );
+  }(std::make_integer_sequence<std::ptrdiff_t,6>{});
 }
+
 
 TTS_CASE("Check gather_high patterns get optimized")
 {
   using eve::detail::find_optimized_pattern;
   using eve::callable_gather_high_;
 
-  // <1 1> is broadcast
   TTS_EXPR_IS( (find_optimized_pattern<-1, 1>()), callable_gather_high_ );
   TTS_EXPR_IS( (find_optimized_pattern< 1,-1>()), callable_gather_high_ );
 
-  TTS_EXPR_IS( (find_optimized_pattern< 2, 3, 2, 3>()), callable_gather_high_ );
-  TTS_EXPR_IS( (find_optimized_pattern<-1,-1, 2, 3>()), callable_gather_high_ );
-  TTS_EXPR_IS( (find_optimized_pattern< 2, 3,-1,-1>()), callable_gather_high_ );
+  [&]<std::ptrdiff_t... R>(std::integer_sequence<std::ptrdiff_t,R...>)
+  {
+    auto g = [&]<std::ptrdiff_t... N>( std::integer_sequence<std::ptrdiff_t,N...>)
+    {
+      constexpr auto O = sizeof...(N);
 
-  TTS_EXPR_IS( (find_optimized_pattern< 4, 5, 6, 7, 4, 5, 6, 7>()), callable_gather_high_ );
-  TTS_EXPR_IS( (find_optimized_pattern<-1,-1,-1,-1, 4, 5, 6, 7>()), callable_gather_high_ );
-  TTS_EXPR_IS( (find_optimized_pattern< 4, 5, 6, 7,-1,-1,-1,-1>()), callable_gather_high_ );
+      TTS_EXPR_IS( (find_optimized_pattern<(O+N)...  ,(O+N)...  >()), callable_gather_high_ );
+      TTS_EXPR_IS( (find_optimized_pattern<(O+N)...  ,(N,-1)... >()), callable_gather_high_ );
+      TTS_EXPR_IS( (find_optimized_pattern<(N,-1)...,(O+N)...   >()), callable_gather_high_ );
+    };
 
-  TTS_EXPR_IS( (find_optimized_pattern< 8, 9,10,11,12,13,14,15
-                                      , 8, 9,10,11,12,13,14,15
-                                      >()), callable_gather_high_ );
-  TTS_EXPR_IS( (find_optimized_pattern< 8, 9,10,11,12,13,14,15
-                                      ,-1,-1,-1,-1,-1,-1,-1,-1
-                                      >()), callable_gather_high_ );
-  TTS_EXPR_IS( (find_optimized_pattern<-1,-1,-1,-1,-1,-1,-1,-1
-                                      , 8, 9,10,11,12,13,14,15
-                                      >()), callable_gather_high_ );
+    (g( std::make_integer_sequence<std::ptrdiff_t,(1<<(R+1))>{}),...);
 
-  TTS_EXPR_IS( (find_optimized_pattern<16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31
-                                      ,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31
-                                      >()), callable_gather_high_ );
-  TTS_EXPR_IS( (find_optimized_pattern<16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31
-                                      ,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
-                                      >()), callable_gather_high_ );
-  TTS_EXPR_IS( (find_optimized_pattern<-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
-                                      ,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31
-                                      >()), callable_gather_high_ );
-
-  TTS_EXPR_IS( (find_optimized_pattern<32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47
-                                      ,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63
-                                      ,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47
-                                      ,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63
-                                      >()), callable_gather_high_ );
-  TTS_EXPR_IS( (find_optimized_pattern<32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47
-                                      ,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63
-                                      ,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
-                                      ,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
-                                      >()), callable_gather_high_ );
-  TTS_EXPR_IS( (find_optimized_pattern<-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
-                                      ,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
-                                      ,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47
-                                      ,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63
-                                      >()), callable_gather_high_ );
+  }(std::make_integer_sequence<std::ptrdiff_t,6>{});
 }
