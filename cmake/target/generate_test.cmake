@@ -54,7 +54,7 @@ function(generate_test root rootpath dep file)
 
         add_test( NAME ${src_test}
                   WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
-                  COMMAND sh -c "${PROJECT_SOURCE_DIR}/cmake/txt2html.sh $<TARGET_FILE:${test}> ${PROJECT_SOURCE_DIR}/test/${doc_path}/${file} > ${PROJECT_SOURCE_DIR}/docs/reference/src/${doc_source}"
+                  COMMAND sh -c "${PROJECT_SOURCE_DIR}/cmake/txt2html.sh ${PROJECT_SOURCE_DIR}/test/${doc_path}/${file} > ${PROJECT_SOURCE_DIR}/docs/reference/src/${doc_source}"
                 )
       else()
 
