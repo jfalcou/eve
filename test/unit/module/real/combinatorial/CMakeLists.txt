@@ -30,4 +30,3 @@ make_all_units(ROOT unit.real.combinatorial NAME lcm                  ARCH scala
 make_all_units(ROOT unit.real.combinatorial NAME nth_prime            ARCH scalar simd TYPES ${uint_types} )
 make_all_units(ROOT unit.real.combinatorial NAME rising_factorial     ARCH scalar simd TYPES ${real_types} )
 make_all_units(ROOT unit.real.combinatorial NAME lrising_factorial    ARCH scalar simd TYPES ${real_types} )
-make_all_units(ROOT unit.real.combinatorial NAME srising_factorial    ARCH scalar simd TYPES ${real_types} )
