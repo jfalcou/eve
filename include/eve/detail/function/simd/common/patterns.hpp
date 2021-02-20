@@ -12,6 +12,7 @@
 
 #include <eve/traits/cardinal.hpp>
 #include <eve/traits/as_wide.hpp>
+#include <ostream>
 
 namespace eve::detail
 {
@@ -39,6 +40,11 @@ namespace eve::detail
   //================================================================================================
   struct perform_identity
   {
+    friend std::ostream& operator<<(std::ostream& os, perform_identity)
+    {
+      return os << "eve::perform_identity";
+    }
+
     template<typename Wide, typename Pattern>
     EVE_FORCEINLINE auto operator()(Wide v, Pattern p) const
     {
