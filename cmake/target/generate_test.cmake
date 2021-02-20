@@ -6,6 +6,7 @@
 ##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
+include(target/generate_html)
 
 ##==================================================================================================
 ## Setup a test with many option
@@ -42,7 +43,6 @@ function(generate_test root rootpath dep file)
     if ( ${root} MATCHES "doc.*")
       string(REPLACE "." "/" doc_path ${root})
       string(REPLACE ".cpp" ".out.html" doc_output ${file})
-      string(REPLACE ".cpp" ".src.html" doc_source ${file})
 
       if( EVE_BUILD_SRC_HTML )
         add_test( NAME ${test}
@@ -50,12 +50,7 @@ function(generate_test root rootpath dep file)
                   COMMAND sh -c "${PROJECT_SOURCE_DIR}/cmake/exe2html.sh $<TARGET_FILE:${test}> \"**Possible output:**\" > ${PROJECT_SOURCE_DIR}/docs/reference/out/${doc_output}"
                 )
 
-        set(src_test "src.${test}")
-
-        add_test( NAME ${src_test}
-                  WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
-                  COMMAND sh -c "${PROJECT_SOURCE_DIR}/cmake/txt2html.sh ${PROJECT_SOURCE_DIR}/test/${doc_path}/${file} > ${PROJECT_SOURCE_DIR}/docs/reference/src/${doc_source}"
-                )
+        generate_html( "test/${doc_path}/${file}" "docs/reference/src" "" "${file}")
       else()
 
       add_test( NAME ${test}
