@@ -61,9 +61,22 @@ Supported decorators
 [`pedantic`](../decorators.html#saturated)
 :   **Required header: **<script type="preformatted">` #include <eve/function/pedantic/lrising_factorial.hpp>`</script>
 
-:   The expression `pedantic(lrising_factorial)(a,x)` uses reflection tricks and computes the function for all real `a` and `x`,
-    and in fact computes the logarithm of the absolute value of the Pochammer symbol  $\log\left|\frac{\Gamma(x+a)}{\Gamma(x)}\right|$
-    returning nan if the result in really undefined.
+:   The expression `pedantic(lrising_factorial)(a,x)` uses reflection tricks and computes the function
+     for all real `a` and `x`, and in fact computes the logarithm of the absolute value of the Pochammer
+     symbol $\log\left|\frac{\Gamma(x+a)}{\Gamma(x)}\right|$ returning nan if the result in really undefined.
+
+[`diff`](../decorators.html#saturated)
+:   **Required header: **<script type="preformatted">` #include <eve/function/diff/lrising_factorial.hpp>`</script>
+
+:   The expression `diff_1st(lrising_factorial)(a,x)` and `diff_2nd(lrising_factorial)(a,x)` computes
+    the derivative of the function relative to the first or second parameter respectively.
+
+    These decorators can be combined to the other available ones : for instance the call
+
+    `pedantic(diff_1st)(lrising_factorial)(a,x)`
+
+    will compute the derivative of `pedantic(lrising_factorial)` relative to the first parameter.
+
 
   (insert ../../src/lrising_factorial.src.html here)
 
