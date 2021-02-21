@@ -8,13 +8,8 @@
 #pragma once
 
 #include <eve/detail/function/simd/lookup_helpers.hpp>
+#include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/implementation.hpp>
-
-// TODO: fix operator<< in operators.hpp
-#include <eve/function/shl.hpp>
-
-// TODO: later std::bit_cast
-#include <eve/function/bit_cast.hpp>
 
 namespace eve::detail
 {
@@ -37,7 +32,7 @@ namespace eve::detail
       }
       else
       {
-        t8_t i1 = lookup(bit_cast( eve::shl(idx, shift<I>), as(i1)), t8_t {repeater<I>});
+        t8_t i1 = lookup(bit_cast( idx << shift<I>, as(i1)), t8_t {repeater<I>});
         i1      = bit_cast(bit_cast(i1, as<wide<I, N, arm_64_>>()) + offset<I>, as<t8_t>());
         return bit_cast(lookup(bit_cast(a, as<t8_t>()), i1), as(a));
       }
@@ -69,11 +64,10 @@ namespace eve::detail
       }
       else
       {
-        t8_t i1 = lookup(bit_cast( eve::shl(idx, shift<I>), as(i1)), t8_t {repeater<I>});
+        t8_t i1 = lookup(bit_cast( idx << shift<I>, as(i1)), t8_t {repeater<I>});
         i1      = bit_cast(bit_cast(i1, as<wide<I, N, arm_128_>>()) + offset<I>, as<t8_t>());
         return bit_cast(lookup(bit_cast(a, as<t8_t>()), i1), as(a));
       }
     }
   }
 }
-

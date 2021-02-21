@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/arch/arm/predef.hpp>
-#include <eve/traits/as_arithmetic.hpp>
+#include <eve/traits/as_integer.hpp>
 #include <type_traits>
 
 namespace eve
