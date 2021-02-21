@@ -46,7 +46,8 @@ namespace eve::detail
     }
   }
 
-  template<value T> EVE_FORCEINLINE bool all_(EVE_SUPPORTS(cpu_), T const &v) noexcept
+  template<value T>
+  EVE_FORCEINLINE bool all_(EVE_SUPPORTS(cpu_), T const &v) noexcept
   {
     if constexpr( scalar_value<T> ) return bool(v);
     else                            return eve::all[ignore_none](v);

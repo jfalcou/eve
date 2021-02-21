@@ -15,28 +15,18 @@
 
 namespace eve::detail
 {
-  template<logical_simd_value T, relative_conditional_expr C>
-  EVE_FORCEINLINE bool all_ignore_top_bits_impl(T const &v, C const& cond) noexcept
+
+  template<real_scalar_value T, typename N, relative_conditional_expr C>
+  EVE_FORCEINLINE bool all_(EVE_SUPPORTS(neon128_), C const &cond, logical<wide<T, N, arm_64_>> const &v0) noexcept
   {
-    eve::detail::top_bits mmask{v};
-    eve::detail::top_bits<T> ignore_mmask{cond};
-
-    mmask |= ~ignore_mmask; // we need 1 in ignored elements;
-
-    return eve::detail::all(mmask);
-  }
-
-  template <typename T, typename N, typename C>
-  EVE_FORCEINLINE bool all_arm_impl(logical<wide<T, N, arm_64_>> v0, C const & cond)
-  {
-    using l_t = logical<wide<T, N, arm_64_>>;
     using u64_1 = typename wide<T, N, arm_64_>::template rebind<std::uint64_t, eve::fixed<1>>;
 
          if constexpr ( C::is_complete && !C::is_inverted ) return true;
-    else if constexpr ( N() == 1 || N() * sizeof(T) <= 4 )  return all_ignore_top_bits_impl(v0, cond);
+    else if constexpr ( N() == 1 || N() * sizeof(T) <= 4 )  return all_(EVE_RETARGET(cpu_), cond, v0);
     else if constexpr ( eve::current_api >= eve::asimd )
     {
-      if constexpr ( !C::is_complete ) return all_ignore_top_bits_impl(v0, cond);
+      // top bits are cheap
+      if constexpr ( !C::is_complete ) return all_(EVE_RETARGET(cpu_), cond, v0);
       else
       {
         // I thought about using min here, unlike any (since we do otherwise 2 tests)
@@ -47,48 +37,49 @@ namespace eve::detail
         return !~vget_lane_u64(qword, 0);
       }
     }
+    else if constexpr ( !C::is_complete ) return eve::all[ignore_none](v0) || all_(EVE_RETARGET(cpu_), cond, v0);
     else
     {
-      if constexpr ( !C::is_complete ) v0 = v0 || cond.mask_inverted(eve::as_<l_t>{});
+      using u32_2 = typename wide<T, N, arm_64_>::template rebind<std::uint32_t, eve::fixed<2>>;
+      auto dwords = eve::bit_cast(v0.bits(), eve::as_<u32_2> {});
 
-      if constexpr( N::value == 1 ) return v0.get(0);
+      if constexpr( sizeof(T) * N() > 4u ) dwords = vpmin_u32(dwords, dwords);
+
+      std::uint32_t combined = vget_lane_u32(dwords, 0);
+
+            if constexpr ( sizeof(T) >= 4 )       return (bool)combined;
+      else  if constexpr ( sizeof(T) * N() == 8 ) return !~combined;
       else
       {
-        using u32_2 = typename wide<T, N, arm_64_>::template rebind<std::uint32_t, eve::fixed<2>>;
-        auto dwords = eve::bit_cast(v0.bits(), eve::as_<u32_2> {});
+        std::uint32_t expected = [] {
+          std::uint64_t res = 1;
+          res <<= sizeof(T) * N() * 8;
+          res -= 1;
+          return res;
+        }();
 
-        if constexpr( sizeof(T) * N() > 4u ) dwords = vpmin_u32(dwords, dwords);
-
-        std::uint32_t combined = vget_lane_u32(dwords, 0);
-
-              if constexpr ( sizeof(T) >= 4 )       return (bool)combined;
-        else  if constexpr ( sizeof(T) * N() == 8 ) return !~combined;
-        else
-        {
-          std::uint32_t expected = [] {
-            std::uint64_t res = 1;
-            res <<= sizeof(T) * N() * 8;
-            res -= 1;
-            return res;
-          }();
-
-          return (combined & expected) == expected;
-        }
+        return (combined & expected) == expected;
       }
     }
   }
 
-  template <typename T, typename N, typename C>
-  EVE_FORCEINLINE bool all_arm_impl(logical<wide<T, N, arm_128_>> v0, C const & cond)
+  template<real_scalar_value T, typename N, relative_conditional_expr C>
+  EVE_FORCEINLINE bool all_(EVE_SUPPORTS(neon128_), C const &cond, logical<wide<T, N, arm_128_>> const &v0) noexcept
   {
-    using l_t = logical<wide<T, N, arm_128_>>;
     using u32_4 = typename wide<T, N, arm_128_>::template rebind<std::uint32_t, eve::fixed<4>>;
 
          if constexpr ( C::is_complete && !C::is_inverted ) return true;
+    // we still have to convert down here
+    else if constexpr ( eve::current_api < eve::asimd && sizeof( T ) >= 2 )
+    {
+      using half_e_t = make_integer_t<sizeof(T) / 2, unsigned>;
+      auto halved = eve::convert(v0, eve::as_<eve::logical<half_e_t>>{});
+      return eve::all[cond](halved);
+    }
+    else if constexpr ( !C::is_complete ) return eve::all[ignore_none](v0) || all_(EVE_RETARGET(cpu_), cond, v0);
     else if constexpr ( eve::current_api >= eve::asimd )
     {
-           if constexpr ( !C::is_complete ) return all_ignore_top_bits_impl(v0, cond);
-      else if constexpr ( sizeof(T) == 1 )  return vminvq_u8(v0.bits());
+           if constexpr ( sizeof(T) == 1 )  return vminvq_u8(v0.bits());
       else if constexpr ( sizeof(T) == 2 )  return vminvq_u16(v0.bits());
       else
       {
@@ -97,33 +88,13 @@ namespace eve::detail
         return vminvq_u32(dwords);
       }
     }
-    else if constexpr ( sizeof( T ) >= 2 )
+    else  // chars, no asimd
     {
-      using half_e_t = make_integer_t<sizeof(T) / 2, unsigned>;
-      auto halved = eve::convert(v0, eve::as_<eve::logical<half_e_t>>{});
-      return all_arm_impl(halved, cond);
-    }
-    else
-    {
-      if constexpr ( !C::is_complete ) v0 = v0 || cond.mask_inverted(eve::as_<l_t>{});
-
       using u32_4 = typename wide<T, N, arm_128_>::template rebind<std::uint32_t, eve::fixed<4>>;
       auto dwords = eve::bit_cast(v0, eve::as<u32_4>());
 
       // not the same logic as for uint_32 plain so duplicated.
-      return all_arm_impl(dwords == static_cast<std::uint32_t>(-1), ignore_none);
+      return eve::all[ignore_none](dwords == static_cast<std::uint32_t>(-1));
     }
-  }
-
-  template<real_scalar_value T, typename N, arm_abi ABI, relative_conditional_expr C>
-  EVE_FORCEINLINE bool all_(EVE_SUPPORTS(neon128_), C const &cond, logical<wide<T, N, ABI>> const &v0) noexcept
-  {
-    return all_arm_impl(v0, cond);
-  }
-
-  template<real_scalar_value T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE bool all_(EVE_SUPPORTS(neon128_), logical<wide<T, N, ABI>> const &v0) noexcept
-  {
-    return all_arm_impl(v0, ignore_none);
   }
 }
