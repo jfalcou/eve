@@ -67,9 +67,13 @@ namespace eve::detail
     // 32bits SSE register only
     else if constexpr(match(c,category::float32x4, category::int32x4, category::uint32x4) )
     {
-      if constexpr(cd < 4)
+      constexpr auto m = is_mov<0,I...>;
+
+      if constexpr(cd == 2)
       {
-        return that_t(v.get(0));
+              if constexpr(m == regular_mov ) return that_t(v.get(0));
+        else  if constexpr(m == half_mov0   ) return that_t(v.get(0),0);
+        else  if constexpr(m == half_0mov   ) return that_t(0,v.get(0));
       }
       else
       {
@@ -78,7 +82,6 @@ namespace eve::detail
         using tgt_t = as_<that_t>;
 
         auto const r = bit_cast(v, as_<i_t>() );
-        constexpr auto m = is_mov<0,I...>;
 
         if constexpr(sz == 4)
         {

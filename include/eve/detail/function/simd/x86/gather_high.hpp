@@ -19,6 +19,34 @@
 
 namespace eve::detail
 {
+  template< typename T, typename N, x86_abi ABI, std::ptrdiff_t... I>
+  EVE_FORCEINLINE auto gather_high_  ( EVE_SUPPORTS(sse2_), logical<wide<T,N,ABI>> v
+                                    , pattern_t<I...> p
+                                    ) noexcept
+  {
+    if constexpr( current_api >= avx512 )
+    {
+      constexpr auto sz = pattern_t<I...>::size(cardinal_v<wide<T,N,ABI>>);
+
+      using that_t  = as_wide_t<logical<wide<T,N,ABI>>,fixed<sz>>;
+      using s_t     = typename that_t::storage_type;
+      using i_t     = typename s_t::type;
+
+      i_t bits = (v.storage().value >> (sz/2)) & ((1ULL << (sz/2)) - 1);
+      [[maybe_unused]] i_t sbits = bits << (sz/2);
+
+      constexpr auto m = is_mov<0,I...>;
+
+            if constexpr(m == regular_mov ) return that_t{s_t{i_t(sbits | bits)}};
+      else  if constexpr(m == half_mov0   ) return that_t{s_t{i_t(bits)}};
+      else  if constexpr(m == half_0mov   ) return that_t{s_t{i_t(sbits)}};
+    }
+    else
+    {
+      return basic_swizzle_(EVE_RETARGET(cpu_),v,p);
+    }
+  }
+
   template< typename T, typename N, x86_abi ABI
           , std::ptrdiff_t... I
           >
@@ -39,9 +67,13 @@ namespace eve::detail
     // 32bits SSE register only
     else if constexpr(match(c,category::float32x4, category::int32x4, category::uint32x4) )
     {
-      if constexpr(cd < 4)
+      constexpr auto m = is_mov<sizeof...(I)/2,I...>;
+
+      if constexpr(cd == 2)
       {
-        return that_t(v.get(0));
+              if constexpr(m == regular_mov ) return that_t(v.get(1));
+        else  if constexpr(m == half_mov0   ) return that_t(v.get(1),0);
+        else  if constexpr(m == half_0mov   ) return that_t(0,v.get(1));
       }
       else
       {
@@ -50,7 +82,6 @@ namespace eve::detail
         using tgt_t = as_<that_t>;
 
         auto const r = bit_cast(v, as_<i_t>() );
-        constexpr auto m = is_mov<sizeof...(I)/2,I...>;
 
         if constexpr(sz == 4)
         {
@@ -60,7 +91,9 @@ namespace eve::detail
         }
         else
         {
-          return basic_swizzle(v,q);
+                if constexpr(m == regular_mov ) return bit_cast( o_t{_mm_unpackhi_ps(r,r)}, tgt_t{});
+          else  if constexpr(m == half_mov0   ) return bit_cast( o_t{_mm_unpackhi_ps(r,i_t(0))}, tgt_t{});
+          else  if constexpr(m == half_0mov   ) return bit_cast( o_t{_mm_unpackhi_ps(i_t(0),r)}, tgt_t{});
         }
       }
     }
@@ -72,7 +105,7 @@ namespace eve::detail
       using tgt_t = as_<that_t>;
       auto const r = bit_cast(v, as_<i_t>() );
 
-      constexpr auto m = is_mov<sizeof...(I)/2,I...>;
+      constexpr auto m = is_mov<0,I...>;
 
             if constexpr(m == regular_mov ) return bit_cast( o_t{_mm_unpackhi_pd(r,r)}, tgt_t{});
       else  if constexpr(m == half_mov0   ) return bit_cast( o_t{_mm_unpackhi_pd(r,i_t(0))}, tgt_t{});
