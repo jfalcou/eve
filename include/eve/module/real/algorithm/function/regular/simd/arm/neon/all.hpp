@@ -37,7 +37,11 @@ namespace eve::detail
         return !~vget_lane_u64(qword, 0);
       }
     }
+<<<<<<< HEAD
     else if constexpr ( !C::is_complete ) return eve::all[ignore_none](v0) || all_(EVE_RETARGET(cpu_), cond, v0);
+=======
+    else if constexpr ( !C::is_complete ) return all(v0) || all_(EVE_RETARGET(cpu_), cond, v0);
+>>>>>>> all arm
     else
     {
       using u32_2 = typename wide<T, N, arm_64_>::template rebind<std::uint32_t, eve::fixed<2>>;
@@ -76,7 +80,11 @@ namespace eve::detail
       auto halved = eve::convert(v0, eve::as_<eve::logical<half_e_t>>{});
       return eve::all[cond](halved);
     }
+<<<<<<< HEAD
     else if constexpr ( !C::is_complete ) return eve::all[ignore_none](v0) || all_(EVE_RETARGET(cpu_), cond, v0);
+=======
+    else if constexpr ( !C::is_complete ) return all(v0) || all_(EVE_RETARGET(cpu_), cond, v0);
+>>>>>>> all arm
     else if constexpr ( eve::current_api >= eve::asimd )
     {
            if constexpr ( sizeof(T) == 1 )  return vminvq_u8(v0.bits());
@@ -94,7 +102,11 @@ namespace eve::detail
       auto dwords = eve::bit_cast(v0, eve::as<u32_4>());
 
       // not the same logic as for uint_32 plain so duplicated.
+<<<<<<< HEAD
       return eve::all[ignore_none](dwords == static_cast<std::uint32_t>(-1));
+=======
+      return eve::all(dwords == static_cast<std::uint32_t>(-1));
+>>>>>>> all arm
     }
   }
 }
