@@ -33,6 +33,8 @@
 #include <eve/function/pow.hpp>
 #include <eve/function/raw.hpp>
 #include <eve/function/regular.hpp>
+#include <eve/function/pedantic.hpp>
+#include <eve/function/derivative.hpp>
 #include <eve/function/sinpi.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/constant/half.hpp>
