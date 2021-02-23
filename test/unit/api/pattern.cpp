@@ -14,13 +14,13 @@
 
 TTS_CASE("Check pattern properties checks")
 {
-  TTS_CONSTEXPR_EQUAL ( (eve::pattern<0,1,2,3>.size(4)), 4 );
+  TTS_CONSTEXPR_EQUAL ( (eve::pattern<0,1,2,3>.size()), 4 );
 
-  TTS_CONSTEXPR_EXPECT    ( (eve::pattern<-1, 1, 2, 3>.has_zeros(4)));
-  TTS_CONSTEXPR_EXPECT    ( (eve::pattern< 0,-1, 2, 3>.has_zeros(4)));
-  TTS_CONSTEXPR_EXPECT    ( (eve::pattern< 0, 1,-1, 3>.has_zeros(4)));
-  TTS_CONSTEXPR_EXPECT    ( (eve::pattern< 0, 1, 2,-1>.has_zeros(4)));
-  TTS_CONSTEXPR_EXPECT_NOT( (eve::pattern< 0, 1, 2, 3>.has_zeros(4)));
+  TTS_CONSTEXPR_EXPECT    ( (eve::pattern<-1, 1, 2, 3>.has_zeros()));
+  TTS_CONSTEXPR_EXPECT    ( (eve::pattern< 0,-1, 2, 3>.has_zeros()));
+  TTS_CONSTEXPR_EXPECT    ( (eve::pattern< 0, 1,-1, 3>.has_zeros()));
+  TTS_CONSTEXPR_EXPECT    ( (eve::pattern< 0, 1, 2,-1>.has_zeros()));
+  TTS_CONSTEXPR_EXPECT_NOT( (eve::pattern< 0, 1, 2, 3>.has_zeros()));
 
   TTS_CONSTEXPR_EXPECT    ( (eve::pattern< 0,-1, 2,-1>.validate(4)) );
   TTS_CONSTEXPR_EXPECT    ( (eve::pattern< 0, 1, 2, 3>.validate(4)) );
@@ -31,13 +31,13 @@ TTS_CASE("Check lambda-pattern properties checks")
 {
   constexpr auto f = [](auto i, auto) { return i%2 ? -1 : i/2; };
 
-  TTS_CONSTEXPR_EQUAL ( eve::fix_pattern<4>(f).size(4), 4   );
-  TTS_CONSTEXPR_EXPECT( eve::fix_pattern<4>(f).has_zeros(4) );
-  TTS_CONSTEXPR_EXPECT( eve::fix_pattern<4>(f).validate(4)  );
+  TTS_CONSTEXPR_EQUAL ( eve::fix_pattern<4>(f).size(), 4   );
+  TTS_CONSTEXPR_EXPECT( eve::fix_pattern<4>(f).has_zeros() );
+  TTS_CONSTEXPR_EXPECT( eve::fix_pattern<4>(f).validate(4) );
 
-  TTS_CONSTEXPR_EQUAL ( eve::fix_pattern<8>(f).size(8), 8   );
-  TTS_CONSTEXPR_EXPECT( eve::fix_pattern<8>(f).has_zeros(8) );
-  TTS_CONSTEXPR_EXPECT( eve::fix_pattern<8>(f).validate(8)  );
+  TTS_CONSTEXPR_EQUAL ( eve::fix_pattern<8>(f).size(), 8  );
+  TTS_CONSTEXPR_EXPECT( eve::fix_pattern<8>(f).has_zeros());
+  TTS_CONSTEXPR_EXPECT( eve::fix_pattern<8>(f).validate(8));
 }
 
 TTS_CASE("Check pattern random access behavior")
@@ -62,12 +62,12 @@ TTS_CASE("Check lambda-pattern random access behavior")
 
 TTS_CASE("Check pattern comparison operators")
 {
-  TTS_CONSTEXPR_EQUAL     ( (eve::pattern<0,1,2,3>)           , (eve::pattern<0,1,2,3>) );
-  TTS_CONSTEXPR_NOT_EQUAL ( (eve::pattern<0,1,2,3>)           , (eve::pattern<0,2,1,3>) );
-  TTS_CONSTEXPR_EXPECT    ( (eve::pattern<0,1,2,3,4,5,6,7>  ).strictly_under(8)         );
-  TTS_CONSTEXPR_EXPECT    ( (eve::pattern<0,0,1,1,2,2,3,3>  ).under(3)                  );
-  TTS_CONSTEXPR_EXPECT    ( (eve::pattern<4,5,6,7,8,9,10,11>).strictly_over(2)          );
-  TTS_CONSTEXPR_EXPECT    ( (eve::pattern<4,5,6,7,8,9,10,11>).over(4)                   );
+  TTS_CONSTEXPR_EQUAL     ( (eve::pattern<0,1,2,3>), (eve::pattern<0,1,2,3>)    );
+  TTS_CONSTEXPR_NOT_EQUAL ( (eve::pattern<0,1,2,3>), (eve::pattern<0,2,1,3>)    );
+  TTS_CONSTEXPR_EXPECT    ( (eve::pattern<0,1,2,3,4,5,6,7>  ).strictly_under(8) );
+  TTS_CONSTEXPR_EXPECT    ( (eve::pattern<0,0,1,1,2,2,3,3>  ).under(3)          );
+  TTS_CONSTEXPR_EXPECT    ( (eve::pattern<4,5,6,7,8,9,10,11>).strictly_over(2)  );
+  TTS_CONSTEXPR_EXPECT    ( (eve::pattern<4,5,6,7,8,9,10,11>).over(4)           );
 }
 
 TTS_CASE("Check lambda-pattern comparison operators")
