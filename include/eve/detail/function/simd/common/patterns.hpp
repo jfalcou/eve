@@ -44,12 +44,12 @@ namespace eve::detail
       return os << "identity_swizzle";
     }
 
-    template<typename Wide, typename Cardinal>
-    EVE_FORCEINLINE auto operator()(Wide v, Cardinal) const
+    template<typename Wide, typename Pattern>
+    EVE_FORCEINLINE auto operator()(Wide v, Pattern p) const
     {
       constexpr auto cd = cardinal_v<Wide>;
-      constexpr auto sz = Cardinal::value;
-      using that_t      = as_wide_t<Wide,Cardinal>;
+      constexpr auto sz = Pattern::size();
+      using that_t      = as_wide_t<Wide,fixed<sz>>;
 
             if constexpr(sz     >= cd ) return that_t(v.storage());
       else  if constexpr(cd/sz  == 2  ) return that_t(v.slice(lower_).storage());

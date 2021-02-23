@@ -36,7 +36,7 @@ namespace eve::detail
 
           if constexpr( is_zero<I0,I...>        ) return bound{zero_swizzle{}       , sz};
     else  if constexpr( is_broadcast<I0,I...>   ) return bound{broadcast, index<I0> , sz};
-    else  if constexpr( is_identity<I0,I...>    ) return bound{identity_swizzle{}   , sz};
+    else  if constexpr( is_identity<I0,I...>    ) return bound{identity_swizzle{}   , p };
     else                                          return bound{basic_swizzle        , p };
   }
 }
