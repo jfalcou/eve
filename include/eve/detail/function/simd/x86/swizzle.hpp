@@ -60,7 +60,7 @@ namespace eve::detail
   template<typename T, typename N, x86_abi ABI, shuffle_pattern Pattern>
   EVE_FORCEINLINE auto basic_swizzle_( EVE_SUPPORTS(sse2_), wide<T,N,ABI> const& v, Pattern const&)
   {
-    constexpr auto sz = Pattern::size(N::value);
+    constexpr auto sz = Pattern::size();
     using that_t      = as_wide_t<wide<T,N,ABI>,fixed<sz>>;
 
     constexpr Pattern q = {};
@@ -98,12 +98,12 @@ namespace eve::detail
       }
       else if constexpr(sizeof(T) == 2)
       {
-        if constexpr( (sz < 8) && (q < 4) )
+        if constexpr( (sz < 8) && q.strictly_under(4) )
         {
           constexpr auto m  = _MM_SHUFFLE(q(3,4)&3, q(2,4)&3, q(1,4)&3, q(0,4)&3);
           return process_zeros(that_t{_mm_shufflelo_epi16(v,m)},q);
         }
-        else if constexpr( (sz < 8) && (q >= 4) )
+        else if constexpr( (sz < 8) && q.over(4) )
         {
           constexpr auto m  = _MM_SHUFFLE(q(3,4)&3, q(2,4)&3, q(1,4)&3, q(0,4)&3);
           return process_zeros(that_t{_mm_bsrli_si128(_mm_shufflehi_epi16(v,m),8)},q);
@@ -129,10 +129,10 @@ namespace eve::detail
   // AVX+ variant
   //================================================================================================
   template<typename T, typename N, x86_abi ABI, shuffle_pattern Pattern>
-  EVE_FORCEINLINE auto basic_swizzle_( EVE_SUPPORTS(avx_), wide<T,N,ABI> const& v, Pattern const& p)
+  EVE_FORCEINLINE auto basic_swizzle_( EVE_SUPPORTS(avx_), wide<T,N,ABI> const& v, Pattern const&)
   {
     constexpr auto cd = N::value;
-    constexpr auto sz = Pattern::size(cd);
+    constexpr auto sz = Pattern::size();
     using that_t      = as_wide_t<wide<T,N,ABI>,fixed<sz>>;
 
     constexpr auto width_in   = cd*sizeof(T);
@@ -151,8 +151,8 @@ namespace eve::detail
       if constexpr(width_out <= 16)       return basic_swizzle_(EVE_RETARGET(cpu_),v,q);
       else if constexpr(width_out == 32)
       {
-              if constexpr( q <  cd/2 )  return v.slice(lower_)[ q ];
-        else  if constexpr( q >= cd/2 )  return v.slice(upper_)[ slide_pattern<cd/2,sz>(q) ];
+              if constexpr( q.strictly_under(cd/2) )  return v.slice(lower_)[q];
+        else  if constexpr( q.over(cd/2) )            return v.slice(upper_)[slide_pattern<cd/2,sz>(q)];
         /// TODO: optimize using SSSE3 + binary shuffle
         else                             return basic_swizzle_(EVE_RETARGET(cpu_),v,q);
       }
@@ -175,8 +175,8 @@ namespace eve::detail
     {
       if constexpr(width_out <= 16)
       {
-              if constexpr( q <  (cd/2) ) return v.slice(lower_)[ q ];
-        else  if constexpr( q >= (cd/2) ) return v.slice(upper_)[ slide_pattern<cd/2,sz>(q) ];
+              if constexpr( q.strictly_under(cd/2) )  return v.slice(lower_)[ q ];
+        else  if constexpr( q.over(cd/2) )            return v.slice(upper_)[ slide_pattern<cd/2,sz>(q) ];
         /// TODO: optimize using SSSE3 + binary shuffle
         else                              return basic_swizzle_(EVE_RETARGET(cpu_),v,q);
       }

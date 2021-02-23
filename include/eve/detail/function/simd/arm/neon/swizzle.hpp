@@ -20,7 +20,7 @@ namespace eve::detail
   template<typename T, typename N, arm_abi ABI, shuffle_pattern Pattern>
   EVE_FORCEINLINE auto basic_swizzle_( EVE_SUPPORTS(neon128_), wide<T,N,ABI> const& v, Pattern const&)
   {
-    constexpr auto sz = Pattern::size(N::value);
+    constexpr auto sz = Pattern::size();
     using that_t      = as_wide_t<wide<T,N,ABI>,fixed<sz>>;
 
     constexpr Pattern q = {};
@@ -75,10 +75,10 @@ namespace eve::detail
           }
           else
           {
-            uint8x8x2_t lh    = {{ vget_low_u8(b0), vget_high_u8(b0) }};
-            bytes_t that  = vcombine_u8 ( vtbl2_u8(lh, vget_low_u8 (mask))
-                                        , vtbl2_u8(lh, vget_high_u8(mask))
-                                        );
+            uint8x8x2_t lh  = {{ vget_low_u8(b0), vget_high_u8(b0) }};
+            bytes_t that    = vcombine_u8 ( vtbl2_u8(lh, vget_low_u8 (mask))
+                                          , vtbl2_u8(lh, vget_high_u8(mask))
+                                          );
 
             return bit_cast(that,as_<that_t>());
           }

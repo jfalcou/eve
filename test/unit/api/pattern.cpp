@@ -62,27 +62,27 @@ TTS_CASE("Check lambda-pattern random access behavior")
 
 TTS_CASE("Check pattern comparison operators")
 {
-  TTS_CONSTEXPR_EQUAL         ( (eve::pattern<0,1,2,3>)           , (eve::pattern<0,1,2,3>) );
-  TTS_CONSTEXPR_NOT_EQUAL     ( (eve::pattern<0,1,2,3>)           , (eve::pattern<0,2,1,3>) );
-  TTS_CONSTEXPR_LESS          ( (eve::pattern<0,1,2,3,4,5,6,7>  ) , 8                       );
-  TTS_CONSTEXPR_LESS_EQUAL    ( (eve::pattern<0,0,1,1,2,2,3,3>  ) , 3                       );
-  TTS_CONSTEXPR_GREATER       ( (eve::pattern<4,5,6,7,8,9,10,11>) , 2                       );
-  TTS_CONSTEXPR_GREATER_EQUAL ( (eve::pattern<4,5,6,7,8,9,10,11>) , 4                       );
+  TTS_CONSTEXPR_EQUAL     ( (eve::pattern<0,1,2,3>)           , (eve::pattern<0,1,2,3>) );
+  TTS_CONSTEXPR_NOT_EQUAL ( (eve::pattern<0,1,2,3>)           , (eve::pattern<0,2,1,3>) );
+  TTS_CONSTEXPR_EXPECT    ( (eve::pattern<0,1,2,3,4,5,6,7>  ).strictly_under(8)         );
+  TTS_CONSTEXPR_EXPECT    ( (eve::pattern<0,0,1,1,2,2,3,3>  ).under(3)                  );
+  TTS_CONSTEXPR_EXPECT    ( (eve::pattern<4,5,6,7,8,9,10,11>).strictly_over(2)          );
+  TTS_CONSTEXPR_EXPECT    ( (eve::pattern<4,5,6,7,8,9,10,11>).over(4)                   );
 }
 
 TTS_CASE("Check lambda-pattern comparison operators")
 {
   constexpr auto s = eve::fix_pattern<8>([](auto i, auto) { return 2*(i/2); });
 
-  TTS_CONSTEXPR_EQUAL         ( s , (eve::pattern<0,0,2,2,4,4,6,6>) );
-  TTS_CONSTEXPR_NOT_EQUAL     ( s , (eve::pattern<0,2,1,3,5,4,2,1>) );
-  TTS_CONSTEXPR_LESS          ( s , 8 );
-  TTS_CONSTEXPR_LESS_EQUAL    ( s , 6 );
+  TTS_CONSTEXPR_EQUAL     ( s , (eve::pattern<0,0,2,2,4,4,6,6>) );
+  TTS_CONSTEXPR_NOT_EQUAL ( s , (eve::pattern<0,2,1,3,5,4,2,1>) );
+  TTS_CONSTEXPR_EXPECT    ( s.strictly_under(8) );
+  TTS_CONSTEXPR_EXPECT    ( s.under(6) );
 
   constexpr auto t = eve::fix_pattern<8>([](auto i, auto) { return 2*(i/2)+4; });
 
-  TTS_CONSTEXPR_GREATER       ( t, 2 );
-  TTS_CONSTEXPR_GREATER_EQUAL ( t, 4 );
+  TTS_CONSTEXPR_EXPECT( t.strictly_over(2) );
+  TTS_CONSTEXPR_EXPECT( t.over(4) );
 }
 
 TTS_CASE("Check pattern_clamp effects")

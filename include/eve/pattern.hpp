@@ -49,10 +49,10 @@ namespace eve
       return i<sz ? data[i] : -1;
     }
 
-    constexpr bool operator>  (std::ptrdiff_t n) const noexcept { return ((I  > n || I == -1) && ...); }
-    constexpr bool operator<  (std::ptrdiff_t n) const noexcept { return ((I  < n || I == -1) && ...); }
-    constexpr bool operator>= (std::ptrdiff_t n) const noexcept { return ((I >= n || I == -1) && ...); }
-    constexpr bool operator<= (std::ptrdiff_t n) const noexcept { return ((I <= n || I == -1) && ...); }
+    constexpr bool strictly_over(std::ptrdiff_t n) const noexcept { return ((I  > n || I == -1) && ...); }
+    constexpr bool strictly_under(std::ptrdiff_t n) const noexcept { return ((I  < n || I == -1) && ...); }
+    constexpr bool over(std::ptrdiff_t n) const noexcept { return ((I >= n || I == -1) && ...); }
+    constexpr bool under(std::ptrdiff_t n) const noexcept { return ((I <= n || I == -1) && ...); }
 
     constexpr bool operator==(pattern_t) const noexcept { return true; }
     constexpr bool operator!=(pattern_t) const noexcept { return false; }
