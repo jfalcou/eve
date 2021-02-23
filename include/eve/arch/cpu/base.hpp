@@ -109,7 +109,7 @@ namespace eve::detail
     }
 
     template<std::ptrdiff_t... I>
-    EVE_FORCEINLINE auto operator[](pattern_t<I...> p) const noexcept
+    EVE_FORCEINLINE auto operator[](pattern_t<I...>) const noexcept
     requires(pattern_t<I...>{}.validate(cardinal_v<Derived>))
     {
       constexpr auto swizzler = find_optimized_pattern<I...>();
