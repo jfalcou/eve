@@ -60,40 +60,6 @@ TTS_CASE("Check lambda-pattern random access behavior")
   TTS_CONSTEXPR_EQUAL(eve::fix_pattern<4>(f)(3,4),-1);
 }
 
-TTS_CASE("Check pattern similarity")
-{
-  constexpr auto q = eve::pattern<0,1,2,3,4,5,6,7>;
-
-  TTS_CONSTEXPR_EXPECT_NOT( q.is_similar(eve::pattern<0,1>)                       );
-  TTS_CONSTEXPR_EXPECT_NOT( q.is_similar(eve::pattern<1,0>)                       );
-  TTS_CONSTEXPR_EXPECT_NOT( q.is_similar(eve::pattern<0,1,2>)                     );
-  TTS_CONSTEXPR_EXPECT_NOT( q.is_similar(eve::pattern<2,1,0>)                     );
-  TTS_CONSTEXPR_EXPECT_NOT( q.is_similar(eve::pattern<0,1,2,3>)                   );
-  TTS_CONSTEXPR_EXPECT_NOT( q.is_similar(eve::pattern<1,2,3,0>)                   );
-  TTS_CONSTEXPR_EXPECT    ( (eve::pattern<0,1>.is_similar(q))                     );
-  TTS_CONSTEXPR_EXPECT    ( (eve::pattern<0,1,2>.is_similar(q))                   );
-  TTS_CONSTEXPR_EXPECT    ( (eve::pattern<0,1,2,3>.is_similar(q))                 );
-  TTS_CONSTEXPR_EXPECT    ( q.is_similar(eve::pattern<0,1,2,3,4,5,6,7>)           );
-  TTS_CONSTEXPR_EXPECT    ( q.is_similar(eve::pattern<0,1,2,3,4,5,6,7,8,9,10,15>) );
-}
-
-TTS_CASE("Check swizzle similarity")
-{
-  constexpr auto f = [](auto i, auto) { return 2*(i/2); };
-  constexpr auto s = eve::fix_pattern<4>(f);
-
-  TTS_CONSTEXPR_EXPECT_NOT( s.is_similar(eve::pattern<0,1>)       );
-  TTS_CONSTEXPR_EXPECT_NOT( s.is_similar(eve::pattern<1,0>)       );
-  TTS_CONSTEXPR_EXPECT_NOT( s.is_similar(eve::pattern<0,1,2>)     );
-  TTS_CONSTEXPR_EXPECT_NOT( s.is_similar(eve::pattern<2,1,0>)     );
-  TTS_CONSTEXPR_EXPECT_NOT( s.is_similar(eve::pattern<0,1,2,3>)   );
-  TTS_CONSTEXPR_EXPECT_NOT( s.is_similar(eve::pattern<1,2,3,0>)   );
-  TTS_CONSTEXPR_EXPECT    ( (eve::pattern<0>.is_similar(s))       );
-  TTS_CONSTEXPR_EXPECT    ( (eve::pattern<0,0>.is_similar(s))     );
-  TTS_CONSTEXPR_EXPECT    ( (eve::pattern<0,0,2>.is_similar(s))   );
-  TTS_CONSTEXPR_EXPECT    ( (eve::pattern<0,0,2,2>.is_similar(s)) );
-}
-
 TTS_CASE("Check pattern comparison operators")
 {
   TTS_CONSTEXPR_EQUAL         ( (eve::pattern<0,1,2,3>)           , (eve::pattern<0,1,2,3>) );

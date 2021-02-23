@@ -21,9 +21,9 @@ namespace eve
   //================================================================================================
   template<std::ptrdiff_t... I> struct pattern_t
   {
-    static inline constexpr auto size(int) noexcept { return sizeof...(I); }
+    static inline constexpr auto size() noexcept { return sizeof...(I); }
 
-    static inline constexpr bool has_zeros(int) noexcept
+    static inline constexpr bool has_zeros() noexcept
     {
       return ((I == -1) || ... || false);
     }
@@ -48,15 +48,6 @@ namespace eve
 
       return i<sz ? data[i] : -1;
     }
-
-    template<std::ptrdiff_t... O>
-    constexpr auto is_similar(pattern_t<I..., O...>) const noexcept requires(sizeof...(I)>0)
-    {
-      return true;
-    }
-
-    template<std::ptrdiff_t... O>
-    constexpr auto is_similar(pattern_t<O...>) const  noexcept { return false; }
 
     constexpr bool operator>  (std::ptrdiff_t n) const noexcept { return ((I  > n || I == -1) && ...); }
     constexpr bool operator<  (std::ptrdiff_t n) const noexcept { return ((I  < n || I == -1) && ...); }

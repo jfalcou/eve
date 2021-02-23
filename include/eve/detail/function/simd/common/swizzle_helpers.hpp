@@ -25,7 +25,7 @@ namespace eve::detail
     constexpr auto sz = cardinal_v<Pack>;
     using type = typename Pack::value_type;
 
-    if constexpr( p.has_zeros(sz) )
+    if constexpr( p.has_zeros() )
     {
       // Turn pattern into 0/~0 then mask
       auto const impl = [=](auto... i)
