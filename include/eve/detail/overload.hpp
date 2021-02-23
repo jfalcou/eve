@@ -169,10 +169,4 @@ namespace eve
   template<typename F>
   struct supports_optimized_conversion : std::false_type
   {};
-
-  //==============================================================================================
-  // Traits for function working as shuffle pattern
-  template<typename F>
-  struct is_pattern : std::false_type
-  {};
 }

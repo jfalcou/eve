@@ -113,19 +113,13 @@ namespace eve::detail
     requires(pattern_t<I...>{}.validate(cardinal_v<Derived>))
     {
       constexpr auto swizzler = find_optimized_pattern<I...>();
-      return swizzler(self(), p);
+      return swizzler(self());
     }
 
     template<typename F>
     EVE_FORCEINLINE auto operator[](as_pattern<F> p) const noexcept
     {
       return self()[ fix_pattern<cardinal_v<Derived>>(p) ];
-    }
-
-    template<typename F>
-    EVE_FORCEINLINE auto operator[](callable_object<F> p) const noexcept requires( is_pattern<F>::value )
-    {
-      return p(self());
     }
 
     //==============================================================================================
