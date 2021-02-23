@@ -37,19 +37,19 @@ namespace eve::detail
   //================================================================================================
   // Local silly helper that doesn't warrant an actual functor
   //================================================================================================
-  struct perform_identity
+  struct identity_swizzle
   {
-    friend std::ostream& operator<<(std::ostream& os, perform_identity)
+    friend std::ostream& operator<<(std::ostream& os, identity_swizzle)
     {
-      return os << "perform_identity";
+      return os << "identity_swizzle";
     }
 
-    template<typename Wide, typename Pattern>
-    EVE_FORCEINLINE auto operator()(Wide v, Pattern p) const
+    template<typename Wide, typename Cardinal>
+    EVE_FORCEINLINE auto operator()(Wide v, Cardinal) const
     {
       constexpr auto cd = cardinal_v<Wide>;
-      constexpr auto sz = Pattern::size(cd);
-      using that_t      = as_wide_t<Wide,fixed<sz>>;
+      constexpr auto sz = Cardinal::value;
+      using that_t      = as_wide_t<Wide,Cardinal>;
 
             if constexpr(sz     >= cd ) return that_t(v.storage());
       else  if constexpr(cd/sz  == 2  ) return that_t(v.slice(lower_).storage());
@@ -57,11 +57,11 @@ namespace eve::detail
     }
   };
 
-  struct perform_zero
+  struct zero_swizzle
   {
-    friend std::ostream& operator<<(std::ostream& os, perform_zero)
+    friend std::ostream& operator<<(std::ostream& os, zero_swizzle)
     {
-      return os << "perform_zero";
+      return os << "zero_swizzle";
     }
 
     template<typename Wide, typename Cardinal>
