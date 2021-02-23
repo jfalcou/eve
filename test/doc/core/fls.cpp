@@ -1,4 +1,4 @@
-#include <eve/function/pedantic/ffs.hpp>
+#include <eve/function/pedantic/fls.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 
@@ -10,13 +10,13 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pi                = " << pi << '\n'
-            << "-> ffs(pi)           = " << eve::ffs(pi) << '\n'
-            << "-> pedantic(fls)(pi) = " << eve::pedantic(eve::ffs)(pi) << '\n';
+            << "-> fls(pi)           = " << eve::fls(pi) << '\n'
+            << "-> pedantic(fls)(pi) = " << eve::pedantic(eve::fls)(pi) << '\n';
 
   std::uint32_t xf = 48;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf              = " << xf << '\n'
-            << "-> ffs(xf) = " << eve::ffs(xf) << '\n';
+            << "-> fls(xf) = " << eve::fls(xf) << '\n';
   return 0;
 }

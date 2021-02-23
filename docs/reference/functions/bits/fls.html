@@ -8,24 +8,24 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::ffs`
+                           `eve::fls`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/ffs.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/fls.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  inline constexpr /*unspecified*/ ffs = /*unspecified*/;
+  inline constexpr /*unspecified*/ fls = /*unspecified*/;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing the ffs operation.
+Function object representing the fls operation.
 
 Member functions
 ====================================================================================================
@@ -34,7 +34,7 @@ Member functions
 template< unsigned_value T > auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs the  [element-wise](../../../glossary.html#element-wise) ffs operation on its parameter.
+Performs the  [element-wise](../../../glossary.html#element-wise) fls operation on its parameter.
 
 
 Parameters
@@ -45,7 +45,7 @@ Parameters
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Computes [element-wise](../../../glossary.html#element-wise_) the index or position of the least
+Computes [element-wise](../../../glossary.html#element-wise_) the index or position of the last
 significant bit set to one in the word counting from the least significant bit position. The result
 is undefined for a zero input if the pedantic decorator is not used.
 
@@ -54,17 +54,16 @@ Supported decorators
 [`pedantic`](../decorators.html#pedantic)
 :   **Required header: **<script type="preformatted">` #include <eve/function/pedantic/abs.hpp>`</script>
 
-:   The expression `pedantic(ffs)(x)` returns the size of the element type (an out of range index) if
+:   The expression `pedantic(fls)(x)` returns the size of the element type (an out of range index) if
     the input is zero.
 
-  (insert ../../src/ffs.src.html here)
+  (insert ../../src/fls.src.html here)
 
-  (insert ../../out/ffs.out.html here)
+  (insert ../../out/fls.out.html here)
 
 See Also
 ====================================================================================================
-[eve::fls](./fls.html)
-
+[eve::ffs](./ffs.html)
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">
