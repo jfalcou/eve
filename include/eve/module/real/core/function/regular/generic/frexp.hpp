@@ -1,11 +1,8 @@
 //==================================================================================================
 /**
-   EVE - Expressive Vector Engine
-   Copyright 2020 Jean-Thierry LAPRESTE
-   Copyright 2020 Joel FALCOU
-
-   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
-   SPDX-License-Identifier: MIT
+  EVE - Expressive Vector Engine
+  Copyright : EVE Contributors & Maintainers
+  SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
 #pragma once

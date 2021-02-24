@@ -1,17 +1,10 @@
-///////////////////////////////////////////////////////////////////////////
-// this file is a tempory patch to be include until the proper boost file
-//  <boost/math/special_functions/cos_pi.hpp> is corrected
-///////////////////////////////////////////////////////////////////////////
-
-//  Copyright (c) 2007 John Maddock
-//  Use, modification and distribution are subject to the
-//  Boost Software License, Version 1.0. (See accompanying file
-//  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-
-#ifndef BOOST_MATH_COS_PI_HPP
-#define BOOST_MATH_COS_PI_HPP
-
-#ifdef _MSC_VER
+//==================================================================================================
+/**
+  EVE - Expressive Vector Engine
+  Copyright : EVE Contributors & Maintainers
+  SPDX-License-Identifier: MIT
+**/
+//==================================================================================================
 #pragma once
 #endif
 
