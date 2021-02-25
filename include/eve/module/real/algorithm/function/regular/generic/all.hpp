@@ -37,6 +37,11 @@ namespace eve::detail
     }
     else
     {
+      if constexpr ( !top_bits<T>::is_cheap && !C::is_complete )
+      {
+        if ( eve::all[ignore_none](v) ) return true;
+      }
+
       top_bits mmask{v};
       top_bits<T> ignore_mmask{cond};
 
