@@ -15,11 +15,10 @@
 
 namespace eve::detail
 {
-  template<simd_value T, relative_conditional_expr C>
+  template<logical_simd_value T, relative_conditional_expr C>
   EVE_FORCEINLINE bool all_(EVE_SUPPORTS(cpu_), C const &cond, T const &v) noexcept
   {
-         if constexpr ( !is_logical_v<T> ) return eve::all[cond](to_logical(v));
-    else if constexpr ( C::is_complete && !C::is_inverted ) return true;
+         if constexpr ( C::is_complete && !C::is_inverted ) return true;
     else if constexpr ( has_emulated_abi_v<T> )
     {
       bool res = true;
@@ -51,8 +50,13 @@ namespace eve::detail
     }
   }
 
+  EVE_FORCEINLINE bool all_(EVE_SUPPORTS(cpu_), bool v) noexcept
+  {
+    return v;
+  }
+
   template<value T>
-  EVE_FORCEINLINE bool all_(EVE_SUPPORTS(cpu_), T const &v) noexcept
+  EVE_FORCEINLINE bool all_(EVE_SUPPORTS(cpu_), logical<T> const &v) noexcept
   {
     if constexpr( scalar_value<T> ) return bool(v);
     else                            return eve::all[ignore_none](v);

@@ -19,45 +19,13 @@
 TTS_CASE_TPL("Check eve::all return type", EVE_TYPE)
 {
   TTS_EXPR_IS( (eve::all(eve::logical<T>())) , bool);
-  TTS_EXPR_IS( (eve::all(T()))               , bool);
 }
 
-TTS_CASE_TPL("Check eve::all behavior on arithmetic", EVE_TYPE)
+TTS_CASE_TPL("Check eve::all bool", EVE_TYPE)
 {
-  TTS_EXPECT    ( (eve::all(T{1})) );
-  TTS_EXPECT_NOT( (eve::all(T{0})) );
-
-  if constexpr(eve::floating_value<T>)
-  {
-    if constexpr( eve::platform::supports_nans )
-    {
-      TTS_EXPECT(eve::all(eve::nan(eve::as<T>())));
-    }
-
-    TTS_EXPECT_NOT(eve::all(T(-0.)));
-  }
-
-#if defined(EVE_SIMD_TESTS)
-  for(int j=0; j < EVE_CARDINAL; ++j)
-  {
-    T rhs1,rhs2, rhs3, rhs4;
-
-    for(int i=0; i< EVE_CARDINAL; ++i)
-    {
-      rhs1.set(i, i >= j ? 0 : 1);
-      rhs2.set(i, i <= j ? 0 : 1);
-      rhs3.set(i, i == j ? 0 : 1);
-      rhs4.set(i, i == j ? 1 : 0);
-    }
-
-    TTS_EXPECT_NOT(eve::all(rhs1));
-    TTS_EXPECT_NOT(eve::all(rhs2));
-    TTS_EXPECT_NOT(eve::all(rhs3));
-
-    if constexpr(EVE_CARDINAL == 1) TTS_EXPECT(eve::all(rhs4));
-    else                        TTS_EXPECT_NOT(eve::all(rhs4));
-  }
-#endif
+  TTS_EXPR_IS( (eve::all(bool{})) , bool);
+  TTS_EXPECT    ( (eve::all(true)) );
+  TTS_EXPECT_NOT( (eve::all(false)) );
 }
 
 TTS_CASE_TPL("Check eve::all behavior on logical", EVE_TYPE)
@@ -68,12 +36,12 @@ TTS_CASE_TPL("Check eve::all behavior on logical", EVE_TYPE)
 
 #if defined(EVE_SIMD_TESTS)
 
-TTS_CASE_TPL("Check eve::all[ignore]", EVE_TYPE)
+TTS_CASE_TPL("Check eve::all[ignore](simd)", EVE_TYPE)
 {
   // complete
   {
     eve::logical<T> mask(true);
-
+    TTS_EXPECT(eve::all(mask));
     TTS_EXPECT(eve::all[eve::ignore_none](mask));
 
     mask = eve::logical<T>{false};
@@ -93,11 +61,23 @@ TTS_CASE_TPL("Check eve::all[ignore]", EVE_TYPE)
     TTS_EXPECT_NOT(eve::all[eve::ignore_last(T::static_size - 1)](mask));
   }
 
+  // every element
+  {
+    eve::logical<T> mask(true);
+
+    for( int i = 0; i != T::static_size; ++i)
+    {
+      mask.set(i, false);
+      TTS_EXPECT_NOT(eve::all(mask));
+      mask.set(i, true);
+    }
+  }
+
   // ignore_first, keep_last
   {
     eve::logical<T> mask(true);
 
-    for(int i = 0; i != T::static_size; ++i )
+    for(int i = 0; i != T::static_size; ++i)
     {
       TTS_EXPECT(eve::all[eve::ignore_first(i)](mask));
       mask.set(i, false);
@@ -113,7 +93,7 @@ TTS_CASE_TPL("Check eve::all[ignore]", EVE_TYPE)
   {
     eve::logical<T> mask(true);
 
-    for(int i = 0; i != T::static_size; ++i )
+    for(int i = 0; i != T::static_size; ++i)
     {
       TTS_EXPECT(eve::all[eve::ignore_last(i)](mask));
       mask.set(T::static_size - i - 1, false);
