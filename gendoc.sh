@@ -1,17 +1,15 @@
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
-##  Copyright 2020 Joel FALCOU
-##  Copyright 2020 Jean-Thierry LAPRESTE
-##
-##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+##  Copyright : EVE Contributors & Maintainers
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 #!/usr/bin/env bash
 
+
 echo "<!--"
 echo "  EVE -  Expressive Vector Engine"
-echo "  Copyright 2020 Joel FALCOU"
-echo "  Copyright 2020 Jean-Thierry LAPRESTE"
+echo "  Copyright : EVE Contributors & Maintainers"
+echo "  SPDX-License-Identifier: MIT"
 echo ""
 echo "  Licensed under the MIT License <http://opensource.org/licenses/MIT>."
 echo "  SPDX-License-Identifier: MIT"

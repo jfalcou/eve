@@ -18,7 +18,7 @@ needs to change.
 
 ## Bibliographic References
 
-If you want to refer to EVE, you can currently use those papers (by order of preference in citation). 
+If you want to refer to EVE, you can currently use those papers (by order of preference in citation).
 A new, more up-to-date EVE specific journal paper is in the work atm.
 
  - **Modern Generative Programming for Optimizing Small Matrix-Vector Multiplication**, Jules Penuchot, Joel Falcou, Amal Khabou in *HPCS 2018*
@@ -51,11 +51,11 @@ EVE is considered in **advanced beta**: it's usable, has an almost complete feat
    - VSX
  - **ARM**
    - NEON (64 & 128 bits)
-   - AARCH64 
-   
+   - AARCH64
+
  - We **do not support** ARM SVE as the execution model makes no sense and the current compiler support is not adequate for us.
- - We **do not support** GPGPU, this is the job for another tool. 
- 
+ - We **do not support** GPGPU, this is the job for another tool.
+
 ### Current roaster of supported compiler
 
 EVE requires a C++ 20 compliant compiler. The main features from C++17/20 we require are:
@@ -65,9 +65,9 @@ EVE requires a C++ 20 compliant compiler. The main features from C++17/20 we req
  - Non-Type Template Parameters
  - `if constexpr`
  - Functions from `<bits>`
- 
+
 Here is the current minimal compiler version supported:
- 
+
 | Compiler       | Version       |
 | -------------- | ------------- |
 | g++            | 10.2 or above |
@@ -81,7 +81,7 @@ Visual Studio support is currently being added. Help on the front of setting up 
  - **Why C++20 ?** Because we want to be able to use modern design components like Concepts, and later on, Modules. C++14 is for 2014.
    We fully know it may hinders adoption in some situation, but we're not running a race. We value proper design and API choice over
    complex retro-compatibility.
- 
+
  - **Why this instead of std::simd or any other libraries?** EVE is a playground for testing proper
    design and implementation decisions for such libraries. Vc and its standard version are fine pieces
    of work but we aim at pushing the envelop in term of API and implementation without any standard
@@ -98,11 +98,10 @@ Visual Studio support is currently being added. Help on the front of setting up 
 
  ## License
 
-  ```
-  MIT License
+```
+MIT License
 
-Copyright (c) 2018-2020 Joel FALCOU
-Copyright (c) 2018-2020 Jean-Thierry LAPRESTE
+Copyright : EVE Contributors & Maintainers
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

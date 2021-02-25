@@ -1,10 +1,7 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
@@ -22,4 +19,3 @@ auto r1  = eve::bit_cast(a , eve::int8 );
 auto r2  = eve::bit_cast(a , as(vb)     );
 auto r3  = eve::bit_cast(va, eve::int8 );
 auto r4  = eve::bit_cast(va, as(vb)     );
-
