@@ -1,15 +1,11 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_SIGNGAM_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_GENERIC_SIGNGAM_HPP_INCLUDED
+#pragma once
 
 #include <eve/concept/value.hpp>
 #include <eve/constant/minf.hpp>
@@ -45,5 +41,3 @@ namespace eve::detail
       return apply_over(signgam, a0);
   }
 }
-
-#endif

@@ -1,11 +1,8 @@
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
-##  Copyright 2018 Joel FALCOU
-##
-##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+##  Copyright : EVE Contributors & Maintainers
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
-
 add_custom_target(unit.real.scalar.exe)
 add_custom_target(unit.real.simd.exe  )
 add_dependencies(unit.scalar.exe  unit.real.scalar.exe )

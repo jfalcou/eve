@@ -1,11 +1,8 @@
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
-##  Copyright 2018 Joel FALCOU
-##
-##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+##  Copyright : EVE Contributors & Maintainers
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
-
 set(  SOURCES
       is_supported.cpp
       current_api.cpp

@@ -1,10 +1,9 @@
 //==================================================================================================
-/*
-  SPY - C++ Informations Broker
-  Copyright 2020-2021 Joel FALCOU
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+/**
+  EVE - Expressive Vector Engine
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
- */
+**/
 //==================================================================================================
 #ifndef SPY_SPY_HPP_INCLUDED
 #define SPY_SPY_HPP_INCLUDED
