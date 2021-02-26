@@ -45,8 +45,8 @@ namespace eve::detail
     std::ptrdiff_t idx[c];
 
     for(int i=0;i<c  ;++i)  idx[i] = p(i,c);
-    for(int i=0;i<c/2;++i)  if(idx[i] >= c/2)                 return false;
-    for(int i=c/2;i<c;++i)  if(idx[i] <  c/2 && idx[i] != -1) return false;
+    for(int i=0;i<c/2;++i)  if(idx[i] >= c/2)                   return false;
+    for(int i=c/2;i<c;++i)  if(idx[i] <  c/2 && idx[i] != na_)  return false;
 
     return true;
   }

@@ -19,7 +19,7 @@ void check_shuffle(T data, Pattern p, auto& runtime, bool verbose)
                         << tts::yellow() << p << tts::reset() << " :"
                         << std::endl;
 
-  ref_type ref( [&](auto i, auto c) { return p(i,c) == -1 ? type{0} : data.get(p(i,c)); });
+  ref_type ref( [&](auto i, auto c) { return p(i,c) == eve::na_ ? type{0} : data.get(p(i,c)); });
   TTS_EQUAL( data[p] , ref );
 }
 

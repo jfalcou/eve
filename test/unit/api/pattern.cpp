@@ -11,22 +11,26 @@
 
 TTS_CASE("Check pattern properties checks")
 {
+  using eve::na_;
+
   TTS_CONSTEXPR_EQUAL ( (eve::pattern<0,1,2,3>.size()), 4 );
 
-  TTS_CONSTEXPR_EXPECT    ( (eve::pattern<-1, 1, 2, 3>.has_zeros()));
-  TTS_CONSTEXPR_EXPECT    ( (eve::pattern< 0,-1, 2, 3>.has_zeros()));
-  TTS_CONSTEXPR_EXPECT    ( (eve::pattern< 0, 1,-1, 3>.has_zeros()));
-  TTS_CONSTEXPR_EXPECT    ( (eve::pattern< 0, 1, 2,-1>.has_zeros()));
+  TTS_CONSTEXPR_EXPECT    ( (eve::pattern<na_, 1, 2, 3>.has_zeros()));
+  TTS_CONSTEXPR_EXPECT    ( (eve::pattern< 0,na_, 2, 3>.has_zeros()));
+  TTS_CONSTEXPR_EXPECT    ( (eve::pattern< 0, 1,na_, 3>.has_zeros()));
+  TTS_CONSTEXPR_EXPECT    ( (eve::pattern< 0, 1, 2,na_>.has_zeros()));
   TTS_CONSTEXPR_EXPECT_NOT( (eve::pattern< 0, 1, 2, 3>.has_zeros()));
 
-  TTS_CONSTEXPR_EXPECT    ( (eve::pattern< 0,-1, 2,-1>.validate(4)) );
+  TTS_CONSTEXPR_EXPECT    ( (eve::pattern< 0,na_, 2,na_>.validate(4)) );
   TTS_CONSTEXPR_EXPECT    ( (eve::pattern< 0, 1, 2, 3>.validate(4)) );
   TTS_CONSTEXPR_EXPECT_NOT( (eve::pattern< 0, 1, 2, 4>.validate(4)) );
 }
 
 TTS_CASE("Check lambda-pattern properties checks")
 {
-  constexpr auto f = [](auto i, auto) { return i%2 ? -1 : i/2; };
+  using eve::na_;
+
+  constexpr auto f = [](auto i, auto) { return i%2 ? na_ : i/2; };
 
   TTS_CONSTEXPR_EQUAL ( eve::fix_pattern<4>(f).size(), 4   );
   TTS_CONSTEXPR_EXPECT( eve::fix_pattern<4>(f).has_zeros() );
@@ -49,12 +53,14 @@ TTS_CASE("Check pattern random access behavior")
 
 TTS_CASE("Check lambda-pattern random access behavior")
 {
-  constexpr auto f = [](auto i, auto) { return i%2 ? -1 : i/2; };
+  using eve::na_;
 
-  TTS_CONSTEXPR_EQUAL(eve::fix_pattern<4>(f)(1,4),-1);
+  constexpr auto f = [](auto i, auto) { return i%2 ? na_ : i/2; };
+
+  TTS_CONSTEXPR_EQUAL(eve::fix_pattern<4>(f)(1,4),na_);
   TTS_CONSTEXPR_EQUAL(eve::fix_pattern<4>(f)(0,4), 0);
   TTS_CONSTEXPR_EQUAL(eve::fix_pattern<4>(f)(2,4), 1);
-  TTS_CONSTEXPR_EQUAL(eve::fix_pattern<4>(f)(3,4),-1);
+  TTS_CONSTEXPR_EQUAL(eve::fix_pattern<4>(f)(3,4),na_);
 }
 
 TTS_CASE("Check pattern comparison operators")

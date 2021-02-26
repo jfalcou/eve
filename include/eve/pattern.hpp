@@ -119,7 +119,7 @@ namespace eve
   {
     return fix_pattern<N> ( [](auto i,auto c)
                             {
-                              auto v = Pattern{}(i,c)-O; return v < -1 ? -1 : v;
+                              auto v = Pattern{}(i,c)-O; return v < na_ ? na_ : v;
                             }
                           );
   }
