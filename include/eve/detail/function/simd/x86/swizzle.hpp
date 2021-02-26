@@ -54,11 +54,11 @@ namespace eve::detail
   //================================================================================================
   // SSE2-SSSE3 variant
   //================================================================================================
-  template<typename T, typename N, x86_abi ABI, shuffle_pattern Pattern>
-  EVE_FORCEINLINE auto basic_swizzle_( EVE_SUPPORTS(sse2_), wide<T,N,ABI> const& v, Pattern const&)
+  template<typename T, typename N, shuffle_pattern Pattern>
+  EVE_FORCEINLINE auto basic_swizzle_( EVE_SUPPORTS(sse2_), wide<T,N,x86_128_> const& v, Pattern const&)
   {
     constexpr auto sz = Pattern::size();
-    using that_t      = as_wide_t<wide<T,N,ABI>,fixed<sz>>;
+    using that_t      = as_wide_t<wide<T,N,x86_128_>,fixed<sz>>;
 
     constexpr Pattern q = {};
 
@@ -67,11 +67,18 @@ namespace eve::detail
     {
       return aggregate_swizzle(v,q);
     }
+    if constexpr(sizeof(T) == 8)
+    {
+      using f_t         = as_floating_point_t<that_t>;
+      auto const vv     = bit_cast(v,as_<f_t>{});
+      constexpr auto m  = _MM_SHUFFLE2(q(1,2)&1, q(0,2)&1);
+      return bit_cast(process_zeros(f_t{_mm_shuffle_pd(vv,vv,m)},q),as_<that_t>{});
+    }
     else if constexpr( current_api >= ssse3 )
     {
       using st_t    = typename that_t::storage_type;
       using bytes_t = typename that_t::template rebind<std::uint8_t,fixed<16>>;
-      using i_t     = as_integer_t<wide<T,N,ABI>>;
+      using i_t     = as_integer_t<wide<T,N,x86_128_>>;
 
       return that_t ( (st_t)_mm_shuffle_epi8( bit_cast(v,as_<i_t>{}).storage()
                                             , as_bytes<that_t>(q,as_<bytes_t>())
@@ -80,14 +87,7 @@ namespace eve::detail
     }
     else
     {
-      if constexpr(sizeof(T) == 8)
-      {
-        using f_t         = as_floating_point_t<that_t>;
-        auto const vv     = bit_cast(v,as_<f_t>{});
-        constexpr auto m  = _MM_SHUFFLE2(q(1,2)&1, q(0,2)&1);
-        return bit_cast(process_zeros(f_t{_mm_shuffle_pd(vv,vv,m)},q),as_<that_t>{});
-      }
-      else if constexpr(sizeof(T) == 4)
+      if constexpr(sizeof(T) == 4)
       {
         constexpr auto m  = _MM_SHUFFLE(q(3,4)&3, q(2,4)&3, q(1,4)&3, q(0,4)&3);
         if constexpr( std::same_as<T,float> ) return process_zeros(that_t{_mm_shuffle_ps(v,v,m)} ,q);
