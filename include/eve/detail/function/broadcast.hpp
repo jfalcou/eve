@@ -9,6 +9,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/concept/vectorized.hpp>
+#include <eve/pattern.hpp>
 
 namespace eve
 {
@@ -23,7 +24,7 @@ namespace eve
   {
     //==============================================================================================
     // Detects <N,...,N> as a broadcast
-    template<int I0, int... I> inline constexpr bool is_broadcast = ((I0 !=-1) && ... && (I0==I));
+    template<int I0, int... I> inline constexpr bool is_broadcast = ((I0 != na_) && ... && (I0==I));
   }
 }
 

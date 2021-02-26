@@ -29,7 +29,7 @@ namespace eve::detail
                         {
                           using i_t = as_integer_t<type,unsigned>;
                           constexpr i_t nz = ~i_t(0), zz = i_t(0);
-                          return Pack(bit_cast((p(i,sz)==-1 ? zz : nz),as_<type>())...);
+                          return Pack(bit_cast((p(i,sz) == na_ ? zz : nz),as_<type>())...);
                         };
 
       return v & apply<sz>(impl);
@@ -63,7 +63,7 @@ namespace eve::detail
     constexpr auto sz = Shuffler::size();
     constexpr auto b = sizeof(typename Pack::value_type);
 
-    return values< (p(I/b,sz) == -1 ? 0xFF : p(I/b,sz)*b+I%b)... >{};
+    return values< (p(I/b,sz) == na_ ? 0xFF : p(I/b,sz)*b+I%b)... >{};
   }
 
   template<typename Pack, typename Shuffler, typename Bytes>

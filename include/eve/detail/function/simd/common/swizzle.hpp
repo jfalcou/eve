@@ -84,7 +84,7 @@ namespace eve::detail
     {
       return [=]<std::ptrdiff_t... I>(pattern_t<I...> const&)
       {
-        return that_t{ (I == -1 ? T{0} : v.get(I))... };
+        return that_t{ (I == na_ ? T{0} : v.get(I))... };
       }(q);
     }
   }
