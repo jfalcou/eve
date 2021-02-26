@@ -76,10 +76,33 @@ struct top_bits
       }
     }
 
+    static constexpr bool is_cheap_impl()
+    {
+      if ( has_emulated_abi_v<logical_type> ) return true;
+      if constexpr ( is_aggregated ) return top_bits<half_logical>::is_cheap;
+
+      if ( x86_abi<abi_type> ) return true;
+
+      if ( arm_abi<abi_type> )
+      {
+        if ( static_size == 1 ) return true;
+        if ( static_size * sizeof(scalar_type) <= 4 ) return true;
+        if ( current_api >= eve::asimd )
+        {
+          if ( sizeof(scalar_type) >= 2 ) return true;
+          return static_size <= 8;  // 16 chars is expensive
+        }
+        return false;
+      }
+      return false;
+    }
+
   public:
     using storage_type = decltype(top_bits::storage_type_impl());
 
     storage_type storage;
+
+    static constexpr bool is_cheap = is_cheap_impl();
 
     // constructors ---------------------------------
 
