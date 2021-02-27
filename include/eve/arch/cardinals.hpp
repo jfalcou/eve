@@ -11,6 +11,9 @@
 
 namespace eve
 {
+  //================================================================================================
+  // Cardinal template class
+  //================================================================================================
   template<std::ptrdiff_t Cardinal>
   struct fixed : std::integral_constant<std::ptrdiff_t, Cardinal>
   {
@@ -42,5 +45,16 @@ namespace eve
 
   template<std::ptrdiff_t Cardinal>
   inline constexpr fixed<Cardinal> const lane = {};
-}
 
+  //================================================================================================
+  // Constant index template class
+  //================================================================================================
+  template<std::ptrdiff_t Index>
+  struct index_t : std::integral_constant<std::ptrdiff_t, Index>
+  {};
+
+  //================================================================================================
+  // Template inline object for passing index within a wide
+  //================================================================================================
+  template<std::ptrdiff_t N> inline constexpr auto index = index_t<N>{};
+}

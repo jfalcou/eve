@@ -13,6 +13,8 @@
 #include <eve/detail/function/lookup.hpp>
 #include <eve/detail/function/slice.hpp>
 #include <eve/detail/function/subscript.hpp>
+#include <eve/detail/function/swizzle.hpp>
+#include <eve/detail/function/patterns.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/detail/spy.hpp>
 
@@ -98,10 +100,26 @@ namespace eve::detail
       return detail::slice(self(), s);
     }
 
+    //==============================================================================================
+    // Reindexing operators
     template<typename Index>
     EVE_FORCEINLINE auto operator[](wide<Index,cardinal_t<Derived>> const& idx) const noexcept
     {
       return lookup(self(),idx);
+    }
+
+    template<std::ptrdiff_t... I>
+    EVE_FORCEINLINE auto operator[](pattern_t<I...>) const noexcept
+    requires(pattern_t<I...>{}.validate(cardinal_v<Derived>))
+    {
+      constexpr auto swizzler = find_optimized_pattern<I...>();
+      return swizzler(self());
+    }
+
+    template<typename F>
+    EVE_FORCEINLINE auto operator[](as_pattern<F> p) const noexcept
+    {
+      return self()[ fix_pattern<cardinal_v<Derived>>(p) ];
     }
 
     //==============================================================================================

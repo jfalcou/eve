@@ -16,6 +16,13 @@
 
 namespace eve::detail
 {
+  // Values list helper
+  template<auto... Values>
+  struct values
+  {
+    static constexpr auto size = sizeof...(Values);
+  };
+
   // Types list helper
   template<typename... Types>
   struct types
@@ -292,5 +299,17 @@ namespace eve::detail
     };
 
     return impl(std::make_index_sequence<Count>{});
+  }
+
+  // Tuple free apply from generator data
+  template<template<auto...> class Generator, auto... I, typename Func>
+  EVE_FORCEINLINE decltype(auto) apply(Func &&f, Generator<I...> const& g)
+  {
+    const auto impl = [&](Generator<I...> const &)
+    {
+      return std::forward<Func>(f)(std::integral_constant<std::size_t, I>{}...);
+    };
+
+    return impl(g);
   }
 }
