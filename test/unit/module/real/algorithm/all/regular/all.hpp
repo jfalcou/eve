@@ -21,7 +21,7 @@ TTS_CASE_TPL("Check eve::all return type", EVE_TYPE)
   TTS_EXPR_IS( (eve::all(eve::logical<T>())) , bool);
 }
 
-TTS_CASE_TPL("Check eve::all bool", EVE_TYPE)
+TTS_CASE("Check eve::all bool")
 {
   TTS_EXPR_IS( (eve::all(bool{})) , bool);
   TTS_EXPECT    ( (eve::all(true)) );
