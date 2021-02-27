@@ -10,6 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/bit_cast.hpp>
+#include <eve/function/replace.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 
 namespace eve::detail
@@ -79,6 +80,46 @@ namespace eve::detail
         ((store(v, cast(ptr, as_<Sub>{}) + k), k += Sub::static_size), ...);
       }
     );
+  }
+
+  template<simd_value T, relative_conditional_expr C, simd_compatible_ptr<T> Ptr>
+  EVE_FORCEINLINE void store_(EVE_SUPPORTS(cpu_),
+                              C const &cond,
+                              T const &value,
+                              Ptr ptr) noexcept
+  {
+         if constexpr ( C::is_complete && C::is_inverted ) store(value, ptr);
+    else if constexpr ( C::has_alternative )               store(replace_ignored(value, cond, cond.alternative), ptr);
+    else if constexpr ( C::is_complete ) return;
+    else if constexpr ( logical_simd_value<T> )
+    {
+      using mask_type_t = typename element_type_t<T>::mask_type;
+      if constexpr ( std::is_pointer_v<Ptr> ) store[cond](value.mask(), (mask_type_t*) ptr);
+      else
+      {
+        store[cond](value.mask(), typename Ptr::template rebind<mask_type_t>{(mask_type_t*)ptr.get()});
+      }
+    }
+    else if constexpr ( !std::is_pointer_v<Ptr> )           store[cond](value, ptr.get());
+    else if constexpr ( has_emulated_abi_v<T> )
+    {
+      auto offset = cond.offset( as_<T>{} );
+      auto count = cond.count( as_<T>{} );
+      using e_t = element_type_t<T>;
+      auto* src   = (e_t*)(&value.storage());
+      std::memcpy((void*)(ptr + offset), (void*)(src + offset), sizeof(e_t) * count);
+    }
+    else
+    {
+      using e_t = element_type_t<T>;
+
+      alignas(sizeof(T)) std::array<e_t, T::static_size> storage;
+      store(value, eve::aligned_ptr<e_t, sizeof(T)>(storage.begin()));
+
+      auto offset = cond.offset( as_<T>{} );
+      auto count = cond.count( as_<T>{} );
+      std::memcpy((void*)(ptr + offset), (void*)(storage.begin() + offset), sizeof(e_t) * count);
+    }
   }
 
   template<real_scalar_value T, typename S, typename ABI>

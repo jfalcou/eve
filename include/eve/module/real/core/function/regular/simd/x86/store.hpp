@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/concept/memory.hpp>
@@ -69,4 +70,92 @@ namespace eve::detail
       memcpy(ptr, (T const*)(&value), N::value * sizeof(T));
     }
   }
+
+  template< scalar_value T, typename N, x86_abi ABI
+          , relative_conditional_expr C
+          , simd_compatible_ptr<wide<T, N, ABI>> Ptr
+          >
+  EVE_FORCEINLINE void store_(EVE_SUPPORTS(sse2_),
+                              C const &cond,
+                              wide<T, N, ABI> const &v,
+                              Ptr ptr) noexcept
+  {
+
+         if constexpr ( C::is_complete || C::has_alternative ) store_(EVE_RETARGET(cpu_), cond, v, ptr);
+    else if constexpr ( current_api == eve::avx && std::is_integral_v<T> && sizeof(T) >= 4 )
+    {
+      using float_t = detail::make_floating_point_t<sizeof(T)>;
+      using wide_float_t = as_wide_t<float_t, N>;
+      store[cond](eve::bit_cast(v, as_<wide_float_t>{}), (float_t*) ptr);
+    }
+    else if constexpr ( ( current_api == eve::avx || current_api == eve::avx2 ) && sizeof(T) >= 4 )
+    {
+      if constexpr ( !std::is_pointer_v<Ptr> ) store[cond](v, ptr.get());
+      else
+      {
+        constexpr auto c = categorize<wide<T, N, ABI>>();
+
+        auto m = cond.mask(as(v));
+
+             if constexpr ( c == category::float64x2 )                         _mm_maskstore_pd   (ptr, m, v);
+        else if constexpr ( c == category::float64x4 )                         _mm256_maskstore_pd(ptr, m, v);
+        else if constexpr ( c == category::float32x4 )                         _mm_maskstore_ps   (ptr, m, v);
+        else if constexpr ( c == category::float32x8 )                         _mm256_maskstore_ps(ptr, m, v);
+        else if constexpr ( match(c, category::int64x2, category::uint64x2 ) ) _mm_maskstore_epi64( (long long*) ptr, m, v );
+        else if constexpr ( match(c, category::int64x4, category::uint64x4 ) ) _mm256_maskstore_epi64( (long long*) ptr, m, v );
+        else if constexpr ( match(c, category::int32x4, category::uint32x4 ) ) _mm_maskstore_epi32( (std::int32_t*) ptr, m, v );
+        else if constexpr ( match(c, category::int32x8, category::uint32x8 ) ) _mm256_maskstore_epi32( (std::int32_t*) ptr, m, v );
+      }
+    }
+    else if constexpr ( current_api >= eve::avx512 && !std::is_pointer_v<Ptr> )
+    {
+      if constexpr ( Ptr::alignment() < 16 || sizeof(T) < 4 ) store[cond](v, ptr.get());
+      else
+      {
+        constexpr auto c = categorize<wide<T, N, ABI>>();
+
+        auto m = cond.mask(as(v)).storage().value;
+
+             if constexpr ( c == category::float64x2 )                           _mm_mask_store_pd      (ptr.get(), m, v);
+        else if constexpr ( c == category::float64x4 )                           _mm256_mask_store_pd   (ptr.get(), m, v);
+        else if constexpr ( c == category::float64x8 )                           _mm512_mask_store_pd   (ptr.get(), m, v);
+        else if constexpr ( c == category::float32x4 )                           _mm_mask_store_ps      (ptr.get(), m, v);
+        else if constexpr ( c == category::float32x8 )                           _mm256_mask_store_ps   (ptr.get(), m, v);
+        else if constexpr ( c == category::float32x16 )                          _mm512_mask_store_ps   (ptr.get(), m, v);
+        else if constexpr ( match(c, category::int64x2, category::uint64x2 ) )   _mm_mask_store_epi64   (ptr.get(), m, v);
+        else if constexpr ( match(c, category::int64x4, category::uint64x4 ) )   _mm256_mask_store_epi64(ptr.get(), m, v);
+        else if constexpr ( match(c, category::int64x8, category::uint64x8 ) )   _mm512_mask_store_epi64(ptr.get(), m, v);
+        else if constexpr ( match(c, category::int32x4, category::uint32x4 ) )   _mm_mask_store_epi32   (ptr.get(), m, v);
+        else if constexpr ( match(c, category::int32x8, category::uint32x8 ) )   _mm256_mask_store_epi32(ptr.get(), m, v);
+        else if constexpr ( match(c, category::int32x16, category::uint32x16 ) ) _mm512_mask_store_epi32(ptr.get(), m, v);
+      }
+    }
+    else if constexpr ( current_api >= eve::avx512 )
+    {
+      constexpr auto c = categorize<wide<T, N, ABI>>();
+
+      auto m = cond.mask(as(v)).storage().value;
+
+           if constexpr ( c == category::float64x2 )                           _mm_mask_storeu_pd      (ptr, m, v);
+      else if constexpr ( c == category::float64x4 )                           _mm256_mask_storeu_pd   (ptr, m, v);
+      else if constexpr ( c == category::float64x8 )                           _mm512_mask_storeu_pd   (ptr, m, v);
+      else if constexpr ( c == category::float32x4 )                           _mm_mask_storeu_ps      (ptr, m, v);
+      else if constexpr ( c == category::float32x8 )                           _mm256_mask_storeu_ps   (ptr, m, v);
+      else if constexpr ( c == category::float32x16 )                          _mm512_mask_storeu_ps   (ptr, m, v);
+      else if constexpr ( match(c, category::int64x2, category::uint64x2 ) )   _mm_mask_storeu_epi64   (ptr, m, v);
+      else if constexpr ( match(c, category::int64x4, category::uint64x4 ) )   _mm256_mask_storeu_epi64(ptr, m, v);
+      else if constexpr ( match(c, category::int64x8, category::uint64x8 ) )   _mm512_mask_storeu_epi64(ptr, m, v);
+      else if constexpr ( match(c, category::int32x4, category::uint32x4 ) )   _mm_mask_storeu_epi32   (ptr, m, v);
+      else if constexpr ( match(c, category::int32x8, category::uint32x8 ) )   _mm256_mask_storeu_epi32(ptr, m, v);
+      else if constexpr ( match(c, category::int32x16, category::uint32x16 ) ) _mm512_mask_storeu_epi32(ptr, m, v);
+      else if constexpr ( match(c, category::int16x8, category::uint16x8 ) )   _mm_mask_storeu_epi16   (ptr, m, v);
+      else if constexpr ( match(c, category::int16x16, category::uint16x16 ) ) _mm256_mask_storeu_epi16(ptr, m, v);
+      else if constexpr ( match(c, category::int16x32, category::uint16x32 ) ) _mm512_mask_storeu_epi16(ptr, m, v);
+      else if constexpr ( match(c, category::int8x16, category::uint8x16 ) )   _mm_mask_storeu_epi8    (ptr, m, v);
+      else if constexpr ( match(c, category::int8x32, category::uint8x32 ) )   _mm256_mask_storeu_epi8 (ptr, m, v);
+      else if constexpr ( match(c, category::int8x64, category::uint8x64 ) )   _mm512_mask_storeu_epi8 (ptr, m, v);
+    }
+    else store_(EVE_RETARGET(cpu_), cond, v, ptr);
+  }
+
 }
