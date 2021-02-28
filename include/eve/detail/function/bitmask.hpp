@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/arch.hpp>
+
 #include <eve/detail/function/simd/common/bitmask.hpp>
 
 #if defined(EVE_HW_X86)

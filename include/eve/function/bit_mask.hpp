@@ -12,7 +12,7 @@
 namespace eve
 {
   EVE_MAKE_CALLABLE(bit_mask_, bit_mask);
+  EVE_MAKE_CALLABLE(to_mask_, to_mask);
 }
 
 #include <eve/module/real/core/function/regular/generic/bit_mask.hpp>
-
