@@ -85,7 +85,7 @@ namespace eve::detail
   {
     using abi_t = typename logical<T>::abi_type;
 
-         if constexpr ( !abi_t::is_wide_logical )  { return a && !b; }
+         if constexpr ( !abi_t::is_wide_logical ) { return a && !b; }
     else if constexpr(sizeof(T) == sizeof(U)) { return bit_cast(bit_andnot(a.bits(), b.bits()), as_<as_logical_t<T>>());}
     else                                     { return apply_over(logical_andnot, a, b); }
   }
