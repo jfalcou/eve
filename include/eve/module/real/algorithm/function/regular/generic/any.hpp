@@ -9,54 +9,18 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/conditional.hpp>
-#include <eve/detail/function/to_logical.hpp>
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton.hpp>
+#include <eve/detail/top_bits.hpp>
 
 namespace eve::detail
 {
-  template<value T> EVE_FORCEINLINE bool any_(EVE_SUPPORTS(cpu_), T const &v) noexcept
-  {
-    if constexpr( scalar_value<T> )
-    {
-      return bool(v);
-    }
-    else if constexpr( simd_value<T> )
-    {
-      if constexpr( is_logical_v<T> )
-      {
-        if constexpr( has_aggregated_abi_v<T> )
-        {
-          return v.storage().apply( [](auto const &... e) { return eve::any((e || ...)); } );
-        }
-        else
-        {
-          bool r = false;
-
-          [&]<std::size_t... I>(std::index_sequence<I...> const &) { r = (r || ... || get<I>(v)); }
-          (std::make_index_sequence<cardinal_v<T>> {});
-
-          return r;
-        }
-      }
-      else
-      {
-        return eve::any(to_logical(v));
-      }
-    }
-  }
-
-  template<simd_value T, relative_conditional_expr C>
+  template<logical_simd_value T, relative_conditional_expr C>
   EVE_FORCEINLINE bool any_(EVE_SUPPORTS(cpu_), C const &cond, T const &v) noexcept
   {
-         if constexpr ( !is_logical_v<T> ) return eve::any[cond](to_logical(v));
-    else if constexpr ( C::is_complete )
-    {
-      if constexpr ( !C::is_inverted ) return false;
-      else                             return eve::any(v);
-    }
-    else
+         if constexpr ( C::is_complete && !C::is_inverted ) return false;
+    else if constexpr ( has_emulated_abi_v<T> )
     {
       bool res = false;
 
@@ -66,6 +30,31 @@ namespace eve::detail
 
       return res;
     }
+    else if constexpr ( has_aggregated_abi_v<T> && C::is_complete )
+    {
+      auto [l, h] = v.slice();
+      return eve::any[ignore_none](l || h);
+    }
+    else
+    {
+      if constexpr ( !top_bits<T>::is_cheap && !C::is_complete )
+      {
+        if ( !eve::any[ignore_none](v) ) return false;
+      }
+
+      return eve::detail::any(eve::detail::top_bits{v, cond});
+    }
   }
 
+  EVE_FORCEINLINE bool any_(EVE_SUPPORTS(cpu_), bool v) noexcept
+  {
+    return v;
+  }
+
+  template<value T>
+  EVE_FORCEINLINE bool any_(EVE_SUPPORTS(cpu_), logical<T> const &v) noexcept
+  {
+    if constexpr ( scalar_value<T> ) return bool(v);
+    else                             return eve::any[ignore_none](v);
+  }
 }

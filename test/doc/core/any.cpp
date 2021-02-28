@@ -12,17 +12,17 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf       = " << pf << '\n'
-            << "-> any(pf)  = " << eve::any(pf) << '\n'
+            << "-> any(pf != 0)  = " << eve::any(pf != 0) << '\n'
             << "<- qi       = " << qi << '\n'
-            << "-> any(qi)  = " << eve::any(qi) << '\n';
+            << "-> any(qi)  = " << eve::any(qi != 0) << '\n';
 
   float        xf = -0.0f;
   float        yf = -3.0f;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf      = " << xf << '\n'
-            << "-> any(xf) = " << eve::any(xf) << '\n'
+            << "-> any(xf) = " << eve::any(xf != 0) << '\n'
             << "<- yf      = " << yf << '\n'
-            << "-> any(yf) = " << eve::any(yf) << '\n';
+            << "-> any(yf) = " << eve::any(yf != 0) << '\n';
   return 0;
 }

@@ -17,10 +17,6 @@ namespace eve
 #include <eve/arch.hpp>
 #include <eve/module/real/algorithm/function/regular/generic/any.hpp>
 
-#if defined(EVE_HW_X86)
-#  include <eve/module/real/algorithm/function/regular/simd/x86/any.hpp>
-#endif
-
 #if defined(EVE_HW_POWERPC)
 #  include <eve/module/real/algorithm/function/regular/simd/ppc/any.hpp>
 #endif
@@ -28,4 +24,3 @@ namespace eve
 #if defined(EVE_HW_ARM)
 #  include <eve/module/real/algorithm/function/regular/simd/arm/neon/any.hpp>
 #endif
-
