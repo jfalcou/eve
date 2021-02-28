@@ -233,6 +233,85 @@ namespace eve::detail
   template<typename T>
   using upgrade_t = typename upgrade<T>::type;
 
+
+  //////////////////////////////////////////////////////
+  // Downgrade a type (u)int(xx) -> (u)int(max(xx/2, 8)
+  //                double -> float,  float -> float
+  template < typename T, bool is = std::is_integral_v<T>>
+  struct downgrader
+  {
+    using type = T;
+  };
+
+  template < typename T>
+  struct downgrader < T, true>
+  {
+    template<std::size_t Size, bool Sign, typename Dummy = void>
+    struct fetch;
+
+    template<typename Dummy>
+    struct fetch<1, true, Dummy>
+    {
+      using type = std::int8_t;
+    };
+    template<typename Dummy>
+    struct fetch<2, true, Dummy>
+    {
+      using type = std::int8_t;
+    };
+    template<typename Dummy>
+    struct fetch<4, true, Dummy>
+    {
+      using type = std::int16_t;
+    };
+    template<typename Dummy>
+    struct fetch<8, true, Dummy>
+    {
+      using type = std::int32_t;
+    };
+
+    template<typename Dummy>
+    struct fetch<1, false, Dummy>
+    {
+      using type = std::uint8_t;
+    };
+    template<typename Dummy>
+    struct fetch<2, false, Dummy>
+    {
+      using type = std::uint8_t;
+    };
+    template<typename Dummy>
+    struct fetch<4, false, Dummy>
+    {
+      using type = std::uint16_t;
+    };
+    template<typename Dummy>
+    struct fetch<8, false, Dummy>
+    {
+      using type = std::uint32_t;
+    };
+
+    using sel = fetch<sizeof(T), std::is_signed_v<T>>;
+    using type = typename sel::type;
+
+  };
+
+  template < typename T>
+  struct downgrader< T, false>
+  {
+    using type = float;
+  };
+
+  template<typename T>
+  struct downgrade : downgrader<T>
+  {
+  };
+
+  template<typename T>
+  using downgrade_t = typename downgrade<T>::type;
+
+  ///////////////////////////////////////////////////////////////////
+
   // Extract the sign of a type
   template<typename T>
   struct sign_of : std::conditional<std::is_signed_v<value_type_t<T>>, signed, unsigned>
