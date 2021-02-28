@@ -42,5 +42,18 @@ namespace eve ::detail
       else return _mm256_castps_si256(_mm256_andnot_ps(_mm256_castsi256_ps(v0), _mm256_castsi256_ps(v1)));
     }
   }
-}
 
+  // -----------------------------------------------------------------------------------------------
+  // 512 bits implementation
+  template<real_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N, x86_512_> bit_notand_(EVE_SUPPORTS(avx512_),
+                                                   wide<T, N, x86_512_> const &v0,
+                                                   wide<T, N, x86_512_> const &v1) noexcept
+  {
+         if constexpr ( std::is_same_v<T, double> ) return _mm512_andnot_pd(v0, v1);
+    else if constexpr ( std::is_same_v<T, float>  ) return _mm512_andnot_ps(v0, v1);
+    else if constexpr ( sizeof(T) == 8            ) return _mm512_andnot_epi64(v0, v1);
+    else if constexpr ( sizeof(T) == 4            ) return _mm512_andnot_epi32(v0, v1);
+    else                                            return _mm512_andnot_si512(v0, v1);
+  }
+}

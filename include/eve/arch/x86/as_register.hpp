@@ -92,6 +92,7 @@ namespace eve
     template<int N> struct mask_n
     {
       using type = typename inner_mask<N>::type;
+      static constexpr int bits = N;
 
       explicit constexpr operator type() const { return value; }
       explicit constexpr operator bool() const { return (bool)value; }
@@ -102,17 +103,17 @@ namespace eve
       friend bool operator== (mask_n  , mask_n) = default;
       friend auto operator<=>(mask_n  , mask_n) = default;
 
-      friend constexpr mask_n operator~(mask_n m) { return mask_n{type{~m.value}}; }
+      friend constexpr mask_n operator~(mask_n m) { return mask_n{ static_cast<type>(~m.value) }; }
 
       friend constexpr mask_n& operator&=(mask_n& m, mask_n n) { m.value &= n.value; return m;     }
       friend constexpr mask_n& operator&=(mask_n& m, type   n) { m.value &= n;       return m;     }
-      friend constexpr mask_n  operator& (mask_n  m, mask_n n) { mask_n t{m.value}; return t &= n; }
+      friend constexpr mask_n  operator& (mask_n  m, mask_n n) { mask_n t{m}; return t &= n; }
       friend constexpr mask_n  operator& (mask_n  m, type   n) { mask_n t{n}; return t &= m;       }
       friend constexpr mask_n  operator& (type    m, mask_n n) { mask_n t{m}; return t &= n;       }
 
       friend constexpr mask_n& operator|=(mask_n& m, mask_n n) { m.value |= n.value; return m;     }
       friend constexpr mask_n& operator|=(mask_n& m, type   n) { m.value |= n;       return m;     }
-      friend constexpr mask_n  operator| (mask_n  m, mask_n n) { mask_n t{m.value}; return t |= n; }
+      friend constexpr mask_n  operator| (mask_n  m, mask_n n) { mask_n t{m}; return t |= n; }
       friend constexpr mask_n  operator| (mask_n  m, type   n) { mask_n t{n}; return t |= m;       }
       friend constexpr mask_n  operator| (type    m, mask_n n) { mask_n t{m}; return t |= n;       }
 
@@ -125,7 +126,7 @@ namespace eve
       friend constexpr mask_n&  operator<<=(mask_n& m, std::ptrdiff_t s) { m.value <<= s; return m; }
       friend constexpr mask_n   operator<< (mask_n  m, std::ptrdiff_t s) { mask_n t{m.value}; return t <<= s; }
       friend constexpr mask_n&  operator>>=(mask_n& m, std::ptrdiff_t s) { m.value >>= s; return m; }
-      friend constexpr mask_n   operator>> (mask_n  m, std::ptrdiff_t s) { mask_n t{m.value}; return t >>= s; }
+      friend constexpr mask_n   operator>> (mask_n  m, std::ptrdiff_t s) { mask_n t{m}; return t >>= s; }
 
       friend std::ostream& operator<<(std::ostream& out, const mask_n& m) { return out << m.value; }
 
