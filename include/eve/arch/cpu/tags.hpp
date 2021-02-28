@@ -10,6 +10,7 @@
 #include <cstddef>
 #include <eve/detail/concepts.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/detail/spy.hpp>
 
 namespace eve
 {
@@ -26,16 +27,37 @@ namespace eve
     using parent  = cpu_;
   };
 
-  //================================================================================================
-  // Dispatching tag for emulated SIMD implementation of large register
-  struct aggregated_ : cpu_
-  {
-    using parent = cpu_;
-    static constexpr bool is_wide_logical = true;
-  };
+# if defined(SPY_SIMD_IS_X86_AVX512)
+#define EVE_WIDE_LOGICAL_NAMESPACE
+#define EVE_BIT_LOGICAL_NAMESPACE   inline
+#else
+#define EVE_WIDE_LOGICAL_NAMESPACE  inline
+#define EVE_BIT_LOGICAL_NAMESPACE
+#endif
 
   //================================================================================================
-  // Concept for discriminatig aggregated from non-agregated ABI
+  // Dispatching tag for emulated SIMD implementation of large register
+  // We use inline namespace to ensure mangling ends up different when using AVX512 like ABI
+  EVE_WIDE_LOGICAL_NAMESPACE namespace internal_wide_logical
+  {
+    struct aggregated_ : cpu_
+    {
+      using parent = cpu_;
+      static constexpr bool is_wide_logical = true;
+    };
+  }
+
+  EVE_BIT_LOGICAL_NAMESPACE namespace internal_bit_logical
+  {
+    struct aggregated_ : cpu_
+    {
+      using parent = cpu_;
+      static constexpr bool is_wide_logical = false;
+    };
+  }
+
+  //================================================================================================
+  // Concept for discriminating aggregated from non-agregated ABI
   //================================================================================================
   template<typename T> concept regular_abi = !std::same_as<T,aggregated_>;
 

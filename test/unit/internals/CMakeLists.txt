@@ -24,3 +24,5 @@ add_dependencies(unit.internals.exe unit.internals.simd.exe   )
 make_all_units(ROOT unit.internals  NAME to_logical       ARCH simd TYPES ${all_types} )
 make_all_units(ROOT unit.internals  NAME top_bits         ARCH simd TYPES ${all_types} )
 make_all_units(ROOT unit.internals  NAME optimize_pattern ARCH simd TYPES ${all_types} )
+
+make_unit( "unit.internals" aggregation.cpp )
