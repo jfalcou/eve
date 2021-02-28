@@ -12,6 +12,7 @@
 #include <eve/memory/aligned_allocator.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/function/any.hpp>
+#include <eve/function/replace.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 #include <vector>
@@ -92,7 +93,7 @@ TTS_CASE_TPL("Check conditional load from  pointer for logical<wide>", EVE_TYPE)
     {
       if constexpr(EVE_CARDINAL == eve::expected_cardinal_v<EVE_VALUE>)
       {
-      TTS_EQUAL(eve::load[eve::ignore_none](uref_ptr)               , full_uref             );
+      TTS_EQUAL(eve::load[eve::ignore_none](uref_ptr)        , full_uref             );
       TTS_EQUAL((eve::load[il](uref_ptr) && ml )             , ignore_last_uref      );
       TTS_EQUAL((eve::load[i1](uref_ptr) && m1 )             , ignore_first_uref     );
       TTS_EQUAL((eve::load[kf](uref_ptr) && mkf)             , keep_first_uref       );
@@ -105,7 +106,7 @@ TTS_CASE_TPL("Check conditional load from  pointer for logical<wide>", EVE_TYPE)
 
     TTS_AND_THEN("load is applied on unaligned pointer for a specific cardinal")
     {
-      TTS_EQUAL(eve::load[eve::ignore_none](uref_ptr, lanes)                , full_uref             );
+      TTS_EQUAL(eve::load[eve::ignore_none](uref_ptr, lanes)         , full_uref             );
       TTS_EQUAL((eve::load[il](uref_ptr, lanes) && ml )              , ignore_last_uref      );
       TTS_EQUAL((eve::load[i1](uref_ptr, lanes) && m1 )              , ignore_first_uref     );
       TTS_EQUAL((eve::load[kf](uref_ptr, lanes) && mkf)              , keep_first_uref       );
@@ -119,7 +120,7 @@ TTS_CASE_TPL("Check conditional load from  pointer for logical<wide>", EVE_TYPE)
     {
       if constexpr(EVE_CARDINAL == eve::expected_cardinal_v<EVE_VALUE>)
       {
-        TTS_EQUAL(eve::load[eve::ignore_none](uref_const_ptr)               , full_uref             );
+        TTS_EQUAL(eve::load[eve::ignore_none](uref_const_ptr)        , full_uref             );
         TTS_EQUAL((eve::load[il](uref_const_ptr) && ml )             , ignore_last_uref      );
         TTS_EQUAL((eve::load[i1](uref_const_ptr) && m1 )             , ignore_first_uref     );
         TTS_EQUAL((eve::load[kf](uref_const_ptr) && mkf)             , keep_first_uref       );
@@ -132,7 +133,7 @@ TTS_CASE_TPL("Check conditional load from  pointer for logical<wide>", EVE_TYPE)
 
     TTS_AND_THEN("load is applied on unaligned constant pointer for a specific cardinal")
     {
-      TTS_EQUAL(eve::load[eve::ignore_none](uref_const_ptr, lanes)                , full_uref             );
+      TTS_EQUAL(eve::load[eve::ignore_none](uref_const_ptr, lanes)         , full_uref             );
       TTS_EQUAL((eve::load[il](uref_const_ptr, lanes) && ml )              , ignore_last_uref      );
       TTS_EQUAL((eve::load[i1](uref_const_ptr, lanes) && m1 )              , ignore_first_uref     );
       TTS_EQUAL((eve::load[kf](uref_const_ptr, lanes) && mkf)              , keep_first_uref       );
@@ -150,7 +151,7 @@ TTS_CASE_TPL("Check conditional load from  pointer for logical<wide>", EVE_TYPE)
     {
       if constexpr(EVE_CARDINAL == eve::expected_cardinal_v<EVE_VALUE>)
       {
-        TTS_EQUAL(eve::load[eve::ignore_none](algt_ptr)                , full_ref               );
+        TTS_EQUAL(eve::load[eve::ignore_none](algt_ptr)         , full_ref               );
         TTS_EQUAL((eve::load[il](algt_ptr) && ml )              , ignore_last_ref        );
         TTS_EQUAL((eve::load[i1](algt_ptr) && m1 )              , ignore_first_ref       );
         TTS_EQUAL((eve::load[kf](algt_ptr) && mkf)              , keep_first_ref         );
@@ -163,7 +164,7 @@ TTS_CASE_TPL("Check conditional load from  pointer for logical<wide>", EVE_TYPE)
 
     TTS_AND_THEN("load is applied on aligned pointer for a specific cardinal")
     {
-      TTS_EQUAL(eve::load[eve::ignore_none](algt_ptr, lanes)               , full_ref               );
+      TTS_EQUAL(eve::load[eve::ignore_none](algt_ptr, lanes)        , full_ref               );
       TTS_EQUAL((eve::load[il](algt_ptr, lanes) && ml )             , ignore_last_ref        );
       TTS_EQUAL((eve::load[i1](algt_ptr, lanes) && m1 )             , ignore_first_ref       );
       TTS_EQUAL((eve::load[kf](algt_ptr, lanes) && mkf)             , keep_first_ref         );
@@ -177,7 +178,7 @@ TTS_CASE_TPL("Check conditional load from  pointer for logical<wide>", EVE_TYPE)
     {
       if constexpr(EVE_CARDINAL == eve::expected_cardinal_v<EVE_VALUE>)
       {
-        TTS_EQUAL(eve::load[eve::ignore_none](algt_const_ptr)                , full_ref               );
+        TTS_EQUAL(eve::load[eve::ignore_none](algt_const_ptr)         , full_ref               );
         TTS_EQUAL((eve::load[il](algt_const_ptr) && ml )              , ignore_last_ref        );
         TTS_EQUAL((eve::load[i1](algt_const_ptr) && m1 )              , ignore_first_ref       );
         TTS_EQUAL((eve::load[kf](algt_const_ptr) && mkf)              , keep_first_ref         );
@@ -190,7 +191,7 @@ TTS_CASE_TPL("Check conditional load from  pointer for logical<wide>", EVE_TYPE)
 
     TTS_AND_THEN("load is applied on aligned constant pointer for a specific cardinal")
     {
-      TTS_EQUAL(eve::load[eve::ignore_none](algt_const_ptr, lanes)               , full_ref               );
+      TTS_EQUAL(eve::load[eve::ignore_none](algt_const_ptr, lanes)        , full_ref               );
       TTS_EQUAL((eve::load[il](algt_const_ptr, lanes) && ml )             , ignore_last_ref        );
       TTS_EQUAL((eve::load[i1](algt_const_ptr, lanes) && m1 )             , ignore_first_ref       );
       TTS_EQUAL((eve::load[kf](algt_const_ptr, lanes) && mkf)             , keep_first_ref         );
@@ -198,6 +199,165 @@ TTS_CASE_TPL("Check conditional load from  pointer for logical<wide>", EVE_TYPE)
       TTS_EQUAL((eve::load[kb](algt_const_ptr, lanes) && mkb)             , keep_between_ref       );
       TTS_EQUAL((eve::load[ie](algt_const_ptr, lanes) && mie)             , ignore_ext_ref         );
       TTS_EQUAL((eve::load[eve::ignore_all](algt_const_ptr, lanes) && mia), eve::logical<T>{false} );
+    }
+  }
+}
+
+TTS_CASE_TPL("Check conditional load with alternatives from pointer for wide", EVE_TYPE)
+{
+  constexpr std::ptrdiff_t algt = eve::alignment_v<logical<T>>;
+  auto [data,idx] = data_block<EVE_VALUE, eve::fixed<EVE_CARDINAL>>();
+  auto* ref_ptr               = &data[idx];
+  auto const* ref_const_ptr   = ref_ptr;
+  auto* uref_ptr              = ref_ptr - 1;
+  auto const* uref_const_ptr  = uref_ptr;
+
+  TTS_WHEN("For some given relative masks")
+  {
+    // Alternatives data
+    logical<T> others = [](auto i, auto) { return i%3 == 1; };
+
+    // Conditional selectors
+    auto il = eve::ignore_last(EVE_CARDINAL/4).else_(others);
+    auto i1 = eve::ignore_first(EVE_CARDINAL/4).else_(others);
+    auto kf = eve::keep_first(EVE_CARDINAL/4).else_(others);
+    auto kl = eve::keep_last(EVE_CARDINAL/4).else_(others);
+    auto kb = eve::keep_between ( std::min(std::ptrdiff_t(0),std::ptrdiff_t(EVE_CARDINAL/3))
+                                , std::max(std::ptrdiff_t(0),std::ptrdiff_t((EVE_CARDINAL*2)/3))
+                                ).else_(others);
+
+    auto ie = (i1 && il).else_(others);
+
+    // Reference values
+    logical<T> full_ref(ref_ptr);
+    logical<T> ignore_last_ref   = eve::replace_ignored(full_ref,il,others);
+    logical<T> ignore_first_ref  = eve::replace_ignored(full_ref,i1,others);
+    logical<T> keep_first_ref    = eve::replace_ignored(full_ref,kf,others);
+    logical<T> keep_last_ref     = eve::replace_ignored(full_ref,kl,others);
+    logical<T> keep_between_ref  = eve::replace_ignored(full_ref,kb,others);
+    logical<T> ignore_ext_ref    = eve::replace_ignored(full_ref,ie,others);
+
+    logical<T> full_uref(uref_ptr);
+    logical<T> ignore_last_uref   = eve::replace_ignored(full_uref,il,others);
+    logical<T> ignore_first_uref  = eve::replace_ignored(full_uref,i1,others);
+    logical<T> keep_first_uref    = eve::replace_ignored(full_uref,kf,others);
+    logical<T> keep_last_uref     = eve::replace_ignored(full_uref,kl,others);
+    logical<T> keep_between_uref  = eve::replace_ignored(full_uref,kb,others);
+    logical<T> ignore_ext_uref    = eve::replace_ignored(full_uref,ie,others);
+
+    // lanes value
+    auto lanes = eve::lane<EVE_CARDINAL>;
+
+    TTS_AND_THEN("load is applied on unaligned pointer for default cardinal")
+    {
+      if constexpr(EVE_CARDINAL == eve::expected_cardinal_v<EVE_VALUE>)
+      {
+      TTS_EQUAL(eve::load[eve::ignore_none.else_(others)](uref_ptr) , full_uref );
+      TTS_EQUAL((eve::load[il](uref_ptr))                           , ignore_last_uref  );
+      TTS_EQUAL((eve::load[i1](uref_ptr))                           , ignore_first_uref );
+      TTS_EQUAL((eve::load[kf](uref_ptr))                           , keep_first_uref   );
+      TTS_EQUAL((eve::load[kl](uref_ptr))                           , keep_last_uref    );
+      TTS_EQUAL((eve::load[kb](uref_ptr))                           , keep_between_uref );
+      TTS_EQUAL((eve::load[ie](uref_ptr))                           , ignore_ext_uref   );
+      TTS_EQUAL((eve::load[eve::ignore_all.else_(others)](uref_ptr)), others        );
+      }
+    }
+
+    TTS_AND_THEN("load is applied on unaligned pointer for a specific cardinal")
+    {
+      TTS_EQUAL(eve::load[eve::ignore_none.else_(others)](uref_ptr, lanes)  , full_uref         );
+      TTS_EQUAL((eve::load[il](uref_ptr, lanes))                            , ignore_last_uref  );
+      TTS_EQUAL((eve::load[i1](uref_ptr, lanes))                            , ignore_first_uref );
+      TTS_EQUAL((eve::load[kf](uref_ptr, lanes))                            , keep_first_uref   );
+      TTS_EQUAL((eve::load[kl](uref_ptr, lanes))                            , keep_last_uref    );
+      TTS_EQUAL((eve::load[kb](uref_ptr, lanes))                            , keep_between_uref );
+      TTS_EQUAL((eve::load[ie](uref_ptr, lanes))                            , ignore_ext_uref   );
+      TTS_EQUAL((eve::load[eve::ignore_all.else_(others)](uref_ptr, lanes) ), others            );
+    }
+
+    TTS_AND_THEN("load is applied on unaligned constant pointer for default cardinal")
+    {
+      if constexpr(EVE_CARDINAL == eve::expected_cardinal_v<EVE_VALUE>)
+      {
+        TTS_EQUAL(eve::load[eve::ignore_none.else_(others)](uref_const_ptr)   , full_uref         );
+        TTS_EQUAL((eve::load[il](uref_const_ptr))                             , ignore_last_uref  );
+        TTS_EQUAL((eve::load[i1](uref_const_ptr))                             , ignore_first_uref );
+        TTS_EQUAL((eve::load[kf](uref_const_ptr))                             , keep_first_uref   );
+        TTS_EQUAL((eve::load[kl](uref_const_ptr))                             , keep_last_uref    );
+        TTS_EQUAL((eve::load[kb](uref_const_ptr))                             , keep_between_uref );
+        TTS_EQUAL((eve::load[ie](uref_const_ptr))                             , ignore_ext_uref   );
+        TTS_EQUAL((eve::load[eve::ignore_all.else_(others)](uref_const_ptr) ) , others            );
+      }
+    }
+
+    TTS_AND_THEN("load is applied on unaligned constant pointer for a specific cardinal")
+    {
+      TTS_EQUAL(eve::load[eve::ignore_none.else_(others)](uref_const_ptr, lanes)  , full_uref         );
+      TTS_EQUAL((eve::load[il](uref_const_ptr, lanes))                            , ignore_last_uref  );
+      TTS_EQUAL((eve::load[i1](uref_const_ptr, lanes))                            , ignore_first_uref );
+      TTS_EQUAL((eve::load[kf](uref_const_ptr, lanes))                            , keep_first_uref   );
+      TTS_EQUAL((eve::load[kl](uref_const_ptr, lanes))                            , keep_last_uref    );
+      TTS_EQUAL((eve::load[kb](uref_const_ptr, lanes))                            , keep_between_uref );
+      TTS_EQUAL((eve::load[ie](uref_const_ptr, lanes))                            , ignore_ext_uref   );
+      TTS_EQUAL((eve::load[eve::ignore_all.else_(others)](uref_const_ptr, lanes)) , others            );
+    }
+
+    // Aligned pointer
+    auto algt_ptr       = eve::as_aligned<algt>(ref_ptr);
+    auto algt_const_ptr = eve::as_aligned<algt>(ref_const_ptr);
+
+    TTS_AND_THEN("load is applied on aligned pointer for default cardinal")
+    {
+      if constexpr(EVE_CARDINAL == eve::expected_cardinal_v<EVE_VALUE>)
+      {
+        TTS_EQUAL(eve::load[eve::ignore_none.else_(others)](algt_ptr) , full_ref        );
+        TTS_EQUAL((eve::load[il](algt_ptr))                           , ignore_last_ref );
+        TTS_EQUAL((eve::load[i1](algt_ptr))                           , ignore_first_ref);
+        TTS_EQUAL((eve::load[kf](algt_ptr))                           , keep_first_ref  );
+        TTS_EQUAL((eve::load[kl](algt_ptr))                           , keep_last_ref   );
+        TTS_EQUAL((eve::load[kb](algt_ptr))                           , keep_between_ref);
+        TTS_EQUAL((eve::load[ie](algt_ptr))                           , ignore_ext_ref  );
+        TTS_EQUAL((eve::load[eve::ignore_all.else_(others)](algt_ptr)), others          );
+      }
+    }
+
+    TTS_AND_THEN("load is applied on aligned pointer for a specific cardinal")
+    {
+      TTS_EQUAL(eve::load[eve::ignore_none.else_(others)](algt_ptr, lanes)  , full_ref        );
+      TTS_EQUAL((eve::load[il](algt_ptr, lanes))                            , ignore_last_ref );
+      TTS_EQUAL((eve::load[i1](algt_ptr, lanes))                            , ignore_first_ref);
+      TTS_EQUAL((eve::load[kf](algt_ptr, lanes))                            , keep_first_ref  );
+      TTS_EQUAL((eve::load[kl](algt_ptr, lanes))                            , keep_last_ref   );
+      TTS_EQUAL((eve::load[kb](algt_ptr, lanes))                            , keep_between_ref);
+      TTS_EQUAL((eve::load[ie](algt_ptr, lanes))                            , ignore_ext_ref  );
+      TTS_EQUAL((eve::load[eve::ignore_all.else_(others)](algt_ptr, lanes)) , others          );
+    }
+
+    TTS_AND_THEN("load is applied on aligned constant pointer for default cardinal")
+    {
+      if constexpr(EVE_CARDINAL == eve::expected_cardinal_v<EVE_VALUE>)
+      {
+        TTS_EQUAL(eve::load[eve::ignore_none.else_(others)](algt_const_ptr)   , full_ref        );
+        TTS_EQUAL((eve::load[il](algt_const_ptr))                             , ignore_last_ref );
+        TTS_EQUAL((eve::load[i1](algt_const_ptr))                             , ignore_first_ref);
+        TTS_EQUAL((eve::load[kf](algt_const_ptr))                             , keep_first_ref  );
+        TTS_EQUAL((eve::load[kl](algt_const_ptr))                             , keep_last_ref   );
+        TTS_EQUAL((eve::load[kb](algt_const_ptr))                             , keep_between_ref);
+        TTS_EQUAL((eve::load[ie](algt_const_ptr))                             , ignore_ext_ref  );
+        TTS_EQUAL((eve::load[eve::ignore_all.else_(others)](algt_const_ptr) ) , others          );
+      }
+    }
+
+    TTS_AND_THEN("load is applied on aligned constant pointer for a specific cardinal")
+    {
+      TTS_EQUAL(eve::load[eve::ignore_none.else_(others)](algt_const_ptr, lanes)  , full_ref        );
+      TTS_EQUAL((eve::load[il](algt_const_ptr, lanes))                            , ignore_last_ref );
+      TTS_EQUAL((eve::load[i1](algt_const_ptr, lanes))                            , ignore_first_ref);
+      TTS_EQUAL((eve::load[kf](algt_const_ptr, lanes))                            , keep_first_ref  );
+      TTS_EQUAL((eve::load[kl](algt_const_ptr, lanes))                            , keep_last_ref   );
+      TTS_EQUAL((eve::load[kb](algt_const_ptr, lanes))                            , keep_between_ref);
+      TTS_EQUAL((eve::load[ie](algt_const_ptr, lanes))                            , ignore_ext_ref  );
+      TTS_EQUAL((eve::load[eve::ignore_all.else_(others)](algt_const_ptr, lanes) ), others          );
     }
   }
 }
