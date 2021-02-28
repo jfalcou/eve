@@ -27,15 +27,26 @@ namespace eve
   template<typename C, typename V> struct or_ : C
   {
     static constexpr bool has_alternative = true;
+    using alternative_type = V;
 
     or_(C const& c, V const& v) : C(c), alternative(v) {}
 
-    template<typename T>
-    EVE_FORCEINLINE auto mask(eve::as_<T> const& tgt) const { return C::mask(tgt); }
+    using C::mask;
+    using C::mask_inverted;
+    using C::bitmap;
+    using C::offset;
+    using C::roffset;
+    using C::count;
+
+    template<typename T> auto rebase(T v) const
+    {
+      return or_<C,T>{static_cast<C const&>(*this), v};
+    }
 
     friend std::ostream& operator<<(std::ostream& os, or_ const& c)
     {
-      return os << c.condition_ << " else ( " << c.alternative << " )";
+      os << static_cast<C const&>(c);
+      return os << " else ( " << c.alternative << " )";
     }
 
     V alternative;
@@ -48,15 +59,26 @@ namespace eve
   {
     static constexpr bool has_alternative = true;
     static constexpr bool is_inverted     = true;
+    using alternative_type = V;
 
     not_or_(C const& c, V const& v) : C(c), alternative(v) {}
 
-    template<typename T>
-    EVE_FORCEINLINE auto mask(eve::as_<T> const& tgt) const { return C::mask(tgt); }
+    using C::mask;
+    using C::mask_inverted;
+    using C::bitmap;
+    using C::offset;
+    using C::roffset;
+    using C::count;
+
+    template<typename T> auto rebase(T v) const
+    {
+      return or_<C,T>{static_cast<C const&>(*this), v};
+    }
 
     friend std::ostream& operator<<(std::ostream& os, not_or_ const& c)
     {
-      return os << "( " << c.alternative << " ) else " << c.condition_;
+      os << "( " << c.alternative << " ) else ";
+      return os << static_cast<C const&>(c);
     }
 
     V alternative;
@@ -162,6 +184,8 @@ namespace eve
     static constexpr bool has_alternative = false;
     static constexpr bool is_inverted     = true;
     static constexpr bool is_complete     = true;
+
+    template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
 
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
@@ -369,7 +393,7 @@ namespace eve
     template<typename T> EVE_FORCEINLINE auto bitmap(eve::as_<T> const&) const
     {
       constexpr auto sz = cardinal_v<T> < 8 ? 8 : cardinal_v<T>;
-      detail::make_integer_t<sz/8,unsigned> mask = ~count_;
+      detail::make_integer_t<sz/8,unsigned> mask =  ~0ULL << count_;
       return mask;
     }
 
