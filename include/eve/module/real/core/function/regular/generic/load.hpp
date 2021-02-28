@@ -11,6 +11,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/spy.hpp>
 #include <eve/function/unsafe.hpp>
+#include <eve/function/replace.hpp>
 #include <eve/wide.hpp>
 #include <type_traits>
 
@@ -88,8 +89,16 @@ namespace eve::detail
     {
       static constexpr bool is_aligned_enough = Cardinal() * sizeof(e_t) >= Ptr::alignment();
 
-      if constexpr (!sanitizers_are_on && is_aligned_enough) return eve::unsafe(eve::load)(ptr, Cardinal{});
-      else                                                   return eve::load[cond](ptr.get(), Cardinal{});
+      if constexpr (!sanitizers_are_on && is_aligned_enough)
+      {
+        auto that = eve::unsafe(eve::load)(ptr, Cardinal{});
+        if constexpr( C::has_alternative )  return replace_ignored(that, cond, cond.alternative);
+        else                                return that;
+      }
+      else
+      {
+        return eve::load[cond](ptr.get(), Cardinal{});
+      }
     }
     else
     {
