@@ -52,7 +52,7 @@ namespace eve::detail
                             , U const &b) noexcept
   requires has_native_abi_v<T> && has_native_abi_v<U> && (cardinal_v<T> == cardinal_v<U>)
   {
-    using abi_t = typename logical<T>::abi_type;
+    using abi_t = typename T::abi_type;
 
          if constexpr ( !abi_t::is_wide_logical )  { return logical_andnot(to_logical(a), to_logical(b)); }
     else if constexpr(sizeof(T) == sizeof(U)) { return bit_cast(bit_andnot(bit_mask(a), bit_mask(b)), as_<as_logical_t<T>>());}
@@ -83,7 +83,7 @@ namespace eve::detail
                                                , logical<U> const &b) noexcept
   requires has_native_abi_v<T> && has_native_abi_v<U> && (cardinal_v<T> == cardinal_v<U>)
   {
-    using abi_t = typename logical<T>::abi_type;
+    using abi_t = typename T::abi_type;
 
          if constexpr ( !abi_t::is_wide_logical ) { return a && !b; }
     else if constexpr(sizeof(T) == sizeof(U)) { return bit_cast(bit_andnot(a.bits(), b.bits()), as_<as_logical_t<T>>());}
@@ -97,7 +97,7 @@ namespace eve::detail
   requires has_native_abi_v<T> && has_native_abi_v<U>
   {
     using elt_t = element_type_t<T>;
-    using abi_t = typename logical<T>::abi_type;
+    using abi_t = typename T::abi_type;
 
     if constexpr ( !abi_t::is_wide_logical )
     {
