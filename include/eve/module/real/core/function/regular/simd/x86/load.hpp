@@ -33,19 +33,25 @@ namespace eve::detail
 
     if constexpr( is_logical_v<b_t> )
     {
+      auto const alt = [&]()
+      {
+        if constexpr( C::has_alternative )  return cond.rebase(cond.alternative.mask());
+        else                                return cond;
+      };
+
       using a_t = as_arithmetic_t<b_t>;
-      auto block = [&]() -> wide<a_t, typename Cardinal::type>
+      auto const block = [&](auto local_cond) -> wide<a_t, typename Cardinal::type>
       {
         if constexpr( !std::is_pointer_v<Ptr> )
         {
           using ptr_t = typename Ptr::template rebind<a_t const>;
-          return load_(EVE_RETARGET(sse2_), cond, ptr_t((a_t const*)(p.get())), Cardinal{});
+          return load_(EVE_RETARGET(sse2_), local_cond, ptr_t((a_t const*)(p.get())), Cardinal{});
         }
         else
         {
-          return load_(EVE_RETARGET(sse2_), cond, (a_t const*)(p), Cardinal{});
+          return load_(EVE_RETARGET(sse2_), local_cond, (a_t const*)(p), Cardinal{});
         }
-      }();
+      }(alt());
 
       if constexpr( current_api >= avx512 ) return to_logical(block).storage();
       else                                  return bit_cast(block, as_<r_t>{});

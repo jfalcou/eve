@@ -27,6 +27,7 @@ namespace eve
   template<typename C, typename V> struct or_ : C
   {
     static constexpr bool has_alternative = true;
+    using alternative_type = V;
 
     or_(C const& c, V const& v) : C(c), alternative(v) {}
 
@@ -36,6 +37,11 @@ namespace eve
     using C::offset;
     using C::roffset;
     using C::count;
+
+    template<typename T> auto rebase(T v) const
+    {
+      return or_<C,T>{static_cast<C const&>(*this), v};
+    }
 
     friend std::ostream& operator<<(std::ostream& os, or_ const& c)
     {
@@ -53,6 +59,7 @@ namespace eve
   {
     static constexpr bool has_alternative = true;
     static constexpr bool is_inverted     = true;
+    using alternative_type = V;
 
     not_or_(C const& c, V const& v) : C(c), alternative(v) {}
 
@@ -62,6 +69,11 @@ namespace eve
     using C::offset;
     using C::roffset;
     using C::count;
+
+    template<typename T> auto rebase(T v) const
+    {
+      return or_<C,T>{static_cast<C const&>(*this), v};
+    }
 
     friend std::ostream& operator<<(std::ostream& os, not_or_ const& c)
     {
