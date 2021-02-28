@@ -30,12 +30,17 @@ namespace eve
 
     or_(C const& c, V const& v) : C(c), alternative(v) {}
 
-    template<typename T>
-    EVE_FORCEINLINE auto mask(eve::as_<T> const& tgt) const { return C::mask(tgt); }
+    using C::mask;
+    using C::mask_inverted;
+    using C::bitmap;
+    using C::offset;
+    using C::roffset;
+    using C::count;
 
     friend std::ostream& operator<<(std::ostream& os, or_ const& c)
     {
-      return os << c.condition_ << " else ( " << c.alternative << " )";
+      os << static_cast<C const&>(c);
+      return os << " else ( " << c.alternative << " )";
     }
 
     V alternative;
@@ -51,12 +56,17 @@ namespace eve
 
     not_or_(C const& c, V const& v) : C(c), alternative(v) {}
 
-    template<typename T>
-    EVE_FORCEINLINE auto mask(eve::as_<T> const& tgt) const { return C::mask(tgt); }
+    using C::mask;
+    using C::mask_inverted;
+    using C::bitmap;
+    using C::offset;
+    using C::roffset;
+    using C::count;
 
     friend std::ostream& operator<<(std::ostream& os, not_or_ const& c)
     {
-      return os << "( " << c.alternative << " ) else " << c.condition_;
+      os << "( " << c.alternative << " ) else ";
+      return os << static_cast<C const&>(c);
     }
 
     V alternative;
@@ -371,7 +381,7 @@ namespace eve
     template<typename T> EVE_FORCEINLINE auto bitmap(eve::as_<T> const&) const
     {
       constexpr auto sz = cardinal_v<T> < 8 ? 8 : cardinal_v<T>;
-      detail::make_integer_t<sz/8,unsigned> mask = ~count_;
+      detail::make_integer_t<sz/8,unsigned> mask =  ~0ULL << count_;
       return mask;
     }
 
