@@ -5,6 +5,9 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+
+#if !defined(SPY_SIMD_IS_X86_AVX512)
+
 #include <eve/function/numeric/fma.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/inc.hpp>
@@ -40,5 +43,6 @@ TTS_CASE_TPL("Check eve::numeric(eve::fma) behavior", EVE_TYPE)
     TTS_EQUAL(eve::numeric(eve::fma)(eve::inc(e), eve::oneminus(e), T(-1)), -eve::sqr(e));
     TTS_EQUAL(eve::numeric(eve::fma)(eve::valmax(eve::as<T>()), T(2), eve::valmin(eve::as<T>())), eve::valmax(eve::as<T>()));
   }
-
 }
+
+#endif  // !defined(SPY_SIMD_IS_X86_AVX512)
