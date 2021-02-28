@@ -12,7 +12,11 @@ add_subdirectory(algorithm)
 add_subdirectory(constant)
 add_subdirectory(core)
 add_subdirectory(math)
+
+if(EVE_USE_BOOST)
 add_subdirectory(special)
+endif()
+
 add_subdirectory(combinatorial)
 add_subdirectory(elliptic)
 add_subdirectory(proba)
