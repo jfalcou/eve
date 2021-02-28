@@ -179,9 +179,9 @@ jobs:
   x86_avx512:
     <<: *base_jobs
   x86_avx512_256:
-    <<: *base_jobs
+    <<: *wip_jobs
   x86_avx512_128:
-    <<: *base_jobs
+    <<: *wip_jobs
   tiny:
     <<: *base_jobs
   small:
