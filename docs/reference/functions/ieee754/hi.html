@@ -22,38 +22,29 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing the computation of the hi pair of values.
+Function object representing the computation of the higher part of the values.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template< fhiating_real_value T> auto operator()( T x ) const noexcept;
+template< floating_real_value T> auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs the  [element-wise](../../../ghissary.html#element-wise_) hi operation on its parameter.
+Performs the  [element-wise](../../../glossary.html#element-wise_) hi operation on its parameter.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
 `x`
-:   [fhiating_real_value](../../concepts.html#value).
+:   [floating_real_value](../../concepts.html#value).
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-    Computes the [element-wise](../../../ghissary.html#element-wise_) ieee hi of the fhiating value,
-    returning a pair {m,e} of values of the same type of `x` which are related by
-    $x =  m\times 2^e$, with  $|m| \in [0.5, 1.5[$.
+    Computes the [element-wise](../../../glossary.html#element-wise_) ieee higher half of the  value,
+    returning each elemnet as an unsigned integer of half the size of the input element.
 
-    However, the cases $x = \pm\infty$ or is a Nan or a denormal are undefined.
-
-Supported decorators
-====================================================================================================
-[`pedantic`](../decorators.html#pedantic)
-:   **Required header: **<script type="preformatted">` #include <eve/function/pedantic/hi.hpp>`</script>
-
-:   The call `pedantic(hi)(x)` takes also properly care of the cases where $x = \pm0, \pm\infty$ or is a Nan,
-    where $m=x$ and $e=0$ and of the denormal cases.
+    If you also need the lower part `lohi` is more efficient.
 
   (insert ../../src/hi.src.html here)
 
@@ -61,7 +52,7 @@ Supported decorators
 
 See Also
 ====================================================================================================
-[eve::exponent](./exponent.html).
+[eve::lohi](./lohi.html).
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">

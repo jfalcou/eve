@@ -41,19 +41,8 @@ Parameters
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-    Computes the [element-wise](../../../glossary.html#element-wise_) ieee lohi of the floating value,
-    returning a pair {m,e} of values of the same type of `x` which are related by
-    $x =  m\times 2^e$, with  $|m| \in [0.5, 1.5[$.
-
-    However, the cases $x = \pm\infty$ or is a Nan or a denormal are undefined.
-
-Supported decorators
-====================================================================================================
-[`pedantic`](../decorators.html#pedantic)
-:   **Required header: **<script type="preformatted">` #include <eve/function/pedantic/lohi.hpp>`</script>
-
-:   The call `pedantic(lohi)(x)` takes also properly care of the cases where $x = \pm0, \pm\infty$ or is a Nan,
-    where $m=x$ and $e=0$ and of the denormal cases.
+    Computes the [element-wise](../../../glossary.html#element-wise_) the lower and higher parts of
+    the input values, as a pair of unsigned integers
 
   (insert ../../src/lohi.src.html here)
 
@@ -61,7 +50,7 @@ Supported decorators
 
 See Also
 ====================================================================================================
-[eve::exponent](./exponent.html).
+[eve::lo](./lo.html),[eve::hi](./hi.html).
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">
