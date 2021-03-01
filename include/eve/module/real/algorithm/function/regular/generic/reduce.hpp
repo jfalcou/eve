@@ -24,7 +24,11 @@ namespace eve::detail
                               , wide<T,N,ABI> v, Callable f
                               ) noexcept
   {
-    if constexpr( !is_aggregated_v<wide<T,N,ABI>> )
+    if constexpr( N::value == 1 )
+    {
+      return v;
+    }
+    else if constexpr( !is_aggregated_v<wide<T,N,ABI>> )
     {
       //============================================================================================
       // We have exactly log2(cardinal) - 1 butterfly steps to perform
