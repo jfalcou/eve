@@ -45,7 +45,8 @@ namespace eve::detail
             auto up = convert(v, as_<upgrade_t<T>>{});
             auto r  = swap_adjacent_group(up,fixed<G>{});
             auto[l,h] = r.slice();
-            return _mm_packs_epi16(l,h);
+            if constexpr( std::is_signed_v<T> ) return _mm_packs_epi16(l,h);
+            else                                return _mm_packus_epi16(l,h);
           }
         }
         else if constexpr( size == 2 )
@@ -175,8 +176,8 @@ namespace eve::detail
     }
     else
     {
-      // Use cpu basic implementation via bit_cast & mask()
-      return swap_adjacent_group_(EVE_RETARGET(cpu_),v, fixed<G>{});
+      // Use basic implementation via bit_cast & mask()
+      return bit_cast( swap_adjacent_group(v.mask(),fixed<G>{}), as(v));
     }
   }
 }
