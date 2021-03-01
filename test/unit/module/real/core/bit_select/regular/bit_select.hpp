@@ -5,6 +5,9 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+
+#if !defined(SPY_SIMD_IS_X86_AVX512)
+
 #include <eve/function/bit_select.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/constant/allbits.hpp>
@@ -48,3 +51,5 @@ TTS_CASE_TPL( "Check eve::bit_select behavior", EVE_TYPE)
   TTS_EQUAL( eve::bit_select( mask, eve::allbits(eve::as<v_t>()) , T( 0 ) ), mask);
   TTS_EQUAL( eve::bit_select( mask, eve::allbits(eve::as<T>())  , eve::zero(eve::as<v_t>())), mask);
 }
+
+#endif  // !defined(SPY_SIMD_IS_X86_AVX512)

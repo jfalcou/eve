@@ -80,4 +80,26 @@ namespace eve::detail
         else if constexpr(sizeof(T) == 4)                  return _mm256_max_epu32(v0, v1);
       }
   }
+
+
+  // -----------------------------------------------------------------------------------------------
+  // 512 bits implementation
+  template<real_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N, x86_512_> max_(EVE_SUPPORTS(avx512_)
+                                       , wide<T, N, x86_512_> const &v0
+                                       , wide<T, N, x86_512_> const &v1) noexcept
+  {
+    constexpr auto c = categorize<wide<T, N, x86_512_>>();
+
+         if constexpr ( c == category::float64x8  ) return _mm512_max_pd(v0, v1);
+    else if constexpr ( c == category::float32x16 ) return _mm512_max_ps(v0, v1);
+    else if constexpr ( c == category::int64x8    ) return _mm512_max_epi64(v0, v1);
+    else if constexpr ( c == category::uint64x8   ) return _mm512_max_epu64(v0, v1);
+    else if constexpr ( c == category::int32x16   ) return _mm512_max_epi32(v0, v1);
+    else if constexpr ( c == category::uint32x16  ) return _mm512_max_epu32(v0, v1);
+    else if constexpr ( c == category::int16x32   ) return _mm512_max_epi16(v0, v1);
+    else if constexpr ( c == category::uint16x32  ) return _mm512_max_epu16(v0, v1);
+    else if constexpr ( c == category::int8x64    ) return _mm512_max_epi8(v0, v1);
+    else if constexpr ( c == category::uint8x64   ) return _mm512_max_epu8(v0, v1);
+  }
 }

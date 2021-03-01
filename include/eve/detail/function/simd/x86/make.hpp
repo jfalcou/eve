@@ -218,7 +218,10 @@ namespace eve::detail
       using i_t = typename s_t::type;
 
       constexpr i_t false_bits =  i_t{0};
-      constexpr i_t true_bits  =  S::value <= 16 ? i_t{(1ULL << S::value)-1} : ~i_t{0};
+      constexpr i_t true_bits  = []{
+        if constexpr ( S() < s_t::bits ) return i_t{ (1ULL << S::value) -1 };
+        else                             return ~i_t{0};
+      }();
 
       return s_t{ !!v ? true_bits : false_bits };
     }

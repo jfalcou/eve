@@ -27,10 +27,19 @@ namespace eve::detail
   // Logical to Mask
   //================================================================================================
   template<typename Wide>
-  EVE_FORCEINLINE auto to_mask( cpu_ const&, Wide const& p ) noexcept
+  EVE_FORCEINLINE auto to_mask(cpu_ const&, Wide const& p ) noexcept
   {
     using type = typename Wide::mask_type;
-    return bit_cast(p, as_<type>{});
+
+    if constexpr ( has_aggregated_abi_v<Wide> )
+    {
+      auto [l, h] = p.slice();
+      return type{l.mask(), h.mask()};
+    }
+    else
+    {
+      return bit_cast(p, as_<type>{});
+    }
   }
 
   //================================================================================================

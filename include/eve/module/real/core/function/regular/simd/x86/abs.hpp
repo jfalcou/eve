@@ -35,4 +35,20 @@ namespace eve::detail
     }
     else                                            return aggregate(eve::abs, v);
   }
+
+// -----------------------------------------------------------------------------------------------
+  // 512 bits implementation
+  template<real_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N, x86_512_> abs_(EVE_SUPPORTS(avx512_), wide<T, N, x86_512_> const &v) noexcept
+  {
+    constexpr auto c = categorize<wide<T, N, x86_512_>>();
+
+         if constexpr ( c && category::unsigned_  ) return v;
+         if constexpr ( c == category::float64x8  ) return _mm512_abs_pd(v);
+    else if constexpr ( c == category::float32x16 ) return _mm512_abs_ps(v);
+    else if constexpr ( c == category::int64x8    ) return _mm512_abs_epi64(v);
+    else if constexpr ( c == category::int32x16   ) return _mm512_abs_epi32(v);
+    else if constexpr ( c == category::int16x32   ) return _mm512_abs_epi16(v);
+    else if constexpr ( c == category::int8x64    ) return _mm512_abs_epi8(v);
+  }
 }

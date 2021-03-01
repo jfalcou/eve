@@ -23,7 +23,8 @@ namespace eve::detail
                                              wide<T, N, x86_128_> const &v1) noexcept
   {
     using l_t = as_logical_t<wide<T, N, x86_128_>>;
-         if constexpr(std::is_same_v<T, float>)  return l_t(_mm_cmpnge_ps(v0, v1));
+         if constexpr( !x86_128_::is_wide_logical ) return is_not_greater_equal_(EVE_RETARGET(cpu_), v0, v1);
+    else if constexpr(std::is_same_v<T, float>)  return l_t(_mm_cmpnge_ps(v0, v1));
     else if constexpr(std::is_same_v<T, double>) return l_t(_mm_cmpnge_pd(v0, v1));
   }
 
@@ -33,8 +34,8 @@ namespace eve::detail
                                              wide<T, N, x86_256_> const &v1) noexcept
   {
     using l_t = as_logical_t<wide<T, N, x86_256_>>;
-         if constexpr(std::is_same_v<T, float>)  return l_t(_mm256_cmp_ps(v0, v1, _CMP_NGE_UQ));
+         if constexpr( !x86_256_::is_wide_logical ) return is_not_greater_equal_(EVE_RETARGET(cpu_), v0, v1);
+    else if constexpr(std::is_same_v<T, float>)  return l_t(_mm256_cmp_ps(v0, v1, _CMP_NGE_UQ));
     else if constexpr(std::is_same_v<T, double>) return l_t(_mm256_cmp_pd(v0, v1, _CMP_NGE_UQ));
   }
 }
-

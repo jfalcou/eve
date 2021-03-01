@@ -177,7 +177,7 @@ jobs:
   emulation:
     <<: *base_jobs
   x86_avx512:
-    <<: *wip_jobs
+    <<: *base_jobs
   x86_avx512_256:
     <<: *wip_jobs
   x86_avx512_128:

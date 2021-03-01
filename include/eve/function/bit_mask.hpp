@@ -15,4 +15,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/bit_mask.hpp>
-

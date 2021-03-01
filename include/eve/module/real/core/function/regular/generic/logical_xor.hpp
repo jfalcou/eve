@@ -45,9 +45,14 @@ namespace eve::detail
                                     , logical<wide<T,N,ABI>> const &a
                                     , logical<wide<U,N,ABI>> const &b
                                     ) noexcept
-  requires( use_is_wide_logical<ABI>::value )
   {
-    if constexpr(sizeof(T) == sizeof(U))  return bit_cast ( bit_xor(a.bits(), b.bits())
+    if constexpr ( !ABI::is_wide_logical )
+    {
+      // I didn't clean up the top here.
+      // joel said he has something general purpose
+      return logical<wide<T,N,ABI>>{a.storage() ^ b.storage()};
+    }
+    else if constexpr(sizeof(T) == sizeof(U))  return bit_cast ( bit_xor(a.bits(), b.bits())
                                                           , as_<as_logical_t<wide<T,N,ABI>>>()
                                                           );
     else                                  return apply_over(logical_xor, a, b);
