@@ -14,7 +14,6 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/swizzle.hpp>
 #include <tts/tts.hpp>
-#include <array>
 
 namespace eve::detail
 {
@@ -32,7 +31,7 @@ namespace eve::detail
         auto uia0 =  bit_cast(a0, as<ui_t>());
         constexpr uint8_t masklo = std::uint8_t(~0) >> 4;
         constexpr uint8_t maskhi = masklo << 4;
-        return std::pair<ui_t, ui_t>{ui_t(uia0 & ui_t(masklo)), ui_t((uia0 & ui_t(maskhi)) >> 4)};
+        return std::array<ui_t, 2>{ui_t(uia0 & ui_t(masklo)), ui_t((uia0 & ui_t(maskhi)) >> 4)};
       }
       else
       {
@@ -48,7 +47,7 @@ namespace eve::detail
         else
         {
           using si_t = downgrade_t<as_integer_t<elt_t, unsigned>>;
-          using r_t = std::pair<si_t, si_t>;
+          using r_t = std::array<si_t, 2>;
           return bit_cast(a0, as<r_t>());
         }
       }
