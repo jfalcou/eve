@@ -229,7 +229,7 @@ workflows:
           requires:
             - x86_sse2
           tool:     "../cmake/toolchain/clang.x86.cmake"
-          options:  "-msse4"
+          options:  "-msse4.2"
           filters:
             branches:
               ignore: develop
