@@ -16,6 +16,7 @@ namespace eve::detail
   template<value T>
   EVE_FORCEINLINE constexpr auto lo_(EVE_SUPPORTS(cpu_), T const &a0) noexcept
   {
-    return lohi(a0)[0];
+    auto [l, h] = lohi(a0);
+    return l;
   }
 }
