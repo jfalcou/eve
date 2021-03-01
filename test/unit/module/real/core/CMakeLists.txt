@@ -146,6 +146,7 @@ make_all_units(ROOT unit.real.core NAME laguerre              ARCH scalar simd T
 make_all_units(ROOT unit.real.core NAME ldexp                 ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.core NAME legendre              ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.core NAME lerp                  ARCH scalar simd TYPES ${real_types}    )
+make_all_units(ROOT unit.real.core NAME lo                    ARCH scalar simd TYPES ${integral_types})
 make_all_units(ROOT unit.real.core NAME logical_and           ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME logical_andnot        ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME logical_not           ARCH scalar simd TYPES ${all_types}     )

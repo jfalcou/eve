@@ -15,9 +15,18 @@ TTS_CASE_TPL("Check lohi return type", EVE_TYPE)
   using elt_t =eve::element_type_t<T>;
   using sui_t = eve::as_integer_t<elt_t, unsigned>;
   using sdui_t =  eve::detail::downgrade_t<sui_t>;
-  using wdui_t = eve::wide<sdui_t, eve::cardinal_t<T> >;
-  using typ = std::array<wdui_t,2>;
-  TTS_EXPR_IS((eve::lohi(T())),typ);
+  if constexpr(eve::simd_value<T>)
+  {
+    using wdui_t = eve::wide<sdui_t, eve::cardinal_t<T> >;
+    using typ = std::array<wdui_t,2>;
+    TTS_EXPR_IS((eve::lohi(T())),typ);
+  }
+  else
+  {
+    using wdui_t = sdui_t;
+    using typ = std::array<wdui_t,2>;
+    TTS_EXPR_IS((eve::lohi(T())),typ);
+  }
 }
 
 TTS_CASE_TPL("Check (eve::lohi behavior", EVE_TYPE)
@@ -46,12 +55,6 @@ TTS_CASE_TPL("Check (eve::lohi behavior", EVE_TYPE)
       TTS_EQUAL (p0, wui_t(dui_t(~0)));
       TTS_EQUAL (p1, wui_t(dui_t(0)));
     }
-    {
-      auto [p0, p1] = eve::lohi((T(ui_t(~0) >> (sizeof(elt_t)*4)) <<(sizeof(elt_t)*4) ));
-      using wui_t = decltype(p0);
-      TTS_EQUAL (p0, wui_t(dui_t(0)));
-      TTS_EQUAL (p1, wui_t(dui_t(~0)));
-    }
   }
   else
   {
@@ -69,17 +72,11 @@ TTS_CASE_TPL("Check (eve::lohi behavior", EVE_TYPE)
       TTS_EQUAL (p0, wui_t(dui_t(~0)>> (sizeof(elt_t)*4)));
       TTS_EQUAL (p1, wui_t(dui_t(~0)>> (sizeof(elt_t)*4)));
     }
-//     {
-//       auto [p0, p1] = eve::lohi(T(ui_t(~0) >> (sizeof(elt_t)*4) ));
-//       using wui_t = decltype(p0);
-//       TTS_EQUAL (p0, wui_t(dui_t(~0)>> (sizeof(elt_t)*4)));
-//       TTS_EQUAL (p1, wui_t(dui_t(0)));
-//     }
-//     {
-//       auto [p0, p1] = eve::lohi((T(ui_t(~0) >> (sizeof(elt_t)*4)) <<(sizeof(elt_t)*4) ));
-//       using wui_t = decltype(p0);
-//       TTS_EQUAL (p0, wui_t(dui_t(0)));
-//       TTS_EQUAL (p1, wui_t(dui_t(~0) >> (sizeof(elt_t)*4)));
-//     }
+    {
+      auto [p0, p1] = eve::lohi(T(ui_t(~0) >> (sizeof(elt_t)*4) ));
+      using wui_t = decltype(p0);
+      TTS_EQUAL (p0, wui_t(dui_t(~0)>> (sizeof(elt_t)*4)));
+      TTS_EQUAL (p1, wui_t(dui_t(0)));
+    }
   }
 }

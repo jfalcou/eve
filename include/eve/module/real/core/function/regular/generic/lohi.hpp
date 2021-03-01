@@ -41,19 +41,14 @@ namespace eve::detail
         {
           using ui_t = wide<si_t, fixed<cardinal_t<T>::value*2>>;
           auto uia0 = bit_cast(a0, as<ui_t>());
-          auto constexpr p = as_pattern([](auto i,  auto c) { return i < c/2 ? 2 * i : 2 * (i-c/2)+1; });
+          auto constexpr p = as_pattern([](auto i,  auto c) { return (i < c/2) ? 2 * i : 2 * (i-c/2)+1; });
           uia0 = uia0[p];
           return uia0.slice();
         }
         else
         {
+          using si_t = downgrade_t<as_integer_t<elt_t, unsigned>>;
           using r_t = std::array<si_t, 2>;
-          std::cout << "1---------" << tts::typename_of_(a0) << std::endl;
-          std::cout << "2---------" << tts::typename_of_( bit_cast(a0, as<r_t>())) << std::endl;
-          std::cout << std::hex << "a0 "<< a0  << std::endl;
-          std::cout << std::hex << "lo " << bit_cast(a0, as<r_t>())[0] << std::endl;
-          std::cout << std::hex << "hi " << bit_cast(a0, as<r_t>())[1] << std::endl;
-          std::cout << std::dec << std::endl;
           return bit_cast(a0, as<r_t>());
         }
       }
