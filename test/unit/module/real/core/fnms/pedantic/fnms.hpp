@@ -6,8 +6,6 @@
 **/
 //==================================================================================================
 
-#if !defined(SPY_SIMD_IS_X86_AVX512)
-
 #include <eve/function/pedantic/fnms.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/inc.hpp>
@@ -43,5 +41,3 @@ TTS_CASE_TPL("Check eve::pedantic(eve::fnms) behavior", EVE_TYPE)
     TTS_EQUAL(eve::pedantic(eve::fnms)(eve::inc(e), eve::dec(e),T(1)), -eve::sqr(e));
   }
 }
-
-#endif  // !defined(SPY_SIMD_IS_X86_AVX512)

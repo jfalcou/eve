@@ -6,8 +6,6 @@
 **/
 //==================================================================================================
 
-#if !defined(SPY_SIMD_IS_X86_AVX512)
-
 #include <eve/function/numeric/fms.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/inc.hpp>
@@ -44,5 +42,3 @@ TTS_CASE_TPL("Check eve::numeric(eve::fms) behavior", EVE_TYPE)
     TTS_EQUAL(eve::numeric(eve::fms)(eve::valmax(eve::as<T>()), T(2), eve::valmax(eve::as<T>())), eve::valmax(eve::as<T>()));
   }
 }
-
-#endif  // !defined(SPY_SIMD_IS_X86_AVX512)
