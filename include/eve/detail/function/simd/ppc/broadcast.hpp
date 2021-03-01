@@ -21,7 +21,7 @@ namespace eve::detail
   template<typename T, typename N, ppc_abi ABI, typename Index, std::ptrdiff_t C>
   EVE_FORCEINLINE auto broadcast_(EVE_SUPPORTS(vmx_), logical<wide<T,N,ABI>> v, Index, fixed<C>) noexcept
   {
-    using  that_t = logical<wide<T,fixed<C>>;
+    using  that_t = logical<wide<T,fixed<C>>>;
     return that_t{ vec_splat(v.storage(), Index::value ) };
   }
 

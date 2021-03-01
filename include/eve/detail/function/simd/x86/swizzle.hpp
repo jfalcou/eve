@@ -229,16 +229,27 @@ namespace eve::detail
         else
         {
           using f_t     = as_floating_point_t<wide<T,N,ABI>>;
-          auto const m  = as_indexes<wide<T,N,ABI>>(q);
 
           if constexpr(sizeof(T) == 8 && is_x86_shuffle_compatible(q) )
           {
             auto const vv     = bit_cast(v,as_<f_t>{});
+
+            //======================================================================================
+            // Fix the pattern to fit the non-obvious control mask for _mm256_permutevar_pd
+            // which read bits 1/65/129/193 instead of the obvious 0/64/128/192
+            //======================================================================================
+            constexpr auto fixed_pattern = fix_pattern<N::value>
+            (
+              [](auto i, auto c) { Pattern r; return (i<c/2 ? r(i,c) : r(i-c/2,c)) << 1; }
+            );
+
+            auto const m  = as_indexes<wide<T,N,ABI>>(fixed_pattern);
             return bit_cast(process_zeros(f_t{_mm256_permutevar_pd(vv,m)},q),as(v));
           }
           else if constexpr(sizeof(T) == 4 && is_x86_shuffle_compatible(q) )
           {
             auto const vv = bit_cast(v,as_<f_t>{});
+            auto const m  = as_indexes<wide<T,N,ABI>>(q);
             return bit_cast(process_zeros(f_t{_mm256_permutevar_ps(vv,m)},q),as(v));
           }
           else
