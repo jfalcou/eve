@@ -154,6 +154,7 @@ make_all_units(ROOT unit.real.core NAME logical_notor         ARCH scalar simd T
 make_all_units(ROOT unit.real.core NAME logical_or            ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME logical_ornot         ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME logical_xor           ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT unit.real.core NAME lohi                  ARCH scalar simd TYPES ${integral_types})
 make_all_units(ROOT unit.real.core NAME lookup                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME manhattan             ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.core NAME mantissa              ARCH scalar simd TYPES ${real_types}    )

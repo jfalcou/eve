@@ -296,11 +296,11 @@ namespace eve::detail
 
   };
 
-  template < typename T>
-  struct downgrader< T, false>
-  {
-    using type = float;
-  };
+//   template < typename T>
+//   struct downgrader< T, false>
+//   {
+//     using type = float;
+//   };
 
   template<typename T>
   struct downgrade : downgrader<T>
