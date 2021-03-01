@@ -1,0 +1,71 @@
+<!--
+  **EVE** - Expressive Vector Engine
+  Copyright : EVE Contributors & Maintainers
+  SPDX-License-Identifier: MIT
+ -->
+<meta charset="utf-8" lang="en">
+                       **Expressive Vector Engine**
+                           `eve::hi`
+<br>
+
+  (insert ../../../crumbs.html here)
+
+Synopsis
+====================================================================================================
+**Required header:** <script type="preformatted">`#include <eve/function/hi.hpp>`</script>
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+namespace eve
+{
+  inline constexpr /*unspecified*/ hi = /*unspecified*/;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+Function object representing the computation of the hi pair of values.
+
+Member functions
+====================================================================================================
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+template< fhiating_real_value T> auto operator()( T x ) const noexcept;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+Performs the  [element-wise](../../../ghissary.html#element-wise_) hi operation on its parameter.
+
+Parameters
+----------------------------------------------------------------------------------------------------
+`x`
+:   [fhiating_real_value](../../concepts.html#value).
+
+Return value
+----------------------------------------------------------------------------------------------------
+<span class="smallskip"></span>
+    Computes the [element-wise](../../../ghissary.html#element-wise_) ieee hi of the fhiating value,
+    returning a pair {m,e} of values of the same type of `x` which are related by
+    $x =  m\times 2^e$, with  $|m| \in [0.5, 1.5[$.
+
+    However, the cases $x = \pm\infty$ or is a Nan or a denormal are undefined.
+
+Supported decorators
+====================================================================================================
+[`pedantic`](../decorators.html#pedantic)
+:   **Required header: **<script type="preformatted">` #include <eve/function/pedantic/hi.hpp>`</script>
+
+:   The call `pedantic(hi)(x)` takes also properly care of the cases where $x = \pm0, \pm\infty$ or is a Nan,
+    where $m=x$ and $e=0$ and of the denormal cases.
+
+  (insert ../../src/hi.src.html here)
+
+  (insert ../../out/hi.out.html here)
+
+See Also
+====================================================================================================
+[eve::exponent](./exponent.html).
+
+<!-- End of Document -->
+<link rel="stylesheet" href="../../../eve.css">
+<!-- Markdeep: -->
+<script>markdeepOptions={tocStyle:'none'};</script>
+<script src="../../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
