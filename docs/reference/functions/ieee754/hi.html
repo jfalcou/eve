@@ -28,7 +28,7 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template< floating_real_value T> auto operator()( T x ) const noexcept;
+template< real_value T> auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 Performs the  [element-wise](../../../glossary.html#element-wise_) hi operation on its parameter.
@@ -36,12 +36,12 @@ Performs the  [element-wise](../../../glossary.html#element-wise_) hi operation 
 Parameters
 ----------------------------------------------------------------------------------------------------
 `x`
-:   [floating_real_value](../../concepts.html#value).
+:   [real_value](../../concepts.html#value).
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-    Computes the [element-wise](../../../glossary.html#element-wise_) ieee higher half of the  value,
+    Computes the [element-wise](../../../glossary.html#element-wise_) higher half of the  value,
     returning each elemnet as an unsigned integer of half the size of the input element.
 
     If you also need the lower part `lohi` is more efficient.
