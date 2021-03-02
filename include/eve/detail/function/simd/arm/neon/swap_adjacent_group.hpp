@@ -14,7 +14,7 @@
 namespace eve::detail
 {
   template<real_scalar_value T, typename N, arm_abi ABI, std::ptrdiff_t G>
-  EVE_FORCEINLINE wide<T,N,ABI> swap_adjacent_group_( EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE wide<T,N,ABI> swap_adjacent_group_( EVE_SUPPORTS(neon128_)
                                                     , wide<T,N,ABI> v, fixed<G>
                                                     ) noexcept
   requires(G<=N::value)
@@ -31,9 +31,8 @@ namespace eve::detail
 
       if constexpr(G == 1)
       {
-              if constexpr( c == category::float64x2  ) return that_t(v.get(1),v.get(0));
-        else  if constexpr( c == category::int64x2    ) return that_t(v.get(1),v.get(0));
-        else  if constexpr( c == category::uint64x2   ) return that_t(v.get(1),v.get(0));
+              if constexpr( c == category::int64x2    ) return vextq_s64(v,v,1);
+        else  if constexpr( c == category::uint64x2   ) return vextq_u64(v,v,1);
         else  if constexpr( c == category::float64x1  ) return v;
         else  if constexpr( c == category::int64x1    ) return v;
         else  if constexpr( c == category::uint64x1   ) return v;
@@ -51,6 +50,11 @@ namespace eve::detail
         else  if constexpr( c == category::uint8x16   ) return vrev16q_u8(v);
         else  if constexpr( c == category::int8x8     ) return vrev16_s8(v);
         else  if constexpr( c == category::uint8x8    ) return vrev16_u8(v);
+        else  if constexpr( c == category::float64x2  )
+        {
+          if constexpr(current_api > asimd) return vextq_f64(v,v,1);
+          else                              return that_t(v.get(1),v.get(0));
+        }
       }
       else
       {

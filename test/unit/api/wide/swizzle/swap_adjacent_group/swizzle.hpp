@@ -24,10 +24,10 @@ void test_swag(Env& runtime, bool verbose, Filler filler)
               constexpr std::size_t sz = 1ULL << N;
               std::cout << "using pattern " << eve::swap_adjacent_group_n<sz,EVE_CARDINAL> << "\n";
 
-              T ref = [&](auto i, auto c)
+              T ref = [=](auto i, auto c)
               {
                 constexpr auto p = eve::swap_adjacent_group_n<sz,EVE_CARDINAL>;
-                return simd.get(p(i,c));
+                return filler(p(i,c),c);
               };
 
               TTS_EQUAL( eve::swap_adjacent_group(simd, eve::lane<sz>), ref);

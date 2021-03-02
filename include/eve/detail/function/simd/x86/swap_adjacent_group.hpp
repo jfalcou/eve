@@ -19,7 +19,7 @@ namespace eve::detail
                                                     ) noexcept
   requires(G<=N::value)
   {
-    using sf4     = std::integral_constant<int,_MM_SHUFFLE(2, 3, 0, 1)>;
+    constexpr auto sf4 = _MM_SHUFFLE(2, 3, 0, 1);
     using that_t  = wide<T,N,ABI>;
 
     if constexpr(G == N::value)
@@ -44,31 +44,40 @@ namespace eve::detail
           {
             auto up = convert(v, as_<upgrade_t<T>>{});
             auto r  = swap_adjacent_group(up,fixed<G>{});
-            auto[l,h] = r.slice();
-            if constexpr( std::is_signed_v<T> ) return _mm_packs_epi16(l,h);
-            else                                return _mm_packus_epi16(l,h);
+
+            if constexpr(N::value < 16)
+            {
+              if constexpr( std::is_signed_v<T> ) return bit_cast(_mm_packs_epi16(r,r), as(v));
+              else                                return bit_cast(_mm_packus_epi16(r,r), as(v));
+            }
+            else
+            {
+              auto[l,h] = r.slice();
+              if constexpr( std::is_signed_v<T> ) return _mm_packs_epi16(l,h);
+              else                                return _mm_packus_epi16(l,h);
+            }
           }
         }
         else if constexpr( size == 2 )
         {
           auto s =v.storage();
-              s = _mm_shufflehi_epi16(s, sf4::value);
-          return  _mm_shufflelo_epi16(s, sf4::value);
+              s = _mm_shufflehi_epi16(s, sf4);
+          return  _mm_shufflelo_epi16(s, sf4);
         }
         else if constexpr( size == 4 )
         {
-          if constexpr( std::same_as<T,float> ) return v[pattern<1,0,3,2>];
+          if constexpr( std::same_as<T,float> ) return _mm_shuffle_ps(v,v, _MM_SHUFFLE(2,3,0,1));
           else
           {
             auto s = v.storage();
-            s = _mm_shuffle_epi32(s, sf4::value);
+            s = _mm_shuffle_epi32(s, sf4);
             return s;
           }
         }
         else if constexpr( size == 8 )
         {
-                if constexpr( std::same_as<T,double> )  return v[pattern<1,0>];
-          else  if constexpr( std::same_as<T,float>  )  return v[pattern<2,3,0,1>];
+                if constexpr( std::same_as<T,double> )  return _mm_shuffle_pd(v,v,_MM_SHUFFLE2(0,1));
+          else  if constexpr( std::same_as<T,float>  )  return _mm_shuffle_ps(v,v, _MM_SHUFFLE(1,0,3,2));
           else
           {
             auto s = v.storage();
@@ -96,8 +105,8 @@ namespace eve::detail
         {
           if constexpr( current_api >= avx2 )
           {
-              v = _mm256_shufflehi_epi16(v, sf4::value);
-          return  _mm256_shufflelo_epi16(v, sf4::value);
+              v = _mm256_shufflehi_epi16(v, sf4);
+          return  _mm256_shufflelo_epi16(v, sf4);
           }
           else
           {
@@ -107,10 +116,13 @@ namespace eve::detail
         }
         else if constexpr( size == 4 )
         {
-          if constexpr( std::same_as<T,float>  )  return v[pattern<1,0,3,2,5,4,7,6>];
+          if constexpr( std::same_as<T,float>  )
+          {
+            return _mm256_permutevar_ps(v, as_integer_t<wide<T,N,ABI>>(1,0,3,2,5,4,7,6));
+          }
           else  if constexpr( current_api >= avx2    )
           {
-            return _mm256_shuffle_epi32(v, sf4::value);
+            return _mm256_shuffle_epi32(v, sf4);
           }
           else
           {
@@ -121,11 +133,17 @@ namespace eve::detail
         }
         else if constexpr( size == 8 )
         {
-                if constexpr( std::same_as<T,double> )  return v[pattern<1,0,2,3>];
-          else  if constexpr( std::same_as<T,float>  )  return v[pattern<2,3,0,1,6,7,4,5>];
-          else  if constexpr( current_api >= avx2    )
+          if constexpr( std::same_as<T,double> )
           {
-            return _mm256_permute4x64_epi64(v, sf4::value);
+            return _mm256_permutevar_pd(v, as_integer_t<wide<T,N,ABI>>(2,0,2,0));
+          }
+          else  if constexpr( std::same_as<T,float> )
+          {
+            return _mm256_permutevar_ps(v, as_integer_t<wide<T,N,ABI>>(6,7,4,5,2,3,0,1));
+          }
+          else  if constexpr( current_api >= avx2 )
+          {
+            return _mm256_permute4x64_epi64(v, sf4);
           }
           else
           {
@@ -136,8 +154,15 @@ namespace eve::detail
         }
         else if constexpr( size == 16 )
         {
-                if constexpr( std::same_as<T,double> )  return v[pattern<2,3,0,1>];
-          else  if constexpr( std::same_as<T,float>  )  return v[pattern<4,5,6,7,0,1,2,3>];
+          if constexpr( std::same_as<T,double> )
+          {
+            return _mm256_permute2f128_pd(v,v,0x21);
+          }
+          else  if constexpr( std::same_as<T,float>  )
+          {
+            auto[l,h] = v.slice();
+            return that_t(h,l);
+          }
           else  if constexpr( current_api >= avx2    )
           {
             return _mm256_permute4x64_epi64(v, _MM_SHUFFLE(1,0,3,2));
@@ -158,7 +183,7 @@ namespace eve::detail
   }
 
   template<real_scalar_value T, typename N, x86_abi ABI, std::ptrdiff_t G>
-  EVE_FORCEINLINE logical<wide<T,N,ABI>> swap_adjacent_group_ ( EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE logical<wide<T,N,ABI>> swap_adjacent_group_ ( EVE_SUPPORTS(sse2_)
                                                               , logical<wide<T,N,ABI>> v, fixed<G>
                                                               ) noexcept
   requires(G<=N::value)
@@ -176,8 +201,8 @@ namespace eve::detail
     }
     else
     {
-      // Use basic implementation via bit_cast & mask()
-      return bit_cast( swap_adjacent_group(v.mask(),fixed<G>{}), as(v));
+      // Use the common implementation
+      return swap_adjacent_group_(EVE_RETARGET(cpu_),v, fixed<G>{});
     }
   }
 }
