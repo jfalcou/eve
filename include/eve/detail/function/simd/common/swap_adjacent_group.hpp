@@ -36,7 +36,7 @@ namespace eve::detail
     else
     {
       // In this case, we don't have anything special to do so we just swizzle
-      return v[eve::swap_adjacent_group_n<G,Wide::size()>];
+      return basic_swizzle(v, eve::swap_adjacent_group_n<G,Wide::size()>);
     }
   }
 
