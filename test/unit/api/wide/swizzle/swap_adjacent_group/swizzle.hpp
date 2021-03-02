@@ -30,7 +30,8 @@ void test_swag(Env& runtime, bool verbose, Filler filler)
                 return filler(p(i,c),c);
               };
 
-              TTS_EQUAL( eve::swap_adjacent_group(simd, eve::lane<sz>), ref);
+              TTS_EQUAL( (simd[eve::swap_adjacent_group_n<sz,EVE_CARDINAL>]), ref);
+              TTS_EQUAL( eve::swap_adjacent_group(simd, eve::lane<sz>)      , ref);
             };
 
     ( f(std::integral_constant<std::size_t,I>{}), ... );
