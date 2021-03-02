@@ -65,7 +65,7 @@ namespace eve::detail
       auto  [xhi, ehi] = f(hiv);
       auto  [xlo, elo] = f(lov);
       using r_t = decltype(eve::combine(xlo, xhi));
-      return std::array<r_t, 2>(eve::combine(xlo, xhi), eve::combine(elo, ehi));
+      return std::array<r_t, 2>{eve::combine(xlo, xhi), eve::combine(elo, ehi)};
     }
     else return f(v);
   }
