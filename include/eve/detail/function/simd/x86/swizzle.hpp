@@ -249,7 +249,7 @@ namespace eve::detail
         }
       }
     }
-    else if constexpr( width_in == 16 )
+    else if constexpr( width_in <= 16 )
     {
       return basic_swizzle_(EVE_RETARGET(sse2_), v, q);
     }
