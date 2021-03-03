@@ -17,8 +17,6 @@
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // Regular case
   template<value T>
   EVE_FORCEINLINE constexpr auto lohi_(EVE_SUPPORTS(cpu_), T const &a0) noexcept
   {
@@ -29,20 +27,17 @@ namespace eve::detail
       {
         using ui_t = as_integer_t<T, unsigned>;
         auto uia0 =  bit_cast(a0, as<ui_t>());
-        constexpr uint8_t masklo = std::uint8_t(~0) >> 4;
-        constexpr uint8_t maskhi = masklo << 4;
-        return std::array<ui_t, 2>{ui_t(uia0 & ui_t(masklo)), ui_t((uia0 & ui_t(maskhi)) >> 4)};
+        return std::array<ui_t, 2>{ui_t(uia0 & ui_t(0xF)), ui_t((uia0 & ui_t(0xF0)) >> 4)};
       }
       else
       {
         using si_t = downgrade_t<as_integer_t<elt_t, unsigned>>;
         if constexpr(simd_value<T>)
         {
-          using ui_t = wide<si_t, fixed<cardinal_t<T>::value*2>>;
+          using ui_t = wide<si_t, typename cardinal_t<T>::combined_type>;
           auto uia0 = bit_cast(a0, as<ui_t>());
           auto constexpr p = as_pattern([](auto i,  auto c) { return (i < c/2) ? 2 * i : 2 * (i-c/2)+1; });
-          uia0 = uia0[p];
-          return uia0.slice();
+          return uia0[p].slice();
         }
         else
         {
