@@ -132,14 +132,14 @@ CMAKE configurations
 |x86_fma                 | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=./cmake/toolchain/clang.x86.cmake  -DEVE_OPTIONS='-mavx2 -mfma' |
 |x86_avx512              | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=./cmake/toolchain/clang.x86.cmake  -DEVE_OPTIONS='-march=skylake-avx512' |
 |x86_avx512_no_native    | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=./cmake/toolchain/clang.x86.sde.cmake  -DEVE_OPTIONS='-march=skylake-avx512' |
-|tiny (sse2)             | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake -DEVE_OPTIONS='-DEVE_TEST_TYPE=tiny_wide' |
-|small (sse2)            | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake -DEVE_OPTIONS='-DEVE_TEST_TYPE=small_wide' |
-|extra (sse2)            | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake -DEVE_OPTIONS='-DEVE_TEST_TYPE=extra_wide' |
+|tiny (sse2)             | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake -DEVE_TEST_TYPE=tiny_wide |
+|small (sse2)            | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake -DEVE_TEST_TYPE=small_wide |
+|extra (sse2)            | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake -DEVE_TEST_TYPE=extra_wide |
 |scalar                  | (see sse2) |
 |aarch64(arm-v8) 128     | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/gcc.aarch64.cmake |
-|aarch64(arm-v8) 64      | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/gcc.aarch64.cmake -DEVE_OPTIONS='-DEVE_TEST_TYPE=small_wide' |
+|aarch64(arm-v8) 64      | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/gcc.aarch64.cmake -DEVE_TEST_TYPE=small_wide |
 |arm (arm-v7) 128        | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/gcc.arm.cmake |
-|arm (arm-v7) 64         | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/gcc.arm.cmake -DEVE_OPTIONS='-DEVE_TEST_TYPE=small_wide' |
+|arm (arm-v7) 64         | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/gcc.arm.cmake -DEVE_TEST_TYPE=small_wide |
 
 ### Building tests
 
