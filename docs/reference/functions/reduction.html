@@ -14,15 +14,22 @@ These functions performs reduction over register values, like sum or product of 
 a SIMD register.
 
 ## Functions
-
 **Convenience header:** <script type="preformatted">`#include <eve/function/reduction.hpp>`</script>
 
+### Boolean reductions
 [`eve::all`](reduction/all.html)
 :   computes if all element in a register are non-null
 [`eve::any`](reduction/any.html)
 :   computes if any element in a register is non-null
+[`eve::count_true`](reduction/count_true.html)
+:   computes the number of value evaluating to `true` in a register
 [`eve::none`](reduction/none.html)
 :   computes if all element in a register are null
+
+### Numeric reductions
+[`eve::reduce`](reduction/reduce.html)
+:   computes the generalized fold operation over a binary operator
+
 <!--
 [`eve::sum`](reduction/sum.html)
 :
@@ -33,8 +40,6 @@ a SIMD register.
 [`eve::minimum`](reduction/minimum.html)
 :
 -->
-[`eve::count_true`](reduction/count_true.html)
-:   computes the number of value evaluating to `true` in a register
 
 ----------------------------------------------------------------------------------------------------
 <!-- Shortcuts -->

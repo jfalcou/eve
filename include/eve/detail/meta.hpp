@@ -391,4 +391,13 @@ namespace eve::detail
 
     return impl(g);
   }
+
+  // Find the index of the first Ps equals to p
+  template<typename P, typename... Ps>
+  consteval std::ptrdiff_t find_index(P p, std::tuple<Ps...> )
+  {
+    bool checks[] = { (Ps{} == p)...};
+    for(std::size_t i=0;i<sizeof...(Ps);++i) if(checks[i]) return i;
+    return -1;
+  }
 }
