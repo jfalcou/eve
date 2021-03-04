@@ -54,7 +54,7 @@ namespace eve::detail
         iu += 0x3f800000 - 0x3f3504f3;
         iT k = bit_cast(iu >> 23, as<iT>()) - 0x7f;
         /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
-        T c = if_else(k >= 2 && is_not_equal(uf, a0), oneminus(uf - a0), a0 - dec(uf));
+        T c = if_else(k < 25, if_else(k >= 2, oneminus(uf - a0), a0 - dec(uf)), zero);
         if (eve::any(eve::is_nez(c))) c /= uf;
         /* reduce a0 into [sqrt(2)/2, sqrt(2)] */
         iu     = (iu & 0x007fffff) + 0x3f3504f3;
@@ -95,9 +95,8 @@ namespace eve::detail
         hu += 0x3ff00000 - 0x3fe6a09e;
         iT k = bit_cast(hu >> 20, as<iT>()) - 0x3ff;
         /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
-        T c = if_else(k >= 2 && is_not_equal(uf, a0), oneminus(uf - a0), a0 - dec(uf));
+        T c = if_else(k < 54, if_else(k >= 2, oneminus(uf - a0), a0 - dec(uf)), zero);
         if (eve::any(eve::is_nez(c))) c /= uf;
-//        T c = if_else(k >= 2, oneminus(uf - a0), a0 - dec(uf)) / uf;
         hu  = (hu & 0x000fffffull) + 0x3fe6a09e;
         T f = bit_cast(bit_cast(hu << 32, as<uiT>())
                            | ((bit_cast(uf, as<uiT>()) & 0xffffffffull)),
@@ -187,8 +186,8 @@ namespace eve::detail
         /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
         if( k < 25 )
         {
-          c = k >= 2 ? oneminus(uf - x) : x - dec(uf);
-          c /= uf;
+          c = (k >= 2) ? oneminus(uf - x) : x - dec(uf);
+          if (eve::is_nez(c)) c /= uf;
         }
 
         /* reduce u into [sqrt(2)/2, sqrt(2)] */
@@ -203,7 +202,7 @@ namespace eve::detail
       T R    = t2 + t1;
       T hfsq = 0.5f * sqr(f);
       T dk   = k;
-      return fma(dk, Log_2hi, ((fma(s, (hfsq + R), dk * Log_2lo + c) - hfsq) + f));
+      return fma(dk, Log_2hi, ((fma(s, (hfsq + R), fma(dk, Log_2lo, c)) - hfsq) + f));
     }
     else if constexpr( std::is_same_v<T, double> )
     {
@@ -253,8 +252,8 @@ namespace eve::detail
         /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
         if( k < 54 )
         {
-          c = k >= 2 ? oneminus(uf - x) : x - dec(uf);
-          c /= uf;
+          c = (k >= 2) ? oneminus(uf - x) : x - dec(uf);
+          if (eve::is_nez(c)) c /= uf;
         }
         hu = (hu & 0x000fffff) + 0x3fe6a09e;
         f  = bit_cast(bit_cast(hu << 32, as<uiT>())
