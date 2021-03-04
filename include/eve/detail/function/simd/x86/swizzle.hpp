@@ -194,7 +194,11 @@ namespace eve::detail
           }
           else  if constexpr(match(c,category::int32x8 ,category::uint32x8) ) s = _mm256_permutexvar_epi32(m,v);
           else  if constexpr(match(c,category::int16x16,category::uint16x16)) s = _mm256_permutexvar_epi16(m,v);
-          else  if constexpr(match(c,category::int8x32 ,category::uint8x32) ) s = _mm256_permutexvar_epi8(m,v);
+          else  if constexpr(match(c,category::int8x32 ,category::uint8x32) )
+          {
+            if constexpr(supports_avx512vbmi_)                                s = _mm256_permutexvar_epi8(m,v);
+            else  return basic_swizzle_(EVE_RETARGET(cpu_),v,q);
+          }
           else  if constexpr(c == category::float64x4 )                       s = _mm256_permutexvar_pd(m,v);
           else  if constexpr(c == category::float32x8 )                       s = _mm256_permutexvar_ps(m,v);
 
