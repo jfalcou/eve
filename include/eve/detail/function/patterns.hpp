@@ -11,6 +11,7 @@
 #include <eve/detail/function/broadcast.hpp>
 #include <eve/detail/function/swap_adjacent_groups.hpp>
 #include <eve/detail/function/broadcast_group.hpp>
+#include <eve/detail/function/reverse.hpp>
 #include <eve/detail/function/simd/common/patterns.hpp>
 
 namespace eve::detail
@@ -54,6 +55,7 @@ namespace eve::detail
     {
       return bound{broadcast_group, st->first, st->second, sz};
     }
-    else                                          return bound{basic_swizzle       , p};
+    else  if constexpr( is_reverse<InCardinal, I0,I...> )  return bound{reverse};
+    else                                                   return bound{basic_swizzle       , p};
   }
 }

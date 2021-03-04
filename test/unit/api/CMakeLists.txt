@@ -29,6 +29,8 @@ make_unit("unit.api"  swizzle/identity.cpp              )
 make_unit("unit.api"  swizzle/swap_adjacent_groups.cpp  )
 make_unit("unit.api"  swizzle/broadcast_group.cpp       )
 make_unit("unit.api"  swizzle/zero.cpp                  )
+make_unit("unit.api"  swizzle/reverse.cpp               )
+
 
 ##==================================================================================================
 ## Wide related tools
