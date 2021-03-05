@@ -7,10 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/detail/spy.hpp>
-#include <eve/detail/abi.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
@@ -79,4 +77,3 @@ namespace eve::detail
   }
 #endif
 }
-
