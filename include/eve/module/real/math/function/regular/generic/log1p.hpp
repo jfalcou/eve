@@ -17,6 +17,7 @@
 #include <eve/constant/zero.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/function/abs.hpp>
 #include <eve/function/any.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/converter.hpp>
@@ -40,12 +41,12 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      using elt_t     = value_type_t<T>;
+      using elt_t     = element_type_t<T>;
       using uiT       = as_integer_t<T, unsigned>;
       using iT        = as_integer_t<T, signed>;
-      T       Log_2hi = Ieee_constant<T, 0x3f318000U, 0x3fe62e42fee00000ULL>();
-      T       Log_2lo = Ieee_constant<T, 0xb95e8083U, 0x3dea39ef35793c76ULL>();
-      const T uf      = inc(a0);
+      const elt_t       Log_2hi = Ieee_constant<elt_t, 0x3f318000U, 0x3fe62e42fee00000ULL>();
+      const elt_t       Log_2lo = Ieee_constant<elt_t, 0xb95e8083U, 0x3dea39ef35793c76ULL>();
+      T uf      = inc(a0);
       auto    isnez   = is_nez(uf);
       if constexpr( std::is_same_v<elt_t, float> )
       {
@@ -53,19 +54,18 @@ namespace eve::detail
         iu += 0x3f800000 - 0x3f3504f3;
         iT k = bit_cast(iu >> 23, as<iT>()) - 0x7f;
         /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
-        /* reduce x into [sqrt(2)/2, sqrt(2)] */
+        T c = if_else(k < 25, if_else(k >= 2, oneminus(uf - a0), a0 - dec(uf)), zero);
+        if (eve::any(eve::is_nez(c))) c /= uf;
+        /* reduce a0 into [sqrt(2)/2, sqrt(2)] */
         iu     = (iu & 0x007fffff) + 0x3f3504f3;
         T f    = dec(bit_cast(iu, as<T>()));
         T s    = f / (2.0f + f);
         T z    = sqr(s);
         T w    = sqr(z);
-        T t1   = w * horn<T, 0x3eccce13, 0x3e789e26>(w);
-        T t2   = z * horn<T, 0x3f2aaaaa, 0x3e91e9ee>(w);
-        T R    = t2 + t1;
+        T R = fma(w,  horn<T, 0x3eccce13, 0x3e789e26>(w),  z * horn<T, 0x3f2aaaaa, 0x3e91e9ee>(w));
         T hfsq = half(eve::as<T>()) * sqr(f);
         T dk   = float32(k);
-        T c    = if_else(k >= 2, oneminus(uf - a0), a0 - dec(uf)) / uf;
-        T r    = fma(dk, Log_2hi, ((fma(s, (hfsq + R), dk * Log_2lo + c) - hfsq) + f));
+        T r    = fma(dk, Log_2hi, ((fma(s, (hfsq + R), fma(dk, Log_2lo, c)) - hfsq) + f));
         T zz;
         if constexpr( eve::platform::supports_infinites )
         {
@@ -95,7 +95,8 @@ namespace eve::detail
         hu += 0x3ff00000 - 0x3fe6a09e;
         iT k = bit_cast(hu >> 20, as<iT>()) - 0x3ff;
         /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
-        T c = if_else(k >= 2, oneminus(uf - a0), a0 - dec(uf)) / uf;
+        T c = if_else(k < 54, if_else(k >= 2, oneminus(uf - a0), a0 - dec(uf)), zero);
+        if (eve::any(eve::is_nez(c))) c /= uf;
         hu  = (hu & 0x000fffffull) + 0x3fe6a09e;
         T f = bit_cast(bit_cast(hu << 32, as<uiT>())
                            | ((bit_cast(uf, as<uiT>()) & 0xffffffffull)),
@@ -115,7 +116,7 @@ namespace eve::detail
                       0x3fc2f112df3e5244ll>(w);
         T R  = t2 + t1;
         T dk = float64(k);
-        T r  = fma(dk, Log_2hi, ((fma(s, (hfsq + R), dk * Log_2lo + c) - hfsq) + f));
+        T r  = fma(dk, Log_2hi, ((fma(s, (hfsq + R), fma(dk, Log_2lo, c)) - hfsq) + f));
         T zz;
         if constexpr( eve::platform::supports_infinites )
         {
@@ -185,8 +186,8 @@ namespace eve::detail
         /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
         if( k < 25 )
         {
-          c = k >= 2 ? oneminus(uf - x) : x - dec(uf);
-          c /= uf;
+          c = (k >= 2) ? oneminus(uf - x) : x - dec(uf);
+          if (eve::is_nez(c)) c /= uf;
         }
 
         /* reduce u into [sqrt(2)/2, sqrt(2)] */
@@ -201,7 +202,7 @@ namespace eve::detail
       T R    = t2 + t1;
       T hfsq = 0.5f * sqr(f);
       T dk   = k;
-      return fma(dk, Log_2hi, ((fma(s, (hfsq + R), dk * Log_2lo + c) - hfsq) + f));
+      return fma(dk, Log_2hi, ((fma(s, (hfsq + R), fma(dk, Log_2lo, c)) - hfsq) + f));
     }
     else if constexpr( std::is_same_v<T, double> )
     {
@@ -251,8 +252,8 @@ namespace eve::detail
         /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
         if( k < 54 )
         {
-          c = k >= 2 ? oneminus(uf - x) : x - dec(uf);
-          c /= uf;
+          c = (k >= 2) ? oneminus(uf - x) : x - dec(uf);
+          if (eve::is_nez(c)) c /= uf;
         }
         hu = (hu & 0x000fffff) + 0x3fe6a09e;
         f  = bit_cast(bit_cast(hu << 32, as<uiT>())
