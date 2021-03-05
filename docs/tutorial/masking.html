@@ -98,7 +98,7 @@ int main()
 
 This code is perfectly valid and will produce the correct result. However, it has some issues:
  - the code looks like the important part is the test
- - the code can't be optimized in case the current architecture support masked operations (i.e AVX512)
+ - the code can't be optimized in case the current architecture support masked operations (i.e. AVX512)
 
 **EVE** functions supports -- whenever it makes sense -- a conditional call syntax that solves
 both issues:
