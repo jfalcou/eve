@@ -14,7 +14,7 @@
 namespace eve::detail
 {
   template<real_scalar_value T, typename N, x86_abi ABI, std::ptrdiff_t G>
-  EVE_FORCEINLINE wide<T,N,ABI> swap_adjacent_group_( EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE wide<T,N,ABI> swap_adjacent_group_( EVE_SUPPORTS(sse2_)
                                                     , wide<T,N,ABI> v, fixed<G>
                                                     ) noexcept
   requires(G<=N::value)
