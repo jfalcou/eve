@@ -6,8 +6,6 @@
 **/
 //==================================================================================================
 
-#if !defined(SPY_SIMD_IS_X86_AVX512)
-
 #include <eve/function/pedantic/pow_abs.hpp>
 #include <eve/function/prev.hpp>
 #include <eve/constant/valmax.hpp>
@@ -102,5 +100,3 @@ TTS_CASE_TPL("Check eve::pedantic(eve::pow_abs) behavior", EVE_TYPE)
     }
   }
 }
-
-#endif  // !defined(SPY_SIMD_IS_X86_AVX512)

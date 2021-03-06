@@ -27,4 +27,18 @@ TTS_CASE_TPL("Check eve::is_unordered behavior on arithmetic", EVE_TYPE)
     TTS_EQUAL(eve::is_unordered(T(3)          , eve::nan(eve::as<T>()) ), eve::true_(eve::as<T>()));
     TTS_EQUAL(eve::is_unordered(eve::nan(eve::as<T>()) , eve::nan(eve::as<T>()) ), eve::true_(eve::as<T>()));
   }
+
+  #if defined(EVE_SIMD_TESTS)
+  T a = [](auto i,auto) { return i%2 ? eve::nan(eve::as_<EVE_VALUE>()) : 3;};
+  T b = [](auto i,auto) { return i%3 ? 8 : eve::nan(eve::as_<EVE_VALUE>());};
+
+  eve::logical<T> ref = [](auto i,auto)
+  {
+    EVE_VALUE u = i%2 ? eve::nan(eve::as_<EVE_VALUE>()) : 3;
+    EVE_VALUE v = i%3 ? 8 : eve::nan(eve::as(u));
+    return eve::is_unordered(u,v);
+  };
+
+  TTS_EQUAL(eve::is_unordered(a,b), ref );
+  #endif
 }
