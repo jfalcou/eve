@@ -190,14 +190,14 @@ TTS_CASE_TPL("top_bits from ignore", TOP_BITS_EVE_TYPE)
     TTS_EQUAL(logical(true), eve::detail::to_logical(mmask));
   }
 
-  // ignore_extrema_ / keep_between
+  // ignore_extrema / keep_between
   {
     for (int i = 0; i < logical::static_size + 1; ++i)
     {
       for (int j = logical::static_size - i; j ; --j)
       {
         logical expected([&](int k, int) { return (k >= i) && (logical::static_size - k) > j; });
-        top_bits<logical> actual(eve::ignore_extrema_(i, j));
+        top_bits<logical> actual(eve::ignore_extrema(i, j));
         TTS_EQUAL(expected, eve::detail::to_logical(actual));
 
         actual = top_bits<logical>(eve::keep_between(i, logical::static_size - j));
@@ -211,7 +211,7 @@ TTS_CASE_TPL("top_bits from ignore", TOP_BITS_EVE_TYPE)
     for (int i = 0; i < logical::static_size + 1; ++i)
     {
       logical expected([&](int j, int) { return j >= i; });
-      top_bits<logical> actual(eve::ignore_first(i));
+      top_bits<logical> actual(eve::ignore_first{i});
       TTS_EQUAL(expected, eve::detail::to_logical(actual));
 
       actual = top_bits<logical>(eve::keep_last(logical::static_size - i));
@@ -224,7 +224,7 @@ TTS_CASE_TPL("top_bits from ignore", TOP_BITS_EVE_TYPE)
     for (int i = 0; i < logical::static_size + 1; ++i)
     {
       logical expected([&](int j, int) { return (logical::static_size - j) > i; });
-      top_bits<logical> actual(eve::ignore_last(i));
+      top_bits<logical> actual(eve::ignore_last{i});
       TTS_EQUAL(expected, eve::detail::to_logical(actual));
 
       actual = top_bits<logical>(eve::keep_first(logical::static_size - i));
