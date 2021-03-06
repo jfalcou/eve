@@ -17,7 +17,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This retrieves the `master` branch which contains the latest stable version.
-You can also use the `develop` branch if you prefer using bleeding edge unstable vesion
+You can also use the `develop` branch if you prefer using bleeding edge unstable version
 or any tagged versions.
 
 Once retrieved, you should have a ``eve`` folder which contains the whole source code.
@@ -61,10 +61,13 @@ option at configuration time.
 If you want to dig a bit further, you can pass additional options to `cmake` to activate additional
 features.
 
-| Option                  | Effect                                                      | Target              |
-|-------------------------|-------------------------------------------------------------|---------------------|
-| `EVE_BUILD_TEST`        | Enable unit tests for **EVE**. This is `ON` by default      | `ninja unit`        |
-| `EVE_BUILD_BENCHMARKS`  | Enable unit tests for **EVE**. This is `OFF` by default     | `ninja benchmarks`  |
+| Option                  | Effect                                                                  | Target              |
+|-------------------------|------------------------------------------------------------------------|---------------------|
+| `EVE_USE_PCH`           | Enable using precompiled headers for **EVE**. This is `OFF` by default |                     |
+| `EVE_BUILD_TEST`        | Enable unit tests for **EVE**. This is `ON` by default                 | `ninja unit`        |
+| `EVE_BUILD_BENCHMARKS`  | Enable benchmark tests for **EVE**. This is `OFF` by default           | `ninja benchmarks`  |
+| `EVE_BUILD_RANDOM`      | Enable random tests for **EVE**. This is `OFF` by default              | `ninja random`      |
+| `EVE_BUILD_SRC_HTML`    | Enable source generation of html documentation cpp files                | `ninja html`        |
 
 There is currently over 5000 tests, so compiling all unit tests may require a large machine or
 some time.

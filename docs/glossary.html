@@ -48,6 +48,8 @@ return f(TUV(x), TUV(y),TUV(z));
 
 In each case the return type is the compatibility result of the types of the three parameters.
 
+These definition can easily be extended to the N parameters case.
+
 ## Bitwise operations semantic
 Let `x`, `y` be two values of respective types `T` and `U`.
 
@@ -95,18 +97,18 @@ respond to the **element-wise operations semantic** if it is semantically equiva
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  C x1(x1), ..., xn(xn);
+  C x_1(x1), ..., x_n(xn);
 
   if constexpr(simd_value<C>)
   {
     for(int i=0; i < cardinal_v<T>; ++i)
     {
-      r[i] = f(x1[i],  ..., xn[i]);
+      r[i] = f(x_1[i],  ..., x_n[i]);
     }
   }
   else
   {
-    r = f(x1, ..., xn);
+    r = f(x_1, ..., x_n);
   }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
@@ -117,7 +119,7 @@ corresponding SIMD register. For any [scalar types](reference/concepts.html#scal
 cardinal is equal to 1. For [SIMD types](reference/concepts.html#simd_value), it's equal to the
 number of lanes in the register.
 
-**EVE** provides the [cardinal](reference/types/traits.html#cardinal) traits to access the cardinal
+**EVE** provides the [cardinal](reference/types/traits.html#cardinal) trait to access the cardinal
 of any type.
 
 ## Element type
@@ -126,7 +128,7 @@ the basic type used to represent its value. For any [scalar types](reference/con
 its type is its own element type. For [SIMD types](reference/concepts.html#simd_value), it's defined
 as its associated scalar type.
 
-**EVE** provides the [element_type](reference/types/traits.html#element_type) traits to access the
+**EVE** provides the [element_type](reference/types/traits.html#element_type) trait to access the
 element type of any type.
 
 ## Type family

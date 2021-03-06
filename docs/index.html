@@ -21,11 +21,13 @@ needs to change.
 
 # Current status
 
-**EVE** is considered in **Advanced BETA**: it's usable, has an almost complete feature sets for a sensible amount of instructions sets but it's possible some values or performances issues may be possible. Don't hesitate to report any funky code-gen or bad optimizations so we can deliver the best performance around.
+**EVE** is considered in **Advanced BETA**: it's usable, has an almost complete feature sets for a sensible
+amount of instructions sets but some values or performances issues may be possible. Don't hesitate to report
+any funky code-gen or bad optimizations so we can deliver the best performance around.
 
 ## Main remaining works:
 
-  - Complete optimized implementations of multi-register shuffles
+  - Complete optimized implementations of multi-register shuffles (swizzle already are available).
   - Reduction (sum, prod, etc) operations
   - Fix potential performance or codegen issues
   - Implement algorithms à la std over SIMD-izable ranges
@@ -36,6 +38,7 @@ needs to change.
   - **Intel**
     - SSE2, SSSE3, SSE3, SSE4.1, SSE4.2
     - AVX, AVX2, FMA4
+    - AVX512 with skylake like  minimum flavour (f,vl,dq,bw)
   - **AMD**
     - XOP, FMA3
   - **PowerPC**
