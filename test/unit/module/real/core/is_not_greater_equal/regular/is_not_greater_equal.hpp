@@ -38,4 +38,17 @@ TTS_CASE_TPL("Check eve::is_not_greater_equal behavior", EVE_TYPE)
   TTS_EQUAL(eve::is_not_greater_equal(T(1)  , T(3)  ), eve::true_(eve::as<T>()) );
   TTS_EQUAL(eve::is_not_greater_equal(T(1)  , v_t(3)), eve::true_(eve::as<T>()) );
   TTS_EQUAL(eve::is_not_greater_equal(v_t(1), T(3)  ), eve::true_(eve::as<T>()) );
+
+  #if defined(EVE_SIMD_TESTS)
+  T a = [](auto i,auto) { return i%2 ? 3 : 0;};
+  T b = [](auto i,auto) { return i%3 ? 8 : 0;};
+
+  eve::logical<T> ref = [](auto i,auto)
+  {
+    EVE_VALUE u = i%2 ? 3 : 0;
+    EVE_VALUE v = i%3 ? 8 : 0;
+    return eve::is_not_greater_equal(u,v);
+  };
+  TTS_EQUAL(eve::is_not_greater_equal(a,b), ref );
+  #endif
 }

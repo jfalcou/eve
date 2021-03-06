@@ -7,69 +7,35 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
-#include <eve/traits/as_logical.hpp>
-#include <eve/constant/false.hpp>
-#include <type_traits>
+#include <eve/detail/category.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // 128 bits implementation
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto is_unordered_(EVE_SUPPORTS(sse2_),
-                                     wide<T, N, x86_128_> const &v0,
-                                     wide<T, N, x86_128_> const &v1) noexcept
+  template<floating_real_scalar_value T, typename N, x86_abi ABI>
+  EVE_FORCEINLINE logical<wide<T, N, ABI>>
+  is_unordered_( EVE_SUPPORTS(sse2_), wide<T,N,ABI> const& a, wide<T,N,ABI> const& b) noexcept
   {
-    using t_t = wide<T, N, x86_128_>;
-    using l_t = as_logical_t<t_t>;
+    using l_t = logical<wide<T, N, ABI>>;
+    constexpr auto c = categorize<wide<T,N,ABI>>();
+    constexpr auto m = _CMP_UNORD_Q;
 
-    if constexpr( current_api >= eve::avx512 )
+          if constexpr( c && category::integer_    )  return false_(eve::as<l_t>());
+    else  if constexpr( current_api >= eve::avx512 )
     {
-           if constexpr ( std::is_same_v<T, float> )  return l_t(_mm_cmp_ps_mask(v0, v1, _CMP_UNORD_Q));
-      else if constexpr ( std::is_same_v<T, double> ) return l_t(_mm_cmp_pd_mask(v0, v1, _CMP_UNORD_Q));
-      else                                            return false_(eve::as<l_t>());
+      using s_t = typename l_t::storage_type;
+
+            if constexpr(c == category::float64x8  ) return s_t{_mm512_cmp_pd_mask(a, b, m) };
+      else  if constexpr(c == category::float64x4  ) return s_t{_mm256_cmp_pd_mask(a, b, m) };
+      else  if constexpr(c == category::float64x2  ) return s_t{_mm_cmp_pd_mask   (a, b, m) };
+      else  if constexpr(c == category::float32x16 ) return s_t{_mm512_cmp_ps_mask(a, b, m) };
+      else  if constexpr(c == category::float32x8  ) return s_t{_mm256_cmp_ps_mask(a, b, m) };
+      else  if constexpr(c == category::float32x4  ) return s_t{_mm_cmp_ps_mask   (a, b, m) };
     }
-    else if constexpr(std::is_same_v<T, float>)  return l_t(_mm_cmpunord_ps(v0, v1));
-    else if constexpr(std::is_same_v<T, double>) return l_t(_mm_cmpunord_pd(v0, v1));
-    else                                         return false_(eve::as<l_t>());
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // 256 bits implementation
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto
-  is_unordered_(EVE_SUPPORTS(avx_), wide<T, N, x86_256_> const &v0, wide<T, N, x86_256_> const &v1) noexcept
-  {
-    using t_t = wide<T, N, x86_256_>;
-    using l_t = as_logical_t<t_t>;
-
-    if constexpr( current_api >= eve::avx512 )
-    {
-           if constexpr ( std::is_same_v<T, float> )  return l_t(_mm256_cmp_ps_mask(v0, v1, _CMP_UNORD_Q));
-      else if constexpr ( std::is_same_v<T, double> ) return l_t(_mm256_cmp_pd_mask(v0, v1, _CMP_UNORD_Q));
-      else                                            return false_(eve::as<l_t>());
-    }
-    else if constexpr(std::is_same_v<T, float>)  return l_t(_mm256_cmp_ps(v0, v1, _CMP_UNORD_Q));
-    else if constexpr(std::is_same_v<T, double>) return l_t(_mm256_cmp_pd(v0, v1, _CMP_UNORD_Q));
-    else if constexpr(std::is_integral_v<T>)     return false_(eve::as<l_t>());
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // 512 bits implementation
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto
-  is_unordered_(EVE_SUPPORTS(avx512_), wide<T, N, x86_512_> const &v0, wide<T, N, x86_512_> const &v1) noexcept
-  {
-    using t_t = wide<T, N, x86_512_>;
-    using l_t = as_logical_t<t_t>;
-
-         if constexpr ( std::is_same_v<T, float> )  return l_t(_mm512_cmp_ps_mask(v0, v1, _CMP_UNORD_Q));
-    else if constexpr ( std::is_same_v<T, double> ) return l_t(_mm512_cmp_pd_mask(v0, v1, _CMP_UNORD_Q));
-    else                                            return false_(eve::as<l_t>());
+    else  if constexpr(c == category::float64x4  ) return l_t(_mm256_cmp_pd   (a, b, m) );
+    else  if constexpr(c == category::float64x2  ) return l_t(_mm_cmpunord_pd (a, b)    );
+    else  if constexpr(c == category::float32x8  ) return l_t(_mm256_cmp_ps   (a, b, m) );
+    else  if constexpr(c == category::float32x4  ) return l_t(_mm_cmpunord_ps (a, b)    );
   }
 }
