@@ -3,7 +3,5 @@
 ##  Copyright : EVE Contributors & Maintainers
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
-##  SPDX-License-Identifier: MIT
-##==================================================================================================
 
-make_unit( "doc.developer.reverse" reverse.cpp  )
+make_unit( "doc.tutorial.strlen" strlen.cpp  )
