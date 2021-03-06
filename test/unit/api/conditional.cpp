@@ -61,7 +61,7 @@ TTS_CASE_TPL("ignore_last behavior", TTS_NUMERIC_TYPES)
   using eve::if_else;
   using eve::as_;
 
-  TTS_EXPECT( relative_conditional_expr<eve::ignore_last_>  );
+  TTS_EXPECT( relative_conditional_expr<eve::ignore_last>  );
 
   using type = wide<T>;
   type value = [](auto i, auto) { return 1+i; };
@@ -93,7 +93,7 @@ TTS_CASE_TPL("keep_last behavior", TTS_NUMERIC_TYPES)
   using eve::if_else;
   using eve::as_;
 
-  TTS_EXPECT( relative_conditional_expr<eve::keep_last_>  );
+  TTS_EXPECT( relative_conditional_expr<eve::keep_last>  );
 
   using type = wide<T>;
   type value = [](auto i, auto) { return 1+i; };
@@ -125,7 +125,7 @@ TTS_CASE_TPL("ignore_first behavior", TTS_NUMERIC_TYPES)
   using eve::if_else;
   using eve::as_;
 
-  TTS_EXPECT( relative_conditional_expr<eve::ignore_first_>  );
+  TTS_EXPECT( relative_conditional_expr<eve::ignore_first>  );
 
   using type = wide<T>;
   type value = [](auto i, auto) { return 1+i; };
@@ -157,7 +157,7 @@ TTS_CASE_TPL("keep_first behavior", TTS_NUMERIC_TYPES)
   using eve::if_else;
   using eve::as_;
 
-  TTS_EXPECT( relative_conditional_expr<eve::keep_first_>  );
+  TTS_EXPECT( relative_conditional_expr<eve::keep_first>  );
 
   using type = wide<T>;
   type value = [](auto i, auto) { return 1+i; };
@@ -189,7 +189,7 @@ TTS_CASE_TPL("keep_between behavior", TTS_NUMERIC_TYPES)
   using eve::if_else;
   using eve::as_;
 
-  TTS_EXPECT( relative_conditional_expr<eve::keep_between_>  );
+  TTS_EXPECT( relative_conditional_expr<eve::keep_between>  );
 
   using type = wide<T>;
   type value = [](auto i, auto) { return 1+i; };
@@ -222,7 +222,7 @@ TTS_CASE_TPL("ignore_first/last combination", TTS_NUMERIC_TYPES)
   using eve::if_else;
   using eve::as_;
 
-  TTS_EXPECT( relative_conditional_expr<eve::ignore_extrema_>  );
+  TTS_EXPECT( relative_conditional_expr<eve::ignore_extrema>  );
 
   using type = wide<T>;
   type value = [](auto i, auto) { return 1+i; };

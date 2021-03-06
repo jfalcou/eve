@@ -230,13 +230,13 @@ namespace eve
   //================================================================================================
   // Helper structure to encode ignoring the last N elements
   //================================================================================================
-  struct ignore_last_
+  struct ignore_last
   {
     static constexpr bool has_alternative = false;
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
-    constexpr ignore_last_(std::ptrdiff_t n) noexcept : count_(n) {}
+    constexpr explicit EVE_FORCEINLINE ignore_last(std::ptrdiff_t n) noexcept : count_(n) {}
 
     template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
 
@@ -265,7 +265,7 @@ namespace eve
       return mask;
     }
 
-    friend std::ostream& operator<<(std::ostream& os, ignore_last_ const& c)
+    friend std::ostream& operator<<(std::ostream& os, ignore_last const& c)
     {
       return os << "ignore_last( " << c.count_ << " )";
     }
@@ -288,21 +288,16 @@ namespace eve
     std::ptrdiff_t count_;
   };
 
-  EVE_FORCEINLINE constexpr ignore_last_ ignore_last(std::ptrdiff_t n) noexcept
-  {
-    return {n};
-  }
-
   //================================================================================================
   // Helper structure to encode keeping the last N elements
   //================================================================================================
-  struct keep_last_
+  struct keep_last
   {
     static constexpr bool has_alternative = false;
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
-    constexpr EVE_FORCEINLINE keep_last_(std::ptrdiff_t n) noexcept : count_(n) {}
+    constexpr explicit EVE_FORCEINLINE keep_last(std::ptrdiff_t n) noexcept : count_(n) {}
 
     template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
 
@@ -333,7 +328,7 @@ namespace eve
       return mask;
     }
 
-    friend std::ostream& operator<<(std::ostream& os, keep_last_ const& c)
+    friend std::ostream& operator<<(std::ostream& os, keep_last const& c)
     {
       return os << "keep_last( " << c.count_ << " )";
     }
@@ -356,21 +351,16 @@ namespace eve
     std::ptrdiff_t count_;
   };
 
-  EVE_FORCEINLINE constexpr keep_last_ keep_last(std::ptrdiff_t n) noexcept
-  {
-    return {n};
-  }
-
   //================================================================================================
   // Helper structure to encode ignoring the first N elements
   //================================================================================================
-  struct ignore_first_
+  struct ignore_first
   {
     static constexpr bool has_alternative = false;
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
-    constexpr ignore_first_(std::ptrdiff_t n) noexcept : count_(n) {}
+    constexpr explicit EVE_FORCEINLINE ignore_first(std::ptrdiff_t n) noexcept : count_(n) {}
 
     template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
 
@@ -412,7 +402,7 @@ namespace eve
       return cardinal_v<T> - count_;
     }
 
-    friend std::ostream& operator<<(std::ostream& os, ignore_first_ const& c)
+    friend std::ostream& operator<<(std::ostream& os, ignore_first const& c)
     {
       return os << "ignore_first( " << c.count_ << " )";
     }
@@ -420,21 +410,16 @@ namespace eve
     std::ptrdiff_t count_;
   };
 
-  EVE_FORCEINLINE constexpr ignore_first_ ignore_first(std::ptrdiff_t n) noexcept
-  {
-    return {n};
-  }
-
   //================================================================================================
   // Helper structure to encode keep the first N elements
   //================================================================================================
-  struct keep_first_
+  struct keep_first
   {
     static constexpr bool has_alternative = false;
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
-    constexpr keep_first_(std::ptrdiff_t n) noexcept : count_(n) {}
+    constexpr explicit EVE_FORCEINLINE keep_first(std::ptrdiff_t n) noexcept : count_(n) {}
 
     template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
 
@@ -461,7 +446,7 @@ namespace eve
       return mask;
     }
 
-    friend std::ostream& operator<<(std::ostream& os, keep_first_ const& c)
+    friend std::ostream& operator<<(std::ostream& os, keep_first const& c)
     {
       return os << "keep_first( " << c.count_ << " )";
     }
@@ -484,21 +469,16 @@ namespace eve
     std::ptrdiff_t count_;
   };
 
-  EVE_FORCEINLINE constexpr keep_first_ keep_first(std::ptrdiff_t n) noexcept
-  {
-    return {n};
-  }
-
   //================================================================================================
   // Helper structure to encode keeping elements in between two index and ignoring the rest
   //================================================================================================
-  struct keep_between_
+  struct keep_between
   {
     static constexpr bool has_alternative = false;
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
-    constexpr keep_between_(std::ptrdiff_t b, std::ptrdiff_t e) noexcept : begin_(b), end_(e)
+    constexpr EVE_FORCEINLINE keep_between(std::ptrdiff_t b, std::ptrdiff_t e) noexcept : begin_(b), end_(e)
     {
       EVE_ASSERT(b<=e, "[eve::keep_between] Index mismatch for begin/end");
     }
@@ -546,7 +526,7 @@ namespace eve
       return end_ - begin_;
     }
 
-    friend std::ostream& operator<<(std::ostream& os, keep_between_ const& c)
+    friend std::ostream& operator<<(std::ostream& os, keep_between const& c)
     {
       return os << "keep_between( " << c.begin_ << ", " << c.end_ << " )";
     }
@@ -554,21 +534,16 @@ namespace eve
     std::ptrdiff_t begin_, end_;
   };
 
-  EVE_FORCEINLINE constexpr keep_between_ keep_between(std::ptrdiff_t b, std::ptrdiff_t e)
-  {
-    return {b,e};
-  }
-
   //================================================================================================
   // Helper structure to encode ignoring N elements on both extrema.
   //================================================================================================
-  struct ignore_extrema_
+  struct ignore_extrema
   {
     static constexpr bool has_alternative = false;
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
-    constexpr ignore_extrema_(std::ptrdiff_t b, std::ptrdiff_t e) noexcept
+    constexpr EVE_FORCEINLINE ignore_extrema(std::ptrdiff_t b, std::ptrdiff_t e) noexcept
             : first_count_(b), last_count_(e)
     {}
 
@@ -615,7 +590,7 @@ namespace eve
       return cardinal_v<T> - last_count_ - first_count_;
     }
 
-    friend std::ostream& operator<<(std::ostream& os, ignore_extrema_ const& c)
+    friend std::ostream& operator<<(std::ostream& os, ignore_extrema const& c)
     {
       return os << "ignore( first(" << c.first_count_ << "), last(" << c.last_count_ << ") )";
     }
@@ -623,12 +598,12 @@ namespace eve
     std::ptrdiff_t first_count_, last_count_;
   };
 
-  constexpr EVE_FORCEINLINE ignore_extrema_ operator&&( ignore_first_ a, ignore_last_ b) noexcept
+  constexpr EVE_FORCEINLINE ignore_extrema operator&&( ignore_first a, ignore_last b) noexcept
   {
     return {a.count_, b.count_};
   }
 
-  constexpr EVE_FORCEINLINE ignore_extrema_ operator&&( ignore_last_ b, ignore_first_ a) noexcept
+  constexpr EVE_FORCEINLINE ignore_extrema operator&&( ignore_last b, ignore_first a) noexcept
   {
     return a && b;
   }

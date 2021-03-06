@@ -102,26 +102,26 @@ TTS_CASE_TPL("Check eve::none[ignore]", EVE_TYPE)
     }
   }
 
-  // ignore_extrema_
+  // ignore_extrema
   {
     for (int i = 0; i < T::static_size + 1; ++i)
     {
       for (int j = T::static_size - i; j ; --j)
       {
         eve::logical<T> mask([&](int k, int) { return (k < i) || (T::static_size - k) < j; });
-        TTS_EXPECT(eve::none[eve::ignore_extrema_(i, j)](mask));
+        TTS_EXPECT(eve::none[eve::ignore_extrema(i, j)](mask));
 
         if (i + j == T::static_size) continue;
 
         mask.set(i, true);
 
-        TTS_EXPECT_NOT(eve::none[eve::ignore_extrema_(i, j)](mask));
-        TTS_EXPECT(eve::none[eve::ignore_extrema_(i + 1, j)](mask));
+        TTS_EXPECT_NOT(eve::none[eve::ignore_extrema(i, j)](mask));
+        TTS_EXPECT(eve::none[eve::ignore_extrema(i + 1, j)](mask));
         mask.set(i, false);
 
         mask.set(T::static_size - j - 1, true);
-        TTS_EXPECT_NOT(eve::none[eve::ignore_extrema_(i, j)](mask));
-        TTS_EXPECT(eve::none[eve::ignore_extrema_(i, j + 1)](mask));
+        TTS_EXPECT_NOT(eve::none[eve::ignore_extrema(i, j)](mask));
+        TTS_EXPECT(eve::none[eve::ignore_extrema(i, j + 1)](mask));
       }
     }
   }

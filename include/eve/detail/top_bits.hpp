@@ -151,7 +151,7 @@ struct top_bits
       }
     }
 
-    EVE_FORCEINLINE constexpr explicit top_bits(ignore_extrema_ ignore)
+    EVE_FORCEINLINE constexpr explicit top_bits(ignore_extrema ignore)
     {
       if constexpr( !is_aggregated )
       {
@@ -193,7 +193,7 @@ struct top_bits
     template <relative_conditional_expr Ignore>
     EVE_FORCEINLINE constexpr explicit top_bits(Ignore ignore):
       top_bits{
-        ignore_extrema_(
+        ignore_extrema(
           ignore.offset(eve::as_<logical_type>{}),
           ignore.roffset(eve::as_<logical_type>{}))
       }
