@@ -202,4 +202,10 @@ namespace eve
     internal negd;
     std::uniform_real_distribution<T> sd;
   };
+
+  template<typename T>
+  using prng =  std::conditional_t< std::is_floating_point_v<eve::element_type_t<T>>
+                                  , eve::tests_real_distribution<eve::element_type_t<T>>
+                                  , std::uniform_int_distribution<eve::element_type_t<T>>
+                                  >;
 }

@@ -22,9 +22,11 @@ make_unit( "unit.api" pattern.cpp     )
 
 ##==================================================================================================
 ## wide API tests
+make_unit("unit.api"  arithmetic.cpp  )
+make_unit("unit.api"  bitwise.cpp     )
+make_unit("unit.api"  shift.cpp       )
+
 add_subdirectory(wide)
-add_subdirectory(arithmetic)
-add_subdirectory(bitwise)
 add_subdirectory(comparisons)
 
 ##==================================================================================================
