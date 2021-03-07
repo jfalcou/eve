@@ -32,12 +32,13 @@
 #include <eve/module/real/math/detail/generic/trig_finalize.hpp>
 
 #include <type_traits>
-#include <utility>
+#include <array>
 
 namespace eve::detail
 {
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr auto sincos_(EVE_SUPPORTS(cpu_), restricted_type const &, T a0) noexcept
+  EVE_FORCEINLINE constexpr std::array<T, 2>
+  sincos_(EVE_SUPPORTS(cpu_), restricted_type const &, T a0) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {
@@ -47,13 +48,13 @@ namespace eve::detail
       auto x2nlepi2_16 = is_not_less_equal(x2, pi2_16);
       if constexpr( scalar_value<T> )
       {
-        return (x2nlepi2_16) ? std::make_tuple(nan(eve::as<T>()), nan(eve::as<T>()))
-                             : std::make_tuple(sin_eval(x2, a0), cos_eval(x2));
+        return (x2nlepi2_16) ? std::array<T, 2>{nan(eve::as<T>()), nan(eve::as<T>())}
+        : std::array<T, 2>{sin_eval(x2, a0), cos_eval(x2)};
       }
       else
       {
         x2 = if_else(x2nlepi2_16, eve::allbits, x2);
-        return std::make_tuple(sin_eval(x2, a0), cos_eval(x2));
+        return {sin_eval(x2, a0), cos_eval(x2)};
       }
     }
     else
@@ -61,7 +62,8 @@ namespace eve::detail
   }
 
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr auto sincos_(EVE_SUPPORTS(cpu_), small_type const &, T a0) noexcept
+  EVE_FORCEINLINE constexpr std::array<T, 2>
+  sincos_(EVE_SUPPORTS(cpu_), small_type const &, T a0) noexcept
   {
     if constexpr(has_native_abi_v<T>)
     {
@@ -84,20 +86,20 @@ namespace eve::detail
       {
         using i_t =  as_integer_t<T, signed>;
 
-        if (is_less_equal(x, eps(as<T>())))       return std::make_tuple(a0, one(eve::as<T>()));
-        if (is_not_less_equal(x, pio_2(eve::as<T>()))) return std::make_tuple(nan(eve::as<T>()), nan(eve::as<T>()));
+        if (is_less_equal(x, eps(as<T>())))            return {a0, one(eve::as<T>())};
+        if (is_not_less_equal(x, pio_2(eve::as<T>()))) return {nan(eve::as<T>()), nan(eve::as<T>())};
 
         i_t n = x > pio_4(eve::as<T>());
 
         if (n)
         {
           auto xr =  reduce(x);
-          return std::make_tuple(bit_xor(bitofsign(a0), cos_eval(sqr(xr)))
-                                , bit_xor(sin_eval(sqr(xr), xr), n << (sizeof(T)*8-1)));
+          return {bit_xor(bitofsign(a0), cos_eval(sqr(xr)))
+               , bit_xor(sin_eval(sqr(xr), xr), n << (sizeof(T)*8-1))};
         }
         else
         {
-          return std::make_tuple(sin_eval(sqr(x), a0), cos_eval(sqr(x)));
+          return {sin_eval(sqr(x), a0), cos_eval(sqr(x))};
         }
       }
       else
@@ -106,7 +108,8 @@ namespace eve::detail
         auto test = is_not_less_equal(x, pio_4(eve::as<T>()));
         auto n = binarize(test);
         auto xr =  if_else(test, reduce(x), x);
-        return  sincos_finalize(a0, n, xr, T(0));
+        auto [s, c] = sincos_finalize(a0, n, xr, T(0));
+        return {s, c};
       }
     }
     else
@@ -118,16 +121,18 @@ namespace eve::detail
   //////////////////////////////////////////////////////////////////////////////
   /// big medium
   template<decorator D, floating_real_value T>
-  EVE_FORCEINLINE constexpr auto sincos_(EVE_SUPPORTS(cpu_), D const &, T a0) noexcept
+  EVE_FORCEINLINE constexpr std::array<T, 2>
+  sincos_(EVE_SUPPORTS(cpu_), D const &, T a0) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {
       if constexpr( scalar_value<T> )
         if( is_not_finite(a0) )
-          return std::make_tuple(nan(eve::as<T>()), nan(eve::as<T>()));
+          return {nan(eve::as<T>()), nan(eve::as<T>())};
       const T x          = abs(a0);
       auto [fn, xr, dxr] = D()(rempio2)(x);
-      return sincos_finalize(bitofsign(a0), fn, xr, dxr);
+      auto [s, c] = sincos_finalize(bitofsign(a0), fn, xr, dxr);
+      return {s, c};
     }
     else
     {

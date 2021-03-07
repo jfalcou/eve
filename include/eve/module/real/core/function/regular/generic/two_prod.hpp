@@ -15,14 +15,15 @@
 #include <eve/concept/value.hpp>
 #include <eve/platform.hpp>
 #include <eve/detail/apply_over.hpp>
-#include <tuple>
+#include <array>
 
 namespace eve::detail
 {
   template<floating_real_value T>
-  EVE_FORCEINLINE auto two_prod_(EVE_SUPPORTS(cpu_)
-                                 , const T& a
-                                 , const T& b) noexcept
+  EVE_FORCEINLINE std::array<T, 2>
+  two_prod_(EVE_SUPPORTS(cpu_)
+           , const T& a
+           , const T& b) noexcept
   {
     if constexpr(has_native_abi_v<T>)
     {
@@ -32,9 +33,8 @@ namespace eve::detail
       T r1 = a2*b2 -(((r0-a1*b1)-a2*b1)-a1*b2);
       if constexpr(eve::platform::supports_invalids)
         r1 = if_else(is_not_finite(r0), eve::zero, r1);
-      return std::make_tuple(r0, r1);
+      return {r0, r1};
     }
     else return apply_over2(two_prod, a, b);
   }
 }
-

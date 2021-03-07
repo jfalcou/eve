@@ -8,11 +8,11 @@
 #include <eve/function/sinpicospi.hpp>
 #include <eve/function/sinpi.hpp>
 #include <eve/function/cospi.hpp>
-#include <tuple>
+#include <array>
 
 TTS_CASE_TPL("Check sinpicospi return type", EVE_TYPE)
 {
-  TTS_EXPR_IS( eve::medium(eve::sinpicospi)(T()), (std::tuple<T,T>));
+  TTS_EXPR_IS( eve::medium(eve::sinpicospi)(T()), (std::array<T,2>));
 }
 
 TTS_CASE_TPL("Check (eve::sinpicospi behavior", EVE_TYPE)

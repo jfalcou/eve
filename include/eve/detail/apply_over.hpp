@@ -50,22 +50,10 @@ namespace eve::detail
       auto  [lov, hiv] = v.slice();
       auto  [xhi, ehi] = f(hiv);
       auto  [xlo, elo] = f(lov);
-      return std::make_tuple(eve::combine(xlo, xhi), eve::combine(elo, ehi));
-    }
-    else return f(v);
-  }
-
-  template<typename Obj, simd_value T>
-  EVE_FORCEINLINE auto apply_over2a(Obj f, T const & v)
-  {
-    if constexpr(has_emulated_abi_v<T> ) return map(f, v);
-    else if constexpr(has_aggregated_abi_v<T>)
-    {
-      auto  [lov, hiv] = v.slice();
-      auto  [xhi, ehi] = f(hiv);
-      auto  [xlo, elo] = f(lov);
-      using r_t = decltype(eve::combine(xlo, xhi));
-      return std::array<r_t, 2>{eve::combine(xlo, xhi), eve::combine(elo, ehi)};
+      if constexpr(std::same_as<decltype(xlo), decltype(ehi)>)
+        return std::array<decltype(xlo), 2>{eve::combine(xlo, xhi), eve::combine(elo, ehi)};
+      else
+        return std::make_tuple(eve::combine(xlo, xhi), eve::combine(elo, ehi));
     }
     else return f(v);
   }
