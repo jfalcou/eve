@@ -38,13 +38,14 @@
 #include <eve/module/real/math/detail/generic/workaround.hpp>
 #include <eve/traits/alignment.hpp>
 #include <bit>
-#include <tuple>
+#include <array>
 #include <type_traits>
 
 namespace eve::detail
 {
  // up to 255*pi/4 ~200
-  template<floating_real_value T> EVE_FORCEINLINE auto rempio2_small(T const &xx) noexcept
+  template<floating_real_value T> EVE_FORCEINLINE std::array<T, 3>
+  rempio2_small(T const &xx) noexcept
   {
     using elt_t             = element_type_t<T>;
     if constexpr( std::is_same_v<elt_t, double> )
@@ -60,20 +61,21 @@ namespace eve::detail
       auto                a   = y - da;
       da                      = (y - a) - da;
 
-      return std::make_tuple(n, a, da);
+      return {n, a, da};
     }
     else if constexpr(std::is_same_v<elt_t,  float>)
     {
       auto x =  float64(xx);
       auto n =  nearest(x*twoopi(eve::as<double>()));
       auto dxr = fma(n, -pio_2(eve::as<double>()), x);
-      return std::make_tuple(quadrant(float32(n)), float32(dxr), T(0.0f));
+      return {quadrant(float32(n)), float32(dxr), T(0.0f)};
     }
   }
 
   // double use   x < 281474976710656 (2.81476710656e+14)
   /* float use   x < 0x1.7d4998p+38 (4.09404e+11) */
-  template<floating_real_value T> EVE_FORCEINLINE auto rempio2_medium(T const &xx) noexcept
+  template<floating_real_value T> EVE_FORCEINLINE std::array<T, 3>
+  rempio2_medium(T const &xx) noexcept
   {
     using elt_t             = element_type_t<T>;
     static const double mp1 = -0x1.921FB58000000p0;   /* -1.5707963407039642      */
@@ -94,7 +96,7 @@ namespace eve::detail
       auto a   = t + da;
       da       = (t - a) + da;
 
-      return std::make_tuple(n, a, da);
+      return {n, a, da};
     }
     else if constexpr( std::is_same_v<elt_t, float> )
     {
@@ -114,22 +116,22 @@ namespace eve::detail
       auto dfa = float32((a - float64(fa)) + da);
       if( eve::any(fa >= pio_4(eve::as<float>()) || fa < -pio_4(eve::as<float>())) )
       {
-        T n1;
-        std::tie(n1, fa, dfa) = rempio2_small(fa);
+        auto [n1, fa1, dfa1] = rempio2_small(fa);
         n                     = quadrant(n + n1);
 
-        return std::make_tuple(n, fa, dfa);
+        return {n, fa1, dfa1};
       }
-      return std::make_tuple(n, fa, dfa);
+      return {n, fa, dfa};
     }
   }
 
-  template<floating_real_value T> EVE_FORCEINLINE auto rempio2_big(T const &xx) noexcept
+  template<floating_real_value T> EVE_FORCEINLINE  std::array<T, 3>
+  rempio2_big(T const &xx) noexcept
   {
     using elt_t             = element_type_t<T>;
     if ( eve::all(xx < Rempio2_limit(restricted_type(), as(xx))) )
     {
-      return std::make_tuple(T(0), xx, T(0));
+      return {T(0), xx, T(0)};
     }
     auto xlerfl = (xx <= Rempio2_limit(small_type(), as<elt_t>()));
     if( eve::all(xlerfl) )
@@ -264,7 +266,7 @@ namespace eve::detail
       s = if_else(xx < Rempio2_limit(restricted_type(), as(xx)), xx, s);
       t = if_else(xx < Rempio2_limit(restricted_type(), as(xx)), T(0), t);
       auto q = if_else(xx < Rempio2_limit(restricted_type(), as(xx)),T(0), quadrant(sum));
-      return  std::make_tuple(q, s, t);
+      return  {q, s, t};
     }
     else if constexpr( std::is_same_v<elt_t, float> )
     {
@@ -317,7 +319,7 @@ namespace eve::detail
       auto br   = if_else(xlerfl, sr, sr1);
       auto dbr  = if_else(xlerfl, dsr, dsr1);
       br        = if_else(is_not_finite(xx), eve::allbits, br);
-      return std::make_tuple(bn, br, dbr);
+      return {bn, br, dbr};
     }
   }
 }

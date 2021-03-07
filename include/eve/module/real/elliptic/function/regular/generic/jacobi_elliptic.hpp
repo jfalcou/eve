@@ -15,6 +15,7 @@
 #include <eve/function/sqrt.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
+#include <array>
 
 namespace eve::detail
 {
@@ -28,16 +29,17 @@ namespace eve::detail
   }
 
   template<floating_real_value T>
-  EVE_FORCEINLINE auto jacobi_elliptic_(EVE_SUPPORTS(cpu_)
-                       , T u
-                       , T x
-                       , T tol = eps(as<T>())) noexcept
+  EVE_FORCEINLINE std::array < T, 3>
+  jacobi_elliptic_(EVE_SUPPORTS(cpu_)
+                  , T u
+                  , T x
+                  , T tol = eps(as<T>())) noexcept
   {
     if constexpr(has_native_abi_v<T>)
     {
       auto phi = am(u, x, tol);
       auto [sn, cn] = sincos(phi);
-      return std::make_tuple(sn, cn, sqrt(oneminus(sqr(x*sn))));
+      return {sn, cn, sqrt(oneminus(sqr(x*sn)))};
     }
     else
       return apply_over3(jacobi_elliptic, u, x, tol);
@@ -54,18 +56,19 @@ namespace eve::detail
   }
 
   template<floating_real_value T, floating_real_value U, floating_real_value V,  decorator D>
-  EVE_FORCEINLINE auto jacobi_elliptic_(EVE_SUPPORTS(cpu_)
-                       , D const &
-                       , T u
-                       , U x
-                       , V tol
-                       ) noexcept
+  EVE_FORCEINLINE  std::array < T, 3>
+  jacobi_elliptic_(EVE_SUPPORTS(cpu_)
+                  , D const &
+                  , T u
+                  , U x
+                  , V tol
+                  ) noexcept
   {
     if constexpr(has_native_abi_v<T>)
     {
     auto phi = D()(am)(u, x, tol);
     auto [sn, cn] = sincos(phi);
-    return std::make_tuple(sn, cn, sqrt(oneminus(sqr(x*sn))));
+    return {sn, cn, sqrt(oneminus(sqr(x*sn)))};
     }
     else
       return apply_over3(D()(jacobi_elliptic), u, x, tol);
