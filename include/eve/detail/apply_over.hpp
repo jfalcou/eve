@@ -51,7 +51,7 @@ namespace eve::detail
       auto  [xhi, ehi] = f(hiv);
       auto  [xlo, elo] = f(lov);
       if constexpr(std::same_as<decltype(xlo), decltype(elo)>)
-        return std::array<decltype(xlo), 2>{eve::combine(xlo, xhi), eve::combine(elo, ehi)};
+        return std::array<decltype(eve::combine(xlo, xhi)), 2>{eve::combine(xlo, xhi), eve::combine(elo, ehi)};
       else
         return std::make_tuple(eve::combine(xlo, xhi), eve::combine(elo, ehi));
     }
@@ -69,7 +69,7 @@ namespace eve::detail
       auto  [xhi, ehi] = f(hiv, hiw);
       auto  [xlo, elo] = f(lov, low);
       if constexpr(std::same_as<decltype(xlo), decltype(elo)>)
-        return std::array<decltype(xlo), 2>{eve::combine(xlo, xhi), eve::combine(elo, ehi)};
+        return std::array<decltype(eve::combine(xlo, xhi)), 2>{eve::combine(xlo, xhi), eve::combine(elo, ehi)};
       else
         return std::make_tuple(eve::combine(xlo, xhi), eve::combine(elo, ehi));
     }
@@ -87,7 +87,7 @@ namespace eve::detail
       auto  [nlo, xlo, dxlo] = f(lo);
       if constexpr(std::same_as<decltype(xlo), decltype(nlo)> &&
                    std::same_as<decltype(xlo), decltype(dxlo)>)
-        return std::array<decltype(xlo), 3>{ eve::combine( nlo, nhi)
+        return std::array<decltype(eve::combine( nlo, nhi)), 3>{ eve::combine( nlo, nhi)
                                            , eve::combine( xlo, xhi)
                                            , eve::combine( dxlo, dxhi)};
       else
