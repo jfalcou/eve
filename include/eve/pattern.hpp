@@ -74,7 +74,7 @@ namespace eve
   //================================================================================================
   // Converts formula pattern to index pattern
   //================================================================================================
-  template<std::ptrdiff_t Sz, typename F> consteval auto fix_pattern(F)
+  template<std::ptrdiff_t Sz, typename F> constexpr auto fix_pattern(F)
   {
     return []<auto... N>( std::integer_sequence<std::ptrdiff_t,N...> )
     {
@@ -83,7 +83,7 @@ namespace eve
     }( std::make_integer_sequence<std::ptrdiff_t,Sz>{} );
   }
 
-  template<std::ptrdiff_t Sz, typename F> consteval auto fix_pattern(as_pattern<F>)
+  template<std::ptrdiff_t Sz, typename F> constexpr auto fix_pattern(as_pattern<F>)
   {
     return fix_pattern<Sz>( F{} );
   }
