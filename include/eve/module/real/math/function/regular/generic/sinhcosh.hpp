@@ -21,15 +21,15 @@
 #include <eve/function/rec.hpp>
 #include <eve/constant/half.hpp>
 #include <type_traits>
-#include <utility>
+#include <array>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr auto sinhcosh_(EVE_SUPPORTS(cpu_)
-                                        , T a0) noexcept
+  EVE_FORCEINLINE constexpr std::array<T, 2>
+  sinhcosh_(EVE_SUPPORTS(cpu_) , T a0) noexcept
   {
     if constexpr(has_native_abi_v<T>)
     {
@@ -37,14 +37,14 @@ namespace eve::detail
         auto x = eve::abs(a0);
       if constexpr(scalar_value<T>)
       {
-        if (x < T(0x1.0p-28)) return std::make_tuple(a0, one(eve::as<T>()));
+        if (x < T(0x1.0p-28)) return {a0, one(eve::as<T>())};
         auto h = (a0 > T(0)) ? T(1) : T(-1);
         if (x >= ovflimit)
         {
           auto w = exp(x*half(eve::as<T>()));
           auto t = half(eve::as<T>())*w;
           t *= w;
-          return std::make_tuple(t*h, t);
+          return {t*h, t};
         }
         h*= half(eve::as<T>());
         auto t = expm1(x);
@@ -52,7 +52,7 @@ namespace eve::detail
         auto u = t/inct;
         auto s = h*(fnma(t, u, t)+t);
         auto c = (x > T(22.0f)) ? inct*half(eve::as<T>()) : average(inct, rec(inct));
-        return std::make_tuple(s, c);       }
+        return {s, c};       }
       else
       {
         auto h = if_else( is_positive(a0), one(eve::as<T>()), mone(eve::as<T>()));
@@ -64,7 +64,7 @@ namespace eve::detail
         auto invt = if_else(x > T(22.0f), eve::zero, rec(inct));
         auto c = average(inct, invt);
         auto test = x <  ovflimit;
-        if (eve::all(test)) return std::make_tuple(s, c);
+        if (eve::all(test)) return {s, c};  
 
         auto w = exp(x*half(eve::as<T>()));
         t = half(eve::as<T>())*w;
@@ -72,7 +72,7 @@ namespace eve::detail
 
         s = if_else(test, s, t*h);
         c = if_else(test, c, t);
-        return std::make_tuple(s, c);
+        return {s, c};  
       }
     }
     else
