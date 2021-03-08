@@ -13,22 +13,23 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/function/trunc.hpp>
 
-#include <tuple>
+#include <array>
 
 namespace eve::detail
 {
-  template<real_value T> EVE_FORCEINLINE constexpr auto modf_(EVE_SUPPORTS(cpu_), T a) noexcept
+  template<real_value T> EVE_FORCEINLINE constexpr
+  std::array<T,2 > modf_(EVE_SUPPORTS(cpu_), T a) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {
       if constexpr( floating_real_value<T> )
       {
         auto t = trunc(a);
-        return std::make_tuple(a - t, t);
+        return {a - t, t};
       }
       else
       {
-        return std::make_tuple(zero(eve::as(a)), a);
+        return {zero(eve::as(a)), a};
       }
     }
     else

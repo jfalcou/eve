@@ -13,10 +13,11 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
 #include <cmath>
+#include <array>
 
 TTS_CASE_TPL("Check sincos return type", EVE_TYPE)
 {
-  TTS_EXPR_IS((eve::sincos(T())), (std::tuple<T,T>));
+  TTS_EXPR_IS((eve::sincos(T())), (std::array<T,2>));
 }
 
 TTS_CASE_TPL("Check (eve::sincos behavior", EVE_TYPE)

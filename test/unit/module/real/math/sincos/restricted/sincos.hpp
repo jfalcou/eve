@@ -10,10 +10,11 @@
 #include <type_traits>
 #include <tuple>
 #include <cmath>
+#include <array>
 
 TTS_CASE_TPL("Check eve::restricted(eve::sincos) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::restricted(eve::sincos)(T()), (std::tuple<T,T>));
+  TTS_EXPR_IS(eve::restricted(eve::sincos)(T()), (std::array<T,2>));
 }
 
 TTS_CASE_TPL("Check eve::restricted(eve::sincos) behavior", EVE_TYPE)

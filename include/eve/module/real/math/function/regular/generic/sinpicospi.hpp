@@ -22,12 +22,12 @@
 #include <eve/module/real/math/detail/generic/trig_finalize.hpp>
 
 #include <type_traits>
-#include <utility>
+#include <array>
 
 namespace eve::detail
 {
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr auto
+  EVE_FORCEINLINE constexpr std::array<T, 2>
   sinpicospi_(EVE_SUPPORTS(cpu_), restricted_type const &, T a0) noexcept
   {
     if constexpr( has_native_abi_v<T> )
@@ -41,20 +41,21 @@ namespace eve::detail
   //////////////////////////////////////////////////////////////////////////////
   /// big medium small
   template<decorator D, floating_real_value T>
-  EVE_FORCEINLINE constexpr auto sinpicospi_(EVE_SUPPORTS(cpu_), D const &, T a0) noexcept
+  EVE_FORCEINLINE constexpr std::array<T, 2>
+  sinpicospi_(EVE_SUPPORTS(cpu_), D const &, T a0) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {
       if constexpr( scalar_value<T> )
       {
         if( is_not_finite(a0) )
-          return std::make_tuple(nan(eve::as<T>()), nan(eve::as<T>()));
+          return {nan(eve::as<T>()), nan(eve::as<T>())};
       }
       T x = abs(a0);
       if constexpr( scalar_value<T> )
       {
         if( x > maxflint(eve::as<T>()) )
-          return std::make_tuple(T {0}, T(1));
+          return {T{0}, T(1)};
       }
       else
       {
@@ -63,14 +64,16 @@ namespace eve::detail
         x = if_else(invalid, eve::allbits, x);
       }
       auto [fn, xr, dxr] = rem2(x);
-      return sincos_finalize(bitofsign(a0), fn, xr, dxr);
+      auto [s, c] = sincos_finalize(bitofsign(a0), fn, xr, dxr);
+      return {s, c}; 
     }
     else
       return apply_over2(D()(sinpicospi), a0);
   }
 
   template<typename T>
-  EVE_FORCEINLINE constexpr auto sinpicospi_(EVE_SUPPORTS(cpu_), T const &a0) noexcept
+  EVE_FORCEINLINE constexpr std::array<T, 2>
+  sinpicospi_(EVE_SUPPORTS(cpu_), T const &a0) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {

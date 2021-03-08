@@ -19,7 +19,7 @@
 #include <eve/module/real/math/detail/constant/rempio2_limits.hpp>
 #include <eve/module/real/math/detail/generic/rempio2_kernel.hpp>
 
-#include <tuple>
+#include <array>
 #include <type_traits>
 
 namespace eve::detail
@@ -50,12 +50,13 @@ namespace eve::detail
       return apply_over3(D()(rempio2), xx);
   }
 
-  template<floating_value T> EVE_FORCEINLINE auto rempio2_(EVE_SUPPORTS(cpu_), T const &x) noexcept
+  template<floating_value T> EVE_FORCEINLINE
+  std::array<T, 3> rempio2_(EVE_SUPPORTS(cpu_), T const &x) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {
       if( eve::all(x <= Rempio2_limit(restricted_type(), as(x))) )
-        return std::make_tuple(T(0), x, T(0));
+        return {T(0), x, T(0)};
       else if( eve::all(x <= Rempio2_limit(small_type(), as(x))) )
         return small(rempio2)(x);
       else if( eve::all(x <= Rempio2_limit(medium_type(), as(x))) )
