@@ -1,11 +1,3 @@
-//==================================================================================================
-/**
-  EVE - Expressive Vector Engine
-  Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
-**/
-//==================================================================================================
-
 #include <eve/eve.hpp>
 #include <eve/function/first_true.hpp>
 #include <eve/function/load.hpp>
