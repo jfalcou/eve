@@ -28,25 +28,63 @@ auto data = []<typename T>(eve::as_<T>, auto seed)
   return std::make_tuple(d0, d1);
 };
 
-auto bitwise_tests  = []<typename T>(auto& runtime, bool verbose, auto const&, T a0, T a1)
+//==================================================================================================
+// type tests
+//==================================================================================================
+auto type_tests  = []<typename T>(auto& runtime, bool verbose, auto const&, T)
 {
-  T ref_and([&](auto i, auto) { return eve::bit_and(a0.get(i), a1.get(i)); });
-  T ref_or ([&](auto i, auto) { return eve::bit_or (a0.get(i), a1.get(i)); });
-  T ref_xor([&](auto i, auto) { return eve::bit_xor(a0.get(i), a1.get(i)); });
-  T ref_not([&](auto i, auto) { return eve::bit_not(a0.get(i)); });
+  using v_t = eve::element_type_t<T>;
 
-  TTS_EXPR_IS( a0 & a1, T);
-  TTS_EXPR_IS( a0 | a1, T);
-  TTS_EXPR_IS( a0 ^ a1, T);
-  TTS_EXPR_IS( ~a0    , T);
+  TTS_EXPR_IS( T()    & T()   , T);
+  TTS_EXPR_IS( T()    & v_t() , T);
+  TTS_EXPR_IS( v_t()  & T()   , T);
+  TTS_EXPR_IS( T()    | T()   , T);
+  TTS_EXPR_IS( T()    | v_t() , T);
+  TTS_EXPR_IS( v_t()  | T()   , T);
+  TTS_EXPR_IS( T()    ^ T()   , T);
+  TTS_EXPR_IS( T()    ^ v_t() , T);
+  TTS_EXPR_IS( v_t()  ^ T()   , T);
+  TTS_EXPR_IS( ~T()           , T);
+};
 
-  TTS_IEEE_EQUAL( (a0 & a1), ref_and );
-  TTS_IEEE_EQUAL( (a0 | a1), ref_or  );
-  TTS_IEEE_EQUAL( (a0 ^ a1), ref_xor );
-  TTS_IEEE_EQUAL( ~a0      , ref_not );
+EVE_TEST_BED( "Check return types of bitwise operators on eve::wide"
+            , eve::test::simd::all_types
+            , eve::test::no_data, type_tests
+            );
+
+//==================================================================================================
+// wide (*) wide tests
+//==================================================================================================
+auto simd_tests  = []<typename T>(auto& runtime, bool verbose, auto const&, T a0, T a1)
+{
+  TTS_IEEE_EQUAL( (a0 & a1), T([&](auto i, auto) { return eve::bit_and(a0.get(i), a1.get(i)); }));
+  TTS_IEEE_EQUAL( (a0 | a1), T([&](auto i, auto) { return eve::bit_or (a0.get(i), a1.get(i)); }));
+  TTS_IEEE_EQUAL( (a0 ^ a1), T([&](auto i, auto) { return eve::bit_xor(a0.get(i), a1.get(i)); }));
+  TTS_IEEE_EQUAL( ~a0      , T([&](auto i, auto) { return eve::bit_not(a0.get(i)); }));
 };
 
 EVE_TEST_BED( "Check behavior of bitwise operators on eve::wide"
             , eve::test::simd::all_types
-            , data, bitwise_tests
+            , data, simd_tests
+            );
+
+//==================================================================================================
+// scalar (*) wide tests
+//==================================================================================================
+auto mixed_tests  = []<typename T>(auto& runtime, bool verbose, auto const&, T a0, T)
+{
+  using v_t = eve::element_type_t<T>;
+
+  TTS_IEEE_EQUAL( (a0 & v_t(1)), T([&](auto i, auto) { return eve::bit_and(a0.get(i), v_t(1)); }));
+  TTS_IEEE_EQUAL( (a0 | v_t(1)), T([&](auto i, auto) { return eve::bit_or (a0.get(i), v_t(1)); }));
+  TTS_IEEE_EQUAL( (a0 ^ v_t(1)), T([&](auto i, auto) { return eve::bit_xor(a0.get(i), v_t(1)); }));
+
+  TTS_IEEE_EQUAL( (v_t(1) & a0), T([&](auto i, auto) { return eve::bit_and(v_t(1), a0.get(i)); }));
+  TTS_IEEE_EQUAL( (v_t(1) | a0), T([&](auto i, auto) { return eve::bit_or (v_t(1), a0.get(i)); }));
+  TTS_IEEE_EQUAL( (v_t(1) ^ a0), T([&](auto i, auto) { return eve::bit_xor(v_t(1), a0.get(i)); }));
+};
+
+EVE_TEST_BED( "Check behavior of bitwise operators on wide and scalar"
+            , eve::test::simd::all_types
+            , data, mixed_tests
             );

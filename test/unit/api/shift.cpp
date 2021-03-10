@@ -9,6 +9,9 @@
 #include <eve/function/shl.hpp>
 #include <eve/function/shr.hpp>
 
+//==================================================================================================
+// Generate a random value data + an integer based data fit to be used by << and >>
+//==================================================================================================
 auto shift_data = []<typename T>(eve::as_<T>, auto seed)
 {
   using e_t = eve::element_type_t<T>;
@@ -30,22 +33,56 @@ auto shift_data = []<typename T>(eve::as_<T>, auto seed)
   return std::make_tuple(d0, s);
 };
 
-auto shift_tests = []<typename T, typename I>
-                  ( auto& runtime, bool verbose, auto const&
-                  , T a0, I s
-                  )
+//==================================================================================================
+// type tests
+//==================================================================================================
+auto type_tests = []<typename T>( auto& runtime, bool verbose, auto const&, T)
 {
-  T ref_shl([&](auto i, auto) { return eve::shl(a0.get(i), s.get(i)); });
-  T ref_shr([&](auto i, auto) { return eve::shr(a0.get(i), s.get(i)); });
+  using i_t = eve::as_integer_t<T>;
+  using vi_t = eve::element_type_t<i_t>;
 
-  TTS_EXPR_IS( a0 << s, T);
-  TTS_EXPR_IS( a0 >> s, T);
-
-  TTS_EQUAL( (a0 << s), ref_shl );
-  TTS_EQUAL( (a0 >> s), ref_shr );
+  TTS_EXPR_IS( T() << i_t() , T);
+  TTS_EXPR_IS( T() << vi_t(), T);
+  TTS_EXPR_IS( T() >> i_t() , T);
+  TTS_EXPR_IS( T() >> vi_t(), T);
 };
 
 EVE_TEST_BED( "Check behavior of shift operators on eve::wide"
             , eve::test::simd::integers
-            , shift_data, shift_tests
+            , eve::test::no_data, type_tests
+            );
+
+//==================================================================================================
+// wide tests
+//==================================================================================================
+auto simd_tests = []<typename T, typename I>
+                  ( auto& runtime, bool verbose, auto const&
+                  , T a0, I s
+                  )
+{
+  TTS_EQUAL( (a0 << s), T([&](auto i, auto) { return eve::shl(a0.get(i), s.get(i)); }) );
+  TTS_EQUAL( (a0 >> s), T([&](auto i, auto) { return eve::shr(a0.get(i), s.get(i)); }) );
+};
+
+EVE_TEST_BED( "Check behavior of shift operators on eve::wide"
+            , eve::test::simd::integers
+            , shift_data, simd_tests
+            );
+
+//==================================================================================================
+// Scalar tests
+//==================================================================================================
+auto mixed_tests  = []<typename T, typename I>
+                    ( auto& runtime, bool verbose, auto const&
+                    , T a0, I s
+                    )
+{
+  auto val = s.get(0);
+  TTS_EQUAL( (a0 >> val), T([&](auto i, auto) { return eve::shr(a0.get(i), val); }) );
+  TTS_EQUAL( (a0 << val), T([&](auto i, auto) { return eve::shl(a0.get(i), val); }) );
+};
+
+EVE_TEST_BED( "Check behavior of shift operators on wide and scalars"
+            , eve::test::simd::integers
+            , shift_data, mixed_tests
             );

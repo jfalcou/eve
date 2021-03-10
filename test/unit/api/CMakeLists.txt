@@ -16,22 +16,21 @@ add_dependencies(unit.simd.exe      unit.api.simd.exe   )
 add_dependencies(unit.api.exe       unit.api.scalar.exe )
 add_dependencies(unit.api.exe       unit.api.simd.exe   )
 
+add_subdirectory(wide)
+
 make_unit( "unit.api" conditional.cpp )
 make_unit( "unit.api" replace.cpp     )
 make_unit( "unit.api" pattern.cpp     )
 
 ##==================================================================================================
-## wide API tests
+## Wide API tests
 make_unit("unit.api"  arithmetic.cpp  )
 make_unit("unit.api"  bitwise.cpp     )
 make_unit("unit.api"  comparisons.cpp )
 make_unit("unit.api"  shift.cpp       )
 
-add_subdirectory(wide)
-#add_subdirectory(comparisons)
-
 ##==================================================================================================
-## General API tests
+## Memory API tests
 make_unit( "unit.api" memory/aligned_alloc.cpp )
 make_unit( "unit.api" memory/aligned_allocator.cpp )
 make_unit( "unit.api" memory/aligned_ptr.cpp )
