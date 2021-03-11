@@ -51,6 +51,7 @@ namespace eve
     using bits_type = wide<as_integer_t<Type, unsigned>, Size>;
     using mask_type = wide<Type, Size>;
 
+    template<typename N> using rescale = logical<wide<Type,N>>;
     template<typename T, typename N = expected_cardinal_t<T>>
     using rebind = logical<wide<T,N>>;
 
