@@ -231,15 +231,22 @@ auto combine_tests  = []<typename T, typename L>( auto& runtime, bool verbose, a
                                                 , T d, L ld
                                                 )
 {
-  using comb_t  = typename eve::cardinal_t<T>::combined_type;
-  using ref_t   = typename T::template rescale<comb_t>;
-  using lref_t  = typename L::template rescale<comb_t>;
+  if constexpr(T::size() < 64)
+  {
+    using comb_t  = typename eve::cardinal_t<T>::combined_type;
+    using ref_t   = typename T::template rescale<comb_t>;
+    using lref_t  = typename L::template rescale<comb_t>;
 
-  TTS_EQUAL( (ref_t{d,d})       , ref_t ( [=](auto i, auto c) { return  d.get(i % (c/2)); } ) );
-  TTS_EQUAL( eve::combine(d,d)  , ref_t ( [=](auto i, auto c) { return  d.get(i % (c/2)); } ) );
-  TTS_EQUAL( (lref_t{ld,ld})    , lref_t( [=](auto i, auto c) { return ld.get(i % (c/2)); } ) );
+    TTS_EQUAL( (ref_t{d,d})       , ref_t ( [=](auto i, auto c) { return  d.get(i % (c/2)); } ) );
+    TTS_EQUAL( eve::combine(d,d)  , ref_t ( [=](auto i, auto c) { return  d.get(i % (c/2)); } ) );
+    TTS_EQUAL( (lref_t{ld,ld})    , lref_t( [=](auto i, auto c) { return ld.get(i % (c/2)); } ) );
 
-  TTS_EQUAL( eve::combine(ld,ld), lref_t( [=](auto i, auto c) { return ld.get(i % (c/2)); } ) );
+    TTS_EQUAL( eve::combine(ld,ld), lref_t( [=](auto i, auto c) { return ld.get(i % (c/2)); } ) );
+  }
+  else
+  {
+    TTS_PASS("No combine for 512 bits char wide");
+  }
 };
 
 EVE_TEST_BED( "Check eve::wide::combine behavior"
