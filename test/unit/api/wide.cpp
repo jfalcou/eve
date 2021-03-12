@@ -7,20 +7,6 @@
 //==================================================================================================
 #include "test.hpp"
 
-auto linear_ramp = []<typename T>(eve::as_<T>, auto)
-{
-  std::array<eve::element_type_t<T>,eve::cardinal_v<T>> d;
-  std::array<eve::logical<eve::element_type_t<T>>,eve::cardinal_v<T>> l;
-
-  for(std::ptrdiff_t i = 0;i<T::size();++i)
-  {
-    d[i] = 1+i;
-    l[i] = ((1+i)%2) == 0;
-  }
-
-  return std::make_tuple(d,l);
-};
-
 //==================================================================================================
 // structured bindings support
 //==================================================================================================
@@ -90,7 +76,8 @@ auto binding_tests  = []<typename T, typename L>( auto& runtime, bool verbose, a
 
 EVE_TEST_BED( "Check eve::wide support for structured bindings"
             , eve::test::simd::all_types
-            , linear_ramp, binding_tests
+            , eve::test::generate(eve::test::ramp<1>,eve::test::logicals<1,2>)
+            , binding_tests
             );
 
 //==================================================================================================
@@ -117,7 +104,8 @@ auto make_tests  = []<typename T, typename L>( auto& runtime, bool verbose, auto
 
 EVE_TEST_BED( "Check eve::wide enumerating constructor"
             , eve::test::simd::all_types
-            , linear_ramp, make_tests
+            , eve::test::generate(eve::test::ramp<1>,eve::test::logicals<1,2>)
+            , make_tests
             );
 
 //==================================================================================================
@@ -143,7 +131,8 @@ auto splat_tests  = []<typename T>( auto& runtime, bool verbose, auto const&, T)
 
 EVE_TEST_BED( "Check eve::wide splat constructor"
             , eve::test::simd::all_types
-            , eve::test::no_data, splat_tests
+            , eve::test::generate(eve::test::no_data)
+            , splat_tests
             );
 
 //==================================================================================================
@@ -178,7 +167,8 @@ auto storage_tests  = []<typename T, typename L>( auto& runtime, bool verbose, a
 
 EVE_TEST_BED( "Check eve::wide raw storage handling"
             , eve::test::simd::all_types
-            , linear_ramp, storage_tests
+            , eve::test::generate(eve::test::ramp<1>,eve::test::logicals<1,2>)
+            , storage_tests
             );
 
 //==================================================================================================
@@ -221,7 +211,8 @@ auto slice_tests  = []<typename T, typename L>( auto& runtime, bool verbose, aut
 
 EVE_TEST_BED( "Check eve::wide::slice behavior"
             , eve::test::simd::all_types
-            , linear_ramp, slice_tests
+            , eve::test::generate(eve::test::ramp<1>,eve::test::logicals<1,2>)
+            , slice_tests
             );
 
 //==================================================================================================
@@ -251,5 +242,6 @@ auto combine_tests  = []<typename T, typename L>( auto& runtime, bool verbose, a
 
 EVE_TEST_BED( "Check eve::wide::combine behavior"
             , eve::test::simd::all_types
-            , linear_ramp, combine_tests
+            , eve::test::generate(eve::test::ramp<1>,eve::test::logicals<1,2>)
+            , combine_tests
             );

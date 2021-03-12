@@ -50,27 +50,13 @@ auto type_tests = []<typename T>(auto& runtime, bool verbose, auto const&, T)
 
 EVE_TEST_BED( "Check comparison operators' return types"
             , eve::test::simd::all_types
-            , eve::test::no_data, type_tests
+            , eve::test::generate(eve::test::no_data)
+            , type_tests
             );
 
 //==================================================================================================
 // Value tests
 //==================================================================================================
-auto data = []<typename T>(eve::as_<T>, auto seed)
-{
-  using d_t = std::array<eve::element_type_t<T>,eve::cardinal_v<T>>;
-  std::mt19937 gen;
-  gen.seed(seed);
-
-  eve::prng<eve::element_type_t<T>> dist(-50,50);
-
-  d_t d0, d1;
-  std::for_each(d0.begin(),d0.end(), [&](auto& e) { e = dist(gen); });
-  std::for_each(d1.begin(),d1.end(), [&](auto& e) { e = dist(gen); });
-
-  return std::make_tuple(d0, d1);
-};
-
 auto basic_tests = []<typename T> ( auto& runtime, bool verbose, auto const&
                                   , T lhs, T rhs
                                   )
@@ -151,15 +137,22 @@ auto nan_tests = []<typename T>( auto& runtime, bool verbose, auto const&, T)
 
 EVE_TEST_BED( "Check comparison operators behavior with NaNs"
             , eve::test::simd::ieee_reals
-            , eve::test::no_data, nan_tests
+            , eve::test::generate(eve::test::no_data)
+            , nan_tests
             );
 
 EVE_TEST_BED( "Check comparison operators behavior between wide"
             , eve::test::simd::all_types
-            , data, basic_tests
+            , eve::test::generate ( eve::test::randoms<-50,50>
+                                  , eve::test::randoms<-50,50>
+                                  )
+            , basic_tests
             );
 
 EVE_TEST_BED( "Check comparison operators behavior between wide & scalar"
             , eve::test::simd::all_types
-            , data, mixed_tests
+            , eve::test::generate ( eve::test::randoms<-50,50>
+                                  , eve::test::randoms<-50,50>
+                                  )
+            , mixed_tests
             );

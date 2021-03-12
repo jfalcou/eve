@@ -8,25 +8,6 @@
 #include "test.hpp"
 
 //==================================================================================================
-// Generate two subset of data, one with no 0 for / and % on integers
-//==================================================================================================
-auto data = []<typename T>(eve::as_<T>, auto seed)
-{
-  using d_t = std::array<eve::element_type_t<T>,eve::cardinal_v<T>>;
-
-  std::mt19937 gen;
-  gen.seed(seed);
-  eve::prng<eve::element_type_t<T>> distr(-50,50), dist(1,100);
-
-  d_t d0, d1, d2;
-  std::for_each(d0.begin(),d0.end(), [&](auto& e) { e = distr(gen); });
-  std::for_each(d1.begin(),d1.end(), [&](auto& e) { e = dist (gen); });
-  std::for_each(d2.begin(),d2.end(), [&](auto& e) { e = distr(gen); });
-
-  return std::make_tuple(d0, d1, d2);
-};
-
-//==================================================================================================
 // Types tests
 //==================================================================================================
 auto types_tests = []<typename T>(auto& runtime, bool verbose, auto const&, T)
@@ -56,7 +37,8 @@ auto types_tests = []<typename T>(auto& runtime, bool verbose, auto const&, T)
 
 EVE_TEST_BED( "Check return types of arithmetic operators on wide"
             , eve::test::simd::all_types
-            , eve::test::no_data, types_tests
+            , eve::test::generate(eve::test::no_data)
+            , types_tests
             );
 
 //==================================================================================================
@@ -79,7 +61,11 @@ auto simd_tests = []<typename T>( auto& runtime, bool verbose, auto const&
 
 EVE_TEST_BED( "Check behavior of arithmetic operators on wide"
             , eve::test::simd::all_types
-            , data, simd_tests
+            , eve::test::generate ( eve::test::randoms<-50,50>
+                                  , eve::test::randoms< 1,100>
+                                  , eve::test::randoms<-50,50>
+                                  )
+            , simd_tests
             );
 
 //==================================================================================================
@@ -120,7 +106,11 @@ auto incdec_tests = []<typename T>( auto& runtime, bool verbose, auto const&
 
 EVE_TEST_BED( "Check behavior of pre/post increment/decrement operators on wide"
             , eve::test::simd::all_types
-            , data, incdec_tests
+            , eve::test::generate ( eve::test::randoms<-50,50>
+                                  , eve::test::randoms< 1,100>
+                                  , eve::test::randoms<-50,50>
+                                  )
+            , incdec_tests
             );
 
 //==================================================================================================
@@ -146,5 +136,9 @@ auto mixed_tests = []<typename T>( auto& runtime, bool verbose, auto const&
 
 EVE_TEST_BED( "Check behavior of arithmetic operators on wide and scalar"
             , eve::test::simd::all_types
-            , data, mixed_tests
+            , eve::test::generate ( eve::test::randoms<-50,50>
+                                  , eve::test::randoms< 1,100>
+                                  , eve::test::randoms<-50,50>
+                                  )
+            , mixed_tests
             );

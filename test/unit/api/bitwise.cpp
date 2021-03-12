@@ -11,23 +11,6 @@
 #include <eve/function/bit_or.hpp>
 #include <eve/function/bit_xor.hpp>
 
-auto data = []<typename T>(eve::as_<T>, auto seed)
-{
-  using e_t = eve::element_type_t<T>;
-  using d_t = std::array<e_t,eve::cardinal_v<T>>;
-
-  std::mt19937 gen;
-  gen.seed(seed);
-
-  eve::prng<e_t> dist(-50,50);
-
-  d_t d0, d1;
-  std::for_each(d0.begin(),d0.end(), [&](auto& e) { e = dist(gen); });
-  std::for_each(d1.begin(),d1.end(), [&](auto& e) { e = dist(gen); });
-
-  return std::make_tuple(d0, d1);
-};
-
 //==================================================================================================
 // type tests
 //==================================================================================================
@@ -49,7 +32,8 @@ auto type_tests  = []<typename T>(auto& runtime, bool verbose, auto const&, T)
 
 EVE_TEST_BED( "Check return types of bitwise operators on eve::wide"
             , eve::test::simd::all_types
-            , eve::test::no_data, type_tests
+            , eve::test::generate(eve::test::no_data)
+            , type_tests
             );
 
 //==================================================================================================
@@ -65,7 +49,10 @@ auto simd_tests  = []<typename T>(auto& runtime, bool verbose, auto const&, T a0
 
 EVE_TEST_BED( "Check behavior of bitwise operators on eve::wide"
             , eve::test::simd::all_types
-            , data, simd_tests
+            , eve::test::generate ( eve::test::randoms<-50,50>
+                                  , eve::test::randoms<-50,50>
+                                  )
+            , simd_tests
             );
 
 //==================================================================================================
@@ -86,5 +73,8 @@ auto mixed_tests  = []<typename T>(auto& runtime, bool verbose, auto const&, T a
 
 EVE_TEST_BED( "Check behavior of bitwise operators on wide and scalar"
             , eve::test::simd::all_types
-            , data, mixed_tests
+            , eve::test::generate ( eve::test::randoms<-50,50>
+                                  , eve::test::randoms<-50,50>
+                                  )
+            , mixed_tests
             );
