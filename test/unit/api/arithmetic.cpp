@@ -83,6 +83,47 @@ EVE_TEST_BED( "Check behavior of arithmetic operators on wide"
             );
 
 //==================================================================================================
+// wide ++/-- tests
+//==================================================================================================
+auto incdec_tests = []<typename T>( auto& runtime, bool verbose, auto const&
+                                  , T, T a1, T
+                                  )
+{
+  {
+    auto d0 = a1;
+    auto post_inc  = d0++;
+    TTS_EQUAL( post_inc , a1);
+    TTS_EQUAL( d0       , a1 + 1);
+  }
+
+  {
+    auto d0 = a1;
+    auto pre_inc  = ++d0;
+    TTS_EQUAL( pre_inc, a1 + 1);
+    TTS_EQUAL( d0     , a1 + 1);
+  }
+
+  {
+    auto d0 = a1;
+    auto post_dec  = d0--;
+    TTS_EQUAL( post_dec , a1);
+    TTS_EQUAL( d0       , a1 - 1);
+  }
+
+  {
+    auto d0 = a1;
+    auto pre_dec  = --d0;
+    TTS_EQUAL( pre_dec, a1 - 1);
+    TTS_EQUAL( d0     , a1 - 1);
+  }
+};
+
+EVE_TEST_BED( "Check behavior of pre/post increment/decrement operators on wide"
+            , eve::test::simd::all_types
+            , data, incdec_tests
+            );
+
+//==================================================================================================
 // scalar (*) wide tests
 //==================================================================================================
 auto mixed_tests = []<typename T>( auto& runtime, bool verbose, auto const&
