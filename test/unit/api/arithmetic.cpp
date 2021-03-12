@@ -51,7 +51,7 @@ auto simd_tests = []<typename T>( auto& runtime, bool verbose, auto const&
   TTS_EQUAL( (a0 + a2), T([&](auto i, auto) { return a0.get(i) + a2.get(i); }));
   TTS_EQUAL( (a0 - a2), T([&](auto i, auto) { return a0.get(i) - a2.get(i); }));
   TTS_EQUAL( (a0 * a2), T([&](auto i, auto) { return a0.get(i) * a2.get(i); }));
-  TTS_EQUAL( (a0 / a1), T([&](auto i, auto) { return a0.get(i) / a1.get(i); }));
+  TTS_ULP_EQUAL( (a0 / a1), T([&](auto i, auto) { return a0.get(i) / a1.get(i); }), 1);
 
   if constexpr( eve::integral_value<T> )
   {
@@ -124,8 +124,8 @@ auto mixed_tests = []<typename T>( auto& runtime, bool verbose, auto const&
   TTS_EQUAL( (a0 - 3), T([&](auto i, auto) { return a0.get(i) - 3; }) );
   TTS_EQUAL( (3 - a0), T([&](auto i, auto) { return 3 - a0.get(i); }) );
   TTS_EQUAL( (a0 * 3), T([&](auto i, auto) { return a0.get(i) * 3; }) );
-  TTS_EQUAL( (a0 / 3), T([&](auto i, auto) { return a0.get(i) / 3; }) );
-  TTS_EQUAL( (3 / a1), T([&](auto i, auto) { return 3 / a1.get(i); }) );
+  TTS_ULP_EQUAL( (a0 / 3), T([&](auto i, auto) { return a0.get(i) / 3; }), 1 );
+  TTS_ULP_EQUAL( (3 / a1), T([&](auto i, auto) { return 3 / a1.get(i); }), 1 );
 
   if constexpr( eve::integral_value<T> )
   {
