@@ -178,10 +178,6 @@ jobs:
     <<: *base_jobs
   x86_avx512:
     <<: *base_jobs
-  x86_avx512_256:
-    <<: *wip_jobs
-  x86_avx512_128:
-    <<: *wip_jobs
   tiny:
     <<: *base_jobs
   small:
@@ -269,31 +265,13 @@ workflows:
           filters:
             branches:
               ignore: develop
-      - x86_avx512_256:
-          requires:
-            - x86_avx512
-          tool:     "../cmake/toolchain/clang.x86.cmake"
-          options:  "-march=skylake-avx512"
-          setup:    "-DEVE_TEST_TYPE=small_wide"
-          filters:
-            branches:
-              ignore: develop
-      - x86_avx512_128:
-          requires:
-            - x86_avx512_256
-          tool:     "../cmake/toolchain/clang.x86.cmake"
-          options:  "-march=skylake-avx512"
-          setup:    "-DEVE_TEST_TYPE=smaller_wide"
-          filters:
-            branches:
-              ignore: develop
 
     ##==============================================================================================
     ## ARM v7
     ##==============================================================================================
       - arm_128:
           requires:
-            - x86_avx512_128
+            - x86_avx512
           tool:     "../cmake/toolchain/gcc.arm.cmake"
           filters:
             branches:
