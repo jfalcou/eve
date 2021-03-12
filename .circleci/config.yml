@@ -162,8 +162,6 @@ jobs:
     <<: *base_jobs
   arm_128:
     <<: *wip_jobs
-  arm_64:
-    <<: *wip_jobs
   x86_sse2:
     <<: *base_jobs
   x86_sse4:
@@ -273,15 +271,6 @@ workflows:
           requires:
             - x86_avx512
           tool:     "../cmake/toolchain/gcc.arm.cmake"
-          filters:
-            branches:
-              ignore: develop
-
-      - arm_64:
-          requires:
-            - arm_128
-          tool:     "../cmake/toolchain/gcc.arm.cmake"
-          setup:    "-DEVE_TEST_TYPE=small_wide"
           filters:
             branches:
               ignore: develop
