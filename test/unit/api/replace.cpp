@@ -8,117 +8,148 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-
 #include <eve/function/replace.hpp>
-#include <eve/wide.hpp>
 
-TTS_CASE_TPL("replace with ignore_all", TTS_NUMERIC_TYPES)
+auto ignore_all_tests = []<typename T>( auto& runtime, bool verbose, auto const&
+                                      , T data, T replacement
+                                      )
 {
-  using eve::wide;
   using eve::ignore_all;
+  TTS_EQUAL( eve::replace_ignored(data,ignore_all,replacement), replacement );
+};
 
-  wide<T> data([](auto i, auto) { return 1+i; } );
-  wide<T> ref([](auto i, auto) { return 10*i; } );
+EVE_TEST_BED( "Check behavior of replace_ignored(ignore_all)"
+            , eve::test::simd::all_types
+            , eve::test::generate ( eve::test::ramp<0>
+                                  , eve::test::ramp<10>
+                                  )
+            , ignore_all_tests
+            );
 
-  TTS_EQUAL( eve::replace_ignored(data,ignore_all,ref), ref );
-}
-
-TTS_CASE_TPL("replace with ignore_none", TTS_NUMERIC_TYPES)
+auto ignore_none_tests = []<typename T>( auto& runtime, bool verbose, auto const&
+                                      , T data, T replacement
+                                      )
 {
-  using eve::wide;
   using eve::ignore_none;
+  TTS_EQUAL( eve::replace_ignored(data,ignore_none,replacement), data );
+};
 
-  wide<T> data([](auto i, auto) { return 1+i; } );
+EVE_TEST_BED( "Check behavior of replace_ignored(ignore_none)"
+            , eve::test::simd::all_types
+            , eve::test::generate ( eve::test::ramp<0>
+                                  , eve::test::ramp<10>
+                                  )
+            , ignore_none_tests
+            );
 
-  TTS_EQUAL( eve::replace_ignored(data,ignore_none,69), data );
-}
-
-TTS_CASE_TPL("replace with ignore_last", TTS_NUMERIC_TYPES)
+auto ignore_last_tests = []<typename T>( auto& runtime, bool verbose, auto const&
+                                      , T data
+                                      )
 {
-  using eve::wide;
   using eve::ignore_last;
+  auto replacement = data;
+  TTS_EQUAL( eve::replace_ignored(data,ignore_last(0),replacement), replacement);
 
-  wide<T> data([](auto i, auto) { return 1+i; } );
-  wide<T> ref = data;
-
-  TTS_EQUAL( eve::replace_ignored(data,ignore_last(0),ref), ref );
-
-  for(std::ptrdiff_t i = 1;i <=wide<T>::size();i++)
+  for(std::ptrdiff_t i = 1;i <= T::size();i++)
   {
-    ref.set(wide<T>::size()-i, 99);
-    TTS_EQUAL( eve::replace_ignored(data,ignore_last(i),ref), ref );
+    replacement.set(T::size()-i, 99);
+    TTS_EQUAL( eve::replace_ignored(data,ignore_last(i),replacement), replacement );
   }
-}
+};
 
-TTS_CASE_TPL("replace with keep_last", TTS_NUMERIC_TYPES)
+EVE_TEST_BED( "Check behavior of replace_ignored (ignore_last)"
+            , eve::test::simd::all_types
+            , eve::test::generate ( eve::test::ramp<0> )
+            , ignore_last_tests
+            );
+
+auto keep_last_tests = []<typename T>( auto& runtime, bool verbose, auto const&
+                                      , T data, T replacement
+                                      )
 {
-  using eve::wide;
   using eve::keep_last;
 
-  wide<T> data([](auto i, auto) { return 1+i; } );
-  wide<T> ref([](auto i, auto) { return 10*i; } );
-
-  for(std::ptrdiff_t i = 0;i < wide<T>::size();i++)
+  for(std::ptrdiff_t i = 0;i < T::size();i++)
   {
-    auto const idx = wide<T>::size()-i-1;
-    ref.set(idx, data.get(idx));
-    TTS_EQUAL( eve::replace_ignored(data,keep_last(i),ref), ref );
+    auto const idx = T::size()-i-1;
+    replacement.set(idx, data.get(idx));
+    TTS_EQUAL( eve::replace_ignored(data,keep_last(i),replacement), replacement );
   }
 
-  TTS_EQUAL( eve::replace_ignored(data,keep_last(wide<T>::size()),ref), data );
-}
+  TTS_EQUAL( eve::replace_ignored(data,keep_last(T::size()),replacement), data );
+};
 
-TTS_CASE_TPL("replace with ignore_first", TTS_NUMERIC_TYPES)
+EVE_TEST_BED( "Check behavior of replace_ignored (keep_last)"
+            , eve::test::simd::all_types
+            , eve::test::generate ( eve::test::ramp<0>, eve::test::ramp<100> )
+            , keep_last_tests
+            );
+
+auto ignore_first_tests = []<typename T>( auto& runtime, bool verbose, auto const&
+                                      , T data
+                                      )
 {
-  using eve::wide;
   using eve::ignore_first;
+  T replacement = data;
 
-  wide<T> data([](auto i, auto) { return 1+i; } );
-  wide<T> ref = data;
+  TTS_EQUAL( eve::replace_ignored(data,ignore_first(0),replacement), data );
 
-  TTS_EQUAL( eve::replace_ignored(data,ignore_first(0),ref), data );
-
-  for(std::ptrdiff_t i = 1;i <= wide<T>::size();i++)
+  for(std::ptrdiff_t i = 1;i <= T::size();i++)
   {
-    ref.set(i-1, 10*(i-1));
-    TTS_EQUAL( eve::replace_ignored(data,ignore_first(i),ref), ref );
+    replacement.set(i-1, 10*(i-1));
+    TTS_EQUAL( eve::replace_ignored(data,ignore_first(i),replacement), replacement );
   }
-}
+};
 
-TTS_CASE_TPL("replace with keep_first", TTS_NUMERIC_TYPES)
+EVE_TEST_BED( "Check behavior of replace_ignored (ignore_first)"
+            , eve::test::simd::all_types
+            , eve::test::generate ( eve::test::ramp<0> )
+            , ignore_first_tests
+            );
+
+auto keep_first_tests = []<typename T>( auto& runtime, bool verbose, auto const&
+                                      , T data, T replacement
+                                      )
 {
-  using eve::wide;
   using eve::keep_first;
 
-  wide<T> data([](auto i, auto) { return 1+i; } );
-  wide<T> ref([](auto i, auto) { return 10*i; } );
+  TTS_EQUAL( eve::replace_ignored(data,keep_first(0),replacement), replacement );
 
-  TTS_EQUAL( eve::replace_ignored(data,keep_first(0),ref), ref );
-
-  for(std::ptrdiff_t i = 1;i <= wide<T>::size();i++)
+  for(std::ptrdiff_t i = 1;i <= T::size();i++)
   {
-    ref.set(i-1, data.get(i-1));
-    TTS_EQUAL( eve::replace_ignored(data,keep_first(i),ref), ref );
+    replacement.set(i-1, data.get(i-1));
+    TTS_EQUAL( eve::replace_ignored(data,keep_first(i),replacement), replacement );
   }
-}
+};
+
+EVE_TEST_BED( "Check behavior of replace_ignored (keep_first)"
+            , eve::test::simd::all_types
+            , eve::test::generate ( eve::test::ramp<0>, eve::test::ramp<100> )
+            , keep_first_tests
+            );
 
 
-TTS_CASE_TPL("replace with keep_between", TTS_NUMERIC_TYPES)
+auto keep_between_tests = []<typename T>( auto& runtime, bool verbose, auto const&
+                                      , T data
+                                      )
 {
-  using eve::wide;
   using eve::keep_between;
 
-  wide<T> data([](auto i, auto) { return 1+i; } );
-
-  for(int fi = 0;fi < wide<T>::size();fi++)
+  for(int fi = 0;fi < T::size();fi++)
   {
-    for(int li = 0;li <= wide<T>::size();li++)
+    for(int li = 0;li <= T::size();li++)
     {
       if(fi<=li)
       {
-        wide<T> ref = [&](auto i, auto) { return (i >= fi && i < li) ? 1+i : 10*i; };
-        TTS_EQUAL( eve::replace_ignored(data,keep_between(fi,li),ref), ref );
+        T replacement = [&](auto i, auto) { return (i >= fi && i < li) ? data.get(i) : 10*i; };
+        TTS_EQUAL( eve::replace_ignored(data,keep_between(fi,li),replacement), replacement );
       }
     }
   }
-}
+};
+
+EVE_TEST_BED( "Check behavior of replace_ignored (keep_between)"
+            , eve::test::simd::all_types
+            , eve::test::generate ( eve::test::ramp<0> )
+            , keep_between_tests
+            );
