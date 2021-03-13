@@ -37,7 +37,7 @@ namespace eve::test
   //================================================================================================
   // no-data generator - used to propagate types only
   //================================================================================================
-  template<typename V, typename T> auto value(V v, as_<T>)
+  template<typename V, typename T> auto as_value(V v, as_<T>)
   {
     if constexpr(std::is_invocable_v<V,as_<T>>)  return v(eve::as_<T>{});
     else                                         return static_cast<T>(v);
@@ -94,10 +94,26 @@ namespace eve::test
     return [=]<typename T>(eve::as_<T>, auto& gen)
     {
       using e_t = eve::element_type_t<T>;
-      eve::prng<e_t> dist(value(mn,as_<e_t>{}),value(mx,as_<e_t>{}));
+      eve::prng<e_t> dist(as_value(mn,as_<e_t>{}),as_value(mx,as_<e_t>{}));
 
       std::array<e_t,eve::cardinal_v<T>> d;
       std::for_each(d.begin(),d.end(), [&](auto& e) { e = dist(gen); });
+
+      return d;
+    };
+  }
+
+  //================================================================================================
+  // Constant value
+  //================================================================================================
+  template<typename V> auto value(V v)
+  {
+    return [=]<typename T>(eve::as_<T> tgt, auto&)
+    {
+      std::array<eve::element_type_t<T>,eve::cardinal_v<T>> d;
+      auto val = as_value(v,tgt);
+
+      for(auto& e : d) e = val;
 
       return d;
     };
