@@ -46,7 +46,7 @@ namespace eve::test
   //================================================================================================
   // no-data generator - used to propagate types only
   //================================================================================================
-  inline auto const no_data = []<typename T>(eve::as_<T>, auto)
+  inline auto const no_data = []<typename T>(eve::as_<T>, auto&)
   {
     using d_t = std::array<eve::element_type_t<T>,eve::cardinal_v<T>>;
     return d_t{};
@@ -57,7 +57,7 @@ namespace eve::test
   //================================================================================================
   template<typename G> inline auto as_integer(G)
   {
-    return []<typename T>(eve::as_<T>, auto s) { return G{}( eve::as_<eve::as_integer_t<T>>{},s); };
+    return []<typename T>(eve::as_<T>, auto& s) { return G{}( eve::as_<eve::as_integer_t<T>>{},s); };
   }
 
   //================================================================================================
@@ -65,7 +65,7 @@ namespace eve::test
   //================================================================================================
   template<typename V> auto ramp(V v)
   {
-    return  [=]<typename T>(eve::as_<T>, auto)
+    return  [=]<typename T>(eve::as_<T>, auto&)
             {
               std::array<eve::element_type_t<T>, eve::cardinal_v<T>> d;
               for(std::ptrdiff_t i = 0;i<T::size();++i) d[i] = v+i;
@@ -78,7 +78,7 @@ namespace eve::test
   //================================================================================================
   template<typename V, typename K> auto logicals(V v, K k)
   {
-    return  [=]<typename T>(eve::as_<T>, auto)
+    return  [=]<typename T>(eve::as_<T>, auto&)
             {
               std::array<eve::logical<eve::element_type_t<T>>,eve::cardinal_v<T>> d;
               for(std::ptrdiff_t i = 0;i<T::size();++i) d[i] = ((v+i)%k) == 0;
@@ -91,12 +91,10 @@ namespace eve::test
   //================================================================================================
   template<typename Mn, typename Mx> auto randoms(Mn mn, Mx mx)
   {
-    return [=]<typename T>(eve::as_<T>, auto seed)
+    return [=]<typename T>(eve::as_<T>, auto& gen)
     {
       using e_t = eve::element_type_t<T>;
       eve::prng<e_t> dist(value(mn,as_<e_t>{}),value(mx,as_<e_t>{}));
-      std::mt19937 gen;
-      gen.seed(seed);
 
       std::array<e_t,eve::cardinal_v<T>> d;
       std::for_each(d.begin(),d.end(), [&](auto& e) { e = dist(gen); });
@@ -110,7 +108,7 @@ namespace eve::test
   //================================================================================================
   template<typename... G> inline auto generate(G... g)
   {
-    return [=]<typename T>(eve::as_<T> t, auto s)
+    return [=]<typename T>(eve::as_<T> t, auto& s)
     {
       return std::make_tuple(g(t,s)...);
     };
@@ -132,14 +130,18 @@ inline bool const TTS_CAT(register_,TTS_FUNCTION) =                             
             {                                                                                       \
               std::mt19937::result_type seed(18102008);                                             \
               seed = a.value_or(seed, "-s", "--seed");                                              \
+              std::mt19937 gen(seed);                                                               \
                                                                                                     \
               constexpr std::make_index_sequence<sizeof...(N)> size = {};                           \
-              auto data = s(eve::as_<T>{}, seed);                                                   \
+              auto data = s(eve::as_<T>{}, gen);                                                    \
               auto args = eve::test::make_args(data, size, eve::as_<T>{});                          \
               Test{}(r,v,a,std::get<N>(args)...);                                                   \
             }                                                                                       \
           });                                                                                       \
-      }(std::make_index_sequence<std::tuple_size<decltype(s(target, 0))>::value>{});                \
+      }(std::make_index_sequence<std::tuple_size<decltype ( s ( target                              \
+                                                              , std::declval<std::mt19937&>()       \
+                                                              )                                     \
+                                                          )>::value>{});                            \
     };                                                                                              \
                                                                                                     \
     (single_test( eve::as_<Ts>() ),...);                                                            \
