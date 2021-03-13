@@ -76,7 +76,7 @@ auto binding_tests  = []<typename T, typename L>( auto& runtime, bool verbose, a
 
 EVE_TEST_BED( "Check eve::wide support for structured bindings"
             , eve::test::simd::all_types
-            , eve::test::generate(eve::test::ramp<1>,eve::test::logicals<1,2>)
+            , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
             , binding_tests
             );
 
@@ -104,7 +104,7 @@ auto make_tests  = []<typename T, typename L>( auto& runtime, bool verbose, auto
 
 EVE_TEST_BED( "Check eve::wide enumerating constructor"
             , eve::test::simd::all_types
-            , eve::test::generate(eve::test::ramp<1>,eve::test::logicals<1,2>)
+            , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
             , make_tests
             );
 
@@ -167,7 +167,7 @@ auto storage_tests  = []<typename T, typename L>( auto& runtime, bool verbose, a
 
 EVE_TEST_BED( "Check eve::wide raw storage handling"
             , eve::test::simd::all_types
-            , eve::test::generate(eve::test::ramp<1>,eve::test::logicals<1,2>)
+            , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
             , storage_tests
             );
 
@@ -211,7 +211,7 @@ auto slice_tests  = []<typename T, typename L>( auto& runtime, bool verbose, aut
 
 EVE_TEST_BED( "Check eve::wide::slice behavior"
             , eve::test::simd::all_types
-            , eve::test::generate(eve::test::ramp<1>,eve::test::logicals<1,2>)
+            , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
             , slice_tests
             );
 
@@ -242,6 +242,6 @@ auto combine_tests  = []<typename T, typename L>( auto& runtime, bool verbose, a
 
 EVE_TEST_BED( "Check eve::wide::combine behavior"
             , eve::test::simd::all_types
-            , eve::test::generate(eve::test::ramp<1>,eve::test::logicals<1,2>)
+            , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
             , combine_tests
             );

@@ -25,10 +25,6 @@ make_unit("unit.api"  shift.cpp       )
 make_unit("unit.api"  wide.cpp        )
 
 ##==================================================================================================
-## logical API tests
-make_all_units(ROOT unit.api      NAME logical  ARCH scalar simd  TYPES ${all_types} )
-
-##==================================================================================================
 ## Wide related tools
 make_unit( "unit.api" conditional.cpp )
 make_unit( "unit.api" replace.cpp     )

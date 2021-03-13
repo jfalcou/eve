@@ -29,6 +29,6 @@ auto wide_to_logical = []<typename T> ( auto& runtime, bool verbose, auto const&
 
 EVE_TEST_BED( "Check detail::to_logical"
             , eve::test::simd::all_types
-            , eve::test::generate( eve::test::randoms<0,2> )
+            , eve::test::generate( eve::test::randoms(0,2) )
             , wide_to_logical
             );

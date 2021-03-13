@@ -61,9 +61,9 @@ auto simd_tests = []<typename T>( auto& runtime, bool verbose, auto const&
 
 EVE_TEST_BED( "Check behavior of arithmetic operators on wide"
             , eve::test::simd::all_types
-            , eve::test::generate ( eve::test::randoms<-50,50>
-                                  , eve::test::randoms< 1,100>
-                                  , eve::test::randoms<-50,50>
+            , eve::test::generate ( eve::test::randoms(-50, 50  )
+                                  , eve::test::randoms( 1 , 100 )
+                                  , eve::test::randoms(-50, 50  )
                                   )
             , simd_tests
             );
@@ -106,9 +106,9 @@ auto incdec_tests = []<typename T>( auto& runtime, bool verbose, auto const&
 
 EVE_TEST_BED( "Check behavior of pre/post increment/decrement operators on wide"
             , eve::test::simd::all_types
-            , eve::test::generate ( eve::test::randoms<-50,50>
-                                  , eve::test::randoms< 1,100>
-                                  , eve::test::randoms<-50,50>
+            , eve::test::generate ( eve::test::randoms(-50, 50  )
+                                  , eve::test::randoms( 1 , 100 )
+                                  , eve::test::randoms(-50, 50  )
                                   )
             , incdec_tests
             );
@@ -136,9 +136,9 @@ auto mixed_tests = []<typename T>( auto& runtime, bool verbose, auto const&
 
 EVE_TEST_BED( "Check behavior of arithmetic operators on wide and scalar"
             , eve::test::simd::all_types
-            , eve::test::generate ( eve::test::randoms<-50,50>
-                                  , eve::test::randoms< 1,100>
-                                  , eve::test::randoms<-50,50>
+            , eve::test::generate ( eve::test::randoms(-50, 50  )
+                                  , eve::test::randoms( 1 , 100 )
+                                  , eve::test::randoms(-50, 50  )
                                   )
             , mixed_tests
             );

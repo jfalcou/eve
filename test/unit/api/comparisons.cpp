@@ -143,16 +143,16 @@ EVE_TEST_BED( "Check comparison operators behavior with NaNs"
 
 EVE_TEST_BED( "Check comparison operators behavior between wide"
             , eve::test::simd::all_types
-            , eve::test::generate ( eve::test::randoms<-50,50>
-                                  , eve::test::randoms<-50,50>
+            , eve::test::generate ( eve::test::randoms(-50, 50)
+                                  , eve::test::randoms(-50, 50)
                                   )
             , basic_tests
             );
 
 EVE_TEST_BED( "Check comparison operators behavior between wide & scalar"
             , eve::test::simd::all_types
-            , eve::test::generate ( eve::test::randoms<-50,50>
-                                  , eve::test::randoms<-50,50>
+            , eve::test::generate ( eve::test::randoms(-50, 50)
+                                  , eve::test::randoms(-50, 50)
                                   )
             , mixed_tests
             );

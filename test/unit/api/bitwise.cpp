@@ -49,8 +49,8 @@ auto simd_tests  = []<typename T>(auto& runtime, bool verbose, auto const&, T a0
 
 EVE_TEST_BED( "Check behavior of bitwise operators on eve::wide"
             , eve::test::simd::all_types
-            , eve::test::generate ( eve::test::randoms<-50,50>
-                                  , eve::test::randoms<-50,50>
+            , eve::test::generate ( eve::test::randoms(-50, 50)
+                                  , eve::test::randoms(-50, 50)
                                   )
             , simd_tests
             );
@@ -73,8 +73,8 @@ auto mixed_tests  = []<typename T>(auto& runtime, bool verbose, auto const&, T a
 
 EVE_TEST_BED( "Check behavior of bitwise operators on wide and scalar"
             , eve::test::simd::all_types
-            , eve::test::generate ( eve::test::randoms<-50,50>
-                                  , eve::test::randoms<-50,50>
+            , eve::test::generate ( eve::test::randoms(-50, 50)
+                                  , eve::test::randoms(-50, 50)
                                   )
             , mixed_tests
             );

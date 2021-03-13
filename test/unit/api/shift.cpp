@@ -59,7 +59,7 @@ auto simd_tests = []<typename T, typename I>
 
 EVE_TEST_BED( "Check behavior of shift operators on eve::wide"
             , eve::test::simd::integers
-            , eve::test::generate(eve::test::randoms<-50,50>, random_bits)
+            , eve::test::generate(eve::test::randoms(-50,50), random_bits)
             , simd_tests
             );
 
@@ -78,6 +78,6 @@ auto mixed_tests  = []<typename T, typename I>
 
 EVE_TEST_BED( "Check behavior of shift operators on wide and scalars"
             , eve::test::simd::integers
-            , eve::test::generate(eve::test::randoms<-50,50>, random_bits)
+            , eve::test::generate(eve::test::randoms(-50,50), random_bits)
             , mixed_tests
             );
