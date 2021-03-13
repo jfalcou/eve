@@ -22,6 +22,6 @@ make_unit( "unit.memory" aligned_alloc.cpp )
 make_unit( "unit.memory" aligned_allocator.cpp )
 make_unit( "unit.memory" aligned_ptr.cpp )
 make_unit( "unit.memory" is_aligned.cpp )
+make_unit( "unit.memory" store.cpp )
 
 # make_all_units(ROOT unit.api  NAME load       ARCH simd TYPES ${all_types} )
-# make_all_units(ROOT unit.api  NAME store      ARCH simd TYPES ${all_types} )
