@@ -29,10 +29,3 @@ make_unit("unit.api"  wide.cpp        )
 make_unit( "unit.api" conditional.cpp )
 make_unit( "unit.api" replace.cpp     )
 make_unit( "unit.api" pattern.cpp     )
-
-##==================================================================================================
-## Memory API tests
-make_unit( "unit.api" memory/aligned_alloc.cpp )
-make_unit( "unit.api" memory/aligned_allocator.cpp )
-make_unit( "unit.api" memory/aligned_ptr.cpp )
-make_unit( "unit.api" memory/is_aligned.cpp )
