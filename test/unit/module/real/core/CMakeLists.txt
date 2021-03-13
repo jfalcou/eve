@@ -29,7 +29,9 @@ add_dependencies(unit.real.core.exe          unit.real.core.simd.exe            
 ##==================================================================================================
 make_unit("unit.real.core"  abs.cpp  )
 make_unit("unit.real.core"  add.cpp  )
+make_unit("unit.real.core"  clamp.cpp)
 make_unit("unit.real.core"  shl.cpp  )
+make_unit("unit.real.core"  shr.cpp  )
 
 ##==================================================================================================
 ## Other tests
@@ -64,7 +66,7 @@ make_all_units(ROOT unit.real.core NAME bit_xor               ARCH scalar simd T
 make_all_units(ROOT unit.real.core NAME bit_width             ARCH scalar simd TYPES ${uint_types}    )
 make_all_units(ROOT unit.real.core NAME cbrt                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.core NAME ceil                  ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT unit.real.core NAME clamp                 ARCH scalar simd TYPES ${all_types}     )
+##make_all_units(ROOT unit.real.core NAME clamp                 ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME conj                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.core NAME convert               ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME copysign              ARCH scalar simd TYPES ${real_types}    )
@@ -200,7 +202,7 @@ make_all_units(ROOT unit.real.core NAME rshr                  ARCH scalar simd T
 make_all_units(ROOT unit.real.core NAME rsqrt                 ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.core NAME saturate              ARCH scalar simd TYPES ${all_types}     )
 ##make_all_units(ROOT unit.real.core NAME shl                   ARCH scalar simd TYPES ${integral_types})
-make_all_units(ROOT unit.real.core NAME shr                   ARCH scalar simd TYPES ${integral_types})
+##make_all_units(ROOT unit.real.core NAME shr                   ARCH scalar simd TYPES ${integral_types})
 # make_all_units(ROOT unit.real.core NAME shuffle                   ARCH scalar simd TYPES ${integral_types})
 make_all_units(ROOT unit.real.core NAME sign                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME significants          ARCH scalar simd TYPES ${real_types}    )

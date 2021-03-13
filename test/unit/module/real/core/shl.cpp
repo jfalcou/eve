@@ -8,7 +8,6 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/function/shl.hpp>
-#include <eve/function/is_gtz.hpp>
 
 //==================================================================================================
 // Types tests
@@ -35,12 +34,6 @@ auto types_tests = []<typename T>(auto& runtime, bool verbose, auto const&, T)
   TTS_EXPR_IS( eve::shl(v_t(), vi_t()) , v_t);
   TTS_EXPR_IS( eve::shl(v_t(), vu_t()) , v_t);
 
-  //conditionnal
-//   TTS_EXPR_IS( eve::shl[eve::logical<T>()](T(), T()  ) , T);
-//   TTS_EXPR_IS( eve::shl[eve::logical<T>()](T(), v_t()) , T);
-//   TTS_EXPR_IS( eve::shl[eve::logical<T>()](v_t(), T()) , T);
-//   TTS_EXPR_IS( eve::shl[eve::logical<T>()](v_t(), v_t()) , T);
-
 };
 
 EVE_TEST_BED( "Check return types of shl"
@@ -49,39 +42,30 @@ EVE_TEST_BED( "Check return types of shl"
             , types_tests
             );
 
-// //==================================================================================================
-// // shl tests
-// //==================================================================================================
-// auto simd_tests = []<typename T>( auto& runtime, bool verbose, auto const&
-//                                 , T const& a0, T const& a1, T const& a2
-//                                 )
-// {
-//   using eve::shl;
-//   using eve::saturated;
-//   TTS_EQUAL( shl(a0, a2), T([&](auto i, auto) { return shl(a0.get(i), a2.get(i)); }));
-//   TTS_EQUAL( saturated(shl)(a0, a2), T([&](auto i, auto) { return saturated(shl)(a0.get(i), a2.get(i)); }));
-//   TTS_EQUAL( shl(a0, a1, a2), T([&](auto i, auto) { return shl(a0.get(i), a1.get(i), a2.get(i)); }));
-//   TTS_EQUAL( saturated(shl)(a0, a1, a2), T([&](auto i, auto) { return saturated(shl)(a0.get(i), a1.get(i), a2.get(i)); }));
+//==================================================================================================
+// shl tests
+//==================================================================================================
+auto simd_tests = []<typename T>( auto& runtime, bool verbose, auto const&
+                                , T const& a0, T const& a1
+                                )
+{
+  using eve::shl;
+  using eve::saturated;
+  TTS_EQUAL( shl(a0, a1), T([&](auto i, auto) { return shl(a0.get(i), a1.get(i)); }));
 
-// };
+};
 
-// EVE_TEST_BED( "Check behavior of shl on signed types"
-//             , eve::test::simd::signed_types
-//             , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-//                                   , eve::test::randoms(eve::valmin, eve::valmax)
-//                                   , eve::test::randoms(eve::valmin, eve::valmax)
-//                                   )
-//             , simd_tests
-//             );
+auto shift_max = []< typename T>(eve::as_<T> const &){return sizeof(eve::element_type_t<T>)*8-1;};
 
-// EVE_TEST_BED( "Check behavior of shl on unsigned types"
-//             , eve::test::simd::unsigned_types
-//             , eve::test::generate ( eve::test::randoms(0, eve::valmax)
-//                                   , eve::test::randoms(0, eve::valmax)
-//                                   , eve::test::randoms(0, eve::valmax)
-//                                   )
-//             , simd_tests
-//             );
+EVE_TEST_BED( "Check behavior of shl on integral types"
+            , eve::test::simd::unsigned_types
+            , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
+                                  , eve::test::randoms(0u, shift_max)
+                                  )
+            , simd_tests
+            );
+
+
 
 // //==================================================================================================
 // // conditional shl tests
