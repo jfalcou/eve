@@ -27,6 +27,8 @@ namespace eve::test::scalar
                         , std::uint32_t , std::uint64_t
                         >                                   integers          = {};
   inline constexpr types<float, double>                     ieee_reals        = {};
+  inline constexpr types<float>                             ieee_floats       = {};
+  inline constexpr types<double>                            ieee_doubles      = {};
   inline constexpr types< float       , double
                         , std::int8_t , std::int16_t
                         , std::int32_t, std::int64_t
@@ -89,6 +91,8 @@ namespace eve::test::simd
   inline constexpr detail::wides< decltype(scalar::unsigned_integers) >::type unsigned_integers {};
   inline constexpr detail::wides< decltype(scalar::integers) >::type          integers          {};
   inline constexpr detail::wides< decltype(scalar::ieee_reals) >::type        ieee_reals        {};
+  inline constexpr detail::wides< decltype(scalar::ieee_floats) >::type       ieee_floats       {};
+  inline constexpr detail::wides< decltype(scalar::ieee_doubles) >::type      ieee_doubles      {};
   inline constexpr detail::wides< decltype(scalar::signed_types) >::type      signed_types      {};
   inline constexpr auto                                   unsigned_types    = unsigned_integers;
   inline constexpr detail::wides< decltype(scalar::all_types) >::type         all_types         {};

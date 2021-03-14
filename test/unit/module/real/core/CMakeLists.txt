@@ -30,6 +30,7 @@ add_dependencies(unit.real.core.exe          unit.real.core.simd.exe            
 make_unit("unit.real.core"  abs.cpp  )
 make_unit("unit.real.core"  add.cpp  )
 make_unit("unit.real.core"  clamp.cpp)
+make_unit("unit.real.core"  fma.cpp  )
 make_unit("unit.real.core"  shl.cpp  )
 make_unit("unit.real.core"  shr.cpp  )
 
@@ -84,7 +85,7 @@ make_all_units(ROOT unit.real.core NAME fdim                  ARCH scalar simd T
 make_all_units(ROOT unit.real.core NAME firstbitset           ARCH scalar simd TYPES ${integral_types})
 make_all_units(ROOT unit.real.core NAME firstbitunset         ARCH scalar simd TYPES ${integral_types})
 make_all_units(ROOT unit.real.core NAME floor                 ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT unit.real.core NAME fma                   ARCH scalar simd TYPES ${all_types}     )
+##make_all_units(ROOT unit.real.core NAME fma                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME fms                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME fnma                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME fnms                  ARCH scalar simd TYPES ${all_types}     )

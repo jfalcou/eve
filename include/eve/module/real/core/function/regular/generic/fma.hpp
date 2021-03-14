@@ -25,6 +25,22 @@ namespace eve::detail
   template<real_scalar_value T>
   EVE_FORCEINLINE T fma_(EVE_SUPPORTS(cpu_), T const &a, T const &b, T const &c) noexcept
   {
+    if constexpr( std::is_same_v<T, float> )
+    {
+#ifdef FP_FAST_FMAF
+      return std::fma(a, b, c);
+#else
+      return float32(float64(a)*float64(b)+float64(c));
+#endif
+    }
+    else if( std::is_same_v<T, double> )
+    {
+#ifdef FP_FAST_FMA
+      return std::fma(a, b, c);
+#else
+      return a * b + c;
+#endif
+    }
     return a * b + c;
   }
 
@@ -35,3 +51,8 @@ namespace eve::detail
     return a * b + c; // fallback never taken if proper intrinsics are at hand
   }
 }
+//   template < typename T > inline bool has_accurate_fma(eve::as_<T> const &){
+//     if constexpr(std::is_same_v<T, double >) return FP_FAST_FMA == 1;
+//     else if  constexpr(std::is_same_v<T, float >) return FP_FAST_FMAF == 1;
+//     else return FP_FAST_FMAL == 1;
+//   };

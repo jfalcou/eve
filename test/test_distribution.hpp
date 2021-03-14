@@ -9,6 +9,9 @@
 #include <eve/function/abs.hpp>
 #include <eve/function/pedantic/ldexp.hpp>
 #include <eve/function/pedantic/frexp.hpp>
+#include <eve/function/mantissa.hpp>
+#include <eve/function/exponent.hpp>
+#include <eve/function/abs.hpp>
 #include <eve/function/sign.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/constant/minexponent.hpp>
@@ -75,10 +78,24 @@ namespace eve
 
     template< class Generator > result_type operator()( Generator& g )
     {
+//       std::cout << "gen a" << a << " b " << b << std::endl;
+//       std::cout << "ma   " << mantissa(a) << " mb " << mantissa(b) << std::endl;
+//       std::cout << "ea   " << exponent(a) << " eb " << exponent(b) << std::endl;
+//       std::cout << "ma - mb " << eve::abs(mantissa(a)- mantissa(b))<< std::endl;
+      if(std::abs(a-b) < half(as(a))) return sd(g);
       auto mant(T(0));
       auto expo(0);
       auto res(T(0));
+      int i = 0;
       do {
+        ++i;
+        if(i > 100)
+        {
+
+          std::cout << "raté " << std::endl;
+          exit(1);
+        }
+
         if (!across)
         {
           if (negative)
@@ -108,6 +125,7 @@ namespace eve
         }
 
         res = eve::pedantic(eve::ldexp)(mant, expo);
+        std::cout << "icitte " << i << "a "<< a << " b " << b << "res "<< res << std::endl;
       } while (res < a || res >=  b);
       return res;
     }
@@ -205,7 +223,7 @@ namespace eve
 
   template<typename T>
   using prng =  std::conditional_t< std::is_floating_point_v<eve::element_type_t<T>>
-                                  , eve::tests_real_distribution<eve::element_type_t<T>>
-                                  , std::uniform_int_distribution<eve::element_type_t<T>>
-                                  >;
+                                    , eve::tests_real_distribution<eve::element_type_t<T>>
+                                    , std::uniform_int_distribution<eve::element_type_t<T>>
+                                    >;
 }
