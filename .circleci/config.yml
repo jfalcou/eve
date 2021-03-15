@@ -34,7 +34,7 @@ commands:
         type: string
       cpu:
         type: integer
-        default: 8
+        default: 2
     steps:
       - run:
           name: Compiling << parameters.targets >> at -j << parameters.cpu >>
@@ -77,17 +77,17 @@ base_jobs: &base_jobs
         setup:    << parameters.setup >>
     - compile:
         targets: "../cmake/toolchain/arch.targets.json"
-        cpu:  3
+        cpu:  2
     - ctest:
         targets: "../cmake/toolchain/arch.targets.json"
     - compile:
         targets: "../cmake/toolchain/api.targets.json"
-        cpu:  3
+        cpu:  2
     - ctest:
         targets: "../cmake/toolchain/api.targets.json"
     - compile:
         targets: "../cmake/toolchain/doc.targets.json"
-        cpu:  3
+        cpu:  2
     - ctest:
         targets: "../cmake/toolchain/doc.targets.json"
     - run:
@@ -95,7 +95,7 @@ base_jobs: &base_jobs
         command: cd build && ninja unit.real.math.heavy.exe  -k 0 -j 2
     - compile:
         targets: "../cmake/toolchain/simd.targets.json"
-        cpu:  3
+        cpu:  2
     - ctest:
         targets: "../cmake/toolchain/simd.targets.json"
 
@@ -119,12 +119,12 @@ wip_jobs: &wip_jobs
         setup:    << parameters.setup >>
     - compile:
         targets: "../cmake/toolchain/arch.targets.json"
-        cpu:  3
+        cpu:  2
     - ctest:
         targets: "../cmake/toolchain/arch.targets.json"
     - compile:
         targets: "../cmake/toolchain/api.targets.json"
-        cpu:  3
+        cpu:  2
     - ctest:
         targets: "../cmake/toolchain/api.targets.json"
 
