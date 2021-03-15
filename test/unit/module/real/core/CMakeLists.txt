@@ -29,6 +29,7 @@ add_dependencies(unit.real.core.exe          unit.real.core.simd.exe            
 ##==================================================================================================
 make_unit("unit.real.core"  abs.cpp           )
 make_unit("unit.real.core"  add.cpp           )
+make_unit("unit.real.core"  arg.cpp           )
 make_unit("unit.real.core"  bit_and.cpp       )
 make_unit("unit.real.core"  bit_andnot.cpp    )
 make_unit("unit.real.core"  bit_notand.cpp    )
@@ -51,7 +52,7 @@ add_subdirectory(failure)
 ##==================================================================================================
 ##make_all_units(ROOT unit.real.core NAME abs                   ARCH scalar simd TYPES ${all_types}     )
 ##make_all_units(ROOT unit.real.core NAME add                   ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT unit.real.core NAME arg                   ARCH scalar simd TYPES ${real_types}    )
+##make_all_units(ROOT unit.real.core NAME arg                   ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.core NAME average               ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME binarize              ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME binarize_not          ARCH scalar simd TYPES ${all_types}     )
