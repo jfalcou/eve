@@ -10,8 +10,6 @@
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/function/bit_ceil.hpp>
-#include <eve/function/exponent.hpp>
-#include <eve/function/ldexp.hpp>
 #include <bit>
 
 //==================================================================================================
@@ -41,42 +39,52 @@ auto simd_integral_tests = []<typename T>( auto& runtime, bool verbose, auto con
                                 , T const& a0
                                 )
 {
-  using v_t = eve::element_type_t<T>;
-  using ui_t =  eve::as_integer_t<v_t,  unsigned>;
-  TTS_EQUAL( eve::bit_ceil(a0), T([&](auto i, auto) { return (a0.get(i) < 0) ? 1 : std::bit_ceil(ui_t(a0.get(i))); }));
+//  using v_t = eve::element_type_t<T>;
+  TTS_EQUAL( eve::bit_ceil(a0), T([&](auto i, auto) { return std::bit_ceil(a0.get(i)); }));
 };
 
-auto maxi = []< typename T>(eve::as_<T> const &){return eve::valmax(eve::as<T>())/2; }; // over valmax/2 bit_ceil is UB so don't test
-auto mini = []< typename T>(eve::as_<T> const &){return eve::valmin(eve::as<T>())/4;  }; //negative values all return 1;
+//auto min = []< typename T>(eve::as_<T> const &){return eve::unsigned_value<T> ? 0: -10;};
+auto max = []< typename T>(eve::as_<T> const &){return eve::valmax(eve::as<T>())/2; };
 EVE_TEST_BED( "Check behavior of bit_ceil on wide"
-            , eve::test::simd::signed_integers
-            , eve::test::generate(eve::test::randoms(mini, maxi))
+            , eve::test::simd::unsigned_integers
+            , eve::test::generate(eve::test::randoms(0, max))
             , simd_integral_tests
             );
 
-auto simd_floating_tests = []<typename T>( auto& runtime, bool verbose, auto const&
-                                , T const& a0
-                                )
-{
-  using v_t = eve::element_type_t<T>;
-  using eve::exponent;
-  using eve::ldexp;
-  TTS_EQUAL( eve::bit_ceil(a0), T([&](auto i, auto) {
-                                    auto v = a0.get(i);
-                                    if(v <= v_t(1)) return v_t(1);
-                                    else {
-                                      auto e =  eve::exponent(v);
-                                      auto res = ldexp(v_t(1), e);
-                                      if (res < v) res*= v_t(2);
-                                      return res;
-                                    };
-                                  }
-                                 )
-           );
-};
+// auto simd_signed_tests2 = []<typename T>( auto& runtime, bool verbose, auto const&
+//                                 , T const& a0
+//                                 )
+// {
+//   using v_t = eve::element_type_t<T>;
+//   TTS_EQUAL( eve::saturated(eve::bit_ceil)(a0)
+//            , (T( [&](auto i, auto) {
+//                    auto z = a0.get(i);
+//                    return (z > 0 ? v_t(z)
+//                            : (z == eve::valmin(eve::as(v_t())) ? eve::valmax(eve::as(v_t())) : -z));
+//                  }))
+//              );
+// };
 
-EVE_TEST_BED( "Check behavior of bit_ceil on wide"
-            , eve::test::simd::ieee_reals
-            , eve::test::generate(eve::test::randoms(-10, eve::valmax))
-            , simd_floating_tests
-            );
+// EVE_TEST_BED( "Check behavior of bit_ceil on wide"
+//             , eve::test::simd::signed_types
+//             , eve::test::generate (eve::test::randoms(eve::valmin, eve::valmax))
+//             , simd_signed_tests2
+//             );
+
+// //==================================================================================================
+// // bit_ceil unsigned tests
+// //==================================================================================================
+
+// auto simd_unsigned_tests = []<typename T>( auto& runtime, bool verbose, auto const&
+//                                 , T const& a0
+//                                 )
+// {
+//   TTS_EQUAL( eve::bit_ceil(a0), a0);
+//   TTS_EQUAL( eve::saturated(eve::bit_ceil)(a0), a0);
+// };
+
+// EVE_TEST_BED( "Check behavior of bit_ceil on wide"
+//             , eve::test::simd::unsigned_types
+//             , eve::test::generate ( eve::test::randoms(0, eve::valmax))
+//             , simd_unsigned_tests
+//             );

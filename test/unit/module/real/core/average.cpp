@@ -96,17 +96,25 @@ auto simd_tests_if = []<typename T>( auto& runtime, bool verbose, auto const&
                                 )
 {
   using eve::average;
-  using eve::saturated;
   using v_t =  eve::element_type_t<T>;
   //values can differ by one on integral types from scalar to simd implementations (intrinsics may be at work)
   TTS_ULP_EQUAL( average[a2 > T(64)](a0, a1), T([&](auto i, auto) {return a2.get(i) > v_t(64) ? average(a0.get(i), a1.get(i)) :a0.get(i) ; }), 1);
 };
 
 EVE_TEST_BED( "Check behavior of average on signed types"
-            , eve::test::simd::all_types
+            , eve::test::simd::signed_types
             , eve::test::generate ( eve::test::randoms(-128, 127)
                                   , eve::test::randoms(-128, 127)
                                   , eve::test::randoms(-128, 127)
+                                  )
+            , simd_tests_if
+            );
+
+EVE_TEST_BED( "Check behavior of average on unsigned types"
+            , eve::test::simd::unsigned_types
+            , eve::test::generate ( eve::test::randoms(0, 255)
+                                  , eve::test::randoms(0, 255)
+                                  , eve::test::randoms(0, 127)
                                   )
             , simd_tests_if
             );

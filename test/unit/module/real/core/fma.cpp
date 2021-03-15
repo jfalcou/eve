@@ -96,4 +96,4 @@ EVE_TEST_BED( "Check behavior of fma on all types"
                                   )
             , simd_rounded_tests
             );
-
+ 
