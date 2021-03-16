@@ -29,6 +29,15 @@ namespace eve::test::scalar
   inline constexpr types<float, double>                     ieee_reals        = {};
   inline constexpr types<float>                             ieee_floats       = {};
   inline constexpr types<double>                            ieee_doubles      = {};
+  inline constexpr types<std::uint64_t>                     uints_64          = {};
+  inline constexpr types<std::uint32_t>                     uints_32          = {};
+  inline constexpr types<std::uint16_t>                     uints_16          = {};
+  inline constexpr types<std::uint8_t>                      uints_8           = {};
+  inline constexpr types<std::int64_t>                      ints_64           = {};
+  inline constexpr types<std::int32_t>                      ints_32           = {};
+  inline constexpr types<std::int16_t>                      ints_16           = {};
+  inline constexpr types<std::int8_t>                       ints_8            = {};
+
   inline constexpr types< float       , double
                         , std::int8_t , std::int16_t
                         , std::int32_t, std::int64_t
@@ -93,6 +102,14 @@ namespace eve::test::simd
   inline constexpr detail::wides< decltype(scalar::ieee_reals) >::type        ieee_reals        {};
   inline constexpr detail::wides< decltype(scalar::ieee_floats) >::type       ieee_floats       {};
   inline constexpr detail::wides< decltype(scalar::ieee_doubles) >::type      ieee_doubles      {};
+  inline constexpr detail::wides< decltype(scalar::uints_64) >::type          uints_64          {};
+  inline constexpr detail::wides< decltype(scalar::uints_32) >::type          uints_32          {};
+  inline constexpr detail::wides< decltype(scalar::uints_16) >::type          uints_16          {};
+  inline constexpr detail::wides< decltype(scalar::uints_8 ) >::type          uints_8           {};
+  inline constexpr detail::wides< decltype(scalar::ints_64) >::type           ints_64           {};
+  inline constexpr detail::wides< decltype(scalar::ints_32) >::type           ints_32           {};
+  inline constexpr detail::wides< decltype(scalar::ints_16) >::type           ints_16           {};
+  inline constexpr detail::wides< decltype(scalar::ints_8 ) >::type           ints_8            {};
   inline constexpr detail::wides< decltype(scalar::signed_types) >::type      signed_types      {};
   inline constexpr auto                                   unsigned_types    = unsigned_integers;
   inline constexpr detail::wides< decltype(scalar::all_types) >::type         all_types         {};
