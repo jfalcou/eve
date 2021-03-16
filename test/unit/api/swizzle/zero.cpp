@@ -25,8 +25,6 @@ auto zero_tests = []<typename T, typename L>( auto& runtime, bool verbose, auto 
     auto f  = [&]<std::size_t N, typename S>(S simd, std::integral_constant<std::size_t,N>)
             {
               constexpr std::size_t sz = 1ULL << N;
-              std::cout << "using pattern " << n_zeros<sz> << "\n";
-
               using type = eve::as_wide_t<S,eve::fixed<sz>>;
               type ref(typename type::value_type(0));
 

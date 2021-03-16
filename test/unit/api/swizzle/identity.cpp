@@ -28,8 +28,6 @@ auto identity_tests = []<typename T, typename L>( auto& runtime, bool verbose, a
                 constexpr std::size_t sz = 1ULL << N;
                 if constexpr(sz <= S::size())
                 {
-                  std::cout << "using pattern " << identity<sz> << "\n";
-
                   eve::as_wide_t<S,eve::fixed<sz>> ref = [&](auto i, auto) { return simd.get(i); };
                   TTS_EQUAL(simd[identity<sz>], ref);
                 }

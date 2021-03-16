@@ -24,8 +24,6 @@ auto swag_tests = []<typename T, typename L>( auto& runtime, bool verbose, auto 
     auto f  = [&]<std::size_t N, typename S>(S simd, std::integral_constant<std::size_t,N>)
             {
               constexpr std::size_t sz = 1ULL << N;
-              std::cout << "using pattern " << eve::swap_adjacent_group_n<sz,S::size()> << "\n";
-
               S ref = [=](auto i, auto c)
               {
                 constexpr auto p = eve::swap_adjacent_group_n<sz,S::size()>;
