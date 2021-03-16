@@ -18,11 +18,15 @@ add_dependencies(unit.api.exe       unit.api.simd.exe   )
 
 ##==================================================================================================
 ## Wide API tests
-make_unit("unit.api"  arithmetic.cpp  )
-make_unit("unit.api"  bitwise.cpp     )
-make_unit("unit.api"  comparisons.cpp )
-make_unit("unit.api"  shift.cpp       )
-make_unit("unit.api"  wide.cpp        )
+make_unit("unit.api"  arithmetic.cpp                  )
+make_unit("unit.api"  bitwise.cpp                     )
+make_unit("unit.api"  comparisons.cpp                 )
+make_unit("unit.api"  shift.cpp                       )
+make_unit("unit.api"  wide.cpp                        )
+make_unit("unit.api"  swizzle/broadcast.cpp           )
+make_unit("unit.api"  swizzle/identity.cpp            )
+make_unit("unit.api"  swizzle/swap_adjacent_group.cpp )
+make_unit("unit.api"  swizzle/zero.cpp                )
 
 ##==================================================================================================
 ## Wide related tools
