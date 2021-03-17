@@ -13,6 +13,8 @@
 #include <eve/constant/mone.hpp>
 #include <eve/constant/allbits.hpp>
 #include <eve/function/bit_and.hpp>
+#include <eve/function/convert.hpp>
+#include <eve/function/if_else.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
@@ -37,20 +39,21 @@ namespace eve::detail
                            , U const & val
                            ) noexcept
   {
-    if constexpr(has_native_abi_v<T>)
+   if constexpr(has_native_abi_v<T>)
     {
-      return  bit_and(T(val),cond.bits());
-    }
+    return if_else(cond, val, zero);
+   }
     else return  apply_over(binarize, cond, val);
   }
 
-  template<real_value T>
+  template<real_value T, real_scalar_value U>
   EVE_FORCEINLINE auto binarize_(EVE_SUPPORTS(cpu_)
                            , logical<T> const &cond
-                           , callable_allbits_ const &
+                                , eve::as_<U> const &
                            ) noexcept
   {
-    return cond.mask();
+    using R = eve::as_wide_t<U, eve::cardinal_t<T>>;
+    return if_else(cond, one(as<R>()), zero);
   }
 
   template<real_value T>

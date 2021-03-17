@@ -18,7 +18,7 @@
 #include <eve/platform.hpp>
 #include <type_traits>
 #include <random>
-
+#include <iostream>
 namespace eve
 {
   template< eve::real_scalar_value T = double > struct tests_real_distribution
@@ -33,14 +33,14 @@ namespace eve
 
     };
 
-    tests_real_distribution() : tests_real_distribution(0.0, 0.1, 10) { }
+    tests_real_distribution() : tests_real_distribution(0.0, 0.1, 300) { }
 
-    tests_real_distribution( T aa, T bb, int nbb = 10)
+    tests_real_distribution( T aa, T bb, int nbb = 300)
       : a(eve::min(aa, bb)),
         b(eve::max(aa, bb)),
         nb(nbb),
         sd(T(0),T(1)),
-        ird(0, nb){
+        ird(1, nb-1){
     };
 
     explicit tests_real_distribution( const param_type& params )
@@ -48,7 +48,7 @@ namespace eve
         b(params.b),
         nb(params.nb),
         sd(T(0),T(1)),
-        ird(0, params.nb){};
+        ird(1, params.nb-1){};
 
     void reset(){
       sd.reset();
@@ -70,7 +70,6 @@ namespace eve
       else
       {
         auto i = ird(gen);
-        std::cout << " i = " << i << " <= " << nb << std::endl;
         if (aa >= 1) // bb > aa
         {
           auto la =  log2(aa);
@@ -85,27 +84,27 @@ namespace eve
         }
         else if (aa >= 0) // aa < 1,  bb > aa
         {
-          if(i == 0)
+          if(i == 1)
           {
             auto r = sd(gen);
             if (r> aa) res =r;
-            else i = 1;
+            else {i = 2;res = 0; }
           }
           else res = (*this)(gen, one(as(bb)), bb, nb);
         }
         else if (bb <= 0) // aa < -1
         {
-          if(i == 0)
+          if(i == 1)
           {
             auto r = sd(gen);
             if (r> -bb) res =-r;
-            else i = 1;
+            else { i = 2; res = 0;}
           }
           else res = (*this)(gen, mone(as(bb)), aa, nb);
         }
         else // aa < 0 bb > 0
         {
-          auto choice = sd(gen)*average(bb, -aa) > bb/2;
+          auto choice = sd(gen)*average(bb, -aa) <  bb/2;
           if (choice)
           {
             res = (*this)(gen, zero(as(bb)), bb, nb);
@@ -161,13 +160,14 @@ namespace eve
 
     tests_integral_distribution() : tests_integral_distribution(valmin(as<T>()), valmax(as<T>())) { }
 
-    tests_integral_distribution( T aa, T bb, int nbb = sizeof(element_type_t<T>))
+    tests_integral_distribution( T aa, T bb, int nbb = 300)
       : a(eve::min(aa, bb)),
         b(eve::max(aa, bb)),
         nb(nbb),
-        toto(double(a), double(b), nb)
-//         sd(0.0f, 1.0f),
-//         ird(1, nb)
+        sd(0.0, 1.0),
+        ird(a, b),
+        ird2(1, nb)
+
     {
     };
 
@@ -175,15 +175,14 @@ namespace eve
       : a(params.a),
         b(params.b),
         nb(params.nb),
-        toto(double(a), double(b), nb)
-//        sd(0.0f, 1.0f),
-//        ird(1, params.nb)
+        sd(0.0, 1.0),
+        ird(a, b),
+        ird2(1, nb)
     {};
 
     void reset(){
-      toto.reset();
-//       sd.reset();
-//       ird.reset();
+       ird.reset();
+       ird2.reset();
     };
 
     template< class Generator > result_type operator()( Generator& gen )
@@ -193,43 +192,47 @@ namespace eve
 
     template< class Generator > result_type operator()( Generator& gen, result_type aa, result_type bb, int nb)
     {
-      return round(toto(gen));
-   //    auto l2 = [](auto x){return log2(inc(double(x)));   };
-//       auto e2 = [](auto x){return dec(T(exp2(round(x)))); };
+      result_type res(0);
+      if(abs(aa) < 256 && abs(bb) < 256)
+      {
+        res = ird(gen);
+      }
+      auto l2 = [](auto x){return log2(inc(double(x)));   };
+      auto e2 = [](auto x){return dec(T(exp2(round(x)))); };
 
-//       result_type res;
-//       if(aa == bb) res = aa;
-//       else
-//       {
-//         auto i = ird(gen);
-//         if (aa >= 0) // bb > aa
-//         {
-//           auto la =  l2(aa);
-//           auto lb =  l2(bb);
-//           auto f =   lb-la;
-//           auto rand = sd(gen);
-//           auto x = la+f*(i-1+rand)/nb;
-//           res = e2(x);
-//         }
-//         else if (bb <= 0) // aa < bb
-//         {
-//           res = -(*this)(gen, saturated(abs)(bb), saturated(abs)(aa), nb);
-//         }
-//         else // aa < 0 bb > 0
-//         {
-//           auto choice = sd(gen)*average(bb, T(saturated(abs)(aa))) <  T(bb/2);
-//           if (choice)
-//           {
-//             res = (*this)(gen, zero(as(bb)), bb, nb);
-//           }
-//           else
-//           {
-//             res = (*this)(gen, aa, zero(as(aa)), nb);
-//           }
+      if(aa == bb) res = aa;
+      else
+      {
+        auto i = ird2(gen);
+        if (aa >= 0) // bb > aa
+        {
+          auto la =  l2(aa);
+          auto lb =  l2(bb);
+          auto f =   lb-la;
+          auto rand = sd(gen);
+          auto x = la+f*(i-1+rand)/nb;
+          res = e2(x);
+        }
+        else if (bb <= 0) // aa < bb
+        {
+          std::cout << "icitte" <<  std::endl;
+          res = -(*this)(gen, saturated(abs)(bb), saturated(abs)(aa), nb);
+        }
+        else // aa < 0 bb > 0
+        {
+          auto choice = sd(gen)*average(bb, T(saturated(abs)(aa))) <  T(bb/2);
+          if (choice)
+          {
+            res = (*this)(gen, zero(as(bb)), bb, nb);
+          }
+          else
+          {
+            res = -(*this)(gen, zero(as(aa)), saturated(abs)(aa), nb);
+          }
 
-//         }
-//       }
-//       return res;
+        }
+      }
+      return res;
     }
 
     template< class Generator > result_type operator()( Generator& g, const param_type& params );
@@ -252,9 +255,9 @@ namespace eve
     T a;
     T b;
     int nb;
-    tests_real_distribution <double > toto;
-//    std::uniform_real_distribution<float> sd;
-    //   std::uniform_int_distribution<int> ird;
+    std::uniform_real_distribution<float> sd;
+    std::uniform_int_distribution<int> ird;
+    std::uniform_int_distribution<int> ird2;
   };
 
   template<typename T>

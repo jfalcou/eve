@@ -4,6 +4,8 @@
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 ##==================================================================================================
+make_unit( "doc.core" essai_distrib.cpp                     )
+make_unit( "doc.core" essai_distrib_int.cpp                 )
 
 make_unit( "doc.core" abs.cpp                               )
 make_unit( "doc.core" acos.cpp                              )
