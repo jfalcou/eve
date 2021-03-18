@@ -68,15 +68,14 @@
 //==================================================================================================
 // fma tests
 //==================================================================================================
-auto simd_rounded_tests = []<typename T>( auto& runtime, bool verbose, auto const&
+auto simd_tests = []<typename T>( auto& runtime, bool verbose, auto const&
                                         , T const& a0, T const& a1, T const& a2
                                         )
 {
   using eve::fma;
-  using eve::round;
-  TTS_ULP_EQUAL(fma(round(a0), round(a1), round(a2)), T([&](auto i , auto) { return eve::pedantic(fma)(round(a0.get(i)), round(a1.get(i)), round(a2.get(i))); }), 2);
-  TTS_ULP_EQUAL(eve::pedantic(fma)(round(a0), round(a1), round(a2)), T([&](auto i , auto) { return eve::pedantic(fma)(round(a0.get(i)), round(a1.get(i)), round(a2.get(i))); }), 2);
-  TTS_ULP_EQUAL(eve::numeric(fma)(round(a0), round(a1), round(a2)), T([&](auto i , auto) { return eve::pedantic(fma)(round(a0.get(i)), round(a1.get(i)), round(a2.get(i))); }), 2);
+  TTS_ULP_EQUAL(fma((a0), (a1), (a2)), T([&](auto i , auto) { return eve::pedantic(fma)((a0.get(i)), (a1.get(i)), (a2.get(i))); }), 2);
+  TTS_ULP_EQUAL(eve::pedantic(fma)((a0), (a1), (a2)), T([&](auto i , auto) { return eve::pedantic(fma)((a0.get(i)), (a1.get(i)), (a2.get(i))); }), 2);
+  TTS_ULP_EQUAL(eve::numeric(fma)((a0), (a1), (a2)), T([&](auto i , auto) { return eve::pedantic(fma)((a0.get(i)), (a1.get(i)), (a2.get(i))); }), 2);
 };
 
 EVE_TEST_BED( "Check behavior of fma on all types"
@@ -85,7 +84,7 @@ EVE_TEST_BED( "Check behavior of fma on all types"
                                   ,  eve::test::randoms(eve::valmin, eve::mone)
                                   ,  eve::test::randoms(eve::valmin, eve::mone)
                                   )
-            , simd_rounded_tests
+            , simd_tests
             );
 
 EVE_TEST_BED( "Check behavior of fma on all types"
@@ -94,6 +93,13 @@ EVE_TEST_BED( "Check behavior of fma on all types"
                                   ,  eve::test::randoms(eve::one, eve::valmax)
                                   ,  eve::test::randoms(eve::one, eve::valmax)
                                   )
-            , simd_rounded_tests
+            , simd_tests
             );
- 
+EVE_TEST_BED( "Check behavior of fma on all types"
+            , eve::test::simd::all_types
+            , eve::test::generate (  eve::test::randoms(eve::valmin, eve::valmax)
+                                  ,  eve::test::randoms(eve::valmin, eve::valmax)
+                                  ,  eve::test::randoms(eve::valmin, eve::valmax)
+                                  )
+            , simd_tests
+            );
