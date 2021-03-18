@@ -15,7 +15,7 @@ int main()
   using eve::as;
   std::random_device rd;  //Will be used to obtain a seed for the random number engine
   std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
-  eve::tests_integral_distribution<i_t> d(eve::valmin(as<i_t>()), eve::valmax(as<i_t>()));
+  eve::tests_integral_distribution<i_t> d(eve::valmin(as<i_t>()), -1); //eve::valmax(as<i_t>()));
   std::vector<i_t> v;
   i_t minipos = eve::valmax(as<i_t > ());
   i_t maxipos = 0;

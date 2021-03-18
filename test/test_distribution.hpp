@@ -166,10 +166,7 @@ namespace eve
         nb(nbb),
         sd(0.0, 1.0),
         ird(a, b),
-        ird2(1, nb)
-
-    {
-    };
+        ird2(1, nb) {};
 
     explicit tests_integral_distribution( const param_type& params )
       : a(params.a),
@@ -177,8 +174,7 @@ namespace eve
         nb(params.nb),
         sd(0.0, 1.0),
         ird(a, b),
-        ird2(1, nb)
-    {};
+        ird2(1, nb) {};
 
     void reset(){
        ird.reset();
@@ -193,7 +189,7 @@ namespace eve
     template< class Generator > result_type operator()( Generator& gen, result_type aa, result_type bb, int nb)
     {
       result_type res(0);
-      if(abs(aa) < 256 && abs(bb) < 256)
+      if(saturated(abs)(aa) < 256 && saturated(abs)(bb) < 256)
       {
         res = ird(gen);
       }
@@ -215,15 +211,14 @@ namespace eve
         }
         else if (bb <= 0) // aa < bb
         {
-          std::cout << "icitte" <<  std::endl;
           res = -(*this)(gen, saturated(abs)(bb), saturated(abs)(aa), nb);
         }
         else // aa < 0 bb > 0
         {
-          auto choice = sd(gen)*average(bb, T(saturated(abs)(aa))) <  T(bb/2);
+          auto choice = sd(gen)*average(saturated(abs)(bb), saturated(abs)(aa)) <  bb/2;
           if (choice)
           {
-            res = (*this)(gen, zero(as(bb)), bb, nb);
+            res = (*this)(gen, zero(as(bb)),saturated(abs)(bb), nb);
           }
           else
           {
