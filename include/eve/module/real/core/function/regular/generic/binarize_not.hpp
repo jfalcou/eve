@@ -14,6 +14,7 @@
 #include <eve/constant/allbits.hpp>
 #include <eve/function/bit_andnot.hpp>
 #include <eve/function/bit_not.hpp>
+#include <eve/function/if_else.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
@@ -25,7 +26,11 @@ namespace eve::detail
                            , logical<T> const &cond
                            ) noexcept
   {
-    return  bit_andnot(one(eve::as<T>()),cond.bits());
+    if constexpr(has_native_abi_v<T>)
+    {
+      return  bit_andnot(one(eve::as<T>()),cond.bits());
+    }
+    else return  apply_over(binarize_not, cond);
   }
 
   template<real_value T, real_scalar_value U>
@@ -34,10 +39,24 @@ namespace eve::detail
                            , U const & val
                            ) noexcept
   {
-      return  bit_andnot(T(val),cond.bits());
+    if constexpr(has_native_abi_v<T>)
+    {
+      return if_else(cond, zero, val);
+    }
+    else return  apply_over(binarize_not, cond, val);
   }
 
-  template<real_value T>
+  template<real_value T, real_scalar_value U>
+  EVE_FORCEINLINE auto binarize_not_(EVE_SUPPORTS(cpu_)
+                                    , logical<T> const &cond
+                                    , eve::as_<U> const &
+                                    ) noexcept
+  {
+    using R = eve::as_wide_t<U, eve::cardinal_t<T>>;
+    return if_else(cond, zero, one(as<R>()));
+  }
+
+   template<real_value T>
   EVE_FORCEINLINE auto binarize_not_(EVE_SUPPORTS(cpu_)
                            , logical<T> const &cond
                            , callable_allbits_ const &
