@@ -21,7 +21,6 @@
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of binarize_not on wide"
         , eve::test::simd::all_types
-        
         )
 <typename T>(eve::as_<T>)
 {
