@@ -20,7 +20,11 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-auto  types_tests = []<typename T>(auto& runtime, bool verbose, auto const&, T)
+EVE_TEST( "Check return types of abs"
+            , eve::test::simd::all_types
+            , eve::test::generate(eve::test::no_data)
+            )
+<typename T>(T)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -50,21 +54,18 @@ auto  types_tests = []<typename T>(auto& runtime, bool verbose, auto const&, T)
   }
 };
 
-EVE_TEST_BED( "Check return types of abs on wide"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::no_data)
-            , types_tests
-            );
-
-
 
 
 //==================================================================================================
 // abs signed tests
 //==================================================================================================
-auto simd_signed_tests = []<typename T>( auto& runtime, bool verbose, auto const&
-                                , T const& a0
-                                )
+auto valminp1 = []< typename T>(eve::as_<T> const &){return eve::inc(eve::valmin(eve::as(eve::element_type_t<T>())));};
+
+EVE_TEST( "Check behavior of abs on signed wide"
+        , eve::test::simd::signed_types
+        , eve::test::generate(eve::test::randoms(valminp1, eve::valmax))
+        )
+<typename T>(T const& a0 )
 {
   using v_t = eve::element_type_t<T>;
   TTS_EQUAL( eve::abs(a0), T([&](auto i, auto) { return a0.get(i) > 0 ? v_t(a0.get(i)) : -v_t(a0.get(i)); }));
@@ -77,48 +78,26 @@ auto simd_signed_tests = []<typename T>( auto& runtime, bool verbose, auto const
              );
 };
 
-auto valminp1 = []< typename T>(eve::as_<T> const &){return eve::inc(eve::valmin(eve::as(eve::element_type_t<T>())));};
-
-EVE_TEST_BED( "Check behavior of abs on wide"
-            , eve::test::simd::signed_types
-            , eve::test::generate(eve::test::randoms(valminp1, eve::valmax))
-            , simd_signed_tests
-            );
-
-auto simd_signed_tests2 = []<typename T>( auto& runtime, bool verbose, auto const&
-                                , T const& a0
-                                )
+EVE_TEST( "Check behavior of saturated(abs) on signed integral wide"
+        , eve::test::simd::signed_integers
+        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
+        )
+<typename T>(T const& a0 )
 {
-  using v_t = eve::element_type_t<T>;
-  TTS_EQUAL( eve::saturated(eve::abs)(a0)
-           , (T( [&](auto i, auto) {
-                   auto z = a0.get(i);
-                   return (z > 0 ? v_t(z)
-                           : (z == eve::valmin(eve::as(v_t())) ? eve::valmax(eve::as(v_t())) : -z));
-                 }))
-             );
+  using eve::as;
+  TTS_EQUAL( eve::abs(a0), T([&](auto i, auto) { auto a0i = a0.get(i); return a0i == eve::valmin(as(a0i)) ? eve::valmax(as(a0i)) : std::abs(a0i); }));
 };
 
-EVE_TEST_BED( "Check behavior of abs on wide"
-            , eve::test::simd::signed_types
-            , eve::test::generate (eve::test::randoms(eve::valmin, eve::valmax))
-            , simd_signed_tests2
-            );
 
 //==================================================================================================
 // abs unsigned tests
 //==================================================================================================
-
-auto simd_unsigned_tests = []<typename T>( auto& runtime, bool verbose, auto const&
-                                , T const& a0
-                                )
+EVE_TEST( "Check behavior of abs on unsigned wide"
+            , eve::test::simd::unsigned_types
+            , eve::test::generate ( eve::test::randoms(0, eve::valmax))
+            )
+<typename T>(T const& a0 )
 {
   TTS_EQUAL( eve::abs(a0), a0);
   TTS_EQUAL( eve::saturated(eve::abs)(a0), a0);
 };
-
-EVE_TEST_BED( "Check behavior of abs on wide"
-            , eve::test::simd::unsigned_types
-            , eve::test::generate ( eve::test::randoms(0, eve::valmax))
-            , simd_unsigned_tests
-            );
