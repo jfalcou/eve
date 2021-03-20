@@ -10,9 +10,7 @@
 //==================================================================================================
 // structured bindings support
 //==================================================================================================
-auto binding_tests  = []<typename T, typename L>( auto& runtime, bool verbose, auto const&
-                                                , T data, L logical_data
-                                                )
+auto binding_tests  = []<typename T, typename L>(T data, L logical_data)
 {
   TTS_TYPE_IS( (typename std::tuple_element<0           , T>::type), eve::element_type_t<T>);
   TTS_TYPE_IS( (typename std::tuple_element<0           , L>::type), eve::element_type_t<L>);
@@ -83,9 +81,7 @@ EVE_TEST_BED( "Check eve::wide support for structured bindings"
 //==================================================================================================
 // Construct from a list of values
 //==================================================================================================
-auto make_tests  = []<typename T, typename L>( auto& runtime, bool verbose, auto const&
-                                             , T ref, L logical_ref
-                                             )
+auto make_tests  = []<typename T, typename L>(T ref, L logical_ref)
 {
   T simd  = [&]<std::size_t... N>(std::index_sequence<N...>)
             {
@@ -111,7 +107,7 @@ EVE_TEST_BED( "Check eve::wide enumerating constructor"
 //==================================================================================================
 // Construct from a single value
 //==================================================================================================
-auto splat_tests  = []<typename T>( auto& runtime, bool verbose, auto const&, T)
+auto splat_tests  = []<typename T>(T)
 {
   using l_t = eve::logical<eve::element_type_t<T>>;
 
@@ -138,9 +134,7 @@ EVE_TEST_BED( "Check eve::wide splat constructor"
 //==================================================================================================
 // Raw storage access
 //==================================================================================================
-auto storage_tests  = []<typename T, typename L>( auto& runtime, bool verbose, auto const&
-                                                , T data, L logical_data
-                                                )
+auto storage_tests  = []<typename T, typename L>(T data, L logical_data)
 {
   T ref;
   L logical_ref;
@@ -174,9 +168,7 @@ EVE_TEST_BED( "Check eve::wide raw storage handling"
 //==================================================================================================
 // Slice API
 //==================================================================================================
-auto slice_tests  = []<typename T, typename L>( auto& runtime, bool verbose, auto const&
-                                              , T d, L ld
-                                              )
+auto slice_tests  = []<typename T, typename L>(T d, L ld)
 {
   if constexpr( T::size() > 1 )
   {
@@ -218,9 +210,7 @@ EVE_TEST_BED( "Check eve::wide::slice behavior"
 //==================================================================================================
 // Combine API
 //==================================================================================================
-auto combine_tests  = []<typename T, typename L>( auto& runtime, bool verbose, auto const&
-                                                , T d, L ld
-                                                )
+auto combine_tests  = []<typename T, typename L>(T d, L ld)
 {
   if constexpr(T::size() < 64)
   {

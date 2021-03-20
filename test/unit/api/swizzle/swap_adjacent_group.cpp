@@ -14,9 +14,7 @@
 //==================================================================================================
 // SWAG test
 //==================================================================================================
-auto swag_tests = []<typename T, typename L>( auto& runtime, bool verbose, auto const&
-                                            , T data, L logicals
-                                            )
+auto swag_tests = []<typename T, typename L>(T data, L logicals)
 {
   constexpr auto ssz = std::bit_width( std::size_t(T::size()) );
 

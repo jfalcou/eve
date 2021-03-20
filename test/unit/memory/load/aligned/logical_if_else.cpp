@@ -18,7 +18,7 @@
 //==================================================================================================
 // Conditionally load into wide from an aligned pointer
 //==================================================================================================
-auto aligned_tests = []<typename T>( auto& runtime, bool verbose, auto const&, T others)
+auto aligned_tests = []<typename T>(T others)
 {
   using v_t = eve::element_type_t<typename T::mask_type>;
   using e_t = eve::element_type_t<T>;

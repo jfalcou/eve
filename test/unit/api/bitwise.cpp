@@ -14,7 +14,7 @@
 //==================================================================================================
 // type tests
 //==================================================================================================
-auto type_tests  = []<typename T>(auto& runtime, bool verbose, auto const&, T)
+auto type_tests  = []<typename T>(T)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -39,7 +39,7 @@ EVE_TEST_BED( "Check return types of bitwise operators on eve::wide"
 //==================================================================================================
 // wide (*) wide tests
 //==================================================================================================
-auto simd_tests  = []<typename T>(auto& runtime, bool verbose, auto const&, T a0, T a1)
+auto simd_tests  = []<typename T>(T a0, T a1)
 {
   TTS_IEEE_EQUAL( (a0 & a1), T([&](auto i, auto) { return eve::bit_and(a0.get(i), a1.get(i)); }));
   TTS_IEEE_EQUAL( (a0 | a1), T([&](auto i, auto) { return eve::bit_or (a0.get(i), a1.get(i)); }));
@@ -58,7 +58,7 @@ EVE_TEST_BED( "Check behavior of bitwise operators on eve::wide"
 //==================================================================================================
 // scalar (*) wide tests
 //==================================================================================================
-auto mixed_tests  = []<typename T>(auto& runtime, bool verbose, auto const&, T a0, T)
+auto mixed_tests  = []<typename T>(T a0, T)
 {
   using v_t = eve::element_type_t<T>;
 

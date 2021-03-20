@@ -16,7 +16,7 @@
 //==================================================================================================
 // Load into scalars
 //==================================================================================================
-auto scalar_tests = []<typename T>(auto& runtime, bool verbose, auto const&, T)
+auto scalar_tests = []<typename T>(T)
 {
   constexpr std::ptrdiff_t algt = eve::alignment_v<eve::logical<T>>;
 
@@ -41,7 +41,7 @@ EVE_TEST_BED( "Check load to scalar values"
 //==================================================================================================
 // Load into wide from a (non-contiguous) range
 //==================================================================================================
-auto range_tests = []<typename T>(auto& runtime, bool verbose, auto const&, T reference)
+auto range_tests = []<typename T>(T reference)
 {
   std::list<eve::element_type_t<T>> ref_range(T::size());
 
@@ -64,7 +64,7 @@ EVE_TEST_BED( "Check load to wides from non-contiguous range"
 //==================================================================================================
 // Load into wide from an unaligned pointer
 //==================================================================================================
-auto unaligned_tests = []<typename T>(auto& runtime, bool verbose, auto const&, T reference)
+auto unaligned_tests = []<typename T>(T reference)
 {
   using v_t = eve::element_type_t<typename T::mask_type>;
 

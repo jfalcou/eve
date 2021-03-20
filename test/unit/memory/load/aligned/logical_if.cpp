@@ -18,7 +18,7 @@
 //==================================================================================================
 // Conditionally load into wide from an aligned pointer
 //==================================================================================================
-auto aligned_tests = []<typename T>( auto& runtime, bool verbose, auto const&, T )
+auto aligned_tests = []<typename T>(T)
 {
   using v_t = eve::element_type_t<T>;
   constexpr std::ptrdiff_t l_algt = eve::alignment_v<eve::logical<T>>;
@@ -126,9 +126,7 @@ EVE_TEST_BED( "Check load to wides from aligned pointer"
 //==================================================================================================
 // Realigned load tests
 //==================================================================================================
-auto realigned_tests = []<typename T> (auto& runtime, bool verbose, auto const&
-                                      , T
-                                      )
+auto realigned_tests = []<typename T>(T)
 {
   using v_t = eve::logical<eve::element_type_t<T>>;
   v_t const x = true;

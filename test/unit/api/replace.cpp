@@ -10,41 +10,24 @@
 #include "test.hpp"
 #include <eve/function/replace.hpp>
 
-auto ignore_all_tests = []<typename T>( auto& runtime, bool verbose, auto const&
-                                      , T data, T replacement
-                                      )
+EVE_TEST( "Check behavior of replace_ignored(ignore_all/ignore_none)"
+        , eve::test::simd::all_types
+        , eve::test::generate ( eve::test::ramp(0), eve::test::ramp(10))
+        )
+<typename T>(T data, T replacement)
 {
   using eve::ignore_all;
-  TTS_EQUAL( eve::replace_ignored(data,ignore_all,replacement), replacement );
-};
-
-EVE_TEST_BED( "Check behavior of replace_ignored(ignore_all)"
-            , eve::test::simd::all_types
-            , eve::test::generate ( eve::test::ramp(0)
-                                  , eve::test::ramp(10)
-                                  )
-            , ignore_all_tests
-            );
-
-auto ignore_none_tests = []<typename T>( auto& runtime, bool verbose, auto const&
-                                      , T data, T replacement
-                                      )
-{
   using eve::ignore_none;
-  TTS_EQUAL( eve::replace_ignored(data,ignore_none,replacement), data );
+
+  TTS_EQUAL( eve::replace_ignored(data,ignore_all , replacement), replacement );
+  TTS_EQUAL( eve::replace_ignored(data,ignore_none, replacement), data        );
 };
 
-EVE_TEST_BED( "Check behavior of replace_ignored(ignore_none)"
-            , eve::test::simd::all_types
-            , eve::test::generate ( eve::test::ramp(0)
-                                  , eve::test::ramp(10)
-                                  )
-            , ignore_none_tests
-            );
-
-auto ignore_last_tests = []<typename T>( auto& runtime, bool verbose, auto const&
-                                      , T data
-                                      )
+EVE_TEST( "Check behavior of replace_ignored(ignore_last)"
+        , eve::test::simd::all_types
+        , eve::test::generate ( eve::test::ramp(0) )
+        )
+<typename T>(T data)
 {
   using eve::ignore_last;
   auto replacement = data;
@@ -57,15 +40,11 @@ auto ignore_last_tests = []<typename T>( auto& runtime, bool verbose, auto const
   }
 };
 
-EVE_TEST_BED( "Check behavior of replace_ignored (ignore_last)"
-            , eve::test::simd::all_types
-            , eve::test::generate ( eve::test::ramp(0) )
-            , ignore_last_tests
-            );
-
-auto keep_last_tests = []<typename T>( auto& runtime, bool verbose, auto const&
-                                      , T data, T replacement
-                                      )
+EVE_TEST( "Check behavior of replace_ignored(keep_last)"
+        , eve::test::simd::all_types
+        , eve::test::generate ( eve::test::ramp(0), eve::test::ramp(100) )
+        )
+<typename T>(T data, T replacement)
 {
   using eve::keep_last;
 
@@ -79,14 +58,8 @@ auto keep_last_tests = []<typename T>( auto& runtime, bool verbose, auto const&
   TTS_EQUAL( eve::replace_ignored(data,keep_last(T::size()),replacement), data );
 };
 
-EVE_TEST_BED( "Check behavior of replace_ignored (keep_last)"
-            , eve::test::simd::all_types
-            , eve::test::generate ( eve::test::ramp(0), eve::test::ramp(100) )
-            , keep_last_tests
-            );
-
-auto ignore_first_tests = []<typename T>( auto& runtime, bool verbose, auto const&
-                                      , T data
+/*
+auto ignore_first_tests = []<typename T>(    , T data
                                       )
 {
   using eve::ignore_first;
@@ -107,8 +80,7 @@ EVE_TEST_BED( "Check behavior of replace_ignored (ignore_first)"
             , ignore_first_tests
             );
 
-auto keep_first_tests = []<typename T>( auto& runtime, bool verbose, auto const&
-                                      , T data, T replacement
+auto keep_first_tests = []<typename T>(    , T data, T replacement
                                       )
 {
   using eve::keep_first;
@@ -129,8 +101,7 @@ EVE_TEST_BED( "Check behavior of replace_ignored (keep_first)"
             );
 
 
-auto keep_between_tests = []<typename T>( auto& runtime, bool verbose, auto const&
-                                      , T data
+auto keep_between_tests = []<typename T>(    , T data
                                       )
 {
   using eve::keep_between;
@@ -153,3 +124,4 @@ EVE_TEST_BED( "Check behavior of replace_ignored (keep_between)"
             , eve::test::generate ( eve::test::ramp(0) )
             , keep_between_tests
             );
+*/

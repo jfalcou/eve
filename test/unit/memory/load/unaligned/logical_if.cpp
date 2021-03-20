@@ -17,7 +17,7 @@
 //==================================================================================================
 // Conditionally load into wide from an unaligned pointer
 //==================================================================================================
-auto unaligned_tests = []<typename T>( auto& runtime, bool verbose, auto const&, T )
+auto unaligned_tests = []<typename T>( T )
 {
   using v_t = eve::element_type_t<T>;
 

@@ -16,7 +16,7 @@
 //==================================================================================================
 // Load into wide from an aligned pointer
 //==================================================================================================
-auto aligned_tests = []<typename T>(auto& runtime, bool verbose, auto const&, T reference)
+auto aligned_tests = []<typename T>(T reference)
 {
   using v_t = eve::element_type_t<typename T::mask_type>;
 
@@ -48,7 +48,7 @@ EVE_TEST_BED( "Check load to wides from aligned pointer"
 //==================================================================================================
 // Realigned load tests
 //==================================================================================================
-auto realigned_tests = []<typename T>(auto& runtime, bool verbose, auto const&, T)
+auto realigned_tests = []<typename T>(T)
 {
   using v_t = eve::element_type_t<T>;
 

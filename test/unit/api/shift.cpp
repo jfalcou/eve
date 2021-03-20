@@ -26,7 +26,7 @@ inline auto const random_bits = []<typename T>(eve::as_<T>, auto& gen)
 //==================================================================================================
 // type tests
 //==================================================================================================
-auto type_tests = []<typename T>( auto& runtime, bool verbose, auto const&, T)
+auto type_tests = []<typename T>(T)
 {
   using i_t = eve::as_integer_t<T>;
   using vi_t = eve::element_type_t<i_t>;
@@ -46,10 +46,7 @@ EVE_TEST_BED( "Check behavior of shift operators on eve::wide"
 //==================================================================================================
 // wide tests
 //==================================================================================================
-auto simd_tests = []<typename T, typename I>
-                  ( auto& runtime, bool verbose, auto const&
-                  , T a0, I s
-                  )
+auto simd_tests = []<typename T, typename I>(T a0, I s)
 {
   TTS_EQUAL( (a0 << s), T([&](auto i, auto) { return eve::shl(a0.get(i), s.get(i)); }) );
   TTS_EQUAL( (a0 >> s), T([&](auto i, auto) { return eve::shr(a0.get(i), s.get(i)); }) );
@@ -64,10 +61,7 @@ EVE_TEST_BED( "Check behavior of shift operators on eve::wide"
 //==================================================================================================
 // Scalar tests
 //==================================================================================================
-auto mixed_tests  = []<typename T, typename I>
-                    ( auto& runtime, bool verbose, auto const&
-                    , T a0, I s
-                    )
+auto mixed_tests  = []<typename T, typename I>(T a0, I s)
 {
   auto val = s.get(0);
   TTS_EQUAL( (a0 >> val), T([&](auto i, auto) { return eve::shr(a0.get(i), val); }) );

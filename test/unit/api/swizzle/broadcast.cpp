@@ -16,9 +16,7 @@ inline constexpr auto broadcast = eve::fix_pattern<N>( [](int, int){ return I; }
 //==================================================================================================
 // Broadcast test
 //==================================================================================================
-auto bcast_tests = []<typename T, typename L> ( auto& runtime, bool verbose, auto const&
-                                              , T data, L logicals
-                                              )
+auto bcast_tests = []<typename T, typename L> (T data, L logicals)
 {
   auto f  = [&]<std::size_t N, typename S>(S simd, std::integral_constant<std::size_t,N>)
             {

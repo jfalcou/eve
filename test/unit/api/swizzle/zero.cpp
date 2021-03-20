@@ -15,9 +15,7 @@ template<int N> inline constexpr auto n_zeros = eve::fix_pattern<N>( [](int, int
 //==================================================================================================
 // Zero test
 //==================================================================================================
-auto zero_tests = []<typename T, typename L>( auto& runtime, bool verbose, auto const&
-                                            , T data, L logicals
-                                            )
+auto zero_tests = []<typename T, typename L>(T data, L logicals)
 {
   constexpr auto ssz = std::bit_width( std::size_t(T::size()) );
 

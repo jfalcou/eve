@@ -15,7 +15,7 @@
 //==================================================================================================
 // Type tests
 //==================================================================================================
-auto type_tests = []<typename T>(auto& runtime, bool verbose, auto const&, T)
+auto type_tests = []<typename T>(T)
 {
   using v_t = eve::element_type_t<T>;
   using eve::logical;
@@ -57,9 +57,7 @@ EVE_TEST_BED( "Check comparison operators' return types"
 //==================================================================================================
 // Value tests
 //==================================================================================================
-auto basic_tests = []<typename T> ( auto& runtime, bool verbose, auto const&
-                                  , T lhs, T rhs
-                                  )
+auto basic_tests = []<typename T> (T lhs, T rhs)
 {
   TTS_EQUAL((lhs == lhs), eve::true_ (eve::as(lhs)));
   TTS_EQUAL((lhs != lhs), eve::false_(eve::as(lhs)));
@@ -83,9 +81,7 @@ auto basic_tests = []<typename T> ( auto& runtime, bool verbose, auto const&
   TTS_EQUAL((lhs >= rhs), ref_gte );
 };
 
-auto mixed_tests = []<typename T> ( auto& runtime, bool verbose, auto const&
-                                  , T lhs, T rhs
-                                  )
+auto mixed_tests = []<typename T> (T lhs, T rhs)
 {
   using v_t = eve::element_type_t<T>;
   v_t val   = rhs.get(0);
@@ -105,7 +101,7 @@ auto mixed_tests = []<typename T> ( auto& runtime, bool verbose, auto const&
   TTS_EQUAL((lhs >= val), ref_gte );
 };
 
-auto nan_tests = []<typename T>( auto& runtime, bool verbose, auto const&, T)
+auto nan_tests = []<typename T>(T)
 {
   using v_t = eve::element_type_t<T>;
 

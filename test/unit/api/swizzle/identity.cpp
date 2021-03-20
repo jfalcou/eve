@@ -16,9 +16,7 @@ inline constexpr auto identity = eve::fix_pattern<N>( [](int i, int){ return i; 
 //==================================================================================================
 // Identity test
 //==================================================================================================
-auto identity_tests = []<typename T, typename L>( auto& runtime, bool verbose, auto const&
-                                                , T data, L logicals
-                                                )
+auto identity_tests = []<typename T, typename L>(T data, L logicals)
 {
   constexpr auto ssz = std::bit_width( std::size_t(T::size()) );
 

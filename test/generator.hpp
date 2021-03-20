@@ -129,11 +129,66 @@ namespace eve::test
       return std::make_tuple(g(t,s)...);
     };
   }
+
+  //================================================================================================
+  // Lambda "seed" capture
+  //================================================================================================
+  template<typename TestBed> struct test_setup
+  {
+    test_setup(TestBed f) : base_test(f) {}
+    auto operator+(auto TestBody) const
+    {
+      base_test( TestBody );
+      return true;
+    }
+
+    TestBed base_test;
+  };
 }
+
+#define EVE_TEST(DESCRIPTION,TYPES,SAMPLES)                                                         \
+inline bool const TTS_CAT(register_,TTS_FUNCTION) =  ::eve::test::test_setup{                       \
+[](auto tests)                                                                                      \
+  {                                                                                                 \
+    auto s = SAMPLES;                                                                               \
+    auto const single_test = [=]<typename T>( eve::as_<T> target)                                   \
+    {                                                                                               \
+      [=]<std::size_t... N>(std::index_sequence<N...>)                                              \
+      {                                                                                             \
+        ::tts::detail::test::acknowledge(::tts::detail::test                                        \
+        {                                                                                           \
+            std::string{DESCRIPTION} + " (with T = " + std::string{::tts::typename_<T>} + ")"       \
+          , [=]()                                                                                   \
+            {                                                                                       \
+              std::mt19937::result_type seed(18102008);                                             \
+              seed = ::tts::arguments.value_or(seed, "-s", "--seed");                               \
+              std::mt19937 gen(seed);                                                               \
+                                                                                                    \
+              constexpr std::make_index_sequence<sizeof...(N)> size = {};                           \
+              auto data = s(eve::as_<T>{}, gen);                                                    \
+              auto args = eve::test::make_args(data, size, eve::as_<T>{});                          \
+              tests(std::get<N>(args)...);                                                          \
+            }                                                                                       \
+          });                                                                                       \
+      }(std::make_index_sequence<std::tuple_size<decltype ( s ( target                              \
+                                                              , std::declval<std::mt19937&>()       \
+                                                              )                                     \
+                                                          )>::value>{});                            \
+    };                                                                                              \
+                                                                                                    \
+    [&]<template<class...> class L,typename... Ts>(L<Ts...>)                                        \
+    {                                                                                               \
+      (single_test( eve::as_<Ts>() ),...);                                                          \
+    }( TYPES );                                                                                     \
+                                                                                                    \
+    return true;                                                                                    \
+  }} + []                                                                                           \
+/**/
+
 
 #define EVE_TEST_BED(DESCRIPTION,TYPES,SAMPLES,TESTS)                                               \
 inline bool const TTS_CAT(register_,TTS_FUNCTION) =                                                 \
-[]<template<class...> class List,typename... Ts, typename S, typename Test>(List<Ts...>, S s, Test) \
+[]<template<class...> class List,typename... Ts, typename S>(List<Ts...>, S s)                      \
   {                                                                                                 \
     auto const single_test = [=]<typename T>( eve::as_<T> target)                                   \
     {                                                                                               \
@@ -142,16 +197,16 @@ inline bool const TTS_CAT(register_,TTS_FUNCTION) =                             
         ::tts::detail::test::acknowledge(::tts::detail::test                                        \
         {                                                                                           \
             std::string{DESCRIPTION} + " (with T = " + std::string{::tts::typename_<T>} + ")"       \
-          , [=]( ::tts::detail::env &r, bool v, ::tts::options const& a )                           \
+          , [=]()                                                                                   \
             {                                                                                       \
               std::mt19937::result_type seed(18102008);                                             \
-              seed = a.value_or(seed, "-s", "--seed");                                              \
+              seed = ::tts::arguments.value_or(seed, "-s", "--seed");                                              \
               std::mt19937 gen(seed);                                                               \
                                                                                                     \
               constexpr std::make_index_sequence<sizeof...(N)> size = {};                           \
               auto data = s(eve::as_<T>{}, gen);                                                    \
               auto args = eve::test::make_args(data, size, eve::as_<T>{});                          \
-              Test{}(r,v,a,std::get<N>(args)...);                                                   \
+              TESTS(std::get<N>(args)...);                                                          \
             }                                                                                       \
           });                                                                                       \
       }(std::make_index_sequence<std::tuple_size<decltype ( s ( target                              \
@@ -163,5 +218,5 @@ inline bool const TTS_CAT(register_,TTS_FUNCTION) =                             
     (single_test( eve::as_<Ts>() ),...);                                                            \
                                                                                                     \
     return true;                                                                                    \
-  }( TYPES, SAMPLES, TESTS)                                                                         \
+  }( TYPES, SAMPLES)                                                                                \
 /**/
