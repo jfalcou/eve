@@ -108,7 +108,7 @@ auto realigned_tests = []<typename T, typename L>(T data, L logical_data)
 
     if constexpr (A >= T::static_alignment)
     {
-      if(verbose) std::cout << "With alignment: " << A << std::endl;
+      if(::tts::verbose_status) std::cout << "With alignment: " << A << std::endl;
 
       eve::aligned_ptr<eve::element_type_t<D>, static_cast<std::size_t>(A)> ptr{f};
       eve::store(d, ptr);
