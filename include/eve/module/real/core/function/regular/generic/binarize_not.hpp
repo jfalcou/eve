@@ -41,7 +41,7 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-      return if_else(cond, zero, val);
+      return if_else(cond, zero(as(val)), val);
     }
     else return  apply_over(binarize_not, cond, val);
   }
