@@ -19,7 +19,11 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-auto  types_tests = []<typename T>(auto& runtime, bool verbose, auto const&, T)
+EVE_TEST( "Check return types of binarize on wide"
+        , eve::test::simd::all_types
+        , eve::test::generate(eve::test::no_data)
+        )
+<typename T>(T)
 {
   using eve::logical;
   using v_t = eve::element_type_t<T>;
@@ -30,21 +34,16 @@ auto  types_tests = []<typename T>(auto& runtime, bool verbose, auto const&, T)
   TTS_EXPR_IS( eve::binarize(logical<T>(),  eve::as<i_t>()) , wi_t);
   TTS_EXPR_IS( eve::binarize(logical<v_t>(), i_t())  , i_t);
   TTS_EXPR_IS( eve::binarize(logical<T>(), i_t())  , wi_t);
-
 };
-
-EVE_TEST_BED( "Check return types of binarize on wide"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::no_data)
-            , types_tests
-            );
 
 //==================================================================================================
 //== binarize tests
 //==================================================================================================
-auto simd_tests = []<typename T>( auto& runtime, bool verbose, auto const&
-                                , T const& a0
-                                )
+EVE_TEST( "Check behavior of binarize on wide"
+        , eve::test::simd::all_types
+        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
+        )
+<typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;
   using eve::zero;
@@ -64,9 +63,3 @@ auto simd_tests = []<typename T>( auto& runtime, bool verbose, auto const&
   TTS_IEEE_EQUAL( binarize(a0 < T(64), v_t(43)), T(ref_binarize2));
   TTS_IEEE_EQUAL( binarize(a0 < T(64), i_t(43)), wi_t(ref_binarize2));
 };
-
-EVE_TEST_BED( "Check behavior of binarize on wide"
-            , eve::test::simd::ieee_reals
-            , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
-            , simd_tests
-            );
