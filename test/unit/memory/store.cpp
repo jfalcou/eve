@@ -15,7 +15,11 @@
 //==================================================================================================
 // Unaligned store tests
 //==================================================================================================
-auto unaligned_tests = []<typename T, typename L> (T data, L logical_data)
+EVE_TEST( "Check store behavior with unaligned pointers"
+        , eve::test::simd::all_types
+        , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
+        )
+<typename T, typename L> (T data, L logical_data)
 {
   std::array<eve::element_type_t<T>, 3 * T::size()> ref;
   std::array<eve::element_type_t<L>, 3 * T::size()> logical_ref;
@@ -46,16 +50,14 @@ auto unaligned_tests = []<typename T, typename L> (T data, L logical_data)
   TTS_ALL_EQUAL(logical_target, logical_ref );
 };
 
-EVE_TEST_BED( "Check store behavior with unaligned pointers"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
-            , unaligned_tests
-            );
-
 //==================================================================================================
 // Aligned store tests
 //==================================================================================================
-auto aligned_tests = []<typename T, typename L>(T data, L logical_data)
+EVE_TEST( "Check store behavior with aligned pointers"
+        , eve::test::simd::all_types
+        , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
+        )
+<typename T, typename L>(T data, L logical_data)
 {
   constexpr auto algt = eve::alignment_v<T>;
 
@@ -88,16 +90,14 @@ auto aligned_tests = []<typename T, typename L>(T data, L logical_data)
   TTS_ALL_EQUAL(logical_target, logical_ref );
 };
 
-EVE_TEST_BED( "Check store behavior with aligned pointers"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
-            , aligned_tests
-            );
-
 //==================================================================================================
 // Aligned store tests
 //==================================================================================================
-auto realigned_tests = []<typename T, typename L>(T data, L logical_data)
+EVE_TEST( "Check store behavior with pointer of different alignment"
+        , eve::test::simd::all_types
+        , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
+        )
+<typename T, typename L>(T data, L logical_data)
 {
   std::array<eve::element_type_t<T>, 256> ref;
   std::array<eve::element_type_t<L>, 256> logical_ref;
@@ -132,9 +132,3 @@ auto realigned_tests = []<typename T, typename L>(T data, L logical_data)
     }( std::make_integer_sequence<std::ptrdiff_t,5>{});
   }
 };
-
-EVE_TEST_BED( "Check store behavior with pointer of different alignment"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
-            , realigned_tests
-            );

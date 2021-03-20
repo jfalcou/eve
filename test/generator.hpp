@@ -200,7 +200,7 @@ inline bool const TTS_CAT(register_,TTS_FUNCTION) =                             
           , [=]()                                                                                   \
             {                                                                                       \
               std::mt19937::result_type seed(18102008);                                             \
-              seed = ::tts::arguments.value_or(seed, "-s", "--seed");                                              \
+              seed = ::tts::arguments.value_or(seed, "-s", "--seed");                               \
               std::mt19937 gen(seed);                                                               \
                                                                                                     \
               constexpr std::make_index_sequence<sizeof...(N)> size = {};                           \

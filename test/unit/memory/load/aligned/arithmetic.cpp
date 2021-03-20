@@ -16,7 +16,11 @@
 //==================================================================================================
 // Load into wide from an aligned pointer
 //==================================================================================================
-auto aligned_tests = []<typename T>(T reference)
+EVE_TEST( "Check load to wides from aligned pointer"
+        , eve::test::simd::all_types
+        , eve::test::generate(eve::test::ramp(1))
+        )
+<typename T>(T reference)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -39,16 +43,14 @@ auto aligned_tests = []<typename T>(T reference)
   }
 };
 
-EVE_TEST_BED( "Check load to wides from aligned pointer"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::ramp(1))
-            , aligned_tests
-            );
-
 //==================================================================================================
 // Realigned load tests
 //==================================================================================================
-auto realigned_tests = []<typename T>(T)
+EVE_TEST( "Check load to wides from re-aligned pointer"
+        , eve::test::simd::all_types
+        , eve::test::generate(eve::test::no_data)
+        )
+<typename T>(T)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -77,9 +79,3 @@ auto realigned_tests = []<typename T>(T)
     }( std::make_integer_sequence<std::ptrdiff_t,5>{});
   }
 };
-
-EVE_TEST_BED( "Check load to wides from re-aligned pointer"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::no_data)
-            , realigned_tests
-            );

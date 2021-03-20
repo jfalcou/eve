@@ -18,7 +18,11 @@
 //==================================================================================================
 // Conditionally load into wide from an unaligned pointer
 //==================================================================================================
-auto unaligned_tests = []<typename T>(T others)
+EVE_TEST( "Check load to logical from unaligned pointer with alternatives"
+        , eve::test::simd::all_types
+        , eve::test::generate(eve::test::logicals(1,2))
+        )
+<typename T>(T others)
 {
   using v_t = eve::element_type_t<typename T::mask_type>;
   auto [ldata ,lidx ] = logical_page<v_t, eve::fixed<T::size()>>();
@@ -105,9 +109,3 @@ auto unaligned_tests = []<typename T>(T others)
     }
   }
 };
-
-EVE_TEST_BED( "Check load to logical from unaligned pointer with alternatives"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::logicals(1,2))
-            , unaligned_tests
-            );

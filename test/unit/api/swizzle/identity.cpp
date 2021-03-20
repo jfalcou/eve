@@ -16,7 +16,13 @@ inline constexpr auto identity = eve::fix_pattern<N>( [](int i, int){ return i; 
 //==================================================================================================
 // Identity test
 //==================================================================================================
-auto identity_tests = []<typename T, typename L>(T data, L logicals)
+EVE_TEST( "Check behavior of identity swizzle"
+        , eve::test::simd::all_types
+        , eve::test::generate ( eve::test::randoms(-50, 50)
+                              , eve::test::logicals(1, 2)
+                              )
+        )
+<typename T, typename L>(T data, L logicals)
 {
   constexpr auto ssz = std::bit_width( std::size_t(T::size()) );
 
@@ -36,11 +42,3 @@ auto identity_tests = []<typename T, typename L>(T data, L logicals)
     ( f(logicals, std::integral_constant<std::size_t,I>{}), ... );
   }( std::make_index_sequence<ssz>{} );
 };
-
-EVE_TEST_BED( "Check behavior of identity swizzle"
-            , eve::test::simd::all_types
-            , eve::test::generate ( eve::test::randoms(-50, 50)
-                                  , eve::test::logicals(1, 2)
-                                  )
-            , identity_tests
-            );

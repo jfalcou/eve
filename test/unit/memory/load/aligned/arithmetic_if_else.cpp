@@ -16,7 +16,11 @@
 //==================================================================================================
 // Conditionally load into wide from an aligned pointer
 //==================================================================================================
-auto aligned_tests = []<typename T>(T others)
+EVE_TEST( "Check conditional load to wides from aligned pointer with alternatives"
+        , eve::test::simd::all_types
+        , eve::test::generate(eve::test::ramp(50))
+        )
+<typename T>(T others)
 {
   using v_t = eve::element_type_t<T>;
   constexpr std::ptrdiff_t algt = eve::alignment_v<T>;
@@ -103,9 +107,3 @@ auto aligned_tests = []<typename T>(T others)
     }
   }
 };
-
-EVE_TEST_BED( "Check conditional load to wides from aligned pointer with alternatives"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::ramp(50))
-            , aligned_tests
-            );

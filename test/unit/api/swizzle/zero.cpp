@@ -15,7 +15,13 @@ template<int N> inline constexpr auto n_zeros = eve::fix_pattern<N>( [](int, int
 //==================================================================================================
 // Zero test
 //==================================================================================================
-auto zero_tests = []<typename T, typename L>(T data, L logicals)
+EVE_TEST( "Check behavior of zeroes swizzle"
+        , eve::test::simd::all_types
+        , eve::test::generate ( eve::test::randoms(-50, 50)
+                              , eve::test::logicals(1, 2)
+                              )
+        )
+<typename T, typename L>(T data, L logicals)
 {
   constexpr auto ssz = std::bit_width( std::size_t(T::size()) );
 
@@ -35,11 +41,3 @@ auto zero_tests = []<typename T, typename L>(T data, L logicals)
 
   }( std::make_index_sequence<ssz>{} );
 };
-
-EVE_TEST_BED( "Check behavior of zeroes swizzle"
-            , eve::test::simd::all_types
-            , eve::test::generate ( eve::test::randoms(-50, 50)
-                                  , eve::test::logicals(1, 2)
-                                  )
-            , zero_tests
-            );

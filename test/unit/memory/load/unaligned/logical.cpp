@@ -16,7 +16,11 @@
 //==================================================================================================
 // Load into scalars
 //==================================================================================================
-auto scalar_tests = []<typename T>(T)
+EVE_TEST( "Check load to scalar values"
+        , eve::test::scalar::all_types
+        , eve::test::generate(eve::test::no_data)
+        )
+[]<typename T>(T)
 {
   constexpr std::ptrdiff_t algt = eve::alignment_v<eve::logical<T>>;
 
@@ -32,16 +36,14 @@ auto scalar_tests = []<typename T>(T)
   TTS_EQUAL((eve::load(eve::as_aligned<algt>(const_ptr) , eve::scalar)) , *const_ptr  );
 };
 
-EVE_TEST_BED( "Check load to scalar values"
-            , eve::test::scalar::all_types
-            , eve::test::generate(eve::test::no_data)
-            , scalar_tests
-            );
-
 //==================================================================================================
 // Load into wide from a (non-contiguous) range
 //==================================================================================================
-auto range_tests = []<typename T>(T reference)
+EVE_TEST( "Check load to wides from non-contiguous range"
+        , eve::test::simd::all_types
+        , eve::test::generate(eve::test::logicals(1,2))
+        )
+<typename T>(T reference)
 {
   std::list<eve::element_type_t<T>> ref_range(T::size());
 
@@ -55,16 +57,14 @@ auto range_tests = []<typename T>(T reference)
   TTS_EQUAL(from_begin_end, reference);
 };
 
-EVE_TEST_BED( "Check load to wides from non-contiguous range"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::logicals(1,2))
-            , range_tests
-            );
-
 //==================================================================================================
 // Load into wide from an unaligned pointer
 //==================================================================================================
-auto unaligned_tests = []<typename T>(T reference)
+EVE_TEST( "Check load to wides from unaligned pointer"
+        , eve::test::simd::all_types
+        , eve::test::generate(eve::test::logicals(1,2))
+        )
+<typename T>(T reference)
 {
   using v_t = eve::element_type_t<typename T::mask_type>;
 
@@ -84,9 +84,3 @@ auto unaligned_tests = []<typename T>(T reference)
     TTS_EQUAL(eve::load(const_ptr)  , reference         );
   }
 };
-
-EVE_TEST_BED( "Check load to wides from unaligned pointer"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::logicals(1,2))
-            , unaligned_tests
-            );

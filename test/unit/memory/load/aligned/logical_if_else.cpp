@@ -18,7 +18,11 @@
 //==================================================================================================
 // Conditionally load into wide from an aligned pointer
 //==================================================================================================
-auto aligned_tests = []<typename T>(T others)
+EVE_TEST( "Check load to logical from aligned pointer with alternatives"
+        , eve::test::simd::all_types
+        , eve::test::generate(eve::test::logicals(1,2))
+        )
+<typename T>(T others)
 {
   using v_t = eve::element_type_t<typename T::mask_type>;
   using e_t = eve::element_type_t<T>;
@@ -108,9 +112,3 @@ auto aligned_tests = []<typename T>(T others)
     }
   }
 };
-
-EVE_TEST_BED( "Check load to logical from aligned pointer with alternatives"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::logicals(1,2))
-            , aligned_tests
-            );

@@ -10,7 +10,11 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-auto types_tests = []<typename T>(T)
+EVE_TEST( "Check return types of arithmetic operators on wide"
+        , eve::test::simd::all_types
+        , eve::test::generate(eve::test::no_data)
+        )
+<typename T>(T)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -35,16 +39,17 @@ auto types_tests = []<typename T>(T)
   }
 };
 
-EVE_TEST_BED( "Check return types of arithmetic operators on wide"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::no_data)
-            , types_tests
-            );
-
 //==================================================================================================
 // wide (*) wide tests
 //==================================================================================================
-auto simd_tests = []<typename T>(T const& a0, T const& a1, T const& a2)
+EVE_TEST( "Check behavior of arithmetic operators on wide"
+        , eve::test::simd::all_types
+        , eve::test::generate ( eve::test::randoms( 5, 50  )
+                              , eve::test::randoms( 1, 100 )
+                              , eve::test::randoms( 5, 50  )
+                              )
+        )
+<typename T>(T const& a0, T const& a1, T const& a2)
 {
   TTS_EQUAL( (a0 + a2), T([&](auto i, auto) { return a0.get(i) + a2.get(i); }));
   TTS_EQUAL( (a0 - a2), T([&](auto i, auto) { return a0.get(i) - a2.get(i); }));
@@ -57,19 +62,17 @@ auto simd_tests = []<typename T>(T const& a0, T const& a1, T const& a2)
   }
 };
 
-EVE_TEST_BED( "Check behavior of arithmetic operators on wide"
-            , eve::test::simd::all_types
-            , eve::test::generate ( eve::test::randoms( 5, 50  )
-                                  , eve::test::randoms( 1, 100 )
-                                  , eve::test::randoms( 5, 50  )
-                                  )
-            , simd_tests
-            );
-
 //==================================================================================================
 // wide ++/-- tests
 //==================================================================================================
-auto incdec_tests = []<typename T>(T, T a1, T)
+EVE_TEST( "Check behavior of pre/post increment/decrement operators on wide"
+        , eve::test::simd::all_types
+        , eve::test::generate ( eve::test::randoms( 5, 50  )
+                              , eve::test::randoms( 1, 100 )
+                              , eve::test::randoms( 5, 50  )
+                              )
+        )
+<typename T>(T, T a1, T)
 {
   {
     auto d0 = a1;
@@ -100,39 +103,30 @@ auto incdec_tests = []<typename T>(T, T a1, T)
   }
 };
 
-EVE_TEST_BED( "Check behavior of pre/post increment/decrement operators on wide"
-            , eve::test::simd::all_types
-            , eve::test::generate ( eve::test::randoms( 5, 50  )
-                                  , eve::test::randoms( 1, 100 )
-                                  , eve::test::randoms( 5, 50  )
-                                  )
-            , incdec_tests
-            );
-
 //==================================================================================================
 // scalar (*) wide tests
 //==================================================================================================
-auto mixed_tests = []<typename T>(T const& a0, T const& a1, T const&)
+EVE_TEST( "Check behavior of arithmetic operators on wide and scalar"
+        , eve::test::simd::all_types
+        , eve::test::generate ( eve::test::randoms( 5, 50  )
+                              , eve::test::randoms( 1, 100 )
+                              , eve::test::randoms( 5, 50  )
+                              )
+        )
+<typename T>(T const& a0, T const& a1, T const& v)
 {
-  TTS_EQUAL( (a0 + 3), T([&](auto i, auto) { return a0.get(i) + 3; }) );
-  TTS_EQUAL( (a0 - 3), T([&](auto i, auto) { return a0.get(i) - 3; }) );
-  TTS_EQUAL( (3 - a0), T([&](auto i, auto) { return 3 - a0.get(i); }) );
-  TTS_EQUAL( (a0 * 3), T([&](auto i, auto) { return a0.get(i) * 3; }) );
-  TTS_ULP_EQUAL( (a0 / 3), T([&](auto i, auto) { return a0.get(i) / 3; }), 1 );
-  TTS_ULP_EQUAL( (3 / a1), T([&](auto i, auto) { return 3 / a1.get(i); }), 1 );
+  auto s = v.get(0);
+
+  TTS_EQUAL( (a0 + s), T([&](auto i, auto) { return a0.get(i) + s; }) );
+  TTS_EQUAL( (a0 - s), T([&](auto i, auto) { return a0.get(i) - s; }) );
+  TTS_EQUAL( (s - a0), T([&](auto i, auto) { return s - a0.get(i); }) );
+  TTS_EQUAL( (a0 * s), T([&](auto i, auto) { return a0.get(i) * s; }) );
+  TTS_ULP_EQUAL( (a0 / s), T([&](auto i, auto) { return a0.get(i) / s; }), 1 );
+  TTS_ULP_EQUAL( (s / a1), T([&](auto i, auto) { return s / a1.get(i); }), 1 );
 
   if constexpr( eve::integral_value<T> )
   {
-    TTS_EQUAL( (a0 % 3), T([&](auto i, auto) { return a0.get(i) % 3; }));
-    TTS_EQUAL( (3 % a1), T([&](auto i, auto) { return 3 % a1.get(i); }));
+    TTS_EQUAL( (a0 % s), T([&](auto i, auto) { return a0.get(i) % s; }));
+    TTS_EQUAL( (s % a1), T([&](auto i, auto) { return s % a1.get(i); }));
   }
 };
-
-EVE_TEST_BED( "Check behavior of arithmetic operators on wide and scalar"
-            , eve::test::simd::all_types
-            , eve::test::generate ( eve::test::randoms( 5, 50  )
-                                  , eve::test::randoms( 1, 100 )
-                                  , eve::test::randoms( 5, 50  )
-                                  )
-            , mixed_tests
-            );

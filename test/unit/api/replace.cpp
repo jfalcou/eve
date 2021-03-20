@@ -58,9 +58,11 @@ EVE_TEST( "Check behavior of replace_ignored(keep_last)"
   TTS_EQUAL( eve::replace_ignored(data,keep_last(T::size()),replacement), data );
 };
 
-/*
-auto ignore_first_tests = []<typename T>(    , T data
-                                      )
+EVE_TEST( "Check behavior of replace_ignored(ignore_first)"
+        , eve::test::simd::all_types
+        , eve::test::generate ( eve::test::ramp(0) )
+        )
+<typename T>(T data)
 {
   using eve::ignore_first;
   T replacement = data;
@@ -74,14 +76,11 @@ auto ignore_first_tests = []<typename T>(    , T data
   }
 };
 
-EVE_TEST_BED( "Check behavior of replace_ignored (ignore_first)"
-            , eve::test::simd::all_types
-            , eve::test::generate ( eve::test::ramp(0) )
-            , ignore_first_tests
-            );
-
-auto keep_first_tests = []<typename T>(    , T data, T replacement
-                                      )
+EVE_TEST( "Check behavior of replace_ignored(keep_first)"
+        , eve::test::simd::all_types
+        , eve::test::generate ( eve::test::ramp(0), eve::test::ramp(100) )
+        )
+<typename T>(T data, T replacement)
 {
   using eve::keep_first;
 
@@ -94,15 +93,11 @@ auto keep_first_tests = []<typename T>(    , T data, T replacement
   }
 };
 
-EVE_TEST_BED( "Check behavior of replace_ignored (keep_first)"
-            , eve::test::simd::all_types
-            , eve::test::generate ( eve::test::ramp(0), eve::test::ramp(100) )
-            , keep_first_tests
-            );
-
-
-auto keep_between_tests = []<typename T>(    , T data
-                                      )
+EVE_TEST( "Check behavior of replace_ignored(keep_between)"
+        , eve::test::simd::all_types
+        , eve::test::generate ( eve::test::ramp(0) )
+        )
+<typename T>(T data)
 {
   using eve::keep_between;
 
@@ -118,10 +113,3 @@ auto keep_between_tests = []<typename T>(    , T data
     }
   }
 };
-
-EVE_TEST_BED( "Check behavior of replace_ignored (keep_between)"
-            , eve::test::simd::all_types
-            , eve::test::generate ( eve::test::ramp(0) )
-            , keep_between_tests
-            );
-*/

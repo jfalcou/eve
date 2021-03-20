@@ -15,7 +15,11 @@
 //==================================================================================================
 // Type tests
 //==================================================================================================
-auto type_tests = []<typename T>(T)
+EVE_TEST( "Check comparison operators' return types"
+        , eve::test::simd::all_types
+        , eve::test::generate(eve::test::no_data)
+        )
+<typename T>(T)
 {
   using v_t = eve::element_type_t<T>;
   using eve::logical;
@@ -48,16 +52,16 @@ auto type_tests = []<typename T>(T)
   TTS_EXPR_IS((logical<v_t>() != logical<T>()), logical<T>);
 };
 
-EVE_TEST_BED( "Check comparison operators' return types"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::no_data)
-            , type_tests
-            );
-
 //==================================================================================================
 // Value tests
 //==================================================================================================
-auto basic_tests = []<typename T> (T lhs, T rhs)
+EVE_TEST( "Check comparison operators behavior between wide"
+        , eve::test::simd::all_types
+        , eve::test::generate ( eve::test::randoms(-50, 50)
+                              , eve::test::randoms(-50, 50)
+                              )
+        )
+<typename T> (T lhs, T rhs)
 {
   TTS_EQUAL((lhs == lhs), eve::true_ (eve::as(lhs)));
   TTS_EQUAL((lhs != lhs), eve::false_(eve::as(lhs)));
@@ -81,7 +85,13 @@ auto basic_tests = []<typename T> (T lhs, T rhs)
   TTS_EQUAL((lhs >= rhs), ref_gte );
 };
 
-auto mixed_tests = []<typename T> (T lhs, T rhs)
+EVE_TEST( "Check comparison operators behavior between wide & scalar"
+        , eve::test::simd::all_types
+        , eve::test::generate ( eve::test::randoms(-50, 50)
+                              , eve::test::randoms(-50, 50)
+                              )
+        )
+<typename T> (T lhs, T rhs)
 {
   using v_t = eve::element_type_t<T>;
   v_t val   = rhs.get(0);
@@ -101,7 +111,11 @@ auto mixed_tests = []<typename T> (T lhs, T rhs)
   TTS_EQUAL((lhs >= val), ref_gte );
 };
 
-auto nan_tests = []<typename T>(T)
+EVE_TEST( "Check comparison operators behavior with NaNs"
+        , eve::test::simd::ieee_reals
+        , eve::test::generate(eve::test::no_data)
+        )
+<typename T>(T)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -130,25 +144,3 @@ auto nan_tests = []<typename T>(T)
     TTS_EQUAL((v_t(4) >= eve::nan(eve::as<T>()) ), eve::false_(eve::as<T>()));
   }
 };
-
-EVE_TEST_BED( "Check comparison operators behavior with NaNs"
-            , eve::test::simd::ieee_reals
-            , eve::test::generate(eve::test::no_data)
-            , nan_tests
-            );
-
-EVE_TEST_BED( "Check comparison operators behavior between wide"
-            , eve::test::simd::all_types
-            , eve::test::generate ( eve::test::randoms(-50, 50)
-                                  , eve::test::randoms(-50, 50)
-                                  )
-            , basic_tests
-            );
-
-EVE_TEST_BED( "Check comparison operators behavior between wide & scalar"
-            , eve::test::simd::all_types
-            , eve::test::generate ( eve::test::randoms(-50, 50)
-                                  , eve::test::randoms(-50, 50)
-                                  )
-            , mixed_tests
-            );

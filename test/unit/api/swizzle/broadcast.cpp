@@ -16,7 +16,13 @@ inline constexpr auto broadcast = eve::fix_pattern<N>( [](int, int){ return I; }
 //==================================================================================================
 // Broadcast test
 //==================================================================================================
-auto bcast_tests = []<typename T, typename L> (T data, L logicals)
+EVE_TEST( "Check behavior of broadcast swizzle"
+        , eve::test::simd::all_types
+        , eve::test::generate ( eve::test::randoms(-50, 50)
+                              , eve::test::logicals(1, 2)
+                              )
+        )
+<typename T, typename L> (T data, L logicals)
 {
   auto f  = [&]<std::size_t N, typename S>(S simd, std::integral_constant<std::size_t,N>)
             {
@@ -35,11 +41,3 @@ auto bcast_tests = []<typename T, typename L> (T data, L logicals)
   f(data    , std::integral_constant<std::size_t,T::size()>{});
   f(logicals, std::integral_constant<std::size_t,L::size()>{});
 };
-
-EVE_TEST_BED( "Check behavior of broadcast swizzle"
-            , eve::test::simd::all_types
-            , eve::test::generate ( eve::test::randoms(-50, 50)
-                                  , eve::test::logicals(1, 2)
-                                  )
-            , bcast_tests
-            );

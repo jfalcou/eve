@@ -10,7 +10,11 @@
 //==================================================================================================
 // structured bindings support
 //==================================================================================================
-auto binding_tests  = []<typename T, typename L>(T data, L logical_data)
+EVE_TEST( "Check eve::wide support for structured bindings"
+        , eve::test::simd::all_types
+        , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
+        )
+<typename T, typename L>(T data, L logical_data)
 {
   TTS_TYPE_IS( (typename std::tuple_element<0           , T>::type), eve::element_type_t<T>);
   TTS_TYPE_IS( (typename std::tuple_element<0           , L>::type), eve::element_type_t<L>);
@@ -72,16 +76,14 @@ auto binding_tests  = []<typename T, typename L>(T data, L logical_data)
   }
 };
 
-EVE_TEST_BED( "Check eve::wide support for structured bindings"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
-            , binding_tests
-            );
-
 //==================================================================================================
 // Construct from a list of values
 //==================================================================================================
-auto make_tests  = []<typename T, typename L>(T ref, L logical_ref)
+EVE_TEST( "Check eve::wide enumerating constructor"
+        , eve::test::simd::all_types
+        , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
+        )
+<typename T, typename L>(T ref, L logical_ref)
 {
   T simd  = [&]<std::size_t... N>(std::index_sequence<N...>)
             {
@@ -98,16 +100,14 @@ auto make_tests  = []<typename T, typename L>(T ref, L logical_ref)
   TTS_EQUAL(logical_simd, logical_ref );
 };
 
-EVE_TEST_BED( "Check eve::wide enumerating constructor"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
-            , make_tests
-            );
-
 //==================================================================================================
 // Construct from a single value
 //==================================================================================================
-auto splat_tests  = []<typename T>(T)
+EVE_TEST( "Check eve::wide splat constructor"
+        , eve::test::simd::all_types
+        , eve::test::generate(eve::test::no_data)
+        )
+<typename T>(T)
 {
   using l_t = eve::logical<eve::element_type_t<T>>;
 
@@ -125,16 +125,14 @@ auto splat_tests  = []<typename T>(T)
   TTS_EQUAL(eve::logical<T>(0)          , all_false );
 };
 
-EVE_TEST_BED( "Check eve::wide splat constructor"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::no_data)
-            , splat_tests
-            );
-
 //==================================================================================================
 // Raw storage access
 //==================================================================================================
-auto storage_tests  = []<typename T, typename L>(T data, L logical_data)
+EVE_TEST( "Check eve::wide raw storage handling"
+        , eve::test::simd::all_types
+        , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
+        )
+<typename T, typename L>(T data, L logical_data)
 {
   T ref;
   L logical_ref;
@@ -159,16 +157,14 @@ auto storage_tests  = []<typename T, typename L>(T data, L logical_data)
   TTS_EQUAL(data, copy);
 };
 
-EVE_TEST_BED( "Check eve::wide raw storage handling"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
-            , storage_tests
-            );
-
 //==================================================================================================
 // Slice API
 //==================================================================================================
-auto slice_tests  = []<typename T, typename L>(T d, L ld)
+EVE_TEST( "Check eve::wide::slice behavior"
+        , eve::test::simd::all_types
+        , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
+        )
+<typename T, typename L>(T d, L ld)
 {
   if constexpr( T::size() > 1 )
   {
@@ -201,16 +197,15 @@ auto slice_tests  = []<typename T, typename L>(T d, L ld)
   }
 };
 
-EVE_TEST_BED( "Check eve::wide::slice behavior"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
-            , slice_tests
-            );
-
 //==================================================================================================
 // Combine API
 //==================================================================================================
-auto combine_tests  = []<typename T, typename L>(T d, L ld)
+EVE_TEST( "Check eve::wide::combine behavior"
+        , eve::test::simd::all_types
+        , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
+        , combine_tests
+        )
+<typename T, typename L>(T d, L ld)
 {
   if constexpr(T::size() < 64)
   {
@@ -229,9 +224,3 @@ auto combine_tests  = []<typename T, typename L>(T d, L ld)
     TTS_PASS("No combine for 512 bits char wide");
   }
 };
-
-EVE_TEST_BED( "Check eve::wide::combine behavior"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
-            , combine_tests
-            );
