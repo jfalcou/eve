@@ -17,7 +17,6 @@
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of average"
         , eve::test::simd::all_types
-        
         )
 <typename T>(eve::as_<T>)
 {
