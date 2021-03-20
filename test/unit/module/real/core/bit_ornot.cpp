@@ -14,7 +14,11 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-auto types_tests = []<typename T>(auto& runtime, bool verbose, auto const&, T)
+EVE_TEST( "Check return types of bit_ornot"
+          , eve::test::simd::all_types
+          , eve::test::generate(eve::test::no_data)
+          )
+<typename T>(T)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -33,37 +37,31 @@ auto types_tests = []<typename T>(auto& runtime, bool verbose, auto const&, T)
   using sui_t = eve::as_integer_t<v_t, unsigned>;
   TTS_EXPR_IS( eve::bit_ornot(T(), ssi_t()) , T);
   TTS_EXPR_IS( eve::bit_ornot(T(), sui_t()) , T);
-
 };
 
-EVE_TEST_BED( "Check return types of bit_ornot"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::no_data)
-            , types_tests
-            );
 
 //==================================================================================================
 //  bit_ornot tests
 //==================================================================================================
-auto simd_tests = []<typename T>( auto& runtime, bool verbose, auto const&
-                                , T const& a0, T const& a1
-                                )
+EVE_TEST( "Check behavior of bit_ornot on integral types"
+        , eve::test::simd::integers
+        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
+                              , eve::test::randoms(eve::valmin, eve::valmax)
+                              )
+        )
+<typename T>( T const& a0, T const& a1)
 {
   using eve::bit_ornot;
   TTS_EQUAL( bit_ornot(a0, a1), T([&](auto i, auto) { return a0.get(i)|~a1.get(i); }));
 };
 
-EVE_TEST_BED( "Check behavior of bit_ornot on integral types"
-            , eve::test::simd::integers
-            , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                                  , eve::test::randoms(eve::valmin, eve::valmax)
-                                  )
-            , simd_tests
-            );
-
-auto simd_testsf = []<typename T>( auto& runtime, bool verbose, auto const&
-                                , T const& a0, T const& a1
-                                )
+EVE_TEST( "Check behavior of bit_ornot on floating types"
+        , eve::test::simd::ieee_reals
+        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
+                              , eve::test::randoms(eve::valmin, eve::valmax)
+                              )
+        )
+<typename T>(T const& a0, T const& a1)
 {
   using eve::as;
   using eve::bit_ornot;
@@ -75,11 +73,3 @@ auto simd_testsf = []<typename T>( auto& runtime, bool verbose, auto const&
                                                      | ~bit_cast(a1.get(i), as(i_t())), as(v_t())); }
                                       ));
 };
-
-EVE_TEST_BED( "Check behavior of bit_ornot on floating types"
-            , eve::test::simd::ieee_reals
-            , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                                  , eve::test::randoms(eve::valmin, eve::valmax)
-                                  )
-            , simd_testsf
-            );
