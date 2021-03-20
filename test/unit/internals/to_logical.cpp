@@ -10,8 +10,7 @@
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 
-auto wide_to_logical = []<typename T> (    , T mixed_values
-                                      )
+auto wide_to_logical = []<typename T>(T mixed_values)
 {
   eve::as_logical_t<T> all_true(true);
   eve::as_logical_t<T> all_false(false);

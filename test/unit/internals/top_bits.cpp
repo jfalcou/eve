@@ -40,7 +40,7 @@ template <typename T, std::size_t N> bool expect_array(const std::array<T, N>&) 
 //==================================================================================================
 // Check the raw type of top_bits' storage
 //==================================================================================================
-auto raw_type = []<typename T>(auto& runtime, bool verbose, auto const&, T)
+auto raw_type = []<typename T>(T)
 {
   using v_t         = eve::element_type_t<T>;
   using logical     = eve::logical<T>;
@@ -76,7 +76,7 @@ EVE_TEST_BED( "Check top bits raw type"
 //==================================================================================================
 // Check the raw type of top_bits' storage
 //==================================================================================================
-auto logical_top_bits = []<typename T>(auto& runtime, bool verbose, auto const&, T)
+auto logical_top_bits = []<typename T>(T)
 {
   using logical = eve::logical<T>;
   logical test(false);
@@ -92,7 +92,7 @@ auto logical_top_bits = []<typename T>(auto& runtime, bool verbose, auto const&,
   }
 };
 
-auto logical_ignore_top_bits = []<typename T>(auto& runtime, bool verbose, auto const&, T)
+auto logical_ignore_top_bits = []<typename T>(T)
 {
   using logical = eve::logical<T>;
   logical expected(true);
@@ -101,7 +101,7 @@ auto logical_ignore_top_bits = []<typename T>(auto& runtime, bool verbose, auto 
   TTS_EQUAL(expected, eve::detail::to_logical(actual));
 };
 
-auto to_logical_top_bits = []<typename T>(auto& runtime, bool verbose, auto const&, T)
+auto to_logical_top_bits = []<typename T>(T)
 {
   test_over_top_bits<T>([&](auto x)
   {
@@ -131,7 +131,7 @@ EVE_TEST_BED("Check top bits to_logical"
 //==================================================================================================
 // Check the raw type of top_bits' storage
 //==================================================================================================
-auto top_bits_set = []<typename T>(auto& runtime, bool verbose, auto const&, T)
+auto top_bits_set = []<typename T>(T)
 {
   using logical = eve::logical<T>;
 
@@ -163,7 +163,7 @@ EVE_TEST_BED( "Check top_bits::set"
 //==================================================================================================
 // Check the raw type of top_bits' storage
 //==================================================================================================
-auto top_bits_endian = []<typename T>(auto& runtime, bool verbose, auto const&, T)
+auto top_bits_endian = []<typename T>(T)
 {
   using logical = eve::logical<T>;
 
@@ -190,7 +190,7 @@ EVE_TEST_BED("Check top_bits endianess"
 //==================================================================================================
 // Check the behavior of top_bits all()/any()
 //==================================================================================================
-auto top_bits_all = []<typename T>(auto& runtime, bool verbose, auto const&, T)
+auto top_bits_all = []<typename T>(T)
 {
   using logical = eve::logical<T>;
 
@@ -206,7 +206,7 @@ auto top_bits_all = []<typename T>(auto& runtime, bool verbose, auto const&, T)
   }
 };
 
-auto top_bits_any = []<typename T>(auto& runtime, bool verbose, auto const&, T)
+auto top_bits_any = []<typename T>(T)
 {
   using logical = eve::logical<T>;
 
@@ -236,7 +236,7 @@ EVE_TEST_BED("Check any(top_bits)"
 //==================================================================================================
 // Check the behavior of top_bits first_true/count_true
 //==================================================================================================
-auto top_bits_first_true = []<typename T>(auto& runtime, bool verbose, auto const&, T)
+auto top_bits_first_true = []<typename T>(T)
 {
   using logical = eve::logical<T>;
   logical x(true);
@@ -260,7 +260,7 @@ auto top_bits_first_true = []<typename T>(auto& runtime, bool verbose, auto cons
   TTS_EXPECT_NOT(eve::detail::first_true(top_bits(x)));
 };
 
-auto top_bits_count_true = []<typename T>(auto& runtime, bool verbose, auto const&, T)
+auto top_bits_count_true = []<typename T>(T)
 {
   test_over_top_bits<T>([&](auto x) {
     std::ptrdiff_t expected = 0;
@@ -285,7 +285,7 @@ EVE_TEST_BED("Check count_true(top_bits)"
 //==================================================================================================
 // Check the behavior of top_bits over ignore masks
 //==================================================================================================
-auto top_bits_ignore = []<typename T>(auto& runtime, bool verbose, auto const&, T)
+auto top_bits_ignore = []<typename T>(T)
 {
   using logical = eve::logical<T>;
 
@@ -353,7 +353,7 @@ EVE_TEST_BED("Check top_bits from ignore_*"
 //==================================================================================================
 // Check the behavior of top_bits bitwise operators
 //==================================================================================================
-auto top_bits_bitwise = []<typename T>(auto& runtime, bool verbose, auto const&, T)
+auto top_bits_bitwise = []<typename T>(T)
 {
   using logical = eve::logical<T>;
 
