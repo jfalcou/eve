@@ -12,7 +12,11 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-auto types_tests = []<typename T>(auto& runtime, bool verbose, auto const&, T)
+EVE_TEST( "Check return types of shl"
+        , eve::test::simd::unsigned_types
+        , eve::test::generate(eve::test::no_data)
+        )
+<typename T>(T)
 {
   using v_t  = eve::element_type_t<T>;
   using i_t  = eve::as_integer_t<T, signed>;
@@ -36,18 +40,18 @@ auto types_tests = []<typename T>(auto& runtime, bool verbose, auto const&, T)
 
 };
 
-EVE_TEST_BED( "Check return types of shl"
-            , eve::test::simd::unsigned_types
-            , eve::test::generate(eve::test::no_data)
-            , types_tests
-            );
-
 //==================================================================================================
 // shl tests
 //==================================================================================================
-auto simd_tests = []<typename T>( auto& runtime, bool verbose, auto const&
-                                , T const& a0, T const& a1
-                                )
+auto shift_max = []< typename T>(eve::as_<T> const &){return sizeof(eve::element_type_t<T>)*8-1;};
+
+EVE_TEST( "Check behavior of shl on integral types"
+        , eve::test::simd::unsigned_types
+        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
+                              , eve::test::randoms(0u, shift_max)
+                              )
+        )
+<typename T>(T const& a0, T const& a1)
 {
   using eve::shl;
   using eve::saturated;
@@ -55,46 +59,17 @@ auto simd_tests = []<typename T>( auto& runtime, bool verbose, auto const&
 
 };
 
-auto shift_max = []< typename T>(eve::as_<T> const &){return sizeof(eve::element_type_t<T>)*8-1;};
+EVE_TEST( "Check behavior of shl with scalar shift on integral types"
+        , eve::test::simd::unsigned_types
+        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
+                              , eve::test::randoms(0u, shift_max)
+                              )
+        )
+<typename T, typename I>(T const& a0,I a1)
+{
+  using eve::shl;
+  using eve::saturated;
+  auto val = a1.get(0);
+  TTS_EQUAL( shl(a0, val), T([&](auto i, auto) { return shl(a0.get(i), val); }));
 
-EVE_TEST_BED( "Check behavior of shl on integral types"
-            , eve::test::simd::unsigned_types
-            , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                                  , eve::test::randoms(0u, shift_max)
-                                  )
-            , simd_tests
-            );
-
-
-
-// //==================================================================================================
-// // conditional shl tests
-// //==================================================================================================
-// auto simd_tests_if = []<typename T>( auto& runtime, bool verbose, auto const&
-//                                 , T const& a0, T const& a1, T const& a2
-//                                 )
-// {
-//   using eve::shl;
-//   using eve::saturated;
-
-//   TTS_EQUAL( shl[a2 > T(64)](a0, a1), T([&](auto i, auto) {return a2.get(i) > 64 ? shl(a0.get(i), a1.get(i)) :a0.get(i) ; }));
-//   TTS_EQUAL( saturated(shl[a2 > T(64)])(a0, a1), T([&](auto i, auto) { return  a2.get(i) > 64 ? saturated(shl)(a0.get(i), a1.get(i)):a0.get(i); }));
-// };
-
-// EVE_TEST_BED( "Check behavior of shl on signed types"
-//             , eve::test::simd::signed_types
-//             , eve::test::generate ( eve::test::randoms(-128, 127)
-//                                   , eve::test::randoms(-128, 127)
-//                                   , eve::test::randoms(-128, 127)
-//                                   )
-//             , simd_tests_if
-//             );
-
-// EVE_TEST_BED( "Check behavior of shl on unsigned types"
-//             , eve::test::simd::unsigned_types
-//             , eve::test::generate ( eve::test::randoms(0, 127)
-//                                   , eve::test::randoms(0, 127)
-//                                   , eve::test::randoms(0, 127)
-//                                   )
-//             , simd_tests
-//             );
+};

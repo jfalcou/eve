@@ -12,7 +12,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-auto types_tests = []<typename T>(auto& runtime, bool verbose, auto const&, T)
+EVE_TEST( "Check return types of shr"
+            , eve::test::simd::unsigned_types
+            , eve::test::generate(eve::test::no_data)
+            )<typename T>(T)
 {
   using v_t  = eve::element_type_t<T>;
   using i_t  = eve::as_integer_t<T, signed>;
@@ -33,20 +36,21 @@ auto types_tests = []<typename T>(auto& runtime, bool verbose, auto const&, T)
   TTS_EXPR_IS( eve::shr(T(), vu_t()) , T);
   TTS_EXPR_IS( eve::shr(v_t(), vi_t()) , v_t);
   TTS_EXPR_IS( eve::shr(v_t(), vu_t()) , v_t);
-
 };
 
-EVE_TEST_BED( "Check return types of shr"
-            , eve::test::simd::unsigned_types
-            , eve::test::generate(eve::test::no_data)
-            , types_tests
-            );
 
 //==================================================================================================
 // shr tests
 //==================================================================================================
-auto simd_tests = []<typename T>( auto& runtime, bool verbose, auto const&
-                                , T const& a0, T const& a1
+auto shift_max = []< typename T>(eve::as_<T> const &){return sizeof(eve::element_type_t<T>)*8-1;};
+
+EVE_TEST( "Check behavior of shr on integral types"
+        , eve::test::simd::unsigned_types
+        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
+                              , eve::test::randoms(0u, shift_max)
+                              )
+        )
+<typename T>( T const& a0, T const& a1
                                 )
 {
   using eve::shr;
@@ -55,13 +59,18 @@ auto simd_tests = []<typename T>( auto& runtime, bool verbose, auto const&
 
 };
 
-auto shift_max = []< typename T>(eve::as_<T> const &){return sizeof(eve::element_type_t<T>)*8-1;};
 
-EVE_TEST_BED( "Check behavior of shr on integral types"
-            , eve::test::simd::unsigned_types
-            , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                                  , eve::test::randoms(0u, shift_max)
-                                  )
-            , simd_tests
-            );
+EVE_TEST( "Check behavior of shr with scalar shift on integral types"
+        , eve::test::simd::unsigned_types
+        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
+                              , eve::test::randoms(0u, shift_max)
+                              )
+        )
+<typename T, typename I>(T const& a0,I a1)
+{
+  using eve::shr;
+  using eve::saturated;
+  auto val = a1.get(0);
+  TTS_EQUAL( shr(a0, val), T([&](auto i, auto) { return shr(a0.get(i), val); }));
 
+};
