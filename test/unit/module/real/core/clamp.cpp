@@ -13,7 +13,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-auto types_tests = []<typename T>(auto& runtime, bool verbose, auto const&, T)
+EVE_TEST( "Check return types of clamp"
+        , eve::test::simd::all_types
+        , eve::test::generate(eve::test::no_data)
+        )<typename T>(T)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -27,34 +30,23 @@ auto types_tests = []<typename T>(auto& runtime, bool verbose, auto const&, T)
   TTS_EXPR_IS( eve::clamp(v_t(), v_t(), v_t()) , v_t);
 };
 
-EVE_TEST_BED( "Check return types of clamp"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::no_data)
-            , types_tests
-            );
-
 //==================================================================================================
 // clamp tests
 //==================================================================================================
-auto simd_tests = []<typename T>( auto& runtime, bool verbose, auto const&
-                                , T const& a0, T const& a1, T const& a2
-                                )
-{
-  using eve::clamp;
-  using eve::saturated;
-  TTS_EQUAL( clamp(a0, a1, a2), T([&](auto i, auto) { return std::clamp(a0.get(i), a1.get(i), a2.get(i)); }));
-};
-
 auto val1 = []< typename T>(eve::as_<T> const &){return (eve::valmax(eve::as(eve::element_type_t<T>()))/6); ;};
 auto val2 = []< typename T>(eve::as_<T> const &){return (eve::valmax(eve::as(eve::element_type_t<T>()))/6)*2;};
 auto val3 = []< typename T>(eve::as_<T> const &){return (eve::valmax(eve::as(eve::element_type_t<T>()))/6)*3;};
 auto val4 = []< typename T>(eve::as_<T> const &){return (eve::valmax(eve::as(eve::element_type_t<T>()))/6)*4;};
 
-EVE_TEST_BED( "Check behavior of clamp on signed types"
-            , eve::test::simd::all_types
-            , eve::test::generate ( eve::test::randoms(val1       , val4)
-                                  , eve::test::randoms(eve::valmin, val2)
-                                  , eve::test::randoms(val3, eve::valmax)
-                                  )
-            , simd_tests
-            );
+EVE_TEST( "Check behavior of clamp on signed types"
+        , eve::test::simd::all_types
+        , eve::test::generate ( eve::test::randoms(val1       , val4)
+                              , eve::test::randoms(eve::valmin, val2)
+                              , eve::test::randoms(val3, eve::valmax)
+                              )
+        )<typename T>( T const& a0, T const& a1, T const& a2 )
+{
+  using eve::clamp;
+  using eve::saturated;
+  TTS_EQUAL( clamp(a0, a1, a2), T([&](auto i, auto) { return std::clamp(a0.get(i), a1.get(i), a2.get(i)); }));
+};
