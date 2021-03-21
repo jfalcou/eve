@@ -16,11 +16,8 @@
 //==================================================================================================
 // Load into scalars
 //==================================================================================================
-EVE_TEST( "Check load to scalar values"
-        , eve::test::scalar::all_types
-        , eve::test::generate(eve::test::no_data)
-        )
-[]<typename T>(T)
+EVE_TEST_TYPES( "Check load to scalar values", eve::test::scalar::all_types)
+<typename T>(eve::as_<T>)
 {
   constexpr std::ptrdiff_t algt = eve::alignment_v<eve::logical<T>>;
 

@@ -46,11 +46,8 @@ EVE_TEST( "Check load to wides from aligned pointer"
 //==================================================================================================
 // Realigned load tests
 //==================================================================================================
-EVE_TEST( "Check load to wides from re-aligned pointer"
-        , eve::test::simd::all_types
-        , eve::test::generate(eve::test::no_data)
-        )
-<typename T>(T)
+EVE_TEST_TYPES( "Check load to wides from re-aligned pointer", eve::test::simd::all_types)
+<typename T>(eve::as_<T>)
 {
   using v_t = eve::element_type_t<T>;
 

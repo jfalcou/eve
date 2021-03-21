@@ -9,7 +9,6 @@
 #include <eve/detail/top_bits.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/all.hpp>
-
 #include <array>
 
 using eve::detail::top_bits;
@@ -40,7 +39,8 @@ template <typename T, std::size_t N> bool expect_array(const std::array<T, N>&) 
 //==================================================================================================
 // Check the raw type of top_bits' storage
 //==================================================================================================
-auto raw_type = []<typename T>(T)
+EVE_TEST_TYPES( "Check top bits raw type", eve::test::simd::all_types)
+<typename T>(eve::as_<T>)
 {
   using v_t         = eve::element_type_t<T>;
   using logical     = eve::logical<T>;
@@ -67,16 +67,11 @@ auto raw_type = []<typename T>(T)
   }
 };
 
-EVE_TEST_BED( "Check top bits raw type"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::no_data)
-            , raw_type
-            );
-
 //==================================================================================================
 // Check the raw type of top_bits' storage
 //==================================================================================================
-auto logical_top_bits = []<typename T>(T)
+EVE_TEST_TYPES("Check top bits from logical", eve::test::simd::all_types)
+<typename T>(eve::as_<T>)
 {
   using logical = eve::logical<T>;
   logical test(false);
@@ -92,7 +87,8 @@ auto logical_top_bits = []<typename T>(T)
   }
 };
 
-auto logical_ignore_top_bits = []<typename T>(T)
+EVE_TEST_TYPES("Check top bits from logical+ignore", eve::test::simd::all_types)
+<typename T>(eve::as_<T>)
 {
   using logical = eve::logical<T>;
   logical expected(true);
@@ -101,7 +97,8 @@ auto logical_ignore_top_bits = []<typename T>(T)
   TTS_EQUAL(expected, eve::detail::to_logical(actual));
 };
 
-auto to_logical_top_bits = []<typename T>(T)
+EVE_TEST_TYPES("Check top bits to_logical", eve::test::simd::all_types)
+<typename T>(eve::as_<T>)
 {
   test_over_top_bits<T>([&](auto x)
   {
@@ -110,28 +107,11 @@ auto to_logical_top_bits = []<typename T>(T)
   });
 };
 
-EVE_TEST_BED("Check top bits from logical"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::no_data)
-            , logical_top_bits
-            );
-
-EVE_TEST_BED("Check top bits from logical+ignore"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::no_data)
-            , logical_ignore_top_bits
-            );
-
-EVE_TEST_BED("Check top bits to_logical"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::no_data)
-            , to_logical_top_bits
-            );
-
 //==================================================================================================
 // Check the raw type of top_bits' storage
 //==================================================================================================
-auto top_bits_set = []<typename T>(T)
+EVE_TEST_TYPES( "Check top_bits::set", eve::test::simd::all_types)
+<typename T>(eve::as_<T>)
 {
   using logical = eve::logical<T>;
 
@@ -154,16 +134,11 @@ auto top_bits_set = []<typename T>(T)
   }
 };
 
-EVE_TEST_BED( "Check top_bits::set"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::no_data)
-            , top_bits_set
-            );
-
 //==================================================================================================
 // Check the raw type of top_bits' storage
 //==================================================================================================
-auto top_bits_endian = []<typename T>(T)
+EVE_TEST_TYPES("Check top_bits endianess", eve::test::simd::all_types)
+<typename T>(eve::as_<T>)
 {
   using logical = eve::logical<T>;
 
@@ -181,16 +156,11 @@ auto top_bits_endian = []<typename T>(T)
   }
 };
 
-EVE_TEST_BED("Check top_bits endianess"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::no_data)
-            , top_bits_endian
-            );
-
 //==================================================================================================
 // Check the behavior of top_bits all()/any()
 //==================================================================================================
-auto top_bits_all = []<typename T>(T)
+EVE_TEST_TYPES("Check all(top_bits)", eve::test::simd::all_types)
+<typename T>(eve::as_<T>)
 {
   using logical = eve::logical<T>;
 
@@ -206,7 +176,8 @@ auto top_bits_all = []<typename T>(T)
   }
 };
 
-auto top_bits_any = []<typename T>(T)
+EVE_TEST_TYPES("Check any(top_bits)", eve::test::simd::all_types)
+<typename T>(eve::as_<T>)
 {
   using logical = eve::logical<T>;
 
@@ -222,21 +193,11 @@ auto top_bits_any = []<typename T>(T)
   }
 };
 
-EVE_TEST_BED("Check all(top_bits)"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::no_data)
-            , top_bits_all
-            );
-EVE_TEST_BED("Check any(top_bits)"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::no_data)
-            , top_bits_any
-            );
-
 //==================================================================================================
 // Check the behavior of top_bits first_true/count_true
 //==================================================================================================
-auto top_bits_first_true = []<typename T>(T)
+EVE_TEST_TYPES("Check first_true(top_bits)", eve::test::simd::all_types)
+<typename T>(eve::as_<T>)
 {
   using logical = eve::logical<T>;
   logical x(true);
@@ -260,7 +221,8 @@ auto top_bits_first_true = []<typename T>(T)
   TTS_EXPECT_NOT(eve::detail::first_true(top_bits(x)));
 };
 
-auto top_bits_count_true = []<typename T>(T)
+EVE_TEST_TYPES("Check count_true(top_bits)", eve::test::simd::all_types)
+<typename T>(eve::as_<T>)
 {
   test_over_top_bits<T>([&](auto x) {
     std::ptrdiff_t expected = 0;
@@ -271,21 +233,11 @@ auto top_bits_count_true = []<typename T>(T)
   });
 };
 
-EVE_TEST_BED("Check first_true(top_bits)"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::no_data)
-            , top_bits_first_true
-            );
-EVE_TEST_BED("Check count_true(top_bits)"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::no_data)
-            , top_bits_count_true
-            );
-
 //==================================================================================================
 // Check the behavior of top_bits over ignore masks
 //==================================================================================================
-auto top_bits_ignore = []<typename T>(T)
+EVE_TEST_TYPES("Check top_bits from ignore_*", eve::test::simd::all_types)
+<typename T>(eve::as_<T>)
 {
   using logical = eve::logical<T>;
 
@@ -344,16 +296,11 @@ auto top_bits_ignore = []<typename T>(T)
   }
 };
 
-EVE_TEST_BED("Check top_bits from ignore_*"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::no_data)
-            , top_bits_ignore
-            );
-
 //==================================================================================================
 // Check the behavior of top_bits bitwise operators
 //==================================================================================================
-auto top_bits_bitwise = []<typename T>(T)
+EVE_TEST_TYPES("Check top_bits bitwise operators", eve::test::simd::all_types)
+<typename T>(eve::as_<T>)
 {
   using logical = eve::logical<T>;
 
@@ -381,9 +328,3 @@ auto top_bits_bitwise = []<typename T>(T)
     TTS_EQUAL(0u, (~top_bits<logical>{logical{true}}).storage);
   }
 };
-
-EVE_TEST_BED("Check top_bits bitwise operators"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::no_data)
-            , top_bits_bitwise
-            );

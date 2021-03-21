@@ -10,7 +10,11 @@
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 
-auto wide_to_logical = []<typename T>(T mixed_values)
+EVE_TEST( "Check detail::to_logical"
+        , eve::test::simd::all_types
+        , eve::test::generate( eve::test::randoms(0,2) )
+        )
+<typename T>(T mixed_values)
 {
   eve::as_logical_t<T> all_true(true);
   eve::as_logical_t<T> all_false(false);
@@ -24,9 +28,3 @@ auto wide_to_logical = []<typename T>(T mixed_values)
   TTS_EQUAL( eve::detail::to_logical(all_false)  , all_false );
   TTS_EQUAL( eve::detail::to_logical(mixed_bool) , mixed_bool);
 };
-
-EVE_TEST_BED( "Check detail::to_logical"
-            , eve::test::simd::all_types
-            , eve::test::generate( eve::test::randoms(0,2) )
-            , wide_to_logical
-            );

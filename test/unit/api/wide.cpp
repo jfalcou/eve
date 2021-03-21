@@ -103,11 +103,8 @@ EVE_TEST( "Check eve::wide enumerating constructor"
 //==================================================================================================
 // Construct from a single value
 //==================================================================================================
-EVE_TEST( "Check eve::wide splat constructor"
-        , eve::test::simd::all_types
-        , eve::test::generate(eve::test::no_data)
-        )
-<typename T>(T)
+EVE_TEST_TYPES( "Check eve::wide splat constructor", eve::test::simd::all_types)
+<typename T>(eve::as_<T>)
 {
   using l_t = eve::logical<eve::element_type_t<T>>;
 
@@ -203,7 +200,6 @@ EVE_TEST( "Check eve::wide::slice behavior"
 EVE_TEST( "Check eve::wide::combine behavior"
         , eve::test::simd::all_types
         , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
-        , combine_tests
         )
 <typename T, typename L>(T d, L ld)
 {

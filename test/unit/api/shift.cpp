@@ -26,11 +26,8 @@ inline auto const random_bits = []<typename T>(eve::as_<T>, auto& gen)
 //==================================================================================================
 // type tests
 //==================================================================================================
-EVE_TEST( "Check behavior of shift operators on eve::wide"
-        , eve::test::simd::integers
-        , eve::test::generate ( eve::test::no_data)
-        )
-<typename T>(T)
+EVE_TEST_TYPES( "Check behavior of shift operators on eve::wide", eve::test::simd::integers)
+<typename T>(eve::as_<T>)
 {
   using i_t = eve::as_integer_t<T>;
   using vi_t = eve::element_type_t<i_t>;
@@ -47,7 +44,6 @@ EVE_TEST( "Check behavior of shift operators on eve::wide"
 EVE_TEST( "Check behavior of shift operators on eve::wide"
         , eve::test::simd::integers
         , eve::test::generate(eve::test::randoms(-50,50), random_bits)
-        , simd_tests
         )
 <typename T, typename I>(T a0, I s)
 {

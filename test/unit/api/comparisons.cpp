@@ -15,11 +15,8 @@
 //==================================================================================================
 // Type tests
 //==================================================================================================
-EVE_TEST( "Check comparison operators' return types"
-        , eve::test::simd::all_types
-        , eve::test::generate(eve::test::no_data)
-        )
-<typename T>(T)
+EVE_TEST_TYPES( "Check comparison operators' return types", eve::test::simd::all_types)
+<typename T>(eve::as_<T>)
 {
   using v_t = eve::element_type_t<T>;
   using eve::logical;
@@ -111,11 +108,8 @@ EVE_TEST( "Check comparison operators behavior between wide & scalar"
   TTS_EQUAL((lhs >= val), ref_gte );
 };
 
-EVE_TEST( "Check comparison operators behavior with NaNs"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::no_data)
-        )
-<typename T>(T)
+EVE_TEST_TYPES( "Check comparison operators behavior with NaNs", eve::test::simd::ieee_reals)
+<typename T>(eve::as_<T>)
 {
   using v_t = eve::element_type_t<T>;
 

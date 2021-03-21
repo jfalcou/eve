@@ -92,4 +92,28 @@ namespace eve::test::simd
   inline constexpr detail::wides< decltype(scalar::signed_types) >::type      signed_types      {};
   inline constexpr auto                                   unsigned_types    = unsigned_integers;
   inline constexpr detail::wides< decltype(scalar::all_types) >::type         all_types         {};
+
+  using detail::types;
+  inline constexpr types< std::integral_constant<int,    8>
+                        , std::integral_constant<int,   16>
+                        , std::integral_constant<int,   32>
+                        , std::integral_constant<int,   64>
+                        , std::integral_constant<int,  128>
+                        , std::integral_constant<int,  256>
+                        , std::integral_constant<int,  512>
+                        , std::integral_constant<int, 1024>
+                        > sizes = {};
+
+  inline constexpr types< eve::fixed<   1>
+                        , eve::fixed<   2>
+                        , eve::fixed<   4>
+                        , eve::fixed<   8>
+                        , eve::fixed<  16>
+                        , eve::fixed<  32>
+                        , eve::fixed<  64>
+                        , eve::fixed< 128>
+                        , eve::fixed< 256>
+                        , eve::fixed< 512>
+                        , eve::fixed<1024>
+                        > cardinals = {};
 }
