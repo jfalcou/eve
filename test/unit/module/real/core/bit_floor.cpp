@@ -9,16 +9,15 @@
 #include <eve/concept/value.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <eve/constant/signmask.hpp>
-#include <eve/function/bitofsign.hpp>
-#include <eve/logical.hpp>
-#include <type_traits>
-#include <cmath>
+#include <eve/function/bit_floor.hpp>
+#include <eve/function/exponent.hpp>
+#include <eve/function/ldexp.hpp>
+#include <bit>
 
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST( "Check return types of bitofsign"
+EVE_TEST( "Check return types of bit_floor on unsigned wide"
             , eve::test::simd::all_types
             , eve::test::generate(eve::test::no_data)
             )
@@ -26,26 +25,19 @@ EVE_TEST( "Check return types of bitofsign"
 {
   using v_t = eve::element_type_t<T>;
 
-  TTS_EXPR_IS( eve::bitofsign(T())  , T);
-  TTS_EXPR_IS( eve::bitofsign(v_t()), v_t);
-  TTS_EXPR_IS( eve::bitofsign[eve::logical<T>()](T())  , T);
-  TTS_EXPR_IS( eve::bitofsign[eve::logical<T>()](v_t()), T);
-  TTS_EXPR_IS( eve::bitofsign[eve::logical<v_t>()](T())  , T);
-  TTS_EXPR_IS( eve::bitofsign[eve::logical<v_t>()](v_t()), v_t);
-  TTS_EXPR_IS( eve::bitofsign[bool()](T())  , T);
-  TTS_EXPR_IS( eve::bitofsign[bool()](v_t()), v_t);
+  TTS_EXPR_IS( eve::bit_floor(T())  , T);
+  TTS_EXPR_IS( eve::bit_floor(v_t()), v_t);
 };
 
-
-
 //==================================================================================================
-// bitofsign  tests
+// bit_floor signed tests
 //==================================================================================================
-EVE_TEST( "Check behavior of bitofsign on wide"
-        , eve::test::simd::all_types
+EVE_TEST( "Check behavior of bit_floor on integral wide"
+        , eve::test::simd::unsigned_integers
         , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
         )
-<typename T>(T const& a0 )
+<typename T>(T const& a0)
 {
-  TTS_EQUAL( eve::bitofsign(a0), T([&](auto i, auto) { auto x = a0.get(i); return eve::bit_and(x, eve::signmask(eve::as(x))); }));
+  TTS_EQUAL( eve::bit_floor(a0), T([&](auto i, auto) { return std::bit_floor(a0.get(i)); }));
 };
+
