@@ -185,6 +185,27 @@ inline bool const TTS_CAT(register_,TTS_FUNCTION) =  ::eve::test::test_setup{   
   }} + []                                                                                           \
 /**/
 
+#define EVE_TEST_TYPES(DESCRIPTION,TYPES)                                                           \
+inline bool const TTS_CAT(register_,TTS_FUNCTION) =  ::eve::test::test_setup{                       \
+[](auto tests)                                                                                      \
+  {                                                                                                 \
+    auto const single_test = [=]<typename T>( eve::as_<T> )                                         \
+    {                                                                                               \
+      ::tts::detail::test::acknowledge(::tts::detail::test                                          \
+      {                                                                                             \
+          std::string{DESCRIPTION} + " (with T = " + std::string{::tts::typename_<T>} + ")"         \
+        , [=]() {tests(eve::as_<T>{}); }                                                            \
+        });                                                                                         \
+    };                                                                                              \
+                                                                                                    \
+    [&]<template<class...> class L,typename... Ts>(L<Ts...>)                                        \
+    {                                                                                               \
+      (single_test( eve::as_<Ts>() ),...);                                                          \
+    }( TYPES );                                                                                     \
+                                                                                                    \
+    return true;                                                                                    \
+  }} + []                                                                                           \
+/**/
 
 #define EVE_TEST_BED(DESCRIPTION,TYPES,SAMPLES,TESTS)                                               \
 inline bool const TTS_CAT(register_,TTS_FUNCTION) =                                                 \
