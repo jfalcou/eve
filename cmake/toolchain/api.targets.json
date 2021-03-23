@@ -1,4 +1,5 @@
 {
   "unit.api.exe": "^unit.api\\..*\\.exe"
+, "unit.memory.exe": "^unit.memory\\..*\\.exe"
 , "unit.real.algorithm.exe": "^unit.real.algorithm\\..*\\simd.exe"
 }

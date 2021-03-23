@@ -25,7 +25,7 @@ namespace std
   template<std::size_t I, typename T, typename N, typename ABI>
   struct tuple_element<I, eve::logical<eve::wide<T, N, ABI>>>
   {
-    using type = T;
+    using type = eve::logical<T>;
   };
 
   template<typename T, typename N, typename ABI>

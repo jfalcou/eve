@@ -27,7 +27,17 @@ namespace eve::detail
   template<typename... Types>
   struct types
   {
+    template<typename... Us> constexpr types<Types...,Us...> operator+( types<Us...> const&) const;
   };
+
+  // Concatenate types lists
+  template<typename... Ls> struct concatenate
+  {
+    using type = decltype( (Ls{} + ...) );
+  };
+
+  template<typename... Ls>
+  using concatenate_t = typename concatenate<Ls...>::type;
 
   // Return the first type in a type list matching a trait
   template<bool Done, template<typename> typename Pred, typename TL>

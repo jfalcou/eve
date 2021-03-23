@@ -34,7 +34,7 @@ commands:
         type: string
       cpu:
         type: integer
-        default: 8
+        default: 2
     steps:
       - run:
           name: Compiling << parameters.targets >> at -j << parameters.cpu >>
@@ -77,17 +77,17 @@ base_jobs: &base_jobs
         setup:    << parameters.setup >>
     - compile:
         targets: "../cmake/toolchain/arch.targets.json"
-        cpu:  8
+        cpu:  2
     - ctest:
         targets: "../cmake/toolchain/arch.targets.json"
     - compile:
         targets: "../cmake/toolchain/api.targets.json"
-        cpu:  8
+        cpu:  2
     - ctest:
         targets: "../cmake/toolchain/api.targets.json"
     - compile:
         targets: "../cmake/toolchain/doc.targets.json"
-        cpu:  8
+        cpu:  2
     - ctest:
         targets: "../cmake/toolchain/doc.targets.json"
     - run:
@@ -95,7 +95,7 @@ base_jobs: &base_jobs
         command: cd build && ninja unit.real.math.heavy.exe  -k 0 -j 2
     - compile:
         targets: "../cmake/toolchain/simd.targets.json"
-        cpu:  8
+        cpu:  2
     - ctest:
         targets: "../cmake/toolchain/simd.targets.json"
 
@@ -119,12 +119,12 @@ wip_jobs: &wip_jobs
         setup:    << parameters.setup >>
     - compile:
         targets: "../cmake/toolchain/arch.targets.json"
-        cpu:  8
+        cpu:  2
     - ctest:
         targets: "../cmake/toolchain/arch.targets.json"
     - compile:
         targets: "../cmake/toolchain/api.targets.json"
-        cpu:  8
+        cpu:  2
     - ctest:
         targets: "../cmake/toolchain/api.targets.json"
 
@@ -162,8 +162,6 @@ jobs:
     <<: *base_jobs
   arm_128:
     <<: *wip_jobs
-  arm_64:
-    <<: *wip_jobs
   x86_sse2:
     <<: *base_jobs
   x86_sse4:
@@ -178,10 +176,6 @@ jobs:
     <<: *base_jobs
   x86_avx512:
     <<: *base_jobs
-  x86_avx512_256:
-    <<: *wip_jobs
-  x86_avx512_128:
-    <<: *wip_jobs
   tiny:
     <<: *base_jobs
   small:
@@ -269,41 +263,14 @@ workflows:
           filters:
             branches:
               ignore: develop
-      - x86_avx512_256:
-          requires:
-            - x86_avx512
-          tool:     "../cmake/toolchain/clang.x86.cmake"
-          options:  "-march=skylake-avx512"
-          setup:    "-DEVE_TEST_TYPE=small_wide"
-          filters:
-            branches:
-              ignore: develop
-      - x86_avx512_128:
-          requires:
-            - x86_avx512_256
-          tool:     "../cmake/toolchain/clang.x86.cmake"
-          options:  "-march=skylake-avx512"
-          setup:    "-DEVE_TEST_TYPE=smaller_wide"
-          filters:
-            branches:
-              ignore: develop
 
     ##==============================================================================================
     ## ARM v7
     ##==============================================================================================
       - arm_128:
           requires:
-            - x86_avx512_128
+            - x86_avx512
           tool:     "../cmake/toolchain/gcc.arm.cmake"
-          filters:
-            branches:
-              ignore: develop
-
-      - arm_64:
-          requires:
-            - arm_128
-          tool:     "../cmake/toolchain/gcc.arm.cmake"
-          setup:    "-DEVE_TEST_TYPE=small_wide"
           filters:
             branches:
               ignore: develop

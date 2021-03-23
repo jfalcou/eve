@@ -45,6 +45,7 @@ namespace eve
     using size_type     = typename card_base::size_type;
 
     template<typename T, typename N = expected_cardinal_t<T>> using rebind = wide<T,N>;
+    template<typename N> using rescale = wide<Type,N>;
 
     static constexpr auto  static_alignment = sizeof(Type)*Size::value;
 

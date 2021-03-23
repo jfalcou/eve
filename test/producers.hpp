@@ -28,14 +28,7 @@ TTS_ULP_RANGE_CHECK(Producer, (EVE_VALUE), (T), Ref, New, Ulps);                
 
 namespace eve
 {
-  template<typename T>
-  using uniform_prng =  tts::prng_generator
-                        < T
-                        , std::conditional_t< std::is_floating_point_v<eve::element_type_t<T>>
-                                            , eve::tests_real_distribution<eve::element_type_t<T>>
-                                            , std::uniform_int_distribution<eve::element_type_t<T>>
-                                            >
-                        >;
+  template<typename T> using uniform_prng = tts::prng_generator< T, prng<T>>;
 }
 
 namespace tts

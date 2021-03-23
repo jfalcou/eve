@@ -25,7 +25,7 @@ set(TTS_IS_DEPENDENT  ON  CACHE INTERNAL "ON")
 include(FetchContent)
 FetchContent_Declare( tts
                       GIT_REPOSITORY https://github.com/jfalcou/tts.git
-                      GIT_TAG main
+                      GIT_TAG develop
                     )
 
 FetchContent_MakeAvailable(tts)
