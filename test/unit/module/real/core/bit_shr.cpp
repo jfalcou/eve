@@ -14,7 +14,7 @@
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of bit_shr"
         , eve::test::simd::unsigned_types
-        
+
         )
 <typename T>(eve::as_<T>)
 {
@@ -33,10 +33,10 @@ EVE_TEST_TYPES( "Check return types of bit_shr"
   TTS_EXPR_IS( eve::bit_shr(T(), u_t()) , T);
   TTS_EXPR_IS( eve::bit_shr(v_t(), i_t()) , T);
   TTS_EXPR_IS( eve::bit_shr(v_t(), u_t()) , T);
-  TTS_EXPR_IS( eve::bit_shr(T(), vi_t()  ) , T);
-  TTS_EXPR_IS( eve::bit_shr(T(), vu_t()) , T);
-  TTS_EXPR_IS( eve::bit_shr(v_t(), vi_t()) , v_t);
-  TTS_EXPR_IS( eve::bit_shr(v_t(), vu_t()) , v_t);
+   TTS_EXPR_IS( eve::bit_shr(T(), vi_t()  ) , T);
+   TTS_EXPR_IS( eve::bit_shr(T(), vu_t()) , T);
+   TTS_EXPR_IS( eve::bit_shr(v_t(), vi_t()) , v_t);
+   TTS_EXPR_IS( eve::bit_shr(v_t(), vu_t()) , v_t);
 
 };
 
