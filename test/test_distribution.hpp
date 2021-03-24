@@ -65,7 +65,7 @@ namespace eve
       result_type res;
       if(aa == bb) res = aa;
       else if(bb <= aa+half(as(aa))) res = aa+(bb-aa)*sd(gen);
-      else if((aa >= 0 && bb <= 1) || bb <= 0 && aa >= -1) res = aa+(bb-aa)*sd(gen);
+      else if((aa >= 0 && bb <= 1) || (bb <= 0 && aa >= -1)) res = aa+(bb-aa)*sd(gen);
       else if(aa >= -1 && bb <= 1)  res =((sd(gen)*(bb-aa) > -aa) ? -aa : bb)*sd(gen);
       else
       {
