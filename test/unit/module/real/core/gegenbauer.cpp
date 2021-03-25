@@ -47,6 +47,8 @@ EVE_TEST( "Check behavior of gegenbauer on wide"
   for(unsigned int n=0; n < 10; ++n)
   {
     auto ref = [&](auto i, auto ){ return boost::math::gegenbauer(n, l, a0.get(i)); };
+    auto diff_ref =  [&](auto i, auto ) { return boost::math::gegenbauer_derivative(n, l, a0.get(i), 1u); };
     TTS_ULP_EQUAL(eve::gegenbauer(n, l, a0), T(ref), 2);
+    TTS_ULP_EQUAL(eve::diff(eve::gegenbauer)(n, l, a0), T(diff_ref), 2);
   }
 };

@@ -18,14 +18,15 @@ namespace eve::detail
 {
 
   template<integral_value N, floating_real_value T, floating_real_value U>
-  EVE_FORCEINLINE constexpr T gegenbauer_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr auto gegenbauer_(EVE_SUPPORTS(cpu_)
                                   , diff_type<1> const &
                                   , N const &n
                                   , T const &l
                                   , U const &x) noexcept
   requires index_compatible_values<N, T> && compatible_values<T, U>
   {
-    if (eve::all(n < one(as(n))))   return zero(as(x));
+    using r_t =  common_compatible_t<T, U>;
+    if (eve::all(n < one(as(n))))   return r_t(0);
     return 2*l*gegenbauer(dec(n), inc(l), x);
   }
 }
