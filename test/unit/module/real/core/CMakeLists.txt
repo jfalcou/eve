@@ -103,9 +103,9 @@ add_subdirectory(failure)
 ##==================================================================================================
 make_all_units(ROOT unit.real.core NAME convert               ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME gather                ARCH        simd TYPES ${all_types}     )
-
 #make_all_units(ROOT unit.real.core NAME horn                  ARCH scalar simd TYPES ${real_types}    )
 #make_all_units(ROOT unit.real.core NAME horn1                 ARCH scalar simd TYPES ${real_types}    )
+
 #make_all_units(ROOT unit.real.core NAME hypot                 ARCH scalar simd TYPES ${real_types}    )
 #make_all_units(ROOT unit.real.core NAME iceil                 ARCH scalar simd TYPES ${all_types}     )
 #make_all_units(ROOT unit.real.core NAME if_else               ARCH scalar simd TYPES ${all_types}     )
