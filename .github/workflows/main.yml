@@ -28,15 +28,11 @@ jobs:
         - { comp: gcc  , arch: x86    , opts: -DEVE_NO_SIMD         , status: 1 }
 
     steps:
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
+      - name: Fetch current branch
+        uses: actions/checkout@v2
       - name: Testing EVE with ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         uses: ./.github/actions/run_tests
         with:
-          repository:     'https://github.com/jfalcou/eve'
-          branch:         '${{ steps.extract_branch.outputs.branch }}'
           options:        '${{ matrix.cfg.opts }}'
           cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
           status:        '${{ matrix.cfg.status }}'
@@ -51,15 +47,11 @@ jobs:
         - { comp: gcc  , arch: arm    , opts: -Wno-psabi            , status: 0 }
 
     steps:
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
+      - name: Fetch current branch
+        uses: actions/checkout@v2
       - name: Testing EVE with ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         uses: ./.github/actions/run_tests
         with:
-          repository:     'https://github.com/jfalcou/eve'
-          branch:         '${{ steps.extract_branch.outputs.branch }}'
           options:        '${{ matrix.cfg.opts }}'
           cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
           status:        '${{ matrix.cfg.status }}'

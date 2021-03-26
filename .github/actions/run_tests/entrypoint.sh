@@ -50,16 +50,10 @@ test_targets()
   return 0;
 }
 
-echo "::group::Checking out $1 @ $2"
-git clone $1 project
-cd project
-git checkout $2
-echo "::endgroup::"
-
-echo "::group::Running: 'cmake .. -G Ninja -DCMAKE_CXX_FLAGS="$3" $4'"
+echo "::group::Running: 'cmake .. -G Ninja -DCMAKE_CXX_FLAGS="$1" $2'"
 mkdir build
 cd build
-cmake .. -G Ninja -DCMAKE_CXX_FLAGS="$3" $4
+cmake .. -G Ninja -DCMAKE_CXX_FLAGS="$1" $2
 echo "::endgroup::"
 
 compile_targets ../cmake/toolchain/arch.targets.json
@@ -86,7 +80,7 @@ then
   exit 1;
 fi
 
-if [ "$5" -eq "1" ]
+if [ "$3" -eq "1" ]
 then
 
   compile_targets ../cmake/toolchain/doc.targets.json

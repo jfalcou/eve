@@ -2,14 +2,6 @@
 name: 'Clone and Build Tests'
 description: 'Clone and build a given repository'
 inputs:
-  repository:  # repository to clone
-    description: 'Repository to clone'
-    required: true
-    default: ${{ github.repository }}
-  branch:  # branch to select
-    description: 'Branch to build'
-    required: true
-    default: ${{ github.ref }}
   options:  # compiler options
     description: 'Compiler options'
     required: false
@@ -26,8 +18,6 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.repository }}
-    - ${{ inputs.branch }}
     - ${{ inputs.options }}
     - ${{ inputs.cmake-options }}
     - ${{ inputs.status }}
