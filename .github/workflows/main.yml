@@ -1,0 +1,65 @@
+name: E.V.E CI
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  arch-x86:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang, arch: x86    , opts: -msse2                , status: 1 }
+        - { comp: clang, arch: x86    , opts: -msse4.2              , status: 1 }
+        - { comp: clang, arch: x86    , opts: -mavx                 , status: 1 }
+        - { comp: clang, arch: x86    , opts: -mavx2                , status: 1 }
+        - { comp: clang, arch: x86    , opts: -march=skylake-avx512 , status: 1 }
+        - { comp: clang, arch: x86    , opts: -DEVE_NO_SIMD         , status: 1 }
+        - { comp: gcc  , arch: x86    , opts: -msse2                , status: 1 }
+        - { comp: gcc  , arch: x86    , opts: -msse4.2              , status: 1 }
+        - { comp: gcc  , arch: x86    , opts: -mavx                 , status: 1 }
+        - { comp: gcc  , arch: x86    , opts: -mavx2                , status: 1 }
+        - { comp: gcc  , arch: x86    , opts: -march=skylake-avx512 , status: 1 }
+        - { comp: gcc  , arch: x86    , opts: -DEVE_NO_SIMD         , status: 1 }
+
+    steps:
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+      - name: Testing EVE with ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        uses: ./.github/actions/run_tests
+        with:
+          repository:     'https://github.com/jfalcou/eve'
+          branch:         '${{ steps.extract_branch.outputs.branch }}'
+          options:        '${{ matrix.cfg.opts }}'
+          cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
+          status:        '${{ matrix.cfg.status }}'
+
+  arch-arm:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: gcc  , arch: aarch64, opts: -Wno-psabi            , status: 1 }
+        - { comp: gcc  , arch: arm    , opts: -Wno-psabi            , status: 0 }
+
+    steps:
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+      - name: Testing EVE with ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        uses: ./.github/actions/run_tests
+        with:
+          repository:     'https://github.com/jfalcou/eve'
+          branch:         '${{ steps.extract_branch.outputs.branch }}'
+          options:        '${{ matrix.cfg.opts }}'
+          cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
+          status:        '${{ matrix.cfg.status }}'
