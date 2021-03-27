@@ -95,10 +95,8 @@ namespace eve::test
     {
       using e_t = eve::element_type_t<T>;
       eve::prng<e_t> dist(as_value(mn,as_<e_t>{}),as_value(mx,as_<e_t>{}));
-
       std::array<e_t,eve::cardinal_v<T>> d;
       std::for_each(d.begin(),d.end(), [&](auto& e) { e = dist(gen); });
-
       return d;
     };
   }

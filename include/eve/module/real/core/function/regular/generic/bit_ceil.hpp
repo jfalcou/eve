@@ -15,6 +15,7 @@
 #include <eve/function/is_less.hpp>
 #include <eve/function/is_less_equal.hpp>
 #include <eve/function/ldexp.hpp>
+#include <eve/function/max.hpp>
 #include <eve/constant/one.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
@@ -49,12 +50,17 @@ namespace eve::detail
       {
         auto tmp =  bit_floor(v);
         auto tmpltv = tmp < v;
-        if constexpr(scalar_value<T>)  return T(tmpltv ? tmp*2 :  tmp);
-        else return if_else(vle1, one(eve::as(v)) //TODO Optimize with one_ ?
-                           , if_else(tmpltv, tmp*2,  tmp));
+        if constexpr(scalar_value<T>)  return T(tmpltv ? tmp*2:  tmp);
+        else
+        {
+
+          auto res = if_else(vle1, one(eve::as(v)) //TODO Optimize with one_ ?
+                        , if_else(tmpltv, tmp*2,  tmp));
+          return res;
+        }
+
       }
     }
     else return apply_over(bit_ceil, v);
   }
 }
-

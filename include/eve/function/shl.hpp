@@ -38,6 +38,11 @@ namespace eve
     EVE_FORCEINLINE auto shl_(EVE_SUPPORTS(cpu_), T a, U s) noexcept
     {
       if constexpr( scalar_value<T> && scalar_value<U> )  return  static_cast<T>(a << s);
+      else if constexpr( scalar_value<T>)
+      {
+        using w_t = as_wide_t<T, cardinal_t<U>>;
+                                                          return w_t(a) << s;
+      }
       else                                                return a << s;
     }
   }
