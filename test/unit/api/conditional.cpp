@@ -14,9 +14,9 @@
 #include <eve/function/if_else.hpp>
 #include <eve/wide.hpp>
 
-TTS_CASE_TPL("ignore_all behavior", TTS_NUMERIC_TYPES)
+EVE_TEST_TYPES( "ignore_all behavior", eve::test::simd::all_types)
+<typename type>(eve::as_<type>)
 {
-  using eve::wide;
   using eve::logical;
   using eve::relative_conditional_expr;
   using eve::ignore_all;
@@ -25,17 +25,15 @@ TTS_CASE_TPL("ignore_all behavior", TTS_NUMERIC_TYPES)
 
   TTS_EXPECT( relative_conditional_expr<eve::ignore_all_>  );
 
-  using type = wide<T>;
-
   TTS_EXPR_IS(ignore_all.mask( as_<type>() ), logical<type> );
 
-  TTS_EQUAL( ignore_all.mask( as_<type>() )           , eve::false_( as_<type>() ) );
+  TTS_EQUAL( ignore_all.mask( as_<type>() )           , eve::false_( as_<type>()) );
   TTS_EQUAL( (if_else(ignore_all,type(42), type(69))) , type(69)                  );
-}
+};
 
-TTS_CASE_TPL("ignore_none behavior", TTS_NUMERIC_TYPES)
+EVE_TEST_TYPES( "ignore_none behavior", eve::test::simd::all_types)
+<typename type>(eve::as_<type>)
 {
-  using eve::wide;
   using eve::logical;
   using eve::relative_conditional_expr;
   using eve::ignore_none;
@@ -44,17 +42,15 @@ TTS_CASE_TPL("ignore_none behavior", TTS_NUMERIC_TYPES)
 
   TTS_EXPECT( relative_conditional_expr<eve::ignore_none_>  );
 
-  using type = wide<T>;
-
   TTS_EXPR_IS(ignore_none.mask( as_<type>() ), logical<type> );
 
   TTS_EQUAL( ignore_none.mask( as_<type>() )            , eve::true_( as_<type>() )  );
   TTS_EQUAL( (if_else(ignore_none,type(42), type(69)))  , type(42)                  );
-}
+};
 
-TTS_CASE_TPL("ignore_last behavior", TTS_NUMERIC_TYPES)
+EVE_TEST_TYPES( "ignore_last behavior", eve::test::simd::all_types)
+<typename type>(eve::as_<type>)
 {
-  using eve::wide;
   using eve::logical;
   using eve::relative_conditional_expr;
   using eve::ignore_last;
@@ -63,7 +59,6 @@ TTS_CASE_TPL("ignore_last behavior", TTS_NUMERIC_TYPES)
 
   TTS_EXPECT( relative_conditional_expr<eve::ignore_last>  );
 
-  using type = wide<T>;
   type value = [](auto i, auto) { return 1+i; };
 
   TTS_EXPR_IS(ignore_last(0).mask( as_<type>() ), logical<type> );
@@ -71,7 +66,7 @@ TTS_CASE_TPL("ignore_last behavior", TTS_NUMERIC_TYPES)
   TTS_EQUAL( ignore_last(0).mask(as_<type>()).bits(), eve::true_(as_<type>()).bits());
   TTS_EQUAL( (if_else(ignore_last(0),value, type(69))), value                   );
 
-  for(std::size_t i = 1;i <= type::static_size;i++)
+  for(std::size_t i = 1;i < type::static_size;i++)
   {
     logical<type> mref  = [i](std::size_t j, std::size_t c) { return j < c-i; };
     type          ref   = [i,&value](std::size_t j, std::size_t c) { return (j < c-i) ? value.get(j) : 69; };
@@ -82,11 +77,11 @@ TTS_CASE_TPL("ignore_last behavior", TTS_NUMERIC_TYPES)
 
   TTS_EQUAL( ignore_last(type::static_size).mask(as_<type>())          , eve::false_( as_<type>() ) );
   TTS_EQUAL( (if_else(ignore_last(type::static_size),value, type(69))) , type(69)                  );
-}
+};
 
-TTS_CASE_TPL("keep_last behavior", TTS_NUMERIC_TYPES)
+EVE_TEST_TYPES( "keep_last behavior", eve::test::simd::all_types)
+<typename type>(eve::as_<type>)
 {
-  using eve::wide;
   using eve::logical;
   using eve::relative_conditional_expr;
   using eve::keep_last;
@@ -95,7 +90,6 @@ TTS_CASE_TPL("keep_last behavior", TTS_NUMERIC_TYPES)
 
   TTS_EXPECT( relative_conditional_expr<eve::keep_last>  );
 
-  using type = wide<T>;
   type value = [](auto i, auto) { return 1+i; };
 
   TTS_EXPR_IS(keep_last(0).mask( as_<type>() ), logical<type> );
@@ -114,11 +108,11 @@ TTS_CASE_TPL("keep_last behavior", TTS_NUMERIC_TYPES)
 
   TTS_EQUAL( keep_last(0).mask(as_<type>()).bits(), eve::false_(as_<type>()).bits() );
   TTS_EQUAL( (if_else(keep_last(0),value, type(69))) , type(69)                     );
-}
+};
 
-TTS_CASE_TPL("ignore_first behavior", TTS_NUMERIC_TYPES)
+EVE_TEST_TYPES( "ignore_first behavior", eve::test::simd::all_types)
+<typename type>(eve::as_<type>)
 {
-  using eve::wide;
   using eve::logical;
   using eve::relative_conditional_expr;
   using eve::ignore_first;
@@ -127,7 +121,6 @@ TTS_CASE_TPL("ignore_first behavior", TTS_NUMERIC_TYPES)
 
   TTS_EXPECT( relative_conditional_expr<eve::ignore_first>  );
 
-  using type = wide<T>;
   type value = [](auto i, auto) { return 1+i; };
 
   TTS_EXPR_IS(ignore_first(0).mask( as_<type>() ), logical<type> );
@@ -146,11 +139,11 @@ TTS_CASE_TPL("ignore_first behavior", TTS_NUMERIC_TYPES)
 
   TTS_EQUAL( ignore_first(type::static_size).mask(as_<type>()).bits(), eve::false_(as_<type>()).bits());
   TTS_EQUAL( (if_else(ignore_first(type::static_size),value, type(69))) , type(69)                );
-}
+};
 
-TTS_CASE_TPL("keep_first behavior", TTS_NUMERIC_TYPES)
+EVE_TEST_TYPES( "keep_first behavior", eve::test::simd::all_types)
+<typename type>(eve::as_<type>)
 {
-  using eve::wide;
   using eve::logical;
   using eve::relative_conditional_expr;
   using eve::keep_first;
@@ -159,7 +152,6 @@ TTS_CASE_TPL("keep_first behavior", TTS_NUMERIC_TYPES)
 
   TTS_EXPECT( relative_conditional_expr<eve::keep_first>  );
 
-  using type = wide<T>;
   type value = [](auto i, auto) { return 1+i; };
 
   TTS_EXPR_IS(keep_first(0).mask( as_<type>() ), logical<type> );
@@ -178,11 +170,11 @@ TTS_CASE_TPL("keep_first behavior", TTS_NUMERIC_TYPES)
 
   TTS_EQUAL( keep_first(0).mask(as_<type>()).bits(), eve::false_(as_<type>()).bits());
   TTS_EQUAL( (if_else(keep_first(0),value, type(69))) , type(69)                    );
-}
+};
 
-TTS_CASE_TPL("keep_between behavior", TTS_NUMERIC_TYPES)
+EVE_TEST_TYPES( "keep_between behavior", eve::test::simd::all_types)
+<typename type>(eve::as_<type>)
 {
-  using eve::wide;
   using eve::logical;
   using eve::relative_conditional_expr;
   using eve::keep_between;
@@ -191,7 +183,6 @@ TTS_CASE_TPL("keep_between behavior", TTS_NUMERIC_TYPES)
 
   TTS_EXPECT( relative_conditional_expr<eve::keep_between>  );
 
-  using type = wide<T>;
   type value = [](auto i, auto) { return 1+i; };
 
   TTS_EXPR_IS(keep_between(0,1).mask( as_<type>() ), logical<type> );
@@ -210,11 +201,11 @@ TTS_CASE_TPL("keep_between behavior", TTS_NUMERIC_TYPES)
       }
     }
   }
-}
+};
 
-TTS_CASE_TPL("ignore_first/last combination", TTS_NUMERIC_TYPES)
+EVE_TEST_TYPES( "ignore_first/last behavior", eve::test::simd::all_types)
+<typename type>(eve::as_<type>)
 {
-  using eve::wide;
   using eve::logical;
   using eve::relative_conditional_expr;
   using eve::ignore_first;
@@ -224,7 +215,6 @@ TTS_CASE_TPL("ignore_first/last combination", TTS_NUMERIC_TYPES)
 
   TTS_EXPECT( relative_conditional_expr<eve::ignore_extrema>  );
 
-  using type = wide<T>;
   type value = [](auto i, auto) { return 1+i; };
 
   TTS_EXPR_IS( ((ignore_first(1) && ignore_last(0)).mask( as_<type>() )), logical<type> );
@@ -233,7 +223,7 @@ TTS_CASE_TPL("ignore_first/last combination", TTS_NUMERIC_TYPES)
   for(std::size_t i = 0;i <= type::static_size; i++)
   {
     auto mref  = ignore_first(i).mask(as_<type>());
-    type ref   = if_else(ignore_first(i), value, T(69));
+    type ref   = if_else(ignore_first(i), value, type(69));
 
     TTS_EQUAL( (ignore_first(i) && ignore_last(0)).mask(as_<type>()).bits(), mref.bits() );
     TTS_EQUAL( (if_else(ignore_first(i) && ignore_last(0),value, type(69))), ref);
@@ -243,7 +233,7 @@ TTS_CASE_TPL("ignore_first/last combination", TTS_NUMERIC_TYPES)
   for(std::size_t i = 0;i <= type::static_size; i++)
   {
     auto mref  = ignore_last(i).mask(as_<type>());
-    type ref   = if_else(ignore_last(i), value, T(69));
+    type ref   = if_else(ignore_last(i), value, type(69));
 
     TTS_EQUAL( (ignore_first(0) && ignore_last(i)).mask(as_<type>()).bits(), mref.bits() );
     TTS_EQUAL( (if_else(ignore_first(0) && ignore_last(i),value, type(69))), ref);
@@ -255,10 +245,10 @@ TTS_CASE_TPL("ignore_first/last combination", TTS_NUMERIC_TYPES)
     for(std::size_t li = 1;li <= type::static_size;li++)
     {
       auto mref  = ignore_first(fi).mask(as_<type>()) && ignore_last(li).mask(as_<type>());
-      type ref   = if_else(mref, value, T(69));
+      type ref   = if_else(mref, value,  type(69));
 
       TTS_EQUAL( (ignore_first(fi) && ignore_last(li)).mask(as_<type>()).bits(), mref.bits() );
       TTS_EQUAL( (if_else(ignore_first(fi) && ignore_last(li),value, type(69))), ref);
     }
   }
-}
+};

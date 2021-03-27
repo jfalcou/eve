@@ -74,9 +74,9 @@ namespace eve::detail
       // Extract bitmap then use the function with mask support
       auto mask = [&](auto const& cx)
       {
-        auto m = cx.bitmap( as_<r_t>{} );
+        auto m = cx.mask( as_<r_t>{} ).bitmap();
         if constexpr( C::is_inverted )  return ~m;
-        else                            return m;
+        else                            return  m;
       };
 
       // Prepare the source value

@@ -71,7 +71,7 @@ namespace eve::detail
         else                                return s;
       };
 
-      auto mask = cond.bitmap( as_<r_t>{} );
+      auto mask = cond.mask( as_<r_t>{} ).storage().value;
       constexpr auto c = categorize<r_t>();
 
             if constexpr( c == category::float64x8 ) return _mm512_mask_loadu_pd(src(that),mask,p);
