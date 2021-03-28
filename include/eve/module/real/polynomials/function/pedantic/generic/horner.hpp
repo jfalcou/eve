@@ -9,53 +9,87 @@
 
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
+#include <eve/constant/one.hpp>
 #include <eve/function/pedantic/fma.hpp>
+#include <eve/module/real/polynomials/detail/horner_impl.hpp>
 
 namespace eve::detail
 {
+  //================================================================================================
+  //== Horner with iterators
+  //================================================================================================
 
-  template<value T0, value T1>
+  template<value T0, std::input_iterator IT>
   EVE_FORCEINLINE constexpr auto horner_(EVE_SUPPORTS(cpu_)
-                                        , pedantic_type const &
-                                        , T0 const &, T1 const &a) noexcept
-      requires compatible_values<T0, T1>
+                                        ,  pedantic_type const &
+                                        , T0 xx, IT const & first, IT const & last) noexcept
+  requires ((compatible_values<T0, typename std::iterator_traits<IT>::value_type>))
   {
-    using r_t = common_compatible_t<T0, T1>;
-    return r_t(a);
-  }
-
-  template<value T0, value T1, value T2>
-  EVE_FORCEINLINE constexpr auto horner_(EVE_SUPPORTS(cpu_)
-                                        , pedantic_type const &
-                                        , T0 const &x, T1 const &a, T2 const &b) noexcept
-      requires compatible_values<T0, T1> &&compatible_values<T1, T2>
-  {
-    using r_t = common_compatible_t<T0, T1, T2>;
-    return pedantic(fma)(r_t(x), a, b);
+    return detail::horner_impl(pedantic_type(), xx, first, last);
   }
 
   //================================================================================================
-  //N parameters (((..(a*x+b)*x+c)*x + ..)..)
+  //== Horner with iterators and leading unitary coefficient
   //================================================================================================
 
-  template<value T0,
-           value T1,
-           value T2,
-           value ...Ts>
+  template<value T0, std::input_iterator IT>
   EVE_FORCEINLINE constexpr auto horner_(EVE_SUPPORTS(cpu_)
-                                        , pedantic_type const &
-                                        , T0 xx, T1 a, T2 b, Ts... args) noexcept
+                                        ,  pedantic_type const &
+                                        , T0 xx
+                                        , callable_one_ const &
+                                        , IT const & first, IT const & last) noexcept
+  requires ((compatible_values<T0, typename std::iterator_traits<IT>::value_type>))
   {
-    using r_t = common_compatible_t<T0, T1, T2, Ts...>;
-    auto x =  r_t(xx);
-    r_t that(pedantic(fma)(x, a, b));
-    auto next = [x](auto that, auto arg){
-      return pedantic(fma)(x, that, arg);
-    };
-    ((that = next(that, args)),...);
-    return that;
+    return detail::horner_impl(pedantic_type(), xx, one, first, last);
+  }
+
+  //================================================================================================
+  //== Horner with ranges
+  //================================================================================================
+  template<value T0, range R>
+  EVE_FORCEINLINE constexpr auto horner_(EVE_SUPPORTS(cpu_)
+                                        ,  pedantic_type const &
+                                        , T0 xx, R const & r) noexcept
+  requires (compatible_values<T0, typename R::value_type> && (!simd_value<R>))
+  {
+    return detail::horner_impl(pedantic_type(), xx, r);
+  }
+
+  //================================================================================================
+  //== Horner with ranges and leading unitary coefficient
+  //================================================================================================
+  template<value T0, range R>
+  EVE_FORCEINLINE constexpr auto horner_(EVE_SUPPORTS(cpu_)
+                                        ,  pedantic_type const &
+                                        , T0 xx
+                                        , callable_one_ const &
+                                        , R const & r) noexcept
+  requires (compatible_values<T0, typename R::value_type> && (!simd_value<R>))
+  {
+    return detail::horner_impl(pedantic_type(), xx, one, r);
+  }
+
+  //================================================================================================
+  //== N parameters (((..(a*x+b)*x+c)*x + ..)..)
+  //================================================================================================
+
+  template<value T0, value ...Ts>
+  EVE_FORCEINLINE constexpr auto horner_(EVE_SUPPORTS(cpu_)
+                                        ,  pedantic_type const &
+                                        , T0 x, Ts... args) noexcept
+  {
+    return horner_impl(pedantic_type(), x, args...);
+  }
+
+  //================================================================================================
+  //== N parameters with unitary leader coefficient (((..(x+b)*x+c)*x + ..)..)
+  //================================================================================================
+
+  template<value T0, value ...Ts>
+  EVE_FORCEINLINE constexpr auto horner_(EVE_SUPPORTS(cpu_)
+                                        ,  pedantic_type const &
+                                        , T0 x, callable_one_ const &, Ts... args) noexcept
+  {
+    return horner_impl(pedantic_type(), x, one, args...);
   }
 }
