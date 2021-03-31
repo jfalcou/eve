@@ -9,6 +9,7 @@
 
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/concept/properly_convertible.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
@@ -19,16 +20,17 @@ namespace eve::detail
   template<real_value T, real_value U, real_value V>
   EVE_FORCEINLINE auto fma_(EVE_SUPPORTS(cpu_), regular_type const &
                            , T const &a, U const &b, V const &c) noexcept
-      requires compatible_values<T, U> &&compatible_values<T, V>
+  requires compatible_values<T, U> &&compatible_values<T, V>
   {
     return arithmetic_call(fma, a, b, c);
   }
 
   template<real_value T, real_value U, real_value V>
   EVE_FORCEINLINE auto fma_(EVE_SUPPORTS(cpu_), T const &a, U const &b, V const &c) noexcept
-      requires compatible_values<T, U> &&compatible_values<T, V>
+  requires properly_convertible<U, V, T>
   {
-    return arithmetic_call(fma, a, b, c);
+    using r_t =  common_compatible_t<T, U, V>;
+    return arithmetic_call(fma, r_t(a), r_t(b), r_t(c));
   }
 
   template<real_scalar_value T>

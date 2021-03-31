@@ -21,23 +21,9 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-// auto types_tests = []<typename T>(auto& runtime, bool verbose, auto const&, T)
-// {
-//   using v_t = eve::element_type_t<T>;
-
-//   //multi
-//   TTS_EXPR_IS( eve::fma(T(), T(), T()  )  , T);
-//   TTS_EXPR_IS( eve::fma(T(), v_t(), T())  , T);
-//   TTS_EXPR_IS( eve::fma(v_t(), T(), T())  , T);
-//   TTS_EXPR_IS( eve::fma(T(), T(), v_t() ) , T);
-//   TTS_EXPR_IS( eve::fma(v_t(), v_t(), T()) , T);
-//   TTS_EXPR_IS( eve::fma(v_t(), T(), v_t()) , T);
-//   TTS_EXPR_IS( eve::fma(v_t(), v_t(), v_t()) , v_t);
-// };
-
 EVE_TEST_TYPES( "Check return types of fma"
-            , eve::test::simd::all_types
-            )
+              , eve::test::simd::all_types
+              )
 <typename T>(eve::as_<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -49,14 +35,29 @@ EVE_TEST_TYPES( "Check return types of fma"
   TTS_EXPR_IS( eve::fma(v_t(), v_t(), T()) , T);
   TTS_EXPR_IS( eve::fma(v_t(), T(), v_t()) , T);
   TTS_EXPR_IS( eve::fma(v_t(), v_t(), v_t()) , v_t);
+  if constexpr(eve::floating_value<T>)
+  {
+    using wi_t = eve::as_wide_t<int, eve::cardinal_t<T>>;
+    TTS_EXPR_IS( eve::fma(T(), int(), int()  )  , T);
+    TTS_EXPR_IS( eve::fma(T(), v_t(), int())  , T);
+    TTS_EXPR_IS( eve::fma(v_t(), int(), T())  , T);
+    TTS_EXPR_IS( eve::fma(int(), T(), int())  , T);
+    TTS_EXPR_IS( eve::fma(wi_t(), int(), int())  , wi_t);
+    TTS_EXPR_IS( eve::fma(char(), wi_t(), int()), wi_t);
 };
 
 //==================================================================================================
-//== fma tests
+// fma tests
 //==================================================================================================
+auto onepmileps = []<typename T>(eve::as_<T>)
+{
+  return (eve::inc(1000*eve::eps(eve::as(eve::element_type_t<T>()))));
+};
 
-auto onepmileps = []< typename T>(eve::as_<T> const &){return (eve::inc(1000*eve::eps(eve::as(eve::element_type_t<T>())))) ;};
-auto onemmileps = []< typename T>(eve::as_<T> const &){return (eve::oneminus(1000*eve::eps(eve::as(eve::element_type_t<T>())))) ;};
+auto onemmileps = []<typename T>(eve::as_<T>)
+{
+  return (eve::oneminus(1000*eve::eps(eve::as(eve::element_type_t<T>()))));
+};
 
 EVE_TEST( "Check precision behavior of fma on real types"
         , eve::test::simd::ieee_reals
@@ -68,7 +69,10 @@ EVE_TEST( "Check precision behavior of fma on real types"
 {
   using eve::fma;
   using v_t = eve::element_type_t<T>;
-  TTS_ULP_EQUAL( eve::pedantic(fma)(a0, a1, -eve::one(eve::as<T>())), T([&](auto i , auto) { return eve::pedantic(fma)(a0.get(i), a1.get(i), v_t(-1)); }), 2);
+  TTS_ULP_EQUAL ( eve::pedantic(fma)(a0, a1, -eve::one(eve::as<T>()))
+                , T([&](auto i , auto) { return eve::pedantic(fma)(a0.get(i), a1.get(i), v_t(-1)); })
+                , 2
+                );
 };
 
 //==================================================================================================
