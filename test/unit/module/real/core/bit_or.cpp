@@ -10,7 +10,6 @@
 #include <eve/constant/valmin.hpp>
 #include <eve/function/bit_or.hpp>
 #include <eve/function/bit_cast.hpp>
-#include <eve/function/is_gtz.hpp>
 
 //==================================================================================================
 // Types tests
@@ -55,20 +54,26 @@ EVE_TEST( "Check behavior of bit_or on integral types"
 };
 
 EVE_TEST( "Check behavior of bit_or on floating types"
-          , eve::test::simd::ieee_reals
-          , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                                , eve::test::randoms(eve::valmin, eve::valmax)
-                                  )
-            )
-<typename T>( T const& a0, T const& a1 )
+        , eve::test::simd::ieee_reals
+        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
+                              , eve::test::randoms(eve::valmin, eve::valmax)
+                              )
+        )
+<typename T>(T const& a0, T const& a1)
 {
   using eve::as;
-  using eve::bit_cast;
   using eve::bit_or;
+  using eve::bit_cast;
   using i_t = eve::as_integer_t<eve::element_type_t<T>, signed>;
   using v_t = eve::element_type_t<T>;
-  TTS_IEEE_EQUAL( bit_or(a0, a1), T([&](auto i, auto)
-                                { return bit_cast(bit_cast(a0.get(i), as(i_t()))
-                                                  | eve::bit_cast(a1.get(i), as(i_t())), as(v_t())); }
-                               ));
+  TTS_IEEE_EQUAL( bit_or(a0, a1)
+                , T([&](auto i, auto)
+                    {
+                      return  bit_cast( bit_cast(a0.get(i), as(i_t()))
+                                      | bit_cast(a1.get(i), as(i_t()))
+                                      , as(v_t())
+                                      );
+                    }
+                   )
+                );
 };

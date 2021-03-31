@@ -14,4 +14,4 @@ namespace eve
   EVE_MAKE_CALLABLE(laguerre_, laguerre);
 }
 
-#include <eve/module/real/math/function/regular/generic/laguerre.hpp>
+#include <eve/module/real/polynomial/function/regular/generic/laguerre.hpp>

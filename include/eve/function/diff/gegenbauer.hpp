@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/gegenbauer.hpp>
-#include <eve/module/real/math/function/diff/generic/gegenbauer.hpp>
+#include <eve/module/real/polynomial/function/diff/generic/gegenbauer.hpp>

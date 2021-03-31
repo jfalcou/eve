@@ -14,4 +14,4 @@ namespace eve
   EVE_MAKE_CALLABLE(gegenbauer_, gegenbauer);
 }
 
-#include <eve/module/real/math/function/regular/generic/gegenbauer.hpp>
+#include <eve/module/real/polynomial/function/regular/generic/gegenbauer.hpp>

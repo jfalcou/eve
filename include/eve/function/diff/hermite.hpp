@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/hermite.hpp>
-#include <eve/module/real/math/function/diff/generic/hermite.hpp>
+#include <eve/module/real/polynomial/function/diff/generic/hermite.hpp>

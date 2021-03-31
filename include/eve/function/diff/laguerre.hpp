@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/laguerre.hpp>
-#include <eve/module/real/math/function/diff/generic/laguerre.hpp>
+#include <eve/module/real/polynomial/function/diff/generic/laguerre.hpp>
