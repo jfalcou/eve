@@ -13,8 +13,8 @@
 // Types tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of shr"
-            , eve::test::simd::unsigned_types
-            )<typename T>(eve::as_<T>)
+              , eve::test::simd::unsigned_types
+              )<typename T>(eve::as_<T>)
 {
   using v_t  = eve::element_type_t<T>;
   using i_t  = eve::as_integer_t<T, signed>;

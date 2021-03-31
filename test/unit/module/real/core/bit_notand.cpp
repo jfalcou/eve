@@ -16,9 +16,9 @@
 // Types tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of bit_notand"
-            , eve::test::simd::all_types
-            )
-<typename T>( T)
+              , eve::test::simd::all_types
+              )
+<typename T>(eve::as_<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -43,11 +43,11 @@ EVE_TEST_TYPES( "Check return types of bit_notand"
 //  bit_notand tests
 //==================================================================================================
 EVE_TEST( "Check behavior of bit_notand on integral types"
-            , eve::test::simd::integers
-            , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                                  , eve::test::randoms(eve::valmin, eve::valmax)
-                                  )
-            )
+        , eve::test::simd::integers
+        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
+                              , eve::test::randoms(eve::valmin, eve::valmax)
+                              )
+        )
 <typename T>(T const& a0, T const& a1 )
 {
   using eve::bit_notand;
@@ -55,13 +55,12 @@ EVE_TEST( "Check behavior of bit_notand on integral types"
 };
 
 EVE_TEST( "Check behavior of bit_notand on integral types"
-            , eve::test::simd::ieee_reals
-            , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                                  , eve::test::randoms(eve::valmin, eve::valmax)
-                                  )
-            )
-<typename T>( T const& a0, T const& a1
-                                )
+        , eve::test::simd::ieee_reals
+        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
+                              , eve::test::randoms(eve::valmin, eve::valmax)
+                              )
+        )
+<typename T>( T const& a0, T const& a1 )
 {
   using eve::as;
   using eve::bit_cast;

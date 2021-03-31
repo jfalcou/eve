@@ -39,5 +39,12 @@ EVE_TEST( "Check behavior of bit_mask on integral types"
 <typename T>( T const& a0)
 {
   using eve::bit_mask;
-  TTS_EQUAL( bit_mask(a0), T([&](auto i, auto) { auto v = a0.get(i);  return v ? eve::allbits(eve::as(v)) : eve::zero(eve::as(v)); }));
+  TTS_IEEE_EQUAL( bit_mask(a0)
+                , T ( [&](auto i, auto)
+                      {
+                        auto v = a0.get(i);
+                        return v ? eve::allbits(eve::as(v)) : eve::zero(eve::as(v));
+                      }
+                    )
+                );
 };

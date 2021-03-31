@@ -13,8 +13,8 @@
 // Types tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of shl"
-        , eve::test::simd::unsigned_types
-        )
+              , eve::test::simd::unsigned_types
+              )
 <typename T>(eve::as_<T>)
 {
   using v_t  = eve::element_type_t<T>;
