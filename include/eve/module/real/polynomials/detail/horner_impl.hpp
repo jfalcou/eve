@@ -62,7 +62,7 @@ namespace eve::detail
     auto x =  r_t(xx);
     auto dfma = d(fma);
     r_t that(dfma(x, a, b));
-    auto next = [&](auto that, auto arg){
+    [[maybe_unused]] auto next = [&](auto that, auto arg){
       return dfma(x, that, arg);
     };
     ((that = next(that, args)),...);

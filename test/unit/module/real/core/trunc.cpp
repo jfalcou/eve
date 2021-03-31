@@ -21,11 +21,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST( "Check return types of trunc"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::no_data)
-            )
-<typename T>(T)
+EVE_TEST_TYPES( "Check return types of trunc"
+              , eve::test::simd::all_types
+              )
+<typename T>(eve::as_<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -44,10 +43,10 @@ EVE_TEST( "Check return types of trunc"
 //==================================================================================================
 // tolerant tests
 //==================================================================================================
-EVE_TEST( "Check  with nans and infs"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::no_data)
-        )<typename T>(T)
+EVE_TEST_TYPES( "Check  with nans and infs"
+              , eve::test::simd::ieee_reals
+              )
+<typename T>(eve::as_<T>)
 {
   TTS_EQUAL(eve::tolerant(eve::trunc)(eve::inc(-eve::eps(eve::as<T>()))), T(1));
   TTS_EQUAL(eve::tolerant(eve::trunc)(eve::inc(-2*eve::eps(eve::as<T>()))), T(1));

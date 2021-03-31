@@ -10,16 +10,16 @@
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/function/bit_ceil.hpp>
+#include <eve/function/exponent.hpp>
 #include <bit>
 
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST( "Check return types of bit_ceil on wide"
+EVE_TEST_TYPES( "Check return types of bit_ceil on wide"
             , eve::test::simd::all_types
-            , eve::test::generate(eve::test::no_data)
             )
-<typename T>(T)
+<typename T>(eve::as_<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -39,7 +39,7 @@ EVE_TEST( "Check behavior of bit_ceil on integral wide"
 <typename T>(T const& a0)
 {
 //  using v_t = eve::element_type_t<T>;
-  TTS_EQUAL( eve::bit_ceil(a0), T([&](auto i, auto) { return std::bit_ceil(a0.get(i)); }));
+  TTS_EQUAL( eve::bit_ceil(a0), T([&](auto i, auto) { return eve::bit_ceil(a0.get(i)); }));
 };
 
 EVE_TEST( "Check behavior of bit_ceil on floating wide"

@@ -22,11 +22,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST( "Check return types of floor"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::no_data)
-            )
-<typename T>(T)
+EVE_TEST_TYPES( "Check return types of floor"
+              , eve::test::simd::all_types
+              )
+<typename T>(eve::as_<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -47,10 +46,9 @@ EVE_TEST( "Check return types of floor"
 //==================================================================================================
 // tolerant tests
 //==================================================================================================
-EVE_TEST( "Check  with nans and infs"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::no_data)
-        )<typename T>(T)
+EVE_TEST_TYPES( "Check  with nans and infs"
+              , eve::test::simd::ieee_reals
+              )<typename T>(eve::as_<T>)
 {
   TTS_EQUAL(eve::tolerant(eve::floor)(static_cast<T>(-1.3)), T(-2));
   TTS_EQUAL(eve::tolerant(eve::floor)(static_cast<T>(-1.5)), T(-2));

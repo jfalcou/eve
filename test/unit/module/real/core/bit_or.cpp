@@ -1,3 +1,4 @@
+//==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
@@ -14,7 +15,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-auto types_tests = []<typename T>(T)
+EVE_TEST_TYPES( "Check return types of bit_or"
+              , eve::test::simd::all_types
+              )
+<typename T>(eve::as_<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -33,33 +37,24 @@ auto types_tests = []<typename T>(T)
   using sui_t = eve::as_integer_t<v_t, unsigned>;
   TTS_EXPR_IS( eve::bit_or(T(), ssi_t()) , T);
   TTS_EXPR_IS( eve::bit_or(T(), sui_t()) , T);
-
 };
-
-EVE_TEST_BED( "Check return types of bit_or"
-            , eve::test::simd::all_types
-            , eve::test::generate(eve::test::no_data)
-            , types_tests
-            );
 
 //==================================================================================================
 //  bit_or tests
 //==================================================================================================
-auto simd_tests = []<typename T>( T const& a0, T const& a1 )
+EVE_TEST( "Check behavior of bit_or on integral types"
+        , eve::test::simd::integers
+        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
+                              , eve::test::randoms(eve::valmin, eve::valmax)
+                              )
+            )
+<typename T>( T const& a0, T const& a1 )
 {
   using eve::bit_or;
   TTS_EQUAL( bit_or(a0, a1), T([&](auto i, auto) { return a0.get(i)|a1.get(i); }));
 };
 
-EVE_TEST_BED( "Check behavior of bit_or on integral types"
-            , eve::test::simd::integers
-            , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                                  , eve::test::randoms(eve::valmin, eve::valmax)
-                                  )
-            , simd_tests
-            );
-
-EVE_TEST( "Check behavior of bit_or on integral types"
+EVE_TEST( "Check behavior of bit_or on floating types"
           , eve::test::simd::ieee_reals
           , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
                                 , eve::test::randoms(eve::valmin, eve::valmax)

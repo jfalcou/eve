@@ -21,7 +21,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-auto  types_tests = []<typename T>(auto& runtime, bool verbose, auto const&, T)
+EVE_TEST_TYPES( "Check return types of arg on wide"
+              , eve::test::simd::ieee_reals
+              )
+<typename T>(eve::as_<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -35,21 +38,14 @@ auto  types_tests = []<typename T>(auto& runtime, bool verbose, auto const&, T)
   TTS_EXPR_IS( eve::diff(eve::arg)(v_t()), v_t);
 };
 
-EVE_TEST_BED( "Check return types of arg on wide"
-            , eve::test::simd::ieee_reals
-            , eve::test::generate(eve::test::no_data)
-            , types_tests
-            );
-
-
-
-
 //==================================================================================================
 // arg tests
 //==================================================================================================
-auto simd_tests = []<typename T>( auto& runtime, bool verbose, auto const&
-                                , T const& a0
-                                )
+EVE_TEST( "Check behavior of arg on wide"
+        , eve::test::simd::ieee_reals
+        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
+        )
+<typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;
   using eve::zero;
@@ -64,13 +60,10 @@ auto simd_tests = []<typename T>( auto& runtime, bool verbose, auto const&
   TTS_IEEE_EQUAL( diff(arg)(a0), T(0));
 };
 
-EVE_TEST_BED( "Check behavior of arg on wide"
-            , eve::test::simd::ieee_reals
-            , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
-            , simd_tests
-            );
-
-auto corner_tests = []<typename T>( auto& runtime, bool verbose, auto const&, T)
+EVE_TEST_TYPES( "Check  with nans and infs"
+              , eve::test::simd::ieee_reals
+              )
+<typename T>(eve::as_<T>)
 {
   using eve::pi;
   using eve::zero;
@@ -100,11 +93,4 @@ auto corner_tests = []<typename T>( auto& runtime, bool verbose, auto const&, T)
     TTS_IEEE_EQUAL(diff(arg)(minf(as<T>())), zero(as<T>()));
     TTS_IEEE_EQUAL(diff(arg)(inf(as<T>())), zero(as<T>()));
   }
-
 };
-
-EVE_TEST_BED( "Check  with nans and infs"
-            , eve::test::simd::ieee_reals
-            , eve::test::generate(eve::test::no_data)
-            , corner_tests
-            );

@@ -16,11 +16,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST( "Check return types of bit_mask"
+EVE_TEST_TYPES( "Check return types of bit_mask"
         , eve::test::simd::all_types
-        , eve::test::generate(eve::test::no_data)
         )
-<typename T>(T)
+<typename T>(eve::as_<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -40,5 +39,12 @@ EVE_TEST( "Check behavior of bit_mask on integral types"
 <typename T>( T const& a0)
 {
   using eve::bit_mask;
-  TTS_EQUAL( bit_mask(a0), T([&](auto i, auto) { auto v = a0.get(i);  return v ? eve::allbits(eve::as(v)) : eve::zero(eve::as(v)); }));
+  TTS_IEEE_EQUAL( bit_mask(a0)
+                , T ( [&](auto i, auto)
+                      {
+                        auto v = a0.get(i);
+                        return v ? eve::allbits(eve::as(v)) : eve::zero(eve::as(v));
+                      }
+                    )
+                );
 };

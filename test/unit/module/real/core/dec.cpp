@@ -20,11 +20,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST( "Check return types of dec"
+EVE_TEST_TYPES( "Check return types of dec"
             , eve::test::simd::all_types
-            , eve::test::generate(eve::test::no_data)
             )
-<typename T>(T)
+<typename T>(eve::as_<T>)
 {
   using v_t = eve::element_type_t<T>;
 

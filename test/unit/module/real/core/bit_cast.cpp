@@ -14,11 +14,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST( "Check return types of bit_cast"
+EVE_TEST_TYPES( "Check return types of bit_cast"
         , eve::test::simd::all_types
-        , eve::test::generate(eve::test::no_data)
         )
-<typename T>(T)
+<typename T>(eve::as_<T>)
 {
   using ut_t = eve::as_integer_t<T, unsigned>;
   using it_t = eve::as_integer_t<T, signed>;

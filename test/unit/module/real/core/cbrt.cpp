@@ -18,11 +18,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST( "Check return types of cbrt"
+EVE_TEST_TYPES( "Check return types of cbrt"
             , eve::test::simd::ieee_reals
-            , eve::test::generate(eve::test::no_data)
             )
-<typename T>(T)
+<typename T>(eve::as_<T>)
 {
   using v_t = eve::element_type_t<T>;
 

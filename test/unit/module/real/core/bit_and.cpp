@@ -1,3 +1,4 @@
+//==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
@@ -14,11 +15,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST( "Check return types of bit_and"
+EVE_TEST_TYPES( "Check return types of bit_and"
         , eve::test::simd::all_types
-        , eve::test::generate(eve::test::no_data)
         )
-<typename T>(T)
+  <typename T>(eve::as_<T>)
 {
   using v_t = eve::element_type_t<T>;
 

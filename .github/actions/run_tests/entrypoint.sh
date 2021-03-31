@@ -95,13 +95,13 @@ then
     exit 1;
   fi
 
-  compile_targets ../cmake/toolchain/simd.targets.json
+  compile_targets ../cmake/toolchain/real.targets.json
   if [ "$?" -eq "1" ]
   then
     exit 1;
   fi
 
-  test_targets    ../cmake/toolchain/simd.targets.json
+  test_targets    ../cmake/toolchain/real.targets.json
   if [ "$?" -eq "1" ]
   then
     exit 1;

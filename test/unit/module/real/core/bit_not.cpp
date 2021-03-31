@@ -14,23 +14,22 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST( "Check return types of bit_not"
+EVE_TEST_TYPES( "Check return types of bit_not"
         , eve::test::simd::all_types
-        , eve::test::generate(eve::test::no_data)
         )
-<typename T>(T)
+<typename T>(eve::as_<T>)
 {
+  using eve::logical;
   using v_t = eve::element_type_t<T>;
 
   //regular
   TTS_EXPR_IS( eve::bit_not(T()  ) , T);
-  TTS_EXPR_IS( eve::bit_not(v_t()) , T);
-  using eve::logical;
-//   using ssi_t = eve::as_integer_t<v_t, signed>;
-//   using sui_t = eve::as_integer_t<v_t, unsigned>;
-  TTS_EXPR_IS( eve::bit_not[logical<T>()](T()) , T);
-  TTS_EXPR_IS( eve::bit_not[logical<v_t>()](T()) , T);
-  TTS_EXPR_IS( eve::bit_not[logical<T>()](v_t()) , T);
+  TTS_EXPR_IS( eve::bit_not(v_t()) , v_t);
+
+  // conditional
+  TTS_EXPR_IS( eve::bit_not[logical<T>()](T())  , T);
+  TTS_EXPR_IS( eve::bit_not[logical<v_t>()](T()), T);
+  TTS_EXPR_IS( eve::bit_not[logical<T>()](v_t()), T);
 };
 
 //==================================================================================================
