@@ -35,9 +35,8 @@
 //   TTS_EXPR_IS( eve::fma(v_t(), v_t(), v_t()) , v_t);
 // };
 
-EVE_TEST( "Check return types of fma"
+EVE_TEST_TYPES( "Check return types of fma"
             , eve::test::simd::all_types
-            , eve::test::generate(eve::test::no_data)
             )
 <typename T>(T)
 {

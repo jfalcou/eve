@@ -12,9 +12,8 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST( "Check return types of shr"
+EVE_TEST_TYPES( "Check return types of shr"
             , eve::test::simd::unsigned_types
-            , eve::test::generate(eve::test::no_data)
             )<typename T>(T)
 {
   using v_t  = eve::element_type_t<T>;

@@ -12,9 +12,8 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST( "Check return types of bit_shr"
+EVE_TEST_TYPES( "Check return types of bit_shr"
         , eve::test::simd::unsigned_types
-        , eve::test::generate(eve::test::no_data)
         )
 <typename T>(T)
 {

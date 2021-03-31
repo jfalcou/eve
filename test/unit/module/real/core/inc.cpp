@@ -20,9 +20,8 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST( "Check return types of inc"
+EVE_TEST_TYPES( "Check return types of inc"
             , eve::test::simd::all_types
-            , eve::test::generate(eve::test::no_data)
             )
 <typename T>(T)
 {

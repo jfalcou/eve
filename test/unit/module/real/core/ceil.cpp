@@ -21,9 +21,8 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST( "Check return types of ceil"
+EVE_TEST_TYPES( "Check return types of ceil"
             , eve::test::simd::all_types
-            , eve::test::generate(eve::test::no_data)
             )
 <typename T>(T)
 {
@@ -47,7 +46,6 @@ EVE_TEST( "Check return types of ceil"
 //==================================================================================================
 EVE_TEST( "Check  with nans and infs"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::no_data)
         )<typename T>(T)
 {
   TTS_EQUAL(eve::tolerant(eve::ceil)(T(-1)), T(-1));

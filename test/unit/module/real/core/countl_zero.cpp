@@ -15,9 +15,8 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST( "Check return types of countl_zero on wide"
+EVE_TEST_TYPES( "Check return types of countl_zero on wide"
             , eve::test::simd::unsigned_integers
-            , eve::test::generate(eve::test::no_data)
             )
 <typename T>(T)
 {

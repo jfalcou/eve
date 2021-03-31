@@ -18,9 +18,8 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST( "Check return types of copysign"
+EVE_TEST_TYPES( "Check return types of copysign"
             , eve::test::simd::ieee_reals
-            , eve::test::generate(eve::test::no_data)
             )
 <typename T>(T)
 {
