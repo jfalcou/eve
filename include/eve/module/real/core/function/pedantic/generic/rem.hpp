@@ -34,6 +34,6 @@ namespace eve::detail
   rem_(EVE_SUPPORTS(cpu_), C const &cond, pedantic_type const &, U const &t, V const &f) noexcept
       requires compatible_values<U, V>
   {
-    return mask_op( EVE_CURRENT_API{}, cond, pedantic(rem), t, f);
+    return mask_op(  cond, pedantic(rem), t, f);
   }
 }

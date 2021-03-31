@@ -46,31 +46,6 @@ namespace eve
   };
 
   //================================================================================================
-  // Helper structure to encode negated conditional expression with alternative
-  //================================================================================================
-  template<typename C, typename V> struct not_or_ : C
-  {
-    static constexpr bool has_alternative = true;
-    static constexpr bool is_inverted     = true;
-    using alternative_type = V;
-
-    not_or_(C c, V v) : C(c), alternative(v) {}
-
-    template<typename T> auto rebase(T v) const
-    {
-      return or_<C,T>{static_cast<C const&>(*this), v};
-    }
-
-    friend std::ostream& operator<<(std::ostream& os, not_or_ const& c)
-    {
-      os << "( " << c.alternative << " ) else ";
-      return os << static_cast<C const&>(c);
-    }
-
-    V alternative;
-  };
-
-  //================================================================================================
   // Helper structure to encode conditional expression without alternative
   //================================================================================================
   template<typename C> struct if_
@@ -87,28 +62,6 @@ namespace eve
     friend std::ostream& operator<<(std::ostream& os, if_ const& c)
     {
       return os << "if( " << c.condition_ << " )";
-    }
-
-    C condition_;
-  };
-
-  //================================================================================================
-  // Helper structure to encode negated conditional expression without alternative
-  //================================================================================================
-  template<typename C> struct if_not_
-  {
-    static constexpr bool has_alternative = false;
-    static constexpr bool is_inverted     = true;
-    static constexpr bool is_complete     = false;
-
-    if_not_(C const& c) : condition_(c) {}
-
-    template<typename V> EVE_FORCEINLINE auto else_(V v) const { return not_or_(*this,v); }
-    template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&)  const { return condition_;  }
-
-    friend std::ostream& operator<<(std::ostream& os, if_not_ const& c)
-    {
-      return os << "if( !" << c.condition_ << " )";
     }
 
     C condition_;

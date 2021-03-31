@@ -59,7 +59,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto div_(EVE_SUPPORTS(cpu_), C const &cond, U const &t, V const &f) noexcept
       requires compatible_values<U, V>
   {
-    return mask_op( EVE_CURRENT_API{}, cond, eve::div, t, f);
+    return mask_op(  cond, eve::div, t, f);
   }
 
   template<conditional_expr C, decorator D, real_value U, real_value V>
@@ -67,7 +67,7 @@ namespace eve::detail
   div_(EVE_SUPPORTS(cpu_), C const &cond, D const &, U const &t, V const &f) noexcept
       requires compatible_values<U, V>
   {
-    return mask_op( EVE_CURRENT_API{}, cond, D()(div), t, f);
+    return mask_op(  cond, D()(div), t, f);
   }
 }
 

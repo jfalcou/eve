@@ -30,6 +30,6 @@ namespace eve::detail
   plus_(EVE_SUPPORTS(cpu_), C const &cond, saturated_type const &, U const &t, V const &f) noexcept
       requires compatible_values<U, V>
   {
-    return mask_op( EVE_CURRENT_API{}, cond, saturated(add), t, f);
+    return mask_op(  cond, saturated(add), t, f);
   }
 }

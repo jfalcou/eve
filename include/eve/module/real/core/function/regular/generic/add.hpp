@@ -21,7 +21,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto add_(EVE_SUPPORTS(cpu_), C const &cond, U const &t, V const &f) noexcept
       requires compatible_values<U, V>
   {
-    return mask_op( EVE_CURRENT_API{}, cond, eve::add, t, f);
+    return mask_op(  cond, eve::add, t, f);
   }
 
   //================================================================================================
