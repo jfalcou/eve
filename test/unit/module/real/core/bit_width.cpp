@@ -20,7 +20,7 @@
 EVE_TEST_TYPES( "Check return types of bit_width on wide"
             , eve::test::simd::unsigned_integers
             )
-<typename T>(T)
+<typename T>(eve::as_<T>)
 {
   using v_t = eve::element_type_t<T>;
 

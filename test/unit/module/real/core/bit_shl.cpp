@@ -15,7 +15,7 @@
 EVE_TEST_TYPES( "Check return types of bit_shl"
         , eve::test::simd::unsigned_types
         )
-<typename T>(T)
+<typename T>(eve::as_<T>)
 {
   using v_t  = eve::element_type_t<T>;
   using i_t  = eve::as_integer_t<T, signed>;

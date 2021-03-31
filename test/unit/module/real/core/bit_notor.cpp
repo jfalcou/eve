@@ -18,7 +18,7 @@
 EVE_TEST_TYPES( "Check return types of bit_notor"
         , eve::test::simd::integral_types
         )
-  <typename T>(T)
+  <typename T>(eve::as_<T>)
 {
   using v_t = eve::element_type_t<T>;
 
