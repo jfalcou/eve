@@ -19,5 +19,8 @@ add_dependencies(unit.real.polynomial.exe  unit.real.polynomial.simd.exe   )
 ##==================================================================================================
 ## new style tests
 ##==================================================================================================
+make_unit("unit.real.polynomial"           gegenbauer.cpp                  )
+make_unit("unit.real.polynomial"           hermite.cpp                     )
 make_unit("unit.real.polynomial"           horner.cpp                      )
 make_unit("unit.real.polynomial"           legendre.cpp                    )
+make_unit("unit.real.polynomial"           laguerre.cpp                    )
