@@ -33,3 +33,4 @@ TTS_CASE_TPL("Check eve::legendre behavior", EVE_TYPE)
     }
   }
 }
+
