@@ -88,13 +88,19 @@ namespace eve::detail
         return 2*eve::fms(x, hn, c*hnm1);
       };
     auto test = c < n;
+    auto swap = [](auto cond, auto& a, auto& b){
+      auto c = a;
+      a = if_else(cond, b, a);
+      b = if_else(cond, c, b);
+    };
+
     while(eve::any(test))
     {
-      std::swap(p0, p1);
+      swap(test, p0, p1);
       p1 = if_else(test, hermite_next(c, x, p0, p1), p1);
       c = inc[test](c);
       test = c < n;
     }
-    return p1;
+    return if_else(iseqzn,  one, p1);
   }
 }
