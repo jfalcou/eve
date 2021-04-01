@@ -55,9 +55,9 @@ namespace eve::test
   //================================================================================================
   // Turn a generator into a integral generator
   //================================================================================================
-  template<typename G> inline auto as_integer(G)
+  template<typename G> inline auto as_integer(G g)
   {
-    return []<typename T>(eve::as_<T>, auto& s) { return G{}( eve::as_<eve::as_integer_t<T>>{},s); };
+    return [g]<typename T>(eve::as_<T>, auto& s) { return g( eve::as_<eve::as_integer_t<T>>{},s); };
   }
 
   //================================================================================================
@@ -69,6 +69,18 @@ namespace eve::test
             {
               std::array<eve::element_type_t<T>, eve::cardinal_v<T>> d;
               for(std::ptrdiff_t i = 0;i<T::size();++i) d[i] = v+i;
+              return d;
+            };
+  }
+
+  template<typename V1,  typename V2> auto ramp(V1 v1, V2 v2)
+  {
+    return  [=]<typename T>(eve::as_<T>, auto&)
+            {
+              auto n = eve::cardinal_v<T>-1;
+              auto a = n ?(v2-v1)/n : 0;
+              std::array<eve::element_type_t<T>, eve::cardinal_v<T>> d;
+              for(std::ptrdiff_t i = 0;i<T::size();++i) d[i] = a*i+v1;
               return d;
             };
   }
