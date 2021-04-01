@@ -77,7 +77,7 @@ namespace eve::detail
         c = cp1;
         test = c < n;
       }
-      return  if_else(iseqzn,  p0, p1);
+      return  if_else(iseqzn,  one, p1);
     }
     else
       return apply_over(laguerre, nn, x);
