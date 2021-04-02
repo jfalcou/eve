@@ -43,14 +43,14 @@ EVE_TEST( "Check behavior of hermite on wide"
   for(unsigned int n=0; n < 5; ++n)
   {
     auto boost_hermite =  [&](auto i, auto) { return boost::math::hermite(n, a0.get(i)); };
-    TTS_ULP_EQUAL(eve__hermitev(n, a0), T(boost_hermite), 15);
+    TTS_ULP_EQUAL(eve__hermitev(n, a0), T(boost_hermite), 16);
   }
   auto boost_hermitev =  [&](auto i, auto) { return boost::math::hermite(i0.get(i), a0.get(i)); };
   TTS_ULP_EQUAL(eve__hermitev(i0    , a0), T(boost_hermitev), 16);
   for(unsigned int j=0; j < eve::cardinal_v<T>; ++j)
   {
     auto boost_hermite2 =  [&](auto i, auto) { return boost::math::hermite(i0.get(i), a0.get(j)); };
-    TTS_ULP_EQUAL(eve__hermitev(i0 , a0.get(j)), T(boost_hermite2), 15);
+    TTS_ULP_EQUAL(eve__hermitev(i0 , a0.get(j)), T(boost_hermite2), 16);
   }
   for(unsigned int j=0; j < eve::cardinal_v<T>; ++j)
   {
