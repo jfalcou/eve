@@ -77,9 +77,10 @@ namespace eve::test
   {
     return  [=]<typename T>(eve::as_<T>, auto&)
             {
+              using elt_t = element_type_t<T>;
               auto n = eve::cardinal_v<T>-1;
-              auto a = n ?(v2-v1)/n : 0;
-              std::array<eve::element_type_t<T>, eve::cardinal_v<T>> d;
+              elt_t a = n ? elt_t((v2-v1))/n : elt_t(0);
+              std::array<elt_t, eve::cardinal_v<T>> d;
               for(std::ptrdiff_t i = 0;i<T::size();++i) d[i] = a*i+v1;
               return d;
             };
