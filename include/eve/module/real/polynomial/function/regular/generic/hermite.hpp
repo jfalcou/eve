@@ -49,13 +49,14 @@ namespace eve::detail
   template<integral_scalar_value I, floating_real_simd_value T>
   EVE_FORCEINLINE auto hermite_(EVE_SUPPORTS(cpu_), I n, T x) noexcept
   {
-    auto p0 = one(as(x));
+    T p0 = one(as(x));
     if(is_eqz(n)) return p0;
-    auto p1 = x+x;
-    auto c = one(as(n));
+    T p1 = x+x;
+    I c = one(as(n));
     auto hermite_next = [](auto n,  auto x,  auto hn,  auto hnm1)
       {
-        return 2*fms(x, hn, n*hnm1);
+        auto z = fma(x, hn, -T(n)*hnm1);
+        return z+z;
       };
     while(c < n)
     {
@@ -85,7 +86,7 @@ namespace eve::detail
     auto c = one(as(n));
     auto hermite_next = [](auto c,  auto x,  auto hn,  auto hnm1)
       {
-        return 2*eve::fms(x, hn, c*hnm1);
+        return 2*eve::fma(x, hn, -c*hnm1);
       };
     auto test = c < n;
     auto swap = [](auto cond, auto& a, auto& b){

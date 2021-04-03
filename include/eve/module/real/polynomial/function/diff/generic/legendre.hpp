@@ -75,7 +75,7 @@ namespace eve::detail
                                        , diff_type<1> const &
                                        , N const & l
                                        , T const &x) noexcept
-  //  requires index_compatible_values<N, T>
+  requires index_compatible_values<N, T>
   {
     using elt_t = element_type_t<T>;
     auto p0 = one(as(x));
