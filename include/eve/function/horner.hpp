@@ -14,4 +14,4 @@ namespace eve
   EVE_MAKE_CALLABLE(horner_, horner);
 }
 
-#include <eve/module/real/polynomials/function/regular/generic/horner.hpp>
+#include <eve/module/real/polynomial/function/regular/generic/horner.hpp>

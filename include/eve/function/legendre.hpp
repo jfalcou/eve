@@ -14,4 +14,4 @@ namespace eve
   EVE_MAKE_CALLABLE(legendre_, legendre);
 }
 
-#include <eve/module/real/math/function/regular/generic/legendre.hpp>
+#include <eve/module/real/polynomial/function/regular/generic/legendre.hpp>

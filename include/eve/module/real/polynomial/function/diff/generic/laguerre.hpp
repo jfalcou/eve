@@ -23,13 +23,14 @@ namespace eve::detail
                                   , diff_type<1> const &
                                   , N const & n
                                   , T const &x) noexcept
-  //  requires index_compatible_values<N, T>
+  requires index_compatible_values<N, T>
   {
     // TODO
     // as there is no available closed formule for laguerre derivative at the first order
     // will use vand algo as soon as complex will be available ie:
     //     complex<T> cx = {x, eps(as(x))};
     //     return = imag(laguerre(cx))/eps(as(x));
+    // and will tested in time
     auto df2 = [](auto n, auto x){
       auto y =  [&n](auto a){ return eve::laguerre(n, a);  };
       return eve::detail::centered_diffdiv(y, x);

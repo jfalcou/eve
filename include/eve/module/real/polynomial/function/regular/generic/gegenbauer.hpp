@@ -34,15 +34,15 @@ namespace eve::detail
     using c_t = common_compatible_t<T, U>;
     using elt_t = element_type_t<c_t>;
     auto p0 = one(as(x));
-    if(is_eqz(n)) return p0;
+    if(is_eqz(n)) return c_t(p0);
 
-    auto y0 = p0;
-    auto y1 = 2*lambda*x;
+    c_t y0(p0);
+    c_t y1(2*lambda*x);
 
     auto yk = y1;
-    auto k = 2;
-    auto k_max = n*inc(eps(as(elt_t())));
-    auto gamma = 2*dec(lambda);
+    elt_t k = 2;
+    elt_t k_max = n*inc(eps(as(elt_t())));
+    c_t gamma(2*dec(lambda));
     auto test = k < k_max;
     while(test)
     {
@@ -69,16 +69,16 @@ namespace eve::detail
     if (has_native_abi_v<T>)
     {
       using elt_t = element_type_t<T>;
-      auto y0 = one(as(x));
+      T y0 = one(as(x));
       auto iseqzn = is_eqz(nn);
       if(eve::all(iseqzn)) return y0;
       auto n =  convert(nn, as(elt_t()));
-      auto y1 = 2*lambda*x;
+      T y1 = 2*lambda*x;
 
-      auto yk = y1;
-      auto k = T(2);
+      T yk = y1;
+      T k(2);
       auto k_max = n*inc(eps(as(elt_t())));
-      auto gamma = 2*dec(lambda);
+      T gamma = 2*dec(lambda);
       auto test = k < k_max;
       while(eve::any(test))
       {

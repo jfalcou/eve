@@ -30,6 +30,7 @@ namespace eve::detail
                                           , N const & l
                                           , T const &x) noexcept
   {
+    if (is_eqz(l)) return T(0);
     auto legendre_next = [](auto ll, auto x, auto pl, auto plm1)
       {
         auto llp1 = inc(ll);
@@ -65,9 +66,8 @@ namespace eve::detail
                                 , I nn
                                 , T x) noexcept
   {
-    if (eve::abs(x) > one(as(x))) return nan(as(x));
     using f_t = as_wide_t<T, cardinal_t<I>>;
-    return laguerre(nn, f_t(x));
+    return if_else(eve::abs(x) > one(as(x)), nan(as<f_t>()), diff(legendre)(nn, f_t(x)));
   }
 
   template<integral_simd_value N, floating_simd_value T>
@@ -75,7 +75,7 @@ namespace eve::detail
                                        , diff_type<1> const &
                                        , N const & l
                                        , T const &x) noexcept
-  //  requires index_compatible_values<N, T>
+  requires index_compatible_values<N, T>
   {
     using elt_t = element_type_t<T>;
     auto p0 = one(as(x));
@@ -89,17 +89,21 @@ namespace eve::detail
       {
         return fms(inc(2*ll) * x,  pl, ll * plm1) / inc(ll);
       };
+    auto swap = [](auto cond, auto& a, auto& b){
+      auto c = a;
+      a = if_else(cond, b, a);
+      b = if_else(cond, c, b);
+    };
     while(eve::any(test))
     {
-      auto p = p0;
-      p0 = p1;
-      p1 = p;
+      swap(test, p0, p1);
       p1 = legendre_next(nn, x, p0, p1);
       nn = inc[test](nn);
       p_prime = add[isoddl && test](p_prime, inc(2*nn)*p1);
       isoddl = !isoddl;
       test = nn < dec(ll);
     }
+    p_prime = if_else(is_eqz(l), zero, p_prime);
     return if_else(eve::abs(x) > one(as(x)), allbits, p_prime);
   }
 }
