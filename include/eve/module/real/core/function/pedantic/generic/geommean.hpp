@@ -53,7 +53,7 @@ namespace eve::detail
                                 , U const &t, V const &f) noexcept
       requires compatible_values<U, V>
   {
-    return mask_op( EVE_CURRENT_API{}, cond, pedantic(eve::geommean), t, f);
+    return mask_op(  cond, pedantic(eve::geommean), t, f);
   }
 
 }

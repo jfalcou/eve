@@ -24,7 +24,6 @@ namespace eve
 
   template<typename T> concept relative_conditional_expr = conditional_expr<T> && requires(T a)
   {
-    { a.bitmap(eve::as_<eve::wide<int>>()) };
     { a.count(eve::as_<eve::wide<int>>())  };
     { a.offset(eve::as_<eve::wide<int>>()) };
     { a.roffset(eve::as_<eve::wide<int>>()) };

@@ -26,6 +26,6 @@ namespace eve::detail
   template<conditional_expr C, real_value U>
   EVE_FORCEINLINE auto bit_not_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
   {
-    return mask_op( EVE_CURRENT_API{}, cond, eve::bit_not, t);
+    return mask_op(  cond, eve::bit_not, t);
   }
 }

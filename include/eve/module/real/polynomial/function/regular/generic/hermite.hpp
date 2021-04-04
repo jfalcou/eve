@@ -81,7 +81,7 @@ namespace eve::detail
     auto p0 = one(as(x));
     auto iseqzn = is_eqz(nn);
     if(eve::all(iseqzn)) return p0;
-    auto p1 = add[if_not_(iseqzn)](x, x);
+    auto p1 = add[!iseqzn](x, x);
     auto n =  convert(nn, as<elt_t>());
     auto c = one(as(n));
     auto hermite_next = [](auto c,  auto x,  auto hn,  auto hnm1)

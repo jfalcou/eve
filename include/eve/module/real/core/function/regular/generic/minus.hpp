@@ -29,7 +29,7 @@ namespace eve::detail
   template<conditional_expr C, real_value U>
   EVE_FORCEINLINE auto minus_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
   {
-    return mask_op( EVE_CURRENT_API{}, cond, eve::minus, t);
+    return mask_op(  cond, eve::minus, t);
   }
 
   template<conditional_expr C, real_value U, real_value V>
@@ -37,6 +37,6 @@ namespace eve::detail
       requires compatible_values<U, V>
   {
     auto substract =  [](auto x, auto y){return x-y;};
-    return mask_op( EVE_CURRENT_API{}, cond, substract, t, f);
+    return mask_op(  cond, substract, t, f);
   }
 }

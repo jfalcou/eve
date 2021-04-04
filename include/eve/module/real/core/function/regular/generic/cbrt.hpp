@@ -76,7 +76,7 @@ namespace eve::detail
   template<conditional_expr C, floating_real_value U>
   EVE_FORCEINLINE auto cbrt_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
   {
-    return mask_op( EVE_CURRENT_API{}, cond, eve::cbrt, t);
+    return mask_op(  cond, eve::cbrt, t);
   }
 
 }

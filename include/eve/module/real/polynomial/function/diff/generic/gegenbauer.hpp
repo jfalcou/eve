@@ -25,7 +25,7 @@ namespace eve::detail
                                             , U const &x) noexcept
   requires index_compatible_values<N, T> && compatible_values<T, U>
   {
-    auto iseqzn = is_eqz(n); 
-    return if_else(iseqzn, zero, 2*l*gegenbauer(dec[if_not_(iseqzn)](n), inc(l), x));
+    auto iseqzn = is_eqz(n);
+    return if_else(iseqzn, zero, 2*l*gegenbauer(dec[!iseqzn](n), inc(l), x));
   }
 }

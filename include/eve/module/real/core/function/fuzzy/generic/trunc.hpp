@@ -76,6 +76,6 @@ namespace eve::detail
   template<conditional_expr C, real_value U>
   EVE_FORCEINLINE auto trunc_(EVE_SUPPORTS(cpu_), C const &cond, tolerant_type const &, U const &t) noexcept
   {
-    return mask_op( EVE_CURRENT_API{}, cond, tolerant(eve::trunc), t);
+    return mask_op(  cond, tolerant(eve::trunc), t);
   }
 }

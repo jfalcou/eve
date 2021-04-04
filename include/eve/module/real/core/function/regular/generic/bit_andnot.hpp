@@ -55,7 +55,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto bit_andnot_(EVE_SUPPORTS(cpu_), C const &cond, U const &t, V const &f) noexcept
       requires bit_compatible_values<U, V>
   {
-    return mask_op( EVE_CURRENT_API{}, cond, eve::bit_andnot, t, f);
+    return mask_op(  cond, eve::bit_andnot, t, f);
   }
 
   //================================================================================================

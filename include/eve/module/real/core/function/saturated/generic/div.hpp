@@ -100,7 +100,7 @@ namespace eve::detail
   div_(EVE_SUPPORTS(cpu_), C const &cond, saturated_type const &, U const &t, V const &f) noexcept
       requires compatible_values<U, V>
   {
-    return mask_op( EVE_CURRENT_API{}, cond, saturated(div), t, f);
+    return mask_op(  cond, saturated(div), t, f);
   }
 }
 

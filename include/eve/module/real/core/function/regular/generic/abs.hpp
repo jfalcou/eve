@@ -38,6 +38,6 @@ namespace eve::detail
   template<conditional_expr C, real_value U>
   EVE_FORCEINLINE auto abs_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
   {
-    return mask_op( EVE_CURRENT_API{}, cond, eve::abs, t);
+    return mask_op( cond, eve::abs, t);
   }
 }
