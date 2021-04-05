@@ -8,30 +8,47 @@
 #pragma once
 #include "test_distribution.hpp"
 #include "types.hpp"
+#include <eve/constant/inf.hpp>
+#include <eve/constant/minf.hpp>
+#include <eve/constant/maxflint.hpp>
+#include <eve/constant/mzero.hpp>
+#include <eve/constant/nan.hpp>
+#include <eve/constant/valmax.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/zero.hpp>
 #include <tuple>
 
 namespace eve::test
 {
   //================================================================================================
-  // Turn a list of sampels into the correct type
+  // Customization point for argument building
+  //================================================================================================
+  template<typename Sampler, typename Target>
+  auto get_arg(Sampler const& s, eve::as_<Target>)
+  {
+    return s;
+  }
+
+  template<typename T, std::size_t N, simd_value Target>
+  auto get_arg(std::array<T,N> const& p, eve::as_<Target>)
+  {
+    using type = as_wide_t< std::remove_cvref_t<decltype(*p.data())>, eve::cardinal_t<Target>>;
+    return type(p.data());
+  }
+
+  template<typename T, std::size_t N, scalar_value Target>
+  auto get_arg(std::array<T,N> const& p, eve::as_<Target>)
+  {
+    return static_cast<Target>(p.front());
+  }
+
+  //================================================================================================
+  // Turn a list of samples into the correct type
   //================================================================================================
   template<typename S, typename T, std::size_t... N>
-  auto make_args(S const& t, std::index_sequence<N...>, eve::as_<T>)
+  auto make_args(S const& t, std::index_sequence<N...>, eve::as_<T> tgt)
   {
-    auto constexpr get = [](auto const& p)
-    {
-      if constexpr( eve::simd_value<T> )
-      {
-        using type = as_wide_t< std::remove_cvref_t<decltype(*p.data())>, eve::cardinal_t<T>>;
-        return type(p.data());
-      }
-      else
-      {
-        return *p.data();
-      }
-    };
-
-    return std::make_tuple( get(std::get<N>(t))... );
+    return std::make_tuple( get_arg(std::get<N>(t), tgt)... );
   }
 
   //================================================================================================
@@ -127,6 +144,46 @@ namespace eve::test
       for(auto& e : d) e = val;
 
       return d;
+    };
+  }
+
+  //================================================================================================
+  // IEEE Special Constant value
+  //================================================================================================
+  inline auto limits()
+  {
+    return [=]<typename T>(eve::as_<T>, auto&)
+    {
+      return []()
+      {
+        if constexpr(eve::floating_real_value<T>)
+        {
+          struct values
+          {
+            using type  = T;
+            type nan       = eve::nan     (eve::as_<type>{});
+            type inf       = eve::inf     (eve::as_<type>{});
+            type minf      = eve::minf    (eve::as_<type>{});
+            type mzero     = eve::mzero   (eve::as_<type>{});
+            type maxflint  = eve::maxflint(eve::as_<type>{});
+            type valmax    = eve::valmax(eve::as_<type>{});
+            type valmin    = eve::valmin(eve::as_<type>{});
+          };
+
+          return values{};
+        }
+        else
+        {
+          struct values
+          {
+            using type  = T;
+            type valmax    = eve::valmax(eve::as_<type>{});
+            type valmin    = eve::valmin(eve::as_<type>{});
+          };
+
+          return values{};
+        }
+      }();
     };
   }
 
