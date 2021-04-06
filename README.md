@@ -2,7 +2,9 @@
 
 # EVE - the Expressive Vector Engine
 
-[![CircleCI](https://circleci.com/gh/jfalcou/eve/tree/develop.svg?style=svg&circle-token=341ef01f38a05865882565127a64f692f650fc7b)](https://circleci.com/gh/jfalcou/eve/tree/develop)
+[![E.V.E CI](https://github.com/jfalcou/eve/actions/workflows/main.yml/badge.svg)](https://github.com/jfalcou/eve/actions/workflows/main.yml)
+[![Licence](https://img.shields.io/github/license/jfalcou/eve?style=plastic)](https://img.shields.io/github/license/jfalcou/eve?style=plastic) 
+[![Discord](https://img.shields.io/discord/692734675726237696?style=plastic)](https://discord.com/channels/692734675726237696/692735259204124692) 
 
 ## Purpose
 
