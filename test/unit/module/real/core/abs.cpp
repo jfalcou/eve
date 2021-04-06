@@ -73,7 +73,7 @@ EVE_TEST( "Check behavior of eve::abs(eve::wide)"
                               , eve::test::logicals(0,3)
                               )
         )
-<typename T, typename M>(T const& a0, M const& mask )
+<typename T, typename M>(T const& a0, M const& mask)
 {
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
@@ -98,7 +98,7 @@ EVE_TEST( "Check behavior of eve::abs(scalar) - signed types"
 //==================================================================================================
 EVE_TEST( "Check behavior of eve::saturated(eve::abs)(eve::wide)"
         , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::randoms(minimal, eve::valmax)
+        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
                               , eve::test::logicals(0,3)
                               )
         )
@@ -131,7 +131,7 @@ EVE_TEST( "Check behavior of eve::saturated(eve::abs)(eve::wide)"
 
 EVE_TEST( "Check behavior of eve::saturated(eve::abs)(scalar)"
         , eve::test::scalar::all_types
-        , eve::test::generate ( eve::test::randoms(minimal, eve::valmax))
+        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax))
         )
 <typename T>(T const& a0)
 {
@@ -178,4 +178,44 @@ EVE_TEST( "Check behavior of eve::diff(eve::abs) on scalar"
   TTS_EQUAL ( eve::diff(eve::abs)(a0)
             , (a0 > 0 ? T(1) : (a0 < 0 ? T(-1) : T(0)))
             );
+};
+
+//==================================================================================================
+// Test for corner-cases values
+//==================================================================================================
+EVE_TEST( "Check corner-cases behavior of eve::abs variants on wide"
+        , eve::test::simd::all_types
+        , eve::test::generate(eve::test::limits())
+        )
+<typename T>(T const& cases)
+{
+  using type = typename T::type;
+
+  if constexpr( eve::floating_real_value<type> )
+  {
+    TTS_IEEE_EQUAL( eve::abs(cases.nan    ) , cases.nan   );
+    TTS_IEEE_EQUAL( eve::abs(cases.minf   ) , cases.inf   );
+    TTS_EQUAL     ( eve::abs(cases.mzero  ) , type(0)     );
+    TTS_EQUAL     ( eve::abs(cases.valmin ) , cases.valmax);
+    TTS_EQUAL     ( eve::abs(cases.valmax ) , cases.valmax);
+
+    TTS_IEEE_EQUAL( eve::saturated(eve::abs)(cases.nan    ) , cases.nan   );
+    TTS_IEEE_EQUAL( eve::saturated(eve::abs)(cases.minf   ) , cases.inf   );
+    TTS_EQUAL     ( eve::saturated(eve::abs)(cases.mzero  ) , type(0)     );
+    TTS_EQUAL     ( eve::saturated(eve::abs)(cases.valmin ) , cases.valmax);
+    TTS_EQUAL     ( eve::saturated(eve::abs)(cases.valmax ) , cases.valmax);
+  }
+  else
+  {
+    TTS_EQUAL( eve::abs(cases.valmin ) , cases.valmin);
+    TTS_EQUAL( eve::abs(cases.valmax ) , cases.valmax);
+
+    if constexpr( eve::signed_value<type> )
+      TTS_EQUAL( eve::saturated(eve::abs)(cases.valmin ) , cases.valmax);
+    else
+      TTS_EQUAL( eve::saturated(eve::abs)(cases.valmin ) , cases.valmin);
+
+    TTS_EQUAL( eve::saturated(eve::abs)(cases.valmax ) , cases.valmax);
+
+  }
 };
