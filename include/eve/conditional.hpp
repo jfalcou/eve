@@ -83,11 +83,6 @@ namespace eve
       return eve::as_logical_t<T>(false);
     }
 
-    template<typename T> EVE_FORCEINLINE auto mask_inverted(eve::as_<T> const&) const
-    {
-      return eve::as_logical_t<T>(true);
-    }
-
     template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as_<T> const&) const
     {
       return 0;
@@ -124,11 +119,6 @@ namespace eve
       return eve::as_logical_t<T>(true);
     }
 
-    template<typename T> EVE_FORCEINLINE auto mask_inverted(eve::as_<T> const&) const
-    {
-      return eve::as_logical_t<T>(false);
-    }
-
     template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as_<T> const&) const
     {
       return 0;
@@ -153,6 +143,64 @@ namespace eve
   inline constexpr ignore_none_  ignore_none = {};
 
   //================================================================================================
+  // Helper structure to encode keep the first N elements
+  //================================================================================================
+  struct keep_first
+  {
+    static constexpr bool has_alternative = false;
+    static constexpr bool is_inverted     = false;
+    static constexpr bool is_complete     = false;
+
+    constexpr explicit EVE_FORCEINLINE keep_first(std::ptrdiff_t n) noexcept : count_(n) {}
+
+    template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
+
+    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as_<T> const&) const
+    {
+      using abi_t = typename T::abi_type;
+      using type  = as_logical_t<T>;
+
+      if constexpr( !abi_t::is_wide_logical )
+      {
+        constexpr auto sz = cardinal_v<T> < 8 ? 8 : cardinal_v<T>;
+        using m_t = detail::make_integer_t<sz/8,unsigned>;
+        m_t mask = (count_ >= sz) ? m_t(~0ULL) : m_t((1ULL << count_) - 1);
+
+        return typename type::storage_type{mask};
+      }
+      else
+      {
+        using i_t = as_arithmetic_t<as_integer_t<T>>;
+        auto const m = detail::linear_ramp(eve::as_<i_t>()) < i_t(count_);
+
+        return bit_cast(m, as_<type>());
+      }
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, keep_first const& c)
+    {
+      return os << "keep_first( " << c.count_ << " )";
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as_<T> const&) const
+    {
+      return 0;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as_<T> const&) const
+    {
+      return cardinal_v<T> - count_;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as_<T> const&) const
+    {
+      return count_;
+    }
+
+    std::ptrdiff_t count_;
+  };
+
+  //================================================================================================
   // Helper structure to encode ignoring the last N elements
   //================================================================================================
   struct ignore_last
@@ -165,38 +213,10 @@ namespace eve
 
     template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
 
-    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as_<T> const& tgt) const
     {
-      using abi_t = typename T::abi_type;
-      using type  = as_logical_t<T>;
-
-      if constexpr( !abi_t::is_wide_logical )
-      {
-        constexpr auto card = cardinal_v<T>;
-        using m_t = detail::make_integer_t<(card < 8 ? 8 : card)/8,unsigned>;
-
-        constexpr m_t bits = card<64 ? (1ULL << card) - 1 : ~0ULL;
-        m_t mask = (count_ >= card) ? m_t(0) : ((m_t(bits << count_) & bits) >> count_);
-
-        return typename type::storage_type{mask};
-      }
-      else
-      {
-        constexpr std::ptrdiff_t card = cardinal_v<T>;
-        using i_t = as_arithmetic_t<as_integer_t<T>>;
-
-        auto const m = detail::linear_ramp(eve::as_<i_t>()) < (card-count_);
-        return bit_cast(m, as_<type>());
-      }
-    }
-
-    template<typename T> EVE_FORCEINLINE auto mask_inverted(eve::as_<T> const&) const
-    {
-      constexpr std::ptrdiff_t card = cardinal_v<T>;
-      using i_t = as_arithmetic_t<as_integer_t<T>>;
-
-      auto const m = detail::linear_ramp(eve::as_<i_t>()) >= (card-count_);
-      return bit_cast(m, as_<as_logical_t<T>>());
+      constexpr auto card = cardinal_v<T>;
+      return keep_first{card-count_}.mask(tgt);
     }
 
     friend std::ostream& operator<<(std::ostream& os, ignore_last const& c)
@@ -260,16 +280,6 @@ namespace eve
       }
     }
 
-    template<typename T> EVE_FORCEINLINE auto mask_inverted(eve::as_<T> const&) const
-    {
-      using i_t = as_arithmetic_t<as_integer_t<T>>;
-      constexpr std::ptrdiff_t card = cardinal_v<T>;
-
-      auto const m = detail::linear_ramp(eve::as_<i_t>()) < i_t(card-count_);
-
-      return bit_cast(m, as_<as_logical_t<T>>());
-    }
-
     friend std::ostream& operator<<(std::ostream& os, keep_last const& c)
     {
       return os << "keep_last( " << c.count_ << " )";
@@ -306,34 +316,10 @@ namespace eve
 
     template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
 
-    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as_<T> const& tgt) const
     {
-      using abi_t = typename T::abi_type;
-      using type  = as_logical_t<T>;
-
-      if constexpr( !abi_t::is_wide_logical )
-      {
-        constexpr auto sz = cardinal_v<T> < 8 ? 8 : cardinal_v<T>;
-        using m_t = detail::make_integer_t<sz/8,unsigned>;
-        m_t mask = (count_ >= sz) ? m_t(0) : m_t(~0ULL << count_);
-
-        return typename type::storage_type{mask};
-      }
-      else
-      {
-        using i_t = as_arithmetic_t<as_integer_t<T>>;
-        auto const m = detail::linear_ramp(eve::as_<i_t>()) >= i_t(count_);
-
-        return bit_cast(m, as_<type>());
-      }
-    }
-
-    template<typename T> EVE_FORCEINLINE auto mask_inverted(eve::as_<T> const&) const
-    {
-      using i_t = as_arithmetic_t<as_integer_t<T>>;
-      auto const m = detail::linear_ramp(eve::as_<i_t>()) < i_t(count_);
-
-      return bit_cast(m, as_<as_logical_t<T>>());
+      constexpr auto card = cardinal_v<T>;
+      return keep_last{card-count_}.mask(tgt);
     }
 
     template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as_<T> const&) const
@@ -354,72 +340,6 @@ namespace eve
     friend std::ostream& operator<<(std::ostream& os, ignore_first const& c)
     {
       return os << "ignore_first( " << c.count_ << " )";
-    }
-
-    std::ptrdiff_t count_;
-  };
-
-  //================================================================================================
-  // Helper structure to encode keep the first N elements
-  //================================================================================================
-  struct keep_first
-  {
-    static constexpr bool has_alternative = false;
-    static constexpr bool is_inverted     = false;
-    static constexpr bool is_complete     = false;
-
-    constexpr explicit EVE_FORCEINLINE keep_first(std::ptrdiff_t n) noexcept : count_(n) {}
-
-    template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
-
-    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as_<T> const&) const
-    {
-      using abi_t = typename T::abi_type;
-      using type  = as_logical_t<T>;
-
-      if constexpr( !abi_t::is_wide_logical )
-      {
-        constexpr auto sz = cardinal_v<T> < 8 ? 8 : cardinal_v<T>;
-        using m_t = detail::make_integer_t<sz/8,unsigned>;
-        m_t mask = (count_ >= sz) ? m_t(~0ULL) : m_t((1ULL << count_) - 1);
-
-        return typename type::storage_type{mask};
-      }
-      else
-      {
-        using i_t = as_arithmetic_t<as_integer_t<T>>;
-        auto const m = detail::linear_ramp(eve::as_<i_t>()) < i_t(count_);
-
-        return bit_cast(m, as_<type>());
-      }
-    }
-
-    template<typename T> EVE_FORCEINLINE auto mask_inverted(eve::as_<T> const&) const
-    {
-      using i_t = as_arithmetic_t<as_integer_t<T>>;
-      auto const m = detail::linear_ramp(eve::as_<i_t>()) >= i_t(count_);
-
-      return bit_cast(m, as_<as_logical_t<T>>());
-    }
-
-    friend std::ostream& operator<<(std::ostream& os, keep_first const& c)
-    {
-      return os << "keep_first( " << c.count_ << " )";
-    }
-
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as_<T> const&) const
-    {
-      return 0;
-    }
-
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as_<T> const&) const
-    {
-      return cardinal_v<T> - count_;
-    }
-
-    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as_<T> const&) const
-    {
-      return count_;
     }
 
     std::ptrdiff_t count_;
@@ -466,15 +386,6 @@ namespace eve
       }
     }
 
-    template<typename T> EVE_FORCEINLINE auto mask_inverted(eve::as_<T> const&) const
-    {
-      using i_t = as_arithmetic_t<as_integer_t<T>>;
-      auto const i = detail::linear_ramp(eve::as_<i_t>());
-      auto const m = (i < begin_) || (i >= end_);
-
-      return bit_cast(m, as_<as_logical_t<T>>());
-    }
-
     template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as_<T> const&) const
     {
       return begin_;
@@ -513,38 +424,13 @@ namespace eve
 
     template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
 
-    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as_<T> const& tgt) const
     {
-      using abi_t = typename T::abi_type;
-      using type  = as_logical_t<T>;
+      EVE_ASSERT( (first_count_ + last_count_) <= cardinal_v<T>
+                , "[eve::ignore_extrema] Index mismatch for first/last"
+                );
 
-      if constexpr( !abi_t::is_wide_logical )
-      {
-        constexpr auto sz = cardinal_v<T> < 8 ? 8 : cardinal_v<T>;
-        auto const cnt = (cardinal_v<T>-last_count_) - first_count_;
-        using m_t = detail::make_integer_t<sz/8,unsigned>;
-
-        m_t mask = (cnt >= sz) ? m_t(~0ULL) : m_t(((1ULL << cnt) - 1) << first_count_);
-            mask = (cnt < 0) ? m_t(0) : mask;
-        return typename type::storage_type{mask};
-      }
-      else
-      {
-        using i_t = as_arithmetic_t<as_integer_t<T>>;
-        auto const i = detail::linear_ramp(eve::as_<i_t>());
-        auto const m = (i >= first_count_) && (i < (cardinal_v<T>-last_count_));
-
-        return bit_cast(m, as_<type>());
-      }
-    }
-
-    template<typename T> EVE_FORCEINLINE auto mask_inverted(eve::as_<T> const&) const
-    {
-      using i_t = as_arithmetic_t<as_integer_t<T>>;
-      auto const i = detail::linear_ramp(eve::as_<i_t>());
-      auto const m = (i < first_count_) || (i >= (cardinal_v<T>-last_count_));
-
-      return bit_cast(m, as_<as_logical_t<T>>());
+      return keep_between(first_count_, cardinal_v<T>-last_count_).mask(tgt);
     }
 
     template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as_<T> const&) const

@@ -11,7 +11,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/function/simd/common/conditional.hpp>
+#include <eve/detail/function/conditional.hpp>
 #include <eve/function/add.hpp>
 
 namespace eve::detail
