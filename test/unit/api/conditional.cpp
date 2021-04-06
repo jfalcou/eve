@@ -219,36 +219,19 @@ EVE_TEST_TYPES( "ignore_first/last behavior", eve::test::simd::all_types)
 
   TTS_EXPR_IS( ((ignore_first(1) && ignore_last(0)).mask( as_<type>() )), logical<type> );
 
-  // Check that ignore_first(i) === ignore_first(i) && ignore_last(0)
-  for(std::size_t i = 0;i <= type::static_size; i++)
-  {
-    auto mref  = ignore_first(i).mask(as_<type>());
-    type ref   = if_else(ignore_first(i), value, type(69));
-
-    TTS_EQUAL( (ignore_first(i) && ignore_last(0)).mask(as_<type>()).bits(), mref.bits() );
-    TTS_EQUAL( (if_else(ignore_first(i) && ignore_last(0),value, type(69))), ref);
-  }
-
-  // Check that ignore_last(i) === ignore_first(0) && ignore_last(i)
-  for(std::size_t i = 0;i <= type::static_size; i++)
-  {
-    auto mref  = ignore_last(i).mask(as_<type>());
-    type ref   = if_else(ignore_last(i), value, type(69));
-
-    TTS_EQUAL( (ignore_first(0) && ignore_last(i)).mask(as_<type>()).bits(), mref.bits() );
-    TTS_EQUAL( (if_else(ignore_first(0) && ignore_last(i),value, type(69))), ref);
-  }
-
   // All masks combo
-  for(std::size_t fi = 1;fi <= type::static_size;fi++)
+  for(std::size_t li = 0;li <=type::static_size;li++)
   {
-    for(std::size_t li = 1;li <= type::static_size;li++)
+    for(std::size_t fi =0;fi <=type::static_size;fi++)
     {
       auto mref  = ignore_first(fi).mask(as_<type>()) && ignore_last(li).mask(as_<type>());
       type ref   = if_else(mref, value,  type(69));
 
-      TTS_EQUAL( (ignore_first(fi) && ignore_last(li)).mask(as_<type>()).bits(), mref.bits() );
-      TTS_EQUAL( (if_else(ignore_first(fi) && ignore_last(li),value, type(69))), ref);
+      if(fi+li <= type::static_size)
+      {
+        TTS_EQUAL( (ignore_first(fi) && ignore_last(li)).mask(as_<type>()).bits(), mref.bits() );
+        TTS_EQUAL( (if_else(ignore_first(fi) && ignore_last(li),value, type(69))), ref);
+      }
     }
   }
 };
