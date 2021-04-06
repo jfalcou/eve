@@ -36,7 +36,11 @@ namespace eve::detail
     else  if constexpr(c == category::int32x4 )
     {
       if constexpr(current_api >= ssse3 )           return _mm_abs_epi32(v);
-      else                                          return (v ^ (v >> 31)) - (v >> 31);
+      else
+      {
+        auto s = _mm_srai_epi32(v,31);
+        return wide<T, N, ABI>{_mm_sub_epi32(_mm_xor_si128(v,s),s)};
+      }
     }
     else  if constexpr(c == category::int16x32)     return _mm512_abs_epi16(v);
     else  if constexpr(c == category::int16x16 )
@@ -47,7 +51,7 @@ namespace eve::detail
     else  if constexpr(c == category::int16x8 )
     {
       if constexpr(current_api >= ssse3 )           return _mm_abs_epi16(v);
-      else                                          return (v ^ (v >> 15)) - (v >> 15);
+      else                                          return _mm_max_epi16(v,-v);
     }
     else  if constexpr(c == category::int8x64 )     return _mm512_abs_epi8(v);
     else  if constexpr(c == category::int8x32 )
