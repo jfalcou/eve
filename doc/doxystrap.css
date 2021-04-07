@@ -1,0 +1,576 @@
+@import url("https://fonts.googleapis.com/css?family=Source+Code+Pro:500");
+
+h1, .h1, h2, .h2, h3, .h3{
+  font-weight: 200 !important;
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+  min-height: 100%;
+  height: auto;
+  /* Negative indent footer by its height */
+  margin: 0 auto -60px;
+  /* Pad bottom by footer height */
+  padding: 0 0 60px;
+}
+
+/* Set the fixed height of the footer here */
+#footer {
+  font-size: 0.9em;
+  padding: 8px 0px;
+  background-color: #f5f5f5;
+}
+
+.footer-row {
+  line-height: 44px;
+}
+
+#footer > .container {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.footer-follow-icon {
+  margin-left: 3px;
+  text-decoration: none !important;
+}
+
+.footer-follow-icon img {
+  width: 20px;
+}
+
+.footer-link {
+  padding-top: 5px;
+  display: inline-block;
+  color: #999999;
+  text-decoration: none;
+}
+
+.footer-copyright {
+  text-align: center;
+}
+
+
+@media (min-width: 992px) {
+  .footer-row {
+    text-align: left;
+  }
+
+  .footer-icons {
+    text-align: right;
+  }
+}
+@media (max-width: 991px) {
+  .footer-row {
+    text-align: center;
+  }
+
+  .footer-icons {
+    text-align: center;
+  }
+}
+
+/* DOXYGEN Code Styles
+----------------------------------- */
+
+
+a.qindex {
+  font-weight: bold;
+}
+
+a.qindexHL {
+  font-weight: bold;
+  background-color: #9CAFD4;
+  color: #ffffff;
+  border: 1px double #869DCA;
+}
+
+.contents a.qindexHL:visited {
+  color: #ffffff;
+}
+
+a.code, a.code:visited, a.code:hover, a.line, a.line:visited {
+  color: #E74C3C;
+  font-weight: bold;
+}
+
+a.codeRef, a.codeRef:visited, a.lineRef, a.lineRef:visited {
+  color: #E74C3C;
+  font-weight: bold;
+}
+
+table a, .table a {
+  text-decoration: none !important;
+  font-weight: bold !important;
+}
+
+/* @end */
+
+dl.el {
+  margin-left: -1cm;
+}
+
+pre.fragment {
+  border: 1px solid transparent;
+  background-color: #F8F8F8;
+  padding: 12px 12px;
+  margin: 12px 8px 12px 2px;
+  overflow: auto;
+  word-wrap: break-word;
+  font-size:  9pt;
+  line-height: 125%;
+  font-family: monospace, fixed;
+  font-size: 105%;
+}
+
+div.fragment {
+  padding: 12px 12px;
+  margin: 12px 8px 12px 2px;
+  border: 1px solid transparent;
+  background-color: #F8F8F8;
+  overflow-x: auto;
+}
+
+div.line {
+  font-family: 'Source Code Pro', monospace, fixed;
+  color: #2C3E50;
+  font-size: 13px;
+  min-height: 13px;
+  line-height: 1.2;
+  white-space: pre;
+  text-indent: -53px;
+  padding-left: 53px;
+  padding-bottom: 0px;
+  margin: 0px;
+  -webkit-transition-property: background-color, box-shadow;
+  -webkit-transition-duration: 0.5s;
+  -moz-transition-property: background-color, box-shadow;
+  -moz-transition-duration: 0.5s;
+  -ms-transition-property: background-color, box-shadow;
+  -ms-transition-duration: 0.5s;
+  -o-transition-property: background-color, box-shadow;
+  -o-transition-duration: 0.5s;
+  transition-property: background-color, box-shadow;
+  transition-duration: 0.5s;
+}
+
+div.line.glow {
+  background-color: cyan;
+  box-shadow: 0 0 10px cyan;
+}
+
+
+span.lineno {
+  padding-right: 4px;
+  text-align: right;
+  border-right: 2px solid #18BC9C;
+  background-color: #F8F8F8;
+  white-space: pre;
+}
+span.lineno a {
+  background-color: #D8D8D8;
+}
+
+span.lineno a:hover {
+  background-color: #C8C8C8;
+}
+
+div.groupHeader {
+  margin-left: 16px;
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+div.groupText {
+  margin-left: 16px;
+  font-style: italic;
+}
+
+/* @group Code Colorization */
+
+span.keyword {
+  color: #2C3E50;
+  font-weight: bold;
+}
+
+span.keywordtype {
+  color: #2C3E50;
+  font-weight: bold;
+}
+
+span.keywordflow {
+  color: #2C3E50;
+  font-weight: bold;
+}
+
+span.comment {
+  color: #2C3E50;
+  font-style: italic;
+}
+
+span.preprocessor {
+  color: #2C3E50
+}
+
+span.stringliteral {
+  color: #3498DB;
+}
+
+span.charliteral {
+  color: #3498DB
+}
+
+span.vhdldigit {
+  color: #ff00ff
+}
+
+span.vhdlchar {
+  color: #000000
+}
+
+span.vhdlkeyword {
+  color: #700070
+}
+
+span.vhdllogic {
+  color: #ff0000
+}
+
+blockquote {
+  background-color: #F7F8FB;
+  border-left: 2px solid #9CAFD4;
+  margin: 0 24px 0 4px;
+  padding: 0 12px 0 16px;
+}
+
+/*---------------- Search Box */
+
+#search-box {
+  margin: 10px 0px;
+}
+#search-box .close {
+  display: none;
+  position: absolute;
+  right: 0px;
+  padding: 6px 12px;
+  z-index: 5;
+}
+
+/*---------------- Search results window */
+
+#search-results-window {
+  display: none;
+}
+
+iframe#MSearchResults {
+  width: 100%;
+  height: 15em;
+}
+
+.SRChildren {
+  padding-left: 3ex; padding-bottom: .5em
+}
+.SRPage .SRChildren {
+  display: none;
+}
+a.SRScope {
+  display: block;
+}
+a.SRSymbol:focus, a.SRSymbol:active,
+a.SRScope:focus, a.SRScope:active {
+  text-decoration: underline;
+}
+span.SRScope {
+  padding-left: 4px;
+}
+.SRResult {
+  display: none;
+}
+
+/* class and file list */
+
+.table > tbody > tr > td.memSeparator {
+  line-height: 0;
+}
+.memItemLeft, .memTemplItemLeft {
+  white-space: normal;
+}
+
+
+/* todo lists */
+.todoname,
+.todoname a {
+  font-weight: bold;
+}
+
+/* Add this to ensure the reference title do not wrap around the citation index in bibliography */
+dl.citelist dd {
+  display:block;
+  overflow:hidden;
+}
+
+/* Set this margin to zero for improved aesthetics in bibliography */
+p.startli, p.startdd {
+  margin-top: 0px;
+}
+
+/* This change ensures the list of function parameters are all in the same line */
+.memname tr {
+  float: left;
+}
+
+/* Center the dot diagrams */
+.dyncontent {
+  text-align: center;
+}
+
+h2.memtitle {
+  font-size: xx-large;
+  font-weight: bold;
+  width: 100%;
+}
+
+address.footer {
+  text-align: right;
+  padding-right: 12px;
+}
+
+img.footer {
+  border: 0px;
+  vertical-align: middle;
+}
+
+#projectlogo
+{
+  text-align: center;
+  vertical-align: bottom;
+  border-collapse: separate;
+}
+
+#projectlogo img
+{
+  border: 0px none;
+}
+
+#projectalign
+{
+  vertical-align: middle;
+}
+
+#projectname
+{
+  font-size: 500%;
+  margin: 0px;
+  padding: 2px 0px;
+}
+
+#projectbrief
+{
+  font-size: 250%;
+  margin: 0px;
+  padding: 0px;
+}
+
+#projectnumber
+{
+  font-size: 30%;
+  margin: 0px;
+  padding: 0px;
+}
+
+#titlearea
+{
+  padding: 0px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  width: 100%;
+  border-bottom: none;
+}
+
+.paramname {
+  font-style: italic;
+  white-space: nowrap;
+}
+.paramname em {
+  font-style: normal;
+}
+.paramname code {
+  line-height: 14px;
+}
+
+.span.icon.badge {
+  display: inline;
+}
+
+.icona {
+  margin-right: 10px;
+  text-align: center;
+}
+
+.arrow {
+  cursor: pointer;
+  font-size: small;
+  display: inline-block;
+  width: 16px;
+  height: 22px;
+}
+
+
+div.qindex, div.navtab{
+  text-align: center;
+  font-variant-caps: small-caps;
+  font-size: larger;
+  margin-bottom: 20px
+}
+
+div.qindex, div.navpath {
+  width: 100%;
+  line-height: 140%;
+}
+
+
+a.qindex {
+  font-weight: bold;
+}
+
+a.qindexHL {
+  font-weight: bold;
+
+}
+
+div.classindex ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+div.classindex span.ai {
+  display: inline-block;
+}
+
+.inherit_header {
+  font-weight: bold;
+  color: gray;
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.inherit_header td {
+  padding: 6px 0px 2px 5px;
+}
+
+.inherit {
+  display: none;
+}
+
+div.panel-heading {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+td.entry {
+  vertical-align: middle;
+}
+
+span.icon.badge {
+  vertical-align: text-bottom;
+}
+
+.summary {
+  text-align: right;
+}
+
+.ingroups .el {
+  font-size: small;
+  font-weight: bold;
+}
+
+/* Corrent memtitle with versions v1.8.11+ of Doxygen */
+.memtitle {
+    padding: 8px;
+    border-top: unset;
+    border-left: unset;
+    border-right: unset;
+    border-top-right-radius: unset;
+    border-top-left-radius: unset;
+    margin-bottom: unset;
+    background-image: unset;
+    background-repeat: unset;
+    background-color: unset;
+    line-height: unset;
+    font-weight: unset;
+    float: unset;
+  }
+
+.icon {
+  height: unset;
+  width: unset;
+  margin-left: unset;
+  margin-right: unset;
+}
+
+.directory .levels span {
+  color: white
+}
+
+/**************************** EVE CSS ********************************/
+
+.nav-pills > .active > a, .nav-pills > .active > a:hover {
+  background-color: #b6d7a8 !important;
+}
+
+a {
+  color: #38751d !important;
+}
+a:hover,
+a:focus {
+  color: #1f4211 !important;
+}
+
+td.navtabHL a, td.navtabHL a:visited {
+  color: #fff !important;
+  text-shadow: 0px 1px 1px rgb(1 1 1);
+}
+
+.btn-primary:focus, .btn-primary:hover {
+  background-color: #b6d7a8 !important;
+}
+
+.btn-primary.focus, .btn-primary:focus {
+  color: #fff !important;
+  background-color: #b6d7a8 !important;
+  border-color: #3c763d !important;
+}
+
+.btn-primary {
+  background-image: -webkit-linear-gradient(top,#b6d7a8 0,#b6d7a8 100%) !important;
+  background-image: -o-linear-gradient(top,#b6d7a8 0,#b6d7a8 100%) !important;
+  background-image: -webkit-gradient(linear,left top,left bottom,from(#b6d7a8),to(#b6d7a8)) !important;
+  background-color: #b6d7a8 !important;
+  border-color: #75a163 !important;
+}
+
+.form-control:focus {
+  border-color: #5cb85c !important;
+  -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(92 184 92 / 60%) !important;
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px #5cb85c91; !important
+}
+
+.label-info {
+  background-color: #5cb85c !important;
+}
+
+div.navtab {
+  visibility: hidden !important;
+  width: 0px !important;
+}
+
+code {
+  font-size: 100% !important;
+  color: #3c763d !important;
+  background-color: #b6d7a83b !important;
+}

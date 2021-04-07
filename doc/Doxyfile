@@ -1,0 +1,104 @@
+# Doxyfile 1.8.20
+
+#---------------------------------------------------------------------------
+# Project related configuration options
+#---------------------------------------------------------------------------
+PROJECT_NAME           = "E.V.E"
+PROJECT_NUMBER         = 0.1-beta
+PROJECT_BRIEF          = "The Expressive Vector Engine"
+PROJECT_LOGO           = logo.png
+OUTPUT_DIRECTORY       = docs
+CREATE_SUBDIRS         = NO
+INLINE_INHERITED_MEMB  = YES
+FULL_PATH_NAMES        = YES
+STRIP_FROM_PATH        =
+STRIP_FROM_INC_PATH    =
+INHERIT_DOCS           = YES
+SEPARATE_MEMBER_PAGES  = YES
+TAB_SIZE               = 2
+ALIASES                =
+MARKDOWN_SUPPORT       = YES
+TYPEDEF_HIDES_STRUCT   = NO
+NUM_PROC_THREADS       = 1
+
+#---------------------------------------------------------------------------
+# Build related configuration options
+#---------------------------------------------------------------------------
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = NO
+EXTRACT_STATIC         = NO
+EXTRACT_LOCAL_CLASSES  = YES
+EXTRACT_LOCAL_METHODS  = NO
+EXTRACT_ANON_NSPACES   = NO
+HIDE_UNDOC_MEMBERS     = NO
+HIDE_UNDOC_CLASSES     = NO
+HIDE_FRIEND_COMPOUNDS  = NO
+HIDE_IN_BODY_DOCS      = NO
+INTERNAL_DOCS          = NO
+CASE_SENSE_NAMES       = YES
+HIDE_SCOPE_NAMES       = NO
+HIDE_COMPOUND_REFERENCE= NO
+SHOW_INCLUDE_FILES     = YES
+SHOW_GROUPED_MEMB_INC  = YES
+SORT_MEMBERS_CTORS_1ST = YES
+SORT_GROUP_NAMES       = YES
+GENERATE_TODOLIST      = NO
+GENERATE_TESTLIST      = NO
+GENERATE_BUGLIST       = NO
+GENERATE_DEPRECATEDLIST= YES
+ENABLED_SECTIONS       =
+SHOW_USED_FILES        = NO
+SHOW_FILES             = NO
+SHOW_NAMESPACES        = YES
+QUIET                  = NO
+WARNINGS               = YES
+WARN_IF_UNDOCUMENTED   = YES
+INPUT                  = ../include
+INPUT                 += .
+RECURSIVE              = YES
+EXCLUDE                = ../include/eve/detail
+EXCLUDE_SYMBOLS        = detail
+EXAMPLE_PATH           = ../test
+EXAMPLE_PATH          += ../docs/reference/out
+
+#---------------------------------------------------------------------------
+# Configuration options related to source browsing
+#---------------------------------------------------------------------------
+SOURCE_BROWSER         = NO
+VERBATIM_HEADERS       = NO
+
+#---------------------------------------------------------------------------
+# Configuration options related to the alphabetical class index
+#---------------------------------------------------------------------------
+ALPHABETICAL_INDEX     = YES
+
+#---------------------------------------------------------------------------
+# Configuration options related to the HTML output
+#---------------------------------------------------------------------------
+GENERATE_HTML          = YES
+
+HTML_HEADER            = doxystrap-header.html
+HTML_FOOTER            = doxystrap-footer.html
+HTML_EXTRA_STYLESHEET  = doxystrap.css
+HTML_EXTRA_FILES       = doxystrap.js
+HTML_COLORSTYLE_HUE    = 90
+HTML_COLORSTYLE_SAT    = 74
+HTML_COLORSTYLE_GAMMA  = 80
+HTML_TIMESTAMP         = YES
+HTML_DYNAMIC_MENUS     = NO
+HTML_DYNAMIC_SECTIONS  = NO
+ENUM_VALUES_PER_LINE   = 4
+
+USE_MATHJAX            = YES
+MATHJAX_FORMAT         = HTML-CSS
+MATHJAX_RELPATH        = https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1
+MATHJAX_EXTENSIONS     =
+SEARCHENGINE           = YES
+
+ENABLE_PREPROCESSING   = YES
+MACRO_EXPANSION        = YES
+INCLUDE_PATH           = ../include
+PREDEFINED             =
+EXPAND_AS_DEFINED      =
+SKIP_FUNCTION_MACROS   = YES
+CLASS_DIAGRAMS         = NO
