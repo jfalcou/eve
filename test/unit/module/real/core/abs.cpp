@@ -69,7 +69,7 @@ EVE_TEST_TYPES( "Check return types of eve::abs(wide)", eve::test::simd::all_typ
 //==================================================================================================
 EVE_TEST( "Check behavior of eve::abs(eve::wide)"
         , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::randoms(minimal, eve::valmax)
+        , eve::test::generate ( eve::test::randoms(-10, +10)
                               , eve::test::logicals(0,3)
                               )
         )
@@ -86,11 +86,15 @@ EVE_TEST( "Check behavior of eve::abs(scalar) - signed types"
         , eve::test::scalar::all_types
         , eve::test::generate(eve::test::randoms(minimal, eve::valmax))
         )
-<typename T>(T const& a0 )
+<typename T>(T const& data )
 {
-  TTS_EQUAL(eve::abs(a0), (a0 > 0 ? T(a0) : T(-a0)) );
-  TTS_EQUAL(eve::abs[true ](a0), eve::abs(a0)       );
-  TTS_EQUAL(eve::abs[false](a0), a0                 );
+  using type = typename T::value_type;
+  for(auto a0 :data)
+  {
+    TTS_EQUAL(eve::abs(a0), (a0 > 0 ? type(a0) : type(-a0)) );
+    TTS_EQUAL(eve::abs[true ](a0), eve::abs(a0)             );
+    TTS_EQUAL(eve::abs[false](a0), a0                       );
+  }
 };
 
 //==================================================================================================
@@ -133,21 +137,25 @@ EVE_TEST( "Check behavior of eve::saturated(eve::abs)(scalar)"
         , eve::test::scalar::all_types
         , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax))
         )
-<typename T>(T const& a0)
+<typename T>(T const& data)
 {
-  if constexpr(std::is_signed_v<T>)
+  using type = typename T::value_type;
+  for(auto a0 : data)
   {
-    TTS_EQUAL ( eve::saturated(eve::abs)(a0)
-              , (a0 == eve::valmin(eve::as(a0)) ? eve::valmax(eve::as(a0)) : eve::abs(a0))
-              );
-  }
-  else
-  {
-    TTS_EQUAL(eve::saturated(eve::abs)(a0), a0);
-  }
+    if constexpr(std::is_signed_v<type>)
+    {
+      TTS_EQUAL ( eve::saturated(eve::abs)(a0)
+                , (a0 == eve::valmin(eve::as(a0)) ? eve::valmax(eve::as(a0)) : eve::abs(a0))
+                );
+    }
+    else
+    {
+      TTS_EQUAL(eve::saturated(eve::abs)(a0), a0);
+    }
 
-  TTS_EQUAL(eve::saturated(eve::abs[true ])(a0), eve::saturated(eve::abs)(a0) );
-  TTS_EQUAL(eve::saturated(eve::abs[false])(a0), a0                           );
+    TTS_EQUAL(eve::saturated(eve::abs[true ])(a0), eve::saturated(eve::abs)(a0) );
+    TTS_EQUAL(eve::saturated(eve::abs[false])(a0), a0                           );
+  }
 };
 
 //==================================================================================================
@@ -171,13 +179,17 @@ EVE_TEST( "Check behavior of eve::diff(eve::abs) on scalar"
         , eve::test::scalar::ieee_reals
         , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
         )
-<typename T>(T const& a0 )
+<typename T>(T const& data )
 {
   using eve::detail::map;
 
-  TTS_EQUAL ( eve::diff(eve::abs)(a0)
-            , (a0 > 0 ? T(1) : (a0 < 0 ? T(-1) : T(0)))
-            );
+  using type = typename T::value_type;
+  for(auto a0 : data)
+  {
+    TTS_EQUAL ( eve::diff(eve::abs)(a0)
+              , (a0 > 0 ? type(1) : (a0 < 0 ? type(-1) : type(0)))
+              );
+  }
 };
 
 //==================================================================================================

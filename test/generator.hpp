@@ -21,6 +21,18 @@
 namespace eve::test
 {
   //================================================================================================
+  // Customization point for the size of data tobe geenrated
+  //================================================================================================
+  template<typename T> constexpr std::size_t amount()
+  {
+    using card_t = eve::cardinal_t<T>;
+    if constexpr( std::same_as<card_t, eve::scalar_cardinal>)
+      return eve::expected_cardinal_v<T>;
+    else
+      return card_t::value;
+  }
+
+  //================================================================================================
   // Customization point for argument building
   //================================================================================================
   template<typename Sampler, typename Target>
@@ -39,7 +51,9 @@ namespace eve::test
   template<typename T, std::size_t N, scalar_value Target>
   auto get_arg(std::array<T,N> const& p, eve::as_<Target>)
   {
-    return static_cast<Target>(p.front());
+    std::array<Target,N> that;
+    for(std::size_t i=0;i<N;++i) that[i] = static_cast<Target>(p[i]);
+    return that;
   }
 
   //================================================================================================
@@ -61,15 +75,6 @@ namespace eve::test
   }
 
   //================================================================================================
-  // no-data generator - used to propagate types only
-  //================================================================================================
-  inline auto const no_data = []<typename T>(eve::as_<T>, auto&)
-  {
-    using d_t = std::array<eve::element_type_t<T>,eve::cardinal_v<T>>;
-    return d_t{};
-  };
-
-  //================================================================================================
   // Turn a generator into a integral generator
   //================================================================================================
   template<typename G> inline auto as_integer(G g)
@@ -84,8 +89,8 @@ namespace eve::test
   {
     return  [=]<typename T>(eve::as_<T>, auto&)
             {
-              std::array<eve::element_type_t<T>, eve::cardinal_v<T>> d;
-              for(std::ptrdiff_t i = 0;i<T::size();++i) d[i] = v+i;
+              std::array<eve::element_type_t<T>, amount<T>()> d;
+              for(std::ptrdiff_t i = 0;i<amount<T>();++i) d[i] = v+i;
               return d;
             };
   }
@@ -95,10 +100,10 @@ namespace eve::test
     return  [=]<typename T>(eve::as_<T>, auto&)
             {
               using elt_t = element_type_t<T>;
-              auto n = eve::cardinal_v<T>-1;
+              auto n = amount<T>()-1;
               elt_t a = n ? elt_t((v2-v1))/n : elt_t(0);
-              std::array<elt_t, eve::cardinal_v<T>> d;
-              for(std::ptrdiff_t i = 0;i<T::size();++i) d[i] = a*i+v1;
+              std::array<elt_t, amount<T>()> d;
+              for(std::ptrdiff_t i = 0;i<amount<T>();++i) d[i] = a*i+v1;
               return d;
             };
   }
@@ -110,8 +115,8 @@ namespace eve::test
   {
     return  [=]<typename T>(eve::as_<T>, auto&)
             {
-              std::array<eve::logical<eve::element_type_t<T>>,eve::cardinal_v<T>> d;
-              for(std::ptrdiff_t i = 0;i<T::size();++i) d[i] = ((v+i)%k) == 0;
+              std::array<eve::logical<eve::element_type_t<T>>,amount<T>()> d;
+              for(std::ptrdiff_t i = 0;i<amount<T>();++i) d[i] = ((v+i)%k) == 0;
               return d;
             };
   }
@@ -125,7 +130,7 @@ namespace eve::test
     {
       using e_t = eve::element_type_t<T>;
       eve::prng<e_t> dist(as_value(mn,as_<e_t>{}),as_value(mx,as_<e_t>{}));
-      std::array<e_t,eve::cardinal_v<T>> d;
+      std::array<e_t,amount<T>()> d;
       std::for_each(d.begin(),d.end(), [&](auto& e) { e = dist(gen); });
       return d;
     };
@@ -138,7 +143,7 @@ namespace eve::test
   {
     return [=]<typename T>(eve::as_<T> tgt, auto&)
     {
-      std::array<eve::element_type_t<T>,eve::cardinal_v<T>> d;
+      std::array<eve::element_type_t<T>,amount<T>()> d;
       auto val = as_value(v,tgt);
 
       for(auto& e : d) e = val;
