@@ -8,7 +8,7 @@
 #include "test.hpp"
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
-#include <eve/function/swap_adjacent_group.hpp>
+#include <eve/function/swap_adjacent_groups.hpp>
 #include <bit>
 
 //==================================================================================================
@@ -31,12 +31,12 @@ EVE_TEST( "Check behavior of SWAGs swizzle"
               constexpr std::size_t sz = 1ULL << N;
               S ref = [=](auto i, auto c)
               {
-                constexpr auto p = eve::swap_adjacent_group_n<sz,S::size()>;
+                constexpr auto p = eve::swap_adjacent_groups_n<sz,S::size()>;
                 return simd.get(p(i,c));
               };
 
-              TTS_EQUAL( (simd[eve::swap_adjacent_group_n<sz,S::size()>]) , ref);
-              TTS_EQUAL( eve::swap_adjacent_group(simd, eve::lane<sz>)    , ref);
+              TTS_EQUAL( (simd[eve::swap_adjacent_groups_n<sz,S::size()>]) , ref);
+              TTS_EQUAL( eve::swap_adjacent_groups(simd, eve::lane<sz>)    , ref);
             };
 
     ( f(data    , std::integral_constant<std::size_t,I>{}), ... );

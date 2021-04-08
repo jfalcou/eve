@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/function/swap_adjacent_group.hpp>
+#include <eve/detail/function/swap_adjacent_groups.hpp>

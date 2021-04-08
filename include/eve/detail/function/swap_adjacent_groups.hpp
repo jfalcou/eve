@@ -16,13 +16,13 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(swap_adjacent_group_, swap_adjacent_group);
+  EVE_MAKE_CALLABLE(swap_adjacent_groups_, swap_adjacent_groups);
 
   //================================================================================================
   // Premade pattern generator
   template<std::ptrdiff_t G, std::ptrdiff_t N>
   inline constexpr
-  auto swap_adjacent_group_n = fix_pattern<N> ( [](auto i, auto)
+  auto swap_adjacent_groups_n = fix_pattern<N> ( [](auto i, auto)
                                               {
                                                 if(G!=N)  return (i+G)%(G*2) + (G*2)*(i/(G*2));
                                                 else      return i;
@@ -37,7 +37,7 @@ namespace eve
     constexpr auto sz = sizeof...(I);
     constexpr auto x = []<std::size_t... N>( std::index_sequence<N...> )
     {
-      return std::make_tuple(swap_adjacent_group_n<sz/(1<<(N+1)),sz>... );
+      return std::make_tuple(swap_adjacent_groups_n<sz/(1<<(N+1)),sz>... );
     }(std::make_index_sequence<std::bit_width(sz)-1>{});
 
     // Find the fitting one
@@ -46,16 +46,16 @@ namespace eve
   }();
 }
 
-#include <eve/detail/function/simd/common/swap_adjacent_group.hpp>
+#include <eve/detail/function/simd/common/swap_adjacent_groups.hpp>
 
 #if defined(EVE_HW_X86)
-#  include <eve/detail/function/simd/x86/swap_adjacent_group.hpp>
+#  include <eve/detail/function/simd/x86/swap_adjacent_groups.hpp>
 #endif
 
 #if defined(EVE_HW_ARM)
-#  include <eve/detail/function/simd/arm/neon/swap_adjacent_group.hpp>
+#  include <eve/detail/function/simd/arm/neon/swap_adjacent_groups.hpp>
 #endif
 
 #if defined(EVE_HW_POWERPC)
-#  include <eve/detail/function/simd/ppc/swap_adjacent_group.hpp>
+#  include <eve/detail/function/simd/ppc/swap_adjacent_groups.hpp>
 #endif

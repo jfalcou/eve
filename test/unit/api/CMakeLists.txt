@@ -25,7 +25,7 @@ make_unit("unit.api"  shift.cpp                       )
 make_unit("unit.api"  wide.cpp                        )
 make_unit("unit.api"  swizzle/broadcast.cpp           )
 make_unit("unit.api"  swizzle/identity.cpp            )
-make_unit("unit.api"  swizzle/swap_adjacent_group.cpp )
+make_unit("unit.api"  swizzle/swap_adjacent_groups.cpp )
 make_unit("unit.api"  swizzle/zero.cpp                )
 
 ##==================================================================================================

@@ -13,7 +13,7 @@
 namespace eve::detail
 {
   template<real_scalar_value T, typename N, ppc_abi ABI, std::ptrdiff_t G>
-  EVE_FORCEINLINE wide<T,N,ABI> swap_adjacent_group_( EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE wide<T,N,ABI> swap_adjacent_groups_( EVE_SUPPORTS(cpu_)
                                                     , wide<T,N,ABI> v, fixed<G>
                                                     ) noexcept
   requires(G<=N::value)
@@ -27,7 +27,7 @@ namespace eve::detail
     else
     {
       /// TODO: Maybe there's better than just vec_perm ??
-      return basic_swizzle(v, swap_adjacent_group_n<G,N::value> );
+      return basic_swizzle(v, swap_adjacent_groups_n<G,N::value> );
     }
   }
 }
