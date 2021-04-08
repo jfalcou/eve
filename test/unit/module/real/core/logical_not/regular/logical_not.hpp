@@ -24,9 +24,3 @@ TTS_CASE_TPL("Check eve::logical_not behavior", EVE_TYPE)
   TTS_EQUAL(eve::logical_not(eve::true_(eve::as<T>()))   , eve::false_(eve::as<T>()));
   TTS_EQUAL(eve::logical_not(eve::false_(eve::as<T>()))  , eve::true_(eve::as<T>()) );
 }
-
-TTS_CASE_TPL("Check eve::operator! behavior", EVE_TYPE)
-{
-  TTS_EQUAL(!eve::true_(eve::as<T>())  , eve::false_(eve::as<T>()));
-  TTS_EQUAL(!eve::false_(eve::as<T>()) , eve::true_(eve::as<T>()));
-}
