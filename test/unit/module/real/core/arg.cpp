@@ -40,7 +40,7 @@ EVE_TEST_TYPES( "Check return types of eve::arg(simd)"
 //==================================================================================================
 // Tests for eve::arg
 //==================================================================================================
-EVE_TEST( "Check behavior of eve::arg(eve::wide)"
+EVE_TEST( "Check behavior of eve::arg(simd)"
         , eve::test::simd::ieee_reals
         , eve::test::generate ( eve::test::ramp(-1.0, 1.0))
         )
@@ -52,7 +52,7 @@ EVE_TEST( "Check behavior of eve::arg(eve::wide)"
   TTS_EQUAL(eve::arg(a0), map([](auto e) -> v_t { return  e >= 0 ? 0 : eve::pi(eve::as(v_t())); }, a0));
 };
 
-EVE_TEST( "Check behavior of eve::arg(eve::scalar)"
+EVE_TEST( "Check behavior of eve::arg(scalar)"
         , eve::test::scalar::ieee_reals
         , eve::test::generate ( eve::test::ramp(-1.0, 1.0))
         )
@@ -70,7 +70,7 @@ EVE_TEST( "Check behavior of eve::arg(eve::scalar)"
 //==================================================================================================
 // Tests for eve::pedantic(eve::arg)
 //==================================================================================================
-EVE_TEST( "Check behavior of eve::pedantic(eve::arg)(eve::wide)"
+EVE_TEST( "Check behavior of eve::pedantic(eve::arg)(simd)"
         , eve::test::simd::ieee_reals
         , eve::test::generate ( eve::test::ramp(-1.0, 1.0)
                               , eve::test::limits()
@@ -85,7 +85,7 @@ EVE_TEST( "Check behavior of eve::pedantic(eve::arg)(eve::wide)"
   TTS_IEEE_EQUAL( eve::pedantic(eve::arg)(cases.nan    ), cases.nan   );
 };
 
-EVE_TEST( "Check behavior of eve::pedantic(eve::arg)(eve::scalar)"
+EVE_TEST( "Check behavior of eve::pedantic(eve::arg)(scalar)"
         , eve::test::scalar::ieee_reals
         , eve::test::generate ( eve::test::ramp(-1.0, 1.0)
                               , eve::test::limits()
@@ -94,41 +94,27 @@ EVE_TEST( "Check behavior of eve::pedantic(eve::arg)(eve::scalar)"
 <typename T>(T const& data, auto cases )
 {
   using v_t = typename T::value_type;
-
-  for(auto a0 :data)
-  {
-    TTS_EQUAL(eve::pedantic(eve::arg)(a0), (a0 >= 0 ? 0 : eve::pi(eve::as(v_t())) ) );
-    TTS_IEEE_EQUAL( eve::pedantic(eve::arg)(cases.nan), cases.nan   );
-  }
+  for(auto a0 :data) TTS_EQUAL(eve::pedantic(eve::arg)(a0), (a0 < 0)*eve::pi(eve::as(v_t())) );
+  TTS_IEEE_EQUAL( eve::pedantic(eve::arg)(cases.nan), cases.nan   );
 };
 
 //==================================================================================================
 // Test for eve::diff(eve::arg)
 //==================================================================================================
-EVE_TEST( "Check behavior of eve::diff(eve::arg) on wide"
+EVE_TEST( "Check behavior of eve::diff(eve::arg)(simd)"
         , eve::test::simd::ieee_reals
         , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
         )
 <typename T>(T const& a0)
 {
-  using eve::detail::map;
-  using v_t = eve::element_type_t<T>;
-
-  TTS_EQUAL ( eve::diff(eve::arg)(a0)
-            , map([](auto e) -> v_t { return e > 0 ? 1 : ((e <  0) ? -1 : 0); }, a0)
-            );
+  TTS_EQUAL ( eve::diff(eve::arg)(a0), eve::zero(eve::as(a0)));
 };
 
-EVE_TEST( "Check behavior of eve::diff(eve::arg) on scalar"
+EVE_TEST( "Check behavior of eve::diff(eve::arg)(scalar)"
         , eve::test::scalar::ieee_reals
         , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
         )
 <typename T>(T const& data )
 {
-  using v_t = typename T::value_type;
-
-  for(auto a0 :data)
-  {
-    TTS_EQUAL( eve::diff(eve::arg)(a0), (a0 > 0 ? v_t(1) : (a0 < 0 ? v_t(-1) : v_t(0))) );
-  }
+  for(auto a0 :data) TTS_EQUAL( eve::diff(eve::arg)(a0), eve::zero(eve::as(a0)) );
 };
