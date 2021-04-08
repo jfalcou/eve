@@ -9,7 +9,7 @@
 
 #include <eve/detail/function/swizzle.hpp>
 #include <eve/detail/function/broadcast.hpp>
-#include <eve/detail/function/swap_adjacent_group.hpp>
+#include <eve/detail/function/swap_adjacent_groups.hpp>
 #include <eve/detail/function/simd/common/patterns.hpp>
 
 namespace eve::detail
@@ -42,7 +42,7 @@ namespace eve::detail
           if constexpr( is_zero<I0,I...>        ) return bound{zero_swizzle{}      , sz};
     else  if constexpr( is_broadcast<I0,I...>   ) return bound{broadcast, index<I0>, sz};
     else  if constexpr( is_identity<I0,I...>    ) return bound{identity_swizzle{}  , p};
-    else  if constexpr( is_swag<I0,I...> != sz  ) return bound{swap_adjacent_group , is_swag<I0,I...>};
+    else  if constexpr( is_swag<I0,I...> != sz  ) return bound{swap_adjacent_groups , is_swag<I0,I...>};
     else                                          return bound{basic_swizzle       , p};
   }
 }

@@ -14,7 +14,7 @@
 namespace eve::detail
 {
   template<real_scalar_value T, typename N, x86_abi ABI, std::ptrdiff_t G>
-  EVE_FORCEINLINE wide<T,N,ABI> swap_adjacent_group_( EVE_SUPPORTS(sse2_)
+  EVE_FORCEINLINE wide<T,N,ABI> swap_adjacent_groups_( EVE_SUPPORTS(sse2_)
                                                     , wide<T,N,ABI> v, fixed<G>
                                                     ) noexcept
   requires(G<=N::value)
@@ -43,7 +43,7 @@ namespace eve::detail
           else
           {
             auto up = convert(v, as_<upgrade_t<T>>{});
-            auto r  = swap_adjacent_group(up,fixed<G>{});
+            auto r  = swap_adjacent_groups(up,fixed<G>{});
 
             if constexpr(N::value < 16)
             {
@@ -98,7 +98,7 @@ namespace eve::detail
           else
           {
             auto[l,h] = v.slice();
-            return that_t( swap_adjacent_group(l,fixed<G>{}), swap_adjacent_group(h,fixed<G>{}));
+            return that_t( swap_adjacent_groups(l,fixed<G>{}), swap_adjacent_groups(h,fixed<G>{}));
           }
         }
         else if constexpr( size == 2 )
@@ -111,7 +111,7 @@ namespace eve::detail
           else
           {
             auto[l,h] = v.slice();
-            return that_t( swap_adjacent_group(l,fixed<G>{}), swap_adjacent_group(h,fixed<G>{}));
+            return that_t( swap_adjacent_groups(l,fixed<G>{}), swap_adjacent_groups(h,fixed<G>{}));
           }
         }
         else if constexpr( size == 4 )
@@ -127,7 +127,7 @@ namespace eve::detail
           else
           {
             auto sd = bit_cast(v, as_<typename that_t::template rebind<float>>{});
-            sd = swap_adjacent_group(sd, fixed<1>{});
+            sd = swap_adjacent_groups(sd, fixed<1>{});
             return bit_cast(sd, as(v));
           }
         }
@@ -148,7 +148,7 @@ namespace eve::detail
           else
           {
             auto sd = bit_cast(v, as_<typename that_t::template rebind<float>>{});
-            sd = swap_adjacent_group(sd, fixed<2>{});
+            sd = swap_adjacent_groups(sd, fixed<2>{});
             return bit_cast(sd, as(v));
           }
         }
@@ -177,13 +177,13 @@ namespace eve::detail
       else  if constexpr( std::same_as<ABI,x86_512_> )
       {
         // We have perfect swizzle so LET'S ROCK'N'ROLL
-        return basic_swizzle(v, swap_adjacent_group_n<G,N::value> );
+        return basic_swizzle(v, swap_adjacent_groups_n<G,N::value> );
       }
     }
   }
 
   template<real_scalar_value T, typename N, x86_abi ABI, std::ptrdiff_t G>
-  EVE_FORCEINLINE logical<wide<T,N,ABI>> swap_adjacent_group_ ( EVE_SUPPORTS(sse2_)
+  EVE_FORCEINLINE logical<wide<T,N,ABI>> swap_adjacent_groups_ ( EVE_SUPPORTS(sse2_)
                                                               , logical<wide<T,N,ABI>> v, fixed<G>
                                                               ) noexcept
   requires(G<=N::value)
@@ -196,13 +196,13 @@ namespace eve::detail
     {
       // Reconstruct mask, swag then turn to mask again
       auto const m = v.mask();
-      auto const swag = swap_adjacent_group(m, fixed<G>{});
+      auto const swag = swap_adjacent_groups(m, fixed<G>{});
       return to_logical(swag);
     }
     else
     {
       // Use the common implementation
-      return swap_adjacent_group_(EVE_RETARGET(cpu_),v, fixed<G>{});
+      return swap_adjacent_groups_(EVE_RETARGET(cpu_),v, fixed<G>{});
     }
   }
 }

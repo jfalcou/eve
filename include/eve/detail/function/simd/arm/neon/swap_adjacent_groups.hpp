@@ -14,7 +14,7 @@
 namespace eve::detail
 {
   template<real_scalar_value T, typename N, arm_abi ABI, std::ptrdiff_t G>
-  EVE_FORCEINLINE wide<T,N,ABI> swap_adjacent_group_( EVE_SUPPORTS(neon128_)
+  EVE_FORCEINLINE wide<T,N,ABI> swap_adjacent_groups_( EVE_SUPPORTS(neon128_)
                                                     , wide<T,N,ABI> v, fixed<G>
                                                     ) noexcept
   requires(G<=N::value)
@@ -60,7 +60,7 @@ namespace eve::detail
       {
         using up_t = upgrade_t<T>;
         auto const up = bit_cast(v, as_<wide<up_t,typename N::split_type>>());
-        return bit_cast(swap_adjacent_group(up, fixed<G/2>{}), as(v));
+        return bit_cast(swap_adjacent_groups(up, fixed<G/2>{}), as(v));
       }
     }
   }
