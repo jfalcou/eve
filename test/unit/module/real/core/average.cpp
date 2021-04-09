@@ -14,7 +14,7 @@
 #include <numeric>
 
 //==================================================================================================
-// Types tests
+//== Types tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of average"
         , eve::test::simd::all_types
@@ -27,6 +27,8 @@ EVE_TEST_TYPES( "Check return types of average"
   TTS_EXPR_IS( eve::average(T(), T()  ) , T);
   TTS_EXPR_IS( eve::average(T(), v_t()) , T);
   TTS_EXPR_IS( eve::average(v_t(), T()) , T);
+  TTS_EXPR_IS( eve::average(T(),int()) , T);
+  TTS_EXPR_IS( eve::average(int(), T()) , T);
   TTS_EXPR_IS( eve::average(v_t(), v_t()) , v_t);
 
   //multi
@@ -38,27 +40,64 @@ EVE_TEST_TYPES( "Check return types of average"
     TTS_EXPR_IS( eve::average(T(), T(), v_t() ) , T);
     TTS_EXPR_IS( eve::average(v_t(), v_t(), T()) , T);
     TTS_EXPR_IS( eve::average(v_t(), T(), v_t()) , T);
+
+    TTS_EXPR_IS( eve::average(T(), int(), T())  , T);
+    TTS_EXPR_IS( eve::average(int(), T(), T())  , T);
+    TTS_EXPR_IS( eve::average(T(), T(), int() ) , T);
+    TTS_EXPR_IS( eve::average(int(), v_t(), T()) , T);
+    TTS_EXPR_IS( eve::average(int(), T(), v_t()) , T);
+    TTS_EXPR_IS( eve::average(v_t(), int(), T()) , T);
+    TTS_EXPR_IS( eve::average(v_t(), T(), int()) , T);
     TTS_EXPR_IS( eve::average(v_t(), v_t(), v_t()) , v_t);
   }
 };
 
 //==================================================================================================
-// average tests
+//== average tests
 //==================================================================================================
-EVE_TEST( "Check behavior of average on integer types"
-            , eve::test::simd::integers
+EVE_TEST( "Check behavior of average(wide)"
+            , eve::test::simd::all_types
             , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
+                                  , eve::test::randoms(eve::valmin, eve::valmax)
                                   , eve::test::randoms(eve::valmin, eve::valmax)
                                   )
             )
-<typename T>(T const& a0, T const& a1 )
+<typename T>(T const& a0, T const& a1, T const& a2 )
 {
   using eve::average;
-  //values can differ by one.
-  TTS_ULP_EQUAL( average(a0, a1), T([&](auto i, auto) { return std::midpoint(a0.get(i), a1.get(i)); }), 1);
+  using eve::detail::map;
+  using v_t = eve::element_type_t<T>;
+  TTS_ULP_EQUAL( average(a0, a1), map([](auto e, auto f) -> v_t { return std::midpoint(e, f); }, a0, a1), 2);
+  if constexpr(eve::floating_value<T>)
+  {
+    TTS_ULP_EQUAL( average(a0, a1, a2), map([](auto e, auto f,  auto g) { return e/3 + f/3 + g/3; }, a0, a1, a2), 2);
+  }
 };
 
-EVE_TEST( "Check behavior of average on integer types"
+EVE_TEST( "Check behavior of average(scalar)"
+            , eve::test::scalar::all_types
+            , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
+                                  , eve::test::randoms(eve::valmin, eve::valmax)
+                                  , eve::test::randoms(eve::valmin, eve::valmax)
+                                  )
+            )
+<typename T>(T const& d0, T const& d1, T const& d2 )
+{
+  using eve::average;
+  for(std::size_t i = 0;  i < d0.size(); ++i)
+  {
+    TTS_ULP_EQUAL( average(d0[i], d1[i]), std::midpoint(d0[i], d1[i]), 2);
+    if constexpr(eve::floating_value<T>)
+    {
+      TTS_ULP_EQUAL( average(d0[i], d1[i], d2[i]),  (d0[i]/3 + d1[i]/3 + d2[i]/3), 2);
+    }
+  }
+};
+
+//==================================================================================================
+//== diff(average) tests
+//==================================================================================================
+EVE_TEST( "Check behavior of diff(average)(simd)"
         , eve::test::simd::ieee_reals
         , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
                               , eve::test::randoms(eve::valmin, eve::valmax)
@@ -71,27 +110,63 @@ EVE_TEST( "Check behavior of average on integer types"
   using eve::diff;
   using eve::as;
   using v_t =  eve::element_type_t<T>;
-  TTS_ULP_EQUAL( average(a0, a1), T([&](auto i, auto) { return std::midpoint(a0.get(i), a1.get(i)); }), 2);
-  TTS_EQUAL( diff(average)(a0, a2), T([&](auto , auto) { return eve::half(as(v_t())); }));
-  TTS_ULP_EQUAL( average(a0, a1, a2), T([&](auto i, auto) { return a0.get(i)/3 + a1.get(i)/3 + a2.get(i)/3; }), 2);
-  TTS_EQUAL( diff(average)(a0, a1, a2), T([&](auto , auto) { return v_t(1.0/3.0); }));
+  TTS_EQUAL( diff(average)(a0, a2), map([](auto , auto ) { return eve::half(as(v_t())); }, a0, a1));
+  TTS_EQUAL( diff(average)(a0, a1, a2), map([](auto , auto , auto ) { return v_t(1.0/3.0); }, a0, a1, a2));
 };
 
+EVE_TEST( "Check behavior of diff(average)(scalar)"
+        , eve::test::scalar::ieee_reals
+        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
+                              , eve::test::randoms(eve::valmin, eve::valmax)
+                              , eve::test::randoms(eve::valmin, eve::valmax)
+                              )
+        )
+  <typename T>( T const& d0, T const& d1, T const& d2 )
+{
+  using eve::average;
+  using eve::diff;
+  using eve::as;
+  using v_t = typename T::value_type;
+  for(std::size_t i = 0;  i < d0.size(); ++i)
+  {
+    TTS_EQUAL( diff(average)(d0[i], d2[i]), eve::half(as(v_t())));
+    TTS_EQUAL( diff(average)(d0[i], d1[i], d2[i]), v_t(1.0/3.0));
+  }
+};
 
 //==================================================================================================
-//  conditional average tests
+//==  conditional average tests
 //==================================================================================================
-EVE_TEST( "Check behavior of conditional average on signed types"
-        , eve::test::simd::signed_types
-        , eve::test::generate ( eve::test::randoms(-128, 127)
-                              , eve::test::randoms(-128, 127)
-                              , eve::test::randoms(-128, 127)
+EVE_TEST( "Check behavior of  average[cond](wide)"
+        , eve::test::simd::all_types
+        , eve::test::generate ( eve::test::randoms(0, 127)
+                              , eve::test::randoms(0, 127)
+                              , eve::test::randoms(0, 127)
                               )
         )
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::average;
+  using eve::detail::map;
   using v_t =  eve::element_type_t<T>;
   //values can differ by one on integral types from scalar to simd implementations (intrinsics may be at work)
-  TTS_ULP_EQUAL( average[a2 > T(64)](a0, a1), T([&](auto i, auto) {return a2.get(i) > v_t(64) ? average(a0.get(i), a1.get(i)) :a0.get(i) ; }), 1);
+  TTS_ULP_EQUAL( average[a2 > T(64)](a0, a1), map([](auto e, auto f, auto g) {return g > v_t(64) ? average(e, f) :e; }, a0, a1, a2), 2);
+};
+
+EVE_TEST( "Check behavior of  average[cond](scalar)"
+        , eve::test::scalar::all_types
+        , eve::test::generate ( eve::test::randoms(0, 127)
+                              , eve::test::randoms(0, 127)
+                              , eve::test::randoms(0, 127)
+                              )
+        )
+<typename T>(T const& d0, T const& d1, T const& d2)
+{
+  using eve::average;
+  using eve::detail::map;
+  using v_t = typename T::value_type;
+  for(std::size_t i = 0; i < d0.size(); ++i)
+  {
+    TTS_ULP_EQUAL( average[d2[i] > v_t(64)](d0[i], d1[i]), (d2[i] > v_t(64) ? average(d0[i], d1[i]) :d0[i]), 2);
+  }
 };
