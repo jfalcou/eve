@@ -423,7 +423,7 @@ namespace eve::detail
 
     [&]<auto... Iter>( std::integer_sequence<type,Iter...> )
     {
-      ( f( std::integral_constant<type,Iter>{} ), ...);
+      ( body( std::integral_constant<type,Iter>{} ), ...);
     }( std::make_integer_sequence<type,End - Begin>{});
   }
 }
