@@ -410,4 +410,20 @@ namespace eve::detail
     for(std::size_t i=0;i<sizeof...(Ps);++i) if(checks[i]) return i;
     return -1;
   }
+
+  // Reusable for-loop like meta-function
+  template<auto Begin, auto Step, auto End, typename Func>
+  EVE_FORCEINLINE constexpr void for_(Func f)
+  {
+    using type = decltype(Begin);
+    auto body = [&]<typename N>(N)
+                {
+                  return f(std::integral_constant<type, N::value*Step>{} );
+                };
+
+    [&]<auto... Iter>( std::integer_sequence<type,Iter...> )
+    {
+      ( f( std::integral_constant<type,Iter>{} ), ...);
+    }( std::make_integer_sequence<type,End - Begin>{});
+  }
 }
