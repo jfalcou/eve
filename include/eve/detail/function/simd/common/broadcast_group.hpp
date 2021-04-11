@@ -21,58 +21,40 @@ namespace eve::detail
                                         )
   {
     using that_t        = as_wide_t<Wide,fixed<Size>>;
-    using v_t           = eve::element_type_t<Wide>;
+    using v_t           = element_type_t<Wide>;
     constexpr auto card = cardinal_v<Wide>;
-
-    [[maybe_unused]] auto const compute_half = [&](auto v, auto sz)
-    {
-      // If the beginning of the indexed group is beyond half the cardinal
-      if constexpr(Index*Group >= card/2)
-      {
-        // We recompute the index and broadcast something from the upper slice of w
-        return broadcast_group(v.slice(upper_), g , index<Index-card/(Group*2)>, sz);
-      }
-      else
-      {
-        // Else we broadcast somethign from the lower slice of w
-        return broadcast_group(v.slice(lower_), g , i, sz);
-      }
-    };
 
     // If the output size is equal to the group size and the cardinal, we just return the input
     if constexpr(Size == Group && Size == card)
     {
       return w;
     }
-    // If the output is aggregated, we do the replication
-    else if constexpr(eve::has_aggregated_abi_v<that_t> )
+    // If the input wide is not aggregated and we don't bcast more than 64 bits
+    else if constexpr(sizeof(v_t)*Group <= 8)
     {
-      auto const r = compute_half(w, lane<(card >= Size ? Size/2 : Size)>);
+      using outer_type  = detail::make_integer_t<sizeof(v_t)*Group>;
+      using w_t         = as_wide_t<outer_type, fixed<card/Group>>;
+      return bit_cast(broadcast(bit_cast(w, as_<w_t>()), i, lane<Size/Group>), as_<that_t>());
+    }
+    // If the output Greater than the Group size, we slice by half
+    else if constexpr( Size > Group )
+    {
+      auto const r = broadcast_group(w, g , i, lane<Size/2>);
       return eve::combine(r,r);
     }
-    // If the group size is equal to the cardinal, fill the output with copies of the input
-    else if constexpr(Group == card)
-    {
-      auto r = broadcast_group(w, g , i, lane<Size/2>);
-      return that_t(r,r);
-    }
-    // If the group size is equal to 1, we proceed to a regular broadcast
-    else if constexpr(Group == 1)
-    {
-      return eve::broadcast(w, i, sz);
-    }
-    // If the input wide is not aggregated and we don't bcast more than 64 bits
-    else if constexpr(!eve::has_aggregated_abi_v<Wide> && sizeof(v_t)*Group <= 8)
-    {
-      using outer_type  = eve::detail::make_integer_t<sizeof(v_t)*Group>;
-      using w_t         = eve::as_wide_t<outer_type, fixed<card/Group>>;
-      return bit_cast( eve::broadcast(bit_cast(w, as_<w_t>()), i), as_<that_t>() );
-    }
-    // Otherwise, we need to slice/bcast/combine recursively
     else
     {
-      auto const r = compute_half(w, lane<(card >= Size ? Size/2 : Size)>);
-      return eve::combine(r,r);
+      // If the beginning of the indexed group is beyond half the cardinal
+      if constexpr(Index*Group >= card/2)
+      {
+        // We recompute the index and broadcast something from the upper slice of w
+        return broadcast_group(w.slice(upper_), g , index<Index-card/(Group*2)>, sz);
+      }
+      else
+      {
+        // Else we broadcast something from the lower slice of w
+        return broadcast_group(w.slice(lower_), g , i, sz);
+      }
     }
   }
 

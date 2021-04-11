@@ -27,14 +27,14 @@ namespace eve
   namespace detail
   {
     // Find the proper broadcast group shape. IF none is found, returns {-1,-1}
-    template<std::size_t Size>
+    template<std::size_t Cardinal,std::size_t Size>
     constexpr inline auto find_broadcast_group(std::array<std::ptrdiff_t,Size> const& pattern)
     {
       struct bg { std::ptrdiff_t group = -1, index = -1; };
 
-      for(std::ptrdiff_t g = Size;g > 0;g /= 2)
+      for(std::ptrdiff_t g = Cardinal;g > 0;g /= 2)
       {
-        std::ptrdiff_t nb_idx = Size/g;
+        std::ptrdiff_t nb_idx = Cardinal/g;
 
         for(std::ptrdiff_t idx = 0;idx < nb_idx;idx++)
         {
@@ -52,10 +52,10 @@ namespace eve
   }
 
   // Compute the expected broadcast group if any
-  template<std::ptrdiff_t... Is> inline constexpr auto is_broadcast_group = []()
+  template<std::ptrdiff_t Sz, std::ptrdiff_t... Is> inline constexpr auto is_broadcast_group = []()
   {
     constexpr std::array<std::ptrdiff_t,sizeof...(Is)> p = {Is...};
-    constexpr auto result = detail::find_broadcast_group(p);
+    constexpr auto result = detail::find_broadcast_group<Sz>(p);
 
     if constexpr( result.group != -1 )
       return std::optional{ std::pair{ lane<result.group>, index<result.index>} };
