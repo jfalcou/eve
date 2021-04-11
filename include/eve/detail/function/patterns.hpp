@@ -37,7 +37,7 @@ namespace eve::detail
   //================================================================================================
   // Look to see if a given pattern is optimizable and returns the optimized function object
   //================================================================================================
-  template<std::ptrdiff_t I0, std::ptrdiff_t... I>
+  template<std::ptrdiff_t InCardinal, std::ptrdiff_t I0, std::ptrdiff_t... I>
   consteval auto find_optimized_pattern()
   {
     [[maybe_unused]] constexpr auto sz = fixed<1+sizeof...(I)>{};
@@ -50,7 +50,7 @@ namespace eve::detail
     {
       return bound{swap_adjacent_groups , is_swag<I0,I...>};
     }
-    else if constexpr(constexpr auto st = is_broadcast_group<I0,I...>)
+    else if constexpr(constexpr auto st = is_broadcast_group<InCardinal,I0,I...>)
     {
       return bound{broadcast_group, st->first, st->second, sz};
     }
