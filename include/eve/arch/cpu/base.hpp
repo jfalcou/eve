@@ -112,7 +112,7 @@ namespace eve::detail
     EVE_FORCEINLINE auto operator[](pattern_t<I...>) const noexcept
     requires(pattern_t<I...>{}.validate(cardinal_v<Derived>))
     {
-      constexpr auto swizzler = find_optimized_pattern<I...>();
+      constexpr auto swizzler = find_optimized_pattern<cardinal_v<Derived>,I...>();
       return swizzler(self());
     }
 
