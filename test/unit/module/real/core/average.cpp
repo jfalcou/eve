@@ -163,7 +163,6 @@ EVE_TEST( "Check behavior of  average[cond](scalar)"
 <typename T>(T const& d0, T const& d1, T const& d2)
 {
   using eve::average;
-  using eve::detail::map;
   using v_t = typename T::value_type;
   for(std::size_t i = 0; i < d0.size(); ++i)
   {
