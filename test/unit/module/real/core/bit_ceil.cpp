@@ -32,17 +32,18 @@ EVE_TEST_TYPES( "Check return types of bit_ceil on wide"
 //==================================================================================================
 auto maxi = []< typename T>(eve::as_<T> const &){return eve::valmax(eve::as<T>())/2; }; // over valmax/2 bit_ceil is UB so don't test
 auto mini = []< typename T>(eve::as_<T> const &){return eve::valmin(eve::as<T>())/4;  }; //negative values all return 1;
-EVE_TEST( "Check behavior of bit_ceil on integral wide"
+EVE_TEST( "Check behavior of bit_ceil(wide) on integral types"
         , eve::test::simd::integers
         , eve::test::generate(eve::test::randoms(mini, maxi))
         )
 <typename T>(T const& a0)
 {
-//  using v_t = eve::element_type_t<T>;
-  TTS_EQUAL( eve::bit_ceil(a0), T([&](auto i, auto) { return eve::bit_ceil(a0.get(i)); }));
+  using v_t = eve::element_type_t<T>;
+  using u_t = eve::as_integer_t<v_t>;
+  TTS_EQUAL( eve::bit_ceil(a0), map([](auto e) { return eve::bit_ceil(u_t(e)); }, a0));
 };
 
-EVE_TEST( "Check behavior of bit_ceil on floating wide"
+EVE_TEST( "Check behavior of bit_ceil(wide) on floating"
             , eve::test::simd::ieee_reals
             , eve::test::generate(eve::test::randoms(-10, eve::valmax))
             )
@@ -51,8 +52,8 @@ EVE_TEST( "Check behavior of bit_ceil on floating wide"
   using v_t = eve::element_type_t<T>;
   using eve::exponent;
   using eve::ldexp;
-  TTS_EQUAL( eve::bit_ceil(a0), T([&](auto i, auto) {
-                                    auto v = a0.get(i);
+  TTS_EQUAL( eve::bit_ceil(a0), map([](auto x) {
+                                    auto v = x;
                                     if(v <= v_t(1)) return v_t(1);
                                     else {
                                       auto e =  eve::exponent(v);
@@ -60,7 +61,7 @@ EVE_TEST( "Check behavior of bit_ceil on floating wide"
                                       if (res < v) res*= v_t(2);
                                       return res;
                                     };
-                                  }
+                                  }, a0
                                  )
            );
 };
