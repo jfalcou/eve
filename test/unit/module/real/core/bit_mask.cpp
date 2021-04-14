@@ -32,19 +32,33 @@ EVE_TEST_TYPES( "Check return types of bit_mask"
 //==================================================================================================
 //  bit_mask tests
 //==================================================================================================
-EVE_TEST( "Check behavior of bit_mask on integral types"
+EVE_TEST( "Check behavior of bit_mask(simd) on all types"
+        , eve::test::simd::all_types
+        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax))
+        )
+<typename T>( T const& a0)
+{
+  using v_t = eve::element_type_t<T>;
+  using eve::bit_mask;
+  using eve::detail::map;
+  TTS_IEEE_EQUAL( bit_mask(a0)
+                , map ( [](auto v) -> v_t
+                      {
+                        return v ? eve::allbits(eve::as(v)) : eve::zero(eve::as(v));
+                      }, a0
+                    )
+                );
+};
+
+EVE_TEST( "Check behavior of bit_mask(scalar) on all types"
         , eve::test::simd::all_types
         , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax))
         )
 <typename T>( T const& a0)
 {
   using eve::bit_mask;
-  TTS_IEEE_EQUAL( bit_mask(a0)
-                , T ( [&](auto i, auto)
-                      {
-                        auto v = a0.get(i);
-                        return v ? eve::allbits(eve::as(v)) : eve::zero(eve::as(v));
-                      }
-                    )
-                );
+  using eve::detail::map;
+  for(auto v : a0)
+   TTS_IEEE_EQUAL( bit_mask(v)
+                 , v ? eve::allbits(eve::as(v)) : eve::zero(eve::as(v)));
 };
