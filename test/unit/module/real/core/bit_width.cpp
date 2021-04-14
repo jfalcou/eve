@@ -29,15 +29,31 @@ EVE_TEST_TYPES( "Check return types of bit_width on wide"
 };
 
 //==================================================================================================
-// bit_width signed tests
+// bit_width(wide) tests
 //==================================================================================================
-EVE_TEST( "Check behavior of bit_width on unsigned integral wide"
+EVE_TEST( "Check behavior of bit_width(wide) on unsigned integrals"
         , eve::test::simd::unsigned_integers
         , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
         )
 <typename T>(T const& a0)
 {
+  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
-  using ui_t =  eve::as_integer_t<v_t,  unsigned>;
-  TTS_EQUAL( eve::bit_width(a0), T([&](auto i, auto) { return (a0.get(i) < 0) ? 1 : std::bit_width(ui_t(a0.get(i))); }));
+  TTS_EQUAL( eve::bit_width(a0), map([](auto e) -> v_t{ return  std::bit_width(e); }, a0));
+};
+
+
+//==================================================================================================
+// bit_width(scalar) tests
+//==================================================================================================
+EVE_TEST( "Check behavior of bit_width(wide) on unsigned integrals"
+        , eve::test::simd::unsigned_integers
+        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
+        )
+<typename T>(T const& a0)
+{
+  using eve::detail::map;
+  using v_t = eve::element_type_t<T>;
+  for(auto a: a0)
+    TTS_EQUAL( eve::bit_width(a), v_t(std::bit_width(a)));
 };
