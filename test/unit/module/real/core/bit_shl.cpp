@@ -93,7 +93,6 @@ EVE_TEST( "Check behavior of shl(scalar, scalar)"
 <typename T, typename I>(T a0, I a1)
 {
   using eve::bit_shl;
-  using eve::detail::map;
   using v_t = typename T::value_type;
   for(std::size_t i = 0;  i < a0.size(); ++i)
     TTS_EQUAL( bit_shl(a0[i], a1[i]), v_t(a0[i] << a1[i]));
