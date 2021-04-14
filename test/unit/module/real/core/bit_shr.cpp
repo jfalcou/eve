@@ -39,33 +39,63 @@ EVE_TEST_TYPES( "Check return types of bit_shr"
 
 };
 
-//==================================================================================================
-// bit_shr tests
-//==================================================================================================
-auto shift_max = []< typename T>(eve::as_<T> const &){return sizeof(eve::element_type_t<T>)*8-1;};
-
-EVE_TEST( "Check behavior of bit_shr on integral types"
-        , eve::test::simd::integers
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                              , eve::test::randoms(0u, shift_max)
-                              )
-        )
-<typename T>(T const& a0, T const& a1)
+//================================================================================================
+// random size values
+//================================================================================================
+inline auto const random_bits = []<typename T>(eve::as_<T>, auto& gen)
 {
-  using eve::bit_shr;
-  TTS_EQUAL( bit_shr(a0, a1), T([&](auto i, auto) { return bit_shr(a0.get(i), a1.get(i)); }));
+  using i_t = eve::as_integer_t<eve::element_type_t<T>>;
+  eve::prng<i_t> dist(0,8*sizeof(i_t)-1);
 
+  std::array<i_t,eve::cardinal_v<T>> d;
+  std::for_each(d.begin(), d.end(), [&](auto& e) { e = dist(gen); });
+
+  return d;
 };
 
-EVE_TEST( "Check behavior of bit_shr with scalar shift on integral types"
+//==================================================================================================
+// wide tests
+//==================================================================================================
+EVE_TEST( "Check behavior of shl(wide, wide)"
         , eve::test::simd::integers
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                              , eve::test::randoms(0u, shift_max)
-                              )
+        , eve::test::generate(eve::test::randoms(-50,50), random_bits)
         )
-<typename T, typename I>(T const& a0,I a1)
+<typename T, typename I>(T a0, I a1)
 {
-  using eve::bit_shr;
-  auto val = a1.get(0);
-  TTS_EQUAL( bit_shr(a0, val), T([&](auto i, auto) { return bit_shr(a0.get(i), val); }));
+  using eve::bit_shl;
+  using eve::detail::map;
+  using v_t = eve::element_type_t<T>;
+  using u_t = as_integer_t<v_t, unsigned>;
+  TTS_EQUAL( bit_shr(a0, a1), map([](auto e, auto s) ->v_t { return v_t(u_t(e) >> s); }, a0, a1));
+};
+
+EVE_TEST( "Check behavior of shift(wide, scalar)"
+        , eve::test::simd::integers
+        , eve::test::generate(eve::test::randoms(-50,50), random_bits)
+        )
+<typename T, typename I>(T a0, I s)
+{
+  using eve::bit_shl;
+  using eve::detail::map;
+  auto val = s.get(0);
+  using v_t = eve::element_type_t<T>;
+  using u_t = as_integer_t<v_t, unsigned>;
+  TTS_EQUAL( bit_shl(a0, val), map([&](auto e) ->v_t{ return v_t(u_t(e) >> val); }, a0) );
+};
+
+
+//==================================================================================================
+// Scalar tests
+//==================================================================================================
+EVE_TEST( "Check behavior of shl(scalar, scalar)"
+        , eve::test::scalar::integers
+        , eve::test::generate(eve::test::randoms(-50,50), random_bits)
+        )
+<typename T, typename I>(T a0, I a1)
+{
+  using eve::bit_shl;
+  using eve::detail::map;
+  using v_t = typename T::value_type;
+  for(std::size_t i = 0;  i < a0.size(); ++i)
+    TTS_EQUAL( bit_shl(a0[i], a1[i]),   v_t(u_t(a0[i]) >> a1[i]));
 };
