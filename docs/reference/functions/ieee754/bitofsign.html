@@ -41,7 +41,7 @@ Parameters
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-The call `bitofsign(x)` is semantically equivalent to `x && signmask(as(x))`.
+The call `bitofsign(x)` is semantically equivalent to `x & signmask(as(x))`.
 
 !!! WARNING
    Take care that for  [floating real values](../../concepts.html#value) bitofsign does NOT return
