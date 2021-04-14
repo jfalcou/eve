@@ -235,6 +235,19 @@ inline bool const TTS_CAT(register_,TTS_FUNCTION) =  ::eve::test::test_setup{   
               constexpr std::make_index_sequence<sizeof...(N)> size = {};                           \
               auto data = s(eve::as_<T>{}, gen);                                                    \
               auto args = eve::test::make_args(data, size, eve::as_<T>{});                          \
+              if( ::tts::verbose_status )                                                           \
+              {                                                                                     \
+                if(::tts::arguments.is_set("-d","--data"))                                          \
+                {                                                                                   \
+                  std::cout << "Input data:\n";                                                     \
+                  ((std::cout << " [" << ::tts::cyan()                                              \
+                                      << ::tts::typename_<decltype(std::get<N>(args))>              \
+                                      << ::tts::reset()                                             \
+                              << "] = "                                                             \
+                              << ::tts::as_string(std::get<N>(args))                                \
+                              << "\n"),...);                                                        \
+                }                                                                                   \
+              }                                                                                     \
               tests(std::get<N>(args)...);                                                          \
             }                                                                                       \
           });                                                                                       \
