@@ -40,6 +40,7 @@ EVE_TEST( "Check behavior of bit_ceil(wide) on integral types"
 {
   using v_t = eve::element_type_t<T>;
   using u_t = eve::as_integer_t<v_t, unsigned>;
+  using eve::detail::map;
   TTS_EQUAL( eve::bit_ceil(a0), map([](auto e) { return v_t(eve::bit_ceil(u_t((e > 0) ? e : 0))); }, a0));
 };
 
@@ -52,6 +53,7 @@ EVE_TEST( "Check behavior of bit_ceil(wide) on floating"
   using v_t = eve::element_type_t<T>;
   using eve::exponent;
   using eve::ldexp;
+  using eve::detail::map;
   TTS_EQUAL( eve::bit_ceil(a0), map([](auto x) {
                                     auto v = x;
                                     if(v <= v_t(1)) return v_t(1);
