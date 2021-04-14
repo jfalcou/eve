@@ -38,13 +38,28 @@ EVE_TEST_TYPES( "Check return types of bitofsign"
 
 
 //==================================================================================================
-// bitofsign  tests
+// bitofsign(simd) tests
 //==================================================================================================
-EVE_TEST( "Check behavior of bitofsign on wide"
+EVE_TEST( "Check behavior of bitofsign(wide)"
         , eve::test::simd::all_types
         , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
         )
 <typename T>(T const& a0 )
 {
-  TTS_EQUAL( eve::bitofsign(a0), T([&](auto i, auto) { auto x = a0.get(i); return eve::bit_and(x, eve::signmask(eve::as(x))); }));
+  using eve::detail::map;
+  TTS_EQUAL( eve::bitofsign(a0), map([&](auto e) { return eve::bit_and(e, eve::signmask(eve::as(e))); }, a0));
+};
+
+//==================================================================================================
+// bitofsign(scalar) tests
+//==================================================================================================
+EVE_TEST( "Check behavior of bitofsign(wide)"
+        , eve::test::scalar::all_types
+        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
+        )
+<typename T>(T const& a0 )
+{
+  using v_t = typename T::value_type;
+  for(auto a : a0)
+    TTS_EQUAL( eve::bitofsign(a), eve::bit_and(a, eve::signmask(eve::as<v_t>())));
 };
