@@ -29,13 +29,28 @@ EVE_TEST_TYPES( "Check return types of bit_floor on unsigned wide"
 };
 
 //==================================================================================================
-// bit_floor signed tests
+// bit_floor simd tests
 //==================================================================================================
-EVE_TEST( "Check behavior of bit_floor on integral wide"
+EVE_TEST( "Check behavior of bit_floor(wide) on unsigned integral types"
         , eve::test::simd::unsigned_integers
-        , eve::test::generate(eve::test::randoms(-50, +50))
+        , eve::test::generate(eve::test::randoms(0, +50))
         )
 <typename T>(T const& a0)
 {
-  TTS_EQUAL( eve::bit_floor(a0), T([&](auto i, auto) { return std::bit_floor(a0.get(i)); }));
+  using v_t = eve::element_type_t<T>;
+  TTS_EQUAL( eve::bit_floor(a0), map([](auto e) { return v_t(std::bit_floor(e)); }, a0));
+};
+
+//==================================================================================================
+// bit_floor scalar tests
+//==================================================================================================
+EVE_TEST( "Check behavior of bit_floor(scalar) on unsigned integral types"
+        , eve::test::simd::unsigned_integers
+        , eve::test::generate(eve::test::randoms(0, +50))
+        )
+<typename T>(T const& data)
+{
+  using v_t = eve::element_type_t<T>;
+  for(auto a0 : data)
+    TTS_EQUAL( eve::bit_floor(a0), v_t(std::bit_floor(a0)));
 };
