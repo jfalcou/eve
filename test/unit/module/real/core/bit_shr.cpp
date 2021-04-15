@@ -47,7 +47,7 @@ inline auto const random_bits = []<typename T>(eve::as_<T>, auto& gen)
   using i_t = eve::as_integer_t<eve::element_type_t<T>>;
   eve::prng<i_t> dist(0,8*sizeof(i_t)-1);
 
-  std::array<i_t,eve::cardinal_v<T>> d;
+  std::array<i_t, eve::test::amount<T>()> d;
   std::for_each(d.begin(), d.end(), [&](auto& e) { e = dist(gen); });
 
   return d;
