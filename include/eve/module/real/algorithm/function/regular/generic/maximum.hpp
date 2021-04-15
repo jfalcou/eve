@@ -8,27 +8,45 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/function/reduce.hpp>
 #include <eve/function/max.hpp>
+#include <eve/function/any.hpp>
 
 namespace eve::detail
 {
-  template<real_value T> EVE_FORCEINLINE auto maximum_(EVE_SUPPORTS(cpu_), T const &v) noexcept
+  template<real_scalar_value T, typename N, typename ABI>
+  EVE_FORCEINLINE auto maximum_ ( EVE_SUPPORTS(cpu_)
+                                , splat_type const&, wide<T,N,ABI> const &v
+                                ) noexcept
   {
-    if constexpr( scalar_value<T> )
-    {
-      return v;
-    }
-    else if constexpr( simd_value<T> )
-    {
-      using elt_t =  element_type_t<T>;
-      elt_t r = v.get(0);
-      for(size_t i=1; i < T::static_size ; ++i)
-      {
-        r = max(r, v.get(i));
-      }
-      return r;
-    }
+    return splat(reduce)(v, eve::max);
+  }
+
+  template<simd_value T>
+  EVE_FORCEINLINE auto maximum_ ( EVE_SUPPORTS(cpu_)
+                                , splat_type const&, logical<T> const &v
+                                ) noexcept
+  {
+    return logical<T>(eve::any(v));
+  }
+
+  template<real_scalar_value T>
+  EVE_FORCEINLINE auto maximum_(EVE_SUPPORTS(cpu_), T const &v) noexcept
+  {
+    return v;
+  }
+
+  template<real_scalar_value T, typename N, typename ABI>
+  EVE_FORCEINLINE auto maximum_(EVE_SUPPORTS(cpu_), wide<T,N,ABI> const &v) noexcept
+  {
+    return reduce(v, eve::max);
+  }
+
+  template<simd_value T>
+  EVE_FORCEINLINE auto maximum_(EVE_SUPPORTS(cpu_), logical<T> const &v) noexcept
+  {
+    using v_t = typename logical<T>::value_type;
+    return v_t{eve::any(v)};
   }
 }
