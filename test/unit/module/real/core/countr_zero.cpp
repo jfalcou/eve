@@ -27,13 +27,28 @@ EVE_TEST_TYPES( "Check return types of countr_zero on wide"
 };
 
 //==================================================================================================
-// countr_zero signed tests
+// countr_zero(scalar) tests
 //==================================================================================================
-EVE_TEST( "Check behavior of countr_zero on unsigned integral wide"
+EVE_TEST( "Check behavior of countr_zero(scalar) on unsigned integral "
+        , eve::test::scalar::unsigned_integers
+        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
+        )
+<typename T>(T const& a0)
+{
+  using v_t = typename T::value_type;
+  for(auto a :a0)
+    TTS_EQUAL( eve::countr_zero(a), v_t(std::countr_zero(a)));
+};
+
+//==================================================================================================
+// countr_zero(simd) tests
+//==================================================================================================
+EVE_TEST( "Check behavior of countr_zero(wide) on unsigned integral "
         , eve::test::simd::unsigned_integers
         , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
         )
 <typename T>(T const& a0)
 {
-  TTS_EQUAL( eve::countr_zero(a0), T([&](auto i, auto) { return std::countr_zero(a0.get(i)); }));
+  using v_t = eve::element_type_t<T>;
+  TTS_EQUAL( eve::countr_zero(a0), map([](auto e) ->v_t{ return std::countr_zero(e); }, a0));
 };
