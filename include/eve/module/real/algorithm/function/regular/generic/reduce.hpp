@@ -10,8 +10,9 @@
 #include <eve/concept/vectorized.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/is_native.hpp>
-#include <eve/function/swap_adjacent_groups.hpp>
+#include <eve/function/combine.hpp>
 #include <eve/function/splat.hpp>
+#include <eve/function/swap_adjacent_groups.hpp>
 #include <eve/pattern.hpp>
 #include <bit>
 
