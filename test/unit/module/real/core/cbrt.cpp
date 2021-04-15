@@ -38,7 +38,7 @@ EVE_TEST_TYPES( "Check return types of cbrt"
 };
 
 //==================================================================================================
-// cbrt tests
+// cbrt simd tests
 //==================================================================================================
 EVE_TEST( "Check behavior of cbrt(wide) and diff on  floating types"
             , eve::test::simd::ieee_reals
@@ -54,6 +54,9 @@ EVE_TEST( "Check behavior of cbrt(wide) and diff on  floating types"
   TTS_ULP_EQUAL( diff(eve::cbrt)(a0), map([&](auto e) { return rec(sqr(std::cbrt(e))*3); }, a0), 2.5);
 };
 
+//==================================================================================================
+// cbrt scalar tests
+//==================================================================================================
 EVE_TEST( "Check behavior of cbrt(scalar)  and diff on  floating types"
             , eve::test::scalar::ieee_reals
             , eve::test::generate ( eve::test::randoms(-100, 100))
@@ -68,4 +71,35 @@ EVE_TEST( "Check behavior of cbrt(scalar)  and diff on  floating types"
     TTS_ULP_EQUAL( eve::cbrt(a), std::cbrt(a), 2);
     TTS_ULP_EQUAL( diff(eve::cbrt)(a), rec(sqr(std::cbrt(a))*3), 2);
   }
+};
+
+//==================================================================================================
+// cbrt[cond](simd) tests
+//==================================================================================================
+EVE_TEST( "Check behavior of cbrt[cond](wide) on  floating types"
+            , eve::test::simd::ieee_reals
+            , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax))
+            )
+<typename T>(T const& a0 )
+{
+  using v_t = eve::element_type_t<T>;
+  auto val = eve::unsigned_value<v_t> ? (eve::valmax(eve::as<v_t>())/2) : 0;
+  using eve::detail::map;
+  TTS_ULP_EQUAL( eve::cbrt[a0 < val](a0), map([&](auto e) { return (e < val)? std::cbrt(e) : e; }, a0), 2);
+};
+
+//==================================================================================================
+// cbrt[cond](scalar) tests
+//==================================================================================================
+EVE_TEST( "Check behavior of cbrt[cond](scalar) on  floating types"
+            , eve::test::scalar::ieee_reals
+            , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax))
+            )
+<typename T>(T const& a0 )
+{
+  using v_t = typename T::value_type;
+  auto val = eve::unsigned_value<v_t> ? (eve::valmax(eve::as<v_t>())/2) : 0;
+  using eve::detail::map;
+  for(auto a : a0)
+    TTS_ULP_EQUAL( eve::cbrt[a < val](a),  ((a < val)? std::cbrt(a) : a), 2);
 };
