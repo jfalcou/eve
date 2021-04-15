@@ -90,7 +90,7 @@ namespace eve::test
     return  [=]<typename T>(eve::as_<T>, auto&)
             {
               std::array<eve::element_type_t<T>, amount<T>()> d;
-              for(std::ptrdiff_t i = 0;i<amount<T>();++i) d[i] = v+i;
+              for(std::size_t i = 0;i<amount<T>();++i) d[i] = v+i;
               return d;
             };
   }
@@ -103,7 +103,7 @@ namespace eve::test
               auto n = amount<T>()-1;
               elt_t a = n ? elt_t((v2-v1))/n : elt_t(0);
               std::array<elt_t, amount<T>()> d;
-              for(std::ptrdiff_t i = 0;i<amount<T>();++i) d[i] = a*i+v1;
+              for(std::size_t i = 0;i<amount<T>();++i) d[i] = a*i+v1;
               return d;
             };
   }
@@ -116,7 +116,7 @@ namespace eve::test
     return  [=]<typename T>(eve::as_<T>, auto&)
             {
               std::array<eve::logical<eve::element_type_t<T>>,amount<T>()> d;
-              for(std::ptrdiff_t i = 0;i<amount<T>();++i) d[i] = ((v+i)%k) == 0;
+              for(std::size_t i = 0;i<amount<T>();++i) d[i] = ((v+i)%k) == 0;
               return d;
             };
   }
