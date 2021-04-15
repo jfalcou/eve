@@ -112,4 +112,4 @@ EVE_TEST( "Check behavior of bit_or on floating types"
 
   for(std::size_t i = 0;  i < a0.size(); ++i)
     TTS_IEEE_EQUAL( bit_or(a0[i], v_t(a1[i])), a0[i] | a1[i]);
-                    };
+};
