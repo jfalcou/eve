@@ -11,8 +11,6 @@
 
 namespace eve
 {
-  template<auto Param> struct diff_;
-
   //================================================================================================
   // Function decorator - splat mode
   struct splat_
