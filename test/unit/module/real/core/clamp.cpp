@@ -79,7 +79,6 @@ EVE_TEST( "Check behavior of clamp(wide) and diff  on all types"
 {
   using eve::clamp;
   using eve::diff;
-  using v_t = eve::element_type_t<T>;
   for(std::size_t i = 0;  i < a0.size(); ++i)
     TTS_EQUAL( clamp(a0[i], a1[i], a2[i]), std::clamp(a0[i], a1[i], a2[i]));
 
@@ -90,10 +89,11 @@ EVE_TEST( "Check behavior of clamp(wide) and diff  on all types"
     using eve::diff_3rd;
     using eve::min;
     using eve::max;
-    using type = typename T::value_type;
-  for(std::size_t i = 0;  i < a0.size(); ++i)
-    TTS_EQUAL( diff_1st(clamp)(a0[i], a1[i], a2[i]),  diff_1st(min)(max(a0[i], a1[i]), a2[i])*diff_1st(max)(a0[i], a1[i]));
-    TTS_EQUAL( diff_2nd(clamp)(a0[i], a1[i], a2[i]),  diff_1st(min)(max(a0[i], a1[i]), a2[i])*diff_2nd(max)(a0[i], a1[i]));
-    TTS_EQUAL( diff_3rd(clamp)(a0[i], a1[i], a2[i]),  diff_2nd(min)(max(a0[i], a1[i]), a2[i]));
+    for(std::size_t i = 0;  i < a0.size(); ++i)
+    {
+      TTS_EQUAL( diff_1st(clamp)(a0[i], a1[i], a2[i]),  diff_1st(min)(max(a0[i], a1[i]), a2[i])*diff_1st(max)(a0[i], a1[i]));
+      TTS_EQUAL( diff_2nd(clamp)(a0[i], a1[i], a2[i]),  diff_1st(min)(max(a0[i], a1[i]), a2[i])*diff_2nd(max)(a0[i], a1[i]));
+      TTS_EQUAL( diff_3rd(clamp)(a0[i], a1[i], a2[i]),  diff_2nd(min)(max(a0[i], a1[i]), a2[i]));
+    }
   }
 };
