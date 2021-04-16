@@ -69,8 +69,9 @@ namespace eve::detail
   //N parameters
   //================================================================================================
 
-  template<floating_real_value T0, floating_real_value ...Ts>
+  template<real_value T0, real_value ...Ts>
   auto average_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args)
+  requires floating_value<common_compatible_t<T0, Ts...>>
   {
     using r_t = common_compatible_t<T0, Ts...>;
     using elt_t = element_type_t<r_t>;
@@ -85,6 +86,7 @@ namespace eve::detail
 
   template<floating_real_value T0, floating_real_value ...Ts>
   auto average_(EVE_SUPPORTS(cpu_), raw_type const &, T0 a0, Ts... args)
+  requires floating_value<common_compatible_t<T0, Ts...>>
   {
     common_compatible_t<T0, Ts...> that(a0);
     ((that = add(that,args)),...);

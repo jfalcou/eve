@@ -55,6 +55,16 @@ namespace eve::detail
     return if_else(cond, one(as<R>()), zero);
   }
 
+  template<real_scalar_value U>
+  EVE_FORCEINLINE auto binarize_(EVE_SUPPORTS(cpu_)
+                           , bool const &cond
+                                , eve::as_<U> const &
+                           ) noexcept
+  {
+    using l_t =  as_logical_t<U>;
+    return binarize(l_t(cond));
+  }
+
   template<real_value T>
   EVE_FORCEINLINE auto binarize_(EVE_SUPPORTS(cpu_)
                                 , logical<T> const &cond

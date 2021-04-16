@@ -44,7 +44,7 @@ EVE_TEST_TYPES( "Check return types of ceil"
 //==================================================================================================
 // tolerant tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check  with nans and infs"
+EVE_TEST_TYPES( "Check  with specific values"
               , eve::test::simd::ieee_reals
               )
 <typename T>(eve::as_<T>)
@@ -70,24 +70,47 @@ EVE_TEST_TYPES( "Check  with nans and infs"
 
 
 //==================================================================================================
-// ceil  tests
+// ceil(simd)  tests
 //==================================================================================================
 auto min = []< typename T>(eve::as_<T> const &){return eve::signed_value<T> ? -50 : 0; };
-EVE_TEST( "Check behavior of ceil on wide"
+EVE_TEST( "Check behavior of ceil(wide) and diff(ceil(wide))"
         , eve::test::simd::all_types
         , eve::test::generate(eve::test::randoms(min, +50))
         )
 <typename T>(T const& a0 )
 {
+  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   if constexpr(eve::floating_real_value<T>)
   {
-    TTS_EQUAL( eve::ceil(a0), T([&](auto i, auto) { return v_t(std::ceil(a0.get(i))); }));
+    TTS_EQUAL( eve::ceil(a0), map([&](auto e) -> v_t{ return v_t(std::ceil(e)); }, a0));
     TTS_EQUAL( eve::diff(eve::ceil)(a0), eve::zero(as(a0)));
   }
   else
   {
     TTS_EQUAL( eve::ceil(a0),a0);
   }
+};
+
+//==================================================================================================
+// ceil(scalar)  tests
+//==================================================================================================
+EVE_TEST( "Check behavior of ceil(wide) and diff(ceil(wide))"
+        , eve::test::scalar::all_types
+        , eve::test::generate(eve::test::randoms(min, +50))
+        )
+<typename T>(T const& a0 )
+{
+  using v_t =  typename T::value_type;
+  for(auto a : a0)
+    if constexpr(eve::floating_real_value<v_t>)
+    {
+      TTS_EQUAL( eve::ceil(a), v_t(std::ceil(a)));
+      TTS_EQUAL( eve::diff(eve::ceil)(a), eve::zero(eve::as(a)));
+    }
+    else
+    {
+      TTS_EQUAL( eve::ceil(a),a);
+    }
 
 };

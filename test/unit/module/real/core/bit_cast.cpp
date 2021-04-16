@@ -34,12 +34,13 @@ EVE_TEST_TYPES( "Check return types of bit_cast"
 //==================================================================================================
 //== bit_cast tests
 //==================================================================================================
-EVE_TEST( "Check behavior of bit_cast on integral types"
+EVE_TEST( "Check behavior of bit_cast(simd) on integral types"
             , eve::test::simd::all_types
             , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax))
             )
 <typename T>( T const& a0)
 {
+  using eve::detail::map;
   using eve::bit_cast;
   using eve::as;
   using elt_t = eve::element_type_t<T>;
@@ -48,8 +49,8 @@ EVE_TEST( "Check behavior of bit_cast on integral types"
   using vut_t = eve::as_integer_t<elt_t, unsigned>;
   using vit_t = eve::as_integer_t<elt_t, signed>;
 
-  TTS_EQUAL( bit_cast(a0, eve::as<T>()), T([&](auto i, auto) { return  bit_cast(a0.get(i), eve::as<elt_t>()); }));
-  TTS_EQUAL( bit_cast(a0, eve::as<ut_t>()), ut_t([&](auto i, auto) { return  bit_cast(a0.get(i), eve::as<vut_t>()); }));
-  TTS_EQUAL( bit_cast(a0, eve::as<it_t>()), it_t([&](auto i, auto) { return  bit_cast(a0.get(i), eve::as<vit_t>()); }));
+  TTS_EQUAL( bit_cast(a0, eve::as<T>()),    map([](auto e,  auto) -> elt_t { return bit_cast(e, eve::as<elt_t>()); }, a0, eve::as<T>()));
+  TTS_EQUAL( bit_cast(a0, eve::as<ut_t>()), map([](auto e,  auto) -> vut_t { return  bit_cast(e, eve::as<vut_t>()); }, a0, eve::as<ut_t>()));
+  TTS_EQUAL( bit_cast(a0, eve::as<it_t>()), map([](auto e,  auto) -> vit_t { return  bit_cast(e, eve::as<vit_t>()); }, a0, eve::as<it_t>()));
   //== more tests to write when std::bit_cast will be available
 };

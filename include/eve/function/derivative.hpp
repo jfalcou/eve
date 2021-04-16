@@ -25,9 +25,9 @@ namespace eve
 
   template<auto Param> using diff_type = decorated<diff_<Param>()>;
 
-  inline constexpr diff_type<1> const diff      = {};
-  inline constexpr diff_type<1> const diff_1st  = {};
-  inline constexpr diff_type<2> const diff_2nd  = {};
-  inline constexpr diff_type<3> const diff_3rd  = {};
+  [[maybe_unused]] inline constexpr diff_type<1> const diff      = {};
+  [[maybe_unused]] inline constexpr diff_type<1> const diff_1st  = {};
+  [[maybe_unused]] inline constexpr diff_type<2> const diff_2nd  = {};
+  [[maybe_unused]] inline constexpr diff_type<3> const diff_3rd  = {};
   template<auto N> inline constexpr diff_type<N> const diff_nth = diff_type<N>{};
 }

@@ -35,7 +35,7 @@ EVE_TEST_TYPES( "Check return types of bit_select"
 //==================================================================================================
 // bit_select tests
 //==================================================================================================
-EVE_TEST( "Check behavior of bit_select on all types full range"
+EVE_TEST( "Check behavior of bit_select(simd) on integers"
         , eve::test::simd::integers
         , eve::test::generate (  eve::test::randoms(eve::valmin, eve::valmax)
                               ,  eve::test::randoms(eve::valmin, eve::valmax)
@@ -44,10 +44,26 @@ EVE_TEST( "Check behavior of bit_select on all types full range"
         )
 <typename T>(  T const& a0, T const& a1, T const& a2)
 {
+  using v_t = eve::element_type_t<T>;
   using eve::bit_select;
-  TTS_EQUAL(bit_select(a0, a1, a2), T([&](auto i , auto) { auto x = a0.get(i);
-                                        auto y = a1.get(i);
-                                        auto z = a2.get(i);
-                                        return (y& x)|(z&~x); }
-                                     ));
+  using eve::detail::map;
+  TTS_EQUAL(bit_select(a0, a1, a2), map([](auto x , auto y,  auto z)->v_t{ return (y& x)|(z&~x); }
+                                       , a0, a1, a2
+                                       ));
+};
+
+EVE_TEST( "Check behavior of bit_select(scalar) on integers"
+        , eve::test::scalar::integers
+        , eve::test::generate (  eve::test::randoms(eve::valmin, eve::valmax)
+                              ,  eve::test::randoms(eve::valmin, eve::valmax)
+                              ,  eve::test::randoms(eve::valmin, eve::valmax)
+                              )
+        )
+<typename T>(  T const& a0, T const& a1, T const& a2)
+{
+  using v_t = typename T::value_type;
+  using eve::bit_select;
+  using eve::detail::map;
+  for(std::size_t i = 0; i < a0.size(); ++i)
+    TTS_EQUAL(bit_select(a0[i], a1[i], a2[i]), v_t( (a1[i]& a0[i])|(a2[i]&~a0[i])));
 };

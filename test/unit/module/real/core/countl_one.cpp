@@ -27,13 +27,28 @@ EVE_TEST_TYPES( "Check return types of countl_one on wide"
 };
 
 //==================================================================================================
-// countl_one signed tests
+// countl_one(scalar) tests
 //==================================================================================================
-EVE_TEST( "Check behavior of countl_one on unsigned integral wide"
+EVE_TEST( "Check behavior of countl_one(scalar) on unsigned integral "
+        , eve::test::scalar::unsigned_integers
+        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
+        )
+<typename T>(T const& a0)
+{
+  using v_t = typename T::value_type;
+  for(auto a :a0)
+    TTS_EQUAL( eve::countl_one(a), v_t(std::countl_one(a)));
+};
+
+//==================================================================================================
+// countl_one(simd) tests
+//==================================================================================================
+EVE_TEST( "Check behavior of countl_one(wide) on unsigned integral "
         , eve::test::simd::unsigned_integers
         , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
         )
 <typename T>(T const& a0)
 {
-  TTS_EQUAL( eve::countl_one(a0), T([&](auto i, auto) { return std::countl_one(a0.get(i)); }));
+  using v_t = eve::element_type_t<T>;
+  TTS_EQUAL( eve::countl_one(a0), map([](auto e) ->v_t{ return std::countl_one(e); }, a0));
 };

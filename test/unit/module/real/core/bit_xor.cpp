@@ -1,3 +1,4 @@
+//==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
@@ -5,11 +6,11 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/traits/as_integer.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/bit_cast.hpp>
-#include <eve/function/is_gtz.hpp>
 
 //==================================================================================================
 // Types tests
@@ -42,32 +43,73 @@ EVE_TEST_TYPES( "Check return types of bit_xor"
 //  bit_xor tests
 //==================================================================================================
 EVE_TEST( "Check behavior of bit_xor on integral types"
-        , eve::test::simd::integers
+            , eve::test::simd::integers
+            , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
+                                  , eve::test::randoms(eve::valmin, eve::valmax)
+                                  )
+            )
+<typename T>( T const& a0, T const& a1)
+{
+  using eve::bit_xor;
+  using eve::detail::map;
+  using v_t = eve::element_type_t<T>;
+  TTS_EQUAL( bit_xor(a0, a1), map([](auto e, auto f) -> v_t { return e ^ f; }, a0, a1));
+};
+
+EVE_TEST( "Check behavior of bit_xor on floating types"
+        , eve::test::simd::ieee_reals
         , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
                               , eve::test::randoms(eve::valmin, eve::valmax)
                               )
         )
 <typename T>(T const& a0, T const& a1)
 {
+  using eve::as;
   using eve::bit_xor;
-  TTS_EQUAL( bit_xor(a0, a1), T([&](auto i, auto) { return a0.get(i)^a1.get(i); }));
+  using eve::bit_cast;
+  using eve::detail::map;
+  using i_t = eve::as_integer_t<eve::element_type_t<T>, signed>;
+  using v_t = eve::element_type_t<T>;
+  TTS_IEEE_EQUAL( bit_xor(a0, a1), map([](auto e, auto f) -> v_t
+                                       { return  bit_cast(bit_cast(e, as(i_t()))
+                                                          ^ bit_cast(f, as(i_t())), as(v_t())); }
+                                     , a0, a1));
 };
 
-EVE_TEST( "Check behavior of bit_xor on integral types"
-        , eve::test::simd::ieee_reals
+
+EVE_TEST( "Check behavior of bit_xor on floating types"
+        , eve::test::scalar::ieee_reals
         , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
                               , eve::test::randoms(eve::valmin, eve::valmax)
                               )
         )
-<typename T>( T const& a0, T const& a1 )
+<typename T>(T const& a0, T const& a1)
 {
   using eve::as;
-  using eve::bit_cast;
   using eve::bit_xor;
-  using i_t = eve::as_integer_t<eve::element_type_t<T>, signed>;
-  using v_t = eve::element_type_t<T>;
-  TTS_IEEE_EQUAL( bit_xor(a0, a1), T([&](auto i, auto)
-                                { return  bit_cast(eve::bit_cast(a0.get(i), eve::as(i_t()))
-                                                 ^ eve::bit_cast(a1.get(i), eve::as(i_t())), as(v_t())); }
-                                    ));
+  using eve::bit_cast;
+  using v_t = typename T::value_type;
+  using i_t = eve::as_integer_t<v_t, signed>;
+
+  for(std::size_t i = 0;  i < a0.size(); ++i)
+   TTS_IEEE_EQUAL( bit_xor(a0[i], a1[i]), bit_cast(bit_cast(a0[i], as(i_t()))
+                                                   ^ bit_cast(a1[i], as(i_t())), as(v_t())
+                                                  )
+                 );
+};
+
+EVE_TEST( "Check behavior of bit_xor on floating types"
+        , eve::test::scalar::integers
+        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
+                              , eve::test::randoms(eve::valmin, eve::valmax)
+                              )
+        )
+<typename T>(T const& a0, T const& a1)
+{
+  using eve::as;
+  using eve::bit_xor;
+  using v_t = typename T::value_type;
+
+  for(std::size_t i = 0;  i < a0.size(); ++i)
+    TTS_IEEE_EQUAL( bit_xor(a0[i], a1[i]), v_t(a0[i] ^ a1[i]));
 };

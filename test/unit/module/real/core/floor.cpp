@@ -46,9 +46,10 @@ EVE_TEST_TYPES( "Check return types of floor"
 //==================================================================================================
 // tolerant tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check  with nans and infs"
+EVE_TEST_TYPES( "Check  with particular values"
               , eve::test::simd::ieee_reals
-              )<typename T>(eve::as_<T>)
+              )
+<typename T>(eve::as_<T>)
 {
   TTS_EQUAL(eve::tolerant(eve::floor)(static_cast<T>(-1.3)), T(-2));
   TTS_EQUAL(eve::tolerant(eve::floor)(static_cast<T>(-1.5)), T(-2));
@@ -97,24 +98,47 @@ EVE_TEST_TYPES( "Check  with nans and infs"
 
 
 //==================================================================================================
-// floor tests
+// floor(simd)  tests
 //==================================================================================================
 auto min = []< typename T>(eve::as_<T> const &){return eve::signed_value<T> ? -50 : 0; };
-EVE_TEST( "Check behavior of floor on wide"
-        , eve::test::simd::all_types//ieee_reals
+EVE_TEST( "Check behavior of floor(wide) and diff(floor(wide))"
+        , eve::test::simd::all_types
         , eve::test::generate(eve::test::randoms(min, +50))
         )
 <typename T>(T const& a0 )
 {
+  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   if constexpr(eve::floating_real_value<T>)
   {
-    TTS_EQUAL( eve::floor(a0), T([&](auto i, auto) { return v_t(std::floor(a0.get(i))); }));
+    TTS_EQUAL( eve::floor(a0), map([&](auto e) -> v_t{ return v_t(std::floor(e)); }, a0));
     TTS_EQUAL( eve::diff(eve::floor)(a0), eve::zero(as(a0)));
   }
   else
   {
     TTS_EQUAL( eve::floor(a0),a0);
   }
+};
+
+//==================================================================================================
+// floor(scalar)  tests
+//==================================================================================================
+EVE_TEST( "Check behavior of floor(wide) and diff(floor(wide))"
+        , eve::test::scalar::all_types
+        , eve::test::generate(eve::test::randoms(min, +50))
+        )
+<typename T>(T const& a0 )
+{
+  using v_t =  typename T::value_type;
+  for(auto a : a0)
+    if constexpr(eve::floating_real_value<v_t>)
+    {
+      TTS_EQUAL( eve::floor(a), v_t(std::floor(a)));
+      TTS_EQUAL( eve::diff(eve::floor)(a), eve::zero(eve::as(a)));
+    }
+    else
+    {
+      TTS_EQUAL( eve::floor(a),a);
+    }
 
 };
