@@ -42,7 +42,7 @@ EVE_TEST( "Check behavior of bit_select(simd) on integers"
                               ,  eve::test::randoms(eve::valmin, eve::valmax)
                               )
         )
-  <typename T>(  T const& a0, T const& a1, T const& a2)
+<typename T>(  T const& a0, T const& a1, T const& a2)
 {
   using v_t = eve::element_type_t<T>;
   using eve::bit_select;
@@ -59,7 +59,7 @@ EVE_TEST( "Check behavior of bit_select(scalar) on integers"
                               ,  eve::test::randoms(eve::valmin, eve::valmax)
                               )
         )
-  <typename T>(  T const& a0, T const& a1, T const& a2)
+<typename T>(  T const& a0, T const& a1, T const& a2)
 {
   using v_t = typename T::value_type;
   using eve::bit_select;

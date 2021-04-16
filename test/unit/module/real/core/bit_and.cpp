@@ -18,7 +18,7 @@
 EVE_TEST_TYPES( "Check return types of bit_and"
         , eve::test::simd::all_types
         )
-  <typename T>(eve::as_<T>)
+<typename T>(eve::as_<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -48,7 +48,7 @@ EVE_TEST( "Check behavior of bit_and on integral types"
                                   , eve::test::randoms(eve::valmin, eve::valmax)
                                   )
             )
-  <typename T>( T const& a0, T const& a1)
+<typename T>( T const& a0, T const& a1)
 {
   using eve::bit_and;
   using eve::detail::map;
@@ -62,7 +62,7 @@ EVE_TEST( "Check behavior of bit_and on floating types"
                               , eve::test::randoms(eve::valmin, eve::valmax)
                               )
         )
-  <typename T>(T const& a0, T const& a1)
+<typename T>(T const& a0, T const& a1)
 {
   using eve::as;
   using eve::bit_and;
@@ -83,7 +83,7 @@ EVE_TEST( "Check behavior of bit_and on floating types"
                               , eve::test::randoms(eve::valmin, eve::valmax)
                               )
         )
-  <typename T>(T const& a0, T const& a1)
+<typename T>(T const& a0, T const& a1)
 {
   using eve::as;
   using eve::bit_and;
@@ -104,7 +104,7 @@ EVE_TEST( "Check behavior of bit_and on floating types"
                               , eve::test::randoms(eve::valmin, eve::valmax)
                               )
         )
-  <typename T>(T const& a0, T const& a1)
+<typename T>(T const& a0, T const& a1)
 {
   using eve::as;
   using eve::bit_and;

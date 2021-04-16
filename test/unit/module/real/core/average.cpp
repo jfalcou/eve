@@ -121,7 +121,7 @@ EVE_TEST( "Check behavior of diff(average)(scalar)"
                               , eve::test::randoms(eve::valmin, eve::valmax)
                               )
         )
-  <typename T>( T const& d0, T const& d1, T const& d2 )
+<typename T>( T const& d0, T const& d1, T const& d2 )
 {
   using eve::average;
   using eve::diff;
