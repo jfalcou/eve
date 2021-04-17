@@ -17,3 +17,6 @@ namespace eve
 #include <eve/arch.hpp>
 #include <eve/module/real/algorithm/function/regular/generic/maximum.hpp>
 
+#if defined(EVE_HW_ARM)
+#  include <eve/module/real/algorithm/function/regular/simd/arm/neon/maximum.hpp>
+#endif

@@ -10,8 +10,9 @@
 #include <eve/concept/vectorized.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/is_native.hpp>
-#include <eve/function/swap_adjacent_groups.hpp>
+#include <eve/function/combine.hpp>
 #include <eve/function/splat.hpp>
+#include <eve/function/swap_adjacent_groups.hpp>
 #include <eve/pattern.hpp>
 #include <bit>
 
@@ -28,7 +29,7 @@ namespace eve::detail
     {
       return v;
     }
-    else if constexpr( !is_aggregated_v<wide<T,N,ABI>> )
+    else if constexpr( !is_aggregated_v<ABI> )
     {
       //============================================================================================
       // We have exactly log2(cardinal) - 1 butterfly steps to perform
@@ -46,8 +47,9 @@ namespace eve::detail
     {
       //===========================================================================================
       // Slice, do f once, then reduce the result
-      auto[l,h] = f.slice();
-      return reduce( f(l,h) );
+      auto[l,h] = v.slice();
+      auto r = splat(reduce)( f(l,h), f );
+      return eve::combine(r,r);
     }
   }
 
