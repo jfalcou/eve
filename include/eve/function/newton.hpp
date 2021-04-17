@@ -11,7 +11,7 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(horner_, horner);
+  EVE_MAKE_CALLABLE(newton_, newton);
 }
 
-#include <eve/module/real/polynomial/function/regular/generic/horner.hpp>
+#include <eve/module/real/polynomial/function/regular/generic/newton.hpp>

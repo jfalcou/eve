@@ -9,6 +9,8 @@
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/decorator.hpp>
 #include <eve/function/fma.hpp>
+#include <eve/function/regular.hpp>
+#include <eve/function/sub.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/concept/range.hpp>
 #include <iterator>
@@ -79,19 +81,15 @@ namespace eve::detail
                                             , IT1 const & firstc
                                             , IT1 const & lastc
                                             , IT2 const & firstn
-                                            , IT2 const & lastn
                                              ) noexcept
   requires (compatible_values<T0, typename std::iterator_traits<IT1>::value_type> &&
             compatible_values<T0, typename std::iterator_traits<IT2>::value_type>)
 
   {
-    EVE_ASSERT_MSG( (std::distance(firstc, lastc) ==
-                     std::distance(firstn, lastn)+1
-                    , "size of nodes and coefs iterator are not coherent");
     using r_t = common_compatible_t<T0, typename std::iterator_traits<IT1>::value_type
                                       , typename std::iterator_traits<IT2>::value_type>;
     auto x =  r_t(xx);
-    if (firstc = lastc) return r_t(0);
+    if (firstc == lastc) return r_t(0);
     if (std::distance(firstc, lastc) == 1) return r_t(*firstc);
     else
     {
@@ -99,12 +97,13 @@ namespace eve::detail
       auto curc = firstc;
       auto curn = firstn;
       advance(curc, 1);
+      advance(curn, 1);
       auto dfma = d(fma);
-      r_t that(dfma(x-*firstn, *firstc, *curc));
+      r_t that(dfma(sub(x, *firstn), *firstc, *curc));
       auto step = [&](auto that, auto argc, auto argn){
-        return dfma(x-argn, that, argc);
+        return dfma(sub(x, argn), that, argc);
       };
-      for (advance(curc, 1); cur != last; advance(curc, 1), advance(curn, 1))
+      for (advance(curc, 1); curc != lastc; advance(curc, 1), advance(curn, 1))
         that = step(that, *curc, *curn);
       return that;
     }
@@ -113,12 +112,14 @@ namespace eve::detail
   //================================================================================================
   //== Newton with ranges
   //================================================================================================
-  template<decorator D, value T0, range R1, Range R2>
+  template<decorator D, value T0, range R1, range R2>
   EVE_FORCEINLINE constexpr auto newton_impl(D const & d
-                                        , T0 xx, R const & rc, Range rn) noexcept
-  requires (compatible_values<T0, typename R1::value_type> && (!simd_value<R1>)
-                                , typename R2::value_type> && (!simd_value<R2>))
+                                        , T0 xx, R1 const & rc, R2 rn) noexcept
+  requires (compatible_values<T0, typename R1::value_type>
+            && compatible_values<T0, typename R2::value_type>
+            && (!simd_value<R1>)
+            && (!simd_value<R2>))
   {
-    return newton_impl(d, xx, std::begin(rc), std::end(rc), std::begin(rn), std::end(rn));
+    return newton_impl(d, xx, std::begin(rc), std::end(rc), std::begin(rn));
   }
 }

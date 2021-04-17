@@ -8,10 +8,4 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-
-namespace eve
-{
-  EVE_MAKE_CALLABLE(newton_, newton);
-}
-
 #include <eve/module/real/polynomial/function/numeric/generic/newton.hpp>
