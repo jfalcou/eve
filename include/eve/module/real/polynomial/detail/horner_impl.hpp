@@ -7,6 +7,7 @@
 #include <eve/detail/concepts.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
+#include <eve/function/add.hpp>
 #include <eve/function/decorator.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/constant/one.hpp>
@@ -86,8 +87,7 @@ namespace eve::detail
                                             , T0 const &x, callable_one_ const &, T2 const &b) noexcept
   requires compatible_values<T0, T2>
   {
-    using r_t = common_compatible_t<T0, T2>;
-    return r_t(x)+b;
+    return add(x, b);
   }
 
   //==  N >= 3
@@ -102,7 +102,7 @@ namespace eve::detail
     using r_t = common_compatible_t<T0, T2, Ts...>;
     auto x =  r_t(xx);
     auto dfma = d(fma);
-    r_t that(x+b);
+    r_t that(add(x, b));
     auto next = [&](auto that, auto arg){
       return dfma(x, that, arg);
     };
@@ -158,7 +158,7 @@ namespace eve::detail
     if(first == last) return one(as(x));
     auto cur = first;
     auto dfma = d(fma);
-    r_t that(x+*cur);
+    r_t that(add(x, *cur));
     auto step = [&](auto that, auto arg){
       return dfma(x, that, arg);
     };
