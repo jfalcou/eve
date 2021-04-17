@@ -24,22 +24,22 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-// EVE_TEST_TYPES( "Check return types of newton on wide"
-//         , eve::test::simd::all_types
+EVE_TEST_TYPES( "Check return types of newton on wide"
+        , eve::test::simd::all_types
 
-//         )
-// <typename T>(eve::as_<T>)
-// {
-//   using v_t = eve::element_type_t<T>;
-// //  using i_t = eve::as_integer_t<v_t>;
-//   using rv_t = std::vector<v_t>;
-//   using rl_t = std::list<v_t>;
-//   TTS_EXPR_IS( eve::newton(T(), rv_t(), rv_t())  , T);
-//   TTS_EXPR_IS( eve::newton(T(), rv_t(), rl_t())  , T);
-//   TTS_EXPR_IS( eve::newton(T(), rl_t(), rl_t())  , T);
+        )
+<typename T>(eve::as_<T>)
+{
+  using v_t = eve::element_type_t<T>;
+ using i_t = eve::as_integer_t<v_t>;
+  using rv_t = std::vector<v_t>;
+  using rl_t = std::list<v_t>;
+  TTS_EXPR_IS( eve::newton(T(), rv_t(), rv_t())  , T);
+  TTS_EXPR_IS( eve::newton(T(), rv_t(), rl_t())  , T);
+  TTS_EXPR_IS( eve::newton(T(), rl_t(), rl_t())  , T);
 
-//   TTS_EXPR_IS( eve::newton(T(), std::begin(rv_t()), std::end(rv_t()), std::begin(rv_t())), T);
-// };
+  TTS_EXPR_IS( eve::newton(T(), std::begin(rv_t()), std::end(rv_t()), std::begin(rv_t())), T);
+};
 
 //==================================================================================================
 //== newton tests
