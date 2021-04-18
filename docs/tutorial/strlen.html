@@ -69,16 +69,16 @@ EVE detects build with these sanitizers and disable them for this load.
 
 ### `cur == zeroes`
 This is an elementwise comparison for equality between `cur` and `zeroes`.
-The result is `eve::logical<wide>` - a class representing N booleans where N is the cardinal (number of lanes) of our wide.
+The result is `eve::logical<wide>` - a class representing N booleans where N is the cardinal of our wide.
 
 ### `eve::ignore_first ignore / eve::first_true[ignore]`
 `first_true` takes a `logical` and returns the optional position of the first `true` element.
-However we took a `previous_aligned_address(s)` and not just `s`, so there might be some 0s we are not interested in. <br/>
+However we compute `previous_aligned_address(s)` and not just `s`, so there might be some 0s we are not interested in. <br/>
 For this purpose `eve` provides some conditional mutators, most commonly used ones are:
 `ignore_first`, `ignore_last`, `ignore_extrema` (ignores from both sides).
 
 ### `while (!match) / aligned_s += wide::static_size`
-While we didn't find the 0, we go to the next chunk. `wide::static_size` is the cardinal of the `wide`.
+While we didn't find the 0, we go to the next chunk. `wide::static_size` is the cardinal of the  `wide`.
 Alternatively we could have used `wide.size()`. but `static_size` has the advantage of being `constexpr` friendly.
 
 ### `match = eve::first_true(cur == zeroes);`
@@ -96,7 +96,7 @@ The differences are minimal: clang handles the bit and address manipulations sli
 When comparing against [glibc arm-v8 (aarch64)](https://code.woboq.org/userspace/glibc/sysdeps/aarch64/multiarch/strlen_asimd.S.html) <br/>
 With eve we get: [eve, aarch64](https://godbolt.org/z/nz5eWe). <br/>
 The interesting differences are:
-  * they do not immediatly load from the previous aligned address for the first block. Instead they check if they can load from s,
+  * they do not immediatly load from the previous aligned address for the first block. Instead they check if they load from s,
     and only if not, they start dealing with the previous address.
   * they compute position of the first match differently.
   * we compare with 0 and then look for `true` using `umaxv` instruction.
