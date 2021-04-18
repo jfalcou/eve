@@ -1,3 +1,10 @@
+//==================================================================================================
+/**
+  EVE - Expressive Vector Engine
+  Copyright : EVE Contributors & Maintainers
+  SPDX-License-Identifier: MIT
+**/
+//==================================================================================================
 #pragma once
 
 #include <eve/traits/common_compatible.hpp>
@@ -18,59 +25,6 @@
 
 namespace eve::detail
 {
-
-
-//   //================================================================================================
-//   //== N+ 1  parameters (((..(a*x+b)*x+c)*x + ..)..)
-//   //================================================================================================
-//   //==  N = 0
-//   template<decorator D,  value T0>
-//   EVE_FORCEINLINE constexpr auto newton_impl(D const &, T0 const &) noexcept
-//   {
-//     return T0(0);
-//   }
-
-//   //==  N = 1
-//   template<decorator D, value T0, value T1>
-//   EVE_FORCEINLINE constexpr auto newton_impl(D const &
-//                                             , T0 const &, T1 const &a) noexcept
-//   requires compatible_values<T0, T1>
-//   {
-//     using r_t = common_compatible_t<T0, T1>;
-//     return r_t(a);
-//   }
-
-//   //==  N = 2
-//   template<decorator D, value T0, value T1, value T2>
-//   EVE_FORCEINLINE constexpr auto newton_impl(D const &
-//                                             , T0 const &x, T1 const &a, T2 const &b) noexcept
-//   requires compatible_values<T0, T1> &&compatible_values<T1, T2>
-//   {
-//     using r_t = common_compatible_t<T0, T1, T2>;
-//     return D()(fma)(r_t(x), a, b);
-//   }
-
-//   //==  N >= 3
-//   template<decorator D,
-//            value T0,
-//            value T1,
-//            value T2,
-//            value ...Ts>
-//   EVE_FORCEINLINE constexpr
-//   auto newton_impl(D const & d
-//                   , T0 xx, T1 a, T2 b, Ts... args) noexcept
-//   {
-//     using r_t = common_compatible_t<T0, T1, T2, Ts...>;
-//     auto x =  r_t(xx);
-//     auto dfma = d(fma);
-//     r_t that(dfma(x, a, b));
-//     [[maybe_unused]] auto next = [&](auto that, auto arg){
-//       return dfma(x, that, arg);
-//     };
-//     ((that = next(that, args)),...);
-//     return that;
-//   }
-
   //================================================================================================
   //== Newton with iterators
   //================================================================================================
