@@ -24,7 +24,7 @@ This sections explains some common definitions used throughout this documentatio
 Let `x`, `y` and `z` be three values of respective types `T, U, V`.
 
 For any callable object `f`, the expression `f(x,y)` has an **arithmetic operations semantic**
-if `T` and `U`  are [compatible](../../concepts.html#compatible) [values](../../concepts.html#value)
+if `T` and `U`  are [compatible](reference/concepts/compatible.html#eve::compatible) [values](reference/concepts/value.html#value)
 and the call is semantically equivalent to:
 
 <script type="preformatted">
@@ -55,7 +55,8 @@ Let `x`, `y` be two values of respective types `T` and `U`.
 
 When invoking the function-call operator of an object `f`,  the calls `f(x,y)`
 will be reputed to respond to the **bitwise operations semantic**
-if the two types are bit_compatible and the call is semantically equivalent to:
+if the two types are  [bit_compatible](reference/concepts/bit_compatible.html#eve::bit_compatible_values)
+ [values](reference/concepts/value.html#value) and the call is semantically equivalent to:
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
