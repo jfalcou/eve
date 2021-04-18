@@ -29,21 +29,21 @@ namespace eve
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 
-Build a [SIMD type](../../../concept.html#simd_value) from a given [element type](traits.html#element_type)
-`Type` and an optional [cardinal](traits.html#cardinal) `Size`.
+Build a [SIMD type](../../concepts/simd_value.html#simd_value) from a given [element type](element_type.html#element_type)
+`Type` and an optional [cardinal](cardinal.html#cardinal) `Size`.
 
- - If `Type` satisfies [scalar_value](../../../concept.html#scalar_value), `eve::as_wide&lt;Type,Cardinal>::type`
+ - If `Type` satisfies [scalar_value](../../concepts/scalar_value.html#scalar_value), `eve::as_wide&lt;Type,Cardinal>::type`
    evaluates to `wide&lt;Type,Cardinal>`.
 
- - If `Type` satisfies [simd_value](../../../concept.html#simd_value), `eve::as_wide&lt;Type,Cardinal>::type`
-   evaluates to `wide&lt;eve::element_t&lt;Type>,Cardinal>`, i.e it overwrites the initial type's cardinal.
+ - If `Type` satisfies [simd_value](../../simd_value.html#simd_value), `eve::as_wide&lt;Type,Cardinal>::type`
+   evaluates to `wide&lt;eve::element_t&lt;Type>,Cardinal>`, i.e. it overwrites the initial type's cardinal.
 
- - If `Type` is a template type satisfies Rebindable, `eve::as_wide&lt;Type,Cardinal>::type`
+ - If `Type` is a template type satisfies [rebindable](../../concepts/rebindable.html), `eve::as_wide&lt;Type,Cardinal>::type`
    evaluates to `std::tuple&lt;eve::as_wide_t&lt;Ts,Cardinal>...>`.
 
- - If `Type` is an instance of `std::pair&lt;T,U>`, evaluates `std::pair&lt;eve::as_wide_t&lt;T>,eve::as_wide_t&lt;U>>`.
+ - If `Type` is an instance of <script type="preformatted">`std::pair&lt;T,U>`</script>, evaluates <script type="preformatted">`std::pair<eve::as_wide_t<T>,eve::as_wide_t&lt;U>>`</script>.
 
- - If `Type` is an instance of `std::array&lt;T,N>`, evaluates `std::array&lt;eve::as_wide_t&lt;T>,N>`.
+ - If `Type` is an instance of <script type="preformatted">`std::array&lt;T,N></script>`, evaluates <script type="preformatted">`std::array<eve::as_wide_t&lt;T>,N>`.</script>
 
 
 
@@ -51,7 +51,7 @@ Build a [SIMD type](../../../concept.html#simd_value) from a given [element type
 
 Member type  | Definition
 ------------ | ----------
-`type`       | The [SIMD type](../../../concept.html#simd_value) build from `Type` and `Cardinal`
+`type`       | The [SIMD type](../../concepts/simd_value.html#simd_value) build from `Type` and `Cardinal`
 
 **Helper Types:**
 <script type="preformatted">
