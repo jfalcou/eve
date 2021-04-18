@@ -5,11 +5,12 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include "test.hpp"
+#include "unit/memory/page.hpp"
+
 #include <eve/function/load.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 
-#include "test.hpp"
-#include "unit/memory/page.hpp"
 #include <array>
 #include <list>
 

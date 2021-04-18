@@ -5,11 +5,12 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include "test.hpp"
+
 #include <eve/function/swap_adjacent_groups.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 
-#include "test.hpp"
 #include <bit>
 
 //==================================================================================================

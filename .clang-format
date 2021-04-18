@@ -36,12 +36,14 @@ ExperimentalAutoDetectBinPacking: false
 FixNamespaceComments: false
 IncludeBlocks: Regroup
 IncludeCategories:
-  - Regex:           '^<eve/'
+  - Regex:           '^"[\/_[:alnum:].]+"'
     Priority:        0
-  - Regex:           '<[[:alnum:].]+>'
+  - Regex:           '^<eve/'
     Priority:        1
-IndentCaseBlocks: true
-IndentCaseLabels: true
+  - Regex:           '^<[\/_[:alnum:].]+>'
+    Priority:        2
+#IndentCaseBlocks: true
+IndentCaseLabels: false
 IndentPPDirectives: AfterHash
 IndentWidth: 2
 IndentWrappedFunctionNames: false
