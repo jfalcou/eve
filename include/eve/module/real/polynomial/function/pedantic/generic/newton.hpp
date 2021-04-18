@@ -43,17 +43,4 @@ namespace eve::detail
   {
     return detail::newton_impl(pedantic_type(), xx, rc, rn);
   }
-
-//   //================================================================================================
-//   //== N parameters (((..(a*x+b)*x+c)*x + ..)..)
-//   //================================================================================================
-
-//   template<value T0, value ...Ts>
-//   EVE_FORCEINLINE constexpr auto newton_(EVE_SUPPORTS(cpu_)
-//                                          , pedantic_type const &
-//                                          , T0 x, Ts... args) noexcept
-//   {
-//     return newton_impl(pedantic_type(), x, args...);
-//   }
-
 }

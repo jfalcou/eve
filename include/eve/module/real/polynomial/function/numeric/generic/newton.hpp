@@ -43,17 +43,4 @@ namespace eve::detail
   {
     return detail::newton_impl(numeric_type(), xx, rc, rn);
   }
-
-//   //================================================================================================
-//   //== N parameters (((..(a*x+b)*x+c)*x + ..)..)
-//   //================================================================================================
-
-//   template<value T0, value ...Ts>
-//   EVE_FORCEINLINE constexpr auto newton_(EVE_SUPPORTS(cpu_)
-//                                        , numeric_type const &
-//                                        , T0 x, Ts... args) noexcept
-//   {
-//     return newton_impl(numeric_type(), x, args...);
-//   }
-
 }
