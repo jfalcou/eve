@@ -16,4 +16,3 @@ namespace eve
 
 #include <eve/module/real/core/function/scalar/minimum.hpp>
 //#include <eve/module/real/core/function/regular/simd/minimum.hpp>
-

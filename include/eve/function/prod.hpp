@@ -14,6 +14,9 @@ namespace eve
   EVE_MAKE_CALLABLE(prod_, prod);
 }
 
-#include <eve/module/real/core/function/scalar/prod.hpp>
-//#include <eve/module/real/core/function/regular/simd/prod.hpp>
+#include <eve/arch.hpp>
+#include <eve/module/real/algorithm/function/regular/generic/prod.hpp>
 
+#if defined(EVE_HW_ARM)
+#  include <eve/module/real/algorithm/function/regular/simd/arm/neon/prod.hpp>
+#endif
