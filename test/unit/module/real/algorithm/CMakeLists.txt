@@ -27,3 +27,4 @@ make_all_units(ROOT unit.real.algorithm NAME none        ARCH scalar  simd TYPES
 make_all_units(ROOT unit.real.algorithm NAME reduce      ARCH         simd TYPES ${all_types} )
 
 make_unit("unit.real.algorithm"  maximum.cpp )
+make_unit("unit.real.algorithm"  minimum.cpp )
