@@ -7,45 +7,23 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/sub.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/mone.hpp>
+#include <eve/constant/zero.hpp>
+#include <eve/function/sub.hpp>
 #include <eve/function/derivative.hpp>
+#include <eve/traits/common_compatible.hpp>
 
 namespace eve::detail
 {
-  template<floating_real_value T, unsigned_value N, unsigned_value P>
-  EVE_FORCEINLINE constexpr T sub_(EVE_SUPPORTS(cpu_)
-                                   , diff_type<1> const &
-                                   , T x
-                                   , T y
-                                   , N n
-                                   , P p) noexcept
+  template<auto N, floating_real_value T, floating_real_value... Ts>
+  EVE_FORCEINLINE constexpr auto sub_(EVE_SUPPORTS(cpu_)
+                                    , diff_type<N> const &
+                                    , T, Ts ... ) noexcept
   {
-    if constexpr( has_native_abi_v<T> )
-    {
-      auto np = n+p;
-      return if_else(np == 0, x-y, if_else(n+p == 1, if_else(n == 1, one(as(x)), mone), zero));
-    }
-    else
-      return apply_over(diff_1st(sub), x, y, n, p);
-  }
-
-  template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T sub_(EVE_SUPPORTS(cpu_)
-                                    , diff_type<1> const &
-                                    , T x, T ) noexcept
-  {
-
-    return one(as(x));
-  }
-
-  template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T sub_(EVE_SUPPORTS(cpu_)
-                                    , diff_type<2> const &
-                                    , T x, T ) noexcept
-  {
-
-    return mone(as(x));
+    using r_t = common_compatible_t<T,Ts...>;
+    if constexpr(N > sizeof...(Ts)+1) return zero(as < r_t>());
+    else if constexpr(N == 1) return one(as<r_t>());
+    else return mone(as<r_t>());
   }
 }
