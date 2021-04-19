@@ -31,7 +31,6 @@ EVE_TEST_TYPES( "Check return types of newton on wide"
 <typename T>(eve::as_<T>)
 {
   using v_t = eve::element_type_t<T>;
- using i_t = eve::as_integer_t<v_t>;
   using rv_t = std::vector<v_t>;
   using rl_t = std::list<v_t>;
   TTS_EXPR_IS( eve::newton(T(), rv_t(), rv_t())  , T);
@@ -125,32 +124,32 @@ EVE_TEST( "Check behavior of newton on scalar"
   using v_t = typename T::value_type;
   for( auto a0 :a)
   {
-//     {
-//       //============================================================================
-//       //== ranges
-//       //============================================================================
-//       std::vector<v_t> tab0; // std does not want array of size 0
-//       std::array<v_t, 1> tab1 = {1};
-//       std::array<v_t, 2> tab2 = {1, 2};
-//       std::array<v_t, 3> tab3 = {1, 2, 3};
+    {
+      //============================================================================
+      //== ranges
+      //============================================================================
+      std::vector<v_t> tab0; // std does not want array of size 0
+      std::array<v_t, 1> tab1 = {1};
+      std::array<v_t, 2> tab2 = {1, 2};
+      std::array<v_t, 3> tab3 = {1, 2, 3};
 
 
-//       TTS_EQUAL((newton)(a0, tab0, tab0), v_t(0));
-//       TTS_EQUAL((newton)(a0, tab1, tab0), v_t(1));
-//       TTS_EQUAL((newton)(a0, tab2, tab1), (fma)(a0, v_t(1), v_t(2)));
-//       TTS_EQUAL((newton)(a0, tab3, tab2), (fma)(a0, (fma)(v_t(a0-1), v_t(1), v_t(2)), v_t(3)));
+      TTS_EQUAL((newton)(a0, tab0, tab0), v_t(0));
+      TTS_EQUAL((newton)(a0, tab1, tab0), v_t(1));
+      TTS_EQUAL((newton)(a0, tab2, tab1), (fma)(v_t(a0-1), v_t(1), v_t(2)));
+      TTS_EQUAL((newton)(a0, tab3, tab2), (fma)(v_t(a0-2), (fma)(v_t(a0-1), v_t(1), v_t(2)), v_t(3)));
 
-//       TTS_EQUAL(pedantic(newton)(a0, tab0, tab0), v_t(0));
-//       TTS_EQUAL(pedantic(newton)(a0, tab1, tab0), v_t(1));
-//       TTS_EQUAL(pedantic(newton)(a0, tab2, tab1), (fma)(v_t(a0-1), v_t(1), v_t(2)));
-//       TTS_EQUAL(pedantic(newton)(a0, tab3, tab2), (fma)(v_t(a0-2), (fma)(v_t(a0-1), v_t(1), v_t(2)), v_t(3)));
+      TTS_EQUAL(pedantic(newton)(a0, tab0, tab0), v_t(0));
+      TTS_EQUAL(pedantic(newton)(a0, tab1, tab0), v_t(1));
+      TTS_EQUAL(pedantic(newton)(a0, tab2, tab1), (fma)(v_t(a0-1), v_t(1), v_t(2)));
+      TTS_EQUAL(pedantic(newton)(a0, tab3, tab2), (fma)(v_t(a0-2), (fma)(v_t(a0-1), v_t(1), v_t(2)), v_t(3)));
 
-//       TTS_EQUAL(numeric(newton)(a0, tab0, tab0), v_t(0));
-//       TTS_EQUAL(numeric(newton)(a0, tab1, tab0), v_t(1));
-//       TTS_EQUAL(numeric(newton)(a0, tab2, tab1), (fma)(a0, v_t(1), v_t(2)));
-//       TTS_EQUAL(numeric(newton)(a0, tab3, tab2), (fma)(v_t(a0-2), (fma)(v_t(a0-1), v_t(1), v_t(2)), v_t(3)));
-//     }
-     {
+      TTS_EQUAL(numeric(newton)(a0, tab0, tab0), v_t(0));
+      TTS_EQUAL(numeric(newton)(a0, tab1, tab0), v_t(1));
+      TTS_EQUAL(numeric(newton)(a0, tab2, tab1), (fma)(v_t(a0-1), v_t(1), v_t(2)));
+      TTS_EQUAL(numeric(newton)(a0, tab3, tab2), (fma)(v_t(a0-2), (fma)(v_t(a0-1), v_t(1), v_t(2)), v_t(3)));
+    }
+    {
       //============================================================================
       //== iterators
       //============================================================================
@@ -162,7 +161,7 @@ EVE_TEST( "Check behavior of newton on scalar"
       TTS_EQUAL((newton)(a0, &tab0[0], &tab0[0], &tab0[0]), v_t(0));
       TTS_EQUAL((newton)(a0, &tab1[0], &tab1[1], &tab1[0]), v_t(1));
       TTS_EQUAL((newton)(a0, &tab2[0], &tab2[2], &tab2[0]), (fma)(v_t(a0-1), v_t(1), v_t(2)));
-      TTS_EQUAL((newton)(a0, tab3.begin(), tab3.end(), tab2.begin()), (fma)(v_t(a0-2), (fma)(a0, v_t(1), v_t(2)), v_t(3)));
+      TTS_EQUAL((newton)(a0, tab3.begin(), tab3.end(), tab2.begin()), (fma)(v_t(a0-2), (fma)(v_t(a0-1), v_t(1), v_t(2)), v_t(3)));
 
       TTS_EQUAL(pedantic(newton)(a0, &tab0[0], &tab0[0], &tab0[0]), v_t(0));
       TTS_EQUAL(pedantic(newton)(a0, &tab1[0], &tab1[1], &tab1[0]), v_t(1));
