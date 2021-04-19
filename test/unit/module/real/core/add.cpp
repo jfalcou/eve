@@ -8,8 +8,10 @@
 #include "test.hpp"
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
+#include <eve/constant/one.hpp>
 #include <eve/function/add.hpp>
 #include <eve/function/saturated/add.hpp>
+#include <eve/function/diff/add.hpp>
 #include <eve/function/is_gtz.hpp>
 
 //==================================================================================================
@@ -65,12 +67,27 @@ EVE_TEST_TYPES( "Check return types of add"
   TTS_EXPR_IS( eve::saturated(eve::add)(v_t(), v_t(), T()) , T);
   TTS_EXPR_IS( eve::saturated(eve::add)(v_t(), T(), v_t()) , T);
   TTS_EXPR_IS( eve::saturated(eve::add)(v_t(), v_t(), v_t()) , v_t);
+
+  //diff
+  if constexpr(eve::floating_value<T>)
+  {
+    using eve::diff_1st;
+    using eve::diff_2nd;
+    TTS_EXPR_IS( diff_1st(eve::add)(T(), T()  ) , T);
+    TTS_EXPR_IS( diff_1st(eve::add)(T(), v_t()) , T);
+    TTS_EXPR_IS( diff_1st(eve::add)(v_t(), T()) , T);
+    TTS_EXPR_IS( diff_1st(eve::add)(v_t(), v_t()) , v_t);
+    TTS_EXPR_IS( diff_2nd(eve::add)(T(), T()  ) , T);
+    TTS_EXPR_IS( diff_2nd(eve::add)(T(), v_t()) , T);
+    TTS_EXPR_IS( diff_2nd(eve::add)(v_t(), T()) , T);
+    TTS_EXPR_IS( diff_2nd(eve::add)(v_t(), v_t()) , v_t);
+  }
 };
 
 //==================================================================================================
-// add tests
+//==  add simd tests
 //==================================================================================================
-EVE_TEST( "Check behavior of add on signed types"
+EVE_TEST( "Check behavior of add on wide"
             , eve::test::simd::all_types
             , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
                                   , eve::test::randoms(eve::valmin, eve::valmax)
@@ -81,15 +98,22 @@ EVE_TEST( "Check behavior of add on signed types"
 {
   using eve::add;
   using eve::saturated;
-  TTS_EQUAL( add(a0, a2), T([&](auto i, auto) { return add(a0.get(i), a2.get(i)); }));
-  TTS_EQUAL( saturated(add)(a0, a2), T([&](auto i, auto) { return saturated(add)(a0.get(i), a2.get(i)); }));
-  TTS_EQUAL( add(a0, a1, a2), T([&](auto i, auto) { return add(a0.get(i), a1.get(i), a2.get(i)); }));
-  TTS_EQUAL( saturated(add)(a0, a1, a2), T([&](auto i, auto) { return saturated(add)(a0.get(i), a1.get(i), a2.get(i)); }));
+  using eve::detail::map;
+  TTS_EQUAL( add(a0, a2), map([](auto e, auto f) { return add(e, f); }, a0, a2));
+  TTS_EQUAL( saturated(add)(a0, a2), map([&](auto e, auto f) { return saturated(add)(e, f); }, a0, a2));
+  TTS_EQUAL( add(a0, a1, a2), map([&](auto e, auto f, auto g) { return add(add(e, f), g); }, a0, a1, a2));
+  TTS_EQUAL( saturated(add)(a0, a1, a2), map([&](auto e, auto f, auto g) { return saturated(add)(saturated(add)(e, f), g); }, a0, a1, a2));
+  if constexpr(eve::floating_value<T>)
+  {
+    TTS_EQUAL( eve::diff_1st(add)(a0, a2), eve::one(as(a0)));
+    TTS_EQUAL( eve::diff_2nd(add)(a0, a2), eve::one(as(a0)));
+    TTS_EQUAL( eve::diff_3rd(add)(a0, a1, a2), eve::one(as(a0)));
+  }
 
 };
 
 //==================================================================================================
-//==  conditional add tests
+//==  conditional add tests on simd
 //==================================================================================================
 auto mini = [] < typename T > (eve::as_<T> const &){ return std::is_signed_v<eve::element_type_t<T>> ? -128 : 0;};
 
@@ -104,7 +128,9 @@ EVE_TEST( "Check behavior of add on signed types"
 {
   using eve::add;
   using eve::saturated;
-
-  TTS_EQUAL( add[a2 > T(64)](a0, a1), T([&](auto i, auto) {return a2.get(i) > 64 ? add(a0.get(i), a1.get(i)) :a0.get(i) ; }));
-  TTS_EQUAL( saturated(add[a2 > T(64)])(a0, a1), T([&](auto i, auto) { return  a2.get(i) > 64 ? saturated(add)(a0.get(i), a1.get(i)):a0.get(i); }));
+  using eve::detail::map;
+  TTS_EQUAL( add[a2 > T(64)](a0, a1), map([](auto e, auto f, auto g) {return g > 64 ? add(e, f) : e ; }, a0, a1, a2));
+  TTS_EQUAL( saturated(add[a2 > T(64)])(a0, a1), map([](auto e, auto f, auto g) { return  g > 64 ? saturated(add)(e, f): e; }, a0, a1, a2));
 };
+
+/// TODO waiting for interface simplifications to add scalar tests

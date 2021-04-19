@@ -60,6 +60,16 @@ Supported decorators
 :   The call `saturated(add)(x, args...)` computes the saturated  sum of `x` and the `args`. The saturation is obtained in the
      [compatibility result](../../concept.html#compatibility) of the two parameters. No overflow occurs.
 
+     For instance
+
+        * `saturated(add)(x, x1, x2, x3)`
+
+     is equivalent to
+
+        * `saturated(add)(saturated(add)(saturated(add)(x, x1), x2), x3)`,
+
+     but a bit less verbose.
+
 [`diff`](../decorators.html#diff)
 :   **Required header: **<script type="preformatted">` #include <eve/function/diff/add.hpp>`</script>
 
