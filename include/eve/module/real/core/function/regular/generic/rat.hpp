@@ -51,13 +51,11 @@ namespace eve::detail
 
       while(true)
       {
-        auto notdone = is_nez(y) &&  (abs(y*d - n) >= abs(n)*tol);
-        std::cout << "notdone" << notdone << std::endl;
+        auto notdone = is_nez(y) &&  (abs(y - n/d) >= tol);
         if (none(notdone)) break;
         auto flip = if_else(notdone,rec(frac), frac);
-        std::cout << "flip" << flip << std::endl;
-        auto step = if_else(notdone,round(frac), zero);
-        frac = sub(flip, step);
+        auto step = if_else(notdone,round(flip), zero);
+        frac = flip - step;
         auto savedn = n;
         auto savedd = d;
         n = if_else(notdone, fma(n, step,  lastn), n);
@@ -67,6 +65,8 @@ namespace eve::detail
       }
       n *= sign(d);
       d = saturated(abs)(d);
+      n = if_else(is_inf, sign(x), n);
+      d = if_else(is_inf, zero, d);
       return std::array<T, 2>{n, d};
     }
     else
@@ -80,31 +80,29 @@ namespace eve::detail
                                      , T const & x
                                      , T const & tol) noexcept
   {
-    auto is_inf = is_infinite(x);
-    auto y = if_else(is_inf, zero, x);
-    auto n = round(y);
-    auto d = one(as(y));
-    auto frac = y-n;
-    auto lastn = one(as(y));
-    auto lastd = zero(as(y));
-
+    if (is_infinite(x)) return  std::array<T, 2>{sign(x), 0};;
+    auto n = round(x);
+    auto d = one(as(x));
+    auto frac = x-n;
+    auto lastn = one(as(x));
+    auto lastd = zero(as(x));
     while(true)
     {
-      auto notdone = is_nez(y) &&  (abs(y - n/d) >= tol);
-      if (notdone) break;
-      auto flip = if_else(notdone,rec(frac), frac);
-      auto step = if_else(notdone,round(frac), frac);
-      frac = sub(flip, step);
+      auto done = is_eqz(x) ||  (abs(x - n/d) < tol);
+      if (done) break;
+      auto flip = rec(frac);
+      auto step = round(flip);
+      frac = flip- step;
       auto savedn = n;
       auto savedd = d;
-      n = fma(n, step,  lastn);
-      d = fma(d, step,  lastd);
+      n = fma(n, step, lastn);
+      d = fma(d, step, lastd);
       lastn = savedn;
       lastd = savedd;
     }
     n *= sign(d);
     d = saturated(abs)(d);
-    return std::array<T, 2>{n, d};
+     return std::array<T, 2>{n, d};
   }
 
   template<floating_real_value T>
