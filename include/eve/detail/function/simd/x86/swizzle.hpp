@@ -190,7 +190,7 @@ namespace eve::detail
           if constexpr(match(c,category::int64x4 ,category::uint64x4) )
           {
             auto vc = bit_cast(v, as_<as_floating_point_t<that_t>>{});
-            return bit_cast( v[q] , as(s));
+            return bit_cast( basic_swizzle(vc, q) , as(s));
           }
           else  if constexpr(match(c,category::int32x8 ,category::uint32x8) ) s = _mm256_permutexvar_epi32(m,v);
           else  if constexpr(match(c,category::int16x16,category::uint16x16)) s = _mm256_permutexvar_epi16(m,v);

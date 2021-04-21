@@ -159,6 +159,10 @@ TTS_CASE("Check swap_adjacent_groups patterns get optimized")
   using eve::detail::bound;
   using eve::callable_swap_adjacent_groups_;
 
+  TTS_EXPR_IS ( (find_optimized_pattern<4,1,0>())
+              , (bound<callable_swap_adjacent_groups_,fixed<1>>)
+              );
+
   TTS_EXPR_IS ( (find_optimized_pattern<2,1,0>())
               , (bound<callable_swap_adjacent_groups_,fixed<1>>)
               );
@@ -418,4 +422,27 @@ TTS_CASE("Check broadcast_group patterns get optimized")
   TTS_EXPR_IS ( (find_optimized_pattern<16,8,9,10,11,12,13,14,15,8,9,10,11,12,13,14,15>())
               , (bound<callable_broadcast_group_,fixed<8>,index_t<1>,fixed<16>>)
               );
+}
+
+TTS_CASE("Check reverse get optimized")
+{
+  using eve::fixed;
+  using eve::detail::find_optimized_pattern;
+  using eve::detail::bound;
+  using eve::callable_reverse_;
+
+  TTS_EXPR_IS ( (find_optimized_pattern<4, 3, 2, 1,0>())
+              , (bound<callable_reverse_>)
+              );
+  TTS_EXPR_IS ( (find_optimized_pattern<8, 7, 6, 5, 4, 3, 2, 1, 0>())
+              , (bound<callable_reverse_>)
+              );
+  TTS_EXPR_IS ( (find_optimized_pattern<16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0>())
+              , (bound<callable_reverse_>)
+              );
+  TTS_EXPR_IS ( (find_optimized_pattern<16, 3, 2, 1, 0>())
+              , (bound<eve::callable_basic_swizzle_,
+                       eve::pattern_t<3, 2, 1,0>>)
+              );
+
 }

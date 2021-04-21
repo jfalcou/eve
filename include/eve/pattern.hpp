@@ -78,8 +78,7 @@ namespace eve
   {
     return []<auto... N>( std::integer_sequence<std::ptrdiff_t,N...> )
     {
-      F f;
-      return pattern<f(N,Sz)...>;
+      return pattern<F{}(N,Sz)...>;
     }( std::make_integer_sequence<std::ptrdiff_t,Sz>{} );
   }
 
