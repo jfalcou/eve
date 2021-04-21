@@ -9,47 +9,79 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/function/reduce.hpp>
+#include <eve/constant/signmask.hpp>
 #include <eve/function/convert.hpp>
-#include <eve/function/reduce.hpp>
+#include <eve/function/replace.hpp>
 #include <eve/function/min.hpp>
 
 namespace eve::detail
 {
   template<real_scalar_value T, typename N, x86_abi ABI>
   EVE_FORCEINLINE T minimum_( EVE_SUPPORTS(sse2_)
-                            , wide<T,N,ABI> const &v
+                            , wide<T,N,ABI> v
                             ) noexcept
   {
     constexpr auto c = categorize<wide<T,N,ABI>>();
 
-    if constexpr ( eve::current_api >= eve::sse4_1 )
+    if constexpr( N::value == 1 )
     {
-      if constexpr( c == category::uint16x8 )
+      return v.get(0);
+    }
+    else if constexpr ( eve::current_api >= eve::sse4_1 )
+    {
+      if constexpr( !std::same_as<ABI,x86_128_> )
       {
-        // minupos return a vector like [0 0 0 0 0 0 p m] where m is the minimum and p its position
-        // We extract only the minimum.
-        return wide<T,N,ABI>(_mm_minpos_epu16(v)).get(0);
-      }
-      else if constexpr ( c == category::int16x8 )
-      {
-        auto usv = eve::bit_cast(v, as_<wide<std::uint16_t,N,ABI>>{});
-        usv += 32768;
-        return static_cast<T>(minimum(usv)-32768);
-      }
-      else if constexpr( c == category::uint8x16 || c == category::int8x16 )
-      {
-        // This is less costly than doing the shuffle dance for int8s
-        auto [lw,hw] = convert(v, as_<std::uint16_t>{}).slice();
+        // Larger X86 ABI slices and try to optimize down the road
+        auto [lw,hw] = v.slice();
         return static_cast<T>(minimum( min(lw,hw) ));
       }
       else
       {
-        return reduce(v, eve::min);
+        if constexpr( c == category::uint16x8 )
+        {
+          constexpr auto fix = [](auto w)
+          {
+            if constexpr(N::value < 8)  return replace_ignored( wide<T,fixed<8>>(w.storage())
+                                                              , ignore_last(8-N::value)
+                                                              , T(~0)
+                                                              );
+            else                        return w;
+          };
+
+          // minupos return a vector like [0 0 0 0 0 0 p m] where m is the minimum and p its position
+          // We extract only the minimum.
+          using type = wide<T,N,ABI>;
+          return type(_mm_minpos_epu16(fix(v))).get(0);
+        }
+        else if constexpr ( c == category::int16x8 )
+        {
+          auto usv = eve::bit_cast(v, as_<wide<std::uint16_t,N,ABI>>{});
+          auto const sm = signmask(as_<T>());
+          usv += sm;
+          return static_cast<T>(minimum(usv)-sm);
+        }
+        else if constexpr( c == category::uint8x16 )
+        {
+          // This is less costly than doing the shuffle dance for int8s
+          auto [lw,hw] = convert(v, as_<std::uint16_t>{}).slice();
+          return static_cast<T>(minimum( min(lw,hw) ));
+        }
+        else if constexpr( c == category::int8x16 )
+        {
+          // This is less costly than doing the shuffle dance for int8s
+          auto [lw,hw] = convert(v, as_<std::int16_t>{}).slice();
+          return static_cast<T>(minimum( min(lw,hw) ));
+        }
+        else
+        {
+          return basic_reduce(v, eve::min);
+        }
       }
     }
     else
     {
-      return reduce(v, eve::min);
+      return basic_reduce(v, eve::min);
     }
   }
 
@@ -64,7 +96,7 @@ namespace eve::detail
     }
     else
     {
-      return splat(reduce)(v, eve::min);
+      return splat(basic_reduce)(v, eve::min);
     }
   }
 }

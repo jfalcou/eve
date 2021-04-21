@@ -9,7 +9,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/reduce.hpp>
+#include <eve/detail/function/reduce.hpp>
 #include <eve/function/min.hpp>
 
 namespace eve::detail
@@ -41,11 +41,11 @@ namespace eve::detail
       else  if constexpr( c == category::float32x4) return vminvq_f32(v);
       else  if constexpr( c == category::float64x1) return v.get(0);
       else  if constexpr( c == category::float64x2) return vminvq_f64(v);
-      else  return reduce(v, eve::min);
+      else  return basic_reduce(v, eve::min);
     }
     else
     {
-      return reduce(v, eve::min);
+      return basic_reduce(v, eve::min);
     }
   }
 
