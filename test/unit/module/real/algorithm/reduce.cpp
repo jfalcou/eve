@@ -21,7 +21,7 @@ EVE_TEST_TYPES( "Check return types of eve::reduce(wide)", eve::test::simd::all_
 };
 
 //==================================================================================================
-// Values tests
+// Arithmetic tests
 //==================================================================================================
 EVE_TEST( "Check behavior of eve::reduce(eve::wide)"
         , eve::test::simd::all_types
@@ -34,4 +34,17 @@ EVE_TEST( "Check behavior of eve::reduce(eve::wide)"
 
   TTS_EQUAL(eve::reduce(a0, [](auto a, auto b) { return a+b; })            , v_t(ref) );
   TTS_EQUAL(eve::splat(eve::reduce)(a0, [](auto a, auto b) { return a+b; }), T(ref)   );
+};
+
+//==================================================================================================
+// Logical tests
+//==================================================================================================
+EVE_TEST( "Check behavior of eve::reduce(eve::wide)"
+        , eve::test::simd::all_types
+        , eve::test::generate ( eve::test::logicals(0,3) )
+        )
+<typename T>(T const& a0)
+{
+  TTS_EQUAL(eve::reduce(a0, eve::logical_and), eve::all(a0) );
+  TTS_EQUAL(eve::reduce(a0, eve::logical_or ), eve::any(a0) );
 };
