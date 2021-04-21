@@ -5,9 +5,9 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include "test.hpp"
 #include <eve/function/reduce.hpp>
 #include <eve/function/plus.hpp>
-#include <type_traits>
 
 //==================================================================================================
 // Types tests

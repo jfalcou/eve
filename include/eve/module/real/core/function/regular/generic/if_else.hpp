@@ -50,7 +50,7 @@ namespace eve::detail
       else  if constexpr(has_aggregated_abi_v<T>)  return aggregate(if_else, cond, t, f);
       else  if constexpr(std::same_as<logical<e_t>,element_type_t<T>>)
       {
-        if constexpr( std::same_as<U,V> ) return  bit_select(cond.mask(), t, f);
+        if constexpr( std::same_as<U,V> ) return  bit_select(cond.mask(),r_t(t), r_t(f));
         else                              return  if_else(cond, r_t(t), r_t(f));
       }
       else return  if_else(convert(cond, as<as_logical_t<e_t>>()), r_t(t), r_t(f));
