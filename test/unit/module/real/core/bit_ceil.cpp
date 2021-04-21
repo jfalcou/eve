@@ -67,38 +67,3 @@ EVE_TEST( "Check behavior of bit_ceil(wide) on floating"
                                  )
            );
 };
-
-EVE_TEST( "Check behavior of bit_ceil(scalar) on floating"
-            , eve::test::scalar::ieee_reals
-            , eve::test::generate(eve::test::randoms(-10, eve::valmax))
-            )
-<typename T>(T const& a0)
-{
-  using v_t = typename T::value_type;
-  using eve::exponent;
-  using eve::ldexp;
-  for(auto a : a0)
-    TTS_EQUAL( eve::bit_ceil(a), [](auto x) {
-                 auto v = x;
-                 if(v <= v_t(1)) return v_t(1);
-                 else {
-                   auto e =  eve::exponent(v);
-                   auto res = ldexp(v_t(1), e);
-                   if (res < v) res*= v_t(2);
-                   return res;
-                 };
-               }(a)
-             );
-};
-
-EVE_TEST( "Check behavior of bit_ceil(scalar) on integral types"
-        , eve::test::simd::integers
-        , eve::test::generate(eve::test::randoms(mini, maxi))
-        )
-<typename T>(T const& a0)
-{
-  using v_t = typename T::value_type;
-  using u_t = eve::as_integer_t<v_t, unsigned>;
-  for(auto a : a0)
-    TTS_EQUAL( eve::bit_ceil(a), v_t(std::bit_ceil(u_t((a > 0) ? a : 0))));
-};
