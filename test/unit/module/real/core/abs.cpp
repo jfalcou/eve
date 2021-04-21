@@ -26,24 +26,7 @@ auto minimal = []<typename T>(eve::as_<T> const & tgt)
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::abs(scalar)", eve::test::scalar::all_types)
-<typename T>(eve::as_<T>)
-{
-  TTS_EXPR_IS( eve::abs(T())                    , T   );
-  TTS_EXPR_IS( eve::abs[eve::logical<T>()](T()) , T   );
-  TTS_EXPR_IS( eve::abs[bool()](T())            , T   );
-
-  TTS_EXPR_IS( eve::saturated(eve::abs)(T())                   , T   );
-  TTS_EXPR_IS( eve::saturated(eve::abs[eve::logical<T>()])(T()), T   );
-  TTS_EXPR_IS( eve::saturated(eve::abs[bool()])(T())           , T   );
-
-  if constexpr(eve::floating_real_value<T>)
-  {
-    TTS_EXPR_IS( eve::diff(eve::abs)(T()) , T );
-  }
-};
-
-EVE_TEST_TYPES( "Check return types of eve::abs(wide)", eve::test::simd::all_types)
+EVE_TEST_TYPES( "Check return types of eve::abs", eve::test::simd::all_types)
 <typename T>(eve::as_<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -58,9 +41,20 @@ EVE_TEST_TYPES( "Check return types of eve::abs(wide)", eve::test::simd::all_typ
   TTS_EXPR_IS( eve::saturated(eve::abs[eve::logical<v_t>()])(T()) , T );
   TTS_EXPR_IS( eve::saturated(eve::abs[bool()])(T())              , T );
 
+  TTS_EXPR_IS( eve::abs(v_t())                      , v_t );
+  TTS_EXPR_IS( eve::abs[eve::logical<T>()](v_t())   , T );
+  TTS_EXPR_IS( eve::abs[eve::logical<v_t>()](v_t()) , v_t );
+  TTS_EXPR_IS( eve::abs[bool()](v_t())              , v_t );
+
+  TTS_EXPR_IS( eve::saturated(eve::abs)(v_t())                      , v_t );
+  TTS_EXPR_IS( eve::saturated(eve::abs[eve::logical<T>()])(v_t())   , T );
+  TTS_EXPR_IS( eve::saturated(eve::abs[eve::logical<v_t>()])(v_t()) , v_t );
+  TTS_EXPR_IS( eve::saturated(eve::abs[bool()])(v_t())              , v_t );
+
   if constexpr(eve::floating_real_value<T>)
   {
     TTS_EXPR_IS( eve::diff(eve::abs)(T()) , T );
+    TTS_EXPR_IS( eve::diff(eve::abs)(v_t()) , v_t );
   }
 };
 
@@ -133,31 +127,6 @@ EVE_TEST( "Check behavior of eve::saturated(eve::abs)(eve::wide)"
             );
 };
 
-EVE_TEST( "Check behavior of eve::saturated(eve::abs)(scalar)"
-        , eve::test::scalar::all_types
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax))
-        )
-<typename T>(T const& data)
-{
-  using type = typename T::value_type;
-  for(auto a0 : data)
-  {
-    if constexpr(std::is_signed_v<type>)
-    {
-      TTS_EQUAL ( eve::saturated(eve::abs)(a0)
-                , (a0 == eve::valmin(eve::as(a0)) ? eve::valmax(eve::as(a0)) : eve::abs(a0))
-                );
-    }
-    else
-    {
-      TTS_EQUAL(eve::saturated(eve::abs)(a0), a0);
-    }
-
-    TTS_EQUAL(eve::saturated(eve::abs[true ])(a0), eve::saturated(eve::abs)(a0) );
-    TTS_EQUAL(eve::saturated(eve::abs[false])(a0), a0                           );
-  }
-};
-
 //==================================================================================================
 // Test for eve::diff(eve::abs)
 //==================================================================================================
@@ -173,23 +142,6 @@ EVE_TEST( "Check behavior of eve::diff(eve::abs) on wide"
   TTS_EQUAL ( eve::diff(eve::abs)(a0)
             , map([](auto e) -> v_t { return e > 0 ? 1 : ((e <  0) ? -1 : 0); }, a0)
             );
-};
-
-EVE_TEST( "Check behavior of eve::diff(eve::abs) on scalar"
-        , eve::test::scalar::ieee_reals
-        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
-        )
-<typename T>(T const& data )
-{
-  using eve::detail::map;
-
-  using type = typename T::value_type;
-  for(auto a0 : data)
-  {
-    TTS_EQUAL ( eve::diff(eve::abs)(a0)
-              , (a0 > 0 ? type(1) : (a0 < 0 ? type(-1) : type(0)))
-              );
-  }
 };
 
 //==================================================================================================
