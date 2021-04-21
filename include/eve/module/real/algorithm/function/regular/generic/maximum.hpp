@@ -9,7 +9,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/reduce.hpp>
+#include <eve/detail/function/reduce.hpp>
 #include <eve/function/max.hpp>
 #include <eve/function/any.hpp>
 
@@ -20,7 +20,7 @@ namespace eve::detail
                                 , splat_type const&, wide<T,N,ABI> const &v
                                 ) noexcept
   {
-    return splat(reduce)(v, eve::max);
+    return splat(basic_reduce)(v, eve::max);
   }
 
   template<simd_value T>
@@ -40,7 +40,7 @@ namespace eve::detail
   template<real_scalar_value T, typename N, typename ABI>
   EVE_FORCEINLINE auto maximum_(EVE_SUPPORTS(cpu_), wide<T,N,ABI> const &v) noexcept
   {
-    return reduce(v, eve::max);
+    return basic_reduce(v, eve::max);
   }
 
   template<simd_value T>

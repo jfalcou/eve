@@ -9,7 +9,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/reduce.hpp>
+#include <eve/detail/function/reduce.hpp>
 #include <eve/function/max.hpp>
 
 namespace eve::detail
@@ -41,11 +41,11 @@ namespace eve::detail
       else  if constexpr( c == category::float32x4) return vmaxvq_f32(v);
       else  if constexpr( c == category::float64x1) return v.get(0);
       else  if constexpr( c == category::float64x2) return vmaxvq_f64(v);
-      else  return reduce(v, eve::max);
+      else  return basic_reduce(v, eve::max);
     }
     else
     {
-      return reduce(v, eve::max);
+      return basic_reduce(v, eve::max);
     }
   }
 
