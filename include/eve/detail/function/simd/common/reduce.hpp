@@ -20,20 +20,20 @@ namespace eve::detail
 {
   //================================================================================================
   // reduce toward wide
-  template<real_scalar_value T, typename N, typename ABI, typename Callable>
+  template<simd_value Wide, typename Callable>
   EVE_FORCEINLINE auto basic_reduce_( EVE_SUPPORTS(cpu_), splat_type const&
-                                    , wide<T,N,ABI> v, Callable f
+                                    , Wide v, Callable f
                                     ) noexcept
   {
-    if constexpr( N::value == 1 )
+    if constexpr( Wide::size() == 1 )
     {
       return v;
     }
-    else if constexpr( !is_aggregated_v<ABI> )
+    else if constexpr( !has_aggregated_abi_v<Wide> )
     {
       //============================================================================================
       // We have exactly log2(cardinal) - 1 butterfly steps to perform
-      constexpr auto depth = std::bit_width(std::size_t{N::value}) - 1;
+      constexpr auto depth = std::bit_width(std::size_t{Wide::size()}) - 1;
 
       //============================================================================================
       // Iterate over all levels
@@ -55,9 +55,8 @@ namespace eve::detail
 
   //================================================================================================
   // reduce toward scalar
-  template<real_scalar_value T, typename N, typename ABI, typename Callable>
-  EVE_FORCEINLINE
-  auto basic_reduce_(EVE_SUPPORTS(cpu_), wide<T,N,ABI> v, Callable f) noexcept
+  template<simd_value Wide, typename Callable>
+  EVE_FORCEINLINE auto basic_reduce_(EVE_SUPPORTS(cpu_), Wide v, Callable f) noexcept
   {
     auto that = splat(basic_reduce)(v,f);
     return that.get(0);
