@@ -73,18 +73,4 @@ EVE_TEST( "Check behavior of binarize(wide)"
   TTS_IEEE_EQUAL( binarize(a0 < T(64), i_t(43)), map(ref_binarizei2, a0));
 };
 
-EVE_TEST( "Check behavior of binarize(scalar)"
-        , eve::test::scalar::all_types
-        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
-        )
-<typename T>(T const& d0)
-{
-  using v_t = typename T::value_type;
-  using eve::binarize;
-  using eve::as;
-  for(auto d:d0)
-  {
-    TTS_ULP_EQUAL( binarize(eve::is_less(d, v_t(64))), v_t(d < v_t(64) ? 1 :0), 0);
-    TTS_ULP_EQUAL( binarize(d < v_t(64), as<v_t >()), v_t(d < v_t(64) ? 1 :0), 0);
-  }
-};
+
