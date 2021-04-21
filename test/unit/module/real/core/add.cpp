@@ -132,5 +132,3 @@ EVE_TEST( "Check behavior of add on signed types"
   TTS_EQUAL( add[a2 > T(64)](a0, a1), map([](auto e, auto f, auto g) {return g > 64 ? add(e, f) : e ; }, a0, a1, a2));
   TTS_EQUAL( saturated(add[a2 > T(64)])(a0, a1), map([](auto e, auto f, auto g) { return  g > 64 ? saturated(add)(e, f): e; }, a0, a1, a2));
 };
-
-/// TODO waiting for interface simplifications to add scalar tests
