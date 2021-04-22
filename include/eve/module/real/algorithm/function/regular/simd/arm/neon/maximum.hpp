@@ -15,16 +15,20 @@
 namespace eve::detail
 {
   template<real_scalar_value T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE T maximum_ ( EVE_SUPPORTS(neon128_)
-                                , wide<T,N,ABI> const &v
-                                ) noexcept
+  EVE_FORCEINLINE T maximum_( EVE_SUPPORTS(neon128_)
+                            , wide<T,N,ABI> v
+                            ) noexcept
   {
+    constexpr auto c = categorize<wide<T,N,ABI>>();
+
     if constexpr ( eve::current_api >= eve::asimd )
     {
-      constexpr auto c = categorize<wide<T,N,ABI>>();
-
             if constexpr( c == category::int64x1  ) return v.get(0);
       else  if constexpr( c == category::uint64x1 ) return v.get(0);
+      else  if constexpr( c == category::float64x1) return v.get(0);
+      else  if constexpr( c == category::float64x2) return vmaxvq_f64(v);
+      else  if constexpr( c == category::float32x2) return vmaxv_f32 (v);
+      else  if constexpr( c == category::float32x4) return vmaxvq_f32(v);
       else  if constexpr( c == category::int32x2  ) return vmaxv_s32 (v);
       else  if constexpr( c == category::int32x4  ) return vmaxvq_s32(v);
       else  if constexpr( c == category::uint32x2 ) return vmaxv_u32 (v);
@@ -37,23 +41,69 @@ namespace eve::detail
       else  if constexpr( c == category::int8x16  ) return vmaxvq_s8 (v);
       else  if constexpr( c == category::uint8x8  ) return vmaxv_u8  (v);
       else  if constexpr( c == category::uint8x16 ) return vmaxvq_u8 (v);
-      else  if constexpr( c == category::float32x2) return vmaxv_f32 (v);
-      else  if constexpr( c == category::float32x4) return vmaxvq_f32(v);
-      else  if constexpr( c == category::float64x1) return v.get(0);
-      else  if constexpr( c == category::float64x2) return vmaxvq_f64(v);
       else  return basic_reduce(v, eve::max);
     }
     else
     {
-      return basic_reduce(v, eve::max);
+      return splat(maximum)(v).get(0);
     }
   }
 
   template<real_scalar_value T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE auto maximum_ ( EVE_SUPPORTS(neon128_)
-                                , splat_type const&, wide<T,N,ABI> const &v
-                                ) noexcept
+  EVE_FORCEINLINE wide<T,N,ABI> maximum_( EVE_SUPPORTS(neon128_)
+                                        , splat_type const&, wide<T,N,ABI> const& v
+                                        ) noexcept
   {
-    return wide<T,N,ABI>( maximum(v) );
+    if constexpr ( eve::current_api >= eve::asimd )
+    {
+      return wide<T,N,ABI>( maximum(v) );
+    }
+    else
+    {
+      constexpr auto pairwise_max = []<typename W>(W const& a, W const& b)
+      {
+        constexpr auto c = categorize<W>();
+
+              if constexpr( c == category::float32x2) return vpmax_f32(a,b);
+        else  if constexpr( c == category::int32x2  ) return vpmax_s32(a,b);
+        else  if constexpr( c == category::uint32x2 ) return vpmax_u32(a,b);
+        else  if constexpr( c == category::int16x4  ) return vpmax_s16(a,b);
+        else  if constexpr( c == category::uint16x4 ) return vpmax_u16(a,b);
+        else  if constexpr( c == category::int8x8   ) return vpmax_s8(a,b);
+        else  if constexpr( c == category::uint8x8  ) return vpmax_u8(a,b);
+      };
+
+      constexpr auto c = categorize<wide<T,N,ABI>>();
+
+            if constexpr( N::value == 1  )          return v;
+      else  if constexpr( c == category::int64x2  ) return eve::max(v.get(0),v.get(1));
+      else  if constexpr( c == category::uint64x2 ) return eve::max(v.get(0),v.get(1));
+      else  if constexpr( c == category::float64x2) return eve::max(v.get(0),v.get(1));
+      else  if constexpr( std::same_as<ABI,arm_64_> )
+      {
+        if(N::value == expected_cardinal_v<T,ABI>)
+        {
+          wide<T,N,ABI> s = pairwise_max(v,v);
+          if constexpr(N::value >= 2  ) s = pairwise_max(s,s);
+          if constexpr(N::value >= 4  ) s = pairwise_max(s,s);
+          if constexpr(N::value >= 8  ) s = pairwise_max(s,s);
+          return s;
+        }
+        else
+        {
+          return splat(basic_reduce)(v, eve::max);
+        }
+      }
+      else  if constexpr( std::same_as<ABI,arm_128_> )
+      {
+        auto [l,h] = v.slice();
+        if constexpr(N::value >= 4  ) l = pairwise_max(l,h);
+        if constexpr(N::value >= 8  ) l = pairwise_max(l,l);
+        if constexpr(N::value >= 16 ) l = pairwise_max(l,l);
+        l = pairwise_max(l,l);
+
+        return wide<T,N,ABI>(l,l);
+      }
+    }
   }
 }
