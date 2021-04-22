@@ -63,33 +63,3 @@ EVE_TEST( "Check behavior of bit_not(simd) on floating types"
                                    { return  bit_cast(~bit_cast(e, as(i_t())), as(v_t())); }, a0
                                   ));
 };
-//==================================================================================================
-//  bit_not scalar tests
-//==================================================================================================
-EVE_TEST( "Check behavior of bit_not(scalar) on integral types"
-        , eve::test::scalar::integers
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax))
-        )
-<typename T>( T const& a0)
-{
-  using v_t =  typename T::value_type;
-  using eve::detail::map;
-  using eve::bit_not;
-  for(auto a : a0)
-    TTS_EQUAL( bit_not(a), static_cast<v_t>(~a));
-};
-
-EVE_TEST( "Check behavior of bit_not(scalar) on floating types"
-        , eve::test::scalar::ieee_reals
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax))
-        )
-<typename T>(T const& a0)
-{
-  using eve::as;
-  using eve::bit_not;
-  using eve::bit_cast;
-  using v_t = typename T::value_type;
-  using i_t = eve::as_integer_t<v_t, signed>;
-  for(auto a : a0)
-    TTS_IEEE_EQUAL( bit_not(a), bit_cast(~bit_cast(a, as(i_t())), as(v_t())));;
-};
