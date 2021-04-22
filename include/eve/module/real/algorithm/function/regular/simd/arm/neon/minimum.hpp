@@ -73,12 +73,10 @@ namespace eve::detail
         else  if constexpr( c == category::uint8x8  ) return vpmin_u8(a,b);
       };
 
-      constexpr auto c = categorize<wide<T,N,ABI>>();
+      using type = wide<T,N,ABI>;
 
-            if constexpr( N::value == 1  )          return v;
-      else  if constexpr( c == category::int64x2  ) return eve::min(v.get(0),v.get(1));
-      else  if constexpr( c == category::uint64x2 ) return eve::min(v.get(0),v.get(1));
-      else  if constexpr( c == category::float64x2) return eve::min(v.get(0),v.get(1));
+            if constexpr( N::value == 1 ) return v;
+      else  if constexpr( N::value == 2 ) return type(eve::min(v.get(0),v.get(1)));
       else  if constexpr( std::same_as<ABI,arm_64_> )
       {
         if(N::value == expected_cardinal_v<T,ABI>)
