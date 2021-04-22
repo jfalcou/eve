@@ -49,16 +49,3 @@ EVE_TEST( "Check behavior of bit_mask(simd) on all types"
                     )
                 );
 };
-
-EVE_TEST( "Check behavior of bit_mask(scalar) on all types"
-        , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax))
-        )
-<typename T>( T const& a0)
-{
-  using eve::bit_mask;
-  using eve::detail::map;
-  for(auto v : a0)
-   TTS_IEEE_EQUAL( bit_mask(v)
-                 , v ? eve::allbits(eve::as(v)) : eve::zero(eve::as(v)));
-};

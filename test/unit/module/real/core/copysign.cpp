@@ -49,19 +49,3 @@ EVE_TEST( "Check behavior of copysign on wide and scalar"
   TTS_EQUAL( eve::copysign(a0, val1), map([&](auto e){return eve::abs(e)*eve::sign(val1);}, a0));
 
 };
-
-//==================================================================================================
-// copysign  scalar tests
-//==================================================================================================
-EVE_TEST( "Check behavior of copysign on wide and scalar"
-        , eve::test::scalar::ieee_reals
-        , eve::test::generate( eve::test::randoms(eve::valmin, eve::valmax)
-                             , eve::test::randoms(eve::valmin, eve::valmax))
-        )
-<typename T>(T const& a0, T const& a1 )
-{
-  using eve::detail::map;
-  for(std::size_t i = 0;  i < a0.size(); ++i)
-    TTS_EQUAL( eve::copysign(a0[i], a1[i]),  eve::abs(a0[i])*eve::sign(a1[i]));
-
-};

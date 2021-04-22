@@ -38,13 +38,3 @@ EVE_TEST( "Check behavior of conj on wide"
 {
   TTS_EQUAL( eve::conj(a0), a0);
 };
-
-EVE_TEST( "Check behavior of conj on wide"
-        , eve::test::scalar::ieee_reals
-        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
-        )
-<typename T>(T const& a0 )
-{
-  for(auto a :a0)
-    TTS_EQUAL( eve::conj(a), a);
-};

@@ -8,9 +8,9 @@
 #pragma once
 
 #include <eve/function/inc.hpp>
+#include <eve/function/if_else.hpp>
 #include <eve/function/derivative.hpp>
 #include <eve/function/is_eqz.hpp>
-#include <eve/function/diff/plus.hpp>
 
 namespace eve::detail
 {

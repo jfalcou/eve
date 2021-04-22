@@ -91,26 +91,3 @@ EVE_TEST( "Check behavior of ceil(wide) and diff(ceil(wide))"
     TTS_EQUAL( eve::ceil(a0),a0);
   }
 };
-
-//==================================================================================================
-// ceil(scalar)  tests
-//==================================================================================================
-EVE_TEST( "Check behavior of ceil(wide) and diff(ceil(wide))"
-        , eve::test::scalar::all_types
-        , eve::test::generate(eve::test::randoms(min, +50))
-        )
-<typename T>(T const& a0 )
-{
-  using v_t =  typename T::value_type;
-  for(auto a : a0)
-    if constexpr(eve::floating_real_value<v_t>)
-    {
-      TTS_EQUAL( eve::ceil(a), v_t(std::ceil(a)));
-      TTS_EQUAL( eve::diff(eve::ceil)(a), eve::zero(eve::as(a)));
-    }
-    else
-    {
-      TTS_EQUAL( eve::ceil(a),a);
-    }
-
-};

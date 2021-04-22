@@ -51,20 +51,6 @@ EVE_TEST( "Check behavior of bitofsign(wide)"
 };
 
 //==================================================================================================
-// bitofsign(scalar) tests
-//==================================================================================================
-EVE_TEST( "Check behavior of bitofsign(scalar)"
-        , eve::test::scalar::all_types
-        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
-        )
-<typename T>(T const& a0 )
-{
-  using v_t = typename T::value_type;
-  for(auto a : a0)
-    TTS_EQUAL( eve::bitofsign(a), eve::bit_and(a, eve::signmask(eve::as<v_t>())));
-};
-
-//==================================================================================================
 // bitofsign[cond](simd) tests
 //==================================================================================================
 EVE_TEST( "Check behavior of bitofsign(wide)"

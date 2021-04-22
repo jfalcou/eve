@@ -74,26 +74,6 @@ EVE_TEST( "Check behavior of average(wide)"
   }
 };
 
-EVE_TEST( "Check behavior of average(scalar)"
-            , eve::test::scalar::all_types
-            , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                                  , eve::test::randoms(eve::valmin, eve::valmax)
-                                  , eve::test::randoms(eve::valmin, eve::valmax)
-                                  )
-            )
-<typename T>(T const& d0, T const& d1, T const& d2 )
-{
-  using eve::average;
-  for(std::size_t i = 0;  i < d0.size(); ++i)
-  {
-    TTS_ULP_EQUAL( average(d0[i], d1[i]), std::midpoint(d0[i], d1[i]), 2);
-    if constexpr(eve::floating_value<T>)
-    {
-      TTS_ULP_EQUAL( average(d0[i], d1[i], d2[i]),  (d0[i]/3 + d1[i]/3 + d2[i]/3), 2);
-    }
-  }
-};
-
 //==================================================================================================
 //== diff(average) tests
 //==================================================================================================
@@ -114,26 +94,6 @@ EVE_TEST( "Check behavior of diff(average)(simd)"
   TTS_EQUAL( diff(average)(a0, a1, a2), map([](auto , auto , auto ) { return v_t(1.0/3.0); }, a0, a1, a2));
 };
 
-EVE_TEST( "Check behavior of diff(average)(scalar)"
-        , eve::test::scalar::ieee_reals
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                              , eve::test::randoms(eve::valmin, eve::valmax)
-                              , eve::test::randoms(eve::valmin, eve::valmax)
-                              )
-        )
-<typename T>( T const& d0, T const& d1, T const& d2 )
-{
-  using eve::average;
-  using eve::diff;
-  using eve::as;
-  using v_t = typename T::value_type;
-  for(std::size_t i = 0;  i < d0.size(); ++i)
-  {
-    TTS_EQUAL( diff(average)(d0[i], d2[i]), eve::half(as(v_t())));
-    TTS_EQUAL( diff(average)(d0[i], d1[i], d2[i]), v_t(1.0/3.0));
-  }
-};
-
 //==================================================================================================
 //==  conditional average tests
 //==================================================================================================
@@ -151,21 +111,4 @@ EVE_TEST( "Check behavior of  average[cond](wide)"
   using v_t =  eve::element_type_t<T>;
   //values can differ by one on integral types from scalar to simd implementations (intrinsics may be at work)
   TTS_ULP_EQUAL( average[a2 > T(64)](a0, a1), map([](auto e, auto f, auto g) {return g > v_t(64) ? average(e, f) :e; }, a0, a1, a2), 2);
-};
-
-EVE_TEST( "Check behavior of  average[cond](scalar)"
-        , eve::test::scalar::all_types
-        , eve::test::generate ( eve::test::randoms(0, 127)
-                              , eve::test::randoms(0, 127)
-                              , eve::test::randoms(0, 127)
-                              )
-        )
-<typename T>(T const& d0, T const& d1, T const& d2)
-{
-  using eve::average;
-  using v_t = typename T::value_type;
-  for(std::size_t i = 0; i < d0.size(); ++i)
-  {
-    TTS_ULP_EQUAL( average[d2[i] > v_t(64)](d0[i], d1[i]), (d2[i] > v_t(64) ? average(d0[i], d1[i]) :d0[i]), 2);
-  }
 };
