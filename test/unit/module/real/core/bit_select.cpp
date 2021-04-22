@@ -51,19 +51,3 @@ EVE_TEST( "Check behavior of bit_select(simd) on integers"
                                        , a0, a1, a2
                                        ));
 };
-
-EVE_TEST( "Check behavior of bit_select(scalar) on integers"
-        , eve::test::scalar::integers
-        , eve::test::generate (  eve::test::randoms(eve::valmin, eve::valmax)
-                              ,  eve::test::randoms(eve::valmin, eve::valmax)
-                              ,  eve::test::randoms(eve::valmin, eve::valmax)
-                              )
-        )
-<typename T>(  T const& a0, T const& a1, T const& a2)
-{
-  using v_t = typename T::value_type;
-  using eve::bit_select;
-  using eve::detail::map;
-  for(std::size_t i = 0; i < a0.size(); ++i)
-    TTS_EQUAL(bit_select(a0[i], a1[i], a2[i]), v_t( (a1[i]& a0[i])|(a2[i]&~a0[i])));
-};
