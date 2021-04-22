@@ -20,12 +20,13 @@ namespace eve::detail
                                 , splat_type const&, wide<T,N,ABI> const &v
                                 ) noexcept
   {
-          if constexpr( N::value == 1 )         return v.get(0);
+          if constexpr( N::value == 1 )         return v;
     else  if constexpr( !is_aggregated_v<ABI> ) return splat(basic_reduce)(v, eve::max);
     else
     {
       auto[l,h] = v.slice();
-      return  splat(maximum)( eve::max(l,h) );
+      auto r = splat(maximum)( eve::max(l,h) );
+      return eve::combine(r,r);
     }
   }
 
@@ -58,7 +59,6 @@ namespace eve::detail
   template<simd_value T>
   EVE_FORCEINLINE auto maximum_(EVE_SUPPORTS(cpu_), logical<T> const &v) noexcept
   {
-    using v_t = typename logical<T>::value_type;
-    return v_t{eve::any(v)};
+    return eve::any(v);
   }
 }

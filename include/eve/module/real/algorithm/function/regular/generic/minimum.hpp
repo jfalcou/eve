@@ -25,7 +25,8 @@ namespace eve::detail
     else
     {
       auto[l,h] = v.slice();
-      return  splat(minimum)( eve::min(l,h) );
+      auto r = splat(minimum)( eve::min(l,h) );
+      return eve::combine(r,r);
     }
   }
 
@@ -58,7 +59,6 @@ namespace eve::detail
   template<simd_value T>
   EVE_FORCEINLINE auto minimum_(EVE_SUPPORTS(cpu_), logical<T> const &v) noexcept
   {
-    using v_t = typename logical<T>::value_type;
-    return v_t{eve::all(v)};
+    return eve::all(v);
   }
 }

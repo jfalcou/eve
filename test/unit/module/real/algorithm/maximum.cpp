@@ -17,7 +17,7 @@ EVE_TEST_TYPES( "Check return types of eve::maximum(wide)", eve::test::simd::all
   using v_t = eve::element_type_t<T>;
 
   TTS_EXPR_IS( eve::maximum(T())                          , v_t               );
-  TTS_EXPR_IS( eve::maximum(eve::logical<T>())            , eve::logical<v_t> );
+  TTS_EXPR_IS( eve::maximum(eve::logical<T>())            , bool              );
   TTS_EXPR_IS( eve::splat(eve::maximum)(T())              , T                 );
   TTS_EXPR_IS( eve::splat(eve::maximum)(eve::logical<T>()), eve::logical<T>   );
 };
@@ -34,13 +34,12 @@ EVE_TEST( "Check behavior of eve::maximum(eve::wide)"
 <typename T, typename L>(T const& a0, L const& l0)
 {
   using v_t = eve::element_type_t<T>;
-  using l_t = eve::element_type_t<L>;
 
   v_t max_value = *std::max_element(a0.begin(),a0.end());
 
   TTS_EQUAL(eve::maximum(a0)            , max_value   );
   TTS_EQUAL(eve::splat(eve::maximum)(a0), T(max_value));
 
-  TTS_EQUAL(eve::maximum(l0)            , l_t{true} );
-  TTS_EQUAL(eve::splat(eve::maximum)(l0), L(true)   );
+  TTS_EQUAL(eve::maximum(l0)            , true    );
+  TTS_EQUAL(eve::splat(eve::maximum)(l0), L(true) );
 };
