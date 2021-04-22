@@ -20,7 +20,13 @@ namespace eve::detail
                                 , splat_type const&, wide<T,N,ABI> const &v
                                 ) noexcept
   {
-    return splat(basic_reduce)(v, eve::max);
+          if constexpr( N::value == 1 )         return v.get(0);
+    else  if constexpr( !is_aggregated_v<ABI> ) return splat(basic_reduce)(v, eve::max);
+    else
+    {
+      auto[l,h] = v.slice();
+      return  splat(maximum)( eve::max(l,h) );
+    }
   }
 
   template<simd_value T>
@@ -40,7 +46,13 @@ namespace eve::detail
   template<real_scalar_value T, typename N, typename ABI>
   EVE_FORCEINLINE auto maximum_(EVE_SUPPORTS(cpu_), wide<T,N,ABI> const &v) noexcept
   {
-    return basic_reduce(v, eve::max);
+          if constexpr( N::value == 1 )         return v.get(0);
+    else  if constexpr( !is_aggregated_v<ABI> ) return basic_reduce(v, eve::max);
+    else
+    {
+      auto[l,h] = v.slice();
+      return  maximum( eve::max(l,h) );
+    }
   }
 
   template<simd_value T>
