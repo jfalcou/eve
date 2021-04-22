@@ -119,26 +119,3 @@ EVE_TEST( "Check behavior of floor(wide) and diff(floor(wide))"
     TTS_EQUAL( eve::floor(a0),a0);
   }
 };
-
-//==================================================================================================
-// floor(scalar)  tests
-//==================================================================================================
-EVE_TEST( "Check behavior of floor(wide) and diff(floor(wide))"
-        , eve::test::scalar::all_types
-        , eve::test::generate(eve::test::randoms(min, +50))
-        )
-<typename T>(T const& a0 )
-{
-  using v_t =  typename T::value_type;
-  for(auto a : a0)
-    if constexpr(eve::floating_real_value<v_t>)
-    {
-      TTS_EQUAL( eve::floor(a), v_t(std::floor(a)));
-      TTS_EQUAL( eve::diff(eve::floor)(a), eve::zero(eve::as(a)));
-    }
-    else
-    {
-      TTS_EQUAL( eve::floor(a),a);
-    }
-
-};
