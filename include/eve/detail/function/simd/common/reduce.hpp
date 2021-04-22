@@ -58,7 +58,21 @@ namespace eve::detail
   template<simd_value Wide, typename Callable>
   EVE_FORCEINLINE auto basic_reduce_(EVE_SUPPORTS(cpu_), Wide v, Callable f) noexcept
   {
-    auto that = splat(basic_reduce)(v,f);
-    return that.get(0);
+    if constexpr( Wide::size() == 1 )
+    {
+      return v.get(0);
+    }
+    else if constexpr( !has_aggregated_abi_v<Wide> )
+    {
+      auto that = splat(basic_reduce)(v,f);
+      return that.get(0);
+    }
+    else
+    {
+      //===========================================================================================
+      // Slice, do f once, then reduce the result
+      auto[l,h] = v.slice();
+      return  basic_reduce( f(l,h), f );
+    }
   }
 }
