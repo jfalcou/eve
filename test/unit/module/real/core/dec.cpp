@@ -93,25 +93,6 @@ EVE_TEST( "Check behavior of saturated(dec)(wide) on integral types"
                                                && e != eve::valmin(eve::as(e)) ? e-1 : e)); }, a0));
  };
 
-//==================================================================================================
-// dec(scalar)  tests
-//==================================================================================================
-EVE_TEST( "Check behavior of dec(wide) and dec[cond](scalar)"
-        , eve::test::scalar::all_types
-        , eve::test::generate(eve::test::randoms(valminp1, eve::valmax))
-        )
-<typename T>(T const& a0 )
-{
-  using v_t =  typename T::value_type;
-  using eve::diff;
-  for (auto a : a0)
-  {
-    TTS_EQUAL( eve::dec(a), v_t(a-1));
-    TTS_EQUAL( eve::dec[a > 64](a), v_t((a > 64) ?a-1 : a));
-    if constexpr(eve::floating_real_value<T>)
-      TTS_EQUAL( diff(eve::dec)(a), eve::one(eve::as(a)));
-  }
-};
 
 EVE_TEST( "Check behavior of saturated(dec)(wide) on integral types"
         , eve::test::simd::integers
