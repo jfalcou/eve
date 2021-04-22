@@ -7,19 +7,31 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch.hpp>
-#include <eve/detail/implementation.hpp>
+#include <eve/concept/vectorized.hpp>
+#include <eve/detail/abi.hpp>
+#include <eve/function/swap_adjacent_groups.hpp>
+#include <bit>
 
-namespace eve
+namespace eve::detail
 {
-  EVE_DECLARE_CALLABLE(basic_reduce_)
-
-  namespace detail
+  //================================================================================================
+  // reduce toward wide using a generic butterfly algorithm
+  template<simd_value Wide, typename Callable>
+  EVE_FORCEINLINE auto butterfly_reduction(Wide v, Callable f) noexcept
   {
-    EVE_ALIAS_CALLABLE(basic_reduce_, basic_reduce);
+    if constexpr( Wide::size() == 1 )
+    {
+      return v;
+    }
+    else
+    {
+      constexpr auto depth = std::bit_width(std::size_t{Wide::size()}) - 1;
+
+      return [&]<std::size_t... I>(std::index_sequence<I...>) mutable
+      {
+        ((v = f(v,swap_adjacent_groups(v, fixed<(1<<I)>{} ))),...);
+        return v;
+      }(std::make_index_sequence<depth>{});
+    }
   }
-
-  EVE_CALLABLE_API(basic_reduce_, basic_reduce)
 }
-
-#include <eve/detail/function/simd/common/reduce.hpp>

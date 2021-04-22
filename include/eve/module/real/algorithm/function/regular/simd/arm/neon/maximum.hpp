@@ -23,9 +23,7 @@ namespace eve::detail
 
     if constexpr ( eve::current_api >= eve::asimd )
     {
-            if constexpr( c == category::int64x1  ) return v.get(0);
-      else  if constexpr( c == category::uint64x1 ) return v.get(0);
-      else  if constexpr( c == category::float64x1) return v.get(0);
+            if constexpr( N::value == 1           ) return v.get(0);
       else  if constexpr( c == category::float64x2) return vmaxvq_f64(v);
       else  if constexpr( c == category::float32x2) return vmaxv_f32 (v);
       else  if constexpr( c == category::float32x4) return vmaxvq_f32(v);
@@ -41,7 +39,7 @@ namespace eve::detail
       else  if constexpr( c == category::int8x16  ) return vmaxvq_s8 (v);
       else  if constexpr( c == category::uint8x8  ) return vmaxv_u8  (v);
       else  if constexpr( c == category::uint8x16 ) return vmaxvq_u8 (v);
-      else  return basic_reduce(v, eve::max);
+      else  return butterfly_reduction(v, eve::max).get(0);
     }
     else
     {
@@ -89,7 +87,7 @@ namespace eve::detail
         }
         else
         {
-          return splat(basic_reduce)(v, eve::max);
+          return butterfly_reduction(v, eve::max);
         }
       }
       else  if constexpr( std::same_as<ABI,arm_128_> )

@@ -10,6 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/reduce.hpp>
+#include <eve/function/splat.hpp>
 #include <eve/function/min.hpp>
 #include <eve/function/all.hpp>
 
@@ -21,7 +22,7 @@ namespace eve::detail
                                 ) noexcept
   {
           if constexpr( N::value == 1 )         return v;
-    else  if constexpr( !is_aggregated_v<ABI> ) return splat(basic_reduce)(v, eve::min);
+    else  if constexpr( !is_aggregated_v<ABI> ) return butterfly_reduction(v, eve::min);
     else
     {
       auto[l,h] = v.slice();
@@ -48,7 +49,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto minimum_(EVE_SUPPORTS(cpu_), wide<T,N,ABI> const &v) noexcept
   {
           if constexpr( N::value == 1 )         return v.get(0);
-    else  if constexpr( !is_aggregated_v<ABI> ) return basic_reduce(v, eve::min);
+    else  if constexpr( !is_aggregated_v<ABI> ) return butterfly_reduction(v, eve::min).get(0);
     else
     {
       auto[l,h] = v.slice();

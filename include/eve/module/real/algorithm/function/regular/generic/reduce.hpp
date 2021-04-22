@@ -10,6 +10,7 @@
 #include <eve/concept/vectorized.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/reduce.hpp>
+#include <eve/function/swap_adjacent_groups.hpp>
 #include <eve/function/logical_and.hpp>
 #include <eve/function/logical_or.hpp>
 #include <eve/function/minimum.hpp>
@@ -20,29 +21,45 @@
 
 namespace eve::detail
 {
+  //================================================================================================
+  // Find the proper callable if optimization is doable, else return a generic call
+  template<typename Callable, typename Option = int>
+  EVE_FORCEINLINE auto find_reduction( Callable f, Option = 0) noexcept
+  {
+          if constexpr( std::same_as<Callable, callable_min_>         ) return eve::minimum;
+    else  if constexpr( std::same_as<Callable, callable_max_>         ) return eve::maximum;
+    else  if constexpr( std::same_as<Callable, callable_logical_and_> ) return eve::all;
+    else  if constexpr( std::same_as<Callable, callable_logical_or_>  ) return eve::any;
+    else  if constexpr( std::same_as<Option, splat_type> )
+    {
+      return [f]<typename Wide>(splat_type const&, Wide v) { return butterfly_reduction(v,f); };
+    }
+    else
+    {
+      return [f]<typename Wide>(Wide v) { return butterfly_reduction(v,f).get(0); };
+    }
+  }
+
   template<real_scalar_value T, typename N, typename ABI, typename Callable>
-  EVE_FORCEINLINE auto reduce_( EVE_SUPPORTS(cpu_), splat_type const&
+  EVE_FORCEINLINE auto reduce_( EVE_SUPPORTS(cpu_), splat_type const& s
                               , wide<T,N,ABI> v, Callable f
                               ) noexcept
   {
-          if constexpr( std::same_as<Callable, callable_min_> ) return splat(minimum)(v);
-    else  if constexpr( std::same_as<Callable, callable_max_> ) return splat(maximum)(v);
-    else                                                        return splat(basic_reduce)(v,f);
+    auto op = find_reduction(f,s);
+    return op(s, v);
   }
 
   template<real_scalar_value T, typename N, typename ABI, typename Callable>
   EVE_FORCEINLINE auto reduce_(EVE_SUPPORTS(cpu_), wide<T,N,ABI> v, Callable f) noexcept
   {
-          if constexpr( std::same_as<Callable, callable_min_> ) return minimum(v);
-    else  if constexpr( std::same_as<Callable, callable_max_> ) return maximum(v);
-    else                                                        return basic_reduce(v,f);
+    auto op = find_reduction(f);
+    return op(v);
   }
 
   template<real_scalar_value T, typename N, typename ABI, typename Callable>
   EVE_FORCEINLINE auto reduce_(EVE_SUPPORTS(cpu_), logical<wide<T,N,ABI>> v, Callable f) noexcept
   {
-          if constexpr( std::same_as<Callable, callable_logical_and_> ) return eve::all(v);
-    else  if constexpr( std::same_as<Callable, callable_logical_or_>  ) return eve::any(v);
-    else                                                                return basic_reduce(v,f);
+    auto op = find_reduction(f);
+    return op(v);
   }
 }
