@@ -16,15 +16,19 @@ namespace eve::detail
 {
   template<real_scalar_value T, typename N, arm_abi ABI>
   EVE_FORCEINLINE T minimum_( EVE_SUPPORTS(neon128_)
-                            , wide<T,N,ABI> const &v
+                            , wide<T,N,ABI> v
                             ) noexcept
   {
+    constexpr auto c = categorize<wide<T,N,ABI>>();
+
     if constexpr ( eve::current_api >= eve::asimd )
     {
-      constexpr auto c = categorize<wide<T,N,ABI>>();
-
             if constexpr( c == category::int64x1  ) return v.get(0);
       else  if constexpr( c == category::uint64x1 ) return v.get(0);
+      else  if constexpr( c == category::float64x1) return v.get(0);
+      else  if constexpr( c == category::float64x2) return vminvq_f64(v);
+      else  if constexpr( c == category::float32x2) return vminv_f32 (v);
+      else  if constexpr( c == category::float32x4) return vminvq_f32(v);
       else  if constexpr( c == category::int32x2  ) return vminv_s32 (v);
       else  if constexpr( c == category::int32x4  ) return vminvq_s32(v);
       else  if constexpr( c == category::uint32x2 ) return vminv_u32 (v);
@@ -37,23 +41,69 @@ namespace eve::detail
       else  if constexpr( c == category::int8x16  ) return vminvq_s8 (v);
       else  if constexpr( c == category::uint8x8  ) return vminv_u8  (v);
       else  if constexpr( c == category::uint8x16 ) return vminvq_u8 (v);
-      else  if constexpr( c == category::float32x2) return vminv_f32 (v);
-      else  if constexpr( c == category::float32x4) return vminvq_f32(v);
-      else  if constexpr( c == category::float64x1) return v.get(0);
-      else  if constexpr( c == category::float64x2) return vminvq_f64(v);
       else  return basic_reduce(v, eve::min);
     }
     else
     {
-      return basic_reduce(v, eve::min);
+      return splat(minimum)(v).get(0);
     }
   }
 
   template<real_scalar_value T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE auto minimum_ ( EVE_SUPPORTS(neon128_)
-                                , splat_type const&, wide<T,N,ABI> const &v
-                                ) noexcept
+  EVE_FORCEINLINE wide<T,N,ABI> minimum_( EVE_SUPPORTS(neon128_)
+                                        , splat_type const&, wide<T,N,ABI> const& v
+                                        ) noexcept
   {
-    return wide<T,N,ABI>( minimum(v) );
+    if constexpr ( eve::current_api >= eve::asimd )
+    {
+      return wide<T,N,ABI>( minimum(v) );
+    }
+    else
+    {
+      constexpr auto pairwise_min = []<typename W>(W const& a, W const& b)
+      {
+        constexpr auto c = categorize<W>();
+
+              if constexpr( c == category::float32x2) return vpmin_f32(a,b);
+        else  if constexpr( c == category::int32x2  ) return vpmin_s32(a,b);
+        else  if constexpr( c == category::uint32x2 ) return vpmin_u32(a,b);
+        else  if constexpr( c == category::int16x4  ) return vpmin_s16(a,b);
+        else  if constexpr( c == category::uint16x4 ) return vpmin_u16(a,b);
+        else  if constexpr( c == category::int8x8   ) return vpmin_s8(a,b);
+        else  if constexpr( c == category::uint8x8  ) return vpmin_u8(a,b);
+      };
+
+      constexpr auto c = categorize<wide<T,N,ABI>>();
+
+            if constexpr( N::value == 1  )          return v;
+      else  if constexpr( c == category::int64x2  ) return eve::min(v.get(0),v.get(1));
+      else  if constexpr( c == category::uint64x2 ) return eve::min(v.get(0),v.get(1));
+      else  if constexpr( c == category::float64x2) return eve::min(v.get(0),v.get(1));
+      else  if constexpr( std::same_as<ABI,arm_64_> )
+      {
+        if(N::value == expected_cardinal_v<T,ABI>)
+        {
+          wide<T,N,ABI> s = pairwise_min(v,v);
+          if constexpr(N::value >= 2  ) s = pairwise_min(s,s);
+          if constexpr(N::value >= 4  ) s = pairwise_min(s,s);
+          if constexpr(N::value >= 8  ) s = pairwise_min(s,s);
+          return s;
+        }
+        else
+        {
+          return splat(basic_reduce)(v, eve::min);
+        }
+      }
+      else  if constexpr( std::same_as<ABI,arm_128_> )
+      {
+        auto [l,h] = v.slice();
+        if constexpr(N::value >= 4  ) l = pairwise_min(l,h);
+        if constexpr(N::value >= 8  ) l = pairwise_min(l,l);
+        if constexpr(N::value >= 16 ) l = pairwise_min(l,l);
+        l = pairwise_min(l,l);
+
+        return wide<T,N,ABI>(l,l);
+      }
+    }
   }
 }
