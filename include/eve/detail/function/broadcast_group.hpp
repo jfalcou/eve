@@ -12,6 +12,7 @@
 #include <eve/concept/vectorized.hpp>
 #include <eve/pattern.hpp>
 #include <bit>
+#include <optional>
 
 namespace eve
 {
