@@ -30,7 +30,7 @@ namespace eve
   // Wrapper for SIMD registers holding arithmetic types with compile-time size
   //================================================================================================
   template<typename Type, typename Size, typename ABI>
-  struct  EVE_MAY_ALIAS wide
+  struct  EVE_MAY_ALIAS  wide
         : detail::wide_cardinal<Size>
         , detail::wide_ops<wide<Type,Size,ABI>>
         , detail::wide_storage<as_register_t<Type, Size, ABI>>
@@ -52,8 +52,7 @@ namespace eve
     //==============================================================================================
     // Constructors
     //==============================================================================================
-    EVE_FORCEINLINE wide() noexcept : storage_base{} {}
-    EVE_FORCEINLINE wide(wide const& w) noexcept : storage_base(w.storage()) {}
+    EVE_FORCEINLINE wide() = default;
     EVE_FORCEINLINE wide(storage_type const &r) noexcept : storage_base(r) {}
 
     template<std::input_iterator It>
