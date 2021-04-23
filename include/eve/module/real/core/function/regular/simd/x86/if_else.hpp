@@ -19,11 +19,11 @@ namespace eve::detail
   //================================================================================================
   // X86 if_else
   template<scalar_value T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE wide<T, N, ABI> if_else_ ( EVE_SUPPORTS(sse4_1_)
-                                                , logical<wide<T, N, ABI>> const &v0
-                                                , wide<T, N, ABI> const &v1
-                                                , wide<T, N, ABI> const &v2
-                                                ) noexcept
+  EVE_FORCEINLINE wide<T, N, ABI> if_else_( EVE_SUPPORTS(sse4_1_)
+                                          , logical<wide<T, N, ABI>> const &v0
+                                          , wide<T, N, ABI> const &v1
+                                          , wide<T, N, ABI> const &v2
+                                          ) noexcept
   {
     constexpr auto c = categorize<wide<T,N,ABI>>();
 

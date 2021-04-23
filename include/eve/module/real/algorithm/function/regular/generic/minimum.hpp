@@ -11,55 +11,55 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/reduce.hpp>
 #include <eve/function/splat.hpp>
-#include <eve/function/max.hpp>
-#include <eve/function/any.hpp>
+#include <eve/function/min.hpp>
+#include <eve/function/all.hpp>
 
 namespace eve::detail
 {
   template<real_scalar_value T, typename N, typename ABI>
-  EVE_FORCEINLINE auto maximum_ ( EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE auto minimum_ ( EVE_SUPPORTS(cpu_)
                                 , splat_type const&, wide<T,N,ABI> const &v
                                 ) noexcept
   {
           if constexpr( N::value == 1 )         return v;
-    else  if constexpr( !is_aggregated_v<ABI> ) return butterfly_reduction(v, eve::max);
+    else  if constexpr( !is_aggregated_v<ABI> ) return butterfly_reduction(v, eve::min);
     else
     {
       auto[l,h] = v.slice();
-      auto r = splat(maximum)( eve::max(l,h) );
+      auto r = splat(minimum)( eve::min(l,h) );
       return eve::combine(r,r);
     }
   }
 
   template<simd_value T>
-  EVE_FORCEINLINE auto maximum_ ( EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE auto minimum_ ( EVE_SUPPORTS(cpu_)
                                 , splat_type const&, logical<T> const &v
                                 ) noexcept
   {
-    return logical<T>(eve::any(v));
+    return logical<T>(eve::all(v));
   }
 
   template<real_scalar_value T>
-  EVE_FORCEINLINE auto maximum_(EVE_SUPPORTS(cpu_), T const &v) noexcept
+  EVE_FORCEINLINE auto minimum_(EVE_SUPPORTS(cpu_), T const &v) noexcept
   {
     return v;
   }
 
   template<real_scalar_value T, typename N, typename ABI>
-  EVE_FORCEINLINE auto maximum_(EVE_SUPPORTS(cpu_), wide<T,N,ABI> const &v) noexcept
+  EVE_FORCEINLINE auto minimum_(EVE_SUPPORTS(cpu_), wide<T,N,ABI> const &v) noexcept
   {
           if constexpr( N::value == 1 )         return v.get(0);
-    else  if constexpr( !is_aggregated_v<ABI> ) return butterfly_reduction(v, eve::max).get(0);
+    else  if constexpr( !is_aggregated_v<ABI> ) return butterfly_reduction(v, eve::min).get(0);
     else
     {
       auto[l,h] = v.slice();
-      return  maximum( eve::max(l,h) );
+      return  minimum( eve::min(l,h) );
     }
   }
 
   template<simd_value T>
-  EVE_FORCEINLINE auto maximum_(EVE_SUPPORTS(cpu_), logical<T> const &v) noexcept
+  EVE_FORCEINLINE auto minimum_(EVE_SUPPORTS(cpu_), logical<T> const &v) noexcept
   {
-    return eve::any(v);
+    return eve::all(v);
   }
 }

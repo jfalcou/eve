@@ -14,6 +14,13 @@ namespace eve
   EVE_MAKE_CALLABLE(minimum_, minimum);
 }
 
-#include <eve/module/real/core/function/scalar/minimum.hpp>
-//#include <eve/module/real/core/function/regular/simd/minimum.hpp>
+#include <eve/arch.hpp>
+#include <eve/module/real/algorithm/function/regular/generic/minimum.hpp>
 
+#if defined(EVE_HW_ARM)
+#  include <eve/module/real/algorithm/function/regular/simd/arm/neon/minimum.hpp>
+#endif
+
+#if defined(EVE_HW_X86)
+#  include <eve/module/real/algorithm/function/regular/simd/x86/minimum.hpp>
+#endif

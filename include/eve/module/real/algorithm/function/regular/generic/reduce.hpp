@@ -9,57 +9,57 @@
 
 #include <eve/concept/vectorized.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/is_native.hpp>
-#include <eve/function/combine.hpp>
-#include <eve/function/splat.hpp>
+#include <eve/detail/function/reduce.hpp>
 #include <eve/function/swap_adjacent_groups.hpp>
-#include <eve/pattern.hpp>
-#include <bit>
+#include <eve/function/logical_and.hpp>
+#include <eve/function/logical_or.hpp>
+#include <eve/function/minimum.hpp>
+#include <eve/function/maximum.hpp>
+#include <eve/function/splat.hpp>
+#include <eve/function/all.hpp>
+#include <eve/function/any.hpp>
 
 namespace eve::detail
 {
   //================================================================================================
-  // reduce toward wide
-  template<real_scalar_value T, typename N, typename ABI, typename Callable>
-  EVE_FORCEINLINE auto reduce_( EVE_SUPPORTS(cpu_), splat_type const&
-                              , wide<T,N,ABI> v, Callable f
-                              ) noexcept
+  // Find the proper callable if optimization is doable, else return a generic call
+  template<typename Callable, typename Option = int>
+  EVE_FORCEINLINE auto find_reduction( Callable f, Option = 0) noexcept
   {
-    if constexpr( N::value == 1 )
+          if constexpr( std::same_as<Callable, callable_min_>         ) return eve::minimum;
+    else  if constexpr( std::same_as<Callable, callable_max_>         ) return eve::maximum;
+    else  if constexpr( std::same_as<Callable, callable_logical_and_> ) return eve::all;
+    else  if constexpr( std::same_as<Callable, callable_logical_or_>  ) return eve::any;
+    else  if constexpr( std::same_as<Option, splat_type> )
     {
-      return v;
-    }
-    else if constexpr( !is_aggregated_v<ABI> )
-    {
-      //============================================================================================
-      // We have exactly log2(cardinal) - 1 butterfly steps to perform
-      constexpr auto depth = std::bit_width(std::size_t{N::value}) - 1;
-
-      //============================================================================================
-      // Iterate over all levels
-      return [&]<std::size_t... I>(std::index_sequence<I...>) mutable
-      {
-        ((v = f(v,swap_adjacent_groups(v, fixed<(1<<I)>{} ))),...);
-        return v;
-      }(std::make_index_sequence<depth>{});
+      return [f]<typename Wide>(splat_type const&, Wide v) { return butterfly_reduction(v,f); };
     }
     else
     {
-      //===========================================================================================
-      // Slice, do f once, then reduce the result
-      auto[l,h] = v.slice();
-      auto r = splat(reduce)( f(l,h), f );
-      return eve::combine(r,r);
+      return [f]<typename Wide>(Wide v) { return butterfly_reduction(v,f).get(0); };
     }
   }
 
-  //================================================================================================
-  // reduce toward scalar
   template<real_scalar_value T, typename N, typename ABI, typename Callable>
-  EVE_FORCEINLINE
-  auto reduce_(EVE_SUPPORTS(cpu_), wide<T,N,ABI> v, Callable f) noexcept
+  EVE_FORCEINLINE auto reduce_( EVE_SUPPORTS(cpu_), splat_type const& s
+                              , wide<T,N,ABI> v, Callable f
+                              ) noexcept
   {
-    auto that = splat(reduce)(v,f);
-    return that.get(0);
+    auto op = find_reduction(f,s);
+    return op(s, v);
+  }
+
+  template<real_scalar_value T, typename N, typename ABI, typename Callable>
+  EVE_FORCEINLINE auto reduce_(EVE_SUPPORTS(cpu_), wide<T,N,ABI> v, Callable f) noexcept
+  {
+    auto op = find_reduction(f);
+    return op(v);
+  }
+
+  template<real_scalar_value T, typename N, typename ABI, typename Callable>
+  EVE_FORCEINLINE auto reduce_(EVE_SUPPORTS(cpu_), logical<wide<T,N,ABI>> v, Callable f) noexcept
+  {
+    auto op = find_reduction(f);
+    return op(v);
   }
 }
