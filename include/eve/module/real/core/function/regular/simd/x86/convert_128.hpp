@@ -32,7 +32,7 @@ namespace eve::detail
   //================================================================================================
   template<real_scalar_value In, typename N, real_scalar_value Out>
   EVE_FORCEINLINE wide<Out, N>
-  convert_(EVE_SUPPORTS(sse2_), wide<In, N, x86_128_> const &v0, as_<Out> const &tgt) noexcept
+  convert_(EVE_SUPPORTS(sse2_), wide<In, N, x86_128_> v0, as_<Out> const &tgt) noexcept
   {
     //==============================================================================================
     // Idempotent call
@@ -283,19 +283,32 @@ namespace eve::detail
       //============================================================================================
       if constexpr( sizeof(In) == 2 && (N::value <= 8) )
       {
-        auto[l,h] = v0.slice();
-        l &= static_cast<In>(0x00FFU);
-        h &= static_cast<In>(0x00FFU);
+              if constexpr(N::value == 1) return wide<Out,N>(v0.storage());
+        else  if constexpr(N::value <= 4)
+        {
+          v0 &= static_cast<In>(0x00FFU);
+          return _mm_packus_epi16(v0,v0);
+        }
+        else
+        {
+          auto[l,h] = v0.slice();
+          l &= static_cast<In>(0x00FFU);
+          h &= static_cast<In>(0x00FFU);
 
-        return _mm_packus_epi16(l,h);
+          return _mm_packus_epi16(l,h);
+        }
       }
       //============================================================================================
       // 32 -> 8 bits
       //============================================================================================
       else if constexpr( std::is_integral_v<In> && sizeof(In) == 4 && (N::value <= 4) )
       {
-        // Not perfect cause we don't have intx4->shortx4 yet
-        return convert(convert(v0, as_<downgrade_t<In>>()), as_<Out>());
+              if constexpr(N::value == 1) return wide<Out,N>(v0.storage());
+        else  if constexpr(N::value == 2) return wide<Out,N>(v0.get(0),v0.get(1));
+        else
+        {
+          return convert(convert(v0, as_<downgrade_t<In>>()), as_<Out>());
+        }
       }
       else
       {
