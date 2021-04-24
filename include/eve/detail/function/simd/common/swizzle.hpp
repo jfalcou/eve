@@ -50,43 +50,53 @@ namespace eve::detail
 
     constexpr Pattern q = {};
 
+    [[maybe_unused]] auto do_swizzle = [=]<std::ptrdiff_t... I>(pattern_t<I...> const&)
+    {
+      return that_t{ (I == na_ ? T{0} : v.get(I))... };
+    };
+
     // We're swizzling so much we aggregate the output
     if constexpr( has_aggregated_abi_v<that_t> && !has_aggregated_abi_v<wide<T,N,ABI>> )
     {
       return aggregate_swizzle(v,q);
     }
-    // We're swizzling the first half of an aggregate
-    else if constexpr( has_aggregated_abi_v<wide<T,N,ABI>> && q.strictly_under(cd/2) )
+    // Be sure we can shuffle everything ionside a single vector of ouput
+    else if constexpr( !has_aggregated_abi_v<that_t> )
     {
-      return v.slice(lower_)[q];
-    }
-    // We're swizzling the second half of an aggregate
-    else if constexpr( has_aggregated_abi_v<wide<T,N,ABI>> && q.over(cd/2) )
-    {
-      return v.slice(upper_)[ slide_pattern<cd/2,sz>(q) ];
-    }
-    // We're swizzling an aggregate in steplock [lo | hi]
-    else if constexpr (   has_aggregated_abi_v<wide<T,N,ABI>>
-                      && pattern_view<0   ,sz/2,sz>(q).strictly_under(cd/2)
-                      && pattern_view<sz/2,sz  ,sz>(q).over(cd/2)
-                      )
-    {
-      return that_t{ v[pattern_view<0,sz/2,sz>(q)], v[pattern_view<sz/2,sz,sz>(q)] };
-    }
-    // We're swizzling an aggregate in steplock [hi | lo]
-    else if constexpr (   has_aggregated_abi_v<wide<T,N,ABI>>
-                      && pattern_view<0   ,sz/2,sz>(q).over(cd/2)
-                      && pattern_view<sz/2,sz  ,sz>(q).strictly_under(cd/2)
-                      )
-    {
-      return that_t{ v[pattern_view<0,sz/2,sz>(q)], v[pattern_view<sz/2,sz,sz>(q)] };
+      // We're swizzling the first half of an aggregate
+      if constexpr( has_aggregated_abi_v<wide<T,N,ABI>> && q.strictly_under(cd/2) )
+      {
+        return v.slice(lower_)[q];
+      }
+      // We're swizzling the second half of an aggregate
+      else if constexpr( has_aggregated_abi_v<wide<T,N,ABI>> && q.over(cd/2) )
+      {
+        return v.slice(upper_)[ slide_pattern<cd/2,sz>(q) ];
+      }
+      // We're swizzling an aggregate in steplock [lo | hi]
+      else if constexpr (   has_aggregated_abi_v<wide<T,N,ABI>>
+                        && pattern_view<0   ,sz/2,sz>(q).strictly_under(cd/2)
+                        && pattern_view<sz/2,sz  ,sz>(q).over(cd/2)
+                        )
+      {
+        return that_t{ v[pattern_view<0,sz/2,sz>(q)], v[pattern_view<sz/2,sz,sz>(q)] };
+      }
+      // We're swizzling an aggregate in steplock [hi | lo]
+      else if constexpr (   has_aggregated_abi_v<wide<T,N,ABI>>
+                        && pattern_view<0   ,sz/2,sz>(q).over(cd/2)
+                        && pattern_view<sz/2,sz  ,sz>(q).strictly_under(cd/2)
+                        )
+      {
+        return that_t{ v[pattern_view<0,sz/2,sz>(q)], v[pattern_view<sz/2,sz,sz>(q)] };
+      }
+      else
+      {
+        return do_swizzle(q);
+      }
     }
     else
     {
-      return [=]<std::ptrdiff_t... I>(pattern_t<I...> const&)
-      {
-        return that_t{ (I == na_ ? T{0} : v.get(I))... };
-      }(q);
+      return do_swizzle(q);
     }
   }
 }
