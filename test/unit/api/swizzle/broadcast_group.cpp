@@ -11,6 +11,11 @@
 #include <eve/function/broadcast_group.hpp>
 #include <bit>
 
+//================================================================================================
+// Premade pattern generator
+template<std::ptrdiff_t G, std::ptrdiff_t I, std::ptrdiff_t N>
+inline constexpr auto broadcast_group_n = eve::fix_pattern<N>( [](auto i, auto) { return I*G + i%G; } );
+
 //==================================================================================================
 // SWAG test
 //==================================================================================================
@@ -33,13 +38,13 @@ EVE_TEST( "Check behavior of broadcast_groups swizzle"
     {
       T ref = [=](auto i, auto c)
               {
-                constexpr auto p = eve::broadcast_group_n<grp,Index::value,T::size()>;
+                constexpr auto p = broadcast_group_n<grp,Index::value,T::size()>;
                 return simd.get(p(i,c));
               };
 
       L lref  = [=](auto i, auto c)
                 {
-                  constexpr auto p = eve::broadcast_group_n<grp,Index::value,T::size()>;
+                  constexpr auto p = broadcast_group_n<grp,Index::value,T::size()>;
                   return logicals.get(p(i,c));
                 };
 
@@ -53,8 +58,8 @@ EVE_TEST( "Check behavior of broadcast_groups swizzle"
                                       )
                 , lref
                 );
-      TTS_EQUAL ( (simd[eve::broadcast_group_n<grp,Index::value,T::size()>]), ref );
-      TTS_EQUAL ( (logicals[eve::broadcast_group_n<grp,Index::value,T::size()>]), lref );
+      TTS_EQUAL ( (simd[broadcast_group_n<grp,Index::value,T::size()>]), ref );
+      TTS_EQUAL ( (logicals[broadcast_group_n<grp,Index::value,T::size()>]), lref );
     }
     );
   }

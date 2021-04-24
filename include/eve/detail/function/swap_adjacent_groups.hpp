@@ -18,32 +18,33 @@ namespace eve
 {
   EVE_MAKE_CALLABLE(swap_adjacent_groups_, swap_adjacent_groups);
 
-  //================================================================================================
-  // Premade pattern generator
-  template<std::ptrdiff_t G, std::ptrdiff_t N>
-  inline constexpr
-  auto swap_adjacent_groups_n = fix_pattern<N> ( [](auto i, auto)
-                                              {
-                                                if(G!=N)  return (i+G)%(G*2) + (G*2)*(i/(G*2));
-                                                else      return i;
-                                              }
-                                            );
-
-  //================================================================================================
-  // Classify a pattern as a swag
-  template<std::ptrdiff_t... I> inline constexpr auto is_swag = []()
+  namespace detail
   {
-    // List all possible swags for a current size
-    constexpr auto sz = sizeof...(I);
-    constexpr auto x = []<std::size_t... N>( std::index_sequence<N...> )
-    {
-      return std::make_tuple(swap_adjacent_groups_n<sz/(1<<(N+1)),sz>... );
-    }(std::make_index_sequence<std::bit_width(sz)-1>{});
+    //==============================================================================================
+    // Classify a pattern as a swag
+    template<std::ptrdiff_t G, std::ptrdiff_t N>
+    inline constexpr
+    auto swap_adjacent_groups_n = fix_pattern<N> ( [](auto i, auto)
+                                                {
+                                                  if(G!=N)  return (i+G)%(G*2) + (G*2)*(i/(G*2));
+                                                  else      return i;
+                                                }
+                                              );
 
-    // Find the fitting one
-    constexpr auto idx = detail::find_index(pattern<I...>,x);
-    return fixed<sz/(1<<(idx+1))>{};
-  }();
+    template<std::ptrdiff_t... I> inline constexpr auto is_swag = []()
+    {
+      // List all possible swags for a current size
+      constexpr auto sz = sizeof...(I);
+      constexpr auto x = []<std::size_t... N>( std::index_sequence<N...> )
+      {
+        return std::make_tuple(swap_adjacent_groups_n<sz/(1<<(N+1)),sz>... );
+      }(std::make_index_sequence<std::bit_width(sz)-1>{});
+
+      // Find the fitting one
+      constexpr auto idx = detail::find_index(pattern<I...>,x);
+      return fixed<sz/(1<<(idx+1))>{};
+    }();
+  }
 }
 
 #include <eve/detail/function/simd/common/swap_adjacent_groups.hpp>
