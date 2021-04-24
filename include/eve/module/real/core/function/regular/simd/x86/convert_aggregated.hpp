@@ -11,6 +11,8 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/traits/as_floating_point.hpp>
+#include <eve/function/bit_shr.hpp>
+#include <eve/function/bit_shl.hpp>
 
 namespace eve::detail
 {
@@ -25,12 +27,17 @@ namespace eve::detail
     // shortx16 -> charx16 is the only case we care about
     if constexpr( std::is_integral_v<In> && (sizeof(In) == 2) )
     {
+      // We slice the shortx16 int shortsx8
       auto[l,h] = v0.slice();
-      l &= static_cast<In>(0x00FFU);
-      h &= static_cast<In>(0x00FFU);
 
+      // Remove the higher bits that will cause unwanted saturation
+      l = static_cast<In>(0x00FFU);
+      h = static_cast<In>(0x00FFU);
+
+      // Pack as bunch of bytes that can't saturate anyway
       return _mm_packus_epi16(l,h);
     }
+    // intx8 -> shortx8
     else if constexpr( std::is_integral_v<In> && (sizeof(In) == 4) )
     {
       if constexpr(sizeof(Out) == 2)
@@ -46,10 +53,9 @@ namespace eve::detail
         }
         else if constexpr( current_api >= ssse3 )
         {
-          auto l16 = bit_cast(l, as_<wide<Out>>());
-          auto h16 = bit_cast(h, as_<wide<Out>>());
-
-          return l16[pattern<0,2,4,6,-1,-1,-1,-1>] | h16[pattern<-1,-1,-1,-1,0,2,4,6>];
+          l &= static_cast<In>(0x0000FFFFU);
+          h &= static_cast<In>(0x0000FFFFU);
+          return _mm_hadd_epi16(l,h);
         }
         else
         {
