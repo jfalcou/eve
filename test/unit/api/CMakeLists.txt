@@ -24,12 +24,13 @@ make_unit("unit.api"  comparisons.cpp                   )
 make_unit("unit.api"  logicals.cpp                      )
 make_unit("unit.api"  shift.cpp                         )
 make_unit("unit.api"  wide.cpp                          )
+make_unit("unit.api"  swizzle/broadcast_group.cpp       )
 make_unit("unit.api"  swizzle/broadcast.cpp             )
 make_unit("unit.api"  swizzle/identity.cpp              )
-make_unit("unit.api"  swizzle/swap_adjacent_groups.cpp  )
-make_unit("unit.api"  swizzle/broadcast_group.cpp       )
-make_unit("unit.api"  swizzle/zero.cpp                  )
 make_unit("unit.api"  swizzle/reverse.cpp               )
+make_unit("unit.api"  swizzle/slide_left.cpp            )
+make_unit("unit.api"  swizzle/swap_adjacent_groups.cpp  )
+make_unit("unit.api"  swizzle/zero.cpp                  )
 
 
 ##==================================================================================================
