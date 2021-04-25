@@ -32,23 +32,10 @@ namespace eve::detail
   EVE_FORCEINLINE T fdim_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
       requires has_native_abi_v<T>
   {
-    if constexpr( unsigned_value<T> )
-    {
-      using elt_t = element_type_t<T>;
-      auto tmp    = a - b;
-      return bit_andnot(tmp, tmp >> (sizeof(elt_t) * 8 - 1));
-    }
-    else
-    {
-      if constexpr( eve::platform::supports_nans )
-      {
-        return if_else(is_not_less_equal(a, b), a - b, eve::zero);
-      }
-      else
-      {
-        return max(b - a, zero(eve::as(a)));
-      }
-    }
+    //   return if_else(is_not_less_equal(a, b), a - b, eve::zero);
+    std::cout << "a " << a << std::endl;
+    std::cout << "b " << b << std::endl;
+    std::cout << "a >= b " << (a >= b) << std::endl;
+    return if_else(a >= b, a - b, eve::zero);
   }
 }
-
