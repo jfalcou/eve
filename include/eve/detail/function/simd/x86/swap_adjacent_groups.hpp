@@ -177,7 +177,7 @@ namespace eve::detail
       else  if constexpr( std::same_as<ABI,x86_512_> )
       {
         // We have perfect swizzle so LET'S ROCK'N'ROLL
-        return basic_swizzle(v, swap_adjacent_groups_n<G,N::value> );
+        return basic_swizzle(v, swap_adjacent_groups_pattern<G,N::value> );
       }
     }
   }

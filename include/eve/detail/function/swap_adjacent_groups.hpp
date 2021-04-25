@@ -24,12 +24,14 @@ namespace eve
     // Classify a pattern as a swag
     template<std::ptrdiff_t G, std::ptrdiff_t N>
     inline constexpr
-    auto swap_adjacent_groups_n = fix_pattern<N> ( [](auto i, auto)
-                                                {
-                                                  if(G!=N)  return (i+G)%(G*2) + (G*2)*(i/(G*2));
-                                                  else      return i;
-                                                }
-                                              );
+    auto swap_adjacent_groups_pattern = fix_pattern<N>( [](auto i, auto)
+                                                      {
+                                                        if(G!=N)
+                                                          return (i+G)%(G*2) + (G*2)*(i/(G*2));
+                                                        else
+                                                          return i;
+                                                      }
+                                                    );
 
     template<std::ptrdiff_t... I> inline constexpr auto is_swag = []()
     {
@@ -37,7 +39,7 @@ namespace eve
       constexpr auto sz = sizeof...(I);
       constexpr auto x = []<std::size_t... N>( std::index_sequence<N...> )
       {
-        return std::make_tuple(swap_adjacent_groups_n<sz/(1<<(N+1)),sz>... );
+        return std::make_tuple(swap_adjacent_groups_pattern<sz/(1<<(N+1)),sz>... );
       }(std::make_index_sequence<std::bit_width(sz)-1>{});
 
       // Find the fitting one
