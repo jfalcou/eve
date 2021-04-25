@@ -15,11 +15,6 @@ namespace eve
 {
   EVE_MAKE_CALLABLE(broadcast_, broadcast);
 
-  //================================================================================================
-  // Premade pattern generator
-  template<std::ptrdiff_t I, std::ptrdiff_t N>
-  inline constexpr auto broadcast_n = fix_pattern<N>( [](auto, auto) { return I; } );
-
   namespace detail
   {
     //==============================================================================================

@@ -27,7 +27,7 @@ namespace eve::detail
     else
     {
       /// TODO: Maybe there's better than just vec_perm ??
-      return basic_swizzle(v, swap_adjacent_groups_n<G,N::value> );
+      return basic_swizzle(v, swap_adjacent_groups_pattern<G,N::value> );
     }
   }
 }

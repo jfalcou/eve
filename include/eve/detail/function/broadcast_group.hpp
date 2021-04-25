@@ -19,11 +19,6 @@ namespace eve
   EVE_MAKE_CALLABLE(broadcast_group_, broadcast_group);
 
   //================================================================================================
-  // Premade pattern generator
-  template<std::ptrdiff_t G, std::ptrdiff_t I, std::ptrdiff_t N>
-  inline constexpr auto broadcast_group_n = fix_pattern<N>( [](auto i, auto) { return I*G + i%G; } );
-
-  //================================================================================================
   // Classify a pattern as a bcstg
   namespace detail
   {
