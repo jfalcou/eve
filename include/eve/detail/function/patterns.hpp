@@ -10,6 +10,7 @@
 #include <eve/detail/function/swizzle.hpp>
 #include <eve/detail/function/broadcast.hpp>
 #include <eve/detail/function/swap_adjacent_groups.hpp>
+#include <eve/detail/function/slide_left.hpp>
 #include <eve/detail/function/broadcast_group.hpp>
 #include <eve/detail/function/reverse.hpp>
 #include <eve/detail/function/simd/common/patterns.hpp>
@@ -55,7 +56,11 @@ namespace eve::detail
     {
       return bound{broadcast_group, st->first, st->second, sz};
     }
-    else  if constexpr( is_reverse<InCardinal, I0,I...> )  return bound{reverse};
-    else                                                   return bound{basic_swizzle       , p};
+    else  if constexpr( constexpr auto s = is_slide_left<I0,I...>)
+    {
+      return bound{slide_left, index<s>};
+    }
+    else  if constexpr( is_reverse<InCardinal, I0,I...> ) return bound{reverse};
+    else                                                  return bound{basic_swizzle, p};
   }
 }
