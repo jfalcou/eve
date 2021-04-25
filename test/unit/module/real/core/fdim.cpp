@@ -46,21 +46,21 @@ EVE_TEST_TYPES( "Check return types of eve::fdim(simd)"
 //==================================================================================================
 //== Tests for eve::fdim
 //==================================================================================================
-// EVE_TEST( "Check behavior of eve::fdim(simd) floating"
-//         , eve::test::simd::ieee_reals
-//         , eve::test::generate ( eve::test::ramp(-1, 1)
-//                               , eve::test::ramp( 1,-1))
-//         )
-// <typename T>(T const& a0, T const& a1)
-// {
-//   using eve::detail::map;
-//   using eve::as;
-//   using v_t = eve::element_type_t<T>;
+EVE_TEST( "Check behavior of eve::fdim(simd) floating"
+        , eve::test::simd::ieee_reals
+        , eve::test::generate ( eve::test::ramp(-1, 1)
+                              , eve::test::ramp( 1,-1))
+        )
+<typename T>(T const& a0, T const& a1)
+{
+  using eve::detail::map;
+  using eve::as;
+  using v_t = eve::element_type_t<T>;
 
-//   TTS_EQUAL(eve::fdim(a0, a1), map([](auto e,  auto f) -> v_t { return  (e >= f) ? e-f : eve::zero(as(e)); }, a0, a1));
-//   TTS_EQUAL ( eve::diff_1st(eve::fdim)(a0, a1), map([](auto e,  auto f) -> v_t { return  (e >= f) ? eve::one(as(e)) : eve::zero(as(e)); }, a0, a1));
-//   TTS_EQUAL ( eve::diff_2nd(eve::fdim)(a0, a1), map([](auto e,  auto f) -> v_t { return  (e >= f) ? eve::mone(as(e)) : eve::zero(as(e)); }, a0, a1));
-// };
+  TTS_EQUAL(eve::fdim(a0, a1), map([](auto e,  auto f) -> v_t { return  (e >= f) ? e-f : eve::zero(as(e)); }, a0, a1));
+  TTS_EQUAL ( eve::diff_1st(eve::fdim)(a0, a1), map([](auto e,  auto f) -> v_t { return  (e >= f) ? eve::one(as(e)) : eve::zero(as(e)); }, a0, a1));
+  TTS_EQUAL ( eve::diff_2nd(eve::fdim)(a0, a1), map([](auto e,  auto f) -> v_t { return  (e >= f) ? eve::mone(as(e)) : eve::zero(as(e)); }, a0, a1));
+};
 
 EVE_TEST( "Check behavior of eve::fdim(simd) integral"
         , eve::test::simd::integers
