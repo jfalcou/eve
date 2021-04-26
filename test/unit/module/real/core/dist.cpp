@@ -57,7 +57,8 @@ EVE_TEST( "Check behavior of dist(wide)"
   using v_t = eve::element_type_t<T>;
   TTS_ULP_EQUAL( dist(a0, a1), map([](auto e, auto f) -> v_t { return std::max(e, f)-std::min(f, e); }, a0, a1), 2);
   TTS_ULP_EQUAL( eve::saturated(dist)(a0, a1), map([](auto e, auto f) -> v_t { v_t d = eve::max(e, f)-eve::min(f, e);
-                                                     return d < 0 ? eve::valmax(eve::as(e)): d; }
+                                                     if constexpr( eve::unsigned_value<v_t>) return d;
+                                                     else return d < 0 ? eve::valmax(eve::as(e)): d; }
                                                   , a0, a1), 2);
 };
 
