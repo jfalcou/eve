@@ -18,8 +18,6 @@ namespace eve::detail
                                                     ) noexcept
   requires(G<=N::value)
   {
-    using that_t  = wide<T,N,ABI>;
-
     if constexpr(G == N::value)
     {
       return v;
