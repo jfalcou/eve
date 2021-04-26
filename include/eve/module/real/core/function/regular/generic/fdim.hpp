@@ -28,9 +28,10 @@ namespace eve::detail
   }
 
   template<real_value T>
-  EVE_FORCEINLINE T fdim_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
+  EVE_FORCEINLINE auto fdim_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
       requires has_native_abi_v<T>
   {
-    return if_else(a >= b, a - b, eve::zero);
+    auto r = if_else(a >= b, sub(a, b), eve::zero);
+    return r;
   }
 }

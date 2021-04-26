@@ -72,6 +72,5 @@ EVE_TEST( "Check behavior of eve::fdim(simd) integral"
   using eve::detail::map;
   using eve::as;
   using v_t = eve::element_type_t<T>;
-
-  TTS_EQUAL(eve::fdim(a0, a1), map([](auto e,  auto f) -> v_t { /*std::cout << "e " << e << " f " << f << " e >= f " << (e >= f) << std::endl;*/ return  (e >= f) ? e-f : eve::zero(eve::as_<v_t>()); }, a0, a1));
+  TTS_EQUAL(eve::fdim(a0, a1), map([](auto e,  auto f) -> v_t { return  (e >= f) ? v_t(e-f) : eve::zero(eve::as_<v_t>()); }, a0, a1));
 };
