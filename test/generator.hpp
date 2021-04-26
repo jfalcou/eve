@@ -16,6 +16,7 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/zero.hpp>
+#include <eve/constant/mindenormal.hpp>
 #include <tuple>
 
 namespace eve::test
@@ -166,13 +167,15 @@ namespace eve::test
           struct values
           {
             using type  = T;
-            type nan       = eve::nan     (eve::as_<type>{});
-            type inf       = eve::inf     (eve::as_<type>{});
-            type minf      = eve::minf    (eve::as_<type>{});
-            type mzero     = eve::mzero   (eve::as_<type>{});
-            type maxflint  = eve::maxflint(eve::as_<type>{});
-            type valmax    = eve::valmax(eve::as_<type>{});
-            type valmin    = eve::valmin(eve::as_<type>{});
+            type nan         = eve::nan     (eve::as_<type>{});
+            type inf         = eve::inf     (eve::as_<type>{});
+            type minf        = eve::minf    (eve::as_<type>{});
+            type mzero       = eve::mzero   (eve::as_<type>{});
+            type zero        = eve::zero   (eve::as_<type>{});
+            type maxflint    = eve::maxflint(eve::as_<type>{});
+            type valmax      = eve::valmax(eve::as_<type>{});
+            type valmin      = eve::valmin(eve::as_<type>{});
+            type mindenormal = eve::mindenormal(eve::as_<type>{});
           };
 
           return values{};
