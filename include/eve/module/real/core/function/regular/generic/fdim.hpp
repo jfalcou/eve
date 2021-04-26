@@ -13,7 +13,6 @@
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/bit_andnot.hpp>
 #include <eve/function/if_else.hpp>
-#include <eve/function/is_not_less_equal.hpp>
 #include <eve/function/max.hpp>
 #include <eve/platform.hpp>
 
@@ -32,10 +31,6 @@ namespace eve::detail
   EVE_FORCEINLINE T fdim_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
       requires has_native_abi_v<T>
   {
-    //   return if_else(is_not_less_equal(a, b), a - b, eve::zero);
-    std::cout << "a " << a << std::endl;
-    std::cout << "b " << b << std::endl;
-    std::cout << "a >= b " << (a >= b) << std::endl;
     return if_else(a >= b, a - b, eve::zero);
   }
 }
