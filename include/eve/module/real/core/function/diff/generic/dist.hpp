@@ -20,7 +20,7 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
       return sign(x-y);
     else
-      return apply_over(diff_1st(dist), x, y), n);
+      return apply_over(diff_1st(dist), x, y);
   }
 
   template<floating_real_value T>
@@ -29,8 +29,8 @@ namespace eve::detail
                                     , T x, T y) noexcept
   {
     if constexpr( has_native_abi_v<T> )
-      return -sign(x-y);
+      return sign(y-x);
     else
-      return apply_over(diff_1st(dist), x, y);
+      return apply_over(diff_2nd(dist), x, y);
   }
 }

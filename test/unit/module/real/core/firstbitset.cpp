@@ -1,0 +1,40 @@
+//==================================================================================================
+/**
+  EVE - Expressive Vector Engine
+  Copyright : EVE Contributors & Maintainers
+  SPDX-License-Identifier: MIT
+**/
+//==================================================================================================
+#include "test.hpp"
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
+#include <eve/function/firstbitset.hpp>
+#include <cmath>
+
+//==================================================================================================
+// Types tests
+//==================================================================================================
+EVE_TEST_TYPES( "Check return types of eve::firstbitset(simd)"
+              , eve::test::simd::unsigned_integers
+              )
+<typename T>(eve::as_<T>)
+{
+  using v_t = eve::element_type_t<T>;
+  TTS_EXPR_IS( eve::firstbitset(T()), T  );
+  TTS_EXPR_IS( eve::firstbitset(v_t()), v_t );
+};
+
+//==================================================================================================
+// Tests for eve::firstbitset
+//==================================================================================================
+EVE_TEST( "Check behavior of eve::firstbitset(simd)"
+        , eve::test::simd::unsigned_integers
+        , eve::test::generate ( eve::test::ramp(0))
+        )
+<typename T>(T const& a0)
+{
+  using eve::detail::map;
+  using vi_t = eve::element_type_t<T>;
+
+  TTS_EQUAL(eve::firstbitset(a0), map([](auto e) -> vi_t { return eve::firstbitset(e);}, a0));
+};
