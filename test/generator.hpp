@@ -271,7 +271,7 @@ inline bool const TTS_CAT(register_,TTS_FUNCTION) =  ::eve::test::test_setup{   
     }( TYPES );                                                                                     \
                                                                                                     \
     return true;                                                                                    \
-  }} + []                                                                                           \
+7  }} + []                                                                                          \
 /**/
 
 #define EVE_TEST_TYPES(DESCRIPTION,TYPES)                                                           \
