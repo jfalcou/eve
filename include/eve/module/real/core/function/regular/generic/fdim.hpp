@@ -14,6 +14,7 @@
 #include <eve/function/bit_andnot.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/max.hpp>
+#include <eve/function/sub.hpp>
 #include <eve/platform.hpp>
 
 namespace eve::detail
