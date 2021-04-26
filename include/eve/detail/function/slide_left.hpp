@@ -42,10 +42,10 @@ namespace eve
 #  include <eve/detail/function/simd/x86/slide_left.hpp>
 #endif
 
-// #if defined(EVE_HW_ARM)
-// #  include <eve/detail/function/simd/arm/neon/slide_left.hpp>
-// #endif
+#if defined(EVE_HW_ARM)
+#  include <eve/detail/function/simd/arm/neon/slide_left.hpp>
+#endif
 
-// #if defined(EVE_HW_POWERPC)
-// #  include <eve/detail/function/simd/ppc/slide_left.hpp>
-// #endif
+#if defined(EVE_HW_POWERPC)
+#  include <eve/detail/function/simd/ppc/slide_left.hpp>
+#endif
