@@ -16,17 +16,24 @@
 
 namespace eve::detail
 {
-  template<real_value T, real_value U, real_value V>
+ template<real_value T, real_value U, real_value V>
   EVE_FORCEINLINE auto fnms_(EVE_SUPPORTS(cpu_), T const &a, U const &b, V const &c) noexcept
-      requires compatible_values<T, U> &&compatible_values<T, V>
+  requires properly_convertible<U, V, T>
   {
-    return arithmetic_call(fnms, a, b, c);
+    using r_t =  common_compatible_t<T, U, V>;
+    return arithmetic_call(fnms, r_t(a), r_t(b), r_t(c));
   }
 
-  template<real_value T>
+  template<real_scalar_value T>
   EVE_FORCEINLINE T fnms_(EVE_SUPPORTS(cpu_), T const &a, T const &b, T const &c) noexcept
-      requires has_native_abi_v<T>
   {
-    return T(-fma(a, b, c));
+    return -(a * b + c);
+  }
+
+  template<real_simd_value T>
+  EVE_FORCEINLINE T fnms_(EVE_SUPPORTS(cpu_), T const &a, T const &b, T const &c) noexcept
+  requires has_native_abi_v<T>
+  {
+    return -fma(a, b, c);
   }
 }

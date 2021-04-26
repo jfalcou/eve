@@ -10,6 +10,7 @@
 #include <eve/constant/eps.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/mone.hpp>
+#include <eve/function/all.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/pedantic/fma.hpp>
 #include <eve/function/numeric/fma.hpp>
@@ -71,9 +72,10 @@ EVE_TEST( "Check precision behavior of fma on real types"
 <typename T>(T const& a0, T const& a1)
 {
   using eve::fma;
+  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   TTS_ULP_EQUAL ( eve::pedantic(fma)(a0, a1, -eve::one(eve::as<T>()))
-                , T([&](auto i , auto) { return eve::pedantic(fma)(a0.get(i), a1.get(i), v_t(-1)); })
+                , map([&](auto e , auto f) -> v_t { return eve::pedantic(fma)(e, f, v_t(-1)); }, a0, a1)
                 , 2
                 );
 };
@@ -91,7 +93,16 @@ EVE_TEST( "Check behavior of fma on all types full range"
 <typename T>(  T const& a0, T const& a1, T const& a2)
 {
   using eve::fma;
-  TTS_ULP_EQUAL(fma((a0), (a1), (a2)), T([&](auto i , auto) { return eve::pedantic(fma)((a0.get(i)), (a1.get(i)), (a2.get(i))); }), 2);
-  TTS_ULP_EQUAL(eve::pedantic(fma)((a0), (a1), (a2)), T([&](auto i , auto) { return eve::pedantic(fma)((a0.get(i)), (a1.get(i)), (a2.get(i))); }), 2);
-  TTS_ULP_EQUAL(eve::numeric(fma)((a0), (a1), (a2)), T([&](auto i , auto) { return eve::pedantic(fma)((a0.get(i)), (a1.get(i)), (a2.get(i))); }), 2);
+  using eve::detail::map;
+  using v_t = eve::element_type_t<T>;
+  if (eve::all(eve::fma(onemmileps(as(a0)), onepmileps(as(a0)), T(-1)) == eve::pedantic(eve::fma)(onemmileps(as(a0)), onepmileps(as(a0)), T(-1))))
+  {
+    TTS_ULP_EQUAL(fma((a0), (a1), (a2)), map([&](auto e , auto f, auto g) -> v_t { return eve::pedantic(fma)(e, f, g); }, a0, a1, a2), 2);
+  }
+  else
+  {
+    TTS_ULP_EQUAL(fma((a0), (a1), (a2)), map([&](auto e , auto f, auto g) -> v_t { return e*f+g; }, a0, a1, a2), 2);
+  }
+  TTS_ULP_EQUAL(eve::pedantic(fma)((a0), (a1), (a2)), map([&](auto e , auto f, auto g) -> v_t { return eve::pedantic(fma)(e, f, g); }, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::numeric(fma)((a0), (a1), (a2)), map([&](auto e , auto f, auto g) -> v_t { return eve::pedantic(fma)(e, f, g); }, a0, a1, a2), 2);
 };
