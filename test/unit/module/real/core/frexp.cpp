@@ -21,7 +21,7 @@
 EVE_TEST_TYPES( "Check return types of eve::frexp(simd)"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as_<T>)
+  <typename T>(eve::as_<T>)
 {
   using v_t = eve::element_type_t<T>;
   TTS_EXPR_IS( eve::frexp(T()), (std::tuple<T, T>) );
