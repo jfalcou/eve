@@ -14,7 +14,7 @@
 #include <bit>
 
 //==================================================================================================
-// Types tests
+//== Types tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of hi on wide"
             , eve::test::simd::all_types
@@ -22,15 +22,16 @@ EVE_TEST_TYPES( "Check return types of hi on wide"
 <typename T>(eve::as_<T>)
 {
   using v_t = eve::element_type_t<T>;
-  using i_t = eve::as_integer_t<T>;
-  using vi_t = eve::as_integer_t<v_t>;
-  TTS_EXPR_IS( eve::hi(T())  , i_t);
-  TTS_EXPR_IS( eve::hi(v_t()), vi_t);
+  using vi_t = eve::as_integer_t<v_t, unsigned>;
+  using sdi_t = eve::detail::downgrade_t<vi_t>;
+  using si_t  = eve::wide<sdi_t, eve::cardinal_t<T> >;
+  TTS_EXPR_IS( eve::hi(T())  , si_t);
+  TTS_EXPR_IS( eve::hi(v_t()), sdi_t);
 };
 
 
 //==================================================================================================
-// hi(simd) tests
+//== hi(simd) tests
 //==================================================================================================
 EVE_TEST( "Check behavior of hi(wide) on unsigned integral "
         , eve::test::simd::unsigned_integers
@@ -38,6 +39,8 @@ EVE_TEST( "Check behavior of hi(wide) on unsigned integral "
         )
 <typename T>(T const& a0)
 {
+  using v_t = eve::element_type_t<T>;
   using vi_t = eve::as_integer_t<v_t>;
-  TTS_EQUAL( eve::hi(a0), map([](auto e) ->vi_t{ return eve::hi(e); }, a0));
+  using sdi_t = eve::detail::downgrade_t<vi_t>;
+  TTS_EQUAL( eve::hi(a0), map([](auto e) ->sdi_t{ return eve::hi(e); }, a0));
 };
