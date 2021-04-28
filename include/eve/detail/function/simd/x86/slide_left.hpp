@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/function/simd/x86/specifics.hpp>
 #include <eve/conditional.hpp>
 
 namespace eve::detail
@@ -40,7 +41,15 @@ namespace eve::detail
       }
       else if constexpr( std::same_as<ABI,x86_256_>)
       {
-        if constexpr(sizeof(T) == 8)
+        if constexpr( current_api >= avx2)
+        {
+          constexpr auto offset = Shift * sizeof(T);
+          __m256i bv = _mm256_permute2x128_si256(v, v, 0x83);
+                if constexpr(offset == 16)  return bv;
+          else  if constexpr(offset <  16)  return _mm256_alignr_epi8(bv, v, offset);
+          else                              return _mm256_bsrli_epi128(bv, offset - 16);
+        }
+        else if constexpr(sizeof(T) == 8)
         {
           // Three optimal shuffles for sliding left by 1->3 - The last one will shock you!
           using f_t = as_floating_point_t<wide<T,N,ABI>>;
