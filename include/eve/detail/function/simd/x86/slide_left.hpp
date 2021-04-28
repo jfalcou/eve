@@ -24,19 +24,19 @@ namespace eve::detail
     {
       if constexpr( std::same_as<ABI,x86_128_>)
       {
-        /// Mask noises from smaller sized registers
-        if constexpr(N::value < expected_cardinal_v<T,x86_128_>)
-        {
-          wide<T,expected_cardinal_t<T,x86_128_>> w = v.storage();
-          w &= keep_first(N::value).mask(as(w)).bits();
-          v = w.storage();
-        }
-
         constexpr auto shift = Shift*sizeof(T);
         using i_t = as_integer_t<wide<T,N,ABI>, unsigned>;
 
         auto const b  = bit_cast(v, as_<i_t>());
-        return bit_cast(i_t(_mm_bsrli_si128( b, shift)), as(v));
+        auto result = bit_cast(i_t(_mm_bsrli_si128( b, shift)), as(v));
+
+        // Mask noises from smaller sized registers
+        if constexpr(N::value < expected_cardinal_v<T,x86_128_>)
+        {
+          result &= keep_first(N::value-Shift).mask(as(result)).bits();
+        }
+
+        return result;
       }
       else if constexpr( std::same_as<ABI,x86_256_>)
       {

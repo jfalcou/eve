@@ -38,18 +38,17 @@ namespace eve::detail
       }
       else
       {
+        constexpr unsigned char offset = (Shift * sizeof(T)) << 3;
+        __vector signed char shift = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,offset};
+        that_t result = vec_slo( v.storage(), shift );
+
         // Mask noises from smaller sized registers
         if constexpr(N::value < expected_cardinal_v<T,ppc_>)
         {
-          wide<T,expected_cardinal_t<T,ppc_>> w = v.storage();
-          w &= keep_first(N::value).mask(as(w)).bits();
-          v = w.storage();
+          result &= keep_first(N::value-Shift).mask(as(result)).bits();
         }
 
-        constexpr unsigned char offset = (Shift * sizeof(T)) << 3;
-        __vector signed char shift = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,offset};
-
-        return vec_slo( v.storage(), shift );
+        return result;
       }
     }
   }

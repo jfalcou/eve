@@ -51,7 +51,7 @@ namespace eve::detail
     }
     else
     {
-      typename wide<T, N>::storage_type that;
+      typename wide<T, N>::storage_type that{};
       std::memcpy(&that, ptr, N::value * sizeof(T));
       return that;
     }
@@ -99,7 +99,7 @@ namespace eve::detail
       }
       else
       {
-        typename wide<T, N>::storage_type that;
+        typename wide<T, N>::storage_type that{};
         std::memcpy(&that, ptr, N::value * sizeof(T));
         return that;
       }
