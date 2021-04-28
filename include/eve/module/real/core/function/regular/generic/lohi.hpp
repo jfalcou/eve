@@ -14,12 +14,14 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/swizzle.hpp>
 #include <array>
+#include <bit>
 
 namespace eve::detail
 {
   template<value T>
   EVE_FORCEINLINE constexpr auto lohi_(EVE_SUPPORTS(cpu_), T const &a0) noexcept
   {
+    using std::endian;
     if constexpr(has_native_abi_v<T>)
     {
       using elt_t = element_type_t<T>;
@@ -32,18 +34,29 @@ namespace eve::detail
       else
       {
         using si_t = downgrade_t<as_integer_t<elt_t, unsigned>>;
+
         if constexpr(simd_value<T>)
         {
-          using ui_t = wide<si_t, typename cardinal_t<T>::combined_type>;
-          auto uia0 = bit_cast(a0, as<ui_t>());
-          auto constexpr p = as_pattern([](auto i,  auto c) { return (i < c/2) ? 2 * i : 2 * (i-c/2)+1; });
-          return uia0[p].slice();
+          using ui_t       = wide<si_t, typename cardinal_t<T>::combined_type>;
+          auto uia0        = bit_cast(a0, as<ui_t>());
+          auto constexpr p = as_pattern ( [](auto i, auto c)
+                                          {
+                                            return (i < c/2) ? 2 * i : 2 * (i-c/2)+1;
+                                          }
+                                        );
+          auto z = uia0[p].slice();
+
+          if constexpr(endian::native == endian::little)  return z;
+          else                                            return decltype(z){z[1], z[0]};
         }
         else
         {
-          using si_t = downgrade_t<as_integer_t<elt_t, unsigned>>;
-          using r_t = std::array<si_t, 2>;
-          return bit_cast(a0, as<r_t>());
+          using si_t  = downgrade_t<as_integer_t<elt_t, unsigned>>;
+          using r_t   = std::array<si_t, 2>;
+          auto z      = bit_cast(a0, as<r_t>());
+
+          if constexpr(endian::native == endian::little)  return z;
+          else                                            return std::array<si_t, 2>{z[1], z[0]};
         }
       }
     }

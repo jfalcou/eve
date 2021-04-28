@@ -61,7 +61,6 @@ TTS_CASE_TPL("Check (eve::lohi behavior", EVE_TYPE)
     {
       auto [p0, p1] = eve::lohi(T(1));
       using wui_t = decltype(p0);
-      std::cout << tts::typename_of_(p0) << std::endl;
       TTS_EQUAL(p0, wui_t(1));
       TTS_EQUAL(p1, wui_t(0));
     }
