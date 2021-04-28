@@ -16,6 +16,7 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/zero.hpp>
+#include <eve/constant/mindenormal.hpp>
 #include <tuple>
 
 namespace eve::test
@@ -127,13 +128,13 @@ namespace eve::test
   template<typename Mn, typename Mx> auto randoms(Mn mn, Mx mx)
   {
     return [=]<typename T>(eve::as_<T>, auto& gen)
-    {
-      using e_t = eve::element_type_t<T>;
-      eve::prng<e_t> dist(as_value(mn,as_<e_t>{}),as_value(mx,as_<e_t>{}));
-      std::array<e_t,amount<T>()> d;
-      std::for_each(d.begin(),d.end(), [&](auto& e) { e = dist(gen); });
-      return d;
-    };
+           {
+             using e_t = eve::element_type_t<T>;
+             eve::prng<e_t> dist(as_value(mn,as_<e_t>{}),as_value(mx,as_<e_t>{}));
+             std::array<e_t,amount<T>()> d;
+             std::for_each(d.begin(),d.end(), [&](auto& e) { e = dist(gen); });
+             return d;
+           };
   }
 
   //================================================================================================
@@ -142,14 +143,14 @@ namespace eve::test
   template<typename V> auto value(V v)
   {
     return [=]<typename T>(eve::as_<T> tgt, auto&)
-    {
-      std::array<eve::element_type_t<T>,amount<T>()> d;
-      auto val = as_value(v,tgt);
+           {
+             std::array<eve::element_type_t<T>,amount<T>()> d;
+             auto val = as_value(v,tgt);
 
-      for(auto& e : d) e = val;
+             for(auto& e : d) e = val;
 
-      return d;
-    };
+             return d;
+           };
   }
 
   //================================================================================================
@@ -166,13 +167,15 @@ namespace eve::test
           struct values
           {
             using type  = T;
-            type nan       = eve::nan     (eve::as_<type>{});
-            type inf       = eve::inf     (eve::as_<type>{});
-            type minf      = eve::minf    (eve::as_<type>{});
-            type mzero     = eve::mzero   (eve::as_<type>{});
-            type maxflint  = eve::maxflint(eve::as_<type>{});
-            type valmax    = eve::valmax(eve::as_<type>{});
-            type valmin    = eve::valmin(eve::as_<type>{});
+            type nan         = eve::nan     (eve::as_<type>{});
+            type inf         = eve::inf     (eve::as_<type>{});
+            type minf        = eve::minf    (eve::as_<type>{});
+            type mzero       = eve::mzero   (eve::as_<type>{});
+            type zero        = eve::zero   (eve::as_<type>{});
+            type maxflint    = eve::maxflint(eve::as_<type>{});
+            type valmax      = eve::valmax(eve::as_<type>{});
+            type valmin      = eve::valmin(eve::as_<type>{});
+            type mindenormal = eve::mindenormal(eve::as_<type>{});
           };
 
           return values{};
@@ -198,9 +201,9 @@ namespace eve::test
   template<typename... G> inline auto generate(G... g)
   {
     return [=]<typename T>(eve::as_<T> t, auto& s)
-    {
-      return std::make_tuple(g(t,s)...);
-    };
+           {
+             return std::make_tuple(g(t,s)...);
+           };
   }
 
   //================================================================================================

@@ -10,9 +10,14 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/conditional.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/function/is_even.hpp>
 #include <eve/function/is_nltz.hpp>
+#include <eve/function/is_ltz.hpp>
 #include <eve/function/logical_or.hpp>
 #include <eve/function/sqrt.hpp>
+#include <eve/function/pow_abs.hpp>
+#include <eve/function/rec.hpp>
+#include <eve/function/sign.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/concept/value.hpp>
@@ -34,7 +39,7 @@ namespace eve::detail
                             , T b) noexcept
   requires has_native_abi_v<T>
   {
-    return if_else(is_nltz(a) || is_nltz(b), sqrt(a)*sqrt(b), allbits);
+    return if_else(is_nltz(sign(a)*sign(b)), sqrt(abs(a))*sqrt(abs(b)), allbits);
   }
 
   //================================================================================================
@@ -47,4 +52,25 @@ namespace eve::detail
     return mask_op(  cond, eve::geommean, t, f);
   }
 
+  //================================================================================================
+  //N parameters
+  //================================================================================================
+
+  template<floating_real_value T0, floating_real_value T1,  floating_real_value ...Ts>
+  auto geommean_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
+  requires floating_value<common_compatible_t<T0, T1, Ts...>>
+  {
+    using r_t = common_compatible_t<T0, T1, Ts...>;
+    using elt_t = element_type_t<r_t>;
+    elt_t invn = rec(elt_t(sizeof...(args)+2u));
+    r_t that(pow_abs(r_t(a0), invn)*pow_abs(r_t(a1), invn));
+    r_t sgn =  sign(r_t(a0))*sign(r_t(a1));
+    auto next = [&](auto avg,  auto x){
+      sgn *= sign(x);
+      return avg*pow_abs(r_t(x), invn);
+
+    };
+    ((that = next(that,args)),...);
+    return if_else(is_even(sizeof...(args)) && is_ltz(sgn),  eve::allbits, sgn*that);
+  }
 }
