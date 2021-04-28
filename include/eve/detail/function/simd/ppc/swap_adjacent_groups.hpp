@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
+#include <eve/detail/function/swizzle.hpp>
 #include <eve/pattern.hpp>
 
 namespace eve::detail
@@ -18,8 +19,6 @@ namespace eve::detail
                                                     ) noexcept
   requires(G<=N::value)
   {
-    using that_t  = wide<T,N,ABI>;
-
     if constexpr(G == N::value)
     {
       return v;

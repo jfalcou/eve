@@ -55,3 +55,21 @@ jobs:
           options:        '${{ matrix.cfg.opts }}'
           cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
           status:        '${{ matrix.cfg.status }}'
+
+  arch-ppc:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: gcc  , arch: ppc64, opts: -Wno-psabi, status: 1 }
+
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v2
+      - name: Testing EVE with ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        uses: ./.github/actions/run_tests
+        with:
+          options:        '${{ matrix.cfg.opts }}'
+          cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
+          status:        '${{ matrix.cfg.status }}'

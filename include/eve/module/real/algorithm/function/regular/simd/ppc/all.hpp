@@ -20,7 +20,7 @@ namespace eve::detail
 
     if constexpr( N::value == 1 )
     {
-      return static_cast<bool>(m[0]);
+      return static_cast<bool>(m.get(0));
     }
     else if constexpr( N::value == expected_cardinal_v<T, ppc_> )
     {
