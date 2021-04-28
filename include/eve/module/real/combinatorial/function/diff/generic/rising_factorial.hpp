@@ -34,8 +34,6 @@ namespace eve::detail
     {
       auto tmp = d_t()(rising_factorial)(aa, x);
       auto tmp1 = diff_type<N>()(lrising_factorial)(aa, x);
-      std::cout << "tmp  " << tmp << std::endl;
-      std::cout << "tmp1 " << tmp1<< std::endl;
       return diff_type<N>()(lrising_factorial)(aa, x)*tmp;
     }
     else
