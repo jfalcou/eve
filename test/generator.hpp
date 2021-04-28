@@ -89,24 +89,24 @@ namespace eve::test
   template<typename V> auto ramp(V v)
   {
     return  [=]<typename T>(eve::as_<T>, auto&)
-    {
-      std::array<eve::element_type_t<T>, amount<T>()> d;
-      for(std::size_t i = 0;i<amount<T>();++i) d[i] = v+i;
-      return d;
-    };
+            {
+              std::array<eve::element_type_t<T>, amount<T>()> d;
+              for(std::size_t i = 0;i<amount<T>();++i) d[i] = v+i;
+              return d;
+            };
   }
 
   template<typename V1,  typename V2> auto ramp(V1 v1, V2 v2)
   {
     return  [=]<typename T>(eve::as_<T>, auto&)
-    {
-      using elt_t = element_type_t<T>;
-      auto n = amount<T>()-1;
-      elt_t a = n ? elt_t((v2-v1))/n : elt_t(0);
-      std::array<elt_t, amount<T>()> d;
-      for(std::size_t i = 0;i<amount<T>();++i) d[i] = a*i+v1;
-      return d;
-    };
+            {
+              using elt_t = element_type_t<T>;
+              auto n = amount<T>()-1;
+              elt_t a = n ? elt_t((v2-v1))/n : elt_t(0);
+              std::array<elt_t, amount<T>()> d;
+              for(std::size_t i = 0;i<amount<T>();++i) d[i] = a*i+v1;
+              return d;
+            };
   }
 
   //================================================================================================
@@ -115,11 +115,11 @@ namespace eve::test
   template<typename V, typename K> auto logicals(V v, K k)
   {
     return  [=]<typename T>(eve::as_<T>, auto&)
-    {
-      std::array<eve::logical<eve::element_type_t<T>>,amount<T>()> d;
-      for(std::size_t i = 0;i<amount<T>();++i) d[i] = ((v+i)%k) == 0;
-      return d;
-    };
+            {
+              std::array<eve::logical<eve::element_type_t<T>>,amount<T>()> d;
+              for(std::size_t i = 0;i<amount<T>();++i) d[i] = ((v+i)%k) == 0;
+              return d;
+            };
   }
 
   //================================================================================================
@@ -128,13 +128,13 @@ namespace eve::test
   template<typename Mn, typename Mx> auto randoms(Mn mn, Mx mx)
   {
     return [=]<typename T>(eve::as_<T>, auto& gen)
-    {
-      using e_t = eve::element_type_t<T>;
-      eve::prng<e_t> dist(as_value(mn,as_<e_t>{}),as_value(mx,as_<e_t>{}));
-      std::array<e_t,amount<T>()> d;
-      std::for_each(d.begin(),d.end(), [&](auto& e) { e = dist(gen); });
-      return d;
-    };
+           {
+             using e_t = eve::element_type_t<T>;
+             eve::prng<e_t> dist(as_value(mn,as_<e_t>{}),as_value(mx,as_<e_t>{}));
+             std::array<e_t,amount<T>()> d;
+             std::for_each(d.begin(),d.end(), [&](auto& e) { e = dist(gen); });
+             return d;
+           };
   }
 
   //================================================================================================
@@ -143,14 +143,14 @@ namespace eve::test
   template<typename V> auto value(V v)
   {
     return [=]<typename T>(eve::as_<T> tgt, auto&)
-    {
-      std::array<eve::element_type_t<T>,amount<T>()> d;
-      auto val = as_value(v,tgt);
+           {
+             std::array<eve::element_type_t<T>,amount<T>()> d;
+             auto val = as_value(v,tgt);
 
-      for(auto& e : d) e = val;
+             for(auto& e : d) e = val;
 
-      return d;
-    };
+             return d;
+           };
   }
 
   //================================================================================================
@@ -201,9 +201,9 @@ namespace eve::test
   template<typename... G> inline auto generate(G... g)
   {
     return [=]<typename T>(eve::as_<T> t, auto& s)
-    {
-      return std::make_tuple(g(t,s)...);
-    };
+           {
+             return std::make_tuple(g(t,s)...);
+           };
   }
 
   //================================================================================================
@@ -271,7 +271,7 @@ inline bool const TTS_CAT(register_,TTS_FUNCTION) =  ::eve::test::test_setup{   
     }( TYPES );                                                                                     \
                                                                                                     \
     return true;                                                                                    \
-  }} + []                                                                                          \
+  }} + []                                                                                           \
 /**/
 
 #define EVE_TEST_TYPES(DESCRIPTION,TYPES)                                                           \
