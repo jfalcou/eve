@@ -67,7 +67,7 @@ namespace eve::detail
     r_t sgn =  sign(r_t(a0))*sign(r_t(a1));
     auto next = [&](auto avg,  auto x){
       sgn *= sign(x);
-      return avg*pow_abs(x, invn);
+      return avg*pow_abs(r_t(x), invn);
 
     };
     ((that = next(that,args)),...);
