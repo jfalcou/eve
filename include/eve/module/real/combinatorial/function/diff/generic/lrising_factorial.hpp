@@ -46,12 +46,10 @@ namespace eve::detail
     auto aa = convert(a, as(elt_t()));
     if constexpr(N == 1)
     {
-      std::cout << "N = 1" << std::endl;
       return digamma(aa+x) - digamma(aa);
     }
     else if constexpr(N == 2)
     {
-      std::cout << "N = 2" << std::endl;
       return digamma(aa+x);
     }
     else
