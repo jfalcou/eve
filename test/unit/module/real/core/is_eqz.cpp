@@ -32,7 +32,7 @@ EVE_TEST_TYPES( "Check return types of eve::is_eqz(simd)"
 //==================================================================================================
 
 EVE_TEST( "Check behavior of eve::is_eqz(simd)"
-        , eve::test::simd::ieee_reals
+        , eve::test::simd::all_types
         , eve::test::generate ( eve::test::ramp(0))
         )
 <typename T>(T const& a0)
