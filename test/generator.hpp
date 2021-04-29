@@ -96,6 +96,38 @@ namespace eve::test
             };
   }
 
+  template<typename V, typename V1> auto sramp(V v,  V1 step)
+  {
+    return  [=]<typename T>(eve::as_<T>, auto&)
+            {
+              std::array<eve::element_type_t<T>, amount<T>()> d;
+              for(std::size_t i = 0;i<amount<T>();++i) d[i] = v+step*i;
+              return d;
+            };
+  }
+
+  template<typename V> auto rramp(V v)
+  {
+    return  [=]<typename T>(eve::as_<T>, auto&)
+            {
+              std::array<eve::element_type_t<T>, amount<T>()> d;
+              auto N = amount<T>();
+              for(std::size_t i = 0;i<amount<T>();++i) d[N-i-1] = v+i;
+              return d;
+            };
+  }
+
+  template<typename V, typename V1> auto rramp(V v, V1 step)
+  {
+    return  [=]<typename T>(eve::as_<T>, auto&)
+            {
+              std::array<eve::element_type_t<T>, amount<T>()> d;
+              auto N = amount<T>();
+              for(std::size_t i = 0;i<amount<T>();++i) d[N-i-1] = v+step*i;
+              return d;
+            };
+  }
+
   template<typename V1,  typename V2> auto ramp(V1 v1, V2 v2)
   {
     return  [=]<typename T>(eve::as_<T>, auto&)
