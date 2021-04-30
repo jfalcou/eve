@@ -56,27 +56,27 @@ namespace eve::detail
           auto const w  = bit_cast(v, as_<f_t>{});
           auto const s0 = _mm256_permute2f128_ps(w,w,0x81 );
 
-          if constexpr(shifted_bytes == 28)
+          if constexpr(shifted_bytes == 4 * 7)
           {
             return bit_cast(f_t(_mm256_permute_ps(_mm256_blend_ps(f_t(0), s0, 0x8), 0x93)), as(v));
           }
-          else if constexpr(shifted_bytes == 24)
+          else if constexpr(shifted_bytes == 4 * 6)
           {
             return bit_cast(f_t( _mm256_shuffle_ps(s0, f_t(0), 0xe)), as(v));
           }
-          else  if constexpr(shifted_bytes == 20)
+          else  if constexpr(shifted_bytes == 4 * 5)
           {
             return bit_cast(f_t(_mm256_permute_ps(_mm256_blend_ps(f_t(0), s0, 0xe), 0x39)),as(v));
           }
-          else  if constexpr(shifted_bytes == 16)
+          else  if constexpr(shifted_bytes == 4 * 4)
           {
             return bit_cast(f_t(s0), as(v));
           }
-          else  if constexpr(shifted_bytes == 12)
+          else  if constexpr(shifted_bytes == 4 * 3)
           {
             return bit_cast(f_t(_mm256_permute_ps(_mm256_blend_ps(w, s0, 0x77), 0x93)), as(v));
           }
-          else  if constexpr(shifted_bytes == 8 )
+          else  if constexpr(shifted_bytes == 4 * 2 )
           {
             return bit_cast(f_t(_mm256_shuffle_ps(w, s0, 0x4e)), as(v));
           }
