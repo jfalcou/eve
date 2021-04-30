@@ -86,22 +86,31 @@ namespace eve::detail
           }
           else
           {
-            // Small integers can be done with partial slide after slicing
-            auto[l,h] = slice(v);
+            if constexpr(shifted_bytes > 16 )
+            {
+              auto h = _mm256_extractf128_si256(v, 0x1);
+              h = _mm_bsrli_si128(h, shifted_bytes - 16);
+              return _mm256_zextsi128_si256(h);
+            }
+            else
+            {
+              // Small integers can be done with partial slide after slicing
+              auto[l,h] = slice(v);
 
-            // Slide higher parts as normal
-            auto h0 = slide_left(h, index<(Shift>(N::value/2)) ? N::value/2 : Shift>);
+              // Slide higher parts as normal
+              auto h0 = slide_left(h, index<(Shift>(N::value/2)) ? N::value/2 : Shift>);
 
-            // Slide lower parts using _mm_alignr_epi8
-            using byte_t = typename wide<T,N,ABI>::template rebind<std::uint8_t,fixed<16>>;
+              // Slide lower parts using _mm_alignr_epi8
+              using byte_t = typename wide<T,N,ABI>::template rebind<std::uint8_t,fixed<16>>;
 
-            byte_t bytes = _mm_alignr_epi8( bit_cast(h,as_<byte_t>{})
-                                          , bit_cast(l,as_<byte_t>{})
-                                          , shifted_bytes
-                                          );
+              byte_t bytes = _mm_alignr_epi8( bit_cast(h,as_<byte_t>{})
+                                            , bit_cast(l,as_<byte_t>{})
+                                            , shifted_bytes
+                                            );
 
-            // Shift everything in place
-            return wide<T,N,ABI>{bit_cast(bytes, as(h0)),h0};
+              // Shift everything in place
+              return wide<T,N,ABI>{bit_cast(bytes, as(h0)),h0};
+            }
           }
         }
       }
