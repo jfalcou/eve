@@ -33,7 +33,7 @@ EVE_TEST_TYPES( "Check return types of eve::frac(simd)"
 //==================================================================================================
 EVE_TEST( "Check behavior of eve::frac(simd)"
         , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::ramp(-1.0, 1.0))
+        , eve::test::generate ( eve::test::between(-1.0, 1.0))
         )
 <typename T>(T const& a0)
 {

@@ -8,36 +8,36 @@
 #include "test.hpp"
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <eve/function/exponent.hpp>
+#include <eve/function/is_finite.hpp>
+#include <eve/logical.hpp>
 #include <cmath>
 
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::exponent(simd)"
-              , eve::test::simd::ieee_reals
+EVE_TEST_TYPES( "Check return types of eve::is_finite(simd)"
+              , eve::test::simd::all_types
               )
 <typename T>(eve::as_<T>)
 {
-  using i_t = eve::as_integer_t<T>;
+  using eve::logical;
   using v_t = eve::element_type_t<T>;
-  using vi_t = eve::element_type_t<i_t>;
-  TTS_EXPR_IS( eve::exponent(T()), i_t  );
-  TTS_EXPR_IS( eve::exponent(v_t()), vi_t );
+  TTS_EXPR_IS( eve::is_finite(T())                    , logical<T>   );
+  TTS_EXPR_IS( eve::is_finite(v_t())                  , logical<v_t> );
 };
 
 //==================================================================================================
-// Tests for eve::exponent
+// Tests for eve::is_finite
 //==================================================================================================
-EVE_TEST( "Check behavior of eve::exponent(simd)"
+
+EVE_TEST( "Check behavior of eve::is_finite(simd)"
         , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::between(-1.0, 1.0))
+        , eve::test::generate ( eve::test::ramp(0))
         )
 <typename T>(T const& a0)
 {
   using eve::detail::map;
-  using i_t = eve::as_integer_t<T>;
-  using vi_t = eve::element_type_t<i_t>;
+  using v_t = eve::element_type_t<T>;
 
-  TTS_EQUAL(eve::exponent(a0), map([](auto e) -> vi_t { int ee; std::frexp(e, &ee); return ee-1; }, a0));
+  TTS_EQUAL(eve::is_finite(a0), map([](auto e) -> eve::logical<v_t> { return  e-e == 0; }, a0));
 };

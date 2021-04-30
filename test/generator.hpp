@@ -22,7 +22,7 @@
 namespace eve::test
 {
   //================================================================================================
-  // Customization point for the size of data tobe geenrated
+  // Customization point for the size of data to be generated
   //================================================================================================
   template<typename T> constexpr std::size_t amount()
   {
@@ -96,7 +96,39 @@ namespace eve::test
             };
   }
 
-  template<typename V1,  typename V2> auto ramp(V1 v1, V2 v2)
+  template<typename V, typename V1> auto ramp(V v,  V1 step)
+  {
+    return  [=]<typename T>(eve::as_<T>, auto&)
+            {
+              std::array<eve::element_type_t<T>, amount<T>()> d;
+              for(std::size_t i = 0;i<amount<T>();++i) d[i] = v+step*i;
+              return d;
+            };
+  }
+
+  template<typename V> auto reverse_ramp(V v)
+  {
+    return  [=]<typename T>(eve::as_<T>, auto&)
+            {
+              std::array<eve::element_type_t<T>, amount<T>()> d;
+              auto N = amount<T>();
+              for(std::size_t i = 0;i<amount<T>();++i) d[N-i-1] = v+i;
+              return d;
+            };
+  }
+
+  template<typename V, typename V1> auto reverse_ramp(V v, V1 step)
+  {
+    return  [=]<typename T>(eve::as_<T>, auto&)
+            {
+              std::array<eve::element_type_t<T>, amount<T>()> d;
+              auto N = amount<T>();
+              for(std::size_t i = 0;i<amount<T>();++i) d[N-i-1] = v+step*i;
+              return d;
+            };
+  }
+
+  template<typename V1,  typename V2> auto between(V1 v1, V2 v2)
   {
     return  [=]<typename T>(eve::as_<T>, auto&)
             {
@@ -110,7 +142,7 @@ namespace eve::test
   }
 
   //================================================================================================
-  // logical ramp - generate 1 % K 2 %k .. N %K
+  // logical ramp - generate (v+1) % k == 0, (v+2) % k ==  0, ... (v+N) % k == 0
   //================================================================================================
   template<typename V, typename K> auto logicals(V v, K k)
   {

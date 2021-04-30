@@ -48,8 +48,8 @@ EVE_TEST_TYPES( "Check return types of eve::fdim(simd)"
 //==================================================================================================
 EVE_TEST( "Check behavior of eve::fdim(simd) floating"
         , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::ramp(-1, 1)
-                              , eve::test::ramp( 1,-1))
+        , eve::test::generate ( eve::test::between(-1, 1)
+                              , eve::test::between( 1,-1))
         )
 <typename T>(T const& a0, T const& a1)
 {
