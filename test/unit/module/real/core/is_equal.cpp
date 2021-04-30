@@ -52,7 +52,7 @@ EVE_TEST_TYPES( "Check return types of eve::is_equal(simd)"
 EVE_TEST( "Check behavior of eve::is_equal(simd)"
         , eve::test::simd::all_types
         , eve::test::generate ( eve::test::ramp(0)
-                              , eve::test::rramp(4, 2)
+                              , eve::test::reverse_ramp(4, 2)
                               , eve::test::logicals(0, 3)
                               , eve::test::logicals(1, 2))
         )

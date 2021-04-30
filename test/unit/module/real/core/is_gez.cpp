@@ -34,7 +34,7 @@ EVE_TEST_TYPES( "Check return types of eve::is_gez(simd)"
 EVE_TEST( "Check behavior of eve::is_gez(simd)"
         , eve::test::simd::all_types
         , eve::test::generate ( eve::test::ramp(-1.0)
-                             ,  eve::test::sramp(1.0, -1.0))
+                             ,  eve::test::ramp(1.0, -1.0))
         )
 <typename T>(T const& a0, T const& a1)
 {
