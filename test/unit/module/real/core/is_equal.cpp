@@ -29,6 +29,8 @@ EVE_TEST_TYPES( "Check return types of eve::is_equal(simd)"
   TTS_EXPR_IS( eve::is_equal(v_t(), v_t()) , logical<v_t> );
   TTS_EXPR_IS( eve::is_equal(T(), v_t())   , logical<T> );
   TTS_EXPR_IS( eve::is_equal(v_t(), T())   , logical<T> );
+  TTS_EXPR_IS( eve::is_equal(logical<T>(), logical<T>())     , logical<T>   );
+  TTS_EXPR_IS( eve::is_equal(logical<v_t>(), logical<v_t>()) , logical<v_t> );
 
   if constexpr(eve::floating_value<T>)
   {
@@ -50,9 +52,11 @@ EVE_TEST_TYPES( "Check return types of eve::is_equal(simd)"
 EVE_TEST( "Check behavior of eve::is_equal(simd)"
         , eve::test::simd::all_types
         , eve::test::generate ( eve::test::ramp(0)
-                              , eve::test::rramp(4, 2))
+                              , eve::test::rramp(4, 2)
+                              , eve::test::logicals(0, 3)
+                              , eve::test::logicals(1, 2))
         )
-<typename T>(T const& a0, T const& a1)
+<typename T, typename M>(T const& a0, T const& a1, M const& l0, M const& l1)
 {
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
@@ -61,10 +65,12 @@ EVE_TEST( "Check behavior of eve::is_equal(simd)"
   TTS_EQUAL(eve::is_equal(a0, a0), map([](auto e, auto f) -> eve::logical<v_t> { return  e == f; }, a0, a0));
   TTS_EQUAL(eve::is_equal(a0, v_t(1)), map([](auto e) -> eve::logical<v_t> { return  e == v_t(1); }, a0));
   TTS_EQUAL(eve::is_equal(v_t(14), a1), map([](auto e) -> eve::logical<v_t> { return  e == v_t(14); }, a1));
+  TTS_EQUAL(eve::is_equal(l0, l1), map([](auto e, auto f) -> eve::logical<v_t> { return  e == f; }, l0, l1));
+
 };
 
 //==================================================================================================
-//== Tests for eve::is_equal corner cases
+//== Tests for eve::is_equal corner cases for floating
 //==================================================================================================
 EVE_TEST( "Check behavior of eve::is_equal(simd)"
         , eve::test::simd::ieee_reals
