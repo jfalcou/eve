@@ -49,83 +49,60 @@ namespace eve::detail
           else  if constexpr(offset <  16)  return _mm256_alignr_epi8(bv, v, offset);
           else                              return _mm256_bsrli_epi128(bv, offset - 16);
         }
-        else if constexpr(sizeof(T) == 8)
-        {
-          // Three optimal shuffles for sliding left by 1->3 - The last one will shock you!
-          using f_t = as_floating_point_t<wide<T,N,ABI>>;
-          auto const w = bit_cast(v, as_<f_t>{});
-
-          if constexpr(Shift == 1)
-          {
-            return bit_cast(f_t(_mm256_shuffle_pd(w,_mm256_permute2f128_pd(w,w,0x81),0x5)), as(v));
-          }
-          else if constexpr(Shift == 2)
-          {
-            return bit_cast(f_t(_mm256_permute2f128_pd(w, w, 0x81)), as(v));
-          }
-          else if constexpr(Shift == 3)
-          {
-            auto const s0 = _mm256_permute2f128_pd(w,w,0x81);
-            return bit_cast(f_t(_mm256_shuffle_pd(s0,f_t(0),1)), as(v));
-          }
-        }
-        else if constexpr(sizeof(T) == 4)
-        {
-          // Seven optimal shuffles for sliding left by 1->7 doctors want you to not know about
-          using f_t = as_floating_point_t<wide<T,N,ABI>>;
-          auto const w = bit_cast(v, as_<f_t>{});
-
-          if constexpr(Shift == 1)
-          {
-            auto const s0 = _mm256_blend_ps(w, _mm256_permute2f128_ps(w,w,0x81), 0x11);
-            return bit_cast(f_t(_mm256_permute_ps(s0, 0x39)), as(v));
-          }
-          else if constexpr(Shift == 2)
-          {
-            auto const s0 = _mm256_permute2f128_ps(w, w, 0x81);
-            return bit_cast(f_t(_mm256_shuffle_ps(w, s0, 0x4e)), as(v));
-          }
-          else if constexpr(Shift == 3)
-          {
-            auto const s0 = _mm256_blend_ps(w, _mm256_permute2f128_ps(w,w,0x81), 0x77);
-            return bit_cast(f_t(_mm256_permute_ps( s0, 0x93)), as(v));
-          }
-          else if constexpr(Shift == 4)
-          {
-            return bit_cast(f_t( _mm256_permute2f128_ps(w,w,0x81)),as(v));
-          }
-          else if constexpr(Shift == 5)
-          {
-            auto const s0 = _mm256_blend_ps(f_t(0), _mm256_permute2f128_ps(w,w,0x81), 0xe);
-            return bit_cast(f_t(_mm256_permute_ps(s0, 0x39)),as(v));
-          }
-          else if constexpr(Shift == 6)
-          {
-            auto const s0 = _mm256_permute2f128_ps(w,w,0x81 );
-            return bit_cast(f_t( _mm256_shuffle_ps(s0, f_t(0), 0xe)), as(v));
-          }
-          else if constexpr(Shift == 7)
-          {
-            auto const s0 = _mm256_blend_ps(f_t(0), _mm256_permute2f128_ps(w,w,0x81), 0x8);
-            return bit_cast(f_t(_mm256_permute_ps(s0, 0x93)), as(v));
-          }
-        }
         else
         {
-          // Small integers can be done with partial slide after slicing
-          auto[l,h] = slice(v);
+          constexpr auto shifted_bytes = sizeof(T)* Shift;
+          using f_t = typename wide<T,N,ABI>::template rebind<float>;
+          auto const w  = bit_cast(v, as_<f_t>{});
+          auto const s0 = _mm256_permute2f128_ps(w,w,0x81 );
 
-          // Slide higher parts as normal
-          auto h0 = slide_left(h, index<(Shift>(N::value/2)) ? N::value/2 : Shift>);
+          if constexpr(shifted_bytes == 28)
+          {
+            return bit_cast(f_t(_mm256_permute_ps(_mm256_blend_ps(f_t(0), s0, 0x8), 0x93)), as(v));
+          }
+          else if constexpr(shifted_bytes == 24)
+          {
+            return bit_cast(f_t( _mm256_shuffle_ps(s0, f_t(0), 0xe)), as(v));
+          }
+          else  if constexpr(shifted_bytes == 20)
+          {
+            return bit_cast(f_t(_mm256_permute_ps(_mm256_blend_ps(f_t(0), s0, 0xe), 0x39)),as(v));
+          }
+          else  if constexpr(shifted_bytes == 16)
+          {
+            return bit_cast(f_t(s0), as(v));
+          }
+          else  if constexpr(shifted_bytes == 12)
+          {
+            return bit_cast(f_t(_mm256_permute_ps(_mm256_blend_ps(w, s0, 0x77), 0x93)), as(v));
+          }
+          else  if constexpr(shifted_bytes == 8 )
+          {
+            return bit_cast(f_t(_mm256_shuffle_ps(w, s0, 0x4e)), as(v));
+          }
+          else  if constexpr(shifted_bytes == 4 )
+          {
+            return bit_cast(f_t(_mm256_permute_ps(_mm256_blend_ps(w, s0, 0x11), 0x39)), as(v));
+          }
+          else
+          {
+            // Small integers can be done with partial slide after slicing
+            auto[l,h] = slice(v);
 
-          // Slide lower parts using _mm_alignr_epi8
-          constexpr auto sz = sizeof(T)* Shift;
-          using byte_t = typename wide<T,N,ABI>::template rebind<std::uint8_t,fixed<16>>;
+            // Slide higher parts as normal
+            auto h0 = slide_left(h, index<(Shift>(N::value/2)) ? N::value/2 : Shift>);
 
-          byte_t bytes = _mm_alignr_epi8(bit_cast(h,as_<byte_t>{}), bit_cast(l,as_<byte_t>{}), sz);
+            // Slide lower parts using _mm_alignr_epi8
+            using byte_t = typename wide<T,N,ABI>::template rebind<std::uint8_t,fixed<16>>;
 
-          // Shift everything in place
-          return wide<T,N,ABI>{bit_cast(bytes, as(h0)),h0};
+            byte_t bytes = _mm_alignr_epi8( bit_cast(h,as_<byte_t>{})
+                                          , bit_cast(l,as_<byte_t>{})
+                                          , shifted_bytes
+                                          );
+
+            // Shift everything in place
+            return wide<T,N,ABI>{bit_cast(bytes, as(h0)),h0};
+          }
         }
       }
       else if constexpr( std::same_as<ABI,x86_512_>)
