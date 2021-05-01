@@ -9,10 +9,7 @@
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/function/is_lessgreater.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/mindenormal.hpp>
 #include <eve/logical.hpp>
-#include <cmath>
 
 //==================================================================================================
 //== Types tests

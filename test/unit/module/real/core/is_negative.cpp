@@ -13,7 +13,6 @@
 #include <eve/function/bitofsign.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/logical.hpp>
-#include <cmath>
 
 //==================================================================================================
 // Types tests

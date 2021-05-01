@@ -15,7 +15,6 @@
 #include <eve/function/nearest.hpp>
 #include <eve/function/diff/nearest.hpp>
 #include <type_traits>
-#include <cmath>
 
 //==================================================================================================
 // Types tests

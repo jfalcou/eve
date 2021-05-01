@@ -12,7 +12,6 @@
 #include <eve/constant/true.hpp>
 #include <eve/constant/false.hpp>
 #include <eve/logical.hpp>
-#include <cmath>
 
 //==================================================================================================
 // Types tests

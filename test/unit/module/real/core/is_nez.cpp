@@ -11,7 +11,6 @@
 #include <eve/function/is_nez.hpp>
 #include <eve/constant/smallestposval.hpp>
 #include <eve/logical.hpp>
-#include <cmath>
 
 //==================================================================================================
 // Types tests
