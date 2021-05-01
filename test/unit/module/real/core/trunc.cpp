@@ -16,7 +16,6 @@
 #include <eve/function/trunc.hpp>
 #include <eve/function/diff/trunc.hpp>
 #include <type_traits>
-#include <cmath>
 
 //==================================================================================================
 // Types tests
