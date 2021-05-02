@@ -115,6 +115,7 @@ make_unit("unit.real.core"  is_not_greater.cpp       )
 make_unit("unit.real.core"  is_not_greater_equal.cpp )
 make_unit("unit.real.core"  is_not_imag.cpp          )
 make_unit("unit.real.core"  is_not_less.cpp          )
+make_unit("unit.real.core"  is_not_less_equal.cpp    )
 
 make_unit("unit.real.core"  nearest.cpp              )
 make_unit("unit.real.core"  rat.cpp                  )
@@ -143,7 +144,6 @@ make_all_units(ROOT unit.real.core NAME ifloor                ARCH scalar simd T
 make_all_units(ROOT unit.real.core NAME inearest              ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME iround                ARCH scalar simd TYPES ${all_types}     )
 
-make_all_units(ROOT unit.real.core NAME is_not_less_equal     ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME is_not_nan            ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME is_not_real           ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.core NAME is_odd                ARCH scalar simd TYPES ${all_types}     )
