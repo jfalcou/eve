@@ -106,6 +106,9 @@ make_unit("unit.real.core"  is_ngez.cpp           )
 make_unit("unit.real.core"  is_ngtz.cpp           )
 make_unit("unit.real.core"  is_nlez.cpp           )
 make_unit("unit.real.core"  is_nltz.cpp           )
+make_unit("unit.real.core"  is_normal.cpp         )
+make_unit("unit.real.core"  is_not_denormal.cpp   )
+
 make_unit("unit.real.core"  nearest.cpp           )
 make_unit("unit.real.core"  rat.cpp               )
 make_unit("unit.real.core"  shl.cpp               )
@@ -133,8 +136,6 @@ make_all_units(ROOT unit.real.core NAME ifloor                ARCH scalar simd T
 make_all_units(ROOT unit.real.core NAME inearest              ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME iround                ARCH scalar simd TYPES ${all_types}     )
 
-make_all_units(ROOT unit.real.core NAME is_normal             ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT unit.real.core NAME is_not_denormal       ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME is_not_equal          ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME is_not_finite         ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME is_not_flint          ARCH scalar simd TYPES ${real_types}    )
