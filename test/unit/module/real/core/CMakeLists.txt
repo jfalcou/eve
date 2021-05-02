@@ -119,6 +119,8 @@ make_unit("unit.real.core"  is_not_less_equal.cpp    )
 make_unit("unit.real.core"  is_not_nan.cpp           )
 make_unit("unit.real.core"  is_not_real.cpp          )
 make_unit("unit.real.core"  is_odd.cpp               )
+make_unit("unit.real.core"  is_ordered.cpp           )
+make_unit("unit.real.core"  is_positive.cpp          )
 
 make_unit("unit.real.core"  nearest.cpp              )
 make_unit("unit.real.core"  rat.cpp                  )
@@ -147,8 +149,6 @@ make_all_units(ROOT unit.real.core NAME ifloor                ARCH scalar simd T
 make_all_units(ROOT unit.real.core NAME inearest              ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME iround                ARCH scalar simd TYPES ${all_types}     )
 
-make_all_units(ROOT unit.real.core NAME is_ordered            ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT unit.real.core NAME is_positive           ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME is_pow2               ARCH scalar simd TYPES ${integral_types})
 make_all_units(ROOT unit.real.core NAME is_real               ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.core NAME is_unordered          ARCH scalar simd TYPES ${all_types}     )
