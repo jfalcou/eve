@@ -12,7 +12,6 @@
 #include <eve/function/fuzzy/is_not_less_equal.hpp>
 #include <eve/constant/eps.hpp>
 #include <eve/logical.hpp>
-#include <cmath>
 
 //==================================================================================================
 //== Types tests

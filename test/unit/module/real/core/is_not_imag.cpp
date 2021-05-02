@@ -11,7 +11,6 @@
 #include <eve/function/is_not_imag.hpp>
 #include <eve/constant/smallestposval.hpp>
 #include <eve/logical.hpp>
-#include <cmath>
 
 //==================================================================================================
 // Types tests

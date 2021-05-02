@@ -13,7 +13,6 @@
 #include <eve/constant/eps.hpp>
 #include <eve/constant/mindenormal.hpp>
 #include <eve/logical.hpp>
-#include <cmath>
 
 //==================================================================================================
 //== Types tests

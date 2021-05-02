@@ -38,9 +38,9 @@ auto mfo2 = []<typename T>(eve::as_<T> const & tgt)
 {
   return eve::maxflint(tgt);
 };
+
 auto mf2 = []<typename T>(eve::as_<T> const & tgt)
 {
-
   return eve::maxflint(tgt)*4;
 };
 

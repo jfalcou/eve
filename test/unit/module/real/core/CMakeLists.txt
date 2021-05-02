@@ -151,9 +151,9 @@ make_all_units(ROOT unit.real.core NAME iceil                 ARCH scalar simd T
 make_all_units(ROOT unit.real.core NAME ifloor                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME inearest              ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME iround                ARCH scalar simd TYPES ${all_types}     )
-
 make_all_units(ROOT unit.real.core NAME itrunc                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME laguerre              ARCH scalar simd TYPES ${real_types}    )
+
 make_all_units(ROOT unit.real.core NAME ldexp                 ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.core NAME legendre              ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.core NAME lerp                  ARCH scalar simd TYPES ${real_types}    )

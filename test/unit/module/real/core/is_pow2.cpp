@@ -11,7 +11,7 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/function/is_pow2.hpp>
 #include <eve/function/firstbitset.hpp>
-#include <bit>
+#include <cmath>
 
 //==================================================================================================
 // Types tests
