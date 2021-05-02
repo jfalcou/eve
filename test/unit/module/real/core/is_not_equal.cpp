@@ -82,7 +82,7 @@ EVE_TEST( "Check behavior of eve::is_not_equal(simd)"
   using eve::detail::map;
   using eve::as;
   using v_t = eve::element_type_t<T>;
-  using ui_t = as_integer_t<T, unsigned>;
+  using ui_t = eve::as_integer_t<T, unsigned>;
 
   TTS_EQUAL(eve::definitely(eve::is_not_equal)(T(1), T(1)), eve::false_(as<T>()) );
   TTS_EQUAL(eve::definitely(eve::is_not_equal)(T(1), v_t(1) ), eve::false_(as<T>()) );
