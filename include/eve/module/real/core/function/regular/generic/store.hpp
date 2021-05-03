@@ -100,7 +100,7 @@ namespace eve::detail
         store[cond](value.mask(), typename Ptr::template rebind<mask_type_t>{(mask_type_t*)ptr.get()});
       }
     }
-    else if constexpr ( !std::is_pointer_v<Ptr> )           store[cond](value, ptr.get());
+    else if constexpr ( !std::is_pointer_v<Ptr> ) store[cond](value, ptr.get());
     else if constexpr ( has_emulated_abi_v<T> )
     {
       auto offset = cond.offset( as_<T>{} );
