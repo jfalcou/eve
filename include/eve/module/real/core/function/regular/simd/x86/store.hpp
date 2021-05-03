@@ -82,15 +82,15 @@ namespace eve::detail
   {
 
          if constexpr ( C::is_complete || C::has_alternative ) store_(EVE_RETARGET(cpu_), cond, v, ptr);
-    else if constexpr ( current_api == eve::avx && std::is_integral_v<T> && sizeof(T) >= 4 )
-    {
-      using float_t = detail::make_floating_point_t<sizeof(T)>;
-      using wide_float_t = as_wide_t<float_t, N>;
-      store[cond](eve::bit_cast(v, as_<wide_float_t>{}), (float_t*) ptr);
-    }
     else if constexpr ( ( current_api == eve::avx || current_api == eve::avx2 ) && sizeof(T) >= 4 )
     {
-      if constexpr ( !std::is_pointer_v<Ptr> ) store[cond](v, ptr.get());
+           if constexpr ( !std::is_pointer_v<Ptr> ) store[cond](v, ptr.get());
+      else if constexpr ( current_api == eve::avx && std::is_integral_v<T> )
+      {
+        using float_t = detail::make_floating_point_t<sizeof(T)>;
+        using wide_float_t = as_wide_t<float_t, N>;
+        store[cond](eve::bit_cast(v, as_<wide_float_t>{}), (float_t*) ptr);
+      }
       else
       {
         constexpr auto c = categorize<wide<T, N, ABI>>();
