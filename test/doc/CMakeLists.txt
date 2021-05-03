@@ -8,5 +8,4 @@
 add_subdirectory(constant)
 add_subdirectory(core)
 #add_subdirectory(diff)
-add_subdirectory(developer)
 add_subdirectory(tutorial)
