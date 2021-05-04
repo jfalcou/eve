@@ -145,8 +145,6 @@ void store_ignore_test_pass(T what, eve::element_type_t<T> garbage_value, eve::e
 {
   using e_t = eve::element_type_t<T>;
 
-  if (sizeof(e_t) < 8) return;
-
   // ignore_all should not write anything
   {
     e_t garbage;
