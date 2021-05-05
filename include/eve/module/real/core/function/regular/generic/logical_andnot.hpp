@@ -138,4 +138,27 @@ namespace eve::detail
     }
     else        { return apply_over(logical_andnot, a, b); }
   }
+
+  template<value U>
+  EVE_FORCEINLINE  auto logical_andnot_(EVE_SUPPORTS(cpu_)
+                                       , bool a
+                                       , U const &b) noexcept
+  {
+    return  logical_andnot(U{a}, b);
+  }
+  template<value U>
+  EVE_FORCEINLINE  auto logical_andnot_(EVE_SUPPORTS(cpu_)
+                                       , U const & a
+                                       , bool b) noexcept
+  {
+    return  logical_andnot(a, U{b});
+  }
+
+  EVE_FORCEINLINE  auto logical_andnot_(EVE_SUPPORTS(cpu_)
+                                       , bool a
+                                       , bool b) noexcept
+  {
+    return  a && !b;
+  }
+
 }
