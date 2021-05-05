@@ -46,11 +46,11 @@ EVE_TEST( "Check behavior of eve::logical_notand(simd)"
   using eve::detail::map;
   using v_t = eve::element_type_t<M>;
 
-    TTS_EQUAL(eve::logical_notand(l0, true), map([](auto e) -> v_t { return  !e; }, l0));
-    TTS_EQUAL(eve::logical_notand(true, l1), eve::false_(eve::as<M>()));
-    TTS_EQUAL(eve::logical_notand(false, l1), map([](auto e) -> v_t { return  e; }, l1));
-    TTS_EQUAL(eve::logical_notand(l0, false), eve::false_(eve::as<M>()));
-    TTS_EQUAL(eve::logical_notand(l0, l1), map([](auto e, auto f) -> v_t { return  !e && f; }, l0, l1));
-    TTS_EQUAL(eve::logical_notand(l0, l1.get(0)), map([&](auto e) -> v_t { return  !e && l1.get(0); }, l0));
-    TTS_EQUAL(eve::logical_notand(l0.get(0), l1), map([&](auto f) -> v_t { return  !l0.get(0) && f; }, l1));
+  TTS_EQUAL(eve::logical_notand(l0, true), map([](auto e) -> v_t { return  !e; }, l0));
+  TTS_EQUAL(eve::logical_notand(true, l1), eve::false_(eve::as<M>()));
+  TTS_EQUAL(eve::logical_notand(false, l1), map([](auto e) -> v_t { return  e; }, l1));
+  TTS_EQUAL(eve::logical_notand(l0, false), eve::false_(eve::as<M>()));
+  TTS_EQUAL(eve::logical_notand(l0, l1), map([](auto e, auto f) -> v_t { return  !e && f; }, l0, l1));
+  TTS_EQUAL(eve::logical_notand(l0, l1.get(0)), map([&](auto e) -> v_t { return  !e && l1.get(0); }, l0));
+  TTS_EQUAL(eve::logical_notand(l0.get(0), l1), map([&](auto f) -> v_t { return  !l0.get(0) && f; }, l1));
 };

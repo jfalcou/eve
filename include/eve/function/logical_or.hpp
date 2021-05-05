@@ -34,5 +34,10 @@ namespace eve
     {
       return U{a} || b;
     }
+
+    EVE_FORCEINLINE auto logical_or_(EVE_SUPPORTS(cpu_), bool a, bool b) noexcept
+    {
+      return a || b;
+    }
   }
 }
