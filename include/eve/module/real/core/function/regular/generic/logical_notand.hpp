@@ -141,7 +141,7 @@ namespace eve::detail
   template<logical_value T>
   EVE_FORCEINLINE auto logical_notand_(EVE_SUPPORTS(cpu_), T a, bool b) noexcept
   {
-    return b ? T{!a} : true_(as<T>());
+    return b ? T{!a} : false_(as<T>());
   }
 
   template<logical_value U>

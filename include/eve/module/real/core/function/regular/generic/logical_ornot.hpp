@@ -147,7 +147,7 @@ namespace eve::detail
   template<logical_value U>
   EVE_FORCEINLINE auto logical_ornot_(EVE_SUPPORTS(cpu_), bool a, U b) noexcept
   {
-    return a ? U{!b} : false_(as<U>());
+    return a ? true_(as<U>()) : U{!b};
   }
 
   EVE_FORCEINLINE  auto logical_ornot_(EVE_SUPPORTS(cpu_)
