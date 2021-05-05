@@ -1,4 +1,4 @@
-#include <eve/function/double_factorial.hpp>
+#include <eve/function/factorial.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 #include <iomanip>
@@ -10,12 +10,12 @@ int main()
 
   std::cout << "---- simd" << std::setprecision(17) << '\n'
             << " <- pi32              = " << pi32 << '\n'
-            << " -> double_factorial(pi32)   = " << eve::double_factorial(pi32) << '\n';
+            << " -> factorial(pi32)   = " << eve::factorial(pi32) << '\n';
 
   std::uint32_t xi = 18;
   std::cout << "---- scalar" << '\n'
             << " xi                   = " << xi << '\n'
-            << " -> double_factorial(xi)     = " << eve::double_factorial(xi) << '\n';
+            << " -> factorial(xi)     = " << eve::factorial(xi) << '\n';
 
 
   return 0;

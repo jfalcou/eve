@@ -139,19 +139,16 @@ namespace eve::detail
     else        { return apply_over(logical_andnot, a, b); }
   }
 
-  template<value U>
-  EVE_FORCEINLINE  auto logical_andnot_(EVE_SUPPORTS(cpu_)
-                                       , bool a
-                                       , U const &b) noexcept
+  template<logical_value T>
+  EVE_FORCEINLINE auto logical_andnot_(EVE_SUPPORTS(cpu_), T a, bool b) noexcept
   {
-    return  logical_andnot(U{a}, b);
+    return b ? false_(as<T>()) : T{a};
   }
-  template<value U>
-  EVE_FORCEINLINE  auto logical_andnot_(EVE_SUPPORTS(cpu_)
-                                       , U const & a
-                                       , bool b) noexcept
+
+  template<logical_value U>
+  EVE_FORCEINLINE auto logical_andnot_(EVE_SUPPORTS(cpu_), bool a, U b) noexcept
   {
-    return  logical_andnot(a, U{b});
+    return a ? U{!b} : false_(as<U>());
   }
 
   EVE_FORCEINLINE  auto logical_andnot_(EVE_SUPPORTS(cpu_)
@@ -160,5 +157,4 @@ namespace eve::detail
   {
     return  a && !b;
   }
-
 }
