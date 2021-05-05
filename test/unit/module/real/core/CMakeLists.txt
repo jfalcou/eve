@@ -126,6 +126,8 @@ make_unit("unit.real.core"  is_real.cpp              )
 make_unit("unit.real.core"  is_unordered.cpp         )
 make_unit("unit.real.core"  lo.cpp                   )
 make_unit("unit.real.core"  logical_and.cpp          )
+make_unit("unit.real.core"  logical_andnot.cpp       )
+make_unit("unit.real.core"  logical_notand.cpp       )
 
 make_unit("unit.real.core"  nearest.cpp              )
 make_unit("unit.real.core"  rat.cpp                  )
@@ -160,9 +162,7 @@ make_all_units(ROOT unit.real.core NAME ldexp                 ARCH scalar simd T
 make_all_units(ROOT unit.real.core NAME legendre              ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.core NAME lerp                  ARCH scalar simd TYPES ${real_types}    )
 
-make_all_units(ROOT unit.real.core NAME logical_andnot        ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME logical_not           ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT unit.real.core NAME logical_notand        ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME logical_notor         ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME logical_or            ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME logical_ornot         ARCH scalar simd TYPES ${all_types}     )
