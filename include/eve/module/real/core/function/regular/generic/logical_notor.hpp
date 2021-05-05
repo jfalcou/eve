@@ -138,4 +138,26 @@ namespace eve::detail
     }
     else        { return apply_over(logical_notor, a, b); }
   }
+
+  template<value U>
+  EVE_FORCEINLINE  auto logical_notor_(EVE_SUPPORTS(cpu_)
+                                       , bool a
+                                       , U const &b) noexcept
+  {
+    return  logical_notor(U{a}, b);
+  }
+  template<value U>
+  EVE_FORCEINLINE  auto logical_notor_(EVE_SUPPORTS(cpu_)
+                                       , U const & a
+                                       , bool b) noexcept
+  {
+    return  logical_notor(a, U{b});
+  }
+
+  EVE_FORCEINLINE  auto logical_notor_(EVE_SUPPORTS(cpu_)
+                                       , bool a
+                                       , bool b) noexcept
+  {
+    return  !a || b;
+  }
 }
