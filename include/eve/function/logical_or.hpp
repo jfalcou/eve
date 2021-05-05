@@ -26,7 +26,7 @@ namespace eve
     template<logical_value T>
     EVE_FORCEINLINE auto logical_or_(EVE_SUPPORTS(cpu_), T a, bool b) noexcept
     {
-      return b ? true(as<T>()) : T{a};
+      return b ? true_(as<T>()) : T{a};
     }
 
     template<logical_value U>
