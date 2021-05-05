@@ -40,4 +40,6 @@ EVE_TEST( "Check behavior of eve::logical_not(simd)"
   using v_t = eve::element_type_t<T>;
 
   TTS_EQUAL(eve::logical_not(a0), map([](auto e) -> v_t { return  !e; }, a0));
+  TTS_EQUAL(eve::logical_not(true),  false);
+  TTS_EQUAL(eve::logical_not(false),  true);
 };
