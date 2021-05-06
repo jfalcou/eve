@@ -17,4 +17,10 @@ namespace eve::detail
   {
     return as_logical_t<T>(!a);
   }
+
+  EVE_FORCEINLINE auto logical_not_(EVE_SUPPORTS(cpu_), bool a) noexcept
+  {
+    return !a;
+  }
+
 }

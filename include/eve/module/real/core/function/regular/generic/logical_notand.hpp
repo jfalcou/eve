@@ -137,4 +137,25 @@ namespace eve::detail
     }
     else        { return apply_over(logical_notand, a, b); }
   }
+
+  template<logical_value T>
+  EVE_FORCEINLINE auto logical_notand_(EVE_SUPPORTS(cpu_), T a, bool b) noexcept
+  {
+    return b ? T{!a} : false_(as<T>());
+  }
+
+  template<logical_value U>
+  EVE_FORCEINLINE auto logical_notand_(EVE_SUPPORTS(cpu_), bool a, U b) noexcept
+  {
+    return a ? false_(as<U>()): U{b};
+  }
+
+  EVE_FORCEINLINE  auto logical_notand_(EVE_SUPPORTS(cpu_)
+                                       , bool a
+                                       , bool b) noexcept
+  {
+    return  !a && b;
+  }
+
+
 }

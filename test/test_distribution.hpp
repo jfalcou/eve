@@ -194,7 +194,7 @@ namespace eve
         res = ird(gen);
       }
       auto l2 = [](auto x){return log2(inc(double(x)));   };
-      auto e2 = [](auto x){return dec(T(exp2(round(x)))); };
+      auto e2 = [](auto x){return dec(T(round(exp2(x)))); };
 
       if(aa == bb) res = aa;
       else

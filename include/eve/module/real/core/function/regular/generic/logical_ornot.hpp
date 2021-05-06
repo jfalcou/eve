@@ -137,4 +137,23 @@ namespace eve::detail
   {
     return logical_ornot(is_nez(a), is_nez(b));
   }
+
+  template<logical_value T>
+  EVE_FORCEINLINE auto logical_ornot_(EVE_SUPPORTS(cpu_), T a, bool b) noexcept
+  {
+    return b ? T{a} :true_(as<T>());
+  }
+
+  template<logical_value U>
+  EVE_FORCEINLINE auto logical_ornot_(EVE_SUPPORTS(cpu_), bool a, U b) noexcept
+  {
+    return a ? true_(as<U>()) : U{!b};
+  }
+
+  EVE_FORCEINLINE  auto logical_ornot_(EVE_SUPPORTS(cpu_)
+                                       , bool a
+                                       , bool b) noexcept
+  {
+    return  a || !b;
+  }
 }
