@@ -57,9 +57,6 @@ EVE_TEST( "Check behavior of eve::logical_andnot(simd)"
   using d_t = eve::detail::downgrade_t<v_t>;
   auto da0 = eve::convert(a0, eve::as<d_t>());
   using dl_t = eve::as_logical_t<d_t>;
-  std::cout << "l1 " << l1 << std::endl;
-  std::cout << "da0 > 1" << (da0 > 1) <<  std::endl;
-  std::cout << "!(da0 > 1)" << !(da0 > 1) <<  std::endl;
   TTS_EQUAL(eve::logical_andnot(l1, da0 > 1), map([](auto e, auto f) -> l_t { return !(f > 1) && e; }, l1, da0));
   TTS_EQUAL(eve::logical_andnot( da0 > 1, l1), map([](auto e, auto f) -> dl_t { return dl_t((e > 1) && !f); }, da0, l1));
 };
