@@ -40,7 +40,7 @@ EVE_TEST( "Check behavior of eve::logical_and(simd)"
         , eve::test::simd::all_types
         , eve::test::generate (eve::test::logicals(0, 3)
                               , eve::test::logicals(1, 2)
-                              , eve::test::randoms(0, 6))
+                              , eve::test::randoms(0, 2))
         )
 <typename M, typename T>(M const& l0, M const& l1, T const & a0)
 {
