@@ -17,8 +17,6 @@
 #include <eve/constant/allbits.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/logical.hpp>
-#include <cmath>
-
 
 //==================================================================================================
 // Types tests

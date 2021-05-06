@@ -15,7 +15,6 @@
 #include <eve/function/saturated/dec.hpp>
 #include <eve/logical.hpp>
 #include <type_traits>
-#include <cmath>
 
 //==================================================================================================
 // Types tests

@@ -11,7 +11,6 @@
 #include <eve/function/logical_and.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/logical.hpp>
-#include <cmath>
 
 //==================================================================================================
 //== Types tests

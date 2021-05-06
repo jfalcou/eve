@@ -14,7 +14,6 @@
 #include <eve/function/binarize_not.hpp>
 #include <eve/logical.hpp>
 #include <type_traits>
-#include <cmath>
 
 //==================================================================================================
 // Types tests

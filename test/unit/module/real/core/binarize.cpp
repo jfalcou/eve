@@ -15,7 +15,6 @@
 #include <eve/logical.hpp>
 #include <eve/function/is_less.hpp>
 #include <type_traits>
-#include <cmath>
 
 //==================================================================================================
 // Types tests

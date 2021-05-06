@@ -13,7 +13,6 @@
 #include <eve/function/trunc.hpp>
 #include <eve/constant/maxflint.hpp>
 #include <eve/logical.hpp>
-#include <cmath>
 
 //==================================================================================================
 // Types tests

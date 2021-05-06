@@ -10,7 +10,6 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/function/logical_andnot.hpp>
 #include <eve/logical.hpp>
-#include <cmath>
 
 //==================================================================================================
 //== Types tests
