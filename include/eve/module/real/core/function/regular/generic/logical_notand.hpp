@@ -11,6 +11,7 @@
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_mask.hpp>
 #include <eve/function/bit_notand.hpp>
+#include <eve/function/convert.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/traits/is_logical.hpp>
@@ -23,16 +24,16 @@ namespace eve::detail
 {
   template<value T, value U>
   EVE_FORCEINLINE  auto logical_notand_(EVE_SUPPORTS(cpu_)
-                                       , T const &a
-                                       , U const &b) noexcept
+                                       , logical<T> const &a
+                                       , logical<U> const &b) noexcept
   {
     return apply_over(logical_notand, a, b);
   }
 
- template<scalar_value T, scalar_value U>
+  template<scalar_value T, scalar_value U>
   EVE_FORCEINLINE  as_logical_t<T> logical_notand_(EVE_SUPPORTS(cpu_)
-                            ,  logical<T> const &a
-                            ,  logical<U> const &b) noexcept
+                                                  ,  logical<T> const &a
+                                                  ,  logical<U> const &b) noexcept
   {
     return as_logical_t<T>(!a.value() && b.value());
   }
@@ -51,8 +52,8 @@ namespace eve::detail
 
   template<simd_value T, scalar_value U>
   EVE_FORCEINLINE  as_logical_t<T> logical_notand_(EVE_SUPPORTS(cpu_)
-                                               , logical<T> const &a
-                                               , logical<U> const &b) noexcept
+                                                  , logical<T> const &a
+                                                  , logical<U> const &b) noexcept
   requires has_native_abi_v<T> && has_native_abi_v<U>
   {
     using elt_t = element_type_t<T>;
@@ -60,8 +61,7 @@ namespace eve::detail
 
     if constexpr ( !abi_t::is_wide_logical )
     {
-//      auto bb = b ? logical<T>(true) : logical<T>(false);
-      return eve::logical_notand(a, b.value);
+      return eve::logical_notand(a, b.value());
     }
     else if constexpr(sizeof(elt_t) == sizeof(U))
     {
@@ -89,7 +89,6 @@ namespace eve::detail
     else if constexpr(sizeof(elt_t) == sizeof(T))
     {
       auto aa = r_t(a);
-
       return bit_cast(bit_notand(aa.bits(), b.bits()), as<r_t>());
     }
   }
