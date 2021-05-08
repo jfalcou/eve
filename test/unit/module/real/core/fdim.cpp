@@ -15,7 +15,6 @@
 #include <eve/function/fdim.hpp>
 #include <eve/function/diff/fdim.hpp>
 #include <eve/logical.hpp>
-#include <cmath>
 
 //==================================================================================================
 //== Types tests

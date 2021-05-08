@@ -19,104 +19,93 @@
 
 namespace eve::detail
 {
-  // Full scalar case
-  template<scalar_value T, scalar_value U>
-  EVE_FORCEINLINE as_logical_t<T> logical_xor_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-  {
-    constexpr auto value = []<typename V>(V const& v)
-    {
-      if constexpr(is_logical_v<V>) return v.value(); else return !!v;
-    };
-
-    return as_logical_t<T>{value(a) != value(b)};
-  }
-
-  // Non-native ABI
   template<value T, value U>
-  EVE_FORCEINLINE auto logical_xor_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-  requires( (!has_native_abi_v<T> || !has_native_abi_v<U>) && size_compatible_values<T,U> )
+  EVE_FORCEINLINE  auto logical_xor_(EVE_SUPPORTS(cpu_)
+                                       , T const &a
+                                       , U const &b) noexcept
   {
     return apply_over(logical_xor, a, b);
   }
 
-  // Other cases
-  template<typename T, typename U, typename N, native_abi ABI>
-  EVE_FORCEINLINE auto logical_xor_ ( EVE_SUPPORTS(cpu_)
-                                    , logical<wide<T,N,ABI>> const &a
-                                    , logical<wide<U,N,ABI>> const &b
-                                    ) noexcept
+  template<scalar_value T, scalar_value U>
+  EVE_FORCEINLINE as_logical_t<T> logical_xor_(EVE_SUPPORTS(cpu_)
+                                              , logical<T> const &a
+                                              , logical<U> const &b) noexcept
   {
-    if constexpr ( !ABI::is_wide_logical )
+    return as_logical_t<T>{a.value() != b.value()};
+  }
+
+  template<simd_value T, simd_value U>
+  EVE_FORCEINLINE  as_logical_t<T> logical_xor_(EVE_SUPPORTS(cpu_)
+                                               , logical<T> const &a
+                                               , logical<U> const &b) noexcept
+  requires has_native_abi_v<T> && has_native_abi_v<U> && (cardinal_v<T> == cardinal_v<U>)
+  {
+    using abi_t = typename T::abi_type;
+         if constexpr ( !abi_t::is_wide_logical ) { return a != b; }
+    else if constexpr(std::is_same_v<U, T>){ return bit_cast(bit_xor(a.bits(), b.bits()), as_<as_logical_t<T>>()); }
+    else                                   { return logical_xor(a, convert(b, as< logical<element_type_t<T>>>())); }
+  }
+
+  template<simd_value T, scalar_value U>
+  EVE_FORCEINLINE  as_logical_t<T> logical_xor_(EVE_SUPPORTS(cpu_)
+                                               , logical<T> const &a
+                                               , logical<U> const &b) noexcept
+  requires has_native_abi_v<T> && has_native_abi_v<U>
+  {
+    using elt_t = element_type_t<T>;
+    using abi_t = typename T::abi_type;
+
+    if constexpr ( !abi_t::is_wide_logical )
     {
-      // I didn't clean up the top here.
-      // joel said he has something general purpose
-      return logical<wide<T,N,ABI>>{a.storage() ^ b.storage()};
+      return eve::logical_xor(a, b.value());
     }
-    else if constexpr(sizeof(T) == sizeof(U))  return bit_cast ( bit_xor(a.bits(), b.bits())
-                                                          , as_<as_logical_t<wide<T,N,ABI>>>()
-                                                          );
-    else                                  return apply_over(logical_xor, a, b);
+    else if constexpr(sizeof(elt_t) == sizeof(U))
+    {
+      auto bb = is_nez(T(bit_cast(b, as<logical<elt_t>>())));
+      return bit_cast(bit_xor(a.bits(), bb.bits()), as_<as_logical_t<T>>());
+    }
   }
 
-  template<typename T, typename U, typename N, native_abi ABI>
-  EVE_FORCEINLINE auto logical_xor_ ( EVE_SUPPORTS(cpu_)
-                                    , logical<wide<T,N,ABI>> const &a
-                                    , wide<U,N,ABI> const &b
-                                    ) noexcept
+  template<scalar_value T, simd_value U>
+  EVE_FORCEINLINE auto logical_xor_(EVE_SUPPORTS(cpu_)
+                                   , logical<T> const &a
+                                   , logical<U> const &b) noexcept
+  requires has_native_abi_v<T> && has_native_abi_v<U>
   {
-    return logical_xor(a, to_logical(b));
+    using elt_t = element_type_t<U>;
+    using r_t = as_wide_t<logical<T>, cardinal_t<U>>;
+    using abi_t = typename logical<U>::abi_type;
+
+    if constexpr ( !abi_t::is_wide_logical )
+    {
+      r_t a_cast{a};
+      r_t b_cast {b.storage()};
+      return eve::logical_xor(a_cast, b_cast);
+    }
+    else if constexpr(sizeof(elt_t) == sizeof(T))
+    {
+      auto aa = r_t(a);
+      return bit_cast(bit_xor(aa.bits(), b.bits()), as<r_t>());
+    }
   }
 
-  template<typename T, scalar_value U, typename N, native_abi ABI>
-  EVE_FORCEINLINE auto logical_xor_ ( EVE_SUPPORTS(cpu_)
-                                    , logical<wide<T,N,ABI>> const &a
-                                    , U const &b
-                                    ) noexcept
+ template<logical_value T>
+  EVE_FORCEINLINE auto logical_xor_(EVE_SUPPORTS(cpu_), T a, bool b) noexcept
   {
-    return logical_xor(a, logical<wide<T,N,ABI>>(!!b));
+    return  T{a} != b;
   }
 
-  template<typename T, typename U, typename N, native_abi ABI>
-  EVE_FORCEINLINE auto logical_xor_ ( EVE_SUPPORTS(cpu_)
-                                    , wide<T,N,ABI> const &a
-                                    , wide<U,N,ABI> const &b
-                                    ) noexcept
+  template<logical_value U>
+  EVE_FORCEINLINE auto logical_xor_(EVE_SUPPORTS(cpu_), bool a, U b) noexcept
   {
-    return logical_xor(to_logical(a), to_logical(b));
+    return  U{b} != a;
   }
 
-  template<typename T, typename U, typename N, native_abi ABI>
-  EVE_FORCEINLINE auto logical_xor_ ( EVE_SUPPORTS(cpu_)
-                                    , wide<T,N,ABI> const &a
-                                    , U const &b
-                                    ) noexcept
+  EVE_FORCEINLINE  auto logical_xor_(EVE_SUPPORTS(cpu_)
+                                       , bool a
+                                       , bool b) noexcept
   {
-    return logical_xor(to_logical(a), logical<wide<T,N,ABI>>(!!b));
-  }
-  template<typename T, typename U, typename N, native_abi ABI>
-  EVE_FORCEINLINE auto logical_xor_ ( EVE_SUPPORTS(cpu_)
-                                    , T const &a
-                                    , wide<U,N,ABI> const &b
-                                    ) noexcept
-  {
-    return logical_xor(b,a);
-  }
-
-  template<typename T, typename U, typename N, native_abi ABI>
-  EVE_FORCEINLINE auto logical_xor_ ( EVE_SUPPORTS(cpu_)
-                                    , wide<T,N,ABI> const &a
-                                    , logical<wide<U,N,ABI>> const &b
-                                    ) noexcept
-  {
-    return logical_xor(b,a);
-  }
-
-  template<scalar_value T, typename U, typename N, native_abi ABI>
-  EVE_FORCEINLINE auto logical_xor_ ( EVE_SUPPORTS(cpu_)
-                                    , T const &a
-                                    , logical<wide<U,N,ABI>> const &b
-                                    ) noexcept
-  {
-    return logical_xor(b,a);
+    return a != b;
   }
 }

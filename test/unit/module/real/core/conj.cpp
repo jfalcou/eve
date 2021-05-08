@@ -11,7 +11,6 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/function/conj.hpp>
 #include <type_traits>
-#include <cmath>
 
 //==================================================================================================
 // Types tests

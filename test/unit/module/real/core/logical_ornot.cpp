@@ -10,7 +10,6 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/function/logical_ornot.hpp>
 #include <eve/logical.hpp>
-#include <cmath>
 
 //==================================================================================================
 //== Types tests
@@ -39,18 +38,25 @@ EVE_TEST_TYPES( "Check return types of eve::logical_ornot(simd)"
 EVE_TEST( "Check behavior of eve::logical_ornot(simd)"
         , eve::test::simd::all_types
         , eve::test::generate (eve::test::logicals(0, 3)
-                              , eve::test::logicals(1, 2))
+                              , eve::test::logicals(1, 2)
+                              , eve::test::randoms(0, 2))
         )
-<typename M>(M const& l0, M const& l1)
+<typename M, typename T>(M const& l0, M const& l1, T const & a0)
 {
   using eve::detail::map;
-  using v_t = eve::element_type_t<M>;
+  using l_t = eve::element_type_t<M>;
 
   TTS_EQUAL(eve::logical_ornot(l0, true), l0);
   TTS_EQUAL(eve::logical_ornot(true, l1), eve::true_(eve::as<M>()));
-  TTS_EQUAL(eve::logical_ornot(false, l1), map([](auto e) -> v_t { return  !e; }, l1));
+  TTS_EQUAL(eve::logical_ornot(false, l1), map([](auto e) -> l_t { return  !e; }, l1));
   TTS_EQUAL(eve::logical_ornot(l0, false),  eve::true_(eve::as<M>()));;
-  TTS_EQUAL(eve::logical_ornot(l0, l1), map([](auto e, auto f) -> v_t { return  e || !f; }, l0, l1));
-  TTS_EQUAL(eve::logical_ornot(l0, l1.get(0)), map([&](auto e) -> v_t { return  e || !l1.get(0); }, l0));
-  TTS_EQUAL(eve::logical_ornot(l0.get(0), l1), map([&](auto f) -> v_t { return  l0.get(0) || !f; }, l1));
+  TTS_EQUAL(eve::logical_ornot(l0, l1), map([](auto e, auto f) -> l_t { return  e || !f; }, l0, l1));
+  TTS_EQUAL(eve::logical_ornot(l0, l1.get(0)), map([&](auto e) -> l_t { return  e || !l1.get(0); }, l0));
+  TTS_EQUAL(eve::logical_ornot(l0.get(0), l1), map([&](auto f) -> l_t { return  l0.get(0) || !f; }, l1));
+  using v_t = eve::element_type_t<T>;
+  using d_t = eve::detail::downgrade_t<v_t>;
+  auto da0 = eve::convert(a0, eve::as<d_t>());
+  using dl_t = eve::as_logical_t<d_t>;
+  TTS_EQUAL(eve::logical_ornot(l1, da0 > 1), map([](auto e, auto f) -> l_t { return !(f > 1) || e; }, l1, da0));
+  TTS_EQUAL(eve::logical_ornot( da0 > 1, l1), map([](auto e, auto f) -> dl_t { return dl_t((e > 1) || !f); }, da0, l1));
 };

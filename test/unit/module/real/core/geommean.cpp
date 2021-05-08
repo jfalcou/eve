@@ -15,7 +15,6 @@
 #include <eve/function/rsqrt.hpp>
 #include <eve/function/sign.hpp>
 #include <eve/function/sqr.hpp>
-#include <cmath>
 
 //==================================================================================================
 //== Types tests

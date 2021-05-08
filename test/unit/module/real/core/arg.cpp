@@ -12,7 +12,6 @@
 #include <eve/function/diff/arg.hpp>
 #include <eve/function/pedantic/arg.hpp>
 #include <eve/logical.hpp>
-#include <cmath>
 
 //==================================================================================================
 // Types tests

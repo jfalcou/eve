@@ -16,7 +16,6 @@
 #include <eve/constant/mindenormal.hpp>
 #include <eve/constant/eps.hpp>
 #include <eve/platform.hpp>
-#include <cmath>
 #include <type_traits>
 
 //==================================================================================================

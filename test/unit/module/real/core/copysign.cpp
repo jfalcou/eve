@@ -13,7 +13,6 @@
 #include <eve/function/sign.hpp>
 #include <eve/function/abs.hpp>
 #include <type_traits>
-#include <cmath>
 
 //==================================================================================================
 // Types tests

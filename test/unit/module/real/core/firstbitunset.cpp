@@ -9,7 +9,6 @@
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/function/firstbitunset.hpp>
-#include <cmath>
 
 //==================================================================================================
 // Types tests

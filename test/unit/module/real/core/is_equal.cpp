@@ -13,7 +13,6 @@
 #include <eve/function/fuzzy/is_equal.hpp>
 #include <eve/constant/eps.hpp>
 #include <eve/logical.hpp>
-#include <cmath>
 
 //==================================================================================================
 //== Types tests
