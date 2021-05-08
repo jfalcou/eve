@@ -34,7 +34,7 @@ EVE_TEST_TYPES( "Check return types of legendre on wide"
 //==================================================================================================
 EVE_TEST( "Check behavior of legendre on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::ramp(-1, 1), eve::test::as_integer(eve::test::ramp(0)))
+        , eve::test::generate(eve::test::between(-1, 1), eve::test::as_integer(eve::test::ramp(0)))
         )
   <typename T, typename I>(T const& a0,I const & i0)
 {
@@ -64,7 +64,7 @@ EVE_TEST( "Check behavior of legendre on wide"
 
 EVE_TEST( "Check behavior of diff(legendre) on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::ramp(-1, 1), eve::test::as_integer(eve::test::ramp(0)))
+        , eve::test::generate(eve::test::between(-1, 1), eve::test::as_integer(eve::test::ramp(0)))
         )
   <typename T, typename I>(T const& a0,I const & i0)
 {
@@ -75,14 +75,16 @@ EVE_TEST( "Check behavior of diff(legendre) on wide"
     auto boost_legendre =  [&](auto i, auto) { return boost::math::legendre_p_prime(n, a0.get(i)); };
     TTS_ULP_EQUAL(eve__legendrev(n, a0), T(boost_legendre), 100);
   }
+
   auto boost_legendrev =  [&](auto i, auto) { return boost::math::legendre_p_prime(i0.get(i), a0.get(i)); };
   TTS_ULP_EQUAL(eve__legendrev(i0    , a0), T(boost_legendrev), 100);
-   std::cout <<" a0 " << a0 << std::endl;
-   for(unsigned int j=0; j < eve::cardinal_v<T>; ++j)
+
+  for(unsigned int j=0; j < eve::cardinal_v<T>; ++j)
   {
     auto boost_legendre2 =  [i0, a0, j](auto i, auto) { return boost::math::legendre_p_prime(i0.get(i), a0.get(j)); };
     TTS_ULP_EQUAL(eve__legendrev(i0 , a0.get(j)), T(boost_legendre2), 100);
   }
+
   for(unsigned int j=0; j < eve::cardinal_v<T>; ++j)
   {
     for(unsigned int n=0; n < eve::cardinal_v<T>; ++n)
