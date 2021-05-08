@@ -14,22 +14,31 @@
 #include <eve/detail/function/to_logical.hpp>
 #include <eve/concept/conditional.hpp>
 #include <eve/concept/value.hpp>
+#include <type_traits>
 #include <utility>
 #include <ostream>
 
 #define EVE_DECLARE_CALLABLE(TAG)                                                                  \
   namespace tag { struct TAG {}; }                                                                 \
+                                                                                                   \
   template<typename C> struct if_;                                                                 \
+                                                                                                   \
   namespace detail                                                                                 \
   {                                                                                                \
+    template<typename... Args>                                                                     \
+    concept supports_ ## TAG = requires(Args&&... args)                                            \
+    {                                                                                              \
+      { TAG( delay_t{}, EVE_CURRENT_API{}, std::forward<Args>(args)...) };                         \
+    };                                                                                             \
+                                                                                                   \
     template<typename Dummy>                                                                       \
     struct  callable_object<tag::TAG, Dummy>                                                       \
     {                                                                                              \
-      using tag_type = tag::TAG;                                                                   \
+      using tag_type    = tag::TAG;                                                                \
                                                                                                    \
       template<value Condition>                                                                    \
       EVE_FORCEINLINE constexpr auto operator[](Condition const &c) const noexcept                 \
-      requires( eve::supports_conditionnal<tag::TAG>::value )                                      \
+      requires( eve::supports_conditionnal<tag_type>::value )                                      \
       {                                                                                            \
         return  [cond = if_(to_logical(c))](auto const&... args) EVE_LAMBDA_FORCEINLINE            \
                 {                                                                                  \
@@ -39,7 +48,7 @@
                                                                                                    \
       template<conditional_expr Condition>                                                         \
       EVE_FORCEINLINE constexpr auto operator[](Condition const &c) const noexcept                 \
-      requires( eve::supports_conditionnal<tag::TAG>::value )                                      \
+      requires( eve::supports_conditionnal<tag_type>::value )                                      \
       {                                                                                            \
         return  [c](auto const&... args) EVE_LAMBDA_FORCEINLINE                                    \
                 {                                                                                  \
@@ -48,26 +57,43 @@
       }                                                                                            \
                                                                                                    \
       template<typename Arg, typename... Args>                                                     \
-      EVE_FORCEINLINE constexpr auto operator()(Arg&& d, Args &&... args) const noexcept           \
-          -> decltype ( TAG(delay_t{}, EVE_CURRENT_API{},                                          \
-                        std::forward<Arg>(d), std::forward<Args>(args)...)                         \
-                      )                                                                            \
+      requires  (   tag_dispatchable<tag_type,Arg,Args...>                                         \
+                ||  supports_ ## TAG<Arg,Args...>                                                  \
+                )                                                                                  \
+      EVE_FORCEINLINE constexpr decltype(auto) operator()(Arg&& d, Args &&... args) const noexcept \
       {                                                                                            \
         if constexpr( decorator<std::decay_t<Arg>> )                                               \
         {                                                                                          \
-          check ( delay_t{}, ::eve::detail::types<std::decay_t<Arg>,tag::TAG>{},                   \
+          check ( delay_t{}, ::eve::detail::types<std::decay_t<Arg>,tag_type>{},                   \
                   std::forward<Args>(args)...                                                      \
                 );                                                                                 \
         }                                                                                          \
         else                                                                                       \
         {                                                                                          \
-          check ( delay_t{}, ::eve::detail::types<tag::TAG>{}, std::forward<Arg>(d),               \
+          check ( delay_t{}, ::eve::detail::types<tag_type>{}, std::forward<Arg>(d),               \
                   std::forward<Args>(args)...                                                      \
                 );                                                                                 \
         }                                                                                          \
                                                                                                    \
-        return TAG(delay_t{},EVE_CURRENT_API{},std::forward<Arg>(d),std::forward<Args>(args)...);  \
+        if constexpr( tag_dispatchable<tag_type,Arg,Args...> )                                     \
+        {                                                                                          \
+          return dispatcher ( tag_type{}                                                           \
+                            , std::forward<Arg>(d), std::forward<Args>(args)...                    \
+                            );                                                                     \
+        }                                                                                          \
+        else                                                                                       \
+        {                                                                                          \
+          return TAG( delay_t{}, EVE_CURRENT_API{}                                                 \
+                    , std::forward<Arg>(d), std::forward<Args>(args)...                            \
+                    );                                                                             \
+        }                                                                                          \
       }                                                                                            \
+                                                                                                   \
+      template<typename Arg, typename... Args>                                                     \
+      requires  (   !tag_dispatchable<tag_type,Arg,Args...>                                        \
+                &&  !supports_ ## TAG<Arg,Args...>                                                 \
+                )                                                                                  \
+      EVE_FORCEINLINE constexpr auto operator()(Arg&& d, Args &&... args) const noexcept = delete; \
     };                                                                                             \
   }                                                                                                \
 /**/
@@ -98,18 +124,6 @@
 
 // Flag a function to support delayed calls on given architecture
 #define EVE_RETARGET(ARCH)  delay_t{}, ARCH {}
-
-// Create named object for constant
-#define EVE_MAKE_NAMED_CONSTANT(TAG, FUNC)                                                         \
-  namespace detail                                                                                 \
-  {                                                                                                \
-    template<typename T>                                                                           \
-    EVE_FORCEINLINE constexpr auto TAG(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept                \
-    {                                                                                              \
-      return FUNC<T>();                                                                            \
-    }                                                                                              \
-  }                                                                                                \
-/**/
 
 namespace eve
 {
@@ -156,6 +170,25 @@ namespace eve
     //==============================================================================================
     // callable_object forward declaration
     template<typename Tag, typename Dummy = void> struct callable_object;
+
+    //==============================================================================================
+    // User-facing tag-dispatch helper
+    template <typename Tag, typename... Args>
+    concept tag_dispatchable = requires(Tag tag, Args&&... args)
+    {
+      { tagged_dispatch(tag, std::forward<Args>(args)...) };
+    };
+
+    // Try to adl lookup the invocation
+    inline struct dispatcher_
+    {
+      template <typename Tag, typename... Args>
+      requires tag_dispatchable<Tag,Args...>
+      decltype(auto) operator()(Tag tag, Args&&... args) const
+      {
+        return tagged_dispatch(tag, std::forward<Args>(args)...);
+      }
+    } constexpr dispatcher;
   }
 
   //==============================================================================================
