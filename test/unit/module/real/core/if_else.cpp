@@ -12,6 +12,7 @@
 #include <eve/function/convert.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/constant/one.hpp>
+#include <eve/constant/false.hpp>
 #include <eve/constant/mone.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/allbits.hpp>
@@ -129,4 +130,28 @@ EVE_TEST( "Check behavior of eve::if_else(logical,logical,logical) and eve::if_e
     TTS_EQUAL( if_else(um0, a1, allbits), map([](auto e, auto f) { return e ? f : allbits(as<v_t>()); }, um0, a1));
   if constexpr(eve::floating_value<T>)
     TTS_IEEE_EQUAL( if_else(um0, a1, allbits), map([](auto e, auto f) { return e ? f : nan(as<v_t>()); }, um0, a1));
+};
+
+EVE_TEST( "Check behavior of eve::if_else(conditional, a, b)"
+        , eve::test::simd::uints_8
+        , eve::test::generate ( eve::test::randoms(-10, +10), eve::test::logicals(0,3) )
+        )
+<typename T, typename L>( T const &a, L const& l )
+{
+  {
+    T actual = eve::if_else[eve::ignore_first(1)](a, T(20));
+    T expected = a;
+    expected.set(0, 20);
+    TTS_EQUAL(actual, expected);
+    actual = eve::if_else[eve::ignore_first(1)](a, 20);
+    TTS_EQUAL(actual, expected);
+  }
+  {
+    L actual = eve::if_else[eve::ignore_first(1)](l, eve::false_(eve::as<L>()));
+    L expected = l;
+    expected.set(0, false);
+    TTS_EQUAL(actual, expected);
+    actual = eve::if_else[eve::ignore_first(1)](l, false);
+    TTS_EQUAL(actual, expected);
+  }
 };
