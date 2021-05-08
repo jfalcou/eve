@@ -56,3 +56,10 @@ iterator that can represent any position in the underlying range.
 * `unaligned_ptr_iterator`
 
 A pointer + cardinal with the `iterator` interface.
+
+### preprocess range
+
+* `preprocess_range`
+
+Given a more general notion of a range + traits returns enhanced traits +
+iterator/sentinel pair that is understood by eve.
