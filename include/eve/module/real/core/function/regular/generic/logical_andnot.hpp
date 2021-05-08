@@ -89,7 +89,6 @@ namespace eve::detail
     else if constexpr(sizeof(elt_t) == sizeof(T))
     {
       auto aa = r_t(a);
-
       return bit_cast(bit_andnot(aa.bits(), b.bits()), as<r_t>());
     }
   }
