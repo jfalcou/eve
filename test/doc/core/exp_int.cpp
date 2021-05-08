@@ -1,4 +1,3 @@
-#include <boost/math/special_functions/expint.hpp>
 #include <eve/function/exp_int.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/inf.hpp>

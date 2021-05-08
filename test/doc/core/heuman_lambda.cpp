@@ -1,5 +1,4 @@
 #include <eve/function/heuman_lambda.hpp>
-#include <boost/math/special_functions/heuman_lambda.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 #include <eve/constant/pio_2.hpp>
