@@ -132,7 +132,7 @@ make_unit("unit.real.core"  logical_notand.cpp       )
 make_unit("unit.real.core"  logical_notor.cpp        )
 make_unit("unit.real.core"  logical_or.cpp           )
 make_unit("unit.real.core"  logical_ornot.cpp        )
-#make_unit("unit.real.core"  logical_xor.cpp          )
+make_unit("unit.real.core"  logical_xor.cpp          )
 
 make_unit("unit.real.core"  nearest.cpp              )
 make_unit("unit.real.core"  rat.cpp                  )

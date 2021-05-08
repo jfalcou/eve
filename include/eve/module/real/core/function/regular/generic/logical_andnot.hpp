@@ -29,10 +29,10 @@ namespace eve::detail
     return apply_over(logical_andnot, a, b);
   }
 
- template<scalar_value T, scalar_value U>
+  template<scalar_value T, scalar_value U>
   EVE_FORCEINLINE  as_logical_t<T> logical_andnot_(EVE_SUPPORTS(cpu_)
-                            ,  logical<T> const &a
-                            ,  logical<U> const &b) noexcept
+                            , logical<T> const &a
+                            , logical<U> const &b) noexcept
   {
     return as_logical_t<T>(a.value() && !b.value());
   }
@@ -60,8 +60,7 @@ namespace eve::detail
 
     if constexpr ( !abi_t::is_wide_logical )
     {
-      auto bb = b ? logical<T>(true) : logical<T>(false);
-      return eve::logical_andnot(a, bb);
+      return eve::logical_andnot(a, b.value());
     }
     else if constexpr(sizeof(elt_t) == sizeof(U))
     {
