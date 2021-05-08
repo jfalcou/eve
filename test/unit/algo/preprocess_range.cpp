@@ -1,10 +1,16 @@
+//==================================================================================================
+/**
+  EVE - Expressive Vector Engine
+  Copyright : EVE Contributors & Maintainers
+  SPDX-License-Identifier: MIT
+**/
+//==================================================================================================
+
 #include "algo_test.hpp"
 
 #include <eve/algo/preprocess_range.hpp>
 
 #include <eve/algo/ptr_iterator.hpp>
-
-#include "iterator_conept_test.hpp"
 
 #include <array>
 #include <vector>
@@ -20,7 +26,7 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
   using e_t = eve::element_type_t<T>;
   using N = eve::fixed<eve::expected_cardinal_v<e_t>>;
 
-  alignas(sizeof(T)) std::array<e_t, T::static_size> arr;
+  alignas(sizeof(T)) std::array<e_t, T::static_size> arr{};
 
   std::vector<e_t> vec(100u, 0);
 
@@ -30,8 +36,8 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
     TTS_TYPE_IS(decltype(traits), no_traits);
     TTS_TYPE_IS(decltype(f), (eve::algo::unaligned_ptr_iterator<e_t, N>));
     TTS_TYPE_IS(decltype(l), (eve::algo::unaligned_ptr_iterator<e_t, N>));
-    TTS_EQUAL(f.ptr, arr.begin());
-    TTS_EQUAL(l.ptr, arr.end());
+    TTS_EQUAL((void*)f.ptr, (void*)arr.begin());
+    TTS_EQUAL((void*)l.ptr, (void*)arr.end());
   }
 
   // const pointers
@@ -40,8 +46,8 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
     TTS_TYPE_IS(decltype(traits), no_traits);
     TTS_TYPE_IS(decltype(f), (eve::algo::unaligned_ptr_iterator<const e_t, N>));
     TTS_TYPE_IS(decltype(l), (eve::algo::unaligned_ptr_iterator<const e_t, N>));
-    TTS_EQUAL(f.ptr, arr.cbegin());
-    TTS_EQUAL(l.ptr, arr.cend());
+    TTS_EQUAL((void*)f.ptr, (void*)arr.cbegin());
+    TTS_EQUAL((void*)l.ptr, (void*)arr.cend());
   }
 
   // vector::iterator
@@ -50,8 +56,8 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
     TTS_TYPE_IS(decltype(traits), no_traits);
     TTS_TYPE_IS(decltype(f), (eve::algo::unaligned_ptr_iterator<e_t, N>));
     TTS_TYPE_IS(decltype(l), (eve::algo::unaligned_ptr_iterator<e_t, N>));
-    TTS_EQUAL(f.ptr, vec.data());
-    TTS_EQUAL(l.ptr, vec.data() + static_cast<std::ptrdiff_t>(vec.size()));
+    TTS_EQUAL((void*)f.ptr, (void*)vec.data());
+    TTS_EQUAL((void*)l.ptr, (void*)(vec.data() + static_cast<std::ptrdiff_t>(vec.size())));
   }
 
   // vector::const_iterator
@@ -60,8 +66,8 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
     TTS_TYPE_IS(decltype(traits), no_traits);
     TTS_TYPE_IS(decltype(f), (eve::algo::unaligned_ptr_iterator<const e_t, N>));
     TTS_TYPE_IS(decltype(l), (eve::algo::unaligned_ptr_iterator<const e_t, N>));
-    TTS_EQUAL(f.ptr, vec.data());
-    TTS_EQUAL(l.ptr, vec.data() + static_cast<std::ptrdiff_t>(vec.size()));
+    TTS_EQUAL((void*)f.ptr, (void*)vec.data());
+    TTS_EQUAL((void*)l.ptr, (void*)(vec.data() + static_cast<std::ptrdiff_t>(vec.size())));
   }
 };
 

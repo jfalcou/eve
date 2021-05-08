@@ -12,5 +12,9 @@ add_custom_target(unit.algo.simd.exe  )
 
 ##==================================================================================================
 ## ALGO tests
-make_unit("unit.algo" ptr_iterator.cpp)
+# Helpers
 make_unit("unit.algo" preprocess_range.cpp)
+make_unit("unit.algo" ptr_iterator.cpp)
+
+# Algorithms
+make_unit("unit.algo" any_of.cpp)
