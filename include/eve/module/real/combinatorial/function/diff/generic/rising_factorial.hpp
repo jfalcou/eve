@@ -33,7 +33,6 @@ namespace eve::detail
     if constexpr(N <= 2)
     {
       auto tmp = d_t()(rising_factorial)(aa, x);
-      auto tmp1 = diff_type<N>()(lrising_factorial)(aa, x);
       return diff_type<N>()(lrising_factorial)(aa, x)*tmp;
     }
     else
