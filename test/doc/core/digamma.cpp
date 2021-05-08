@@ -1,5 +1,4 @@
 #include <eve/function/digamma.hpp>
-#include <boost/math/special_functions/digamma.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>

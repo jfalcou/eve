@@ -1,5 +1,4 @@
 #include <eve/function/ellint_3.hpp>
-#include <boost/math/special_functions/ellint_3.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

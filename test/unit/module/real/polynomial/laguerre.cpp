@@ -34,7 +34,7 @@ EVE_TEST_TYPES( "Check return types of laguerre on wide"
 //==================================================================================================
 EVE_TEST( "Check behavior of laguerre on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::ramp(-1, 1), eve::test::as_integer(eve::test::ramp(0)))
+        , eve::test::generate(eve::test::between(-1, 1), eve::test::as_integer(eve::test::ramp(0)))
         )
   <typename T, typename I>(T const& a0,I const & i0)
 {

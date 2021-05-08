@@ -1,5 +1,4 @@
 #include <eve/function/jacobi_zeta.hpp>
-#include <boost/math/special_functions/jacobi_zeta.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 #include <eve/constant/pio_2.hpp>

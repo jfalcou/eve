@@ -4,7 +4,6 @@
 #include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
 #include <iostream>
-#include <boost/math/special_functions/gegenbauer.hpp>
 
 using wide_ft = eve::wide<double, eve::fixed<8>>;
 using wide_it = eve::wide<unsigned, eve::fixed<8>>;

@@ -1,5 +1,4 @@
 #include <eve/function/ellint_d.hpp>
-#include <boost/math/special_functions/ellint_d.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 #include <eve/constant/pio_2.hpp>
