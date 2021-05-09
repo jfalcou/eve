@@ -1,0 +1,18 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+<- pf                      = (-1, 0, 367, -1.0056e+06, 4.94066e-324, inf, -inf, -nan)
+-> sinhcosh(pf)            = [
+                              (-1.1752, 0, 1.21631e+159, -inf, 4.94066e-324, inf, -inf, nan), 
+                              (1.54308, 1, 1.21631e+159, inf, 1, inf, inf, nan)
+                             ]
+---- scalar
+<- xf           =  2.3
+-> sinhcosh(xf) = [4.93696, 5.03722]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

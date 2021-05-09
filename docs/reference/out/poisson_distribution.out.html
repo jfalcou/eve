@@ -1,0 +1,31 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+<- x                   = (0, 1, 3, 5)
+<- lambda              = (0.02, 0.5, 1, 10)
+-> median(po)          = (-1, 0, 1, 10)  \\  possibly approximate
+-> mode(po)            = (0, 0, 0, 9)
+-> mean(po)            = (0.02, 0.5, 1, 10)
+-> var(po)             = (0.02, 0.5, 1, 10)
+-> pmf(po, x)          = (0.980199, 0.303265, 0.0613132, 0.0378333)
+-> cdf(po, x)          = (0.995523, 0.9545, 0.981684, 0.0839238)
+-> mgf(po, x)          = (1, 2.36113, 1.94421e+08, inf)
+---- scalar
+<- xf                  = 2
+<- lf                  = 1
+-> cdf(pof, xf)        = 0.950213
+-> mean(pof)           = 1
+-> var(pof)            = 1
+generator 
+-> d1(gen, eve::as<wide_ft>()) (16, 18, 12, 13)
+-> d1(gen)                     18
+generator 
+-> d2(gen, eve::as<wide_ft>()) (2, 1, 0, 1)
+-> d2(gen)                     2
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

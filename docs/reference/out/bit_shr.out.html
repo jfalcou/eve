@@ -1,0 +1,20 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+ <- pi              = (3, 602, 3, 4001)
+ <- qi              = (4, 1, 2, 0)
+ <- z               = 5
+ -> bit_shr(pi, qi) = (0, 301, 0, 4001)
+ -> bit_shr(z,  qi) = (0, 2, 1, 5)
+ -> bit_shr(pi, z ) = (0, 18, 0, 125)
+---- scalar
+ <- a             = 1
+ <- n             = 4
+ -> bit_shr(a, n) = 0
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

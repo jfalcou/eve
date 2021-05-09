@@ -1,0 +1,19 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+<- pi            = (100, 200, -2, 3)
+<- qi            = (1, -2, 3, -1)
+-> shl(pi, qi)   = (50, 800, -1, 6)
+---- scalar
+<- xi            = 2
+<- mxi           = -2
+<- yi            = 3
+-> rshr(xi, yi)  = 0
+-> rshr(mxi, yi) = -1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

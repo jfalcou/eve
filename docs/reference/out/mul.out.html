@@ -1,0 +1,19 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+ <- pi          = (3, 2, 3, 32700)
+ <- qi          = (4, 1, 1, 100)
+ -> mul(pi, qi) = (12, 2, 3, -6800)
+ -> pi * qi     = (12, 2, 3, -6800)
+---- scalar
+ xi             = 100
+ yi             = 32700
+ -> mul(xi, yi) = -6800
+ -> xi * yi     = 3270000
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

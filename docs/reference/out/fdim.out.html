@@ -1,0 +1,19 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+<- pf           = (0, 1, -1, -3.40282e+38)
+<- qf           = (1, -1, 0, 3.40282e+38)
+-> fdim(pf, qf) = (0, 2, 0, 0)
+
+---- scalar
+<- xf           = -3.40282e+38
+<- yf           = 3.40282e+38
+-> fdim(xf, yf) = 0
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

@@ -1,0 +1,19 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+<- pf                   = (0, 0.1, 0.5, 2)
+<- qf                   = (1, 1, 3, 5)
+<- rf                   = (4, 2, 1, 0.2)
+-> betainc(pf, qf, rf)  = (0, 0.19, 0.125, -nan)
+---- scalar
+<- xf                   = 0.2
+<- yf                   = 0.5
+<- zf                   = 2
+-> betainc(xf, yf, zf)  = 0.626099
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

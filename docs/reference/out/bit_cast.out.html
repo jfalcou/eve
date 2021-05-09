@@ -1,0 +1,15 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+<- pf =                            (1, 2, -1, 0.5)
+-> eve::bit_cast(pf,as_<wide_it>()) = (1065353216, 1073741824, -1082130432, 1056964608)
+---- scalar
+<- xf =                            2
+-> eve::bit_cast(xf, as_<iT>()) =      1073741824
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

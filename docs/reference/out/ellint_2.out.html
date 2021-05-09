@@ -1,0 +1,19 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+<- pf           = (1, 0, 0.75, 0.5)
+-> ellint_2(pf) = (1, 1.5708, 1.31847, 1.46746)
+---- scalar
+<- xf            = 0.1
+-> ellint_2(xf,) = 1.56686
+---- simd
+<- phi               = (0.2, 1e-30, 0.5, 0)
+-> ellint_2(phi, pf) = (0.198669, 1e-30, 0.488623, nan)
+-> ellint_2(pio2,pf) = (1, 1.5708, 1.31847, 1.46746)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

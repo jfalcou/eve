@@ -1,0 +1,19 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+ <- pi16           = (52, 53, 6541, 6542, 0, 1, 999, 10000)
+ -> nth_prime(pi16)   = (241, 251, 65521, 65537, 2, 3, 7919, 0)
+ -> uint32(nth_prime)(pi16)   = (241, 251, 65521, 65537, 2, 3, 7919, 0)
+ -> float32(nth_prime)(pi16)  = (241, 251, 65521, 65537, 2, 3, 7919, -nan)
+ -> float32(nth_prime(pi16))  = (241, 251, 65521, 65537, 2, 3, 7919, 0)// mind the parentheses
+
+---- scalar
+ xi                = 18
+ -> nth_prime(xi)  = 67
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

@@ -1,0 +1,15 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+<- pf                                = (0, 1, 2, 10, 200, 1000, inf, -nan)
+-> eve::diff(eve::rec)(pf)     = (-inf, -1, -0.25, -0.01, -2.5e-05, -1e-06, -0, nan)
+---- scalar
+<- xf                            = 1
+-> eve::diff(eve::rec)(xf) = -1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

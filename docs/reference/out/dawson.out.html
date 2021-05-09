@@ -1,0 +1,15 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+<- pf         = (0, -0, -1, 1, 2, inf, -inf, -nan)
+-> dawson(pf) = (0, -0, -0.53808, 0.53808, 0.30134, 0, -0, -nan)
+---- scalar
+<- xf         = 1
+-> dawson(xf) = 0.53808
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

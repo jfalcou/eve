@@ -1,0 +1,17 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+<- pf            = (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
+-> is_normal(pf) = (false, true, true, true, false, false, false, false)
+---- scalar
+<- xf            = 1
+-> is_normal(xf) = true
+<- yf            = 1.4013e-45
+-> is_normal(yf) = false
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

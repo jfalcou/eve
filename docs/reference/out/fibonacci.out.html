@@ -1,0 +1,22 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+ <- n                        = (13, 25, 32, 180, 1, 2, 3, 4)
+ <- a                        = (1, 2, 3, 4, 0.5, 0.33, -4.5, 0)
+ <- b                        = (2, 3, 4, 0.5, 0.33, -4.5, 0, 1)
+ -> fibonacci(n, a, b)       = (610, 317811, 1.2752e+07, 5.51265e+37, 0.33, -4.17, -4.5, 3)
+ -> fibonacci(4u, a, b)      = (8, 13, 18, 9.5, 1.99, -12.84, -9, 3)
+ -> fibonacci(n, 1.0f, 3.0f) = (843, 271443, 7.8812e+06, 6.71065e+37, 3, 4, 7, 11)
+ -> fibonacci(n, 1.0f, b)    = (610, 271443, 1.00595e+07, 2.0737e+37, 0.33, -3.5, 1, 5)
+---- scalar
+ ns                           = 10
+ as                           = 1
+ bs                           = 1
+ -> fibonacci(ns, as, bs)     = 89
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

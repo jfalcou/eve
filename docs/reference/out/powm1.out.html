@@ -1,0 +1,17 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+<- pf            = (0, 1.1, 1.1, -2.3, 2, inf, inf, -nan)
+<- qf            = (4, 1, -1, 0, -0.5, -nan, -2, -nan)
+-> powm1(pf, qf) = (-1, 0.1, -0.0909091, 0, -0.292893, inf, -1, nan)
+---- scalar
+<- xf            = 4
+<- yf            = -1
+-> powm1(xf, yf) = -0.75
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

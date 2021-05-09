@@ -1,0 +1,16 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+ <- mi                                = (0, 65535, 1, 65280)
+ <- pi                                = (2, 65533, 0, 1024)
+ <- qi                                = (3, 65534, 4, 2)
+ -> bit_select(mi, pi, qi)            = (3, 65533, 4, 1026)
+---- scalar
+ -> bit_select(32767, 1, 32768 )      = 32769
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
