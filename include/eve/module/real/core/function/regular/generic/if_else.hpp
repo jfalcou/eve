@@ -46,8 +46,8 @@ namespace eve::detail
       using e_t = element_type_t<common_compatible_t<U, V>>;
       using r_t = as_wide_t<e_t, cardinal_t<T>>;
 
-            if constexpr(has_emulated_abi_v<T>)    return map(if_else, cond, t, f);
-      else  if constexpr(has_aggregated_abi_v<T>)  return aggregate(if_else, cond, t, f);
+            if constexpr(has_emulated_abi_v<T>)    return map(if_else, cond, r_t(t), r_t(f));
+      else  if constexpr(has_aggregated_abi_v<T>)  return aggregate(if_else, cond, r_t(t), r_t(f));
       else  if constexpr(std::same_as<logical<e_t>,element_type_t<T>>)
       {
         if constexpr( std::same_as<U,V> ) return  bit_select(cond.mask(),r_t(t), r_t(f));
