@@ -1,0 +1,17 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+ <- pi              = (0, 1, 0.99999994, 1)
+ <- qi              = (1.17549435e-38, 2, 1, inf)
+ -> ulpdist(pi, qi) = (4194304, 4194304, 0.5, 536870912)
+---- scalar
+ xi                 = 3
+ yi                 = 7
+ -> ulpdist(xi, yi) = 4
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

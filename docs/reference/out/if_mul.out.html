@@ -1,0 +1,23 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+ <- si =                              (2, -3, 0, 4)
+ <- lsi =                             (true, false, false, true)
+ <- pi =                              (3, -2, -10, 0)
+ <- qi =                              (4, -1, 0, 5)
+ -> eve::mul[si](pi, qi) =        (12, 2, -10, 0)
+ -> eve::mul[lsi](pi, qi) =       (12, -2, -10, 0)
+---- scalar
+ ssi =                                3
+ lssi =                               false
+ xi =                                 3
+ yi =                                 4
+ -> eve::mul[ssi](xi, yi) =       12
+ -> eve::mul[(lssi](xi, yi) =      3
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

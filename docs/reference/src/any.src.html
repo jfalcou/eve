@@ -3,34 +3,6 @@ Example
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-#include <eve/function/any.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-
-using wide_ft = eve::wide<float, eve::fixed<4>>;
-using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;
-
-int main()
-{
-  wide_ft pf = { 0.0f, 0.0f, -0.0f, -0.0f};
-  wide_it qi = {-1.0f, 02.0f, -3.0f, -0.0f};
-
-  std::cout << "---- simd" << '\n'
-            << "<- pf       = " << pf << '\n'
-            << "-> any(pf)  = " << eve::any(pf) << '\n'
-            << "<- qi       = " << qi << '\n'
-            << "-> any(qi)  = " << eve::any(qi) << '\n';
-
-  float        xf = -0.0f;
-  float        yf = -3.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf      = " << xf << '\n'
-            << "-> any(xf) = " << eve::any(xf) << '\n'
-            << "<- yf      = " << yf << '\n'
-            << "-> any(yf) = " << eve::any(yf) << '\n';
-  return 0;
-}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 

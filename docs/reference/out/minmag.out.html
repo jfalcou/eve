@@ -1,0 +1,19 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+<- pf                        = (0, 1, 1, -2, 2, inf, -inf, -nan)
+<- qf                        = (4, 1, -1, 0, -3, -nan, nan, -2)
+-> minmag(pf, qf)            = (0, 1, -1, 0, 2, inf, -inf, -nan)
+-> saturated(minmag)(pf, qf) = (0, 1, -1, 0, 2, inf, -inf, -nan)
+---- scalar
+<- xf                        = -4
+<- yf                        = 1
+-> minmag(xf, yf)            = 1
+-> saturated(minmag)(xf, yf) = 1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

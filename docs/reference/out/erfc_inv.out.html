@@ -1,0 +1,17 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+<- pf            = (0, 1, 1.5, 1.75)
+-> eve::erfc_inv(pf) = (inf, 0, -0.476936, -0.81342)
+---- scalar
+<- xf            = 1
+-> eve::erfc_inv(xf) = 0
+<- yf            = 2
+-> eve::erfc_inv(yf) = -inf
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

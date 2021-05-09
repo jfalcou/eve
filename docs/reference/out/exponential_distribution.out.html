@@ -1,0 +1,37 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+<- x                   = (0, 1, -1, 5)
+<- lambda              = (1, 2, 3, 4)
+<- p                   = (0, 0.5, 0.75, 1)
+-> median(ex)          = (0.693147, 0.346574, 0.231049, 0.173287)
+-> mean(ex)            = (1, 0.5, 0.333333, 0.25)
+-> mode(ex)            = (0, 0, 0, 0)
+-> stdev(ex)           = (1, 0.5, 0.333333, 0.25)
+-> var(ex)             = (1, 0.25, 0.111111, 0.0625)
+-> fisher(ex)          = (1, 0.25, 0.111111, 0.0625)
+-> skewness(ex)        = (2, 2, 2, 2)
+-> kurtosis(ex)        = (6, 6, 6, 6)
+-> pdf(ex, x)          = (1, 0.270671, 60.2566, 8.24461e-09)
+-> invcdf(ex, p)       = (-0, 0.346574, 0.462098, inf)
+-> cdf(ex, x)          = (0, 0.864665, -0, 1)
+-> mgf(ex, x)          = (1, 2, 0.75, -nan)
+---- scalar
+<- xf                  = 9
+<- lf                  = 10
+-> cdf(exf, xf)        = 1
+-> mode(exf)           = 0
+generator 
+-> d1(gen, eve::as<wide_ft>()) (0.404586, 0.0346094, 0.280819, 2.75681)
+-> d1(gen)                     0.150636
+confidence 
+r          0.993262
+plo        0.713635
+phi        1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

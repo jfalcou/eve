@@ -1,0 +1,37 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+<- x                   = (0, 1, -1, 5)
+<- theta               = (0.5, 2, 0.3, 4)
+<- k                   = (1, 2, 3, 0.5)
+<- p                   = (0, 0.5, 0.75, 1)
+-> mode(ga)            = (0, 2, 0.6, 0)
+-> mean(ga)            = (0.5, 4, 0.9, 2)
+-> var(ga)             = (0.25, 8, 0.27, 8)
+-> entropy(ga)         = (0.306853, 2.77036, 2.64361, 1.4769)
+-> pdf(ga, x)          = (0, 0.151633, 0, 0.113551)
+-> invcdf(ga, p)       = (0, 3.35669, 1.17612, inf)
+-> cdf(ga, x)          = (0, 0.090204, 0, 0.886153)
+---- scalar
+<- xf                  = 9
+<- thetaf              = 10
+<- kf                  = 2
+-> cdf(gaf, xf)        = 0.227518
+-> mode(gaf)           = 10
+generator 
+-> d1(gen, eve::as<wide_ft>()) (9.45808, 10.3413, 4.9894, 1.91529)
+-> d1(gen)                     3.25013
+generator 
+-> d2(gen, eve::as<wide_ft>()) (0.0852474, 2.95315, 0.786602, 0.0543936)
+-> d2(gen)                     4.70244
+confidence 
+r          0.2
+plo        0.198332
+phi        0.201679
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

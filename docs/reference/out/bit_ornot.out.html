@@ -1,0 +1,20 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+ <- pi                = (3, 2, 3, 4)
+ <- qi                = (4, 1, 1, 4294967295)
+ <- z                 = 5
+ -> bit_ornot(pi, qi) = (4294967291, 4294967294, 4294967295, 4)
+ -> bit_ornot(z,  qi) = (4294967295, 4294967295, 4294967295, 5)
+ -> bit_ornot(pi, z ) = (4294967291, 4294967290, 4294967291, 4294967294)
+---- scalar
+ <- xi                  = -3.4565
+ <- mask                = 0
+ -> bit_ornot(xi, mask) = -nan
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

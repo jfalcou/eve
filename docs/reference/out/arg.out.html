@@ -1,0 +1,19 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+<- pf                      = (0, -0, -1, -2, 2, inf, -inf, -nan)
+-> arg(pf)                 = (0, 3.14159, 3.14159, 3.14159, 0, 0, 3.14159, 3.14159)
+-> pedantic(eve::arg)(pf) = (0, 3.14159, 3.14159, 3.14159, 0, 0, 3.14159, -nan)
+---- scalar
+<- xf                      = 1
+-> arg(xf)                 = 0
+<- yf                      = -nan
+-> arg(yf)                 = 3.14159
+-> pedantic(eve::arg)(yf) = -nan
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

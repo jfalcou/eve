@@ -1,0 +1,17 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+ <- pf                      = (true, true, false, false)
+ <- qf                      = (true, false, true, false)
+ -> eve::logical_or(pf, qf) = (true, true, true, false)
+---- scalar
+ xf                         = false
+ yf                         = true
+ -> eve::logical_or(xf, yf) = true
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

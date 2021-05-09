@@ -1,0 +1,19 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+<- pf                       = (-1, 2, -3, -32768)
+<- qf                       = (-4, 3, -2, -12)
+-> hypot(pf, qf)            = (4.123105526, 3.605551243, 3.605551243, 32768)
+-> pedantic(hypot)(pf, qf) = (4.123105526, 3.605551243, 3.605551243, 32768.00391)
+---- scalar
+<- xf                       = -32768
+<- yf                       = 12
+-> hypot(xf, yf)            = 32768.0022
+-> pedantic(hypot)(xf, yf) = 32768.0022
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

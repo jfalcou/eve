@@ -1,0 +1,16 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+ <- pi32                     = (0, 6, 6542, 15, 104729, 104730, 10000, 1000)
+ -> prime_ceil(pi32)         = (2, 7, 6547, 17, 104729, 2, 10007, 1009)
+ -> float32(prime_ceil)(pi32) = (2, 7, 6547, 17, 104729, 2, 10007, 1009)
+---- scalar
+ xi                 = 18
+ -> prime_ceil(xi)  = 19
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

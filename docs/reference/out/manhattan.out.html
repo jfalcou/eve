@@ -1,0 +1,17 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+<- pf                     = (-1, 2, -3, -32768)
+<- qf                     = (-4, 3, -2, -12)
+-> eve::manhattan(pf, qf) = (5, 5, 5, 32780)
+---- scalar
+<- xf                     = -32768
+<- yf                     = 2
+-> eve::manhattan(xf, yf) = 32770
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

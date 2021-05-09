@@ -1,0 +1,26 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+<- xd                                       = (-0.3, 0.5, 0, 2)
+<- x                                        = (0.5, 0.5, 0.5, 0.5)
+<- l and v contain  {1, -2, 3, -4} 
+<- wv      contains { {0, 1, 2, 3}, {4, 5, 6, 7}, {8, 9, 10, 11} }
+-> horner(xd, 1, -2, 3, -4)                 = (-5.107, -2.875, -4, 2)
+-> horner(xd, eve::one, -2, 3, -4))         = (-5.107, -2.875, -4, 2)
+-> horner(0.5 1, b, 3, -4)                  = (-2.875, 0.25, -3.375, -2.35)
+-> horner(x, 1, -2, 3, -4)                  = (-5.107, -2.875, -4, 2)
+-> horner(xd, l)                            = (-5.107, -2.875, -4, 2)
+-> horner(xd, v)                            = (-5.107, -2.875, -4, 2)
+-> horner(xd, eve::one, &v[1], &v[4])       = (-5.107, -2.875, -4, 2)
+-> horner(xd, std::begin(ca), std::end(ca)) = (-5.107, -2.875, -4, 2)
+-> horner(xd, wv)                           = (6.8, 11.75, 10, 37)
+---- scalar
+<- xs               = 0.1
+-> horner(xs, 1.5, 2.0, 4.0)   = 4.215
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

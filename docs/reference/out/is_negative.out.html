@@ -1,0 +1,15 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+<- pf              = (0, 1, -1.5, -2, -nan, inf, -inf, nan)
+-> is_negative(pf) = (false, false, true, true, true, false, true, false)
+---- scalar
+<- xf              = 1
+-> is_negative(xf) = false
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

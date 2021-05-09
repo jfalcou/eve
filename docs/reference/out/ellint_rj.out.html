@@ -1,0 +1,21 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+<- pf                        = (0, 0, 0, 3)
+<- qf                        = (0.19, 4, 0.4375, 0.5)
+<- rf                        = (1, 1, 1, 1)
+<- sf                        = (0.19, 0.5, 0.87071, 2.4)
+-> ellint_rj(pf, qf, rf, sf) = (14.3936, 2.17066, 3.51682, 0.474997)
+---- scalar
+<- xf                        = 3
+<- yf                        = 0.5
+<- zf                        = 1
+<- uf                        = -3.4
+-> ellint_rj(xf, yf, zf, uf) = -0.403385
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

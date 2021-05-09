@@ -1,0 +1,20 @@
+ <meta charset="utf-8">
+**Possible output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+<- pf                         = (-1, 2.3, 45000.7, -64768.6)
+-> saturate(pf, int_64()_)    = (-1, 2.3, 45000.7, -64768.6)
+-> saturate(pf, int_16())     = (-1, 2.3, 32767, -32768)
+<- pi                         = (-1, 2, -3, 9223372036854775807)
+-> saturate(pi, as(eve::as<double>())) = (-1, 2, -3, 9223372036854775807)
+---- scalar
+<- xf                         = -64768.4
+-> saturate(xf, int_64())     = -64768.4
+<- xi                         = -64768
+-> saturate(xi, as(eve::as<double>())) = -64768
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
