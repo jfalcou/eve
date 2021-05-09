@@ -4,7 +4,7 @@
 #include <iostream>
 #include <iomanip>
 
-using wide_ft = eve::wide<double, eve::fixed<4>>;
+using wide_ft = eve::wide<float, eve::fixed<4>>;
 
 int main()
 {
@@ -16,8 +16,8 @@ int main()
              << "<- k                = " << k << '\n'
              << "-> gamma_pinv(p, k) = " << eve::gamma_pinv(p, k) << '\n';
 
-  double kf = 0.1;
-  double pf = 0.3;
+  float kf = 0.1;
+  float pf = 0.3;
   std::cout << "---- scalar" << '\n'
             << "<- kf                 = " << kf << '\n'
             << "<- pf                 = " << pf<< '\n'

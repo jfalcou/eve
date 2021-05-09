@@ -78,15 +78,6 @@
         return call(args...);                                                                      \
       }                                                                                            \
                                                                                                    \
-      template<typename Arg, typename... Args>                                                     \
-      requires  (   !tag_dispatchable<tag_type,Arg,Args...>                                        \
-                &&  !supports_ ## TAG<Arg,Args...>                                                 \
-                )                                                                                  \
-      [[deprecated( "[EVE | Invalid Function Call] eve::" #NAME                                    \
-                    " is called with invalids argument types."                                     \
-                  )]]                                                                              \
-      EVE_FORCEINLINE constexpr auto operator()(Arg&& d, Args &&... args) const noexcept;          \
-                                                                                                   \
       template<value Condition>                                                                    \
       EVE_FORCEINLINE constexpr auto operator[](Condition const &c) const noexcept                 \
       requires( eve::supports_conditional<tag_type>::value )                                       \
