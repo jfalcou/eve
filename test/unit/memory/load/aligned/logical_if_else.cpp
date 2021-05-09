@@ -11,7 +11,6 @@
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/function/any.hpp>
 #include <eve/function/load.hpp>
-#include <eve/constant/false.hpp>
 #include <array>
 #include <list>
 
@@ -57,8 +56,6 @@ EVE_TEST( "Check load to logical from aligned pointer with alternatives"
 
     // lanes value
     auto lanes = eve::lane<T::size()>;
-
-    using eve::false_;
 
     TTS_AND_THEN("load is applied on aligned pointer for a specific cardinal")
     {

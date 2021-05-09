@@ -9,6 +9,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/constant/false.hpp>
 
 namespace eve
 {

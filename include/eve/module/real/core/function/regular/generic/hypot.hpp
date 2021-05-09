@@ -35,7 +35,7 @@ namespace eve::detail
     }
     else
     {
-      return apply_over(hypot, r_t(a0), r_t(args)...);
+      return apply_over(hypot, r_t{a0}, r_t{args}...);
     }
   }
 }

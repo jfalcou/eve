@@ -11,7 +11,6 @@
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/function/load.hpp>
 #include <eve/function/any.hpp>
-#include <eve/constant/false.hpp>
 #include <array>
 #include <list>
 
@@ -61,8 +60,6 @@ EVE_TEST_TYPES( "Check load to wides from unaligned pointer", eve::test::simd::a
 
     // lanes value
     auto lanes = eve::lane<T::size()>;
-
-    using eve::false_;
 
     TTS_AND_THEN("load is applied on unaligned pointer for a specific cardinal")
     {
