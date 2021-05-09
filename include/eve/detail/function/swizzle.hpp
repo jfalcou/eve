@@ -12,7 +12,7 @@
 
 namespace eve
 {
-  EVE_DECLARE_CALLABLE(basic_swizzle_)
+  EVE_DECLARE_CALLABLE(basic_swizzle_, basic_swizzle)
 
   namespace detail
   {

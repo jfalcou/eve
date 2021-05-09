@@ -18,7 +18,7 @@
 #include <utility>
 #include <ostream>
 
-#define EVE_DECLARE_CALLABLE(TAG)                                                                  \
+#define EVE_DECLARE_CALLABLE(TAG,NAME)                                                             \
   namespace tag { struct TAG {}; }                                                                 \
                                                                                                    \
   template<typename C> struct if_;                                                                 \
@@ -36,31 +36,11 @@
     {                                                                                              \
       using tag_type    = tag::TAG;                                                                \
                                                                                                    \
-      template<value Condition>                                                                    \
-      EVE_FORCEINLINE constexpr auto operator[](Condition const &c) const noexcept                 \
-      requires( eve::supports_conditionnal<tag_type>::value )                                      \
-      {                                                                                            \
-        return  [cond = if_(to_logical(c))](auto const&... args) EVE_LAMBDA_FORCEINLINE            \
-                {                                                                                  \
-                  return callable_object{}(cond, args...);                                         \
-                };                                                                                 \
-      }                                                                                            \
-                                                                                                   \
-      template<conditional_expr Condition>                                                         \
-      EVE_FORCEINLINE constexpr auto operator[](Condition const &c) const noexcept                 \
-      requires( eve::supports_conditionnal<tag_type>::value )                                      \
-      {                                                                                            \
-        return  [c](auto const&... args) EVE_LAMBDA_FORCEINLINE                                    \
-                {                                                                                  \
-                  return callable_object{}(c, args...);                                            \
-                };                                                                                 \
-      }                                                                                            \
-                                                                                                   \
       template<typename Arg, typename... Args>                                                     \
       requires  (   tag_dispatchable<tag_type,Arg,Args...>                                         \
                 ||  supports_ ## TAG<Arg,Args...>                                                  \
                 )                                                                                  \
-      EVE_FORCEINLINE constexpr decltype(auto) operator()(Arg&& d, Args &&... args) const noexcept \
+      static EVE_FORCEINLINE constexpr auto call(Arg&& d, Args &&... args)  noexcept               \
       {                                                                                            \
         if constexpr( decorator<std::decay_t<Arg>> )                                               \
         {                                                                                          \
@@ -89,11 +69,43 @@
         }                                                                                          \
       }                                                                                            \
                                                                                                    \
+      template<typename... Args>                                                                   \
+      requires  (   tag_dispatchable<tag_type,Args...>                                             \
+                ||  supports_ ## TAG<Args...>                                                      \
+                )                                                                                  \
+      EVE_FORCEINLINE constexpr auto operator()(Args &&... args) const noexcept                    \
+      {                                                                                            \
+        return call(args...);                                                                      \
+      }                                                                                            \
+                                                                                                   \
       template<typename Arg, typename... Args>                                                     \
       requires  (   !tag_dispatchable<tag_type,Arg,Args...>                                        \
                 &&  !supports_ ## TAG<Arg,Args...>                                                 \
                 )                                                                                  \
-      EVE_FORCEINLINE constexpr auto operator()(Arg&& d, Args &&... args) const noexcept = delete; \
+      [[deprecated( "[EVE | Invalid Function Call] eve::" #NAME                                    \
+                    " is called with invalids argument types."                                     \
+                  )]]                                                                              \
+      EVE_FORCEINLINE constexpr auto operator()(Arg&& d, Args &&... args) const noexcept;          \
+                                                                                                   \
+      template<value Condition>                                                                    \
+      EVE_FORCEINLINE constexpr auto operator[](Condition const &c) const noexcept                 \
+      requires( eve::supports_conditional<tag_type>::value )                                       \
+      {                                                                                            \
+        return  [cond = if_(to_logical(c))](auto const&... args) EVE_LAMBDA_FORCEINLINE            \
+                {                                                                                  \
+                  return callable_object::call(cond, args...);                                     \
+                };                                                                                 \
+      }                                                                                            \
+                                                                                                   \
+      template<conditional_expr Condition>                                                         \
+      EVE_FORCEINLINE constexpr auto operator[](Condition const &c) const noexcept                 \
+      requires( eve::supports_conditional<tag_type>::value )                                       \
+      {                                                                                            \
+        return  [c](auto const&... args) EVE_LAMBDA_FORCEINLINE                                    \
+                {                                                                                  \
+                  return callable_object::call(c, args...);                                        \
+                };                                                                                 \
+      }                                                                                            \
     };                                                                                             \
   }                                                                                                \
 /**/
@@ -111,7 +123,7 @@
 /**/
 
 #define EVE_MAKE_CALLABLE(TAG, NAME)                                                                \
-  EVE_DECLARE_CALLABLE(TAG)                                                                         \
+  EVE_DECLARE_CALLABLE(TAG,NAME)                                                                    \
   EVE_CALLABLE_API(TAG,NAME)                                                                        \
   EVE_ALIAS_CALLABLE(TAG, NAME)                                                                     \
 /**/
@@ -194,7 +206,7 @@ namespace eve
   //==============================================================================================
   // Traits for foo[cond](...) supports
   template<typename Tag>
-  struct supports_conditionnal : std::true_type
+  struct supports_conditional : std::true_type
   {};
 
   //==============================================================================================
