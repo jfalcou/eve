@@ -59,7 +59,7 @@ EVE_TEST( "Check behavior of geommean(wide)"
   using v_t = eve::element_type_t<T>;
   TTS_ULP_EQUAL( geommean(a0, a1), map([](auto e, auto f) -> v_t { return (eve::sign(e)*eve::sign(f) >= 0) ?
                                            std::sqrt(e*f) :eve::nan(eve::as<v_t>()); }, a0, a1), 2);
-  TTS_ULP_EQUAL( geommean(a0, a1, a2), map([](auto e, auto f,  auto g) { return std::cbrt(e*f*g); }, a0, a1, a2), 2.5);
+  TTS_ULP_EQUAL( geommean(a0, a1, a2), map([](auto e, auto f,  auto g) { return std::cbrt(e*f*g); }, a0, a1, a2), 3);
 };
 
 //==================================================================================================
@@ -80,7 +80,7 @@ EVE_TEST( "Check behavior of diff(geommean)(simd)"
   using v_t =  eve::element_type_t<T>;
   TTS_ULP_EQUAL( eve::diff_1st(geommean)(a0, a2), map([](auto e, auto f) { return (eve::sign(e)*eve::sign(f) >= 0) ? std::sqrt(eve::abs(f))*std::sqrt(eve::abs(e))/e/2 :eve::nan(eve::as<v_t>()); }, a0, a2), 2);
   TTS_ULP_EQUAL( eve::diff_2nd(geommean)(a0, a2), map([](auto e, auto f) { return (eve::sign(e)*eve::sign(f) >= 0) ? std::sqrt(eve::abs(e))*std::sqrt(eve::abs(f))/f/2 :eve::nan(eve::as<v_t>()); }, a0, a2), 2);
-  TTS_ULP_EQUAL( eve::diff_1st(geommean)(a0, a1, a2), map([](auto e, auto f, auto g) { return std::cbrt(f*g)/eve::sqr(std::cbrt(e))/3; }, a0, a1, a2), 3);
-  TTS_ULP_EQUAL( eve::diff_2nd(geommean)(a0, a1, a2), map([](auto e, auto f, auto g) { return std::cbrt(e*g)/eve::sqr(std::cbrt(f))/3; }, a0, a1, a2), 3);
-  TTS_ULP_EQUAL( eve::diff_3rd(geommean)(a0, a1, a2), map([](auto e, auto f, auto g) { return std::cbrt(e*f)/eve::sqr(std::cbrt(g))/3; }, a0, a1, a2), 3);
+  TTS_ULP_EQUAL( eve::diff_1st(geommean)(a0, a1, a2), map([](auto e, auto f, auto g) { return std::cbrt(f*g)/eve::sqr(std::cbrt(e))/3; }, a0, a1, a2), 4);
+  TTS_ULP_EQUAL( eve::diff_2nd(geommean)(a0, a1, a2), map([](auto e, auto f, auto g) { return std::cbrt(e*g)/eve::sqr(std::cbrt(f))/3; }, a0, a1, a2), 4);
+  TTS_ULP_EQUAL( eve::diff_3rd(geommean)(a0, a1, a2), map([](auto e, auto f, auto g) { return std::cbrt(e*f)/eve::sqr(std::cbrt(g))/3; }, a0, a1, a2), 4);
  };
