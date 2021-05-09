@@ -10,6 +10,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/sqr.hpp>
+#include <eve/function/abs.hpp>
 #include <eve/function/sqrt.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
