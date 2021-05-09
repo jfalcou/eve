@@ -24,7 +24,6 @@
 #include <eve/function/is_not_nan.hpp>
 #include <eve/function/is_lez.hpp>
 #include <eve/function/is_not_less.hpp>
-#include <eve/function/lgamma.hpp>
 #include <eve/function/log.hpp>
 #include <eve/function/log1p.hpp>
 #include <eve/function/max.hpp>
@@ -41,12 +40,9 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/inf.hpp>
 #include <type_traits>
-#include <boost/math/special_functions/gamma.hpp>
-#include <tts/tts.hpp>
-#include <iomanip>
+
 namespace eve::detail
 {
-
   template<real_value T, real_value U>
   EVE_FORCEINLINE  auto gamma_pinv_(EVE_SUPPORTS(cpu_)
                               , T a

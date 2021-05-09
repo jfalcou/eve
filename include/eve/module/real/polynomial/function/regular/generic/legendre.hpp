@@ -23,7 +23,6 @@
 #include <eve/constant/one.hpp>
 #include <eve/constant/nan.hpp>
 #include <utility>
-#include <iostream>
 
 namespace eve::detail
 {
