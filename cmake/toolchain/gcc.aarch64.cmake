@@ -11,6 +11,6 @@ set(CMAKE_C_COMPILER    aarch64-linux-gnu-gcc-10  )
 set(CMAKE_CXX_COMPILER  aarch64-linux-gnu-g++-10  )
 set(CMAKE_BUILD_TYPE    Debug                     )
 
-set(CMAKE_CXX_FLAGS     "-DEVE_NO_FORCEINLINE ${EVE_OPTIONS}" )
+set(CMAKE_CXX_FLAGS     "-Wno-psabi -DEVE_NO_FORCEINLINE ${EVE_OPTIONS}" )
 
 set(CMAKE_CROSSCOMPILING_CMD qemu-aarch64)
