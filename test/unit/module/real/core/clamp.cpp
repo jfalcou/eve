@@ -35,22 +35,23 @@ EVE_TEST_TYPES( "Check return types of clamp"
 //==================================================================================================
 // clamp simd tests
 //==================================================================================================
-auto val1 = []< typename T>(eve::as_<T> const &){return (eve::valmax(eve::as(eve::element_type_t<T>()))/6); ;};
+auto val1 = []< typename T>(eve::as_<T> const &){return (eve::valmax(eve::as(eve::element_type_t<T>()))/2); ;};
 auto val2 = []< typename T>(eve::as_<T> const &){return (eve::valmax(eve::as(eve::element_type_t<T>()))/6)*2;};
 auto val3 = []< typename T>(eve::as_<T> const &){return (eve::valmax(eve::as(eve::element_type_t<T>()))/6)*3;};
 auto val4 = []< typename T>(eve::as_<T> const &){return (eve::valmax(eve::as(eve::element_type_t<T>()))/6)*4;};
 
 EVE_TEST( "Check behavior of clamp(wide) and diff  on all types"
         , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::randoms(val1       , val4)
-                              , eve::test::randoms(eve::valmin, val2)
-                              , eve::test::randoms(val3, eve::valmax)
+        , eve::test::generate ( eve::test::randoms(val1, val4)
+                              , eve::test::between(val1, val2)
+                              , eve::test::between(val2, val3)
                               )
         )<typename T>( T const& a0, T const& a1, T const& a2 )
 {
   using eve::clamp;
   using eve::diff;
   using v_t = eve::element_type_t<T>;
+
   TTS_EQUAL( clamp(a0, a1, a2), map([&](auto e, auto f, auto g) -> v_t{ return std::clamp(e, f, g); }, a0, a1, a2));
 
   if constexpr(eve::floating_real_value<T>)
