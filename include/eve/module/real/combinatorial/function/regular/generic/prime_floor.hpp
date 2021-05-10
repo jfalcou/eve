@@ -37,9 +37,9 @@ namespace eve::detail
          auto test = pmid <= n;
          first = if_else (test, mid, first);
          last =  if_else (test, last, mid);
-
       }
-      return nth_prime(first);
+      
+      return if_else(n <= 1 || n > 104729, zero, nth_prime(first));
     }
     else
       return apply_over(prime_floor, n);
