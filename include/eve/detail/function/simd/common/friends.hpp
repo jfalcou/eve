@@ -69,7 +69,10 @@ namespace eve::detail
       auto [wl, wh] = w.slice();
       return logical<wide<T,N>>{ self_logand(vl, wl), self_logand(vh, wh)};
     }
-    else if constexpr ( !abi_t::is_wide_logical ) return logical<wide<T,N>>(v.value & w.value);
+    else if constexpr ( !abi_t::is_wide_logical )
+    {
+      return logical<wide<T,N>>(v.storage().value & w.storage().value);
+    }
     else if constexpr ( !std::same_as<abi_t, eve::aggregated_> && sizeof(T) == sizeof(U) )
     {
       return bit_cast ( v.bits() & w.bits(), as(v) );
@@ -92,7 +95,10 @@ namespace eve::detail
       auto [wl, wh] = w.slice();
       return logical<wide<T,N>>{ self_logor(vl, wl), self_logor(vh, wh)};
     }
-    else if constexpr ( !abi_t::is_wide_logical ) return logical<wide<T,N>>(v.value | w.value);
+    else if constexpr ( !abi_t::is_wide_logical )
+    {
+      return logical<wide<T,N>>(v.storage().value & w.storage().value);
+    }
     else if constexpr ( !std::same_as<abi_t, eve::aggregated_> && sizeof(T) == sizeof(U) )
     {
       return bit_cast ( v.bits() | w.bits(), as(v) );
