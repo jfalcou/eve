@@ -53,7 +53,7 @@ test_targets()
 echo "::group::Running: 'cmake .. -G Ninja -DCMAKE_CXX_FLAGS="$1" $2'"
 mkdir build
 cd build
-cmake .. -G Ninja -DCMAKE_CXX_FLAGS="$1" $2
+cmake .. -G Ninja -DEVE_OPTIONS="$1" $2
 echo "::endgroup::"
 
 compile_targets ../cmake/toolchain/arch.targets.json
