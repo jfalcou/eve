@@ -27,7 +27,6 @@
 #include <eve/constant/zero.hpp>
 #include <eve/constant/one.hpp>
 #include <concepts>
-#include <iostream>
 
 namespace eve
 {

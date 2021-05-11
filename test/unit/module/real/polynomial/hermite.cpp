@@ -34,7 +34,7 @@ EVE_TEST_TYPES( "Check return types of hermite on wide"
 //==================================================================================================
 EVE_TEST( "Check behavior of hermite on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::ramp(-1.0, 1.0), eve::test::as_integer(eve::test::ramp(0)))
+        , eve::test::generate(eve::test::between(-1.0, 1.0), eve::test::as_integer(eve::test::ramp(0)))
         )
   <typename T, typename I>(T const& a0,I const & i0)
 {
@@ -67,7 +67,7 @@ EVE_TEST( "Check behavior of hermite on wide"
 //==================================================================================================
 EVE_TEST( "Check behavior of diff hermite on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::ramp(-1.0, 1.0), eve::test::as_integer(eve::test::ramp(0)))
+        , eve::test::generate(eve::test::between(-1.0, 1.0), eve::test::as_integer(eve::test::ramp(0)))
         )
   <typename T, typename I>(T const& a0,I const & i0)
 {
@@ -94,4 +94,4 @@ EVE_TEST( "Check behavior of diff hermite on wide"
       TTS_ULP_EQUAL(eve__hermitev(i0.get(j) , a0.get(n)), v_t(boost_hermderiv(i0.get(j), a0.get(n))), 100);
     }
   }
-}; 
+};

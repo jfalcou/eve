@@ -8,6 +8,8 @@
 #include "test.hpp"
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/constant/true.hpp>
+#include <eve/constant/false.hpp>
 #include <eve/function/is_infinite.hpp>
 #include <eve/logical.hpp>
 

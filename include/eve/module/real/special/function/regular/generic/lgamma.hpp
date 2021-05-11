@@ -321,7 +321,7 @@ namespace eve::detail
         {
           const T Maxlgamma =
               Ieee_constant<T, 0x7bc3f8eaU, 0x7f574c5dd06d2516ULL>(); // 2.035093e36f, 2.556348e305
-          auto lgamma_pos = [Logsqrt2pi](double x) {
+          auto lgamma_pos = [Logsqrt2pi](T x) {
             if( x < 13.0 )
             {
               T z = one(as<T>());

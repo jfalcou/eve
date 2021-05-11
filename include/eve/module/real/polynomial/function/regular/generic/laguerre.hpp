@@ -21,7 +21,6 @@
 #include <eve/function/oneminus.hpp>
 #include <eve/constant/one.hpp>
 #include <utility>
-#include <iostream>
 
 namespace eve::detail
 {

@@ -16,13 +16,12 @@
 
 namespace eve::detail
 {
-
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr T gamma_p_(EVE_SUPPORTS(cpu_)
                                   , diff_type<1> const &
                                   , T const &x
                                   , T const &k) noexcept
   {
-    return  exp(dec(k) * eve::log(x) - x - lgamma(k));
+    return exp(dec(k) * log(x) - x - lgamma(k));
   }
 }

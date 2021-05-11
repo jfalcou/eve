@@ -14,11 +14,14 @@
 #include <eve/function/average.hpp>
 #include <eve/function/log2.hpp>
 #include <eve/function/exp2.hpp>
+#include <eve/function/dec.hpp>
+#include <eve/function/inc.hpp>
+#include <eve/function/round.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
 #include <random>
-#include <iostream>
+
 namespace eve
 {
   template< eve::real_scalar_value T = double > struct tests_real_distribution
@@ -36,8 +39,8 @@ namespace eve
     tests_real_distribution() : tests_real_distribution(0.0, 0.1, 300) { }
 
     tests_real_distribution( T aa, T bb, int nbb = 300)
-      : a(eve::min(aa, bb)),
-        b(eve::max(aa, bb)),
+      : a(std::min(aa, bb)),
+        b(std::max(aa, bb)),
         nb(nbb),
         sd(T(0),T(1)),
         ird(1, nb-1){
@@ -72,11 +75,11 @@ namespace eve
         auto i = ird(gen);
         if (aa >= 1) // bb > aa
         {
-          auto la =  log2(aa);
-          auto f =  log2(bb)-la;
+          auto la =  eve::log2(aa);
+          auto f =  eve::log2(bb)-la;
           auto rand = sd(gen);
           auto x = la+f*(i-1+rand)/nb;
-          res = exp2(x);
+          res = eve::exp2(x);
         }
         else if (bb <= -1) // aa < bb
         {
@@ -157,12 +160,12 @@ namespace eve
       param_type(T aa, T bb, int nbb) : a(aa),  b(bb), nb(nbb){};
 
     };
-
+*
     tests_integral_distribution() : tests_integral_distribution(valmin(as<T>()), valmax(as<T>())) { }
 
     tests_integral_distribution( T aa, T bb, int nbb = 300)
-      : a(eve::min(aa, bb)),
-        b(eve::max(aa, bb)),
+      : a(std::min(aa, bb)),
+        b(std::max(aa, bb)),
         nb(nbb),
         sd(0.0, 1.0),
         ird(a, b),
@@ -193,8 +196,9 @@ namespace eve
       {
         res = ird(gen);
       }
-      auto l2 = [](auto x){return log2(inc(double(x)));   };
-      auto e2 = [](auto x){return dec(T(round(exp2(x)))); };
+
+      auto l2 = [](auto x){return eve::log2(eve::inc(double(x)));   };
+      auto e2 = [](auto x){return eve::dec(T(eve::round(eve::exp2(x)))); };
 
       if(aa == bb) res = aa;
       else

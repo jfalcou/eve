@@ -41,7 +41,6 @@
 #include <eve/function/sqr.hpp>
 #include <eve/module/real/core/detail/generic/horn.hpp>
 #include <type_traits>
-#include <iomanip>
 
 namespace eve::detail
 {

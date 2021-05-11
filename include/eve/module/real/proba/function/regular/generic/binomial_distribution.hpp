@@ -40,8 +40,6 @@
 #include <eve/constant/inf.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/zero.hpp>
-#include <iostream>
-#include <tts/tts.hpp>
 
 namespace eve
 {
@@ -465,13 +463,13 @@ namespace eve
     {
       auto twopie = T(17.0794684453471341309271017390931489900697770715304);
       if constexpr (floating_value<U> && floating_value<T>)
-        return half(as<T>())*eve::log(twopie*d.n*d.p*d.q); // + ô(1/n)
+        return half(as<T>())*eve::log(twopie*d.n*d.p*d.q); // + o(1/n)
       else if constexpr (floating_value<U>)
-        return half(as<U>())*eve::log(twopie*d.n*U(0.25)); // + ô(1/n)
+        return half(as<U>())*eve::log(twopie*d.n*U(0.25)); // + o(1/n)
       else if constexpr (floating_value<T>)
-        return half(as<T>())*eve::log(twopie*d.p*d.q); // + ô(1/n)
+        return half(as<T>())*eve::log(twopie*d.p*d.q); // + o(1/n)
       else
-        return half(as<I>())*eve::log(twopie*I(0.25)); // + ô(1/n)
+        return half(as<I>())*eve::log(twopie*I(0.25)); // + o(1/n)
     }
 
 

@@ -22,7 +22,6 @@
 #include <eve/constant/eps.hpp>
 #include <eve/traits/common_compatible.hpp>
 #include <utility>
-#include <iostream>
 
 namespace eve::detail
 {

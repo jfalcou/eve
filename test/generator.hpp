@@ -134,9 +134,11 @@ namespace eve::test
             {
               using elt_t = element_type_t<T>;
               auto n = amount<T>()-1;
-              elt_t a = n ? elt_t((v2-v1))/n : elt_t(0);
+              elt_t w1 = as_value(v1,as_<elt_t>{});
+              elt_t w2 = as_value(v2,as_<elt_t>{});
+              elt_t a = n ? elt_t((w2 - w1))/n : elt_t(0);
               std::array<elt_t, amount<T>()> d;
-              for(std::size_t i = 0;i<amount<T>();++i) d[i] = a*i+v1;
+              for(std::size_t i = 0;i<amount<T>();++i) d[i] = std::min( elt_t(a*i+w1), w2);
               return d;
             };
   }
