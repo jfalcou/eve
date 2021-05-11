@@ -11,6 +11,8 @@
 #include <eve/function/fma.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_infinite.hpp>
+#include <eve/function/is_eqz.hpp>
+#include <eve/function/is_nez.hpp>
 #include <eve/function/none.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/round.hpp>
@@ -20,6 +22,7 @@
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/concept/value.hpp>
 #include <array>
+#include <iostream>
 
 namespace eve::detail
 {
@@ -38,7 +41,6 @@ namespace eve::detail
                                      , T const & x
                                      , T const & tol) noexcept
   {
-
     if (has_native_abi_v<T>)
     {
       auto is_inf = is_infinite(x);
@@ -80,16 +82,14 @@ namespace eve::detail
                                      , T const & x
                                      , T const & tol) noexcept
   {
-    if (is_infinite(x)) return  std::array<T, 2>{sign(x), 0};;
+    if (is_infinite(x) || is_eqz(x)) return  std::array<T, 2>{sign(x), 0};
     auto n = round(x);
     auto d = one(as(x));
     auto frac = x-n;
     auto lastn = one(as(x));
     auto lastd = zero(as(x));
-    while(true)
+    while(abs(x - n/d) >=  tol)
     {
-      auto done = is_eqz(x) ||  (abs(x - n/d) < tol);
-      if (done) break;
       auto flip = rec(frac);
       auto step = round(flip);
       frac = flip- step;
