@@ -156,7 +156,8 @@ namespace eve::detail
                             , logical<wide<T, N, ABI>> const &h
           ) noexcept
   {
-    using type = typename logical<wide<T, typename N::combined_type>>::storage_type;
-    return type{(h.bitmap().to_ullong() << h.size()) | l.bitmap().to_ullong()};
+    using s_t = typename logical<wide<T, typename N::combined_type>>::storage_type;
+    using i_t  = typename s_t::type;
+    return s_t{ static_cast<i_t>((h.bitmap().to_ullong() << h.size()) | l.bitmap().to_ullong())};
   }
 }
