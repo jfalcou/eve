@@ -12,12 +12,15 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/function/saturated/abs.hpp>
 #include <eve/function/average.hpp>
+#include <eve/function/log2.hpp>
+#include <eve/function/exp2.hpp>
+#include <eve/function/dec.hpp>
+#include <eve/function/inc.hpp>
+#include <eve/function/round.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
-#include <iostream>
 #include <random>
-#include <cmath>
 
 namespace eve
 {
@@ -72,11 +75,11 @@ namespace eve
         auto i = ird(gen);
         if (aa >= 1) // bb > aa
         {
-          auto la =  log2(aa);
-          auto f =  log2(bb)-la;
+          auto la =  eve::log2(aa);
+          auto f =  eve::log2(bb)-la;
           auto rand = sd(gen);
           auto x = la+f*(i-1+rand)/nb;
-          res = exp2(x);
+          res = eve::exp2(x);
         }
         else if (bb <= -1) // aa < bb
         {
@@ -157,7 +160,7 @@ namespace eve
       param_type(T aa, T bb, int nbb) : a(aa),  b(bb), nb(nbb){};
 
     };
-
+*
     tests_integral_distribution() : tests_integral_distribution(valmin(as<T>()), valmax(as<T>())) { }
 
     tests_integral_distribution( T aa, T bb, int nbb = 300)
@@ -194,8 +197,8 @@ namespace eve
         res = ird(gen);
       }
 
-      auto l2 = [](auto x) { return std::log2(x+1);                         };
-      auto e2 = [](auto x) { return static_cast<T>(round(std::exp2(x)))-1;  };
+      auto l2 = [](auto x){return eve::log2(eve::inc(double(x)));   };
+      auto e2 = [](auto x){return eve::dec(T(eve::round(eve::exp2(x)))); };
 
       if(aa == bb) res = aa;
       else
