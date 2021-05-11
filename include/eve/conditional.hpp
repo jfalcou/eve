@@ -374,7 +374,7 @@ namespace eve
         using m_t = detail::make_integer_t<sz/8,unsigned>;
         m_t mask = (cnt >= sz) ? m_t(~0ULL) : m_t((1ULL << cnt) - 1);
 
-        return typename type::storage_type{mask << begin_};
+        return typename type::storage_type{static_cast<m_t>(mask << begin_)};
       }
       else
       {
