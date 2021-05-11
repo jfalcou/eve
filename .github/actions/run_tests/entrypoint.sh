@@ -28,11 +28,11 @@ compile_targets()
 test_target()
 {
   echo "::group::Running $1 tests" ;
-  ctest -R $1 -j $2;
-  compile=$?;
+  ctest --output-on-failure -R $1 -j $2;
+  tested=$?;
   echo "::endgroup::" ;
 
-  return $compile;
+  return $tested;
 }
 
 test_targets()
