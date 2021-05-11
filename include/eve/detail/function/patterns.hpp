@@ -56,7 +56,7 @@ namespace eve::detail
     {
       return bound{broadcast_group, st->first, st->second, sz};
     }
-    else  if constexpr( constexpr auto s = is_slide_left<I0,I...>)
+    else  if constexpr( constexpr auto s = is_slide_left<I0,I...>; s != 0)
     {
       return bound{slide_left, index<s>};
     }
