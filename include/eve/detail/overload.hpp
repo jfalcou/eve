@@ -57,7 +57,7 @@
                                                                                                    \
         if constexpr( tag_dispatchable<tag_type,Arg,Args...> )                                     \
         {                                                                                          \
-          return dispatcher ( tag_type{}                                                           \
+          return tagged_dispatch ( tag_type{}                                                      \
                             , std::forward<Arg>(d), std::forward<Args>(args)...                    \
                             );                                                                     \
         }                                                                                          \
@@ -181,17 +181,6 @@ namespace eve
     {
       { tagged_dispatch(tag, std::forward<Args>(args)...) };
     };
-
-    // Try to adl lookup the invocation
-    inline struct dispatcher_
-    {
-      template <typename Tag, typename... Args>
-      requires tag_dispatchable<Tag,Args...>
-      decltype(auto) operator()(Tag tag, Args&&... args) const
-      {
-        return tagged_dispatch(tag, std::forward<Args>(args)...);
-      }
-    } constexpr dispatcher;
   }
 
   //==============================================================================================
