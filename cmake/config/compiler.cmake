@@ -16,9 +16,12 @@ else()
 endif()
 
 target_include_directories( eve_test INTERFACE
-                            ${tts_SOURCE_DIR}/include
                             ${PROJECT_SOURCE_DIR}/test
                             ${PROJECT_SOURCE_DIR}/include
+                          )
+
+target_include_directories( eve_test SYSTEM INTERFACE
+                            ${tts_SOURCE_DIR}/include
                             ${Boost_INCLUDE_DIRS}
                           )
 
@@ -34,8 +37,11 @@ else()
 endif()
 
 target_include_directories( eve_bench INTERFACE
-                            ${tts_SOURCE_DIR}/include
                             ${PROJECT_SOURCE_DIR}/test
                             ${PROJECT_SOURCE_DIR}/include
+                          )
+
+target_include_directories( eve_bench SYSTEM INTERFACE
+                            ${tts_SOURCE_DIR}/include
                             ${Boost_INCLUDE_DIRS}
                           )
