@@ -87,6 +87,7 @@ namespace eve::detail
     auto frac = x-n;
     auto lastn = one(as(x));
     auto lastd = zero(as(x));
+
     while(abs(x - n/d) >=  tol)
     {
       auto flip = rec(frac);
