@@ -120,7 +120,7 @@ namespace eve::detail
           if( (is_infinite(a0)) ) return inf(as<T>());
           const T Maxlgamma =
               Ieee_constant<T, 0x7bc3f8eaU, 0x7f574c5dd06d2516ULL>(); // 2.035093e36f, 2.556348e305
-          auto lgamma_pos = [Logsqrt2pi](T x)  -> T {
+          auto lgamma_pos = [Logsqrt2pi](T x) {
             if( x < 6.5f )
             {
               T z  = one(as<T>());
@@ -212,7 +212,7 @@ namespace eve::detail
           auto   ltza0 = is_ltz(a0);
           size_t nb    = eve::count_true(ltza0);
           T      r {0};
-          auto   other = [Logsqrt2pi](T x)  -> T {
+          auto   other = [Logsqrt2pi](T x) {
             auto   xlt650 = is_less(x, T(6.50));
             size_t nb     = eve::count_true(xlt650);
             T      r0x    = x;
@@ -296,7 +296,7 @@ namespace eve::detail
           T r1 = other(q);
           if( nb > 0 ) // some are negative
           {
-            auto negative = [](T q, T w)  -> T {
+            auto negative = [](T q, T w) {
               T    p     = floor(q);
               T    z     = q - p;
               auto test2 = (z < half(as<T>()));
@@ -321,7 +321,7 @@ namespace eve::detail
         {
           const T Maxlgamma =
               Ieee_constant<T, 0x7bc3f8eaU, 0x7f574c5dd06d2516ULL>(); // 2.035093e36f, 2.556348e305
-          auto lgamma_pos = [Logsqrt2pi](T x)  -> T {
+          auto lgamma_pos = [Logsqrt2pi](T x) {
             if( x < 13.0 )
             {
               T z = one(as<T>());
@@ -389,7 +389,7 @@ namespace eve::detail
         }
         else if constexpr( simd_value<T> ) // simd double
         {
-          auto other = [Logsqrt2pi](T xx)  -> T {
+          auto other = [Logsqrt2pi](T xx) {
             T      x    = xx;
             auto   test = (x < T(13.0));
             size_t nb   = eve::count_true(test);
@@ -428,7 +428,7 @@ namespace eve::detail
             r2 += lgammaA(p) / xx;
             return if_else(test, r1, r2);
           };
-          auto large_negative = [Logpi](const T &q) -> T {
+          auto large_negative = [Logpi](const T &q) {
             T    w     = lgamma(q);
             T    p     = floor(q);
             T    z     = q - p;
