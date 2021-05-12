@@ -22,7 +22,6 @@
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/concept/value.hpp>
 #include <array>
-#include <iostream>
 
 namespace eve::detail
 {
