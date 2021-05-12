@@ -40,7 +40,7 @@ EVE_TEST( "Check behavior of eve::is_ordered(simd)"
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   a0.set(0, eve::nan(eve::as<v_t>()));
-  TTS_EQUAL(eve::is_ordered(a0, a1), map([](auto e, auto f) -> eve::logical<v_t> { return  (e == e) & (f == f); }, a0, a1));
+  TTS_EQUAL(eve::is_ordered(a0, a1), map([](auto e, auto f) -> eve::logical<v_t> { return  (e == e) && (f == f); }, a0, a1));
   TTS_EQUAL(eve::is_ordered(a0, v_t(1)), map([](auto e) -> eve::logical<v_t> { return  (e == e); }, a0));
   TTS_EQUAL(eve::is_ordered(v_t(14), a1), map([](auto e) -> eve::logical<v_t> { return (e == e); }, a1));
 };

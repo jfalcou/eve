@@ -35,8 +35,8 @@ namespace eve::detail
       else  if constexpr(c == category::float32x4  ) return s_t{_mm_cmp_ps_mask   (a, b, m) };
     }
     else  if constexpr(c == category::float64x4  ) return l_t(_mm256_cmp_pd   (a, b, m) );
-    else  if constexpr(c == category::float64x2  ) return l_t(_mm_cmpunord_pd (a, b)    );
+    else  if constexpr(c == category::float64x2  ) return l_t(_mm_cmpord_pd (a, b)    );
     else  if constexpr(c == category::float32x8  ) return l_t(_mm256_cmp_ps   (a, b, m) );
-    else  if constexpr(c == category::float32x4  ) return l_t(_mm_cmpunord_ps (a, b)    );
+    else  if constexpr(c == category::float32x4  ) return l_t(_mm_cmpord_ps (a, b)    );
   }
 }

@@ -18,7 +18,9 @@ namespace eve::detail
 {
   //================================================================================================
   template<typename T, typename U, typename N, x86_abi ABI>
-  EVE_FORCEINLINE auto self_logand(logical<wide<T,N,ABI>> v, logical<wide<U,N,ABI>> w) noexcept
+  EVE_FORCEINLINE auto self_logand( sse2_ const&
+                                  , logical<wide<T,N,ABI>> v, logical<wide<U,N,ABI>> w
+                                  ) noexcept
   {
     if constexpr( !use_is_wide_logical<ABI>::value )
     {
@@ -29,13 +31,15 @@ namespace eve::detail
     }
     else
     {
-      return bit_cast ( v.bits() & w.bits(), as(v) );
+      return self_logand(cpu_{},v,w);
     }
   }
 
   //================================================================================================
   template<typename T, typename U, typename N, x86_abi ABI>
-  EVE_FORCEINLINE auto self_logor(logical<wide<T,N,ABI>> v, logical<wide<U,N,ABI>> w) noexcept
+  EVE_FORCEINLINE auto self_logor ( sse2_ const&
+                                  , logical<wide<T,N,ABI>> v, logical<wide<U,N,ABI>> w
+                                  ) noexcept
   {
     if constexpr( !use_is_wide_logical<ABI>::value )
     {
@@ -46,7 +50,7 @@ namespace eve::detail
     }
     else
     {
-      return bit_cast ( v.bits() | w.bits(), as(v) );
+      return self_logor(cpu_{},v,w);
     }
   }
 
