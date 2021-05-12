@@ -83,10 +83,10 @@ namespace eve::detail
       auto src  = alternative(cx,v,as_<wide<T, N, ABI>>{});
       auto m    = expand_mask(cx,as_<wide<T, N, ABI>>{}).storage().value;
 
-            if constexpr(c && category::unsigned_ ) return if_else(cx,v,src);
+            if constexpr(c && category::unsigned_ ) return if_else(cx,eve::abs(v),src);
       else  if constexpr(c == category::float32x16) return _mm512_mask_abs_ps   (src,m,v);
       else  if constexpr(c == category::float64x8 ) return _mm512_mask_abs_pd   (src,m,v);
-      else  if constexpr(c && category::float_    ) return if_else(cx,v,src);
+      else  if constexpr(c && category::float_    ) return if_else(cx,eve::abs(v),src);
       else  if constexpr(c == category::int64x8   ) return _mm512_mask_abs_epi64(src,m,v);
       else  if constexpr(c == category::int64x4   ) return _mm256_mask_abs_epi64(src,m,v);
       else  if constexpr(c == category::int64x2   ) return _mm_mask_abs_epi64   (src,m,v);

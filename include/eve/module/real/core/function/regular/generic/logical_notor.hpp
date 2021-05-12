@@ -45,7 +45,7 @@ namespace eve::detail
   requires has_native_abi_v<T> && has_native_abi_v<U> && (cardinal_v<T> == cardinal_v<U>)
   {
     using abi_t = typename T::abi_type;
-         if constexpr ( !abi_t::is_wide_logical ) {  return a || !b; }
+         if constexpr ( !abi_t::is_wide_logical ) {  return !a || b; }
     else if constexpr(std::is_same_v<U, T>)       { return bit_cast(bit_notor(a.bits(), b.bits()), as_<as_logical_t<T>>()); }
     else                                          { return logical_notor(a, convert(b, as< logical<element_type_t<T>>>())); }
   }

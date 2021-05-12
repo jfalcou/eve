@@ -90,7 +90,6 @@ EVE_TEST( "Check behavior of gegenbauer diff on wide"
   {
     for(unsigned int n=0; n < eve::cardinal_v<T>; ++n)
     {
-     std::cout << "j " << j << " n " << n << std::endl;
       TTS_ULP_EQUAL(eve__gegenbauerv(i0.get(j) , a0.get(n)), v_t(boost::math::gegenbauer_derivative(i0.get(j), l, a0.get(n), 1u)), 15);
     }
  }

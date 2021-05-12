@@ -71,7 +71,10 @@ namespace eve::detail
     }
     else if constexpr ( !abi_t::is_wide_logical )
     {
-      return logical<wide<T,N>>(v.storage().value & w.storage().value);
+      using storage_t = typename logical<wide<T, N>>::storage_type;
+      using m_t       = typename storage_t::type;
+      m_t that = v.storage().value & w.storage().value;
+      return logical<wide<T, N>>(storage_t{that});
     }
     else if constexpr ( !std::same_as<abi_t, eve::aggregated_> && sizeof(T) == sizeof(U) )
     {
@@ -97,7 +100,10 @@ namespace eve::detail
     }
     else if constexpr ( !abi_t::is_wide_logical )
     {
-      return logical<wide<T,N>>(v.storage().value & w.storage().value);
+      using storage_t = typename logical<wide<T, N>>::storage_type;
+      using m_t       = typename storage_t::type;
+      m_t that = v.storage().value | w.storage().value;
+      return logical<wide<T, N>>(storage_t{that});
     }
     else if constexpr ( !std::same_as<abi_t, eve::aggregated_> && sizeof(T) == sizeof(U) )
     {
