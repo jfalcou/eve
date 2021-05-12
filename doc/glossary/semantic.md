@@ -1,11 +1,9 @@
-Glossary {#glossary}
-========
+Semantic of E.V.E functions {#glossary_semantic}
+===========================
 
 @tableofcontents
 
-@section glossary_semantic Semantic of E.V.E functions
-
-@subsection glossary_arithmetic Arithmetic operations semantic
+@section glossary_arithmetic Arithmetic operations semantic
 
 Let `x`, `y` and `z` be three values of respective types `T, U, V`.
 
@@ -32,7 +30,7 @@ In each case the return type is the compatibility result of the types of the thr
 
 These definition can easily be extended to the N parameters case.
 
-@subsection glossary_bitwise Bitwise operations semantic
+@section glossary_bitwise Bitwise operations semantic
 Let `x`, `y` be two values of respective types `T` and `U`.
 
 When invoking the function-call operator of an object `f`,  the calls `f(x,y)`
@@ -61,7 +59,7 @@ else
 
 The return type always has `T` as element type.
 
-@subsection glossary_logical Logical operations semantic
+@section glossary_logical Logical operations semantic
 
 Let `x`, `y` be two values of respective types `T` and `U`.
 
@@ -69,7 +67,7 @@ When invoking the function-call operator of an object `f`,  the calls `f(x,y)`
 will be reputed to respond to the **logical operations semantic**
 if the two types are ... TODO
 
-@subsection glossary_elementwise Element-wise operations
+@section glossary_elementwise Element-wise operations
 
 Let `x1`, `x2`, ..., `xn` be  values of respective types `X1` and `X2`, ... `Xn` which are mutually compatible.
 and let `C` be the compatibility result of these types.
@@ -92,28 +90,3 @@ respond to the **element-wise operations semantic** if it is semantically equiva
     r = f(x_1, ..., x_n);
   }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-@section glossary_properties Property of EVE types
-
-@subsection Cardinal
-The cardinal of a [value](reference/concepts.html#value) is the number of elements inside the
-corresponding SIMD register. For any [scalar types](reference/concepts.html#scalar_value), the
-cardinal is equal to 1. For [SIMD types](reference/concepts.html#simd_value), it's equal to the
-number of lanes in the register.
-
-**EVE** provides the [cardinal](reference/types/traits.html#cardinal) trait to access the cardinal
-of any type.
-
-@subsection Element type
-For any [value type](reference/concepts.html#value), **EVE** defines its underlying element type as
-the basic type used to represent its value. For any [scalar types](reference/concepts.html#scalar_value),
-its type is its own element type. For [SIMD types](reference/concepts.html#simd_value), it's defined
-as its associated scalar type.
-
-**EVE** provides the [element_type](reference/types/traits.html#element_type) trait to access the
-element type of any type.
-
-@subsection Type family
-The type family is based on the value concept a type satisfies. One says a type is from a scalar
-family if it satisfies the [scalar_value](reference/concepts.html#scalar_value) and from a SIMD
-family if it satisfies the [simd_value](reference/concepts.html#simd_value).

@@ -21,10 +21,10 @@ namespace eve
   ///
   /// Function object representing the computation of the absolute value.
   ///
-  /// ### Member functions
+  /// **Member functions:**
   ///
   /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  /// template<value T> auto operator()( T x ) const noexcept;
+  ///  template<value T> auto operator()( T x ) const noexcept;
   /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   ///
   /// Performs the  [element-wise](../../../glossary.html#element-wise_) absolute value operation

@@ -5,7 +5,7 @@
 #---------------------------------------------------------------------------
 PROJECT_NAME           = "E.V.E"
 PROJECT_NUMBER         = 0.1-beta
-PROJECT_BRIEF          = "The Expressive Vector Engine"
+PROJECT_BRIEF          = ""
 PROJECT_LOGO           = logo.png
 OUTPUT_DIRECTORY       = docs
 CREATE_SUBDIRS         = NO
@@ -56,9 +56,9 @@ WARN_IF_UNDOCUMENTED   = YES
 INPUT                  = ../include
 INPUT                 += .
 RECURSIVE              = YES
-EXCLUDE                = ../include/eve/detail
-EXCLUDE_SYMBOLS        = detail
-EXAMPLE_PATH           = ../test
+EXCLUDE                = ../include/eve/detail/
+EXCLUDE               += ../include/eve/module/
+EXAMPLE_PATH           = ../test/doc
 EXAMPLE_PATH          += ../docs/reference/out
 
 #---------------------------------------------------------------------------
@@ -76,6 +76,7 @@ ALPHABETICAL_INDEX     = YES
 # Configuration options related to the HTML output
 #---------------------------------------------------------------------------
 GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
 
 HTML_HEADER            = doxystrap-header.html
 HTML_FOOTER            = doxystrap-footer.html
