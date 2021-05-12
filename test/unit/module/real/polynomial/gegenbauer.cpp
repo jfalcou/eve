@@ -43,20 +43,20 @@ EVE_TEST( "Check behavior of gegenbauer on wide"
   for(unsigned int n=0; n < 5; ++n)
   {
     auto boost_gegenbauer =  [&](auto i, auto) { return boost::math::gegenbauer(n, l, a0.get(i)); };
-    TTS_ULP_EQUAL(eve__gegenbauerv(n, a0), T(boost_gegenbauer), 15);
+    TTS_ULP_EQUAL(eve__gegenbauerv(n, a0), T(boost_gegenbauer), 180);
   }
   auto boost_gegenbauerv =  [&](auto i, auto) { return boost::math::gegenbauer(i0.get(i), l, a0.get(i)); };
-  TTS_ULP_EQUAL(eve__gegenbauerv(i0    , a0), T(boost_gegenbauerv), 15);
+  TTS_ULP_EQUAL(eve__gegenbauerv(i0    , a0), T(boost_gegenbauerv), 180);
   for(unsigned int j=0; j < eve::cardinal_v<T>; ++j)
   {
     auto boost_gegenbauer2 =  [&](auto i, auto) { return boost::math::gegenbauer(i0.get(i), l, a0.get(j)); };
-    TTS_ULP_EQUAL(eve__gegenbauerv(i0 , a0.get(j)), T(boost_gegenbauer2), 15);
+    TTS_ULP_EQUAL(eve__gegenbauerv(i0 , a0.get(j)), T(boost_gegenbauer2), 180);
   }
   for(unsigned int j=0; j < eve::cardinal_v<T>; ++j)
   {
     for(unsigned int n=0; n < eve::cardinal_v<T>; ++n)
     {
-      TTS_ULP_EQUAL(eve__gegenbauerv(i0.get(j) , a0.get(n)), v_t(boost::math::gegenbauer(i0.get(j), l, a0.get(n))), 15);
+      TTS_ULP_EQUAL(eve__gegenbauerv(i0.get(j) , a0.get(n)), v_t(boost::math::gegenbauer(i0.get(j), l, a0.get(n))), 180);
     }
   }
 };
@@ -77,20 +77,20 @@ EVE_TEST( "Check behavior of gegenbauer diff on wide"
   for(unsigned int n=0; n < 5; ++n)
   {
     auto boost_gegenbauer =  [&](auto i, auto) { return boost::math::gegenbauer_derivative(n, l, a0.get(i), 1u); };
-    TTS_ULP_EQUAL(eve__gegenbauerv(n, a0), T(boost_gegenbauer), 15);
+    TTS_ULP_EQUAL(eve__gegenbauerv(n, a0), T(boost_gegenbauer), 180);
   }
   auto boost_gegenbauerv =  [&](auto i, auto) { return boost::math::gegenbauer_derivative(i0.get(i), l, a0.get(i), 1u); };
-  TTS_ULP_EQUAL(eve__gegenbauerv(i0    , a0), T(boost_gegenbauerv), 15);
+  TTS_ULP_EQUAL(eve__gegenbauerv(i0    , a0), T(boost_gegenbauerv), 180);
   for(unsigned int j=0; j < eve::cardinal_v<T>; ++j)
   {
     auto boost_gegenbauer2 =  [&](auto i, auto) { return boost::math::gegenbauer_derivative(i0.get(i), l, a0.get(j), 1u); };
-    TTS_ULP_EQUAL(eve__gegenbauerv(i0 , a0.get(j)), T(boost_gegenbauer2), 15);
+    TTS_ULP_EQUAL(eve__gegenbauerv(i0 , a0.get(j)), T(boost_gegenbauer2), 180);
   }
   for(unsigned int j=0; j < eve::cardinal_v<T>; ++j)
   {
     for(unsigned int n=0; n < eve::cardinal_v<T>; ++n)
     {
-      TTS_ULP_EQUAL(eve__gegenbauerv(i0.get(j) , a0.get(n)), v_t(boost::math::gegenbauer_derivative(i0.get(j), l, a0.get(n), 1u)), 15);
+      TTS_ULP_EQUAL(eve__gegenbauerv(i0.get(j) , a0.get(n)), v_t(boost::math::gegenbauer_derivative(i0.get(j), l, a0.get(n), 1u)), 180);
     }
  }
 };
