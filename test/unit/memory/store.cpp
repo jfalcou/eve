@@ -167,7 +167,7 @@ void store_ignore_test_pass(T what, eve::element_type_t<T> garbage_value, eve::e
 
   // ignore doesn't write garbarge values
   {
-    std::array<e_t, 256> data;
+    std::array<e_t, 2 * T::static_size> data;
     const T filler{garbage_value};
 
     auto run_one_case = [&](auto ptr, auto ignore)

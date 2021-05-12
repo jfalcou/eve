@@ -18,22 +18,40 @@ namespace eve::detail
 {
   //================================================================================================
   template<typename T, typename U, typename N, x86_abi ABI>
-  EVE_FORCEINLINE auto self_logand(logical<wide<T,N,ABI>> v, logical<wide<U,N,ABI>> w) noexcept
-  requires( !use_is_wide_logical<ABI>::value )
+  EVE_FORCEINLINE auto self_logand( sse2_ const&
+                                  , logical<wide<T,N,ABI>> v, logical<wide<U,N,ABI>> w
+                                  ) noexcept
   {
-    using storage_t = typename logical<wide<T, N, ABI>>::storage_type;
-    typename storage_t::type that = v.storage().value & w.storage().value;
-    return logical<wide<T, N, ABI>>(storage_t{that});
+    if constexpr( !use_is_wide_logical<ABI>::value )
+    {
+      using storage_t = typename logical<wide<T, N, ABI>>::storage_type;
+      using m_t       = typename storage_t::type;
+      m_t that = v.storage().value & w.storage().value;
+      return logical<wide<T, N, ABI>>(storage_t{that});
+    }
+    else
+    {
+      return self_logand(cpu_{},v,w);
+    }
   }
 
   //================================================================================================
   template<typename T, typename U, typename N, x86_abi ABI>
-  EVE_FORCEINLINE auto self_logor(logical<wide<T,N,ABI>> v, logical<wide<U,N,ABI>> w) noexcept
-  requires( !use_is_wide_logical<ABI>::value )
+  EVE_FORCEINLINE auto self_logor ( sse2_ const&
+                                  , logical<wide<T,N,ABI>> v, logical<wide<U,N,ABI>> w
+                                  ) noexcept
   {
-    using storage_t = typename logical<wide<T, N, ABI>>::storage_type;
-    typename storage_t::type that = v.storage().value | w.storage().value;
-    return logical<wide<T, N, ABI>>(storage_t{that});
+    if constexpr( !use_is_wide_logical<ABI>::value )
+    {
+      using storage_t = typename logical<wide<T, N, ABI>>::storage_type;
+      using m_t       = typename storage_t::type;
+      m_t that = v.storage().value | w.storage().value;
+      return logical<wide<T, N, ABI>>(storage_t{that});
+    }
+    else
+    {
+      return self_logor(cpu_{},v,w);
+    }
   }
 
   //================================================================================================

@@ -43,11 +43,24 @@ namespace eve::detail
       {
         if constexpr( current_api >= avx2)
         {
+          using i_t = as_integer_t<wide<T,N,ABI>>;
           constexpr auto offset = Shift * sizeof(T);
-          __m256i bv = _mm256_permute2x128_si256(v, v, 0x83);
-                if constexpr(offset == 16)  return bv;
-          else  if constexpr(offset <  16)  return _mm256_alignr_epi8(bv, v, offset);
-          else                              return _mm256_bsrli_epi128(bv, offset - 16);
+
+          i_t vi  = bit_cast(v, as_<i_t>{});
+          i_t bvi = _mm256_permute2x128_si256(vi, vi, 0x83);
+
+          if constexpr(offset == 16)
+          {
+            return bit_cast(bvi,as(v));
+          }
+          else  if constexpr(offset <  16)
+          {
+            return bit_cast(i_t(_mm256_alignr_epi8 (bvi, vi, offset)) , as(v));
+          }
+          else
+          {
+            return bit_cast(i_t(_mm256_bsrli_epi128(bvi, offset - 16)), as(v));
+          }
         }
         else
         {

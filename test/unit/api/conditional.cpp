@@ -14,6 +14,20 @@
 #include <eve/function/if_else.hpp>
 #include <eve/wide.hpp>
 
+#if defined(SPY_SIMD_IS_X86_AVX512)
+template<typename Type, typename Cond> void check_conditional_bits()
+{
+  using m_t = typename eve::logical<Type>::storage_type::type;
+  m_t bits_mask = m_t(~eve::detail::set_lower_n_bits<m_t>(Type::static_size));
+
+  for(std::size_t i = 0;i <= Type::static_size;i++)
+  {
+    auto ignore_mask = Cond(i).mask(eve::as_<Type>()).storage().value;
+    TTS_EQUAL( m_t(ignore_mask & bits_mask), m_t(0) );
+  }
+}
+#endif
+
 EVE_TEST_TYPES( "ignore_all behavior", eve::test::simd::all_types)
 <typename type>(eve::as_<type>)
 {
@@ -29,6 +43,10 @@ EVE_TEST_TYPES( "ignore_all behavior", eve::test::simd::all_types)
 
   TTS_EQUAL( ignore_all.mask( as_<type>() )           , eve::false_( as_<type>()) );
   TTS_EQUAL( (if_else(ignore_all,type(42), type(69))) , type(69)                  );
+
+#if defined(SPY_SIMD_IS_X86_AVX512)
+  TTS_EQUAL( ignore_all.mask(as_<type>()).storage().value, 0U );
+#endif
 };
 
 EVE_TEST_TYPES( "ignore_none behavior", eve::test::simd::all_types)
@@ -46,6 +64,49 @@ EVE_TEST_TYPES( "ignore_none behavior", eve::test::simd::all_types)
 
   TTS_EQUAL( ignore_none.mask( as_<type>() )            , eve::true_( as_<type>() )  );
   TTS_EQUAL( (if_else(ignore_none,type(42), type(69)))  , type(42)                  );
+
+#if defined(SPY_SIMD_IS_X86_AVX512)
+  using m_t = typename eve::logical<type>::storage_type::type;
+  TTS_EQUAL ( ignore_none.mask(as_<type>()).storage().value
+            , eve::detail::set_lower_n_bits<m_t>(type::static_size)
+            );
+#endif
+};
+
+EVE_TEST_TYPES( "keep_first behavior", eve::test::simd::all_types)
+<typename type>(eve::as_<type>)
+{
+  using eve::logical;
+  using eve::relative_conditional_expr;
+  using eve::keep_first;
+  using eve::if_else;
+  using eve::as_;
+
+  TTS_EXPECT( relative_conditional_expr<eve::keep_first>  );
+
+  type value = [](auto i, auto) { return 1+i; };
+
+  TTS_EXPR_IS(keep_first(0).mask( as_<type>() ), logical<type> );
+
+  TTS_EQUAL( keep_first(type::static_size).mask(as_<type>()).bits(), eve::true_(as_<type>()).bits());
+  TTS_EQUAL( (if_else(keep_first(type::static_size),value, type(69))), value                   );
+
+  for(std::size_t i = 1;i < type::static_size;i++)
+  {
+    logical<type> mref  = [i](std::size_t j, auto) { return j < i; };
+    type          ref   = [i,&value](std::size_t j, auto) { return (j < i) ? value.get(j) : 69.f; };
+
+    TTS_EQUAL( keep_first(i).mask(as_<type>()).bits(), mref.bits() );
+    TTS_EQUAL( (if_else(keep_first(i),value, type(69))), ref);
+
+  }
+
+  TTS_EQUAL( keep_first(0).mask(as_<type>()).bits(), eve::false_(as_<type>()).bits());
+  TTS_EQUAL( (if_else(keep_first(0),value, type(69))) , type(69)                    );
+
+#if defined(SPY_SIMD_IS_X86_AVX512)
+  check_conditional_bits<type, keep_first>();
+#endif
 };
 
 EVE_TEST_TYPES( "ignore_last behavior", eve::test::simd::all_types)
@@ -77,6 +138,10 @@ EVE_TEST_TYPES( "ignore_last behavior", eve::test::simd::all_types)
 
   TTS_EQUAL( ignore_last(type::static_size).mask(as_<type>())          , eve::false_( as_<type>() ) );
   TTS_EQUAL( (if_else(ignore_last(type::static_size),value, type(69))) , type(69)                  );
+
+#if defined(SPY_SIMD_IS_X86_AVX512)
+  check_conditional_bits<type, ignore_last>();
+#endif
 };
 
 EVE_TEST_TYPES( "keep_last behavior", eve::test::simd::all_types)
@@ -108,6 +173,10 @@ EVE_TEST_TYPES( "keep_last behavior", eve::test::simd::all_types)
 
   TTS_EQUAL( keep_last(0).mask(as_<type>()).bits(), eve::false_(as_<type>()).bits() );
   TTS_EQUAL( (if_else(keep_last(0),value, type(69))) , type(69)                     );
+
+#if defined(SPY_SIMD_IS_X86_AVX512)
+  check_conditional_bits<type, keep_last>();
+#endif
 };
 
 EVE_TEST_TYPES( "ignore_first behavior", eve::test::simd::all_types)
@@ -139,37 +208,10 @@ EVE_TEST_TYPES( "ignore_first behavior", eve::test::simd::all_types)
 
   TTS_EQUAL( ignore_first(type::static_size).mask(as_<type>()).bits(), eve::false_(as_<type>()).bits());
   TTS_EQUAL( (if_else(ignore_first(type::static_size),value, type(69))) , type(69)                );
-};
 
-EVE_TEST_TYPES( "keep_first behavior", eve::test::simd::all_types)
-<typename type>(eve::as_<type>)
-{
-  using eve::logical;
-  using eve::relative_conditional_expr;
-  using eve::keep_first;
-  using eve::if_else;
-  using eve::as_;
-
-  TTS_EXPECT( relative_conditional_expr<eve::keep_first>  );
-
-  type value = [](auto i, auto) { return 1+i; };
-
-  TTS_EXPR_IS(keep_first(0).mask( as_<type>() ), logical<type> );
-
-  TTS_EQUAL( keep_first(type::static_size).mask(as_<type>()).bits(), eve::true_(as_<type>()).bits());
-  TTS_EQUAL( (if_else(keep_first(type::static_size),value, type(69))), value                   );
-
-  for(std::size_t i = 1;i < type::static_size;i++)
-  {
-    logical<type> mref  = [i](std::size_t j, auto) { return j < i; };
-    type          ref   = [i,&value](std::size_t j, auto) { return (j < i) ? value.get(j) : 69.f; };
-
-    TTS_EQUAL( keep_first(i).mask(as_<type>()).bits(), mref.bits() );
-    TTS_EQUAL( (if_else(keep_first(i),value, type(69))), ref);
-  }
-
-  TTS_EQUAL( keep_first(0).mask(as_<type>()).bits(), eve::false_(as_<type>()).bits());
-  TTS_EQUAL( (if_else(keep_first(0),value, type(69))) , type(69)                    );
+#if defined(SPY_SIMD_IS_X86_AVX512)
+  check_conditional_bits<type,ignore_first>();
+#endif
 };
 
 EVE_TEST_TYPES( "keep_between behavior", eve::test::simd::all_types)
@@ -198,6 +240,14 @@ EVE_TEST_TYPES( "keep_between behavior", eve::test::simd::all_types)
 
         TTS_EQUAL( keep_between(fi,li).mask(as_<type>()).bits(), mref.bits() );
         TTS_EQUAL( (if_else(keep_between(fi,li),value, type(69))), ref);
+
+#if defined(SPY_SIMD_IS_X86_AVX512)
+        using m_t = typename eve::logical<type>::storage_type::type;
+        m_t bits_mask = m_t(~eve::detail::set_lower_n_bits<m_t>(type::static_size));
+
+        auto ignore_mask = keep_between(fi,li).mask(eve::as_<type>()).storage().value;
+        TTS_EQUAL( m_t(ignore_mask & bits_mask), m_t(0) );
+#endif
       }
     }
   }
@@ -231,6 +281,14 @@ EVE_TEST_TYPES( "ignore_first/last behavior", eve::test::simd::all_types)
       {
         TTS_EQUAL( (ignore_first(fi) && ignore_last(li)).mask(as_<type>()).bits(), mref.bits() );
         TTS_EQUAL( (if_else(ignore_first(fi) && ignore_last(li),value, type(69))), ref);
+
+#if defined(SPY_SIMD_IS_X86_AVX512)
+        using m_t = typename eve::logical<type>::storage_type::type;
+        m_t bits_mask = m_t(~eve::detail::set_lower_n_bits<m_t>(type::static_size));
+
+        auto ignore_mask = (ignore_first(fi) && ignore_last(li)).mask(eve::as_<type>()).storage().value;
+        TTS_EQUAL( m_t(ignore_mask & bits_mask), m_t(0) );
+#endif
       }
     }
   }

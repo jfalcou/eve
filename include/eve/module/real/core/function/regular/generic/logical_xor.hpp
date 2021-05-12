@@ -42,9 +42,24 @@ namespace eve::detail
   requires has_native_abi_v<T> && has_native_abi_v<U> && (cardinal_v<T> == cardinal_v<U>)
   {
     using abi_t = typename T::abi_type;
-         if constexpr ( !abi_t::is_wide_logical ) { return a != b; }
-    else if constexpr(std::is_same_v<U, T>){ return bit_cast(bit_xor(a.bits(), b.bits()), as_<as_logical_t<T>>()); }
-    else                                   { return logical_xor(a, convert(b, as< logical<element_type_t<T>>>())); }
+    if constexpr ( std::is_same_v<U, T> )
+    {
+      if constexpr ( !abi_t::is_wide_logical )
+      {
+        using s_t = typename logical<T>::storage_type;
+        using m_t = typename s_t::type;
+        m_t r = a.storage().value ^ b.storage().value;
+        return s_t{r};
+      }
+      else
+      {
+        return bit_cast(bit_xor(a.bits(), b.bits()), as_<as_logical_t<T>>());
+      }
+    }
+    else
+    {
+      return logical_xor(a, convert(b, as< logical<element_type_t<T>>>()));
+    }
   }
 
   template<simd_value T, scalar_value U>
@@ -93,13 +108,13 @@ namespace eve::detail
  template<logical_value T>
   EVE_FORCEINLINE auto logical_xor_(EVE_SUPPORTS(cpu_), T a, bool b) noexcept
   {
-    return  T{a} != b;
+    return  T{b} != a;
   }
 
   template<logical_value U>
   EVE_FORCEINLINE auto logical_xor_(EVE_SUPPORTS(cpu_), bool a, U b) noexcept
   {
-    return  U{b} != a;
+    return  U{a} != b;
   }
 
   EVE_FORCEINLINE  auto logical_xor_(EVE_SUPPORTS(cpu_)

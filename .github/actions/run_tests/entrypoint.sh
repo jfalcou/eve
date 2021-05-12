@@ -28,11 +28,11 @@ compile_targets()
 test_target()
 {
   echo "::group::Running $1 tests" ;
-  ctest -R $1 -j $2;
-  compile=$?;
+  ctest --output-on-failure -R $1 -j $2;
+  tested=$?;
   echo "::endgroup::" ;
 
-  return $compile;
+  return $tested;
 }
 
 test_targets()
@@ -50,10 +50,14 @@ test_targets()
   return 0;
 }
 
+echo "::group::Discovery CPU Capabilities"
+lscpu
+echo "::endgroup::"
+
 echo "::group::Running: 'cmake .. -G Ninja -DCMAKE_CXX_FLAGS="$1" $2'"
 mkdir build
 cd build
-cmake .. -G Ninja -DCMAKE_CXX_FLAGS="$1" $2
+cmake .. -G Ninja -DEVE_OPTIONS="$1" $2
 echo "::endgroup::"
 
 compile_targets ../cmake/toolchain/arch.targets.json

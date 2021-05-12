@@ -12,6 +12,7 @@
 #include <eve/concept/conditional.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/function/iota.hpp>
+#include <eve/detail/bits.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/traits/as_integer.hpp>
 #include <eve/traits/as_arithmetic.hpp>
@@ -266,6 +267,7 @@ namespace eve
         using m_t = detail::make_integer_t<(card < 8 ? 8 : card)/8,unsigned>;
 
         m_t mask = (count_ > 0) ? m_t(~0ULL << (card - count_)) : 0;
+            mask &= eve::detail::set_lower_n_bits<m_t>(T::static_size);
 
         return typename type::storage_type{mask};
       }
@@ -374,7 +376,7 @@ namespace eve
         using m_t = detail::make_integer_t<sz/8,unsigned>;
         m_t mask = (cnt >= sz) ? m_t(~0ULL) : m_t((1ULL << cnt) - 1);
 
-        return typename type::storage_type{mask << begin_};
+        return typename type::storage_type{static_cast<m_t>(mask << begin_)};
       }
       else
       {

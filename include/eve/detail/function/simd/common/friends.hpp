@@ -59,7 +59,7 @@ namespace eve::detail
 
   //================================================================================================
   template<typename T, typename U, typename N>
-  EVE_FORCEINLINE auto self_logand(logical<wide<T,N>> v, logical<wide<U,N>> w) noexcept
+  EVE_FORCEINLINE auto self_logand(cpu_ const&, logical<wide<T,N>> v, logical<wide<U,N>> w) noexcept
   {
     using abi_t = typename logical<wide<T,N>>::abi_type;
 
@@ -67,9 +67,17 @@ namespace eve::detail
     {
       auto [vl, vh] = v.slice();
       auto [wl, wh] = w.slice();
-      return logical<wide<T,N>>{ self_logand(vl, wl), self_logand(vh, wh)};
+      return logical<wide<T,N>> { self_logand(EVE_CURRENT_API{},vl, wl)
+                                , self_logand(EVE_CURRENT_API{},vh, wh)
+                                };
     }
-    else if constexpr ( !abi_t::is_wide_logical ) return logical<wide<T,N>>(v.value & w.value);
+    else if constexpr ( !abi_t::is_wide_logical )
+    {
+      using storage_t = typename logical<wide<T, N>>::storage_type;
+      using m_t       = typename storage_t::type;
+      m_t that = v.storage().value & w.storage().value;
+      return logical<wide<T, N>>(storage_t{that});
+    }
     else if constexpr ( !std::same_as<abi_t, eve::aggregated_> && sizeof(T) == sizeof(U) )
     {
       return bit_cast ( v.bits() & w.bits(), as(v) );
@@ -82,7 +90,7 @@ namespace eve::detail
 
   //================================================================================================
   template<typename T, typename U, typename N>
-  EVE_FORCEINLINE auto self_logor(logical<wide<T,N>> v, logical<wide<U,N>> w) noexcept
+  EVE_FORCEINLINE auto self_logor(cpu_ const&, logical<wide<T,N>> v, logical<wide<U,N>> w) noexcept
   {
     using abi_t = typename logical<wide<T,N>>::abi_type;
 
@@ -90,9 +98,17 @@ namespace eve::detail
     {
       auto [vl, vh] = v.slice();
       auto [wl, wh] = w.slice();
-      return logical<wide<T,N>>{ self_logor(vl, wl), self_logor(vh, wh)};
+      return logical<wide<T,N>> { self_logor(EVE_CURRENT_API{},vl, wl)
+                                , self_logor(EVE_CURRENT_API{},vh, wh)
+                                };
     }
-    else if constexpr ( !abi_t::is_wide_logical ) return logical<wide<T,N>>(v.value | w.value);
+    else if constexpr ( !abi_t::is_wide_logical )
+    {
+      using storage_t = typename logical<wide<T, N>>::storage_type;
+      using m_t       = typename storage_t::type;
+      m_t that = v.storage().value | w.storage().value;
+      return logical<wide<T, N>>(storage_t{that});
+    }
     else if constexpr ( !std::same_as<abi_t, eve::aggregated_> && sizeof(T) == sizeof(U) )
     {
       return bit_cast ( v.bits() | w.bits(), as(v) );

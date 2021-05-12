@@ -7,29 +7,33 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
-#include <type_traits>
+#include <eve/detail/category.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // 256 bits implementation
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto is_lessgreater_(EVE_SUPPORTS(avx_),
-                                       wide<T, N, x86_256_> const &v0,
-                                       wide<T, N, x86_256_> const &v1) noexcept
+  template<floating_real_scalar_value T, typename N, x86_abi ABI>
+  EVE_FORCEINLINE logical<wide<T, N, ABI>>
+  is_lessgreater_( EVE_SUPPORTS(sse2_), wide<T,N,ABI> const& a, wide<T,N,ABI> const& b) noexcept
   {
-    using t_t = wide<T, N, x86_256_>;
-    using l_t = as_logical_t<t_t>;
+    using l_t = logical<wide<T, N, ABI>>;
+    constexpr auto c = categorize<wide<T,N,ABI>>();
+    constexpr auto m = _CMP_NEQ_OQ;
 
-    if constexpr(std::is_same_v<T, float>)
-      return l_t(_mm256_cmp_ps(v0, v1, _CMP_NEQ_OQ));
-    else if constexpr(std::is_same_v<T, double>)
-      return l_t(_mm256_cmp_pd(v0, v1, _CMP_NEQ_OQ));
-    else if constexpr(std::is_integral_v<T>)
-      return aggregate(eve::is_lessgreater, v0, v1);
+    if constexpr( current_api >= eve::avx512 )
+    {
+      using s_t = typename l_t::storage_type;
+
+            if constexpr(c == category::float64x8  ) return s_t{_mm512_cmp_pd_mask(a, b, m) };
+      else  if constexpr(c == category::float64x4  ) return s_t{_mm256_cmp_pd_mask(a, b, m) };
+      else  if constexpr(c == category::float64x2  ) return s_t{_mm_cmp_pd_mask   (a, b, m) };
+      else  if constexpr(c == category::float32x16 ) return s_t{_mm512_cmp_ps_mask(a, b, m) };
+      else  if constexpr(c == category::float32x8  ) return s_t{_mm256_cmp_ps_mask(a, b, m) };
+      else  if constexpr(c == category::float32x4  ) return s_t{_mm_cmp_ps_mask   (a, b, m) };
+    }
+    else  if constexpr(c == category::float64x4  ) return l_t(_mm256_cmp_pd   (a, b, m) );
+    else  if constexpr(c == category::float32x8  ) return l_t(_mm256_cmp_ps   (a, b, m) );
+    else  return is_lessgreater_(EVE_RETARGET(cpu_), a, b);
   }
 }
-

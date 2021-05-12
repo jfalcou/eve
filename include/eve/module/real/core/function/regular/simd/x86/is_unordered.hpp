@@ -10,6 +10,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/constant/false.hpp>
 
 namespace eve::detail
 {

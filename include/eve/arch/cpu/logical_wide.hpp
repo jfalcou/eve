@@ -130,7 +130,7 @@ namespace eve
     template<typename U, typename A2>
     friend EVE_FORCEINLINE auto operator&&(logical const& v, logical<wide<U,Size,A2>> const& w) noexcept
     {
-      return detail::self_logand(v,w);
+      return detail::self_logand(EVE_CURRENT_API{},v,w);
     }
 
     friend EVE_FORCEINLINE auto operator&&(logical const& v, scalar_value auto w) noexcept
@@ -146,7 +146,7 @@ namespace eve
     template<typename U, typename A2>
     friend EVE_FORCEINLINE auto operator||(logical const& v, logical<wide<U,Size,A2>> const& w) noexcept
     {
-      return detail::self_logor(v,w);
+      return detail::self_logor(EVE_CURRENT_API{},v,w);
     }
 
     friend EVE_FORCEINLINE auto operator||(logical const& v, scalar_value auto w) noexcept

@@ -95,7 +95,7 @@ namespace eve::detail
       {
         constexpr auto c = categorize<wide<T, N, ABI>>();
 
-        auto m = cond.mask(as(v));
+        auto m = cond.mask(as_<as_integer_t<wide<T, N, ABI>>>{});
 
              if constexpr ( c == category::float64x2 )                         _mm_maskstore_pd   (ptr, m, v);
         else if constexpr ( c == category::float64x4 )                         _mm256_maskstore_pd(ptr, m, v);
