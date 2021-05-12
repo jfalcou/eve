@@ -17,6 +17,17 @@ else()
 endif()
 
 ##==================================================================================================
+## Find Doxygen
+##==================================================================================================
+find_package(Doxygen QUIET)
+
+if (DOXYGEN_FOUND)
+  message( STATUS "[eve] Doxygen available")
+else (DOXYGEN_FOUND)
+  message( STATUS "[eve] Doxygen need to be installed to generate the doxygen documentation")
+endif (DOXYGEN_FOUND)
+
+##==================================================================================================
 ## Fetch TTS
 ##==================================================================================================
 set(TTS_BUILD_TEST    OFF CACHE INTERNAL "OFF")
