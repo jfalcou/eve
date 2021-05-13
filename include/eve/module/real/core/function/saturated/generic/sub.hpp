@@ -27,6 +27,10 @@
 #include <eve/function/is_ltz.hpp>
 #include <eve/function/saturate.hpp>
 #include <eve/function/saturated.hpp>
+#include <eve/function/add.hpp>
+#include <eve/function/sub.hpp>
+#include <eve/function/min.hpp>
+#include <eve/function/max.hpp>
 
 #include <limits>
 
@@ -55,21 +59,10 @@ namespace eve::detail
     {
       if constexpr( sizeof(T) >= 4 )
       {
-        using u_t = std::make_unsigned_t<T>;
-        enum sizee
-        {
-          value = sizeof(T) * 8 - 1
-        };
-
-        u_t ux  = a;
-        u_t uy  = b;
-        u_t res = ux - uy;
-
-        ux = (ux >> sizee::value) + std::numeric_limits<T>::max();
-
-        if( T((ux ^ uy) & (ux ^ res)) < T(0) )
-          res = ux;
-        return static_cast<T>(res);
+        auto test = is_ltz(b);
+        auto pos  = min(add(valmax(as(a)), b), a);
+        auto neg  = max(add(valmin(as(a)), b), a);
+        return sub(b, if_else(test, neg, pos));
       }
       else
       {
@@ -98,25 +91,10 @@ namespace eve::detail
     {
       if constexpr( signed_integral_value<T> )
       {
-        using elt_t = element_type_t<T>;
-        if constexpr( sizeof(elt_t) >= 4 )
-        {
-          //          using su_t =  std::conditional_t<sizeof(elt_t) == 4, uint32_t, uint64_t>;
-          //           using u_t = as_wide < su_t, cardinal_t<T>>;
-          using u_t = as_integer_t<T, unsigned>;
-          auto ux   = bit_cast(a, as_<u_t>());
-          auto uy   = bit_cast(b, as(ux));
-          u_t  res  = ux - uy;
-
-          ux = (ux >> (sizeof(elt_t) * 8 - 1)) + u_t(valmax(eve::as<elt_t>()));
-          return bit_cast(
-              if_else(is_ltz(bit_cast(bit_and(bit_xor(ux, uy), bit_xor(ux, res)), as(a))), ux, res),
-              as(a));
-        }
-        else
-        {
-          return map(saturated(sub), a, b);
-        }
+        auto test = is_ltz(b);
+        auto pos  = min(add(valmax(as(a)), b), a);
+        auto neg  = max(add(valmin(as(a)), b), a);
+        return sub(b, if_else(test, neg, pos));
       }
       else if constexpr( unsigned_value<T> )
       {
