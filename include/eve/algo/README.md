@@ -40,6 +40,15 @@ The main model is `unaligned_ptr_iterator`
 
 iterator that can represent any position in the underlying range.
 
+### iteration pattern (concept)
+
+A reusable component to do `while(f != l) ++f;`.
+Given traits, f, l, delegate calls the delegate for each piece with (f, ignore).
+The specific api of the delegate varies by iteration pattern.
+
+Main one is `for_each_iteration`.
+However for some algorithms, like `reverse` and maybe `partition` it's not a good.
+
 ### concepts
 
 * `unaligned_t` -> a convinience to get the unaligned type.
@@ -56,3 +65,23 @@ iterator that can represent any position in the underlying range.
 * `unaligned_ptr_iterator`
 
 A pointer + cardinal with the `iterator` interface.
+
+### preprocess_range
+
+* `preprocess_range`
+
+Given a more general notion of a range + traits returns enhanced traits +
+iterator/sentinel pair that is understood by eve.
+
+### for_each_iteration
+
+`for_each_iteration(traits, f, l)`
+
+_TODO_: we need some way to know where the iteration pattern starts from before actually doing anything. Example is `remove` it needs the base of where to start writing and it has to be there at the time of delegate creation.
+
+The basic iteration pattern. A simd version of `while (f != l)`.
+Delegate needs to implement `step(iterator, relative_condtional_expr)` and
+_TODO_ `step_unrolled(iterator)` if the `unroll` trait is bigger than 1.
+`iterator` type from steps is not guarantied to match `decltype(f)` (for when we know we can align the input for example).
+
+`step` returns `true` if it wants to break or `false` to continue.
