@@ -33,22 +33,17 @@ namespace eve::detail
     friend cmn<B,std::max(S1,S2),std::max(V1,V2)> operator%(cmn<A,S1,V1>, cmn<B,S2,V2>);
   };
 
-  // Use a layer of std::void_t to make common_compatible SFINAE-friendly
-  template<typename L, typename Enable = void>
-  struct  common_compatible_impl
-  {};
+  template<typename... Ts>
+  using cmn_t = decltype( (detail::cmn< Ts
+                                      , scalar_value<Ts>
+                                      , simd_value<Ts>
+                                      >{}
+                          % ... )
+                        );
 
   template<typename... Ts>
-  struct  common_compatible_impl< types<Ts...>
-                                , std::enable_if_t< decltype( (detail::cmn< Ts
-                                                                          , scalar_value<Ts>
-                                                                          , simd_value<Ts>
-                                                                          >{}
-                                                              % ... )
-                                                            )::is_valid
-                                                  >
-                                >
-        : decltype( (detail::cmn<Ts,scalar_value<Ts>,simd_value<Ts>>{} % ... ) )
+  requires( cmn_t<Ts...>::is_valid )
+  struct  common_compatible_impl : cmn_t<Ts...>
   {};
 }
 
