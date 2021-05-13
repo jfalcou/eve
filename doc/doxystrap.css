@@ -4,6 +4,12 @@ h1, .h1, h2, .h2, h3, .h3{
   font-weight: 200 !important;
 }
 
+h4:after
+{
+    content:' ';
+    display:block;
+    border:0.1px solid #cccccc88;
+}
 /* Wrapper for page content to push down footer */
 #wrap {
   min-height: 100%;
@@ -573,4 +579,8 @@ code {
   font-size: 100% !important;
   color: #3c763d !important;
   background-color: #b6d7a83b !important;
+}
+
+.tparams .paramname {
+  padding-right: 10px !important;
 }
