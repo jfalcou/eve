@@ -1,15 +1,14 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
 #include <eve/concept/value.hpp>
 #include <eve/traits/as_floating_point.hpp>
-#include <concepts>
 
 namespace eve::detail
 {
@@ -55,7 +54,49 @@ namespace eve::detail
 
 namespace eve
 {
-  template<typename... Ts> struct common_compatible;
+  //================================================================================================
+  //! @addtogroup traits Type Traits
+  //! @{
+  //!
+  //! @struct common_compatible
+  //!
+  //! @brief Computes the type compatible with a list of [values](@ref value)
+  //!
+  //! If all `Ts...` are all identical to a given `T` and model eve::value, provides the member
+  //! typedef `type` which is defined as `T`.
+  //!
+  //! If `Ts...` contains a set of types modeling eve::scalar_value and a set of types modeling
+  //! eve::simd_value all identical to a given `T`, provides the member typedef `type` which is
+  //! defined as `T`.
+  //!
+  //! Otherwise, the program is ill-formed.
+  //!
+  //! @tparam Ts Variadic list of types to process
+  //!
+  //! #### Member types
+  //!
+  //! |Name   | Definition                                      |
+  //! |:------|:------------------------------------------------|
+  //! |`type` | The type defined as compatible with all `Ts...` |
+  //!
+  //! <br/>
+  //! #### Helper types
+  //!
+  //! @code{.cpp}
+  //! template<typename Ts...>
+  //! using common_compatible_t = typename common_compatible<Ts...>::type;
+  //! @endcode
+  //!
+  //! <br/>
+  //! #### Example
+  //!
+  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/h8eePWxn3)
+  //!
+  //! @include{lineno} doc/traits/common_compatible.cpp
+  //!
+  //! @}
+  //================================================================================================
+  template<typename... Ts> struct common_compatible {};
 
   template<typename T> struct common_compatible<T>
   {
@@ -68,11 +109,4 @@ namespace eve
 
   template<typename... Ts>
   using common_compatible_t = typename common_compatible<Ts...>::type;
-
-
-  template < typename... Ts> using common_compatible_floating_t =
-    as_floating_point_t<common_compatible_t<Ts...>>;
-
-  template < typename... Ts> using common_compatible_floating_elt_t =
-    element_type_t<common_compatible_floating_t<Ts...>>;
 }

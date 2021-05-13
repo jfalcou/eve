@@ -3,10 +3,5 @@
 ##  Copyright : EVE Contributors & Maintainers
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
-##==================================================================================================
 
-add_subdirectory(constant)
-add_subdirectory(core)
-#add_subdirectory(diff)
-add_subdirectory(traits)
-add_subdirectory(tutorial)
+make_unit( "doc.traits" common_compatible.cpp )
