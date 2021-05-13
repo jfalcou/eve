@@ -32,7 +32,7 @@ namespace eve::detail
   //================================================================================================
   template<real_scalar_value In, typename N, real_scalar_value Out>
   EVE_FORCEINLINE wide<Out, N>
-  convert_(EVE_SUPPORTS(sse2_), wide<In, N, x86_128_> const &v0, as_<Out> const &tgt) noexcept
+  convert_(EVE_SUPPORTS(sse2_), wide<In, N, x86_128_> v0, as_<Out> const &tgt) noexcept
   {
     //==============================================================================================
     // Idempotent call
@@ -46,31 +46,88 @@ namespace eve::detail
     //==============================================================================================
     else if constexpr( std::is_same_v<Out, double> )
     {
-           if constexpr( std::is_same_v<In, float> && (N::value <= 2))
-      {
-        return _mm_cvtps_pd(v0);
-      }
-      else if constexpr( std::is_same_v<In, std::int32_t> && (N::value <= 2))
-      {
-        return _mm_cvtepi32_pd(v0);
-      }
-      else
-      {
-        return convert_(EVE_RETARGET(simd_), v0, tgt);
-      }
+      constexpr auto sz = N::value <= 2;
+            if constexpr( std::is_same_v<In, float>         && sz ) return _mm_cvtps_pd(v0);
+      else  if constexpr( std::is_same_v<In, std::int32_t>  && sz ) return _mm_cvtepi32_pd(v0);
+      else  return convert_(EVE_RETARGET(simd_), v0, tgt);
     }
     //==============================================================================================
     // Convert to float
     //==============================================================================================
     else if constexpr( std::is_same_v<Out, float> )
     {
-      if constexpr( std::is_same_v<In, double> && (N::value <= 2) )
+            if constexpr( std::is_same_v<In, double> && (N::value <= 2) ) return _mm_cvtpd_ps(v0);
+      else  if constexpr( std::is_same_v<In, std::int32_t> )              return _mm_cvtepi32_ps(v0);
+      else  return convert_(EVE_RETARGET(simd_), v0, tgt);
+    }
+    //==============================================================================================
+    // Convert to 64 bits integer
+    //==============================================================================================
+    else if constexpr( std::is_integral_v<Out> && (sizeof(Out) == 8) )
+    {
+      constexpr auto sz = N::value <= 2;
+
+      //============================================================================================
+      // 8 -> 64 bits
+      //============================================================================================
+      if constexpr( std::is_integral_v<In> && (sizeof(In) == 1))
       {
-        return _mm_cvtpd_ps(v0);
+        if constexpr( current_api >= sse4_1 )
+        {
+                if constexpr(  std::is_signed_v<In> && sz ) return _mm_cvtepi8_epi64(v0);
+          else  if constexpr( !std::is_signed_v<In> && sz ) return _mm_cvtepu8_epi64(v0);
+          else  return convert_(EVE_RETARGET(simd_), v0, tgt);
+        }
+        else
+        {
+          return convert_(EVE_RETARGET(simd_), v0, tgt);
+        }
       }
-      else if constexpr( std::is_same_v<In, std::int32_t> && (N::value <= 4) )
+      //============================================================================================
+      // 16 -> 64 bits
+      //============================================================================================
+      if constexpr( std::is_integral_v<In> && (sizeof(In) == 2))
       {
-        return _mm_cvtepi32_ps(v0);
+        if constexpr( current_api >= sse4_1 )
+        {
+                if constexpr(  std::is_signed_v<In> && sz ) return _mm_cvtepi16_epi64(v0);
+          else  if constexpr( !std::is_signed_v<In> && sz ) return _mm_cvtepu16_epi64(v0);
+          else  return convert_(EVE_RETARGET(simd_), v0, tgt);
+        }
+        else
+        {
+          return convert_(EVE_RETARGET(simd_), v0, tgt);
+        }
+      }
+      //============================================================================================
+      // 32 -> 64 bits
+      //============================================================================================
+      if constexpr( std::is_integral_v<In> && (sizeof(In) == 4))
+      {
+        if constexpr( current_api >= sse4_1 )
+        {
+                if constexpr(  std::is_signed_v<In> && sz ) return _mm_cvtepi32_epi64(v0);
+          else  if constexpr( !std::is_signed_v<In> && sz ) return _mm_cvtepu32_epi64(v0);
+          else  return convert_(EVE_RETARGET(simd_), v0, tgt);
+        }
+        else
+        {
+          auto const mask = [&]() { if constexpr(std::is_signed_v<In>)  return (v0<0).bits();
+                                    else                                return _mm_setzero_si128();
+                                  }();
+
+          if constexpr(N::value <= 2)
+          {
+            return _mm_unpacklo_epi32( v0, mask );
+          }
+          else
+          {
+            // clang can generate this from aggregate+above, but not gcc nor msvc
+            wide<Out, fixed<2>> l = _mm_unpacklo_epi32( v0, mask );
+            wide<Out, fixed<2>> h = _mm_unpackhi_epi32( v0, mask );
+            return wide<Out, N>(l,h);
+          }
+        }
       }
       else
       {
@@ -86,7 +143,7 @@ namespace eve::detail
       else if constexpr( std::is_same_v<In, double> && (N::value <= 2) ) return _mm_cvttpd_epi32(v0);
       else if constexpr (sizeof(In) == 1 && N() <= 4)
       {
-             if constexpr( eve::current_api < eve::sse4_1 )
+        if constexpr( eve::current_api < eve::sse4_1 )
         {
           using type16 = std::conditional_t<std::is_signed_v<In>, std::int16_t, std::uint16_t>;
           auto wide16 = eve::convert(v0, eve::as_<type16>{});
@@ -97,7 +154,7 @@ namespace eve::detail
       }
       else if constexpr (sizeof(In) == 2 && N() <= 4)
       {
-             if constexpr( eve::current_api < eve::sse4_1 )
+        if constexpr( eve::current_api < eve::sse4_1 )
         {
           auto const mask = [&]() { if constexpr(std::is_signed_v<In>)  return (v0<0).bits();
                                     else                                return _mm_setzero_si128();
@@ -133,20 +190,12 @@ namespace eve::detail
       //============================================================================================
       if constexpr( std::is_integral_v<In> && (sizeof(In) == 1) )
       {
+        constexpr auto sz = N::value <= 8;
         if constexpr( current_api >= sse4_1 )
         {
-          if constexpr( std::is_signed_v<In> && (N::value <= 8) )
-          {
-            return _mm_cvtepi8_epi16(v0);
-          }
-          else if constexpr( !std::is_signed_v<In>  && (N::value <= 8) )
-          {
-            return _mm_cvtepu8_epi16(v0);
-          }
-          else
-          {
-            return convert_(EVE_RETARGET(simd_), v0, tgt);
-          }
+                if constexpr(  std::is_signed_v<In> && sz ) return _mm_cvtepi8_epi16(v0);
+          else  if constexpr( !std::is_signed_v<In> && sz ) return _mm_cvtepu8_epi16(v0);
+          else  return convert_(EVE_RETARGET(simd_), v0, tgt);
         }
         else
         {
@@ -173,98 +222,38 @@ namespace eve::detail
       }
     }
     //==============================================================================================
-    // Convert to 64 bits integer
+    // Convert to 8 bits integer
     //==============================================================================================
-    else if constexpr( std::is_integral_v<Out> && (sizeof(Out) == 8) )
+    else if constexpr( std::is_integral_v<Out> && (sizeof(Out) == 1) )
     {
       //============================================================================================
-      // 8 -> 64 bits
+      // 16 -> 8 bits
       //============================================================================================
-      if constexpr( std::is_integral_v<In> && (sizeof(In) == 1))
+      if constexpr( sizeof(In) == 2 && (N::value <= 8) )
       {
-        if constexpr( current_api >= sse4_1 )
+              if constexpr(N::value == 1) return wide<Out,N>(v0.storage());
+        else  if constexpr(N::value <= 4)
         {
-          if constexpr( std::is_signed_v<In> && (N::value <= 2) )
-          {
-            return _mm_cvtepi8_epi64(v0);
-          }
-          else if constexpr( !std::is_signed_v<In>  && (N::value <= 2) )
-          {
-            return _mm_cvtepu8_epi64(v0);
-          }
-          else
-          {
-            return convert_(EVE_RETARGET(simd_), v0, tgt);
-          }
+          v0 &= static_cast<In>(0x00FFU);
+          return _mm_packus_epi16(v0,v0);
         }
         else
         {
-          return convert_(EVE_RETARGET(simd_), v0, tgt);
-        }
-      }
-      //============================================================================================
-      // 16 -> 64 bits
-      //============================================================================================
-      if constexpr( std::is_integral_v<In> && (sizeof(In) == 2))
-      {
-        if constexpr( current_api >= sse4_1 )
-        {
-          if constexpr( std::is_signed_v<In> && (N::value <= 2) )
-          {
-            return _mm_cvtepi16_epi64(v0);
-          }
-          else if constexpr( !std::is_signed_v<In>  && (N::value <= 2) )
-          {
-            return _mm_cvtepu16_epi64(v0);
-          }
-          else
-          {
-            return convert_(EVE_RETARGET(simd_), v0, tgt);
-          }
-        }
-        else
-        {
-          return convert_(EVE_RETARGET(simd_), v0, tgt);
-        }
-      }
-      //============================================================================================
-      // 32 -> 64 bits
-      //============================================================================================
-      if constexpr( std::is_integral_v<In> && (sizeof(In) == 4))
-      {
-        if constexpr( current_api >= sse4_1 )
-        {
-          if constexpr( std::is_signed_v<In> && (N::value <= 2) )
-          {
-            return _mm_cvtepi32_epi64(v0);
-          }
-          else if constexpr( !std::is_signed_v<In>  && (N::value <= 2) )
-          {
-            return _mm_cvtepu32_epi64(v0);
-          }
-          else
-          {
-            return convert_(EVE_RETARGET(simd_), v0, tgt);
-          }
-        }
-        else
-        {
-          auto const mask = [&]() { if constexpr(std::is_signed_v<In>)  return (v0<0).bits();
-                                    else                                return _mm_setzero_si128();
-                                  }();
+          auto[l,h] = v0.slice();
+          l &= static_cast<In>(0x00FFU);
+          h &= static_cast<In>(0x00FFU);
 
-          if constexpr(N::value <= 2)
-          {
-            return _mm_unpacklo_epi32( v0, mask );
-          }
-          else
-          {
-            // clang can generate this from aggregate+above, but not gcc nor msvc
-            wide<Out, fixed<2>> l = _mm_unpacklo_epi32( v0, mask );
-            wide<Out, fixed<2>> h = _mm_unpackhi_epi32( v0, mask );
-            return wide<Out, N>(l,h);
-          }
+          return _mm_packus_epi16(l,h);
         }
+      }
+      //============================================================================================
+      // 32 -> 8 bits
+      //============================================================================================
+      else if constexpr( std::is_integral_v<In> && sizeof(In) == 4 && (N::value <= 4) )
+      {
+              if constexpr(N::value == 1) return wide<Out,N>(v0.storage());
+        else  if constexpr(N::value == 2) return wide<Out,N>(v0.get(0),v0.get(1));
+        else  return convert(convert(v0, as_<downgrade_t<In>>()), as_<Out>());
       }
       else
       {

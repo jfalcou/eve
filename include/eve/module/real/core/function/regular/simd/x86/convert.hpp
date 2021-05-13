@@ -14,4 +14,5 @@
 #include <type_traits>
 
 #include <eve/module/real/core/function/regular/simd/x86/convert_128.hpp>
+#include <eve/module/real/core/function/regular/simd/x86/convert_aggregated.hpp>
 #include <eve/module/real/core/function/regular/simd/x86/convert_256.hpp>
