@@ -1,14 +1,26 @@
-Semantic of E.V.E functions {#glossary_semantic}
-===========================
+Semantic of EVE functions {#glossary_semantic}
+=========================
 
 @tableofcontents
+
+@section glossary_elementwise Element-wise operation
+
+For any [values](@ref eve::value) `x1`, ..., `xn` of types `T1`, ..., `Tn` so that the expression
+`using C = eve::common_compatible_t<T1,...,Tn>` is valid, a Callable Object `f` is said to have
+an **element-wise semantic** if the expression `C r = f(x1, ...,xn)` is semantically equivalent to:
+
+  - if C models eve::simd_value: `C r = [](auto i, auto) { return f(x_1.get(i),  ..., x_n.get(i)); }`
+  - if C models eve::scalar_value:  `C r = return f(x_1.get(i),  ..., x_n.get(i))`
+
+---
+<!-- TO REMASTER -->
 
 @section glossary_arithmetic Arithmetic operations semantic
 
 Let `x`, `y` and `z` be three values of respective types `T, U, V`.
 
 For any callable object `f`, the expression `f(x,y)` has an **arithmetic operations semantic**
-if `T` and `U`  are [compatible](../../concepts.html#compatible) [values](../../concepts.html#value)
+if `T` and `U`  are [compatible](@ref common_comaptible) [values](@ref value)
 and the call is semantically equivalent to:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
@@ -66,27 +78,3 @@ Let `x`, `y` be two values of respective types `T` and `U`.
 When invoking the function-call operator of an object `f`,  the calls `f(x,y)`
 will be reputed to respond to the **logical operations semantic**
 if the two types are ... TODO
-
-@section glossary_elementwise Element-wise operations
-
-Let `x1`, `x2`, ..., `xn` be  values of respective types `X1` and `X2`, ... `Xn` which are mutually compatible.
-and let `C` be the compatibility result of these types.
-
-When invoking the function-call operator of an object `f`, the call `f(x1, x2, ...)` will be reputed to
-respond to the **element-wise operations semantic** if it is semantically equivalent to:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  C x_1(x1), ..., x_n(xn);
-
-  if constexpr(simd_value<C>)
-  {
-    for(int i=0; i < cardinal_v<T>; ++i)
-    {
-      r[i] = f(x_1[i],  ..., x_n[i]);
-    }
-  }
-  else
-  {
-    r = f(x_1, ..., x_n);
-  }
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
