@@ -17,7 +17,18 @@
 namespace eve
 {
   //================================================================================================
-  // A type satisfies simd_value iff its cardinal is not scalar_cardinal
+  //! @addtogroup concepts
+  //! @{
+  //! @var simd_value
+  //! The concept `simd_value<T>` is satisfied if and only if T verifies that :
+  //!
+  //! <center>`std::is_same_v<cardinal_t<T>,scalar_cardinal> == false`</center>
+  //!
+  //! #### Examples
+  //!
+  //! - `eve::logical<eve::wide<char>>`
+  //! - `eve::wide<float>`
+  //! - `eve::wide<int, eve::fixed<1>>`
   //================================================================================================
   template<typename T> concept simd_value = !std::same_as<eve::cardinal_t<T>, scalar_cardinal>;
 

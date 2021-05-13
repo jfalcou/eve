@@ -1,13 +1,23 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
-// **=======================================================
-// helper file to include all arithmetic functions
+
+//================================================================================================
+//! @defgroup arithmetic Arithmetic functions
+//!
+//! These functions provide scalar and SIMD version of basic arithmetic functions.
+//!
+//! To keep the results homogeneous and coherent between SIMD and scalar mode, the types usable
+//! in those functions are required to satisfy `eve::compatible_values`
+//!
+//! **Convenience header:** @code{.cpp} #include <eve/function/arithmetic.hpp> @endcode
+//!
+//================================================================================================
 #include <eve/function/abs.hpp>
 #include <eve/function/arg.hpp>
 #include <eve/function/average.hpp>

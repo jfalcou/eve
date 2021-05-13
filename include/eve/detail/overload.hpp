@@ -113,11 +113,15 @@
   }
 /**/
 
+#if defined(EVE_DOXYGEN_INVOKED)
+#define EVE_MAKE_CALLABLE(TAG, NAME) inline constexpr callable_##TAG NAME = {};
+#else
 #define EVE_MAKE_CALLABLE(TAG, NAME)                                                                \
   EVE_DECLARE_CALLABLE(TAG,NAME)                                                                    \
   EVE_CALLABLE_API(TAG,NAME)                                                                        \
   EVE_ALIAS_CALLABLE(TAG, NAME)                                                                     \
 /**/
+#endif
 
 // Flag a function to support delayed calls on given architecture
 #define EVE_SUPPORTS(ARCH) delay_t const &, ARCH const &

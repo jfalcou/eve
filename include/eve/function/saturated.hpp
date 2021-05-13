@@ -21,6 +21,24 @@ namespace eve
   using saturated_type = decorated<saturated_()>;
 
   //================================================================================================
-  // Function decorator - saturated mode
+  //! @addtogroup decorator
+  //! @{
+  //! @var saturated
+  //!
+  //! #### Synopsis
+  //!
+  //! **Required header:** `#include <eve/function/saturated.hpp>`
+  //!
+  //! Higher-order callable object imbuing saturation semantic onto other Callables.
+  //!
+  //! @param f
+  //! An instance of eve::callable
+  //!
+  //! @return
+  //! A Callable object performing the same kind of operation but while taking care of saturating
+  //! its return value so that it always fit into the input type range.
+  //!
+  //!  @}
+  //================================================================================================
   inline constexpr saturated_type const saturated = {};
 }

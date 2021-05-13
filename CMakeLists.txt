@@ -24,6 +24,14 @@ endif()
 ## =================================================================================================
 include(config/options)
 include(config/install)
+include(config/dependencies)
+
+## =================================================================================================
+## Documentation target
+## =================================================================================================
+if( EVE_BUILD_DOCUMENTATION )
+  include(config/doxygen)
+endif()
 
 ## =================================================================================================
 ## Test and Benchmarks target
@@ -31,7 +39,6 @@ include(config/install)
 include(CTest)
 include(target/add_parent_target)
 include(target/targets)
-include(config/dependencies)
 include(config/compiler)
 include(config/types)
 include(config/pch)
