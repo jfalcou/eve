@@ -111,7 +111,7 @@ namespace eve::detail
               auto[l,h] = slice(v);
 
               // Slide higher parts as normal
-              auto h0 = slide_left(h, index<(Shift>(N::value/2)) ? N::value/2 : Shift>);
+              auto h0 = slide_left(h, index<Shift>);
 
               // Slide lower parts using _mm_alignr_epi8
               using byte_t = typename wide<T,N,ABI>::template rebind<std::uint8_t,fixed<16>>;
