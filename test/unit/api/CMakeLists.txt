@@ -29,6 +29,7 @@ make_unit("unit.api"  swizzle/broadcast.cpp             )
 make_unit("unit.api"  swizzle/identity.cpp              )
 make_unit("unit.api"  swizzle/reverse.cpp               )
 make_unit("unit.api"  swizzle/slide_left.cpp            )
+make_unit("unit.api"  swizzle/slide_right.cpp           )
 make_unit("unit.api"  swizzle/swap_adjacent_groups.cpp  )
 make_unit("unit.api"  swizzle/zero.cpp                  )
 
