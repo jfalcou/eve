@@ -160,7 +160,7 @@ namespace eve
       param_type(T aa, T bb, int nbb) : a(aa),  b(bb), nb(nbb){};
 
     };
-*
+
     tests_integral_distribution() : tests_integral_distribution(valmin(as<T>()), valmax(as<T>())) { }
 
     tests_integral_distribution( T aa, T bb, int nbb = 300)
