@@ -13,7 +13,10 @@
 
 template<std::ptrdiff_t Shift, std::ptrdiff_t N>
 inline constexpr
-auto slide_right_pattern = fix_pattern<N>([](auto i, auto ){ return i<Shift ? eve::na_ : i-Shift;});
+auto slide_right_pattern  = eve::fix_pattern<N>([](auto i, auto )
+                                                {
+                                                  return i<Shift ? eve::na_ : i-Shift;
+                                                });
 
 //==================================================================================================
 // slide_right test
@@ -40,11 +43,11 @@ EVE_TEST( "Check behavior of slide_right swizzle"
                 return l_t{ i >= Shift::value};
               };
 
-    TTS_EQUAL(eve::slide_right(simd,eve::index<Shift::value>)    , ref);
+    TTS_EQUAL(eve::slide_right(simd    ,eve::index<Shift::value>), ref);
     TTS_EQUAL(eve::slide_right(logicals,eve::index<Shift::value>), lref);
 
-    // TTS_EQUAL( (simd[slide_right_pattern<Shift::value,T::size()>])     , ref   );
-    // TTS_EQUAL( (logicals[slide_right_pattern<Shift::value,T::size()>]) , lref  );
+    TTS_EQUAL( (simd[slide_right_pattern<Shift::value,T::size()>])     , ref   );
+    TTS_EQUAL( (logicals[slide_right_pattern<Shift::value,T::size()>]) , lref  );
   }
   );
 };
