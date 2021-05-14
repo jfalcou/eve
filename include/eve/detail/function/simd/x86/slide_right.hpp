@@ -103,31 +103,19 @@ namespace eve::detail
             }
             else
             {
-              // Which side are we ?
-              constexpr bool phase = Shift > (N::value/2);
-
-              // Slide lower parts as normal
-              auto l = v.slice(lower_);
-              auto l0 = slide_right(l, index<phase ? N::value/2: Shift>);
-
-              // Compute how many bytes to realign
-              constexpr auto sz = sizeof(T) * (phase ? (N::value - Shift) : (N::value/2-Shift));
-
-              // Slide lower parts using _mm_alignr_epi8
               using byte_t = typename wide<T,N,ABI>::template rebind<std::uint8_t,fixed<16>>;
               using tgt_t  = as_<byte_t>;
 
-              if constexpr(phase)
-              {
-                byte_t bytes = _mm_alignr_epi8 ( bit_cast(l,tgt_t{}), bit_cast(l0,tgt_t{}), sz);
-                return wide<T,N,ABI>{l0,bit_cast(bytes, as(l0))};
-              }
-              else
-              {
-                auto h = v.slice(upper_);
-                byte_t bytes = _mm_alignr_epi8(bit_cast(h,tgt_t{}), bit_cast(l,tgt_t{}), sz);
-                return wide<T,N,ABI>{l0,bit_cast(bytes, as(l0))};
-              }
+              // Slide lower parts as normal
+              auto [l,h] = v.slice();
+              auto l0 = slide_right(l, index<Shift>);
+
+              // Compute how many bytes to realign
+              constexpr auto sz = sizeof(T) * (N::value/2-Shift);
+
+              // Slide lower parts using _mm_alignr_epi8
+              byte_t bytes = _mm_alignr_epi8(bit_cast(h,tgt_t{}), bit_cast(l,tgt_t{}), sz);
+              return wide<T,N,ABI>{l0,bit_cast(bytes, as(l0))};
             }
           }
         }
