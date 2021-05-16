@@ -47,7 +47,7 @@ namespace eve::detail
   {
     if constexpr(integral_value<T> )
     {
-      EVE_ASSERT(all((a!= 0) || (b!= 0)), "[eve] - saturated(div)(0, 0) is undefined");
+      EVE_ASSERT(eve::all((a!= 0) || (b!= 0)), "[eve] - saturated(div)(0, 0) is undefined");
     }
 
     if constexpr( floating_real_value<T> )

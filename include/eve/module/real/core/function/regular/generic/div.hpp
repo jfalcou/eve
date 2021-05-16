@@ -15,6 +15,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/function/all.hpp>
 #include <eve/function/is_eqz.hpp>
+#include <eve/function/is_nez.hpp>
 #include <eve/function/regular.hpp>
 #include <eve/function/replace.hpp>
 #include <eve/detail/skeleton_calls.hpp>
@@ -53,7 +54,7 @@ namespace eve::detail
         return trunc(div(a, b));
       else
       {
-        EVE_ASSERT(all(a!= 0), "[eve] - div(0, 0) is undefined");
+        EVE_ASSERT(eve::all(is_nez(a)), "[eve] - div(0, 0) is undefined");
         return div(a, b);
       }
     }
@@ -91,7 +92,7 @@ namespace eve::detail
     using r_t = common_compatible_t<T0, T1, Ts...>;
     r_t that(a1);
     that = mul(that,r_t(args)...);
-    EVE_ASSERT(all(is_nez(that)), "[eve] div - 0/0 is undefined");
+    EVE_ASSERT(eve::all(is_nez(that)), "[eve] div - 0/0 is undefined");
     return div(r_t(a0), that);
   }
 
