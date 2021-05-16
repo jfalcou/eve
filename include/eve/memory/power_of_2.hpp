@@ -1,9 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -13,24 +13,40 @@
 
 namespace eve
 {
-  template<std::integral T> constexpr bool is_power_of_2(T value) noexcept
+  //================================================================================================
+  //! @addtogroup utility
+  //! @{
+  //================================================================================================
+  //! @brief Checks if `v` is a power of two
+  //================================================================================================
+  template<std::integral T> constexpr bool is_power_of_2(T v) noexcept
   {
-    return (!(value & (value - 1)) && value);
+    return (!(v & (v - 1)) && v);
   }
 
-  template<std::integral T> constexpr T next_power_of_2(T value) noexcept
+  //================================================================================================
+  //! @brief Computes the power of two greater or equal to `v`
+  //================================================================================================
+  template<std::integral T> constexpr T next_power_of_2(T v) noexcept
   {
-    value--;
-    for(std::size_t i = 1; i < sizeof(value) * CHAR_BIT; i *= 2) value |= value >> i;
+    v--;
+    for(std::size_t i = 1; i < sizeof(v) * CHAR_BIT; i *= 2) v |= v >> i;
 
-    return ++value;
+    return ++v;
   }
 
-  template<std::integral T> constexpr T prev_power_of_2(T value) noexcept
+  //================================================================================================
+  //! @brief Computes the power of two lesser or equal to `v`
+  //================================================================================================
+  template<std::integral T> constexpr T prev_power_of_2(T v) noexcept
   {
-    for(std::size_t i = 1; i < sizeof(value) * CHAR_BIT; i *= 2) value |= value >> i;
+    for(std::size_t i = 1; i < sizeof(v) * CHAR_BIT; i *= 2) v |= v >> i;
 
-    return value ? (value >> 1) + 1 : value;
+    return v ? (v >> 1) + 1 : v;
   }
+
+  //================================================================================================
+  //! @}
+  //================================================================================================
 }
 
