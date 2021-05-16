@@ -11,6 +11,8 @@
 #include <eve/function/div.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/function/decorator.hpp>
+#include <eve/assert.hpp>
+#include <eve/function/all.hpp>
 
 namespace eve::detail
 {
@@ -21,7 +23,7 @@ namespace eve::detail
     using r_t = common_compatible_t<T0, T1, Ts...>;
     r_t that(a1);
     that = d(mul)(that,r_t(args)...);
-    EVE_ASSERT(all(is_nez(that)), "[eve] D()(div) - 0/0 is undefined");
+    EVE_ASSERT(eve::all(is_nez(that)), "[eve] D()(div) - 0/0 is undefined");
     return (D()(div))(r_t(a0), that);
   }
 
