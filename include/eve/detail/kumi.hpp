@@ -327,26 +327,16 @@ namespace kumi
     [[nodiscard]] static constexpr bool empty() noexcept { return sizeof...(Ts) == 0; }
 
     //==============================================================================================
-    // Conversions
+    // Conversion
     //==============================================================================================
     template<typename... Us>
-    requires( detail::piecewise_constructible<tuple<Us...>,tuple> )
-    explicit(!detail::piecewise_constructible<tuple<Us...>,tuple> )
-    constexpr operator tuple<Us...>() const
+    requires(     detail::piecewise_convertible<tuple,tuple<Us...>>
+              &&  (sizeof...(Us) == sizeof...(Ts))
+              &&  (!std::same_as<Ts,Us> && ...)
+            )
+    [[nodiscard]] inline constexpr auto cast() const
     {
-      return apply([](auto &&...elems) { return kumi::tuple{ static_cast<Us>(elems)...}; }, *this);
-    }
-
-    template<typename Type>
-    requires( detail::implicit_constructible<Type, Ts...> )
-    explicit(!detail::implicit_constructible<Type, Ts...> )
-    constexpr operator Type() const
-    {
-      return [&]<std::size_t... I>(std::index_sequence<I...>)
-      {
-        return Type{detail::get_leaf<I>(impl)...};
-      }
-      (std::make_index_sequence<sizeof...(Ts)>());
+      return apply([](auto &&...elems) { return tuple<Us...>{ static_cast<Us>(elems)...}; }, *this);
     }
 
     //==============================================================================================
@@ -446,6 +436,20 @@ namespace kumi
       [[nodiscard]] constexpr auto tuple<Ts...>::split(index_t<I0> const &) noexcept
   {
     return kumi::make_tuple(extract(index<0>, index<I0>), extract(index<I0>));
+  }
+
+  //================================================================================================
+  // Conversions to arbitrary types
+  //================================================================================================
+  template<typename Type, typename... Ts>
+  requires( !product_type<Type> && detail::implicit_constructible<Type, Ts...> )
+  [[nodiscard]] constexpr auto tuple_cast(tuple<Ts...> const& t)
+  {
+    return [&]<std::size_t... I>(std::index_sequence<I...>)
+    {
+      return Type{get<I>(t)...};
+    }
+    (std::make_index_sequence<sizeof...(Ts)>());
   }
 
   //================================================================================================
@@ -644,3 +648,5 @@ namespace std
   {
   };
 }
+
+#undef KUMI_FWD
