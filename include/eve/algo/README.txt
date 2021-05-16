@@ -49,6 +49,15 @@ The specific api of the delegate varies by iteration pattern.
 Main one is `for_each_iteration`.
 However for some algorithms, like `reverse` and maybe `partition` it's not a good.
 
+### traits
+
+* `traits`
+* `unroll`
+* `divisible_by_cardinal`
+
+traits is a way to customise the behaviour of the algorithm.
+Different algorithms support different customizations.
+
 ### concepts
 
 * `unaligned_t` -> a convinience to get the unaligned type.
