@@ -49,6 +49,15 @@ The specific api of the delegate varies by iteration pattern.
 Main one is `for_each_iteration`.
 However for some algorithms, like `reverse` and maybe `partition` it's not a good.
 
+### traits
+
+* `traits`
+* `unroll`
+* `divisible_by_cardinal`
+
+traits is a way to customise the behaviour of the algorithm.
+Different algorithms support different customizations.
+
 ### concepts
 
 * `unaligned_t` -> a convinience to get the unaligned type.
@@ -85,3 +94,12 @@ _TODO_ `step_unrolled(iterator)` if the `unroll` trait is bigger than 1.
 `iterator` type from steps is not guarantied to match `decltype(f)` (for when we know we can align the input for example).
 
 `step` returns `true` if it wants to break or `false` to continue.
+
+### unroll_op
+
+* `unroll_op(Op)`
+
+A helper to unroll loops.
+Calls an operation with an `eve::index` for each step.
+
+Operations should return true if it wants to break.

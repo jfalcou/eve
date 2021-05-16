@@ -17,6 +17,8 @@ add_custom_target(unit.algo.simd.exe  )
 make_unit("unit.algo" preprocess_range.cpp)
 make_unit("unit.algo" ptr_iterator.cpp)
 make_unit("unit.algo" traits.cpp)
+make_unit("unit.algo" unroll.cpp)
+
 
 # Algorithms
 make_unit("unit.algo" any_of.cpp)

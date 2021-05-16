@@ -10,7 +10,7 @@
 
 #include <eve/algo/traits.hpp>
 
-TTS_CASE("algo.traits")
+TTS_CASE("eve.algo basic traits testing")
 {
   {
     []<typename Traits>(Traits) {
