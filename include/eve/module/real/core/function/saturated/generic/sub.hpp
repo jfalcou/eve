@@ -25,6 +25,7 @@
 #include <eve/function/is_less.hpp>
 #include <eve/function/is_less_equal.hpp>
 #include <eve/function/is_ltz.hpp>
+#include <eve/function/is_lez.hpp>
 #include <eve/function/saturate.hpp>
 #include <eve/function/saturated.hpp>
 #include <eve/function/add.hpp>
@@ -62,7 +63,7 @@ namespace eve::detail
         auto test = is_ltz(b);
         auto pos  = min(add(valmax(as(a)), b), a);
         auto neg  = max(add(valmin(as(a)), b), a);
-        return sub(b, if_else(test, neg, pos));
+        return sub(if_else(test, pos, neg), b);
       }
       else
       {
@@ -91,10 +92,10 @@ namespace eve::detail
     {
       if constexpr( signed_integral_value<T> )
       {
-        auto test = is_ltz(b);
+        auto test = is_lez(b);
         auto pos  = min(add(valmax(as(a)), b), a);
         auto neg  = max(add(valmin(as(a)), b), a);
-        return sub(b, if_else(test, neg, pos));
+        return sub(if_else(test, pos, neg), b);
       }
       else if constexpr( unsigned_value<T> )
       {
