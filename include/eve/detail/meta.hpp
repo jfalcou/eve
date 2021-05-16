@@ -426,4 +426,15 @@ namespace eve::detail
       ( body( std::integral_constant<type,Iter>{} ), ...);
     }( std::make_integer_sequence<type,End - Begin>{});
   }
+
+  template<auto Begin, auto Step, auto End, typename Func>
+  EVE_FORCEINLINE constexpr bool for_until_(Func f)
+  {
+    using type = decltype(Begin);
+
+    return [&]<auto... Iter>( std::integer_sequence<type,Iter...> )
+    {
+      return ( f(std::integral_constant<type, Iter * Step>{} ) || ...);
+    }( std::make_integer_sequence<type,End - Begin>{});
+  }
 }

@@ -8,13 +8,14 @@
 
 #include "test.hpp"
 
-#include <eve/algo/unroll_op.hpp>
+#include <eve/detail/meta.hpp>
 
-TTS_CASE("eve.algo check unroll op") {
+
+TTS_CASE("eve::detail::for_until_") {
   {
     int i = 0;
-    bool res = eve::algo::unroll_op<4>([&]<std::ptrdiff_t j>(eve::index_t<j>)mutable {
-      TTS_EXPECT(i == j);
+    bool res = eve::detail::for_until_<0, 1, 4>([&](auto j)mutable {
+      TTS_EXPECT(i == j());
       ++i;
       return false;
     });
@@ -23,12 +24,12 @@ TTS_CASE("eve.algo check unroll op") {
   }
   {
     int i = 0;
-    bool res = eve::algo::unroll_op<4>([&]<std::ptrdiff_t j>(eve::index_t<j>)mutable {
-      TTS_EXPECT(i == j);
-      ++i;
-      return i == 2;
+    bool res = eve::detail::for_until_<0, 2, 8>([&](auto j) mutable {
+      TTS_EXPECT(i == j());
+      i += 2;
+      return i == 4;
     });
     TTS_EXPECT(res);
-    TTS_EXPECT(i == 2);
+    TTS_EXPECT(i == 4);
   }
 }

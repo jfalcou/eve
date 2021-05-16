@@ -8,10 +8,10 @@
 #pragma once
 
 #include <eve/algo/traits.hpp>
-#include <eve/algo/unroll_op.hpp>
 
 #include <eve/assert.hpp>
 #include <eve/conditional.hpp>
+#include <eve/detail/meta.hpp>
 
 #include <array>
 
@@ -64,7 +64,7 @@ namespace eve::algo
         bool should_break = false;
 
         // single steps
-        if( unroll_op<unrolling>([&](auto) mutable {
+        if( eve::detail::for_until_<0, 1, unrolling>([&](auto) mutable {
               reached_end = (f == l);
               if( reached_end )
                 return true;
@@ -81,10 +81,9 @@ namespace eve::algo
 
         while (big_steps_count) {
           std::array<I, unrolling> arr;
-          unroll_op<unrolling>([&](auto idx) mutable {
+          eve::detail::for_<0, 1, unrolling>([&](auto idx) mutable {
             arr[idx()] = f;
             f += step;
-            return false;
           });
           if (delegate.unrolled_step(arr)) return true;
           --big_steps_count;
