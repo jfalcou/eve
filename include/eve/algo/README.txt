@@ -4,6 +4,12 @@ algo is for stl/ranges style algorithms using simd.
 
 Main eve supports it's callables for scalars. We don't do that for algorithms. The code is still portable since the cpu emulation is enabled.
 
+# Algorithms
+
+* any_of
+
+# Helpers
+
 ### iterator (concept)
 
 *TODO*
@@ -67,6 +73,16 @@ Different algorithms support different customizations.
 
 * `operations_with_distance` -> provides boilerplate distance operations.
 * `forward_to_unaligned` -> provides boilerplate operations using `unaligned()`
+
+### array_utils
+
+* `array_map`
+* `array_reduce`
+
+Functional style utilites to perform common operations on arrays.
+For example, using `std::reduce` on a small array to compute a sum will no be efficient,
+since it will generate instructions that can be executed in parallel.
+`array_reduce` will.
 
 ### ptr_iterator
 

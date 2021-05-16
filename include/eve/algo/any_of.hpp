@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/algo/array_utils.hpp>
 #include <eve/algo/for_each_iteration.hpp>
 #include <eve/algo/preprocess_range.hpp>
 #include <eve/algo/traits.hpp>
@@ -37,18 +38,9 @@ namespace eve::algo
       template <typename I, std::size_t size>
       EVE_FORCEINLINE bool unrolled_step(std::array<I, size> arr)
       {
-        // TODO: Issue #710 to do the proper reduciton;
-        auto f = arr.begin(), l = arr.end();
-
-        eve::logical sum = p(eve::load(*f));
-        ++f;
-
-        while (f != l) {
-          sum = eve::logical_or(sum, p(eve::load(*f)));
-          ++f;
-        }
-
-        res = eve::any(sum);
+        auto tests = array_map(arr, [&](I it) { return p(eve::load(it)); });
+        auto overall = array_reduce(tests, eve::logical_or);
+        res = eve::any(overall);
         return res;
       }
 
