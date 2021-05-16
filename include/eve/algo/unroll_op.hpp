@@ -11,7 +11,8 @@
 
 namespace eve::algo
 {
-  template<std::ptrdiff_t how_much, typename Op> EVE_FORCEINLINE auto unroll_op(Op op)
+  template<std::ptrdiff_t how_much, typename Op>
+  EVE_FORCEINLINE auto unroll_op(Op op)
   {
     return [&]<std::ptrdiff_t... idxs>(std::integer_sequence<std::ptrdiff_t, idxs...>)
     {

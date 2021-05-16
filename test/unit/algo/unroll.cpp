@@ -13,20 +13,22 @@
 TTS_CASE("eve.algo check unroll op") {
   {
     int i = 0;
-    eve::algo::unroll_op<4>([&]<std::ptrdiff_t j>(eve::index_t<j>)mutable {
+    bool res = eve::algo::unroll_op<4>([&]<std::ptrdiff_t j>(eve::index_t<j>)mutable {
       TTS_EXPECT(i == j);
       ++i;
       return false;
     });
+    TTS_EXPECT_NOT(res);
     TTS_EXPECT(i == 4);
   }
   {
     int i = 0;
-    eve::algo::unroll_op<4>([&]<std::ptrdiff_t j>(eve::index_t<j>)mutable {
+    bool res = eve::algo::unroll_op<4>([&]<std::ptrdiff_t j>(eve::index_t<j>)mutable {
       TTS_EXPECT(i == j);
       ++i;
       return i == 2;
     });
+    TTS_EXPECT(res);
     TTS_EXPECT(i == 2);
   }
 }
