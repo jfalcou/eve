@@ -18,6 +18,7 @@
 #include <eve/function/bit_mask.hpp>
 #include <eve/function/bit_ornot.hpp>
 #include <eve/function/bit_select.hpp>
+#include <eve/function/minus.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/traits/common_compatible.hpp>
 
@@ -108,7 +109,7 @@ namespace eve::detail
       {
         if constexpr( std::same_as<Constant, callable_one_> )
         {
-          return -bit_ornot(-u, bit_mask(convert(cond, cvt{})));
+          return -bit_ornot(minus(u), bit_mask(convert(cond, cvt{})));
         }
         else if constexpr( std::same_as<Constant, callable_mone_> )
         {

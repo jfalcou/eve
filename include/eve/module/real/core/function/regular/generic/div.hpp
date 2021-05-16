@@ -16,8 +16,11 @@
 #include <eve/function/all.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/regular.hpp>
+#include <eve/function/replace.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/mul.hpp>
+#include <eve/function/logical_andnot.hpp>
+#include <eve/function/if_else.hpp>
 #include <eve/assert.hpp>
 
 #ifdef EVE_COMP_IS_MSVC
@@ -62,10 +65,11 @@ namespace eve::detail
   //== Masked case
   //================================================================================================
   template<conditional_expr C, real_value U, real_value V>
-  EVE_FORCEINLINE auto div_(EVE_SUPPORTS(cpu_), C const &cond, U const &t, V const &f) noexcept
+  EVE_FORCEINLINE auto div_(EVE_SUPPORTS(cpu_), C const &cond, U t, V f) noexcept
       requires compatible_values<U, V>
   {
-    return mask_op(  cond, eve::div, t, f);
+    auto g = if_else(cond, f, one);
+    return eve::div(t, g);
   }
 
   template<conditional_expr C, decorator D, real_value U, real_value V>
@@ -73,7 +77,8 @@ namespace eve::detail
   div_(EVE_SUPPORTS(cpu_), C const &cond, D const &, U const &t, V const &f) noexcept
       requires compatible_values<U, V>
   {
-    return mask_op(  cond, D()(div), t, f);
+    auto g = if_else(cond, f, one);
+    return D()(div)(t, g);
   }
 
   //================================================================================================
