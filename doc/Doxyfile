@@ -17,7 +17,9 @@ STRIP_FROM_INC_PATH    = ../include
 INHERIT_DOCS           = YES
 SEPARATE_MEMBER_PAGES  = YES
 TAB_SIZE               = 2
-ALIASES                =
+ALIASES               += callable="[Callable Object](https://en.cppreference.com/w/cpp/named_req/Callable)"
+ALIASES               += callable{1}="[Callable Object\1](https://en.cppreference.com/w/cpp/named_req/Callable)"
+ALIASES               += nullable="[NullablePointer](https://en.cppreference.com/w/cpp/named_req/NullablePointer)"
 MARKDOWN_SUPPORT       = YES
 TYPEDEF_HIDES_STRUCT   = NO
 NUM_PROC_THREADS       = 1
@@ -28,12 +30,12 @@ NUM_PROC_THREADS       = 1
 EXTRACT_ALL            = NO
 EXTRACT_PRIVATE        = NO
 EXTRACT_STATIC         = NO
-EXTRACT_LOCAL_CLASSES  = YES
+EXTRACT_LOCAL_CLASSES  = NO
 EXTRACT_LOCAL_METHODS  = NO
 EXTRACT_ANON_NSPACES   = NO
 HIDE_UNDOC_MEMBERS     = YES
 HIDE_UNDOC_CLASSES     = YES
-HIDE_FRIEND_COMPOUNDS  = NO
+HIDE_FRIEND_COMPOUNDS  = YES
 HIDE_IN_BODY_DOCS      = NO
 INTERNAL_DOCS          = NO
 CASE_SENSE_NAMES       = YES
@@ -59,6 +61,7 @@ INPUT                 += .
 RECURSIVE              = YES
 EXCLUDE                = ../include/eve/detail/
 EXCLUDE               += ../include/eve/module/
+EXCLUDE_SYMBOLS        = detail
 EXAMPLE_PATH           = ../test/doc
 EXAMPLE_PATH          += ../docs/reference/out
 

@@ -182,9 +182,10 @@ span.lineno a:hover {
 }
 
 div.groupHeader {
-  margin-left: 16px;
-  margin-top: 12px;
-  font-weight: bold;
+    margin-left: -8px;
+    margin-top: 12px;
+    font-weight: bold;
+    font-size: larger;
 }
 
 div.groupText {
@@ -488,6 +489,11 @@ span.icon.badge {
 
 .summary {
   text-align: right;
+}
+
+div.summary
+{
+  width: 100% !important;
 }
 
 .ingroups .el {

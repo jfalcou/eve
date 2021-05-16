@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['the_20expressive_20vector_20engine_16',['The Expressive Vector Engine',['../index.html',1,'']]],
-  ['tutorials_17',['Tutorials',['../tutorials.html',1,'']]],
-  ['type_20traits_18',['Type Traits',['../group__traits.html',1,'']]]
+  ['next_5fpower_5fof_5f2_29',['next_power_of_2',['../group__utility.html#gad47c55690b36ca096a9a5ffcb4e28b6f',1,'eve']]]
 ];

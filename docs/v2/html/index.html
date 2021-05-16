@@ -138,10 +138,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
 <div class="textblock"><p><a class="anchor" id="md__large_hdd_dev_project_eve_doc_index"></a></p>
 <p><b>EVE</b> is a new implementation of the previous <b>EVE</b> SIMD library by Falcou et al. which for a while was named Boost.SIMD. It's a C++20 and onward implementation of a type based wrapper around SIMD extensions sets for most current architectures. It aims at showing how C++20 can be used to design and implement efficient, low level, high abstraction library suited for high performances.</p>
 <p>It's a research project first and an open source library second. We reserve the right to change API and baseline compiler required until the first official 0.1 release. However, we'll try to minimize disruption. Semantic versioning will ensure API retro-compatibility if anything huge needs to change.</p>
-<h1><a class="anchor" id="autotoc_md13"></a>
+<h1><a class="anchor" id="autotoc_md15"></a>
 Current status</h1>
 <p><b>EVE</b> is considered in <b>Advanced BETA</b>: it's usable, has an almost complete feature sets for a sensible amount of instructions sets but some values or performances issues may be possible. Don't hesitate to report any funky code-gen or bad optimizations so we can deliver the best performance around.</p>
-<h2><a class="anchor" id="autotoc_md14"></a>
+<h2><a class="anchor" id="autotoc_md16"></a>
 Main remaining works:</h2>
 <ul>
 <li>Complete optimized implementations of multi-register shuffles (swizzle already are available).</li>
@@ -150,7 +150,7 @@ Main remaining works:</h2>
 <li>Implement algorithms à la std over SIMD-izable ranges</li>
 <li>Complete the documentations with bite-size tutorials</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md15"></a>
+<h2><a class="anchor" id="autotoc_md17"></a>
 Current roaster of supported Instructions Sets</h2>
 <ul>
 <li><b>Intel</b><ul>
@@ -176,7 +176,7 @@ Current roaster of supported Instructions Sets</h2>
 <li>We <b>do not support</b> ARM SVE as the execution model makes no sense and the current compiler support is not adequate for us.</li>
 <li>We <b>do not support</b> GPGPU, this is the job for another tool.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md16"></a>
+<h2><a class="anchor" id="autotoc_md18"></a>
 Current roaster of supported compiler</h2>
 <p><b>EVE</b> requires a C++ 20 compliant compiler. The main features from C++17/20 we require are:</p><ul>
 <li>Concepts and requires</li>
@@ -198,7 +198,7 @@ Current roaster of supported compiler</h2>
 <td class="markdownTableBodyNone">Visual Studio   </td><td class="markdownTableBodyNone"><em>TBD</em>   </td></tr>
 </table>
 </center><p>Visual Studio support is currently being added. Help on the front of setting up appveyor properly is also welcome.</p>
-<h1><a class="anchor" id="autotoc_md17"></a>
+<h1><a class="anchor" id="autotoc_md19"></a>
 FAQ</h1>
 <ul>
 <li><b>Why C++20 ?</b> Because we want to be able to use modern design components like Concepts, and later on, Modules. C++14 is for 2014. We fully know it may hinders adoption in some situation, but we're not running a race. We value proper design and API choice over complex retro-compatibility.</li>
@@ -206,7 +206,7 @@ FAQ</h1>
 <li><b>Is this Boost.SIMD v42.69?</b> Yes and no. This reimplementation is based on slightly different premises and some radical new ideas. All results exhibited by all our previous Boost.SIMD papers still hold and we'll try to improve upon.</li>
 <li><b>I want to help!</b> Good, we need tests on exotic configuration, maybe a stable PPC test machine. Write code, make it fail so we can improve for use cases we may have missed. Fork and hack away. We would also value input (even harsh ones) on how we use our CI infrastructure or how our CMake looks. We tried our best but those elements are complex all by themselves.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md18"></a>
+<h1><a class="anchor" id="autotoc_md20"></a>
 Bibliographic References</h1>
 <p>If you want to refers to <b>EVE</b>, you can currently use those papers (by order of preference in citation). A new, more up-to-date <b>EVE</b> specific journal paper is in the work atm.</p>
 <ul>
@@ -224,7 +224,7 @@ Bibliographic References</h1>
 </div> <!-- DOXYSTRAP RELATED -->
 </div> <!-- DOXYSTRAP RELATED -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu May 13 2021 22:39:34 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Sun May 16 2021 23:33:49 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>
