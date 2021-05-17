@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
   <meta name="generator" content="Doxygen 1.9.1"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>E.V.E: eve::abs</title>
+  <title>E.V.E: eve::add</title>
   <!--<link href="tabs.css" rel="stylesheet" type="text/css"/> REMOVED BY DOXYSTRAP -->
   <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="dynsections.js"></script>
@@ -140,8 +140,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
    <td valign="top">
       <div class="navtab">
         <table>
-          <tr><td class="navtabHL"><a class="navtab" href="group__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">abs</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="group__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8">add</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">abs</a></td></tr>
+          <tr><td class="navtabHL"><a class="navtab" href="group__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8">add</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="group__memory_gae685b8647a1587dd880773310538c3c3.html#gae685b8647a1587dd880773310538c3c3">align</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="group__memory_gac4423607571a261fa6db058e09195c93.html#gac4423607571a261fa6db058e09195c93">align</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="group__memory_ga545d28f7a8a147f33980c2fdd00a3eec.html#ga545d28f7a8a147f33980c2fdd00a3eec">align</a></td></tr>
@@ -164,8 +164,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
       </div>
    </td>
    <td valign="top" class="mempage">
-<a id="gaf9bc648f57be07a02903259faabd2df1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf9bc648f57be07a02903259faabd2df1">&#9670;&nbsp;</a></span>abs</h2>
+<a id="gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8">&#9670;&nbsp;</a></span>add</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -174,7 +174,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::abs = {}</td>
+          <td class="memname">eve::add = {}</td>
         </tr>
       </table>
   </td>
@@ -183,10 +183,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
   </tr>
 </table>
 </div><div class="memdoc">
-<p><b>Required header:</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/function/abs.hpp&gt;</span></div>
+<p><b>Required header:</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/function/add.hpp&gt;</span></div>
 </div><!-- fragment --><p><br  />
-Callable object performing the computation of the absolute value.</p>
-<h4><a class="anchor" id="autotoc_md2"></a>
+Callable object performing the sum of multiple values.</p>
+<h4><a class="anchor" id="autotoc_md8"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -197,69 +197,66 @@ Members Functions</h4>
 <td class="markdownTableBodyLeft"><code>operator[]</code>   </td><td class="markdownTableBodyLeft">Construct a conditional version of current function object   </td></tr>
 </table>
 <hr  />
-<div class="fragment"><div class="line"><span class="keyword">auto</span> operator()(<a class="code" href="group__concepts_ga19be3db9960e555ea9ee279846facacd.html#ga19be3db9960e555ea9ee279846facacd">eve::value</a> <span class="keyword">auto</span> <span class="keyword">const</span>&amp; x ) <span class="keyword">const</span> noexcept;</div>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> operator()(<a class="code" href="group__concepts_ga19be3db9960e555ea9ee279846facacd.html#ga19be3db9960e555ea9ee279846facacd">eve::value</a> <span class="keyword">auto</span> <span class="keyword">const</span>&amp;... xs) <span class="keyword">const</span> noexcept;</div>
 <div class="ttc" id="agroup__concepts_ga19be3db9960e555ea9ee279846facacd_html_ga19be3db9960e555ea9ee279846facacd"><div class="ttname"><a href="group__concepts_ga19be3db9960e555ea9ee279846facacd.html#ga19be3db9960e555ea9ee279846facacd">eve::value</a></div><div class="ttdeci">concept value</div><div class="ttdef"><b>Definition:</b> value.hpp:33</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
-<p><code>x</code>: An instance of <a class="el" href="group__concepts_ga19be3db9960e555ea9ee279846facacd.html#ga19be3db9960e555ea9ee279846facacd">eve::value</a></p>
+<p><code>xs</code>: Instances of <a class="el" href="group__concepts_ga19be3db9960e555ea9ee279846facacd.html#ga19be3db9960e555ea9ee279846facacd">eve::value</a></p>
 <p><b>Return value</b></p>
-<p>A value with the same type as <code>x</code> containing the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> absolute value of <code>x</code> if it is representable in this type. More specifically, for signed integers the absolute value of eve::valmin is not representable and the result is undefined.</p>
-<dl class="section warning"><dt>Warning</dt><dd><code>abs</code> is also a standard library function name and there possibly exists a C macro version which may be called instead of the <b>EVE</b> version.<br  />
- To avoid this, use the <a class="el" href="group__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">eve::abs</a> notation.</dd></dl>
+<p>A value of the <a class="el" href="structeve_1_1common__compatible.html">common compatible type</a> of all <code>xs</code> containing the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> sum of all <code>xs</code>.</p>
 <hr  />
 <div class="fragment"><div class="line"><span class="keyword">auto</span> operator[]( conditional_expression <span class="keyword">auto</span> cond ) <span class="keyword">const</span> noexcept;</div>
-</div><!-- fragment --><p>Higher-order function generating a masked version of <a class="el" href="group__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">eve::abs</a></p>
+</div><!-- fragment --><p>Higher-order function generating a masked version of <a class="el" href="group__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8">eve::add</a></p>
 <p><b>Parameters</b></p>
 <p><code>cond</code> : conditional expression</p>
 <p><b>Return value</b></p>
-<p>A Callable object so that the expression <code>abs[cond](x)</code> is equivalent to <code>if_else(cond,abs(x),x)</code></p>
+<p>A Callable object so that the expression <code>add[cond](x0,xs...)</code> is equivalent to <code>if_else(cond,add(x0,xs...),x0)</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md6"></a>
+<h4><a class="anchor" id="autotoc_md12"></a>
 Supported decorators</h4>
 <ul>
 <li><p class="startli"><a class="el" href="group__decorator_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">eve::saturated</a></p>
 <p class="startli"><b>Required header:</b> <code>#include &lt;eve/function/saturated/abs.hpp&gt;</code></p>
-<p class="startli">The expression <code>eve::saturated(eve::abs)(x)</code> computes the saturated absolute value of <code>x</code>. More specifically, for any signed integer value <code>x</code>, the expression <code>eve::saturated(eve::abs)(eve::valmin(as(x)))</code> evaluates to <code>eve::valmax(as(x))</code>.</p>
+<p class="startli">The expression <code>eve::saturated(eve::add)(xs...)</code> computes the saturated sum of all <code>xs</code>.</p>
 </li>
 <li><p class="startli">eve::diff</p>
-<p class="startli"><b>Required header:</b> <code>#include &lt;eve/function/diff/abs.hpp&gt;</code></p>
-<p class="startli">The expression <code>eve::diff( eve::abs )(x)</code> computes the derivative of the function at <code>x</code>.</p>
+<p class="startli"><b>Required header:</b> <code>#include &lt;eve/function/diff/add.hpp&gt;</code></p>
+<p class="startli">The expression <code>eve::diff&lt;N&gt;(<a class="el" href="group__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8">eve::add</a>)(xs...)</code> computes the derivative of the sum of <code>xs...</code> over the Nth parameters.</p>
 </li>
 </ul>
-<h4><a class="anchor" id="autotoc_md7"></a>
+<h4><a class="anchor" id="autotoc_md13"></a>
 Example</h4>
-<p><a href="https://godbolt.org/z/Wevnjdb8n"><b>See it live on Compiler Explorer</b></a></p>
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;eve/function/abs.hpp&gt;</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;eve/function/saturated/abs.hpp&gt;</span></div>
+<p><a href="https://godbolt.org/z/h6YKzz5jc"><b>See it live on Compiler Explorer</b></a></p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;eve/function/add.hpp&gt;</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;eve/function/saturated/add.hpp&gt;</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">using</span> wide_ft = eve::wide&lt;float, eve::fixed&lt;4&gt;&gt;;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">using</span> wide_it = eve::wide&lt;std::int16_t, eve::fixed&lt;4&gt;&gt;;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keywordtype">int</span> main()</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;{</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;  wide_ft pf = {-1.0f, 2.0f, -3.0f, -32768.0f};</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;  wide_it pi = {-1, 2, -3, -32768};</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                  = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;            &lt;&lt; <span class="stringliteral">&quot;-&gt; abs(pf)             = &quot;</span> &lt;&lt; <a class="code" href="group__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">eve::abs</a>(pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi                  = &quot;</span> &lt;&lt; pi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;            &lt;&lt; <span class="stringliteral">&quot;-&gt; saturated(abs)(pi) = &quot;</span> &lt;&lt; <a class="code" href="group__decorator_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">eve::saturated</a>(<a class="code" href="group__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">eve::abs</a>)(pi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            &lt;&lt; <span class="stringliteral">&quot;-&gt; abs(pi)             = &quot;</span> &lt;&lt; <a class="code" href="group__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">eve::abs</a>(pi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <span class="keywordtype">float</span>        xf = -32768.0f;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  std::int16_t xi = -32768;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;            &lt;&lt; <span class="stringliteral">&quot;&lt;- xf                  = &quot;</span> &lt;&lt; xf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;            &lt;&lt; <span class="stringliteral">&quot;-&gt; abs(xf)             = &quot;</span> &lt;&lt; <a class="code" href="group__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">eve::abs</a>(xf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;            &lt;&lt; <span class="stringliteral">&quot;&lt;- xi                  = &quot;</span> &lt;&lt; xi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            &lt;&lt; <span class="stringliteral">&quot;-&gt; saturated(abs)(xi) = &quot;</span> &lt;&lt; <a class="code" href="group__decorator_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">eve::saturated</a>(<a class="code" href="group__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">eve::abs</a>)(xi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;            &lt;&lt; <span class="stringliteral">&quot;-&gt; abs(xi)             = &quot;</span> &lt;&lt; <a class="code" href="group__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">eve::abs</a>(xi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;}</div>
-<div class="ttc" id="agroup__arithmetic_gaf9bc648f57be07a02903259faabd2df1_html_gaf9bc648f57be07a02903259faabd2df1"><div class="ttname"><a href="group__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">eve::abs</a></div><div class="ttdeci">constexpr callable_abs_ abs</div><div class="ttdef"><b>Definition:</b> abs.hpp:96</div></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keywordtype">int</span> main()</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;{</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;  <span class="keyword">using</span> w_t = eve::wide&lt;std::int16_t, eve::fixed&lt;4&gt;&gt;;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;  w_t pi = {3, 2, -32700, 32700}, qi = {4, 1, -100, 100};</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;            &lt;&lt; <span class="stringliteral">&quot; &lt;- pi          = &quot;</span> &lt;&lt; pi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;            &lt;&lt; <span class="stringliteral">&quot; &lt;- qi          = &quot;</span> &lt;&lt; qi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;            &lt;&lt; <span class="stringliteral">&quot; -&gt; add(pi, qi) = &quot;</span> &lt;&lt; <a class="code" href="group__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8">eve::add</a>(pi, qi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;            &lt;&lt; <span class="stringliteral">&quot; -&gt; pi + qi     = &quot;</span> &lt;&lt; pi + qi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;            &lt;&lt;  <span class="stringliteral">&quot; -&gt; saturated(add)(pi, qi) = &quot;</span> &lt;&lt; <a class="code" href="group__decorator_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">eve::saturated</a>(<a class="code" href="group__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8">eve::add</a>)(pi, qi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  std::int16_t xi = 100, yi = 32700;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;            &lt;&lt; <span class="stringliteral">&quot; &lt;- xi          = &quot;</span> &lt;&lt; xi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;            &lt;&lt; <span class="stringliteral">&quot; &lt;- yi          = &quot;</span> &lt;&lt; yi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            &lt;&lt; <span class="stringliteral">&quot; -&gt; add(xi, yi) = &quot;</span> &lt;&lt; <a class="code" href="group__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8">eve::add</a>(xi, yi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;            &lt;&lt; <span class="stringliteral">&quot; -&gt; xi + yi     = &quot;</span> &lt;&lt; xi + yi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>; <span class="comment">// C++ promotion to int</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;---- multi parameters&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;            &lt;&lt; <span class="stringliteral">&quot; -&gt; add(pi, pi, pi, 1)                = &quot;</span> &lt;&lt; <a class="code" href="group__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8">eve::add</a>(pi, pi, pi, 1) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            &lt;&lt; <span class="stringliteral">&quot; -&gt; saturated(eve::add)(pi,12, pi,pi) = &quot;</span> &lt;&lt; <a class="code" href="group__decorator_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">eve::saturated</a>(<a class="code" href="group__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8">eve::add</a>)(pi, 12, pi,pi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;}</div>
+<div class="ttc" id="agroup__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8_html_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8"><div class="ttname"><a href="group__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8">eve::add</a></div><div class="ttdeci">constexpr callable_add_ add</div><div class="ttdef"><b>Definition:</b> add.hpp:90</div></div>
 <div class="ttc" id="agroup__decorator_ga65d424f34f684af47b6e2d2653be632e_html_ga65d424f34f684af47b6e2d2653be632e"><div class="ttname"><a href="group__decorator_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">eve::saturated</a></div><div class="ttdeci">constexpr saturated_type const saturated</div><div class="ttdef"><b>Definition:</b> saturated.hpp:43</div></div>
 </div><!-- fragment --> 
 </div>
