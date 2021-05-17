@@ -7,20 +7,17 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/real/core/detail/generic/multi_div.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/constant/valmin.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/function/conditional.hpp>
-#include <eve/detail/function/operators.hpp>
-#include <eve/detail/meta.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/bitofsign.hpp>
-#include <eve/function/convert.hpp>
 #include <eve/function/if_else.hpp>
-#include <eve/function/roundings.hpp>
-#include <eve/function/saturate.hpp>
-#include <eve/function/saturated.hpp>
+#include <eve/function/all.hpp>
+#include <eve/function/shr.hpp>
+#include <eve/function/saturated/mul.hpp>
 
 #ifdef EVE_COMP_IS_MSVC
 #  pragma warning(push)
@@ -44,53 +41,46 @@ namespace eve::detail
   template<real_value T>
   EVE_FORCEINLINE T div_(EVE_SUPPORTS(cpu_),
                          saturated_type const &,
-                         T const &a,
-                         T const &b) noexcept requires has_native_abi_v<T>
+                         T a,
+                         T b) noexcept
+  requires has_native_abi_v<T>
   {
+    if constexpr(integral_value<T> )
+    {
+      EVE_ASSERT(eve::all((a!= 0) || (b!= 0)), "[eve] - saturated(div)(0, 0) is undefined");
+    }
+
     if constexpr( floating_real_value<T> )
+    {
       return div(a, b);
+    }
     else if constexpr( signed_integral_value<T> )
     {
+      constexpr int shft   = sizeof(element_type_t<T>) * 8 - 1;
       if constexpr( scalar_value<T> )
       {
-        using ui_t = as_integer_t<T, unsigned>;
-        auto aa    = a + !((b + one(eve::as(a))) | ((ui_t)a + valmin(eve::as(a))));
-        if( b )
-          return aa / b;
-        else if( a )
-          return valmax(eve::as(a)) + ((ui_t)a >> (sizeof(T) * 8 - 1));
-        else
-          return zero(eve::as(a));
+        // case valmin/-1 is treated here
+        if(b != 0)    return (a + !(inc(b) | add(a, eve::valmin(eve::as(a)))))/ b;
+        // negative -> valmin,  positive -> valmax
+        else          return bit_xor(eve::valmax(eve::as(a)), shr(a, shft));
       }
       else if constexpr( simd_value<T> )
       {
-        constexpr int shft   = sizeof(element_type_t<T>) * 8 - 1;
-        auto          iseqzb = is_eqz(b);
-        // replace valmin/-1 by (valmin+1)/-1
-        auto x = inc[logical_not(inc(b) | (a + valmin(eve::as<T>())))](a);
-        // negative -> valmin
-        // positive -> valmax
-        auto x2 = valmax(eve::as<T>()) ^ (x >> shft);
-        x       = if_else(logical_and(iseqzb, is_nez(x)), x2, x);
-        auto y  = if_else(iseqzb, one(eve::as<T>()), b);
-        return div(x, y);
+        auto a2 =  bit_xor(eve::valmax(eve::as(a)), shr(a, shft));
+        // case valmin/-1 is treated here
+        a = inc[logical_not(inc(b) | add(a, eve::valmin(eve::as(a))))](a);
+        auto isnezb = is_nez(b);
+        b = if_else(isnezb, b, mone);
+        return if_else(isnezb, div(a, b), a2);
       }
     }
     else if constexpr( unsigned_value<T> )
     {
-      if constexpr( scalar_value<T> )
-      {
-        return b ? a / b : bit_mask(a);
-      }
-      else if constexpr( simd_value<T> )
-      {
-        auto iseqzb = is_eqz(b);
-        auto bb     = if_else(iseqzb, one(eve::as(a)), b);
-        auto aa     = if_else(iseqzb, bit_mask(a), a);
-        return div(aa, bb);
-      }
+      if constexpr( scalar_value<T> )    return b ? a / b : eve::valmax(as(a));
+      else if constexpr( simd_value<T> ) return if_else(is_nez(b), div(a, b), allbits);
     }
   }
+
 
   //================================================================================================
   // Masked case
@@ -98,7 +88,7 @@ namespace eve::detail
   template<conditional_expr C, saturated_type const &, real_value U, real_value V>
   EVE_FORCEINLINE auto
   div_(EVE_SUPPORTS(cpu_), C const &cond, saturated_type const &, U const &t, V const &f) noexcept
-      requires compatible_values<U, V>
+  requires compatible_values<U, V>
   {
     return mask_op(  cond, saturated(div), t, f);
   }
