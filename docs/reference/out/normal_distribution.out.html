@@ -1,5 +1,5 @@
  <meta charset="utf-8">
-**Possible Output:**
+**Possible output:**
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
 ---- simd
@@ -21,6 +21,16 @@
 <- sf                  = 2
 -> cdf(nof, xf)        = 0.308538
 -> mode(nof)           = 10
+generator 
+-> d1(gen, eve::as<wide_ft>()) (5.66124, 3.9389, 6.00627, 5.28327)
+-> d1(gen)                     6.63973
+generator 
+-> d2(gen, eve::as<wide_ft>()) (0.379512, 0.633335, -0.798766, 0.398003)
+-> d2(gen)                     -0.671769
+confidence 
+r          0.158655
+plo        8.10346e-05
+phi        0.961787
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  
 <!-- Markdeep: -->

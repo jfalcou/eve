@@ -1,5 +1,5 @@
  <meta charset="utf-8">
-**Possible Output:**
+**Possible output:**
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
 ---- simd
@@ -20,6 +20,18 @@
 <- sf                  = 0.5
 -> cdf(bif, xf)        = 1
 -> mode(bif)           = 5
+generator 
+-> d1(gen, eve::as<wide_ft>()) (5, 3, 7, 5)
+-> d1(gen)                     7
+generator 
+-> d2(gen, eve::as<wide_ft>()) (18, 11, 18, 11)
+-> d2(gen)                     18
+generator 
+-> d3(gen, eve::as<wide_ft>()) (6, 8, 11, 17)
+-> d3(gen)                     8
+generator 
+-> d4(gen, eve::as<wide_ft>()) (1, 0, 1, 1)
+-> d4(gen)                     0
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  
 <!-- Markdeep: -->

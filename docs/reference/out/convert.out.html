@@ -1,19 +1,19 @@
  <meta charset="utf-8">
-**Possible Output:**
+**Possible output:**
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
 ---- simd
 <- pf                                 = (-1, 2.3, 45000.7, -64768.6)
 -> convert(pf, int_64()_)             = (-1, 2, 45000, -64768)
--> saturated(convert)(pf, int_16())  = (-1, 2, 32767, -32768)
--> convert(pf, int_16()) =            = (-1, 2, -20536, 768)
+-> saturated(convert)(pf, int_16())   = (-1, 2, 32767, -32768)
+-> convert(pf, int_16()) =            = (-1, 2, 0, 0)
 <- pi                                 = (-1, 2, -3, 9223372036854775807)
--> convert(pi, as(eve::as<double>()))          = (-1, 2, -3, 9.22337e+18)
+-> convert(pi, as(eve::as<double>())) = (-1, 2, -3, 9.22337e+18)
 ---- scalar
-<- xf                               = -64768.4
--> convert(xf, int_64())            = -64768
-<- xi                               = -64768
--> convert(xi, as(eve::as<double>()))        = -64768
+<- xf                                  = -64768.4
+-> convert(xf, int_64())               = -64768
+<- xi                                  = -64768
+-> convert(xi, as(eve::as<double>()))  = -64768
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  
 <!-- Markdeep: -->

@@ -1,5 +1,5 @@
  <meta charset="utf-8">
-**Possible Output:**
+**Possible output:**
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
 ---- simd
@@ -8,10 +8,13 @@
  -> add(pi, qi) = (7, 3, 4, -32736)
  -> pi + qi     = (7, 3, 4, -32736)
 ---- scalar
- xi             = 100
- yi             = 32700
+ <- xi          = 100
+ <- yi          = 32700
  -> add(xi, yi) = -32736
  -> xi + yi     = 32800
+---- multi parameters
+ -> add(pi, pi, pi, 1)                = (10, 7, 10, 32565)
+ -> saturated(eve::add)(pi,12, pi,pi) = (21, 18, 21, 32767)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  
 <!-- Markdeep: -->

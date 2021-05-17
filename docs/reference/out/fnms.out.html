@@ -1,13 +1,11 @@
  <meta charset="utf-8">
-**Possible Output:**
+**Possible output:**
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
 ---- simd
  <- oi                                 = (2, -3, 1, 3.40282e+38)
  <- pi                                 = (3, -2, -1, 2)
  <- qi                                 = (4, -1, 1, -3.40282e+38)
- -> pedantic(fnms)(oi, pi, qi)        = (-10, -5, -1.42109e-14, -3.40282e+38)
- -> numeric(fnms)(oi, pi, qi)         = (-10, -5, -1.42109e-14, -3.40282e+38)
  -> fnms(oi, pi, qi)                   = (-10, -5, -0, -inf)
 
  if the last fnms result ends by '0, -inf}', it means that
@@ -16,13 +14,9 @@
 
 ---- scalar
  <- vm                                = 3.402823466e+38
- -> pedantic(fnms)(vm, 2.0f, vm)     = -3.402823466e+38
- -> numeric(fnms)(vm, 2.0f, vm)      = -3.402823466e+38
  -> fnms(vm, 2.0f, vm)                = -inf
  <- esm1                              = -0.9999998808
  <- esp1                              = 1.000000119
- -> pedantic(fnms)(esp1, esm1, 1.0f) = -1.421085472e-14
- -> numeric(fnms)(esp1, esm1, 1.0f)  = -1.421085472e-14
  -> fnms(esp1, esm1, 1.0f)            = -0
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  

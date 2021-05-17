@@ -1,15 +1,16 @@
  <meta charset="utf-8">
-**Possible Output:**
+**Possible output:**
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
 ---- simd
- <- pf                          = (3, -2, -3, 51.04)
- <- qf                          = (4, -1, -3, 0)
- -> eve::logical_andnot(pf, qf) = (false, false, false, true)
+ <- pf                                           = (3, -2, -3, 51.04)
+ <- qf                                           = (4, -1, -3, 0)
+ -> eve::logical_andnot(is_odd(pf), is_even(qf)) = (false, false, true, false)
 ---- scalar
- xf                             = 3
- yf                             = 4
- -> eve::logical_andnot(xf, yf) = false
+ xf                                              = 3
+ yf                                              = 4.5
+ -> eve::logical_andnot(is_odd(xf), is_even(yf)) = true
+ -> eve::logical_andnot(xf == 3,    is_even(yf)) = true
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  
 <!-- Markdeep: -->
