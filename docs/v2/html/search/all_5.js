@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['glossary_10',['Glossary',['../glossary.html',1,'']]]
+  ['functions_22',['Functions',['../group__functions.html',1,'']]]
 ];

@@ -55,7 +55,7 @@ namespace eve::detail
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup traits Type Traits
+  //! @addtogroup traits
   //! @{
   //!
   //! @struct common_compatible

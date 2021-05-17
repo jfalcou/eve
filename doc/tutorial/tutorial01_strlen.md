@@ -1,5 +1,5 @@
-Building `strlen`  {#tutorial_strlen}
-=================
+Building strlen {#tutorial_strlen}
+===============
 
 @tableofcontents
 

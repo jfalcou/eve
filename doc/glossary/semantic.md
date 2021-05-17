@@ -20,7 +20,7 @@ an **element-wise semantic** if the expression `C r = f(x1, ...,xn)` is semantic
 Let `x`, `y` and `z` be three values of respective types `T, U, V`.
 
 For any callable object `f`, the expression `f(x,y)` has an **arithmetic operations semantic**
-if `T` and `U`  are [compatible](@ref common_comaptible) [values](@ref value)
+if `T` and `U`  are [compatible](@ref common_compatible) [values](@ref value)
 and the call is semantically equivalent to:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++

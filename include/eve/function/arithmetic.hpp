@@ -8,7 +8,9 @@
 #pragma once
 
 //================================================================================================
-//! @defgroup arithmetic Arithmetic functions
+//! @addtogroup functions
+//! @{
+//! @defgroup arithmetic Arithmetic
 //!
 //! These functions provide scalar and SIMD version of basic arithmetic functions.
 //!
@@ -17,6 +19,7 @@
 //!
 //! **Convenience header:** @code{.cpp} #include <eve/function/arithmetic.hpp> @endcode
 //!
+//!@}
 //================================================================================================
 #include <eve/function/abs.hpp>
 #include <eve/function/arg.hpp>

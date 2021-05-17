@@ -7,7 +7,19 @@
 //==================================================================================================
 #pragma once
 
-// helper file to include all predicates functions and operators
+//==================================================================================================
+//! @addtogroup functions
+//! @{
+//! @defgroup decorator Decorators
+//!
+//! Decorators are higher-order functions that modify the behavior of other functions.
+//! Every decorators returns a new callable object that will behave as the callable passed as
+//! parameters but with different computation scheme (e.g more precision, more speed, etc...).
+//!
+//! **Convenience header:** @code{.cpp} #include <eve/function/decorator.hpp> @endcode
+//! @}
+//==================================================================================================
+
 #include <eve/function/numeric.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/function/raw.hpp>
