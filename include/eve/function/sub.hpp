@@ -12,6 +12,83 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @subtogroup arithmetic
+  //! @{
+  //! @var sub
+  //!
+  //! **Required header:**
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  #include <eve/function/sub.hpp>
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! <br/>Callable object performing the difference of multiple values.
+  //!
+  //! #### Members Functions
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | Computes the absolute value of its parameter               |
+  //! | `operator[]` | Construct a conditional version of current function object |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator()(eve::value auto const&... xs) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //! `xs`:  Instances of eve::value
+  //!
+  //! **Return value**
+  //!
+  //! A value of the [common compatible type](@ref common_compatible) of all `xs` containing the
+  //! [elementwise](@ref glossary_elementwise) difference of all `xs`.
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::sub
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `sub[cond](x0,xs...)` is equivalent
+  //!  to `if_else(cond,sub(x0,xs...),x0)`
+  //!
+  //! ---
+  //!
+  //! #### Supported decorators
+  //!
+  //!   * eve::saturated
+  //!
+  //!     **Required header:** `#include <eve/function/saturated/abs.hpp>`
+  //!
+  //!     The expression `eve::saturated(eve::sub)(xs...)` computes the saturated difference of
+  //!     all `xs`.
+  //!
+  //!   * eve::diff
+  //!
+  //!     **Required header:** `#include <eve/function/diff/sub.hpp>`
+  //!
+  //!     The expression `eve::diff<N>(eve::sub)(xs...)` computes the derivative of the difference
+  //!     of `xs...` over the Nth parameters.
+  //!
+  //! #### Example
+  //!
+  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/bb7vc5bWd)
+  //!
+  //! @include{lineno} doc/core/sub.cpp
+  //!
+  //!  @}
+  //================================================================================================
   EVE_MAKE_CALLABLE(sub_, sub);
 }
 
@@ -28,4 +105,3 @@ namespace eve
 #if defined(EVE_HW_ARM)
 #  include <eve/module/real/core/function/regular/simd/arm/neon/sub.hpp>
 #endif
-
