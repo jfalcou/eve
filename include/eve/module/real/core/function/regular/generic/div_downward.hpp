@@ -42,10 +42,9 @@ namespace eve::detail
         if constexpr( std::is_same_v<elt_t, std::int64_t> )
         {
           auto q =  div(a, b);
-          auto comp = [b](auto x){
-            return if_else(is_ltz(b), is_ltz(x), is_gtz(x));
-          };
-          return dec[comp(fms(q, b, a))](q);
+          auto r = fms(q, b, a);
+          auto test = if_else(is_ltz(b), is_ltz(r), is_gtz(r));
+          return dec[test](q);
         }
         else
         {
