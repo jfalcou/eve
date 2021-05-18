@@ -18,6 +18,7 @@
 #include <eve/function/is_nez.hpp>
 #include <eve/function/saturated.hpp>
 #include <eve/function/saturated/convert.hpp>
+#include <eve/function/all.hpp>
 
 namespace eve::detail
 {
@@ -27,7 +28,7 @@ namespace eve::detail
   {
     if constexpr(integral_value<T> )
     {
-      EVE_ASSERT(all((b!= 0)), "[eve] - upward(div)(a, 0) is undefined");
+      EVE_ASSERT(eve::all((b!= 0)), "[eve] - upward(div)(a, 0) is undefined");
     }
     using elt_t = element_type_t<T>;
     if constexpr( floating_real_value<T> )

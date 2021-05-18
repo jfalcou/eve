@@ -8,31 +8,18 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/zero.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/bit_mask.hpp>
-#include <eve/function/bit_xor.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/converter.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/inc.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_even.hpp>
-#include <eve/function/is_gez.hpp>
-#include <eve/function/is_greater_equal.hpp>
-#include <eve/function/is_gtz.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/function/logical_ornot.hpp>
+#include <eve/function/dec.hpp>
+#include <eve/function/fnma.hpp>
+#include <eve/function/is_ltz.hpp>
 #include <eve/function/nearest.hpp>
-#include <eve/function/saturated.hpp>
+#include <eve/function/converter.hpp>
 #include <eve/function/saturated/convert.hpp>
 #include <eve/function/saturated/div.hpp>
-#include <eve/function/saturated/abs.hpp>
-#include <eve/function/logical_xor.hpp>
 #include <eve/function/is_odd.hpp>
-#include <eve/function/is_even.hpp>
+#include <eve/function/all.hpp>
 
 namespace eve::detail
 {
@@ -52,24 +39,32 @@ namespace eve::detail
     }
     else if constexpr( integral_real_value<T> )
     {
-      if constexpr( unsigned_value<T> )
+      using v_t = element_type_t<T>;
+      if constexpr( sizeof(v_t)== 8)
       {
-        auto q =  div(a, b);
-        auto r1 = fnma(b, q, a);
-        auto r2 = b-r1;
-        return inc[(r1 > r2)||((r1 == r2)&&is_odd(q))](q);
+        if constexpr( unsigned_value<T> )
+        {
+          auto q =  div(a, b);
+          auto r1 = fnma(b, q, a);
+          auto r2 = b-r1;
+          return inc[(r1 > r2)||((r1 == r2)&&is_odd(q))](q);
+        }
+        else
+        {
+          auto ltza = is_ltz(a);
+          a = minus[ltza](a); // ensure a >= 0
+          b = minus[ltza](b);
+          auto ltzb = is_ltz(b);
+          auto q =  div(a, b);
+          auto r1 = fnma(b, q, a);
+          auto r2 = minus[ltzb](b)-r1;
+          auto cond = (r1 > r2)||((r1 == r2)&&is_odd(q));
+          return if_else(is_ltz(b), dec[cond](q), inc[cond](q));
+        }
       }
       else
       {
-        auto ltza = is_ltz(a);
-        a = minus[ltza](a); // ensure a >= 0
-        b = minus[ltza](b);
-        auto ltzb = is_ltz(b);
-        auto q =  div(a, b);
-        auto r1 = fnma(b, q, a);
-        auto r2 = minus[ltzb](b)-r1;
-        auto cond = (r1 > r2)||((r1 == r2)&&is_odd(q));
-        return if_else(is_ltz(b), dec[cond](q), inc[cond](q));
+        return saturated(convert)(nearest(float64(a) / float64(b)), as<v_t>());
       }
     }
   }
