@@ -70,7 +70,7 @@ namespace eve::detail
       requires compatible_values<U, V>
   {
     auto g = if_else(cond, f, one);
-    return eve::div(t, g);
+    return if_else(cond, eve::div(t, g), t);
   }
 
   template<conditional_expr C, decorator D, real_value U, real_value V>
@@ -79,7 +79,7 @@ namespace eve::detail
       requires compatible_values<U, V>
   {
     auto g = if_else(cond, f, one);
-    return D()(div)(t, g);
+    return if_else(cond, D()(div)(t, g), t);
   }
 
   //================================================================================================

@@ -8,28 +8,17 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/zero.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/bit_mask.hpp>
-#include <eve/function/bit_xor.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/function/converter.hpp>
 #include <eve/function/floor.hpp>
 #include <eve/function/fms.hpp>
 #include <eve/function/if_else.hpp>
-#include <eve/function/inc.hpp>
+#include <eve/function/dec.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/is_lez.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/function/logical_xor.hpp>
-#include <eve/function/minus.hpp>
-#include <eve/function/saturated.hpp>
 #include <eve/function/saturated/convert.hpp>
-#include <eve/function/saturated/div.hpp>
-#include <eve/function/saturated/dec.hpp>
 
 namespace eve::detail
 {
@@ -52,8 +41,11 @@ namespace eve::detail
       {
         if constexpr( std::is_same_v<elt_t, std::int64_t> )
         {
-          auto z =  div(a, b);
-          return dec[is_gtz(fms(z, b, a))](z);
+          auto q =  div(a, b);
+          auto comp = [b](auto x){
+            return if_else(is_ltz(b), is_ltz(x), is_gtz(x));
+          };
+          return dec[comp(fms(q, b, a))](q);
         }
         else
         {
