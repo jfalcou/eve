@@ -40,27 +40,12 @@ namespace eve::detail
     return arithmetic_call(D()(rem), a, b);
   }
 
-
-//   template<real_value T, real_value U>
-//   EVE_FORCEINLINE auto rem_ ( EVE_SUPPORTS(cpu_)
-//                             , pedantic_type const&,T const &a, U const &b
-//                             ) noexcept requires compatible_values<T, U>
-//   {
-//     return if_else(is_nez(b), rem(a,b), a);
-//   }
-
   template<floating_real_value T>
   EVE_FORCEINLINE auto rem_(EVE_SUPPORTS(cpu_)
                            , T const &a
                            , T const &b) noexcept
   {
-    std::cout << "+++++++++++++++++++++" << std::setprecision(15) << std::endl;
-    std::cout << "a " << a << std::endl;
-    std::cout << "b " << b << std::endl;
-    std::cout << "d(div)(a, b)  " << trunc(div(a, b)) << std::endl;
-    std::cout << "rem           " << fnma(b, trunc(div(a,b)), a)<< std::endl;
-    std::cout << "=====================" << std::endl;
-    return fnma(b, trunc(div(a,b)), a);
+   return fnma(b, trunc(div(a,b)), a);
   }
 
   template<real_value T, decorator D>
@@ -71,7 +56,6 @@ namespace eve::detail
   {
     return fnma(b, D()(eve::div)(a,b), a);
   }
-
 
   //================================================================================================
   // Masked case
