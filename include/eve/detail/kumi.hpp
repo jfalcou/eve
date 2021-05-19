@@ -9,6 +9,10 @@
 #include <iosfwd>
 #include <utility>
 
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wmissing-braces"
+#endif
+
 #define KUMI_FWD(...) static_cast<decltype(__VA_ARGS__) &&>(__VA_ARGS__)
 
 namespace kumi
@@ -136,11 +140,23 @@ namespace kumi
   //==============================================================================================
   // Concept
   //==============================================================================================
+  template<typename T, typename Enable = void>
+  struct is_product_type : std::false_type {};
+
   template<typename T>
-  concept product_type = std::remove_cvref_t<T>::is_product_type;
+  struct is_product_type<T,typename T::is_product_type> : std::true_type {};
+
+  template<typename T> struct size;
+
+  template<typename T>
+  requires requires(T) { T::size(); }
+  struct size<T> : std::integral_constant<std::size_t, T::size()> {};
+
+  template<typename T>
+  concept product_type = is_product_type<std::remove_cvref_t<T>>::value;
 
   template<typename T, std::size_t N>
-  concept sized_product_type = product_type<T> &&(T::size() == N);
+  concept sized_product_type = product_type<T> && (size<T>::value == N);
 
   //================================================================================================
   // Forward declaration
@@ -156,45 +172,45 @@ namespace kumi
   {
     return [&]<std::size_t... I>(std::index_sequence<I...>)
     {
-      return KUMI_FWD(f)(detail::get_leaf<I>(KUMI_FWD(t).impl)...);
+      return KUMI_FWD(f)(get<I>(KUMI_FWD(t))...);
     }
-    (std::make_index_sequence<std::remove_cvref_t<Tuple>::size()>());
+    (std::make_index_sequence<size<std::remove_cvref_t<Tuple>>::value>());
   }
 
   //================================================================================================
   // Apply f to each element of tuple and returns a continuation
   //================================================================================================
-  template<typename Function, typename... Ts> constexpr void for_each(Function f, tuple<Ts...> &t)
+  template<typename Function, product_type Tuple> constexpr void for_each(Function f, Tuple& t)
   {
-    [&]<std::size_t... I>(std::index_sequence<I...>) { (f(detail::get_leaf<I>(t.impl)), ...); }
-    (std::make_index_sequence<sizeof...(Ts)>());
+    [&]<std::size_t... I>(std::index_sequence<I...>) { (f(get<I>(t)), ...); }
+    (std::make_index_sequence<size<Tuple>::value>());
   }
 
-  template<typename Function, typename... Ts>
-  constexpr void for_each(Function f, tuple<Ts...> const &t)
+  template<typename Function, product_type Tuple>
+  constexpr void for_each(Function f, Tuple const &t)
   {
-    [&]<std::size_t... I>(std::index_sequence<I...>) { (f(detail::get_leaf<I>(t.impl)), ...); }
-    (std::make_index_sequence<sizeof...(Ts)>());
+    [&]<std::size_t... I>(std::index_sequence<I...>) { (f(get<I>(t)), ...); }
+    (std::make_index_sequence<size<Tuple>::value>());
   }
 
-  template<typename Function, typename... Ts>
-  constexpr void for_each_index(Function f, tuple<Ts...> &t)
+  template<typename Function, product_type Tuple>
+  constexpr void for_each_index(Function f, Tuple&t)
   {
     [&]<std::size_t... I>(std::index_sequence<I...>)
     {
-      (f(index<I>, detail::get_leaf<I>(t.impl)), ...);
+      (f(index<I>, get<I>(t)), ...);
     }
-    (std::make_index_sequence<sizeof...(Ts)>());
+    (std::make_index_sequence<size<Tuple>::value>());
   }
 
-  template<typename Function, typename... Ts>
-  constexpr void for_each_index(Function f, tuple<Ts...> const &t)
+  template<typename Function, product_type Tuple>
+  constexpr void for_each_index(Function f, Tuple const &t)
   {
     [&]<std::size_t... I>(std::index_sequence<I...>)
     {
-      (f(index<I>, detail::get_leaf<I>(t.impl)), ...);
+      (f(index<I>, get<I>(t)), ...);
     }
-    (std::make_index_sequence<sizeof...(Ts)>());
+    (std::make_index_sequence<size<Tuple>::value>());
   }
 
   //================================================================================================
@@ -202,7 +218,7 @@ namespace kumi
   //================================================================================================
   template<typename... Ts> struct tuple
   {
-    static constexpr bool                                          is_product_type = true;
+    using is_product_type = void;
     detail::binder<std::make_index_sequence<sizeof...(Ts)>, Ts...> impl;
 
     //==============================================================================================
@@ -348,7 +364,7 @@ namespace kumi
     {
       [&]<std::size_t... I>(std::index_sequence<I...>)
       {
-        ((detail::get_leaf<I>(impl) = detail::get_leaf<I>(other.impl)), ...);
+        ((get<I>(*this) = get<I>(other)), ...);
       }
       (std::make_index_sequence<sizeof...(Ts)>());
 
@@ -361,7 +377,7 @@ namespace kumi
     {
       [&]<std::size_t... I>(std::index_sequence<I...>)
       {
-        ((detail::get_leaf<I>(impl) = detail::get_leaf<I>(KUMI_FWD(other).impl)), ...);
+        ((get<I>(*this) = get<I>(KUMI_FWD(other))), ...);
       }
       (std::make_index_sequence<sizeof...(Ts)>());
 
@@ -376,7 +392,7 @@ namespace kumi
     {
       return [&]<std::size_t... I>(std::index_sequence<I...>)
       {
-        return ((detail::get_leaf<I>(self.impl) == detail::get_leaf<I>(other.impl)) && ...);
+        return ((get<I>(self) == get<I>(other)) && ...);
       }
       (std::make_index_sequence<sizeof...(Ts)>());
     }
@@ -386,7 +402,7 @@ namespace kumi
     {
       return [&]<std::size_t... I>(std::index_sequence<I...>)
       {
-        return ((detail::get_leaf<I>(self.impl) != detail::get_leaf<I>(other.impl)) || ...);
+        return ((get<I>(self) != get<I>(other)) || ...);
       }
       (std::make_index_sequence<sizeof...(Ts)>());
     }
@@ -485,17 +501,17 @@ namespace kumi
   //================================================================================================
   // Construct the tuple made of the application of f to elements of each tuples
   //================================================================================================
-  template<typename... Ts, typename Function, sized_product_type<sizeof...(Ts)>... Tuples>
-  constexpr auto map(Function f, tuple<Ts...> const &t0, Tuples const &...others)
+  template<product_type Tuple, typename Function, sized_product_type<size<Tuple>::value>... Tuples>
+  constexpr auto map(Function f, Tuple const &t0, Tuples const &...others)
   {
     return [&]<std::size_t... I>(std::index_sequence<I...>)
     {
       auto call = [&]<std::size_t N>(index_t<N>, auto const &...args)
-      { return f(detail::get_leaf<N>(args.impl)...); };
+      { return f(get<N>(args)...); };
 
       return make_tuple(call(index<I>, t0, others...)...);
     }
-    (std::make_index_sequence<sizeof...(Ts)>());
+    (std::make_index_sequence<size<Tuple>::value>());
   }
 
   //================================================================================================
@@ -506,11 +522,9 @@ namespace kumi
   {
     return [&]<std::size_t... I>(std::index_sequence<I...>)
     {
-      return (detail::foldable {f, detail::get_leaf<I>(t.impl)} >> ...
-              >> detail::foldable {f, init})
-          .value;
+      return (detail::foldable {f, get<I>(t)} >> ... >> detail::foldable {f, init}).value;
     }
-    (std::make_index_sequence<Tuple::size()>());
+    (std::make_index_sequence<size<Tuple>::value>());
   }
 
   template<typename Function, product_type Tuple, typename Value>
@@ -518,32 +532,30 @@ namespace kumi
   {
     return [&]<std::size_t... I>(std::index_sequence<I...>)
     {
-      return (detail::foldable {f, init} << ...
-                                         << detail::foldable {f, detail::get_leaf<I>(t.impl)})
-          .value;
+      return (detail::foldable {f, init} << ... << detail::foldable {f, get<I>(t)}).value;
     }
-    (std::make_index_sequence<Tuple::size()>());
+    (std::make_index_sequence<size<Tuple>::value>());
   }
 
   //================================================================================================
   // Concatenates tuples
   //================================================================================================
-  template<typename... Ts, typename... Us>
-  [[nodiscard]] constexpr auto cat(tuple<Ts...> const &ts, tuple<Us...> const &us)
+  template<product_type T, product_type U>
+  [[nodiscard]] constexpr auto cat(T const &t, U const &u)
   {
     return [&]<std::size_t... TI, std::size_t... UI>(std::index_sequence<TI...>,
                                                      std::index_sequence<UI...>)
     {
-      return tuple<Ts..., Us...> {get<TI>(ts)..., get<UI>(us)...};
+      return make_tuple(get<TI>(t)..., get<UI>(u)...);
     }
-    (std::index_sequence_for<Ts...> {}, std::index_sequence_for<Us...> {});
+    (std::make_index_sequence<size<T>::value>(), std::make_index_sequence<size<U>::value>());
   }
 
-  template<typename... Ts, product_type... Tuples>
-  [[nodiscard]] constexpr auto cat(tuple<Ts...> const &ts, Tuples const &...us)
+  template<product_type T, product_type... Tuples>
+  [[nodiscard]] constexpr auto cat(T const &t, Tuples const &...us)
   {
     auto const cc = [](auto const &a, auto const &b) { return cat(a, b); };
-    return (detail::foldable {cc, ts} << ... << detail::foldable {cc, us}).value;
+    return (detail::foldable {cc, t} << ... << detail::foldable {cc, us}).value;
   }
 
   template<product_type T1, product_type T2>
@@ -555,7 +567,7 @@ namespace kumi
   //================================================================================================
   // Flatten nested tuples : one layer at a time or recursively
   //================================================================================================
-  template<typename... Ts> [[nodiscard]] constexpr auto flatten(tuple<Ts...> const &ts)
+  template<product_type Tuple> [[nodiscard]] constexpr auto flatten(Tuple const &ts)
   {
     return kumi::fold_right(
         []<typename M>(auto acc, M const &m)
@@ -569,7 +581,7 @@ namespace kumi
         kumi::tuple {});
   }
 
-  template<typename... Ts> [[nodiscard]] constexpr auto flatten_all(tuple<Ts...> const &ts)
+  template<product_type Tuple> [[nodiscard]] constexpr auto flatten_all(Tuple const &ts)
   {
     return kumi::fold_right(
         []<typename M>(auto acc, M const &m)
@@ -587,7 +599,7 @@ namespace kumi
   // Zip multiple tuples contents
   //================================================================================================
   template<product_type T0, product_type... Ts>
-  requires((std::remove_cvref_t<T0>::size() == std::remove_cvref_t<Ts>::size()) && ...)
+  requires((size<std::remove_cvref_t<T0>>::value == size<std::remove_cvref_t<Ts>>::value) && ...)
       [[nodiscard]] constexpr auto zip(T0 &&t0, Ts &&...tuples)
   {
     return map(
@@ -599,8 +611,8 @@ namespace kumi
   //================================================================================================
   // Transpose a tuple of tuples
   //================================================================================================
-  template<typename T0, typename... Ts>
-  [[nodiscard]] constexpr auto transpose(tuple<T0, Ts...> const &t)
+  template<product_type Tuple>
+  [[nodiscard]] constexpr auto transpose(Tuple const &t)
   {
     return [&]<std::size_t... I>(std::index_sequence<I...>)
     {
@@ -609,14 +621,14 @@ namespace kumi
 
       return make_tuple(uz(index_t<I> {}, t)...);
     }
-    (std::make_index_sequence<T0::size()>());
+    (std::make_index_sequence<size<std::remove_cvref_t<decltype(get<0>(t))>>::value>());
   }
 
   //================================================================================================
   // Reorder elements of a tuple
   //================================================================================================
   template<std::size_t... Idx, product_type Tuple>
-  requires((Idx < std::remove_cvref_t<Tuple>::size()) && ...)
+  requires((Idx < size<std::remove_cvref_t<Tuple>>::value) && ...)
       [[nodiscard]] constexpr auto reorder(Tuple &&t)
   {
     return make_tuple(KUMI_FWD(t)[index<Idx>]...);
