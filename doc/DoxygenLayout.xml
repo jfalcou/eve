@@ -51,9 +51,11 @@
       <publicslots title=""/>
       <signals title=""/>
       <publicstaticmethods title=""/>
-      <publicmethods title=""/>
       <publicstaticattributes title=""/>
+      <publicmethods title=""/>
       <publicattributes title=""/>
+      <friends title=""/>
+      <related title="" subtitle=""/>
       <protectedtypes title=""/>
       <protectedslots title=""/>
       <protectedmethods title=""/>
@@ -73,8 +75,6 @@
       <privatestaticmethods title=""/>
       <privateattributes title=""/>
       <privatestaticattributes title=""/>
-      <friends title=""/>
-      <related title="" subtitle=""/>
       <membergroups visible="yes"/>
     </memberdecl>
     <memberdef>

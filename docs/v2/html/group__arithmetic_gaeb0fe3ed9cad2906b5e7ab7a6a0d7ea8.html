@@ -148,6 +148,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
           <tr><td class="navtab"><a class="navtab" href="group__memory_ga0c5c814e7f47fcfe1e38e2436afc7203.html#ga0c5c814e7f47fcfe1e38e2436afc7203">align</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="namespaceeve.html#a391c6bfda8692e3428c23d2b47596a78">as_aligned</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="namespaceeve.html#a4c23bf1f534da4402aac07f2168299c0">as_aligned</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__arithmetic_gae0ef9200ab790a71835ff39ff61061a5.html#gae0ef9200ab790a71835ff39ff61061a5">div</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="group__memory_gad05ab928f3e9aa972a7e7146f76cce13.html#gad05ab928f3e9aa972a7e7146f76cce13">is_aligned</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="group__memory_ga25228d751afbdd3a2c7d09aea5f2ae74.html#ga25228d751afbdd3a2c7d09aea5f2ae74">is_aligned</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="group__memory_gab1add731db6f65a080c9ec8b4a125858.html#gab1add731db6f65a080c9ec8b4a125858">is_aligned</a></td></tr>
@@ -157,7 +158,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
           <tr><td class="navtab"><a class="navtab" href="group__utility.html#ga08edf538439c89f7e910d1bb5fdd5a80">prev_power_of_2</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="group__decorator_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">saturated</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="group__concepts_ga4e1ad9e34fc8607b515ddaa7cad9452f.html#ga4e1ad9e34fc8607b515ddaa7cad9452f">simd_value</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="namespaceeve_a13ddd05c1c516674e73d2ed018fa5d5a.html#a13ddd05c1c516674e73d2ed018fa5d5a">sub</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a">sub</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="group__utility_ga664bc5b316e0dd3be42aa4c2fd818047.html#ga664bc5b316e0dd3be42aa4c2fd818047">under</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="group__concepts_ga19be3db9960e555ea9ee279846facacd.html#ga19be3db9960e555ea9ee279846facacd">value</a></td></tr>
         </table>
@@ -233,7 +234,7 @@ Example</h4>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keywordtype">int</span> main()</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;{</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;  <span class="keyword">using</span> w_t = eve::wide&lt;std::int16_t, eve::fixed&lt;4&gt;&gt;;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;  <span class="keyword">using</span> w_t = <a class="code" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;  w_t pi = {3, 2, -32700, 32700}, qi = {4, 1, -100, 100};</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
@@ -258,6 +259,7 @@ Example</h4>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;}</div>
 <div class="ttc" id="agroup__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8_html_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8"><div class="ttname"><a href="group__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8">eve::add</a></div><div class="ttdeci">constexpr callable_add_ add</div><div class="ttdef"><b>Definition:</b> add.hpp:90</div></div>
 <div class="ttc" id="agroup__decorator_ga65d424f34f684af47b6e2d2653be632e_html_ga65d424f34f684af47b6e2d2653be632e"><div class="ttname"><a href="group__decorator_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">eve::saturated</a></div><div class="ttdeci">constexpr saturated_type const saturated</div><div class="ttdef"><b>Definition:</b> saturated.hpp:43</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:47</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -273,7 +275,7 @@ Example</h4>
 </div> <!-- DOXYSTRAP RELATED -->
 </div> <!-- DOXYSTRAP RELATED -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon May 17 2021 10:12:01 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Tue May 18 2021 19:21:31 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

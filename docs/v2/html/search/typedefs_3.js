@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['type_110',['type',['../structeve_1_1as__.html#a71d0476bef3c779c1d4213bd20f2e1e6',1,'eve::as_']]]
+  ['pointer_161',['pointer',['../structeve_1_1aligned__ptr.html#a8b8fef1a5efc9384204ee46540e409ea',1,'eve::aligned_ptr']]]
 ];

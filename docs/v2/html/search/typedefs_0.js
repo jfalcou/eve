@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['element_5ftype_107',['element_type',['../structeve_1_1aligned__ptr.html#a45c86f93f151af092c135aca9efd5a7e',1,'eve::aligned_ptr']]]
+  ['abi_5ftype_158',['abi_type',['../structeve_1_1wide.html#ad77f714bcdf918dffec9b5585a80837f',1,'eve::wide']]]
 ];

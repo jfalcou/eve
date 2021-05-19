@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['is_5faligned_82',['is_aligned',['../group__memory_gad05ab928f3e9aa972a7e7146f76cce13.html#gad05ab928f3e9aa972a7e7146f76cce13',1,'eve::is_aligned(aligned_ptr&lt; T, Other &gt; const &amp;ptr) noexcept'],['../group__memory_gab1add731db6f65a080c9ec8b4a125858.html#gab1add731db6f65a080c9ec8b4a125858',1,'eve::is_aligned(T v) noexcept'],['../group__memory_ga25228d751afbdd3a2c7d09aea5f2ae74.html#ga25228d751afbdd3a2c7d09aea5f2ae74',1,'eve::is_aligned(T *ptr) noexcept']]],
-  ['is_5fpower_5fof_5f2_83',['is_power_of_2',['../group__utility.html#ga7f90f4e08946de5604a6d0f7f2611390',1,'eve']]]
+  ['empty_121',['empty',['../structeve_1_1detail_1_1wide__cardinal.html#ac20bcc211ad426f1b1b4dd55a8dd809e',1,'eve::detail::wide_cardinal']]],
+  ['end_122',['end',['../structeve_1_1wide.html#adced0dc649e98b521b32715bd4a3600a',1,'eve::wide::end() noexcept'],['../structeve_1_1wide.html#a1051f17d44973e1d702c6344371f8d1a',1,'eve::wide::end() const noexcept']]]
 ];

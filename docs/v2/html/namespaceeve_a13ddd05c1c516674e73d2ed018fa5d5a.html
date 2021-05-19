@@ -148,6 +148,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
           <tr><td class="navtab"><a class="navtab" href="group__memory_ga0c5c814e7f47fcfe1e38e2436afc7203.html#ga0c5c814e7f47fcfe1e38e2436afc7203">align</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="namespaceeve.html#a391c6bfda8692e3428c23d2b47596a78">as_aligned</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="namespaceeve.html#a4c23bf1f534da4402aac07f2168299c0">as_aligned</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="namespaceeve_ae0ef9200ab790a71835ff39ff61061a5.html#ae0ef9200ab790a71835ff39ff61061a5">div</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="group__memory_gad05ab928f3e9aa972a7e7146f76cce13.html#gad05ab928f3e9aa972a7e7146f76cce13">is_aligned</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="group__memory_ga25228d751afbdd3a2c7d09aea5f2ae74.html#ga25228d751afbdd3a2c7d09aea5f2ae74">is_aligned</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="group__memory_gab1add731db6f65a080c9ec8b4a125858.html#gab1add731db6f65a080c9ec8b4a125858">is_aligned</a></td></tr>
@@ -187,7 +188,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
 <p><b>Required header:</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/function/sub.hpp&gt;</span></div>
 </div><!-- fragment --><p><br  />
 Callable object performing the difference of multiple values.</p>
-<h4><a class="anchor" id="autotoc_md15"></a>
+<h4><a class="anchor" id="autotoc_md21"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -212,7 +213,7 @@ Members Functions</h4>
 <p><b>Return value</b></p>
 <p>A Callable object so that the expression <code>sub[cond](x0,xs...)</code> is equivalent to <code>if_else(cond,sub(x0,xs...),x0)</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md19"></a>
+<h4><a class="anchor" id="autotoc_md25"></a>
 Supported decorators</h4>
 <ul>
 <li><p class="startli"><a class="el" href="group__decorator_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">eve::saturated</a></p>
@@ -224,7 +225,7 @@ Supported decorators</h4>
 <p class="startli">The expression <code>eve::diff&lt;N&gt;(<a class="el" href="namespaceeve_a13ddd05c1c516674e73d2ed018fa5d5a.html#a13ddd05c1c516674e73d2ed018fa5d5a">eve::sub</a>)(xs...)</code> computes the derivative of the difference of <code>xs...</code> over the Nth parameters.</p>
 </li>
 </ul>
-<h4><a class="anchor" id="autotoc_md20"></a>
+<h4><a class="anchor" id="autotoc_md26"></a>
 Example</h4>
 <p><a href="https://godbolt.org/z/bb7vc5bWd"><b>See it live on Compiler Explorer</b></a></p>
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;eve/function/sub.hpp&gt;</span></div>
@@ -234,7 +235,7 @@ Example</h4>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keywordtype">int</span> main()</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;{</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;  <span class="keyword">using</span> w_t = eve::wide&lt;std::int16_t, eve::fixed&lt;4&gt;&gt;;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;  <span class="keyword">using</span> w_t = <a class="code" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;  w_t pi = {3, 2, -32700, 32700}, qi = {4, 1, 100, -100};</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
@@ -259,6 +260,7 @@ Example</h4>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;}</div>
 <div class="ttc" id="agroup__decorator_ga65d424f34f684af47b6e2d2653be632e_html_ga65d424f34f684af47b6e2d2653be632e"><div class="ttname"><a href="group__decorator_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">eve::saturated</a></div><div class="ttdeci">constexpr saturated_type const saturated</div><div class="ttdef"><b>Definition:</b> saturated.hpp:43</div></div>
 <div class="ttc" id="anamespaceeve_a13ddd05c1c516674e73d2ed018fa5d5a_html_a13ddd05c1c516674e73d2ed018fa5d5a"><div class="ttname"><a href="namespaceeve_a13ddd05c1c516674e73d2ed018fa5d5a.html#a13ddd05c1c516674e73d2ed018fa5d5a">eve::sub</a></div><div class="ttdeci">constexpr callable_sub_ sub</div><div class="ttdef"><b>Definition:</b> sub.hpp:92</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:46</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -274,7 +276,7 @@ Example</h4>
 </div> <!-- DOXYSTRAP RELATED -->
 </div> <!-- DOXYSTRAP RELATED -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon May 17 2021 10:12:01 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon May 17 2021 16:55:53 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

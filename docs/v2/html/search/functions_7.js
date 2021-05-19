@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['swap_100',['swap',['../structeve_1_1aligned__ptr.html#a3de1f1ab2d131e23af231cde028e50d5',1,'eve::aligned_ptr']]]
+  ['next_5fpower_5fof_5f2_127',['next_power_of_2',['../group__utility.html#gad47c55690b36ca096a9a5ffcb4e28b6f',1,'eve']]]
 ];
