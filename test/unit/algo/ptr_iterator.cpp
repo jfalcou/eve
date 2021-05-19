@@ -15,18 +15,31 @@
 #include <array>
 #include <numeric>
 
+namespace
+{
+
+struct basic_delegate
+{
+  auto replace(auto v, auto ignore) { return eve::replace_ignored(v, ignore, 0); }
+
+  void assert_eq(auto x, auto y) { TTS_EQUAL(x, y); }
+};
+
+}
+
 EVE_TEST_TYPES("Check ptr_iterator", algo_test::selected_types)
 <typename T>(eve::as_<T>)
 {
   alignas(sizeof(T)) std::array<eve::element_type_t<T>, T::static_size> data;
   std::iota(data.begin(), data.end(), 0);
 
-  T values([](int i, int) { return i; });
-  auto replace = [&](auto v, auto ignore) { return eve::replace_ignored(v, ignore, T{0}); };
-
+  struct delegate_t : basic_delegate
+  {
+    T v() { return T([](int i, int) { return i; }); }
+  } delegate;
 
   auto run_test_one_pair = [&](auto f, auto l) {
-    algo_test::iterator_sentinel_test(f, l, values, replace);
+    algo_test::iterator_sentinel_test(f, l, delegate);
   };
 
   auto run_test = [&] <typename U>(U* f, U* l) {
@@ -47,8 +60,8 @@ EVE_TEST_TYPES("Check ptr_iterator", algo_test::selected_types)
 
     if constexpr (!std::is_const_v<U>)
     {
-      algo_test::writeable_readable_iterator(a_f, values, replace);
-      algo_test::writeable_readable_iterator(u_f, values, replace);
+      algo_test::writeable_readable_iterator(a_f, delegate);
+      algo_test::writeable_readable_iterator(u_f, delegate);
     }
   };
 
