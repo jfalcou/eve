@@ -161,6 +161,7 @@ EVE_TEST( "Check corner-cases behavior of eve::div variants on wide"
     TTS_EQUAL(upward(eve::div)(T(-4) ,   T(-4)), T(1));
     TTS_EQUAL(upward(eve::div)(T(0) ,    T(-4)), T(0));
     TTS_EQUAL(upward(eve::div)(T(0) ,    T(4)), T(0));
+    TTS_EQUAL(upward(eve::div)(T(1) ,    T(2)), T(1));
   }
 
   TTS_EQUAL(upward(eve::div)(T(12), T(4)), T(3));

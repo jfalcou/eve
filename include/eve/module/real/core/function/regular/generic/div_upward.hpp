@@ -33,7 +33,7 @@ namespace eve::detail
     using elt_t = element_type_t<T>;
     if constexpr( floating_real_value<T> )
     {
-      return floor(div(a, b));
+      return ceil(div(a, b));
     }
     else if constexpr( integral_real_value<T> )
     {
