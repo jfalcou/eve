@@ -62,6 +62,8 @@ namespace eve
   //!
   //! @brief Computes the type compatible with a list of [values](@ref value)
   //!
+  //! **Required header:** `#include <eve/traits/common_compatible.hpp>`
+  //!
   //! If all `Ts...` are all identical to a given `T` and model eve::value, provides the member
   //! typedef `type` which is defined as `T`.
   //!
