@@ -388,7 +388,7 @@ namespace kumi
     // Comparison operators
     //==============================================================================================
     template<sized_product_type<sizeof...(Ts)> Other>
-    friend constexpr bool operator==(tuple const &self, Other const &other) noexcept
+    friend constexpr auto operator==(tuple const &self, Other const &other) noexcept
     {
       return [&]<std::size_t... I>(std::index_sequence<I...>)
       {
@@ -398,7 +398,7 @@ namespace kumi
     }
 
     template<sized_product_type<sizeof...(Ts)> Other>
-    friend constexpr bool operator!=(tuple const &self, Other const &other) noexcept
+    friend constexpr auto operator!=(tuple const &self, Other const &other) noexcept
     {
       return [&]<std::size_t... I>(std::index_sequence<I...>)
       {
@@ -509,7 +509,7 @@ namespace kumi
       auto call = [&]<std::size_t N>(index_t<N>, auto const &...args)
       { return f(get<N>(args)...); };
 
-      return make_tuple(call(index<I>, t0, others...)...);
+      return kumi::make_tuple(call(index<I>, t0, others...)...);
     }
     (std::make_index_sequence<size<Tuple>::value>());
   }
@@ -546,7 +546,7 @@ namespace kumi
     return [&]<std::size_t... TI, std::size_t... UI>(std::index_sequence<TI...>,
                                                      std::index_sequence<UI...>)
     {
-      return make_tuple(get<TI>(t)..., get<UI>(u)...);
+      return kumi::make_tuple(get<TI>(t)..., get<UI>(u)...);
     }
     (std::make_index_sequence<size<T>::value>(), std::make_index_sequence<size<U>::value>());
   }
@@ -603,7 +603,7 @@ namespace kumi
       [[nodiscard]] constexpr auto zip(T0 &&t0, Ts &&...tuples)
   {
     return map(
-        []<typename... Ms>(Ms && ...ms) { return make_tuple(std::forward<Ms>(ms)...); },
+        []<typename... Ms>(Ms && ...ms) { return kumi::make_tuple(std::forward<Ms>(ms)...); },
         std::forward<T0>(t0),
         std::forward<Ts>(tuples)...);
   }
@@ -617,9 +617,9 @@ namespace kumi
     return [&]<std::size_t... I>(std::index_sequence<I...>)
     {
       constexpr auto uz = []<typename N>(N const &, auto const &u)
-      { return apply([](auto const &...m) { return make_tuple(get<N::value>(m)...); }, u); };
+      { return apply([](auto const &...m) { return kumi::make_tuple(get<N::value>(m)...); }, u); };
 
-      return make_tuple(uz(index_t<I> {}, t)...);
+      return kumi::make_tuple(uz(index_t<I> {}, t)...);
     }
     (std::make_index_sequence<size<std::remove_cvref_t<decltype(get<0>(t))>>::value>());
   }
@@ -631,7 +631,7 @@ namespace kumi
   requires((Idx < size<std::remove_cvref_t<Tuple>>::value) && ...)
       [[nodiscard]] constexpr auto reorder(Tuple &&t)
   {
-    return make_tuple(KUMI_FWD(t)[index<Idx>]...);
+    return kumi::make_tuple(KUMI_FWD(t)[index<Idx>]...);
   }
 }
 
