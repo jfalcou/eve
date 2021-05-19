@@ -152,8 +152,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
 
 <p>Storage-only element of wide/logical.  
  <a href="structeve_1_1detail_1_1wide__storage.html#details">More...</a></p>
-
-<p><code>#include &lt;eve/arch/cpu/base.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename Storage&gt;<br />
 struct eve::detail::wide_storage&lt; Storage &gt;</h3>
@@ -169,11 +167,6 @@ struct eve::detail::wide_storage&lt; Storage &gt;</h3>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
-<tr class="memitem:a700e21a29b081985d0b10531d12d118d"><td class="memItemLeft" align="right" valign="top"><a id="a700e21a29b081985d0b10531d12d118d"></a>
-<a class="el" href="structeve_1_1detail_1_1wide__storage.html">wide_storage</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1detail_1_1wide__storage.html#a700e21a29b081985d0b10531d12d118d">operator=</a> (storage_type const &amp;r)</td></tr>
-<tr class="memdesc:a700e21a29b081985d0b10531d12d118d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assignment of an architecture-specific SIMD register. <br /></td></tr>
-<tr class="separator:a700e21a29b081985d0b10531d12d118d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Interface with architecture-specific intrinsics</div></td></tr>
 <tr class="memitem:a517acf9c001d2d30651de6ee0a989f97"><td class="memItemLeft" align="right" valign="top"><a id="a517acf9c001d2d30651de6ee0a989f97"></a>
 storage_type const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1detail_1_1wide__storage.html#a517acf9c001d2d30651de6ee0a989f97">storage</a> () const &amp;noexcept</td></tr>
@@ -181,11 +174,11 @@ storage_type const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a 
 <tr class="separator:a517acf9c001d2d30651de6ee0a989f97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a655a4251d49218c41759da8d8cc27be6"><td class="memItemLeft" align="right" valign="top"><a id="a655a4251d49218c41759da8d8cc27be6"></a>
 storage_type &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1detail_1_1wide__storage.html#a655a4251d49218c41759da8d8cc27be6">storage</a> () &amp;noexcept</td></tr>
-<tr class="memdesc:a655a4251d49218c41759da8d8cc27be6"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. <br /></td></tr>
+<tr class="memdesc:a655a4251d49218c41759da8d8cc27be6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the architecture-specific storage help by wide. <br /></td></tr>
 <tr class="separator:a655a4251d49218c41759da8d8cc27be6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a947659b90b165234fbc601493bf367fa"><td class="memItemLeft" align="right" valign="top"><a id="a947659b90b165234fbc601493bf367fa"></a>
 storage_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1detail_1_1wide__storage.html#a947659b90b165234fbc601493bf367fa">storage</a> () &amp;&amp;noexcept</td></tr>
-<tr class="memdesc:a947659b90b165234fbc601493bf367fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. <br /></td></tr>
+<tr class="memdesc:a947659b90b165234fbc601493bf367fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the architecture-specific storage help by wide. <br /></td></tr>
 <tr class="separator:a947659b90b165234fbc601493bf367fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a88f4571bc839404f25eb4843c19bbccf"><td class="memItemLeft" align="right" valign="top"><a id="a88f4571bc839404f25eb4843c19bbccf"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1detail_1_1wide__storage.html#a88f4571bc839404f25eb4843c19bbccf">operator storage_type const &amp;</a> () const &amp;noexcept</td></tr>
@@ -193,11 +186,11 @@ storage_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="separator:a88f4571bc839404f25eb4843c19bbccf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3e054b6a5917548f79c7394b9a67a716"><td class="memItemLeft" align="right" valign="top"><a id="a3e054b6a5917548f79c7394b9a67a716"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1detail_1_1wide__storage.html#a3e054b6a5917548f79c7394b9a67a716">operator storage_type &amp;</a> () &amp;noexcept</td></tr>
-<tr class="memdesc:a3e054b6a5917548f79c7394b9a67a716"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. <br /></td></tr>
+<tr class="memdesc:a3e054b6a5917548f79c7394b9a67a716"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicit conversion to the architecture-specific storage help by wide. <br /></td></tr>
 <tr class="separator:a3e054b6a5917548f79c7394b9a67a716"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed3fabf863699bcff6836c81f33d6ce8"><td class="memItemLeft" align="right" valign="top"><a id="aed3fabf863699bcff6836c81f33d6ce8"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1detail_1_1wide__storage.html#aed3fabf863699bcff6836c81f33d6ce8">operator storage_type</a> () &amp;&amp;noexcept</td></tr>
-<tr class="memdesc:aed3fabf863699bcff6836c81f33d6ce8"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. <br /></td></tr>
+<tr class="memdesc:aed3fabf863699bcff6836c81f33d6ce8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicit conversion to the architecture-specific storage help by wide. <br /></td></tr>
 <tr class="separator:aed3fabf863699bcff6836c81f33d6ce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
@@ -209,7 +202,7 @@ storage_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 </div> <!-- DOXYSTRAP RELATED -->
 </div> <!-- DOXYSTRAP RELATED -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 18 2021 19:21:31 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Wed May 19 2021 19:18:01 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

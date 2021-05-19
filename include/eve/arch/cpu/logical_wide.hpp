@@ -17,11 +17,18 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/alias.hpp>
 #include <eve/detail/concepts.hpp>
-#include <eve/detail/function/bitmask.hpp>
 #include <eve/detail/function/bit_cast.hpp>
+#include <eve/detail/function/bitmask.hpp>
 #include <eve/detail/function/combine.hpp>
 #include <eve/detail/function/fill.hpp>
+#include <eve/detail/function/friends.hpp>
+#include <eve/detail/function/load.hpp>
+#include <eve/detail/function/lookup.hpp>
 #include <eve/detail/function/make.hpp>
+#include <eve/detail/function/patterns.hpp>
+#include <eve/detail/function/slice.hpp>
+#include <eve/detail/function/subscript.hpp>
+#include <eve/detail/function/swizzle.hpp>
 #include <eve/traits/as_integer.hpp>
 
 #include <cstring>
@@ -31,7 +38,20 @@
 namespace eve
 {
   //================================================================================================
-  // Wrapper for SIMD registers holding logical types with compile-time size
+  //! @addtogroup simd
+  //! @{
+  //================================================================================================
+  //! @brief Wrapper for SIMD registers holding logical types with compile-time size
+  //!
+  //! **Required header:** `#include <eve/logical.hpp>`
+  //!
+  //! This specialization of eve::logical is an architecture-agnostic representation of a low-level
+  //! SIMD register mask and provides standardized API to access informations, compute values and
+  //! manipulate such register.
+  //!
+  //! @tparam Type  Type of value to store in the register
+  //! @tparam Size  Cardinal of the register. By default, the best cardinal for current architecture
+  //!               is selected.
   //================================================================================================
   template<typename Type, typename Size, typename ABI>
   struct  EVE_MAY_ALIAS  logical<wide<Type,Size,ABI>>
@@ -43,19 +63,35 @@ namespace eve
     using storage_base  = detail::wide_storage<as_logical_register_t<Type, Size, ABI>>;
 
     public:
-    using abi_type      = ABI;
+    //! The type stored in the register.
     using value_type    = logical<Type>;
+
+    //! The ABI tag for this register.
+    using abi_type      = ABI;
+
+    //! The type used for this register storage
     using storage_type  = typename storage_base::storage_type;
+
+    //! Type for indexing element in a wide
     using size_type     = typename card_base::size_type;
 
+    //! Type representing the bits of the logical value
     using bits_type = wide<as_integer_t<Type, unsigned>, Size>;
+
+    //! Type representing the numerical value associated to the mask
     using mask_type = wide<Type, Size>;
 
-    template<typename N> using rescale = logical<wide<Type,N>>;
-    template<typename T, typename N = expected_cardinal_t<T>>
-    using rebind = logical<wide<T,N>>;
+    //! Type alias for computing a new wide type of given type and cardinal
+    template<typename T, typename N = expected_cardinal_t<T>> using rebind = logical<wide<T,N>>;
 
+    //! Type alias for resizing a wide type to a new cardinal
+    template<typename N> using rescale = logical<wide<Type,N>>;
+
+    //! The expected alignment for this register type
     static constexpr size_type  static_alignment = sizeof(Type)*Size::value;
+
+    //! The expected alignment for this register type
+    static EVE_FORCEINLINE constexpr auto alignment() noexcept { return static_alignment; }
 
     //==============================================================================================
     // Constructors
@@ -84,7 +120,9 @@ namespace eve
 
     template<simd_compatible_ptr<logical> Ptr>
     EVE_FORCEINLINE explicit logical(Ptr ptr) noexcept
-                  : storage_base(detail::load(eve::as_<logical>{}, ptr)) {}
+                  : storage_base(detail::load(eve::as_<logical>{}, ptr))
+    {
+    }
 
     EVE_FORCEINLINE explicit logical(scalar_value auto const& v) noexcept
                   : storage_base(detail::make(eve::as_<logical>{}, v)) {}
@@ -112,13 +150,75 @@ namespace eve
     {}
 
     //==============================================================================================
-    // Assignments
+    //! @name Assignment operators
+    //! @{
     //==============================================================================================
+    //! Assignment operator
     logical& operator=(logical const&) & = default;
-    using detail::wide_ops<logical>::operator=;
+
+    EVE_FORCEINLINE logical& operator=(value_type v) noexcept
+    {
+      logical that(v);
+      swap(that);
+      return *this;
+    }
+
+    EVE_FORCEINLINE logical& operator=(bool v) noexcept
+    {
+      logical that( value_type{v} );
+      swap(that);
+      return *this;
+    }
+
+    //! @brief Assignment of an architecture-specific SIMD register
+    logical& operator=(storage_type const &r) { storage_base::data_ = r; return *this; }
 
     //==============================================================================================
-    // Convertion from logical to other formats (mask, bits, bitmap)
+    //! @}
+    //==============================================================================================
+
+    //==============================================================================================
+    //! @name Indexing and reordering
+    //! @{
+    //==============================================================================================
+
+    //==============================================================================================
+    //! @brief Dynamic lookup via lane indexing
+    //!
+    //! Does not participate in overload in overload resolution if `idx` is not an integral register.
+    //!
+    //! @see eve::wide::operator[]
+    //!
+    //! @param idx  wide of integral indexes
+    //! @return A logical constructed as `logical{ get(idx.get(0)), ..., get(idx.get(size()-1))}`.
+    //==============================================================================================
+    template<typename Index>
+    EVE_FORCEINLINE auto operator[](wide<Index,Size> const& idx) const noexcept
+    {
+      return lookup((*this),idx);
+    }
+
+    template<std::ptrdiff_t... I>
+    EVE_FORCEINLINE auto operator[](pattern_t<I...>) const noexcept
+#if !defined (EVE_DOXYGEN_INVOKED)
+    requires(pattern_t<I...>{}.validate(Size::value))
+#endif
+    {
+      constexpr auto swizzler = detail::find_optimized_pattern<Size::value,I...>();
+      return swizzler((*this));
+    }
+
+    template<typename F>
+    EVE_FORCEINLINE auto operator[](as_pattern<F> p) const noexcept
+    {
+      return (*this)[ fix_pattern<Size::value>(p) ];
+    }
+    //==============================================================================================
+    //! @}
+    //==============================================================================================
+
+    //==============================================================================================
+    // Conversion from logical to other formats (mask, bits, bitmap)
     //==============================================================================================
     EVE_FORCEINLINE auto bits()   const noexcept { return detail::to_bits(EVE_CURRENT_API{},*this); }
     EVE_FORCEINLINE auto mask()   const noexcept { return detail::to_mask(EVE_CURRENT_API{},*this); }
@@ -159,6 +259,63 @@ namespace eve
       return w || v;
     }
 
+    friend EVE_FORCEINLINE auto operator!(logical const& v) noexcept
+    {
+      return detail::self_lognot(v);
+    }
+
+    //==============================================================================================
+    //! @name Modifiers
+    //! @{
+    //==============================================================================================
+    void swap( logical& other ) { std::swap(this->storage(), other.storage()); }
+
+    //==============================================================================================
+    //! @}
+    //==============================================================================================
+
+    //! @brief Swaps the contents of `lhs` and `rhs` by calling `lhs.swap(rhs)`.
+    friend EVE_FORCEINLINE void swap(logical &lhs, logical &rhs) noexcept
+    {
+      lhs.swap(rhs);
+    }
+
+    //==============================================================================================
+    //! @name Sequence interface
+    //! @{
+    //==============================================================================================
+    //! Set the value of a given lane
+    EVE_FORCEINLINE void set(std::size_t i, scalar_value auto v) noexcept
+    {
+      detail::insert(*this, i, v);
+    }
+
+    //! Retrieve the value from a given lane
+    EVE_FORCEINLINE auto get(std::size_t i) const noexcept
+    {
+      return detail::extract(*this, i);
+    }
+
+    //! Retrieve the value of the first lanes
+    EVE_FORCEINLINE auto back()  const noexcept { return get(Size::value-1); }
+
+    //! Retrieve the value of the first lane
+    EVE_FORCEINLINE auto front() const noexcept { return get(0); }
+
+    EVE_FORCEINLINE auto slice() const requires(Size::value > 1)
+    {
+      return detail::slice(*this);
+    }
+
+    EVE_FORCEINLINE auto slice(auto s) const requires(Size::value > 1)
+    {
+      return detail::slice(*this, s);
+    }
+
+    //==============================================================================================
+    //! @}
+    //==============================================================================================
+
     //==============================================================================================
     // Inserting a logical<wide> into a stream
     //==============================================================================================
@@ -170,4 +327,7 @@ namespace eve
       return os << ')';
     }
   };
+  //================================================================================================
+  //! @}
+  //================================================================================================
 }

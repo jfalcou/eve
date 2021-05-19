@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['next_5fpower_5fof_5f2_127',['next_power_of_2',['../group__utility.html#gad47c55690b36ca096a9a5ffcb4e28b6f',1,'eve']]]
+  ['logical_148',['logical',['../structeve_1_1logical.html#a83188ebd25932c504e2e289b63e223b4',1,'eve::logical::logical() noexcept'],['../structeve_1_1logical.html#ab884507910d1e31e78f65996e28384ca',1,'eve::logical::logical(bool v) noexcept'],['../structeve_1_1logical.html#ab653908c20a7064c7aee017040fc596c',1,'eve::logical::logical(U const &amp;v) noexcept']]]
 ];

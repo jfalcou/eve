@@ -145,6 +145,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
 <div class="header">
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="structeve_1_1wide-members.html">List of all members</a>  </div>
@@ -155,14 +156,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
 
 <p>Wrapper for SIMD registers.  
  <a href="structeve_1_1wide.html#details">More...</a></p>
-
-<p><code>#include &lt;eve/arch/cpu/wide.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename Type, typename Size, typename ABI&gt;<br />
 struct eve::wide&lt; Type, Size, ABI &gt;</h3>
 
 <p>Wrapper for SIMD registers. </p>
-<p>wide is an architecture-agnostic representation of a low-level SIMD register and provides standardized API to access informations, compute values and manipulate such register.</p>
+<p><b>Required header:</b> <code>#include &lt;eve/wide.hpp&gt;</code></p>
+<p><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> is an architecture-agnostic representation of a low-level SIMD register and provides standardized API to access informations, compute values and manipulate such register.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Type</td><td>Type of value to store in the register </td></tr>
@@ -171,7 +171,7 @@ struct eve::wide&lt; Type, Size, ABI &gt;</h3>
   </dd>
 </dl>
 </div>
-<p>Inherits <a class="el" href="structeve_1_1detail_1_1wide__cardinal.html">eve::detail::wide_cardinal&lt; Size &gt;</a>, eve::detail::wide_ops&lt; Derived &gt;, and <a class="el" href="structeve_1_1detail_1_1wide__storage.html">eve::detail::wide_storage&lt; as_register_t&lt; Type, Size, ABI &gt; &gt;</a>.</p>
+<p>Inherits <a class="el" href="structeve_1_1detail_1_1wide__cardinal.html">eve::detail::wide_cardinal&lt; Size &gt;</a>, <a class="el" href="structeve_1_1detail_1_1wide__ops.html">eve::detail::wide_ops&lt; wide&lt; Type, Size, ABI &gt; &gt;</a>, and <a class="el" href="structeve_1_1detail_1_1wide__storage.html">eve::detail::wide_storage&lt; as_register_t&lt; Type, Size, ABI &gt; &gt;</a>.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -208,6 +208,10 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="str
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:abb62902ce006fd86ae507ba2ce7b8b21"><td class="memItemLeft" align="right" valign="top"><a id="abb62902ce006fd86ae507ba2ce7b8b21"></a>
+static constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#abb62902ce006fd86ae507ba2ce7b8b21">alignment</a> () noexcept</td></tr>
+<tr class="memdesc:abb62902ce006fd86ae507ba2ce7b8b21"><td class="mdescLeft">&#160;</td><td class="mdescRight">The expected alignment for this register type. <br /></td></tr>
+<tr class="separator:abb62902ce006fd86ae507ba2ce7b8b21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Sequence interface</div></td></tr>
 <tr class="memitem:ae1eceedc7fc52c9f33893e6ce7b1b2a9"><td class="memItemLeft" align="right" valign="top"><a id="ae1eceedc7fc52c9f33893e6ce7b1b2a9"></a>
 static constexpr <a class="el" href="structeve_1_1wide.html#a343028862bdb7c2598c9b61d899b21c1">size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1detail_1_1wide__cardinal.html#ae1eceedc7fc52c9f33893e6ce7b1b2a9">size</a> () noexcept</td></tr>
@@ -254,14 +258,16 @@ template&lt;detail::range Range&gt; </td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#a2d7168a79df504c7553ba709cb17bccf">wide</a> (simd_compatible_ptr&lt; <a class="el" href="structeve_1_1wide.html">wide</a> &gt; auto ptr) noexcept</td></tr>
 <tr class="memdesc:a2d7168a79df504c7553ba709cb17bccf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a wide from a SIMD compatible pointer. <br /></td></tr>
 <tr class="separator:a2d7168a79df504c7553ba709cb17bccf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa51e09f0a2df8412faeab3635845b5b5"><td class="memItemLeft" align="right" valign="top"><a id="aa51e09f0a2df8412faeab3635845b5b5"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#aa51e09f0a2df8412faeab3635845b5b5">wide</a> (scalar_value auto const &amp;v) noexcept</td></tr>
-<tr class="memdesc:aa51e09f0a2df8412faeab3635845b5b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a wide by splatting a scalar value in all lanes. <br /></td></tr>
-<tr class="separator:aa51e09f0a2df8412faeab3635845b5b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a880327f3c9f37e2ce6427e76a82312d1"><td class="memItemLeft" align="right" valign="top"><a id="a880327f3c9f37e2ce6427e76a82312d1"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#a880327f3c9f37e2ce6427e76a82312d1">wide</a> (scalar_value auto v0, scalar_value auto v1, scalar_value auto... vs) noexcept</td></tr>
-<tr class="memdesc:a880327f3c9f37e2ce6427e76a82312d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a wide from a sequence of scalar values of proper size. <br /></td></tr>
-<tr class="separator:a880327f3c9f37e2ce6427e76a82312d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53d7ee5c2d0482ee6254afc88e8257b4"><td class="memTemplParams" colspan="2"><a id="a53d7ee5c2d0482ee6254afc88e8257b4"></a>
+template&lt;scalar_value S&gt; </td></tr>
+<tr class="memitem:a53d7ee5c2d0482ee6254afc88e8257b4"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#a53d7ee5c2d0482ee6254afc88e8257b4">wide</a> (S const &amp;v) noexcept</td></tr>
+<tr class="memdesc:a53d7ee5c2d0482ee6254afc88e8257b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a wide by splatting a scalar value in all lanes. <br /></td></tr>
+<tr class="separator:a53d7ee5c2d0482ee6254afc88e8257b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61392e421b3512176961da5f2d92b38c"><td class="memTemplParams" colspan="2"><a id="a61392e421b3512176961da5f2d92b38c"></a>
+template&lt;scalar_value S0, scalar_value S1, scalar_value... Ss&gt; </td></tr>
+<tr class="memitem:a61392e421b3512176961da5f2d92b38c"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#a61392e421b3512176961da5f2d92b38c">wide</a> (S0 v0, S1 v1, Ss... vs) noexcept</td></tr>
+<tr class="memdesc:a61392e421b3512176961da5f2d92b38c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a wide from a sequence of scalar values of proper size. <br /></td></tr>
+<tr class="separator:a61392e421b3512176961da5f2d92b38c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add07272484206e936439afab38faedde"><td class="memTemplParams" colspan="2">template&lt;std::invocable&lt; size_type, size_type &gt; Generator&gt; </td></tr>
 <tr class="memitem:add07272484206e936439afab38faedde"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structeve_1_1wide_add07272484206e936439afab38faedde.html#add07272484206e936439afab38faedde">wide</a> (Generator &amp;&amp;g) noexcept</td></tr>
 <tr class="memdesc:add07272484206e936439afab38faedde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a wide from a <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a>.  <a href="structeve_1_1wide_add07272484206e936439afab38faedde.html#add07272484206e936439afab38faedde">More...</a><br /></td></tr>
@@ -269,12 +275,22 @@ template&lt;detail::range Range&gt; </td></tr>
 <tr class="memitem:a5fdfef3fa11404e31035ed9a8cc70c94"><td class="memTemplParams" colspan="2"><a id="a5fdfef3fa11404e31035ed9a8cc70c94"></a>
 template&lt;typename halfSize &gt; </td></tr>
 <tr class="memitem:a5fdfef3fa11404e31035ed9a8cc70c94"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#a5fdfef3fa11404e31035ed9a8cc70c94">wide</a> (<a class="el" href="structeve_1_1wide.html">wide</a>&lt; Type, halfSize &gt; const &amp;l, <a class="el" href="structeve_1_1wide.html">wide</a>&lt; Type, halfSize &gt; const &amp;h) noexcept</td></tr>
-<tr class="memdesc:a5fdfef3fa11404e31035ed9a8cc70c94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a wide by combining two wide of half the current cardinal. <br /></td></tr>
+<tr class="memdesc:a5fdfef3fa11404e31035ed9a8cc70c94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a wide by combining two wide of half the current cardinal. Does not participate in overload resolution if <code>Size::value != 2 * halfSize::value</code>. <br /></td></tr>
 <tr class="separator:a5fdfef3fa11404e31035ed9a8cc70c94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
 <tr class="memitem:aacc4257554149e07826cfbcf77f8916b"><td class="memItemLeft" align="right" valign="top"><a id="aacc4257554149e07826cfbcf77f8916b"></a>
-<a class="el" href="structeve_1_1wide.html">wide</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;) &amp;=default</td></tr>
+<a class="el" href="structeve_1_1wide.html">wide</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#aacc4257554149e07826cfbcf77f8916b">operator=</a> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;) &amp;=default</td></tr>
+<tr class="memdesc:aacc4257554149e07826cfbcf77f8916b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assignment operator. <br /></td></tr>
 <tr class="separator:aacc4257554149e07826cfbcf77f8916b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f0de66e37e5a7dbfa661fe6399845b2"><td class="memItemLeft" align="right" valign="top"><a id="a9f0de66e37e5a7dbfa661fe6399845b2"></a>
+<a class="el" href="structeve_1_1wide.html">wide</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#a9f0de66e37e5a7dbfa661fe6399845b2">operator=</a> (<a class="el" href="structeve_1_1wide.html#a8b90bd082c2de7a2bb7c628d853677a7">storage_type</a> const &amp;r)</td></tr>
+<tr class="memdesc:a9f0de66e37e5a7dbfa661fe6399845b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assignment of an architecture-specific SIMD register. <br /></td></tr>
+<tr class="separator:a9f0de66e37e5a7dbfa661fe6399845b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6c521d0f5f0195a0a59cb0e80820ad1"><td class="memTemplParams" colspan="2"><a id="ac6c521d0f5f0195a0a59cb0e80820ad1"></a>
+template&lt;scalar_value S&gt; </td></tr>
+<tr class="memitem:ac6c521d0f5f0195a0a59cb0e80820ad1"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structeve_1_1wide.html">wide</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#ac6c521d0f5f0195a0a59cb0e80820ad1">operator=</a> (S v) noexcept</td></tr>
+<tr class="memdesc:ac6c521d0f5f0195a0a59cb0e80820ad1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assignment of a scalar value by splatting it in all lanes. <br /></td></tr>
+<tr class="separator:ac6c521d0f5f0195a0a59cb0e80820ad1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Sequence interface</div></td></tr>
 <tr class="memitem:ad397202de65668e707909afb8f4c673c"><td class="memItemLeft" align="right" valign="top"><a id="ad397202de65668e707909afb8f4c673c"></a>
 auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#ad397202de65668e707909afb8f4c673c">begin</a> () noexcept</td></tr>
@@ -282,7 +298,7 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stru
 <tr class="separator:ad397202de65668e707909afb8f4c673c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a40953c44048ded62720985cb221c9eb9"><td class="memItemLeft" align="right" valign="top"><a id="a40953c44048ded62720985cb221c9eb9"></a>
 auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#a40953c44048ded62720985cb221c9eb9">begin</a> () const noexcept</td></tr>
-<tr class="memdesc:a40953c44048ded62720985cb221c9eb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. <br /></td></tr>
+<tr class="memdesc:a40953c44048ded62720985cb221c9eb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an iterator to the beginning. <br /></td></tr>
 <tr class="separator:a40953c44048ded62720985cb221c9eb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adced0dc649e98b521b32715bd4a3600a"><td class="memItemLeft" align="right" valign="top"><a id="adced0dc649e98b521b32715bd4a3600a"></a>
 auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#adced0dc649e98b521b32715bd4a3600a">end</a> () noexcept</td></tr>
@@ -290,8 +306,24 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stru
 <tr class="separator:adced0dc649e98b521b32715bd4a3600a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1051f17d44973e1d702c6344371f8d1a"><td class="memItemLeft" align="right" valign="top"><a id="a1051f17d44973e1d702c6344371f8d1a"></a>
 auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#a1051f17d44973e1d702c6344371f8d1a">end</a> () const noexcept</td></tr>
-<tr class="memdesc:a1051f17d44973e1d702c6344371f8d1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. <br /></td></tr>
+<tr class="memdesc:a1051f17d44973e1d702c6344371f8d1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an iterator to the end. <br /></td></tr>
 <tr class="separator:a1051f17d44973e1d702c6344371f8d1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4f0accf1d718cc9554ac9755a40ac96"><td class="memItemLeft" align="right" valign="top"><a id="af4f0accf1d718cc9554ac9755a40ac96"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#af4f0accf1d718cc9554ac9755a40ac96">set</a> (std::size_t i, scalar_value auto v) noexcept</td></tr>
+<tr class="memdesc:af4f0accf1d718cc9554ac9755a40ac96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the value of a given lane. <br /></td></tr>
+<tr class="separator:af4f0accf1d718cc9554ac9755a40ac96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1946a00400b0539479bc39d3e37a63d1"><td class="memItemLeft" align="right" valign="top"><a id="a1946a00400b0539479bc39d3e37a63d1"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#a1946a00400b0539479bc39d3e37a63d1">get</a> (std::size_t i) const noexcept</td></tr>
+<tr class="memdesc:a1946a00400b0539479bc39d3e37a63d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the value from a given lane. <br /></td></tr>
+<tr class="separator:a1946a00400b0539479bc39d3e37a63d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab65b3cff1d5a25c36acb231f35409d26"><td class="memItemLeft" align="right" valign="top"><a id="ab65b3cff1d5a25c36acb231f35409d26"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#ab65b3cff1d5a25c36acb231f35409d26">back</a> () const noexcept</td></tr>
+<tr class="memdesc:ab65b3cff1d5a25c36acb231f35409d26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the value of the first lanes. <br /></td></tr>
+<tr class="separator:ab65b3cff1d5a25c36acb231f35409d26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa39a304296e28d2f909c583d09b830ce"><td class="memItemLeft" align="right" valign="top"><a id="aa39a304296e28d2f909c583d09b830ce"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#aa39a304296e28d2f909c583d09b830ce">front</a> () const noexcept</td></tr>
+<tr class="memdesc:aa39a304296e28d2f909c583d09b830ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the value of the first lane. <br /></td></tr>
+<tr class="separator:aa39a304296e28d2f909c583d09b830ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Self-increment/decrement operators</div></td></tr>
 <tr class="memitem:a70bbb35ba772760cb8e32d020824c600"><td class="memItemLeft" align="right" valign="top"><a id="a70bbb35ba772760cb8e32d020824c600"></a>
 <a class="el" href="structeve_1_1wide.html">wide</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator++</b> () noexcept</td></tr>
@@ -305,6 +337,23 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stru
 <tr class="memitem:a9f699336ed60eeac189632b09e72844d"><td class="memItemLeft" align="right" valign="top"><a id="a9f699336ed60eeac189632b09e72844d"></a>
 <a class="el" href="structeve_1_1wide.html">wide</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator--</b> (int) noexcept</td></tr>
 <tr class="separator:a9f699336ed60eeac189632b09e72844d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Modifiers</div></td></tr>
+<tr class="memitem:a3f51e41642dfe344bfea519908b2245d"><td class="memItemLeft" align="right" valign="top"><a id="a3f51e41642dfe344bfea519908b2245d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>swap</b> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;other)</td></tr>
+<tr class="separator:a3f51e41642dfe344bfea519908b2245d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Indexing and reordering</div></td></tr>
+<tr class="memitem:a54e603e8391ec5eeca222d22b606c82d"><td class="memTemplParams" colspan="2">template&lt;integral_scalar_value Index&gt; </td></tr>
+<tr class="memitem:a54e603e8391ec5eeca222d22b606c82d"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structeve_1_1wide_a54e603e8391ec5eeca222d22b606c82d.html#a54e603e8391ec5eeca222d22b606c82d">operator[]</a> (<a class="el" href="structeve_1_1wide.html">wide</a>&lt; Index, Size &gt; const &amp;idx) const noexcept</td></tr>
+<tr class="memdesc:a54e603e8391ec5eeca222d22b606c82d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dynamic lookup via lane indexing.  <a href="structeve_1_1wide_a54e603e8391ec5eeca222d22b606c82d.html#a54e603e8391ec5eeca222d22b606c82d">More...</a><br /></td></tr>
+<tr class="separator:a54e603e8391ec5eeca222d22b606c82d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fc2afe5f99f385831cbda618e1e013f"><td class="memTemplParams" colspan="2"><a id="a6fc2afe5f99f385831cbda618e1e013f"></a>
+template&lt;std::ptrdiff_t... I&gt; </td></tr>
+<tr class="memitem:a6fc2afe5f99f385831cbda618e1e013f"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator[]</b> (pattern_t&lt; I... &gt;) const noexcept</td></tr>
+<tr class="separator:a6fc2afe5f99f385831cbda618e1e013f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ea6e9bce8fe6ab1884da4ff8a8a4521"><td class="memTemplParams" colspan="2"><a id="a1ea6e9bce8fe6ab1884da4ff8a8a4521"></a>
+template&lt;typename F &gt; </td></tr>
+<tr class="memitem:a1ea6e9bce8fe6ab1884da4ff8a8a4521"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator[]</b> (as_pattern&lt; F &gt; p) const noexcept</td></tr>
+<tr class="separator:a1ea6e9bce8fe6ab1884da4ff8a8a4521"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Interface with architecture-specific intrinsics</div></td></tr>
 <tr class="memitem:a517acf9c001d2d30651de6ee0a989f97"><td class="memItemLeft" align="right" valign="top"><a id="a517acf9c001d2d30651de6ee0a989f97"></a>
 <a class="el" href="structeve_1_1wide.html#a8b90bd082c2de7a2bb7c628d853677a7">storage_type</a> const &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1detail_1_1wide__storage.html#a517acf9c001d2d30651de6ee0a989f97">storage</a> () const &amp;noexcept</td></tr>
@@ -312,11 +361,11 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stru
 <tr class="separator:a517acf9c001d2d30651de6ee0a989f97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a655a4251d49218c41759da8d8cc27be6"><td class="memItemLeft" align="right" valign="top"><a id="a655a4251d49218c41759da8d8cc27be6"></a>
 <a class="el" href="structeve_1_1wide.html#a8b90bd082c2de7a2bb7c628d853677a7">storage_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1detail_1_1wide__storage.html#a655a4251d49218c41759da8d8cc27be6">storage</a> () &amp;noexcept</td></tr>
-<tr class="memdesc:a655a4251d49218c41759da8d8cc27be6"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. <br /></td></tr>
+<tr class="memdesc:a655a4251d49218c41759da8d8cc27be6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the architecture-specific storage help by wide. <br /></td></tr>
 <tr class="separator:a655a4251d49218c41759da8d8cc27be6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a947659b90b165234fbc601493bf367fa"><td class="memItemLeft" align="right" valign="top"><a id="a947659b90b165234fbc601493bf367fa"></a>
 <a class="el" href="structeve_1_1wide.html#a8b90bd082c2de7a2bb7c628d853677a7">storage_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1detail_1_1wide__storage.html#a947659b90b165234fbc601493bf367fa">storage</a> () &amp;&amp;noexcept</td></tr>
-<tr class="memdesc:a947659b90b165234fbc601493bf367fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. <br /></td></tr>
+<tr class="memdesc:a947659b90b165234fbc601493bf367fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the architecture-specific storage help by wide. <br /></td></tr>
 <tr class="separator:a947659b90b165234fbc601493bf367fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a88f4571bc839404f25eb4843c19bbccf"><td class="memItemLeft" align="right" valign="top"><a id="a88f4571bc839404f25eb4843c19bbccf"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1detail_1_1wide__storage.html#a88f4571bc839404f25eb4843c19bbccf">operator storage_type const &amp;</a> () const &amp;noexcept</td></tr>
@@ -324,15 +373,19 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stru
 <tr class="separator:a88f4571bc839404f25eb4843c19bbccf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3e054b6a5917548f79c7394b9a67a716"><td class="memItemLeft" align="right" valign="top"><a id="a3e054b6a5917548f79c7394b9a67a716"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1detail_1_1wide__storage.html#a3e054b6a5917548f79c7394b9a67a716">operator storage_type &amp;</a> () &amp;noexcept</td></tr>
-<tr class="memdesc:a3e054b6a5917548f79c7394b9a67a716"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. <br /></td></tr>
+<tr class="memdesc:a3e054b6a5917548f79c7394b9a67a716"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicit conversion to the architecture-specific storage help by wide. <br /></td></tr>
 <tr class="separator:a3e054b6a5917548f79c7394b9a67a716"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed3fabf863699bcff6836c81f33d6ce8"><td class="memItemLeft" align="right" valign="top"><a id="aed3fabf863699bcff6836c81f33d6ce8"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1detail_1_1wide__storage.html#aed3fabf863699bcff6836c81f33d6ce8">operator storage_type</a> () &amp;&amp;noexcept</td></tr>
-<tr class="memdesc:aed3fabf863699bcff6836c81f33d6ce8"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. <br /></td></tr>
+<tr class="memdesc:aed3fabf863699bcff6836c81f33d6ce8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicit conversion to the architecture-specific storage help by wide. <br /></td></tr>
 <tr class="separator:aed3fabf863699bcff6836c81f33d6ce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
+<tr class="memitem:ad1d370008485018ecd5bd61aa2fdd7b7"><td class="memItemLeft" align="right" valign="top"><a id="ad1d370008485018ecd5bd61aa2fdd7b7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#ad1d370008485018ecd5bd61aa2fdd7b7">swap</a> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;lhs, <a class="el" href="structeve_1_1wide.html">wide</a> &amp;rhs) noexcept</td></tr>
+<tr class="memdesc:ad1d370008485018ecd5bd61aa2fdd7b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps the contents of <code>lhs</code> and <code>rhs</code> by calling <code>lhs.swap(rhs)</code>. <br /></td></tr>
+<tr class="separator:ad1d370008485018ecd5bd61aa2fdd7b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff1a293cd2c26ba5aeb7ec16c1f6c187"><td class="memItemLeft" align="right" valign="top"><a id="aff1a293cd2c26ba5aeb7ec16c1f6c187"></a>
 auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#aff1a293cd2c26ba5aeb7ec16c1f6c187">operator~</a> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v) noexcept</td></tr>
 <tr class="memdesc:aff1a293cd2c26ba5aeb7ec16c1f6c187"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a bitwise complement on all the wide lanes. <br /></td></tr>
@@ -415,12 +468,12 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stru
 <tr class="memitem:ade853f6683b76972efeb472e922d4dd4"><td class="memTemplParams" colspan="2"><a id="ade853f6683b76972efeb472e922d4dd4"></a>
 template&lt;real_scalar_value S&gt; </td></tr>
 <tr class="memitem:ade853f6683b76972efeb472e922d4dd4"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#ade853f6683b76972efeb472e922d4dd4">operator+</a> (S s, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v) noexcept</td></tr>
-<tr class="memdesc:ade853f6683b76972efeb472e922d4dd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the addition between all lanes of a scalar and a wide instance See also: <a class="el" href="group__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8">eve::add</a>. <br /></td></tr>
+<tr class="memdesc:ade853f6683b76972efeb472e922d4dd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the addition between a scalar and all lanes of a wide instance See also: <a class="el" href="group__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8">eve::add</a>. <br /></td></tr>
 <tr class="separator:ade853f6683b76972efeb472e922d4dd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3e6d76e129c2238b800ea7d19d5b377"><td class="memTemplParams" colspan="2"><a id="af3e6d76e129c2238b800ea7d19d5b377"></a>
 template&lt;real_scalar_value S&gt; </td></tr>
 <tr class="memitem:af3e6d76e129c2238b800ea7d19d5b377"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#af3e6d76e129c2238b800ea7d19d5b377">operator+</a> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, S s) noexcept</td></tr>
-<tr class="memdesc:af3e6d76e129c2238b800ea7d19d5b377"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the addition between all lanes of a scalar and a wide instance See also: <a class="el" href="group__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8">eve::add</a>. <br /></td></tr>
+<tr class="memdesc:af3e6d76e129c2238b800ea7d19d5b377"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the addition between all lanes of a wide instance and a scalar See also: <a class="el" href="group__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8">eve::add</a>. <br /></td></tr>
 <tr class="separator:af3e6d76e129c2238b800ea7d19d5b377"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a996da84fd607b7134b15d3fb3969cbd6"><td class="memTemplParams" colspan="2"><a id="a996da84fd607b7134b15d3fb3969cbd6"></a>
 template&lt;value V&gt; </td></tr>
@@ -433,8 +486,64 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stru
 <tr class="separator:a01e7120dbe0bcb7f3c4dcd7c9f798f50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50a4d6791321a446c19522c059f53317"><td class="memItemLeft" align="right" valign="top"><a id="a50a4d6791321a446c19522c059f53317"></a>
 auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#a50a4d6791321a446c19522c059f53317">operator-</a> (real_scalar_value auto s, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v) noexcept</td></tr>
-<tr class="memdesc:a50a4d6791321a446c19522c059f53317"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the difference between all lanes of its parameters See also: <a class="el" href="group__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a">eve::sub</a>. <br /></td></tr>
+<tr class="memdesc:a50a4d6791321a446c19522c059f53317"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the difference between a scalar and all lanes of a wide instance See also: <a class="el" href="group__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a">eve::sub</a>. <br /></td></tr>
 <tr class="separator:a50a4d6791321a446c19522c059f53317"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae973969d5d0d231af91c412af827ec4a"><td class="memItemLeft" align="right" valign="top"><a id="ae973969d5d0d231af91c412af827ec4a"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#ae973969d5d0d231af91c412af827ec4a">operator-</a> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, real_scalar_value auto s) noexcept</td></tr>
+<tr class="memdesc:ae973969d5d0d231af91c412af827ec4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the difference between all lanes of a wide instance and a scalar See also: <a class="el" href="group__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a">eve::sub</a>. <br /></td></tr>
+<tr class="separator:ae973969d5d0d231af91c412af827ec4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf73e7cb4673abaa93aab9c6ec2532f8"><td class="memItemLeft" align="right" valign="top"><a id="adf73e7cb4673abaa93aab9c6ec2532f8"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#adf73e7cb4673abaa93aab9c6ec2532f8">operator*=</a> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;w, <a class="el" href="group__concepts_ga19be3db9960e555ea9ee279846facacd.html#ga19be3db9960e555ea9ee279846facacd">value</a> auto o) noexcept</td></tr>
+<tr class="memdesc:adf73e7cb4673abaa93aab9c6ec2532f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the compound product on all the wide lanes and assign the result to current wide. See also: eve::mul. <br /></td></tr>
+<tr class="separator:adf73e7cb4673abaa93aab9c6ec2532f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39ece988f1ebba90718a9b6fa5ce6b11"><td class="memItemLeft" align="right" valign="top"><a id="a39ece988f1ebba90718a9b6fa5ce6b11"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#a39ece988f1ebba90718a9b6fa5ce6b11">operator*</a> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;w) noexcept</td></tr>
+<tr class="memdesc:a39ece988f1ebba90718a9b6fa5ce6b11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the product between all lanes of its parameters See also: eve::mul. <br /></td></tr>
+<tr class="separator:a39ece988f1ebba90718a9b6fa5ce6b11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeaf1f2ef91c15caa79d27395c7b50c59"><td class="memTemplParams" colspan="2"><a id="aeaf1f2ef91c15caa79d27395c7b50c59"></a>
+template&lt;real_scalar_value S&gt; </td></tr>
+<tr class="memitem:aeaf1f2ef91c15caa79d27395c7b50c59"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#aeaf1f2ef91c15caa79d27395c7b50c59">operator*</a> (S s, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v) noexcept</td></tr>
+<tr class="memdesc:aeaf1f2ef91c15caa79d27395c7b50c59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the product between a scalar and all lanes of a wide instance See also: eve::mul. <br /></td></tr>
+<tr class="separator:aeaf1f2ef91c15caa79d27395c7b50c59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1be7f6fc846b8495fc09ffd378d3d5cd"><td class="memItemLeft" align="right" valign="top"><a id="a1be7f6fc846b8495fc09ffd378d3d5cd"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#a1be7f6fc846b8495fc09ffd378d3d5cd">operator*</a> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, real_scalar_value auto s) noexcept</td></tr>
+<tr class="memdesc:a1be7f6fc846b8495fc09ffd378d3d5cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the product between all lanes of a wide instance and a scalar See also: eve::mul. <br /></td></tr>
+<tr class="separator:a1be7f6fc846b8495fc09ffd378d3d5cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a756a799ae6cc714137f2d6a9af4a08e5"><td class="memItemLeft" align="right" valign="top"><a id="a756a799ae6cc714137f2d6a9af4a08e5"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#a756a799ae6cc714137f2d6a9af4a08e5">operator/=</a> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;w, <a class="el" href="group__concepts_ga19be3db9960e555ea9ee279846facacd.html#ga19be3db9960e555ea9ee279846facacd">value</a> auto o) noexcept</td></tr>
+<tr class="memdesc:a756a799ae6cc714137f2d6a9af4a08e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the compound division on all the wide lanes and assign the result to current wide. See also: <a class="el" href="group__arithmetic_gae0ef9200ab790a71835ff39ff61061a5.html#gae0ef9200ab790a71835ff39ff61061a5">eve::div</a>. <br /></td></tr>
+<tr class="separator:a756a799ae6cc714137f2d6a9af4a08e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8227ccccaac41f1a70e37f2a8ce5fa49"><td class="memItemLeft" align="right" valign="top"><a id="a8227ccccaac41f1a70e37f2a8ce5fa49"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#a8227ccccaac41f1a70e37f2a8ce5fa49">operator/</a> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;w) noexcept</td></tr>
+<tr class="memdesc:a8227ccccaac41f1a70e37f2a8ce5fa49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the division between all lanes of its parameters See also: <a class="el" href="group__arithmetic_gae0ef9200ab790a71835ff39ff61061a5.html#gae0ef9200ab790a71835ff39ff61061a5">eve::div</a>. <br /></td></tr>
+<tr class="separator:a8227ccccaac41f1a70e37f2a8ce5fa49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ba54d6a011430be4f92e15dc83d7edb"><td class="memTemplParams" colspan="2"><a id="a6ba54d6a011430be4f92e15dc83d7edb"></a>
+template&lt;real_scalar_value S&gt; </td></tr>
+<tr class="memitem:a6ba54d6a011430be4f92e15dc83d7edb"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#a6ba54d6a011430be4f92e15dc83d7edb">operator/</a> (S s, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v) noexcept</td></tr>
+<tr class="memdesc:a6ba54d6a011430be4f92e15dc83d7edb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the division between a scalar and all lanes of a wide instance See also: <a class="el" href="group__arithmetic_gae0ef9200ab790a71835ff39ff61061a5.html#gae0ef9200ab790a71835ff39ff61061a5">eve::div</a>. <br /></td></tr>
+<tr class="separator:a6ba54d6a011430be4f92e15dc83d7edb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5ff84f5200fb5e7a0005539e8762759"><td class="memTemplParams" colspan="2"><a id="ab5ff84f5200fb5e7a0005539e8762759"></a>
+template&lt;real_scalar_value S&gt; </td></tr>
+<tr class="memitem:ab5ff84f5200fb5e7a0005539e8762759"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#ab5ff84f5200fb5e7a0005539e8762759">operator/</a> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, S s) noexcept</td></tr>
+<tr class="memdesc:ab5ff84f5200fb5e7a0005539e8762759"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the division between all lanes of a wide instance and a scalar See also: <a class="el" href="group__arithmetic_gae0ef9200ab790a71835ff39ff61061a5.html#gae0ef9200ab790a71835ff39ff61061a5">eve::div</a>. <br /></td></tr>
+<tr class="separator:ab5ff84f5200fb5e7a0005539e8762759"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8eb4ce31a4e3fc4805b4d1c5c954d0c"><td class="memItemLeft" align="right" valign="top"><a id="ac8eb4ce31a4e3fc4805b4d1c5c954d0c"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#ac8eb4ce31a4e3fc4805b4d1c5c954d0c">operator%=</a> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;w, <a class="el" href="group__concepts_ga19be3db9960e555ea9ee279846facacd.html#ga19be3db9960e555ea9ee279846facacd">value</a> auto o) noexcept</td></tr>
+<tr class="memdesc:ac8eb4ce31a4e3fc4805b4d1c5c954d0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the compound modulo on all the wide lanes and assign the result to current wide. Does not participate in overload resolution if <code>Type</code> does not models integral_scalar_value. <br /></td></tr>
+<tr class="separator:ac8eb4ce31a4e3fc4805b4d1c5c954d0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30062a067e1482c9fb61d49e12db32e5"><td class="memItemLeft" align="right" valign="top"><a id="a30062a067e1482c9fb61d49e12db32e5"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#a30062a067e1482c9fb61d49e12db32e5">operator%</a> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;w) noexcept</td></tr>
+<tr class="memdesc:a30062a067e1482c9fb61d49e12db32e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the modulo between all lanes of its parameters. Does not participate in overload resolution if <code>Type</code> does not models integral_scalar_value. <br /></td></tr>
+<tr class="separator:a30062a067e1482c9fb61d49e12db32e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11c12eb6691b179552797bee0abae0e8"><td class="memTemplParams" colspan="2"><a id="a11c12eb6691b179552797bee0abae0e8"></a>
+template&lt;integral_scalar_value S&gt; </td></tr>
+<tr class="memitem:a11c12eb6691b179552797bee0abae0e8"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#a11c12eb6691b179552797bee0abae0e8">operator%</a> (S s, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v) noexcept</td></tr>
+<tr class="memdesc:a11c12eb6691b179552797bee0abae0e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the modulo between a scalar and all lanes of a wide instance Does not participate in overload resolution if <code>Type</code> does not models integral_scalar_value. <br /></td></tr>
+<tr class="separator:a11c12eb6691b179552797bee0abae0e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a608ed24dd6c80c15cc4d656120207498"><td class="memItemLeft" align="right" valign="top"><a id="a608ed24dd6c80c15cc4d656120207498"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html#a608ed24dd6c80c15cc4d656120207498">operator%</a> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, integral_scalar_value auto s) noexcept</td></tr>
+<tr class="memdesc:a608ed24dd6c80c15cc4d656120207498"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the modulo between all lanes of a wide instance and a scalar Does not participate in overload resolution if <code>Type</code> does not models integral_scalar_value. <br /></td></tr>
+<tr class="separator:a608ed24dd6c80c15cc4d656120207498"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.20-->
@@ -445,7 +554,7 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stru
 </div> <!-- DOXYSTRAP RELATED -->
 </div> <!-- DOXYSTRAP RELATED -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 18 2021 19:21:31 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Wed May 19 2021 19:18:01 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

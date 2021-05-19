@@ -1,29 +1,4 @@
 var searchData=
 [
-  ['operator_20bool_40',['operator bool',['../structeve_1_1aligned__ptr.html#a3e60a1a6d1d25f337fea83b3231449aa',1,'eve::aligned_ptr']]],
-  ['operator_20pointer_41',['operator pointer',['../structeve_1_1aligned__ptr.html#a38ac3e7cad01e0e5f7215da14ab253a5',1,'eve::aligned_ptr']]],
-  ['operator_20storage_5ftype_42',['operator storage_type',['../structeve_1_1detail_1_1wide__storage.html#aed3fabf863699bcff6836c81f33d6ce8',1,'eve::detail::wide_storage']]],
-  ['operator_20storage_5ftype_20_26_43',['operator storage_type &amp;',['../structeve_1_1detail_1_1wide__storage.html#a3e054b6a5917548f79c7394b9a67a716',1,'eve::detail::wide_storage']]],
-  ['operator_20storage_5ftype_20const_20_26_44',['operator storage_type const &amp;',['../structeve_1_1detail_1_1wide__storage.html#a88f4571bc839404f25eb4843c19bbccf',1,'eve::detail::wide_storage']]],
-  ['operator_21_3d_45',['operator!=',['../structeve_1_1aligned__allocator.html#a27ab460322a8ed553b665c9da4cd0e38',1,'eve::aligned_allocator']]],
-  ['operator_26_46',['operator&amp;',['../structeve_1_1wide.html#a47c3016d62a87842dccf18c18d583d14',1,'eve::wide::operator&amp;()'],['../structeve_1_1wide.html#a4b6c789311183c4e0c7834377abba421',1,'eve::wide::operator&amp;()'],['../structeve_1_1wide.html#a78d2b8f91f31575fca6b10f03367b00e',1,'eve::wide::operator&amp;()']]],
-  ['operator_26_3d_47',['operator&amp;=',['../structeve_1_1wide.html#a92175766763da6bee387de4f7b943832',1,'eve::wide']]],
-  ['operator_2a_48',['operator*',['../structeve_1_1aligned__ptr.html#aac4c7c303fab39b760412b3b31ff0b38',1,'eve::aligned_ptr::operator*() const noexcept'],['../structeve_1_1aligned__ptr.html#a1b804def5c75c31bfdb0c0ac7369e17e',1,'eve::aligned_ptr::operator*() noexcept']]],
-  ['operator_2b_49',['operator+',['../structeve_1_1wide.html#ac7061787eec9fca7b788bff662298493',1,'eve::wide::operator+()'],['../structeve_1_1wide.html#af3e6d76e129c2238b800ea7d19d5b377',1,'eve::wide::operator+()'],['../structeve_1_1wide.html#ade853f6683b76972efeb472e922d4dd4',1,'eve::wide::operator+()'],['../structeve_1_1wide.html#a02c4976011c472dc04940eea479c12b9',1,'eve::wide::operator+()']]],
-  ['operator_2b_2b_50',['operator++',['../structeve_1_1aligned__ptr.html#a94bf4e27cb6983985a6cd15ab66cb288',1,'eve::aligned_ptr::operator++() noexcept'],['../structeve_1_1aligned__ptr.html#a667984fb4233b0403ac3512fd74d247e',1,'eve::aligned_ptr::operator++(int) noexcept']]],
-  ['operator_2b_3d_51',['operator+=',['../structeve_1_1wide.html#a5ccd93a4cef6202aa8554b68335934b7',1,'eve::wide::operator+=()'],['../structeve_1_1aligned__ptr.html#a7f1d3da6b494b18e0d55b9b9cdbe62d0',1,'eve::aligned_ptr::operator+=()']]],
-  ['operator_2d_52',['operator-',['../structeve_1_1wide.html#a6850923cbf22417c1f02cadf6dfdfdfe',1,'eve::wide::operator-()'],['../structeve_1_1wide.html#a01e7120dbe0bcb7f3c4dcd7c9f798f50',1,'eve::wide::operator-()'],['../structeve_1_1wide.html#a50a4d6791321a446c19522c059f53317',1,'eve::wide::operator-()']]],
-  ['operator_2d_2d_53',['operator--',['../structeve_1_1aligned__ptr.html#a239a915f5a7d3ce57bd05bae868f4cf1',1,'eve::aligned_ptr::operator--() noexcept'],['../structeve_1_1aligned__ptr.html#a53a64b4fa774cbe9c8f2d68be86e7c68',1,'eve::aligned_ptr::operator--(int) noexcept']]],
-  ['operator_2d_3d_54',['operator-=',['../structeve_1_1wide.html#a996da84fd607b7134b15d3fb3969cbd6',1,'eve::wide::operator-=()'],['../structeve_1_1aligned__ptr.html#aa1629b6544a709d803e405396ad57294',1,'eve::aligned_ptr::operator-=(std::ptrdiff_t o) noexcept']]],
-  ['operator_2d_3e_55',['operator-&gt;',['../structeve_1_1aligned__ptr.html#ad3fb59f773789241b4b489874fa89e98',1,'eve::aligned_ptr::operator-&gt;() const noexcept'],['../structeve_1_1aligned__ptr.html#a442b3c0970c31ff6d0c849d197339e6d',1,'eve::aligned_ptr::operator-&gt;() noexcept']]],
-  ['operator_3c_3d_3e_56',['operator&lt;=&gt;',['../structeve_1_1aligned__ptr.html#a2a7a90cd772997bbbc1e8561ad914cb1',1,'eve::aligned_ptr']]],
-  ['operator_3d_57',['operator=',['../structeve_1_1detail_1_1wide__storage.html#a700e21a29b081985d0b10531d12d118d',1,'eve::detail::wide_storage::operator=()'],['../structeve_1_1aligned__ptr.html#a14c3f2612dced314a6042baea0ad0af5',1,'eve::aligned_ptr::operator=(aligned_ptr&lt; U, A &gt; p) noexcept'],['../structeve_1_1aligned__ptr.html#a5ed36e4df5ac7fb705541158902768e2',1,'eve::aligned_ptr::operator=(aligned_ptr&lt; void, A &gt; p) noexcept']]],
-  ['operator_3d_3d_58',['operator==',['../structeve_1_1aligned__allocator.html#a5b517ec4c0b7a4057e37591cf5ebf87d',1,'eve::aligned_allocator']]],
-  ['operator_5b_5d_59',['operator[]',['../structeve_1_1aligned__ptr.html#a953d55dcf4e8af80fea78b730eb528d3',1,'eve::aligned_ptr::operator[](std::size_t i) noexcept'],['../structeve_1_1aligned__ptr.html#ae82e21d1ad23f398e88a4191f531c673',1,'eve::aligned_ptr::operator[](std::size_t i) const noexcept']]],
-  ['operator_5e_60',['operator^',['../structeve_1_1wide.html#a1381717bc1cf7bb76529bb51a7118766',1,'eve::wide::operator^()'],['../structeve_1_1wide.html#a639a7dd4e74a426b1bf3ba1ad026f458',1,'eve::wide::operator^()'],['../structeve_1_1wide.html#a907dff44bdca625423b14cabb27b5385',1,'eve::wide::operator^()']]],
-  ['operator_5e_3d_61',['operator^=',['../structeve_1_1wide.html#a05d9156223e452bc3a94067a43000ab0',1,'eve::wide']]],
-  ['operator_7c_62',['operator|',['../structeve_1_1wide.html#afad6534882296d4887f8c405dc4ec3df',1,'eve::wide::operator|()'],['../structeve_1_1wide.html#abd3502d6e1c36dc4cc0da6ff1f421ab7',1,'eve::wide::operator|()'],['../structeve_1_1wide.html#a871fd2210db2590c27b6a138db5719e7',1,'eve::wide::operator|()']]],
-  ['operator_7c_3d_63',['operator|=',['../structeve_1_1wide.html#ad80f9b62ceef7191ff80fa3ec5b2f64f',1,'eve::wide']]],
-  ['operator_7e_64',['operator~',['../structeve_1_1wide.html#aff1a293cd2c26ba5aeb7ec16c1f6c187',1,'eve::wide']]],
-  ['over_65',['over',['../group__utility_ga069e9f110c0cb2416812ef8fc5a37555.html#ga069e9f110c0cb2416812ef8fc5a37555',1,'eve']]]
+  ['next_5fpower_5fof_5f2_45',['next_power_of_2',['../group__utility.html#gad47c55690b36ca096a9a5ffcb4e28b6f',1,'eve']]]
 ];

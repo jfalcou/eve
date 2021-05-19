@@ -150,13 +150,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
 
 <p>Computes the type compatible with a list of <a class="el" href="group__concepts_ga19be3db9960e555ea9ee279846facacd.html#ga19be3db9960e555ea9ee279846facacd">values</a>.  
  <a href="structeve_1_1common__compatible.html#details">More...</a></p>
-
-<p><code>#include &lt;eve/traits/common_compatible.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename... Ts&gt;<br />
 struct eve::common_compatible&lt; Ts &gt;</h3>
 
 <p>Computes the type compatible with a list of <a class="el" href="group__concepts_ga19be3db9960e555ea9ee279846facacd.html#ga19be3db9960e555ea9ee279846facacd">values</a>. </p>
+<p><b>Required header:</b> <code>#include &lt;eve/traits/common_compatible.hpp&gt;</code></p>
 <p>If all <code>Ts...</code> are all identical to a given <code>T</code> and model <a class="el" href="group__concepts_ga19be3db9960e555ea9ee279846facacd.html#ga19be3db9960e555ea9ee279846facacd">eve::value</a>, provides the member typedef <code>type</code> which is defined as <code>T</code>.</p>
 <p>If <code>Ts...</code> contains a set of types modeling eve::scalar_value and a set of types modeling <a class="el" href="group__concepts_ga4e1ad9e34fc8607b515ddaa7cad9452f.html#ga4e1ad9e34fc8607b515ddaa7cad9452f">eve::simd_value</a> all identical to a given <code>T</code>, provides the member typedef <code>type</code> which is defined as <code>T</code>.</p>
 <p>Otherwise, the program is ill-formed.</p>
@@ -201,8 +200,8 @@ Example</h4>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;            &lt;&lt; std::is_same&lt;mixed_type, eve::wide&lt;float&gt;&gt;<a class="code" href="group__concepts_ga19be3db9960e555ea9ee279846facacd.html#ga19be3db9960e555ea9ee279846facacd">::value</a>      &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;}</div>
 <div class="ttc" id="agroup__concepts_ga19be3db9960e555ea9ee279846facacd_html_ga19be3db9960e555ea9ee279846facacd"><div class="ttname"><a href="group__concepts_ga19be3db9960e555ea9ee279846facacd.html#ga19be3db9960e555ea9ee279846facacd">eve::value</a></div><div class="ttdeci">concept value</div><div class="ttdef"><b>Definition:</b> value.hpp:33</div></div>
-<div class="ttc" id="astructeve_1_1common__compatible_html"><div class="ttname"><a href="structeve_1_1common__compatible.html">eve::common_compatible</a></div><div class="ttdoc">Computes the type compatible with a list of values.</div><div class="ttdef"><b>Definition:</b> common_compatible.hpp:99</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:47</div></div>
+<div class="ttc" id="astructeve_1_1common__compatible_html"><div class="ttname"><a href="structeve_1_1common__compatible.html">eve::common_compatible</a></div><div class="ttdoc">Computes the type compatible with a list of values.</div><div class="ttdef"><b>Definition:</b> common_compatible.hpp:101</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:55</div></div>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.20-->
 <!-- start footer part -->
@@ -212,7 +211,7 @@ Example</h4>
 </div> <!-- DOXYSTRAP RELATED -->
 </div> <!-- DOXYSTRAP RELATED -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 18 2021 19:21:31 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Wed May 19 2021 19:18:01 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

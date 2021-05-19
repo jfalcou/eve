@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['rebind_70',['rebind',['../structeve_1_1aligned__allocator_1_1rebind.html',1,'eve::aligned_allocator&lt; T, Alignment &gt;::rebind&lt; U &gt;'],['../structeve_1_1wide.html#a88cfeda0c5a7ce4762e1e256bfafe8fb',1,'eve::wide::rebind()'],['../structeve_1_1aligned__ptr.html#ac6704874599b1389068fd4396a8a9ad1',1,'eve::aligned_ptr::rebind()']]],
-  ['rescale_71',['rescale',['../structeve_1_1wide.html#a5a302c52cfd10e7cd2ada6547213240b',1,'eve::wide']]]
+  ['pointer_77',['pointer',['../structeve_1_1aligned__ptr.html#a8b8fef1a5efc9384204ee46540e409ea',1,'eve::aligned_ptr']]],
+  ['prev_5fpower_5fof_5f2_78',['prev_power_of_2',['../group__utility.html#ga08edf538439c89f7e910d1bb5fdd5a80',1,'eve']]],
+  ['previous_5faligned_5faddress_79',['previous_aligned_address',['../structeve_1_1aligned__ptr_a16e228c017be1eb2f97d9e318e0bccde.html#a16e228c017be1eb2f97d9e318e0bccde',1,'eve::aligned_ptr::previous_aligned_address(T *p, Cardinal width) noexcept'],['../structeve_1_1aligned__ptr_a911aab2fb14b05dcc4625f412282dbe1.html#a911aab2fb14b05dcc4625f412282dbe1',1,'eve::aligned_ptr::previous_aligned_address(T *p) noexcept']]],
+  ['property_20of_20eve_20types_80',['Property of EVE types',['../glossary_properties.html',1,'glossary']]]
 ];
