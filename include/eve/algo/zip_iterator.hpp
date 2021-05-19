@@ -66,10 +66,20 @@ namespace eve::algo
       return get<0>(x) - get<0>(y);
     }
 
-    template <same_unaligned_iterator<zip_iterator> U>
-    auto operator<=>(U x) const
+    // template <same_unaligned_iterator<zip_iterator> U>
+    // auto operator<=>(U x) const
+    // {
+    //   return get<0>(*this) <=> get<0>(x);
+    // }
+
+    template <same_unaligned_iterator<zip_iterator> U> auto operator==(U x) const
     {
-      return get<0>(*this) <=> get<0>(x);
+      return get<0>(*this) == get<0>(x);
+    }
+
+    template <same_unaligned_iterator<zip_iterator> U> auto operator!=(U x) const
+    {
+      return get<0>(*this) != get<0>(x);
     }
 
     template <relative_conditional_expr C>

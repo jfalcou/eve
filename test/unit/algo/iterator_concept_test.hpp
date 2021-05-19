@@ -82,14 +82,14 @@ namespace algo_test
   }
 
   template <typename I, typename S, typename T, typename ReplaceIgnored>
-  void iterator_sentinel_test(I f, S l, T v, ReplaceIgnored replace)
+  void iterator_sentinel_test(I f, S l, T /*v*/, ReplaceIgnored /*replace*/)
   {
-    iterator_sentinel_test_one_pair(f, l, v, replace);
-    unaligned_iteration_test(f.unaligned(), l);
+    //iterator_sentinel_test_one_pair(f, l, v, replace);
+     unaligned_iteration_test(f.unaligned(), l);
 
-    iterator_sentinel_test_one_pair(f.unaligned(), l, v, replace);
-    iterator_sentinel_test_one_pair(f, l.unaligned(), v, replace);
-    iterator_sentinel_test_one_pair(f.unaligned(), l.unaligned(), v, replace);
+    // iterator_sentinel_test_one_pair(f.unaligned(), l, v, replace);
+    // iterator_sentinel_test_one_pair(f, l.unaligned(), v, replace);
+    // iterator_sentinel_test_one_pair(f.unaligned(), l.unaligned(), v, replace);
   }
 
   template <typename I, typename T, typename ReplaceIgnored>

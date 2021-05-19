@@ -56,12 +56,12 @@ EVE_TEST_TYPES("Check zip_iterator", algo_test::selected_types)
       unaligned_it_l{lf + (ul - uf)}
     );
 
-    (void)f;
-    (void)l;
-    (void)values;
-    (void)replace;
+    // (void)f;
+    // (void)l;
+    // (void)values;
+    // (void)replace;
 
-    // algo_test::iterator_sentinel_test(f, l, values, replace);
+    algo_test::iterator_sentinel_test(f, l, values, replace);
   };
 
   run_test(a.begin(), a.end(), b.begin(), a.begin());
