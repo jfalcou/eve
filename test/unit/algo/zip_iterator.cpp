@@ -18,6 +18,25 @@
 
 #include <array>
 
+namespace
+{
+
+struct basic_delegate {
+  auto replace(auto v, auto ignore) {
+    return kumi::map([&](auto x) {
+      return eve::replace_ignored(x, ignore, 0); }, v);
+  }
+
+  void assert_eq(auto x, auto y) {
+    kumi::map([](auto xv, auto yv) {
+      TTS_EQUAL(xv, yv);
+      return 0;
+    }, x, y);
+  }
+};
+
+}
+
 EVE_TEST_TYPES("Check zip_iterator", algo_test::selected_types)
 <typename T>(eve::as_<T>)
 {
@@ -26,6 +45,7 @@ EVE_TEST_TYPES("Check zip_iterator", algo_test::selected_types)
   alignas(sizeof(T)) std::array<eve::element_type_t<T>, T::static_size> a;
   std::iota(a.begin(), a.end(), 0);
   std::array<short, T::static_size> b;
+  std::iota(b.begin(), b.end(), 0);
 
   auto run_test = [&]<typename U, typename K, typename L>
   (U* uf, U* ul, K* kf, L* lf) {
@@ -34,15 +54,15 @@ EVE_TEST_TYPES("Check zip_iterator", algo_test::selected_types)
     using unaligned_it_k = eve::algo::unaligned_ptr_iterator<K, N>;
     using unaligned_it_l = eve::algo::unaligned_ptr_iterator<L, N>;
 
-    kumi::tuple values{
-      typename aligned_it::wide_value_type([](int i, int) { return i; }),
-      typename unaligned_it_k::wide_value_type([](int i, int) { return i; }),
-      typename unaligned_it_l::wide_value_type([](int i, int) { return i; })
-    };
-
-    auto replace = [&](auto v, auto ignore) {
-      return kumi::map([&](auto x) { return eve::replace_ignored(x, ignore, 0); }, v);
-    };
+    struct delegate_t : basic_delegate {
+      auto v() const {
+        return kumi::tuple{
+          typename aligned_it::wide_value_type([](int i, int) { return i; }),
+          typename unaligned_it_k::wide_value_type([](int i, int) { return i; }),
+          typename unaligned_it_l::wide_value_type([](int i, int) { return i; })
+        };
+      }
+    } delegate;
 
     eve::algo::zip_iterator f(
       aligned_it{aligned_p{uf}},
@@ -56,12 +76,12 @@ EVE_TEST_TYPES("Check zip_iterator", algo_test::selected_types)
       unaligned_it_l{lf + (ul - uf)}
     );
 
-    // (void)f;
-    // (void)l;
-    // (void)values;
-    // (void)replace;
+    algo_test::iterator_sentinel_test(f, l, delegate);
 
-    algo_test::iterator_sentinel_test(f, l, values, replace);
+    if constexpr (!std::is_const_v<U>)
+    {
+      algo_test::writeable_readable_iterator(f, delegate);
+    }
   };
 
   run_test(a.begin(), a.end(), b.begin(), a.begin());

@@ -17,11 +17,6 @@
 #include <concepts>
 #include <compare>
 
-#if defined(__clang__)
-#  pragma clang diagnostic push
-#  pragma clang diagnostic ignored "-Wmissing-braces"
-#endif
-
 namespace eve::algo
 {
   template <typename I, typename ... Is>
@@ -66,21 +61,13 @@ namespace eve::algo
       return get<0>(x) - get<0>(y);
     }
 
-    // template <same_unaligned_iterator<zip_iterator> U>
-    // auto operator<=>(U x) const
-    // {
-    //   return get<0>(*this) <=> get<0>(x);
-    // }
-
     template <same_unaligned_iterator<zip_iterator> U> auto operator==(U x) const
     {
       return get<0>(*this) == get<0>(x);
     }
 
-    template <same_unaligned_iterator<zip_iterator> U> auto operator!=(U x) const
-    {
-      return get<0>(*this) != get<0>(x);
-    }
+    template <same_unaligned_iterator<zip_iterator> U>
+    auto operator<=>(U x) const { return get<0>(*this) <=> get<0>(x); }
 
     template <relative_conditional_expr C>
     friend auto tagged_dispatch( eve::tag::load_, C cond, zip_iterator self )
@@ -96,23 +83,20 @@ namespace eve::algo
     template <relative_conditional_expr C>
     friend auto tagged_dispatch(eve::tag::store_, C cond, auto v, zip_iterator self)
     {
-      kumi::for_each(
-        [&](auto v2it){ eve::store[cond](get<0>(v2it), get<1>(v2it)); },
-        kumi::zip(v, self)
+      kumi::map(
+        [&](auto _v, auto _it){ eve::store[cond](_v, _it); return 0; },
+        v, self
       );
     }
 
     friend void tagged_dispatch( eve::tag::store_, auto v, zip_iterator self )
     {
-      kumi::for_each(
-        [&](auto v2it){ eve::store(get<0>(v2it), get<1>(v2it)); },
-        kumi::zip(v, self));
+      kumi::map(
+        [&](auto _v, auto _it){ eve::store(_v, _it); return 0; },
+        v, self
+      );
     }
 
     storage_type storage;
   };
 }
-
-#if defined(__clang__)
-#  pragma clang diagnostic pop
-#endif
