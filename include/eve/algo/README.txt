@@ -29,6 +29,7 @@ The minimum requirements are:
 * I is totally ordered
 * `I.unaligned()` - returns an `unaligned_iterator` pointing to the same place.
 * `I.unaligned()` and `I` are comparible
+* `I.previous_partially_aligned()` - returns our best attempt to align this iterator.
 
 ### aligned_iterator(concept)
 

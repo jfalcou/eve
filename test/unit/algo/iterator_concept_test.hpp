@@ -81,11 +81,16 @@ namespace algo_test
     TTS_EQUAL(f, l);
   }
 
-  template <typename I, typename S, typename T, typename ReplaceIgnored>
+  template <eve::algo::readable_iterator I, eve::algo::sentinel_for<I> S, typename T, typename ReplaceIgnored>
   void iterator_sentinel_test(I f, S l, T v, ReplaceIgnored replace)
   {
     iterator_sentinel_test_one_pair(f, l, v, replace);
     unaligned_iteration_test(f.unaligned(), l);
+
+    TTS_CONSTEXPR_EXPECT(
+      eve::algo::partially_aligned_iterator<decltype(f.previous_partially_aligned())>);
+    TTS_CONSTEXPR_EXPECT(
+      eve::algo::unaligned_iterator<decltype(f.unaligned())>);
 
     iterator_sentinel_test_one_pair(f.unaligned(), l, v, replace);
     iterator_sentinel_test_one_pair(f, l.unaligned(), v, replace);
