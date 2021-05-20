@@ -13,6 +13,7 @@
 #include <eve/function/unsafe.hpp>
 #include <eve/function/replace.hpp>
 #include <eve/wide.hpp>
+#include <eve/bundle.hpp>
 #include <type_traits>
 
 #ifdef SPY_COMPILER_IS_GCC
@@ -43,7 +44,66 @@ namespace eve::detail
   constexpr bool sanitizers_are_on = false;
 #endif
 
+  //================================================================================================
+  // Bundle load
+  //================================================================================================
+  template<typename... Pointers>
+  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), kumi::tuple<Pointers...> ptr) noexcept
+  {
+    auto card = expected_cardinal_t< kumi::tuple<std::remove_cvref_t<decltype(*std::declval<Pointers>())>...> >{};
+    return eve::load(ptr, card);
+  }
 
+  template<typename... Pointers,typename Cardinal>
+  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), kumi::tuple<Pointers...> ptr
+                            , Cardinal
+                            ) noexcept
+  {
+    return bundle { kumi::map ( [](auto p) { return eve::load(p, Cardinal{}); }, ptr) };
+  }
+
+  template<relative_conditional_expr C, typename... Pointers>
+  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), C cond, kumi::tuple<Pointers...> ptr ) noexcept
+  {
+    auto card = expected_cardinal_t< kumi::tuple<std::remove_cvref_t<decltype(*std::declval<Pointers>())>...> >{};
+    return eve::load[cond](ptr, card);
+  }
+
+  template<relative_conditional_expr C, typename... Pointers,typename Cardinal>
+  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_)
+                            , C cond, kumi::tuple<Pointers...> ptr, Cardinal
+                            ) noexcept
+  {
+    return bundle { kumi::map ( [&](auto p) { return eve::load[cond](p, Cardinal{}); }, ptr) };
+  }
+
+  template<typename... Pointers>
+  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), unsafe_type, kumi::tuple<Pointers...> ptr) noexcept
+  {
+    return bundle { kumi::map ( [](auto p) { return eve::unsafe(eve::load)(p); }, ptr) };
+  }
+
+  template<typename... Pointers,typename Cardinal>
+  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), unsafe_type, kumi::tuple<Pointers...> ptr
+                            , Cardinal
+                            ) noexcept
+  {
+    return bundle { kumi::map ( [](auto p) { return eve::unsafe(eve::load)(p, Cardinal{}); }, ptr) };
+  }
+
+  template<relative_conditional_expr C, typename... Pointers>
+  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), unsafe_type, C cond, kumi::tuple<Pointers...> ptr ) noexcept
+  {
+    return bundle { kumi::map ( [&](auto p) { return eve::unsafe(eve::load)[cond](p); }, ptr) };
+  }
+
+  template<relative_conditional_expr C, typename... Pointers,typename Cardinal>
+  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), unsafe_type
+                            , C cond, kumi::tuple<Pointers...> ptr, Cardinal
+                            ) noexcept
+  {
+    return bundle { kumi::map ( [&](auto p) { return eve::unsafe(eve::load)[cond](p, Cardinal{}); }, ptr) };
+  }
 
   //================================================================================================
   // SIMD
@@ -208,7 +268,7 @@ namespace eve::detail
   template<typename ...Args>
   requires (!sanitizers_are_on)
   EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), unsafe_type, Args ... args) noexcept
-              ->  decltype(eve::load(args...))
+              ->  decltype( eve::load(args...) )
   {
     return eve::load(args...);
   }
@@ -216,7 +276,7 @@ namespace eve::detail
   template<relative_conditional_expr C, typename ... Args>
   requires (!sanitizers_are_on)
   EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), C const &cond, unsafe_type, Args ... args) noexcept
-              ->  decltype(eve::load[cond](args...))
+              ->  decltype( eve::load[cond](args...) )
   {
     return eve::load[cond](args...);
   }

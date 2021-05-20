@@ -64,7 +64,14 @@ namespace eve::detail
   template<typename Wide>
   EVE_FORCEINLINE auto extract(Wide const& p, std::size_t i) noexcept
   {
-    return at_begin(p)[i];
+    if constexpr( has_bundle_abi_v<Wide> )
+    {
+      return kumi::map( [i](auto const& m) { return m.get(i); }, p.storage());
+    }
+    else
+    {
+      return at_begin(p)[i];
+    }
   }
 
   //================================================================================================
@@ -83,6 +90,10 @@ namespace eve::detail
     else if constexpr( has_emulated_abi_v<Wide> )
     {
       p.storage()[i] = v;
+    }
+    else if constexpr( has_bundle_abi_v<Wide> )
+    {
+      kumi::for_each( [i](auto& m, auto w) { m.set(i,w); }, p.storage(), v);
     }
     else
     {

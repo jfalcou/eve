@@ -29,5 +29,5 @@
 #include <eve/concept/properly_convertible.hpp>
 #include <eve/concept/range.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/concept/vectorizabel.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <eve/concept/vectorized.hpp>

@@ -42,7 +42,7 @@ inline namespace EVE_ABI_NAMESPACE
   //!
   //! **Required header:** `#include <eve/wide.hpp>`
   //!
-  //! eve::wide is an architecture-agnostic representation of a low-level SIMD register and provides
+  //! eve::wide is an architecture-agnostic representation of a IMD register and provides
   //! standardized API to access informations, compute values and manipulate such register.
   //!
   //! @tparam Type      Type of value to store in the register
@@ -988,12 +988,19 @@ inline namespace EVE_ABI_NAMESPACE
     //! Inserts a eve::wide into a output stream
     friend std::ostream &operator<<(std::ostream &os, wide const &p)
     {
-      constexpr auto sz = sizeof(storage_type)/sizeof(Type);
-      auto that = bit_cast( p, as_<std::array<Type,sz>>());
+      if constexpr( kumi::product_type<Type> )
+      {
+        return os << p.storage();
+      }
+      else
+      {
+        constexpr auto sz = sizeof(storage_type)/sizeof(Type);
+        auto that = bit_cast( p, as_<std::array<Type,sz>>());
 
-      os << '(' << +that[ 0 ];
-      for(size_type i = 1; i != p.size(); ++i) os << ", " << +that[ i ];
-      return os << ')';
+        os << '(' << +that[ 0 ];
+        for(size_type i = 1; i != p.size(); ++i) os << ", " << +that[ i ];
+        return os << ')';
+      }
     }
   };
   //================================================================================================

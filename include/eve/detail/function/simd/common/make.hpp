@@ -51,6 +51,21 @@ namespace eve::detail
   }
 
   //================================================================================================
+  // Bundle
+  //================================================================================================
+  template<typename T, typename N, kumi::product_type... Vs>
+  EVE_FORCEINLINE auto make(eve::as_<wide<T,N,bundle_>> const &, Vs... vs) noexcept
+  {
+    typename wide<T,N,bundle_>::storage_type that;
+
+    kumi::for_each_index( [&]<typename I, typename M>(I, M& m) { m = M{ get<I::value>(vs)... }; }
+                        , that
+                        );
+
+    return that;
+  }
+
+  //================================================================================================
   // Aggregation
   //================================================================================================
   template<typename Pack, typename V0, typename... Vs>

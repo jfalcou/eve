@@ -45,11 +45,23 @@ namespace eve
       using parent = cpu_;
       static constexpr bool is_wide_logical = true;
     };
+
+    struct bundle_ : cpu_
+    {
+      using parent = cpu_;
+      static constexpr bool is_wide_logical = true;
+    };
   }
 
   EVE_BIT_LOGICAL_NAMESPACE namespace internal_bit_logical
   {
     struct aggregated_ : cpu_
+    {
+      using parent = cpu_;
+      static constexpr bool is_wide_logical = false;
+    };
+
+    struct bundle_ : cpu_
     {
       using parent = cpu_;
       static constexpr bool is_wide_logical = false;
@@ -74,10 +86,10 @@ namespace eve
   };
 
   template<typename T>
-  concept non_native_abi = detail::is_one_of<T>(detail::types<aggregated_, emulated_> {});
+  concept non_native_abi = detail::is_one_of<T>(detail::types<aggregated_, emulated_, bundle_> {});
 
   template<typename T>
-  concept native_abi = !detail::is_one_of<T>(detail::types<aggregated_, emulated_> {});
+  concept native_abi = !detail::is_one_of<T>(detail::types<aggregated_, emulated_, bundle_> {});
 
   //================================================================================================
   // Checks for logical status in ABI

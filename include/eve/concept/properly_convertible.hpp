@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/is_wide.hpp>
+#include <eve/concept/vectorized.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/traits/common_compatible.hpp>
 #include <eve/traits/element_type.hpp>
@@ -28,7 +28,7 @@ namespace eve
     {
       // If the computed destination type is a wide
       // All types must convert to it without impromptu truncation
-      if constexpr( is_wide<Dest>::value )
+      if constexpr( simd_value<Dest> )
       {
         using type = element_type_t<Dest>;
         bool found[] = { has_no_loss_convertion<Ts,type>::value... };

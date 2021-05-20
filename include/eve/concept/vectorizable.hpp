@@ -7,22 +7,49 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/detail/concepts.hpp>
+#include <eve/detail/kumi.hpp>
 #include <eve/forward.hpp>
-#include <eve/detail/is_wide.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/is_logical.hpp>
-
-#include <eve/detail/concepts.hpp>
 #include <type_traits>
+#include <utility>
 
 namespace eve::detail
 {
-  //==============================================================================================
+  //================================================================================================
   // Check if something is a scalar_value
-  //==============================================================================================
+  //================================================================================================
+
+  //================================================================================================
+  // Case #1 - it is arithmetic
+  //================================================================================================
   template<typename T> struct is_scalar_value : std::is_arithmetic<T>
   {};
 
+  //================================================================================================
+  // Case #2 - it is a product_type of arithmetic
+  //================================================================================================
+  template<typename T>
+  static constexpr bool check_tuple()
+  {
+    return []<std::size_t... I>( std::index_sequence<I...> )
+    {
+      return  ( is_scalar_value<std::remove_cvref_t<decltype( get<I>(std::declval<T>()) )>>::value
+                && ...
+                && true
+              );
+    }(std::make_index_sequence<kumi::size<T>::value>{});
+  }
+
+  template<typename T>
+  requires( kumi::product_type<T> )
+  struct  is_scalar_value<T> : std::bool_constant< check_tuple<T>() >
+  {};
+
+  //================================================================================================
+  // Case #3 - it is a logical
+  //================================================================================================
   template<typename T>
   struct is_scalar_value<eve::logical<T>> : std::is_arithmetic<T>
   {};

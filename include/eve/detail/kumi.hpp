@@ -224,6 +224,36 @@ namespace kumi
   }
 
   //================================================================================================
+  // Transform a product_type type via a meta-function
+  //================================================================================================
+  namespace detail
+  {
+    template<typename T> struct box {};
+
+    template<template<typename...> class Meta, product_type T>
+    constexpr auto meta_map(box<T>)
+    {
+      return []<std::size_t... I>( std::index_sequence<I...> )
+      {
+        return kumi::tuple{ typename Meta
+                            <
+                              std::remove_cvref_t<decltype( get<I>(std::declval<T>()) )>
+                            >::type{}...
+                          };
+      }( std::make_index_sequence<kumi::size<T>::value>{});
+    }
+  }
+
+  template<template<typename...> class Meta, product_type T>
+  struct remap_type
+  {
+    using type = decltype( detail::meta_map<Meta>(detail::box<T>{}) );
+  };
+
+  template<template<typename...> class Meta, product_type T>
+  using remap_type_t = typename remap_type<Meta, T>::type;
+
+  //================================================================================================
   // Pass every elements of the tuple to f
   //================================================================================================
   template<typename Function, product_type Tuple>
@@ -239,10 +269,20 @@ namespace kumi
   //================================================================================================
   // Apply f to each element of tuple and returns a continuation
   //================================================================================================
-  template<typename Function, product_type Tuple>
-  constexpr void for_each(Function f, Tuple &&t) requires detail::applicable<Function, Tuple>
+  template<typename Function, product_type Tuple, product_type... Tuples>
+  constexpr void for_each(Function f, Tuple&& t, Tuples&&... ts)
+  requires detail::applicable<Function, Tuple, Tuples...>
   {
-    [&]<std::size_t... I>(std::index_sequence<I...>) { (f(get<I>(KUMI_FWD(t))), ...); }
+    [&]<std::size_t... I>(std::index_sequence<I...>)
+    {
+      auto call = [&]<typename M>(M)
+                  { f ( get<M::value>(KUMI_FWD(t))
+                      , get<M::value>(KUMI_FWD(ts))...
+                      );
+                  };
+
+      ( call(std::integral_constant<std::size_t, I>{}), ...);
+    }
     (std::make_index_sequence<size<Tuple>::value>());
   }
 

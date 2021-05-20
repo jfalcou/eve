@@ -8,16 +8,17 @@
 #pragma once
 
 #include <eve/forward.hpp>
-#include <eve/detail/is_wide.hpp>
+#include <eve/detail/kumi.hpp>
+#include <eve/as.hpp>
 #include <utility>
-#include <array>
 
 namespace eve
 {
   template<typename Type, typename Size = expected_cardinal_t<Type>>
   struct as_wide;
 
-  template<typename Type, typename Size> requires( std::is_arithmetic_v<Type> )
+  template<typename Type, typename Size>
+  requires( std::is_arithmetic_v<Type>  || kumi::product_type<Type> )
   struct as_wide<Type,Size>
   {
     using type = eve::wide<Type,Size>;
@@ -39,15 +40,6 @@ namespace eve
   struct as_wide<eve::logical<eve::wide<Type,N>>,Size>
   {
     using type = eve::logical<eve::wide<Type,Size>>;
-  };
-
-  //================================================================================================
-  // Special case : kumi::tuple
-  //================================================================================================
-  template<typename... Ts, typename Size>
-  struct as_wide<kumi::tuple<Ts...>,Size>
-  {
-    using type = kumi::tuple<typename as_wide<Ts,Size>::type...>;
   };
 
   template<typename Type, typename Size = expected_cardinal_t<Type> >
