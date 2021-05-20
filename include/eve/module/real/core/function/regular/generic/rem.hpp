@@ -64,14 +64,15 @@ namespace eve::detail
   EVE_FORCEINLINE auto rem_(EVE_SUPPORTS(cpu_), C const &cond, U const &t, V const &f) noexcept
       requires compatible_values<U, V>
   {
-    return mask_op(  cond, eve::rem, t, f);
+    auto g = if_else(cond, f, one);
+    return mask_op(  cond, eve::rem, t, g);
   }
 
   template<conditional_expr C, decorator D, real_value U, real_value V>
-  EVE_FORCEINLINE auto
-  rem_(EVE_SUPPORTS(cpu_), C const &cond, D const &, U const &t, V const &f) noexcept
-      requires compatible_values<U, V>
+  EVE_FORCEINLINE auto rem_(EVE_SUPPORTS(cpu_), C const &cond, D const &, U const &t, V const &f) noexcept
+  requires compatible_values<U, V>
   {
-    return mask_op(  cond, D()(rem), t, f);
+    auto g = if_else(cond, f, one);
+    return mask_op(  cond, D()(rem), t, g);
   }
 }
