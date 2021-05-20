@@ -72,6 +72,8 @@ namespace eve::algo
   template <typename I>
   concept partially_aligned_iterator = iterator_basics<I> && partially_aligned_check<I>;
 
+  template <typename I>
+  concept always_aligned_iterator = partially_aligned_iterator<I> && unaligned_iterator<I>;
 
   template <typename S, typename I>
   concept sentinel_for = std::totally_ordered_with<S, I> &&
