@@ -46,6 +46,18 @@ namespace eve::algo
       return operator()(traits_, it{raw_f}, it{raw_l});
     }
 
+    template <typename Traits, typename T>
+    auto operator()(Traits traits_, eve::aligned_ptr<T> f, T* l) const
+    {
+      EVE_ASSERT(f != l, "preprocess_range requires a non-empty range");
+
+      using N            = eve::fixed<eve::expected_cardinal_v<T>>;
+      using aligned_it   = aligned_ptr_iterator<T, N>;
+      using unaligned_it = unaligned_ptr_iterator<T, N>;
+
+      return operator()(traits_, aligned_it(f), unaligned_it(l));
+    }
+
     // Base case. Should validate that I, S are a valid iterator pair
     template <typename Traits, iterator_basics I, sentinel_for<I> S>
     auto operator()(Traits traits_, I f, S l) const
