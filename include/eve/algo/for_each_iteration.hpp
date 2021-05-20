@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/algo/traits.hpp>
+#include <eve/algo/concepts.hpp>
 
 #include <eve/assert.hpp>
 #include <eve/conditional.hpp>
@@ -19,8 +20,9 @@ namespace eve::algo
 {
   struct for_each_iteration_
   {
-    template <typename Traits, typename I, typename S, typename Delegate>
+    template <typename Traits, iterator_basics I, sentinel_for<I> S, typename Delegate>
     EVE_FORCEINLINE void operator()(Traits traits, I f, S l, Delegate& delegate) const
+      requires (Traits::contains(no_aligning)())
     {
       static constexpr std::ptrdiff_t step = typename I::cardinal{}();
 
@@ -28,8 +30,36 @@ namespace eve::algo
 
       if (main_loop(traits, f, precise_l, delegate)) return;
 
+      if (precise_l == l) return;
+
       eve::keep_first ignore{l - precise_l};
       delegate.step(f, ignore);
+    }
+
+    template <typename Traits, unaligned_iterator I, sentinel_for<I> S, typename Delegate>
+    EVE_FORCEINLINE void operator()(Traits traits, I f, S l, Delegate& delegate) const
+      requires (!Traits::contains(no_aligning)())
+    {
+      static constexpr std::ptrdiff_t step = typename I::cardinal{}();
+
+      auto aligned_f = f.previous_partially_aligned();
+      auto aligned_l = (f + (l - f)).previous_partially_aligned();
+
+      eve::ignore_first ignore_first{f - aligned_f};
+
+      if (aligned_f != aligned_l) {
+        // first chunk, maybe partial
+        if (delegate.step(aligned_f, ignore_first)) return;
+        ignore_first = eve::ignore_first{0};
+        aligned_f += step;
+
+        if (main_loop(traits, aligned_f, aligned_l, delegate)) return;
+
+        if (aligned_l == l) return;
+      }
+
+      eve::ignore_last ignore_last { aligned_l + step - l };
+      delegate.step(aligned_l, ignore_first && ignore_last);
     }
 
   private:

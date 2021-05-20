@@ -75,7 +75,7 @@ namespace eve::algo
 
     using aligned_ptr_type = eve::aligned_ptr<T, Cardinal{}() * sizeof(T)>;
 
-    aligned_ptr_iterator();
+    aligned_ptr_iterator() = default;
     explicit aligned_ptr_iterator(aligned_ptr_type ptr) : ptr{ptr} {}
 
     // Need this for totally ordered.
