@@ -8,7 +8,6 @@
 #include <eve/function/sinpicospi.hpp>
 #include <eve/function/sinpi.hpp>
 #include <eve/function/cospi.hpp>
-#include <array>
 
 TTS_CASE_TPL("Check sinpicospi return type", EVE_TYPE)
 {

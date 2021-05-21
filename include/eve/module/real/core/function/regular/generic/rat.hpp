@@ -21,7 +21,7 @@
 #include <eve/constant/zero.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/concept/value.hpp>
-#include <array>
+#include <tuple>
 
 namespace eve::detail
 {
@@ -68,7 +68,7 @@ namespace eve::detail
       d = saturated(abs)(d);
       n = if_else(is_inf, sign(x), n);
       d = if_else(is_inf, zero, d);
-      return std::array<T, 2>{n, d};
+      return std::tuple<T, T>{n, d};
     }
     else
     {
@@ -81,7 +81,7 @@ namespace eve::detail
                                      , T const & x
                                      , T const & tol) noexcept
   {
-    if (is_infinite(x) || is_eqz(x)) return  std::array<T, 2>{sign(x), 0};
+    if (is_infinite(x) || is_eqz(x)) return  std::tuple<T, T>{sign(x), 0};
     auto n = round(x);
     auto d = one(as(x));
     auto frac = x-n;
@@ -102,7 +102,7 @@ namespace eve::detail
     }
     n *= sign(d);
     d = saturated(abs)(d);
-     return std::array<T, 2>{n, d};
+     return std::tuple<T, T>{n, d};
   }
 
   template<floating_real_value T>

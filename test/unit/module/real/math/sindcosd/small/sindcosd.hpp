@@ -11,11 +11,11 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/pi.hpp>
-#include <array>
+#include <tuple>
 
 TTS_CASE_TPL("Check eve::small(eve::sindcosd) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::small(eve::sindcosd)(T()), (std::array<T, 2>));
+  TTS_EXPR_IS(eve::small(eve::sindcosd)(T()), (std::tuple<T, T>));
 }
 
 TTS_CASE_TPL("Check eve::small(eve::sindcosd) behavior", EVE_TYPE)

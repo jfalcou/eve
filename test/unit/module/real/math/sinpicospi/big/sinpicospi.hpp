@@ -10,7 +10,6 @@
 #include <eve/function/sinpi.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <array>
 
 TTS_CASE_TPL("Check  eve::big(eve::sinpicospi) return type", EVE_TYPE)
 {

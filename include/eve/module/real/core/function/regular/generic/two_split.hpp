@@ -13,12 +13,12 @@
 #include <eve/constant/ieee_constant.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
-#include <array>
+#include <tuple>
 
 namespace eve::detail
 {
   template<real_value T>
-  EVE_FORCEINLINE std::array<T, 2>
+  EVE_FORCEINLINE std::tuple<T, T>
   two_split_(EVE_SUPPORTS(cpu_)
             , const T& a) noexcept
   {

@@ -21,14 +21,14 @@
 #include <eve/function/rec.hpp>
 #include <eve/constant/half.hpp>
 #include <type_traits>
-#include <array>
+#include <tuple>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr std::array<T, 2>
+  EVE_FORCEINLINE constexpr std::tuple<T, T>
   sinhcosh_(EVE_SUPPORTS(cpu_) , T a0) noexcept
   {
     if constexpr(has_native_abi_v<T>)
@@ -64,7 +64,7 @@ namespace eve::detail
         auto invt = if_else(x > T(22.0f), eve::zero, rec(inct));
         auto c = average(inct, invt);
         auto test = x <  ovflimit;
-        if (eve::all(test)) return {s, c};  
+        if (eve::all(test)) return {s, c};
 
         auto w = exp(x*half(eve::as<T>()));
         t = half(eve::as<T>())*w;
@@ -72,7 +72,7 @@ namespace eve::detail
 
         s = if_else(test, s, t*h);
         c = if_else(test, c, t);
-        return {s, c};  
+        return {s, c};
       }
     }
     else

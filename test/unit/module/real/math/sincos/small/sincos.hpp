@@ -13,7 +13,7 @@
 #include <eve/constant/inf.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/pi.hpp>
-#include <array>
+
 #include <cmath>
 
 TTS_CASE_TPL("Check eve::small(eve::sincos) return type", EVE_TYPE)

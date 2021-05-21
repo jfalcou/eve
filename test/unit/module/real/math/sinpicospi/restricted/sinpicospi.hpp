@@ -9,7 +9,7 @@
 #include <eve/function/cospi.hpp>
 #include <eve/function/sinpi.hpp>
 #include <eve/constant/nan.hpp>
-#include <array>
+
 
 TTS_CASE_TPL("Check sinpicospi  return type", EVE_TYPE)
 {

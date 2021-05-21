@@ -16,12 +16,12 @@
 #include <eve/function/pedantic.hpp>
 #include <eve/function/trunc.hpp>
 
-#include <array>
+#include <tuple>
 
 namespace eve::detail
 {
   template<real_value T>
-  EVE_FORCEINLINE constexpr std::array<T, 2>
+  EVE_FORCEINLINE constexpr std::tuple<T, T>
   modf_(EVE_SUPPORTS(cpu_), pedantic_type const &, T a) noexcept
   {
     if constexpr( has_native_abi_v<T> )

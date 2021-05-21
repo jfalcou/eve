@@ -10,7 +10,6 @@
 #include <type_traits>
 #include <tuple>
 #include <cmath>
-#include <array>
 
 TTS_CASE_TPL("Check eve::restricted(eve::sincos) return type", EVE_TYPE)
 {

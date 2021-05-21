@@ -12,7 +12,6 @@
 #include <eve/function/ulpdist.hpp>
 #include <eve/function/all.hpp>
 #include <cmath>
-#include <array>
 
 TTS_CASE_TPL("Check  eve::big(eve::sincos) return type", EVE_TYPE)
 {

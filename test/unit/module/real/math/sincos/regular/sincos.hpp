@@ -13,7 +13,6 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
 #include <cmath>
-#include <array>
 
 TTS_CASE_TPL("Check sincos return type", EVE_TYPE)
 {

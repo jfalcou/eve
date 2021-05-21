@@ -11,7 +11,6 @@
 #include <eve/constant/nan.hpp>
 #include <eve/constant/pi.hpp>
 #include <cmath>
-#include <array>
 
 TTS_CASE_TPL("Check eve::medium(eve::sincos) return type", EVE_TYPE)
 {

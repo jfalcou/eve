@@ -15,12 +15,12 @@
 #include <eve/concept/value.hpp>
 #include <eve/platform.hpp>
 #include <eve/detail/apply_over.hpp>
-#include <array>
+#include <tuple>
 
 namespace eve::detail
 {
   template<floating_real_value T>
-  EVE_FORCEINLINE std::array<T, 2>
+  EVE_FORCEINLINE std::tuple<T, T>
   two_prod_(EVE_SUPPORTS(cpu_)
            , const T& a
            , const T& b) noexcept

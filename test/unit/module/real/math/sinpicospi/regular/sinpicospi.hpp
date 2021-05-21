@@ -11,7 +11,6 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/one.hpp>
-#include <array>
 
 TTS_CASE_TPL("Check sinpicospi return type", EVE_TYPE)
 {

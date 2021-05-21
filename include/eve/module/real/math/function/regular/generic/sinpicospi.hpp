@@ -22,12 +22,12 @@
 #include <eve/module/real/math/detail/generic/trig_finalize.hpp>
 
 #include <type_traits>
-#include <array>
+#include <tuple>
 
 namespace eve::detail
 {
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr std::array<T, 2>
+  EVE_FORCEINLINE constexpr std::tuple<T, T>
   sinpicospi_(EVE_SUPPORTS(cpu_), restricted_type const &, T a0) noexcept
   {
     if constexpr( has_native_abi_v<T> )
@@ -41,7 +41,7 @@ namespace eve::detail
   //////////////////////////////////////////////////////////////////////////////
   /// big medium small
   template<decorator D, floating_real_value T>
-  EVE_FORCEINLINE constexpr std::array<T, 2>
+  EVE_FORCEINLINE constexpr std::tuple<T, T>
   sinpicospi_(EVE_SUPPORTS(cpu_), D const &, T a0) noexcept
   {
     if constexpr( has_native_abi_v<T> )
@@ -65,14 +65,14 @@ namespace eve::detail
       }
       auto [fn, xr, dxr] = rem2(x);
       auto [s, c] = sincos_finalize(bitofsign(a0), fn, xr, dxr);
-      return {s, c}; 
+      return {s, c};
     }
     else
       return apply_over2(D()(sinpicospi), a0);
   }
 
   template<typename T>
-  EVE_FORCEINLINE constexpr std::array<T, 2>
+  EVE_FORCEINLINE constexpr std::tuple<T, T>
   sinpicospi_(EVE_SUPPORTS(cpu_), T const &a0) noexcept
   {
     if constexpr( has_native_abi_v<T> )

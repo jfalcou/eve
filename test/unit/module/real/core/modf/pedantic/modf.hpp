@@ -6,7 +6,6 @@
 **/
 //==================================================================================================
 #include <eve/function/pedantic/modf.hpp>
-#include <array>
 
 TTS_CASE_TPL("Check modf return type", EVE_TYPE)
 {
