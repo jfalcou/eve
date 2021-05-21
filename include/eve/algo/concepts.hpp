@@ -16,13 +16,13 @@ namespace eve::algo
   namespace detail
   {
     template <typename>
-    struct is_eve_fixed  : std::false_type {};
+    struct is_fixed  : std::false_type {};
 
     template <std::ptrdiff_t N>
-    struct is_eve_fixed<eve::fixed<N>> : std::true_type {};
+    struct is_fixed<eve::fixed<N>> : std::true_type {};
 
     template <typename T>
-    concept is_eve_fixed_v = is_eve_fixed<T>::value;
+    concept is_fixed_v = is_fixed<T>::value;
   }
 
   template <typename T>
@@ -36,30 +36,40 @@ namespace eve::algo
   };
 
   template <typename T>
-  using partialy_unaligned_t = decltype(std::declval<T>().previous_partially_aligned());
+  using partially_aligned_t = decltype(std::declval<T>().previous_partially_aligned());
+
+  template <typename T>
+  struct partially_aligned
+  {
+    using type = partially_aligned_t<T>;
+  };
+
+  namespace detail
+  {
+
+    template <typename I>
+    concept unaligned_check = std::same_as<unaligned_t<I>, I>;
+
+    template <typename I>
+    concept partially_aligned_check = std::same_as<partially_aligned_t<I>, I>;
+  }
 
   template <typename I>
-  concept unaligned_check = std::same_as<unaligned_t<I>, I>;
-
-  template <typename I>
-  concept partially_aligned_check = std::same_as<partialy_unaligned_t<I>, I>;
-
-  template <typename I>
-  concept iterator_basics =
-    detail::is_eve_fixed_v<typename I::cardinal> &&
+  concept iterator =
+    detail::is_fixed_v<typename I::cardinal> &&
     std::regular<I> &&
     std::totally_ordered<I> &&
     std::totally_ordered_with<I, unaligned_t<I>> &&
-    std::totally_ordered_with<I, partialy_unaligned_t<I>> &&
+    std::totally_ordered_with<I, partially_aligned_t<I>> &&
     requires(I i, std::ptrdiff_t n) {
        { i += n } -> std::same_as<I&>;
        { i - i }  -> std::same_as<std::ptrdiff_t>;
-       { i.unaligned() } -> unaligned_check;
-       { i.previous_partially_aligned() } -> partially_aligned_check;
+       { i.unaligned() } -> detail::unaligned_check;
+       { i.previous_partially_aligned() } -> detail::partially_aligned_check;
     };
 
   template <typename I>
-  concept readable_iterator = iterator_basics<I> &&
+  concept readable_iterator = iterator<I> &&
     requires(I i) {
       { eve::load(i) };
       { eve::load[eve::ignore_first(1)](i) };
@@ -67,17 +77,17 @@ namespace eve::algo
     };
 
   template <typename I>
-  concept unaligned_iterator = iterator_basics<I> && unaligned_check<I>;
+  concept unaligned_iterator = iterator<I> && detail::unaligned_check<I>;
 
   template <typename I>
-  concept partially_aligned_iterator = iterator_basics<I> && partially_aligned_check<I>;
+  concept partially_aligned_iterator = iterator<I> && detail::partially_aligned_check<I>;
 
   // We don't yet have examples;
   template <typename I>
   concept always_aligned_iterator = partially_aligned_iterator<I> && unaligned_iterator<I>;
 
   template <typename S, typename I>
-  concept sentinel_for = std::totally_ordered_with<S, I> &&
+  concept sentinel_for = iterator<I> && std::totally_ordered_with<S, I> &&
     requires(I i, S s) {
       { s - i } -> std::same_as<std::ptrdiff_t>;
     };

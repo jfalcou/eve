@@ -50,4 +50,10 @@ TTS_CASE("eve.algo defaulting")
     TTS_CONSTEXPR_EXPECT(decltype(out)::contains((eve::algo::divisible_by_cardinal)));
     TTS_CONSTEXPR_EXPECT(decltype(out)::contains((eve::algo::no_aligning)));
   }
+  {
+    constexpr auto expected = eve::algo::traits(eve::algo::divisible_by_cardinal);
+    constexpr auto actual = eve::algo::default_to(eve::algo::traits(), expected);
+
+    TTS_TYPE_IS(decltype(expected), decltype(actual));
+  }
 }

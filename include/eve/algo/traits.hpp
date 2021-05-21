@@ -74,7 +74,7 @@ namespace eve::algo
       }
       else
       {
-        return unroll_(other...);
+        return divisible_(other...);
       }
     };
 

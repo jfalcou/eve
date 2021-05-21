@@ -13,6 +13,7 @@
 
 #include <eve/memory/aligned_allocator.hpp>
 
+#include <algorithm>
 #include <vector>
 
 namespace algo_test
@@ -36,10 +37,10 @@ namespace algo_test
     using e_t = eve::element_type_t<T>;
     std::vector<e_t, eve::aligned_allocator<e_t, 4096>> page(4096 / sizeof(e_t), e_t{0});
 
-    const std::ptrdiff_t elemenents_to_test = T::static_size * 6;
+    constexpr int elements_to_test  = std::min(T::static_size * 10, 300l);
 
     auto f = page.data();
-    auto l = f + elemenents_to_test;
+    auto l = f + elements_to_test;
 
     auto run = [&] {
       for (auto it = f; it < l; ++it) {
@@ -54,7 +55,7 @@ namespace algo_test
     // from the beginning
     while (f < l) {
       run();
-      *l = 1;
+      if (l != (page.data() + page.size())) { *l = 1; }
       --l;
       *f = 1;
       ++f;
@@ -62,10 +63,13 @@ namespace algo_test
 
     std::fill(page.begin(), page.end(), 0);
 
+    l = page.data() + page.size();
+    f = l - elements_to_test;
+
     // from the end
     while (f < l) {
       run();
-      *l = 1;
+      if (l != (page.data() + page.size())) { *l = 1; }
       --l;
       *f = 1;
       ++f;

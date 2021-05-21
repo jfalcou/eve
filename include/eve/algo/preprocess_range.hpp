@@ -59,7 +59,7 @@ namespace eve::algo
     }
 
     // Base case. Should validate that I, S are a valid iterator pair
-    template <typename Traits, iterator_basics I, sentinel_for<I> S>
+    template <typename Traits, iterator I, sentinel_for<I> S>
     auto operator()(Traits traits_, I f, S l) const
     {
       EVE_ASSERT(f != l, "preprocess_range requires a non-empty range");

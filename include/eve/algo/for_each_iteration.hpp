@@ -20,10 +20,12 @@ namespace eve::algo
 {
   struct for_each_iteration_
   {
-    template <typename Traits, iterator_basics I, sentinel_for<I> S, typename Delegate>
+    template <typename Traits, iterator I, sentinel_for<I> S, typename Delegate>
     EVE_FORCEINLINE void operator()(Traits traits, I f, S l, Delegate& delegate) const
       requires (Traits::contains(no_aligning)())
     {
+      EVE_ASSERT(f != l, "for_each_iteration requires a non-empty range");
+
       static constexpr std::ptrdiff_t step = typename I::cardinal{}();
 
       I precise_l = f + ((l - f) / step * step);
@@ -40,6 +42,8 @@ namespace eve::algo
     EVE_FORCEINLINE void operator()(Traits traits, I f, S l, Delegate& delegate) const
       requires (!Traits::contains(no_aligning)())
     {
+      EVE_ASSERT(f != l, "for_each_iteration requires a non-empty range");
+
       static constexpr std::ptrdiff_t step = typename I::cardinal{}();
 
       auto aligned_f = f.previous_partially_aligned();
