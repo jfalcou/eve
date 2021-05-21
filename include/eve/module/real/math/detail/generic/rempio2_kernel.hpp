@@ -38,13 +38,13 @@
 #include <eve/module/real/math/detail/generic/workaround.hpp>
 #include <eve/traits/alignment.hpp>
 #include <bit>
-#include <array>
+#include <tuple>
 #include <type_traits>
 
 namespace eve::detail
 {
  // up to 255*pi/4 ~200
-  template<floating_real_value T> EVE_FORCEINLINE std::array<T, 3>
+  template<floating_real_value T> EVE_FORCEINLINE std::tuple<T, T, T>
   rempio2_small(T const &xx) noexcept
   {
     using elt_t             = element_type_t<T>;
