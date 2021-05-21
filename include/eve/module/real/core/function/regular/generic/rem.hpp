@@ -45,7 +45,11 @@ namespace eve::detail
                            , T const &a
                            , T const &b) noexcept
   {
-   return fnma(b, trunc(div(a,b)), a);
+    std::cout << "icitte rem" << std::endl;
+    std::cout << "a         " << a << std::endl;
+    std::cout << "b         " << b << std::endl;
+    std::cout << "r         " << fnma(b, trunc(div(a,b)), a) << std::endl;
+    return fnma(b, trunc(div(a,b)), a);
   }
 
   template<real_value T, decorator D>

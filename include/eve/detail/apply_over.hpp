@@ -72,6 +72,21 @@ namespace eve::detail
   }
 
   template<typename Obj, simd_value T>
+  EVE_FORCEINLINE auto apply_over2t(Obj f, T const & v, T const & w)
+  {
+    if constexpr(has_emulated_abi_v<T> ) return map(f, v, w);
+    else if constexpr(has_aggregated_abi_v<T>)
+    {
+      auto  [lov, hiv] = v.slice();
+      auto  [low, hiw] = w.slice();
+      auto  [xhi, ehi] = f(hiv, hiw);
+      auto  [xlo, elo] = f(lov, low);
+      return std::make_tuple(eve::combine(xlo, xhi), eve::combine(elo, ehi));
+    }
+    else return f(v, w);
+  }
+
+  template<typename Obj, simd_value T>
   EVE_FORCEINLINE auto apply_over3(Obj f, T const & v)
   {
     if constexpr(has_emulated_abi_v<T> ) return map(f, v);
