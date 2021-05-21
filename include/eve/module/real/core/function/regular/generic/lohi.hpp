@@ -46,7 +46,7 @@ namespace eve::detail
                                         );
           auto z = uia0[p].slice();
 
-          if constexpr(endian::native == endian::little)  return z;
+          if constexpr(endian::native == endian::little)  return decltype(z){std::get<1>(z), std::get<0>(z)};
           else                                            return decltype(z){std::get<1>(z), std::get<0>(z)};
         }
         else
@@ -55,7 +55,7 @@ namespace eve::detail
           using r_t   = std::tuple<si_t, si_t>;
           auto z      = bit_cast(a0, as<r_t>());
 
-          if constexpr(endian::native == endian::little)  return z;
+          if constexpr(endian::native == endian::little)  return std::tuple<si_t, si_t>{std::get<1>(z), std::get<0>(z)};
           else                                            return std::tuple<si_t, si_t>{std::get<1>(z), std::get<0>(z)};
         }
       }

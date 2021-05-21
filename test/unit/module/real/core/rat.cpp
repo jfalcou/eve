@@ -9,7 +9,7 @@
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/function/rat.hpp>
-#include <array>
+#include <tuple>
 
 //==================================================================================================
 //== Types tests
@@ -20,10 +20,10 @@ EVE_TEST_TYPES( "Check return types of eve::rat(scalar)"
 <typename T>(eve::as_<T>)
 {
   using v_t =  eve::element_type_t<T>;
-  TTS_EXPR_IS( eve::rat(T())                    , (std::array<T, 2>)  );
-  TTS_EXPR_IS( eve::rat(T(), T())               , (std::array<T, 2>) );
-  TTS_EXPR_IS( eve::rat(T(), v_t())             , (std::array<T, 2>) );
-  TTS_EXPR_IS( eve::rat(v_t(), v_t())           , (std::array<v_t, 2>)  );
+  TTS_EXPR_IS( eve::rat(T())                    , (std::tuple<T, T>)  );
+  TTS_EXPR_IS( eve::rat(T(), T())               , (std::tuple<T, T>) );
+  TTS_EXPR_IS( eve::rat(T(), v_t())             , (std::tuple<T, T>) );
+  TTS_EXPR_IS( eve::rat(v_t(), v_t())           , (std::tuple<v_t, v_t>)  );
 };
 
 
