@@ -14,7 +14,7 @@
 
 TTS_CASE_TPL("Check eve::sindcosd return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::sindcosd(T()), (std::array<T,2>));
+  TTS_EXPR_IS(eve::sindcosd(T()), (std::tuple<T,T>));
 }
 
 TTS_CASE_TPL("Check eve::sindcosd behavior", EVE_TYPE)

@@ -24,7 +24,7 @@ TTS_CASE_TPL("Check lohi return type", EVE_TYPE)
   else
   {
     using wdui_t = sdui_t;
-    using typ = std::array<wdui_t,2>;
+    using typ = std::tuple<wdui_t,wdui_t>;
     TTS_EXPR_IS((eve::lohi(T())),typ);
   }
 }

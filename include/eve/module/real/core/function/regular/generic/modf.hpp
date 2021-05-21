@@ -13,12 +13,12 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/function/trunc.hpp>
 
-#include <array>
+#include <tuple>
 
 namespace eve::detail
 {
   template<real_value T> EVE_FORCEINLINE constexpr
-  std::array<T,2 > modf_(EVE_SUPPORTS(cpu_), T a) noexcept
+  std::tuple<T,T > modf_(EVE_SUPPORTS(cpu_), T a) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {

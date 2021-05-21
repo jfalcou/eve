@@ -14,7 +14,7 @@
 
 TTS_CASE_TPL("Check sinpicospi return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::sinpicospi(T()), (std::array<T,2>));
+  TTS_EXPR_IS(eve::sinpicospi(T()), (std::tuple<T,T>));
 }
 
 TTS_CASE_TPL("Check (eve::sinpicospi behavior", EVE_TYPE)

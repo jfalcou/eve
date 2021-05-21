@@ -9,7 +9,7 @@
 
 TTS_CASE_TPL("Check modf return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::modf(T()), (std::array<T,2>));
+  TTS_EXPR_IS(eve::modf(T()), (std::tuple<T,T>));
 }
 
 TTS_CASE_TPL("Check (eve::modf behavior", EVE_TYPE)

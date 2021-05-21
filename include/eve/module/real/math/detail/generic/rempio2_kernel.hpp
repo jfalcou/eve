@@ -74,7 +74,7 @@ namespace eve::detail
 
   // double use   x < 281474976710656 (2.81476710656e+14)
   /* float use   x < 0x1.7d4998p+38 (4.09404e+11) */
-  template<floating_real_value T> EVE_FORCEINLINE std::array<T, 3>
+  template<floating_real_value T> EVE_FORCEINLINE std::tuple<T, T, T>
   rempio2_medium(T const &xx) noexcept
   {
     using elt_t             = element_type_t<T>;
@@ -125,7 +125,7 @@ namespace eve::detail
     }
   }
 
-  template<floating_real_value T> EVE_FORCEINLINE  std::array<T, 3>
+  template<floating_real_value T> EVE_FORCEINLINE  std::tuple<T, T, T>
   rempio2_big(T const &xx) noexcept
   {
     using elt_t             = element_type_t<T>;
