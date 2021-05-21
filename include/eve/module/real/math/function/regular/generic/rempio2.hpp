@@ -19,7 +19,7 @@
 #include <eve/module/real/math/detail/constant/rempio2_limits.hpp>
 #include <eve/module/real/math/detail/generic/rempio2_kernel.hpp>
 
-#include <array>
+#include <tuple>
 #include <type_traits>
 
 namespace eve::detail
@@ -51,7 +51,7 @@ namespace eve::detail
   }
 
   template<floating_value T> EVE_FORCEINLINE
-  std::array<T, 3> rempio2_(EVE_SUPPORTS(cpu_), T const &x) noexcept
+  std::tuple<T, T, T> rempio2_(EVE_SUPPORTS(cpu_), T const &x) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {

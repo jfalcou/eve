@@ -15,7 +15,7 @@
 #include <eve/function/sqrt.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <array>
+#include <tuple>
 
 namespace eve::detail
 {
@@ -29,7 +29,7 @@ namespace eve::detail
   }
 
   template<floating_real_value T>
-  EVE_FORCEINLINE std::array < T, 3>
+  EVE_FORCEINLINE std::tuple < T, T, T>
   jacobi_elliptic_(EVE_SUPPORTS(cpu_)
                   , T u
                   , T x
@@ -56,7 +56,7 @@ namespace eve::detail
   }
 
   template<floating_real_value T, floating_real_value U, floating_real_value V,  decorator D>
-  EVE_FORCEINLINE  std::array < T, 3>
+  EVE_FORCEINLINE  std::tuple < T, T, T>
   jacobi_elliptic_(EVE_SUPPORTS(cpu_)
                   , D const &
                   , T u
