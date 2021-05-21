@@ -16,6 +16,9 @@
 namespace eve::algo
 {
   template <typename T, typename Cardinal>
+  struct aligned_ptr_iterator;
+
+  template <typename T, typename Cardinal>
   struct unaligned_ptr_iterator : operations_with_distance
   {
     using cardinal = Cardinal;
@@ -25,6 +28,11 @@ namespace eve::algo
     explicit unaligned_ptr_iterator(T* ptr) : ptr(ptr) {}
 
     unaligned_ptr_iterator unaligned() const { return *this; }
+
+    auto previous_partially_aligned() const
+    {
+      return aligned_ptr_iterator<T, cardinal>{eve::previous_aligned_address(ptr, cardinal{})};
+    }
 
     unaligned_ptr_iterator& operator+=(std::ptrdiff_t n) { ptr += n; return *this; }
     friend std::ptrdiff_t   operator-(unaligned_ptr_iterator x, unaligned_ptr_iterator y) { return x.ptr - y.ptr; }
@@ -67,10 +75,17 @@ namespace eve::algo
 
     using aligned_ptr_type = eve::aligned_ptr<T, Cardinal{}() * sizeof(T)>;
 
-    aligned_ptr_iterator();
+    aligned_ptr_iterator() = default;
     explicit aligned_ptr_iterator(aligned_ptr_type ptr) : ptr{ptr} {}
 
+    // Need this for totally ordered.
+    operator unaligned_ptr_iterator<T, Cardinal>() const {
+      return unaligned_ptr_iterator<T, Cardinal>{ptr.get()};
+    }
+
     auto unaligned() const { return unaligned_ptr_iterator<T, Cardinal>{ptr.get()}; }
+    auto previous_partially_aligned() const { return *this; }
+
     aligned_ptr_iterator& operator+=(std::ptrdiff_t n) { ptr += n; return *this; }
 
     template <relative_conditional_expr C>

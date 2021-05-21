@@ -48,7 +48,6 @@ namespace eve::algo
     {
       return x.unaligned() <=> y.unaligned();
     }
-
     template <typename T, typename U>
     friend std::ptrdiff_t operator-(T const& x, U const& y) requires detail::should_enable_forward_to_unaligned<T, U>
     {

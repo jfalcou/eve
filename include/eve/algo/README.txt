@@ -29,6 +29,7 @@ The minimum requirements are:
 * I is totally ordered
 * `I.unaligned()` - returns an `unaligned_iterator` pointing to the same place.
 * `I.unaligned()` and `I` are comparible
+* `I.previous_partially_aligned()` - returns our best attempt to align this iterator.
 
 ### aligned_iterator(concept)
 
@@ -36,15 +37,33 @@ The minimum requirements are:
 
 The main model is `aligned_ptr_iterator`
 
-The concept around a general purpose `aligned_ptr`. We can only step in `I::cardinal{}()` divisible steps. We guarantee that all loads stores will happen from an aligned address.
+This is a `partially_aligned_iterator` but has an extra feature: we can do `unsafe` load.
+When we get to unbounded algorithms it will become important.
+
+### partially_aligned_iterator(concept)
+
+I and partially_aligned_t<I> are the same.
+
+The main model is `aligned_ptr_iterator`, `zip_iterator<aligned_ptr_iterator, unaligned_ptr_iterator>`
+
+Loading/Storign is more efficient than doing the same from `unaligned`. We can only step in `I::cardinal{}()` divisible steps.
 
 ### unaligned_iterator(concept)
 
-*TODO*
+I and unaligned_t<I> are the same.
 
 The main model is `unaligned_ptr_iterator`
 
 iterator that can represent any position in the underlying range.
+
+### always_aligned_iterator (concept)
+
+I is the same as `partially_aligned_t<I>` and `unaligned_t<I>`
+
+Main model: iota_iterator.
+
+These are not phisical iterators but rather some mechanisms that pretend to be iterators.
+alignment does not matter to them, every position is just as efficient as any other.
 
 ### iteration pattern (concept)
 
@@ -59,6 +78,7 @@ However for some algorithms, like `reverse` and maybe `partition` it's not a goo
 
 * `traits`
 * `unroll`
+* `no_aligning`
 * `divisible_by_cardinal`
 
 traits is a way to customise the behaviour of the algorithm.
@@ -67,7 +87,13 @@ Different algorithms support different customizations.
 ### concepts
 
 * `unaligned_t` -> a convinience to get the unaligned type.
+* `partially_aligned_t` -> a convinience to get the type of `previous_partially_aligned`
 * `same_unaligned_iterator<T, U>` -> checks if two iterators have the same unaligned types.
+* `iterator_basics` -> checks everything about iterator except for load and store
+* `readable_iterator`
+* `unaligned_iterator`
+* `partially_aligned_iterator`
+* `always_aligned_iterator`
 
 ### iterator helpers
 

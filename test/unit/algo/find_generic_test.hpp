@@ -13,29 +13,41 @@
 
 #include <eve/memory/aligned_allocator.hpp>
 
+#include <algorithm>
 #include <vector>
 
 namespace algo_test
 {
+  template <typename T, typename Algo, typename Check>
+  void find_one_ptr_test(T* f, T* l, T* res, Algo alg, Check check)
+  {
+    auto pred = [](auto x) { return x != 0; };
+    check(f, l, res, alg(f, l, pred));
+
+    if (eve::is_aligned<eve::expected_cardinal_v<T> * sizeof(T)>(f))
+    {
+      auto f_ = eve::aligned_ptr<T>(f);
+      check(f_, l, res, alg(f_, l, pred));
+    }
+  }
+
   template <typename T, typename Algo, typename Check>
   void find_generic_test_page_ends(eve::as_<T>, Algo alg, Check check)
   {
     using e_t = eve::element_type_t<T>;
     std::vector<e_t, eve::aligned_allocator<e_t, 4096>> page(4096 / sizeof(e_t), e_t{0});
 
-    const std::ptrdiff_t elemenents_to_test = 512 / T::static_size;
+    constexpr int elements_to_test  = std::min(T::static_size * 10, 300l);
 
-    auto f = page.begin();
-    auto l = page.begin() + elemenents_to_test;
+    auto f = page.data();
+    auto l = f + elements_to_test;
 
     auto run = [&] {
       for (auto it = f; it < l; ++it) {
-        auto actual = alg(f, l, [](auto x) { return x != 0; });
-        check(f, l, l, actual);
+        find_one_ptr_test(f, l, l, alg, check);
         *it = 1;
 
-        actual = alg(f, l, [](auto x) { return x != 0; });
-        check(f, l, it, actual);
+        find_one_ptr_test(f, l, it, alg, check);
         *it = 0;
       }
     };
@@ -43,7 +55,7 @@ namespace algo_test
     // from the beginning
     while (f < l) {
       run();
-      *l = 1;
+      if (l != (page.data() + page.size())) { *l = 1; }
       --l;
       *f = 1;
       ++f;
@@ -51,10 +63,13 @@ namespace algo_test
 
     std::fill(page.begin(), page.end(), 0);
 
+    l = page.data() + page.size();
+    f = l - elements_to_test;
+
     // from the end
     while (f < l) {
       run();
-      *l = 1;
+      if (l != (page.data() + page.size())) { *l = 1; }
       --l;
       *f = 1;
       ++f;
