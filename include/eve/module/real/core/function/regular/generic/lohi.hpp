@@ -38,6 +38,7 @@ namespace eve::detail
         if constexpr(simd_value<T>)
         {
           using ui_t       = wide<si_t, typename cardinal_t<T>::combined_type>;
+          using vi_t       = wide<si_t, cardinal_t<T>>;
           auto uia0        = bit_cast(a0, as<ui_t>());
           auto constexpr p = as_pattern ( [](auto i, auto c)
                                           {
@@ -46,17 +47,17 @@ namespace eve::detail
                                         );
           auto z = uia0[p].slice();
 
-          if constexpr(endian::native == endian::little)  return decltype(z){std::get<1>(z), std::get<0>(z)};
-          else                                            return decltype(z){std::get<1>(z), std::get<0>(z)};
+          if constexpr(endian::native == endian::little)  return std::tuple<vi_t, vi_t>{bit_cast(z[0], as<vi_t>()), bit_cast(z[1], as<vi_t>())};
+          else                                            return std::tuple<vi_t, vi_t>{bit_cast(z[1], as<vi_t>()), bit_cast(z[0], as<vi_t>())};
         }
         else
         {
           using si_t  = downgrade_t<as_integer_t<elt_t, unsigned>>;
-          using r_t   = std::tuple<si_t, si_t>;
+          using r_t   = std::array<si_t, 2>;
           auto z      = bit_cast(a0, as<r_t>());
 
-          if constexpr(endian::native == endian::little)  return std::tuple<si_t, si_t>{std::get<1>(z), std::get<0>(z)};
-          else                                            return std::tuple<si_t, si_t>{std::get<1>(z), std::get<0>(z)};
+          if constexpr(endian::native == endian::little)  return std::tuple<si_t, si_t>{z[0], z[1]};
+          else                                            return std::tuple<si_t, si_t>{z[1], z[0]};
         }
       }
     }
