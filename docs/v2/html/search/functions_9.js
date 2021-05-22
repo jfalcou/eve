@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['next_5fpower_5fof_5f2_150',['next_power_of_2',['../group__utility.html#gad47c55690b36ca096a9a5ffcb4e28b6f',1,'eve']]]
+  ['max_5fsize_171',['max_size',['../group__details.html#ga8ed6166db49554183a5e2ad91d64bb38',1,'eve::detail::wide_cardinal']]]
 ];

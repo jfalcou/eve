@@ -132,7 +132,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Implementation details</div>  </div>
 </div><!--header-->
@@ -147,9 +149,54 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1detail_1_1wide__cardinal.html">eve::detail::wide_cardinal&lt; Size &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cardinal-only element of wide/logical.  <a href="structeve_1_1detail_1_1wide__cardinal.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1detail_1_1wide__ops.html">eve::detail::wide_ops&lt; Derived &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Common operations for wide/logical.  <a href="structeve_1_1detail_1_1wide__ops.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gab1d01a75197ed87dba6abf82f978fc28"><td class="memItemLeft" align="right" valign="top"><a id="gab1d01a75197ed87dba6abf82f978fc28"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__details.html#gab1d01a75197ed87dba6abf82f978fc28">eve::detail::wide_cardinal&lt; Size &gt;::cardinal_type</a> = Size</td></tr>
+<tr class="memdesc:gab1d01a75197ed87dba6abf82f978fc28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type describing the number of lanes of current wide. <br /></td></tr>
+<tr class="separator:gab1d01a75197ed87dba6abf82f978fc28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gae1eceedc7fc52c9f33893e6ce7b1b2a9"><td class="memItemLeft" align="right" valign="top"><a id="gae1eceedc7fc52c9f33893e6ce7b1b2a9"></a>
+static constexpr size_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__details.html#gae1eceedc7fc52c9f33893e6ce7b1b2a9">eve::detail::wide_cardinal&lt; Size &gt;::size</a> () noexcept</td></tr>
+<tr class="memdesc:gae1eceedc7fc52c9f33893e6ce7b1b2a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the wide in number of lanes. <br /></td></tr>
+<tr class="separator:gae1eceedc7fc52c9f33893e6ce7b1b2a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8ed6166db49554183a5e2ad91d64bb38"><td class="memItemLeft" align="right" valign="top"><a id="ga8ed6166db49554183a5e2ad91d64bb38"></a>
+static constexpr size_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__details.html#ga8ed6166db49554183a5e2ad91d64bb38">eve::detail::wide_cardinal&lt; Size &gt;::max_size</a> () noexcept</td></tr>
+<tr class="memdesc:ga8ed6166db49554183a5e2ad91d64bb38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximal number of lanes for a given wide. <br /></td></tr>
+<tr class="separator:ga8ed6166db49554183a5e2ad91d64bb38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac20bcc211ad426f1b1b4dd55a8dd809e"><td class="memItemLeft" align="right" valign="top"><a id="gac20bcc211ad426f1b1b4dd55a8dd809e"></a>
+static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__details.html#gac20bcc211ad426f1b1b4dd55a8dd809e">eve::detail::wide_cardinal&lt; Size &gt;::empty</a> () noexcept</td></tr>
+<tr class="memdesc:gac20bcc211ad426f1b1b4dd55a8dd809e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a wide contains 0 lanes. <br /></td></tr>
+<tr class="separator:gac20bcc211ad426f1b1b4dd55a8dd809e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader">Interface with architecture-specific intrinsics</h2></td></tr>
+<tr class="memitem:ga517acf9c001d2d30651de6ee0a989f97"><td class="memItemLeft" align="right" valign="top"><a id="ga517acf9c001d2d30651de6ee0a989f97"></a>
+storage_type const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__details.html#ga517acf9c001d2d30651de6ee0a989f97">eve::detail::wide_storage&lt; Storage &gt;::storage</a> () const &amp;noexcept</td></tr>
+<tr class="memdesc:ga517acf9c001d2d30651de6ee0a989f97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the architecture-specific storage help by wide. <br /></td></tr>
+<tr class="separator:ga517acf9c001d2d30651de6ee0a989f97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga655a4251d49218c41759da8d8cc27be6"><td class="memItemLeft" align="right" valign="top"><a id="ga655a4251d49218c41759da8d8cc27be6"></a>
+storage_type &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__details.html#ga655a4251d49218c41759da8d8cc27be6">eve::detail::wide_storage&lt; Storage &gt;::storage</a> () &amp;noexcept</td></tr>
+<tr class="memdesc:ga655a4251d49218c41759da8d8cc27be6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the architecture-specific storage help by wide. <br /></td></tr>
+<tr class="separator:ga655a4251d49218c41759da8d8cc27be6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga947659b90b165234fbc601493bf367fa"><td class="memItemLeft" align="right" valign="top"><a id="ga947659b90b165234fbc601493bf367fa"></a>
+storage_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__details.html#ga947659b90b165234fbc601493bf367fa">eve::detail::wide_storage&lt; Storage &gt;::storage</a> () &amp;&amp;noexcept</td></tr>
+<tr class="memdesc:ga947659b90b165234fbc601493bf367fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the architecture-specific storage help by wide. <br /></td></tr>
+<tr class="separator:ga947659b90b165234fbc601493bf367fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga88f4571bc839404f25eb4843c19bbccf"><td class="memItemLeft" align="right" valign="top"><a id="ga88f4571bc839404f25eb4843c19bbccf"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__details.html#ga88f4571bc839404f25eb4843c19bbccf">eve::detail::wide_storage&lt; Storage &gt;::operator storage_type const &amp;</a> () const &amp;noexcept</td></tr>
+<tr class="memdesc:ga88f4571bc839404f25eb4843c19bbccf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicit conversion to the architecture-specific storage help by wide. <br /></td></tr>
+<tr class="separator:ga88f4571bc839404f25eb4843c19bbccf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3e054b6a5917548f79c7394b9a67a716"><td class="memItemLeft" align="right" valign="top"><a id="ga3e054b6a5917548f79c7394b9a67a716"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__details.html#ga3e054b6a5917548f79c7394b9a67a716">eve::detail::wide_storage&lt; Storage &gt;::operator storage_type &amp;</a> () &amp;noexcept</td></tr>
+<tr class="memdesc:ga3e054b6a5917548f79c7394b9a67a716"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicit conversion to the architecture-specific storage help by wide. <br /></td></tr>
+<tr class="separator:ga3e054b6a5917548f79c7394b9a67a716"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaed3fabf863699bcff6836c81f33d6ce8"><td class="memItemLeft" align="right" valign="top"><a id="gaed3fabf863699bcff6836c81f33d6ce8"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__details.html#gaed3fabf863699bcff6836c81f33d6ce8">eve::detail::wide_storage&lt; Storage &gt;::operator storage_type</a> () &amp;&amp;noexcept</td></tr>
+<tr class="memdesc:gaed3fabf863699bcff6836c81f33d6ce8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicit conversion to the architecture-specific storage help by wide. <br /></td></tr>
+<tr class="separator:gaed3fabf863699bcff6836c81f33d6ce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.20-->
@@ -160,7 +207,7 @@ Classes</h2></td></tr>
 </div> <!-- DOXYSTRAP RELATED -->
 </div> <!-- DOXYSTRAP RELATED -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed May 19 2021 19:18:01 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Sat May 22 2021 22:36:16 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

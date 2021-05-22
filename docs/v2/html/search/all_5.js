@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['front_32',['front',['../structeve_1_1logical_3_01wide_3_01Type_00_01Size_00_01ABI_01_4_01_4.html#a9c309ad6dbf343e126b5a097dc0fad8e',1,'eve::logical&lt; wide&lt; Type, Size, ABI &gt; &gt;::front()'],['../structeve_1_1wide.html#aa39a304296e28d2f909c583d09b830ce',1,'eve::wide::front()']]],
-  ['functions_33',['Functions',['../group__functions.html',1,'']]]
+  ['fix_5fpattern_33',['fix_pattern',['../structeve_1_1pattern__t.html#abfc27bc9e535aab6f92c30fc1f7ec756',1,'eve::pattern_t']]],
+  ['front_34',['front',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_00_01ABI_01_4_01_4.html#a449b2debdc353a5182c26650d4dffde7',1,'eve::logical&lt; wide&lt; Type, Cardinal, ABI &gt; &gt;::front()'],['../structeve_1_1wide.html#af80e13e9e08f07632225a9db4a67609e',1,'eve::wide::front()']]],
+  ['functions_35',['Functions',['../group__functions.html',1,'']]]
 ];

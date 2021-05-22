@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['set_169',['set',['../structeve_1_1logical_3_01wide_3_01Type_00_01Size_00_01ABI_01_4_01_4.html#a15839ea7d35de1c14427d4b9817ab4bf',1,'eve::logical&lt; wide&lt; Type, Size, ABI &gt; &gt;::set()'],['../structeve_1_1wide.html#af4f0accf1d718cc9554ac9755a40ac96',1,'eve::wide::set()']]],
-  ['size_170',['size',['../structeve_1_1detail_1_1wide__cardinal.html#ae1eceedc7fc52c9f33893e6ce7b1b2a9',1,'eve::detail::wide_cardinal']]],
-  ['storage_171',['storage',['../structeve_1_1detail_1_1wide__storage.html#a517acf9c001d2d30651de6ee0a989f97',1,'eve::detail::wide_storage::storage() const &amp;noexcept'],['../structeve_1_1detail_1_1wide__storage.html#a655a4251d49218c41759da8d8cc27be6',1,'eve::detail::wide_storage::storage() &amp;noexcept'],['../structeve_1_1detail_1_1wide__storage.html#a947659b90b165234fbc601493bf367fa',1,'eve::detail::wide_storage::storage() &amp;&amp;noexcept']]],
-  ['swap_172',['swap',['../structeve_1_1aligned__ptr.html#a3de1f1ab2d131e23af231cde028e50d5',1,'eve::aligned_ptr']]]
+  ['pattern_5fclamp_191',['pattern_clamp',['../structeve_1_1pattern__t.html#aac580eb9f0d080a624c6daff238715ef',1,'eve::pattern_t']]],
+  ['pattern_5fview_192',['pattern_view',['../structeve_1_1pattern__t_aba2457c37b6001a44f3c682466fd4e36.html#aba2457c37b6001a44f3c682466fd4e36',1,'eve::pattern_t']]],
+  ['prev_5fpower_5fof_5f2_193',['prev_power_of_2',['../group__utility.html#ga08edf538439c89f7e910d1bb5fdd5a80',1,'eve']]],
+  ['previous_5faligned_5faddress_194',['previous_aligned_address',['../structeve_1_1aligned__ptr_a16e228c017be1eb2f97d9e318e0bccde.html#a16e228c017be1eb2f97d9e318e0bccde',1,'eve::aligned_ptr::previous_aligned_address(T *p, Cardinal width) noexcept'],['../structeve_1_1aligned__ptr_a911aab2fb14b05dcc4625f412282dbe1.html#a911aab2fb14b05dcc4625f412282dbe1',1,'eve::aligned_ptr::previous_aligned_address(T *p) noexcept']]]
 ];

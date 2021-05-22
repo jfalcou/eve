@@ -1,5 +1,11 @@
 var searchData=
 [
-  ['rebind_81',['rebind',['../structeve_1_1aligned__allocator_1_1rebind.html',1,'eve::aligned_allocator&lt; T, Alignment &gt;::rebind&lt; U &gt;'],['../structeve_1_1logical_3_01wide_3_01Type_00_01Size_00_01ABI_01_4_01_4.html#afac321e528d3d7e0902b4daeba9baec2',1,'eve::logical&lt; wide&lt; Type, Size, ABI &gt; &gt;::rebind()'],['../structeve_1_1wide.html#a88cfeda0c5a7ce4762e1e256bfafe8fb',1,'eve::wide::rebind()'],['../structeve_1_1aligned__ptr.html#ac6704874599b1389068fd4396a8a9ad1',1,'eve::aligned_ptr::rebind()']]],
-  ['rescale_82',['rescale',['../structeve_1_1logical_3_01wide_3_01Type_00_01Size_00_01ABI_01_4_01_4.html#a73b5466eececbcb75bbeee9eb0c3d3a8',1,'eve::logical&lt; wide&lt; Type, Size, ABI &gt; &gt;::rescale()'],['../structeve_1_1wide.html#a5a302c52cfd10e7cd2ada6547213240b',1,'eve::wide::rescale()']]]
+  ['pattern_91',['pattern',['../group__simd.html#ga61c6484edbe5ceb7f92946bc798802dd',1,'eve']]],
+  ['pattern_5fclamp_92',['pattern_clamp',['../structeve_1_1pattern__t.html#aac580eb9f0d080a624c6daff238715ef',1,'eve::pattern_t']]],
+  ['pattern_5ft_93',['pattern_t',['../structeve_1_1pattern__t.html',1,'eve']]],
+  ['pattern_5fview_94',['pattern_view',['../structeve_1_1pattern__t_aba2457c37b6001a44f3c682466fd4e36.html#aba2457c37b6001a44f3c682466fd4e36',1,'eve::pattern_t']]],
+  ['pointer_95',['pointer',['../structeve_1_1aligned__ptr.html#a8b8fef1a5efc9384204ee46540e409ea',1,'eve::aligned_ptr']]],
+  ['prev_5fpower_5fof_5f2_96',['prev_power_of_2',['../group__utility.html#ga08edf538439c89f7e910d1bb5fdd5a80',1,'eve']]],
+  ['previous_5faligned_5faddress_97',['previous_aligned_address',['../structeve_1_1aligned__ptr_a16e228c017be1eb2f97d9e318e0bccde.html#a16e228c017be1eb2f97d9e318e0bccde',1,'eve::aligned_ptr::previous_aligned_address(T *p, Cardinal width) noexcept'],['../structeve_1_1aligned__ptr_a911aab2fb14b05dcc4625f412282dbe1.html#a911aab2fb14b05dcc4625f412282dbe1',1,'eve::aligned_ptr::previous_aligned_address(T *p) noexcept']]],
+  ['property_20of_20eve_20types_98',['Property of EVE types',['../glossary_properties.html',1,'glossary']]]
 ];

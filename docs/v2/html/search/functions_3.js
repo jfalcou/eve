@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['empty_142',['empty',['../structeve_1_1detail_1_1wide__cardinal.html#ac20bcc211ad426f1b1b4dd55a8dd809e',1,'eve::detail::wide_cardinal']]],
-  ['end_143',['end',['../structeve_1_1wide.html#adced0dc649e98b521b32715bd4a3600a',1,'eve::wide::end() noexcept'],['../structeve_1_1wide.html#a1051f17d44973e1d702c6344371f8d1a',1,'eve::wide::end() const noexcept']]]
+  ['empty_162',['empty',['../group__details.html#gac20bcc211ad426f1b1b4dd55a8dd809e',1,'eve::detail::wide_cardinal']]],
+  ['end_163',['end',['../structeve_1_1wide.html#ad975e790f3bfc912cc5fc399e71ed571',1,'eve::wide::end() noexcept'],['../structeve_1_1wide.html#a86d8cd19a238afb47b6ae2715c0367be',1,'eve::wide::end() const noexcept']]]
 ];

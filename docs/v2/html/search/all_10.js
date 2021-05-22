@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['under_99',['under',['../group__utility_ga664bc5b316e0dd3be42aa4c2fd818047.html#ga664bc5b316e0dd3be42aa4c2fd818047',1,'eve']]],
-  ['utility_100',['Utility',['../group__utility.html',1,'']]]
+  ['the_20expressive_20vector_20engine_116',['The Expressive Vector Engine',['../index.html',1,'']]],
+  ['tutorials_117',['Tutorials',['../tutorials.html',1,'']]],
+  ['type_118',['type',['../structeve_1_1as__.html#a71d0476bef3c779c1d4213bd20f2e1e6',1,'eve::as_']]],
+  ['type_20traits_119',['Type traits',['../group__traits.html',1,'']]]
 ];

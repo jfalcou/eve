@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['rebind_188',['rebind',['../structeve_1_1logical_3_01wide_3_01Type_00_01Size_00_01ABI_01_4_01_4.html#afac321e528d3d7e0902b4daeba9baec2',1,'eve::logical&lt; wide&lt; Type, Size, ABI &gt; &gt;::rebind()'],['../structeve_1_1wide.html#a88cfeda0c5a7ce4762e1e256bfafe8fb',1,'eve::wide::rebind()'],['../structeve_1_1aligned__ptr.html#ac6704874599b1389068fd4396a8a9ad1',1,'eve::aligned_ptr::rebind()']]],
-  ['rescale_189',['rescale',['../structeve_1_1logical_3_01wide_3_01Type_00_01Size_00_01ABI_01_4_01_4.html#a73b5466eececbcb75bbeee9eb0c3d3a8',1,'eve::logical&lt; wide&lt; Type, Size, ABI &gt; &gt;::rescale()'],['../structeve_1_1wide.html#a5a302c52cfd10e7cd2ada6547213240b',1,'eve::wide::rescale()']]]
+  ['rebind_221',['rebind',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_00_01ABI_01_4_01_4.html#a511e1d893e781b3693a06e68769f4578',1,'eve::logical&lt; wide&lt; Type, Cardinal, ABI &gt; &gt;::rebind()'],['../structeve_1_1wide.html#a159b8a727bcce883ae8d6efa14f4ffd3',1,'eve::wide::rebind()'],['../structeve_1_1aligned__ptr.html#ac6704874599b1389068fd4396a8a9ad1',1,'eve::aligned_ptr::rebind()']]],
+  ['rescale_222',['rescale',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_00_01ABI_01_4_01_4.html#a702ec4455d1146dba1426f6c3a2e14d5',1,'eve::logical&lt; wide&lt; Type, Cardinal, ABI &gt; &gt;::rescale()'],['../structeve_1_1wide.html#a13e2e49af5db5ffb4034f70bceca895c',1,'eve::wide::rescale()']]]
 ];
