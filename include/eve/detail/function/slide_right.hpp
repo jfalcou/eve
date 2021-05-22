@@ -11,7 +11,6 @@
 #include <eve/detail/overload.hpp>
 #include <eve/concept/vectorized.hpp>
 #include <eve/pattern.hpp>
-#include <iostream>
 
 namespace eve
 {
