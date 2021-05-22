@@ -35,7 +35,9 @@ namespace eve::detail
   template<decorator D, real_value T, real_value U>
   EVE_FORCEINLINE auto
   rem_(EVE_SUPPORTS(cpu_), D const &, T const &a, U const &b) noexcept
-  requires compatible_values<T, U>
+  requires (compatible_values<T, U>  &&
+            (is_one_of<D>(types<toward_zero_type, downward_type, upward_type
+                         , downward_type,  to_nearest_type> {})))
   {
     return arithmetic_call(D()(rem), a, b);
   }
@@ -45,10 +47,6 @@ namespace eve::detail
                            , T const &a
                            , T const &b) noexcept
   {
-    std::cout << "icitte rem" << std::endl;
-    std::cout << "a         " << a << std::endl;
-    std::cout << "b         " << b << std::endl;
-    std::cout << "r         " << fnma(b, trunc(div(a,b)), a) << std::endl;
     return fnma(b, trunc(div(a,b)), a);
   }
 
@@ -56,9 +54,11 @@ namespace eve::detail
   EVE_FORCEINLINE auto rem_ ( EVE_SUPPORTS(cpu_), D const&
                             , T const &a, T const &b
                             ) noexcept
-  requires has_native_abi_v<T>
+  requires  (is_one_of<D>(types<toward_zero_type, downward_type, upward_type
+                         , downward_type,  to_nearest_type> {}))
   {
-    return fnma(b, D()(eve::div)(a,b), a);
+    if constexpr(has_native_abi_v<T>) return fnma(b, D()(eve::div)(a,b), a);
+    else                              return apply_over(D()(rem), a, b);
   }
 
   //================================================================================================
@@ -74,7 +74,9 @@ namespace eve::detail
 
   template<conditional_expr C, decorator D, real_value U, real_value V>
   EVE_FORCEINLINE auto rem_(EVE_SUPPORTS(cpu_), C const &cond, D const &, U const &t, V const &f) noexcept
-  requires compatible_values<U, V>
+  requires (compatible_values<V, U>  &&
+            (is_one_of<D>(types<toward_zero_type, downward_type, upward_type
+                         , downward_type,  to_nearest_type> {})))
   {
     auto g = if_else(cond, f, one);
     return mask_op(  cond, D()(rem), t, g);

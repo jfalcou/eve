@@ -53,10 +53,6 @@ namespace eve::detail
     {
       if constexpr( floating_real_value<T> )
       {
-        std::cout << "icitte div" << std::endl;
-        std::cout << "a         " << a << std::endl;
-        std::cout << "b         " << b << std::endl;
-        std::cout << "d         " << trunc(div(a, b)) << std::endl;
         return trunc(div(a, b));
       }
       else
