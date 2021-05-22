@@ -12,6 +12,8 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_nez.hpp>
+#include <eve/function/is_unordered.hpp>
+#include <eve/function/is_infinite.hpp>
 #include <eve/function/pedantic.hpp>
 
 namespace eve::detail
@@ -33,7 +35,17 @@ namespace eve::detail
    if constexpr(has_native_abi_v<T>)
     {
       auto bb = if_else(is_nez(b), b, one);
-      return if_else(is_nez(b), rem(a,bb), a);
+     if constexpr(floating_real_value<T>)
+     {
+       return if_else(is_eqz(b) || is_infinite(a) || is_unordered(a, b)
+                     , allbits
+                     , if_else(is_eqz(a) || is_infinite(b)
+                              , a
+                              , rem(a, b)
+                              )
+                     );  //as remainder
+     }
+     else return if_else(is_nez(b), rem(a,bb), a);
     }
     else return apply_over(pedantic(rem), a, b);
   }

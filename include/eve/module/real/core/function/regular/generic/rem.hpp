@@ -16,6 +16,8 @@
 #include <eve/function/fnma.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_nez.hpp>
+#include <eve/function/is_eqz.hpp>
+#include <eve/function/is_unordered.hpp>
 #include <eve/function/decorator.hpp>
 #include <eve/function/trunc.hpp>
 #include <eve/detail/skeleton_calls.hpp>
@@ -47,7 +49,13 @@ namespace eve::detail
                            , T const &a
                            , T const &b) noexcept
   {
-    return fnma(b, trunc(div(a,b)), a);
+    return if_else(is_unordered(a, b) || is_infinite(a) || is_eqz(b)
+                  , allbits
+                  , if_else(is_eqz(a)
+                           , a
+                           , fnma(b, trunc(div(a,b)), a)
+                           )
+                  );
   }
 
   template<real_value T, decorator D>
@@ -59,6 +67,22 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>) return fnma(b, D()(eve::div)(a,b), a);
     else                              return apply_over(D()(rem), a, b);
+  }
+  template<floating_real_value T>
+  EVE_FORCEINLINE auto rem_ ( EVE_SUPPORTS(cpu_), to_nearest_type const&
+                            , T const &a, T const &b
+                            ) noexcept
+ {
+    if constexpr(has_native_abi_v<T>)
+    {
+      return if_else(is_eqz(b)||is_unordered(a, b)
+                    ,  if_else(is_eqz(a) || is_infinite(b)
+                              , a, allbits
+                              )
+                    , fnma(b, to_nearest(eve::div)(a,b), a)
+                    ); //as remainder
+    }
+    else return apply_over(to_nearest(rem), a, b);
   }
 
   //================================================================================================

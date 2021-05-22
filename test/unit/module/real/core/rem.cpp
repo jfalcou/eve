@@ -8,7 +8,7 @@
 #include "test.hpp"
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
-#include <eve/constant/one.hpp>
+#include <eve/constant/nan.hpp>
 #include <eve/function/rem.hpp>
 #include <eve/function/pedantic/rem.hpp>
 #include <eve/function/rec.hpp>
@@ -113,7 +113,10 @@ EVE_TEST( "Check fixed-cases behavior of eve::rem"
   TTS_EQUAL(rem(T(12), v_t(4)), T(0));
   TTS_EQUAL(rem(T( 1), v_t(2)), T(1));
   TTS_EQUAL(eve::toward_zero(rem)(T( 4), v_t(3)), T(1));
-  TTS_EQUAL(eve::pedantic(rem)(T( 4), T(0)), T(4));
+  if (eve::floating_real_value<T>)
+    TTS_IEEE_EQUAL(eve::pedantic(rem)(T( 4), T(0)), eve::nan(eve::as<T>()));
+  else
+    TTS_EQUAL(eve::pedantic(rem)(T( 4), T(0)), T(4));
 };
 
 
