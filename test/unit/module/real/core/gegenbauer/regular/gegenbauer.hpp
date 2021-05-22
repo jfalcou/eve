@@ -5,7 +5,6 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <boost/math/special_functions/gegenbauer.hpp>
 #include <eve/function/gegenbauer.hpp>
 #include <eve/platform.hpp>
 #include <cmath>

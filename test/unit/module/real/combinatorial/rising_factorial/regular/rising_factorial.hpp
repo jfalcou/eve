@@ -6,7 +6,6 @@
 **/
 //==================================================================================================
 #include <eve/function/rising_factorial.hpp>
-#include <boost/math/special_functions/factorials.hpp>
 #include <type_traits>
 
 TTS_CASE_TPL("Check eve::rising_factorial return type", EVE_TYPE)

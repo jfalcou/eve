@@ -6,7 +6,6 @@
 **/
 //==================================================================================================
 #include <eve/function/lrising_factorial.hpp>
-#include <boost/math/special_functions/factorials.hpp>
 #include <eve/constant/valmin.hpp>
 #include <type_traits>
 
