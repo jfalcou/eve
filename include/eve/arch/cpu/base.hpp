@@ -82,73 +82,15 @@ namespace eve::detail
     using cardinal_type = Size;
     using size_type     = std::ptrdiff_t;
 
-    static constexpr size_type  static_size  = Size::value;
-
-    //==============================================================================================
-    //! @name Sequence interface
-    //! @{
-    //==============================================================================================
     //! @brief Size of the wide in number of lanes
-    static EVE_FORCEINLINE constexpr size_type size()     noexcept { return static_size; }
+    static EVE_FORCEINLINE constexpr size_type size()     noexcept { return Size::value; }
 
     //! @brief Maximal number of lanes for a given wide
-    static EVE_FORCEINLINE constexpr size_type max_size() noexcept { return static_size; }
+    static EVE_FORCEINLINE constexpr size_type max_size() noexcept { return Size::value; }
 
     //! @brief Check if a wide contains 0 lanes
     static EVE_FORCEINLINE constexpr bool      empty()    noexcept { return false; }
-    //==============================================================================================
-    //! @}
-    //==============================================================================================
   };
-
-  //================================================================================================
-  //! @brief Common operations for wide/logical
-  //!
-  //! wide_ops acts as a wrapper for all the common operations between wide and logical.
-  //!
-  //! @tparam Size Type encoding the cardinal of a wide
-  //================================================================================================
-  template<typename Derived> struct wide_ops
-  {
-    //==============================================================================================
-    // Common hidden friend operators
-    friend EVE_FORCEINLINE auto operator==(wide_ops const& v, wide_ops const& w) noexcept
-    {
-      return detail::self_eq(v.self(),w.self());
-    }
-
-    friend EVE_FORCEINLINE auto operator==(wide_ops const& v, scalar_value auto w) noexcept
-    {
-      return v == Derived{w};
-    }
-
-    friend EVE_FORCEINLINE auto operator==(scalar_value auto v, wide_ops const& w) noexcept
-    {
-      return w == v;
-    }
-
-    friend EVE_FORCEINLINE auto operator!=(wide_ops const& v, wide_ops const& w) noexcept
-    {
-      return detail::self_neq(v.self(),w.self());
-    }
-
-    friend EVE_FORCEINLINE auto operator!=(wide_ops const& v, scalar_value auto w) noexcept
-    {
-      return v != Derived{w};
-    }
-
-    friend EVE_FORCEINLINE auto operator!=(scalar_value auto v, wide_ops const& w) noexcept
-    {
-      return w != v;
-    }
-
-    private:
-    EVE_FORCEINLINE Derived&        self()        { return static_cast<Derived&>(*this); }
-    EVE_FORCEINLINE Derived const&  self() const  { return static_cast<Derived const&>(*this); }
-  };
-  //================================================================================================
-  //! @}
-  //================================================================================================
 }
 
 #if defined(SPY_COMPILER_IS_GCC)

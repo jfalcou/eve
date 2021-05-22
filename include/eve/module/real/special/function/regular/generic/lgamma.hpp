@@ -420,7 +420,7 @@ namespace eve::detail
               z = abs(z);
               x += p - T(2);
               r1 = x * lgamma1(x) + log(z);
-              if( nb >= T::static_size )
+              if( nb >= T::size() )
                 return r1;
             }
             T r2 = fma(xx - half(as<T>()), log(xx), Logsqrt2pi - xx);
@@ -450,7 +450,7 @@ namespace eve::detail
           {
             // treat negative large with reflection
             r = large_negative(q);
-            if( nb >= T::static_size )
+            if( nb >= T::size() )
               return if_else(inf_result, inf(as<T>()), r);
           }
           T r1 = other(a0);

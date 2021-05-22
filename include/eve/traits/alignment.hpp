@@ -37,7 +37,7 @@ namespace eve
 
   template<typename Type, typename Size, typename ABI>
   struct  alignment<wide<Type, Size, ABI>>
-        : std::integral_constant<std::size_t,wide<Type, Size, ABI>::static_alignment>
+        : std::integral_constant<std::size_t,wide<Type, Size, ABI>::alignment()>
   {};
 
   template<typename Type>
@@ -47,7 +47,7 @@ namespace eve
 
   template<typename Type, typename Size, typename ABI>
   struct  alignment<logical<wide<Type, Size, ABI>>>
-        : std::integral_constant<std::size_t,logical<wide<Type, Size, ABI>>::static_alignment>
+        : std::integral_constant<std::size_t,logical<wide<Type, Size, ABI>>::alignment()>
   {};
 
   template<typename Type>

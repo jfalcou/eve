@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/concept/value.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/detail/overload.hpp>
 
 namespace eve
@@ -14,5 +16,17 @@ namespace eve
   EVE_MAKE_CALLABLE(logical_not_, logical_not);
 }
 
-#include <eve/module/real/core/function/regular/generic/logical_not.hpp>
+namespace eve::detail
+{
+  template<value T>
+  EVE_FORCEINLINE auto logical_not_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  {
+    return as_logical_t<T>(!a);
+  }
+
+  EVE_FORCEINLINE auto logical_not_(EVE_SUPPORTS(cpu_), bool a) noexcept
+  {
+    return !a;
+  }
+}
 

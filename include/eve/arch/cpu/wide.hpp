@@ -1,15 +1,15 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
 #include <eve/arch/as_register.hpp>
-#include <eve/arch/expected_cardinal.hpp>
 #include <eve/arch/cpu/base.hpp>
+#include <eve/arch/expected_cardinal.hpp>
 #include <eve/arch/spec.hpp>
 #include <eve/concept/memory.hpp>
 #include <eve/concept/range.hpp>
@@ -43,18 +43,17 @@ namespace eve
   //! eve::wide is an architecture-agnostic representation of a low-level SIMD register and provides
   //! standardized API to access informations, compute values and manipulate such register.
   //!
-  //! @tparam Type  Type of value to store in the register
-  //! @tparam Size  Cardinal of the register. By default, the best cardinal for current architecture
-  //!               is selected.
+  //! @tparam Type      Type of value to store in the register
+  //! @tparam Cardinal  Cardinal of the register. By default, the best cardinal for current
+  //!                    architecture is selected.
   //================================================================================================
-  template<typename Type, typename Size, typename ABI>
+  template<typename Type, typename Cardinal, typename ABI>
   struct  EVE_MAY_ALIAS  wide
-        : detail::wide_cardinal<Size>
-        , detail::wide_ops<wide<Type,Size,ABI>>
-        , detail::wide_storage<as_register_t<Type, Size, ABI>>
+        : detail::wide_cardinal<Cardinal>
+        , detail::wide_storage<as_register_t<Type, Cardinal, ABI>>
   {
-    using card_base     = detail::wide_cardinal<Size>;
-    using storage_base  = detail::wide_storage<as_register_t<Type, Size, ABI>>;
+    using card_base     = detail::wide_cardinal<Cardinal>;
+    using storage_base  = detail::wide_storage<as_register_t<Type, Cardinal, ABI>>;
 
     public:
 
@@ -67,20 +66,18 @@ namespace eve
     //! The type used for this register storage
     using storage_type  = typename storage_base::storage_type;
 
-    //! Type for indexing element in a wide
+    //! Type for indexing element in a eve::wide
     using size_type     = typename card_base::size_type;
 
-    //! Type alias for computing a new wide type of given type and cardinal
+    //! @brief Generates a eve::wide from a different type `T` and cardinal `N`.
+    //! If unspecified, `N` is computed as `expected_cardinal_t<T>`.
     template<typename T, typename N = expected_cardinal_t<T>> using rebind = wide<T,N>;
 
-    //! Type alias for resizing a wide type to a new cardinal
+    //! Generates a eve::wide type from a different cardinal `N`.
     template<typename N> using rescale = wide<Type,N>;
 
-    //! The expected alignment for this register type
-    static constexpr auto  static_alignment = sizeof(Type)*Size::value;
-
-    //! The expected alignment for this register type
-    static EVE_FORCEINLINE constexpr auto alignment() noexcept { return static_alignment; }
+    //! Returns the alignment expected to be used to store a eve::wide
+    static EVE_FORCEINLINE constexpr auto alignment() noexcept { return sizeof(Type)*Cardinal{}; }
 
     //==============================================================================================
     //! @name Constructors
@@ -93,14 +90,14 @@ namespace eve
     //! Constructs from ABI-specific storage
     EVE_FORCEINLINE wide(storage_type const &r) noexcept : storage_base(r) {}
 
-    //! @brief Constructs a wide from a pair of @iterator.
+    //! @brief Constructs a eve::wide from a pair of @iterator.
     //! Construction is done piecewise unless the @iterator{s} are @raiterator{s}.
     template<std::input_iterator It>
     EVE_FORCEINLINE explicit  wide(It b, It e) noexcept
                             : storage_base(detail::load(eve::as_<wide>{}, b, e))
     {}
 
-    //! @brief Constructs a wide from a @container.
+    //! @brief Constructs a eve::wide from a @container.
     //! Construction is done piecewise unless the @iterator{s} extracted from `r` are @raiterator{s}.
     template<detail::range Range>
     EVE_FORCEINLINE explicit  wide(Range &&r) noexcept
@@ -112,28 +109,29 @@ namespace eve
                                   )
     {}
 
-    //! Constructs a wide from a SIMD compatible pointer
-    EVE_FORCEINLINE explicit  wide(simd_compatible_ptr<wide> auto ptr) noexcept
+    //! Constructs a eve::wide from a SIMD compatible pointer
+    template<simd_compatible_ptr<wide> Ptr>
+    EVE_FORCEINLINE explicit  wide(Ptr ptr) noexcept
                             : storage_base(detail::load(eve::as_<wide>{}, ptr))
     {}
 
-    //! Constructs a wide by splatting a scalar value in all lanes
+    //! Constructs a eve::wide by splatting a scalar value in all lanes
     template<scalar_value S>
     EVE_FORCEINLINE explicit  wide(S const& v)  noexcept
                             : storage_base(detail::make(eve::as_<wide>{}, v))
     {}
 
-    //! Constructs a wide from a sequence of scalar values of proper size
+    //! Constructs a eve::wide from a sequence of scalar values of proper size
     template<scalar_value S0, scalar_value S1, scalar_value... Ss>
     EVE_FORCEINLINE wide( S0 v0, S1 v1, Ss... vs) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-    requires( card_base::static_size == 2 + sizeof...(vs) )
+    requires( card_base::size() == 2 + sizeof...(vs) )
 #endif
                   : storage_base(detail::make(eve::as_<wide>{}, v0, v1, vs...))
     {}
 
     //==============================================================================================
-    //! @brief Constructs a wide from a @callable.
+    //! @brief Constructs a eve::wide from a @callable.
     //!
     //! The @callable must satisfy the following prototype:
     //!
@@ -149,7 +147,7 @@ namespace eve
     //!
     //! **Example:**
     //!
-    //! //! [**See it live on Compiler Explorer**](https://godbolt.org/z/qosv89e14)
+    //! [**See it live on Compiler Explorer**](https://godbolt.org/z/qosv89e14)
     //!
     //! @code
     //! #include <eve/wide.hpp>
@@ -169,12 +167,12 @@ namespace eve
                   : storage_base( detail::fill(eve::as_<wide>{}, std::forward<Generator>(g)) )
     {}
 
-    //! @brief Constructs a wide by combining two wide of half the current cardinal.
-    //! Does not participate in overload resolution if `Size::value != 2 * halfSize::value`.
-    template<typename halfSize>
-    EVE_FORCEINLINE wide( wide<Type, halfSize> const &l, wide<Type, halfSize> const &h) noexcept
+    //! @brief Constructs a eve::wide by combining two eve::wide of half the current cardinal.
+    //! Does not participate in overload resolution if `Cardinal::value != 2 * Half::value`.
+    template<typename Half>
+    EVE_FORCEINLINE wide( wide<Type, Half> const &l, wide<Type, Half> const &h) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-    requires( card_base::static_size == 2 * halfSize::value )
+    requires( card_base::size() == 2 * Half::value )
 #endif
                   : storage_base(detail::combine(EVE_CURRENT_API{}, l, h))
     {}
@@ -219,10 +217,10 @@ namespace eve
     EVE_FORCEINLINE auto  begin() const noexcept { return detail::at_begin(*this); }
 
     //! Returns an iterator to the end
-    EVE_FORCEINLINE auto  end()        noexcept { return begin() + card_base::static_size; }
+    EVE_FORCEINLINE auto  end()        noexcept { return begin() + card_base::size(); }
 
     //! Returns an iterator to the end
-    EVE_FORCEINLINE auto  end() const  noexcept { return begin() + card_base::static_size; }
+    EVE_FORCEINLINE auto  end() const  noexcept { return begin() + card_base::size(); }
 
     //! Set the value of a given lane
     EVE_FORCEINLINE void set(std::size_t i, scalar_value auto v) noexcept
@@ -237,17 +235,78 @@ namespace eve
     }
 
     //! Retrieve the value of the first lanes
-    EVE_FORCEINLINE auto back()  const noexcept { return get(Size::value-1); }
+    EVE_FORCEINLINE auto back()  const noexcept { return get(Cardinal::value-1); }
 
     //! Retrieve the value of the first lane
     EVE_FORCEINLINE auto front() const noexcept { return get(0); }
 
-    EVE_FORCEINLINE auto slice() const requires(Size::value > 1)
+    //==============================================================================================
+    //! @brief Slice a eve::wide into two eve::wide of half cardinal.
+    //! Does not participate in overload resolution if `Cardinal::value == 1`.
+    //!
+    //! **Example:**
+    //!
+    //! [**See it live on Compiler Explorer**](https://godbolt.org/z/cq9xs97fz)
+    //!
+    //! @code
+    //! #include <eve/wide.hpp>
+    //! #include <iostream>
+    //!
+    //! int main()
+    //! {
+    //!   // Generates the wide [1 ... N]
+    //!   eve::wide<int> r = [](auto i, auto c) { return i + 1;};
+    //!   std::cout << r << "\n";
+    //!
+    //!   auto[lo,hi] = r.slice();
+    //!   std::cout << lo << " " << hi << "\n";
+    //! }
+    //! @endcode
+    //!
+    //==============================================================================================
+    EVE_FORCEINLINE auto slice() const
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires(Cardinal::value > 1)
+#endif
     {
       return detail::slice(*this);
     }
 
-    EVE_FORCEINLINE auto slice(auto s) const requires(Size::value > 1)
+    //==============================================================================================
+    //! @brief Return the upper or lower half-sized slice of a eve::wide.
+    //! Does not participate in overload resolution if `Cardinal::value == 1`.
+    //!
+    //! @see eve::upper_
+    //! @see eve::lower_
+    //!
+    //! @param s A tag indicating which slice is required
+    //!
+    //! **Example:**
+    //!
+    //! [**See it live on Compiler Explorer**](https://godbolt.org/z/x7n8azx78)
+    //!
+    //! @code
+    //! #include <eve/wide.hpp>
+    //! #include <iostream>
+    //!
+    //! int main()
+    //! {
+    //!   // Generates the wide [1 ... N]
+    //!   eve::wide<int> r = [](auto i, auto c) { return i + 1;};
+    //!   std::cout << r << "\n";
+    //!
+    //!   auto lo = r.slice(eve::lower_);
+    //!   auto hi = r.slice(eve::upper_);
+    //!   std::cout << lo << " " << hi << "\n";
+    //! }
+    //! @endcode
+    //
+    //==============================================================================================
+    template<std::size_t Slice>
+    EVE_FORCEINLINE auto slice(slice_t<Slice> s) const
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires(Cardinal::value > 1)
+#endif
     {
       return detail::slice(*this, s);
     }
@@ -257,23 +316,23 @@ namespace eve
     //==============================================================================================
 
     //==============================================================================================
-    //! @name Self-increment/decrement operators
-    //! @{
-    //==============================================================================================
-    //!
-    EVE_FORCEINLINE wide &operator++()    noexcept  { return detail::self_add(*this, wide{1}); }
-    EVE_FORCEINLINE wide &operator--()    noexcept  { return detail::self_sub(*this, wide{1}); }
-    EVE_FORCEINLINE wide operator++(int)  noexcept  { auto that(*this); operator++(); return that; }
-    EVE_FORCEINLINE wide operator--(int)  noexcept  { auto that(*this); operator--(); return that; }
-    //==============================================================================================
-    //! @}
-    //==============================================================================================
-
-    //==============================================================================================
     //! @name Modifiers
     //! @{
     //==============================================================================================
+    //! Exchange this value with another eve::wide
     void swap( wide& other ) { std::swap(this->storage(), other.storage()); }
+
+    //! Pre-incrementation operator
+    EVE_FORCEINLINE wide &operator++()    noexcept  { return detail::self_add(*this, wide{1}); }
+
+    //! Pre-decrementation operator
+    EVE_FORCEINLINE wide &operator--()    noexcept  { return detail::self_sub(*this, wide{1}); }
+
+    //! Post-incrementation operator
+    EVE_FORCEINLINE wide operator++(int)  noexcept  { auto that(*this); operator++(); return that; }
+
+    //! Post-decrementation operator
+    EVE_FORCEINLINE wide operator--(int)  noexcept  { auto that(*this); operator--(); return that; }
 
     //==============================================================================================
     //! @}
@@ -287,12 +346,15 @@ namespace eve
     //==============================================================================================
     //! @name Indexing and reordering
     //! @{
-    //==============================================================================================
+    //=============================================================================================
 
     //==============================================================================================
     //! @brief Dynamic lookup via lane indexing
     //!
     //! Does not participate in overload in overload resolution if `idx` is not an integral register.
+    //!
+    //! @param idx  wide of integral indexes
+    //! @return A wide constructed as `wide{ get(idx.get(0)), ..., get(idx.get(size()-1))}`.
     //!
     //! **Example:**
     //!
@@ -309,35 +371,63 @@ namespace eve
     //!   std::cout << r << "\n";
     //!
     //!   // A re-indexing wide
-    //!   eve::wide<int> indexes =  [](auto i, auto) { return i%2 ? i : i/2;};
-    //!   std::cout << r << "\n";
+    //!   eve::wide<int> l =  [](auto i, auto) { return i%2 ? i : i/2;};
+    //!   std::cout << l    << "\n";
+    //!   std::cout << r[l] << "\n";
     //! }
     //! @endcode
-    //!
-    //! @param idx  wide of integral indexes
-    //! @return A wide constructed as `wide{ get(idx.get(0)), ..., get(idx.get(size()-1))}`.
     //==============================================================================================
     template<integral_scalar_value Index>
-    EVE_FORCEINLINE auto operator[](wide<Index,Size> const& idx) const noexcept
+    EVE_FORCEINLINE auto operator[](wide<Index,Cardinal> const& idx) const noexcept
     {
       return lookup((*this),idx);
     }
 
+    //==============================================================================================
+    //! @brief Static lookup via lane indexing
+    //!
+    //! Does not participate in overload in overload resolution if ...
+    //!
+    //! @param idx  A eve::pattern defining a shuffling pattern
+    //! @return A wide constructed as `wide{ get(I), ... }`.
+    //! @see eve::pattern_t    //! @see eve::pattern
+    //!
+    //! **Example:**
+    //!
+    //! [**See it live on Compiler Explorer**](https://godbolt.org/z/7nohq9h1T)
+    //!
+    //! @code
+    //! #include <eve/wide.hpp>
+    //! #include <iostream>
+    //!
+    //! int main()
+    //! {
+    //!   eve::wide<int, eve::fixed<8>> r{1, 2, 4, 8, 16, 32, 64, 128, 256};
+    //!   std::cout << r << "\n";
+    //!
+    //!   // Reindex r with a static pattern
+    //!   std::cout << r[ eve::pattern<0,0,1,1,2,2,3,3> ] << "\n";
+    //! }
+    //! @endcode
+    //==============================================================================================
     template<std::ptrdiff_t... I>
-    EVE_FORCEINLINE auto operator[](pattern_t<I...>) const noexcept
 #if !defined (EVE_DOXYGEN_INVOKED)
-    requires(pattern_t<I...>{}.validate(Size::value))
+    EVE_FORCEINLINE auto operator[](pattern_t<I...> ) const noexcept
+    requires(pattern_t<I...>{}.validate(Cardinal::value))
+#else
+    EVE_FORCEINLINE auto operator[](pattern_t<I...> idx) const noexcept
 #endif
     {
-      constexpr auto swizzler = detail::find_optimized_pattern<Size::value,I...>();
+      constexpr auto swizzler = detail::find_optimized_pattern<Cardinal::value,I...>();
       return swizzler(*this);
     }
 
     template<typename F>
     EVE_FORCEINLINE auto operator[](as_pattern<F> p) const noexcept
     {
-      return (*this)[ fix_pattern<Size::value>(p) ];
+      return (*this)[ fix_pattern<Cardinal::value>(p) ];
     }
+
     //==============================================================================================
     //! @}
     //==============================================================================================
@@ -352,7 +442,7 @@ namespace eve
       return detail::self_bitnot(v);
     }
 
-    //! Perform a compound bitwise and on all the wide lanes and assign the result to current wide
+    //! Perform a compound bitwise and on all the wide lanes and assign the result to the current one
     template<value V>
     friend  EVE_FORCEINLINE auto operator&=(wide& w, V o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
@@ -374,7 +464,7 @@ namespace eve
       return  that &= w;
     }
 
-    //! @brief Perform a bitwise and between all lanes of a wide instance and a scalar
+    //! @brief Perform a bitwise and between all lanes of a eve::wide and a scalar
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator&(wide const& v, S w) noexcept
@@ -386,7 +476,7 @@ namespace eve
       return  that &= bit_cast(w, as_<Type>{});
     }
 
-    //! @brief Perform a bitwise and between all lanes of a scalar and a wide instance
+    //! @brief Perform a bitwise and between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator&(S v, wide const& w) noexcept
@@ -394,11 +484,11 @@ namespace eve
     requires (sizeof(v) == sizeof(Type))
 #endif
     {
-      auto    u  = bit_cast(w, as_<typename wide::template rebind<S,Size>>());
+      auto    u  = bit_cast(w, as_<typename wide::template rebind<S,Cardinal>>());
       return  u &= v;
     }
 
-    //! Perform a Compound bitwise or on all the wide lanes and assign the result to current wide
+    //! Perform a Compound bitwise or on all the wide lanes and assign the result to the current one
     friend  EVE_FORCEINLINE auto operator|=(wide& w, value auto o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
                         ->  decltype(detail::self_bitor(w, o))
@@ -419,7 +509,7 @@ namespace eve
       return  that |= w;
     }
 
-    //! @brief Perform a bitwise or between all lanes of a scalar and a wide instance
+    //! @brief Perform a bitwise or between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator|(wide const& v, S w) noexcept
@@ -431,7 +521,7 @@ namespace eve
       return  that |= bit_cast(w, as_<Type>{});
     }
 
-    //! @brief Perform a bitwise or between all lanes of a scalar and a wide instance
+    //! @brief Perform a bitwise or between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator|(S v, wide const& w) noexcept
@@ -439,11 +529,11 @@ namespace eve
     requires (sizeof(v) == sizeof(Type))
 #endif
     {
-      auto    u  = bit_cast(w, as_<typename wide::template rebind<S,Size>>());
+      auto    u  = bit_cast(w, as_<typename wide::template rebind<S,Cardinal>>());
       return  u |= v;
     }
 
-    //! Perform a bitwise xor on all the wide lanes and assign the result to current wide
+    //! Perform a bitwise xor on all the wide lanes and assign the result to the current one
     friend  EVE_FORCEINLINE auto operator^=(wide& w, value auto o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
                         ->  decltype(detail::self_bitxor(w, o))
@@ -464,7 +554,7 @@ namespace eve
       return  that ^= w;
     }
 
-    //! @brief Perform a bitwise xor between all lanes of a scalar and a wide instance
+    //! @brief Perform a bitwise xor between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator^(wide const& v, S w) noexcept
@@ -476,7 +566,7 @@ namespace eve
       return  that ^= bit_cast(w, as_<Type>{});
     }
 
-    //! @brief Perform a bitwise xor between all lanes of a scalar and a wide instance
+    //! @brief Perform a bitwise xor between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator^(S v, wide const& w) noexcept
@@ -484,14 +574,13 @@ namespace eve
     requires (sizeof(v) == sizeof(Type))
 #endif
     {
-      auto    u  = bit_cast(w, as_<typename wide::template rebind<S,Size>>());
+      auto    u  = bit_cast(w, as_<typename wide::template rebind<S,Cardinal>>());
       return  u ^= v;
     }
 
     //==============================================================================================
     // Arithmetic operators
     //==============================================================================================
-
     //! Unary plus operator
     friend EVE_FORCEINLINE auto operator+(wide const& v) noexcept { return v; }
 
@@ -499,7 +588,7 @@ namespace eve
     friend EVE_FORCEINLINE auto operator-(wide const& v) noexcept { return self_negate(v); }
 
     //! @brief Perform the compound addition on all the wide lanes and assign the result
-    //! to current wide. See also: eve::add
+    //! to the current one. See also: eve::add
     template<value V>
     friend  EVE_FORCEINLINE auto operator+=(wide& w, V v) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
@@ -517,7 +606,7 @@ namespace eve
       return that += w;
     }
 
-    //! @brief Perform the addition between a scalar and all lanes of a wide instance
+    //! @brief Perform the addition between a scalar and all lanes of a eve::wide
     //! See also: eve::add
     template<real_scalar_value S>
     friend EVE_FORCEINLINE auto operator+(S s, wide const& v) noexcept
@@ -525,7 +614,7 @@ namespace eve
       return v + wide(s);
     }
 
-    //! @brief Perform the addition between all lanes of a wide instance and a scalar
+    //! @brief Perform the addition between all lanes of a eve::wide and a scalar
     //! See also: eve::add
     template<real_scalar_value S>
     friend EVE_FORCEINLINE auto operator+(wide const& v, S s) noexcept
@@ -534,7 +623,7 @@ namespace eve
     }
 
     //! @brief Perform the compound difference on all the wide lanes and assign
-    //! the result to current wide. See also: eve::sub
+    //! the result to the current one. See also: eve::sub
     template<value V>
     friend  EVE_FORCEINLINE auto operator-=(wide& w, V v) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
@@ -552,14 +641,14 @@ namespace eve
       return that -= w;
     }
 
-    //! @brief Perform the difference between a scalar and all lanes of a wide instance
+    //! @brief Perform the difference between a scalar and all lanes of a eve::wide
     //! See also: eve::sub
     friend EVE_FORCEINLINE auto operator-(real_scalar_value auto s, wide const& v) noexcept
     {
       return wide(s) - v;
     }
 
-    //! @brief Perform the difference between all lanes of a wide instance and a scalar
+    //! @brief Perform the difference between all lanes of a eve::wide and a scalar
     //! See also: eve::sub
     friend EVE_FORCEINLINE auto operator-(wide const& v, real_scalar_value auto s) noexcept
     {
@@ -567,7 +656,7 @@ namespace eve
     }
 
     //! @brief Perform the compound product on all the wide lanes and assign
-    //! the result to current wide. See also: eve::mul
+    //! the result to the current one. See also: eve::mul
     friend  EVE_FORCEINLINE auto operator*=(wide& w, value auto o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
                         ->  decltype(detail::self_mul(w, o))
@@ -584,7 +673,7 @@ namespace eve
       return that *= w;
     }
 
-    //! @brief Perform the product between a scalar and all lanes of a wide instance
+    //! @brief Perform the product between a scalar and all lanes of a eve::wide
     //! See also: eve::mul
     template<real_scalar_value S>
     friend EVE_FORCEINLINE auto operator*(S s, wide const& v) noexcept
@@ -592,7 +681,7 @@ namespace eve
       return v * wide(s);
     }
 
-    //! @brief Perform the product between all lanes of a wide instance and a scalar
+    //! @brief Perform the product between all lanes of a eve::wide and a scalar
     //! See also: eve::mul
     friend EVE_FORCEINLINE auto operator*(wide const& v, real_scalar_value auto s) noexcept
     {
@@ -600,7 +689,7 @@ namespace eve
     }
 
     //! @brief Perform the compound division on all the wide lanes and assign
-    //! the result to current wide. See also: eve::div
+    //! the result to the current one. See also: eve::div
     friend  EVE_FORCEINLINE auto operator/=(wide& w, value auto o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
                         ->  decltype(detail::self_div(w, o))
@@ -617,7 +706,7 @@ namespace eve
       return that /= w;
     }
 
-    //! @brief Perform the division between a scalar and all lanes of a wide instance
+    //! @brief Perform the division between a scalar and all lanes of a eve::wide
     //! See also: eve::div
     template<real_scalar_value S>
     friend EVE_FORCEINLINE auto operator/(S s, wide const& v) noexcept
@@ -625,7 +714,7 @@ namespace eve
       return wide(s) / v;
     }
 
-    //! @brief Perform the division between all lanes of a wide instance and a scalar
+    //! @brief Perform the division between all lanes of a eve::wide and a scalar
     //! See also: eve::div
     template<real_scalar_value S>
     friend EVE_FORCEINLINE auto operator/(wide const& v, S s) noexcept
@@ -634,7 +723,7 @@ namespace eve
     }
 
     //! @brief Perform the compound modulo on all the wide lanes and assign
-    //! the result to current wide. Does not participate in overload resolution
+    //! the result to the current one. Does not participate in overload resolution
     //! if `Type` does not models integral_scalar_value
     friend  EVE_FORCEINLINE auto operator%=(wide& w, value auto o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
@@ -655,7 +744,7 @@ namespace eve
       return that %= w;
     }
 
-    //! @brief Perform the modulo between a scalar and all lanes of a wide instance
+    //! @brief Perform the modulo between a scalar and all lanes of a eve::wide
     //! Does not participate in overload resolution if `Type` does not models integral_scalar_value
     template<integral_scalar_value S>
     friend EVE_FORCEINLINE  auto operator%(S s, wide const& v) noexcept
@@ -666,7 +755,7 @@ namespace eve
       return wide(s) % v;
     }
 
-    //! @brief Perform the modulo between all lanes of a wide instance and a scalar
+    //! @brief Perform the modulo between all lanes of a eve::wide and a scalar
     //! Does not participate in overload resolution if `Type` does not models integral_scalar_value
     friend EVE_FORCEINLINE  auto operator%(wide const& v, integral_scalar_value auto s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
@@ -676,96 +765,174 @@ namespace eve
       return v % wide(s);
     }
 
-    friend  EVE_FORCEINLINE auto operator<<=(wide& w, integral_value auto s) noexcept
+    //! @brief Perform the compound left-shift on all the eve::wide lanes and assign
+    //! the result to current one.
+    template<integral_value S>
+    friend  EVE_FORCEINLINE auto operator<<=(wide& w, S s) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
                         ->  decltype(detail::self_shl(w, s))
+#endif
     {
       return detail::self_shl(w, s);
     }
 
-    friend EVE_FORCEINLINE  auto operator<<(wide v, integral_value auto s) noexcept
+    //! @brief Perform the left-shift between all lanes of a eve::wide and an integral scalar.
+    template<integral_value S>
+    friend EVE_FORCEINLINE  auto operator<<(wide v, S s) noexcept
     {
       auto that = v;
       return that <<= s;
     }
 
-    friend  EVE_FORCEINLINE auto operator>>=(wide& w, integral_value auto s) noexcept
+    //! @brief Perform the compound right-shift on all the eve::wide lanes and assign
+    //! the result to current one.
+    template<integral_value S>
+    friend  EVE_FORCEINLINE auto operator>>=(wide& w, S s) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
                         ->  decltype(detail::self_shr(w, s))
+#endif
     {
       return detail::self_shr(w, s);
     }
 
-    friend EVE_FORCEINLINE  auto operator>>(wide v, integral_value auto s) noexcept
+    //! @brief Perform the right-shift between all lanes of a eve::wide and an integral scalar.
+    template<integral_value S>
+    friend EVE_FORCEINLINE  auto operator>>(wide v, S s) noexcept
     {
       auto that = v;
       return that >>= s;
     }
 
     //==============================================================================================
-    // Numerical comparisons
+    // Logical operations
     //==============================================================================================
-    friend EVE_FORCEINLINE auto operator<(wide const& v, wide const& w) noexcept
+    //! @brief Element-wise equality comparison of two eve::wide
+    friend EVE_FORCEINLINE logical<wide> operator==(wide v, wide w) noexcept
+    {
+      return detail::self_eq(v,w);
+    }
+
+    //! @brief Element-wise equality comparison of a eve::wide and a scalar value
+    template<scalar_value S>
+    friend EVE_FORCEINLINE logical<wide> operator==(wide v, S w) noexcept
+    {
+      return v == wide{w};
+    }
+
+    //! @brief Element-wise equality comparison of a scalar value and a eve::wide
+    template<scalar_value S>
+    friend EVE_FORCEINLINE logical<wide> operator==(S v, wide w) noexcept
+    {
+      return w == v;
+    }
+
+    //! @brief Element-wise inequality comparison of two eve::wide
+    friend EVE_FORCEINLINE logical<wide> operator!=(wide v, wide w) noexcept
+    {
+      return detail::self_neq(v,w);
+    }
+
+    //! @brief Element-wise inequality comparison of a eve::wide and a scalar value
+    template<scalar_value S>
+    friend EVE_FORCEINLINE logical<wide> operator!=(wide v, S w) noexcept
+    {
+      return v != wide{w};
+    }
+
+    //! @brief Element-wise inequality comparison of a scalar value and a eve::wide
+    template<scalar_value S>
+    friend EVE_FORCEINLINE logical<wide> operator!=(S v, wide w) noexcept
+    {
+      return w != v;
+    }
+
+    //! @brief Element-wise less-than comparison between eve::wide
+    friend EVE_FORCEINLINE logical<wide> operator<(wide v, wide w) noexcept
     {
       return detail::self_less(v,w);
     }
 
-    friend EVE_FORCEINLINE auto operator<(wide const& v, scalar_value auto w) noexcept
+    //! @brief Element-wise less-than comparison between a eve::wide and a scalar
+    template<scalar_value S>
+    friend EVE_FORCEINLINE logical<wide> operator<(wide v, S w) noexcept
     {
       return v < wide{w};
     }
 
-    friend EVE_FORCEINLINE auto operator<(scalar_value auto v, wide const& w) noexcept
+    //! @brief Element-wise less-than comparison between a scalar and a eve::wide
+    template<scalar_value S>
+    friend EVE_FORCEINLINE logical<wide> operator<(S v, wide w) noexcept
     {
       return wide{v} < w;
     }
 
-    friend EVE_FORCEINLINE auto operator>(wide const& v, wide const& w) noexcept
+    //! @brief Element-wise greater-than comparison between eve::wide
+    friend EVE_FORCEINLINE logical<wide> operator>(wide v, wide w) noexcept
     {
       return detail::self_greater(v,w);
     }
 
-    friend EVE_FORCEINLINE auto operator>(wide const& v, scalar_value auto w) noexcept
+    //! @brief Element-wise greater-than comparison between a eve::wide and a scalar
+    template<scalar_value S>
+    friend EVE_FORCEINLINE logical<wide> operator>(wide v, S w) noexcept
     {
       return v > wide{w};
     }
 
-    friend EVE_FORCEINLINE auto operator>(scalar_value auto v, wide const& w) noexcept
+    //! @brief Element-wise greater-than comparison between a scalar and a eve::wide
+    template<scalar_value S>
+    friend EVE_FORCEINLINE logical<wide> operator>(S v, wide w) noexcept
     {
       return wide{v} > w;
     }
 
-    friend EVE_FORCEINLINE auto operator>=(wide const& v, wide const& w) noexcept
+    //! @brief Element-wise greater-or-equal comparison between eve::wide
+    friend EVE_FORCEINLINE logical<wide> operator>=(wide v, wide w) noexcept
     {
       return detail::self_geq(v,w);
     }
 
-    friend EVE_FORCEINLINE auto operator>=(wide const& v, scalar_value auto w) noexcept
+    //! @brief Element-wise greater-or-equal comparison between a eve::wide and a scalar
+    template<scalar_value S>
+    friend EVE_FORCEINLINE logical<wide> operator>=(wide v, S w) noexcept
     {
       return v >= wide{w};
     }
 
-    friend EVE_FORCEINLINE auto operator>=(scalar_value auto v, wide const& w) noexcept
+    //! @brief Element-wise greater-or-equal comparison between a scalar and a eve::wide
+    template<scalar_value S>
+    friend EVE_FORCEINLINE logical<wide> operator>=(S v, wide w) noexcept
     {
       return wide{v} >= w;
     }
 
-    friend EVE_FORCEINLINE auto operator<=(wide const& v, wide const& w) noexcept
+    //! @brief Element-wise less-or-equal comparison between eve::wide
+    friend EVE_FORCEINLINE logical<wide> operator<=(wide v, wide w) noexcept
     {
       return detail::self_leq(v,w);
     }
 
-    friend EVE_FORCEINLINE auto operator<=(wide const& v, scalar_value auto w) noexcept
+    //! @brief Element-wise less-or-equal comparison between a eve::wide and a scalar
+    template<scalar_value S>
+    friend EVE_FORCEINLINE logical<wide> operator<=(wide v, S w) noexcept
     {
       return v <= wide{w};
     }
 
-    friend EVE_FORCEINLINE auto operator<=(scalar_value auto v, wide const& w) noexcept
+    //! @brief Element-wise less-or-equal comparison between a scalar and a eve::wide
+    template<scalar_value S>
+    friend EVE_FORCEINLINE logical<wide> operator<=(S v, wide w) noexcept
     {
       return wide{v} <= w;
     }
 
-    //==============================================================================================
-    // Inserting a logical<wide> into a stream
-    //==============================================================================================
+    //! Computes the logical complement of its parameter
+    friend EVE_FORCEINLINE logical<wide> operator!(wide v) noexcept
+    {
+      return detail::self_lognot(v);
+    }
+
+    //! Inserts a eve::wide into a output stream
     friend std::ostream &operator<<(std::ostream &os, wide const &p)
     {
       constexpr auto sz = sizeof(storage_type)/sizeof(Type);

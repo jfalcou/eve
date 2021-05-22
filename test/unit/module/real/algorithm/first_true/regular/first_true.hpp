@@ -52,7 +52,7 @@ TTS_CASE_TPL("Check eve::first_true", EVE_TYPE)
   {
     l_t x(true);
 
-    for (int i = 0; i != T::static_size; ++i)
+    for (int i = 0; i != T::size(); ++i)
     {
       TTS_EQUAL(eve::first_true(x), i);
       TTS_EQUAL(eve::first_true[eve::ignore_none](x), i);
@@ -64,28 +64,28 @@ TTS_CASE_TPL("Check eve::first_true", EVE_TYPE)
   {
     l_t x(true);
 
-    for (int i = 0; i != T::static_size; ++i)
+    for (int i = 0; i != T::size(); ++i)
     {
       auto ifirst = eve::ignore_first(i);
       TTS_EQUAL(eve::first_true[ifirst](x), i);
 
-      auto iextrema = ifirst && eve::ignore_last(T::static_size - i - 1);
+      auto iextrema = ifirst && eve::ignore_last(T::size() - i - 1);
       TTS_EQUAL(eve::first_true[iextrema](x), i);
 
     }
-    TTS_EQUAL(eve::first_true[eve::ignore_first(T::static_size)](x), std::nullopt);
+    TTS_EQUAL(eve::first_true[eve::ignore_first(T::size())](x), std::nullopt);
   }
 
   // ignore last
   {
     l_t x(false);
 
-    for (int i = 0; i != T::static_size; ++i)
+    for (int i = 0; i != T::size(); ++i)
     {
       x.set(i, true);
 
-      auto ilast = eve::ignore_last(T::static_size - i - 1);
-      auto ilast_bigger = eve::ignore_last(T::static_size - i);
+      auto ilast = eve::ignore_last(T::size() - i - 1);
+      auto ilast_bigger = eve::ignore_last(T::size() - i);
 
       TTS_EQUAL(eve::first_true[ilast](x), i);
       TTS_EQUAL(eve::first_true[ilast_bigger](x), std::nullopt);
@@ -103,7 +103,7 @@ TTS_CASE_TPL("Check eve::first_true", EVE_TYPE)
     }
 
     x = true;
-    TTS_EQUAL(eve::first_true[eve::ignore_first(T::static_size)](x), std::nullopt);
+    TTS_EQUAL(eve::first_true[eve::ignore_first(T::size())](x), std::nullopt);
   }
 }
 

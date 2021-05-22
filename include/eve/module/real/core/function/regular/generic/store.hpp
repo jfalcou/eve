@@ -48,7 +48,7 @@ namespace eve::detail
     ( [&]<typename... Sub>(Sub&... v)
       {
         int k = 0;
-        ((store(v, ptr + k), k += Sub::static_size), ...);
+        ((store(v, ptr + k), k += Sub::size()), ...);
       }
     );
   }
@@ -58,7 +58,7 @@ namespace eve::detail
   template<real_scalar_value T, typename S, std::size_t N>
   EVE_FORCEINLINE void
   store_(EVE_SUPPORTS(cpu_), wide<T, S, emulated_> const &value, aligned_ptr<T, N> ptr) noexcept
-      requires(wide<T, S, emulated_>::static_alignment <= N)
+      requires(wide<T, S, emulated_>::alignment() <= N)
   {
     store(value, ptr.get());
   }
@@ -66,18 +66,18 @@ namespace eve::detail
   template<real_scalar_value T, typename S, std::size_t N>
   EVE_FORCEINLINE void
   store_(EVE_SUPPORTS(cpu_), wide<T, S, aggregated_> const &value, aligned_ptr<T, N> ptr) noexcept
-      requires(wide<T, S, aggregated_>::static_alignment <= N)
+      requires(wide<T, S, aggregated_>::alignment() <= N)
   {
     auto cast = []<typename Ptr, typename Sub>(Ptr ptr, as_<Sub>)
     {
-      return eve::aligned_ptr<T, Sub::static_alignment>{ptr.get()};
+      return eve::aligned_ptr<T, Sub::alignment()>{ptr.get()};
     };
 
     value.storage().apply
     ( [&]<typename... Sub>(Sub&... v)
       {
         int k = 0;
-        ((store(v, cast(ptr, as_<Sub>{}) + k), k += Sub::static_size), ...);
+        ((store(v, cast(ptr, as_<Sub>{}) + k), k += Sub::size()), ...);
       }
     );
   }
@@ -113,7 +113,7 @@ namespace eve::detail
     {
       using e_t = element_type_t<T>;
 
-      alignas(sizeof(T)) std::array<e_t, T::static_size> storage;
+      alignas(sizeof(T)) std::array<e_t, T::size()> storage;
       store(value, eve::aligned_ptr<e_t, sizeof(T)>(storage.begin()));
 
       auto offset = cond.offset( as_<T>{} );

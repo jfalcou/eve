@@ -27,7 +27,7 @@ namespace eve::detail
     }
     else
     {
-      return basic_swizzle(v, eve::fix_pattern<Wide::static_size>([](int i, int size) { return size - i - 1; }));
+      return basic_swizzle(v, eve::fix_pattern<Wide::size()>([](int i, int size) { return size - i - 1; }));
     }
   }
 

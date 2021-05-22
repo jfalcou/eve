@@ -267,7 +267,7 @@ namespace eve
         using m_t = detail::make_integer_t<(card < 8 ? 8 : card)/8,unsigned>;
 
         m_t mask = (count_ > 0) ? m_t(~0ULL << (card - count_)) : 0;
-            mask &= eve::detail::set_lower_n_bits<m_t>(T::static_size);
+            mask &= eve::detail::set_lower_n_bits<m_t>(T::size());
 
         return typename type::storage_type{mask};
       }

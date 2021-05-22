@@ -22,7 +22,7 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
   using e_t = eve::element_type_t<T>;
   using N = eve::fixed<eve::expected_cardinal_v<e_t>>;
 
-  alignas(sizeof(eve::wide<e_t, N>)) std::array<e_t, T::static_size> arr{};
+  alignas(sizeof(eve::wide<e_t, N>)) std::array<e_t, T::size()> arr{};
 
   std::vector<e_t> vec(100u, 0);
 
@@ -91,9 +91,9 @@ EVE_TEST_TYPES("Check preprocess_range for eve ptr iterators", algo_test::select
 <typename T>(eve::as_<T>)
 {
   using e_t = eve::element_type_t<T>;
-  using N = eve::fixed<T::static_size>;
+  using N = eve::fixed<T::size()>;
 
-  alignas(sizeof(T)) std::array<e_t, T::static_size> arr;
+  alignas(sizeof(T)) std::array<e_t, T::size()> arr;
 
   auto run_one_test = [&]<typename I, typename S, typename ExpectedTraits>(I _f, S _l, ExpectedTraits)
   {

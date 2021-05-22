@@ -103,7 +103,7 @@ namespace eve::detail
           T ysq = if_else(y > halfeps(as<T>()), sqry, eve::zero);
           r1 = kernel1_erf1(a0, ysq);
           r1 =  oneminus(r1);
-          if (nb == T::static_size) return r1;
+          if (nb == T::size()) return r1;
         }
         auto test2 = (y <= T(4));
         auto test3 = logical_andnot(test2, test1);
@@ -115,7 +115,7 @@ namespace eve::detail
           res   = kernel1_finalize2(res, y);
           res = if_else(is_ltz(a0), 2.0-res, res);
           r1 = if_else(test3, res, r1);
-          if (nb+nb1 == T::static_size) return r1;
+          if (nb+nb1 == T::size()) return r1;
         }
         //here we treat y > 4
         T res = kernel1_erf3(a0, y);
@@ -136,7 +136,7 @@ namespace eve::detail
         if(nb > 0)
         {
           r1 = kernel_erfc3(z);
-          if (nb >= T::static_size)
+          if (nb >= T::size())
             return eve::if_else(test0, T(2)-r1, r1);
         }
         z -= T(0.4);

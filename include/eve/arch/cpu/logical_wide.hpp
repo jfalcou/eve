@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/arch/as_register.hpp>
-#include <eve/arch/cpu/logical.hpp>
 #include <eve/arch/cpu/base.hpp>
+#include <eve/arch/cpu/logical.hpp>
 #include <eve/arch/expected_cardinal.hpp>
 #include <eve/arch/spec.hpp>
 #include <eve/concept/memory.hpp>
@@ -49,18 +49,17 @@ namespace eve
   //! SIMD register mask and provides standardized API to access informations, compute values and
   //! manipulate such register.
   //!
-  //! @tparam Type  Type of value to store in the register
-  //! @tparam Size  Cardinal of the register. By default, the best cardinal for current architecture
-  //!               is selected.
+  //! @tparam Type      Type of value to store in the register
+  //! @tparam Cardinal  Cardinal of the register. By default, the best cardinal for current
+  //!                   architecture is selected.
   //================================================================================================
-  template<typename Type, typename Size, typename ABI>
-  struct  EVE_MAY_ALIAS  logical<wide<Type,Size,ABI>>
-        : detail::wide_cardinal<Size>
-        , detail::wide_ops<logical<wide<Type,Size,ABI>>>
-        , detail::wide_storage<as_logical_register_t<Type, Size, ABI>>
+  template<typename Type, typename Cardinal, typename ABI>
+  struct  EVE_MAY_ALIAS  logical<wide<Type,Cardinal,ABI>>
+        : detail::wide_cardinal<Cardinal>
+        , detail::wide_storage<as_logical_register_t<Type, Cardinal, ABI>>
   {
-    using card_base     = detail::wide_cardinal<Size>;
-    using storage_base  = detail::wide_storage<as_logical_register_t<Type, Size, ABI>>;
+    using card_base     = detail::wide_cardinal<Cardinal>;
+    using storage_base  = detail::wide_storage<as_logical_register_t<Type, Cardinal, ABI>>;
 
     public:
     //! The type stored in the register.
@@ -72,35 +71,37 @@ namespace eve
     //! The type used for this register storage
     using storage_type  = typename storage_base::storage_type;
 
-    //! Type for indexing element in a wide
+    //! Type for indexing element in a eve::logical
     using size_type     = typename card_base::size_type;
 
     //! Type representing the bits of the logical value
-    using bits_type = wide<as_integer_t<Type, unsigned>, Size>;
+    using bits_type = wide<as_integer_t<Type, unsigned>, Cardinal>;
 
     //! Type representing the numerical value associated to the mask
-    using mask_type = wide<Type, Size>;
+    using mask_type = wide<Type, Cardinal>;
 
-    //! Type alias for computing a new wide type of given type and cardinal
+    //! @brief Generates a eve::wide from a different type `T` and cardinal `N`.
+    //! If unspecified, `N` is computed as `expected_cardinal_t<T>`.
     template<typename T, typename N = expected_cardinal_t<T>> using rebind = logical<wide<T,N>>;
 
-    //! Type alias for resizing a wide type to a new cardinal
+    //! Generates a eve::wide type from a different cardinal `N`.
     template<typename N> using rescale = logical<wide<Type,N>>;
 
-    //! The expected alignment for this register type
-    static constexpr size_type  static_alignment = sizeof(Type)*Size::value;
-
-    //! The expected alignment for this register type
-    static EVE_FORCEINLINE constexpr auto alignment() noexcept { return static_alignment; }
+    //! Returns the alignment expected to be used to store a eve::logical
+    static EVE_FORCEINLINE constexpr auto alignment() noexcept { return sizeof(Type)*Cardinal::value; }
 
     //==============================================================================================
-    // Constructors
+    //! @name Constructors
+    //! @{
     //==============================================================================================
+
+    //! Default constructor
     EVE_FORCEINLINE logical() = default;
 
+    //! Constructs from ABI-specific storage
     EVE_FORCEINLINE logical(storage_type const &r) noexcept
       : storage_base( [&]()
-                      { constexpr auto  c =   Size::value == 1 && sizeof(Type) == 8
+                      { constexpr auto  c =   Cardinal::value == 1 && sizeof(Type) == 8
                                           &&  std::is_same_v<ABI, arm_64_>
                                           && current_api != asimd;
                         if constexpr(c) return value_type(r); else  return r;
@@ -108,44 +109,89 @@ namespace eve
                     )
     {}
 
+    //! @brief Constructs a eve::logical from a pair of @iterator.
+    //! Construction is done piecewise unless the @iterator{s} are @raiterator{s}.
     template<std::input_iterator Iterator>
     EVE_FORCEINLINE explicit logical(Iterator b, Iterator e) noexcept
                   : storage_base(detail::load(eve::as_<logical>{}, b, e))
     {}
 
+    //! @brief Constructs a eve::logical from a @container.
+    //! Construction is done piecewise unless the @iterator{s} extracted from `r` are @raiterator{s}.
     template<detail::range Range>
     EVE_FORCEINLINE explicit logical(Range &&r) noexcept requires(!std::same_as<storage_type, Range>)
                   : logical(std::begin(std::forward<Range>(r)), std::end(std::forward<Range>(r)))
     {}
 
+    //! Constructs a eve::logical from a SIMD compatible pointer
     template<simd_compatible_ptr<logical> Ptr>
     EVE_FORCEINLINE explicit logical(Ptr ptr) noexcept
                   : storage_base(detail::load(eve::as_<logical>{}, ptr))
     {
     }
 
-    EVE_FORCEINLINE explicit logical(scalar_value auto const& v) noexcept
+    //! Constructs a eve::logical by splatting a scalar value in all lanes
+    template<scalar_value S>
+    EVE_FORCEINLINE explicit logical(S v) noexcept
                   : storage_base(detail::make(eve::as_<logical>{}, v)) {}
 
+    //! Constructs a eve::logical from a sequence of scalar values of proper size
     template<typename T0, typename T1, typename... Ts>
     EVE_FORCEINLINE logical(T0 const &v0, T1 const &v1, Ts const &... vs) noexcept
           requires(     std::convertible_to<T0,logical<Type>> && std::convertible_to<T0,logical<Type>>
                     &&  (... && std::convertible_to<Ts,logical<Type>>)
-                    &&  (card_base::static_size == 2 + sizeof...(Ts))
+                    &&  (card_base::size() == 2 + sizeof...(Ts))
                   )
         : storage_base(detail::make(eve::as_<logical>{}, v0, v1, vs...))
     {}
 
+    //==============================================================================================
+    //! @brief Constructs a eve::logical from a @callable.
+    //!
+    //! The @callable must satisfy the following prototype:
+    //!
+    //! @code
+    //! T generator(std::ptrdiff_t index, std::ptrdiff_t cardinal);
+    //! @endcode
+    //! <br/>
+    //!
+    //! and is supposed to return the value computed from the current index and the cardinal to
+    //! store at said index.
+    //!
+    //! @param g  The @callable to use as a value generator
+    //!
+    //! **Example:**
+    //!
+    //! [**See it live on Compiler Explorer**](https://godbolt.org/z/aWa385hKb)
+    //!
+    //! @code
+    //! #include <eve/logical.hpp>
+    //! #include <eve/wide.hpp>
+    //! #include <iostream>
+    //!
+    //! int main()
+    //! {
+    //!   // Generates the wide [true false true .. ]
+    //!   eve::logical<eve::wide<int>> r = [](auto i, auto) { return i%2 == 0;};
+    //!   std::cout << r << "\n";
+    //! }
+    //! @endcode
+    //!
+    //==============================================================================================
     template<std::invocable<size_type,size_type> Generator>
     EVE_FORCEINLINE logical(Generator &&g) noexcept
                   : storage_base(detail::fill(as_<logical>{}, std::forward<Generator>(g)))
     {}
 
-    template<typename HalfSize>
-    EVE_FORCEINLINE logical ( logical<wide<Type, HalfSize>> const &l
-                            , logical<wide<Type, HalfSize>> const &h
+    //! @brief Constructs a eve::logical by combining two eve::logical of half the current cardinal.
+    //! Does not participate in overload resolution if `Cardinal::value != 2 * Half::value`.
+    template<typename Half>
+    EVE_FORCEINLINE logical ( logical<wide<Type, Half>> const &l
+                            , logical<wide<Type, Half>> const &h
                             ) noexcept
-                    requires( card_base::static_size == 2 * HalfSize::value )
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires( card_base::size() == 2 * Half::value )
+#endif
                   : storage_base(detail::combine(EVE_CURRENT_API{}, l, h))
     {}
 
@@ -156,13 +202,15 @@ namespace eve
     //! Assignment operator
     logical& operator=(logical const&) & = default;
 
-    EVE_FORCEINLINE logical& operator=(value_type v) noexcept
+    //! @brief Assignment of a logical value by splatting it in all lanes
+    EVE_FORCEINLINE logical& operator=(logical<Type> v) noexcept
     {
       logical that(v);
       swap(that);
       return *this;
     }
 
+    //! @brief Assignment of a boolean value by splatting it in all lanes
     EVE_FORCEINLINE logical& operator=(bool v) noexcept
     {
       logical that( value_type{v} );
@@ -193,7 +241,7 @@ namespace eve
     //! @return A logical constructed as `logical{ get(idx.get(0)), ..., get(idx.get(size()-1))}`.
     //==============================================================================================
     template<typename Index>
-    EVE_FORCEINLINE auto operator[](wide<Index,Size> const& idx) const noexcept
+    EVE_FORCEINLINE auto operator[](wide<Index,Cardinal> const& idx) const noexcept
     {
       return lookup((*this),idx);
     }
@@ -201,17 +249,17 @@ namespace eve
     template<std::ptrdiff_t... I>
     EVE_FORCEINLINE auto operator[](pattern_t<I...>) const noexcept
 #if !defined (EVE_DOXYGEN_INVOKED)
-    requires(pattern_t<I...>{}.validate(Size::value))
+    requires(pattern_t<I...>{}.validate(Cardinal::value))
 #endif
     {
-      constexpr auto swizzler = detail::find_optimized_pattern<Size::value,I...>();
+      constexpr auto swizzler = detail::find_optimized_pattern<Cardinal::value,I...>();
       return swizzler((*this));
     }
 
     template<typename F>
     EVE_FORCEINLINE auto operator[](as_pattern<F> p) const noexcept
     {
-      return (*this)[ fix_pattern<Size::value>(p) ];
+      return (*this)[ fix_pattern<Cardinal::value>(p) ];
     }
     //==============================================================================================
     //! @}
@@ -228,7 +276,7 @@ namespace eve
     // Logical operations
     //==============================================================================================
     template<typename U, typename A2>
-    friend EVE_FORCEINLINE auto operator&&(logical const& v, logical<wide<U,Size,A2>> const& w) noexcept
+    friend EVE_FORCEINLINE auto operator&&(logical const& v, logical<wide<U,Cardinal,A2>> const& w) noexcept
     {
       return detail::self_logand(EVE_CURRENT_API{},v,w);
     }
@@ -244,7 +292,7 @@ namespace eve
     }
 
     template<typename U, typename A2>
-    friend EVE_FORCEINLINE auto operator||(logical const& v, logical<wide<U,Size,A2>> const& w) noexcept
+    friend EVE_FORCEINLINE auto operator||(logical const& v, logical<wide<U,Cardinal,A2>> const& w) noexcept
     {
       return detail::self_logor(EVE_CURRENT_API{},v,w);
     }
@@ -297,24 +345,120 @@ namespace eve
     }
 
     //! Retrieve the value of the first lanes
-    EVE_FORCEINLINE auto back()  const noexcept { return get(Size::value-1); }
+    EVE_FORCEINLINE auto back()  const noexcept { return get(Cardinal::value-1); }
 
     //! Retrieve the value of the first lane
     EVE_FORCEINLINE auto front() const noexcept { return get(0); }
 
-    EVE_FORCEINLINE auto slice() const requires(Size::value > 1)
+    //==============================================================================================
+    //! @brief Slice a eve::logical into two eve::logical of half cardinal.
+    //! Does not participate in overload resolution if `Cardinal::value == 1`.
+    //!
+    //! **Example:**
+    //!
+    //! [**See it live on Compiler Explorer**](https://godbolt.org/z/P8W3K7T7q)
+    //!
+    //! @code
+    //! #include <eve/logical.hpp>
+    //! #include <eve/wide.hpp>
+    //! #include <iostream>
+    //!
+    //! int main()
+    //! {
+    //!   // Generates the logical<wide> [true false true .. ]
+    //!   eve::logical<eve::wide<int>> r = [](auto i, auto) { return i%2 == 0;};
+    //!   std::cout << r << "\n";
+    //!
+    //!   auto[lo,hi] = r.slice();
+    //!   std::cout << lo << " " << hi << "\n";
+    //! }
+    //! @endcode
+    //!
+    //==============================================================================================
+    EVE_FORCEINLINE auto slice() const
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires(Cardinal::value > 1)
+#endif
     {
       return detail::slice(*this);
     }
 
-    EVE_FORCEINLINE auto slice(auto s) const requires(Size::value > 1)
+    //==============================================================================================
+    //! @brief Return the upper or lower half-sized slice of a eve::logical.
+    //! Does not participate in overload resolution if `Cardinal::value == 1`.
+    //!
+    //! @see eve::upper_
+    //! @see eve::lower_
+    //!
+    //! @param s A tag indicating which slice is required
+    //!
+    //! **Example:**
+    //!
+    //! [**See it live on Compiler Explorer**](https://godbolt.org/z/WjWxP4jqW)
+    //!
+    //! @code
+    //! #include <eve/logical.hpp>
+    //! #include <eve/wide.hpp>
+    //! #include <iostream>
+    //!
+    //! int main()
+    //! {
+    //!   // Generates the logical<wide> [true false true .. ]
+    //!   eve::logical<eve::wide<int>> r = [](auto i, auto) { return i%2 == 0;};
+    //!   std::cout << r << "\n";
+    //!
+    //!   auto lo = r.slice(eve::lower_);
+    //!   auto hi = r.slice(eve::upper_);
+    //!   std::cout << lo << " " << hi << "\n";
+    //! }
+    //! @endcode
+    //
+    //==============================================================================================
+    template<std::size_t Slice>
+    EVE_FORCEINLINE auto slice(slice_t<Slice> s) const
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires(Cardinal::value > 1)
+#endif
     {
       return detail::slice(*this, s);
     }
-
     //==============================================================================================
     //! @}
     //==============================================================================================
+
+    friend EVE_FORCEINLINE auto operator==(logical const& v, logical const& w) noexcept
+    {
+      return detail::self_eq(v,w);
+    }
+
+    template<scalar_value S>
+    friend EVE_FORCEINLINE auto operator==(logical const& v, S w) noexcept
+    {
+      return v == logical{w};
+    }
+
+    template<scalar_value S>
+    friend EVE_FORCEINLINE auto operator==(S v, logical const& w) noexcept
+    {
+      return w == v;
+    }
+
+    friend EVE_FORCEINLINE auto operator!=(logical const& v, logical const& w) noexcept
+    {
+      return detail::self_neq(v,w);
+    }
+
+    template<scalar_value S>
+    friend EVE_FORCEINLINE auto operator!=(logical const& v, S w) noexcept
+    {
+      return v != logical{w};
+    }
+
+    template<scalar_value S>
+    friend EVE_FORCEINLINE auto operator!=(S v, logical const& w) noexcept
+    {
+      return w != v;
+    }
 
     //==============================================================================================
     // Inserting a logical<wide> into a stream

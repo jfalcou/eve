@@ -137,7 +137,7 @@ EVE_TEST_TYPES( "Check conditional load to wide from realigned pointer", eve::te
     loaded = eve::unsafe(eve::load)(ptr.get());
     TTS_EXPECT(eve::any(loaded == x));
 
-    for (auto ignore_ptr = ptr.get(); (&x - ignore_ptr) < T::static_size; --ignore_ptr)
+    for (auto ignore_ptr = ptr.get(); (&x - ignore_ptr) < T::size(); --ignore_ptr)
     {
       loaded = eve::unsafe(eve::load[eve::ignore_first(ptr.get() - ignore_ptr)])(ignore_ptr);
       TTS_EXPECT(eve::any(loaded == x));

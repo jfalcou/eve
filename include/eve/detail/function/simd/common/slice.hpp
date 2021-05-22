@@ -1,9 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -19,15 +19,26 @@
 
 namespace eve
 {
-  struct upper_slice : std::integral_constant<std::size_t, 1>
-  {
-  };
-  struct lower_slice : std::integral_constant<std::size_t, 0>
-  {
-  };
+  template<std::size_t Slice>
+  struct  slice_t
+        : std::integral_constant<std::size_t, Slice>
+  {};
 
-  inline constexpr upper_slice const upper_ = {};
-  inline constexpr lower_slice const lower_ = {};
+  using upper_slice_t = slice_t<1>;
+  using lower_slice_t = slice_t<0>;
+
+  //================================================================================================
+  //! @addtogroup utility
+  //! @{
+  //================================================================================================
+  //! @brief Tag to select the upper slice of a simd_value
+  inline constexpr upper_slice_t const upper_ = {};
+
+  //! @brief Tag to select the lower slice of a simd_value
+  inline constexpr lower_slice_t const lower_ = {};
+  //================================================================================================
+  //! @}
+  //================================================================================================
 }
 
 namespace eve::detail
@@ -72,7 +83,7 @@ namespace eve::detail
 
     if constexpr( is_emulated_v<abi_t> )
     {
-      auto eval = [&](auto... I) { return sub_t {a.get(I + (Slice::value * sub_t::static_size))...}; };
+      auto eval = [&](auto... I) { return sub_t {a.get(I + (Slice::value * sub_t::size()))...}; };
 
       return apply<card_t::value / 2>(eval);
     }
