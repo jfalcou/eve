@@ -199,12 +199,12 @@ EVE_TEST( "Check behavior of rem on signed types"
   using eve::is_nez;
   using eve::detail::map;
 
-  TTS_EQUAL( downward(rem[is_nez(a2)])(a0, a2), map([](auto e, auto f) { return  is_nez(f) ? downward(rem)(e, f): e; }, a0, a2));
-  TTS_EQUAL( upward(rem[is_nez(a2)])(a0, a2), map([](auto e, auto f) { return  is_nez(f) ? upward(rem)(e, f): e; }, a0, a2));
-  TTS_EQUAL( to_nearest(rem[is_nez(a2)])(a0, a2), map([](auto e, auto f) { return  is_nez(f) ? to_nearest(rem)(e, f): e; }, a0, a2));
+  TTS_ULP_EQUAL( downward(rem[is_nez(a2)])(a0, a2), map([](auto e, auto f) { return  is_nez(f) ? downward(rem)(e, f): e; }, a0, a2), 500);
+  TTS_ULP_EQUAL( upward(rem[is_nez(a2)])(a0, a2), map([](auto e, auto f) { return  is_nez(f) ? upward(rem)(e, f): e; }, a0, a2), 500);
+  TTS_ULP_EQUAL( to_nearest(rem[is_nez(a2)])(a0, a2), map([](auto e, auto f) { return  is_nez(f) ? to_nearest(rem)(e, f): e; }, a0, a2), 500);
 
   a1 =  eve::if_else(eve::is_eqz(a1), eve::one, a1);
-  TTS_EQUAL( downward(rem[a2 > T(64)])(a0, a1), map([](auto e, auto f, auto g) { return  g > 64 ? downward(rem)(e, f): e; }, a0, a1, a2));
-  TTS_EQUAL( upward(rem[a2 > T(64)])(a0, a1), map([](auto e, auto f, auto g) { return  g > 64 ? upward(rem)(e, f): e; }, a0, a1, a2));
-  TTS_EQUAL( to_nearest(rem[a2 > T(64)])(a0, a1), map([](auto e, auto f, auto g) { return  g > 64 ? to_nearest(rem)(e, f): e; }, a0, a1, a2));
+  TTS_ULP_EQUAL( downward(rem[a2 > T(64)])(a0, a1), map([](auto e, auto f, auto g) { return  g > 64 ? downward(rem)(e, f): e; }, a0, a1, a2), 500);
+  TTS_ULP_EQUAL( upward(rem[a2 > T(64)])(a0, a1), map([](auto e, auto f, auto g) { return  g > 64 ? upward(rem)(e, f): e; }, a0, a1, a2), 500);
+  TTS_ULP_EQUAL( to_nearest(rem[a2 > T(64)])(a0, a1), map([](auto e, auto f, auto g) { return  g > 64 ? to_nearest(rem)(e, f): e; }, a0, a1, a2), 500);
 };
