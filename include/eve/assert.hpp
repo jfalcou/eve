@@ -15,22 +15,16 @@
 
 #else
 
-#  include <cstdlib>
-#  include <cstdio>
-
-#define EVE_ASSERT_STRING(...)   TTS_STRING_((__VA_ARGS__))
-#define EVE_ASSERT_STRING__(...) #__VA_ARGS__
-#define EVE_ASSERT_STRING_(TXT)  TTS_STRING__ TXT
+#  include <iostream>
 
 #  define EVE_ASSERT(cond, ...)                                                                     \
     do                                                                                              \
     {                                                                                               \
       if(!(cond))                                                                                   \
       {                                                                                             \
-        std::fprintf ( stderr                                                                       \
-                     , "Assertion '%s' failed in '%s':%d - %s\n"                                    \
-                     , #cond, __FILE__, __LINE__, EVE_ASSERT_STRING__(__VA_ARGS__)                  \
-                     );                                                                             \
+        std::cerr << "[EVE] - Assertion '" << #cond                                                 \
+                  << "' failed !\nIn file " << __FILE__ << ", line " << __LINE__                    \
+                  << "\nBecause:\n" << __VA_ARGS__ << "\n";                                         \
         std::abort();                                                                               \
       }                                                                                             \
     } while(0)                                                                                      \

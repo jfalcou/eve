@@ -34,7 +34,6 @@
 #include <eve/function/is_ltz.hpp>
 
 #include <limits>
-#include <iostream>
 
 namespace eve::detail
 {
