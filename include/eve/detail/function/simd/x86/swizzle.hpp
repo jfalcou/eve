@@ -26,10 +26,11 @@ namespace eve::detail
   //================================================================================================
   // Unary swizzle - logical on AVX512 ABI, call general case on others
   //================================================================================================
-  template<typename T, typename N, x86_abi ABI, shuffle_pattern Pattern>
+  template<typename T, typename N, shuffle_pattern Pattern>
   EVE_FORCEINLINE auto basic_swizzle_ ( EVE_SUPPORTS(sse2_)
-                                      , logical<wide<T,N,ABI>> const& v, Pattern p
+                                      , logical<wide<T,N>> const& v, Pattern p
                                       ) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
     if constexpr( current_api >= avx512 ) return to_logical((v.mask())[p]);
     else                                  return basic_swizzle_(EVE_RETARGET(cpu_),v,p);
@@ -127,12 +128,13 @@ namespace eve::detail
   //================================================================================================
   // AVX+ variant
   //================================================================================================
-  template<typename T, typename N, x86_abi ABI, shuffle_pattern Pattern>
-  EVE_FORCEINLINE auto basic_swizzle_( EVE_SUPPORTS(avx_), wide<T,N,ABI> const& v, Pattern const&)
+  template<typename T, typename N, shuffle_pattern Pattern>
+  EVE_FORCEINLINE auto basic_swizzle_( EVE_SUPPORTS(avx_), wide<T,N> const& v, Pattern const&)
+      requires x86_abi<abi_t<T, N>>
   {
     constexpr auto cd = N::value;
     constexpr auto sz = Pattern::size();
-    using that_t      = as_wide_t<wide<T,N,ABI>,fixed<sz>>;
+    using that_t      = as_wide_t<wide<T,N>,fixed<sz>>;
 
     constexpr auto width_in   = cd*sizeof(T);
     constexpr auto width_out  = sz*sizeof(T);
@@ -217,7 +219,7 @@ namespace eve::detail
           }
           else if constexpr(sizeof(T) == 4)
           {
-            auto m = as_indexes<wide<T,N,ABI>>(q);
+            auto m = as_indexes<wide<T,N>>(q);
 
             if constexpr(std::same_as<T,float>)
               return process_zeros(that_t{ _mm256_permutevar8x32_ps(v, m) },q);
@@ -232,7 +234,7 @@ namespace eve::detail
         }
         else
         {
-          using f_t     = as_floating_point_t<wide<T,N,ABI>>;
+          using f_t     = as_floating_point_t<wide<T,N>>;
 
           if constexpr(sizeof(T) == 8 && is_x86_shuffle_compatible(q) )
           {
@@ -247,13 +249,13 @@ namespace eve::detail
               [](auto i, auto c) { Pattern r; return (i<c/2 ? r(i,c) : r(i-c/2,c)) << 1; }
             );
 
-            auto const m  = as_indexes<wide<T,N,ABI>>(fixed_pattern);
+            auto const m  = as_indexes<wide<T,N>>(fixed_pattern);
             return bit_cast(process_zeros(f_t{_mm256_permutevar_pd(vv,m)},q),as(v));
           }
           else if constexpr(sizeof(T) == 4 && is_x86_shuffle_compatible(q) )
           {
             auto const vv = bit_cast(v,as_<f_t>{});
-            auto const m  = as_indexes<wide<T,N,ABI>>(q);
+            auto const m  = as_indexes<wide<T,N>>(q);
             return bit_cast(process_zeros(f_t{_mm256_permutevar_ps(vv,m)},q),as(v));
           }
           else

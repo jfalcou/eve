@@ -15,13 +15,14 @@ namespace eve::detail
   //================================================================================================
   // Single slice
   //================================================================================================
-  template<typename T, typename N, x86_abi ABI, typename Slice>
+  template<typename T, typename N, typename Slice>
   EVE_FORCEINLINE wide<T, typename N::split_type>
-  slice(wide<T,N,ABI> const &a, Slice const &) noexcept
+  slice(wide<T,N> const &a, Slice const &) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
     constexpr auto s = Slice::value;
 
-    if constexpr( std::same_as<ABI,x86_128_> )
+    if constexpr( std::same_as<abi_t<T, N>,x86_128_> )
     {
       if constexpr( !s )
       {
@@ -40,19 +41,19 @@ namespace eve::detail
           constexpr auto size = N::value * sizeof(T);
 
           if constexpr( N::value == 2          )  return wide<T, typename N::split_type>{a.get(1)};
-          if constexpr( size == ABI::bytes     )  return _mm_shuffle_epi32(a, 0xEE);
-          if constexpr( 2 * size == ABI::bytes )  return _mm_shuffle_epi32(a, 0x01);
+          if constexpr( size == abi_t<T, N>::bytes     )  return _mm_shuffle_epi32(a, 0xEE);
+          if constexpr( 2 * size == abi_t<T, N>::bytes )  return _mm_shuffle_epi32(a, 0x01);
           else                                    return _mm_shufflelo_epi16(a, 0x01);
         }
       }
     }
-    else if constexpr( std::same_as<ABI,x86_256_> )
+    else if constexpr( std::same_as<abi_t<T, N>,x86_256_> )
     {
             if constexpr( std::same_as<T, double> ) return _mm256_extractf128_pd(a, s);
       else  if constexpr( std::same_as<T, float>  ) return _mm256_extractf128_ps(a, s);
       else                                          return _mm256_extractf128_si256(a, s);
     }
-    else if constexpr( std::same_as<ABI,x86_512_> )
+    else if constexpr( std::same_as<abi_t<T, N>,x86_512_> )
     {
             if constexpr( std::same_as<T, double> )         return _mm512_extractf64x4_pd(a, s);
       else  if constexpr( std::integral<T> && sizeof(T)==8) return _mm512_extracti64x4_epi64(a, s);
@@ -72,11 +73,12 @@ namespace eve::detail
     }
   }
 
-  template<typename T, typename N, x86_abi ABI, typename Slice>
+  template<typename T, typename N, typename Slice>
   EVE_FORCEINLINE logical<wide<T, typename N::split_type>>
-  slice(logical<wide<T,N,ABI>> const &a, Slice const &) noexcept
+  slice(logical<wide<T,N>> const &a, Slice const &) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
-    if constexpr( !ABI::is_wide_logical )
+    if constexpr( !abi_t<T, N>::is_wide_logical )
     {
       using type  = logical<wide<T, typename N::split_type>>;
       using mask  = typename type::storage_type;
@@ -98,15 +100,17 @@ namespace eve::detail
   //================================================================================================
   // Both slice
   //================================================================================================
-  template<typename T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE auto slice(wide<T, N, ABI> const &a) noexcept
+  template<typename T, typename N>
+  EVE_FORCEINLINE auto slice(wide<T, N> const &a) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
     std::array<wide<T, typename N::split_type>, 2> that{slice(a, lower_), slice(a, upper_)};
     return that;
   }
 
-  template<typename T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE auto slice(logical<wide<T,N,ABI>> const &a) noexcept
+  template<typename T, typename N>
+  EVE_FORCEINLINE auto slice(logical<wide<T,N>> const &a) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
     std::array<logical<wide<T, typename N::split_type>>,2> that{slice(a, lower_), slice(a, upper_)};
     return that;
