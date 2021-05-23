@@ -38,7 +38,7 @@ EVE_TEST_TYPES( "Check return types of remdiv"
 auto mini = [] < typename T > (eve::as_<T> const &){ return std::is_signed_v<eve::element_type_t<T>> ? -100 : 1;};
 
 EVE_TEST( "Check behavior of remdiv on wide"
-        , eve::test::simd::ieee_reals//all_types
+        , eve::test::simd::all_types
         , eve::test::generate ( eve::test::randoms(mini, 100)
                               , eve::test::randoms(mini, 100)
                               )
