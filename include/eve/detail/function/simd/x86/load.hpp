@@ -21,7 +21,8 @@ namespace eve::detail
   //================================================================================================
   template<typename T, typename N, x86_abi ABI, simd_compatible_ptr<wide<T,N,ABI>> Ptr >
   EVE_FORCEINLINE auto load(eve::as_<wide<T, N, ABI>> const &, Ptr p)
-  requires( std::same_as<T, std::remove_cvref_t<decltype(*p)>> )
+  requires( dereference_as<T, Ptr>::value )
+  //requires( std::same_as<T, std::remove_cvref_t<decltype(*p)>> )
   {
     constexpr auto cat = categorize<wide<T, N>>();
     constexpr bool isfull512 = N::value*sizeof(T) == x86_512_::bytes;
@@ -90,7 +91,8 @@ namespace eve::detail
   template<typename T, typename N, typename Ptr, x86_abi ABI>
   EVE_FORCEINLINE
   auto load([[maybe_unused]] eve::as_<logical<wide<T, N, ABI>>> const& tgt, Ptr p)
-  requires( std::same_as<logical<T>, std::remove_cvref_t<decltype(*p)>> )
+  requires( dereference_as<logical<T>, Ptr>::value )
+  //requires( std::same_as<logical<T>, std::remove_cvref_t<decltype(*p)>> )
   {
     auto block = [&]() -> wide<T, N, ABI>
     {
