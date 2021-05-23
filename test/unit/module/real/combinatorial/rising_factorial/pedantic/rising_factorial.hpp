@@ -6,7 +6,6 @@
 **/
 //==================================================================================================
 #include <eve/function/pedantic/rising_factorial.hpp>
-#include <boost/math/special_functions/factorials.hpp>
 #include <eve/constant/eps.hpp>
 
 #include <type_traits>
