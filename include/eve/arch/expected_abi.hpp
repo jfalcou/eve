@@ -61,5 +61,7 @@ namespace eve
   // Type short-cut
   template<typename Type, typename Size>
   using expected_abi_t = typename expected_abi<Type, Size>::type;
-}
 
+  template<typename Type, typename Size>
+  using abi_t = expected_abi_t<Type, Size>;
+}
