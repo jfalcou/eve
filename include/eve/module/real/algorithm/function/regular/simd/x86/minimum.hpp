@@ -17,19 +17,20 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N, x86_abi ABI>
+  template<real_scalar_value T, typename N>
   requires(sizeof(T) <= 2)
   EVE_FORCEINLINE auto minimum_ ( EVE_SUPPORTS(sse4_1_)
-                                , wide<T,N,ABI> v
+                                , wide<T,N> v
                                 ) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
-    constexpr auto c = categorize<wide<T,N,ABI>>();
+    constexpr auto c = categorize<wide<T,N>>();
 
     if constexpr( N::value == 1 )
     {
       return v.get(0);
     }
-    else if constexpr( !std::same_as<ABI,x86_128_> )
+    else if constexpr( !std::same_as<abi_t<T, N>,x86_128_> )
     {
       // Larger X86 ABI slices and try to optimize down the road
       auto [lw,hw] = v.slice();
@@ -50,12 +51,12 @@ namespace eve::detail
 
         // minupos return a vector like [0 0 0 0 0 0 p m] where m is the minimum and p its position
         // We extract only the minimum.
-        using type = wide<T,N,ABI>;
+        using type = wide<T,N>;
         return type(_mm_minpos_epu16(fix(v))).get(0);
       }
       else if constexpr ( c == category::int16x8 )
       {
-        auto usv = eve::bit_cast(v, as_<wide<std::uint16_t,N,ABI>>{});
+        auto usv = eve::bit_cast(v, as_<wide<std::uint16_t,N>>{});
         auto const sm = signmask(as_<T>());
         usv += sm;
         return static_cast<T>(minimum(usv)-sm);
@@ -75,12 +76,13 @@ namespace eve::detail
     }
   }
 
-  template<real_scalar_value T, typename N, x86_abi ABI>
+  template<real_scalar_value T, typename N>
   requires(sizeof(T) <= 2)
   EVE_FORCEINLINE auto minimum_ ( EVE_SUPPORTS(sse4_1_)
-                                , splat_type const&, wide<T,N,ABI> const &v
+                                , splat_type const&, wide<T,N> const &v
                                 ) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
-    return wide<T,N,ABI>(minimum(v));
+    return wide<T,N>(minimum(v));
   }
 }

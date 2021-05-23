@@ -18,16 +18,17 @@ namespace eve::detail
 {
   //================================================================================================
   // X86 if_else
-  template<scalar_value T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE wide<T, N, ABI> if_else_( EVE_SUPPORTS(sse4_1_)
-                                          , logical<wide<T, N, ABI>> const &v0
-                                          , wide<T, N, ABI> const &v1
-                                          , wide<T, N, ABI> const &v2
+  template<scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N> if_else_( EVE_SUPPORTS(sse4_1_)
+                                          , logical<wide<T, N>> const &v0
+                                          , wide<T, N> const &v1
+                                          , wide<T, N> const &v2
                                           ) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
-    constexpr auto c = categorize<wide<T,N,ABI>>();
+    constexpr auto c = categorize<wide<T,N>>();
 
-    if constexpr( !ABI::is_wide_logical )
+    if constexpr( !abi_t<T, N>::is_wide_logical )
     {
       auto const msk =v0.storage().value;
       auto const s1 =v1.storage();
@@ -74,7 +75,7 @@ namespace eve::detail
       else  if constexpr( c == category::float32x4   ) return _mm_blendv_ps   (v2, v1, msk);
       else
       {
-        if constexpr( std::same_as<ABI,x86_128_> ) return _mm_blendv_epi8(v2, v1, msk);
+        if constexpr( std::same_as<abi_t<T, N>,x86_128_> ) return _mm_blendv_epi8(v2, v1, msk);
         else if constexpr(current_api >= avx2)
         {
           using a_t = wide<as_integer_t<T>, N>;
@@ -95,18 +96,19 @@ namespace eve::detail
 
   //================================================================================================
   // Full logical if_else
-  template<real_scalar_value T, typename N, x86_abi ABI>
+  template<real_scalar_value T, typename N>
   EVE_FORCEINLINE auto if_else_ ( EVE_SUPPORTS(sse2_)
-                                , logical<wide<T, N, ABI>> const &v0
-                                , logical<wide<T, N, ABI>> const &v1
-                                , logical<wide<T, N, ABI>> const &v2
+                                , logical<wide<T, N>> const &v0
+                                , logical<wide<T, N>> const &v1
+                                , logical<wide<T, N>> const &v2
                                 ) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
-    if constexpr( !ABI::is_wide_logical )
+    if constexpr( !abi_t<T, N>::is_wide_logical )
     {
-      using s_t = typename logical<wide<T,N,ABI>>::storage_type;
+      using s_t = typename logical<wide<T,N>>::storage_type;
       auto    r = bit_select(v0.storage().value,v1.storage().value,v2.storage().value);
-      return logical<wide<T,N,ABI>>( s_t{r} );
+      return logical<wide<T,N>>( s_t{r} );
     }
     else
     {

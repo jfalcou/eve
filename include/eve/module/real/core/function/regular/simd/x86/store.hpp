@@ -17,10 +17,11 @@
 
 namespace eve::detail
 {
-  template< scalar_value T, typename N, x86_abi ABI
-          , simd_compatible_ptr<wide<T, N, ABI>> Ptr
+  template< scalar_value T, typename N
+          , simd_compatible_ptr<wide<T, N>> Ptr
           >
-  EVE_FORCEINLINE void store_(EVE_SUPPORTS(sse2_), wide<T, N, ABI> const &value, Ptr ptr) noexcept
+  EVE_FORCEINLINE void store_(EVE_SUPPORTS(sse2_), wide<T, N> const &value, Ptr ptr) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
     if constexpr( !std::is_pointer_v<Ptr> )
     {
@@ -71,14 +72,15 @@ namespace eve::detail
     }
   }
 
-  template< scalar_value T, typename N, x86_abi ABI
+  template< scalar_value T, typename N
           , relative_conditional_expr C
-          , simd_compatible_ptr<wide<T, N, ABI>> Ptr
+          , simd_compatible_ptr<wide<T, N>> Ptr
           >
   EVE_FORCEINLINE void store_(EVE_SUPPORTS(sse2_),
                               C const &cond,
-                              wide<T, N, ABI> const &v,
+                              wide<T, N> const &v,
                               Ptr ptr) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
 
          if constexpr ( C::is_complete || C::has_alternative ) store_(EVE_RETARGET(cpu_), cond, v, ptr);
@@ -93,9 +95,9 @@ namespace eve::detail
       }
       else
       {
-        constexpr auto c = categorize<wide<T, N, ABI>>();
+        constexpr auto c = categorize<wide<T, N>>();
 
-        auto m = cond.mask(as_<as_integer_t<wide<T, N, ABI>>>{});
+        auto m = cond.mask(as_<as_integer_t<wide<T, N>>>{});
 
              if constexpr ( c == category::float64x2 )                         _mm_maskstore_pd   (ptr, m, v);
         else if constexpr ( c == category::float64x4 )                         _mm256_maskstore_pd(ptr, m, v);
@@ -112,7 +114,7 @@ namespace eve::detail
       if constexpr ( Ptr::alignment() < 16 || sizeof(T) < 4 ) store[cond](v, ptr.get());
       else
       {
-        constexpr auto c = categorize<wide<T, N, ABI>>();
+        constexpr auto c = categorize<wide<T, N>>();
 
         auto m = cond.mask(as(v)).storage().value;
 
@@ -132,7 +134,7 @@ namespace eve::detail
     }
     else if constexpr ( current_api >= eve::avx512 )
     {
-      constexpr auto c = categorize<wide<T, N, ABI>>();
+      constexpr auto c = categorize<wide<T, N>>();
 
       auto m = cond.mask(as(v)).storage().value;
 

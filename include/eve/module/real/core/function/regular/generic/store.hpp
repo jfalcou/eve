@@ -122,17 +122,17 @@ namespace eve::detail
     }
   }
 
-  template<real_scalar_value T, typename S, typename ABI>
+  template<real_scalar_value T, typename S>
   EVE_FORCEINLINE void store_(EVE_SUPPORTS(cpu_),
-                              logical<wide<T, S, ABI>> const &value,
+                              logical<wide<T, S>> const &value,
                               logical<T>* ptr) noexcept
   {
     store(value.mask(), (typename logical<T>::mask_type*) ptr);
   }
 
-  template<real_scalar_value T, typename S, std::size_t A, typename ABI>
+  template<real_scalar_value T, typename S, std::size_t A>
   EVE_FORCEINLINE void store_(EVE_SUPPORTS(cpu_),
-                              logical<wide<T, S, ABI>> const &value,
+                              logical<wide<T, S>> const &value,
                               aligned_ptr<logical<T>, A> ptr) noexcept
     requires (
       requires {store(value.mask(), aligned_ptr<typename logical<T>::mask_type, A>{}); } )

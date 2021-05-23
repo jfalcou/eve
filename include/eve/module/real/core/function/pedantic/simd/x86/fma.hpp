@@ -18,12 +18,13 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE wide<T, N, ABI> fma_(EVE_SUPPORTS(avx2_),
+  template<real_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N> fma_(EVE_SUPPORTS(avx2_),
                                         pedantic_type const &,
-                                        wide<T, N, ABI> const &a,
-                                        wide<T, N, ABI> const &b,
-                                        wide<T, N, ABI> const &c) noexcept
+                                        wide<T, N> const &a,
+                                        wide<T, N> const &b,
+                                        wide<T, N> const &c) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
     if constexpr( supports_fma3 || supports_fma4  )
     {
