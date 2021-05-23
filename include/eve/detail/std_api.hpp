@@ -1,18 +1,13 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
-#include <tuple>
-
-#ifdef __clang__
-#  pragma clang diagnostic push
-#  pragma clang diagnostic ignored "-Wmismatched-tags"
-#endif
+#include <utility>
 
 namespace std
 {
@@ -38,9 +33,6 @@ namespace std
   {
   };
 }
-#ifdef __clang__
-#  pragma clang diagnostic pop
-#endif
 
 namespace eve
 {

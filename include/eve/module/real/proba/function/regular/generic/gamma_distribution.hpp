@@ -7,39 +7,41 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/concept/value.hpp>
+#include <eve/constant/half.hpp>
+#include <eve/constant/mhalf.hpp>
+#include <eve/constant/one.hpp>
+#include <eve/constant/sqrt_2.hpp>
+#include <eve/constant/sqrt_2o_2.hpp>
+#include <eve/constant/zero.hpp>
+#include <eve/detail/apply_over.hpp>
+#include <eve/detail/kumi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/platform.hpp>
-#include <type_traits>
-#include <eve/module/real/proba/detail/attributes.hpp>
-#include <eve/module/real/proba/detail/urg01.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/function/exponential_distribution.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/all.hpp>
+#include <eve/function/cospi.hpp>
 #include <eve/function/digamma.hpp>
-#include <eve/function/tgamma.hpp>
+#include <eve/function/exp.hpp>
+#include <eve/function/exponential_distribution.hpp>
+#include <eve/function/fma.hpp>
 #include <eve/function/gamma_p.hpp>
 #include <eve/function/gamma_pinv.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/function/fma.hpp>
 #include <eve/function/is_finite.hpp>
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/log.hpp>
 #include <eve/function/log1p.hpp>
 #include <eve/function/raw.hpp>
 #include <eve/function/rec.hpp>
-#include <eve/function/cospi.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/sqrt.hpp>
-#include <eve/constant/sqrt_2o_2.hpp>
-#include <eve/constant/sqrt_2.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/mhalf.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/one.hpp>
+#include <eve/function/tgamma.hpp>
+#include <eve/module/real/proba/detail/attributes.hpp>
+#include <eve/module/real/proba/detail/urg01.hpp>
+#include <eve/platform.hpp>
+
 #include <concepts>
+#include <type_traits>
 
 namespace eve
 {
@@ -422,7 +424,7 @@ namespace eve
       auto explup = exp(l + halfwidth);
       auto plo = expllo/inc(expllo);
       auto pup = explup/inc(explup);
-      return std::make_tuple(p, plo, pup);
+      return kumi::make_tuple(p, plo, pup);
     }
   }
 }

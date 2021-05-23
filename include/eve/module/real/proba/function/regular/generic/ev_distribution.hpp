@@ -7,26 +7,27 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/platform.hpp>
-#include <type_traits>
-#include <eve/module/real/proba/detail/attributes.hpp>
-#include <eve/module/real/proba/detail/urg01.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/constant/one.hpp>
+#include <eve/constant/zero.hpp>
+#include <eve/detail/apply_over.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/detail/kumi.hpp>
+#include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/all.hpp>
-#include <eve/function/normal_distribution.hpp>
+#include <eve/function/exp.hpp>
+#include <eve/function/expm1.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_gtz.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/function/expm1.hpp>
 #include <eve/function/log.hpp>
 #include <eve/function/log1p.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/one.hpp>
+#include <eve/function/normal_distribution.hpp>
+#include <eve/module/real/proba/detail/attributes.hpp>
+#include <eve/module/real/proba/detail/urg01.hpp>
+#include <eve/platform.hpp>
 #include <concepts>
+#include <type_traits>
 
 namespace eve
 {
@@ -378,7 +379,7 @@ namespace eve
       if constexpr(floating_real_value<U>)
         halfwidth /= d.s;
       auto d01 =  ev_distribution_01<I>;
-      return std::make_tuple(cdf(d01, z), cdf(d01, z-halfwidth), cdf(d01, z+halfwidth));
+      return kumi::make_tuple(cdf(d01, z), cdf(d01, z-halfwidth), cdf(d01, z+halfwidth));
     }
   }
 }

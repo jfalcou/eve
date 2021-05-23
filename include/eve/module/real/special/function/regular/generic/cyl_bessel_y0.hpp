@@ -31,7 +31,6 @@
 #include <eve/constant/pio_4.hpp>
 #include <type_traits>
 #include <eve/module/real/core/detail/generic/poleval.hpp>
-#include <tuple>
 
 namespace eve::detail
 {

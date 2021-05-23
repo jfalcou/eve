@@ -12,13 +12,12 @@
 #include <eve/constant/nan.hpp>
 #include <eve/constant/twoopi.hpp>
 #include <eve/constant/zero.hpp>
+#include <eve/detail/kumi.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/load.hpp>
 #include <eve/function/abs.hpp>
-#include <eve/traits/alignment.hpp>
+#include <eve/function/load.hpp>
 #include <eve/module/real/math/detail/scalar/ieee_754_rem_pio2.hpp>
-
-#include <tuple>
+#include <eve/traits/alignment.hpp>
 #include <type_traits>
 
 // This function object is an old slow version whose only purpose is to test the new version
@@ -38,8 +37,11 @@ namespace eve::detail
     alignas(algt) std::array<elt_t, size> txr;
     alignas(algt) std::array<elt_t, size> tyr;
     for( uint32_t i = 0; i != size; ++i )
-    { std::tie(tmp[i], txr[i], tyr[i]) = eve::rem_pio2(a0.get(i)); }
-    return std::make_tuple( eve::load(eve::as_aligned<algt>(&tmp[0]), cardinal_t<T>{})
+    {
+      kumi::tie(tmp[i], txr[i], tyr[i]) = eve::rem_pio2(a0.get(i));
+    }
+
+    return kumi::make_tuple( eve::load(eve::as_aligned<algt>(&tmp[0]), cardinal_t<T>{})
                           , eve::load(eve::as_aligned<algt>(&txr[0]), cardinal_t<T>{})
                           , eve::load(eve::as_aligned<algt>(&tyr[0]), cardinal_t<T>{})
                           );
@@ -48,16 +50,16 @@ namespace eve::detail
   EVE_FORCEINLINE auto rem_pio2_(EVE_SUPPORTS(cpu_), double const &a0) noexcept
   {
     if( a0 == inf(eve::as<double>()) )
-      return std::make_tuple(zero(eve::as<double>()), nan(eve::as<double>()), nan(eve::as<double>()));
+      return kumi::make_tuple(zero(eve::as<double>()), nan(eve::as<double>()), nan(eve::as<double>()));
     double       y[2];
     std::int32_t n = __ieee754_rem_pio2(a0, y);
-    return std::make_tuple(static_cast<double>(n & std::int32_t(3)), y[0], y[1]);
+    return kumi::make_tuple(static_cast<double>(n & std::int32_t(3)), y[0], y[1]);
   }
 
   EVE_FORCEINLINE auto rem_pio2_(EVE_SUPPORTS(cpu_), float const &a0) noexcept
   {
     if( a0 == inf(eve::as<float>()) )
-      return std::make_tuple(zero(eve::as<float>()), nan(eve::as<float>()), nan(eve::as<float>()));
+      return kumi::make_tuple(zero(eve::as<float>()), nan(eve::as<float>()), nan(eve::as<float>()));
     // This is the musl way
     // pio2_1:   first 25 bits of pi/2
     // pio2_1t:  pi/2 - pio2_1
@@ -68,12 +70,12 @@ namespace eve::detail
     {
       /* 25+53 bit pi is good enough for medium size */
       double fn = nearest(double(a0) * twoopi(eve::as<double>()));
-      return std::make_tuple(static_cast<float>(quadrant(fn)),
+      return kumi::make_tuple(static_cast<float>(quadrant(fn)),
                              static_cast<float>((a0 - fn * pio2_1) - fn * pio2_1t),
                              0.0f);
     }
     auto [fn, x, dx] = rem_pio2(double(a0));
     float fx         = static_cast<float>(x);
-    return std::make_tuple(static_cast<float>(fn), fx, 0.0f);
+    return kumi::make_tuple(static_cast<float>(fn), fx, 0.0f);
   }
 }

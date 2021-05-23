@@ -11,12 +11,13 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/function/slice.hpp>
 #include <eve/detail/has_abi.hpp>
+#include <eve/detail/kumi.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/as_wide.hpp>
 #include <eve/traits/cardinal.hpp>
 #include <algorithm>
+#include <type_traits>
 #include <utility>
-#include <tuple>
 
 namespace eve::detail
 {
@@ -61,22 +62,40 @@ namespace eve::detail
     using type                          = as_wide_t<value_t, fixed_t>;
   };
 
-  // MAP skeleton used to emulate SIMD operations
+  template<typename T> struct type_name_
+  {
+    static constexpr auto value() noexcept
+    {
+  #if defined(_MSC_VER )
+      std::string_view data(__FUNCSIG__);
+      auto i = data.find('<') + 1,
+        j = data.find(">::value");
+      return data.substr(i, j - i);
+  #else
+      std::string_view data(__PRETTY_FUNCTION__);
+      auto i = data.find('=') + 2,
+        j = data.find_last_of(']');
+      return data.substr(i, j - i);
+  #endif
+    }
+  };
+
+  template<typename T>
+  inline constexpr auto const typename_ = type_name_<T>::value();
+
+ // MAP skeleton used to emulate SIMD operations
   template<typename Out, typename... Bs>
   EVE_FORCEINLINE auto rebuild( Bs const&... ps) noexcept
   {
-    static constexpr auto sz = count_v<Out>;
-
-    auto const inside = [&](auto const& I)
+    auto const inside = [&]<typename I>(I)
     {
-      using idx_t = std::decay_t<decltype(I)>;
-      return std::tuple_element_t<idx_t::value,Out>(std::get<idx_t::value>(ps)...);
+      return std::tuple_element_t<I::value,Out>(kumi::get<I::value>(ps)...);
     };
 
-    return detail::apply<sz>( [&]( auto const&... I)
+    return detail::apply<kumi::size<Out>::value>( [&]( auto const&... I)
     {
       Out that;
-      ((std::get<std::decay_t<decltype(I)>::value>(that) = inside(I)),...);
+      ((kumi::get<std::decay_t<decltype(I)>::value>(that) = inside(I)),...);
       return that;
     }
     );
@@ -97,21 +116,27 @@ namespace eve::detail
   {
     using w_t = typename wide_result<Fn, Ts...>::type;
 
-    auto impl = [&](auto... I)
+    if constexpr( kumi::product_type<element_type_t<w_t>> )
     {
-      static constexpr auto sz = count_v<element_type_t<w_t>>;
-
-      if constexpr( sz != 0 )
-      {
-        return rebuild<w_t>(map_{}(std::forward<Fn>(f), I, std::forward<Ts>(ts)...)...);
-      }
-      else
-      {
-        return w_t{map_{}(std::forward<Fn>(f), I, std::forward<Ts>(ts)...)...};
-      }
-    };
-
-    return apply<cardinal_v<w_t>>(impl);
+      return  apply<cardinal_v<std::tuple_element_t<0,w_t>>>
+              ( [&](auto... I)
+                {
+                  return rebuild<w_t>(map_{}(std::forward<Fn>(f), I, std::forward<Ts>(ts)...)...);
+                }
+              );
+    }
+    else
+    {
+      return apply<cardinal_v<w_t>> ( [&](auto... I)
+                                      {
+                                        return w_t{ map_{}( std::forward<Fn>(f)
+                                                          , I
+                                                          , std::forward<Ts>(ts)...
+                                                          )...
+                                                  };
+                                      }
+                                    );
+    }
   }
 
   // AGGREGATE skeleton used to emulate SIMD operations on aggregated wide
@@ -145,7 +170,7 @@ namespace eve::detail
     }
   };
 
-  // Extract th e# of registers used by a wide (0 if T is scalar)
+  // Extract the # of registers used by a wide (0 if T is scalar)
   template<typename T> constexpr auto replication() noexcept
   {
     if constexpr( scalar_value<T> )             return 0;

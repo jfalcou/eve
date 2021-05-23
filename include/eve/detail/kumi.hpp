@@ -7,10 +7,11 @@
 //==================================================================================================
 #pragma once
 #include <iosfwd>
+#include <iostream>
 #include <utility>
 
 #if defined(__clang__)
-#pragma clang diagnostic ignored "-Wmissing-braces"
+#  pragma clang diagnostic ignored "-Wmissing-braces"
 #endif
 
 #define KUMI_FWD(...) static_cast<decltype(__VA_ARGS__) &&>(__VA_ARGS__)
@@ -71,8 +72,7 @@ namespace kumi
     template<typename From, typename To>
     concept piecewise_constructible = detail::is_piecewise_constructible<From, To>::value;
 
-    template<typename T, typename... Args>
-    concept implicit_constructible = requires(Args... args)
+    template<typename T, typename... Args> concept implicit_constructible = requires(Args... args)
     {
       T {args...};
     };
@@ -140,20 +140,31 @@ namespace kumi
   //==============================================================================================
   // Concept
   //==============================================================================================
-  template<typename T, typename Enable = void>
-  struct is_product_type : std::false_type {};
+  template<typename T, typename Enable = void> struct is_product_type : std::false_type
+  {
+  };
 
-  template<typename T>
-  struct is_product_type<T,typename T::is_product_type> : std::true_type {};
+  template<typename T> struct is_product_type<T, typename T::is_product_type> : std::true_type
+  {
+  };
 
   template<typename T> struct size;
+  template<typename T> struct size<T &> : size<T>
+  {
+  };
+  template<typename T> struct size<T const> : size<T>
+  {
+  };
+  template<typename T> struct size<T const &> : size<T>
+  {
+  };
 
-  template<typename T>
-  requires requires(T) { T::size(); }
-  struct size<T> : std::integral_constant<std::size_t, T::size()> {};
+  template<typename T> requires requires(T) { T::size(); }
+  struct size<T> : std::integral_constant<std::size_t, T::size()>
+  {
+  };
 
-  template<typename T>
-  concept product_type = is_product_type<std::remove_cvref_t<T>>::value;
+  template<typename T> concept product_type = is_product_type<std::remove_cvref_t<T>>::value;
 
   template<typename T, std::size_t N>
   concept sized_product_type = product_type<T> && (size<T>::value == N);
@@ -161,8 +172,57 @@ namespace kumi
   //================================================================================================
   // Forward declaration
   //================================================================================================
-
   template<typename... Ts> struct tuple;
+}
+
+//==================================================================================================
+// Structured binding adaptation
+//==================================================================================================
+namespace std
+{
+  template<std::size_t I, typename Head, typename... Tail>
+  struct tuple_element<I, kumi::tuple<Head, Tail...>> : tuple_element<I - 1, kumi::tuple<Tail...>>
+  {
+  };
+
+  template<std::size_t I, typename... Ts> struct tuple_element<I, kumi::tuple<Ts...> const>
+  {
+    using type = typename tuple_element<I, kumi::tuple<Ts...>>::type const;
+  };
+
+  template<typename Head, typename... Tail> struct tuple_element<0, kumi::tuple<Head, Tail...>>
+  {
+    using type = Head;
+  };
+
+  template<typename... Ts>
+  struct tuple_size<kumi::tuple<Ts...>> : std::integral_constant<std::size_t, sizeof...(Ts)>
+  {
+  };
+}
+
+namespace kumi
+{
+  //================================================================================================
+  // Concept machinery to make our algorithms SFINAE friendly
+  //================================================================================================
+  namespace detail
+  {
+    template<typename F, size_t I, typename... Tuples>
+    concept applicable_i = std::is_invocable_v<F, decltype(get<I>(std::declval<Tuples &>()))...>;
+
+    template<typename F, typename Indices, typename... Tuples> struct is_applicable;
+
+    template<typename F, size_t... Is, typename... Tuples>
+    struct is_applicable<F, std::index_sequence<Is...>, Tuples...>
+        : std::bool_constant<(applicable_i<F, Is, Tuples...> && ...)>
+    {
+    };
+
+    template<typename F, typename... Tuples>
+    concept applicable = detail::
+        is_applicable<F, std::make_index_sequence<(size<Tuples>::value, ...)>, Tuples...>::value;
+  }
 
   //================================================================================================
   // Pass every elements of the tuple to f
@@ -174,42 +234,30 @@ namespace kumi
     {
       return KUMI_FWD(f)(get<I>(KUMI_FWD(t))...);
     }
-    (std::make_index_sequence<size<std::remove_cvref_t<Tuple>>::value>());
+    (std::make_index_sequence<size<Tuple>::value>());
   }
 
   //================================================================================================
   // Apply f to each element of tuple and returns a continuation
   //================================================================================================
-  template<typename Function, product_type Tuple> constexpr void for_each(Function f, Tuple& t)
+  template<typename Function, product_type Tuple>
+  constexpr void for_each(Function f, Tuple &&t) requires detail::applicable<Function, Tuple>
   {
-    [&]<std::size_t... I>(std::index_sequence<I...>) { (f(get<I>(t)), ...); }
+    [&]<std::size_t... I>(std::index_sequence<I...>) { (f(get<I>(KUMI_FWD(t))), ...); }
     (std::make_index_sequence<size<Tuple>::value>());
   }
 
   template<typename Function, product_type Tuple>
-  constexpr void for_each(Function f, Tuple const &t)
+  constexpr void for_each_index(Function f, Tuple &t)
   {
-    [&]<std::size_t... I>(std::index_sequence<I...>) { (f(get<I>(t)), ...); }
-    (std::make_index_sequence<size<Tuple>::value>());
-  }
-
-  template<typename Function, product_type Tuple>
-  constexpr void for_each_index(Function f, Tuple&t)
-  {
-    [&]<std::size_t... I>(std::index_sequence<I...>)
-    {
-      (f(index<I>, get<I>(t)), ...);
-    }
+    [&]<std::size_t... I>(std::index_sequence<I...>) { (f(index<I>, get<I>(t)), ...); }
     (std::make_index_sequence<size<Tuple>::value>());
   }
 
   template<typename Function, product_type Tuple>
   constexpr void for_each_index(Function f, Tuple const &t)
   {
-    [&]<std::size_t... I>(std::index_sequence<I...>)
-    {
-      (f(index<I>, get<I>(t)), ...);
-    }
+    [&]<std::size_t... I>(std::index_sequence<I...>) { (f(index<I>, get<I>(t)), ...); }
     (std::make_index_sequence<size<Tuple>::value>());
   }
 
@@ -346,13 +394,10 @@ namespace kumi
     // Conversion
     //==============================================================================================
     template<typename... Us>
-    requires(     detail::piecewise_convertible<tuple,tuple<Us...>>
-              &&  (sizeof...(Us) == sizeof...(Ts))
-              &&  (!std::same_as<Ts,Us> && ...)
-            )
-    [[nodiscard]] inline constexpr auto cast() const
+    requires(detail::piecewise_convertible<tuple, tuple<Us...>> && (sizeof...(Us) == sizeof...(Ts))
+             && (!std::same_as<Ts, Us> && ...)) [[nodiscard]] inline constexpr auto cast() const
     {
-      return apply([](auto &&...elems) { return tuple<Us...>{ static_cast<Us>(elems)...}; }, *this);
+      return apply([](auto &&...elems) { return tuple<Us...> {static_cast<Us>(elems)...}; }, *this);
     }
 
     //==============================================================================================
@@ -362,10 +407,7 @@ namespace kumi
     requires(detail::piecewise_convertible<tuple, tuple<Us...>>) constexpr tuple &
     operator=(tuple<Us...> const &other)
     {
-      [&]<std::size_t... I>(std::index_sequence<I...>)
-      {
-        ((get<I>(*this) = get<I>(other)), ...);
-      }
+      [&]<std::size_t... I>(std::index_sequence<I...>) { ((get<I>(*this) = get<I>(other)), ...); }
       (std::make_index_sequence<sizeof...(Ts)>());
 
       return *this;
@@ -388,7 +430,7 @@ namespace kumi
     // Comparison operators
     //==============================================================================================
     template<sized_product_type<sizeof...(Ts)> Other>
-    friend constexpr bool operator==(tuple const &self, Other const &other) noexcept
+    friend constexpr auto operator==(tuple const &self, Other const &other) noexcept
     {
       return [&]<std::size_t... I>(std::index_sequence<I...>)
       {
@@ -398,7 +440,7 @@ namespace kumi
     }
 
     template<sized_product_type<sizeof...(Ts)> Other>
-    friend constexpr bool operator!=(tuple const &self, Other const &other) noexcept
+    friend constexpr auto operator!=(tuple const &self, Other const &other) noexcept
     {
       return [&]<std::size_t... I>(std::index_sequence<I...>)
       {
@@ -440,14 +482,16 @@ namespace kumi
     return {KUMI_FWD(ts)...};
   }
 
-  template<typename... Ts> template<std::size_t I0>
+  template<typename... Ts>
+  template<std::size_t I0>
   requires(I0 <= sizeof...(Ts))
       [[nodiscard]] constexpr auto tuple<Ts...>::split(index_t<I0> const &) const noexcept
   {
     return kumi::make_tuple(extract(index<0>, index<I0>), extract(index<I0>));
   }
 
-  template<typename... Ts> template<std::size_t I0>
+  template<typename... Ts>
+  template<std::size_t I0>
   requires(I0 <= sizeof...(Ts))
       [[nodiscard]] constexpr auto tuple<Ts...>::split(index_t<I0> const &) noexcept
   {
@@ -458,13 +502,10 @@ namespace kumi
   // Conversions to arbitrary types
   //================================================================================================
   template<typename Type, typename... Ts>
-  requires( !product_type<Type> && detail::implicit_constructible<Type, Ts...> )
-  [[nodiscard]] constexpr auto tuple_cast(tuple<Ts...> const& t)
+  requires(!product_type<Type> && detail::implicit_constructible<Type, Ts...>)
+      [[nodiscard]] constexpr auto tuple_cast(tuple<Ts...> const &t)
   {
-    return [&]<std::size_t... I>(std::index_sequence<I...>)
-    {
-      return Type{get<I>(t)...};
-    }
+    return [&]<std::size_t... I>(std::index_sequence<I...>) { return Type {get<I>(t)...}; }
     (std::make_index_sequence<sizeof...(Ts)>());
   }
 
@@ -502,14 +543,17 @@ namespace kumi
   // Construct the tuple made of the application of f to elements of each tuples
   //================================================================================================
   template<product_type Tuple, typename Function, sized_product_type<size<Tuple>::value>... Tuples>
-  constexpr auto map(Function f, Tuple const &t0, Tuples const &...others)
+  constexpr auto
+  map(Function     f,
+      Tuple const &t0,
+      Tuples const &...others) requires detail::applicable<Function, Tuple, Tuples...>
   {
     return [&]<std::size_t... I>(std::index_sequence<I...>)
     {
-      auto call = [&]<std::size_t N>(index_t<N>, auto const &...args)
-      { return f(get<N>(args)...); };
-
-      return make_tuple(call(index<I>, t0, others...)...);
+      auto call = [&]<std::size_t N>(index_t<N>, auto const &...args) {
+        return f(get<N>(args)...);
+      };
+      return kumi::make_tuple(call(index<I>, t0, others...)...);
     }
     (std::make_index_sequence<size<Tuple>::value>());
   }
@@ -540,13 +584,12 @@ namespace kumi
   //================================================================================================
   // Concatenates tuples
   //================================================================================================
-  template<product_type T, product_type U>
-  [[nodiscard]] constexpr auto cat(T const &t, U const &u)
+  template<product_type T, product_type U> [[nodiscard]] constexpr auto cat(T const &t, U const &u)
   {
     return [&]<std::size_t... TI, std::size_t... UI>(std::index_sequence<TI...>,
                                                      std::index_sequence<UI...>)
     {
-      return make_tuple(get<TI>(t)..., get<UI>(u)...);
+      return kumi::make_tuple(get<TI>(t)..., get<UI>(u)...);
     }
     (std::make_index_sequence<size<T>::value>(), std::make_index_sequence<size<U>::value>());
   }
@@ -570,8 +613,7 @@ namespace kumi
   template<product_type Tuple> [[nodiscard]] constexpr auto flatten(Tuple const &ts)
   {
     return kumi::fold_right(
-        []<typename M>(auto acc, M const &m)
-        {
+        []<typename M>(auto acc, M const &m) {
           if constexpr( product_type<M> )
             return cat(acc, m);
           else
@@ -584,8 +626,7 @@ namespace kumi
   template<product_type Tuple> [[nodiscard]] constexpr auto flatten_all(Tuple const &ts)
   {
     return kumi::fold_right(
-        []<typename M>(auto acc, M const &m)
-        {
+        []<typename M>(auto acc, M const &m) {
           if constexpr( product_type<M> )
             return cat(acc, flatten(m));
           else
@@ -599,66 +640,38 @@ namespace kumi
   // Zip multiple tuples contents
   //================================================================================================
   template<product_type T0, product_type... Ts>
-  requires((size<std::remove_cvref_t<T0>>::value == size<std::remove_cvref_t<Ts>>::value) && ...)
-      [[nodiscard]] constexpr auto zip(T0 &&t0, Ts &&...tuples)
+  requires((size<T0>::value == size<Ts>::value) && ...)
+      [[nodiscard]] constexpr auto zip(T0 const &t0, Ts const &...tuples)
   {
-    return map(
-        []<typename... Ms>(Ms && ...ms) { return make_tuple(std::forward<Ms>(ms)...); },
-        std::forward<T0>(t0),
-        std::forward<Ts>(tuples)...);
+    return kumi::map([](auto const &m0, auto const &...ms) { return kumi::make_tuple(m0, ms...); },
+                     t0,
+                     tuples...);
   }
 
   //================================================================================================
   // Transpose a tuple of tuples
   //================================================================================================
-  template<product_type Tuple>
-  [[nodiscard]] constexpr auto transpose(Tuple const &t)
+  template<product_type Tuple> [[nodiscard]] constexpr auto transpose(Tuple const &t)
   {
     return [&]<std::size_t... I>(std::index_sequence<I...>)
     {
-      constexpr auto uz = []<typename N>(N const &, auto const &u)
-      { return apply([](auto const &...m) { return make_tuple(get<N::value>(m)...); }, u); };
+      constexpr auto uz = []<typename N>(N const &, auto const &u) {
+        return apply([](auto const &...m) { return kumi::make_tuple(get<N::value>(m)...); }, u);
+      };
 
-      return make_tuple(uz(index_t<I> {}, t)...);
+      return kumi::make_tuple(uz(index_t<I> {}, t)...);
     }
-    (std::make_index_sequence<size<std::remove_cvref_t<decltype(get<0>(t))>>::value>());
+    (std::make_index_sequence<size<decltype(get<0>(t))>::value>());
   }
 
   //================================================================================================
   // Reorder elements of a tuple
   //================================================================================================
   template<std::size_t... Idx, product_type Tuple>
-  requires((Idx < size<std::remove_cvref_t<Tuple>>::value) && ...)
-      [[nodiscard]] constexpr auto reorder(Tuple &&t)
+  requires((Idx < size<Tuple>::value) && ...) [[nodiscard]] constexpr auto reorder(Tuple &&t)
   {
-    return make_tuple(KUMI_FWD(t)[index<Idx>]...);
+    return kumi::make_tuple(KUMI_FWD(t)[index<Idx>]...);
   }
-}
-
-//==================================================================================================
-// Structured binding adaptation
-//==================================================================================================
-namespace std
-{
-  template<std::size_t I, typename Head, typename... Tail>
-  struct tuple_element<I, kumi::tuple<Head, Tail...>> : tuple_element<I - 1, kumi::tuple<Tail...>>
-  {
-  };
-
-  template<std::size_t I, typename... Ts> struct tuple_element<I, kumi::tuple<Ts...> const>
-  {
-    using type = typename tuple_element<I, kumi::tuple<Ts...>>::type const;
-  };
-
-  template<typename Head, typename... Tail> struct tuple_element<0, kumi::tuple<Head, Tail...>>
-  {
-    using type = Head;
-  };
-
-  template<typename... Ts>
-  struct tuple_size<kumi::tuple<Ts...>> : std::integral_constant<std::size_t, sizeof...(Ts)>
-  {
-  };
 }
 
 #undef KUMI_FWD

@@ -15,7 +15,7 @@
 
 TTS_CASE_TPL("Check  eve::big(eve::sincos) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::big(eve::sincos)(T()), (std::tuple<T,T>));
+  TTS_EXPR_IS(eve::big(eve::sincos)(T()), (kumi::tuple<T,T>));
 }
 
 TTS_CASE_TPL("Check  eve::big(eve::sincos) behavior", EVE_TYPE)

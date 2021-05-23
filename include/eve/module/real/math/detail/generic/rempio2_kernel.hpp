@@ -11,9 +11,9 @@
 #include <eve/constant/pio_2.hpp>
 #include <eve/constant/twoopi.hpp>
 #include <eve/detail/apply_over.hpp>
+#include <eve/detail/kumi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/add.hpp>
-#include <eve/function/sub.hpp>
 #include <eve/function/all.hpp>
 #include <eve/function/any.hpp>
 #include <eve/function/bit_and.hpp>
@@ -27,24 +27,25 @@
 #include <eve/function/fma.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/gather.hpp>
-#include <eve/function/inc.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/function/inc.hpp>
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/logical_or.hpp>
 #include <eve/function/max.hpp>
 #include <eve/function/nearest.hpp>
 #include <eve/function/quadrant.hpp>
+#include <eve/function/sub.hpp>
 #include <eve/module/real/math/detail/constant/rempio2_limits.hpp>
 #include <eve/module/real/math/detail/generic/workaround.hpp>
 #include <eve/traits/alignment.hpp>
+
 #include <bit>
-#include <tuple>
 #include <type_traits>
 
 namespace eve::detail
 {
  // up to 255*pi/4 ~200
-  template<floating_real_value T> EVE_FORCEINLINE std::tuple<T, T, T>
+  template<floating_real_value T> EVE_FORCEINLINE kumi::tuple<T, T, T>
   rempio2_small(T const &xx) noexcept
   {
     using elt_t             = element_type_t<T>;
@@ -74,7 +75,7 @@ namespace eve::detail
 
   // double use   x < 281474976710656 (2.81476710656e+14)
   /* float use   x < 0x1.7d4998p+38 (4.09404e+11) */
-  template<floating_real_value T> EVE_FORCEINLINE std::tuple<T, T, T>
+  template<floating_real_value T> EVE_FORCEINLINE auto
   rempio2_medium(T const &xx) noexcept
   {
     using elt_t             = element_type_t<T>;
@@ -96,7 +97,7 @@ namespace eve::detail
       auto a   = t + da;
       da       = (t - a) + da;
 
-      return {n, a, da};
+      return kumi::make_tuple(n, a, da);
     }
     else if constexpr( std::is_same_v<elt_t, float> )
     {
@@ -119,13 +120,13 @@ namespace eve::detail
         auto [n1, fa1, dfa1] = rempio2_small(fa);
         n                     = quadrant(n + n1);
 
-        return {n, fa1, dfa1};
+        return kumi::make_tuple(n, fa1, dfa1);
       }
-      return {n, fa, dfa};
+      return kumi::make_tuple(n, fa, dfa);
     }
   }
 
-  template<floating_real_value T> EVE_FORCEINLINE  std::tuple<T, T, T>
+  template<floating_real_value T> EVE_FORCEINLINE  kumi::tuple<T, T, T>
   rempio2_big(T const &xx) noexcept
   {
     using elt_t             = element_type_t<T>;

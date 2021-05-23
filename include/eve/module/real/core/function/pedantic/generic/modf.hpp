@@ -10,18 +10,17 @@
 #include <eve/concept/value.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/detail/apply_over.hpp>
+#include <eve/detail/kumi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_infinite.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/function/trunc.hpp>
 
-#include <tuple>
-
 namespace eve::detail
 {
   template<real_value T>
-  EVE_FORCEINLINE constexpr std::tuple<T, T>
+  EVE_FORCEINLINE constexpr kumi::tuple<T, T>
   modf_(EVE_SUPPORTS(cpu_), pedantic_type const &, T a) noexcept
   {
     if constexpr( has_native_abi_v<T> )
@@ -52,5 +51,4 @@ namespace eve::detail
       return apply_over2(pedantic(modf), a);
     }
   }
-
 }

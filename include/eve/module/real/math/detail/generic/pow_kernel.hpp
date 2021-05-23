@@ -7,15 +7,15 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/concept/value.hpp>
+#include <eve/detail/kumi.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/function/gather.hpp>
+#include <eve/function/is_greater_equal.hpp>
+#include <eve/function/is_less_equal.hpp>
 #include <eve/module/real/core/detail/generic/horn.hpp>
 #include <eve/module/real/core/detail/generic/horn1.hpp>
-#include <eve/function/gather.hpp>
-#include <eve/function/is_less_equal.hpp>
-#include <eve/function/is_greater_equal.hpp>
-#include <eve/concept/value.hpp>
 #include <type_traits>
-#include <tuple>
 
 namespace eve::detail
 {
@@ -196,7 +196,7 @@ namespace eve::detail
     auto x = xx-tmp;
     x -= continuation(i >> 1);
     x /= tmp;
-    return std::make_tuple(x, i);
+    return kumi::make_tuple(x, i);
   }
 
 }

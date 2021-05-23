@@ -11,7 +11,7 @@
 
 TTS_CASE_TPL("Check two_split return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::two_split(T()), (std::tuple<T, T>) );
+  TTS_EXPR_IS(eve::two_split(T()), (kumi::tuple<T, T>) );
 }
 
 TTS_CASE_TPL("Check (eve::two_split behavior", EVE_TYPE)

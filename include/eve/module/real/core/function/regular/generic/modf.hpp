@@ -10,15 +10,14 @@
 #include <eve/concept/value.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/detail/apply_over.hpp>
+#include <eve/detail/kumi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/trunc.hpp>
-
-#include <tuple>
 
 namespace eve::detail
 {
   template<real_value T> EVE_FORCEINLINE constexpr
-  std::tuple<T,T > modf_(EVE_SUPPORTS(cpu_), T a) noexcept
+  kumi::tuple<T,T > modf_(EVE_SUPPORTS(cpu_), T a) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {

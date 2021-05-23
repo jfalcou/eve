@@ -16,7 +16,7 @@
 
 TTS_CASE_TPL("Check sincos return type", EVE_TYPE)
 {
-  TTS_EXPR_IS((eve::sincos(T())), (std::tuple<T,T>));
+  TTS_EXPR_IS((eve::sincos(T())), (kumi::tuple<T,T>));
 }
 
 TTS_CASE_TPL("Check (eve::sincos behavior", EVE_TYPE)

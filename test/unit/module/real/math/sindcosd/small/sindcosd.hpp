@@ -15,7 +15,7 @@
 
 TTS_CASE_TPL("Check eve::small(eve::sindcosd) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::small(eve::sindcosd)(T()), (std::tuple<T, T>));
+  TTS_EXPR_IS(eve::small(eve::sindcosd)(T()), (kumi::tuple<T, T>));
 }
 
 TTS_CASE_TPL("Check eve::small(eve::sindcosd) behavior", EVE_TYPE)

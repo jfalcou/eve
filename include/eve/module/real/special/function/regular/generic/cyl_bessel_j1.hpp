@@ -22,9 +22,8 @@
 #include <eve/constant/inf.hpp>
 #include <eve/constant/invsqrt_2.hpp>
 #include <eve/constant/pio_4.hpp>
-#include <type_traits>
 #include <eve/module/real/core/detail/generic/poleval.hpp>
-#include <tuple>
+#include <type_traits>
 
 namespace eve::detail
 {

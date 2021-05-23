@@ -27,7 +27,7 @@
 
 TTS_CASE_TPL("Check eve::sinhcosh return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::sinhcosh(T(0)), (std::tuple<T, T>));
+  TTS_EXPR_IS(eve::sinhcosh(T(0)), (kumi::tuple<T, T>));
 }
 
 TTS_CASE_TPL("Check eve::sinhcosh behavior", EVE_TYPE)

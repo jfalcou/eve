@@ -18,13 +18,13 @@ TTS_CASE_TPL("Check lohi return type", EVE_TYPE)
   if constexpr(eve::simd_value<T>)
   {
     using wdui_t = eve::wide<sdui_t, eve::cardinal_t<T> >;
-    using typ = std::tuple<wdui_t,wdui_t>;
+    using typ = kumi::tuple<wdui_t,wdui_t>;
     TTS_EXPR_IS((eve::lohi(T())),typ);
   }
   else
   {
     using wdui_t = sdui_t;
-    using typ = std::tuple<wdui_t,wdui_t>;
+    using typ = kumi::tuple<wdui_t,wdui_t>;
     TTS_EXPR_IS((eve::lohi(T())),typ);
   }
 }

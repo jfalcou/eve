@@ -7,34 +7,36 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/concept/value.hpp>
+#include <eve/constant/half.hpp>
+#include <eve/detail/apply_over.hpp>
+#include <eve/detail/kumi.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/real/math/detail/generic/trig_finalize.hpp>
-#include <eve/module/real/math/detail/constant/rempio2_limits.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/average.hpp>
 #include <eve/function/exp.hpp>
 #include <eve/function/expm1.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_positive.hpp>
 #include <eve/function/fnma.hpp>
+#include <eve/function/if_else.hpp>
 #include <eve/function/inc.hpp>
+#include <eve/function/is_positive.hpp>
 #include <eve/function/rec.hpp>
-#include <eve/constant/half.hpp>
+#include <eve/module/real/math/detail/constant/rempio2_limits.hpp>
+#include <eve/module/real/math/detail/generic/trig_finalize.hpp>
 #include <type_traits>
-#include <tuple>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr std::tuple<T, T>
+  EVE_FORCEINLINE constexpr kumi::tuple<T, T>
   sinhcosh_(EVE_SUPPORTS(cpu_) , T a0) noexcept
   {
     if constexpr(has_native_abi_v<T>)
     {
-      T ovflimit =   maxlog(as<T>()); //Ieee_constant<T,0x42B0C0A4U, 0x40862E42FEFA39EFULL>(); // 88.376251220703125f, 709.782712893384
-        auto x = eve::abs(a0);
+      //Ieee_constant<T,0x42B0C0A4U, 0x40862E42FEFA39EFULL>(); // 88.376251220703125f, 709.782712893384
+      T ovflimit  =   maxlog(as<T>());
+      auto      x = eve::abs(a0);
+
       if constexpr(scalar_value<T>)
       {
         if (x < T(0x1.0p-28)) return {a0, one(eve::as<T>())};

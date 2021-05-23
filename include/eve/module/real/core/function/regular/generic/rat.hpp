@@ -7,21 +7,21 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/saturated/abs.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/constant/one.hpp>
+#include <eve/constant/zero.hpp>
+#include <eve/detail/kumi.hpp>
+#include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/if_else.hpp>
-#include <eve/function/is_infinite.hpp>
 #include <eve/function/is_eqz.hpp>
+#include <eve/function/is_infinite.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/none.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/round.hpp>
+#include <eve/function/saturated/abs.hpp>
 #include <eve/function/sign.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/concept/value.hpp>
-#include <tuple>
 
 namespace eve::detail
 {
@@ -68,7 +68,7 @@ namespace eve::detail
       d = saturated(abs)(d);
       n = if_else(is_inf, sign(x), n);
       d = if_else(is_inf, zero, d);
-      return std::tuple<T, T>{n, d};
+      return kumi::tuple<T, T>{n, d};
     }
     else
     {
@@ -81,7 +81,7 @@ namespace eve::detail
                                      , T const & x
                                      , T const & tol) noexcept
   {
-    if (is_infinite(x) || is_eqz(x)) return  std::tuple<T, T>{sign(x), 0};
+    if (is_infinite(x) || is_eqz(x)) return  kumi::tuple<T, T>{sign(x), 0};
     auto n = round(x);
     auto d = one(as(x));
     auto frac = x-n;
@@ -102,7 +102,7 @@ namespace eve::detail
     }
     n *= sign(d);
     d = saturated(abs)(d);
-     return std::tuple<T, T>{n, d};
+     return kumi::tuple<T, T>{n, d};
   }
 
   template<floating_real_value T>

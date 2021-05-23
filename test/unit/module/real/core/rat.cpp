@@ -20,10 +20,10 @@ EVE_TEST_TYPES( "Check return types of eve::rat(scalar)"
 <typename T>(eve::as_<T>)
 {
   using v_t =  eve::element_type_t<T>;
-  TTS_EXPR_IS( eve::rat(T())                    , (std::tuple<T, T>)  );
-  TTS_EXPR_IS( eve::rat(T(), T())               , (std::tuple<T, T>) );
-  TTS_EXPR_IS( eve::rat(T(), v_t())             , (std::tuple<T, T>) );
-  TTS_EXPR_IS( eve::rat(v_t(), v_t())           , (std::tuple<v_t, v_t>)  );
+  TTS_EXPR_IS( eve::rat(T())                    , (kumi::tuple<T, T>)  );
+  TTS_EXPR_IS( eve::rat(T(), T())               , (kumi::tuple<T, T>) );
+  TTS_EXPR_IS( eve::rat(T(), v_t())             , (kumi::tuple<T, T>) );
+  TTS_EXPR_IS( eve::rat(v_t(), v_t())           , (kumi::tuple<v_t, v_t>)  );
 };
 
 
