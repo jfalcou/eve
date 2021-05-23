@@ -136,7 +136,7 @@ EVE_TEST( "Check behavior of rem on signed types"
   using eve::is_nez;
   using eve::pedantic;
   using eve::detail::map;
-  TTS_ULP_EQUAL( pedantic(rem[is_nez(a2)])(a0, a2), map([](auto e, auto f) {return is_nez(f) ? rem(e, f) : e ; }, a0, a2), 2);
+  TTS_ULP_EQUAL( pedantic(rem[is_nez(a2)])(a0, a2), map([](auto e, auto f) {return is_nez(f) ? rem(e, f) : e ; }, a0, a2), 8);
   a2 = eve::if_else(a2 >= 0, eve::one, a2);
   TTS_ULP_EQUAL( rem[is_nez(a2)](a0, a2), map([](auto e, auto f) {return rem(e, f); }, a0, a2), 2);
 
