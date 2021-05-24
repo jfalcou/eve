@@ -237,7 +237,7 @@ namespace eve
     //! The values of `idx` must be integer between 0 and `size()-1` or equal to eve::na_ to
     //! indicate the value at this lane must be replaced by zero.
     //!
-    //! Does not participate in overload in overload resolution if `idx` is not an integral register.
+    //! Does not participate in overload resolution if `idx` is not an integral register.
     //!
     //! @param idx  eve::wide of integral indexes
     //! @return     A eve::wide constructed as `wide{ get(idx.get(0)), ..., get(idx.get(size()-1))}`.
@@ -307,45 +307,61 @@ namespace eve
     //==============================================================================================
     // Conversion from logical to other formats (mask, bits, bitmap)
     //==============================================================================================
+    //! @brief Computes a eve::wide containing the bit pattern of current logical.
+    //! This bit patterns is contained in a eve::wide of unsigned integral.
     EVE_FORCEINLINE auto bits()   const noexcept { return detail::to_bits(EVE_CURRENT_API{},*this); }
+
+    //! @brief Computes a eve::wide containing the bit pattern of current logical.
+    //! This bit patterns is contained in a eve::wide of `Type`.
     EVE_FORCEINLINE auto mask()   const noexcept { return detail::to_mask(EVE_CURRENT_API{},*this); }
+
+    //! Returns a bitset corresponding to the current logical values.
     EVE_FORCEINLINE auto bitmap() const noexcept { return detail::to_bitmap(EVE_CURRENT_API{},*this); }
 
     //==============================================================================================
     // Logical operations
     //==============================================================================================
+    //! Perform a logical and operation between two eve::logical
     template<typename U, typename A2>
     friend EVE_FORCEINLINE auto operator&&(logical const& v, logical<wide<U,Cardinal,A2>> const& w) noexcept
     {
       return detail::self_logand(EVE_CURRENT_API{},v,w);
     }
 
-    friend EVE_FORCEINLINE auto operator&&(logical const& v, scalar_value auto w) noexcept
+    //! Perform a logical and operation between a eve::logical and a scalar
+    template<scalar_value S>
+    friend EVE_FORCEINLINE auto operator&&(logical const& v, S w) noexcept
     {
       return v && logical{w};
     }
 
-    friend EVE_FORCEINLINE auto operator&&(scalar_value auto v, logical const& w) noexcept
+    //! Perform a logical and operation between a scalar and a eve::logical
+    template<scalar_value S>
+    friend EVE_FORCEINLINE auto operator&&(S v, logical const& w) noexcept
     {
       return w && v;
     }
 
+    //! Perform a logical or operation between two eve::logical
     template<typename U, typename A2>
     friend EVE_FORCEINLINE auto operator||(logical const& v, logical<wide<U,Cardinal,A2>> const& w) noexcept
     {
       return detail::self_logor(EVE_CURRENT_API{},v,w);
     }
 
+    //! Perform a logical or operation between a eve::logical and a scalar
     friend EVE_FORCEINLINE auto operator||(logical const& v, scalar_value auto w) noexcept
     {
       return v || logical{w};
     }
 
+    //! Perform a logical or operation between a scalar and a eve::logical
     friend EVE_FORCEINLINE auto operator||(scalar_value auto v, logical const& w) noexcept
     {
       return w || v;
     }
 
+    //! Computes the logical complement of its parameter
     friend EVE_FORCEINLINE auto operator!(logical const& v) noexcept
     {
       return detail::self_lognot(v);
@@ -355,6 +371,7 @@ namespace eve
     //! @name Modifiers
     //! @{
     //==============================================================================================
+    //! Exchange this value with another eve::logical
     void swap( logical& other ) { std::swap(this->storage(), other.storage()); }
 
     //==============================================================================================
@@ -461,47 +478,51 @@ namespace eve
     {
       return detail::slice(*this, s);
     }
+
     //==============================================================================================
     //! @}
     //==============================================================================================
-
-    friend EVE_FORCEINLINE auto operator==(logical const& v, logical const& w) noexcept
+    //! @brief Element-wise equality comparison of two eve::logical
+    friend EVE_FORCEINLINE logical operator==(logical v, logical w) noexcept
     {
       return detail::self_eq(v,w);
     }
 
+    //! @brief Element-wise equality comparison of a eve::logical and a scalar value
     template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator==(logical const& v, S w) noexcept
+    friend EVE_FORCEINLINE logical operator==(logical v, S w) noexcept
     {
       return v == logical{w};
     }
 
+    //! @brief Element-wise equality comparison of a scalar value and a eve::logical
     template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator==(S v, logical const& w) noexcept
+    friend EVE_FORCEINLINE logical operator==(S v, logical w) noexcept
     {
       return w == v;
     }
 
-    friend EVE_FORCEINLINE auto operator!=(logical const& v, logical const& w) noexcept
+    //! @brief Element-wise inequality comparison of two eve::logical
+    friend EVE_FORCEINLINE logical operator!=(logical v, logical w) noexcept
     {
       return detail::self_neq(v,w);
     }
 
+    //! @brief Element-wise inequality comparison of a eve::logical and a scalar value
     template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator!=(logical const& v, S w) noexcept
+    friend EVE_FORCEINLINE logical operator!=(logical v, S w) noexcept
     {
       return v != logical{w};
     }
 
+    //! @brief Element-wise inequality comparison of a scalar value and a eve::logical
     template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator!=(S v, logical const& w) noexcept
+    friend EVE_FORCEINLINE logical operator!=(S v, logical w) noexcept
     {
       return w != v;
     }
 
-    //==============================================================================================
-    // Inserting a logical<wide> into a stream
-    //==============================================================================================
+    //! Inserts a eve::wide into a output stream
     friend std::ostream &operator<<(std::ostream &os, logical const &p)
     {
       auto that = p.bitmap();

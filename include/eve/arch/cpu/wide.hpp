@@ -355,7 +355,7 @@ namespace eve
     //! The values of `idx` must be integer between 0 and `size()-1` or equal to eve::na_ to
     //! indicate the value at this lane must be replaced by zero.
     //!
-    //! Does not participate in overload in overload resolution if `idx` is not an integral register.
+    //! Does not participate in overload resolution if `idx` is not an integral register.
     //!
     //! @param idx  eve::wide of integral indexes
     //! @return     A eve::wide constructed as `wide{ get(idx.get(0)), ..., get(idx.get(size()-1))}`.

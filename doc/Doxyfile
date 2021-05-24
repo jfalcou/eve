@@ -71,9 +71,11 @@ WARN_IF_UNDOCUMENTED   = YES
 INPUT                  = ../include
 INPUT                 += .
 RECURSIVE              = YES
-EXCLUDE                = ../include/eve/detail/
-EXCLUDE               += ../include/eve/module/
-EXCLUDE_SYMBOLS        =
+EXCLUDE                = ../include/eve/module/
+EXCLUDE               += ../include/eve/detail/function/tmp
+EXCLUDE               += ../include/eve/detail/function/simd
+EXCLUDE_SYMBOLS        = spy*
+EXCLUDE_SYMBOLS       += kumi*
 EXAMPLE_PATH           = ../test/doc
 EXAMPLE_PATH          += ../docs/reference/out
 
