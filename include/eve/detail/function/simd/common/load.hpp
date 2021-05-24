@@ -86,13 +86,19 @@ namespace eve::detail
     return piecewise_load(tgt,b);
   }
 
+  template<typename T, typename Ptr> struct dereference_as
+  {
+    using deref = std::remove_cvref_t<decltype(*std::declval<Ptr>())>;
+    static constexpr bool value = std::same_as<T,deref>;
+  };
+
   //================================================================================================
   // Basic logical support
   //================================================================================================
   template<typename T, typename N, typename Ptr, typename ABI>
   EVE_FORCEINLINE
   auto load(eve::as_<logical<wide<T, N, ABI>>> const & tgt, Ptr p)
-  requires( std::same_as<logical<T>, std::remove_cvref_t<decltype(*p)>> )
+  requires( dereference_as<logical<T>, Ptr>::value && !x86_abi<ABI>)
   {
     return  bit_cast
             ( [&]() -> wide<T, N, ABI>
@@ -115,7 +121,7 @@ namespace eve::detail
   template<typename T, typename N, typename Ptr>
   EVE_FORCEINLINE
   auto load(eve::as_<logical<wide<T, N, aggregated_>>> const & tgt, Ptr p)
-  requires( std::same_as<logical<T>, std::remove_cvref_t<decltype(*p)>> )
+  requires( dereference_as<logical<T>, Ptr>::value )
   {
     return aggregate_load(tgt,p);
   }

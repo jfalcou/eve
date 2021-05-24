@@ -30,14 +30,14 @@ namespace eve::detail
 
 #if defined(__has_feature)
 #  if __has_feature(address_sanitizer) or __has_feature(thread_sanitizer)
-#       define EVE_SANITZERS_ARE_ON
+#       define EVE_SANITIZERS_ARE_ON
 #  endif  // __has_feature
 #endif
 
-#if defined(EVE_SANITZERS_ARE_ON)
+#if defined(EVE_SANITIZERS_ARE_ON)
   constexpr bool sanitizers_are_on = true;
 
-#undef EVE_SANITZERS_ARE_ON
+#undef EVE_SANITIZERS_ARE_ON
 
 #else
   constexpr bool sanitizers_are_on = false;
@@ -163,8 +163,9 @@ namespace eve::detail
   // due to what called functions it will affect.
   // Since the unsafe is mostly used in corner cases, will do it scalar in asan mode.
   template<relative_conditional_expr C, typename Ptr, typename Cardinal>
+  requires(sanitizers_are_on)
   DISABLE_SANITIZERS auto load_(EVE_SUPPORTS(cpu_), C const &cond, unsafe_type, Ptr ptr, Cardinal const&) noexcept
-    requires sanitizers_are_on && (requires(Ptr ptr, Cardinal const& N) { eve::load[cond](ptr, N); })
+                  -> decltype( eve::load[cond](ptr, Cardinal{}))
   {
     using e_t = std::remove_cvref_t<decltype(*ptr)>;
     using r_t = as_wide_t< e_t, typename Cardinal::type >;
@@ -180,37 +181,42 @@ namespace eve::detail
   }
 
   template<relative_conditional_expr C,typename Ptr>
+  requires(sanitizers_are_on)
   EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), C const &cond, unsafe_type, Ptr ptr) noexcept
-    requires sanitizers_are_on && requires(Ptr ptr) { eve::load[cond](ptr); }
+              ->  decltype(eve::load[cond](ptr))
   {
     using T = std::remove_cvref_t<decltype(*ptr)>;
     return eve::unsafe(eve::load[cond])(ptr, expected_cardinal_t<T>{});
   }
 
   template<typename Ptr, typename Cardinal>
+  requires(sanitizers_are_on)
   DISABLE_SANITIZERS auto load_(EVE_SUPPORTS(cpu_), unsafe_type, Ptr ptr, Cardinal const& N) noexcept
-    requires sanitizers_are_on && (requires(Ptr ptr, Cardinal const& N) { eve::load(ptr, N); })
+                  -> decltype(eve::load(ptr, N))
   {
     return eve::unsafe(eve::load[eve::ignore_none])(ptr, N);
   }
 
   template<typename Ptr>
+  requires(!sanitizers_are_on)
   EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), unsafe_type, Ptr ptr) noexcept
-    requires sanitizers_are_on && requires(Ptr ptr) { eve::load(ptr); }
+              ->  decltype(eve::load(ptr))
   {
     return eve::unsafe(eve::load[eve::ignore_none])(ptr);
   }
 
   template<typename ...Args>
+  requires (!sanitizers_are_on)
   EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), unsafe_type, Args ... args) noexcept
-    requires (!sanitizers_are_on) && requires(Args ... args) { eve::load(args...); }
+              ->  decltype(eve::load(args...))
   {
     return eve::load(args...);
   }
 
   template<relative_conditional_expr C, typename ... Args>
+  requires (!sanitizers_are_on)
   EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), C const &cond, unsafe_type, Args ... args) noexcept
-    requires (!sanitizers_are_on) && requires(C const &cond, Args ... args) { eve::load[cond](args...); }
+              ->  decltype(eve::load[cond](args...))
   {
     return eve::load[cond](args...);
   }
