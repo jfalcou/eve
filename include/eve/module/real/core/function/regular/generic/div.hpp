@@ -48,7 +48,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   div_(EVE_SUPPORTS(cpu_), toward_zero_type const &, T const &a, T const &b) noexcept
   {
-    EVE_ASSERT(eve::all(is_nez(a)), "[eve] - div(0, 0) is undefined");
+    EVE_ASSERT(eve::all(is_nez(b)), "[eve] - div(0, 0) is undefined");
     if constexpr( has_native_abi_v<T> )
     {
       if constexpr( floating_real_value<T> )
