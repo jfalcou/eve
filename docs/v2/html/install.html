@@ -136,18 +136,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md39">Retrieving the source</a></li>
-<li class="level1"><a href="#autotoc_md40">Installing</a></li>
-<li class="level1"><a href="#autotoc_md41">Quick Start</a><ul><li class="level2"><a href="#autotoc_md42">Compilation</a></li>
-<li class="level2"><a href="#autotoc_md43">Instruction Set Selection</a></li>
-<li class="level2"><a href="#autotoc_md44">Execution</a></li>
+<ul><li class="level1"><a href="#autotoc_md43">Retrieving the source</a></li>
+<li class="level1"><a href="#autotoc_md44">Installing</a></li>
+<li class="level1"><a href="#autotoc_md45">Quick Start</a><ul><li class="level2"><a href="#autotoc_md46">Compilation</a></li>
+<li class="level2"><a href="#autotoc_md47">Instruction Set Selection</a></li>
+<li class="level2"><a href="#autotoc_md48">Execution</a></li>
 </ul>
 </li>
-<li class="level1"><a href="#autotoc_md45">Advanced options</a></li>
+<li class="level1"><a href="#autotoc_md49">Advanced options</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md__large_hdd_dev_project_eve_doc_page01_install"></a></p>
-<h1><a class="anchor" id="autotoc_md39"></a>
+<h1><a class="anchor" id="autotoc_md43"></a>
 Retrieving the source</h1>
 <p><b>EVE</b> is available on GitHub and can be retrieved via the following command:</p>
 <div class="fragment"><div class="line">$ git clone -b main https://github.com/jfalcou/eve.git</div>
@@ -155,7 +155,7 @@ Retrieving the source</h1>
 <div class="fragment"><div class="line">$ cd eve</div>
 <div class="line">$ ls</div>
 <div class="line">  benchmarks  cmake  CMakeLists.txt  docs include  LICENSE.md  README.md  test  tools</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md40"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md44"></a>
 Installing</h1>
 <p>Create a <code>build</code> directory here and enter it. Once in the <code>build</code> directory, you can use <b>CMake</b> to generate the build system for <b>EVE</b>. We recommend using Ninja but any build system is fine.</p>
 <div class="fragment"><div class="line">$ mkdir build</div>
@@ -166,9 +166,9 @@ Installing</h1>
 </div><!-- fragment --><p>You can select an alternative installation path by specifying the <code>CMAKE_INSTALL_PREFIX</code> option at configuration time.</p>
 <div class="fragment"><div class="line">$ cmake .. -G Ninja -DCMAKE_INSTALL_PREFIX=path/to/install</div>
 <div class="line">$ ninja install</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md41"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md45"></a>
 Quick Start</h1>
-<h2><a class="anchor" id="autotoc_md42"></a>
+<h2><a class="anchor" id="autotoc_md46"></a>
 Compilation</h2>
 <p>Once installed, you can compile the following code to check if everything is alright.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -190,11 +190,11 @@ Compilation</h2>
 </div><!-- fragment --><p>Don't forget the <code>--std=c++20</code> option to be sure to activate C++20 support. If you use a different compiler, check your compiler user's manual to use the proper option.</p>
 <p>You can notice we use the <code>-O3 -DNEDBUG</code> options. This is required if you want to be sure to get the best performance out of <b>EVE</b>.</p>
 <p>The <code>-DNDEBUG</code> setting can be omitted but then asserts will be inserted into the code to prevent logic errors.</p>
-<h2><a class="anchor" id="autotoc_md43"></a>
+<h2><a class="anchor" id="autotoc_md47"></a>
 Instruction Set Selection</h2>
 <p>The SIMD instruction sets that <b>EVE</b> uses is decided at compile time. You can use <code>-march=native</code> if you're sure your code won't be executed anywhere else. You can also select a specific instructions set by using the proper option(s) from your compiler. For example, let's compile for exactly SSE4.1.</p>
 <div class="fragment"><div class="line">$ g++-10 test.cpp -std=c++20  -msse4.1 -O3 -DNDEBUG -I/path/to/install/include -o output</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md44"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md48"></a>
 Execution</h2>
 <p>Once done, execute the binary. If you compiled for SSE4.1 for example, you'll end up with the following results:</p>
 <div class="fragment"><div class="line">$ ./output</div>
@@ -202,7 +202,7 @@ Execution</h2>
 <div class="line"> 2*x   = (2, 4, 6, 8)</div>
 <div class="line"> x^0.5 = (1, 1.41421, 1.73205, 2)</div>
 </div><!-- fragment --><p>That's it, <b>EVE</b> is properly installed and ready to use.</p>
-<h1><a class="anchor" id="autotoc_md45"></a>
+<h1><a class="anchor" id="autotoc_md49"></a>
 Advanced options</h1>
 <p>If you want to dig a bit further, you can pass additional options to <code>cmake</code> to activate additional features.</p>
 <table class="markdownTable">
@@ -230,7 +230,7 @@ Advanced options</h1>
 </div> <!-- DOXYSTRAP RELATED -->
 </div> <!-- DOXYSTRAP RELATED -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat May 22 2021 22:36:16 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon May 24 2021 18:34:02 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['pattern_210',['pattern',['../group__simd.html#ga61c6484edbe5ceb7f92946bc798802dd',1,'eve']]]
+  ['na_5f_212',['na_',['../group__simd.html#ga11b65eff854b205c9f9ef8dbd559bb9b',1,'eve']]]
 ];

@@ -233,12 +233,14 @@ namespace eve
     //==============================================================================================
     //! @brief Dynamic lookup via lane indexing
     //!
+    //! Generate a new eve::wide which is an arbitrary shuffling of current eve::wide lanes.
+    //! The values of `idx` must be integer between 0 and `size()-1` or equal to eve::na_ to
+    //! indicate the value at this lane must be replaced by zero.
+    //!
     //! Does not participate in overload in overload resolution if `idx` is not an integral register.
     //!
-    //! @see eve::wide::operator[]
-    //!
-    //! @param idx  wide of integral indexes
-    //! @return A logical constructed as `logical{ get(idx.get(0)), ..., get(idx.get(size()-1))}`.
+    //! @param idx  eve::wide of integral indexes
+    //! @return     A eve::wide constructed as `wide{ get(idx.get(0)), ..., get(idx.get(size()-1))}`.
     //==============================================================================================
     template<typename Index>
     EVE_FORCEINLINE auto operator[](wide<Index,Cardinal> const& idx) const noexcept
@@ -246,6 +248,24 @@ namespace eve
       return lookup((*this),idx);
     }
 
+    //==============================================================================================
+    //! @brief Static lookup via lane indexing
+    //!
+    //! Generate a new eve::logical which is an arbitrary shuffling of current eve::logical lanes.
+    //! `p' is an instance of eve::pattern_t constructed via the eve::pattern template
+    //! variable. Values appearing in the pattern must be between 0 and `size()-1` or equal
+    //! to eve::na_ to indicate the value at this lane must be replaced by zero or this operator
+    //! will not participate in overload resolution.
+    //!
+    //! Note that if the statically generated pattern matches a predefined @ref shuffling function
+    //! the corresponding optimized shuffling functions will be called.
+    //!
+    //! @param p  A eve::pattern defining a shuffling pattern
+    //! @return   A logical constructed as `logical{ get(I), ... }`.
+    //!
+    //! @see eve::pattern_t
+    //! @see eve::pattern
+    //==============================================================================================
     template<std::ptrdiff_t... I>
     EVE_FORCEINLINE auto operator[](pattern_t<I...>) const noexcept
 #if !defined (EVE_DOXYGEN_INVOKED)
@@ -256,6 +276,25 @@ namespace eve
       return swizzler((*this));
     }
 
+
+    //==============================================================================================
+    //! @brief Static lookup via procedural lane indexing
+    //!
+    //! Generate a new eve::logical which is an arbitrary shuffling of current eve::logical lanes.
+    //! `p' is an instance of eve::as_pattern instantiated with a `constexpr` lambda that will be
+    //! used to generate the pattern algorithmically.
+    //! Values returned by the lambda must be between 0 and `size()-1` or equal to eve::na_ to
+    //! indicate the value at this lane must be replaced by zero or this operator
+    //! will not participate in overload resolution.
+    //!
+    //! Note that if the statically generated pattern matches a pre-defined @ref shuffling function
+    //! the corresponding optimized shuffling functions will be called.
+    //!
+    //! @param p  A eve::as_pattern_t defined from a lambda function
+    //! @return   A logical constructed as `logical{ get(p(0,size())), ..., get(p(0,size()-1)) }`.
+    //!
+    //! @see eve::as_pattern
+    //==============================================================================================
     template<typename F>
     EVE_FORCEINLINE auto operator[](as_pattern<F> p) const noexcept
     {

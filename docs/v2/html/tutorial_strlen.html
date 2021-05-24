@@ -140,20 +140,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md47">Key idea</a><ul><ul><li class="level3"><a href="#autotoc_md48">&lt;tt&gt;reinterpret_cast&lt;/tt&gt;.</a></li>
-<li class="level3"><a href="#autotoc_md49">typedef for &lt;tt&gt;eve::wide&lt;std::uint8_t&gt;&lt;/tt&gt;</a></li>
-<li class="level3"><a href="#autotoc_md50">&lt;tt&gt;const wide zero{0};&lt;/tt&gt;</a></li>
-<li class="level3"><a href="#autotoc_md51">&lt;tt&gt;eve::previous_aligned_address(s);&lt;/tt&gt;</a></li>
-<li class="level3"><a href="#autotoc_md52">&lt;tt&gt;eve::unsafe(eve::load)(aligned_s);&lt;/tt&gt;</a></li>
-<li class="level3"><a href="#autotoc_md53">&lt;tt&gt;cur == zeroes&lt;/tt&gt;</a></li>
-<li class="level3"><a href="#autotoc_md54">&lt;tt&gt;eve::ignore_first ignore / eve::first_true[ignore]&lt;/tt&gt;</a></li>
-<li class="level3"><a href="#autotoc_md55">&lt;tt&gt;while (!match) / aligned_s += wide::static_size&lt;/tt&gt;</a></li>
-<li class="level3"><a href="#autotoc_md56">&lt;tt&gt;match = eve::first_true(cur == zeroes);&lt;/tt&gt;</a></li>
-<li class="level3"><a href="#autotoc_md57">&lt;tt&gt;aligned_s.get() + *match - s&lt;/tt&gt;</a></li>
+<ul><li class="level1"><a href="#autotoc_md51">Key idea</a><ul><ul><li class="level3"><a href="#autotoc_md52">&lt;tt&gt;reinterpret_cast&lt;/tt&gt;.</a></li>
+<li class="level3"><a href="#autotoc_md53">typedef for &lt;tt&gt;eve::wide&lt;std::uint8_t&gt;&lt;/tt&gt;</a></li>
+<li class="level3"><a href="#autotoc_md54">&lt;tt&gt;const wide zero{0};&lt;/tt&gt;</a></li>
+<li class="level3"><a href="#autotoc_md55">&lt;tt&gt;eve::previous_aligned_address(s);&lt;/tt&gt;</a></li>
+<li class="level3"><a href="#autotoc_md56">&lt;tt&gt;eve::unsafe(eve::load)(aligned_s);&lt;/tt&gt;</a></li>
+<li class="level3"><a href="#autotoc_md57">&lt;tt&gt;cur == zeroes&lt;/tt&gt;</a></li>
+<li class="level3"><a href="#autotoc_md58">&lt;tt&gt;eve::ignore_first ignore / eve::first_true[ignore]&lt;/tt&gt;</a></li>
+<li class="level3"><a href="#autotoc_md59">&lt;tt&gt;while (!match) / aligned_s += wide::static_size&lt;/tt&gt;</a></li>
+<li class="level3"><a href="#autotoc_md60">&lt;tt&gt;match = eve::first_true(cur == zeroes);&lt;/tt&gt;</a></li>
+<li class="level3"><a href="#autotoc_md61">&lt;tt&gt;aligned_s.get() + *match - s&lt;/tt&gt;</a></li>
 </ul>
 </ul>
 </li>
-<li class="level1"><a href="#autotoc_md58">Comparison with real strlens</a></li>
+<li class="level1"><a href="#autotoc_md62">Comparison with real strlens</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md__large_hdd_dev_project_eve_doc_tutorial_tutorial01_strlen"></a></p>
@@ -162,47 +162,47 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
  The strlen we will implement is discussed in this <a href="https://stackoverflow.com/questions/25566302/vectorized-strlen-getting-away-with-reading-unallocated-memory">stackoverflow</a> and is very close to <a href="https://opensource.apple.com/source/Libc/Libc-997.90.3/x86_64/string/strlen.s">MacOs x86</a> and <a href="https://code.woboq.org/userspace/glibc/sysdeps/aarch64/multiarch/strlen_asimd.S.html">glibc arm-v8</a> implemenations. <br  />
  You can also find this tutorial in <a href="https://youtu.be/d6NcnyXjc3I">this talk</a> though the syntax was updated.</p>
 <p><em>NOTE: we are not advocating rewriting <code>strlen</code> with EVE - this was just an example to show the interfaces and to prove that we have high quality codegen.</em></p>
-<h1><a class="anchor" id="autotoc_md47"></a>
+<h1><a class="anchor" id="autotoc_md51"></a>
 Key idea</h1>
 <p>SIMD allows us to test multiple chars at once for zero and that what will do with EVE. However, how can we read multiple bytes if the string can be less that what we try to read? We are just going to state the solution here: <b>reading a register from an address aligned to the size of the register is safe due to allocations happening in pages</b>. <br  />
  You can find a detailed discussion on <a href="https://stackoverflow.com/questions/25566302/vectorized-strlen-getting-away-with-reading-unallocated-memory">stackoverflow</a> or in <a href="https://youtu.be/d6NcnyXjc3I">this talk</a>.</p>
 <p>(insert src/strlen.src.html here)</p>
 <p>Let's break it down.</p>
-<h3><a class="anchor" id="autotoc_md48"></a>
+<h3><a class="anchor" id="autotoc_md52"></a>
 &lt;tt&gt;reinterpret_cast&lt;/tt&gt;.</h3>
 <p><code>char</code> is not guarantied to be a <code>signed char</code> or an <code>unsigned char</code> and can be an individual type. EVE supports <code>int8_t</code> and <code>uint8_t</code> but not weird <code>char</code>, so we have to cast.</p>
-<h3><a class="anchor" id="autotoc_md49"></a>
+<h3><a class="anchor" id="autotoc_md53"></a>
 typedef for &lt;tt&gt;eve::wide&lt;std::uint8_t&gt;&lt;/tt&gt;</h3>
 <p><code><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a></code> is EVE's abstraction on top of the simd register. By default EVE will select the native register size for your platform. You can override that with an arbitraty power of 2 by providing <code>eve::fixed&lt;N&gt;</code> as a second parameter, which is useful in certain cases.</p>
-<h3><a class="anchor" id="autotoc_md50"></a>
+<h3><a class="anchor" id="autotoc_md54"></a>
 &lt;tt&gt;const wide zero{0};&lt;/tt&gt;</h3>
 <p>We will compare each element we load with 0 and this populates us a full wide of zeroes. You can construct a wide from a constant or a variable.</p>
-<h3><a class="anchor" id="autotoc_md51"></a>
+<h3><a class="anchor" id="autotoc_md55"></a>
 &lt;tt&gt;eve::previous_aligned_address(s);&lt;/tt&gt;</h3>
 <p>This returns the previous address aligned to the default width of the register. You can specify an <code>eve::fixed&lt;N&gt;{}</code> as a second parameter if you wanted to override how many elements you needed to align to (for non-default width). There is a convenience template variable <code>eve::lane&lt;N&gt;</code> that has <code>eve::fixed&lt;N&gt;</code> type. It returns a special type <a class="el" href="structeve_1_1aligned__ptr.html" title="Wrapper for non-owning aligned pointers.">eve::aligned_ptr</a>[T, size_t] - second parameter is alignment in bytes. (there is a default = native register size), Here we want the library to take care of all of that, so we just rely on CTAD.</p>
-<h3><a class="anchor" id="autotoc_md52"></a>
+<h3><a class="anchor" id="autotoc_md56"></a>
 &lt;tt&gt;eve::unsafe(eve::load)(aligned_s);&lt;/tt&gt;</h3>
 <p>We load a <code>wide</code> from <code>aligned_s</code> pointer. There are two ways to do it:</p><ul>
 <li><code>wide(ptr)</code> constructor</li>
 <li><code>eve::load</code> function Here we are perfectly fine doing either of those until we decide to use our strlen with dynamic analysis. As was mentioned previously, it is OK to load from an aligned address but not from the view of C++. The dynamic analysis on this <code>strlen</code> will report an issue because you read outside of the allocated memory. For <code>asan</code> and <code>tsan</code> we have special modifier <code>unsafe</code>. When we call <code>eve::unsafe(eve::load)(aligned_s)</code>, EVE detects build with these sanitizers and disable them for this load. <code>wide(ptr)</code> constructor does not have a way to do this.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md53"></a>
+<h3><a class="anchor" id="autotoc_md57"></a>
 &lt;tt&gt;cur == zeroes&lt;/tt&gt;</h3>
 <p>This is an elementwise comparison for equality between <code>cur</code> and <code>zeroes</code>. The result is <code><a class="el" href="structeve_1_1logical.html" title="Wrapper for SIMD compatible logical types.">eve::logical</a>&lt;wide&gt;</code> - a class representing N booleans where N is the cardinal of our wide.</p>
-<h3><a class="anchor" id="autotoc_md54"></a>
+<h3><a class="anchor" id="autotoc_md58"></a>
 &lt;tt&gt;eve::ignore_first ignore / eve::first_true[ignore]&lt;/tt&gt;</h3>
 <p><code>first_true</code> takes a <code>logical</code> and returns the optional position of the first <code>true</code> element. However we compute <code>previous_aligned_address(s)</code> and not just <code>s</code>, so there might be some 0s we are not interested in. <br  />
  For this purpose <code>eve</code> provides some conditional mutators, most commonly used ones are: <code>ignore_first</code>, <code>ignore_last</code>, <code>ignore_extrema</code> (ignores from both sides).</p>
-<h3><a class="anchor" id="autotoc_md55"></a>
+<h3><a class="anchor" id="autotoc_md59"></a>
 &lt;tt&gt;while (!match) / aligned_s += wide::static_size&lt;/tt&gt;</h3>
 <p>While we didn't find the 0, we go to the next chunk. <code>wide::static_size</code> is the cardinal of the <code>wide</code>. Alternatively we could have used <code>wide.size()</code>. but <code>static_size</code> has the advantage of being <code>constexpr</code> friendly.</p>
-<h3><a class="anchor" id="autotoc_md56"></a>
+<h3><a class="anchor" id="autotoc_md60"></a>
 &lt;tt&gt;match = eve::first_true(cur == zeroes);&lt;/tt&gt;</h3>
 <p>This is the same <code>first_true</code> but we no longer need to ignore anything.</p>
-<h3><a class="anchor" id="autotoc_md57"></a>
+<h3><a class="anchor" id="autotoc_md61"></a>
 &lt;tt&gt;aligned_s.get() + *match - s&lt;/tt&gt;</h3>
 <p>Finally, compute where we finished.</p>
-<h1><a class="anchor" id="autotoc_md58"></a>
+<h1><a class="anchor" id="autotoc_md62"></a>
 Comparison with real strlens</h1>
 <p>The code above closely resembles <a href="https://opensource.apple.com/source/Libc/Libc-997.90.3/x86_64/string/strlen.s">MacOs x86 strlen</a>. <br  />
  With EVE compiled for <code>sse2</code>: <a href="https://godbolt.org/z/hvr3P5">godbolt</a> <br  />
@@ -225,7 +225,7 @@ Comparison with real strlens</h1>
 </div> <!-- DOXYSTRAP RELATED -->
 </div> <!-- DOXYSTRAP RELATED -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat May 22 2021 22:36:16 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon May 24 2021 18:34:02 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

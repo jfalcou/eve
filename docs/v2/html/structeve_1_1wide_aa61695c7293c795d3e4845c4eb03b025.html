@@ -207,7 +207,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
           <tr><td class="navtab"><a class="navtab" href="structeve_1_1wide.html#a0be60111aec8c0aef7ab33b1d8d33066">operator&gt;&gt;</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="structeve_1_1wide.html#a7ad4d3a98ce4b80a9382c8bf98af1592">operator&gt;&gt;=</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="structeve_1_1wide_a4b2a9dde81cf44e116e6717cfc904c7a.html#a4b2a9dde81cf44e116e6717cfc904c7a">operator[]</a></td></tr>
-          <tr><td class="navtabHL"><a class="navtab" href="structeve_1_1wide_ae63086d1cabbb2e1119ec64efd6ce72a.html#ae63086d1cabbb2e1119ec64efd6ce72a">operator[]</a></td></tr>
+          <tr><td class="navtabHL"><a class="navtab" href="structeve_1_1wide_aa61695c7293c795d3e4845c4eb03b025.html#aa61695c7293c795d3e4845c4eb03b025">operator[]</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1wide_a51f3565eee8f48fc07b156803a8fd122.html#a51f3565eee8f48fc07b156803a8fd122">operator[]</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="structeve_1_1wide.html#a1381717bc1cf7bb76529bb51a7118766">operator^</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="structeve_1_1wide.html#a639a7dd4e74a426b1bf3ba1ad026f458">operator^</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="structeve_1_1wide.html#a907dff44bdca625423b14cabb27b5385">operator^</a></td></tr>
@@ -240,8 +241,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
       </div>
    </td>
    <td valign="top" class="mempage">
-<a id="ae63086d1cabbb2e1119ec64efd6ce72a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae63086d1cabbb2e1119ec64efd6ce72a">&#9670;&nbsp;</a></span>operator[]() <span class="overload">[1/2]</span></h2>
+<a id="aa61695c7293c795d3e4845c4eb03b025"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa61695c7293c795d3e4845c4eb03b025">&#9670;&nbsp;</a></span>operator[]() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -257,7 +258,7 @@ template&lt;std::ptrdiff_t... I&gt; </div>
           <td class="memname">auto <a class="el" href="structeve_1_1wide.html">eve::wide</a>&lt; Type, Cardinal, ABI &gt;::operator[] </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structeve_1_1pattern__t.html">pattern_t</a>&lt; I... &gt;&#160;</td>
-          <td class="paramname"><em>idx</em></td><td>)</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -269,15 +270,16 @@ template&lt;std::ptrdiff_t... I&gt; </div>
 </div><div class="memdoc">
 
 <p>Static lookup via lane indexing. </p>
-<p>Does not participate in overload in overload resolution if ...</p>
+<p>Generate a new <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> which is an arbitrary shuffling of current <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> lanes. &lsquo;p&rsquo; is an instance of <a class="el" href="structeve_1_1pattern__t.html" title="Shuffling pattern.">eve::pattern_t</a> constructed via the <a class="el" href="group__simd.html#ga61c6484edbe5ceb7f92946bc798802dd" title="Generate a shuffling pattern.">eve::pattern</a> template variable. Values appearing in the pattern must be between 0 and <code><a class="el" href="group__details.html#gae1eceedc7fc52c9f33893e6ce7b1b2a9" title="Size of the wide in number of lanes.">size()</a>-1</code> or equal to <a class="el" href="group__simd.html#ga11b65eff854b205c9f9ef8dbd559bb9b" title="Tag for zeroing swizzle index.">eve::na_</a> to indicate the value at this lane must be replaced by zero or this operator will not participate in overload resolution.</p>
+<p>Note that if the statically generated pattern matches a predefined <a class="el" href="group__shuffling.html">Shuffling and Swizzling</a> function the corresponding optimized shuffling functions will be called.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">idx</td><td>A <a class="el" href="group__simd.html#ga61c6484edbe5ceb7f92946bc798802dd" title="Generate a shuffling pattern.">eve::pattern</a> defining a shuffling pattern </td></tr>
+    <tr><td class="paramname">p</td><td>A <a class="el" href="group__simd.html#ga61c6484edbe5ceb7f92946bc798802dd" title="Generate a shuffling pattern.">eve::pattern</a> defining a shuffling pattern </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A wide constructed as <code>wide{ get(I), ... }</code>. </dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="structeve_1_1pattern__t.html" title="Shuffling pattern.">eve::pattern_t</a> //! </dd>
+<dl class="section return"><dt>Returns</dt><dd>A wide constructed as <code>wide{ get(I), ... }</code>.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="structeve_1_1pattern__t.html" title="Shuffling pattern.">eve::pattern_t</a> </dd>
 <dd>
 <a class="el" href="group__simd.html#ga61c6484edbe5ceb7f92946bc798802dd" title="Generate a shuffling pattern.">eve::pattern</a></dd></dl>
 <p><b>Example:</b></p>
@@ -287,7 +289,7 @@ template&lt;std::ptrdiff_t... I&gt; </div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  <a class="code" href="structeve_1_1wide.html">eve::wide&lt;int, eve::fixed&lt;8&gt;</a>&gt; r{1, 2, 4, 8, 16, 32, 64, 128, 256};</div>
+<div class="line">  <a class="code" href="structeve_1_1wide.html">eve::wide&lt;int, eve::fixed&lt;8&gt;</a>&gt; r{1, 2, 4, 8, 16, 32, 64, 128};</div>
 <div class="line">  std::cout &lt;&lt; r &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Reindex r with a static pattern</span></div>
@@ -309,7 +311,7 @@ template&lt;std::ptrdiff_t... I&gt; </div>
 </div> <!-- DOXYSTRAP RELATED -->
 </div> <!-- DOXYSTRAP RELATED -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat May 22 2021 22:36:16 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon May 24 2021 18:34:02 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>
