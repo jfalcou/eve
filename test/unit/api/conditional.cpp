@@ -8,6 +8,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <cstddef>
 
 #include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>
@@ -20,7 +21,7 @@ template<typename Type, typename Cond> void check_conditional_bits()
   using m_t = typename eve::logical<Type>::storage_type::type;
   m_t bits_mask = m_t(~eve::detail::set_lower_n_bits<m_t>(Type::size()));
 
-  for(std::size_t i = 0;i <= Type::size();i++)
+  for(std::ptrdiff_t i = 0;i <= Type::size();i++)
   {
     auto ignore_mask = Cond(i).mask(eve::as_<Type>()).storage().value;
     TTS_EQUAL( m_t(ignore_mask & bits_mask), m_t(0) );
@@ -91,10 +92,10 @@ EVE_TEST_TYPES( "keep_first behavior", eve::test::simd::all_types)
   TTS_EQUAL( keep_first(type::size()).mask(as_<type>()).bits(), eve::true_(as_<type>()).bits());
   TTS_EQUAL( (if_else(keep_first(type::size()),value, type(69))), value                   );
 
-  for(std::size_t i = 1;i < type::size();i++)
+  for(std::ptrdiff_t i = 1;i < type::size();i++)
   {
-    logical<type> mref  = [i](std::size_t j, auto) { return j < i; };
-    type          ref   = [i,&value](std::size_t j, auto) { return (j < i) ? value.get(j) : 69.f; };
+    logical<type> mref  = [i](auto j, auto) { return j < i; };
+    type          ref   = [i,&value](auto j, auto) { return (j < i) ? value.get(j) : 69.f; };
 
     TTS_EQUAL( keep_first(i).mask(as_<type>()).bits(), mref.bits() );
     TTS_EQUAL( (if_else(keep_first(i),value, type(69))), ref);
@@ -127,10 +128,10 @@ EVE_TEST_TYPES( "ignore_last behavior", eve::test::simd::all_types)
   TTS_EQUAL( ignore_last(0).mask(as_<type>()).bits(), eve::true_(as_<type>()).bits());
   TTS_EQUAL( (if_else(ignore_last(0),value, type(69))), value                   );
 
-  for(std::size_t i = 1;i < type::size();i++)
+  for(std::ptrdiff_t i = 1;i < type::size();i++)
   {
-    logical<type> mref  = [i](std::size_t j, std::size_t c) { return j < c-i; };
-    type          ref   = [i,&value](std::size_t j, std::size_t c) { return (j < c-i) ? value.get(j) : 69; };
+    logical<type> mref  = [i](auto j, auto c) { return j < c-i; };
+    type          ref   = [i,&value](auto j, auto c) { return (j < c-i) ? value.get(j) : 69; };
 
     TTS_EQUAL( ignore_last(i).mask(as_<type>()).bits(), mref.bits() );
     TTS_EQUAL( (if_else(ignore_last(i),value, type(69))), ref);
@@ -162,10 +163,10 @@ EVE_TEST_TYPES( "keep_last behavior", eve::test::simd::all_types)
   TTS_EQUAL( keep_last(type::size()).mask(as_<type>()).bits(), eve::true_(as_<type>()).bits());
   TTS_EQUAL( (if_else(keep_last(type::size()),value, type(69))), value                   );
 
-  for(std::size_t i = 1;i < type::size();i++)
+  for(std::ptrdiff_t i = 1;i < type::size();i++)
   {
-    logical<type> mref  = [i](std::size_t j, std::size_t c) { return j >= c-i; };
-    type          ref   = [i,&value](std::size_t j, std::size_t c) { return (j >= c-i) ? value.get(j) : 69.f; };
+    logical<type> mref  = [i](auto j, auto c) { return j >= c-i; };
+    type          ref   = [i,&value](auto j, auto c) { return (j >= c-i) ? value.get(j) : 69.f; };
 
     TTS_EQUAL( keep_last(i).mask(as_<type>()).bits(), mref.bits() );
     TTS_EQUAL( (if_else(keep_last(i),value, type(69))), ref);
@@ -197,10 +198,10 @@ EVE_TEST_TYPES( "ignore_first behavior", eve::test::simd::all_types)
   TTS_EQUAL( ignore_first(0).mask(as_<type>()).bits(), eve::true_(as_<type>()).bits());
   TTS_EQUAL( (if_else(ignore_first(0),value, type(69))), value  );
 
-  for(std::size_t i = 1;i < type::size();i++)
+  for(std::ptrdiff_t i = 1;i < type::size();i++)
   {
-    logical<type> mref  = [i](std::size_t j, auto) { return j >= i; };
-    type          ref   = [i,&value](std::size_t j, auto) { return (j >= i) ? value.get(j) : 69.f; };
+    logical<type> mref  = [i](auto j, auto) { return j >= i; };
+    type          ref   = [i,&value](auto j, auto) { return (j >= i) ? value.get(j) : 69.f; };
 
     TTS_EQUAL( ignore_first(i).mask(as_<type>()).bits(), mref.bits() );
     TTS_EQUAL( (if_else(ignore_first(i),value, type(69))), ref);
@@ -270,9 +271,9 @@ EVE_TEST_TYPES( "ignore_first/last behavior", eve::test::simd::all_types)
   TTS_EXPR_IS( ((ignore_first(1) && ignore_last(0)).mask( as_<type>() )), logical<type> );
 
   // All masks combo
-  for(std::size_t li = 0;li <=type::size();li++)
+  for(std::ptrdiff_t li = 0;li <=type::size();li++)
   {
-    for(std::size_t fi =0;fi <=type::size();fi++)
+    for(std::ptrdiff_t fi =0;fi <=type::size();fi++)
     {
       auto mref  = ignore_first(fi).mask(as_<type>()) && ignore_last(li).mask(as_<type>());
       type ref   = if_else(mref, value,  type(69));

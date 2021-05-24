@@ -32,6 +32,7 @@
 #include <eve/function/sinpi.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/module/real/core/detail/generic/horn.hpp>
+#include <cstddef>
 
 namespace eve::detail
 {
@@ -392,7 +393,7 @@ namespace eve::detail
           auto other = [Logsqrt2pi](T xx) {
             T      x    = xx;
             auto   test = (x < T(13.0));
-            size_t nb   = eve::count_true(test);
+            std::ptrdiff_t nb   = eve::count_true(test);
             T      r1   = zero(as<T>());
             if( nb > 0 )
             {

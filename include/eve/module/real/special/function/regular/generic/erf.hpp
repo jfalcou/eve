@@ -99,7 +99,7 @@ namespace eve::detail
         T sqry =  eve::sqr(y);
         auto test1 = eve::is_less(y, T( 0.46875)); // 15/32;
         T r1 = eve::zero(as<T>());
-        std::size_t nb = eve::count_true(test1);
+      auto nb = eve::count_true(test1);
         if(nb > 0)  //here y < 0.46875
         {
           T ysq = if_else(y > halfeps(as<T>()), sqry, eve::zero);
@@ -132,7 +132,7 @@ namespace eve::detail
         T x =  eve::abs(a0);
         T r1 = eve::zero(as<T>());
         auto test1 = eve::is_less(x, 6.6666667e-01f); //Ratio<T, 2, 3>());
-          std::size_t nb = eve::count_true(test1);
+        auto nb = eve::count_true(test1);
         if(nb > 0)
         {
           r1 =  a0*kernel_erf1(sqr(x));
