@@ -110,14 +110,15 @@ namespace eve::detail
     else                                  return bit_cast(block, tgt);
   }
 
-  template<typename Iterator, typename T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE auto load ( eve::as_<logical<wide<T, N, ABI>>> const &
+  template<typename Iterator, typename T, typename N>
+  EVE_FORCEINLINE auto load ( eve::as_<logical<wide<T, N>>> const &
                             , Iterator b, Iterator e
                             ) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
-    auto block = [&]() -> wide<T, N, ABI>
+    auto block = [&]() -> wide<T, N>
     {
-      using tgt = eve::as_<wide<T, N, ABI>>;
+      using tgt = eve::as_<wide<T, N>>;
       return load(tgt(), b, e);
     }();
 
