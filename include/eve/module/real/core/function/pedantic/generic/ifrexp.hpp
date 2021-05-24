@@ -7,6 +7,15 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/concept/value.hpp>
+#include <eve/constant/exponentmask.hpp>
+#include <eve/constant/half.hpp>
+#include <eve/constant/limitexponent.hpp>
+#include <eve/constant/maxexponentm1.hpp>
+#include <eve/constant/nbmantissabits.hpp>
+#include <eve/constant/twotonmb.hpp>
+#include <eve/detail/apply_over.hpp>
+#include <eve/detail/kumi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/add.hpp>
 #include <eve/function/bit_notand.hpp>
@@ -17,15 +26,6 @@
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/logical_notand.hpp>
 #include <eve/function/pedantic.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/limitexponent.hpp>
-#include <eve/constant/maxexponentm1.hpp>
-#include <eve/constant/nbmantissabits.hpp>
-#include <eve/constant/exponentmask.hpp>
-#include <eve/constant/twotonmb.hpp>
-#include <tuple>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
@@ -59,13 +59,13 @@ namespace eve::detail
         {
           ee -= t ;
         }
-        return std::make_tuple( if_else(test0, add[test1](r0,a0), eve::zero), ee);
+        return kumi::make_tuple( if_else(test0, add[test1](r0,a0), eve::zero), ee);
       }
       else  if constexpr(scalar_value<T>)
       {
         if (a0 == 0 || is_not_finite(a0))
         {
-          return std::make_tuple(a0, i_t(0));
+          return kumi::make_tuple(a0, i_t(0));
         }
         else if constexpr(scalar_value<T>)
         {
@@ -82,16 +82,16 @@ namespace eve::detail
             }
             T x  = bit_andnot(a0, exponentmask(as<T>()));        // clear exp. in a0
             e = bit_shr(e,nmb)- maxexponentm1(eve::as<T>());         // compute exp.
-            if (e > limitexponent(eve::as<T>())) return std::make_tuple(a0, i_t(0));
+            if (e > limitexponent(eve::as<T>())) return kumi::make_tuple(a0, i_t(0));
             e -= t;
-            return std::make_tuple(bit_or(x,half(eve::as<T>())), e);
+            return kumi::make_tuple(bit_or(x,half(eve::as<T>())), e);
           }
           else
           {
             T x  = bit_andnot(a0, exponentmask(as<T>()));        // clear exp. in a0
             e = bit_shr(e,nmb)- maxexponentm1(eve::as<T>());         // compute exp.
-            if (e > limitexponent(eve::as<T>())) return std::make_tuple(a0, i_t(0));
-            return std::make_tuple(bit_or(x,half(eve::as<T>())), e);
+            if (e > limitexponent(eve::as<T>())) return kumi::make_tuple(a0, i_t(0));
+            return kumi::make_tuple(bit_or(x,half(eve::as<T>())), e);
           }
         }
       }

@@ -24,10 +24,10 @@ EVE_TEST_TYPES( "Check return types of eve::frexp(simd)"
   <typename T>(eve::as_<T>)
 {
   using v_t = eve::element_type_t<T>;
-  TTS_EXPR_IS( eve::frexp(T()), (std::tuple<T, T>) );
-  TTS_EXPR_IS( eve::frexp(v_t()), (std::tuple<v_t,v_t>) );
-  TTS_EXPR_IS( eve::pedantic(eve::frexp)(T()), (std::tuple<T, T>) );
-  TTS_EXPR_IS( eve::pedantic(eve::frexp)(v_t()), (std::tuple<v_t,v_t>) );
+  TTS_EXPR_IS( eve::frexp(T()), (kumi::tuple<T, T>) );
+  TTS_EXPR_IS( eve::frexp(v_t()), (kumi::tuple<v_t,v_t>) );
+  TTS_EXPR_IS( eve::pedantic(eve::frexp)(T()), (kumi::tuple<T, T>) );
+  TTS_EXPR_IS( eve::pedantic(eve::frexp)(v_t()), (kumi::tuple<v_t,v_t>) );
 };
 
 //==================================================================================================

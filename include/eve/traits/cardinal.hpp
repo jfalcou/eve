@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/rebindable.hpp>
 #include <eve/detail/is_wide.hpp>
 #include <eve/forward.hpp>
 #include <cstddef>
@@ -31,12 +30,6 @@ namespace eve
 
   template<typename Type>
   struct cardinal<logical<Type>> : cardinal<Type>
-  {
-  };
-
-  template<typename Type>
-  requires( rebindable<Type> )
-  struct cardinal<Type> : cardinal<std::tuple_element_t<0,Type>>
   {
   };
 

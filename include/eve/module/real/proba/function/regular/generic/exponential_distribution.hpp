@@ -7,20 +7,20 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/concept/value.hpp>
+#include <eve/constant/log_2.hpp>
+#include <eve/constant/one.hpp>
+#include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/kumi.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/platform.hpp>
-#include <type_traits>
-#include <eve/concept/value.hpp>
-#include <eve/module/real/proba/detail/attributes.hpp>
-#include <eve/module/real/proba/detail/urg01.hpp>
 #include <eve/function/exp.hpp>
 #include <eve/function/expm1.hpp>
 #include <eve/function/if_else.hpp>
-#include <eve/function/is_gtz.hpp>
 #include <eve/function/is_finite.hpp>
+#include <eve/function/is_gtz.hpp>
+#include <eve/function/is_ltz.hpp>
 #include <eve/function/log.hpp>
 #include <eve/function/log1p.hpp>
 #include <eve/function/normal_distribution.hpp>
@@ -28,10 +28,10 @@
 #include <eve/function/rec.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/sqrt.hpp>
-#include <eve/function/is_ltz.hpp>
-#include <eve/constant/log_2.hpp>
-#include <eve/constant/one.hpp>
-#include <array>
+#include <eve/module/real/proba/detail/attributes.hpp>
+#include <eve/module/real/proba/detail/urg01.hpp>
+#include <eve/platform.hpp>
+#include <type_traits>
 
 namespace eve
 {
@@ -262,7 +262,7 @@ namespace eve
       auto halfwidth = normz*eve::sqrt(pcov);
       if constexpr(floating_real_value<T>) halfwidth *= d.lambda;
       auto exp_halfwidth =  eve::exp(halfwidth);
-      return std::make_tuple(-expm1(-z), -expm1(-z/exp_halfwidth), -expm1(-z*exp_halfwidth));
+      return kumi::make_tuple(-expm1(-z), -expm1(-z/exp_halfwidth), -expm1(-z*exp_halfwidth));
     }
 
   }

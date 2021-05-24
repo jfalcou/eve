@@ -7,28 +7,28 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/module/real/core/detail/generic/horn.hpp>
-#include <eve/module/real/core/detail/generic/horn1.hpp>
-#include <eve/function/binarize.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_greater_equal.hpp>
-#include <eve/function/oneminus.hpp>
-#include <eve/function/shl.hpp>
-#include <eve/function/bit_xor.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/fnma.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/constant/signmask.hpp>
+#include <eve/concept/value.hpp>
 #include <eve/constant/eps.hpp>
 #include <eve/constant/mhalf.hpp>
 #include <eve/constant/nan.hpp>
+#include <eve/constant/signmask.hpp>
+#include <eve/detail/abi.hpp>
+#include <eve/detail/kumi.hpp>
+#include <eve/detail/overload.hpp>
+#include <eve/function/binarize.hpp>
+#include <eve/function/bit_xor.hpp>
+#include <eve/function/fma.hpp>
+#include <eve/function/fnma.hpp>
+#include <eve/function/if_else.hpp>
+#include <eve/function/is_greater_equal.hpp>
+#include <eve/function/oneminus.hpp>
+#include <eve/function/rec.hpp>
+#include <eve/function/shl.hpp>
+#include <eve/function/sqr.hpp>
+#include <eve/module/real/core/detail/generic/horn.hpp>
+#include <eve/module/real/core/detail/generic/horn1.hpp>
 #include <eve/traits/as_integer.hpp>
 #include <type_traits>
-#include <eve/concept/value.hpp>
-
-#include <eve/function/rec.hpp>
 
 namespace eve::detail
 {
@@ -134,7 +134,7 @@ namespace eve::detail
       if (swap_bit) std::swap(ce, se);
       se = bit_xor(se,sin_sign_bit);
       ce = bit_xor(ce,cos_sign_bit);
-      return std::make_tuple(se, ce);
+      return kumi::make_tuple(se, ce);
     }
     else
     {
@@ -144,7 +144,7 @@ namespace eve::detail
       auto cos_sign_bit = binarize(is_nez(bit_xor(swap_bit, tmp)), signmask(eve::as<elt_t>()));
       auto sin_sign_bit = bit_xor(bitofsign(a0),if_else(tmp, signmask(eve::as<T>()), eve::zero));
       auto test = is_nez(swap_bit);
-      return std::make_tuple( bit_xor(if_else(test, ce0, se0), sin_sign_bit)
+      return kumi::make_tuple( bit_xor(if_else(test, ce0, se0), sin_sign_bit)
                             , bit_xor(if_else(test, se0, ce0), cos_sign_bit) );
     }
   }

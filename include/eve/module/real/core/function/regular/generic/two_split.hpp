@@ -7,18 +7,18 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/constant/ieee_constant.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/constant/ieee_constant.hpp>
+#include <eve/detail/abi.hpp>
 #include <eve/detail/apply_over.hpp>
-#include <array>
+#include <eve/detail/kumi.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/detail/meta.hpp>
 
 namespace eve::detail
 {
   template<real_value T>
-  EVE_FORCEINLINE std::array<T, 2>
+  EVE_FORCEINLINE kumi::tuple<T, T>
   two_split_(EVE_SUPPORTS(cpu_)
             , const T& a) noexcept
   {

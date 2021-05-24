@@ -7,16 +7,16 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/is_infinite.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
-#include <array>
+#include <eve/detail/kumi.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/function/is_infinite.hpp>
 
 namespace eve::detail
 {
   template<floating_real_value T>
-  EVE_FORCEINLINE std::array<T, 2>
+  EVE_FORCEINLINE kumi::tuple<T, T>
   two_add_(EVE_SUPPORTS(cpu_)
           , const T& a
           , const T& b) noexcept

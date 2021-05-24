@@ -15,15 +15,16 @@
 #include <eve/constant/pio_2.hpp>
 #include <eve/constant/pio_4.hpp>
 #include <eve/detail/apply_over.hpp>
+#include <eve/detail/kumi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/fnms.hpp>
+#include <eve/function/is_less_equal.hpp>
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/is_not_less_equal.hpp>
-#include <eve/function/is_less_equal.hpp>
 #include <eve/function/nearest.hpp>
 #include <eve/function/rempio2.hpp>
 #include <eve/function/sqr.hpp>
@@ -32,12 +33,11 @@
 #include <eve/module/real/math/detail/generic/trig_finalize.hpp>
 
 #include <type_traits>
-#include <array>
 
 namespace eve::detail
 {
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr std::array<T, 2>
+  EVE_FORCEINLINE constexpr kumi::tuple<T, T>
   sincos_(EVE_SUPPORTS(cpu_), restricted_type const &, T a0) noexcept
   {
     if constexpr( has_native_abi_v<T> )
@@ -48,8 +48,8 @@ namespace eve::detail
       auto x2nlepi2_16 = is_not_less_equal(x2, pi2_16);
       if constexpr( scalar_value<T> )
       {
-        return (x2nlepi2_16) ? std::array<T, 2>{nan(eve::as<T>()), nan(eve::as<T>())}
-        : std::array<T, 2>{sin_eval(x2, a0), cos_eval(x2)};
+        return (x2nlepi2_16) ? kumi::tuple<T, T>{nan(eve::as<T>()), nan(eve::as<T>())}
+        : kumi::tuple<T, T>{sin_eval(x2, a0), cos_eval(x2)};
       }
       else
       {
@@ -62,7 +62,7 @@ namespace eve::detail
   }
 
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr std::array<T, 2>
+  EVE_FORCEINLINE constexpr kumi::tuple<T, T>
   sincos_(EVE_SUPPORTS(cpu_), small_type const &, T a0) noexcept
   {
     if constexpr(has_native_abi_v<T>)
@@ -121,7 +121,7 @@ namespace eve::detail
   //////////////////////////////////////////////////////////////////////////////
   /// big medium
   template<decorator D, floating_real_value T>
-  EVE_FORCEINLINE constexpr std::array<T, 2>
+  EVE_FORCEINLINE constexpr kumi::tuple<T, T>
   sincos_(EVE_SUPPORTS(cpu_), D const &, T a0) noexcept
   {
     if constexpr( has_native_abi_v<T> )

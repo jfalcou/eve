@@ -28,7 +28,6 @@
 #include <eve/concept/pattern.hpp>
 #include <eve/concept/properly_convertible.hpp>
 #include <eve/concept/range.hpp>
-#include <eve/concept/rebindable.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/vectorizabel.hpp>
 #include <eve/concept/vectorized.hpp>

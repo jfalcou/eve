@@ -31,13 +31,11 @@
 #include <eve/constant/invsqrt_2.hpp>
 #include <eve/constant/pi.hpp>
 #include <eve/constant/pio_4.hpp>
-#include <type_traits>
 #include <eve/module/real/core/detail/generic/poleval.hpp>
-#include <tuple>
+#include <type_traits>
 
 namespace eve::detail
 {
-
   template<floating_real_value T>
   EVE_FORCEINLINE T cyl_bessel_y1_(EVE_SUPPORTS(cpu_), T a0) noexcept
   {

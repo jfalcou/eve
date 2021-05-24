@@ -11,6 +11,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/apply_over.hpp>
+#include <eve/detail/kumi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/all.hpp>
 #include <eve/function/is_nltz.hpp>
@@ -19,7 +20,6 @@
 #include <eve/module/real/math/detail/constant/rempio2_limits.hpp>
 #include <eve/module/real/math/detail/generic/rempio2_kernel.hpp>
 
-#include <array>
 #include <type_traits>
 
 namespace eve::detail
@@ -51,7 +51,7 @@ namespace eve::detail
   }
 
   template<floating_value T> EVE_FORCEINLINE
-  std::array<T, 3> rempio2_(EVE_SUPPORTS(cpu_), T const &x) noexcept
+  kumi::tuple<T, T, T> rempio2_(EVE_SUPPORTS(cpu_), T const &x) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {

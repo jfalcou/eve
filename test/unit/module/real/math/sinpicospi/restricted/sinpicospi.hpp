@@ -9,11 +9,11 @@
 #include <eve/function/cospi.hpp>
 #include <eve/function/sinpi.hpp>
 #include <eve/constant/nan.hpp>
-#include <array>
+
 
 TTS_CASE_TPL("Check sinpicospi  return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::restricted(eve::sinpicospi)(T()), (std::array<T,2>));
+  TTS_EXPR_IS(eve::restricted(eve::sinpicospi)(T()), (kumi::tuple<T,T>));
 }
 
 TTS_CASE_TPL("Check (eve::sinpicospi behavior", EVE_TYPE)

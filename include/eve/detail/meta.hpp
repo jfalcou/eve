@@ -7,8 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/rebindable.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/detail/kumi.hpp>
 #include <type_traits>
 #include <utility>
 #include <cstdint>
@@ -367,18 +367,6 @@ namespace eve::detail
   struct as_trait : as_trait_impl<Concept, types<T...>>
   {};
 
-  // How many items in tuple-like things ? 0 means non-tuple
-  template<typename T>
-  struct count : std::integral_constant<std::size_t,0>
-  {};
-
-  template<typename T> requires( rebindable<T> )
-  struct count<T> : std::tuple_size<T>
-  {};
-
-  template<typename T>
-  inline constexpr auto count_v = count<T>::value;
-
   // Tuple free apply
   template<std::size_t Count, typename Func> EVE_FORCEINLINE decltype(auto) apply(Func &&f)
   {
@@ -404,7 +392,7 @@ namespace eve::detail
 
   // Find the index of the first Ps equals to p
   template<typename P, typename... Ps>
-  consteval std::ptrdiff_t find_index(P p, std::tuple<Ps...> )
+  consteval std::ptrdiff_t find_index(P p, kumi::tuple<Ps...> )
   {
     bool checks[] = { (Ps{} == p)...};
     for(std::size_t i=0;i<sizeof...(Ps);++i) if(checks[i]) return i;

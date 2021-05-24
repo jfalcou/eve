@@ -11,11 +11,10 @@
 #include <eve/constant/nan.hpp>
 #include <eve/constant/pi.hpp>
 #include <cmath>
-#include <array>
 
 TTS_CASE_TPL("Check eve::medium(eve::sincos) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS( eve::medium(eve::sincos)(T()), (std::array<T,2>));
+  TTS_EXPR_IS( eve::medium(eve::sincos)(T()), (kumi::tuple<T,T>));
 }
 
 TTS_CASE_TPL("Check eve::medium(eve::sincos) behavior", EVE_TYPE)

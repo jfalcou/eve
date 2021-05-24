@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/forward.hpp>
-#include <eve/concept/rebindable.hpp>
 #include <eve/detail/is_wide.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/is_logical.hpp>
@@ -27,20 +26,6 @@ namespace eve::detail
   template<typename T>
   struct is_scalar_value<eve::logical<T>> : std::is_arithmetic<T>
   {};
-
-  template<typename Type>
-  requires( rebindable<Type> && !detail::is_wide<Type>::value )
-  struct is_scalar_value<Type>
-  {
-    template<typename Idx>      struct eval_n;
-    template<std::size_t... N>  struct eval_n<std::index_sequence<N...>>
-    {
-      static constexpr bool value = (is_scalar_value<std::tuple_element_t<N,Type>>::value && ...);
-    };
-
-    using size = std::tuple_size<Type>;
-    static constexpr bool value = eval_n<std::make_index_sequence<size::value>>::value;
-  };
 }
 
 namespace eve

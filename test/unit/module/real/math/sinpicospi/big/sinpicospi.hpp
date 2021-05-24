@@ -10,11 +10,10 @@
 #include <eve/function/sinpi.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <array>
 
 TTS_CASE_TPL("Check  eve::big(eve::sinpicospi) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::big(eve::sinpicospi)(T()), (std::array<T,2>));
+  TTS_EXPR_IS(eve::big(eve::sinpicospi)(T()), (kumi::tuple<T,T>));
 }
 
 TTS_CASE_TPL("Check  eve::big(eve::sinpicospi) behavior", EVE_TYPE)

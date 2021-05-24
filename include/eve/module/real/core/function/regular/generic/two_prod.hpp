@@ -7,20 +7,20 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
+#include <eve/detail/kumi.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/platform.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/two_split.hpp>
-#include <eve/concept/value.hpp>
 #include <eve/platform.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <array>
+#include <eve/platform.hpp>
 
 namespace eve::detail
 {
   template<floating_real_value T>
-  EVE_FORCEINLINE std::array<T, 2>
+  EVE_FORCEINLINE kumi::tuple<T, T>
   two_prod_(EVE_SUPPORTS(cpu_)
            , const T& a
            , const T& b) noexcept

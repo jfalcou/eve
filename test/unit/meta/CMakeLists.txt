@@ -13,7 +13,6 @@ make_unit( "unit.meta" sign_of.cpp )
 
 ##==================================================================================================
 ## Concepts tests
-make_unit( "unit.meta.concept" rebindable.cpp )
 make_unit( "unit.meta.concept" decorator.cpp )
 make_unit( "unit.meta.concept" value.cpp )
 make_unit( "unit.meta.concept" native_simd_for_abi.cpp )

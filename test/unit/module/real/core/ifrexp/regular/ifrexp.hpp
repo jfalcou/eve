@@ -10,7 +10,7 @@
 
 TTS_CASE_TPL("Check ifrexp return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::ifrexp(T()), (std::tuple<T,eve::as_integer_t<T,signed>>));
+  TTS_EXPR_IS(eve::ifrexp(T()), (kumi::tuple<T,eve::as_integer_t<T,signed>>));
 }
 
 TTS_CASE_TPL("Check (eve::ifrexp behavior", EVE_TYPE)

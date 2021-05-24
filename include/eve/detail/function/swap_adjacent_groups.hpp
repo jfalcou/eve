@@ -11,7 +11,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/concept/vectorized.hpp>
 #include <eve/pattern.hpp>
-#include <tuple>
+#include <eve/detail/kumi.hpp>
 #include <bit>
 
 namespace eve
@@ -39,7 +39,7 @@ namespace eve
       constexpr auto sz = sizeof...(I);
       constexpr auto x = []<std::size_t... N>( std::index_sequence<N...> )
       {
-        return std::make_tuple(swap_adjacent_groups_pattern<sz/(1<<(N+1)),sz>... );
+        return kumi::make_tuple(swap_adjacent_groups_pattern<sz/(1<<(N+1)),sz>... );
       }(std::make_index_sequence<std::bit_width(sz)-1>{});
 
       // Find the fitting one

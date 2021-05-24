@@ -10,10 +10,10 @@
 #include <eve/detail/meta.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
+#include <eve/detail/kumi.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/swizzle.hpp>
-#include <array>
 #include <bit>
 
 namespace eve::detail
@@ -29,7 +29,7 @@ namespace eve::detail
       {
         using ui_t = as_integer_t<T, unsigned>;
         auto uia0 =  bit_cast(a0, as<ui_t>());
-        return std::array<ui_t, 2>{ui_t(uia0 & ui_t(0xF)), ui_t((uia0 & ui_t(0xF0)) >> 4)};
+        return kumi::tuple<ui_t, ui_t>{ui_t(uia0 & ui_t(0xF)), ui_t((uia0 & ui_t(0xF0)) >> 4)};
       }
       else
       {
@@ -38,6 +38,7 @@ namespace eve::detail
         if constexpr(simd_value<T>)
         {
           using ui_t       = wide<si_t, typename cardinal_t<T>::combined_type>;
+          using vi_t       = wide<si_t, cardinal_t<T>>;
           auto uia0        = bit_cast(a0, as<ui_t>());
           auto constexpr p = as_pattern ( [](auto i, auto c)
                                           {
@@ -46,8 +47,8 @@ namespace eve::detail
                                         );
           auto z = uia0[p].slice();
 
-          if constexpr(endian::native == endian::little)  return z;
-          else                                            return decltype(z){z[1], z[0]};
+          if constexpr(endian::native == endian::little)  return kumi::tuple<vi_t, vi_t>{bit_cast(z[0], as<vi_t>()), bit_cast(z[1], as<vi_t>())};
+          else                                            return kumi::tuple<vi_t, vi_t>{bit_cast(z[1], as<vi_t>()), bit_cast(z[0], as<vi_t>())};
         }
         else
         {
@@ -55,8 +56,8 @@ namespace eve::detail
           using r_t   = std::array<si_t, 2>;
           auto z      = bit_cast(a0, as<r_t>());
 
-          if constexpr(endian::native == endian::little)  return z;
-          else                                            return std::array<si_t, 2>{z[1], z[0]};
+          if constexpr(endian::native == endian::little)  return kumi::tuple<si_t, si_t>{z[0], z[1]};
+          else                                            return kumi::tuple<si_t, si_t>{z[1], z[0]};
         }
       }
     }
