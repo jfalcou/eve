@@ -15,17 +15,17 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N, typename ABI>
+  template<typename T, typename N>
   EVE_FORCEINLINE auto
-  combine(cpu_ const &, wide<T, N, ABI> const &l, wide<T, N, ABI> const &h) noexcept
+  combine(cpu_ const &, wide<T, N> const &l, wide<T, N> const &h) noexcept
   {
     using that_t = wide<T, typename N::combined_type>;
 
-    if constexpr( is_emulated_v<ABI> )
+    if constexpr( is_emulated_v<abi_t<T, N>> )
     {
       return apply<N::value>([&](auto... I) { return that_t {l.get(I)..., h.get(I)...}; });
     }
-    else if constexpr( is_aggregated_v<ABI> )
+    else if constexpr( is_aggregated_v<abi_t<T, N>> )
     {
       that_t that;
 
@@ -36,17 +36,17 @@ namespace eve::detail
     }
   }
 
-  template<typename T, typename N, typename ABI>
+  template<typename T, typename N>
   EVE_FORCEINLINE auto
-  combine(cpu_ const &, logical<wide<T, N, ABI>> const &l, logical<wide<T, N, ABI>> const &h) noexcept
+  combine(cpu_ const &, logical<wide<T, N>> const &l, logical<wide<T, N>> const &h) noexcept
   {
     using that_t = logical<wide<T, typename N::combined_type>>;
 
-    if constexpr( is_emulated_v<ABI> )
+    if constexpr( is_emulated_v<abi_t<T, N>> )
     {
       return apply<N::value>([&](auto... I) { return that_t {l.get(I)..., h.get(I)...}; });
     }
-    else if constexpr( is_aggregated_v<ABI> )
+    else if constexpr( is_aggregated_v<abi_t<T, N>> )
     {
       that_t that;
 
