@@ -12,6 +12,7 @@
 #include <eve/detail/function/simd/x86/flags.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/category.hpp>
+#include <eve/traits/as_floating_point.hpp>
 #include <eve/forward.hpp>
 
 namespace eve::detail
@@ -149,6 +150,15 @@ namespace eve::detail
         else  if constexpr( c == category::uint32x4 )             return _mm_cmpeq_epi32(v,w);
         else  if constexpr( c == category::uint16x8 )             return _mm_cmpeq_epi16(v,w);
         else  if constexpr( c == category::uint8x16 )             return _mm_cmpeq_epi8 (v,w);
+        else  if constexpr( c == category::int64x4 || c == category::uint64x4 ||
+                            c == category::int32x8 || c == category::uint32x8
+                          )
+        {
+          using f_t = as_floating_point_t<wide<T, N, ABI>>;
+          auto fv   = bit_cast( v , as_<f_t>{});
+               fv  ^= bit_cast( w, as_<f_t>{});
+          return bit_cast ( !to_logical( fv ), as_<logical<wide<T, N, ABI>>>{} );
+        }
         else                                                      return aggregate(eq,v,w);
       }
     }
@@ -163,7 +173,7 @@ namespace eve::detail
     }
     else
     {
-      return bit_cast(v.bits() == w.bits(), as(v));
+      return bit_cast(~v.bits() ^ w.bits(), as(v));
     }
   }
 
@@ -237,7 +247,7 @@ namespace eve::detail
     }
     else
     {
-      return bit_cast(v.bits() != w.bits(), as(v));
+      return bit_cast( v.bits() ^ w.bits(), as(v));
     }
   }
 
