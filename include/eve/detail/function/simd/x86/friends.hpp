@@ -12,6 +12,7 @@
 #include <eve/detail/function/simd/x86/flags.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/category.hpp>
+#include <eve/traits/as_floating_point.hpp>
 #include <eve/forward.hpp>
 
 namespace eve::detail
@@ -92,7 +93,7 @@ namespace eve::detail
       else  if constexpr( c == category::uint32x4   ) return mask8 {_mm_cmpeq_epu32_mask   (v,w)};
       else  if constexpr( c == category::uint16x32  ) return mask32{_mm512_cmpeq_epu16_mask(v,w)};
       else  if constexpr( c == category::uint16x16  ) return mask16{_mm256_cmpeq_epu16_mask(v,w)};
-      else  if constexpr( c == category::uint16x8   ) return mask8 {_mm_cmpeq_epu16_mask    (v,w)};
+      else  if constexpr( c == category::uint16x8   ) return mask8 {_mm_cmpeq_epu16_mask   (v,w)};
       else  if constexpr( c == category::uint8x64   ) return mask64{_mm512_cmpeq_epu8_mask (v,w)};
       else  if constexpr( c == category::uint8x32   ) return mask32{_mm256_cmpeq_epu8_mask (v,w)};
       else  if constexpr( c == category::uint8x16   ) return mask16{_mm_cmpeq_epu8_mask    (v,w)};
@@ -163,7 +164,11 @@ namespace eve::detail
     }
     else
     {
-      return bit_cast(v.bits() == w.bits(), as(v));
+      constexpr auto c = categorize<wide<T, N, ABI>>();
+
+      // AVX has a bad == for integers so we use XOR
+      if constexpr( current_api == avx )  return bit_cast(~v.bits()  ^ w.bits(), as(v));
+      else                                return bit_cast( v.bits() == w.bits(), as(v));
     }
   }
 
@@ -237,7 +242,7 @@ namespace eve::detail
     }
     else
     {
-      return bit_cast(v.bits() != w.bits(), as(v));
+      return bit_cast( v.bits() ^ w.bits(), as(v));
     }
   }
 
