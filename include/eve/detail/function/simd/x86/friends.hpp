@@ -93,7 +93,7 @@ namespace eve::detail
       else  if constexpr( c == category::uint32x4   ) return mask8 {_mm_cmpeq_epu32_mask   (v,w)};
       else  if constexpr( c == category::uint16x32  ) return mask32{_mm512_cmpeq_epu16_mask(v,w)};
       else  if constexpr( c == category::uint16x16  ) return mask16{_mm256_cmpeq_epu16_mask(v,w)};
-      else  if constexpr( c == category::uint16x8   ) return mask8 {_mm_cmpeq_epu16_mask    (v,w)};
+      else  if constexpr( c == category::uint16x8   ) return mask8 {_mm_cmpeq_epu16_mask   (v,w)};
       else  if constexpr( c == category::uint8x64   ) return mask64{_mm512_cmpeq_epu8_mask (v,w)};
       else  if constexpr( c == category::uint8x32   ) return mask32{_mm256_cmpeq_epu8_mask (v,w)};
       else  if constexpr( c == category::uint8x16   ) return mask16{_mm_cmpeq_epu8_mask    (v,w)};
@@ -150,15 +150,6 @@ namespace eve::detail
         else  if constexpr( c == category::uint32x4 )             return _mm_cmpeq_epi32(v,w);
         else  if constexpr( c == category::uint16x8 )             return _mm_cmpeq_epi16(v,w);
         else  if constexpr( c == category::uint8x16 )             return _mm_cmpeq_epi8 (v,w);
-        else  if constexpr( c == category::int64x4 || c == category::uint64x4 ||
-                            c == category::int32x8 || c == category::uint32x8
-                          )
-        {
-          using f_t = as_floating_point_t<wide<T, N, ABI>>;
-          auto fv   = bit_cast( v , as_<f_t>{});
-               fv  ^= bit_cast( w, as_<f_t>{});
-          return bit_cast ( !to_logical( fv ), as_<logical<wide<T, N, ABI>>>{} );
-        }
         else                                                      return aggregate(eq,v,w);
       }
     }
@@ -173,7 +164,11 @@ namespace eve::detail
     }
     else
     {
-      return bit_cast(~v.bits() ^ w.bits(), as(v));
+      constexpr auto c = categorize<wide<T, N, ABI>>();
+
+      // AVX has a bad == for integers so we use XOR
+      if constexpr( current_api == avx )  return bit_cast(~v.bits()  ^ w.bits(), as(v));
+      else                                return bit_cast( v.bits() == w.bits(), as(v));
     }
   }
 
