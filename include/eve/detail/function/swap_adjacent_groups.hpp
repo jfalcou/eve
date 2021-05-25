@@ -51,7 +51,7 @@ namespace eve
 
 #include <eve/detail/function/simd/common/swap_adjacent_groups.hpp>
 
-#if defined(EVE_HW_X86)
+#if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/detail/function/simd/x86/swap_adjacent_groups.hpp>
 #endif
 

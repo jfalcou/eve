@@ -44,5 +44,5 @@
 #if defined(SPY_SIMD_IS_X86) && !defined(EVE_NO_SIMD)
 #  define EVE_SUPPORTS_NATIVE_SIMD
 #  define EVE_HW_X86
+#  define EVE_INCLUDE_X86_HEADER
 #endif
-

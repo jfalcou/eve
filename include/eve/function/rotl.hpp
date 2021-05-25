@@ -37,6 +37,6 @@ namespace eve
 #include <eve/arch.hpp>
 #include <eve/module/real/core/function/regular/generic/rotl.hpp>
 
-#if defined(EVE_HW_X86)
+#if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/real/core/function/regular/simd/x86/rotl.hpp>
 #endif

@@ -17,7 +17,6 @@ namespace eve
 
 #include <eve/module/real/math/function/regular/generic/log2.hpp>
 
-#if defined(EVE_HW_X86)
+#if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/real/math/function/regular/simd/x86/log2.hpp>
 #endif
-

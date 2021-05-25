@@ -10,6 +10,6 @@
 #include <eve/function/fnms.hpp>
 #include <eve/module/real/core/function/numeric/generic/fnms.hpp>
 
-#if defined(EVE_HW_X86)
+#if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/real/core/function/numeric/simd/x86/fnms.hpp>
 #endif

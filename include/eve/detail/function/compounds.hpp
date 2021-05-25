@@ -12,7 +12,7 @@
 #include <eve/detail/function/simd/common/arithmetic_compounds.hpp>
 #include <eve/detail/function/operators.hpp>
 
-#if defined(EVE_HW_X86)
+#if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/detail/function/simd/x86/bit_compounds.hpp>
 #  include <eve/detail/function/simd/x86/arithmetic_compounds.hpp>
 #endif

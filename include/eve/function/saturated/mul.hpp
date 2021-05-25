@@ -10,6 +10,6 @@
 #include <eve/function/mul.hpp>
 #include <eve/module/real/core/function/saturated/generic/mul.hpp>
 
-#if defined(EVE_HW_X86)
+#if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/real/core/function/saturated/simd/x86/mul.hpp>
 #endif

@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/detail/function/simd/common/load.hpp>
 
-#if defined(EVE_HW_X86)
+#if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/detail/function/simd/x86/load.hpp>
 #endif
 

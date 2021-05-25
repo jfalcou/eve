@@ -17,6 +17,6 @@ namespace eve
 #include <eve/module/real/core/function/regular/generic/is_unordered.hpp>
 #include <eve/arch.hpp>
 
-#if defined(EVE_HW_X86)
+#if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/real/core/function/regular/simd/x86/is_unordered.hpp>
 #endif
