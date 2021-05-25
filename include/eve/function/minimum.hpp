@@ -17,7 +17,7 @@ namespace eve
 #include <eve/arch.hpp>
 #include <eve/module/real/algorithm/function/regular/generic/minimum.hpp>
 
-#if defined(EVE_HW_ARM)
+#if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/module/real/algorithm/function/regular/simd/arm/neon/minimum.hpp>
 #endif
 

@@ -18,6 +18,6 @@
 #  include <eve/detail/function/simd/ppc/friends.hpp>
 #endif
 
-#if defined(EVE_HW_ARM)
+#if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/detail/function/simd/arm/neon/friends.hpp>
 #endif

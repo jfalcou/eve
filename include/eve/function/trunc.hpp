@@ -25,8 +25,6 @@ namespace eve
 #  include <eve/module/real/core/function/regular/simd/ppc/trunc.hpp>
 #endif
 
-#if defined(EVE_HW_ARM)
+#if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/module/real/core/function/regular/simd/arm/neon/trunc.hpp>
 #endif
-
-

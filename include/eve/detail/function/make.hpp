@@ -18,7 +18,6 @@
 #  include <eve/detail/function/simd/ppc/make.hpp>
 #endif
 
-#if defined(EVE_HW_ARM)
+#if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/detail/function/simd/arm/neon/make.hpp>
 #endif
-

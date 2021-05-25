@@ -21,7 +21,6 @@ namespace eve
 #  include <eve/module/real/core/function/regular/simd/x86/fms.hpp>
 #endif
 
-#if defined(EVE_HW_ARM)
+#if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/module/real/core/function/regular/simd/arm/neon/fms.hpp>
 #endif
-

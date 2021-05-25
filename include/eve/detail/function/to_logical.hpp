@@ -18,6 +18,6 @@
 #  include <eve/detail/function/simd/ppc/to_logical.hpp>
 #endif
 
-#if defined(EVE_HW_ARM)
+#if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/detail/function/simd/arm/neon/to_logical.hpp>
 #endif

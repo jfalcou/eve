@@ -21,6 +21,6 @@ namespace eve
 #  include <eve/module/real/algorithm/function/regular/simd/ppc/all.hpp>
 #endif
 
-#if defined(EVE_HW_ARM)
+#if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/module/real/algorithm/function/regular/simd/arm/neon/all.hpp>
 #endif
