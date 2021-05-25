@@ -24,14 +24,14 @@ namespace eve
 
 #include <eve/detail/function/simd/common/swizzle.hpp>
 
-#if defined(EVE_HW_X86)
+#if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/detail/function/simd/x86/swizzle.hpp>
 #endif
 
-#if defined(EVE_HW_POWERPC)
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
 #  include <eve/detail/function/simd/ppc/swizzle.hpp>
 #endif
 
-#if defined(EVE_HW_ARM)
+#if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/detail/function/simd/arm/neon/swizzle.hpp>
 #endif

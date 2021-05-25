@@ -17,14 +17,14 @@ namespace eve
 
 #include <eve/module/real/core/function/regular/generic/mul.hpp>
 
-#if defined(EVE_HW_X86)
+#if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/real/core/function/regular/simd/x86/mul.hpp>
 #endif
 
-#if defined(EVE_HW_POWERPC)
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
 #  include <eve/module/real/core/function/regular/simd/ppc/mul.hpp>
 #endif
 
-#if defined(EVE_HW_ARM)
+#if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/module/real/core/function/regular/simd/arm/neon/mul.hpp>
 #endif

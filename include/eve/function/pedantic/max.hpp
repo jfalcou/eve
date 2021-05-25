@@ -11,6 +11,6 @@
 #include <eve/module/real/core/function/pedantic/generic/max.hpp>
 
 
-#if defined(EVE_HW_ARM)
+#if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/module/real/core/function/pedantic/simd/arm/neon/max.hpp>
 #endif

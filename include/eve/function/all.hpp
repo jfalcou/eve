@@ -17,10 +17,10 @@ namespace eve
 #include <eve/arch.hpp>
 #include <eve/module/real/algorithm/function/regular/generic/all.hpp>
 
-#if defined(EVE_HW_POWERPC)
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
 #  include <eve/module/real/algorithm/function/regular/simd/ppc/all.hpp>
 #endif
 
-#if defined(EVE_HW_ARM)
+#if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/module/real/algorithm/function/regular/simd/arm/neon/all.hpp>
 #endif

@@ -13,5 +13,5 @@
 #if defined(SPY_SIMD_IS_PPC) && !defined(EVE_NO_SIMD)
 #  define EVE_SUPPORTS_NATIVE_SIMD
 #  define EVE_HW_POWERPC
+#  define EVE_INCLUDE_POWERPC_HEADER
 #endif
-

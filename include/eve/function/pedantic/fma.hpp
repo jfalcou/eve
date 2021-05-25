@@ -10,6 +10,6 @@
 #include <eve/function/fma.hpp>
 #include <eve/module/real/core/function/pedantic/generic/fma.hpp>
 
-#if defined(EVE_HW_X86)
+#if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/real/core/function/pedantic/simd/x86/fma.hpp>
 #endif

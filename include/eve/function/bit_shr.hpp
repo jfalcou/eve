@@ -35,6 +35,6 @@ namespace eve
 #include <eve/arch.hpp>
 #include <eve/module/real/core/function/regular/generic/bit_shr.hpp>
 
-#if defined(EVE_HW_POWERPC)
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
 #  include <eve/module/real/core/function/regular/simd/ppc/bit_shr.hpp>
 #endif

@@ -17,14 +17,14 @@ namespace eve
 #include <eve/arch.hpp>
 #include <eve/module/real/core/function/regular/generic/fma.hpp>
 
-#if defined(EVE_HW_X86)
+#if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/real/core/function/regular/simd/x86/fma.hpp>
 #endif
 
-#if defined(EVE_HW_POWERPC)
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
 #  include <eve/module/real/core/function/regular/simd/ppc/fma.hpp>
 #endif
 
-#if defined(EVE_HW_ARM)
+#if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/module/real/core/function/regular/simd/arm/neon/fma.hpp>
 #endif
