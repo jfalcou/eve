@@ -22,6 +22,8 @@ namespace eve
   //! @brief  Standard-compliant allocator handling the allocation and deallocation of segment of
   //!         aligned memory.
   //!
+  //! **Required header:** `#include <eve/memory/aligned_allocator.hpp>`
+  //!
   //! By default, allocation will be aligned on current architecture's SIMD compatible
   //! alignment but can be specified otherwise.
   //!

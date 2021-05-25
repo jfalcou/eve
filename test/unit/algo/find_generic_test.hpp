@@ -37,7 +37,7 @@ namespace algo_test
     using e_t = eve::element_type_t<T>;
     std::vector<e_t, eve::aligned_allocator<e_t, 4096>> page(4096 / sizeof(e_t), e_t{0});
 
-    constexpr int elements_to_test  = std::min(T::static_size * 10, 300l);
+    constexpr int elements_to_test  = std::min(T::size() * 10, 300l);
 
     auto f = page.data();
     auto l = f + elements_to_test;

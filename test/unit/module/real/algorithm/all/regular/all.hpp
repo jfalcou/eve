@@ -57,15 +57,15 @@ TTS_CASE_TPL("Check eve::all[ignore](simd)", EVE_TYPE)
 
     mask.set(0, false);
     TTS_EXPECT(eve::all[eve::ignore_first(1)](mask));
-    TTS_EXPECT(eve::all[eve::ignore_last(T::static_size)](mask));
-    TTS_EXPECT_NOT(eve::all[eve::ignore_last(T::static_size - 1)](mask));
+    TTS_EXPECT(eve::all[eve::ignore_last(T::size())](mask));
+    TTS_EXPECT_NOT(eve::all[eve::ignore_last(T::size() - 1)](mask));
   }
 
   // every element
   {
     eve::logical<T> mask(true);
 
-    for( int i = 0; i != T::static_size; ++i)
+    for( int i = 0; i != T::size(); ++i)
     {
       mask.set(i, false);
       TTS_EXPECT_NOT(eve::all(mask));
@@ -77,15 +77,15 @@ TTS_CASE_TPL("Check eve::all[ignore](simd)", EVE_TYPE)
   {
     eve::logical<T> mask(true);
 
-    for(int i = 0; i != T::static_size; ++i)
+    for(int i = 0; i != T::size(); ++i)
     {
       TTS_EXPECT(eve::all[eve::ignore_first(i)](mask));
       mask.set(i, false);
       TTS_EXPECT_NOT(eve::all[eve::ignore_first(i)](mask));
       TTS_EXPECT(eve::all[eve::ignore_first(i + 1)](mask));
 
-      TTS_EXPECT_NOT(eve::all[eve::keep_last(T::static_size - i)](mask));
-      TTS_EXPECT(eve::all[eve::keep_last(T::static_size - i - 1)](mask));
+      TTS_EXPECT_NOT(eve::all[eve::keep_last(T::size() - i)](mask));
+      TTS_EXPECT(eve::all[eve::keep_last(T::size() - i - 1)](mask));
     }
   }
 
@@ -93,45 +93,45 @@ TTS_CASE_TPL("Check eve::all[ignore](simd)", EVE_TYPE)
   {
     eve::logical<T> mask(true);
 
-    for(int i = 0; i != T::static_size; ++i)
+    for(int i = 0; i != T::size(); ++i)
     {
       TTS_EXPECT(eve::all[eve::ignore_last(i)](mask));
-      mask.set(T::static_size - i - 1, false);
+      mask.set(T::size() - i - 1, false);
       TTS_EXPECT_NOT(eve::all[eve::ignore_last(i)](mask));
       TTS_EXPECT(eve::all[eve::ignore_last(i + 1)](mask));
 
-      TTS_EXPECT_NOT(eve::all[eve::keep_first(T::static_size - i)](mask));
-      TTS_EXPECT(eve::all[eve::keep_first(T::static_size - i - 1)](mask));
+      TTS_EXPECT_NOT(eve::all[eve::keep_first(T::size() - i)](mask));
+      TTS_EXPECT(eve::all[eve::keep_first(T::size() - i - 1)](mask));
     }
   }
 
   // ignore_extrema, keep_between
   {
-    for (int i = 0; i < T::static_size + 1; ++i)
+    for (int i = 0; i < T::size() + 1; ++i)
     {
-      for (int j = T::static_size - i; j ; --j)
+      for (int j = T::size() - i; j ; --j)
       {
-        eve::logical<T> mask([&](int k, int) { return (k >= i) && (T::static_size - k) > j; });
+        eve::logical<T> mask([&](int k, int) { return (k >= i) && (T::size() - k) > j; });
         TTS_EXPECT(eve::all[eve::ignore_extrema(i, j)](mask));
 
-        if (i + j == T::static_size) continue;
+        if (i + j == T::size()) continue;
 
         mask.set(i, false);
 
         TTS_EXPECT_NOT(eve::all[eve::ignore_extrema(i, j)](mask));
         TTS_EXPECT(eve::all[eve::ignore_extrema(i + 1, j)](mask));
 
-        TTS_EXPECT_NOT(eve::all[eve::keep_between(i, T::static_size - j)](mask));
-        TTS_EXPECT(eve::all[eve::keep_between(i + 1, T::static_size - j)](mask));
+        TTS_EXPECT_NOT(eve::all[eve::keep_between(i, T::size() - j)](mask));
+        TTS_EXPECT(eve::all[eve::keep_between(i + 1, T::size() - j)](mask));
 
         mask.set(i, true);
 
-        mask.set(T::static_size - j - 1, false);
+        mask.set(T::size() - j - 1, false);
         TTS_EXPECT_NOT(eve::all[eve::ignore_extrema(i, j)](mask));
         TTS_EXPECT(eve::all[eve::ignore_extrema(i, j + 1)](mask));
 
-        TTS_EXPECT_NOT(eve::all[eve::keep_between(i, T::static_size - j)](mask));
-        TTS_EXPECT(eve::all[eve::keep_between(i, T::static_size - j - 1)](mask));
+        TTS_EXPECT_NOT(eve::all[eve::keep_between(i, T::size() - j)](mask));
+        TTS_EXPECT(eve::all[eve::keep_between(i, T::size() - j - 1)](mask));
       }
     }
   }

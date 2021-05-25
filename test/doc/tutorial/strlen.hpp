@@ -16,7 +16,7 @@ std::size_t strlen_example(const char* s_) {
   std::optional match = eve::first_true[ignore](cur == zeroes);
 
   while (!match) {
-    aligned_s += wide::static_size;
+    aligned_s += wide::size();
     cur = eve::unsafe(eve::load)(aligned_s);
     match = eve::first_true(cur == zeroes);
   }

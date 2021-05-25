@@ -17,10 +17,30 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup simd
+  //! @{
+  //================================================================================================
+  //! @brief Wrapper for SIMD compatible logical types
+  //!
+  //! **Required header:** `#include <eve/logical.hpp>`
+  //!
+  //! eve::logical is an architecture-agnostic representation of a boolean mask and provides
+  //! standardized API to access informations, compute values and manipulate such mask. Contrary
+  //! to `bool`, an instance of logical has the same sizeof as `T`, allowing seamless interaction
+  //! with an instance eve::logical<eve::wide< T >>.
+  //!
+  //! @tparam T  Type of value to store a mask from
+  //================================================================================================
   template<typename T> struct logical
   {
+    //! The type associated to the boolean mask.
     using value_type  = T;
+
+    //! The type representing the numerical value of mask.
     using mask_type   = T;
+
+    //! The type representing the bitwise representation of the mask
     using bits_type   = as_integer_t<T, unsigned>;
 
     static constexpr bits_type true_mask  = ~bits_type{0};
@@ -29,33 +49,46 @@ namespace eve
     template<typename U> using rebind = logical<U>;
 
     //==============================================================================================
-    // Constructors
+    //! @name Constructors
+    //! @{
     //==============================================================================================
+    //! Default constructor
     EVE_FORCEINLINE constexpr logical() noexcept {}
+
+    EVE_FORCEINLINE constexpr logical(logical const&) noexcept = default;
+
+    //! Construct from a `bool`
     EVE_FORCEINLINE constexpr logical(bool v) noexcept : value_(v ? true_mask : false_mask) {}
 
+    //! Construct from a scalar_value
     template<scalar_value U>
     EVE_FORCEINLINE explicit constexpr logical(U const &v) noexcept
                   : value_((v != 0) ? true_mask : false_mask)
     {}
-
-    EVE_FORCEINLINE constexpr logical(const logical&) = default;
-    EVE_FORCEINLINE constexpr logical(logical&&) noexcept = default;
+    //==============================================================================================
+    //! @}
+    //==============================================================================================
 
     //==============================================================================================
-    // Assignment
+    //! @name Assignment operators
+    //! @{
     //==============================================================================================
-    EVE_FORCEINLINE constexpr logical &operator=(logical v) & noexcept
+    //! Assign another logical
+    EVE_FORCEINLINE constexpr logical &operator=(logical const& v) & noexcept
     {
       value_ = v.value_;
       return *this;
     }
 
+    //! Assign a `bool`
     EVE_FORCEINLINE constexpr logical &operator=(bool v) & noexcept
     {
       value_ = v ? true_mask : false_mask;
       return *this;
     }
+    //==============================================================================================
+    //! @}
+    //==============================================================================================
 
     //==============================================================================================
     // Logical operators
@@ -146,6 +179,11 @@ namespace eve
       return w.value() == !v;
     }
 
+    friend EVE_FORCEINLINE void swap(logical &lhs, logical &rhs) noexcept
+    {
+      lhs.swap(rhs);
+    }
+
     //==============================================================================================
     // Stream insertion operator
     //==============================================================================================
@@ -157,9 +195,7 @@ namespace eve
     private:
     bits_type value_;
   };
-
-  template<typename T> EVE_FORCEINLINE void swap(logical<T> &lhs, logical<T> &rhs) noexcept
-  {
-    lhs.swap(rhs);
-  }
+  //================================================================================================
+  //! @}
+  //================================================================================================
 }

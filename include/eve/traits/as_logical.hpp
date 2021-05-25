@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/forward.hpp>
-#include <eve/logical.hpp>
 
 namespace eve
 {

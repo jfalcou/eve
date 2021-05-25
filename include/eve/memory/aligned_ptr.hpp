@@ -24,6 +24,8 @@ namespace eve
   //================================================================================================
   //! @brief Wrapper for non-owning aligned pointers
   //!
+  //! **Required header:** `#include <eve/memory/aligned_ptr.hpp>`
+  //!
   //! aligned_ptr is a non-owning pointer that binds a preexisting, properly aligned memory and
   //! prevent any alignment-altering operations to be performed. Rebinding to another pointer is
   //! allowed only if the new pointer's alignment is compatible with the current aligned_ptr

@@ -12,7 +12,7 @@
 
 TTS_CASE( "Check for detection of native ABI")
 {
-  constexpr auto native = eve::wide<float>::static_size;
+  constexpr auto native = eve::wide<float>::size();
 
   TTS_EXPECT_NOT(( eve::has_native_abi_v<eve::wide<float, eve::fixed<2*native>>>              ));
   TTS_EXPECT_NOT(( eve::has_native_abi_v<eve::logical<eve::wide<float, eve::fixed<2*native>>>>));
@@ -31,7 +31,7 @@ TTS_CASE( "Check for detection of native ABI")
 
 TTS_CASE( "Check for detection of aggregated ABI")
 {
-  constexpr auto native = eve::wide<float>::static_size;
+  constexpr auto native = eve::wide<float>::size();
 
 #if defined(EVE_NO_SIMD)
   TTS_EXPECT_NOT(( eve::has_aggregated_abi_v<eve::wide<float, eve::fixed<2*native>>>              ));

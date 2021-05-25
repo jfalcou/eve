@@ -59,7 +59,7 @@ EVE_TEST_TYPES( "Check load to wides from re-aligned pointer", eve::test::simd::
   {
     if (!eve::is_aligned<A>(f))   return;
 
-    if constexpr (A >= D::static_alignment)
+    if constexpr (A >= D::alignment())
     {
       eve::aligned_ptr<P, static_cast<std::size_t>(A)> ptr{f};
       TTS_EQUAL(D{ptr}                                           , expected);

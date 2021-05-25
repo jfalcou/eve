@@ -19,6 +19,8 @@ namespace eve
   //! @struct as_
   //! @brief Lightweight type-wrapper
   //!
+  //! **Required header:** `#include <eve/as.hpp>`
+  //!
   //! Wraps type into a constexpr, trivially constructible empty class to optimize passing type
   //! parameters via object instead of via template parameters
   //================================================================================================

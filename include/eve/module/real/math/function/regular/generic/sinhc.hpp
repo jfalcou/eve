@@ -81,7 +81,7 @@ namespace eve::detail
         if( nb > 0)
         {
           z = sinhc_kernel(sqr(x));
-          if(nb >=T::static_size) return z;
+          if(nb >=T::size()) return z;
         }
         auto test1 = is_greater(x, maxlog(eve::as<T>())-log_2(eve::as<T>()));
         T fac = if_else(test1, half(eve::as<T>()), one(eve::as<T>()));

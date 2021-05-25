@@ -27,8 +27,8 @@ namespace eve::detail
         {
           std::ptrdiff_t k = 0;
 
-          ( ( v = Sub([&](auto i, auto) { return g(i + k, Pack::static_size); })
-            , k += Sub::static_size
+          ( ( v = Sub([&](auto i, auto) { return g(i + k, Pack::size()); })
+            , k += Sub::size()
             )
           , ...
           );

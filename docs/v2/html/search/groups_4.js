@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['memory_20management_118',['Memory Management',['../group__memory.html',1,'']]]
+  ['implementation_20details_275',['Implementation details',['../group__details.html',1,'']]]
 ];

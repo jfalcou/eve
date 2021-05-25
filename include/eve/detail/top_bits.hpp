@@ -42,7 +42,7 @@ struct top_bits
   using scalar_type = typename as_arithmetic_t<logical_type>::value_type;
   using abi_type = typename as_arithmetic_t<logical_type>::abi_type;
 
-  static constexpr std::ptrdiff_t static_size = logical_type::static_size;
+  static constexpr std::ptrdiff_t static_size = logical_type::size();
   static constexpr bool is_emulated_aggregated = has_emulated_abi_v<logical_type> && static_size > 64;
   static constexpr bool is_aggregated = has_aggregated_abi_v<logical_type> || is_emulated_aggregated;
   static constexpr bool is_avx512_logical = !abi_type::is_wide_logical;
@@ -370,7 +370,7 @@ EVE_FORCEINLINE Logical to_logical(top_bits<Logical> mmask)
   {
     // For arm and power we can likely do better, but we didn't care thus far.
     Logical res;
-    for (std::ptrdiff_t i = 0; i != Logical::static_size; ++i) {
+    for (std::ptrdiff_t i = 0; i != Logical::size(); ++i) {
       res.set(i, mmask.get(i));
     }
     return res;
@@ -407,7 +407,7 @@ EVE_FORCEINLINE std::ptrdiff_t first_true_guaranteed(top_bits<Logical> mmask)
   else
   {
     auto half_mmask = mmask.storage[1];
-    int offset = Logical::static_size / 2;
+    int offset = Logical::size() / 2;
 
     // trying to make a cmove (otherwise does not cmove, I think I tested)
     if (mmask.storage[0])

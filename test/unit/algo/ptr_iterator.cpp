@@ -18,7 +18,7 @@
 EVE_TEST_TYPES("Check ptr_iterator", algo_test::selected_types)
 <typename T>(eve::as_<T>)
 {
-  alignas(sizeof(T)) std::array<eve::element_type_t<T>, T::static_size> data;
+  alignas(sizeof(T)) std::array<eve::element_type_t<T>, T::size()> data;
   std::iota(data.begin(), data.end(), 0);
 
   T values([](int i, int) { return i; });
@@ -30,7 +30,7 @@ EVE_TEST_TYPES("Check ptr_iterator", algo_test::selected_types)
   };
 
   auto run_test = [&] <typename U>(U* f, U* l) {
-    using N = eve::fixed<T::static_size>;
+    using N = eve::fixed<T::size()>;
 
     using aligned_it = eve::algo::aligned_ptr_iterator<U, N>;
     using aligned_p = typename aligned_it::aligned_ptr_type;

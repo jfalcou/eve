@@ -8,9 +8,11 @@
 #pragma once
 
 //==================================================================================================
-//! @defgroup utility   Utility
-//! @defgroup functions Functions
-//! @namespace eve Main EVE namespace
+//! @defgroup   utility   Utility
+//! @defgroup   functions Functions
+//! @defgroup   simd      SIMD Types and Helpers
+//! @defgroup   details   Implementation details
+//! @namespace  eve       Main EVE namespace
 //==================================================================================================
 
 #include <eve/as.hpp>

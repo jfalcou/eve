@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['the_20expressive_20vector_20engine_55',['The Expressive Vector Engine',['../index.html',1,'']]],
-  ['tutorials_56',['Tutorials',['../tutorials.html',1,'']]],
-  ['type_57',['type',['../structeve_1_1as__.html#a71d0476bef3c779c1d4213bd20f2e1e6',1,'eve::as_']]],
-  ['type_20traits_58',['Type traits',['../group__traits.html',1,'']]]
+  ['rebind_105',['rebind',['../structeve_1_1aligned__allocator_1_1rebind.html',1,'eve::aligned_allocator&lt; T, Alignment &gt;::rebind&lt; U &gt;'],['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_00_01ABI_01_4_01_4.html#a511e1d893e781b3693a06e68769f4578',1,'eve::logical&lt; wide&lt; Type, Cardinal, ABI &gt; &gt;::rebind()'],['../structeve_1_1wide.html#a159b8a727bcce883ae8d6efa14f4ffd3',1,'eve::wide::rebind()'],['../structeve_1_1aligned__ptr.html#ac6704874599b1389068fd4396a8a9ad1',1,'eve::aligned_ptr::rebind()']]],
+  ['rescale_106',['rescale',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_00_01ABI_01_4_01_4.html#a702ec4455d1146dba1426f6c3a2e14d5',1,'eve::logical&lt; wide&lt; Type, Cardinal, ABI &gt; &gt;::rescale()'],['../structeve_1_1wide.html#a13e2e49af5db5ffb4034f70bceca895c',1,'eve::wide::rescale()']]]
 ];

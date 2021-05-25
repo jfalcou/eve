@@ -60,15 +60,15 @@ TTS_CASE_TPL("Check eve::any[ignore]", EVE_TYPE)
 
     mask.set(0, true);
     TTS_EXPECT_NOT(eve::any[eve::ignore_first(1)](mask));
-    TTS_EXPECT_NOT(eve::any[eve::ignore_last(T::static_size)](mask));
-    TTS_EXPECT(eve::any[eve::ignore_last(T::static_size - 1)](mask));
+    TTS_EXPECT_NOT(eve::any[eve::ignore_last(T::size())](mask));
+    TTS_EXPECT(eve::any[eve::ignore_last(T::size() - 1)](mask));
   }
 
   // every element
   {
     eve::logical<T> mask(false);
 
-    for( int i = 0; i != T::static_size; ++i)
+    for( int i = 0; i != T::size(); ++i)
     {
       mask.set(i, true);
       TTS_EXPECT(eve::any(mask));
@@ -80,7 +80,7 @@ TTS_CASE_TPL("Check eve::any[ignore]", EVE_TYPE)
   {
     eve::logical<T> mask(false);
 
-    for(int i = 0; i != T::static_size; ++i )
+    for(int i = 0; i != T::size(); ++i )
     {
       TTS_EXPECT_NOT(eve::any[eve::ignore_first(i)](mask));
       mask.set(i, true);
@@ -93,10 +93,10 @@ TTS_CASE_TPL("Check eve::any[ignore]", EVE_TYPE)
   {
     eve::logical<T> mask(false);
 
-    for(int i = 0; i != T::static_size; ++i )
+    for(int i = 0; i != T::size(); ++i )
     {
       TTS_EXPECT_NOT(eve::any[eve::ignore_last(i)](mask));
-      mask.set(T::static_size - i - 1, true);
+      mask.set(T::size() - i - 1, true);
       TTS_EXPECT(eve::any[eve::ignore_last(i)](mask));
       TTS_EXPECT_NOT(eve::any[eve::ignore_last(i + 1)](mask));
     }
@@ -104,14 +104,14 @@ TTS_CASE_TPL("Check eve::any[ignore]", EVE_TYPE)
 
   // ignore_extrema
   {
-    for (int i = 0; i < T::static_size + 1; ++i)
+    for (int i = 0; i < T::size() + 1; ++i)
     {
-      for (int j = T::static_size - i; j ; --j)
+      for (int j = T::size() - i; j ; --j)
       {
-        eve::logical<T> mask([&](int k, int) { return (k < i) || (T::static_size - k) < j; });
+        eve::logical<T> mask([&](int k, int) { return (k < i) || (T::size() - k) < j; });
         TTS_EXPECT_NOT(eve::any[eve::ignore_extrema(i, j)](mask));
 
-        if (i + j == T::static_size) continue;
+        if (i + j == T::size()) continue;
 
         mask.set(i, true);
 
@@ -119,7 +119,7 @@ TTS_CASE_TPL("Check eve::any[ignore]", EVE_TYPE)
         TTS_EXPECT_NOT(eve::any[eve::ignore_extrema(i + 1, j)](mask));
         mask.set(i, false);
 
-        mask.set(T::static_size - j - 1, true);
+        mask.set(T::size() - j - 1, true);
         TTS_EXPECT(eve::any[eve::ignore_extrema(i, j)](mask));
         TTS_EXPECT_NOT(eve::any[eve::ignore_extrema(i, j + 1)](mask));
       }

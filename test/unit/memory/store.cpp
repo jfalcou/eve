@@ -109,7 +109,7 @@ EVE_TEST( "Check store behavior with pointer of different alignment"
   {
     if (!eve::is_aligned<A>(f))   return;
 
-    if constexpr (A >= T::static_alignment)
+    if constexpr (A >= T::alignment())
     {
       if(::tts::verbose_status) std::cout << "With alignment: " << A << std::endl;
 
@@ -155,19 +155,19 @@ void store_ignore_test_pass(T what, eve::element_type_t<T> garbage_value, eve::e
   {
     e_t data;
     data = garbage_value;
-    eve::store[eve::ignore_first(T::static_size - 1)](what, &data - T::static_size + 1);
+    eve::store[eve::ignore_first(T::size() - 1)](what, &data - T::size() + 1);
     TTS_EQUAL(data, what.back());
 
-    eve::store[eve::ignore_last(T::static_size - 1)](what, &data);
+    eve::store[eve::ignore_last(T::size() - 1)](what, &data);
     TTS_EQUAL(data, what.front());
 
-    eve::store[eve::ignore_extrema(0, T::static_size - 1)](what, &data);
+    eve::store[eve::ignore_extrema(0, T::size() - 1)](what, &data);
     TTS_EQUAL(data, what.front());
   }
 
   // ignore doesn't write garbarge values
   {
-    std::array<e_t, 2 * T::static_size> data;
+    std::array<e_t, 2 * T::size()> data;
     const T filler{garbage_value};
 
     auto run_one_case = [&](auto ptr, auto ignore)
@@ -187,29 +187,29 @@ void store_ignore_test_pass(T what, eve::element_type_t<T> garbage_value, eve::e
 
     auto run_all_ignores = [&](auto ptr)
     {
-      for (int i = 0; i != T::static_size + 1; ++i)
+      for (int i = 0; i != T::size() + 1; ++i)
       {
         run_one_case(ptr, eve::ignore_first(i));
         run_one_case(ptr, eve::ignore_last(i));
 
-        for (int j = T::static_size - i; j != -1; --j)
+        for (int j = T::size() - i; j != -1; --j)
         {
           run_one_case(ptr, eve::ignore_extrema(i, j));
         }
       }
     };
 
-    for (e_t* f = data.begin(); f != data.end() - T::static_size; ++f)
+    for (e_t* f = data.begin(); f != data.end() - T::size(); ++f)
     {
       run_all_ignores(f);
 
-      static constexpr std::ptrdiff_t alignment = sizeof(e_t) * T::static_size;
+      static constexpr std::ptrdiff_t alignment = sizeof(e_t) * T::size();
 
       if (!eve::is_aligned<alignment>(f)) continue;
 
       run_all_ignores(eve::aligned_ptr<e_t, alignment>(f));
 
-      static constexpr std::ptrdiff_t double_alignment = sizeof(e_t) * T::static_size * 2;
+      static constexpr std::ptrdiff_t double_alignment = sizeof(e_t) * T::size() * 2;
 
       if (!eve::is_aligned<double_alignment>(f)) continue;
 

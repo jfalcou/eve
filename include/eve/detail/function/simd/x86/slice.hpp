@@ -85,7 +85,7 @@ namespace eve::detail
       auto v = a.storage().value;
 
       if constexpr( !Slice::value ) return mask{static_cast<value>(v)};
-      else                          return mask{static_cast<value>(v >> type::static_size)};
+      else                          return mask{static_cast<value>(v >> type::size())};
     }
     else
     {
