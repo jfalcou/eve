@@ -15,17 +15,17 @@ namespace eve::detail
 {
   template<real_scalar_value T, typename N, x86_abi ABI>
   EVE_FORCEINLINE auto movemask( eve::logical<eve::wide<T, N, ABI>> const &v ) noexcept
-    requires ( !ABI::is_wide_logical )
+    requires ( !abi_t<T, N>::is_wide_logical )
   {
     return std::pair{v.storage(), eve::lane<1>};
   }
 
   template<typename T, typename N, x86_abi ABI>
   EVE_FORCEINLINE auto movemask( eve::logical<eve::wide<T, N, ABI>> const &v ) noexcept
-    requires ( ABI::is_wide_logical )
+    requires ( abi_t<T, N>::is_wide_logical )
   {
     auto raw = [&] {
-      if constexpr( std::same_as<ABI, x86_128_> )
+      if constexpr( std::same_as<abi_t<T, N>, x86_128_> )
       {
              if constexpr( std::is_same_v<T, float > ) return (std::uint16_t)_mm_movemask_ps(v);
         else if constexpr( std::is_same_v<T, double> ) return (std::uint16_t)_mm_movemask_pd(v);

@@ -15,7 +15,7 @@ namespace eve::detail
   template<typename T, typename N, arm_abi ABI>
   EVE_FORCEINLINE wide<T,N,ABI> reverse_( EVE_SUPPORTS(neon128_), wide<T,N,ABI> v) noexcept
   {
-    constexpr bool one_instruction_basic_swizzle = (current_api >= asimd) || std::same_as<ABI, arm_64_>;
+    constexpr bool one_instruction_basic_swizzle = (current_api >= asimd) || std::same_as<abi_t<T, N>, arm_64_>;
 
     // two reverse instructions seem better than one table lookup.
     if constexpr ( N() >= 8 && one_instruction_basic_swizzle) return reverse_(EVE_RETARGET(cpu_), v);

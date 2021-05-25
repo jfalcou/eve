@@ -98,7 +98,7 @@ namespace eve::detail
   template<typename T, typename N, typename Ptr, typename ABI>
   EVE_FORCEINLINE
   auto load(eve::as_<logical<wide<T, N, ABI>>> const & tgt, Ptr p)
-  requires( dereference_as<logical<T>, Ptr>::value && !x86_abi<ABI>)
+  requires( dereference_as<logical<T>, Ptr>::value && !x86_abi<abi_t<T, N>>)
   {
     return  bit_cast
             ( [&]() -> wide<T, N, ABI>

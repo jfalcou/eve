@@ -29,7 +29,7 @@ namespace eve::detail
     }
     else
     {
-      if constexpr( std::same_as<ABI, arm_64_> )
+      if constexpr( std::same_as<abi_t<T, N>, arm_64_> )
       {
         using that_abi_t  = typename that_t::abi_type;
         using bytes_t     = typename that_t::template rebind<std::uint8_t,fixed<8>>;
@@ -51,7 +51,7 @@ namespace eve::detail
           return bit_cast(out_t{l,h}, as_<that_t>());
         }
       }
-      else if constexpr( std::same_as<ABI, arm_128_> )
+      else if constexpr( std::same_as<abi_t<T, N>, arm_128_> )
       {
         using bytes_t     = typename that_t::template rebind<std::uint8_t,fixed<16>>;
         bytes_t     b0    = bit_cast(v,as_<bytes_t>());

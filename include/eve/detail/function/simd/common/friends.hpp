@@ -38,7 +38,7 @@ namespace eve::detail
   template<real_scalar_value T, typename N, typename ABI>
   EVE_FORCEINLINE auto self_bitnot(wide<T,N,ABI> const& v) noexcept
   {
-    if constexpr(is_native_v<ABI>)
+    if constexpr(is_native_v<abi_t<T, N>>)
     {
       auto that = v;
       that ^= allbits(eve::as(v));

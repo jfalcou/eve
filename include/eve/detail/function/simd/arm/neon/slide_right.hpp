@@ -35,7 +35,7 @@ namespace eve::detail
 
       // The actual shift uses the expected cardinal so it has enough
       // to push through the unused space.
-      constexpr auto shf  = expected_cardinal_v<T,ABI> - Shift;
+      constexpr auto shf  = expected_cardinal_v<T,abi_t<T, N>> - Shift;
 
             if constexpr( c == category::int64x2    ) return vextq_s64(z,v,shf);
       else  if constexpr( c == category::uint64x2   ) return vextq_u64(z,v,shf);

@@ -19,7 +19,7 @@ namespace eve::detail
                              , wide<T, N, ABI> const &value
                              , T *ptr) noexcept
   {
-    if constexpr( std::is_same_v<ABI,arm_64_> &&  (N::value * sizeof(T) != arm_64_::bytes ))
+    if constexpr( std::is_same_v<abi_t<T, N>,arm_64_> &&  (N::value * sizeof(T) != arm_64_::bytes ))
     {
       memcpy(ptr, (T const*)(&value), N::value * sizeof(T));
     }

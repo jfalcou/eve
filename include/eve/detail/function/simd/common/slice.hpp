@@ -99,7 +99,7 @@ namespace eve::detail
   template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto slice(logical<wide<T, N, ABI>> const &a) noexcept
   {
-    if constexpr( is_native_v<ABI> )
+    if constexpr( is_native_v<abi_t<T, N>> )
     {
       using l_t   = logical<wide<T, typename N::split_type>>;
       using s_t   = typename l_t::storage_type;
@@ -118,7 +118,7 @@ namespace eve::detail
   template<typename T, typename N, typename ABI, typename Slice>
   EVE_FORCEINLINE auto slice(logical<wide<T, N, ABI>> const &a, Slice const &s) noexcept
   {
-    if constexpr( is_native_v<ABI> )
+    if constexpr( is_native_v<abi_t<T, N>> )
     {
       using l_t = logical<wide<T, typename N::split_type>>;
       using s_t = typename l_t::storage_type;

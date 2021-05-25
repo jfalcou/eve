@@ -21,7 +21,7 @@ namespace eve::detail
     else  if constexpr(Shift == N::value) return wide<T,N,ABI>{0};
     else
     {
-      if constexpr( std::same_as<ABI,x86_128_>)
+      if constexpr( std::same_as<abi_t<T, N>,x86_128_>)
       {
         constexpr auto shift = Shift*sizeof(T);
         using i_t = as_integer_t<wide<T,N,ABI>, unsigned>;
@@ -29,7 +29,7 @@ namespace eve::detail
         auto const b  = bit_cast(v, as_<i_t>());
         return bit_cast(i_t(_mm_bslli_si128( b, shift)), as(v));
       }
-      else if constexpr( std::same_as<ABI,x86_256_>)
+      else if constexpr( std::same_as<abi_t<T, N>,x86_256_>)
       {
         if constexpr( current_api >= avx2)
         {
@@ -120,7 +120,7 @@ namespace eve::detail
           }
         }
       }
-      else if constexpr( std::same_as<ABI,x86_512_>)
+      else if constexpr( std::same_as<abi_t<T, N>,x86_512_>)
       {
         // Generates vperm + pand, good enough for now
         return basic_swizzle(v, slide_right_pattern<Shift,N::value>);

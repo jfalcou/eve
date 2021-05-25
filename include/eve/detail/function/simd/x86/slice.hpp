@@ -21,7 +21,7 @@ namespace eve::detail
   {
     constexpr auto s = Slice::value;
 
-    if constexpr( std::same_as<ABI,x86_128_> )
+    if constexpr( std::same_as<abi_t<T, N>,x86_128_> )
     {
       if constexpr( !s )
       {
@@ -40,19 +40,19 @@ namespace eve::detail
           constexpr auto size = N::value * sizeof(T);
 
           if constexpr( N::value == 2          )  return wide<T, typename N::split_type>{a.get(1)};
-          if constexpr( size == ABI::bytes     )  return _mm_shuffle_epi32(a, 0xEE);
-          if constexpr( 2 * size == ABI::bytes )  return _mm_shuffle_epi32(a, 0x01);
+          if constexpr( size == abi_t<T, N>::bytes     )  return _mm_shuffle_epi32(a, 0xEE);
+          if constexpr( 2 * size == abi_t<T, N>::bytes )  return _mm_shuffle_epi32(a, 0x01);
           else                                    return _mm_shufflelo_epi16(a, 0x01);
         }
       }
     }
-    else if constexpr( std::same_as<ABI,x86_256_> )
+    else if constexpr( std::same_as<abi_t<T, N>,x86_256_> )
     {
             if constexpr( std::same_as<T, double> ) return _mm256_extractf128_pd(a, s);
       else  if constexpr( std::same_as<T, float>  ) return _mm256_extractf128_ps(a, s);
       else                                          return _mm256_extractf128_si256(a, s);
     }
-    else if constexpr( std::same_as<ABI,x86_512_> )
+    else if constexpr( std::same_as<abi_t<T, N>,x86_512_> )
     {
             if constexpr( std::same_as<T, double> )         return _mm512_extractf64x4_pd(a, s);
       else  if constexpr( std::integral<T> && sizeof(T)==8) return _mm512_extracti64x4_epi64(a, s);
@@ -76,7 +76,7 @@ namespace eve::detail
   EVE_FORCEINLINE logical<wide<T, typename N::split_type>>
   slice(logical<wide<T,N,ABI>> const &a, Slice const &) noexcept
   {
-    if constexpr( !ABI::is_wide_logical )
+    if constexpr( !abi_t<T, N>::is_wide_logical )
     {
       using type  = logical<wide<T, typename N::split_type>>;
       using mask  = typename type::storage_type;

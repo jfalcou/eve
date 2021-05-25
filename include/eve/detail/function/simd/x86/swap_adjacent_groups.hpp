@@ -30,7 +30,7 @@ namespace eve::detail
     {
       constexpr auto size = G * sizeof(T);
 
-      if constexpr( std::same_as<ABI,x86_128_> )
+      if constexpr( std::same_as<abi_t<T, N>,x86_128_> )
       {
         if constexpr( size == 1 )
         {
@@ -86,7 +86,7 @@ namespace eve::detail
           }
         }
       }
-      else  if constexpr( std::same_as<ABI,x86_256_> )
+      else  if constexpr( std::same_as<abi_t<T, N>,x86_256_> )
       {
         if constexpr( size == 1 )
         {
@@ -174,7 +174,7 @@ namespace eve::detail
           }
         }
       }
-      else  if constexpr( std::same_as<ABI,x86_512_> )
+      else  if constexpr( std::same_as<abi_t<T, N>,x86_512_> )
       {
         // We have perfect swizzle so LET'S ROCK'N'ROLL
         return basic_swizzle(v, swap_adjacent_groups_pattern<G,N::value> );
@@ -192,7 +192,7 @@ namespace eve::detail
     {
       return v;
     }
-    else  if constexpr( !ABI::is_wide_logical )
+    else  if constexpr( !abi_t<T, N>::is_wide_logical )
     {
       // Reconstruct mask, swag then turn to mask again
       auto const m = v.mask();

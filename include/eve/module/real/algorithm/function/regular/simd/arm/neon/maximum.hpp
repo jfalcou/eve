@@ -75,9 +75,9 @@ namespace eve::detail
 
             if constexpr( N::value == 1 ) return v;
       else  if constexpr( N::value == 2 ) return type(eve::max(v.get(0),v.get(1)));
-      else  if constexpr( std::same_as<ABI,arm_64_> )
+      else  if constexpr( std::same_as<abi_t<T, N>,arm_64_> )
       {
-        if(N::value == expected_cardinal_v<T,ABI>)
+        if(N::value == expected_cardinal_v<T,abi_t<T, N>>)
         {
           wide<T,N,ABI> s = pairwise_max(v,v);
           if constexpr(N::value >= 2  ) s = pairwise_max(s,s);
@@ -90,7 +90,7 @@ namespace eve::detail
           return butterfly_reduction(v, eve::max);
         }
       }
-      else  if constexpr( std::same_as<ABI,arm_128_> )
+      else  if constexpr( std::same_as<abi_t<T, N>,arm_128_> )
       {
         auto [l,h] = v.slice();
         if constexpr(N::value >= 4  ) l = pairwise_max(l,h);
