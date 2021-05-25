@@ -20,7 +20,7 @@ namespace eve
 #  include <eve/module/real/core/function/regular/simd/x86/average.hpp>
 #endif
 
-#if defined(EVE_HW_POWERPC)
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
 #  include <eve/module/real/core/function/regular/simd/ppc/average.hpp>
 #endif
 

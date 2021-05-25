@@ -28,7 +28,7 @@ namespace eve
 #  include <eve/detail/function/simd/x86/swizzle.hpp>
 #endif
 
-#if defined(EVE_HW_POWERPC)
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
 #  include <eve/detail/function/simd/ppc/swizzle.hpp>
 #endif
 

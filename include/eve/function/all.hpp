@@ -17,7 +17,7 @@ namespace eve
 #include <eve/arch.hpp>
 #include <eve/module/real/algorithm/function/regular/generic/all.hpp>
 
-#if defined(EVE_HW_POWERPC)
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
 #  include <eve/module/real/algorithm/function/regular/simd/ppc/all.hpp>
 #endif
 

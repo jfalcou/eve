@@ -98,7 +98,7 @@ namespace eve
 #  include <eve/module/real/core/function/regular/simd/x86/sub.hpp>
 #endif
 
-#if defined(EVE_HW_POWERPC)
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
 #  include <eve/module/real/core/function/regular/simd/ppc/sub.hpp>
 #endif
 

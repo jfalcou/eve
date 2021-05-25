@@ -17,15 +17,14 @@ namespace eve
 
 #include <eve/module/real/core/function/regular/generic/nearest.hpp>
 
-#  if defined(EVE_HW_X86)
-#    include <eve/module/real/core/function/regular/simd/x86/nearest.hpp>
-#  endif
+#if defined(EVE_HW_X86)
+#  include <eve/module/real/core/function/regular/simd/x86/nearest.hpp>
+#endif
 
-#  if defined(EVE_HW_POWERPC)
-#    include <eve/module/real/core/function/regular/simd/ppc/nearest.hpp>
-#  endif
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
+#  include <eve/module/real/core/function/regular/simd/ppc/nearest.hpp>
+#endif
 
-#  if defined(EVE_HW_ARM)
-#    include <eve/module/real/core/function/regular/simd/arm/neon/nearest.hpp>
-#  endif
-
+#if defined(EVE_INCLUDE_ARM_HEADER)
+#  include <eve/module/real/core/function/regular/simd/arm/neon/nearest.hpp>
+#endif

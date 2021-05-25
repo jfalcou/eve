@@ -25,6 +25,6 @@ namespace eve
 
 #include <eve/detail/function/simd/common/broadcast.hpp>
 
-#if defined(EVE_HW_POWERPC)
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
 #  include <eve/detail/function/simd/ppc/broadcast.hpp>
 #endif

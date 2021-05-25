@@ -17,7 +17,7 @@
 #  include <eve/detail/function/simd/x86/arithmetic_compounds.hpp>
 #endif
 
-#if defined(EVE_HW_POWERPC)
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
 #  include <eve/detail/function/simd/ppc/bit_compounds.hpp>
 #  include <eve/detail/function/simd/ppc/arithmetic_compounds.hpp>
 #endif
