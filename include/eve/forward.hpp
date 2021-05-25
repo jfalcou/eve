@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/arch/expected_cardinal.hpp>
-#include <eve/arch/expected_abi.hpp>
+#include <eve/arch/abi.hpp>
 
 namespace eve
 {
@@ -18,6 +18,6 @@ namespace eve
   // Wrapper for SIMD registers holding arithmetic types with compile-time size
   template<typename Type,
            typename Size = expected_cardinal_t<Type>,
-           typename ABI  = expected_abi_t<Type, Size>>
+           typename ABI  = abi_t<Type, Size>>
   struct wide;
 }

@@ -31,35 +31,34 @@ namespace eve
   template<typename T> concept arithmetic = std::is_arithmetic_v<T>;
 
   // Find proper ABI for wide
-  template<typename Type, typename Size> struct expected_abi {};
+  template<typename Type, typename Size> struct abi {};
 
   template<typename Type, typename Size>
   requires( arithmetic<Type> && detail::require_aggregation<Type, Size> )
-  struct expected_abi<Type, Size>
+  struct abi<Type, Size>
   {
     using type = eve::aggregated_;
   };
 
   template<typename Type, typename Size>
   requires( arithmetic<Type> && !detail::require_aggregation<Type, Size> )
-  struct expected_abi<Type, Size> : abi_of<Type, Size::value>
+  struct abi<Type, Size> : abi_of<Type, Size::value>
   {};
 
   // Wrapper for SIMD registers holding logical type
   template<typename Type, typename Size>
   requires( arithmetic<Type> && detail::require_aggregation<Type, Size> )
-  struct expected_abi<logical<Type>, Size>
+  struct abi<logical<Type>, Size>
   {
     using type = eve::aggregated_;
   };
 
   template<typename Type, typename Size>
   requires( arithmetic<Type> && !detail::require_aggregation<Type, Size> )
-  struct expected_abi<logical<Type>, Size> : abi_of<logical<Type>, Size::value>
+  struct abi<logical<Type>, Size> : abi_of<logical<Type>, Size::value>
   {};
 
   // Type short-cut
   template<typename Type, typename Size>
-  using expected_abi_t = typename expected_abi<Type, Size>::type;
+  using abi_t = typename abi<Type, Size>::type;
 }
-
