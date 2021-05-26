@@ -1,0 +1,132 @@
+##==================================================================================================
+##  EVE - Expressive Vector Engine
+##  Copyright : EVE Contributors & Maintainers
+##  SPDX-License-Identifier: MIT
+##==================================================================================================
+version: 2.1
+
+##==================================================================================================
+## Custom commands
+##==================================================================================================
+commands:
+  configure_toolchain:
+    description: "Configure tests from a CMake Toolchain"
+    parameters:
+      tool:
+        type: string
+      options:
+        type: string
+        default: ""
+      setup:
+        type: string
+        default: ""
+    steps:
+      - run:
+          name: Configuring toolchain << parameters.tool >>
+          command:                                                                                    |
+            mkdir -p build && cd build                                                                &&
+            cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=<< parameters.tool >> -DEVE_OPTIONS="<< parameters.options >>" << parameters.setup >>
+
+  compile:
+    description: "Compile tests from a list of target"
+    parameters:
+      targets:
+        type: string
+      cpu:
+        type: integer
+        default: 2
+    steps:
+      - run:
+          name: Compiling << parameters.targets >> at -j << parameters.cpu >>
+          command:                                                                                    |
+            cd build                                                                                  &&
+            for i in `../cmake/toolchain/filter.sh << parameters.targets >> keys`; do ninja $i -j << parameters.cpu >> ; done;
+
+  ctest:
+    description: "Perform tests from a list of target"
+    parameters:
+      targets:
+        type: string
+    steps:
+      - run:
+          name: Run tests for << parameters.targets >>
+          command:                                                                                    |
+            cd build                                                                                  &&
+            for i in `../cmake/toolchain/filter.sh << parameters.targets >> values`; do ctest -R $i -j 8 ; done;
+
+##==================================================================================================
+## Jobs setup
+##==================================================================================================
+base_jobs: &base_jobs
+  docker:
+    - image: jfalcou/compilers:latest
+  parameters:
+    tool:
+      type: string
+    options:
+      type: string
+      default: ""
+    setup:
+      type: string
+      default: ""
+  steps:
+    - checkout
+    - configure_toolchain:
+        tool:     << parameters.tool >>
+        options:  << parameters.options >>
+        setup:    << parameters.setup >>
+    - compile:
+        targets: "../cmake/toolchain/arch.targets.json"
+        cpu:  2
+    - ctest:
+        targets: "../cmake/toolchain/arch.targets.json"
+    - compile:
+        targets: "../cmake/toolchain/api.targets.json"
+        cpu:  2
+    - ctest:
+        targets: "../cmake/toolchain/api.targets.json"
+    - compile:
+        targets: "../cmake/toolchain/doc.targets.json"
+        cpu:  2
+    - ctest:
+        targets: "../cmake/toolchain/doc.targets.json"
+    - run:
+        name: Pre-compiling large math function
+        command: cd build && ninja unit.real.math.heavy.exe  -k 0 -j 2
+    - compile:
+        targets: "../cmake/toolchain/simd.targets.json"
+        cpu:  2
+    - ctest:
+        targets: "../cmake/toolchain/simd.targets.json"
+
+##==================================================================================================
+## Jobs list
+##==================================================================================================
+jobs:
+  x86_gcc_avx512:
+    <<: *base_jobs
+  x86_clang_avx512:
+    <<: *base_jobs
+
+##==================================================================================================
+## Workflow & dependencies
+##==================================================================================================
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+    ##==============================================================================================
+    ## X86 - 512 bits
+    ##==============================================================================================
+      - x86_gcc_avx512:
+          tool:     "../cmake/toolchain/clang.x86.cmake"
+          options:  "-march=skylake-avx512"
+          filters:
+            branches:
+              ignore: develop
+      - x86_clang_avx512:
+          tool:     "../cmake/toolchain/clang.x86.cmake"
+          options:  "-march=skylake-avx512"
+          filters:
+            branches:
+              ignore: develop

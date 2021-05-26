@@ -50,10 +50,6 @@ test_targets()
   return 0;
 }
 
-echo "::group::Discovery CPU Capabilities"
-lscpu
-echo "::endgroup::"
-
 echo "::group::Running: 'cmake .. -G Ninja -DCMAKE_CXX_FLAGS="$1" $2'"
 mkdir build
 cd build
