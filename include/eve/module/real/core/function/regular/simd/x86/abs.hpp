@@ -74,7 +74,7 @@ namespace eve::detail
   {
     constexpr auto c = categorize<wide<T, N, ABI>>();
 
-    if constexpr( C::is_complete || ABI::is_wide_logical )
+    if constexpr( C::is_complete || abi_t<T, N>::is_wide_logical )
     {
       return abs_(EVE_RETARGET(cpu_),cx,v);
     }

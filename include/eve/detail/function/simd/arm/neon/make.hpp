@@ -41,7 +41,7 @@ namespace eve::detail
   template<real_scalar_value T, typename N, arm_abi ABI, typename... Vs>
   EVE_FORCEINLINE auto make(eve::as_<wide<T,N,ABI>> const &, Vs... vs) noexcept
   {
-    return neon_maker<T, ABI> {}(vs...);
+    return neon_maker<T, abi_t<T, N>> {}(vs...);
   }
 
   //================================================================================================
@@ -74,6 +74,6 @@ namespace eve::detail
   template<real_scalar_value T, typename N, arm_abi ABI, typename... Vs>
   EVE_FORCEINLINE auto make(eve::as_<logical<wide<T,N,ABI>>> const &, Vs... vs) noexcept
   {
-    return neon_maker<logical<T>, ABI> {}(vs...);
+    return neon_maker<logical<T>, abi_t<T, N>> {}(vs...);
   }
 }

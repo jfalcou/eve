@@ -26,7 +26,7 @@ namespace eve::detail
       as_ints = reverse(as_ints);
       return eve::bit_cast(as_ints, eve::as(v));
     }
-    else if constexpr( std::same_as<ABI, eve::x86_128_> )
+    else if constexpr( std::same_as<abi_t<T, N>, eve::x86_128_> )
     {
            if constexpr ( sizeof(T) == 8 )            return _mm_shuffle_epi32(v, _MM_SHUFFLE(1, 0, 3, 2));
       else if constexpr ( sizeof(T) == 4 && N() == 2) return _mm_shuffle_epi32(v, _MM_SHUFFLE(3, 2, 0, 1));
@@ -81,7 +81,7 @@ namespace eve::detail
       h = reverse(h);
       return {h, l};
     }
-    else if constexpr ( std::same_as<ABI, eve::x86_256_> )
+    else if constexpr ( std::same_as<abi_t<T, N>, eve::x86_256_> )
     {
            if constexpr ( sizeof(T) == 8 ) return _mm256_permute4x64_epi64(v, _MM_SHUFFLE(0, 1, 2, 3));
       else if constexpr ( sizeof(T) == 4 ) return _mm256_permutevar8x32_epi32(v, _mm256_set_epi32(0, 1, 2, 3, 4, 5, 6, 7));
@@ -99,7 +99,7 @@ namespace eve::detail
         return _mm256_permute4x64_epi64(halves, _MM_SHUFFLE(1, 0, 3, 2));
       }
     }
-    else if constexpr ( std::same_as<ABI, eve::x86_512_> )
+    else if constexpr ( std::same_as<abi_t<T, N>, eve::x86_512_> )
     {
       if constexpr ( sizeof(T) >= 2 )
       {

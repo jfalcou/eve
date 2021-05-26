@@ -240,8 +240,8 @@ namespace eve::detail
       else  if constexpr( c == category::float32x16       ) self = _mm512_and_ps(self, bits);
       else  if constexpr( c == category::float32x8        ) self = _mm256_and_ps(self, bits);
       else  if constexpr( c == category::float32x4        ) self = _mm_and_ps   (self, bits);
-      else  if constexpr( i && std::same_as<ABI,x86_512_> ) self = _mm512_and_si512(self, bits);
-      else  if constexpr( i && std::same_as<ABI,x86_256_> )
+      else  if constexpr( i && std::same_as<abi_t<T, N>,x86_512_> ) self = _mm512_and_si512(self, bits);
+      else  if constexpr( i && std::same_as<abi_t<T, N>,x86_256_> )
       {
         if constexpr  ( current_api >= avx2 ) self =  _mm256_and_si256(self, bits);
         else                                  self =  _mm256_castps_si256
@@ -250,7 +250,7 @@ namespace eve::detail
                                                                       )
                                                       );
       }
-      else  if constexpr  ( i && std::same_as<ABI,x86_128_> ) self = _mm_and_si128(self, bits);
+      else  if constexpr  ( i && std::same_as<abi_t<T, N>,x86_128_> ) self = _mm_and_si128(self, bits);
 
       return self;
     }
@@ -282,8 +282,8 @@ namespace eve::detail
       else  if constexpr  ( c == category::float32x16       ) self = _mm512_or_ps(self, bits);
       else  if constexpr  ( c == category::float32x8        ) self = _mm256_or_ps(self, bits);
       else  if constexpr  ( c == category::float32x4        ) self = _mm_or_ps   (self, bits);
-      else  if constexpr  ( i && std::same_as<ABI,x86_512_> ) self = _mm512_or_si512(self, bits);
-      else  if constexpr  ( i && std::same_as<ABI,x86_256_> )
+      else  if constexpr  ( i && std::same_as<abi_t<T, N>,x86_512_> ) self = _mm512_or_si512(self, bits);
+      else  if constexpr  ( i && std::same_as<abi_t<T, N>,x86_256_> )
       {
         if constexpr  ( current_api >= avx2 ) self =  _mm256_or_si256(self, bits);
         else                                  self =  _mm256_castps_si256
@@ -292,7 +292,7 @@ namespace eve::detail
                                                                       )
                                                       );
       }
-      else  if constexpr  ( i && std::same_as<ABI,x86_128_> ) self = _mm_or_si128(self, bits);
+      else  if constexpr  ( i && std::same_as<abi_t<T, N>,x86_128_> ) self = _mm_or_si128(self, bits);
 
       return self;
     }
@@ -324,8 +324,8 @@ namespace eve::detail
       else  if constexpr  ( c == category::float32x16       ) self = _mm512_xor_ps(self, bits);
       else  if constexpr  ( c == category::float32x8        ) self = _mm256_xor_ps(self, bits);
       else  if constexpr  ( c == category::float32x4        ) self = _mm_xor_ps   (self, bits);
-      else  if constexpr  ( i && std::same_as<ABI,x86_512_> ) self = _mm512_xor_si512(self, bits);
-      else  if constexpr  ( i && std::same_as<ABI,x86_256_> )
+      else  if constexpr  ( i && std::same_as<abi_t<T, N>,x86_512_> ) self = _mm512_xor_si512(self, bits);
+      else  if constexpr  ( i && std::same_as<abi_t<T, N>,x86_256_> )
       {
         if constexpr  ( current_api >= avx2 ) self =  _mm256_xor_si256(self, bits);
         else                                  self =  _mm256_castps_si256
@@ -334,7 +334,7 @@ namespace eve::detail
                                                                       )
                                                       );
       }
-      else  if constexpr  ( i && std::same_as<ABI,x86_128_> ) self = _mm_xor_si128(self, bits);
+      else  if constexpr  ( i && std::same_as<abi_t<T, N>,x86_128_> ) self = _mm_xor_si128(self, bits);
 
       return self;
     }

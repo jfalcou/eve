@@ -34,7 +34,7 @@ namespace eve::detail
       auto a = allbits(as_<wide<T, N, ABI>>());
       auto m = p.storage().value;
 
-      if constexpr( std::same_as<ABI,x86_128_>)
+      if constexpr( std::same_as<abi_t<T, N>,x86_128_>)
       {
               if constexpr( std::same_as<T,double > ) return _mm_mask_blend_pd(m,z,a);
         else  if constexpr( std::same_as<T,float  > ) return _mm_mask_blend_ps(m,z,a);
@@ -53,7 +53,7 @@ namespace eve::detail
           return _mm_mask_blend_epi8(m,z.storage(),a.storage());
         }
       }
-      else if constexpr( std::same_as<ABI,x86_256_>)
+      else if constexpr( std::same_as<abi_t<T, N>,x86_256_>)
       {
               if constexpr( std::same_as<T,double > ) return _mm256_mask_blend_pd(m,z,a);
         else  if constexpr( std::same_as<T,float  > ) return _mm256_mask_blend_ps(m,z,a);
@@ -72,7 +72,7 @@ namespace eve::detail
           return _mm256_mask_blend_epi8(m,z.storage(),a.storage());
         }
       }
-      else if constexpr( std::same_as<ABI,x86_512_>)
+      else if constexpr( std::same_as<abi_t<T, N>,x86_512_>)
       {
               if constexpr( std::same_as<T,double > ) return _mm512_mask_blend_pd(m,z,a);
         else  if constexpr( std::same_as<T,float  > ) return _mm512_mask_blend_ps(m,z,a);
@@ -101,11 +101,11 @@ namespace eve::detail
   template<typename T, typename N, x86_abi ABI> EVE_FORCEINLINE
   std::bitset<N::value> to_bitmap(sse2_ const&, logical<wide<T, N, ABI>> const& p ) noexcept
   {
-    if constexpr( !ABI::is_wide_logical )
+    if constexpr( !abi_t<T, N>::is_wide_logical )
     {
       return p.storage().value;
     }
-    else if constexpr( std::same_as<ABI,x86_128_>)
+    else if constexpr( std::same_as<abi_t<T, N>,x86_128_>)
     {
             if constexpr(std::is_same_v<T, float >) return _mm_movemask_ps(p.storage());
       else  if constexpr(std::is_same_v<T, double>) return _mm_movemask_pd(p.storage());
@@ -117,7 +117,7 @@ namespace eve::detail
       }
       else  if constexpr(sizeof(T) == 1)            return _mm_movemask_epi8(p.storage());
     }
-    else if constexpr( std::same_as<ABI,x86_256_>)
+    else if constexpr( std::same_as<abi_t<T, N>,x86_256_>)
     {
             if constexpr(std::is_same_v<T, float >) return _mm256_movemask_ps(p.storage());
       else  if constexpr(std::is_same_v<T, double>) return _mm256_movemask_pd(p.storage());

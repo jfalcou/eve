@@ -21,11 +21,11 @@ namespace eve::detail
   {
     using that_t = wide<T, typename N::combined_type>;
 
-    if constexpr( is_emulated_v<ABI> )
+    if constexpr( is_emulated_v<abi_t<T, N>> )
     {
       return apply<N::value>([&](auto... I) { return that_t {l.get(I)..., h.get(I)...}; });
     }
-    else if constexpr( is_aggregated_v<ABI> )
+    else if constexpr( is_aggregated_v<abi_t<T, N>> )
     {
       that_t that;
 
@@ -42,11 +42,11 @@ namespace eve::detail
   {
     using that_t = logical<wide<T, typename N::combined_type>>;
 
-    if constexpr( is_emulated_v<ABI> )
+    if constexpr( is_emulated_v<abi_t<T, N>> )
     {
       return apply<N::value>([&](auto... I) { return that_t {l.get(I)..., h.get(I)...}; });
     }
-    else if constexpr( is_aggregated_v<ABI> )
+    else if constexpr( is_aggregated_v<abi_t<T, N>> )
     {
       that_t that;
 

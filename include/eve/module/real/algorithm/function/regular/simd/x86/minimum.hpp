@@ -29,7 +29,7 @@ namespace eve::detail
     {
       return v.get(0);
     }
-    else if constexpr( !std::same_as<ABI,x86_128_> )
+    else if constexpr( !std::same_as<abi_t<T, N>,x86_128_> )
     {
       // Larger X86 ABI slices and try to optimize down the road
       auto [lw,hw] = v.slice();

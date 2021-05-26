@@ -23,7 +23,7 @@ namespace eve::detail
                                   , logical<wide<T,N,ABI>> v, logical<wide<U,N,ABI>> w
                                   ) noexcept
   {
-    if constexpr( !use_is_wide_logical<ABI>::value )
+    if constexpr( !use_is_wide_logical<abi_t<T, N>>::value )
     {
       using storage_t = typename logical<wide<T, N, ABI>>::storage_type;
       using m_t       = typename storage_t::type;
@@ -42,7 +42,7 @@ namespace eve::detail
                                   , logical<wide<T,N,ABI>> v, logical<wide<U,N,ABI>> w
                                   ) noexcept
   {
-    if constexpr( !use_is_wide_logical<ABI>::value )
+    if constexpr( !use_is_wide_logical<abi_t<T, N>>::value )
     {
       using storage_t = typename logical<wide<T, N, ABI>>::storage_type;
       using m_t       = typename storage_t::type;
@@ -59,7 +59,7 @@ namespace eve::detail
   template<real_value T, typename N, x86_abi ABI>
   EVE_FORCEINLINE auto self_lognot(logical<wide<T, N, ABI>> v) noexcept
   {
-    if constexpr( !ABI::is_wide_logical )
+    if constexpr( !abi_t<T, N>::is_wide_logical )
     {
       using l_t = logical<wide<T, N, ABI>>;
       return l_t{~v.storage()};
@@ -158,7 +158,7 @@ namespace eve::detail
   template<real_value T, typename N, x86_abi ABI>
   EVE_FORCEINLINE auto self_eq(logical<wide<T,N,ABI>> v, logical<wide<T,N,ABI>> w) noexcept
   {
-    if constexpr( !ABI::is_wide_logical )
+    if constexpr( !abi_t<T, N>::is_wide_logical )
     {
       return logical<wide<T,N,ABI>>{ ~(v.storage() ^ w.storage()) };
     }
@@ -236,7 +236,7 @@ namespace eve::detail
   template<real_value T, typename N, x86_abi ABI>
   EVE_FORCEINLINE auto self_neq(logical<wide<T,N,ABI>> v, logical<wide<T,N,ABI>> w) noexcept
   {
-    if constexpr( !ABI::is_wide_logical )
+    if constexpr( !abi_t<T, N>::is_wide_logical )
     {
       return logical<wide<T,N,ABI>>{ v.storage() ^ w.storage() };
     }

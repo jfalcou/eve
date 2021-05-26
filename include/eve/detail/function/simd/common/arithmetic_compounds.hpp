@@ -32,12 +32,12 @@ namespace eve::detail
     }
     else if constexpr( std::same_as<type, U> )
     {
-      if constexpr( is_emulated_v<ABI> )
+      if constexpr( is_emulated_v<abi_t<T, N>> )
       {
         apply<N::value>([&](auto... I) { (self.set(I, self.get(I) + other.get(I)), ...); });
         return self;
       }
-      else if constexpr( is_aggregated_v<ABI> )
+      else if constexpr( is_aggregated_v<abi_t<T, N>> )
       {
         self.storage().for_each( [&](auto& s, auto const& o)  { s += o; }, other );
         return self;
@@ -59,12 +59,12 @@ namespace eve::detail
       return self_sub(self, type {other});
     else if constexpr( std::same_as<type, U> )
     {
-      if constexpr( is_emulated_v<ABI> )
+      if constexpr( is_emulated_v<abi_t<T, N>> )
       {
         apply<N::value>([&](auto... I) { (self.set(I, self.get(I) - other.get(I)), ...); });
         return self;
       }
-      else if constexpr( is_aggregated_v<ABI> )
+      else if constexpr( is_aggregated_v<abi_t<T, N>> )
       {
         self.storage().for_each( [&](auto& s, auto const& o)  { s -= o; }, other );
         return self;
@@ -86,12 +86,12 @@ namespace eve::detail
       return self_mul(self, type {other});
     else if constexpr( std::same_as<type, U> )
     {
-      if constexpr( is_emulated_v<ABI> )
+      if constexpr( is_emulated_v<abi_t<T, N>> )
       {
         apply<N::value>([&](auto... I) { (self.set(I, self.get(I) * other.get(I)), ...); });
         return self;
       }
-      else if constexpr( is_aggregated_v<ABI> )
+      else if constexpr( is_aggregated_v<abi_t<T, N>> )
       {
         self.storage().for_each( [&](auto& s, auto const& o)  { s *= o; }, other );
         return self;
@@ -113,12 +113,12 @@ namespace eve::detail
       return self_div(self, type {other});
     else if constexpr( std::same_as<type, U> )
     {
-      if constexpr( is_emulated_v<ABI> )
+      if constexpr( is_emulated_v<abi_t<T, N>> )
       {
         apply<N::value>([&](auto... I) { (self.set(I, self.get(I) / other.get(I)), ...); });
         return self;
       }
-      else if constexpr( is_aggregated_v<ABI> )
+      else if constexpr( is_aggregated_v<abi_t<T, N>> )
       {
         self.storage().for_each( [&](auto& s, auto const& o)  { s /= o; }, other );
         return self;
@@ -142,7 +142,7 @@ namespace eve::detail
     }
     else if constexpr( std::same_as<type, U> )
     {
-      if constexpr( is_aggregated_v<ABI> )
+      if constexpr( is_aggregated_v<abi_t<T, N>> )
       {
         self.storage().for_each( [&](auto& s, auto const& o)  { s %= o; }, other );
         return self;

@@ -21,7 +21,7 @@ namespace eve::detail
   template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto to_logical( wide<T,N,ABI> const& v ) noexcept
   {
-    if constexpr( is_aggregated_v<ABI> )
+    if constexpr( is_aggregated_v<abi_t<T, N>> )
     {
       as_logical_t<wide<T,N,ABI>> that;
       that.storage().for_each( [](auto& s, auto const& o)  { s = to_logical(o); }, v );

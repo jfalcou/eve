@@ -82,7 +82,7 @@ namespace eve::detail
     }
     else
     {
-      if constexpr( is_emulated_v<ABI> )
+      if constexpr( is_emulated_v<abi_t<T, N>> )
       {
         auto& data = self.storage();
 
@@ -92,7 +92,7 @@ namespace eve::detail
 
         return self;
       }
-      else if constexpr( is_aggregated_v<ABI> )
+      else if constexpr( is_aggregated_v<abi_t<T, N>> )
       {
         self.storage().for_each( [&](auto& s, auto const& o)  { s &= o; }, other );
         return self;
@@ -117,7 +117,7 @@ namespace eve::detail
     }
     else
     {
-      if constexpr( is_emulated_v<ABI> )
+      if constexpr( is_emulated_v<abi_t<T, N>> )
       {
         auto& data = self.storage();
 
@@ -127,7 +127,7 @@ namespace eve::detail
 
         return self;
       }
-      else if constexpr( is_aggregated_v<ABI> )
+      else if constexpr( is_aggregated_v<abi_t<T, N>> )
       {
         self.storage().for_each( [&](auto& s, auto const& o)  { s |= o; }, other );
         return self;
@@ -152,7 +152,7 @@ namespace eve::detail
     }
     else
     {
-      if constexpr( is_emulated_v<ABI> )
+      if constexpr( is_emulated_v<abi_t<T, N>> )
       {
         auto& data = self.storage();
 
@@ -162,7 +162,7 @@ namespace eve::detail
 
         return self;
       }
-      else if constexpr( is_aggregated_v<ABI> )
+      else if constexpr( is_aggregated_v<abi_t<T, N>> )
       {
         self.storage().for_each( [&](auto& s, auto const& o)  { s ^= o; }, other );
         return self;
