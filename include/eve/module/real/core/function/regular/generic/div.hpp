@@ -35,8 +35,6 @@
 
 namespace eve::detail
 {
-  //////////////////////////////////////////////////////////////////////
-  //== toward_zero
   template<real_value T, real_value U, decorator D>
   EVE_FORCEINLINE auto div_(EVE_SUPPORTS(cpu_), D const &, T const &a, U const &b) noexcept
       requires compatible_values<T, U>
@@ -44,17 +42,21 @@ namespace eve::detail
     return arithmetic_call(D()(div), a, b);
   }
 
+  //////////////////////////////////////////////////////////////////////
+  //== toward_zero
   template<real_value T>
   EVE_FORCEINLINE auto
   div_(EVE_SUPPORTS(cpu_), toward_zero_type const &, T const &a, T const &b) noexcept
   {
+    EVE_ASSERT(eve::all(is_nez(b)), "[eve] - div(0, 0) is undefined");
     if constexpr( has_native_abi_v<T> )
     {
       if constexpr( floating_real_value<T> )
+      {
         return trunc(div(a, b));
+      }
       else
       {
-        EVE_ASSERT(eve::all(is_nez(a)), "[eve] - div(0, 0) is undefined");
         return div(a, b);
       }
     }
@@ -70,7 +72,7 @@ namespace eve::detail
       requires compatible_values<U, V>
   {
     auto g = if_else(cond, f, one);
-    return eve::div(t, g);
+    return if_else(cond, eve::div(t, g), t);
   }
 
   template<conditional_expr C, decorator D, real_value U, real_value V>
@@ -79,7 +81,7 @@ namespace eve::detail
       requires compatible_values<U, V>
   {
     auto g = if_else(cond, f, one);
-    return D()(div)(t, g);
+    return if_else(cond, D()(div)(t, g), t);
   }
 
   //================================================================================================
