@@ -51,7 +51,7 @@ test_targets()
 }
 
 echo "::group::Discovery CPU Capabilities"
-lscpu
+../../cmake/toolchain/run_x86_sde.sh lscpu
 echo "::endgroup::"
 
 echo "::group::Running: 'cmake .. -G Ninja -DCMAKE_CXX_FLAGS="$1" $2'"
