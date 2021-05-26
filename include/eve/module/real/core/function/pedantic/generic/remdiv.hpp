@@ -40,17 +40,15 @@ namespace eve::detail
                                  , fnma(b, d, a)
                                  )
                         );
-        return std::tuple<r_t, r_t>{r, d};
+        return kumi::make_tuple( r_t(r), r_t(d) );
       }
       else
       {
         auto r = if_else(is_nez(b), fnma(b, d, a), a);
-        return std::tuple<r_t, r_t>{r, d};
+        return kumi::make_tuple( r_t(r), r_t(d) );
       }
     }
-    else return apply_over2t(remdiv, r_t(a), r_t(b));
-
-    return if_else(is_nez(b), rem(a,b), a);
+    else return apply_over2(remdiv, r_t(a), r_t(b));
   }
 
   template<conditional_expr C, real_value U, real_value V>

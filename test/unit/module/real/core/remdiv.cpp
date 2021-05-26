@@ -24,12 +24,12 @@ EVE_TEST_TYPES( "Check return types of remdiv"
 <typename T>(eve::as_<T>)
 {
   using v_t = eve::element_type_t<T>;
-  using tup_t = std::tuple < T, T >;
+  using tup_t = kumi::tuple < T, T >;
   //regular
   TTS_EXPR_IS( eve::remdiv(T(), T()  ) , tup_t);
   TTS_EXPR_IS( eve::remdiv(T(), v_t()) , tup_t);
   TTS_EXPR_IS( eve::remdiv(v_t(), T()) , tup_t);
-  TTS_EXPR_IS( eve::remdiv(v_t(), v_t()) , (std::tuple<v_t, v_t>));
+  TTS_EXPR_IS( eve::remdiv(v_t(), v_t()) , (kumi::tuple<v_t, v_t>));
 };
 
 //==================================================================================================

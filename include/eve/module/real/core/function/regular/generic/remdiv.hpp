@@ -8,18 +8,18 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/kumi.hpp>
+#include <eve/detail/skeleton_calls.hpp>
+#include <eve/function/decorator.hpp>
 #include <eve/function/div.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/if_else.hpp>
-#include <eve/function/is_nez.hpp>
 #include <eve/function/is_eqz.hpp>
+#include <eve/function/is_nez.hpp>
 #include <eve/function/is_unordered.hpp>
 #include <eve/function/trunc.hpp>
-#include <eve/function/decorator.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <tuple>
 
 namespace eve::detail
 {
@@ -41,14 +41,14 @@ namespace eve::detail
                                  , fnma(b, d, a)
                                  )
                         );
-        return std::tuple<r_t, r_t>{r, d};
+        return kumi::make_tuple( r_t(r), r_t(d) );
       }
       else
       {
         auto r = fnma(b, d, a);
-        return std::tuple<r_t, r_t>{r, d};
+        return kumi::make_tuple( r_t(r), r_t(d) );
       }
     }
-    else return apply_over2t(remdiv, r_t(a), r_t(b));
+    else return apply_over2(remdiv, r_t(a), r_t(b));
   }
 }
