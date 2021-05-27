@@ -16,10 +16,11 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE wide<T, N, ABI> abs_(EVE_SUPPORTS(sse2_), wide<T, N, ABI> const &v) noexcept
+  template<real_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N> abs_(EVE_SUPPORTS(sse2_), wide<T, N> const &v) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
-    constexpr auto c = categorize<wide<T, N, ABI>>();
+    constexpr auto c = categorize<wide<T, N>>();
 
           if constexpr(c && category::unsigned_  )  return v;
     else  if constexpr(c == category::float32x16 )  return _mm512_abs_ps(v);
@@ -39,7 +40,7 @@ namespace eve::detail
       else
       {
         auto s = _mm_srai_epi32(v,31);
-        return wide<T, N, ABI>{_mm_sub_epi32(_mm_xor_si128(v,s),s)};
+        return wide<T, N>{_mm_sub_epi32(_mm_xor_si128(v,s),s)};
       }
     }
     else  if constexpr(c == category::int16x32)     return _mm512_abs_epi16(v);
@@ -68,11 +69,12 @@ namespace eve::detail
 
   // -----------------------------------------------------------------------------------------------
   // Masked case
-  template<conditional_expr C, real_scalar_value T, typename N, x86_abi ABI>
+  template<conditional_expr C, real_scalar_value T, typename N>
   EVE_FORCEINLINE
-  wide<T, N, ABI> abs_(EVE_SUPPORTS(sse2_), C const &cx, wide<T, N, ABI> const &v) noexcept
+  wide<T, N> abs_(EVE_SUPPORTS(sse2_), C const &cx, wide<T, N> const &v) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
-    constexpr auto c = categorize<wide<T, N, ABI>>();
+    constexpr auto c = categorize<wide<T, N>>();
 
     if constexpr( C::is_complete || abi_t<T, N>::is_wide_logical )
     {
@@ -80,8 +82,8 @@ namespace eve::detail
     }
     else
     {
-      auto src  = alternative(cx,v,as_<wide<T, N, ABI>>{});
-      auto m    = expand_mask(cx,as_<wide<T, N, ABI>>{}).storage().value;
+      auto src  = alternative(cx,v,as_<wide<T, N>>{});
+      auto m    = expand_mask(cx,as_<wide<T, N>>{}).storage().value;
 
             if constexpr(c && category::unsigned_ ) return if_else(cx,eve::abs(v),src);
       else  if constexpr(c == category::float32x16) return _mm512_mask_abs_ps   (src,m,v);

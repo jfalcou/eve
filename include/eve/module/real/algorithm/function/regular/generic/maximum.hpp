@@ -16,9 +16,9 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N, typename ABI>
+  template<real_scalar_value T, typename N>
   EVE_FORCEINLINE auto maximum_ ( EVE_SUPPORTS(cpu_)
-                                , splat_type const&, wide<T,N,ABI> const &v
+                                , splat_type const&, wide<T,N> const &v
                                 ) noexcept
   {
           if constexpr( N::value == 1 )         return v;
@@ -45,8 +45,8 @@ namespace eve::detail
     return v;
   }
 
-  template<real_scalar_value T, typename N, typename ABI>
-  EVE_FORCEINLINE auto maximum_(EVE_SUPPORTS(cpu_), wide<T,N,ABI> const &v) noexcept
+  template<real_scalar_value T, typename N>
+  EVE_FORCEINLINE auto maximum_(EVE_SUPPORTS(cpu_), wide<T,N> const &v) noexcept
   {
           if constexpr( N::value == 1 )         return v.get(0);
     else  if constexpr( !is_aggregated_v<abi_t<T, N>> ) return butterfly_reduction(v, eve::max).get(0);

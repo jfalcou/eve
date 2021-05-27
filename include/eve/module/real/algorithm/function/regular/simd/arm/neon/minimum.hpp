@@ -14,12 +14,13 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N, arm_abi ABI>
+  template<real_scalar_value T, typename N>
   EVE_FORCEINLINE T minimum_( EVE_SUPPORTS(neon128_)
-                            , wide<T,N,ABI> v
+                            , wide<T,N> v
                             ) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
-    constexpr auto c = categorize<wide<T,N,ABI>>();
+    constexpr auto c = categorize<wide<T,N>>();
 
     if constexpr ( eve::current_api >= eve::asimd )
     {
@@ -47,14 +48,15 @@ namespace eve::detail
     }
   }
 
-  template<real_scalar_value T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE wide<T,N,ABI> minimum_( EVE_SUPPORTS(neon128_)
-                                        , splat_type const&, wide<T,N,ABI> const& v
+  template<real_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T,N> minimum_( EVE_SUPPORTS(neon128_)
+                                        , splat_type const&, wide<T,N> const& v
                                         ) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
     if constexpr ( eve::current_api >= eve::asimd )
     {
-      return wide<T,N,ABI>( minimum(v) );
+      return wide<T,N>( minimum(v) );
     }
     else
     {
@@ -71,7 +73,7 @@ namespace eve::detail
         else  if constexpr( c == category::uint8x8  ) return vpmin_u8(a,b);
       };
 
-      using type = wide<T,N,ABI>;
+      using type = wide<T,N>;
 
             if constexpr( N::value == 1 ) return v;
       else  if constexpr( N::value == 2 ) return type(eve::min(v.get(0),v.get(1)));
@@ -79,7 +81,7 @@ namespace eve::detail
       {
         if(N::value == expected_cardinal_v<T,abi_t<T, N>>)
         {
-          wide<T,N,ABI> s = pairwise_min(v,v);
+          wide<T,N> s = pairwise_min(v,v);
           if constexpr(N::value >= 2  ) s = pairwise_min(s,s);
           if constexpr(N::value >= 4  ) s = pairwise_min(s,s);
           if constexpr(N::value >= 8  ) s = pairwise_min(s,s);
@@ -98,7 +100,7 @@ namespace eve::detail
         if constexpr(N::value >= 16 ) l = pairwise_min(l,l);
         l = pairwise_min(l,l);
 
-        return wide<T,N,ABI>(l,l);
+        return wide<T,N>(l,l);
       }
     }
   }

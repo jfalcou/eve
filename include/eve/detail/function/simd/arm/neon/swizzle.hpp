@@ -14,11 +14,12 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N, arm_abi ABI, shuffle_pattern Pattern>
-  EVE_FORCEINLINE auto basic_swizzle_( EVE_SUPPORTS(neon128_), wide<T,N,ABI> const& v, Pattern const&)
+  template<typename T, typename N, shuffle_pattern Pattern>
+  EVE_FORCEINLINE auto basic_swizzle_( EVE_SUPPORTS(neon128_), wide<T,N> const& v, Pattern const&)
+      requires arm_abi<abi_t<T, N>>
   {
     constexpr auto sz = Pattern::size();
-    using that_t      = as_wide_t<wide<T,N,ABI>,fixed<sz>>;
+    using that_t      = as_wide_t<wide<T,N>,fixed<sz>>;
 
     constexpr Pattern q = {};
 
@@ -37,7 +38,7 @@ namespace eve::detail
 
         if constexpr( std::same_as<that_abi_t, arm_64_> )
         {
-          bytes_t that = vtbl1_u8(b0,as_bytes<wide<T,N,ABI>>(q,as_<bytes_t>()));
+          bytes_t that = vtbl1_u8(b0,as_bytes<wide<T,N>>(q,as_<bytes_t>()));
           return bit_cast(that,as_<that_t>());
         }
         else
@@ -45,8 +46,8 @@ namespace eve::detail
           using out_t = typename that_t::template rebind<std::uint8_t,fixed<16>>;
 
           auto sp     = pattern_view<sz/2,sz,sz/2>(q);
-          bytes_t h   = vtbl1_u8(b0,as_bytes<wide<T,N,ABI>>(sp,as_<bytes_t>()));
-          bytes_t l   = vtbl1_u8(b0,as_bytes<wide<T,N,ABI>>(q,as_<bytes_t>()));
+          bytes_t h   = vtbl1_u8(b0,as_bytes<wide<T,N>>(sp,as_<bytes_t>()));
+          bytes_t l   = vtbl1_u8(b0,as_bytes<wide<T,N>>(q,as_<bytes_t>()));
 
           return bit_cast(out_t{l,h}, as_<that_t>());
         }

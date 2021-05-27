@@ -18,14 +18,15 @@ namespace eve::detail
 {
   //================================================================================================
   // X86 if_else
-  template<scalar_value T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE wide<T, N, ABI> if_else_( EVE_SUPPORTS(sse4_1_)
-                                          , logical<wide<T, N, ABI>> const &v0
-                                          , wide<T, N, ABI> const &v1
-                                          , wide<T, N, ABI> const &v2
+  template<scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N> if_else_( EVE_SUPPORTS(sse4_1_)
+                                          , logical<wide<T, N>> const &v0
+                                          , wide<T, N> const &v1
+                                          , wide<T, N> const &v2
                                           ) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
-    constexpr auto c = categorize<wide<T,N,ABI>>();
+    constexpr auto c = categorize<wide<T,N>>();
 
     if constexpr( !abi_t<T, N>::is_wide_logical )
     {
@@ -95,18 +96,19 @@ namespace eve::detail
 
   //================================================================================================
   // Full logical if_else
-  template<real_scalar_value T, typename N, x86_abi ABI>
+  template<real_scalar_value T, typename N>
   EVE_FORCEINLINE auto if_else_ ( EVE_SUPPORTS(sse2_)
-                                , logical<wide<T, N, ABI>> const &v0
-                                , logical<wide<T, N, ABI>> const &v1
-                                , logical<wide<T, N, ABI>> const &v2
+                                , logical<wide<T, N>> const &v0
+                                , logical<wide<T, N>> const &v1
+                                , logical<wide<T, N>> const &v2
                                 ) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
     if constexpr( !abi_t<T, N>::is_wide_logical )
     {
-      using s_t = typename logical<wide<T,N,ABI>>::storage_type;
+      using s_t = typename logical<wide<T,N>>::storage_type;
       auto    r = bit_select(v0.storage().value,v1.storage().value,v2.storage().value);
-      return logical<wide<T,N,ABI>>( s_t{r} );
+      return logical<wide<T,N>>( s_t{r} );
     }
     else
     {
