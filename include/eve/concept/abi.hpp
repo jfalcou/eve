@@ -31,7 +31,7 @@ namespace eve
     {};
 
     template<typename Wide, typename... ABI>
-    struct  is_native_for_abi<logical<Wide>,ABI...>
+    struct  is_native_for_abi<logical<Wide>, ABI...>
           : std::bool_constant
             < ( std::is_same_v< logical<Wide>
                               , logical < wide< element_type_t<Wide>
@@ -49,5 +49,5 @@ namespace eve
   }
 
   template<typename Wide, typename... ABI>
-  concept native_simd_for_abi = detail::is_native_for_abi<Wide,ABI...>::value;
+  concept native_simd_for_abi = detail::is_native_for_abi<Wide, ABI...>::value;
 }

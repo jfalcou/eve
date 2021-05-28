@@ -16,8 +16,8 @@ namespace eve
   struct as_floating_point : detail::make_floating_point<(sizeof(T) <= 4) ? 4: sizeof(T)>
   {};
 
-  template<typename T, typename N, typename ABI>
-  struct as_floating_point<wide<T,N,ABI>>
+  template<typename T, typename N>
+  struct as_floating_point<wide<T,N>>
   {
     using type = wide<typename as_floating_point<T>::type, N>;
   };
