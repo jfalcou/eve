@@ -15,11 +15,11 @@
 namespace eve::detail
 {
   template<decorator D, real_scalar_value T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE wide<T, N, ABI> fnms_(EVE_SUPPORTS(neon128_),
+  EVE_FORCEINLINE wide<T, N> fnms_(EVE_SUPPORTS(neon128_),
                                        numeric_type const &,
-                                       wide<T, N, ABI> const &v0,
-                                       wide<T, N, ABI> const &v1,
-                                       wide<T, N, ABI> const &v2) noexcept
+                                       wide<T, N> const &v0,
+                                       wide<T, N> const &v1,
+                                       wide<T, N> const &v2) noexcept
   {
     return fnms(v0, v1, v2);
   }
