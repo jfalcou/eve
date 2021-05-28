@@ -53,11 +53,23 @@ namespace eve::detail
 
   template<typename T>
   using is_emulated_t = typename is_emulated<T>::type;
+
+  template<typename X>
+  struct is_bundle : std::is_same<X, bundle_>
+  {
+  };
+
+  template<typename T>
+  inline constexpr bool is_bundle_v = is_bundle<T>::value;
+
+  template<typename T>
+  using is_bundle_t = typename is_emulated<T>::type;
 }
 
 namespace eve
 {
   // concepts related to above traits
+  template<typename T> concept bundle     = detail::is_bundle_v<T>;
   template<typename T> concept emulated   = detail::is_emulated_v<T>;
   template<typename T> concept aggregated = detail::is_aggregated_v<T>;
   template<typename T> concept native     = detail::is_native_v<T>;
