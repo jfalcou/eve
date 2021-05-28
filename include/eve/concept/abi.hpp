@@ -19,33 +19,14 @@ namespace eve
     template<typename Wide, typename... ABI>
     struct  is_native_for_abi
           : std::bool_constant
-            < ( std::is_same_v< Wide
-                              , wide< element_type_t<Wide>
-                                    , expected_cardinal_t<element_type_t<Wide>, ABI>
-                                    , ABI
-                                    >
-                              >
+            < ( (std::is_same_v<typename Wide::abi_type, ABI> &&
+                 Wide::size() == expected_cardinal_v<element_type_t<Wide>, ABI> )
               || ...
-              )
-            >
+              )>
     {};
 
     template<typename Wide, typename... ABI>
-    struct  is_native_for_abi<logical<Wide>, ABI...>
-          : std::bool_constant
-            < ( std::is_same_v< logical<Wide>
-                              , logical < wide< element_type_t<Wide>
-                                              , expected_cardinal_t < element_type_t<Wide>
-                                                                    , ABI
-                                                                    >
-                                              , ABI
-                                              >
-                                        >
-                              >
-              || ...
-              )
-            >
-    {};
+    struct  is_native_for_abi<logical<Wide>, ABI...> : is_native_for_abi<Wide, ABI...> {};
   }
 
   template<typename Wide, typename... ABI>

@@ -22,8 +22,8 @@ namespace eve
     using type = scalar_cardinal;
   };
 
-  template<typename Type, typename Size, typename ABI>
-  struct cardinal<wide<Type, Size, ABI>> : Size
+  template<typename Type, typename Size>
+  struct cardinal<wide<Type, Size>> : Size
   {
      using type = Size;
   };
@@ -39,4 +39,3 @@ namespace eve
   template<typename Type>
   inline constexpr auto cardinal_v = cardinal<Type>::value;
 }
-
