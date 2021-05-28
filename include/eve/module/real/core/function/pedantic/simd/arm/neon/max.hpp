@@ -14,12 +14,13 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE wide<T, N, ABI> max_( EVE_SUPPORTS(neon128_)
+  template<typename T, typename N>
+  EVE_FORCEINLINE wide<T, N> max_( EVE_SUPPORTS(neon128_)
                                       , pedantic_type const &
-                                      , wide<T, N, ABI> const &a0
-                                      , wide<T, N, ABI> const &a1
+                                      , wide<T, N> const &a0
+                                      , wide<T, N> const &a1
                                       ) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
     auto tmp = eve::max(a0, a1);
     if constexpr(eve::platform::supports_invalids) tmp = if_else(is_nan(a1), a0, tmp);

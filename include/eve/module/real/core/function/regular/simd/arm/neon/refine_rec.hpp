@@ -13,12 +13,13 @@
 
 namespace eve::detail
 {
-  template<floating_real_scalar_value T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE wide<T, N, ABI> refine_rec_(EVE_SUPPORTS(neon128_)
-                                             , wide<T, N, ABI> const& a0
-                                             , wide<T, N, ABI> const& a1) noexcept
+  template<floating_real_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N> refine_rec_(EVE_SUPPORTS(neon128_)
+                                             , wide<T, N> const& a0
+                                             , wide<T, N> const& a1) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
-    constexpr auto cat = categorize<wide<T, N, ABI>>();
+    constexpr auto cat = categorize<wide<T, N>>();
 
          if constexpr( cat == category::float32x2) return vmul_f32(vrecps_f32(a0, a1), a1);
     else if constexpr( cat == category::float32x4) return vmulq_f32(vrecpsq_f32(a0, a1), a1);

@@ -15,12 +15,13 @@
 
 namespace eve::detail
 {
-  template<floating_real_scalar_value T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE wide<T, N, ABI> rec_(EVE_SUPPORTS(neon128_)
+  template<floating_real_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N> rec_(EVE_SUPPORTS(neon128_)
                                       , raw_type const &
-                                      , wide<T, N, ABI> const& v) noexcept
+                                      , wide<T, N> const& v) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
-    constexpr auto cat = categorize<wide<T, N, ABI>>();
+    constexpr auto cat = categorize<wide<T, N>>();
 
 
          if constexpr( cat == category::float32x2) return vrecpe_f32(v);
@@ -33,9 +34,10 @@ namespace eve::detail
     else                                           return map(rec, v);
   }
 
-  template<floating_real_scalar_value T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE wide<T, N, ABI> rec_(EVE_SUPPORTS(neon128_),
-                                       wide<T, N, ABI> const &v0) noexcept
+  template<floating_real_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N> rec_(EVE_SUPPORTS(neon128_),
+                                       wide<T, N> const &v0) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
       // estimate 1/x with an extra NR step for full precision
       auto a = refine_rec(v0, raw(rec)(v0));

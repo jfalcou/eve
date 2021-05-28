@@ -12,8 +12,9 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE wide<T,N,ABI> reverse_( EVE_SUPPORTS(neon128_), wide<T,N,ABI> v) noexcept
+  template<typename T, typename N>
+  EVE_FORCEINLINE wide<T,N> reverse_( EVE_SUPPORTS(neon128_), wide<T,N> v) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
     constexpr bool one_instruction_basic_swizzle = (current_api >= asimd) || std::same_as<abi_t<T, N>, arm_64_>;
 

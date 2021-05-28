@@ -13,12 +13,13 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE wide<T, N, ABI> bit_notor_(EVE_SUPPORTS(neon128_),
-                                             wide<T, N, ABI> const &v0,
-                                             wide<T, N, ABI> const &v1) noexcept
+  template<real_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N> bit_notor_(EVE_SUPPORTS(neon128_),
+                                             wide<T, N> const &v0,
+                                             wide<T, N> const &v1) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
-    constexpr auto cat = categorize<wide<T, N, ABI>>();
+    constexpr auto cat = categorize<wide<T, N>>();
 
     if constexpr(cat == category::float32x4)
       return vreinterpretq_f32_u32(vornq_u32(vreinterpretq_u32_f32(v1), vreinterpretq_u32_f32(v0)));

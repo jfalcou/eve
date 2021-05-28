@@ -14,12 +14,13 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE wide<T, N, ABI> fma_( EVE_SUPPORTS(avx2_)
-                                      , wide<T, N, ABI> const& a
-                                      , wide<T, N, ABI> const& b
-                                      , wide<T, N, ABI> const& c
+  template<real_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N> fma_( EVE_SUPPORTS(avx2_)
+                                      , wide<T, N> const& a
+                                      , wide<T, N> const& b
+                                      , wide<T, N> const& c
                                       ) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
     if constexpr( std::is_integral_v<T> )
     {
@@ -33,7 +34,7 @@ namespace eve::detail
     }
     else
     {
-      constexpr auto cat = categorize<wide<T, N, ABI>>();
+      constexpr auto cat = categorize<wide<T, N>>();
 
             if constexpr( cat == category::float64x8  )   return _mm512_fmadd_pd(a, b, c);
       else  if constexpr( cat == category::float32x16 )   return _mm512_fmadd_ps(a, b, c);

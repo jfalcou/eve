@@ -13,13 +13,14 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE wide<T, N, ABI> bit_select_(EVE_SUPPORTS(neon128_),
-                                               wide<T, N, ABI> const &m,
-                                               wide<T, N, ABI> const &v0,
-                                               wide<T, N, ABI> const &v1) noexcept
+  template<real_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N> bit_select_(EVE_SUPPORTS(neon128_),
+                                               wide<T, N> const &m,
+                                               wide<T, N> const &v0,
+                                               wide<T, N> const &v1) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
-    constexpr auto cat = categorize<wide<T, N, ABI>>();
+    constexpr auto cat = categorize<wide<T, N>>();
 
          if constexpr(cat == category::float64x1) return vbsl_f64(vreinterpret_u64_f64(m), v0, v1);
     else if constexpr(cat == category::float64x2) return vbslq_f64(vreinterpretq_u64_f64(m), v0, v1);

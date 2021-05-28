@@ -17,37 +17,37 @@ namespace eve::detail
 {
   //================================================================================================
   // Unaligned pointer
-  template<typename U, integral_scalar_value T, typename N, typename ABI>
-  EVE_FORCEINLINE auto gather_(EVE_SUPPORTS(cpu_), U const *ptr, wide<T, N, ABI> const &v) noexcept
+  template<typename U, integral_scalar_value T, typename N>
+  EVE_FORCEINLINE auto gather_(EVE_SUPPORTS(cpu_), U const *ptr, wide<T, N> const &v) noexcept
   {
     wide<U, N> that;
     apply<N::value>([&](auto... I) { (that.set(I,ptr[v.get(I)]),...); });
     return that;
   }
 
-  template<typename U, value X, integral_scalar_value T, typename N, typename ABI>
+  template<typename U, value X, integral_scalar_value T, typename N>
   EVE_FORCEINLINE auto gather_(EVE_SUPPORTS(cpu_),
                                logical<X> const &     cond,
                                U const *              ptr,
-                               wide<T, N, ABI> const &v) noexcept
+                               wide<T, N> const &v) noexcept
   {
     return if_else(cond, gather(ptr, v), zero_);
   }
 
   //================================================================================================
   // Aligned pointer
-  template<typename U, std::size_t S, integral_scalar_value T, typename N, typename ABI>
+  template<typename U, std::size_t S, integral_scalar_value T, typename N>
   EVE_FORCEINLINE auto
-  gather_(EVE_SUPPORTS(cpu_), aligned_ptr<U, S> ptr, wide<T, N, ABI> const &v) noexcept
+  gather_(EVE_SUPPORTS(cpu_), aligned_ptr<U, S> ptr, wide<T, N> const &v) noexcept
   {
     return gather(ptr.get(), v);
   }
 
-  template<typename U, std::size_t S, value X, integral_scalar_value T, typename N, typename ABI>
+  template<typename U, std::size_t S, value X, integral_scalar_value T, typename N>
   EVE_FORCEINLINE auto gather_(EVE_SUPPORTS(cpu_),
                                logical<X> const &     cond,
                                aligned_ptr<U, S>      ptr,
-                               wide<T, N, ABI> const &v) noexcept
+                               wide<T, N> const &v) noexcept
   {
     return if_else(cond, gather(ptr.get(), v), zero_);
   }

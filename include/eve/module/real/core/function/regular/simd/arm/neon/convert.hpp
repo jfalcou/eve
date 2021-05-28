@@ -14,12 +14,13 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N, real_scalar_value U, arm_abi ABI>
+  template<real_scalar_value T, typename N, real_scalar_value U>
   EVE_FORCEINLINE wide<U, N>  convert_(EVE_SUPPORTS(neon128_)
-                                      , wide<T, N, ABI> const &v0
+                                      , wide<T, N> const &v0
                                       , as_<U> const &tgt) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
-    constexpr auto catin = categorize<wide<T, N, ABI>>();
+    constexpr auto catin = categorize<wide<T, N>>();
     constexpr auto catou = categorize<wide<U, N>>();
 
     // Idempotent call

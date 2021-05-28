@@ -13,12 +13,13 @@
 
 namespace eve::detail
 {
-  template<floating_real_scalar_value T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE logical<wide<T, N, ABI>>
-  is_lessgreater_( EVE_SUPPORTS(sse2_), wide<T,N,ABI> const& a, wide<T,N,ABI> const& b) noexcept
+  template<floating_real_scalar_value T, typename N>
+  EVE_FORCEINLINE logical<wide<T, N>>
+  is_lessgreater_( EVE_SUPPORTS(sse2_), wide<T,N> const& a, wide<T,N> const& b) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
-    using l_t = logical<wide<T, N, ABI>>;
-    constexpr auto c = categorize<wide<T,N,ABI>>();
+    using l_t = logical<wide<T, N>>;
+    constexpr auto c = categorize<wide<T,N>>();
     constexpr auto m = _CMP_NEQ_OQ;
 
     if constexpr( current_api >= eve::avx512 )

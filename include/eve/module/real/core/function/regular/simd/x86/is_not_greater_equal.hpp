@@ -13,14 +13,15 @@
 
 namespace eve::detail
 {
-  template<floating_real_scalar_value T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE logical<wide<T, N, ABI>>
+  template<floating_real_scalar_value T, typename N>
+  EVE_FORCEINLINE logical<wide<T, N>>
   is_not_greater_equal_ ( EVE_SUPPORTS(sse2_)
-                        , wide<T,N,ABI> const& a, wide<T,N,ABI> const& b
+                        , wide<T,N> const& a, wide<T,N> const& b
                         ) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
-    using s_t = typename logical<wide<T, N, ABI>>::storage_type;
-    constexpr auto c = categorize<wide<T,N,ABI>>();
+    using s_t = typename logical<wide<T, N>>::storage_type;
+    constexpr auto c = categorize<wide<T,N>>();
 
     if constexpr( !x86_128_::is_wide_logical )
     {

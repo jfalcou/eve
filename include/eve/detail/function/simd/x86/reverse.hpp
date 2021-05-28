@@ -11,8 +11,9 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE wide<T,N,ABI> reverse_( EVE_SUPPORTS(sse2_), wide<T,N,ABI> v) noexcept
+  template<real_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T,N> reverse_( EVE_SUPPORTS(sse2_), wide<T,N> v) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
     const __m128i reverse_8_shorts = _mm_set_epi8(1, 0, 3, 2, 5, 4, 7, 6, 9, 8, 11, 10, 13, 12, 15, 14);
 
@@ -104,7 +105,7 @@ namespace eve::detail
       if constexpr ( sizeof(T) >= 2 )
       {
         // spelling out the indexes will be a lot.
-        wide<T, N, ABI> idx([](int i, int size) { return size - i - 1; });
+        wide<T, N> idx([](int i, int size) { return size - i - 1; });
              if constexpr ( sizeof(T) == 8 ) return _mm512_permutexvar_epi64(idx, v);
         else if constexpr ( sizeof(T) == 4 ) return _mm512_permutexvar_epi32(idx, v);
         else                                 return _mm512_permutexvar_epi16(idx, v);

@@ -19,12 +19,13 @@ namespace eve::detail
 {
   //------------------------------------------------------------------------------------------------
   // Raw version
-  template<floating_real_scalar_value T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE wide<T, N, ABI>  sqrt_(EVE_SUPPORTS(neon128_)
+  template<floating_real_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N>  sqrt_(EVE_SUPPORTS(neon128_)
                                         , raw_type const &
-                                        , wide<T, N, ABI> const &v0) noexcept
+                                        , wide<T, N> const &v0) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
-    constexpr auto cat = categorize<wide<T, N, ABI>>();
+    constexpr auto cat = categorize<wide<T, N>>();
 
           if constexpr(cat == category::float32x2 )   return vsqrt_f32(v0);
     else  if constexpr(cat == category::float32x4 )   return vsqrtq_f32(v0);
@@ -39,11 +40,12 @@ namespace eve::detail
 
   //------------------------------------------------------------------------------------------------
   // Basic version
-  template<floating_real_scalar_value T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE wide<T, N, ABI>  sqrt_(EVE_SUPPORTS(neon128_)
-                                        , wide<T, N, ABI> const &v0) noexcept
+  template<floating_real_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N>  sqrt_(EVE_SUPPORTS(neon128_)
+                                        , wide<T, N> const &v0) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
-    constexpr auto cat = categorize<wide<T, N, ABI>>();
+    constexpr auto cat = categorize<wide<T, N>>();
 
          if constexpr(cat == category::float32x2 ) return vsqrt_f32(v0);
     else if constexpr(cat == category::float32x4 ) return vsqrtq_f32(v0);
