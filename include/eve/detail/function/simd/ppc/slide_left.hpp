@@ -13,13 +13,11 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N, ppc_abi ABI, std::ptrdiff_t Shift>
-  EVE_FORCEINLINE wide<T,N,ABI> slide_left_ ( EVE_SUPPORTS(vmx_)
-                                            , wide<T,N,ABI> v, index_t<Shift>
-                                            ) noexcept
-  requires(Shift<=N::value)
+  template<real_scalar_value T, typename N, std::ptrdiff_t Shift>
+  EVE_FORCEINLINE wide<T, N> slide_left_ ( EVE_SUPPORTS(vmx_), wide<T, N> v, index_t<Shift> ) noexcept
+    requires (Shift<=N::value) && ppc_abi<abi_t<T, N>>
   {
-    using that_t  = wide<T,N,ABI>;
+    using that_t  = wide<T, N>;
 
     if constexpr(Shift == N::value)
     {
@@ -31,9 +29,9 @@ namespace eve::detail
     }
     else
     {
-      if constexpr( std::same_as<T,double> )
+      if constexpr( std::same_as<T, double> )
       {
-        using i_t = as_integer_t<wide<T,N,ABI>>;
+        using i_t = as_integer_t<wide<T, N>>;
         return bit_cast(slide_left(bit_cast(v, as_<i_t>()), index<Shift> ), as(v));
       }
       else
@@ -43,7 +41,7 @@ namespace eve::detail
         that_t result = vec_slo( v.storage(), shift );
 
         // Mask noises from smaller sized registers
-        if constexpr(N::value < expected_cardinal_v<T,ppc_>)
+        if constexpr(N::value < expected_cardinal_v<T>)
         {
           result &= keep_first(N::value-Shift).mask(as(result)).bits();
         }

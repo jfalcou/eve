@@ -14,11 +14,12 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N, ppc_abi ABI, shuffle_pattern Pattern>
-  EVE_FORCEINLINE auto basic_swizzle_( EVE_SUPPORTS(vmx_), wide<T,N,ABI> const& v, Pattern const&)
+  template<typename T, typename N, shuffle_pattern Pattern>
+  EVE_FORCEINLINE auto basic_swizzle_( EVE_SUPPORTS(vmx_), wide<T, N> const& v, Pattern const&)
+    requires ppc_abi<abi_t<T, N>>
   {
     constexpr auto sz = Pattern::size();
-    using that_t      = as_wide_t<wide<T,N,ABI>,fixed<sz>>;
+    using that_t      = as_wide_t<wide<T, N>,fixed<sz>>;
 
     constexpr Pattern q = {};
 
@@ -31,7 +32,7 @@ namespace eve::detail
     {
       using bytes_t = typename that_t::template rebind<std::uint8_t,fixed<16>>;
       that_t that = vec_perm( v.storage(), v.storage()
-                            , as_bytes<wide<T,N,ABI>>(q,as_<bytes_t>()).storage()
+                            , as_bytes<wide<T, N>>(q,as_<bytes_t>()).storage()
                             );
 
       return process_zeros(that,q);

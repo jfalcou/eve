@@ -15,8 +15,9 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N, ppc_abi ABI>
-  EVE_FORCEINLINE auto load(eve::as_<wide<T, N, ABI>> const &tgt, T const* ptr) noexcept
+  template<real_scalar_value T, typename N>
+  EVE_FORCEINLINE auto load(eve::as_<wide<T, N>> const &tgt, T const* ptr) noexcept
+    requires ppc_abi<abi_t<T, N>>
   {
     if constexpr( N::value * sizeof(T) >= ppc_::bytes )
     {
@@ -52,9 +53,10 @@ namespace eve::detail
     }
   }
 
-  template<real_scalar_value T, typename N, ppc_abi ABI, std::size_t Align>
+  template<real_scalar_value T, typename N, std::size_t Align>
   EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N, ABI>> const &tgt, aligned_ptr<T const, Align> ptr) noexcept
+  load(eve::as_<wide<T, N>> const &tgt, aligned_ptr<T const, Align> ptr) noexcept
+    requires ppc_abi<abi_t<T, N>>
   {
     if constexpr( N::value * sizeof(T) >= ppc_::bytes )
     {
@@ -87,9 +89,10 @@ namespace eve::detail
     }
   }
 
-  template<real_scalar_value T, typename N, ppc_abi ABI, std::size_t Align>
+  template<real_scalar_value T, typename N, std::size_t Align>
   EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N, ABI>> const &tgt, aligned_ptr<T, Align>  ptr) noexcept
+  load(eve::as_<wide<T, N>> const &tgt, aligned_ptr<T, Align>  ptr) noexcept
+    requires ppc_abi<abi_t<T, N>>
   {
     return load(tgt, aligned_ptr<T const, Align>(ptr));
   }

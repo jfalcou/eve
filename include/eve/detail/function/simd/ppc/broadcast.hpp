@@ -13,26 +13,30 @@
 namespace eve::detail
 {
   template<typename T, typename N, ppc_abi ABI, typename Index>
-  EVE_FORCEINLINE auto broadcast_(EVE_SUPPORTS(vmx_), logical<wide<T,N,ABI>> v, Index) noexcept
+  EVE_FORCEINLINE auto broadcast_(EVE_SUPPORTS(vmx_), logical<wide<T,N>> v, Index) noexcept
+    requires ppc_abi<abi_t<T, N>>
   {
-    return logical<wide<T,N,ABI>>{ vec_splat(v.storage(), Index::value ) };
+    return logical<wide<T,N>>{ vec_splat(v.storage(), Index::value ) };
   }
 
   template<typename T, typename N, ppc_abi ABI, typename Index, std::ptrdiff_t C>
-  EVE_FORCEINLINE auto broadcast_(EVE_SUPPORTS(vmx_), logical<wide<T,N,ABI>> v, Index, fixed<C>) noexcept
+  EVE_FORCEINLINE auto broadcast_(EVE_SUPPORTS(vmx_), logical<wide<T,N>> v, Index, fixed<C>) noexcept
+    requires ppc_abi<abi_t<T, N>>
   {
     using  that_t = logical<wide<T,fixed<C>>>;
     return that_t{ vec_splat(v.storage(), Index::value ) };
   }
 
   template<typename T, typename N, ppc_abi ABI, typename Index>
-  EVE_FORCEINLINE auto broadcast_(EVE_SUPPORTS(vmx_), wide<T,N,ABI> v, Index) noexcept
+  EVE_FORCEINLINE auto broadcast_(EVE_SUPPORTS(vmx_), wide<T,N> v, Index) noexcept
+    requires ppc_abi<abi_t<T, N>>
   {
-    return wide<T,N,ABI>{ vec_splat(v.storage(), Index::value ) };
+    return wide<T,N>{ vec_splat(v.storage(), Index::value ) };
   }
 
   template<typename T, typename N, ppc_abi ABI, typename Index, std::ptrdiff_t C>
-  EVE_FORCEINLINE auto broadcast_(EVE_SUPPORTS(vmx_), wide<T,N,ABI> v, Index, fixed<C>) noexcept
+  EVE_FORCEINLINE auto broadcast_(EVE_SUPPORTS(vmx_), wide<T,N> v, Index, fixed<C>) noexcept
+    requires ppc_abi<abi_t<T, N>>
   {
     using  that_t = wide<T,fixed<C>>;
     return that_t{ vec_splat(v.storage(), Index::value ) };
