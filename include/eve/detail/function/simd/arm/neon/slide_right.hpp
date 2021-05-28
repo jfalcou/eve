@@ -12,13 +12,13 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N, arm_abi ABI, std::ptrdiff_t Shift>
-  EVE_FORCEINLINE wide<T,N,ABI> slide_right_( EVE_SUPPORTS(neon128_)
-                                            , wide<T,N,ABI> v, index_t<Shift>
+  template<real_scalar_value T, typename N, std::ptrdiff_t Shift>
+  EVE_FORCEINLINE wide<T,N> slide_right_( EVE_SUPPORTS(neon128_)
+                                            , wide<T,N> v, index_t<Shift>
                                             ) noexcept
-  requires(Shift<=N::value)
+  requires(Shift<=N::value) && arm_abi<abi_t<T, N>>
   {
-    using that_t  = wide<T,N,ABI>;
+    using that_t  = wide<T,N>;
 
     if constexpr(Shift == N::value)
     {
@@ -55,7 +55,7 @@ namespace eve::detail
       else  if constexpr( c == category::uint8x8    ) return vext_u8  (z,v,shf);
       else
       {
-        using f_t = as_integer_t<wide<T,N,ABI>>;
+        using f_t = as_integer_t<wide<T,N>>;
         return bit_cast( slide_right(bit_cast(v,as_<f_t>{}), index<Shift>), as(v) );
       }
     }

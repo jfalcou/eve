@@ -164,8 +164,6 @@ namespace eve::detail
     }
     else
     {
-      constexpr auto c = categorize<wide<T, N, ABI>>();
-
       // AVX has a bad == for integers so we use XOR
       if constexpr( current_api == avx )  return bit_cast(~v.bits()  ^ w.bits(), as(v));
       else                                return bit_cast( v.bits() == w.bits(), as(v));

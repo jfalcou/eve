@@ -13,13 +13,13 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N, arm_abi ABI, std::ptrdiff_t G>
-  EVE_FORCEINLINE wide<T,N,ABI> swap_adjacent_groups_( EVE_SUPPORTS(neon128_)
-                                                    , wide<T,N,ABI> v, fixed<G>
+  template<real_scalar_value T, typename N, std::ptrdiff_t G>
+  EVE_FORCEINLINE wide<T,N> swap_adjacent_groups_( EVE_SUPPORTS(neon128_)
+                                                    , wide<T,N> v, fixed<G>
                                                     ) noexcept
-  requires(G<=N::value)
+  requires(G<=N::value) && arm_abi<abi_t<T, N>>
   {
-    using that_t  = wide<T,N,ABI>;
+    using that_t  = wide<T,N>;
 
     if constexpr(G == N::value)
     {
