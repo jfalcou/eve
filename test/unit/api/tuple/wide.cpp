@@ -121,3 +121,31 @@ EVE_TEST_TYPES( "Check eve::wide::slice behavior", eve::test::scalar::all_types)
     TTS_PASS("Type is too small to be split.");
   }
 };
+
+//==================================================================================================
+// Combine API
+//==================================================================================================
+EVE_TEST_TYPES( "Check eve::wide::combine behavior", eve::test::scalar::all_types)
+<typename T>(eve::as_<T>)
+{
+  using w_t = eve::wide<tuple_t<T>>;
+
+  if constexpr(w_t::size() < 64)
+  {
+    using comb_t  = typename eve::cardinal_t<w_t>::combined_type;
+    using ref_t   = typename w_t::template rescale<comb_t>;
+
+    w_t d = [&](auto i, auto) { return tuple_t<T> { static_cast<std::int8_t>('a'+i)
+                                                  , static_cast<T>(i + 1)
+                                                  , 1.5*(1+i)
+                                                  };
+                              };
+
+    TTS_EQUAL( (ref_t{d,d})       , ref_t ( [&](auto i, auto c) { return  d.get(i % (c/2)); } ) );
+    TTS_EQUAL( eve::combine(d,d)  , ref_t ( [&](auto i, auto c) { return  d.get(i % (c/2)); } ) );
+  }
+  else
+  {
+    TTS_PASS("No combine for 512 bits char wide");
+  }
+};

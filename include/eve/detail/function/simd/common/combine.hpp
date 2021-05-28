@@ -34,6 +34,13 @@ namespace eve::detail
 
       return that;
     }
+    else if constexpr( is_bundle_v<abi_t<T, N>> )
+    {
+      return that_t ( kumi::map ( [](auto ml, auto mh) { return eve::combine(ml,mh); }
+                                , l.storage(), h.storage()
+                                )
+                    );
+    }
   }
 
   template<typename T, typename N>
