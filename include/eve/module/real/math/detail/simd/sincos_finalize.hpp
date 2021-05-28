@@ -26,14 +26,14 @@
 
 namespace eve::detail
 {
-  template<typename T,  typename N,  typename ABI>
+  template<typename T,  typename N>
   EVE_FORCEINLINE auto
-  sincos_finalize( wide<T, N, ABI> const & a0
-                 , wide<T, N, ABI> const & fn
-                 , wide<T, N, ABI> const & xr
-                 , wide<T, N, ABI> const & dxr = wide<T, N, ABI>(0)) noexcept
+  sincos_finalize( wide<T, N> const & a0
+                 , wide<T, N> const & fn
+                 , wide<T, N> const & xr
+                 , wide<T, N> const & dxr = wide<T, N>(0)) noexcept
   {
-    using t_t = wide<T, N, ABI>;
+    using t_t = wide<T, N>;
     auto const tmp =  binarize(fn >= t_t(2));
     auto const swap_bit = (fma(t_t(-2), tmp, fn));
     auto const cos_sign_bit = binarize(is_nez(bit_xor(swap_bit, tmp)), signmask(eve::as<T>()));
@@ -48,4 +48,3 @@ namespace eve::detail
                             );
   }
 }
-

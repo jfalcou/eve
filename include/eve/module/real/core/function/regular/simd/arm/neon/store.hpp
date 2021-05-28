@@ -54,10 +54,11 @@ namespace eve::detail
   }
 
 #if defined(SPY_COMPILER_IS_MSVC)
-  template<real_scalar_value T, typename N,  arm_abi ABI>
+  template<real_scalar_value T, typename N>
   EVE_FORCEINLINE void store_(EVE_SUPPORTS(neon128_)
-                             , wide<T, S, ABI> const &value
+                             , wide<T, N> const &value
                              , aligned_ptr<T, N> ptr) noexcept
+    requires arm_abi<abi_t<T, N>>
   {
     if constexpr( std::is_same<ABI,arm_64_> &&  (ABI N::value * sizeof(T) != arm_64_::bytes ))
     {
@@ -65,7 +66,7 @@ namespace eve::detail
     }
     else
     {
-      constexpr auto cat = categorize<wide<T, N, ABI>>();
+      constexpr auto cat = categorize<wide<T, N>>();
            if constexpr( cat == category::float32x2) vst1_f32_ex(ptr, value, 64);
       else if constexpr( cat == category::float32x4) vst1_f32_ex(ptr, value, 128);
       else if constexpr( cat == category::int64x1)   vst1_s64_ex(ptr, value, 64);

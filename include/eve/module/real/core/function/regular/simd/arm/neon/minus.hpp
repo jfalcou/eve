@@ -14,10 +14,10 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE wide<T, N, ABI> minus_(EVE_SUPPORTS(neon128_), wide<T, N, ABI> const& v) noexcept
+  template<real_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N> minus_(EVE_SUPPORTS(neon128_), wide<T, N> const& v) noexcept
   {
-    constexpr auto cat = categorize<wide<T, N, ABI>>();
+    constexpr auto cat = categorize<wide<T, N>>();
 
           if constexpr( cat && category::unsigned_) return zero(eve::as(v)) - v;
     else  if constexpr( cat && category::size64_  ) return zero(eve::as(v)) - v;
