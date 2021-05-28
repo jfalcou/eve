@@ -36,13 +36,13 @@ namespace std
 
 namespace eve
 {
-  template<std::size_t I,typename T, typename N, typename ABI> auto get(wide<T,N,ABI> w)
+  template<std::size_t I,typename T, typename N> auto get(wide<T,N> w)
   {
     return w.get(I);
   }
 
-  template<std::size_t I,typename T, typename N, typename ABI>
-  auto get(logical<wide<T,N,ABI>> w)
+  template<std::size_t I,typename T, typename N>
+  auto get(logical<wide<T,N>> w)
   {
     return w.get(I);
   }

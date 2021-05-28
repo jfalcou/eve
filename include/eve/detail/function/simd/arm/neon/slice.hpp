@@ -12,11 +12,12 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N, typename Slice, arm_abi ABI>
-  EVE_FORCEINLINE auto slice(wide<T, N, ABI> const &a, Slice const &) noexcept
+  template<typename T, typename N, typename Slice>
+  EVE_FORCEINLINE auto slice(wide<T, N> const &a, Slice const &) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
     using type = wide<T, typename N::split_type>;
-    constexpr auto c = categorize<wide<T, N, ABI>>();
+    constexpr auto c = categorize<wide<T, N>>();
 
     if constexpr( Slice::value )
     {
@@ -63,8 +64,9 @@ namespace eve::detail
     }
   }
 
-  template<typename T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE auto slice(wide<T, N, ABI> const &a) noexcept
+  template<typename T, typename N>
+  EVE_FORCEINLINE auto slice(wide<T, N> const &a) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
     std::array<wide<T, typename N::split_type>, 2> that{ slice(a, lower_), slice(a, upper_) };
     return that;

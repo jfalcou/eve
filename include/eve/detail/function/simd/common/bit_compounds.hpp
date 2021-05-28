@@ -19,8 +19,8 @@ namespace eve::detail
   //================================================================================================
   // <<=
   //================================================================================================
-  template<integral_real_scalar_value T, typename N, typename ABI, integral_real_scalar_value U>
-  EVE_FORCEINLINE decltype(auto) self_shl(wide<T,N,ABI>& v, wide<U,N,ABI> s) noexcept
+  template<integral_real_scalar_value T, typename N, integral_real_scalar_value U>
+  EVE_FORCEINLINE decltype(auto) self_shl(wide<T,N>& v, wide<U,N> s) noexcept
   {
     auto ss = []<typename V>(V a, auto b) { return static_cast<V>(a << b); };
 
@@ -30,8 +30,8 @@ namespace eve::detail
     return v;
   }
 
-  template<integral_real_scalar_value T, typename N, typename ABI, integral_real_scalar_value U>
-  EVE_FORCEINLINE decltype(auto) self_shl(wide<T,N,ABI>& v, U s) noexcept
+  template<integral_real_scalar_value T, typename N, integral_real_scalar_value U>
+  EVE_FORCEINLINE decltype(auto) self_shl(wide<T,N>& v, U s) noexcept
   {
     auto ss = []<typename V>(V a, auto b) { return static_cast<V>(a << b); };
 
@@ -44,8 +44,8 @@ namespace eve::detail
   //================================================================================================
   // >>=
   //================================================================================================
-  template<integral_real_scalar_value T, typename N, typename ABI, integral_real_scalar_value U>
-  EVE_FORCEINLINE decltype(auto) self_shr(wide<T,N,ABI>& v, wide<U,N,ABI> s) noexcept
+  template<integral_real_scalar_value T, typename N, integral_real_scalar_value U>
+  EVE_FORCEINLINE decltype(auto) self_shr(wide<T,N>& v, wide<U,N> s) noexcept
   {
     auto ss = []<typename V>(V a, auto b) { return static_cast<V>(a >> b); };
 
@@ -55,8 +55,8 @@ namespace eve::detail
     return v;
   }
 
-  template<integral_real_scalar_value T, typename N, typename ABI, integral_real_scalar_value U>
-  EVE_FORCEINLINE decltype(auto) self_shr(wide<T,N,ABI>& v, U s) noexcept
+  template<integral_real_scalar_value T, typename N, integral_real_scalar_value U>
+  EVE_FORCEINLINE decltype(auto) self_shr(wide<T,N>& v, U s) noexcept
   {
     auto ss = []<typename V>(V a, auto b) { return static_cast<V>(a >> b); };
 
@@ -69,11 +69,11 @@ namespace eve::detail
   //================================================================================================
   // &=
   //================================================================================================
-  template<scalar_value T, value U, typename N, non_native_abi ABI>
-  EVE_FORCEINLINE decltype(auto) self_bitand(wide<T, N, ABI> &self, U const &other) noexcept
-  requires((sizeof(wide<T, N, ABI>) == sizeof(U)) || (sizeof(T) == sizeof(U)))
+  template<scalar_value T, value U, typename N>
+  EVE_FORCEINLINE decltype(auto) self_bitand(wide<T, N> &self, U const &other) noexcept
+  requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && non_native_abi<abi_t<T, N>>
   {
-    using type = wide<T, N, ABI>;
+    using type = wide<T, N>;
 
     if constexpr( scalar_value<U> )
     {
@@ -103,12 +103,12 @@ namespace eve::detail
   //================================================================================================
   // |=
   //================================================================================================
-  template<scalar_value T, value U, typename N, non_native_abi ABI>
+  template<scalar_value T, value U, typename N>
   EVE_FORCEINLINE decltype(auto)
-  self_bitor(wide<T, N, ABI> &self, U const &other) requires((sizeof(wide<T, N, ABI>) == sizeof(U))
-                                                             || (sizeof(T) == sizeof(U)))
+  self_bitor(wide<T, N> &self, U const &other) requires((sizeof(wide<T, N>) == sizeof(U))
+                                                             || (sizeof(T) == sizeof(U))) && non_native_abi<abi_t<T, N>>
   {
-    using type = wide<T, N, ABI>;
+    using type = wide<T, N>;
 
     if constexpr( scalar_value<U> )
     {
@@ -138,12 +138,12 @@ namespace eve::detail
   //================================================================================================
   // ^=
   //================================================================================================
-  template<scalar_value T, value U, typename N, non_native_abi ABI>
+  template<scalar_value T, value U, typename N>
   EVE_FORCEINLINE decltype(auto)
-  self_bitxor(wide<T, N, ABI> &self, U const &other) requires((sizeof(wide<T, N, ABI>) == sizeof(U))
-                                                              || (sizeof(T) == sizeof(U)))
+  self_bitxor(wide<T, N> &self, U const &other) requires((sizeof(wide<T, N>) == sizeof(U))
+                                                              || (sizeof(T) == sizeof(U))) && non_native_abi<abi_t<T, N>>
   {
-    using type = wide<T, N, ABI>;
+    using type = wide<T, N>;
 
     if constexpr( scalar_value<U> )
     {

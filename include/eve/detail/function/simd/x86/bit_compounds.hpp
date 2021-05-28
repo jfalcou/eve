@@ -18,10 +18,11 @@ namespace eve::detail
   //================================================================================================
   // <<=
   //================================================================================================
-  template<integral_real_scalar_value T, typename N, x86_abi ABI, integral_real_scalar_value U>
-  EVE_FORCEINLINE decltype(auto) self_shr(wide<T,N,ABI>& v, U s) noexcept
+  template<integral_real_scalar_value T, typename N, integral_real_scalar_value U>
+  EVE_FORCEINLINE decltype(auto) self_shr(wide<T,N>& v, U s) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
-    constexpr auto c          = categorize<wide<T, N, ABI>>();
+    constexpr auto c          = categorize<wide<T, N>>();
     constexpr bool is_avx2    = current_api >= avx2;
     constexpr bool is_avx512  = current_api >= avx512;
 
@@ -50,10 +51,11 @@ namespace eve::detail
     return v;
   }
 
-  template<integral_real_scalar_value T, typename N, x86_abi ABI, integral_real_scalar_value U>
-  EVE_FORCEINLINE decltype(auto) self_shr(wide<T,N,ABI>& v, wide<U,N,ABI> s) noexcept
+  template<integral_real_scalar_value T, typename N, integral_real_scalar_value U>
+  EVE_FORCEINLINE decltype(auto) self_shr(wide<T,N>& v, wide<U,N> s) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
-    constexpr auto c         = categorize<wide<T, N, ABI>>();
+    constexpr auto c         = categorize<wide<T, N>>();
     constexpr bool is_avx2   = current_api >= avx2;
     constexpr bool is_avx512 = current_api >= avx512;
 
@@ -70,7 +72,7 @@ namespace eve::detail
 
     if constexpr( supports_xop )
     {
-      using i_t = typename wide<T,N,ABI>::template rebind <as_integer_t<T, signed>,N>;
+      using i_t = typename wide<T,N>::template rebind <as_integer_t<T, signed>,N>;
       auto const si = bit_cast(s,as_<i_t>()).storage();
 
             if constexpr( c == category::int64x2  ) v = _mm_sha_epi64(v,-si);
@@ -117,10 +119,11 @@ namespace eve::detail
   //================================================================================================
   // <<=
   //================================================================================================
-  template<integral_real_scalar_value T, typename N, x86_abi ABI, integral_real_scalar_value U>
-  EVE_FORCEINLINE auto self_shl(wide<T,N,ABI>& v, U s) noexcept
+  template<integral_real_scalar_value T, typename N, integral_real_scalar_value U>
+  EVE_FORCEINLINE auto self_shl(wide<T,N>& v, U s) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
-    constexpr auto c = categorize<wide<T, N, ABI>>();
+    constexpr auto c = categorize<wide<T, N>>();
     constexpr bool is_avx2 = current_api >= avx2;
 
     [[maybe_unused]] auto shft = [](auto a, auto b )
@@ -166,10 +169,11 @@ namespace eve::detail
     return v;
   }
 
-  template<integral_real_scalar_value T, typename N, x86_abi ABI, integral_real_scalar_value U>
-  EVE_FORCEINLINE decltype(auto) self_shl(wide<T,N,ABI>& v, wide<U,N,ABI> s) noexcept
+  template<integral_real_scalar_value T, typename N, integral_real_scalar_value U>
+  EVE_FORCEINLINE decltype(auto) self_shl(wide<T,N>& v, wide<U,N> s) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
-    constexpr auto c = categorize<wide<T, N, ABI>>();
+    constexpr auto c = categorize<wide<T, N>>();
     constexpr bool is_avx2 = current_api >= avx2;
 
     [[maybe_unused]] auto shft = []<typename V>(V a, auto b)
@@ -218,11 +222,11 @@ namespace eve::detail
   //================================================================================================
   // &=
   //================================================================================================
-  template<scalar_value T, value U, typename N, x86_abi ABI>
-  EVE_FORCEINLINE decltype(auto) self_bitand(wide<T, N, ABI> &self, U const &other) noexcept
-  requires((sizeof(wide<T, N, ABI>) == sizeof(U)) || (sizeof(T) == sizeof(U)))
+  template<scalar_value T, value U, typename N>
+  EVE_FORCEINLINE decltype(auto) self_bitand(wide<T, N> &self, U const &other) noexcept
+  requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && x86_abi<abi_t<T, N>>
   {
-    using type = wide<T, N, ABI>;
+    using type = wide<T, N>;
 
     if constexpr( scalar_value<U> )
     {
@@ -259,11 +263,11 @@ namespace eve::detail
   //================================================================================================
   // |=
   //================================================================================================
-  template<scalar_value T, value U, typename N, x86_abi ABI>
-  EVE_FORCEINLINE decltype(auto) self_bitor(wide<T, N, ABI> &self, U const &other) noexcept
-      requires((sizeof(wide<T, N, ABI>) == sizeof(U)) || (sizeof(T) == sizeof(U)))
+  template<scalar_value T, value U, typename N>
+  EVE_FORCEINLINE decltype(auto) self_bitor(wide<T, N> &self, U const &other) noexcept
+      requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && x86_abi<abi_t<T, N>>
   {
-    using type = wide<T, N, ABI>;
+    using type = wide<T, N>;
 
     if constexpr( scalar_value<U> )
     {
@@ -301,11 +305,11 @@ namespace eve::detail
   //================================================================================================
   // ^=
   //================================================================================================
-  template<scalar_value T, value U, typename N, x86_abi ABI>
-  EVE_FORCEINLINE decltype(auto) self_bitxor(wide<T, N, ABI> &self, U const &other) noexcept
-      requires((sizeof(wide<T, N, ABI>) == sizeof(U)) || (sizeof(T) == sizeof(U)))
+  template<scalar_value T, value U, typename N>
+  EVE_FORCEINLINE decltype(auto) self_bitxor(wide<T, N> &self, U const &other) noexcept
+      requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && x86_abi<abi_t<T, N>>
   {
-    using type = wide<T, N, ABI>;
+    using type = wide<T, N>;
 
     if constexpr( scalar_value<U> )
     {

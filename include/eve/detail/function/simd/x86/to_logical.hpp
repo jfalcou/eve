@@ -19,8 +19,9 @@ namespace eve::detail
   //================================================================================================
   // Wide to Logical
   //================================================================================================
-  template<typename T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE as_logical_t<wide<T,N,ABI>> to_logical( wide<T,N,ABI> const& v ) noexcept
+  template<typename T, typename N>
+  EVE_FORCEINLINE as_logical_t<wide<T,N>> to_logical( wide<T,N> const& v ) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
     return v != 0;
   }

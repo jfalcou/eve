@@ -18,17 +18,18 @@
 namespace eve::detail
 {
   //================================================================================================
-  template<typename T, typename U, typename N, x86_abi ABI>
+  template<typename T, typename U, typename N>
   EVE_FORCEINLINE auto self_logand( sse2_ const&
-                                  , logical<wide<T,N,ABI>> v, logical<wide<U,N,ABI>> w
+                                  , logical<wide<T,N>> v, logical<wide<U,N>> w
                                   ) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
     if constexpr( !use_is_wide_logical<abi_t<T, N>>::value )
     {
-      using storage_t = typename logical<wide<T, N, ABI>>::storage_type;
+      using storage_t = typename logical<wide<T, N>>::storage_type;
       using m_t       = typename storage_t::type;
       m_t that = v.storage().value & w.storage().value;
-      return logical<wide<T, N, ABI>>(storage_t{that});
+      return logical<wide<T, N>>(storage_t{that});
     }
     else
     {
@@ -37,17 +38,18 @@ namespace eve::detail
   }
 
   //================================================================================================
-  template<typename T, typename U, typename N, x86_abi ABI>
+  template<typename T, typename U, typename N>
   EVE_FORCEINLINE auto self_logor ( sse2_ const&
-                                  , logical<wide<T,N,ABI>> v, logical<wide<U,N,ABI>> w
+                                  , logical<wide<T,N>> v, logical<wide<U,N>> w
                                   ) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
     if constexpr( !use_is_wide_logical<abi_t<T, N>>::value )
     {
-      using storage_t = typename logical<wide<T, N, ABI>>::storage_type;
+      using storage_t = typename logical<wide<T, N>>::storage_type;
       using m_t       = typename storage_t::type;
       m_t that = v.storage().value | w.storage().value;
-      return logical<wide<T, N, ABI>>(storage_t{that});
+      return logical<wide<T, N>>(storage_t{that});
     }
     else
     {
@@ -56,12 +58,13 @@ namespace eve::detail
   }
 
   //================================================================================================
-  template<real_value T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE auto self_lognot(logical<wide<T, N, ABI>> v) noexcept
+  template<real_value T, typename N>
+  EVE_FORCEINLINE auto self_lognot(logical<wide<T, N>> v) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
     if constexpr( !abi_t<T, N>::is_wide_logical )
     {
-      using l_t = logical<wide<T, N, ABI>>;
+      using l_t = logical<wide<T, N>>;
       return l_t{~v.storage()};
     }
     else
@@ -71,10 +74,11 @@ namespace eve::detail
   }
 
   //================================================================================================
-  template<real_value T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE as_logical_t<wide<T, N, ABI>> self_eq(wide<T,N,ABI> v, wide<T,N,ABI> w) noexcept
+  template<real_value T, typename N>
+  EVE_FORCEINLINE as_logical_t<wide<T, N>> self_eq(wide<T,N> v, wide<T,N> w) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
-    constexpr auto c = categorize<wide<T, N, ABI>>();
+    constexpr auto c = categorize<wide<T, N>>();
     constexpr auto f = to_integer(cmp_flt::eq_oq);
 
     if constexpr( current_api >= avx512 )
@@ -155,12 +159,13 @@ namespace eve::detail
     }
   }
 
-  template<real_value T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE auto self_eq(logical<wide<T,N,ABI>> v, logical<wide<T,N,ABI>> w) noexcept
+  template<real_value T, typename N>
+  EVE_FORCEINLINE auto self_eq(logical<wide<T,N>> v, logical<wide<T,N>> w) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
     if constexpr( !abi_t<T, N>::is_wide_logical )
     {
-      return logical<wide<T,N,ABI>>{ ~(v.storage() ^ w.storage()) };
+      return logical<wide<T,N>>{ ~(v.storage() ^ w.storage()) };
     }
     else
     {
@@ -171,10 +176,11 @@ namespace eve::detail
   }
 
   //================================================================================================
-  template<real_value T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE as_logical_t<wide<T, N, ABI>> self_neq(wide<T,N,ABI> v, wide<T,N,ABI> w) noexcept
+  template<real_value T, typename N>
+  EVE_FORCEINLINE as_logical_t<wide<T, N>> self_neq(wide<T,N> v, wide<T,N> w) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
-    constexpr auto c = categorize<wide<T, N, ABI>>();
+    constexpr auto c = categorize<wide<T, N>>();
     constexpr auto f = to_integer(cmp_flt::neq_uq);
 
     if constexpr( current_api >= avx512 )
@@ -231,12 +237,13 @@ namespace eve::detail
     }
   }
 
-  template<real_value T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE auto self_neq(logical<wide<T,N,ABI>> v, logical<wide<T,N,ABI>> w) noexcept
+  template<real_value T, typename N>
+  EVE_FORCEINLINE auto self_neq(logical<wide<T,N>> v, logical<wide<T,N>> w) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
     if constexpr( !abi_t<T, N>::is_wide_logical )
     {
-      return logical<wide<T,N,ABI>>{ v.storage() ^ w.storage() };
+      return logical<wide<T,N>>{ v.storage() ^ w.storage() };
     }
     else
     {
@@ -245,10 +252,11 @@ namespace eve::detail
   }
 
   //================================================================================================
-  template<real_value T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE as_logical_t<wide<T, N, ABI>> self_less(wide<T,N,ABI> v, wide<T,N,ABI> w) noexcept
+  template<real_value T, typename N>
+  EVE_FORCEINLINE as_logical_t<wide<T, N>> self_less(wide<T,N> v, wide<T,N> w) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
-    constexpr auto c = categorize<wide<T, N, ABI>>();
+    constexpr auto c = categorize<wide<T, N>>();
     constexpr auto f = to_integer(cmp_flt::lt_oq);
 
     if constexpr( current_api >= avx512 )
@@ -308,8 +316,8 @@ namespace eve::detail
 
         [[maybe_unused]]  auto unsigned_cmp = [](auto v, auto w)
         {
-          using l_t = logical<wide<T, N, ABI>>;
-          auto const sm = signmask(as_<as_integer_t<wide<T, N, ABI>, signed>>());
+          using l_t = logical<wide<T, N>>;
+          auto const sm = signmask(as_<as_integer_t<wide<T, N>, signed>>());
           return bit_cast( (bit_cast(v,as(sm))-sm) < (bit_cast(w,as(sm))-sm),as_<l_t>{});
         };
 
@@ -335,10 +343,11 @@ namespace eve::detail
   }
 
   //================================================================================================
-  template<real_value T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE as_logical_t<wide<T, N, ABI>> self_greater(wide<T,N,ABI> v, wide<T,N,ABI> w) noexcept
+  template<real_value T, typename N>
+  EVE_FORCEINLINE as_logical_t<wide<T, N>> self_greater(wide<T,N> v, wide<T,N> w) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
-    constexpr auto c = categorize<wide<T, N, ABI>>();
+    constexpr auto c = categorize<wide<T, N>>();
     constexpr auto f = to_integer(cmp_flt::gt_oq);
 
     if constexpr( current_api >= avx512 )
@@ -400,8 +409,8 @@ namespace eve::detail
 
         [[maybe_unused]]  auto unsigned_cmp = [](auto v, auto w)
         {
-          using l_t = logical<wide<T, N, ABI>>;
-          auto const sm = signmask(as_<as_integer_t<wide<T, N, ABI>, signed>>());
+          using l_t = logical<wide<T, N>>;
+          auto const sm = signmask(as_<as_integer_t<wide<T, N>, signed>>());
           return bit_cast((bit_cast(v,as(sm))-sm) > (bit_cast(w,as(sm))-sm),as_<l_t>{});
         };
 
@@ -428,10 +437,11 @@ namespace eve::detail
   }
 
   //================================================================================================
-  template<real_value T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE as_logical_t<wide<T, N, ABI>> self_geq(wide<T,N,ABI> v, wide<T,N,ABI> w) noexcept
+  template<real_value T, typename N>
+  EVE_FORCEINLINE as_logical_t<wide<T, N>> self_geq(wide<T,N> v, wide<T,N> w) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
-    constexpr auto c = categorize<wide<T, N, ABI>>();
+    constexpr auto c = categorize<wide<T, N>>();
     constexpr auto f = to_integer(cmp_flt::ge_oq);
 
     if constexpr( current_api >= avx512 )
@@ -489,10 +499,11 @@ namespace eve::detail
   }
 
   //================================================================================================
-  template<real_value T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE as_logical_t<wide<T, N, ABI>> self_leq(wide<T,N,ABI> v, wide<T,N,ABI> w) noexcept
+  template<real_value T, typename N>
+  EVE_FORCEINLINE as_logical_t<wide<T, N>> self_leq(wide<T,N> v, wide<T,N> w) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
-    constexpr auto c = categorize<wide<T, N, ABI>>();
+    constexpr auto c = categorize<wide<T, N>>();
     constexpr auto f = to_integer(cmp_flt::le_oq);
 
     if constexpr( current_api >= avx512 )

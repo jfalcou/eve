@@ -12,8 +12,8 @@
 
 namespace eve
 {
-  template<typename T, typename N, typename ABI>
-  inline bool compare_equal(wide<T, N, ABI> const &l, wide<T, N, ABI> const &r)
+  template<typename T, typename N>
+  inline bool compare_equal(wide<T, N> const &l, wide<T, N> const &r)
   {
     auto check = [=]<std::size_t... I>(std::index_sequence<I...> const&)
     {
@@ -49,8 +49,8 @@ namespace eve
 
 namespace tts
 {
-  template<typename T, typename N, typename ABI>
-  inline double ulp_distance(eve::wide<T, N, ABI> const &l, eve::wide<T, N, ABI> const &r)
+  template<typename T, typename N>
+  inline double ulp_distance(eve::wide<T, N> const &l, eve::wide<T, N> const &r)
   {
     double max_ulp = 0;
     for(auto i = 0; i < l.size(); ++i)
@@ -65,8 +65,8 @@ namespace tts
     return eve::compare_equal(l,r) ? 0. : std::numeric_limits<double>::infinity();
   }
 
-  template<typename T, typename N, typename ABI>
-  inline double relative_distance(eve::wide<T, N, ABI> const &l, eve::wide<T, N, ABI> const &r)
+  template<typename T, typename N>
+  inline double relative_distance(eve::wide<T, N> const &l, eve::wide<T, N> const &r)
   {
     double max_ulp = 0;
     for(auto i = 0; i < l.size(); ++i)
@@ -81,8 +81,8 @@ namespace tts
     return eve::compare_equal(l,r) ? 0. : 1;
   }
 
-  template<typename T, typename N, typename ABI>
-  inline double absolute_distance(eve::wide<T, N, ABI> const &l, eve::wide<T, N, ABI> const &r)
+  template<typename T, typename N>
+  inline double absolute_distance(eve::wide<T, N> const &l, eve::wide<T, N> const &r)
   {
     double max_ulp = 0;
     for(auto i = 0; i < l.size(); ++i)

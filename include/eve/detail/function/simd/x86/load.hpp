@@ -19,9 +19,9 @@ namespace eve::detail
   //================================================================================================
   // Regular loads
   //================================================================================================
-  template<typename T, typename N, x86_abi ABI, simd_compatible_ptr<wide<T,N,ABI>> Ptr >
-  EVE_FORCEINLINE auto load(eve::as_<wide<T, N, ABI>> const &, Ptr p)
-  requires( dereference_as<T, Ptr>::value )
+  template<typename T, typename N, simd_compatible_ptr<wide<T,N>> Ptr >
+  EVE_FORCEINLINE auto load(eve::as_<wide<T, N>> const &, Ptr p)
+  requires( dereference_as<T, Ptr>::value ) && x86_abi<abi_t<T, N>>
   //requires( std::same_as<T, std::remove_cvref_t<decltype(*p)>> )
   {
     constexpr auto cat = categorize<wide<T, N>>();
@@ -88,15 +88,15 @@ namespace eve::detail
   //================================================================================================
   // logical loads require some specific setup
   //================================================================================================
-  template<typename T, typename N, typename Ptr, x86_abi ABI>
+  template<typename T, typename N, typename Ptr>
   EVE_FORCEINLINE
-  auto load([[maybe_unused]] eve::as_<logical<wide<T, N, ABI>>> const& tgt, Ptr p)
-  requires( dereference_as<logical<T>, Ptr>::value )
+  auto load([[maybe_unused]] eve::as_<logical<wide<T, N>>> const& tgt, Ptr p)
+  requires( dereference_as<logical<T>, Ptr>::value ) && x86_abi<abi_t<T, N>>
   //requires( std::same_as<logical<T>, std::remove_cvref_t<decltype(*p)>> )
   {
-    auto block = [&]() -> wide<T, N, ABI>
+    auto block = [&]() -> wide<T, N>
     {
-      using wtg = eve::as_<wide<T, N, ABI>>;
+      using wtg = eve::as_<wide<T, N>>;
       if constexpr( !std::is_pointer_v<Ptr> )
       {
         using ptr_t = typename Ptr::template rebind<T const>;
@@ -112,14 +112,15 @@ namespace eve::detail
     else                                  return bit_cast(block, tgt);
   }
 
-  template<typename Iterator, typename T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE auto load ( eve::as_<logical<wide<T, N, ABI>>> const &
+  template<typename Iterator, typename T, typename N>
+  EVE_FORCEINLINE auto load ( eve::as_<logical<wide<T, N>>> const &
                             , Iterator b, Iterator e
                             ) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
-    auto block = [&]() -> wide<T, N, ABI>
+    auto block = [&]() -> wide<T, N>
     {
-      using tgt = eve::as_<wide<T, N, ABI>>;
+      using tgt = eve::as_<wide<T, N>>;
       return load(tgt(), b, e);
     }();
 

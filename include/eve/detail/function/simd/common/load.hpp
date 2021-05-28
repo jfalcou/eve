@@ -95,15 +95,15 @@ namespace eve::detail
   //================================================================================================
   // Basic logical support
   //================================================================================================
-  template<typename T, typename N, typename Ptr, typename ABI>
+  template<typename T, typename N, typename Ptr>
   EVE_FORCEINLINE
-  auto load(eve::as_<logical<wide<T, N, ABI>>> const & tgt, Ptr p)
+  auto load(eve::as_<logical<wide<T, N>>> const & tgt, Ptr p)
   requires( dereference_as<logical<T>, Ptr>::value && !x86_abi<abi_t<T, N>>)
   {
     return  bit_cast
-            ( [&]() -> wide<T, N, ABI>
+            ( [&]() -> wide<T, N>
               {
-                using wtg = eve::as_<wide<T, N, ABI>>;
+                using wtg = eve::as_<wide<T, N>>;
                 if constexpr( !std::is_pointer_v<Ptr> )
                 {
                   using ptr_t = typename Ptr::template rebind<T const>;

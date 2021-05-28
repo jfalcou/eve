@@ -16,8 +16,8 @@ namespace eve::detail
   // There is no usecase for aggregated - use top bits.
   // For emulated, N <= 64 is enforced in top bits.
 
-  template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto movemask( eve::logical<eve::wide<T, N, ABI>> const& v ) noexcept
+  template<typename T, typename N>
+  EVE_FORCEINLINE auto movemask( eve::logical<eve::wide<T, N>> const& v ) noexcept
   {
     std::uint64_t res = 0;
     for (std::uint64_t i = 0; i != (std::uint64_t)N(); ++i) {

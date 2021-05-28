@@ -15,23 +15,25 @@ namespace eve::detail
   //================================================================================================
   // Logical to Bits
   //================================================================================================
-  template<typename T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE auto to_bits( sse2_ const&, logical<wide<T, N, ABI>> const& p ) noexcept
+  template<typename T, typename N>
+  EVE_FORCEINLINE auto to_bits( sse2_ const&, logical<wide<T, N>> const& p ) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
-    using type = typename logical<wide<T, N, ABI>>::bits_type;
+    using type = typename logical<wide<T, N>>::bits_type;
     return bit_cast(p.mask(), as_<type>{});
   }
 
   //================================================================================================
   // Logical to Mask
   //================================================================================================
-  template<typename T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE wide<T, N, ABI> to_mask(sse2_ const&, logical<wide<T, N, ABI>> const& p ) noexcept
+  template<typename T, typename N>
+  EVE_FORCEINLINE wide<T, N> to_mask(sse2_ const&, logical<wide<T, N>> const& p ) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
     if constexpr( current_api >= avx512 )
     {
-      auto z = wide<T, N, ABI>(0);
-      auto a = allbits(as_<wide<T, N, ABI>>());
+      auto z = wide<T, N>(0);
+      auto a = allbits(as_<wide<T, N>>());
       auto m = p.storage().value;
 
       if constexpr( std::same_as<abi_t<T, N>,x86_128_>)
@@ -98,8 +100,9 @@ namespace eve::detail
   //================================================================================================
   // Logical to Bitmap - use movemask variant
   //================================================================================================
-  template<typename T, typename N, x86_abi ABI> EVE_FORCEINLINE
-  std::bitset<N::value> to_bitmap(sse2_ const&, logical<wide<T, N, ABI>> const& p ) noexcept
+  template<typename T, typename N> EVE_FORCEINLINE
+  std::bitset<N::value> to_bitmap(sse2_ const&, logical<wide<T, N>> const& p ) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
     if constexpr( !abi_t<T, N>::is_wide_logical )
     {

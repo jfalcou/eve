@@ -158,10 +158,11 @@ namespace eve::detail
   //================================================================================================
   // splat make
   //================================================================================================
-  template<real_scalar_value T, typename S, typename V, x86_abi ABI>
-  EVE_FORCEINLINE auto make(eve::as_<wide<T,S,ABI>> const &, V v) noexcept
+  template<real_scalar_value T, typename S, typename V>
+  EVE_FORCEINLINE auto make(eve::as_<wide<T,S>> const &, V v) noexcept
+      requires x86_abi<abi_t<T, S>>
   {
-    constexpr auto c = categorize<wide<T,S,ABI>>();
+    constexpr auto c = categorize<wide<T,S>>();
 
          if constexpr( c == category::float64x8                        ) return _mm512_set1_pd(v);
     else if constexpr( c == category::float64x4                        ) return _mm256_set1_pd(v);
@@ -192,12 +193,13 @@ namespace eve::detail
   //================================================================================================
   // logical cases
   //================================================================================================
-  template<real_scalar_value T, typename S, x86_abi ABI, typename... Vs>
-  EVE_FORCEINLINE auto make(as_<logical<wide<T,S,ABI>>> const &, Vs... vs) noexcept
+  template<real_scalar_value T, typename S, typename... Vs>
+  EVE_FORCEINLINE auto make(as_<logical<wide<T,S>>> const &, Vs... vs) noexcept
+      requires x86_abi<abi_t<T, S>>
   {
     if constexpr( !abi_t<T, S>::is_wide_logical )
     {
-      typename logical<wide<T,S,ABI>>::storage_type that{};
+      typename logical<wide<T,S>>::storage_type that{};
       [&]<std::size_t... N>(auto& v, std::index_sequence<N...>){ (( v |= vs?(1ULL<<N):0),...); }
       (that.value, std::make_index_sequence<sizeof...(vs)>{});
 
@@ -205,16 +207,17 @@ namespace eve::detail
     }
     else
     {
-      return make(as_<wide<T,S,ABI>> {}, logical<T>(vs).mask()...);
+      return make(as_<wide<T,S>> {}, logical<T>(vs).mask()...);
     }
   }
 
-  template<real_scalar_value T, typename S, x86_abi ABI,typename V>
-  EVE_FORCEINLINE auto make(as_<logical<wide<T,S,ABI>>> const &, V v) noexcept
+  template<real_scalar_value T, typename S,typename V>
+  EVE_FORCEINLINE auto make(as_<logical<wide<T,S>>> const &, V v) noexcept
+      requires x86_abi<abi_t<T, S>>
   {
     if constexpr( !abi_t<T, S>::is_wide_logical )
     {
-      using s_t = typename logical<wide<T,S,ABI>>::storage_type;
+      using s_t = typename logical<wide<T,S>>::storage_type;
       using i_t = typename s_t::type;
 
       constexpr i_t false_bits =  i_t{0};
@@ -227,7 +230,7 @@ namespace eve::detail
     }
     else
     {
-      return make(as_<wide<T,S,ABI>> {}, logical<T>(v).mask());
+      return make(as_<wide<T,S>> {}, logical<T>(v).mask());
     }
   }
 }

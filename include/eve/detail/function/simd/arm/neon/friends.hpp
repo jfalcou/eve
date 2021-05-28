@@ -16,10 +16,11 @@ namespace eve::detail
   //================================================================================================
   // operator~ implementation
   //================================================================================================
-  template<real_scalar_value T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE wide<T,N,ABI> self_bitnot(wide<T,N,ABI> const& v) noexcept
+  template<real_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T,N> self_bitnot(wide<T,N> const& v) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
-    constexpr auto c = categorize<wide<T, N, ABI>>();
+    constexpr auto c = categorize<wide<T, N>>();
     using i_t  = wide<as_integer_t<T, unsigned>, N>;
 
           if constexpr(c == category::int64x1 ) return vreinterpret_s64_s8(vmvn_s8(vreinterpret_s8_s64(v)));
@@ -44,10 +45,11 @@ namespace eve::detail
   //================================================================================================
   // operator== implementation
   //================================================================================================
-  template<real_value T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE logical<wide<T, N,ABI>> self_eq(wide<T,N,ABI> v, wide<T,N,ABI> w) noexcept
+  template<real_value T, typename N>
+  EVE_FORCEINLINE logical<wide<T, N>> self_eq(wide<T,N> v, wide<T,N> w) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
-    constexpr auto cat = categorize<wide<T, N, ABI>>();
+    constexpr auto cat = categorize<wide<T, N>>();
     [[maybe_unused]] constexpr auto eq  = []<typename E>(E const& e, E const& f)
                                           {
                                             return as_logical_t<E>(e == f);
@@ -82,8 +84,9 @@ namespace eve::detail
   //================================================================================================
   // operator!= implementation
   //================================================================================================
-  template<real_value T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE logical<wide<T, N,ABI>> self_neq(wide<T,N,ABI> v, wide<T,N,ABI> w) noexcept
+  template<real_value T, typename N>
+  EVE_FORCEINLINE logical<wide<T, N>> self_neq(wide<T,N> v, wide<T,N> w) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
     return !(v == w);
   }
@@ -91,12 +94,13 @@ namespace eve::detail
   //================================================================================================
   // operator!= implementation
   //================================================================================================
-  template<typename T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE logical<wide<T, N,ABI>> self_less ( wide<T, N, ABI> v
-                                                    , wide<T, N, ABI> w
+  template<typename T, typename N>
+  EVE_FORCEINLINE logical<wide<T, N>> self_less ( wide<T, N> v
+                                                    , wide<T, N> w
                                                     ) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
-    constexpr auto cat = categorize<wide<T, N, ABI>>();
+    constexpr auto cat = categorize<wide<T, N>>();
 
     if constexpr( cat == category::int32x4  ) return vcltq_s32(v, w);
     else  if constexpr( cat == category::int16x8  ) return vcltq_s16(v, w);
@@ -126,12 +130,13 @@ namespace eve::detail
 
   }
 
-  template<typename T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE logical<wide<T, N,ABI>> self_greater( wide<T, N, ABI> v
-                                                      , wide<T, N, ABI> w
+  template<typename T, typename N>
+  EVE_FORCEINLINE logical<wide<T, N>> self_greater( wide<T, N> v
+                                                      , wide<T, N> w
                                                       ) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
-    constexpr auto cat = categorize<wide<T, N, ABI>>();
+    constexpr auto cat = categorize<wide<T, N>>();
 
           if constexpr( cat == category::int32x4  ) return vcgtq_s32(v, w);
     else  if constexpr( cat == category::int16x8  ) return vcgtq_s16(v, w);
@@ -160,10 +165,11 @@ namespace eve::detail
       return map([]<typename E>(E const& e, E const& f){ return as_logical_t<E>(e > f); }, v, w);
   }
 
-  template<typename T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE logical<wide<T, N,ABI>> self_geq(wide<T, N, ABI> v, wide<T, N, ABI> w) noexcept
+  template<typename T, typename N>
+  EVE_FORCEINLINE logical<wide<T, N>> self_geq(wide<T, N> v, wide<T, N> w) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
-    constexpr auto cat = categorize<wide<T, N, ABI>>();
+    constexpr auto cat = categorize<wide<T, N>>();
 
           if constexpr( cat == category::int32x4  ) return vcgeq_s32(v, w);
     else  if constexpr( cat == category::int16x8  ) return vcgeq_s16(v, w);
@@ -192,10 +198,11 @@ namespace eve::detail
         return map([]<typename E>(E const& e, E const& f){ return as_logical_t<E>(e >= f); }, v, w);
   }
 
-  template<typename T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE logical<wide<T,N,ABI>> self_leq(wide<T, N, ABI> v,wide<T, N, ABI> w) noexcept
+  template<typename T, typename N>
+  EVE_FORCEINLINE logical<wide<T,N>> self_leq(wide<T, N> v,wide<T, N> w) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
-    constexpr auto cat = categorize<wide<T, N, ABI>>();
+    constexpr auto cat = categorize<wide<T, N>>();
 
           if constexpr( cat == category::int32x4  ) return vcleq_s32(v, w);
     else  if constexpr( cat == category::int16x8  ) return vcleq_s16(v, w);
