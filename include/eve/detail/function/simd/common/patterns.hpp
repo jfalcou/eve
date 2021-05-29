@@ -62,9 +62,17 @@ namespace eve::detail
     }
 
     template<typename Wide, typename Cardinal>
-    EVE_FORCEINLINE auto operator()(Wide, Cardinal) const
+    EVE_FORCEINLINE auto operator()([[maybe_unused]] Wide w, Cardinal) const
     {
-      return as_wide_t<Wide,Cardinal>{0};
+      using w_t = as_wide_t<Wide,Cardinal>;
+      if constexpr( is_bundle_v<typename Wide::abi_type> )
+      {
+        return w_t( kumi::map([]<typename T>(T) { return as_wide_t<T,Cardinal>{0}; }, w.storage()));
+      }
+      else
+      {
+        return w_t{0};
+      }
     }
   };
 }

@@ -66,7 +66,7 @@ namespace eve::detail
   {
     if constexpr( has_bundle_abi_v<Wide> )
     {
-      return kumi::map( [i](auto const& m) { return m.get(i); }, p.storage());
+      return kumi::map( [i](auto m) { return m.get(i); }, p.storage());
     }
     else
     {
