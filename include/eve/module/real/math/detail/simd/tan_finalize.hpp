@@ -28,13 +28,13 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE constexpr wide<T, N, ABI> tan_finalize( wide<T, N, ABI> const & a0
-                                                        , wide<T, N, ABI> const & n
-                                                        , wide<T, N, ABI> const & xr
-                                                        , wide<T, N, ABI> const & dxr = wide<T, N, ABI>(0)) noexcept
+  template<typename T, typename N>
+  EVE_FORCEINLINE constexpr wide<T, N> tan_finalize( wide<T, N> const & a0
+                                                        , wide<T, N> const & n
+                                                        , wide<T, N> const & xr
+                                                        , wide<T, N> const & dxr = wide<T, N>(0)) noexcept
   {
-    using t_t = wide<T, N, ABI>;
+    using t_t = wide<T, N>;
     auto tmp = binarize( n >= t_t(2));
     auto swap_bit = (fma(t_t(-2), tmp, n));
     auto test = is_eqz(swap_bit);
@@ -44,4 +44,3 @@ namespace eve::detail
     return if_else(abs(a0) < Eps<t_t>(), a0, bit_xor(y, bitofsign(a0)));
   }
 }
-

@@ -17,10 +17,11 @@ namespace eve::detail
   //================================================================================================
   // Wide to Logical
   //================================================================================================
-  template<typename T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE as_logical_t<wide<T,N,ABI>> to_logical( wide<T,N,ABI> const& v ) noexcept
+  template<typename T, typename N>
+  EVE_FORCEINLINE as_logical_t<wide<T,N>> to_logical( wide<T,N> const& v ) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
-    constexpr auto cat = categorize<wide<T, N, ABI>>();
+    constexpr auto cat = categorize<wide<T, N>>();
     [[maybe_unused]] auto const nez  = [](auto x) { return logical<T>(x != 0); };
     [[maybe_unused]] auto const nope = [](auto x)
     {
@@ -38,7 +39,7 @@ namespace eve::detail
         return vreinterpretq_u64_u32(vmvnq_u32(vreinterpretq_u32_u64(x)));
     };
 
-    wide<T,N,ABI> const z{0};
+    wide<T,N> const z{0};
 
           if constexpr( cat == category::float32x4) return vmvnq_u32(vceqq_f32(v, z));
     else  if constexpr( cat == category::int32x4  ) return vmvnq_u32(vceqq_s32(v, z));

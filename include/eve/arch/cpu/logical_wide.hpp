@@ -53,20 +53,20 @@ namespace eve
   //! @tparam Cardinal  Cardinal of the register. By default, the best cardinal for current
   //!                   architecture is selected.
   //================================================================================================
-  template<typename Type, typename Cardinal, typename ABI>
-  struct  EVE_MAY_ALIAS  logical<wide<Type,Cardinal,ABI>>
+  template<typename Type, typename Cardinal>
+  struct  EVE_MAY_ALIAS  logical<wide<Type,Cardinal>>
         : detail::wide_cardinal<Cardinal>
-        , detail::wide_storage<as_logical_register_t<Type, Cardinal, ABI>>
+        , detail::wide_storage<as_logical_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>
   {
     using card_base     = detail::wide_cardinal<Cardinal>;
-    using storage_base  = detail::wide_storage<as_logical_register_t<Type, Cardinal, ABI>>;
+    using storage_base  = detail::wide_storage<as_logical_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>;
 
     public:
     //! The type stored in the register.
     using value_type    = logical<Type>;
 
     //! The ABI tag for this register.
-    using abi_type      = ABI;
+    using abi_type      = abi_t<Type, Cardinal>;
 
     //! The type used for this register storage
     using storage_type  = typename storage_base::storage_type;
@@ -102,7 +102,7 @@ namespace eve
     EVE_FORCEINLINE logical(storage_type const &r) noexcept
       : storage_base( [&]()
                       { constexpr auto  c =   Cardinal::value == 1 && sizeof(Type) == 8
-                                          &&  std::is_same_v<ABI, arm_64_>
+                                          &&  std::is_same_v<abi_type, arm_64_>
                                           && current_api != asimd;
                         if constexpr(c) return value_type(r); else  return r;
                       }()

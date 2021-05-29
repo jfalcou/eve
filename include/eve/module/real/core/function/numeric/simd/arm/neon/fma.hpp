@@ -14,12 +14,13 @@
 
 namespace eve::detail
 {
-  template<decorator D, real_scalar_value T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE wide<T, N, ABI> fma_(EVE_SUPPORTS(neon128_),
+  template<decorator D, real_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N> fma_(EVE_SUPPORTS(neon128_),
                                        numeric_type const &,
-                                       wide<T, N, ABI> const &v0,
-                                       wide<T, N, ABI> const &v1,
-                                       wide<T, N, ABI> const &v2) noexcept
+                                       wide<T, N> const &v0,
+                                       wide<T, N> const &v1,
+                                       wide<T, N> const &v2) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
     return fma(v0, v1, v2);
   }

@@ -19,12 +19,12 @@ namespace eve::detail
   //================================================================================================
   // +=
   //================================================================================================
-  template<scalar_value T, value U, typename N, typename ABI>
+  template<scalar_value T, value U, typename N>
   EVE_FORCEINLINE decltype(auto)
-  self_add(wide<T, N, ABI> &self,
-           U const &        other) requires(scalar_value<U> || std::same_as<wide<T, N, ABI>, U>)
+  self_add(wide<T, N> &self,
+           U const &        other) requires(scalar_value<U> || std::same_as<wide<T, N>, U>)
   {
-    using type = wide<T, N, ABI>;
+    using type = wide<T, N>;
 
     if constexpr( scalar_value<U> )
     {
@@ -48,12 +48,12 @@ namespace eve::detail
   //================================================================================================
   // -=
   //================================================================================================
-  template<scalar_value T, value U, typename N, typename ABI>
+  template<scalar_value T, value U, typename N>
   EVE_FORCEINLINE decltype(auto)
-  self_sub(wide<T, N, ABI> &self,
-           U const &        other) requires(scalar_value<U> || std::same_as<wide<T, N, ABI>, U>)
+  self_sub(wide<T, N> &self,
+           U const &        other) requires(scalar_value<U> || std::same_as<wide<T, N>, U>)
   {
-    using type = wide<T, N, ABI>;
+    using type = wide<T, N>;
 
     if constexpr( scalar_value<U> )
       return self_sub(self, type {other});
@@ -75,12 +75,12 @@ namespace eve::detail
   //================================================================================================
   // *=
   //================================================================================================
-  template<scalar_value T, value U, typename N, typename ABI>
+  template<scalar_value T, value U, typename N>
   EVE_FORCEINLINE decltype(auto)
-  self_mul(wide<T, N, ABI> &self,
-           U const &        other) requires(scalar_value<U> || std::same_as<wide<T, N, ABI>, U>)
+  self_mul(wide<T, N> &self,
+           U const &        other) requires(scalar_value<U> || std::same_as<wide<T, N>, U>)
   {
-    using type = wide<T, N, ABI>;
+    using type = wide<T, N>;
 
     if constexpr( scalar_value<U> )
       return self_mul(self, type {other});
@@ -102,12 +102,12 @@ namespace eve::detail
   //================================================================================================
   // /=
   //================================================================================================
-  template<scalar_value T, value U, typename N, typename ABI>
+  template<scalar_value T, value U, typename N>
   EVE_FORCEINLINE decltype(auto)
-  self_div(wide<T, N, ABI> &self,
-           U const &        other) requires(scalar_value<U> || std::same_as<wide<T, N, ABI>, U>)
+  self_div(wide<T, N> &self,
+           U const &        other) requires(scalar_value<U> || std::same_as<wide<T, N>, U>)
   {
-    using type = wide<T, N, ABI>;
+    using type = wide<T, N>;
 
     if constexpr( scalar_value<U> )
       return self_div(self, type {other});
@@ -129,12 +129,12 @@ namespace eve::detail
   //================================================================================================
   // %=
   //================================================================================================
-  template<integral_scalar_value T, value U, typename N, typename ABI>
+  template<integral_scalar_value T, value U, typename N>
   EVE_FORCEINLINE decltype(auto)
-  self_rem(wide<T, N, ABI> &self,
-           U const &        other) requires(integral_scalar_value<U> || std::same_as<wide<T, N, ABI>, U>)
+  self_rem(wide<T, N> &self,
+           U const &        other) requires(integral_scalar_value<U> || std::same_as<wide<T, N>, U>)
   {
-    using type = wide<T, N, ABI>;
+    using type = wide<T, N>;
 
     if constexpr( integral_scalar_value<U> )
     {
@@ -149,7 +149,7 @@ namespace eve::detail
       }
       else
       {
-        wide<T, N, ABI> that;
+        wide<T, N> that;
         apply<N::value>([&](auto... I) { (that.set(I, self.get(I) % other.get(I)), ...); });
         return self = that;
       }

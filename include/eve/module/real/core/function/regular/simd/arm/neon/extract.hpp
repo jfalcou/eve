@@ -13,21 +13,20 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N, typename I, auto V, arm_abi ABI>
+  template<typename T, typename N, typename I, auto V>
   EVE_FORCEINLINE logical<T> extract_(EVE_SUPPORTS(neon128_),
-                                      logical<wide<T, N, ABI>> const &v0,
+                                      logical<wide<T, N>> const &v0,
                                       std::integral_constant<I, V> const &u) noexcept
   {
     return logical<T>(extract(v0.bits(), u));
   }
 
-  template<typename T, typename N, typename I, auto V, arm_abi ABI>
+  template<typename T, typename N, typename I, auto V>
   EVE_FORCEINLINE T extract_(EVE_SUPPORTS(neon128_),
-                                      logical<wide<T, N, ABI>> const &v0,
+                                      logical<wide<T, N>> const &v0,
                                       std::integral_constant<I, V> const &) noexcept
-                             std::integral_constant<I, V> const &) noexcept
   {
-    constexpr auto cat = categorize<wide<T, N, ABI>>();
+    constexpr auto cat = categorize<wide<T, N>>();
 
           if constexpr( cat == category::int32x4  ) return vget_laneq_s32(v0, V);
     else  if constexpr( cat == category::int16x8  ) return vget_laneq_s16(v0, V);

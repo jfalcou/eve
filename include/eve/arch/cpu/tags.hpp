@@ -82,6 +82,6 @@ namespace eve
   //================================================================================================
   // Checks for logical status in ABI
   template<typename ABI>
-  struct use_is_wide_logical : std::integral_constant<bool,ABI::is_wide_logical>
+  struct use_is_wide_logical : std::integral_constant<bool, ABI::is_wide_logical>
   {};
 }

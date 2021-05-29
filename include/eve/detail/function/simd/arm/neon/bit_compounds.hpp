@@ -19,13 +19,14 @@ namespace eve::detail
   //================================================================================================
   // <<=
   //================================================================================================
-  template<integral_real_scalar_value T, typename N, arm_abi ABI, integral_real_scalar_value U>
-  EVE_FORCEINLINE decltype(auto) self_shl(wide<T,N,ABI>& v, wide<U,N,ABI> s) noexcept
+  template<integral_real_scalar_value T, typename N, integral_real_scalar_value U>
+  EVE_FORCEINLINE decltype(auto) self_shl(wide<T,N>& v, wide<U,N> s) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
-    using i_t = typename wide<T,N,ABI>::template rebind <as_integer_t<T, signed>,N>;
+    using i_t = typename wide<T,N>::template rebind <as_integer_t<T, signed>,N>;
     auto const si   = bit_cast(s,as_<i_t>()).storage();
 
-    constexpr auto c = categorize<wide<T, N, ABI>>();
+    constexpr auto c = categorize<wide<T, N>>();
 
           if constexpr( c == category::int64x1  ) v = vshl_s64(v, si);
     else  if constexpr( c == category::int32x2  ) v = vshl_s32(v, si);
@@ -47,10 +48,11 @@ namespace eve::detail
     return v;
   }
 
-  template<integral_real_scalar_value T, typename N, arm_abi ABI, integral_real_scalar_value U>
-  EVE_FORCEINLINE auto self_shl(wide<T,N,ABI>& v, U s) noexcept
+  template<integral_real_scalar_value T, typename N, integral_real_scalar_value U>
+  EVE_FORCEINLINE auto self_shl(wide<T,N>& v, U s) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
-    using i_t = typename wide<T,N,ABI>::template rebind <as_integer_t<T, signed>,N>;
+    using i_t = typename wide<T,N>::template rebind <as_integer_t<T, signed>,N>;
     v <<= i_t(s);
     return v;
   }
@@ -58,14 +60,16 @@ namespace eve::detail
   //================================================================================================
   // >>=
   //================================================================================================
-  template<integral_real_scalar_value T, typename N, arm_abi ABI, integral_real_scalar_value U>
-  EVE_FORCEINLINE decltype(auto) self_shr(wide<T,N,ABI>& v, wide<U,N,ABI> s) noexcept
+  template<integral_real_scalar_value T, typename N, integral_real_scalar_value U>
+  EVE_FORCEINLINE decltype(auto) self_shr(wide<T,N>& v, wide<U,N> s) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
     return self_shl(v, -s);
   }
 
-  template<integral_real_scalar_value T, typename N, arm_abi ABI, integral_real_scalar_value U>
-  EVE_FORCEINLINE auto self_shr(wide<T,N,ABI>& v, U s) noexcept
+  template<integral_real_scalar_value T, typename N, integral_real_scalar_value U>
+  EVE_FORCEINLINE auto self_shr(wide<T,N>& v, U s) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
     return self_shl(v, -s);
   }
@@ -73,11 +77,11 @@ namespace eve::detail
   //================================================================================================
   // &=
   //================================================================================================
-  template<scalar_value T, value U, typename N, arm_abi ABI>
-  EVE_FORCEINLINE decltype(auto) self_bitand(wide<T, N, ABI> &self, U const &other) noexcept
-      requires((sizeof(wide<T, N, ABI>) == sizeof(U)) || (sizeof(T) == sizeof(U)))
+  template<scalar_value T, value U, typename N>
+  EVE_FORCEINLINE decltype(auto) self_bitand(wide<T, N> &self, U const &other) noexcept
+      requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && arm_abi<abi_t<T, N>>
   {
-    using type = wide<T, N, ABI>;
+    using type = wide<T, N>;
 
     if constexpr( element_bit_compatible_to<U, type> )
     {
@@ -144,11 +148,11 @@ namespace eve::detail
   //================================================================================================
   // |=
   //================================================================================================
-  template<scalar_value T, value U, typename N, arm_abi ABI>
-  EVE_FORCEINLINE decltype(auto) self_bitor(wide<T, N, ABI> &self, U const &other) noexcept
-      requires((sizeof(wide<T, N, ABI>) == sizeof(U)) || (sizeof(T) == sizeof(U)))
+  template<scalar_value T, value U, typename N>
+  EVE_FORCEINLINE decltype(auto) self_bitor(wide<T, N> &self, U const &other) noexcept
+      requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && arm_abi<abi_t<T, N>>
   {
-    using type = wide<T, N, ABI>;
+    using type = wide<T, N>;
 
     if constexpr( element_bit_compatible_to<U, type> )
     {
@@ -215,11 +219,11 @@ namespace eve::detail
   //================================================================================================
   // ^=
   //================================================================================================
-  template<scalar_value T, value U, typename N, arm_abi ABI>
-  EVE_FORCEINLINE decltype(auto) self_bitxor(wide<T, N, ABI> &self, U const &other) noexcept
-      requires((sizeof(wide<T, N, ABI>) == sizeof(U)) || (sizeof(T) == sizeof(U)))
+  template<scalar_value T, value U, typename N>
+  EVE_FORCEINLINE decltype(auto) self_bitxor(wide<T, N> &self, U const &other) noexcept
+      requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && arm_abi<abi_t<T, N>>
   {
-    using type = wide<T, N, ABI>;
+    using type = wide<T, N>;
 
     if constexpr( element_bit_compatible_to<U, type> )
     {

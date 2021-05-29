@@ -96,8 +96,8 @@ namespace eve::detail
   //================================================================================================
   // Logical slices
   //================================================================================================
-  template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto slice(logical<wide<T, N, ABI>> const &a) noexcept
+  template<typename T, typename N>
+  EVE_FORCEINLINE auto slice(logical<wide<T, N>> const &a) noexcept
   {
     if constexpr( is_native_v<abi_t<T, N>> )
     {
@@ -115,8 +115,8 @@ namespace eve::detail
     }
   }
 
-  template<typename T, typename N, typename ABI, typename Slice>
-  EVE_FORCEINLINE auto slice(logical<wide<T, N, ABI>> const &a, Slice const &s) noexcept
+  template<typename T, typename N, typename Slice>
+  EVE_FORCEINLINE auto slice(logical<wide<T, N>> const &a, Slice const &s) noexcept
   {
     if constexpr( is_native_v<abi_t<T, N>> )
     {
@@ -133,14 +133,16 @@ namespace eve::detail
   //================================================================================================
   // Arithmetic slices
   //================================================================================================
-  template<typename T, typename N, non_native_abi ABI>
-  EVE_FORCEINLINE auto slice(wide<T, N, ABI> const &a) noexcept
+  template<typename T, typename N>
+  EVE_FORCEINLINE auto slice(wide<T, N> const &a) noexcept
+      requires non_native_abi<abi_t<T, N>>
   {
     return slice_impl(a);
   }
 
-  template<typename T, typename N, non_native_abi ABI, typename Slice>
-  EVE_FORCEINLINE auto slice(wide<T, N, ABI> const &a, Slice const &s) noexcept
+  template<typename T, typename N, typename Slice>
+  EVE_FORCEINLINE auto slice(wide<T, N> const &a, Slice const &s) noexcept
+      requires non_native_abi<abi_t<T, N>>
   {
     return slice_impl(a, s);
   }

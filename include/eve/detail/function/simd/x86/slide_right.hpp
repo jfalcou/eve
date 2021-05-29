@@ -11,20 +11,20 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N, x86_abi ABI, std::ptrdiff_t Shift>
-  EVE_FORCEINLINE wide<T,N,ABI> slide_right_ ( EVE_SUPPORTS(sse2_)
-                                            , wide<T,N,ABI> v, index_t<Shift>
+  template<real_scalar_value T, typename N, std::ptrdiff_t Shift>
+  EVE_FORCEINLINE wide<T,N> slide_right_ ( EVE_SUPPORTS(sse2_)
+                                            , wide<T,N> v, index_t<Shift>
                                             ) noexcept
-  requires(Shift <= N::value)
+  requires(Shift <= N::value) && x86_abi<abi_t<T, N>>
   {
           if constexpr(Shift == 0)        return v;
-    else  if constexpr(Shift == N::value) return wide<T,N,ABI>{0};
+    else  if constexpr(Shift == N::value) return wide<T,N>{0};
     else
     {
       if constexpr( std::same_as<abi_t<T, N>,x86_128_>)
       {
         constexpr auto shift = Shift*sizeof(T);
-        using i_t = as_integer_t<wide<T,N,ABI>, unsigned>;
+        using i_t = as_integer_t<wide<T,N>, unsigned>;
 
         auto const b  = bit_cast(v, as_<i_t>());
         return bit_cast(i_t(_mm_bslli_si128( b, shift)), as(v));
@@ -33,7 +33,7 @@ namespace eve::detail
       {
         if constexpr( current_api >= avx2)
         {
-          using i_t = as_integer_t<wide<T,N,ABI>>;
+          using i_t = as_integer_t<wide<T,N>>;
           constexpr auto offset = Shift * sizeof(T);
 
           i_t vi  = bit_cast(v, as_<i_t>{});
@@ -55,7 +55,7 @@ namespace eve::detail
         else
         {
           constexpr auto shifted_bytes = sizeof(T)* Shift;
-          using f_t = typename wide<T,N,ABI>::template rebind<float>;
+          using f_t = typename wide<T,N>::template rebind<float>;
           auto const w  = bit_cast(v, as_<f_t>{});
           auto const s0 = _mm256_permute2f128_ps(w,w,0x08 );
 
@@ -92,7 +92,7 @@ namespace eve::detail
             if constexpr(shifted_bytes > 16 )
             {
               // generates [ 0 .. v0 <0 .. 0> ]
-              wide<T,N,ABI> h = _mm256_zextsi128_si256( _mm_bslli_si128 ( v.slice(lower_)
+              wide<T,N> h = _mm256_zextsi128_si256( _mm_bslli_si128 ( v.slice(lower_)
                                                                         , shifted_bytes - 16
                                                                         )
                                                       );
@@ -103,7 +103,7 @@ namespace eve::detail
             }
             else
             {
-              using byte_t = typename wide<T,N,ABI>::template rebind<std::uint8_t,fixed<16>>;
+              using byte_t = typename wide<T,N>::template rebind<std::uint8_t,fixed<16>>;
               using tgt_t  = as_<byte_t>;
 
               // Slide lower parts as normal
@@ -115,7 +115,7 @@ namespace eve::detail
 
               // Slide lower parts using _mm_alignr_epi8
               byte_t bytes = _mm_alignr_epi8(bit_cast(h,tgt_t{}), bit_cast(l,tgt_t{}), sz);
-              return wide<T,N,ABI>{l0,bit_cast(bytes, as(l0))};
+              return wide<T,N>{l0,bit_cast(bytes, as(l0))};
             }
           }
         }

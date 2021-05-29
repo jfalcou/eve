@@ -150,11 +150,12 @@ namespace eve::detail
   //================================================================================================
   // 2*256-bits to 512-bits combine
   //================================================================================================
-  template<typename T, typename N, x86_abi ABI>
+  template<typename T, typename N>
   EVE_FORCEINLINE auto
-  combine ( avx512_ const & , logical<wide<T, N, ABI>> const &l
-                            , logical<wide<T, N, ABI>> const &h
+  combine ( avx512_ const & , logical<wide<T, N>> const &l
+                            , logical<wide<T, N>> const &h
           ) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
     using s_t = typename logical<wide<T, typename N::combined_type>>::storage_type;
     using i_t  = typename s_t::type;

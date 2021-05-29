@@ -18,12 +18,13 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE auto load(eve::as_<wide<T, N, ABI>> const &, T const* ptr) noexcept
+  template<real_scalar_value T, typename N>
+  EVE_FORCEINLINE auto load(eve::as_<wide<T, N>> const &, T const* ptr) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
     if constexpr( N::value * sizeof(T) >= arm_64_::bytes )
     {
-      constexpr auto c = categorize<wide<T, N, ABI>>();
+      constexpr auto c = categorize<wide<T, N>>();
 
             if constexpr( c == category::float32x4 )  return vld1q_f32(ptr);
       else  if constexpr( c == category::float32x2 )  return vld1_f32(ptr);
@@ -58,8 +59,9 @@ namespace eve::detail
   }
 
 #if defined(SPY_COMPILER_IS_MSVC)
-  template<real_scalar_value T, typename N, arm_abi ABI>
-  EVE_FORCEINLINE auto load ( as_<wide<T, N, ABI>> const &, aligned_ptr<T const, Align> p) noexcept
+  template<real_scalar_value T, typename N>
+  EVE_FORCEINLINE auto load ( as_<wide<T, N>> const &, aligned_ptr<T const, Align> p) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
     auto ptr = p.get();
 
@@ -71,7 +73,7 @@ namespace eve::detail
     {
       if constexpr( N::value * sizeof(T) >= eve::arm_64_::bytes )
       {
-        constexpr auto c = categorize<wide<T, N, ABI>>();
+        constexpr auto c = categorize<wide<T, N>>();
 
               if constexpr( c == category::float32x4 )  return vld1q_f32_ex(ptr,128);
         else  if constexpr( c == category::float32x2 )  return vld1_f32_ex(ptr,64);
@@ -106,25 +108,28 @@ namespace eve::detail
     }
   }
 
-  template<real_scalar_value T, typename N, arm_abi ABI, std::size_t Align>
+  template<real_scalar_value T, typename N std::size_t Align>
   EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N, ABI>> const &tgt, aligned_ptr<T, Align> p) noexcept
+  load(eve::as_<wide<T, N>> const &tgt, aligned_ptr<T, Align> p) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
     return load(tgt, aligned_ptr<T const, A>(p));
   }
 
 #else
 
-  template<real_scalar_value T, typename N, arm_abi ABI, std::size_t Align>
+  template<real_scalar_value T, typename N, std::size_t Align>
   EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N, ABI>> const &tgt,aligned_ptr<T const, Align>  ptr)
+  load(eve::as_<wide<T, N>> const &tgt,aligned_ptr<T const, Align>  ptr)
+      requires arm_abi<abi_t<T, N>>
   {
     return load(tgt, ptr.get());
   }
 
-  template<real_scalar_value T, typename N, arm_abi ABI, std::size_t Align>
+  template<real_scalar_value T, typename N, std::size_t Align>
   EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N, ABI>> const &tgt, aligned_ptr<T, Align> ptr) noexcept
+  load(eve::as_<wide<T, N>> const &tgt, aligned_ptr<T, Align> ptr) noexcept
+      requires arm_abi<abi_t<T, N>>
   {
     return load(tgt, ptr.get());
   }

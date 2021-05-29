@@ -13,14 +13,14 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N, x86_abi ABI, std::ptrdiff_t G>
-  EVE_FORCEINLINE wide<T,N,ABI> swap_adjacent_groups_( EVE_SUPPORTS(sse2_)
-                                                    , wide<T,N,ABI> v, fixed<G>
+  template<real_scalar_value T, typename N, std::ptrdiff_t G>
+  EVE_FORCEINLINE wide<T,N> swap_adjacent_groups_( EVE_SUPPORTS(sse2_)
+                                                    , wide<T,N> v, fixed<G>
                                                     ) noexcept
-  requires(G<=N::value)
+  requires(G<=N::value) && x86_abi<abi_t<T, N>>
   {
     constexpr auto sf4 = _MM_SHUFFLE(2, 3, 0, 1);
-    using that_t  = wide<T,N,ABI>;
+    using that_t  = wide<T,N>;
 
     if constexpr(G == N::value)
     {
@@ -118,7 +118,7 @@ namespace eve::detail
         {
           if constexpr( std::same_as<T,float>  )
           {
-            return _mm256_permutevar_ps(v, as_integer_t<wide<T,N,ABI>>(1,0,3,2,5,4,7,6));
+            return _mm256_permutevar_ps(v, as_integer_t<wide<T,N>>(1,0,3,2,5,4,7,6));
           }
           else  if constexpr( current_api >= avx2    )
           {
@@ -135,11 +135,11 @@ namespace eve::detail
         {
           if constexpr( std::same_as<T,double> )
           {
-            return _mm256_permutevar_pd(v, as_integer_t<wide<T,N,ABI>>(2,0,2,0));
+            return _mm256_permutevar_pd(v, as_integer_t<wide<T,N>>(2,0,2,0));
           }
           else  if constexpr( std::same_as<T,float> )
           {
-            return _mm256_permutevar_ps(v, as_integer_t<wide<T,N,ABI>>(6,7,4,5,2,3,0,1));
+            return _mm256_permutevar_ps(v, as_integer_t<wide<T,N>>(6,7,4,5,2,3,0,1));
           }
           else  if constexpr( current_api >= avx2 )
           {
@@ -182,11 +182,11 @@ namespace eve::detail
     }
   }
 
-  template<real_scalar_value T, typename N, x86_abi ABI, std::ptrdiff_t G>
-  EVE_FORCEINLINE logical<wide<T,N,ABI>> swap_adjacent_groups_ ( EVE_SUPPORTS(sse2_)
-                                                              , logical<wide<T,N,ABI>> v, fixed<G>
+  template<real_scalar_value T, typename N, std::ptrdiff_t G>
+  EVE_FORCEINLINE logical<wide<T,N>> swap_adjacent_groups_ ( EVE_SUPPORTS(sse2_)
+                                                              , logical<wide<T,N>> v, fixed<G>
                                                               ) noexcept
-  requires(G<=N::value)
+  requires(G<=N::value) && x86_abi<abi_t<T, N>>
   {
     if constexpr(G == N::value)
     {
