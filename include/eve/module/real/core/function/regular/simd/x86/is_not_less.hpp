@@ -22,10 +22,11 @@ namespace eve::detail
   // 128 bits implementation
   template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE auto is_not_less_(EVE_SUPPORTS(sse2_)
-                                   , wide<T, N, x86_128_> const &v0
-                                   , wide<T, N, x86_128_> const &v1) noexcept
+                                   , wide<T, N> const &v0
+                                   , wide<T, N> const &v1) noexcept
+    requires std::same_as<abi_t<T, N>, x86_128_>
   {
-    using t_t = wide<T, N, x86_128_>;
+    using t_t = wide<T, N>;
     using l_t = as_logical_t<t_t>;
 
          if constexpr( !x86_128_::is_wide_logical ) return is_not_less_(EVE_RETARGET(cpu_), v0, v1);
@@ -37,10 +38,11 @@ namespace eve::detail
   // 256 bits implementation
   template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE auto is_not_less_(EVE_SUPPORTS(avx_)
-                                   , wide<T, N, x86_256_> const &v0
-                                   , wide<T, N, x86_256_> const &v1) noexcept
+                                   , wide<T, N> const &v0
+                                   , wide<T, N> const &v1) noexcept
+    requires std::same_as<abi_t<T, N>, x86_256_>
   {
-    using t_t = wide<T, N, x86_256_>;
+    using t_t = wide<T, N>;
     using l_t = as_logical_t<t_t>;
 
          if constexpr( !x86_256_::is_wide_logical ) return is_not_less_(EVE_RETARGET(cpu_), v0, v1);
