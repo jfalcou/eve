@@ -46,7 +46,7 @@ namespace eve::detail
     // 256 - 64 bit ints
     else if constexpr ( current_api >= avx512 && c == category::int64x4  ) return _mm256_max_epi64(v0, v1);
     else if constexpr ( current_api >= avx512 && c == category::uint64x4 ) return _mm256_max_epu64(v0, v1);
-    else if constexpr ( match(c, category::int64x8, category::uint64x8)  ) return detail::if_else_max(v0, v1);
+    else if constexpr ( match(c, category::int64x4, category::uint64x4)  ) { return detail::if_else_max(v0, v1); }
     // 256 - 32 bit ints
     else if constexpr ( current_api >= avx2 && c == category::int32x8    ) return _mm256_max_epi32(v0, v1);
     else if constexpr ( current_api >= avx2 && c == category::uint32x8   ) return _mm256_max_epu32(v0, v1);

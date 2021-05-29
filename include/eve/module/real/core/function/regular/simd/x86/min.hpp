@@ -46,7 +46,7 @@ namespace eve::detail
     // 256 - 64 bit ints
     else if constexpr ( current_api >= avx512 && c == category::int64x4  ) return _mm256_min_epi64(v0, v1);
     else if constexpr ( current_api >= avx512 && c == category::uint64x4 ) return _mm256_min_epu64(v0, v1);
-    else if constexpr ( match(c, category::int64x8, category::uint64x8)  ) return detail::if_else_min(v0, v1);
+    else if constexpr ( match(c, category::int64x4, category::uint64x4)  ) return detail::if_else_min(v0, v1);
     // 256 - 32 bit ints
     else if constexpr ( current_api >= avx2 && c == category::int32x8    ) return _mm256_min_epi32(v0, v1);
     else if constexpr ( current_api >= avx2 && c == category::uint32x8   ) return _mm256_min_epu32(v0, v1);
@@ -79,7 +79,7 @@ namespace eve::detail
     else if constexpr ( c == category::uint16x8                          ) return detail::if_else_min(v0, v1);
     // 128 - 8 bit ints
     else if constexpr ( current_api >= sse4_1 && c == category::int8x16 ) return _mm_min_epi8(v0, v1);
-    else if constexpr ( c == category::int8x16                          ) return detail::if_else_max(v0, v1);
+    else if constexpr ( c == category::int8x16                          ) return detail::if_else_min(v0, v1);
     else if constexpr ( c == category::uint8x16                         ) return _mm_min_epu8(v0, v1);
   }
 }
