@@ -17,8 +17,9 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // 128 bits implementation only
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, x86_128_>
-                  mul_(EVE_SUPPORTS(avx_), saturated_type const &, wide<T, N, x86_128_> v0, wide<T, N, x86_128_> const &v1) noexcept
+  EVE_FORCEINLINE wide<T, N>
+  mul_(EVE_SUPPORTS(avx_), saturated_type const &, wide<T, N> v0, wide<T, N> const &v1) noexcept
+    requires std::same_as<abi_t<T, N>, x86_128_>
   {
     if constexpr(supports_xop)
     {
