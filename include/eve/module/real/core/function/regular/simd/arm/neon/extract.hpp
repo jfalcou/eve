@@ -13,7 +13,7 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N, typename I, auto V, arm_abi ABI>
+  template<typename T, typename N, typename I, auto V>
   EVE_FORCEINLINE logical<T> extract_(EVE_SUPPORTS(neon128_),
                                       logical<wide<T, N>> const &v0,
                                       std::integral_constant<I, V> const &u) noexcept
@@ -21,11 +21,10 @@ namespace eve::detail
     return logical<T>(extract(v0.bits(), u));
   }
 
-  template<typename T, typename N, typename I, auto V, arm_abi ABI>
+  template<typename T, typename N, typename I, auto V>
   EVE_FORCEINLINE T extract_(EVE_SUPPORTS(neon128_),
                                       logical<wide<T, N>> const &v0,
                                       std::integral_constant<I, V> const &) noexcept
-                             std::integral_constant<I, V> const &) noexcept
   {
     constexpr auto cat = categorize<wide<T, N>>();
 
