@@ -20,21 +20,20 @@ namespace eve::detail
   //-----------------------------------------------------------------------------------------------
   // 128 bits implementation
   template<floating_real_scalar_value T, typename N, typename ABI>
-  EVE_FORCEINLINE wide<T, N, x86_128_> ceil_(EVE_SUPPORTS(sse4_1_)
-                                        , wide<T, N, x86_128_> const &a0) noexcept
+  EVE_FORCEINLINE wide<T, N> ceil_(EVE_SUPPORTS(sse4_1_), wide<T, N> const &a0) noexcept
+    requires std::same_as<abi_t<T, N>, x86_128_>
   {
-    if constexpr(std::is_same_v<T, double>)     return _mm_ceil_pd(a0);
-    else if constexpr(std::is_same_v<T, float>) return _mm_ceil_ps(a0);
+         if constexpr (std::is_same_v<T, double>) return _mm_ceil_pd(a0);
+    else if constexpr (std::is_same_v<T, float> ) return _mm_ceil_ps(a0);
   }
 
   //-----------------------------------------------------------------------------------------------
   // 256 bits implementation
   template<floating_real_scalar_value T, typename N, typename ABI>
-  EVE_FORCEINLINE wide<T, N, x86_256_> ceil_(EVE_SUPPORTS(avx_)
-                                        , wide<T, N, x86_256_> const &a0) noexcept
+  EVE_FORCEINLINE wide<T, N> ceil_(EVE_SUPPORTS(avx_), wide<T, N> const &a0) noexcept
+    requires std::same_as<abi_t<T, N>, x86_256_>
   {
-    if constexpr(std::is_same_v<T, double>)     return _mm256_round_pd(a0, _MM_FROUND_CEIL);
-    else if constexpr(std::is_same_v<T, float>) return _mm256_round_ps(a0, _MM_FROUND_CEIL);
+         if constexpr (std::is_same_v<T, double>)  return _mm256_round_pd(a0, _MM_FROUND_CEIL);
+    else if constexpr (std::is_same_v<T, float> )  return _mm256_round_ps(a0, _MM_FROUND_CEIL);
   }
 }
-

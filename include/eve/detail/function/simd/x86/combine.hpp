@@ -92,7 +92,7 @@ namespace eve::detail
   combine ( avx512_ const & , logical<wide<T, N>> const &l
                             , logical<wide<T, N>> const &h
           ) noexcept
-      requires x86_abi<abi_t<T, N>>
+    requires x86_abi<abi_t<T, N>>
   {
     using s_t = typename logical<wide<T, typename N::combined_type>>::storage_type;
     using i_t  = typename s_t::type;
