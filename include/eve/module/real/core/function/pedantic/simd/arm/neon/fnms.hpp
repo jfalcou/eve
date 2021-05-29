@@ -20,6 +20,7 @@ namespace eve::detail
                                        wide<T, N> const &v0,
                                        wide<T, N> const &v1,
                                        wide<T, N> const &v2) noexcept
+    requires arm_abi<abi_t<T, N>>
   {
     return fnms(v0, v1, v2);
   }

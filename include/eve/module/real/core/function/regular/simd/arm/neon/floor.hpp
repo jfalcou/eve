@@ -16,6 +16,7 @@ namespace eve::detail
   template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N> floor_(EVE_SUPPORTS(neon128_)
                                        , wide<T, N> const& v) noexcept
+    requires arm_abi<abi_t<T, N>>
   {
     constexpr auto cat = categorize<wide<T, N>>();
 
