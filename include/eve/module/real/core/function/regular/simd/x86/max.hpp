@@ -22,75 +22,13 @@ namespace eve::detail
      return eve::if_else(y > x, y, x);
    }
 
-  // -----------------------------------------------------------------------------------------------
-  // 128 bits implementation
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, x86_128_> max_(EVE_SUPPORTS(sse2_)
-                                       , wide<T, N, x86_128_> const &v0
-                                       , wide<T, N, x86_128_> const &v1) noexcept
+  EVE_FORCEINLINE wide<T, N> max_(EVE_SUPPORTS(sse2_), wide<T, N> v0, wide<T, N> v1)
+    requires x86_abi<abi_t<T, N>>
   {
-         if constexpr(std::is_same_v<T, double>) return _mm_max_pd(v0, v1);
-    else if constexpr(std::is_same_v<T, float>)  return _mm_max_ps(v0, v1);
-    else if constexpr(sizeof(T) == 1)
-    {
-           if constexpr(!std::is_signed_v<T>)    return _mm_max_epu8(v0, v1);
-      else if constexpr(current_api >= sse4_1)   return _mm_max_epi8(v0, v1);
-      else                                       return detail::if_else_max(v0, v1);
-    }
-    else if constexpr(sizeof(T) == 2)
-    {
-           if constexpr(std::is_signed_v<T>)     return _mm_max_epi16(v0, v1);
-      else if constexpr(current_api >= sse4_1)   return _mm_max_epu16(v0, v1);
-      else                                       return detail::if_else_max(v0, v1);
-    }
-    else if constexpr(sizeof(T) == 4)
-    {
-           if constexpr(current_api < sse4_1)    return detail::if_else_max(v0, v1);
-      else if constexpr(std::is_signed_v<T>)     return _mm_max_epi32(v0, v1);
-      else                                       return _mm_max_epu32(v0, v1);
-    }
-    else
-    {
-           if constexpr(current_api >= sse4_2)   return detail::if_else_max(v0, v1);
-      else                                       return map(max, v0, v1);
-    }
-  }
+    constexpr auto c = categorize<wide<T, N>>();
 
-  // -----------------------------------------------------------------------------------------------
-  // 256 bits implementation
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, x86_256_> max_(EVE_SUPPORTS(avx_)
-                                       , wide<T, N, x86_256_> const &v0
-                                       , wide<T, N, x86_256_> const &v1) noexcept
-  {
-         if constexpr(std::is_same_v<T, float>)            return _mm256_max_ps(v0, v1);
-    else if constexpr(std::is_same_v<T, double>)           return _mm256_max_pd(v0, v1);
-    else if constexpr(current_api == avx && sizeof(T) < 8) return aggregate(max, v0, v1);
-    else if constexpr(sizeof(T) == 8)                      return detail::if_else_max(v0, v1);
-    else if constexpr(std::is_signed_v<T>)
-      {
-             if constexpr(sizeof(T) == 1)                  return _mm256_max_epi8(v0, v1);
-        else if constexpr(sizeof(T) == 2)                  return _mm256_max_epi16(v0, v1);
-        else if constexpr(sizeof(T) == 4)                  return _mm256_max_epi32(v0, v1);
-      }
-    else
-      {
-             if constexpr(sizeof(T) == 1)                  return _mm256_max_epu8(v0, v1);
-        else if constexpr(sizeof(T) == 2)                  return _mm256_max_epu16(v0, v1);
-        else if constexpr(sizeof(T) == 4)                  return _mm256_max_epu32(v0, v1);
-      }
-  }
-
-
-  // -----------------------------------------------------------------------------------------------
-  // 512 bits implementation
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, x86_512_> max_(EVE_SUPPORTS(avx512_)
-                                       , wide<T, N, x86_512_> const &v0
-                                       , wide<T, N, x86_512_> const &v1) noexcept
-  {
-    constexpr auto c = categorize<wide<T, N, x86_512_>>();
-
+    // 512
          if constexpr ( c == category::float64x8  ) return _mm512_max_pd(v0, v1);
     else if constexpr ( c == category::float32x16 ) return _mm512_max_ps(v0, v1);
     else if constexpr ( c == category::int64x8    ) return _mm512_max_epi64(v0, v1);
@@ -101,5 +39,47 @@ namespace eve::detail
     else if constexpr ( c == category::uint16x32  ) return _mm512_max_epu16(v0, v1);
     else if constexpr ( c == category::int8x64    ) return _mm512_max_epi8(v0, v1);
     else if constexpr ( c == category::uint8x64   ) return _mm512_max_epu8(v0, v1);
+
+    // 256
+    else if constexpr ( c == category::float64x4  ) return _mm256_max_pd(v0, v1);
+    else if constexpr ( c == category::float32x8  ) return _mm256_max_ps(v0, v1);
+    // 256 - 64 bit ints
+    else if constexpr ( current_api >= avx512 && c == category::int64x4  ) return _mm256_max_epi64(v0, v1);
+    else if constexpr ( current_api >= avx512 && c == category::uint64x4 ) return _mm256_max_epu64(v0, v1);
+    else if constexpr ( match(c, category::int64x8, category::uint64x8)  ) return detail::if_else_max(v0, v1);
+    // 256 - 32 bit ints
+    else if constexpr ( current_api >= avx2 && c == category::int32x8    ) return _mm256_max_epi32(v0, v1);
+    else if constexpr ( current_api >= avx2 && c == category::uint32x8   ) return _mm256_max_epu32(v0, v1);
+    else if constexpr ( match(c, category::int32x8, category::uint32x8)  ) return detail::if_else_max(v0, v1);
+    // 256 - 16 bit ints
+    else if constexpr ( current_api >= avx2 && c == category::int16x16   ) return _mm256_max_epi16(v0, v1);
+    else if constexpr ( current_api >= avx2 && c == category::uint16x16  ) return _mm256_max_epu16(v0, v1);
+    else if constexpr ( match(c, category::int16x16, category::uint16x16)) return aggregate(max, v0, v1);
+    // 256 - 8 bit ints
+    else if constexpr ( current_api >= avx2 && c == category::int8x32    ) return _mm256_max_epi8(v0, v1);
+    else if constexpr ( current_api >= avx2 && c == category::uint8x32   ) return _mm256_max_epu8(v0, v1);
+    else if constexpr ( match(c, category::int8x32, category::uint8x32  )) return aggregate(max, v0, v1);
+
+    // 128
+    else if constexpr ( c == category::float64x2 ) return _mm_max_pd(v0, v1);
+    else if constexpr ( c == category::float32x4 ) return _mm_max_ps(v0, v1);
+    // 128 - 64 bit ints
+    else if constexpr ( current_api >= avx512 && c == category::int64x2  ) return _mm_max_epi64(v0, v1);
+    else if constexpr ( current_api >= avx512 && c == category::uint64x2 ) return _mm_max_epu64(v0, v1);
+    else if constexpr ( current_api >= sse4_2 && c == category::int64x2  ) return detail::if_else_max(v0, v1);
+    else if constexpr ( current_api >= sse4_2 && c == category::uint64x2 ) return detail::if_else_max(v0, v1);
+    else if constexpr ( match(c, category::int64x2, category::uint64x2 ) ) return map(max, v0, v1);
+    // 128 - 32 bit ints
+    else if constexpr ( current_api >= sse4_1 && c == category::int32x4  ) return _mm_max_epi32(v0, v1);
+    else if constexpr ( current_api >= sse4_1 && c == category::uint32x4 ) return _mm_max_epu32(v0, v1);
+    else if constexpr ( match(c, category::int32x4, category::uint32x4  )) return detail::if_else_max(v0, v1);
+    // 128 - 16 bit ints
+    else if constexpr ( c == category::int16x8                           ) return _mm_max_epi16(v0, v1);
+    else if constexpr ( current_api >= sse4_1 && c == category::uint16x8 ) return _mm_max_epu16(v0, v1);
+    else if constexpr ( c == category::uint16x8                          ) return detail::if_else_max(v0, v1);
+    // 128 - 8 bit ints
+    else if constexpr ( current_api >= sse4_1 && c == category::int8x16 ) return _mm_max_epi8(v0, v1);
+    else if constexpr ( c == category::int8x16                          ) return detail::if_else_max(v0, v1);
+    else if constexpr ( c == category::uint8x16                         ) return _mm_max_epu8(v0, v1);
   }
 }
