@@ -16,17 +16,18 @@
 namespace eve::detail
 {
   template<typename U, typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, x86_128_> bit_select_(EVE_SUPPORTS(avx_),
-                                                   wide<U, N, x86_128_> const &v0,
-                                                   wide<T, N, x86_128_> const &v1,
-                                                   wide<T, N, x86_128_> const &v2) noexcept
+  EVE_FORCEINLINE wide<T, N> bit_select_(EVE_SUPPORTS(avx_),
+                                         wide<U, N> const &v0,
+                                         wide<T, N> const &v1,
+                                         wide<T, N> const &v2) noexcept
+    requires std::same_as<abi_t<T, N>, x86_128_>
   {
     if constexpr(supports_xop)
     {
       if constexpr(std::is_floating_point_v<T>)
       {
-        using itype = wide<as_integer_t<T, unsigned>, N, x86_128_>;
-        using utype = wide<as_integer_t<U, unsigned>, N, x86_128_>;
+        using itype = wide<as_integer_t<T, unsigned>, N>;
+        using utype = wide<as_integer_t<U, unsigned>, N>;
         itype tmp   = _mm_cmov_si128( bit_cast(v1,as_<itype>()),
                                       bit_cast(v2,as_<itype>()),
                                       bit_cast(v0,as_<utype>())
@@ -47,17 +48,18 @@ namespace eve::detail
 
 #if defined(SPY_COMPILER_IS_MSVC)
   template<typename U, typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, x86_256_> bit_select_(EVE_SUPPORTS(avx_),
-                                                   wide<U, N, x86_256_> const &v0,
-                                                   wide<T, N, x86_256_> const &v1,
-                                                   wide<T, N, x86_256_> const &v2) noexcept
+  EVE_FORCEINLINE wide<T, N> bit_select_(EVE_SUPPORTS(avx_),
+                                         wide<U, N> const &v0,
+                                         wide<T, N> const &v1,
+                                         wide<T, N> const &v2) noexcept
+    requires std::same_as<abi_t<T, N>, x86_256_>
   {
     if constexpr(supports_xop)
     {
       if constexpr(std::is_floating_point_v<T>)
       {
-        using itype = wide<as_integer_t<T, unsigned>, N, x86_256_>;
-        using utype = wide<as_integer_t<U, unsigned>, N, x86_256_>;
+        using itype = wide<as_integer_t<T, unsigned>, N>;
+        using utype = wide<as_integer_t<U, unsigned>, N>;
         itype tmp   =  _mm256_cmov_si256( bit_cast(v1,as_<itype>()),
                                           bit_cast(v2,as_<itype>()),
                                           bit_cast(v0,as_<utype>())
