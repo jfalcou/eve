@@ -13,7 +13,6 @@
 #include <eve/function/unsafe.hpp>
 #include <eve/function/replace.hpp>
 #include <eve/wide.hpp>
-#include <eve/bundle.hpp>
 #include <type_traits>
 
 #ifdef SPY_COMPILER_IS_GCC
@@ -54,14 +53,14 @@ namespace eve::detail
     return eve::load(ptr, card);
   }
 
-  template<typename... Pointers,typename Cardinal>
+/*  template<typename... Pointers,typename Cardinal>
   EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), kumi::tuple<Pointers...> ptr
                             , Cardinal
                             ) noexcept
   {
     return bundle { kumi::map ( [](auto p) { return eve::load(p, Cardinal{}); }, ptr) };
   }
-
+*/
   template<relative_conditional_expr C, typename... Pointers>
   EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), C cond, kumi::tuple<Pointers...> ptr ) noexcept
   {
@@ -69,7 +68,7 @@ namespace eve::detail
     return eve::load[cond](ptr, card);
   }
 
-  template<relative_conditional_expr C, typename... Pointers,typename Cardinal>
+/*  template<relative_conditional_expr C, typename... Pointers,typename Cardinal>
   EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_)
                             , C cond, kumi::tuple<Pointers...> ptr, Cardinal
                             ) noexcept
@@ -104,6 +103,7 @@ namespace eve::detail
   {
     return bundle { kumi::map ( [&](auto p) { return eve::unsafe(eve::load)[cond](p, Cardinal{}); }, ptr) };
   }
+*/
 
   //================================================================================================
   // SIMD

@@ -9,7 +9,6 @@
 #include <eve/traits/cardinal.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
-#include <eve/bundle.hpp>
 
 TTS_CASE( "Check for scalar cardinals")
 {

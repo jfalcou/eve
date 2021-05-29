@@ -172,6 +172,18 @@ namespace kumi
   // Forward declaration
   //================================================================================================
   template<typename... Ts> struct tuple;
+
+  template<std::size_t I, product_type T>
+  constexpr decltype(auto) get(T &arg) noexcept;
+
+  template<std::size_t I, product_type T>
+  constexpr decltype(auto) get(T &&arg) noexcept;
+
+  template<std::size_t I, product_type T>
+  constexpr decltype(auto) get(T const &arg) noexcept;
+
+  template<std::size_t I, product_type T>
+  constexpr decltype(auto) get(T const &&arg) noexcept;
 }
 
 //==================================================================================================
