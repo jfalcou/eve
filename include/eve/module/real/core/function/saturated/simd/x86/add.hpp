@@ -14,103 +14,37 @@
 
 namespace eve::detail
 {
-  //================================================================================================
-  // 128 bits saturated implementation
-  //================================================================================================
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, x86_128_> add_(EVE_SUPPORTS(sse2_),
-                                        saturated_type const &  st,
-                                        wide<T, N, x86_128_> const &v0,
-                                        wide<T, N, x86_128_> const &v1) noexcept
+  EVE_FORCEINLINE wide<T, N> add_(EVE_SUPPORTS(sse2_),
+    saturated_type const &  st, wide<T, N> v0, wide<T, N> v1) noexcept
+    requires x86_abi<abi_t<T, N>>
   {
-    if constexpr( std::floating_point<T> )
+         if constexpr ( std::floating_point<T>                                    ) return add(v0, v1);
+    else if constexpr ( sizeof(T) > 2                                             ) return add_(EVE_RETARGET(cpu_), st, v0, v1);
+    else if constexpr ( std::same_as<abi_t<T, N>, x86_256_> && current_api == avx ) return add_(EVE_RETARGET(cpu_), st, v0, v1);
+    else if constexpr ( std::signed_integral<T> && sizeof(T) == 1 )
     {
-      return add(v0, v1);
+           if constexpr ( std::same_as<abi_t<T, N>, x86_512_> ) return _mm512_adds_epi8(v0, v1);
+      else if constexpr ( std::same_as<abi_t<T, N>, x86_256_> ) return _mm256_adds_epi8(v0, v1);
+      else if constexpr ( std::same_as<abi_t<T, N>, x86_128_> ) return _mm_adds_epi8   (v0, v1);
     }
-    else
+    else if constexpr ( std::signed_integral<T> && sizeof(T) == 2 )
     {
-      if constexpr( std::signed_integral<T> )
-      {
-        if constexpr( sizeof(T) == 1 )
-        {
-          return _mm_adds_epi8(v0, v1);
-        }
-        else if constexpr( sizeof(T) == 2 )
-        {
-          return _mm_adds_epi16(v0, v1);
-        }
-        else
-        {
-          return add_(EVE_RETARGET(cpu_), st, v0, v1);
-        }
-      }
-      else if constexpr( std::unsigned_integral<T> )
-      {
-        if constexpr( sizeof(T) == 1 )
-        {
-          return _mm_adds_epu8(v0, v1);
-        }
-        else if constexpr( sizeof(T) == 2 )
-        {
-          return _mm_adds_epu16(v0, v1);
-        }
-        else
-        {
-          return add_(EVE_RETARGET(cpu_), st, v0, v1);
-        }
-      }
+           if constexpr ( std::same_as<abi_t<T, N>, x86_512_> ) return _mm512_adds_epi16(v0, v1);
+      else if constexpr ( std::same_as<abi_t<T, N>, x86_256_> ) return _mm256_adds_epi16(v0, v1);
+      else if constexpr ( std::same_as<abi_t<T, N>, x86_128_> ) return _mm_adds_epi16   (v0, v1);
     }
-  }
-
-  //================================================================================================
-  // 256 bits saturated implementation
-  //================================================================================================
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, x86_256_> add_(EVE_SUPPORTS(avx2_),
-                                        saturated_type const &  st,
-                                        wide<T, N, x86_256_> const &v0,
-                                        wide<T, N, x86_256_> const &v1) noexcept
-  {
-    if constexpr( std::floating_point<T> )
+    else if constexpr ( std::unsigned_integral<T> && sizeof(T) == 1 )
     {
-      return add(v0, v1);
+           if constexpr ( std::same_as<abi_t<T, N>, x86_512_> ) return _mm512_adds_epu8(v0, v1);
+      else if constexpr ( std::same_as<abi_t<T, N>, x86_256_> ) return _mm256_adds_epu8(v0, v1);
+      else if constexpr ( std::same_as<abi_t<T, N>, x86_128_> ) return _mm_adds_epu8   (v0, v1);
     }
-    else if constexpr( current_api >= avx2 )
+    else if constexpr ( std::unsigned_integral<T> && sizeof(T) == 2 )
     {
-      if constexpr( std::signed_integral<T> )
-      {
-        if constexpr( sizeof(T) == 1 )
-        {
-          return _mm256_adds_epi8(v0, v1);
-        }
-        else if constexpr( sizeof(T) == 2 )
-        {
-          return _mm256_adds_epi16(v0, v1);
-        }
-        else
-        {
-          return add_(EVE_RETARGET(cpu_), st, v0, v1);
-        }
-      }
-      else if constexpr( std::unsigned_integral<T> )
-      {
-        if constexpr( sizeof(T) == 1 )
-        {
-          return _mm256_adds_epu8(v0, v1);
-        }
-        else if constexpr( sizeof(T) == 2 )
-        {
-          return _mm256_adds_epu16(v0, v1);
-        }
-        else
-        {
-          return add_(EVE_RETARGET(cpu_), st, v0, v1);
-        }
-      }
-    }
-    else
-    {
-      return add_(EVE_RETARGET(cpu_), st, v0, v1);
+           if constexpr ( std::same_as<abi_t<T, N>, x86_512_> ) return _mm512_adds_epu16(v0, v1);
+      else if constexpr ( std::same_as<abi_t<T, N>, x86_256_> ) return _mm256_adds_epu16(v0, v1);
+      else if constexpr ( std::same_as<abi_t<T, N>, x86_128_> ) return _mm_adds_epu16   (v0, v1);
     }
   }
 }
