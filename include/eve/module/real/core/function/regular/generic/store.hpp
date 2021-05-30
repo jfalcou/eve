@@ -35,14 +35,16 @@ namespace eve::detail
   // simd Regular case
   template<real_scalar_value T, typename N>
   EVE_FORCEINLINE void
-  store_(EVE_SUPPORTS(cpu_), wide<T, N, emulated_> const &value, T *ptr) noexcept
+  store_(EVE_SUPPORTS(cpu_), wide<T, N> const &value, T *ptr) noexcept
+    requires std::same_as<abi_t<T, N>, emulated_>
   {
     apply<N::value>([&](auto... I) { ((*ptr++ = value.get(I)), ...); });
   }
 
   template<real_scalar_value T, typename N>
   EVE_FORCEINLINE void
-  store_(EVE_SUPPORTS(cpu_), wide<T, N, aggregated_> const &value, T *ptr) noexcept
+  store_(EVE_SUPPORTS(cpu_), wide<T, N> const &value, T *ptr) noexcept
+    requires std::same_as<abi_t<T, N>, aggregated_>
   {
     value.storage().apply
     ( [&]<typename... Sub>(Sub&... v)

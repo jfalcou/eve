@@ -14,9 +14,9 @@
 
 namespace eve::detail
 {
-  template<scalar_value T, integral_scalar_value I, typename N, typename X, typename Y>
+  template<scalar_value T, integral_scalar_value I, typename N>
   EVE_FORCEINLINE auto
-  lookup_(EVE_SUPPORTS(cpu_), wide<T, N, X> const &a, wide<I, N, Y> const &ind) noexcept
+  lookup_(EVE_SUPPORTS(cpu_), wide<T, N> const &a, wide<I, N> const &ind) noexcept
   {
     auto const cond = [&]()
     {
@@ -30,7 +30,7 @@ namespace eve::detail
     auto  msk  = cond.mask();
 
     // Rebuild as scalar
-    wide<T, N, X> data;
+    wide<T, N> data;
     apply<N::value>([&](auto... v) { (data.set(v,a.get(idx.get(v))),...); });
 
     // Apply mask as SIMD
@@ -38,16 +38,17 @@ namespace eve::detail
     return data;
   }
 
-  template<scalar_value T, integral_scalar_value I, typename N, typename X, typename Y>
+  template<scalar_value T, integral_scalar_value I, typename N>
   EVE_FORCEINLINE auto
-  lookup_(EVE_SUPPORTS(cpu_), logical<wide<T, N, X>> const &a, wide<I, N, Y> const &ind) noexcept
+  lookup_(EVE_SUPPORTS(cpu_), logical<wide<T, N>> const &a, wide<I, N> const &ind) noexcept
   {
     return bit_cast(lookup(a.bits(),ind), as(a));
   }
 
-  template<scalar_value T, integral_scalar_value I, typename N, typename X>
+  template<scalar_value T, integral_scalar_value I, typename N>
   EVE_FORCEINLINE auto
-  lookup_(EVE_SUPPORTS(cpu_), wide<T, N, X> const &a, wide<I, N, aggregated_> const &ind) noexcept
+  lookup_(EVE_SUPPORTS(cpu_), wide<T, N> const &a, wide<I, N> const &ind) noexcept
+    requires std::same_as<abi_t<I, N>, aggregated_>
   {
     auto const cond = [&]()
     {
@@ -61,7 +62,7 @@ namespace eve::detail
     auto  msk  = cond.mask();
 
     // Rebuild as scalar
-    wide<T, N, X> data;
+    wide<T, N> data;
 
     constexpr auto const half = N::value / 2;
     apply<half>([&, lx = idx.slice(lower_)](auto... v) { (data.set(v     , a.get(lx.get(v))),...); } );
