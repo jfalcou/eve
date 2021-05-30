@@ -59,16 +59,16 @@ namespace eve::detail
   // simd Aligned case
   template<real_scalar_value T, typename S, std::size_t N>
   EVE_FORCEINLINE void
-  store_(EVE_SUPPORTS(cpu_), wide<T, S, emulated_> const &value, aligned_ptr<T, N> ptr) noexcept
-      requires(wide<T, S, emulated_>::alignment() <= N)
+  store_(EVE_SUPPORTS(cpu_), wide<T, S> const &value, aligned_ptr<T, N> ptr) noexcept
+      requires(wide<T, S>::alignment() <= N) && std::same_as<abi_t<T, S>, emulated_>
   {
     store(value, ptr.get());
   }
 
   template<real_scalar_value T, typename S, std::size_t N>
   EVE_FORCEINLINE void
-  store_(EVE_SUPPORTS(cpu_), wide<T, S, aggregated_> const &value, aligned_ptr<T, N> ptr) noexcept
-      requires(wide<T, S, aggregated_>::alignment() <= N)
+  store_(EVE_SUPPORTS(cpu_), wide<T, S> const &value, aligned_ptr<T, N> ptr) noexcept
+      requires(wide<T, S>::alignment() <= N) && std::same_as<abi_t<T, S>, aggregated_>
   {
     auto cast = []<typename Ptr, typename Sub>(Ptr ptr, as_<Sub>)
     {
