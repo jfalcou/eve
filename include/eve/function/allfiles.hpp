@@ -96,7 +96,6 @@
 #include <eve/function/exp.hpp>
 #include <eve/function/expm1.hpp>
 #include <eve/function/exponent.hpp>
-#include <eve/function/extract.hpp>
 #include <eve/function/fdim.hpp>
 #include <eve/function/firstbitset.hpp>
 #include <eve/function/firstbitunset.hpp>

@@ -9,7 +9,6 @@
 // **=======================================================
 // helper file to include all arithmetic functions
 #include <eve/function/combine.hpp>
-#include <eve/function/extract.hpp>
 #include <eve/function/lookup.hpp>
 //#include <eve/function/shuffle.hpp> TO DO
 //#include <eve/function/slice.hpp>   TO DO   ??

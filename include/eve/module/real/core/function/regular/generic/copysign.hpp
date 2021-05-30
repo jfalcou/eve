@@ -12,7 +12,6 @@
 #include <eve/function/bit_notand.hpp>
 #include <eve/function/bitofsign.hpp>
 #include <eve/function/bit_or.hpp>
-#include <eve/function/extract.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/concept/compatible.hpp>
