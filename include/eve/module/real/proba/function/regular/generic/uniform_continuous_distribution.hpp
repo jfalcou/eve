@@ -18,7 +18,6 @@
 #include <eve/function/average.hpp>
 #include <eve/function/exp.hpp>
 #include <eve/function/expm1.hpp>
-#include <eve/function/extract.hpp>
 #include <eve/function/floor.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/is_finite.hpp>
