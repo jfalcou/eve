@@ -11,7 +11,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/forward.hpp>
-#include <eve/numeric.hpp>
+#include <eve/function/numeric.hpp>
 
 #include <type_traits>
 
