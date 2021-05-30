@@ -13,15 +13,8 @@ namespace eve::detail
 {
   template<typename T, typename N>
   EVE_FORCEINLINE auto
-  combine(neon128_ const &, wide<T, N, arm_128_> const &l, wide<T, N, arm_128_> const &h) noexcept
-  {
-    using that_t = wide<T, typename N::combined_type>;
-    return that_t(typename that_t::storage_type {l, h});
-  }
-
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto
-  combine(neon128_ const &, wide<T, N, arm_64_> const &l, wide<T, N, arm_64_> const &h) noexcept
+  combine(neon128_ const &, wide<T, N> const &l, wide<T, N> const &h) noexcept
+    requires std::same_as<abi_t<T, N>, arm_64_>
   {
     using that_t = wide<T, typename N::combined_type>;
 
