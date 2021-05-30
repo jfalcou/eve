@@ -11,7 +11,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/forward.hpp>
-#include <eve/pedantic.hpp>
+#include <eve/function/pedantic.hpp>
 
 #include <type_traits>
 
