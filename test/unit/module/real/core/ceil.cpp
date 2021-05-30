@@ -49,6 +49,19 @@ EVE_TEST_TYPES( "Check  with specific values"
               )
 <typename T>(eve::as_<T>)
 {
+  TTS_EQUAL(eve::ceil(T(-1)), T(-1));
+  TTS_EQUAL(eve::ceil(T(-2)), T(-2));
+  TTS_EQUAL(eve::ceil(T(0)), T(0));
+  TTS_EQUAL(eve::ceil(T(1)), T(1));
+  TTS_EQUAL(eve::ceil(T(2)), T(2));
+
+  TTS_EQUAL(eve::ceil(T(-1.3)), T(-1));
+  TTS_EQUAL(eve::ceil(T(-1.5)), T(-1));
+  TTS_EQUAL(eve::ceil(T(-1.6)), T(-1));
+  TTS_EQUAL(eve::ceil(T(1.3)) , T(2));
+  TTS_EQUAL(eve::ceil(T(1.5)) , T(2));
+  TTS_EQUAL(eve::ceil(T(1.6)) , T(2));
+
   TTS_EQUAL(eve::tolerant(eve::ceil)(T(-1)), T(-1));
   TTS_EQUAL(eve::tolerant(eve::ceil)(T(-2)), T(-2));
   TTS_EQUAL(eve::tolerant(eve::ceil)(T(0)), T(0));
@@ -61,7 +74,6 @@ EVE_TEST_TYPES( "Check  with specific values"
   TTS_EQUAL(eve::tolerant(eve::ceil)(T(1.3)) , T(2));
   TTS_EQUAL(eve::tolerant(eve::ceil)(T(1.5)) , T(2));
   TTS_EQUAL(eve::tolerant(eve::ceil)(T(1.6)) , T(2));
-  TTS_EQUAL(eve::tolerant(eve::ceil)(T(0)), T(0));
   TTS_EQUAL(eve::tolerant(eve::ceil)(eve::eps(eve::as<T>())), T(0));
   TTS_EQUAL(eve::tolerant(eve::ceil)(2*eve::eps(eve::as<T>())), T(0));
   TTS_EQUAL(eve::tolerant(eve::ceil)(3*eve::eps(eve::as<T>())), T(0));
