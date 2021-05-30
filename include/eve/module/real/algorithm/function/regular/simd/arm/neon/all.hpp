@@ -17,9 +17,10 @@ namespace eve::detail
 {
 
   template<real_scalar_value T, typename N, relative_conditional_expr C>
-  EVE_FORCEINLINE bool all_(EVE_SUPPORTS(neon128_), C const &cond, logical<wide<T, N, arm_64_>> const &v0) noexcept
+  EVE_FORCEINLINE bool all_(EVE_SUPPORTS(neon128_), C const &cond, logical<wide<T, N>> v0) noexcept
+      requires std::same_as<abi_t<T, N>, arm_64_>
   {
-    using u32_2 = typename wide<T, N, arm_64_>::template rebind<std::uint32_t, eve::fixed<2>>;
+    using u32_2 = typename wide<T, N>::template rebind<std::uint32_t, eve::fixed<2>>;
 
          if constexpr ( C::is_complete && !C::is_inverted ) return true;
     else if constexpr ( !C::is_complete )                   return all_(EVE_RETARGET(cpu_), cond, v0);
@@ -39,9 +40,10 @@ namespace eve::detail
   }
 
   template<real_scalar_value T, typename N, relative_conditional_expr C>
-  EVE_FORCEINLINE bool all_(EVE_SUPPORTS(neon128_), C const &cond, logical<wide<T, N, arm_128_>> const &v0) noexcept
+  EVE_FORCEINLINE bool all_(EVE_SUPPORTS(neon128_), C const &cond, logical<wide<T, N>> v0) noexcept
+    requires std::same_as<abi_t<T, N>, arm_128_>
   {
-    using u32_4 = typename wide<T, N, arm_128_>::template rebind<std::uint32_t, eve::fixed<4>>;
+    using u32_4 = typename wide<T, N>::template rebind<std::uint32_t, eve::fixed<4>>;
 
          if constexpr ( C::is_complete && !C::is_inverted ) return true;
     // we still have to convert down here, so we can do it before ignore.
@@ -65,7 +67,7 @@ namespace eve::detail
     }
     else  // chars, no asimd
     {
-      using u32_4 = typename wide<T, N, arm_128_>::template rebind<std::uint32_t, eve::fixed<4>>;
+      using u32_4 = typename wide<T, N>::template rebind<std::uint32_t, eve::fixed<4>>;
       auto dwords = eve::bit_cast(v0, eve::as<u32_4>());
 
       // not the same logic as for uint_32 plain so duplicated.

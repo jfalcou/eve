@@ -14,7 +14,8 @@
 namespace eve::detail
 {
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE bool any_(EVE_SUPPORTS(vmx_), logical<wide<T, N, ppc_>> const &v0) noexcept
+  EVE_FORCEINLINE bool any_(EVE_SUPPORTS(vmx_), logical<wide<T, N>> const &v0) noexcept
+    requires ppc_abi<abi_t<T, N>>
   {
     auto m = v0.bits();
 
@@ -28,7 +29,7 @@ namespace eve::detail
     }
     else
     {
-      using type = logical<wide<T, N, ppc_>>;
+      using type = logical<wide<T, N>>;
 
       auto mm = apply<N::value>([](auto... I) { return type {(I < N::value)...}; });
       m &= mm.bits();

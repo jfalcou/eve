@@ -47,13 +47,13 @@ namespace eve
   //! @tparam Cardinal  Cardinal of the register. By default, the best cardinal for current
   //!                    architecture is selected.
   //================================================================================================
-  template<typename Type, typename Cardinal, typename ABI>
+  template<typename Type, typename Cardinal>
   struct  EVE_MAY_ALIAS  wide
         : detail::wide_cardinal<Cardinal>
-        , detail::wide_storage<as_register_t<Type, Cardinal, ABI>>
+        , detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>
   {
     using card_base     = detail::wide_cardinal<Cardinal>;
-    using storage_base  = detail::wide_storage<as_register_t<Type, Cardinal, ABI>>;
+    using storage_base  = detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>;
 
     public:
 
@@ -61,7 +61,7 @@ namespace eve
     using value_type    = Type;
 
     //! The ABI tag for this register.
-    using abi_type      = ABI;
+    using abi_type      = abi_t<Type, Cardinal>;
 
     //! The type used for this register storage
     using storage_type  = typename storage_base::storage_type;

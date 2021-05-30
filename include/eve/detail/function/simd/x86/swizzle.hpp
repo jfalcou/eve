@@ -56,10 +56,11 @@ namespace eve::detail
   // SSE2-SSSE3 variant
   //================================================================================================
   template<typename T, typename N, shuffle_pattern Pattern>
-  EVE_FORCEINLINE auto basic_swizzle_( EVE_SUPPORTS(sse2_), wide<T,N,x86_128_> const& v, Pattern const&)
+  EVE_FORCEINLINE auto basic_swizzle_( EVE_SUPPORTS(sse2_), wide<T, N> const& v, Pattern const&)
+    requires std::same_as<abi_t<T, N>, x86_128_>
   {
     constexpr auto sz = Pattern::size();
-    using that_t      = as_wide_t<wide<T,N,x86_128_>,fixed<sz>>;
+    using that_t      = as_wide_t<wide<T, N>, fixed<sz>>;
 
     constexpr Pattern q = {};
 
@@ -79,7 +80,7 @@ namespace eve::detail
     {
       using st_t    = typename that_t::storage_type;
       using bytes_t = typename that_t::template rebind<std::uint8_t,fixed<16>>;
-      using i_t     = as_integer_t<wide<T,N,x86_128_>>;
+      using i_t     = as_integer_t<wide<T, N>>;
 
       return that_t ( (st_t)_mm_shuffle_epi8( bit_cast(v,as_<i_t>{}).storage()
                                             , as_bytes<that_t>(q,as_<bytes_t>())

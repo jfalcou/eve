@@ -15,7 +15,7 @@ template<typename T> using tiny_wide  = eve::wide<T,eve::fixed<1>>;
 
 #if !defined(EVE_NO_SIMD)
 #if defined(SPY_SIMD_IS_X86)
-TTS_CASE_TPL( "Check that wide<T,N,x86*> satisfies native_simd_for_abi with any X86 ABI"
+TTS_CASE_TPL( "Check that wide<T,N> satisfies native_simd_for_abi with any X86 ABI"
             , TTS_NUMERIC_TYPES
             )
 {
@@ -26,7 +26,7 @@ TTS_CASE_TPL( "Check that wide<T,N,x86*> satisfies native_simd_for_abi with any 
   TTS_EXPECT((eve::native_simd_for_abi<logical<wide<T>> , eve::x86_128_ , eve::x86_256_, eve::x86_512_> ));
 }
 
-TTS_CASE_TPL( "Check that wide<T,N,x86*> does not satisfy native_simd_for_abi with other ABI"
+TTS_CASE_TPL( "Check that wide<T,N> does not satisfy native_simd_for_abi with other ABI"
             , TTS_NUMERIC_TYPES
             )
 {
@@ -63,7 +63,7 @@ TTS_CASE_TPL( "Check that wide<T,N,ppc*> does not satisfy native_simd_for_abi wi
   TTS_EXPECT_NOT((eve::native_simd_for_abi<logical<wide<T>> , eve::x86_128_ , eve::x86_256_, eve::x86_512_ > ));
 }
 #elif defined(SPY_SIMD_IS_ARM)
-TTS_CASE_TPL( "Check that wide<T,N,arm*> satisfies native_simd_for_abi with any ARM ABI"
+TTS_CASE_TPL( "Check that wide<T,N> satisfies native_simd_for_abi with any ARM ABI"
             , TTS_NUMERIC_TYPES
             )
 {
@@ -90,7 +90,7 @@ TTS_CASE_TPL( "Check that wide<T,N,arm*> satisfies native_simd_for_abi with any 
   }
 }
 
-TTS_CASE_TPL( "Check that wide<T,N,arm*> does not satisfy native_simd_for_abi with other ABI"
+TTS_CASE_TPL( "Check that wide<T,N> does not satisfy native_simd_for_abi with other ABI"
             , TTS_NUMERIC_TYPES
             )
 {

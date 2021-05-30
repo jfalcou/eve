@@ -57,7 +57,8 @@ namespace eve::detail
   // Emulation
   //================================================================================================
   template<typename T, typename N, typename Pointer>
-  EVE_FORCEINLINE auto load(eve::as_<wide<T,N,emulated_>> const& tgt, Pointer i) noexcept
+  EVE_FORCEINLINE auto load(eve::as_<wide<T, N>> const& tgt, Pointer i) noexcept
+    requires std::same_as<abi_t<T, N>, emulated_>
   {
     auto const get = [](auto p)
     {
@@ -72,7 +73,8 @@ namespace eve::detail
   // Aggregation
   //================================================================================================
   template<typename T, typename N, typename Pointer>
-  EVE_FORCEINLINE auto load(eve::as_<wide<T,N,aggregated_>> const & tgt, Pointer ptr) noexcept
+  EVE_FORCEINLINE auto load(eve::as_<wide<T,N>> const & tgt, Pointer ptr) noexcept
+    requires std::same_as<abi_t<T, N>, aggregated_>
   {
     return aggregate_load(tgt,ptr);
   }
@@ -100,7 +102,9 @@ namespace eve::detail
   auto load(eve::as_<logical<wide<T, N>>> const & tgt, Ptr p)
   requires( dereference_as<logical<T>, Ptr>::value && !x86_abi<abi_t<T, N>>)
   {
-    return  bit_cast
+    if constexpr ( std::same_as<abi_t<T, N>, aggregated_> ) return aggregate_load(tgt,p);
+    else return
+      bit_cast
             ( [&]() -> wide<T, N>
               {
                 using wtg = eve::as_<wide<T, N>>;
@@ -116,13 +120,5 @@ namespace eve::detail
               }()
             , tgt
             );
-  }
-
-  template<typename T, typename N, typename Ptr>
-  EVE_FORCEINLINE
-  auto load(eve::as_<logical<wide<T, N, aggregated_>>> const & tgt, Ptr p)
-  requires( dereference_as<logical<T>, Ptr>::value )
-  {
-    return aggregate_load(tgt,p);
   }
 }

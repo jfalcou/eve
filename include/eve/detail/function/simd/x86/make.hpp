@@ -24,13 +24,14 @@ namespace eve::detail
   // enumerated make - 128bits
   //================================================================================================
   template<real_scalar_value T, typename S, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as_<wide<T,S,x86_128_>> const &, Vs... vs) noexcept
+  EVE_FORCEINLINE auto make(eve::as_<wide<T,S>> const &, Vs... vs) noexcept
+    requires std::same_as<abi_t<T, S>, x86_128_>
   {
     static_assert ( sizeof...(Vs) <= S::value
                   , "[eve::make] - Invalid number of arguments"
                   );
 
-    constexpr auto c = categorize<wide<T,S,x86_128_>>();
+    constexpr auto c = categorize<wide<T,S>>();
 
           if constexpr( c == category::float64x2) return _mm_setr_pd(static_cast<T>(vs)...);
     else  if constexpr( c == category::float32x4)
@@ -79,13 +80,14 @@ namespace eve::detail
   // enumerated make - 256bits
   //================================================================================================
   template<real_scalar_value T, typename S, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as_<wide<T,S,x86_256_>> const &, Vs... vs) noexcept
+  EVE_FORCEINLINE auto make(eve::as_<wide<T, S>> const &, Vs... vs) noexcept
+    requires std::same_as<abi_t<T, S>, x86_256_>
   {
     static_assert ( sizeof...(Vs) <= S::value
                   , "[eve::make] - Invalid number of arguments"
                   );
 
-    constexpr auto c = categorize<wide<T,S,x86_256_>>();
+    constexpr auto c = categorize<wide<T, S>>();
 
           if constexpr( c == category::float64x4) return _mm256_setr_pd(vs...);
     else  if constexpr( c == category::float32x8) return _mm256_setr_ps(vs...);
@@ -99,13 +101,14 @@ namespace eve::detail
   // enumerated make - 512bits
   //================================================================================================
   template<real_scalar_value T, typename S, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as_<wide<T,S,x86_512_>> const &, Vs... vs) noexcept
+  EVE_FORCEINLINE auto make(eve::as_<wide<T,S>> const &, Vs... vs) noexcept
+    requires std::same_as<abi_t<T, S>, x86_512_>
   {
     static_assert ( sizeof...(Vs) <= S::value
                   , "[eve::make] - Invalid number of arguments"
                   );
 
-    constexpr auto c = categorize<wide<T,S,x86_512_>>();
+    constexpr auto c = categorize<wide<T,S>>();
 
     /*
       Please take a minute to acknowledge the effect of deciding _mm512_setr should be

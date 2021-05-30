@@ -21,14 +21,16 @@
 namespace eve::detail
 {
   template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, ppc_>
-                  rec_(EVE_SUPPORTS(vmx_), raw_type const&, wide<T, N, ppc_> const &v0) noexcept
+  EVE_FORCEINLINE wide<T, N>
+  rec_(EVE_SUPPORTS(vmx_), raw_type const&, wide<T, N> const &v0) noexcept
+    requires ppc_abi<abi_t<T, N>>
   {
     return vec_re(v0.storage());
   }
 
   template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, ppc_> rec_(EVE_SUPPORTS(vmx_), wide<T, N, ppc_> const &v0) noexcept
+  EVE_FORCEINLINE wide<T, N> rec_(EVE_SUPPORTS(vmx_), wide<T, N> const &v0) noexcept
+    requires ppc_abi<abi_t<T, N>>
   {
     auto constexpr fix_inf = [](auto v, auto e)
     {

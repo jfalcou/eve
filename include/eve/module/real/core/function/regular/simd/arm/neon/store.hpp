@@ -60,7 +60,7 @@ namespace eve::detail
                              , aligned_ptr<T, N> ptr) noexcept
     requires arm_abi<abi_t<T, N>>
   {
-    if constexpr( std::is_same<ABI,arm_64_> &&  (ABI N::value * sizeof(T) != arm_64_::bytes ))
+    if constexpr( std::is_same<abi_t<T, N>,arm_64_> &&  ( N::value * sizeof(T) != arm_64_::bytes ))
     {
       memcpy(ptr, (T const*)(&value), N::value * sizeof(T));
     }

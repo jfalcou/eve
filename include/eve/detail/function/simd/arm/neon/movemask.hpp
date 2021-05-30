@@ -45,9 +45,10 @@ namespace eve::detail
   }
 
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE auto movemask (logical<wide<T, N, arm_64_>> const &v) noexcept
+  EVE_FORCEINLINE auto movemask (logical<wide<T, N>> const &v) noexcept
+    requires std::same_as<abi_t<T, N>, arm_64_>
   {
-    using w_t = wide<T, N, arm_64_>;
+    using w_t = wide<T, N>;
     using u16_4 = typename w_t::template rebind<std::uint16_t, eve::fixed<4>>;
     using u32_2 = typename w_t::template rebind<std::uint32_t, eve::fixed<2>>;
     using u64_1 = typename w_t::template rebind<std::uint64_t, eve::fixed<1>>;
@@ -82,9 +83,10 @@ namespace eve::detail
   }
 
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE auto movemask (logical<wide<T, N, arm_128_>> const &v) noexcept
+  EVE_FORCEINLINE auto movemask (logical<wide<T, N>> const &v) noexcept
+    requires std::same_as<abi_t<T, N>, arm_128_>
   {
-    using w_t = wide<T, N, arm_128_>;
+    using w_t = wide<T, N>;
     using u8_8  = typename w_t::template rebind <std::uint8_t,  eve::fixed<8>>;
     using u16_8 = typename w_t::template rebind <std::uint16_t, eve::fixed<8>>;
     using u32_4 = typename w_t::template rebind <std::uint32_t, eve::fixed<4>>;

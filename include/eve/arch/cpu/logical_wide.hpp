@@ -322,8 +322,8 @@ namespace eve
     // Logical operations
     //==============================================================================================
     //! Perform a logical and operation between two eve::logical
-    template<typename U, typename A2>
-    friend EVE_FORCEINLINE auto operator&&(logical const& v, logical<wide<U,Cardinal,A2>> const& w) noexcept
+    template<typename U>
+    friend EVE_FORCEINLINE auto operator&&(logical const& v, logical<wide<U, Cardinal>> const& w) noexcept
     {
       return detail::self_logand(EVE_CURRENT_API{},v,w);
     }
@@ -343,8 +343,8 @@ namespace eve
     }
 
     //! Perform a logical or operation between two eve::logical
-    template<typename U, typename A2>
-    friend EVE_FORCEINLINE auto operator||(logical const& v, logical<wide<U,Cardinal,A2>> const& w) noexcept
+    template<typename U>
+    friend EVE_FORCEINLINE auto operator||(logical const& v, logical<wide<U, Cardinal>> const& w) noexcept
     {
       return detail::self_logor(EVE_CURRENT_API{},v,w);
     }

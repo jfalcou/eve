@@ -37,15 +37,17 @@ namespace eve::detail
   }
 
   template<typename T, typename N, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as_<wide<T,N,emulated_>> const &, Vs... vs) noexcept
+  EVE_FORCEINLINE auto make(eve::as_<wide<T, N>> const &, Vs... vs) noexcept
+    requires std::same_as<abi_t<T, N>, emulated_>
   {
-    return make_emulated<wide<T,N,emulated_>>(vs...);
+    return make_emulated<wide<T, N>>(vs...);
   }
 
   template<typename T, typename N, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as_<logical<wide<T,N,emulated_>>> const &, Vs... vs) noexcept
+  EVE_FORCEINLINE auto make(eve::as_<logical<wide<T, N>>> const &, Vs... vs) noexcept
+    requires std::same_as<abi_t<T, N>, emulated_>
   {
-    return make_emulated<logical<wide<T,N,emulated_>>>(vs...);
+    return make_emulated<logical<wide<T, N>>>(vs...);
   }
 
   //================================================================================================
@@ -77,14 +79,16 @@ namespace eve::detail
   }
 
   template<typename T, typename N, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as_<wide<T,N,aggregated_>> const &, Vs... vs) noexcept
+  EVE_FORCEINLINE auto make(eve::as_<wide<T,N>> const &, Vs... vs) noexcept
+    requires std::same_as<abi_t<T, N>, aggregated_>
   {
-    return make_aggregated<wide<T,N,aggregated_>>(vs...);
+    return make_aggregated<wide<T, N>>(vs...);
   }
 
   template<typename T, typename N, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as_<logical<wide<T,N,aggregated_>>> const &, Vs... vs) noexcept
+  EVE_FORCEINLINE auto make(eve::as_<logical<wide<T,N>>> const &, Vs... vs) noexcept
+    requires std::same_as<abi_t<T, N>, aggregated_>
   {
-    return make_aggregated<logical<wide<T,N,aggregated_>>>(vs...);
+    return make_aggregated<logical<wide<T, N>>>(vs...);
   }
 }
