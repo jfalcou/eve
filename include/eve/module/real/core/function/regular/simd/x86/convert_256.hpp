@@ -23,7 +23,8 @@ namespace eve::detail
   //================================================================================================
   template<real_scalar_value In, typename N, real_scalar_value Out>
   EVE_FORCEINLINE wide<Out, N>
-  convert_(EVE_SUPPORTS(avx_), wide<In, N, x86_256_> const &v0, as_<Out> const &tgt) noexcept
+  convert_(EVE_SUPPORTS(avx_), wide<In, N> const &v0, as_<Out> const &tgt) noexcept
+    requires std::same_as<abi_t<In, N>, x86_256_>
   {
     if constexpr( std::is_same_v<In, Out> )
     {
@@ -48,7 +49,8 @@ namespace eve::detail
   //================================================================================================
   template<real_scalar_value In, typename N, real_scalar_value Out>
   EVE_FORCEINLINE wide<Out, N>
-  convert_(EVE_SUPPORTS(avx_), wide<In, N, x86_128_> const &v0, as_<Out> const &tgt) noexcept
+  convert_(EVE_SUPPORTS(avx_), wide<In, N> const &v0, as_<Out> const &tgt) noexcept
+    requires std::same_as<abi_t<In, N>, x86_128_>
   {
     //==============================================================================================
     // Idempotent call

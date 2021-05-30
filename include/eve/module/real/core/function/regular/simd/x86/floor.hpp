@@ -18,20 +18,20 @@
 namespace eve::detail
 {
   template<floating_scalar_value T, typename N, typename ABI>
-  EVE_FORCEINLINE wide<T, N, x86_128_> floor_(EVE_SUPPORTS(sse4_1_),
-                                          wide<T, N, x86_128_> const &a0) noexcept
+  EVE_FORCEINLINE wide<T, N> floor_(EVE_SUPPORTS(sse4_1_), wide<T, N> a0) noexcept
+    requires x86_abi<abi_t<T, N>>
   {
-         if constexpr(std::is_same_v<T, double>) return _mm_floor_pd(a0);
-    else if constexpr(std::is_same_v<T, float>)  return _mm_floor_ps(a0);
-  }
-
-  //-----------------------------------------------------------------------------------------------
-  // 256 bits implementation
-  template<floating_scalar_value T, typename N, typename ABI>
-  EVE_FORCEINLINE wide<T, N, x86_256_> floor_(EVE_SUPPORTS(avx_), wide<T, N, x86_256_> const &a0) noexcept
-  {
-         if constexpr(std::is_same_v<T, double>) return _mm256_round_pd(a0, _MM_FROUND_FLOOR);
-    else if constexpr(std::is_same_v<T, float>)  return _mm256_round_ps(a0, _MM_FROUND_FLOOR);
+    if constexpr (std::same_as<T, double> )
+    {
+           if constexpr (std::same_as<abi_t<T, N>, x86_512_>) return _mm512_roundscale_pd(a0, _MM_FROUND_TO_ZERO);
+      else if constexpr (std::same_as<abi_t<T, N>, x86_256_>) return _mm256_round_pd     (a0, _MM_FROUND_TO_ZERO);
+      else                                                    return _mm_floor_pd        (a0);
+    }
+    else
+    {
+           if constexpr (std::same_as<abi_t<T, N>, x86_512_>) return _mm512_roundscale_ps(a0, _MM_FROUND_TO_ZERO);
+      else if constexpr (std::same_as<abi_t<T, N>, x86_256_>) return _mm256_round_ps     (a0, _MM_FROUND_TO_ZERO);
+      else                                                    return _mm_floor_ps        (a0);
+    }
   }
 }
-

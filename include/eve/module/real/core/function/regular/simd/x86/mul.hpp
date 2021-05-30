@@ -13,23 +13,10 @@
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // 128 bits implementation
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, x86_128_>
-                  mul_(EVE_SUPPORTS(sse2_), wide<T, N, x86_128_> v0, wide<T, N, x86_128_> const &v1) noexcept
+  EVE_FORCEINLINE wide<T, N> mul_(EVE_SUPPORTS(sse2_), wide<T, N> v0, wide<T, N> v1) noexcept
+    requires x86_abi<abi_t<T, N>>
   {
     return v0 *= v1;
   }
-
-  // -----------------------------------------------------------------------------------------------
-  // 256 bits implementation
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, x86_256_>
-                  mul_(EVE_SUPPORTS(avx_), wide<T, N, x86_256_> v0, wide<T, N, x86_256_> const &v1) noexcept
-  {
-    return v0 *= v1;
-  }
-
-
 }

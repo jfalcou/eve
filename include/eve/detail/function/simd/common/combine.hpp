@@ -25,7 +25,7 @@ namespace eve::detail
     {
       return apply<N::value>([&](auto... I) { return that_t {l.get(I)..., h.get(I)...}; });
     }
-    else if constexpr( is_aggregated_v<abi_t<T, N>> )
+    else if constexpr( has_aggregated_abi_v<that_t> )
     {
       that_t that;
 
@@ -46,7 +46,7 @@ namespace eve::detail
     {
       return apply<N::value>([&](auto... I) { return that_t {l.get(I)..., h.get(I)...}; });
     }
-    else if constexpr( is_aggregated_v<abi_t<T, N>> )
+    else if constexpr( has_aggregated_abi_v<that_t> )
     {
       that_t that;
 

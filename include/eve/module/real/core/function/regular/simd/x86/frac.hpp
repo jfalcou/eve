@@ -21,8 +21,8 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // 128 bits implementation for xop
   template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE auto frac_(EVE_SUPPORTS(avx_),
-                             wide<T, N, x86_128_> const &a0) noexcept
+  EVE_FORCEINLINE wide<T, N> frac_(EVE_SUPPORTS(avx_), wide<T, N> const &a0) noexcept
+    requires std::same_as<abi_t<T, N>, x86_128_>
   {
     if constexpr(supports_xop)
     {
@@ -35,12 +35,12 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // 256 bits implementation for xop
   template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE auto frac_(EVE_SUPPORTS(avx_),
-                             wide<T, N, x86_256_> const &a0) noexcept
+  EVE_FORCEINLINE wide<T, N> frac_(EVE_SUPPORTS(avx_), wide<T, N> const &a0) noexcept
+    requires std::same_as<abi_t<T, N>, x86_256_>
   {
     if constexpr(supports_xop)
     {
-      if constexpr(std::is_same_v<T, float>)       return _mm256_frcz_ps(a0);
+      if constexpr(std::is_same_v<T, float>      ) return _mm256_frcz_ps(a0);
       else if constexpr(std::is_same_v<T, double>) return _mm256_frcz_pd(a0);
     }
     else  return frac_(EVE_RETARGET(cpu_), a0);

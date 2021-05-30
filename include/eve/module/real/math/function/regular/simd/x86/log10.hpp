@@ -186,7 +186,8 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // 256 bits implementation for avx
   template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE auto log10_(EVE_SUPPORTS(avx_), wide<T, N, x86_256_> const &v) noexcept
+  EVE_FORCEINLINE auto log10_(EVE_SUPPORTS(avx_), wide<T, N> const &v) noexcept
+    requires std::same_as<abi_t<T, N>, x86_256_>
   {
     if constexpr( current_api < avx2 )
       return plain(log10)(v);

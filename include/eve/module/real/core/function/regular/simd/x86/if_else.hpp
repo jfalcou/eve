@@ -75,7 +75,7 @@ namespace eve::detail
       else  if constexpr( c == category::float32x4   ) return _mm_blendv_ps   (v2, v1, msk);
       else
       {
-        if constexpr( std::same_as<abi_t<T, N>,x86_128_> ) return _mm_blendv_epi8(v2, v1, msk);
+        if constexpr( std::same_as<abi_t<T, N>, x86_128_> ) return _mm_blendv_epi8(v2, v1, msk);
         else if constexpr(current_api >= avx2)
         {
           using a_t = wide<as_integer_t<T>, N>;
@@ -86,7 +86,7 @@ namespace eve::detail
                 if constexpr(sizeof(T) <= 2)      return aggregate(if_else, v0, v1, v2);
           else  if constexpr(sizeof(T) >= 4)
           {
-            using f_t = wide<as_floating_point_t<T>, N, x86_256_>;
+            using f_t = wide<as_floating_point_t<T>, N>;
             return bit_cast( if_else( v0, bit_cast(v1,as_<f_t>()), bit_cast(v2,as_<f_t>())), as(v2));
           }
         }
