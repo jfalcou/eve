@@ -30,10 +30,12 @@ namespace eve
 #  if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_ARM_ASIMD)
 #   define EVE_CURRENT_ABI ::eve::arm_128_
 #   define EVE_CURRENT_API ::eve::asimd_
+#   define EVE_ABI_NAMESPACE arm_abi_v0
 #  endif
 #  if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_ARM_NEON)
 #   define EVE_CURRENT_ABI ::eve::arm_128_
 #   define EVE_CURRENT_API ::eve::neon128_
+#   define EVE_ABI_NAMESPACE arm_abi_v0
 #  endif
 # endif
 

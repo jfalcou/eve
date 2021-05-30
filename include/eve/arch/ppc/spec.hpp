@@ -54,11 +54,12 @@ namespace eve
 #  if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_PPC_VMX)
 #   define EVE_CURRENT_ABI ::eve::ppc_
 #   define EVE_CURRENT_API ::eve::vmx_
+#   define EVE_ABI_NAMESPACE ppc_abi_v0
 #  elif !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_PPC_VSX)
 #   define EVE_CURRENT_ABI ::eve::ppc_
 #   define EVE_CURRENT_API ::eve::vsx_
+#   define EVE_ABI_NAMESPACE ppc_abi_v0
 #  endif
 # endif
 
 #endif
-
