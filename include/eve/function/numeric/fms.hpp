@@ -14,10 +14,6 @@
 #  include <eve/module/real/core/function/numeric/simd/x86/fms.hpp>
 #endif
 
-#if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/real/core/function/numeric/simd/ppc/fms.hpp>
-#endif
-
 #if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/module/real/core/function/numeric/simd/arm/neon/fms.hpp>
 #endif
