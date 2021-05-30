@@ -13,3 +13,11 @@
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/real/core/function/pedantic/simd/x86/fnma.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
+#  include <eve/module/real/core/function/pedantic/simd/ppc/fnma.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_ARM_HEADER)
+#  include <eve/module/real/core/function/pedantic/simd/arm/neon/fnma.hpp>
+#endif
