@@ -23,14 +23,14 @@ namespace eve::detail
   {
     if constexpr (std::same_as<T, double> )
     {
-           if constexpr (std::same_as<abi_t<T, N>, x86_512_>) return _mm512_roundscale_pd(a0, _MM_FROUND_TO_ZERO);
-      else if constexpr (std::same_as<abi_t<T, N>, x86_256_>) return _mm256_round_pd     (a0, _MM_FROUND_TO_ZERO);
+           if constexpr (std::same_as<abi_t<T, N>, x86_512_>) return _mm512_roundscale_pd(a0, _MM_FROUND_TO_NEG_INF);
+      else if constexpr (std::same_as<abi_t<T, N>, x86_256_>) return _mm256_round_pd     (a0, _MM_FROUND_TO_NEG_INF);
       else                                                    return _mm_floor_pd        (a0);
     }
     else
     {
-           if constexpr (std::same_as<abi_t<T, N>, x86_512_>) return _mm512_roundscale_ps(a0, _MM_FROUND_TO_ZERO);
-      else if constexpr (std::same_as<abi_t<T, N>, x86_256_>) return _mm256_round_ps     (a0, _MM_FROUND_TO_ZERO);
+           if constexpr (std::same_as<abi_t<T, N>, x86_512_>) return _mm512_roundscale_ps(a0, _MM_FROUND_TO_NEG_INF);
+      else if constexpr (std::same_as<abi_t<T, N>, x86_256_>) return _mm256_round_ps     (a0, _MM_FROUND_TO_NEG_INF);
       else                                                    return _mm_floor_ps        (a0);
     }
   }
