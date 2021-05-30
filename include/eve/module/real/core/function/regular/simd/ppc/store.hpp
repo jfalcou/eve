@@ -14,9 +14,10 @@
 namespace eve::detail
 {
   template< scalar_value T, typename N
-          , simd_compatible_ptr<wide<T, N, ppc_>> Ptr
+          , simd_compatible_ptr<wide<T, N>> Ptr
           >
-  EVE_FORCEINLINE void store_(EVE_SUPPORTS(vmx_), wide<T, N, ppc_> const &value, Ptr ptr) noexcept
+  EVE_FORCEINLINE void store_(EVE_SUPPORTS(vmx_), wide<T, N> const &value, Ptr ptr) noexcept
+    requires ppc_abi<abi_t<T, N>>
   {
     if constexpr( !std::is_pointer_v<Ptr> )
     {
@@ -27,7 +28,7 @@ namespace eve::detail
     {
       if constexpr( current_api == eve::vmx )
       {
-        *((typename wide<T, N, ppc_>::storage_type *)(ptr)) = value;
+        *((typename wide<T, N>::storage_type *)(ptr)) = value;
       }
       else if constexpr( current_api == eve::vsx )
       {
@@ -48,4 +49,3 @@ namespace eve::detail
     }
   }
 }
-

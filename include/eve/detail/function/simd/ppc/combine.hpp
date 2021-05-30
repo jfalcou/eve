@@ -13,7 +13,8 @@ namespace eve::detail
 {
   template<typename T, typename N>
   EVE_FORCEINLINE auto
-  combine(vmx_ const &, wide<T, N, ppc_> const &l, wide<T, N, ppc_> const &h) noexcept
+  combine(vmx_ const &, wide<T, N> const &l, wide<T, N> const &h) noexcept
+    requires ppc_abi<abi_t<T, N>>
   {
     using that_t = wide<T, typename N::combined_type>;
 

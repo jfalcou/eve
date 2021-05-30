@@ -17,7 +17,7 @@
 
 namespace eve::detail
 {
-  template<floating_real_scalar_value T, typename N, typename ABI>
+  template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N> ceil_(EVE_SUPPORTS(sse4_1_), wide<T, N> const &a0) noexcept
     requires x86_abi<abi_t<T, N>>
   {

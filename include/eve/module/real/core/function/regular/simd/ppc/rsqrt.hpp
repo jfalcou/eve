@@ -18,7 +18,8 @@
 namespace eve::detail
 {
   template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, ppc_> rsqrt_(EVE_SUPPORTS(vmx_), wide<T, N, ppc_> const &v0) noexcept
+  EVE_FORCEINLINE wide<T, N> rsqrt_(EVE_SUPPORTS(vmx_), wide<T, N> const &v0) noexcept
+    requires ppc_abi<abi_t<T, N>>
   {
     if constexpr(std::same_as<T, float>)
     {
@@ -42,8 +43,8 @@ namespace eve::detail
     {
       auto refine = [](auto sw0, auto w0)
       {
-        wide<T, N, ppc_> hest = sw0 * half(eve::as(w0));
-        wide<T, N, ppc_> tmp  = vec_nmsub(w0.storage(), sqr(sw0).storage(), one(eve::as(w0)).storage());
+        wide<T, N> hest = sw0 * half(eve::as(w0));
+        wide<T, N> tmp  = vec_nmsub(w0.storage(), sqr(sw0).storage(), one(eve::as(w0)).storage());
         return fma(tmp, hest, sw0);
       };
 
@@ -62,8 +63,9 @@ namespace eve::detail
   }
 
   template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, ppc_>
-                  rsqrt_(EVE_SUPPORTS(vmx_), raw_type const &, wide<T, N, ppc_> const &v0) noexcept
+  EVE_FORCEINLINE wide<T, N>
+  rsqrt_(EVE_SUPPORTS(vmx_), raw_type const &, wide<T, N> const &v0) noexcept
+    requires ppc_abi<abi_t<T, N>>
   {
     if constexpr(std::is_floating_point_v<T>) { return vec_rsqrte(v0.storage()); }
     else
@@ -72,4 +74,3 @@ namespace eve::detail
     }
   }
 }
-
