@@ -15,23 +15,17 @@
 namespace eve::detail
 {
   template<integral_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, x86_128_> sign_(EVE_SUPPORTS(ssse3_)
-                                        , wide<T, N, x86_128_> const &a) noexcept
+  EVE_FORCEINLINE wide<T, N> sign_(EVE_SUPPORTS(ssse3_), wide<T, N> a) noexcept
+    requires x86_abi<abi_t<T, N>>
   {
-    if constexpr(std::is_signed_v<T>)
-    {
-      using t_t = wide<T, N, x86_128_>;
-      if constexpr(sizeof(T) == 1)
-        return t_t(_mm_sign_epi8(one(eve::as(a)), a));
-      else if constexpr(sizeof(T) == 2)
-        return t_t(_mm_sign_epi16(one(eve::as(a)), a));
-      else if constexpr(sizeof(T) == 4)
-        return t_t(_mm_sign_epi32(one(eve::as(a)), a));
-      else if constexpr(sizeof(T) == 8)
-        return map(sign, a);
-    }
-    else
-      return binarize(is_nez(a));
+    constexpr auto c = categorize<wide<T, N>>();
+
+         if constexpr ( current_api >= avx2 && c == category::int32x8   ) return _mm256_sign_epi32(one(eve::as(a)), a);
+    else if constexpr ( current_api >= avx2 && c == category::int16x16  ) return _mm256_sign_epi16(one(eve::as(a)), a);
+    else if constexpr ( current_api >= avx2 && c == category::int8x32   ) return _mm256_sign_epi8 (one(eve::as(a)), a);
+    else if constexpr ( c == category::int32x4                          ) return _mm_sign_epi32   (one(eve::as(a)), a);
+    else if constexpr ( c == category::int16x8                          ) return _mm_sign_epi16   (one(eve::as(a)), a);
+    else if constexpr ( c == category::int8x16                          ) return _mm_sign_epi8    (one(eve::as(a)), a);
+    else                                                                  return sign_(EVE_RETARGET(cpu_), a);
   }
 }
-
