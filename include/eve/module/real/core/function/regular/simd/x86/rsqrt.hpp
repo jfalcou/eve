@@ -81,7 +81,8 @@ namespace eve::detail
   //------------------------------------------------------------------------------------------------
   // Regular 128 bits rsqrt
   template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE auto rsqrt_(EVE_SUPPORTS(sse2_), wide<T, N, x86_128_> const &a0) noexcept
+  EVE_FORCEINLINE auto rsqrt_(EVE_SUPPORTS(sse2_), wide<T, N> const &a0) noexcept
+    requires std::same_as<abi_t<T, N>, x86_128_>
   {
     if constexpr(std::is_same_v<T, double>) return rsqrt_x86_pedantic(a0);
     else return rsqrt_x86(a0);
@@ -90,7 +91,8 @@ namespace eve::detail
   //------------------------------------------------------------------------------------------------
   // Regular 256 bits rsqrt
   template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE auto rsqrt_(EVE_SUPPORTS(avx_), wide<T, N, x86_256_> const &a0) noexcept
+  EVE_FORCEINLINE auto rsqrt_(EVE_SUPPORTS(avx_), wide<T, N> const &a0) noexcept
+    requires std::same_as<abi_t<T, N>, x86_256_>
   {
     if constexpr(std::is_same_v<T, double>) return rsqrt_x86_pedantic(a0);
     else return rsqrt_x86(a0);
@@ -100,8 +102,8 @@ namespace eve::detail
 //------------------------------------------------------------------------------------------------
   // 128 bits raw rsqrt
   template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, x86_128_>
-                  rsqrt_(EVE_SUPPORTS(sse2_), raw_type const &, wide<T, N, x86_128_> const &a0) noexcept
+  EVE_FORCEINLINE wide<T, N> rsqrt_(EVE_SUPPORTS(sse2_), raw_type, wide<T, N> a0) noexcept
+    requires std::same_as<abi_t<T, N>, x86_128_>
   {
     if constexpr(std::is_same_v<T, double>)
     {
@@ -117,8 +119,8 @@ namespace eve::detail
   //------------------------------------------------------------------------------------------------
   // 256 bits raw rsqrt
   template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, x86_256_>
-                  rsqrt_(EVE_SUPPORTS(avx_), raw_type const &, wide<T, N, x86_256_> const &a0) noexcept
+  EVE_FORCEINLINE wide<T, N> rsqrt_(EVE_SUPPORTS(avx_), raw_type, wide<T, N> a0) noexcept
+    requires std::same_as<abi_t<T, N>, x86_256_>
   {
     if constexpr(std::is_same_v<T, double>)
     {
