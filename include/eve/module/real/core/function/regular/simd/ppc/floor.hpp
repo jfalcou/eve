@@ -16,6 +16,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> floor_(EVE_SUPPORTS(vmx_), wide<T, N> const &v0) noexcept
   requires ppc_abi<abi_t<T, N>>
   {
-    return vec_floor(v0.storage());
+    if constexpr(floating_value<T>) return vec_floor(v0.storage());
+    else                            return v0;
   }
 }
