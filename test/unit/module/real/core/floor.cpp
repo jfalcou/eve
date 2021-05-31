@@ -51,6 +51,13 @@ EVE_TEST_TYPES( "Check  with particular values"
               )
 <typename T>(eve::as_<T>)
 {
+  TTS_EQUAL(eve::floor(static_cast<T>(-1.3)), T(-2));
+  TTS_EQUAL(eve::floor(static_cast<T>(-1.5)), T(-2));
+  TTS_EQUAL(eve::floor(static_cast<T>(-1.6)), T(-2));
+  TTS_EQUAL(eve::floor(static_cast<T>(1.3)) , T( 1));
+  TTS_EQUAL(eve::floor(static_cast<T>(1.5)) , T( 1));
+  TTS_EQUAL(eve::floor(static_cast<T>(1.6)) , T( 1));
+
   TTS_EQUAL(eve::tolerant(eve::floor)(static_cast<T>(-1.3)), T(-2));
   TTS_EQUAL(eve::tolerant(eve::floor)(static_cast<T>(-1.5)), T(-2));
   TTS_EQUAL(eve::tolerant(eve::floor)(static_cast<T>(-1.6)), T(-2));
