@@ -44,7 +44,7 @@ namespace eve::detail
   {
     auto ik =  int(b)+maxexponent(eve::as<T>());
     ik <<= nbmantissabits(eve::as<T>());
-    return a*ik;
+    return a*bit_cast(ik,as<T>());
   }
 
   template<floating_real_scalar_value T, integral_simd_value U>
@@ -52,17 +52,11 @@ namespace eve::detail
                                , T const &a
                                , U const &b) noexcept
   {
-    using i_t =  as_integer_t<T>;
+   using i_t =  as_integer_t<T>;
     using w_t =  wide<T,  cardinal_t<U>>;
     auto bb = convert(b, as<i_t>());
     auto ik =  bb + i_t(maxexponent(eve::as<T>()));
     ik <<= nbmantissabits(eve::as<T>());
-//     std::cout << ik << std::endl;
-//     std::cout << std::string(tts::typename_<T>) << std::endl;
-//     std::cout << std::string(tts::typename_<w_t>) << std::endl;
-//     std::cout << std::string(tts::typename_<decltype(ik)>)<< std::endl;
-//     std::cout << "ik " << sizeof(ik) << std::endl;
-//     std::cout << "iw_t " << sizeof(w_t) << std::endl;
     return a*bit_cast(ik, as<w_t>());
   }
 

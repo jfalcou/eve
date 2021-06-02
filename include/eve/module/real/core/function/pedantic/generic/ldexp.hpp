@@ -31,62 +31,168 @@
 
 namespace eve::detail
 {
-  template<floating_real_value T, floating_real_value U>
+
+  template<floating_value T, value U>
   EVE_FORCEINLINE auto ldexp_(EVE_SUPPORTS(cpu_)
                              , pedantic_type const &
                              , T a
                              , U b) noexcept
-  requires(std::same_as<element_type_t<T>, element_type_t<U>>)
   {
-    return pedantic(ldexp)(a, int_(trunc(b)));
+    std::cout << "1p" << std::endl;
+    return ldexp(a, int_(trunc(b)));
   }
 
-  template<floating_real_value T, integral_real_value U>
-  EVE_FORCEINLINE auto ldexp_(EVE_SUPPORTS(cpu_)
-                               , pedantic_type const &
-                               , T a
-                               , U b) noexcept
-  {
-    if constexpr(floating_real_scalar_value<T> && integral_simd_value<U>)
-    {
-      using i_t =  as_integer_t<T>;
-      using w_t =  wide<T,  cardinal_t<U>>;
-      auto bb = convert(b, as<i_t>());
-      w_t aa(a);
-      return pedantic(ldexp)(aa, bb);
-    }
-    else if constexpr(floating_real_simd_value<T> && integral_scalar_value<U>)
-    {
-      using elt_t = element_type_t<T>;
-      using i_t =  as_integer_t<elt_t>;
-      using wi_t = wide<i_t, cardinal_t<T>>;
-      i_t bb = convert(trunc(b), as<i_t>());
-      return pedantic(ldexp)(a, wi_t(bb));
-    }
-    else
-    {
-      if constexpr(has_native_abi_v<T> && has_native_abi_v<U>)
-      {
-        using elt_t = element_type_t<T>;
-        auto denormal =  is_less(b, minexponent(eve::as<elt_t>()));
-        auto f = one(eve::as<T>());
-        if (eve::any(denormal))
-        {
-          if constexpr( eve::platform::supports_denormals)
-          {
-            b = sub[denormal]( b, decltype(b)(minexponent(eve::as<elt_t>())));
-            f = if_else(denormal, smallestposval(eve::as<elt_t>()), eve::one);
-          }
-          auto test = (b == decltype(b)(limitexponent(eve::as<elt_t>())));
-          f = inc[test](f);
-          b = dec[test](b);
-          b += maxexponent(eve::as<elt_t>());
-          b <<=  nbmantissabits(eve::as<elt_t>());
-          return a*bit_cast(b, as(T()))*f;
-        }
-        else return ldexp(a, b);
-      }
-      else  return apply_over(pedantic(ldexp), a, b);
-    }
-  }
-}
+
+
+//   template<floating_real_value T, floating_real_value U>
+//   EVE_FORCEINLINE auto ldexp_(EVE_SUPPORTS(cpu_)
+//                              , pedantic_type const &
+//                              , T a
+//                              , U b) noexcept
+//   requires(std::same_as<element_type_t<T>, element_type_t<U>>)
+//   {
+//     std::cout << "1p" << std::endl;
+//     return pedantic(ldexp)(a, int_(trunc(b)));
+//   }
+
+//   template<floating_real_scalar_value T, integral_scalar_value U>
+//   EVE_FORCEINLINE auto ldexp_(EVE_SUPPORTS(cpu_)
+//                              , pedantic_type const &
+//                              , T const &a
+//                              , U const &b) noexcept
+//   {
+//     std::cout << "2p" << std::endl;
+//     auto ik =  int(b)+maxexponent(eve::as<T>());
+//     ik <<= nbmantissabits(eve::as<T>());
+//     return a*bit_cast(ik,as<T>());
+//   }
+
+//   template<floating_real_scalar_value T, integral_simd_value U>
+//   EVE_FORCEINLINE auto ldexp_(EVE_SUPPORTS(cpu_)
+//                              , pedantic_type const &
+//                              , T const &a
+//                              , U const &b) noexcept
+//   {
+//     std::cout << "3p" << std::endl;
+//     using i_t =  as_integer_t<T>;
+//     using w_t =  wide<T,  cardinal_t<U>>;
+//     auto bb = convert(b, as<i_t>());
+//     auto ik =  bb + i_t(maxexponent(eve::as<T>()));
+//     ik <<= nbmantissabits(eve::as<T>());
+// //     std::cout << ik << std::endl;
+// //     std::cout << std::string(tts::typename_<T>) << std::endl;
+// //     std::cout << std::string(tts::typename_<w_t>) << std::endl;
+// //     std::cout << std::string(tts::typename_<decltype(ik)>)<< std::endl;
+// //     std::cout << "ik " << sizeof(ik) << std::endl;
+// //     std::cout << "iw_t " << sizeof(w_t) << std::endl;
+//     return a*bit_cast(ik, as<w_t>());
+//   }
+
+//   template<floating_real_simd_value T, integral_scalar_value U>
+//   EVE_FORCEINLINE auto ldexp_(EVE_SUPPORTS(cpu_)
+//                              , pedantic_type const &
+//                              , T const &a
+//                              , U const &b) noexcept
+//   {
+//     std::cout << "4p" << std::endl;
+//     using elt_t = element_type_t<T>;
+//     using i_t =  as_integer_t<elt_t>;
+//     i_t bb = convert(trunc(b), as<i_t>());
+//     auto ik =  bb+maxexponent(eve::as<T>());
+//     ik <<= nbmantissabits(eve::as<T>());
+//     return a*bit_cast(ik, as<T>());
+//   }
+
+//   template<floating_real_simd_value T, integral_simd_value U>
+//   EVE_FORCEINLINE auto ldexp_(EVE_SUPPORTS(cpu_)
+//                              , pedantic_type const &
+//                              , T const &a
+//                              , U const &b) noexcept
+//   requires (cardinal_v<T> == cardinal_v<U>)
+//   {
+//     if constexpr(has_native_abi_v<T> && has_native_abi_v<U>)
+//     {
+//       std::cout << "5p" << std::endl;
+//       using elt_t = element_type_t<T>;
+//       auto ik =  b+maxexponent(eve::as<elt_t>());
+//       ik <<= nbmantissabits(eve::as<elt_t>());
+//       return a*bit_cast(ik, as<T>());
+//     }
+//     else
+//     {
+//       return apply_over(ldexp, a, b);
+//     }
+//   }
+ }
+
+
+
+
+
+
+
+
+
+
+
+ //  template<floating_real_scalar_value T, integral_scalar_value U>
+//   EVE_FORCEINLINE auto ldexp_(EVE_SUPPORTS(cpu_)
+//                                , pedantic_type const &
+//                                , T const &a
+//                                , U const &b) noexcept
+//   {
+//     std::cout << "2p" << std::endl;
+//     auto ik =  int(b)+maxexponent(eve::as<T>());
+//     ik <<= nbmantissabits(eve::as<T>());
+//     return a*bit_cast(ik,as<T>());
+//   }
+
+//   template<floating_real_value T, integral_real_value U>
+//   EVE_FORCEINLINE auto ldexp_(EVE_SUPPORTS(cpu_)
+//                                , pedantic_type const &
+//                                , T a
+//                                , U b) noexcept
+//   {
+//     if constexpr(floating_real_scalar_value<T> && integral_simd_value<U>)
+//     {
+//       using i_t =  as_integer_t<T>;
+//       using w_t =  wide<T,  cardinal_t<U>>;
+//       auto bb = convert(b, as<i_t>());
+//       w_t aa(a);
+//       return pedantic(ldexp)(aa, bb);
+//     }
+//     else if constexpr(floating_real_simd_value<T> && integral_scalar_value<U>)
+//     {
+//       using elt_t = element_type_t<T>;
+//       using i_t =  as_integer_t<elt_t>;
+//       using wi_t = wide<i_t, cardinal_t<T>>;
+//       i_t bb = convert(trunc(b), as<i_t>());
+//       return pedantic(ldexp)(a, wi_t(bb));
+//     }
+//     else
+//     {
+//       if constexpr(has_native_abi_v<T> && has_native_abi_v<U>)
+//       {
+//         using elt_t = element_type_t<T>;
+//         auto denormal =  is_less(b, minexponent(eve::as<elt_t>()));
+//         auto f = one(eve::as<T>());
+//         if (eve::any(denormal))
+//         {
+//           if constexpr( eve::platform::supports_denormals)
+//           {
+//             b = sub[denormal]( b, decltype(b)(minexponent(eve::as<elt_t>())));
+//             f = if_else(denormal, smallestposval(eve::as<elt_t>()), eve::one);
+//           }
+//           auto test = (b == decltype(b)(limitexponent(eve::as<elt_t>())));
+//           f = inc[test](f);
+//           b = dec[test](b);
+//           b += maxexponent(eve::as<elt_t>());
+//           b <<=  nbmantissabits(eve::as<elt_t>());
+//           return a*bit_cast(b, as(T()))*f;
+//         }
+//         else return ldexp(a, b);
+//       }
+//       else  return apply_over(pedantic(ldexp), a, b);
+//     }
+//   }
+// }
