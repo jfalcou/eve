@@ -14,28 +14,35 @@
 
 namespace eve::detail
 {
-  template<scalar_value T, integral_scalar_value I, typename N>
+  template<typename T, integral_scalar_value I, typename N>
   EVE_FORCEINLINE auto
   lookup_(EVE_SUPPORTS(cpu_), wide<T, N> const &a, wide<I, N> const &ind) noexcept
   {
-    auto const cond = [&]()
+    if constexpr( is_bundle_v<abi_t<T,N>> )
     {
-      if constexpr( std::is_signed_v<I> ) return ind >= 0;
-      else                                return ind < N::value;
-    }();
+      return wide<T, N>(kumi::map( [=](auto m) { return m[ind]; }, a.storage()));
+    }
+    else
+    {
+      auto const cond = [&]()
+      {
+        if constexpr( std::is_signed_v<I> ) return ind >= 0;
+        else                                return ind < N::value;
+      }();
 
-    // Compute mask as SIMD
-    auto  idx  = cond.bits();
-          idx &= ind;
-    auto  msk  = cond.mask();
+      // Compute mask as SIMD
+      auto  idx  = cond.bits();
+            idx &= ind;
+      auto  msk  = cond.mask();
 
-    // Rebuild as scalar
-    wide<T, N> data;
-    apply<N::value>([&](auto... v) { (data.set(v,a.get(idx.get(v))),...); });
+      // Rebuild as scalar
+      wide<T, N> data;
+      apply<N::value>([&](auto... v) { (data.set(v,a.get(idx.get(v))),...); });
 
-    // Apply mask as SIMD
-    data &= msk;
-    return data;
+      // Apply mask as SIMD
+      data &= msk;
+      return data;
+    }
   }
 
   template<scalar_value T, integral_scalar_value I, typename N>
