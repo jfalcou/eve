@@ -93,7 +93,8 @@ namespace eve::detail
   {
     using elt_t = element_type_t<T>;
     using i_t =  as_integer_t<elt_t>;
-    return pedantic(ldexp)(a, convert(b, as<i_t>()));
+    using wi_t =  wide<i_t, cardinal_t<T>>;
+    return pedantic(ldexp)(a, wi_t(b));
   }
 
   //////////////////////////////////////////////////////////
