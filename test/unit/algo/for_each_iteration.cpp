@@ -104,6 +104,11 @@ namespace
       return std::visit([&](auto elem) -> decltype(auto) { return out << elem; }, x.body);
     }
 
+    std::ptrdiff_t count() const {
+      auto as = eve::as_<eve::wide<int, eve::fixed<4>>>{};
+      return std::visit([&](auto elem) { return elem.count(as); }, body);
+    }
+
   };
 
   using test_res = std::vector<std::pair<std::ptrdiff_t, ignore>>;
@@ -140,7 +145,13 @@ namespace
     test_delegate del{iteration.base, stop_at};
     iteration(del);
     TTS_EQUAL(expected.size(), del.res.size());
-    if (expected.size() != del.res.size()) return;
+    if (expected.size() != del.res.size()) {
+      std::cout << "actual : {" << std::endl;
+      for (auto const& e : del.res) {
+         std::cout << e.first << ' ' << e.second << std::endl;
+      }
+      std::cout << "}" << std::endl;
+    }
 
     for (std::size_t i = 0; i != del.res.size(); ++i) {
       TTS_EQUAL(del.res[i].first,  expected[i].first);
@@ -155,7 +166,7 @@ TTS_CASE("eve.algo for_each_iteration border cases, aligning")
   fixture fix;
 
   auto test = [](auto f, auto l, test_res expected){
-    run_test(eve::algo::traits(eve::algo::unroll<4>), f, l, -1, expected);
+    run_test(eve::algo::traits(), f, l, -1, expected);
   };
 
   // <= wide
@@ -248,4 +259,50 @@ TTS_CASE("eve.algo for_each_iteration border cases, precise")
     test(f + 1, l - 2, {{0, eve::ignore_none}, {4, eve::keep_first(1)}});
     test(f + 2, l - 1, {{0, eve::ignore_none}, {4, eve::keep_first(1)}});
   }
+}
+
+TTS_CASE("eve.algo for_each_iteration unrolling, aligning")
+{
+  fixture fix;
+  auto f = fix.unaligned_begin();
+
+  auto test = [&](auto unroll, test_res expected) {
+    auto l = f + expected.back().first + expected.back().second.count();
+    auto traits = eve::algo::traits(unroll);
+    run_test(traits, f, l, -1, expected);
+  };
+
+  auto pattern_test = [&](auto unroll, test_res pattern) {
+    for (auto up_to = pattern.begin() + 1; up_to != pattern.end(); ++up_to) {
+      test(unroll, {pattern.begin(), up_to});
+    }
+  };
+
+  // no unrolling
+  pattern_test(
+    eve::algo::unroll<1>,
+    {
+      {0, eve::ignore_first(0)},
+      {4, eve::ignore_none},
+      {8, eve::ignore_none},
+      {12, eve::ignore_none},
+      {16, eve::ignore_none},
+      {20, eve::ignore_none},
+    }
+  );
+
+  // unroll 2
+  pattern_test(
+    eve::algo::unroll<2>,
+    {
+      {0, eve::ignore_first(0)},
+      {4, eve::ignore_none},
+      {8, eve::ignore_none},
+      {12, eve::ignore_none},
+      {20, eve::ignore_none},
+      {28, eve::ignore_none},
+      {36, eve::ignore_none},
+      {44, eve::ignore_extrema(0, 2)},
+    }
+  );
 }
