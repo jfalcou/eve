@@ -80,7 +80,7 @@ namespace eve::detail
   {
     using i_t =  as_integer_t<T>;
     using w_t =  wide<T,  cardinal_t<U>>;
-    return pedantic(ldexp)(a, convert(b, as<i_t>()));
+    return pedantic(ldexp)(w_t(a), convert(b, as<i_t>()));
   }
 
   //////////////////////////////////////////////////////////
