@@ -43,7 +43,7 @@ EVE_TEST_TYPES( "Check eve::lookup behavior on product type wide", eve::test::sc
 {
   using s_t = tuple_t<T>;
   using w_t = eve::wide<tuple_t<T>>;
-  using i_t = eve::as_integer_t<eve::wide<T, eve::cardinal_t<w_t>>>;
+  using i_t = eve::wide<eve::as_integer_t<T>, eve::cardinal_t<w_t>>;
 
   i_t indexes{[](auto i, auto c) { return c-i-1; } };
 
@@ -53,7 +53,7 @@ EVE_TEST_TYPES( "Check eve::lookup behavior on product type wide", eve::test::sc
                                           };
                               };
 
-  w_t ref = [&](auto i, auto) { return data.get(indexes.get(i)); };
+  w_t ref = [&data,indexes](auto i, auto) { return data.get(indexes.get(i)); };
 
   TTS_EQUAL(eve::lookup(data, indexes), ref );
   TTS_EQUAL(data[indexes]             , ref );

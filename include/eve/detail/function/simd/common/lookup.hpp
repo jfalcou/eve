@@ -20,7 +20,7 @@ namespace eve::detail
   {
     if constexpr( is_bundle_v<abi_t<T,N>> )
     {
-      return wide<T, N>(kumi::map( [=](auto m) { return m[ind]; }, a.storage()));
+      return wide<T, N>( kumi::map([=]<typename M>(M m){ return m[ind]; }, a.storage()) );
     }
     else
     {
@@ -37,10 +37,8 @@ namespace eve::detail
 
       // Rebuild as scalar
       wide<T, N> data;
-      apply<N::value>([&](auto... v) { (data.set(v,a.get(idx.get(v))),...); });
+      apply<N::value>([&](auto... v) { (data.set(v, cond.get(v) ? a.get(idx.get(v)) : T{0}),...); });
 
-      // Apply mask as SIMD
-      data &= msk;
       return data;
     }
   }
