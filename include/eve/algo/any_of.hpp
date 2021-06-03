@@ -56,7 +56,7 @@ namespace eve::algo
       delegate d{p};
 
       auto [traits, f, l] = preprocess_range(default_to(_traits, default_traits), _f, _l);
-      for_each_iteration(traits, f, l, d);
+      for_each_iteration(traits, f, l)(d);
       return d.res;
     }
 
