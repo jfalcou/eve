@@ -64,30 +64,30 @@ EVE_TEST( "Check behavior of ldexp on wide"
 <typename T>(T a0)
 {
   using eve::ldexp;
-//   TTS_EQUAL( ldexp(a0, 0), a0);
-//   TTS_EQUAL( ldexp(a0, 1), 2*a0);
-//   TTS_EQUAL( ldexp(a0, -1), a0/2);
+  TTS_EQUAL( ldexp(a0, 0), a0);
+  TTS_EQUAL( ldexp(a0, 1), 2*a0);
+  TTS_EQUAL( ldexp(a0, -1), a0/2);
 
   using v_t = eve::element_type_t<T>;
   using i_t = eve::as_integer_t<T, signed>;
   using si_t = eve::as_integer_t<v_t, signed>;
 
-//   TTS_EXPECT(eve::all(eve::is_negative(ldexp(T(-0.0), i_t(0)))));
-//   TTS_EXPECT(eve::all(eve::is_positive(ldexp(T( 0.0), i_t(0)))));
+  TTS_EXPECT(eve::all(eve::is_negative(ldexp(T(-0.0), i_t(0)))));
+  TTS_EXPECT(eve::all(eve::is_positive(ldexp(T( 0.0), i_t(0)))));
 
-//   TTS_EQUAL(ldexp(T( 0 ), i_t(0))  , T( 0) );
-//   TTS_EQUAL(ldexp(T(-0.), i_t(0))  , T( 0) );
-//   TTS_EQUAL(ldexp(T( 0 ), i_t(2))  , T( 0) );
-//   TTS_EQUAL(ldexp(T( 1 ), i_t(2))  , T( 4) );
-//   TTS_EQUAL(ldexp(T( 0 ), si_t(2)) , T( 0) );
-//   TTS_EQUAL(ldexp(T( 1 ), si_t(2)) , T( 4) );
-//   TTS_EQUAL(ldexp(T(-1 ), i_t(2))  , T(-4) );
-//   TTS_EQUAL(ldexp(T(-2 ), i_t(2))  , T(-8) );
-//   TTS_EQUAL(ldexp(T(-1 ), si_t(2)) , T(-4) );
-//   TTS_EQUAL(ldexp(T(-2 ), si_t(2)) , T(-8) );
-//   TTS_EQUAL(ldexp(T(0 ), si_t(0))  , T(0)  );
-//   TTS_EQUAL(ldexp(T(0 ), si_t(1))  , T(0)  );
-//   TTS_EQUAL(ldexp(T(0 ), si_t(1000))  , T(0)  );
+  TTS_EQUAL(ldexp(T( 0 ), i_t(0))  , T( 0) );
+  TTS_EQUAL(ldexp(T(-0.), i_t(0))  , T( 0) );
+  TTS_EQUAL(ldexp(T( 0 ), i_t(2))  , T( 0) );
+  TTS_EQUAL(ldexp(T( 1 ), i_t(2))  , T( 4) );
+  TTS_EQUAL(ldexp(T( 0 ), si_t(2)) , T( 0) );
+  TTS_EQUAL(ldexp(T( 1 ), si_t(2)) , T( 4) );
+  TTS_EQUAL(ldexp(T(-1 ), i_t(2))  , T(-4) );
+  TTS_EQUAL(ldexp(T(-2 ), i_t(2))  , T(-8) );
+  TTS_EQUAL(ldexp(T(-1 ), si_t(2)) , T(-4) );
+  TTS_EQUAL(ldexp(T(-2 ), si_t(2)) , T(-8) );
+  TTS_EQUAL(ldexp(T(0 ), si_t(0))  , T(0)  );
+  TTS_EQUAL(ldexp(T(0 ), si_t(1))  , T(0)  );
+  TTS_EQUAL(ldexp(T(0 ), si_t(1000))  , T(0)  );
 
   TTS_EQUAL((ldexp)(1.0, 0), 1.0);
   TTS_EQUAL((ldexp)(T(1.0), 0), T(1.0));
