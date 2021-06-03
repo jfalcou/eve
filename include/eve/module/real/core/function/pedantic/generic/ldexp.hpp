@@ -53,7 +53,7 @@ namespace eve::detail
     using i_t =  as_integer_t<T>;
     if constexpr(eve::platform::supports_denormals)
     {
-      auto denormal =  b < minexponent(eve::as<T>());
+      auto denormal =  b < static_cast<U>(minexponent(eve::as<T>()));
       if (denormal)
       {
         b = sub[denormal]( b, decltype(b)(minexponent(eve::as<T>())));
