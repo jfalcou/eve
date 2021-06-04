@@ -25,11 +25,11 @@
 namespace eve::detail
 {
   template<floating_real_value T, floating_real_value U>
-  EVE_FORCEINLINE constexpr T trunc_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr auto trunc_(EVE_SUPPORTS(cpu_)
                                     , tolerant_type const &
                                     , T const &a0
                                     , U const &n) noexcept
-  -> decltype(arithmetic_call(rem, a0, n))
+  -> decltype(arithmetic_call(tolerant(trunc), a0, n))
   {
     return arithmetic_call(tolerant(trunc), a0, n);
   }

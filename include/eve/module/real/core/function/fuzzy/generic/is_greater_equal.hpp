@@ -27,19 +27,9 @@ namespace eve::detail
                                 , almost_type const &
                                 , T const &a
                                 , U const &b) noexcept
-  requires compatible_values<T, U>
+  -> decltype(arithmetic_call(almost(is_greater_equal), a, b, 3*eps(as(a))))
   {
     return arithmetic_call(almost(is_greater_equal), a, b, 3*eps(as(a)));
-  }
-
-  template<floating_real_value T, floating_real_value U>
-  EVE_FORCEINLINE auto is_greater_equal_(EVE_SUPPORTS(cpu_)
-                                , almost_type const &
-                                , logical<T> const &a
-                                , logical<U> const &b) noexcept
-  requires compatible_values<T, U>
-  {
-    return arithmetic_call(is_greater_equal, a, b);
   }
 
   template<floating_real_value T, floating_real_value U, real_value V>
