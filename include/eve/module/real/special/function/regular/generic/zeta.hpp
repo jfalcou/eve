@@ -38,7 +38,7 @@ namespace eve::detail
   EVE_FORCEINLINE T zeta_(EVE_SUPPORTS(cpu_)
                               , T x
                               , U y) noexcept
-  requires compatible_values<T, U>
+  -> decltype(arithmetic_call(zeta, x, y))
   {
     return arithmetic_call(zeta, x, y);
   }

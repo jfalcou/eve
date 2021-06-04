@@ -20,7 +20,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto is_ordered_(EVE_SUPPORTS(cpu_)
                                             , T const &a
                                             , U const &b) noexcept
-  requires compatible_values<T, U>
+  -> decltype(arithmetic_call(is_ordered, a, b))
   {
     return arithmetic_call(is_ordered, a, b);
   }

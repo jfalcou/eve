@@ -27,7 +27,7 @@ namespace eve::detail
   EVE_FORCEINLINE  auto nb_values_(EVE_SUPPORTS(cpu_)
                             , T const &a
                             , U const &b) noexcept
-  requires std::same_as<element_type_t<U>, element_type_t<T>>
+  -> decltype(arithmetic_call(nb_values, a, b))
   {
 
     return arithmetic_call(nb_values, a, b);
@@ -56,4 +56,3 @@ namespace eve::detail
     }
   }
 }
-

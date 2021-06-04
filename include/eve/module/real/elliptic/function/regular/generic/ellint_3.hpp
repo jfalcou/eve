@@ -48,6 +48,7 @@ namespace eve::detail
                              , U n
                              , T phi
                              , V k) noexcept
+  -> decltype(arithmetic_call(ellint3, n, phi, k))
   {
     return arithmetic_call(ellint_3_, n, phi, k);
   }
