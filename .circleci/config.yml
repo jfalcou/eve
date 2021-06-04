@@ -119,7 +119,7 @@ workflows:
     ## X86 - 512 bits
     ##==============================================================================================
       - x86_gcc_avx512:
-          tool:     "../cmake/toolchain/clang.x86.cmake"
+          tool:     "../cmake/toolchain/gcc.x86.cmake"
           options:  "-march=skylake-avx512"
           filters:
             branches:

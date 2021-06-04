@@ -34,6 +34,7 @@ TTS_CASE_TPL("Check eve::double_factorial behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::double_factorial(T(181))    , r_t(boost::math::double_factorial<double>( 181)), 1.0);
   if constexpr(sizeof(eve::element_type_t<T>) > 1)
   {
+    TTS_ULP_EQUAL(eve::double_factorial(T(300))    , r_t(boost::math::double_factorial<double>( 300)), 1.0);
     TTS_ULP_EQUAL(eve::double_factorial(T(301))    , eve::inf(eve::as<r_t>()), 0);
     TTS_ULP_EQUAL(eve::double_factorial(T(302))    , eve::inf(eve::as<r_t>()), 0);
   }

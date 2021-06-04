@@ -49,7 +49,7 @@ namespace eve::detail
           {
             constexpr double invsqrtpi = 0.564189583547756286948079451560772585844050629329;
             auto r1 = tgamma(fma(float64(i), 0.5, 1.0))* invsqrtpi;
-            return if_else(test,  r, pedantic(ldexp)(r1, inc(i) >> 1));
+            return if_else(test,  r, ldexp(r1, inc(i) >> 1));
           }
         };
 
