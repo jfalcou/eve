@@ -19,7 +19,7 @@ namespace eve
   {
     // Note: this traits is customizable for other types we may need later on (complex,etc...)
     template<typename T, typename U>
-    struct  has_no_loss_convertion
+    struct  has_no_loss_conversion
           : std::bool_constant<!(std::is_floating_point_v<T> && std::is_integral_v<U>)>
     {};
 
@@ -31,7 +31,7 @@ namespace eve
       if constexpr( is_wide<Dest>::value )
       {
         using type = element_type_t<Dest>;
-        bool found[] = { has_no_loss_convertion<Ts,type>::value... };
+        bool found[] = { has_no_loss_conversion<Ts,type>::value... };
 
         for(auto f : found)
           if(!f) return false;

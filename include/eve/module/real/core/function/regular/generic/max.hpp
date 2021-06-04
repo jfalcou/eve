@@ -23,7 +23,7 @@ namespace eve::detail
   EVE_FORCEINLINE  auto max_(EVE_SUPPORTS(cpu_)
                             , T const &a
                             , U const &b) noexcept
-  requires compatible_values<T, U>
+  -> decltype(arithmetic_call(max, a, b))
   {
     return arithmetic_call(max, a, b);
   }

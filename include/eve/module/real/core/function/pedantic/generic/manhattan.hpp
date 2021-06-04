@@ -21,7 +21,7 @@ namespace eve::detail
                             , pedantic_type const &
                             , T const &a
                             , U const &b) noexcept
-  requires compatible_values<T, U>
+  -> decltype(arithmetic_call(manhattan, a, b))
   {
     return arithmetic_call(pedantic(manhattan), a, b);
   }

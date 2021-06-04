@@ -22,7 +22,7 @@ namespace eve::detail
                                   , T const &a
                                   , U const &b
                                   , V const &c) noexcept
-  requires compatible_values<T,U> && compatible_values<T,V>
+  -> decltype(arithmetic_call(clamp, a, b, c))
   {
     return arithmetic_call(clamp, a, b, c);
   }
@@ -37,4 +37,3 @@ namespace eve::detail
     return eve::min(eve::max(a, b), c);
   }
 }
-

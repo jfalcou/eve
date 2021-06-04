@@ -29,11 +29,11 @@
 namespace eve::detail
 {
   template<floating_real_value T, floating_real_value U>
-  EVE_FORCEINLINE constexpr T floor_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr auto floor_(EVE_SUPPORTS(cpu_)
                                     , tolerant_type const &
                                     , T const &a0
                                     , U const &n) noexcept
-  requires compatible_values<T, U>
+  -> decltype( arithmetic_call(tolerant(floor), a0, n))
   {
     return arithmetic_call(tolerant(floor), a0, n);
   }

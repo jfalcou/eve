@@ -20,6 +20,7 @@
 #include <eve/platform.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
+#include <eve/concept/properly_convertible.hpp>
 #include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
@@ -29,7 +30,7 @@ namespace eve::detail
                             pedantic_type const &,
                             T const &v0,
                             U const &v1) noexcept
-  requires compatible_values<T, U>
+  requires properly_convertible<U, T>
   {
     return arithmetic_call(pedantic(min), v0, v1);
   }

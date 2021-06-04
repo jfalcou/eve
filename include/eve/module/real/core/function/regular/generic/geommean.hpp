@@ -28,7 +28,7 @@ namespace eve::detail
   EVE_FORCEINLINE  auto geommean_(EVE_SUPPORTS(cpu_)
                             , T a
                             , U b) noexcept
-  requires compatible_values<T, U>
+  -> decltype(arithmetic_call(geommean, a, b))
   {
     return arithmetic_call(geommean, a, b);
   }

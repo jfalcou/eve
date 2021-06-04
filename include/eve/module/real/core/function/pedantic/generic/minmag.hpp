@@ -27,7 +27,7 @@ namespace eve::detail
   template<real_value T, real_value U>
   EVE_FORCEINLINE auto minmag_(EVE_SUPPORTS(cpu_), pedantic_type const &
                               , T const &a, U const &b) noexcept
-  requires compatible_values<T, U>
+   -> decltype(arithmetic_call(minmag, a, b))
   {
     return arithmetic_call(pedantic(minmag), a, b);
   }

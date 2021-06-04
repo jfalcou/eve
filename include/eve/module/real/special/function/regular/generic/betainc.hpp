@@ -31,7 +31,7 @@ namespace eve::detail
                               , T x
                               , U a
                               , V b ) noexcept
-  requires compatible_values<T, U>
+  -> decltype(arithmetic_call(betainc, x, a, b))
   {
     return arithmetic_call(betainc, x, a, b);
   }

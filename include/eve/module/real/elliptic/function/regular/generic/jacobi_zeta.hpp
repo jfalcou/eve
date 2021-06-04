@@ -27,7 +27,7 @@ namespace eve::detail
   EVE_FORCEINLINE T jacobi_zeta_(EVE_SUPPORTS(cpu_)
                               , T phi
                               , U k) noexcept
-  requires compatible_values<T, U>
+  -> decltype(arithmetic_call(jacobi_zeta, phi, k))
   {
     return arithmetic_call(jacobi_zeta, phi, k);
   }

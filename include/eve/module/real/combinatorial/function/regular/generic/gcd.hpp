@@ -31,7 +31,7 @@ namespace eve::detail
 {
   template<value T, value U>
   EVE_FORCEINLINE auto gcd_(EVE_SUPPORTS(cpu_), T a, U b) noexcept
-  requires compatible_values<T, U>
+  -> decltype(arithmetic_call(gcd, a, b))
   {
     return arithmetic_call(gcd, a, b);
   }

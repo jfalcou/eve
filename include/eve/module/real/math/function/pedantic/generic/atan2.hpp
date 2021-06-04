@@ -34,10 +34,10 @@ namespace eve::detail
 {
   template<floating_value T, floating_value U>
   EVE_FORCEINLINE  auto atan2_(EVE_SUPPORTS(cpu_)
-                            , pedantic_type const &
-                            , T const &a
-                            , U const &b) noexcept
-  requires compatible_values<T, U>
+                              , pedantic_type const &
+                              , T const &a
+                              , U const &b) noexcept
+    -> decltype(arithmetic_call(pedantic(atan2), a, b)) 
   {
     return arithmetic_call(pedantic(atan2), a, b);
   }

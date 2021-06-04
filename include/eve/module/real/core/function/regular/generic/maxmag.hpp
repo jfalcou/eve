@@ -25,7 +25,7 @@ namespace eve::detail
 {
   template<real_value T, real_value U>
   EVE_FORCEINLINE auto maxmag_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-      requires compatible_values<T, U>
+  -> decltype(arithmetic_call(maxmag, a, b))
   {
     return arithmetic_call(maxmag, a, b);
   }

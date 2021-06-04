@@ -37,7 +37,7 @@ namespace eve::detail
   EVE_FORCEINLINE  auto expx2_(EVE_SUPPORTS(cpu_)
                               , T const &a
                               , U const &b) noexcept
-  requires compatible_values<T, U>
+  -> decltype( arithmetic_call(expx2, a, b))
   {
     return arithmetic_call(expx2, a, b);
   }

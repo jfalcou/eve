@@ -17,7 +17,7 @@ namespace eve::detail
   EVE_FORCEINLINE  auto lbeta_(EVE_SUPPORTS(cpu_)
                              , T a
                              , U b) noexcept
-  requires compatible_values<T, U>
+  -> decltype(arithmetic_call(lbeta, a, b))
   {
     return arithmetic_call(lbeta, a, b);
   }

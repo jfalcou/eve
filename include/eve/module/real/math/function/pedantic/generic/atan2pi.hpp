@@ -20,6 +20,7 @@ namespace eve::detail
   template<floating_real_value T, floating_real_value U>
   EVE_FORCEINLINE auto
   atan2pi_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const &a, U const &b) noexcept
+    -> decltype(arithmetic_call(pedantic(atan2pi), a, b)) 
   {
     return arithmetic_call(pedantic(atan2pi), a, b);
   }

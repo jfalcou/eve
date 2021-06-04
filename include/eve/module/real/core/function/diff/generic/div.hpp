@@ -19,9 +19,9 @@ namespace eve::detail
   template<int N, real_value T, real_value U>
   EVE_FORCEINLINE auto
   div_(EVE_SUPPORTS(cpu_), diff_type<N> const &, T const &a, U const &b) noexcept
-      requires compatible_values<T, U>
+  -> decltype( arithmetic_call(diff_type<N>{}(div), a, b))
   {
-    return arithmetic_call(saturated(div), a, b);
+    return arithmetic_call(diff_type<N>{}(div), a, b);
   }
 
   template<floating_real_value T>

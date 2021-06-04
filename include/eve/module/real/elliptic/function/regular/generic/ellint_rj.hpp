@@ -40,7 +40,7 @@ namespace eve::detail
                               , U y
                               , V z
                               , W p) noexcept
-  requires compatible_values<T, U> &&  compatible_values<V, U> &&  compatible_values<V, W>
+  -> decltype(arithmetic_call(llint_rj, x, y, z, p))
   {
     return arithmetic_call(ellint_rj, x, y, z, p);
   }

@@ -22,7 +22,7 @@ namespace eve::detail
   EVE_FORCEINLINE  auto negate_(EVE_SUPPORTS(cpu_)
                             , T const &a
                             , U const &b) noexcept
-  requires std::same_as<element_type_t<T>, element_type_t<U>>
+  -> decltype(arithmetic_call(negate, a, b))
   {
     return arithmetic_call(negate, a, b);
   }
@@ -37,4 +37,3 @@ namespace eve::detail
     else { return if_else(is_nez(b), a, eve::zero);}
   }
 }
-

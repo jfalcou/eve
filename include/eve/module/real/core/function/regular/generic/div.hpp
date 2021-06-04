@@ -37,7 +37,7 @@ namespace eve::detail
 {
   template<real_value T, real_value U, decorator D>
   EVE_FORCEINLINE auto div_(EVE_SUPPORTS(cpu_), D const &, T const &a, U const &b) noexcept
-      requires compatible_values<T, U>
+  -> decltype( arithmetic_call(div, a, b))
   {
     return arithmetic_call(D()(div), a, b);
   }

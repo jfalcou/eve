@@ -20,7 +20,7 @@ namespace eve::detail
                             , T const &a
                             , U const &b
                             , V const &c) noexcept
-  requires compatible_values<T, U>&&compatible_values<T, V>
+  -> decltype(arithmetic_call(diff_type<N>()(clamp), a, b, c))
   {
     return arithmetic_call(diff_type<N>()(clamp), a, b, c);
   }

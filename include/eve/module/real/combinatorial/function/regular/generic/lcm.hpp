@@ -24,7 +24,7 @@ namespace eve::detail
   // regular case
   template<integral_real_value T, integral_real_value U>
   EVE_FORCEINLINE auto lcm_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-      requires compatible_values<T, U>
+  -> decltype(arithmetic_call(lcm, a, b))
   {
     return arithmetic_call(lcm, a, b);
   }

@@ -43,7 +43,7 @@ namespace eve::detail
   template<real_value T, real_value U>
   EVE_FORCEINLINE auto
   add_(EVE_SUPPORTS(cpu_), saturated_type const &, T const &a, U const &b) noexcept
-      requires compatible_values<T, U>
+    -> decltype(arithmetic_call(saturated(add), a, b))
   {
     return arithmetic_call(saturated(add), a, b);
   }
