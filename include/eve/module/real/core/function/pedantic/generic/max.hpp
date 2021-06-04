@@ -31,7 +31,7 @@ namespace eve::detail
                             pedantic_type const &,
                             T const &v0,
                             U const &v1) noexcept
-  requires properly_convertible<U, T>
+  requires compatible<U, T>
   {
     return arithmetic_call(pedantic(max), v0, v1);
   }

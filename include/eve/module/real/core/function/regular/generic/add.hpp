@@ -19,7 +19,7 @@ namespace eve::detail
   //================================================================================================
   template<conditional_expr C, real_value U, real_value V>
   EVE_FORCEINLINE auto add_(EVE_SUPPORTS(cpu_), C const &cond, U const &t, V const &f) noexcept
-      requires compatible_values<U, V>
+      requires compatible<U,V>
   {
     return mask_op(  cond, eve::add, t, f);
   }
@@ -28,17 +28,17 @@ namespace eve::detail
   //N parameters
   //================================================================================================
   template<decorator D, real_value T0, real_value ...Ts>
-  auto add_(EVE_SUPPORTS(cpu_), D const &, T0 a0, Ts... args)
-    requires (compatible_values<T0, Ts> && ...)
+  common_compatible_t<T0,Ts...> add_(EVE_SUPPORTS(cpu_), D const& , T0 a0, Ts... args)
+  requires compatible<T0, Ts...>
   {
+    auto call = D{}(add);
     common_compatible_t<T0,Ts...> that(a0);
-    ((that = D()(add)(that,args)),...);
+    ((that = call(that, args)),...);
     return that;
   }
 
   template<real_value T0, real_value ...Ts>
-  auto add_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args)
-    requires (compatible_values<T0, Ts> && ...)
+  auto add_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args) requires compatible<T0, Ts...>
   {
     common_compatible_t<T0,Ts...> that(a0);
     ((that = add(that,args)),...);
