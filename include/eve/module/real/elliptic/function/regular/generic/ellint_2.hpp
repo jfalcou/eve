@@ -58,7 +58,7 @@ namespace eve::detail
   EVE_FORCEINLINE T ellint_2_(EVE_SUPPORTS(cpu_)
                              , T phi
                              , U x) noexcept
-  -> decltype(arithmetic_call(llint_2, phi, x))
+  -> decltype(arithmetic_call(ellint_2, phi, x))
   {
     return arithmetic_call(ellint_2_, phi, x);
   }

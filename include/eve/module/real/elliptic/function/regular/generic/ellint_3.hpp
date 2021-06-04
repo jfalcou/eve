@@ -58,7 +58,7 @@ namespace eve::detail
                               , T v
                               , T phi
                               , T k) noexcept
-  -> decltype(arithmetic_call(llint_3, v, phi, k))
+  -> decltype(arithmetic_call(ellint_3, v, phi, k, oneminus(v)))
   {
     return ellint_3(v, phi, k, oneminus(v));
   }
