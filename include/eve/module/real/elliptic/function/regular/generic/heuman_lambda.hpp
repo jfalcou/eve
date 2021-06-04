@@ -26,10 +26,8 @@
 namespace eve::detail
 {
   template<floating_real_value T, floating_real_value U>
-  EVE_FORCEINLINE T heuman_lambda_(EVE_SUPPORTS(cpu_)
-                              , T phi
-                              , U k) noexcept
-  -> decltype(arithmetic_call(heuman_lambda, phi, k))
+  EVE_FORCEINLINE auto heuman_lambda_(EVE_SUPPORTS(cpu_), T phi, U k) noexcept
+                  -> decltype(arithmetic_call(heuman_lambda, phi, k))
   {
     return arithmetic_call(heuman_lambda, phi, k);
   }

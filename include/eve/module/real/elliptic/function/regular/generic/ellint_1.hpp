@@ -61,10 +61,8 @@ namespace eve::detail
   }
 
   template<floating_real_value T, floating_real_value U>
-  EVE_FORCEINLINE T ellint_1_(EVE_SUPPORTS(cpu_)
-                             , T phi
-                             , U x) noexcept
-  -> decltype(arithmetic_call(ellint_1, phi, x))
+  EVE_FORCEINLINE auto ellint_1_(EVE_SUPPORTS(cpu_), T phi, U x) noexcept
+                  -> decltype(arithmetic_call(ellint_1_, phi, x))
   {
     return arithmetic_call(ellint_1_, phi, x);
   }

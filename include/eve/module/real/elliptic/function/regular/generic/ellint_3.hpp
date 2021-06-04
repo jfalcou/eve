@@ -44,21 +44,15 @@
 namespace eve::detail
 {
   template<floating_real_value T, floating_real_value U, floating_real_value V>
-  EVE_FORCEINLINE T ellint_3_(EVE_SUPPORTS(cpu_)
-                             , U n
-                             , T phi
-                             , V k) noexcept
-  -> decltype(arithmetic_call(ellint3, n, phi, k))
+  EVE_FORCEINLINE   auto ellint_3_(EVE_SUPPORTS(cpu_), U n, T phi, V k) noexcept
+                ->  decltype(arithmetic_call(ellint_3, n, phi, k))
   {
-    return arithmetic_call(ellint_3_, n, phi, k);
+    return arithmetic_call(ellint_3, n, phi, k);
   }
 
  template<floating_real_value T>
-  EVE_FORCEINLINE T ellint_3_(EVE_SUPPORTS(cpu_)
-                              , T v
-                              , T phi
-                              , T k) noexcept
-  -> decltype(arithmetic_call(ellint_3, v, phi, k, oneminus(v)))
+  EVE_FORCEINLINE   auto ellint_3_(EVE_SUPPORTS(cpu_), T v, T phi, T k) noexcept
+                ->  decltype(ellint_3(v, phi, k, oneminus(v)))
   {
     return ellint_3(v, phi, k, oneminus(v));
   }

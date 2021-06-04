@@ -24,10 +24,8 @@
 namespace eve::detail
 {
   template<floating_real_value T, floating_real_value U>
-  EVE_FORCEINLINE T jacobi_zeta_(EVE_SUPPORTS(cpu_)
-                              , T phi
-                              , U k) noexcept
-  -> decltype(arithmetic_call(jacobi_zeta, phi, k))
+  EVE_FORCEINLINE auto jacobi_zeta_(EVE_SUPPORTS(cpu_), T phi, U k) noexcept
+                  -> decltype(arithmetic_call(jacobi_zeta, phi, k))
   {
     return arithmetic_call(jacobi_zeta, phi, k);
   }
