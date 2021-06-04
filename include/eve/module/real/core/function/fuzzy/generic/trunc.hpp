@@ -29,7 +29,7 @@ namespace eve::detail
                                     , tolerant_type const &
                                     , T const &a0
                                     , U const &n) noexcept
-  requires compatible_values<T, U>
+  -> decltype(arithmetic_call(rem, a0, n))
   {
     return arithmetic_call(tolerant(trunc), a0, n);
   }

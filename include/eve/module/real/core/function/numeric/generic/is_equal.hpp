@@ -26,7 +26,7 @@ namespace eve::detail
                                 , numeric_type const &
                                 , T const &a
                                 , U const &b) noexcept
-  requires compatible_values<T, U>
+  -> decltype(arithmetic_call(is_equal, a, b))
   {
     return arithmetic_call(numeric(is_equal), a, b);
   }
