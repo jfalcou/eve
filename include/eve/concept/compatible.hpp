@@ -8,11 +8,13 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
+#include <eve/concept/properly_convertible.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/forward.hpp>
 
 namespace eve
 {
+  // TO REMOVE LATER
   template<typename T, typename U>
   concept element_compatible_to = scalar_value<T>
                                && simd_value<U>
@@ -33,7 +35,6 @@ namespace eve
                                || element_bit_compatible_to<T, U>
                                || element_bit_compatible_to<U, T>;
 
-
   template<typename T, typename U>
   concept size_compatible_to = scalar_value<T>
                             || std::same_as<cardinal_t<T>, cardinal_t<U>>;
@@ -52,7 +53,4 @@ namespace eve
 
   template<typename I, typename T>
   concept index_compatible_values = integral_value<I> && floating_value<T> && size_compatible_values<I, T>;
-
-
-
 }

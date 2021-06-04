@@ -117,10 +117,4 @@ namespace eve
 
   template < typename... Ts> using common_compatible_floating_elt_t =
     element_type_t<common_compatible_floating_t<Ts...>>;
-
-  template<typename... Ts>
-  concept compatible = requires(Ts...)
-  {
-    typename eve::common_compatible<Ts...>::type;
-  };
 }

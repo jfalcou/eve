@@ -31,7 +31,7 @@ namespace eve
       if constexpr( is_wide<Dest>::value )
       {
         using type = element_type_t<Dest>;
-        bool found[] = { has_no_loss_conversion<Ts,type>::value... };
+        bool found[] = { has_no_loss_conversion<element_type_t<Ts>,type>::value... };
 
         for(auto f : found)
           if(!f) return false;
@@ -42,6 +42,6 @@ namespace eve
   }
 
   template<typename... Ts>
-  concept properly_convertible
+  concept compatible
         = detail::is_properly_convertible<common_compatible_t<Ts...>>( detail::types<Ts...>{} );
 }
