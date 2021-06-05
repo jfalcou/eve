@@ -100,7 +100,7 @@ namespace eve
       return 0ULL;
     }
 
-    constexpr auto friend operator<=>(ignore_all_ const&, ignore_all_ const&) = default;
+    constexpr bool friend operator==(ignore_all_ const&, ignore_all_ const&) = default;
 
     friend std::ostream& operator<<(std::ostream& os, ignore_all_ const&)
     {
@@ -139,7 +139,7 @@ namespace eve
       return cardinal_v<T>;
     }
 
-    constexpr auto friend operator<=>(ignore_none_ const&, ignore_none_ const&) = default;
+    constexpr bool friend operator==(ignore_none_ const&, ignore_none_ const&) = default;
 
     friend std::ostream& operator<<(std::ostream& os, ignore_none_ const&)
     {
@@ -184,7 +184,7 @@ namespace eve
       }
     }
 
-    constexpr auto friend operator<=>(keep_first const&, keep_first const&) = default;
+    constexpr bool friend operator==(keep_first const&, keep_first const&) = default;
 
     friend std::ostream& operator<<(std::ostream& os, keep_first const& c)
     {
@@ -228,7 +228,7 @@ namespace eve
       return keep_first{card-count_}.mask(tgt);
     }
 
-    constexpr auto friend operator<=>(ignore_last const&, ignore_last const&) = default;
+    constexpr bool friend operator==(ignore_last const&, ignore_last const&) = default;
 
     friend std::ostream& operator<<(std::ostream& os, ignore_last const& c)
     {
@@ -292,7 +292,7 @@ namespace eve
       }
     }
 
-    constexpr auto friend operator<=>(keep_last const&, keep_last const&) = default;
+    constexpr bool friend operator==(keep_last const&, keep_last const&) = default;
 
     friend std::ostream& operator<<(std::ostream& os, keep_last const& c)
     {
@@ -351,7 +351,7 @@ namespace eve
       return cardinal_v<T> - count_;
     }
 
-    constexpr auto friend operator<=>(ignore_first const&, ignore_first const&) = default;
+    constexpr bool friend operator==(ignore_first const&, ignore_first const&) = default;
 
     friend std::ostream& operator<<(std::ostream& os, ignore_first const& c)
     {
@@ -417,7 +417,7 @@ namespace eve
       return end_ - begin_;
     }
 
-    constexpr auto friend operator<=>(keep_between const&, keep_between const&) = default;
+    constexpr bool friend operator==(keep_between const&, keep_between const&) = default;
 
     friend std::ostream& operator<<(std::ostream& os, keep_between const& c)
     {
@@ -466,7 +466,7 @@ namespace eve
       return cardinal_v<T> - last_count_ - first_count_;
     }
 
-    constexpr auto friend operator<=>(ignore_extrema const&, ignore_extrema const&) = default;
+    constexpr bool friend operator==(ignore_extrema const&, ignore_extrema const&) = default;
 
     friend std::ostream& operator<<(std::ostream& os, ignore_extrema const& c)
     {
