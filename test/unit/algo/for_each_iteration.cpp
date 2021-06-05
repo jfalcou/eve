@@ -172,6 +172,9 @@ TTS_CASE("eve.algo for_each_iteration border cases, aligning")
 
   auto test = [](auto f, auto l, test_res expected){
     run_test(eve::algo::traits(), f, l, -1, expected);
+
+    if (expected.size() > 1) expected.pop_back();
+    run_test(eve::algo::traits(), f, l, 0, expected);
   };
 
   // <= wide
@@ -214,14 +217,18 @@ TTS_CASE("eve.algo for_each_iteration border cases, precise")
 {
   fixture fix;
 
-  auto test = [](auto f, auto l, test_res expected){
-    auto traits = eve::algo::traits(eve::algo::no_aligning, eve::algo::unroll<4>);
-    run_test(traits, f, l, -1, expected);
+  auto one_test = [](auto traits, auto f, auto l, test_res expected) {
+     run_test(traits, f, l, -1, expected);
+     if (expected.size() > 1) expected.pop_back();
+     run_test(traits, f, l, 0, expected);
+  };
+
+  auto test = [&](auto f, auto l, test_res expected){
+    one_test(eve::algo::traits(eve::algo::no_aligning), f, l, expected);
 
     if ((f - l) % 4 == 0) {
-      run_test(eve::algo::default_to(
-        traits, eve::algo::traits(eve::algo::divisible_by_cardinal)),
-        f, l, -1, expected);
+      auto traits = eve::algo::traits(eve::algo::no_aligning, eve::algo::divisible_by_cardinal);
+      one_test(traits, f, l, expected);
     }
   };
 
