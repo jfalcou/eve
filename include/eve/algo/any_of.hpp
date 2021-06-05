@@ -9,7 +9,7 @@
 
 #include <eve/algo/array_utils.hpp>
 #include <eve/algo/for_each_iteration.hpp>
-#include <eve/algo/preprocess_range.hpp>
+#include <eve/algo/one_range_algorithm_adapter.hpp>
 #include <eve/algo/traits.hpp>
 
 #include <eve/function/any.hpp>
@@ -19,9 +19,12 @@
 
 namespace eve::algo
 {
-  struct any_of_
+  struct any_of_ : one_range_algorithm_adapter<any_of_>
   {
-    static constexpr traits default_traits{unroll<4>};
+    static constexpr auto default_traits()
+    {
+      return algo::traits(algo::unroll<4>);
+    };
 
     template <typename P>
     struct delegate
@@ -48,22 +51,14 @@ namespace eve::algo
       bool res = false;
     };
 
-    template <typename Traits, typename I, typename S, typename P>
-    EVE_FORCEINLINE bool operator()(Traits _traits, I _f, S _l, P p) const
+    template <instance_of<algo::traits> Traits, iterator I, sentinel_for<I> S, typename P>
+    EVE_FORCEINLINE bool impl(Traits traits, I f, S l, P p) const
     {
-      delegate d{p};
-
-      auto [traits, f, l] = preprocess_range(default_to(_traits, default_traits), _f, _l);
       if (f == l) return false;
-      for_each_iteration(traits, f, l)(d);
+
+      delegate d{p};
+      algo::for_each_iteration(traits, f, l)(d);
       return d.res;
     }
-
-    template <typename I, typename S, typename P>
-    EVE_FORCEINLINE bool operator()(I f, S l, P p) const
-    {
-      return operator()(default_traits, f, l, p);
-    }
-
   } inline constexpr any_of;
 }

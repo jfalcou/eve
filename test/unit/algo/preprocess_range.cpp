@@ -22,7 +22,7 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
   using e_t = eve::element_type_t<T>;
   using N = eve::fixed<eve::expected_cardinal_v<e_t>>;
 
-  alignas(sizeof(eve::wide<e_t, N>)) std::array<e_t, T::size()> arr{};
+  alignas(sizeof(eve::wide<e_t, N>)) std::array<e_t, N{}()> arr{};
 
   std::vector<e_t> vec(100u, 0);
 
@@ -76,6 +76,32 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
     TTS_EQUAL((void*)l.ptr, (void*)arr.end());
 
     auto [traits1, f1, l1] = eve::algo::preprocess_range(eve::algo::traits(eve::algo::unroll<2>), eve::aligned_ptr<const e_t>{arr.cbegin()}, arr.cbegin());
+    TTS_EQUAL(f1, l1);
+  }
+
+  // two aligned_pointers
+  {
+    auto [traits, f, l] = eve::algo::preprocess_range(eve::algo::traits(eve::algo::unroll<2>), eve::aligned_ptr<e_t>{arr.begin()}, eve::aligned_ptr<e_t>{arr.end()});
+    TTS_TYPE_IS(decltype(traits), decltype(eve::algo::traits(eve::algo::unroll<2>, eve::algo::divisible_by_cardinal, eve::algo::no_aligning)));
+    TTS_TYPE_IS(decltype(f), (eve::algo::aligned_ptr_iterator<e_t, N>));
+    TTS_TYPE_IS(decltype(l), (eve::algo::aligned_ptr_iterator<e_t, N>));
+    TTS_EQUAL((void*)f.ptr.get(), (void*)arr.begin());
+    TTS_EQUAL((void*)l.ptr.get(), (void*)arr.end());
+
+    auto [traits1, f1, l1] = eve::algo::preprocess_range(eve::algo::traits(eve::algo::unroll<2>), eve::aligned_ptr<e_t>{arr.begin()}, eve::aligned_ptr<e_t>{arr.begin()});
+    TTS_EQUAL(f1, l1);
+  }
+
+  // two const aligned_pointer
+  {
+    auto [traits, f, l] = eve::algo::preprocess_range(eve::algo::traits(eve::algo::unroll<2>), eve::aligned_ptr<const e_t>{arr.cbegin()}, eve::aligned_ptr<const e_t>{arr.cend()});
+    TTS_TYPE_IS(decltype(traits), decltype(eve::algo::traits(eve::algo::unroll<2>, eve::algo::divisible_by_cardinal, eve::algo::no_aligning)));
+    TTS_TYPE_IS(decltype(f), (eve::algo::aligned_ptr_iterator<const e_t, N>));
+    TTS_TYPE_IS(decltype(l), (eve::algo::aligned_ptr_iterator<const e_t, N>));
+    TTS_EQUAL((void*)f.ptr.get(), (void*)arr.begin());
+    TTS_EQUAL((void*)l.ptr.get(), (void*)arr.end());
+
+    auto [traits1, f1, l1] = eve::algo::preprocess_range(eve::algo::traits(eve::algo::unroll<2>), eve::aligned_ptr<const e_t>{arr.cbegin()}, eve::aligned_ptr<const e_t>{arr.cbegin()});
     TTS_EQUAL(f1, l1);
   }
 

@@ -54,9 +54,7 @@ namespace eve::algo
     template <typename Traits, typename Rng>
       requires std::ranges::contiguous_range<std::remove_reference_t<Rng>>
     auto operator()(Traits traits_, Rng&& rng) const {
-      return operator()(traits_,
-                        std::ranges::begin(std::forward<Rng>(rng)),
-                        std::ranges::end(std::forward<Rng>(rng)));
+      return operator()(traits_, std::ranges::begin(rng), std::ranges::end(rng));
     }
 
     template <typename Traits, typename T>
@@ -67,6 +65,15 @@ namespace eve::algo
       using unaligned_it = unaligned_ptr_iterator<T, N>;
 
       return operator()(traits_, aligned_it(f), unaligned_it(l));
+    }
+
+    template <typename Traits, typename T>
+    auto operator()(Traits traits_, eve::aligned_ptr<T> f, eve::aligned_ptr<T> l) const
+    {
+      using N            = eve::fixed<eve::expected_cardinal_v<T>>;
+      using aligned_it   = aligned_ptr_iterator<T, N>;
+
+      return operator()(traits_, aligned_it(f), aligned_it(l));
     }
 
     // Base case. Should validate that I, S are a valid iterator pair

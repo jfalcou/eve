@@ -98,13 +98,13 @@ namespace eve::algo
 
   namespace detail
   {
-    template <template <typename ...> class Templ, typename T>
+    template <typename T, template <typename ...> class Templ>
     struct instance_of_impl : std::false_type {};
 
-    template <template <typename ...> class Templ, typename ...Args>
-    struct instance_of_impl<Templ, Templ<Args...>> : std::true_type {};
+    template <typename ...Args, template <typename ...> class Templ>
+    struct instance_of_impl<Templ<Args...>, Templ> : std::true_type {};
   }
 
-  template <template <typename ...> class Templ, typename T>
-  concept instance_of = detail::instance_of_impl<Templ, T>::value;
+  template <typename T, template <typename ...> class Templ>
+  concept instance_of = detail::instance_of_impl<T, Templ>::value;
 }

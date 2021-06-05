@@ -65,7 +65,9 @@ Main model: iota_iterator.
 These are not phisical iterators but rather some mechanisms that pretend to be iterators.
 alignment does not matter to them, every position is just as efficient as any other.
 
-### iteration pattern (concept)
+### iteration patterns
+
+*`for_each_iteration`
 
 A reusable component to do `while(f != l) ++f;`.
 Given traits, f, l, delegate calls the delegate for each piece with (f, ignore).
@@ -73,6 +75,14 @@ The specific api of the delegate varies by iteration pattern.
 
 Main one is `for_each_iteration`.
 However for some algorithms, like `reverse` and maybe `partition` it's not a good.
+
+### range algorithm adaters
+
+* `one_range_algorithm_adapter`
+
+These are helpers to deal with all of the boilerplate of algorithm interfaces.
+Get's from the ranges,std::contigious iterators, various eve iterators, default traits, provided traits etc
+to something uniform that specific algorithms can actually use.
 
 ### traits
 
@@ -123,6 +133,8 @@ A pointer + cardinal with the `iterator` interface.
 
 Given a more general notion of a range + traits returns enhanced traits +
 iterator/sentinel pair that is understood by eve.
+This is one hand a helper for `range algorithm adapters` and on the other (*TODO*)
+a customization point for different ranges that need some non-default handling.
 
 ### for_each_iteration
 
