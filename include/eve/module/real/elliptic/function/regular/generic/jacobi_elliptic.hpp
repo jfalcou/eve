@@ -24,6 +24,7 @@ namespace eve::detail
                        , T u
                        , T x
                        , T tol = eps(as<T>())) noexcept
+  -> decltype(arithmetic_call(jacobi_elliptic, u, x, tol))
   {
     return arithmetic_call(jacobi_elliptic, u, x, tol);
   }

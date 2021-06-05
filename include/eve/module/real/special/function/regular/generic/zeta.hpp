@@ -35,10 +35,8 @@
 namespace eve::detail
 {
   template<floating_real_value T, floating_real_value U>
-  EVE_FORCEINLINE T zeta_(EVE_SUPPORTS(cpu_)
-                              , T x
-                              , U y) noexcept
-  requires compatible_values<T, U>
+  EVE_FORCEINLINE   auto zeta_(EVE_SUPPORTS(cpu_), T x, U y) noexcept
+                ->  decltype(arithmetic_call(zeta, x, y))
   {
     return arithmetic_call(zeta, x, y);
   }

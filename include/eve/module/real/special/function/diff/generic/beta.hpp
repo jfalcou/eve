@@ -19,7 +19,7 @@ namespace eve::detail
                               , diff_type<N> const &
                               , T const &a
                               , U const &b) noexcept
-  requires compatible_values<T, U>
+  -> decltype(arithmetic_call(diff_type<N>{}(beta), a, b))
   {
     return arithmetic_call(diff_type<N>{}(beta), a, b);
   }

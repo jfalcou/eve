@@ -24,11 +24,11 @@
 namespace eve::detail
 {
   template<floating_real_value T, floating_real_value U,  floating_real_value V>
-  EVE_FORCEINLINE T ellint_rg_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE auto ellint_rg_(EVE_SUPPORTS(cpu_)
                               , T x
                               , U y
                               , V z) noexcept
-  requires compatible_values<T, U> &&  compatible_values<V, U>
+  -> decltype(arithmetic_call(ellint_rg, x, y, z))
   {
     return arithmetic_call(ellint_rg, x, y, z);
   }

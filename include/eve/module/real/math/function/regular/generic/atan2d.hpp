@@ -18,7 +18,8 @@
 namespace eve::detail
 {
   template<floating_real_value T, floating_real_value U>
-  EVE_FORCEINLINE auto atan2d_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
+  EVE_FORCEINLINE auto atan2d_(EVE_SUPPORTS(cpu_), T const &a, U const &b)  noexcept
+    -> decltype(arithmetic_call(atan2d, a, b))
   {
     return arithmetic_call(atan2d, a, b);
   }

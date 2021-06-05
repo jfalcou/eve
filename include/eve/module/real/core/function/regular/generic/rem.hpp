@@ -29,7 +29,7 @@ namespace eve::detail
   template<floating_real_value T, floating_real_value U>
   EVE_FORCEINLINE auto
   rem_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-  requires compatible_values<T, U>
+  -> decltype(arithmetic_call(rem, a, b))
   {
     return arithmetic_call(rem, a, b);
   }

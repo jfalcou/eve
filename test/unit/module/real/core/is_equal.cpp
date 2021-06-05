@@ -38,10 +38,10 @@ EVE_TEST_TYPES( "Check return types of eve::is_equal(simd)"
     TTS_EXPR_IS( eve::numeric(eve::is_equal)(T(), v_t())   , logical<T> );
     TTS_EXPR_IS( eve::numeric(eve::is_equal)(v_t(), T())   , logical<T> );
 
-    TTS_EXPR_IS( eve::almost(eve::is_equal)(T(), T())     , logical<T>   );
-    TTS_EXPR_IS( eve::almost(eve::is_equal)(v_t(), v_t()) , logical<v_t> );
-    TTS_EXPR_IS( eve::almost(eve::is_equal)(T(), v_t())   , logical<T> );
-    TTS_EXPR_IS( eve::almost(eve::is_equal)(v_t(), T())   , logical<T> );
+//     TTS_EXPR_IS( eve::almost(eve::is_equal)(T(), T())     , logical<T>   );
+//     TTS_EXPR_IS( eve::almost(eve::is_equal)(v_t(), v_t()) , logical<v_t> );
+//     TTS_EXPR_IS( eve::almost(eve::is_equal)(T(), v_t())   , logical<T> );
+//     TTS_EXPR_IS( eve::almost(eve::is_equal)(v_t(), T())   , logical<T> );
   }
 };
 

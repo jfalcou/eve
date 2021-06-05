@@ -23,7 +23,7 @@ namespace eve::detail
   // regular case
   template<real_value T, real_value U>
   EVE_FORCEINLINE auto fdim_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-      requires compatible_values<T, U>
+  -> decltype( arithmetic_call(fdim, a, b))
   {
     return arithmetic_call(fdim, a, b);
   }

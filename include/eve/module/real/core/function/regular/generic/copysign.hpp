@@ -25,7 +25,7 @@ namespace eve::detail
   EVE_FORCEINLINE  auto copysign_(EVE_SUPPORTS(cpu_)
                             , T a
                             , U b) noexcept
-  requires compatible_values<T, U>
+  -> decltype(arithmetic_call(copysign, a, b))
   {
     return arithmetic_call(copysign, a, b);
   }

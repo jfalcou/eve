@@ -28,7 +28,7 @@ namespace eve::detail
                                  ,  pedantic_type const&
                                  , T a
                                  , U b) noexcept
-  requires compatible_values<T, U>
+  -> decltype(arithmetic_call(pedantic(geommean), a, b))
   {
     return arithmetic_call(pedantic(geommean), a, b);
   }

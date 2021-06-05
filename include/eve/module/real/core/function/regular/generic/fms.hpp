@@ -19,7 +19,7 @@ namespace eve::detail
 {
   template<real_value T, real_value U, real_value V>
   EVE_FORCEINLINE auto fms_(EVE_SUPPORTS(cpu_), T const &a, U const &b, V const &c) noexcept
-  requires properly_convertible<U, V, T>
+  requires compatible<U, V, T>
   {
     using r_t =  common_compatible_t<T, U, V>;
     return arithmetic_call(fms, r_t(a), r_t(b), r_t(c));

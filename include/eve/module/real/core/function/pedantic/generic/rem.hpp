@@ -22,7 +22,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto rem_ ( EVE_SUPPORTS(cpu_)
                             , pedantic_type const&,T const &a, U const &b
                             ) noexcept
-  requires compatible_values<T, U>
+  -> decltype(arithmetic_call(pedantic(rem), a, b))
   {
     return arithmetic_call(pedantic(rem), a, b);
   }

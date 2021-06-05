@@ -47,7 +47,7 @@ namespace eve::detail
   EVE_FORCEINLINE  auto gamma_pinv_(EVE_SUPPORTS(cpu_)
                               , T a
                               , U b) noexcept
-  requires compatible_values<T, U>
+  ->  decltype(arithmetic_call(gamma_pinv, a, b))
   {
     return arithmetic_call(gamma_pinv, a, b);
   }

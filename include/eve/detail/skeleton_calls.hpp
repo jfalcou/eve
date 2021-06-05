@@ -12,6 +12,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/traits/cardinal.hpp>
+#include <eve/traits/common_compatible.hpp>
 
 
 namespace eve::detail
@@ -26,9 +27,9 @@ namespace eve::detail
   // N parameters arithmetic operators scheme
   template<typename Obj, value T0, value ... T>
   EVE_FORCEINLINE  auto arithmetic_call(Obj op
-                                       , T0 const &arg0
-                                       , T const &... args ) noexcept
-  requires (compatible_values<T0, T> &&  ...)
+                                       , T0 arg0
+                                       , T ... args ) noexcept
+  requires compatible<T0, T...>
   {
     constexpr bool all_scalar = (scalar_value<T0>) &&  (scalar_value<T> && ...);
     constexpr bool all_simd   = (simd_value<T0>) && (simd_value<T> && ...);
@@ -43,7 +44,7 @@ namespace eve::detail
     }
     else //   one is simd
     {
-      using w_t = first_with_t<is_simd_value, types<T0, T...>>;
+      using w_t = common_compatible_t<T0, T...>;
       return apply_over(op, w_t(arg0), w_t(args)...);
     }
   }

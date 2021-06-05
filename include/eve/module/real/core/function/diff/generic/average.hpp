@@ -19,6 +19,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr T average_(EVE_SUPPORTS(cpu_)
                                     , diff_type<N> const &
                                     , T , Ts ... ys ) noexcept
+  requires compatible<T, Ts...>
   {
     using r_t = common_compatible_t<T,Ts...>;
     using elt_t = element_type_t<r_t>;
