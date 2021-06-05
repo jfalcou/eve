@@ -51,11 +51,10 @@ namespace eve::algo
     template <typename Traits, typename I, typename S, typename P>
     EVE_FORCEINLINE bool operator()(Traits _traits, I _f, S _l, P p) const
     {
-      if (_f == _l) return false;
-
       delegate d{p};
 
       auto [traits, f, l] = preprocess_range(default_to(_traits, default_traits), _f, _l);
+      if (f == l) return false;
       for_each_iteration(traits, f, l)(d);
       return d.res;
     }

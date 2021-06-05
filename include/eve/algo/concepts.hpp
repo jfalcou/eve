@@ -95,4 +95,16 @@ namespace eve::algo
 
   template <typename T, typename U>
   concept same_unaligned_iterator = std::same_as<unaligned_t<T>, unaligned_t<U>>;
+
+  namespace detail
+  {
+    template <template <typename ...> class Templ, typename T>
+    struct instance_of_impl : std::false_type {};
+
+    template <template <typename ...> class Templ, typename ...Args>
+    struct instance_of_impl<Templ, Templ<Args...>> : std::true_type {};
+  }
+
+  template <template <typename ...> class Templ, typename T>
+  concept instance_of = detail::instance_of_impl<Templ, T>::value;
 }

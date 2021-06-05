@@ -10,10 +10,10 @@
 #include <eve/algo/ptr_iterator.hpp>
 #include <eve/algo/traits.hpp>
 
-#include <eve/assert.hpp>
-
 #include <iterator>
+#include <ranges>
 #include <type_traits>
+#include <utility>
 
 namespace eve::algo
 {
@@ -36,21 +36,32 @@ namespace eve::algo
     template <typename Traits, std::contiguous_iterator I, typename S>
     auto operator()(Traits traits_, I f, S l) const
     {
-      EVE_ASSERT(f != l, "preprocess_range requires a non-empty range");
-
-      auto* raw_f = &*f;
-      auto* raw_l = raw_f + (l - f);
-      using T = std::remove_reference_t<decltype(*raw_f)>;
+      using T = std::remove_reference_t<decltype(*f)>;
       using it = unaligned_ptr_iterator<T, eve::fixed<eve::expected_cardinal_v<T>>>;
 
+      T* raw_f = nullptr;
+      T* raw_l = raw_f;
+
+      if (f != l)
+      {
+        raw_f = &*f;
+        raw_l = raw_f + (l - f);
+      }
+
       return operator()(traits_, it{raw_f}, it{raw_l});
+    }
+
+    template <typename Traits, typename Rng>
+      requires std::ranges::contiguous_range<std::remove_reference_t<Rng>>
+    auto operator()(Traits traits_, Rng&& rng) const {
+      return operator()(traits_,
+                        std::ranges::begin(std::forward<Rng>(rng)),
+                        std::ranges::end(std::forward<Rng>(rng)));
     }
 
     template <typename Traits, typename T>
     auto operator()(Traits traits_, eve::aligned_ptr<T> f, T* l) const
     {
-      EVE_ASSERT(f != l, "preprocess_range requires a non-empty range");
-
       using N            = eve::fixed<eve::expected_cardinal_v<T>>;
       using aligned_it   = aligned_ptr_iterator<T, N>;
       using unaligned_it = unaligned_ptr_iterator<T, N>;
@@ -62,8 +73,6 @@ namespace eve::algo
     template <typename Traits, iterator I, sentinel_for<I> S>
     auto operator()(Traits traits_, I f, S l) const
     {
-      EVE_ASSERT(f != l, "preprocess_range requires a non-empty range");
-
       auto deduced = [] {
         if constexpr (partially_aligned_iterator<I>)
         {
