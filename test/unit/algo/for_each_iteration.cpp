@@ -146,6 +146,11 @@ namespace
     iteration(del);
     TTS_EQUAL(expected.size(), del.res.size());
     if (expected.size() != del.res.size()) {
+      std::cout << "expected : {" << std::endl;
+      for (auto const& e : expected) {
+         std::cout << e.first << ' ' << e.second << std::endl;
+      }
+      std::cout << "}" << std::endl;
       std::cout << "actual : {" << std::endl;
       for (auto const& e : del.res) {
          std::cout << e.first << ' ' << e.second << std::endl;
@@ -298,11 +303,52 @@ TTS_CASE("eve.algo for_each_iteration unrolling, aligning")
       {0, eve::ignore_first(0)},
       {4, eve::ignore_none},
       {8, eve::ignore_none},
+      // unrolling starts
       {12, eve::ignore_none},
       {20, eve::ignore_none},
       {28, eve::ignore_none},
       {36, eve::ignore_none},
+      // unrolling ends
       {44, eve::ignore_extrema(0, 2)},
+    }
+  );
+
+  // unroll 3
+  pattern_test(
+    eve::algo::unroll<3>,
+    {
+      {0, eve::ignore_first(0)},
+      {4, eve::ignore_none},
+      {8, eve::ignore_none},
+      {12, eve::ignore_none},
+      // unrolling starts
+      {16, eve::ignore_none},
+      {28, eve::ignore_none},
+      // unrolling ends
+      {40, eve::ignore_none},
+      {44, eve::ignore_none},
+      {48, eve::ignore_extrema(0, 3)}
+    }
+  );
+
+  // unroll 4
+  pattern_test(
+    eve::algo::unroll<4>,
+    {
+      {0, eve::ignore_first(0)},
+      {4, eve::ignore_none},
+      {8, eve::ignore_none},
+      {12, eve::ignore_none},
+      {16, eve::ignore_none},
+      // unrolling starts
+      {20, eve::ignore_none},
+      {36, eve::ignore_none},
+      {52, eve::ignore_none},
+      // unrolling ends
+      {68, eve::ignore_none},
+      {72, eve::ignore_none},
+      {76, eve::ignore_none},
+      {80, eve::ignore_extrema(0, 1)}
     }
   );
 }
