@@ -297,6 +297,7 @@ TTS_CASE("eve.algo for_each_iteration unrolling, aligning")
       {12, eve::ignore_none},
       {16, eve::ignore_none},
       {20, eve::ignore_none},
+      {24, eve::ignore_extrema(0, 2)},
     }
   );
 
@@ -353,6 +354,97 @@ TTS_CASE("eve.algo for_each_iteration unrolling, aligning")
       {72, eve::ignore_none},
       {76, eve::ignore_none},
       {80, eve::ignore_extrema(0, 1)}
+    }
+  );
+}
+
+TTS_CASE("eve.algo for_each_iteration unrolling, precise")
+{
+  fixture fix;
+  auto f = fix.unaligned_begin();
+
+  auto test = [&](auto traits, auto overall_l, test_res expected) {
+    auto l = f + expected.back().first + expected.back().second.count();
+    run_test(traits, f, l, -1, expected);
+    // stop test
+    run_test(traits, f, overall_l, expected.back().first, expected);
+  };
+
+  auto pattern_test = [&](auto unroll, test_res pattern) {
+    auto overall_l = f + pattern.back().first + pattern.back().second.count();
+
+    for (auto up_to = pattern.begin() + 1; up_to != pattern.end(); ++up_to) {
+      auto traits = eve::algo::traits(unroll, eve::algo::no_aligning);
+      test(traits, overall_l, {pattern.begin(), up_to});
+    }
+
+    pattern.pop_back();
+    for (auto up_to = pattern.begin() + 1; up_to != pattern.end(); ++up_to) {
+      auto traits = eve::algo::traits(unroll, eve::algo::no_aligning, eve::algo::divisible_by_cardinal);
+      test(traits, overall_l, {pattern.begin(), up_to});
+    }
+  };
+
+  // no unrolling
+  pattern_test(
+    eve::algo::unroll<1>,
+    {
+      {0, eve::ignore_none},
+      {4, eve::ignore_none},
+      {8, eve::ignore_none},
+      {12, eve::ignore_none},
+      {16, eve::ignore_none},
+      {20, eve::ignore_none},
+      {24, eve::keep_first(2)},
+    }
+  );
+
+  // unroll 2
+  pattern_test(
+    eve::algo::unroll<2>,
+    {
+      {0, eve::ignore_none},
+      {4, eve::ignore_none},
+      // unrolling starts
+      {8, eve::ignore_none},
+      {16, eve::ignore_none},
+      {24, eve::ignore_none},
+      // unrolling ends
+      {32, eve::keep_first(2)},
+    }
+  );
+
+  // unroll 3
+  pattern_test(
+    eve::algo::unroll<3>,
+    {
+      {0, eve::ignore_none},
+      {4, eve::ignore_none},
+      {8, eve::ignore_none},
+      // unrolling starts
+      {12, eve::ignore_none},
+      {24, eve::ignore_none},
+      {36, eve::ignore_none},
+      // unrolling ends
+      {40, eve::ignore_none},
+      {44, eve::keep_first(3)},
+    }
+  );
+
+  // unroll 4
+  pattern_test(
+    eve::algo::unroll<4>,
+    {
+      {0, eve::ignore_none},
+      {4, eve::ignore_none},
+      {8, eve::ignore_none},
+      {12, eve::ignore_none},
+      // unrolling starts
+      {16, eve::ignore_none},
+      {32, eve::ignore_none},
+      {48, eve::ignore_none},
+      // unrolling ends
+      {64, eve::keep_first(1)},
     }
   );
 }
