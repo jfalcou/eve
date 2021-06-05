@@ -271,15 +271,19 @@ TTS_CASE("eve.algo for_each_iteration unrolling, aligning")
   fixture fix;
   auto f = fix.unaligned_begin();
 
-  auto test = [&](auto unroll, test_res expected) {
+  auto test = [&](auto traits, auto overall_l, test_res expected) {
     auto l = f + expected.back().first + expected.back().second.count();
-    auto traits = eve::algo::traits(unroll);
     run_test(traits, f, l, -1, expected);
+    // stop test
+    run_test(traits, f, overall_l, expected.back().first, expected);
   };
 
   auto pattern_test = [&](auto unroll, test_res pattern) {
+    auto overall_l = f + pattern.back().first + pattern.back().second.count();
+
     for (auto up_to = pattern.begin() + 1; up_to != pattern.end(); ++up_to) {
-      test(unroll, {pattern.begin(), up_to});
+      auto traits = eve::algo::traits(unroll);
+      test(traits, overall_l, {pattern.begin(), up_to});
     }
   };
 
