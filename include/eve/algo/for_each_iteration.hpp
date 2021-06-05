@@ -94,7 +94,15 @@ namespace eve::algo
       S l;
 
       for_each_iteration_precise_f_l(Traits traits, I f, S l) :
-        traits(traits), base(f), f(f), l(l) {}
+        traits(traits), base(f), f(f), l(l)
+      {
+        [[maybe_unused]] static constexpr std::ptrdiff_t step =
+          typename I::cardinal {}();
+        EVE_ASSERT(((l - f) % step == 0),
+          " len of the range is no divisible by cardinal " <<
+          "when `divisible by cardinal is passed`: " <<
+          "l - f: " << (l - f) << " step: " << step);
+      }
 
       template <typename Delegate>
       EVE_FORCEINLINE void operator()(Delegate& delegate)

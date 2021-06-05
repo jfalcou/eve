@@ -386,6 +386,7 @@ TTS_CASE("eve.algo for_each_iteration unrolling, precise")
     }
 
     pattern.pop_back();
+    overall_l = f + pattern.back().first + 4;
     for (auto up_to = pattern.begin() + 1; up_to != pattern.end(); ++up_to) {
       auto traits = eve::algo::traits(unroll, eve::algo::no_aligning, eve::algo::divisible_by_cardinal);
       test(traits, overall_l, {pattern.begin(), up_to});
