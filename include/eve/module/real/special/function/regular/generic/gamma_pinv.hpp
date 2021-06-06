@@ -44,10 +44,9 @@
 namespace eve::detail
 {
   template<real_value T, real_value U>
-  EVE_FORCEINLINE  auto gamma_pinv_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE  common_compatible_t<T, U> gamma_pinv_(EVE_SUPPORTS(cpu_)
                               , T a
                               , U b) noexcept
-  requires compatible_values<T, U>
   {
     return arithmetic_call(gamma_pinv, a, b);
   }
