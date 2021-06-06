@@ -7,11 +7,11 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/algo/concepts.hpp>
 #include <eve/algo/ptr_iterator.hpp>
 #include <eve/algo/traits.hpp>
 
 #include <iterator>
-#include <ranges>
 #include <type_traits>
 #include <utility>
 
@@ -52,9 +52,9 @@ namespace eve::algo
     }
 
     template <typename Traits, typename Rng>
-      requires std::ranges::contiguous_range<std::remove_reference_t<Rng>>
+      requires detail::contiguous_range<std::remove_reference_t<Rng>>
     auto operator()(Traits traits_, Rng&& rng) const {
-      return operator()(traits_, std::ranges::begin(rng), std::ranges::end(rng));
+      return operator()(traits_, rng.begin(), rng.end());
     }
 
     template <typename Traits, typename T>

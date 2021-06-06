@@ -218,6 +218,8 @@ EVE_TEST_TYPES("contigious ranges", algo_test::selected_types)
     non_empty_range_test(v);
   }
 
+// We need better ranges support for it.
+#if 0
   {
     e_t v[10] = {};
     non_empty_range_test(v);
@@ -227,6 +229,7 @@ EVE_TEST_TYPES("contigious ranges", algo_test::selected_types)
     e_t const v[10] = {};
     non_empty_range_test(v);
   }
+#endif
 
   {
     std::array<e_t, 10> v = {};
