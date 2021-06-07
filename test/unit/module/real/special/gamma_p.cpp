@@ -46,7 +46,7 @@ EVE_TEST( "Check behavior of gamma_p on wide"
 {
   using v_t = eve::element_type_t<T>;
   using eve::gamma_p;
-  TTS_ULP_EQUAL( eve::gamma_p(a0, a1),  map([&](auto e, auto f) -> v_t{ return boost::math::gamma_p(f, e); }, a0, a1), 2);
+  TTS_ULP_EQUAL( eve::gamma_p(a0, a1),  map([&](auto e, auto f) -> v_t{ return boost::math::gamma_p(f, e); }, a0, a1), 4);
 
   if constexpr( eve::platform::supports_invalids )
   {
