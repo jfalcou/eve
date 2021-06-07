@@ -44,4 +44,13 @@ namespace eve::algo
   {
     return detail::array_reduce_impl<0, N>(x, op);
   }
+
+  template <typename T, std::size_t N, typename Op>
+  EVE_FORCEINLINE constexpr void array_reverse_it(std::array<T, N> x, Op op)
+  {
+    [&]<std::size_t ...i>(std::index_sequence<i...>){
+      (op(x[N - i - 1]), ...);
+    }(std::make_index_sequence<N>{});
+  }
+
 }

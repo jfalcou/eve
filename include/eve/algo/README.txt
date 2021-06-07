@@ -7,6 +7,7 @@ Main eve supports it's callables for scalars. We don't do that for algorithms. T
 # Algorithms
 
 * any_of
+* find_if
 
 # Helpers
 

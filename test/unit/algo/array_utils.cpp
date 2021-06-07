@@ -40,3 +40,17 @@ TTS_CASE("eve.algo.array_utils array_map")
     TTS_CONSTEXPR_EXPECT( actual == 1 );
   }
 }
+
+TTS_CASE("eve.algo.array_utils reverse it")
+{
+  constexpr auto res = [] {
+    std::array in = {3, 2, 1};
+    std::array out = in;
+    eve::algo::array_reverse_it(in, [&, i = 0u] (int x) mutable{
+      out[i++] = x;
+    });
+    return out;
+  }();
+
+  TTS_CONSTEXPR_EQUAL(res, (std::array{1, 2, 3}));
+}

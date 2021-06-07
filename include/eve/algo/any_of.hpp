@@ -23,7 +23,7 @@ namespace eve::algo
   {
     static constexpr auto default_traits()
     {
-      return algo::traits(algo::unroll<4>);
+      return default_simple_algo_traits;
     };
 
     template <typename P>
