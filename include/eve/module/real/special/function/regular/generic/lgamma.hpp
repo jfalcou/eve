@@ -38,7 +38,7 @@ namespace eve::detail
 {
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   /// helpers
-  template<floating_real_value T> EVE_FORCEINLINE T large_negative (T q)
+  template<floating_real_value T> inline T large_negative (T q)
   {
     T    w     = eve::lgamma(q);
     T    p     = floor(q);
