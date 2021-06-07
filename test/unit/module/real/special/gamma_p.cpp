@@ -38,7 +38,7 @@ EVE_TEST_TYPES( "Check return types of gamma_p"
 // gamma_p  tests
 //==================================================================================================
 EVE_TEST( "Check behavior of gamma_p on wide"
-        , eve::test::simd::ieee_floats //ieee_reals but there is a flaw in boost_gamma_p for double
+        , eve::test::simd::ieee_reals //but there is a flaw in boost_gamma_p for double
         , eve::test::generate(eve::test::randoms(0.0, 100.0)
                              , eve::test::randoms(0.0, 5.0))
         )
@@ -46,7 +46,7 @@ EVE_TEST( "Check behavior of gamma_p on wide"
 {
   using v_t = eve::element_type_t<T>;
   using eve::gamma_p;
-  TTS_ULP_EQUAL( eve::gamma_p(a0, a1),  map([&](auto e, auto f) -> v_t{ return boost::math::gamma_p(e, f); }, a0, a1), 2);
+  TTS_ULP_EQUAL( eve::gamma_p(a0, a1),  map([&](auto e, auto f) -> v_t{ return boost::math::gamma_p(f, e); }, a0, a1), 2);
 
   if constexpr( eve::platform::supports_invalids )
   {
