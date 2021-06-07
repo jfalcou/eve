@@ -23,8 +23,8 @@ namespace eve::algo
       requires std::invocable<preprocess_range_, Traits, I, S>
     EVE_FORCEINLINE decltype(auto) after_dealing_with_traits(Traits tr_, I f_, S l_, Args&& ... args) const
     {
-      auto [tr, f, l] = preprocess_range(tr_, f_, l_);
-      return self().impl(tr, f, l, std::forward<Args>(args)...);
+      auto processed = preprocess_range(tr_, f_, l_);
+      return self().impl(processed, std::forward<Args>(args)...);
     }
 
 
@@ -32,8 +32,8 @@ namespace eve::algo
       requires std::invocable<preprocess_range_, Traits, Rng>
     EVE_FORCEINLINE decltype(auto) after_dealing_with_traits(Traits tr_, Rng&& rng, Args&& ... args) const
     {
-      auto [tr, f, l] = preprocess_range(tr_, std::forward<Rng>(rng));
-      return self().impl(tr, f, l, std::forward<Args>(args)...);
+      auto processed = preprocess_range(tr_, std::forward<Rng>(rng));
+      return self().impl(processed, std::forward<Args>(args)...);
     }
 
    public:

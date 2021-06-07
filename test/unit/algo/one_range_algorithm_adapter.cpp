@@ -31,9 +31,9 @@ struct fake_algorithm :
   }
 
   template <typename ...Args>
-  auto impl(Args&&... args) const
+  auto impl(auto processed, Args&&... args) const
   {
-    return impl_(std::forward<Args>(args)...);
+    return impl_(processed.traits(), processed.begin(), processed.end(), std::forward<Args>(args)...);
   }
 };
 

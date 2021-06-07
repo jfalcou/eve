@@ -51,13 +51,13 @@ namespace eve::algo
       bool res = false;
     };
 
-    template <instance_of<algo::traits> Traits, iterator I, sentinel_for<I> S, typename P>
-    EVE_FORCEINLINE bool impl(Traits traits, I f, S l, P p) const
+    template <typename P>
+    EVE_FORCEINLINE bool impl(auto processed, P p) const
     {
-      if (f == l) return false;
+      if (processed.begin() == processed.end()) return false;
 
       delegate d{p};
-      algo::for_each_iteration(traits, f, l)(d);
+      algo::for_each_iteration(processed.traits(), processed.begin(), processed.end())(d);
       return d.res;
     }
   } inline constexpr any_of;
