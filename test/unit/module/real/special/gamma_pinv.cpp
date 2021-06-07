@@ -48,17 +48,6 @@ EVE_TEST( "Check behavior of gamma_pinv on wide"
   using eve::gamma_pinv;
   TTS_ULP_EQUAL( eve::gamma_pinv(a0, a1),  map([&](auto e, auto f) -> v_t{ return boost::math::gamma_p_inv(f, e); }, a0, a1), 33);
 
-//   for(int i=0; i < eve::cardinal_v<T> ; ++i)
-//  {
-//    std::cout <<" =========================================== " << std::endl;
-//    auto x = a0.get(i);
-//    auto y = a1.get(i);
-//    std::cout << std::setprecision(20) << "gammaincinv(" << x <<", " << y << ")" << std::endl;
-//    std::cout << std::setprecision(20) << eve::gamma_pinv(x, y) << std::endl;
-//    TTS_ULP_EQUAL( eve::gamma_pinv(x, y),  boost::math::gamma_p_inv(y, x), 33);
-//    std::cout <<" ******************************************* " << std::endl;
-//  }
-
   auto bggpi =  [](auto e, auto f){return boost::math::gamma_p_inv(f, e); };
   if constexpr( eve::platform::supports_invalids )
   {

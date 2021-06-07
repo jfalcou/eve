@@ -441,17 +441,6 @@ namespace eve::detail
             r2 += lgammaA(p) / xx;
             return if_else(test, r1, r2);
           };
- //          auto large_negative = [Logpi](const T &q) {
-//             T    w     = eve::lgamma(q);
-//             T    p     = floor(q);
-//             T    z     = q - p;
-//             auto test2 = (z < half(as<T>()));
-//             z          = dec[test2](z);
-//             z          = q * sinpi(z);
-//             z          = abs(z);
-//             return Logpi - log(z) - w;
-//           };
-
           auto inf_result = (is_lez(a0) && is_flint(a0)) || is_infinite(a0);;
           T    x          = if_else(inf_result, eve::allbits, a0);
           T    q          = abs(x);
