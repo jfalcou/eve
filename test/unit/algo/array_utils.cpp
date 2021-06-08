@@ -41,16 +41,12 @@ TTS_CASE("eve.algo.array_utils array_map")
   }
 }
 
-TTS_CASE("eve.algo.array_utils reverse it")
+TTS_CASE("eve.algo.array_utils find_branchless")
 {
-  constexpr auto res = [] {
-    std::array in = {3, 2, 1};
-    std::array out = in;
-    eve::algo::array_reverse_it(in, [&, i = 0u] (int x) mutable{
-      out[i++] = x;
-    });
-    return out;
-  }();
+  constexpr std::array in = {1, -2, 5};
 
-  TTS_CONSTEXPR_EQUAL(res, (std::array{1, 2, 3}));
+  constexpr std::size_t find_neg_2   = eve::algo::find_branchless(in, [](int x) { return x == -2; });
+  constexpr std::size_t find_more_10 = eve::algo::find_branchless(in, [](int x) { return x > 10; });
+  TTS_CONSTEXPR_EQUAL(find_neg_2, 1u);
+  TTS_CONSTEXPR_EQUAL(find_more_10, 3u);
 }

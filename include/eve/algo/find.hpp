@@ -47,26 +47,18 @@ namespace eve::algo
       {
         auto tests = array_map(arr, [&](I it) { return p(eve::load(it)); });
 
-        // TODO: this is not the best solution, see: #764
         auto overall = array_reduce(tests, eve::logical_or);
         if (!eve::any(overall)) return false;
 
-        std::size_t i = size - 1;
+        // TODO: this might not be ideal, see: #764
         std::optional<std::ptrdiff_t> match;
-        std::size_t pos = i;
-
-        array_reverse_it(tests, [&](auto test) mutable {
-          auto local_match = eve::first_true(test);
-          // should generate cmovs
-          if (local_match)
-          {
-            pos = i;
-            match = local_match;
-          }
-          --i;
+        std::size_t pos = find_branchless(tests,
+          [&](auto test) {
+            auto _m = eve::first_true(test);
+            if (_m) match = _m;
+            return _m.has_value();
         });
-
-        const std::ptrdiff_t lanes = typename I::cardinal{}();
+        constexpr std::ptrdiff_t lanes = typename I::cardinal{}();
         found = arr[0].unaligned() + (pos * lanes) + *match;
 
         return true;

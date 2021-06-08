@@ -46,10 +46,14 @@ namespace eve::algo
   }
 
   template <typename T, std::size_t N, typename Op>
-  EVE_FORCEINLINE constexpr void array_reverse_it(std::array<T, N> x, Op op)
-  {
-    [&]<std::size_t ...i>(std::index_sequence<i...>){
-      (op(x[N - i - 1]), ...);
+  EVE_FORCEINLINE constexpr std::size_t find_branchless(std::array<T, N> x, Op op) {
+    return [&]<std::size_t ...i> ( std::index_sequence<i...> ) {
+      std::size_t res = N;
+      auto update_res_if = [&](std::size_t j) mutable {
+        if (op(x[j])) res = j;  // should generate cmov
+      };
+      (update_res_if(N - i - 1), ...);
+      return res;
     }(std::make_index_sequence<N>{});
   }
 
