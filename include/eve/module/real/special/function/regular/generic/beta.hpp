@@ -12,9 +12,16 @@
 #include <eve/function/signgam.hpp>
 #include <eve/function/exp.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/concept/compatible.hpp>
 
 namespace eve::detail
 {
+  template<floating_real_value T,  floating_real_value U>
+  EVE_FORCEINLINE common_compatible_t<T, U> beta_(EVE_SUPPORTS(cpu_), T a0,  U a1) noexcept
+  {
+    return arithmetic_call(beta, a0, a1);
+  }
+
   template<floating_real_value T>
   EVE_FORCEINLINE T beta_(EVE_SUPPORTS(cpu_), T a0,  T a1) noexcept
   {
