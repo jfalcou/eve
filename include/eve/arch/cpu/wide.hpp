@@ -79,7 +79,24 @@ inline namespace EVE_ABI_NAMESPACE
     template<typename N> using rescale = wide<Type,N>;
 
     //! Returns the alignment expected to be used to store a eve::wide
-    static EVE_FORCEINLINE constexpr auto alignment() noexcept { return sizeof(Type)*Cardinal{}; }
+    static EVE_FORCEINLINE constexpr auto alignment() noexcept
+    {
+      if constexpr( kumi::product_type<Type> )
+      {
+        // use the largest type as a reference for the alignment computation
+        constexpr auto sizes  = kumi::fold_left ( [](auto acc, auto m)
+                                                  {
+                                                    return acc < sizeof(m) ? sizeof(m) : acc;
+                                                  }
+                                                , Type{}, 0
+                                                );
+        return sizes*Cardinal{};
+      }
+      else
+      {
+        return sizeof(Type)*Cardinal{};
+      }
+    }
 
     //==============================================================================================
     //! @name Constructors
