@@ -1,0 +1,84 @@
+//==================================================================================================
+/**
+  EVE - Expressive Vector Engine
+  Copyright : EVE Contributors & Maintainers
+  SPDX-License-Identifier: MIT
+**/
+//==================================================================================================
+#include "test.hpp"
+#include <eve/concept/value.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
+#include <eve/function/all.hpp>
+#include <eve/function/erf_inv.hpp>
+#include <eve/function/diff/erf_inv.hpp>
+#include <eve/function/is_negative.hpp>
+#include <eve/function/is_positive.hpp>
+#include <type_traits>
+#include <cmath>
+#include <eve/constant/inf.hpp>
+#include <eve/constant/minf.hpp>
+#include <eve/constant/nan.hpp>
+#include <eve/constant/smallestposval.hpp>
+#include <eve/platform.hpp>
+#include <boost/math/special_functions/erf.hpp>
+
+//==================================================================================================
+// Types tests
+//==================================================================================================
+EVE_TEST_TYPES( "Check return types of erf_inv"
+            , eve::test::simd::ieee_reals
+            )
+<typename T>(eve::as_<T>)
+{
+  using v_t = eve::element_type_t<T>;
+
+  TTS_EXPR_IS( eve::erf_inv(T())  , T);
+  TTS_EXPR_IS( eve::erf_inv(v_t()), v_t);
+};
+
+//==================================================================================================
+// erf_inv  tests
+//==================================================================================================
+EVE_TEST( "Check behavior of erf_inv on wide"
+        , eve::test::simd::ieee_reals
+        , eve::test::generate(eve::test::randoms(-1.0, 1.0))
+        )
+<typename T>(T const& a0 )
+{
+  using v_t = eve::element_type_t<T>;
+  using eve::erf_inv;
+  using eve::as;
+  TTS_ULP_EQUAL( erf_inv(a0),  map([](auto e){return boost::math::erf_inv(e);}, a0), 2);
+  auto derf_inv = [](auto e){return v_t(0.886226925452758013649)*std::exp(eve::sqr(erf_inv(e)));};
+  TTS_ULP_EQUAL( eve::diff(erf_inv)(a0),  map(derf_inv, a0), 2);
+
+
+  TTS_ULP_EQUAL(erf_inv(T(0.5)), T(boost::math::erf_inv(v_t(0.5))), 1. );
+  TTS_ULP_EQUAL(erf_inv(T(eve::smallestposval(as<T>()))), T(boost::math::erf_inv(eve::smallestposval(as<v_t>()))), 0.5);
+
+  if constexpr( eve::platform::supports_invalids )
+  {
+    TTS_IEEE_EQUAL(erf_inv(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(erf_inv(eve::inf(eve::as<T>()))  , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(erf_inv(eve::minf(eve::as<T>())) , eve::nan(eve::as<T>()) );
+  }
+
+  TTS_ULP_EQUAL(erf_inv(T(35)), eve::nan(eve::as<T>()), 0.5);
+  TTS_ULP_EQUAL(erf_inv(T(-35)), eve::nan(eve::as<T>()), 0.5);
+
+  TTS_IEEE_EQUAL(erf_inv(T( 0 )),T(0)  );
+  TTS_IEEE_EQUAL(erf_inv(T(-0.)), T(0) );
+  TTS_ULP_EQUAL(erf_inv(T( 0.1 )), T( boost::math::erf_inv(0.1)), 0.5 );
+  TTS_ULP_EQUAL(erf_inv(T( 0.2 )), T( boost::math::erf_inv(0.2)), 0.5 );
+  TTS_ULP_EQUAL(erf_inv(T( 0.3 )), T( boost::math::erf_inv(0.3)), 0.5 );
+  TTS_ULP_EQUAL(erf_inv(T( 0.5 )), T( boost::math::erf_inv(0.5)),  1 );
+  TTS_ULP_EQUAL(erf_inv(T( 0.15)), T( boost::math::erf_inv(0.15)), 0.5 );
+  TTS_ULP_EQUAL(erf_inv(T( 0.75)), T( boost::math::erf_inv(0.75)), 0.5 );
+  TTS_ULP_EQUAL(erf_inv(T(- 0.1 )), T( boost::math::erf_inv(-0.1)), 0.5 );
+  TTS_ULP_EQUAL(erf_inv(T( -0.2 )), T( boost::math::erf_inv(-0.2)), 0.5 );
+  TTS_ULP_EQUAL(erf_inv(T( -0.3 )), T( boost::math::erf_inv(-0.3)), 0.5 );
+  TTS_ULP_EQUAL(erf_inv(T( -0.5 )), T( boost::math::erf_inv(-0.5)),  1 );
+  TTS_ULP_EQUAL(erf_inv(T( -0.15)), T( boost::math::erf_inv(-0.15)), 0.5 );
+  TTS_ULP_EQUAL(erf_inv(T( -0.75)), T( boost::math::erf_inv(-0.75)), 0.5 );
+};
