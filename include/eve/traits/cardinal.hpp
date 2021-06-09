@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/is_wide.hpp>
 #include <eve/forward.hpp>
 #include <cstddef>
 

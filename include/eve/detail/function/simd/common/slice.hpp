@@ -58,7 +58,7 @@ namespace eve::detail
   // Partial slice
   //================================================================================================
   template<typename P, typename Slice>
-  EVE_FORCEINLINE auto slice_impl(P const &a, [[maybe_unused]] Slice const & s) noexcept
+  EVE_FORCEINLINE auto slice_impl(P const &a, Slice const & s) noexcept
   {
     using abi_t   = typename P::abi_type;
     using card_t  = typename P::cardinal_type;

@@ -11,6 +11,7 @@
 
 #include <array>
 #include <numeric>
+#include <utility>
 
 namespace
 {
@@ -46,14 +47,17 @@ EVE_TEST_TYPES( "Check store behavior with aligned pointers", eve::test::scalar:
     ref2[i] = 1.5*(1+i);
   }
 
-  constexpr auto algt = eve::alignment_v<w_t>;
-  alignas(algt) std::array<std::int8_t, w_t::size()> target0;
-  alignas(algt) std::array<T          , w_t::size()> target1;
-  alignas(algt) std::array<double     , w_t::size()> target2;
+  constexpr auto alg0 = eve::alignment_v< std::tuple_element_t<0,w_t>>;
+  constexpr auto alg1 = eve::alignment_v< std::tuple_element_t<1,w_t>>;
+  constexpr auto alg2 = eve::alignment_v< std::tuple_element_t<2,w_t>>;
 
-  auto dst = kumi::make_tuple ( eve::as_aligned<algt>(&target0[0])
-                              , eve::as_aligned<algt>(&target1[0])
-                              , eve::as_aligned<algt>(&target2[0])
+  alignas(alg0) std::array<std::int8_t, w_t::size()> target0;
+  alignas(alg1) std::array<T          , w_t::size()> target1;
+  alignas(alg2) std::array<double     , w_t::size()> target2;
+
+  auto dst = kumi::make_tuple ( eve::as_aligned<alg0>(&target0[0])
+                              , eve::as_aligned<alg1>(&target1[0])
+                              , eve::as_aligned<alg2>(&target2[0])
                               );
 
   eve::store(data, dst);
