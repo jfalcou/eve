@@ -256,13 +256,13 @@ namespace kumi
     }
   }
 
-  template<template<typename...> class Meta, product_type T>
+  template<template<typename...> class Meta, typename T>
   struct remap_type
   {
     using type = decltype( detail::meta_map<Meta>(detail::box<T>{}) );
   };
 
-  template<template<typename...> class Meta, product_type T>
+  template<template<typename...> class Meta, typename T>
   using remap_type_t = typename remap_type<Meta, T>::type;
 
   //================================================================================================
