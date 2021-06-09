@@ -26,6 +26,7 @@ make_unit("unit.real.special"  dawson.cpp                  )
 make_unit("unit.real.special"  digamma.cpp                 )
 make_unit("unit.real.special"  erf.cpp                     )
 make_unit("unit.real.special"  erfc.cpp                    )
+make_unit("unit.real.special"  erfcx.cpp                   )
 make_unit("unit.real.special"  gamma_p.cpp                 )
 make_unit("unit.real.special"  gamma_pinv.cpp              )
 make_unit("unit.real.special"  lgamma.cpp                  )
@@ -35,7 +36,7 @@ make_unit("unit.real.special"  tgamma.cpp                  )
 ## Elementwise function unit tests
 ##==================================================================================================
 
-make_all_units(ROOT unit.real.special NAME erfcx         ARCH scalar simd TYPES ${real_types} )
+##make_all_units(ROOT unit.real.special NAME erfcx         ARCH scalar simd TYPES ${real_types} )
 make_all_units(ROOT unit.real.special NAME erf_inv       ARCH scalar simd TYPES ${real_types} )
 make_all_units(ROOT unit.real.special NAME erfc_inv      ARCH scalar simd TYPES ${real_types} )
 make_all_units(ROOT unit.real.special NAME exp_int       ARCH scalar simd TYPES ${real_types} )
