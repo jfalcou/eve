@@ -393,6 +393,27 @@ namespace eve
     return that -= o;
   }
 
+  template <typename Type, std::size_t Alignment>
+  std::ptrdiff_t operator-(aligned_ptr<Type, Alignment> const& lhs, aligned_ptr<Type, Alignment> const& rhs) noexcept
+    requires (!std::same_as<Type, void>)
+  {
+    return lhs.get() - rhs.get();
+  }
+
+  template <typename Type, std::size_t Alignment>
+  std::ptrdiff_t operator-(aligned_ptr<Type, Alignment> const& lhs, Type* rhs) noexcept
+    requires (!std::same_as<Type, void>)
+  {
+    return lhs.get() - rhs;
+  }
+
+  template <typename Type, std::size_t Alignment>
+  std::ptrdiff_t operator-(Type* lhs, aligned_ptr<Type, Alignment> const& rhs) noexcept
+    requires (!std::same_as<Type, void>)
+  {
+    return lhs - rhs.get();
+  }
+
   template<typename Type, std::size_t Alignment>
   aligned_ptr<Type, Alignment> operator+(aligned_ptr<Type, Alignment> const &p,
                                          std::ptrdiff_t                      o) noexcept

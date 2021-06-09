@@ -8,6 +8,7 @@
 #pragma once
 
 #include <concepts>
+#include <iterator>
 #include <type_traits>
 #include <eve/function/load.hpp>
 
@@ -95,4 +96,23 @@ namespace eve::algo
 
   template <typename T, typename U>
   concept same_unaligned_iterator = std::same_as<unaligned_t<T>, unaligned_t<U>>;
+
+  namespace detail
+  {
+    template <typename T, template <typename ...> class Templ>
+    struct instance_of_impl : std::false_type {};
+
+    template <typename ...Args, template <typename ...> class Templ>
+    struct instance_of_impl<Templ<Args...>, Templ> : std::true_type {};
+  }
+
+  template <typename T, template <typename ...> class Templ>
+  concept instance_of = detail::instance_of_impl<T, Templ>::value;
+
+  // While standard ranges are not properly supported
+  namespace detail
+  {
+    template<typename R>
+    concept contiguous_range = std::contiguous_iterator<decltype(std::declval<R>().begin())>;
+  }
 }

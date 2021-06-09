@@ -40,3 +40,13 @@ TTS_CASE("eve.algo.array_utils array_map")
     TTS_CONSTEXPR_EXPECT( actual == 1 );
   }
 }
+
+TTS_CASE("eve.algo.array_utils find_branchless")
+{
+  constexpr std::array in = {1, -2, 5};
+
+  constexpr std::size_t find_neg_2   = eve::algo::find_branchless(in, [](int x) { return x == -2; });
+  constexpr std::size_t find_more_10 = eve::algo::find_branchless(in, [](int x) { return x > 10; });
+  TTS_CONSTEXPR_EQUAL(find_neg_2, 1u);
+  TTS_CONSTEXPR_EQUAL(find_more_10, 3u);
+}

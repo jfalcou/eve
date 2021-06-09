@@ -165,6 +165,16 @@ TTS_CASE("aligned_ptr provides pointer-like interface")
       TTS_EQUAL(ptr->member, 42);
       TTS_EQUAL(other_ptr->member, 17);
     }
+
+    TTS_AND_THEN("we check interation with raw ptr")
+    {
+      TTS_EQUAL(ptr, ptr.get());
+      TTS_EQUAL(ptr.get(), ptr);
+      TTS_NOT_EQUAL(ptr, other_ptr.get());
+      TTS_NOT_EQUAL(ptr.get(), other_ptr);
+      TTS_EQUAL((other_ptr.get() - ptr), 1);
+      TTS_EQUAL((other_ptr - ptr.get()), 1);
+    }
   }
 }
 

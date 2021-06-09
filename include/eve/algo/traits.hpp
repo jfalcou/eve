@@ -80,4 +80,6 @@ namespace eve::algo
 
     return no_aligning_();
   }
+
+  inline constexpr algo::traits default_simple_algo_traits{algo::unroll<4>};
 }
