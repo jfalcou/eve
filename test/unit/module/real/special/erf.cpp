@@ -49,7 +49,8 @@ EVE_TEST( "Check behavior of erf on wide"
   using eve::erf;
   using eve::as;
   TTS_ULP_EQUAL( erf(a0),  map([&](auto e) -> v_t{ return std::erf(e); }, a0), 2);
-//  TTS_ULP_EQUAL( eve::diff(erf)(a0),  eve::digamma(a0), 2);
+  auto derf = [](auto e){return 2*std::exp(-e*e)*v_t(.564189583547756286948);};
+  TTS_ULP_EQUAL( eve::diff(erf)(a0),  map(derf, a0), 2);
 
 
   TTS_ULP_EQUAL(erf(T(0.5)), T(std::erf(v_t(0.5))), 1. );
