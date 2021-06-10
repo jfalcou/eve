@@ -117,6 +117,14 @@ inline namespace EVE_ABI_NAMESPACE
                             : storage_base(detail::load(eve::as_<wide>{}, ptr))
     {}
 
+
+    //! Constructs a eve::wide from a SIMD compatible pointer
+    template<typename... Ptr>
+    requires(kumi::product_type<Type>)
+    EVE_FORCEINLINE explicit  wide(kumi::tuple<Ptr...> ptr) noexcept
+                            : storage_base(detail::load(eve::as_<wide>{}, ptr))
+    {}
+
     //! Constructs a eve::wide by splatting a scalar value in all lanes
     template<scalar_value S>
     EVE_FORCEINLINE explicit  wide(S const& v)  noexcept
@@ -1007,4 +1015,14 @@ inline namespace EVE_ABI_NAMESPACE
   //! @}
   //================================================================================================
 }
+
+  //================================================================================================
+  // Product type operations
+  //================================================================================================
+  template<typename Function, typename... Wide>
+  EVE_FORCEINLINE void for_each(Function&& f, Wide&&... ts)
+  requires requires { kumi::for_each(f, std::forward<Wide>(ts).storage()... ); }
+  {
+    kumi::for_each( std::forward<Function>(f), std::forward<Wide>(ts).storage()... );
+  }
 }

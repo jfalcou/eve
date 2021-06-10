@@ -46,64 +46,85 @@ namespace eve::detail
   //================================================================================================
   // Bundle load
   //================================================================================================
-  template<typename... Pointers>
-  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), kumi::tuple<Pointers...> ptr) noexcept
+  template<typename... Args, typename... P, typename Type, typename Cardinal>
+  EVE_FORCEINLINE auto perform_load ( kumi::tuple<P...> ptr, as_<Type> const&, Cardinal
+                                    , Args const&... args
+                                    ) noexcept
   {
-    auto card = expected_cardinal_t< kumi::tuple<std::remove_cvref_t<decltype(*std::declval<Pointers>())>...> >{};
-    return eve::load(ptr, card);
+    Type that;
+    kumi::for_each( [=]<typename M>(M& m, auto p) { m = eve::load(args...,p,Cardinal{}); }
+                  , that.storage()
+                  , ptr
+                  );
+
+    return that;
   }
 
-/*  template<typename... Pointers,typename Cardinal>
-  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), kumi::tuple<Pointers...> ptr
-                            , Cardinal
+  template<typename... Args, typename... P, typename Type>
+  EVE_FORCEINLINE auto perform_load ( kumi::tuple<P...> ptr, as_<Type> const& tgt
+                                    , Args const&... args
+                                    ) noexcept
+  {
+    return perform_load(ptr, tgt, cardinal_t<Type>{}, args...);
+  }
+
+  template<typename... P,typename Cardinal>
+  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), kumi::tuple<P...> ptr, Cardinal) noexcept
+  {
+    using type = wide<kumi::tuple<std::remove_cvref_t<decltype(*std::declval<P>())>...>, Cardinal>;
+    return type(ptr);
+  }
+
+  template<typename... P>
+  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), kumi::tuple<P...> ptr) noexcept
+  {
+    using c_t = cardinal_t<wide<kumi::tuple<std::remove_cvref_t<decltype(*std::declval<P>())>...>>>;
+    return eve::load(ptr,c_t{});
+  }
+
+  template<relative_conditional_expr C, typename... P>
+  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), C cond, kumi::tuple<P...> ptr) noexcept
+  {
+    using type  = wide<kumi::tuple<std::remove_cvref_t<decltype(*std::declval<P>())>...>>;
+    return perform_load(ptr, as_<type>{}, cardinal_t<type>{}, cond);
+  }
+
+  template<relative_conditional_expr C, typename... P,typename Cardinal>
+  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), C cond, kumi::tuple<P...> ptr, Cardinal) noexcept
+  {
+    using type = wide<kumi::tuple<std::remove_cvref_t<decltype(*std::declval<P>())>...>,Cardinal>;
+    return perform_load(ptr, as_<type>{}, cond);
+  }
+
+  template<typename... P>
+  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), unsafe_type u, kumi::tuple<P...> ptr) noexcept
+  {
+    using type  = wide<kumi::tuple<std::remove_cvref_t<decltype(*std::declval<P>())>...>>;
+    return perform_load(ptr, as_<type>{}, cardinal_t<type>{}, u);
+  }
+
+  template<typename... P,typename Cardinal>
+  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), unsafe_type u, kumi::tuple<P...> ptr, Cardinal) noexcept
+  {
+    using type = wide<kumi::tuple<std::remove_cvref_t<decltype(*std::declval<P>())>...>,Cardinal>;
+    return perform_load(ptr, as_<type>{}, u);
+  }
+
+  template<relative_conditional_expr C, typename... P>
+  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), unsafe_type u, C c, kumi::tuple<P...> ptr) noexcept
+  {
+    using type  = wide<kumi::tuple<std::remove_cvref_t<decltype(*std::declval<P>())>...>>;
+    return perform_load(ptr, as_<type>{}, cardinal_t<type>{}, u, c);
+  }
+
+  template<relative_conditional_expr C, typename... P, typename Cardinal>
+  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), unsafe_type u, C c
+                            , kumi::tuple<P...> ptr, Cardinal
                             ) noexcept
   {
-    return bundle { kumi::map ( [](auto p) { return eve::load(p, Cardinal{}); }, ptr) };
+    using type = wide<kumi::tuple<std::remove_cvref_t<decltype(*std::declval<P>())>...>,Cardinal>;
+    return perform_load(ptr, as_<type>{}, Cardinal{}, u, c);
   }
-*/
-  template<relative_conditional_expr C, typename... Pointers>
-  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), C cond, kumi::tuple<Pointers...> ptr ) noexcept
-  {
-    auto card = expected_cardinal_t< kumi::tuple<std::remove_cvref_t<decltype(*std::declval<Pointers>())>...> >{};
-    return eve::load[cond](ptr, card);
-  }
-
-/*  template<relative_conditional_expr C, typename... Pointers,typename Cardinal>
-  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_)
-                            , C cond, kumi::tuple<Pointers...> ptr, Cardinal
-                            ) noexcept
-  {
-    return bundle { kumi::map ( [&](auto p) { return eve::load[cond](p, Cardinal{}); }, ptr) };
-  }
-
-  template<typename... Pointers>
-  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), unsafe_type, kumi::tuple<Pointers...> ptr) noexcept
-  {
-    return bundle { kumi::map ( [](auto p) { return eve::unsafe(eve::load)(p); }, ptr) };
-  }
-
-  template<typename... Pointers,typename Cardinal>
-  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), unsafe_type, kumi::tuple<Pointers...> ptr
-                            , Cardinal
-                            ) noexcept
-  {
-    return bundle { kumi::map ( [](auto p) { return eve::unsafe(eve::load)(p, Cardinal{}); }, ptr) };
-  }
-
-  template<relative_conditional_expr C, typename... Pointers>
-  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), unsafe_type, C cond, kumi::tuple<Pointers...> ptr ) noexcept
-  {
-    return bundle { kumi::map ( [&](auto p) { return eve::unsafe(eve::load)[cond](p); }, ptr) };
-  }
-
-  template<relative_conditional_expr C, typename... Pointers,typename Cardinal>
-  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), unsafe_type
-                            , C cond, kumi::tuple<Pointers...> ptr, Cardinal
-                            ) noexcept
-  {
-    return bundle { kumi::map ( [&](auto p) { return eve::unsafe(eve::load)[cond](p, Cardinal{}); }, ptr) };
-  }
-*/
 
   //================================================================================================
   // SIMD
