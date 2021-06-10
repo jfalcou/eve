@@ -42,10 +42,10 @@ EVE_TEST_TYPES( "Check eve::lookup behavior on product type wide", eve::test::sc
 <typename T>(eve::as_<T>)
 {
   using s_t = tuple_t<T>;
-  using w_t = eve::wide<tuple_t<T>>;
-  using i_t = eve::wide<eve::as_integer_t<T>, eve::cardinal_t<w_t>>;
+  using w_t = eve::wide<tuple_t<T>, eve::fixed<4>>;
+  using i_t = eve::wide<short, eve::cardinal_t<w_t>>;
 
-  i_t indexes{[](auto i, auto c) { return c-i-1; } };
+  i_t indexes{[](auto i, auto c) { return i%2 ? i : c-i-1; } };
 
   w_t data = [](auto i, auto) { return s_t{ static_cast<std::int8_t>('a'+i)
                                           , static_cast<T>(i + 1)
