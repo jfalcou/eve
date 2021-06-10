@@ -6,10 +6,12 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/memory/aligned_ptr.hpp>
 #include <eve/function/store.hpp>
 
 #include <array>
 #include <numeric>
+#include <utility>
 
 namespace
 {
@@ -18,9 +20,9 @@ template<typename T>
 using tuple_t = kumi::tuple<std::int8_t,T,double>;
 
 //==================================================================================================
-// Aligned store tests
+// store tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check store behavior with unaligned pointers", eve::test::scalar::all_types)
+EVE_TEST_TYPES( "Check store behavior with aligned pointers", eve::test::scalar::all_types)
 <typename T>(eve::as_<T>)
 {
   using s_t  = tuple_t<T>;
@@ -45,17 +47,37 @@ EVE_TEST_TYPES( "Check store behavior with unaligned pointers", eve::test::scala
     ref2[i] = 1.5*(1+i);
   }
 
-  std::array<std::int8_t, w_t::size()> target0;
-  std::array<T          , w_t::size()> target1;
-  std::array<double     , w_t::size()> target2;
+  constexpr auto alg0 = eve::alignment_v< std::tuple_element_t<0,w_t> >;
+  constexpr auto alg2 = eve::alignment_v< std::tuple_element_t<2,w_t> > * 4;
 
-  auto dst = kumi::make_tuple(&target0[0], &target1[0], &target2[0]);
+  alignas(alg0) std::array<std::int8_t, w_t::size()> target0, ctarget0;
+                std::array<T          , w_t::size()> target1, ctarget1;
+  alignas(alg2) std::array<double     , w_t::size()> target2, ctarget2;
+
+  auto dst = kumi::make_tuple ( eve::as_aligned<alg0>(&target0[0])
+                              , &target1[0]
+                              , eve::as_aligned<alg2>(&target2[0])
+                              );
 
   eve::store(data, dst);
 
   TTS_ALL_EQUAL(target0, ref0);
   TTS_ALL_EQUAL(target1, ref1);
   TTS_ALL_EQUAL(target2, ref2);
+
+  auto cdst = kumi::make_tuple( eve::as_aligned<alg0>(&ctarget0[0])
+                              , &ctarget1[0]
+                              , eve::as_aligned<alg2>(&ctarget2[0])
+                              );
+
+  eve::store[eve::ignore_last(w_t::size()/2)](data, cdst);
+
+  for(int i = 0; i < w_t::size()/2; ++i)
+  {
+    TTS_EQUAL(ctarget0[i], ref0[i]);
+    TTS_EQUAL(ctarget1[i], ref1[i]);
+    TTS_EQUAL(ctarget2[i], ref2[i]);
+  }
 };
 
 }
