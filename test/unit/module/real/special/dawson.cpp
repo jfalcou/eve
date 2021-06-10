@@ -5,28 +5,46 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include "test.hpp"
+#include <eve/concept/value.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
+#include <eve/function/all.hpp>
 #include <eve/function/dawson.hpp>
-#include <eve/function/next.hpp>
-#include <eve/function/prev.hpp>
-#include <eve/function/is_denormal.hpp>
-#include <eve/constant/nan.hpp>
+#include <eve/function/diff/dawson.hpp>
+#include <eve/function/is_negative.hpp>
+#include <eve/function/is_positive.hpp>
+#include <type_traits>
+#include <cmath>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
-#include <eve/constant/minlog2.hpp>
-#include <eve/constant/minlog2denormal.hpp>
-#include <eve/concept/value.hpp>
+#include <eve/constant/nan.hpp>
+#include <eve/constant/smallestposval.hpp>
 #include <eve/platform.hpp>
-#include <eve/concept/value.hpp>
-#include <cmath>
+#include <eve/detail/diff_div.hpp>
 
-TTS_CASE_TPL("Check eve::dawson return type", EVE_TYPE)
+//==================================================================================================
+// Types tests
+//==================================================================================================
+EVE_TEST_TYPES( "Check return types of dawson"
+            , eve::test::simd::ieee_reals
+            )
+<typename T>(eve::as_<T>)
 {
-  TTS_EXPR_IS(eve::dawson(T(0)), T);
-}
+  using v_t = eve::element_type_t<T>;
 
-TTS_CASE_TPL("Check eve::dawson behavior", EVE_TYPE)
+  TTS_EXPR_IS( eve::dawson(T())  , T);
+  TTS_EXPR_IS( eve::dawson(v_t()), v_t);
+};
+
+//==================================================================================================
+// dawson  tests
+//==================================================================================================
+EVE_TEST_TYPES( "Check behavior of dawson on wide"
+        , eve::test::simd::ieee_reals
+        )
+  <typename T>(eve::as_<T> )
 {
-
  if constexpr( eve::platform::supports_invalids )
   {
     TTS_IEEE_EQUAL(eve::dawson(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
@@ -57,4 +75,10 @@ TTS_CASE_TPL("Check eve::dawson behavior", EVE_TYPE)
    TTS_ULP_EQUAL(eve::dawson(w), r, 2);
 
 
-}
+    using elt_t = eve::element_type_t<T>;
+    auto df = [](auto f, auto x){return eve::detail::centered_diffdiv(f, x); };
+    auto ulp =  (sizeof(elt_t) == 4) ? 1.0e4 : 1.0e8;
+    TTS_ULP_EQUAL(eve::diff(eve::dawson)(T{2.0}), df(eve::dawson, T(2.0))  , ulp);
+    TTS_ULP_EQUAL(eve::diff(eve::dawson)(T{1}), df(eve::dawson, T(1.0))  , ulp);
+
+};

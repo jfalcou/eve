@@ -62,6 +62,7 @@ namespace eve::detail
     return exp_int(n, x);
   }
 
+
   template<integral_simd_value I, floating_real_simd_value T>
   EVE_FORCEINLINE auto exp_int_(EVE_SUPPORTS(cpu_), I in, T x) noexcept
   //  requires compatible_values<T, I>
@@ -71,14 +72,14 @@ namespace eve::detail
   }
 
   template<integral_simd_value I, floating_real_scalar_value T>
-  EVE_FORCEINLINE T exp_int_(EVE_SUPPORTS(cpu_), I in, T x) noexcept
-  requires compatible_values<T, I>
+  EVE_FORCEINLINE auto exp_int_(EVE_SUPPORTS(cpu_), I in, T x) noexcept
+  //  requires compatible_values<T, I>
   {
     using elt_t =  element_type_t<T>;
     using w_t = wide<elt_t, cardinal_t<I>>;
     using i_t = as_integer_t<elt_t>;
     return exp_int(convert(in, as<i_t>()), w_t(x));
-  }
+   }
 
   template<floating_real_value T>
   EVE_FORCEINLINE T exp_int_(EVE_SUPPORTS(cpu_), T n, T x) noexcept

@@ -43,7 +43,7 @@ TTS_CASE_TPL("Check eve::beta behavior", EVE_TYPE)
     TTS_ULP_EQUAL(eve__beta(T(1), eve::nan(eve::as<T>())), eve::nan(as<T>()), 0);
   }
 
-#if __cpp_lib_math_special_functions
+#if defined(__cpp_lib_math_special_functions)
   using elt_t = eve::element_type_t<T>;
 
   TTS_ULP_EQUAL(eve__beta(T(-0.0), T(-0.0)), T(std::beta(elt_t(-0.0), elt_t(-0.0))), 0);
