@@ -46,20 +46,32 @@ namespace eve::detail
                      wide<T, N> v,
                      logical<wide<T, N>> mask,
                      Ptr ptr) noexcept
-    requires (N() == 4 && std::same_as<T, std::int32_t> )
+    requires (N() == 4 && sizeof(T) == 4 )
   {
-    constexpr auto patterns = int_patterns();
+    if constexpr ( std::floating_point<T> )
+    {
+      using i_t = eve::as_integer_t<T>;
+      auto  i_p = ptr_cast<i_t>(ptr);
+      auto  i_v = eve::bit_cast(v, eve::as_<wide<i_t, N>>{});
+      auto  i_m = eve::bit_cast(mask, eve::as_<eve::logical<wide<i_t, N>>>{});
 
-    top_bits mmask{mask};
-    wide<std::uint32_t, eve::fixed<4>> pattern{patterns[mmask.as_int() & 7].data()};
+      i_t* stored = unsafe(compress_store)(i_v, i_m, i_p);
+      return (T*) stored;
+    }
+    else
+    {
+      constexpr auto patterns = int_patterns();
 
-    auto byte_idxs = eve::bit_cast(pattern, eve::as_<wide<std::uint8_t, eve::fixed<16>>>{});
+      top_bits mmask{mask};
+      wide<std::uint32_t, eve::fixed<4>> pattern{patterns[mmask.as_int() & 7].data()};
 
-    int popcount_3 = get_popcount(byte_idxs.get(0));
-    int popcount_4 = popcount_3 + mmask.get(3);
+      auto byte_idxs = eve::bit_cast(pattern, eve::as_<wide<std::uint8_t, eve::fixed<16>>>{});
+      wide<T, N> shuffled = _mm_shuffle_epi8(v, pattern);
 
-    wide<T, N> shuffled = _mm_shuffle_epi8(v, pattern);
-    store(shuffled, ptr);
-    return as_raw_pointer(ptr) + popcount_4;
+      int popcount = get_popcount(byte_idxs.get(0)) + mmask.get(3);
+
+      store(shuffled, ptr);
+      return as_raw_pointer(ptr) + popcount;
+    }
   }
 }
