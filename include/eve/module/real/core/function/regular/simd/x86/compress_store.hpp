@@ -60,6 +60,6 @@ namespace eve::detail
 
     wide<T, N> shuffled = _mm_shuffle_epi8(v, pattern);
     store(shuffled, ptr);
-    return ptr + popcount_4;
+    return as_raw_pointer(ptr) + popcount_4;
   }
 }

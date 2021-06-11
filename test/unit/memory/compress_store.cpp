@@ -15,14 +15,14 @@
 
 namespace
 {
-template <typename T, typename L>
+template <bool all_options, typename T, typename L>
 void one_test(T x, L m)
 {
-  using scalar = typename T::value_type;
-  using arr = std::array<scalar, T::size()>;
+  using e_t = eve::element_type_t<T>;
+  using arr = std::array<e_t, T::size()>;
 
   arr expected;
-  expected.fill(scalar{});
+  expected.fill(e_t{});
 
   std::int8_t o = 0;
   for (std::int8_t i = 0; i != T::size(); ++i) {
@@ -31,15 +31,27 @@ void one_test(T x, L m)
   }
 
   alignas(sizeof(arr)) arr actual;
-  actual.fill(scalar{});
+  actual.fill(e_t{});
 
-  scalar* out = eve::unsafe(eve::compress_store)(x, m, actual.begin());
+  e_t* out = eve::unsafe(eve::compress_store)(x, m, actual.begin());
   TTS_EQUAL((out - actual.begin()), o);
 
   // No guarntees past the out
   std::copy(&expected[o], expected.end(), &actual[o]);
-
   TTS_EQUAL(T(expected.begin()), T(actual.begin()));
+
+  // Same check for aligned
+  if constexpr (all_options)
+  {
+    using ap_t = eve::aligned_ptr<e_t, T::size() * sizeof(e_t)>;
+
+    out = eve::unsafe(eve::compress_store)(x, m, ap_t{actual.begin()});
+
+    TTS_EQUAL((out - actual.begin()), o);
+
+    std::copy(&expected[o], expected.end(), &actual[o]);
+    TTS_EQUAL(T(expected.begin()), T(actual.begin()));
+  }
 }
 
 template <typename L, typename T>
@@ -48,7 +60,7 @@ void go_through_everything(T x)
   L m(false);
   auto test = [&](auto& self, std::size_t i) mutable {
     if (i == T::size()) {
-      one_test(x, m);
+      one_test<false>(x, m);
       return;
     };
     self(self, i + 1);
@@ -67,14 +79,14 @@ template<typename L, typename T> void smaller_test_v(T x)
     for( std::ptrdiff_t i = 0; i < T::size(); i += 2 )
     {
       m.set(i, true);
-      one_test(x, m);
+      one_test<true>(x, m);
     }
   }
 
   // all/none
   {
-    one_test(x, L {true});
-    one_test(x, L {false});
+    one_test<true>(x, L {true});
+    one_test<true>(x, L {false});
   }
 
   // bunch of randoms
@@ -88,7 +100,7 @@ template<typename L, typename T> void smaller_test_v(T x)
       return m;
     };
 
-    for( int i = 0; i < 1000; ++i ) { one_test(x, random_l()); }
+    for( int i = 0; i < 1000; ++i ) { one_test<true>(x, random_l()); }
   }
 }
 
@@ -99,10 +111,7 @@ void all_tests_for_v(T x)
   {
     go_through_everything<L>(x);
   }
-  else
-  {
-    smaller_test_v<L>(x);
-  }
+  smaller_test_v<L>(x);
 }
 
 }
@@ -114,6 +123,5 @@ EVE_TEST( "Check compress store behavior"
 <typename T, typename L> (T data, L logical_data)
 {
   all_tests_for_v<eve::logical<T>>(data);
-  // smaller_test_v<L>(logical_data);
-  (void) logical_data;
+  smaller_test_v<L>(logical_data);
 };
