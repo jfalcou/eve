@@ -50,15 +50,13 @@ namespace eve::detail
   {
     constexpr auto patterns = int_patterns();
 
-    top_bits bits{mask};
-    int storage = bits.storage;
-
-    wide<std::uint32_t, eve::fixed<4>> pattern{patterns[storage & 7].data()};
+    top_bits mmask{mask};
+    wide<std::uint32_t, eve::fixed<4>> pattern{patterns[mmask.as_int() & 7].data()};
 
     auto byte_idxs = eve::bit_cast(pattern, eve::as_<wide<std::uint8_t, eve::fixed<16>>>{});
 
     int popcount_3 = get_popcount(byte_idxs.get(0));
-    int popcount_4 = popcount_3 + bits.get(3);
+    int popcount_4 = popcount_3 + mmask.get(3);
 
     wide<T, N> shuffled = _mm_shuffle_epi8(v, pattern);
     store(shuffled, ptr);

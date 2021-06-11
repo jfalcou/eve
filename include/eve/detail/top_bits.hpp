@@ -231,6 +231,12 @@ struct top_bits
       }
     }
 
+    EVE_FORCEINLINE constexpr auto as_int() const
+      requires ( !is_aggregated )
+    {
+      if constexpr(!Logical::abi_type::is_wide_logical) return storage.value; else return storage;
+    }
+
     EVE_FORCEINLINE constexpr std::strong_ordering operator<=>(const top_bits&) const = default;
 
     template<typename X>
@@ -397,12 +403,7 @@ EVE_FORCEINLINE std::ptrdiff_t first_true_guaranteed(top_bits<Logical> mmask)
 {
   if constexpr ( !top_bits<Logical>::is_aggregated )
   {
-    auto st = [](auto m)
-    {
-      if constexpr(!Logical::abi_type::is_wide_logical) return m.value; else return m;
-    }(mmask.storage);
-
-    return std::countr_zero(st) / top_bits<Logical>::bits_per_element;
+    return std::countr_zero(mmask.as_int()) / top_bits<Logical>::bits_per_element;
   }
   else
   {
@@ -432,12 +433,7 @@ EVE_FORCEINLINE std::ptrdiff_t count_true(top_bits<Logical> mmask)
 {
   if constexpr ( !top_bits<Logical>::is_aggregated )
   {
-    auto st = [](auto m)
-    {
-      if constexpr(!Logical::abi_type::is_wide_logical) return m.value; else return m;
-    }(mmask.storage);
-
-    return std::popcount(st) / top_bits<Logical>::bits_per_element;
+    return std::popcount(mmask.as_int()) / top_bits<Logical>::bits_per_element;
   }
   else
   {
