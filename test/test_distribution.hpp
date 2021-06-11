@@ -32,7 +32,7 @@ namespace eve
       T a;
       T b;
       int nb;
-      param_type(T aa, T bb, int nbb) : a(aa),  b(bb), nb(nbb){};
+      param_type(T aa, T bb, int nbb = 300) : a(aa),  b(bb), nb(nbb){};
 
     };
 
@@ -157,7 +157,7 @@ namespace eve
       T a;
       T b;
       int nb;
-      param_type(T aa, T bb, int nbb) : a(aa),  b(bb), nb(nbb){};
+      param_type(T aa, T bb, int nbb = 300) : a(aa),  b(bb), nb(nbb){};
 
     };
 
