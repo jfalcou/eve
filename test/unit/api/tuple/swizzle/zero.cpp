@@ -12,7 +12,7 @@
 template<int N> inline constexpr auto n_zeros = eve::fix_pattern<N>( [](int, int){ return -1; } );
 
 //==================================================================================================
-// Identity test
+// Zero test
 //==================================================================================================
 EVE_TEST_TYPES( "Check behavior of zero swizzle", eve::test::scalar::all_types)
 <typename T>(eve::as_<T>)

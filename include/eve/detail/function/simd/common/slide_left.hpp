@@ -33,6 +33,13 @@ namespace eve::detail
       auto h = v.slice(upper_);
       return Wide{ slide_left(h, index<Shift-Wide::size()/2>), decltype(h){0} };
     }
+    else if constexpr( is_bundle_v<typename Wide::abi_type> )
+    {
+      return Wide ( kumi::map ( []<typename T>(T m) { return slide_left(m,index<Shift>); }
+                              , v.storage()
+                              )
+                  );
+    }
     else
     {
       return basic_swizzle(v, slide_left_pattern<Shift,Wide::size()>);
