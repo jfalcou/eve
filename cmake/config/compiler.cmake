@@ -21,7 +21,6 @@ target_include_directories( eve_test INTERFACE
                           )
 
 target_include_directories( eve_test SYSTEM INTERFACE
-                            ${tts_SOURCE_DIR}/include
                             ${Boost_INCLUDE_DIRS}
                           )
 
@@ -42,6 +41,5 @@ target_include_directories( eve_bench INTERFACE
                           )
 
 target_include_directories( eve_bench SYSTEM INTERFACE
-                            ${tts_SOURCE_DIR}/include
                             ${Boost_INCLUDE_DIRS}
                           )

@@ -26,17 +26,3 @@ if (DOXYGEN_FOUND)
 else (DOXYGEN_FOUND)
   message( STATUS "[eve] Doxygen need to be installed to generate the doxygen documentation")
 endif (DOXYGEN_FOUND)
-
-##==================================================================================================
-## Fetch TTS
-##==================================================================================================
-set(TTS_BUILD_TEST    OFF CACHE INTERNAL "OFF")
-set(TTS_IS_DEPENDENT  ON  CACHE INTERNAL "ON")
-
-include(FetchContent)
-FetchContent_Declare( tts
-                      GIT_REPOSITORY https://github.com/jfalcou/tts.git
-                      GIT_TAG develop
-                    )
-
-FetchContent_MakeAvailable(tts)

@@ -31,7 +31,6 @@ function(check_failure root)
 
     target_include_directories( ${test_lib}
                                 PRIVATE
-                                  ${tts_SOURCE_DIR}/include
                                   ${PROJECT_SOURCE_DIR}/test
                                   ${PROJECT_SOURCE_DIR}/include
                               )
