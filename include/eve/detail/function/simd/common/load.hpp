@@ -83,7 +83,7 @@ namespace eve::detail
   // Bundle load
   //================================================================================================
   template<kumi::product_type T, typename N, typename... Pointers>
-  EVE_FORCEINLINE auto load(eve::as_<wide<T,N>> const & tgt, kumi::tuple<Pointers...> ptr) noexcept
+  EVE_FORCEINLINE auto load(eve::as_<wide<T,N>> const&, kumi::tuple<Pointers...> ptr) noexcept
   requires std::same_as<abi_t<T, N>, bundle_>
   {
     wide<T,N> that;

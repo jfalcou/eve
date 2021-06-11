@@ -47,8 +47,8 @@ EVE_TEST_TYPES( "Check store behavior with aligned pointers", eve::test::scalar:
     ref2[i] = 1.5*(1+i);
   }
 
-  constexpr auto alg0 = eve::alignment_v< std::tuple_element_t<0,w_t> >;
-  constexpr auto alg2 = eve::alignment_v< std::tuple_element_t<2,w_t> > * 4;
+  constexpr auto alg0 = eve::alignment_v< std::tuple_element_t<0,typename w_t::storage_type> >;
+  constexpr auto alg2 = eve::alignment_v< std::tuple_element_t<2,typename w_t::storage_type> >;
 
   alignas(alg0) std::array<std::int8_t, w_t::size()> target0, ctarget0;
                 std::array<T          , w_t::size()> target1, ctarget1;
