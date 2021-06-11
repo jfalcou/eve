@@ -43,7 +43,88 @@ namespace eve::detail
   constexpr bool sanitizers_are_on = false;
 #endif
 
+  //================================================================================================
+  // Bundle load
+  //================================================================================================
+  template<typename... Args, typename... P, typename Type, typename Cardinal>
+  EVE_FORCEINLINE auto perform_load ( kumi::tuple<P...> ptr, as_<Type> const&, Cardinal
+                                    , Args const&... args
+                                    ) noexcept
+  {
+    Type that;
+    kumi::for_each( [=]<typename M>(M& m, auto p) { m = eve::load(args...,p,Cardinal{}); }
+                  , that.storage()
+                  , ptr
+                  );
 
+    return that;
+  }
+
+  template<typename... Args, typename... P, typename Type>
+  EVE_FORCEINLINE auto perform_load ( kumi::tuple<P...> ptr, as_<Type> const& tgt
+                                    , Args const&... args
+                                    ) noexcept
+  {
+    return perform_load(ptr, tgt, cardinal_t<Type>{}, args...);
+  }
+
+  template<typename... P,typename Cardinal>
+  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), kumi::tuple<P...> ptr, Cardinal) noexcept
+  {
+    using type = wide<kumi::tuple<std::remove_cvref_t<decltype(*std::declval<P>())>...>, Cardinal>;
+    return type(ptr);
+  }
+
+  template<typename... P>
+  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), kumi::tuple<P...> ptr) noexcept
+  {
+    using c_t = cardinal_t<wide<kumi::tuple<std::remove_cvref_t<decltype(*std::declval<P>())>...>>>;
+    return eve::load(ptr,c_t{});
+  }
+
+  template<relative_conditional_expr C, typename... P>
+  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), C cond, kumi::tuple<P...> ptr) noexcept
+  {
+    using type  = wide<kumi::tuple<std::remove_cvref_t<decltype(*std::declval<P>())>...>>;
+    return perform_load(ptr, as_<type>{}, cardinal_t<type>{}, cond);
+  }
+
+  template<relative_conditional_expr C, typename... P,typename Cardinal>
+  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), C cond, kumi::tuple<P...> ptr, Cardinal) noexcept
+  {
+    using type = wide<kumi::tuple<std::remove_cvref_t<decltype(*std::declval<P>())>...>,Cardinal>;
+    return perform_load(ptr, as_<type>{}, cond);
+  }
+
+  template<typename... P>
+  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), unsafe_type u, kumi::tuple<P...> ptr) noexcept
+  {
+    using type  = wide<kumi::tuple<std::remove_cvref_t<decltype(*std::declval<P>())>...>>;
+    return perform_load(ptr, as_<type>{}, cardinal_t<type>{}, u);
+  }
+
+  template<typename... P,typename Cardinal>
+  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), unsafe_type u, kumi::tuple<P...> ptr, Cardinal) noexcept
+  {
+    using type = wide<kumi::tuple<std::remove_cvref_t<decltype(*std::declval<P>())>...>,Cardinal>;
+    return perform_load(ptr, as_<type>{}, u);
+  }
+
+  template<relative_conditional_expr C, typename... P>
+  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), unsafe_type u, C c, kumi::tuple<P...> ptr) noexcept
+  {
+    using type  = wide<kumi::tuple<std::remove_cvref_t<decltype(*std::declval<P>())>...>>;
+    return perform_load(ptr, as_<type>{}, cardinal_t<type>{}, u, c);
+  }
+
+  template<relative_conditional_expr C, typename... P, typename Cardinal>
+  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), unsafe_type u, C c
+                            , kumi::tuple<P...> ptr, Cardinal
+                            ) noexcept
+  {
+    using type = wide<kumi::tuple<std::remove_cvref_t<decltype(*std::declval<P>())>...>,Cardinal>;
+    return perform_load(ptr, as_<type>{}, Cardinal{}, u, c);
+  }
 
   //================================================================================================
   // SIMD
@@ -208,7 +289,7 @@ namespace eve::detail
   template<typename ...Args>
   requires (!sanitizers_are_on)
   EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), unsafe_type, Args ... args) noexcept
-              ->  decltype(eve::load(args...))
+              ->  decltype( eve::load(args...) )
   {
     return eve::load(args...);
   }
@@ -216,7 +297,7 @@ namespace eve::detail
   template<relative_conditional_expr C, typename ... Args>
   requires (!sanitizers_are_on)
   EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), C const &cond, unsafe_type, Args ... args) noexcept
-              ->  decltype(eve::load[cond](args...))
+              ->  decltype( eve::load[cond](args...) )
   {
     return eve::load[cond](args...);
   }

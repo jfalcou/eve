@@ -9,6 +9,7 @@
 
 #include <eve/arch/expected_cardinal.hpp>
 #include <eve/detail/concepts.hpp>
+#include <eve/detail/kumi.hpp>
 #include <eve/arch/abi_of.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
@@ -38,6 +39,13 @@ namespace eve
   struct abi<Type, Size>
   {
     using type = eve::aggregated_;
+  };
+
+  template<typename Type, typename Size>
+  requires( kumi::product_type<Type> )
+  struct abi<Type, Size>
+  {
+    using type = eve::bundle_;
   };
 
   template<typename Type, typename Size>

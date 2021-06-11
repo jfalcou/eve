@@ -19,11 +19,16 @@ namespace eve::detail
   template<simd_value Wide>
   EVE_FORCEINLINE Wide reverse_(EVE_SUPPORTS(cpu_), Wide const& v)
   {
-    if constexpr ( has_aggregated_abi_v<Wide> ) {
+    if constexpr ( has_aggregated_abi_v<Wide> )
+    {
       auto [l, h] = v.slice();
       l = eve::reverse(l);
       h = eve::reverse(h);
       return Wide{h, l};
+    }
+    else if constexpr( has_bundle_abi_v<Wide> )
+    {
+      return Wide(kumi::map( [](auto m) { return reverse(m); }, v.storage()));
     }
     else
     {

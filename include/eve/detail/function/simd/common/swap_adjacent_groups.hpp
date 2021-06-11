@@ -33,6 +33,13 @@ namespace eve::detail
         return Wide {swap_adjacent_groups(l,fixed<G>{}),swap_adjacent_groups(h,fixed<G>{})};
       }
     }
+    else if constexpr( is_bundle_v<typename Wide::abi_type> )
+    {
+      return Wide ( kumi::map ( [&]<typename T>(T m) { return swap_adjacent_groups(m,fixed<G>{}); }
+                              , v.storage()
+                              )
+                  );
+    }
     else
     {
       // In this case, we don't have anything special to do so we just swizzle

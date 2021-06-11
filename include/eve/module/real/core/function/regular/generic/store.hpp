@@ -9,6 +9,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/kumi.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/replace.hpp>
 #include <eve/memory/aligned_ptr.hpp>
@@ -29,6 +30,28 @@ namespace eve::detail
   EVE_FORCEINLINE auto store_(EVE_SUPPORTS(cpu_), T value, aligned_ptr<T, N> ptr) noexcept
   {
     *ptr = value;
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  // simd Tuple case
+  template<kumi::product_type T, typename S, kumi::sized_product_type<T::size()> Ptr>
+  EVE_FORCEINLINE void
+  store_(EVE_SUPPORTS(cpu_), wide<T, S> const &value, Ptr ptrs) noexcept
+    requires std::same_as<abi_t<T, S>, bundle_>
+  {
+    kumi::for_each( [](auto v, auto p) { store(v, p); }, value.storage(), ptrs );
+  }
+
+  template< kumi::product_type T, typename S
+          , kumi::sized_product_type<T::size()> Ptr
+          , relative_conditional_expr C
+          >
+  EVE_FORCEINLINE void store_(EVE_SUPPORTS(cpu_),
+                              C const &cond,
+                              wide<T, S> const &value,
+                              Ptr ptrs) noexcept
+  {
+    kumi::for_each( [&](auto v, auto p) { store[cond](v, p); }, value.storage(), ptrs );
   }
 
   // -----------------------------------------------------------------------------------------------

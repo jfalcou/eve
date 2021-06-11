@@ -69,7 +69,7 @@ namespace eve::detail
     {
       return aggregate_swizzle(v,q);
     }
-    if constexpr(sizeof(T) == 8)
+    else if constexpr(sizeof(T) == 8)
     {
       using f_t         = as_floating_point_t<that_t>;
       auto const vv     = bit_cast(v,as_<f_t>{});

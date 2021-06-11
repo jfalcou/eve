@@ -42,7 +42,7 @@ inline namespace EVE_ABI_NAMESPACE
   //!
   //! **Required header:** `#include <eve/wide.hpp>`
   //!
-  //! eve::wide is an architecture-agnostic representation of a low-level SIMD register and provides
+  //! eve::wide is an architecture-agnostic representation of a IMD register and provides
   //! standardized API to access informations, compute values and manipulate such register.
   //!
   //! @tparam Type      Type of value to store in the register
@@ -78,7 +78,7 @@ inline namespace EVE_ABI_NAMESPACE
     //! Generates a eve::wide type from a different cardinal `N`.
     template<typename N> using rescale = wide<Type,N>;
 
-    //! Returns the alignment expected to be used to store a eve::wide
+    // TODO : REMOVE AFTER MERGE
     static EVE_FORCEINLINE constexpr auto alignment() noexcept { return sizeof(Type)*Cardinal{}; }
 
     //==============================================================================================
@@ -114,6 +114,14 @@ inline namespace EVE_ABI_NAMESPACE
     //! Constructs a eve::wide from a SIMD compatible pointer
     template<simd_compatible_ptr<wide> Ptr>
     EVE_FORCEINLINE explicit  wide(Ptr ptr) noexcept
+                            : storage_base(detail::load(eve::as_<wide>{}, ptr))
+    {}
+
+
+    //! Constructs a eve::wide from a SIMD compatible pointer
+    template<typename... Ptr>
+    requires(kumi::product_type<Type>)
+    EVE_FORCEINLINE explicit  wide(kumi::tuple<Ptr...> ptr) noexcept
                             : storage_base(detail::load(eve::as_<wide>{}, ptr))
     {}
 
@@ -988,16 +996,33 @@ inline namespace EVE_ABI_NAMESPACE
     //! Inserts a eve::wide into a output stream
     friend std::ostream &operator<<(std::ostream &os, wide const &p)
     {
-      constexpr auto sz = sizeof(storage_type)/sizeof(Type);
-      auto that = bit_cast( p, as_<std::array<Type,sz>>());
+      if constexpr( kumi::product_type<Type> )
+      {
+        return os << p.storage();
+      }
+      else
+      {
+        constexpr auto sz = sizeof(storage_type)/sizeof(Type);
+        auto that = bit_cast( p, as_<std::array<Type,sz>>());
 
-      os << '(' << +that[ 0 ];
-      for(size_type i = 1; i != p.size(); ++i) os << ", " << +that[ i ];
-      return os << ')';
+        os << '(' << +that[ 0 ];
+        for(size_type i = 1; i != p.size(); ++i) os << ", " << +that[ i ];
+        return os << ')';
+      }
     }
   };
   //================================================================================================
   //! @}
   //================================================================================================
 }
+
+  //================================================================================================
+  // Product type operations
+  //================================================================================================
+  template<typename Function, typename... Wide>
+  EVE_FORCEINLINE void for_each(Function&& f, Wide&&... ts)
+  requires requires { kumi::for_each(f, std::forward<Wide>(ts).storage()... ); }
+  {
+    kumi::for_each( std::forward<Function>(f), std::forward<Wide>(ts).storage()... );
+  }
 }

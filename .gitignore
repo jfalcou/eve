@@ -42,3 +42,4 @@
 Testing/*
 *.vscode/*
 doc/docs/*
+.cache/

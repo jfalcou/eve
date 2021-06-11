@@ -49,31 +49,16 @@ namespace eve::detail
   template<typename P> EVE_FORCEINLINE auto slice_impl(P const &a) noexcept
   {
     using abi_t   = typename P::abi_type;
-    using card_t  = typename P::cardinal_type;
-    using value_t = typename P::value_type;
 
-    using sub_t = as_wide_t<value_t, typename card_t::split_type>;
-
-    if constexpr( is_emulated_v<abi_t> )
-    {
-      auto eval = [&](auto... I) {
-        using that_t = std::array<sub_t, 2>;
-        return that_t {sub_t {a.get(I)...}, sub_t {a.get(I + card_t::value / 2)...}};
-      };
-
-      return apply<card_t::value / 2>(eval);
-    }
-    else if constexpr( is_aggregated_v<abi_t> )
-    {
-      return a.storage().segments;
-    }
+    if constexpr( is_aggregated_v<abi_t> )  return a.storage().segments;
+    else                                    return std::array{a.slice(lower_), a.slice(upper_)};
   }
 
   //================================================================================================
   // Partial slice
   //================================================================================================
   template<typename P, typename Slice>
-  EVE_FORCEINLINE auto slice_impl(P const &a, Slice const &) noexcept
+  EVE_FORCEINLINE auto slice_impl(P const &a, Slice const & s) noexcept
   {
     using abi_t   = typename P::abi_type;
     using card_t  = typename P::cardinal_type;
@@ -90,6 +75,10 @@ namespace eve::detail
     else if constexpr( is_aggregated_v<abi_t> )
     {
       return a.storage().segments[Slice::value];
+    }
+    else if constexpr( is_bundle_v<abi_t> )
+    {
+      return sub_t(kumi::map( [&](auto m) { return m.slice(s); }, a.storage()));
     }
   }
 

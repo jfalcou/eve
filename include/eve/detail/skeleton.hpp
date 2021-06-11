@@ -59,31 +59,17 @@ namespace eve::detail
     static constexpr std::size_t card_v = std::max({eve::cardinal_v<std::decay_t<Ts>>...});
     using value_t                       = decltype(std::declval<F>()(at(std::declval<Ts>(), 0)...));
     using fixed_t                       = fixed<card_v>;
-    using type                          = as_wide_t<value_t, fixed_t>;
+
+    template<typename S> struct widen : as_wide<S, fixed_t> {};
+
+    using base  = std::conditional_t< kumi::product_type<value_t>
+                                    , kumi::remap_type<widen,value_t>
+                                    , as_wide<value_t, fixed_t>
+                                    >;
+    using type = typename base::type;
   };
 
-  template<typename T> struct type_name_
-  {
-    static constexpr auto value() noexcept
-    {
-  #if defined(_MSC_VER )
-      std::string_view data(__FUNCSIG__);
-      auto i = data.find('<') + 1,
-        j = data.find(">::value");
-      return data.substr(i, j - i);
-  #else
-      std::string_view data(__PRETTY_FUNCTION__);
-      auto i = data.find('=') + 2,
-        j = data.find_last_of(']');
-      return data.substr(i, j - i);
-  #endif
-    }
-  };
-
-  template<typename T>
-  inline constexpr auto const typename_ = type_name_<T>::value();
-
- // MAP skeleton used to emulate SIMD operations
+  // MAP skeleton used to emulate SIMD operations
   template<typename Out, typename... Bs>
   EVE_FORCEINLINE auto rebuild( Bs const&... ps) noexcept
   {

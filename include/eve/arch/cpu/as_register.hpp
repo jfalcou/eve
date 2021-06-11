@@ -7,11 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/traits/as_wide.hpp>
 #include <eve/arch/expected_cardinal.hpp>
-#include <eve/detail/has_abi.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/detail/has_abi.hpp>
+#include <eve/detail/kumi.hpp>
 #include <eve/forward.hpp>
+#include <eve/traits/as_wide.hpp>
 #include <array>
 
 namespace eve
@@ -38,6 +39,24 @@ namespace eve
   struct as_logical_register<Type, Cardinal, eve::emulated_>
   {
     using type = std::array<logical<Type>, Cardinal::value>;
+  };
+
+  //================================================================================================
+  // Special case : product_type
+  //================================================================================================
+  namespace detail
+  {
+    template<typename Cardinal> struct apply_as_wide
+    {
+      template<typename T> using type = as_wide<T,Cardinal>;
+    };
+  }
+
+  template<typename Type, typename Cardinal>
+  requires( kumi::product_type<Type> )
+  struct  as_register<Type, Cardinal, eve::bundle_>
+        : kumi::remap_type<detail::apply_as_wide<Cardinal>::template type, Type>
+  {
   };
 
   namespace detail

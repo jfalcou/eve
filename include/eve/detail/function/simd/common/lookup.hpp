@@ -14,28 +14,32 @@
 
 namespace eve::detail
 {
-  template<scalar_value T, integral_scalar_value I, typename N>
+  template<typename T, integral_scalar_value I, typename N>
   EVE_FORCEINLINE auto
   lookup_(EVE_SUPPORTS(cpu_), wide<T, N> const &a, wide<I, N> const &ind) noexcept
   {
-    auto const cond = [&]()
+    if constexpr( is_bundle_v<abi_t<T,N>> )
     {
-      if constexpr( std::is_signed_v<I> ) return ind >= 0;
-      else                                return ind < N::value;
-    }();
+      return wide<T, N>( kumi::map([=]<typename M>(M m){ return m[ind]; }, a.storage()) );
+    }
+    else
+    {
+      auto const cond = [&]()
+      {
+        if constexpr( std::is_signed_v<I> ) return ind >= 0;
+        else                                return ind < N::value;
+      }();
 
-    // Compute mask as SIMD
-    auto  idx  = cond.bits();
-          idx &= ind;
-    auto  msk  = cond.mask();
+      // Compute mask as SIMD
+      auto  idx  = cond.bits();
+            idx &= ind;
 
-    // Rebuild as scalar
-    wide<T, N> data;
-    apply<N::value>([&](auto... v) { (data.set(v,a.get(idx.get(v))),...); });
+      // Rebuild as scalar
+      wide<T, N> data;
+      apply<N::value>([&](auto... v) { (data.set(v, cond.get(v) ? a.get(idx.get(v)) : T{}),...); });
 
-    // Apply mask as SIMD
-    data &= msk;
-    return data;
+      return data;
+    }
   }
 
   template<scalar_value T, integral_scalar_value I, typename N>
@@ -59,17 +63,22 @@ namespace eve::detail
     // Compute mask as SIMD
     auto  idx  = cond.bits();
           idx &= ind;
-    auto  msk  = cond.mask();
 
     // Rebuild as scalar
     wide<T, N> data;
 
     constexpr auto const half = N::value / 2;
-    apply<half>([&, lx = idx.slice(lower_)](auto... v) { (data.set(v     , a.get(lx.get(v))),...); } );
-    apply<half>([&, hx = idx.slice(upper_)](auto... v) { (data.set(v+half, a.get(hx.get(v))),...); } );
+    apply<half> ([&, lx = idx.slice(lower_)](auto... v)
+                  {
+                    (data.set(v , (cond.get(v) ? a.get(lx.get(v)) : T{})),...);
+                  }
+                );
+    apply<half> ([&, hx = idx.slice(upper_)](auto... v)
+                  {
+                    (data.set(v+half, (cond.get(v) ? a.get(hx.get(v)) : T{})),...);
+                  }
+                );
 
-    // Apply mask as SIMD
-    data &= msk;
     return data;
   }
 }

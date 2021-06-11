@@ -80,6 +80,18 @@ namespace eve::detail
   }
 
   //================================================================================================
+  // Bundle load
+  //================================================================================================
+  template<kumi::product_type T, typename N, typename... Pointers>
+  EVE_FORCEINLINE auto load(eve::as_<wide<T,N>> const&, kumi::tuple<Pointers...> ptr) noexcept
+  requires std::same_as<abi_t<T, N>, bundle_>
+  {
+    wide<T,N> that;
+    kumi::for_each( []<typename M>(M& m, auto p) { m = M{p}; } , that.storage(), ptr);
+    return that;
+  }
+
+  //================================================================================================
   // Common case for iterator based load
   //================================================================================================
   template<std::input_iterator Iterator, typename Pack>
@@ -88,7 +100,11 @@ namespace eve::detail
     return piecewise_load(tgt,b);
   }
 
-  template<typename T, typename Ptr> struct dereference_as
+  template<typename T, typename Ptr> struct dereference_as;
+
+  template<typename T, typename Ptr>
+  requires( !kumi::product_type<Ptr> )
+  struct dereference_as<T,Ptr>
   {
     using deref = std::remove_cvref_t<decltype(*std::declval<Ptr>())>;
     static constexpr bool value = std::same_as<T,deref>;
