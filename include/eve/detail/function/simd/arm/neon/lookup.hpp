@@ -47,13 +47,7 @@ namespace eve::detail
         }
         else
         {
-          auto bb = bit_cast(idx, as_<typename wide<I,N>::template rebind<std::uint8_t,fixed<16>>>());
-
-          constexpr auto fix = fix_pattern<N::value>(as_pattern { [](auto i, auto)
-                                                                  { return sizeof(I) * i; }
-                                                                }
-                                                    );
-          return lookup(a, basic_swizzle(bb,fix));
+          return lookup(a, convert(idx, as<as_integer_t<T>>() ));
         }
       }
       else if constexpr( std::same_as<abi_t<T, N>, arm_128_> )
