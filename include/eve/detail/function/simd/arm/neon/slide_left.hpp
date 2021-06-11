@@ -56,13 +56,7 @@ namespace eve::detail
         result = bit_cast( slide_left(bit_cast(v,as_<f_t>{}), index<Shift>), as(v) );
       }
 
-        // Mask noises from smaller sized registers
-        if constexpr(N::value < expected_cardinal_v<T,arm_64_>)
-        {
-          result &= keep_first(N::value-Shift).mask(as(result)).bits();
-        }
-
-        return result;
+      return result;
     }
   }
 }

@@ -8,8 +8,11 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/detail/meta.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/meta.hpp>
+#include <eve/function/count_true.hpp>
+#include <eve/function/slide_left.hpp>
+#include <eve/function/store.hpp>
 #include <eve/function/unsafe.hpp>
 
 namespace eve::detail
@@ -22,7 +25,14 @@ namespace eve::detail
                     logical<wide<T, N>> mask,
                     Ptr ptr) noexcept
   {
-    if constexpr ( !std::is_pointer_v<Ptr> ) return unsafe(compress_store)(v, mask, ptr.get());
+         if constexpr ( !std::is_pointer_v<Ptr> ) return unsafe(compress_store)(v, mask, ptr.get());
+    else if constexpr ( !has_emulated_abi_v<wide<T, N>> && N() == 2 )
+    {
+      auto to_left     = eve::slide_left( v, eve::index<1> );
+      auto compressed  = eve::if_else[mask]( v, to_left );
+      eve::store(compressed, ptr);
+      return ptr + eve::count_true(mask);
+    }
     else
     {
       detail::for_<0,1, N{}()>([&](auto idx) mutable
