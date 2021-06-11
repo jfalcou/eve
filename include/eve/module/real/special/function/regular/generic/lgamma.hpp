@@ -48,7 +48,7 @@ namespace eve::detail
     z          = q * sinpi(z);
     z          = abs(z);
     return T(1.1447298858494001741434273513530587116472948129153) - log(z) - w;
-  };
+  }
 
   template<floating_real_value T> EVE_FORCEINLINE T lgammaB(T x) noexcept
   {

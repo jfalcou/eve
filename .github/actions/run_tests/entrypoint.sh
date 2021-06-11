@@ -3,7 +3,7 @@
 compile_target()
 {
   echo "::group::Compiling $1" ;
-  ninja $1 -j $2;
+  ninja -v $1 -j $2;
   compile=$?;
   echo "::endgroup::" ;
 
