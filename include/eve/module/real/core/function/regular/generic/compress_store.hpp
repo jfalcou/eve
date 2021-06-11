@@ -14,6 +14,7 @@
 #include <eve/function/slide_left.hpp>
 #include <eve/function/store.hpp>
 #include <eve/function/unsafe.hpp>
+#include <eve/detail/function/simd/common/swizzle_helpers.hpp>
 
 namespace eve::detail
 {

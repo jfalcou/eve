@@ -114,5 +114,6 @@ EVE_TEST( "Check compress store behavior"
 <typename T, typename L> (T data, L logical_data)
 {
   all_tests_for_v<eve::logical<T>>(data);
-  smaller_test_v<L>(logical_data);
+  // smaller_test_v<L>(logical_data);
+  (void) logical_data;
 };
