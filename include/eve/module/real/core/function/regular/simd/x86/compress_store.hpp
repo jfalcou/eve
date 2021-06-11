@@ -21,6 +21,9 @@ namespace eve::detail
     return idx >> 4;
   }
 
+  // The idea from: https://gist.github.com/aqrit/6e73ca6ff52f72a2b121d584745f89f3#file-despace-cpp-L141
+  // Was shown to me by: @aqrit
+  // Stack Overflow discussion: https://chat.stackoverflow.com/rooms/212510/discussion-between-denis-yaroshevskiy-and-peter-cordes
   EVE_FORCEINLINE constexpr auto int_patterns() {
 
     constexpr std::array idxs = {0x03020100u, 0x07060504u, 0x0b0a0908u, 0x0f0e0d0cu};
