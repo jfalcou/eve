@@ -102,6 +102,30 @@ base_jobs: &base_jobs
     - ctest:
         targets: "../cmake/toolchain/simd.targets.json"
 
+random_jobs: &random_jobs
+  docker:
+    - image: jfalcou/compilers:latest
+  parameters:
+    tool:
+      type: string
+    options:
+      type: string
+      default: ""
+    setup:
+      type: string
+      default: ""
+  steps:
+    - checkout
+    - configure_toolchain:
+        tool:     << parameters.tool >>
+        options:  << parameters.options >>
+        setup:    << parameters.setup >>
+    - compile:
+        targets: "../cmake/toolchain/random.targets.json"
+        cpu:  2
+    - ctest:
+        targets: "../cmake/toolchain/random.targets.json"
+
 ##==================================================================================================
 ## Jobs list
 ##==================================================================================================
@@ -110,6 +134,12 @@ jobs:
     <<: *base_jobs
   x86_clang_avx512:
     <<: *base_jobs
+  random_sse2:
+    <<: *random_jobs
+  random_avx2:
+    <<: *random_jobs
+  random_arm:
+    <<: *random_jobs
 
 ##==================================================================================================
 ## Workflow & dependencies
@@ -130,6 +160,30 @@ workflows:
       - x86_clang_avx512:
           tool:     "../cmake/toolchain/clang.x86.cmake"
           options:  "-march=skylake-avx512"
+          filters:
+            branches:
+              ignore: develop
+    ##==============================================================================================
+    ## Random tests
+    ##==============================================================================================
+      - random_sse2:
+          tool:     "../cmake/toolchain/gcc.x86.cmake"
+          options:  "-msse2"
+          setup:    "-DEVE_BUILD_RANDOM=ON"
+          filters:
+            branches:
+              ignore: develop
+      - random_avx2:
+          tool:     "../cmake/toolchain/gcc.x86.cmake"
+          options:  "-mavx2"
+          setup:    "-DEVE_BUILD_RANDOM=ON"
+          filters:
+            branches:
+              ignore: develop
+      - random_arm:
+          tool:     "../cmake/toolchain/gcc.aarch64.cmake"
+          options:  "-Wno-psabi"
+          setup:    "-DEVE_BUILD_RANDOM=ON"
           filters:
             branches:
               ignore: develop
