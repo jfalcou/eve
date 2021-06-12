@@ -31,12 +31,6 @@ namespace eve::detail
         auto const b  = bit_cast(v, as_<i_t>());
         auto result = bit_cast(i_t(_mm_bsrli_si128( b, shift)), as(v));
 
-        // Mask noises from smaller sized registers
-        if constexpr(N::value < expected_cardinal_v<T,x86_128_>)
-        {
-          result &= keep_first(N::value-Shift).mask(as(result)).bits();
-        }
-
         return result;
       }
       else if constexpr( std::same_as<abi_t<T, N>,x86_256_>)
