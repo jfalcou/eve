@@ -33,6 +33,7 @@ make_unit("unit.real.special"  gamma_p.cpp                 )
 make_unit("unit.real.special"  gamma_pinv.cpp              )
 make_unit("unit.real.special"  lgamma.cpp                  )
 make_unit("unit.real.special"  signgam.cpp                 )
+make_unit("unit.real.special"  stirling.cpp                ) 
 make_unit("unit.real.special"  tgamma.cpp                  )
 make_unit("unit.real.special"  zeta.cpp                    )
 
@@ -41,4 +42,3 @@ make_unit("unit.real.special"  zeta.cpp                    )
 ##==================================================================================================
 
 make_all_units(ROOT unit.real.special NAME erfc_inv      ARCH scalar simd TYPES ${real_types} )
-make_all_units(ROOT unit.real.special NAME stirling      ARCH scalar simd TYPES ${real_types} )
