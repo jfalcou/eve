@@ -19,7 +19,6 @@ add_dependencies(unit.real.combinatorial.exe  unit.real.combinatorial.simd.exe  
 ##==================================================================================================
 ## Elementwise function unit tests
 ##==================================================================================================
-make_all_units(ROOT unit.real.combinatorial NAME bernouilli           ARCH scalar simd TYPES ${uint_types} )
 make_all_units(ROOT unit.real.combinatorial NAME double_factorial     ARCH scalar simd TYPES ${uint_types} )
 make_all_units(ROOT unit.real.combinatorial NAME factorial            ARCH scalar simd TYPES ${uint_types} )
 make_all_units(ROOT unit.real.combinatorial NAME fibonacci            ARCH scalar simd TYPES ${real_types} )
@@ -32,4 +31,5 @@ make_all_units(ROOT unit.real.combinatorial NAME lrising_factorial    ARCH scala
 ##==================================================================================================
 ## new style tests
 ##==================================================================================================
+make_unit("unit.real.combinatorial"  bernouilli.cpp                   )
 make_unit("unit.real.combinatorial"  prime_floor.cpp                  )
