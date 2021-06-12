@@ -39,12 +39,6 @@ make_unit("unit.real.special"  tgamma.cpp                  )
 ##==================================================================================================
 
 make_all_units(ROOT unit.real.special NAME erfc_inv      ARCH scalar simd TYPES ${real_types} )
-make_all_units(ROOT unit.real.special NAME cyl_bessel_j0 ARCH scalar simd TYPES ${real_types} )
-make_all_units(ROOT unit.real.special NAME cyl_bessel_j1 ARCH scalar simd TYPES ${real_types} )
-make_all_units(ROOT unit.real.special NAME cyl_bessel_j  ARCH scalar simd TYPES ${real_types} )
 make_all_units(ROOT unit.real.special NAME signgam       ARCH scalar simd TYPES ${real_types} )
 make_all_units(ROOT unit.real.special NAME stirling      ARCH scalar simd TYPES ${real_types} )
-make_all_units(ROOT unit.real.special NAME cyl_bessel_y  ARCH scalar simd TYPES ${real_types} )
-make_all_units(ROOT unit.real.special NAME cyl_bessel_y0 ARCH scalar simd TYPES ${real_types} )
-make_all_units(ROOT unit.real.special NAME cyl_bessel_y1 ARCH scalar simd TYPES ${real_types} )
 make_all_units(ROOT unit.real.special NAME zeta          ARCH scalar simd TYPES ${real_types} )
