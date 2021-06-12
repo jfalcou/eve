@@ -8,6 +8,8 @@
 #pragma once
 
 #include <eve/function/erfc_inv.hpp>
+#include <eve/function/exp.hpp>
+#include <eve/function/sqr.hpp>
 #include <eve/function/derivative.hpp>
 
 namespace eve::detail
@@ -18,6 +20,12 @@ namespace eve::detail
                                   , diff_type<1> const &
                                   , T const &x) noexcept
   {
-    return erfc_inv(x);
+    if constexpr(has_native_abi_v<T>)
+    {
+      auto sqrt_pi_2 = T(0.886226925452758013649);
+      return -sqrt_pi_2*exp(sqr(erfc_inv(x)));
+    }
+    else
+      return apply_over(diff(erfc_inv), x);
   }
 }

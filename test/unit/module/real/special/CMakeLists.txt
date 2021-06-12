@@ -28,23 +28,12 @@ make_unit("unit.real.special"  erf.cpp                     )
 make_unit("unit.real.special"  erfc.cpp                    )
 make_unit("unit.real.special"  erfcx.cpp                   )
 make_unit("unit.real.special"  erf_inv.cpp                 )
+make_unit("unit.real.special"  erfc_inv.cpp                )
 make_unit("unit.real.special"  exp_int.cpp                 )
 make_unit("unit.real.special"  gamma_p.cpp                 )
 make_unit("unit.real.special"  gamma_pinv.cpp              )
 make_unit("unit.real.special"  lgamma.cpp                  )
+make_unit("unit.real.special"  signgam.cpp                 )
+make_unit("unit.real.special"  stirling.cpp                )
 make_unit("unit.real.special"  tgamma.cpp                  )
-
-##==================================================================================================
-## Elementwise function unit tests
-##==================================================================================================
-
-make_all_units(ROOT unit.real.special NAME erfc_inv      ARCH scalar simd TYPES ${real_types} )
-make_all_units(ROOT unit.real.special NAME cyl_bessel_j0 ARCH scalar simd TYPES ${real_types} )
-make_all_units(ROOT unit.real.special NAME cyl_bessel_j1 ARCH scalar simd TYPES ${real_types} )
-make_all_units(ROOT unit.real.special NAME cyl_bessel_j  ARCH scalar simd TYPES ${real_types} )
-make_all_units(ROOT unit.real.special NAME signgam       ARCH scalar simd TYPES ${real_types} )
-make_all_units(ROOT unit.real.special NAME stirling      ARCH scalar simd TYPES ${real_types} )
-make_all_units(ROOT unit.real.special NAME cyl_bessel_y  ARCH scalar simd TYPES ${real_types} )
-make_all_units(ROOT unit.real.special NAME cyl_bessel_y0 ARCH scalar simd TYPES ${real_types} )
-make_all_units(ROOT unit.real.special NAME cyl_bessel_y1 ARCH scalar simd TYPES ${real_types} )
-make_all_units(ROOT unit.real.special NAME zeta          ARCH scalar simd TYPES ${real_types} )
+make_unit("unit.real.special"  zeta.cpp                    )
