@@ -21,8 +21,7 @@ add_dependencies(unit.real.combinatorial.exe  unit.real.combinatorial.simd.exe  
 ##==================================================================================================
 make_all_units(ROOT unit.real.combinatorial NAME gcd                  ARCH scalar simd TYPES ${all_types}  )
 make_all_units(ROOT unit.real.combinatorial NAME lcm                  ARCH scalar simd TYPES ${all_types}  )
-make_all_units(ROOT unit.real.combinatorial NAME rising_factorial     ARCH scalar simd TYPES ${real_types} )
-make_all_units(ROOT unit.real.combinatorial NAME lrising_factorial    ARCH scalar simd TYPES ${real_types} )
+make_all_units(ROOT unit.real.combinatorial NAME rising_factorial    ARCH scalar simd TYPES ${real_types} )
 
 ##==================================================================================================
 ## new style tests
@@ -33,3 +32,4 @@ make_unit("unit.real.combinatorial"  factorial.cpp                    )
 make_unit("unit.real.combinatorial"  fibonacci.cpp                    )
 make_unit("unit.real.combinatorial"  nth_prime.cpp                    )
 make_unit("unit.real.combinatorial"  prime_floor.cpp                  )
+make_unit("unit.real.combinatorial"  lrising_factorial.cpp             )
