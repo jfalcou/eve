@@ -14,7 +14,8 @@
 
 TTS_CASE_TPL("wide random check on inc", EVE_TYPE)
 {
-  auto std_inc = [](auto e) -> EVE_VALUE { return e == eve::valmax(eve::as<EVE_VALUE>()) ? eve::valmin(eve::as<EVE_VALUE>()) : e+1; };
+  auto std_inc = [](auto e) -> EVE_VALUE { return e == eve::valmax(eve::as<EVE_VALUE>()) && (!std::is_floating_point_v<EVE_VALUE>) ?
+                                            eve::valmin(eve::as<EVE_VALUE>()) : e+1; };
 
   eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_inc, eve::inc);
