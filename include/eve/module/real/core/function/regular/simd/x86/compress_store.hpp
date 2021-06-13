@@ -52,33 +52,51 @@ namespace eve::detail
   // The idea from: https://gist.github.com/aqrit/6e73ca6ff52f72a2b121d584745f89f3#file-despace-cpp-L141
   // Was shown to me by: @aqrit
   // Stack Overflow discussion: https://chat.stackoverflow.com/rooms/212510/discussion-between-denis-yaroshevskiy-and-peter-cordes
-  EVE_FORCEINLINE constexpr auto char_4_patterns()
+  template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  EVE_FORCEINLINE
+  T* compress_store_(EVE_SUPPORTS(ssse3_),
+                     unsafe_type,
+                     wide<T, N> v,
+                     logical<wide<T, N>> mask,
+                     Ptr ptr) noexcept
+    requires std::same_as<abi_t<T, N>, x86_128_> && (N() == 4)
   {
-    constexpr std::array idxs = {
-      std::uint8_t{0x00}, std::uint8_t{0x01}, std::uint8_t{0x02}, std::uint8_t{0x03}
-    };
-    return pattern_4_elements(idxs);
-  }
+    if constexpr ( std::floating_point<T> )
+    {
+      using i_t = eve::as_integer_t<T>;
+      auto  i_p = ptr_cast<i_t>(ptr);
+      auto  i_v = eve::bit_cast(v, eve::as_<wide<i_t, N>>{});
+      auto  i_m = eve::bit_cast(mask, eve::as_<eve::logical<wide<i_t, N>>>{});
 
-  EVE_FORCEINLINE constexpr auto short_4_patterns()
-  {
-    constexpr std::array idxs = {
-      std::uint16_t{0x0100}, std::uint16_t{0x0302}, std::uint16_t{0x0504}, std::uint16_t{0x0706}
-    };
-    return pattern_4_elements(idxs);
-  }
+      i_t* stored = unsafe(compress_store)(i_v, i_m, i_p);
+      return (T*) stored;
+    }
+    else
+    {
+      using u_t         = eve::as_integer_t<T, unsigned>;
+      using bytes_fixed = eve::fixed<N() * sizeof(T)>;
+      using bytes_t = typename wide<T, N>::template rebind<std::uint8_t, bytes_fixed>;
 
-  EVE_FORCEINLINE constexpr auto int_32_4_patterns()
-  {
-    constexpr std::array idxs = {0x03020100u, 0x07060504u, 0x0b0a0908u, 0x0f0e0d0cu};
-    return pattern_4_elements(idxs);
-  }
+      alignas(sizeof(T) * 4) const auto patterns = add_popcounts(pattern_4_elements([]{
+             if constexpr ( sizeof(T) == 4 ) return std::array{0x03020100u, 0x07060504u, 0x0b0a0908u, 0x0f0e0d0cu};
+        else if constexpr ( sizeof(T) == 2 ) return std::array{u_t{0x0100}, u_t{0x0302}, u_t{0x0504}, u_t{0x0706}};
+        else if constexpr ( sizeof(T) == 1 ) return std::array{u_t{0x00},   u_t{0x01},   u_t{0x02},   u_t{0x03}};
+      }()));
 
-  EVE_FORCEINLINE constexpr auto int_64_4_patterns()
-  {
-    auto u64_idx = [](unsigned low, unsigned high) { return (uint64_t{high} << 32) | low; };
-    constexpr std::array idxs = { u64_idx(0, 1), u64_idx(2, 3), u64_idx(4, 5), u64_idx(6, 7) };
-    return pattern_4_elements(idxs);
+      auto mmask = [&] {
+        if constexpr ( sizeof(T) == 2 ) return _mm_movemask_epi8(_mm_packs_epi16(mask, mask));
+        else                            return top_bits{mask}.as_int();
+      }();
+
+      using a_p = aligned_ptr<u_t const, N() * sizeof(u_t)>;
+      bytes_t pattern { ptr_cast<std::uint8_t const>( a_p{patterns[mmask & 7].data()} )};
+
+      wide<T, N> shuffled = _mm_shuffle_epi8(v, pattern);
+      store(shuffled, ptr);
+
+      int popcount = get_popcount(pattern.get(0)) + (bool)(mmask & 8);
+      return as_raw_pointer(ptr) + popcount;
+    }
   }
 
   template <typename T, typename N>
@@ -91,16 +109,20 @@ namespace eve::detail
 
   template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
-  T* compress_store_(EVE_SUPPORTS(ssse3_),
-                     unsafe_type u,
+  T* compress_store_(EVE_SUPPORTS(avx_),
+                     unsafe_type,
                      wide<T, N> v,
                      logical<wide<T, N>> mask,
                      Ptr ptr) noexcept
-    requires x86_abi<abi_t<T, N>>
+    requires std::same_as<abi_t<T, N>, x86_256_> && (N() == 4)
   {
     if constexpr ( N() == 4 && sizeof(T) == 8 && current_api >= avx2 )
     {
-      alignas(32) auto patterns = int_64_4_patterns();
+      alignas(32) auto patterns = [] {
+        auto u64_idx = [](unsigned low, unsigned high) { return (uint64_t{high} << 32) | low; };
+        constexpr std::array idxs = { u64_idx(0, 1), u64_idx(2, 3), u64_idx(4, 5), u64_idx(6, 7) };
+        return pattern_4_elements(idxs);
+      }();
 
       top_bits mmask{mask};
       aligned_ptr<std::uint64_t, 32> pattern_ptr{patterns[mmask.as_int() & 7].data()};
@@ -112,65 +134,6 @@ namespace eve::detail
       int popcount = eve::count_true(mask);
       return as_raw_pointer(ptr) + popcount;
     }
-    else if constexpr ( std::same_as<abi_t<T, N>, x86_256_> )
-    {
-      return compress_store_aggregated_unsafe(v, mask, ptr);
-    }
-    else if constexpr ( std::floating_point<T> )
-    {
-      using i_t = eve::as_integer_t<T>;
-      auto  i_p = ptr_cast<i_t>(ptr);
-      auto  i_v = eve::bit_cast(v, eve::as_<wide<i_t, N>>{});
-      auto  i_m = eve::bit_cast(mask, eve::as_<eve::logical<wide<i_t, N>>>{});
-
-      i_t* stored = unsafe(compress_store)(i_v, i_m, i_p);
-      return (T*) stored;
-    }
-    else if constexpr ( N() == 4 && sizeof(T) == 4 )
-    {
-      alignas(16) auto patterns = add_popcounts(int_32_4_patterns());
-
-      top_bits mmask{mask};
-
-      aligned_ptr<std::uint32_t, 16> pattern_ptr{patterns[mmask.as_int() & 7].data()};
-      wide<std::uint32_t, eve::fixed<4>> pattern{pattern_ptr};
-
-      wide<T, N> shuffled = _mm_shuffle_epi8(v, pattern);
-
-      auto byte_idxs = eve::bit_cast(pattern, eve::as_<wide<std::uint8_t, eve::fixed<16>>>{});
-      int popcount = get_popcount(byte_idxs.get(0)) + mmask.get(3);
-
-      store(shuffled, ptr);
-      return as_raw_pointer(ptr) + popcount;
-    }
-    else if constexpr ( N() == 4 && sizeof(T) == 2 )
-    {
-      const auto patterns = add_popcounts(short_4_patterns());
-      int mmask = _mm_movemask_epi8(_mm_packs_epi16(mask, mask)) & 15;
-
-      wide<std::uint16_t, eve::fixed<4>> pattern{patterns[mmask & 7].data()};
-      wide<T, N> shuffled = _mm_shuffle_epi8(v, pattern);
-
-      store(shuffled, ptr);
-
-      auto byte_idxs = eve::bit_cast(pattern, eve::as_<wide<std::uint8_t, eve::fixed<16>>>{});
-      int popcount = get_popcount(byte_idxs.get(0)) + (bool)(mmask & 8);
-
-      return as_raw_pointer(ptr) + popcount;
-    }
-    else if constexpr ( N() == 4 && sizeof(T) == 1 )
-    {
-      const auto patterns = add_popcounts(char_4_patterns());
-
-      top_bits mmask{mask};
-      wide<std::uint8_t, eve::fixed<4>> pattern{patterns[mmask.as_int() & 7].data()};
-
-      wide<T, N> shuffled = _mm_shuffle_epi8(v, pattern);
-      store(shuffled, ptr);
-
-      int popcount = get_popcount(pattern.get(0)) + mmask.get(3);
-      return as_raw_pointer(ptr) + popcount;
-    }
-    else return compress_store_(EVE_RETARGET(cpu_), u, v, mask, ptr);
+    else return compress_store_aggregated_unsafe(v, mask, ptr);
   }
 }
