@@ -100,7 +100,7 @@ template<typename L, typename T> void smaller_test_v(T x)
       return m;
     };
 
-    for( int i = 0; i < 1000; ++i ) { one_test<true>(x, random_l()); }
+    for( int i = 0; i < 10; ++i ) { one_test<true>(x, random_l()); }
   }
 }
 
