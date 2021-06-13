@@ -45,11 +45,10 @@ namespace eve::detail
   template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
   T* compress_store_(EVE_SUPPORTS(ssse3_),
-                     unsafe_type,
+                     unsafe_type u,
                      wide<T, N> v,
                      logical<wide<T, N>> mask,
                      Ptr ptr) noexcept
-    requires (N() == 4 && sizeof(T) == 4 )
   {
     if constexpr ( std::floating_point<T> )
     {
@@ -61,12 +60,14 @@ namespace eve::detail
       i_t* stored = unsafe(compress_store)(i_v, i_m, i_p);
       return (T*) stored;
     }
-    else
+    else if constexpr ( N() == 4 && sizeof(T) == 4 )
     {
-      constexpr auto patterns = int_patterns();
+      alignas(16) auto patterns = int_patterns();
 
       top_bits mmask{mask};
-      wide<std::uint32_t, eve::fixed<4>> pattern{patterns[mmask.as_int() & 7].data()};
+
+      aligned_ptr<std::uint32_t, 16> pattern_ptr{patterns[mmask.as_int() & 7].data()};
+      wide<std::uint32_t, eve::fixed<4>> pattern{pattern_ptr};
 
       auto byte_idxs = eve::bit_cast(pattern, eve::as_<wide<std::uint8_t, eve::fixed<16>>>{});
       wide<T, N> shuffled = _mm_shuffle_epi8(v, pattern);
@@ -76,5 +77,6 @@ namespace eve::detail
       store(shuffled, ptr);
       return as_raw_pointer(ptr) + popcount;
     }
+    else return compress_store_(EVE_RETARGET(cpu_), u, v, mask);
   }
 }
