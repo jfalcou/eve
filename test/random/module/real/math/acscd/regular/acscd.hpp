@@ -19,8 +19,8 @@ TTS_CASE_TPL("wide random check on acscd", EVE_TYPE)
   auto std_acscd = [](auto e) { return eve::radindeg(std::asin(eve::rec(e))); };
 
   eve::uniform_prng<EVE_VALUE> p1(eve::valmin(eve::as<EVE_VALUE>()), EVE_VALUE(-1));
-  TTS_RANGE_CHECK(p1, std_acscd, eve::acscd);
+  TTS_RANGE_CHECK_WITH(p1, std_acscd, eve::acscd, 4.);
 
   eve::uniform_prng<EVE_VALUE> p2(EVE_VALUE(1), eve::valmax(eve::as<EVE_VALUE>()));
-  TTS_RANGE_CHECK(p2, std_acscd, eve::acscd);
+  TTS_RANGE_CHECK_WITH(p2, std_acscd, eve::acscd, 4.);
 }
