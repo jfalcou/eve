@@ -80,6 +80,7 @@ namespace eve::detail
                      wide<T, N> v,
                      logical<wide<T, N>> mask,
                      Ptr ptr) noexcept
+    requires x86_abi<abi_t<T, N>>
   {
     if constexpr ( N() == 4 && sizeof(T) == 8 && current_api >= avx2 )
     {
@@ -94,6 +95,10 @@ namespace eve::detail
       store(shuffled, ptr);
       int popcount = eve::count_true(mask);
       return as_raw_pointer(ptr) + popcount;
+    }
+    else if constexpr ( std::same_as<abi_t<T, N>, x86_256_> )
+    {
+      return compress_store_aggregated_unsafe(v, mask, ptr);
     }
     else if constexpr ( std::floating_point<T> )
     {
