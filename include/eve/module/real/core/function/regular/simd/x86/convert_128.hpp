@@ -277,4 +277,18 @@ namespace eve::detail
       return convert_(EVE_RETARGET(simd_), v0, tgt);
     }
   }
+
+  template<real_scalar_value In, typename N, real_scalar_value Out>
+  EVE_FORCEINLINE logical<wide<Out, N>>
+  convert_(EVE_SUPPORTS(sse2_), logical<wide<In, N>> const &v0, as_<logical<Out>> const &tgt) noexcept
+    requires std::same_as<abi_t<In, N>, x86_128_> && (abi_t<In, N>::is_wide_logical)
+  {
+    constexpr auto c  = categorize<wide<In, N>>();
+
+    if constexpr ( match(c, category::int16x8, category::uint16x8) && sizeof(Out) == 1 )
+    {
+      return  _mm_packs_epi16(v0, v0);
+    }
+    else return convert_(EVE_RETARGET(simd_), v0, tgt);
+  }
 }

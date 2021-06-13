@@ -22,14 +22,12 @@ namespace eve::detail
 
   template <typename U, typename T, std::size_t size>
   EVE_FORCEINLINE auto ptr_cast(eve::aligned_ptr<T, size> p)
-    requires (sizeof(U) == sizeof(T))
   {
     return aligned_ptr<U, size>{(U*)(p.get())};
   }
 
   template <typename U, typename T>
   EVE_FORCEINLINE auto ptr_cast(T* p)
-    requires (sizeof(U) == sizeof(T))
   {
     return (U*)p;
   }

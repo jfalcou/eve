@@ -20,6 +20,19 @@ namespace eve::detail
 {
   template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
+  T* compress_store_aggregated_unsafe(wide<T, N> v,
+                                      logical<wide<T, N>> mask,
+                                      Ptr ptr)
+  {
+    auto [l, h] = v.slice();
+    auto [ml, mh] = mask.slice();
+
+    T* ptr1 = eve::unsafe(eve::compress_store)(l, ml, ptr);
+    return eve::unsafe(eve::compress_store)(h, mh, ptr1);
+  }
+
+  template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  EVE_FORCEINLINE
   T* compress_store_(EVE_SUPPORTS(cpu_),
                     unsafe_type,
                     wide<T, N> v,
@@ -32,6 +45,10 @@ namespace eve::detail
       auto compressed  = eve::if_else[mask]( v, to_left );
       eve::store(compressed, ptr);
       return as_raw_pointer(ptr) + eve::count_true(mask);
+    }
+    else if constexpr ( has_aggregated_abi_v<wide<T, N>> )
+    {
+      return compress_store_aggregated_unsafe(v, mask, ptr);
     }
     else
     {
