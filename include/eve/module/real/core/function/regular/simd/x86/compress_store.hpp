@@ -8,6 +8,7 @@
 #pragma once
 
 #include <array>
+#include <bit>
 
 namespace eve::detail
 {
@@ -21,25 +22,55 @@ namespace eve::detail
     return idx >> 4;
   }
 
+  template <std::unsigned_integral T>
+  EVE_FORCEINLINE constexpr auto pattern_4_elements(std::array<T, 4> idxs)
+  {
+    using row = std::array<T, 4>;
+
+    return std::array {
+      row{ idxs[3],       0,       0,       0 },  // 000
+      row{ idxs[0], idxs[3],       0,       0 },  // 001
+      row{ idxs[1], idxs[3],       0,       0 },  // 010
+      row{ idxs[0], idxs[1], idxs[3],       0 },  // 011
+      row{ idxs[2], idxs[3],       0,       0 },  // 100
+      row{ idxs[0], idxs[2], idxs[3],       0 },  // 101
+      row{ idxs[1], idxs[2], idxs[3],       0 },  // 110
+      row{ idxs[0], idxs[1], idxs[2], idxs[3] },  // 111
+    };
+  }
+
+  template <typename Row, std::size_t N>
+  EVE_FORCEINLINE constexpr auto add_popcounts(std::array<Row, N> patterns)
+  {
+    for (std::uint8_t i = 0; i != patterns.size(); ++i) {
+      patterns[i][0] = add_popcount(patterns[i][0], std::popcount(i));
+    }
+    return patterns;
+  }
+
+
   // The idea from: https://gist.github.com/aqrit/6e73ca6ff52f72a2b121d584745f89f3#file-despace-cpp-L141
   // Was shown to me by: @aqrit
   // Stack Overflow discussion: https://chat.stackoverflow.com/rooms/212510/discussion-between-denis-yaroshevskiy-and-peter-cordes
-  EVE_FORCEINLINE constexpr auto int_patterns() {
-
+  EVE_FORCEINLINE constexpr auto int_32_4_patterns()
+  {
     constexpr std::array idxs = {0x03020100u, 0x07060504u, 0x0b0a0908u, 0x0f0e0d0cu};
+    return pattern_4_elements(idxs);
+  }
 
-    using row = std::array<std::uint32_t, 4>;
+  EVE_FORCEINLINE constexpr auto int_64_4_patterns()
+  {
+    auto u64_idx = [](unsigned low, unsigned high) { return (uint64_t{high} << 32) | low; };
+    constexpr std::array idxs = { u64_idx(0, 1), u64_idx(2, 3), u64_idx(4, 5), u64_idx(6, 7) };
+    return pattern_4_elements(idxs);
+  }
 
-    return std::array {
-      row{ add_popcount(idxs[3], 0),       0,       0,       0 },  // 000
-      row{ add_popcount(idxs[0], 1), idxs[3],       0,       0 },  // 001
-      row{ add_popcount(idxs[1], 1), idxs[3],       0,       0 },  // 010
-      row{ add_popcount(idxs[0], 2), idxs[1], idxs[3],       0 },  // 011
-      row{ add_popcount(idxs[2], 1), idxs[3],       0,       0 },  // 100
-      row{ add_popcount(idxs[0], 2), idxs[2], idxs[3],       0 },  // 101
-      row{ add_popcount(idxs[1], 2), idxs[2], idxs[3],       0 },  // 110
-      row{ add_popcount(idxs[0], 3), idxs[1], idxs[2], idxs[3] },  // 111
-    };
+  template <typename T, typename N>
+  EVE_FORCEINLINE wide<T, N> permvar8(wide<T, N> v, __m256i pattern)
+    requires (current_api >= avx2)
+  {
+    if constexpr ( std::floating_point<T> ) return _mm256_permutevar8x32_ps   (v, pattern);
+    else                                    return _mm256_permutevar8x32_epi32(v, pattern);
   }
 
   template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
@@ -50,7 +81,21 @@ namespace eve::detail
                      logical<wide<T, N>> mask,
                      Ptr ptr) noexcept
   {
-    if constexpr ( std::floating_point<T> )
+    if constexpr ( N() == 4 && sizeof(T) == 8 && current_api >= avx2 )
+    {
+      alignas(32) auto patterns = int_64_4_patterns();
+
+      top_bits mmask{mask};
+      aligned_ptr<std::uint64_t, 32> pattern_ptr{patterns[mmask.as_int() & 7].data()};
+      wide<std::uint32_t, eve::fixed<8>> pattern{ptr_cast<std::uint32_t>(pattern_ptr)};
+
+      wide<T, N> shuffled = permvar8(v, pattern);
+
+      store(shuffled, ptr);
+      int popcount = eve::count_true(mask);
+      return as_raw_pointer(ptr) + popcount;
+    }
+    else if constexpr ( std::floating_point<T> )
     {
       using i_t = eve::as_integer_t<T>;
       auto  i_p = ptr_cast<i_t>(ptr);
@@ -62,21 +107,21 @@ namespace eve::detail
     }
     else if constexpr ( N() == 4 && sizeof(T) == 4 )
     {
-      alignas(16) auto patterns = int_patterns();
+      alignas(16) auto patterns = add_popcounts(int_32_4_patterns());
 
       top_bits mmask{mask};
 
       aligned_ptr<std::uint32_t, 16> pattern_ptr{patterns[mmask.as_int() & 7].data()};
       wide<std::uint32_t, eve::fixed<4>> pattern{pattern_ptr};
 
-      auto byte_idxs = eve::bit_cast(pattern, eve::as_<wide<std::uint8_t, eve::fixed<16>>>{});
       wide<T, N> shuffled = _mm_shuffle_epi8(v, pattern);
 
+      auto byte_idxs = eve::bit_cast(pattern, eve::as_<wide<std::uint8_t, eve::fixed<16>>>{});
       int popcount = get_popcount(byte_idxs.get(0)) + mmask.get(3);
 
       store(shuffled, ptr);
       return as_raw_pointer(ptr) + popcount;
     }
-    else return compress_store_(EVE_RETARGET(cpu_), u, v, mask);
+    else return compress_store_(EVE_RETARGET(cpu_), u, v, mask, ptr);
   }
 }
