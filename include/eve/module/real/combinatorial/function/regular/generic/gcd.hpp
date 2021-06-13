@@ -45,7 +45,7 @@ namespace eve::detail
       a   = b;
       b   = r;
     }
-    return a;
+    return abs(a);
   }
 
   template<integral_simd_value T>
@@ -66,7 +66,7 @@ namespace eve::detail
           test = test && is_nez(r);
           b = r;
         }
-        return a;
+        return abs(a);
       }
       else if  constexpr(sizeof(elt_t) == 4)
       {
@@ -118,7 +118,7 @@ namespace eve::detail
             a   = b;
             b   = r;
           }
-          return a;
+          return abs(a);
         }
         else return nan(as(a));
       }
@@ -135,7 +135,7 @@ namespace eve::detail
           test = is_nez(r)&&test;
           b = r;
         }
-        return if_else(valid, a, allbits);
+        return if_else(valid, abs(a), allbits);
       }
     }
     else
@@ -158,7 +158,7 @@ namespace eve::detail
           a   = b;
           b   = r;
         }
-        return a;
+        return abs(a);
       }
       else
       {
@@ -171,7 +171,7 @@ namespace eve::detail
           test = is_nez(r)&&test;
           b = r;
         }
-        return a;
+        return abs(a);
       }
     }
     else
@@ -183,14 +183,14 @@ namespace eve::detail
   template<integral_value T>
   EVE_FORCEINLINE auto gcd_(EVE_SUPPORTS(cpu_), raw_type const &, T a, T b) noexcept
   {
-    return gcd(a, b);
+    return abs(gcd(a, b));
   }
 
   template<value T, value U, decorator D>
   EVE_FORCEINLINE auto gcd_(EVE_SUPPORTS(cpu_), D const &, T a, U b) noexcept
   requires compatible_values<T, U>
   {
-    return arithmetic_call(D(gcd), a, b);
+    return arithmetic_call(D(gcd), abs(a), abs(b));
   }
 
   template<value T, decorator D>
