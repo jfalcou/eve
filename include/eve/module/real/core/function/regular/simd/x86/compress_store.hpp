@@ -60,6 +60,14 @@ namespace eve::detail
     return pattern_4_elements(idxs);
   }
 
+  EVE_FORCEINLINE constexpr auto short_4_patterns()
+  {
+    constexpr std::array idxs = {
+      std::uint16_t{0x0100}, std::uint16_t{0x0302}, std::uint16_t{0x0504}, std::uint16_t{0x0706}
+    };
+    return pattern_4_elements(idxs);
+  }
+
   EVE_FORCEINLINE constexpr auto int_32_4_patterns()
   {
     constexpr std::array idxs = {0x03020100u, 0x07060504u, 0x0b0a0908u, 0x0f0e0d0cu};
@@ -135,9 +143,24 @@ namespace eve::detail
       store(shuffled, ptr);
       return as_raw_pointer(ptr) + popcount;
     }
+    else if constexpr ( N() == 4 && sizeof(T) == 2 )
+    {
+      const auto patterns = add_popcounts(short_4_patterns());
+      int mmask = _mm_movemask_epi8(_mm_packs_epi16(mask, mask)) & 15;
+
+      wide<std::uint16_t, eve::fixed<4>> pattern{patterns[mmask & 7].data()};
+      wide<T, N> shuffled = _mm_shuffle_epi8(v, pattern);
+
+      store(shuffled, ptr);
+
+      auto byte_idxs = eve::bit_cast(pattern, eve::as_<wide<std::uint8_t, eve::fixed<16>>>{});
+      int popcount = get_popcount(byte_idxs.get(0)) + (bool)(mmask & 8);
+
+      return as_raw_pointer(ptr) + popcount;
+    }
     else if constexpr ( N() == 4 && sizeof(T) == 1 )
     {
-      auto patterns = add_popcounts(char_4_patterns());
+      const auto patterns = add_popcounts(char_4_patterns());
 
       top_bits mmask{mask};
       wide<std::uint8_t, eve::fixed<4>> pattern{patterns[mmask.as_int() & 7].data()};
