@@ -25,6 +25,7 @@ EVE_TEST_TYPES( "Check return types of eve::double_factorial"
               , eve::test::simd::unsigned_integers)
 <typename T>(eve::as_<T>)
 {
+  using v_t = eve::element_type_t<T>>;
   using d_t = eve::wide<double, eve::cardinal_t<T>>;
   TTS_EXPR_IS( eve::double_factorial(T())                       , d_t);
   TTS_EXPR_IS( eve::double_factorial(v_t())                     , double );
