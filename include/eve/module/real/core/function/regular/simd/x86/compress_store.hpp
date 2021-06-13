@@ -52,6 +52,14 @@ namespace eve::detail
   // The idea from: https://gist.github.com/aqrit/6e73ca6ff52f72a2b121d584745f89f3#file-despace-cpp-L141
   // Was shown to me by: @aqrit
   // Stack Overflow discussion: https://chat.stackoverflow.com/rooms/212510/discussion-between-denis-yaroshevskiy-and-peter-cordes
+  EVE_FORCEINLINE constexpr auto char_4_patterns()
+  {
+    constexpr std::array idxs = {
+      std::uint8_t{0x00}, std::uint8_t{0x01}, std::uint8_t{0x02}, std::uint8_t{0x03}
+    };
+    return pattern_4_elements(idxs);
+  }
+
   EVE_FORCEINLINE constexpr auto int_32_4_patterns()
   {
     constexpr std::array idxs = {0x03020100u, 0x07060504u, 0x0b0a0908u, 0x0f0e0d0cu};
@@ -125,6 +133,19 @@ namespace eve::detail
       int popcount = get_popcount(byte_idxs.get(0)) + mmask.get(3);
 
       store(shuffled, ptr);
+      return as_raw_pointer(ptr) + popcount;
+    }
+    else if constexpr ( N() == 4 && sizeof(T) == 1 )
+    {
+      auto patterns = add_popcounts(char_4_patterns());
+
+      top_bits mmask{mask};
+      wide<std::uint8_t, eve::fixed<4>> pattern{patterns[mmask.as_int() & 7].data()};
+
+      wide<T, N> shuffled = _mm_shuffle_epi8(v, pattern);
+      store(shuffled, ptr);
+
+      int popcount = get_popcount(pattern.get(0)) + mmask.get(3);
       return as_raw_pointer(ptr) + popcount;
     }
     else return compress_store_(EVE_RETARGET(cpu_), u, v, mask, ptr);
