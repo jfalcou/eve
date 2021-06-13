@@ -15,11 +15,13 @@ jobs:
       matrix:
         cfg:
         - { comp: clang, arch: x86    , opts: -msse2                , status: 1 }
+        - { comp: clang, arch: x86    , opts: -mssse3               , status: 1 }
         - { comp: clang, arch: x86    , opts: -msse4.2              , status: 1 }
         - { comp: clang, arch: x86    , opts: -mavx                 , status: 1 }
         - { comp: clang, arch: x86    , opts: -mavx2                , status: 1 }
         - { comp: clang, arch: x86    , opts: -DEVE_NO_SIMD         , status: 1 }
         - { comp: gcc  , arch: x86    , opts: -msse2                , status: 1 }
+        - { comp: gcc  , arch: x86    , opts: -mssse3               , status: 1 }
         - { comp: gcc  , arch: x86    , opts: -msse4.2              , status: 1 }
         - { comp: gcc  , arch: x86    , opts: -mavx                 , status: 1 }
         - { comp: gcc  , arch: x86    , opts: -mavx2                , status: 1 }
