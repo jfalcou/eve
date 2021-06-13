@@ -281,7 +281,7 @@ namespace eve::detail
   template<real_scalar_value In, typename N, real_scalar_value Out>
   EVE_FORCEINLINE logical<wide<Out, N>>
   convert_(EVE_SUPPORTS(sse2_), logical<wide<In, N>> const &v0, as_<logical<Out>> const &tgt) noexcept
-    requires std::same_as<abi_t<In, N>, x86_128_>
+    requires std::same_as<abi_t<In, N>, x86_128_> && (abi_t<In, N>::is_wide_logical)
   {
     constexpr auto c  = categorize<wide<In, N>>();
 

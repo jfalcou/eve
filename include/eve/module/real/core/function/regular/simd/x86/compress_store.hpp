@@ -84,8 +84,14 @@ namespace eve::detail
       }()));
 
       auto mmask = [&] {
-        if constexpr ( sizeof(T) == 2 ) return _mm_movemask_epi8(_mm_packs_epi16(mask, mask));
-        else                            return top_bits{mask}.as_int();
+        if constexpr ( sizeof(T) == 2 && abi_t<T, N>::is_wide_logical )
+        {
+          return _mm_movemask_epi8(_mm_packs_epi16(mask, mask));
+        }
+        else
+        {
+          return top_bits{mask}.as_int();
+        }
       }();
 
       using a_p = aligned_ptr<u_t const, N() * sizeof(u_t)>;
@@ -103,8 +109,14 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> permvar8(wide<T, N> v, __m256i pattern)
     requires (current_api >= avx2)
   {
-    if constexpr ( std::floating_point<T> ) return _mm256_permutevar8x32_ps   (v, pattern);
-    else                                    return _mm256_permutevar8x32_epi32(v, pattern);
+         if constexpr ( std::integral<T>       ) return _mm256_permutevar8x32_epi32(v, pattern);
+    else if constexpr ( std::same_as<T, float> ) return _mm256_permutevar8x32_ps   (v, pattern);
+    else
+    {
+      __m256 f32s = _mm256_castpd_ps(v);
+      f32s = _mm256_permutevar8x32_ps(f32s, pattern);
+      return _mm256_castps_pd(f32s);
+    }
   }
 
   template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
