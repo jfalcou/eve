@@ -36,7 +36,7 @@ namespace eve::detail
     auto cast = []<typename Ptr, typename Sub>(Ptr ptr, as_<Sub>)
     {
       using type = element_type_t<Wide>;
-      using a_p = eve::aligned_ptr<const type, Sub::alignment()>;
+      using a_p = eve::aligned_ptr<const type, cardinal_t<Sub>>;
       if constexpr (std::is_pointer_v<Ptr>) return ptr;
       else                                  return a_p{ptr.get()};
     };
