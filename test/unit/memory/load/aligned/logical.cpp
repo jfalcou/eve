@@ -23,20 +23,22 @@ EVE_TEST( "Check load to wides from aligned pointer"
 <typename T>(T reference)
 {
   using v_t = eve::element_type_t<typename T::mask_type>;
-  auto [data  ,idx  ] = logical_page<v_t , eve::cardinal_t<T>>();
+  using lanes_t = eve::cardinal_t<T>;
+
+  auto [data  ,idx  ] = logical_page<v_t, lanes_t>();
 
   auto* ptr              = &data[idx];
   auto const* const_ptr  = ptr;
 
-  TTS_EQUAL(T(eve::as_aligned(ptr,eve::cardinal_t<T>{}))              , reference );
-  TTS_EQUAL(T(eve::as_aligned(const_ptr,eve::cardinal_t<T>{}))        , reference );
-  TTS_EQUAL((eve::load(eve::as_aligned(ptr,eve::cardinal_t<T>{})      , eve::lane<T::size()>)) , reference );
-  TTS_EQUAL((eve::load(eve::as_aligned(const_ptr,eve::cardinal_t<T>{}), eve::lane<T::size()>)) , reference );
+  TTS_EQUAL(T(eve::as_aligned(ptr,lanes_t{}))                           , reference );
+  TTS_EQUAL(T(eve::as_aligned(const_ptr,lanes_t{}))                     , reference );
+  TTS_EQUAL((eve::load(eve::as_aligned(ptr,lanes_t{})      , lanes_t{})), reference );
+  TTS_EQUAL((eve::load(eve::as_aligned(const_ptr,lanes_t{}), lanes_t{})), reference );
 
   if constexpr(T::size() == eve::expected_cardinal_v<v_t>)
   {
-    TTS_EQUAL(eve::load(eve::as_aligned(ptr,eve::cardinal_t<T>{}))       , reference  );
-    TTS_EQUAL(eve::load(eve::as_aligned(const_ptr,eve::cardinal_t<T>{})) , reference  );
+    TTS_EQUAL(eve::load(eve::as_aligned(ptr,lanes_t{}))       , reference  );
+    TTS_EQUAL(eve::load(eve::as_aligned(const_ptr,lanes_t{})) , reference  );
   }
 };
 

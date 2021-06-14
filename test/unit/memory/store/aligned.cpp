@@ -42,13 +42,13 @@ EVE_TEST( "Check store behavior with aligned pointers"
   alignas(algt) std::array<eve::element_type_t<T>, 3 * T::size()> target;
   alignas(algt) std::array<eve::element_type_t<L>, 3 * T::size()> logical_target;
 
-  eve::store(data, eve::as_aligned<algt>(&target[ 0            ]) );
-  eve::store(data, eve::as_aligned<algt>(&target[ T::size()    ]) );
-  eve::store(data, eve::as_aligned<algt>(&target[ 2 * T::size()]) );
+  eve::store(data, eve::as_aligned(&target[ 0            ], eve::cardinal_t<T>{}) );
+  eve::store(data, eve::as_aligned(&target[ T::size()    ], eve::cardinal_t<T>{}) );
+  eve::store(data, eve::as_aligned(&target[ 2 * T::size()], eve::cardinal_t<T>{}) );
 
-  eve::store(logical_data, eve::as_aligned<algt>(&logical_target[ 0            ]) );
-  eve::store(logical_data, eve::as_aligned<algt>(&logical_target[ T::size()    ]) );
-  eve::store(logical_data, eve::as_aligned<algt>(&logical_target[ 2 * T::size()]) );
+  eve::store(logical_data, eve::as_aligned(&logical_target[ 0            ], eve::cardinal_t<T>{}) );
+  eve::store(logical_data, eve::as_aligned(&logical_target[ T::size()    ], eve::cardinal_t<T>{}) );
+  eve::store(logical_data, eve::as_aligned(&logical_target[ 2 * T::size()], eve::cardinal_t<T>{}) );
 
   TTS_ALL_EQUAL(target        , ref         );
   TTS_ALL_EQUAL(logical_target, logical_ref );
@@ -68,13 +68,13 @@ EVE_TEST( "Check store behavior with pointer of different alignment"
 
   auto test = [&]<typename D, std::ptrdiff_t A>(eve::fixed<A>, auto f, D d)
   {
-    if (!eve::is_aligned<A>(f))   return;
+    if (!eve::is_aligned(f, eve::fixed<A>{}))   return;
 
-    if constexpr (A >= T::alignment())
+    if constexpr (A*sizeof(eve::element_type_t<D>) >= T::alignment())
     {
       if(::tts::verbose_status) std::cout << "With alignment: " << A << std::endl;
 
-      eve::aligned_ptr<eve::element_type_t<D>, static_cast<std::size_t>(A)> ptr{f};
+      eve::aligned_ptr<eve::element_type_t<D>, eve::fixed<A>> ptr{f};
       eve::store(d, ptr);
       TTS_EQUAL(D{f}, d);
       eve::store(D{0}, ptr);
