@@ -74,7 +74,8 @@ namespace eve
     aligned_ptr(pointer p) noexcept : pointer_(p)
     {
       EVE_ASSERT( is_aligned<alignment()>(p)
-                , (void *)(p) << " is not aligned on " << Lanes::value << " elements."
+                , (void *)(p) << " is not aligned on " << Lanes::value
+                              << " elements (or " << alignment() << " bytes)."
                 );
     }
 
