@@ -23,7 +23,7 @@ namespace eve::detail
   template <typename U, typename T, typename Lanes>
   EVE_FORCEINLINE auto ptr_cast(eve::aligned_ptr<T, Lanes> p)
   {
-    return aligned_ptr<U, Lanes>{(U*)(p.get())};
+    return aligned_ptr<U, eve::fixed<Lanes() * sizeof(T) / sizeof(U)>>{(U*)(p.get())};
   }
 
   template <typename U, typename T>

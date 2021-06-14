@@ -95,7 +95,7 @@ namespace eve::detail
       }();
 
       using a_p = aligned_ptr<u_t const, N>;
-      bytes_t pattern { ptr_cast<std::uint8_t const>( a_p{patterns[mmask & 7].data()} )};
+      bytes_t pattern(ptr_cast<std::uint8_t const>( a_p(patterns[mmask & 7].data()) ));
 
       wide<T, N> shuffled = _mm_shuffle_epi8(v, pattern);
       store(shuffled, ptr);
@@ -137,9 +137,7 @@ namespace eve::detail
       }();
 
       top_bits mmask{mask};
-      aligned_ptr < std::uint64_t
-                  , expected_cardinal_t<std::uint64_t>
-                  > pattern_ptr{patterns[mmask.as_int() & 7].data()};
+      aligned_ptr<std::uint64_t, eve::fixed<4>> pattern_ptr{patterns[mmask.as_int() & 7].data()};
       wide<std::uint32_t, eve::fixed<8>> pattern{ptr_cast<std::uint32_t>(pattern_ptr)};
 
       wide<T, N> shuffled = permvar8(v, pattern);

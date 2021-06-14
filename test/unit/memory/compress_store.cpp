@@ -36,7 +36,7 @@ void one_test(T x, L m)
   e_t* out = eve::unsafe(eve::compress_store)(x, m, actual.begin());
   TTS_EQUAL((out - actual.begin()), o);
 
-  // No guarntees past the out
+  // No guarantees past the out
   std::copy(&expected[o], expected.end(), &actual[o]);
   TTS_EQUAL(T(expected.begin()), T(actual.begin()));
 
