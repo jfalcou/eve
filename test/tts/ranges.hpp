@@ -325,14 +325,15 @@ namespace tts
 
     void init( options const& args )
     {
-      std::mt19937::result_type no_seed(-1);
-      seed_ = args.value_or(no_seed, "-s", "--seed");
+      auto s = args.value_or(18102008, "-s", "--seed");
 
-      if(seed_ == no_seed )
+      if(s == -1 )
       {
         auto now  = std::chrono::high_resolution_clock::now();
-        seed_      = static_cast<unsigned int>(now.time_since_epoch().count());
+        s = static_cast<unsigned int>(now.time_since_epoch().count());
       }
+
+      seed_ = std::mt19937::result_type(s);
       generator_.seed(seed_);
 
       auto mn = args.value_or(distribution_.min(), "-v", "--valmin");

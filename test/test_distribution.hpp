@@ -32,7 +32,7 @@ namespace eve
       T a;
       T b;
       int nb;
-      param_type(T aa, T bb, int nbb) : a(aa),  b(bb), nb(nbb){};
+      param_type(T aa, T bb, int nbb = 300) : a(aa),  b(bb), nb(nbb){};
 
     };
 
@@ -79,13 +79,13 @@ namespace eve
           auto f =  eve::log2(bb)-la;
           auto rand = sd(gen);
           auto x = la+f*(i-1+rand)/nb;
-          res = eve::exp2(x);
+          res = eve::min(eve::exp2(x), bb);
         }
         else if (bb <= -1) // aa < bb
         {
            res = -(*this)(gen, abs(bb), abs(aa), nb);
         }
-        else if (aa >= 0) // aa < 1,  bb > aa
+        else if (aa >= 0) // aa < 1,  bb > aax
         {
           if(i == 1)
           {
@@ -157,7 +157,7 @@ namespace eve
       T a;
       T b;
       int nb;
-      param_type(T aa, T bb, int nbb) : a(aa),  b(bb), nb(nbb){};
+      param_type(T aa, T bb, int nbb = 300) : a(aa),  b(bb), nb(nbb){};
 
     };
 

@@ -13,6 +13,7 @@
 #include <eve/constant/maxflint.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/function/is_flint.hpp>
+#include <eve/function/is_infinite.hpp>
 #include <eve/function/is_odd.hpp>
 #include <eve/function/rec.hpp>
 #include "producers.hpp"
@@ -26,13 +27,13 @@ TTS_CASE_TPL("wide random check on secpi", EVE_TYPE)
 
                         if (z >= eve::maxflint(eve::as(x))) return EVE_VALUE(1);
                         if (eve::is_even(z)) return   EVE_VALUE(1);
-
+                        if (eve::is_infinite(z)) return eve::nan(eve::as<EVE_VALUE>());
                         if ((z-EVE_VALUE(0.5) == eve::trunc(z)) && (z != z-EVE_VALUE(0.5) ))
                           return eve::nan(eve::as<EVE_VALUE>());
 
                         return  EVE_VALUE(eve::rec(boost::math::cos_pi(double(x))));
                       };
 
-  eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
+  eve::uniform_prng<EVE_VALUE> p(-2*eve::maxflint(eve::as<EVE_VALUE>()), 2*eve::maxflint(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, my_stdsecpi, eve::secpi);
 }

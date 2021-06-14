@@ -17,8 +17,8 @@ TTS_CASE_TPL("wide random check on acoth", EVE_TYPE)
   auto std_acoth = [](auto e) { return std::atanh(eve::rec(e)); };
 
   eve::uniform_prng<EVE_VALUE> p1(EVE_VALUE(1), eve::valmax(eve::as<EVE_VALUE>()));
-  TTS_RANGE_CHECK(p1, std_acoth, eve::acoth);
+  TTS_RANGE_CHECK_WITH(p1, std_acoth, eve::acoth, 64);
 
   eve::uniform_prng<EVE_VALUE> p2(eve::valmin(eve::as<EVE_VALUE>()), EVE_VALUE(-1));
-  TTS_RANGE_CHECK(p2, std_acoth, eve::acoth);
+  TTS_RANGE_CHECK_WITH(p2, std_acoth, eve::acoth, 64);
 }

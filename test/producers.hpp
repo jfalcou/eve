@@ -33,9 +33,9 @@ namespace eve
 
 namespace tts
 {
-  template<typename T,typename N,typename ABI> struct adapter<eve::wide<T,N,ABI>>
+  template<typename T,typename N> struct adapter<eve::wide<T,N>>
   {
-    using type = eve::wide<T,N,ABI>;
+    using type = eve::wide<T,N>;
 
     template<typename U, typename Func>
     static void run(T const*& src, U*& dst, Func f) noexcept
@@ -62,9 +62,9 @@ namespace tts
     }
   };
 
-  template<typename T,typename N,typename ABI> struct adapter<eve::logical<eve::wide<T,N,ABI>>>
+  template<typename T,typename N> struct adapter<eve::logical<eve::wide<T,N>>>
   {
-    using type = eve::logical<eve::wide<T,N,ABI>>;
+    using type = eve::logical<eve::wide<T,N>>;
 
     template<typename U, typename Func>
     static void run(eve::logical<T> const*& src, U*& dst, Func f) noexcept

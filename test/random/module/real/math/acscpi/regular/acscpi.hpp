@@ -18,8 +18,8 @@ TTS_CASE_TPL("wide random check on acscpi", EVE_TYPE)
   auto std_acscpi = [](auto e) { return eve::invpi(eve::as<EVE_VALUE>())*std::asin(eve::rec(e)); };
 
   eve::uniform_prng<EVE_VALUE> p1(eve::valmin(eve::as<EVE_VALUE>()), EVE_VALUE(-1));
-  TTS_RANGE_CHECK(p1, std_acscpi, eve::acscpi);
+  TTS_RANGE_CHECK_WITH(p1, std_acscpi, eve::acscpi, 8.);
 
   eve::uniform_prng<EVE_VALUE> p2(EVE_VALUE(1), eve::valmax(eve::as<EVE_VALUE>()));
-  TTS_RANGE_CHECK(p2, std_acscpi, eve::acscpi);
+  TTS_RANGE_CHECK_WITH(p2, std_acscpi, eve::acscpi, 8.);
 }
