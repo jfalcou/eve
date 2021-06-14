@@ -36,14 +36,14 @@ namespace eve::detail
 
   //================================================================================================
   // Aligned pointer
-  template<typename U, std::size_t S, integral_scalar_value T, typename N>
+  template<typename U, typename S, integral_scalar_value T, typename N>
   EVE_FORCEINLINE auto
   gather_(EVE_SUPPORTS(cpu_), aligned_ptr<U, S> ptr, wide<T, N> const &v) noexcept
   {
     return gather(ptr.get(), v);
   }
 
-  template<typename U, std::size_t S, value X, integral_scalar_value T, typename N>
+  template<typename U, typename S, value X, integral_scalar_value T, typename N>
   EVE_FORCEINLINE auto gather_(EVE_SUPPORTS(cpu_),
                                logical<X> const &     cond,
                                aligned_ptr<U, S>      ptr,
@@ -73,14 +73,14 @@ namespace eve::detail
 
   //================================================================================================
   // Aligned pointer
-  template<typename U, std::size_t S, integral_scalar_value T>
+  template<typename U, typename S, integral_scalar_value T>
   EVE_FORCEINLINE auto
   gather_(EVE_SUPPORTS(cpu_), aligned_ptr<U, S> ptr, T const &v) noexcept
   {
     return  *(ptr+v);
   }
 
-  template<typename U, std::size_t S, value X, integral_scalar_value T>
+  template<typename U, typename S, value X, integral_scalar_value T>
   EVE_FORCEINLINE auto gather_(EVE_SUPPORTS(cpu_),
                                logical<X> const &     cond,
                                aligned_ptr<U, S>      ptr,
