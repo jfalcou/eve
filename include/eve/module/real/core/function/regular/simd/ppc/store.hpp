@@ -9,7 +9,6 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/memory/aligned_ptr.hpp>
 
 namespace eve::detail
 {

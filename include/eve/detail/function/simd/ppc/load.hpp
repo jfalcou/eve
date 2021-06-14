@@ -53,9 +53,9 @@ namespace eve::detail
     }
   }
 
-  template<real_scalar_value T, typename N, std::size_t Align>
+  template<real_scalar_value T, typename N, typename Lanes>
   EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N>> const &tgt, aligned_ptr<T const, Align> ptr) noexcept
+  load(eve::as_<wide<T, N>> const &tgt, aligned_ptr<T const, Lanes> ptr) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
     if constexpr( N::value * sizeof(T) >= ppc_::bytes )
@@ -64,8 +64,8 @@ namespace eve::detail
       {
         if constexpr( sizeof(T) <= 8 )
         {
-          if constexpr( Align >= 16 ) return vec_ld(0, ptr.get());
-          else                        return load(tgt, ptr.get());
+          if constexpr( aligned_ptr<T, Lanes>::alignment() >= 16 )  return vec_ld(0, ptr.get());
+          else                                                      return load(tgt, ptr.get());
         }
       }
       else if constexpr( current_api == spy::vsx_ )
@@ -89,11 +89,11 @@ namespace eve::detail
     }
   }
 
-  template<real_scalar_value T, typename N, std::size_t Align>
+  template<real_scalar_value T, typename N, typename Lanes>
   EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N>> const &tgt, aligned_ptr<T, Align>  ptr) noexcept
+  load(eve::as_<wide<T, N>> const &tgt, aligned_ptr<T, Lanes>  ptr) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
-    return load(tgt, aligned_ptr<T const, Align>(ptr));
+    return load(tgt, aligned_ptr<T const, Lanes>(ptr));
   }
 }
