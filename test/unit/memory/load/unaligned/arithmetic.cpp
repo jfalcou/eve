@@ -8,7 +8,6 @@
 #include "test.hpp"
 #include "unit/memory/page.hpp"
 
-#include <eve/memory/aligned_ptr.hpp>
 #include <eve/function/load.hpp>
 #include <array>
 #include <list>
@@ -19,18 +18,13 @@
 EVE_TEST_TYPES( "Check load to scalar values", eve::test::scalar::all_types)
 <typename T>(eve::as_<T>)
 {
-  constexpr std::ptrdiff_t algt = eve::alignment_v<T>;
-
   auto [data,idx]         = page<T, eve::scalar_cardinal>();
   auto* ptr               = &data[idx];
   auto* uptr              = ptr - 1;
-  auto const* const_ptr   = ptr;
   auto const* uconst_ptr  = uptr;
 
-  TTS_EQUAL((eve::load(uptr                             , eve::scalar)) , *uptr       );
-  TTS_EQUAL((eve::load(uconst_ptr                       , eve::scalar)) , *uconst_ptr );
-  TTS_EQUAL((eve::load(eve::as_aligned<algt>(ptr)       , eve::scalar)) , *ptr        );
-  TTS_EQUAL((eve::load(eve::as_aligned<algt>(const_ptr) , eve::scalar)) , *const_ptr  );
+  TTS_EQUAL((eve::load(uptr       , eve::scalar)) , *uptr       );
+  TTS_EQUAL((eve::load(uconst_ptr , eve::scalar)) , *uconst_ptr );
 };
 
 //==================================================================================================

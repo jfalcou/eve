@@ -8,7 +8,6 @@
 #include "test.hpp"
 #include "unit/memory/page.hpp"
 
-#include <eve/memory/aligned_ptr.hpp>
 #include <eve/function/load.hpp>
 #include <eve/function/any.hpp>
 #include <array>
