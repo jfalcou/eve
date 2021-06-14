@@ -16,7 +16,7 @@ EVE_TEST_TYPES("aligned_allocator behavior", eve::test::simd::cardinals)
   using alloc_t = eve::aligned_allocator<char, Lanes>;
   std::vector<char, alloc_t> x(1337);
 
-  TTS_EXPECT(eve::is_aligned<alloc_t::alignment()>(x.data()));
+  TTS_EXPECT(eve::is_aligned(x.data(), Lanes{}));
 };
 
 EVE_TEST_TYPES("aligned_allocator comparisons", eve::test::simd::cardinals)
