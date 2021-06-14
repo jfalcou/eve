@@ -30,7 +30,7 @@ TTS_CASE("aligned_ptr factory functions - Default SIMD alignment")
   TTS_NOT_EQUAL(eve::as_aligned(&values[ 0 ])     , &values[ 3 ]);
   TTS_NOT_EQUAL(eve::as_aligned(&values[ 0 ])     , eve::as_aligned(&values[ size ]));
 }
-
+/*
 TTS_CASE("aligned_ptr factory functions - Specific alignment")
 {
   alignas(8) std::array<std::byte, 64> values;
@@ -198,3 +198,4 @@ TTS_CASE("previous aligned address")
     TTS_EQUAL(aligned_const.get(), expected);
   }
 }
+*/
