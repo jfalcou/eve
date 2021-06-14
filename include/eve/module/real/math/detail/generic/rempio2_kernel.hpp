@@ -216,7 +216,7 @@ namespace eve::detail
 
         for( int i = 0; i < 6; ++i )
         {
-          auto values = gather(eve::as_aligned<alg>(&toverp[0]), inds);
+          auto values = gather(eve::as_aligned(&toverp[0],cardinal_t<T>{}), inds);
           inds        = inc(inds);
           r[i]        = x1 * values * tmp1;
           tmp1 *= tm24;
@@ -281,7 +281,7 @@ namespace eve::detail
       using ui_t          = std::conditional_t<scalar_value<T>, ui_ts, ui_tv>;
       using wui_t         = std::conditional_t<scalar_value<T>, wui_ts, wui_tv>;
 
-      constexpr auto alg = alignment_v<ui_t>;
+      constexpr auto alg = alignment_v<ui_tv>;
       // Table with 4/PI to 192 bit precision.  To avoid unaligned accesses
       //   only 8 new bits are added per entry, making the table 4 times larger.
       alignas(alg) constexpr const uint32_t __inv_pio4[24] = {
@@ -293,9 +293,9 @@ namespace eve::detail
       auto [sn, sr, dsr]          = rempio2_small(xx);
       auto xi                     = bit_cast(xx, as_<ui_t>());
       auto index                  = ((xi >> 26) & 15);
-      auto arr0                   = gather(eve::as_aligned<alg>(&__inv_pio4[0]), index);
-      auto arr4 =      uint64(gather(eve::as_aligned<alg>(&__inv_pio4[0]), index + 4));
-      auto arr8 =      uint64(gather(eve::as_aligned<alg>(&__inv_pio4[0]), index + 8));
+      auto arr0 = gather(eve::as_aligned(&__inv_pio4[0], cardinal_t<T>{}), index);
+      auto arr4 = uint64(gather(eve::as_aligned(&__inv_pio4[0], cardinal_t<T>{}), index + 4));
+      auto arr8 = uint64(gather(eve::as_aligned(&__inv_pio4[0], cardinal_t<T>{}), index + 8));
 
       auto shift  = ((xi >> 23) & 7);
       auto xii    = bit_or(bit_and(xi, 0xffffff), 0x800000);
