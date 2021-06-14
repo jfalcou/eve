@@ -12,7 +12,7 @@
 #include <eve/platform.hpp>
 #include <cmath>
 
-EVE_TEST_TYPES("Check eve::binomial_distribution behavior"
+EVE_TEST_TYPES("Check eve::cauchy_distribution behavior"
               , eve::test::simd::ieee_reals
               )
   <typename T>(eve::as_<T>)
@@ -62,4 +62,4 @@ EVE_TEST_TYPES("Check eve::binomial_distribution behavior"
     TTS_ULP_EQUAL(eve::scale(ca)           , T(1)  , 0);
     TTS_ULP_EQUAL(eve::fisher(ca)          , T(0.5)  , 0);
   }
-}; 
+};
