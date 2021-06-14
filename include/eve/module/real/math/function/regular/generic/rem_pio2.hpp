@@ -41,9 +41,9 @@ namespace eve::detail
       kumi::tie(tmp[i], txr[i], tyr[i]) = eve::rem_pio2(a0.get(i));
     }
 
-    return kumi::make_tuple( eve::load(eve::as_aligned<algt>(&tmp[0]), cardinal_t<T>{})
-                          , eve::load(eve::as_aligned<algt>(&txr[0]), cardinal_t<T>{})
-                          , eve::load(eve::as_aligned<algt>(&tyr[0]), cardinal_t<T>{})
+    return kumi::make_tuple( eve::load(eve::as_aligned(&tmp[0]), cardinal_t<T>{})
+                          , eve::load(eve::as_aligned(&txr[0]), cardinal_t<T>{})
+                          , eve::load(eve::as_aligned(&tyr[0]), cardinal_t<T>{})
                           );
   }
 
