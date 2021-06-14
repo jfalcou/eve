@@ -12,6 +12,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/spy.hpp>
 #include <eve/memory/aligned_ptr.hpp>
+#include <eve/memory/pointer.hpp>
 
 namespace eve::detail
 {
@@ -94,6 +95,6 @@ namespace eve::detail
   load(eve::as_<wide<T, N>> const &tgt, aligned_ptr<T, Lanes>  ptr) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
-    return load(tgt, aligned_ptr<T const, Lanes>(ptr));
+    return load(tgt, ptr_cast<T const>(ptr));
   }
 }
