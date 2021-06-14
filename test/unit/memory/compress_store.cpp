@@ -43,7 +43,7 @@ void one_test(T x, L m)
   // Same check for aligned
   if constexpr (all_options)
   {
-    using ap_t = eve::aligned_ptr<e_t, T::size() * sizeof(e_t)>;
+    using ap_t = eve::aligned_ptr<e_t, eve::cardinal_t<T>>;
 
     out = eve::unsafe(eve::compress_store)(x, m, ap_t{actual.begin()});
 

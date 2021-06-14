@@ -451,6 +451,7 @@ namespace eve
   //  Specialisation for pointer_alignment
   //================================================================================================
   template<typename Type, typename Lanes>
-  struct  pointer_alignment<aligned_ptr<Type, Lanes>> : Lanes
+  struct  pointer_alignment<aligned_ptr<Type, Lanes>>
+        : std::integral_constant<std::size_t,aligned_ptr<Type, Lanes>::alignment()>
   {};
 }
