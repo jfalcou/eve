@@ -48,12 +48,9 @@ EVE_TEST_TYPES( "Check load behavior with tuple of pointers", eve::test::scalar:
   auto [data1,idx1] = page<T            , typename w8_t::cardinal_type >();
   auto [data2,idx2] = page<double       , typename w8_t::cardinal_type >();
 
-  constexpr auto alg0 = eve::alignment_v< std::tuple_element_t<0,typename w8_t::storage_type> >;
-  constexpr auto alg2 = eve::alignment_v< std::tuple_element_t<2,typename w8_t::storage_type> >;
-
-  auto src = kumi::make_tuple ( eve::as_aligned<alg0>(&data0[idx0])
+  auto src = kumi::make_tuple ( eve::as_aligned(&data0[idx0],typename w8_t::cardinal_type{})
                               , &data1[idx1] - 1
-                              , eve::as_aligned<alg2>(&data2[idx2])
+                              , eve::as_aligned(&data2[idx2],typename w8_t::cardinal_type{})
                               );
 
   w_t constructed(src);
