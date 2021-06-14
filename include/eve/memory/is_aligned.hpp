@@ -7,9 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <cstdint>
-#include <eve/memory/power_of_2.hpp>
 #include <eve/detail/concepts.hpp>
+
+#include <bit>
+#include <cstdint>
 
 namespace eve
 {
@@ -28,7 +29,7 @@ namespace eve
   template<std::size_t Alignment, std::integral T>
   constexpr bool is_aligned(T v) noexcept
   {
-    static_assert(is_power_of_2(Alignment), "[eve] Alignment must be a power of 2");
+    static_assert(std::has_single_bit(Alignment), "[eve] Alignment must be a power of 2");
     return (v & (Alignment - 1)) == 0;
   }
 
@@ -44,8 +45,22 @@ namespace eve
   template<std::size_t Alignment, typename T>
   constexpr bool is_aligned(T *ptr) noexcept
   {
-    static_assert(is_power_of_2(Alignment), "[eve] Alignment must be a power of 2");
+    static_assert(std::has_single_bit(Alignment), "[eve] Alignment must be a power of 2");
     return is_aligned<Alignment>(reinterpret_cast<std::uintptr_t>(ptr));
+  }
+
+  //================================================================================================
+  //! @brief Checks if a pointer satisfy an alignment constraint.
+  //!
+  //! @param  ptr   Pointer to check
+  //! @param  lanes Alignment constraint to verify expressed as a SIMD register number of lanes.
+  //!
+  //! @return `true` if `ptr` is aligned over the alignment implid by `lanes`, `false` otherwise.
+  //================================================================================================
+  template<typename T, typename Lanes>
+  constexpr bool is_aligned(T *ptr, Lanes) noexcept
+  {
+    return is_aligned<sizeof(T) * Lanes::value>(ptr);
   }
   //================================================================================================
   //! @}

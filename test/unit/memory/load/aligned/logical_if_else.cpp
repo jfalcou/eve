@@ -25,12 +25,12 @@ EVE_TEST( "Check load to logical from aligned pointer with alternatives"
 {
   using v_t = eve::element_type_t<typename T::mask_type>;
   using e_t = eve::element_type_t<T>;
-  constexpr std::ptrdiff_t l_algt = eve::alignment_v<T>;
+  using lanes_t = eve::cardinal_t<T>;
 
-  auto [ldata ,lidx ] = logical_page<v_t, eve::fixed<T::size()>>();
+  auto [ldata ,lidx ] = logical_page<v_t, lanes_t>();
 
-  auto l_ptr        = eve::as_aligned<l_algt>(&ldata[lidx]);
-  auto l_const_ptr  = eve::as_aligned<l_algt>((e_t const*)(&ldata[lidx]));
+  auto l_ptr        = eve::as_aligned(&ldata[lidx], lanes_t{});
+  auto l_const_ptr  = eve::as_aligned((e_t const*)(&ldata[lidx]), lanes_t{});
 
   TTS_WHEN("For some given relative masks")
   {

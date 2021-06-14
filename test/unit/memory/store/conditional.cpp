@@ -78,17 +78,13 @@ void store_ignore_test_pass(T what, eve::element_type_t<T> garbage_value, eve::e
     {
       run_all_ignores(f);
 
-      static constexpr std::ptrdiff_t alignment = sizeof(e_t) * T::size();
+      if (!eve::is_aligned(f,eve::cardinal_t<T>{})) continue;
 
-      if (!eve::is_aligned<alignment>(f)) continue;
+      run_all_ignores(eve::aligned_ptr<e_t, eve::cardinal_t<T>>(f));
 
-      run_all_ignores(eve::aligned_ptr<e_t, alignment>(f));
+      if (!eve::is_aligned(f, typename eve::cardinal_t<T>::combined_type{})) continue;
 
-      static constexpr std::ptrdiff_t double_alignment = sizeof(e_t) * T::size() * 2;
-
-      if (!eve::is_aligned<double_alignment>(f)) continue;
-
-      run_all_ignores(eve::aligned_ptr<e_t, double_alignment>(f));
+      run_all_ignores(eve::aligned_ptr<e_t, typename eve::cardinal_t<T>::combined_type>(f));
     }
   }
 }

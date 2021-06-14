@@ -21,13 +21,13 @@
 EVE_TEST_TYPES( "Check load to wides from aligned pointer", eve::test::simd::all_types)
 <typename T>(eve::as_<T>)
 {
-  using v_t = eve::element_type_t<T>;
-  constexpr std::ptrdiff_t l_algt = eve::alignment_v<eve::logical<T>>;
+  using v_t     = eve::element_type_t<T>;
+  using lanes_t = eve::cardinal_t<T>;
 
-  auto [ldata ,lidx ] = logical_page<v_t, eve::fixed<T::size()>>();
+  auto [data  ,idx  ] = logical_page<v_t, lanes_t>();
 
-  auto l_ptr        = eve::as_aligned<l_algt>(&ldata[lidx]);
-  auto l_const_ptr  = eve::as_aligned<l_algt>((eve::logical<v_t> const*)(l_ptr));
+  auto l_ptr          = eve::as_aligned(&data[idx], lanes_t{});
+  auto l_const_ptr    = eve::as_aligned((eve::logical<v_t> const*)(l_ptr), lanes_t{});
 
   TTS_WHEN("For some given relative masks")
   {

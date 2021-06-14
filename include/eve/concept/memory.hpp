@@ -18,7 +18,7 @@ namespace eve
   {
     template<typename T> struct is_aligned_ptr : std::false_type {};
 
-    template<typename T, std::size_t A>
+    template<typename T, typename A>
     struct is_aligned_ptr<aligned_ptr<T,A>> : std::true_type {};
   }
 

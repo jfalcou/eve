@@ -14,7 +14,7 @@
 template<typename T, typename N> auto page()
 {
   constexpr std::ptrdiff_t algt = eve::alignment_v<eve::wide<T, N>>;
-  using alloc_t = eve::aligned_allocator<T, algt>;
+  using alloc_t = eve::aligned_allocator<T, N>;
 
   auto nb_elem  = 4096/sizeof(T);
   auto start    = nb_elem - std::max(algt,N::value);
@@ -28,8 +28,8 @@ template<typename T, typename N> auto page()
 
 template<typename T, typename N> auto logical_page()
 {
-  constexpr std::ptrdiff_t algt = eve::logical<eve::wide<T, N>>::alignment();
-  using alloc_t = eve::aligned_allocator<eve::logical<T>, algt>;
+  constexpr std::ptrdiff_t algt = eve::alignment_v<eve::logical<eve::wide<T, N>>>;
+  using alloc_t = eve::aligned_allocator<eve::logical<T>, N>;
 
   auto nb_elem  = 4096/sizeof(T);
   auto start    = nb_elem - std::max(algt,N::value);

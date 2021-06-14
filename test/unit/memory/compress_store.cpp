@@ -36,14 +36,14 @@ void one_test(T x, L m)
   e_t* out = eve::unsafe(eve::compress_store)(x, m, actual.begin());
   TTS_EQUAL((out - actual.begin()), o);
 
-  // No guarntees past the out
+  // No guarantees past the out
   std::copy(&expected[o], expected.end(), &actual[o]);
   TTS_EQUAL(T(expected.begin()), T(actual.begin()));
 
   // Same check for aligned
   if constexpr (all_options)
   {
-    using ap_t = eve::aligned_ptr<e_t, T::size() * sizeof(e_t)>;
+    using ap_t = eve::aligned_ptr<e_t, eve::cardinal_t<T>>;
 
     out = eve::unsafe(eve::compress_store)(x, m, ap_t{actual.begin()});
 

@@ -18,7 +18,6 @@ add_dependencies(unit.memory.exe  unit.memory.simd.exe  )
 
 ##==================================================================================================
 ## Memory API tests
-make_unit( "unit.memory" aligned_alloc.cpp                      )
 make_unit( "unit.memory" aligned_allocator.cpp                  )
 make_unit( "unit.memory" aligned_ptr.cpp                        )
 make_unit( "unit.memory" is_aligned.cpp                         )

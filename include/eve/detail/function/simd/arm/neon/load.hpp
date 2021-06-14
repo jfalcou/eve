@@ -8,12 +8,10 @@
 #pragma once
 
 #include <eve/as.hpp>
-#include <eve/detail/category.hpp>
-#include <eve/detail/concepts.hpp>
 #include <eve/concept/vectorizable.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/detail/category.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/detail/spy.hpp>
-#include <eve/forward.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 
 namespace eve::detail
@@ -59,13 +57,13 @@ namespace eve::detail
   }
 
 #if defined(SPY_COMPILER_IS_MSVC)
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE auto load ( as_<wide<T, N>> const &, aligned_ptr<T const, Align> p) noexcept
+  template<real_scalar_value T, typename N, typename Lanes>
+  EVE_FORCEINLINE auto load ( as_<wide<T, N>> const &, aligned_ptr<T const, Lanes> p) noexcept
       requires arm_abi<abi_t<T, N>>
   {
     auto ptr = p.get();
 
-    if constexpr( Align < 16 )
+    if constexpr( aligned_ptr<T const, Lanes>::alignment() < 16 )
     {
       return load(ptr, tgt);
     }
@@ -108,27 +106,27 @@ namespace eve::detail
     }
   }
 
-  template<real_scalar_value T, typename N std::size_t Align>
+  template<real_scalar_value T, typename N, typename Lanes>
   EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N>> const &tgt, aligned_ptr<T, Align> p) noexcept
+  load(eve::as_<wide<T, N>> const &tgt, aligned_ptr<T, Lanes> p) noexcept
       requires arm_abi<abi_t<T, N>>
   {
-    return load(tgt, aligned_ptr<T const, A>(p));
+    return load(tgt, aligned_ptr<T const, Lanes>(p));
   }
 
 #else
 
-  template<real_scalar_value T, typename N, std::size_t Align>
+  template<real_scalar_value T, typename N, typename Lanes>
   EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N>> const &tgt,aligned_ptr<T const, Align>  ptr)
+  load(eve::as_<wide<T, N>> const &tgt,aligned_ptr<T const, Lanes>  ptr)
       requires arm_abi<abi_t<T, N>>
   {
     return load(tgt, ptr.get());
   }
 
-  template<real_scalar_value T, typename N, std::size_t Align>
+  template<real_scalar_value T, typename N, typename Lanes>
   EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N>> const &tgt, aligned_ptr<T, Align> ptr) noexcept
+  load(eve::as_<wide<T, N>> const &tgt, aligned_ptr<T, Lanes> ptr) noexcept
       requires arm_abi<abi_t<T, N>>
   {
     return load(tgt, ptr.get());

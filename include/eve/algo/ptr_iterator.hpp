@@ -73,7 +73,7 @@ namespace eve::algo
     using cardinal = Cardinal;
     using wide_value_type = eve::wide<std::remove_const_t<T>, cardinal>;
 
-    using aligned_ptr_type = eve::aligned_ptr<T, Cardinal{}() * sizeof(T)>;
+    using aligned_ptr_type = eve::aligned_ptr<T, Cardinal>;
 
     aligned_ptr_iterator() = default;
     explicit aligned_ptr_iterator(aligned_ptr_type ptr) : ptr{ptr} {}

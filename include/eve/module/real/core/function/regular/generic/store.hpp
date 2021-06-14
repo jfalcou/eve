@@ -26,8 +26,8 @@ namespace eve::detail
 
   // -----------------------------------------------------------------------------------------------
   // scalar Aligned case
-  template<scalar_value T, std::size_t N>
-  EVE_FORCEINLINE auto store_(EVE_SUPPORTS(cpu_), T value, aligned_ptr<T, N> ptr) noexcept
+  template<scalar_value T, typename Lanes>
+  EVE_FORCEINLINE auto store_(EVE_SUPPORTS(cpu_), T value, aligned_ptr<T, Lanes> ptr) noexcept
   {
     *ptr = value;
   }
@@ -58,7 +58,7 @@ namespace eve::detail
   // simd Regular case
   template<real_scalar_value T, typename N>
   EVE_FORCEINLINE void
-  store_(EVE_SUPPORTS(cpu_), wide<T, N> const &value, T *ptr) noexcept
+  store_(EVE_SUPPORTS(cpu_), wide<T, N> value, T *ptr) noexcept
     requires std::same_as<abi_t<T, N>, emulated_>
   {
     apply<N::value>([&](auto... I) { ((*ptr++ = value.get(I)), ...); });
@@ -66,7 +66,7 @@ namespace eve::detail
 
   template<real_scalar_value T, typename N>
   EVE_FORCEINLINE void
-  store_(EVE_SUPPORTS(cpu_), wide<T, N> const &value, T *ptr) noexcept
+  store_(EVE_SUPPORTS(cpu_), wide<T, N> value, T *ptr) noexcept
     requires std::same_as<abi_t<T, N>, aggregated_>
   {
     value.storage().apply
@@ -80,22 +80,22 @@ namespace eve::detail
 
   // -----------------------------------------------------------------------------------------------
   // simd Aligned case
-  template<real_scalar_value T, typename S, std::size_t N>
+  template<real_scalar_value T, typename S, typename Lanes>
   EVE_FORCEINLINE void
-  store_(EVE_SUPPORTS(cpu_), wide<T, S> const &value, aligned_ptr<T, N> ptr) noexcept
-      requires(wide<T, S>::alignment() <= N) && std::same_as<abi_t<T, S>, emulated_>
+  store_(EVE_SUPPORTS(cpu_), wide<T, S> const &value, aligned_ptr<T, Lanes> ptr) noexcept
+      requires(S::value <= Lanes::value) && std::same_as<abi_t<T, S>, emulated_>
   {
     store(value, ptr.get());
   }
 
-  template<real_scalar_value T, typename S, std::size_t N>
+  template<real_scalar_value T, typename S, typename Lanes>
   EVE_FORCEINLINE void
-  store_(EVE_SUPPORTS(cpu_), wide<T, S> const &value, aligned_ptr<T, N> ptr) noexcept
-      requires(wide<T, S>::alignment() <= N) && std::same_as<abi_t<T, S>, aggregated_>
+  store_(EVE_SUPPORTS(cpu_), wide<T, S> const &value, aligned_ptr<T, Lanes> ptr) noexcept
+      requires(S::value <= Lanes::value) && std::same_as<abi_t<T, S>, aggregated_>
   {
     auto cast = []<typename Ptr, typename Sub>(Ptr ptr, as_<Sub>)
     {
-      return eve::aligned_ptr<T, Sub::alignment()>{ptr.get()};
+      return eve::aligned_ptr<T, typename Sub::cardinal_type>{ptr.get()};
     };
 
     value.storage().apply
@@ -139,7 +139,7 @@ namespace eve::detail
       using e_t = element_type_t<T>;
 
       alignas(sizeof(T)) std::array<e_t, T::size()> storage;
-      store(value, eve::aligned_ptr<e_t, sizeof(T)>(storage.begin()));
+      store(value, eve::aligned_ptr<e_t, typename T::cardinal_type>(storage.begin()));
 
       auto offset = cond.offset( as_<T>{} );
       auto count = cond.count( as_<T>{} );
@@ -155,14 +155,14 @@ namespace eve::detail
     store(value.mask(), (typename logical<T>::mask_type*) ptr);
   }
 
-  template<real_scalar_value T, typename S, std::size_t A>
+  template<real_scalar_value T, typename S,typename Lanes>
   EVE_FORCEINLINE void store_(EVE_SUPPORTS(cpu_),
                               logical<wide<T, S>> const &value,
-                              aligned_ptr<logical<T>, A> ptr) noexcept
+                              aligned_ptr<logical<T>, Lanes> ptr) noexcept
     requires (
-      requires {store(value.mask(), aligned_ptr<typename logical<T>::mask_type, A>{}); } )
+      requires {store(value.mask(), aligned_ptr<typename logical<T>::mask_type, Lanes>{}); } )
   {
     using mask_type_t = typename logical<T>::mask_type;
-    store(value.mask(), aligned_ptr<mask_type_t, A>{(mask_type_t*)ptr.get()});
+    store(value.mask(), aligned_ptr<mask_type_t, Lanes>{(mask_type_t*)ptr.get()});
   }
 }

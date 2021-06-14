@@ -15,9 +15,7 @@
 namespace eve::detail
 {
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE void store_(EVE_SUPPORTS(neon128_)
-                             , wide<T, N> const &value
-                             , T *ptr) noexcept
+  EVE_FORCEINLINE void store_(EVE_SUPPORTS(neon128_), wide<T, N> value, T *ptr) noexcept
       requires arm_abi<abi_t<T, N>>
   {
     if constexpr( std::is_same_v<abi_t<T, N>,arm_64_> &&  (N::value * sizeof(T) != arm_64_::bytes ))
@@ -54,10 +52,10 @@ namespace eve::detail
   }
 
 #if defined(SPY_COMPILER_IS_MSVC)
-  template<real_scalar_value T, typename N>
+  template<real_scalar_value T, typename N, typename Lanes>
   EVE_FORCEINLINE void store_(EVE_SUPPORTS(neon128_)
-                             , wide<T, N> const &value
-                             , aligned_ptr<T, N> ptr) noexcept
+                             , wide<T, N> value
+                             , aligned_ptr<T, Lanes> ptr) noexcept
     requires arm_abi<abi_t<T, N>>
   {
     if constexpr( std::is_same<abi_t<T, N>,arm_64_> &&  ( N::value * sizeof(T) != arm_64_::bytes ))
@@ -93,11 +91,11 @@ namespace eve::detail
     }
   }
 #else
-  template<real_scalar_value T, typename S, std::size_t N>
-  EVE_FORCEINLINE void store_(EVE_SUPPORTS(neon128_)
-                             , wide<T, S> const &value
-                             , aligned_ptr<T, N> ptr) noexcept
-      requires arm_abi<abi_t<T, S>>
+  template<real_scalar_value T, typename S, typename Lanes>
+  EVE_FORCEINLINE void store_ ( EVE_SUPPORTS(neon128_)
+                              , wide<T, S> value, aligned_ptr<T, Lanes> ptr
+                              ) noexcept
+  requires arm_abi<abi_t<T, S>>
   {
     store(value, ptr.get());
   }

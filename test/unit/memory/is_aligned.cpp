@@ -47,3 +47,17 @@ TTS_CASE("is_aligned for pointers")
   TTS_EXPECT(eve::is_aligned<8>(&v64));
   TTS_EXPECT(eve::is_aligned<8>(&v128));
 }
+
+EVE_TEST_TYPES("is_aligned for pointers with respect to SIMD lanes", eve::test::simd::cardinals)
+<typename Lanes>(eve::as_<Lanes>)
+{
+  alignas(sizeof(std::uint8_t)  * Lanes::value) std::uint8_t  v8;
+  alignas(sizeof(std::uint16_t) * Lanes::value) std::uint16_t v16;
+  alignas(sizeof(std::uint32_t) * Lanes::value) std::uint32_t v32;
+  alignas(sizeof(std::uint64_t) * Lanes::value) std::uint64_t v64;
+
+  TTS_EXPECT(eve::is_aligned(&v8  , Lanes{}));
+  TTS_EXPECT(eve::is_aligned(&v16 , Lanes{}));
+  TTS_EXPECT(eve::is_aligned(&v32 , Lanes{}));
+  TTS_EXPECT(eve::is_aligned(&v64 , Lanes{}));
+};

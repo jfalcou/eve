@@ -23,23 +23,22 @@ EVE_TEST( "Check load to wides from aligned pointer"
 <typename T>(T reference)
 {
   using v_t = eve::element_type_t<typename T::mask_type>;
+  using lanes_t = eve::cardinal_t<T>;
 
-  constexpr std::ptrdiff_t algt   = eve::alignment_v<T>;
-
-  auto [data  ,idx  ] = logical_page<v_t , eve::fixed<T::size()>>();
+  auto [data  ,idx  ] = logical_page<v_t, lanes_t>();
 
   auto* ptr              = &data[idx];
   auto const* const_ptr  = ptr;
 
-  TTS_EQUAL(T(eve::as_aligned<algt>(ptr))                                       , reference );
-  TTS_EQUAL(T(eve::as_aligned<algt>(const_ptr))                                 , reference );
-  TTS_EQUAL((eve::load(eve::as_aligned<algt>(ptr)      , eve::lane<T::size()>)) , reference );
-  TTS_EQUAL((eve::load(eve::as_aligned<algt>(const_ptr), eve::lane<T::size()>)) , reference );
+  TTS_EQUAL(T(eve::as_aligned(ptr,lanes_t{}))                           , reference );
+  TTS_EQUAL(T(eve::as_aligned(const_ptr,lanes_t{}))                     , reference );
+  TTS_EQUAL((eve::load(eve::as_aligned(ptr,lanes_t{})      , lanes_t{})), reference );
+  TTS_EQUAL((eve::load(eve::as_aligned(const_ptr,lanes_t{}), lanes_t{})), reference );
 
   if constexpr(T::size() == eve::expected_cardinal_v<v_t>)
   {
-    TTS_EQUAL(eve::load(eve::as_aligned<algt>(ptr))       , reference         );
-    TTS_EQUAL(eve::load(eve::as_aligned<algt>(const_ptr)) , reference         );
+    TTS_EQUAL(eve::load(eve::as_aligned(ptr,lanes_t{}))       , reference  );
+    TTS_EQUAL(eve::load(eve::as_aligned(const_ptr,lanes_t{})) , reference  );
   }
 };
 
@@ -57,11 +56,11 @@ EVE_TEST_TYPES( "Check load to wides from re-aligned pointer", eve::test::simd::
 
   auto test = [&]<typename D, typename P, std::ptrdiff_t A>(eve::fixed<A>, P* f, D expected)
   {
-    if (!eve::is_aligned<A>(f))   return;
+    if (!eve::is_aligned(f, eve::fixed<A>{}))   return;
 
-    if constexpr (A >= D::alignment())
+    if constexpr (A*sizeof(P) >= D::alignment())
     {
-      eve::aligned_ptr<P, static_cast<std::size_t>(A)> ptr{f};
+      eve::aligned_ptr<P, eve::fixed<A>> ptr{f};
       TTS_EQUAL(D{ptr}                                           , expected);
       TTS_EQUAL(eve::unsafe(eve::load)(ptr, eve::lane<D::size()>), expected);
     }

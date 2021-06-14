@@ -28,7 +28,7 @@ namespace
     auto aligned_begin() const
     {
       return eve::algo::aligned_ptr_iterator<const int, eve::fixed<4>> {
-        eve::aligned_ptr<const int, 4 * sizeof(int)>(data.begin())
+        eve::aligned_ptr<const int, eve::fixed<4>>(data.begin())
       };
     }
 
