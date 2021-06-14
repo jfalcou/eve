@@ -213,6 +213,24 @@ namespace eve::detail
 
         self *= refine(other, refine(other, estimate(other)));
       }
+      else if constexpr( current_api >= asimd && std::same_as<T, double> )
+      {
+        auto estimate = [](auto x)
+        {
+          constexpr auto c = categorize<type>();
+                if constexpr( c == category::float64x1 ) return vrecpe_f64(x);
+          else  if constexpr( c == category::float64x2 ) return vrecpeq_f64(x);
+        };
+
+        auto refine = [](auto x, auto y) -> type
+        {
+          constexpr auto c = categorize<type>();
+                if constexpr( c == category::float64x1 ) return vmul_f64(vrecps_f64(x, y), y);
+          else  if constexpr( c == category::float64x2 ) return vmulq_f64(vrecpsq_f64(x, y), y);
+        };
+
+        self *= refine(other, refine(other, estimate(other)));
+      }
       else
       {
         apply<N::value>([&](auto... I) { (self.set(I, self.get(I) / other.get(I)), ...); });
