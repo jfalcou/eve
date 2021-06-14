@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/memory/power_of_2.hpp>
-#include <eve/detail/concepts.hpp>
 #include <eve/assert.hpp>
+#include <bit>
+#include <concepts>
 #include <cstdint>
 
 namespace eve
@@ -91,7 +91,7 @@ namespace eve
   template<std::integral T> constexpr auto align(T v, over alignment) noexcept
   {
     auto const a = to_integer(alignment);
-    EVE_ASSERT(is_power_of_2(a), a << " is not a power of 2.");
+    EVE_ASSERT(std::has_single_bit(a), a << " is not a power of 2.");
     return (v + a - 1) & ~(a - 1);
   }
 
@@ -111,7 +111,7 @@ namespace eve
   template<std::integral T> constexpr auto align(T v, under alignment) noexcept
   {
     auto const a = to_integer(alignment);
-    EVE_ASSERT(is_power_of_2(a), a << " is not a power of 2.");
+    EVE_ASSERT(std::has_single_bit(a), a << " is not a power of 2.");
     return v & ~(a - 1);
   }
 
