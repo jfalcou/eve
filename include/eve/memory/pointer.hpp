@@ -8,8 +8,23 @@
 #pragma once
 
 #include <eve/memory/aligned_ptr.hpp>
+#include <eve/detail/kumi.hpp>
 
 #include <concepts>
+
+namespace eve
+{
+  template<typename T, typename Enable=void> struct pointer_traits;
+
+  template<typename T> struct pointer_traits<T*>        { using value_type = T;       };
+  template<typename T> struct pointer_traits<T const*>  { using value_type = T const; };
+
+  template<typename T>
+  struct pointer_traits<T, std::void_t<typename T::value_type>>
+  {
+    using value_type = typename T::value_type;
+  };
+}
 
 namespace eve::detail
 {
