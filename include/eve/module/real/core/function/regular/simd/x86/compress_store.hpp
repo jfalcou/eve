@@ -23,7 +23,7 @@ namespace eve::detail
   }
 
   template <std::unsigned_integral T>
-  EVE_FORCEINLINE constexpr auto pattern_4_elements(std::array<T, 4> idxs)
+  EVE_FORCEINLINE constexpr auto pattern_4_elements(std::array<T, 8> idxs)
   {
     using row = std::array<T, 4>;
 
@@ -39,6 +39,52 @@ namespace eve::detail
     };
   }
 
+  template <std::unsigned_integral T>
+  constexpr auto idxs_bytes = [] {
+    std::array<T, 8> res = {};
+
+    for (unsigned i = 0; i != 8; ++i)
+    {
+      unsigned byte_idx = i * sizeof(T);
+
+      if constexpr ( sizeof(T) == 4 )
+      {
+        res[i] = (byte_idx + 3) << 24 | (byte_idx + 2) << 16 | (byte_idx + 1) << 8 | byte_idx;
+      }
+      else if constexpr ( sizeof(T) == 2 )
+      {
+        res[i] = (byte_idx + 1) << 8 | byte_idx;
+      }
+      else if constexpr ( sizeof(T) == 1 )
+      {
+        res[i] = byte_idx;
+      }
+    }
+
+    return res;
+  }();
+
+  template <std::unsigned_integral T>
+  constexpr auto idx_dwords = [] {
+    std::array<T, 8> res = {};
+
+    for (unsigned i = 0; i != 8; i += 1)
+    {
+      unsigned dword_idx = i * sizeof(T) / 4;
+
+      if constexpr ( sizeof(T) == 8 )
+      {
+        res[i] = std::uint64_t(dword_idx + 1) << 32 | dword_idx;
+      }
+      else if constexpr ( sizeof(T) == 4 )
+      {
+        res[i] = dword_idx;
+      }
+    }
+
+    return res;
+  }();
+
   template <typename Row, std::size_t N>
   EVE_FORCEINLINE constexpr auto add_popcounts(std::array<Row, N> patterns)
   {
@@ -48,6 +94,19 @@ namespace eve::detail
     return patterns;
   }
 
+  template <typename T, typename N>
+  EVE_FORCEINLINE wide<T, N> permvar8(wide<T, N> v, __m256i pattern)
+    requires (current_api >= avx2)
+  {
+         if constexpr ( std::integral<T>       ) return _mm256_permutevar8x32_epi32(v, pattern);
+    else if constexpr ( std::same_as<T, float> ) return _mm256_permutevar8x32_ps   (v, pattern);
+    else
+    {
+      __m256 f32s = _mm256_castpd_ps(v);
+      f32s = _mm256_permutevar8x32_ps(f32s, pattern);
+      return _mm256_castps_pd(f32s);
+    }
+  }
 
   // The idea from: https://gist.github.com/aqrit/6e73ca6ff52f72a2b121d584745f89f3#file-despace-cpp-L141
   // Was shown to me by: @aqrit
@@ -59,9 +118,27 @@ namespace eve::detail
                      wide<T, N> v,
                      logical<wide<T, N>> mask,
                      Ptr ptr) noexcept
-    requires std::same_as<abi_t<T, N>, x86_128_> && (N() == 4)
+    requires x86_abi<abi_t<T, N>> && ( N() == 4 )
   {
-    if constexpr ( std::floating_point<T> )
+    if constexpr ( N() == 4 && sizeof(T) == 8 && current_api == avx  )
+    {
+      return compress_store_aggregated_unsafe(v, mask, ptr);
+    }
+    else if constexpr ( N() == 4 && sizeof(T) == 8 )
+    {
+      alignas(32) auto patterns = pattern_4_elements(idx_dwords<std::uint64_t>);
+
+      top_bits mmask{mask};
+      aligned_ptr<std::uint64_t, eve::fixed<4>> pattern_ptr{patterns[mmask.as_int() & 7].data()};
+      wide<std::uint32_t, eve::fixed<8>> pattern{ptr_cast<std::uint32_t>(pattern_ptr)};
+
+      wide<T, N> shuffled = permvar8(v, pattern);
+
+      store(shuffled, ptr);
+      int popcount = eve::count_true(mask);
+      return as_raw_pointer(ptr) + popcount;
+    }
+    else if constexpr ( std::floating_point<T> )
     {
       using i_t = eve::as_integer_t<T>;
       auto  i_p = ptr_cast<i_t>(ptr);
@@ -77,11 +154,7 @@ namespace eve::detail
       using bytes_fixed = eve::fixed<N() * sizeof(T)>;
       using bytes_t = typename wide<T, N>::template rebind<std::uint8_t, bytes_fixed>;
 
-      alignas(sizeof(T) * 4) const auto patterns = add_popcounts(pattern_4_elements([]{
-             if constexpr ( sizeof(T) == 4 ) return std::array{0x03020100u, 0x07060504u, 0x0b0a0908u, 0x0f0e0d0cu};
-        else if constexpr ( sizeof(T) == 2 ) return std::array{u_t{0x0100}, u_t{0x0302}, u_t{0x0504}, u_t{0x0706}};
-        else if constexpr ( sizeof(T) == 1 ) return std::array{u_t{0x00},   u_t{0x01},   u_t{0x02},   u_t{0x03}};
-      }()));
+      alignas(sizeof(T) * 4) const auto patterns = add_popcounts(pattern_4_elements(idxs_bytes<u_t>));
 
       auto mmask = [&] {
         if constexpr ( sizeof(T) == 2 && abi_t<T, N>::is_wide_logical )
@@ -105,47 +178,123 @@ namespace eve::detail
     }
   }
 
-  template <typename T, typename N>
-  EVE_FORCEINLINE wide<T, N> permvar8(wide<T, N> v, __m256i pattern)
-    requires (current_api >= avx2)
-  {
-         if constexpr ( std::integral<T>       ) return _mm256_permutevar8x32_epi32(v, pattern);
-    else if constexpr ( std::same_as<T, float> ) return _mm256_permutevar8x32_ps   (v, pattern);
-    else
+  /*
+    Credit again goes to @aqrit.
+
+    See comment in compress store for 8 elements first.
+    00 should become 0, 10|01 -> 1, 11 -> 2.
+    This is adding digigts.
+
+    We have 3 pairs, so the first 1 should correspond to power 0, second to 1, third 3 - 2
+
+    So we should & with [1, 1, 3, 3, 9, 9] and then reduce.
+
+    Now, the problem is there is not really a good instruction to reduce 8 numbers.
+    The closest we come is `_mm_sad_epu8`.
+    However, it sums absolute differences for bytes.
+    We could use a zero mask.
+    But instead we can use the same mask we got to mask the 1, 3, 9.
+    In order to get the result in the correct order, we need to use `andnot` instead of `and`.
+    For 8 integers we can use a popcount + some math.
+
+    Example:
+    (true, false, true, true, true, false, false, false)
+     1             3    3      9
+     reduced is 16
+
+    NOTE: @aqrit does not have the problem with an inverted mask nor subtracting from 8.
+          I don't understand how though so far.
+    NOTE: we could also use mmx intrinsics but tend to not use them.
+  */
+  template <real_scalar_value T, typename N>
+  EVE_FORCEINLINE
+  std::pair<std::uint32_t, std::uint16_t>
+  base_3_mask(eve::logical<eve::wide<T, N>> mask) {
+    if constexpr ( sizeof(T) == 4 && N() == 8 && current_api == avx2)
     {
-      __m256 f32s = _mm256_castpd_ps(v);
-      f32s = _mm256_permutevar8x32_ps(f32s, pattern);
-      return _mm256_castps_pd(f32s);
+      std::uint32_t mmask = _mm256_movemask_epi8(
+         eve::bit_cast(mask, eve::as_<logical<eve::wide<std::uint32_t, N>>>{})
+      );
+
+      // sum from popcount:   [ 1, 1, 3, 3, 4, 1]
+      // sum from extra mask: [ 0, 0, 0, 0, 5, 8]
+      std::uint32_t idx_base_3 = std::popcount(mmask & 0x001f7711);
+      std::uint32_t extra_mask = (mmask >> 17) & 0b1'101;
+
+      idx_base_3 += extra_mask;
+      return {idx_base_3, std::popcount(mmask) / 4};
     }
+  }
+
+  // See base_3_mask for explanation
+  template <std::unsigned_integral T>
+  EVE_FORCEINLINE constexpr auto pattern_8_elements(std::array<T, 8> idxs)
+  {
+    using row = std::array<T, 8>;
+
+    std::array<row, 27> res = {};
+
+    for (unsigned i = 0; i != 27; ++i)
+    {
+      unsigned number_of_9s = 0, number_of_3s = 0, number_of_1s = 0;
+      unsigned base_3_value = i;
+
+      if (base_3_value >= 9) ++number_of_9s, base_3_value -= 9;
+      if (base_3_value >= 9) ++number_of_9s, base_3_value -= 9;
+      if (base_3_value >= 3) ++number_of_3s, base_3_value -= 3;
+      if (base_3_value >= 3) ++number_of_3s, base_3_value -= 3;
+      if (base_3_value >= 1) ++number_of_1s, base_3_value -= 1;
+      if (base_3_value >= 1) ++number_of_1s, base_3_value -= 1;
+
+      auto* it = res[i].begin();
+      if (number_of_1s) *it++ = idxs[0], --number_of_1s;
+      if (number_of_1s) *it++ = idxs[1], --number_of_1s;
+      if (number_of_3s) *it++ = idxs[2], --number_of_3s;
+      if (number_of_3s) *it++ = idxs[3], --number_of_3s;
+      if (number_of_9s) *it++ = idxs[4], --number_of_9s;
+      if (number_of_9s) *it++ = idxs[5], --number_of_9s;
+      *it++ = idxs[6];
+      *it++ = idxs[7];
+    }
+
+    return res;
   }
 
   template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
-  T* compress_store_(EVE_SUPPORTS(avx_),
+  T* compress_store_(EVE_SUPPORTS(ssse3_),
                      unsafe_type,
                      wide<T, N> v,
                      logical<wide<T, N>> mask,
                      Ptr ptr) noexcept
-    requires std::same_as<abi_t<T, N>, x86_256_> && (N() == 4)
+    requires x86_abi<abi_t<T, N>> && ( N() == 8 ) && ( sizeof(T) == 4 ) &&
+             abi_t<T, N>::is_wide_logical
   {
-    if constexpr ( N() == 4 && sizeof(T) == 8 && current_api >= avx2 )
+    if constexpr ( sizeof(T) == 4 && current_api == avx ) return compress_store_aggregated_unsafe(v, mask, ptr);
+    else
     {
-      alignas(32) auto patterns = [] {
-        auto u64_idx = [](unsigned low, unsigned high) { return (uint64_t{high} << 32) | low; };
-        constexpr std::array idxs = { u64_idx(0, 1), u64_idx(2, 3), u64_idx(4, 5), u64_idx(6, 7) };
-        return pattern_4_elements(idxs);
-      }();
+      // First let's reduce the variability in each pair
+      auto to_left = eve::slide_left( v, eve::index<1> );
+      v = eve::if_else[mask]( v, to_left );
 
-      top_bits mmask{mask};
-      aligned_ptr<std::uint64_t, eve::fixed<4>> pattern_ptr{patterns[mmask.as_int() & 7].data()};
-      wide<std::uint32_t, eve::fixed<8>> pattern{ptr_cast<std::uint32_t>(pattern_ptr)};
+      // This left us with 3 options instead of 4 per each each pair:
+      // 00 -> 0 | 01, 10 -> 1 | 11 -> 2
+      // On top of this we don't care about the 2 last elements.
+      // So we have 3 pairs ^ 3 options = 27 variations.
+      //
+      // Those variations can be contigious, if we interpret these 0, 1, 2 as a base3 number.
+
+      alignas(32) const auto patterns = pattern_8_elements(idx_dwords<std::uint32_t>);
+
+      auto [pattern_idx, popcount] = base_3_mask(mask);
+
+      aligned_ptr<std::uint32_t const, eve::fixed<8>> pattern_ptr{patterns[pattern_idx].data()};
+      wide<std::uint32_t, eve::fixed<8>> pattern{pattern_ptr};
 
       wide<T, N> shuffled = permvar8(v, pattern);
 
       store(shuffled, ptr);
-      int popcount = eve::count_true(mask);
       return as_raw_pointer(ptr) + popcount;
     }
-    else return compress_store_aggregated_unsafe(v, mask, ptr);
   }
 }
