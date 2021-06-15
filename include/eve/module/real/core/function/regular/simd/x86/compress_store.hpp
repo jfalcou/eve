@@ -194,21 +194,13 @@ namespace eve::detail
     However, it sums absolute differences for bytes.
     We could use a zero mask.
     But instead we can use the same mask we got to mask the 1, 3, 9.
-    This get's us a somewhat inverted result:
-    0x0101 - 0x0101 becomes a 0 instead of 2.
-    So we can just take that into account when ordering masks.
+    In order to get the result in the correct order, we need to use `andnot` instead of `and`.
+    For 8 integers we can use a popcount + some math.
 
     Example:
     (true, false, true, true, true, false, false, false)
      1             3    3      9
      reduced is 16
-     Total sum is 3^4 -1 = 26.
-     26 - 16 = 10
-     Resulting index is 10
-
-    Since we do reduction, we can also try to squese the popcount in it.
-    But, the popcount will also come inverted, so we need to subtract it from 8.
-    If native is suppored, might be not worth it again.
 
     NOTE: @aqrit does not have the problem with an inverted mask nor subtracting from 8.
           I don't understand how though so far.
@@ -220,21 +212,17 @@ namespace eve::detail
   base_3_mask(eve::logical<eve::wide<T, N>> mask) {
     if constexpr ( sizeof(T) == 4 && N() == 8 && current_api == avx2)
     {
-      // Converting to byte per element
-      // This also messes with order a bit
-      // Alternative is to convert to epi16 using packus but this seems better.
-      std::int32_t to_4_bits_per_element = _mm256_movemask_epi8(mask);
-      std::uint32_t top_half             =  to_4_bits_per_element >> 4;
-      __m128i byte_mask = _mm_set_epi32(top_half, to_4_bits_per_element,
-                                        top_half, to_4_bits_per_element);
-
-      __m128i mask = _mm_set_epi32(
-        0x01010101, 0x01010101,  // popcount bytes
-        0x00090301, 0x00090301   // idx mask
+      std::uint32_t mmask = _mm256_movemask_epi8(
+         eve::bit_cast(mask, eve::as_<logical<eve::wide<std::uint32_t, N>>>{})
       );
 
-      __m128i reduced = _mm_sad_epu8(_mm_and_si128(byte_mask, mask), mask);
-      return {_mm_cvtsi128_si32(reduced), 8 - _mm_extract_epi16(reduced, 4)};
+      // sum from popcount:   [ 1, 1, 3, 3, 4, 1]
+      // sum from extra mask: [ 0, 0, 0, 0, 5, 8]
+      std::uint32_t idx_base_3 = std::popcount(mmask & 0x001f7711);
+      std::uint32_t extra_mask = (mmask >> 17) & 0b1'101;
+
+      idx_base_3 += extra_mask;
+      return {idx_base_3, std::popcount(mmask) / 4};
     }
   }
 
@@ -248,9 +236,8 @@ namespace eve::detail
 
     for (unsigned i = 0; i != 27; ++i)
     {
-      unsigned base_3_value = 26 - i;
-
       unsigned number_of_9s = 0, number_of_3s = 0, number_of_1s = 0;
+      unsigned base_3_value = i;
 
       if (base_3_value >= 9) ++number_of_9s, base_3_value -= 9;
       if (base_3_value >= 9) ++number_of_9s, base_3_value -= 9;
@@ -280,29 +267,34 @@ namespace eve::detail
                      wide<T, N> v,
                      logical<wide<T, N>> mask,
                      Ptr ptr) noexcept
-    requires x86_abi<abi_t<T, N>> && ( N() == 8 ) && ( sizeof(T) == 4 )
-            && (abi_t<T, N>::is_wide_logical)
+    requires x86_abi<abi_t<T, N>> && ( N() == 8 ) && ( sizeof(T) == 4 ) &&
+             abi_t<T, N>::is_wide_logical
   {
-    // First let's reduce the variability in each pair
-    auto to_left = eve::slide_left( v, eve::index<1> );
-    v = eve::if_else[mask]( v, to_left );
+    if constexpr ( sizeof(T) == 4 && current_api == avx ) return compress_store_aggregated_unsafe(v, mask, ptr);
+    else
+    {
+      // First let's reduce the variability in each pair
+      auto to_left = eve::slide_left( v, eve::index<1> );
+      v = eve::if_else[mask]( v, to_left );
 
-    // This left us with 3 options instead of 4 per each each pair:
-    // 00 -> 0 | 01, 10 -> 1 | 11 -> 2
-    // On top of this we don't care about the 2 last elements.
-    // So we have 3 pairs ^ 3 options = 27 variations.
-    //
-    // Those variations can be contigious, if we interpret these 0, 1, 2 as a base3 number.
+      // This left us with 3 options instead of 4 per each each pair:
+      // 00 -> 0 | 01, 10 -> 1 | 11 -> 2
+      // On top of this we don't care about the 2 last elements.
+      // So we have 3 pairs ^ 3 options = 27 variations.
+      //
+      // Those variations can be contigious, if we interpret these 0, 1, 2 as a base3 number.
 
-    alignas(32) const auto patterns = pattern_8_elements(idx_dwords<std::uint32_t>);
+      alignas(32) const auto patterns = pattern_8_elements(idx_dwords<std::uint32_t>);
 
-    auto [pattern_idx, popcount] = base_3_mask(mask);
+      auto [pattern_idx, popcount] = base_3_mask(mask);
 
-    aligned_ptr<std::uint32_t const, eve::fixed<8>> pattern_ptr{patterns[pattern_idx].data()};
-    wide<std::uint32_t, eve::fixed<8>> pattern{pattern_ptr};
-    wide<T, N> shuffled = permvar8(v, pattern);
+      aligned_ptr<std::uint32_t const, eve::fixed<8>> pattern_ptr{patterns[pattern_idx].data()};
+      wide<std::uint32_t, eve::fixed<8>> pattern{pattern_ptr};
 
-    store(shuffled, ptr);
-    return as_raw_pointer(ptr) + popcount;
+      wide<T, N> shuffled = permvar8(v, pattern);
+
+      store(shuffled, ptr);
+      return as_raw_pointer(ptr) + popcount;
+    }
   }
 }
