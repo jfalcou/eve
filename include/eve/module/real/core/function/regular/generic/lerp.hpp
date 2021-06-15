@@ -23,7 +23,7 @@ namespace eve::detail
   template<floating_real_value T, floating_real_value U, floating_real_value V>
   EVE_FORCEINLINE auto lerp_(EVE_SUPPORTS(cpu_)
                             , T const &a, U const &b, V const &t) noexcept
-      requires compatible_values<T, U> &&compatible_values<T, V>
+  requires compatible_values<T, U> &&compatible_values<T, V>
   {
     return arithmetic_call(lerp, a, b, t);
   }

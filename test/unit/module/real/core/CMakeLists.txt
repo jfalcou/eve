@@ -127,6 +127,7 @@ make_unit("unit.real.core"  is_pow2.cpp              )
 make_unit("unit.real.core"  is_real.cpp              )
 make_unit("unit.real.core"  is_unordered.cpp         )
 make_unit("unit.real.core"  ldexp.cpp                )
+make_unit("unit.real.core"  lerp.cpp                 )
 make_unit("unit.real.core"  lo.cpp                   )
 make_unit("unit.real.core"  lookup.cpp               )
 make_unit("unit.real.core"  logical_and.cpp          )
@@ -165,7 +166,7 @@ make_all_units(ROOT unit.real.core NAME inearest              ARCH scalar simd T
 make_all_units(ROOT unit.real.core NAME iround                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME itrunc                ARCH scalar simd TYPES ${all_types}     )
 
-make_all_units(ROOT unit.real.core NAME lerp                  ARCH scalar simd TYPES ${real_types}    )
+##make_all_units(ROOT unit.real.core NAME lerp                  ARCH scalar simd TYPES ${real_types}    )
 
 make_all_units(ROOT unit.real.core NAME lohi                  ARCH scalar simd TYPES ${integral_types})
 make_all_units(ROOT unit.real.core NAME manhattan             ARCH scalar simd TYPES ${real_types}    )
