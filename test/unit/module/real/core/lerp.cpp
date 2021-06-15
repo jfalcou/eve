@@ -41,42 +41,12 @@ EVE_TEST_TYPES( "Check return types of lerp"
 //==================================================================================================
 // lerp tests
 //==================================================================================================
-auto onepmileps = []<typename U>(eve::as_<U>)
-{
-  return (eve::inc(1000*eve::eps(eve::as(eve::element_type_t<U>()))));
-};
-
-auto onemmileps = []<typename U>(eve::as_<U>)
-{
-  return (eve::oneminus(1000*eve::eps(eve::as(eve::element_type_t<U>()))));
-};
-
-EVE_TEST( "Check precision behavior of lerp on real types"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate (  eve::test::randoms(onemmileps, onepmileps)
-                              ,  eve::test::randoms(onemmileps, onepmileps)
-                              )
-        )
-<typename T>(T const& a0, T const& a1)
-{
-  using eve::lerp;
-  using eve::detail::map;
-  using v_t = eve::element_type_t<T>;
-  TTS_ULP_EQUAL ( eve::pedantic(lerp)(a0, a1, -eve::one(eve::as<T>()))
-                , map([&](auto e , auto f) -> v_t { return eve::pedantic(lerp)(e, f, v_t(-1)); }, a0, a1)
-                , 2
-                );
-};
-
-//==================================================================================================
-//== lerp full range tests
-//==================================================================================================
 auto mini = []<typename U>(eve::as_<U>)
 {
   return (-eve::sqrtvalmax(eve::as(eve::element_type_t<U>())));
 };
 
-EVE_TEST( "Check behavior of lerp on all types full range"
+EVE_TEST( "Check behavior of lerp on ieee floating"
         , eve::test::simd::ieee_reals
         , eve::test::generate (  eve::test::randoms(mini, eve::sqrtvalmax)
                               ,  eve::test::randoms(mini, eve::sqrtvalmax)
