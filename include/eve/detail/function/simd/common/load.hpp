@@ -92,7 +92,7 @@ namespace eve::detail
 
   template<relative_conditional_expr C, decorator Decorator, data_source Ptr>
   EVE_FORCEINLINE   auto load_(EVE_SUPPORTS(cpu_), C const &cond, Decorator const& d,Ptr ptr) noexcept
-                ->  decltype( load(cond, safe, as_<loaded_wide_t<Ptr>>{}, ptr) )
+                ->  decltype( load(cond, d, as_<loaded_wide_t<Ptr>>{}, ptr) )
   {
     return load(cond, d, as_<loaded_wide_t<Ptr>>{}, ptr);
   }

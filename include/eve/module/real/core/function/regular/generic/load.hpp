@@ -14,7 +14,7 @@
 #include <eve/function/replace.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/memory/pointer.hpp>
-#include <eve/forward.hpp>
+#include <eve/wide.hpp>
 #include <type_traits>
 
 #ifdef SPY_COMPILER_IS_GCC
