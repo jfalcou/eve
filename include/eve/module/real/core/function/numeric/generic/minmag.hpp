@@ -36,6 +36,6 @@ namespace eve::detail
   {
     auto aa = if_else(is_nan(a), b, a);
     auto bb = if_else(is_nan(b), a, b);
-    return minmag(aa, bb);
+    return pedantic(minmag)(aa, bb);
   }
 }
