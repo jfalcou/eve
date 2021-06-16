@@ -7,17 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
-#include <eve/conditional.hpp>
-
-namespace eve
-{
-  EVE_MAKE_CALLABLE(load_, load);
-
-  template<> struct supports_optimized_conversion<tag::load_> : std::true_type {};
-}
-
+#include <eve/detail/function/load.hpp>
 #include <eve/module/real/core/function/regular/generic/load.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)

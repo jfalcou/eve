@@ -16,11 +16,18 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE auto load(eve::as_<wide<T, N>> const &, T const* ptr) noexcept
-      requires arm_abi<abi_t<T, N>>
+  template<real_scalar_value T, typename N, typename Ptr>
+  EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(neon128_)
+                                  , ignore_none_ const&, safe_type const&
+                                  , eve::as_<wide<T, N>> const& tgt, Ptr ptr
+                                  )
+  requires simd_compatible_ptr<Ptr,wide<T, N>> && arm_abi<abi_t<T, N>>
   {
-    if constexpr( N::value * sizeof(T) >= arm_64_::bytes )
+    if constexpr( !std::is_pointer_v<Ptr> )
+    {
+      return load(ignore_none,safe,tgt, ptr.get());
+    }
+    else if constexpr( N::value * sizeof(T) >= arm_64_::bytes )
     {
       constexpr auto c = categorize<wide<T, N>>();
 
@@ -57,15 +64,18 @@ namespace eve::detail
   }
 
 #if defined(SPY_COMPILER_IS_MSVC)
-  template<real_scalar_value T, typename N, typename Lanes>
-  EVE_FORCEINLINE auto load ( as_<wide<T, N>> const &, aligned_ptr<T const, Lanes> p) noexcept
-      requires arm_abi<abi_t<T, N>>
+  template<real_scalar_value T, typename N, typename U, typename Lanes>
+  EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(neon128_)
+                                  , ignore_none_ const&, safe_type const&
+                                  , eve::as_<wide<T, N>> const& tgt, aligned_ptr<U, Lanes> p
+                                  )
+  requires simd_compatible_ptr<aligned_ptr<U, Lanes>,wide<T, N>> && arm_abi<abi_t<T, N>>
   {
     auto ptr = p.get();
 
-    if constexpr( aligned_ptr<T const, Lanes>::alignment() < 16 )
+    if constexpr( aligned_ptr<U, Lanes>::alignment() < 16 )
     {
-      return load(ptr, tgt);
+      return load_(EVE_RETARGET(cpu_), ignore_none, safe, tgt, ptr);
     }
     else
     {
@@ -104,32 +114,6 @@ namespace eve::detail
         return that;
       }
     }
-  }
-
-  template<real_scalar_value T, typename N, typename Lanes>
-  EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N>> const &tgt, aligned_ptr<T, Lanes> p) noexcept
-      requires arm_abi<abi_t<T, N>>
-  {
-    return load(tgt, aligned_ptr<T const, Lanes>(p));
-  }
-
-#else
-
-  template<real_scalar_value T, typename N, typename Lanes>
-  EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N>> const &tgt,aligned_ptr<T const, Lanes>  ptr)
-      requires arm_abi<abi_t<T, N>>
-  {
-    return load(tgt, ptr.get());
-  }
-
-  template<real_scalar_value T, typename N, typename Lanes>
-  EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N>> const &tgt, aligned_ptr<T, Lanes> ptr) noexcept
-      requires arm_abi<abi_t<T, N>>
-  {
-    return load(tgt, ptr.get());
   }
 #endif
 }
