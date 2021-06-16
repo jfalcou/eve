@@ -54,12 +54,18 @@ namespace eve::detail
     return *p;
   }
 
+  template<data_source Ptr, scalar_value Target>
+  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), Ptr p, as_<Target> const&) noexcept
+  {
+    return static_cast<Target>(*p);
+  }
+
   template<data_source Ptr, scalar_value T>
   EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_)
                             , decorated<convert_to_<T>()> const&, Ptr p, scalar_cardinal const&
                             ) noexcept
   {
-    return static_cast<T>(*p);
+    return load(p, as_<T>{});
   }
 
   //================================================================================================
@@ -68,7 +74,7 @@ namespace eve::detail
   template<relative_conditional_expr C, data_source Ptr, typename Pack>
   EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_)
                             , C const &cond, safe_type const&
-                            , eve::as_<Pack>, Ptr ptr
+                            , eve::as_<Pack> tgt, Ptr ptr
                             ) noexcept
   requires simd_compatible_ptr<Ptr,Pack>
   {
@@ -82,13 +88,13 @@ namespace eve::detail
 
       if constexpr (!sanitizers_are_on && is_aligned_enough)
       {
-        auto that = eve::unsafe(eve::load)(ptr, c_t{});
+        auto that = eve::unsafe(eve::load)(ptr, tgt);
         if constexpr( C::has_alternative )  return replace_ignored(that, cond, cond.alternative);
         else                                return that;
       }
       else
       {
-        return eve::load[cond](ptr.get(), c_t{});
+        return eve::load[cond](ptr.get(), tgt);
       }
     }
     else
@@ -96,7 +102,7 @@ namespace eve::detail
       // If the ignore/keep is complete we can jump over if_else
       if constexpr( C::is_complete )
       {
-        if constexpr(C::is_inverted)  { return eve::load(ptr, c_t{});  }
+        if constexpr(C::is_inverted)  { return eve::load(ptr, tgt);  }
         else
         {
           if constexpr(C::has_alternative)  return r_t{cond.alternative};
@@ -142,7 +148,7 @@ namespace eve::detail
                                 , eve::as_<Pack> const& tgt, Ptr ptr
                                 ) noexcept
   {
-    if constexpr(sanitizers_are_on)
+    if constexpr(sanitizers_are_on && !std::same_as<C,ignore_none_> )
     {
       Pack that;
 

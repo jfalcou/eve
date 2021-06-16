@@ -24,9 +24,8 @@ namespace eve
   }
 
   template<typename T, typename SIMD>
-  concept simd_compatible_ptr =  simd_value<SIMD>
-                              &&  (   detail::is_aligned_ptr<T>::value
-                                    ? (pointer_alignment_v<T> >= alignment_v<SIMD>)
-                                    : detail::behaves_as_ptr<T>
-                                  );
+  concept simd_compatible_ptr = simd_value<SIMD> && (   std::is_pointer_v<T>
+                                                    ||  (detail::is_aligned_ptr<T>::value
+                                                         && (pointer_alignment_v<T> >= alignment_v<SIMD>))
+                                                    );
 }

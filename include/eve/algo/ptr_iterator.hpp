@@ -22,8 +22,8 @@ namespace eve::algo
   struct unaligned_ptr_iterator : operations_with_distance
   {
     using cardinal        = Cardinal;
-    using wide_value_type = eve::wide<std::remove_const_t<T>, cardinal>;
-    using value_type      = typename wide_value_type::value_type;
+    using value_type      = std::remove_const_t<T>;
+    using wide_value_type = eve::wide<value_type, cardinal>;
 
     unaligned_ptr_iterator() = default;
     explicit unaligned_ptr_iterator(T* ptr) : ptr(ptr) {}
@@ -35,7 +35,7 @@ namespace eve::algo
       return aligned_ptr_iterator<T, cardinal>{eve::previous_aligned_address(ptr, cardinal{})};
     }
 
-    decltype(auto) operator*() const { return *ptr; }
+    value_type& operator*() const { return *ptr; }
 
     unaligned_ptr_iterator& operator+=(std::ptrdiff_t n) { ptr += n; return *this; }
     friend std::ptrdiff_t   operator-(unaligned_ptr_iterator x, unaligned_ptr_iterator y) { return x.ptr - y.ptr; }
@@ -73,9 +73,9 @@ namespace eve::algo
   struct aligned_ptr_iterator : operations_with_distance, forward_to_unaligned
   {
     using cardinal          = Cardinal;
+    using value_type        = std::remove_const_t<T>;
     using aligned_ptr_type  = eve::aligned_ptr<T, Cardinal>;
-    using value_type        = typename aligned_ptr_type::value_type;
-    using wide_value_type   = eve::wide<std::remove_const_t<T>, cardinal>;
+    using wide_value_type   = eve::wide<value_type, cardinal>;
 
     aligned_ptr_iterator() = default;
     explicit aligned_ptr_iterator(aligned_ptr_type ptr) : ptr{ptr} {}
@@ -85,7 +85,7 @@ namespace eve::algo
       return unaligned_ptr_iterator<T, Cardinal>{ptr.get()};
     }
 
-    decltype(auto) operator*() const { return *ptr; }
+    value_type& operator*() const { return *ptr; }
     auto get() const { return ptr.get(); }
     auto unaligned() const { return unaligned_ptr_iterator<T, Cardinal>{ptr.get()}; }
     auto previous_partially_aligned() const { return *this; }
