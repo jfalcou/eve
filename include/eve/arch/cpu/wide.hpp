@@ -11,6 +11,7 @@
 #include <eve/arch/cpu/base.hpp>
 #include <eve/arch/expected_cardinal.hpp>
 #include <eve/arch/spec.hpp>
+#include <eve/conditional.hpp>
 #include <eve/concept/memory.hpp>
 #include <eve/concept/range.hpp>
 #include <eve/detail/abi.hpp>
@@ -96,7 +97,7 @@ inline namespace EVE_ABI_NAMESPACE
     //! Construction is done piecewise unless the @iterator{s} are @raiterator{s}.
     template<std::input_iterator It>
     EVE_FORCEINLINE explicit  wide(It b, It e) noexcept
-                            : storage_base(detail::load(eve::as_<wide>{}, b, e))
+                            : storage_base(load(ignore_none, safe, eve::as_<wide>{}, b, e))
     {}
 
     //! @brief Constructs a eve::wide from a @container.
@@ -114,15 +115,14 @@ inline namespace EVE_ABI_NAMESPACE
     //! Constructs a eve::wide from a SIMD compatible pointer
     template<simd_compatible_ptr<wide> Ptr>
     EVE_FORCEINLINE explicit  wide(Ptr ptr) noexcept
-                            : storage_base(detail::load(eve::as_<wide>{}, ptr))
+                            : storage_base(load(ignore_none, safe, eve::as_<wide>{}, ptr))
     {}
-
 
     //! Constructs a eve::wide from a SIMD compatible pointer
     template<typename... Ptr>
     requires(kumi::product_type<Type>)
     EVE_FORCEINLINE explicit  wide(kumi::tuple<Ptr...> ptr) noexcept
-                            : storage_base(detail::load(eve::as_<wide>{}, ptr))
+                            : storage_base(load(ignore_none, safe, eve::as_<wide>{}, ptr))
     {}
 
     //! Constructs a eve::wide by splatting a scalar value in all lanes
