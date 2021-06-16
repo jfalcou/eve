@@ -11,6 +11,8 @@
 #include <eve/function/abs.hpp>
 #include <eve/function/manhattan.hpp>
 #include <eve/function/pedantic/manhattan.hpp>
+#include <eve/function/diff/manhattan.hpp>
+#include <eve/function/sign.hpp>
 #include <algorithm>
 
 //==================================================================================================
@@ -50,6 +52,10 @@ EVE_TEST( "Check behavior of manhattan on all types full range"
   using eve::abs;
   using v_t = eve::element_type_t<T>;
   auto m = [](auto a, auto b, auto c)-> v_t {return abs(a)+abs(b)+abs(c); };
+  auto s = [](auto a)                -> v_t {return eve::sign(a);  };
   TTS_ULP_EQUAL(manhattan((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::pedantic(manhattan)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::diff_1st(manhattan)((a0), (a1), (a2)), map(s, a0), 2);
+  TTS_ULP_EQUAL(eve::diff_2nd(manhattan)((a0), (a1), (a2)), map(s, a1), 2);
+  TTS_ULP_EQUAL(eve::diff_3rd(manhattan)((a0), (a1), (a2)), map(s, a2), 2);
 };
