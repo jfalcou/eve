@@ -126,7 +126,7 @@ namespace eve::detail
     }
     else if constexpr ( N() == 4 && sizeof(T) == 8 )
     {
-      alignas(32) auto patterns = pattern_4_elements(idx_dwords<std::uint64_t>);
+      alignas(sizeof(T) * N()) auto patterns = pattern_4_elements(idx_dwords<std::uint64_t>);
 
       top_bits mmask{mask};
       aligned_ptr<std::uint64_t, eve::fixed<4>> pattern_ptr{patterns[mmask.as_int() & 7].data()};
@@ -202,27 +202,44 @@ namespace eve::detail
      1             3    3      9
      reduced is 16
 
-    NOTE: @aqrit does not have the problem with an inverted mask nor subtracting from 8.
-          I don't understand how though so far.
     NOTE: we could also use mmx intrinsics but tend to not use them.
   */
   template <real_scalar_value T, typename N>
   EVE_FORCEINLINE
   std::pair<std::uint32_t, std::uint16_t>
-  base_3_mask(eve::logical<eve::wide<T, N>> mask) {
-    if constexpr ( sizeof(T) == 4 && N() == 8 && current_api == avx2)
+  base_3_mask(eve::logical<eve::wide<T, N>> m) {
+    if constexpr ( sizeof(T) == 4 && N() == 8 && current_api == avx2 )
     {
       std::uint32_t mmask = _mm256_movemask_epi8(
-         eve::bit_cast(mask, eve::as_<logical<eve::wide<std::uint32_t, N>>>{})
+         eve::bit_cast(m, eve::as_<logical<eve::wide<std::uint32_t, N>>>{})
       );
 
       // sum from popcount:   [ 1, 1, 3, 3, 4, 1]
       // sum from extra mask: [ 0, 0, 0, 0, 5, 8]
       std::uint32_t idx_base_3 = std::popcount(mmask & 0x001f7711);
       std::uint32_t extra_mask = (mmask >> 17) & 0b1'101;
-
       idx_base_3 += extra_mask;
+
       return {idx_base_3, std::popcount(mmask) / 4};
+    }
+    else if constexpr ( sizeof(T) <= 2 && N() == 8 )
+    {
+      // Alternative for shorts is to compute both halves
+      // But that implies using _mm_extract_epi16 which has latency 3
+      // as oppose to latency 1 for _mm_packs_epi16
+      __m128i raw = [&] () -> __m128i {
+        if constexpr ( sizeof(T) == 2 ) return _mm_packs_epi16(m, m);
+        else                            return m;
+      }();
+
+      __m128i sad_mask = _mm_set_epi64x(0, 0x8080898983838181);
+      __m128i sum      = _mm_sad_epu8(_mm_andnot_si128(raw, sad_mask), sad_mask);
+
+      std::uint32_t desc       = _mm_cvtsi128_si32(sum);
+      std::uint32_t idx_base_3 = desc & 0x1f;
+      std::uint32_t popcount   = desc >> 7;
+
+      return {idx_base_3, popcount};
     }
   }
 
@@ -267,7 +284,7 @@ namespace eve::detail
                      wide<T, N> v,
                      logical<wide<T, N>> mask,
                      Ptr ptr) noexcept
-    requires x86_abi<abi_t<T, N>> && ( N() == 8 ) && ( sizeof(T) == 4 ) &&
+    requires x86_abi<abi_t<T, N>> && ( N() == 8 ) && ( sizeof(T) <= 4 ) &&
              abi_t<T, N>::is_wide_logical
   {
     if constexpr ( sizeof(T) == 4 && current_api == avx ) return compress_store_aggregated_unsafe(v, mask, ptr);
@@ -284,14 +301,22 @@ namespace eve::detail
       //
       // Those variations can be contigious, if we interpret these 0, 1, 2 as a base3 number.
 
-      alignas(32) const auto patterns = pattern_8_elements(idx_dwords<std::uint32_t>);
+      using u_t = eve::as_integer_t<T, unsigned>;
+
+      alignas(sizeof(T) * N()) const auto patterns = [] {
+        if constexpr ( sizeof(T) == 4 ) return pattern_8_elements(idx_dwords<u_t>);
+        else                            return pattern_8_elements(idxs_bytes<u_t>);
+      }();
 
       auto [pattern_idx, popcount] = base_3_mask(mask);
 
-      aligned_ptr<std::uint32_t const, eve::fixed<8>> pattern_ptr{patterns[pattern_idx].data()};
-      wide<std::uint32_t, eve::fixed<8>> pattern{pattern_ptr};
+      auto         pattern_ptr = eve::as_aligned(patterns[pattern_idx].data(), N());
+      wide<u_t, N> pattern {pattern_ptr};
 
-      wide<T, N> shuffled = permvar8(v, pattern);
+      wide<T, N> shuffled = [&] {
+        if constexpr ( sizeof(T) == 4 ) return permvar8(v, pattern);
+        else                            return _mm_shuffle_epi8(v, pattern);
+      }();
 
       store(shuffled, ptr);
       return as_raw_pointer(ptr) + popcount;
