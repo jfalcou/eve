@@ -147,6 +147,7 @@ make_unit("unit.real.core"  min.cpp                  )
 make_unit("unit.real.core"  minmag.cpp               )
 make_unit("unit.real.core"  minus.cpp                )
 make_unit("unit.real.core"  modf.cpp                 )
+make_unit("unit.real.core"  mul.cpp                  )
 
 make_unit("unit.real.core"  nearest.cpp              )
 make_unit("unit.real.core"  rat.cpp                  )
@@ -175,7 +176,6 @@ make_all_units(ROOT unit.real.core NAME inearest              ARCH scalar simd T
 make_all_units(ROOT unit.real.core NAME iround                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME itrunc                ARCH scalar simd TYPES ${all_types}     )
 
-make_all_units(ROOT unit.real.core NAME mul                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME count_true                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME nb_values             ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME negate                ARCH scalar simd TYPES ${all_types}     )
