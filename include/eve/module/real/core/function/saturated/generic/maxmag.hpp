@@ -15,7 +15,6 @@
 #include <eve/function/saturated/abs.hpp>
 #include <eve/function/is_not_greater_equal.hpp>
 #include <eve/function/saturated/abs.hpp>
-#include <eve/function/saturated/max.hpp>
 #include <eve/function/saturated.hpp>
 
 namespace eve::detail
@@ -24,7 +23,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto maxmag_(EVE_SUPPORTS(cpu_), saturated_type const &, T const &a, U const &b) noexcept
       requires compatible_values<T, U>
   {
-    return arithmetic_call(saturated_type(minmag), a, b);
+    return arithmetic_call(saturated(maxmag), a, b);
   }
 
   template<real_value T>
@@ -34,7 +33,7 @@ namespace eve::detail
     auto bb  = saturated(eve::abs)(b);
     if constexpr( simd_value<T> )
     {
-      auto tmp = if_else(is_not_greater_equal(aa, bb), b, saturated(eve::max)(a, b));
+      auto tmp = if_else(is_not_greater_equal(aa, bb), b, eve::max(a, b));
       return if_else(is_not_greater_equal(bb, aa), a, tmp);
     }
     else
