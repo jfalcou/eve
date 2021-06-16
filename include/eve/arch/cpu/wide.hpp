@@ -119,7 +119,7 @@ inline namespace EVE_ABI_NAMESPACE
     {}
 
     //! Constructs a eve::wide from a SIMD compatible pointer
-    template<typename... Ptr>
+    template<detail::behaves_as_ptr... Ptr>
     requires(kumi::product_type<Type>)
     EVE_FORCEINLINE explicit  wide(kumi::tuple<Ptr...> ptr) noexcept
                             : storage_base(load(ignore_none, safe, eve::as_<wide>{}, ptr))

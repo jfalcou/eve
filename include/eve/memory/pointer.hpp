@@ -14,7 +14,11 @@
 
 namespace eve
 {
-  template<typename T, typename Enable=void> struct pointer_traits;
+  template<typename T, typename Enable=void>
+  struct pointer_traits
+  {
+    using value_type = void;
+  };
 
   template<typename T> struct pointer_traits<T*>        { using value_type = T; };
   template<typename T> struct pointer_traits<T const*>  { using value_type = T; };
@@ -35,9 +39,9 @@ namespace eve
 namespace eve::detail
 {
   template<typename Ptr>
-  concept behaves_as_ptr = requires(Ptr p)
+  concept behaves_as_ptr = !std::same_as<typename pointer_traits<Ptr>::value_type,void>
+  && requires(Ptr p)
   {
-    typename pointer_traits<Ptr>::value_type;
     { *p };
   };
 
