@@ -140,6 +140,7 @@ make_unit("unit.real.core"  logical_ornot.cpp        )
 make_unit("unit.real.core"  logical_xor.cpp          )
 make_unit("unit.real.core"  lohi.cpp                 )
 make_unit("unit.real.core"  manhattan.cpp            )
+make_unit("unit.real.core"  mantissa.cpp             )
 
 make_unit("unit.real.core"  nearest.cpp              )
 make_unit("unit.real.core"  rat.cpp                  )
@@ -168,7 +169,6 @@ make_all_units(ROOT unit.real.core NAME inearest              ARCH scalar simd T
 make_all_units(ROOT unit.real.core NAME iround                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME itrunc                ARCH scalar simd TYPES ${all_types}     )
 
-make_all_units(ROOT unit.real.core NAME mantissa              ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.core NAME max                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME maxmag                ARCH scalar simd TYPES ${signed_types}  )
 make_all_units(ROOT unit.real.core NAME min                   ARCH scalar simd TYPES ${all_types}     )
