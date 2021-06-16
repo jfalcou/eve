@@ -35,9 +35,10 @@ namespace eve
 namespace eve::detail
 {
   template<typename Ptr>
-  concept behaves_as_ptr = requires(Ptr)
+  concept behaves_as_ptr = requires(Ptr p)
   {
     typename pointer_traits<Ptr>::value_type;
+    { *p };
   };
 
   template<typename Ptr>
