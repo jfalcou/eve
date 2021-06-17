@@ -16,12 +16,12 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N, typename Ptr>
+  template< real_scalar_value T, typename N, simd_compatible_ptr<wide<T,N>> Ptr>
   EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(neon128_)
                                   , ignore_none_ const&, safe_type const&
                                   , eve::as_<wide<T, N>> const&, Ptr p
                                   )
-  requires simd_compatible_ptr<Ptr,wide<T, N>> && arm_abi<abi_t<T, N>>
+  requires arm_abi<abi_t<T, N>>
   {
     auto ptr = as_raw_pointer(p);
 

@@ -16,12 +16,12 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N, typename Ptr>
+  template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T,N>> Ptr>
   EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(vmx_)
                                   , ignore_none_ const&, safe_type const&
                                   , eve::as_<wide<T, N>> const& tgt, Ptr ptr
                                   )
-  requires simd_compatible_ptr<Ptr,wide<T, N>> && ppc_abi<abi_t<T, N>>
+  requires ppc_abi<abi_t<T, N>>
   {
     if constexpr( N::value * sizeof(T) >= ppc_::bytes )
     {
