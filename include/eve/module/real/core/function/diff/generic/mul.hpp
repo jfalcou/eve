@@ -16,6 +16,31 @@
 
 namespace eve::detail
 {
+  template<int N, real_value T, real_value U>
+  EVE_FORCEINLINE auto
+  mul_(EVE_SUPPORTS(cpu_), diff_type<N> const &, T const &a, U const &b) noexcept
+  requires compatible_values<T, U>
+  {
+    return arithmetic_call(diff_nth<N>(mul), a, b);
+  }
+
+  template<floating_real_value T>
+  EVE_FORCEINLINE constexpr T mul_(EVE_SUPPORTS(cpu_)
+                                  , diff_type<1> const &
+                                  , T , T y ) noexcept
+  {
+    return y;
+  }
+
+  template<floating_real_value T>
+  EVE_FORCEINLINE constexpr T mul_(EVE_SUPPORTS(cpu_)
+                                  , diff_type<2> const &
+                                  , T x, T  ) noexcept
+  {
+
+    return x;
+  }
+
   template<int N, typename T0, typename T1, typename... Ts>
   auto mul_(EVE_SUPPORTS(cpu_), diff_type<N>
            , T0 arg0, T1 arg1, Ts... args) noexcept
