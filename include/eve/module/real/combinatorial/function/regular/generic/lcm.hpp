@@ -37,11 +37,11 @@ namespace eve::detail
       if constexpr( scalar_value<T> )
       {
         if( !b || !a ) return T(0);
-        return abs(b / gcd(a, b) * a);
+        return b / gcd(a, b) * a;
       }
       else
       {
-        return abs(a* (b / gcd(a, if_else(b, b, eve::mone))));
+        return a* (b / gcd(a, if_else(b, b, eve::mone)));
       }
     }
     else
@@ -65,11 +65,11 @@ namespace eve::detail
       if constexpr( scalar_value<T> )
       {
         if( !b || !a ) return T(0);
-        return abs(b / gcd(a, b) * a);
+        return b / gcd(a, b) * a;
       }
       else
       {
-        return abs(a*(b / D()(gcd)(a, if_else(b, b, eve::mone))));
+        return a*(b / D()(gcd)(a, if_else(b, b, eve::mone)));
       }
     }
     else
