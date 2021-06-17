@@ -48,8 +48,7 @@ namespace eve::algo
                                 , eve::as_<Pack> const& , unaligned_ptr_iterator self
                                 )
     {
-      using tgt_t = typename Pack::template rescale<Cardinal>;
-      return eve::load(c, s, eve::as_<tgt_t>{}, self.ptr);
+      return eve::load(c, s, self.ptr, Cardinal{});
     }
 
     template <relative_conditional_expr C>
@@ -97,8 +96,7 @@ namespace eve::algo
                                 , eve::as_<Pack> const&, aligned_ptr_iterator self
                                 )
     {
-      using tgt_t = typename Pack::template rescale<Cardinal>;
-      return eve::load(c, s, eve::as_<tgt_t>{}, self.ptr);
+      return eve::load(c, s, self.ptr, Cardinal{});
     }
 
     template <relative_conditional_expr C>
