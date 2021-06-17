@@ -30,15 +30,15 @@ add_dependencies(unit.real.probas.exe          unit.real.probas.simd.exe        
 ##add_subdirectory(failure)
 
 ##==================================================================================================
-## Elementwise function unit tests
+## new style tests
 ##==================================================================================================
-make_all_units(ROOT unit.real.probas NAME binomial_distribution           ARCH scalar simd TYPES ${real_types} )
-make_all_units(ROOT unit.real.probas NAME cauchy_distribution             ARCH scalar simd TYPES ${real_types} )
-make_all_units(ROOT unit.real.probas NAME ev_distribution                 ARCH scalar simd TYPES ${real_types} )
-make_all_units(ROOT unit.real.probas NAME exponential_distribution        ARCH scalar simd TYPES ${real_types} )
-make_all_units(ROOT unit.real.probas NAME gamma_distribution              ARCH scalar simd TYPES ${real_types} )
-make_all_units(ROOT unit.real.probas NAME lognormal_distribution          ARCH scalar simd TYPES ${real_types} )
-make_all_units(ROOT unit.real.probas NAME normal_distribution             ARCH scalar simd TYPES ${real_types} )
-make_all_units(ROOT unit.real.probas NAME poisson_distribution            ARCH scalar simd TYPES ${real_types} )
-make_all_units(ROOT unit.real.probas NAME uniform_continuous_distribution ARCH scalar simd TYPES ${real_types} )
-make_all_units(ROOT unit.real.probas NAME uniform_discrete_distribution   ARCH scalar simd TYPES ${real_types} )
+make_unit("unit.real.probas"  binomial_distribution.cpp                    )
+make_unit("unit.real.probas"  cauchy_distribution.cpp                      )
+make_unit("unit.real.probas"  ev_distribution.cpp                          )
+make_unit("unit.real.probas"  exponential_distribution.cpp                 )
+make_unit("unit.real.probas"  gamma_distribution.cpp                       )
+make_unit("unit.real.probas"  lognormal_distribution.cpp                   )
+make_unit("unit.real.probas"  normal_distribution.cpp                      )
+make_unit("unit.real.probas"  poisson_distribution.cpp                     )
+make_unit("unit.real.probas"  uniform_continuous_distribution.cpp          )
+make_unit("unit.real.probas"  uniform_discrete_distribution.cpp            )
