@@ -5,9 +5,9 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include "test.hpp"
 #include <eve/function/uniform_continuous_distribution.hpp>
 #include <eve/platform.hpp>
-
 
 EVE_TEST_TYPES("Check eve::uniform_continuous_distribution behavior"
               , eve::test::simd::ieee_reals

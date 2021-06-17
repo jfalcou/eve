@@ -5,12 +5,12 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include "test.hpp"
 #include <eve/function/binomial_distribution.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/half.hpp>
 #include <eve/platform.hpp>
-
 
 EVE_TEST_TYPES("Check eve::binomial_distribution behavior"
               , eve::test::simd::ieee_reals

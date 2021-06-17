@@ -5,6 +5,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include "test.hpp"
 #include <eve/function/uniform_discrete_distribution.hpp>
 #include <eve/platform.hpp>
 

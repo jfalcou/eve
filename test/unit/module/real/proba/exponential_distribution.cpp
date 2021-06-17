@@ -5,6 +5,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include "test.hpp"
 #include <eve/function/exponential_distribution.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/inf.hpp>
