@@ -149,6 +149,8 @@ make_unit("unit.real.core"  minus.cpp                )
 make_unit("unit.real.core"  modf.cpp                 )
 make_unit("unit.real.core"  mul.cpp                  )
 make_unit("unit.real.core"  nb_values.cpp            )
+make_unit("unit.real.core"  negate.cpp               )
+
 
 make_unit("unit.real.core"  nearest.cpp              )
 make_unit("unit.real.core"  rat.cpp                  )
