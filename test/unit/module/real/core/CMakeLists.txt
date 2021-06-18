@@ -152,6 +152,8 @@ make_unit("unit.real.core"  nb_values.cpp            )
 make_unit("unit.real.core"  negate.cpp               )
 make_unit("unit.real.core"  negatenz.cpp             )
 make_unit("unit.real.core"  next.cpp                 )
+make_unit("unit.real.core"  nextafter.cpp            )
+
 
 
 
@@ -182,7 +184,6 @@ make_all_units(ROOT unit.real.core NAME inearest              ARCH scalar simd T
 make_all_units(ROOT unit.real.core NAME iround                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME itrunc                ARCH scalar simd TYPES ${all_types}     )
 
-make_all_units(ROOT unit.real.core NAME nextafter             ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME none                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME oneminus              ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME plus                  ARCH scalar simd TYPES ${all_types}     )
