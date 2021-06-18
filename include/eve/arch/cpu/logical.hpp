@@ -55,6 +55,7 @@ namespace eve
     //! Default constructor
     EVE_FORCEINLINE constexpr logical() noexcept {}
 
+    //! Copy constructor
     EVE_FORCEINLINE constexpr logical(logical const&) noexcept = default;
 
     //! Construct from a `bool`
