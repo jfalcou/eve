@@ -54,10 +54,14 @@ namespace eve
   //! @param  ptr   Pointer to check
   //! @param  lanes Alignment constraint to verify expressed as a SIMD register number of lanes.
   //!
-  //! @return `true` if `ptr` is aligned over the alignment implied by `Lanes`, `false` otherwise.
+  //! @return `true` if `ptr` is aligned over the alignment implied by `lanes`, `false` otherwise.
   //================================================================================================
   template<typename T, typename Lanes>
+#if !defined(EVE_DOXYGEN_INVOKED)
   constexpr bool is_aligned(T *ptr, Lanes) noexcept
+#else
+  constexpr bool is_aligned(T *ptr, Lanes lanes) noexcept
+#endif
   {
     return is_aligned<sizeof(T) * Lanes::value>(ptr);
   }

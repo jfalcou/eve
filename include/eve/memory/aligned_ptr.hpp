@@ -44,7 +44,7 @@ namespace eve
   template< typename Type
           , typename Lanes = expected_cardinal_t<Type>
           >
-#if defined(EVE_DOXYGEN_INVOKED)
+#if !defined(EVE_DOXYGEN_INVOKED)
   requires (!std::same_as<Type, void>)
 #endif
   struct aligned_ptr
@@ -379,7 +379,11 @@ namespace eve
   //! @return An aligned_ptr holding`ptr` with the proper alignment constraint.
   //================================================================================================
   template<typename Lanes, typename Type>
-  aligned_ptr<Type, Lanes> as_aligned(Type* ptr, Lanes /*lanes*/) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+  aligned_ptr<Type, Lanes> as_aligned(Type* ptr, Lanes ) noexcept
+#else
+  aligned_ptr<Type, Lanes> as_aligned(Type* ptr, Lanes lanes) noexcept
+#endif
   {
     return {ptr};
   }
@@ -417,21 +421,21 @@ namespace eve
   //! @relates eve::aligned_ptr
   //!
   //! @brief Computes an address lesser or equal to `p` which is satisfy the alignment constraint of
-  //! SIMD registers of size `Cardinal`.
+  //! SIMD registers of size `Lanes`.
   //!
   //! @param p      Pointer to realign
   //! @param width  SIMD cardinal to use as alignment constraint
   //! @return An aligned_ptr holding the realigned pointer with the proper alignment constraint.
   //! @see previous_aligned_address(T*)
   //================================================================================================
-  template <typename T, typename Cardinal>
+  template <typename T, typename Lanes>
   #if !defined(EVE_DOXYGEN_INVOKED)
-  EVE_FORCEINLINE auto previous_aligned_address(T* p, Cardinal) noexcept
+  EVE_FORCEINLINE auto previous_aligned_address(T* p, Lanes) noexcept
   #else
-  EVE_FORCEINLINE auto previous_aligned_address(T* p, Cardinal width) noexcept
+  EVE_FORCEINLINE auto previous_aligned_address(T* p, Lanes width) noexcept
   #endif
   {
-    return eve::aligned_ptr<T, Cardinal>{ eve::align(p, eve::under{Cardinal::value*sizeof(T)}) };
+    return eve::aligned_ptr<T, Lanes>{ eve::align(p, eve::under{Lanes::value*sizeof(T)}) };
   }
 
   //================================================================================================
