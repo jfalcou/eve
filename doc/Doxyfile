@@ -84,8 +84,10 @@ RECURSIVE              = YES
 EXCLUDE                = ../include/eve/module/
 EXCLUDE               += ../include/eve/detail/function/tmp
 EXCLUDE               += ../include/eve/detail/function/simd
+EXCLUDE               += ../include/eve/detail/raberu.hpp
 EXCLUDE_SYMBOLS        = spy*
 EXCLUDE_SYMBOLS       += kumi*
+EXCLUDE_SYMBOLS       += rbr*
 EXAMPLE_PATH           = ../test/doc
 EXAMPLE_PATH          += ../docs/reference/out
 
