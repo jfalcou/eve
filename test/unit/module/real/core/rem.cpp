@@ -22,7 +22,7 @@
 EVE_TEST_TYPES( "Check return types of rem"
           , eve::test::simd::all_types
           )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
   using eve::rem;
@@ -60,7 +60,7 @@ EVE_TEST_TYPES( "Check return types of rem"
 //==================================================================================================
 //==  rem simd tests
 //==================================================================================================
-auto mini = [] < typename T > (eve::as_<T> const &){ return std::is_signed_v<eve::element_type_t<T>> ? -100 : 0;};
+auto mini = [] < typename T > (eve::as<T> const &){ return std::is_signed_v<eve::element_type_t<T>> ? -100 : 0;};
 
 EVE_TEST( "Check behavior of rem on wide"
         , eve::test::simd::ieee_reals//all_types

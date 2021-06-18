@@ -22,7 +22,7 @@
 EVE_TEST_TYPES( "Check return types of nearest"
             , eve::test::simd::all_types
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -51,7 +51,7 @@ EVE_TEST( "Check behavior of nearest on wide"
   if constexpr(eve::floating_real_value<T>)
   {
     TTS_EQUAL( eve::nearest(a0), T([&](auto i, auto) { return v_t(std::nearbyint(a0.get(i))); }));
-    TTS_EQUAL( eve::diff(eve::nearest)(a0), eve::zero(as(a0)));
+    TTS_EQUAL( eve::diff(eve::nearest)(a0), eve::zero(eve::as(a0)));
   }
   else
   {

@@ -97,7 +97,7 @@ inline namespace EVE_ABI_NAMESPACE
     //! Construction is done piecewise unless the @iterator{s} are @raiterator{s}.
     template<std::input_iterator It>
     EVE_FORCEINLINE explicit  wide(It b, It e) noexcept
-                            : storage_base(load(as_<wide>{}, b, e))
+                            : storage_base(load(as<wide>{}, b, e))
     {}
 
     //! @brief Constructs a eve::wide from a @container.
@@ -128,7 +128,7 @@ inline namespace EVE_ABI_NAMESPACE
     //! Constructs a eve::wide by splatting a scalar value in all lanes
     template<scalar_value S>
     EVE_FORCEINLINE explicit  wide(S const& v)  noexcept
-                            : storage_base(detail::make(eve::as_<wide>{}, v))
+                            : storage_base(detail::make(eve::as<wide>{}, v))
     {}
 
     //! Constructs a eve::wide from a sequence of scalar values of proper size
@@ -137,7 +137,7 @@ inline namespace EVE_ABI_NAMESPACE
 #if !defined(EVE_DOXYGEN_INVOKED)
     requires( card_base::size() == 2 + sizeof...(vs) )
 #endif
-                  : storage_base(detail::make(eve::as_<wide>{}, v0, v1, vs...))
+                  : storage_base(detail::make(eve::as<wide>{}, v0, v1, vs...))
     {}
 
     //==============================================================================================
@@ -174,7 +174,7 @@ inline namespace EVE_ABI_NAMESPACE
     //==============================================================================================
     template<std::invocable<size_type,size_type> Generator>
     EVE_FORCEINLINE wide(Generator &&g) noexcept
-                  : storage_base( detail::fill(eve::as_<wide>{}, std::forward<Generator>(g)) )
+                  : storage_base( detail::fill(eve::as<wide>{}, std::forward<Generator>(g)) )
     {}
 
     //! @brief Constructs a eve::wide by combining two eve::wide of half the current cardinal.
@@ -534,7 +534,7 @@ inline namespace EVE_ABI_NAMESPACE
 #endif
     {
       auto    that  = v;
-      return  that &= bit_cast(w, as_<Type>{});
+      return  that &= bit_cast(w, as<Type>{});
     }
 
     //! @brief Perform a bitwise and between all lanes of a scalar and a eve::wide
@@ -545,7 +545,7 @@ inline namespace EVE_ABI_NAMESPACE
     requires (sizeof(v) == sizeof(Type))
 #endif
     {
-      auto    u  = bit_cast(w, as_<typename wide::template rebind<S,Cardinal>>());
+      auto    u  = bit_cast(w, as<typename wide::template rebind<S,Cardinal>>());
       return  u &= v;
     }
 
@@ -579,7 +579,7 @@ inline namespace EVE_ABI_NAMESPACE
 #endif
     {
       auto    that  = v;
-      return  that |= bit_cast(w, as_<Type>{});
+      return  that |= bit_cast(w, as<Type>{});
     }
 
     //! @brief Perform a bitwise or between all lanes of a scalar and a eve::wide
@@ -590,7 +590,7 @@ inline namespace EVE_ABI_NAMESPACE
     requires (sizeof(v) == sizeof(Type))
 #endif
     {
-      auto    u  = bit_cast(w, as_<typename wide::template rebind<S,Cardinal>>());
+      auto    u  = bit_cast(w, as<typename wide::template rebind<S,Cardinal>>());
       return  u |= v;
     }
 
@@ -624,7 +624,7 @@ inline namespace EVE_ABI_NAMESPACE
 #endif
     {
       auto    that  = v;
-      return  that ^= bit_cast(w, as_<Type>{});
+      return  that ^= bit_cast(w, as<Type>{});
     }
 
     //! @brief Perform a bitwise xor between all lanes of a scalar and a eve::wide
@@ -635,7 +635,7 @@ inline namespace EVE_ABI_NAMESPACE
     requires (sizeof(v) == sizeof(Type))
 #endif
     {
-      auto    u  = bit_cast(w, as_<typename wide::template rebind<S,Cardinal>>());
+      auto    u  = bit_cast(w, as<typename wide::template rebind<S,Cardinal>>());
       return  u ^= v;
     }
 
@@ -1003,7 +1003,7 @@ inline namespace EVE_ABI_NAMESPACE
       else
       {
         constexpr auto sz = sizeof(storage_type)/sizeof(Type);
-        auto that = bit_cast( p, as_<std::array<Type,sz>>());
+        auto that = bit_cast( p, as<std::array<Type,sz>>());
 
         os << '(' << +that[ 0 ];
         for(size_type i = 1; i != p.size(); ++i) os << ", " << +that[ i ];

@@ -114,7 +114,7 @@ namespace eve
     //! Construction is done piecewise unless the @iterator{s} are @raiterator{s}.
     template<std::input_iterator Iterator>
     EVE_FORCEINLINE explicit logical(Iterator b, Iterator e) noexcept
-                  : storage_base(load(as_<logical>{}, b, e))
+                  : storage_base(load(as<logical>{}, b, e))
     {}
 
     //! @brief Constructs a eve::logical from a @container.
@@ -134,7 +134,7 @@ namespace eve
     //! Constructs a eve::logical by splatting a scalar value in all lanes
     template<scalar_value S>
     EVE_FORCEINLINE explicit logical(S v) noexcept
-                  : storage_base(detail::make(eve::as_<logical>{}, v)) {}
+                  : storage_base(detail::make(eve::as<logical>{}, v)) {}
 
     //! Constructs a eve::logical from a sequence of scalar values of proper size
     template<typename T0, typename T1, typename... Ts>
@@ -143,7 +143,7 @@ namespace eve
                     &&  (... && std::convertible_to<Ts,logical<Type>>)
                     &&  (card_base::size() == 2 + sizeof...(Ts))
                   )
-        : storage_base(detail::make(eve::as_<logical>{}, v0, v1, vs...))
+        : storage_base(detail::make(eve::as<logical>{}, v0, v1, vs...))
     {}
 
     //==============================================================================================
@@ -181,7 +181,7 @@ namespace eve
     //==============================================================================================
     template<std::invocable<size_type,size_type> Generator>
     EVE_FORCEINLINE logical(Generator &&g) noexcept
-                  : storage_base(detail::fill(as_<logical>{}, std::forward<Generator>(g)))
+                  : storage_base(detail::fill(as<logical>{}, std::forward<Generator>(g)))
     {}
 
     //! @brief Constructs a eve::logical by combining two eve::logical of half the current cardinal.

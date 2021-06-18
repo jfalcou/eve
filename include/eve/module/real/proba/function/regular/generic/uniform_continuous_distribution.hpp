@@ -62,7 +62,7 @@ namespace eve
       check_constraints();
     }
 
-    uniform_continuous_distribution(T a_,  U b_, as_<V>)
+    uniform_continuous_distribution(T a_,  U b_, as<V>)
       : a(convert(a_, as<V>())), b(convert(b_, as<V>()))
     {
       check_constraints();
@@ -75,7 +75,7 @@ namespace eve
       EVE_ASSERT(all(a < b)       , "a must be stricty less than b");
     }
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+    template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
       requires scalar_value<value_type>
     {
       return fma(detail::urg01(gen, as<R>()), b-a, a);
@@ -87,7 +87,7 @@ namespace eve
 
   template<typename T, typename U>  uniform_continuous_distribution(T,U) -> uniform_continuous_distribution<T,U>;
   template<typename T, typename U, typename V>  uniform_continuous_distribution(T,U,V) -> uniform_continuous_distribution<T,U, V>;
-  template<typename T, typename U, typename V>  uniform_continuous_distribution(T,U,as_<V>) -> uniform_continuous_distribution<T,U,V>;
+  template<typename T, typename U, typename V>  uniform_continuous_distribution(T,U,as<V>) -> uniform_continuous_distribution<T,U,V>;
 
   template < floating_real_value T>
   struct uniform_continuous_distribution<callable_zero_, callable_one_, T>
@@ -99,18 +99,18 @@ namespace eve
     using value_type = T;
     using elt_t = element_type_t<T>;
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+    template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
       requires scalar_value<value_type>
     {
       return detail::urg01(gen, as<R>());
     }
 
     constexpr uniform_continuous_distribution() { }
-    constexpr uniform_continuous_distribution( as_<T> const&) { }
+    constexpr uniform_continuous_distribution( as<T> const&) { }
   };
 
 
-  template<typename T>  uniform_continuous_distribution(as_<T> const&) -> uniform_continuous_distribution<callable_zero_, callable_one_, T>;
+  template<typename T>  uniform_continuous_distribution(as<T> const&) -> uniform_continuous_distribution<callable_zero_, callable_one_, T>;
 
   template<floating_real_value T>
   inline constexpr auto uniform_continuous_distribution_01 = uniform_continuous_distribution<callable_zero_, callable_one_, T>();

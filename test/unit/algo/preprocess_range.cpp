@@ -17,7 +17,7 @@
 
 
 EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::selected_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using e_t = eve::element_type_t<T>;
   using N = eve::fixed<eve::expected_cardinal_v<e_t>>;
@@ -113,7 +113,7 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
 
 
 EVE_TEST_TYPES("Check preprocess_range for eve ptr iterators", algo_test::selected_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using e_t = eve::element_type_t<T>;
   using N = eve::fixed<T::size()>;
@@ -159,7 +159,7 @@ EVE_TEST_TYPES("Check preprocess_range for eve ptr iterators", algo_test::select
 };
 
 EVE_TEST_TYPES("contigious ranges", algo_test::selected_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using e_t = eve::element_type_t<T>;
   using N = eve::fixed<eve::expected_cardinal_v<e_t>>;

@@ -18,7 +18,7 @@ namespace eve::detail
     requires std::same_as<abi_t<T, N>, x86_128_> && supports_xop
   {
     using si_t = wide<as_integer_t<I, signed>, N>;
-    auto sa1   = -bit_cast(a1, as_<si_t>{});
+    auto sa1   = -bit_cast(a1, as<si_t>{});
 
     if (std::is_signed_v<I>)
     {

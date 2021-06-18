@@ -21,7 +21,7 @@
 EVE_TEST_TYPES( "Check return types of negate"
         , eve::test::simd::all_types
         )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -43,7 +43,7 @@ EVE_TEST_TYPES( "Check return types of negate"
 EVE_TEST_TYPES( "Check return types of negate"
         , eve::test::simd::all_types
         )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
  if constexpr(eve::floating_value<T>)
   {
@@ -94,6 +94,6 @@ EVE_TEST( "Check behavior of negate(wide)"
   if constexpr(eve::floating_value<T>)
   {
     TTS_ULP_EQUAL( eve::diff_1st(negate)(a0, a1), eve::sign(a1), 2);
-    TTS_ULP_EQUAL( eve::diff_2nd(negate)(a0, a1), eve::zero(as(a0)), 2);
+    TTS_ULP_EQUAL( eve::diff_2nd(negate)(a0, a1), eve::zero(eve::as(a0)), 2);
   }
 };

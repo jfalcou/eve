@@ -18,7 +18,7 @@
 namespace eve::detail
 {
   template<value IN, scalar_value OUT>
-  EVE_FORCEINLINE auto convert_(EVE_SUPPORTS(cpu_), IN const &v0, as_<OUT> const &tgt) noexcept
+  EVE_FORCEINLINE auto convert_(EVE_SUPPORTS(cpu_), IN const &v0, as<OUT> const &tgt) noexcept
   {
     if constexpr(std::same_as<element_type_t<IN>, OUT>)
     {
@@ -53,7 +53,7 @@ namespace eve::detail
   template<value IN, scalar_value OUT>
   EVE_FORCEINLINE auto convert_ ( EVE_SUPPORTS(cpu_)
                                 , logical<IN> const &v0
-                                , [[maybe_unused]] as_<logical<OUT>> const & tgt
+                                , [[maybe_unused]] as<logical<OUT>> const & tgt
                                 ) noexcept
   {
     if constexpr(std::same_as<element_type_t<IN>, OUT>)
@@ -96,10 +96,10 @@ namespace eve::detail
           using s_out_t = std::make_signed_t<typename logical<OUT>::bits_type>;
 
           // Just convert the bit and bitcast back to the proper output
-          return bit_cast ( convert ( bit_cast(v0.bits(),as_<v_int_t>{})
-                                    , as_<s_out_t>{}
+          return bit_cast ( convert ( bit_cast(v0.bits(),as<v_int_t>{})
+                                    , as<s_out_t>{}
                                     )
-                          , as_<out_t>{}
+                          , as<out_t>{}
                           );
         }
       }

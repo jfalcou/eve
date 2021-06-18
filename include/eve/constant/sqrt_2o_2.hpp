@@ -20,7 +20,7 @@ namespace eve
   namespace detail
   {
     template<floating_value T>
-    EVE_FORCEINLINE auto sqrt_2o_2_(EVE_SUPPORTS(cpu_), eve::as_<T> const & = {}) noexcept
+    EVE_FORCEINLINE auto sqrt_2o_2_(EVE_SUPPORTS(cpu_), eve::as<T> const & = {}) noexcept
     {
       return T(0.70710678118654752440084436210484903928483593768847);
     }

@@ -15,7 +15,7 @@
 EVE_TEST_TYPES("Check eve::gamma_distribution behavior"
               , eve::test::simd::ieee_reals
               )
-  <typename T>(eve::as_<T>)
+  <typename T>(eve::as<T>)
 {
   auto inf  = eve::inf(eve::as<T>());
   {

@@ -52,7 +52,7 @@ namespace eve
       EVE_ASSERT(all(is_gtz(lambda) && is_finite(lambda)), "lambda must be strictly positive and finite");
     }
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+    template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
       requires scalar_value<value_type>
     {
       if (lambda < value_type(10))
@@ -103,7 +103,7 @@ namespace eve
     using value_type = T;
     using elt_t = element_type_t<T>;
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+    template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
       requires scalar_value<value_type>
     {
       auto p = R(expm1);
@@ -118,15 +118,15 @@ namespace eve
       }
       return x;
     }
-    constexpr poisson_distribution( as_<T> const&) {}
+    constexpr poisson_distribution( as<T> const&) {}
     static constexpr elt_t expm1 = elt_t(0.36787944117144232159552377016146086744581113103176);
 
   };
 
-  template<typename T>  poisson_distribution(as_<T> const&) -> poisson_distribution<callable_one_, T>;
+  template<typename T>  poisson_distribution(as<T> const&) -> poisson_distribution<callable_one_, T>;
 
   template<floating_real_value T>
-  inline constexpr auto poisson_distribution_1 = poisson_distribution<callable_one_, T>(as_<T>{});
+  inline constexpr auto poisson_distribution_1 = poisson_distribution<callable_one_, T>(as<T>{});
 
   namespace detail
   {

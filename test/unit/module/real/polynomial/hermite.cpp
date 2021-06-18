@@ -17,7 +17,7 @@ EVE_TEST_TYPES( "Check return types of hermite on wide"
         , eve::test::simd::ieee_reals
 
         )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
   using wi_t = eve::as_integer_t<T>;

@@ -15,7 +15,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                              = " << pf      << '\n'
             << "<- mask                            = " << mask
-            << " / "                                   << mask.mask( eve::as_<eve::logical<wide_ft>>()) << '\n'
+            << " / "                                   << mask.mask( eve::as<eve::logical<wide_ft>>()) << '\n'
             << "<- others                          = " << others  << '\n'
             << "-> replace_ignored(pf,mask,others) = " << eve::replace_ignored(pf,mask,others) << '\n';
 

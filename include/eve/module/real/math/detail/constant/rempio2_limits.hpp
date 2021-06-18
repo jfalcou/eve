@@ -19,7 +19,7 @@
 namespace eve::detail
 {
   template <typename D, typename T>
-  EVE_FORCEINLINE auto Rempio2_limit(D const &, as_<T> const &) noexcept
+  EVE_FORCEINLINE auto Rempio2_limit(D const &, as<T> const &) noexcept
   {
     if constexpr(floating_value<T>)
     {

@@ -19,7 +19,7 @@ namespace eve
   namespace detail
   {
     template<typename T>
-    EVE_FORCEINLINE constexpr auto nan_(EVE_SUPPORTS(cpu_), as_<T> const& tgt) noexcept
+    EVE_FORCEINLINE constexpr auto nan_(EVE_SUPPORTS(cpu_), as<T> const& tgt) noexcept
     {
       return allbits(tgt);
     }

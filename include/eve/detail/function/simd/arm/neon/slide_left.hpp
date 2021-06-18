@@ -53,7 +53,7 @@ namespace eve::detail
       else
       {
         using f_t = as_integer_t<wide<T,N>>;
-        result = bit_cast( slide_left(bit_cast(v,as_<f_t>{}), index<Shift>), as(v) );
+        result = bit_cast( slide_left(bit_cast(v,as<f_t>{}), index<Shift>), as(v) );
       }
 
       return result;

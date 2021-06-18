@@ -19,7 +19,7 @@
 EVE_TEST_TYPES( "Check return types of is_pow2 on wide"
             , eve::test::simd::unsigned_integers
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 

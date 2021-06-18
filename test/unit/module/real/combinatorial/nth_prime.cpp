@@ -22,7 +22,7 @@
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of eve::nth_prime"
               , eve::test::simd::unsigned_integers)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   TTS_EXPR_IS(eve::nth_prime(T()), T); 
 };
@@ -34,7 +34,7 @@ EVE_TEST_TYPES( "Check corner-cases behavior of eve::nth_prime on wide"
         , eve::test::simd::unsigned_integers
 
          )
-  <typename T>(eve::as_<T>)
+  <typename T>(eve::as<T>)
 {
   using eve::as;
   using elt_t = eve::element_type_t<T>;

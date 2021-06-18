@@ -21,9 +21,9 @@ namespace eve::detail
     using u8_8  = typename T::template rebind<std::uint8_t,  eve::fixed<8>>;
     using u32_2 = typename T::template rebind<std::uint32_t, eve::fixed<2>>;
 
-    auto bytes    = eve::bit_cast(v, eve::as_<u8_8>{});
+    auto bytes    = eve::bit_cast(v, eve::as<u8_8>{});
     auto selected = vtbl1_u8(bytes, u8_8(0, 2, 4, 6, 0, 0, 0, 0));
-    auto dwords   = eve::bit_cast(selected, eve::as_<u32_2>{});
+    auto dwords   = eve::bit_cast(selected, eve::as<u32_2>{});
 
     return vget_lane_u32(dwords, 0);
   }
@@ -35,11 +35,11 @@ namespace eve::detail
     using u8_16 = typename T::template rebind<std::uint8_t,  eve::fixed<16>>;
     using u32_2 = typename T::template rebind<std::uint32_t, eve::fixed<2>>;
 
-    auto bytes = eve::bit_cast(v, eve::as_<u8_16>{});
+    auto bytes = eve::bit_cast(v, eve::as<u8_16>{});
 
     uint8x8x2_t table = {{ vget_low_u8(bytes), vget_high_u8(bytes) }};
     u8_8     selected = vtbl2_u8(table, u8_8(0, 4, 8, 12, 0, 0, 0, 0));
-    auto     dwords   = eve::bit_cast(selected, eve::as_<u32_2>{});
+    auto     dwords   = eve::bit_cast(selected, eve::as<u32_2>{});
 
     return vget_lane_u32(dwords, 0);
   }
@@ -56,17 +56,17 @@ namespace eve::detail
          if constexpr ( N() == 1 ) return std::pair{ (std::uint8_t) v.bits().get(0), eve::lane<8> };
     else if constexpr ( sizeof(T) == 1 && N() == 2 )
     {
-      auto words = eve::bit_cast(v, eve::as_<u16_4>{});
+      auto words = eve::bit_cast(v, eve::as<u16_4>{});
       return std::pair{ vget_lane_u16(words, 0), eve::lane<8> };
     }
     else if constexpr ( sizeof(T) * N() == 4)
     {
-      auto dwords = eve::bit_cast(v, eve::as_<u32_2>{});
+      auto dwords = eve::bit_cast(v, eve::as<u32_2>{});
       return std::pair{ vget_lane_u32(dwords, 0), eve::lane<sizeof(T) * 8> };
     }
     else if constexpr ( eve::current_api >= eve::asimd )
     {
-      auto qword  = eve::bit_cast(v, eve::as_<u64_1>{});
+      auto qword  = eve::bit_cast(v, eve::as<u64_1>{});
       return std::pair { vget_lane_u64(qword, 0), eve::lane<sizeof(T) * 8> };
     }
     else if constexpr ( sizeof(T) >= 2 )
@@ -75,7 +75,7 @@ namespace eve::detail
     }
     else   // chars
     {
-      auto words = eve::bit_cast(v, eve::as_<u16_4>{});
+      auto words = eve::bit_cast(v, eve::as<u16_4>{});
       words = vshr_n_u16(words, 4);
 
       return std::pair{ every_2nd_byte_arm64(words), eve::lane<sizeof(T) * 4> };
@@ -95,8 +95,8 @@ namespace eve::detail
     if constexpr ( eve::current_api >= eve::asimd && sizeof(T) >= 2 )
     {
       using half_e_t = make_integer_t<sizeof(T) / 2, unsigned>;
-      auto halved = eve::convert(v, eve::as_<eve::logical<half_e_t>>{});
-      auto qword  = eve::bit_cast(halved, eve::as_<u64_1>{});
+      auto halved = eve::convert(v, eve::as<eve::logical<half_e_t>>{});
+      auto qword  = eve::bit_cast(halved, eve::as<u64_1>{});
       return std::pair { vget_lane_u64(qword, 0), eve::lane<sizeof(T) * 4> };
     }
     else if constexpr ( sizeof(T) >= 4 )
@@ -106,7 +106,7 @@ namespace eve::detail
     else if constexpr ( sizeof(T) == 2 )
     {
       // pack 2 shorts into byte
-      auto dwords = eve::bit_cast(v, eve::as_<u32_4>{});
+      auto dwords = eve::bit_cast(v, eve::as<u32_4>{});
       dwords = vshrq_n_u32(dwords, 12);
 
       return std::pair{ every_4th_byte_arm128(dwords), eve::lane<sizeof(T) * 2> };
@@ -116,12 +116,12 @@ namespace eve::detail
       // Couldn't figure out anything nice.
       // We will have to suck up the 64 bit emulation on arm-v7, which is not ideal.
 
-      auto words_16 = eve::bit_cast(v, eve::as_<u16_8>{});
+      auto words_16 = eve::bit_cast(v, eve::as<u16_8>{});
       words_16 = vshrq_n_u16(words_16, 4);
 
       // drop top byte
       u8_8  bytes_8  = vmovn_u16(words_16);
-      u64_1 qword = eve::bit_cast(bytes_8, eve::as_<u64_1>{});
+      u64_1 qword = eve::bit_cast(bytes_8, eve::as<u64_1>{});
 
       return std::pair{ vget_lane_u64(qword, 0), eve::lane<4> };
     }

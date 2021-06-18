@@ -29,7 +29,7 @@ namespace eve::detail
     {
       if constexpr( sizeof(T) * N() <= 4u ) return all_(EVE_RETARGET(cpu_), cond, v0);
 
-      auto dwords = eve::bit_cast(v0.bits(), eve::as_<u32_2> {});
+      auto dwords = eve::bit_cast(v0.bits(), eve::as<u32_2> {});
       dwords = vpmin_u32(dwords, dwords);
 
       std::uint32_t combined = vget_lane_u32(dwords, 0);
@@ -50,7 +50,7 @@ namespace eve::detail
     else if constexpr ( eve::current_api < eve::asimd && sizeof( T ) >= 2 )
     {
       using half_e_t = make_integer_t<sizeof(T) / 2, unsigned>;
-      auto halved = eve::convert(v0, eve::as_<eve::logical<half_e_t>>{});
+      auto halved = eve::convert(v0, eve::as<eve::logical<half_e_t>>{});
       return eve::all[cond](halved);
     }
     else if constexpr ( !C::is_complete ) return all_(EVE_RETARGET(cpu_), cond, v0);
@@ -61,7 +61,7 @@ namespace eve::detail
       else
       {
         // There is no vminvq_u64, so we use vminvq_u32 for everything bigger.
-        auto dwords = eve::bit_cast(v0, eve::as_<u32_4>{});
+        auto dwords = eve::bit_cast(v0, eve::as<u32_4>{});
         return vminvq_u32(dwords);
       }
     }

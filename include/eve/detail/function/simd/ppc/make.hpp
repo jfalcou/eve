@@ -18,7 +18,7 @@ namespace eve::detail
   // arithmetic cases
   //================================================================================================
   template<real_scalar_value T, typename N, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as_<wide<T, N>> const &, Vs... vs) noexcept
+  EVE_FORCEINLINE auto make(eve::as<wide<T, N>> const &, Vs... vs) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
     using type = as_register_t<T, N, ppc_>;
@@ -27,7 +27,7 @@ namespace eve::detail
   }
 
   template<real_scalar_value T, typename N, typename V>
-  EVE_FORCEINLINE auto make(eve::as_<wide<T, N>> const &, V v) noexcept
+  EVE_FORCEINLINE auto make(eve::as<wide<T, N>> const &, V v) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
     auto impl = [&](auto... I)
@@ -47,7 +47,7 @@ namespace eve::detail
   // logical cases
   //================================================================================================
   template<real_scalar_value T, typename N, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as_<logical<wide<T, N>>> const &, Vs... vs) noexcept
+  EVE_FORCEINLINE auto make(eve::as<logical<wide<T, N>>> const &, Vs... vs) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
     using type = as_logical_register_t<T, N, ppc_>;
@@ -56,7 +56,7 @@ namespace eve::detail
   }
 
   template<real_scalar_value T, typename N, typename V>
-  EVE_FORCEINLINE auto make(eve::as_<logical<wide<T, N>>> const &, V v) noexcept
+  EVE_FORCEINLINE auto make(eve::as<logical<wide<T, N>>> const &, V v) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
     auto impl   = [&](auto... I)

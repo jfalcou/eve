@@ -25,7 +25,7 @@
 EVE_TEST_TYPES( "Check return types of floor"
               , eve::test::simd::all_types
               )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -49,7 +49,7 @@ EVE_TEST_TYPES( "Check return types of floor"
 EVE_TEST_TYPES( "Check  with particular values"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   TTS_EQUAL(eve::floor(static_cast<T>(-1.3)), T(-2));
   TTS_EQUAL(eve::floor(static_cast<T>(-1.5)), T(-2));
@@ -107,7 +107,7 @@ EVE_TEST_TYPES( "Check  with particular values"
 //==================================================================================================
 // floor(simd)  tests
 //==================================================================================================
-auto min = []< typename T>(eve::as_<T> const &){return eve::signed_value<T> ? -50 : 0; };
+auto min = []< typename T>(eve::as<T> const &){return eve::signed_value<T> ? -50 : 0; };
 EVE_TEST( "Check behavior of floor(wide) and diff(floor(wide))"
         , eve::test::simd::all_types
         , eve::test::generate(eve::test::randoms(min, +50))
@@ -119,7 +119,7 @@ EVE_TEST( "Check behavior of floor(wide) and diff(floor(wide))"
   if constexpr(eve::floating_real_value<T>)
   {
     TTS_EQUAL( eve::floor(a0), map([&](auto e) -> v_t{ return v_t(std::floor(e)); }, a0));
-    TTS_EQUAL( eve::diff(eve::floor)(a0), eve::zero(as(a0)));
+    TTS_EQUAL( eve::diff(eve::floor)(a0), eve::zero(eve::as(a0)));
   }
   else
   {

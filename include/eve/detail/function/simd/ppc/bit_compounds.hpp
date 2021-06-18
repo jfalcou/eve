@@ -23,7 +23,7 @@ namespace eve::detail
     requires ppc_abi<abi_t<T, N>>
   {
     using i_t = typename wide<T,N>::template rebind <as_integer_t<T, unsigned>,N>;
-    v = vec_sl(v.storage(), bit_cast(s,as_<i_t>()).storage());
+    v = vec_sl(v.storage(), bit_cast(s,as<i_t>()).storage());
     return v;
   }
 
@@ -45,8 +45,8 @@ namespace eve::detail
   {
     using i_t = typename wide<T,N>::template rebind <as_integer_t<T, unsigned>,N>;
 
-    if constexpr(std::is_signed_v<T>) v = vec_sra(v.storage(), bit_cast(s,as_<i_t>()).storage());
-    else                              v = vec_sr (v.storage(), bit_cast(s,as_<i_t>()).storage());
+    if constexpr(std::is_signed_v<T>) v = vec_sra(v.storage(), bit_cast(s,as<i_t>()).storage());
+    else                              v = vec_sr (v.storage(), bit_cast(s,as<i_t>()).storage());
 
     return v;
   }
@@ -71,7 +71,7 @@ namespace eve::detail
 
     if constexpr( element_bit_compatible_to<U,type> )
     {
-      auto bit_other = detail::bit_cast_(EVE_RETARGET(cpu_), other , as_<T>{});
+      auto bit_other = detail::bit_cast_(EVE_RETARGET(cpu_), other , as<T>{});
       self = vec_and(self.storage(), type{bit_other}.storage());
     }
     else if constexpr( simd_value<U> && sizeof(self) == sizeof(other) )
@@ -93,7 +93,7 @@ namespace eve::detail
 
     if constexpr( element_bit_compatible_to<U,type> )
     {
-      auto bit_other = detail::bit_cast_(EVE_RETARGET(cpu_), other , as_<T>{});
+      auto bit_other = detail::bit_cast_(EVE_RETARGET(cpu_), other , as<T>{});
       self = vec_or(self.storage(), type{bit_other}.storage());
     }
     else if constexpr( simd_value<U> && sizeof(self) == sizeof(other) )
@@ -115,7 +115,7 @@ namespace eve::detail
 
     if constexpr( element_bit_compatible_to<U,type> )
     {
-      auto bit_other = detail::bit_cast_(EVE_RETARGET(cpu_), other , as_<T>{});
+      auto bit_other = detail::bit_cast_(EVE_RETARGET(cpu_), other , as<T>{});
       self = vec_xor(self.storage(), type{bit_other}.storage());
     }
     else if constexpr( simd_value<U> && sizeof(self) == sizeof(other) )

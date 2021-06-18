@@ -59,7 +59,7 @@ namespace eve
     if_(C c) : condition_(c) {}
 
     template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
-    template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&)  const { return condition_; }
+    template<typename T> EVE_FORCEINLINE auto mask(eve::as<T> const&)  const { return condition_; }
 
     friend std::ostream& operator<<(std::ostream& os, if_ const& c)
     {
@@ -80,22 +80,22 @@ namespace eve
 
     template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
 
-    template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE auto mask(eve::as<T> const&) const
     {
       return eve::as_logical_t<T>(false);
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const
     {
       return 0;
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> const&) const
     {
       return cardinal_v<T>;
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> const&) const
     {
       return 0ULL;
     }
@@ -119,22 +119,22 @@ namespace eve
 
     template<typename V> EVE_FORCEINLINE auto else_(V) const  {  return *this;  }
 
-    template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE auto mask(eve::as<T> const&) const
     {
       return eve::as_logical_t<T>(true);
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const
     {
       return 0;
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> const&) const
     {
       return 0;
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> const&) const
     {
       return cardinal_v<T>;
     }
@@ -162,7 +162,7 @@ namespace eve
 
     template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
 
-    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const&) const
     {
       using abi_t = typename T::abi_type;
       using type  = as_logical_t<T>;
@@ -178,9 +178,9 @@ namespace eve
       else
       {
         using i_t = as_arithmetic_t<as_integer_t<T>>;
-        auto const m = detail::linear_ramp(eve::as_<i_t>()) < i_t(count_);
+        auto const m = detail::linear_ramp(eve::as<i_t>()) < i_t(count_);
 
-        return bit_cast(m, as_<type>());
+        return bit_cast(m, as<type>());
       }
     }
 
@@ -191,17 +191,17 @@ namespace eve
       return os << "keep_first( " << c.count_ << " )";
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const
     {
       return 0;
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> const&) const
     {
       return cardinal_v<T> - count_;
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> const&) const
     {
       return count_;
     }
@@ -222,7 +222,7 @@ namespace eve
 
     template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
 
-    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as_<T> const& tgt) const
+    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const& tgt) const
     {
       constexpr auto card = cardinal_v<T>;
       return keep_first{card-count_}.mask(tgt);
@@ -235,17 +235,17 @@ namespace eve
       return os << "ignore_last( " << c.count_ << " )";
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const
     {
       return 0;
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> const&) const
     {
       return count_;
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> const&) const
     {
       return cardinal_v<T> - count_;
     }
@@ -266,7 +266,7 @@ namespace eve
 
     template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
 
-    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const&) const
     {
       using abi_t = typename T::abi_type;
       using type  = as_logical_t<T>;
@@ -286,9 +286,9 @@ namespace eve
         using i_t = as_arithmetic_t<as_integer_t<T>>;
         constexpr std::ptrdiff_t card = cardinal_v<T>;
 
-        auto const m = detail::linear_ramp(eve::as_<i_t>()) >= i_t(card-count_);
+        auto const m = detail::linear_ramp(eve::as<i_t>()) >= i_t(card-count_);
 
-        return bit_cast(m, as_<type>());
+        return bit_cast(m, as<type>());
       }
     }
 
@@ -299,17 +299,17 @@ namespace eve
       return os << "keep_last( " << c.count_ << " )";
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const
     {
       return cardinal_v<T> - count_;
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> const&) const
     {
       return 0;
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> const&) const
     {
       return count_;
     }
@@ -330,23 +330,23 @@ namespace eve
 
     template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
 
-    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as_<T> const& tgt) const
+    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const& tgt) const
     {
       constexpr auto card = cardinal_v<T>;
       return keep_last{card-count_}.mask(tgt);
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const
     {
       return count_;
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> const&) const
     {
       return 0;
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> const&) const
     {
       return cardinal_v<T> - count_;
     }
@@ -377,7 +377,7 @@ namespace eve
 
     template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
 
-    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const&) const
     {
       using abi_t = typename T::abi_type;
       using type  = as_logical_t<T>;
@@ -395,24 +395,24 @@ namespace eve
       else
       {
         using i_t = as_arithmetic_t<as_integer_t<T>>;
-        auto const i = detail::linear_ramp(eve::as_<i_t>());
+        auto const i = detail::linear_ramp(eve::as<i_t>());
         auto const m = (i >= begin_) && (i < end_);
 
-        return bit_cast(m, as_<type>());
+        return bit_cast(m, as<type>());
       }
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const
     {
       return begin_;
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> const&) const
     {
       return cardinal_v<T> - end_;
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> const&) const
     {
       return end_ - begin_;
     }
@@ -442,7 +442,7 @@ namespace eve
 
     template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
 
-    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as_<T> const& tgt) const
+    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const& tgt) const
     {
       EVE_ASSERT( (first_count_ + last_count_) <= cardinal_v<T>
                 , "[eve::ignore_extrema] Index mismatch for first/last"
@@ -451,17 +451,17 @@ namespace eve
       return keep_between(first_count_, cardinal_v<T>-last_count_).mask(tgt);
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const
     {
       return first_count_;
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> const&) const
     {
       return last_count_;
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> const&) const
     {
       return cardinal_v<T> - last_count_ - first_count_;
     }

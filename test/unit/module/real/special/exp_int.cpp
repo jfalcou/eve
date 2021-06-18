@@ -29,7 +29,7 @@
 EVE_TEST_TYPES( "Check return types of exp_int"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
   using i_t = eve::as_integer_t<v_t>;
@@ -57,9 +57,9 @@ EVE_TEST( "Check behavior of exp_int on wide"
   using eve::as;
   for(int i=1; i < 4 ; ++i)
   {
-    TTS_ULP_EQUAL( exp_int(i, a0),  map([i](auto e){return boost::math::expint(i, e);}, a0), 4);
+    TTS_ULP_EQUAL( exp_int(i, a0),  map([i](auto e){return boost::math::expint(i, e);}, a0), 5);
     auto dexp_int = [i](auto e){return v_t( -boost::math::expint(i-1, e));};
-    TTS_ULP_EQUAL( eve::diff(exp_int)(i, a0),  map(dexp_int, a0), 4);
+    TTS_ULP_EQUAL( eve::diff(exp_int)(i, a0),  map(dexp_int, a0), 5);
   }
 
   if constexpr( eve::platform::supports_invalids )

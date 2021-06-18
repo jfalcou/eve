@@ -56,21 +56,21 @@ namespace eve::detail
       }
       else if constexpr ( c == category::int16x8 )
       {
-        auto usv = eve::bit_cast(v, as_<wide<std::uint16_t,N>>{});
-        auto const sm = signmask(as_<T>());
+        auto usv = eve::bit_cast(v, as<wide<std::uint16_t,N>>{});
+        auto const sm = signmask(as<T>());
         usv += sm;
         return static_cast<T>(minimum(usv)-sm);
       }
       else if constexpr( c == category::uint8x16 )
       {
         // This is less costly than doing the shuffle dance for int8s
-        auto [lw,hw] = convert(v, as_<std::uint16_t>{}).slice();
+        auto [lw,hw] = convert(v, as<std::uint16_t>{}).slice();
         return static_cast<T>(minimum( min(lw,hw) ));
       }
       else if constexpr( c == category::int8x16 )
       {
         // This is less costly than doing the shuffle dance for int8s
-        auto [lw,hw] = convert(v, as_<std::int16_t>{}).slice();
+        auto [lw,hw] = convert(v, as<std::int16_t>{}).slice();
         return static_cast<T>(minimum( min(lw,hw) ));
       }
     }

@@ -27,7 +27,7 @@ namespace eve::detail
 {
   template<real_scalar_value Target, real_scalar_value U>
   EVE_FORCEINLINE constexpr auto
-  saturate_(EVE_SUPPORTS(cpu_), U const &a0, as_<Target> const &) noexcept
+  saturate_(EVE_SUPPORTS(cpu_), U const &a0, as<Target> const &) noexcept
   {
     if constexpr(std::same_as<U, Target>)
     {
@@ -43,8 +43,8 @@ namespace eve::detail
         }
         else
         {
-          auto mn = static_cast<double>(valmin(eve::as_<float>()));
-          auto mx = static_cast<double>(valmax(eve::as_<float>()));
+          auto mn = static_cast<double>(valmin(eve::as<float>()));
+          auto mx = static_cast<double>(valmax(eve::as<float>()));
           return is_infinite(a0) ? a0 : clamp(a0, mn, mx);
         }
       }
@@ -110,7 +110,7 @@ namespace eve::detail
   }
 
   template<real_scalar_value Target, real_simd_value U>
-  EVE_FORCEINLINE auto saturate_(EVE_SUPPORTS(cpu_), U const &v, as_<Target> const &at)
+  EVE_FORCEINLINE auto saturate_(EVE_SUPPORTS(cpu_), U const &v, as<Target> const &at)
   {
     using elt_u = element_type_t<U>;
 
@@ -130,8 +130,8 @@ namespace eve::detail
             return v;
           else
           {
-            auto mn = U(valmin(eve::as_<float>()));
-            auto mx = U(valmax(eve::as_<float>()));
+            auto mn = U(valmin(eve::as<float>()));
+            auto mx = U(valmax(eve::as<float>()));
             return if_else(is_infinite(v), v, clamp(v, mn, mx));
           }
         }

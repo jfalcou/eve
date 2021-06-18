@@ -15,7 +15,7 @@
 EVE_TEST_TYPES( "Check return types of bit_shr"
         , eve::test::simd::unsigned_types
         )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t  = eve::element_type_t<T>;
   using i_t  = eve::as_integer_t<T, signed>;
@@ -42,7 +42,7 @@ EVE_TEST_TYPES( "Check return types of bit_shr"
 //================================================================================================
 // random size values
 //================================================================================================
-inline auto const random_bits = []<typename T>(eve::as_<T>, auto& gen)
+inline auto const random_bits = []<typename T>(eve::as<T>, auto& gen)
 {
   using i_t = eve::as_integer_t<eve::element_type_t<T>>;
   eve::prng<i_t> dist(0,8*sizeof(i_t)-1);

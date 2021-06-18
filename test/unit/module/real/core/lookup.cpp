@@ -39,7 +39,7 @@ using tuple_t = kumi::tuple<std::int8_t,T,double>;
 // product types
 //==================================================================================================
 EVE_TEST_TYPES( "Check eve::lookup behavior on product type wide", eve::test::scalar::all_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using s_t = tuple_t<T>;
   using w_t = eve::wide<tuple_t<T>, eve::fixed<4>>;

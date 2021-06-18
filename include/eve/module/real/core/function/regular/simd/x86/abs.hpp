@@ -82,8 +82,8 @@ namespace eve::detail
     }
     else
     {
-      auto src  = alternative(cx,v,as_<wide<T, N>>{});
-      auto m    = expand_mask(cx,as_<wide<T, N>>{}).storage().value;
+      auto src  = alternative(cx,v,as<wide<T, N>>{});
+      auto m    = expand_mask(cx,as<wide<T, N>>{}).storage().value;
 
             if constexpr(c && category::unsigned_ ) return if_else(cx,eve::abs(v),src);
       else  if constexpr(c == category::float32x16) return _mm512_mask_abs_ps   (src,m,v);

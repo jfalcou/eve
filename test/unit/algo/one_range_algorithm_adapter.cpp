@@ -40,7 +40,7 @@ struct fake_algorithm :
 }
 
 EVE_TEST_TYPES("Vector/const vector", algo_test::selected_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using e_t = eve::element_type_t<T>;
   using N = eve::fixed<eve::expected_cardinal_v<e_t>>;
@@ -77,7 +77,7 @@ EVE_TEST_TYPES("Vector/const vector", algo_test::selected_types)
 };
 
 EVE_TEST_TYPES("aligned_ptr, empty range", algo_test::selected_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using e_t = eve::element_type_t<T>;
   using N = eve::fixed<eve::expected_cardinal_v<e_t>>;

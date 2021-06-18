@@ -24,7 +24,7 @@ int main()
    std::cout << "---- simd" << '\n'
              << "<- phi               = " << phi << '\n'
              << "-> ellint_1(phi, pf) = " << eve::ellint_1(phi, pf) << '\n'
-             << "-> ellint_1(pio2,pf) = " << eve::ellint_1(eve::pio_2(as(phi)), pf) << '\n';
+             << "-> ellint_1(pio2,pf) = " << eve::ellint_1(eve::pio_2(eve::as(phi)), pf) << '\n';
 
   return 0;
 }

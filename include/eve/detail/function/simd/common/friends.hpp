@@ -49,7 +49,7 @@ namespace eve::detail
       return  apply_over([]<typename E>(E const& e)
               {
                 if constexpr(floating_scalar_value<E>)
-                  return bit_cast( ~bit_cast(e, as_<as_integer_t<E>>{}), as(e));
+                  return bit_cast( ~bit_cast(e, as<as_integer_t<E>>{}), as(e));
                 else
                   return E(~e);
               }, v
@@ -125,7 +125,7 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<Wide>)
     {
-      if constexpr( is_logical_v<Wide> )  return bit_cast(~v.bits(), as_<Wide>{});
+      if constexpr( is_logical_v<Wide> )  return bit_cast(~v.bits(), as<Wide>{});
       else                                return !to_logical(v);
     }
     else

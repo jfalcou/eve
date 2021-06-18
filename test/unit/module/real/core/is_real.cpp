@@ -19,7 +19,7 @@
 EVE_TEST_TYPES( "Check return types of eve::is_real(simd)"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using eve::logical;
   using v_t = eve::element_type_t<T>;
@@ -37,5 +37,5 @@ EVE_TEST( "Check behavior of eve::is_real(simd)"
         )
 <typename T>(T const& a0)
 {
-  TTS_EQUAL(eve::is_real(a0), eve::true_(as(a0)));
+  TTS_EQUAL(eve::is_real(a0), eve::true_(eve::as(a0)));
 };

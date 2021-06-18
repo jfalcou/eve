@@ -20,7 +20,7 @@ namespace eve::detail
                                         ) noexcept
     requires ppc_abi<abi_t<U, N>>
   {
-    return vec_sel(v1.storage(), v0.storage(), bit_cast(m, as_<logical<wide<U,N>>>()).storage());
+    return vec_sel(v1.storage(), v0.storage(), bit_cast(m, as<logical<wide<U,N>>>()).storage());
   }
 
   template<real_scalar_value U, typename N>
@@ -32,7 +32,7 @@ namespace eve::detail
     requires ppc_abi<abi_t<U, N>>
   {
     return bit_cast ( vec_sel ( v1.storage(), v0.storage()
-                              , bit_cast(m, as_<logical<wide<U,N>>>()).storage()
+                              , bit_cast(m, as<logical<wide<U,N>>>()).storage()
                               )
                     , as(v0)
                     );

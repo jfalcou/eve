@@ -63,8 +63,8 @@ namespace eve::detail
   template<conditional_expr C, typename U, typename V>
   EVE_FORCEINLINE auto if_else_(EVE_SUPPORTS(cpu_), C const& cond, U const& t, V const& f )
   requires(    compatible_values<U, V>
-            || (value<U> && std::is_invocable_v<V, as_<U>>)
-            || (value<V> && std::is_invocable_v<U, as_<V>>)
+            || (value<U> && std::is_invocable_v<V, as<U>>)
+            || (value<V> && std::is_invocable_v<U, as<V>>)
           )
   {
     using r_t = std::conditional_t< simd_value<U>, U, V>;
@@ -75,7 +75,7 @@ namespace eve::detail
     }
     else
     {
-      auto const condition  = cond.mask(eve::as_<r_t>());
+      auto const condition  = cond.mask(eve::as<r_t>());
       if constexpr( C::is_inverted )  { return if_else(condition, f, t ); }
       else                            { return if_else(condition, t, f ); }
     }
@@ -84,18 +84,18 @@ namespace eve::detail
   //------------------------------------------------------------------------------------------------
   // Optimizes if_else(c,t,constant)
   template<value T, value U, typename Constant>
-  requires( std::is_invocable_v<Constant, as_<U>> )
+  requires( std::is_invocable_v<Constant, as<U>> )
   EVE_FORCEINLINE constexpr auto if_else_ ( EVE_SUPPORTS(cpu_)
                                           , T const& cond, U const& u, Constant const& v
                                           ) noexcept
   {
-    using tgt = as_<U>;
+    using tgt = as<U>;
 
           if constexpr(scalar_value<T>)       return static_cast<bool>(cond) ? u : v(tgt{});
     else  if constexpr(current_api >= avx512) return if_else(cond, u, v(tgt{}));
     else
     {
-      using cvt = as_<as_logical_t<element_type_t<U>>>;
+      using cvt = as<as_logical_t<element_type_t<U>>>;
 
       if constexpr( std::same_as<Constant, callable_zero_> )
       {
@@ -130,18 +130,18 @@ namespace eve::detail
   //------------------------------------------------------------------------------------------------
   // Optimizes if_else(c,constant, t)
   template<value T, value U, typename Constant>
-  requires( std::is_invocable_v<Constant, as_<U>> )
+  requires( std::is_invocable_v<Constant, as<U>> )
   EVE_FORCEINLINE constexpr auto if_else_ ( EVE_SUPPORTS(cpu_)
                                           , T const& cond, Constant const& v, U const& u
                                           ) noexcept
   {
-    using tgt = as_<U>;
+    using tgt = as<U>;
 
           if constexpr(scalar_value<T>)       return static_cast<bool>(cond) ? v(tgt{}) : u;
     else  if constexpr(current_api >= avx512) return if_else(cond, v(tgt{}), u);
     else
     {
-      using cvt = as_<as_logical_t<element_type_t<U>>>;
+      using cvt = as<as_logical_t<element_type_t<U>>>;
 
       if constexpr( std::same_as<Constant, callable_zero_> )
       {

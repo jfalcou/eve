@@ -41,7 +41,7 @@ namespace eve
         }
         else
         {
-          return convert(f(std::forward<Ts>(args)...), as_<T>());
+          return convert(f(std::forward<Ts>(args)...), as<T>());
         }
       };
     }
@@ -85,7 +85,7 @@ namespace eve
         }
         else
         {
-          return convert(f(std::forward<T>(arg0), std::forward<Ts>(args)...), as_<value_type>());
+          return convert(f(std::forward<T>(arg0), std::forward<Ts>(args)...), as<value_type>());
         }
       };
     }

@@ -28,7 +28,7 @@ namespace eve::detail
         constexpr auto shift = Shift*sizeof(T);
         using i_t = as_integer_t<wide<T,N>, unsigned>;
 
-        auto const b  = bit_cast(v, as_<i_t>());
+        auto const b  = bit_cast(v, as<i_t>());
         auto result = bit_cast(i_t(_mm_bsrli_si128( b, shift)), as(v));
 
         return result;
@@ -40,7 +40,7 @@ namespace eve::detail
           using i_t = as_integer_t<wide<T,N>>;
           constexpr auto offset = Shift * sizeof(T);
 
-          i_t vi  = bit_cast(v, as_<i_t>{});
+          i_t vi  = bit_cast(v, as<i_t>{});
           i_t bvi = _mm256_permute2x128_si256(vi, vi, 0x83);
 
           if constexpr(offset == 16)
@@ -60,7 +60,7 @@ namespace eve::detail
         {
           constexpr auto shifted_bytes = sizeof(T)* Shift;
           using f_t = typename wide<T,N>::template rebind<float>;
-          auto const w  = bit_cast(v, as_<f_t>{});
+          auto const w  = bit_cast(v, as<f_t>{});
           auto const s0 = _mm256_permute2f128_ps(w,w,0x81 );
 
           if constexpr(shifted_bytes == 4 * 7)
@@ -110,8 +110,8 @@ namespace eve::detail
               // Slide lower parts using _mm_alignr_epi8
               using byte_t = typename wide<T,N>::template rebind<std::uint8_t,fixed<16>>;
 
-              byte_t bytes = _mm_alignr_epi8( bit_cast(h,as_<byte_t>{})
-                                            , bit_cast(l,as_<byte_t>{})
+              byte_t bytes = _mm_alignr_epi8( bit_cast(h,as<byte_t>{})
+                                            , bit_cast(l,as<byte_t>{})
                                             , shifted_bytes
                                             );
 

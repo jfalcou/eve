@@ -23,7 +23,7 @@
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of eve::nextafter"
               , eve::test::simd::all_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t   = eve::element_type_t<T>;
 

@@ -13,7 +13,7 @@
 #include "find_generic_test.hpp"
 
 EVE_TEST_TYPES("Check any_of", algo_test::selected_types)
-<typename T>(eve::as_<T> as_t)
+<typename T>(eve::as<T> as_t)
 {
   algo_test::find_generic_test(as_t, eve::algo::any_of,
   [](auto, auto l, auto expected, bool actual) {

@@ -20,7 +20,7 @@ namespace eve
   namespace detail
   {
     template<floating_value T>
-    EVE_FORCEINLINE auto twoopi_(EVE_SUPPORTS(cpu_), eve::as_<T> const & = {}) noexcept
+    EVE_FORCEINLINE auto twoopi_(EVE_SUPPORTS(cpu_), eve::as<T> const & = {}) noexcept
     {
       using t_t = detail::value_type_t<T>;
 

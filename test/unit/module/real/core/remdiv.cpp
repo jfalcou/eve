@@ -21,7 +21,7 @@
 EVE_TEST_TYPES( "Check return types of remdiv"
           , eve::test::simd::all_types
           )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
   using tup_t = kumi::tuple < T, T >;
@@ -35,7 +35,7 @@ EVE_TEST_TYPES( "Check return types of remdiv"
 //==================================================================================================
 //==  remdiv simd tests
 //==================================================================================================
-auto mini = [] < typename T > (eve::as_<T> const &){ return std::is_signed_v<eve::element_type_t<T>> ? -100 : 1;};
+auto mini = [] < typename T > (eve::as<T> const &){ return std::is_signed_v<eve::element_type_t<T>> ? -100 : 1;};
 
 EVE_TEST( "Check behavior of remdiv on wide"
         , eve::test::simd::all_types

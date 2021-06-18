@@ -29,7 +29,7 @@
 EVE_TEST_TYPES( "Check return types of dawson"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -43,7 +43,7 @@ EVE_TEST_TYPES( "Check return types of dawson"
 EVE_TEST_TYPES( "Check behavior of dawson on wide"
         , eve::test::simd::ieee_reals
         )
-  <typename T>(eve::as_<T> )
+  <typename T>(eve::as<T> )
 {
  if constexpr( eve::platform::supports_invalids )
   {

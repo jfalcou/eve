@@ -31,12 +31,12 @@ namespace eve::detail
         using elt_t =  element_type_t<T>;
         using swi_t = as_wide_t<eve::as_integer_t<elt_t, signed>, cardinal_t<T>>;
         using lwi_t = as_logical_t<as_wide_t<elt_t, cardinal_t<T>>>;
-        return bit_cast(is_gez(bit_cast(v,as_<swi_t>())), as_<lwi_t>());
+        return bit_cast(is_gez(bit_cast(v,as<swi_t>())), as<lwi_t>());
       }
       else
       {
         using si_t = eve::as_integer_t<T, signed>;
-        return bit_cast(is_gez(bit_cast(v,as_<si_t>{})), as_<as_logical_t<T>>{});
+        return bit_cast(is_gez(bit_cast(v,as<si_t>{})), as<as_logical_t<T>>{});
       }
     }
     else return apply_over(is_positive, v);

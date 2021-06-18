@@ -32,7 +32,7 @@ namespace eve::detail
       if constexpr( std::same_as<abi_t<T, N>, arm_64_> )
       {
         using bytes_t = typename wide<I,N>::template rebind<std::uint8_t,fixed<8>>;
-        using tgt_t   = as_<bytes_t>;
+        using tgt_t   = as<bytes_t>;
         auto  b       = bit_cast(a,tgt_t{});
 
         if constexpr( sizeof(I) == 1 && sizeof(T) == 1)
@@ -53,13 +53,13 @@ namespace eve::detail
       else if constexpr( std::same_as<abi_t<T, N>, arm_128_> )
       {
         using bytes_t = typename wide<I,N>::template rebind<std::uint8_t,fixed<16>>;
-        using tgt_t   = as_<bytes_t>;
+        using tgt_t   = as<bytes_t>;
         auto  b       = bit_cast(a,tgt_t{});
 
         if constexpr( std::same_as<abi_t<I, N>, arm_64_> )
         {
           // Extend index to the properly sized integer then lookup
-          return lookup(a, eve::convert(idx, as_<as_integer_t<T>>{}));
+          return lookup(a, eve::convert(idx, as<as_integer_t<T>>{}));
         }
         else
         {

@@ -104,7 +104,7 @@ EVE_TEST( "Check eve::wide enumerating constructor"
 // Construct from a single value
 //==================================================================================================
 EVE_TEST_TYPES( "Check eve::wide splat constructor", eve::test::simd::all_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using l_t = eve::logical<eve::element_type_t<T>>;
 

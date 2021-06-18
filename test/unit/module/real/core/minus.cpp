@@ -20,7 +20,7 @@
 // Types tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of eve::minus", eve::test::simd::signed_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 

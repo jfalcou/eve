@@ -17,7 +17,7 @@
 namespace eve
 {
   template<floating_value T, auto BitsPatternfloat, auto BitsPatterndouble>
-  EVE_FORCEINLINE auto Ieee_constant(eve::as_<T> const & = {}) noexcept
+  EVE_FORCEINLINE auto Ieee_constant(eve::as<T> const & = {}) noexcept
   {
     using t_t = detail::value_type_t<T>;
 
@@ -29,7 +29,7 @@ namespace eve
                       "[eve::ieeeconstant] floating_point case - BitsPatternfloat has not the correct size");
         return T{};
       }
-      else return static_cast<T>(bit_cast(BitsPatternfloat, as_<t_t>()));
+      else return static_cast<T>(bit_cast(BitsPatternfloat, as<t_t>()));
     }
     else // if constexpr(std::is_same_v<t_t, double>)
     {
@@ -39,7 +39,7 @@ namespace eve
                       "[eve::ieeeconstant] floating_point case - BitsPatterndouble has not the correct size");
         return T{};
       }
-      else return static_cast<T>(bit_cast(BitsPatterndouble, as_<t_t>()));
+      else return static_cast<T>(bit_cast(BitsPatterndouble, as<t_t>()));
     }
   }
 }

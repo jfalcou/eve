@@ -15,7 +15,7 @@
 EVE_TEST_TYPES( "Check return types of shl"
               , eve::test::simd::unsigned_types
               )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t  = eve::element_type_t<T>;
   using i_t  = eve::as_integer_t<T, signed>;
@@ -42,7 +42,7 @@ EVE_TEST_TYPES( "Check return types of shl"
 //==================================================================================================
 // shl tests
 //==================================================================================================
-auto shift_max = []< typename T>(eve::as_<T> const &){return sizeof(eve::element_type_t<T>)*8-1;};
+auto shift_max = []< typename T>(eve::as<T> const &){return sizeof(eve::element_type_t<T>)*8-1;};
 
 EVE_TEST( "Check behavior of shl on integral types"
         , eve::test::simd::unsigned_types

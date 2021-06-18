@@ -20,7 +20,7 @@ namespace eve::detail
     requires arm_abi<abi_t<T, N>>
   {
     using i_t = wide<as_integer_t<T, signed>, N>;
-    auto s1 = bit_cast(v1, as_<i_t>());
+    auto s1 = bit_cast(v1, as<i_t>());
 
     constexpr auto c = categorize<wide<T, N>>();
 

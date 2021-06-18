@@ -59,7 +59,7 @@ namespace eve::detail
       else
       {
         using up_t = upgrade_t<T>;
-        auto const up = bit_cast(v, as_<wide<up_t,typename N::split_type>>());
+        auto const up = bit_cast(v, as<wide<up_t,typename N::split_type>>());
         return bit_cast(swap_adjacent_groups(up, fixed<G/2>{}), as(v));
       }
     }

@@ -23,7 +23,7 @@
 // Types tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of eve::if_else", eve::test::simd::all_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using sT =  eve::element_type_t<T>;
   using eve::logical;

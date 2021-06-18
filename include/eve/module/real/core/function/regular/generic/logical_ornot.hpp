@@ -45,7 +45,7 @@ namespace eve::detail
   {
         using abi_t = typename T::abi_type;
          if constexpr ( !abi_t::is_wide_logical) { return a || !b; }
-    else if constexpr(std::is_same_v<U, T>) { return bit_cast(bit_ornot(bit_mask(a), bit_mask(b)), as_<as_logical_t<T>>());}
+    else if constexpr(std::is_same_v<U, T>) { return bit_cast(bit_ornot(bit_mask(a), bit_mask(b)), as<as_logical_t<T>>());}
     else                                    { return logical_ornot(a, convert(b, as< logical<element_type_t<T>>>())); }
   }
 
@@ -65,7 +65,7 @@ namespace eve::detail
     else if constexpr(sizeof(elt_t) == sizeof(U))
     {
       auto bb = is_nez(T(bit_cast(b, as<logical<elt_t>>())));
-      return bit_cast(bit_ornot(a.bits(), bb.bits()), as_<as_logical_t<T>>());
+      return bit_cast(bit_ornot(a.bits(), bb.bits()), as<as_logical_t<T>>());
     }
   }
 

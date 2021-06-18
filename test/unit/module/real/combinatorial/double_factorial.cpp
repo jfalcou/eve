@@ -23,7 +23,7 @@
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of eve::double_factorial"
               , eve::test::simd::unsigned_integers)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
   using d_t = eve::wide<double, eve::cardinal_t<T>>;
@@ -37,7 +37,7 @@ EVE_TEST_TYPES( "Check return types of eve::double_factorial"
 EVE_TEST_TYPES( "Check corner-cases behavior of eve::double_factorial on wide"
         , eve::test::simd::unsigned_integers
          )
-  <typename T>(eve::as_<T>)
+  <typename T>(eve::as<T>)
 {
   using eve::as;
   using d_t = eve::wide<double, eve::cardinal_t<T>>;

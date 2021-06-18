@@ -18,7 +18,7 @@
 // Conditionally load into wide from an aligned pointer
 //==================================================================================================
 EVE_TEST_TYPES( "Check conditional load to wides from aligned pointer", eve::test::simd::all_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t     = eve::element_type_t<T>;
   using lanes_t = eve::cardinal_t<T>;
@@ -42,13 +42,13 @@ EVE_TEST_TYPES( "Check conditional load to wides from aligned pointer", eve::tes
     auto ie = i1 && il;
 
     // Conditional selectors' masks
-    auto ml   = il.mask( eve::as_<T>() );
-    auto m1   = i1.mask( eve::as_<T>() );
-    auto mkf  = kf.mask( eve::as_<T>() );
-    auto mkl  = kl.mask( eve::as_<T>() );
-    auto mkb  = kb.mask( eve::as_<T>() );
-    auto mie  = ie.mask( eve::as_<T>() );
-    auto mia  = eve::ignore_all.mask( eve::as_<T>() );
+    auto ml   = il.mask( eve::as<T>() );
+    auto m1   = i1.mask( eve::as<T>() );
+    auto mkf  = kf.mask( eve::as<T>() );
+    auto mkl  = kl.mask( eve::as<T>() );
+    auto mkb  = kb.mask( eve::as<T>() );
+    auto mie  = ie.mask( eve::as<T>() );
+    auto mia  = eve::ignore_all.mask( eve::as<T>() );
 
     // Reference values
     T full_ref(ptr);
@@ -119,7 +119,7 @@ EVE_TEST_TYPES( "Check conditional load to wides from aligned pointer", eve::tes
 // Realigned load tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check conditional load to wide from realigned pointer", eve::test::simd::all_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
   v_t const x = 123;

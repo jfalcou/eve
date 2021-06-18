@@ -204,10 +204,10 @@ namespace eve::detail
         }
         else
         {
-          k = bit_cast(bit_and(bit_cast(x1, as_<ui64_t>()), zero_lo), as_<i32_t>());
+          k = bit_cast(bit_and(bit_cast(x1, as<ui64_t>()), zero_lo), as<i32_t>());
           k          = bit_shr(k, 20) & 2047;
           k          = eve::max((k - 450) / 24, 0);
-          tmp   = bit_cast(ui64_t(t576), as_<i32_t>());
+          tmp   = bit_cast(ui64_t(t576), as<i32_t>());
           tmp -= (k * 24 << 20);
           k      = eve::max(k, zero(as(k)));
         }
@@ -291,7 +291,7 @@ namespace eve::detail
         0xc0db6295, 0xdb629599, 0x6295993c, 0x95993c43, 0x993c4390, 0x3c439041};
       constexpr const double pi63 = 0x1.921FB54442D18p-62; /* 2PI * 2^-64.  */
       auto [sn, sr, dsr]          = rempio2_small(xx);
-      auto xi                     = bit_cast(xx, as_<ui_t>());
+      auto xi                     = bit_cast(xx, as<ui_t>());
       auto index                  = ((xi >> 26) & 15);
       auto arr0 = gather(eve::as_aligned(&__inv_pio4[0], cardinal_t<T>{}), index);
       auto arr4 = uint64(gather(eve::as_aligned(&__inv_pio4[0], cardinal_t<T>{}), index + 4));

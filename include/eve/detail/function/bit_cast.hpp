@@ -26,7 +26,7 @@ namespace eve
 namespace eve::detail
 {
   template<typename T, typename Target>
-  EVE_FORCEINLINE auto bit_cast_(EVE_SUPPORTS(cpu_), T const &a, as_<Target> const &) noexcept
+  EVE_FORCEINLINE auto bit_cast_(EVE_SUPPORTS(cpu_), T const &a, as<Target> const &) noexcept
   requires (sizeof(T) == sizeof(Target))
   {
     if constexpr(std::is_same_v<T, Target>)

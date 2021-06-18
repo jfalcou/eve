@@ -72,9 +72,9 @@ namespace eve::detail
     else if constexpr(sizeof(T) == 8)
     {
       using f_t         = as_floating_point_t<that_t>;
-      auto const vv     = bit_cast(v,as_<f_t>{});
+      auto const vv     = bit_cast(v,as<f_t>{});
       constexpr auto m  = _MM_SHUFFLE2(q(1,2)&1, q(0,2)&1);
-      return bit_cast(process_zeros(f_t{_mm_shuffle_pd(vv,vv,m)},q),as_<that_t>{});
+      return bit_cast(process_zeros(f_t{_mm_shuffle_pd(vv,vv,m)},q),as<that_t>{});
     }
     else if constexpr( current_api >= ssse3 )
     {
@@ -82,8 +82,8 @@ namespace eve::detail
       using bytes_t = typename that_t::template rebind<std::uint8_t,fixed<16>>;
       using i_t     = as_integer_t<wide<T, N>>;
 
-      return that_t ( (st_t)_mm_shuffle_epi8( bit_cast(v,as_<i_t>{}).storage()
-                                            , as_bytes<that_t>(q,as_<bytes_t>())
+      return that_t ( (st_t)_mm_shuffle_epi8( bit_cast(v,as<i_t>{}).storage()
+                                            , as_bytes<that_t>(q,as<bytes_t>())
                                             )
                     );
     }
@@ -192,7 +192,7 @@ namespace eve::detail
 
           if constexpr(match(c,category::int64x4 ,category::uint64x4) )
           {
-            auto vc = bit_cast(v, as_<as_floating_point_t<that_t>>{});
+            auto vc = bit_cast(v, as<as_floating_point_t<that_t>>{});
             return bit_cast( basic_swizzle(vc, q) , as(s));
           }
           else  if constexpr(match(c,category::int32x8 ,category::uint32x8) ) s = _mm256_permutexvar_epi32(m,v);
@@ -239,7 +239,7 @@ namespace eve::detail
 
           if constexpr(sizeof(T) == 8 && is_x86_shuffle_compatible(q) )
           {
-            auto const vv     = bit_cast(v,as_<f_t>{});
+            auto const vv     = bit_cast(v,as<f_t>{});
 
             //======================================================================================
             // Fix the pattern to fit the non-obvious control mask for _mm256_permutevar_pd
@@ -255,7 +255,7 @@ namespace eve::detail
           }
           else if constexpr(sizeof(T) == 4 && is_x86_shuffle_compatible(q) )
           {
-            auto const vv = bit_cast(v,as_<f_t>{});
+            auto const vv = bit_cast(v,as<f_t>{});
             auto const m  = as_indexes<wide<T,N>>(q);
             return bit_cast(process_zeros(f_t{_mm256_permutevar_ps(vv,m)},q),as(v));
           }

@@ -19,7 +19,7 @@ namespace eve
   namespace detail
   {
     template<typename T>
-    EVE_FORCEINLINE constexpr auto mzero_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    EVE_FORCEINLINE constexpr auto mzero_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
     {
       using t_t           = detail::value_type_t<T>;
       if constexpr(std::is_same_v<t_t, float>)

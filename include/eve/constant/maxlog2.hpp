@@ -22,7 +22,7 @@ namespace eve
   namespace detail
   {
     template<floating_value T>
-    EVE_FORCEINLINE constexpr auto maxlog2_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    EVE_FORCEINLINE constexpr auto maxlog2_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
     {
       using t_t           = detail::value_type_t<T>;
 

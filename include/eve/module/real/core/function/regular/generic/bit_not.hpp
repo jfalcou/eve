@@ -18,7 +18,7 @@ namespace eve::detail
   template<real_value T>
   EVE_FORCEINLINE auto bit_not_(EVE_SUPPORTS(cpu_), T const &v) noexcept
   {
-    if constexpr(floating_scalar_value<T>)  return bit_cast( ~bit_cast(v, as_<as_integer_t<T>>{}), as(v));
+    if constexpr(floating_scalar_value<T>)  return bit_cast( ~bit_cast(v, as<as_integer_t<T>>{}), as(v));
     else                                    return T(~v);
   }
 

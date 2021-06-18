@@ -20,7 +20,7 @@
 // Types tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of eve::oneminus", eve::test::simd::all_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -71,11 +71,11 @@ EVE_TEST( "Check behavior of eve::oneminus(eve::wide)"
   TTS_EQUAL(oneminus(a0)      , map([](auto e) -> v_t { return 1-e; }, a0) );
   TTS_EQUAL(oneminus[mask](a0), eve::if_else(mask,oneminus(a0),a0)    );
   if constexpr(eve::unsigned_value<T>)
-    TTS_EQUAL(saturated(oneminus)(a0), eve::if_else(eve::is_eqz(a0), eve::one(as(a0)), eve::zero));
+    TTS_EQUAL(saturated(oneminus)(a0), eve::if_else(eve::is_eqz(a0), eve::one(eve::as(a0)), eve::zero));
   else
     TTS_EQUAL(saturated(oneminus)(a0), eve::if_else(a0 < eve::valmin(eve::as(a0)) + 2, eve::valmax(eve::as(a0)), oneminus(a0)));
   if constexpr(eve::floating_real_value<T>)
-    TTS_EQUAL ( eve::diff(eve::oneminus)(a0), eve::mone(as(a0)));
+    TTS_EQUAL ( eve::diff(eve::oneminus)(a0), eve::mone(eve::as(a0)));
 };
 
 //==================================================================================================
@@ -84,7 +84,7 @@ EVE_TEST( "Check behavior of eve::oneminus(eve::wide)"
 EVE_TEST_TYPES( "Check corner-cases behavior of eve::oneminus variants on wide"
         , eve::test::simd::all_types
         )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   TTS_EQUAL(eve::saturated(eve::oneminus)(T(1)), T(0));
 

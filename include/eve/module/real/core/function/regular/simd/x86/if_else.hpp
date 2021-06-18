@@ -79,7 +79,7 @@ namespace eve::detail
         else if constexpr(current_api >= avx2)
         {
           using a_t = wide<as_integer_t<T>, N>;
-          return _mm256_blendv_epi8(v2, v1, bit_cast(v0.bits(),as_<a_t>()));
+          return _mm256_blendv_epi8(v2, v1, bit_cast(v0.bits(),as<a_t>()));
         }
         else
         {
@@ -87,7 +87,7 @@ namespace eve::detail
           else  if constexpr(sizeof(T) >= 4)
           {
             using f_t = wide<as_floating_point_t<T>, N>;
-            return bit_cast( if_else( v0, bit_cast(v1,as_<f_t>()), bit_cast(v2,as_<f_t>())), as(v2));
+            return bit_cast( if_else( v0, bit_cast(v1,as<f_t>()), bit_cast(v2,as<f_t>())), as(v2));
           }
         }
       }

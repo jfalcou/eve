@@ -22,7 +22,7 @@
 EVE_TEST_TYPES( "Check return types of geommean"
         , eve::test::simd::ieee_reals
         )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 

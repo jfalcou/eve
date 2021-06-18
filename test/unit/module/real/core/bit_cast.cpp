@@ -17,7 +17,7 @@
 EVE_TEST_TYPES( "Check return types of bit_cast"
         , eve::test::simd::all_types
         )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using ut_t = eve::as_integer_t<T, unsigned>;
   using it_t = eve::as_integer_t<T, signed>;

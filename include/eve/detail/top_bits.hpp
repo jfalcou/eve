@@ -181,8 +181,8 @@ struct top_bits
     EVE_FORCEINLINE constexpr explicit top_bits(Ignore ignore):
       top_bits{
         ignore_extrema(
-          ignore.offset(eve::as_<logical_type>{}),
-          ignore.roffset(eve::as_<logical_type>{}))
+          ignore.offset(eve::as<logical_type>{}),
+          ignore.roffset(eve::as<logical_type>{}))
       }
     {}
 
@@ -370,7 +370,7 @@ EVE_FORCEINLINE Logical to_logical(top_bits<Logical> mmask)
     });
 
     bits_wide test = actual_mmask & true_mmask;
-    return bit_cast( test == true_mmask, as_<Logical>{} );
+    return bit_cast( test == true_mmask, as<Logical>{} );
   }
   else
   {

@@ -32,7 +32,7 @@ namespace algo_test
   }
 
   template <typename T, typename Algo, typename Check>
-  void find_generic_test_page_ends(eve::as_<T>, Algo alg, Check check)
+  void find_generic_test_page_ends(eve::as<T>, Algo alg, Check check)
   {
     using e_t     = eve::element_type_t<T>;
     using card_t  = eve::fixed<4096/ sizeof(e_t)>;
@@ -78,7 +78,7 @@ namespace algo_test
   }
 
   template <typename T, typename Algo, typename Check>
-  void find_generic_test(eve::as_<T> as_t, Algo alg, Check check)
+  void find_generic_test(eve::as<T> as_t, Algo alg, Check check)
   {
     find_generic_test_page_ends(as_t, alg, check);
 

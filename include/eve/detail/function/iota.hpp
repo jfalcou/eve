@@ -14,7 +14,7 @@
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr auto linear_ramp(as_<T> const &) noexcept
+  EVE_FORCEINLINE constexpr auto linear_ramp(as<T> const &) noexcept
   {
     if constexpr( scalar_value<T> )
     {

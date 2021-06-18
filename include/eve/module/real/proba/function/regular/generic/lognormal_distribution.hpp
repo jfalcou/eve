@@ -54,11 +54,11 @@ namespace eve
       return { .m = m, .s = s };
     }
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+    template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
       requires scalar_value<value_type>
     {
       auto n = normal_distribution(m, s);
-      return exp(n(gen, as_<R>()));
+      return exp(n(gen, as<R>()));
     }
 
     m_type m;
@@ -86,11 +86,11 @@ namespace eve
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
     }
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+    template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
       requires scalar_value<value_type>
     {
       auto n = normal_distribution(zero, s);
-      return exp(n(gen, as_<R>()));
+      return exp(n(gen, as<R>()));
     }
 
     parameters params() const noexcept
@@ -123,11 +123,11 @@ namespace eve
       EVE_ASSERT(all(is_finite(m)), "m must be finite");
     }
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+    template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
       requires scalar_value<value_type>
     {
       auto n = normal_distribution(m, one);
-      return exp(n(gen, as_<R>()));
+      return exp(n(gen, as<R>()));
     }
 
     parameters params() const noexcept
@@ -149,11 +149,11 @@ namespace eve
     using value_type = T;
     using parameters = struct { callable_zero_ m; callable_one_ s; };
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+    template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
       requires scalar_value<value_type>
     {
       auto n = normal_distribution_01<T>;
-      return exp(n(gen, as_<R>()));
+      return exp(n(gen, as<R>()));
     }
 
     parameters params() const noexcept
@@ -161,14 +161,14 @@ namespace eve
       return { .m = zero, .s = one };
     }
 
-    constexpr lognormal_distribution( as_<T> const&) {}
+    constexpr lognormal_distribution( as<T> const&) {}
   };
 
 
-  template<typename T>  lognormal_distribution(as_<T> const&) -> lognormal_distribution<callable_zero_, callable_one_, T>;
+  template<typename T>  lognormal_distribution(as<T> const&) -> lognormal_distribution<callable_zero_, callable_one_, T>;
 
   template<floating_real_value T>
-  inline constexpr auto lognormal_distribution_01 = lognormal_distribution<callable_zero_, callable_one_, T>(as_<T>{});
+  inline constexpr auto lognormal_distribution_01 = lognormal_distribution<callable_zero_, callable_one_, T>(as<T>{});
 
   namespace detail
   {

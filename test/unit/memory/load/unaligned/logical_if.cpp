@@ -17,7 +17,7 @@
 // Conditionally load into wide from an unaligned pointer
 //==================================================================================================
 EVE_TEST_TYPES( "Check load to wides from unaligned pointer", eve::test::simd::all_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -40,13 +40,13 @@ EVE_TEST_TYPES( "Check load to wides from unaligned pointer", eve::test::simd::a
     auto ie = i1 && il;
 
     // Conditional selectors' masks
-    auto ml   = il.mask( eve::as_<T>() );
-    auto m1   = i1.mask( eve::as_<T>() );
-    auto mkf  = kf.mask( eve::as_<T>() );
-    auto mkl  = kl.mask( eve::as_<T>() );
-    auto mkb  = kb.mask( eve::as_<T>() );
-    auto mie  = ie.mask( eve::as_<T>() );
-    auto mia  = eve::ignore_all.mask( eve::as_<T>() );
+    auto ml   = il.mask( eve::as<T>() );
+    auto m1   = i1.mask( eve::as<T>() );
+    auto mkf  = kf.mask( eve::as<T>() );
+    auto mkl  = kl.mask( eve::as<T>() );
+    auto mkb  = kb.mask( eve::as<T>() );
+    auto mie  = ie.mask( eve::as<T>() );
+    auto mia  = eve::ignore_all.mask( eve::as<T>() );
 
     // Reference values
     eve::logical<T> l_full_ref(l_ptr);
@@ -71,7 +71,7 @@ EVE_TEST_TYPES( "Check load to wides from unaligned pointer", eve::test::simd::a
       TTS_EQUAL((eve::load[kl](l_ptr, lanes) && mkl)             , l_keep_last_ref      );
       TTS_EQUAL((eve::load[kb](l_ptr, lanes) && mkb)             , l_keep_between_ref   );
       TTS_EQUAL((eve::load[ie](l_ptr, lanes) && mie)             , l_ignore_ext_ref     );
-      TTS_EQUAL((eve::load[eve::ignore_all](l_ptr, lanes) && mia), false_(eve::as_<T>()));
+      TTS_EQUAL((eve::load[eve::ignore_all](l_ptr, lanes) && mia), false_(eve::as<T>()));
     }
 
     TTS_AND_THEN("load is applied on unaligned constant pointer for a specific cardinal")
@@ -83,7 +83,7 @@ EVE_TEST_TYPES( "Check load to wides from unaligned pointer", eve::test::simd::a
       TTS_EQUAL((eve::load[kl](l_const_ptr, lanes) && mkl )             , l_keep_last_ref       );
       TTS_EQUAL((eve::load[kb](l_const_ptr, lanes) && mkb )             , l_keep_between_ref    );
       TTS_EQUAL((eve::load[ie](l_const_ptr, lanes) && mie )             , l_ignore_ext_ref      );
-      TTS_EQUAL((eve::load[eve::ignore_all](l_const_ptr, lanes) && mia) , false_(eve::as_<T>()) );
+      TTS_EQUAL((eve::load[eve::ignore_all](l_const_ptr, lanes) && mia) , false_(eve::as<T>()) );
     }
 
     if constexpr(T::size() == eve::expected_cardinal_v<v_t>)
@@ -97,7 +97,7 @@ EVE_TEST_TYPES( "Check load to wides from unaligned pointer", eve::test::simd::a
         TTS_EQUAL((eve::load[kl](l_ptr) && mkl)             , l_keep_last_ref      );
         TTS_EQUAL((eve::load[kb](l_ptr) && mkb)             , l_keep_between_ref   );
         TTS_EQUAL((eve::load[ie](l_ptr) && mie)             , l_ignore_ext_ref     );
-        TTS_EQUAL((eve::load[eve::ignore_all](l_ptr) && mia), false_(eve::as_<T>()));
+        TTS_EQUAL((eve::load[eve::ignore_all](l_ptr) && mia), false_(eve::as<T>()));
       }
 
       TTS_AND_THEN("load is applied on unaligned constant pointer for default cardinal")
@@ -109,7 +109,7 @@ EVE_TEST_TYPES( "Check load to wides from unaligned pointer", eve::test::simd::a
         TTS_EQUAL((eve::load[kl](l_const_ptr) && mkl )             , l_keep_last_ref       );
         TTS_EQUAL((eve::load[kb](l_const_ptr) && mkb )             , l_keep_between_ref    );
         TTS_EQUAL((eve::load[ie](l_const_ptr) && mie )             , l_ignore_ext_ref      );
-        TTS_EQUAL((eve::load[eve::ignore_all](l_const_ptr) && mia) , false_(eve::as_<T>()) );
+        TTS_EQUAL((eve::load[eve::ignore_all](l_const_ptr) && mia) , false_(eve::as<T>()) );
       }
     }
   }
