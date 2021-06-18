@@ -13,6 +13,7 @@
 #include <eve/constant/inf.hpp>
 #include <eve/function/negate.hpp>
 #include <eve/function/diff/negate.hpp>
+#include <eve/function/sign.hpp>
 
 //==================================================================================================
 //== Types tests

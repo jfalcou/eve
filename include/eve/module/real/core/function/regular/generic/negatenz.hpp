@@ -14,6 +14,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/signnz.hpp>
+#include <eve/traits/common_compatible.hpp>
 
 namespace eve::detail
 {
@@ -35,7 +36,7 @@ namespace eve::detail
   template<real_value T, real_value U>
   EVE_FORCEINLINE auto negatenz_(EVE_SUPPORTS(cpu_)
                                 , T const &a, U const &b) noexcept
-  requires std::same_as<element_type_t<T>, element_type_t<U>>
+  requires  compatible_values<U, T>
   {
     return arithmetic_call(negatenz, a, b);
   }
