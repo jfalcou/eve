@@ -54,16 +54,14 @@ EVE_TEST_TYPES( "Check return types of negatenz"
 
       TTS_IEEE_EQUAL(eve::negatenz(eve::nan(eve::as<T>()), eve::nan(eve::as<T>()) ), eve::nan(eve::as<T>()));
       TTS_IEEE_EQUAL(eve::negatenz(eve::nan(eve::as<T>()), T(0)          ), eve::nan(eve::as<T>()));
-      TTS_IEEE_EQUAL(eve::negatenz(T(0)         , eve::nan(eve::as<T>()) ), eve::nan(eve::as<T>()));
       TTS_IEEE_EQUAL(eve::negatenz(eve::nan(eve::as<T>()), T(0)          ), eve::nan(eve::as<T>()));
-      TTS_IEEE_EQUAL(eve::negatenz(T(1)         , eve::nan(eve::as<T>()) ), eve::nan(eve::as<T>()));
       TTS_IEEE_EQUAL(eve::negatenz(eve::nan(eve::as<T>()), T(1)          ), eve::nan(eve::as<T>()));
     }
 
     TTS_EQUAL(eve::negatenz(T(-1), T(-1)), T( 1));
     TTS_EQUAL(eve::negatenz(T( 1), T( 1)), T( 1));
     TTS_EQUAL(eve::negatenz(T( 0), T( 0)), T( 0));
-    TTS_EQUAL(eve::negatenz(T( 1), T( 0)), T( 0));
+    TTS_EQUAL(eve::negatenz(T( 1), T( 0)), T( 1));
     TTS_EQUAL(eve::negatenz(T( 2), T(-3)), T(-2));
     TTS_EQUAL(eve::negatenz(T( 2), T( 3)), T( 2));
   }
@@ -75,7 +73,7 @@ EVE_TEST_TYPES( "Check return types of negatenz"
 
   TTS_EQUAL(eve::negatenz(T(1), T(1)), T(1));
   TTS_EQUAL(eve::negatenz(T(0), T(0)), T(0));
-  TTS_EQUAL(eve::negatenz(T(1), T(0)), T(0));
+  TTS_EQUAL(eve::negatenz(T(1), T(0)), T(1));
 };
 
 
