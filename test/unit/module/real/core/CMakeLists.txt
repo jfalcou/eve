@@ -156,7 +156,8 @@ make_unit("unit.real.core"  nextafter.cpp            )
 make_unit("unit.real.core"  nearest.cpp              )
 make_unit("unit.real.core"  oneminus.cpp             )
 make_unit("unit.real.core"  plus.cpp                 )
-make_unit("unit.real.core"  popcount.cpp              )
+make_unit("unit.real.core"  popcount.cpp             )
+make_unit("unit.real.core"  prev.cpp                 )
 
 
 make_unit("unit.real.core"  rat.cpp                  )
@@ -190,7 +191,6 @@ make_all_units(ROOT unit.real.core NAME negate                ARCH scalar simd T
 make_all_units(ROOT unit.real.core NAME negatenz              ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME next                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME nextafter             ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT unit.real.core NAME prev                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME rec                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME reduce                ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.core NAME reduce_fast           ARCH scalar simd TYPES ${real_types}    )

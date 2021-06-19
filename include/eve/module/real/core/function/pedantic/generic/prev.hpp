@@ -51,7 +51,7 @@ namespace eve::detail
         }
         else
         {
-          return if_else(test, if_else(is_eqz(a), mzero(eve::as(a)), bitfloating(nz)), z);
+          return if_else(is_nan(a), allbits, if_else(test, if_else(is_eqz(a), mzero(eve::as(a)), bitfloating(nz)), z));
         }
       }
       else if constexpr(integral_value<T>)
@@ -85,7 +85,7 @@ namespace eve::detail
         }
         else
         {
-          return if_else(test, if_else(is_eqz(nz), mzero(eve::as<T>()), bitfloating(nz)), z);
+          return  if_else(is_nan(a), allbits, if_else(test, if_else(is_eqz(nz), mzero(eve::as<T>()), bitfloating(nz)), z));
         }
       }
       else if constexpr(integral_value<T>)
