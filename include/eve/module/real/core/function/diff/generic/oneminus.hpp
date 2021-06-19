@@ -10,6 +10,7 @@
 #include <eve/function/oneminus.hpp>
 #include <eve/function/derivative.hpp>
 #include <eve/function/diff/plus.hpp>
+#include <eve/constant/mone.hpp>
 
 namespace eve::detail
 {
@@ -33,6 +34,6 @@ namespace eve::detail
                                     , T x) noexcept
   {
 
-    return one(as(x));
+    return mone(as(x));
   }
 }
