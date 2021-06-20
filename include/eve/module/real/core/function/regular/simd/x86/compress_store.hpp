@@ -284,14 +284,17 @@ namespace eve::detail
                      wide<T, N> v,
                      logical<wide<T, N>> mask,
                      Ptr ptr) noexcept
-    requires x86_abi<abi_t<T, N>> && ( N() == 8 ) && ( sizeof(T) <= 4 ) &&
-             abi_t<T, N>::is_wide_logical
+    requires x86_abi<abi_t<T, N>> && (current_api <= avx2) && ( N() == 8 )
   {
     if constexpr ( sizeof(T) == 4 && current_api == avx ) return compress_store_aggregated_unsafe(v, mask, ptr);
     else
     {
       // First let's reduce the variability in each pair
-      auto to_left = eve::slide_left( v, eve::index<1> );
+      eve::wide<T, N> to_left = [&] {
+             if constexpr ( std::floating_point<T> ) return _mm256_permute_ps   (v, _MM_SHUFFLE(0, 3, 2, 1));
+        else if constexpr ( sizeof(T) == 4         ) return _mm256_shuffle_epi32(v, _MM_SHUFFLE(0, 3, 2, 1));
+        else                                         return _mm_bsrli_si128     (v, sizeof(T));
+      }();
       v = eve::if_else[mask]( v, to_left );
 
       // This left us with 3 options instead of 4 per each each pair:
