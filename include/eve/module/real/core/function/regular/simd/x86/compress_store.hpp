@@ -207,8 +207,8 @@ namespace eve::detail
   template <real_scalar_value T, typename N>
   EVE_FORCEINLINE
   std::pair<std::uint32_t, std::uint16_t>
-  base_3_mask(eve::logical<eve::wide<T, N>> m) {
-    if constexpr ( sizeof(T) == 4 && N() == 8 && current_api == avx2 )
+  base_3_mask_8_elements(eve::logical<eve::wide<T, N>> m) {
+    if constexpr ( sizeof(T) == 4 && current_api == avx2 )
     {
       std::uint32_t mmask = _mm256_movemask_epi8(
          eve::bit_cast(m, eve::as_<logical<eve::wide<std::uint32_t, N>>>{})
@@ -222,7 +222,7 @@ namespace eve::detail
 
       return {idx_base_3, std::popcount(mmask) / 4};
     }
-    else if constexpr ( sizeof(T) <= 2 && N() == 8 )
+    else if constexpr ( sizeof(T) <= 2 )
     {
       // Alternative for shorts is to compute both halves
       // But that implies using _mm_extract_epi16 which has latency 3
@@ -241,6 +241,31 @@ namespace eve::detail
 
       return {idx_base_3, popcount};
     }
+  }
+
+  template <real_scalar_value T, typename N>
+  EVE_FORCEINLINE
+  auto base_3_mask_16_elements(eve::logical<eve::wide<T, N>> m) {
+    struct res {
+      std::uint32_t lo_idx;
+      std::uint32_t lo_count;
+      std::uint32_t hi_idx;
+      std::uint32_t hi_count;
+    };
+
+    __m128i raw      = m;
+    __m128i sad_mask = _mm_set_epi64x(0x8080898983838181, 0x8080898983838181);
+    __m128i sum      = _mm_sad_epu8(_mm_andnot_si128(raw, sad_mask), sad_mask);
+
+    std::uint32_t desc_lo = _mm_cvtsi128_si32(sum);
+    std::uint32_t desc_hi = _mm_extract_epi16(sum, 4);
+
+    return res {
+      desc_lo  & 0x1f,
+      desc_lo >> 7,
+      desc_hi & 0x1f,
+      desc_hi >> 7
+    };
   }
 
   // See base_3_mask for explanation
@@ -311,7 +336,7 @@ namespace eve::detail
         else                            return pattern_8_elements(idxs_bytes<u_t>);
       }();
 
-      auto [pattern_idx, popcount] = base_3_mask(mask);
+      auto [pattern_idx, popcount] = base_3_mask_8_elements(mask);
 
       auto         pattern_ptr = eve::as_aligned(patterns[pattern_idx].data(), N());
       wide<u_t, N> pattern {pattern_ptr};
@@ -323,6 +348,39 @@ namespace eve::detail
 
       store(shuffled, ptr);
       return as_raw_pointer(ptr) + popcount;
+    }
+  }
+
+  template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  EVE_FORCEINLINE
+  T* compress_store_(EVE_SUPPORTS(ssse3_),
+                     unsafe_type,
+                     wide<T, N> v,
+                     logical<wide<T, N>> mask,
+                     Ptr ptr) noexcept
+    requires x86_abi<abi_t<T, N>> && (current_api <= avx2) && ( N() == 16 )
+  {
+    if constexpr (sizeof(T) == 2) return compress_store_aggregated_unsafe(v, mask, ptr);
+    else if constexpr ( sizeof(T) == 1)
+    {
+      using pattern8 = typename wide<T, N>::template rebind<std::uint8_t, eve::fixed<8>>;
+
+      eve::wide<T, N> to_left = _mm_bsrli_si128(v, 1);
+      v = eve::if_else[mask]( v, to_left );
+
+      auto [lo_idx, lo_count, hi_idx, hi_count] = base_3_mask_16_elements(mask);
+
+      const auto patterns = pattern_8_elements(idxs_bytes<std::uint8_t>);
+
+      pattern8 lo_shuffle{patterns[lo_idx].data()};
+      pattern8 hi_shuffle{patterns[hi_idx].data()};
+      hi_shuffle |= pattern8{0x08};  // adjust higher idxs +8
+
+      T* res = as_raw_pointer(ptr);
+      _mm_storel_epi64((__m128i*)res, _mm_shuffle_epi8(v, lo_shuffle));
+      res += lo_count;
+      _mm_storel_epi64((__m128i*)res, _mm_shuffle_epi8(v, hi_shuffle));
+      return res + hi_count;
     }
   }
 }
