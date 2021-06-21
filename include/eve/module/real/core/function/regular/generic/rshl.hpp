@@ -19,7 +19,35 @@
 
 namespace eve::detail
 {
-  template<integral_value T, integral_value U>
+  template<unsigned_scalar_value T, integral_simd_value U>
+  EVE_FORCEINLINE  auto rshl_(EVE_SUPPORTS(cpu_)
+                            , T const &a0
+                            , U const &a1) noexcept
+  {
+    using w_t = wide < T, cardinal_t<U>>;
+    return rshl(w_t(a0), a1);
+  }
+
+  template<unsigned_scalar_value T, integral_scalar_value U>
+  EVE_FORCEINLINE  auto rshl_(EVE_SUPPORTS(cpu_)
+                            , T const &a0
+                            , U const &a1) noexcept
+  {
+    if constexpr(unsigned_value<U>)
+    {
+      return T(a0 << a1);
+    }
+    else
+    {
+#ifndef NDEBUG
+      return is_gtz(a1) ? T(a0 << max(zero(eve::as(a1)), a1)) : T(a0 >> max(zero(eve::as(a1)), -a1));
+#else
+    return is_gtz(a1) ? T(a0 << a1) : T(a0>> -a1);
+#endif
+    }
+  }
+
+  template<unsigned_simd_value T, integral_value U>
   EVE_FORCEINLINE  auto rshl_(EVE_SUPPORTS(cpu_)
                             , T const &a0
                             , U const &a1) noexcept
