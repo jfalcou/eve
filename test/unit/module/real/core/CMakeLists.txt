@@ -170,6 +170,7 @@ make_unit("unit.real.core"  rotr.cpp                 )
 make_unit("unit.real.core"  round.cpp                )
 make_unit("unit.real.core"  rshl.cpp                 )
 make_unit("unit.real.core"  rshr.cpp                 )
+make_unit("unit.real.core"  rsqrt.cpp                )
 
 make_unit("unit.real.core"  decorated.rem.cpp        )
 make_unit("unit.real.core"  shl.cpp                  )
@@ -219,5 +220,5 @@ make_all_units(ROOT unit.real.core NAME reduce_fast           ARCH scalar simd T
 make_all_units(ROOT unit.real.core NAME reduce_large          ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.core NAME reduce_medium         ARCH scalar simd TYPES ${real_types}    )
 
-make_all_units(ROOT unit.real.core NAME rsqrt                 ARCH scalar simd TYPES ${real_types}    )
+##make_all_units(ROOT unit.real.core NAME rsqrt                 ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.core NAME saturate              ARCH scalar simd TYPES ${all_types}     )

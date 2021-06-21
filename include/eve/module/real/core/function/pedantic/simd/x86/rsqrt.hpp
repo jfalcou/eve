@@ -22,6 +22,6 @@ namespace eve::detail
                              , wide<T, N>    const &a0) noexcept
     requires std::same_as<abi_t<T, N>, x86_128_>
   {
-     return rsqrt_x86_pedantic(a0);
+    return rsqrt_x86_pedantic(a0);
   }
 }
