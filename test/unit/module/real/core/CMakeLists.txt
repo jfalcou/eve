@@ -166,6 +166,8 @@ make_unit("unit.real.core"  rec.cpp                  )
 make_unit("unit.real.core"  rem.cpp                  )
 make_unit("unit.real.core"  remdiv.cpp               )
 make_unit("unit.real.core"  rotl.cpp                 )
+make_unit("unit.real.core"  rotr.cpp                 )
+
 make_unit("unit.real.core"  decorated.rem.cpp        )
 make_unit("unit.real.core"  shl.cpp                  )
 make_unit("unit.real.core"  shr.cpp                  )
@@ -215,8 +217,6 @@ make_all_units(ROOT unit.real.core NAME reduce_large          ARCH scalar simd T
 make_all_units(ROOT unit.real.core NAME reduce_medium         ARCH scalar simd TYPES ${real_types}    )
 
 
-make_all_units(ROOT unit.real.core NAME rotl                  ARCH scalar simd TYPES ${uint_types}    )
-make_all_units(ROOT unit.real.core NAME rotr                  ARCH scalar simd TYPES ${uint_types}    )
 make_all_units(ROOT unit.real.core NAME round                 ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME rshl                  ARCH scalar simd TYPES ${integral_types})
 make_all_units(ROOT unit.real.core NAME rshr                  ARCH scalar simd TYPES ${integral_types})
