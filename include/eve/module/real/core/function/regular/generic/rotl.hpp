@@ -42,7 +42,7 @@ namespace eve::detail
     }
     else if constexpr( scalar_value<T> && has_native_abi_v<U> )
     {
-      using r_t = as_wide<T, cardinal_t<U>>;
+      using r_t = wide<T, cardinal_t<U>>;
       return rotl(r_t(a0), n);
     }
     // now none is scalar
