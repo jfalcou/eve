@@ -47,11 +47,12 @@ namespace eve::detail
         auto test = is_negative(z) && is_positive(a);
         if constexpr(scalar_value<T>)
         {
+          if (is_nan(a)) return a;
           return test ? (a == 0 ? T(-0.) : bitfloating(nz)) : z;
         }
         else
         {
-          return if_else(test, if_else(is_eqz(a), mzero(eve::as(a)), bitfloating(nz)), z);
+          return if_else(is_nan(a), allbits, if_else(test, if_else(is_eqz(a), mzero(eve::as(a)), bitfloating(nz)), z));
         }
       }
       else if constexpr(integral_value<T>)
@@ -85,7 +86,7 @@ namespace eve::detail
         }
         else
         {
-          return if_else(test, if_else(is_eqz(nz), mzero(eve::as<T>()), bitfloating(nz)), z);
+          return  if_else(is_nan(a), allbits, if_else(test, if_else(is_eqz(nz), mzero(eve::as<T>()), bitfloating(nz)), z));
         }
       }
       else if constexpr(integral_value<T>)
