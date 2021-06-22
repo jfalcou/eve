@@ -175,7 +175,7 @@ namespace eve::detail
   }
 
   //================================================================================================
-  // Load from a range [b, e[
+  // Load from a range [b, e(
   //================================================================================================
   template<std::input_iterator Iterator>
   EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), Iterator b, Iterator e) noexcept

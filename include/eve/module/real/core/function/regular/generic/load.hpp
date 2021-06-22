@@ -148,7 +148,7 @@ namespace eve::detail
                                 , eve::as_<Pack> const& tgt, Ptr ptr
                                 ) noexcept
   {
-    if constexpr(sanitizers_are_on && !std::same_as<C,ignore_none_> )
+    if constexpr(sanitizers_are_on)
     {
       Pack that;
 
