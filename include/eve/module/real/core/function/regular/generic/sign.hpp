@@ -72,5 +72,12 @@ namespace eve::detail
       return apply_over(sign, a);
     }
   }
-}
 
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto sign_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
+  {
+    return mask_op( cond, sign, t);
+  }
+}

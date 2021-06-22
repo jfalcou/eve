@@ -166,6 +166,8 @@ make_unit("unit.real.core"  remdiv.cpp               )
 make_unit("unit.real.core"  decorated.rem.cpp        )
 make_unit("unit.real.core"  shl.cpp                  )
 make_unit("unit.real.core"  shr.cpp                  )
+make_unit("unit.real.core"  sign.cpp                 )
+
 make_unit("unit.real.core"  sub.cpp                  )
 make_unit("unit.real.core"  trunc.cpp                )
 
@@ -199,7 +201,7 @@ make_all_units(ROOT unit.real.core NAME rshl                  ARCH scalar simd T
 make_all_units(ROOT unit.real.core NAME rshr                  ARCH scalar simd TYPES ${integral_types})
 make_all_units(ROOT unit.real.core NAME rsqrt                 ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.core NAME saturate              ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT unit.real.core NAME sign                  ARCH scalar simd TYPES ${all_types}     )
+
 make_all_units(ROOT unit.real.core NAME significants          ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.core NAME signnz                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME sqr                   ARCH scalar simd TYPES ${all_types}     )
