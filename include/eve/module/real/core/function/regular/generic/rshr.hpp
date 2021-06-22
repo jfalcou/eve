@@ -11,6 +11,8 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/max.hpp>
+#include <eve/function/shr.hpp>
+#include <eve/function/shl.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
@@ -57,14 +59,14 @@ namespace eve::detail
     }
     else if constexpr(scalar_value<U>)
     {
-        return (a1 > 0) ? T(a0 >> a1) : T(a0 << -a1);
+      return (a1 > 0) ? T(shr(a0, a1)) : T(shl(a0, -a1));
     }
     else
     {
       if constexpr(has_native_abi_v<T> && has_native_abi_v<U>)
       {
 #ifndef NDEBUG
-      return if_else(is_gtz(a1), (a0 >>max(zero(eve::as(a1)), a1)), T(a0 << max(zero(eve::as(a1)), -a1)));
+      return if_else(is_gtz(a1), (a0 >> max(zero(eve::as(a1)), a1)), T(a0 << max(zero(eve::as(a1)), -a1)));
 #else
       return if_else(is_gtz(a1), T(a0 >> a1), T(a0 <<  -a1));
 #endif

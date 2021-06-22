@@ -12,6 +12,7 @@
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/max.hpp>
 #include <eve/function/shr.hpp>
+#include <eve/function/shl.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
@@ -58,7 +59,7 @@ namespace eve::detail
     }
     else if constexpr(scalar_value<U>)
     {
-      return (a1 > 0) ? T(a0 << a1) : T(a0 >> -a1);
+      return (a1 > 0) ? T(shl(a0, a1)) : T(shr(a0, -a1));
     }
     else
     {
