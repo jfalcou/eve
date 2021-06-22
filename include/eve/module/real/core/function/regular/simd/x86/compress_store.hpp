@@ -207,8 +207,8 @@ namespace eve::detail
   template <real_scalar_value T, typename N>
   EVE_FORCEINLINE
   std::pair<std::uint32_t, std::uint16_t>
-  base_3_mask(eve::logical<eve::wide<T, N>> m) {
-    if constexpr ( sizeof(T) == 4 && N() == 8 && current_api == avx2 )
+  base_3_mask_8_elements(eve::logical<eve::wide<T, N>> m) {
+    if constexpr ( sizeof(T) == 4 && current_api == avx2 )
     {
       std::uint32_t mmask = _mm256_movemask_epi8(
          eve::bit_cast(m, eve::as_<logical<eve::wide<std::uint32_t, N>>>{})
@@ -222,7 +222,7 @@ namespace eve::detail
 
       return {idx_base_3, std::popcount(mmask) / 4};
     }
-    else if constexpr ( sizeof(T) <= 2 && N() == 8 )
+    else if constexpr ( sizeof(T) <= 2 )
     {
       // Alternative for shorts is to compute both halves
       // But that implies using _mm_extract_epi16 which has latency 3
@@ -241,6 +241,31 @@ namespace eve::detail
 
       return {idx_base_3, popcount};
     }
+  }
+
+  template <real_scalar_value T, typename N>
+  EVE_FORCEINLINE
+  auto base_3_mask_16_elements(eve::logical<eve::wide<T, N>> m) {
+    struct res {
+      std::uint32_t lo_idx;
+      std::uint32_t lo_count;
+      std::uint32_t hi_idx;
+      std::uint32_t hi_count;
+    };
+
+    __m128i raw      = eve::convert(m, eve::as_<logical<std::uint8_t>>{});
+    __m128i sad_mask = _mm_set_epi64x(0x8080898983838181, 0x8080898983838181);
+    __m128i sum      = _mm_sad_epu8(_mm_andnot_si128(raw, sad_mask), sad_mask);
+
+    std::uint32_t desc_lo = _mm_cvtsi128_si32(sum);
+    std::uint32_t desc_hi = _mm_extract_epi16(sum, 4);
+
+    return res {
+      desc_lo  & 0x1f,
+      desc_lo >> 7,
+      desc_hi & 0x1f,
+      desc_hi >> 7
+    };
   }
 
   // See base_3_mask for explanation
@@ -284,14 +309,17 @@ namespace eve::detail
                      wide<T, N> v,
                      logical<wide<T, N>> mask,
                      Ptr ptr) noexcept
-    requires x86_abi<abi_t<T, N>> && ( N() == 8 ) && ( sizeof(T) <= 4 ) &&
-             abi_t<T, N>::is_wide_logical
+    requires x86_abi<abi_t<T, N>> && (current_api <= avx2) && ( N() == 8 )
   {
     if constexpr ( sizeof(T) == 4 && current_api == avx ) return compress_store_aggregated_unsafe(v, mask, ptr);
     else
     {
       // First let's reduce the variability in each pair
-      auto to_left = eve::slide_left( v, eve::index<1> );
+      eve::wide<T, N> to_left = [&] {
+             if constexpr ( std::floating_point<T> ) return _mm256_permute_ps   (v, _MM_SHUFFLE(0, 3, 2, 1));
+        else if constexpr ( sizeof(T) == 4         ) return _mm256_shuffle_epi32(v, _MM_SHUFFLE(0, 3, 2, 1));
+        else                                         return _mm_bsrli_si128     (v, sizeof(T));
+      }();
       v = eve::if_else[mask]( v, to_left );
 
       // This left us with 3 options instead of 4 per each each pair:
@@ -308,7 +336,7 @@ namespace eve::detail
         else                            return pattern_8_elements(idxs_bytes<u_t>);
       }();
 
-      auto [pattern_idx, popcount] = base_3_mask(mask);
+      auto [pattern_idx, popcount] = base_3_mask_8_elements(mask);
 
       auto         pattern_ptr = eve::as_aligned(patterns[pattern_idx].data(), N());
       wide<u_t, N> pattern {pattern_ptr};
@@ -320,6 +348,83 @@ namespace eve::detail
 
       store(shuffled, ptr);
       return as_raw_pointer(ptr) + popcount;
+    }
+  }
+
+  template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  EVE_FORCEINLINE
+  T* compress_store_(EVE_SUPPORTS(ssse3_),
+                     unsafe_type,
+                     wide<T, N> v,
+                     logical<wide<T, N>> mask,
+                     Ptr ptr) noexcept
+    requires x86_abi<abi_t<T, N>> && (current_api <= avx2) && ( N() == 16 )
+  {
+    using half_wide = wide<T, eve::fixed<8>>;
+
+    if constexpr ( sizeof(T) == 2 )
+    {
+      auto [l, h] = [&] {
+        if constexpr ( current_api == avx2 )
+        {
+          wide<T, N> to_left =
+            _mm256_shufflelo_epi16(
+              _mm256_shufflehi_epi16(v, _MM_SHUFFLE(0, 3, 2, 1)),
+              _MM_SHUFFLE(0, 3, 2, 1));
+          v = eve::if_else[mask](v, to_left);
+          return v.slice();
+        }
+        else
+        {
+          auto [l, h] = v.slice();
+          auto [ml, mh] = mask.slice();
+          half_wide l_to_left = _mm_bsrli_si128(l, 2);
+          half_wide h_to_left = _mm_bsrli_si128(h, 2);
+          l = eve::if_else[ml](l, l_to_left);
+          h = eve::if_else[mh](h, h_to_left);
+          return std::pair{l, h};
+        }
+      }();
+
+      alignas(16) const auto patterns = pattern_8_elements(idxs_bytes<std::uint16_t>);
+      using pattern8 = typename wide<T, N>::template rebind<std::uint16_t, eve::fixed<8>>;
+
+      auto [lo_idx, lo_count, hi_idx, hi_count] = base_3_mask_16_elements(mask);
+
+      auto lo_shuffle_ptr = eve::as_aligned(patterns[lo_idx].data(), eve::lane<8>);
+      auto hi_shuffle_ptr = eve::as_aligned(patterns[hi_idx].data(), eve::lane<8>);
+
+      pattern8 lo_shuffle{lo_shuffle_ptr};
+      pattern8 hi_shuffle{hi_shuffle_ptr};
+
+      l = _mm_shuffle_epi8(l, lo_shuffle);
+      h = _mm_shuffle_epi8(h, hi_shuffle);
+      eve::store(l, ptr);
+
+      T* res = as_raw_pointer(ptr) + lo_count;
+      eve::store(h, res);
+      return res + hi_count;
+    }
+    else if constexpr ( sizeof(T) == 1 )
+    {
+      using pattern8 = typename wide<T, N>::template rebind<std::uint8_t, eve::fixed<8>>;
+
+      eve::wide<T, N> to_left = _mm_bsrli_si128(v, 1);
+      v = eve::if_else[mask]( v, to_left );
+
+      auto [lo_idx, lo_count, hi_idx, hi_count] = base_3_mask_16_elements(mask);
+
+      const auto patterns = pattern_8_elements(idxs_bytes<std::uint8_t>);
+
+      pattern8 lo_shuffle{patterns[lo_idx].data()};
+      pattern8 hi_shuffle{patterns[hi_idx].data()};
+      hi_shuffle |= pattern8{0x08};  // adjust higher idxs +8
+
+      T* res = as_raw_pointer(ptr);
+      _mm_storel_epi64((__m128i*)res, _mm_shuffle_epi8(v, lo_shuffle));
+      res += lo_count;
+      _mm_storel_epi64((__m128i*)res, _mm_shuffle_epi8(v, hi_shuffle));
+      return res + hi_count;
     }
   }
 }

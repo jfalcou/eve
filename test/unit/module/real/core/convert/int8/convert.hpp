@@ -66,3 +66,20 @@ TTS_CASE_TPL("Check eve::convert logical behavior", EVE_TYPE)
   TTS_EQUAL(eve::convert(mixed, eve::as<eve::logical<std::int8_t>>()), ref );
 #endif
 }
+
+#if defined(EVE_SIMD_TESTS)
+
+EVE_TEST( "Check eve::convert logical behavior"
+        , eve::test::simd::all_types
+        , eve::test::generate(eve::test::logicals(1,15))
+        )
+<typename L> (L logical_data)
+{
+  using target_t = eve::logical<eve::wide<std::int8_t, eve::fixed<L::size()>>>;
+
+  target_t ref([&](auto i, auto) { return (bool)logical_data.get(i); });
+
+  TTS_EQUAL(eve::convert(logical_data, eve::as<eve::logical<std::int8_t>>()), ref);
+};
+
+#endif

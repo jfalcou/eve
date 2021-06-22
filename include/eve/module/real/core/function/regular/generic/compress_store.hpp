@@ -46,7 +46,7 @@ namespace eve::detail
       eve::store(compressed, ptr);
       return as_raw_pointer(ptr) + eve::count_true(mask);
     }
-    else if constexpr ( has_aggregated_abi_v<wide<T, N>> )
+    else if constexpr ( !has_emulated_abi_v<wide<T, N>> && N() > 2 )
     {
       return compress_store_aggregated_unsafe(v, mask, ptr);
     }

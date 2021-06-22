@@ -95,12 +95,12 @@ template<typename L, typename T> void smaller_test_v(T x)
     std::uniform_int_distribution<short> d(0, 1);
 
     auto random_l = [&]() mutable {
-      L m;
+      L m {false};
       for( int i = 0; i != L::size(); ++i ) { m.set(i, d(g) == 1); }
       return m;
     };
 
-    for( int i = 0; i < 10; ++i ) { one_test<true>(x, random_l()); }
+    for( int i = 0; i < 1000; ++i ) { one_test<true>(x, random_l()); }
   }
 }
 
