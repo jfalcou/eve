@@ -57,12 +57,6 @@ namespace std
     using value_type = typename T::value_type;
   };
 
-  template<typename T> requires requires { typename T::element_type; }
-  struct indirectly_readable_traits<T>
-  {
-    using value_type = typename T::element_type;
-  };
-
   template<typename T >
   using iter_reference_t = decltype(*std::declval<T&>());
 

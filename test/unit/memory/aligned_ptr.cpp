@@ -11,6 +11,15 @@
 #include <array>
 #include <memory>
 
+TTS_CASE("aligned_ptr exposes proper traits")
+{
+  using it_t  = eve::pointer_traits<eve::aligned_ptr<double>>;
+  using cit_t = eve::pointer_traits<eve::aligned_ptr<double const>>;
+
+  TTS_TYPE_IS( it_t::value_type , double);
+  TTS_TYPE_IS( cit_t::value_type, double);
+}
+
 TTS_CASE("aligned_ptr constructor from nullptr")
 {
   eve::aligned_ptr<double> nullptr_constructed_ptr = nullptr;

@@ -15,6 +15,7 @@
 #include <eve/traits/alignment.hpp>
 #include <eve/traits/element_type.hpp>
 #include <compare>
+#include <type_traits>
 
 namespace eve
 {
@@ -47,11 +48,11 @@ namespace eve
 #endif
   struct aligned_ptr
   {
+    //! The value type associated to the held pointer
+    using value_type = std::remove_const_t<Type>;
+
     //! The @nullable type currently held.
     using pointer = std::add_pointer_t<Type>;
-
-    //! The type of the object managed by this aligned_ptr
-    using element_type = Type ;
 
     //! Generate an aligned_ptr with a different type but same `Lanes`
     template<typename T> using rebind = aligned_ptr<T,Lanes>;

@@ -16,9 +16,12 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE auto load(eve::as_<wide<T, N>> const &tgt, T const* ptr) noexcept
-    requires ppc_abi<abi_t<T, N>>
+  template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T,N>> Ptr>
+  EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(vmx_)
+                                  , ignore_none_ const&, safe_type const&
+                                  , eve::as_<wide<T, N>> const& tgt, Ptr ptr
+                                  )
+  requires ppc_abi<abi_t<T, N>>
   {
     if constexpr( N::value * sizeof(T) >= ppc_::bytes )
     {
@@ -54,10 +57,13 @@ namespace eve::detail
     }
   }
 
-  template<real_scalar_value T, typename N, typename Lanes>
-  EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N>> const &tgt, aligned_ptr<T const, Lanes> ptr) noexcept
-    requires ppc_abi<abi_t<T, N>>
+  template<real_scalar_value T, real_scalar_value U, typename N, typename Lanes>
+  EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(vmx_)
+                                  , ignore_none_ const&, safe_type const&
+                                  , eve::as_<wide<T, N>> const& tgt
+                                  , aligned_ptr<U, Lanes> ptr
+                                  )
+  requires ppc_abi<abi_t<T, N>> && simd_compatible_ptr<aligned_ptr<U, Lanes>,wide<T, N>>
   {
     if constexpr( N::value * sizeof(T) >= ppc_::bytes )
     {
@@ -88,13 +94,5 @@ namespace eve::detail
       std::memcpy(&that, ptr.get(), N::value * sizeof(T));
       return that;
     }
-  }
-
-  template<real_scalar_value T, typename N, typename Lanes>
-  EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N>> const &tgt, aligned_ptr<T, Lanes>  ptr) noexcept
-    requires ppc_abi<abi_t<T, N>>
-  {
-    return load(tgt, ptr_cast<T const>(ptr));
   }
 }

@@ -8,14 +8,135 @@
 #pragma once
 
 #include <eve/as.hpp>
+#include <eve/concept/memory.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/memory/aligned_ptr.hpp>
+#include <eve/memory/pointer.hpp>
+#include <eve/function/replace.hpp>
+#include <eve/function/safe.hpp>
+#include <eve/function/unsafe.hpp>
 
 #include <iterator>
 
 namespace eve::detail
 {
+  //================================================================================================
+  // Take a data_source and a Cardinal to determine which wide to build
+  //================================================================================================
+  template<data_source Ptr, typename Cardinal = void>
+  struct wide_value_type : as_wide<typename pointer_traits<Ptr>::value_type, Cardinal>
+  {};
+
+  template<data_source Ptr>
+  struct wide_value_type<Ptr> : as_wide<typename pointer_traits<Ptr>::value_type>
+  {};
+
+  template<data_source Ptr, typename Cardinal = void>
+  using wide_value_type_t = typename wide_value_type<Ptr,Cardinal>::type;
+
+  //================================================================================================
+  // SIMD short-cut
+  // Those overloads redirect simpler load calls to the actual, fully-fledged load implementation
+  // with all missing elements pre-computed
+  //================================================================================================
+  template<data_source Ptr>
+  EVE_FORCEINLINE   auto load_(EVE_SUPPORTS(cpu_), Ptr ptr) noexcept
+                ->  decltype(load(ignore_none, safe, eve::as_<wide_value_type_t<Ptr>>{}, ptr))
+  {
+    return load(ignore_none, safe, eve::as_<wide_value_type_t<Ptr>>{}, ptr);
+  }
+
+  template<data_source Ptr, std::ptrdiff_t N>
+  EVE_FORCEINLINE   auto load_(EVE_SUPPORTS(cpu_), Ptr ptr, fixed<N> const &) noexcept
+                ->  decltype(load(ignore_none, safe, eve::as_<wide_value_type_t<Ptr,fixed<N>>>{}, ptr))
+  {
+    return load(ignore_none, safe, eve::as_<wide_value_type_t<Ptr,fixed<N>>>{}, ptr);
+  }
+
+  template<data_source Ptr, simd_value Wide>
+  EVE_FORCEINLINE   auto load_(EVE_SUPPORTS(cpu_), Ptr ptr, as_<Wide> const &) noexcept
+                ->  decltype(load(ignore_none, safe, eve::as_<Wide>{}, ptr))
+  {
+    return load(ignore_none, safe, eve::as_<Wide>{}, ptr);
+  }
+
+  template<data_source Ptr, decorator Decorator>
+  EVE_FORCEINLINE   auto load_(EVE_SUPPORTS(cpu_), Decorator const& d, Ptr ptr) noexcept
+                ->  decltype(load(ignore_none, d, eve::as_<wide_value_type_t<Ptr>>{}, ptr))
+  {
+    return load(ignore_none, d, eve::as_<wide_value_type_t<Ptr>>{}, ptr);
+  }
+
+  template<data_source Ptr, decorator Decorator, std::ptrdiff_t N>
+  EVE_FORCEINLINE   auto load_( EVE_SUPPORTS(cpu_)
+                              , Decorator const& d, Ptr ptr, fixed<N> const&
+                              ) noexcept
+                ->  decltype( load(ignore_none, d, eve::as_<wide_value_type_t<Ptr,fixed<N>>>{}, ptr) )
+  {
+    return load(ignore_none, d, eve::as_<wide_value_type_t<Ptr,fixed<N>>>{}, ptr);
+  }
+
+  template<data_source Ptr, decorator Decorator, simd_value Wide>
+  EVE_FORCEINLINE   auto load_( EVE_SUPPORTS(cpu_)
+                              , Decorator const& d, Ptr ptr, as_<Wide> const&
+                              ) noexcept
+                ->  decltype( load(ignore_none, d, eve::as_<Wide>{}, ptr) )
+  {
+    return load(ignore_none, d, eve::as_<Wide>{}, ptr);
+  }
+
+  template<relative_conditional_expr C, data_source Ptr>
+  EVE_FORCEINLINE   auto load_(EVE_SUPPORTS(cpu_), C const &cond, Ptr ptr) noexcept
+                ->  decltype( load(cond, safe, as_<wide_value_type_t<Ptr>>{}, ptr) )
+  {
+    return load(cond, safe, as_<wide_value_type_t<Ptr>>{}, ptr);
+  }
+
+  template<relative_conditional_expr C, data_source Ptr, std::ptrdiff_t N>
+  EVE_FORCEINLINE   auto load_(EVE_SUPPORTS(cpu_), C const &cond, Ptr ptr, fixed<N> const&) noexcept
+                ->  decltype( load( cond, safe, as_<wide_value_type_t<Ptr, fixed<N>>>{}, ptr ) )
+  {
+    return load( cond, safe, as_<wide_value_type_t<Ptr, fixed<N>>>{}, ptr );
+  }
+
+  template<relative_conditional_expr C, data_source Ptr, simd_value Wide>
+  EVE_FORCEINLINE   auto load_(EVE_SUPPORTS(cpu_), C const &cond, Ptr ptr, as_<Wide> const&) noexcept
+                ->  decltype( load( cond, safe, as_<Wide>{}, ptr ) )
+  {
+    return load( cond, safe, as_<Wide>{}, ptr );
+  }
+
+  template<relative_conditional_expr C, decorator Decorator, data_source Ptr>
+  EVE_FORCEINLINE   auto load_( EVE_SUPPORTS(cpu_)
+                              , C const &cond, Decorator const& d,Ptr ptr
+                              ) noexcept
+                ->  decltype( load(cond, d, as_<wide_value_type_t<Ptr>>{}, ptr) )
+  {
+    return load(cond, d, as_<wide_value_type_t<Ptr>>{}, ptr);
+  }
+
+  template<relative_conditional_expr C, decorator Decorator, data_source Ptr, std::ptrdiff_t N>
+  EVE_FORCEINLINE   auto load_( EVE_SUPPORTS(cpu_)
+                              , C const &cond, Decorator const& d,Ptr ptr, fixed<N> const&
+                              ) noexcept
+                ->  decltype( load( cond, d, as_<wide_value_type_t<Ptr, fixed<N>>>{}, ptr ) )
+  {
+    return load( cond, d, as_<wide_value_type_t<Ptr, fixed<N>>>{}, ptr );
+  }
+
+  template<relative_conditional_expr C, decorator Decorator, data_source Ptr, simd_value Wide>
+  EVE_FORCEINLINE   auto load_( EVE_SUPPORTS(cpu_)
+                              , C const &cond, Decorator const& d,Ptr ptr, as_<Wide> const&
+                              ) noexcept
+                ->  decltype( load( cond, d, as_<Wide>{}, ptr ) )
+  {
+    return load( cond, d, as_<Wide>{}, ptr );
+  }
+
+  //================================================================================================
+  // Load helper
+  //================================================================================================
   template<typename Pack, typename Iterator>
   EVE_FORCEINLINE auto piecewise_load(eve::as_<Pack> const &, Iterator ptr) noexcept
   {
@@ -50,89 +171,91 @@ namespace eve::detail
       }
     );
 
-    return that.storage();
+    return that;
   }
 
   //================================================================================================
-  // Emulation
+  // Load from a range [b, e(
   //================================================================================================
-  template<typename T, typename N, typename Pointer>
-  EVE_FORCEINLINE auto load(eve::as_<wide<T, N>> const& tgt, Pointer i) noexcept
-    requires std::same_as<abi_t<T, N>, emulated_>
+  template<std::input_iterator Iterator>
+  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), Iterator b, Iterator e) noexcept
   {
-    auto const get = [](auto p)
-    {
-      if constexpr( !std::input_iterator<Pointer> )  return p.get();
-      else                                            return p;
-    };
+    using base = typename std::iterator_traits<Iterator>::value_type;
+    return load(ignore_none, safe, as_<as_wide_t<base>>{}, b, e);
+  }
 
-    return piecewise_load(tgt, get(i));
+  template<std::input_iterator Iterator, typename Wide>
+  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), as_<Wide> const&, Iterator b, Iterator e) noexcept
+  {
+    return load(ignore_none, safe, as_<Wide>{}, b, e);
+  }
+
+  template<std::input_iterator Iterator, typename Pack>
+  EVE_FORCEINLINE Pack
+  load_ ( EVE_SUPPORTS(cpu_), ignore_none_ const&, safe_type const&
+        , eve::as_<Pack> const &tgt, Iterator b, [[maybe_unused]] Iterator e
+        ) noexcept
+  {
+    return piecewise_load(tgt,b);
+  }
+
+  //================================================================================================
+  // Load from pointer - Emulation
+  //================================================================================================
+  template<typename T, typename N, data_source Ptr>
+  EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(cpu_), ignore_none_ const&, safe_type const&
+                                  , eve::as_<wide<T, N>> const &tgt, Ptr ptr
+                                  ) noexcept
+  requires simd_compatible_ptr<Ptr,wide<T, N>> && std::same_as<abi_t<T, N>, emulated_>
+  {
+    return piecewise_load(tgt, as_raw_pointer(ptr));
   }
 
   //================================================================================================
   // Aggregation
   //================================================================================================
-  template<typename T, typename N, typename Pointer>
-  EVE_FORCEINLINE auto load(eve::as_<wide<T,N>> const & tgt, Pointer ptr) noexcept
-    requires std::same_as<abi_t<T, N>, aggregated_>
+  template<typename T, typename N, data_source Ptr>
+  EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(cpu_), ignore_none_ const&, safe_type const&
+                                  , eve::as_<wide<T, N>> const &tgt, Ptr ptr
+                                  ) noexcept
+  requires(simd_compatible_ptr<Ptr,wide<T, N>> && std::same_as<abi_t<T, N>, aggregated_>)
   {
     return aggregate_load(tgt,ptr);
   }
 
   //================================================================================================
-  // Bundle load
+  // Bundle
   //================================================================================================
-  template<kumi::product_type T, typename N, typename... Pointers>
-  EVE_FORCEINLINE auto load(eve::as_<wide<T,N>> const&, kumi::tuple<Pointers...> ptr) noexcept
-  requires std::same_as<abi_t<T, N>, bundle_>
+  template<typename T, typename N, relative_conditional_expr C, data_source Ptr>
+  EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(cpu_), C const& c, safe_type const&
+                                  , eve::as_<wide<T, N>> const &, Ptr ptr
+                                  ) noexcept
+  requires(std::same_as<abi_t<T, N>, bundle_>)
   {
-    wide<T,N> that;
-    kumi::for_each( []<typename M>(M& m, auto p) { m = M{p}; } , that.storage(), ptr);
+    wide<T, N> that;
+    kumi::for_each( [=]<typename M>(M& m, auto p) { m = load(c,safe,as_<M>{},p); }
+                  , that.storage(), ptr
+                  );
     return that;
   }
 
   //================================================================================================
-  // Common case for iterator based load
-  //================================================================================================
-  template<std::input_iterator Iterator, typename Pack>
-  EVE_FORCEINLINE Pack load(eve::as_<Pack> const &tgt, Iterator b, Iterator) noexcept
-  {
-    return piecewise_load(tgt,b);
-  }
-
-  template<typename T, typename Ptr> struct dereference_as;
-
-  template<typename T, typename Ptr>
-  requires( !kumi::product_type<Ptr> )
-  struct dereference_as<T,Ptr>
-  {
-    using deref = std::remove_cvref_t<decltype(*std::declval<Ptr>())>;
-    static constexpr bool value = std::same_as<T,deref>;
-  };
-
-  //================================================================================================
   // Basic logical support
   //================================================================================================
-  template<typename T, typename N, typename Ptr>
-  EVE_FORCEINLINE
-  auto load(eve::as_<logical<wide<T, N>>> const & tgt, Ptr p)
-  requires( dereference_as<logical<T>, Ptr>::value && !x86_abi<abi_t<T, N>>)
+  template<typename T, typename N, data_source Pointer>
+  EVE_FORCEINLINE logical<wide<T, N>>
+  load_ ( EVE_SUPPORTS(cpu_), ignore_none_ const&, safe_type const&
+        , eve::as_<logical<wide<T, N>>> const &tgt, Pointer ptr
+        ) noexcept
+  requires( dereference_as<logical<T>, Pointer>::value && !x86_abi<abi_t<T, N>> )
   {
-    if constexpr ( std::same_as<abi_t<T, N>, aggregated_> ) return aggregate_load(tgt,p);
+    if constexpr ( std::same_as<abi_t<T, N>, aggregated_> ) return aggregate_load(tgt,ptr);
     else return
       bit_cast
             ( [&]() -> wide<T, N>
               {
                 using wtg = eve::as_<wide<T, N>>;
-                if constexpr( !std::is_pointer_v<Ptr> )
-                {
-                  using ptr_t = typename Ptr::template rebind<T const>;
-                  return load(wtg{}, ptr_t( (T const*)(p.get())) );
-                }
-                else
-                {
-                  return load(wtg{}, (T const*)(p));
-                }
+                return load(ignore_none,safe,wtg{}, ptr_cast<T>(ptr));
               }()
             , tgt
             );

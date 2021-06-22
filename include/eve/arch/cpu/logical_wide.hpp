@@ -12,6 +12,7 @@
 #include <eve/arch/cpu/logical.hpp>
 #include <eve/arch/expected_cardinal.hpp>
 #include <eve/arch/spec.hpp>
+#include <eve/conditional.hpp>
 #include <eve/concept/memory.hpp>
 #include <eve/concept/range.hpp>
 #include <eve/detail/abi.hpp>
@@ -113,7 +114,7 @@ namespace eve
     //! Construction is done piecewise unless the @iterator{s} are @raiterator{s}.
     template<std::input_iterator Iterator>
     EVE_FORCEINLINE explicit logical(Iterator b, Iterator e) noexcept
-                  : storage_base(detail::load(eve::as_<logical>{}, b, e))
+                  : storage_base(load(as_<logical>{}, b, e))
     {}
 
     //! @brief Constructs a eve::logical from a @container.
@@ -126,7 +127,7 @@ namespace eve
     //! Constructs a eve::logical from a SIMD compatible pointer
     template<simd_compatible_ptr<logical> Ptr>
     EVE_FORCEINLINE explicit logical(Ptr ptr) noexcept
-                  : storage_base(detail::load(eve::as_<logical>{}, ptr))
+                  : storage_base(load(ptr, Cardinal{}))
     {
     }
 

@@ -117,7 +117,7 @@ namespace eve
     static constexpr bool is_inverted     = true;
     static constexpr bool is_complete     = true;
 
-    template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
+    template<typename V> EVE_FORCEINLINE auto else_(V) const  {  return *this;  }
 
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {

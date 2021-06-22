@@ -12,6 +12,8 @@
 #include <eve/detail/spy.hpp>
 #include <eve/function/unsafe.hpp>
 #include <eve/function/replace.hpp>
+#include <eve/memory/aligned_ptr.hpp>
+#include <eve/memory/pointer.hpp>
 #include <eve/wide.hpp>
 #include <type_traits>
 
@@ -44,141 +46,55 @@ namespace eve::detail
 #endif
 
   //================================================================================================
-  // Bundle load
+  // SCALAR
   //================================================================================================
-  template<typename... Args, typename... P, typename Type, typename Cardinal>
-  EVE_FORCEINLINE auto perform_load ( kumi::tuple<P...> ptr, as_<Type> const&, Cardinal
-                                    , Args const&... args
-                                    ) noexcept
+  template<data_source Ptr>
+  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), Ptr p, scalar_cardinal const&) noexcept
   {
-    Type that;
-    kumi::for_each( [=]<typename M>(M& m, auto p) { m = eve::load(args...,p,Cardinal{}); }
-                  , that.storage()
-                  , ptr
-                  );
-
-    return that;
+    return *p;
   }
 
-  template<typename... Args, typename... P, typename Type>
-  EVE_FORCEINLINE auto perform_load ( kumi::tuple<P...> ptr, as_<Type> const& tgt
-                                    , Args const&... args
-                                    ) noexcept
+  template<data_source Ptr, scalar_value Target>
+  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), Ptr p, as_<Target> const&) noexcept
   {
-    return perform_load(ptr, tgt, cardinal_t<Type>{}, args...);
+    return static_cast<Target>(*p);
   }
 
-  template<typename... P,typename Cardinal>
-  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), kumi::tuple<P...> ptr, Cardinal) noexcept
-  {
-    using type = wide<kumi::tuple<std::remove_cvref_t<decltype(*std::declval<P>())>...>, Cardinal>;
-    return type(ptr);
-  }
-
-  template<typename... P>
-  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), kumi::tuple<P...> ptr) noexcept
-  {
-    using c_t = cardinal_t<wide<kumi::tuple<std::remove_cvref_t<decltype(*std::declval<P>())>...>>>;
-    return eve::load(ptr,c_t{});
-  }
-
-  template<relative_conditional_expr C, typename... P>
-  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), C cond, kumi::tuple<P...> ptr) noexcept
-  {
-    using type  = wide<kumi::tuple<std::remove_cvref_t<decltype(*std::declval<P>())>...>>;
-    return perform_load(ptr, as_<type>{}, cardinal_t<type>{}, cond);
-  }
-
-  template<relative_conditional_expr C, typename... P,typename Cardinal>
-  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), C cond, kumi::tuple<P...> ptr, Cardinal) noexcept
-  {
-    using type = wide<kumi::tuple<std::remove_cvref_t<decltype(*std::declval<P>())>...>,Cardinal>;
-    return perform_load(ptr, as_<type>{}, cond);
-  }
-
-  template<typename... P>
-  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), unsafe_type u, kumi::tuple<P...> ptr) noexcept
-  {
-    using type  = wide<kumi::tuple<std::remove_cvref_t<decltype(*std::declval<P>())>...>>;
-    return perform_load(ptr, as_<type>{}, cardinal_t<type>{}, u);
-  }
-
-  template<typename... P,typename Cardinal>
-  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), unsafe_type u, kumi::tuple<P...> ptr, Cardinal) noexcept
-  {
-    using type = wide<kumi::tuple<std::remove_cvref_t<decltype(*std::declval<P>())>...>,Cardinal>;
-    return perform_load(ptr, as_<type>{}, u);
-  }
-
-  template<relative_conditional_expr C, typename... P>
-  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), unsafe_type u, C c, kumi::tuple<P...> ptr) noexcept
-  {
-    using type  = wide<kumi::tuple<std::remove_cvref_t<decltype(*std::declval<P>())>...>>;
-    return perform_load(ptr, as_<type>{}, cardinal_t<type>{}, u, c);
-  }
-
-  template<relative_conditional_expr C, typename... P, typename Cardinal>
-  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_), unsafe_type u, C c
-                            , kumi::tuple<P...> ptr, Cardinal
+  template<data_source Ptr, scalar_value T>
+  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_)
+                            , decorated<convert_to_<T>()> const&, Ptr p, scalar_cardinal const&
                             ) noexcept
   {
-    using type = wide<kumi::tuple<std::remove_cvref_t<decltype(*std::declval<P>())>...>,Cardinal>;
-    return perform_load(ptr, as_<type>{}, Cardinal{}, u, c);
+    return load(p, as_<T>{});
   }
 
   //================================================================================================
-  // SIMD
+  // Load from pointer - Conditional load
   //================================================================================================
-  template<typename Ptr>
-  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), Ptr ptr) noexcept
-  requires( simd_compatible_ptr<Ptr, as_wide_t<std::remove_cvref_t<decltype(*ptr)>> > )
+  template<relative_conditional_expr C, data_source Ptr, typename Pack>
+  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_)
+                            , C const &cond, safe_type const&
+                            , eve::as_<Pack> tgt, Ptr ptr
+                            ) noexcept
+  requires simd_compatible_ptr<Ptr,Pack>
   {
-    return as_wide_t<std::remove_cvref_t<decltype(*ptr)>>(ptr);
-  }
-
-  template<typename Ptr, typename Cardinal>
-  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), Ptr ptr, Cardinal const &) noexcept
-  requires( simd_compatible_ptr < Ptr
-                                , as_wide_t < std::remove_cvref_t<decltype(*ptr)>
-                                            , typename Cardinal::type
-                                            >
-                                >
-          )
-  {
-    return as_wide_t<std::remove_cvref_t<decltype(*ptr)>, typename Cardinal::type>(ptr);
-  }
-
-  template<relative_conditional_expr C, typename Ptr>
-  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), C const &cond, Ptr ptr) noexcept
-  requires( simd_compatible_ptr<Ptr, as_wide_t<std::remove_cvref_t<decltype(*ptr)>> > )
-  {
-    using T = std::remove_cvref_t<decltype(*ptr)>;
-    return eve::load[cond](ptr, expected_cardinal_t<T>{});
-  }
-
-  template<relative_conditional_expr C, typename Ptr, typename Cardinal>
-  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), C const &cond, Ptr ptr, Cardinal const&) noexcept
-  requires( simd_compatible_ptr<Ptr, as_wide_t< std::remove_cvref_t<decltype(*ptr)>
-                                              , typename Cardinal::type>
-                                              >
-          )
-  {
-    using e_t = std::remove_cvref_t<decltype(*ptr)>;
-    using r_t = as_wide_t< e_t, typename Cardinal::type >;
+    using e_t = typename pointer_traits<Pack>::value_type;
+    using r_t = Pack;
+    using c_t = cardinal_t<Pack>;
 
     if constexpr( !std::is_pointer_v<Ptr> )
     {
-      static constexpr bool is_aligned_enough = Cardinal() * sizeof(e_t) >= Ptr::alignment();
+      static constexpr bool is_aligned_enough = c_t() * sizeof(e_t) >= Ptr::alignment();
 
       if constexpr (!sanitizers_are_on && is_aligned_enough)
       {
-        auto that = eve::unsafe(eve::load)(ptr, Cardinal{});
+        auto that = eve::unsafe(eve::load)(ptr, tgt);
         if constexpr( C::has_alternative )  return replace_ignored(that, cond, cond.alternative);
         else                                return that;
       }
       else
       {
-        return eve::load[cond](ptr.get(), Cardinal{});
+        return eve::load[cond](ptr.get(), tgt);
       }
     }
     else
@@ -186,7 +102,7 @@ namespace eve::detail
       // If the ignore/keep is complete we can jump over if_else
       if constexpr( C::is_complete )
       {
-        if constexpr(C::is_inverted)  { return eve::load(ptr, Cardinal{});  }
+        if constexpr(C::is_inverted)  { return eve::load(ptr, tgt);  }
         else
         {
           if constexpr(C::has_alternative)  return r_t{cond.alternative};
@@ -215,23 +131,6 @@ namespace eve::detail
     }
   }
 
-  //================================================================================================
-  // Scalar support
-  //================================================================================================
-  template<typename Ptr>
-  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), Ptr p, scalar_cardinal const&) noexcept
-  {
-    return *p;
-  }
-
-  template<typename Ptr, scalar_value T>
-  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_)
-                            , decorated<convert_to_<T>()> const&, Ptr p, scalar_cardinal const&
-                            ) noexcept
-  {
-    return static_cast<T>(*p);
-  }
-
 #if defined(SPY_COMPILER_IS_CLANG) or defined(SPY_COMPILER_IS_GCC)
 #define DISABLE_SANITIZERS __attribute__((no_sanitize_address)) __attribute__((no_sanitize_thread))
 #elif defined(SPY_COMPILER_IS_MSVC)
@@ -240,69 +139,33 @@ namespace eve::detail
 #define DISABLE_SANITIZERS
 #endif
 
-  // making unsafe(load) call intinsics requires a lot of work and is not very portable
+  // making unsafe(load) call intrinsics requires a lot of work and is not very portable
   // due to what called functions it will affect.
   // Since the unsafe is mostly used in corner cases, will do it scalar in asan mode.
-  template<relative_conditional_expr C, typename Ptr, typename Cardinal>
-  requires(sanitizers_are_on)
-  DISABLE_SANITIZERS auto load_(EVE_SUPPORTS(cpu_), C const &cond, unsafe_type, Ptr ptr, Cardinal const&) noexcept
-                  -> decltype( eve::load[cond](ptr, Cardinal{}))
+  template<relative_conditional_expr C, data_source Ptr, typename Pack>
+  DISABLE_SANITIZERS Pack load_ ( EVE_SUPPORTS(cpu_)
+                                , C const& cond, unsafe_type const&
+                                , eve::as_<Pack> const& tgt, Ptr ptr
+                                ) noexcept
   {
-    using e_t = std::remove_cvref_t<decltype(*ptr)>;
-    using r_t = as_wide_t< e_t, typename Cardinal::type >;
+    if constexpr(sanitizers_are_on)
+    {
+      Pack that;
 
-    r_t that;
+      auto offset = cond.offset( as_<Pack>{} );
+      auto count  = cond.count( as_<Pack>{} );
 
-    auto offset = cond.offset( as_<r_t>{} );
-    auto count  = cond.count( as_<r_t>{} );
+      for (std::ptrdiff_t i = offset; i != count + offset; ++i) that.set(i, ptr[i]);
 
-    for (std::ptrdiff_t i = offset; i != count + offset; ++i) that.set(i, ptr[i]);
-
-    return that;
+      return that;
+    }
+    else
+    {
+      return eve::load(cond,safe,tgt,ptr);
+    }
   }
-
-  template<relative_conditional_expr C,typename Ptr>
-  requires(sanitizers_are_on)
-  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), C const &cond, unsafe_type, Ptr ptr) noexcept
-              ->  decltype(eve::load[cond](ptr))
-  {
-    using T = std::remove_cvref_t<decltype(*ptr)>;
-    return eve::unsafe(eve::load[cond])(ptr, expected_cardinal_t<T>{});
-  }
-
-  template<typename Ptr, typename Cardinal>
-  requires(sanitizers_are_on)
-  DISABLE_SANITIZERS auto load_(EVE_SUPPORTS(cpu_), unsafe_type, Ptr ptr, Cardinal const& N) noexcept
-                  -> decltype(eve::load(ptr, N))
-  {
-    return eve::unsafe(eve::load[eve::ignore_none])(ptr, N);
-  }
-
-  template<typename Ptr>
-  requires(!sanitizers_are_on)
-  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), unsafe_type, Ptr ptr) noexcept
-              ->  decltype(eve::load(ptr))
-  {
-    return eve::unsafe(eve::load[eve::ignore_none])(ptr);
-  }
-
-  template<typename ...Args>
-  requires (!sanitizers_are_on)
-  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), unsafe_type, Args ... args) noexcept
-              ->  decltype( eve::load(args...) )
-  {
-    return eve::load(args...);
-  }
-
-  template<relative_conditional_expr C, typename ... Args>
-  requires (!sanitizers_are_on)
-  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), C const &cond, unsafe_type, Args ... args) noexcept
-              ->  decltype( eve::load[cond](args...) )
-  {
-    return eve::load[cond](args...);
-  }
-
 }
+
 #ifdef SPY_COMPILER_IS_GCC
 #pragma GCC diagnostic pop
 #endif

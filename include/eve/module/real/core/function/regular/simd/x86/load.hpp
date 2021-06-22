@@ -20,16 +20,15 @@ namespace eve::detail
   //================================================================================================
   // Conditional loads
   //================================================================================================
-  template<relative_conditional_expr C, typename Ptr, typename Cardinal>
-  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(sse2_), C const &cond, Ptr p, Cardinal const&) noexcept
-                  -> as_wide_t<std::remove_cvref_t<decltype(*p)>, typename Cardinal::type>
-  requires( simd_compatible_ptr<Ptr, as_wide_t< std::remove_cvref_t<decltype(*p)>
-                                              , typename Cardinal::type>
-                                              >
-          )
+  template<relative_conditional_expr C, typename Ptr, typename Pack>
+  EVE_FORCEINLINE Pack load_( EVE_SUPPORTS(sse2_), C const &cond, safe_type const& s
+                            , eve::as_<Pack> const& tgt
+                            , Ptr p
+                            ) noexcept
+  requires simd_compatible_ptr<Ptr, Pack>
   {
     using b_t   = std::remove_cvref_t<decltype(*p)>;
-    using r_t   = as_wide_t<b_t, typename Cardinal::type>;
+    using r_t   = Pack;
 
     if constexpr( is_logical_v<b_t> )
     {
@@ -40,27 +39,27 @@ namespace eve::detail
       };
 
       using a_t = as_arithmetic_t<b_t>;
-      auto const block = [&](auto local_cond) -> wide<a_t, typename Cardinal::type>
+      auto const block = [&](auto local_cond)
       {
         if constexpr( !std::is_pointer_v<Ptr> )
         {
           using ptr_t = typename Ptr::template rebind<a_t const>;
-          return load_(EVE_RETARGET(sse2_), local_cond, ptr_t((a_t const*)(p.get())), Cardinal{});
+          return load(local_cond,s, as_<as_arithmetic_t<Pack>>{}, ptr_t((a_t const*)(p.get())));
         }
         else
         {
-          return load_(EVE_RETARGET(sse2_), local_cond, (a_t const*)(p), Cardinal{});
+          return load(local_cond,s, as_<as_arithmetic_t<Pack>>{}, (a_t const*)(p));
         }
       }(alt());
 
-      if constexpr( current_api >= avx512 ) return to_logical(block).storage();
+      if constexpr( current_api >= avx512 ) return to_logical(block);
       else                                  return bit_cast(block, as_<r_t>{});
     }
     // Hack until a proper FIX-#572
-    else if constexpr ( has_aggregated_abi_v<r_t> ) return load_(EVE_RETARGET(cpu_), cond, p, Cardinal{});
+    else if constexpr ( has_aggregated_abi_v<r_t> ) return load_(EVE_RETARGET(cpu_), cond, s, tgt, p);
     // Aligned addressed don't need a masked load.
-    else if constexpr ( !std::is_pointer_v<Ptr> )   return load_(EVE_RETARGET(cpu_), cond, p, Cardinal{});
-    else if constexpr ( C::is_complete )            return load_(EVE_RETARGET(cpu_), cond, p, Cardinal{});
+    else if constexpr ( !std::is_pointer_v<Ptr> )   return load_(EVE_RETARGET(cpu_), cond, s, tgt, p);
+    else if constexpr ( C::is_complete )            return load_(EVE_RETARGET(cpu_), cond, s, tgt, p);
     else if constexpr( current_api >= avx512 )
     {
       r_t that;
@@ -125,9 +124,9 @@ namespace eve::detail
         else  if constexpr( c == category::uint32x8) that = _mm256_maskload_epi32 ((std::int32_t const*)p,mask);
         else  if constexpr( c == category::int32x4 ) that = _mm_maskload_epi32    ((std::int32_t const*)p,mask);
         else  if constexpr( c == category::uint32x4) that = _mm_maskload_epi32    ((std::int32_t const*)p,mask);
-        else                                         return load_(EVE_RETARGET(cpu_), cond, p, Cardinal{});
+        else                                         return load_(EVE_RETARGET(cpu_), cond, s, tgt, p);
       }
-      else return  load_(EVE_RETARGET(cpu_), cond, p, Cardinal{});
+      else return load_(EVE_RETARGET(cpu_), cond, s, tgt, p);
 
       if constexpr( C::has_alternative )
       {
@@ -148,7 +147,7 @@ namespace eve::detail
 
       return that;
   }
-  else return load_(EVE_RETARGET(cpu_), cond, p, Cardinal{});
+  else return load_(EVE_RETARGET(cpu_), cond, s, tgt, p);
 }
 
 }

@@ -20,9 +20,11 @@ namespace eve::detail
   // Regular loads
   //================================================================================================
   template<typename T, typename N, simd_compatible_ptr<wide<T,N>> Ptr >
-  EVE_FORCEINLINE auto load(eve::as_<wide<T, N>> const &, Ptr p)
-  requires( dereference_as<T, Ptr>::value ) && x86_abi<abi_t<T, N>>
-  //requires( std::same_as<T, std::remove_cvref_t<decltype(*p)>> )
+  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_)
+                            , ignore_none_ const&, safe_type const&
+                            , eve::as_<wide<T, N>> const &, Ptr p
+                            )
+  requires dereference_as<T, Ptr>::value && x86_abi<abi_t<T, N>>
   {
     constexpr auto cat = categorize<wide<T, N>>();
     constexpr bool isfull512 = N::value*sizeof(T) == x86_512_::bytes;
@@ -89,41 +91,38 @@ namespace eve::detail
   // logical loads require some specific setup
   //================================================================================================
   template<typename T, typename N, typename Ptr>
-  EVE_FORCEINLINE
-  auto load([[maybe_unused]] eve::as_<logical<wide<T, N>>> const& tgt, Ptr p)
-  requires( dereference_as<logical<T>, Ptr>::value ) && x86_abi<abi_t<T, N>>
-  //requires( std::same_as<logical<T>, std::remove_cvref_t<decltype(*p)>> )
+  EVE_FORCEINLINE logical<wide<T, N>> load_ ( EVE_SUPPORTS(cpu_)
+                                            , ignore_none_ const&, safe_type const&
+                                            , eve::as_<logical<wide<T, N>>> const& tgt
+                                            , Ptr p
+                                            )
+
+  requires dereference_as<logical<T>, Ptr>::value && x86_abi<abi_t<T, N>>
   {
     auto block = [&]() -> wide<T, N>
     {
       using wtg = eve::as_<wide<T, N>>;
-      if constexpr( !std::is_pointer_v<Ptr> )
-      {
-        using ptr_t = typename Ptr::template rebind<T const>;
-        return load(wtg{}, ptr_t( (T const*)(p.get())) );
-      }
-      else
-      {
-        return load(wtg{}, (T const*)(p));
-      }
+      return load(ignore_none, safe, wtg{}, ptr_cast<T const>(p));
     }();
 
-    if constexpr( current_api >= avx512 ) return to_logical(block).storage();
+    if constexpr( current_api >= avx512 ) return to_logical(block);
     else                                  return bit_cast(block, tgt);
   }
 
   template<typename Iterator, typename T, typename N>
-  EVE_FORCEINLINE auto load ( eve::as_<logical<wide<T, N>>> const &
-                            , Iterator b, Iterator e
-                            ) noexcept
-      requires x86_abi<abi_t<T, N>>
+  EVE_FORCEINLINE logical<wide<T, N>> load_ ( EVE_SUPPORTS(cpu_)
+                                            , ignore_none_ const&, safe_type const&
+                                            , eve::as_<logical<wide<T, N>>> const &
+                                            , Iterator b, Iterator e
+                                            ) noexcept
+  requires x86_abi<abi_t<T, N>>
   {
     auto block = [&]() -> wide<T, N>
     {
       using tgt = eve::as_<wide<T, N>>;
-      return load(tgt(), b, e);
+      return load(ignore_none, safe, tgt(), b, e);
     }();
 
-    return to_logical(block).storage();
+    return to_logical(block);
   }
 }

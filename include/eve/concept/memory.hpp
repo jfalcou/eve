@@ -9,6 +9,7 @@
 
 #include <eve/concept/vectorized.hpp>
 #include <eve/memory/aligned_ptr.hpp>
+#include <eve/memory/pointer.hpp>
 #include <eve/traits/alignment.hpp>
 #include <type_traits>
 
