@@ -12,9 +12,8 @@
 #include <eve/function/sign.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
-#include <eve/concept/compatible.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/detail/concepts.hpp>
+#include <eve/traits/common_compatible.hpp>
 
 namespace eve::detail
 {
@@ -22,7 +21,7 @@ namespace eve::detail
   EVE_FORCEINLINE  auto negate_(EVE_SUPPORTS(cpu_)
                             , T const &a
                             , U const &b) noexcept
-  requires std::same_as<element_type_t<T>, element_type_t<U>>
+  requires  compatible_values<U, T>
   {
     return arithmetic_call(negate, a, b);
   }
@@ -37,4 +36,3 @@ namespace eve::detail
     else { return if_else(is_nez(b), a, eve::zero);}
   }
 }
-

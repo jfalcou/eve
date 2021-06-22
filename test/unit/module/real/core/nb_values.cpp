@@ -5,25 +5,43 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/nb_values.hpp>
-#include <eve/function/is_even.hpp>
-#include <eve/function/is_odd.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/all.hpp>
-#include <eve/constant/mindenormal.hpp>
+#include "test.hpp"
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/eps.hpp>
 #include <eve/constant/nan.hpp>
+#include <eve/function/nb_values.hpp>
+#include <eve/function/inc.hpp>
+#include <eve/function/dec.hpp>
+#include <eve/function/all.hpp>
+#include <eve/function/is_odd.hpp>
 
-TTS_CASE_TPL("Check eve::nb_values return type", EVE_TYPE)
+//==================================================================================================
+// Types tests
+//==================================================================================================
+EVE_TEST_TYPES( "Check return types of eve::nb_values(simd)"
+              , eve::test::simd::all_types
+              )
+<typename T>(eve::as_<T>)
 {
-  using r_t = eve::as_integer_t<T, unsigned>;
-  TTS_EXPR_IS((eve::nb_values(T(0), T(0))), (r_t));
-}
+  using i_t = eve::as_integer_t<T, unsigned>;
+  using v_t = eve::element_type_t<T>;
+  using vi_t = eve::element_type_t<i_t>;
+  TTS_EXPR_IS( eve::nb_values(T(), T()), i_t  );
+  TTS_EXPR_IS( eve::nb_values(T(), v_t()), i_t  );
+  TTS_EXPR_IS( eve::nb_values(v_t(), T()), i_t  );
+  TTS_EXPR_IS( eve::nb_values(v_t(), v_t()), vi_t );
+};
 
-TTS_CASE_TPL("Check eve::nb_values  behavior", EVE_TYPE)
+//==================================================================================================
+// Tests for eve::nb_values
+//==================================================================================================
+EVE_TEST_TYPES( "Check behavior of eve::nb_values(simd)"
+        , eve::test::simd::all_types
+              )
+  <typename T>(eve::as_<T>)
 {
   using r_t = eve::as_integer_t<T, unsigned>;
 
@@ -54,4 +72,4 @@ TTS_CASE_TPL("Check eve::nb_values  behavior", EVE_TYPE)
     TTS_EQUAL(eve::nb_values(T(1), T(10)), r_t(9));
     TTS_EQUAL(eve::nb_values(T(0), T( 0)), r_t(0));
   }
-}
+};

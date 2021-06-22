@@ -32,6 +32,7 @@ namespace eve::detail
   template<real_value T>
   EVE_FORCEINLINE constexpr auto
   nextafter_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
+  requires has_native_abi_v<T>
   {
     if constexpr( scalar_value<T> )
     {
