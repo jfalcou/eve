@@ -153,11 +153,13 @@ make_unit("unit.real.core"  negate.cpp               )
 make_unit("unit.real.core"  negatenz.cpp             )
 make_unit("unit.real.core"  next.cpp                 )
 make_unit("unit.real.core"  nextafter.cpp            )
-
-
-
-
 make_unit("unit.real.core"  nearest.cpp              )
+make_unit("unit.real.core"  oneminus.cpp             )
+make_unit("unit.real.core"  plus.cpp                 )
+make_unit("unit.real.core"  popcount.cpp             )
+make_unit("unit.real.core"  prev.cpp                 )
+
+
 make_unit("unit.real.core"  rat.cpp                  )
 make_unit("unit.real.core"  rem.cpp                  )
 make_unit("unit.real.core"  remdiv.cpp               )
@@ -183,12 +185,7 @@ make_all_units(ROOT unit.real.core NAME ifloor                ARCH scalar simd T
 make_all_units(ROOT unit.real.core NAME inearest              ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME iround                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME itrunc                ARCH scalar simd TYPES ${all_types}     )
-
-make_all_units(ROOT unit.real.core NAME none                  ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT unit.real.core NAME oneminus              ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT unit.real.core NAME plus                  ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT unit.real.core NAME popcount              ARCH scalar simd TYPES ${integral_types})
-make_all_units(ROOT unit.real.core NAME prev                  ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT unit.real.core NAME count_true                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME rec                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME reduce                ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.core NAME reduce_fast           ARCH scalar simd TYPES ${real_types}    )
