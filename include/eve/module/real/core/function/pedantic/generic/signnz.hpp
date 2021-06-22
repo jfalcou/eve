@@ -56,7 +56,16 @@ namespace eve::detail
     }
     else
     {
-      return apply_over(signnz, a);
+      return apply_over(pedantic(signnz), a);
     }
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto signnz_(EVE_SUPPORTS(cpu_), C const &cond, pedantic_type const &
+                              , U const &t) noexcept
+  {
+    return mask_op( cond, pedantic(signnz), t);
   }
 }

@@ -8,8 +8,10 @@
 #include "test.hpp"
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/constant/nan.hpp>
 #include <eve/function/signnz.hpp>
 #include <eve/function/diff/signnz.hpp>
+#include <eve/function/pedantic/signnz.hpp>
 #include <eve/logical.hpp>
 #include <cmath>
 
@@ -55,5 +57,8 @@ EVE_TEST( "Check behavior of eve::signnz(eve::wide)"
   TTS_EQUAL(eve::signnz(a0)      , map([](auto e) -> v_t { return e >= 0 ? 1 : -1; }, a0) );
   TTS_EQUAL(eve::signnz[mask](a0), eve::if_else(mask,eve::signnz(a0),a0)                    );
   if constexpr(eve::floating_real_value<T>)
+  {
     TTS_EQUAL(eve::diff(eve::signnz)(a0)      , T(0) );
+    TTS_IEEE_EQUAL(eve::pedantic(eve::signnz)(eve::nan(eve::as<T>())),  eve::nan(eve::as<T>()));
+  }
 };
