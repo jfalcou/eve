@@ -52,7 +52,7 @@ namespace eve::detail
   auto minmag_(EVE_SUPPORTS(cpu_), D const &, T0 a0, T1 a1, Ts... args)
   {
     using r_t = common_compatible_t<T0,T1,Ts...>;
-    r_t that(D()(minmag)(a0,a1));
+    r_t that(D()(minmag)(r_t(a0),r_t(a1)));
     ((that = D()(minmag)(that,r_t(args))),...);
     return that;
   }
@@ -61,7 +61,7 @@ namespace eve::detail
   auto minmag_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
   {
      using r_t = common_compatible_t<T0,T1,Ts...>;
-     r_t that(minmag(a0,a1));
+     r_t that(minmag(r_t(a0),r_t(a1)));
      ((that = minmag(that,r_t(args))),...);
     return that;
   }

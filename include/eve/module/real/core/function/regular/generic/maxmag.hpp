@@ -53,7 +53,7 @@ namespace eve::detail
   auto maxmag_(EVE_SUPPORTS(cpu_), D const &, T0 a0, T1 a1, Ts... args)
   {
     using r_t = common_compatible_t<T0,T1,Ts...>;
-    r_t that(D()(maxmag)(a0,a1));
+    r_t that(D()(maxmag)(r_t(a0),r_t(a1)));
     ((that = D()(maxmag)(that,r_t(args))),...);
     return that;
   }
@@ -62,7 +62,7 @@ namespace eve::detail
   common_compatible_t<T0,T1,Ts...> maxmag_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
   {
     using r_t = common_compatible_t<T0,T1,Ts...>;
-    r_t that(maxmag(a0,a1));
+    r_t that(maxmag(r_t(a0),r_t(a1)));
     ((that = maxmag(that,r_t(args))),...);
     return that;
   }

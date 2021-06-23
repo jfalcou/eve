@@ -51,7 +51,7 @@ namespace eve::detail
   auto max_(EVE_SUPPORTS(cpu_), D const &, T0 a0, T1 a1, Ts... args)
   {
     using r_t = common_compatible_t<T0,T1,Ts...>;
-    r_t that(D()(max)(a0,a1));
+    r_t that(D()(max)(r_t(a0),r_t(a1)));
     ((that = D()(max)(that,r_t(args))),...);
     return that;
   }
@@ -60,7 +60,7 @@ namespace eve::detail
   auto max_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
   {
     using r_t = common_compatible_t<T0,T1,Ts...>;
-    r_t that(max(a0,a1));
+    r_t that(max(r_t(a0),r_t(a1)));
     ((that = max(that,r_t(args))),...);
     return that;
   }

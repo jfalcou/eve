@@ -55,6 +55,6 @@ EVE_TEST( "Check behavior of rshl on integral types"
 {
   using eve::rshl;
   TTS_EQUAL( rshl(a0, a1), map([&](auto e, auto f) { return rshl(e, f); }, a0, a1));
-//   auto val = a1.get(0);
-//   TTS_EQUAL( rshl(a0, val), map([&](auto e) { return rshl(e, val); }, a0));
+  auto val = a1.get(0);
+  TTS_EQUAL( rshl(a0, val), map([&](auto e) { return rshl(e, val); }, a0));
 };
