@@ -171,9 +171,11 @@ make_unit("unit.real.core"  signnz.cpp               )
 make_unit("unit.real.core"  significants.cpp         )
 make_unit("unit.real.core"  sqr.cpp                  )
 make_unit("unit.real.core"  sqr_abs.cpp              )
-
+make_unit("unit.real.core"  sqrt.cpp                 )
 make_unit("unit.real.core"  sub.cpp                  )
 make_unit("unit.real.core"  trunc.cpp                )
+make_unit("unit.real.core"  two_split.cpp            )
+
 
 ##==================================================================================================
 ## Other tests
@@ -206,6 +208,4 @@ make_all_units(ROOT unit.real.core NAME rshr                  ARCH scalar simd T
 make_all_units(ROOT unit.real.core NAME rsqrt                 ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.core NAME saturate              ARCH scalar simd TYPES ${all_types}     )
 
-make_all_units(ROOT unit.real.core NAME sqrt                  ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.core NAME two_split             ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.core NAME ulpdist               ARCH scalar simd TYPES ${all_types}     )
