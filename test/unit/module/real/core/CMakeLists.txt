@@ -175,7 +175,7 @@ make_unit("unit.real.core"  sqrt.cpp                 )
 make_unit("unit.real.core"  sub.cpp                  )
 make_unit("unit.real.core"  trunc.cpp                )
 make_unit("unit.real.core"  two_split.cpp            )
-
+make_unit("unit.real.core"  ulpdist.cpp              )
 
 ##==================================================================================================
 ## Other tests
@@ -207,5 +207,3 @@ make_all_units(ROOT unit.real.core NAME rshl                  ARCH scalar simd T
 make_all_units(ROOT unit.real.core NAME rshr                  ARCH scalar simd TYPES ${integral_types})
 make_all_units(ROOT unit.real.core NAME rsqrt                 ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.core NAME saturate              ARCH scalar simd TYPES ${all_types}     )
-
-make_all_units(ROOT unit.real.core NAME ulpdist               ARCH scalar simd TYPES ${all_types}     )
