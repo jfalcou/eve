@@ -50,16 +50,18 @@ namespace eve::detail
   template<decorator D, real_value T0, real_value T1, real_value ...Ts>
   auto max_(EVE_SUPPORTS(cpu_), D const &, T0 a0, T1 a1, Ts... args)
   {
-    common_compatible_t<T0,T1,Ts...> that(D()(max)(a0,a1));
-    ((that = D()(max)(that,args)),...);
+    using r_t = common_compatible_t<T0,T1,Ts...>;
+    r_t that(D()(max)(a0,a1));
+    ((that = D()(max)(that,r_t(args))),...);
     return that;
   }
 
   template<real_value T0, real_value T1, real_value ...Ts>
   auto max_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
   {
-    common_compatible_t<T0,T1,Ts...> that(max(a0,a1));
-    ((that = max(that,args)),...);
+    using common_compatible_t<T0,T1,Ts...>;
+    r_t that(max(a0,a1));
+    ((that = max(that,r_t(args))),...);
     return that;
   }
 }
