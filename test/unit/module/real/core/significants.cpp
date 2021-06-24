@@ -5,15 +5,32 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/significants.hpp>
+#include "test.hpp"
+#include <eve/concept/value.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
 #include <eve/constant/nan.hpp>
+#include <eve/function/significants.hpp>
+#include <type_traits>
 
-TTS_CASE_TPL("Check eve::round return type", EVE_TYPE)
+//==================================================================================================
+// Types tests
+//==================================================================================================
+EVE_TEST_TYPES( "Check return types of significants"
+            , eve::test::simd::ieee_reals
+            )
+<typename T>(eve::as_<T>)
 {
-  TTS_EXPR_IS(eve::significants(T(0), 1), T);
-}
+  using v_t = eve::element_type_t<T>;
 
-TTS_CASE_TPL("Check eve::significants behavior", EVE_TYPE)
+  TTS_EXPR_IS( eve::significants(T(), int())  , T);
+  TTS_EXPR_IS( eve::significants(v_t(), int()), v_t);
+};
+
+EVE_TEST_TYPES( "Check significants"
+            , eve::test::simd::ieee_reals
+            )
+<typename T>(eve::as_<T>)
 {
   TTS_IEEE_EQUAL(eve::significants(T(1.234567), 0), eve::nan(eve::as<T>()) );
   TTS_EQUAL(eve::significants(T(1.234567), 1), T(1.) );
@@ -49,4 +66,4 @@ TTS_CASE_TPL("Check eve::significants behavior", EVE_TYPE)
   TTS_ULP_EQUAL (eve::significants(T(987654321), 4), T(987700000.0), 0.5);
   TTS_ULP_EQUAL (eve::significants(T(987654321), 5), T(987650000.0), 0.5);
   TTS_ULP_EQUAL (eve::significants(T(987654321), 6), T(987654000.0), 0.5);
-}
+};

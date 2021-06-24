@@ -41,4 +41,13 @@ namespace eve::detail
       return apply_over(saturated(sqr), a0);
     }
   }
+
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto sqr_(EVE_SUPPORTS(cpu_), C const &cond, saturated_type const &
+                           , U const &t) noexcept
+  {
+    return mask_op( cond, saturated(eve::sqr), t);
+  }
 }
