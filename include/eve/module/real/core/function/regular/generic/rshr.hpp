@@ -11,6 +11,7 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/max.hpp>
+#include <eve/function/minus.hpp>
 #include <eve/function/shr.hpp>
 #include <eve/function/shl.hpp>
 #include <eve/constant/zero.hpp>
@@ -41,9 +42,9 @@ namespace eve::detail
     else
     {
 #ifndef NDEBUG
-      return is_gtz(a1) ? (a0 >>max(zero(eve::as(a1)), a1)) : T(a0 << max(zero(eve::as(a1)), -a1));
+      return is_gtz(a1) ? (a0 >>max(zero(eve::as(a1)), a1)) : T(a0 << max(zero(eve::as(a1)), minus(a1)));
 #else
-      return is_gtz(a1) ? T(a0 >> a1) : T(a0 <<  -a1);
+      return is_gtz(a1) ? T(a0 >> a1) : T(a0 <<  minus(a1));
 #endif
     }
   }
@@ -59,7 +60,7 @@ namespace eve::detail
     }
     else if constexpr(scalar_value<U>)
     {
-      return (a1 > 0) ? T(shr(a0, a1)) : T(shl(a0, -a1));
+      return (a1 > 0) ? T(shr(a0, a1)) : T(shl(a0, minus(a1)));
     }
     else
     {
@@ -68,7 +69,7 @@ namespace eve::detail
 #ifndef NDEBUG
       return if_else(is_gtz(a1), (a0 >> max(zero(eve::as(a1)), a1)), T(a0 << max(zero(eve::as(a1)), -a1)));
 #else
-      return if_else(is_gtz(a1), T(a0 >> a1), T(a0 <<  -a1));
+      return if_else(is_gtz(a1), T(a0 >> a1), T(a0 <<  minus(a1)));
 #endif
       }
       else
