@@ -17,7 +17,7 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of dist"
+EVE_TEST_TYPES( "Check return types of ulpdist"
         , eve::test::simd::all_types
         )
 <typename T>(eve::as_<T>)
@@ -25,13 +25,13 @@ EVE_TEST_TYPES( "Check return types of dist"
   using v_t = eve::element_type_t<T>;
 
   //regular
-  TTS_EXPR_IS( eve::dist(T(), T()  ) , T);
-  TTS_EXPR_IS( eve::dist(T(), v_t()) , T);
-  TTS_EXPR_IS( eve::dist(v_t(), T()) , T);
-  TTS_EXPR_IS( eve::dist(v_t(), v_t()) , v_t);
+  TTS_EXPR_IS( eve::ulpdist(T(), T()  ) , T);
+  TTS_EXPR_IS( eve::ulpdist(T(), v_t()) , T);
+  TTS_EXPR_IS( eve::ulpdist(v_t(), T()) , T);
+  TTS_EXPR_IS( eve::ulpdist(v_t(), v_t()) , v_t);
 };
 
-EVE_TEST_TYPES( "Check return types of dist"
+EVE_TEST_TYPES( "Check return types of ulpdist"
         , eve::test::simd::all_types
         )
 <typename T>(eve::as_<T>)
