@@ -56,18 +56,18 @@ EVE_TEST( "Check behavior of cosd on wide"
   using eve::deginrad;
   using v_t = eve::element_type_t<T>;
   auto ref = [](auto e) -> v_t { return boost::math::cos_pi(e/180.0l); };
-//  auto ref = [](auto e) -> v_t { return std::cos(deginrad(e)); };
+
   TTS_ULP_EQUAL(eve::restricted(cosd)(a0)      , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::small(cosd)(a0)           , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::small(cosd)(a1)           , map(ref, a1), 2);
+  TTS_ULP_EQUAL(eve::small(cosd)(a1)           , map(ref, a1), 30);
   TTS_ULP_EQUAL(eve::medium(cosd)(a0)          , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::medium(cosd)(a1)          , map(ref, a1), 2);
+  TTS_ULP_EQUAL(eve::medium(cosd)(a1)          , map(ref, a1), 30);
   TTS_ULP_EQUAL(eve::medium(cosd)(a2)          , map(ref, a2), 300);
   TTS_ULP_EQUAL(eve::big(cosd)(a0)             , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::big(cosd)(a1)             , map(ref, a1), 2);
+  TTS_ULP_EQUAL(eve::big(cosd)(a1)             , map(ref, a1), 30);
   TTS_ULP_EQUAL(eve::big(cosd)(a2)             , map(ref, a2), 300);
   TTS_ULP_EQUAL(cosd(a0)                       , map(ref, a0), 2);
-  TTS_ULP_EQUAL(cosd(a1)                       , map(ref, a1), 2);
+  TTS_ULP_EQUAL(cosd(a1)                       , map(ref, a1), 30);
   TTS_ULP_EQUAL(cosd(a2)                       , map(ref, a2), 300);
   auto dinr = 1.7453292519943295769236907684886127134428718885417e-2l;
 
