@@ -47,10 +47,9 @@ EVE_TEST( "Check behavior of cscd on wide"
         , eve::test::simd::ieee_reals
         , eve::test::generate( eve::test::randoms(mrest, rest)
                              , eve::test::randoms(msmall, small)
-                             , eve::test::randoms(mmed, med)
-                             , eve::test::randoms(eve::valmin, eve::valmax))
+                             , eve::test::randoms(mmed, med))
                              )
-<typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
+<typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::detail::map;
   using eve::cscd;
@@ -67,11 +66,9 @@ EVE_TEST( "Check behavior of cscd on wide"
   TTS_ULP_EQUAL(eve::big(cscd)(a0)             , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::big(cscd)(a1)             , map(ref, a1), 2);
   TTS_ULP_EQUAL(eve::big(cscd)(a2)             , map(ref, a2), 300);
-  TTS_ULP_EQUAL(eve::big(cscd)(a3)             , map(ref, a3), 300);
   TTS_ULP_EQUAL(cscd(a0)                       , map(ref, a0), 2);
   TTS_ULP_EQUAL(cscd(a1)                       , map(ref, a1), 2);
   TTS_ULP_EQUAL(cscd(a2)                       , map(ref, a2), 300);
-  TTS_ULP_EQUAL(cscd(a3)                       , map(ref, a3), 300);
   auto dinr = 1.7453292519943295769236907684886127134428718885417e-2l;
 
   TTS_ULP_EQUAL(diff(cscd)(a0), map([dinr](auto e) -> v_t { return  -dinr*cscd(e)*eve::cotd(e); }, a0), 2);
