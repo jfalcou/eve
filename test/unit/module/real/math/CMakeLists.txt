@@ -17,6 +17,7 @@ add_dependencies(unit.real.simd.exe      unit.real.math.simd.exe   )
 add_dependencies(unit.real.math.exe      unit.real.math.scalar.exe )
 add_dependencies(unit.real.math.exe      unit.real.math.simd.exe   )
 
+
 ##==================================================================================================
 ## new style tests
 ##==================================================================================================
@@ -47,14 +48,13 @@ make_unit("unit.real.math"  atanpi.cpp                )
 make_unit("unit.real.math"  atan2.cpp                 )
 make_unit("unit.real.math"  atan2d.cpp                )
 make_unit("unit.real.math"  atan2pi.cpp               )
-
+make_unit("unit.real.math"  cos.cpp                   )
+make_unit("unit.real.math"  cosd.cpp                  )
+make_unit("unit.real.math"  cospi.cpp                 )
 
 ##==================================================================================================
 ## Elementwise function unit tests
 ##==================================================================================================
-make_all_units(ROOT unit.real.math NAME cos                   ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME cosd                  ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME cospi                 ARCH scalar simd TYPES ${signed_types}  )
 make_all_units(ROOT unit.real.math NAME cosh                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME cot                   ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME cotd                  ARCH scalar simd TYPES ${real_types}    )
