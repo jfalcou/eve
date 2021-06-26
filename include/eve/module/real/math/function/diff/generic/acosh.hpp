@@ -21,6 +21,6 @@ namespace eve::detail
                                   , diff_type<1> const &
                                   , T const &x) noexcept
   {
-    return rsqrt(dec(sqr((x))));;
+    return rsqrt(dec(sqr((x))));
   }
 }
