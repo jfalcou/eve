@@ -60,16 +60,14 @@ make_unit("unit.real.math"  csc.cpp                   )
 make_unit("unit.real.math"  cscd.cpp                  )
 make_unit("unit.real.math"  csch.cpp                  )
 make_unit("unit.real.math"  cscpi.cpp                 )
+make_unit("unit.real.math"  deginrad.cpp              )
+make_unit("unit.real.math"  exp.cpp                   )
+make_unit("unit.real.math"  exp10.cpp                 )
+make_unit("unit.real.math"  exp2.cpp                  )
 
 ##==================================================================================================
 ## Elementwise function unit tests
 ##==================================================================================================
-make_all_units(ROOT unit.real.math NAME cscd                  ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME csch                  ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME cscpi                 ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME deginrad              ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME exp                   ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME exp10                 ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME expm1                 ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME expx2                 ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME log                   ARCH scalar simd TYPES ${real_types}    )
