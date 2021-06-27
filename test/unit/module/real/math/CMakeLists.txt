@@ -17,6 +17,7 @@ add_dependencies(unit.real.simd.exe      unit.real.math.simd.exe   )
 add_dependencies(unit.real.math.exe      unit.real.math.scalar.exe )
 add_dependencies(unit.real.math.exe      unit.real.math.simd.exe   )
 
+
 ##==================================================================================================
 ## new style tests
 ##==================================================================================================
@@ -47,20 +48,22 @@ make_unit("unit.real.math"  atanpi.cpp                )
 make_unit("unit.real.math"  atan2.cpp                 )
 make_unit("unit.real.math"  atan2d.cpp                )
 make_unit("unit.real.math"  atan2pi.cpp               )
-
+make_unit("unit.real.math"  cos.cpp                   )
+make_unit("unit.real.math"  cosd.cpp                  )
+make_unit("unit.real.math"  cosh.cpp                  )
+make_unit("unit.real.math"  cospi.cpp                 )
+make_unit("unit.real.math"  cot.cpp                   )
+make_unit("unit.real.math"  cotd.cpp                  )
+make_unit("unit.real.math"  coth.cpp                  )
+make_unit("unit.real.math"  cotpi.cpp                 )
+make_unit("unit.real.math"  csc.cpp                   )
+make_unit("unit.real.math"  cscd.cpp                  )
+make_unit("unit.real.math"  csch.cpp                  )
+make_unit("unit.real.math"  cscpi.cpp                 )
 
 ##==================================================================================================
 ## Elementwise function unit tests
 ##==================================================================================================
-make_all_units(ROOT unit.real.math NAME cos                   ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME cosd                  ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME cospi                 ARCH scalar simd TYPES ${signed_types}  )
-make_all_units(ROOT unit.real.math NAME cosh                  ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME cot                   ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME cotd                  ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME coth                  ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME cotpi                 ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME csc                   ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME cscd                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME csch                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME cscpi                 ARCH scalar simd TYPES ${real_types}    )
