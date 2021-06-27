@@ -13,6 +13,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/kumi.hpp>
 #include <type_traits>
+#include <limits>
 #include <utility>
 
 namespace eve
@@ -35,24 +36,19 @@ namespace eve
   //================================================================================================
   namespace detail
   {
-    template<kumi::product_type T, regular_abi ABI>
-    constexpr auto min_cardinal() noexcept
+    template<typename T, regular_abi ABI> struct min_cardinal;
+
+    template<typename... T, regular_abi ABI>
+    struct min_cardinal<kumi::tuple<T...>,ABI>
     {
-      return []<std::size_t... I>( std::index_sequence<I...> )
-      {
-        return std::min({ expected_cardinal
-                          < std::remove_cvref_t<decltype(get<I>(std::declval<T>()))>
-                          , ABI
-                          >::value...
-                        });
-      }(std::make_index_sequence<kumi::size<T>::value>{});
-    }
+      static constexpr std::ptrdiff_t value = std::min({expected_cardinal<T,ABI>::value...});
+    };
   }
 
   template<kumi::product_type T, regular_abi ABI>
-  struct expected_cardinal<T,ABI> : fixed<detail::min_cardinal<T,ABI>()>
+  struct expected_cardinal<T,ABI> : fixed<detail::min_cardinal<kumi::as_tuple_t<T>,ABI>::value>
   {
-    using type = fixed<detail::min_cardinal<T,ABI>()>;
+    using type = fixed<detail::min_cardinal<kumi::as_tuple_t<T>,ABI>::value>;
   };
 
   //================================================================================================

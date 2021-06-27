@@ -55,7 +55,7 @@ namespace eve
   template<typename Type, typename Cardinal>
   requires( kumi::product_type<Type> )
   struct  as_register<Type, Cardinal, eve::bundle_>
-        : kumi::remap_type<detail::apply_as_wide<Cardinal>::template type, Type>
+        : kumi::as_tuple<Type, detail::apply_as_wide<Cardinal>::template type>
   {
   };
 
