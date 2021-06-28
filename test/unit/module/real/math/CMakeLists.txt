@@ -77,13 +77,13 @@ make_unit("unit.real.math"  nthroot.cpp               )
 make_unit("unit.real.math"  pow.cpp                   )
 make_unit("unit.real.math"  pow_abs.cpp               )
 make_unit("unit.real.math"  powm1.cpp                 )
-
+make_unit("unit.real.math"  radindeg.cpp              )
+make_unit("unit.real.math"  radinpi.cpp               )
 
 ##==================================================================================================
 ## Elementwise function unit tests
 ##==================================================================================================
 
-make_all_units(ROOT unit.real.math NAME radindeg              ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME radinpi               ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME rempio2               ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME sec                   ARCH scalar simd TYPES ${real_types}    )
