@@ -66,16 +66,18 @@ make_unit("unit.real.math"  exp10.cpp                 )
 make_unit("unit.real.math"  exp2.cpp                  )
 make_unit("unit.real.math"  expm1.cpp                 )
 make_unit("unit.real.math"  expx2.cpp                 )
+make_unit("unit.real.math"  log.cpp                   )
+make_unit("unit.real.math"  log10.cpp                 )
+make_unit("unit.real.math"  log1p.cpp                 )
+make_unit("unit.real.math"  log2.cpp                  )
+make_unit("unit.real.math"  logspace_add.cpp          )
+make_unit("unit.real.math"  logspace_sub.cpp          )
+make_unit("unit.real.math"  lpnorm.cpp                )
 
 ##==================================================================================================
 ## Elementwise function unit tests
 ##==================================================================================================
 
-make_all_units(ROOT unit.real.math NAME log                   ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME log10                 ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME log1p                 ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME log2                  ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME logspace_add          ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME pow_abs               ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME powm1                 ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME radindeg              ARCH scalar simd TYPES ${real_types}    )
@@ -115,8 +117,5 @@ add_dependencies(unit.real.math.simd.exe       unit.real.math.heavy.simd.exe   )
 
 ##=================================================================================================
 make_all_units(ROOT unit.real.math.heavy NAME nthroot       ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math.heavy NAME exp2          ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT unit.real.math.heavy NAME lpnorm        ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math.heavy NAME pow           ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT unit.real.math.heavy NAME logspace_sub  ARCH scalar simd TYPES ${real_types}    )
 ##===================================================================================================
