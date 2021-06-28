@@ -80,7 +80,6 @@ namespace eve::algo
     }
 
     template <typename Traits, typename Rng>
-      requires detail::contiguous_range<std::remove_reference_t<Rng>>
     auto operator()(Traits traits_, Rng&& rng) const {
       return operator()(traits_, rng.begin(), rng.end());
     }

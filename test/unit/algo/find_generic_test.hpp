@@ -9,6 +9,7 @@
 
 #include "test.hpp"
 
+#include <eve/algo/as_range.hpp>
 #include <eve/algo/traits.hpp>
 
 #include <eve/memory/aligned_allocator.hpp>
@@ -22,12 +23,12 @@ namespace algo_test
   void find_one_ptr_test(T* f, T* l, T* res, Algo alg, Check check)
   {
     auto pred = [](auto x) { return x != 0; };
-    check(f, l, res, alg(f, l, pred));
+    check(f, l, res, alg(eve::algo::as_range(f, l), pred));
 
     if (eve::is_aligned<eve::expected_cardinal_v<T> * sizeof(T)>(f))
     {
       auto f_ = eve::aligned_ptr<T>(f);
-      check(f_, l, res, alg(f_, l, pred));
+      check(f_, l, res, alg(eve::algo::as_range(f_, l), pred));
     }
   }
 
@@ -82,20 +83,9 @@ namespace algo_test
   {
     find_generic_test_page_ends(as_t, alg, check);
 
-    find_generic_test_page_ends(as_t, [alg](auto ... args) {
-      return alg(eve::algo::traits(eve::algo::unroll<1>), args...);
-    }, check);
-
-    find_generic_test_page_ends(as_t, [alg](auto ... args) {
-      return alg(eve::algo::traits(eve::algo::unroll<2>), args...);
-    }, check);
-
-    find_generic_test_page_ends(as_t, [alg](auto ... args) {
-      return alg(eve::algo::traits(eve::algo::unroll<3>), args...);
-    }, check);
-
-    find_generic_test_page_ends(as_t, [alg](auto ... args) {
-      return alg(eve::algo::traits(eve::algo::unroll<4>), args...);
-    }, check);
+    find_generic_test_page_ends(as_t, alg[eve::algo::traits{eve::algo::unroll<1>}], check);
+    find_generic_test_page_ends(as_t, alg[eve::algo::traits{eve::algo::unroll<2>}], check);
+    find_generic_test_page_ends(as_t, alg[eve::algo::traits{eve::algo::unroll<3>}], check);
+    find_generic_test_page_ends(as_t, alg[eve::algo::traits{eve::algo::unroll<4>}], check);
   }
 }

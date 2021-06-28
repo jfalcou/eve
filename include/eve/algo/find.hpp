@@ -20,12 +20,18 @@
 
 namespace eve::algo
 {
-  struct find_if_ : one_range_algorithm_adapter<find_if_>
+  template <instance_of<algo::traits> Traits>
+  struct find_if_
   {
-    static constexpr auto default_traits()
+    Traits tr_;
+
+    constexpr explicit find_if_(Traits tr) : tr_(tr) {}
+
+    template <typename Settings>
+    constexpr auto operator[](algo::traits<Settings> tr) const
     {
-      return default_simple_algo_traits;
-    };
+      return find_if_<algo::traits<Settings>>{default_to(tr, tr_)};
+    }
 
     template <typename UnalignedI, typename P>
     struct delegate
@@ -68,9 +74,10 @@ namespace eve::algo
       P p;
     };
 
-    template <typename P>
-    EVE_FORCEINLINE auto impl(auto processed, P p) const
+    template <typename Rng, typename P>
+    EVE_FORCEINLINE auto operator()(Rng&& rng, P p) const
     {
+      auto processed = preprocess_range(tr_, std::forward<Rng>(rng));
       if (processed.begin() == processed.end())
       {
         return processed.to_output_iterator(processed.begin());
@@ -78,9 +85,10 @@ namespace eve::algo
 
       auto l = processed.begin().unaligned() + (processed.end() - processed.begin());
 
-      delegate d{l, p};
+      delegate<decltype(processed.end()), P> d{l, p};
       algo::for_each_iteration(processed.traits(), processed.begin(), processed.end())(d);
       return processed.to_output_iterator(d.found);
     }
-  } inline constexpr find_if;
+  };
+  inline constexpr find_if_ find_if{default_simple_algo_traits};
 }

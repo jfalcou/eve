@@ -16,15 +16,22 @@
 #include <eve/function/logical_or.hpp>
 
 #include <array>
+#include <utility>
 
 namespace eve::algo
 {
-  struct any_of_ : one_range_algorithm_adapter<any_of_>
+  template <instance_of<algo::traits> Traits>
+  struct any_of_
   {
-    static constexpr auto default_traits()
+    Traits tr_;
+
+    constexpr explicit any_of_(Traits tr) : tr_(tr) {}
+
+    template <typename Settings>
+    constexpr auto operator[](algo::traits<Settings> tr) const
     {
-      return default_simple_algo_traits;
-    };
+      return any_of_<algo::traits<Settings>>{default_to(tr, tr_)};
+    }
 
     template <typename P>
     struct delegate
@@ -51,14 +58,17 @@ namespace eve::algo
       bool res = false;
     };
 
-    template <typename P>
-    EVE_FORCEINLINE bool impl(auto processed, P p) const
+    template <typename Rng, typename P>
+    EVE_FORCEINLINE bool operator()(Rng&& rng, P p) const
     {
+      auto processed = preprocess_range(tr_, std::forward<Rng>(rng));
+
       if (processed.begin() == processed.end()) return false;
 
-      delegate d{p};
+      delegate<P> d{p};
       algo::for_each_iteration(processed.traits(), processed.begin(), processed.end())(d);
       return d.res;
     }
-  } inline constexpr any_of;
+  };
+  inline constexpr any_of_ any_of{default_simple_algo_traits};
 }
