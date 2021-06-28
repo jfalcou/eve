@@ -80,16 +80,20 @@ make_unit("unit.real.math"  powm1.cpp                 )
 make_unit("unit.real.math"  radindeg.cpp              )
 make_unit("unit.real.math"  radinpi.cpp               )
 
+make_unit("unit.real.math"  sec.cpp                   )
+make_unit("unit.real.math"  secd.cpp                  )
+make_unit("unit.real.math"  secpi.cpp                 )
+
+
 ##==================================================================================================
 ## Elementwise function unit tests
 ##==================================================================================================
 
 make_all_units(ROOT unit.real.math NAME radinpi               ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME rempio2               ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME sec                   ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME secd                  ARCH scalar simd TYPES ${real_types}    )
+
 make_all_units(ROOT unit.real.math NAME sech                  ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME secpi                 ARCH scalar simd TYPES ${real_types}    )
+
 make_all_units(ROOT unit.real.math NAME sin                   ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME sincos                ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME sinc                  ARCH scalar simd TYPES ${real_types}    )

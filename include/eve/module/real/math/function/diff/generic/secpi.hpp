@@ -20,6 +20,6 @@ namespace eve::detail
                                   , diff_type<1> const &
                                   , T const &x) noexcept
   {
-     return -pi(as(x))*secpi(x)*tanpi(x);
+     return pi(as(x))*secpi(x)*tanpi(x);
   }
 }
