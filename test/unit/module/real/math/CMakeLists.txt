@@ -74,6 +74,7 @@ make_unit("unit.real.math"  logspace_add.cpp          )
 make_unit("unit.real.math"  logspace_sub.cpp          )
 make_unit("unit.real.math"  lpnorm.cpp                )
 make_unit("unit.real.math"  nthroot.cpp               )
+make_unit("unit.real.math"  pow.cpp                   )
 make_unit("unit.real.math"  pow_abs.cpp               )
 
 
@@ -118,5 +119,4 @@ add_dependencies(unit.real.math.scalar.exe     unit.real.math.heavy.scalar.exe )
 add_dependencies(unit.real.math.simd.exe       unit.real.math.heavy.simd.exe   )
 
 ##=================================================================================================
-make_all_units(ROOT unit.real.math.heavy NAME pow           ARCH scalar simd TYPES ${all_types}     )
 ##===================================================================================================
