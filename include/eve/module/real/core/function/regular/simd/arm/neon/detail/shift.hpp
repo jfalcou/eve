@@ -35,7 +35,7 @@ namespace eve::detail
     else if constexpr ( c == category::uint8x16 ) return vshlq_u8 (v0, s1);
     // arm_64
     else if constexpr ( c == category::int64x1  ) return vshl_s64 (v0, s1);
-    else if constexpr ( c == category::uint64x1 ) return vshl_s32 (v0, s1);
+    else if constexpr ( c == category::uint64x1 ) return vshl_u64 (v0, s1);
     else if constexpr ( c == category::int32x2  ) return vshl_s32 (v0, s1);
     else if constexpr ( c == category::uint32x2 ) return vshl_u32 (v0, s1);
     else if constexpr ( c == category::int16x4  ) return vshl_s16 (v0, s1);

@@ -42,7 +42,7 @@ namespace eve::detail
     else
     {
 #ifndef NDEBUG
-      return is_gtz(a1) ? (a0 >>max(zero(eve::as(a1)), a1)) : T(a0 << max(zero(eve::as(a1)), minus(a1)));
+      return is_gtz(a1) ? T(a0 >>max(zero(eve::as(a1)), a1)) : T(a0 << max(zero(eve::as(a1)), minus(a1)));
 #else
       return is_gtz(a1) ? T(a0 >> a1) : T(a0 <<  minus(a1));
 #endif
@@ -67,7 +67,7 @@ namespace eve::detail
       if constexpr(has_native_abi_v<T> && has_native_abi_v<U>)
       {
 #ifndef NDEBUG
-      return if_else(is_gtz(a1), (a0 >> max(zero(eve::as(a1)), a1)), T(a0 << max(zero(eve::as(a1)), -a1)));
+      return if_else(is_gtz(a1), T(a0 >> max(zero(eve::as(a1)), a1)), T(a0 << max(zero(eve::as(a1)), -a1)));
 #else
       return if_else(is_gtz(a1), T(a0 >> a1), T(a0 <<  minus(a1)));
 #endif
