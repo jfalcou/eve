@@ -26,7 +26,7 @@
 EVE_TEST_TYPES( "Check return types of cscpi"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -37,12 +37,12 @@ EVE_TEST_TYPES( "Check return types of cscpi"
 //==================================================================================================
 // cscpi  tests
 //==================================================================================================
-auto mrest  = []<typename T>(eve::as_<T> const & ){  return T(-0.25); };
-auto rest   = []<typename T>(eve::as_<T> const & ){  return T( 0.25); };
-auto msmall = []<typename T>(eve::as_<T> const & ){  return T(-0.5 ); };
-auto small  = []<typename T>(eve::as_<T> const & ){  return T( 0.5 ); };
-auto mmed   = []<typename T>(eve::as_<T> const & tgt){  return -eve::detail::Rempio2_limit(eve::medium_type(), tgt)*eve::invpi(tgt); };
-auto med    = []<typename T>(eve::as_<T> const & tgt){  return  eve::detail::Rempio2_limit(eve::medium_type(), tgt)*eve::invpi(tgt); };
+auto mrest  = []<typename T>(eve::as<T> const & ){  return T(-0.25); };
+auto rest   = []<typename T>(eve::as<T> const & ){  return T( 0.25); };
+auto msmall = []<typename T>(eve::as<T> const & ){  return T(-0.5 ); };
+auto small  = []<typename T>(eve::as<T> const & ){  return T( 0.5 ); };
+auto mmed   = []<typename T>(eve::as<T> const & tgt){  return -eve::detail::Rempio2_limit(eve::medium_type(), tgt)*eve::invpi(tgt); };
+auto med    = []<typename T>(eve::as<T> const & tgt){  return  eve::detail::Rempio2_limit(eve::medium_type(), tgt)*eve::invpi(tgt); };
 
 EVE_TEST( "Check behavior of cscpi on wide"
         , eve::test::simd::ieee_reals

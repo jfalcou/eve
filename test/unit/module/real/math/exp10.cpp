@@ -22,7 +22,7 @@
 EVE_TEST_TYPES( "Check return types of exp10"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -54,7 +54,7 @@ EVE_TEST( "Check behavior of exp10 on wide"
 EVE_TEST_TYPES( "Check return types of exp10"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   TTS_ULP_EQUAL ( eve::pedantic(eve::exp10)(T(1)), T(10), 0.5);
   TTS_IEEE_EQUAL( eve::pedantic(eve::exp10)(T(0)), T(1));

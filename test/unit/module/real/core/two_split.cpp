@@ -16,7 +16,7 @@
 EVE_TEST_TYPES( "Check return types of two_split"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t =eve::element_type_t<T>;
   using wtyp = kumi::tuple<T, T>;
@@ -32,7 +32,7 @@ EVE_TEST_TYPES( "Check return types of two_split"
 EVE_TEST_TYPES( "Check behavior of two_split on all types full range"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   {
     auto [p0, p1] = eve::two_split(T(1));

@@ -25,7 +25,7 @@
 EVE_TEST_TYPES( "Check return types of cscd"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -36,12 +36,12 @@ EVE_TEST_TYPES( "Check return types of cscd"
 //==================================================================================================
 // cscd  tests
 //==================================================================================================
-auto mrest  = []<typename T>(eve::as_<T> const & ){  return T(-45); };
-auto rest   = []<typename T>(eve::as_<T> const & ){  return T( 45); };
-auto msmall = []<typename T>(eve::as_<T> const & ){  return T(-90 ); };
-auto small  = []<typename T>(eve::as_<T> const & ){  return T( 90 ); };
-auto mmed   = []<typename T>(eve::as_<T> const & ){  return -5000; };
-auto med    = []<typename T>(eve::as_<T> const & ){  return  5000; };
+auto mrest  = []<typename T>(eve::as<T> const & ){  return T(-45); };
+auto rest   = []<typename T>(eve::as<T> const & ){  return T( 45); };
+auto msmall = []<typename T>(eve::as<T> const & ){  return T(-90 ); };
+auto small  = []<typename T>(eve::as<T> const & ){  return T( 90 ); };
+auto mmed   = []<typename T>(eve::as<T> const & ){  return -5000; };
+auto med    = []<typename T>(eve::as<T> const & ){  return  5000; };
 
 EVE_TEST( "Check behavior of cscd on wide"
         , eve::test::simd::ieee_reals

@@ -208,7 +208,7 @@ namespace eve::detail
                                   ) noexcept
   requires simd_compatible_ptr<Ptr,wide<T, N>> && std::same_as<abi_t<T, N>, emulated_>
   {
-    return piecewise_load(tgt, asraw_pointer(ptr));
+    return piecewise_load(tgt, as_raw_pointer(ptr));
   }
 
   //================================================================================================
