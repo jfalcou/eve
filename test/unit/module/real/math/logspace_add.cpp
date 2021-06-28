@@ -44,13 +44,17 @@ EVE_TEST_TYPES( "Check return types of logspace_add"
 //==================================================================================================
 // logspace_add  tests
 //==================================================================================================
+auto maxi = []<typename T>(eve::as_<T> const & tgt)
+{
+  return eve::valmax(tgt)/3;
+};
 EVE_TEST( "Check behavior of logspace_add on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate( eve::test::randoms(0.0, eve::valmax)
-                             , eve::test::randoms(0.0, eve::valmax)
+        , eve::test::generate( eve::test::randoms(0.0, maxi)
+                             , eve::test::randoms(0.0, maxi)
                              , eve::test::randoms(0.5, 2.0)
                              , eve::test::randoms(0.5, 2.0)
-                             , eve::test::randoms(0.0, eve::valmax)
+                             , eve::test::randoms(0.0, maxi)
                              , eve::test::randoms(0.5, 2.0)
                              )
         )
