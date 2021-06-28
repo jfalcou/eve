@@ -5,24 +5,62 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/powm1.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/all.hpp>
+#include "test.hpp"
+#include <eve/concept/value.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
-#include <eve/platform.hpp>
+#include <eve/function/dec.hpp>
+#include <eve/function/powm1.hpp>
+#include <eve/function/diff/powm1.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check powm1_abs return type", EVE_TYPE)
+//==================================================================================================
+// Types tests
+//==================================================================================================
+EVE_TEST_TYPES( "Check return types of powm1"
+            , eve::test::simd::ieee_reals
+            )
+<typename T>(eve::as_<T>)
 {
-  if (eve::floating_value<T>)
-  {
-    TTS_EXPR_IS(eve::powm1(T(0), T(0)), T);
-  }
-}
+  using v_t = eve::element_type_t<T>;
 
-TTS_CASE_TPL("powm1 conformity", EVE_TYPE)
+  TTS_EXPR_IS( eve::powm1(T(), T())  , T);
+  TTS_EXPR_IS( eve::powm1(v_t(), v_t()), v_t);
+  TTS_EXPR_IS( eve::powm1(T(), v_t()), T);
+//  TTS_EXPR_IS( eve::powm1(v_t(), T()), T);
+};
+
+//==================================================================================================
+// powm1  tests
+//==================================================================================================
+EVE_TEST( "Check behavior of powm1 on wide"
+        , eve::test::simd::ieee_reals
+        , eve::test::generate( eve::test::randoms(0, eve::valmax)
+                             , eve::test::randoms(eve::valmin, eve::valmax)
+                             , eve::test::randoms(0.0, 1.0)
+                             , eve::test::randoms(-1.0, 1.0))
+        )
+<typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
+{
+  using eve::detail::map;
+  using v_t = eve::element_type_t<T>;
+
+  TTS_ULP_EQUAL(eve::powm1(a0, a1)      , map([](auto e, auto f) -> v_t { return std::pow(double(e), double(f))-1; }, a0, a1), 2);
+  TTS_ULP_EQUAL(eve::powm1(a2, a3)      , map([](auto e, auto f) -> v_t { return std::pow(double(e), double(f))-1; }, a2, a3), 5);
+  TTS_ULP_EQUAL(eve::diff_1st(eve::powm1)(a0, a1), eve::pow(a0, eve::dec(a1))*a1, 2);
+  TTS_ULP_EQUAL(eve::diff_1st(eve::powm1)(a2, a3), eve::pow(a2, eve::dec(a3))*a3, 2);
+  TTS_ULP_EQUAL(eve::diff_2nd(eve::powm1)(a0, a1), eve::pow(a0, a1)*eve::log(a0), 2);
+  TTS_ULP_EQUAL(eve::diff_2nd(eve::powm1)(a2, a3), eve::pow(a2, a3)*eve::log(a2), 2);
+};
+
+
+EVE_TEST_TYPES( "Check  powm1"
+            , eve::test::simd::all_types
+            )
+<typename T>(eve::as_<T>)
 {
   using eve::dec;
   if constexpr(eve::floating_value<T>)
@@ -76,4 +114,4 @@ TTS_CASE_TPL("powm1 conformity", EVE_TYPE)
       }
     }
   }
-}
+};
