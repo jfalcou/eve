@@ -19,7 +19,7 @@
 EVE_TEST_TYPES( "Check return types of rotr"
             , eve::test::simd::unsigned_integers
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using eve::rotr;
   using v_t = eve::element_type_t<T>;
@@ -44,13 +44,13 @@ EVE_TEST_TYPES( "Check return types of rotr"
 //==================================================================================================
 // Specific generator - valmin or valmin+1 if T is signed
 //==================================================================================================
-auto mini = []<typename T>(eve::as_<T> const & )
+auto mini = []<typename T>(eve::as<T> const & )
 {
   using v_t = eve::element_type_t<T>;
   return -sizeof(v_t)*8+1;
 };
 
-auto maxi = []<typename T>(eve::as_<T> const & )
+auto maxi = []<typename T>(eve::as<T> const & )
 {
   using v_t = eve::element_type_t<T>;
   return sizeof(v_t)*8-1;

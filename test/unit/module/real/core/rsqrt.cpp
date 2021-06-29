@@ -22,7 +22,7 @@
 EVE_TEST_TYPES( "Check return types of rsqrt"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -54,7 +54,7 @@ EVE_TEST( "Check behavior of rsqrt on wide"
 EVE_TEST_TYPES( "Check return types of rsqrt"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
   auto z = eve::mindenormal(eve::as<v_t>());

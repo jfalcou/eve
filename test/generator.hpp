@@ -85,12 +85,12 @@ namespace eve::test
 
   template<typename G> inline auto as_signed_integer(G g)
   {
-    return [g]<typename T>(eve::as_<T>, auto& s) { return g( eve::as_<eve::as_integer_t<T, signed>>{},s); };
+    return [g]<typename T>(eve::as<T>, auto& s) { return g( eve::as<eve::as_integer_t<T, signed>>{},s); };
   }
 
   template<typename G> inline auto as_unsigned(G g)
   {
-    return [g]<typename T>(eve::as_<T>, auto& s) { return g( eve::as_<eve::as_integer_t<T, unsigned>>{},s); };
+    return [g]<typename T>(eve::as<T>, auto& s) { return g( eve::as<eve::as_integer_t<T, unsigned>>{},s); };
   }
   //================================================================================================
   // arithmetic ramp - generate V V+1 .. V+n

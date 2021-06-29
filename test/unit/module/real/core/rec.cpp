@@ -17,7 +17,7 @@
 // Types tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of eve::rec", eve::test::simd::all_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -41,7 +41,7 @@ EVE_TEST_TYPES( "Check return types of eve::rec", eve::test::simd::all_types)
 //==================================================================================================
 // Specific generator - valmin or valmin+1 if T is signed
 //==================================================================================================
-auto minimal = []<typename T>(eve::as_<T> const & tgt)
+auto minimal = []<typename T>(eve::as<T> const & tgt)
 {
   constexpr auto sign = std::is_signed_v<T> ? 1 : 0;
   return eve::valmin(tgt) + sign;
