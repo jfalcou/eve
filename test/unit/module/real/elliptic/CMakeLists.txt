@@ -23,17 +23,16 @@ make_unit("unit.real.elliptic"  ellint_1.cpp                  )
 make_unit("unit.real.elliptic"  ellint_2.cpp                  )
 #make_unit("unit.real.elliptic"  ellint_3.cpp                  )
 make_unit("unit.real.elliptic"  ellint_d.cpp                  )
+make_unit("unit.real.elliptic"  ellint_rc.cpp                 )
+make_unit("unit.real.elliptic"  ellint_rd.cpp                 )
+make_unit("unit.real.elliptic"  ellint_rf.cpp                 )
+make_unit("unit.real.elliptic"  ellint_rg.cpp                 )
 
 ##==================================================================================================
 ## Elementwise function unit tests
 ##==================================================================================================
 
 #make_all_units(ROOT unit.real.elliptic NAME am                   ARCH scalar simd TYPES ${real_types}    )
-#make_all_units(ROOT unit.real.elliptic NAME ellint_d             ARCH scalar simd TYPES ${real_types}    )
-#make_all_units(ROOT unit.real.elliptic NAME ellint_rc            ARCH scalar simd TYPES ${real_types}    )
-#make_all_units(ROOT unit.real.elliptic NAME ellint_rd            ARCH scalar simd TYPES ${real_types}    )
-#make_all_units(ROOT unit.real.elliptic NAME ellint_rf            ARCH scalar simd TYPES ${real_types}    )
-#make_all_units(ROOT unit.real.elliptic NAME ellint_rg            ARCH scalar simd TYPES ${real_types}    )
 # make_all_units(ROOT unit.real.elliptic NAME ellint_3             ARCH scalar simd TYPES ${real_types}    )
 # make_all_units(ROOT unit.real.elliptic NAME heuman_lambda        ARCH scalar simd TYPES ${real_types}    )
 # make_all_units(ROOT unit.real.elliptic NAME jacobi_real.elliptic      ARCH scalar simd TYPES ${real_types}    )
