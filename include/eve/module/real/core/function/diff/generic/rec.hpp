@@ -17,7 +17,7 @@
 namespace eve::detail
 {
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T rec_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr auto rec_(EVE_SUPPORTS(cpu_)
                                     , diff_type<1> const &
                                     , T x) noexcept
   {

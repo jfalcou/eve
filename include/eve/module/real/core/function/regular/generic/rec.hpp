@@ -71,4 +71,11 @@ namespace eve::detail
     }
   }
 
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto rec_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
+  {
+    return mask_op( cond, eve::rec, t);
+  }
 }

@@ -7,12 +7,12 @@
 #include "test.hpp"
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
-#include <eve/function/shl.hpp>
+#include <eve/function/rshl.hpp>
 
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of shl"
+EVE_TEST_TYPES( "Check return types of rshl"
               , eve::test::simd::unsigned_types
               )
 <typename T>(eve::as_<T>)
@@ -24,49 +24,37 @@ EVE_TEST_TYPES( "Check return types of shl"
   using vu_t = eve::as_integer_t<v_t, unsigned>;
 
   //regular
-  TTS_EXPR_IS( eve::shl(T(), T()  ) , T);
-  TTS_EXPR_IS( eve::shl(T(), v_t()) , T);
-  TTS_EXPR_IS( eve::shl(v_t(), T()) , T);
-  TTS_EXPR_IS( eve::shl(v_t(), v_t()) , v_t);
-  TTS_EXPR_IS( eve::shl(T(), i_t()  ) , T);
-  TTS_EXPR_IS( eve::shl(T(), u_t()) , T);
-  TTS_EXPR_IS( eve::shl(v_t(), i_t()) , T);
-  TTS_EXPR_IS( eve::shl(v_t(), u_t()) , T);
-  TTS_EXPR_IS( eve::shl(T(), vi_t()  ) , T);
-  TTS_EXPR_IS( eve::shl(T(), vu_t()) , T);
-  TTS_EXPR_IS( eve::shl(v_t(), vi_t()) , v_t);
-  TTS_EXPR_IS( eve::shl(v_t(), vu_t()) , v_t);
+  TTS_EXPR_IS( eve::rshl(T(), T()  ) , T);
+  TTS_EXPR_IS( eve::rshl(T(), v_t()) , T);
+  TTS_EXPR_IS( eve::rshl(v_t(), T()) , T);
+  TTS_EXPR_IS( eve::rshl(v_t(), v_t()) , v_t);
+  TTS_EXPR_IS( eve::rshl(T(), i_t()  ) , T);
+  TTS_EXPR_IS( eve::rshl(T(), u_t()) , T);
+  TTS_EXPR_IS( eve::rshl(v_t(), i_t()) , T);
+  TTS_EXPR_IS( eve::rshl(v_t(), u_t()) , T);
+  TTS_EXPR_IS( eve::rshl(T(), vi_t()  ) , T);
+  TTS_EXPR_IS( eve::rshl(T(), vu_t()) , T);
+  TTS_EXPR_IS( eve::rshl(v_t(), vi_t()) , v_t);
+  TTS_EXPR_IS( eve::rshl(v_t(), vu_t()) , v_t);
 
 };
 
 //==================================================================================================
-// shl tests
+// rshl tests
 //==================================================================================================
 auto shift_max = []< typename T>(eve::as_<T> const &){return sizeof(eve::element_type_t<T>)*8-1;};
+auto shift_min = []< typename T>(eve::as_<T> const &){return -sizeof(eve::element_type_t<T>)*8+1;};
 
-EVE_TEST( "Check behavior of shl on integral types"
+EVE_TEST( "Check behavior of rshl on integral types"
         , eve::test::simd::unsigned_types
         , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                              , eve::test::randoms(0u, shift_max)
+                              , eve::test::as_signed_integer(eve::test::randoms(shift_min, shift_max))
                               )
         )
-<typename T>(T const& a0, T const& a1)
+  <typename T, typename U>(T const& a0, U const& a1)
 {
-  using eve::shl;
-  TTS_EQUAL( shl(a0, a1), T([&](auto i, auto) { return shl(a0.get(i), a1.get(i)); }));
-
-};
-
-EVE_TEST( "Check behavior of shl with scalar shift on integral types"
-        , eve::test::simd::unsigned_types
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                              , eve::test::randoms(0u, shift_max)
-                              )
-        )
-<typename T, typename I>(T const& a0,I a1)
-{
-  using eve::shl;
+  using eve::rshl;
+  TTS_EQUAL( rshl(a0, a1), map([&](auto e, auto f) { return rshl(e, f); }, a0, a1));
   auto val = a1.get(0);
-  TTS_EQUAL( shl(a0, val), T([&](auto i, auto) { return shl(a0.get(i), val); }));
-
+  TTS_EQUAL( rshl(a0, val), map([&](auto e) { return rshl(e, val); }, a0));
 };

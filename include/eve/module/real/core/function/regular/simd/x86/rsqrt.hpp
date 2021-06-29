@@ -75,7 +75,10 @@ namespace eve::detail
       auto a0 = rsqrt_x86(a00);
       return if_else(is_eqz(x), inf(eve::as(x)), pedantic(ldexp)(a0, -nn/2));
     }
-    else return rsqrt_x86(x);
+    else
+    {
+      return rsqrt_x86(x);
+    }
   }
 
   //------------------------------------------------------------------------------------------------
