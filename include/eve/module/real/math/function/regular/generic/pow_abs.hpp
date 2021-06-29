@@ -83,7 +83,6 @@ namespace eve::detail
       if(ax_is1 || is_eqz(y)) return T(1);
       if(iseqzx && is_gtz(y)) return T(0);
     }
-
     eli_t const largelimit = (sizeof(eli_t) == 4 ? 31 : 63);
     auto [yf,  yi] = eve::modf(eve::abs(y));
     auto test =  yf > T(0.5);
@@ -94,7 +93,10 @@ namespace eve::detail
     auto large = (yi > T(largelimit));
     if constexpr(real_scalar_value<T> )
     {
-      if(large) return (ax < one(as(x))) ? T(0) : inf(as(x));
+      if(large){
+        auto zz =  (ax < one(as(x))) ? T(0) : inf(as(x));
+        return ylt0 ? rec(zz) : zz;
+      }
     }
     else
       yi =  if_else(large, eve::one, yi);

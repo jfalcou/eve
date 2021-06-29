@@ -30,6 +30,7 @@
 #include <eve/function/pow_abs.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/sqr.hpp>
+#include <eve/function/abs.hpp>
 
 namespace eve::detail
 {
