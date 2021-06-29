@@ -106,7 +106,7 @@ make_unit("unit.real.math"  tanpi.cpp                 )
 ##==================================================================================================
 
 make_all_units(ROOT unit.real.math NAME radinpi               ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME rempio2               ARCH scalar simd TYPES ${real_types}    )
+#make_all_units(ROOT unit.real.math NAME rempio2               ARCH scalar simd TYPES ${real_types}    )
 
 ## ================================================================================================
 # Targets that require more RAM to compile
