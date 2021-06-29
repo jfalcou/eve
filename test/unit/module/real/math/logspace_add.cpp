@@ -23,7 +23,7 @@
 EVE_TEST_TYPES( "Check return types of logspace_add"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -44,7 +44,7 @@ EVE_TEST_TYPES( "Check return types of logspace_add"
 //==================================================================================================
 // logspace_add  tests
 //==================================================================================================
-auto maxi = []<typename T>(eve::as_<T> const & tgt)
+auto maxi = []<typename T>(eve::as<T> const & tgt)
 {
   return eve::valmax(tgt)/3;
 };
