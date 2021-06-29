@@ -5,27 +5,65 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/pow.hpp>
-#include <eve/function/is_negative.hpp>
-#include <eve/function/is_positive.hpp>
-#include <eve/function/all.hpp>
+#include "test.hpp"
+#include <eve/concept/value.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
-#include <eve/platform.hpp>
+#include <eve/function/is_positive.hpp>
+#include <eve/function/is_negative.hpp>
+#include <eve/function/log.hpp>
+#include <eve/function/abs.hpp>
+#include <eve/function/pow.hpp>
+#include <eve/function/diff/pow.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check pow_abs return type", EVE_TYPE)
+//==================================================================================================
+// Types tests
+//==================================================================================================
+EVE_TEST_TYPES( "Check return types of pow"
+            , eve::test::simd::all_types
+            )
+<typename T>(eve::as_<T>)
 {
-  if (eve::floating_value<T>)
-  {
-    TTS_EXPR_IS(eve::pow(T(0), T(0)), T);
-  }
+  using v_t = eve::element_type_t<T>;
 
-  TTS_EXPR_IS(eve::pow(T(0), int(0)), T);
-}
+  TTS_EXPR_IS( eve::pow(T(), T())  , T);
+  TTS_EXPR_IS( eve::pow(v_t(), v_t()), v_t);
+  TTS_EXPR_IS( eve::pow(T(), v_t()), T);
+//  TTS_EXPR_IS( eve::pow(v_t(), T()), T);
+};
 
-TTS_CASE_TPL("pow conformity", EVE_TYPE)
+//==================================================================================================
+// pow  tests
+//==================================================================================================
+EVE_TEST( "Check behavior of pow on wide"
+        , eve::test::simd::ieee_reals
+        , eve::test::generate( eve::test::randoms(0, eve::valmax)
+                             , eve::test::randoms(eve::valmin, eve::valmax)
+                             , eve::test::randoms(0.0, 1.0)
+                             , eve::test::randoms(-1.0, 1.0))
+        )
+<typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
+{
+  using eve::detail::map;
+  using v_t = eve::element_type_t<T>;
+
+  TTS_ULP_EQUAL(eve::pow(a0, a1)      , map([](auto e, auto f) -> v_t { return std::pow(std::abs(e), f); }, a0, a1), 2);
+  TTS_ULP_EQUAL(eve::pow(a2, a3)      , map([](auto e, auto f) -> v_t { return std::pow(std::abs(e), f); }, a2, a3), 2);
+  TTS_ULP_EQUAL(eve::diff_1st(eve::pow)(a0, a1), eve::pow(a0, eve::dec(a1))*a1, 2);
+  TTS_ULP_EQUAL(eve::diff_1st(eve::pow)(a2, a3), eve::pow(a2, eve::dec(a3))*a3, 2);
+  TTS_ULP_EQUAL(eve::diff_2nd(eve::pow)(a0, a1), eve::pow(a0, a1)*eve::log(a0), 2);
+  TTS_ULP_EQUAL(eve::diff_2nd(eve::pow)(a2, a3), eve::pow(a2, a3)*eve::log(a2), 2);
+};
+
+
+EVE_TEST_TYPES( "Check  pow"
+            , eve::test::simd::all_types
+            )
+<typename T>(eve::as_<T>)
 {
   if constexpr(eve::floating_value<T>)
   {
@@ -85,4 +123,4 @@ TTS_CASE_TPL("pow conformity", EVE_TYPE)
       }
     }
   }
-}
+};

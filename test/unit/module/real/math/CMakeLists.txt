@@ -73,14 +73,17 @@ make_unit("unit.real.math"  log2.cpp                  )
 make_unit("unit.real.math"  logspace_add.cpp          )
 make_unit("unit.real.math"  logspace_sub.cpp          )
 make_unit("unit.real.math"  lpnorm.cpp                )
+make_unit("unit.real.math"  nthroot.cpp               )
+make_unit("unit.real.math"  pow.cpp                   )
+make_unit("unit.real.math"  pow_abs.cpp               )
+make_unit("unit.real.math"  powm1.cpp                 )
+make_unit("unit.real.math"  radindeg.cpp              )
+make_unit("unit.real.math"  radinpi.cpp               )
 
 ##==================================================================================================
 ## Elementwise function unit tests
 ##==================================================================================================
 
-make_all_units(ROOT unit.real.math NAME pow_abs               ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME powm1                 ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME radindeg              ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME radinpi               ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME rempio2               ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME sec                   ARCH scalar simd TYPES ${real_types}    )
@@ -116,6 +119,4 @@ add_dependencies(unit.real.math.scalar.exe     unit.real.math.heavy.scalar.exe )
 add_dependencies(unit.real.math.simd.exe       unit.real.math.heavy.simd.exe   )
 
 ##=================================================================================================
-make_all_units(ROOT unit.real.math.heavy NAME nthroot       ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math.heavy NAME pow           ARCH scalar simd TYPES ${all_types}     )
 ##===================================================================================================
