@@ -87,6 +87,7 @@ make_unit("unit.real.math"  sech.cpp                  )
 make_unit("unit.real.math"  sin.cpp                   )
 make_unit("unit.real.math"  sinc.cpp                  )
 make_unit("unit.real.math"  sincos.cpp                )
+make_unit("unit.real.math"  sind.cpp                  )
 
 ##==================================================================================================
 ## Elementwise function unit tests
