@@ -80,6 +80,7 @@ make_unit("unit.real.math"  powm1.cpp                 )
 make_unit("unit.real.math"  radindeg.cpp              )
 make_unit("unit.real.math"  radinpi.cpp               )
 
+make_unit("unit.real.math"  rempio2.cpp               )
 make_unit("unit.real.math"  sec.cpp                   )
 make_unit("unit.real.math"  secd.cpp                  )
 make_unit("unit.real.math"  secpi.cpp                 )
