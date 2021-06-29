@@ -42,9 +42,9 @@ EVE_TEST_TYPES( "Check return types of nthroot"
 //==================================================================================================
 EVE_TEST( "Check behavior of nthroot on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate( eve::test::randoms(eve::valmin, eve::valmax)
+        , eve::test::generate( eve::test::randoms(-100.0,  100.0)
                              , eve::test::randoms(0, eve::valmax)
-                             , eve::test::as_integer(eve::test::randoms(0, 5))
+                             , eve::test::as_integer(eve::test::randoms(1, 5))
                              , eve::test::as_integer(eve::test::randoms(1, 10))
                              )
         )
