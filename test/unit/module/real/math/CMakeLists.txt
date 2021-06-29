@@ -94,6 +94,11 @@ make_unit("unit.real.math"  sinhc.cpp                 )
 make_unit("unit.real.math"  sinhcosh.cpp              )
 make_unit("unit.real.math"  sinpi.cpp                 )
 make_unit("unit.real.math"  sinpic.cpp                )
+make_unit("unit.real.math"  sinpicospi.cpp            )
+make_unit("unit.real.math"  tan.cpp                   )
+make_unit("unit.real.math"  tand.cpp                  )
+make_unit("unit.real.math"  tanh.cpp                  )
+make_unit("unit.real.math"  tanpi.cpp                 )
 
 ##==================================================================================================
 ## Elementwise function unit tests
@@ -101,13 +106,6 @@ make_unit("unit.real.math"  sinpic.cpp                )
 
 make_all_units(ROOT unit.real.math NAME radinpi               ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME rempio2               ARCH scalar simd TYPES ${real_types}    )
-
-make_all_units(ROOT unit.real.math NAME sinpic                ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME sinpicospi            ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME tan                   ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME tand                  ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME tanh                  ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME tanpi                 ARCH scalar simd TYPES ${real_types}    )
 
 ## ================================================================================================
 # Targets that require more RAM to compile
