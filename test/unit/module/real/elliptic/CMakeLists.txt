@@ -21,6 +21,8 @@ add_dependencies(unit.real.elliptic.exe unit.real.elliptic.simd.exe   )
 ##==================================================================================================
 make_unit("unit.real.elliptic"  ellint_1.cpp                  )
 make_unit("unit.real.elliptic"  ellint_2.cpp                  )
+#make_unit("unit.real.elliptic"  ellint_3.cpp                  )
+make_unit("unit.real.elliptic"  ellint_d.cpp                  )
 
 ##==================================================================================================
 ## Elementwise function unit tests
