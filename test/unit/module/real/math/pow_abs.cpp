@@ -50,7 +50,7 @@ EVE_TEST( "Check behavior of pow_abs on wide"
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
-  TTS_ULP_EQUAL(eve::pow_abs(a0, a1)      , map([](auto e, auto f) -> v_t { return std::pow(std::abs(e), f); }, a0, a1), 2);
+  TTS_ULP_EQUAL(eve::pow_abs(a0, a1)      , map([](auto e, auto f) -> v_t { return std::pow(std::abs(e), f); }, a0, a1), 32);
   TTS_ULP_EQUAL(eve::pow_abs(a2, a3)      , map([](auto e, auto f) -> v_t { return std::pow(std::abs(e), f); }, a2, a3), 2);
   TTS_ULP_EQUAL(eve::diff_1st(eve::pow_abs)(a0, a1), eve::pow_abs(a0, eve::dec(a1))*a1, 2);
   TTS_ULP_EQUAL(eve::diff_1st(eve::pow_abs)(a2, a3), eve::pow_abs(a2, eve::dec(a3))*a3, 2);
