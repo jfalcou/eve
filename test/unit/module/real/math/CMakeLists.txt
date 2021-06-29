@@ -88,6 +88,7 @@ make_unit("unit.real.math"  sin.cpp                   )
 make_unit("unit.real.math"  sinc.cpp                  )
 make_unit("unit.real.math"  sincos.cpp                )
 make_unit("unit.real.math"  sind.cpp                  )
+make_unit("unit.real.math"  sindcosd.cpp              )
 
 ##==================================================================================================
 ## Elementwise function unit tests
@@ -96,8 +97,6 @@ make_unit("unit.real.math"  sind.cpp                  )
 make_all_units(ROOT unit.real.math NAME radinpi               ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME rempio2               ARCH scalar simd TYPES ${real_types}    )
 
-make_all_units(ROOT unit.real.math NAME sind                  ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME sindcosd              ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME sinh                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME sinhc                 ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME sinhcosh              ARCH scalar simd TYPES ${real_types}    )
