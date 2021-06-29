@@ -83,6 +83,8 @@ make_unit("unit.real.math"  radinpi.cpp               )
 make_unit("unit.real.math"  sec.cpp                   )
 make_unit("unit.real.math"  secd.cpp                  )
 make_unit("unit.real.math"  secpi.cpp                 )
+make_unit("unit.real.math"  sech.cpp                  )
+make_unit("unit.real.math"  sin.cpp                   )
 
 
 ##==================================================================================================
@@ -92,9 +94,6 @@ make_unit("unit.real.math"  secpi.cpp                 )
 make_all_units(ROOT unit.real.math NAME radinpi               ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME rempio2               ARCH scalar simd TYPES ${real_types}    )
 
-make_all_units(ROOT unit.real.math NAME sech                  ARCH scalar simd TYPES ${real_types}    )
-
-make_all_units(ROOT unit.real.math NAME sin                   ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME sincos                ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME sinc                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.math NAME sind                  ARCH scalar simd TYPES ${real_types}    )
