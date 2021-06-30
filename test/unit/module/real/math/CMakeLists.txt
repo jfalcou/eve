@@ -80,7 +80,7 @@ make_unit("unit.real.math"  powm1.cpp                 )
 make_unit("unit.real.math"  radindeg.cpp              )
 make_unit("unit.real.math"  radinpi.cpp               )
 
-make_unit("unit.real.math"  rempio2.cpp               )
+#make_unit("unit.real.math"  rempio2.cpp               )
 make_unit("unit.real.math"  sec.cpp                   )
 make_unit("unit.real.math"  secd.cpp                  )
 make_unit("unit.real.math"  secpi.cpp                 )
@@ -105,8 +105,6 @@ make_unit("unit.real.math"  tanpi.cpp                 )
 ## Elementwise function unit tests
 ##==================================================================================================
 
-make_all_units(ROOT unit.real.math NAME radinpi               ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.math NAME rempio2               ARCH scalar simd TYPES ${real_types}    )
 
 ## ================================================================================================
 # Targets that require more RAM to compile
