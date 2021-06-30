@@ -5,6 +5,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include "test.hpp"
 #include <eve/constant/ieee754.hpp>
 #include <eve/platform.hpp>
 #include <eve/function/bit_cast.hpp>
@@ -13,12 +14,14 @@
 #include <eve/constant/one.hpp>
 #include <eve/constant/bitincrement.hpp>
 
-TTS_CASE_TPL("Check ieee754 constants behavior", EVE_TYPE)
+EVE_TEST_TYPES( "Check ieee754 constants"
+            , eve::test::simd::ieee_reals
+            )
+<typename T>(eve::as_<T>)
 {
   using eve::as;
   using elt_t = eve::element_type_t<T>;
   using ilt_t = eve::as_integer_t<elt_t>;
-//  using ui_t  = eve::as_integer_t<T, unsigned>;
   using  i_t  = eve::as_integer_t<T,   signed>;
   TTS_EQUAL(eve::bitincrement(as<T>()), T(eve::bit_cast(eve::one(as<ilt_t>()), as<elt_t>())));
   TTS_IEEE_EQUAL(eve::nan(as<T>()),  T(0.0/0.0));
@@ -52,4 +55,4 @@ TTS_CASE_TPL("Check ieee754 constants behavior", EVE_TYPE)
     TTS_EQUAL(eve::nbmantissabits(as<T>()), i_t(52));
     TTS_EQUAL(eve::twotonmb(as<T>()), eve::exp2(T(52.0)));
   }
-}
+};

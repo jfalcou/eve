@@ -5,6 +5,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include "test.hpp"
 #include <eve/constant/limit.hpp>
 #include <eve/platform.hpp>
 #include <eve/function/sqrt.hpp>
@@ -12,7 +13,10 @@
 #include <eve/concept/value.hpp>
 #include <limits>
 
-TTS_CASE_TPL("Check limit constants behavior", EVE_TYPE)
+EVE_TEST_TYPES( "Check limits"
+            , eve::test::simd::ieee_reals
+            )
+<typename T>(eve::as_<T>)
 {
   using eve::as;
   using elt_t = eve::element_type_t<T>;
@@ -38,7 +42,5 @@ TTS_CASE_TPL("Check limit constants behavior", EVE_TYPE)
   else
   {
     TTS_EQUAL(eve::sqrtvalmax(as<T>()), T(eve::trunc(std::sqrt(eve::valmax(as<elt_t>())))));
-
   }
-
-}
+};
