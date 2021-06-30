@@ -55,7 +55,7 @@ template<typename Target> auto f(Target const&)
 
 int main()
 {
-  std::cout << f(eve::as_<double>{}) << "\n";
+  std::cout << f(eve::as<double>{}) << "\n";
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
@@ -74,7 +74,7 @@ eve::as
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  template<typename T> inline constexpr as_<std::decay_t<T>> as(T&& x = {}) noexcept;
+  template<typename T> inline constexpr as<std::decay_t<T>> as(T&& x = {}) noexcept;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
@@ -122,16 +122,16 @@ Predefined Type Wrappers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  inline constexpr as_<double>       float64 = {};  // (1
-  inline constexpr as_<float>        float32 = {};  // (2
-  inline constexpr as_<std::uint8t>  uint8  = {};   // (3
-  inline constexpr as_<std::uint16t> uint16 = {};   // (4
-  inline constexpr as_<std::uint32t> uint32 = {};   // (5
-  inline constexpr as_<std::uint64t> uint64 = {};   // (6
-  inline constexpr as_<std::int8t>   int8   = {};   // (7
-  inline constexpr as_<std::int16t>  int16  = {};   // (8
-  inline constexpr as_<std::int32t>  int32  = {};   // (9
-  inline constexpr as_<std::int64t>  int64  = {};   // (10
+  inline constexpr as<double>       float64 = {};  // (1
+  inline constexpr as<float>        float32 = {};  // (2
+  inline constexpr as<std::uint8t>  uint8  = {};   // (3
+  inline constexpr as<std::uint16t> uint16 = {};   // (4
+  inline constexpr as<std::uint32t> uint32 = {};   // (5
+  inline constexpr as<std::uint64t> uint64 = {};   // (6
+  inline constexpr as<std::int8t>   int8   = {};   // (7
+  inline constexpr as<std::int16t>  int16  = {};   // (8
+  inline constexpr as<std::int32t>  int32  = {};   // (9
+  inline constexpr as<std::int64t>  int64  = {};   // (10
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>

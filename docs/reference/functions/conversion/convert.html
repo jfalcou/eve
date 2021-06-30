@@ -29,7 +29,7 @@ Function object converting a value to another type.
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 template<value T, scalar_value Target>
-auto operator()( T const& x, as_<Target> const& t) const noexcept;
+auto operator()( T const& x, as<Target> const& t) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 Converts a value to a given type.
@@ -49,7 +49,7 @@ For a [value](../../concepts.html#value) `x` and any type `Target` the expressio
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = convert(x, as_<Target>{});
+auto r = convert(x, as<Target>{});
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 
