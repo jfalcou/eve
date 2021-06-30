@@ -5,6 +5,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include "test.hpp"
 #include <eve/constant/limit.hpp>
 #include <eve/platform.hpp>
 #include <eve/function/sqrt.hpp>

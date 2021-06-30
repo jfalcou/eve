@@ -5,6 +5,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include "test.hpp"
 #include <eve/constant/ieee754.hpp>
 #include <eve/platform.hpp>
 #include <eve/function/bit_cast.hpp>
