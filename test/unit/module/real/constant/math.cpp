@@ -13,7 +13,10 @@
 #include <eve/function/sqrt.hpp>
 #include <eve/function/atan.hpp>
 
-TTS_CASE_TPL("Check basic constants behavior", EVE_TYPE)
+EVE_TEST_TYPES("Check math constants behavior"
+              , eve::test::simd::ieee_reals
+              )
+<typename T>(eve::as_<T>)
 {
   using eve::as;
   TTS_ULP_EQUAL(eve::pi(as<T>()), 4*eve::atan(T(1)),0.5);
@@ -25,4 +28,4 @@ TTS_CASE_TPL("Check basic constants behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::invlog10_2(as<T>()), eve::rec(eve::log10(T(2))),0.5);
   TTS_ULP_EQUAL(eve::twopi(as<T>()), 8*eve::atan(T(1)),0.5);
   TTS_ULP_EQUAL(eve::twoopi(as<T>()), eve::rec(eve::pio_2(as<T>())),0.5);
-}
+};

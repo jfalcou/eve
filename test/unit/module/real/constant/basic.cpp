@@ -5,14 +5,17 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include "test.hpp"
 #include <eve/constant/basic.hpp>
 #include <eve/platform.hpp>
 #include <eve/logical.hpp>
 #include <eve/function/all.hpp>
-#include <eve/function/bit_not.hpp>
 #include <eve/function/is_negative.hpp>
 
-TTS_CASE_TPL("Check basic constants behavior", EVE_TYPE)
+EVE_TEST_TYPES("Check basic constants behavior"
+              , eve::test::simd::ieee_reals
+              )
+  <typename T>(eve::as_<T>)
 {
   using eve::as;
   using elt_t = eve::element_type_t<T>;
@@ -35,5 +38,4 @@ TTS_CASE_TPL("Check basic constants behavior", EVE_TYPE)
   {
     TTS_EQUAL(eve::allbits(as<T>()), T(elt_t(~0)));
   }
-
-}
+};
