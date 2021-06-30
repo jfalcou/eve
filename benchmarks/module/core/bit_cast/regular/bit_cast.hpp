@@ -15,7 +15,7 @@ int main()
 //   auto lmin = eve::valmin(eve::as<EVE_VALUE>());
 //   auto lmax = eve::valmax(eve::as<EVE_VALUE>());
 
-//   auto my__bit_cast =  [](auto x){ return eve::bit_cast(x, eve::as_<eve::as_integer_t<EVE_TYPE>>()); };
+//   auto my__bit_cast =  [](auto x){ return eve::bit_cast(x, eve::as<eve::as_integer_t<EVE_TYPE>>()); };
 
 //   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 

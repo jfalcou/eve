@@ -15,7 +15,7 @@ int main()
   auto lmin = eve::valmin(eve::as<EVE_VALUE>())/2;
   auto lmax = eve::valmax(eve::as<EVE_VALUE>())/2;
   using i_t = eve::as_integer_t<EVE_VALUE, signed>;
-  auto f =  [](auto x){ return eve::convert(x, eve::as_<i_t>());
+  auto f =  [](auto x){ return eve::convert(x, eve::as<i_t>());
   }
  ;
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
