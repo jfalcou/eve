@@ -53,5 +53,5 @@ EVE_TEST( "Check behavior of sinc on wide"
     return x ? eve::fms(x, c, s)/(x*x) : v_t(0);
   };
   TTS_ULP_EQUAL(diff(sinc)(a0), map(ds, a0), 2);
-  TTS_ULP_EQUAL(diff(sinc)(a1), map(ds, a1), 2);
+  TTS_ULP_EQUAL(diff(sinc)(a1), map(ds, a1), 10);
 };

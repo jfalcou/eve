@@ -60,15 +60,15 @@ EVE_TEST( "Check behavior of secd on wide"
 
   TTS_ULP_EQUAL(eve::restricted(secd)(a0)      , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::small(secd)(a0)           , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::small(secd)(a1)           , map(ref, a1), 30);
+  TTS_ULP_EQUAL(eve::small(secd)(a1)           , map(ref, a1), 50);
   TTS_ULP_EQUAL(eve::medium(secd)(a0)          , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::medium(secd)(a1)          , map(ref, a1), 30);
+  TTS_ULP_EQUAL(eve::medium(secd)(a1)          , map(ref, a1), 50);
   TTS_ULP_EQUAL(eve::medium(secd)(a2)          , map(ref, a2), 500);
   TTS_ULP_EQUAL(eve::big(secd)(a0)             , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::big(secd)(a1)             , map(ref, a1), 30);
+  TTS_ULP_EQUAL(eve::big(secd)(a1)             , map(ref, a1), 50);
   TTS_ULP_EQUAL(eve::big(secd)(a2)             , map(ref, a2), 500);
   TTS_ULP_EQUAL(secd(a0)                       , map(ref, a0), 2);
-  TTS_ULP_EQUAL(secd(a1)                       , map(ref, a1), 30);
+  TTS_ULP_EQUAL(secd(a1)                       , map(ref, a1), 50);
   TTS_ULP_EQUAL(secd(a2)                       , map(ref, a2), 500);
   auto dinr = 1.7453292519943295769236907684886127134428718885417e-2l;
 
