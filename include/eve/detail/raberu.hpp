@@ -83,6 +83,11 @@ namespace rbr
     constexpr flag_type() =default;
     constexpr flag_type(T const&) {}
 
+    template<typename V> constexpr auto operator=(V&&) const noexcept
+    {
+      return *this;
+    }
+
     template<typename V> constexpr auto operator|(V &&value) const noexcept
     {
       return type_or_<type, V> {RBR_FWD(value)};
@@ -113,6 +118,29 @@ namespace rbr
 
   // flag_type generator
   template<typename T> inline constexpr const flag_type<T> flag = {};
+
+  // ID/Keyword/Flag-type user defined literals
+  namespace literals
+  {
+    template<char... Char> struct id_
+    {
+    };
+
+    template<typename T, T... Chars> constexpr auto operator""_id() noexcept
+    {
+      return id_<Chars...>{};
+    }
+
+    template<typename T, T... Chars> constexpr auto operator""_kw() noexcept
+    {
+      return rbr::keyword<id_<Chars...>>;
+    }
+
+    template<typename T, T... Chars> constexpr auto operator""_fl() noexcept
+    {
+      return rbr::flag<id_<Chars...>>;
+    }
+  }
 
   namespace detail
   {
@@ -325,6 +353,63 @@ namespace rbr
 
   template<typename Settings, auto Keyword, typename Default = unknown_key>
   using get_type_t = typename get_type<Settings,Keyword,Default>::type;
+
+  // Merge settings
+  namespace detail
+  {
+    template<typename K, typename Ks>        struct contains;
+
+    template<typename... Ks, typename K>
+    struct  contains<K, keys<Ks...>> : std::bool_constant<(std::same_as<K,Ks> || ...)>
+    {};
+
+    template<typename K, typename Ks, bool>  struct append_if_impl;
+
+    template<typename... Ks, typename K> struct append_if_impl<K,keys<Ks...>,true>
+    {
+      using type = keys<Ks...>;
+    };
+
+    template<typename... Ks, typename K> struct append_if_impl<K,keys<Ks...>,false>
+    {
+      using type = keys<Ks...,K>;
+    };
+
+    template<typename K, typename Ks>        struct append_if;
+
+    template<typename K, typename Ks>
+    struct append_if : append_if_impl<K,Ks, contains<K, Ks>::value>
+    {};
+
+    template<typename K1, typename K2> struct uniques;
+
+    template<typename K1s, typename K2, typename... K2s>
+    struct  uniques<K1s, keys<K2,K2s...>>
+          : uniques< typename append_if<K2,K1s>::type, keys<K2s...> >
+    {};
+
+    template<typename K1s> struct  uniques<K1s, keys<>> { using type = K1s; };
+  }
+
+  template<typename... K1s, typename L1, typename... K2s, typename L2>
+  auto merge( settings<keys<K1s...>, L1> const& opts
+            , settings<keys<K2s...>, L2> const& defs
+            ) noexcept
+  {
+    auto select = []<typename... Ks>(keys<Ks...>, auto const& os, auto const& ds)
+    {
+      auto selector = []<typename K, typename Opts>(keys<K>, Opts const& o, auto const& d)
+                      {
+                        constexpr K key;
+                        if constexpr( Opts::contains(key) ) return (key = o[key]);
+                        else                                return (key = d[key]);
+                      };
+
+      return settings(selector(keys<Ks>{},os,ds)...);
+    };
+
+    return select(typename detail::uniques<keys<K1s...>,keys<K2s...>>::type{},opts,defs);
+  }
 }
 
 #undef RBR_FWD
