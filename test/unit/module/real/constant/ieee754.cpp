@@ -17,7 +17,7 @@
 EVE_TEST_TYPES( "Check ieee754 constants"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using eve::as;
   using elt_t = eve::element_type_t<T>;
