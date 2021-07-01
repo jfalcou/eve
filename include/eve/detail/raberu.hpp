@@ -119,29 +119,6 @@ namespace rbr
   // flag_type generator
   template<typename T> inline constexpr const flag_type<T> flag = {};
 
-  // ID/Keyword/Flag-type user defined literals
-  namespace literals
-  {
-    template<char... Char> struct id_
-    {
-    };
-
-    template<typename T, T... Chars> constexpr auto operator""_id() noexcept
-    {
-      return id_<Chars...>{};
-    }
-
-    template<typename T, T... Chars> constexpr auto operator""_kw() noexcept
-    {
-      return rbr::keyword<id_<Chars...>>;
-    }
-
-    template<typename T, T... Chars> constexpr auto operator""_fl() noexcept
-    {
-      return rbr::flag<id_<Chars...>>;
-    }
-  }
-
   namespace detail
   {
     // Turn a Type+Value pair into a Callable
