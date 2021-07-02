@@ -19,7 +19,10 @@ namespace eve::detail
   //================================================================================================
   template<scalar_value T, value U, typename N>
   EVE_FORCEINLINE decltype(auto) self_add(wide<T, N> &self, U const &other) noexcept
-      requires(scalar_value<U> || std::same_as<wide<T, N>, U>) && x86_abi<abi_t<T, N>>
+    requires(   !kumi::product_type<T>
+            &&  (scalar_value<U> || std::same_as<wide<T, N>, U>)
+            &&  x86_abi<abi_t<T, N>>
+            )
   {
     using type = wide<T, N>;
 
@@ -82,7 +85,10 @@ namespace eve::detail
   //================================================================================================
   template<scalar_value T, value U, typename N>
   EVE_FORCEINLINE decltype(auto) self_sub(wide<T, N> &self, U const &other) noexcept
-      requires(scalar_value<U> || std::same_as<wide<T, N>, U>) && x86_abi<abi_t<T, N>>
+    requires(   !kumi::product_type<T>
+            &&  (scalar_value<U> || std::same_as<wide<T, N>, U>)
+            &&  x86_abi<abi_t<T, N>>
+            )
   {
     using type = wide<T, N>;
 
@@ -145,7 +151,10 @@ namespace eve::detail
   //================================================================================================
   template<scalar_value T, value U, typename N>
   EVE_FORCEINLINE decltype(auto) self_mul(wide<T, N> &self, U const &other) noexcept
-      requires(scalar_value<U> || std::same_as<wide<T, N>, U>) && x86_abi<abi_t<T, N>>
+    requires(   !kumi::product_type<T>
+            &&  (scalar_value<U> || std::same_as<wide<T, N>, U>)
+            &&  x86_abi<abi_t<T, N>>
+            )
   {
     using type = wide<T, N>;
 
@@ -229,7 +238,10 @@ namespace eve::detail
   //================================================================================================
   template<scalar_value T, value U, typename N>
   EVE_FORCEINLINE decltype(auto) self_div(wide<T, N> &self, U const &other) noexcept
-      requires(scalar_value<U> || std::same_as<wide<T, N>, U>) && x86_abi<abi_t<T, N>>
+    requires(   !kumi::product_type<T>
+            &&  (scalar_value<U> || std::same_as<wide<T, N>, U>)
+            &&  x86_abi<abi_t<T, N>>
+            )
   {
     using type = wide<T, N>;
 

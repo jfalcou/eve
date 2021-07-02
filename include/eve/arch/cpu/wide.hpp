@@ -128,7 +128,7 @@ inline namespace EVE_ABI_NAMESPACE
     //! Constructs a eve::wide by splatting a scalar value in all lanes
     template<scalar_value S>
     EVE_FORCEINLINE explicit  wide(S const& v)  noexcept
-                            : storage_base(detail::make(eve::as<wide>{}, v))
+                            : storage_base(detail::make(eve::as<wide>{}, static_cast<Type>(v)))
     {}
 
     //! Constructs a eve::wide from a sequence of scalar values of proper size
@@ -137,7 +137,11 @@ inline namespace EVE_ABI_NAMESPACE
 #if !defined(EVE_DOXYGEN_INVOKED)
     requires( card_base::size() == 2 + sizeof...(vs) )
 #endif
-                  : storage_base(detail::make(eve::as<wide>{}, v0, v1, vs...))
+                  : storage_base(detail::make ( eve::as<wide>{}
+                                              , static_cast<Type>(v0)
+                                              , static_cast<Type>(v1)
+                                              , static_cast<Type>(vs)...
+                                )             )
     {}
 
     //==============================================================================================
@@ -718,7 +722,8 @@ inline namespace EVE_ABI_NAMESPACE
 
     //! @brief Perform the compound product on all the wide lanes and assign
     //! the result to the current one. See also: eve::mul
-    friend  EVE_FORCEINLINE auto operator*=(wide& w, value auto o) noexcept
+    template<value V>
+    friend  EVE_FORCEINLINE auto operator*=(wide& w, V o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
                         ->  decltype(detail::self_mul(w, o))
 #endif
@@ -738,15 +743,24 @@ inline namespace EVE_ABI_NAMESPACE
     //! See also: eve::mul
     template<real_scalar_value S>
     friend EVE_FORCEINLINE auto operator*(S s, wide const& v) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+      requires( !(kumi::product_type<Type> && requires(Type t, S s) { s * t; } ))
+#endif
     {
-      return v * wide(s);
+      auto that = v;
+      return that *= s;
     }
 
     //! @brief Perform the product between all lanes of a eve::wide and a scalar
     //! See also: eve::mul
-    friend EVE_FORCEINLINE auto operator*(wide const& v, real_scalar_value auto s) noexcept
+    template<real_scalar_value S>
+    friend EVE_FORCEINLINE auto operator*(wide const& v, S s) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+      requires( !(kumi::product_type<Type> && requires(Type t, S s) { t * s; } ))
+#endif
     {
-      return v * wide(s);
+      auto that = v;
+      return that *= s;
     }
 
     //! @brief Perform the compound division on all the wide lanes and assign

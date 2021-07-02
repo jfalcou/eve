@@ -19,9 +19,9 @@ namespace eve
                                && std::convertible_to<T, element_type_t<U>>;
 
   template<typename T, typename U>
-  concept compatible_values = element_compatible_to<T, U>
-                           || element_compatible_to<U, T>
-                           || std::same_as<T,U>;
+  concept compatible_values = element_compatible_to<std::remove_cvref_t<T>, std::remove_cvref_t<U>>
+                           || element_compatible_to<std::remove_cvref_t<U>, std::remove_cvref_t<T>>
+                           || std::same_as<std::remove_cvref_t<T>,std::remove_cvref_t<U>>;
 
   template<typename T, typename U>
   concept element_bit_compatible_to = scalar_value<T>
@@ -44,7 +44,9 @@ namespace eve
 
 
   template<typename T, typename U>
-  concept same_value_type = std::same_as<element_type_t<U>, element_type_t<T>>;
+  concept same_value_type = std::same_as< element_type_t<std::remove_cvref_t<T>>
+                                        , element_type_t<std::remove_cvref_t<U>>
+                                        >;
 
   template<typename T, typename U>
   concept different_value_type = !std::same_as<element_type_t<U>, element_type_t<T>>;
