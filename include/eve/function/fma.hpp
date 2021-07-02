@@ -11,6 +11,107 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup arithmetic
+  //! @{
+  //! @var fma
+  //!
+  //! **Required header:**
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  #include <eve/function/fma.hpp>
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! <br/>Callable object performing the computation of the fused multiply-add operation.
+  //!
+  //! #### Members Functions
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | the fused multiply-add operation   |
+  //! | `operator[]` | Construct a conditional version of current function object |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  template< value T, value U, value V > auto operator()( T x, U y, V z ) const noexcept
+  //!  requires compatible< T,U> && compatible< T, V >;
+  //!  
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`x`, `y`, `z`:   [values](../../concepts.html#value)
+  //!
+  //!
+  //! **Return value**
+  //!
+  //!The call `fma(x, y, z)` is similar to `x*y+z` as if calculated to infinite precision and rounded once
+  //!to fit the result as much as supported by the hardware.
+  //!
+  //!The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
+  //!
+  //!
+  //!@WARNING Note
+  //!    This `fma` implementation provides those properties for all [real integral values](../../concepts.html#integral_value)
+  //!     and when possible for [real floating values](../../concepts.html#value).
+  //!
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::fma
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `fma[cond](x, ...)` is equivalent to `if_else(cond,fma(x, ...),x)`
+  //!
+  //! ---
+  //!
+  //! #### Supported decorators
+  //!
+  //!  ====================================================================================================
+  //!  * `pedantic`
+  //!     **Required header: 
+  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!       #include <eve/function/pedantic/fma.hpp>`
+  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  
+  //!     The call `pedantic(fma)(x,y,z)` ensures the one rounding property. This can be very expensive if the
+  //!      system has no hardware capability.
+  //!  * `numeric`
+  //!     **Required header: 
+  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!       #include <eve/function/numeric/fma.hpp>`
+  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  
+  //!     The call `numeric(fma)(x,y,z)` ensures the full compliance to fma properties. This can be very expensive if the
+  //!      system has no hardware capability.
+  //!  
+  //!  * `diff`
+  //!     **Required header: 
+  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!       #include <eve/function/diff/fma.hpp>`
+  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  
+  //!     The expression `diff_1st(fma)(x,y,z)`, `diff_2nd(fma)(x,y,z)` and `diff_3rd(fma)(x,y,z)` computes the partial
+  //!      diffs of $f$, where $f$ is the function $(x,y,z) \rightarrow \ xy+z$.
+  //!  
+  //!
+  //! #### Example
+  //!
+  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
+  //!
+  //! @include{lineno} doc/core/fma.cpp
+  //!
+  //!  @}
+  //================================================================================================
   EVE_MAKE_CALLABLE(fma_, fma);
 }
 

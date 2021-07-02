@@ -11,6 +11,87 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup hyperbolic
+  //! @{
+  //! @var atanh
+  //!
+  //! **Required header:**
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  #include <eve/function/atanh.hpp>
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! <br/>Callable object performing the computation of the  computation of atanh.
+  //!
+  //! #### Members Functions
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | the  computation of atanh   |
+  //! | `operator[]` | Construct a conditional version of current function object |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  template< floating_real_value T> auto operator()( T x ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`x`:   [floating real value](../../concepts.html#value).
+  //!
+  //!
+  //! **Return value**
+  //!
+  //!Returns the [element-wise](../../../glossary.html#elment-wise) inverse hyperbolic cotangent of the input.
+  //!The inverse hyperbolic sine is semantically equivalent to $\frac{1}{2}\log((1+x)/(1-x))$.
+  //!
+  //!In particular:
+  //!
+  //!   * If the element is $\pm1$, $\pm\infty$ is returned.
+  //!   * If the element is $\pm0$, $\pm0$ is returned.
+  //!   * If the element is greater than one or a `NaN`, `NaN` is returned.
+  //!
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::atanh
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `atanh[cond](x, ...)` is equivalent to `if_else(cond,atanh(x, ...),x)`
+  //!
+  //! ---
+  //!
+  //! #### Supported decorators
+  //!
+  //!  ====================================================================================================
+  //!  * `diff`
+  //!     **Required header: 
+  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!       #include <eve/function/diff/atanh.hpp>`
+  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  
+  //!     The expression `diff(atanh)(x)` computes the derivative of the function at `x`.
+  //!  
+  //!  
+  //!
+  //! #### Example
+  //!
+  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
+  //!
+  //! @include{lineno} doc/core/atanh.cpp
+  //!
+  //!  @}
+  //================================================================================================
   EVE_MAKE_CALLABLE(atanh_, atanh);
 }
 

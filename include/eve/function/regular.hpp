@@ -13,6 +13,74 @@
 namespace eve
 {
   //================================================================================================
+  //! @addtogroup decorator
+  //! @{
+  //! @var regular
+  //!
+  //! **Required header:**
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  #include <eve/function/regular.hpp>
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! <br/>Callable object performing the computation of **TODO: FILL THIS BLANK**.
+  //!
+  //! #### Members Functions
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | **TODO: FILL THIS BLANK**   |
+  //! | `operator[]` | Construct a conditional version of current function object |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  template<**TODO: FILL THIS BLANK**>
+  //!  auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`x`:   **TODO: FILL THIS BLANK**
+  //!
+  //!OTHER PARAMETERS
+  //!:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
+  //!
+  //!
+  //! **Return value**
+  //!
+  //!  return values NOT FOUND
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::regular
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `regular[cond](x, ...)` is equivalent to `if_else(cond,regular(x, ...),x)`
+  //!
+  //! ---
+  //!
+  //! #### Supported decorators
+  //!
+  //!  decorators NOT FOUND
+  //!
+  //! #### Example
+  //!
+  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
+  //!
+  //! @include{lineno} doc/core/regular.cpp
+  //!
+  //!  @}
+  //================================================================================================
+  //================================================================================================
   // Function decorators mark-up used in function overloads
   struct regular_type : decorator_
   {

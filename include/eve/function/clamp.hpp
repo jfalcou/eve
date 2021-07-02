@@ -14,6 +14,91 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup arithmetic
+  //! @{
+  //! @var clamp
+  //!
+  //! **Required header:**
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  #include <eve/function/clamp.hpp>
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! <br/>Callable object performing the computation of the clamping operation.
+  //!
+  //! #### Members Functions
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | the clamping operation   |
+  //! | `operator[]` | Construct a conditional version of current function object |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  template< real_value T, real_value U, real_value V > auto operator()( T x, U lo, V hi ) const noexcept
+  //!  requires compatible< T, U > && compatible< T, V >;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`x`:    [value](../../concepts.html#value) to clamp.
+  //!
+  //!`lo`, `hi`:    the boundary [values](../../concepts.html#value) to clamp `x` to.
+  //!
+  //!
+  //! **Return value**
+  //!
+  //!Each [element](../../../glossary.html#regular)  of the result contains:
+  //!   -  `lo`, if `x` is less than `lo`.
+  //!   -  `hi`, if `hi` is less than `x`.
+  //!   -  otherwise `x`.
+  //!
+  //!The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
+  //!
+  //!@WARNING
+  //!    Contrary to the standard implementation `clamp` does not return a reference.
+  //!
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::clamp
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `clamp[cond](x, ...)` is equivalent to `if_else(cond,clamp(x, ...),x)`
+  //!
+  //! ---
+  //!
+  //! #### Supported decorators
+  //!
+  //!  ====================================================================================================
+  //!  * `diff`
+  //!     **Required header: 
+  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!       #include <eve/function/diff/clam.hpp>`
+  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  
+  //!     The expression `diff_1st(clamp)(x,y,z)`, `diff_2nd(clam)(x,y,z)` and `diff_3rd(clam)(x,y,z)` computes the partial
+  //!      diffs of $f$, where $f$ is the function $(x,y,z) \rightarrow \ \mbox{clamp}(x,y,z)$.
+  //!  
+  //!
+  //! #### Example
+  //!
+  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
+  //!
+  //! @include{lineno} doc/core/clamp.cpp
+  //!
+  //!  @}
+  //================================================================================================
   namespace tag { struct clamp_; }
 
   namespace detail

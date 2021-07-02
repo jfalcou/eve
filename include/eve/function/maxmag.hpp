@@ -11,6 +11,112 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup arithmetic
+  //! @{
+  //! @var maxmag
+  //!
+  //! **Required header:**
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  #include <eve/function/maxmag.hpp>
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! <br/>Callable object performing the computation of the maxmag operation.
+  //!
+  //! #### Members Functions
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | the maxmag operation   |
+  //! | `operator[]` | Construct a conditional version of current function object |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  template< value T, value ...Ts> auto operator()( T x,Ts... args ) const noexcept
+  //!                                       requires (compatible_values< T, Ts > && ...);
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`x`, `args`:   [values](../../concepts.html#value)
+  //!
+  //!
+  //! **Return value**
+  //!
+  //!the greatest absolute value is returned.
+  //!
+  //!For instance for two elemnts:
+  //!
+  //!  * If `|x| >  |y|`,  `x` is returned.
+  //!  * If `|x| <  |y|`,  `y` is returned.
+  //!  * Otherwise `max(x, y)` is returned.
+  //!
+  //!For n parameters the result is computed as if this scheme was recursively used.
+  //!
+  //!The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
+  //!
+  //!@WARNING
+  //!   If any element of the inputs is a `Nan`, the corresponding output element is system-dependent.
+  //!
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::maxmag
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `maxmag[cond](x, ...)` is equivalent to `if_else(cond,maxmag(x, ...),x)`
+  //!
+  //! ---
+  //!
+  //! #### Supported decorators
+  //!
+  //!  ====================================================================================================
+  //!  * `pedantic`
+  //!     **Required header: 
+  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!       #include <eve/function/pedantic/maxmag.hpp>`
+  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  
+  //!  The behaviour is the same except that if  `|x| == |y|`, `pedantic(max)` is used.
+  //!  
+  //!  * `numeric`
+  //!     **Required header: 
+  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!       #include <eve/function/numeric/maxmag.hpp>`
+  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  
+  //!  The behaviour is the same except that if  `|x| == |y|`, `numeric(max)` is used.
+  //!  
+  //!  * `diff`
+  //!     **Required header: 
+  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!       #include <eve/function/diff/maxmag.hpp>`
+  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  
+  //!     The expression `diff< N >(maxmag)(x,args,...)` computes the partial
+  //!      diff relative to the Nth parameter. If the parameters are $x_1, ..., x_n$ and
+  //!      their maxmag is $m$, the value returned is elementwise 1 if $m$ is equal to $x_N$ else 0.
+  //!  
+  //!  
+  //!
+  //! #### Example
+  //!
+  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
+  //!
+  //! @include{lineno} doc/core/maxmag.cpp
+  //!
+  //!  @}
+  //================================================================================================
   EVE_MAKE_CALLABLE(maxmag_, maxmag);
 }
 

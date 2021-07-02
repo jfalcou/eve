@@ -11,6 +11,87 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup exponential
+  //! @{
+  //! @var expm1
+  //!
+  //! **Required header:**
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  #include <eve/function/expm1.hpp>
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! <br/>Callable object performing the computation of the  computation of expm1.
+  //!
+  //! #### Members Functions
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | the  computation of expm1   |
+  //! | `operator[]` | Construct a conditional version of current function object |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  template< real_value T> auto operator()( T x ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`x`:   [floating real value](../../concepts.html#value).
+  //!
+  //!
+  //! **Return value**
+  //!
+  //!Returns the [element-wise](../../../glossary.html#elment-wise) exponential input minus one, with good accuracy, even for small values of `x`
+  //!In partucular, for floating inputs:
+  //!
+  //!   * If the element is $\pm0$, $\pm0$ is returned
+  //!   * If the element is $-\infty$, $-1$ is returned
+  //!   * If the element is $\infty$, $\infty$ is returned
+  //!   * If the element is a `NaN`, `NaN` is returned
+  //!
+  //!
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::expm1
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `expm1[cond](x, ...)` is equivalent to `if_else(cond,expm1(x, ...),x)`
+  //!
+  //! ---
+  //!
+  //! #### Supported decorators
+  //!
+  //!  ====================================================================================================
+  //!  * `diff`
+  //!     **Required header: 
+  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!       #include <eve/function/diff/expm1.hpp>`
+  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  
+  //!     The expression `diff(expm1)(x)` computes the derivative of the function at `x`.
+  //!  
+  //!  
+  //!
+  //! #### Example
+  //!
+  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
+  //!
+  //! @include{lineno} doc/core/expm1.cpp
+  //!
+  //!  @}
+  //================================================================================================
   EVE_MAKE_CALLABLE(expm1_, expm1);
 }
 

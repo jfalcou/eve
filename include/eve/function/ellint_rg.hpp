@@ -11,6 +11,83 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup elliptic
+  //! @{
+  //! @var ellint_rg
+  //!
+  //! **Required header:**
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  #include <eve/function/ellint_rg.hpp>
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! <br/>Callable object performing the computation of the ellint_rg operation.
+  //!
+  //! #### Members Functions
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | the ellint_rg operation   |
+  //! | `operator[]` | Construct a conditional version of current function object |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  template< floating_value T, floating_value U, floating_scalar_value V> auto operator()(T x, U y, V z) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`x`, `y`, `z`:   [floating values](../../concepts.html#value).
+  //!
+  //!
+  //!
+  //!  This computes the Carlson's elliptic integral
+  //!
+  //! $$\displaystyle R_G(x, y, z) = \frac1{4\pi} \int_{0}^{2\pi}\int_{0}^{\pi} \sqrt{x\sin^2\theta\cos^2\phi
+  //!                                                                                +y\sin^2\theta\sin^2\phi
+  //!                                                                                +z\cos^2\theta} \mbox{d}\theta\mbox{d}\phi$$
+  //!
+  //!  as described in  Carlson, Numerische Mathematik, vol 33, 1 (1979)
+  //!
+  //!  Parameters `x` and `y` and `z`must be non-negative.
+  //!  In any other case the result is nan.
+  //!
+  //!
+  //! **Return value**
+  //!
+  //!  return values NOT FOUND
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::ellint_rg
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `ellint_rg[cond](x, ...)` is equivalent to `if_else(cond,ellint_rg(x, ...),x)`
+  //!
+  //! ---
+  //!
+  //! #### Supported decorators
+  //!
+  //!  decorators NOT FOUND
+  //!
+  //! #### Example
+  //!
+  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
+  //!
+  //! @include{lineno} doc/core/ellint_rg.cpp
+  //!
+  //!  @}
+  //================================================================================================
   EVE_MAKE_CALLABLE(ellint_rg_, ellint_rg);
 }
 
