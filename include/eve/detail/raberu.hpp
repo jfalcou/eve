@@ -240,6 +240,9 @@ namespace rbr
     {
     }
 
+    constexpr settings(settings const&  v) : content_(v.content_) {}
+    constexpr settings(settings &&      v) : content_(std::move(v.content_)) {}
+
     static constexpr std::ptrdiff_t size() noexcept { return sizeof...(Ts); }
 
     // Named options interface
@@ -369,12 +372,13 @@ namespace rbr
   }
 
   template<typename... K1s, typename L1, typename... K2s, typename L2>
-  auto merge( settings<keys<K1s...>, L1> const& opts
+  constexpr auto merge( settings<keys<K1s...>, L1> const& opts
             , settings<keys<K2s...>, L2> const& defs
             ) noexcept
   {
     auto select = []<typename... Ks>(keys<Ks...>, auto const& os, auto const& ds)
     {
+      [[maybe_unused]]
       auto selector = []<typename K, typename Opts>(keys<K>, Opts const& o, auto const& d)
                       {
                         constexpr K key;

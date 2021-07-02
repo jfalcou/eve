@@ -21,9 +21,12 @@ namespace eve::algo
   {
     template <rbr::keyword_parameter... Options>
     constexpr explicit traits(Options && ... options) : Settings(std::forward<Options>(options) ...) {}
+
+    template <typename... Options>
+    constexpr traits(rbr::settings<Options...> const& options) : Settings(options) {}
   };
 
-  template <typename ... Options>
+  template <rbr::keyword_parameter ... Options>
   traits(Options&& ... options) -> traits<decltype(rbr::settings(std::forward<Options>(options) ...))>;
 
   inline constexpr auto unrolling = rbr::keyword<struct unrolling>;
@@ -42,43 +45,11 @@ namespace eve::algo
     else return std::remove_cvref_t<decltype(std::declval<Traits>()[unrolling])>{}();
   }
 
-  // Temp hack while https://github.com/jfalcou/ofw/issues/25 is not done
-  template <typename ... User, typename ... Default>
-  constexpr auto default_to(traits<User...>, traits<Default...>) {
-    using o_t = traits<User...>;
-    using d_t = traits<Default...>;
-
-    auto unroll_ = [&] (auto ...other){
-           if constexpr (o_t::contains(unrolling)) return traits(unroll<get_unrolling<o_t>()>, other...);
-      else if constexpr (d_t::contains(unrolling)) return traits(unroll<get_unrolling<d_t>()>, other...);
-      else                                         return traits(other...);
-    };
-
-    auto divisible_ = [&] (auto ...other){
-      if constexpr (o_t::contains(divisible_by_cardinal) ||
-                    d_t::contains(divisible_by_cardinal))
-      {
-        return unroll_(divisible_by_cardinal, other...);
-      }
-      else
-      {
-        return unroll_(other...);
-      }
-    };
-
-    auto no_aligning_ = [&] (auto ...other){
-      if constexpr (o_t::contains(no_aligning) ||
-                    d_t::contains(no_aligning))
-      {
-        return divisible_(no_aligning, other...);
-      }
-      else
-      {
-        return divisible_(other...);
-      }
-    };
-
-    return no_aligning_();
+  template <typename User, typename Default>
+  constexpr auto default_to(traits<User> const& user, traits<Default> const& defaults)
+  {
+    using settings_t = decltype(rbr::merge(user, defaults));
+    return traits<settings_t>{rbr::merge(user, defaults)};
   }
 
   inline constexpr algo::traits default_simple_algo_traits{algo::unroll<4>};

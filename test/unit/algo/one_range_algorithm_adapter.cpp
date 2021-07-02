@@ -83,7 +83,7 @@ EVE_TEST_TYPES("aligned_ptr, empty range", algo_test::selected_types)
   using N = eve::fixed<eve::expected_cardinal_v<e_t>>;
 
   fake_algorithm(eve::algo::traits(), [](auto traits, auto f, auto l) {
-    auto expected_traits = eve::algo::traits(eve::algo::divisible_by_cardinal, eve::algo::no_aligning);
+    auto expected_traits = eve::algo::traits(eve::algo::no_aligning, eve::algo::divisible_by_cardinal);
     TTS_TYPE_IS(decltype(traits),decltype(expected_traits));
     TTS_TYPE_IS(decltype(f), (eve::algo::aligned_ptr_iterator<e_t, N>));
     TTS_TYPE_IS(decltype(l), (eve::algo::aligned_ptr_iterator<e_t, N>));
