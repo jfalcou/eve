@@ -63,10 +63,6 @@ namespace eve
   //!
   //! ---
   //!
-  //! #### Supported decorators
-  //!
-  //!  decorators NOT FOUND
-  //!
   //! #### Example
   //!
   //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
@@ -79,4 +75,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/conj.hpp>
-

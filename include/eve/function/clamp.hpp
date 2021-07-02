@@ -82,14 +82,12 @@ namespace eve
   //!
   //!  ====================================================================================================
   //!  * `diff`
-  //!     **Required header: 
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!       #include <eve/function/diff/clam.hpp>`
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!  
+  //!
+  //!     **Required header: #include <eve/function/diff/clamp.hpp>
+  //!
   //!     The expression `diff_1st(clamp)(x,y,z)`, `diff_2nd(clam)(x,y,z)` and `diff_3rd(clam)(x,y,z)` computes the partial
   //!      diffs of $f$, where $f$ is the function $(x,y,z) \rightarrow \ \mbox{clamp}(x,y,z)$.
-  //!  
+  //!
   //!
   //! #### Example
   //!
