@@ -24,7 +24,7 @@
 EVE_TEST_TYPES( "Check return types of log2"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -54,7 +54,7 @@ EVE_TEST( "Check behavior of log2 on wide"
 EVE_TEST_TYPES( "Check return types of log2"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
   if constexpr(eve::platform::supports_invalids)

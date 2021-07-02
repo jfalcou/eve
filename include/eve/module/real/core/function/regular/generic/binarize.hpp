@@ -48,7 +48,7 @@ namespace eve::detail
   template<real_value T, real_scalar_value U>
   EVE_FORCEINLINE auto binarize_(EVE_SUPPORTS(cpu_)
                            , logical<T> const &cond
-                                , eve::as_<U> const &
+                                , eve::as<U> const &
                            ) noexcept
   {
     using R = eve::as_wide_t<U, eve::cardinal_t<T>>;
@@ -58,7 +58,7 @@ namespace eve::detail
   template<real_scalar_value U>
   EVE_FORCEINLINE auto binarize_(EVE_SUPPORTS(cpu_)
                            , bool const &cond
-                                , eve::as_<U> const &
+                                , eve::as<U> const &
                            ) noexcept
   {
     using l_t =  as_logical_t<U>;

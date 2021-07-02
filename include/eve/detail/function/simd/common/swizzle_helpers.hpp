@@ -29,7 +29,7 @@ namespace eve::detail
                         {
                           using i_t = as_integer_t<type,unsigned>;
                           constexpr i_t nz = ~i_t(0), zz = i_t(0);
-                          return Pack(bit_cast((p(i,sz) == na_ ? zz : nz),as_<type>())...);
+                          return Pack(bit_cast((p(i,sz) == na_ ? zz : nz),as<type>())...);
                         };
 
       return v & apply<sz>(impl);
@@ -67,7 +67,7 @@ namespace eve::detail
   }
 
   template<typename Pack, typename Shuffler, typename Bytes>
-  EVE_FORCEINLINE constexpr auto as_bytes(Shuffler p, as_<Bytes> const&) noexcept
+  EVE_FORCEINLINE constexpr auto as_bytes(Shuffler p, as<Bytes> const&) noexcept
   {
     constexpr auto bytes = as_bytes_impl<Pack>(p, std::make_index_sequence<Bytes::size()>{});
     return apply( [](auto... v) { return Bytes{ std::uint8_t(v)... }; }, bytes);

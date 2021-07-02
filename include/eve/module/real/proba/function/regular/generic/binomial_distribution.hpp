@@ -91,7 +91,7 @@ namespace eve
       rej.h = (lgamma(inc(rej.m))+lgamma(inc(n-rej.m)));
      }
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+    template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
       requires scalar_value<value_type>
     {
 
@@ -187,7 +187,7 @@ namespace eve
       EVE_ASSERT(all(p <= one(as(p)) && is_gez(p)), "p must be in [0, 1]");
     }
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+    template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
       requires scalar_value<value_type>
     {
       return if_else(detail::urg01(gen, as<R>()) < p, zero, one(as<R>()));
@@ -241,7 +241,7 @@ namespace eve
       rej.h = lgamma(inc(rej.m))+lgamma(inc(n-rej.m));
      }
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+    template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
       requires scalar_value<value_type>
     {
       if (n < value_type(21))
@@ -325,19 +325,19 @@ namespace eve
     using p_type = callable_half_;
     using value_type = T;
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+    template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
       requires scalar_value<value_type>
     {
       return binarize(detail::urg01(gen, as<R>()) > R(0.5));
     }
 
-    constexpr binomial_distribution( as_<T> const&) {}
+    constexpr binomial_distribution( as<T> const&) {}
   };
 
-  template<typename T>  binomial_distribution(as_<T> const&) -> binomial_distribution<callable_one_, callable_half_, T>;
+  template<typename T>  binomial_distribution(as<T> const&) -> binomial_distribution<callable_one_, callable_half_, T>;
 
   template<floating_real_value T>
-  inline constexpr auto bernouilli = binomial_distribution<callable_one_, callable_half_, T>(as_<T>{});
+  inline constexpr auto bernouilli = binomial_distribution<callable_one_, callable_half_, T>(as<T>{});
 
   namespace detail
   {

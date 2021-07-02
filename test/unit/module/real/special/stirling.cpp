@@ -24,7 +24,7 @@
 EVE_TEST_TYPES( "Check return types of stirling"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -38,7 +38,7 @@ EVE_TEST_TYPES( "Check return types of stirling"
 EVE_TEST_TYPES( "Check behavior of stirling on wide"
         , eve::test::simd::ieee_reals
         )
-  <typename T>(eve::as_<T>)
+  <typename T>(eve::as<T>)
 {
   using eve::stirling;
   using eve::as;

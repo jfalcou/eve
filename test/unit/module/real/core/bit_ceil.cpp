@@ -19,7 +19,7 @@
 EVE_TEST_TYPES( "Check return types of bit_ceil on wide"
             , eve::test::simd::all_types
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -30,8 +30,8 @@ EVE_TEST_TYPES( "Check return types of bit_ceil on wide"
 //==================================================================================================
 // bit_ceil simd tests
 //==================================================================================================
-auto maxi = []< typename T>(eve::as_<T> const &){return eve::valmax(eve::as<T>())/2; }; // over valmax/2 bit_ceil is UB so don't test
-auto mini = []< typename T>(eve::as_<T> const &){return eve::valmin(eve::as<T>())/4; }; //negative values all return 1;
+auto maxi = []< typename T>(eve::as<T> const &){return eve::valmax(eve::as<T>())/2; }; // over valmax/2 bit_ceil is UB so don't test
+auto mini = []< typename T>(eve::as<T> const &){return eve::valmin(eve::as<T>())/4; }; //negative values all return 1;
 EVE_TEST( "Check behavior of bit_ceil(wide) on integral types"
         , eve::test::simd::integers
         , eve::test::generate(eve::test::randoms(mini, maxi))

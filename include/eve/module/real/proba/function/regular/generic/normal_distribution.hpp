@@ -47,7 +47,7 @@ namespace eve
  namespace detail
  {
    template < typename G, typename R> EVE_FORCEINLINE
-   auto box_muller(G & gen, as_<R> const & ) noexcept
+   auto box_muller(G & gen, as<R> const & ) noexcept
    {
      auto x1 = detail::urg01(gen, as<R>());
      auto x2 = detail::urg01(gen, as<R>());
@@ -83,7 +83,7 @@ namespace eve
       EVE_ASSERT(all(is_finite(m)), "m must be finite");
     }
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+    template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
       requires scalar_value<value_type>
     {
       return fma(m, detail::box_muller(gen, as<R>()), s);
@@ -119,7 +119,7 @@ namespace eve
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
     }
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+    template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
       requires scalar_value<value_type>
     {
 
@@ -155,7 +155,7 @@ namespace eve
       EVE_ASSERT(all(is_finite(m)), "m must be finite");
     }
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+    template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
       requires scalar_value<value_type>
     {
       return detail::box_muller(gen, as<R>())+m;
@@ -183,7 +183,7 @@ namespace eve
 
     normal_distribution(parameters const & ) { }
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+    template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
       requires scalar_value<value_type>
     {
       return detail::box_muller(gen, as<R>());
@@ -194,14 +194,14 @@ namespace eve
       return { .m = zero, .s = one };
     }
 
-    constexpr normal_distribution( as_<T> const&) {}
+    constexpr normal_distribution( as<T> const&) {}
   };
 
 
-  template<typename T>  normal_distribution(as_<T> const&) -> normal_distribution<callable_zero_, callable_one_, T>;
+  template<typename T>  normal_distribution(as<T> const&) -> normal_distribution<callable_zero_, callable_one_, T>;
 
   template<floating_real_value T>
-  inline constexpr auto normal_distribution_01 = normal_distribution<callable_zero_, callable_one_, T>(as_<T>{});
+  inline constexpr auto normal_distribution_01 = normal_distribution<callable_zero_, callable_one_, T>(as<T>{});
 
   namespace detail
   {

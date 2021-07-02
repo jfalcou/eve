@@ -22,7 +22,7 @@
 EVE_TEST_TYPES( "Check return types of eve::fdim(simd)"
               , eve::test::simd::all_types
               )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
   TTS_EXPR_IS( eve::fdim(T(), T())                        , T   );
@@ -71,5 +71,5 @@ EVE_TEST( "Check behavior of eve::fdim(simd) integral"
   using eve::detail::map;
   using eve::as;
   using v_t = eve::element_type_t<T>;
-  TTS_EQUAL(eve::fdim(a0, a1), map([](auto e,  auto f) -> v_t { return  (e >= f) ? v_t(e-f) : eve::zero(eve::as_<v_t>()); }, a0, a1));
+  TTS_EQUAL(eve::fdim(a0, a1), map([](auto e,  auto f) -> v_t { return  (e >= f) ? v_t(e-f) : eve::zero(eve::as<v_t>()); }, a0, a1));
 };

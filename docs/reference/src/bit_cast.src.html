@@ -17,13 +17,13 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf =                            " << pf << '\n'
-            << "-> eve::bit_cast(pf,as_<wide_it>()) = " << eve::bit_cast(pf, eve::as_<wide_it>()) << '\n';
+            << "-> eve::bit_cast(pf,as<wide_it>()) = " << eve::bit_cast(pf, eve::as<wide_it>()) << '\n';
 
   float xf = 2.0f;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf =                            " << xf << '\n'
-            << "-> eve::bit_cast(xf, as_<iT>()) =      " << eve::bit_cast(xf, eve::as_<iT>()) << '\n';
+            << "-> eve::bit_cast(xf, as<iT>()) =      " << eve::bit_cast(xf, eve::as<iT>()) << '\n';
   return 0;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

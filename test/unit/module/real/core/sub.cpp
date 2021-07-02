@@ -21,7 +21,7 @@
 EVE_TEST_TYPES( "Check return types of sub"
           , eve::test::simd::all_types
           )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -106,9 +106,9 @@ EVE_TEST( "Check behavior of sub on wide"
   TTS_EQUAL( saturated(sub)(a0, a1, a2), map([&](auto e, auto f, auto g) { return saturated(sub)(saturated(sub)(e, f), g); }, a0, a1, a2));
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL( eve::diff_1st(sub)(a0, a2), eve::one(as(a0)));
-    TTS_EQUAL( eve::diff_2nd(sub)(a0, a2), eve::mone(as(a0)));
-    TTS_EQUAL( eve::diff_3rd(sub)(a0, a1, a2), eve::mone(as(a0)));
+    TTS_EQUAL( eve::diff_1st(sub)(a0, a2), eve::one(eve::as(a0)));
+    TTS_EQUAL( eve::diff_2nd(sub)(a0, a2), eve::mone(eve::as(a0)));
+    TTS_EQUAL( eve::diff_3rd(sub)(a0, a1, a2), eve::mone(eve::as(a0)));
   }
 
 };
@@ -116,7 +116,7 @@ EVE_TEST( "Check behavior of sub on wide"
 //==================================================================================================
 //==  conditional sub tests on simd
 //==================================================================================================
-auto mini = [] < typename T > (eve::as_<T> const &){ return std::is_signed_v<eve::element_type_t<T>> ? -128 : 0;};
+auto mini = [] < typename T > (eve::as<T> const &){ return std::is_signed_v<eve::element_type_t<T>> ? -128 : 0;};
 
 EVE_TEST( "Check behavior of sub on signed types"
         , eve::test::simd::signed_types

@@ -20,7 +20,7 @@ namespace eve::detail
   //////////////////////////////////////////////////////////////////////////////////////
   template<value IN, scalar_value OUT>
   EVE_FORCEINLINE auto
-  convert_(EVE_SUPPORTS(cpu_), saturated_type const &, IN const &v0, as_<OUT> const &tgt) noexcept
+  convert_(EVE_SUPPORTS(cpu_), saturated_type const &, IN const &v0, as<OUT> const &tgt) noexcept
   {
     return convert(saturate(v0, tgt), tgt);
   }

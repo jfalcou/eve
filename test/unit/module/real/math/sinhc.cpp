@@ -21,7 +21,7 @@
 EVE_TEST_TYPES( "Check return types of sinhc"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -32,7 +32,7 @@ EVE_TEST_TYPES( "Check return types of sinhc"
 //==================================================================================================
 // sinhc  tests
 //==================================================================================================
-auto mini = []<typename T>(eve::as_<T> const & tgt)
+auto mini = []<typename T>(eve::as<T> const & tgt)
 {
   return -eve::maxlog(tgt);
 };

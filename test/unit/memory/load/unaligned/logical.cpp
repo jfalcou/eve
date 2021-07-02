@@ -16,7 +16,7 @@
 // Load into scalars
 //==================================================================================================
 EVE_TEST_TYPES( "Check load to scalar values", eve::test::scalar::all_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   auto [data,idx]        = logical_page<T, eve::scalar_cardinal>();
   auto* ptr               = &data[idx];

@@ -22,7 +22,7 @@ namespace eve::detail
   //================================================================================================
   template<relative_conditional_expr C, typename Ptr, typename Pack>
   EVE_FORCEINLINE Pack load_( EVE_SUPPORTS(sse2_), C const &cond, safe_type const& s
-                            , eve::as_<Pack> const& tgt
+                            , eve::as<Pack> const& tgt
                             , Ptr p
                             ) noexcept
   requires simd_compatible_ptr<Ptr, Pack>
@@ -44,16 +44,16 @@ namespace eve::detail
         if constexpr( !std::is_pointer_v<Ptr> )
         {
           using ptr_t = typename Ptr::template rebind<a_t const>;
-          return load(local_cond,s, as_<as_arithmetic_t<Pack>>{}, ptr_t((a_t const*)(p.get())));
+          return load(local_cond,s, as<as_arithmetic_t<Pack>>{}, ptr_t((a_t const*)(p.get())));
         }
         else
         {
-          return load(local_cond,s, as_<as_arithmetic_t<Pack>>{}, (a_t const*)(p));
+          return load(local_cond,s, as<as_arithmetic_t<Pack>>{}, (a_t const*)(p));
         }
       }(alt());
 
       if constexpr( current_api >= avx512 ) return to_logical(block);
-      else                                  return bit_cast(block, as_<r_t>{});
+      else                                  return bit_cast(block, as<r_t>{});
     }
     // Hack until a proper FIX-#572
     else if constexpr ( has_aggregated_abi_v<r_t> ) return load_(EVE_RETARGET(cpu_), cond, s, tgt, p);
@@ -70,7 +70,7 @@ namespace eve::detail
         else                                return s;
       };
 
-      auto mask = cond.mask( as_<r_t>{} ).storage().value;
+      auto mask = cond.mask( as<r_t>{} ).storage().value;
       constexpr auto c = categorize<r_t>();
 
             if constexpr( c == category::float64x8 ) return _mm512_mask_loadu_pd(src(that),mask,p);
@@ -108,7 +108,7 @@ namespace eve::detail
     {
       r_t that;
       constexpr auto c = categorize<r_t>();
-      auto mask = cond.mask( as_<r_t>{} ).bits();
+      auto mask = cond.mask( as<r_t>{} ).bits();
 
             if constexpr( c == category::float64x4 )  that = _mm256_maskload_pd (p,mask);
       else  if constexpr( c == category::float64x2 )  that = _mm_maskload_pd    (p,mask);

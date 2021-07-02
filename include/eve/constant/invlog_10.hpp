@@ -21,7 +21,7 @@ namespace eve
   namespace detail
   {
     template<floating_value T>
-    EVE_FORCEINLINE constexpr auto invlog_10_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    EVE_FORCEINLINE constexpr auto invlog_10_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
     {
       using t_t           = detail::value_type_t<T>;
       if constexpr(std::is_same_v<t_t, float>) return Constant<T,  0x3ede5bd9U>();

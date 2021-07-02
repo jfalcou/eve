@@ -29,7 +29,7 @@
 EVE_TEST_TYPES( "Check return types of betainc_inv"
               , eve::test::simd::ieee_reals
               )
-  <typename T>(eve::as_<T>)
+  <typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -49,7 +49,7 @@ EVE_TEST_TYPES( "Check return types of betainc_inv"
 EVE_TEST_TYPES( "Check behavior of betainc_inv on wide"
               , eve::test::simd::ieee_reals
               )
-  <typename T>(eve::as_<T>)
+  <typename T>(eve::as<T>)
 {
   using eve::betainc_inv;
   using eve::as;

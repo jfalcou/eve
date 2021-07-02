@@ -46,6 +46,6 @@ namespace eve::detail
   EVE_FORCEINLINE auto slide_right_(EVE_SUPPORTS(cpu_), logical<Wide> v, index_t<Shift> s) noexcept
   requires(Shift <= Wide::size() )
   {
-    return bit_cast(slide_right(v.bits(),s), as_<logical<Wide>>{});
+    return bit_cast(slide_right(v.bits(),s), as<logical<Wide>>{});
   }
 }

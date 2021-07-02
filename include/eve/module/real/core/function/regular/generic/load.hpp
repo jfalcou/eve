@@ -55,7 +55,7 @@ namespace eve::detail
   }
 
   template<data_source Ptr, scalar_value Target>
-  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), Ptr p, as_<Target> const&) noexcept
+  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), Ptr p, as<Target> const&) noexcept
   {
     return static_cast<Target>(*p);
   }
@@ -65,7 +65,7 @@ namespace eve::detail
                             , decorated<convert_to_<T>()> const&, Ptr p, scalar_cardinal const&
                             ) noexcept
   {
-    return load(p, as_<T>{});
+    return load(p, as<T>{});
   }
 
   //================================================================================================
@@ -74,7 +74,7 @@ namespace eve::detail
   template<relative_conditional_expr C, data_source Ptr, typename Pack>
   EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_)
                             , C const &cond, safe_type const&
-                            , eve::as_<Pack> tgt, Ptr ptr
+                            , eve::as<Pack> tgt, Ptr ptr
                             ) noexcept
   requires simd_compatible_ptr<Ptr,Pack>
   {
@@ -111,20 +111,20 @@ namespace eve::detail
       }
       else
       {
-        auto offset = cond.offset( as_<r_t>{} );
+        auto offset = cond.offset( as<r_t>{} );
 
         if constexpr(C::has_alternative)
         {
           [[maybe_unused]] r_t that(cond.alternative);
           auto* dst   = (e_t*)(&that.storage());
-          std::memcpy( (void*)(dst + offset), ptr + offset, sizeof(e_t) * cond.count( as_<r_t>{} ) );
+          std::memcpy( (void*)(dst + offset), ptr + offset, sizeof(e_t) * cond.count( as<r_t>{} ) );
           return that;
         }
         else
         {
           [[maybe_unused]] r_t that;
           auto* dst   = (e_t*)(&that.storage());
-          std::memcpy( (void*)(dst + offset), ptr + offset, sizeof(e_t) * cond.count( as_<r_t>{} ) );
+          std::memcpy( (void*)(dst + offset), ptr + offset, sizeof(e_t) * cond.count( as<r_t>{} ) );
           return that;
         }
       }
@@ -145,15 +145,15 @@ namespace eve::detail
   template<relative_conditional_expr C, data_source Ptr, typename Pack>
   DISABLE_SANITIZERS Pack load_ ( EVE_SUPPORTS(cpu_)
                                 , C const& cond, unsafe_type const&
-                                , eve::as_<Pack> const& tgt, Ptr ptr
+                                , eve::as<Pack> const& tgt, Ptr ptr
                                 ) noexcept
   {
     if constexpr(sanitizers_are_on)
     {
       Pack that;
 
-      auto offset = cond.offset( as_<Pack>{} );
-      auto count  = cond.count( as_<Pack>{} );
+      auto offset = cond.offset( as<Pack>{} );
+      auto count  = cond.count( as<Pack>{} );
 
       for (std::ptrdiff_t i = offset; i != count + offset; ++i) that.set(i, ptr[i]);
 

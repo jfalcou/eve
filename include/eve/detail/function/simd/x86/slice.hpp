@@ -93,7 +93,7 @@ namespace eve::detail
     {
       using l_t = logical<wide<T, typename N::split_type>>;
       using s_t = typename l_t::storage_type;
-      return l_t( bit_cast(a.mask().slice(Slice{}).storage(), as_<s_t>()) );
+      return l_t( bit_cast(a.mask().slice(Slice{}).storage(), as<s_t>()) );
     }
   }
 

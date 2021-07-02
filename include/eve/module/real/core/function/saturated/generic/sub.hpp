@@ -69,7 +69,7 @@ namespace eve::detail
       {
         // small signed integral case
         auto r = a - b;
-        return static_cast<T>(saturate(r, as_<T>()));
+        return static_cast<T>(saturate(r, as<T>()));
       }
     }
     else if constexpr( unsigned_value<T> )

@@ -148,7 +148,7 @@ namespace eve::bench
 
       constexpr std::array<std::ptrdiff_t,sizeof...(Args)> cards  = { eve::cardinal_v<Types>... };
 
-      auto loader = []<typename Tgt>(auto* ptr, as_<Tgt> const& )
+      auto loader = []<typename Tgt>(auto* ptr, as<Tgt> const& )
       {
         constexpr auto algt = eve::alignment_v<Tgt>;
         if constexpr( simd_value<Tgt> ) return Tgt( eve::as_aligned<algt>(ptr) );
@@ -164,7 +164,7 @@ namespace eve::bench
                     {
                       auto result = [&]<std::size_t... N>(std::index_sequence<N...> const&)
                       {
-                        return fun( loader(std::get<N>(ptrs), eve::as_<Types>{})... );
+                        return fun( loader(std::get<N>(ptrs), eve::as<Types>{})... );
                       }( std::index_sequence_for<Types...>{} );
 
                       [&]<std::size_t... N>(std::index_sequence<N...> const&)

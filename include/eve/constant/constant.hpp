@@ -17,7 +17,7 @@
 namespace eve
 {
   template<typename T, auto BitsPattern>
-  EVE_FORCEINLINE auto Constant(eve::as_<T> const & = {})
+  EVE_FORCEINLINE auto Constant(eve::as<T> const & = {})
   {
     using t_t = detail::value_type_t<T>;
 
@@ -36,7 +36,7 @@ namespace eve
       }
       else
       {
-        return static_cast<T>(bit_cast(BitsPattern,as_<t_t>{}));
+        return static_cast<T>(bit_cast(BitsPattern,as<t_t>{}));
       }
     }
   }

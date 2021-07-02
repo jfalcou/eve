@@ -33,4 +33,11 @@ namespace eve::detail
       return bit_cast(_mm_shuffle_epi8(b, i1), as(a));
     }
   }
+
+  template<scalar_value T, integral_scalar_value I, typename N>
+  EVE_FORCEINLINE auto
+  lookup_(EVE_SUPPORTS(avx512_), logical<wide<T, N>> const &a, wide<I, N> const &ind) noexcept
+  {
+    return to_logical(lookup(a.mask(),ind));
+  }
 }

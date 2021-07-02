@@ -37,20 +37,20 @@ namespace eve::test
   // Customization point for argument building
   //================================================================================================
   template<typename Sampler, typename Target>
-  auto get_arg(Sampler const& s, eve::as_<Target>)
+  auto get_arg(Sampler const& s, eve::as<Target>)
   {
     return s;
   }
 
   template<typename T, std::size_t N, simd_value Target>
-  auto get_arg(std::array<T,N> const& p, eve::as_<Target>)
+  auto get_arg(std::array<T,N> const& p, eve::as<Target>)
   {
     using type = as_wide_t< std::remove_cvref_t<decltype(*p.data())>, eve::cardinal_t<Target>>;
     return type(p.data());
   }
 
   template<typename T, std::size_t N, scalar_value Target>
-  auto get_arg(std::array<T,N> const& p, eve::as_<Target>)
+  auto get_arg(std::array<T,N> const& p, eve::as<Target>)
   {
     std::array<Target,N> that;
     for(std::size_t i=0;i<N;++i) that[i] = static_cast<Target>(p[i]);
@@ -61,7 +61,7 @@ namespace eve::test
   // Turn a list of samples into the correct type
   //================================================================================================
   template<typename S, typename T, std::size_t... N>
-  auto make_args(S const& t, std::index_sequence<N...>, eve::as_<T> tgt)
+  auto make_args(S const& t, std::index_sequence<N...>, eve::as<T> tgt)
   {
     return std::make_tuple( get_arg(std::get<N>(t), tgt)... );
   }
@@ -69,9 +69,9 @@ namespace eve::test
   //================================================================================================
   // no-data generator - used to propagate types only
   //================================================================================================
-  template<typename V, typename T> auto as_value(V v, as_<T>)
+  template<typename V, typename T> auto as_value(V v, as<T>)
   {
-    if constexpr(std::is_invocable_v<V,as_<T>>)  return v(eve::as_<T>{});
+    if constexpr(std::is_invocable_v<V,as<T>>)  return v(eve::as<T>{});
     else                                         return static_cast<T>(v);
   }
 
@@ -80,24 +80,24 @@ namespace eve::test
   //================================================================================================
   template<typename G> inline auto as_integer(G g)
   {
-    return [g]<typename T>(eve::as_<T>, auto& s) { return g( eve::as_<eve::as_integer_t<T>>{},s); };
+    return [g]<typename T>(eve::as<T>, auto& s) { return g( eve::as<eve::as_integer_t<T>>{},s); };
   }
 
   template<typename G> inline auto as_signed_integer(G g)
   {
-    return [g]<typename T>(eve::as_<T>, auto& s) { return g( eve::as_<eve::as_integer_t<T, signed>>{},s); };
+    return [g]<typename T>(eve::as<T>, auto& s) { return g( eve::as<eve::as_integer_t<T, signed>>{},s); };
   }
 
   template<typename G> inline auto as_unsigned(G g)
   {
-    return [g]<typename T>(eve::as_<T>, auto& s) { return g( eve::as_<eve::as_integer_t<T, unsigned>>{},s); };
+    return [g]<typename T>(eve::as<T>, auto& s) { return g( eve::as<eve::as_integer_t<T, unsigned>>{},s); };
   }
   //================================================================================================
   // arithmetic ramp - generate V V+1 .. V+n
   //================================================================================================
   template<typename V> auto ramp(V v)
   {
-    return  [=]<typename T>(eve::as_<T>, auto&)
+    return  [=]<typename T>(eve::as<T>, auto&)
             {
               std::array<eve::element_type_t<T>, amount<T>()> d;
               for(std::size_t i = 0;i<amount<T>();++i) d[i] = v+i;
@@ -107,7 +107,7 @@ namespace eve::test
 
   template<typename V, typename V1> auto ramp(V v,  V1 step)
   {
-    return  [=]<typename T>(eve::as_<T>, auto&)
+    return  [=]<typename T>(eve::as<T>, auto&)
             {
               std::array<eve::element_type_t<T>, amount<T>()> d;
               for(std::size_t i = 0;i<amount<T>();++i) d[i] = v+step*i;
@@ -117,7 +117,7 @@ namespace eve::test
 
   template<typename V> auto reverse_ramp(V v)
   {
-    return  [=]<typename T>(eve::as_<T>, auto&)
+    return  [=]<typename T>(eve::as<T>, auto&)
             {
               std::array<eve::element_type_t<T>, amount<T>()> d;
               auto N = amount<T>();
@@ -128,7 +128,7 @@ namespace eve::test
 
   template<typename V, typename V1> auto reverse_ramp(V v, V1 step)
   {
-    return  [=]<typename T>(eve::as_<T>, auto&)
+    return  [=]<typename T>(eve::as<T>, auto&)
             {
               std::array<eve::element_type_t<T>, amount<T>()> d;
               auto N = amount<T>();
@@ -139,12 +139,12 @@ namespace eve::test
 
   template<typename V1,  typename V2> auto between(V1 v1, V2 v2)
   {
-    return  [=]<typename T>(eve::as_<T>, auto&)
+    return  [=]<typename T>(eve::as<T>, auto&)
             {
               using elt_t = element_type_t<T>;
               auto n = amount<T>()-1;
-              elt_t w1 = as_value(v1,as_<elt_t>{});
-              elt_t w2 = as_value(v2,as_<elt_t>{});
+              elt_t w1 = as_value(v1,as<elt_t>{});
+              elt_t w2 = as_value(v2,as<elt_t>{});
               elt_t a = n ? elt_t((w2 - w1))/n : elt_t(0);
               std::array<elt_t, amount<T>()> d;
               for(std::size_t i = 0;i<amount<T>();++i) d[i] = std::min( elt_t(a*i+w1), w2);
@@ -157,7 +157,7 @@ namespace eve::test
   //================================================================================================
   template<typename V, typename K> auto logicals(V v, K k)
   {
-    return  [=]<typename T>(eve::as_<T>, auto&)
+    return  [=]<typename T>(eve::as<T>, auto&)
             {
               std::array<eve::logical<eve::element_type_t<T>>,amount<T>()> d;
               for(std::size_t i = 0;i<amount<T>();++i) d[i] = ((v+i)%k) == 0;
@@ -170,10 +170,10 @@ namespace eve::test
   //================================================================================================
   template<typename Mn, typename Mx> auto randoms(Mn mn, Mx mx)
   {
-    return [=]<typename T>(eve::as_<T>, auto& gen)
+    return [=]<typename T>(eve::as<T>, auto& gen)
            {
              using e_t = eve::element_type_t<T>;
-             eve::prng<e_t> dist(as_value(mn,as_<e_t>{}),as_value(mx,as_<e_t>{}));
+             eve::prng<e_t> dist(as_value(mn,as<e_t>{}),as_value(mx,as<e_t>{}));
              std::array<e_t,amount<T>()> d;
              std::for_each(d.begin(),d.end(), [&](auto& e) { e = dist(gen); });
              return d;
@@ -185,7 +185,7 @@ namespace eve::test
   //================================================================================================
   template<typename V> auto value(V v)
   {
-    return [=]<typename T>(eve::as_<T> tgt, auto&)
+    return [=]<typename T>(eve::as<T> tgt, auto&)
            {
              std::array<eve::element_type_t<T>,amount<T>()> d;
              auto val = as_value(v,tgt);
@@ -201,7 +201,7 @@ namespace eve::test
   //================================================================================================
   inline auto limits()
   {
-    return [=]<typename T>(eve::as_<T>, auto&)
+    return [=]<typename T>(eve::as<T>, auto&)
     {
       return []()
       {
@@ -210,15 +210,15 @@ namespace eve::test
           struct values
           {
             using type  = T;
-            type nan         = eve::nan     (eve::as_<type>{});
-            type inf         = eve::inf     (eve::as_<type>{});
-            type minf        = eve::minf    (eve::as_<type>{});
-            type mzero       = eve::mzero   (eve::as_<type>{});
-            type zero        = eve::zero   (eve::as_<type>{});
-            type maxflint    = eve::maxflint(eve::as_<type>{});
-            type valmax      = eve::valmax(eve::as_<type>{});
-            type valmin      = eve::valmin(eve::as_<type>{});
-            type mindenormal = eve::mindenormal(eve::as_<type>{});
+            type nan         = eve::nan     (eve::as<type>{});
+            type inf         = eve::inf     (eve::as<type>{});
+            type minf        = eve::minf    (eve::as<type>{});
+            type mzero       = eve::mzero   (eve::as<type>{});
+            type zero        = eve::zero   (eve::as<type>{});
+            type maxflint    = eve::maxflint(eve::as<type>{});
+            type valmax      = eve::valmax(eve::as<type>{});
+            type valmin      = eve::valmin(eve::as<type>{});
+            type mindenormal = eve::mindenormal(eve::as<type>{});
           };
 
           return values{};
@@ -228,8 +228,8 @@ namespace eve::test
           struct values
           {
             using type  = T;
-            type valmax    = eve::valmax(eve::as_<type>{});
-            type valmin    = eve::valmin(eve::as_<type>{});
+            type valmax    = eve::valmax(eve::as<type>{});
+            type valmin    = eve::valmin(eve::as<type>{});
           };
 
           return values{};
@@ -243,7 +243,7 @@ namespace eve::test
   //================================================================================================
   template<typename... G> inline auto generate(G... g)
   {
-    return [=]<typename T>(eve::as_<T> t, auto& s)
+    return [=]<typename T>(eve::as<T> t, auto& s)
            {
              return std::make_tuple(g(t,s)...);
            };
@@ -270,7 +270,7 @@ inline bool const TTS_CAT(register_,TTS_FUNCTION) =  ::eve::test::test_setup{   
 [](auto tests)                                                                                      \
   {                                                                                                 \
     auto s = SAMPLES;                                                                               \
-    auto const single_test = [=]<typename T>( eve::as_<T> target)                                   \
+    auto const single_test = [=]<typename T>( eve::as<T> target)                                   \
     {                                                                                               \
       [=]<std::size_t... N>(std::index_sequence<N...>)                                              \
       {                                                                                             \
@@ -284,8 +284,8 @@ inline bool const TTS_CAT(register_,TTS_FUNCTION) =  ::eve::test::test_setup{   
               std::mt19937 gen(seed);                                                               \
                                                                                                     \
               constexpr std::make_index_sequence<sizeof...(N)> size = {};                           \
-              auto data = s(eve::as_<T>{}, gen);                                                    \
-              auto args = eve::test::make_args(data, size, eve::as_<T>{});                          \
+              auto data = s(eve::as<T>{}, gen);                                                    \
+              auto args = eve::test::make_args(data, size, eve::as<T>{});                          \
               if( ::tts::verbose_status )                                                           \
               {                                                                                     \
                 if(::tts::arguments.is_set("-d","--data"))                                          \
@@ -310,7 +310,7 @@ inline bool const TTS_CAT(register_,TTS_FUNCTION) =  ::eve::test::test_setup{   
                                                                                                     \
     [&]<template<class...> class L,typename... Ts>(L<Ts...>)                                        \
     {                                                                                               \
-      (single_test( eve::as_<Ts>() ),...);                                                          \
+      (single_test( eve::as<Ts>() ),...);                                                          \
     }( TYPES );                                                                                     \
                                                                                                     \
     return true;                                                                                    \
@@ -321,18 +321,18 @@ inline bool const TTS_CAT(register_,TTS_FUNCTION) =  ::eve::test::test_setup{   
 inline bool const TTS_CAT(register_,TTS_FUNCTION) =  ::eve::test::test_setup{                       \
 [](auto tests)                                                                                      \
   {                                                                                                 \
-    auto const single_test = [=]<typename T>( eve::as_<T> )                                         \
+    auto const single_test = [=]<typename T>( eve::as<T> )                                         \
     {                                                                                               \
       ::tts::detail::test::acknowledge(::tts::detail::test                                          \
       {                                                                                             \
           std::string{DESCRIPTION} + " (with T = " + std::string{::tts::typename_<T>} + ")"         \
-        , [=]() {tests(eve::as_<T>{}); }                                                            \
+        , [=]() {tests(eve::as<T>{}); }                                                            \
         });                                                                                         \
     };                                                                                              \
                                                                                                     \
     [&]<template<class...> class L,typename... Ts>(L<Ts...>)                                        \
     {                                                                                               \
-      (single_test( eve::as_<Ts>() ),...);                                                          \
+      (single_test( eve::as<Ts>() ),...);                                                          \
     }( TYPES );                                                                                     \
                                                                                                     \
     return true;                                                                                    \

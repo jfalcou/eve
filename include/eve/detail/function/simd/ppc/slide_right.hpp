@@ -31,7 +31,7 @@ namespace eve::detail
       if constexpr( std::same_as<T,double> )
       {
         using i_t = as_integer_t<wide<T, N>>;
-        return bit_cast(slide_right(bit_cast(v, as_<i_t>()), index<Shift> ), as(v));
+        return bit_cast(slide_right(bit_cast(v, as<i_t>()), index<Shift> ), as(v));
       }
       else
       {

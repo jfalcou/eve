@@ -25,7 +25,7 @@
 EVE_TEST_TYPES( "Check return types of lerp"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -41,7 +41,7 @@ EVE_TEST_TYPES( "Check return types of lerp"
 //==================================================================================================
 // lerp tests
 //==================================================================================================
-auto mini = []<typename U>(eve::as_<U>)
+auto mini = []<typename U>(eve::as<U>)
 {
   return (-eve::sqrtvalmax(eve::as(eve::element_type_t<U>())));
 };

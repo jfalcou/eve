@@ -23,7 +23,7 @@ namespace eve::detail
       using int_t = detail::make_integer_t<sizeof(T)>;
       using wide_int = as_wide_t<int_t, N>;
 
-      auto as_ints = eve::bit_cast(v, eve::as_<wide_int>{});
+      auto as_ints = eve::bit_cast(v, eve::as<wide_int>{});
       as_ints = reverse(as_ints);
       return eve::bit_cast(as_ints, eve::as(v));
     }

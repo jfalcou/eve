@@ -22,7 +22,7 @@
 EVE_TEST_TYPES( "Check return types of binarize"
         , eve::test::simd::all_types
         )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using eve::logical;
   using v_t = eve::element_type_t<T>;

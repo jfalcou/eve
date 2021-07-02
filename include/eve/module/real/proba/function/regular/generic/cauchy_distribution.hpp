@@ -63,7 +63,7 @@ namespace eve
       EVE_ASSERT(all(is_finite(m)), "m must be finite");
     }
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+    template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
       requires scalar_value<value_type>
     {
       return invcdf(*this, detail::urg01(gen, as<R>()));
@@ -95,7 +95,7 @@ namespace eve
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
     }
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+    template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
       requires scalar_value<value_type>
     {
       return invcdf(*this, detail::urg01(gen, as<R>()));
@@ -126,7 +126,7 @@ namespace eve
       EVE_ASSERT(all(is_finite(m)), "m must be finite");
     }
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+    template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
       requires scalar_value<value_type>
     {
       return invcdf(*this, detail::urg01(gen, as<R>()));
@@ -144,18 +144,18 @@ namespace eve
     using m_type = callable_zero_;
     using s_type = callable_one_;
     using value_type = T;
-    constexpr cauchy_distribution( as_<T> const&) {}
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+    constexpr cauchy_distribution( as<T> const&) {}
+    template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
       requires scalar_value<value_type>
     {
       return invcdf(*this, detail::urg01(gen, as<R>()));
     }
   };
 
-  template<typename T>  cauchy_distribution(as_<T> const&) -> cauchy_distribution<callable_zero_, callable_one_, T>;
+  template<typename T>  cauchy_distribution(as<T> const&) -> cauchy_distribution<callable_zero_, callable_one_, T>;
 
   template<floating_real_value T>
-  inline constexpr auto cauchy_distribution_01 = cauchy_distribution<callable_zero_, callable_one_, T>(as_<T>{});
+  inline constexpr auto cauchy_distribution_01 = cauchy_distribution<callable_zero_, callable_one_, T>(as<T>{});
 
   namespace detail
   {

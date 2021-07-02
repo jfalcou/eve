@@ -19,7 +19,7 @@ int main(int argc, char** argv)
 
   EVE_REGISTER_BENCHMARK(std_tan, EVE_TYPE, eve::bench::random<EVE_TYPE>(eve::pio_4(eve::as<EVE_TYPE>()), eve::pio_4(eve::as<EVE_TYPE>())));
   EVE_REGISTER_BENCHMARK(std_tan, EVE_TYPE, eve::bench::random<EVE_TYPE>(eve::pio_2(eve::as<EVE_TYPE>()), eve::pio_2(eve::as<EVE_TYPE>())));
-  auto l = eve::detail::Rempio2_limit(eve::medium_type(),eve::as_<EVE_TYPE>());
+  auto l = eve::detail::Rempio2_limit(eve::medium_type(),eve::as<EVE_TYPE>());
   EVE_REGISTER_BENCHMARK(std_tan, EVE_TYPE, eve::bench::random<EVE_TYPE>(-l, l));
   EVE_REGISTER_BENCHMARK(std_tan, EVE_TYPE, eve::bench::random<EVE_TYPE>(eve::valmin(eve::as<EVE_TYPE>()), eve::valmax(eve::as<EVE_TYPE>())));
 

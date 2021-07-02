@@ -13,7 +13,7 @@
 EVE_TEST_TYPES("Check eve::uniform_discrete_distribution_distribution behavior"
               , eve::test::simd::ieee_reals
               )
-  <typename T>(eve::as_<T>)
+  <typename T>(eve::as<T>)
 {
   {
     auto d = eve::uniform_discrete_distribution{T(1), T(2)};

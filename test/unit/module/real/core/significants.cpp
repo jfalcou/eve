@@ -19,7 +19,7 @@
 EVE_TEST_TYPES( "Check return types of significants"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -30,7 +30,7 @@ EVE_TEST_TYPES( "Check return types of significants"
 EVE_TEST_TYPES( "Check significants"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   TTS_IEEE_EQUAL(eve::significants(T(1.234567), 0), eve::nan(eve::as<T>()) );
   TTS_EQUAL(eve::significants(T(1.234567), 1), T(1.) );

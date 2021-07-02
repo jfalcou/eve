@@ -17,7 +17,7 @@
 EVE_TEST_TYPES( "Check return types of eve::popcount(simd)"
               , eve::test::simd::integers
               )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using i_t = eve::as_integer_t<T, unsigned>;
   using v_t = eve::element_type_t<T>;

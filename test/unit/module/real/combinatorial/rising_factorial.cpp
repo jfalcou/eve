@@ -25,7 +25,7 @@
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of eve::fibonacci"
               , eve::test::simd::ieee_reals)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   TTS_EXPR_IS(eve::raw(eve::lrising_factorial)(int(), T()), T);
 
@@ -37,7 +37,7 @@ EVE_TEST_TYPES( "Check return types of eve::fibonacci"
 EVE_TEST_TYPES( "Check corner-cases behavior of eve::fibonacci on wide"
         , eve::test::simd::ieee_reals
          )
-  <typename T>(eve::as_<T>)
+  <typename T>(eve::as<T>)
 {
   using eve::as;
   auto ulp = sizeof(eve::element_type_t<T>) == 4 ? 70 : 40;

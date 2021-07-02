@@ -76,11 +76,11 @@ namespace eve::detail
     //==============================================================================================
     else if constexpr( N()== 2 )
     {
-      return make(eve::as_<t_t> {}, l.get(0), l.get(1), h.get(0), h.get(1));
+      return make(eve::as<t_t> {}, l.get(0), l.get(1), h.get(0), h.get(1));
     }
     else if constexpr( N() == 1 )
     {
-      return make(eve::as_<t_t> {}, l.get(0), h.get(0));
+      return make(eve::as<t_t> {}, l.get(0), h.get(0));
     }
   }
 

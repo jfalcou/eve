@@ -26,7 +26,7 @@ namespace eve::detail
         constexpr auto shift = Shift*sizeof(T);
         using i_t = as_integer_t<wide<T,N>, unsigned>;
 
-        auto const b  = bit_cast(v, as_<i_t>());
+        auto const b  = bit_cast(v, as<i_t>());
         return bit_cast(i_t(_mm_bslli_si128( b, shift)), as(v));
       }
       else if constexpr( std::same_as<abi_t<T, N>,x86_256_>)
@@ -36,7 +36,7 @@ namespace eve::detail
           using i_t = as_integer_t<wide<T,N>>;
           constexpr auto offset = Shift * sizeof(T);
 
-          i_t vi  = bit_cast(v, as_<i_t>{});
+          i_t vi  = bit_cast(v, as<i_t>{});
           i_t bvi = _mm256_permute2x128_si256(vi, vi, 0x08);
 
           if constexpr(offset == 16)
@@ -56,7 +56,7 @@ namespace eve::detail
         {
           constexpr auto shifted_bytes = sizeof(T)* Shift;
           using f_t = typename wide<T,N>::template rebind<float>;
-          auto const w  = bit_cast(v, as_<f_t>{});
+          auto const w  = bit_cast(v, as<f_t>{});
           auto const s0 = _mm256_permute2f128_ps(w,w,0x08 );
 
           if constexpr(shifted_bytes == 4 * 7)
@@ -98,13 +98,13 @@ namespace eve::detail
                                                       );
 
               // permutes so we have [ <0 .. 0> 0 .. v0 ]
-              auto g = bit_cast(h, as_<f_t>{});
+              auto g = bit_cast(h, as<f_t>{});
               return bit_cast(_mm256_permute2f128_ps(g,g,0x01), as(v));
             }
             else
             {
               using byte_t = typename wide<T,N>::template rebind<std::uint8_t,fixed<16>>;
-              using tgt_t  = as_<byte_t>;
+              using tgt_t  = as<byte_t>;
 
               // Slide lower parts as normal
               auto [l,h] = v.slice();

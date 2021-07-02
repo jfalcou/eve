@@ -23,7 +23,7 @@
 EVE_TEST_TYPES( "Check return types of trunc"
               , eve::test::simd::all_types
               )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -45,7 +45,7 @@ EVE_TEST_TYPES( "Check return types of trunc"
 EVE_TEST_TYPES( "Check  with nans and infs"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   TTS_EQUAL(eve::tolerant(eve::trunc)(eve::inc(-eve::eps(eve::as<T>()))), T(1));
   TTS_EQUAL(eve::tolerant(eve::trunc)(eve::inc(-2*eve::eps(eve::as<T>()))), T(1));
@@ -60,7 +60,7 @@ EVE_TEST_TYPES( "Check  with nans and infs"
 //==================================================================================================
 // trunc signed tests
 //==================================================================================================
-auto min = []< typename T>(eve::as_<T> const &){return eve::signed_value<T> ? -50 : 0; };
+auto min = []< typename T>(eve::as<T> const &){return eve::signed_value<T> ? -50 : 0; };
 EVE_TEST( "Check behavior of trunc on wide"
         , eve::test::simd::all_types
         , eve::test::generate(eve::test::randoms(min, +50))
@@ -71,7 +71,7 @@ EVE_TEST( "Check behavior of trunc on wide"
   if constexpr(eve::floating_real_value<T>)
   {
     TTS_EQUAL( eve::trunc(a0), T([&](auto i, auto) { return v_t(std::trunc(a0.get(i))); }));
-    TTS_EQUAL( eve::diff(eve::trunc)(a0), eve::zero(as(a0)));
+    TTS_EQUAL( eve::diff(eve::trunc)(a0), eve::zero(eve::as(a0)));
   }
   else
   {

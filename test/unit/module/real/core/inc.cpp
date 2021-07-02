@@ -22,7 +22,7 @@
 EVE_TEST_TYPES( "Check return types of inc"
             , eve::test::simd::all_types
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -55,7 +55,7 @@ EVE_TEST_TYPES( "Check return types of inc"
 //==================================================================================================
 // inc(simd)  tests
 //==================================================================================================
-auto valminp1 = []< typename T>(eve::as_<T> const &){return eve::inc(eve::valmin(eve::as(eve::element_type_t<T>())));};
+auto valminp1 = []< typename T>(eve::as<T> const &){return eve::inc(eve::valmin(eve::as(eve::element_type_t<T>())));};
 
 EVE_TEST( "Check behavior of inc(wide) and inc[cond](wide)"
         , eve::test::simd::all_types

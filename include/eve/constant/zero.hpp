@@ -17,7 +17,7 @@ namespace eve
   namespace detail
   {
     template<typename T>
-    EVE_FORCEINLINE auto zero_(EVE_SUPPORTS(cpu_), eve::as_<T> const &) noexcept
+    EVE_FORCEINLINE auto zero_(EVE_SUPPORTS(cpu_), eve::as<T> const &) noexcept
     {
       return T(0);
     }

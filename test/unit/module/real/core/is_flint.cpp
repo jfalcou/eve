@@ -20,7 +20,7 @@
 EVE_TEST_TYPES( "Check return types of eve::is_flint(simd)"
               , eve::test::simd::all_types
               )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using eve::logical;
   using v_t = eve::element_type_t<T>;
@@ -33,11 +33,11 @@ EVE_TEST_TYPES( "Check return types of eve::is_flint(simd)"
 //==================================================================================================
 // Tests for eve::is_flint
 //==================================================================================================
-auto mfo2 = []<typename T>(eve::as_<T> const & tgt)
+auto mfo2 = []<typename T>(eve::as<T> const & tgt)
 {
   return eve::maxflint(tgt);
 };
-auto mf2 = []<typename T>(eve::as_<T> const & tgt)
+auto mf2 = []<typename T>(eve::as<T> const & tgt)
 {
 
   return eve::maxflint(tgt)*4;

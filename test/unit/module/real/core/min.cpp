@@ -23,7 +23,7 @@
 EVE_TEST_TYPES( "Check return types of min"
               , eve::test::simd::all_types
               )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -76,7 +76,7 @@ EVE_TEST( "Check behavior of min on all types full range"
 EVE_TEST_TYPES( "Check values of min"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
     TTS_IEEE_EQUAL(eve::pedantic(eve::min)(eve::nan(eve::as<T>())   , T(1)  ) , eve::nan(eve::as<T>()) );

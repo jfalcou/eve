@@ -1,7 +1,8 @@
 #include <eve/function/ellint_2.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
 #include <eve/constant/pio_2.hpp>
+#include <eve/wide.hpp>
+#include <eve/as.hpp>
+#include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;
 
@@ -24,7 +25,7 @@ int main()
    std::cout << "---- simd" << '\n'
              << "<- phi               = " << phi << '\n'
              << "-> ellint_2(phi, pf) = " << eve::ellint_2(phi, pf) << '\n'
-             << "-> ellint_2(pio2,pf) = " << eve::ellint_2(eve::pio_2(as(phi)), pf) << '\n';
+             << "-> ellint_2(pio2,pf) = " << eve::ellint_2(eve::pio_2(eve::as(phi)), pf) << '\n';
 
   return 0;
 }

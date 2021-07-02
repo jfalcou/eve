@@ -20,7 +20,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto to_bits( cpu_ const&, Wide const& p ) noexcept
   {
     using type = typename Wide::bits_type;
-    return bit_cast(p, as_<type>{});
+    return bit_cast(p, as<type>{});
   }
 
   //================================================================================================
@@ -38,7 +38,7 @@ namespace eve::detail
     }
     else
     {
-      return bit_cast(p, as_<type>{});
+      return bit_cast(p, as<type>{});
     }
   }
 

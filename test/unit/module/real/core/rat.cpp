@@ -17,7 +17,7 @@
 EVE_TEST_TYPES( "Check return types of eve::rat(scalar)"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t =  eve::element_type_t<T>;
   TTS_EXPR_IS( eve::rat(T())                    , (kumi::tuple<T, T>)  );

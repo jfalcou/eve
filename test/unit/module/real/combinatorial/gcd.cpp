@@ -22,12 +22,12 @@
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of eve::gcd"
               , eve::test::simd::all_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   TTS_EXPR_IS(eve::gcd(T(), T()), T);
 };
 
-auto mini = []< typename T>(eve::as_<T> const &){return eve::valmin(eve::as<T>())+1; };
+auto mini = []< typename T>(eve::as<T> const &){return eve::valmin(eve::as<T>())+1; };
 
 EVE_TEST( "Check corner-cases behavior of eve::gcd on wide"
         , eve::test::simd::integers
@@ -50,7 +50,7 @@ EVE_TEST_TYPES( "Check  behavior of eve::gcd on wide peculiar cases"
         , eve::test::simd::all_types
 
          )
-  <typename T>(eve::as_<T>)
+  <typename T>(eve::as<T>)
 {
   using eve::as;
   using eve::gcd;

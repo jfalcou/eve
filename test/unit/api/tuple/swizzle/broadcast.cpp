@@ -17,7 +17,7 @@ inline constexpr auto broadcast = eve::fix_pattern<N>( [](int, int){ return I; }
 // Identity test
 //==================================================================================================
 EVE_TEST_TYPES( "Check behavior of broadcast swizzle", eve::test::scalar::all_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using s_t = kumi::tuple<std::int8_t,T,double>;
 

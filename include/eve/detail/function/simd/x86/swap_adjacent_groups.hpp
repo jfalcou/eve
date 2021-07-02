@@ -42,7 +42,7 @@ namespace eve::detail
           }
           else
           {
-            auto up = convert(v, as_<upgrade_t<T>>{});
+            auto up = convert(v, as<upgrade_t<T>>{});
             auto r  = swap_adjacent_groups(up,fixed<G>{});
 
             if constexpr(N::value < 16)
@@ -126,7 +126,7 @@ namespace eve::detail
           }
           else
           {
-            auto sd = bit_cast(v, as_<typename that_t::template rebind<float>>{});
+            auto sd = bit_cast(v, as<typename that_t::template rebind<float>>{});
             sd = swap_adjacent_groups(sd, fixed<1>{});
             return bit_cast(sd, as(v));
           }
@@ -147,7 +147,7 @@ namespace eve::detail
           }
           else
           {
-            auto sd = bit_cast(v, as_<typename that_t::template rebind<float>>{});
+            auto sd = bit_cast(v, as<typename that_t::template rebind<float>>{});
             sd = swap_adjacent_groups(sd, fixed<2>{});
             return bit_cast(sd, as(v));
           }

@@ -12,7 +12,7 @@
 
 int main()
 {
-  auto lmax = eve::detail::Rempio2_limit(eve::small_type(), eve::as_<EVE_VALUE>());
+  auto lmax = eve::detail::Rempio2_limit(eve::small_type(), eve::as<EVE_VALUE>());
   auto lmin = -lmax;
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);

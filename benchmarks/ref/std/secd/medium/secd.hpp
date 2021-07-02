@@ -14,7 +14,7 @@ int main(int argc, char** argv)
   constexpr EVE_TYPE inrad = std::numbers::pi_v<EVE_TYPE>/180;
   auto const std_secd = [](auto x) { return inrad*1/std::cos(x); };
 
-  auto l = eve::detail::Rempio2_limit(eve::medium_type(),eve::as_<EVE_TYPE>());
+  auto l = eve::detail::Rempio2_limit(eve::medium_type(),eve::as<EVE_TYPE>());
   EVE_REGISTER_BENCHMARK(std_secd, EVE_TYPE, eve::bench::random<EVE_TYPE>(-l, l));
 
   eve::bench::start_benchmarks(argc, argv);

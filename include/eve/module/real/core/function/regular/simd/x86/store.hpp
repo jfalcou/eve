@@ -91,13 +91,13 @@ namespace eve::detail
       {
         using float_t = detail::make_floating_point_t<sizeof(T)>;
         using wide_float_t = as_wide_t<float_t, N>;
-        store[cond](eve::bit_cast(v, as_<wide_float_t>{}), (float_t*) ptr);
+        store[cond](eve::bit_cast(v, as<wide_float_t>{}), (float_t*) ptr);
       }
       else
       {
         constexpr auto c = categorize<wide<T, N>>();
 
-        auto m = cond.mask(as_<as_integer_t<wide<T, N>>>{});
+        auto m = cond.mask(as<as_integer_t<wide<T, N>>>{});
 
              if constexpr ( c == category::float64x2 )                         _mm_maskstore_pd   (ptr, m, v);
         else if constexpr ( c == category::float64x4 )                         _mm256_maskstore_pd(ptr, m, v);

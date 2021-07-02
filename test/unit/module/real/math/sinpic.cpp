@@ -23,7 +23,7 @@
 EVE_TEST_TYPES( "Check return types of sinpic"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -34,11 +34,11 @@ EVE_TEST_TYPES( "Check return types of sinpic"
 //==================================================================================================
 // sinpic  tests
 //==================================================================================================
-auto mini= []<typename T>(eve::as_<T> const & tgt)
+auto mini= []<typename T>(eve::as<T> const & tgt)
 {
   return eve::valmin(tgt)/4;
 };
-auto maxi= []<typename T>(eve::as_<T> const & tgt)
+auto maxi= []<typename T>(eve::as<T> const & tgt)
 {
   return eve::valmax(tgt)/4;
 };
@@ -56,13 +56,13 @@ EVE_TEST( "Check behavior of sinpic on wide"
   using v_t = eve::element_type_t<T>;
   v_t dpi = 3.1415926535897932384626433832795028841971693993751;
   auto ref = [dpi](auto e) -> v_t { return e ? eve::sinpi(e)/(dpi*e) : v_t(1); };
-  TTS_ULP_EQUAL(sinpic(a0)                       , map(ref, a0), 2);
-  TTS_ULP_EQUAL(sinpic(a1)                       , map(ref, a1), 2);
+  TTS_ULP_EQUAL(sinpic(a0)                       , map(ref, a0), 3);
+  TTS_ULP_EQUAL(sinpic(a1)                       , map(ref, a1), 3);
   auto ds = [dpi](auto x) -> v_t {
     auto [s, c] = eve::sinpicospi(x);
     return x ? eve::fms(x*dpi, c, s)/(dpi*x*x) : v_t(0);
 
   };
-  TTS_ULP_EQUAL(diff(sinpic)(a0), map(ds, a0), 2);
-  TTS_ULP_EQUAL(diff(sinpic)(a1), map(ds, a1), 2);
+  TTS_ULP_EQUAL(diff(sinpic)(a0), map(ds, a0), 3);
+  TTS_ULP_EQUAL(diff(sinpic)(a1), map(ds, a1), 3);
 };

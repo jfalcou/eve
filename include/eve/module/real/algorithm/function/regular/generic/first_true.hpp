@@ -24,8 +24,8 @@ namespace eve::detail
          if constexpr ( C::is_complete && !C::is_inverted ) return {};
     else if constexpr ( has_emulated_abi_v<T> )
     {
-      std::ptrdiff_t first = cond.offset(eve::as_<T>{});
-      std::ptrdiff_t last = first + cond.count(eve::as_<T>{});
+      std::ptrdiff_t first = cond.offset(eve::as<T>{});
+      std::ptrdiff_t last = first + cond.count(eve::as<T>{});
 
       while (first != last) {
         if (v.get(first)) return first;

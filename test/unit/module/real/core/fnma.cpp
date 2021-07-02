@@ -25,7 +25,7 @@
 EVE_TEST_TYPES( "Check return types of fnma"
               , eve::test::simd::all_types
               )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -53,12 +53,12 @@ EVE_TEST_TYPES( "Check return types of fnma"
 //==================================================================================================
 // fnma tests
 //==================================================================================================
-auto onepmileps = []<typename U>(eve::as_<U>)
+auto onepmileps = []<typename U>(eve::as<U>)
 {
   return (eve::inc(1000*eve::eps(eve::as(eve::element_type_t<U>()))));
 };
 
-auto onemmileps = []<typename U>(eve::as_<U>)
+auto onemmileps = []<typename U>(eve::as<U>)
 {
   return (eve::oneminus(1000*eve::eps(eve::as(eve::element_type_t<U>()))));
 };
@@ -92,10 +92,12 @@ EVE_TEST( "Check behavior of fnma on all types full range"
         )
 <typename T>(  T const& a0, T const& a1, T const& a2)
 {
+  using eve::as;
   using eve::fnma;
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
-  if (eve::all(eve::fnma(onemmileps(as(a0)), onepmileps(as(a0)), T(1)) == eve::pedantic(eve::fnma)(onemmileps(as(a0)), onepmileps(as(a0)), T(1))))
+
+  if (eve::all(eve::fnma(onemmileps(eve::as(a0)), onepmileps(eve::as(a0)), T(1)) == eve::pedantic(eve::fnma)(onemmileps(eve::as(a0)), onepmileps(eve::as(a0)), T(1))))
   {
     TTS_ULP_EQUAL(fnma((a0), (a1), (a2)), map([&](auto e , auto f, auto g) -> v_t { return eve::pedantic(fnma)(e, f, g); }, a0, a1, a2), 2);
   }

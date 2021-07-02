@@ -20,7 +20,7 @@
 EVE_TEST_TYPES( "Check return types of round"
               , eve::test::simd::all_types
               )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -39,7 +39,7 @@ EVE_TEST_TYPES( "Check return types of round"
 EVE_TEST_TYPES( "Check behavior of round(wide) and diff(round(wide))"
         , eve::test::simd::all_types
         )
-  <typename T>(eve::as_<T>)
+  <typename T>(eve::as<T>)
 {
   TTS_EQUAL(eve::upward      (eve::round)(T(1.7)), eve::ceil   (T(1.7)) );
   TTS_EQUAL(eve::downward    (eve::round)(T(1.7)), eve::floor  (T(1.7)) );

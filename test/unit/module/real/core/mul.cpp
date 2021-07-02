@@ -20,7 +20,7 @@
 EVE_TEST_TYPES( "Check return types of mul"
           , eve::test::simd::all_types
           )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -126,7 +126,7 @@ EVE_TEST( "Check behavior of mul on wide"
 //==================================================================================================
 //==  conditional mul tests on simd
 //==================================================================================================
-auto mini = [] < typename T > (eve::as_<T> const &){ return std::is_signed_v<eve::element_type_t<T>> ? -128 : 0;};
+auto mini = [] < typename T > (eve::as<T> const &){ return std::is_signed_v<eve::element_type_t<T>> ? -128 : 0;};
 
 EVE_TEST( "Check behavior of mul on signed types"
         , eve::test::simd::signed_types

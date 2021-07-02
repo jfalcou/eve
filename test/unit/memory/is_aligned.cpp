@@ -49,7 +49,7 @@ TTS_CASE("is_aligned for pointers")
 }
 
 EVE_TEST_TYPES("is_aligned for pointers with respect to SIMD lanes", eve::test::simd::cardinals)
-<typename Lanes>(eve::as_<Lanes>)
+<typename Lanes>(eve::as<Lanes>)
 {
   alignas(sizeof(std::uint8_t)  * Lanes::value) std::uint8_t  v8;
   alignas(sizeof(std::uint16_t) * Lanes::value) std::uint16_t v16;

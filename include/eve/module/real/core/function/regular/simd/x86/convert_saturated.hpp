@@ -20,7 +20,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<Out, N> convert_(EVE_SUPPORTS(sse2_),
                                         saturated_type const &sat_,
                                         wide<In, N> const &   v0,
-                                        as_<Out> const &      tgt) noexcept
+                                        as<Out> const &      tgt) noexcept
   {
     // Idempotent call
     if constexpr( std::is_same_v<In, Out> )
@@ -94,7 +94,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<Out, N> convert_(EVE_SUPPORTS(avx2_),
                                         saturated_type const &sat_,
                                         wide<In, N> const &   v0,
-                                        as_<Out> const &      tgt) noexcept
+                                        as<Out> const &      tgt) noexcept
   {
     // Idempotent call
     if constexpr( std::is_same_v<In, Out> )

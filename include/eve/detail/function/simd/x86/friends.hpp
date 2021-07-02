@@ -317,8 +317,8 @@ namespace eve::detail
         [[maybe_unused]]  auto unsigned_cmp = [](auto v, auto w)
         {
           using l_t = logical<wide<T, N>>;
-          auto const sm = signmask(as_<as_integer_t<wide<T, N>, signed>>());
-          return bit_cast( (bit_cast(v,as(sm))-sm) < (bit_cast(w,as(sm))-sm),as_<l_t>{});
+          auto const sm = signmask(as<as_integer_t<wide<T, N>, signed>>());
+          return bit_cast( (bit_cast(v,as(sm))-sm) < (bit_cast(w,as(sm))-sm),as<l_t>{});
         };
 
               if constexpr(use_avx2 && c == category::int64x4  )  return _mm256_cmpgt_epi64(w,v);
@@ -410,8 +410,8 @@ namespace eve::detail
         [[maybe_unused]]  auto unsigned_cmp = [](auto v, auto w)
         {
           using l_t = logical<wide<T, N>>;
-          auto const sm = signmask(as_<as_integer_t<wide<T, N>, signed>>());
-          return bit_cast((bit_cast(v,as(sm))-sm) > (bit_cast(w,as(sm))-sm),as_<l_t>{});
+          auto const sm = signmask(as<as_integer_t<wide<T, N>, signed>>());
+          return bit_cast((bit_cast(v,as(sm))-sm) > (bit_cast(w,as(sm))-sm),as<l_t>{});
         };
 
               if constexpr(use_avx2 && c == category::int64x4  )  return _mm256_cmpgt_epi64(v,w);

@@ -24,7 +24,7 @@
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of eve::prime_floor"
               , eve::test::simd::unsigned_integers)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
   using f_t = eve::wide<float, eve::cardinal_t<T>>;

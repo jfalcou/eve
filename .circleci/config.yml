@@ -97,10 +97,10 @@ base_jobs: &base_jobs
         name: Pre-compiling large math function
         command: cd build && ninja unit.real.math.heavy.exe  -k 0 -j 2
     - compile:
-        targets: "../cmake/toolchain/simd.targets.json"
+        targets: "../cmake/toolchain/real.targets.json"
         cpu:  2
     - ctest:
-        targets: "../cmake/toolchain/simd.targets.json"
+        targets: "../cmake/toolchain/real.targets.json"
 
 random_jobs: &random_jobs
   docker:

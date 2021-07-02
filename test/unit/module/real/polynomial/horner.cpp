@@ -28,7 +28,7 @@ EVE_TEST_TYPES( "Check return types of horner on wide"
         , eve::test::simd::all_types
 
         )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
   using i_t = eve::as_integer_t<v_t>;

@@ -142,8 +142,8 @@ namespace eve::detail
     {
       using i_t = eve::as_integer_t<T>;
       auto  i_p = ptr_cast<i_t>(ptr);
-      auto  i_v = eve::bit_cast(v, eve::as_<wide<i_t, N>>{});
-      auto  i_m = eve::bit_cast(mask, eve::as_<eve::logical<wide<i_t, N>>>{});
+      auto  i_v = eve::bit_cast(v, eve::as<wide<i_t, N>>{});
+      auto  i_m = eve::bit_cast(mask, eve::as<eve::logical<wide<i_t, N>>>{});
 
       i_t* stored = unsafe(compress_store)(i_v, i_m, i_p);
       return (T*) stored;
@@ -211,7 +211,7 @@ namespace eve::detail
     if constexpr ( sizeof(T) == 4 && current_api == avx2 )
     {
       std::uint32_t mmask = _mm256_movemask_epi8(
-         eve::bit_cast(m, eve::as_<logical<eve::wide<std::uint32_t, N>>>{})
+         eve::bit_cast(m, eve::as<logical<eve::wide<std::uint32_t, N>>>{})
       );
 
       // sum from popcount:   [ 1, 1, 3, 3, 4, 1]
@@ -253,7 +253,7 @@ namespace eve::detail
       std::uint32_t hi_count;
     };
 
-    __m128i raw      = eve::convert(m, eve::as_<logical<std::uint8_t>>{});
+    __m128i raw      = eve::convert(m, eve::as<logical<std::uint8_t>>{});
     __m128i sad_mask = _mm_set_epi64x(0x8080898983838181, 0x8080898983838181);
     __m128i sum      = _mm_sad_epu8(_mm_andnot_si128(raw, sad_mask), sad_mask);
 

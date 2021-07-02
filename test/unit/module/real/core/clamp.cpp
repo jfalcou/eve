@@ -18,7 +18,7 @@
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of clamp"
         , eve::test::simd::all_types
-        )<typename T>(eve::as_<T>)
+        )<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -35,10 +35,10 @@ EVE_TEST_TYPES( "Check return types of clamp"
 //==================================================================================================
 // clamp simd tests
 //==================================================================================================
-auto val1 = []< typename T>(eve::as_<T> const &){return (eve::valmax(eve::as(eve::element_type_t<T>()))/6); ;};
-auto val2 = []< typename T>(eve::as_<T> const &){return (eve::valmax(eve::as(eve::element_type_t<T>()))/6)*2;};
-auto val3 = []< typename T>(eve::as_<T> const &){return (eve::valmax(eve::as(eve::element_type_t<T>()))/6)*3;};
-auto val4 = []< typename T>(eve::as_<T> const &){return (eve::valmax(eve::as(eve::element_type_t<T>()))/6)*4;};
+auto val1 = []< typename T>(eve::as<T> const &){return (eve::valmax(eve::as(eve::element_type_t<T>()))/6); ;};
+auto val2 = []< typename T>(eve::as<T> const &){return (eve::valmax(eve::as(eve::element_type_t<T>()))/6)*2;};
+auto val3 = []< typename T>(eve::as<T> const &){return (eve::valmax(eve::as(eve::element_type_t<T>()))/6)*3;};
+auto val4 = []< typename T>(eve::as<T> const &){return (eve::valmax(eve::as(eve::element_type_t<T>()))/6)*4;};
 
 EVE_TEST( "Check behavior of clamp(wide) and diff  on all types"
         , eve::test::simd::all_types

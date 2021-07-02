@@ -16,7 +16,7 @@ using tuple_t = kumi::tuple<std::int8_t,T,double>;
 // Structured bindings
 //==================================================================================================
 EVE_TEST_TYPES( "Check eve::wide<tuple> structured binding behavior", eve::test::scalar::all_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using s_t  = tuple_t<T>;
   using w2_t = eve::wide<tuple_t<T>, eve::fixed<2>>;
@@ -57,7 +57,7 @@ EVE_TEST_TYPES( "Check eve::wide<tuple> structured binding behavior", eve::test:
 // Construct from a lambda returning a tuple
 //==================================================================================================
 EVE_TEST_TYPES( "Check eve::wide lambda constructor", eve::test::scalar::all_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using s_t = tuple_t<T>;
   using w_t = eve::wide<tuple_t<T>>;
@@ -82,7 +82,7 @@ EVE_TEST_TYPES( "Check eve::wide lambda constructor", eve::test::scalar::all_typ
 // Construct from a list of values
 //==================================================================================================
 EVE_TEST_TYPES( "Check eve::wide enumerating constructor", eve::test::scalar::all_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using s_t = tuple_t<T>;
   using w_t = eve::wide<tuple_t<T>>;
@@ -106,7 +106,7 @@ EVE_TEST_TYPES( "Check eve::wide enumerating constructor", eve::test::scalar::al
 // Construct from a single value
 //==================================================================================================
 EVE_TEST_TYPES( "Check eve::wide splat constructor", eve::test::scalar::all_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using w_t = eve::wide<tuple_t<T>>;
 
@@ -119,7 +119,7 @@ EVE_TEST_TYPES( "Check eve::wide splat constructor", eve::test::scalar::all_type
 // Construct from raw storage
 //==================================================================================================
 EVE_TEST_TYPES( "Check eve::wide constructor from raw storage", eve::test::scalar::all_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using w_t = eve::wide<tuple_t<T>>;
   using s_t = typename eve::wide<tuple_t<T>>::storage_type;
@@ -136,7 +136,7 @@ EVE_TEST_TYPES( "Check eve::wide constructor from raw storage", eve::test::scala
 // Slice API
 //==================================================================================================
 EVE_TEST_TYPES( "Check eve::wide::slice behavior", eve::test::scalar::all_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using w_t = eve::wide<tuple_t<T>>;
 
@@ -168,7 +168,7 @@ EVE_TEST_TYPES( "Check eve::wide::slice behavior", eve::test::scalar::all_types)
 // Combine API
 //==================================================================================================
 EVE_TEST_TYPES( "Check eve::wide::combine behavior", eve::test::scalar::all_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using w_t = eve::wide<tuple_t<T>>;
 

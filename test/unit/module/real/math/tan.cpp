@@ -26,7 +26,7 @@
 EVE_TEST_TYPES( "Check return types of tan"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -37,12 +37,12 @@ EVE_TEST_TYPES( "Check return types of tan"
 //==================================================================================================
 // tan  tests
 //==================================================================================================
-auto mrest  = []<typename T>(eve::as_<T> const & tgt){  return -eve::pio_4(tgt); };
-auto rest   = []<typename T>(eve::as_<T> const & tgt){  return  eve::pio_4(tgt); };
-auto msmall = []<typename T>(eve::as_<T> const & tgt){  return -eve::pio_2(tgt); };
-auto small  = []<typename T>(eve::as_<T> const & tgt){  return  eve::pio_2(tgt); };
-auto mmed   = []<typename T>(eve::as_<T> const & tgt){  return -eve::detail::Rempio2_limit(eve::medium_type(), tgt); };
-auto med    = []<typename T>(eve::as_<T> const & tgt){  return  eve::detail::Rempio2_limit(eve::medium_type(), tgt); };
+auto mrest  = []<typename T>(eve::as<T> const & tgt){  return -eve::pio_4(tgt); };
+auto rest   = []<typename T>(eve::as<T> const & tgt){  return  eve::pio_4(tgt); };
+auto msmall = []<typename T>(eve::as<T> const & tgt){  return -eve::pio_2(tgt); };
+auto small  = []<typename T>(eve::as<T> const & tgt){  return  eve::pio_2(tgt); };
+auto mmed   = []<typename T>(eve::as<T> const & tgt){  return -eve::detail::Rempio2_limit(eve::medium_type(), tgt); };
+auto med    = []<typename T>(eve::as<T> const & tgt){  return  eve::detail::Rempio2_limit(eve::medium_type(), tgt); };
 
 EVE_TEST( "Check behavior of tan on wide"
         , eve::test::simd::ieee_reals

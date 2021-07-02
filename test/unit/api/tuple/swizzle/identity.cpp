@@ -16,7 +16,7 @@ inline constexpr auto identity = eve::fix_pattern<N>( [](int i, int){ return i; 
 // Identity test
 //==================================================================================================
 EVE_TEST_TYPES( "Check behavior of identity swizzle", eve::test::scalar::all_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using s_t = kumi::tuple<std::int8_t,T,double>;
 

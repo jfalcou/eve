@@ -105,7 +105,7 @@ namespace
     }
 
     std::ptrdiff_t count() const {
-      auto as = eve::as_<eve::wide<int, eve::fixed<4>>>{};
+      auto as = eve::as<eve::wide<int, eve::fixed<4>>>{};
       return std::visit([&](auto elem) { return elem.count(as); }, body);
     }
 

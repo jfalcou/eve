@@ -32,7 +32,7 @@ namespace eve::detail
   //================================================================================================
   template<real_scalar_value In, typename N, real_scalar_value Out>
   EVE_FORCEINLINE wide<Out, N>
-  convert_(EVE_SUPPORTS(sse2_), wide<In, N> const &v0, as_<Out> const &tgt) noexcept
+  convert_(EVE_SUPPORTS(sse2_), wide<In, N> const &v0, as<Out> const &tgt) noexcept
     requires std::same_as<abi_t<In, N>, x86_128_>
   {
     //==============================================================================================
@@ -90,7 +90,7 @@ namespace eve::detail
              if constexpr( eve::current_api < eve::sse4_1 )
         {
           using type16 = std::conditional_t<std::is_signed_v<In>, std::int16_t, std::uint16_t>;
-          auto wide16 = eve::convert(v0, eve::as_<type16>{});
+          auto wide16 = eve::convert(v0, eve::as<type16>{});
           return eve::convert(wide16, tgt);
         }
         else if constexpr ( std::is_signed_v<In> )                       return _mm_cvtepi8_epi32(v0);
@@ -280,7 +280,7 @@ namespace eve::detail
 
   template<real_scalar_value In, typename N, real_scalar_value Out>
   EVE_FORCEINLINE logical<wide<Out, N>>
-  convert_(EVE_SUPPORTS(sse2_), logical<wide<In, N>> const &v0, as_<logical<Out>> const &tgt) noexcept
+  convert_(EVE_SUPPORTS(sse2_), logical<wide<In, N>> const &v0, as<logical<Out>> const &tgt) noexcept
     requires std::same_as<abi_t<In, N>, x86_128_> && (abi_t<In, N>::is_wide_logical)
   {
     constexpr auto c  = categorize<wide<In, N>>();

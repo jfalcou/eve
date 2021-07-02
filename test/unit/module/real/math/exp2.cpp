@@ -22,7 +22,7 @@
 EVE_TEST_TYPES( "Check return types of exp2"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -54,7 +54,7 @@ EVE_TEST( "Check behavior of exp2 on wide"
 EVE_TEST_TYPES( "Check return types of exp2"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   TTS_ULP_EQUAL (eve::pedantic(eve::exp2)(T(1)), T(2), 0.5);
   TTS_IEEE_EQUAL(eve::pedantic(eve::exp2)(T(0)), T(1));
@@ -95,7 +95,7 @@ EVE_TEST_TYPES( "Check return types of exp2"
 EVE_TEST_TYPES("Check float64 & float32(eve::exp2) behavior"
               , eve::test::simd::integers
               )
-  <typename T>(eve::as_<T>)
+  <typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
   if constexpr(eve::scalar_value<T> )

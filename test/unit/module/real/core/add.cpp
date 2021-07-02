@@ -20,7 +20,7 @@
 EVE_TEST_TYPES( "Check return types of add"
           , eve::test::simd::all_types
           )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -96,18 +96,20 @@ EVE_TEST( "Check behavior of add on wide"
             )
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
+  using eve::as;
   using eve::add;
   using eve::saturated;
   using eve::detail::map;
+
   TTS_EQUAL( add(a0, a2), map([](auto e, auto f) { return add(e, f); }, a0, a2));
   TTS_EQUAL( saturated(add)(a0, a2), map([&](auto e, auto f) { return saturated(add)(e, f); }, a0, a2));
   TTS_EQUAL( add(a0, a1, a2), map([&](auto e, auto f, auto g) { return add(add(e, f), g); }, a0, a1, a2));
   TTS_EQUAL( saturated(add)(a0, a1, a2), map([&](auto e, auto f, auto g) { return saturated(add)(saturated(add)(e, f), g); }, a0, a1, a2));
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL( eve::diff_1st(add)(a0, a2), eve::one(as(a0)));
-    TTS_EQUAL( eve::diff_2nd(add)(a0, a2), eve::one(as(a0)));
-    TTS_EQUAL( eve::diff_3rd(add)(a0, a1, a2), eve::one(as(a0)));
+    TTS_EQUAL( eve::diff_1st(add)(a0, a2), eve::one(eve::as(a0)));
+    TTS_EQUAL( eve::diff_2nd(add)(a0, a2), eve::one(eve::as(a0)));
+    TTS_EQUAL( eve::diff_3rd(add)(a0, a1, a2), eve::one(eve::as(a0)));
   }
 
 };
@@ -115,7 +117,7 @@ EVE_TEST( "Check behavior of add on wide"
 //==================================================================================================
 //==  conditional add tests on simd
 //==================================================================================================
-auto mini = [] < typename T > (eve::as_<T> const &){ return std::is_signed_v<eve::element_type_t<T>> ? -128 : 0;};
+auto mini = [] < typename T > (eve::as<T> const &){ return std::is_signed_v<eve::element_type_t<T>> ? -128 : 0;};
 
 EVE_TEST( "Check behavior of add on signed types"
         , eve::test::simd::signed_types

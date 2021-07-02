@@ -19,7 +19,7 @@
 EVE_TEST_TYPES( "Check return types of exp"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -34,11 +34,11 @@ EVE_TEST_TYPES( "Check return types of exp"
 //==================================================================================================
 // exp  tests
 //==================================================================================================
-auto mini = []<typename T>(eve::as_<T> const & tgt)
+auto mini = []<typename T>(eve::as<T> const & tgt)
 {
   return -eve::sqrt(eve::maxlog(tgt));
 };
-auto maxi = []<typename T>(eve::as_<T> const & tgt)
+auto maxi = []<typename T>(eve::as<T> const & tgt)
 {
   return eve::sqrt(eve::maxlog(tgt));
 };
@@ -63,7 +63,7 @@ EVE_TEST( "Check behavior of exp on wide"
 EVE_TEST_TYPES( "Check expx2 2 parameters"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using eve::as;
   TTS_ULP_EQUAL (eve::expx2(T(1)), eve::exp(T(1)), 0.5);

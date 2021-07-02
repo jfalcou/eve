@@ -77,7 +77,7 @@ namespace eve::detail
 
     if constexpr( scalar_value<U> )
     {
-      auto bit_other = detail::bit_cast_(EVE_RETARGET(cpu_), other, as_<T> {});
+      auto bit_other = detail::bit_cast_(EVE_RETARGET(cpu_), other, as<T> {});
       return self_bitand(self, type {bit_other});
     }
     else
@@ -112,7 +112,7 @@ namespace eve::detail
 
     if constexpr( scalar_value<U> )
     {
-      auto bit_other = detail::bit_cast_(EVE_RETARGET(cpu_), other, as_<T> {});
+      auto bit_other = detail::bit_cast_(EVE_RETARGET(cpu_), other, as<T> {});
       return self_bitor(self, type {bit_other});
     }
     else
@@ -147,7 +147,7 @@ namespace eve::detail
 
     if constexpr( scalar_value<U> )
     {
-      auto bit_other = detail::bit_cast_(EVE_RETARGET(cpu_), other, as_<T> {});
+      auto bit_other = detail::bit_cast_(EVE_RETARGET(cpu_), other, as<T> {});
       return self_bitxor(self, type {bit_other});
     }
     else

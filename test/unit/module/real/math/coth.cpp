@@ -19,7 +19,7 @@
 EVE_TEST_TYPES( "Check return types of coth"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -30,13 +30,13 @@ EVE_TEST_TYPES( "Check return types of coth"
 //==================================================================================================
 // coth  tests
 //==================================================================================================
-auto maxi = []<typename T>(eve::as_<T> const &)
+auto maxi = []<typename T>(eve::as<T> const &)
 {
   using v_t = eve::element_type_t<T>;
   v_t ovl =  eve::Ieee_constant<v_t,0x42B0C0A4U, 0x40862E42FEFA39EFULL>(); // 88.376251220703125f, 709.782712893384
   return T(ovl);
 };
-auto mini = []<typename T>(eve::as_<T> const & tgt)
+auto mini = []<typename T>(eve::as<T> const & tgt)
 {
   return -maxi(tgt);
 };

@@ -73,7 +73,7 @@ namespace eve::detail
     if constexpr( supports_xop )
     {
       using i_t = typename wide<T,N>::template rebind <as_integer_t<T, signed>,N>;
-      auto const si = bit_cast(s,as_<i_t>()).storage();
+      auto const si = bit_cast(s,as<i_t>()).storage();
 
             if constexpr( c == category::int64x2  ) v = _mm_sha_epi64(v,-si);
       else  if constexpr( c == category::int32x4  ) v = _mm_sha_epi32(v,-si);
@@ -230,11 +230,11 @@ namespace eve::detail
 
     if constexpr( scalar_value<U> )
     {
-      return self &= type{bit_cast(other, as_<T> {})};
+      return self &= type{bit_cast(other, as<T> {})};
     }
     else if constexpr( simd_value<U> && sizeof(self) == sizeof(other) )
     {
-      const     auto bits = bit_cast(other, as_<type> {});
+      const     auto bits = bit_cast(other, as<type> {});
       constexpr auto c    = categorize<type>();
       constexpr bool i    = c && category::integer_;
 
@@ -271,12 +271,12 @@ namespace eve::detail
 
     if constexpr( scalar_value<U> )
     {
-      auto bit_other = detail::bit_cast_(EVE_RETARGET(cpu_), other, as_<T> {});
+      auto bit_other = detail::bit_cast_(EVE_RETARGET(cpu_), other, as<T> {});
       return self_bitor(self, type {bit_other});
     }
     else if constexpr( simd_value<U> && sizeof(self) == sizeof(other) )
     {
-      auto bits = detail::bit_cast_(EVE_RETARGET(cpu_), other, as_<type> {});
+      auto bits = detail::bit_cast_(EVE_RETARGET(cpu_), other, as<type> {});
       constexpr auto c = categorize<type>();
       constexpr bool i = c && category::integer_;
 
@@ -313,12 +313,12 @@ namespace eve::detail
 
     if constexpr( scalar_value<U> )
     {
-      auto bit_other = detail::bit_cast_(EVE_RETARGET(cpu_), other, as_<T> {});
+      auto bit_other = detail::bit_cast_(EVE_RETARGET(cpu_), other, as<T> {});
       return self_bitxor(self, type {bit_other});
     }
     else if constexpr( simd_value<U> && sizeof(self) == sizeof(other) )
     {
-      auto bits = detail::bit_cast_(EVE_RETARGET(cpu_), other, as_<type> {});
+      auto bits = detail::bit_cast_(EVE_RETARGET(cpu_), other, as<type> {});
       constexpr auto c = categorize<type>();
       constexpr bool i = c && category::integer_;
 

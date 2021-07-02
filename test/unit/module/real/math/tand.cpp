@@ -30,7 +30,7 @@
 EVE_TEST_TYPES( "Check return types of tand"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -41,12 +41,12 @@ EVE_TEST_TYPES( "Check return types of tand"
 //==================================================================================================
 // tand  tests
 //==================================================================================================
-auto mrest  = []<typename T>(eve::as_<T> const & ){  return T(-45); };
-auto rest   = []<typename T>(eve::as_<T> const & ){  return T( 45); };
-auto msmall = []<typename T>(eve::as_<T> const & ){  return T(-90 ); };
-auto small  = []<typename T>(eve::as_<T> const & ){  return T( 90 ); };
-auto mmed   = []<typename T>(eve::as_<T> const & ){  return -5000; };
-auto med    = []<typename T>(eve::as_<T> const & ){  return  5000; };
+auto mrest  = []<typename T>(eve::as<T> const & ){  return T(-45); };
+auto rest   = []<typename T>(eve::as<T> const & ){  return T( 45); };
+auto msmall = []<typename T>(eve::as<T> const & ){  return T(-90 ); };
+auto small  = []<typename T>(eve::as<T> const & ){  return T( 90 ); };
+auto mmed   = []<typename T>(eve::as<T> const & ){  return -5000; };
+auto med    = []<typename T>(eve::as<T> const & ){  return  5000; };
 
 EVE_TEST( "Check behavior of tand on wide"
         , eve::test::simd::ieee_reals
@@ -85,7 +85,7 @@ EVE_TEST( "Check behavior of tand on wide"
 EVE_TEST_TYPES( "Check return types of tand"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using eve::tand;
   TTS_ULP_EQUAL(eve::big(eve::tand)( T(  1)) , T(1.74550649282175857651288952197278243141015888398755e-2) , 3 );

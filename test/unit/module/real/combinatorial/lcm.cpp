@@ -21,7 +21,7 @@
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of eve::lcm"
               , eve::test::simd::all_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   TTS_EXPR_IS(eve::lcm(T(), T()), T);
 };
@@ -48,7 +48,7 @@ EVE_TEST_TYPES( "Check  behavior of eve::lcm on wide peculiar cases"
         , eve::test::simd::all_types
 
          )
-  <typename T>(eve::as_<T>)
+  <typename T>(eve::as<T>)
 {
   using eve::as;
   using eve::lcm;

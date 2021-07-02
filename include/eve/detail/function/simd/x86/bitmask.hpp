@@ -20,7 +20,7 @@ namespace eve::detail
       requires x86_abi<abi_t<T, N>>
   {
     using type = typename logical<wide<T, N>>::bits_type;
-    return bit_cast(p.mask(), as_<type>{});
+    return bit_cast(p.mask(), as<type>{});
   }
 
   //================================================================================================
@@ -33,7 +33,7 @@ namespace eve::detail
     if constexpr( current_api >= avx512 )
     {
       auto z = wide<T, N>(0);
-      auto a = allbits(as_<wide<T, N>>());
+      auto a = allbits(as<wide<T, N>>());
       auto m = p.storage().value;
 
       if constexpr( std::same_as<abi_t<T, N>,x86_128_>)

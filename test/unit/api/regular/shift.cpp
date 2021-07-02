@@ -12,7 +12,7 @@
 //================================================================================================
 // random size values
 //================================================================================================
-inline auto const random_bits = []<typename T>(eve::as_<T>, auto& gen)
+inline auto const random_bits = []<typename T>(eve::as<T>, auto& gen)
 {
   using i_t = eve::as_integer_t<eve::element_type_t<T>>;
   eve::prng<i_t> dist(0,8*sizeof(i_t)-1);
@@ -27,7 +27,7 @@ inline auto const random_bits = []<typename T>(eve::as_<T>, auto& gen)
 // type tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check behavior of shift operators on eve::wide", eve::test::simd::integers)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using i_t = eve::as_integer_t<T>;
   using vi_t = eve::element_type_t<i_t>;

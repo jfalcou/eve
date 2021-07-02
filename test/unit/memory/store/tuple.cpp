@@ -23,7 +23,7 @@ using tuple_t = kumi::tuple<std::int8_t,T,double>;
 // store tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check store behavior with aligned pointers", eve::test::scalar::all_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using s_t = tuple_t<T>;
   using w_t = eve::wide<tuple_t<T>>;

@@ -18,7 +18,7 @@
 // slide_right test
 //==================================================================================================
 EVE_TEST_TYPES( "Check behavior of slide_right swizzle", eve::test::scalar::all_types)
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using s_t = kumi::tuple<std::int8_t,T,double>;
   using w_t = eve::wide<s_t>;

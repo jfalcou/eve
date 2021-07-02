@@ -24,7 +24,7 @@ namespace eve::detail
       requires arm_abi<abi_t<T, N>>
   {
     using i_t = typename wide<T,N>::template rebind <as_integer_t<T, signed>,N>;
-    auto const si   = bit_cast(s,as_<i_t>()).storage();
+    auto const si   = bit_cast(s,as<i_t>()).storage();
 
     constexpr auto c = categorize<wide<T, N>>();
 
@@ -85,12 +85,12 @@ namespace eve::detail
 
     if constexpr( element_bit_compatible_to<U, type> )
     {
-      auto bit_other = eve::bit_cast(other, as_<T> {});
+      auto bit_other = eve::bit_cast(other, as<T> {});
       self           = self_bitand(self, type {bit_other});
     }
     else if constexpr( simd_value<U> && sizeof(self) == sizeof(other) )
     {
-      auto bit_other = eve::bit_cast(other, as_<type> {});
+      auto bit_other = eve::bit_cast(other, as<type> {});
       constexpr auto c = categorize<type>();
 
             if constexpr( c == category::int64x1  ) self = vand_s64 (self, bit_other);
@@ -156,12 +156,12 @@ namespace eve::detail
 
     if constexpr( element_bit_compatible_to<U, type> )
     {
-      auto bit_other = eve::bit_cast(other, as_<T> {});
+      auto bit_other = eve::bit_cast(other, as<T> {});
       self           = self_bitor(self, type {bit_other});
     }
     else if constexpr( simd_value<U> && sizeof(self) == sizeof(other) )
     {
-      auto bit_other = eve::bit_cast(other, as_<type> {});
+      auto bit_other = eve::bit_cast(other, as<type> {});
       constexpr auto c = categorize<type>();
 
             if constexpr( c == category::int64x1  ) self = vorr_s64 (self, bit_other);
@@ -227,12 +227,12 @@ namespace eve::detail
 
     if constexpr( element_bit_compatible_to<U, type> )
     {
-      auto bit_other = eve::bit_cast(other, as_<T> {});
+      auto bit_other = eve::bit_cast(other, as<T> {});
       self           = self_bitxor(self, type {bit_other});
     }
     else if constexpr( simd_value<U> && sizeof(self) == sizeof(other) )
     {
-      auto bit_other = eve::bit_cast(other, as_<type> {});
+      auto bit_other = eve::bit_cast(other, as<type> {});
       constexpr auto c = categorize<type>();
 
             if constexpr( c == category::int64x1  ) self = veor_s64 (self, bit_other);

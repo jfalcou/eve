@@ -66,7 +66,7 @@ namespace eve
       check_constraints();
     }
 
-    uniform_discrete_distribution(T a_,  U b_, as_<V>)
+    uniform_discrete_distribution(T a_,  U b_, as<V>)
       : a(convert(a_, as<V>())), b(convert(b_, as<V>())), n(inc(b-a))
     {
       check_constraints();
@@ -79,7 +79,7 @@ namespace eve
       EVE_ASSERT(all(a < b)       , "a must be stricty less than b");
     }
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+    template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
       requires scalar_value<value_type>
     {
       return floor(fma(detail::urg01(gen, as<R>()), n, a));
@@ -101,27 +101,27 @@ namespace eve
     using value_type = T;
     using elt_t  = element_type_t<T>;
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+    template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
       requires scalar_value<value_type>
     {
       return floor(2*detail::urg01(gen, as<R>()));
     }
 
     constexpr uniform_discrete_distribution() { }
-    constexpr uniform_discrete_distribution( as_<T> const&) { }
+    constexpr uniform_discrete_distribution( as<T> const&) { }
 
   };
 
   template<floating_real_value T, floating_real_value U>  uniform_discrete_distribution(T,U) -> uniform_discrete_distribution<T,U>;
   template<floating_real_value T, floating_real_value U, floating_real_value V>  uniform_discrete_distribution(T,U,V) -> uniform_discrete_distribution<T,U, V>;
-  template<floating_real_value T, floating_real_value U, floating_real_value V>  uniform_discrete_distribution(T,U,as_<V>) -> uniform_discrete_distribution<T,U,V>;
+  template<floating_real_value T, floating_real_value U, floating_real_value V>  uniform_discrete_distribution(T,U,as<V>) -> uniform_discrete_distribution<T,U,V>;
 
   template<integral_value T, integral_value U>  uniform_discrete_distribution(T,U) -> uniform_discrete_distribution<T,U>;
   template<integral_value T, integral_value U, floating_real_value V>  uniform_discrete_distribution(T,U,V) -> uniform_discrete_distribution<T,U, V>;
-  template<integral_value T, integral_value U, floating_real_value V>  uniform_discrete_distribution(T,U,as_<V>) -> uniform_discrete_distribution<T,U,V>;
+  template<integral_value T, integral_value U, floating_real_value V>  uniform_discrete_distribution(T,U,as<V>) -> uniform_discrete_distribution<T,U,V>;
 
   template<typename T>  uniform_discrete_distribution(T const&) -> uniform_discrete_distribution<callable_zero_, callable_one_, T>;
-  template<typename T>  uniform_discrete_distribution(as_<T> const&) -> uniform_discrete_distribution<callable_zero_, callable_one_, as_<T>>;
+  template<typename T>  uniform_discrete_distribution(as<T> const&) -> uniform_discrete_distribution<callable_zero_, callable_one_, as<T>>;
 
   template<value T>
   inline constexpr auto uniform_discrete_distribution_01 = uniform_discrete_distribution<callable_zero_, callable_one_, T>();

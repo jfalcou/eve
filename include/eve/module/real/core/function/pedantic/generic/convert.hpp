@@ -32,7 +32,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto convert_(EVE_SUPPORTS(cpu_),
                                 pedantic_type const &,
                                 IN const &           v00,
-                                as_<OUT> const &     tgt) noexcept
+                                as<OUT> const &     tgt) noexcept
   {
     using elt_tin = element_type_t<IN>;
     if constexpr( has_aggregated_abi_v<IN> )

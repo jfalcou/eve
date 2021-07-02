@@ -19,7 +19,7 @@ namespace eve
   namespace detail
   {
     template<typename T>
-    EVE_FORCEINLINE constexpr auto mone_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    EVE_FORCEINLINE constexpr auto mone_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
     {
       return T(-1);
     }

@@ -17,7 +17,7 @@ namespace eve::detail
   template<real_scalar_value T, typename N, real_scalar_value U>
   EVE_FORCEINLINE wide<U, N>  convert_(EVE_SUPPORTS(neon128_)
                                       , wide<T, N> const &v0
-                                      , as_<U> const &tgt) noexcept
+                                      , as<U> const &tgt) noexcept
       requires arm_abi<abi_t<T, N>>
   {
     constexpr auto catin = categorize<wide<T, N>>();
@@ -29,14 +29,14 @@ namespace eve::detail
     if constexpr ( std::signed_integral<T> && std::unsigned_integral<U> )
     {
       using s_u = std::make_signed_t<U>;
-      auto s_res = convert(v0, eve::as_<s_u>{});
-      return bit_cast(s_res, eve::as_<wide<U, N>>{});
+      auto s_res = convert(v0, eve::as<s_u>{});
+      return bit_cast(s_res, eve::as<wide<U, N>>{});
     }
     else if constexpr ( std::unsigned_integral<T> && std::signed_integral<U> )
     {
       using u_u = std::make_unsigned_t<U>;
-      auto u_res = convert(v0, eve::as_<u_u>{});
-      return bit_cast(u_res, eve::as_<wide<U, N>>{});
+      auto u_res = convert(v0, eve::as<u_u>{});
+      return bit_cast(u_res, eve::as<wide<U, N>>{});
     }
 
     //==============================================================================================

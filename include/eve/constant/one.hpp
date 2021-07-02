@@ -16,7 +16,7 @@ namespace eve
   namespace detail
   {
     template<typename T>
-    EVE_FORCEINLINE constexpr auto one_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    EVE_FORCEINLINE constexpr auto one_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
     {
       return T(1);
     }

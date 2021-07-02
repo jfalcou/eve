@@ -25,7 +25,7 @@ namespace eve::detail
     requires ppc_abi<abi_t<T, N>>
   {
     using i_t = wide<as_integer_t<T, unsigned>, N>;
-    return wide<T, N>(vec_sr(v0.storage(), bit_cast(v1,as_<i_t>()).storage()));
+    return wide<T, N>(vec_sr(v0.storage(), bit_cast(v1,as<i_t>()).storage()));
   }
 
   template<integral_scalar_value T, typename N, integral_scalar_value I>

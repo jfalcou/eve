@@ -53,7 +53,7 @@ namespace eve::detail
       }
       else
       {
-        return bit_cast(bit_xor(a.bits(), b.bits()), as_<as_logical_t<T>>());
+        return bit_cast(bit_xor(a.bits(), b.bits()), as<as_logical_t<T>>());
       }
     }
     else
@@ -78,7 +78,7 @@ namespace eve::detail
     else if constexpr(sizeof(elt_t) == sizeof(U))
     {
       auto bb = is_nez(T(bit_cast(b, as<logical<elt_t>>())));
-      return bit_cast(bit_xor(a.bits(), bb.bits()), as_<as_logical_t<T>>());
+      return bit_cast(bit_xor(a.bits(), bb.bits()), as<as_logical_t<T>>());
     }
   }
 

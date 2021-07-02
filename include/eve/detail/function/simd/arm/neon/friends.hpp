@@ -39,7 +39,7 @@ namespace eve::detail
     else  if constexpr(c == category::uint8x8 ) return vmvn_u8(v);
     else  if constexpr(c == category::int8x16 ) return vmvnq_s8(v);
     else  if constexpr(c == category::uint8x16) return vmvnq_u8(v);
-    else                                        return bit_cast(~bit_cast(v,as_<i_t>{}), as(v));
+    else                                        return bit_cast(~bit_cast(v,as<i_t>{}), as(v));
   }
 
   //================================================================================================

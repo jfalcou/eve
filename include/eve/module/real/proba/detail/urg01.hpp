@@ -14,7 +14,7 @@
 namespace eve::detail
 {
   template<floating_real_scalar_value T, typename Engine>
-  EVE_FORCEINLINE auto urg01(Engine& eng, as_<T> const &) noexcept
+  EVE_FORCEINLINE auto urg01(Engine& eng, as<T> const &) noexcept
   {
     for(;;) {
       T numerator = static_cast<T>(eng() - (eng.min)());
@@ -27,7 +27,7 @@ namespace eve::detail
   }
 
   template<floating_real_simd_value T, typename Engine>
-  EVE_FORCEINLINE auto urg01(Engine& eng, as_<T> const &) noexcept
+  EVE_FORCEINLINE auto urg01(Engine& eng, as<T> const &) noexcept
   {
     using elt_t = element_type_t<T>;
     return [&]<std::size_t... I>( std::index_sequence<I...>)

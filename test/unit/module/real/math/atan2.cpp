@@ -28,7 +28,7 @@
 EVE_TEST_TYPES( "Check return types of atan2"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -65,7 +65,7 @@ EVE_TEST( "Check behavior of atan2 on wide"
 EVE_TEST_TYPES( "Check return types of atan2"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using eve::is_negative;
   using eve::is_positive;

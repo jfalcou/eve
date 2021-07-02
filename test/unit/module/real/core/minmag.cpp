@@ -24,7 +24,7 @@
 EVE_TEST_TYPES( "Check return types of minmag"
               , eve::test::simd::all_types
               )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -78,7 +78,7 @@ EVE_TEST( "Check behavior of minmag on all types full range"
 EVE_TEST_TYPES( "Check values of minmag"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
   TTS_IEEE_EQUAL(eve::pedantic(eve::minmag)(eve::nan(eve::as<T>())   , T(1)  ) , eve::nan(eve::as<T>()) );

@@ -24,7 +24,7 @@
 EVE_TEST_TYPES( "Check return types of ceil"
               , eve::test::simd::all_types
               )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -47,7 +47,7 @@ EVE_TEST_TYPES( "Check return types of ceil"
 EVE_TEST_TYPES( "Check  with specific values"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   TTS_EQUAL(eve::ceil(T(-1)), T(-1));
   TTS_EQUAL(eve::ceil(T(-2)), T(-2));
@@ -84,7 +84,7 @@ EVE_TEST_TYPES( "Check  with specific values"
 //==================================================================================================
 // ceil(simd)  tests
 //==================================================================================================
-auto min = []< typename T>(eve::as_<T> const &){return eve::signed_value<T> ? -50 : 0; };
+auto min = []< typename T>(eve::as<T> const &){return eve::signed_value<T> ? -50 : 0; };
 EVE_TEST( "Check behavior of ceil(wide) and diff(ceil(wide))"
         , eve::test::simd::all_types
         , eve::test::generate(eve::test::randoms(min, +50))
@@ -96,7 +96,7 @@ EVE_TEST( "Check behavior of ceil(wide) and diff(ceil(wide))"
   if constexpr(eve::floating_real_value<T>)
   {
     TTS_EQUAL( eve::ceil(a0), map([&](auto e) -> v_t{ return v_t(std::ceil(e)); }, a0));
-    TTS_EQUAL( eve::diff(eve::ceil)(a0), eve::zero(as(a0)));
+    TTS_EQUAL( eve::diff(eve::ceil)(a0), eve::zero(eve::as(a0)));
   }
   else
   {

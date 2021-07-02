@@ -74,7 +74,7 @@ namespace eve
       EVE_ASSERT(all(is_gtz(k) && is_finite(k)), "k must be strictly positive and finite");
     }
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+    template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
       requires scalar_value<value_type>
     {
       return invcdf(*this, detail::urg01(gen, as<R>()));
@@ -111,7 +111,7 @@ namespace eve
       EVE_ASSERT(all(is_gtz(theta) && is_finite(theta)), "theta must be strictly positive and finite");
     }
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+    template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
       requires scalar_value<value_type>
     {
      return invcdf(*this, detail::urg01(gen, as<R>()));
@@ -146,7 +146,7 @@ namespace eve
       EVE_ASSERT(all(is_gtz(k) && is_finite(k)), "k must be strictly positive and finite");
     }
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+    template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
       requires scalar_value<value_type>
     {
       return invcdf(*this, detail::urg01(gen, as<R>()));
@@ -174,7 +174,7 @@ namespace eve
 
     gamma_distribution(parameters const & ) { }
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+    template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
       requires scalar_value<value_type>
     {
       auto d = exponential_distribution_1<value_type>;
@@ -186,14 +186,14 @@ namespace eve
       return { .k = one, .theta = one };
     }
 
-    constexpr gamma_distribution( as_<T> const&) {}
+    constexpr gamma_distribution( as<T> const&) {}
   };
 
 
-  template<typename T>  gamma_distribution(as_<T> const&) -> gamma_distribution<callable_one_, callable_one_, T>;
+  template<typename T>  gamma_distribution(as<T> const&) -> gamma_distribution<callable_one_, callable_one_, T>;
 
   template<floating_real_value T>
-  inline constexpr auto gamma_distribution_11 = gamma_distribution<callable_one_, callable_one_, T>(as_<T>{});
+  inline constexpr auto gamma_distribution_11 = gamma_distribution<callable_one_, callable_one_, T>(as<T>{});
 
   namespace detail
   {

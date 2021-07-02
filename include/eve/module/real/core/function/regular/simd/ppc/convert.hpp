@@ -17,7 +17,7 @@ namespace eve::detail
 {
   template<real_scalar_value T, typename N, real_scalar_value U>
   EVE_FORCEINLINE wide<U, N>
-  convert_(EVE_SUPPORTS(vmx_), wide<T, N> const &v0, as_<U> const &tgt) noexcept
+  convert_(EVE_SUPPORTS(vmx_), wide<T, N> const &v0, as<U> const &tgt) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
     // Idempotent call

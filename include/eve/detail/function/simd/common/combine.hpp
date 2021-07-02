@@ -62,7 +62,7 @@ namespace eve::detail
     else
     {
       wide<T, typename N::combined_type> cb(l.mask(),h.mask());
-      return bit_cast(cb, as_<that_t>());
+      return bit_cast(cb, as<that_t>());
     }
   }
 }

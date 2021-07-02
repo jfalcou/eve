@@ -20,7 +20,7 @@
 EVE_TEST_TYPES( "Check return types of lohi"
               , eve::test::simd::integers
               )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using elt_t =eve::element_type_t<T>;
   using sui_t = eve::as_integer_t<elt_t, unsigned>;
@@ -46,7 +46,7 @@ EVE_TEST_TYPES( "Check return types of lohi"
 EVE_TEST_TYPES( "Check behavior of lohi on all types full range"
               , eve::test::simd::integers
               )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using elt_t =eve::element_type_t<T>;
   using ui_t = eve::as_integer_t<elt_t, unsigned>;

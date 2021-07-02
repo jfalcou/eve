@@ -28,9 +28,9 @@ namespace eve::detail
       {
         using itype = wide<as_integer_t<T, unsigned>, N>;
         using utype = wide<as_integer_t<U, unsigned>, N>;
-        itype tmp   = _mm_cmov_si128( bit_cast(v1,as_<itype>()),
-                                      bit_cast(v2,as_<itype>()),
-                                      bit_cast(v0,as_<utype>())
+        itype tmp   = _mm_cmov_si128( bit_cast(v1,as<itype>()),
+                                      bit_cast(v2,as<itype>()),
+                                      bit_cast(v0,as<utype>())
                                     );
 
         return bit_cast(tmp,as(v0));
@@ -60,9 +60,9 @@ namespace eve::detail
       {
         using itype = wide<as_integer_t<T, unsigned>, N>;
         using utype = wide<as_integer_t<U, unsigned>, N>;
-        itype tmp   =  _mm256_cmov_si256( bit_cast(v1,as_<itype>()),
-                                          bit_cast(v2,as_<itype>()),
-                                          bit_cast(v0,as_<utype>())
+        itype tmp   =  _mm256_cmov_si256( bit_cast(v1,as<itype>()),
+                                          bit_cast(v2,as<itype>()),
+                                          bit_cast(v0,as<utype>())
                                         );
 
         return bit_cast(tmp,as(v0));

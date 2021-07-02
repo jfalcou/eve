@@ -13,7 +13,7 @@
 
 struct use_friend
 {
-  friend std::string tagged_dispatch( eve::tag::valmax_, eve::as_<use_friend> )
+  friend std::string tagged_dispatch( eve::tag::valmax_, eve::as<use_friend> )
   {
     return "valmax dispatched via friend";
   }
@@ -45,7 +45,7 @@ namespace other_space
 {
   struct use_adl {};
 
-  std::string tagged_dispatch( eve::tag::valmax_, eve::as_<use_adl> )
+  std::string tagged_dispatch( eve::tag::valmax_, eve::as<use_adl> )
   {
     return "valmax dispatched via ADL";
   }
@@ -80,8 +80,8 @@ namespace other_space
 
 TTS_CASE("Check that constant can be externally defined for user-defined types" )
 {
-  TTS_EQUAL( eve::valmax( eve::as_<use_friend>{}            ), "valmax dispatched via friend" );
-  TTS_EQUAL( eve::valmax( eve::as_<other_space::use_adl>{}  ), "valmax dispatched via ADL"    );
+  TTS_EQUAL( eve::valmax( eve::as<use_friend>{}            ), "valmax dispatched via friend" );
+  TTS_EQUAL( eve::valmax( eve::as<other_space::use_adl>{}  ), "valmax dispatched via ADL"    );
 }
 
 TTS_CASE("Check that function can be externally defined for user-defined types" )

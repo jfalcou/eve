@@ -15,7 +15,7 @@
 EVE_TEST_TYPES("Check eve::binomial_distribution behavior"
               , eve::test::simd::ieee_reals
               )
-  <typename T>(eve::as_<T>)
+  <typename T>(eve::as<T>)
 {
   {
     auto bino = eve::binomial_distribution{T(4), T(0.25)};

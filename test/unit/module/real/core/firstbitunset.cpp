@@ -16,7 +16,7 @@
 EVE_TEST_TYPES( "Check return types of eve::firstbitunset(simd)"
               , eve::test::simd::unsigned_integers
               )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
   TTS_EXPR_IS( eve::firstbitunset(T()), T  );

@@ -16,7 +16,7 @@
 EVE_TEST_TYPES( "Check return types of modf"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t =eve::element_type_t<T>;
   using wtyp = kumi::tuple<T, T>;
@@ -32,7 +32,7 @@ EVE_TEST_TYPES( "Check return types of modf"
 EVE_TEST_TYPES( "Check behavior of modf on all types full range"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   {
     auto [p0, p1] = eve::modf(T(1.5));

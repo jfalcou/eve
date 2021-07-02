@@ -70,13 +70,13 @@ namespace eve::detail
       else if constexpr(scalar_value<T>)
       {
         using r_t = wide<T, cardinal_t<U>>;
-        auto tmp1 = bit_cast(a, as_<vt_u>());
+        auto tmp1 = bit_cast(a, as<vt_u>());
         U tmp2(tmp1);
         return bit_cast(op(tmp2, b), as<r_t>());
       }
       else if constexpr(scalar_value<U>)
       {
-        return op(a, T(bit_cast(b,as_<vt_t>())));
+        return op(a, T(bit_cast(b,as<vt_t>())));
       }
     }
     else if constexpr(simd_value<T> && simd_value<U>) // both are simd so of the same bit size
@@ -106,46 +106,46 @@ namespace eve::detail
     else if constexpr(scalar_value<T> && scalar_value<U> && simd_value<V>)  //T, U are scalar so of the same bit size, V is simd
     {
       using r_t = as_wide_t<U, cardinal_t<V>>;
-      auto  aa = r_t(bit_cast(a, as_<vt_u>()));
-      auto  bb = r_t(bit_cast(b, as_<vt_u>()));
-      auto  cc =   bit_cast(c, as_<r_t>());
+      auto  aa = r_t(bit_cast(a, as<vt_u>()));
+      auto  bb = r_t(bit_cast(b, as<vt_u>()));
+      auto  cc =   bit_cast(c, as<r_t>());
       return op(aa, bb, cc);
     }
     else if constexpr(scalar_value<T> && scalar_value<V>&& simd_value<U>)  //T, V are scalar so of the same bit size, U is simd
     {
       using r_t = U;
-      auto  aa = r_t(bit_cast(a, as_<vt_u>()));
-      auto  cc = r_t(bit_cast(c, as_<vt_u>()));
+      auto  aa = r_t(bit_cast(a, as<vt_u>()));
+      auto  cc = r_t(bit_cast(c, as<vt_u>()));
       return op(aa, b, cc);
     }
     else if constexpr(scalar_value<U> && scalar_value<V> && simd_value<T>) //U, V are scalar so of the same bit size, T is simd
     {
       using r_t = as_wide_t<U, cardinal_t<T>>;
-      auto  aa = bit_cast(a, as_<r_t>());
-      auto  bb = r_t(bit_cast(b, as_<vt_u>()));
-      auto  cc = r_t(bit_cast(b, as_<vt_u>()));
+      auto  aa = bit_cast(a, as<r_t>());
+      auto  bb = r_t(bit_cast(b, as<vt_u>()));
+      auto  cc = r_t(bit_cast(b, as<vt_u>()));
       return op(aa, bb, cc);
     }
     else if constexpr(simd_value<U> && simd_value<V> && scalar_value<T>) //U, V are simd so of the same bit size, T is scalar
     {
       using r_t = U;
-      auto  aa = r_t(bit_cast(a, as_<vt_u>()));
-      auto  cc = bit_cast(c, as_<r_t>());
+      auto  aa = r_t(bit_cast(a, as<vt_u>()));
+      auto  cc = bit_cast(c, as<r_t>());
       return op(aa, b, cc);
     }
     else if constexpr(simd_value<T> && simd_value<U> && scalar_value<V>) //U, T are simd so of the same bit size, V is scalar
     {
       using r_t = U;
-      auto  aa = bit_cast(a, as_<r_t>());
-      auto  cc = r_t(bit_cast(c, as_<vt_u>()));
+      auto  aa = bit_cast(a, as<r_t>());
+      auto  cc = r_t(bit_cast(c, as<vt_u>()));
       return op(aa, b, cc);
     }
     else if constexpr(simd_value<T> && simd_value<V> && scalar_value<U>) //T, V are simd so of the same bit size, U is scalar
     {
       using r_t = as_wide_t<U, cardinal_t<V>>;
-      auto  aa = bit_cast(a, as_<r_t>());
+      auto  aa = bit_cast(a, as<r_t>());
       auto  bb = r_t(b);
-      auto  cc = bit_cast(c, as_<r_t>());
+      auto  cc = bit_cast(c, as<r_t>());
       return op(aa, bb, cc);
     }
     else if constexpr(simd_value<T> && simd_value<U> && simd_value<V>) // both are simd so of the same bit size
@@ -153,8 +153,8 @@ namespace eve::detail
       if constexpr(has_native_abi_v<T> && has_native_abi_v<U> && has_native_abi_v<V>)
       {
         using r_t = U;
-        auto  aa = bit_cast(a, as_<r_t>());
-        auto  cc = bit_cast(c, as_<r_t>());
+        auto  aa = bit_cast(a, as<r_t>());
+        auto  cc = bit_cast(c, as<r_t>());
         return op(aa, b, cc); // generally already taken by arch specific intrisics
       }
       else return apply_over(op, a, b, c);

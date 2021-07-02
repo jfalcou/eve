@@ -56,7 +56,7 @@ namespace eve
       EVE_ASSERT(all(is_gtz(lambda) && is_finite(lambda)), "lambda must be strictly positive and finite");
     }
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+    template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
       requires scalar_value<value_type>
     {
       return invcdf(*this, detail::urg01(gen, as<R>()));
@@ -77,19 +77,19 @@ namespace eve
     using lambda_type = callable_one_;
     using value_type = T;
 
-    template < typename G, typename R = value_type> auto operator()(G & gen, as_<R> const & )
+    template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
       requires scalar_value<value_type>
     {
       return invcdf(*this, detail::urg01(gen, as<R>()));
     }
 
-    constexpr exponential_distribution( as_<T> const&) {}
+    constexpr exponential_distribution( as<T> const&) {}
   };
 
-  template<typename T>  exponential_distribution(as_<T> const&) -> exponential_distribution<callable_one_, T>;
+  template<typename T>  exponential_distribution(as<T> const&) -> exponential_distribution<callable_one_, T>;
 
   template<floating_real_value T>
-  inline constexpr auto exponential_distribution_1 = exponential_distribution<callable_one_, T>(as_<T>{});
+  inline constexpr auto exponential_distribution_1 = exponential_distribution<callable_one_, T>(as<T>{});
 
 
   namespace detail

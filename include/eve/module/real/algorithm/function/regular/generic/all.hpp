@@ -23,8 +23,8 @@ namespace eve::detail
     {
       bool res = true;
 
-      std::ptrdiff_t first = cond.offset(eve::as_<T>{});
-      std::ptrdiff_t last = first + cond.count(eve::as_<T>{});
+      std::ptrdiff_t first = cond.offset(eve::as<T>{});
+      std::ptrdiff_t last = first + cond.count(eve::as<T>{});
       while (first != last) res = res && v.get(first++);
 
       return res;

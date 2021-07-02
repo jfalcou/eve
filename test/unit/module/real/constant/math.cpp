@@ -17,7 +17,7 @@
 EVE_TEST_TYPES("Check math constants behavior"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using eve::as;
   TTS_ULP_EQUAL(eve::pi(as<T>()), 4*eve::atan(T(1)),0.5);

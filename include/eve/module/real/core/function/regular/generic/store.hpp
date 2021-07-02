@@ -93,7 +93,7 @@ namespace eve::detail
   store_(EVE_SUPPORTS(cpu_), wide<T, S> const &value, aligned_ptr<T, Lanes> ptr) noexcept
       requires(S::value <= Lanes::value) && std::same_as<abi_t<T, S>, aggregated_>
   {
-    auto cast = []<typename Ptr, typename Sub>(Ptr ptr, as_<Sub>)
+    auto cast = []<typename Ptr, typename Sub>(Ptr ptr, as<Sub>)
     {
       return eve::aligned_ptr<T, typename Sub::cardinal_type>{ptr.get()};
     };
@@ -102,7 +102,7 @@ namespace eve::detail
     ( [&]<typename... Sub>(Sub&... v)
       {
         int k = 0;
-        ((store(v, cast(ptr, as_<Sub>{}) + k), k += Sub::size()), ...);
+        ((store(v, cast(ptr, as<Sub>{}) + k), k += Sub::size()), ...);
       }
     );
   }
@@ -128,8 +128,8 @@ namespace eve::detail
     else if constexpr ( !std::is_pointer_v<Ptr> ) store[cond](value, ptr.get());
     else if constexpr ( has_emulated_abi_v<T> )
     {
-      auto offset = cond.offset( as_<T>{} );
-      auto count = cond.count( as_<T>{} );
+      auto offset = cond.offset( as<T>{} );
+      auto count = cond.count( as<T>{} );
       using e_t = element_type_t<T>;
       auto* src   = (e_t*)(&value.storage());
       std::memcpy((void*)(ptr + offset), (void*)(src + offset), sizeof(e_t) * count);
@@ -141,8 +141,8 @@ namespace eve::detail
       alignas(sizeof(T)) std::array<e_t, T::size()> storage;
       store(value, eve::aligned_ptr<e_t, typename T::cardinal_type>(storage.begin()));
 
-      auto offset = cond.offset( as_<T>{} );
-      auto count = cond.count( as_<T>{} );
+      auto offset = cond.offset( as<T>{} );
+      auto count = cond.count( as<T>{} );
       std::memcpy((void*)(ptr + offset), (void*)(storage.begin() + offset), sizeof(e_t) * count);
     }
   }

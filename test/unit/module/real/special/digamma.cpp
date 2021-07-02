@@ -28,7 +28,7 @@
 EVE_TEST_TYPES( "Check return types of digamma"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as_<T>)
+<typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -42,7 +42,7 @@ EVE_TEST_TYPES( "Check return types of digamma"
 EVE_TEST_TYPES( "Check behavior of digamma on wide"
               , eve::test::simd::ieee_reals
               )
-  <typename T>(eve::as_<T> )
+  <typename T>(eve::as<T> )
 {
   using eve::digamma;
   if constexpr( eve::platform::supports_invalids )

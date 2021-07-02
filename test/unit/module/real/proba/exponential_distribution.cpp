@@ -16,7 +16,7 @@
 EVE_TEST_TYPES("Check eve::exponential_distribution behavior"
               , eve::test::simd::ieee_reals
               )
-  <typename T>(eve::as_<T>)
+  <typename T>(eve::as<T>)
 {
   using elt_t =  eve::element_type_t<T>;
   auto inf  = eve::inf(eve::as<T>());
