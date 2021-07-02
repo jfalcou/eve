@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`phi, `k`:   [floating values](../../concepts.html#value).
+  //!`phi`, `k`:   [floating values](../../concepts.html#value).
   //!
   //!
   //! computes the complete and incomplete elliptic integrals of the second kind :
