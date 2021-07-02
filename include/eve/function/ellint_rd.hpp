@@ -44,7 +44,7 @@ namespace eve
   //!
   //!  This computes the Carlson's elliptic integral
   //!
-  //!  $$\displaystyle R_D(x, y, z) = \frac32 \int_{0}^{\infty} [(t+x)(t+y)]^{-1/2} (t+z)^{-3/2} \mbox{d}t$$
+  //!  \f[ R_D(x, y, z) = \frac32 \int_{0}^{\infty} [(t+x)(t+y)]^{-1/2} (t+z)^{-3/2} \mbox{d}t\f]
   //!
   //!  as described in  Carlson, Numerische Mathematik, vol 33, 1 (1979)
   //!

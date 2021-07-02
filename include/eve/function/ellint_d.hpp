@@ -44,7 +44,7 @@ namespace eve
   //!
   //! computes the complete and incomplete D elliptic integrals  :
   //!
-  //!$$\displaystyle F(\phi,k) = \int_0^{\phi} \frac{\sin^2 t}{\sqrt{1-k^2\sin^2 t}}\mbox{d}t$$
+  //!\f[ F(\phi,k) = \int_0^{\phi} \frac{\sin^2 t}{\sqrt{1-k^2\sin^2 t}}\mbox{d}t\f]
   //!
   //!The complete case corresponds to \f$\phi = \pi/2\f$.
   //!

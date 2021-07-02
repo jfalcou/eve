@@ -44,7 +44,7 @@ namespace eve
   //!
   //!  This computes the Carlson's elliptic integral
   //!
-  //!  $$\displaystyle R_F(x, y, z) = \frac12 \int_{0}^{\infty} [(t+x)(t+y)(t+z)]^{-1/2} \mbox{d}t$$
+  //!  \f[ R_F(x, y, z) = \frac12 \int_{0}^{\infty} [(t+x)(t+y)(t+z)]^{-1/2} \mbox{d}t\f]
   //!
   //!  as described in  Carlson, Numerische Mathematik, vol 33, 1 (1979)
   //!

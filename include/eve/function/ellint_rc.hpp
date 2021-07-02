@@ -44,7 +44,7 @@ namespace eve
   //!
   //!  This computes the degenerate Carlson's elliptic integral
   //!
-  //!  $$\displaystyle R_C(x, y) = \frac12 \int_{0}^{\infty} (t+x)^{-1/2}(t+y)^{-1} \mbox{d}t$$
+  //!  \f[ R_C(x, y) = \frac12 \int_{0}^{\infty} (t+x)^{-1/2}(t+y)^{-1} \mbox{d}t\f]
   //!
   //!  as described in  Carlson, Numerische Mathematik, vol 33, 1 (1979)
   //!

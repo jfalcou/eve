@@ -44,9 +44,9 @@ namespace eve
   //!
   //!  This computes the Carlson's elliptic integral
   //!
-  //! $$\displaystyle R_G(x, y, z) = \frac1{4\pi} \int_{0}^{2\pi}\int_{0}^{\pi} \sqrt{x\sin^2\theta\cos^2\phi
+  //! \f[ R_G(x, y, z) = \frac1{4\pi} \int_{0}^{2\pi}\int_{0}^{\pi} \sqrt{x\sin^2\theta\cos^2\phi
   //!                                                                                +y\sin^2\theta\sin^2\phi
-  //!                                                                                +z\cos^2\theta} \mbox{d}\theta\mbox{d}\phi$$
+  //!                                                                                +z\cos^2\theta} \mbox{d}\theta\mbox{d}\phi\f]
   //!
   //!  as described in  Carlson, Numerische Mathematik, vol 33, 1 (1979)
   //!
