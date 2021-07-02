@@ -83,20 +83,19 @@ namespace eve
   //!
   //!  ====================================================================================================
   //!  * `diff_nth`
-  //!     **Required header: 
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!       #include <eve/function/diff/average.hpp>`
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!  
+  //!
+  //!     **Required header:** `#include <eve/function/diff/average.hpp>`
+  //!
   //!     The expression `diff_nth< N >(average)(x,args...)` computes the partial
   //!      diff of the function relative to its Nth parameter. The returned value is 0 if N is
   //!      greater that the actual number of parameters, otherwise it is the inverse of the number of parameters.
-  //!  
+  //!
   //!      This is only available for floating point entries.
-  //!  
+  //!
   //!  * `raw`
+  //!
   //!     when `raw(average)(x, args, ...)` is used, no provision is made to avoid overflows for more than 2 parameters.
-  //!  
+  //!
   //!
   //! #### Example
   //!

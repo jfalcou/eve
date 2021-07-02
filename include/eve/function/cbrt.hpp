@@ -66,17 +66,15 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff`
-  //!     **Required header: 
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!       #include <eve/function/diff/cbrt.hpp>`
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!  
+  //!
+  //!
+  //!     **Required header:** #include <eve/function/diff/cbrt.hpp>
+  //!
   //!     The expression `diff(cbrt)(x)` computes the derivative of the function at `x`.
-  //!     
-  //!  
-  //!  
+  //!
+  //!
+  //!
   //!
   //! #### Example
   //!
@@ -90,4 +88,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/cbrt.hpp>
-

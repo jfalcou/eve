@@ -72,18 +72,17 @@ namespace eve
   //!  ----------------------------------------------------------------------------------------------------
   //!  <span class="smallskip"></span>
   //!  * `pedantic`
+  //!
   //!     With this decorator the function returns a Nan element for each corresponding Nan entry element.
-  //!  
-  //!  
+  //!
+  //!
   //!  * `diff`
-  //!     **Required header: 
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!       #include <eve/function/diff/arg.hpp>`
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!  
+  //!
+  //!     **Required header:** `#include <eve/function/diff/arg.hpp>`
+  //!
   //!     The expression `diff(arg)(x)` computes the derivative of the function at `x`.
-  //!  
-  //!  
+  //!
+  //!
   //!
   //! #### Example
   //!
