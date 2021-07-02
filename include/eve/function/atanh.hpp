@@ -44,12 +44,12 @@ namespace eve
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) inverse hyperbolic cotangent of the input.
-  //!The inverse hyperbolic sine is semantically equivalent to $\frac{1}{2}\log((1+x)/(1-x))$.
+  //!The inverse hyperbolic sine is semantically equivalent to \f$\frac{1}{2}\log((1+x)/(1-x))\f$.
   //!
   //!In particular:
   //!
-  //!   * If the element is $\pm1$, $\pm\infty$ is returned.
-  //!   * If the element is $\pm0$, $\pm0$ is returned.
+  //!   * If the element is \f$\pm1\f$, \f$\pm\infty\f$ is returned.
+  //!   * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
   //!   * If the element is greater than one or a `NaN`, `NaN` is returned.
   //!
   //!

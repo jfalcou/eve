@@ -43,13 +43,13 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) cosine of the input expressed in $\pi$ multiples.
+  //!Returns the [element-wise](../../../glossary.html#elment-wise) cosine of the input expressed in \f$\pi\f$ multiples.
   //!
-  //!The call `cospi(x)` is semantically equivalent to $cos(\pi x)$.
+  //!The call `cospi(x)` is semantically equivalent to \f$cos(\pi x)\f$.
   //!In particular:
   //!
-  //!   * If the element is $\pm0$, $1$ is returned.
-  //!   * If the element is $\pm\infty$, Nan is returned.
+  //!   * If the element is \f$\pm0\f$, \f$1\f$ is returned.
+  //!   * If the element is \f$\pm\infty\f$, Nan is returned.
   //!   * If the element is a `NaN`, `NaN` is returned.
   //!
   //!

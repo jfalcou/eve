@@ -81,10 +81,10 @@ namespace eve
   //!     The call `toward_zero(rem)(x, y)`  computes  `x-towardzero_(div)(x, y)*y`.
   //!      For floating point entries this call is similar to std::fmod. In particular:
   //!  
-  //!      * If `x` is  $\pm0$ and y is not zero,  $\pm0$ is returned.
-  //!      * If `x` is $\pm\infty$, and y is not NaN, NaN is returned.
-  //!      * If `y` is  $\pm0$, NaN is returned.
-  //!      * If `y` is  $\pm\infty$ and `x` is finite, `x` is returned.
+  //!      * If `x` is  \f$\pm0\f$ and y is not zero,  \f$\pm0\f$ is returned.
+  //!      * If `x` is \f$\pm\infty\f$, and y is not NaN, NaN is returned.
+  //!      * If `y` is  \f$\pm0\f$, NaN is returned.
+  //!      * If `y` is  \f$\pm\infty\f$ and `x` is finite, `x` is returned.
   //!      * If either argument is a Nan, NaN is returned.
   //!  
   //!  
@@ -102,8 +102,8 @@ namespace eve
   //!      For floating point entries this call is similar to std::remainder.
   //!      In particular:
   //!  
-  //!      * If `x` is $\pm\infty$, NaN is returned
-  //!      * If `y` is $\pm0$, NaN is returned
+  //!      * If `x` is \f$\pm\infty\f$, NaN is returned
+  //!      * If `y` is \f$\pm0\f$, NaN is returned
   //!      * If either argument is a Nan, NaN is returned
   //!  
   //!  Masked calls

@@ -46,9 +46,9 @@ namespace eve
   //!Returns the [element-wise](../../../glossary.html#elment-wise) exponential input minus one, with good accuracy, even for small values of `x`
   //!In partucular, for floating inputs:
   //!
-  //!   * If the element is $\pm0$, $\pm0$ is returned
-  //!   * If the element is $-\infty$, $-1$ is returned
-  //!   * If the element is $\infty$, $\infty$ is returned
+  //!   * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned
+  //!   * If the element is \f$-\infty\f$, \f$-1\f$ is returned
+  //!   * If the element is \f$\infty\f$, \f$\infty\f$ is returned
   //!   * If the element is a `NaN`, `NaN` is returned
   //!
   //!

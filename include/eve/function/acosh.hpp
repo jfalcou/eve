@@ -44,13 +44,13 @@ namespace eve
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) inverse hyperbolic cosine of the input.
-  //!For values in the domain `x>1`, the inverse hyperbolic cosine is semantically equivalent to $\log(x+\sqrt{x^2-1})$.
+  //!For values in the domain `x>1`, the inverse hyperbolic cosine is semantically equivalent to \f$\log(x+\sqrt{x^2-1})\f$.
   //!
   //!In particular:
   //!
-  //!   * If the element is less than $1$ or `Nan`, `NaN` is returned.
-  //!   * If the element is $1$, $+0$ is returned.
-  //!   * If the element is $+\infty$, $+\infty$ is returned.
+  //!   * If the element is less than \f$1\f$ or `Nan`, `NaN` is returned.
+  //!   * If the element is \f$1\f$, \f$+0\f$ is returned.
+  //!   * If the element is \f$+\infty\f$, \f$+\infty\f$ is returned.
   //!   * If the element is a `Nan`, `NaN` is returned.
   //!
   //!

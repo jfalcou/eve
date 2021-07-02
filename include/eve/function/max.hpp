@@ -100,8 +100,8 @@ namespace eve
   //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!  
   //!     The expression `diff< N >(max)(x,args,...)` computes the partial
-  //!      diff relative to the Nth parameter. If the parameters are $x_1, ..., x_n$ and
-  //!      their maximum is $m$, the value returned is 1 if $m$ is equal to $x_N$ and otherwise 0.
+  //!      diff relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and
+  //!      their maximum is \f$m\f$, the value returned is 1 if \f$m\f$ is equal to \f$x_N\f$ and otherwise 0.
   //!  
   //!  
   //!  

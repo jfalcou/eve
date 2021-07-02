@@ -44,19 +44,19 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!the arc tangent of $\frac{y}x$  in the range [-180 , +180] radians, is returned.
+  //!the arc tangent of \f$\frac{y}x\f$  in the range [-180 , +180] radians, is returned.
   //!The **IEEE** limiting values are almost all satisfied :
   //!
   //!     -  If `x` and `y` are both zero or infinites, Nan is returned (this is not standard conforming)
-  //!     -  If `y` is $\pm0$ and `x` is strictly negative or $-0$, $\pm180$ is returned
-  //!     -  If `y` is $\pm0$ and `x` is strictly positive or $+0$, $\pm0$ is returned
-  //!     -  If `y` is $\pm\inft`y`$ and `x` is finite, $\pm90$ is returned
-  //!     -  If `x` is $\pm0$ and `y` is strictly negative, $-90$ is returned
-  //!     -  If `x` is $\pm0$ and `y` is strictly positive, $+90$  is returned
-  //!     -  If `x` is $-\inft`y`$ and `y` is finite and positive, $+180$ is returned
-  //!     -  If `x` is $-\inft`y`$ and `y` is finite and negative, $-180$ is returned
-  //!     -  If `x` is $+\inft`y`$ and `y` is finite and positive, $+0$ is returned
-  //!     -  If `x` is $+\inft`y`$ and `y` is finite and negative, $-0$ is returned
+  //!     -  If `y` is \f$\pm0\f$ and `x` is strictly negative or \f$-0\f$, \f$\pm180\f$ is returned
+  //!     -  If `y` is \f$\pm0\f$ and `x` is strictly positive or \f$+0\f$, \f$\pm0\f$ is returned
+  //!     -  If `y` is \f$\pm\inft`y`\f$ and `x` is finite, \f$\pm90\f$ is returned
+  //!     -  If `x` is \f$\pm0\f$ and `y` is strictly negative, \f$-90\f$ is returned
+  //!     -  If `x` is \f$\pm0\f$ and `y` is strictly positive, \f$+90\f$  is returned
+  //!     -  If `x` is \f$-\inft`y`\f$ and `y` is finite and positive, \f$+180\f$ is returned
+  //!     -  If `x` is \f$-\inft`y`\f$ and `y` is finite and negative, \f$-180\f$ is returned
+  //!     -  If `x` is \f$+\inft`y`\f$ and `y` is finite and positive, \f$+0\f$ is returned
+  //!     -  If `x` is \f$+\inft`y`\f$ and `y` is finite and negative, \f$-0\f$ is returned
   //!     -  If either `x` is Nan or `y` is Nan, Nan is returned
   //!
   //!     The call will return a NaN if `x` and `y` are both either null or infinite: this result is not **IEEE** conform,
@@ -97,10 +97,10 @@ namespace eve
   //!     The call `pedantic(atan2d)(`x`,`y`)` returns the same results as the regular call, but all
   //!      **IEEE** limiting values are satisfied :
   //!  
-  //!       -  If `y` is $\pm\infty$ and `x` is $-\inft`y`$,$\pm135$ is returned
-  //!       -  If `y` is $\pm\infty$ and `x` is $+\infty$, $\pm45$ is returned
-  //!       -  If `x` is $\pm0$ and `y` is $\pm-0$, $-90$ is returned
-  //!       -  If `x` is $\pm0$ and `y` is $\pm+0$, $+90$  is returned
+  //!       -  If `y` is \f$\pm\infty\f$ and `x` is \f$-\inft`y`\f$,\f$\pm135\f$ is returned
+  //!       -  If `y` is \f$\pm\infty\f$ and `x` is \f$+\infty\f$, \f$\pm45\f$ is returned
+  //!       -  If `x` is \f$\pm0\f$ and `y` is \f$\pm-0\f$, \f$-90\f$ is returned
+  //!       -  If `x` is \f$\pm0\f$ and `y` is \f$\pm+0\f$, \f$+90\f$  is returned
   //!  
   //!  
   //!  * `diff`
@@ -110,7 +110,7 @@ namespace eve
   //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!  
   //!     The expression `diff_1st(atan2d)(x,y)` and `diff_2nd(atan2d)(x,y)` computes the partial
-  //!      diffs of $f$, where $f$ is the function $(x,y) \rightarrow \ \mbox{atan2d}(x,y)$.
+  //!      diffs of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \mbox{atan2d}(x,y)\f$.
   //!  
   //!  
   //!

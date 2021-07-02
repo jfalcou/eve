@@ -39,7 +39,7 @@ namespace eve
   //! **Parameters**
   //!
   //!`n`:   [integral values](../../concepts.html#value).
-  //!`l`:   [floating values](../../concepts.html#value), elements must be greater than $-\frac12$.
+  //!`l`:   [floating values](../../concepts.html#value), elements must be greater than \f$-\frac12\f$.
   //!`x`:   [floating values](../../concepts.html#value).
   //!
   //!

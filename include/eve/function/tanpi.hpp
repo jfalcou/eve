@@ -43,13 +43,13 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) tangent of the input expressed in $\pi$ multiples.
+  //!Returns the [element-wise](../../../glossary.html#elment-wise) tangent of the input expressed in \f$\pi\f$ multiples.
   //!
-  //!The call `tanpi(x)` is semantically equivalent to tan(\pi x)$.
+  //!The call `tanpi(x)` is semantically equivalent to tan(\pi x)\f$.
   //!In particular:
   //!
-  //!   * If the element is $\pm0$, $\pm0$ is returned.
-  //!   * If the element is $\pm\infty$, Nan is returned.
+  //!   * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
+  //!   * If the element is \f$\pm\infty\f$, Nan is returned.
   //!   * If the element is a `Nan`, `NaN` is returned.
   //!
   //!

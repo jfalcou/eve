@@ -21,13 +21,13 @@ namespace eve
   //!  #include <eve/function/rising_factorial.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of rising_factorial i.e. $\frac{\Gamma(x+a)}{\Gamma(a)}.
+  //! <br/>Callable object performing the computation of rising_factorial i.e. \f$\frac{\Gamma(x+a)}{\Gamma(a)}.
   //!
   //! #### Members Functions
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | rising_factorial i.e. $\frac{\Gamma(x+a)}{\Gamma(a)}   |
+  //! | `operator()` | rising_factorial i.e. \f$\frac{\Gamma(x+a)}{\Gamma(a)}   |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
@@ -84,7 +84,7 @@ namespace eve
   //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!  
   //!     The expression `pedantic(rising_factorial)(a,x)` uses reflection tricks and computes the function for all real `a` and `x`,
-  //!      and in fact computes the Pochammer symbol  $x^{\overline a}=\frac{\Gamma(x+a)}{\Gamma(a)}$
+  //!      and in fact computes the Pochammer symbol  \f$x^{\overline a}=\frac{\Gamma(x+a)}{\Gamma(a)}\f$
   //!      returning nan if the result in really undefined.
   //!  
   //!  * `diff`

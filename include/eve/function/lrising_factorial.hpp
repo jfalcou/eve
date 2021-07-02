@@ -21,13 +21,13 @@ namespace eve
   //!  #include <eve/function/lrising_factorial.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of lrising_factorial i.e. $\log\left(\frac{\Gamma(x+a)}{\Gamma(x)}\right).
+  //! <br/>Callable object performing the computation of lrising_factorial i.e. \f$\log\left(\frac{\Gamma(x+a)}{\Gamma(x)}\right).
   //!
   //! #### Members Functions
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | lrising_factorial i.e. $\log\left(\frac{\Gamma(x+a)}{\Gamma(x)}\right)   |
+  //! | `operator()` | lrising_factorial i.e. \f$\log\left(\frac{\Gamma(x+a)}{\Gamma(x)}\right)   |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
@@ -85,7 +85,7 @@ namespace eve
   //!  
   //!     The expression `pedantic(lrising_factorial)(a,x)` uses reflection tricks and computes the function
   //!       for all real `a` and `x`, and in fact computes the logarithm of the absolute value of the Pochammer
-  //!       symbol $\log\left|\frac{\Gamma(x+a)}{\Gamma(x)}\right|$ returning nan if the result in really undefined.
+  //!       symbol \f$\log\left|\frac{\Gamma(x+a)}{\Gamma(x)}\right|\f$ returning nan if the result in really undefined.
   //!  
   //!  * `diff`
   //!     **Required header: 

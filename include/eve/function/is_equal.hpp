@@ -96,9 +96,9 @@ namespace eve
   //!      true if and only if `x` is almost equal to `y`.
   //!      This means that:
   //!  
-  //!      - if `t` is a floating_value then the relative error of confusing is `x` and `y` is less than `t` $(|x-y| \le t \max(|x|, |y|))$.
-  //!      - if `t` is a positive integral_value then there are not more than `t` values of the type of `x` representable in the interval $[x,y[$.
-  //!      - if `t` is omitted then the tolerance `t` is taken to 3 times the machine $\epsilon$ in the `x` type (`3*eps(as(x))`).
+  //!      - if `t` is a floating_value then the relative error of confusing is `x` and `y` is less than `t` \f$(|x-y| \le t \max(|x|, |y|))\f$.
+  //!      - if `t` is a positive integral_value then there are not more than `t` values of the type of `x` representable in the interval \f$[x,y[\f$.
+  //!      - if `t` is omitted then the tolerance `t` is taken to 3 times the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
   //!  
   //!
   //! #### Example

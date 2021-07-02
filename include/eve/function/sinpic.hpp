@@ -43,12 +43,12 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) sine of the input times $\pi$  divided by the input times $\pi$.
+  //!Returns the [element-wise](../../../glossary.html#elment-wise) sine of the input times \f$\pi\f$  divided by the input times \f$\pi\f$.
   //!
   //!In particular:
   //!
-  //!   * If the element is $\pm0$, $1$ is returned.
-  //!   * If the element is $\pm\infty$, 0 is returned.
+  //!   * If the element is \f$\pm0\f$, \f$1\f$ is returned.
+  //!   * If the element is \f$\pm\infty\f$, 0 is returned.
   //!   * If the element is a `Nan`, `NaN` is returned.
   //!
   //!

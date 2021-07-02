@@ -44,12 +44,12 @@ namespace eve
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) inverse hyperbolic cosine of the input.
-  //!The inverse hyperbolic sine is semantically equivalent to $\log(x+\sqrt{x^2+1})$.
+  //!The inverse hyperbolic sine is semantically equivalent to \f$\log(x+\sqrt{x^2+1})\f$.
   //!
   //!In particular:
   //!
-  //!   * If the element is $\pm0$, $\pm0$ is returned.
-  //!   * If the element is $\pm\infty$, $\pm\infty$ returned.
+  //!   * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
+  //!   * If the element is \f$\pm\infty\f$, \f$\pm\infty\f$ returned.
   //!   * If the element is a `NaN`, `NaN` is returned.
   //!
   //!

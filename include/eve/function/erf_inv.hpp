@@ -47,7 +47,7 @@ namespace eve
   //!Returns [element-wise](../../../glossary.html#value) `y` such that `erf(y)==x`
   //!
   //! The result type is of the same type as the  parameter.
-  //! The function returns Nan outside of the interval $[-1,1]$.
+  //! The function returns Nan outside of the interval \f$[-1,1]\f$.
   //!
   //!
   //! ---

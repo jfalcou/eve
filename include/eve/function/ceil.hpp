@@ -78,7 +78,7 @@ namespace eve
   //!  
   //!      - If `tol` is a floating_value computes the floor with a tolerance `tol` using Hagerty's FL5 function.
   //!      - If `tol` is an integral_value n compute the floor of the next nth representable value in the `x` type.
-  //!      - If `tol` is omitted the tolerance is taken to 3 times the machine $\epsilon$ in the `x` type (`3*eps(as(x))`).
+  //!      - If `tol` is omitted the tolerance is taken to 3 times the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
   //!  
   //!  * `diff`
   //!     **Required header: 

@@ -49,8 +49,8 @@ namespace eve
   //!    floating point values, evals to true if and only if and only if `x` is definitely not less or equal to `y`.
   //!    This means that the pair `x, y` is unordered or:
   //!
-  //!    - if `t` is a floating_value then  $(x \ge y + t \max(|x|, |y|))$
-  //!    - if `t` is a positive integral_value then $(x \ge \mbox{next}(y, t)$;
+  //!    - if `t` is a floating_value then  \f$(x \ge y + t \max(|x|, |y|))\f$
+  //!    - if `t` is a positive integral_value then \f$(x \ge \mbox{next}(y, t)\f$;
   //!    - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
   //!
   //!
@@ -89,8 +89,8 @@ namespace eve
   //!      floating point values, evals to true if and only if and only if `x` is definitely not less or equal to `y`.
   //!      This means that the pair `x, y` is unordered or:
   //!  
-  //!      - if `t` is a floating_value then  $(x \ge y + t \max(|x|, |y|))$
-  //!      - if `t` is a positive integral_value then $(x \ge \mbox{next}(y, t)$;
+  //!      - if `t` is a floating_value then  \f$(x \ge y + t \max(|x|, |y|))\f$
+  //!      - if `t` is a positive integral_value then \f$(x \ge \mbox{next}(y, t)\f$;
   //!      - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
   //!  
   //!  Return value

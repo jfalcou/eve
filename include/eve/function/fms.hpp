@@ -101,7 +101,7 @@ namespace eve
   //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!  
   //!     The expression `diff_1st(fms)(x,y,z)`, `diff_2nd(fms)(x,y,z)` and `diff_3rd(fms)(x,y,z)` computes the partial
-  //!      diffs of $f$, where $f$ is the function $(x,y,z) \rightarrow \ xy-z$.
+  //!      diffs of \f$f\f$, where \f$f\f$ is the function \f$(x,y,z) \rightarrow \ xy-z\f$.
   //!  
   //!
   //! #### Example

@@ -94,9 +94,9 @@ namespace eve
   //!      to true if and only if `x` is definitely not equal to `y`.
   //!      This means that the pair `x,y` is unordered or:
   //!  
-  //!      - if `t` is a floating_value then the relative error of confusing is `x` and `y` is greater than `t` $|x-y| > t \max(|x|, |y|)$.
-  //!      - if `t` is an integral_value then there at least `t` values of the type of `x` representable in the interval $[x,y[$.
-  //!      - if `t` is omitted then the tolerance `t` is taken to 3 times the machine $\epsilon$ in the `x` type (`3*eps(as(x))`).
+  //!      - if `t` is a floating_value then the relative error of confusing is `x` and `y` is greater than `t` \f$|x-y| > t \max(|x|, |y|)\f$.
+  //!      - if `t` is an integral_value then there at least `t` values of the type of `x` representable in the interval \f$[x,y[\f$.
+  //!      - if `t` is omitted then the tolerance `t` is taken to 3 times the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
   //!  
   //!  
   //!

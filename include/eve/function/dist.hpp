@@ -89,7 +89,7 @@ namespace eve
   //!     **Required header:  #include <eve/function/saturated/dist.hpp>
   //!
   //!     The call `saturated(dist)(x, y)` computes a saturated distance. Contrary to the [regular case](../decorator/regular.html), it guarantees
-  //!      that the result is always defined. If $|x-y|$ is not representable
+  //!      that the result is always defined. If \f$|x-y|\f$ is not representable
   //!      [the greatest representable positive value](../../constants.html#valmax) is returned
   //!
   //!  * `diff`
@@ -97,7 +97,7 @@ namespace eve
   //!     **Required header: #include <eve/function/diff/dist.hpp>
   //!
   //!     The expression `diff_1st(dist)(x,y)` and `diff_2nd(dist)(x,y)` computes the partial
-  //!      diffs of $f$, where $f$ is the function $(x,y) \rightarrow \ |x-y|$.
+  //!      diffs of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ |x-y|\f$.
   //!
   //!
   //! #### Example

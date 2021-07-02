@@ -47,8 +47,8 @@ namespace eve
   //!
   //!In particular:
   //!
-  //!   * If the element is $\pm0$, $\pm0$ is returned.
-  //!   * If the element is $\pm\infty$, $\pm1$ returned.
+  //!   * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
+  //!   * If the element is \f$\pm\infty\f$, \f$\pm1\f$ returned.
   //!   * If the element is a `NaN`, `NaN` is returned.
   //!
   //!

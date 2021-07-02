@@ -47,9 +47,9 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!For two parameters $\sqrt{xy}$. No overflow occurs.
+  //!For two parameters \f$\sqrt{xy}\f$. No overflow occurs.
   //!
-  //!For more than two parameters $\sqrt[n]{x_1x_2...x_n}$
+  //!For more than two parameters \f$\sqrt[n]{x_1x_2...x_n}\f$
   //!
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
   //!

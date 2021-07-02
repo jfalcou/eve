@@ -80,7 +80,7 @@ namespace eve
   //!      without undue overflow or underflow at intermediate stages of the computation
   //!      and can be more accurate than the [`regular`](../decorators.html#regular) call.
   //!  
-  //!      Morever it returns $\infty$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
+  //!      Morever it returns \f$\infty\f$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
   //!  
   //!  * `diff`
   //!     **Required header: 

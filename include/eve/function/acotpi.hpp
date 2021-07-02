@@ -44,12 +44,12 @@ namespace eve
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) arc cotangent of the
-  //!input in the range $]-\frac12, \frac12]$.
+  //!input in the range \f$]-\frac12, \frac12]\f$.
   //!
   //!In particular:
   //!
-  //!   * If the element is $\pm0$, $\pm\frac12$ is returned.
-  //!   * If the element is $\pm\infty$, $\pm0$ is returned.
+  //!   * If the element is \f$\pm0\f$, \f$\pm\frac12\f$ is returned.
+  //!   * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
   //!   * If the element is a `Nan`, `NaN` is returned.
   //!
   //!

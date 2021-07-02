@@ -44,13 +44,13 @@ namespace eve
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) arc cosecant in degrees of the
-  //!input in the range $[-90, 90]$.
+  //!input in the range \f$[-90, 90]\f$.
   //!
   //!In particular:
   //!
-  //!   * If the element is $\pm1$, $\pm90$ is returned.
-  //!   * If the element $|x| < 1$, `NaN` is returned.
-  //!   * If the element is $\pm\infty$, $\pm0$ is returned.
+  //!   * If the element is \f$\pm1\f$, \f$\pm90\f$ is returned.
+  //!   * If the element \f$|x| < 1\f$, `NaN` is returned.
+  //!   * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
   //!   * If the element is a `Nan`, `NaN` is returned.
   //!
   //!

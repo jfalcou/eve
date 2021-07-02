@@ -22,13 +22,13 @@ namespace eve
   //!  #include <eve/function/log1p.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of the natural logarithm of $1+x$.
+  //! <br/>Callable object performing the computation of the  computation of the natural logarithm of \f$1+x\f$.
   //!
   //! #### Members Functions
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the  computation of the natural logarithm of $1+x$   |
+  //! | `operator()` | the  computation of the natural logarithm of \f$1+x\f$   |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
@@ -49,9 +49,9 @@ namespace eve
   //!
   //!In partucular, for floating inputs:
   //!
-  //!   * If the element is $-1$, $-\infty$ is returned.
-  //!   * If the element is $\pm0$, $\pm0$ is returned.
-  //!   * If the element is $\infty$, $\infty$ is returned.
+  //!   * If the element is \f$-1\f$, \f$-\infty\f$ is returned.
+  //!   * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
+  //!   * If the element is \f$\infty\f$, \f$\infty\f$ is returned.
   //!   * If the element is less than -1, `NaN` is returned.
   //!
   //!

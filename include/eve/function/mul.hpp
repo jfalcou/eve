@@ -97,8 +97,8 @@ namespace eve
   //!     The expression `diff_< N >(mul)(x,args,...)` computes the partial
   //!      diff of the function relative to the Nth parameter.
   //!  
-  //!      If the actual parameters are $x_1, ... x_n$ the value returned is
-  //!      $\prod_{i \neq N} x_i$ if $1\le N \le n$ otherwise 0.
+  //!      If the actual parameters are \f$x_1, ... x_n\f$ the value returned is
+  //!      \f$\prod_{i \neq N} x_i\f$ if \f$1\le N \le n\f$ otherwise 0.
   //!  
   //!  !!! Warning
   //!      This is only available for floating point entries.

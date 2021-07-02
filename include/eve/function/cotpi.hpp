@@ -43,13 +43,13 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) cotine of the input expressed in $\pi$ multiples.
+  //!Returns the [element-wise](../../../glossary.html#elment-wise) cotine of the input expressed in \f$\pi\f$ multiples.
   //!
-  //!The call `cotpi(x)` is semantically equivalent to $cot(\pi x)$.
+  //!The call `cotpi(x)` is semantically equivalent to \f$cot(\pi x)\f$.
   //!In particular:
   //!
-  //!   * If the element is $\pm0$, $\pm\infty$ is returned.
-  //!   * If the element is $\pm\infty$, Nan is returned.
+  //!   * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
+  //!   * If the element is \f$\pm\infty\f$, Nan is returned.
   //!   * If the element is a `Nan`, `NaN` is returned.
   //!
   //!

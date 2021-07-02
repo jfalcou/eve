@@ -47,9 +47,9 @@ namespace eve
   //!Returns the [element-wise](../../../glossary.html#elment-wise) the base 10 logarithm  of `x`
   //!In partucular, for floating inputs:
   //!
-  //!   * If the element is $\pm0$, $-\infty$ is returned.
-  //!   * If the element is $1$, $+0$ is returned.
-  //!   * If the element is $\infty$, $\infty$ is returned.
+  //!   * If the element is \f$\pm0\f$, \f$-\infty\f$ is returned.
+  //!   * If the element is \f$1\f$, \f$+0\f$ is returned.
+  //!   * If the element is \f$\infty\f$, \f$\infty\f$ is returned.
   //!   * If the element is less than 0, `NaN` is returned.
   //!
   //!

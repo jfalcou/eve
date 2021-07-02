@@ -44,25 +44,25 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) $|x|^y$.
+  //!Returns [element-wise](../../../glossary.html#value) \f$|x|^y\f$.
   //!
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
   //! In particular we have (IEC 60559):
   //!
-  //!  *  pow_abs($\pm0$, y), where y is a negative odd integer, returns $+\infty$.
-  //!  *  pow_abs($\pm0$, y), where y is negative, finite, and is an even integer or a non-integer, returns $+\infty$.
-  //!  *  pow_abs($\pm0$, $-\infty$) returns $+\infty$.
-  //!  *  pow_abs($\pm0$, y), where y is a positive odd integer, returns $+0$.
-  //!  *  pow_abs($\pm0$, y), where y is positive non-integer or a positive even integer, returns $+0$.
-  //!  *  pow_abs(-1, $\pm\infty$) returns 1.
-  //!  *  pow_abs($\pm1$, y) returns 1 for any y, even when y is NaN.
-  //!  *  pow_abs(x, $\pm0$) returns 1 for any x, even when x is NaN.
-  //!  *  pow_abs(x, $-\infty$) returns $+\infty$ for any |x| `<` 1.
-  //!  *  pow_abs(x, $-\infty$) returns $+0$ for any |x| `>` 1.
-  //!  *  pow_abs(x, $+\infty$) returns $+0$ for any |x| `<` 1.
-  //!  *  pow_abs(x, $+\infty$) returns $+\infty$ for any |x| `>` 1.
-  //!  *  pow_abs($+\infty$, y) returns $+0$ for any negative y.
-  //!  *  pow_abs($+\infty$, y) returns $+\infty$ for any positive y.
+  //!  *  pow_abs(\f$\pm0\f$, y), where y is a negative odd integer, returns \f$+\infty\f$.
+  //!  *  pow_abs(\f$\pm0\f$, y), where y is negative, finite, and is an even integer or a non-integer, returns \f$+\infty\f$.
+  //!  *  pow_abs(\f$\pm0\f$, \f$-\infty\f$) returns \f$+\infty\f$.
+  //!  *  pow_abs(\f$\pm0\f$, y), where y is a positive odd integer, returns \f$+0\f$.
+  //!  *  pow_abs(\f$\pm0\f$, y), where y is positive non-integer or a positive even integer, returns \f$+0\f$.
+  //!  *  pow_abs(-1, \f$\pm\infty\f$) returns 1.
+  //!  *  pow_abs(\f$\pm1\f$, y) returns 1 for any y, even when y is NaN.
+  //!  *  pow_abs(x, \f$\pm0\f$) returns 1 for any x, even when x is NaN.
+  //!  *  pow_abs(x, \f$-\infty\f$) returns \f$+\infty\f$ for any |x| `<` 1.
+  //!  *  pow_abs(x, \f$-\infty\f$) returns \f$+0\f$ for any |x| `>` 1.
+  //!  *  pow_abs(x, \f$+\infty\f$) returns \f$+0\f$ for any |x| `<` 1.
+  //!  *  pow_abs(x, \f$+\infty\f$) returns \f$+\infty\f$ for any |x| `>` 1.
+  //!  *  pow_abs(\f$+\infty\f$, y) returns \f$+0\f$ for any negative y.
+  //!  *  pow_abs(\f$+\infty\f$, y) returns \f$+\infty\f$ for any positive y.
   //!  *  except where specified above, if any argument is NaN, NaN is returned.
   //!
   //!
@@ -98,7 +98,7 @@ namespace eve
   //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!  
   //!     The expression `diff_1st(pow_abs)(x,y)` and `diff_2nd(pow_abs)(x,y)` computes the partial
-  //!      diffs of $f$, where $f$ is the function $(x,y) \rightarrow \ |x|^y$.
+  //!      diffs of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ |x|^y\f$.
   //!  
   //!
   //! #### Example

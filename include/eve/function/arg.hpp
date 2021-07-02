@@ -45,8 +45,8 @@ namespace eve
   //!
   //!For each  [`element`](../../../glossary.html#element-wise) of the input the phase angle is returned:
   //!
-  //!  *  if the bit of sign of the entry [element](../../../glossary.html#elment-wise) is not set, $0$ is returned.
-  //!  *  if the bit of sign of the entry [element](../../../glossary.html#elment-wise) is set, $\pi$ is returned.
+  //!  *  if the bit of sign of the entry [element](../../../glossary.html#elment-wise) is not set, \f$0\f$ is returned.
+  //!  *  if the bit of sign of the entry [element](../../../glossary.html#elment-wise) is set, \f$\pi\f$ is returned.
   //!
   //!
   //! ---

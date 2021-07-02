@@ -45,9 +45,9 @@ namespace eve
   //!
   //!    Computes the [element-wise](../../../glossary.html#element-wise_) ieee frexp of the floating value,
   //!    returning a pair {m,e} of values of the same type of `x` which are related by
-  //!    $x =  m\times 2^e$, with  $|m| \in [0.5, 1.5[$.
+  //!    \f$x =  m\times 2^e\f$, with  \f$|m| \in [0.5, 1.5[\f$.
   //!
-  //!    However, the cases $x = \pm\infty$ or is a Nan or a denormal are undefined.
+  //!    However, the cases \f$x = \pm\infty\f$ or is a Nan or a denormal are undefined.
   //!
   //!
   //! ---
@@ -77,8 +77,8 @@ namespace eve
   //!       #include <eve/function/pedantic/frexp.hpp>`
   //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!  
-  //!     The call `pedantic(frexp)(x)` takes also properly care of the cases where $x = \pm0, \pm\infty$ or is a Nan,
-  //!      where $m=x$ and $e=0$ and of the denormal cases.
+  //!     The call `pedantic(frexp)(x)` takes also properly care of the cases where \f$x = \pm0, \pm\infty\f$ or is a Nan,
+  //!      where \f$m=x\f$ and \f$e=0\f$ and of the denormal cases.
   //!  
   //!
   //! #### Example

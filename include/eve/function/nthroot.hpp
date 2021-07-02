@@ -45,7 +45,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) the value of $x^{1/n}$.
+  //!Returns [element-wise](../../../glossary.html#value) the value of \f$x^{1/n}\f$.
   //!For negative `x` the value returned is a Nan as soon as `n` is not an odd integer.
   //!
   //! The result type is of the compatibility type of the  parameters.
@@ -88,7 +88,7 @@ namespace eve
   //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!  
   //!     The expression `diff_1st(nthroot)(x,n)`
-  //!      diff of $f$, where $f$ is the function $x \rightarrow \ x^{1/n}$.
+  //!      diff of \f$f\f$, where \f$f\f$ is the function \f$x \rightarrow \ x^{1/n}\f$.
   //!  
   //!
   //! #### Example

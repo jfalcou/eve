@@ -76,7 +76,7 @@ namespace eve
   //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!  
   //!     The call `pedantic(manhattan)(x,args...`  computes the sum of the absolute values of its parameters
-  //!      returning $\infty$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
+  //!      returning \f$\infty\f$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
   //!  
   //!  * `diff`
   //!     **Required header: 

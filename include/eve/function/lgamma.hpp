@@ -45,7 +45,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) $\displaystyle \log(|\Gamma(x)|)$
+  //!Returns [element-wise](../../../glossary.html#value) \f$\displaystyle \log(|\Gamma(x)|)\f$
   //!
   //! The result type is of the same type as the  parameter.
   //!

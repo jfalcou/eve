@@ -49,8 +49,8 @@ namespace eve
   //!
   //!:   The expression `diff_nth< N >(logspace_sub)(arg0,arg1,args...)` computes the partial
   //!    diff of the function relative to its Nth parameter. The returned value is 0 if N is
-  //!    greater that the actual number of parameters, otherwise if the parameters are $x_1, ... x_n$ returns $\displaystyle\frac{s e^{x_N}}{e^{x_1} - ... - e^{x_n}}$
-  //!    where $s$ is $1$ if $N = 1$ and $-1$ otherwise.
+  //!    greater that the actual number of parameters, otherwise if the parameters are \f$x_1, ... x_n\f$ returns \f$\displaystyle\frac{s e^{x_N}}{e^{x_1} - ... - e^{x_n}}\f$
+  //!    where \f$s\f$ is \f$1\f$ if \f$N = 1\f$ and \f$-1\f$ otherwise.
   //!
   //!
   //! **Return value**
@@ -86,8 +86,8 @@ namespace eve
   //!  
   //!     The expression `diff_nth< N >(logspace_sub)(arg0,arg1,args...)` computes the partial
   //!      diff of the function relative to its Nth parameter. The returned value is 0 if N is
-  //!      greater that the actual number of parameters, otherwise if the parameters are $x_1, ... x_n$ returns $\displaystyle\frac{s e^{x_N}}{e^{x_1} - ... - e^{x_n}}$
-  //!      where $s$ is $1$ if $N = 1$ and $-1$ otherwise.
+  //!      greater that the actual number of parameters, otherwise if the parameters are \f$x_1, ... x_n\f$ returns \f$\displaystyle\frac{s e^{x_N}}{e^{x_1} - ... - e^{x_n}}\f$
+  //!      where \f$s\f$ is \f$1\f$ if \f$N = 1\f$ and \f$-1\f$ otherwise.
   //!  
   //!  Return value
   //!  ----------------------------------------------------------------------------------------------------
