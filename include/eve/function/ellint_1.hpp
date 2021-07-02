@@ -46,17 +46,17 @@ namespace eve
   //!
   //!$$\displaystyle F(\phi,k) = \int_0^{\phi} \frac{\mbox{d}t}{\sqrt{1-k^2\sin^2 t}}$$
   //!
-  //!The complete case corresponds to \f\f$\phi = \pi/2\f\f$.
+  //!The complete case corresponds to \f$\phi = \pi/2\f$.
   //!
-  //!  - `k` must verify \f\f$k^2\sin^2\phi \le 1\f\f$ or the result is nan.
+  //!  - `k` must verify \f$k^2\sin^2\phi \le 1\f$ or the result is nan.
   //!
-  //!  - In the complete case this means \f\f$|k| \le 1\f\f$.
+  //!  - In the complete case this means \f$|k| \le 1\f$.
   //!
   //!  In any other case the result is nan.
   //!
   //!!!! WARNING
-  //!  Be aware that as \f\f$\pi/2\f\f$ is not exactly represented by floating point values the result of the incomplete
-  //!  function with a \f\f$\phi\f\f$ value near \f\f$\pi/2\f\f$ can differ a lot with the result of the complete call.
+  //!  Be aware that as \f$\pi/2\f$ is not exactly represented by floating point values the result of the incomplete
+  //!  function with a \f$\phi\f$ value near \f$\pi/2\f$ can differ a lot with the result of the complete call.
   //!
   //!
   //! **Return value**
