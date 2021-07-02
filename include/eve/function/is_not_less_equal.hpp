@@ -80,10 +80,11 @@ namespace eve
   //!
   //!  ====================================================================================================
   //!  * `definitely`
+  //!
   //!     **Required header: 
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //! 
   //!       #include <eve/function/definitely/is_not_less_equal.hpp>`
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! 
   //!  
   //!     The expression `definitely(is_not_less_equal)(x, y, t)` where `x` and `y` must be
   //!      floating point values, evals to true if and only if and only if `x` is definitely not less or equal to `y`.

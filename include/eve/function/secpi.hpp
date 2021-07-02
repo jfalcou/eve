@@ -79,10 +79,11 @@ namespace eve
   //!  to see the [properties and rationale](../trigonometric.html)
   //!  
   //!  * `diff`
+  //!
   //!     **Required header: 
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //! 
   //!       #include <eve/function/diff/secpi.hpp>`
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! 
   //!  
   //!     The expression `diff(secpi)(x)` computes the derivative of the function at `x`.
   //!  

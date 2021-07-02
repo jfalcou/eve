@@ -75,10 +75,11 @@ namespace eve
   //!
   //!  ====================================================================================================
   //!  * `diff`
+  //!
   //!     **Required header: 
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //! 
   //!       #include <eve/function/diff/asind.hpp>`
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! 
   //!  
   //!     The expression `diff(asind)(x)` computes the derivative of the function at `x`.
   //!  

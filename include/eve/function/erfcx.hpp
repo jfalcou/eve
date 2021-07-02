@@ -71,10 +71,11 @@ namespace eve
   //!
   //!  ====================================================================================================
   //!  * `diff`
+  //!
   //!     **Required header: 
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //! 
   //!       #include <eve/function/diff/erfcx.hpp>`
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! 
   //!  
   //!     The expression `diff(erfcx)(x)` computes the derivative of the function at `x`.
   //!  

@@ -73,10 +73,11 @@ namespace eve
   //!      Otherwise it uses the [`regular`](../decorators.html#regular) call.
   //!  
   //!  * `diff`
+  //!
   //!     **Required header: 
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //! 
   //!       #include <eve/function/diff/sqrt.hpp>`
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! 
   //!  
   //!     The expression `diff(sqrt)(x)` computes the derivative of the function at `x`.
   //!     

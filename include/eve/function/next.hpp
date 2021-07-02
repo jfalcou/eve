@@ -76,10 +76,11 @@ namespace eve
   //!
   //!  ====================================================================================================
   //!  * `pedantic`
+  //!
   //!     **Required header: 
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //! 
   //!       #include <eve/function/pedantic/next.hpp>`
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! 
   //!  
   //!     The call `pedantic(next)(x)` distinguish `-0.0` and `+0.0` for floating point point inputs.
   //!      So `pedantic(next)(-0.0)` is `+0.0`.

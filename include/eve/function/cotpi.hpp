@@ -79,10 +79,11 @@ namespace eve
   //!  to see the [properties and rationale](../trigonometric.html)
   //!  
   //!  * `diff`
+  //!
   //!     **Required header: 
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //! 
   //!       #include <eve/function/diff/cotpi.hpp>`
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! 
   //!  
   //!     The expression `diff(cotpi)(x)` computes the derivative of the function at `x`.
   //!  

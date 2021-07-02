@@ -74,10 +74,11 @@ namespace eve
   //!
   //!  ====================================================================================================
   //!  * `saturated`
+  //!
   //!     **Required header: 
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //! 
   //!       #include <eve/function/saturated/sqr.hpp>`
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! 
   //!  
   //!     The expression `saturated(abs)(x)` computes a saturated square of `x`. Contrary to the [regular case](../decorator/regular.html), this guarantees
   //!      that the result is [`element-wise`](../../../glossary.html#element-wise) greater or equal than 0. More specifically, for any signed integer value
@@ -91,10 +92,11 @@ namespace eve
   //!      is greater than [`eve::Sqrtvalmax(as(x))`](../../constants/limits/sqrtvalmax.html).
   //!  
   //!  * `diff`
+  //!
   //!     **Required header: 
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //! 
   //!       #include <eve/function/diff/sqr.hpp>`
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! 
   //!  
   //!     The expression `diff(sqr)(x)` computes the derivative of the function at `x`.
   //!  

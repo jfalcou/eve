@@ -72,10 +72,11 @@ namespace eve
   //!
   //!  ====================================================================================================
   //!  * `almost`
+  //!
   //!     **Required header: 
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //! 
   //!       #include <eve/function/almost/is_not_less.hpp>`
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! 
   //!  
   //!     The expression `almost(is_not_less)(x, y, t)` where `x` and `y` must be
   //!      floating point values, evals to true if and only if and only if `x` is not almost less than `y`.

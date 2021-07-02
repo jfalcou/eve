@@ -84,10 +84,11 @@ namespace eve
   //!     The expression `toward_zero(round)(x)` is equivalent to `trunc(x)`.
   //!  
   //!  * `diff`
+  //!
   //!     **Required header: 
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //! 
   //!       #include <eve/function/diff/round.hpp>`
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! 
   //!  
   //!     The expression `diff(round)(x)` computes the derivative of the function at `x` (it is the same as `nearest`).
   //!  

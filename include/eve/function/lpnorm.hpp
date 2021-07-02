@@ -71,10 +71,11 @@ namespace eve
   //!
   //!  ====================================================================================================
   //!  * `pedantic`
+  //!
   //!     **Required header: 
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //! 
   //!       #include <eve/function/pedantic/lpnorm.hpp>`
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! 
   //!  
   //!     The call `pedantic(lpnorm)(x,args...)`  computes the \f$l_p\f$ norm
   //!      without undue overflow or underflow at intermediate stages of the computation
@@ -83,10 +84,11 @@ namespace eve
   //!      Morever it returns \f$\infty\f$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
   //!  
   //!  * `diff`
+  //!
   //!     **Required header: 
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //! 
   //!       #include <eve/function/diff/lpnorm.hpp>`
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! 
   //!  
   //!     The expression `diff_< N >(lpnorm)(x,args...)` computes the partial
   //!      diff of the function relative to its Nth parameter. The returned value is 0 if N is
@@ -94,7 +96,7 @@ namespace eve
   //!      `N`th parameter value divided by the `lpnorm` value.
   //!  
   //!  
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! 
   //!  
   //!
   //! #### Example

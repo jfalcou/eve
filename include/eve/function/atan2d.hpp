@@ -89,10 +89,11 @@ namespace eve
   //!
   //!  ====================================================================================================
   //!  * `pedantic`
+  //!
   //!     **Required header: 
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //! 
   //!       #include <eve/function/pedantic/atan2d.hpp>`
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! 
   //!  
   //!     The call `pedantic(atan2d)(`x`,`y`)` returns the same results as the regular call, but all
   //!      **IEEE** limiting values are satisfied :
@@ -104,10 +105,11 @@ namespace eve
   //!  
   //!  
   //!  * `diff`
+  //!
   //!     **Required header: 
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //! 
   //!       #include <eve/function/diff/atan2d.hpp>`
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! 
   //!  
   //!     The expression `diff_1st(atan2d)(x,y)` and `diff_2nd(atan2d)(x,y)` computes the partial
   //!      diffs of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \mbox{atan2d}(x,y)\f$.

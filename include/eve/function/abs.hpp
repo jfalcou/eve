@@ -73,6 +73,7 @@ namespace eve
   //!
   //!   * eve::saturated
   //!
+  //!
   //!     **Required header:** `#include <eve/function/saturated/abs.hpp>`
   //!
   //!     The expression `eve::saturated(eve::abs)(x)` computes the saturated absolute value of `x`.
@@ -80,6 +81,7 @@ namespace eve
   //!     `eve::saturated(eve::abs)(eve::valmin(as(x)))` evaluates to `eve::valmax(as(x))`.
   //!
   //!   * eve::diff
+  //!
   //!
   //!     **Required header:** `#include <eve/function/diff/abs.hpp>`
   //!

@@ -72,10 +72,11 @@ namespace eve
   //!
   //!  ====================================================================================================
   //!  * `diff`
+  //!
   //!     **Required header: 
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //! 
   //!       #include <eve/function/diff/fdim.hpp>`
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! 
   //!  
   //!     The expression `diff_1st(fim)(x,y)` and `diff_2nd(fim)(x,y)` computes the partial
   //!      diffs of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \max(0,x-y)\f$.

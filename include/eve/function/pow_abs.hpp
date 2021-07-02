@@ -92,10 +92,11 @@ namespace eve
   //!      than the regular implemention, but does not fullfill all the boundary requisites of IEC 60559 and has not always a good accuracy.
   //!  
   //!  * `diff`
+  //!
   //!     **Required header: 
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //! 
   //!       #include <eve/function/diff/pow.hpp>`
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! 
   //!  
   //!     The expression `diff_1st(pow_abs)(x,y)` and `diff_2nd(pow_abs)(x,y)` computes the partial
   //!      diffs of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ |x|^y\f$.

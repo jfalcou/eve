@@ -89,7 +89,7 @@ namespace eve
   //!      great floating values are not pedantically flint.
   //!  
   //!  
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! 
   //!  
   //!
   //! #### Example

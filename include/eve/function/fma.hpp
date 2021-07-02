@@ -35,7 +35,7 @@ namespace eve
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  template< value T, value U, value V > auto operator()( T x, U y, V z ) const noexcept
   //!  requires compatible< T,U> && compatible< T, V >;
-  //!  
+  //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -78,31 +78,35 @@ namespace eve
   //!
   //!  ====================================================================================================
   //!  * `pedantic`
-  //!     **Required header: 
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!
+  //!     **Required header:
+  //!
   //!       #include <eve/function/pedantic/fma.hpp>`
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!  
+  //!
+  //!
   //!     The call `pedantic(fma)(x,y,z)` ensures the one rounding property. This can be very expensive if the
   //!      system has no hardware capability.
   //!  * `numeric`
-  //!     **Required header: 
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!
+  //!     **Required header:
+  //!
   //!       #include <eve/function/numeric/fma.hpp>`
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!  
+  //!
+  //!
   //!     The call `numeric(fma)(x,y,z)` ensures the full compliance to fma properties. This can be very expensive if the
   //!      system has no hardware capability.
-  //!  
+  //!
   //!  * `diff`
-  //!     **Required header: 
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!
+  //!
+  //!     **Required header:
+  //!
   //!       #include <eve/function/diff/fma.hpp>`
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!  
+  //!
+  //!
   //!     The expression `diff_1st(fma)(x,y,z)`, `diff_2nd(fma)(x,y,z)` and `diff_3rd(fma)(x,y,z)` computes the partial
   //!      diffs of \f$f\f$, where \f$f\f$ is the function \f$(x,y,z) \rightarrow \ xy+z\f$.
-  //!  
+  //!
   //!
   //! #### Example
   //!

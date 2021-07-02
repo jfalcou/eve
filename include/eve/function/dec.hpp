@@ -70,19 +70,21 @@ namespace eve
   //!
   //!  ====================================================================================================
   //!  * `saturated`
+  //!
   //!     **Required header: 
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //! 
   //!       #include <eve/function/saturated/dec.hpp>`
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! 
   //!  
   //!     The call `saturated(dec)(x)` computes the saturated opposite of `x`. The only interest of this behaviour is that
   //!      for integral type T  `saturated(dec)(Valmin< T >())` returns `Valmin< T >()`.
   //!  
   //!  * `diff`
+  //!
   //!     **Required header: 
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //! 
   //!       #include <eve/function/diff/dec.hpp>`
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! 
   //!  
   //!     The expression `diff(dec)(x)` computes the derivative of the function at `x`.
   //!  

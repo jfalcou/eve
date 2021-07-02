@@ -84,6 +84,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `diff_nth`
   //!
+  //!
   //!     **Required header:** `#include <eve/function/diff/average.hpp>`
   //!
   //!     The expression `diff_nth< N >(average)(x,args...)` computes the partial

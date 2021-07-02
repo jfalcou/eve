@@ -78,10 +78,11 @@ namespace eve
   //!
   //!  ====================================================================================================
   //!  * `almost`
+  //!
   //!     **Required header: 
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //! 
   //!       #include <eve/function/almost/is_greater_equal.hpp>`
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! 
   //!  
   //!     The expression `almost(is_greater_equal)(x, y, t)` where `x` and `y` must be
   //!      floating point values, evals to true if and only if `x` is almost greater or equal to `y`.

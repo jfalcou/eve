@@ -79,10 +79,11 @@ namespace eve
   //!     The call `raw(rsqrt)(x)`, call a faster implementation which can be slightly less accurate near \f$\pi\f$..
   //!  
   //!  * `diff`
+  //!
   //!     **Required header: 
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //! 
   //!       #include <eve/function/diff/acos.hpp>`
-  //!      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! 
   //!  
   //!     The expression `diff(acos)(x)` computes the derivative of the function at `x`.
   //!  

@@ -86,6 +86,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `saturated`
   //!
+  //!
   //!     **Required header:  #include <eve/function/saturated/dist.hpp>
   //!
   //!     The call `saturated(dist)(x, y)` computes a saturated distance. Contrary to the [regular case](../decorator/regular.html), it guarantees
@@ -93,6 +94,7 @@ namespace eve
   //!      [the greatest representable positive value](../../constants.html#valmax) is returned
   //!
   //!  * `diff`
+  //!
   //!
   //!     **Required header: #include <eve/function/diff/dist.hpp>
   //!

@@ -78,6 +78,7 @@ namespace eve
   //!
   //!  * `diff`
   //!
+  //!
   //!     **Required header:** `#include <eve/function/diff/arg.hpp>`
   //!
   //!     The expression `diff(arg)(x)` computes the derivative of the function at `x`.

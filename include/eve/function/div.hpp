@@ -68,12 +68,14 @@ namespace eve
   //!
   //!   * eve::saturated
   //!
+  //!
   //!     **Required header:** `#include <eve/function/saturated/abs.hpp>`
   //!
   //!     The expression `eve::saturated(eve::div)(xs...)` computes the saturated division of
   //!     all `xs`.
   //!
   //!   * eve::diff
+  //!
   //!
   //!     **Required header:** `#include <eve/function/diff/div.hpp>`
   //!
