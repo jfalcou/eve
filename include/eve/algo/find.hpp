@@ -9,7 +9,7 @@
 
 #include <eve/algo/array_utils.hpp>
 #include <eve/algo/for_each_iteration.hpp>
-#include <eve/algo/one_range_algorithm_adapter.hpp>
+#include <eve/algo/preprocess_range.hpp>
 #include <eve/algo/traits.hpp>
 
 #include <eve/function/any.hpp>

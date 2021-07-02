@@ -50,15 +50,15 @@ namespace eve::algo
 
     template< relative_conditional_expr C, decorator S, typename Pack>
     friend auto tagged_dispatch ( eve::tag::load_, C const& c, S const& s
-                                , eve::as_<Pack> const& tgt, converting_iterator self
+                                , eve::as<Pack> const& tgt, converting_iterator self
                                 )
     {
       auto c1 = map_alternative(
         c,
-        [](auto alt) { return eve::convert(alt, eve::as_<typename I::value_type>{}); }
+        [](auto alt) { return eve::convert(alt, eve::as<typename I::value_type>{}); }
       );
 
-      return eve::convert(eve::load(c1, s, tgt, self.base), eve::as_<T>{});
+      return eve::convert(eve::load(c1, s, tgt, self.base), eve::as<T>{});
     }
 
     template <relative_conditional_expr C>
@@ -67,15 +67,15 @@ namespace eve::algo
     {
       auto c1 = map_alternative(
         c,
-        [](auto alt) { return eve::convert(alt, eve::as_<typename I::value_type>{}); }
+        [](auto alt) { return eve::convert(alt, eve::as<typename I::value_type>{}); }
       );
 
-      eve::store[c1](eve::convert(v, eve::as_<typename I::value_type>{}), self.base);
+      eve::store[c1](eve::convert(v, eve::as<typename I::value_type>{}), self.base);
     }
 
     friend void tagged_dispatch( eve::tag::store_, wide_value_type v, converting_iterator self )
     {
-      eve::store(eve::convert(v, eve::as_<typename I::value_type>{}), self.base);
+      eve::store(eve::convert(v, eve::as<typename I::value_type>{}), self.base);
     }
 
     I base;
@@ -83,7 +83,7 @@ namespace eve::algo
 
   struct {
     template <iterator I, typename T>
-    auto operator()(I it, eve::as_<T>) const
+    auto operator()(I it, eve::as<T>) const
     {
       if constexpr ( instance_of<I, converting_iterator> )
       {
