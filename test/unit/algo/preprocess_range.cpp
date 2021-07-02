@@ -150,7 +150,7 @@ EVE_TEST_TYPES("Check preprocess_range for eve ptr iterators", algo_test::select
 
     run_one_test(u_f, u_l, eve::algo::traits(eve::algo::unroll<2>));
     run_one_test(u_f, a_l, eve::algo::traits(eve::algo::unroll<2>));
-    run_one_test(a_f, a_l, eve::algo::traits(eve::algo::unroll<2>, eve::algo::divisible_by_cardinal, eve::algo::no_aligning));
+    run_one_test(a_f, a_l, eve::algo::traits(eve::algo::unroll<2>, eve::algo::no_aligning, eve::algo::divisible_by_cardinal));
     run_one_test(a_f, u_l, eve::algo::traits(eve::algo::unroll<2>, eve::algo::no_aligning));
   };
 
