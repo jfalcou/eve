@@ -7,27 +7,44 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/real/core/detail/generic/multi_mul.hpp>
 #include <eve/assert.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/all.hpp>
+#include <eve/function/if_else.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/is_nez.hpp>
+#include <eve/function/logical_andnot.hpp>
+#include <eve/function/mul.hpp>
 #include <eve/function/regular.hpp>
 #include <eve/function/replace.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/mul.hpp>
-#include <eve/function/logical_andnot.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/assert.hpp>
+#include <eve/module/real/core/detail/generic/multi_mul.hpp>
+#include <eve/product_type.hpp>
 
 #ifdef EVE_COMP_IS_MSVC
 #  pragma warning(push)
 #  pragma warning(disable : 4723) // potential divide by 0
 #endif
+
+namespace eve
+{
+  //================================================================================================
+  // Product type support helper
+  //================================================================================================
+  template<typename Type>
+  struct supports<Type, eve::tag::div_>
+  {
+    template<same_value_type<Type> V, same_value_type<Type> U>
+    friend constexpr V& operator/=(V& self, U const& other) noexcept
+    {
+      kumi::for_each( [](auto& s, auto o) { s /= o; }, self.storage(), other.storage() );
+      return self;
+    }
+  };
+}
 
 #include <eve/module/real/core/function/regular/generic/div_downward.hpp>
 #include <eve/module/real/core/function/regular/generic/div_tonearest.hpp>

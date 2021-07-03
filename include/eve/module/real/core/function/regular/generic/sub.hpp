@@ -9,14 +9,29 @@
 
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/function/operators.hpp>
 #include <eve/detail/function/conditional.hpp>
-#include <eve/function/derivative.hpp>
+#include <eve/product_type.hpp>
+#include <eve/traits/common_compatible.hpp>
+
+namespace eve
+{
+  //================================================================================================
+  // Product type support helper
+  //================================================================================================
+  template<typename Type>
+  struct supports<Type, eve::tag::sub_>
+  {
+    template<same_value_type<Type> V, same_value_type<Type> U>
+    friend constexpr V& operator-=(V& self, U const& other) noexcept
+    {
+      kumi::for_each( [](auto& s, auto o) { s -= o; }, self.storage(), other.storage() );
+      return self;
+    }
+  };
+}
 
 namespace eve::detail
 {
-
   //================================================================================================
   // Masked case
   //================================================================================================
