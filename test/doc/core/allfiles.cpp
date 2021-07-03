@@ -1,7 +1,6 @@
 #include <eve/function/operator.hpp>
 #include <eve/function/arithmetic.hpp>
 #include <eve/function/rounding.hpp>
-#include <eve/function/bit.hpp>
 #include <eve/function/logical.hpp>
 #include <eve/function/comparison.hpp>
 #include <eve/function/predicate.hpp>
