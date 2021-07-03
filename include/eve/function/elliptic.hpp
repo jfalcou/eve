@@ -10,20 +10,19 @@
 //================================================================================================
 //! @addtogroup functions
 //! @{
-//! @defgroup exponential Exponential
+//! @defgroup elliptic Elliptic
 //!
-//! These functions provide scalar and SIMD version of exponential functions.
+//! These functions provide scalar and SIMD version of some elliptic functions.
 //!
-//! **Convenience header:** @code{.cpp} #include <eve/function/exponentials.hpp> @endcode
+//! **Convenience header:** @code{.cpp} #include <eve/function/elliptic.hpp> @endcode
 //!
 //!@}
 //================================================================================================
-
-#include <eve/function/exp.hpp>
-#include <eve/function/exp10.hpp>
-#include <eve/function/exp2.hpp>
-#include <eve/function/expm1.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/log10.hpp>
-#include <eve/function/log2.hpp>
-#include <eve/function/log1p.hpp>
+#include <eve/function/ellint_1.hpp>
+#include <eve/function/ellint_2.hpp>
+#include <eve/function/ellint_d.hpp>
+#include <eve/function/ellint_rc.hpp>
+#include <eve/function/ellint_rd.hpp>
+#include <eve/function/ellint_rf.hpp>
+#include <eve/function/ellint_rg.hpp>
+#include <eve/function/ellint_rj.hpp>

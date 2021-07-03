@@ -1,13 +1,23 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
-// **========================================================
-// helper file to include all inverse hyperbolic functions
+
+//================================================================================================
+//! @addtogroup functions
+//! @{
+//! @defgroup hyperbolic Hyperbolic
+//!
+//! These functions provide scalar and SIMD version of hyperbolic functions.
+//!
+//! **Convenience header:** @code{.cpp} #include <eve/function/hyperbolic.hpp> @endcode
+//!
+//!@}
+//================================================================================================
 #include <eve/function/acosh.hpp>
 #include <eve/function/acoth.hpp>
 #include <eve/function/asech.hpp>
