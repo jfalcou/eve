@@ -18,12 +18,12 @@
 //!@}
 //================================================================================================
 
-#include <eve/function/all.html
-#include <eve/function/any.html
-#include <eve/function/count_true.html
-#include <eve/function/maximum.html
-#include <eve/function/minimum.html
-#include <eve/function/none.html
-#include <eve/function/prod.html
-#include <eve/function/reduce.html
-#include <eve/function/sum.html
+#include <eve/function/all.hpp>
+#include <eve/function/any.hpp>
+#include <eve/function/count_true.hpp>
+#include <eve/function/maximum.hpp>
+#include <eve/function/minimum.hpp>
+#include <eve/function/none.hpp>
+#include <eve/function/prod.hpp>
+#include <eve/function/reduce.hpp>
+#include <eve/function/sum.hpp>
