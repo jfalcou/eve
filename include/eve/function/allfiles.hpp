@@ -48,7 +48,6 @@
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_ceil.hpp>
 #include <eve/function/bit_floor.hpp>
-#include <eve/function/bit.hpp>
 #include <eve/function/bit_mask.hpp>
 #include <eve/function/bit_notand.hpp>
 #include <eve/function/bit_not.hpp>

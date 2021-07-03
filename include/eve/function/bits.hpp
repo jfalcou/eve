@@ -17,7 +17,7 @@
 //! To keep the results homogeneous and coherent between SIMD and scalar mode, the types usable
 //! in those functions are generally required to satisfy `eve::bit_compatible_values`
 //!
-//! **Convenience header:** @code{.cpp} #include <eve/function/bit.hpp> @endcode
+//! **Convenience header:** @code{.cpp} #include <eve/function/bits.hpp> @endcode
 //!
 //!@}
 //================================================================================================

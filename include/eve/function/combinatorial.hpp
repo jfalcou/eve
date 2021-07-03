@@ -14,7 +14,7 @@
 //!
 //! These functions provide scalar and SIMD version of some combinatorial functions.
 //!
-//! **Convenience header:** @code{.cpp} #include <eve/function/bit.hpp> @endcode
+//! **Convenience header:** @code{.cpp} #include <eve/function/combinatorial.hpp> @endcode
 //!
 //!@}
 //================================================================================================
