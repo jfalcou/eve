@@ -74,9 +74,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `diff_nth`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/logspace_add.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/logspace_add.hpp>
   //! 
   //!  
   //!     The expression `diff_nth< N >(logspace_add)(arg0,arg1,args...)` computes the partial

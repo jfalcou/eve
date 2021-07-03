@@ -79,9 +79,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `definitely`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/definitely/is_less.hpp>`
+  //!     **Required header:**  #include <eve/function/definitely/is_less.hpp>
   //! 
   //!  
   //!     The expression `definitely(is_less)(x, y, t)` where `x` and `y` must be

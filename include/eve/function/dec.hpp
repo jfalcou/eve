@@ -71,9 +71,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `saturated`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/saturated/dec.hpp>`
+  //!     **Required header:**  #include <eve/function/saturated/dec.hpp>
   //! 
   //!  
   //!     The call `saturated(dec)(x)` computes the saturated opposite of `x`. The only interest of this behaviour is that
@@ -81,9 +79,7 @@ namespace eve
   //!  
   //!  * `diff`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/dec.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/dec.hpp>
   //! 
   //!  
   //!     The expression `diff(dec)(x)` computes the derivative of the function at `x`.

@@ -77,9 +77,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `diff`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/acot.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/acot.hpp>
   //! 
   //!  
   //!     The expression `diff(acot)(x)` computes the derivative of the function at `x`.

@@ -77,9 +77,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `diff`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/log10.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/log10.hpp>
   //! 
   //!  
   //!     The expression `diff(log10)(x)` computes the derivative of the function at `x`.

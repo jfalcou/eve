@@ -83,27 +83,21 @@ namespace eve
   //!  ====================================================================================================
   //!  * `pedantic`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/pedantic/maxmag.hpp>`
+  //!     **Required header:**  #include <eve/function/pedantic/maxmag.hpp>
   //! 
   //!  
   //!  The behaviour is the same except that if  `|x| == |y|`, `pedantic(max)` is used.
   //!  
   //!  * `numeric`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/numeric/maxmag.hpp>`
+  //!     **Required header:**  #include <eve/function/numeric/maxmag.hpp>
   //! 
   //!  
   //!  The behaviour is the same except that if  `|x| == |y|`, `numeric(max)` is used.
   //!  
   //!  * `diff`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/maxmag.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/maxmag.hpp>
   //! 
   //!  
   //!     The expression `diff< N >(maxmag)(x,args,...)` computes the partial

@@ -72,9 +72,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `diff`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/dawson.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/dawson.hpp>
   //! 
   //!  
   //!     The expression `diff(dawson)(x)` computes the derivative of the function at `x`.

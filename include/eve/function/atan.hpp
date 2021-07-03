@@ -76,9 +76,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `diff`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/atan.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/atan.hpp>
   //! 
   //!  
   //!     The expression `diff(atan)(x)` computes the derivative of the function at `x`.

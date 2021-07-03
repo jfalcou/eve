@@ -81,27 +81,21 @@ namespace eve
   //!  ====================================================================================================
   //!  * `pedantic`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/pedantic/minmag.hpp>`
+  //!     **Required header:**  #include <eve/function/pedantic/minmag.hpp>
   //! 
   //!  
   //!  The behaviour is the same except that if  `|x| == |y|`, `pedantic(min)` is used.
   //!  
   //!  * `numeric`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/numeric/minmag.hpp>`
+  //!     **Required header:**  #include <eve/function/numeric/minmag.hpp>
   //! 
   //!  
   //!  The behaviour is the same except that if  `|x| == |y|`, `numeric(min)` is used.
   //!  
   //!  * `diff`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/minmag.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/minmag.hpp>
   //! 
   //!  
   //!     The expression `diff< N >(minmag)(x,args,...)` computes the partial

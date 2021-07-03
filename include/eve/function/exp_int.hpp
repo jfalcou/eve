@@ -73,9 +73,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `diff`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/exp_int.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/exp_int.hpp>
   //! 
   //!  
   //!     The expression `diff(exp_int)(n,x)` computes the derivative (relative to the second parameter)

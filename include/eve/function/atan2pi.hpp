@@ -90,9 +90,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `pedantic`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/pedantic/atan2pi.hpp>`
+  //!     **Required header:**  #include <eve/function/pedantic/atan2pi.hpp>
   //! 
   //!  
   //!     The call `pedantic(atan2pi)(`x`,`y`)` returns the same results as the regular call, but all
@@ -105,9 +103,7 @@ namespace eve
   //!  
   //!  * `diff`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/atan2pi.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/atan2pi.hpp>
   //! 
   //!  
   //!     The expression `diff_1st(atan2pi)(x,y)` and `diff_2nd(atan2pi)(x,y)` computes the partial

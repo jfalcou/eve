@@ -71,9 +71,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `definitely`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/definitely/is_not_greater_equal.hpp>`
+  //!     **Required header:**  #include <eve/function/definitely/is_not_greater_equal.hpp>
   //! 
   //!  
   //!     The expression `definitely(is_not_greater_equal)(x, y, t)` where `x` and `y` must be

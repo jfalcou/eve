@@ -70,9 +70,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `diff`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/pow.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/pow.hpp>
   //! 
   //!  
   //!     The expression `diff_1st(powm1)(x,y)` and `diff_2nd(powm1)(x,y)` computes the partial

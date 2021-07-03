@@ -72,9 +72,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `pedantic`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/pedantic/hypot.hpp>`
+  //!     **Required header:**  #include <eve/function/pedantic/hypot.hpp>
   //! 
   //!  
   //!     The call `pedantic(hypot)(x,args...)`  computes the square root of the sum of the parameters
@@ -85,9 +83,7 @@ namespace eve
   //!  
   //!  * `diff`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/hypot.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/hypot.hpp>
   //! 
   //!  
   //!     The expression `diff_< N >(hypot)(x,args...)` computes the partial

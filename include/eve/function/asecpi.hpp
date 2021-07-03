@@ -77,9 +77,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `diff`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/asecpi.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/asecpi.hpp>
   //! 
   //!  
   //!     The expression `diff(asecpi)(x)` computes the derivative of the function at `x`.

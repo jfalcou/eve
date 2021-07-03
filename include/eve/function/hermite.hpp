@@ -74,9 +74,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `diff`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/hermite.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/hermite.hpp>
   //! 
   //!  
   //!     The expression `diff(hermite)(n,x)` computes the derivative of the function at `x`.

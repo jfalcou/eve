@@ -75,9 +75,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `saturated`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/saturated/sqr.hpp>`
+  //!     **Required header:**  #include <eve/function/saturated/sqr.hpp>
   //! 
   //!  
   //!     The expression `saturated(abs)(x)` computes a saturated square of `x`. Contrary to the [regular case](../decorator/regular.html), this guarantees
@@ -93,9 +91,7 @@ namespace eve
   //!  
   //!  * `diff`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/sqr.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/sqr.hpp>
   //! 
   //!  
   //!     The expression `diff(sqr)(x)` computes the derivative of the function at `x`.

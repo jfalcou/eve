@@ -78,18 +78,14 @@ namespace eve
   //!  ====================================================================================================
   //!  * `numeric`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/numeric/is_not_equal.hpp>`
+  //!     **Required header:**  #include <eve/function/numeric/is_not_equal.hpp>
   //! 
   //!  
   //!     The expression `numeric(is_not_equal)(x,y)` considers that Nan values are equal.
   //!  
   //!  * `definitely`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/definitely/is_not_equal.hpp>`
+  //!     **Required header:**  #include <eve/function/definitely/is_not_equal.hpp>
   //! 
   //!  
   //!     The expression `definitely(is_not_equal)(x, y, t)` where `x` and `y` must be floating point values, evals

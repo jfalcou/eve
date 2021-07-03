@@ -81,9 +81,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `saturated`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/saturated/mul.hpp>`
+  //!     **Required header:**  #include <eve/function/saturated/mul.hpp>
   //! 
   //!  
   //!     The call `saturated(mul)(x, args...)` computes the saturated  multiplication of `x` and `y`. The saturation is obtained in the
@@ -91,9 +89,7 @@ namespace eve
   //!  
   //!  * `diff`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/mul.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/mul.hpp>
   //! 
   //!  
   //!     The expression `diff_< N >(mul)(x,args,...)` computes the partial

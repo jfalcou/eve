@@ -79,9 +79,7 @@ namespace eve
   //!  
   //!  * `diff`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/csc.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/csc.hpp>
   //! 
   //!  
   //!     The expression `diff(csc)(x)` computes the derivative of the function at `x`.

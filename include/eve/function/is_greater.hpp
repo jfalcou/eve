@@ -79,9 +79,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `definitely`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/definitely/is_greater.hpp>`
+  //!     **Required header:**  #include <eve/function/definitely/is_greater.hpp>
   //! 
   //!  
   //!     The expression `definitely(is_greater)(x, y, t)` where `x` and `y` must be

@@ -73,9 +73,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `pedantic`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/pedantic/frexp.hpp>`
+  //!     **Required header:**  #include <eve/function/pedantic/frexp.hpp>
   //! 
   //!  
   //!     The call `pedantic(frexp)(x)` takes also properly care of the cases where \f$x = \pm0, \pm\infty\f$ or is a Nan,

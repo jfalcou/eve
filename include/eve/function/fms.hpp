@@ -79,18 +79,14 @@ namespace eve
   //!  ====================================================================================================
   //!  * `pedantic`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/pedantic/fms.hpp>`
+  //!     **Required header:**  #include <eve/function/pedantic/fms.hpp>
   //! 
   //!  
   //!     The call `pedantic(fms)(x,y,z)` ensures the one rounding property. This can be very expensive if the
   //!      system has no hardware capability.
   //!  * `numeric`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/numeric/fms.hpp>`
+  //!     **Required header:**  #include <eve/function/numeric/fms.hpp>
   //! 
   //!  
   //!     The call `numeric(fms)(x,y,z)` ensures the full compliance to fms properties. This can be very expensive if the
@@ -98,9 +94,7 @@ namespace eve
   //!  
   //!  * `diff`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/fms.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/fms.hpp>
   //! 
   //!  
   //!     The expression `diff_1st(fms)(x,y,z)`, `diff_2nd(fms)(x,y,z)` and `diff_3rd(fms)(x,y,z)` computes the partial

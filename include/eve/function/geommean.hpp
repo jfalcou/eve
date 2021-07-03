@@ -82,9 +82,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `diff_nth`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/geommean.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/geommean.hpp>
   //! 
   //!  
   //!     The expression `diff_nth< N >(geommean)(x,args...)` computes the partial

@@ -75,9 +75,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `pedantic`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/pedantic/min.hpp>`
+  //!     **Required header:**  #include <eve/function/pedantic/min.hpp>
   //! 
   //!  
   //!     The call `pedantic(min)(x, args, ...)`  ensures the conformity to the standard behaviour, that is
@@ -87,9 +85,7 @@ namespace eve
   //!  
   //!  * `numeric`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/numeric/min.hpp>`
+  //!     **Required header:**  #include <eve/function/numeric/min.hpp>
   //! 
   //!  
   //!     The call `numeric(max)(x,args,...)`  ensures that  if any element of the inputs is not a `Nan`, the corresponding
@@ -97,9 +93,7 @@ namespace eve
   //!  
   //!  * `diff`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/min.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/min.hpp>
   //! 
   //!  
   //!     The expression `diff< N >(min)(x,args,...)` computes the partial

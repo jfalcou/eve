@@ -80,9 +80,7 @@ namespace eve
   //!  
   //!  * `diff`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/cotpi.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/cotpi.hpp>
   //! 
   //!  
   //!     The expression `diff(cotpi)(x)` computes the derivative of the function at `x`.

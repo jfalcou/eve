@@ -74,9 +74,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `raw`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/nthroot.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/nthroot.hpp>
   //! 
   //!  
   //!     The expression `raw(nthroot)(x,n)` does not care about limiting values and gives less accurate values.
@@ -84,9 +82,7 @@ namespace eve
   //!  
   //!  * `diff`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/nthroot.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/nthroot.hpp>
   //! 
   //!  
   //!     The expression `diff_1st(nthroot)(x,n)`

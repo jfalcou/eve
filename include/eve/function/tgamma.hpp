@@ -72,9 +72,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `diff`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/tgamma.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/tgamma.hpp>
   //! 
   //!  
   //!     The expression `diff(tgamma)(x)` computes the derivative of the function at `x`.

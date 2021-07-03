@@ -72,9 +72,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `pedantic`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/pedantic/lpnorm.hpp>`
+  //!     **Required header:**  #include <eve/function/pedantic/lpnorm.hpp>
   //! 
   //!  
   //!     The call `pedantic(lpnorm)(x,args...)`  computes the \f$l_p\f$ norm
@@ -85,9 +83,7 @@ namespace eve
   //!  
   //!  * `diff`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/lpnorm.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/lpnorm.hpp>
   //! 
   //!  
   //!     The expression `diff_< N >(lpnorm)(x,args...)` computes the partial

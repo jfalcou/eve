@@ -70,9 +70,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `diff`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/sqr_abs.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/sqr_abs.hpp>
   //! 
   //!  
   //!     The expression `diff(sqr_abs)(x)` computes the derivative of the function at `x`.

@@ -76,9 +76,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `diff`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/asinh.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/asinh.hpp>
   //! 
   //!  
   //!     The expression `diff(asinh)(x)` computes the derivative of the function at `x`.

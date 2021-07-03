@@ -73,9 +73,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `almost`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/almost/is_not_greater.hpp>`
+  //!     **Required header:**  #include <eve/function/almost/is_not_greater.hpp>
   //! 
   //!  
   //!     The expression `almost(is_not_greater)(x, y, t)` where `x` and `y` must be

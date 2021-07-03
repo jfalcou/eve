@@ -70,9 +70,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `raw`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/lrising_factorial.hpp>`
+  //!     **Required header:**  #include <eve/function/lrising_factorial.hpp>
   //! 
   //!  
   //!     The expression `raw(lrising_factorial)(a,x)` uses the crude formula with all its limitations and
@@ -80,9 +78,7 @@ namespace eve
   //!  
   //!  * `pedantic`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/pedantic/lrising_factorial.hpp>`
+  //!     **Required header:**  #include <eve/function/pedantic/lrising_factorial.hpp>
   //! 
   //!  
   //!     The expression `pedantic(lrising_factorial)(a,x)` uses reflection tricks and computes the function
@@ -91,9 +87,7 @@ namespace eve
   //!  
   //!  * `diff`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/lrising_factorial.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/lrising_factorial.hpp>
   //! 
   //!  
   //!     The expression `diff_1st(lrising_factorial)(a,x)` and `diff_2nd(lrising_factorial)(a,x)` computes

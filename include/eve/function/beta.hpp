@@ -49,7 +49,7 @@ namespace eve
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
   //!
   //![`diff`](../decorators.html#diff)
-  //!:   **Required header: **<script type="preformatted">` #include <eve/function/diff/beta.hpp>`</script>
+  //!:   **Required header:** **<script type="preformatted">` #include <eve/function/diff/beta.hpp>`</script>
   //!
   //!:   The expression `diff_1st(beta)(x,y)` and `diff_2nd(beta)(x,y)` computes the partial
   //!    diffs of $f$, where $f$ is the function $(x,y) \rightarrow \ \mbox{B}(x,y)$.

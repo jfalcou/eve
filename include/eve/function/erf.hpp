@@ -72,9 +72,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `diff`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/erf.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/erf.hpp>
   //! 
   //!  
   //!     The expression `diff(erf)(x)` computes the derivative of the function at `x`.

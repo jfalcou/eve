@@ -71,9 +71,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `pedantic`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/pedantic/manhattan.hpp>`
+  //!     **Required header:**  #include <eve/function/pedantic/manhattan.hpp>
   //! 
   //!  
   //!     The call `pedantic(manhattan)(x,args...`  computes the sum of the absolute values of its parameters
@@ -81,9 +79,7 @@ namespace eve
   //!  
   //!  * `diff`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/diff/manhattan.hpp>`
+  //!     **Required header:**  #include <eve/function/diff/manhattan.hpp>
   //! 
   //!  
   //!     The expression `diff_< N >(manhattan)(x,args...)` computes the partial

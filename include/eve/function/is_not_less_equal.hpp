@@ -43,7 +43,7 @@ namespace eve
   //!Supported decorators
   //!====================================================================================================
   //![`definitely`](../decorators.html#definitely)
-  //!:   **Required header: **<script type="preformatted">` #include <eve/function/definitely/is_not_less_equal.hpp>`</script>
+  //!:   **Required header:** **<script type="preformatted">` #include <eve/function/definitely/is_not_less_equal.hpp>`</script>
   //!
   //!:   The expression `definitely(is_not_less_equal)(x, y, t)` where `x` and `y` must be
   //!    floating point values, evals to true if and only if and only if `x` is definitely not less or equal to `y`.
@@ -83,9 +83,7 @@ namespace eve
   //!  ====================================================================================================
   //!  * `definitely`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/definitely/is_not_less_equal.hpp>`
+  //!     **Required header:**  #include <eve/function/definitely/is_not_less_equal.hpp>
   //! 
   //!  
   //!     The expression `definitely(is_not_less_equal)(x, y, t)` where `x` and `y` must be

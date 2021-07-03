@@ -80,18 +80,14 @@ namespace eve
   //!  ====================================================================================================
   //!  * `numeric`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/numeric/is_equal.hpp>`
+  //!     **Required header:**  #include <eve/function/numeric/is_equal.hpp>
   //! 
   //!  
   //!     The expression `numeric(is_equal)(x,y)` considers that Nan values are equal.
   //!  
   //!  * `almost`
   //!
-  //!     **Required header: 
-  //! 
-  //!       #include <eve/function/almost/is_equal.hpp>`
+  //!     **Required header:**  #include <eve/function/almost/is_equal.hpp>
   //! 
   //!  
   //!     The expression `almost(is_equal)(x, y, t)` where `x` and `y` must be floating point values, evals to
