@@ -43,7 +43,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!A bool value
   //!
   //! ---
   //!

@@ -43,8 +43,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
-  //!
+  //!Returns the number of bit set in each [`element`](../../../glossary.html#element-wise) of the parameter.
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

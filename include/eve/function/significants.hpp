@@ -44,8 +44,12 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!Computes  [element-wise](../../../glossary.html#elment-wise) the rounding to n significants digits of `x`.
+  //!With null n the result is a nan.
   //!
+  //!@WARNING
+  //!   Floating numbers are not stored in decimal form. So if you try significants with
+  //!   a not exactly representable number the result can be not exactly what you expect.
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

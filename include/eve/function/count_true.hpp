@@ -43,8 +43,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
-  //!
+  //!an int value
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

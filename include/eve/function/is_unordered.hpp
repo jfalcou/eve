@@ -44,7 +44,19 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!
+  //!The call:
+  //!
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+  //!logical<T> r = is_unordered(x, y);
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!is semantically  equivalent to:
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+  //!logical<T> r;
+  //!if   constexpr(floating_real_value<T>) r = is_nan(x) || is_nan(y);
+  //!else constexpr(integral_real_value<T>) r = False<T>();
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! ---
   //!

@@ -45,8 +45,8 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
-  //!
+  //!The call `ifnot_else(x, y, z)` is performs a choice between the elements of `y` and `z` according to the truth value
+  //!of the elements of `x`. It is merely syntaxic sugar for `if_else(x, z, y)`
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

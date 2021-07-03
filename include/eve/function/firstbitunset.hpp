@@ -43,8 +43,8 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
-  //!
+  //!Computes [element-wise](../../../glossary.html#element-wise_) the bit pattern in which the only bit set (if it exists) is
+  //!the first bit unset (beginning with the least significant bit) in the input.
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

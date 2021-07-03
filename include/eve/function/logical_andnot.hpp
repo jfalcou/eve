@@ -44,8 +44,13 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!Computes  logical ANDNOT of the two parameters following the
+  //![logical operations semantic](../../../glossary.html#Logical).
   //!
+  //!the call `logical_andnot(x, y)` is semantically equivalent to `x && !y`
+  //!if `x` or  `y` is an  [simd value](../../concepts.html#value).
+  //!
+  //!@WARNING  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

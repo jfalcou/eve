@@ -44,7 +44,18 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!
+  //! The result type is the [compatibility result](../../concept.html#compatibility) of the two first parameters,
+  //! vectorized with the cardinality of the third one if necessary.
+  //!
+  //! The recurrence formula defining the fibonacci sequence is:
+  //!
+  //!      - r(0) = x
+  //!      - r(1) = y
+  //!      - r(i+2) = r(i+1)+r(i),  i > 2
+  //!
+  //! The function return elementwise r(n), but the result is computed using the Binet formula.
+  //!
   //!
   //! ---
   //!

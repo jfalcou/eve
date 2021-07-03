@@ -43,8 +43,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
-  //!
+  //!Returns the number of consecutive 0 ("zero") bits in the value of `x`, starting from the most significant bit ("right").
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

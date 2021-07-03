@@ -43,7 +43,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!This function always returns `x`.
   //!
   //! ---
   //!

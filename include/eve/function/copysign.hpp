@@ -44,8 +44,8 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
-  //!
+  //!Returns the [element-wise](../../../glossary.html#regular) composition of a value with the magnitude of `x`
+  //!and the bit of sign of `y`.
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

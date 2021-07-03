@@ -47,8 +47,10 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!Returns the logical value containing the [element-wise](../../../glossary.html#value) inequality test result
+  //!between `x` and 0.
   //!
+  //!The result type is `logical< T >`.
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

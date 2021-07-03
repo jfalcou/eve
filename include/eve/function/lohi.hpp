@@ -43,8 +43,8 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
-  //!
+  //!    Computes the [element-wise](../../../glossary.html#element-wise_) the lower and higher parts of
+  //!    the input values, as a pair of unsigned integers
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

@@ -43,8 +43,14 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!Computes  [element-wise](../../../glossary.html#elment-wise) the never zero sign of `x`.
   //!
+  //!For [real value](../../concepts.html#value) `x` is semantically equivalent to:
+  //!  * If x is positive, 1 is returned.
+  //!  * If x is negative  -1 is returned.
+  //!  * If x is `Nan`, the result is `Nan`.
+  //!For   [floating real value](../../concepts.html#value) the positivity is only here based on the bit of sign.
+  //!In particular -0.0 is negative and +0.0 is positive.
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

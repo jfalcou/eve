@@ -43,7 +43,19 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!
+  //!The call:
+  //!
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+  //!logical<T> r = is_not_nan(x);
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!computation is semantically  equivalent to:
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+  //!logical<T> r;
+  //!if   constexpr(floating_real_value<T>) r = is_equal(x, x);
+  //!else constexpr(integral_real_value<T>) r = True<T>());
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! ---
   //!

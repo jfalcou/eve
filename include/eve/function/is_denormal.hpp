@@ -43,8 +43,19 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
   //!
+  //!The call:
+  //!
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+  //!logical<T> r = is_denormal(x);
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!computation is semantically  equivalent to:
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+  //!logical<T> r;
+  //!if   constexpr(floating_real_value<T>) r = (abs(x) < Smallestposval(as(x))) && is_nez(x);
+  //!else constexpr(integral_real_value<T>) r = False<T>());
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

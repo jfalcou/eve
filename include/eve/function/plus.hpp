@@ -43,8 +43,9 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!Computes  [element-wise](../../../glossary.html#elment-wise) `+x` which generally is a no-op.
   //!
+  //!@WARNING  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

@@ -44,7 +44,20 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!
+  //! The result element type is the same as the input one unless a converter is applied to `nth_prime`.
+  //! See the example below.
+  //!
+  //!
+  //! Almost no computations are made, the results are from a lookup table.
+  //!
+  //! 2 is the first prime number (n=0). If the output is of integral type incorrect computation will return 0, but
+  //! if the result has been converted to a floating value (by concerting the object function) incorrect computation will return nan
+  //!
+  //!@WARNING
+  //!    this function will return 0 (or nan) as soon as the correct result will not be exactly represented
+  //!    in the output type or (for the current implementation) if n is greater or equal to 10000.
+  //!
   //!
   //! ---
   //!

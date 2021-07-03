@@ -44,8 +44,11 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!Returns [element-wise](../../../glossary.html#value) $\displaystyle \zeta(s)=\sum_{n=0}^\infty \frac1{n^s}$
   //!
+  //!For negative entries the computation is made using the reflection formula.
+  //!
+  //! The result type is of the same type as the  parameter.
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

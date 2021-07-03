@@ -43,8 +43,12 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!Returns the [`element-wise`](../../../glossary.html#element-wise) product of the first parameter by the never zero sign of the second.
   //!
+  //![`diff`](../decorators.html#diff)
+  //!:   **Required header: **<script type="preformatted">` #include <eve/function/diff/negatenz.hpp>`</script>
+  //!
+  //!:   The expression `diff(negatenz)(x)` computes the derivative of the function at `x` .
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

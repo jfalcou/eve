@@ -43,7 +43,8 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!
+  //!The call  `is_real(x)` always returns `True<`T`>()`
   //!
   //! ---
   //!

@@ -44,8 +44,10 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!Computes  logical XOR of the two parameters following the
+  //![logical operations semantic](../../../glossary.html#Logical).
   //!
+  //!the call `logical_xor(x, y)` is semantically equivalent to `(x && !y) || (!x && y)`.
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

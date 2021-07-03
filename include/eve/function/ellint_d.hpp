@@ -61,7 +61,9 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!Returns  [element-wise](../../../glossary.html#value) the elliptic integral of the first kind.
+  //!
+  //! The result type is of the compatibility type of the three parameters.
   //!
   //! ---
   //!

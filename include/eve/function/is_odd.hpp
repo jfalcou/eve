@@ -43,8 +43,19 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
   //!
+  //!The call:
+  //!
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+  //!logical<T> r = is_odd(x);
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!computation is semantically  equivalent to:
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+  //!logical<T> r;
+  //!if constexpr(floating_real_value<T>)   r =  (a != dec(a)) && is_even(dec(a));
+  //!else constexpr(integral_real_value<T>) r = is_equal(x, (x/2)*2);
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

@@ -43,8 +43,8 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
-  //!
+  //!Calculates [element-wise](../../../glossary.html#element-wise) the smallest integral power of two that is not smaller than `x`.
+  //!If that value is not representable in `T`, the behavior is undefined.
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

@@ -43,8 +43,10 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!    Computes the [element-wise](../../../glossary.html#element-wise_) higher half of the  value,
+  //!    returning each elemnet as an unsigned integer of half the size of the input element.
   //!
+  //!    If you also need the lower part `lohi` is more efficient.
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

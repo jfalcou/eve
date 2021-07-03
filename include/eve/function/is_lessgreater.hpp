@@ -44,8 +44,10 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!Returns the logical value containing the [element-wise](../../../glossary.html#value) comparison test result
+  //!between `x` and `y`.
   //!
+  //!The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

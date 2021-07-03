@@ -45,7 +45,25 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!
+  //!The types T and U must be  bit_compatible and the call
+  //!
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+  //!r==bit_select(m,x,y)
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!is semantically equivalent to
+  //!
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+  //!r = bit_or(bit_and(x, m), bit_andnot(y, m))
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!In a short way (omitting casting details to bring all bit sizes of the parameters equal), it means that the result is
+  //!composed of the bits of `x` for which the corresponding bit of `m` is set
+  //!and the bits of  `y` for which the corresponding bit of `m` is unset.
+  //!
+  //!If `T` or `U` is an [simd value](../../concepts.html#value), the type of the result has the element type
+  //! of `T` and the maximum of the cardinals of `M` and `T`, otherwise it is `T`.
   //!
   //! ---
   //!

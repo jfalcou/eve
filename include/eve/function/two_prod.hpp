@@ -44,8 +44,12 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!computes [element-wise](../../../glossary.html#element-wise_) a pair of values `[a,e]` such that:
   //!
+  //!* `a` is `x*y`
+  //!* `e` is a value such that `a`$\oplus$`e` is equal to `x`$\otimes$`y`
+  //!
+  //!where $\oplus$ (resp. $\otimes$) multiplies (resp. adds ) its two parameters with infinite precision.
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

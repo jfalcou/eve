@@ -44,7 +44,15 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!
+  //!double factorial is defined by $\displaystyle (2n)!! = \prod_{i=1}^n (2i)$ and $\displaystyle (2n+1)!! = \prod_{i=0}^n (2i+1)$
+  //!
+  //! The result element type is always double to try to avoid overflow
+  //! and its cardinal is the same as the entry in case of an simd call.
+  //!
+  //!@WARNING
+  //!    this function will overflow as soon as the input is greater than 300.
+  //!
   //!
   //! ---
   //!

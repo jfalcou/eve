@@ -56,7 +56,9 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!Returns  [element-wise](../../../glossary.html#value) Carlson's integral.
+  //!
+  //! The result type is of the compatibility type of the three parameters.
   //!
   //! ---
   //!

@@ -44,8 +44,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
-  //!
+  //!computes [`element-wise`](../../../glossary.html#element-wise), representable value next to `x` in the direction of `y`.
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

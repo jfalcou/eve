@@ -44,8 +44,11 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!computes [element-wise](../../../glossary.html#element-wise_) the 'units in the last place' distance betwween `x` and `y`.
+  //!This is semantically equivalent to:`
   //!
+  //!* if is_ordered(x,y), nb_values(x,y)/2.0 is returned
+  //!* otherwise a `Nan` is returned
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

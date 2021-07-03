@@ -44,7 +44,14 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!
+  //! The result element type is the same as the input one unless a converter is applied.
+  //!
+  //! A binary search is performed using nth_prime.
+  //!
+  //!@WARNING
+  //!    this function will return 0 (or nan) as soon as the input is greater than 104729.
+  //!
   //!
   //! ---
   //!

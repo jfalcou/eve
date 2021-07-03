@@ -43,7 +43,12 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!The call `bitofsign(x)` is semantically equivalent to `x & signmask(as(x))`.
+  //!
+  //!@WARNING
+  //!   Take care that for  [floating real values](../../concepts.html#value) bitofsign does NOT return
+  //!   a [logical value](../../concepts.html#value) that can be tested, but `mzero(as(x))` if `x` is negative
+  //!   and  `zero(as(x))` if `x` is positive, which both satisfy the `is_eqz` predicate.
   //!
   //! ---
   //!

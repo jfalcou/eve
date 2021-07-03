@@ -55,8 +55,9 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!Similar to  `log(exp(arg0) - (exp(arg1) + exp(args)...))`;.
   //!
+  //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

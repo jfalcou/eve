@@ -43,8 +43,11 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!    Computes the [element-wise](../../../glossary.html#element-wise_) ieee exponent of the floating value.
   //!
+  //!    The exponent $e$ and mantissa $m$ of a floating point entry $x$ are related by
+  //!    $x =  m\times 2^e$, with  $|m| \in [1, 2[$ (except for $x = \pm0, \pm\infty$ or is a Nan,
+  //!    where $m=x$ and $e=0$ ).
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

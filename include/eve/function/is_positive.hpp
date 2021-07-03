@@ -43,8 +43,15 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
   //!
+  //!For signed types The call `is_positive(x)` [element-wise](../../../glossary.html#value) returns true
+  //!if and only if the bit of sign (most significant bit) is unset.
+  //!
+  //!@WARNING
+  //!   this function coincides with `is_gez` on [integral real values](../../concepts.html#value),
+  //!   but for [floating real values](../../concepts.html#value) `T`, `is_positive(Mzero<`T`>)` is false and
+  //!   if `x` is a Nan the result depends of the bit of sign of `x` which can be out of control although
+  //!   not undefined.
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

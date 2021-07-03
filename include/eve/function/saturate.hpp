@@ -46,7 +46,24 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!For an  `x` of [real value](../../concepts.html#value) `T` and any   [real scalar value](../../concepts.html#value) `Target`, the expression:
+  //!
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+  //!T  r = saturate(x, as_<Target>{});
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!is semantically equivalent to:
+  //!
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+  //!T vmin=static_cast<T>(Valmin<Target>());
+  //!T vmax=static_cast<T>(Valmax<Target>());
+  //!T r = convert(clamp(x,vmi,vmax),as(x));
+  //!
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!@WARNING Note
+  //!   Saturation operated by [eve::saturate](#eve::saturate) may lead to
+  //!   Undefined Behaviors if it implies conversions that are themselves U.B.
   //!
   //! ---
   //!

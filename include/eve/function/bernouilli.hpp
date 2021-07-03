@@ -44,7 +44,14 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!
+  //! The result element type is always double to try to avoid overflow
+  //! and its cardinal is the same as the entry in case of an simd call.
+  //!
+  //!@WARNING
+  //!    this function will overflow as soon as the input is even and greater than 260
+  //!    But all odd index values are properly computed as they are all 0 except $b_1 = -1/2$.
+  //!
   //!
   //! ---
   //!

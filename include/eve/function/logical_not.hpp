@@ -46,7 +46,10 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!Computes  logical NOT of the two parameters following the
+  //![logical operations semantic](../../../glossary.html#Logical).
+  //!
+  //!the call `logical_not(x)` is semantically equivalent to `is_eqz(x)` . Infix notation can be used with `!x`
   //!
   //! ---
   //!

@@ -44,8 +44,11 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!Computes  bitwise AND of the two parameters following the [bitwise operations semantic](../../../glossary.html#Bitwise).
   //!
+  //!The call `bit_and(x, y)` is equivalent to `x & y` if `x` or  `y` is an  [simd value](../../concepts.html#value).
+  //!
+  //!@WARNING  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

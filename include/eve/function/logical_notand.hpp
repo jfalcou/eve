@@ -44,8 +44,13 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!Computes  element-wise NOTAND of the two parameters following the
+  //![element-wise operations semantic](../../../glossary.html#Logicalwise).
   //!
+  //!the call `logical_notand(x, y)` is semantically equivalent to `!x && y`
+  //!if `x` or  `y` is an  [simd value](../../concepts.html#value).
+  //!
+  //!@WARNING  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

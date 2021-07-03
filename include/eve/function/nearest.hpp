@@ -44,8 +44,19 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!Computes  [element-wise](../../../glossary.html#elment-wise) the integer nearest to `x`.
   //!
+  //!If `x` is an exact half-integer the rouding is made to the nearest even integer.
+  //!
+  //!The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `FE_UPWARD`, `FE_TOWARDZERO`.
+  //!    This function object implements the `FE_DOWNWARD` version.
+  //!
+  //!The call to `nearest(a)` is equivalent to the call `round(a, to_nearest)`.
+  //!
+  //![`diff`](../decorators.html#diff)
+  //!:   **Required header: **<script type="preformatted">` #include <eve/function/diff/nearest.hpp>`</script>
+  //!
+  //!:   The expression `diff(nearest)(x)` computes the derivative of the function at `x`.
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

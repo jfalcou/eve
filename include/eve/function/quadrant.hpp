@@ -43,8 +43,10 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!return a value of the same type as `x` containing the quadrant number where `x` (supposed an integer) lies.
   //!
+  //!@WARNING
+  //!   the input `x` must be an integral or floating integral value.
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

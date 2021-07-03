@@ -43,8 +43,15 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
   //!
+  //!For signed types The call `is_negative(x)` [element-wise](../../../glossary.html#value) returns true
+  //!if and only if the bit of sign (most significant bit) is set.
+  //!
+  //!@WARNING
+  //!   this function coincides with `is_ltz` on [integral real values](../../concepts.html#value),
+  //!   but for [floating real values](../../concepts.html#value) `T`, `is_negative(Mzero<`T`>)` is true and
+  //!   if `n` is a Nan the result depends of the bit of sign of `n` which can be out of control although
+  //!   not undefined.
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

@@ -45,8 +45,9 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!Returns [element-wise](../../../glossary.html#value) the sign of $\displaystyle \Gamma(x)=\int_0^\infty t^{x-1}e^{-t}\mbox{d}t$
   //!
+  //! The result type is of the same type as the  parameter.
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

@@ -49,8 +49,13 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!Computes the [element-wise](../../../glossary.html#element-wise) arithmetic left/right shift of the first parameter by the second one.
   //!
+  //!the call `rshl(x, n)` is equivalent to `if_else(n>0, shl(x, n), shr(x, n))` if `x`  is an  [simd value](../../concepts.html#value).
+  //!
+  //!The types must share the same cardinal or be scalar and if $N$ is the size in bits  of the element type of `T`,
+  //!all  [elements](../../../glossary.html#element) of n must belong to the
+  //!interval: `[-N, N[` or the result is undefined.
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

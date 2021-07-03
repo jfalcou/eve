@@ -44,8 +44,12 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!Computes  bitwise NOTOR of the two parameters following the
+  //![bitwise operations semantic](../../../glossary.html#Bitwise).
   //!
+  //!the call `bit_notor(x, y)` is semantically equivalent to `~x | y`.
+  //!
+  //!@WARNING  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

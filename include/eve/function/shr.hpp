@@ -48,8 +48,15 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!Computes the [element-wise](../../../glossary.html#element-wise) arithmetic right shift of the first parameter by the second one.
   //!
+  //!the call `shr(x, n)` is equivalent to `x << n` if `x`  is an  [simd value](../../concepts.html#value).
+  //!
+  //!The types must share the same cardinal or be scalar and if $N$ is the size in bits  of the element type of `T`,
+  //!all  [elements](../../../glossary.html#element) of n must belong to the
+  //!interval: `[0, N[` or the result is undefined.
+  //!
+  //!@WARNING  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

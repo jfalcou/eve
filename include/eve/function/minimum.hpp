@@ -47,8 +47,26 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!For **TODO: FILL THIS BLANK**:
   //!
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+  //!auto r = minimum(**TODO: FILL THIS BLANK**);
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!is semantically equivalent to:
+  //!
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+  //!Target r;
+  //!
+  //!if constexpr( scalar_value<T> )
+  //!{
+  //!  **TODO: FILL THIS BLANK**
+  //!}
+  //!else if constexpr( simd_value<T> )
+  //!{
+  //!  **TODO: FILL THIS BLANK**
+  //!}
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
