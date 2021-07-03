@@ -675,6 +675,9 @@ inline namespace EVE_ABI_NAMESPACE
     //! See also: eve::add
     template<real_scalar_value S>
     friend EVE_FORCEINLINE auto operator+(S s, wide const& v) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+      requires( !(kumi::product_type<Type> && requires(Type t, S s) { s + t; } ))
+#endif
     {
       return v + wide(s);
     }
@@ -683,6 +686,9 @@ inline namespace EVE_ABI_NAMESPACE
     //! See also: eve::add
     template<real_scalar_value S>
     friend EVE_FORCEINLINE auto operator+(wide const& v, S s) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+      requires( !(kumi::product_type<Type> && requires(Type t, S s) { t + s; } ))
+#endif
     {
       return v + wide(s);
     }
@@ -708,14 +714,22 @@ inline namespace EVE_ABI_NAMESPACE
 
     //! @brief Perform the difference between a scalar and all lanes of a eve::wide
     //! See also: eve::sub
-    friend EVE_FORCEINLINE auto operator-(real_scalar_value auto s, wide const& v) noexcept
+    template<real_scalar_value S>
+    friend EVE_FORCEINLINE auto operator-(S s, wide const& v) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+      requires( !(kumi::product_type<Type> && requires(Type t, S s) { s - t; } ))
+#endif
     {
       return wide(s) - v;
     }
 
     //! @brief Perform the difference between all lanes of a eve::wide and a scalar
     //! See also: eve::sub
-    friend EVE_FORCEINLINE auto operator-(wide const& v, real_scalar_value auto s) noexcept
+    template<real_scalar_value S>
+    friend EVE_FORCEINLINE auto operator-(wide const& v, S s) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+      requires( !(kumi::product_type<Type> && requires(Type t, S s) { t - s; } ))
+#endif
     {
       return v - wide(s);
     }
@@ -785,6 +799,9 @@ inline namespace EVE_ABI_NAMESPACE
     //! See also: eve::div
     template<real_scalar_value S>
     friend EVE_FORCEINLINE auto operator/(S s, wide const& v) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+      requires( !(kumi::product_type<Type> && requires(Type t, S s) { s / t; } ))
+#endif
     {
       return wide(s) / v;
     }
@@ -793,6 +810,9 @@ inline namespace EVE_ABI_NAMESPACE
     //! See also: eve::div
     template<real_scalar_value S>
     friend EVE_FORCEINLINE auto operator/(wide const& v, S s) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+      requires( !(kumi::product_type<Type> && requires(Type t, S s) { t / s; } ))
+#endif
     {
       return v / wide(s);
     }
@@ -802,7 +822,7 @@ inline namespace EVE_ABI_NAMESPACE
     //! if `Type` does not models integral_scalar_value
     friend  EVE_FORCEINLINE auto operator%=(wide& w, value auto o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-                        ->  decltype(detail::self_rem(w, o))
+      //                  ->  decltype(detail::self_rem(w, o))
 #endif
     {
       return detail::self_rem(w, o);
@@ -1009,6 +1029,9 @@ inline namespace EVE_ABI_NAMESPACE
 
     //! Inserts a eve::wide into a output stream
     friend std::ostream &operator<<(std::ostream &os, wide const &p)
+#if !defined(EVE_DOXYGEN_INVOKED)
+      requires( !(kumi::product_type<Type> && requires(Type t) { os << t; } ))
+#endif
     {
       if constexpr( kumi::product_type<Type> )
       {

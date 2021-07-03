@@ -146,7 +146,6 @@ namespace eve::detail
   self_rem(wide<T, N> &self, U const& other)
   requires(   !kumi::product_type<T>
           &&  (scalar_value<U> || std::same_as<wide<T, N>, U>)
-          &&  non_native_abi<abi_t<T, N>>
           )
   {
     using type = wide<T, N>;
