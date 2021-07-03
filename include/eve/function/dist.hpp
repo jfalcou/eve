@@ -44,19 +44,15 @@ namespace eve
   //! **Return value**
   //!
   //!
-  //!<script type="preformatted">
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
   //!auto r = dist(x,y);
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!</script>
   //!
   //!is semantically equivalent to:
   //!
-  //!<script type="preformatted">
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
   //!auto r = abs(x-y);
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!</script>
   //!   If an  [element](../../../glossary.html#element_) of the expected result is not representable in
   //!   the result type, the corresponding result [element](../../../glossary.html#element_) is undefined.
   //!

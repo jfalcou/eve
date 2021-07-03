@@ -49,15 +49,12 @@ namespace eve
   //!
   //!For a [value](../../concepts.html#value) `x` and any type `Target` the expression:
   //!
-  //!<script type="preformatted">
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
   //!auto r = convert(x, as_<Target>{});
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!</script>
   //!
   //!is semantically equivalent to:
   //!
-  //!<script type="preformatted">
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
   //!Target r;
   //!
@@ -71,7 +68,6 @@ namespace eve
   //!    r[i] = static_cast<Target>(x[i]);
   //!}
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!</script>
   //!
   //!@WARNING Note
   //!   Conversion operated by [eve::convert](#eve::convert) follows the regular rules of C++ type conversion, including the cases leading to Undefined Behaviors.

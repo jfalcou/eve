@@ -46,14 +46,11 @@ namespace eve
   //!
   //!The call:
   //!
-  //!<script type="preformatted">
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
   //!logical<T> r = is_flint(x);
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!</script>
   //!
   //!computation is semantically  equivalent to:
-  //!<script type="preformatted">
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
   //!logical<T> r;
   //!if   constexpr(floating_real_value<T>) r = is_eqz(frac(x));
