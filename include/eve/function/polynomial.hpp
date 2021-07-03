@@ -10,17 +10,18 @@
 //================================================================================================
 //! @addtogroup functions
 //! @{
-//! @defgroup swar Swar
+//! @defgroup polynomial Polynomial
 //!
-//! These functions provide swar functions.
+//! These functions provide scalar and SIMD version of polynomial evaluation functions.
 //!
-//! **Convenience header:** @code{.cpp} #include <eve/function/swar.hpp> @endcode
+//! **Convenience header:** @code{.cpp} #include <eve/function/polynomial.hpp> @endcode
 //!
 //!@}
 //================================================================================================
 
-#include <eve/function/combine.hpp>
-#include <eve/function/lookup.hpp>
-#include <eve/function/replace_ignored.hpp>
-#include <eve/function/shuffle.hpp>
-#include <eve/function/slice.hpp>
+#include <eve/function/gegenbauer.hpp>
+#include <eve/function/hermite.hpp>
+#include <eve/function/horner.hpp>
+#include <eve/function/laguerre.hpp>
+#include <eve/function/legendre.hpp>
+#include <eve/function/newton.hpp>

@@ -1,13 +1,27 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
-// helper file to include all predicates functions and operators
+//================================================================================================
+//! @addtogroup functions
+//! @{
+//! @defgroup predicates Predicates
+//!
+//! These functions provide scalar and SIMD version of predicate functions.
+//!
+//! Take take that these function objects in **SIMD** mode do not return a boolean but a logical
+//! **SIMD** value,
+//!
+//! **Convenience header:** @code{.cpp} #include <eve/function/predicate.hpp> @endcode
+//!
+//!@}
+//================================================================================================
+
 #include <eve/function/is_denormal.hpp>
 #include <eve/function/is_even.hpp>
 #include <eve/function/is_finite.hpp>
@@ -29,6 +43,5 @@
 #include <eve/function/is_odd.hpp>
 #include <eve/function/is_ordered.hpp>
 #include <eve/function/is_positive.hpp>
-//#include <eve/function/is_pow2.hpp>
 #include <eve/function/is_real.hpp>
 #include <eve/function/is_unordered.hpp>
