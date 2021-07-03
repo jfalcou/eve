@@ -21,6 +21,6 @@
 
 #include <eve/function/combine.hpp>
 #include <eve/function/lookup.hpp>
-#include <eve/function/replace_ignored.hpp>
-#include <eve/function/shuffle.hpp>
-#include <eve/function/slice.hpp>
+//#include <eve/function/replace_ignored.hpp>
+//#include <eve/function/shuffle.hpp>
+//#include <eve/function/slice.hpp>

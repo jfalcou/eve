@@ -24,6 +24,6 @@
 #include <eve/function/maximum.hpp>
 #include <eve/function/minimum.hpp>
 #include <eve/function/none.hpp>
-#include <eve/function/prod.hpp>
+//#include <eve/function/prod.hpp>
 #include <eve/function/reduce.hpp>
-#include <eve/function/sum.hpp>
+//#include <eve/function/sum.hpp>
