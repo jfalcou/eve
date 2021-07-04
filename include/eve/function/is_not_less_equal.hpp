@@ -11,6 +11,106 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup comparisons
+  //! @{
+  //! @var is_not_less_equal
+  //!
+  //! **Required header:**
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  #include <eve/function/is_not_less_equal.hpp>
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! <br/>Callable object performing the computation of the "not less or equal to" predicate.
+  //!
+  //! #### Members Functions
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | the "not less or equal to" predicate   |
+  //! | `operator[]` | Construct a conditional version of current function object |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`x`, `y`:   [values](../../concepts.html#value).
+  //!
+  //!Supported decorators
+  //!====================================================================================================
+  //![`definitely`](../decorators.html#definitely)
+  //!:   **Required header:** **<script type="preformatted">` #include <eve/function/definitely/is_not_less_equal.hpp>`</script>
+  //!
+  //!:   The expression `definitely(is_not_less_equal)(x, y, t)` where `x` and `y` must be
+  //!    floating point values, evals to true if and only if and only if `x` is definitely not less or equal to `y`.
+  //!    This means that the pair `x, y` is unordered or:
+  //!
+  //!    - if `t` is a floating_value then  \f$(x \ge y + t \max(|x|, |y|))\f$
+  //!    - if `t` is a positive integral_value then \f$(x \ge \mbox{next}(y, t)\f$;
+  //!    - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
+  //!
+  //!
+  //! **Return value**
+  //!
+  //!Returns the logical value containing the [element-wise](../../../glossary.html#value) comparison test result
+  //!between `x` and `y`.
+  //!
+  //!The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::is_not_less_equal
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `is_not_less_equal[cond](x, ...)` is equivalent to `if_else(cond,is_not_less_equal(x, ...),x)`
+  //!
+  //! ---
+  //!
+  //! #### Supported decorators
+  //!
+  //!  ====================================================================================================
+  //!  * `definitely`
+  //!
+  //!     **Required header:**  #include <eve/function/definitely/is_not_less_equal.hpp>
+  //! 
+  //!  
+  //!     The expression `definitely(is_not_less_equal)(x, y, t)` where `x` and `y` must be
+  //!      floating point values, evals to true if and only if and only if `x` is definitely not less or equal to `y`.
+  //!      This means that the pair `x, y` is unordered or:
+  //!  
+  //!      - if `t` is a floating_value then  \f$(x \ge y + t \max(|x|, |y|))\f$
+  //!      - if `t` is a positive integral_value then \f$(x \ge \mbox{next}(y, t)\f$;
+  //!      - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
+  //!  
+  //!  Return value
+  //!  ----------------------------------------------------------------------------------------------------
+  //!  <span class="smallskip"></span>
+  //!  Returns the logical value containing the [element-wise](../../../glossary.html#value) comparison test result
+  //!  between `x` and `y`.
+  //!  
+  //!  The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+  //!  
+  //!
+  //! #### Example
+  //!
+  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
+  //!
+  //! @include{lineno} doc/core/is_not_less_equal.cpp
+  //!
+  //!  @}
+  //================================================================================================
   EVE_MAKE_CALLABLE(is_not_less_equal_, is_not_less_equal);
 }
 

@@ -12,6 +12,81 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup rounding
+  //! @{
+  //! @var nearest
+  //!
+  //! **Required header:**
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  #include <eve/function/nearest.hpp>
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! <br/>Callable object performing the computation of the nearest operation.
+  //!
+  //! #### Members Functions
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | the nearest operation   |
+  //! | `operator[]` | Construct a conditional version of current function object |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  template< value T > auto operator()( T x ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`x`:   [value](../../concepts.html#value).
+  //!
+  //!
+  //! **Return value**
+  //!
+  //!Computes  [element-wise](../../../glossary.html#elment-wise) the integer nearest to `x`.
+  //!
+  //!If `x` is an exact half-integer the rouding is made to the nearest even integer.
+  //!
+  //!The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `FE_UPWARD`, `FE_TOWARDZERO`.
+  //!    This function object implements the `FE_DOWNWARD` version.
+  //!
+  //!The call to `nearest(a)` is equivalent to the call `round(a, to_nearest)`.
+  //!
+  //![`diff`](../decorators.html#diff)
+  //!:   **Required header:** **<script type="preformatted">` #include <eve/function/diff/nearest.hpp>`</script>
+  //!
+  //!:   The expression `diff(nearest)(x)` computes the derivative of the function at `x`.
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::nearest
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `nearest[cond](x, ...)` is equivalent to `if_else(cond,nearest(x, ...),x)`
+  //!
+  //! ---
+  //!
+  //! #### Supported decorators
+  //!
+  //!  decorators NOT FOUND
+  //!
+  //! #### Example
+  //!
+  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
+  //!
+  //! @include{lineno} doc/core/nearest.cpp
+  //!
+  //!  @}
+  //================================================================================================
   EVE_MAKE_CALLABLE(nearest_, nearest);
 }
 

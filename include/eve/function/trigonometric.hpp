@@ -1,13 +1,24 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
-// helper file to include all inverse trigonometric functions
+//================================================================================================
+//! @addtogroup functions
+//! @{
+//! @defgroup trigonometric Trigonometric
+//!
+//! These functions provide scalar and SIMD version of trigonometric functions.
+//!
+//! **Convenience header:** @code{.cpp} #include <eve/function/trigonometric.hpp> @endcode
+//!
+//!@}
+//================================================================================================
+
 #include <eve/function/cos.hpp>
 #include <eve/function/cosd.hpp>
 #include <eve/function/cospi.hpp>
@@ -28,3 +39,5 @@
 #include <eve/function/tan.hpp>
 #include <eve/function/tand.hpp>
 #include <eve/function/tanpi.hpp>
+#include <eve/function/radindeg.hpp>
+#include <eve/function/radinpi.hpp>

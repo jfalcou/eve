@@ -12,6 +12,99 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup conversion
+  //! @{
+  //! @var convert
+  //!
+  //! **Required header:**
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  #include <eve/function/convert.hpp>
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! <br/>Callable object performing the computation of   //!  description NOT FOUND.
+  //!
+  //! #### Members Functions
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` |   //!  description NOT FOUND   |
+  //! | `operator[]` | Construct a conditional version of current function object |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  template<value T, scalar_value Target>
+  //!  auto operator()( T const& x, as_<Target> const& t) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`x`:   [value](../../concepts.html#value) to convert.
+  //!
+  //!`t`:   [Type wrapper](../types/as.html#as_) instance embedding the type to convert `x` to.
+  //!
+  //!
+  //! **Return value**
+  //!
+  //!For a [value](../../concepts.html#value) `x` and any type `Target` the expression:
+  //!
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+  //!auto r = convert(x, as_<Target>{});
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!is semantically equivalent to:
+  //!
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+  //!Target r;
+  //!
+  //!if constexpr( scalar_value<T> )
+  //!{
+  //!  r = static_cast<Target>(x);
+  //!}
+  //!else if constexpr( simd_value<T> )
+  //!{
+  //!  for(std::size_t i=;i<x.size();++i)
+  //!    r[i] = static_cast<Target>(x[i]);
+  //!}
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!@WARNING Note
+  //!   Conversion operated by [eve::convert](#eve::convert) follows the regular rules of C++ type conversion, including the cases leading to Undefined Behaviors.
+  //!
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::convert
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `convert[cond](x, ...)` is equivalent to `if_else(cond,convert(x, ...),x)`
+  //!
+  //! ---
+  //!
+  //! #### Supported decorators
+  //!
+  //!  ### [`saturated`](../../decorators.html#saturated)
+  //!  The expression `saturated(convert)(x,t)` computes a saturated conversion of `x` to the type wrapped by `t`.
+  //!  
+  //!
+  //! #### Example
+  //!
+  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
+  //!
+  //! @include{lineno} doc/core/convert.cpp
+  //!
+  //!  @}
+  //================================================================================================
   EVE_MAKE_CALLABLE(convert_, convert);
 }
 

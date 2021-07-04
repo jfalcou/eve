@@ -1,13 +1,23 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
-// helper file to include all inverse trigonometric functions
+//================================================================================================
+//! @addtogroup functions
+//! @{
+//! @defgroup invtrigonometric Invtrigonometric
+//!
+//! These functions provide scalar and SIMD version of inverse trigonometric functions.
+//!
+//! **Convenience header:** @code{.cpp} #include <eve/function/invtrigonometric.hpp> @endcode
+//!
+//!@}
+//================================================================================================
 #include <eve/function/acos.hpp>
 #include <eve/function/acosd.hpp>
 #include <eve/function/acospi.hpp>

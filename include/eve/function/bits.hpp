@@ -1,13 +1,26 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
-// **========================================================
-// helper file to include all bit functions and operators
+
+//================================================================================================
+//! @addtogroup functions
+//! @{
+//! @defgroup bits Bits
+//!
+//! These functions provide scalar and SIMD version of basic bitwise functions.
+//!
+//! To keep the results homogeneous and coherent between SIMD and scalar mode, the types usable
+//! in those functions are generally required to satisfy `eve::bit_compatible_values`
+//!
+//! **Convenience header:** @code{.cpp} #include <eve/function/bits.hpp> @endcode
+//!
+//!@}
+//================================================================================================
 #include <eve/function/bit_and.hpp>
 #include <eve/function/bit_andnot.hpp>
 #include <eve/function/bit_ceil.hpp>
@@ -31,7 +44,7 @@
 #include <eve/function/countl_zero.hpp>
 #include <eve/function/countr_zero.hpp>
 #include <eve/function/next.hpp>
-//#include <eve/function/nextafter.hpp>
+#include <eve/function/nextafter.hpp>
 #include <eve/function/prev.hpp>
 #include <eve/function/popcount.hpp>
-//#include <eve/function/bit_width.hpp>
+#include <eve/function/bit_width.hpp>
