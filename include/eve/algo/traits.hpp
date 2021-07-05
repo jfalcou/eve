@@ -54,7 +54,7 @@ namespace eve::algo
     return rbr::get_type_t<Traits, unroll_key, eve::fixed<1>>{}();
   }
 
-  template <typename Traits, iterator I>
+  template <typename Traits, typename I>
   using forced_cardinal_t = rbr::get_type_t<Traits, force_cardinal_key, typename I::cardinal>;
 
   namespace detail
@@ -70,7 +70,7 @@ namespace eve::algo
     }
   }
 
-  template <typename Traits, iterator I>
+  template <typename Traits, typename I>
   using iteration_type_t = decltype(detail::iterator_type_impl<Traits, I>());
 
   template <typename User, typename Default>

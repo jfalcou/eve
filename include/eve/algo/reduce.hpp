@@ -8,8 +8,12 @@
 #pragma once
 
 #include <eve/algo/array_utils.hpp>
-#include <eve/algo/converting_iterator.hpp>
+#include <eve/algo/for_each_iteration.hpp>
+#include <eve/algo/preprocess_range.hpp>
 #include <eve/algo/traits.hpp>
+
+#include <eve/function/add.hpp>
+#include <eve/function/reduce.hpp>
 
 #include <algorithm>
 #include <utility>
@@ -44,9 +48,8 @@ namespace eve::algo
 
       EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore)
       {
-        // TODO: I used to have small steps add to their own sums.
-        //       We should do that too probably.
-        sums[0] = op(sums[0], eve::load[ignore.else(zero)](it));
+        // TODO: FIX-#802 use a non-zero sum.
+        sums[0] = op(sums[0], eve::load[ignore.else_(zero)](it));
         return false;
       }
 
@@ -61,33 +64,24 @@ namespace eve::algo
 
       auto finish() {
         auto sum = array_reduce(sums, op);
-        return eve::spat(eve::reduce)(sum, op);
+        return eve::reduce(sum, op);
       }
     };
 
     template <typename Rng, typename Op, typename T, typename U>
-    auto operator()(Rng&& rng, std::pair<Op, T> op_zero, U init)
+    auto operator()(Rng&& rng, std::pair<Op, T> op_zero, U init) const
     {
-      auto processed = preprocess_range(tr_, std::forward<Rng>(rng));
-      using _I = decltype(processed.begin());
-      using res_t = std::common_type_t<typename I::value_type, U>;
+      auto processed = preprocess_range(
+        algo::default_to(tr_, eve::algo::traits(common_with_types<U>)),
+        std::forward<Rng>(rng));
+
+      using I = decltype(processed.begin());
+      using res_t = typename I::value_type;
 
       if (processed.begin() == processed.end()) return res_t{init};
 
-      // We probably need to just have a traits for cardinal
-      constexpr std::ptrdiff_t N = [] {
-        if constexpr (sizeof(res_t) == sizeof(typename I::value_type)) return typename I::cardinal{}();
-        else
-        {
-          return typename I::cardinal{}() * eve::expected_cardinal_v<U> /
-                 eve::expected_cardinal_v<typename I::value_type>;
-        }
-      }();
-
-      auto f = eve::algo::convert(processed.begin(), eve::as<res_t>{});
-      auto l = eve::algo::convert(processed.end(),   eve::as<res_t>{});
       auto op = op_zero.first;
-      using wide_t = typename decltype(f)::wide_value_type;
+      using wide_t = typename I::wide_value_type;
       wide_t zero(op_zero.second);
       wide_t init_as_wide{zero};
       init_as_wide.set(0, init);
@@ -97,4 +91,13 @@ namespace eve::algo
       algo::for_each_iteration(processed.traits(), processed.begin(), processed.end())(d);
       return d.finish();
     }
+
+    template <typename Rng, typename U>
+    auto operator()(Rng&& rng, U init) const
+    {
+      return operator()(std::forward<Rng>(rng), std::pair{eve::add, 0}, init);
+    }
   };
+
+  inline constexpr reduce_ reduce{default_simple_algo_traits};
+}

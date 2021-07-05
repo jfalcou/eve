@@ -32,7 +32,10 @@ namespace eve::algo
     }
 
     converting_iterator<unaligned_t<I>, T>         unaligned()                  const { return *this; }
-    converting_iterator<partially_aligned_t<I>, T> previous_partially_aligned() const { return *this; }
+    auto previous_partially_aligned() const
+    {
+      return converting_iterator<partially_aligned_t<I>, T>{base.previous_partially_aligned()};
+    }
 
     template <typename _Cardinal>
     auto cardinal_cast(_Cardinal N) const

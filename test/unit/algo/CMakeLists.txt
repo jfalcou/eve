@@ -24,3 +24,4 @@ make_unit("unit.algo" for_each_iteration.cpp)
 # Algorithms
 make_unit("unit.algo" any_of.cpp)
 make_unit("unit.algo" find.cpp)
+make_unit("unit.algo" reduce.cpp)
