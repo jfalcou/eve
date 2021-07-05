@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var firstbitunset
   //!
+  //! @brief Callable object performing the computation of the firstbitunset operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/firstbitunset.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the firstbitunset operation.
   //!
   //! #### Members Functions
   //!

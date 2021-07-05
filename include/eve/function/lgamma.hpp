@@ -17,12 +17,14 @@ namespace eve
   //! @{
   //! @var lgamma
   //!
+  //! @brief Callable object performing the computation of the lgamma operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/lgamma.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the lgamma operation.
   //!
   //! #### Members Functions
   //!

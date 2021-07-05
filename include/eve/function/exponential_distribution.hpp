@@ -17,12 +17,14 @@
   //! @{
   //! @var exponential_distribution
   //!
+  //! @brief Callable object performing the computation of   //!  description NOT FOUND.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/exponential_distribution.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of   //!  description NOT FOUND.
   //!
   //! #### Members Functions
   //!

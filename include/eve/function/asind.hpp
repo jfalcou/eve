@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var asind
   //!
+  //! @brief Callable object performing the computation of the  computation of asind.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/asind.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of asind.
   //!
   //! #### Members Functions
   //!

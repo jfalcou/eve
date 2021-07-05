@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var exp_int
   //!
+  //! @brief Callable object performing the computation of the exp_int operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/exp_int.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the exp_int operation.
   //!
   //! #### Members Functions
   //!

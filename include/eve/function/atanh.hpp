@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var atanh
   //!
+  //! @brief Callable object performing the computation of the  computation of atanh.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/atanh.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of atanh.
   //!
   //! #### Members Functions
   //!

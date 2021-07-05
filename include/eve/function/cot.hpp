@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var cot
   //!
+  //! @brief Callable object performing the computation of the  computation of cot.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/cot.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of cot.
   //!
   //! #### Members Functions
   //!

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var maximum
   //!
+  //! @brief Callable object performing the computation of **TODO: FILL THIS BLANK**.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/maximum.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of **TODO: FILL THIS BLANK**.
   //!
   //! #### Members Functions
   //!

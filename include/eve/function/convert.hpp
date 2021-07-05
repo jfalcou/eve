@@ -17,12 +17,14 @@ namespace eve
   //! @{
   //! @var convert
   //!
+  //! @brief Callable object performing the computation of   //!  description NOT FOUND.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/convert.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of   //!  description NOT FOUND.
   //!
   //! #### Members Functions
   //!
@@ -69,7 +71,7 @@ namespace eve
   //!}
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //!@WARNING Note
+  //!@warning Note
   //!   Conversion operated by [eve::convert](#eve::convert) follows the regular rules of C++ type conversion, including the cases leading to Undefined Behaviors.
   //!
   //!

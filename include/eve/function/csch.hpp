@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var csch
   //!
+  //! @brief Callable object performing the computation of the  computation of csch.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/csch.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of csch.
   //!
   //! #### Members Functions
   //!

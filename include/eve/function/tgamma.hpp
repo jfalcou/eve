@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var tgamma
   //!
+  //! @brief Callable object performing the computation of the tgamma operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/tgamma.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the tgamma operation.
   //!
   //! #### Members Functions
   //!

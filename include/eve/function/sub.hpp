@@ -17,12 +17,14 @@ namespace eve
   //! @{
   //! @var sub
   //!
+  //! @brief Callable object performing the difference of multiple values.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/sub.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the difference of multiple values.
   //!
   //! #### Members Functions
   //!

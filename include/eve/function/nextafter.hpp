@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var nextafter
   //!
+  //! @brief Callable object performing the computation of the nextafter operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/nextafter.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the nextafter operation.
   //!
   //! #### Members Functions
   //!

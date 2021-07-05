@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var erf
   //!
+  //! @brief Callable object performing the computation of the erf operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/erf.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the erf operation.
   //!
   //! #### Members Functions
   //!

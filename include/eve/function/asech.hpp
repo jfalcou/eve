@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var asech
   //!
+  //! @brief Callable object performing the computation of the  computation of asech.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/asech.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of asech.
   //!
   //! #### Members Functions
   //!

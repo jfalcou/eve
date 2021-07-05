@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var round
   //!
+  //! @brief Callable object performing the computation of the round operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/round.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the round operation.
   //!
   //! #### Members Functions
   //!

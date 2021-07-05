@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var bit_or
   //!
+  //! @brief Callable object performing the computation of the bitwise OR operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/bit_or.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the bitwise OR operation.
   //!
   //! #### Members Functions
   //!
@@ -49,7 +51,7 @@ namespace eve
   //!the call `bit_or(x, y)` is semantically equivalent to `x | y`
   //!if `x` or  `y` is an  [simd value](../../concepts.html#value).
   //!
-  //!@WARNING  //!
+  //!@warning  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var oneminus
   //!
+  //! @brief Callable object performing the computation of the oneminus operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/oneminus.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the oneminus operation.
   //!
   //! #### Members Functions
   //!
@@ -45,7 +47,7 @@ namespace eve
   //!
   //!Computes  [element-wise](../../../glossary.html#elment-wise) `1-x` with the type of `x`.
   //!
-  //!@WARNING
+  //!@warning
   //!    If an  [element](../../../glossary.html#element_) of the expected result is not representable in
   //!    the result type, the corresponding result [element](../../../glossary.html#element_) is undefined.
   //!

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var popcount
   //!
+  //! @brief Callable object performing the computation of the computation of the number of bits set.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/popcount.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the computation of the number of bits set.
   //!
   //! #### Members Functions
   //!

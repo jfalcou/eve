@@ -19,12 +19,14 @@ namespace eve
   //! @{
   //! @var clamp
   //!
+  //! @brief Callable object performing the computation of the clamping operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/clamp.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the clamping operation.
   //!
   //! #### Members Functions
   //!
@@ -56,7 +58,7 @@ namespace eve
   //!
   //!The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
   //!
-  //!@WARNING
+  //!@warning
   //!    Contrary to the standard implementation `clamp` does not return a reference.
   //!
   //!

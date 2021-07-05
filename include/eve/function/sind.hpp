@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var sind
   //!
+  //! @brief Callable object performing the computation of the  computation of sind.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/sind.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of sind.
   //!
   //! #### Members Functions
   //!

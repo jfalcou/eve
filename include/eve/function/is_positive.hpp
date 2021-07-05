@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var is_positive
   //!
+  //! @brief Callable object performing the computation of the computation of the is_positive logical value.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/is_positive.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the computation of the is_positive logical value.
   //!
   //! #### Members Functions
   //!
@@ -47,7 +49,7 @@ namespace eve
   //!For signed types The call `is_positive(x)` [element-wise](../../../glossary.html#value) returns true
   //!if and only if the bit of sign (most significant bit) is unset.
   //!
-  //!@WARNING
+  //!@warning
   //!   this function coincides with `is_gez` on [integral real values](../../concepts.html#value),
   //!   but for [floating real values](../../concepts.html#value) `T`, `is_positive(Mzero<`T`>)` is false and
   //!   if `x` is a Nan the result depends of the bit of sign of `x` which can be out of control although

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var sincos
   //!
+  //! @brief Callable object performing the computation of the simultaneous  computation of sin an cos.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/sincos.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the simultaneous  computation of sin an cos.
   //!
   //! #### Members Functions
   //!

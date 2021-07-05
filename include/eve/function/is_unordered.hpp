@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var is_unordered
   //!
+  //! @brief Callable object performing the computation of the computation of the is_unordered logical value.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/is_unordered.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the computation of the is_unordered logical value.
   //!
   //! #### Members Functions
   //!

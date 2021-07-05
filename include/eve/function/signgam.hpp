@@ -17,12 +17,14 @@ namespace eve
   //! @{
   //! @var signgam
   //!
+  //! @brief Callable object performing the computation of the signgam operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/signgam.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the signgam operation.
   //!
   //! #### Members Functions
   //!

@@ -17,12 +17,14 @@ namespace eve
   //! @{
   //! @var mul
   //!
+  //! @brief Callable object performing the computation of the mul operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/mul.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the mul operation.
   //!
   //! #### Members Functions
   //!
@@ -53,7 +55,7 @@ namespace eve
   //! The call `mul(x, args, ...)` is equivalent to `(x * args * ...)` if `x` or one of the `args`
   //! is an  [simd value](../../concepts.html#value).
   //!
-  //!@WARNING
+  //!@warning
   //!   Although the infix notation with `*` is supported, the `*` operator on
   //!   standard scalar type is the original one and so can lead to automatic promotion.
   //!

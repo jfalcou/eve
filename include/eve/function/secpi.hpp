@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var secpi
   //!
+  //! @brief Callable object performing the computation of the  computation of secpi.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/secpi.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of secpi.
   //!
   //! #### Members Functions
   //!

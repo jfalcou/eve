@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var sinhcosh
   //!
+  //! @brief Callable object performing the computation of the  computation of sinhcosh.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/sinhcosh.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of sinhcosh.
   //!
   //! #### Members Functions
   //!

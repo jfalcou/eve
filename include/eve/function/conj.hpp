@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var conj
   //!
+  //! @brief Callable object performing the computation of the computation of the conjugate value.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/conj.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the computation of the conjugate value.
   //!
   //! #### Members Functions
   //!

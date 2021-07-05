@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var pow
   //!
+  //! @brief Callable object performing the computation of the pow operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/pow.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the pow operation.
   //!
   //! #### Members Functions
   //!

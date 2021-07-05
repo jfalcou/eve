@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var average
   //!
+  //! @brief Callable object performing the computation of the mid-point operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/average.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the mid-point operation.
   //!
   //! #### Members Functions
   //!
@@ -53,7 +55,7 @@ namespace eve
   //!
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
   //!
-  //!@WARNING
+  //!@warning
   //!    If `x` and `y` are [real integral values](../../concepts.html#value) and the sum is odd, the result is a rounded value at a distance guaranteed
   //!    to be less than or equal to 0.5 of the average floating value, but may differ
   //!    by unity from the truncation given by `(x+y)/2`. Moreover, as some architectures provide

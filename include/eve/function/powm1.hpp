@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var powm1
   //!
+  //! @brief Callable object performing the computation of the  computation of powm1.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/powm1.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of powm1.
   //!
   //! #### Members Functions
   //!

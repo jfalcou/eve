@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var binarize_not
   //!
+  //! @brief Callable object performing the computation of the computation of the binarize_not operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/binarize_not.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the computation of the binarize_not operation.
   //!
   //! #### Members Functions
   //!

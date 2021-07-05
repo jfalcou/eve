@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var gamma_p
   //!
+  //! @brief Callable object performing the computation of the gamma_p operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/gamma_p.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the gamma_p operation.
   //!
   //! #### Members Functions
   //!

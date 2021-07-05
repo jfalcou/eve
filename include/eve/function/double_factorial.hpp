@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var double_factorial
   //!
+  //! @brief Callable object performing the computation of unsigned integral double_factorial.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/double_factorial.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of unsigned integral double_factorial.
   //!
   //! #### Members Functions
   //!
@@ -50,7 +52,7 @@ namespace eve
   //! The result element type is always double to try to avoid overflow
   //! and its cardinal is the same as the entry in case of an simd call.
   //!
-  //!@WARNING
+  //!@warning
   //!    this function will overflow as soon as the input is greater than 300.
   //!
   //!

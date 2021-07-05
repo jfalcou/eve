@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var arg
   //!
+  //! @brief Callable object performing the computation of the computation of the phase angle (in radians).
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/arg.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the computation of the phase angle (in radians).
   //!
   //! #### Members Functions
   //!

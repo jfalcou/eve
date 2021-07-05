@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var fdim
   //!
+  //! @brief Callable object performing the computation of the fdim operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/fdim.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the fdim operation.
   //!
   //! #### Members Functions
   //!

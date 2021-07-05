@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var nth_prime
   //!
+  //! @brief Callable object performing the computation of unsigned integral nth_prime.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/nth_prime.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of unsigned integral nth_prime.
   //!
   //! #### Members Functions
   //!
@@ -54,7 +56,7 @@ namespace eve
   //! 2 is the first prime number (n=0). If the output is of integral type incorrect computation will return 0, but
   //! if the result has been converted to a floating value (by concerting the object function) incorrect computation will return nan
   //!
-  //!@WARNING
+  //!@warning
   //!    this function will return 0 (or nan) as soon as the correct result will not be exactly represented
   //!    in the output type or (for the current implementation) if n is greater or equal to 10000.
   //!

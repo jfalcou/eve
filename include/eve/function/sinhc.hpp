@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var sinhc
   //!
+  //! @brief Callable object performing the computation of the  computation of sinhc.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/sinhc.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of sinhc.
   //!
   //! #### Members Functions
   //!

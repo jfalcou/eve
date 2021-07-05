@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var fnma
   //!
+  //! @brief Callable object performing the computation of the fused negate-multiply-add operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/fnma.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the fused negate-multiply-add operation.
   //!
   //! #### Members Functions
   //!
@@ -51,7 +53,7 @@ namespace eve
   //!The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
   //!
   //!
-  //!@WARNING Note
+  //!@warning Note
   //!    This `fnma` implementation provides those properties for all [real integral values](../../concepts.html#integral_value)
   //!     and when possible for [real floating values](../../concepts.html#value).
   //!

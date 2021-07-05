@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var erfc_inv
   //!
+  //! @brief Callable object performing the computation of the erfc_inv operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/erfc_inv.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the erfc_inv operation.
   //!
   //! #### Members Functions
   //!

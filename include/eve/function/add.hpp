@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var add
   //!
+  //! @brief Callable object performing the sum of multiple values.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/add.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the sum of multiple values.
   //!
   //! #### Members Functions
   //!

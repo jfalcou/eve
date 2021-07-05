@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var lcm
   //!
+  //! @brief Callable object performing the computation of least common multiple operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/lcm.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of least common multiple operation.
   //!
   //! #### Members Functions
   //!
@@ -47,7 +49,7 @@ namespace eve
   //!
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
   //!
-  //!@WARNING
+  //!@warning
   //!    `p` and `n` can be of any [real values](../../concepts.html#value) type, but when the types are not integral
   //!    the least common multiple is defined only if `p` and `n` element are flint. If it is not the
   //!    case the corresponding result will be Nan.

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var plus
   //!
+  //! @brief Callable object performing the computation of the plus unary operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/plus.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the plus unary operation.
   //!
   //! #### Members Functions
   //!
@@ -45,7 +47,7 @@ namespace eve
   //!
   //!Computes  [element-wise](../../../glossary.html#elment-wise) `+x` which generally is a no-op.
   //!
-  //!@WARNING  //!
+  //!@warning  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

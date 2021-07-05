@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var stirling
   //!
+  //! @brief Callable object performing the computation of the stirling operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/stirling.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the stirling operation.
   //!
   //! #### Members Functions
   //!

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var sin
   //!
+  //! @brief Callable object performing the computation of the  computation of sin.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/sin.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of sin.
   //!
   //! #### Members Functions
   //!

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var logspace_sub
   //!
+  //! @brief Callable object performing the computation of the logspace_sub operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/logspace_sub.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the logspace_sub operation.
   //!
   //! #### Members Functions
   //!

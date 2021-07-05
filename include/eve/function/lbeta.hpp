@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var lbeta
   //!
+  //! @brief Callable object performing the computation of the lbeta operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/lbeta.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the lbeta operation.
   //!
   //! #### Members Functions
   //!

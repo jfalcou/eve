@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var lo
   //!
+  //! @brief Callable object performing the computation of the computation of the lower part of the values.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/lo.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the computation of the lower part of the values.
   //!
   //! #### Members Functions
   //!

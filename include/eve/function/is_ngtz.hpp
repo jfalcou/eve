@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var is_ngtz
   //!
+  //! @brief Callable object performing the computation of the "not greater than zero" predicate.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/is_ngtz.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the "not greater than zero" predicate.
   //!
   //! #### Members Functions
   //!

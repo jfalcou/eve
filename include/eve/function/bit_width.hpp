@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var bit_width
   //!
+  //! @brief Callable object performing the computation of the bit_width operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/bit_width.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the bit_width operation.
   //!
   //! #### Members Functions
   //!

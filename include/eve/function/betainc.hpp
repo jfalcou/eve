@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var betainc
   //!
+  //! @brief Callable object performing the computation of the betainc operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/betainc.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the betainc operation.
   //!
   //! #### Members Functions
   //!

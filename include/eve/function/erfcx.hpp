@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var erfcx
   //!
+  //! @brief Callable object performing the computation of the erfcx operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/erfcx.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the erfcx operation.
   //!
   //! #### Members Functions
   //!

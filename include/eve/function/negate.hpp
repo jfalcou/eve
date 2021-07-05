@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var negate
   //!
+  //! @brief Callable object performing the computation of the negate operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/negate.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the negate operation.
   //!
   //! #### Members Functions
   //!

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var dist
   //!
+  //! @brief Callable object performing the computation of the distance operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/dist.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the distance operation.
   //!
   //! #### Members Functions
   //!

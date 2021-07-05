@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var inc
   //!
+  //! @brief Callable object performing the computation of the inc unary operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/inc.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the inc unary operation.
   //!
   //! #### Members Functions
   //!

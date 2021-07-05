@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var gegenbauer
   //!
+  //! @brief Callable object performing the computation of the gegenbauer operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/gegenbauer.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the gegenbauer operation.
   //!
   //! #### Members Functions
   //!

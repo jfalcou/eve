@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var bit_select
   //!
+  //! @brief Callable object performing the computation of the bit_select operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/bit_select.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the bit_select operation.
   //!
   //! #### Members Functions
   //!

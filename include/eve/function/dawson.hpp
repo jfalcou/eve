@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var dawson
   //!
+  //! @brief Callable object performing the computation of the dawson operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/dawson.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the dawson operation.
   //!
   //! #### Members Functions
   //!

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var any
   //!
+  //! @brief Callable object performing the computation of the computation of the any value.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/any.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the computation of the any value.
   //!
   //! #### Members Functions
   //!

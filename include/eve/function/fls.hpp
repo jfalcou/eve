@@ -17,12 +17,14 @@ namespace eve
   //! @{
   //! @var fls
   //!
+  //! @brief Callable object performing the computation of the fls operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/fls.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the fls operation.
   //!
   //! #### Members Functions
   //!

@@ -18,12 +18,14 @@ namespace eve
   //! @{
   //! @var is_greater
   //!
+  //! @brief Callable object performing the computation of the "greater than" predicate.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/is_greater.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the "greater than" predicate.
   //!
   //! #### Members Functions
   //!
@@ -51,7 +53,7 @@ namespace eve
   //!
   //!The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
   //!
-  //!@WARNING
+  //!@warning
   //!   Although the infix notation with `>` is supported, the `>` operator on
   //!   standard scalar types is the original one and so returns bool result, not `logical`.
   //!

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var digamma
   //!
+  //! @brief Callable object performing the computation of the digamma operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/digamma.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the digamma operation.
   //!
   //! #### Members Functions
   //!

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var acot
   //!
+  //! @brief Callable object performing the computation of the  computation of acot.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/acot.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of acot.
   //!
   //! #### Members Functions
   //!

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var prime_floor
   //!
+  //! @brief Callable object performing the computation of unsigned integral prime_floor.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/prime_floor.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of unsigned integral prime_floor.
   //!
   //! #### Members Functions
   //!
@@ -49,7 +51,7 @@ namespace eve
   //!
   //! A binary search is performed using nth_prime.
   //!
-  //!@WARNING
+  //!@warning
   //!    this function will return 0 (or nan) as soon as the input is greater than 104729 or less than 2.
   //!
   //!

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var tanpi
   //!
+  //! @brief Callable object performing the computation of the  computation of tanpi.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/tanpi.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of tanpi.
   //!
   //! #### Members Functions
   //!

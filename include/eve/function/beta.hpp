@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var beta
   //!
+  //! @brief Callable object performing the computation of the beta operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/beta.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the beta operation.
   //!
   //! #### Members Functions
   //!

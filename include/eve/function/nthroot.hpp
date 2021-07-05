@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var nthroot
   //!
+  //! @brief Callable object performing the computation of the nthroot operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/nthroot.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the nthroot operation.
   //!
   //! #### Members Functions
   //!

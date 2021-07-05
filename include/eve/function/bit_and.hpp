@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var bit_and
   //!
+  //! @brief Callable object performing the computation of the bitwise AND operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/bit_and.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the bitwise AND operation.
   //!
   //! #### Members Functions
   //!
@@ -48,7 +50,7 @@ namespace eve
   //!
   //!The call `bit_and(x, y)` is equivalent to `x & y` if `x` or  `y` is an  [simd value](../../concepts.html#value).
   //!
-  //!@WARNING  //!
+  //!@warning  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

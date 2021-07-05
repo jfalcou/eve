@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var exponent
   //!
+  //! @brief Callable object performing the computation of the computation of the exponent value.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/exponent.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the computation of the exponent value.
   //!
   //! #### Members Functions
   //!

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var bit_notor
   //!
+  //! @brief Callable object performing the computation of the bitwise NOTOR operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/bit_notor.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the bitwise NOTOR operation.
   //!
   //! #### Members Functions
   //!
@@ -49,7 +51,7 @@ namespace eve
   //!
   //!the call `bit_notor(x, y)` is semantically equivalent to `~x | y`.
   //!
-  //!@WARNING  //!
+  //!@warning  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

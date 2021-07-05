@@ -18,12 +18,14 @@ namespace eve
   //! @{
   //! @var ldexp
   //!
+  //! @brief Callable object performing the computation of the ldexp operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/ldexp.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the ldexp operation.
   //!
   //! #### Members Functions
   //!

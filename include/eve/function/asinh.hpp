@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var asinh
   //!
+  //! @brief Callable object performing the computation of the  computation of asinh.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/asinh.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of asinh.
   //!
   //! #### Members Functions
   //!

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var is_gtz
   //!
+  //! @brief Callable object performing the computation of the greter than zero predicate.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/is_gtz.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the greter than zero predicate.
   //!
   //! #### Members Functions
   //!

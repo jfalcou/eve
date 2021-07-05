@@ -17,12 +17,14 @@ namespace eve
   //! @{
   //! @var log10
   //!
+  //! @brief Callable object performing the computation of the  computation of the base 10  logarithm.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/log10.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of the base 10  logarithm.
   //!
   //! #### Members Functions
   //!

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var cosh
   //!
+  //! @brief Callable object performing the computation of the  computation of cosh.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/cosh.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of cosh.
   //!
   //! #### Members Functions
   //!

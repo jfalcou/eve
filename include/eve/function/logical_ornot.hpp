@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var logical_ornot
   //!
+  //! @brief Callable object performing the computation of the logical ANDNOT operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/logical_ornot.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the logical ANDNOT operation.
   //!
   //! #### Members Functions
   //!
@@ -50,7 +52,7 @@ namespace eve
   //!the call `logical_andnot(x, y)` is semantically equivalent to `x && !y`
   //!if `x` or  `y` is an  [simd value](../../concepts.html#value).
   //!
-  //!@WARNING  //!
+  //!@warning  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

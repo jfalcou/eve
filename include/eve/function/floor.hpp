@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var floor
   //!
+  //! @brief Callable object performing the computation of the floor operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/floor.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the floor operation.
   //!
   //! #### Members Functions
   //!

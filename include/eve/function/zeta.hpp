@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var zeta
   //!
+  //! @brief Callable object performing the computation of the zeta operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/zeta.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the zeta operation.
   //!
   //! #### Members Functions
   //!
