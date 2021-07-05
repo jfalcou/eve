@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var atan
   //!
-  //! @brief Callable object performing the computation of the  computation of atan.
+  //! @brief Callable object performing the computation of atan.
   //!
   //!
   //! **Required header:**

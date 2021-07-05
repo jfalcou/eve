@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var powm1
   //!
-  //! @brief Callable object performing the computation of the  computation of powm1.
+  //! @brief Callable object performing the computation of powm1.
   //!
   //!
   //! **Required header:**

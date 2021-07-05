@@ -17,7 +17,7 @@ namespace eve
   //! @{
   //! @var sqrt
   //!
-  //! @brief Callable object performing the computation of the  computation of the square root.
+  //! @brief Callable object performing the computation of the square root.
   //!
   //!
   //! **Required header:**

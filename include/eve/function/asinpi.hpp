@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var asinpi
   //!
-  //! @brief Callable object performing the computation of the  computation of asinpi.
+  //! @brief Callable object performing the computation of asinpi.
   //!
   //!
   //! **Required header:**

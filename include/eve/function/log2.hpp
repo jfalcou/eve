@@ -17,7 +17,7 @@ namespace eve
   //! @{
   //! @var log2
   //!
-  //! @brief Callable object performing the computation of the  computation of the base 2 logarithm.
+  //! @brief Callable object performing the computation of the base 2 logarithm.
   //!
   //!
   //! **Required header:**

@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var sec
   //!
-  //! @brief Callable object performing the computation of the  computation of sec.
+  //! @brief Callable object performing the computation of sec.
   //!
   //!
   //! **Required header:**

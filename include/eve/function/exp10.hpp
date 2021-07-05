@@ -21,7 +21,7 @@ namespace eve
   //! @{
   //! @var exp10
   //!
-  //! @brief Callable object performing the computation of the  computation of exp10.
+  //! @brief Callable object performing the computation of exp10.
   //!
   //!
   //! **Required header:**

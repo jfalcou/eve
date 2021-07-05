@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var asecd
   //!
-  //! @brief Callable object performing the computation of the  computation of asecd.
+  //! @brief Callable object performing the computation of asecd.
   //!
   //!
   //! **Required header:**

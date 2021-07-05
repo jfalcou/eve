@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var acot
   //!
-  //! @brief Callable object performing the computation of the  computation of acot.
+  //! @brief Callable object performing the computation of acot.
   //!
   //!
   //! **Required header:**

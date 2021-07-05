@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var asin
   //!
-  //! @brief Callable object performing the computation of the  computation of asin.
+  //! @brief Callable object performing the computation of asin.
   //!
   //!
   //! **Required header:**

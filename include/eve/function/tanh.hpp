@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var tanh
   //!
-  //! @brief Callable object performing the computation of the  computation of tanh.
+  //! @brief Callable object performing the computation of tanh.
   //!
   //!
   //! **Required header:**

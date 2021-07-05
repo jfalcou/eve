@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var atanpi
   //!
-  //! @brief Callable object performing the computation of the  computation of atand.
+  //! @brief Callable object performing the computation of atand.
   //!
   //!
   //! **Required header:**

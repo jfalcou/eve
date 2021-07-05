@@ -17,7 +17,7 @@ namespace eve
   //! @{
   //! @var log
   //!
-  //! @brief Callable object performing the computation of the  computation of the natural logarithm.
+  //! @brief Callable object performing the computation of the natural logarithm.
   //!
   //!
   //! **Required header:**

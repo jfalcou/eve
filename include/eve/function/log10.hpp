@@ -17,7 +17,7 @@ namespace eve
   //! @{
   //! @var log10
   //!
-  //! @brief Callable object performing the computation of the  computation of the base 10  logarithm.
+  //! @brief Callable object performing the computation of the base 10  logarithm.
   //!
   //!
   //! **Required header:**

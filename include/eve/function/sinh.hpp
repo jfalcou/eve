@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var sinh
   //!
-  //! @brief Callable object performing the computation of the  computation of sinh.
+  //! @brief Callable object performing the computation of sinh.
   //!
   //!
   //! **Required header:**

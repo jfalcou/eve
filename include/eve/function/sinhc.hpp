@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var sinhc
   //!
-  //! @brief Callable object performing the computation of the  computation of sinhc.
+  //! @brief Callable object performing the computation of sinhc.
   //!
   //!
   //! **Required header:**

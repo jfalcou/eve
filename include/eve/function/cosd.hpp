@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var cosd
   //!
-  //! @brief Callable object performing the computation of the  computation of cosd.
+  //! @brief Callable object performing the computation of cosd.
   //!
   //!
   //! **Required header:**

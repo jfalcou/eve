@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var acosd
   //!
-  //! @brief Callable object performing the computation of the  computation of acosd.
+  //! @brief Callable object performing the computation of acosd.
   //!
   //!
   //! **Required header:**
@@ -80,11 +80,11 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/acosd.hpp>
-  //! 
-  //!  
+  //!
+  //!
   //!     The expression `diff(acosd)(x)` computes the derivative of the function at `x`.
-  //!  
-  //!  
+  //!
+  //!
   //!
   //! #### Example
   //!

@@ -17,7 +17,7 @@ namespace eve
   //! @{
   //! @var log1p
   //!
-  //! @brief Callable object performing the computation of the  computation of the natural logarithm of \f$1+x\f$.
+  //! @brief Callable object performing the computation of the natural logarithm of \f$1+x\f$.
   //!
   //!
   //! **Required header:**

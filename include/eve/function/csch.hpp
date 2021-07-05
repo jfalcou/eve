@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var csch
   //!
-  //! @brief Callable object performing the computation of the  computation of csch.
+  //! @brief Callable object performing the computation of csch.
   //!
   //!
   //! **Required header:**

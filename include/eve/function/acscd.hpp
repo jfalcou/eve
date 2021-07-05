@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var acscd
   //!
-  //! @brief Callable object performing the computation of the  computation of acscd.
+  //! @brief Callable object performing the computation of acscd.
   //!
   //!
   //! **Required header:**

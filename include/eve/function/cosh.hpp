@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var cosh
   //!
-  //! @brief Callable object performing the computation of the  computation of cosh.
+  //! @brief Callable object performing the computation of cosh.
   //!
   //!
   //! **Required header:**

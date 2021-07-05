@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var cscpi
   //!
-  //! @brief Callable object performing the computation of the  computation of cscpi.
+  //! @brief Callable object performing the computation of cscpi.
   //!
   //!
   //! **Required header:**

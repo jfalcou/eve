@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var sinc
   //!
-  //! @brief Callable object performing the computation of the  computation of sinc.
+  //! @brief Callable object performing the computation of sinc.
   //!
   //!
   //! **Required header:**

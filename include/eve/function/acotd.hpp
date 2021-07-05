@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var acotd
   //!
-  //! @brief Callable object performing the computation of the  computation of acotd.
+  //! @brief Callable object performing the computation of acotd.
   //!
   //!
   //! **Required header:**

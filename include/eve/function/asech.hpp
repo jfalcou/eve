@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var asech
   //!
-  //! @brief Callable object performing the computation of the  computation of asech.
+  //! @brief Callable object performing the computation of asech.
   //!
   //!
   //! **Required header:**

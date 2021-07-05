@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var sind
   //!
-  //! @brief Callable object performing the computation of the  computation of sind.
+  //! @brief Callable object performing the computation of sind.
   //!
   //!
   //! **Required header:**

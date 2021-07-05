@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var acscpi
   //!
-  //! @brief Callable object performing the computation of the  computation of acscpi.
+  //! @brief Callable object performing the computation of acscpi.
   //!
   //!
   //! **Required header:**
