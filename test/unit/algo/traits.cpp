@@ -14,7 +14,7 @@ TTS_CASE("eve.algo basic traits testing")
 {
   {
     []<typename Traits>(Traits) {
-      TTS_CONSTEXPR_EXPECT_NOT(Traits::contains(eve::algo::unrolling));
+      TTS_CONSTEXPR_EXPECT_NOT(Traits::contains(eve::algo::unroll_key));
       TTS_CONSTEXPR_EXPECT(eve::algo::get_unrolling<Traits>() == 1);
     } (eve::algo::traits());
   }

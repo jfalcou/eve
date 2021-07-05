@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/algo/concepts.hpp>
+#include <eve/algo/converting_iterator.hpp>
 #include <eve/algo/ptr_iterator.hpp>
 #include <eve/algo/traits.hpp>
 
@@ -113,22 +114,38 @@ namespace eve::algo
     template <typename Traits, iterator I, sentinel_for<I> S>
     auto operator()(Traits traits_, I f, S l) const
     {
-      auto deduced = [] {
-        if constexpr (partially_aligned_iterator<I>)
-        {
-          if constexpr ( std::same_as<I, S> && !always_aligned_iterator<I> ) return algo::traits(no_aligning, divisible_by_cardinal);
-          else                                                               return algo::traits(no_aligning);
-        }
-        else
-        {
-          return algo::traits();
-        }
-      }();
+      if constexpr ( !std::same_as<typename I::value_type, iteration_type_t<Traits, I>> )
+      {
+        using T = iteration_type_t<Traits, I>;
+        using N = eve::fixed<std::min(typename I::cardinal{}(), eve::expected_cardinal_v<T>)>;
+        auto f_ = eve::algo::convert(f.cardinal_cast(N{}), eve::as<T>{});
+        auto l_ = eve::algo::convert(l.cardinal_cast(N{}), eve::as<T>{});
+        return operator()(traits_, f_, l_);
+      }
+      else if constexpr ( !std::same_as<typename I::cardinal, forced_cardinal_t<Traits, I>> )
+      {
+        using N = forced_cardinal_t<Traits, I>;
+        return operator()(traits_, f.cardinal_cast(N{}), l.cardinal_cast(N{}));
+      }
+      else
+      {
+        auto deduced = [] {
+          if constexpr (partially_aligned_iterator<I>)
+          {
+            if constexpr ( std::same_as<I, S> && !always_aligned_iterator<I> ) return algo::traits(no_aligning, divisible_by_cardinal);
+            else                                                               return algo::traits(no_aligning);
+          }
+          else
+          {
+            return algo::traits();
+          }
+        }();
 
-      return detail::preprocess_range_result{
-        default_to(traits_, deduced), f, l,
-        [](unaligned_t<I> i) { return i; }
-      };
+        return detail::preprocess_range_result{
+          default_to(traits_, deduced), f, l,
+          [](unaligned_t<I> i) { return i; }
+        };
+      }
     }
 
   } inline constexpr preprocess_range;

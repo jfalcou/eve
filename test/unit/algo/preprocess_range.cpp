@@ -228,3 +228,43 @@ EVE_TEST_TYPES("contigious ranges", algo_test::selected_types)
     non_empty_range_test(v);
   }
 };
+
+EVE_TEST_TYPES("cardinal/type manipulation", algo_test::selected_types)
+<typename T>(eve::as<T>)
+{
+  using e_t = eve::element_type_t<T>;
+
+  std::vector<e_t> v;
+  {
+    auto processed = eve::algo::preprocess_range(
+    eve::algo::traits(eve::algo::force_cardinal<T::size()>), v);
+
+    using I = decltype(processed.begin());
+    TTS_CONSTEXPR_EXPECT((std::same_as<typename I::wide_value_type, T>));
+  }
+
+  {
+    auto processed = eve::algo::preprocess_range(
+      eve::algo::traits(eve::algo::common_with_types<double, char>), v);
+
+    using I = decltype(processed.begin());
+    TTS_CONSTEXPR_EXPECT((std::same_as<typename I::value_type, double>));
+    if constexpr ( T::size() >= eve::cardinal_v<double> )
+    {
+      TTS_CONSTEXPR_EXPECT((std::same_as<typename I::wide_value_type, eve::wide<double>>));
+    }
+  }
+
+  {
+    auto processed = eve::algo::preprocess_range(
+      eve::algo::traits(eve::algo::force_cardinal<T::size()>,
+                        eve::algo::common_with_types<double>),
+      v);
+
+    using I = decltype(processed.begin());
+    TTS_CONSTEXPR_EXPECT((std::same_as<
+      typename I::wide_value_type,
+      eve::wide<double, eve::fixed<T::size()>>
+    >));
+  }
+};
