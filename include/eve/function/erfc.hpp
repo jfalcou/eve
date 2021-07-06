@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var erfc
   //!
-  //! @brief Callable object performing the computation of the erfc operation.
+  //! @brief Callable object performing the computation of the complementary error function \f$1-\mbox{erf}(x)\f$.
   //!
   //!
   //! **Required header:**
@@ -75,11 +75,11 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/erfc.hpp>
-  //! 
-  //!  
+  //!
+  //!
   //!     The expression `diff(erfc)(x)` computes the derivative of the function at `x`.
-  //!  
-  //!  
+  //!
+  //!
   //!
   //! #### Example
   //!

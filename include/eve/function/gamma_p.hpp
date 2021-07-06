@@ -16,7 +16,8 @@ namespace eve
   //! @{
   //! @var gamma_p
   //!
-  //! @brief Callable object performing the computation of the gamma_p operation.
+  //! @brief Callable object performing the computation of the normalized lower incomplete \f$\Gamma\f$ function :
+  //!        \f$\displaystyle \frac{1}{\Gamma(x)}\int_0^{y} t^{x-1}e^{-t}\mbox{d}t\f$
   //!
   //!
   //! **Required header:**
@@ -46,7 +47,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) computes the normalized lower incomplete $\Gamma$ function :
+  //!Returns [element-wise](../../../glossary.html#value) computes the normalized lower incomplete \f$\Gamma\f$ function :
   //! $\displaystyle \frac{1}{\Gamma(x)}\int_0^{y} t^{x-1}e^{-t}\mbox{d}t$
   //!
   //! The result type is of the same type as the  parameter.

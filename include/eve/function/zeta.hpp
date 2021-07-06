@@ -16,7 +16,8 @@ namespace eve
   //! @{
   //! @var zeta
   //!
-  //! @brief Callable object performing the computation of the zeta operation.
+  //! @brief Callable object performing the computation of the the Riemann \f$\zeta\f$ function:
+  //!        \f$\displaystyle \zeta(s)=\sum_{n=0}^\infty \frac1{n^s}\f$
   //!
   //!
   //! **Required header:**

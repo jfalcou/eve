@@ -26,7 +26,7 @@
 #include <eve/function/exponential_distribution.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/gamma_p.hpp>
-#include <eve/function/gamma_pinv.hpp>
+#include <eve/function/gamma_p_inv.hpp>
 #include <eve/function/is_finite.hpp>
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/log.hpp>
@@ -274,7 +274,7 @@ namespace eve
     {
       if constexpr(floating_value<T> && floating_value<U>)
       {
-        return gamma_pinv( p, d.k)*d.theta;
+        return gamma_p_inv( p, d.k)*d.theta;
       }
       else if constexpr(std::same_as<T, callable_one_> && floating_value<U>)
       {
@@ -282,7 +282,7 @@ namespace eve
       }
       else if constexpr(std::same_as<U, callable_one_> && floating_value<T>)
       {
-        return  inc(gamma_pinv(p, d.k));
+        return  inc(gamma_p_inv(p, d.k));
       }
       else
         return  -log1p(-p);

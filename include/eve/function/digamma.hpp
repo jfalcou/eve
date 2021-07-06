@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var digamma
   //!
-  //! @brief Callable object performing the computation of the digamma operation.
+  //! @brief Callable object performing the computation of logarithmic derivative of the \f$\Gamma\f$ function.
   //!
   //!
   //! **Required header:**
@@ -76,11 +76,11 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/digamma.hpp>
-  //! 
-  //!  
+  //!
+  //!
   //!     The expression `diff(digamma)(x)` computes the derivative of the function at `x`.
-  //!  
-  //!  
+  //!
+  //!
   //!
   //! #### Example
   //!
@@ -94,4 +94,3 @@ namespace eve
 }
 
 #include <eve/module/real/special/function/regular/generic/digamma.hpp>
-

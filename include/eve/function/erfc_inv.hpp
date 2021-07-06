@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var erfc_inv
   //!
-  //! @brief Callable object performing the computation of the erfc_inv operation.
+  //! @brief Callable object performing the computation of the inverse of the \f$\mbox{erfc}\f$ function.
   //!
   //!
   //! **Required header:**
@@ -76,11 +76,11 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/erfc_inv.hpp>
-  //! 
-  //!  
+  //!
+  //!
   //!     The expression `diff(erfc_inv)(x)` computes the derivative of the function at `x`.
-  //!  
-  //!  
+  //!
+  //!
   //!
   //! #### Example
   //!

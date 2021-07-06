@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
 
 namespace eve
@@ -14,14 +15,14 @@ namespace eve
   //================================================================================================
   //! @addtogroup special
   //! @{
-  //! @var exp_int
+  //! @var gamma_p_inv
   //!
-  //! @brief Callable object performing the computation of the exponential integral \f$\displaystyle \mbox{E}_{n}(x)=\int_0^\infty \frac{e^{-xt}}{t^{n}} \mbox{d}t\f$.
+  //! @brief Callable object performing the computation of the normalized lower incomplete \f$\Gamma\f$ function.
   //!
   //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/exp_int.hpp>
+  //!  #include <eve/function/gamma_p_inv.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //!
@@ -29,36 +30,34 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the exp_int operation   |
+  //! | `operator()` | the gamma_p_inv operation   |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, floating_value U > auto operator()( T n, U y ) const noexcept requires compatible< T, U >;
+  //!  template< floating_value T,floating_value U > auto operator()( T x, U y) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`n`:   [value](../../concepts.html#value).
-  //!
   //!`x`:   [floating value](../../concepts.html#value).
+  //!
   //!
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) exponential integral
-  //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
-  //!If the first parameter inot an integral value it must be a flint, otherwise the result is Nan.
+  //!Returns [element-wise](../../../glossary.html#value) computes the inverse of normalized lower incomplete \f$\Gamma\f$ function :
+  //! $\displaystyle \frac{1}{\Gamma(x)}\int_0^{y} t^{x-1}e^{-t}\mbox{d}t$
   //!
-  //!
+  //! The result type is of the same type as the  parameter.
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  auto operator[]( conditional_expression auto cond ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //!  Higher-order function generating a masked version of eve::exp_int
+  //!  Higher-order function generating a masked version of eve::gamma_p_inv
   //!
   //!  **Parameters**
   //!
@@ -66,32 +65,23 @@ namespace eve
   //!
   //!  **Return value**
   //!
-  //!  A Callable object so that the expression `exp_int[cond](x, ...)` is equivalent to `if_else(cond,exp_int(x, ...),x)`
+  //!  A Callable object so that the expression `gamma_p_inv[cond](x, ...)` is equivalent to `if_else(cond,gamma_p_inv(x, ...),x)`
   //!
   //! ---
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
-  //!  * `diff`
-  //!
-  //!     **Required header:**  #include <eve/function/diff/exp_int.hpp>
-  //!
-  //!
-  //!     The expression `diff(exp_int)(n,x)` computes the derivative (relative to the second parameter)
-  //!      of the function at `x`.
-  //!
-  //!
+  //!  decorators NOT FOUND
   //!
   //! #### Example
   //!
   //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
   //!
-  //! @include{lineno} doc/core/exp_int.cpp
+  //! @include{lineno} doc/core/gamma_p_inv.cpp
   //!
   //!  @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(exp_int_, exp_int);
+  EVE_MAKE_CALLABLE(gamma_p_inv_, gamma_p_inv);
 }
 
-#include <eve/module/real/special/function/regular/generic/exp_int.hpp>
+#include <eve/module/real/special/function/regular/generic/gamma_p_inv.hpp>

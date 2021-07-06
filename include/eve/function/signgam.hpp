@@ -17,7 +17,7 @@ namespace eve
   //! @{
   //! @var signgam
   //!
-  //! @brief Callable object performing the computation of the signgam operation.
+  //! @brief Callable object performing the computation of the sign of the \f$\Gamma\f$ function.
   //!
   //!
   //! **Required header:**
