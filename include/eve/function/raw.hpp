@@ -12,100 +12,34 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup decorator
-  //! @{
-  //! @var raw
-  //!
-  //! @brief Callable object performing the computation of **TODO: FILL THIS BLANK**.
-  //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/raw.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | **TODO: FILL THIS BLANK**   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template<**TODO: FILL THIS BLANK**>
-  //!  auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   **TODO: FILL THIS BLANK**
-  //!
-  //!OTHER PARAMETERS
-  //!:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
-  //!
-  //!
-  //! **Return value**
-  //!
-  //!For **TODO: FILL THIS BLANK**:
-  //!
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!auto r = raw(**TODO: FILL THIS BLANK**);
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!is semantically equivalent to:
-  //!
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!Target r;
-  //!
-  //!if constexpr( scalar_value<T> )
-  //!{
-  //!  **TODO: FILL THIS BLANK**
-  //!}
-  //!else if constexpr( simd_value<T> )
-  //!{
-  //!  **TODO: FILL THIS BLANK**
-  //!}
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::raw
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `raw[cond](x, ...)` is equivalent to `if_else(cond,raw(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  decorators NOT FOUND
-  //!
-  //! #### Example
-  //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/raw.cpp
-  //!
-  //!  @}
   //================================================================================================
-  //================================================================================================
-  // Function decorator - raw mode
+  // Function decorators mark-up used in function overloads
   struct raw_
   {
     template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
   };
 
   using raw_type = decorated<raw_()>;
+
+  //================================================================================================
+  //! @addtogroup decorator
+  //! @{
+  //! @var raw
+  //!
+  //! @brief  Higher-order @callable imbuing quick and dirty behaviour onto other @callable{s}.
+  //!
+  //! #### Synopsis
+  //!
+  //! @param f
+  //! An instance of eve::callable
+  //!
+  //! @return
+  //! A @callable performing the same kind of operation but using quick and dirty version whenever
+  //! available.
+  //!
+  //! @warning using this decorator can imply loss of accuracy.
+  //!
+  //!  @}
+  //================================================================================================
   inline constexpr raw_type const raw = {};
 }

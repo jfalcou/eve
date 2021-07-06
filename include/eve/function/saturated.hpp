@@ -25,11 +25,21 @@ namespace eve
   //! @{
   //! @var saturated
   //!
+  //! @brief  Higher-order @callable imbuing saturation semantic onto other @callable{s}.
+  //!
   //! #### Synopsis
   //!
-  //! **Required header:** `#include <eve/function/saturated.hpp>`
+  //!  if saturated(eve::fname) is to be called then
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  #include <eve/function/saturated/fname.hpp>
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  must be included.
   //!
-  //! Higher-order @callable imbuing saturation semantic onto other @callable{s}.
+  //! #### Members Functions
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator()(eve::callable auto const& f ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! @param f
   //! An instance of eve::callable
