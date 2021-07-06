@@ -14,13 +14,15 @@ namespace eve
   //================================================================================================
   //================================================================================================
   // Function decorators mark-up used in function overloads
-  struct pedantic_
+ struct pedantic_
   {
-    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
+    template<auto N> static constexpr auto combine( decorated<diff_<N>()> const& ) noexcept
+    {
+      return decorated<diff_<N>(pedantic_)>{};
+    }
   };
 
   using pedantic_type = decorated<pedantic_()>;
-
   //================================================================================================
   //! @addtogroup decorator
   //! @{
@@ -50,5 +52,5 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-  inline constexpr pedantic_type const pedantic = {};
+  [[maybe_unused]] inline constexpr pedantic_type const pedantic = {};
 }
