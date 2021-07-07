@@ -47,7 +47,7 @@ namespace eve
   //!:   **Required header:** **<script type="preformatted">` #include <eve/function/diff/beta.hpp>`</script>
   //!
   //!:   The expression `diff_1st(beta)(x,y)` and `diff_2nd(beta)(x,y)` computes the partial
-  //!    diffs of $f$, where $f$ is the function $(x,y) \rightarrow \ \mbox{B}(x,y)$.
+  //!    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ \mbox{B}(x,y)$.
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

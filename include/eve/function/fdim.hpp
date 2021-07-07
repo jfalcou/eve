@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var fdim
   //!
-  //! @brief Callable object performing the computation of the fdim operation.
+  //! @brief Callable object performing the computation of the positive difference.
   //!
   //! **Required header:** `#include <eve/function/fdim.hpp>`
   //!
@@ -69,7 +69,7 @@ namespace eve
   //!     **Required header:**  #include <eve/function/diff/fdim.hpp>
   //!
   //!       The expression `diff_1st(fim)(x,y)` and `diff_2nd(fim)(x,y)` computes the partial
-  //!       diffs of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \max(0,x-y)\f$.
+  //!       derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \max(0,x-y)\f$.
   //!
   //! #### Example
   //!

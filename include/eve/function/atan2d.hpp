@@ -102,7 +102,7 @@ namespace eve
   //! 
   //!  
   //!     The expression `diff_1st(atan2d)(x,y)` and `diff_2nd(atan2d)(x,y)` computes the partial
-  //!      diffs of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \mbox{atan2d}(x,y)\f$.
+  //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \mbox{atan2d}(x,y)\f$.
   //!  
   //!  
   //!
