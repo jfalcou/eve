@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var saturate
   //!
-  //! @brief Callable object performing the computation of   //!  description NOT FOUND.
+  //! @brief Callable object performing the computation of the saturation of a value in a type.
   //!
   //! **Required header:** `#include <eve/function/saturate.hpp>`
   //!
@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` |   //!  description NOT FOUND   |
+  //! | `operator()` | computation of the saturation of a value in a type         |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
@@ -33,6 +33,8 @@ namespace eve
   //!  template< real_value T, real_scalar_value Target>
   //!  auto operator()( T const& x, as_<Target> const& t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! ---
   //!
   //! **Parameters**
   //!

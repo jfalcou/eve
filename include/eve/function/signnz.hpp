@@ -14,11 +14,11 @@ namespace eve
   //================================================================================================
   //! @addtogroup arithmetic
   //! @{
-  //! @var signn
+  //! @var signnz
+  //!
+  //! @brief Callable object performing the computation of the signnz function.
   //!
   //! **Required header:** `#include <eve/function/signnz.hpp>`
-  //!
-  //! <br/>Callable object performing the computation of the signnz operation.
   //!
   //! #### Members Functions
   //!
@@ -45,8 +45,10 @@ namespace eve
   //!  * If x is positive, 1 is returned.
   //!  * If x is negative  -1 is returned.
   //!  * If x is `Nan`, the result is `Nan`.
-  //!For   [floating real value](../../concepts.html#value) the positivity is only here based on the bit of sign.
-  //!In particular -0.0 is negative and +0.0 is positive.
+  //!
+  //! For   [floating real value](../../concepts.html#value) the positivity is only here based on the bit of sign.
+  //! In particular -0.0 is negative and +0.0 is positive.
+  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
@@ -67,7 +69,11 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  no decorators are supported
+  //!  * `diff`
+  //!
+  //!     **Required header:**  #include <eve/function/diff/signnz.hpp>
+  //!
+  //!     The expression `diff(sign)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
   //!

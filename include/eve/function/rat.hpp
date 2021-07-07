@@ -25,7 +25,6 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the computation of the rational approximation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -34,31 +33,16 @@ namespace eve
   //!  template< floating_real_value T, floating_real_value S> auto operator()( T x, S tol) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
+  //! ---
+  //!
   //! **Parameters**
   //!
   //!`x`:   [floating_real_value](../../concepts.html#value).
   //!`tol`:   [floating_real_value](../../concepts.html#value).
   //!
-  //! **Return value**
+  //! **Return values**
   //!
   //!Two values with the same type as `x` containing the [element-wise](../../../glossary.html#value) numerator and denominator of the rational number
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::rat
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `rat[cond](x, ...)` is equivalent to `if_else(cond,rat(x, ...),x)`
-  //!
-  //! ---
   //!
   //! #### Supported decorators
   //!

@@ -25,7 +25,6 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the modf operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -39,28 +38,12 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!A pair of values with the same type as `x` containing respectively the [element-wise](../../../glossary.html#value) fractional and integral parts of `x`,
+  //!A pair of values containing respectively the [element-wise](../../../glossary.html#value) fractional and integral parts of `x`,
   //!each having the type and sign of `x`.
   //!
   //!In particular:
   //!  * If `x` is infinite `{Nan, x}` is returned.
   //!  * If `x` is a `Nan`  `{Nan, Nan}` is returned.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::modf
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `modf[cond](x, ...)` is equivalent to `if_else(cond,modf(x, ...),x)`
   //!
   //! ---
   //!
@@ -70,7 +53,7 @@ namespace eve
   //!  * `pedantic`
   //!
   //!     **Required header:**  #include <eve/function/pedantic/modf.hpp>
-  //!  
+  //!
   //!     The call `pedantic(modf)(x)` ensures standard conformity : if `x` is infinite, `{0, x}` is returned.
   //!
   //! #### Example

@@ -14,11 +14,11 @@ namespace eve
   //================================================================================================
   //! @addtogroup arithmetic
   //! @{
-  //! @var negaten
+  //! @var negatenz
+  //!
+  //!  @brief Callable object performing the computation of the negatenz function.
   //!
   //! **Required header:** `#include <eve/function/negatenz.hpp>`
-  //!
-  //! <br/>Callable object performing the computation of the negatenz operation.
   //!
   //! #### Members Functions
   //!
@@ -41,10 +41,6 @@ namespace eve
   //!
   //!Returns the [`element-wise`](../../../glossary.html#element-wise) product of the first parameter by the never zero sign of the second.
   //!
-  //![`diff`](../decorators.html#diff)
-  //!:   **Required header:** **<script type="preformatted">` #include <eve/function/diff/negatenz.hpp>`</script>
-  //!
-  //!:   The expression `diff(negatenz)(x)` computes the derivative of the function at `x` .
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
@@ -64,6 +60,11 @@ namespace eve
   //! ---
   //!
   //! #### Supported decorators
+  //!
+  //!    [`diff`](../decorators.html#diff)
+  //!:   **Required header:** `#include <eve/function/diff/negatenz.hpp>`
+  //!
+  //!    The expression `diff(negatenz)(x)` computes the derivative of the function at `x`.
   //!
   //!  no decorators are supported
   //!

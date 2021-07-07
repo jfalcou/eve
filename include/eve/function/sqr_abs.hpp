@@ -25,47 +25,29 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the sqr_abs operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< real_floating_value T > auto operator()( T x ) const noexcept;
+  //!  template< floating_value T > auto operator()( T x ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`:   [real floating value](../../concepts.html#value).
+  //!`x`:   [floating value](../../concepts.html#value).
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](../../../glossary.html#elment-wise) the square of the absolute value of `x` .
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::sqr_abs
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `sqr_abs[cond](x, ...)` is equivalent to `if_else(cond,sqr_abs(x, ...),x)`
+  //!Computes  [element-wise](../../../glossary.html#elment-wise) the square of the absolute value of `x`.
   //!
   //! ---
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/sqr_abs.hpp>
-  //!  
+  //!
   //!     The expression `diff(sqr_abs)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
