@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var ffs
   //!
+  //! @brief Callable object performing the computation of the ffs operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/ffs.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the ffs operation.
   //!
   //! #### Members Functions
   //!

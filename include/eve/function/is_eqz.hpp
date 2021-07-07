@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var is_eqz
   //!
+  //! @brief Callable object performing the computation of the equality to zero predicate.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/is_eqz.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the equality to zero predicate.
   //!
   //! #### Members Functions
   //!

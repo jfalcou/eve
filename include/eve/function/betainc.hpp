@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var betainc
   //!
+  //! @brief Callable object performing the computation of the beta incomplete function. \f$\mbox{B}(s,x,y)=\frac{1}{\mbox{B}(x,y)}\int_0^s t^{x-1}(1-t)^{y-1}\mbox{d}t\f$
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/betainc.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the betainc operation.
   //!
   //! #### Members Functions
   //!

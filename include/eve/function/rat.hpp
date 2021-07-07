@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var rat
   //!
+  //! @brief Callable object performing the computation of the computation of the rational approximation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/rat.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the computation of the rational approximation.
   //!
   //! #### Members Functions
   //!

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var saturate
   //!
+  //! @brief Callable object performing the computation of   //!  description NOT FOUND.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/saturate.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of   //!  description NOT FOUND.
   //!
   //! #### Members Functions
   //!
@@ -61,7 +63,7 @@ namespace eve
   //!
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //!@WARNING Note
+  //!@warning Note
   //!   Saturation operated by [eve::saturate](#eve::saturate) may lead to
   //!   Undefined Behaviors if it implies conversions that are themselves U.B.
   //!

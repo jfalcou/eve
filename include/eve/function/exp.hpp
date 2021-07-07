@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var exp
   //!
+  //! @brief Callable object performing the computation of exp.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/exp.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of exp.
   //!
   //! #### Members Functions
   //!

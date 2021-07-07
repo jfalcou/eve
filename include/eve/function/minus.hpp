@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var minus
   //!
+  //! @brief Callable object performing the computation of the minus unary operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/minus.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the minus unary operation.
   //!
   //! #### Members Functions
   //!
@@ -48,7 +50,7 @@ namespace eve
   //!More specifically, for signed integers the opposite value of [their lowest finite value](../../constants.html#valmin)
   //!is not representable and the result is undefined behaviour.
   //!
-  //!@WARNING
+  //!@warning
   //!   Although the operator notation with `-` is supported, the `-` operator on
   //!   standard scalar type is the original one and so can lead to automatic promotion.
   //!

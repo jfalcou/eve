@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var acoth
   //!
+  //! @brief Callable object performing the computation of acoth.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/acoth.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of acoth.
   //!
   //! #### Members Functions
   //!

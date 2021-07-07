@@ -19,12 +19,14 @@ namespace eve
   //! @{
   //! @var rempio2
   //!
+  //! @brief Callable object performing the computation of the computation of the rempio2 value.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/rempio2.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the computation of the rempio2 value.
   //!
   //! #### Members Functions
   //!

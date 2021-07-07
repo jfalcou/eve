@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var is_pow2
   //!
+  //! @brief Callable object performing the computation of the is_pow2 operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/is_pow2.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the is_pow2 operation.
   //!
   //! #### Members Functions
   //!

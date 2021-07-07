@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var cosd
   //!
+  //! @brief Callable object performing the computation of cosd.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/cosd.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of cosd.
   //!
   //! #### Members Functions
   //!

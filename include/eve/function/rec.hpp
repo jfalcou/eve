@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var rec
   //!
+  //! @brief Callable object performing the computation of the rec operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/rec.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the rec operation.
   //!
   //! #### Members Functions
   //!

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var rsqrt
   //!
+  //! @brief Callable object performing the computation of the inverse of the square root.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/rsqrt.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of the inverse of the square root.
   //!
   //! #### Members Functions
   //!

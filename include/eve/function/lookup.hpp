@@ -25,12 +25,14 @@ namespace eve::detail
   //! @{
   //! @var lookup
   //!
+  //! @brief Callable object performing the computation of **TODO: FILL THIS BLANK**.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/lookup.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of **TODO: FILL THIS BLANK**.
   //!
   //! #### Members Functions
   //!

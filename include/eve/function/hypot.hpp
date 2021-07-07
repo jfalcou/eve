@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var hypot
   //!
+  //! @brief Callable object performing the computation of the hypot operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/hypot.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the hypot operation.
   //!
   //! #### Members Functions
   //!

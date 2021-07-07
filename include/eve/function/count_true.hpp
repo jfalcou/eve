@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var count_true
   //!
+  //! @brief Callable object performing the computation of the computation of the count_true value.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/count_true.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the computation of the count_true value.
   //!
   //! #### Members Functions
   //!

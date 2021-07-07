@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var tan
   //!
+  //! @brief Callable object performing the computation of tan.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/tan.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of tan.
   //!
   //! #### Members Functions
   //!

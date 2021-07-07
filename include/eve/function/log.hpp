@@ -17,12 +17,14 @@ namespace eve
   //! @{
   //! @var log
   //!
+  //! @brief Callable object performing the computation of the natural logarithm.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/log.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of the natural logarithm.
   //!
   //! #### Members Functions
   //!

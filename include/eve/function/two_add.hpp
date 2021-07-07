@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var two_add
   //!
+  //! @brief Callable object performing the computation of the two_add operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/two_add.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the two_add operation.
   //!
   //! #### Members Functions
   //!

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var horner
   //!
+  //! @brief Callable object performing the computation of the horner operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/horner.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the horner operation.
   //!
   //! #### Members Functions
   //!
@@ -58,7 +60,7 @@ namespace eve
   //!
   //!The result type is of the compatibility type of the  coefficients and the evaluation value `x`.
   //!
-  //!@WARNING
+  //!@warning
   //!   If the coefficients are simd values of cardinal N, this means you compute the values of N polynomials.
   //!   If x is scalar, the polynomials are all computed at the same point, but
   //!   If x is simd, the nth polynomial is computed on the nth value of x.

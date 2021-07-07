@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var acscd
   //!
+  //! @brief Callable object performing the computation of acscd.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/acscd.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of acscd.
   //!
   //! #### Members Functions
   //!

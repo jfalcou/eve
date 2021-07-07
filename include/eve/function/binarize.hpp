@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var binarize
   //!
+  //! @brief Callable object performing the computation of the computation of the binarize operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/binarize.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the computation of the binarize operation.
   //!
   //! #### Members Functions
   //!

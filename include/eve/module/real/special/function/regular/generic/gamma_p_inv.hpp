@@ -44,20 +44,20 @@
 namespace eve::detail
 {
   template<real_value T, real_value U>
-  EVE_FORCEINLINE  common_compatible_t<T, U> gamma_pinv_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE  common_compatible_t<T, U> gamma_p_inv_(EVE_SUPPORTS(cpu_)
                               , T a
                               , U b) noexcept
   {
-    return arithmetic_call(gamma_pinv, a, b);
+    return arithmetic_call(gamma_p_inv, a, b);
   }
 
   template<floating_real_value T>
-  EVE_FORCEINLINE T gamma_pinv_(EVE_SUPPORTS(cpu_), T p, T k) noexcept
+  EVE_FORCEINLINE T gamma_p_inv_(EVE_SUPPORTS(cpu_), T p, T k) noexcept
   requires has_native_abi_v<T>
   {
     if constexpr(std::is_same_v<T, float>)
     {
-      return float32(gamma_pinv(float64(p), float64(k)));
+      return float32(gamma_p_inv(float64(p), float64(k)));
     }
     p = if_else(is_ltz(p) || p > one(as(p)), allbits, p);
     auto iseqzp = is_eqz(p);

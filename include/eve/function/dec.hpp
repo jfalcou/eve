@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var dec
   //!
+  //! @brief Callable object performing the computation of the dec unary operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/dec.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the dec unary operation.
   //!
   //! #### Members Functions
   //!

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var manhattan
   //!
+  //! @brief Callable object performing the computation of the manhattan operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/manhattan.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the manhattan operation.
   //!
   //! #### Members Functions
   //!

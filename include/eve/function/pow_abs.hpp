@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var pow_abs
   //!
+  //! @brief Callable object performing the computation of the pow_abs operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/pow_abs.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the pow_abs operation.
   //!
   //! #### Members Functions
   //!

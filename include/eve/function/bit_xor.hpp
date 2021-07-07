@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var bit_xor
   //!
+  //! @brief Callable object performing the computation of the bitwise XOR operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/bit_xor.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the bitwise XOR operation.
   //!
   //! #### Members Functions
   //!
@@ -50,7 +52,7 @@ namespace eve
   //!if `x` or  `y` is an  [simd value](../../concepts.html#value).
   //!
   //!
-  //!@WARNING  //!
+  //!@warning  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

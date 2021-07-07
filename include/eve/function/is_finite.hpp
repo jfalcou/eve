@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var is_finite
   //!
+  //! @brief Callable object performing the computation of the computation of the is_finite logical value.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/is_finite.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the computation of the is_finite logical value.
   //!
   //! #### Members Functions
   //!

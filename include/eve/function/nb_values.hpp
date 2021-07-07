@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var nb_values
   //!
+  //! @brief Callable object performing the computation of the nb_values operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/nb_values.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the nb_values operation.
   //!
   //! #### Members Functions
   //!

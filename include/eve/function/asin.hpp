@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var asin
   //!
+  //! @brief Callable object performing the computation of asin.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/asin.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of asin.
   //!
   //! #### Members Functions
   //!

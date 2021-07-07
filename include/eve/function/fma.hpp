@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var fma
   //!
+  //! @brief Callable object performing the computation of the fused multiply-add operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/fma.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the fused multiply-add operation.
   //!
   //! #### Members Functions
   //!
@@ -51,7 +53,7 @@ namespace eve
   //!The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
   //!
   //!
-  //!@WARNING Note
+  //!@warning Note
   //!    This `fma` implementation provides those properties for all [real integral values](../../concepts.html#integral_value)
   //!     and when possible for [real floating values](../../concepts.html#value).
   //!

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var frac
   //!
+  //! @brief Callable object performing the computation of the computation of the fractional part of a value.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/frac.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the computation of the fractional part of a value.
   //!
   //! #### Members Functions
   //!

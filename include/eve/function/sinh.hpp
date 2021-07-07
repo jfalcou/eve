@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var sinh
   //!
+  //! @brief Callable object performing the computation of sinh.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/sinh.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of sinh.
   //!
   //! #### Members Functions
   //!

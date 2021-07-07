@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var ellint_rd
   //!
+  //! @brief Callable object performing the computation of the ellint_rd operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/ellint_rd.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the ellint_rd operation.
   //!
   //! #### Members Functions
   //!

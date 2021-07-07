@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var lohi
   //!
+  //! @brief Callable object performing the computation of the computation of the lohi pair of values.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/lohi.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the computation of the lohi pair of values.
   //!
   //! #### Members Functions
   //!

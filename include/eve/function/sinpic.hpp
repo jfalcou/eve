@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var sinpic
   //!
+  //! @brief Callable object performing the computation of sinpic.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/sinpic.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of sinpic.
   //!
   //! #### Members Functions
   //!

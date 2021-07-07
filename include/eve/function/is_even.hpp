@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var is_even
   //!
+  //! @brief Callable object performing the computation of the computation of the is_even logical value.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/is_even.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the computation of the is_even logical value.
   //!
   //! #### Members Functions
   //!

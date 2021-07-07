@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var is_gez
   //!
+  //! @brief Callable object performing the computation of the greater or equal to zero predicate.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/is_gez.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the greater or equal to zero predicate.
   //!
   //! #### Members Functions
   //!

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var cospi
   //!
+  //! @brief Callable object performing the computation of cospi.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/cospi.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of cospi.
   //!
   //! #### Members Functions
   //!

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var cos
   //!
+  //! @brief Callable object performing the computation of cos.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/cos.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of cos.
   //!
   //! #### Members Functions
   //!

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var bit_notand
   //!
+  //! @brief Callable object performing the computation of the bitwise NOTAND operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/bit_notand.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the bitwise NOTAND operation.
   //!
   //! #### Members Functions
   //!
@@ -50,7 +52,7 @@ namespace eve
   //!the call `bit_notand(x, y)` is semantically equivalent to `~x & y`
   //!if `x` or  `y` is an  [simd value](../../concepts.html#value).
   //!
-  //!@WARNING  //!
+  //!@warning  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

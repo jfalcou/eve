@@ -19,12 +19,14 @@
   //! @{
   //! @var load
   //!
+  //! @brief Callable object performing the computation of **TODO: FILL THIS BLANK**.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/load.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of **TODO: FILL THIS BLANK**.
   //!
   //! #### Members Functions
   //!

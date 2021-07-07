@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var div
   //!
+  //! @brief Callable object performing the division of multiple values.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/div.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the division of multiple values.
   //!
   //! #### Members Functions
   //!

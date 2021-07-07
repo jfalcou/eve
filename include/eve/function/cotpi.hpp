@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var cotpi
   //!
+  //! @brief Callable object performing the computation of cotpi.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/cotpi.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of cotpi.
   //!
   //! #### Members Functions
   //!

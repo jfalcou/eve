@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var cbrt
   //!
+  //! @brief Callable object performing the computation of the cubic root.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/cbrt.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of the cubic root.
   //!
   //! #### Members Functions
   //!

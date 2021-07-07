@@ -7,21 +7,22 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
 
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup arithmetic
+  //! @addtogroup special
   //! @{
-  //! @var modf
+  //! @var gamma_p_inv
   //!
-  //! @brief Callable object performing the computation of the modf operation.
+  //! @brief Callable object performing the computation of the normalized lower incomplete \f$\Gamma\f$ function.
   //!
   //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/modf.hpp>
+  //!  #include <eve/function/gamma_p_inv.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //!
@@ -29,37 +30,34 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the modf operation   |
+  //! | `operator()` | the gamma_p_inv operation   |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T> auto operator()( T x ) const noexcept;
+  //!  template< floating_value T,floating_value U > auto operator()( T x, U y) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value).
+  //!`x`:   [floating value](../../concepts.html#value).
+  //!
   //!
   //!
   //! **Return value**
   //!
-  //!A pair of values with the same type as `x` containing respectively the [element-wise](../../../glossary.html#value) fractional and integral parts of `x`,
-  //!each having the type and sign of `x`.
+  //!Returns [element-wise](../../../glossary.html#value) computes the inverse of normalized lower incomplete \f$\Gamma\f$ function :
+  //! $\displaystyle \frac{1}{\Gamma(x)}\int_0^{y} t^{x-1}e^{-t}\mbox{d}t$
   //!
-  //!In particular:
-  //!  * If `x` is infinite `{Nan, x}` is returned.
-  //!  * If `x` is a `Nan`  `{Nan, Nan}` is returned.
-  //!
-  //!
+  //! The result type is of the same type as the  parameter.
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  auto operator[]( conditional_expression auto cond ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //!  Higher-order function generating a masked version of eve::modf
+  //!  Higher-order function generating a masked version of eve::gamma_p_inv
   //!
   //!  **Parameters**
   //!
@@ -67,31 +65,23 @@ namespace eve
   //!
   //!  **Return value**
   //!
-  //!  A Callable object so that the expression `modf[cond](x, ...)` is equivalent to `if_else(cond,modf(x, ...),x)`
+  //!  A Callable object so that the expression `gamma_p_inv[cond](x, ...)` is equivalent to `if_else(cond,gamma_p_inv(x, ...),x)`
   //!
   //! ---
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
-  //!  * `pedantic`
-  //!
-  //!     **Required header:**  #include <eve/function/pedantic/modf.hpp>
-  //! 
-  //!  
-  //!     The call `pedantic(modf)(x)` ensures standard conformity : if `x` is infinite, `{0, x}` is returned.
-  //!  
+  //!  decorators NOT FOUND
   //!
   //! #### Example
   //!
   //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
   //!
-  //! @include{lineno} doc/core/modf.cpp
+  //! @include{lineno} doc/core/gamma_p_inv.cpp
   //!
   //!  @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(modf_, modf);
+  EVE_MAKE_CALLABLE(gamma_p_inv_, gamma_p_inv);
 }
 
-#include <eve/module/real/core/function/regular/generic/modf.hpp>
-
+#include <eve/module/real/special/function/regular/generic/gamma_p_inv.hpp>

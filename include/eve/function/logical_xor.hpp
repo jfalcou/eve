@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var logical_xor
   //!
+  //! @brief Callable object performing the computation of the logical XOR operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/logical_xor.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the logical XOR operation.
   //!
   //! #### Members Functions
   //!

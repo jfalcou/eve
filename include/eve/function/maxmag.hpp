@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var maxmag
   //!
+  //! @brief Callable object performing the computation of the maxmag operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/maxmag.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the maxmag operation.
   //!
   //! #### Members Functions
   //!
@@ -56,7 +58,7 @@ namespace eve
   //!
   //!The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
   //!
-  //!@WARNING
+  //!@warning
   //!   If any element of the inputs is a `Nan`, the corresponding output element is system-dependent.
   //!
   //!

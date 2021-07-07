@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var beta
   //!
+  //! @brief Callable object performing the computation of the beta function. \f$\mbox{B}(x,y)=\int_0^1 t^{x-1}(1-t)^{y-1}\mbox{d}t\f$
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/beta.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the beta operation.
   //!
   //! #### Members Functions
   //!

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var expm1
   //!
+  //! @brief Callable object performing the computation of expm1.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/expm1.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of expm1.
   //!
   //! #### Members Functions
   //!

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var sech
   //!
+  //! @brief Callable object performing the computation of sech.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/sech.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of sech.
   //!
   //! #### Members Functions
   //!

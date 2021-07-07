@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var laguerre
   //!
+  //! @brief Callable object performing the computation of the laguerre operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/laguerre.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the laguerre operation.
   //!
   //! #### Members Functions
   //!

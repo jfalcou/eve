@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var atan2
   //!
+  //! @brief Callable object performing the computation of the atan2 operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/atan2.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the atan2 operation.
   //!
   //! #### Members Functions
   //!

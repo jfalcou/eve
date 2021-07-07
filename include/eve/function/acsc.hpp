@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var acsc
   //!
+  //! @brief Callable object performing the computation of acsc.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/acsc.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of acsc.
   //!
   //! #### Members Functions
   //!

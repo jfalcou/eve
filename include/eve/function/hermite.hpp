@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var hermite
   //!
+  //! @brief Callable object performing the computation of the hermite operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/hermite.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the hermite operation.
   //!
   //! #### Members Functions
   //!

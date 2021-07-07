@@ -21,12 +21,14 @@ namespace eve
   //! @{
   //! @var prev
   //!
+  //! @brief Callable object performing the computation of the prevt operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/prev.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the prevt operation.
   //!
   //! #### Members Functions
   //!

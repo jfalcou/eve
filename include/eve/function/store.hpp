@@ -17,12 +17,14 @@ namespace eve
   //! @{
   //! @var store
   //!
+  //! @brief Callable object performing the computation of   //!  description NOT FOUND.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/store.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of   //!  description NOT FOUND.
   //!
   //! #### Members Functions
   //!

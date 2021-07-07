@@ -12,98 +12,42 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup decorator
-  //! @{
-  //! @var numeric
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/numeric.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! <br/>Callable object performing the computation of **TODO: FILL THIS BLANK**.
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | **TODO: FILL THIS BLANK**   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template<**TODO: FILL THIS BLANK**>
-  //!  auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   **TODO: FILL THIS BLANK**
-  //!
-  //!OTHER PARAMETERS
-  //!:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
-  //!
-  //!
-  //! **Return value**
-  //!
-  //!For **TODO: FILL THIS BLANK**:
-  //!
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!auto r = numeric(**TODO: FILL THIS BLANK**);
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!is semantically equivalent to:
-  //!
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!Target r;
-  //!
-  //!if constexpr( scalar_value<T> )
-  //!{
-  //!  **TODO: FILL THIS BLANK**
-  //!}
-  //!else if constexpr( simd_value<T> )
-  //!{
-  //!  **TODO: FILL THIS BLANK**
-  //!}
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::numeric
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `numeric[cond](x, ...)` is equivalent to `if_else(cond,numeric(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  decorators NOT FOUND
-  //!
-  //! #### Example
-  //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/numeric.cpp
-  //!
-  //!  @}
   //================================================================================================
-  //================================================================================================
-  // Function decorator - numeric mode
+  // Function decorators mark-up used in function overloads
   struct numeric_
   {
     template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
   };
 
   using numeric_type = decorated<numeric_()>;
+  //================================================================================================
+  //! @addtogroup decorator
+  //! @{
+  //! @var numeric
+  //!
+  //! @brief  Higher-order @callable imbuing non invalid return  preference semantic onto other @callable{s}.
+  //!
+  //! #### Synopsis
+  //!
+  //!  if numeric(eve::fname) is to be called then
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  #include <eve/function/numeric/fname.hpp>
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  must be included.
+  //!
+  //! #### Members Functions
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator()(eve::callable auto const& f ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! @param f
+  //! An instance of eve::callable
+  //!
+  //! @return
+  //! A @callable performing the same kind of operation but while insuring a preference to return
+  //! numeric values instead of Nans, whenever possible.
+  //!
+  //!  @}
+  //================================================================================================
   inline constexpr numeric_type const numeric = {};
 }

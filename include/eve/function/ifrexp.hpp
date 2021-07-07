@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var ifrexp
   //!
+  //! @brief Callable object performing the computation of the computation of the ifrexp pair of values.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/ifrexp.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the computation of the ifrexp pair of values.
   //!
   //! #### Members Functions
   //!

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var rising_factorial
   //!
+  //! @brief Callable object performing the computation of rising_factorial i.e. \f$\frac{\Gamma(x+a)}{\Gamma(a)}.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/rising_factorial.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of rising_factorial i.e. \f$\frac{\Gamma(x+a)}{\Gamma(a)}.
   //!
   //! #### Members Functions
   //!

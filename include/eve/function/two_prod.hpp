@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var two_prod
   //!
+  //! @brief Callable object performing the computation of the two_prod operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/two_prod.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the two_prod operation.
   //!
   //! #### Members Functions
   //!

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var csc
   //!
+  //! @brief Callable object performing the computation of csc.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/csc.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of csc.
   //!
   //! #### Members Functions
   //!

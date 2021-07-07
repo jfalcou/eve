@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var gcd
   //!
+  //! @brief Callable object performing the computation of greater common divisor operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/gcd.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of greater common divisor operation.
   //!
   //! #### Members Functions
   //!
@@ -47,7 +49,7 @@ namespace eve
   //!
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
   //!
-  //!@WARNING
+  //!@warning
   //!    `p` and `n` can be of any [real values](../../concepts.html#value) type, but when the types are not integral
   //!    the greatest common divisor is defined only if `p` and `n` element are flint. If it is not the
   //!    case the corresponding result will be Nan.

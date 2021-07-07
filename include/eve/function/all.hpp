@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var all
   //!
+  //! @brief Callable object performing the computation of the computation of the all value.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/all.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the computation of the all value.
   //!
   //! #### Members Functions
   //!

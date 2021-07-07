@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var prod
   //!
+  //! @brief Callable object performing the computation of **TODO: FILL THIS BLANK**.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/prod.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of **TODO: FILL THIS BLANK**.
   //!
   //! #### Members Functions
   //!

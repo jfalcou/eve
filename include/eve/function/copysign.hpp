@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var copysign
   //!
+  //! @brief Callable object performing the computation of sign copying operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/copysign.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of sign copying operation.
   //!
   //! #### Members Functions
   //!

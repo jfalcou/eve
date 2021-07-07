@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var legendre
   //!
+  //! @brief Callable object performing the computation of the legendre operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/legendre.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the legendre operation.
   //!
   //! #### Members Functions
   //!

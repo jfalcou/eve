@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var is_nlez
   //!
+  //! @brief Callable object performing the computation of the "not less or equal to zero" predicate.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/is_nlez.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the "not less or equal to zero" predicate.
   //!
   //! #### Members Functions
   //!

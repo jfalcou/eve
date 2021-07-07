@@ -17,12 +17,14 @@ namespace eve
   //! @{
   //! @var nearest
   //!
+  //! @brief Callable object performing the computation of the nearest operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/nearest.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the nearest operation.
   //!
   //! #### Members Functions
   //!

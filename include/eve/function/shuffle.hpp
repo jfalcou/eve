@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var shuffle
   //!
+  //! @brief Callable object performing the computation of **TODO: FILL THIS BLANK**.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/shuffle.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of **TODO: FILL THIS BLANK**.
   //!
   //! #### Members Functions
   //!

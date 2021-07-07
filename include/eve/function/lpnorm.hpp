@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var lpnorm
   //!
+  //! @brief Callable object performing the computation of the lpnorm operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/lpnorm.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the lpnorm operation.
   //!
   //! #### Members Functions
   //!

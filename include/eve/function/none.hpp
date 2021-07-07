@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var none
   //!
+  //! @brief Callable object performing the computation of the computation of the none value.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/none.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the computation of the none value.
   //!
   //! #### Members Functions
   //!

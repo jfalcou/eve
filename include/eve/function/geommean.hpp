@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var geommean
   //!
+  //! @brief Callable object performing the computation of the mid-point operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/geommean.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the mid-point operation.
   //!
   //! #### Members Functions
   //!
@@ -53,7 +55,7 @@ namespace eve
   //!
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
   //!
-  //!@WARNING
+  //!@warning
   //!    if the number of parameters is even and the product of the parameters is srictly negative the result is a Nan.
   //!
   //!    if the number of parameters is odd the result has the sign of the product of the parameters

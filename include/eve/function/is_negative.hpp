@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var is_negative
   //!
+  //! @brief Callable object performing the computation of the computation of the is_negative logical value.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/is_negative.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the computation of the is_negative logical value.
   //!
   //! #### Members Functions
   //!
@@ -47,7 +49,7 @@ namespace eve
   //!For signed types The call `is_negative(x)` [element-wise](../../../glossary.html#value) returns true
   //!if and only if the bit of sign (most significant bit) is set.
   //!
-  //!@WARNING
+  //!@warning
   //!   this function coincides with `is_ltz` on [integral real values](../../concepts.html#value),
   //!   but for [floating real values](../../concepts.html#value) `T`, `is_negative(Mzero<`T`>)` is true and
   //!   if `n` is a Nan the result depends of the bit of sign of `n` which can be out of control although

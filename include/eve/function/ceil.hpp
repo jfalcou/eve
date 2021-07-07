@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var ceil
   //!
+  //! @brief Callable object performing the computation of the ceil operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/ceil.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the ceil operation.
   //!
   //! #### Members Functions
   //!

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var significants
   //!
+  //! @brief Callable object performing the computation of the significants operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/significants.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the significants operation.
   //!
   //! #### Members Functions
   //!
@@ -47,7 +49,7 @@ namespace eve
   //!Computes  [element-wise](../../../glossary.html#elment-wise) the rounding to n significants digits of `x`.
   //!With null n the result is a nan.
   //!
-  //!@WARNING
+  //!@warning
   //!   Floating numbers are not stored in decimal form. So if you try significants with
   //!   a not exactly representable number the result can be not exactly what you expect.
   //! ---

@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var quadrant
   //!
+  //! @brief Callable object performing the computation of the computation of the quadrant value.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/quadrant.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the computation of the quadrant value.
   //!
   //! #### Members Functions
   //!
@@ -45,7 +47,7 @@ namespace eve
   //!
   //!return a value of the same type as `x` containing the quadrant number where `x` (supposed an integer) lies.
   //!
-  //!@WARNING
+  //!@warning
   //!   the input `x` must be an integral or floating integral value.
   //! ---
   //!

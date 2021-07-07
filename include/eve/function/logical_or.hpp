@@ -18,12 +18,14 @@ namespace eve
   //! @{
   //! @var logical_or
   //!
+  //! @brief Callable object performing the computation of the logical OR operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/logical_or.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the logical OR operation.
   //!
   //! #### Members Functions
   //!

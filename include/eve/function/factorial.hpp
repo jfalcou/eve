@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var factorial
   //!
+  //! @brief Callable object performing the computation of unsigned integral factorial.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/factorial.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of unsigned integral factorial.
   //!
   //! #### Members Functions
   //!
@@ -48,7 +50,7 @@ namespace eve
   //! The result element type is always double to try to avoid overflow
   //! and its cardinal is the same as the entry in case of an simd call.
   //!
-  //!@WARNING
+  //!@warning
   //!    this function will overflow as soon as the input is greater than 171
   //!
   //!

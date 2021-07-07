@@ -18,12 +18,14 @@ namespace eve
   //! @{
   //! @var logical_and
   //!
+  //! @brief Callable object performing the computation of the logical AND operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/logical_and.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the logical AND operation.
   //!
   //! #### Members Functions
   //!

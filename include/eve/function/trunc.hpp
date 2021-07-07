@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var trunc
   //!
+  //! @brief Callable object performing the computation of the trunc operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/trunc.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the trunc operation.
   //!
   //! #### Members Functions
   //!

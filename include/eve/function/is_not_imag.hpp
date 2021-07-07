@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var is_not_imag
   //!
+  //! @brief Callable object performing the computation of the computation of the is_not_imag logical value.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/is_not_imag.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the computation of the is_not_imag logical value.
   //!
   //! #### Members Functions
   //!

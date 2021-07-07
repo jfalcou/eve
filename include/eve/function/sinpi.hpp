@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var sinpi
   //!
+  //! @brief Callable object performing the computation of sinpi.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/sinpi.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of sinpi.
   //!
   //! #### Members Functions
   //!

@@ -19,12 +19,14 @@ namespace eve
   //! @{
   //! @var is_nez
   //!
+  //! @brief Callable object performing the computation of the "not equal to zero" predicate.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/is_nez.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the "not equal to zero" predicate.
   //!
   //! #### Members Functions
   //!

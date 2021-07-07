@@ -18,12 +18,14 @@ namespace eve
   //! @{
   //! @var shr
   //!
+  //! @brief Callable object performing the computation of the arithmetic right shift operation.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/shr.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the arithmetic right shift operation.
   //!
   //! #### Members Functions
   //!
@@ -56,7 +58,7 @@ namespace eve
   //!all  [elements](../../../glossary.html#element) of n must belong to the
   //!interval: `[0, N[` or the result is undefined.
   //!
-  //!@WARNING  //!
+  //!@warning  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

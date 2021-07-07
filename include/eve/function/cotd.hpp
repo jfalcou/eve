@@ -16,12 +16,14 @@ namespace eve
   //! @{
   //! @var cotd
   //!
+  //! @brief Callable object performing the computation of cotd.
+  //!
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/function/cotd.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! <br/>Callable object performing the computation of the  computation of cotd.
   //!
   //! #### Members Functions
   //!
