@@ -16,7 +16,8 @@ namespace eve
   //! @{
   //! @var ellint_2
   //!
-  //! @brief Callable object performing the computation of the ellint_2 operation.
+  //! @brief Callable object performing the computation of the elliptic integrals of the second kind :
+  //!        \f$ \int_0^{\phi} \scriptstyle \sqrt{1-k^2\sin^2 t} \scriptstyle\;\mathrm{d}t\f$
   //!
   //!
   //! **Required header:**
@@ -46,7 +47,7 @@ namespace eve
   //!
   //! computes the complete and incomplete elliptic integrals of the second kind :
   //!
-  //!\f[ F(\phi,k) = \int_0^{\phi} \sqrt{1-k^2\sin^2 t\mbox{d}t}\f]
+  //!\f[ F(\phi,k) = \int_0^{\phi} \sqrt{1-k^2\sin^2 t}\mbox{d}t\f]
   //!
   //!The complete case corresponds to \f$\phi = \pi/2\f$.
   //!

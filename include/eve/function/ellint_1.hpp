@@ -16,7 +16,8 @@ namespace eve
   //! @{
   //! @var ellint_1
   //!
-  //! @brief Callable object performing the computation of the ellint_1 operation.
+  //! @brief Callable object performing the computation of the elliptic integrals of the first kind :
+  //!        \f$\int_0^{\phi} \frac{\mathrm{d}t}{\sqrt{1-k^2\sin^2 t}}\f$.
   //!
   //!
   //! **Required header:**

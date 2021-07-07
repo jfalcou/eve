@@ -16,7 +16,10 @@ namespace eve
   //! @{
   //! @var ellint_rg
   //!
-  //! @brief Callable object performing the computation of the ellint_rg operation.
+  //! @brief Callable object performing the computation of the the Carlson's elliptic integral
+  //!        \f$\frac1{4\pi} \int_{0}^{2\pi}\int_{0}^{\pi} \scriptstyle\sqrt{x\sin^2\theta\cos^2\phi
+  //!                                    +y\sin^2\theta\sin^2\phi
+  //!                                    +z\cos^2\theta} \scriptstyle\;\mathrm{d}\theta\;\mathrm{d}\phi\f$
   //!
   //!
   //! **Required header:**
