@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var conj
   //!
-  //! @brief Callable object performing the computation of the computation of the conjugate value.
+  //! @brief Callable object performing the computation of the conjugate value.
   //!
   //!
   //! **Required header:**
@@ -35,7 +35,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< real_floating_value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(eve::floating_value auto x ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -45,7 +45,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!This function always returns `x`.
+  //!This function acts as identity on real entries
   //!
   //! ---
   //!

@@ -35,17 +35,26 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(eve::value auto const&... xs) const noexcept;
+  //!  auto operator()(eve::value auto const& x, eve::value auto const&... xs) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //! `xs`:  Instances of eve::value. Behavior is undefined if any `xs` is integral and equal to 0.
+  //! `x`    Instance of eve::value.
+  //!
+  //! `xs`:  Instances of eve::value. Behavior is undefined if the expected result type is integral and any `xs` is  equal to 0.
   //!
   //! **Return value**
   //!
-  //! A value of the [common compatible type](@ref common_compatible) of all `xs` containing the
-  //! [elementwise](@ref glossary_elementwise) division of all `xs`.
+  //! A value of the [common compatible type](@ref common_compatible) of `x` and all `xs` containing the
+  //! [elementwise](@ref glossary_elementwise) division of `x` by all `xs`.
+  //! The result is semantically equivalent to `x/mul(xs...)`
+  //!
+  //! With two parameters, the call `div(x, y)` is equivalent to `x / y` if `x` or  `y` is an  [simd value](../../concepts.html#value).
+  //!
+  //!@warning
+  //!   Although the infix notation with `/` is supported, the `/` operator on
+  //!   standard scalar types is the original one and so can lead to automatic promotion.
   //!
   //! ---
   //!
@@ -68,21 +77,24 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!   * eve::saturated
+  //!   - eve::saturated<br>
+  //!     **Required header:** `#include <eve/function/saturated/div.hpp>`
   //!
+  //!     The expression `eve::saturated(eve::div)(x, xs...)` computes the saturated division of `x` by
+  //!     all `xs`. The result is semantically equivalent to `x/saturated(mul)(xs...)` but is always defined even
+  //!     if the denominator is 0.
   //!
-  //!     **Required header:** `#include <eve/function/saturated/abs.hpp>`
+  //!     The relevant cases are just in fact  the division by 0 for integral types in which case the result
+  //!     is [`eve::Valmin(as(x))`](../../constants/limits/valmin.html) or
+  //!     [`eve::Valmax(as(x))`](../../constants/limits/valmax.html) according to the dividend sign, and
+  //!     the division of [`eve::Valmin(as(x))`](../../constants/limits/valmin.html)
+  //!     by -1 that produces [`eve::Valmax(as(x))`](../../constants/limits/valmax.html).
   //!
-  //!     The expression `eve::saturated(eve::div)(xs...)` computes the saturated division of
-  //!     all `xs`.
-  //!
-  //!   * eve::diff
-  //!
-  //!
+  //!   - eve::diff<br>
   //!     **Required header:** `#include <eve/function/diff/div.hpp>`
   //!
-  //!     The expression `eve::diff<N>(eve::div)(xs...)` computes the derivative of the division
-  //!     of `xs...` over the Nth parameters.
+  //!     The expression `eve::diff<N>(eve::div)(x, xs...)` computes the derivative of the division
+  //!     over the Nth parameter.
   //!
   //! #### Example
   //!

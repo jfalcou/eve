@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var copysign
   //!
-  //! @brief Callable object performing the computation of sign copying operation.
+  //! @brief Callable object performing the sign copying operation.
   //!
   //!
   //! **Required header:**
@@ -46,8 +46,9 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#regular) composition of a value with the magnitude of `x`
-  //!and the bit of sign of `y`.
+  //!   Returns the [element-wise](../../../glossary.html#regular) composition of a value with the magnitude of `x`
+  //!   and the bit of sign of `y`.
+  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
@@ -68,7 +69,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  decorators NOT FOUND
+  //!  no decorators are supported
   //!
   //! #### Example
   //!
@@ -82,4 +83,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/copysign.hpp>
-

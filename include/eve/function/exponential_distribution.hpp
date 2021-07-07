@@ -69,7 +69,7 @@
   //!
   //! #### Supported decorators
   //!
-  //!  decorators NOT FOUND
+  //!  no decorators are supported
   //!
   //! #### Example
   //!

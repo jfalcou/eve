@@ -16,13 +16,10 @@ namespace eve
   //! @{
   //! @var average
   //!
-  //! @brief Callable object performing the computation of the mid-point operation.
+  //! @brief Callable object performing the computation of the average of multiple values.
   //!
   //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/average.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! **Required header:** `#include <eve/function/average.hpp>`
   //!
   //!
   //! #### Members Functions
@@ -51,16 +48,17 @@ namespace eve
   //!
   //!For two parameters half the sum of `x` and `y`. No overflow occurs.
   //!
-  //!For more than two parameters only floating entries are allowed and overflow is  avoided.
+  //!For more than two parameters only floating entries are allowed and overflow is avoided.
   //!
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
   //!
   //!@warning
-  //!    If `x` and `y` are [real integral values](../../concepts.html#value) and the sum is odd, the result is a rounded value at a distance guaranteed
+  //!    If `x` and `y` are [real integral values](../../concepts.html#value) and the sum is odd, the result
+  //!    is a rounded value at a distance guaranteed
   //!    to be less than or equal to 0.5 of the average floating value, but may differ
   //!    by unity from the truncation given by `(x+y)/2`. Moreover, as some architectures provide
   //!    simd intrinsics to perform the operation, the scalar results may differ by one unit from
-  //!    simd ones and is system dependent.
+  //!    simd ones which are system dependent.
   //!
   //!
   //! ---
@@ -84,19 +82,16 @@ namespace eve
   //! #### Supported decorators
   //!
   //!  ====================================================================================================
-  //!  * `diff_nth`
-  //!
-  //!
+  //!  * `diff_nth`<br>
   //!     **Required header:** `#include <eve/function/diff/average.hpp>`
   //!
   //!     The expression `diff_nth< N >(average)(x,args...)` computes the partial
-  //!      diff of the function relative to its Nth parameter. The returned value is 0 if N is
+  //!      derivative of the function relative to its Nth parameter. The returned value is 0 if N is
   //!      greater that the actual number of parameters, otherwise it is the inverse of the number of parameters.
   //!
   //!      This is only available for floating point entries.
   //!
-  //!  * `raw`
-  //!
+  //!  * `raw`<br>
   //!     when `raw(average)(x, args, ...)` is used, no provision is made to avoid overflows for more than 2 parameters.
   //!
   //!

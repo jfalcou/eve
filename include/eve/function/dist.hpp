@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var dist
   //!
-  //! @brief Callable object performing the computation of the distance operation.
+  //! @brief Callable object performing the computation of the distance between two values.
   //!
   //!
   //! **Required header:**
@@ -84,7 +84,6 @@ namespace eve
   //!  ====================================================================================================
   //!  * `saturated`
   //!
-  //!
   //!     **Required header:**  #include <eve/function/saturated/dist.hpp>
   //!
   //!     The call `saturated(dist)(x, y)` computes a saturated distance. Contrary to the [regular case](../decorator/regular.html), it guarantees
@@ -93,11 +92,10 @@ namespace eve
   //!
   //!  * `diff`
   //!
-  //!
   //!     **Required header:** #include <eve/function/diff/dist.hpp>
   //!
-  //!     The expression `diff_1st(dist)(x,y)` and `diff_2nd(dist)(x,y)` computes the partial
-  //!      diffs of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ |x-y|\f$.
+  //!     The expression `diff_1st(dist)(x,y)` and `diff_2nd(dist)(x,y)` compute the partial
+  //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ |x-y|\f$.
   //!
   //!
   //! #### Example

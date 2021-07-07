@@ -72,15 +72,12 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
-  //!  * `diff`
-  //!
+  //!  * `diff`<br>
   //!     **Required header:**  #include <eve/function/diff/fdim.hpp>
-  //! 
-  //!  
-  //!     The expression `diff_1st(fim)(x,y)` and `diff_2nd(fim)(x,y)` computes the partial
-  //!      diffs of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \max(0,x-y)\f$.
-  //!  
+  //!
+  //!       The expression `diff_1st(fim)(x,y)` and `diff_2nd(fim)(x,y)` computes the partial
+  //!       diffs of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \max(0,x-y)\f$.
+  //!
   //!
   //! #### Example
   //!
@@ -94,4 +91,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/fdim.hpp>
-

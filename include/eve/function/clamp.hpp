@@ -19,7 +19,7 @@ namespace eve
   //! @{
   //! @var clamp
   //!
-  //! @brief Callable object performing the computation of the clamping operation.
+  //! @brief Callable object clamping a value between two others.
   //!
   //!
   //! **Required header:**
