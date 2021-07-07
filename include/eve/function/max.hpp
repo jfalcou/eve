@@ -88,7 +88,7 @@ namespace eve
   //!     **Required header:**  #include <eve/function/diff/max.hpp>
   //!  
   //!     The expression `diff< N >(max)(x,args,...)` computes the partial
-  //!      diff relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and
+  //!      derivative relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and
   //!      their maximum is \f$m\f$, the value returned is 1 if \f$m\f$ is equal to \f$x_N\f$ and otherwise 0.
   //!
   //! #### Example

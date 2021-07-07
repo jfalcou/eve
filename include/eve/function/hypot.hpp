@@ -78,7 +78,7 @@ namespace eve
   //!     **Required header:**  #include <eve/function/diff/hypot.hpp>
   //!
   //!     The expression `diff_< N >(hypot)(x,args...)` computes the partial
-  //!      diff of the function relative to its Nth parameter. The returned value is 0 if N is
+  //!      derivativ of the function relative to its Nth parameter. The returned value is 0 if N is
   //!      greater that the actual number of parameters, otherwise it is the
   //!      `N`th parameter value divided by the `hypot` value.
   //!
