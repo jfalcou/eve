@@ -81,4 +81,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/is_negative.hpp>
-

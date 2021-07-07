@@ -93,4 +93,3 @@ namespace eve
 }
 
 #include <eve/module/real/math/function/regular/generic/cotpi.hpp>
-
