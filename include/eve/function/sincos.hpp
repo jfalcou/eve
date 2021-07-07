@@ -64,7 +64,6 @@ namespace eve
   //!  ====================================================================================================
   //!  As all direct trigonometric functions, `sincos` supports the restricted, small, medium and big decorators. Click
   //!  to see the [properties and rationale](../trigonometric.html)
-  //!  
   //!
   //! #### Example
   //!

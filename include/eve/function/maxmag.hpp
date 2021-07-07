@@ -79,27 +79,22 @@ namespace eve
   //!  * `pedantic`
   //!
   //!     **Required header:**  #include <eve/function/pedantic/maxmag.hpp>
-  //! 
   //!  
   //!  The behaviour is the same except that if  `|x| == |y|`, `pedantic(max)` is used.
   //!  
   //!  * `numeric`
   //!
   //!     **Required header:**  #include <eve/function/numeric/maxmag.hpp>
-  //! 
   //!  
   //!  The behaviour is the same except that if  `|x| == |y|`, `numeric(max)` is used.
   //!  
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/maxmag.hpp>
-  //! 
   //!  
   //!     The expression `diff< N >(maxmag)(x,args,...)` computes the partial
   //!      diff relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and
   //!      their maxmag is \f$m\f$, the value returned is elementwise 1 if \f$m\f$ is equal to \f$x_N\f$ else 0.
-  //!  
-  //!  
   //!
   //! #### Example
   //!

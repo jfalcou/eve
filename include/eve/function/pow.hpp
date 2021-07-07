@@ -91,11 +91,9 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/pow.hpp>
-  //! 
   //!  
   //!     The expression `diff_1st(pow)(x,y)` and `diff_2nd(pow)(x,y)` computes the partial
   //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ x^y\f$.
-  //!  
   //!
   //! #### Example
   //!

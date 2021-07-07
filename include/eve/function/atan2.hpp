@@ -85,7 +85,6 @@ namespace eve
   //!  * `pedantic`
   //!
   //!     **Required header:**  #include <eve/function/pedantic/atan2.hpp>
-  //! 
   //!  
   //!     The call `pedantic(atan2)(`x`,`y`)` returns the same results as the regular call, but all
   //!      **IEEE** limiting values are satisfied :
@@ -98,11 +97,9 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/atan2.hpp>
-  //! 
   //!  
   //!     The expression `diff_1st(atan2)(x,y)` and `diff_2nd(atan2)(x,y)` computes the partial
   //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \mbox{atan2}(x,y)\f$.
-  //!  
   //!
   //! #### Example
   //!

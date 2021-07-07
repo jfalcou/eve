@@ -74,11 +74,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/log1p.hpp>
-  //! 
   //!  
   //!     The expression `diff(log1p)(x)` computes the derivative of the function at `x`.
-  //!  
-  //!  
   //!
   //! #### Example
   //!

@@ -72,11 +72,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/asech.hpp>
-  //! 
   //!  
   //!     The expression `diff(asech)(x)` computes the derivative of the function at `x`.
-  //!  
-  //!  
   //!
   //! #### Example
   //!

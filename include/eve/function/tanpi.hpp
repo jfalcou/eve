@@ -75,11 +75,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/tanpi.hpp>
-  //! 
   //!  
   //!     The expression `diff(tanpi)(x)` computes the derivative of the function at `x`.
-  //!  
-  //!  
   //!
   //! #### Example
   //!

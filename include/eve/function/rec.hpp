@@ -74,11 +74,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/rec.hpp>
-  //! 
   //!  
   //!     The expression `diff(rec)(x)` computes the derivative of the function at `x`.
-  //!     
-  //!  
   //!
   //! #### Example
   //!

@@ -76,7 +76,6 @@ namespace eve
   //!  * `saturated`
   //!
   //!     **Required header:**  #include <eve/function/saturated/mul.hpp>
-  //! 
   //!  
   //!     The call `saturated(mul)(x, args...)` computes the saturated  multiplication of `x` and `y`. The saturation is obtained in the
   //!       [compatibility result](../../concept.html#compatibility) of the two parameters. No overflow occurs.
@@ -84,7 +83,6 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/mul.hpp>
-  //! 
   //!  
   //!     The expression `diff_< N >(mul)(x,args,...)` computes the partial
   //!      diff of the function relative to the Nth parameter.
@@ -110,7 +108,6 @@ namespace eve
   //!  
   //!  !!! Warning
   //!      This is only available for two parameters.
-  //!  
   //!
   //! #### Example
   //!

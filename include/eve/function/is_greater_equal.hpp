@@ -74,7 +74,6 @@ namespace eve
   //!  * `almost`
   //!
   //!     **Required header:**  #include <eve/function/almost/is_greater_equal.hpp>
-  //! 
   //!  
   //!     The expression `almost(is_greater_equal)(x, y, t)` where `x` and `y` must be
   //!      floating point values, evals to true if and only if `x` is almost greater or equal to `y`.
@@ -83,7 +82,6 @@ namespace eve
   //!      - if `t` is a floating_value then  \f$x \ge y - t \max(|x|, |y|)\f$
   //!      - if `t` is a positive integral_value then \f$x \ge  \mbox{prev}(y, t)\f$;
   //!      - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
-  //!  
   //!
   //! #### Example
   //!

@@ -65,7 +65,6 @@ namespace eve
   //!  * `tolerant`
   //!
   //!     **Required header:**  #include <eve/function/tolerant/floor.hpp>
-  //! 
   //!  
   //!     The expression `tolerant(floor)(x, tol)` computes a tolerant floor value for `x`, where `x` must be a floating value..
   //!  
@@ -76,10 +75,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/floor.hpp>
-  //! 
   //!  
   //!     The expression `diff(floor)(x)` computes the derivative of the function at `x`.
-  //!  
   //!
   //! #### Example
   //!

@@ -69,7 +69,6 @@ namespace eve
   //!  * `pedantic`
   //!
   //!     **Required header:**  #include <eve/function/pedantic/max.hpp>
-  //! 
   //!  
   //!     The call `pedantic(max)(x,args,...)`  ensures the conformity to the standard behaviour, that is
   //!      for two parameters  (on an  [element-wise](../../../glossary.html#value) basis)
@@ -80,7 +79,6 @@ namespace eve
   //!  * `numeric`
   //!
   //!     **Required header:**  #include <eve/function/numeric/max.hpp>
-  //! 
   //!  
   //!     The call `numeric(max)(x,args,...)`  ensures that  if any element of the inputs is not a `Nan`, the corresponding
   //!      output element will not be a `Nan`.
@@ -88,17 +86,10 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/max.hpp>
-  //! 
   //!  
   //!     The expression `diff< N >(max)(x,args,...)` computes the partial
   //!      diff relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and
   //!      their maximum is \f$m\f$, the value returned is 1 if \f$m\f$ is equal to \f$x_N\f$ and otherwise 0.
-  //!  
-  //!  
-  //!  
-  //!  
-  //! 
-  //!  
   //!
   //! #### Example
   //!

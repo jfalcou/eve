@@ -65,7 +65,6 @@ namespace eve
   //!  * `tolerant`
   //!
   //!     **Required header:**  #include <eve/function/tolerant/ceil.hpp>
-  //! 
   //!  
   //!     The expression `tolerant(ceil)(x, tol)` computes a tolerant ceil value for `x`, where `x` must be a floating value.
   //!  
@@ -76,10 +75,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/ceil.hpp>
-  //! 
   //!  
   //!     The expression `diff(ceil)(x)` computes the derivative of the function at `x`.
-  //!  
   //!
   //! #### Example
   //!

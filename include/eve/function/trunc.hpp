@@ -70,7 +70,6 @@ namespace eve
   //!  * `tolerant`
   //!
   //!     **Required header:**  #include <eve/function/tolerant/trunc.hpp>
-  //! 
   //!  
   //!     The expression `tolerant(trunc)(x, tol)` computes a tolerant truncated value for `x`, where `x` must be a floating value.
   //!  
@@ -81,10 +80,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/trunc.hpp>
-  //! 
   //!  
   //!     The expression `diff(trunc)(x)` computes the derivative of the function at `x` .
-  //!  
   //!
   //! #### Example
   //!

@@ -70,10 +70,8 @@ namespace eve
   //!  * `pedantic`
   //!
   //!     **Required header:**  #include <eve/function/pedantic/modf.hpp>
-  //! 
   //!  
   //!     The call `pedantic(modf)(x)` ensures standard conformity : if `x` is infinite, `{0, x}` is returned.
-  //!  
   //!
   //! #### Example
   //!

@@ -81,10 +81,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/round.hpp>
-  //! 
   //!  
   //!     The expression `diff(round)(x)` computes the derivative of the function at `x` (it is the same as `nearest`).
-  //!  
   //!
   //! #### Example
   //!

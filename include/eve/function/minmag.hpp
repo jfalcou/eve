@@ -77,27 +77,22 @@ namespace eve
   //!  * `pedantic`
   //!
   //!     **Required header:**  #include <eve/function/pedantic/minmag.hpp>
-  //! 
   //!  
   //!  The behaviour is the same except that if  `|x| == |y|`, `pedantic(min)` is used.
   //!  
   //!  * `numeric`
   //!
   //!     **Required header:**  #include <eve/function/numeric/minmag.hpp>
-  //! 
   //!  
   //!  The behaviour is the same except that if  `|x| == |y|`, `numeric(min)` is used.
   //!  
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/minmag.hpp>
-  //! 
   //!  
   //!     The expression `diff< N >(minmag)(x,args,...)` computes the partial
   //!      diff relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and
   //!      their minmag is \f$m\f$, the value returned is elementwise 1 if \f$m\f$ is equal to \f$x_N\f$ else 0.
-  //!  
-  //!  
   //!
   //! #### Example
   //!

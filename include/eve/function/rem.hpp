@@ -81,14 +81,12 @@ namespace eve
   //!      * If `y` is  \f$\pm\infty\f$ and `x` is finite, `x` is returned.
   //!      * If either argument is a Nan, NaN is returned.
   //!  
-  //!  
   //!  * `downward`
   //!     The call `downward(rem)(x, y)`  computes  `x-downward(div)(x, y)*y`.
   //!  
   //!  * `upward`
   //!     The call `upward(rem)(x, y)`  computes  `x-upward(div)(x, y)*y`.
   //!      It is not defined for unsigned values as the result can be negative.
-  //!  
   //!  
   //!  * `to_nearest`
   //!     The call `to_nearest(rem)(x, y)`  computes  `x-to_nearest(div)(x,y)*y`.
@@ -112,7 +110,6 @@ namespace eve
   //!  
   //!   *  `if_else(cond, rem(x,y), x)`,
   //!   *  `if_else(cond, d_(rem)(x,y), x)`;
-  //!  
   //!
   //! #### Example
   //!

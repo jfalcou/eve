@@ -76,11 +76,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/exp2.hpp>
-  //! 
   //!  
   //!     The expression `diff(exp2)(x)` computes the derivative of the function at `x`.
-  //!  
-  //!  
   //!
   //! #### Example
   //!

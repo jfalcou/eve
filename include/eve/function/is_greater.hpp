@@ -74,7 +74,6 @@ namespace eve
   //!  * `definitely`
   //!
   //!     **Required header:**  #include <eve/function/definitely/is_greater.hpp>
-  //! 
   //!  
   //!     The expression `definitely(is_greater)(x, y, t)` where `x` and `y` must be
   //!      floating point values, evals to true if and only if `x` is definitely greater than `y`.
@@ -83,7 +82,6 @@ namespace eve
   //!      - if `t` is a floating_value then  \f$x > y + t \max(|x|, |y|)\f$
   //!      - if `t` is a positive integral_value then \f$x > \mbox{next}(y, t)\f$;
   //!      - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
-  //!  
   //!
   //! #### Example
   //!

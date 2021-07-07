@@ -69,11 +69,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/gegenbauer.hpp>
-  //! 
   //!  
   //!     The expression `diff(gegenbauer)(n,l,x)` computes the derivative of the function at `x`.
-  //!  
-  //!  
   //!
   //! #### Example
   //!

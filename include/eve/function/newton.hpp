@@ -76,7 +76,6 @@ namespace eve
   //!  * `pedantic`
   //!
   //!     **Required header:**  #include <eve/function/pedantic/newton.hpp>
-  //! 
   //!  
   //!     The expression `pedantic(newton)(...)` computes the result using `pedantic(fma)(a,x,b)` for `a*x+b` instead of
   //!      `fma(a,x,b)`.
@@ -84,12 +83,9 @@ namespace eve
   //!  * `numeric`
   //!
   //!     **Required header:**  #include <eve/function/numeric/newton.hpp>
-  //! 
   //!  
   //!     The expression `numeric(newton)(...)` computes the result using `numeric(fma)(a,x,b)` for `a*x+b` instead of
   //!      `fma(a,x,b)`.
-  //!  
-  //!  
   //!
   //! #### Example
   //!

@@ -49,9 +49,9 @@ namespace eve
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
   //!
   //!@warning
-  //!    if the number of parameters is even and the product of the parameters is srictly negative the result is a Nan.
-  //!
-  //!    if the number of parameters is odd the result has the sign of the product of the parameters
+  //!    for real_floating_value input types
+  //!    * if the number of parameters is even and the product of the parameters is srictly negative the result is a Nan.
+  //!    * if the number of parameters is odd the result has the sign of the product of the parameters
   //!
   //! ---
   //!
@@ -77,13 +77,10 @@ namespace eve
   //!  * `diff_nth`
   //!
   //!     **Required header:**  #include <eve/function/diff/geommean.hpp>
-  //! 
-  //!  
+  //!
   //!     The expression `diff_nth< N >(geommean)(x,args...)` computes the partial
-  //!      diff of the function relative to its Nth parameter. The returned value is 0 if N is
+  //!      derivative of the function relative to its Nth parameter. The returned value is 0 if N is
   //!      greater that the actual number of parameters, otherwise it is similar to `geommean(x1,x2,...,xn)/(n*xN)`.
-  //!  
-  //!  
   //!
   //! #### Example
   //!

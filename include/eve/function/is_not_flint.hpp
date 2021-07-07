@@ -78,10 +78,6 @@ namespace eve
   //!      that integral typed values are not floating and so `pedantic(is_not_flint)(x)` returns true for all elements of this types. Moreover a
   //!      floating point value is pedantically deemed as flint only is the next representable value is not flint, so
   //!      great floating values are not pedantically flint.
-  //!  
-  //!  
-  //! 
-  //!  
   //!
   //! #### Example
   //!

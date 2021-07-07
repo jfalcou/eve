@@ -74,10 +74,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/cos.hpp>
-  //! 
   //!  
   //!     The expression `diff(cos)(x)` computes the derivative of the function at `x`.
-  //!  
   //!
   //! #### Example
   //!

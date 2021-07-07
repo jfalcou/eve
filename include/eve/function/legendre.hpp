@@ -70,11 +70,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/legendre.hpp>
-  //! 
   //!  
   //!     The expression `diff(legendre)(n,x)` computes the derivative of the function at `x`.
-  //!  
-  //!  
   //!
   //! #### Example
   //!

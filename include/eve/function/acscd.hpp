@@ -73,11 +73,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/acscd.hpp>
-  //! 
   //!  
   //!     The expression `diff(acscd)(x)` computes the derivative of the function at `x`.
-  //!  
-  //!  
   //!
   //! #### Example
   //!
