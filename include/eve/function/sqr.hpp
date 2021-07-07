@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the sqr operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/sqr.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/sqr.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Computes  [element-wise](../../../glossary.html#elment-wise) the square of `x`.
@@ -50,9 +44,6 @@ namespace eve
   //!@warning
   //!   For  [real integral signed values](../../concepts.html#value)   if `saturated(abs)(x)`
   //!   is greater than [`eve::Sqrtvalmax(as(x))`](../../constants/limits/sqrtvalmax.html) the corresponding element result is undefined .
-  //!
-  //!
-  //!
   //!
   //! ---
   //!
@@ -111,4 +102,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/sqr.hpp>
-

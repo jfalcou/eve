@@ -19,12 +19,7 @@
   //!
   //! @brief Callable object performing the computation of   //!  description NOT FOUND.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/poisson_distribution.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/poisson_distribution.hpp>`
   //!
   //! #### Members Functions
   //!

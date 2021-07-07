@@ -20,12 +20,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the logical NOT operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/logical_not.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/logical_not.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -43,8 +38,6 @@ namespace eve
   //! **Parameters**
   //!
   //!`x`:   [values](../../concepts.html#value).
-  //!
-  //!
   //!
   //! **Return value**
   //!
@@ -99,4 +92,3 @@ namespace eve::detail
     return !a;
   }
 }
-

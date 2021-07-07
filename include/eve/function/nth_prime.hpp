@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of unsigned integral nth_prime.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/nth_prime.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/nth_prime.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,14 +37,10 @@ namespace eve
   //!
   //!`n`:   [value](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
-  //!
   //!
   //! The result element type is the same as the input one unless a converter is applied to `nth_prime`.
   //! See the example below.
-  //!
   //!
   //! Almost no computations are made, the results are from a lookup table.
   //!
@@ -59,7 +50,6 @@ namespace eve
   //!@warning
   //!    this function will return 0 (or nan) as soon as the correct result will not be exactly represented
   //!    in the output type or (for the current implementation) if n is greater or equal to 10000.
-  //!
   //!
   //! ---
   //!

@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the bitwise OR operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/bit_or.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/bit_or.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -41,8 +36,6 @@ namespace eve
   //! **Parameters**
   //!
   //!`x`, `y`:   [values](../../concepts.html#value).
-  //!
-  //!
   //!
   //! **Return value**
   //!
@@ -86,4 +79,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/bit_or.hpp>
-

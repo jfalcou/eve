@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the fused multiply-substract operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/fms.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/fms.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -44,7 +39,6 @@ namespace eve
   //!
   //!`x`, `y`, `z`:   [values](../../concepts.html#value)
   //!
-  //!
   //! **Return value**
   //!
   //!The call `fms(x, y, z)` is similar to `x*y-z` as if calculated to infinite precision and rounded once
@@ -52,11 +46,9 @@ namespace eve
   //!
   //!The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
   //!
-  //!
   //!@warning Note
   //!    This `fms` implementation provides those properties for all [real integral values](../../concepts.html#integral_value)
   //!     and when possible for [real floating values](../../concepts.html#value).
-  //!
   //!
   //! ---
   //!
@@ -120,4 +112,3 @@ namespace eve
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/real/core/function/regular/simd/x86/fms.hpp>
 #endif
-

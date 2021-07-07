@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the fused multiply-add operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/fma.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/fma.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -44,7 +39,6 @@ namespace eve
   //!
   //!`x`, `y`, `z`:   [values](../../concepts.html#value)
   //!
-  //!
   //! **Return value**
   //!
   //!The call `fma(x, y, z)` is similar to `x*y+z` as if calculated to infinite precision and rounded once
@@ -52,11 +46,9 @@ namespace eve
   //!
   //!The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
   //!
-  //!
   //!@warning Note
   //!    This `fma` implementation provides those properties for all [real integral values](../../concepts.html#integral_value)
   //!     and when possible for [real floating values](../../concepts.html#value).
-  //!
   //!
   //! ---
   //!
@@ -83,26 +75,21 @@ namespace eve
   //!
   //!     **Required header:** #include <eve/function/pedantic/fma.hpp>
   //!
-  //!
   //!     The call `pedantic(fma)(x,y,z)` ensures the one rounding property. This can be very expensive if the
   //!      system has no hardware capability.
   //!  * `numeric`
   //!
   //!     **Required header:** #include <eve/function/numeric/fma.hpp>
   //!
-  //!
   //!     The call `numeric(fma)(x,y,z)` ensures the full compliance to fma properties. This can be very expensive if the
   //!      system has no hardware capability.
   //!
   //!  * `diff`
   //!
-  //!
   //!     **Required header:** #include <eve/function/diff/fma.hpp>
-  //!
   //!
   //!     The expression `diff_1st(fma)(x,y,z)`, `diff_2nd(fma)(x,y,z)` and `diff_3rd(fma)(x,y,z)` computes the partial
   //!      diffs of \f$f\f$, where \f$f\f$ is the function \f$(x,y,z) \rightarrow \ xy+z\f$.
-  //!
   //!
   //! #### Example
   //!

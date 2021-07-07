@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the modf operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/modf.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/modf.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!A pair of values with the same type as `x` containing respectively the [element-wise](../../../glossary.html#value) fractional and integral parts of `x`,
@@ -51,7 +45,6 @@ namespace eve
   //!In particular:
   //!  * If `x` is infinite `{Nan, x}` is returned.
   //!  * If `x` is a `Nan`  `{Nan, Nan}` is returned.
-  //!
   //!
   //! ---
   //!
@@ -94,4 +87,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/modf.hpp>
-

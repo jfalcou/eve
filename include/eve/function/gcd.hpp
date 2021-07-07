@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of greater common divisor operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/gcd.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/gcd.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,10 +37,7 @@ namespace eve
   //!
   //!`p`, `n`:   [values](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
-  //!
   //!
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
   //!

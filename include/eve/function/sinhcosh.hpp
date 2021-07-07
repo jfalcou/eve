@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of sinhcosh.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/sinhcosh.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/sinhcosh.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -41,7 +36,6 @@ namespace eve
   //! **Parameters**
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
-  //!
   //!
   //! **Return value**
   //!
@@ -82,4 +76,3 @@ namespace eve
 }
 
 #include <eve/module/real/math/function/regular/generic/sinhcosh.hpp>
-

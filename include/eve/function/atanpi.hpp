@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of atand.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/atanpi.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/atanpi.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) arc cotangent of the
@@ -53,7 +47,6 @@ namespace eve
   //!   * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
   //!   * If the element is \f$\pm\infty\f$, \f$\pm\frac\pi2\f$ is returned.
   //!   * If the element is a `Nan`, `NaN` is returned.
-  //!
   //!
   //! ---
   //!
@@ -97,4 +90,3 @@ namespace eve
 }
 
 #include <eve/module/real/math/function/regular/generic/atanpi.hpp>
-

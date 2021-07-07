@@ -20,12 +20,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the arithmetic right shift operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/shr.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/shr.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -46,7 +41,6 @@ namespace eve
   //!`x`:   [value](../../concepts.html#value).
   //!
   //!`n`:   [integral value](../../concepts.html#value).
-  //!
   //!
   //! **Return value**
   //!

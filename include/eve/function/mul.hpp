@@ -19,12 +19,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the mul operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/mul.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/mul.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -44,8 +39,6 @@ namespace eve
   //!
   //!`x`, `args`:   [values](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!Return the multiplication of the [values](../../concepts.html#value).
@@ -58,7 +51,6 @@ namespace eve
   //!@warning
   //!   Although the infix notation with `*` is supported, the `*` operator on
   //!   standard scalar type is the original one and so can lead to automatic promotion.
-  //!
   //!
   //! ---
   //!

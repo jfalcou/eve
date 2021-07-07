@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the computation of the is_not_flint logical value.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/is_not_flint.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/is_not_flint.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,9 +37,7 @@ namespace eve
   //!
   //!`x`:   [value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
-  //!
   //!
   //!The call:
   //!
@@ -58,7 +51,6 @@ namespace eve
   //!if   constexpr(floating_real_value<T>) r = is_nez(frac(x));
   //!else constexpr(integral_real_value<T>) r = False<T>());
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
   //!
   //! ---
   //!
@@ -103,4 +95,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/is_not_flint.hpp>
-

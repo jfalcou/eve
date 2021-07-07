@@ -21,12 +21,7 @@ namespace eve
   //!                                    +y\sin^2\theta\sin^2\phi
   //!                                    +z\cos^2\theta} \scriptstyle\;\mathrm{d}\theta\;\mathrm{d}\phi\f$
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/ellint_rg.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/ellint_rg.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -45,8 +40,6 @@ namespace eve
   //!
   //!`x`, `y`, `z`:   [floating values](../../concepts.html#value).
   //!
-  //!
-  //!
   //!  This computes the Carlson's elliptic integral
   //!
   //! \f[ R_G(x, y, z) = \frac1{4\pi} \int_{0}^{2\pi}\int_{0}^{\pi} \sqrt{x\sin^2\theta\cos^2\phi
@@ -57,7 +50,6 @@ namespace eve
   //!
   //!  Parameters `x` and `y` and `z`must be non-negative.
   //!  In any other case the result is nan.
-  //!
   //!
   //! **Return value**
   //!

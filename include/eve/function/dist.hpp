@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the distance between two values.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/dist.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/dist.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,9 +37,7 @@ namespace eve
   //!
   //!`x`, `y`:   [values](../../concepts.html#value)
   //!
-  //!
   //! **Return value**
-  //!
   //!
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
   //!auto r = dist(x,y);
@@ -59,7 +52,6 @@ namespace eve
   //!   the result type, the corresponding result [element](../../../glossary.html#element_) is undefined.
   //!
   //!   The result type is the [compatibility result](../../../glossary.html#compatibility) of the two parameters.
-  //!
   //!
   //! ---
   //!
@@ -96,7 +88,6 @@ namespace eve
   //!
   //!     The expression `diff_1st(dist)(x,y)` and `diff_2nd(dist)(x,y)` compute the partial
   //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ |x-y|\f$.
-  //!
   //!
   //! #### Example
   //!

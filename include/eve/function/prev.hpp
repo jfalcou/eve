@@ -23,12 +23,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the prevt operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/prev.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/prev.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -47,13 +42,10 @@ namespace eve
   //!
   //!`x`, `n`:   [values](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!computes [`element-wise`](../../../glossary.html#element-wise), the `n`th  representable value less than `x`.
   //!If `n` is zero returns `x`.
-  //!
   //!
   //! ---
   //!

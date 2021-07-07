@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the rem operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/rem.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/rem.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,8 +37,6 @@ namespace eve
   //!
   //!`x`, `y`:   [values](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!Return the remainderafter division division of `x` by `y`.
@@ -56,7 +49,6 @@ namespace eve
   //!   Although the infix notation with `%` is supported, the `%` operator on
   //!   standard integral scalar type is the original one and so can lead to automatic promotion.
   //!   Moreover due to C++ limitations `%` is not available for scalar floating point values.
-  //!
   //!
   //! ---
   //!
@@ -134,4 +126,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/rem.hpp>
-

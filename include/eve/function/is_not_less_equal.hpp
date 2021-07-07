@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the "not less or equal to" predicate.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/is_not_less_equal.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/is_not_less_equal.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -54,7 +49,6 @@ namespace eve
   //!    - if `t` is a floating_value then  \f$(x \ge y + t \max(|x|, |y|))\f$
   //!    - if `t` is a positive integral_value then \f$(x \ge \mbox{next}(y, t)\f$;
   //!    - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
-  //!
   //!
   //! **Return value**
   //!

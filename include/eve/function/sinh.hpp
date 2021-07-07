@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of sinh.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/sinh.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/sinh.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) hyperbolic sine of the input.
@@ -52,7 +46,6 @@ namespace eve
   //!   * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
   //!   * If the element is \f$\pm\infty\f$, \f$\pm\infty\f$ returned.
   //!   * If the element is a `NaN`, `NaN` is returned.
-  //!
   //!
   //! ---
   //!
@@ -96,4 +89,3 @@ namespace eve
 }
 
 #include <eve/module/real/math/function/regular/generic/sinh.hpp>
-

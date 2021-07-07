@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the conjugate value.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/conj.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/conj.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -41,7 +36,6 @@ namespace eve
   //! **Parameters**
   //!
   //!`x`:  the [value](../../concepts.html#value) to conjugate
-  //!
   //!
   //! **Return value**
   //!

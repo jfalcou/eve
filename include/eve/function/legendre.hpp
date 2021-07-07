@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the legendre operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/legendre.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/legendre.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -44,15 +39,12 @@ namespace eve
   //!
   //!`x`:   [floating valuex](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!Returns [element-wise](../../../glossary.html#value) the value of the first kind Legendre polynomial of order `n` at `x`.
   //!By choice returns a nan if x is outside of \f$[-1,1]\f$.
   //!
   //!The result type is of the compatibility type of the  parameters.
-  //!
   //!
   //! ---
   //!

@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the computation of the is_ordered logical value.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/is_ordered.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/is_ordered.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,10 +37,7 @@ namespace eve
   //!
   //!`x`, `y`:   [values](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
-  //!
   //!
   //!The call:
   //!

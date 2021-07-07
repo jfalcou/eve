@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the bitwise AND operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/bit_and.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/bit_and.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -41,8 +36,6 @@ namespace eve
   //! **Parameters**
   //!
   //!`x`, `y`:   [values](../../concepts.html#value).
-  //!
-  //!
   //!
   //! **Return value**
   //!
@@ -85,4 +78,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/bit_and.hpp>
-

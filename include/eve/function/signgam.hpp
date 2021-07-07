@@ -19,12 +19,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the sign of the \f$\Gamma\f$ function.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/signgam.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/signgam.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,8 +37,6 @@ namespace eve
   //! **Parameters**
   //!
   //!`x`:   [value](../../concepts.html#value).
-  //!
-  //!
   //!
   //! **Return value**
   //!

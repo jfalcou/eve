@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of acot.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/acot.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/acot.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) arc cotangent of the
@@ -53,8 +47,6 @@ namespace eve
   //!   * If the element is \f$\pm0\f$, \f$\pm\frac\pi2\f$ is returned.
   //!   * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
   //!   * If the element is a `Nan`, `NaN` is returned.
-  //!
-  //!
   //!
   //! ---
   //!

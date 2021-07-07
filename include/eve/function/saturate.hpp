@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of   //!  description NOT FOUND.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/saturate.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/saturate.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -44,7 +39,6 @@ namespace eve
   //!`x`:   [value](../../concepts.html#value) to saturate.
   //!
   //!`t`:   [Type wrapper](../types/as.html#as_) instance embedding the type to saturate `x` to.
-  //!
   //!
   //! **Return value**
   //!
@@ -101,4 +95,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/saturate.hpp>
-

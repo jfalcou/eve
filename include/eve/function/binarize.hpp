@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the computation of the binarize operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/binarize.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/binarize.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -43,9 +38,7 @@ namespace eve
   //!`c`:   [logical value](../../concepts.html#value).
   //!`v`:   [scalar value](../../concepts.html#value) defaulting to 1.
   //!
-  //!
   //! **Return value**
-  //!
   //!
   //!The call:
   //!
@@ -91,4 +84,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/binarize.hpp>
-

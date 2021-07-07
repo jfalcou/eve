@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the firstbitset operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/firstbitset.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/firstbitset.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -41,7 +36,6 @@ namespace eve
   //! **Parameters**
   //!
   //!`x`:   [unsigned value](../../concepts.html#value).
-  //!
   //!
   //! **Return value**
   //!
@@ -81,4 +75,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/firstbitset.hpp>
-

@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of asin.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/asin.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/asin.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) arc sine of the
@@ -53,7 +47,6 @@ namespace eve
   //!   * If the element is \f$1\f$, \f$+0\f$ is returned.
   //!   * If the element \f$|x| > 1\f$, `NaN` is returned.
   //!   * If the element is a `Nan`, `NaN` is returned.
-  //!
   //!
   //! ---
   //!

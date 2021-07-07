@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the ceil operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/ceil.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/ceil.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,12 +37,9 @@ namespace eve
   //!
   //!`x`:   [value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Computes  [element-wise](../../../glossary.html#elment-wise) the smallest integer not less than `x`.
-  //!
-  //!
   //!
   //! ---
   //!

@@ -19,12 +19,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the base 10  logarithm.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/log10.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/log10.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -43,7 +38,6 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) the base 10 logarithm  of `x`
@@ -53,8 +47,6 @@ namespace eve
   //!   * If the element is \f$1\f$, \f$+0\f$ is returned.
   //!   * If the element is \f$\infty\f$, \f$\infty\f$ is returned.
   //!   * If the element is less than 0, `NaN` is returned.
-  //!
-  //!
   //!
   //! ---
   //!

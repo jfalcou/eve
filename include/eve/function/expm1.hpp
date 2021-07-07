@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of expm1.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/expm1.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/expm1.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) exponential input minus one, with good accuracy, even for small values of `x`
@@ -52,8 +46,6 @@ namespace eve
   //!   * If the element is \f$-\infty\f$, \f$-1\f$ is returned
   //!   * If the element is \f$\infty\f$, \f$\infty\f$ is returned
   //!   * If the element is a `NaN`, `NaN` is returned
-  //!
-  //!
   //!
   //! ---
   //!
@@ -97,4 +89,3 @@ namespace eve
 }
 
 #include <eve/module/real/math/function/regular/generic/expm1.hpp>
-

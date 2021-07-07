@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the logspace_sub operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/logspace_sub.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/logspace_sub.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -53,7 +48,6 @@ namespace eve
   //!    diff of the function relative to its Nth parameter. The returned value is 0 if N is
   //!    greater that the actual number of parameters, otherwise if the parameters are \f$x_1, ... x_n\f$ returns \f$\displaystyle\frac{s e^{x_N}}{e^{x_1} - ... - e^{x_n}}\f$
   //!    where \f$s\f$ is \f$1\f$ if \f$N = 1\f$ and \f$-1\f$ otherwise.
-  //!
   //!
   //! **Return value**
   //!

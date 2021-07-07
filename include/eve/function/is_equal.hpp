@@ -20,12 +20,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the equality predicate.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/is_equal.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/is_equal.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -44,8 +39,6 @@ namespace eve
   //!
   //!`x`, `y`:   [values](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!Returns the logical value containing the [element-wise](../../../glossary.html#value) equality test result
@@ -56,8 +49,6 @@ namespace eve
   //!@warning
   //!   Although the infix notation with `==` is supported, the `==` operator on
   //!   standard scalar types is the original one and so returns bool result, not `logical`.
-  //!
-  //!
   //!
   //! ---
   //!

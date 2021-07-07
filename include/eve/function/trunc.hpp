@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the trunc operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/trunc.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/trunc.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Computes  [element-wise](../../../glossary.html#elment-wise) the integral part of `x` with the same sign as  `x`.
@@ -51,7 +45,6 @@ namespace eve
   //!    This function object implements the `FE_TOWARDZERO` version.
   //!
   //!The call to `trunc(a)` is equivalent to the call `toward_zero(round)(a)`.
-  //!
   //!
   //! ---
   //!

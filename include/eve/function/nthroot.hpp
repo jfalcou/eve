@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the nthroot operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/nthroot.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/nthroot.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -43,15 +38,12 @@ namespace eve
   //!`x`:   [floating valuex](../../concepts.html#value).
   //!`n`:   [integral_value](../../concepts.html#value). Actually `n` can be a flint.
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!Returns [element-wise](../../../glossary.html#value) the value of \f$x^{1/n}\f$.
   //!For negative `x` the value returned is a Nan as soon as `n` is not an odd integer.
   //!
   //! The result type is of the compatibility type of the  parameters.
-  //!
   //!
   //! ---
   //!

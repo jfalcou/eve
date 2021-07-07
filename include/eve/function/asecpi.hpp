@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of asecpi.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/asecpi.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/asecpi.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) arc secant of the
@@ -54,7 +48,6 @@ namespace eve
   //!   * If the element is \f$0\f$, \f$1\f$ is returned.
   //!   * If the element \f$|x| < 1\f$, `NaN` is returned.
   //!   * If the element is a `Nan`, `NaN` is returned.
-  //!
   //!
   //! ---
   //!
@@ -98,4 +91,3 @@ namespace eve
 }
 
 #include <eve/module/real/math/function/regular/generic/asecpi.hpp>
-

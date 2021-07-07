@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the sign copying operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/copysign.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/copysign.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //! **Parameters**
   //!
   //!`x`, `y`:    [real floating values](../../concepts.html#value)
-  //!
   //!
   //! **Return value**
   //!

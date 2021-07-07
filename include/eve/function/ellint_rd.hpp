@@ -19,12 +19,7 @@ namespace eve
   //! @brief Callable object performing the computation of the  the Carlson's elliptic integral
   //!         \f$ \frac32 \int_{0}^{\infty} \scriptstyle[(t+x)(t+y)]^{-1/2} (t+z)^{-3/2}\scriptstyle\;\mathrm{d}t\f$.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/ellint_rd.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/ellint_rd.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -43,8 +38,6 @@ namespace eve
   //!
   //!`x`, `y`, `z`:   [floating values](../../concepts.html#value).
   //!
-  //!
-  //!
   //!  This computes the Carlson's elliptic integral
   //!
   //!  \f[ R_D(x, y, z) = \frac32 \int_{0}^{\infty} [(t+x)(t+y)]^{-1/2} (t+z)^{-3/2} \mbox{d}t\f]
@@ -53,7 +46,6 @@ namespace eve
   //!
   //!  Parameters `x` and `y`must be non-negative and at most one ot them  zero. Parameter `z` must be greater than 0.
   //!  In any other case the result is nan.
-  //!
   //!
   //! **Return value**
   //!

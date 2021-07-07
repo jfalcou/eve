@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the cubic root.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/cbrt.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/cbrt.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,11 +37,9 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) cubic root value of the input.
-  //!
   //!
   //! ---
   //!
@@ -70,14 +63,9 @@ namespace eve
   //!
   //!  * `diff`
   //!
-  //!
-  //!
   //!     **Required header:** #include <eve/function/diff/cbrt.hpp>
   //!
   //!     The expression `diff(cbrt)(x)` computes the derivative of the function at `x`.
-  //!
-  //!
-  //!
   //!
   //! #### Example
   //!

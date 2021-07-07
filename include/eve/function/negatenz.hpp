@@ -16,10 +16,7 @@ namespace eve
   //! @{
   //! @var negaten
   //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/negatenz.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! **Required header:** `#include <eve/function/negatenz.hpp>`
   //!
   //! <br/>Callable object performing the computation of the negatenz operation.
   //!
@@ -39,7 +36,6 @@ namespace eve
   //! **Parameters**
   //!
   //!`x`, `y`:   [values](../../concepts.html#value).
-  //!
   //!
   //! **Return value**
   //!

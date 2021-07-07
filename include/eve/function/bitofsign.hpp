@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the computation of the bitofsign value.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/bitofsign.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/bitofsign.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -41,7 +36,6 @@ namespace eve
   //! **Parameters**
   //!
   //!`x`:   [value](../../concepts.html#value).
-  //!
   //!
   //! **Return value**
   //!
@@ -86,4 +80,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/bitofsign.hpp>
-

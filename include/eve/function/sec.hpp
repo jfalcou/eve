@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of sec.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/sec.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/sec.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) secant of the input.
@@ -52,8 +46,6 @@ namespace eve
   //!   * If the element is \f$\pm0\f$, \f$1\f$ is returned.
   //!   * If the element is \f$\pm\infty\f$, Nan is returned.
   //!   * If the element is a `NaN`, `NaN` is returned.
-  //!
-  //!
   //!
   //! ---
   //!
@@ -100,4 +92,3 @@ namespace eve
 }
 
 #include <eve/module/real/math/function/regular/generic/sec.hpp>
-

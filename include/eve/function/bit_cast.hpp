@@ -16,12 +16,7 @@
   //!
   //! @brief Callable object performing the computation of **TODO: FILL THIS BLANK**.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/bit_cast.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/bit_cast.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -43,7 +38,6 @@
   //!
   //!OTHER PARAMETERS
   //!:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
-  //!
   //!
   //! **Return value**
   //!

@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the maxmag operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/maxmag.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/maxmag.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -43,7 +38,6 @@ namespace eve
   //!
   //!`x`, `args`:   [values](../../concepts.html#value)
   //!
-  //!
   //! **Return value**
   //!
   //!the greatest absolute value is returned.
@@ -60,7 +54,6 @@ namespace eve
   //!
   //!@warning
   //!   If any element of the inputs is a `Nan`, the corresponding output element is system-dependent.
-  //!
   //!
   //! ---
   //!
@@ -120,4 +113,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/maxmag.hpp>
-

@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the minus unary operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/minus.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/minus.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Computes  [element-wise](../../../glossary.html#elment-wise) a value with the same type as `x`.
@@ -53,7 +47,6 @@ namespace eve
   //!@warning
   //!   Although the operator notation with `-` is supported, the `-` operator on
   //!   standard scalar type is the original one and so can lead to automatic promotion.
-  //!
   //!
   //! ---
   //!
@@ -116,4 +109,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/minus.hpp>
-

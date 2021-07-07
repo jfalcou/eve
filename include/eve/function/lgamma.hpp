@@ -19,12 +19,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the logarithm of the \f$\Gamma\f$ function.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/lgamma.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/lgamma.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -43,14 +38,11 @@ namespace eve
   //!
   //!`x`:   [value](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!Returns [element-wise](../../../glossary.html#value) \f$\displaystyle \log(|\Gamma(x)|)\f$
   //!
   //! The result type is of the same type as the  parameter.
-  //!
   //!
   //! ---
   //!
@@ -77,10 +69,7 @@ namespace eve
   //!
   //!     **Required header:**  #include <eve/function/diff/lgamma.hpp>
   //!
-  //!
   //!     The expression `diff(lgamma)(x)` computes the derivative of the function at `x`.
-  //!
-  //!
   //!
   //! #### Example
   //!

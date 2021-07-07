@@ -21,12 +21,7 @@ namespace eve
   //!
   //! @brief Callable object clamping a value between two others.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/clamp.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/clamp.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -48,7 +43,6 @@ namespace eve
   //!
   //!`lo`, `hi`:    the boundary [values](../../concepts.html#value) to clamp `x` to.
   //!
-  //!
   //! **Return value**
   //!
   //!Each [element](../../../glossary.html#regular)  of the result contains:
@@ -60,7 +54,6 @@ namespace eve
   //!
   //!@warning
   //!    Contrary to the standard implementation `clamp` does not return a reference.
-  //!
   //!
   //! ---
   //!
@@ -85,12 +78,10 @@ namespace eve
   //!  ====================================================================================================
   //!  * `diff`
   //!
-  //!
   //!     **Required header:** #include <eve/function/diff/clamp.hpp>
   //!
   //!     The expression `diff_1st(clamp)(x,y,z)`, `diff_2nd(clam)(x,y,z)` and `diff_3rd(clam)(x,y,z)` computes the partial
   //!      diffs of \f$f\f$, where \f$f\f$ is the function \f$(x,y,z) \rightarrow \ \mbox{clamp}(x,y,z)\f$.
-  //!
   //!
   //! #### Example
   //!

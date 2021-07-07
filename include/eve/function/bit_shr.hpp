@@ -20,12 +20,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the logical right shift operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/bit_shr.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/bit_shr.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -45,7 +40,6 @@ namespace eve
   //!`x`:   [value](../../concepts.html#value).
   //!
   //!`n`:   [integral value](../../concepts.html#value).
-  //!
   //!
   //! **Return value**
   //!

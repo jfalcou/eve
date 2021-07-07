@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the greater or equal to zero predicate.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/is_lez.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/is_lez.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -41,8 +36,6 @@ namespace eve
   //! **Parameters**
   //!
   //!`x`:   [values](../../concepts.html#value).
-  //!
-  //!
   //!
   //! **Return value**
   //!

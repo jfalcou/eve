@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the newton operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/newton.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/newton.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -45,8 +40,6 @@ namespace eve
   //!`coefs`, `nodes``:   [values ](../../concepts.html#value) Range containing the coefficients
   //!`firstcoef`, `sentinel`,`firstnode`:   std::input_iterator conforming pair of iterators through the coefficients and start of the nodes
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!Returns [element-wise](../../../glossary.html#value) the value of polynomial function(s)
@@ -58,7 +51,6 @@ namespace eve
   //!   If the coefficients are simd values of cardinal N, this means you compute the values of N polynomials.
   //!   If x is scalar, the polynomials are all computed at the same point, but
   //!   If x is simd, the nth polynomial is computed on the nth value of x.
-  //!
   //!
   //! ---
   //!

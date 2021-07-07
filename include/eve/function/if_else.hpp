@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the if_else operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/if_else.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/if_else.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -43,7 +38,6 @@ namespace eve
   //! **Parameters**
   //!
   //!`x`, `y`, `z`:   [values](../../concepts.html#value)
-  //!
   //!
   //! **Return value**
   //!

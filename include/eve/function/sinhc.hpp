@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of sinhc.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/sinhc.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/sinhc.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) hyperbolic sine of the input divided by the input.
@@ -52,8 +46,6 @@ namespace eve
   //!   * If the element is \f$\pm0\f$, \f$1\f$ is returned.
   //!   * If the element is \f$\pm\infty\f$, \f$\pm\infty\f$ is returned.
   //!   * If the element is a `Nan`, `NaN` is returned.
-  //!
-  //!
   //!
   //! ---
   //!

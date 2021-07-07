@@ -21,12 +21,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the computation of the rempio2 value.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/rempio2.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/rempio2.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -44,7 +39,6 @@ namespace eve
   //! **Parameters**
   //!
   //!`x`:   [value](../../concepts.html#value).
-  //!
   //!
   //! **Return value**
   //!

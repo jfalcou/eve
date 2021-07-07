@@ -19,12 +19,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the square root.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/sqrt.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/sqrt.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -43,11 +38,9 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) square root  of the input.
-  //!
   //!
   //! ---
   //!

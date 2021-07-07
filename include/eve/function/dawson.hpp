@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the dawson function. \f$\displaystyle D_+(x)=e^{-x^2}\int_0^{x} e^{t^2} \mbox{d}t\f$
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/dawson.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/dawson.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,14 +37,11 @@ namespace eve
   //!
   //!`x`:   [value](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!Returns [element-wise](../../../glossary.html#value) the value of the dawson function.
   //!
   //! The result type is of the same type as the  parameter.
-  //!
   //!
   //! ---
   //!
@@ -76,10 +68,7 @@ namespace eve
   //!
   //!     **Required header:**  #include <eve/function/diff/dawson.hpp>
   //!
-  //!
   //!     The expression `diff(dawson)(x)` computes the derivative of the function at `x`.
-  //!
-  //!
   //!
   //! #### Example
   //!

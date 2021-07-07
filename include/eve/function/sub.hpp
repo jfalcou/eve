@@ -19,12 +19,7 @@ namespace eve
   //!
   //! @brief Callable object performing the difference of multiple values.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/sub.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/sub.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -71,14 +66,12 @@ namespace eve
   //!
   //!   * eve::saturated
   //!
-  //!
   //!     **Required header:** `#include <eve/function/saturated/abs.hpp>`
   //!
   //!     The expression `eve::saturated(eve::sub)(xs...)` computes the saturated difference of
   //!     all `xs`.
   //!
   //!   * eve::diff
-  //!
   //!
   //!     **Required header:** `#include <eve/function/diff/sub.hpp>`
   //!

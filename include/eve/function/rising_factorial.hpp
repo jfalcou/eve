@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of rising_factorial i.e. \f$\frac{\Gamma(x+a)}{\Gamma(a)}.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/rising_factorial.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/rising_factorial.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -44,10 +39,7 @@ namespace eve
   //!
   //!`x`:   [floating value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
-  //!
-  //!
   //!
   //! ---
   //!

@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of acosd.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/acosd.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/acosd.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) value in degrees of the arc cosine of the
@@ -53,8 +47,6 @@ namespace eve
   //!   * If the element is \f$1\f$, \f$+0\f$ is returned.
   //!   * If the element \f$|x| > 1\f$, `NaN` is returned.
   //!   * If the element is a `Nan`, `NaN` is returned.
-  //!
-  //!
   //!
   //! ---
   //!
@@ -81,10 +73,7 @@ namespace eve
   //!
   //!     **Required header:**  #include <eve/function/diff/acosd.hpp>
   //!
-  //!
   //!     The expression `diff(acosd)(x)` computes the derivative of the function at `x`.
-  //!
-  //!
   //!
   //! #### Example
   //!

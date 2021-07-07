@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the bit_select operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/bit_select.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/bit_select.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -46,7 +41,6 @@ namespace eve
   //!`y`, `z`:   selection [values](../../concepts.html#value)
   //!
   //! **Return value**
-  //!
   //!
   //!The types T and U must be  bit_compatible and the call
   //!

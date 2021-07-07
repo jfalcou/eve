@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the sqr_abs operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/sqr_abs.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/sqr_abs.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,12 +37,9 @@ namespace eve
   //!
   //!`x`:   [real floating value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Computes  [element-wise](../../../glossary.html#elment-wise) the square of the absolute value of `x` .
-  //!
-  //!
   //!
   //! ---
   //!
@@ -91,4 +83,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/sqr_abs.hpp>
-

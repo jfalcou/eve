@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the exponential integral \f$\displaystyle \mbox{E}_{n}(x)=\int_0^\infty \frac{e^{-xt}}{t^{n}} \mbox{d}t\f$.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/exp_int.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/exp_int.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -44,13 +39,11 @@ namespace eve
   //!
   //!`x`:   [floating value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns [element-wise](../../../glossary.html#value) exponential integral
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
   //!If the first parameter inot an integral value it must be a flint, otherwise the result is Nan.
-  //!
   //!
   //! ---
   //!
@@ -77,11 +70,8 @@ namespace eve
   //!
   //!     **Required header:**  #include <eve/function/diff/exp_int.hpp>
   //!
-  //!
   //!     The expression `diff(exp_int)(n,x)` computes the derivative (relative to the second parameter)
   //!      of the function at `x`.
-  //!
-  //!
   //!
   //! #### Example
   //!

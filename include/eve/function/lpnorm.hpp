@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the lpnorm operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/lpnorm.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/lpnorm.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -43,13 +38,9 @@ namespace eve
   //!
   //!`p`, `x`, `args`:   [floating value](../../concepts.html#value)
   //!
-  //!
   //! **Return value**
   //!
-  //!
   //!The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
-  //!
-  //!
   //!
   //! ---
   //!

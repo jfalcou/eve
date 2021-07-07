@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the simultaneous  computation of sin an cos of an argument in .
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/sinpicospi.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/sinpicospi.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,11 +37,9 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!The computation returns a pair and is semantically equivalent to `{sinpi(x), cospi(x)}`
-  //!
   //!
   //! ---
   //!
@@ -85,4 +78,3 @@ namespace eve
 }
 
 #include <eve/module/real/math/function/regular/generic/sinpicospi.hpp>
-

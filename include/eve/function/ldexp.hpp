@@ -20,12 +20,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the ldexp operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/ldexp.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/ldexp.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -45,8 +40,6 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!`y`:   [integral real value](../../concepts.html#value).
-  //!
-  //!
   //!
   //! **Return value**
   //!

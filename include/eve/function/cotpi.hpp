@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of cotpi.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/cotpi.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/cotpi.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) cotine of the input expressed in \f$\pi\f$ multiples.
@@ -53,8 +47,6 @@ namespace eve
   //!   * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
   //!   * If the element is \f$\pm\infty\f$, Nan is returned.
   //!   * If the element is a `Nan`, `NaN` is returned.
-  //!
-  //!
   //!
   //! ---
   //!
@@ -101,5 +93,4 @@ namespace eve
 }
 
 #include <eve/module/real/math/function/regular/generic/cotpi.hpp>
-
 

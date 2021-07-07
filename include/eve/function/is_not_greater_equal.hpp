@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the "not greater or equal to" predicate.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/is_not_greater_equal.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/is_not_greater_equal.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,13 +37,10 @@ namespace eve
   //!
   //!`x`, `y`:   [values](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!Returns the logical value containing the [element-wise](../../../glossary.html#value) comparison test result
   //!between `x` and `y`.
-  //!
   //!
   //! ---
   //!

@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the mid-point operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/geommean.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/geommean.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -45,8 +40,6 @@ namespace eve
   //!`x`, `y` or `x`, `args`, ...
   //!:   [floating values](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!For two parameters \f$\sqrt{xy}\f$. No overflow occurs.
@@ -59,7 +52,6 @@ namespace eve
   //!    if the number of parameters is even and the product of the parameters is srictly negative the result is a Nan.
   //!
   //!    if the number of parameters is odd the result has the sign of the product of the parameters
-  //!
   //!
   //! ---
   //!

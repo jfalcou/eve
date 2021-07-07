@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the inverse of the square root.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/rsqrt.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/rsqrt.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,11 +37,9 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) inverse of the square root  of the input.
-  //!
   //!
   //! ---
   //!

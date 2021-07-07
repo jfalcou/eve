@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the minmag operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/minmag.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/minmag.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -43,7 +38,6 @@ namespace eve
   //!
   //!`x`, `y`:   [values](../../concepts.html#value)
   //!
-  //!
   //! **Return value**
   //!
   //!the least absolute value is returned.
@@ -58,7 +52,6 @@ namespace eve
   //!
   //!@warning
   //!   If any element of the inputs is a `Nan`, the corresponding output element is system-dependent.
-  //!
   //!
   //! ---
   //!
@@ -118,4 +111,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/minmag.hpp>
-

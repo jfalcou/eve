@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the logspace_add operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/logspace_add.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/logspace_add.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -44,14 +39,11 @@ namespace eve
   //!`arg0`, `arg1`, `args`, ...
   //!:   [values](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!Similar to  `log(exp(arg0) + exp(arg1) + exp(args)...)`;.
   //!
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
-  //!
   //!
   //! ---
   //!

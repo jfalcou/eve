@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of cotd.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/cotd.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/cotd.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) cotangent of the input expressed in degrees.
@@ -52,8 +46,6 @@ namespace eve
   //!   * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
   //!   * If the element is \f$\pm\infty\f$, Nan is returned.
   //!   * If the element is a `NaN`, `NaN` is returned.
-  //!
-  //!
   //!
   //! ---
   //!
@@ -100,4 +92,3 @@ namespace eve
 }
 
 #include <eve/module/real/math/function/regular/generic/cotd.hpp>
-

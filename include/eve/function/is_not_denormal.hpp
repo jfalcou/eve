@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the computation of the is_not_denormal logical value.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/is_not_denormal.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/is_not_denormal.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,9 +37,7 @@ namespace eve
   //!
   //!`x`:   [value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
-  //!
   //!
   //!The call:
   //!
@@ -92,4 +85,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/is_not_denormal.hpp>
-

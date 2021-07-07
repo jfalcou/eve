@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the computation of the phase angle (in radians).
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/arg.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/arg.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,14 +37,12 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!For each  [`element`](../../../glossary.html#element-wise) of the input the phase angle is returned:
   //!
   //!  *  if the bit of sign of the entry [element](../../../glossary.html#elment-wise) is not set, \f$0\f$ is returned.
   //!  *  if the bit of sign of the entry [element](../../../glossary.html#elment-wise) is set, \f$\pi\f$ is returned.
-  //!
   //!
   //! ---
   //!
@@ -77,15 +70,11 @@ namespace eve
   //!
   //!     With this decorator the function returns a Nan element for each corresponding Nan entry element.
   //!
-  //!
   //!  * `diff`
-  //!
   //!
   //!     **Required header:** `#include <eve/function/diff/arg.hpp>`
   //!
   //!     The expression `diff(arg)(x)` computes the derivative of the function at `x`.
-  //!
-  //!
   //!
   //! #### Example
   //!

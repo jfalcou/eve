@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of asech.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/asech.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/asech.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) inverse hyperbolic cosine of the input.
@@ -53,7 +47,6 @@ namespace eve
   //!   * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
   //!   * If the element is \f$1\f$, \f$+0\f$ returned.
   //!   * If the element does not belong to \f$[0,1]\f$, `NaN` is returned.
-  //!
   //!
   //! ---
   //!
@@ -97,4 +90,3 @@ namespace eve
 }
 
 #include <eve/module/real/math/function/regular/generic/asech.hpp>
-

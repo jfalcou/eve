@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the plus unary operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/plus.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/plus.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -41,7 +36,6 @@ namespace eve
   //! **Parameters**
   //!
   //!`x`:   [value](../../concepts.html#value).
-  //!
   //!
   //! **Return value**
   //!
@@ -82,4 +76,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/plus.hpp>
-

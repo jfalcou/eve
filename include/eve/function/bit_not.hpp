@@ -19,12 +19,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the ones' complement operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/bit_not.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/bit_not.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //! **Parameters**
   //!
   //!`x`:   [real value](../../concepts.html#value).
-  //!
   //!
   //! **Return value**
   //!

@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the dec unary operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/dec.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/dec.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,13 +37,10 @@ namespace eve
   //!
   //!`x`:   [value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Computes  [element-wise](../../../glossary.html#elment-wise) a value with the same type as `x`.
   //!The result is `x-1`.
-  //!
-  //!
   //!
   //! ---
   //!
@@ -111,4 +103,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/dec.hpp>
-

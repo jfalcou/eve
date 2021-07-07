@@ -16,10 +16,7 @@ namespace eve
   //! @{
   //! @var signn
   //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/signnz.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! **Required header:** `#include <eve/function/signnz.hpp>`
   //!
   //! <br/>Callable object performing the computation of the signnz operation.
   //!
@@ -39,7 +36,6 @@ namespace eve
   //! **Parameters**
   //!
   //!`x`:   [value](../../concepts.html#value).
-  //!
   //!
   //! **Return value**
   //!

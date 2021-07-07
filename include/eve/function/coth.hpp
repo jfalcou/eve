@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of coth.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/coth.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/coth.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) hyperbolic cotangent of the input.
@@ -52,7 +46,6 @@ namespace eve
   //!   * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
   //!   * If the element is \f$\pm\infty\f$, \f$\pm1\f$ is returned.
   //!   * If the element is a `NaN`, `NaN` is returned.
-  //!
   //!
   //! ---
   //!
@@ -96,4 +89,3 @@ namespace eve
 }
 
 #include <eve/module/real/math/function/regular/generic/coth.hpp>
-

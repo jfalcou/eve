@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the bitwise XOR operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/bit_xor.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/bit_xor.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,15 +37,12 @@ namespace eve
   //!
   //!`x`, `y`:   [values](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!Computes  bitwise XOR of the two parameters following the [bitwise operations semantic](../../../glossary.html#Bitwise).
   //!
   //!the call `bit_xor(x, y)` is equivalent to `x ^ y`
   //!if `x` or  `y` is an  [simd value](../../concepts.html#value).
-  //!
   //!
   //!@warning  //!
   //! ---
@@ -87,4 +79,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/bit_xor.hpp>
-

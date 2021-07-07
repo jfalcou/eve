@@ -22,12 +22,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the arithmetic left/right shift operation according to shift sign.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/rshl.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/rshl.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -47,7 +42,6 @@ namespace eve
   //!`x`:   [value](../../concepts.html#value).
   //!
   //!`n`:   [integral value](../../concepts.html#value).
-  //!
   //!
   //! **Return value**
   //!

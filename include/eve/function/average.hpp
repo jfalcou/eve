@@ -18,9 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the average of multiple values.
   //!
-  //!
   //! **Required header:** `#include <eve/function/average.hpp>`
-  //!
   //!
   //! #### Members Functions
   //!
@@ -42,8 +40,6 @@ namespace eve
   //!`x`, `y` or `x`, `args`, ...
   //!:   [values](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!For two parameters half the sum of `x` and `y`. No overflow occurs.
@@ -59,7 +55,6 @@ namespace eve
   //!    by unity from the truncation given by `(x+y)/2`. Moreover, as some architectures provide
   //!    simd intrinsics to perform the operation, the scalar results may differ by one unit from
   //!    simd ones which are system dependent.
-  //!
   //!
   //! ---
   //!
@@ -93,7 +88,6 @@ namespace eve
   //!
   //!  * `raw`<br>
   //!     when `raw(average)(x, args, ...)` is used, no provision is made to avoid overflows for more than 2 parameters.
-  //!
   //!
   //! #### Example
   //!

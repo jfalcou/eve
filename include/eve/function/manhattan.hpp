@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the manhattan operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/manhattan.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/manhattan.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -43,12 +38,9 @@ namespace eve
   //!
   //!`x`, `args`:   [value](../../concepts.html#value)
   //!
-  //!
   //! **Return value**
   //!
-  //!
   //!The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
-  //!
   //!
   //! ---
   //!
@@ -107,4 +99,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/manhattan.hpp>
-

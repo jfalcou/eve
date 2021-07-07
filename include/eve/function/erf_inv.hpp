@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the inverse of the \f$\mbox{erf}\f$ function.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/erf_inv.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/erf_inv.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,15 +37,12 @@ namespace eve
   //!
   //!`x`:   [value](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!Returns [element-wise](../../../glossary.html#value) `y` such that `erf(y)==x`
   //!
   //! The result type is of the same type as the  parameter.
   //! The function returns Nan outside of the interval \f$[-1,1]\f$.
-  //!
   //!
   //! ---
   //!
@@ -77,10 +69,7 @@ namespace eve
   //!
   //!     **Required header:**  #include <eve/function/diff/erf_inv.hpp>
   //!
-  //!
   //!     The expression `diff(erf_inv)(x)` computes the derivative of the function at `x`.
-  //!
-  //!
   //!
   //! #### Example
   //!
