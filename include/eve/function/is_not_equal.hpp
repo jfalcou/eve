@@ -6,9 +6,11 @@
 **/
 //==================================================================================================
 #pragma once
+
 #include <eve/detail/implementation.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/product_type.hpp>
 
 namespace eve
 {
@@ -107,4 +109,21 @@ namespace eve
       else                                                return a != b;
     }
   }
+
+  //================================================================================================
+  // Product type support helper
+  //================================================================================================
+  template<typename Type>
+  struct supports<Type, eve::tag::is_not_equal_>
+  {
+    template<same_value_type<Type> V, same_value_type<Type> U>
+    friend constexpr auto operator!=(V const& lhs, U const& rhs) noexcept
+    {
+      auto zipped = kumi::zip(contents(lhs), contents(rhs));
+      return kumi::fold_right ( [](auto acc , auto e) { return acc || ( get<0>(e) != get<1>(e) ); }
+                              , zipped
+                              , false
+                              );
+    }
+  };
 }

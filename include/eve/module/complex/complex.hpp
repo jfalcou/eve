@@ -13,7 +13,7 @@
 namespace eve
 {
   template<std::floating_point T>
-  struct complex : additive<complex<T>>
+  struct complex : additive<complex<T>>, comparable<complex<T>>
   {
     using value_type      = T;
     using is_product_type = void;
@@ -21,7 +21,7 @@ namespace eve
     constexpr complex(T r = {}, T i = {}) : real_{r}, imag_{i} {}
 
     template<same_value_type<complex> V, same_value_type<complex> U>
-    friend constexpr V& operator*=(V& self, U const& other) noexcept
+    friend constexpr V& operator*=(V& self, U other) noexcept
     {
       auto r0 = real(self);
       auto r1 = real(other);
@@ -34,7 +34,7 @@ namespace eve
       return self;
     }
 
-    template<same_value_type<complex> V, real_value U>
+    template<same_value_type<complex> V, same_value_type<T> U>
     friend constexpr V& operator*=(V& self, U other) noexcept
     {
       real(self) *= other;

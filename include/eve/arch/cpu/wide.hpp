@@ -822,7 +822,7 @@ inline namespace EVE_ABI_NAMESPACE
     //! if `Type` does not models integral_scalar_value
     friend  EVE_FORCEINLINE auto operator%=(wide& w, value auto o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-      //                  ->  decltype(detail::self_rem(w, o))
+                        ->  decltype(detail::self_rem(w, o))
 #endif
     {
       return detail::self_rem(w, o);
@@ -902,127 +902,133 @@ inline namespace EVE_ABI_NAMESPACE
     // Logical operations
     //==============================================================================================
     //! @brief Element-wise equality comparison of two eve::wide
-    friend EVE_FORCEINLINE logical<wide> operator==(wide v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator==(wide v, wide w) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+      requires( !(kumi::product_type<Type> && requires(Type v) { v == v; } ))
+#endif
     {
       return detail::self_eq(v,w);
     }
 
     //! @brief Element-wise equality comparison of a eve::wide and a scalar value
     template<scalar_value S>
-    friend EVE_FORCEINLINE logical<wide> operator==(wide v, S w) noexcept
+    friend EVE_FORCEINLINE auto operator==(wide v, S w) noexcept
     {
       return v == wide{w};
     }
 
     //! @brief Element-wise equality comparison of a scalar value and a eve::wide
     template<scalar_value S>
-    friend EVE_FORCEINLINE logical<wide> operator==(S v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator==(S v, wide w) noexcept
     {
       return w == v;
     }
 
     //! @brief Element-wise inequality comparison of two eve::wide
-    friend EVE_FORCEINLINE logical<wide> operator!=(wide v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator!=(wide v, wide w) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+      requires( !(kumi::product_type<Type> && requires(Type v) { v != v; } ))
+#endif
     {
       return detail::self_neq(v,w);
     }
 
     //! @brief Element-wise inequality comparison of a eve::wide and a scalar value
     template<scalar_value S>
-    friend EVE_FORCEINLINE logical<wide> operator!=(wide v, S w) noexcept
+    friend EVE_FORCEINLINE auto operator!=(wide v, S w) noexcept
     {
       return v != wide{w};
     }
 
     //! @brief Element-wise inequality comparison of a scalar value and a eve::wide
     template<scalar_value S>
-    friend EVE_FORCEINLINE logical<wide> operator!=(S v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator!=(S v, wide w) noexcept
     {
       return w != v;
     }
 
     //! @brief Element-wise less-than comparison between eve::wide
-    friend EVE_FORCEINLINE logical<wide> operator<(wide v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator<(wide v, wide w) noexcept
     {
       return detail::self_less(v,w);
     }
 
     //! @brief Element-wise less-than comparison between a eve::wide and a scalar
     template<scalar_value S>
-    friend EVE_FORCEINLINE logical<wide> operator<(wide v, S w) noexcept
+    friend EVE_FORCEINLINE auto operator<(wide v, S w) noexcept
     {
       return v < wide{w};
     }
 
     //! @brief Element-wise less-than comparison between a scalar and a eve::wide
     template<scalar_value S>
-    friend EVE_FORCEINLINE logical<wide> operator<(S v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator<(S v, wide w) noexcept
     {
       return wide{v} < w;
     }
 
     //! @brief Element-wise greater-than comparison between eve::wide
-    friend EVE_FORCEINLINE logical<wide> operator>(wide v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator>(wide v, wide w) noexcept
     {
       return detail::self_greater(v,w);
     }
 
     //! @brief Element-wise greater-than comparison between a eve::wide and a scalar
     template<scalar_value S>
-    friend EVE_FORCEINLINE logical<wide> operator>(wide v, S w) noexcept
+    friend EVE_FORCEINLINE auto operator>(wide v, S w) noexcept
     {
       return v > wide{w};
     }
 
     //! @brief Element-wise greater-than comparison between a scalar and a eve::wide
     template<scalar_value S>
-    friend EVE_FORCEINLINE logical<wide> operator>(S v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator>(S v, wide w) noexcept
     {
       return wide{v} > w;
     }
 
     //! @brief Element-wise greater-or-equal comparison between eve::wide
-    friend EVE_FORCEINLINE logical<wide> operator>=(wide v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator>=(wide v, wide w) noexcept
     {
       return detail::self_geq(v,w);
     }
 
     //! @brief Element-wise greater-or-equal comparison between a eve::wide and a scalar
     template<scalar_value S>
-    friend EVE_FORCEINLINE logical<wide> operator>=(wide v, S w) noexcept
+    friend EVE_FORCEINLINE auto operator>=(wide v, S w) noexcept
     {
       return v >= wide{w};
     }
 
     //! @brief Element-wise greater-or-equal comparison between a scalar and a eve::wide
     template<scalar_value S>
-    friend EVE_FORCEINLINE logical<wide> operator>=(S v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator>=(S v, wide w) noexcept
     {
       return wide{v} >= w;
     }
 
     //! @brief Element-wise less-or-equal comparison between eve::wide
-    friend EVE_FORCEINLINE logical<wide> operator<=(wide v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator<=(wide v, wide w) noexcept
     {
       return detail::self_leq(v,w);
     }
 
     //! @brief Element-wise less-or-equal comparison between a eve::wide and a scalar
     template<scalar_value S>
-    friend EVE_FORCEINLINE logical<wide> operator<=(wide v, S w) noexcept
+    friend EVE_FORCEINLINE auto operator<=(wide v, S w) noexcept
     {
       return v <= wide{w};
     }
 
     //! @brief Element-wise less-or-equal comparison between a scalar and a eve::wide
     template<scalar_value S>
-    friend EVE_FORCEINLINE logical<wide> operator<=(S v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator<=(S v, wide w) noexcept
     {
       return wide{v} <= w;
     }
 
     //! Computes the logical complement of its parameter
-    friend EVE_FORCEINLINE logical<wide> operator!(wide v) noexcept
+    friend EVE_FORCEINLINE auto operator!(wide v) noexcept
     {
       return detail::self_lognot(v);
     }

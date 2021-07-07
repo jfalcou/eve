@@ -32,6 +32,21 @@ namespace eve
   //! @addtogroup struct
   //! @{
   //================================================================================================
+
+  //==============================================================================================
+  //! @brief Converts to a eve::product_type instance.
+  //!
+  //! @param  t  eve::value to extract
+  //! @tparam I  Index of the member to extract
+  //!
+  //! @return The Ith element of the product type value passed as parameter
+  //==============================================================================================
+  template<typename T> constexpr decltype(auto) contents(T&& t) noexcept
+  {
+    if constexpr( simd_value<std::remove_cvref_t<T>> )  return std::forward<T>(t).storage();
+    else                                                return std::forward<T>(t);
+  }
+
   //==============================================================================================
   //! @brief Extract the Ith element of a eve::product_type instance.
   //!
@@ -52,8 +67,7 @@ namespace eve
   requires( I < std::tuple_size<std::remove_cvref_t<T>>::value )
 #endif
   {
-    if constexpr( simd_value<std::remove_cvref_t<T>> )  return get<I>(std::forward<T>(t).storage());
-    else                                                return get<I>(std::forward<T>(t));
+    return get<I>( contents(std::forward<T>(t)) );
   }
 
   //==============================================================================================

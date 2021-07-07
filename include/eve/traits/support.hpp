@@ -1,9 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -13,9 +13,24 @@
 #include <eve/function/mul.hpp>
 #include <eve/function/div.hpp>
 #include <eve/function/rem.hpp>
+#include <eve/function/is_equal.hpp>
+#include <eve/function/is_not_equal.hpp>
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup struct
+  //! @{
+  //================================================================================================
+
+  //==============================================================================================
+  //! @brief Add supports for equality operators to product type like structures
+  //! @tparam Type Type to adapt
+  //==============================================================================================
+  template<typename Type>
+  struct comparable : supports<Type, tag::is_equal_, tag::is_not_equal_>
+  {};
+
   //==============================================================================================
   //! @brief Add supports for additive operators to product type like structures
   //! @tparam Type Type to adapt
