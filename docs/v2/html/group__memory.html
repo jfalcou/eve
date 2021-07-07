@@ -92,11 +92,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
 </script>
   <div id="navrow1" class="tabs">
     <ul class="tablist">
-      <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li class="current"><a href="modules.html"><span>Modules</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
-      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="index.html"><span>Index</span></a></li>
+      <li><a href="pages.html"><span>Tutorials</span></a></li>
+      <li class="current"><a href="modules.html"><span>Components</span></a></li>
+      <li><a href="classes.html"><span>Types&#160;Reference</span></a></li>
+      <li><a href="namespacemembers.html"><span>Functions&#160;Reference</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -133,7 +133,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">Memory Management<div class="ingroups"><a class="el" href="group__utility.html">Utility</a></div></div>  </div>
 </div><!--header-->
@@ -141,14 +142,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p><b>EVE</b> provides various element to simplify the management of SIMD-compatible memory like functions and allocators for requesting SIMD-compatible block of memory, pointer wrapper to discriminate aligned memory from regular one, and alignment computation functions.</p>
 <p><b>Convenience header:</b></p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/memory.hpp&gt;</span> </div>
-</div><!-- fragment --> <table class="memberdecls">
+</div><!-- fragment --><p>EVE - Expressive Vector Engine Copyright : EVE Contributors &amp; Maintainers SPDX-License-Identifier: MIT </p>
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1aligned__allocator.html">eve::aligned_allocator&lt; T, Alignment &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1aligned__allocator.html">eve::aligned_allocator&lt; T, Lanes &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standard-compliant allocator handling the allocation and deallocation of segment of aligned memory.  <a href="structeve_1_1aligned__allocator.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1aligned__ptr.html">eve::aligned_ptr&lt; Type, Alignment &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper for non-owning aligned pointers.  <a href="structeve_1_1aligned__ptr.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
@@ -169,9 +168,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gac4423607571a261fa6db058e09195c93"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__memory_gac4423607571a261fa6db058e09195c93.html#gac4423607571a261fa6db058e09195c93">eve::align</a> (T *ptr, <a class="el" href="group__utility_ga664bc5b316e0dd3be42aa4c2fd818047.html#ga664bc5b316e0dd3be42aa4c2fd818047">under</a> alignment) noexcept</td></tr>
 <tr class="memdesc:gac4423607571a261fa6db058e09195c93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Realigns a pointer under a given power-of-2 alignment constraint.  <a href="group__memory_gac4423607571a261fa6db058e09195c93.html#gac4423607571a261fa6db058e09195c93">More...</a><br /></td></tr>
 <tr class="separator:gac4423607571a261fa6db058e09195c93"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad05ab928f3e9aa972a7e7146f76cce13"><td class="memTemplParams" colspan="2">template&lt;std::size_t A, typename T , std::size_t Other&gt; </td></tr>
-<tr class="memitem:gad05ab928f3e9aa972a7e7146f76cce13"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__memory_gad05ab928f3e9aa972a7e7146f76cce13.html#gad05ab928f3e9aa972a7e7146f76cce13">eve::is_aligned</a> (<a class="el" href="structeve_1_1aligned__ptr.html">aligned_ptr</a>&lt; T, Other &gt; const &amp;ptr) noexcept</td></tr>
-<tr class="memdesc:gad05ab928f3e9aa972a7e7146f76cce13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if an <a class="el" href="structeve_1_1aligned__ptr.html" title="Wrapper for non-owning aligned pointers.">aligned_ptr</a> is aligned on a given alignment.  <a href="group__memory_gad05ab928f3e9aa972a7e7146f76cce13.html#gad05ab928f3e9aa972a7e7146f76cce13">More...</a><br /></td></tr>
+<tr class="memitem:gad05ab928f3e9aa972a7e7146f76cce13"><td class="memTemplParams" colspan="2">template&lt;std::size_t A, typename T , typename Other &gt; </td></tr>
+<tr class="memitem:gad05ab928f3e9aa972a7e7146f76cce13"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__memory_gad05ab928f3e9aa972a7e7146f76cce13.html#gad05ab928f3e9aa972a7e7146f76cce13">eve::is_aligned</a> (aligned_ptr&lt; T, Other &gt; const &amp;ptr) noexcept</td></tr>
+<tr class="memdesc:gad05ab928f3e9aa972a7e7146f76cce13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if an aligned_ptr is aligned on a given alignment.  <a href="group__memory_gad05ab928f3e9aa972a7e7146f76cce13.html#gad05ab928f3e9aa972a7e7146f76cce13">More...</a><br /></td></tr>
 <tr class="separator:gad05ab928f3e9aa972a7e7146f76cce13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab1add731db6f65a080c9ec8b4a125858"><td class="memTemplParams" colspan="2">template&lt;std::size_t Alignment, std::integral T&gt; </td></tr>
 <tr class="memitem:gab1add731db6f65a080c9ec8b4a125858"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__memory_gab1add731db6f65a080c9ec8b4a125858.html#gab1add731db6f65a080c9ec8b4a125858">eve::is_aligned</a> (T v) noexcept</td></tr>
@@ -181,6 +180,19 @@ Functions</h2></td></tr>
 <tr class="memitem:ga25228d751afbdd3a2c7d09aea5f2ae74"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__memory_ga25228d751afbdd3a2c7d09aea5f2ae74.html#ga25228d751afbdd3a2c7d09aea5f2ae74">eve::is_aligned</a> (T *ptr) noexcept</td></tr>
 <tr class="memdesc:ga25228d751afbdd3a2c7d09aea5f2ae74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a pointer satisfy an alignment constraint.  <a href="group__memory_ga25228d751afbdd3a2c7d09aea5f2ae74.html#ga25228d751afbdd3a2c7d09aea5f2ae74">More...</a><br /></td></tr>
 <tr class="separator:ga25228d751afbdd3a2c7d09aea5f2ae74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac05cd7c057018d675509c6261fd73cab"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Lanes &gt; </td></tr>
+<tr class="memitem:gac05cd7c057018d675509c6261fd73cab"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__memory_gac05cd7c057018d675509c6261fd73cab.html#gac05cd7c057018d675509c6261fd73cab">eve::is_aligned</a> (T *ptr, Lanes) noexcept</td></tr>
+<tr class="memdesc:gac05cd7c057018d675509c6261fd73cab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a pointer satisfy an alignment constraint.  <a href="group__memory_gac05cd7c057018d675509c6261fd73cab.html#gac05cd7c057018d675509c6261fd73cab">More...</a><br /></td></tr>
+<tr class="separator:gac05cd7c057018d675509c6261fd73cab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga1104bd95e3b6b1a682c2fd9c290034d0"><td class="memItemLeft" align="right" valign="top">constexpr callable_gather_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__memory_ga1104bd95e3b6b1a682c2fd9c290034d0.html#ga1104bd95e3b6b1a682c2fd9c290034d0">eve::gather</a> = {}</td></tr>
+<tr class="memdesc:ga1104bd95e3b6b1a682c2fd9c290034d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object performing the computation of <b>TODO: FILL THIS BLANK</b>.  <a href="group__memory_ga1104bd95e3b6b1a682c2fd9c290034d0.html#ga1104bd95e3b6b1a682c2fd9c290034d0">More...</a><br /></td></tr>
+<tr class="separator:ga1104bd95e3b6b1a682c2fd9c290034d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga92b6c322f7422825155c2a590be84f09"><td class="memItemLeft" align="right" valign="top">constexpr callable_store_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09">eve::store</a> = {}</td></tr>
+<tr class="memdesc:ga92b6c322f7422825155c2a590be84f09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object performing the computation of //! description NOT FOUND.  <a href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09">More...</a><br /></td></tr>
+<tr class="separator:ga92b6c322f7422825155c2a590be84f09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.20-->
@@ -191,7 +203,7 @@ Functions</h2></td></tr>
 </div> <!-- DOXYSTRAP RELATED -->
 </div> <!-- DOXYSTRAP RELATED -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 25 2021 12:12:46 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Wed Jul 7 2021 21:34:48 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

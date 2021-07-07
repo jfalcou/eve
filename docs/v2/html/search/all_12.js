@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['validate_129',['validate',['../structeve_1_1pattern__t.html#a828fefe9303d5cfdd45a1bdd67bf0b80',1,'eve::pattern_t']]],
-  ['value_130',['value',['../group__concepts_ga19be3db9960e555ea9ee279846facacd.html#ga19be3db9960e555ea9ee279846facacd',1,'eve']]],
-  ['value_5ftype_131',['value_type',['../structeve_1_1logical.html#a4ca253e53d508bd86a04e37251298986',1,'eve::logical::value_type()'],['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_00_01ABI_01_4_01_4.html#aa182c2a317909abe4a6a0e3aa121b683',1,'eve::logical&lt; wide&lt; Type, Cardinal, ABI &gt; &gt;::value_type()'],['../structeve_1_1wide.html#a8d4e1d73f7a55515b49a1f1d4a93063f',1,'eve::wide::value_type()'],['../structeve_1_1aligned__allocator.html#a948f2d49a28c975b96f57a27dd6988b5',1,'eve::aligned_allocator::value_type()']]]
+  ['ulpdist_405',['ulpdist',['../group__ieee754_ga40ae299a91e28c9285b6521ca12c3fbf.html#ga40ae299a91e28c9285b6521ca12c3fbf',1,'eve']]],
+  ['under_406',['under',['../structeve_1_1pattern__t.html#aef70581b6e3b30db25467efcc08eff1c',1,'eve::pattern_t::under()'],['../group__utility_ga664bc5b316e0dd3be42aa4c2fd818047.html#ga664bc5b316e0dd3be42aa4c2fd818047',1,'eve::under()']]],
+  ['utility_407',['Utility',['../group__utility.html',1,'']]]
 ];
