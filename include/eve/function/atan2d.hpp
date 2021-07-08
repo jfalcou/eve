@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the atan2d operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/atan2d.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/atan2d.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //! **Parameters**
   //!
   //!`x`, `y`:   [value](../../concepts.html#value)
-  //!
   //!
   //! **Return value**
   //!
@@ -66,8 +60,6 @@ namespace eve
   //!     In all other cases, the result is standard conformant.
   //!
   //!The result type is the [compatibility result](../../concept.html#compatibilit`y`) of the two parameters.
-  //!
-  //!
   //!
   //! ---
   //!
@@ -93,7 +85,6 @@ namespace eve
   //!  * `pedantic`
   //!
   //!     **Required header:**  #include <eve/function/pedantic/atan2d.hpp>
-  //! 
   //!  
   //!     The call `pedantic(atan2d)(`x`,`y`)` returns the same results as the regular call, but all
   //!      **IEEE** limiting values are satisfied :
@@ -103,16 +94,12 @@ namespace eve
   //!       -  If `x` is \f$\pm0\f$ and `y` is \f$\pm-0\f$, \f$-90\f$ is returned
   //!       -  If `x` is \f$\pm0\f$ and `y` is \f$\pm+0\f$, \f$+90\f$  is returned
   //!  
-  //!  
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/atan2d.hpp>
-  //! 
   //!  
   //!     The expression `diff_1st(atan2d)(x,y)` and `diff_2nd(atan2d)(x,y)` computes the partial
-  //!      diffs of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \mbox{atan2d}(x,y)\f$.
-  //!  
-  //!  
+  //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \mbox{atan2d}(x,y)\f$.
   //!
   //! #### Example
   //!
@@ -126,4 +113,3 @@ namespace eve
 }
 
 #include <eve/module/real/math/function/regular/generic/atan2d.hpp>
-

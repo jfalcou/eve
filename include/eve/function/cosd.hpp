@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of cosd.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/cosd.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/cosd.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) cosine of the input expressed in degrees.
@@ -52,8 +46,6 @@ namespace eve
   //!   * If the element is \f$\pm0\f$, \f$1\f$ is returned.
   //!   * If the element is \f$\pm\infty\f$, Nan is returned.
   //!   * If the element is a `NaN`, `NaN` is returned.
-  //!
-  //!
   //!
   //! ---
   //!
@@ -82,11 +74,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/cosd.hpp>
-  //! 
   //!  
   //!     The expression `diff(cosd)(x)` computes the derivative of the function at `x`.
-  //!  
-  //!  
   //!
   //! #### Example
   //!
@@ -100,4 +89,3 @@ namespace eve
 }
 
 #include <eve/module/real/math/function/regular/generic/cosd.hpp>
-

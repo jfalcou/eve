@@ -19,12 +19,7 @@
   //!
   //! @brief Callable object performing the computation of   //!  description NOT FOUND.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/uniform_continuous_distribution.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/uniform_continuous_distribution.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -69,7 +64,7 @@
   //!
   //! #### Supported decorators
   //!
-  //!  decorators NOT FOUND
+  //!  no decorators are supported
   //!
   //! #### Example
   //!

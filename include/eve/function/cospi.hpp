@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of cospi.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/cospi.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/cospi.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) cosine of the input expressed in \f$\pi\f$ multiples.
@@ -53,8 +47,6 @@ namespace eve
   //!   * If the element is \f$\pm0\f$, \f$1\f$ is returned.
   //!   * If the element is \f$\pm\infty\f$, Nan is returned.
   //!   * If the element is a `NaN`, `NaN` is returned.
-  //!
-  //!
   //!
   //! ---
   //!
@@ -83,11 +75,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/cospi.hpp>
-  //! 
   //!  
   //!     The expression `diff(cospi)(x)` computes the derivative of the function at `x`.
-  //!  
-  //!  
   //!
   //! #### Example
   //!
@@ -101,4 +90,3 @@ namespace eve
 }
 
 #include <eve/module/real/math/function/regular/generic/cospi.hpp>
-

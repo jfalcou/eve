@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the "not greater or equal to" predicate.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/is_not_greater_equal.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/is_not_greater_equal.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,13 +37,10 @@ namespace eve
   //!
   //!`x`, `y`:   [values](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!Returns the logical value containing the [element-wise](../../../glossary.html#value) comparison test result
   //!between `x` and `y`.
-  //!
   //!
   //! ---
   //!
@@ -74,7 +66,6 @@ namespace eve
   //!  * `definitely`
   //!
   //!     **Required header:**  #include <eve/function/definitely/is_not_greater_equal.hpp>
-  //! 
   //!  
   //!     The expression `definitely(is_not_greater_equal)(x, y, t)` where `x` and `y` must be
   //!      floating point values, evals to true if and only if and only if `x` is definitely not greater or equal to `y`.
@@ -85,7 +76,6 @@ namespace eve
   //!      - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
   //!  
   //!  The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
-  //!  
   //!
   //! #### Example
   //!

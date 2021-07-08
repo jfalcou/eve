@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the logspace_add operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/logspace_add.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/logspace_add.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -44,14 +39,11 @@ namespace eve
   //!`arg0`, `arg1`, `args`, ...
   //!:   [values](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!Similar to  `log(exp(arg0) + exp(arg1) + exp(args)...)`;.
   //!
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
-  //!
   //!
   //! ---
   //!
@@ -77,14 +69,10 @@ namespace eve
   //!  * `diff_nth`
   //!
   //!     **Required header:**  #include <eve/function/diff/logspace_add.hpp>
-  //! 
   //!  
   //!     The expression `diff_nth< N >(logspace_add)(arg0,arg1,args...)` computes the partial
   //!      diff of the function relative to its Nth parameter. The returned value is 0 if N is
   //!      greater that the actual number of parameters, otherwise if the parameters are \f$x_1, ... x_n\f$ returns \f$\displaystyle\frac{e^{x_N}}{e^{x_1} + ... + e^{x_n}}\f$
-  //!  
-  //!  
-  //!  
   //!
   //! #### Example
   //!

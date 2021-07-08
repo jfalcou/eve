@@ -19,12 +19,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the natural logarithm of \f$1+x\f$.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/log1p.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/log1p.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -43,7 +38,6 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) the natural log1parithm  of `1+x`
@@ -55,8 +49,6 @@ namespace eve
   //!   * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
   //!   * If the element is \f$\infty\f$, \f$\infty\f$ is returned.
   //!   * If the element is less than -1, `NaN` is returned.
-  //!
-  //!
   //!
   //! ---
   //!
@@ -82,11 +74,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/log1p.hpp>
-  //! 
   //!  
   //!     The expression `diff(log1p)(x)` computes the derivative of the function at `x`.
-  //!  
-  //!  
   //!
   //! #### Example
   //!

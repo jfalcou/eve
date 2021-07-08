@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the laguerre operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/laguerre.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/laguerre.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -44,14 +39,11 @@ namespace eve
   //!
   //!`x`:   [floating valuex](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!Returns [element-wise](../../../glossary.html#value) the value of the 'physicists' laguerre polynomial of order `n` at `x`:
   //!
   //!The result type is of the compatibility type of the  parameters.
-  //!
   //!
   //! ---
   //!
@@ -77,11 +69,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/laguerre.hpp>
-  //! 
   //!  
   //!     The expression `diff(laguerre)(n,x)` computes the derivative of the function at `x`.
-  //!  
-  //!  
   //!
   //! #### Example
   //!

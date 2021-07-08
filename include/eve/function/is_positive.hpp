@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the computation of the is_positive logical value.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/is_positive.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/is_positive.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,9 +37,7 @@ namespace eve
   //!
   //!`x`:   [value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
-  //!
   //!
   //!For signed types The call `is_positive(x)` [element-wise](../../../glossary.html#value) returns true
   //!if and only if the bit of sign (most significant bit) is unset.
@@ -74,7 +67,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  decorators NOT FOUND
+  //!  no decorators are supported
   //!
   //! #### Example
   //!
@@ -88,4 +81,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/is_positive.hpp>
-

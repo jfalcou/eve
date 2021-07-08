@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the computation of the number of consecutive 1 bits right.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/countr_one.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/countr_one.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -41,7 +36,6 @@ namespace eve
   //! **Parameters**
   //!
   //!`x`:   [unsigned value](../../concepts.html#value).
-  //!
   //!
   //! **Return value**
   //!
@@ -66,7 +60,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  decorators NOT FOUND
+  //!  no decorators are supported
   //!
   //! #### Example
   //!
@@ -80,4 +74,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/countr_one.hpp>
-

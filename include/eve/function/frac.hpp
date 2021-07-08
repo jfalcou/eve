@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the computation of the fractional part of a value.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/frac.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/frac.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns a value with the same type as `x`  containing the [element-wise](../../../glossary.html#value) fractional part of `x` with the same sign as `x`.
@@ -50,7 +44,6 @@ namespace eve
   //!In particular:
   //! * If an [element](../../../glossary.html#value) of `x` is \f$\pm0\f$,  \f$\pm0\f$ is returned.
   //! * If an [element](../../../glossary.html#value) of `x` is \f$\pm\infty\f$ or `Nan`, a `Nan` is returned.
-  //!
   //!
   //! ---
   //!
@@ -76,10 +69,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/frac.hpp>
-  //! 
-  //!  
+  //!
   //!     The expression `diff(frac)(x)` computes the derivative of the function at `x`.
-  //!     
   //!
   //! #### Example
   //!

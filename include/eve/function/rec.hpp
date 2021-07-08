@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the rec operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/rec.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/rec.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Computes  [element-wise](../../../glossary.html#elment-wise) the inverse of `x`.
@@ -51,7 +45,6 @@ namespace eve
   //!  * If x==1 or x==-1, x is returned.
   //!  * If x==0,  [the greatest representable positive value](../../constants.html#valmax) is returned.
   //!  * Otherwise 0 is returned.
-  //!
   //!
   //! ---
   //!
@@ -81,11 +74,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/rec.hpp>
-  //! 
   //!  
   //!     The expression `diff(rec)(x)` computes the derivative of the function at `x`.
-  //!     
-  //!  
   //!
   //! #### Example
   //!

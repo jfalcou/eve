@@ -23,12 +23,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of exp2.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/exp2.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/exp2.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -47,7 +42,6 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) exponential of base 2 of the input.
@@ -57,8 +51,6 @@ namespace eve
   //!   * If the element is \f$-\infty\f$, \f$+0\f$ is returned
   //!   * If the element is \f$\infty\f$, \f$\infty\f$ is returned
   //!   * If the element is a `NaN`, `NaN` is returned
-  //!
-  //!
   //!
   //! ---
   //!
@@ -84,11 +76,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/exp2.hpp>
-  //! 
   //!  
   //!     The expression `diff(exp2)(x)` computes the derivative of the function at `x`.
-  //!  
-  //!  
   //!
   //! #### Example
   //!

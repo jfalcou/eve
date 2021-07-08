@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of acosh.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/acosh.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/acosh.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) inverse hyperbolic cosine of the input.
@@ -54,7 +48,6 @@ namespace eve
   //!   * If the element is \f$1\f$, \f$+0\f$ is returned.
   //!   * If the element is \f$+\infty\f$, \f$+\infty\f$ is returned.
   //!   * If the element is a `Nan`, `NaN` is returned.
-  //!
   //!
   //! ---
   //!
@@ -80,11 +73,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/acosh.hpp>
-  //! 
   //!  
   //!     The expression `diff(acosh)(x)` computes the derivative of the function at `x`.
-  //!  
-  //!  
   //!
   //! #### Example
   //!
@@ -98,4 +88,3 @@ namespace eve
 }
 
 #include <eve/module/real/math/function/regular/generic/acosh.hpp>
-

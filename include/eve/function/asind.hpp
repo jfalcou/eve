@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of asind.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/asind.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/asind.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) arc sine of the
@@ -53,7 +47,6 @@ namespace eve
   //!   * If the element is \f$1\f$, \f$+0\f$ is returned.
   //!   * If the element \f$|x| > 1\f$, `NaN` is returned.
   //!   * If the element is a `Nan`, `NaN` is returned.
-  //!
   //!
   //! ---
   //!
@@ -79,11 +72,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/asind.hpp>
-  //! 
   //!  
   //!     The expression `diff(asind)(x)` computes the derivative of the function at `x`.
-  //!  
-  //!  
   //!
   //! #### Example
   //!
@@ -97,4 +87,3 @@ namespace eve
 }
 
 #include <eve/module/real/math/function/regular/generic/asind.hpp>
-

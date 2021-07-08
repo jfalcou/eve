@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the computation of the is_flint logical value.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/is_flint.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/is_flint.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,9 +37,7 @@ namespace eve
   //!
   //!`x`:   [value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
-  //!
   //!
   //!The call:
   //!
@@ -58,7 +51,6 @@ namespace eve
   //!if   constexpr(floating_real_value<T>) r = is_eqz(frac(x));
   //!else constexpr(integral_real_value<T>) r = True<T>());
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
   //!
   //! ---
   //!
@@ -86,10 +78,6 @@ namespace eve
   //!      that integral typed values are not floating and so `pedantic(is_flint)(x)` returns false for all elements of this types. Moreover a
   //!      floating point value is pedantically deemed as flint only is the next representable value is not flint, so
   //!      great floating values are not pedantically flint.
-  //!  
-  //!  
-  //! 
-  //!  
   //!
   //! #### Example
   //!
@@ -103,4 +91,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/is_flint.hpp>
-

@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the normalized complementary error function \f$\mbox{erfcx}(x) = e^{x^2} \mbox{erfc}(x)\f$.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/erfcx.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/erfcx.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,14 +37,11 @@ namespace eve
   //!
   //!`x`:   [value](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!Returns [element-wise](../../../glossary.html#value) \f$\displaystyle \mbox{erfcx}(x)=\frac{2e^{x^2}}{\sqrt\pi}\int_{x}^{\infty} e^{-t^2}\mbox{d}t\f$
   //!
   //! The result type is of the same type as the  parameter.
-  //!
   //!
   //! ---
   //!
@@ -76,10 +68,7 @@ namespace eve
   //!
   //!     **Required header:**  #include <eve/function/diff/erfcx.hpp>
   //!
-  //!
   //!     The expression `diff(erfcx)(x)` computes the derivative of the function at `x`.
-  //!
-  //!
   //!
   //! #### Example
   //!

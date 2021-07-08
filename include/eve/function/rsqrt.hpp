@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the inverse of the square root.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/rsqrt.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/rsqrt.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,11 +37,9 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) inverse of the square root  of the input.
-  //!
   //!
   //! ---
   //!
@@ -68,20 +61,15 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `raw`
   //!     The call `raw(rsqrt)(x)`, call a proper system intrinsic if one exists, but with possibly very poor accuracy in return.
   //!      Otherwise it uses the [`regular`](../decorators.html#regular) call.
-  //!  
+  //!
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/rsqrt.hpp>
-  //! 
-  //!  
+  //!
   //!     The expression `diff(rsqrt)(x)` computes the derivative of the function at `x`.
-  //!     
-  //!  
-  //!  
   //!
   //! #### Example
   //!

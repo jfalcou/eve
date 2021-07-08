@@ -16,14 +16,9 @@ namespace eve
   //! @{
   //! @var fdim
   //!
-  //! @brief Callable object performing the computation of the fdim operation.
+  //! @brief Callable object performing the computation of the positive difference.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/fdim.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/fdim.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -43,14 +38,12 @@ namespace eve
   //!
   //!`x`, `y`:    [values](../../concepts.html#value)
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the  [element-wise](../../../glossary.html#value) positive difference between `x` and `y`:
   //! * if `x>y`,   x-y is returned
   //! * if `x<=y`,  +0 is returned
   //! * otherwise a `Nan` is returned
-  //!
   //!
   //! ---
   //!
@@ -72,15 +65,11 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
-  //!  * `diff`
-  //!
+  //!  * `diff`<br>
   //!     **Required header:**  #include <eve/function/diff/fdim.hpp>
-  //! 
-  //!  
-  //!     The expression `diff_1st(fim)(x,y)` and `diff_2nd(fim)(x,y)` computes the partial
-  //!      diffs of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \max(0,x-y)\f$.
-  //!  
+  //!
+  //!       The expression `diff_1st(fim)(x,y)` and `diff_2nd(fim)(x,y)` computes the partial
+  //!       derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \max(0,x-y)\f$.
   //!
   //! #### Example
   //!
@@ -94,4 +83,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/fdim.hpp>
-

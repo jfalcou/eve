@@ -19,12 +19,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the mul operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/mul.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/mul.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -44,8 +39,6 @@ namespace eve
   //!
   //!`x`, `args`:   [values](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!Return the multiplication of the [values](../../concepts.html#value).
@@ -58,7 +51,6 @@ namespace eve
   //!@warning
   //!   Although the infix notation with `*` is supported, the `*` operator on
   //!   standard scalar type is the original one and so can lead to automatic promotion.
-  //!
   //!
   //! ---
   //!
@@ -84,7 +76,6 @@ namespace eve
   //!  * `saturated`
   //!
   //!     **Required header:**  #include <eve/function/saturated/mul.hpp>
-  //! 
   //!  
   //!     The call `saturated(mul)(x, args...)` computes the saturated  multiplication of `x` and `y`. The saturation is obtained in the
   //!       [compatibility result](../../concept.html#compatibility) of the two parameters. No overflow occurs.
@@ -92,7 +83,6 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/mul.hpp>
-  //! 
   //!  
   //!     The expression `diff_< N >(mul)(x,args,...)` computes the partial
   //!      diff of the function relative to the Nth parameter.
@@ -118,7 +108,6 @@ namespace eve
   //!  
   //!  !!! Warning
   //!      This is only available for two parameters.
-  //!  
   //!
   //! #### Example
   //!

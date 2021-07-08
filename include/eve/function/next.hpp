@@ -24,12 +24,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the next operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/next.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/next.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -48,13 +43,10 @@ namespace eve
   //!
   //!`x`, `n`:   [values](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!computes [`element-wise`](../../../glossary.html#element-wise), the `n`th  representable value greater than `x`.
   //!If `n` is zero returns `x`.
-  //!
   //!
   //! ---
   //!
@@ -80,11 +72,9 @@ namespace eve
   //!  * `pedantic`
   //!
   //!     **Required header:**  #include <eve/function/pedantic/next.hpp>
-  //! 
   //!  
   //!     The call `pedantic(next)(x)` distinguish `-0.0` and `+0.0` for floating point point inputs.
   //!      So `pedantic(next)(-0.0)` is `+0.0`.
-  //!  
   //!
   //! #### Example
   //!

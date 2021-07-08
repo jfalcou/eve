@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of sech.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/sech.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/sech.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) hyperbolic secant of the input.
@@ -52,7 +46,6 @@ namespace eve
   //!   * If the element is \f$\pm0\f$, 1 is returned.
   //!   * If the element is \f$\pm\infty\f$, \f$+0\f$ is returned.
   //!   * If the element is a `NaN`, `NaN` is returned.
-  //!
   //!
   //! ---
   //!
@@ -78,11 +71,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/sech.hpp>
-  //! 
   //!  
   //!     The expression `diff(sech)(x)` computes the derivative of the function at `x`.
-  //!  
-  //!  
   //!
   //! #### Example
   //!
@@ -96,4 +86,3 @@ namespace eve
 }
 
 #include <eve/module/real/math/function/regular/generic/sech.hpp>
-

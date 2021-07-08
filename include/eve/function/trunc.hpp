@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the trunc operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/trunc.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/trunc.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Computes  [element-wise](../../../glossary.html#elment-wise) the integral part of `x` with the same sign as  `x`.
@@ -51,7 +45,6 @@ namespace eve
   //!    This function object implements the `FE_TOWARDZERO` version.
   //!
   //!The call to `trunc(a)` is equivalent to the call `toward_zero(round)(a)`.
-  //!
   //!
   //! ---
   //!
@@ -77,7 +70,6 @@ namespace eve
   //!  * `tolerant`
   //!
   //!     **Required header:**  #include <eve/function/tolerant/trunc.hpp>
-  //! 
   //!  
   //!     The expression `tolerant(trunc)(x, tol)` computes a tolerant truncated value for `x`, where `x` must be a floating value.
   //!  
@@ -88,10 +80,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/trunc.hpp>
-  //! 
   //!  
   //!     The expression `diff(trunc)(x)` computes the derivative of the function at `x` .
-  //!  
   //!
   //! #### Example
   //!

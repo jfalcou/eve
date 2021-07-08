@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the minmag operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/minmag.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/minmag.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -43,7 +38,6 @@ namespace eve
   //!
   //!`x`, `y`:   [values](../../concepts.html#value)
   //!
-  //!
   //! **Return value**
   //!
   //!the least absolute value is returned.
@@ -58,7 +52,6 @@ namespace eve
   //!
   //!@warning
   //!   If any element of the inputs is a `Nan`, the corresponding output element is system-dependent.
-  //!
   //!
   //! ---
   //!
@@ -84,27 +77,22 @@ namespace eve
   //!  * `pedantic`
   //!
   //!     **Required header:**  #include <eve/function/pedantic/minmag.hpp>
-  //! 
-  //!  
-  //!  The behaviour is the same except that if  `|x| == |y|`, `pedantic(min)` is used.
-  //!  
+  //!
+  //!     The behaviour is the same except that if  `|x| == |y|`, `pedantic(min)` is used.
+  //!
   //!  * `numeric`
   //!
   //!     **Required header:**  #include <eve/function/numeric/minmag.hpp>
-  //! 
-  //!  
-  //!  The behaviour is the same except that if  `|x| == |y|`, `numeric(min)` is used.
-  //!  
+  //!
+  //!     The behaviour is the same except that if  `|x| == |y|`, `numeric(min)` is used.
+  //!
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/minmag.hpp>
-  //! 
-  //!  
+  //!
   //!     The expression `diff< N >(minmag)(x,args,...)` computes the partial
-  //!      diff relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and
+  //!      derivative relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and
   //!      their minmag is \f$m\f$, the value returned is elementwise 1 if \f$m\f$ is equal to \f$x_N\f$ else 0.
-  //!  
-  //!  
   //!
   //! #### Example
   //!
@@ -118,4 +106,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/minmag.hpp>
-

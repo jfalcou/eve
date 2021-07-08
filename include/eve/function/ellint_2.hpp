@@ -16,14 +16,10 @@ namespace eve
   //! @{
   //! @var ellint_2
   //!
-  //! @brief Callable object performing the computation of the ellint_2 operation.
+  //! @brief Callable object performing the computation of the elliptic integrals of the second kind :
+  //!        \f$ \int_0^{\phi} \scriptstyle \sqrt{1-k^2\sin^2 t} \scriptstyle\;\mathrm{d}t\f$
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/ellint_2.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/ellint_2.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -43,10 +39,9 @@ namespace eve
   //!
   //!`phi`, `k`:   [floating values](../../concepts.html#value).
   //!
-  //!
   //! computes the complete and incomplete elliptic integrals of the second kind :
   //!
-  //!\f[ F(\phi,k) = \int_0^{\phi} \sqrt{1-k^2\sin^2 t\mbox{d}t}\f]
+  //!\f[ F(\phi,k) = \int_0^{\phi} \sqrt{1-k^2\sin^2 t}\mbox{d}t\f]
   //!
   //!The complete case corresponds to \f$\phi = \pi/2\f$.
   //!
@@ -59,7 +54,6 @@ namespace eve
   //!!!! WARNING
   //!  Be aware that as \f$\pi/2\f$ is not exactly represented by floating point values the result of the incomplete
   //!  function with a \f$\phi\f$ value near \f$\pi/2\f$ can differ a lot with the result of the complete call.
-  //!
   //!
   //! **Return value**
   //!
@@ -87,7 +81,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  decorators NOT FOUND
+  //!  no decorators are supported
   //!
   //! #### Example
   //!

@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of acsc.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/acsc.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/acsc.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) arc cosecant of the
@@ -50,12 +44,10 @@ namespace eve
   //!
   //!In particular:
   //!
-  //!
   //!   * If the element is \f$\pm1\f$, \f$\pm\frac\pi2\f$ is returned.
   //!   * If the element \f$|x| < 1\f$, `NaN` is returned.
   //!   * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
   //!   * If the element is a `Nan`, `NaN` is returned.
-  //!
   //!
   //! ---
   //!
@@ -81,11 +73,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/acsc.hpp>
-  //! 
   //!  
   //!     The expression `diff(acsc)(x)` computes the derivative of the function at `x`.
-  //!  
-  //!  
   //!
   //! #### Example
   //!
@@ -99,4 +88,3 @@ namespace eve
 }
 
 #include <eve/module/real/math/function/regular/generic/acsc.hpp>
-

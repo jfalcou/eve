@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the "not less than" predicate.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/is_not_less.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/is_not_less.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,15 +37,12 @@ namespace eve
   //!
   //!`x`, `y`:   [values](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!Returns the logical value containing the [element-wise](../../../glossary.html#value) comparison test result
   //!between `x` and `y`.
   //!
   //!The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
-  //!
   //!
   //! ---
   //!
@@ -76,7 +68,6 @@ namespace eve
   //!  * `almost`
   //!
   //!     **Required header:**  #include <eve/function/almost/is_not_less.hpp>
-  //! 
   //!  
   //!     The expression `almost(is_not_less)(x, y, t)` where `x` and `y` must be
   //!      floating point values, evals to true if and only if and only if `x` is not almost less than `y`.
@@ -85,8 +76,6 @@ namespace eve
   //!      - if `t` is a floating_value then  \f$(x \ge y - t \max(|x|, |y|))\f$
   //!      - if `t` is a positive integral_value then \f$(x \ge \mbox{prev}(y, t)\f$;
   //!      - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
-  //!  
-  //!  
   //!
   //! #### Example
   //!

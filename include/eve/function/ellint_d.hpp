@@ -16,14 +16,10 @@ namespace eve
   //! @{
   //! @var ellint_d
   //!
-  //! @brief Callable object performing the computation of the ellint_d operation.
+  //! @brief Callable object performing the computation of the \f$\mbox{D}\f$ elliptic integrals  :
+  //!        \f$\int_0^{\phi} \frac{\sin^2 t}{\sqrt{1-k^2\sin^2 t}} \scriptstyle\;\mathrm{d}t\f$.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/ellint_d.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/ellint_d.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -43,7 +39,6 @@ namespace eve
   //!
   //!`phi`, `k`:   [floating values](../../concepts.html#value).
   //!
-  //!
   //! computes the complete and incomplete D elliptic integrals  :
   //!
   //!\f[ F(\phi,k) = \int_0^{\phi} \frac{\sin^2 t}{\sqrt{1-k^2\sin^2 t}}\mbox{d}t\f]
@@ -59,7 +54,6 @@ namespace eve
   //!!!! WARNING
   //!  Be aware that as \f$\pi/2\f$ is not exactly represented by floating point values the result of the incomplete
   //!  function with a \f$\phi\f$ value near \f$\pi/2\f$ can differ a lot with the result of the complete call.
-  //!
   //!
   //! **Return value**
   //!
@@ -87,7 +81,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  decorators NOT FOUND
+  //!  no decorators are supported
   //!
   //! #### Example
   //!

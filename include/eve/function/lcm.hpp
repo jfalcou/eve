@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of least common multiple operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/lcm.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/lcm.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,10 +37,7 @@ namespace eve
   //!
   //!`p`, `n`:   [values](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
-  //!
   //!
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
   //!
@@ -65,7 +57,6 @@ namespace eve
   //!
   //!where deco is one of: `to_nearest`, `downward`, `upward` or `toward_zero`.
   //!
-  //!
   //!Type conversion
   //!----------------------------------------------------------------------------------------------------
   //!<span class="smallskip"></span>
@@ -74,7 +65,6 @@ namespace eve
   //!input values which will be representable in the upgraded integral type:
   //!
   //!The call `upgrade(lcm)(a,b)` will then return a correct result in the upgraded type (see example below).
-  //!
   //!
   //! ---
   //!
@@ -96,7 +86,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  decorators NOT FOUND
+  //!  no decorators are supported
   //!
   //! #### Example
   //!

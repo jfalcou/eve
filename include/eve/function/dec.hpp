@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the dec unary operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/dec.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/dec.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,13 +37,10 @@ namespace eve
   //!
   //!`x`:   [value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Computes  [element-wise](../../../glossary.html#elment-wise) a value with the same type as `x`.
   //!The result is `x-1`.
-  //!
-  //!
   //!
   //! ---
   //!
@@ -74,7 +66,6 @@ namespace eve
   //!  * `saturated`
   //!
   //!     **Required header:**  #include <eve/function/saturated/dec.hpp>
-  //! 
   //!  
   //!     The call `saturated(dec)(x)` computes the saturated opposite of `x`. The only interest of this behaviour is that
   //!      for integral type T  `saturated(dec)(Valmin< T >())` returns `Valmin< T >()`.
@@ -82,7 +73,6 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/dec.hpp>
-  //! 
   //!  
   //!     The expression `diff(dec)(x)` computes the derivative of the function at `x`.
   //!  
@@ -97,7 +87,6 @@ namespace eve
   //!  
   //!   *  `if_else(cond, dec(x), x)`,
   //!   *  `if_else(cond, saturated(dec)(x), x)`;
-  //!  
   //!
   //! #### Example
   //!
@@ -111,4 +100,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/dec.hpp>
-

@@ -20,12 +20,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the "greater than" predicate.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/is_greater.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/is_greater.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -44,8 +39,6 @@ namespace eve
   //!
   //!`x`, `y`:   [values](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!Returns the logical value containing the [element-wise](../../../glossary.html#value) comparison test result
@@ -56,7 +49,6 @@ namespace eve
   //!@warning
   //!   Although the infix notation with `>` is supported, the `>` operator on
   //!   standard scalar types is the original one and so returns bool result, not `logical`.
-  //!
   //!
   //! ---
   //!
@@ -82,7 +74,6 @@ namespace eve
   //!  * `definitely`
   //!
   //!     **Required header:**  #include <eve/function/definitely/is_greater.hpp>
-  //! 
   //!  
   //!     The expression `definitely(is_greater)(x, y, t)` where `x` and `y` must be
   //!      floating point values, evals to true if and only if `x` is definitely greater than `y`.
@@ -91,7 +82,6 @@ namespace eve
   //!      - if `t` is a floating_value then  \f$x > y + t \max(|x|, |y|)\f$
   //!      - if `t` is a positive integral_value then \f$x > \mbox{next}(y, t)\f$;
   //!      - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
-  //!  
   //!
   //! #### Example
   //!

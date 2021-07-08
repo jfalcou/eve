@@ -19,12 +19,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the equality predicate.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/is_not_equal.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/is_not_equal.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -43,8 +38,6 @@ namespace eve
   //!
   //!`x`, `y`:   [values](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!Returns the logical value containing the [element-wise](../../../glossary.html#value) equality test result
@@ -55,7 +48,6 @@ namespace eve
   //!@warning
   //!   Although the infix notation with `!=` is supported, the `!=` operator on
   //!   standard scalar types is the original one and so returns bool result, not `logical`.
-  //!
   //!
   //! ---
   //!
@@ -81,14 +73,12 @@ namespace eve
   //!  * `numeric`
   //!
   //!     **Required header:**  #include <eve/function/numeric/is_not_equal.hpp>
-  //! 
   //!  
   //!     The expression `numeric(is_not_equal)(x,y)` considers that Nan values are equal.
   //!  
   //!  * `definitely`
   //!
   //!     **Required header:**  #include <eve/function/definitely/is_not_equal.hpp>
-  //! 
   //!  
   //!     The expression `definitely(is_not_equal)(x, y, t)` where `x` and `y` must be floating point values, evals
   //!      to true if and only if `x` is definitely not equal to `y`.
@@ -97,8 +87,6 @@ namespace eve
   //!      - if `t` is a floating_value then the relative error of confusing is `x` and `y` is greater than `t` \f$|x-y| > t \max(|x|, |y|)\f$.
   //!      - if `t` is an integral_value then there at least `t` values of the type of `x` representable in the interval \f$[x,y[\f$.
   //!      - if `t` is omitted then the tolerance `t` is taken to 3 times the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
-  //!  
-  //!  
   //!
   //! #### Example
   //!

@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of **TODO: FILL THIS BLANK**.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/gather.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/gather.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -45,7 +40,6 @@ namespace eve
   //!
   //!OTHER PARAMETERS
   //!:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
-  //!
   //!
   //! **Return value**
   //!
@@ -89,7 +83,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  decorators NOT FOUND
+  //!  no decorators are supported
   //!
   //! #### Example
   //!
@@ -103,4 +97,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/simd/gather.hpp>
-

@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of unsigned integral double_factorial.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/double_factorial.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/double_factorial.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,10 +37,7 @@ namespace eve
   //!
   //!`n`:   [value](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
-  //!
   //!
   //!double factorial is defined by $\displaystyle (2n)!! = \prod_{i=1}^n (2i)$ and $\displaystyle (2n+1)!! = \prod_{i=0}^n (2i+1)$
   //!
@@ -54,7 +46,6 @@ namespace eve
   //!
   //!@warning
   //!    this function will overflow as soon as the input is greater than 300.
-  //!
   //!
   //! ---
   //!
@@ -76,7 +67,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  decorators NOT FOUND
+  //!  no decorators are supported
   //!
   //! #### Example
   //!

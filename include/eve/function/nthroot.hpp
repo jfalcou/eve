@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the nthroot operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/nthroot.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/nthroot.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -43,15 +38,12 @@ namespace eve
   //!`x`:   [floating valuex](../../concepts.html#value).
   //!`n`:   [integral_value](../../concepts.html#value). Actually `n` can be a flint.
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!Returns [element-wise](../../../glossary.html#value) the value of \f$x^{1/n}\f$.
   //!For negative `x` the value returned is a Nan as soon as `n` is not an odd integer.
   //!
   //! The result type is of the compatibility type of the  parameters.
-  //!
   //!
   //! ---
   //!
@@ -77,7 +69,6 @@ namespace eve
   //!  * `raw`
   //!
   //!     **Required header:**  #include <eve/function/diff/nthroot.hpp>
-  //! 
   //!  
   //!     The expression `raw(nthroot)(x,n)` does not care about limiting values and gives less accurate values.
   //!      for instance `nthroot(64.0,3)` is not exactly four but is `3.9999999999999991118` with a 0.5ulp error.
@@ -85,11 +76,9 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/nthroot.hpp>
-  //! 
   //!  
   //!     The expression `diff_1st(nthroot)(x,n)`
   //!      diff of \f$f\f$, where \f$f\f$ is the function \f$x \rightarrow \ x^{1/n}\f$.
-  //!  
   //!
   //! #### Example
   //!

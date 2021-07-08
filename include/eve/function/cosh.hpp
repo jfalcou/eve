@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of cosh.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/cosh.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/cosh.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) hyperbolic cosine of the input.
@@ -52,7 +46,6 @@ namespace eve
   //!   * If the element is \f$\pm0\f$, 1 is returned.
   //!   * If the element is \f$\pm\infty\f$, \f$+\infty\f$ is returned.
   //!   * If the element is a `NaN`, `NaN` is returned.
-  //!
   //!
   //! ---
   //!
@@ -78,11 +71,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/cosh.hpp>
-  //! 
   //!  
   //!     The expression `diff(cosh)(x)` computes the derivative of the function at `x`.
-  //!  
-  //!  
   //!
   //! #### Example
   //!
@@ -96,4 +86,3 @@ namespace eve
 }
 
 #include <eve/module/real/math/function/regular/generic/cosh.hpp>
-

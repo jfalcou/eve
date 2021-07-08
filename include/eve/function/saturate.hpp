@@ -16,20 +16,15 @@ namespace eve
   //! @{
   //! @var saturate
   //!
-  //! @brief Callable object performing the computation of   //!  description NOT FOUND.
+  //! @brief Callable object performing the computation of the saturation of a value in a type.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/saturate.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/saturate.hpp>`
   //!
   //! #### Members Functions
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` |   //!  description NOT FOUND   |
+  //! | `operator()` | computation of the saturation of a value in a type         |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
@@ -39,12 +34,13 @@ namespace eve
   //!  auto operator()( T const& x, as_<Target> const& t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
+  //! ---
+  //!
   //! **Parameters**
   //!
   //!`x`:   [value](../../concepts.html#value) to saturate.
   //!
   //!`t`:   [Type wrapper](../types/as.html#as_) instance embedding the type to saturate `x` to.
-  //!
   //!
   //! **Return value**
   //!
@@ -87,7 +83,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  decorators NOT FOUND
+  //!  no decorators are supported
   //!
   //! #### Example
   //!
@@ -101,4 +97,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/saturate.hpp>
-

@@ -21,12 +21,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of **TODO: FILL THIS BLANK**.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/combine.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/combine.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -48,7 +43,6 @@ namespace eve
   //!
   //!OTHER PARAMETERS
   //!:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
-  //!
   //!
   //! **Return value**
   //!
@@ -92,7 +86,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  decorators NOT FOUND
+  //!  no decorators are supported
   //!
   //! #### Example
   //!
@@ -112,4 +106,3 @@ namespace eve::detail
     return as_wide_t<T, typename cardinal_t<T>::combined_type>(a, b);
   }
 }
-

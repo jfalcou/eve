@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of lrising_factorial i.e. \f$\log\left(\frac{\Gamma(x+a)}{\Gamma(x)}\right).
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/lrising_factorial.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/lrising_factorial.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -44,10 +39,7 @@ namespace eve
   //!
   //!`x`:   [floating value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
-  //!
-  //!
   //!
   //! ---
   //!
@@ -73,7 +65,6 @@ namespace eve
   //!  * `raw`
   //!
   //!     **Required header:**  #include <eve/function/lrising_factorial.hpp>
-  //! 
   //!  
   //!     The expression `raw(lrising_factorial)(a,x)` uses the crude formula with all its limitations and
   //!      inacurracies and return a Nan if `a` and `a+x` are not both positive
@@ -81,7 +72,6 @@ namespace eve
   //!  * `pedantic`
   //!
   //!     **Required header:**  #include <eve/function/pedantic/lrising_factorial.hpp>
-  //! 
   //!  
   //!     The expression `pedantic(lrising_factorial)(a,x)` uses reflection tricks and computes the function
   //!       for all real `a` and `x`, and in fact computes the logarithm of the absolute value of the Pochammer
@@ -90,7 +80,6 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/lrising_factorial.hpp>
-  //! 
   //!  
   //!     The expression `diff_1st(lrising_factorial)(a,x)` and `diff_2nd(lrising_factorial)(a,x)` computes
   //!      the derivative of the function relative to the first or second parameter respectively.
@@ -100,8 +89,6 @@ namespace eve
   //!      `pedantic(diff_1st)(lrising_factorial)(a,x)`
   //!  
   //!      will compute the derivative of `pedantic(lrising_factorial)` relative to the first parameter.
-  //!  
-  //!  
   //!
   //! #### Example
   //!

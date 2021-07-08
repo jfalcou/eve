@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the negate operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/negate.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/negate.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -43,15 +38,10 @@ namespace eve
   //!`x`:   [value](../../concepts.html#value) to negate.
   //!`y`:   [value](../../concepts.html#value) whose sign will be used to negate `x`.
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [`element-wise`](../../../glossary.html#element-wise) product of the first parameter by the sign of the second.
   //!
-  //![`diff`](../decorators.html#diff)
-  //!:   **Required header:** **<script type="preformatted">` #include <eve/function/diff/negate.hpp>`</script>
-  //!
-  //!:   The expression `diff(negate)(x)` computes the derivative of the function at `x` .
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
@@ -72,7 +62,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  decorators NOT FOUND
+  //!  no decorators are supported
   //!
   //! #### Example
   //!

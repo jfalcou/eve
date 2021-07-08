@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of unsigned integral prime_ceil.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/prime_ceil.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/prime_ceil.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,10 +37,7 @@ namespace eve
   //!
   //!`n`:   [value](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
-  //!
   //!
   //! The result element type is the same as the input one unless a converter is applied.
   //!
@@ -53,7 +45,6 @@ namespace eve
   //!
   //!@warning
   //!    this function will return 0 (or nan) as soon as the input is greater than 104729.
-  //!
   //!
   //! ---
   //!
@@ -75,7 +66,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  decorators NOT FOUND
+  //!  no decorators are supported
   //!
   //! #### Example
   //!

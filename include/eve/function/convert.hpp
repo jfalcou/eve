@@ -19,12 +19,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of   //!  description NOT FOUND.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/convert.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/convert.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -45,7 +40,6 @@ namespace eve
   //!`x`:   [value](../../concepts.html#value) to convert.
   //!
   //!`t`:   [Type wrapper](../types/as.html#as_) instance embedding the type to convert `x` to.
-  //!
   //!
   //! **Return value**
   //!
@@ -74,7 +68,6 @@ namespace eve
   //!@warning Note
   //!   Conversion operated by [eve::convert](#eve::convert) follows the regular rules of C++ type conversion, including the cases leading to Undefined Behaviors.
   //!
-  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
@@ -97,7 +90,6 @@ namespace eve
   //!
   //!  ### [`saturated`](../../decorators.html#saturated)
   //!  The expression `saturated(convert)(x,t)` computes a saturated conversion of `x` to the type wrapped by `t`.
-  //!  
   //!
   //! #### Example
   //!

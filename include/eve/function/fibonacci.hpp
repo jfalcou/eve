@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the nth fibonacci sequence value operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/fibonacci.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/fibonacci.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,10 +37,7 @@ namespace eve
   //!
   //!`p`, `n`:   [values](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
-  //!
   //!
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the two first parameters,
   //! vectorized with the cardinality of the third one if necessary.
@@ -57,7 +49,6 @@ namespace eve
   //!      - r(i+2) = r(i+1)+r(i),  i > 2
   //!
   //! The function return elementwise r(n), but the result is computed using the Binet formula.
-  //!
   //!
   //! ---
   //!
@@ -79,7 +70,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  decorators NOT FOUND
+  //!  no decorators are supported
   //!
   //! #### Example
   //!

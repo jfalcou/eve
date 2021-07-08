@@ -21,12 +21,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the arithmetic left shift operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/shl.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/shl.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -47,7 +42,6 @@ namespace eve
   //!`x`:   [value](../../concepts.html#value).
   //!
   //!`n`:   [integral value](../../concepts.html#value).
-  //!
   //!
   //! **Return value**
   //!
@@ -80,7 +74,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  decorators NOT FOUND
+  //!  no decorators are supported
   //!
   //! #### Example
   //!

@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the min operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/min.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/min.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -44,15 +39,12 @@ namespace eve
   //!`x`, `args`, ...
   //!:   [values](../../concepts.html#value)
   //!
-  //!
   //! **Return value**
-  //!
   //!
   //!The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
   //!
   //!@warning
   //!   If any element of the inputs is a `Nan`, the corresponding output element is system-dependent.
-  //!
   //!
   //! ---
   //!
@@ -78,7 +70,6 @@ namespace eve
   //!  * `pedantic`
   //!
   //!     **Required header:**  #include <eve/function/pedantic/min.hpp>
-  //! 
   //!  
   //!     The call `pedantic(min)(x, args, ...)`  ensures the conformity to the standard behaviour, that is
   //!      for two parameters (on an  [element-wise](../../../glossary.html#value) basis) semanticaly equivalent to:
@@ -88,7 +79,6 @@ namespace eve
   //!  * `numeric`
   //!
   //!     **Required header:**  #include <eve/function/numeric/min.hpp>
-  //! 
   //!  
   //!     The call `numeric(max)(x,args,...)`  ensures that  if any element of the inputs is not a `Nan`, the corresponding
   //!      output element will not be a `Nan`.
@@ -96,12 +86,10 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/min.hpp>
-  //! 
   //!  
   //!     The expression `diff< N >(min)(x,args,...)` computes the partial
-  //!      diff relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and
+  //!      derivative relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and
   //!      their minimum is \f$m\f$, the value returned is elementwise 1 if \f$m\f$ is equal to \f$x_N\f$ else 0.
-  //!  
   //!
   //! #### Example
   //!

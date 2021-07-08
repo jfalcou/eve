@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the rem operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/rem.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/rem.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,8 +37,6 @@ namespace eve
   //!
   //!`x`, `y`:   [values](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!Return the remainderafter division division of `x` by `y`.
@@ -56,7 +49,6 @@ namespace eve
   //!   Although the infix notation with `%` is supported, the `%` operator on
   //!   standard integral scalar type is the original one and so can lead to automatic promotion.
   //!   Moreover due to C++ limitations `%` is not available for scalar floating point values.
-  //!
   //!
   //! ---
   //!
@@ -89,14 +81,12 @@ namespace eve
   //!      * If `y` is  \f$\pm\infty\f$ and `x` is finite, `x` is returned.
   //!      * If either argument is a Nan, NaN is returned.
   //!  
-  //!  
   //!  * `downward`
   //!     The call `downward(rem)(x, y)`  computes  `x-downward(div)(x, y)*y`.
   //!  
   //!  * `upward`
   //!     The call `upward(rem)(x, y)`  computes  `x-upward(div)(x, y)*y`.
   //!      It is not defined for unsigned values as the result can be negative.
-  //!  
   //!  
   //!  * `to_nearest`
   //!     The call `to_nearest(rem)(x, y)`  computes  `x-to_nearest(div)(x,y)*y`.
@@ -120,7 +110,6 @@ namespace eve
   //!  
   //!   *  `if_else(cond, rem(x,y), x)`,
   //!   *  `if_else(cond, d_(rem)(x,y), x)`;
-  //!  
   //!
   //! #### Example
   //!
@@ -134,4 +123,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/rem.hpp>
-

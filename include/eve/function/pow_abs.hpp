@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the pow_abs operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/pow_abs.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/pow_abs.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -41,8 +36,6 @@ namespace eve
   //! **Parameters**
   //!
   //!`x`, `y`:   [values](../../concepts.html#value).
-  //!
-  //!
   //!
   //! **Return value**
   //!
@@ -66,7 +59,6 @@ namespace eve
   //!  *  pow_abs(\f$+\infty\f$, y) returns \f$+0\f$ for any negative y.
   //!  *  pow_abs(\f$+\infty\f$, y) returns \f$+\infty\f$ for any positive y.
   //!  *  except where specified above, if any argument is NaN, NaN is returned.
-  //!
   //!
   //! ---
   //!
@@ -96,11 +88,9 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/pow.hpp>
-  //! 
   //!  
   //!     The expression `diff_1st(pow_abs)(x,y)` and `diff_2nd(pow_abs)(x,y)` computes the partial
-  //!      diffs of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ |x|^y\f$.
-  //!  
+  //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ |x|^y\f$.
   //!
   //! #### Example
   //!
@@ -114,4 +104,3 @@ namespace eve
 }
 
 #include <eve/module/real/math/function/regular/generic/pow_abs.hpp>
-

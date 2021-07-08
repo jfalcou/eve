@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the "not less or equal to" predicate.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/is_not_less_equal.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/is_not_less_equal.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -55,7 +50,6 @@ namespace eve
   //!    - if `t` is a positive integral_value then \f$(x \ge \mbox{next}(y, t)\f$;
   //!    - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the logical value containing the [element-wise](../../../glossary.html#value) comparison test result
@@ -86,7 +80,6 @@ namespace eve
   //!  * `definitely`
   //!
   //!     **Required header:**  #include <eve/function/definitely/is_not_less_equal.hpp>
-  //! 
   //!  
   //!     The expression `definitely(is_not_less_equal)(x, y, t)` where `x` and `y` must be
   //!      floating point values, evals to true if and only if and only if `x` is definitely not less or equal to `y`.
@@ -103,7 +96,6 @@ namespace eve
   //!  between `x` and `y`.
   //!  
   //!  The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
-  //!  
   //!
   //! #### Example
   //!

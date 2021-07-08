@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the sqr operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/sqr.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/sqr.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Computes  [element-wise](../../../glossary.html#elment-wise) the square of `x`.
@@ -50,9 +44,6 @@ namespace eve
   //!@warning
   //!   For  [real integral signed values](../../concepts.html#value)   if `saturated(abs)(x)`
   //!   is greater than [`eve::Sqrtvalmax(as(x))`](../../constants/limits/sqrtvalmax.html) the corresponding element result is undefined .
-  //!
-  //!
-  //!
   //!
   //! ---
   //!
@@ -78,7 +69,6 @@ namespace eve
   //!  * `saturated`
   //!
   //!     **Required header:**  #include <eve/function/saturated/sqr.hpp>
-  //! 
   //!  
   //!     The expression `saturated(abs)(x)` computes a saturated square of `x`. Contrary to the [regular case](../decorator/regular.html), this guarantees
   //!      that the result is [`element-wise`](../../../glossary.html#element-wise) greater or equal than 0. More specifically, for any signed integer value
@@ -94,10 +84,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/sqr.hpp>
-  //! 
   //!  
   //!     The expression `diff(sqr)(x)` computes the derivative of the function at `x`.
-  //!  
   //!
   //! #### Example
   //!
@@ -111,4 +99,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/sqr.hpp>
-

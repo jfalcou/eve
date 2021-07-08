@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of powm1.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/powm1.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/powm1.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,12 +37,10 @@ namespace eve
   //!
   //!`x`, `y`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) power minus one, with good accuracy,
   //!even when `y` is very small, or when `x` is close to 1.
-  //!
   //!
   //! ---
   //!
@@ -73,12 +66,9 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/pow.hpp>
-  //! 
   //!  
   //!     The expression `diff_1st(powm1)(x,y)` and `diff_2nd(powm1)(x,y)` computes the partial
-  //!      diffs of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ x^y-1\f$.
-  //!  
-  //!  
+  //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ x^y-1\f$.
   //!
   //! #### Example
   //!

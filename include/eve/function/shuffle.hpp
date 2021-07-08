@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of **TODO: FILL THIS BLANK**.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/shuffle.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/shuffle.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -45,7 +40,6 @@ namespace eve
   //!
   //!OTHER PARAMETERS
   //!:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
-  //!
   //!
   //! **Return value**
   //!
@@ -89,7 +83,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  decorators NOT FOUND
+  //!  no decorators are supported
   //!
   //! #### Example
   //!
@@ -104,4 +98,3 @@ namespace eve
 
 #include <eve/module/real/core/function/scalar/shuffle.hpp>
 //#include <eve/module/real/core/function/regular/simd/shuffle.hpp>
-

@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the beta function. \f$\mbox{B}(x,y)=\int_0^1 t^{x-1}(1-t)^{y-1}\mbox{d}t\f$
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/beta.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/beta.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,8 +37,6 @@ namespace eve
   //!
   //!`x`, `y`:   [values](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!Returns [element-wise](../../../glossary.html#value) $\displaystyle \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}$.
@@ -54,7 +47,7 @@ namespace eve
   //!:   **Required header:** **<script type="preformatted">` #include <eve/function/diff/beta.hpp>`</script>
   //!
   //!:   The expression `diff_1st(beta)(x,y)` and `diff_2nd(beta)(x,y)` computes the partial
-  //!    diffs of $f$, where $f$ is the function $(x,y) \rightarrow \ \mbox{B}(x,y)$.
+  //!    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ \mbox{B}(x,y)$.
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
@@ -75,7 +68,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  decorators NOT FOUND
+  //!  no decorators are supported
   //!
   //! #### Example
   //!

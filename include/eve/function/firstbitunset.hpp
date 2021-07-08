@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the firstbitunset operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/firstbitunset.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/firstbitunset.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -41,7 +36,6 @@ namespace eve
   //! **Parameters**
   //!
   //!`x`:   [unsigned value](../../concepts.html#value).
-  //!
   //!
   //! **Return value**
   //!
@@ -67,7 +61,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  decorators NOT FOUND
+  //!  no decorators are supported
   //!
   //! #### Example
   //!
@@ -81,4 +75,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/firstbitunset.hpp>
-

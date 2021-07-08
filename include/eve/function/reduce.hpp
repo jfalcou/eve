@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the computation of a generalized fold operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/reduce.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/reduce.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -44,12 +39,9 @@ namespace eve
   //!
   //!`binary_op`:   Binary callable object that perform a binary, associative operation.
   //!
-  //!
   //! **Return value**
   //!
   //!Generalized fold of `v.get(0)`, `v.get(1)`, ... `v.get(v.size()-1)` over `binary_op`,
-  //!
-  //!
   //!
   //! ---
   //!
@@ -71,7 +63,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  decorators NOT FOUND
+  //!  no decorators are supported
   //!
   //! #### Example
   //!

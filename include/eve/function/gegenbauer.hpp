@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the gegenbauer operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/gegenbauer.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/gegenbauer.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -44,14 +39,11 @@ namespace eve
   //!`l`:   [floating values](../../concepts.html#value), elements must be greater than \f$-\frac12\f$.
   //!`x`:   [floating values](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!Returns [element-wise](../../../glossary.html#value) the value of the gegenbauer polynomial of order `n` at `l`, `x`:
   //!
   //!The result type is of the compatibility type of the  parameters.
-  //!
   //!
   //! ---
   //!
@@ -77,11 +69,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/gegenbauer.hpp>
-  //! 
   //!  
   //!     The expression `diff(gegenbauer)(n,l,x)` computes the derivative of the function at `x`.
-  //!  
-  //!  
   //!
   //! #### Example
   //!

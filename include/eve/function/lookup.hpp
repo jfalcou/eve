@@ -27,12 +27,7 @@ namespace eve::detail
   //!
   //! @brief Callable object performing the computation of **TODO: FILL THIS BLANK**.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/lookup.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/lookup.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -54,7 +49,6 @@ namespace eve::detail
   //!
   //!OTHER PARAMETERS
   //!:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
-  //!
   //!
   //! **Return value**
   //!
@@ -98,7 +92,7 @@ namespace eve::detail
   //!
   //! #### Supported decorators
   //!
-  //!  decorators NOT FOUND
+  //!  no decorators are supported
   //!
   //! #### Example
   //!

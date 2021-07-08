@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the ceil operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/ceil.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/ceil.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,12 +37,9 @@ namespace eve
   //!
   //!`x`:   [value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Computes  [element-wise](../../../glossary.html#elment-wise) the smallest integer not less than `x`.
-  //!
-  //!
   //!
   //! ---
   //!
@@ -73,7 +65,6 @@ namespace eve
   //!  * `tolerant`
   //!
   //!     **Required header:**  #include <eve/function/tolerant/ceil.hpp>
-  //! 
   //!  
   //!     The expression `tolerant(ceil)(x, tol)` computes a tolerant ceil value for `x`, where `x` must be a floating value.
   //!  
@@ -84,10 +75,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/ceil.hpp>
-  //! 
   //!  
   //!     The expression `diff(ceil)(x)` computes the derivative of the function at `x`.
-  //!  
   //!
   //! #### Example
   //!

@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the sign operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/sign.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/sign.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Computes  [element-wise](../../../glossary.html#elment-wise) the sign of `x`.
@@ -54,7 +48,6 @@ namespace eve
   //!
   //!Moreover for  [floating real value](../../concepts.html#value)
   //!if x is `Nan`, the result is `Nan`
-  //!
   //!
   //! ---
   //!
@@ -76,15 +69,11 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/sign.hpp>
-  //! 
-  //!  
+  //!
   //!     The expression `diff(sign)(x)` computes the derivative of the function at `x`.
-  //!  
-  //!  
   //!
   //! #### Example
   //!

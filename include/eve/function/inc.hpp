@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the inc unary operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/inc.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/inc.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,13 +37,10 @@ namespace eve
   //!
   //!`x`:   [value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Computes  [element-wise](../../../glossary.html#elment-wise) a value with the same type as `x`.
   //!The result is `x+1`.
-  //!
-  //!
   //!
   //! ---
   //!
@@ -70,7 +62,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  decorators NOT FOUND
+  //!  no decorators are supported
   //!
   //! #### Example
   //!
@@ -84,4 +76,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/inc.hpp>
-

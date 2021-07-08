@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of exp.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/exp.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/exp.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) exponential of the input.
@@ -52,8 +46,6 @@ namespace eve
   //!   * If the element is \f$-\infty\f$, \f$+0\f$ is returned
   //!   * If the element is \f$\infty\f$, \f$\infty\f$ is returned
   //!   * If the element is a `NaN`, `NaN` is returned
-  //!
-  //!
   //!
   //! ---
   //!
@@ -79,11 +71,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/exp.hpp>
-  //! 
   //!  
   //!     The expression `diff(exp)(x)` computes the derivative of the function at `x`.
-  //!  
-  //!  
   //!
   //! #### Example
   //!
@@ -97,4 +86,3 @@ namespace eve
 }
 
 #include <eve/module/real/math/function/regular/generic/exp.hpp>
-

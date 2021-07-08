@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the round operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/round.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/round.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Computes  [element-wise](../../../glossary.html#elment-wise) the integer nearest to `x`.
@@ -50,7 +44,6 @@ namespace eve
   //!If `x` is an exact half-integer the rouding is made to the nearest even integer.
   //!
   //!The call to `round(a)` is equivalent to the call `nearest(a)`.
-  //!
   //!
   //! ---
   //!
@@ -88,10 +81,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/round.hpp>
-  //! 
   //!  
   //!     The expression `diff(round)(x)` computes the derivative of the function at `x` (it is the same as `nearest`).
-  //!  
   //!
   //! #### Example
   //!
@@ -105,4 +96,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/round.hpp>
-

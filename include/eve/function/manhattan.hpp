@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the manhattan operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/manhattan.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/manhattan.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -43,12 +38,9 @@ namespace eve
   //!
   //!`x`, `args`:   [value](../../concepts.html#value)
   //!
-  //!
   //! **Return value**
   //!
-  //!
   //!The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
-  //!
   //!
   //! ---
   //!
@@ -74,26 +66,20 @@ namespace eve
   //!  * `pedantic`
   //!
   //!     **Required header:**  #include <eve/function/pedantic/manhattan.hpp>
-  //! 
-  //!  
+  //!
   //!     The call `pedantic(manhattan)(x,args...`  computes the sum of the absolute values of its parameters
   //!      returning \f$\infty\f$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
-  //!  
+  //!
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/manhattan.hpp>
-  //! 
-  //!  
+  //!
   //!     The expression `diff_< N >(manhattan)(x,args...)` computes the partial
-  //!      diff of the function relative to its Nth parameter. The returned value is 0 if N is
+  //!      derivative of the function relative to its Nth parameter. The returned value is 0 if N is
   //!      greater that the actual number of parameters, otherwise it is the [sign](./sign.html) of the `N`th parameter value.
-  //!  
+  //!
   //!  !!! Warning
   //!      This is only available for floating point entries.
-  //!  
-  //!  
-  //! 
-  //!  
   //!
   //! #### Example
   //!
@@ -107,4 +93,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/manhattan.hpp>
-

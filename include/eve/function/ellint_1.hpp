@@ -16,14 +16,10 @@ namespace eve
   //! @{
   //! @var ellint_1
   //!
-  //! @brief Callable object performing the computation of the ellint_1 operation.
+  //! @brief Callable object performing the computation of the elliptic integrals of the first kind :
+  //!        \f$\int_0^{\phi} \frac{\mathrm{d}t}{\sqrt{1-k^2\sin^2 t}}\f$.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/ellint_1.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/ellint_1.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -43,7 +39,6 @@ namespace eve
   //!
   //!`phi`, `k`:   [floating values](../../concepts.html#value).
   //!
-  //!
   //! computes the complete and incomplete elliptic integrals of the first kind :
   //!
   //!\f[ F(\phi,k) = \int_0^{\phi} \frac{\mbox{d}t}{\sqrt{1-k^2\sin^2 t}}\f]
@@ -59,7 +54,6 @@ namespace eve
   //!!!! WARNING
   //!  Be aware that as \f$\pi/2\f$ is not exactly represented by floating point values the result of the incomplete
   //!  function with a \f$\phi\f$ value near \f$\pi/2\f$ can differ a lot with the result of the complete call.
-  //!
   //!
   //! **Return value**
   //!
@@ -87,7 +81,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  decorators NOT FOUND
+  //!  no decorators are supported
   //!
   //! #### Example
   //!

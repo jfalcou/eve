@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the computation of the ifrexp pair of values.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/ifrexp.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/ifrexp.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [floating_real_value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!    Computes the [element-wise](../../../glossary.html#element-wise_) ieee ifrexp of the floating value,
@@ -51,7 +45,6 @@ namespace eve
   //!    \f$x =  m\times 2^e\f$, with  \f$|m| \in [0.5, 1.5[\f$.
   //!
   //!    However, the cases \f$x = \pm\infty\f$ or is a Nan or a denormal are undefined.
-  //!
   //!
   //! ---
   //!
@@ -77,11 +70,9 @@ namespace eve
   //!  * `pedantic`
   //!
   //!     **Required header:**  #include <eve/function/pedantic/ifrexp.hpp>
-  //! 
   //!  
   //!     The call `pedantic(ifrexp)(x)` takes also properly care of the cases where \f$x = \pm0, \pm\infty\f$ or is a Nan,
   //!      where \f$m=x\f$ and \f$e=0\f$ and of the denormal cases.
-  //!  
   //!
   //! #### Example
   //!
@@ -95,4 +86,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/ifrexp.hpp>
-

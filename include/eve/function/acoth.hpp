@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of acoth.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/acoth.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/acoth.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,7 +37,6 @@ namespace eve
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) inverse hyperbolic cotangent of the input.
@@ -53,7 +47,6 @@ namespace eve
   //!   * If the element is \f$\pm1\f$, \f$\pm0\f$ is returned.
   //!   * If the element is \f$\pm\infty\f$, \f$\pm1\f$ is returned.
   //!   * If the element is less than one or a `NaN`, `NaN` is returned.
-  //!
   //!
   //! ---
   //!
@@ -79,11 +72,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/acoth.hpp>
-  //! 
   //!  
   //!     The expression `diff(acoth)(x)` computes the derivative of the function at `x`.
-  //!  
-  //!  
   //!
   //! #### Example
   //!
@@ -97,4 +87,3 @@ namespace eve
 }
 
 #include <eve/module/real/math/function/regular/generic/acoth.hpp>
-

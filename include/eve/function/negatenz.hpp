@@ -14,14 +14,11 @@ namespace eve
   //================================================================================================
   //! @addtogroup arithmetic
   //! @{
-  //! @var negaten
+  //! @var negatenz
   //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/negatenz.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @brief Callable object performing the computation of the negatenz function.
   //!
-  //! <br/>Callable object performing the computation of the negatenz operation.
+  //! **Required header:** `#include <eve/function/negatenz.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -40,15 +37,10 @@ namespace eve
   //!
   //!`x`, `y`:   [values](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Returns the [`element-wise`](../../../glossary.html#element-wise) product of the first parameter by the never zero sign of the second.
   //!
-  //![`diff`](../decorators.html#diff)
-  //!:   **Required header:** **<script type="preformatted">` #include <eve/function/diff/negatenz.hpp>`</script>
-  //!
-  //!:   The expression `diff(negatenz)(x)` computes the derivative of the function at `x` .
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
@@ -69,7 +61,12 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  decorators NOT FOUND
+  //!    [`diff`](../decorators.html#diff)
+  //!:   **Required header:** `#include <eve/function/diff/negatenz.hpp>`
+  //!
+  //!    The expression `diff(negatenz)(x)` computes the derivative of the function at `x`.
+  //!
+  //!  no decorators are supported
   //!
   //! #### Example
   //!

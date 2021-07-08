@@ -16,14 +16,10 @@ namespace eve
   //! @{
   //! @var ellint_rj
   //!
-  //! @brief Callable object performing the computation of the ellint_rj operation.
+  //! @brief Callable object performing the computation of the the Carlson's elliptic integral
+  //!        \f$\frac32 \int_{0}^{\infty}\scriptstyle(t+p)^{-1}[(t+x)(t+y)(t+z)]^{-1/2}\scriptstyle\;\mathrm{d}t\f$
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/ellint_rj.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/ellint_rj.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -52,7 +48,6 @@ namespace eve
   //!  Parameters `x`, `y` and  `z` must be non negative at most one of them 0, and `p` non zero.
   //!  In any other case the result is nan.
   //!
-  //!
   //! **Return value**
   //!
   //!Returns [element-wise](../../../glossary.html#value) the Carlson's integral.
@@ -79,7 +74,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  decorators NOT FOUND
+  //!  no decorators are supported
   //!
   //! #### Example
   //!

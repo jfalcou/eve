@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the pow operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/pow.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/pow.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,16 +37,12 @@ namespace eve
   //!
   //!`x`, `y`:   [values](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!Returns [element-wise](../../../glossary.html#value) \f$x^y\f$.
   //!
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
   //! In paticular we have (IEC 60559):
-  //!
-  //!
   //!
   //!  * pow(+0, y), where y is a negative odd integer, returns \f$+\infty\f$
   //!  * pow(-0, y), where y is a negative odd integer, returns \f$-\infty\f$
@@ -75,7 +66,6 @@ namespace eve
   //!  * pow(\f$+\infty\f$, y) returns +0 for any y less than 0
   //!  * pow(\f$+\infty\f$, y) returns \f$+\infty\f$ for any y greater than 0
   //!  *  except where specified above, if any argument is NaN, NaN is returned
-  //!
   //!
   //! ---
   //!
@@ -101,11 +91,9 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/pow.hpp>
-  //! 
   //!  
   //!     The expression `diff_1st(pow)(x,y)` and `diff_2nd(pow)(x,y)` computes the partial
-  //!      diffs of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ x^y\f$.
-  //!  
+  //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ x^y\f$.
   //!
   //! #### Example
   //!
@@ -119,4 +107,3 @@ namespace eve
 }
 
 #include <eve/module/real/math/function/regular/generic/pow.hpp>
-

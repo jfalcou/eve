@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the complementary error function \f$1-\mbox{erf}(x)\f$.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/erfc.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/erfc.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,14 +37,11 @@ namespace eve
   //!
   //!`x`:   [value](../../concepts.html#value).
   //!
-  //!
-  //!
   //! **Return value**
   //!
   //!Returns [element-wise](../../../glossary.html#value) \f$\displaystyle \mbox{erfc}(x)=\frac{2}{\sqrt\pi}\int_{x}^{\infty} e^{-t^2}\mbox{d}t\f$
   //!
   //! The result type is of the same type as the  parameter.
-  //!
   //!
   //! ---
   //!
@@ -76,10 +68,7 @@ namespace eve
   //!
   //!     **Required header:**  #include <eve/function/diff/erfc.hpp>
   //!
-  //!
   //!     The expression `diff(erfc)(x)` computes the derivative of the function at `x`.
-  //!
-  //!
   //!
   //! #### Example
   //!

@@ -18,12 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation of the floor operation.
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/floor.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/floor.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,11 +37,9 @@ namespace eve
   //!
   //!`x`:   [value](../../concepts.html#value).
   //!
-  //!
   //! **Return value**
   //!
   //!Computes  [element-wise](../../../glossary.html#elment-wise) the greatest integer not greater than `x`.
-  //!
   //!
   //! ---
   //!
@@ -72,7 +65,6 @@ namespace eve
   //!  * `tolerant`
   //!
   //!     **Required header:**  #include <eve/function/tolerant/floor.hpp>
-  //! 
   //!  
   //!     The expression `tolerant(floor)(x, tol)` computes a tolerant floor value for `x`, where `x` must be a floating value..
   //!  
@@ -83,10 +75,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/floor.hpp>
-  //! 
   //!  
   //!     The expression `diff(floor)(x)` computes the derivative of the function at `x`.
-  //!  
   //!
   //! #### Example
   //!

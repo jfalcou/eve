@@ -16,14 +16,10 @@ namespace eve
   //! @{
   //! @var ellint_rf
   //!
-  //! @brief Callable object performing the computation of the ellint_rf operation.
+  //! @brief Callable object performing the computation of the Carlson's elliptic integral
+  //!        \f$\frac12 \int_{0}^{\infty} \scriptstyle[(t+x)(t+y)(t+z)]^{-1/2}\scriptstyle\;\mathrm{d}t\f$
   //!
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/ellint_rf.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
+  //! **Required header:** `#include <eve/function/ellint_rf.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -42,8 +38,6 @@ namespace eve
   //!
   //!`x`, `y`, `z`:   [floating values](../../concepts.html#value).
   //!
-  //!
-  //!
   //!  This computes the Carlson's elliptic integral
   //!
   //!  \f[ R_F(x, y, z) = \frac12 \int_{0}^{\infty} [(t+x)(t+y)(t+z)]^{-1/2} \mbox{d}t\f]
@@ -51,7 +45,6 @@ namespace eve
   //!  as described in  Carlson, Numerische Mathematik, vol 33, 1 (1979)
   //!
   //!  parameters must be non-negative and at most one zero or the result is nan.
-  //!
   //!
   //! **Return value**
   //!
@@ -79,7 +72,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  decorators NOT FOUND
+  //!  no decorators are supported
   //!
   //! #### Example
   //!
