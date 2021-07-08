@@ -1,4 +1,3 @@
-//==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
@@ -51,6 +50,7 @@ namespace eve
   //!if   constexpr(floating_real_value<T>) r = is_not_denormal(x) && is_finite(x) && is_nez(x);
   //!else constexpr(integral_real_value<T>) r = is_nez(x);
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

@@ -1,4 +1,3 @@
-//==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
@@ -47,6 +46,7 @@ namespace eve
   //!   but for [floating real values](../../concepts.html#value) `T`, `is_positive(Mzero<`T`>)` is false and
   //!   if `x` is a Nan the result depends of the bit of sign of `x` which can be out of control although
   //!   not undefined.
+  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

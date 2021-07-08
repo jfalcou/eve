@@ -1,4 +1,3 @@
-//==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
@@ -45,6 +44,7 @@ namespace eve
   //!between `x` and 0.
   //!
   //!The result type is `logical< T >`.
+  //!
   //! ---
   //!
   //! #### Supported decorators

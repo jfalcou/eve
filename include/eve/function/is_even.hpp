@@ -1,4 +1,3 @@
-//==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
@@ -51,6 +50,7 @@ namespace eve
   //!if constexpr(floating_real_value<T>)   r = is_flint(x) && is_flint(x/2);
   //!else constexpr(integral_real_value<T>) r = is_equal(x, (x/2)*2);
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
