@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var rising_factorial
   //!
-  //! @brief Callable object performing the computation of rising_factorial i.e. \f$\frac{\Gamma(x+a)}{\Gamma(a)}.
+  //! @brief Callable object performing the computation of rising_factorial function i.e. \f$\frac{\Gamma(x+a)}{\Gamma(a)}\f$.
   //!
   //! **Required header:** `#include <eve/function/rising_factorial.hpp>`
   //!
@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | rising_factorial i.e. \f$\frac{\Gamma(x+a)}{\Gamma(a)}   |
+  //! | `operator()` | rising_factorial operation  |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
@@ -35,9 +35,9 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`a`:   [value](../../concepts.html#value).
+  //!`a`:   [value](../../concepts.html#value). `a` must be positive or the result is Nan
   //!
-  //!`x`:   [floating value](../../concepts.html#value).
+  //!`x`:   [floating value](../../concepts.html#value). `a+x` must be positive or the result is Nan
   //!
   //! **Return value**
   //!
@@ -65,29 +65,29 @@ namespace eve
   //!  * `raw`
   //!
   //!     **Required header:**  #include <eve/function/rising_factorial.hpp>
-  //!  
+  //!
   //!     The expression `raw(rising_factorial)(a,x)` uses the crude formula with all its limitations and
   //!      inacurracies and return a Nan if `a` and `a+x` are not both positive
-  //!  
+  //!
   //!  * `pedantic`
   //!
   //!     **Required header:**  #include <eve/function/pedantic/rising_factorial.hpp>
-  //!  
+  //!
   //!     The expression `pedantic(rising_factorial)(a,x)` uses reflection tricks and computes the function for all real `a` and `x`,
   //!      and in fact computes the Pochammer symbol  \f$x^{\overline a}=\frac{\Gamma(x+a)}{\Gamma(a)}\f$
   //!      returning nan if the result in really undefined.
-  //!  
+  //!
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/rising_factorial.hpp>
-  //!  
+  //!
   //!     The expression `diff_1st(rising_factorial)(a,x)` and `diff_2nd(rising_factorial)(a,x)` computes
   //!      the derivative of the function relative to the first or second parameter respectively.
-  //!  
+  //!
   //!      These decorators can be combined to the other available ones : for instance the call
-  //!  
+  //!
   //!         `pedantic(diff_1st)(rising_factorial)(a,x)`
-  //!  
+  //!
   //!      will compute the derivative of `pedantic(rising_factorial)` relative to the first parameter.
   //!
   //! #### Example

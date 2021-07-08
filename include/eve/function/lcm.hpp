@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var lcm
   //!
-  //! @brief Callable object performing the computation of least common multiple operation.
+  //! @brief Callable object performing the computation of least common multiple.
   //!
   //! **Required header:** `#include <eve/function/lcm.hpp>`
   //!
@@ -46,26 +46,6 @@ namespace eve
   //!    the least common multiple is defined only if `p` and `n` element are flint. If it is not the
   //!    case the corresponding result will be Nan.
   //!
-  //!Decorators
-  //!----------------------------------------------------------------------------------------------------
-  //!<span class="smallskip"></span>
-  //!
-  //!If the user calls the function with floating parameters, he can enforce the fact that all parameters are flint
-  //!using one of the  [roundings](./../decorator.html#roundings) decorators on the object function. Namely:
-  //!
-  //!   - deco(lcm)(a,b) is equivalent to lcm)(deco(round)(a),deco(round)(b)), but optimized when possible.
-  //!
-  //!where deco is one of: `to_nearest`, `downward`, `upward` or `toward_zero`.
-  //!
-  //!Type conversion
-  //!----------------------------------------------------------------------------------------------------
-  //!<span class="smallskip"></span>
-  //!
-  //!If the input types are integral, the result is succeptible to overflow, but will not be greater than the product of the two
-  //!input values which will be representable in the upgraded integral type:
-  //!
-  //!The call `upgrade(lcm)(a,b)` will then return a correct result in the upgraded type (see example below).
-  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
@@ -86,7 +66,21 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  no decorators are supported
+  //!If the user calls the function with floating parameters, he can enforce the fact that all parameters are flint
+  //!using one of the  [roundings](./../decorator.html#roundings) decorators on the object function. Namely:
+  //!
+  //!   - deco(lcm)(a,b) is equivalent to lcm)(deco(round)(a),deco(round)(b)), but optimized when possible.
+  //!
+  //!where deco is one of: `to_nearest`, `downward`, `upward` or `toward_zero`.
+  //!
+  //! ---
+  //!
+  //! #### Type conversion
+  //!
+  //!If the input types are integral, the result is succeptible to overflow, but will never be greater than the product of the two
+  //!input values which will be representable in the upgraded integral type:
+  //!
+  //!The call `upgrade(lcm)(a,b)` will then return a correct result in the upgraded type (see example below).
   //!
   //! #### Example
   //!

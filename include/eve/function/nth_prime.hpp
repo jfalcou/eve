@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var nth_prime
   //!
-  //! @brief Callable object performing the computation of unsigned integral nth_prime.
+  //! @brief Callable object performing the computation the nth prime integer.
   //!
   //! **Required header:** `#include <eve/function/nth_prime.hpp>`
   //!

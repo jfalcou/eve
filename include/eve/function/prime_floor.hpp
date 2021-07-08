@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var prime_floor
   //!
-  //! @brief Callable object performing the computation of unsigned integral prime_floor.
+  //! @brief Callable object performing the computation of the greater prime integer less or equal to the input.
   //!
   //! **Required header:** `#include <eve/function/prime_floor.hpp>`
   //!
@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< unsigned_value T > auto operator()( T n ) const noexcept;
+  //!  auto operator()( unsigned_value auto n ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
