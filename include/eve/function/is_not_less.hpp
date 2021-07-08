@@ -47,15 +47,14 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `almost`
   //!
   //!     **Required header:**  #include <eve/function/fuzzy/is_not_less.hpp>
-  //!  
+  //!
   //!     The expression `almost(is_not_less)(x, y, t)` where `x` and `y` must be
   //!      floating point values, evals to true if and only if and only if `x` is not almost less than `y`.
   //!      This means that the pair `x, y` is unordered or:
-  //!  
+  //!
   //!      - if `t` is a floating_value then  \f$(x \ge y - t \max(|x|, |y|))\f$
   //!      - if `t` is a positive integral_value then \f$(x \ge \mbox{prev}(y, t)\f$;
   //!      - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
