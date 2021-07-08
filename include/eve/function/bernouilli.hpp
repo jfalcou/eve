@@ -25,12 +25,11 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | bernouilli numbers sequence   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< unsigned_value T > auto operator()( T n ) const noexcept;
+  //!  auto operator()( unsigned_value auto n ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -44,23 +43,7 @@ namespace eve
   //!
   //!@warning
   //!    this function will overflow as soon as the input is even and greater than 260
-  //!    But all odd index values are properly computed as they are all 0 except $b_1 = -1/2$.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::bernouilli
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `bernouilli[cond](x, ...)` is equivalent to `if_else(cond,bernouilli(x, ...),x)`
+  //!    But all odd index values are properly computed as they are all 0 except \f$b_1 = -1/2\f$.
   //!
   //! ---
   //!

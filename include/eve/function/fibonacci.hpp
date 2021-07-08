@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var fibonacci
   //!
-  //! @brief Callable object performing the computation of the nth fibonacci sequence value operation.
+  //! @brief Callable object performing the computation of the nth value of the fibonacci sequence.
   //!
   //! **Required header:** `#include <eve/function/fibonacci.hpp>`
   //!
@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the nth fibonacci sequence value operation   |
+  //! | `operator()` | the nth value of the fibonacci sequence  |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
@@ -35,7 +35,9 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`p`, `n`:   [values](../../concepts.html#value).
+  //!`x`, `y`:   [floating values](../../concepts.html#value).
+  //!
+  //!`n`:   [unsigned value](../../concepts.html#value).
   //!
   //! **Return value**
   //!
