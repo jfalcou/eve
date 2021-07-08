@@ -27,7 +27,6 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the "greater than" predicate   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -52,33 +51,16 @@ namespace eve
   //!
   //! ---
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::is_greater
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_greater[cond](x, ...)` is equivalent to `if_else(cond,is_greater(x, ...),x)`
-  //!
-  //! ---
-  //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `definitely`
   //!
-  //!     **Required header:**  #include <eve/function/definitely/is_greater.hpp>
-  //!  
+  //!     **Required header:**  #include <eve/function/fuzzy/is_greater.hpp>
+  //!
   //!     The expression `definitely(is_greater)(x, y, t)` where `x` and `y` must be
   //!      floating point values, evals to true if and only if `x` is definitely greater than `y`.
   //!      This means that:
-  //!  
+  //!
   //!      - if `t` is a floating_value then  \f$x > y + t \max(|x|, |y|)\f$
   //!      - if `t` is a positive integral_value then \f$x > \mbox{next}(y, t)\f$;
   //!      - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.

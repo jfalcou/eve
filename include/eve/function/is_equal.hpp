@@ -27,7 +27,6 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the equality predicate   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -52,39 +51,22 @@ namespace eve
   //!
   //! ---
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::is_equal
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_equal[cond](x, ...)` is equivalent to `if_else(cond,is_equal(x, ...),x)`
-  //!
-  //! ---
-  //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `numeric`
   //!
   //!     **Required header:**  #include <eve/function/numeric/is_equal.hpp>
-  //!  
+  //!
   //!     The expression `numeric(is_equal)(x,y)` considers that Nan values are equal.
-  //!  
+  //!
   //!  * `almost`
   //!
-  //!     **Required header:**  #include <eve/function/almost/is_equal.hpp>
-  //!  
+  //!     **Required header:**  #include <eve/function/fuzzy/is_equal.hpp>
+  //!
   //!     The expression `almost(is_equal)(x, y, t)` where `x` and `y` must be floating point values, evals to
   //!      true if and only if `x` is almost equal to `y`.
   //!      This means that:
-  //!  
+  //!
   //!      - if `t` is a floating_value then the relative error of confusing is `x` and `y` is less than `t` \f$(|x-y| \le t \max(|x|, |y|))\f$.
   //!      - if `t` is a positive integral_value then there are not more than `t` values of the type of `x` representable in the interval \f$[x,y[\f$.
   //!      - if `t` is omitted then the tolerance `t` is taken to 3 times the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).

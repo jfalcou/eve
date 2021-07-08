@@ -25,7 +25,6 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the equality to zero predicate   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -40,24 +39,9 @@ namespace eve
   //! **Return value**
   //!
   //!Returns the logical value containing the [element-wise](../../../glossary.html#value) equality test result
-  //!between `x` 0.
+  //!between `x` and 0.
   //!
   //!The result type is `logical< T >`.
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::is_eq
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_eqz[cond](x, ...)` is equivalent to `if_else(cond,is_eqz(x, ...),x)`
   //!
   //! ---
   //!

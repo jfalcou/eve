@@ -27,7 +27,6 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the "greater or equal to" predicate   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -52,28 +51,11 @@ namespace eve
   //!
   //! ---
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::is_greater_equal
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_greater_equal[cond](x, ...)` is equivalent to `if_else(cond,is_greater_equal(x, ...),x)`
-  //!
-  //! ---
-  //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `almost`
   //!
-  //!     **Required header:**  #include <eve/function/almost/is_greater_equal.hpp>
+  //!     **Required header:**  #include <eve/function/fuzzy/is_greater_equal.hpp>
   //!  
   //!     The expression `almost(is_greater_equal)(x, y, t)` where `x` and `y` must be
   //!      floating point values, evals to true if and only if `x` is almost greater or equal to `y`.
