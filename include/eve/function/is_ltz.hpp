@@ -41,6 +41,7 @@ namespace eve
   //!Returns the [element-wise](../../../glossary.html#value) `x < 0`.
   //!
   //!The result type is `logical< T >`.
+  //!
   //! ---
   //!
   //! #### Supported decorators

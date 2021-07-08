@@ -48,10 +48,6 @@ namespace eve
   //!   Although the infix notation with `<=` is supported, the `<=` operator on
   //!   standard scalar types is the original one and so returns bool result, not `logical`.
   //!
-  //!  (insert ../../src/is_less_equal.src.html here)
-  //!
-  //!  (insert ../../out/is_less_equal.out.html here)
-  //!
   //! ---
   //!
   //! #### Supported decorators

@@ -42,6 +42,7 @@ namespace eve
   //!between `x` and `y`.
   //!
   //!The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+  //!
   //! ---
   //!
   //! #### Supported decorators
