@@ -16,7 +16,7 @@
 namespace eve::algo
 {
   template <typename I, typename T>
-  struct converting_iterator : operations_with_distance, forward_to_unaligned
+  struct converting_iterator : operations_with_distance
   {
     using cardinal = typename I::cardinal;
     using value_type = T;
@@ -31,7 +31,7 @@ namespace eve::algo
       return converting_iterator<unaligned_t<I>, T>{base};
     }
 
-    converting_iterator<unaligned_t<I>, T>         unaligned()                  const { return *this; }
+    converting_iterator<unaligned_t<I>, T> unaligned() const { return *this; }
     auto previous_partially_aligned() const
     {
       return converting_iterator<partially_aligned_t<I>, T>{base.previous_partially_aligned()};
@@ -46,10 +46,33 @@ namespace eve::algo
 
     T operator*() const { return static_cast<T>(*base); }
 
+    template <sentinel_for<I> I2>
+    friend bool operator==(converting_iterator const& x, converting_iterator<I2, T> const& y)
+    {
+      return x.base == y.base;
+    }
+
+    template <sentinel_for<I> I2>
+    auto operator<=>(converting_iterator<I2, T> const & x) const
+    {
+      return base <=> x.base;
+    }
+
+    template <typename I2>
+    std::ptrdiff_t operator-(converting_iterator<I2, T> const & x) const
+    {
+      return base - x.base;
+    }
+
+    auto operator<=>(converting_iterator<unaligned_t<I>, T> const& x) const
+      requires (!unaligned_iterator<I>)
+    {
+      return unaligned() <=> x;
+    }
+    auto operator<=>(converting_iterator const&) const = default;
+
     converting_iterator&  operator+=(std::ptrdiff_t n) { base += n; return *this; }
     friend std::ptrdiff_t operator-(converting_iterator x, converting_iterator y) { return x.base - y.base; }
-
-    auto operator<=>(converting_iterator const&) const = default;
 
     template< relative_conditional_expr C, decorator S, typename Pack>
     friend auto tagged_dispatch ( eve::tag::load_, C const& c, S const& s
