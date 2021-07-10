@@ -30,7 +30,8 @@ namespace eve::algo
     template <typename Settings>
     constexpr auto operator[](algo::traits<Settings> tr) const
     {
-      return any_of_<algo::traits<Settings>>{default_to(tr, tr_)};
+      auto sum = default_to(tr, tr_);
+      return any_of_<decltype(sum)>{sum};
     }
 
     template <typename P>

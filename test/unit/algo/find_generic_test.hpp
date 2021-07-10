@@ -19,21 +19,21 @@
 
 namespace algo_test
 {
-  template <typename T, typename Algo, typename Check>
-  void find_one_ptr_test(T* f, T* l, T* res, Algo alg, Check check)
+  template <typename T, typename U, typename Algo, typename Check>
+  void find_one_ptr_test(eve::as<T>, U* f, U* l, U* res, Algo alg, Check check)
   {
     auto pred = [](auto x) { return x != 0; };
     check(f, l, res, alg(eve::algo::as_range(f, l), pred));
 
-    if (eve::is_aligned<eve::expected_cardinal_v<T> * sizeof(T)>(f))
+    if (eve::is_aligned<T::size() * sizeof(U)>(f))
     {
-      auto f_ = eve::aligned_ptr<T>(f);
+      auto f_ = eve::aligned_ptr<U, eve::fixed<T::size()>>(f);
       check(f_, l, res, alg(eve::algo::as_range(f_, l), pred));
     }
   }
 
   template <typename T, typename Algo, typename Check>
-  void find_generic_test_page_ends(eve::as<T>, Algo alg, Check check)
+  void find_generic_test_page_ends(eve::as<T> as, Algo alg, Check check)
   {
     using e_t     = eve::element_type_t<T>;
     using card_t  = eve::fixed<4096/ sizeof(e_t)>;
@@ -46,10 +46,10 @@ namespace algo_test
 
     auto run = [&] {
       for (auto it = f; it < l; ++it) {
-        find_one_ptr_test(f, l, l, alg, check);
+        find_one_ptr_test(as, f, l, l, alg, check);
         *it = 1;
 
-        find_one_ptr_test(f, l, it, alg, check);
+        find_one_ptr_test(as, f, l, it, alg, check);
         *it = 0;
       }
     };
@@ -81,11 +81,15 @@ namespace algo_test
   template <typename T, typename Algo, typename Check>
   void find_generic_test(eve::as<T> as_t, Algo alg, Check check)
   {
-    find_generic_test_page_ends(as_t, alg, check);
+    find_generic_test_page_ends(eve::as<eve::wide<typename T::value_type>>{}, alg, check);
 
-    find_generic_test_page_ends(as_t, alg[eve::algo::traits{eve::algo::unroll<1>}], check);
-    find_generic_test_page_ends(as_t, alg[eve::algo::traits{eve::algo::unroll<2>}], check);
-    find_generic_test_page_ends(as_t, alg[eve::algo::traits{eve::algo::unroll<3>}], check);
-    find_generic_test_page_ends(as_t, alg[eve::algo::traits{eve::algo::unroll<4>}], check);
+    find_generic_test_page_ends(as_t, alg[
+      eve::algo::traits{eve::algo::force_cardinal<T::size()>, eve::algo::unroll<1>}], check);
+    find_generic_test_page_ends(as_t, alg[
+      eve::algo::traits{eve::algo::force_cardinal<T::size()>, eve::algo::unroll<2>}], check);
+    find_generic_test_page_ends(as_t, alg[
+      eve::algo::traits{eve::algo::force_cardinal<T::size()>, eve::algo::unroll<3>}], check);
+    find_generic_test_page_ends(as_t, alg[eve::algo::traits{
+      eve::algo::force_cardinal<T::size()>, eve::algo::unroll<4>}], check);
   }
 }

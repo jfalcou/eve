@@ -30,7 +30,8 @@ namespace eve::algo
     template <typename Settings>
     constexpr auto operator[](algo::traits<Settings> tr) const
     {
-      return find_if_<algo::traits<Settings>>{default_to(tr, tr_)};
+      auto sum = default_to(tr, tr_);
+      return find_if_<decltype(sum)>{sum};
     }
 
     template <typename UnalignedI, typename P>

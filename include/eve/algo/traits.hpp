@@ -54,8 +54,8 @@ namespace eve::algo
     return rbr::get_type_t<Traits, unroll_key, eve::fixed<1>>{}();
   }
 
-  template <typename Traits, typename I>
-  using forced_cardinal_t = rbr::get_type_t<Traits, force_cardinal_key, typename I::cardinal>;
+  template <typename Traits, typename T>
+  using forced_cardinal_t = rbr::get_type_t<Traits, force_cardinal_key, eve::expected_cardinal_t<T>>;
 
   namespace detail
   {

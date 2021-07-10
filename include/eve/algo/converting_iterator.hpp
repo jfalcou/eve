@@ -113,7 +113,7 @@ namespace eve::algo
     {
       if constexpr ( instance_of<I, converting_iterator> )
       {
-        auto base = it.base();
+        auto base = it.base;
         if constexpr ( std::same_as<typename decltype(base)::value_type, T> ) return base;
         else                                                                  return operator()(it.base);
       }
