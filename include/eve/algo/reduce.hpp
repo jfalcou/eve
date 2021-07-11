@@ -70,16 +70,15 @@ namespace eve::algo
     };
 
     template <typename Rng, typename Op, typename T, typename U>
-    auto operator()(Rng&& rng, std::pair<Op, T> op_zero, U init) const
+    U operator()(Rng&& rng, std::pair<Op, T> op_zero, U init) const
     {
       auto processed = preprocess_range(
         algo::default_to(tr_, eve::algo::traits(common_with_types<U>)),
         std::forward<Rng>(rng));
 
       using I = decltype(processed.begin());
-      using res_t = typename I::value_type;
 
-      if (processed.begin() == processed.end()) return res_t{init};
+      if (processed.begin() == processed.end()) return init;
 
       auto op = op_zero.first;
       using wide_t = typename I::wide_value_type;
@@ -90,11 +89,11 @@ namespace eve::algo
       delegate<decltype(op), wide_t> d{op, zero, init_as_wide};
 
       algo::for_each_iteration(processed.traits(), processed.begin(), processed.end())(d);
-      return d.finish();
+      return (U) d.finish();
     }
 
     template <typename Rng, typename U>
-    auto operator()(Rng&& rng, U init) const
+    U operator()(Rng&& rng, U init) const
     {
       return operator()(std::forward<Rng>(rng), std::pair{eve::add, 0}, init);
     }

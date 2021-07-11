@@ -27,13 +27,13 @@ void specific_tests(eve::as<T>, Algo alg)
     const e_t* f = v.data();
     const e_t* l = f + v.size();
 
-    TTS_EQUAL(alg(eve::algo::as_range(f, l), 0), 13);
+    TTS_EQUAL(alg(eve::algo::as_range(f, l), e_t{0}), e_t{13});
   }
 
   // const iterator
   {
     const std::vector<e_t> v(27u, e_t(1));
-    TTS_EQUAL(alg(v, 1), 28);
+    TTS_EQUAL(alg(v, e_t{1}), e_t{28});
   }
 }
 
@@ -117,16 +117,32 @@ void reduce_generic_test_page_ends(eve::as<T> tgt, Init init, Algo alg)
 template <typename T, typename Alg>
 void all_test_cases(eve::as<T> tgt, Alg basic_reduce)
 {
-  // all should be good to double
-  reduce_generic_test_page_ends(tgt, double(1), basic_reduce);
+  using e_t = eve::element_type_t<T>;
+  auto native_tgt = eve::as<eve::wide<e_t>>{};
 
-  // we can init everything with char
-  reduce_generic_test_page_ends(tgt, char(4), basic_reduce);
+  // The very basic one
+  reduce_generic_test_page_ends(native_tgt, e_t{0}, basic_reduce);
+
+  // all should be good to double
+  reduce_generic_test_page_ends(native_tgt, double(1), basic_reduce);
+
+  // we can init everything with byte size 1
+  if constexpr (std::is_signed_v<e_t>)
+  {
+    reduce_generic_test_page_ends(native_tgt, std::int8_t(4), basic_reduce);
+  }
+  else
+  {
+    reduce_generic_test_page_ends(native_tgt, std::uint8_t(4), basic_reduce);
+  }
+
+  // no unroll, precise tgt
+  auto tr = eve::algo::traits(eve::algo::unroll<1>, eve::algo::force_cardinal<T::size()>);
+  reduce_generic_test_page_ends(tgt, e_t{10}, basic_reduce[tr]);
 }
 
 EVE_TEST_TYPES("Check reduce", algo_test::selected_types)
 <typename T>(eve::as<T> tgt)
 {
-  (void)tgt;
-  all_test_cases(eve::as<eve::wide<char>>{}, eve::algo::reduce);
+  all_test_cases(tgt, eve::algo::reduce);
 };
