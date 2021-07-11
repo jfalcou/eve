@@ -42,7 +42,7 @@ namespace algo_test
   }
 
   template <typename T, typename Algo, typename Check>
-  void find_generic_test_page_ends(eve::as<T> as, Algo alg, Check check)
+  void find_generic_test_page_ends(eve::as<T> tgt, Algo alg, Check check)
   {
     using e_t     = eve::element_type_t<T>;
     using card_t  = eve::fixed<4096/ sizeof(e_t)>;
@@ -55,10 +55,10 @@ namespace algo_test
 
     auto run = [&] {
       for (auto it = f; it < l; ++it) {
-        find_one_ptr_test(as, f, l, l, alg, check);
+        find_one_ptr_test(tgt, f, l, l, alg, check);
         *it = 1;
 
-        find_one_ptr_test(as, f, l, it, alg, check);
+        find_one_ptr_test(tgt, f, l, it, alg, check);
         *it = 0;
       }
     };
