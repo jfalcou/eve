@@ -109,15 +109,11 @@ namespace eve::algo
 
   struct {
     template <iterator I, typename T>
-    auto operator()(I it, eve::as<T>) const
+    auto operator()(I it, eve::as<T> tgt) const
     {
-      if constexpr ( instance_of<I, converting_iterator> )
-      {
-        auto base = it.base;
-        if constexpr ( std::same_as<typename decltype(base)::value_type, T> ) return base;
-        else                                                                  return operator()(it.base);
-      }
-      else return converting_iterator<I, T>{it};
+           if constexpr ( std::same_as<typename I::value_type, T> )  return it;
+      else if constexpr ( instance_of<I, converting_iterator>     )  return operator()(it.base, tgt);
+      else                                                           return converting_iterator<I, T>{it};
     }
   } inline constexpr convert;
 }

@@ -16,9 +16,7 @@
 #include <array>
 #include <numeric>
 
-eve::detail::types<eve::wide<int>> constexpr small_types;
-
-EVE_TEST_TYPES("Check converting_iterator", small_types)
+EVE_TEST_TYPES("Check converting_iterator", algo_test::selected_types)
 <typename T>(eve::as<T>)
 {
   alignas(sizeof(T)) std::array<eve::element_type_t<T>, T::size()> data;
@@ -32,9 +30,12 @@ EVE_TEST_TYPES("Check converting_iterator", small_types)
     algo_test::iterator_sentinel_test(eve::algo::convert(f, eve::as<char>{}),
                                       eve::algo::convert(l, eve::as<char>{}),
                                       char_values, replace);
-    algo_test::iterator_sentinel_test(eve::algo::convert(f, eve::as<std::uint64_t>{}),
-                                      eve::algo::convert(l, eve::as<std::uint64_t>{}),
-                                      int64_values, replace);
+    if constexpr (eve::current_api != eve::avx512 || !eve::has_aggregated_abi_v<decltype(int64_values)>)
+    {
+      algo_test::iterator_sentinel_test(eve::algo::convert(f, eve::as<std::uint64_t>{}),
+                                        eve::algo::convert(l, eve::as<std::uint64_t>{}),
+                                        int64_values, replace);
+    }
   };
 
   auto run_test_writeable = [&](auto f) {
@@ -68,3 +69,14 @@ EVE_TEST_TYPES("Check converting_iterator", small_types)
   run_test(data.begin(), data.end());
   run_test(data.cbegin(), data.cend());
 };
+
+TTS_CASE("eve.algo.convert to/from")
+{
+  using ap_it = eve::algo::aligned_ptr_iterator<char, eve::fixed<4>>;
+  ap_it                                        chars{};
+  eve::algo::converting_iterator<ap_it, int>   ints   = eve::algo::convert(chars, eve::as<int>{});
+  eve::algo::converting_iterator<ap_it, short> shorts = eve::algo::convert(ints, eve::as<short>{});
+  ap_it                                        chars2 = eve::algo::convert(shorts, eve::as<char>{});
+  (void)chars2;
+  TTS_PASS("all types ok");
+}
