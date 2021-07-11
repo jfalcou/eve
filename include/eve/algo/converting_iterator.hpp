@@ -64,13 +64,6 @@ namespace eve::algo
       return base - x.base;
     }
 
-    auto operator<=>(converting_iterator<unaligned_t<I>, T> const& x) const
-      requires (!unaligned_iterator<I>)
-    {
-      return unaligned() <=> x;
-    }
-    auto operator<=>(converting_iterator const&) const = default;
-
     converting_iterator&  operator+=(std::ptrdiff_t n) { base += n; return *this; }
     friend std::ptrdiff_t operator-(converting_iterator x, converting_iterator y) { return x.base - y.base; }
 
