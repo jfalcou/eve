@@ -21,7 +21,7 @@ namespace eve
   //! @{
   //! @var exp10
   //!
-  //! @brief Callable object performing the computation of exp10.
+  //! @brief Callable object performing the computation of  \f$10^x\f$.
   //!
   //! **Required header:** `#include <eve/function/exp10.hpp>`
   //!
@@ -76,7 +76,7 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/exp10.hpp>
-  //!  
+  //!
   //!     The expression `diff(exp10)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example

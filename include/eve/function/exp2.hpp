@@ -21,7 +21,7 @@ namespace eve
   //! @{
   //! @var exp2
   //!
-  //! @brief Callable object performing the computation of exp2.
+  //! @brief Callable object performing the computation of \f$2^x\f$.
   //!
   //! **Required header:** `#include <eve/function/exp2.hpp>`
   //!
@@ -76,7 +76,7 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/exp2.hpp>
-  //!  
+  //!
   //!     The expression `diff(exp2)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example

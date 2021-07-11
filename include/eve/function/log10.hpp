@@ -17,7 +17,7 @@ namespace eve
   //! @{
   //! @var log10
   //!
-  //! @brief Callable object performing the computation of the base 10  logarithm.
+  //! @brief Callable object performing the computation of the base 10  logarithm: \f$\log_{10} x\f$.
   //!
   //! **Required header:** `#include <eve/function/log10.hpp>`
   //!
@@ -72,7 +72,7 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/log10.hpp>
-  //!  
+  //!
   //!     The expression `diff(log10)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example

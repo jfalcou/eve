@@ -64,9 +64,10 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ----------------------------------------------------------------------------------------------------
   //!  <span class="smallskip"></span>
   //!  * `pedantic`
+  //!
+  //!     **Required header:** `#include <eve/function/pedantic/arg.hpp>`
   //!
   //!     With this decorator the function returns a Nan element for each corresponding Nan entry element.
   //!

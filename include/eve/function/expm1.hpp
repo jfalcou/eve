@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var expm1
   //!
-  //! @brief Callable object performing the computation of expm1.
+  //! @brief Callable object performing the computation of \f$e^x-1\f$.
   //!
   //! **Required header:** `#include <eve/function/expm1.hpp>`
   //!
@@ -39,8 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) exponential input minus one, with good accuracy, even for small values of `x`
-  //!In partucular, for floating inputs:
+  //!Returns the [element-wise](../../../glossary.html#elment-wise) exponential input minus one, with good accuracy, even for small values of `x`.
   //!
   //!   * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned
   //!   * If the element is \f$-\infty\f$, \f$-1\f$ is returned
@@ -71,7 +70,7 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/expm1.hpp>
-  //!  
+  //!
   //!     The expression `diff(expm1)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example

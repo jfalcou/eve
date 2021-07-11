@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var exp
   //!
-  //! @brief Callable object performing the computation of exp.
+  //! @brief Callable object performing the computation of \f$e^x\f$.
   //!
   //! **Required header:** `#include <eve/function/exp.hpp>`
   //!
@@ -71,7 +71,7 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/exp.hpp>
-  //!  
+  //!
   //!     The expression `diff(exp)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example

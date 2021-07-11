@@ -17,7 +17,7 @@ namespace eve
   //! @{
   //! @var log
   //!
-  //! @brief Callable object performing the computation of the natural logarithm.
+  //! @brief Callable object performing the computation of the natural logarithm: \f$\log x\f$.
   //!
   //! **Required header:** `#include <eve/function/log.hpp>`
   //!
@@ -40,8 +40,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) the natural logarithm  of `x`
-  //!In partucular, for floating inputs:
+  //!Returns the [element-wise](../../../glossary.html#elment-wise) the natural logarithm  of `x`: \f$\log x\f$..
   //!
   //!   * If the element is \f$\pm0\f$, \f$-\infty\f$ is returned.
   //!   * If the element is \f$1\f$, \f$+0\f$ is returned.
@@ -72,7 +71,7 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/log.hpp>
-  //!  
+  //!
   //!     The expression `diff(log)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
