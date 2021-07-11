@@ -25,10 +25,19 @@ namespace algo_test
     auto pred = [](auto x) { return x != 0; };
     check(f, l, res, alg(eve::algo::as_range(f, l), pred));
 
-    if (eve::is_aligned<T::size() * sizeof(U)>(f))
+    static constexpr std::ptrdiff_t alignment = T::size() * sizeof(U);
+    using a_p = eve::aligned_ptr<U, eve::fixed<T::size()>>;
+
+    if (eve::is_aligned<alignment>(f))
     {
-      auto f_ = eve::aligned_ptr<U, eve::fixed<T::size()>>(f);
+      auto f_ = a_p(f);
       check(f_, l, res, alg(eve::algo::as_range(f_, l), pred));
+
+      if (eve::is_aligned<alignment>(l))
+      {
+        auto l_ = a_p(l);
+        check(f_, l_, res, alg(eve::algo::as_range(f_, l_), pred));
+      }
     }
   }
 

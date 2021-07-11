@@ -86,7 +86,7 @@ namespace eve::algo
 
       auto l = processed.begin().unaligned() + (processed.end() - processed.begin());
 
-      delegate<decltype(processed.end()), P> d{l, p};
+      delegate<unaligned_t<decltype(processed.begin())>, P> d{l, p};
       algo::for_each_iteration(processed.traits(), processed.begin(), processed.end())(d);
       return processed.to_output_iterator(d.found);
     }
