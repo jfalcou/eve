@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var none
   //!
-  //! @brief Callable object performing the computation of the computation of the none value.
+  //! @brief Callable object performing the computation of the none value.
   //!
   //! **Required header:** `#include <eve/function/none.hpp>`
   //!

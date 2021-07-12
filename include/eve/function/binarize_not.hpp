@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var binarize_not
   //!
-  //! @brief Callable object performing the computation of the computation of the binarize_not operation.
+  //! @brief Callable object performing the computation of the binarize_not operation.
   //!
   //! **Required header:** `#include <eve/function/binarize_not.hpp>`
   //!

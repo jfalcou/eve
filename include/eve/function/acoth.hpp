@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var acoth
   //!
-  //! @brief Callable object performing the computation of acoth.
+  //! @brief Callable object performing the computation of acoth: \f$\frac{1}{2}\log((x+1)/(x-1))\f$.
   //!
   //! **Required header:** `#include <eve/function/acoth.hpp>`
   //!
@@ -72,7 +72,7 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/acoth.hpp>
-  //!  
+  //!
   //!     The expression `diff(acoth)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example

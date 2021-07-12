@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var reduce
   //!
-  //! @brief Callable object performing the computation of the computation of a generalized fold operation.
+  //! @brief Callable object performing the computation of a generalized fold operation.
   //!
   //! **Required header:** `#include <eve/function/reduce.hpp>`
   //!

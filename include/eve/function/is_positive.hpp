@@ -15,7 +15,7 @@ namespace eve
   //! @{
   //! @var is_positive
   //!
-  //! @brief Callable object performing the computation of the computation of the is_positive logical value.
+  //! @brief Callable object performing the computation of the is_positive logical value.
   //!
   //! **Required header:** `#include <eve/function/is_positive.hpp>`
   //!

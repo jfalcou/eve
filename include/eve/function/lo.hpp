@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var lo
   //!
-  //! @brief Callable object performing the computation of the computation of the lower part of the values.
+  //! @brief Callable object performing the computation of the lower part of the values.
   //!
   //! **Required header:** `#include <eve/function/lo.hpp>`
   //!
@@ -43,21 +43,6 @@ namespace eve
   //!    returning each elemnet as an unsigned integer of half the size of the input element.
   //!
   //!    If you also need the higher part `lohi` is more efficient.
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::lo
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `lo[cond](x, ...)` is equivalent to `if_else(cond,lo(x, ...),x)`
   //!
   //! ---
   //!

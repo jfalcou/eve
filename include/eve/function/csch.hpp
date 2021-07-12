@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var csch
   //!
-  //! @brief Callable object performing the computation of csch.
+  //! @brief Callable object performing the computation of csch: \f$\frac2{e^x+e^{-x}}\f$.
   //!
   //! **Required header:** `#include <eve/function/csch.hpp>`
   //!
@@ -71,7 +71,7 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/csch.hpp>
-  //!  
+  //!
   //!     The expression `diff(csch)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example

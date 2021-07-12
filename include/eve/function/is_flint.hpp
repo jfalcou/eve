@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var is_flint
   //!
-  //! @brief Callable object performing the computation of the computation of the is_flint logical value.
+  //! @brief Callable object performing the computation of the is_flint logical value.
   //!
   //! **Required header:** `#include <eve/function/is_flint.hpp>`
   //!

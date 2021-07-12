@@ -15,7 +15,7 @@ namespace eve
   //! @{
   //! @var is_denormal
   //!
-  //! @brief Callable object performing the computation of the computation of the is_denormal logical value.
+  //! @brief Callable object performing the computation of the is_denormal logical value.
   //!
   //! **Required header:** `#include <eve/function/is_denormal.hpp>`
   //!

@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var mantissa
   //!
-  //! @brief Callable object performing the computation of the computation of the mantissa value.
+  //! @brief Callable object performing the computation of the mantissa value.
   //!
   //! **Required header:** `#include <eve/function/mantissa.hpp>`
   //!
@@ -41,9 +41,10 @@ namespace eve
   //!
   //!    Computes the [element-wise](../../../glossary.html#element-wise_) ieee mantissa of the floating value.
   //!
-  //!    The mantissa $e$ and mantissa $m$ of a floating point entry $x$ are related by
-  //!    $x =  m\times 2^e$, with  $|m| \in [1, 2[$ (except for $x = \pm0, \pm\infty$ or is a Nan,
-  //!    where $m=x$ and $e=0$ ).
+  //!    The mantissa \f$e\f$ and mantissa \f$m\f$ of a floating point entry \f$x\f$ are related by
+  //!    \f$x =  m\times 2^e\f$, with  \f$|m| \in [1, 2[\f$ (except for \f$x = \pm0, \pm\infty\f$ or is a Nan,
+  //!    where \f$m=x\f$ and \f$e=0\f$).
+  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

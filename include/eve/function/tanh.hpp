@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var tanh
   //!
-  //! @brief Callable object performing the computation of tanh.
+  //! @brief Callable object performing the computation of tanh: \f$\frac{e^x-e^{-x}}{e^x+e^{-x}}\f$.
   //!
   //! **Required header:** `#include <eve/function/tanh.hpp>`
   //!
@@ -71,7 +71,7 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/tanh.hpp>
-  //!  
+  //!
   //!     The expression `diff(tanh)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example

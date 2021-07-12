@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var sinh
   //!
-  //! @brief Callable object performing the computation of sinh.
+  //! @brief Callable object performing the computation of sinh: \f$\frac{e^x-e^{-x}}2\f$.
   //!
   //! **Required header:** `#include <eve/function/sinh.hpp>`
   //!
@@ -71,7 +71,7 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/sinh.hpp>
-  //!  
+  //!
   //!     The expression `diff(sinh)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example

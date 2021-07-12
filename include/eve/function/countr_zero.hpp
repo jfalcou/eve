@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var countr_zero
   //!
-  //! @brief Callable object performing the computation of the computation of the number of consecutive 1 bits right.
+  //! @brief Callable object performing the computation of the number of consecutive 1 bits right.
   //!
   //! **Required header:** `#include <eve/function/countr_zero.hpp>`
   //!

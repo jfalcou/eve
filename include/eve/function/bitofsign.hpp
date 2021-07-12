@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var bitofsign
   //!
-  //! @brief Callable object performing the computation of the computation of the bitofsign value.
+  //! @brief Callable object performing the computation of the bitofsign value.
   //!
   //! **Required header:** `#include <eve/function/bitofsign.hpp>`
   //!

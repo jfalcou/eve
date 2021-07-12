@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var sinhcosh
   //!
-  //! @brief Callable object performing the computation of sinhcosh.
+  //! @brief Callable object performing the simultaneous computations of sinh and cosh.
   //!
   //! **Required header:** `#include <eve/function/sinhcosh.hpp>`
   //!

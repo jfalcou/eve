@@ -15,7 +15,7 @@ namespace eve
   //! @{
   //! @var is_odd
   //!
-  //! @brief Callable object performing the computation of the computation of the is_odd logical value.
+  //! @brief Callable object performing the computation of the is_odd logical value.
   //!
   //! **Required header:** `#include <eve/function/is_odd.hpp>`
   //!

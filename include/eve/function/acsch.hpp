@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var acsch
   //!
-  //! @brief Callable object performing the computation of acsch.
+  //! @brief Callable object performing the computation of acsch: \f$\log(1/x+\sqrt{1/x^2+1})\f$.
   //!
   //! **Required header:** `#include <eve/function/acsch.hpp>`
   //!
@@ -72,7 +72,7 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/acsch.hpp>
-  //!  
+  //!
   //!     The expression `diff(acsch)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
