@@ -25,7 +25,6 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the logical ANDNOT operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -44,23 +43,6 @@ namespace eve
   //!
   //!the call `logical_andnot(x, y)` is semantically equivalent to `x && !y`
   //!if `x` or  `y` is an  [simd value](../../concepts.html#value).
-  //!
-  //!@warning  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::logical_andnot
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `logical_andnot[cond](x, ...)` is equivalent to `if_else(cond,logical_andnot(x, ...),x)`
   //!
   //! ---
   //!

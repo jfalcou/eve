@@ -27,7 +27,6 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the logical OR operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -46,21 +45,6 @@ namespace eve
   //!
   //!the call `logical_or(x, y)` is semantically equivalent to `x || y`
   //!if `x` or  `y` is an  [simd value](../../concepts.html#value) and does not shortcut.
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::logical_or
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `logical_or[cond](x, ...)` is equivalent to `if_else(cond,logical_or(x, ...),x)`
   //!
   //! ---
   //!
