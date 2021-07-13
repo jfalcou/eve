@@ -9,11 +9,14 @@
 
 #include <eve/detail/concepts.hpp>
 #include <eve/traits/support.hpp>
+#include <eve/function/conj.hpp>
 
 namespace eve
 {
   template<std::floating_point T>
-  struct complex : additive<complex<T>>, comparable<complex<T>>
+  struct complex  : additive<complex<T>>
+                  , comparable<complex<T>>
+                  , selectable<complex<T>>
   {
     using value_type      = T;
     using is_product_type = void;
@@ -59,6 +62,12 @@ namespace eve
     friend std::ostream& operator<<( std::ostream& os, Z const& z)
     {
       return os << real(z) << " + i*" << imag(z);
+    }
+
+    template<same_value_type<complex> Z>
+    friend auto tagged_dispatch( eve::tag::conj_, Z const& z )
+    {
+      return Z{ real(z), -imag(z) };
     }
 
     T real_;
