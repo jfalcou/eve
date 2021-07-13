@@ -9,7 +9,7 @@
 
 #include <eve/algo/array_utils.hpp>
 #include <eve/algo/for_each_iteration.hpp>
-#include <eve/algo/one_range_algorithm_adapter.hpp>
+#include <eve/algo/preprocess_range.hpp>
 #include <eve/algo/traits.hpp>
 
 #include <eve/function/any.hpp>
@@ -20,12 +20,19 @@
 
 namespace eve::algo
 {
-  struct find_if_ : one_range_algorithm_adapter<find_if_>
+  template <instance_of<algo::traits> Traits>
+  struct find_if_
   {
-    static constexpr auto default_traits()
+    Traits tr_;
+
+    constexpr explicit find_if_(Traits tr) : tr_(tr) {}
+
+    template <typename Settings>
+    constexpr auto operator[](algo::traits<Settings> tr) const
     {
-      return default_simple_algo_traits;
-    };
+      auto sum = default_to(tr, tr_);
+      return find_if_<decltype(sum)>{sum};
+    }
 
     template <typename UnalignedI, typename P>
     struct delegate
@@ -68,9 +75,10 @@ namespace eve::algo
       P p;
     };
 
-    template <typename P>
-    EVE_FORCEINLINE auto impl(auto processed, P p) const
+    template <typename Rng, typename P>
+    EVE_FORCEINLINE auto operator()(Rng&& rng, P p) const
     {
+      auto processed = preprocess_range(tr_, std::forward<Rng>(rng));
       if (processed.begin() == processed.end())
       {
         return processed.to_output_iterator(processed.begin());
@@ -78,9 +86,10 @@ namespace eve::algo
 
       auto l = processed.begin().unaligned() + (processed.end() - processed.begin());
 
-      delegate d{l, p};
+      delegate<unaligned_t<decltype(processed.begin())>, P> d{l, p};
       algo::for_each_iteration(processed.traits(), processed.begin(), processed.end())(d);
       return processed.to_output_iterator(d.found);
     }
-  } inline constexpr find_if;
+  };
+  inline constexpr find_if_ find_if{default_simple_algo_traits};
 }

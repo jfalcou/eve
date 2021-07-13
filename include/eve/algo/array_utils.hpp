@@ -38,6 +38,17 @@ namespace eve::algo
     }(std::make_index_sequence<N>{});
   }
 
+  template <typename T, typename U, std::size_t N, typename F>
+  EVE_FORCEINLINE constexpr auto array_map(
+    std::array<T, N> const& x,
+    std::array<U, N> const& y,
+    F f)
+  {
+    return [&]<std::size_t ...i>(std::index_sequence<i...>){
+      return std::array{ f(x[i], y[i]) ... };
+    }(std::make_index_sequence<N>{});
+  }
+
   template <typename T, std::size_t N, typename Op>
   EVE_FORCEINLINE constexpr T array_reduce(std::array<T, N> x, Op op)
     requires (N >= 1)

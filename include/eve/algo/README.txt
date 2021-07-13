@@ -8,8 +8,18 @@ Main eve supports it's callables for scalars. We don't do that for algorithms. T
 
 * any_of
 * find_if
+* reduce
 
 # Helpers
+
+# as_range
+
+taking a relaxed iterator/sentinel pair, returns a range for it.
+
+### relaxed iterator/range(concept)
+
+Some iterator/range like thing that can be converted to proper eve iterator/sentinel pair
+using `preprocess_range`.
 
 ### iterator (concept)
 
@@ -76,14 +86,6 @@ The specific api of the delegate varies by iteration pattern.
 
 Main one is `for_each_iteration`.
 However for some algorithms, like `reverse` and maybe `partition` it's not a good.
-
-### range algorithm adaters
-
-* `one_range_algorithm_adapter`
-
-These are helpers to deal with all of the boilerplate of algorithm interfaces.
-Get's from the ranges,std::contigious iterators, various eve iterators, default traits, provided traits etc
-to something uniform that specific algorithms can actually use.
 
 ### traits
 

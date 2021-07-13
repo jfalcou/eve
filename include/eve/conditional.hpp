@@ -38,6 +38,13 @@ namespace eve
       return or_<C,T>{static_cast<C const&>(*this), v};
     }
 
+    auto map_alternative(auto op) const
+    {
+      auto mapped = op(alternative);
+      C c = *this;
+      return or_<C, decltype(mapped)>{c, mapped};
+    }
+
     friend std::ostream& operator<<(std::ostream& os, or_ const& c)
     {
       os << static_cast<C const&>(c);
@@ -484,5 +491,11 @@ namespace eve
   constexpr EVE_FORCEINLINE ignore_extrema operator&&( ignore_last b, ignore_first a) noexcept
   {
     return a && b;
+  }
+
+  template <eve::relative_conditional_expr C>
+  auto map_alternative(C c, auto map) {
+    if constexpr (!C::has_alternative) return c;
+    else                               return c.map_alternative(map);
   }
 }

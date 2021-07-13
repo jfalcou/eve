@@ -15,7 +15,6 @@
 #include <array>
 #include <vector>
 
-
 EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::selected_types)
 <typename T>(eve::as<T>)
 {
@@ -117,17 +116,21 @@ EVE_TEST_TYPES("Check preprocess_range for eve ptr iterators", algo_test::select
 {
   using e_t = eve::element_type_t<T>;
   using N = eve::fixed<T::size()>;
+  using expected_N = eve::fixed<std::min(T::size(), eve::expected_cardinal_v<e_t>)>;
 
   alignas(sizeof(T)) std::array<e_t, T::size()> arr;
 
   auto run_one_test = [&]<typename I, typename S, typename ExpectedTraits>(I f, S l, ExpectedTraits)
   {
+    auto f_ = f.cardinal_cast(expected_N{});
+    auto l_ = l.cardinal_cast(expected_N{});
+
     auto processed = eve::algo::preprocess_range(eve::algo::traits(eve::algo::unroll<2>), f, l);
     TTS_TYPE_IS(decltype(processed.traits()), ExpectedTraits);
-    TTS_TYPE_IS(decltype(processed.begin()), I);
-    TTS_TYPE_IS(decltype(processed.end()), S);
-    TTS_EQUAL(processed.begin(), f);
-    TTS_EQUAL(processed.end(), l);
+    TTS_TYPE_IS(decltype(processed.begin()), decltype(f_));
+    TTS_TYPE_IS(decltype(processed.end()), decltype(l_));
+    TTS_EQUAL(processed.begin(), f_);
+    TTS_EQUAL(processed.end(), l_);
 
     auto back_to_f = processed.to_output_iterator(processed.begin().unaligned());
     TTS_TYPE_IS(decltype(back_to_f), eve::algo::unaligned_t<I>);
@@ -226,5 +229,45 @@ EVE_TEST_TYPES("contigious ranges", algo_test::selected_types)
   {
     const std::array<e_t, 10> v = {};
     non_empty_range_test(v);
+  }
+};
+
+EVE_TEST_TYPES("cardinal/type manipulation", algo_test::selected_types)
+<typename T>(eve::as<T>)
+{
+  using e_t = eve::element_type_t<T>;
+
+  std::vector<e_t> v;
+  {
+    auto processed = eve::algo::preprocess_range(
+    eve::algo::traits(eve::algo::force_cardinal<T::size()>), v);
+
+    using I = decltype(processed.begin());
+    TTS_CONSTEXPR_EXPECT((std::same_as<typename I::wide_value_type, T>));
+  }
+
+  {
+    auto processed = eve::algo::preprocess_range(
+      eve::algo::traits(eve::algo::common_with_types<double, char>), v);
+
+    using I = decltype(processed.begin());
+    TTS_CONSTEXPR_EXPECT((std::same_as<typename I::value_type, double>));
+    if constexpr ( T::size() >= eve::cardinal_v<double> )
+    {
+      TTS_CONSTEXPR_EXPECT((std::same_as<typename I::wide_value_type, eve::wide<double>>));
+    }
+  }
+
+  {
+    auto processed = eve::algo::preprocess_range(
+      eve::algo::traits(eve::algo::force_cardinal<T::size()>,
+                        eve::algo::common_with_types<double>),
+      v);
+
+    using I = decltype(processed.begin());
+    TTS_CONSTEXPR_EXPECT((std::same_as<
+      typename I::wide_value_type,
+      eve::wide<double, eve::fixed<T::size()>>
+    >));
   }
 };
