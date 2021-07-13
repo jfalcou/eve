@@ -30,7 +30,7 @@ namespace eve::algo
 
         while( f != l )
         {
-          if( delegate.step(f, eve::ignore_none) )
+          if( delegate.step(f, eve::ignore_none, eve::index<0>) )
             return true;
           f += step;
         }
@@ -55,12 +55,12 @@ namespace eve::algo
           bool should_break = false;
 
           // single steps
-          if( eve::detail::for_until_<0, 1, unrolling>([&](auto) mutable {
+          if( eve::detail::for_until_<0, 1, unrolling>([&](auto idx) mutable {
                 reached_end = (f == l);
                 if( reached_end )
                   return true;
 
-                should_break = delegate.step(f, eve::ignore_none);
+                should_break = delegate.step(f, eve::ignore_none, eve::index<decltype(idx){}()>);
                 f += step;
                 return should_break;
               }) )
@@ -134,7 +134,7 @@ namespace eve::algo
         if (precise_l == l) return;
 
         eve::keep_first ignore{l - precise_l};
-        delegate.step(f, ignore);
+        delegate.step(f, ignore, eve::index<0>);
       }
     };
 
@@ -162,7 +162,7 @@ namespace eve::algo
         if( aligned_f != aligned_l )
         {
           // first chunk, maybe partial
-          if( delegate.step(aligned_f, ignore_first) )
+          if( delegate.step(aligned_f, ignore_first, eve::index<0>) )
             return;
           ignore_first = eve::ignore_first {0};
           aligned_f += step;
@@ -175,7 +175,7 @@ namespace eve::algo
         }
 
         eve::ignore_last ignore_last {aligned_l + step - l};
-        delegate.step(aligned_l, ignore_first && ignore_last);
+        delegate.step(aligned_l, ignore_first && ignore_last, eve::index<0>);
       }
     };
   }

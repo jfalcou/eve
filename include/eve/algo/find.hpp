@@ -39,7 +39,7 @@ namespace eve::algo
     {
       explicit delegate(UnalignedI found, P p) : found(found), p(p) {}
 
-      EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore)
+      EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto /*idx*/)
       {
         eve::logical test = p(eve::load[ignore](it));
         std::optional match = eve::first_true[ignore](test);
