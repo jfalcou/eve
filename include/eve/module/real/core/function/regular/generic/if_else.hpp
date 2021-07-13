@@ -21,6 +21,23 @@
 #include <eve/function/minus.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/traits/common_compatible.hpp>
+#include <eve/product_type.hpp>
+
+namespace eve
+{
+  //================================================================================================
+  // Product type support helper
+  //================================================================================================
+  template<typename Type>
+  struct supports<Type, eve::tag::if_else_>
+  {
+    template<typename C, same_value_type<Type> V, same_value_type<Type> U>
+    friend auto tagged_dispatch( eve::tag::if_else_, C const& c, V const& tv, U const& tf) noexcept
+    {
+      return kumi::map([c](auto t, auto f) { return if_else(c,t,f); }, tv.storage(), tf.storage());
+    }
+  };
+}
 
 namespace eve::detail
 {
@@ -36,7 +53,7 @@ namespace eve::detail
 
   template<simd_value T, value U, value V>
   EVE_FORCEINLINE auto if_else_(EVE_SUPPORTS(cpu_), T const & cond, U const & t, V const & f )
-  requires compatible_values<U, V>
+  requires( compatible_values<U, V> && !kumi::product_type<element_type_t<U>> && !kumi::product_type<element_type_t<V>>)
   {
     if constexpr( !is_logical_v<T> )
     {
@@ -63,6 +80,7 @@ namespace eve::detail
   template<conditional_expr C, typename U, typename V>
   EVE_FORCEINLINE auto if_else_(EVE_SUPPORTS(cpu_), C const& cond, U const& t, V const& f )
   requires(    compatible_values<U, V>
+            && !kumi::product_type<U> && !kumi::product_type<V>
             || (value<U> && std::is_invocable_v<V, as<U>>)
             || (value<V> && std::is_invocable_v<U, as<V>>)
           )
@@ -88,6 +106,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto if_else_ ( EVE_SUPPORTS(cpu_)
                                           , T const& cond, U const& u, Constant const& v
                                           ) noexcept
+  requires( !kumi::product_type<T> && !kumi::product_type<U> )
   {
     using tgt = as<U>;
 
@@ -134,6 +153,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto if_else_ ( EVE_SUPPORTS(cpu_)
                                           , T const& cond, Constant const& v, U const& u
                                           ) noexcept
+  requires( !kumi::product_type<T> && !kumi::product_type<U> )
   {
     using tgt = as<U>;
 

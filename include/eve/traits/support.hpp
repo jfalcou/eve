@@ -15,6 +15,7 @@
 #include <eve/function/rem.hpp>
 #include <eve/function/is_equal.hpp>
 #include <eve/function/is_not_equal.hpp>
+#include <eve/function/if_else.hpp>
 
 namespace eve
 {
@@ -29,6 +30,14 @@ namespace eve
   //==============================================================================================
   template<typename Type>
   struct comparable : supports<Type, tag::is_equal_, tag::is_not_equal_>
+  {};
+
+  //==============================================================================================
+  //! @brief Add supports for if_else operator to product type like structures
+  //! @tparam Type Type to adapt
+  //==============================================================================================
+  template<typename Type>
+  struct selectable : supports<Type, tag::if_else_>
   {};
 
   //==============================================================================================
