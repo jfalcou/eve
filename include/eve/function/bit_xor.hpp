@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var bit_xor
   //!
-  //! @brief Callable object performing the computation of the bitwise XOR operation.
+  //! @brief Callable object computing the bitwise XOR operation.
   //!
   //! **Required header:** `#include <eve/function/bit_xor.hpp>`
   //!

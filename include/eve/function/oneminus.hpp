@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var oneminus
   //!
-  //! @brief Callable object performing the computation of the oneminus operation.
+  //! @brief Callable object computing the oneminus operation.
   //!
   //! **Required header:** `#include <eve/function/oneminus.hpp>`
   //!

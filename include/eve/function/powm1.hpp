@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var powm1
   //!
-  //! @brief Callable object performing the computation of powm1: \f$x^y-1\f$.
+  //! @brief Callable object computing powm1: \f$x^y-1\f$.
   //!
   //! **Required header:** `#include <eve/function/powm1.hpp>`
   //!

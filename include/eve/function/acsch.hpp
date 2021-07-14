@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var acsch
   //!
-  //! @brief Callable object performing the computation of acsch: \f$\log(1/x+\sqrt{1/x^2+1})\f$.
+  //! @brief Callable object computing acsch: \f$\log(1/x+\sqrt{1/x^2+1})\f$.
   //!
   //! **Required header:** `#include <eve/function/acsch.hpp>`
   //!

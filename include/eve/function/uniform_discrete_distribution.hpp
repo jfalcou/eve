@@ -17,7 +17,7 @@
   //! @{
   //! @var uniform_discrete_distribution
   //!
-  //! @brief Callable object performing the computation of   //!  description NOT FOUND.
+  //! @brief Callable object computing   //!  description NOT FOUND.
   //!
   //! **Required header:** `#include <eve/function/uniform_discrete_distribution.hpp>`
   //!

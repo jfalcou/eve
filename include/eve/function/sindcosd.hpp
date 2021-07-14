@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var sindcosd
   //!
-  //! @brief Callable object performing the computation of the simultaneous  computation of sin an cos of an argument in degrees.
+  //! @brief Callable object computing the simultaneous  computation of sin an cos of an argument in degrees.
   //!
   //! **Required header:** `#include <eve/function/sindcosd.hpp>`
   //!

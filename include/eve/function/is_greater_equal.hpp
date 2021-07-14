@@ -18,7 +18,7 @@ namespace eve
   //! @{
   //! @var is_greater_equal
   //!
-  //! @brief Callable object performing the computation of the "greater or equal to" predicate.
+  //! @brief Callable object computing the "greater or equal to" predicate.
   //!
   //! **Required header:** `#include <eve/function/is_greater_equal.hpp>`
   //!

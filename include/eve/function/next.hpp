@@ -22,7 +22,7 @@ namespace eve
   //! @{
   //! @var next
   //!
-  //! @brief Callable object performing the computation of the next operation.
+  //! @brief Callable object computing the next operation.
   //!
   //! **Required header:** `#include <eve/function/next.hpp>`
   //!

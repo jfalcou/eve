@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var sinh
   //!
-  //! @brief Callable object performing the computation of sinh: \f$\frac{e^x-e^{-x}}2\f$.
+  //! @brief Callable object computing sinh: \f$\frac{e^x-e^{-x}}2\f$.
   //!
   //! **Required header:** `#include <eve/function/sinh.hpp>`
   //!

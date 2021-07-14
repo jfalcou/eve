@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var bit_mask
   //!
-  //! @brief Callable object performing the computation of a bit mask.
+  //! @brief Callable object computing a bit mask.
   //!
   //! **Required header:** `#include <eve/function/bit_mask.hpp>`
   //!

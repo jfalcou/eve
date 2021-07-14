@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var bit_and
   //!
-  //! @brief Callable object performing the computation of the bitwise AND operation.
+  //! @brief Callable object computing the bitwise AND operation.
   //!
   //! **Required header:** `#include <eve/function/bit_and.hpp>`
   //!

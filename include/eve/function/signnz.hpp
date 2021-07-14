@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var signnz
   //!
-  //! @brief Callable object performing the computation of the signnz function.
+  //! @brief Callable object computing the signnz function.
   //!
   //! **Required header:** `#include <eve/function/signnz.hpp>`
   //!

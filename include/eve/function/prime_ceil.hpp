@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var prime_ceil
   //!
-  //! @brief Callable object performing the computation of the least prime greter or equal to the input.
+  //! @brief Callable object computing the least prime greter or equal to the input.
   //!
   //! **Required header:** `#include <eve/function/prime_ceil.hpp>`
   //!

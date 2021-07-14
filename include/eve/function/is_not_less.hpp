@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var is_not_less
   //!
-  //! @brief Callable object performing the computation of the "not less than" predicate.
+  //! @brief Callable object computing the "not less than" predicate.
   //!
   //! **Required header:** `#include <eve/function/is_not_less.hpp>`
   //!

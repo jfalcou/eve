@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var frexp
   //!
-  //! @brief Callable object performing the computation of the frexp pair of values.
+  //! @brief Callable object computing the frexp pair of values.
   //!
   //! **Required header:** `#include <eve/function/frexp.hpp>`
   //!

@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var atand
   //!
-  //! @brief Callable object performing the computation of atand.
+  //! @brief Callable object computing atand.
   //!
   //! **Required header:** `#include <eve/function/atand.hpp>`
   //!

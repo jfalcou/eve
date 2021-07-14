@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var is_not_real
   //!
-  //! @brief Callable object performing the computation of the is_not_real logical value.
+  //! @brief Callable object computing the is_not_real logical value.
   //!
   //! **Required header:** `#include <eve/function/is_not_real.hpp>`
   //!

@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var lrising_factorial
   //!
-  //! @brief Callable object performing the computation of the lrising_factorial function i.e.
+  //! @brief Callable object computing the lrising_factorial function i.e.
   //! \f$\log\left(\frac{\Gamma(x+a)}{\Gamma(x)}\right)\f$.
   //!
   //! **Required header:** `#include <eve/function/lrising_factorial.hpp>`

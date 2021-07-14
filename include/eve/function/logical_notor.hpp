@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var logical_notor
   //!
-  //! @brief Callable object performing the computation of the logical NOTOR operation.
+  //! @brief Callable object computing the logical NOTOR operation.
   //!
   //! **Required header:** `#include <eve/function/logical_notor.hpp>`
   //!

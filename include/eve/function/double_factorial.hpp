@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var double_factorial
   //!
-  //! @brief Callable object performing the computation of unsigned integral double_factorial.
+  //! @brief Callable object computing unsigned integral double_factorial.
   //!
   //! **Required header:** `#include <eve/function/double_factorial.hpp>`
   //!

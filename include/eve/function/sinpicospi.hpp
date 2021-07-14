@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var sinpicospi
   //!
-  //! @brief Callable object performing the computation of the simultaneous  computation of sin an cos of an argument in .
+  //! @brief Callable object computing the simultaneous  computation of sin an cos of an argument in .
   //!
   //! **Required header:** `#include <eve/function/sinpicospi.hpp>`
   //!

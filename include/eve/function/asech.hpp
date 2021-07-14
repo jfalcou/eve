@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var asech
   //!
-  //! @brief Callable object performing the computation of asech: \f$\log(1/x+\sqrt{1/x^2-1})\f$.
+  //! @brief Callable object computing asech: \f$\log(1/x+\sqrt{1/x^2-1})\f$.
   //!
   //! **Required header:** `#include <eve/function/asech.hpp>`
   //!

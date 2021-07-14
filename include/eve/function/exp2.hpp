@@ -21,7 +21,7 @@ namespace eve
   //! @{
   //! @var exp2
   //!
-  //! @brief Callable object performing the computation of \f$2^x\f$.
+  //! @brief Callable object computing \f$2^x\f$.
   //!
   //! **Required header:** `#include <eve/function/exp2.hpp>`
   //!

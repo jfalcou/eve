@@ -17,7 +17,7 @@ namespace eve
   //! @{
   //! @var log2
   //!
-  //! @brief Callable object performing the computation of the base 2 logarithm: \f$\log_2 x\f$.
+  //! @brief Callable object computing the base 2 logarithm: \f$\log_2 x\f$.
   //!
   //! **Required header:** `#include <eve/function/log2.hpp>`
   //!

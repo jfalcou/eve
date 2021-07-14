@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var max
   //!
-  //! @brief Callable object performing the computation of the max operation.
+  //! @brief Callable object computing the max operation.
   //!
   //! **Required header:** `#include <eve/function/max.hpp>`
   //!

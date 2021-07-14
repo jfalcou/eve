@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var logspace_add
   //!
-  //! @brief Callable object performing the computation of the logspace_add operation: \f$\log\left(\sum_{i = 0}^n e^{x_i}\right)\f$
+  //! @brief Callable object computing the logspace_add operation: \f$\log\left(\sum_{i = 0}^n e^{x_i}\right)\f$
   //!
   //! **Required header:** `#include <eve/function/logspace_add.hpp>`
   //!

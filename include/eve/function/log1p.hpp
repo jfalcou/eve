@@ -17,7 +17,7 @@ namespace eve
   //! @{
   //! @var log1p
   //!
-  //! @brief Callable object performing the computation of the natural logarithm of \f$1+x\f$: \f$\log(1+x)\f$.
+  //! @brief Callable object computing the natural logarithm of \f$1+x\f$: \f$\log(1+x)\f$.
   //!
   //! **Required header:** `#include <eve/function/log1p.hpp>`
   //!

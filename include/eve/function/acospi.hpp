@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var acospi
   //!
-  //! @brief Callable object performing the computation of acospi.
+  //! @brief Callable object computing acospi.
   //!
   //! **Required header:** `#include <eve/function/acospi.hpp>`
   //!

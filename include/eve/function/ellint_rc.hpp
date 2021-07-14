@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var ellint_rc
   //!
-  //! @brief Callable object performing the computation of the degenerate Carlson's elliptic integral
+  //! @brief Callable object computing the degenerate Carlson's elliptic integral
   //!  \f$ \frac12 \int_{0}^{\infty} \scriptstyle(t+x)^{-1/2}(t+y)^{-1}\scriptstyle\;\mathrm{d}t\f$
   //!
   //! **Required header:** `#include <eve/function/ellint_rc.hpp>`

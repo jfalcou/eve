@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var minus
   //!
-  //! @brief Callable object performing the computation of the minus unary operation.
+  //! @brief Callable object computing the minus unary operation.
   //!
   //! **Required header:** `#include <eve/function/minus.hpp>`
   //!

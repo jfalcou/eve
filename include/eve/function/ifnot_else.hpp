@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var ifnot_else
   //!
-  //! @brief Callable object performing the computation of the ifnot_else operation.
+  //! @brief Callable object computing the ifnot_else operation.
   //!
   //! **Required header:** `#include <eve/function/ifnot_else.hpp>`
   //!

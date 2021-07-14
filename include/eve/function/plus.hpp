@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var plus
   //!
-  //! @brief Callable object performing the computation of the plus unary operation.
+  //! @brief Callable object computing the plus unary operation.
   //!
   //! **Required header:** `#include <eve/function/plus.hpp>`
   //!

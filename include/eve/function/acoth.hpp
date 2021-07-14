@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var acoth
   //!
-  //! @brief Callable object performing the computation of acoth: \f$\frac{1}{2}\log((x+1)/(x-1))\f$.
+  //! @brief Callable object computing acoth: \f$\frac{1}{2}\log((x+1)/(x-1))\f$.
   //!
   //! **Required header:** `#include <eve/function/acoth.hpp>`
   //!

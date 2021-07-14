@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var asinh
   //!
-  //! @brief Callable object performing the computation of asinh: \f$\log(x+\sqrt{x^2+1})\f$.
+  //! @brief Callable object computing asinh: \f$\log(x+\sqrt{x^2+1})\f$.
   //!
   //! **Required header:** `#include <eve/function/asinh.hpp>`
   //!

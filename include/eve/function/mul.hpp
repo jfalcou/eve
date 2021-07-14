@@ -17,7 +17,7 @@ namespace eve
   //! @{
   //! @var mul
   //!
-  //! @brief Callable object performing the computation of the mul operation.
+  //! @brief Callable object computing the mul operation.
   //!
   //! **Required header:** `#include <eve/function/mul.hpp>`
   //!

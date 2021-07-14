@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var sech
   //!
-  //! @brief Callable object performing the computation of sech: \f$\frac2{e^x-e^{-x}}\f$.
+  //! @brief Callable object computing sech: \f$\frac2{e^x-e^{-x}}\f$.
   //!
   //! **Required header:** `#include <eve/function/sech.hpp>`
   //!

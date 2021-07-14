@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var logical_andnot
   //!
-  //! @brief Callable object performing the computation of the logical ANDNOT operation.
+  //! @brief Callable object computing the logical ANDNOT operation.
   //!
   //! **Required header:** `#include <eve/function/logical_andnot.hpp>`
   //!

@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var mantissa
   //!
-  //! @brief Callable object performing the computation of the mantissa value.
+  //! @brief Callable object computing the mantissa value.
   //!
   //! **Required header:** `#include <eve/function/mantissa.hpp>`
   //!

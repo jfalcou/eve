@@ -15,7 +15,7 @@ namespace eve
   //! @{
   //! @var is_ngez
   //!
-  //! @brief Callable object performing the computation of the "not greater or equal to zero" predicate.
+  //! @brief Callable object computing the "not greater or equal to zero" predicate.
   //!
   //! **Required header:** `#include <eve/function/is_ngez.hpp>`
   //!

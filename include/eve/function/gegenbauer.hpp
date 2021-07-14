@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var gegenbauer
   //!
-  //! @brief Callable object performing the computation of the gegenbauer operation.
+  //! @brief Callable object computing the gegenbauer operation.
   //!
   //! **Required header:** `#include <eve/function/gegenbauer.hpp>`
   //!

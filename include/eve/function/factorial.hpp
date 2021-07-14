@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var factorial
   //!
-  //! @brief Callable object performing the computation of unsigned integral factorial \f$\displaystyle n! = \prod_{i=1}^n i\f$.
+  //! @brief Callable object computing unsigned integral factorial \f$\displaystyle n! = \prod_{i=1}^n i\f$.
   //!
   //! **Required header:** `#include <eve/function/factorial.hpp>`
   //!

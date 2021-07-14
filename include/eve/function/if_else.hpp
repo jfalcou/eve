@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var if_else
   //!
-  //! @brief Callable object performing the computation of the if_else operation.
+  //! @brief Callable object computing the if_else operation.
   //!
   //! **Required header:** `#include <eve/function/if_else.hpp>`
   //!

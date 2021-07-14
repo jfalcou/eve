@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var acos
   //!
-  //! @brief Callable object performing the computation of acos.
+  //! @brief Callable object computing acos.
   //!
   //! **Required header:** `#include <eve/function/acos.hpp>`
   //!

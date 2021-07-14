@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var fibonacci
   //!
-  //! @brief Callable object performing the computation of the nth value of the fibonacci sequence.
+  //! @brief Callable object computing the nth value of the fibonacci sequence.
   //!
   //! **Required header:** `#include <eve/function/fibonacci.hpp>`
   //!

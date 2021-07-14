@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var acotpi
   //!
-  //! @brief Callable object performing the computation of acotpi.
+  //! @brief Callable object computing acotpi.
   //!
   //! **Required header:** `#include <eve/function/acotpi.hpp>`
   //!

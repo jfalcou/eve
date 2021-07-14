@@ -17,7 +17,7 @@ namespace eve
   //! @{
   //! @var log
   //!
-  //! @brief Callable object performing the computation of the natural logarithm: \f$\log x\f$.
+  //! @brief Callable object computing the natural logarithm: \f$\log x\f$.
   //!
   //! **Required header:** `#include <eve/function/log.hpp>`
   //!

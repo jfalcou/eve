@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var dec
   //!
-  //! @brief Callable object performing the computation of the dec unary operation.
+  //! @brief Callable object computing the dec unary operation.
   //!
   //! **Required header:** `#include <eve/function/dec.hpp>`
   //!

@@ -15,7 +15,7 @@ namespace eve
   //! @{
   //! @var is_even
   //!
-  //! @brief Callable object performing the computation of the is_even logical value.
+  //! @brief Callable object computing the is_even logical value.
   //!
   //! **Required header:** `#include <eve/function/is_even.hpp>`
   //!

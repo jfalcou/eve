@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var erf
   //!
-  //! @brief Callable object performing the computation of the eroror function. \f$ \mbox{erf}(x)=\frac{2}{\sqrt\pi}\int_0^{x} e^{-t^2}\mbox{d}t\f$
+  //! @brief Callable object computing the eroror function. \f$ \mbox{erf}(x)=\frac{2}{\sqrt\pi}\int_0^{x} e^{-t^2}\mbox{d}t\f$
   //!
   //! **Required header:** `#include <eve/function/erf.hpp>`
   //!

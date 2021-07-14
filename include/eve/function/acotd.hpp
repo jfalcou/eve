@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var acotd
   //!
-  //! @brief Callable object performing the computation of acotd.
+  //! @brief Callable object computing acotd.
   //!
   //! **Required header:** `#include <eve/function/acotd.hpp>`
   //!

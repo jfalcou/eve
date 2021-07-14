@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var bernouilli
   //!
-  //! @brief Callable object performing the computation of bernouilli numbers sequence.
+  //! @brief Callable object computing bernouilli numbers sequence.
   //!
   //! **Required header:** `#include <eve/function/bernouilli.hpp>`
   //!

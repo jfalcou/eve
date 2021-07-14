@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var firstbitset
   //!
-  //! @brief Callable object performing the computation of the firstbitset operation.
+  //! @brief Callable object computing the firstbitset operation.
   //!
   //! **Required header:** `#include <eve/function/firstbitset.hpp>`
   //!

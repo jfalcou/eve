@@ -21,7 +21,7 @@ namespace eve
   //! @{
   //! @var exp10
   //!
-  //! @brief Callable object performing the computation of  \f$10^x\f$.
+  //! @brief Callable object computing  \f$10^x\f$.
   //!
   //! **Required header:** `#include <eve/function/exp10.hpp>`
   //!

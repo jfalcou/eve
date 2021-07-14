@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var is_not_greater_equal
   //!
-  //! @brief Callable object performing the computation of the "not greater or equal to" predicate.
+  //! @brief Callable object computing the "not greater or equal to" predicate.
   //!
   //! **Required header:** `#include <eve/function/is_not_greater_equal.hpp>`
   //!

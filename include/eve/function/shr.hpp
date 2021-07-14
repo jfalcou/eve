@@ -18,7 +18,7 @@ namespace eve
   //! @{
   //! @var shr
   //!
-  //! @brief Callable object performing the computation of the arithmetic right shift operation.
+  //! @brief Callable object computing the arithmetic right shift operation.
   //!
   //! **Required header:** `#include <eve/function/shr.hpp>`
   //!

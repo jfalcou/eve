@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var newton
   //!
-  //! @brief Callable object performing the computation of the newton operation.
+  //! @brief Callable object computing the newton operation.
   //!
   //! **Required header:** `#include <eve/function/newton.hpp>`
   //!

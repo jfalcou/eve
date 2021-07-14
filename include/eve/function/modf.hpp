@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var modf
   //!
-  //! @brief Callable object performing the computation of the modf operation.
+  //! @brief Callable object computing the modf operation.
   //!
   //! **Required header:** `#include <eve/function/modf.hpp>`
   //!

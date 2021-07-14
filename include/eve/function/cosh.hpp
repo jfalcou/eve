@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var cosh
   //!
-  //! @brief Callable object performing the computation of cosh: \f$\frac{e^x+e^{-x}}2\f$.
+  //! @brief Callable object computing cosh: \f$\frac{e^x+e^{-x}}2\f$.
   //!
   //! **Required header:** `#include <eve/function/cosh.hpp>`
   //!

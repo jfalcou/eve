@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var logspace_sub
   //!
-  //! @brief Callable object performing the computation of the logspace_sub operation:
+  //! @brief Callable object computing the logspace_sub operation:
   //!        \f$\log\left(e^{x_0}-\sum_{i = 1}^n e^{x_i}\right)\f$.
   //!
   //! **Required header:** `#include <eve/function/logspace_sub.hpp>`

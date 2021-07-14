@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var lo
   //!
-  //! @brief Callable object performing the computation of the lower part of the values.
+  //! @brief Callable object computing the lower part of the values.
   //!
   //! **Required header:** `#include <eve/function/lo.hpp>`
   //!

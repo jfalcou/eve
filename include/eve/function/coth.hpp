@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var coth
   //!
-  //! @brief Callable object performing the computation of coth: \f$\frac{e^x+e^{-x}}{e^x-e^{-x}}\f$.
+  //! @brief Callable object computing coth: \f$\frac{e^x+e^{-x}}{e^x-e^{-x}}\f$.
   //!
   //! **Required header:** `#include <eve/function/coth.hpp>`
   //!

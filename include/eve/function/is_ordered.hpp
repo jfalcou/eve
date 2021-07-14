@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var is_ordered
   //!
-  //! @brief Callable object performing the computation of the is_ordered logical value.
+  //! @brief Callable object computing the is_ordered logical value.
   //!
   //! **Required header:** `#include <eve/function/is_ordered.hpp>`
   //!

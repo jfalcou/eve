@@ -17,7 +17,7 @@ namespace eve
   //! @{
   //! @var log10
   //!
-  //! @brief Callable object performing the computation of the base 10  logarithm: \f$\log_{10} x\f$.
+  //! @brief Callable object computing the base 10  logarithm: \f$\log_{10} x\f$.
   //!
   //! **Required header:** `#include <eve/function/log10.hpp>`
   //!

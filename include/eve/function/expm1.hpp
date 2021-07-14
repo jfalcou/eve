@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var expm1
   //!
-  //! @brief Callable object performing the computation of \f$e^x-1\f$.
+  //! @brief Callable object computing \f$e^x-1\f$.
   //!
   //! **Required header:** `#include <eve/function/expm1.hpp>`
   //!

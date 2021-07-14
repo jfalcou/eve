@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var sinhc
   //!
-  //! @brief Callable object performing the computation of sinhc: \f$\frac{e^x-e^{-x}}{2x}\f$.
+  //! @brief Callable object computing sinhc: \f$\frac{e^x-e^{-x}}{2x}\f$.
   //!
   //! **Required header:** `#include <eve/function/sinhc.hpp>`
   //!

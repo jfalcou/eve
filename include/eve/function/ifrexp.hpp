@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var ifrexp
   //!
-  //! @brief Callable object performing the computation of the ifrexp pair of values.
+  //! @brief Callable object computing the ifrexp pair of values.
   //!
   //! **Required header:** `#include <eve/function/ifrexp.hpp>`
   //!

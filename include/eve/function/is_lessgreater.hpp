@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var is_lessgreater
   //!
-  //! @brief Callable object performing the computation of the "less or greater to" predicate.
+  //! @brief Callable object computing the "less or greater to" predicate.
   //!
   //! **Required header:** `#include <eve/function/is_lessgreater.hpp>`
   //!

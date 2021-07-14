@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var is_imag
   //!
-  //! @brief Callable object performing the computation of the is_imag logical value.
+  //! @brief Callable object computing the is_imag logical value.
   //!
   //! **Required header:** `#include <eve/function/is_imag.hpp>`
   //!

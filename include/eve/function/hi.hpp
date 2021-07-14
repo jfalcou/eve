@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var hi
   //!
-  //! @brief Callable object performing the computation of the higher part of the values.
+  //! @brief Callable object computing the higher part of the values.
   //!
   //! **Required header:** `#include <eve/function/hi.hpp>`
   //!

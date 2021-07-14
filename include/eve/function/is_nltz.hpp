@@ -15,7 +15,7 @@ namespace eve
   //! @{
   //! @var is_nltz
   //!
-  //! @brief Callable object performing the computation of the "not less than zero" predicate.
+  //! @brief Callable object computing the "not less than zero" predicate.
   //!
   //! **Required header:** `#include <eve/function/is_nltz.hpp>`
   //!

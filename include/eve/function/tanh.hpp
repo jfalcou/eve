@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var tanh
   //!
-  //! @brief Callable object performing the computation of tanh: \f$\frac{e^x-e^{-x}}{e^x+e^{-x}}\f$.
+  //! @brief Callable object computing tanh: \f$\frac{e^x-e^{-x}}{e^x+e^{-x}}\f$.
   //!
   //! **Required header:** `#include <eve/function/tanh.hpp>`
   //!

@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var pow
   //!
-  //! @brief Callable object performing the computation of the pow operation \f$x^y\f$.
+  //! @brief Callable object computing the pow operation \f$x^y\f$.
   //!
   //! **Required header:** `#include <eve/function/pow.hpp>`
   //!

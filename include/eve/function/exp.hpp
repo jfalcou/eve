@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var exp
   //!
-  //! @brief Callable object performing the computation of \f$e^x\f$.
+  //! @brief Callable object computing \f$e^x\f$.
   //!
   //! **Required header:** `#include <eve/function/exp.hpp>`
   //!

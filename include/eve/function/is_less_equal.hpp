@@ -17,7 +17,7 @@ namespace eve
   //! @{
   //! @var is_less_equal
   //!
-  //! @brief Callable object performing the computation of the "less or equal to" predicate.
+  //! @brief Callable object computing the "less or equal to" predicate.
   //!
   //! **Required header:** `#include <eve/function/is_less_equal.hpp>`
   //!

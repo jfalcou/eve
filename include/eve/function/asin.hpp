@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var asin
   //!
-  //! @brief Callable object performing the computation of asin.
+  //! @brief Callable object computing asin.
   //!
   //! **Required header:** `#include <eve/function/asin.hpp>`
   //!

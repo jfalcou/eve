@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var atan2d
   //!
-  //! @brief Callable object performing the computation of the atan2d operation.
+  //! @brief Callable object computing the atan2d operation.
   //!
   //! **Required header:** `#include <eve/function/atan2d.hpp>`
   //!

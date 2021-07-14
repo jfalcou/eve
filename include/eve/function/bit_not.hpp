@@ -17,7 +17,7 @@ namespace eve
   //! @{
   //! @var bit_not
   //!
-  //! @brief Callable object performing the computation of the ones' complement operation.
+  //! @brief Callable object computing the ones' complement operation.
   //!
   //! **Required header:** `#include <eve/function/bit_not.hpp>`
   //!

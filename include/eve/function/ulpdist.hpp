@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var ulpdist
   //!
-  //! @brief Callable object performing the computation of the ulpdistt operation.
+  //! @brief Callable object computing the ulpdistt operation.
   //!
   //! **Required header:** `#include <eve/function/ulpdist.hpp>`
   //!

@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var binarize
   //!
-  //! @brief Callable object performing the computation of the binarize operation.
+  //! @brief Callable object computing the binarize operation.
   //!
   //! **Required header:** `#include <eve/function/binarize.hpp>`
   //!

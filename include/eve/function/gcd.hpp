@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var gcd
   //!
-  //! @brief Callable object performing the computation of greater common divisor.
+  //! @brief Callable object computing greater common divisor.
   //!
   //! **Required header:** `#include <eve/function/gcd.hpp>`
   //!

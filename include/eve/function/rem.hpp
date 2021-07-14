@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var rem
   //!
-  //! @brief Callable object performing the computation of the rem operation.
+  //! @brief Callable object computing the rem operation.
   //!
   //! **Required header:** `#include <eve/function/rem.hpp>`
   //!

@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var min
   //!
-  //! @brief Callable object performing the computation of the min operation.
+  //! @brief Callable object computing the min operation.
   //!
   //! **Required header:** `#include <eve/function/min.hpp>`
   //!

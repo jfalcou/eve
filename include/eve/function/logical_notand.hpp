@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var logical_notand
   //!
-  //! @brief Callable object performing the computation of the element-wise NOTAND operation.
+  //! @brief Callable object computing the element-wise NOTAND operation.
   //!
   //! **Required header:** `#include <eve/function/logical_notand.hpp>`
   //!

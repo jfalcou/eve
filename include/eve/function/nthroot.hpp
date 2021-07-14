@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var nthroot
   //!
-  //! @brief Callable object performing the computation of the nth root: \f$x^{1/n}\f$.
+  //! @brief Callable object computing the nth root: \f$x^{1/n}\f$.
   //!
   //! **Required header:** `#include <eve/function/nthroot.hpp>`
   //!

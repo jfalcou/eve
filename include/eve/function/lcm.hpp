@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var lcm
   //!
-  //! @brief Callable object performing the computation of least common multiple.
+  //! @brief Callable object computing least common multiple.
   //!
   //! **Required header:** `#include <eve/function/lcm.hpp>`
   //!

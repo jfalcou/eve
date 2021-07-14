@@ -18,7 +18,7 @@ namespace eve
   //! @{
   //! @var logical_not
   //!
-  //! @brief Callable object performing the computation of the logical NOT operation.
+  //! @brief Callable object computing the logical NOT operation.
   //!
   //! **Required header:** `#include <eve/function/logical_not.hpp>`
   //!

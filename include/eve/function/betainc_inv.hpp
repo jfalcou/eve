@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var betainc_inv
   //!
-  //! @brief Callable object performing the computation of the inverse relative to the first parameter
+  //! @brief Callable object computing the inverse relative to the first parameter
   //!        of the beta incomplete function.
   //!
   //! **Required header:** `#include <eve/function/betainc_inv.hpp>`

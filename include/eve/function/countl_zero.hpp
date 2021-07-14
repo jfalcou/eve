@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var countl_zero
   //!
-  //! @brief Callable object performing the computation of the number of consecutive 1 bits left.
+  //! @brief Callable object computing the number of consecutive 1 bits left.
   //!
   //! **Required header:** `#include <eve/function/countl_zero.hpp>`
   //!

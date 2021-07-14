@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var maxmag
   //!
-  //! @brief Callable object performing the computation of the maxmag operation.
+  //! @brief Callable object computing the maxmag operation.
   //!
   //! **Required header:** `#include <eve/function/maxmag.hpp>`
   //!

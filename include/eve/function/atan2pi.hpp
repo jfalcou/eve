@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var atan2pi
   //!
-  //! @brief Callable object performing the computation of the atan2pi operation.
+  //! @brief Callable object computing the atan2pi operation.
   //!
   //! **Required header:** `#include <eve/function/atan2pi.hpp>`
   //!

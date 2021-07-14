@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var acosh
   //!
-  //! @brief Callable object performing the computation of acosh;  \f$\log(x+\sqrt{x^2-1})\f$.
+  //! @brief Callable object computing acosh;  \f$\log(x+\sqrt{x^2-1})\f$.
   //!
   //! **Required header:** `#include <eve/function/acosh.hpp>`
   //!

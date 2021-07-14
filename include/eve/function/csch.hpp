@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var csch
   //!
-  //! @brief Callable object performing the computation of csch: \f$\frac2{e^x+e^{-x}}\f$.
+  //! @brief Callable object computing csch: \f$\frac2{e^x+e^{-x}}\f$.
   //!
   //! **Required header:** `#include <eve/function/csch.hpp>`
   //!

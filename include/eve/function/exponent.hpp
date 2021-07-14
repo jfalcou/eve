@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var exponent
   //!
-  //! @brief Callable object performing the computation of the exponent value.
+  //! @brief Callable object computing the exponent value.
   //!
   //! **Required header:** `#include <eve/function/exponent.hpp>`
   //!

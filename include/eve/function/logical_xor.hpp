@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var logical_xor
   //!
-  //! @brief Callable object performing the computation of the logical XOR operation.
+  //! @brief Callable object computing the logical XOR operation.
   //!
   //! **Required header:** `#include <eve/function/logical_xor.hpp>`
   //!

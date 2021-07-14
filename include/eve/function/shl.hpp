@@ -19,7 +19,7 @@ namespace eve
   //! @{
   //! @var shl
   //!
-  //! @brief Callable object performing the computation of the arithmetic left shift operation.
+  //! @brief Callable object computing the arithmetic left shift operation.
   //!
   //! **Required header:** `#include <eve/function/shl.hpp>`
   //!

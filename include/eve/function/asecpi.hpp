@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var asecpi
   //!
-  //! @brief Callable object performing the computation of asecpi.
+  //! @brief Callable object computing asecpi.
   //!
   //! **Required header:** `#include <eve/function/asecpi.hpp>`
   //!

@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var quadrant
   //!
-  //! @brief Callable object performing the computation of the quadrant value.
+  //! @brief Callable object computing the quadrant value.
   //!
   //! **Required header:** `#include <eve/function/quadrant.hpp>`
   //!

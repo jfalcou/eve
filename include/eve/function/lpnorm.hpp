@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var lpnorm
   //!
-  //! @brief Callable object performing the computation of the lpnorm operation \f$ \left(\sum_{i = 0}^n x_i^p\right)^{\frac1p} \f$.
+  //! @brief Callable object computing the lpnorm operation \f$ \left(\sum_{i = 0}^n x_i^p\right)^{\frac1p} \f$.
   //!
   //! **Required header:** `#include <eve/function/lpnorm.hpp>`
   //!

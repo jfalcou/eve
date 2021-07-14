@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var is_infinite
   //!
-  //! @brief Callable object performing the computation of the is_infinite logical value.
+  //! @brief Callable object computing the is_infinite logical value.
   //!
   //! **Required header:** `#include <eve/function/is_infinite.hpp>`
   //!

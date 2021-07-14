@@ -21,7 +21,7 @@ namespace eve
   //! @{
   //! @var prev
   //!
-  //! @brief Callable object performing the computation of the prevt operation.
+  //! @brief Callable object computing the prevt operation.
   //!
   //! **Required header:** `#include <eve/function/prev.hpp>`
   //!

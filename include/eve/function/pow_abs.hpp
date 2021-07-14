@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var pow_abs
   //!
-  //! @brief Callable object performing the computation of the pow_abs function \f$|x|^y\f$.
+  //! @brief Callable object computing the pow_abs function \f$|x|^y\f$.
   //!
   //! **Required header:** `#include <eve/function/pow_abs.hpp>`
   //!

@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var negatenz
   //!
-  //!  @brief Callable object performing the computation of the negatenz function.
+  //!  @brief Callable object computing the negatenz function.
   //!
   //! **Required header:** `#include <eve/function/negatenz.hpp>`
   //!

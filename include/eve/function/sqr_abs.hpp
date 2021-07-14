@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var sqr_abs
   //!
-  //! @brief Callable object performing the computation of the sqr_abs operation.
+  //! @brief Callable object computing the sqr_abs operation.
   //!
   //! **Required header:** `#include <eve/function/sqr_abs.hpp>`
   //!

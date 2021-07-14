@@ -15,7 +15,7 @@ namespace eve
   //! @{
   //! @var is_negative
   //!
-  //! @brief Callable object performing the computation of the is_negative logical value.
+  //! @brief Callable object computing the is_negative logical value.
   //!
   //! **Required header:** `#include <eve/function/is_negative.hpp>`
   //!

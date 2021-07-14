@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var is_ltz
   //!
-  //! @brief Callable object performing the computation of the less than zero predicate.
+  //! @brief Callable object computing the less than zero predicate.
   //!
   //! **Required header:** `#include <eve/function/is_ltz.hpp>`
   //!

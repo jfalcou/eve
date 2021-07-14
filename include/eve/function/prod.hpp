@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var prod
   //!
-  //! @brief Callable object performing the computation of **TODO: FILL THIS BLANK**.
+  //! @brief Callable object computing **TODO: FILL THIS BLANK**.
   //!
   //! **Required header:** `#include <eve/function/prod.hpp>`
   //!

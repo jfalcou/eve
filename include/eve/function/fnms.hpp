@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var fnms
   //!
-  //! @brief Callable object performing the computation of the fused negate-multiply-substract operation.
+  //! @brief Callable object computing the fused negate-multiply-substract operation.
   //!
   //! **Required header:** `#include <eve/function/fnms.hpp>`
   //!

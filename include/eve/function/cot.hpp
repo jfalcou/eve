@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var cot
   //!
-  //! @brief Callable object performing the computation of cot.
+  //! @brief Callable object computing cot.
   //!
   //! **Required header:** `#include <eve/function/cot.hpp>`
   //!

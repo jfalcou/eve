@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var erf_inv
   //!
-  //! @brief Callable object performing the computation of the inverse of the \f$\mbox{erf}\f$ function.
+  //! @brief Callable object computing the inverse of the \f$\mbox{erf}\f$ function.
   //!
   //! **Required header:** `#include <eve/function/erf_inv.hpp>`
   //!
