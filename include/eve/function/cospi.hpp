@@ -41,7 +41,7 @@ namespace eve
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) cosine of the input expressed in \f$\pi\f$ multiples.
   //!
-  //!The call `cospi(x)` is semantically equivalent to \f$cos(\pi x)\f$.
+  //!The call `cospi(x)` is semantically equivalent to \f$\cos(\pi x)\f$.
   //!In particular:
   //!
   //!   * If the element is \f$\pm0\f$, \f$1\f$ is returned.
@@ -68,14 +68,13 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  As all direct trigonometric functions, `cospi` supports the restricted, small, medium and big decorators. Click
   //!  to see the [properties and rationale](../trigonometric.html)
-  //!  
+  //!
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/cospi.hpp>
-  //!  
+  //!
   //!     The expression `diff(cospi)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example

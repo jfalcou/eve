@@ -49,7 +49,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `pedantic`
   //!
   //!     **Required header:**  #include <eve/function/pedantic/modf.hpp>

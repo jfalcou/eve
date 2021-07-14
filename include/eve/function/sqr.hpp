@@ -65,7 +65,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `saturated`
   //!
   //!     **Required header:**  #include <eve/function/saturated/sqr.hpp>

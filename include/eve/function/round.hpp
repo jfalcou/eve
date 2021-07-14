@@ -65,7 +65,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `downward`
   //!     The expression `downward(round)(x)` is equivalent to `floor(x)`.
   //!  

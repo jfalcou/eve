@@ -52,7 +52,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `numeric`
   //!
   //!     **Required header:**  #include <eve/function/numeric/is_not_equal.hpp>

@@ -61,7 +61,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `tolerant`
   //!
   //!     **Required header:**  #include <eve/function/tolerant/ceil.hpp>

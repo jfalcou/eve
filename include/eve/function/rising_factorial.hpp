@@ -61,7 +61,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `raw`
   //!
   //!     **Required header:**  #include <eve/function/rising_factorial.hpp>

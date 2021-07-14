@@ -51,7 +51,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `raw`
   //!     The call `raw(rsqrt)(x)`, call a faster implementation which can be slightly less accurate near \f$\pi\f$..
   //!

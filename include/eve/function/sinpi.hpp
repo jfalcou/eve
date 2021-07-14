@@ -41,7 +41,7 @@ namespace eve
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) sinine of the input expressed in \f$\pi\f$ multiples.
   //!
-  //!The call `sinpi(x)` is semantically equivalent to \f$sin(\pi x)\f$.
+  //!The call `sinpi(x)` is semantically equivalent to \f$\sin(\pi x)\f$.
   //!In particular:
   //!
   //!   * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
@@ -68,14 +68,13 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  As all direct trigonometric functions, `sinpi` supports the restricted, small, medium and big decorators. Click
   //!  to see the [properties and rationale](../trigonometric.html)
-  //!  
+  //!
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/sinpi.hpp>
-  //!  
+  //!
   //!     The expression `diff(sinpi)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example

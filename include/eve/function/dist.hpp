@@ -73,7 +73,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `saturated`
   //!
   //!     **Required header:**  #include <eve/function/saturated/dist.hpp>

@@ -76,7 +76,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff_nth`<br>
   //!     **Required header:** `#include <eve/function/diff/average.hpp>`
   //!

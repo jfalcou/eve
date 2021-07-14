@@ -47,7 +47,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `almost`
   //!
   //!     **Required header:**  #include <eve/function/fuzzy/is_not_greater.hpp>

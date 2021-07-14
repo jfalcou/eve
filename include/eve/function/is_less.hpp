@@ -53,7 +53,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `definitely`
   //!
   //!     **Required header:**  #include <eve/function/fuzzy/is_less.hpp>

@@ -73,7 +73,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff_nth`
   //!
   //!     **Required header:**  #include <eve/function/diff/geommean.hpp>
