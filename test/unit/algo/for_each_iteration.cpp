@@ -124,8 +124,13 @@ namespace
     std::ptrdiff_t stop_at;
     test_res res;
 
-    bool step(auto it, eve::relative_conditional_expr auto ignore)
+    std::vector<std::ptrdiff_t> step_idxes;
+
+    template <std::ptrdiff_t idx>
+    bool step(auto it, eve::relative_conditional_expr auto ignore, eve::index_t<idx>)
     {
+      // Separate test to proper test indexing
+      step_idxes.push_back(idx);
       res.emplace_back(it - base, ignore);
       return stop_at == (it - base);
     }
@@ -455,4 +460,37 @@ TTS_CASE("eve.algo for_each_iteration unrolling, precise")
       {64, eve::keep_first(1)},
     }
   );
+}
+
+TTS_CASE("eve.algo for_each_iteration steps indexing")
+{
+  fixture fix;
+
+  auto run = [&] (auto traits, int elem_count) {
+    auto f = fix.unaligned_begin();
+    auto l = f + elem_count;
+
+    auto iteration = eve::algo::for_each_iteration(traits, f, l);
+    test_delegate del{iteration.base, -1};
+    iteration(del);
+
+    return del.step_idxes;
+  };
+
+  auto aligning = run(eve::algo::traits(eve::algo::unroll<4>), 82);
+  TTS_EQUAL(aligning, (std::vector<std::ptrdiff_t>{
+    0, // ignore,
+    0, 1, 2, 3, // steps starting
+    0, 1, 2, // steps finishing
+    0, // ignore last
+  }));
+
+  auto precise = run(
+    eve::algo::traits(eve::algo::unroll<4>, eve::algo::no_aligning),
+    78);
+  TTS_EQUAL(precise, (std::vector<std::ptrdiff_t>{
+    0, 1, 2, 3, // steps starting
+    0, 1, 2, // steps finishing
+    0, // ignore
+  }));
 }

@@ -13,6 +13,7 @@
 #include <eve/algo/traits.hpp>
 
 #include <eve/function/add.hpp>
+#include <eve/function/convert.hpp>
 #include <eve/function/reduce.hpp>
 
 #include <algorithm>
@@ -47,10 +48,10 @@ namespace eve::algo
         sums[0] = op(sums[0], init);
       }
 
-      EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore)
+      EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto idx)
       {
         // TODO: FIX-#802 use a non-zero sum.
-        sums[0] = op(sums[0], eve::load[ignore.else_(zero)](it));
+        sums[idx()] = op(sums[idx()], eve::load[ignore.else_(zero)](it));
         return false;
       }
 
@@ -63,14 +64,14 @@ namespace eve::algo
         return false;
       }
 
-      auto finish() {
+      EVE_FORCEINLINE auto finish() {
         auto sum = array_reduce(sums, op);
         return eve::reduce(sum, op);
       }
     };
 
     template <typename Rng, typename Op, typename T, typename U>
-    U operator()(Rng&& rng, std::pair<Op, T> op_zero, U init) const
+    EVE_FORCEINLINE U operator()(Rng&& rng, std::pair<Op, T> op_zero, U init) const
     {
       auto processed = preprocess_range(
         algo::default_to(tr_, eve::algo::traits(common_with_types<U>)),
@@ -89,11 +90,11 @@ namespace eve::algo
       delegate<decltype(op), wide_t> d{op, zero, init_as_wide};
 
       algo::for_each_iteration(processed.traits(), processed.begin(), processed.end())(d);
-      return (U) d.finish();
+      return eve::convert(d.finish(), eve::as<U>{});
     }
 
     template <typename Rng, typename U>
-    U operator()(Rng&& rng, U init) const
+    EVE_FORCEINLINE U operator()(Rng&& rng, U init) const
     {
       return operator()(std::forward<Rng>(rng), std::pair{eve::add, 0}, init);
     }

@@ -39,7 +39,7 @@ namespace eve::algo
     {
       explicit delegate(P p) : p(p) {}
 
-      EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore)
+      EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto /*idx*/)
       {
         eve::logical test = p(eve::load[ignore](it));
         res = eve::any[ignore](test);
