@@ -66,12 +66,11 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/legendre.hpp>
-  //!  
-  //!     The expression `diff(legendre)(n,x)` computes the derivative of the function at `x`.
+  //!
+  //!     The expression `diff(legendre)(n,x)` computes the derivative of the function relative to `x`.
   //!
   //! #### Example
   //!

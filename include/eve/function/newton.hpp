@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var newton
   //!
-  //! @brief Callable object computing the newton operation.
+  //! @brief Callable object computing the newton operation: \f$\sum_{i = 0}^n c_i\prod_{j = 0}^i (x-n_i)\f$.
   //!
   //! **Required header:** `#include <eve/function/newton.hpp>`
   //!
@@ -30,27 +30,31 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T0, range Rc,range Rn>                                auto operator()(T0 x, Rc coefs, Rn nodes) const noexcept;
+  //!  template< value T0, range Rc,range Rn>                                auto operator()(T0 x, Rc c, Rn n) const noexcept;
   //!  template< value T0, std::inputiterator ITc, std::inputiterator ITn>   auto operator()(T0 x, ITc firstcoef, ITc sentinel,ITn firstnode) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! ---
   //!
   //! **Parameters**
   //!
   //!`x`:   [value x](../../concepts.html#value).
-  //!`coefs`, `nodes``:   [values ](../../concepts.html#value) Range containing the coefficients
+  //!
+  //!`c`, `n``:   [values ](../../concepts.html#value) Range containing the coefficients
+  //!
   //!`firstcoef`, `sentinel`,`firstnode`:   std::input_iterator conforming pair of iterators through the coefficients and start of the nodes
   //!
   //! **Return value**
   //!
   //!Returns [element-wise](../../../glossary.html#value) the value of polynomial function(s)
-  //!represented by the coefficients in decreasing power order at `x`.
+  //!represented in newton form by the coefficients and the nodes.
   //!
   //!The result type is of the compatibility type of the  coefficients and the evaluation value `x`.
   //!
   //!@warning
   //!   If the coefficients are simd values of cardinal N, this means you compute the values of N polynomials.
-  //!   If x is scalar, the polynomials are all computed at the same point, but
-  //!   If x is simd, the nth polynomial is computed on the nth value of x.
+  //!   * If x is scalar, the polynomials are all computed at the same point
+  //!   * If x is simd, the nth polynomial is computed on the nth value of x
   //!
   //! ---
   //!
@@ -76,14 +80,14 @@ namespace eve
   //!  * `pedantic`
   //!
   //!     **Required header:**  #include <eve/function/pedantic/newton.hpp>
-  //!  
+  //!
   //!     The expression `pedantic(newton)(...)` computes the result using `pedantic(fma)(a,x,b)` for `a*x+b` instead of
   //!      `fma(a,x,b)`.
-  //!  
+  //!
   //!  * `numeric`
   //!
   //!     **Required header:**  #include <eve/function/numeric/newton.hpp>
-  //!  
+  //!
   //!     The expression `numeric(newton)(...)` computes the result using `numeric(fma)(a,x,b)` for `a*x+b` instead of
   //!      `fma(a,x,b)`.
   //!

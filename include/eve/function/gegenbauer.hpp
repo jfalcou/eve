@@ -36,7 +36,9 @@ namespace eve
   //! **Parameters**
   //!
   //!`n`:   [integral values](../../concepts.html#value).
+  //!
   //!`l`:   [floating values](../../concepts.html#value), elements must be greater than \f$-\frac12\f$.
+  //!
   //!`x`:   [floating values](../../concepts.html#value).
   //!
   //! **Return value**
@@ -69,8 +71,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/gegenbauer.hpp>
-  //!  
-  //!     The expression `diff(gegenbauer)(n,l,x)` computes the derivative of the function at `x`.
+  //!
+  //!     The expression `diff(gegenbauer)(n,l,x)` computes the derivative of the function relative to `x`.
   //!
   //! #### Example
   //!

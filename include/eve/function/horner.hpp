@@ -38,12 +38,18 @@ namespace eve
   //!  template< value T0, std::inputiterator IT, std::inputiterator IT>   auto operator()(T0 x, callable_one_ const & o, IT first, IT sentinel) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
+  //! ---
+  //!
   //! **Parameters**
   //!
   //!`x`:   [value x](../../concepts.html#value).
+  //!
   //!`o`:   [callable_one_ ](../../concepts.html#value). Put eve::one here to have an unitary polynomial and a small optimization
+  //!
   //!`args`:   [values ](../../concepts.html#value) expansion pack associated to \f$(a_i)_{i_0\le i \le n}\f$. \f$i_0\f$ is 1 if o is present else 0
+  //!
   //!`r`:   [values ](../../concepts.html#value) Range containing the coefficients in the same conditions
+  //!
   //!`first`, `sentinel`:   std::input_iterator conforming pair of iterators through the coefficients in the same conditions
   //!
   //! **Return value**
@@ -54,9 +60,9 @@ namespace eve
   //!The result type is of the compatibility type of the  coefficients and the evaluation value `x`.
   //!
   //!@warning
-  //!   If the coefficients are simd values of cardinal N, this means you compute the values of N polynomials.
-  //!   If x is scalar, the polynomials are all computed at the same point, but
-  //!   If x is simd, the nth polynomial is computed on the nth value of x.
+  //!   If the coefficients are simd values of cardinal N, this means you simultaneously compute the values of N polynomials.
+  //!   *  If x is scalar, the polynomials are all computed at the same point
+  //!   *  If x is simd, the nth polynomial is computed on the nth value of x
   //!
   //! ---
   //!
@@ -82,14 +88,14 @@ namespace eve
   //!  * `pedantic`
   //!
   //!     **Required header:**  #include <eve/function/pedantic/horner.hpp>
-  //!  
+  //!
   //!     The expression `pedantic(horner)(...)` computes the result using `pedantic(fma)(a,x,b)` for `a*x+b` instead of
   //!      `fma(a,x,b)`.
-  //!  
+  //!
   //!  * `numeric`
   //!
   //!     **Required header:**  #include <eve/function/numeric/horner.hpp>
-  //!  
+  //!
   //!     The expression `numeric(horner)(...)` computes the result using `numeric(fma)(a,x,b)` for `a*x+b` instead of
   //!      `fma(a,x,b)`.
   //!

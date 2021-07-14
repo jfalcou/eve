@@ -69,8 +69,8 @@ namespace eve
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/laguerre.hpp>
-  //!  
-  //!     The expression `diff(laguerre)(n,x)` computes the derivative of the function at `x`.
+  //!
+  //!     The expression `diff(laguerre)(n,x)` computes the derivative of the function relative to `x`.
   //!
   //! #### Example
   //!
