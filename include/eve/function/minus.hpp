@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T > auto operator()( T x ) const noexcept;
+  //!  auto operator()( value auto x ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -72,27 +72,15 @@ namespace eve
   //!  * `saturated`
   //!
   //!     **Required header:**  #include <eve/function/saturated/minus.hpp>
-  //!  
+  //!
   //!     The call `saturated(minus)(x)` computes the saturated opposite of `x`. The only interest of this behaviour is that
   //!      for integral signed type T  `saturated(minus)(Valmin< T >())` returns `Valmax< T >()` and is not u.b.
-  //!  
+  //!
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/minus.hpp>
-  //!  
+  //!
   //!     The expression `diff(minus)(x)` computes the derivative of the function at `x`.
-  //!  
-  //!  Masked calls
-  //!  ====================================================================================================
-  //!   The [masked](../../../tutorial/masking.html) calls `minus[cond](x)` and `saturated(minus[cond])(x)` where `cond` satisfies the
-  //!   [conditionnal-expression](../../concepts.html#conditionnal) requirements are supported.
-  //!  
-  //!   More precisely, if `cond` is
-  //!   a mere [logical value](../../concepts.html#value) these expressions compute the opposite (resp the saturated  opposite) of `x`
-  //!   if the condition `cond` is satisfied else returns  `x`. The calls are respectively equivalent to :
-  //!  .
-  //!   *  `if_else(cond, minus(x), x)`,
-  //!   *  `if_else(cond, saturated(minus)(x), x)`;
   //!
   //! #### Example
   //!

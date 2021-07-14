@@ -12,7 +12,8 @@
 //! @{
 //! @defgroup invtrigonometric Invtrigonometric
 //!
-//! These functions provide scalar and SIMD version of inverse trigonometric functions.
+//! These functions provide scalar and SIMD version of the inverse trigonometric functions in radians,
+//! degrees and \f$\pi\f$ multiples.
 //!
 //! **Convenience header:** @code{.cpp} #include <eve/function/invtrigonometric.hpp> @endcode
 //!

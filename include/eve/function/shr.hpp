@@ -48,11 +48,15 @@ namespace eve
   //!
   //!the call `shr(x, n)` is equivalent to `x << n` if `x`  is an  [simd value](../../concepts.html#value).
   //!
-  //!The types must share the same cardinal or be scalar and if $N$ is the size in bits  of the element type of `T`,
+  //!The types must share the same cardinal or be scalar and if `N` is the size in bits  of the element type of `T`,
   //!all  [elements](../../../glossary.html#element) of n must belong to the
   //!interval: `[0, N[` or the result is undefined.
   //!
-  //!@warning  //!
+  //!  @warning
+  //!     Although the infix notation with `>>` is supported, the `>>` operator on
+  //!     standard scalar types is the original one and so can not be overloaded on standard floating parameters
+  //!     due to **C++** limitations.
+  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

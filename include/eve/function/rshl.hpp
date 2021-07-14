@@ -49,9 +49,10 @@ namespace eve
   //!
   //!the call `rshl(x, n)` is equivalent to `if_else(n>0, shl(x, n), shr(x, n))` if `x`  is an  [simd value](../../concepts.html#value).
   //!
-  //!The types must share the same cardinal or be scalar and if $N$ is the size in bits  of the element type of `T`,
+  //!The types must share the same cardinal or be scalar and if `N` is the size in bits  of the element type of `T`,
   //!all  [elements](../../../glossary.html#element) of n must belong to the
   //!interval: `[-N, N[` or the result is undefined.
+  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
