@@ -75,7 +75,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff`
   //!
   //!     **Required header:** #include <eve/function/diff/clamp.hpp>

@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var asecd
   //!
-  //! @brief Callable object performing the computation of asecd.
+  //! @brief Callable object computing asecd.
   //!
   //! **Required header:** `#include <eve/function/asecd.hpp>`
   //!
@@ -25,12 +25,11 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the  computation of asecd   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(floating_value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -51,25 +50,8 @@ namespace eve
   //!
   //! ---
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::asecd
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `asecd[cond](x, ...)` is equivalent to `if_else(cond,asecd(x, ...),x)`
-  //!
-  //! ---
-  //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/asecd.hpp>

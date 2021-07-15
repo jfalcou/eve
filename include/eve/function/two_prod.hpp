@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var two_prod
   //!
-  //! @brief Callable object performing the computation of the two_prod operation.
+  //! @brief Callable object computing the two_prod operation.
   //!
   //! **Required header:** `#include <eve/function/two_prod.hpp>`
   //!
@@ -25,7 +25,6 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the two_prod operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -42,9 +41,10 @@ namespace eve
   //!computes [element-wise](../../../glossary.html#element-wise_) a pair of values `[a,e]` such that:
   //!
   //!* `a` is `x*y`
-  //!* `e` is a value such that `a`$\oplus$`e` is equal to `x`$\otimes$`y`
+  //!* `e` is a value such that `a`\f$\oplus\f$`e` is equal to `x`\f$\otimes\f$`y`
   //!
-  //!where $\oplus$ (resp. $\otimes$) multiplies (resp. adds ) its two parameters with infinite precision.
+  //!where \f$\oplus\f$ (resp. \f$\otimes\f$) adds (resp. multiplies) its two parameters with infinite precision.
+  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

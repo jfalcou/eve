@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var cos
   //!
-  //! @brief Callable object performing the computation of cos.
+  //! @brief Callable object computing cos.
   //!
   //! **Required header:** `#include <eve/function/cos.hpp>`
   //!
@@ -25,12 +25,11 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the  computation of cos   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(floating_value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -49,25 +48,8 @@ namespace eve
   //!
   //! ---
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::cos
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `cos[cond](x, ...)` is equivalent to `if_else(cond,cos(x, ...),x)`
-  //!
-  //! ---
-  //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  As all direct trigonometric functions, `cos` supports the restricted, small, medium and big decorators. Click
   //!  to see the [properties and rationale](../trigonometric.html)
   //!  

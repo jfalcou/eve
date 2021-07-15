@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var cosh
   //!
-  //! @brief Callable object performing the computation of cosh.
+  //! @brief Callable object computing cosh: \f$\frac{e^x+e^{-x}}2\f$.
   //!
   //! **Required header:** `#include <eve/function/cosh.hpp>`
   //!
@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(floating_value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -67,11 +67,10 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/cosh.hpp>
-  //!  
+  //!
   //!     The expression `diff(cosh)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example

@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var bit_shl
   //!
-  //! @brief Callable object performing the computation of the logical left shift operation.
+  //! @brief Callable object computing the logical left shift operation.
   //!
   //! **Required header:** `#include <eve/function/bit_shl.hpp>`
   //!

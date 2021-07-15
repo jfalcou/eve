@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var popcount
   //!
-  //! @brief Callable object performing the computation of the computation of the number of bits set.
+  //! @brief Callable object computing the number of bits set.
   //!
   //! **Required header:** `#include <eve/function/popcount.hpp>`
   //!
@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**

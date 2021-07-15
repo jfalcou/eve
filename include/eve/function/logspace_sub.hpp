@@ -16,7 +16,8 @@ namespace eve
   //! @{
   //! @var logspace_sub
   //!
-  //! @brief Callable object performing the computation of the logspace_sub operation.
+  //! @brief Callable object computing the logspace_sub operation:
+  //!        \f$\log\left(e^{x_0}-\sum_{i = 1}^n e^{x_i}\right)\f$.
   //!
   //! **Required header:** `#include <eve/function/logspace_sub.hpp>`
   //!
@@ -39,21 +40,13 @@ namespace eve
   //!`arg0`, `arg1`, `args`, ...
   //!:   [values](../../concepts.html#value).
   //!
-  //!Supported decorators
-  //!====================================================================================================
-  //![`diff`](../decorators.html#diff)
-  //!:   **Required header:** **<script type="preformatted">` #include <eve/function/diff/logspace_sub.hpp>`</script>
-  //!
-  //!:   The expression `diff_nth< N >(logspace_sub)(arg0,arg1,args...)` computes the partial
-  //!    diff of the function relative to its Nth parameter. The returned value is 0 if N is
-  //!    greater that the actual number of parameters, otherwise if the parameters are \f$x_1, ... x_n\f$ returns \f$\displaystyle\frac{s e^{x_N}}{e^{x_1} - ... - e^{x_n}}\f$
-  //!    where \f$s\f$ is \f$1\f$ if \f$N = 1\f$ and \f$-1\f$ otherwise.
-  //!
   //! **Return value**
   //!
-  //!Similar to  `log(exp(arg0) - (exp(arg1) + exp(args)...))`;.
+  //! The call `logspace_sub(arg0, arg1, args...)` is semantically equivalent to
+  //!`log(exp(arg0) - exp(arg1) - exp(args)...)`;.
   //!
-  //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+  //! The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
+  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
@@ -74,28 +67,15 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/logspace_sub.hpp>
-  //!  
+  //!
   //!     The expression `diff_nth< N >(logspace_sub)(arg0,arg1,args...)` computes the partial
   //!      diff of the function relative to its Nth parameter. The returned value is 0 if N is
-  //!      greater that the actual number of parameters, otherwise if the parameters are \f$x_1, ... x_n\f$ returns \f$\displaystyle\frac{s e^{x_N}}{e^{x_1} - ... - e^{x_n}}\f$
+  //!      greater that the actual number of parameters, otherwise if the parameters are
+  //!      \f$x_1, ... x_n\f$ returns \f$\displaystyle\frac{s e^{x_N}}{e^{x_1} - ... - e^{x_n}}\f$
   //!      where \f$s\f$ is \f$1\f$ if \f$N = 1\f$ and \f$-1\f$ otherwise.
-  //!  
-  //!  Return value
-  //!  ----------------------------------------------------------------------------------------------------
-  //!  <span class="smallskip"></span>
-  //!  Similar to  `log(exp(arg0) - (exp(arg1) + exp(args)...))`;.
-  //!  
-  //!   The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
-  //!
-  //! #### Example
-  //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/logspace_sub.cpp
   //!
   //!  @}
   //================================================================================================

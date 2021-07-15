@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var gcd
   //!
-  //! @brief Callable object performing the computation of greater common divisor operation.
+  //! @brief Callable object computing greater common divisor.
   //!
   //! **Required header:** `#include <eve/function/gcd.hpp>`
   //!
@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value U > auto operator()( T p, U n ) const noexcept requires compatible< T, U >;
+  //!  template< real_value T, real_value U > auto operator()( T p, U n ) const noexcept requires compatible< T, U >;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -46,16 +46,17 @@ namespace eve
   //!    the greatest common divisor is defined only if `p` and `n` element are flint. If it is not the
   //!    case the corresponding result will be Nan.
   //!
-  //!Decorators
-  //!----------------------------------------------------------------------------------------------------
-  //!<span class="smallskip"></span>
+  //! #### Supported decorators
   //!
   //!If the user calls the function with floating parameters, he can enforce the fact that all parameters are flint
   //!using one of the  [roundings](./../decorator.html#roundings) decorators on the object function. Namely:
   //!
-  //!   - deco(gcd)(a,b) is equivalent to gcd)(deco(round)(a),deco(round)(b)), but optimized when possible.
+  //!   `deco(gcd)(a,b)` is equivalent to `gcd(deco(round)(a),deco(round)(b))`
   //!
-  //!where deco is one of: `to_nearest`, `downward`, `upward` or `toward_zero`.
+  //!   but the computation is optimized when possible
+  //!
+  //!   `deco` can be one of: `to_nearest`, `downward`, `upward` or `toward_zero`.
+  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
@@ -71,12 +72,6 @@ namespace eve
   //!  **Return value**
   //!
   //!  A Callable object so that the expression `gcd[cond](x, ...)` is equivalent to `if_else(cond,gcd(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
   //!
   //! #### Example
   //!

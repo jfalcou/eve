@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var bitofsign
   //!
-  //! @brief Callable object performing the computation of the computation of the bitofsign value.
+  //! @brief Callable object computing the bitofsign value.
   //!
   //! **Required header:** `#include <eve/function/bitofsign.hpp>`
   //!
@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**

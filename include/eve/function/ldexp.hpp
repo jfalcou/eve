@@ -18,7 +18,7 @@ namespace eve
   //! @{
   //! @var ldexp
   //!
-  //! @brief Callable object performing the computation of the ldexp operation.
+  //! @brief Callable object computing the ldexp operation: \f$\textstyle x 2^n\f$.
   //!
   //! **Required header:** `#include <eve/function/ldexp.hpp>`
   //!
@@ -32,18 +32,20 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T, integral_real_value U > auto operator()( T x, U y ) const noexcept
+  //!  template< floating_value T, integral_real_value U > auto operator()( T x, U n ) const noexcept
   //!  requires compatible< T, U >;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
   //!`x`:   [floating real value](../../concepts.html#value).
-  //!`y`:   [integral real value](../../concepts.html#value).
+  //!
+  //!`n`:   [integral real value](../../concepts.html#value).
   //!
   //! **Return value**
   //!
-  //!the call `ldexp(x,y)` is semantically equivalent to  $\textstyle x 2^y$:
+  //!the call `ldexp(x,n)` is semantically equivalent to  \f$\textstyle x 2^n\f$:
+  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
@@ -58,7 +60,7 @@ namespace eve
   //!
   //!  **Return value**
   //!
-  //!  A Callable object so that the expression `ldexp[cond](x, ...)` is equivalent to `if_else(cond,ldexp(x, ...),x)`
+  //!  A Callable object so that the expression `ldexp[cond](x, n)` is equivalent to `if_else(cond,ldexp(x, n),x)`
   //!
   //! ---
   //!

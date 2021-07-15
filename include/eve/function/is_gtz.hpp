@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var is_gtz
   //!
-  //! @brief Callable object performing the computation of the greter than zero predicate.
+  //! @brief Callable object computing the greter than zero predicate.
   //!
   //! **Required header:** `#include <eve/function/is_gtz.hpp>`
   //!
@@ -24,8 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the greter than zero predicate   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //! | `operator()` | the greater than zero predicate   |
   //!
   //! ---
   //!
@@ -42,21 +41,6 @@ namespace eve
   //!Returns the [element-wise](../../../glossary.html#value) `x > 0`.
   //!
   //!The result type is `logical< T >`.
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::is_gt
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_gtz[cond](x, ...)` is equivalent to `if_else(cond,is_gtz(x, ...),x)`
   //!
   //! ---
   //!

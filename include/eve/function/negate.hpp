@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var negate
   //!
-  //! @brief Callable object performing the computation of the negate operation.
+  //! @brief Callable object computing the negate operation.
   //!
   //! **Required header:** `#include <eve/function/negate.hpp>`
   //!
@@ -30,12 +30,13 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(value auto x, value auto y) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
   //!`x`:   [value](../../concepts.html#value) to negate.
+  //!
   //!`y`:   [value](../../concepts.html#value) whose sign will be used to negate `x`.
   //!
   //! **Return value**

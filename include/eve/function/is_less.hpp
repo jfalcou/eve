@@ -18,7 +18,7 @@ namespace eve
   //! @{
   //! @var is_less
   //!
-  //! @brief Callable object performing the computation of the "less than" predicate.
+  //! @brief Callable object computing the "less than" predicate.
   //!
   //! **Required header:** `#include <eve/function/is_less.hpp>`
   //!
@@ -27,7 +27,6 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the "less than" predicate   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -52,28 +51,11 @@ namespace eve
   //!
   //! ---
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::is_less
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_less[cond](x, ...)` is equivalent to `if_else(cond,is_less(x, ...),x)`
-  //!
-  //! ---
-  //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `definitely`
   //!
-  //!     **Required header:**  #include <eve/function/definitely/is_less.hpp>
+  //!     **Required header:**  #include <eve/function/fuzzy/is_less.hpp>
   //!  
   //!     The expression `definitely(is_less)(x, y, t)` where `x` and `y` must be
   //!      floating point values, evals to true if and only if and only if `x` is definitely less than `y`.

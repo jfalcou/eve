@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var bit_ceil
   //!
-  //! @brief Callable object performing the computation of the bit_ceil operation.
+  //! @brief Callable object computing the bit_ceil operation.
   //!
   //! **Required header:** `#include <eve/function/bit_ceil.hpp>`
   //!

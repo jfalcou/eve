@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var dist
   //!
-  //! @brief Callable object performing the computation of the distance between two values.
+  //! @brief Callable object computing the distance between two values.
   //!
   //! **Required header:** `#include <eve/function/dist.hpp>`
   //!
@@ -73,7 +73,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `saturated`
   //!
   //!     **Required header:**  #include <eve/function/saturated/dist.hpp>

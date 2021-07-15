@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var atan2d
   //!
-  //! @brief Callable object performing the computation of the atan2d operation.
+  //! @brief Callable object computing the atan2d operation.
   //!
   //! **Required header:** `#include <eve/function/atan2d.hpp>`
   //!
@@ -25,7 +25,6 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the atan2d operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -63,25 +62,8 @@ namespace eve
   //!
   //! ---
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::atan2d
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `atan2d[cond](x, ...)` is equivalent to `if_else(cond,atan2d(x, ...),x)`
-  //!
-  //! ---
-  //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `pedantic`
   //!
   //!     **Required header:**  #include <eve/function/pedantic/atan2d.hpp>

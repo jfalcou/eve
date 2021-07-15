@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var frac
   //!
-  //! @brief Callable object performing the computation of the computation of the fractional part of a value.
+  //! @brief Callable object computing the fractional part of a value.
   //!
   //! **Required header:** `#include <eve/function/frac.hpp>`
   //!
@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -65,7 +65,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/frac.hpp>

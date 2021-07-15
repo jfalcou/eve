@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var pow_abs
   //!
-  //! @brief Callable object performing the computation of the pow_abs operation.
+  //! @brief Callable object computing the pow_abs function \f$|x|^y\f$.
   //!
   //! **Required header:** `#include <eve/function/pow_abs.hpp>`
   //!
@@ -35,7 +35,9 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`, `y`:   [values](../../concepts.html#value).
+  //!`x`:   [value](../../concepts.html#value).
+  //!
+  //!`y`:   [real value](../../concepts.html#value).
   //!
   //! **Return value**
   //!
@@ -80,15 +82,14 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `raw`
   //!     The expression `raw(pow_abs)(x,y)` merely returns `exp(y*log(|x|)` which is must faster way to compute the result
   //!      than the regular implemention, but does not fullfill all the boundary requisites of IEC 60559 and has not always a good accuracy.
-  //!  
+  //!
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/pow.hpp>
-  //!  
+  //!
   //!     The expression `diff_1st(pow_abs)(x,y)` and `diff_2nd(pow_abs)(x,y)` computes the partial
   //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ |x|^y\f$.
   //!

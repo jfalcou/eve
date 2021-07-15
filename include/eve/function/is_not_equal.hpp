@@ -17,7 +17,7 @@ namespace eve
   //! @{
   //! @var is_not_equal
   //!
-  //! @brief Callable object performing the computation of the equality predicate.
+  //! @brief Callable object computing the equality predicate.
   //!
   //! **Required header:** `#include <eve/function/is_not_equal.hpp>`
   //!
@@ -26,7 +26,6 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the equality predicate   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -51,25 +50,8 @@ namespace eve
   //!
   //! ---
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::is_not_equal
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_not_equal[cond](x, ...)` is equivalent to `if_else(cond,is_not_equal(x, ...),x)`
-  //!
-  //! ---
-  //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `numeric`
   //!
   //!     **Required header:**  #include <eve/function/numeric/is_not_equal.hpp>
@@ -78,7 +60,7 @@ namespace eve
   //!  
   //!  * `definitely`
   //!
-  //!     **Required header:**  #include <eve/function/definitely/is_not_equal.hpp>
+  //!     **Required header:**  #include <eve/function/fuzzy/is_not_equal.hpp>
   //!  
   //!     The expression `definitely(is_not_equal)(x, y, t)` where `x` and `y` must be floating point values, evals
   //!      to true if and only if `x` is definitely not equal to `y`.

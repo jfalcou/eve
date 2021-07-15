@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var logical_xor
   //!
-  //! @brief Callable object performing the computation of the logical XOR operation.
+  //! @brief Callable object computing the logical XOR operation.
   //!
   //! **Required header:** `#include <eve/function/logical_xor.hpp>`
   //!
@@ -25,7 +25,6 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the logical XOR operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -43,21 +42,6 @@ namespace eve
   //![logical operations semantic](../../../glossary.html#Logical).
   //!
   //!the call `logical_xor(x, y)` is semantically equivalent to `(x && !y) || (!x && y)`.
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::logical_xor
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `logical_xor[cond](x, ...)` is equivalent to `if_else(cond,logical_xor(x, ...),x)`
   //!
   //! ---
   //!

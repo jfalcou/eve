@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var is_not_greater
   //!
-  //! @brief Callable object performing the computation of the "not greater than" predicate.
+  //! @brief Callable object computing the "not greater than" predicate.
   //!
   //! **Required header:** `#include <eve/function/is_not_greater.hpp>`
   //!
@@ -25,7 +25,6 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the "not greater than" predicate   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -46,28 +45,11 @@ namespace eve
   //!
   //! ---
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::is_not_greater
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_not_greater[cond](x, ...)` is equivalent to `if_else(cond,is_not_greater(x, ...),x)`
-  //!
-  //! ---
-  //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `almost`
   //!
-  //!     **Required header:**  #include <eve/function/almost/is_not_greater.hpp>
+  //!     **Required header:**  #include <eve/function/fuzzy/is_not_greater.hpp>
   //!  
   //!     The expression `almost(is_not_greater)(x, y, t)` where `x` and `y` must be
   //!      floating point values, evals to true if and only if and only if `x` is not almost greater than `y`.

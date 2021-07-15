@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var ceil
   //!
-  //! @brief Callable object performing the computation of the ceil operation.
+  //! @brief Callable object computing the ceil operation.
   //!
   //! **Required header:** `#include <eve/function/ceil.hpp>`
   //!
@@ -61,7 +61,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `tolerant`
   //!
   //!     **Required header:**  #include <eve/function/tolerant/ceil.hpp>

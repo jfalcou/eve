@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var plus
   //!
-  //! @brief Callable object performing the computation of the plus unary operation.
+  //! @brief Callable object computing the plus unary operation.
   //!
   //! **Required header:** `#include <eve/function/plus.hpp>`
   //!
@@ -25,12 +25,11 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the plus unary operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T > auto operator()( T x ) const noexcept;
+  //!  auto operator()(value  auto x ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -41,7 +40,10 @@ namespace eve
   //!
   //!Computes  [element-wise](../../../glossary.html#elment-wise) `+x` which generally is a no-op.
   //!
-  //!@warning  //!
+  //!@warning
+  //!   Although the operator notation with `+` is supported, the `+` operator on
+  //!   standard scalar type is the original one and so can lead to automatic promotion.
+  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

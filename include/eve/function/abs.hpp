@@ -17,7 +17,7 @@ namespace eve
   //! @{
   //! @var abs
   //!
-  //! @brief Callable object performing the computation of the absolute value.
+  //! @brief Callable object computing the absolute value.
   //!
   //! **Required header:** `#include <eve/function/abs.hpp>`
   //!

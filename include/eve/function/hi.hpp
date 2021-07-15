@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var hi
   //!
-  //! @brief Callable object performing the computation of the computation of the higher part of the values.
+  //! @brief Callable object computing the higher part of the values.
   //!
   //! **Required header:** `#include <eve/function/hi.hpp>`
   //!
@@ -40,24 +40,9 @@ namespace eve
   //! **Return value**
   //!
   //!    Computes the [element-wise](../../../glossary.html#element-wise_) higher half of the  value,
-  //!    returning each elemnet as an unsigned integer of half the size of the input element.
+  //!    returning each element as an unsigned integer of half the size of the input element.
   //!
   //!    If you also need the lower part `lohi` is more efficient.
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::hi
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `hi[cond](x, ...)` is equivalent to `if_else(cond,hi(x, ...),x)`
   //!
   //! ---
   //!

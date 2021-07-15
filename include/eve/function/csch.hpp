@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var csch
   //!
-  //! @brief Callable object performing the computation of csch.
+  //! @brief Callable object computing csch: \f$\frac2{e^x+e^{-x}}\f$.
   //!
   //! **Required header:** `#include <eve/function/csch.hpp>`
   //!
@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(floating_value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -67,11 +67,10 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/csch.hpp>
-  //!  
+  //!
   //!     The expression `diff(csch)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example

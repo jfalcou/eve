@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var average
   //!
-  //! @brief Callable object performing the computation of the average of multiple values.
+  //! @brief Callable object computing the average of multiple values.
   //!
   //! **Required header:** `#include <eve/function/average.hpp>`
   //!
@@ -76,7 +76,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff_nth`<br>
   //!     **Required header:** `#include <eve/function/diff/average.hpp>`
   //!

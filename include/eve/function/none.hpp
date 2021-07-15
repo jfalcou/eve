@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var none
   //!
-  //! @brief Callable object performing the computation of the computation of the none value.
+  //! @brief Callable object computing the none value.
   //!
   //! **Required header:** `#include <eve/function/none.hpp>`
   //!
@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**

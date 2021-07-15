@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var lbeta
   //!
-  //! @brief Callable object performing the computation of the logarithm of the beta function.
+  //! @brief Callable object computing the logarithm of the beta function.
   //!
   //! **Required header:** `#include <eve/function/lbeta.hpp>`
   //!

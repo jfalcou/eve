@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var bit_floor
   //!
-  //! @brief Callable object performing the computation of the bit_floor operation.
+  //! @brief Callable object computing the bit_floor operation.
   //!
   //! **Required header:** `#include <eve/function/bit_floor.hpp>`
   //!

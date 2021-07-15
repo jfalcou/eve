@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var oneminus
   //!
-  //! @brief Callable object performing the computation of the oneminus operation.
+  //! @brief Callable object computing the oneminus operation.
   //!
   //! **Required header:** `#include <eve/function/oneminus.hpp>`
   //!
@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -65,7 +65,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `saturated`
   //!
   //!     **Required header:**  #include <eve/function/saturated/oneminus.hpp>

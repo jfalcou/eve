@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var fma
   //!
-  //! @brief Callable object performing the computation of the fused multiply-add operation.
+  //! @brief Callable object computing the fused multiply-add operation.
   //!
   //! **Required header:** `#include <eve/function/fma.hpp>`
   //!
@@ -70,7 +70,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `pedantic`
   //!
   //!     **Required header:** #include <eve/function/pedantic/fma.hpp>

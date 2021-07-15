@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var rec
   //!
-  //! @brief Callable object performing the computation of the rec operation.
+  //! @brief Callable object computing the rec operation.
   //!
   //! **Required header:** `#include <eve/function/rec.hpp>`
   //!
@@ -66,7 +66,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `raw`
   //!     The call `raw(rec)(x)`, call a proper system intrinsic if one exists, but with possibly very poor accuracy in return.
   //!      Otherwise it uses the [`regular`](../decorators.html#regular) call.

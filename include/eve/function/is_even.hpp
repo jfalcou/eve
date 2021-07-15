@@ -1,4 +1,3 @@
-//==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
@@ -16,7 +15,7 @@ namespace eve
   //! @{
   //! @var is_even
   //!
-  //! @brief Callable object performing the computation of the computation of the is_even logical value.
+  //! @brief Callable object computing the is_even logical value.
   //!
   //! **Required header:** `#include <eve/function/is_even.hpp>`
   //!
@@ -25,7 +24,6 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the computation of the is_even logical value   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -45,27 +43,12 @@ namespace eve
   //!logical<T> r = is_even(x);
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //!computation is semantically  equivalent to:
+  //!is semantically  equivalent to:
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
   //!logical<T> r;
   //!if constexpr(floating_real_value<T>)   r = is_flint(x) && is_flint(x/2);
   //!else constexpr(integral_real_value<T>) r = is_equal(x, (x/2)*2);
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::is_even
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_even[cond](x, ...)` is equivalent to `if_else(cond,is_even(x, ...),x)`
   //!
   //! ---
   //!

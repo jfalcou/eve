@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var laguerre
   //!
-  //! @brief Callable object performing the computation of the laguerre operation.
+  //! @brief Callable object computing the laguerre operation.
   //!
   //! **Required header:** `#include <eve/function/laguerre.hpp>`
   //!
@@ -65,12 +65,11 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/laguerre.hpp>
-  //!  
-  //!     The expression `diff(laguerre)(n,x)` computes the derivative of the function at `x`.
+  //!
+  //!     The expression `diff(laguerre)(n,x)` computes the derivative of the function relative to `x`.
   //!
   //! #### Example
   //!

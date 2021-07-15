@@ -17,7 +17,7 @@ namespace eve
   //! @{
   //! @var sqrt
   //!
-  //! @brief Callable object performing the computation of the square root.
+  //! @brief Callable object computing the square root.
   //!
   //! **Required header:** `#include <eve/function/sqrt.hpp>`
   //!
@@ -31,7 +31,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(floating_value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -62,7 +62,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `raw`
   //!     The call `raw(sqrt)(x)`, call a proper system intrinsic if one exists, but with possibly very poor accuracy in return.
   //!      Otherwise it uses the [`regular`](../decorators.html#regular) call.

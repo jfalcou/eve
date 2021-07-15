@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var fdim
   //!
-  //! @brief Callable object performing the computation of the positive difference.
+  //! @brief Callable object computing the positive difference.
   //!
   //! **Required header:** `#include <eve/function/fdim.hpp>`
   //!

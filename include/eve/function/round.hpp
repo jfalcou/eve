@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var round
   //!
-  //! @brief Callable object performing the computation of the round operation.
+  //! @brief Callable object computing the round operation.
   //!
   //! **Required header:** `#include <eve/function/round.hpp>`
   //!
@@ -65,7 +65,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `downward`
   //!     The expression `downward(round)(x)` is equivalent to `floor(x)`.
   //!  

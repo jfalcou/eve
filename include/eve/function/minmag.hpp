@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var minmag
   //!
-  //! @brief Callable object performing the computation of the minmag operation.
+  //! @brief Callable object computing the minmag operation.
   //!
   //! **Required header:** `#include <eve/function/minmag.hpp>`
   //!
@@ -73,7 +73,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `pedantic`
   //!
   //!     **Required header:**  #include <eve/function/pedantic/minmag.hpp>

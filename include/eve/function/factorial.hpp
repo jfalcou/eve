@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var factorial
   //!
-  //! @brief Callable object performing the computation of unsigned integral factorial.
+  //! @brief Callable object computing unsigned integral factorial \f$\displaystyle n! = \prod_{i=1}^n i\f$.
   //!
   //! **Required header:** `#include <eve/function/factorial.hpp>`
   //!
@@ -25,7 +25,6 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | unsigned integral factorial   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -44,22 +43,6 @@ namespace eve
   //!
   //!@warning
   //!    this function will overflow as soon as the input is greater than 171
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::factorial
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `factorial[cond](x, ...)` is equivalent to `if_else(cond,factorial(x, ...),x)`
   //!
   //! ---
   //!

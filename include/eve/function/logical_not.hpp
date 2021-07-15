@@ -18,7 +18,7 @@ namespace eve
   //! @{
   //! @var logical_not
   //!
-  //! @brief Callable object performing the computation of the logical NOT operation.
+  //! @brief Callable object computing the logical NOT operation.
   //!
   //! **Required header:** `#include <eve/function/logical_not.hpp>`
   //!
@@ -27,7 +27,6 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the logical NOT operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -46,23 +45,6 @@ namespace eve
   //!
   //!the call `logical_not(x)` is semantically equivalent to `is_eqz(x)` . Infix notation can be used with `!x`
   //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::logical_not
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `logical_not[cond](x, ...)` is equivalent to `if_else(cond,logical_not(x, ...),x)`
-  //!
-  //! ---
   //!
   //! #### Supported decorators
   //!

@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var digamma
   //!
-  //! @brief Callable object performing the computation of logarithmic derivative of the \f$\Gamma\f$ function.
+  //! @brief Callable object computing logarithmic derivative of the \f$\Gamma\f$ function.
   //!
   //! **Required header:** `#include <eve/function/digamma.hpp>`
   //!
@@ -64,7 +64,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/digamma.hpp>

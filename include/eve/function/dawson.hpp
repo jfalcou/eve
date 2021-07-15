@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var dawson
   //!
-  //! @brief Callable object performing the computation of the dawson function. \f$\displaystyle D_+(x)=e^{-x^2}\int_0^{x} e^{t^2} \mbox{d}t\f$
+  //! @brief Callable object computing the dawson function. \f$\displaystyle D_+(x)=e^{-x^2}\int_0^{x} e^{t^2} \mbox{d}t\f$
   //!
   //! **Required header:** `#include <eve/function/dawson.hpp>`
   //!
@@ -63,7 +63,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/dawson.hpp>

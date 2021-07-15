@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var rat
   //!
-  //! @brief Callable object performing the computation of the computation of the rational approximation.
+  //! @brief Callable object computing the rational approximation.
   //!
   //! **Required header:** `#include <eve/function/rat.hpp>`
   //!
@@ -29,7 +29,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(floating_value auto x) const noexcept;
   //!  template< floating_real_value T, floating_real_value S> auto operator()( T x, S tol) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!

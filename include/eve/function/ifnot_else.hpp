@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var ifnot_else
   //!
-  //! @brief Callable object performing the computation of the ifnot_else operation.
+  //! @brief Callable object computing the ifnot_else operation.
   //!
   //! **Required header:** `#include <eve/function/ifnot_else.hpp>`
   //!
@@ -25,14 +25,12 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the ifnot_else operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  template< value T, value U, value V > auto operator()( T x, U y, V z ) const noexcept
   //!  requires  compatible< U, V >;
-  //!  
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -43,21 +41,6 @@ namespace eve
   //!
   //!The call `ifnot_else(x, y, z)` is performs a choice between the elements of `y` and `z` according to the truth value
   //!of the elements of `x`. It is merely syntaxic sugar for `if_else(x, z, y)`
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::ifnot_else
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `ifnot_else[cond](x, ...)` is equivalent to `if_else(cond,ifnot_else(x, ...),x)`
   //!
   //! ---
   //!

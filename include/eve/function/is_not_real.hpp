@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var is_not_real
   //!
-  //! @brief Callable object performing the computation of the computation of the is_not_real logical value.
+  //! @brief Callable object computing the is_not_real logical value.
   //!
   //! **Required header:** `#include <eve/function/is_not_real.hpp>`
   //!
@@ -25,12 +25,11 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the computation of the is_not_real logical value   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(floating_value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -39,23 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!The call  `is_not_real(x)` always returns `False<`T`>()`
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::is_not_real
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_not_real[cond](x, ...)` is equivalent to `if_else(cond,is_not_real(x, ...),x)`
+  //!The call  `is_not_real(x)` is semantcally equivalent to `is_nez(imag(x))`
   //!
   //! ---
   //!

@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var modf
   //!
-  //! @brief Callable object performing the computation of the modf operation.
+  //! @brief Callable object computing the modf operation.
   //!
   //! **Required header:** `#include <eve/function/modf.hpp>`
   //!
@@ -29,7 +29,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -49,7 +49,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `pedantic`
   //!
   //!     **Required header:**  #include <eve/function/pedantic/modf.hpp>

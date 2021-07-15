@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var sinpi
   //!
-  //! @brief Callable object performing the computation of sinpi.
+  //! @brief Callable object computing sinpi.
   //!
   //! **Required header:** `#include <eve/function/sinpi.hpp>`
   //!
@@ -25,12 +25,11 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the  computation of sinpi   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(floating_value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -41,7 +40,7 @@ namespace eve
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) sinine of the input expressed in \f$\pi\f$ multiples.
   //!
-  //!The call `sinpi(x)` is semantically equivalent to \f$sin(\pi x)\f$.
+  //!The call `sinpi(x)` is semantically equivalent to \f$\sin(\pi x)\f$.
   //!In particular:
   //!
   //!   * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
@@ -50,32 +49,15 @@ namespace eve
   //!
   //! ---
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::sinpi
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `sinpi[cond](x, ...)` is equivalent to `if_else(cond,sinpi(x, ...),x)`
-  //!
-  //! ---
-  //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  As all direct trigonometric functions, `sinpi` supports the restricted, small, medium and big decorators. Click
   //!  to see the [properties and rationale](../trigonometric.html)
-  //!  
+  //!
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/sinpi.hpp>
-  //!  
+  //!
   //!     The expression `diff(sinpi)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
