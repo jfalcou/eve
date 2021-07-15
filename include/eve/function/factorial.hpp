@@ -58,6 +58,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct factorial_; }
+  template<> struct supports_conditional<tag::factorial_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(factorial_, factorial);
 }
 

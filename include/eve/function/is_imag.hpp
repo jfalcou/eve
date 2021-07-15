@@ -60,6 +60,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct is_imag_; }
+  template<> struct supports_conditional<tag::is_imag_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(is_imag_, is_imag);
 }
 

@@ -69,6 +69,10 @@ namespace eve
     }
  }
 
+     
+  namespace tag { struct rempio2_; }
+  template<> struct supports_conditional<tag::rempio2_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(rempio2_, rempio2);
 }
 

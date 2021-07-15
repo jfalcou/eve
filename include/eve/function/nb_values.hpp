@@ -54,6 +54,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct nb_values_; }
+  template<> struct supports_conditional<tag::nb_values_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(nb_values_, nb_values);
 }
 

@@ -56,6 +56,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct rat_; }
+  template<> struct supports_conditional<tag::rat_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(rat_, rat);
 }
 

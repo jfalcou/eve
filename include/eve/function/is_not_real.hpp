@@ -54,6 +54,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct is_not_real_; }
+  template<> struct supports_conditional<tag::is_not_real_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(is_not_real_, is_not_real);
 }
 

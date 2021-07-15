@@ -56,6 +56,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct quadrant_; }
+  template<> struct supports_conditional<tag::quadrant_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(quadrant_, quadrant);
 }
 

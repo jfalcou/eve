@@ -60,6 +60,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct is_positive_; }
+  template<> struct supports_conditional<tag::is_positive_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(is_positive_, is_positive);
 }
 

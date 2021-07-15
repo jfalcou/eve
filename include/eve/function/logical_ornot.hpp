@@ -58,6 +58,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct logical_ornot_; }
+  template<> struct supports_conditional<tag::logical_ornot_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(logical_ornot_, logical_ornot);
 }
 

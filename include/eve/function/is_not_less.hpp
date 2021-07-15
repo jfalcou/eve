@@ -67,6 +67,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct is_not_less_; }
+  template<> struct supports_conditional<tag::is_not_less_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(is_not_less_, is_not_less);
 }
 
