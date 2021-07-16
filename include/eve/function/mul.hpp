@@ -50,7 +50,7 @@ namespace eve
   //!
   //!@warning
   //!   Although the infix notation with `*` is supported for two parameters, the `*` operator on
-  //!   standard scalar type is the original one and so can lead to automatic promotion.
+  //!   standard scalar types is the original one and so can lead to automatic promotion.
   //!
   //! ---
   //!
