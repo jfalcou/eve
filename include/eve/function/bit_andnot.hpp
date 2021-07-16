@@ -44,8 +44,11 @@ namespace eve
   //! * For two parameters it computes the  bitwise ANDNOT of the two parameters
   //! * For more than two parameters the call is  semantically equivalent to to `bit_andnot(a0, bit_or(xs...))`
   //!
-  //! the call `bit_andnot(x, y)` is semantically equivalent to `x & ~y` if `x` or  `y`
-  //! is an  [simd value](../../concepts.html#value).
+  //!@warning
+  //!  the call `bit_andnot(x, y)` is semantically equivalent to `x & ~y` if `x` or  `y`
+  //!  is an  [simd value](../../concepts.html#value), but the pure scalar calls imply the original C++ operators
+  //!  an may not exist due to C++ limitations.<br> Moreover if an hardware intrinsic exists,  the infix syntax
+  //!  will not be able to use it.
   //!
   //! ---
   //!
