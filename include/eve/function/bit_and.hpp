@@ -41,7 +41,12 @@ namespace eve
   //!
   //! A value of the same type as a0 containing the
   //! [elementwise](@ref glossary_elementwise) bitwise and of a0 and all `xs` following the
-  //! [bitwise operations semantic](../../../glossary.html#Bitwise)..
+  //! [bitwise operations semantic](../../../glossary.html#Bitwise).
+  //!
+  //!@warning
+  //!   Although the infix notation with `&` is supported for two parameters, the `&` operator on
+  //!   standard scalar types is the original one and so can lead to automatic promotion and due to C++
+  //!   limitation is not available for floating point scalr entries.
   //!
   //! ---
   //!
