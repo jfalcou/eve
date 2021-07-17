@@ -37,4 +37,13 @@ namespace eve::detail
     ((that = bit_and(that, args)),...);
     return that;
   }
+
+  template<conditional_expr C, real_value T0, real_value T1, real_value ...Ts>
+  auto bit_and_(EVE_SUPPORTS(cpu_), C const &cond, T0 a0, T1 a1, Ts... args)
+    requires bit_compatible_values<T0, T1> && (bit_compatible_values<T1, Ts> && ...)
+  {
+    auto that = bit_and(a1,args...);
+    return mask_op( cond, eve::bit_and, a0, that);
+
+  }
 }

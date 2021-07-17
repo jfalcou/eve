@@ -30,20 +30,24 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value U > auto operator()( T x, U y ) const noexcept requires bit_compatible< T, U >;
+  //!  auto operator()(eve::value auto a0, eve::value auto ... xs) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`, `y`:   [values](../../concepts.html#value).
+  //! a0, `xs`:  Instances of eve::value
   //!
   //! **Return value**
   //!
-  //!Computes  bitwise AND of the two parameters following the [bitwise operations semantic](../../../glossary.html#Bitwise).
+  //! A value of the same type as a0 containing the
+  //! [elementwise](@ref glossary_elementwise) bitwise AND of a0 and all `xs` following the
+  //! [bitwise operations semantic](../../../glossary.html#Bitwise).
   //!
-  //!The call `bit_and(x, y)` is equivalent to `x & y` if `x` or  `y` is an  [simd value](../../concepts.html#value).
+  //!@warning
+  //!   Although the infix notation with `&` is supported for two parameters, the `&` operator on
+  //!   standard scalar types is the original one and so can lead to automatic promotion and due to C++
+  //!   limitation is not available for floating point scalar entries.
   //!
-  //!@warning  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

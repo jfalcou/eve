@@ -57,6 +57,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct logical_xor_; }
+  template<> struct supports_conditional<tag::logical_xor_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(logical_xor_, logical_xor);
 }
 

@@ -54,6 +54,9 @@ namespace eve::detail
   template<conditional_expr C, integral_value T, integral_value U>
   EVE_FORCEINLINE auto bit_shr_(EVE_SUPPORTS(cpu_), C const &cond, T const &a, U const &b) noexcept
   {
+    // TODO in case cond is a logical
+    // return eve::bit_shr, a, if_else(cond, b, eve::zero));
+    // would be better
     return mask_op(  cond, eve::bit_shr, a, b);
   }
 

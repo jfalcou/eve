@@ -56,6 +56,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct is_lez_; }
+  template<> struct supports_conditional<tag::is_lez_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(is_lez_, is_lez);
 }
 

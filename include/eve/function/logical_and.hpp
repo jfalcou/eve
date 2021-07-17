@@ -60,6 +60,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct logical_and_; }
+  template<> struct supports_conditional<tag::logical_and_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(logical_and_, logical_and);
 
   namespace detail

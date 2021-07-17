@@ -28,4 +28,5 @@ namespace eve::detail
   {
     return mask_op(  cond, eve::bit_not, t);
   }
+
 }

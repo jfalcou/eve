@@ -12,6 +12,7 @@
 #include <eve/detail/function/conditional.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_not.hpp>
+#include <eve/function/bit_or.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
 
@@ -63,8 +64,15 @@ namespace eve::detail
   auto bit_notor_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
     requires bit_compatible_values<T0, T1> && (bit_compatible_values<T1, Ts> && ...)
   {
-    auto that = bit_notor(a0,a1);
-    ((that = bit_notor(that, args)),...);
-    return that;
+    auto that = bit_or(a1,args...);
+    return eve::bit_notor(a0, that);
+  }
+
+  template<conditional_expr C, real_value T0, real_value T1, real_value ...Ts>
+  auto bit_notor_(EVE_SUPPORTS(cpu_), C const &cond, T0 a0, T1 a1, Ts... args)
+    requires bit_compatible_values<T0, T1> && (bit_compatible_values<T1, Ts> && ...)
+  {
+    auto that = bit_or(a1,args...);
+    return mask_op( cond, eve::bit_notor, a0, that);
   }
 }

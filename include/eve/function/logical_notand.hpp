@@ -58,6 +58,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct logical_notand_; }
+  template<> struct supports_conditional<tag::logical_notand_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(logical_notand_, logical_notand);
 }
 

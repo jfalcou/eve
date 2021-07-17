@@ -1,4 +1,3 @@
-//==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
@@ -43,6 +42,7 @@ namespace eve
   //!
   //!A tuple consisting of an flint value  designing the quadrant an two floating values of type T giving
   //!the remainder of `x` modulo $\pi/2$ and a corrective to the rounding erreor on the first result.
+  //!
   //! ---
   //!
   //! #### Supported decorators
@@ -69,6 +69,10 @@ namespace eve
     }
  }
 
+     
+  namespace tag { struct rempio2_; }
+  template<> struct supports_conditional<tag::rempio2_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(rempio2_, rempio2);
 }
 

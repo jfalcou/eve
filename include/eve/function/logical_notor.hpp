@@ -58,6 +58,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct logical_notor_; }
+  template<> struct supports_conditional<tag::logical_notor_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(logical_notor_, logical_notor);
 }
 

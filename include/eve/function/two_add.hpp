@@ -59,6 +59,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct two_add_; }
+  template<> struct supports_conditional<tag::two_add_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(two_add_, two_add);
 }
 

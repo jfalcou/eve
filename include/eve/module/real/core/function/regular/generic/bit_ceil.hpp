@@ -63,4 +63,13 @@ namespace eve::detail
     }
     else return apply_over(bit_ceil, v);
   }
+
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto bit_ceil_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
+  {
+    return mask_op( cond, eve::bit_ceil, t);
+  }
+
 }

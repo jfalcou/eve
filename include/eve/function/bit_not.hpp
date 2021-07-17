@@ -41,6 +41,7 @@ namespace eve
   //! **Return value**
   //!
   //!Computes the bitwise NOT of the parameter
+  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

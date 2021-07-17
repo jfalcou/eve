@@ -65,6 +65,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct is_nan_; }
+  template<> struct supports_conditional<tag::is_nan_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(is_nan_, is_nan);
 }
 

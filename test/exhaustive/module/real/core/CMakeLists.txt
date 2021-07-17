@@ -24,7 +24,6 @@ make_all_units(ROOT exhaustive.real.core NAME arg                   ARCH scalar 
 make_all_units(ROOT exhaustive.real.core NAME bit_ceil              ARCH scalar simd TYPES ${uint_or_real_types_32})
 make_all_units(ROOT exhaustive.real.core NAME bit_floor             ARCH scalar simd TYPES ${uint_or_real_types_32})
 ##make_all_units(ROOT exhaustive.real.core NAME bit_mask              ARCH scalar simd TYPES ${all_types_32}     )
-make_all_units(ROOT exhaustive.real.core NAME bit_mantissa          ARCH scalar simd TYPES ${real_types_32}    )
 make_all_units(ROOT exhaustive.real.core NAME bit_not               ARCH scalar simd TYPES ${integral_types_32}     )
 make_all_units(ROOT exhaustive.real.core NAME bit_width             ARCH scalar simd TYPES ${uint_types_32}    )
 make_all_units(ROOT exhaustive.real.core NAME cbrt                  ARCH scalar simd TYPES ${real_types_32}    )

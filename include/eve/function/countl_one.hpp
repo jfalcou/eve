@@ -40,6 +40,7 @@ namespace eve
   //! **Return value**
   //!
   //!Returns the number of consecutive 1 ("one") bits in the value of `x`, starting from the most significant bit ("left").
+  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

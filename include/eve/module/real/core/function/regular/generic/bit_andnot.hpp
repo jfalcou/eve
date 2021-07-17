@@ -13,6 +13,8 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/function/conditional.hpp>
 #include <eve/function/bit_cast.hpp>
+#include <eve/function/bit_and.hpp>
+#include <eve/function/bit_or.hpp>
 #include <eve/function/bit_not.hpp>
 #include <eve/function/if_else.hpp>
 
@@ -55,7 +57,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto bit_andnot_(EVE_SUPPORTS(cpu_), C const &cond, U const &t, V const &f) noexcept
       requires bit_compatible_values<U, V>
   {
-    return mask_op(  cond, eve::bit_andnot, t, f);
+    return mask_op( cond, eve::bit_andnot, t, f);
   }
 
   //================================================================================================
@@ -65,8 +67,15 @@ namespace eve::detail
   auto bit_andnot_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
     requires bit_compatible_values<T0, T1> && (bit_compatible_values<T1, Ts> && ...)
   {
-    auto that = bit_andnot(a0,a1);
-    ((that = bit_andnot(that, args)),...);
-    return that;
+    auto that = bit_or(a1,args...);
+    return bit_andnot(a0, that);
+  }
+
+  template<conditional_expr C, real_value T0, real_value T1, real_value ...Ts>
+  auto bit_andnot_(EVE_SUPPORTS(cpu_), C const &cond, T0 a0, T1 a1, Ts... args)
+    requires bit_compatible_values<T0, T1> && (bit_compatible_values<T1, Ts> && ...)
+  {
+    auto that = bit_or(a1,args...);
+    return mask_op( cond, eve::bit_andnot, a0, that);
   }
 }

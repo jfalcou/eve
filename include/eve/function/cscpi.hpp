@@ -68,6 +68,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct cscpi_; }
+  template<> struct supports_conditional<tag::cscpi_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(cscpi_, cscpi);
 }
 

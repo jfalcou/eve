@@ -1,4 +1,3 @@
-//==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
@@ -53,6 +52,7 @@ namespace eve
   //!:   **Required header:** **<script type="preformatted">` #include <eve/function/diff/nearest.hpp>`</script>
   //!
   //!:   The expression `diff(nearest)(x)` computes the derivative of the function at `x`.
+  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

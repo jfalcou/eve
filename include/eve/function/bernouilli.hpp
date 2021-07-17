@@ -59,6 +59,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct bernouilli_; }
+  template<> struct supports_conditional<tag::bernouilli_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(bernouilli_, bernouilli);
 }
 

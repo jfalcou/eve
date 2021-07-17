@@ -63,6 +63,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct modf_; }
+  template<> struct supports_conditional<tag::modf_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(modf_, modf);
 }
 

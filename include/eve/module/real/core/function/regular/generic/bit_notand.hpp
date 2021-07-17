@@ -13,6 +13,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/function/conditional.hpp>
 #include <eve/function/bit_cast.hpp>
+#include <eve/function/bit_and.hpp>
 #include <eve/function/bit_not.hpp>
 
 namespace eve::detail
@@ -64,8 +65,15 @@ namespace eve::detail
   auto bit_notand_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
     requires bit_compatible_values<T0, T1> && (bit_compatible_values<T1, Ts> && ...)
   {
-    auto that = bit_notand(a0,a1);
-    ((that = bit_notand(that, args)),...);
-    return that;
+    auto that = bit_and(a1,args...);
+    return eve::bit_notand(a0, that);
+  }
+
+  template<conditional_expr C, real_value T0, real_value T1, real_value ...Ts>
+  auto bit_notand_(EVE_SUPPORTS(cpu_), C const &cond, T0 a0, T1 a1, Ts... args)
+    requires bit_compatible_values<T0, T1> && (bit_compatible_values<T1, Ts> && ...)
+  {
+    auto that = bit_and(a1,args...);
+    return mask_op( cond, eve::bit_notand, a0, that);
   }
 }

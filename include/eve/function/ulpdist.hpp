@@ -58,6 +58,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct ulpdist_; }
+  template<> struct supports_conditional<tag::ulpdist_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(ulpdist_, ulpdist);
 }
 

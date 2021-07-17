@@ -65,6 +65,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct is_unordered_; }
+  template<> struct supports_conditional<tag::is_unordered_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(is_unordered_, is_unordered);
 }
 

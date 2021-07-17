@@ -68,6 +68,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct cospi_; }
+  template<> struct supports_conditional<tag::cospi_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(cospi_, cospi);
 }
 

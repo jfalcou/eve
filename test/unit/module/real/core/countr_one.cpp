@@ -31,10 +31,12 @@ EVE_TEST_TYPES( "Check return types of countr_one on wide"
 //==================================================================================================
 EVE_TEST( "Check behavior of countr_one(wide) on unsigned integral "
         , eve::test::simd::unsigned_integers
-        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
+        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax)
+                              ,  eve::test::logicals(0, 3))
         )
-<typename T>(T const& a0)
+<typename T, typename M>(T const& a0, const M t)
 {
   using v_t = eve::element_type_t<T>;
   TTS_EQUAL( eve::countr_one(a0), map([](auto e) ->v_t{ return std::countr_one(e); }, a0));
+  TTS_EQUAL( eve::countr_one[t](a0), eve::if_else(t, eve::countr_one(a0), a0));
 };

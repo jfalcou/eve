@@ -93,4 +93,12 @@ namespace eve::detail
     return that/(sizeof...(args)+1);
   }
 
+  template<conditional_expr C, real_value T0, real_value ...Ts>
+  auto average_(EVE_SUPPORTS(cpu_), C const &cond, T0 a0, Ts... args)
+  requires floating_value<common_compatible_t<T0, Ts...>>
+  {
+   return mask_op(  cond, eve::average, a0, args...);
+  }
+
+
 }

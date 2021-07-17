@@ -1,4 +1,3 @@
-//==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
@@ -40,6 +39,7 @@ namespace eve
   //! **Return value**
   //!
   //!Returns the number of consecutive 0 ("zero") bits in the value of `x`, starting from the most significant bit ("left").
+  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

@@ -1,4 +1,3 @@
-//==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
@@ -48,6 +47,7 @@ namespace eve
   //!
   //!:   The expression `diff_1st(beta)(x,y)` and `diff_2nd(beta)(x,y)` computes the partial
   //!    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ \mbox{B}(x,y)$.
+  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

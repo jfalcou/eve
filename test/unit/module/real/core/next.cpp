@@ -44,7 +44,7 @@ EVE_TEST( "Check behavior of eve::next(eve::wide)"
                               , eve::test::logicals(0,3)
                               )
         )
-  <typename T, typename M>(T const& a0, M const& /*mask*/)
+  <typename T, typename M>(T const& a0, M const& t)
 {
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
@@ -60,6 +60,8 @@ EVE_TEST( "Check behavior of eve::next(eve::wide)"
     TTS_EQUAL(eve::next(a0)      , eve::inc(a0));
     TTS_EQUAL(eve::next(a0, 2)   , eve::inc(eve::inc(a0)));
   }
+  TTS_EQUAL(eve::next[t](a0)     , eve::if_else(t, eve::next(a0), a0));
+  TTS_EQUAL(eve::next[t](a0, 2)  , eve::if_else(t, eve::next(a0, 2), a0));
 };
 
 

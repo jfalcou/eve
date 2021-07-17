@@ -26,15 +26,7 @@ EVE_TEST_TYPES( "Check return types of eve::sqr_abs", eve::test::simd::ieee_real
   using eve::sqr_abs;
 
   TTS_EXPR_IS( sqr_abs(T())                      , T );
-  TTS_EXPR_IS( sqr_abs[eve::logical<T>()](T())   , T );
-  TTS_EXPR_IS( sqr_abs[eve::logical<v_t>()](T()) , T );
-  TTS_EXPR_IS( sqr_abs[bool()](T())              , T );
-
   TTS_EXPR_IS( sqr_abs(v_t())                      , v_t );
-  TTS_EXPR_IS( sqr_abs[eve::logical<T>()](v_t())   , T );
-  TTS_EXPR_IS( sqr_abs[eve::logical<v_t>()](v_t()) , v_t );
-  TTS_EXPR_IS( sqr_abs[bool()](v_t())              , v_t );
-
   TTS_EXPR_IS( eve::diff(eve::sqr_abs)(T()) , T );
   TTS_EXPR_IS( eve::diff(eve::sqr_abs)(v_t()) , v_t );
 };
@@ -47,18 +39,15 @@ EVE_TEST_TYPES( "Check return types of eve::sqr_abs", eve::test::simd::ieee_real
 EVE_TEST( "Check behavior of eve::sqr_abs(eve::wide)"
         , eve::test::simd::ieee_reals
         , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                              , eve::test::logicals(0,3)
                               )
         )
-<typename T, typename M>(T const& a0, M const& mask)
+<typename T>(T const& a0)
 {
   using eve::detail::map;
   using eve::sqr_abs;
-  using eve::saturated;
   using eve::as;
   using v_t = eve::element_type_t<T>;
 
   TTS_EQUAL(sqr_abs(a0)      , map([](auto e) -> v_t { return e*e; }, a0) );
-  TTS_EQUAL(sqr_abs[mask](a0), eve::if_else(mask,eve::sqr_abs(a0),a0)                    );
   TTS_EQUAL(eve::diff(sqr_abs)(a0), 2*a0);
 };

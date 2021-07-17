@@ -64,6 +64,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct sinpic_; }
+  template<> struct supports_conditional<tag::sinpic_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(sinpic_, sinpic);
 }
 

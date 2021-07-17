@@ -105,18 +105,5 @@ namespace eve
 
   EVE_MAKE_CALLABLE(shr_, shr);
 
-  namespace detail
-  {
-    template<integral_value T, integral_value U>
-    EVE_FORCEINLINE auto shr_(EVE_SUPPORTS(cpu_), T a, U s) noexcept
-    {
-      if constexpr( scalar_value<T> && scalar_value<U> )  return  static_cast<T>(a >> s);
-      else if constexpr( scalar_value<T>)
-      {
-        using w_t = as_wide_t<T, cardinal_t<U>>;
-                                                          return w_t(a) >>  s;
-      }
-      else                                                return a >> s;
-    }
-  }
 }
+#include <eve/module/real/core/function/regular/generic/shr.hpp>

@@ -30,22 +30,26 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value U > auto operator()( T x, U y ) const noexcept requires bit_compatible< T, U >;
+  //!  auto operator()(eve::value auto a0, eve::value auto ... xs) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`, `y`:   [values](../../concepts.html#value).
+  //! a0, `xs`:  Instances of eve::value
   //!
   //! **Return value**
   //!
-  //!Computes  bitwise ANDNOT of the two parameters following the
-  //![bitwise operations semantic](../../../glossary.html#Bitwise).
+  //! The value returned is of same type as `a0` and follows the
+  //! [bitwise operations semantic](../../../glossary.html#Bitwise).
+  //! * For two parameters it computes the  bitwise ANDNOT of the two parameters
+  //! * For more than two parameters the call is  semantically equivalent to to `bit_andnot(a0, bit_or(xs...))`
   //!
-  //!the call `bit_andnot(x, y)` is semantically equivalent to `x & ~y` if `x` or  `y`
-  //!is an  [simd value](../../concepts.html#value).
+  //!@warning
+  //!  the call `bit_andnot(x, y)` is semantically equivalent to `x & ~y` if `x` or  `y`
+  //!  is an  [simd value](../../concepts.html#value), but the pure scalar calls imply the original C++ operators
+  //!  an may not exist due to C++ limitations.<br> Moreover if an hardware intrinsic exists,  the infix syntax
+  //!  will not be able to use it.
   //!
-  //!@warning  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

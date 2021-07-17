@@ -39,8 +39,9 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!If `x` is not zero, calculates [element-wise](../../../glossary.html#element-wise)  the largest integral power of two that is not greater than `x`.
+  //!If `x` is not zero, computes [element-wise](../../../glossary.html#element-wise)  the largest integral power of two that is not greater than `x`.
   //!If an  [element](../../../glossary.html#element) of `x` is zero, the corresponding result  [element](../../../glossary.html#element) is zero.
+  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

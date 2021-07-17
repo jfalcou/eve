@@ -56,6 +56,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct ifnot_else_; }
+  template<> struct supports_conditional<tag::ifnot_else_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(ifnot_else_, ifnot_else);
 }
 

@@ -61,6 +61,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct frexp_; }
+  template<> struct supports_conditional<tag::frexp_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(frexp_, frexp);
 }
 

@@ -56,6 +56,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct is_ltz_; }
+  template<> struct supports_conditional<tag::is_ltz_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(is_ltz_, is_ltz);
 }
 

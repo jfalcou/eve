@@ -54,6 +54,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct nextafter_; }
+  template<> struct supports_conditional<tag::nextafter_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(nextafter_, nextafter);
 }
 

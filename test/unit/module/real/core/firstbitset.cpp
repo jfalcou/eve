@@ -28,12 +28,14 @@ EVE_TEST_TYPES( "Check return types of eve::firstbitset(simd)"
 //==================================================================================================
 EVE_TEST( "Check behavior of eve::firstbitset(simd)"
         , eve::test::simd::unsigned_integers
-        , eve::test::generate ( eve::test::ramp(0))
+        , eve::test::generate ( eve::test::ramp(0)
+                              ,  eve::test::logicals(0, 3))
         )
-<typename T>(T const& a0)
+<typename T, typename M>(T const& a0, const M t)
 {
   using eve::detail::map;
   using vi_t = eve::element_type_t<T>;
 
   TTS_EQUAL(eve::firstbitset(a0), map([](auto e) -> vi_t { return eve::firstbitset(e);}, a0));
+  TTS_EQUAL( eve::firstbitset[t](a0), eve::if_else(t, eve::firstbitset(a0), a0));
 };

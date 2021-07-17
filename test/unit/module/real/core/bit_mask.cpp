@@ -34,9 +34,10 @@ EVE_TEST_TYPES( "Check return types of bit_mask"
 //==================================================================================================
 EVE_TEST( "Check behavior of bit_mask(simd) on all types"
         , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax))
+        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
+                              ,  eve::test::logicals(0, 3))
         )
-<typename T>( T const& a0)
+<typename T, typename U>(T const& a0, U const & t)
 {
   using v_t = eve::element_type_t<T>;
   using eve::bit_mask;
@@ -48,4 +49,5 @@ EVE_TEST( "Check behavior of bit_mask(simd) on all types"
                       }, a0
                     )
                 );
+  TTS_IEEE_EQUAL( eve::bit_mask[t](a0), eve::if_else(t, eve::bit_mask(a0), a0));
 };

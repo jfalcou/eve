@@ -1,4 +1,3 @@
-//==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
@@ -48,6 +47,7 @@ namespace eve
   //!
   //!:   The expression `derivative_1st(lbeta)(x,y)` and `derivative_2nd(lbeta)(x,y)` computes the partial
   //!derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ \log(\mbox{B}(x,y))$.
+  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
