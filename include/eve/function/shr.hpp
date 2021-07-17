@@ -102,6 +102,8 @@ namespace eve
                 );
     }
   }
+
+  EVE_MAKE_CALLABLE(shr_, shr);
+
 }
 #include <eve/module/real/core/function/regular/generic/shr.hpp>
-
