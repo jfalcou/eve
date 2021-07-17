@@ -1,4 +1,3 @@
-//==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
@@ -40,6 +39,7 @@ namespace eve
   //! **Return value**
   //!
   //!Returns the number of bit set in each [`element`](../../../glossary.html#element-wise) of the parameter.
+  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

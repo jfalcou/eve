@@ -1,4 +1,3 @@
-//==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
@@ -49,6 +48,7 @@ namespace eve
   //!
   //!:   The expression `diff(betainc_inv)(s,x,y)` computes the partial
   //!    diff of $f$, where $f$ is the function $s \rightarrow \ \mbox{B}(s,x,y)$.
+  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

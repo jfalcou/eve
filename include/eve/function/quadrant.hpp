@@ -1,4 +1,3 @@
-//==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
@@ -42,6 +41,7 @@ namespace eve
   //!
   //!@warning
   //!   the input `x` must be an integral or floating integral value.
+  //!
   //! ---
   //!
   //! #### Supported decorators
