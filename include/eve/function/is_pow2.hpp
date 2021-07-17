@@ -15,7 +15,7 @@ namespace eve
   //! @{
   //! @var is_pow2
   //!
-  //! @brief Callable object computing the is_pow2 operation.
+  //! @brief Callable object computing the is_pow2 predicate.
   //!
   //! **Required header:** `#include <eve/function/is_pow2.hpp>`
   //!
@@ -23,13 +23,12 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the is_pow2 operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //! | `operator()` | the is_pow2 predicate   |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< unsigned_real_value T > auto operator()( T x ) const noexcept;
+  //!  auto operator()( unsigned_real_value auto x ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -39,22 +38,6 @@ namespace eve
   //! **Return value**
   //!
   //!Checks [element-wise](../../../glossary.html#element-wise) if `x` is an integral power of two.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::is_pow2
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_pow2[cond](x, ...)` is equivalent to `if_else(cond,is_pow2(x, ...),x)`
   //!
   //! ---
   //!
