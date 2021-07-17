@@ -30,7 +30,6 @@ namespace eve::detail
       return apply_over(countl_one, v);
   }
 
-
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<conditional_expr C, unsigned_value U>
