@@ -8,6 +8,8 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
+#include <eve/detail/assert_utils.hpp>
+#include <eve/assert.hpp>
 #include <type_traits>
 
 namespace eve
