@@ -12,6 +12,7 @@
 #include <eve/function/bit_andnot.hpp>
 #include <eve/function/bit_and.hpp>
 #include <eve/function/bit_cast.hpp>
+#include <eve/function/average.hpp>
 
 //==================================================================================================
 // Types tests
@@ -51,9 +52,9 @@ EVE_TEST( "Check behavior of bit_andnot on integral types"
                                   , eve::test::randoms(eve::valmin, eve::valmax)
                                   )
             )
-<typename T>( T const& a0, T const& a1,  T const& a2,  T const& a3)
+<typename T>( T const& a0, T const& a1, T const& a2,  T const& a3)
 {
- using eve::as;
+  using eve::as;
   using eve::bit_andnot;
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
@@ -71,7 +72,7 @@ EVE_TEST( "Check behavior of bit_andnot on floating types"
                               , eve::test::randoms(eve::valmin, eve::valmax)
                               )
         )
-<typename T>(T const& a0, T const& a1,  T const& a2,  T const& a3)
+<typename T>(T const& a0, T const& a1, T const& a2,  T const& a3)
 {
   using eve::as;
   using eve::bit_andnot;

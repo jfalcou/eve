@@ -32,7 +32,7 @@ namespace eve::detail
   template<conditional_expr C, integral_value T, integral_value U>
   EVE_FORCEINLINE auto shr_(EVE_SUPPORTS(cpu_), C const &cond, T const &a, U const &b) noexcept
   {
-    return mask_op(  cond, eve::shr, a, b);
+    return mask_op(  cond, shr, a, b);
   }
 
 }

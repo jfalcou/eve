@@ -37,21 +37,24 @@ EVE_TEST_TYPES( "Check return types of bit_not"
 //==================================================================================================
 EVE_TEST( "Check behavior of bit_not(simd) on integral types"
         , eve::test::simd::integers
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax))
+        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
+                              ,  eve::test::logicals(0, 3))
         )
-<typename T>( T const& a0)
+<typename T, typename U>(T const& a0, U const & t)
 {
   using v_t = eve::element_type_t<T>;
   using eve::detail::map;
   using eve::bit_not;
   TTS_EQUAL( bit_not(a0), map([](auto e) -> v_t{ return ~e; }, a0));
+  TTS_EQUAL( eve::bit_not[t](a0), eve::if_else(t, eve::bit_not(a0), a0));
 };
 
 EVE_TEST( "Check behavior of bit_not(simd) on floating types"
         , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax))
+        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
+                              ,  eve::test::logicals(0, 3))
         )
-<typename T>(T const& a0)
+<typename T, typename U>(T const& a0, U const & t)
 {
   using eve::as;
   using eve::bit_not;
@@ -62,4 +65,5 @@ EVE_TEST( "Check behavior of bit_not(simd) on floating types"
   TTS_IEEE_EQUAL( bit_not(a0), map([](auto e)
                                    { return  bit_cast(~bit_cast(e, as(i_t())), as(v_t())); }, a0
                                   ));
+  TTS_EQUAL( eve::bit_not[t](a0), eve::if_else(t, eve::bit_not(a0), a0));
 };
