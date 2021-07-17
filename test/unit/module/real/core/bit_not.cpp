@@ -65,5 +65,5 @@ EVE_TEST( "Check behavior of bit_not(simd) on floating types"
   TTS_IEEE_EQUAL( bit_not(a0), map([](auto e)
                                    { return  bit_cast(~bit_cast(e, as(i_t())), as(v_t())); }, a0
                                   ));
-  TTS_EQUAL( eve::bit_not[t](a0), eve::if_else(t, eve::bit_not(a0), a0));
+  TTS_IEEE_EQUAL( eve::bit_not[t](a0), eve::if_else(t, eve::bit_not(a0), a0));
 };

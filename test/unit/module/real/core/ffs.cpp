@@ -33,10 +33,12 @@ EVE_TEST_TYPES( "Check return types of ffs on wide"
 //==================================================================================================
 EVE_TEST( "Check behavior of ffs(wide) on unsigned integral "
         , eve::test::simd::unsigned_integers
-        , eve::test::generate(eve::test::ramp(1))
+        , eve::test::generate(eve::test::ramp(1)
+                              ,  eve::test::logicals(0, 3))
         )
-<typename T>(T const& a0)
+<typename T, typename M>(T const& a0, const M t)
 {
   using v_t = eve::element_type_t<T>;
   TTS_EQUAL( eve::ffs(a0), map([](auto e) ->v_t{ return v_t(std::log2(eve::firstbitset(e))); }, a0));
+  TTS_EQUAL( eve::ffs[t](a0), eve::if_else(t, eve::ffs(a0), a0));
 };
