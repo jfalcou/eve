@@ -13,6 +13,7 @@
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_not.hpp>
 #include <eve/function/bit_and.hpp>
+#include <eve/function/bit_or.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
