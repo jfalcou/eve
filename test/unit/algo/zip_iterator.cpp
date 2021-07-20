@@ -43,6 +43,6 @@ TTS_CASE("zip_iterator, sanity check, types test")
   TTS_TYPE_IS(eve::algo::partially_aligned_t<zip_u_u>, zip_a_u);
 
   // Load
-  auto loaded = eve::load(zip_a_u{});
-  TTS_TYPE_IS(decltype(loaded), wide_value_type);
+  //auto loaded = eve::load(zip_a_u{});
+  TTS_TYPE_IS(decltype(eve::load(zip_a_u{})), wide_value_type);
 }

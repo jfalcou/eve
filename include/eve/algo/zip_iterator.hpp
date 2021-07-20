@@ -57,7 +57,7 @@ namespace eve::algo
     // data_source requirement
     auto operator*() const
     {
-      return kumi::map( []<typename P>(P p) { return p.ptr == nullptr ? typename P::value_type{} : *p; }, storage );
+      return kumi::map( [](auto p) { return *p; }, storage );
     }
 
     auto previous_partially_aligned() const
