@@ -29,7 +29,9 @@ namespace eve::detail
   {};
 
   template<data_source Ptr>
-  struct wide_value_type<Ptr> : as_wide<typename pointer_traits<Ptr>::value_type>
+  struct wide_value_type<Ptr> : as_wide < typename pointer_traits<Ptr>::value_type
+                                        , typename pointer_cardinal<Ptr>::type
+                                        >
   {};
 
   template<data_source Ptr, typename Cardinal = void>
@@ -230,7 +232,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(cpu_), C const& c, safe_type const&
                                   , eve::as<wide<T, N>> const &, Ptr ptr
                                   ) noexcept
-  requires(std::same_as<abi_t<T, N>, bundle_>)
+  requires(std::same_as<abi_t<T, N>, bundle_> && kumi::product_type<Ptr>)
   {
     wide<T, N> that;
     kumi::for_each( [=]<typename M>(M& m, auto p) { m = load(c,safe,as<M>{},p); }

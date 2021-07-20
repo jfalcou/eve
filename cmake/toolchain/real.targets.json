@@ -1,4 +1,3 @@
 {
-  "unit.real.exe": "^unit.real.*.exe",
-  "unit.algo.exe": "^unit.algo\\..*\\.exe"
+  "unit.real.exe": "^unit.real.*.exe"
  }

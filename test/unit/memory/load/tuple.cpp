@@ -53,6 +53,7 @@ EVE_TEST_TYPES( "Check load behavior with tuple of pointers", eve::test::scalar:
                               , eve::as_aligned(&data2[idx2],typename w8_t::cardinal_type{})
                               );
 
+
   w_t constructed(src);
   TTS_EQUAL(constructed                   , reference   );
   TTS_EQUAL(eve::load(src)                , reference   );

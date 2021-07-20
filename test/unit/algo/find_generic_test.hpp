@@ -48,7 +48,7 @@ namespace algo_test
     using card_t  = eve::fixed<4096/ sizeof(e_t)>;
     std::vector<e_t, eve::aligned_allocator<e_t, card_t>> page(card_t::value, e_t{0});
 
-    constexpr int elements_to_test  = std::min(T::size() * 10, 300l);
+    constexpr int elements_to_test  = std::min(int(T::size() * 10), 300);
 
     auto f = page.data();
     auto l = f + elements_to_test;
