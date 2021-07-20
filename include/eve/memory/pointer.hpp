@@ -45,7 +45,7 @@ namespace eve
   };
 
   template<typename Ptr, typename... Ptrs>
-  struct pointer_traits<kumi::tuple<Ptr, Ptrs...>> : pointer_cardinal<Ptr>
+  struct pointer_cardinal<kumi::tuple<Ptr, Ptrs...>> : pointer_cardinal<Ptr>
   {
   };
 }
