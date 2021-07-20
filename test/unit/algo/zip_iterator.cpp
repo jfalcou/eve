@@ -24,7 +24,7 @@ TTS_CASE("zip_iterator, sanity check, types test")
   using zip_a_u = eve::algo::zip_iterator<aligned_float,   unaligned_short>;
   using zip_u_u = eve::algo::zip_iterator<unaligned_float, unaligned_short>;
 
-  using wide_value_type = eve::wide<kumi::tuple<float, short>>;
+  using wide_value_type = eve::wide<kumi::tuple<float, short>, eve::fixed<8>>;
 
   // CTAD
   eve::algo::zip_iterator zi {unaligned_float{}, aligned_short{}};

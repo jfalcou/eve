@@ -29,7 +29,9 @@ namespace eve::detail
   {};
 
   template<data_source Ptr>
-  struct wide_value_type<Ptr> : as_wide<typename pointer_traits<Ptr>::value_type>
+  struct wide_value_type<Ptr> : as_wide < typename pointer_traits<Ptr>::value_type
+                                        , typename pointer_cardinal<Ptr>::type
+                                        >
   {};
 
   template<data_source Ptr, typename Cardinal = void>

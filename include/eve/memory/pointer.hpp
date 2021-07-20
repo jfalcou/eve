@@ -14,14 +14,14 @@
 
 namespace eve
 {
-  template<typename T, typename Enable=void>
-  struct pointer_traits {};
+  template<typename T> struct pointer_traits;
 
   template<typename T> struct pointer_traits<T*>        { using value_type = T; };
   template<typename T> struct pointer_traits<T const*>  { using value_type = T; };
 
   template<typename T>
-  struct pointer_traits<T, std::void_t<typename T::value_type>>
+  requires requires { typename T::value_type; }
+  struct pointer_traits<T>
   {
     using value_type = typename T::value_type;
   };
@@ -30,6 +30,23 @@ namespace eve
   struct pointer_traits<kumi::tuple<Ptrs...>>
   {
     using value_type = kumi::tuple<typename pointer_traits<Ptrs>::value_type...>;
+  };
+
+  template<typename T> struct pointer_cardinal;
+
+  template<typename T> struct pointer_cardinal<T*>        : expected_cardinal<T> {};
+  template<typename T> struct pointer_cardinal<T const*>  : expected_cardinal<T> {};
+
+  template<typename T>
+  requires requires { typename T::cardinal; }
+  struct pointer_cardinal<T>
+  {
+    using type = typename T::cardinal;
+  };
+
+  template<typename Ptr, typename... Ptrs>
+  struct pointer_traits<kumi::tuple<Ptr, Ptrs...>> : pointer_cardinal<Ptr>
+  {
   };
 }
 
