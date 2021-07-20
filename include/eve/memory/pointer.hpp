@@ -32,10 +32,9 @@ namespace eve
     using value_type = kumi::tuple<typename pointer_traits<Ptrs>::value_type...>;
   };
 
-  template<typename T> struct pointer_cardinal {};
-
-  template<typename T> struct pointer_cardinal<T*>        : expected_cardinal<T> {};
-  template<typename T> struct pointer_cardinal<T const*>  : expected_cardinal<T> {};
+  template<typename T>
+  struct pointer_cardinal : expected_cardinal<typename pointer_traits<T>::value_type>
+  {};
 
   template<typename T>
   requires requires { typename T::cardinal; }
