@@ -108,3 +108,22 @@ EVE_TEST( "Check behavior of fnms on all types full range"
   TTS_ULP_EQUAL(eve::pedantic(fnms)((a0), (a1), (a2)), map([&](auto e , auto f, auto g) -> v_t { return eve::pedantic(fnms)(e, f, g); }, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::numeric(fnms)((a0), (a1), (a2)), map([&](auto e , auto f, auto g) -> v_t { return eve::pedantic(fnms)(e, f, g); }, a0, a1, a2), 2);
 };
+
+//==================================================================================================
+// fnms masked
+//==================================================================================================
+EVE_TEST( "Check behavior of fnms on all types full range"
+        , eve::test::simd::all_types
+        , eve::test::generate (  eve::test::randoms(eve::valmin, eve::valmax)
+                              ,  eve::test::randoms(eve::valmin, eve::valmax)
+                              ,  eve::test::randoms(eve::valmin, eve::valmax)
+                              ,  eve::test::logicals(0, 3)
+                              )
+        )
+<typename T, typename M>(  T const& a0, T const& a1, T const& a2, M const & t)
+{
+  using eve::as;
+  using eve::fnms;
+
+  TTS_IEEE_EQUAL(fnms[t](a0, a1, a2), eve::if_else(t,fnms[t](a0, a1, a2), a0));
+};

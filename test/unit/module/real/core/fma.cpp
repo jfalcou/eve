@@ -14,6 +14,7 @@
 #include <eve/function/fma.hpp>
 #include <eve/function/pedantic/fma.hpp>
 #include <eve/function/numeric/fma.hpp>
+#include <eve/function/if_else.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/round.hpp>
@@ -108,4 +109,23 @@ EVE_TEST( "Check behavior of fma on all types full range"
   }
   TTS_ULP_EQUAL(eve::pedantic(fma)((a0), (a1), (a2)), map([&](auto e , auto f, auto g) -> v_t { return eve::pedantic(fma)(e, f, g); }, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::numeric(fma)((a0), (a1), (a2)), map([&](auto e , auto f, auto g) -> v_t { return eve::pedantic(fma)(e, f, g); }, a0, a1, a2), 2);
+};
+
+//==================================================================================================
+// fma masked
+//==================================================================================================
+EVE_TEST( "Check behavior of fma on all types full range"
+        , eve::test::simd::all_types
+        , eve::test::generate (  eve::test::randoms(eve::valmin, eve::valmax)
+                              ,  eve::test::randoms(eve::valmin, eve::valmax)
+                              ,  eve::test::randoms(eve::valmin, eve::valmax)
+                              ,  eve::test::logicals(0, 3)
+                              )
+        )
+<typename T, typename M>(  T const& a0, T const& a1, T const& a2, M const & t)
+{
+  using eve::as;
+  using eve::fma;
+
+  TTS_IEEE_EQUAL(fma[t](a0, a1, a2), eve::if_else(t,fma[t](a0, a1, a2), a0));
 };

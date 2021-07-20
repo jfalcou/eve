@@ -36,4 +36,14 @@ namespace eve::detail
   {
     return -fma(a, b, c);
   }
+
+  //================================================================================================
+  // Masked case
+  //================================================================================================
+  template<conditional_expr C, real_value T, real_value U, real_value V>
+  EVE_FORCEINLINE auto fnms_(EVE_SUPPORTS(cpu_), C const &cond, T const &a, U const &b, V const &c) noexcept
+  requires properly_convertible<U, V, T>
+  {
+    return mask_op(  cond, eve::fnms, a, b, c);
+  }
 }

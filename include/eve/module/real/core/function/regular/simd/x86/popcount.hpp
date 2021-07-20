@@ -127,4 +127,83 @@ namespace eve::detail
       }
     }
   }
+
+  /////////////////////////////////////////////////////////////////////////////
+  // avx512
+  template<integral_scalar_value T,  typename N>
+  EVE_FORCEINLINE auto popcount_(EVE_SUPPORTS(avx512_), wide<T, N>  v) noexcept
+      requires x86_abi<abi_t<T, N>>
+  {
+    using r_t = wide<as_integer_t<T, unsigned>, N>;
+    constexpr auto c = categorize<wide<T, N>>();
+          if constexpr(c == category::int64x8   ) return r_t(_mm512_popcnt_epi64(v));
+    else  if constexpr(c == category::int64x4   ) return r_t(_mm256_popcnt_epi64(v));
+    else  if constexpr(c == category::int64x2   ) return r_t(_mm_popcnt_epi64   (v));
+    else  if constexpr(c == category::int32x16  ) return r_t(_mm512_popcnt_epi32(v));
+    else  if constexpr(c == category::int32x8   ) return r_t(_mm256_popcnt_epi32(v));
+    else  if constexpr(c == category::int32x4   ) return r_t(_mm_popcnt_epi32   (v));
+    else  if constexpr(c == category::int16x32  ) return r_t(_mm512_popcnt_epi16(v));
+    else  if constexpr(c == category::int16x16  ) return r_t(_mm256_popcnt_epi16(v));
+    else  if constexpr(c == category::int16x8   ) return r_t(_mm_popcnt_epi16   (v));
+    else  if constexpr(c == category::int8x64   ) return r_t(_mm512_popcnt_epi8 (v));
+    else  if constexpr(c == category::int8x32   ) return r_t(_mm256_popcnt_epi8 (v));
+    else  if constexpr(c == category::int8x16   ) return r_t(_mm_popcnt_epi8    (v));
+    else  if constexpr(c == category::uint64x8  ) return r_t(_mm512_popcnt_epi64(v));
+    else  if constexpr(c == category::uint64x4  ) return r_t(_mm256_popcnt_epi64(v));
+    else  if constexpr(c == category::uint64x2  ) return r_t(_mm_popcnt_epi64   (v));
+    else  if constexpr(c == category::uint32x16 ) return r_t(_mm512_popcnt_epi32(v));
+    else  if constexpr(c == category::uint32x8  ) return r_t(_mm256_popcnt_epi32(v));
+    else  if constexpr(c == category::uint32x4  ) return r_t(_mm_popcnt_epi32   (v));
+    else  if constexpr(c == category::uint16x32 ) return r_t(_mm512_popcnt_epi16(v));
+    else  if constexpr(c == category::uint16x16 ) return r_t(_mm256_popcnt_epi16(v));
+    else  if constexpr(c == category::uint16x8  ) return r_t(_mm_popcnt_epi16   (v));
+    else  if constexpr(c == category::uint8x64  ) return r_t(_mm512_popcnt_epi8 (v));
+    else  if constexpr(c == category::uint8x32  ) return r_t(_mm256_popcnt_epi8 (v));
+    else  if constexpr(c == category::uint8x16  ) return r_t(_mm_popcnt_epi8    (v));
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, integral_scalar_value T, typename N>
+  EVE_FORCEINLINE
+  auto popcount_(EVE_SUPPORTS(sse2_), C const &cx, wide<T, N> const &v) noexcept
+      requires x86_abi<abi_t<T, N>>
+  {
+    using r_t = wide<as_integer_t<T, unsigned>, N>;
+    constexpr auto c = categorize<wide<T, N>>();
+
+    if constexpr( C::is_complete || abi_t<T, N>::is_wide_logical )
+    {
+      return popcount_(EVE_RETARGET(cpu_),cx,v);
+    }
+    else
+    {
+      auto src  = alternative(cx,v,as<wide<T, N>>{});
+      auto m    = expand_mask(cx,as<wide<T, N>>{}).storage().value;
+            if constexpr(c == category::int64x8   ) return r_t(_mm512_mask_popcnt_epi64(src,m,v));
+      else  if constexpr(c == category::int64x4   ) return r_t(_mm256_mask_popcnt_epi64(src,m,v));
+      else  if constexpr(c == category::int64x2   ) return r_t(_mm_mask_popcnt_epi64   (src,m,v));
+      else  if constexpr(c == category::int32x16  ) return r_t(_mm512_mask_popcnt_epi32(src,m,v));
+      else  if constexpr(c == category::int32x8   ) return r_t(_mm256_mask_popcnt_epi32(src,m,v));
+      else  if constexpr(c == category::int32x4   ) return r_t(_mm_mask_popcnt_epi32   (src,m,v));
+      else  if constexpr(c == category::int16x32  ) return r_t(_mm512_mask_popcnt_epi16(src,m,v));
+      else  if constexpr(c == category::int16x16  ) return r_t(_mm256_mask_popcnt_epi16(src,m,v));
+      else  if constexpr(c == category::int16x8   ) return r_t(_mm_mask_popcnt_epi16   (src,m,v));
+      else  if constexpr(c == category::int8x64   ) return r_t(_mm512_mask_popcnt_epi8 (src,m,v));
+      else  if constexpr(c == category::int8x32   ) return r_t(_mm256_mask_popcnt_epi8 (src,m,v));
+      else  if constexpr(c == category::int8x16   ) return r_t(_mm_mask_popcnt_epi8    (src,m,v));
+      else  if constexpr(c == category::uint64x8  ) return r_t(_mm512_mask_popcnt_epi64(src,m,v));
+      else  if constexpr(c == category::uint64x4  ) return r_t(_mm256_mask_popcnt_epi64(src,m,v));
+      else  if constexpr(c == category::uint64x2  ) return r_t(_mm_mask_popcnt_epi64   (src,m,v));
+      else  if constexpr(c == category::uint32x16 ) return r_t(_mm512_mask_popcnt_epi32(src,m,v));
+      else  if constexpr(c == category::uint32x8  ) return r_t(_mm256_mask_popcnt_epi32(src,m,v));
+      else  if constexpr(c == category::uint32x4  ) return r_t(_mm_mask_popcnt_epi32   (src,m,v));
+      else  if constexpr(c == category::uint16x32 ) return r_t(_mm512_mask_popcnt_epi16(src,m,v));
+      else  if constexpr(c == category::uint16x16 ) return r_t(_mm256_mask_popcnt_epi16(src,m,v));
+      else  if constexpr(c == category::uint16x8  ) return r_t(_mm_mask_popcnt_epi16   (src,m,v));
+      else  if constexpr(c == category::uint8x64  ) return r_t(_mm512_mask_popcnt_epi8 (src,m,v));
+      else  if constexpr(c == category::uint8x32  ) return r_t(_mm256_mask_popcnt_epi8 (src,m,v));
+      else  if constexpr(c == category::uint8x16  ) return r_t(_mm_mask_popcnt_epi8    (src,m,v));
+    }
+  }
 }
