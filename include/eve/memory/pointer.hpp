@@ -43,10 +43,10 @@ namespace eve
     using type = typename T::cardinal;
   };
 
-  template<typename... Ptr>
+/*  template<typename... Ptr>
   struct pointer_cardinal<kumi::tuple<Ptr...>> : expected_cardinal<kumi::tuple<Ptr...>>
   {
-  };
+  };*/
 
   template<typename Type, typename Lanes>
   struct  pointer_cardinal<eve::aligned_ptr<Type, Lanes>> : expected_cardinal<Type>
