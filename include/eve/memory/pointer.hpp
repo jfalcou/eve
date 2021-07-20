@@ -14,7 +14,7 @@
 
 namespace eve
 {
-  template<typename T> struct pointer_traits;
+  template<typename T> struct pointer_traits {};
 
   template<typename T> struct pointer_traits<T*>        { using value_type = T; };
   template<typename T> struct pointer_traits<T const*>  { using value_type = T; };
@@ -32,7 +32,7 @@ namespace eve
     using value_type = kumi::tuple<typename pointer_traits<Ptrs>::value_type...>;
   };
 
-  template<typename T> struct pointer_cardinal;
+  template<typename T> struct pointer_cardinal {};
 
   template<typename T> struct pointer_cardinal<T*>        : expected_cardinal<T> {};
   template<typename T> struct pointer_cardinal<T const*>  : expected_cardinal<T> {};
