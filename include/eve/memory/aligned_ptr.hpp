@@ -48,9 +48,6 @@ namespace eve
 #endif
   struct aligned_ptr
   {
-    //! The number of lanes loaded from the held pointer
-    using cardinal = Lanes;
-
     //! The value type associated to the held pointer
     using value_type = std::remove_const_t<Type>;
 

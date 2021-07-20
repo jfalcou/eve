@@ -26,8 +26,9 @@ using tuple_t = kumi::tuple<std::int8_t,T,double>;
 EVE_TEST_TYPES( "Check load behavior with tuple of pointers", eve::test::scalar::all_types)
 <typename T>(eve::as<T>)
 {
-  using s_t  = tuple_t<T>;
-  using w_t  = eve::wide<tuple_t<T>, eve::fixed<8>>;
+  using s_t   = tuple_t<T>;
+  using w_t   = eve::wide<tuple_t<T>>;
+  using w8_t  = eve::wide<tuple_t<T>, eve::fixed<8>>;
 
   auto const filler = [](auto i, auto)  { return s_t{ static_cast<std::int8_t>(1+i)
                                                     , static_cast<T>(i)
@@ -35,26 +36,27 @@ EVE_TEST_TYPES( "Check load behavior with tuple of pointers", eve::test::scalar:
                                                     };
                                         };
 
-  w_t  reference  = filler;
+  w_t   reference   = filler;
+  w8_t  reference8  = filler;
 
   auto il         = eve::ignore_last(w_t::size()/4);
-  auto ireference = w_t{kumi::map( [=]<typename M>(M m){ return m & il.mask(eve::as(m)).mask(); }
-                                  , reference.storage()
-                                  )};
+  auto ireference = w_t{kumi::map ( [=]<typename M>(M m){ return m & il.mask(eve::as(m)).mask(); }
+                              , reference.storage()
+                              )};
 
-  auto [data0,idx0] = page<std::int8_t  , typename w_t::cardinal_type >();
-  auto [data1,idx1] = page<T            , typename w_t::cardinal_type >();
-  auto [data2,idx2] = page<double       , typename w_t::cardinal_type >();
+  auto [data0,idx0] = page<std::int8_t  , typename w8_t::cardinal_type >();
+  auto [data1,idx1] = page<T            , typename w8_t::cardinal_type >();
+  auto [data2,idx2] = page<double       , typename w8_t::cardinal_type >();
 
-  auto src = kumi::make_tuple ( eve::as_aligned(&data0[idx0],typename w_t::cardinal_type{})
+  auto src = kumi::make_tuple ( eve::as_aligned(&data0[idx0],typename w8_t::cardinal_type{})
                               , &data1[idx1] - 1
-                              , eve::as_aligned(&data2[idx2],typename w_t::cardinal_type{})
+                              , eve::as_aligned(&data2[idx2],typename w8_t::cardinal_type{})
                               );
 
   w_t constructed(src);
-  TTS_EQUAL(constructed                   , reference  );
-  TTS_EQUAL(eve::load(src)                , reference  );
-  TTS_EQUAL(eve::load(src, eve::lane<8>)  , reference  );
+  TTS_EQUAL(constructed                   , reference   );
+  TTS_EQUAL(eve::load(src)                , reference   );
+  TTS_EQUAL(eve::load(src, eve::lane<8>)  , reference8  );
 
   auto loaded = eve::load[il](src);
   eve::for_each( [=]<typename M>(M& m){ m &= il.mask(eve::as(m)).mask(); }, loaded);
