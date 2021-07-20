@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var sqr
   //!
-  //! @brief Callable object performing the computation of the sqr operation.
+  //! @brief Callable object computing the sqr operation.
   //!
   //! **Required header:** `#include <eve/function/sqr.hpp>`
   //!
@@ -65,7 +65,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `saturated`
   //!
   //!     **Required header:**  #include <eve/function/saturated/sqr.hpp>

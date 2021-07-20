@@ -17,7 +17,7 @@ namespace eve
   //! @{
   //! @var log2
   //!
-  //! @brief Callable object performing the computation of the base 2 logarithm.
+  //! @brief Callable object computing the base 2 logarithm: \f$\log_2 x\f$.
   //!
   //! **Required header:** `#include <eve/function/log2.hpp>`
   //!
@@ -68,11 +68,10 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/log2.hpp>
-  //!  
+  //!
   //!     The expression `diff(log2)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example

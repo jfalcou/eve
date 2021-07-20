@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var asinh
   //!
-  //! @brief Callable object performing the computation of asinh.
+  //! @brief Callable object computing asinh: \f$\log(x+\sqrt{x^2+1})\f$.
   //!
   //! **Required header:** `#include <eve/function/asinh.hpp>`
   //!
@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(floating_value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -68,11 +68,10 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/asinh.hpp>
-  //!  
+  //!
   //!     The expression `diff(asinh)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example

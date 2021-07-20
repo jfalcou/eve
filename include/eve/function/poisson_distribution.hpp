@@ -17,7 +17,7 @@
   //! @{
   //! @var poisson_distribution
   //!
-  //! @brief Callable object performing the computation of   //!  description NOT FOUND.
+  //! @brief Callable object computing   //!  description NOT FOUND.
   //!
   //! **Required header:** `#include <eve/function/poisson_distribution.hpp>`
   //!

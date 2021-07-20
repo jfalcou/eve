@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var bit_notand
   //!
-  //! @brief Callable object performing the computation of the bitwise NOTAND operation.
+  //! @brief Callable object computing the bitwise NOTAND operation.
   //!
   //! **Required header:** `#include <eve/function/bit_notand.hpp>`
   //!

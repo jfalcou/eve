@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var sech
   //!
-  //! @brief Callable object performing the computation of sech.
+  //! @brief Callable object computing sech: \f$\frac2{e^x-e^{-x}}\f$.
   //!
   //! **Required header:** `#include <eve/function/sech.hpp>`
   //!
@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(floating_value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -67,11 +67,10 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/sech.hpp>
-  //!  
+  //!
   //!     The expression `diff(sech)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example

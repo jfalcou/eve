@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var inc
   //!
-  //! @brief Callable object performing the computation of the inc unary operation.
+  //! @brief Callable object computing the inc unary operation.
   //!
   //! **Required header:** `#include <eve/function/inc.hpp>`
   //!
@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T > auto operator()( T x ) const noexcept;
+  //!  auto operator()( value auto x ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**

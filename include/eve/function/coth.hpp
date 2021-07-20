@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var coth
   //!
-  //! @brief Callable object performing the computation of coth.
+  //! @brief Callable object computing coth: \f$\frac{e^x+e^{-x}}{e^x-e^{-x}}\f$.
   //!
   //! **Required header:** `#include <eve/function/coth.hpp>`
   //!
@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(floating_value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -67,11 +67,10 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/coth.hpp>
-  //!  
+  //!
   //!     The expression `diff(coth)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example

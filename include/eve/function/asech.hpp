@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var asech
   //!
-  //! @brief Callable object performing the computation of asech.
+  //! @brief Callable object computing asech: \f$\log(1/x+\sqrt{1/x^2-1})\f$.
   //!
   //! **Required header:** `#include <eve/function/asech.hpp>`
   //!
@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(floating_value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -68,11 +68,10 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/asech.hpp>
-  //!  
+  //!
   //!     The expression `diff(asech)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example

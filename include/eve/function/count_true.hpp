@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var count_true
   //!
-  //! @brief Callable object performing the computation of the computation of the count_true value.
+  //! @brief Callable object computing the count_true value.
   //!
   //! **Required header:** `#include <eve/function/count_true.hpp>`
   //!
@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**

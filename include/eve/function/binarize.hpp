@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var binarize
   //!
-  //! @brief Callable object performing the computation of the computation of the binarize operation.
+  //! @brief Callable object computing the binarize operation.
   //!
   //! **Required header:** `#include <eve/function/binarize.hpp>`
   //!
@@ -46,10 +46,12 @@ namespace eve
   //!logical<T> r = binarize(c,v);
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //!computation is semantically  equivalent to:
+  //!is semantically  equivalent to:
+  //!
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
   //!T r = if_else(c, T(v), T(0);
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var two_add
   //!
-  //! @brief Callable object performing the computation of the two_add operation.
+  //! @brief Callable object computing the two_add operation.
   //!
   //! **Required header:** `#include <eve/function/two_add.hpp>`
   //!
@@ -25,7 +25,6 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the two_add operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -42,24 +41,9 @@ namespace eve
   //!computes [element-wise](../../../glossary.html#element-wise_) a pair of values `[a,e]` such that:
   //!
   //!* `a` is `x+y`
-  //!* `e` is a value such that `a`$\oplus$`e` is equal to `x`$\oplus$`y`
+  //!* `e` is a value such that `a`\f$\oplus\f$`e` is equal to `x`\f$\oplus\f$`y`
   //!
-  //!where $\oplus$ adds its two parameters with infinite precision.
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::two_add
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `two_add[cond](x, ...)` is equivalent to `if_else(cond,two_add(x, ...),x)`
+  //!where \f$\oplus\f$ adds its two parameters with infinite precision.
   //!
   //! ---
   //!

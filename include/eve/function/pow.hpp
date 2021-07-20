@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var pow
   //!
-  //! @brief Callable object performing the computation of the pow operation.
+  //! @brief Callable object computing the pow operation \f$x^y\f$.
   //!
   //! **Required header:** `#include <eve/function/pow.hpp>`
   //!
@@ -87,11 +87,10 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/pow.hpp>
-  //!  
+  //!
   //!     The expression `diff_1st(pow)(x,y)` and `diff_2nd(pow)(x,y)` computes the partial
   //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ x^y\f$.
   //!

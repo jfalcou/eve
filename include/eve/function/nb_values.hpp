@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var nb_values
   //!
-  //! @brief Callable object performing the computation of the nb_values operation.
+  //! @brief Callable object computing the nb_values operation.
   //!
   //! **Required header:** `#include <eve/function/nb_values.hpp>`
   //!
@@ -25,7 +25,6 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the nb_values operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -39,22 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!computes the number of values representable in the type in the interval `[x`, `y[`
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::nb_values
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `nb_values[cond](x, ...)` is equivalent to `if_else(cond,nb_values(x, ...),x)`
+  //!computes the number of values representable in the type in the interval `[x, y[`
   //!
   //! ---
   //!

@@ -17,7 +17,7 @@ namespace eve
   //! @{
   //! @var mul
   //!
-  //! @brief Callable object performing the computation of the mul operation.
+  //! @brief Callable object computing the mul operation.
   //!
   //! **Required header:** `#include <eve/function/mul.hpp>`
   //!
@@ -49,7 +49,7 @@ namespace eve
   //! is an  [simd value](../../concepts.html#value).
   //!
   //!@warning
-  //!   Although the infix notation with `*` is supported, the `*` operator on
+  //!   Although the infix notation with `*` is supported for two parameters, the `*` operator on
   //!   standard scalar type is the original one and so can lead to automatic promotion.
   //!
   //! ---
@@ -72,42 +72,27 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `saturated`
   //!
   //!     **Required header:**  #include <eve/function/saturated/mul.hpp>
-  //!  
-  //!     The call `saturated(mul)(x, args...)` computes the saturated  multiplication of `x` and `y`. The saturation is obtained in the
-  //!       [compatibility result](../../concept.html#compatibility) of the two parameters. No overflow occurs.
-  //!  
+  //!
+  //!     The call `saturated(mul)(x, args...)` computes the saturated  multiplication of `x` and `args...`. The saturation is obtained in the
+  //!     [compatibility result](../../concept.html#compatibility) of the N parameters. The computation is done as if all arguments were
+  //!     converted to this type and the saturated multiplication applied recursively on all parameters. No overflow occurs.
+  //!
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/mul.hpp>
-  //!  
+  //!
   //!     The expression `diff_< N >(mul)(x,args,...)` computes the partial
   //!      diff of the function relative to the Nth parameter.
-  //!  
+  //!
   //!      If the actual parameters are \f$x_1, ... x_n\f$ the value returned is
   //!      \f$\prod_{i \neq N} x_i\f$ if \f$1\le N \le n\f$ otherwise 0.
-  //!  
-  //!  !!! Warning
-  //!      This is only available for floating point entries.
-  //!  
-  //!  Masked calls
-  //!  ====================================================================================================
-  //!   The [masked](../../../tutorial/masking.html) calls `mul[cond](x,y)` and `saturated(mul[cond])(x,y)` where `cond` satisfies the
-  //!   [conditionnal-expression](../../concepts.html#conditionnal) requirements are supported.
-  //!  
-  //!   More precisely, if `cond` is
-  //!   a mere [logical value](../../concepts.html#value) these expressions compute the multiplication
-  //!   (resp the saturated  multiplication) of `x` and `y`
-  //!   if the condition `cond` is satisfied else returns  `x`. The calls are respectively equivalent to :
-  //!  
-  //!   *  `if_else(cond, mul(x,y),x)`,
-  //!   *  `if_else(cond, saturated(mul)(x,y),x)`;
-  //!  
-  //!  !!! Warning
-  //!      This is only available for two parameters.
+  //!
+  //!      @warning
+  //!        This is only available for floating point entries.
+  //!
   //!
   //! #### Example
   //!

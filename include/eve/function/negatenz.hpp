@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var negatenz
   //!
-  //!  @brief Callable object performing the computation of the negatenz function.
+  //!  @brief Callable object computing the negatenz function.
   //!
   //! **Required header:** `#include <eve/function/negatenz.hpp>`
   //!
@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T > auto operator()( T x ) const noexcept;
+  //!  auto operator()( value auto x, value auto y ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -47,7 +47,7 @@ namespace eve
   //!  auto operator[]( conditional_expression auto cond ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //!  Higher-order function generating a masked version of eve::negaten
+  //!  Higher-order function generating a masked version of eve::negatenz
   //!
   //!  **Parameters**
   //!
@@ -64,7 +64,7 @@ namespace eve
   //!    [`diff`](../decorators.html#diff)
   //!:   **Required header:** `#include <eve/function/diff/negatenz.hpp>`
   //!
-  //!    The expression `diff(negatenz)(x)` computes the derivative of the function at `x`.
+  //!    The expression `diff(negatenz)(x)` computes the derivative of the function relative to `x`.
   //!
   //!  no decorators are supported
   //!

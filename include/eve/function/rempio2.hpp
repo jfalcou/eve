@@ -19,7 +19,7 @@ namespace eve
   //! @{
   //! @var rempio2
   //!
-  //! @brief Callable object performing the computation of the computation of the rempio2 value.
+  //! @brief Callable object computing the rempio2 value.
   //!
   //! **Required header:** `#include <eve/function/rempio2.hpp>`
   //!
@@ -28,7 +28,6 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the computation of the rempio2 value   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -44,22 +43,6 @@ namespace eve
   //!
   //!A tuple consisting of an flint value  designing the quadrant an two floating values of type T giving
   //!the remainder of `x` modulo $\pi/2$ and a corrective to the rounding erreor on the first result.
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::rempio2
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `rempio2[cond](x, ...)` is equivalent to `if_else(cond,rempio2(x, ...),x)`
-  //!
   //! ---
   //!
   //! #### Supported decorators

@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var geommean
   //!
-  //! @brief Callable object performing the computation of the mid-point operation.
+  //! @brief Callable object computing the mid-point operation.
   //!
   //! **Required header:** `#include <eve/function/geommean.hpp>`
   //!
@@ -73,7 +73,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff_nth`
   //!
   //!     **Required header:**  #include <eve/function/diff/geommean.hpp>

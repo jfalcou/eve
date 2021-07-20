@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var rsqrt
   //!
-  //! @brief Callable object performing the computation of the inverse of the square root.
+  //! @brief Callable object computing the inverse of the square root.
   //!
   //! **Required header:** `#include <eve/function/rsqrt.hpp>`
   //!
@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(floating_value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**

@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var bit_andnot
   //!
-  //! @brief Callable object performing the computation of the bitwise ANDNOT operation.
+  //! @brief Callable object computing the bitwise ANDNOT operation.
   //!
   //! **Required header:** `#include <eve/function/bit_andnot.hpp>`
   //!

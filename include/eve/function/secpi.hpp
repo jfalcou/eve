@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var secpi
   //!
-  //! @brief Callable object performing the computation of secpi.
+  //! @brief Callable object computing secpi.
   //!
   //! **Required header:** `#include <eve/function/secpi.hpp>`
   //!
@@ -25,12 +25,11 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the  computation of secpi   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(floating_value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -41,7 +40,7 @@ namespace eve
   //!
   //!Returns the [element-wise](../../../glossary.html#elment-wise) secine of the input expressed in \f$\pi\f$ multiples.
   //!
-  //!The call `secpi(x)` is semantically equivalent to \f$sec(\pi x)\f$.
+  //!The call `secpi(x)` is semantically equivalent to \f$\sec(\pi x)\f$.
   //!In particular:
   //!
   //!   * If the element is \f$\pm0\f$, \f$1\f$ is returned.
@@ -50,32 +49,15 @@ namespace eve
   //!
   //! ---
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::secpi
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `secpi[cond](x, ...)` is equivalent to `if_else(cond,secpi(x, ...),x)`
-  //!
-  //! ---
-  //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  As all direct trigonometric functions, `secpi` supports the restricted, small, medium and big decorators. Click
   //!  to see the [properties and rationale](../trigonometric.html)
-  //!  
+  //!
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/secpi.hpp>
-  //!  
+  //!
   //!     The expression `diff(secpi)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example

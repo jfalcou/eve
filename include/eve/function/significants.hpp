@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var significants
   //!
-  //! @brief Callable object performing the computation of the significants operation.
+  //! @brief Callable object computing the significants operation.
   //!
   //! **Required header:** `#include <eve/function/significants.hpp>`
   //!

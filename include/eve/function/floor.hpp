@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var floor
   //!
-  //! @brief Callable object performing the computation of the floor operation.
+  //! @brief Callable object computing the floor operation.
   //!
   //! **Required header:** `#include <eve/function/floor.hpp>`
   //!
@@ -61,7 +61,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `tolerant`
   //!
   //!     **Required header:**  #include <eve/function/tolerant/floor.hpp>

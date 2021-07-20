@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var nextafter
   //!
-  //! @brief Callable object performing the computation of the nextafter operation.
+  //! @brief Callable object computing the nextafter operation.
   //!
   //! **Required header:** `#include <eve/function/nextafter.hpp>`
   //!
@@ -25,7 +25,6 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the nextafter operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -40,21 +39,6 @@ namespace eve
   //! **Return value**
   //!
   //!computes [`element-wise`](../../../glossary.html#element-wise), representable value next to `x` in the direction of `y`.
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::nextafter
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `nextafter[cond](x, ...)` is equivalent to `if_else(cond,nextafter(x, ...),x)`
   //!
   //! ---
   //!

@@ -1,4 +1,3 @@
-//==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
@@ -16,7 +15,7 @@ namespace eve
   //! @{
   //! @var is_negative
   //!
-  //! @brief Callable object performing the computation of the computation of the is_negative logical value.
+  //! @brief Callable object computing the is_negative logical value.
   //!
   //! **Required header:** `#include <eve/function/is_negative.hpp>`
   //!
@@ -25,7 +24,6 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the computation of the is_negative logical value   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -44,24 +42,9 @@ namespace eve
   //!
   //!@warning
   //!   this function coincides with `is_ltz` on [integral real values](../../concepts.html#value),
-  //!   but for [floating real values](../../concepts.html#value) `T`, `is_negative(Mzero<`T`>)` is true and
+  //!   but for [floating real values](../../concepts.html#value) `T`, `is_negative(mzero<`T`>)` is true and
   //!   if `n` is a Nan the result depends of the bit of sign of `n` which can be out of control although
   //!   not undefined.
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::is_negative
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_negative[cond](x, ...)` is equivalent to `if_else(cond,is_negative(x, ...),x)`
   //!
   //! ---
   //!

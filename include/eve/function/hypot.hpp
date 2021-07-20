@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var hypot
   //!
-  //! @brief Callable object performing the computation of the hypot operation.
+  //! @brief Callable object computing the hypot operation.
   //!
   //! **Required header:** `#include <eve/function/hypot.hpp>`
   //!
@@ -62,7 +62,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `pedantic`
   //!
   //!     **Required header:**  #include <eve/function/pedantic/hypot.hpp>

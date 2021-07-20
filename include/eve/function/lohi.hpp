@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var lohi
   //!
-  //! @brief Callable object performing the computation of the computation of the lohi pair of values.
+  //! @brief Callable object computing the lohi pair of values.
   //!
   //! **Required header:** `#include <eve/function/lohi.hpp>`
   //!
@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(floating_value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**

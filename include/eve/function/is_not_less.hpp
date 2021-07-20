@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var is_not_less
   //!
-  //! @brief Callable object performing the computation of the "not less than" predicate.
+  //! @brief Callable object computing the "not less than" predicate.
   //!
   //! **Required header:** `#include <eve/function/is_not_less.hpp>`
   //!
@@ -25,7 +25,6 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the "not less than" predicate   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -46,33 +45,16 @@ namespace eve
   //!
   //! ---
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::is_not_less
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_not_less[cond](x, ...)` is equivalent to `if_else(cond,is_not_less(x, ...),x)`
-  //!
-  //! ---
-  //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `almost`
   //!
-  //!     **Required header:**  #include <eve/function/almost/is_not_less.hpp>
-  //!  
+  //!     **Required header:**  #include <eve/function/fuzzy/is_not_less.hpp>
+  //!
   //!     The expression `almost(is_not_less)(x, y, t)` where `x` and `y` must be
   //!      floating point values, evals to true if and only if and only if `x` is not almost less than `y`.
   //!      This means that the pair `x, y` is unordered or:
-  //!  
+  //!
   //!      - if `t` is a floating_value then  \f$(x \ge y - t \max(|x|, |y|))\f$
   //!      - if `t` is a positive integral_value then \f$(x \ge \mbox{prev}(y, t)\f$;
   //!      - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.

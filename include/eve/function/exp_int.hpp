@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var exp_int
   //!
-  //! @brief Callable object performing the computation of the exponential integral \f$\displaystyle \mbox{E}_{n}(x)=\int_0^\infty \frac{e^{-xt}}{t^{n}} \mbox{d}t\f$.
+  //! @brief Callable object computing the exponential integral \f$\displaystyle \mbox{E}_{n}(x)=\int_0^\infty \frac{e^{-xt}}{t^{n}} \mbox{d}t\f$.
   //!
   //! **Required header:** `#include <eve/function/exp_int.hpp>`
   //!
@@ -65,7 +65,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/exp_int.hpp>

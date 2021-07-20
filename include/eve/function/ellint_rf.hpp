@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var ellint_rf
   //!
-  //! @brief Callable object performing the computation of the Carlson's elliptic integral
+  //! @brief Callable object computing the Carlson's elliptic integral
   //!        \f$\frac12 \int_{0}^{\infty} \scriptstyle[(t+x)(t+y)(t+z)]^{-1/2}\scriptstyle\;\mathrm{d}t\f$
   //!
   //! **Required header:** `#include <eve/function/ellint_rf.hpp>`

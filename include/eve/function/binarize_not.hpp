@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var binarize_not
   //!
-  //! @brief Callable object performing the computation of the computation of the binarize_not operation.
+  //! @brief Callable object computing the binarize_not operation.
   //!
   //! **Required header:** `#include <eve/function/binarize_not.hpp>`
   //!
@@ -46,10 +46,12 @@ namespace eve
   //!logical<T> r = binarize_not(c,v);
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //!computation is semantically  equivalent to:
+  //!is semantically  equivalent to:
+  //!
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
   //!T r = if_else(c, T(0), T(v);
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

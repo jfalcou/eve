@@ -126,19 +126,32 @@ void all_test_cases(eve::as<T> tgt, Alg basic_reduce)
   // all should be good to double
   reduce_generic_test_page_ends(native_tgt, double(1), basic_reduce);
 
-  // we can init everything with byte size 1
-  if constexpr (std::is_signed_v<e_t>)
+  // Reduce to a smaller type.
+  // For floats no smaller type is avaliable, since float -> int conversion can be ub.
+  if constexpr (std::same_as<e_t, double>)
+  {
+    reduce_generic_test_page_ends(native_tgt, float(4), basic_reduce);
+  }
+  else if constexpr (std::signed_integral<e_t> && !std::same_as<e_t, std::int8_t>)
   {
     reduce_generic_test_page_ends(native_tgt, std::int8_t(4), basic_reduce);
   }
-  else
+  else if constexpr (std::unsigned_integral<e_t> && !std::same_as<e_t, std::uint8_t> )
   {
     reduce_generic_test_page_ends(native_tgt, std::uint8_t(4), basic_reduce);
   }
 
   // no unroll, precise tgt
-  auto tr = eve::algo::traits(eve::algo::unroll<1>, eve::algo::force_cardinal<T::size()>);
-  reduce_generic_test_page_ends(tgt, e_t{10}, basic_reduce[tr]);
+  {
+    auto tr = eve::algo::traits(eve::algo::unroll<1>, eve::algo::force_cardinal<T::size()>);
+    reduce_generic_test_page_ends(tgt, e_t{10}, basic_reduce[tr]);
+  }
+
+  // unroll 3
+  {
+    auto tr = eve::algo::traits{eve::algo::unroll<4>};
+    reduce_generic_test_page_ends(native_tgt, e_t{10}, basic_reduce[tr]);
+  }
 }
 
 EVE_TEST_TYPES("Check reduce", algo_test::selected_types)

@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var erfc_inv
   //!
-  //! @brief Callable object performing the computation of the inverse of the \f$\mbox{erfc}\f$ function.
+  //! @brief Callable object computing the inverse of the \f$\mbox{erfc}\f$ function.
   //!
   //! **Required header:** `#include <eve/function/erfc_inv.hpp>`
   //!
@@ -64,7 +64,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/erfc_inv.hpp>

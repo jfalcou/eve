@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var acosh
   //!
-  //! @brief Callable object performing the computation of acosh.
+  //! @brief Callable object computing acosh;  \f$\log(x+\sqrt{x^2-1})\f$.
   //!
   //! **Required header:** `#include <eve/function/acosh.hpp>`
   //!
@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(floating_value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -69,11 +69,10 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/acosh.hpp>
-  //!  
+  //!
   //!     The expression `diff(acosh)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example

@@ -17,7 +17,7 @@ namespace eve
   //! @{
   //! @var fls
   //!
-  //! @brief Callable object performing the computation of the fls operation.
+  //! @brief Callable object computing the fls operation.
   //!
   //! **Required header:** `#include <eve/function/fls.hpp>`
   //!
@@ -64,7 +64,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `pedantic`
   //!
   //!     **Required header:**  #include <eve/function/pedantic/abs.hpp>

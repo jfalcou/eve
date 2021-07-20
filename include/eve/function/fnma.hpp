@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var fnma
   //!
-  //! @brief Callable object performing the computation of the fused negate-multiply-add operation.
+  //! @brief Callable object computing the fused negate-multiply-add operation.
   //!
   //! **Required header:** `#include <eve/function/fnma.hpp>`
   //!
@@ -70,7 +70,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `pedantic`
   //!
   //!     **Required header:**  #include <eve/function/pedantic/fnma.hpp>

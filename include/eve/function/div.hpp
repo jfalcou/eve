@@ -12,7 +12,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup arithmetic
+  //! @addtogroup operators
   //! @{
   //! @var div
   //!
@@ -72,7 +72,8 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!   - eve::saturated<br>
+  //!   * eve::saturated
+  //!
   //!     **Required header:** `#include <eve/function/saturated/div.hpp>`
   //!
   //!     The expression `eve::saturated(eve::div)(x, xs...)` computes the saturated division of `x` by
@@ -85,7 +86,20 @@ namespace eve
   //!     the division of [`eve::Valmin(as(x))`](../../constants/limits/valmin.html)
   //!     by -1 that produces [`eve::Valmax(as(x))`](../../constants/limits/valmax.html).
   //!
-  //!   - eve::diff<br>
+  //!   * `toward_zero`
+  //!     The call `toward_zero(div)(x, y)`  computes  `trunc(div(x, y))`.
+  //!
+  //!   * `downward`
+  //!     The call `downward(div)(x, y)`  computes  `floor(div(x, y))`.
+  //!
+  //!   * `upward`
+  //!     The call `upward(div)(x, y)`  computes  `ceil(div(x, y))`.
+  //!
+  //!   * `to_nearest`
+  //!     The call `to_nearest(div)(x, y)`  computes  `nearest(div(x,y))`.
+  //!
+  //!   * eve::diff
+  //!
   //!     **Required header:** `#include <eve/function/diff/div.hpp>`
   //!
   //!     The expression `eve::diff<N>(eve::div)(x, xs...)` computes the derivative of the division

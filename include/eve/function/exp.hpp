@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var exp
   //!
-  //! @brief Callable object performing the computation of exp.
+  //! @brief Callable object computing \f$e^x\f$.
   //!
   //! **Required header:** `#include <eve/function/exp.hpp>`
   //!
@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(floating_value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -67,11 +67,10 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/exp.hpp>
-  //!  
+  //!
   //!     The expression `diff(exp)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example

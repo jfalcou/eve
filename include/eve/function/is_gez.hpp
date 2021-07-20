@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var is_gez
   //!
-  //! @brief Callable object performing the computation of the greater or equal to zero predicate.
+  //! @brief Callable object computing the greater or equal to zero predicate.
   //!
   //! **Required header:** `#include <eve/function/is_gez.hpp>`
   //!
@@ -25,7 +25,6 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the greater or equal to zero predicate   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -42,21 +41,6 @@ namespace eve
   //!Returns the [element-wise](../../../glossary.html#value) `x >= 0`.
   //!
   //!The result type is `logical< T >`.
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::is_ge
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_gez[cond](x, ...)` is equivalent to `if_else(cond,is_gez(x, ...),x)`
   //!
   //! ---
   //!

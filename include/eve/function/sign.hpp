@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var sign
   //!
-  //! @brief Callable object performing the computation of the sign operation.
+  //! @brief Callable object computing the sign operation.
   //!
   //! **Required header:** `#include <eve/function/sign.hpp>`
   //!

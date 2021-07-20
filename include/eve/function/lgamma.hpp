@@ -17,7 +17,7 @@ namespace eve
   //! @{
   //! @var lgamma
   //!
-  //! @brief Callable object performing the computation of the logarithm of the \f$\Gamma\f$ function.
+  //! @brief Callable object computing the logarithm of the \f$\Gamma\f$ function.
   //!
   //! **Required header:** `#include <eve/function/lgamma.hpp>`
   //!
@@ -64,7 +64,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/lgamma.hpp>

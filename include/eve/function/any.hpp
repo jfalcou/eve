@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var any
   //!
-  //! @brief Callable object performing the computation of the computation of the any value.
+  //! @brief Callable object computing the any value.
   //!
   //! **Required header:** `#include <eve/function/any.hpp>`
   //!
@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**

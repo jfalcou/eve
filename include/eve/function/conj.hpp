@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var conj
   //!
-  //! @brief Callable object performing the computation of the conjugate value.
+  //! @brief Callable object computing the conjugate value.
   //!
   //! **Required header:** `#include <eve/function/conj.hpp>`
   //!

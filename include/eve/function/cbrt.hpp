@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var cbrt
   //!
-  //! @brief Callable object performing the computation of the cubic root.
+  //! @brief Callable object computing the cubic root.
   //!
   //! **Required header:** `#include <eve/function/cbrt.hpp>`
   //!
@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(floating_value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**

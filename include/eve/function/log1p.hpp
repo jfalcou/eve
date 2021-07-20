@@ -17,7 +17,7 @@ namespace eve
   //! @{
   //! @var log1p
   //!
-  //! @brief Callable object performing the computation of the natural logarithm of \f$1+x\f$.
+  //! @brief Callable object computing the natural logarithm of \f$1+x\f$: \f$\log(1+x)\f$.
   //!
   //! **Required header:** `#include <eve/function/log1p.hpp>`
   //!
@@ -70,11 +70,10 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/log1p.hpp>
-  //!  
+  //!
   //!     The expression `diff(log1p)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example

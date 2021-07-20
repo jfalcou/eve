@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var fms
   //!
-  //! @brief Callable object performing the computation of the fused multiply-substract operation.
+  //! @brief Callable object computing the fused multiply-substract operation.
   //!
   //! **Required header:** `#include <eve/function/fms.hpp>`
   //!
@@ -70,7 +70,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `pedantic`
   //!
   //!     **Required header:**  #include <eve/function/pedantic/fms.hpp>

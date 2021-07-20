@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var erfc
   //!
-  //! @brief Callable object performing the computation of the complementary error function \f$1-\mbox{erf}(x)\f$.
+  //! @brief Callable object computing the complementary error function \f$1-\mbox{erf}(x)\f$.
   //!
   //! **Required header:** `#include <eve/function/erfc.hpp>`
   //!
@@ -63,7 +63,6 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/erfc.hpp>

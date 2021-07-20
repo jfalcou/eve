@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var ifrexp
   //!
-  //! @brief Callable object performing the computation of the computation of the ifrexp pair of values.
+  //! @brief Callable object computing the ifrexp pair of values.
   //!
   //! **Required header:** `#include <eve/function/ifrexp.hpp>`
   //!
@@ -25,12 +25,11 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the computation of the ifrexp pair of values   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(floating_value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -66,11 +65,10 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `pedantic`
   //!
   //!     **Required header:**  #include <eve/function/pedantic/ifrexp.hpp>
-  //!  
+  //!
   //!     The call `pedantic(ifrexp)(x)` takes also properly care of the cases where \f$x = \pm0, \pm\infty\f$ or is a Nan,
   //!      where \f$m=x\f$ and \f$e=0\f$ and of the denormal cases.
   //!

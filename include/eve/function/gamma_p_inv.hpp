@@ -17,7 +17,7 @@ namespace eve
   //! @{
   //! @var gamma_p_inv
   //!
-  //! @brief Callable object performing the computation of the normalized lower incomplete \f$\Gamma\f$ function.
+  //! @brief Callable object computing the normalized lower incomplete \f$\Gamma\f$ function.
   //!
   //!
   //! **Required header:**

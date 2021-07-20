@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var acoth
   //!
-  //! @brief Callable object performing the computation of acoth.
+  //! @brief Callable object computing acoth: \f$\frac{1}{2}\log((x+1)/(x-1))\f$.
   //!
   //! **Required header:** `#include <eve/function/acoth.hpp>`
   //!
@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()(floating_value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -68,11 +68,10 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/acoth.hpp>
-  //!  
+  //!
   //!     The expression `diff(acoth)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example

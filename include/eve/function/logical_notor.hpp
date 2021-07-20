@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var logical_notor
   //!
-  //! @brief Callable object performing the computation of the logical NOTOR operation.
+  //! @brief Callable object computing the logical NOTOR operation.
   //!
   //! **Required header:** `#include <eve/function/logical_notor.hpp>`
   //!
@@ -25,7 +25,6 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the logical NOTOR operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -44,23 +43,6 @@ namespace eve
   //!
   //!the call `logical_notor(x, y)` is semantically equivalent to `!x || y`
   //!if `x` or  `y` is an  [simd value](../../concepts.html#value).
-  //!
-  //!@warning  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::logical_notor
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `logical_notor[cond](x, ...)` is equivalent to `if_else(cond,logical_notor(x, ...),x)`
   //!
   //! ---
   //!

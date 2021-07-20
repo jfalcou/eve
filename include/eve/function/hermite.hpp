@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var hermite
   //!
-  //! @brief Callable object performing the computation of the hermite operation.
+  //! @brief Callable object computing the hermite operation.
   //!
   //! **Required header:** `#include <eve/function/hermite.hpp>`
   //!
@@ -65,12 +65,11 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ====================================================================================================
   //!  * `diff`
   //!
   //!     **Required header:**  #include <eve/function/diff/hermite.hpp>
-  //!  
-  //!     The expression `diff(hermite)(n,x)` computes the derivative of the function at `x`.
+  //!
+  //!     The expression `diff(hermite)(n,x)` computes the derivative of the function relative to `x`.
   //!
   //! #### Example
   //!
