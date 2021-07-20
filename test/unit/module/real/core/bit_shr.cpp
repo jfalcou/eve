@@ -58,22 +58,27 @@ inline auto const random_bits = []<typename T>(eve::as<T>, auto& gen)
 //==================================================================================================
 EVE_TEST( "Check behavior of shr(wide, wide)"
         , eve::test::simd::integers
-        , eve::test::generate(eve::test::randoms(-50,50), random_bits)
+        , eve::test::generate(eve::test::randoms(-50,50)
+                             , random_bits
+                             , eve::test::logicals(0, 3))
         )
-<typename T, typename I>(T a0, I a1)
+<typename T, typename I, typename L>(T a0, I a1, L test)
 {
   using eve::bit_shr;
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   using u_t = eve::as_integer_t<v_t, unsigned>;
   TTS_EQUAL( bit_shr(a0, a1), map([](auto e, auto s) ->v_t { return v_t(u_t(e) >> s); }, a0, a1));
+  TTS_EQUAL( bit_shr[test](a0, a1),  eve::if_else(test, eve::bit_shr(a0, a1), a0));
 };
 
 EVE_TEST( "Check behavior of shift(wide, scalar)"
         , eve::test::simd::integers
-        , eve::test::generate(eve::test::randoms(-50,50), random_bits)
+         , eve::test::generate(eve::test::randoms(-50,50)
+                             , random_bits
+                             , eve::test::logicals(0, 3))
         )
-<typename T, typename I>(T a0, I s)
+<typename T, typename I, typename L>(T a0, I s, L test)
 {
   using eve::bit_shr;
   using eve::detail::map;
@@ -81,6 +86,7 @@ EVE_TEST( "Check behavior of shift(wide, scalar)"
   using v_t = eve::element_type_t<T>;
   using u_t = eve::as_integer_t<v_t, unsigned>;
   TTS_EQUAL( bit_shr(a0, val), map([&](auto e) ->v_t{ return v_t(u_t(e) >> val); }, a0) );
+  TTS_EQUAL( bit_shr[test](a0, val),  eve::if_else(test, eve::bit_shr(a0, val), a0));
 };
 
 
@@ -89,14 +95,19 @@ EVE_TEST( "Check behavior of shift(wide, scalar)"
 //==================================================================================================
 EVE_TEST( "Check behavior of shl(scalar, scalar)"
         , eve::test::scalar::integers
-        , eve::test::generate(eve::test::randoms(-50,50), random_bits)
+         , eve::test::generate(eve::test::randoms(-50,50)
+                             , random_bits
+                             , eve::test::logicals(0, 3))
         )
-<typename T, typename I>(T a0, I a1)
+<typename T, typename I, typename L>(T a0, I a1, L test)
 {
   using eve::bit_shr;
   using eve::detail::map;
   using v_t = typename T::value_type;
   using u_t = eve::as_integer_t<v_t, unsigned>;
   for(std::size_t i = 0;  i < a0.size(); ++i)
+  {
     TTS_EQUAL( bit_shr(a0[i], a1[i]),   v_t(u_t(a0[i]) >> a1[i]));
+    TTS_EQUAL( bit_shr[test[i]](a0[i], a1[i]),  (test[i] ? bit_shr(a0[i], a1[i]) : a0[i]));
+  }
 };

@@ -42,6 +42,10 @@ namespace eve
   //! A value of the [common compatible type](@ref common_compatible) of all `xs` containing the
   //! [elementwise](@ref glossary_elementwise) sum of all `xs`.
   //!
+  //!@warning
+  //!   Although the infix notation with `+` is supported for two parameters, the `+` operator on
+  //!   standard scalar types is the original one and so can lead to automatic promotion.
+  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

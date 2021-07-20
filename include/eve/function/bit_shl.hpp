@@ -49,7 +49,6 @@ namespace eve
   //!all  [elements](../../../glossary.html#element) of n must belong to the
   //!interval: `[0, N[` or the result is undefined.
   //!
-  //!@warning  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

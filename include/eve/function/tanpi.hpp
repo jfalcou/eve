@@ -68,6 +68,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct tanpi_; }
+  template<> struct supports_conditional<tag::tanpi_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(tanpi_, tanpi);
 }
 

@@ -55,6 +55,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct sindcosd_; }
+  template<> struct supports_conditional<tag::sindcosd_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(sindcosd_, sindcosd);
 }
 

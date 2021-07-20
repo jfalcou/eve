@@ -1,4 +1,3 @@
-//==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
@@ -41,6 +40,7 @@ namespace eve
   //!
   //!    Computes the [element-wise](../../../glossary.html#element-wise_) the lower and higher parts of
   //!    the input values, as a pair of unsigned integers
+  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

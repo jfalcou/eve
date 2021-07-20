@@ -70,7 +70,7 @@ namespace eve
   //!  * `pedantic`
   //!
   //!     **Required header:**  #include <eve/function/pedantic/prev.hpp>
-  //!  
+  //!
   //!     The call `pedantic(prev)(x)` distinguish -0.0 and +0.0 for floating point point inputs and so `pedantic(prev)(0.0)` is -0.0.
   //!
   //! #### Example
@@ -85,15 +85,26 @@ namespace eve
 
   namespace detail
   {
-
-    template<typename T, typename U>
-    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::prev_), T const&, [[ maybe_unused ]] U const & n)
+    template<conditional_expr C, real_value T, integral_value U>
+    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::prev_),  C const &
+                              , T const& ,  [[ maybe_unused]] U const & n)
+    {
+      EVE_ASSERT(eve::all(is_gez(n)), "[eve::prev] : second parameter must be positive");
+    }
+    template<real_value T, integral_value U>
+    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::prev_), T const& ,  [[ maybe_unused]] U const & n)
     {
       EVE_ASSERT(eve::all(is_gez(n)), "[eve::prev] : second parameter must be positive");
     }
 
-    template<typename T, typename U>
-    EVE_FORCEINLINE void check(EVE_MATCH_CALL(saturated_type, eve::tag::prev_), T const&,[[ maybe_unused ]]  U const & n)
+    template<conditional_expr C, real_value T, integral_value U>
+    EVE_FORCEINLINE void check(EVE_MATCH_CALL(saturated_type, eve::tag::prev_),  C const &
+                              , T const&,  [[ maybe_unused]] U const & n)
+    {
+      EVE_ASSERT(eve::all(is_gez(n)), "[eve::prev] : second parameter must be positive");
+    }
+    template<real_value T, integral_value U>
+    EVE_FORCEINLINE void check(EVE_MATCH_CALL(saturated_type, eve::tag::prev_), T const&,  [[ maybe_unused]]  U const & n)
     {
       EVE_ASSERT(eve::all(is_gez(n)), "[[eve::saturated([eve::prev)] : second parameter must be positive");
     }

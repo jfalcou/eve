@@ -1,4 +1,3 @@
-//==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
@@ -46,6 +45,7 @@ namespace eve
   //!@warning
   //!   Floating numbers are not stored in decimal form. So if you try significants with
   //!   a not exactly representable number the result can be not exactly what you expect.
+  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

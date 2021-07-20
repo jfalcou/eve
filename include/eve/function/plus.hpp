@@ -74,6 +74,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct plus_; }
+  template<> struct supports_conditional<tag::plus_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(plus_, plus);
 }
 

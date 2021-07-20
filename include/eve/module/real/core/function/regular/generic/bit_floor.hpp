@@ -55,4 +55,12 @@ namespace eve::detail
     }
     else return apply_over(bit_floor, v);
   }
+
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto bit_floor_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
+  {
+    return mask_op( cond, eve::bit_floor, t);
+  }
 }

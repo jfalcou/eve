@@ -66,6 +66,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct acscd_; }
+  template<> struct supports_conditional<tag::acscd_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(acscd_, acscd);
 }
 

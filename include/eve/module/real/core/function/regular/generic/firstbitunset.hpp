@@ -35,5 +35,11 @@ namespace eve::detail
     else return apply_over(firstbitunset, a0);
   }
 
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, unsigned_value U>
+  EVE_FORCEINLINE auto firstbitunset_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
+  {
+    return mask_op( cond, firstbitunset, t);
+  }
 }
-

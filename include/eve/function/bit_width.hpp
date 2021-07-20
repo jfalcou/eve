@@ -40,7 +40,7 @@ namespace eve
   //! **Return value**
   //!
   //!If x is not zero, calculates the number of bits needed to store the value `x`,
-  //!that is $1+\lfloor\log2(x)\rfloor$. If `x` is zero, returns zero.
+  //!that is \f$1+\lfloor\log2(x)\rfloor\f$. If `x` is zero, returns zero.
   //!
   //! ---
   //!

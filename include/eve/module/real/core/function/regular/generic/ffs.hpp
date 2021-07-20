@@ -28,4 +28,11 @@ namespace eve::detail
     else return apply_over(ffs, a0);
   }
 
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, unsigned_value U>
+  EVE_FORCEINLINE auto ffs_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
+  {
+    return mask_op( cond, ffs, t);
+  }
 }

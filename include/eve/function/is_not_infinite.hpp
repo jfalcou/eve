@@ -65,6 +65,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct is_not_infinite_; }
+  template<> struct supports_conditional<tag::is_not_infinite_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(is_not_infinite_, is_not_infinite);
 }
 

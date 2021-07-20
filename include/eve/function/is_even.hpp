@@ -64,6 +64,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct is_even_; }
+  template<> struct supports_conditional<tag::is_even_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(is_even_, is_even);
 }
 

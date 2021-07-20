@@ -21,5 +21,12 @@ namespace eve::detail
     return T(sizeof(elt_t) * 8 - countl_zero(v));
   }
 
-}
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, unsigned_value U>
+  EVE_FORCEINLINE auto bit_width_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
+  {
+    return mask_op(  cond, eve::bit_width, t);
+  }
 
+}

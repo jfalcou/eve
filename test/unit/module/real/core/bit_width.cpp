@@ -33,13 +33,15 @@ EVE_TEST_TYPES( "Check return types of bit_width on wide"
 //==================================================================================================
 EVE_TEST( "Check behavior of bit_width(wide) on unsigned integrals"
         , eve::test::simd::unsigned_integers
-        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
+        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
+                              ,  eve::test::logicals(0, 3))
         )
-<typename T>(T const& a0)
+<typename T, typename U>(T const& a0, U const & t)
 {
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   TTS_EQUAL( eve::bit_width(a0), map([](auto e) -> v_t{ return  std::bit_width(e); }, a0));
+  TTS_EQUAL( eve::bit_width[t](a0), eve::if_else(t, eve::bit_width(a0), a0));
 };
 
 
@@ -55,5 +57,7 @@ EVE_TEST( "Check behavior of bit_width(wide) on unsigned integrals"
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   for(auto a: a0)
+  {
     TTS_EQUAL( eve::bit_width(a), v_t(std::bit_width(a)));
+  }
 };

@@ -32,12 +32,13 @@ namespace eve
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  template< value T, value U > auto operator()( T m, U x, U y ) const noexcept
   //!  requires compatible< T,U>;
-  //!  
+  //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
   //!`mx`:   mask [value](../../concepts.html#value)
+  //!
   //!`y`, `z`:   selection [values](../../concepts.html#value)
   //!
   //! **Return value**
@@ -63,22 +64,6 @@ namespace eve
   //!
   //! ---
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::bit_select
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `bit_select[cond](x, ...)` is equivalent to `if_else(cond,bit_select(x, ...),x)`
-  //!
-  //! ---
-  //!
   //! #### Supported decorators
   //!
   //!  no decorators are supported
@@ -91,6 +76,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+
+  namespace tag { struct bit_select_; }
+  template<> struct supports_conditional<tag::bit_select_> : std::false_type {};
+
   EVE_MAKE_CALLABLE(bit_select_, bit_select);
 }
 

@@ -17,4 +17,13 @@ namespace eve::detail
   {
     return is_nez(v).mask();
   }
+
+
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, value U>
+  EVE_FORCEINLINE auto bit_mask_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
+  {
+    return mask_op( cond, bit_mask, t);
+  }
 }

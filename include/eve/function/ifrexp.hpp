@@ -80,6 +80,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct ifrexp_; }
+  template<> struct supports_conditional<tag::ifrexp_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(ifrexp_, ifrexp);
 }
 

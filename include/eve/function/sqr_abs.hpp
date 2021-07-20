@@ -58,6 +58,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+     
+  namespace tag { struct sqr_abs_; }
+  template<> struct supports_conditional<tag::sqr_abs_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(sqr_abs_, sqr_abs);
 }
 

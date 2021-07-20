@@ -10,6 +10,7 @@
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/function/bit_ceil.hpp>
+#include <eve/function/if_else.hpp>
 #include <eve/function/exponent.hpp>
 #include <bit>
 
@@ -34,21 +35,24 @@ auto maxi = []< typename T>(eve::as<T> const &){return eve::valmax(eve::as<T>())
 auto mini = []< typename T>(eve::as<T> const &){return eve::valmin(eve::as<T>())/4; }; //negative values all return 1;
 EVE_TEST( "Check behavior of bit_ceil(wide) on integral types"
         , eve::test::simd::integers
-        , eve::test::generate(eve::test::randoms(mini, maxi))
+        , eve::test::generate(eve::test::randoms(mini, maxi)
+                             , eve::test::logicals(0, 3))
         )
-<typename T>(T const& a0)
+<typename T, typename U>(T const& a0, U const & t)
 {
   using v_t = eve::element_type_t<T>;
   using u_t = eve::as_integer_t<v_t, unsigned>;
   using eve::detail::map;
   TTS_EQUAL( eve::bit_ceil(a0), map([](auto e) { return v_t(eve::bit_ceil(u_t((e > 0) ? e : 0))); }, a0));
+  TTS_EQUAL( eve::bit_ceil[t](a0), eve::if_else(t, eve::bit_ceil(a0), a0));
 };
 
 EVE_TEST( "Check behavior of bit_ceil(wide) on floating"
-            , eve::test::simd::ieee_reals
-            , eve::test::generate(eve::test::randoms(-10, eve::valmax))
-            )
-<typename T>(T const& a0)
+        , eve::test::simd::ieee_reals
+        , eve::test::generate(eve::test::randoms(-10, eve::valmax)
+                             ,  eve::test::logicals(0, 3))
+        )
+<typename T, typename U>(T const& a0, U const & t)
 {
   using v_t = eve::element_type_t<T>;
   using eve::exponent;
@@ -66,4 +70,5 @@ EVE_TEST( "Check behavior of bit_ceil(wide) on floating"
                                   }, a0
                                  )
            );
+  TTS_EQUAL( eve::bit_ceil[t](a0), eve::if_else(t, eve::bit_ceil(a0), a0));
 };

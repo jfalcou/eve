@@ -12,6 +12,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_not.hpp>
+#include <eve/function/bit_and.hpp>
 #include <eve/function/bit_or.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/concept/value.hpp>
@@ -65,8 +66,15 @@ namespace eve::detail
   auto bit_ornot_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
     requires bit_compatible_values<T0, T1> && (bit_compatible_values<T1, Ts> && ...)
   {
-    auto that = bit_ornot(a0,a1);
-    ((that = bit_ornot(that, args)),...);
-    return that;
+    auto that = bit_and(a1,args...);
+    return bit_ornot(a0, that);
+  }
+
+  template<conditional_expr C, real_value T0, real_value T1, real_value ...Ts>
+  auto bit_ornot_(EVE_SUPPORTS(cpu_), C const &cond, T0 a0, T1 a1, Ts... args)
+    requires bit_compatible_values<T0, T1> && (bit_compatible_values<T1, Ts> && ...)
+  {
+    auto that = bit_and(a1,args...);
+    return mask_op( cond, eve::bit_ornot, a0, that);
   }
 }
