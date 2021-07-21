@@ -32,7 +32,7 @@ EVE_TEST( "Check behavior of eve::popcount(simd)"
         , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
                               , eve::test::logicals(0, 3))
         )
-<typename T, typename M>(T const& a0, M const& t)
+<typename T, typename M>(T const& a0, M const& )
 {
   using eve::detail::map;
   using i_t = eve::as_integer_t<T, unsigned>;
