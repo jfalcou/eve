@@ -48,17 +48,16 @@ EVE_TEST( "Check behavior of bit_and on integral types"
             , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
                                   , eve::test::randoms(eve::valmin, eve::valmax)
                                   , eve::test::randoms(eve::valmin, eve::valmax)
-                                  , eve::test::randoms(eve::valmin, eve::valmax)
+                                  , eve::test::logicals(0, 3)
                                   )
             )
-<typename T>( T const& a0, T const& a1,  T const& a2,  T const& a3)
+<typename T, typename M>( T const& a0, T const& a1,  T const& a2,  M const& test)
 {
   using eve::as;
   using eve::bit_and;
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   TTS_EQUAL( bit_and(a0, a1), map([](auto e, auto f) -> v_t { return e & f; }, a0, a1));
-  auto test = a3 > eve::average(eve::valmin(as<T>()), eve::valmax(as<T>()));
   TTS_EQUAL( bit_and[test](a0, a1),  eve::if_else(test, eve::bit_and(a0, a1), a0));
   TTS_EQUAL( bit_and[test](a0, a1, a2),  eve::if_else(test, eve::bit_and(a0, a1, a2), a0));
 };
