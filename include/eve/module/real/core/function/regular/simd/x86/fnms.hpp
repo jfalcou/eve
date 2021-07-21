@@ -89,7 +89,7 @@ namespace eve::detail
 
     if constexpr( C::is_complete || abi_t<T, N>::is_wide_logical )
     {
-      return fnms_(EVE_RETARGET(cpu_),cx,v,w);
+      return fnms_(EVE_RETARGET(cpu_),cx,v,w,x);
     }
     else
     {
