@@ -16,15 +16,6 @@
 namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
-  // 128 bits implementation
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N> add_(EVE_SUPPORTS(sse2_), wide<T, N> v0, wide<T, N> v1) noexcept
-    requires x86_abi<abi_t<T, N>>
-  {
-    return v0 += v1;
-  }
-
-  // -----------------------------------------------------------------------------------------------
   // Masked case
   template<conditional_expr C, real_scalar_value T, typename N>
   EVE_FORCEINLINE
@@ -56,7 +47,7 @@ namespace eve::detail
       else  if constexpr(c == category::int64x8   ) return _mm512_mask_add_epi64(src,m,v,w);
       else  if constexpr(c == category::int64x4   ) return _mm256_mask_add_epi64(src,m,v,w);
       else  if constexpr(c == category::int64x2   ) return _mm_mask_add_epi64(src,m,v,w);
-      else    return if_else(cx,eve::add(v, w),src);
+      else     return add_(EVE_RETARGET(cpu_),cx,v,w);
     }
   }
 

@@ -13,13 +13,6 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N> mul_(EVE_SUPPORTS(sse2_), wide<T, N> v0, wide<T, N> v1) noexcept
-    requires x86_abi<abi_t<T, N>>
-  {
-    return v0 *= v1;
-  }
-
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<conditional_expr C, real_scalar_value T, typename N>
@@ -43,7 +36,7 @@ namespace eve::detail
       else  if constexpr(c == category::int32x16  ) return _mm512_mask_mul_epi32(src,m,v,w);
       else  if constexpr(c == category::int32x8   ) return _mm256_mask_mul_epi32(src,m,v,w);
       else  if constexpr(c == category::int32x4   ) return _mm_mask_mul_epi32(src,m,v,w);
-      else    return if_else(cx,eve::mul(v, w),src);
+      else     return mul_(EVE_RETARGET(cpu_),cx,v,w);
     }
   }
 }
