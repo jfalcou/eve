@@ -81,6 +81,7 @@ namespace eve::detail
       {
         if constexpr(c == category::float32x16) return _mm512_mask_fmsub_ps   (v,m,w,x);
         else  if constexpr(c == category::float64x8 ) return _mm512_mask_fmsub_pd   (v,m,w,x);
+        else  return if_else(cx,eve::fma(v, w, x),v);
       }
       else
       {
