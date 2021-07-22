@@ -11,11 +11,13 @@
 #include <eve/function/popcount.hpp>
 #include <eve/logical.hpp>
 #include "producers.hpp"
+#include <bit>
 
 TTS_CASE_TPL("wide random check on is_pow2", EVE_TYPE)
 {
-  auto std_is_pow2 = [](auto e) ->eve::logical<EVE_VALUE> {
-    return ((e > 0) && (eve::popcount(e) == 1u));
+  auto std_is_pow2 = [] < typename U > (U e) ->eve::logical<U> {
+    using ui_t =  eve::as_integer_t<U, unsigned>;
+    return ((e > 0) && (std::popcount(eve::bit_cast(e, eve::as<ui_t>())) == 1u));
   };
 
   eve::uniform_prng<EVE_VALUE> p(eve::zero(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
