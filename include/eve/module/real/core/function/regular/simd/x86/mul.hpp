@@ -21,7 +21,7 @@ namespace eve::detail
   requires x86_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();
-    std::cout << "icitte" << std::endl;
+
     if constexpr( C::is_complete || abi_t<T, N>::is_wide_logical )
     {
       return mul_(EVE_RETARGET(cpu_),cx,v,w);
@@ -33,9 +33,12 @@ namespace eve::detail
 
             if constexpr(c == category::float32x16) return _mm512_mask_mul_ps   (src,m,v,w);
       else  if constexpr(c == category::float64x8 ) return _mm512_mask_mul_pd   (src,m,v,w);
+#ifndef SPY_COMPILER_IS_GCC
+            // TODO seems g++11 has a bug here
       else  if constexpr(c == category::int32x16  ) return _mm512_mask_mul_epi32(src,m,v,w);
       else  if constexpr(c == category::int32x8   ) return _mm256_mask_mul_epi32(src,m,v,w);
       else  if constexpr(c == category::int32x4   ) return _mm_mask_mul_epi32(src,m,v,w);
+#endif
       else     return mul_(EVE_RETARGET(cpu_),cx,v,w);
     }
   }
