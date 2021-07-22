@@ -33,7 +33,6 @@ namespace eve::detail
             if constexpr(c == category::float32x16) return _mm512_mask_div_ps   (src,m,v,w);
       else  if constexpr(c == category::float64x8 ) return _mm512_mask_div_pd   (src,m,v,w);
       else  {
-        auto ww = if_else(cx, w, one);
         return div_(EVE_RETARGET(cpu_),cx,v,w);
       }
     }
