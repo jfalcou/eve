@@ -58,9 +58,8 @@ namespace udt
   //------------------------------------------------------------------------------------------------
   // Actual interface - Note that we mix function and friend function to check both works
   //------------------------------------------------------------------------------------------------
-  template<eve::same_value_type<grid2d> P>
-  std::ostream& operator<<( std::ostream& os, P const& p)
+  std::ostream& operator<<( std::ostream& os, grid2d const& p)
   {
-    return os << "[x: " << x(p) << " - y: " << y(p) << "]\n";
+    return os << "[x: " << x(p) << " - y: " << y(p) << "]";
   }
 }

@@ -35,14 +35,10 @@ TTS_CASE("Check User Defined Type default construction")
   TTS_EQUAL(p.x, +1);
   TTS_EQUAL(p.y, -1);
 
-  std::cout << p << "\n";
-
   eve::wide<udt::grid2d> vp;
-  std::cout << vp << "\n";
   TTS_EQUAL(x(vp), eve::wide<int>(+1));
   TTS_EQUAL(y(vp), eve::wide<int>(-1));
 };
-
 
 #if 0
 //==================================================================================================

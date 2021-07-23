@@ -1002,11 +1002,22 @@ inline namespace EVE_ABI_NAMESPACE
     }
 
     //! Inserts a eve::wide into a output stream
-    friend std::ostream &operator<<(std::ostream &os, wide const &p)
+    friend std::ostream &operator<<(std::ostream &os, wide p)
     {
       if constexpr( kumi::product_type<Type> )
       {
-        return os << p.storage();
+        if constexpr( requires(Type t) { os << t; } )
+        {
+          // If said product_type is streamable, we stream each parts
+          os << '(' << p.get(0);
+          for(size_type i = 1; i != p.size(); ++i) os << ", " << p.get(i);
+          return os << ')';
+        }
+        else
+        {
+          // Else we just stream the internal tuple
+          return os << p.storage();
+        }
       }
       else
       {
