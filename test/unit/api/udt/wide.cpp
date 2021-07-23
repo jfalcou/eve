@@ -29,97 +29,71 @@ TTS_CASE("Check User Defined Type properties with respect to SIMDification")
 //==================================================================================================
 // Default constructors
 //==================================================================================================
-TTS_CASE("Check User Defined Type default construction")
+TTS_CASE("Check eve::wide<udt> default constructor")
 {
   udt::grid2d p;
   TTS_EQUAL(p.x, +1);
   TTS_EQUAL(p.y, -1);
 
   eve::wide<udt::grid2d> vp;
-  TTS_EQUAL(x(vp), eve::wide<int>(+1));
-  TTS_EQUAL(y(vp), eve::wide<int>(-1));
-};
-
-#if 0
-//==================================================================================================
-// Construct from a lambda returning a tuple
-//==================================================================================================
-EVE_TEST_TYPES( "Check eve::wide lambda constructor", eve::test::scalar::all_types)
-<typename T>(eve::as<T>)
-{
-  using s_t = tuple_t<T>;
-  using w_t = eve::wide<tuple_t<T>>;
-
-  w_t ref;
-
-  for(int i=0;i<ref.size();++i)
-  {
-    ref.set(i, s_t{ static_cast<std::int8_t>('a'+i), static_cast<T>(i + 1), 1.5 * (1+i)} );
-  }
-
-  w_t simd = [&](auto i, auto)  { return s_t{ static_cast<std::int8_t>('a'+i)
-                                            , static_cast<T>(i + 1)
-                                            , 1.5*(1+i)
-                                            };
-                                };
-
-  TTS_EQUAL(simd  , ref );
-};
-
-//==================================================================================================
-// Construct from a list of values
-//==================================================================================================
-EVE_TEST_TYPES( "Check eve::wide enumerating constructor", eve::test::scalar::all_types)
-<typename T>(eve::as<T>)
-{
-  using s_t = tuple_t<T>;
-  using w_t = eve::wide<tuple_t<T>>;
-
-  w_t ref;
-
-  for(int i=0;i<ref.size();++i)
-  {
-    ref.set(i, s_t{ static_cast<std::int8_t>('a'+i), static_cast<T>(i + 1), 1. + i} );
-  }
-
-  w_t simd  = [&]<std::size_t... N>(std::index_sequence<N...>)
-              {
-                return w_t(s_t{static_cast<std::int8_t>('a'+N), static_cast<T>(N + 1), N + 1. }...);
-              }( std::make_index_sequence<w_t::size()>());
-
-  TTS_EQUAL(simd  , ref );
+  TTS_EQUAL(coord_x(vp), eve::wide<int>(+1));
+  TTS_EQUAL(coord_y(vp), eve::wide<int>(-1));
 };
 
 //==================================================================================================
 // Construct from a single value
 //==================================================================================================
-EVE_TEST_TYPES( "Check eve::wide splat constructor", eve::test::scalar::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE( "Check eve::wide<udt> splat constructor")
 {
-  using w_t = eve::wide<tuple_t<T>>;
+  eve::wide<udt::grid2d> vp{ udt::grid2d{+6,-9} };
 
-  TTS_EQUAL ( w_t(tuple_t<T>{ 'z', T{69}, 13.37 })
-            , w_t([](auto, auto) { return tuple_t<T>{ 'z', T{69}, 13.37 }; } )
-            );
+  TTS_EQUAL(coord_x(vp), eve::wide<int>(+6));
+  TTS_EQUAL(coord_y(vp), eve::wide<int>(-9));
+};
+
+//==================================================================================================
+// Construct from a lambda returning an UDT
+//==================================================================================================
+TTS_CASE("Check eve::wide<udt> Lambda construction")
+{
+  eve::wide<udt::grid2d> vp = [](int i, int c) { return udt::grid2d{i,c-i-1}; };
+
+  TTS_EQUAL(coord_x(vp), eve::wide<int>([](int i, int  ) { return i;    } ));
+  TTS_EQUAL(coord_y(vp), eve::wide<int>([](int i, int c) { return c-i-1;} ));
+};
+
+//==================================================================================================
+// Construct from a list of values
+//==================================================================================================
+TTS_CASE( "Check eve::wide<udt> enumerating constructor" )
+{
+  constexpr auto sz = eve::wide<udt::grid2d>::size();
+
+  auto vp = [&]<std::size_t... N>(std::index_sequence<N...>)
+            {
+              return eve::wide<udt::grid2d>( udt::grid2d{N,sz-N-1}...);
+            }( std::make_index_sequence<sz>());
+
+  TTS_EQUAL(coord_x(vp), eve::wide<int>([](int i, int  ) { return i;    } ));
+  TTS_EQUAL(coord_y(vp), eve::wide<int>([](int i, int c) { return c-i-1;} ));
 };
 
 //==================================================================================================
 // Construct from raw storage
 //==================================================================================================
-EVE_TEST_TYPES( "Check eve::wide constructor from raw storage", eve::test::scalar::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE( "Check eve::wide<udt> constructor from raw storage")
 {
-  using w_t = eve::wide<tuple_t<T>>;
-  using s_t = typename eve::wide<tuple_t<T>>::storage_type;
-  using w0_t = std::tuple_element_t<0, s_t>;
-  using w1_t = std::tuple_element_t<1, s_t>;
-  using w2_t = std::tuple_element_t<2, s_t>;
+  auto st = kumi::make_tuple( eve::wide<int>([](int i, int  ) { return i;    } )
+                            , eve::wide<int>([](int i, int c) { return c-i-1;} )
+                            );
 
-  TTS_EQUAL ( w_t( s_t{ w0_t('A'), w1_t(99), w2_t(13.37) } )
-            , w_t(tuple_t<T>{ 'A', T{99}, 13.37 } )
-            );
+  eve::wide<udt::grid2d> vp = st;
+
+  TTS_EQUAL(coord_x(vp), eve::wide<int>([](int i, int  ) { return i;    } ));
+  TTS_EQUAL(coord_y(vp), eve::wide<int>([](int i, int c) { return c-i-1;} ));
 };
 
+#if 0
 //==================================================================================================
 // Slice API
 //==================================================================================================

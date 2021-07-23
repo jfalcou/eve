@@ -16,18 +16,19 @@ namespace udt
     using is_product_type = void;
 
     // Retrieve the actual sub-part of the UDT even when vectorized
-    template<eve::same_value_type<grid2d> P> friend constexpr decltype(auto) x(P&& p) noexcept
+    template<eve::same_value_type<grid2d> P> friend constexpr decltype(auto) coord_x(P&& p) noexcept
     {
       return eve::content<0>(std::forward<P>(p));
     }
 
-    template<eve::same_value_type<grid2d> P> friend constexpr decltype(auto) y(P&& p) noexcept
+    template<eve::same_value_type<grid2d> P> friend constexpr decltype(auto) coord_y(P&& p) noexcept
     {
       return eve::content<1>(std::forward<P>(p));
     }
 
     // Actual data
     int x = +1, y = -1;
+    friend constexpr auto operator<=>(grid2d,grid2d) = default;
   };
 
   // Adapt as a bindable type for eve::product_type
@@ -60,6 +61,6 @@ namespace udt
   //------------------------------------------------------------------------------------------------
   std::ostream& operator<<( std::ostream& os, grid2d const& p)
   {
-    return os << "[x: " << x(p) << " - y: " << y(p) << "]";
+    return os << "[x: " << coord_x(p) << " - y: " << coord_y(p) << "]";
   }
 }
