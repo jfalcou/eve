@@ -23,22 +23,22 @@ namespace eve::detail
     else  if constexpr(c == category::float64x8  )  return _mm512_rcp14_pd(v);
     else  if constexpr(c == category::float32x8  )
     {
-      if constexpr(current_api >= avx2 )            return _mm256_rcp14_epi32(v);
+      if constexpr(current_api >= avx2 )            return _mm256_rcp14_ps(v);
       else                                          return _mm256_rcp_ps(v);
     }
-    else  if constexpr(c == category::int64x4 )
+    else  if constexpr(c == category::float64x4 )
     {
-      if constexpr(current_api >= avx2 )            return _mm256_rcp14_epi64(v);
+      if constexpr(current_api >= avx2 )            return _mm256_rcp14_pd(v);
       else                                          return _mm256_cvtps_pd(_mm_rcp_ps(_mm256_cvtpd_ps(v)));
     }
     else  if constexpr(c == category::float32x4  )
     {
-      if constexpr(current_api >= avx2 )            return _mm_rcp14_epi32(v);
+      if constexpr(current_api >= avx2 )            return _mm_rcp14_ps(v);
       else                                          return _mm_rcp_ps(v);
     }
     else  if constexpr(c == category::float64x2 )
     {
-      if constexpr(current_api >= avx2 )            return _mm_rcp14_epi64(v);
+      if constexpr(current_api >= avx2 )            return _mm_rcp14_pd(v);
       else                                          return _mm_cvtps_pd(_mm_rcp_ps(_mm_cvtpd_ps(v)));
     }
   }
@@ -57,7 +57,6 @@ namespace eve::detail
     else  if constexpr(c == category::float32x4  )  return _mm_div_ps(one(eve::as(a0)), a0);
     else  if constexpr(c == category::float64x2  )  return _mm_div_pd(one(eve::as(a0)), a0);
   }
-
 
   // -----------------------------------------------------------------------------------------------
   // Masked case
@@ -85,7 +84,7 @@ namespace eve::detail
       else  if constexpr(c == category::float64x2  )  return _mm_mask_rcp14_pd(src,m,a0);
     }
   }
-  
+
   template<conditional_expr C, floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE
   wide<T, N> rec_(EVE_SUPPORTS(sse2_), C const &cx, wide<T, N> const &a0) noexcept
