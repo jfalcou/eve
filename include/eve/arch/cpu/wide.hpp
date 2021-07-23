@@ -88,8 +88,11 @@ inline namespace EVE_ABI_NAMESPACE
     //! @{
     //==============================================================================================
 
-    //! Default constructor
-    EVE_FORCEINLINE wide() = default;
+    //! @brief Default constructor
+    //! This operation is a no-op unless `Type` satisfies eve::product_type and has a non trivial
+    //! default constructor.
+    EVE_FORCEINLINE wide() requires( std::is_trivially_constructible_v<Type>)                 {}
+    EVE_FORCEINLINE wide() requires(!std::is_trivially_constructible_v<Type>) : wide(Type{})  {}
 
     //! Constructs from ABI-specific storage
     EVE_FORCEINLINE wide(storage_type const &r) noexcept : storage_base(r) {}
@@ -129,7 +132,7 @@ inline namespace EVE_ABI_NAMESPACE
     //! Constructs a eve::wide by splatting a scalar value in all lanes
     template<scalar_value S>
     EVE_FORCEINLINE explicit  wide(S const& v)  noexcept
-                            : storage_base(detail::make(eve::as<wide>{}, v))
+                            : storage_base(detail::make(eve::as<wide>{}, static_cast<Type>(v)))
     {}
 
     //! Constructs a eve::wide from a sequence of scalar values of proper size
@@ -138,7 +141,11 @@ inline namespace EVE_ABI_NAMESPACE
 #if !defined(EVE_DOXYGEN_INVOKED)
     requires( card_base::size() == 2 + sizeof...(vs) )
 #endif
-                  : storage_base(detail::make(eve::as<wide>{}, v0, v1, vs...))
+                  : storage_base(detail::make ( eve::as<wide>{}
+                                              , static_cast<Type>(v0)
+                                              , static_cast<Type>(v1)
+                                              , static_cast<Type>(vs)...
+                                )             )
     {}
 
     //==============================================================================================
