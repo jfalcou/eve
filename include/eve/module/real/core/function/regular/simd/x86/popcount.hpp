@@ -13,6 +13,7 @@
 #include <eve/as.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_shr.hpp>
+#include <eve/function/if_else.hpp>
 
 #if defined(SPY_COMPILER_IS_MSVC)
 #  include <intrin.h>
@@ -21,7 +22,7 @@
 namespace eve::detail
 {
 
-  template<integral_scalar_value T,  typename N>
+  template<unsigned_scalar_value T,  typename N>
   EVE_FORCEINLINE auto popcount_(EVE_SUPPORTS(sse2_), wide<T, N>  x) noexcept
     requires std::same_as<abi_t<T, N>, x86_128_>
   {
@@ -71,7 +72,7 @@ namespace eve::detail
 
   /////////////////////////////////////////////////////////////////////////////
   // 256 bits
-  template<integral_scalar_value T,  typename N>
+  template<unsigned_scalar_value T,  typename N>
   EVE_FORCEINLINE auto popcount_(EVE_SUPPORTS(avx_), wide<T, N>  x) noexcept
     requires std::same_as<abi_t<T, N>, x86_256_>
   {

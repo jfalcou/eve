@@ -23,16 +23,16 @@
 
 namespace eve::detail
 {
-  template<integral_value T>
-  EVE_FORCEINLINE as_integer_t<T, unsigned> popcount_(EVE_SUPPORTS(cpu_)
-                                                     , T const &v) noexcept
+  template<unsigned_value T>
+  EVE_FORCEINLINE auto popcount_(EVE_SUPPORTS(cpu_)
+                                , T const &v) noexcept
   {
     using r_t = as_integer_t<T, unsigned>;
     if constexpr(has_native_abi_v<T>)
     {
       if constexpr(scalar_value<T>)
       {
-        return r_t(std::popcount(bit_cast(v, as<r_t>())));
+        return r_t(std::popcount(v));
       }
       else
       {
@@ -43,5 +43,13 @@ namespace eve::detail
     {
       return apply_over(popcount, v);
     }
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, unsigned_value  U>
+  EVE_FORCEINLINE auto popcount_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
+  {
+    return mask_op( cond, eve::popcount, t);
   }
 }

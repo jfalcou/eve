@@ -53,9 +53,10 @@ EVE_TEST( "Check behavior of max on all types full range"
         , eve::test::generate (  eve::test::randoms(eve::valmin, eve::valmax)
                               ,  eve::test::randoms(eve::valmin, eve::valmax)
                               ,  eve::test::randoms(eve::valmin, eve::valmax)
-                              )
+                              ,  eve::test::logicals(0, 3)
+                             )
         )
-<typename T>(  T const& a0, T const& a1, T const& a2)
+<typename T, typename M>(  T const& a0, T const& a1, T const& a2, M const & t)
 {
   using eve::max;
   using eve::detail::map;
@@ -71,6 +72,7 @@ EVE_TEST( "Check behavior of max on all types full range"
   TTS_ULP_EQUAL(eve::diff_1st(max)((a0), (a1), (a2)), map(dm1, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::diff_2nd(max)((a0), (a1), (a2)), map(dm2, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::diff_3rd(max)((a0), (a1), (a2)), map(dm3, a0, a1, a2), 2);
+  TTS_IEEE_EQUAL(max[t](a0, a1), eve::if_else(t, max(a0, a1), a0));
 };
 
 EVE_TEST_TYPES( "Check values of max"

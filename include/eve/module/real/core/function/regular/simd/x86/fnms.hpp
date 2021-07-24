@@ -75,4 +75,37 @@ namespace eve::detail
     else
       return fms(-a, b, c);
   }
+
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, real_scalar_value T, typename N>
+  EVE_FORCEINLINE
+  wide<T, N> fnms_(EVE_SUPPORTS(sse2_), C const &cx, wide<T, N> const &v
+                 , wide<T, N> const &w
+                 , wide<T, N> const &x) noexcept
+  requires x86_abi<abi_t<T, N>>
+  {
+    constexpr auto c = categorize<wide<T, N>>();
+
+    if constexpr( C::is_complete || abi_t<T, N>::is_wide_logical )
+    {
+      return fnms_(EVE_RETARGET(cpu_),cx,v,w,x);
+    }
+    else
+    {
+      auto m    = expand_mask(cx,as<wide<T, N>>{}).storage().value;
+
+      if constexpr(!C::has_alternative)
+      {
+        if constexpr(c == category::float32x16) return _mm512_mask_fnmsub_ps   (v,m,w,x);
+        else  if constexpr(c == category::float64x8 ) return _mm512_mask_fnmsub_pd   (v,m,w,x);
+        else  return if_else(cx,eve::fnms(v, w, x),v);
+      }
+      else
+      {
+        auto src  = alternative(cx,v,as<wide<T, N>>{});
+        return if_else(cx,eve::fnms(v, w, x),src);
+      }
+    }
+  }
 }

@@ -13,53 +13,101 @@
 
 namespace eve::detail
 {
+  template<floating_real_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N> rec_(EVE_SUPPORTS(sse2_), raw_type, wide<T, N> const &v) noexcept
+      requires x86_abi<abi_t<T, N>>
+  {
+    constexpr auto c = categorize<wide<T, N>>();
+
+          if constexpr(c == category::float32x16 )  return _mm512_rcp14_ps(v);
+    else  if constexpr(c == category::float64x8  )  return _mm512_rcp14_pd(v);
+    else  if constexpr(c == category::float32x8  )
+    {
+      if constexpr(current_api >= avx2 )            return _mm256_rcp14_ps(v);
+      else                                          return _mm256_rcp_ps(v);
+    }
+    else  if constexpr(c == category::float64x4 )
+    {
+      if constexpr(current_api >= avx2 )            return _mm256_rcp14_pd(v);
+      else                                          return _mm256_cvtps_pd(_mm_rcp_ps(_mm256_cvtpd_ps(v)));
+    }
+    else  if constexpr(c == category::float32x4  )
+    {
+      if constexpr(current_api >= avx2 )            return _mm_rcp14_ps(v);
+      else                                          return _mm_rcp_ps(v);
+    }
+    else  if constexpr(c == category::float64x2 )
+    {
+      if constexpr(current_api >= avx2 )            return _mm_rcp14_pd(v);
+      else                                          return _mm_cvtps_pd(_mm_rcp_ps(_mm_cvtpd_ps(v)));
+    }
+  }
+
+
+  template<floating_real_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N> rec_(EVE_SUPPORTS(sse2_), wide<T, N> const &a0) noexcept
+      requires x86_abi<abi_t<T, N>>
+  {
+    constexpr auto c = categorize<wide<T, N>>();
+
+          if constexpr(c == category::float32x16 )  return _mm512_div_ps(one(eve::as(a0)), a0);
+    else  if constexpr(c == category::float64x8  )  return _mm512_div_pd(one(eve::as(a0)), a0);
+    else  if constexpr(c == category::float32x8  )  return _mm256_div_ps(one(eve::as(a0)), a0);
+    else  if constexpr(c == category::float64x4  )  return _mm256_div_pd(one(eve::as(a0)), a0);
+    else  if constexpr(c == category::float32x4  )  return _mm_div_ps(one(eve::as(a0)), a0);
+    else  if constexpr(c == category::float64x2  )  return _mm_div_pd(one(eve::as(a0)), a0);
+  }
+
   // -----------------------------------------------------------------------------------------------
-  // 128 bits implementation
-  template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N> rec_(EVE_SUPPORTS(sse2_), raw_type, wide<T, N> a0) noexcept
-    requires std::same_as<abi_t<T, N>, x86_128_>
+  // Masked case
+  template<conditional_expr C, floating_real_scalar_value T, typename N>
+  EVE_FORCEINLINE
+  wide<T, N> rec_(EVE_SUPPORTS(sse2_), C const &cx, raw_type, wide<T, N> const &a0) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
-    if constexpr(std::is_same_v<T, double>)
+    constexpr auto c = categorize<wide<T, N>>();
+
+    if constexpr( C::is_complete || abi_t<T, N>::is_wide_logical )
     {
-      // The error for this approximation is no more than 1.5.e-12
-      return _mm_cvtps_pd(_mm_rcp_ps(_mm_cvtpd_ps(a0)));
+      return rec_(EVE_RETARGET(cpu_),cx,a0);
     }
-    else if constexpr(std::is_same_v<T, float>) { return _mm_rcp_ps(a0); }
+    else
+    {
+      auto src  = alternative(cx,a0,as<wide<T, N>>{});
+      auto m    = expand_mask(cx,as<wide<T, N>>{}).storage().value;
+
+            if constexpr(c == category::float32x16 )  return _mm512_mask_rcp14_ps(src,m,a0);
+      else  if constexpr(c == category::float64x8  )  return _mm512_mask_rcp14_pd(src,m,a0);
+      else  if constexpr(c == category::float32x8  )  return _mm256_mask_rcp14_ps(src,m,a0);
+      else  if constexpr(c == category::float64x4  )  return _mm256_mask_rcp14_pd(src,m,a0);
+      else  if constexpr(c == category::float32x4  )  return _mm_mask_rcp14_ps(src,m,a0);
+      else  if constexpr(c == category::float64x2  )  return _mm_mask_rcp14_pd(src,m,a0);
+    }
   }
 
-  template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N> rec_(EVE_SUPPORTS(sse2_), wide<T, N> const a0) noexcept
-    requires std::same_as<abi_t<T, N>, x86_128_>
+  template<conditional_expr C, floating_real_scalar_value T, typename N>
+  EVE_FORCEINLINE
+  wide<T, N> rec_(EVE_SUPPORTS(sse2_), C const &cx, wide<T, N> const &a0) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
-    if constexpr(std::is_same_v<T, double>) { return _mm_div_pd(one(eve::as(a0)), a0); }
-    else if constexpr(std::is_same_v<T, float>)
+    constexpr auto c = categorize<wide<T, N>>();
+
+    if constexpr( C::is_complete || abi_t<T, N>::is_wide_logical )
     {
-      return _mm_div_ps(one(eve::as(a0)), a0);
+      return rec_(EVE_RETARGET(cpu_),cx,a0);
+    }
+    else
+    {
+      auto src  = alternative(cx,a0,as<wide<T, N>>{});
+      auto m    = expand_mask(cx,as<wide<T, N>>{}).storage().value;
+
+            if constexpr(c == category::float32x16 )  return _mm512_mask_div_ps(src,m,one(eve::as(a0)), a0);
+      else  if constexpr(c == category::float64x8  )  return _mm512_mask_div_pd(src,m,one(eve::as(a0)), a0);
+      else  if constexpr(c == category::float32x8  )  return _mm256_mask_div_ps(src,m,one(eve::as(a0)), a0);
+      else  if constexpr(c == category::float64x4  )  return _mm256_mask_div_pd(src,m,one(eve::as(a0)), a0);
+      else  if constexpr(c == category::float32x4  )  return _mm_mask_div_ps(src,m,one(eve::as(a0)), a0);
+      else  if constexpr(c == category::float64x2  )  return _mm_mask_div_pd(src,m,one(eve::as(a0)), a0);
     }
   }
 
-  // -----------------------------------------------------------------------------------------------
-  // 256 bits implementation
-  template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N> rec_(EVE_SUPPORTS(avx_), raw_type, wide<T, N> a0) noexcept
-    requires std::same_as<abi_t<T, N>, x86_256_>
-  {
-    if constexpr(std::is_same_v<T, double>)
-    {
-      // The error for this approximation is no more than 1.5.e-12
-      return _mm256_cvtps_pd(_mm_rcp_ps(_mm256_cvtpd_ps(a0)));
-    }
-    else if constexpr(std::is_same_v<T, float>) { return _mm256_rcp_ps(a0); }
-  }
-
-  template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N> rec_(EVE_SUPPORTS(avx_), wide<T, N> a0) noexcept
-    requires std::same_as<abi_t<T, N>, x86_256_>
-  {
-    if constexpr(std::is_same_v<T, double>) { return _mm256_div_pd(one(eve::as(a0)), a0); }
-    else if constexpr(std::is_same_v<T, float>)
-    {
-      return _mm256_div_ps(one(eve::as(a0)), a0);
-    }
-  }
 }

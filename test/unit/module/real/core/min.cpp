@@ -53,9 +53,10 @@ EVE_TEST( "Check behavior of min on all types full range"
         , eve::test::generate (  eve::test::randoms(eve::valmin, eve::valmin)
                               ,  eve::test::randoms(eve::valmin, eve::valmin)
                               ,  eve::test::randoms(eve::valmin, eve::valmin)
+                              ,  eve::test::logicals(0, 3)
                               )
         )
-<typename T>(  T const& a0, T const& a1, T const& a2)
+<typename T, typename M>(  T const& a0, T const& a1, T const& a2, M const & t)
 {
   using eve::min;
   using eve::detail::map;
@@ -71,6 +72,7 @@ EVE_TEST( "Check behavior of min on all types full range"
   TTS_ULP_EQUAL(eve::diff_1st(min)((a0), (a1), (a2)), map(dm1, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::diff_2nd(min)((a0), (a1), (a2)), map(dm2, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::diff_3rd(min)((a0), (a1), (a2)), map(dm3, a0, a1, a2), 2);
+  TTS_IEEE_EQUAL(min[t](a0, a1), eve::if_else(t, min(a0, a1), a0));
 };
 
 EVE_TEST_TYPES( "Check values of min"

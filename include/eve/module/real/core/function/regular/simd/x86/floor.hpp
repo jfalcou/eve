@@ -30,4 +30,29 @@ template<floating_scalar_value T, typename N>
     else if constexpr ( c == category::float64x2  ) return _mm_round_pd        (a0, _MM_FROUND_FLOOR);
     else if constexpr ( c == category::float32x4  ) return _mm_round_ps        (a0, _MM_FROUND_FLOOR);
   }
+
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, real_scalar_value T, typename N>
+  EVE_FORCEINLINE
+  wide<T, N> floor_(EVE_SUPPORTS(sse2_), C const &cx, wide<T, N> const &v) noexcept
+      requires x86_abi<abi_t<T, N>>
+  {
+    constexpr auto c = categorize<wide<T, N>>();
+
+    if constexpr( C::is_complete || abi_t<T, N>::is_wide_logical )
+    {
+      return floor_(EVE_RETARGET(cpu_),cx,v);
+    }
+    else
+    {
+      auto src  = alternative(cx,v,as<wide<T, N>>{});
+      auto m    = expand_mask(cx,as<wide<T, N>>{}).storage().value;
+
+            if constexpr(c && category::integer_  ) return if_else(cx,v,src);
+      else  if constexpr(c == category::float32x16) return _mm512_mask_floor_ps   (src,m,v);
+      else  if constexpr(c == category::float64x8 ) return _mm512_mask_floor_pd   (src,m,v);
+      else  if constexpr(c && category::float_    ) return if_else(cx,eve::floor(v),src);
+    }
+  }
 }

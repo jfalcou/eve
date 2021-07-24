@@ -151,7 +151,7 @@ make_all_units(ROOT random.real.core NAME next                  ARCH scalar simd
 ##make_all_units(ROOT random.real.core NAME nextafter             ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT random.real.core NAME oneminus              ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT random.real.core NAME plus                  ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT random.real.core NAME popcount              ARCH scalar simd TYPES ${integral_types})
+make_all_units(ROOT random.real.core NAME popcount              ARCH scalar simd TYPES ${uint_types}    )
 make_all_units(ROOT random.real.core NAME prev                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT random.real.core NAME rec                   ARCH scalar simd TYPES ${all_types}     )
 ##make_all_units(ROOT random.real.core NAME reduce                ARCH scalar simd TYPES ${real_types}    )
