@@ -36,8 +36,8 @@ TTS_CASE("Check eve::wide<udt> default constructor")
   TTS_EQUAL(p.y, -1);
 
   eve::wide<udt::grid2d> vp;
-  TTS_EQUAL(coord_x(vp), eve::wide<int>(+1));
-  TTS_EQUAL(coord_y(vp), eve::wide<int>(-1));
+  TTS_EQUAL(eve::content<0>(vp), eve::wide<int>(+1));
+  TTS_EQUAL(eve::content<1>(vp), eve::wide<int>(-1));
 };
 
 //==================================================================================================
@@ -47,8 +47,8 @@ TTS_CASE( "Check eve::wide<udt> splat constructor")
 {
   eve::wide<udt::grid2d> vp{ udt::grid2d{+6,-9} };
 
-  TTS_EQUAL(coord_x(vp), eve::wide<int>(+6));
-  TTS_EQUAL(coord_y(vp), eve::wide<int>(-9));
+  TTS_EQUAL(eve::content<0>(vp), eve::wide<int>(+6));
+  TTS_EQUAL(eve::content<1>(vp), eve::wide<int>(-9));
 };
 
 //==================================================================================================
@@ -58,8 +58,8 @@ TTS_CASE("Check eve::wide<udt> Lambda construction")
 {
   eve::wide<udt::grid2d> vp = [](int i, int c) { return udt::grid2d{i,c-i-1}; };
 
-  TTS_EQUAL(coord_x(vp), eve::wide<int>([](int i, int  ) { return i;    } ));
-  TTS_EQUAL(coord_y(vp), eve::wide<int>([](int i, int c) { return c-i-1;} ));
+  TTS_EQUAL(eve::content<0>(vp), eve::wide<int>([](int i, int  ) { return i;    } ));
+  TTS_EQUAL(eve::content<1>(vp), eve::wide<int>([](int i, int c) { return c-i-1;} ));
 };
 
 //==================================================================================================
@@ -74,8 +74,8 @@ TTS_CASE( "Check eve::wide<udt> enumerating constructor" )
               return eve::wide<udt::grid2d>( udt::grid2d{N,sz-N-1}...);
             }( std::make_index_sequence<sz>());
 
-  TTS_EQUAL(coord_x(vp), eve::wide<int>([](int i, int  ) { return i;    } ));
-  TTS_EQUAL(coord_y(vp), eve::wide<int>([](int i, int c) { return c-i-1;} ));
+  TTS_EQUAL(eve::content<0>(vp), eve::wide<int>([](int i, int  ) { return i;    } ));
+  TTS_EQUAL(eve::content<1>(vp), eve::wide<int>([](int i, int c) { return c-i-1;} ));
 };
 
 //==================================================================================================
@@ -89,36 +89,23 @@ TTS_CASE( "Check eve::wide<udt> constructor from raw storage")
 
   eve::wide<udt::grid2d> vp = st;
 
-  TTS_EQUAL(coord_x(vp), eve::wide<int>([](int i, int  ) { return i;    } ));
-  TTS_EQUAL(coord_y(vp), eve::wide<int>([](int i, int c) { return c-i-1;} ));
+  TTS_EQUAL(eve::content<0>(vp), eve::wide<int>([](int i, int  ) { return i;    } ));
+  TTS_EQUAL(eve::content<1>(vp), eve::wide<int>([](int i, int c) { return c-i-1;} ));
 };
 
-#if 0
 //==================================================================================================
 // Slice API
 //==================================================================================================
-EVE_TEST_TYPES( "Check eve::wide::slice behavior", eve::test::scalar::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE( "Check eve::wide<udt> slice behavior")
 {
-  using w_t = eve::wide<tuple_t<T>>;
+  using w_t = eve::wide<udt::grid2d>;
 
   if constexpr( w_t::size() > 1 )
   {
-    using split_t = typename eve::cardinal_t<w_t>::split_type;
-    using ref_t   = typename w_t::template rescale<split_t>;
+    eve::wide<udt::grid2d> vp = [](int i, int c) { return udt::grid2d{i,c-i-1}; };
 
-    w_t d = [&](auto i, auto) { return tuple_t<T> { static_cast<std::int8_t>('a'+i)
-                                                  , static_cast<T>(i + 1)
-                                                  , 1.5*(1+i)
-                                                  };
-                              };
-
-    auto [ low, high ] = d.slice();
-    TTS_EQUAL(low , ref_t([&](auto i, auto  ) { return d.get(i);     } ) );
-    TTS_EQUAL(high, ref_t([&](auto i, auto c) { return d.get(i + c); } ) );
-
-    TTS_EQUAL(d.slice(eve::lower_) , ref_t([&](auto i, auto  ) { return d.get(i);     } ) );
-    TTS_EQUAL(d.slice(eve::upper_) , ref_t([&](auto i, auto c) { return d.get(i + c); } ) );
+    auto[lo,hi] = vp.slice();
+    std::cout << lo << " -  " << hi << "\n";
   }
   else
   {
@@ -126,6 +113,7 @@ EVE_TEST_TYPES( "Check eve::wide::slice behavior", eve::test::scalar::all_types)
   }
 };
 
+#if 0
 //==================================================================================================
 // Combine API
 //==================================================================================================
