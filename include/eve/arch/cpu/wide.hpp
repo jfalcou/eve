@@ -876,43 +876,71 @@ inline namespace EVE_ABI_NAMESPACE
     // Logical operations
     //==============================================================================================
     //! @brief Element-wise equality comparison of two eve::wide
-    friend EVE_FORCEINLINE logical<wide> operator==(wide v, wide w) noexcept
+    friend  EVE_FORCEINLINE auto operator==(wide const& v, wide const& w) noexcept
     {
       return detail::self_eq(v,w);
     }
 
     //! @brief Element-wise equality comparison of a eve::wide and a scalar value
     template<scalar_value S>
-    friend EVE_FORCEINLINE logical<wide> operator==(wide v, S w) noexcept
+    friend EVE_FORCEINLINE auto operator==(wide const& v, S w) noexcept
     {
       return v == wide{w};
     }
 
+    template<scalar_value S>
+    friend EVE_FORCEINLINE auto operator==(wide const& v, S w) noexcept
+            requires(detail::tag_dispatchable<tag::is_equal_,wide,S>)
+    {
+      return tagged_dispatch(tag::is_equal_{}, v, w);
+    }
+
     //! @brief Element-wise equality comparison of a scalar value and a eve::wide
     template<scalar_value S>
-    friend EVE_FORCEINLINE logical<wide> operator==(S v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator==(S v, wide const& w) noexcept
     {
       return w == v;
     }
 
+    template<scalar_value S>
+    friend EVE_FORCEINLINE auto operator==(S v, wide const& w) noexcept
+            requires(detail::tag_dispatchable<tag::is_equal_,S,wide>)
+    {
+      return tagged_dispatch(tag::is_equal_{}, v, w);
+    }
+
     //! @brief Element-wise inequality comparison of two eve::wide
-    friend EVE_FORCEINLINE logical<wide> operator!=(wide v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator!=(wide const& v, wide w) noexcept
     {
       return detail::self_neq(v,w);
     }
 
     //! @brief Element-wise inequality comparison of a eve::wide and a scalar value
     template<scalar_value S>
-    friend EVE_FORCEINLINE logical<wide> operator!=(wide v, S w) noexcept
+    friend EVE_FORCEINLINE auto operator!=(wide const& v, S w) noexcept
     {
       return v != wide{w};
     }
 
+    template<scalar_value S>
+    friend EVE_FORCEINLINE auto operator!=(wide const& v, S w) noexcept
+            requires(detail::tag_dispatchable<tag::is_not_equal_,wide,S>)
+    {
+      return tagged_dispatch(tag::is_not_equal_{}, v, w);
+    }
+
     //! @brief Element-wise inequality comparison of a scalar value and a eve::wide
     template<scalar_value S>
-    friend EVE_FORCEINLINE logical<wide> operator!=(S v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator!=(S v, wide const& w) noexcept
     {
       return w != v;
+    }
+
+    template<scalar_value S>
+    friend EVE_FORCEINLINE auto operator!=(S v, wide const& w) noexcept
+            requires(detail::tag_dispatchable<tag::is_not_equal_,S,wide>)
+    {
+      return tagged_dispatch(tag::is_not_equal_{}, v, w);
     }
 
     //! @brief Element-wise less-than comparison between eve::wide

@@ -16,6 +16,13 @@
 #include <eve/detail/is_native.hpp>
 #include <eve/forward.hpp>
 
+// Register tag here so we can use them in tagged_dispatch situation
+namespace eve
+{
+  EVE_REGISTER_CALLABLE(is_equal_)
+  EVE_REGISTER_CALLABLE(is_not_equal_)
+}
+
 namespace eve::detail
 {
   //================================================================================================
@@ -135,7 +142,24 @@ namespace eve::detail
   }
 
   //================================================================================================
-  template<real_simd_value Wide>
+  template<simd_value Wide>
+  EVE_FORCEINLINE auto self_eq(Wide const& v,Wide const& w) noexcept
+  requires( kumi::product_type<element_type_t<Wide>> )
+  {
+    if constexpr( detail::tag_dispatchable<tag::is_equal_,Wide,Wide> )
+    {
+      return tagged_dispatch(tag::is_equal_{}, v, w);
+    }
+    else
+    {
+      auto zipped = kumi::zip(v.storage(),w.storage());
+      return kumi::fold_right ( [](auto acc , auto e) { return acc && ( get<0>(e) == get<1>(e) ); }
+                              , zipped, true
+                              );
+    }
+  }
+
+  template<simd_value Wide>
   EVE_FORCEINLINE auto self_eq(Wide const& v,Wide const& w) noexcept
   {
     constexpr auto eq = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e == f); };
@@ -152,7 +176,24 @@ namespace eve::detail
   }
 
   //================================================================================================
-  template<real_simd_value Wide>
+  template<simd_value Wide>
+  EVE_FORCEINLINE auto self_neq(Wide const& v,Wide const& w) noexcept
+  requires( kumi::product_type<element_type_t<Wide>> )
+  {
+    if constexpr( detail::tag_dispatchable<tag::is_not_equal_,Wide,Wide> )
+    {
+      return tagged_dispatch(tag::is_not_equal_{}, v, w);
+    }
+    else
+    {
+      auto zipped = kumi::zip(v.storage(),w.storage());
+      return kumi::fold_right ( [](auto acc , auto e) { return acc || ( get<0>(e) != get<1>(e) ); }
+                              , zipped, false
+                              );
+    }
+  }
+
+  template<simd_value Wide>
   EVE_FORCEINLINE auto self_neq(Wide const& v,Wide const& w) noexcept
   {
     constexpr auto eq = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e != f); };

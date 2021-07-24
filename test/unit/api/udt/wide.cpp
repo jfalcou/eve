@@ -36,8 +36,8 @@ TTS_CASE("Check eve::wide<udt> default constructor")
   TTS_EQUAL(p.y, -1);
 
   eve::wide<udt::grid2d> vp;
-  TTS_EQUAL(eve::content<0>(vp), eve::wide<int>(+1));
-  TTS_EQUAL(eve::content<1>(vp), eve::wide<int>(-1));
+  TTS_EQUAL(get<0>(vp), eve::wide<int>(+1));
+  TTS_EQUAL(get<1>(vp), eve::wide<int>(-1));
 };
 
 //==================================================================================================
@@ -47,8 +47,8 @@ TTS_CASE( "Check eve::wide<udt> splat constructor")
 {
   eve::wide<udt::grid2d> vp{ udt::grid2d{+6,-9} };
 
-  TTS_EQUAL(eve::content<0>(vp), eve::wide<int>(+6));
-  TTS_EQUAL(eve::content<1>(vp), eve::wide<int>(-9));
+  TTS_EQUAL(get<0>(vp), eve::wide<int>(+6));
+  TTS_EQUAL(get<1>(vp), eve::wide<int>(-9));
 };
 
 //==================================================================================================
@@ -58,8 +58,8 @@ TTS_CASE("Check eve::wide<udt> Lambda construction")
 {
   eve::wide<udt::grid2d> vp = [](int i, int c) { return udt::grid2d{i,c-i-1}; };
 
-  TTS_EQUAL(eve::content<0>(vp), eve::wide<int>([](int i, int  ) { return i;    } ));
-  TTS_EQUAL(eve::content<1>(vp), eve::wide<int>([](int i, int c) { return c-i-1;} ));
+  TTS_EQUAL(get<0>(vp), eve::wide<int>([](int i, int  ) { return i;    } ));
+  TTS_EQUAL(get<1>(vp), eve::wide<int>([](int i, int c) { return c-i-1;} ));
 };
 
 //==================================================================================================
@@ -74,8 +74,8 @@ TTS_CASE( "Check eve::wide<udt> enumerating constructor" )
               return eve::wide<udt::grid2d>( udt::grid2d{N,sz-N-1}...);
             }( std::make_index_sequence<sz>());
 
-  TTS_EQUAL(eve::content<0>(vp), eve::wide<int>([](int i, int  ) { return i;    } ));
-  TTS_EQUAL(eve::content<1>(vp), eve::wide<int>([](int i, int c) { return c-i-1;} ));
+  TTS_EQUAL(get<0>(vp), eve::wide<int>([](int i, int  ) { return i;    } ));
+  TTS_EQUAL(get<1>(vp), eve::wide<int>([](int i, int c) { return c-i-1;} ));
 };
 
 //==================================================================================================
@@ -89,8 +89,8 @@ TTS_CASE( "Check eve::wide<udt> constructor from raw storage")
 
   eve::wide<udt::grid2d> vp = st;
 
-  TTS_EQUAL(eve::content<0>(vp), eve::wide<int>([](int i, int  ) { return i;    } ));
-  TTS_EQUAL(eve::content<1>(vp), eve::wide<int>([](int i, int c) { return c-i-1;} ));
+  TTS_EQUAL(get<0>(vp), eve::wide<int>([](int i, int  ) { return i;    } ));
+  TTS_EQUAL(get<1>(vp), eve::wide<int>([](int i, int c) { return c-i-1;} ));
 };
 
 //==================================================================================================
@@ -148,12 +148,12 @@ TTS_CASE( "Check eve::wide<udt> combine behavior")
 //==================================================================================================
 TTS_CASE( "Check eve::wide<udt> structured binding behavior")
 {
-  eve::wide<udt::grid2d,eve::fixed<2>> vp = [](int i, int c) { return udt::grid2d{  i, c  -i-1}; };
+  eve::wide<udt::grid2d> vp = [](int i, int c) { return udt::grid2d{  i, c-i-1}; };
 
   auto[p0,p1] = vp;
   auto s0 = p0;
   auto s1 = p1;
 
-  TTS_EQUAL(s0, vp.get(0));
-  TTS_EQUAL(s1, vp.get(1));
+  TTS_EQUAL(s0, eve::wide<int>{[](int i, int  ){ return i;      } } );
+  TTS_EQUAL(s1, eve::wide<int>{[](int i, int c){ return c-i-1;  } } );
 };

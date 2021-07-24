@@ -6,6 +6,7 @@
 **/
 //==================================================================================================
 #include <eve/product_type.hpp>
+#include <eve/function/is_equal.hpp>
 #include <type_traits>
 
 namespace udt
@@ -36,6 +37,25 @@ namespace udt
   std::ostream& operator<<( std::ostream& os, grid2d const& p)
   {
     return os << "[x: " << p.x << " - y: " << p.y << "]";
+  }
+
+  //------------------------------------------------------------------------------------------------
+  // Functions and operators are externally defined using tagged_dispatch
+  //------------------------------------------------------------------------------------------------
+  auto tagged_dispatch( eve::tag::is_equal_
+                      , eve::same_value_type<grid2d> auto a
+                      , eve::same_value_type<grid2d> auto b
+                      )
+  {
+    return (get<0>(a) == get<0>(b)) &&(get<1>(a) == get<1>(b));
+  }
+
+  auto tagged_dispatch( eve::tag::is_not_equal_
+                      , eve::same_value_type<grid2d> auto a
+                      , eve::same_value_type<grid2d> auto b
+                      )
+  {
+    return (get<0>(a) != get<0>(b)) || (get<1>(a) != get<1>(b));
   }
 }
 

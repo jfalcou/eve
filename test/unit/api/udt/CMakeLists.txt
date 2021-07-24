@@ -6,4 +6,5 @@
 
 ##==================================================================================================
 ## Wide API tests over User Defined Type
-make_unit("unit.api.udt"  wide.cpp )
+make_unit("unit.api.udt"  comparison.cpp  )
+make_unit("unit.api.udt"  wide.cpp        )
