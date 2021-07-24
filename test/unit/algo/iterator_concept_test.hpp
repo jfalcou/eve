@@ -81,6 +81,13 @@ namespace algo_test
     TTS_EQUAL(f, l);
   }
 
+  template <typename I>
+  void cardinal_cast_test(I f)
+  {
+    auto res = f.cardinal_cast(eve::lane<1>);
+    TTS_TYPE_IS(typename decltype(res)::cardinal, eve::fixed<1>);
+  }
+
   template <eve::algo::readable_iterator I, eve::algo::sentinel_for<I> S, typename T, typename ReplaceIgnored>
   void iterator_sentinel_test(I f, S l, T v, ReplaceIgnored replace)
   {

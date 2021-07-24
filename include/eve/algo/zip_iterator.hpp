@@ -47,17 +47,17 @@ namespace eve::algo
       : storage{i, is...}
     {}
 
+    operator zip_iterator<unaligned_t<I>, unaligned_t<Is> ...>() const
+      requires (!unaligned_iterator<I>) || ((!unaligned_iterator<Is>) || ...)
+    {
+      return unaligned();
+    }
+
     auto unaligned() const
     {
       return zip_iterator<unaligned_t<I>, unaligned_t<Is>...> {
         kumi::map([](auto x) { return x.unaligned(); }, storage)
       };
-    }
-
-    // data_source requirement
-    auto operator*() const
-    {
-      return kumi::map( [](auto p) { return *p; }, storage );
     }
 
     auto previous_partially_aligned() const
@@ -83,12 +83,65 @@ namespace eve::algo
       }
     }
 
+    template <typename _Cardinal>
+    auto cardinal_cast(_Cardinal N) const
+    {
+      return zip_iterator<decltype(I{}.cardinal_cast(N)), decltype(Is{}.cardinal_cast(N))...> {
+        kumi::map([&](auto x) { return x.cardinal_cast(N); }, storage)
+      };
+    }
+
+    // data_source requirement
+    auto operator*() const
+    {
+      return kumi::map( [](auto p) { return *p; }, storage );
+    }
+
+    template <sentinel_for<I> I2, typename ... Is2>
+    //  requires (sentinel_for<Is, Is2> && ...), this breaks on gcc
+    friend bool operator==(zip_iterator const& x, zip_iterator<I2, Is2...> const& y)
+    {
+      return get<0>(x) == get<0>(y);
+    }
+
+    template <sentinel_for<I> I2, typename... Is2>
+      requires (sentinel_for<Is, Is2> && ...)
+    auto operator<=>(zip_iterator<I2, Is2...> const& x) const
+    {
+      return get<0>(*this) <=> get<0>(x);
+    }
+
+    zip_iterator& operator+=(std::ptrdiff_t n)
+    {
+      kumi::for_each([&](auto& m) { m += n; }, storage);
+      return *this;
+    }
+
+    template <sentinel_for<I> I2, typename ... Is2>
+      requires (sentinel_for<Is, Is2> && ...)
+    std::ptrdiff_t operator-(zip_iterator<I2, Is2...> const& x) const
+    {
+      return get<0>(*this) - get<0>(x);
+    }
+
     template< relative_conditional_expr C, decorator S>
     friend auto tagged_dispatch ( eve::tag::load_, C const& c, S const& s
                                 , auto const& pack, zip_iterator self
                                 )
     {
       return eve::load(c, s, pack, self.storage);
+    }
+
+    template <relative_conditional_expr C>
+    friend void tagged_dispatch(
+      eve::tag::store_, C cond, wide_value_type v, zip_iterator self )
+    {
+      eve::store[cond](v, self.storage);
+    }
+
+    friend void tagged_dispatch( eve::tag::store_, wide_value_type v, zip_iterator self )
+    {
+      eve::store(v, self.storage);
     }
 
     tuple_type storage;
