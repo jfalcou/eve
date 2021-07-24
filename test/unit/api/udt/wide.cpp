@@ -102,10 +102,17 @@ TTS_CASE( "Check eve::wide<udt> slice behavior")
 
   if constexpr( w_t::size() > 1 )
   {
-    eve::wide<udt::grid2d> vp = [](int i, int c) { return udt::grid2d{i,c-i-1}; };
+    using c_t = typename w_t::cardinal_type::split_type;
+    constexpr int s = c_t::value;
+
+    eve::wide<udt::grid2d>      vp  = [](int i, int c) { return udt::grid2d{  i, c  -i-1}; };
+    eve::wide<udt::grid2d, c_t> vl  = [](int i, int c) { return udt::grid2d{  i, c+s-i-1}; };
+    eve::wide<udt::grid2d, c_t> vh  = [](int i, int  ) { return udt::grid2d{s+i,   s-i-1}; };
 
     auto[lo,hi] = vp.slice();
-    std::cout << lo << " -  " << hi << "\n";
+
+    TTS_EQUAL(lo, vl);
+    TTS_EQUAL(hi, vh);
   }
   else
   {
@@ -113,28 +120,22 @@ TTS_CASE( "Check eve::wide<udt> slice behavior")
   }
 };
 
-#if 0
 //==================================================================================================
 // Combine API
 //==================================================================================================
-EVE_TEST_TYPES( "Check eve::wide::combine behavior", eve::test::scalar::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE( "Check eve::wide<udt> combine behavior")
 {
-  using w_t = eve::wide<tuple_t<T>>;
+  using w_t = eve::wide<udt::grid2d>;
 
   if constexpr(w_t::size() < 64)
   {
     using comb_t  = typename eve::cardinal_t<w_t>::combined_type;
     using ref_t   = typename w_t::template rescale<comb_t>;
 
-    w_t d = [&](auto i, auto) { return tuple_t<T> { static_cast<std::int8_t>('a'+i)
-                                                  , static_cast<T>(i + 1)
-                                                  , 1.5*(1+i)
-                                                  };
-                              };
+    w_t vp = [](int i, int c) { return udt::grid2d{  i, c  -i-1}; };
 
-    TTS_EQUAL( (ref_t{d,d})       , ref_t ( [&](auto i, auto c) { return  d.get(i % (c/2)); } ) );
-    TTS_EQUAL( eve::combine(d,d)  , ref_t ( [&](auto i, auto c) { return  d.get(i % (c/2)); } ) );
+    TTS_EQUAL( (ref_t{vp,vp})     , ref_t ( [&](auto i, auto c) { return vp.get(i % (c/2)); } ) );
+    TTS_EQUAL( eve::combine(vp,vp), ref_t ( [&](auto i, auto c) { return vp.get(i % (c/2)); } ) );
   }
   else
   {
@@ -142,6 +143,7 @@ EVE_TEST_TYPES( "Check eve::wide::combine behavior", eve::test::scalar::all_type
   }
 };
 
+#if 0
 //==================================================================================================
 // Structured bindings
 //==================================================================================================
