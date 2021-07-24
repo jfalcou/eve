@@ -55,14 +55,31 @@ EVE_TEST_TYPES( "Check load behavior with tuple of pointers", eve::test::scalar:
 
 
   w_t constructed(src);
-  TTS_EQUAL(constructed                   , reference   );
-  TTS_EQUAL(eve::load(src)                , reference   );
-  TTS_EQUAL(eve::load(src, eve::lane<8>)  , reference8  );
+  TTS_EQUAL(constructed                                , reference   );
+  TTS_EQUAL(eve::load(src)                             , reference   );
+  TTS_EQUAL(eve::load(src, eve::lane<8>)               , reference8  );
+  TTS_EQUAL(eve::unsafe(eve::load)(src)                , reference   );
+  TTS_EQUAL(eve::unsafe(eve::load)(src, eve::lane<8>)  , reference8  );
 
   auto loaded = eve::load[il](src);
   eve::for_each( [=]<typename M>(M& m){ m &= il.mask(eve::as(m)).mask(); }, loaded);
 
-  TTS_EQUAL(loaded, ireference  );
+  TTS_EQUAL(loaded, ireference);
+
+  // else_
+  {
+    auto else_reference = ireference;
+    eve::for_each( [=]<typename M>(M& m) { m = eve::if_else[il](m, eve::zero); }, else_reference );
+
+    s_t scalar_zero {(std::uint8_t) 0, (T) 0, (double) 0};
+    w_t wide_zeroes { scalar_zero };
+
+    auto loaded_scalar_alt = eve::load[il.else_(scalar_zero)](src);
+    TTS_EQUAL(loaded_scalar_alt, else_reference);
+
+    auto loaded_wide_alt = eve::load[il.else_(wide_zeroes)](src);
+    TTS_EQUAL(loaded_wide_alt, else_reference);
+  }
 };
 
 }

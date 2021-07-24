@@ -47,11 +47,26 @@ namespace eve::detail
           , relative_conditional_expr C
           >
   EVE_FORCEINLINE void store_(EVE_SUPPORTS(cpu_),
-                              C const &cond,
+                              C const &c,
                               wide<T, S> const &value,
                               Ptr ptrs) noexcept
   {
-    kumi::for_each( [&](auto v, auto p) { store[cond](v, p); }, value.storage(), ptrs );
+    if constexpr ( C::has_alternative )
+    {
+      auto alt = [&]{
+        if constexpr ( kumi::product_type<typename C::alternative_type> ) return c.alternative;
+        else                                                              return c.alternative.storage();
+      }();
+
+      kumi::for_each( [&](auto v, auto part_alt, auto p) {
+         auto new_c = c.map_alternative([&](auto) { return part_alt; });
+         store[new_c](v, p);
+      }, value.storage(), alt, ptrs);
+    }
+    else
+    {
+      kumi::for_each( [&](auto v, auto p) { store[c](v, p); }, value.storage(), ptrs );
+    }
   }
 
   // -----------------------------------------------------------------------------------------------
