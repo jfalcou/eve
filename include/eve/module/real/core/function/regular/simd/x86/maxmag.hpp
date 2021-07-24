@@ -57,7 +57,7 @@ namespace eve::detail
 
             if constexpr(c == category::float32x16) return _mm512_mask_range_ps(src,m,v,w,ctrl);
       else  if constexpr(c == category::float64x8 ) return _mm512_mask_range_pd(src,m,v,w,ctrl);
-      else     return maxmag_(EVE_RETARGET(cpu_),cx,v,w,ctrl);
+      else     return maxmag_(EVE_RETARGET(cpu_),cx,v,w);
     }
   }
 }
