@@ -107,3 +107,7 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/maxmag.hpp>
+
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/module/real/core/function/regular/simd/x86/maxmag.hpp>
+#endif
