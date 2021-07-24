@@ -143,46 +143,17 @@ TTS_CASE( "Check eve::wide<udt> combine behavior")
   }
 };
 
-#if 0
 //==================================================================================================
 // Structured bindings
 //==================================================================================================
-EVE_TEST_TYPES( "Check eve::wide<tuple> structured binding behavior", eve::test::scalar::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE( "Check eve::wide<udt> structured binding behavior")
 {
-  using s_t  = tuple_t<T>;
-  using w2_t = eve::wide<tuple_t<T>, eve::fixed<2>>;
-  using w4_t = eve::wide<tuple_t<T>, eve::fixed<4>>;
-  using w8_t = eve::wide<tuple_t<T>, eve::fixed<8>>;
+  eve::wide<udt::grid2d,eve::fixed<2>> vp = [](int i, int c) { return udt::grid2d{  i, c  -i-1}; };
 
-  auto const filler = [](auto i, auto)  { return s_t  { static_cast<std::int8_t>('a'+i)
-                                            , static_cast<T>(i + 1)
-                                            , 1.5*(1+i)
-                                            };
-                                        };
-  w2_t w2 = filler;
-  w4_t w4 = filler;
-  w8_t w8 = filler;
+  auto[p0,p1] = vp;
+  auto s0 = p0;
+  auto s1 = p1;
 
-  auto[s20,s21] = w2;
-  TTS_EQUAL(s20, w2.get(0));
-  TTS_EQUAL(s21, w2.get(1));
-
-  auto[s40,s41,s42,s43] = w4;
-  TTS_EQUAL(s40, w4.get(0));
-  TTS_EQUAL(s41, w4.get(1));
-  TTS_EQUAL(s42, w4.get(2));
-  TTS_EQUAL(s43, w4.get(3));
-
-  auto[s80,s81,s82,s83,s84,s85,s86,s87] = w8;
-  TTS_EQUAL(s80, w8.get(0));
-  TTS_EQUAL(s81, w8.get(1));
-  TTS_EQUAL(s82, w8.get(2));
-  TTS_EQUAL(s83, w8.get(3));
-  TTS_EQUAL(s84, w8.get(4));
-  TTS_EQUAL(s85, w8.get(5));
-  TTS_EQUAL(s86, w8.get(6));
-  TTS_EQUAL(s87, w8.get(7));
+  TTS_EQUAL(s0, vp.get(0));
+  TTS_EQUAL(s1, vp.get(1));
 };
-
-#endif
