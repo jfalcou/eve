@@ -61,6 +61,6 @@ namespace eve::detail
   template<real_value T0, real_value T1, real_value ...Ts>
   common_compatible_t<T0,T1,Ts...> negabsmin_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
   {
-    return eve::abs(eve::min(a0, a1, args...));
+    return -eve::abs(eve::min(a0, a1, args...));
   }
 }
