@@ -26,6 +26,16 @@ namespace eve::detail
   EVE_FORCEINLINE auto minabs_(EVE_SUPPORTS(cpu_), saturated_type const &, T const &a, T const &b) noexcept
   requires has_native_abi_v<T>
   {
-    return  min(saturated(eve::abs)(a), saturated(eve::abs)(b));
+    return  eve::min(saturated(eve::abs)(a), saturated(eve::abs)(b));
+  }
+
+  //================================================================================================
+  //N parameters
+  //================================================================================================
+  template<real_value T0, real_value T1, real_value ...Ts>
+  auto minabs_(EVE_SUPPORTS(cpu_), saturated_type const &, T0 a0, T1 a1, Ts... args)
+  {
+    auto sa = saturated(eve::abs);
+    return eve::min(sa(a0), sa(a1), sa(args)...) ;
   }
 }

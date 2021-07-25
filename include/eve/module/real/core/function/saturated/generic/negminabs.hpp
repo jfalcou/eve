@@ -9,37 +9,32 @@
 
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/pedantic/min.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/platform.hpp>
+#include <eve/function/minabs.hpp>
 
 namespace eve::detail
 {
   template<real_value T, real_value U>
-  EVE_FORCEINLINE auto minabs_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const &a, U const &b) noexcept
+  EVE_FORCEINLINE auto negminabs_(EVE_SUPPORTS(cpu_), saturated_type const &, T const &a, U const &b) noexcept
       requires compatible_values<T, U>
   {
-    return arithmetic_call(pedantic(minabs), a, b);
+    return arithmetic_call(saturated(negminabs), a, b);
   }
 
   template<real_value T>
-  EVE_FORCEINLINE auto minabs_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const &a, T const &b) noexcept
+  EVE_FORCEINLINE auto negminabs_(EVE_SUPPORTS(cpu_), saturated_type const &, T const &a, T const &b) noexcept
+  requires has_native_abi_v<T>
   {
-    return  pedantic(min)(eve::abs(a), eve::abs(b));
+    return  -saturated(minabs(a, b));
   }
 
   //================================================================================================
   //N parameters
   //================================================================================================
   template<real_value T0, real_value T1, real_value ...Ts>
-  auto minabs_(EVE_SUPPORTS(cpu_), pedantic_type const &, T0 a0, T1 a1, Ts... args)
+  auto negminabs_(EVE_SUPPORTS(cpu_), saturated_type const &, T0 a0, T1 a1, Ts... args)
   {
-    using r_t = common_compatible_t<T0,T1,Ts...>;
-    r_t that(pedantic(minabs)(r_t(a0),r_t(a1)));
-    ((that = pedantic(minabs)(that,r_t(args))),...);
-    return that;
+    return -saturated(eve::minabs)(a0, a1, args...) ;
   }
+
 }
