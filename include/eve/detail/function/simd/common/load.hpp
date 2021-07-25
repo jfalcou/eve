@@ -235,9 +235,27 @@ namespace eve::detail
   requires(std::same_as<abi_t<T, N>, bundle_> && kumi::product_type<Ptr>)
   {
     wide<T, N> that;
-    kumi::for_each( [=]<typename M>(M& m, auto p) { m = load(c,safe,as<M>{},p); }
-                  , that.storage(), ptr
-                  );
+    if constexpr ( C::has_alternative )
+    {
+      auto alt = [&]{
+        if constexpr ( kumi::product_type<typename C::alternative_type> ) return c.alternative;
+        else                                                              return c.alternative.storage();
+      }();
+
+      kumi::for_each( [=]<typename M>(M& m, auto part_alt, auto p) {
+            auto new_c = c.map_alternative([&](auto) { return part_alt; });
+            m = load(new_c,safe,as<M>{},p);
+          }
+          , that.storage(), alt, ptr
+          );
+    }
+    else
+    {
+      kumi::for_each( [=]<typename M>(M& m, auto p) { m = load(c,safe,as<M>{},p); }
+                     , that.storage(), ptr
+                     );
+    }
+
     return that;
   }
 
