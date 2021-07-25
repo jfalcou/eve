@@ -39,7 +39,7 @@ namespace eve::detail
   store_(EVE_SUPPORTS(cpu_), wide<T, S> const &value, Ptr ptrs) noexcept
     requires std::same_as<abi_t<T, S>, bundle_>
   {
-    kumi::for_each( [](auto v, auto p) { store(v, p); }, value.storage(), ptrs );
+    kumi::for_each( [](auto v, auto p) { store(v, p); }, value, ptrs );
   }
 
   template< kumi::product_type T, typename S

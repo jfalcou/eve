@@ -58,7 +58,7 @@ namespace eve::detail
     // We're swizzling so much we aggregate the output
     if constexpr( has_bundle_abi_v<that_t> )
     {
-      return that_t{ kumi::map( [](auto m) { return m[Pattern{}]; }, v.storage() ) };
+      return that_t{ kumi::map( [](auto m) { return m[Pattern{}]; }, v ) };
     }
     else if constexpr( has_aggregated_abi_v<that_t> && !has_aggregated_abi_v<wide<T,N>> )
     {

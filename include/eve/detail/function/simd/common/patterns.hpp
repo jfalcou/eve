@@ -67,7 +67,7 @@ namespace eve::detail
       using w_t = as_wide_t<Wide,Cardinal>;
       if constexpr( is_bundle_v<typename Wide::abi_type> )
       {
-        return w_t( kumi::map([]<typename T>(T) { return as_wide_t<T,Cardinal>{0}; }, w.storage()));
+        return w_t( kumi::map([]<typename T>(T) { return as_wide_t<T,Cardinal>{0}; }, w));
       }
       else
       {

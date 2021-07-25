@@ -16,7 +16,7 @@ namespace eve::detail
   {
     if constexpr( is_bundle_v<typename Wide::abi_type> )
     {
-      return Wide(kumi::map( [&]<typename T>(T m) { return broadcast(m,Index); }, v.storage()));
+      return Wide(kumi::map( [&]<typename T>(T m) { return broadcast(m,Index); }, v));
     }
     else
     {
@@ -32,7 +32,7 @@ namespace eve::detail
     if constexpr( is_bundle_v<typename Wide::abi_type> )
     {
       return that_t ( kumi::map ( [&]<typename T>(T m) { return broadcast(m,Index,fixed<N>{}); }
-                                , v.storage()
+                                , v
                                 )
                     );
     }

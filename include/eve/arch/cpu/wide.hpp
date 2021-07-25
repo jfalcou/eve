@@ -1021,7 +1021,7 @@ inline namespace EVE_ABI_NAMESPACE
       return kumi::get<I>(w.storage());
     }
 
-    template<std::size_t I> friend EVE_FORCEINLINE auto const& get(wide const& w) noexcept
+    template<std::size_t I> friend EVE_FORCEINLINE auto get(wide const& w) noexcept
     requires( kumi::product_type<Type> )
     {
       return kumi::get<I>(w.storage());

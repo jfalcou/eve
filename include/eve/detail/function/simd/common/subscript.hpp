@@ -68,7 +68,7 @@ namespace eve::detail
     {
       // Constructs piecewise so we don't have to ask for special ctor
       typename Wide::value_type that;
-      kumi::for_each( [i](auto m, auto& d) { d = m.get(i); }, p.storage(), that);
+      kumi::for_each( [i](auto m, auto& d) { d = m.get(i); }, p, that);
       return that;
     }
     else
