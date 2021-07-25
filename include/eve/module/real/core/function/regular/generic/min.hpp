@@ -57,15 +57,6 @@ namespace eve::detail
   //================================================================================================
   //N parameters
   //================================================================================================
-  template<decorator D, real_value T0, real_value T1, real_value ...Ts>
-  auto min_(EVE_SUPPORTS(cpu_), D const &, T0 a0, T1 a1, Ts... args)
-  {
-    using r_t = common_compatible_t<T0,T1,Ts...>;
-    r_t that(D()(min)(r_t(a0),r_t(a1)));
-    ((that = D()(min)(that,r_t(args))),...);
-    return that;
-  }
-
   template<real_value T0, real_value T1, real_value ...Ts>
   auto min_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
   {
