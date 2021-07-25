@@ -26,7 +26,7 @@ namespace eve::detail
 
     if constexpr( is_bundle_v<typename Wide::abi_type> )
     {
-      return Wide(kumi::map( [=](auto m) { return broadcast_group(m,g,i,sz); }, w.storage()) );
+      return Wide(kumi::map( [=](auto m) { return broadcast_group(m,g,i,sz); }, w) );
     }
     else
     {

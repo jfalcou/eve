@@ -20,7 +20,7 @@ namespace eve::detail
   {
     if constexpr( is_bundle_v<abi_t<T,N>> )
     {
-      return wide<T, N>( kumi::map([=]<typename M>(M m){ return m[ind]; }, a.storage()) );
+      return wide<T, N>( kumi::map([=]<typename M>(M m){ return m[ind]; }, a) );
     }
     else
     {

@@ -237,16 +237,11 @@ namespace eve::detail
     wide<T, N> that;
     if constexpr ( C::has_alternative )
     {
-      auto alt = [&]{
-        if constexpr ( kumi::product_type<typename C::alternative_type> ) return c.alternative;
-        else                                                              return c.alternative.storage();
-      }();
-
       kumi::for_each( [=]<typename M>(M& m, auto part_alt, auto p) {
             auto new_c = c.map_alternative([&](auto) { return part_alt; });
             m = load(new_c,safe,as<M>{},p);
           }
-          , that.storage(), alt, ptr
+          , that.storage(), c.alternative, ptr
           );
     }
     else

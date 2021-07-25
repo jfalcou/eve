@@ -35,10 +35,7 @@ namespace eve::detail
     }
     else if constexpr( is_bundle_v<typename Wide::abi_type> )
     {
-      return Wide ( kumi::map ( []<typename T>(T m) { return slide_left(m,index<Shift>); }
-                              , v.storage()
-                              )
-                  );
+      return Wide( kumi::map ( []<typename T>(T m) { return slide_left(m,index<Shift>); }, v) );
     }
     else
     {

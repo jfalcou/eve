@@ -28,7 +28,7 @@ namespace eve::detail
     }
     else if constexpr( has_bundle_abi_v<Wide> )
     {
-      return Wide(kumi::map( [](auto m) { return reverse(m); }, v.storage()));
+      return Wide(kumi::map( [](auto m) { return reverse(m); }, v));
     }
     else
     {

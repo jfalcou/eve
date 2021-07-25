@@ -76,7 +76,7 @@ namespace eve::algo
 
         [&]<std::size_t... idx>(std::index_sequence<idx...>)
         {
-          ((get<idx + 1>(res.storage) = get<idx + 1>(storage) - offset), ...);
+          ((kumi::get<idx + 1>(res.storage) = kumi::get<idx + 1>(storage) - offset), ...);
         }(std::index_sequence_for<Is...>{});
 
         return res;

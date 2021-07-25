@@ -78,7 +78,7 @@ namespace eve::detail
     }
     else if constexpr( is_bundle_v<abi_t> )
     {
-      return sub_t(kumi::map( [&](auto m) { return m.slice(s); }, a.storage()));
+      return sub_t(kumi::map( [&](auto m) { return m.slice(s); }, a));
     }
   }
 
