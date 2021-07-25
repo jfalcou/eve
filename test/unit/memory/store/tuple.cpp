@@ -15,7 +15,6 @@
 
 namespace
 {
-
 template<typename T>
 using tuple_t = kumi::tuple<std::int8_t,T,double>;
 
@@ -138,8 +137,7 @@ EVE_TEST_TYPES( "Check store behavior with aligned pointers", eve::test::scalar:
     {
       TTS_EQUAL(ctarget0[i], 0);
       TTS_EQUAL(ctarget1[i], (T)0);
-      // TODO(#824) - uncomment
-      // TTS_EQUAL(ctarget2[i], 0.0);
+      TTS_EQUAL(ctarget2[i], 0.0);
     }
   }
 };

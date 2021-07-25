@@ -31,7 +31,7 @@ namespace eve
     static constexpr bool has_alternative = true;
     using alternative_type = V;
 
-    or_(C c, V v) : C(c), alternative(v) {}
+    or_(C const& c, V const& v) : C(c), alternative(v) {}
 
     template<typename T> auto rebase(T v) const
     {
@@ -65,7 +65,7 @@ namespace eve
 
     if_(C c) : condition_(c) {}
 
-    template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
+    template<typename V> EVE_FORCEINLINE auto else_(V const& v) const  {  return or_(*this,v);  }
     template<typename T> EVE_FORCEINLINE auto mask(eve::as<T> const&)  const { return condition_; }
 
     friend std::ostream& operator<<(std::ostream& os, if_ const& c)
@@ -85,7 +85,7 @@ namespace eve
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = true;
 
-    template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
+    template<typename V> EVE_FORCEINLINE auto else_(V const& v) const  {  return or_(*this,v);  }
 
     template<typename T> EVE_FORCEINLINE auto mask(eve::as<T> const&) const
     {
@@ -167,7 +167,7 @@ namespace eve
 
     constexpr explicit EVE_FORCEINLINE keep_first(std::ptrdiff_t n) noexcept : count_(n) {}
 
-    template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
+    template<typename V> EVE_FORCEINLINE auto else_(V const& v) const  {  return or_(*this,v);  }
 
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const&) const
     {
@@ -227,7 +227,7 @@ namespace eve
 
     constexpr explicit EVE_FORCEINLINE ignore_last(std::ptrdiff_t n) noexcept : count_(n) {}
 
-    template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
+    template<typename V> EVE_FORCEINLINE auto else_(V const& v) const  {  return or_(*this,v);  }
 
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const& tgt) const
     {
@@ -271,7 +271,7 @@ namespace eve
 
     constexpr explicit EVE_FORCEINLINE keep_last(std::ptrdiff_t n) noexcept : count_(n) {}
 
-    template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
+    template<typename V> EVE_FORCEINLINE auto else_(V const& v) const  {  return or_(*this,v);  }
 
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const&) const
     {
@@ -335,7 +335,7 @@ namespace eve
 
     constexpr explicit EVE_FORCEINLINE ignore_first(std::ptrdiff_t n) noexcept : count_(n) {}
 
-    template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
+    template<typename V> EVE_FORCEINLINE auto else_(V const& v) const  {  return or_(*this,v);  }
 
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const& tgt) const
     {
@@ -382,7 +382,7 @@ namespace eve
       EVE_ASSERT(b<=e, "[eve::keep_between] Index mismatch for begin/end");
     }
 
-    template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
+    template<typename V> EVE_FORCEINLINE auto else_(V const& v) const  {  return or_(*this,v);  }
 
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const&) const
     {
@@ -447,7 +447,7 @@ namespace eve
             : first_count_(b), last_count_(e)
     {}
 
-    template<typename V> EVE_FORCEINLINE auto else_(V v) const  {  return or_(*this,v);  }
+    template<typename V> EVE_FORCEINLINE auto else_(V const& v) const  {  return or_(*this,v);  }
 
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const& tgt) const
     {
