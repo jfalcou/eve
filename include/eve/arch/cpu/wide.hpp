@@ -28,8 +28,9 @@
 #include <eve/detail/function/subscript.hpp>
 #include <eve/detail/function/swizzle.hpp>
 
-#include <type_traits>
 #include <ostream>
+#include <type_traits>
+#include <utility>
 
 namespace eve
 {
@@ -1010,19 +1011,39 @@ inline namespace EVE_ABI_NAMESPACE
         return os << ')';
       }
     }
+
+    //==============================================================================================
+    // Product type Support
+    //==============================================================================================
+    template<std::size_t I> friend EVE_FORCEINLINE auto& get(wide& w) noexcept
+    requires( kumi::product_type<Type> )
+    {
+      return kumi::get<I>(w.storage());
+    }
+
+    template<std::size_t I> friend EVE_FORCEINLINE auto const& get(wide const& w) noexcept
+    requires( kumi::product_type<Type> )
+    {
+      return kumi::get<I>(w.storage());
+    }
   };
   //================================================================================================
   //! @}
   //================================================================================================
-}
+} }
 
-  //================================================================================================
-  // Product type operations
-  //================================================================================================
-  template<typename Function, typename... Wide>
-  EVE_FORCEINLINE void for_each(Function&& f, Wide&&... ts)
-  requires requires { kumi::for_each(f, std::forward<Wide>(ts).storage()... ); }
-  {
-    kumi::for_each( std::forward<Function>(f), std::forward<Wide>(ts).storage()... );
-  }
-}
+//================================================================================================
+// Product type Support
+//================================================================================================
+template<typename T, typename N>
+struct  kumi::is_product_type<eve::wide<T, N>> : kumi::is_product_type<T>
+{};
+
+template<std::size_t I, kumi::product_type T, typename N>
+struct  std::tuple_element<I, eve::wide<T, N>>
+      : std::tuple_element<I, typename eve::wide<T, N>::storage_type>
+{};
+
+template<kumi::product_type T, typename N>
+struct std::tuple_size<eve::wide<T, N>> : std::tuple_size<typename eve::wide<T, N>::storage_type>
+{};

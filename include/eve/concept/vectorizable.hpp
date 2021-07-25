@@ -35,10 +35,7 @@ namespace eve::detail
   {
     return []<std::size_t... I>( std::index_sequence<I...> )
     {
-      return  ( is_scalar_value<std::remove_cvref_t<decltype( get<I>(std::declval<T>()) )>>::value
-                && ...
-                && true
-              );
+      return ( is_scalar_value<kumi::element_t<I,T>>::value && ... && true );
     }(std::make_index_sequence<kumi::size<T>::value>{});
   }
 

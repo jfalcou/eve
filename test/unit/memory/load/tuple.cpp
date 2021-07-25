@@ -62,14 +62,14 @@ EVE_TEST_TYPES( "Check load behavior with tuple of pointers", eve::test::scalar:
   TTS_EQUAL(eve::unsafe(eve::load)(src, eve::lane<8>)  , reference8  );
 
   auto loaded = eve::load[il](src);
-  eve::for_each( [=]<typename M>(M& m){ m &= il.mask(eve::as(m)).mask(); }, loaded);
+  kumi::for_each( [=]<typename M>(M& m){ m &= il.mask(eve::as(m)).mask(); }, loaded);
 
   TTS_EQUAL(loaded, ireference);
 
   // else_
   {
     auto else_reference = ireference;
-    eve::for_each( [=]<typename M>(M& m) { m = eve::if_else[il](m, eve::zero); }, else_reference );
+    kumi::for_each( [=]<typename M>(M& m) { m = eve::if_else[il](m, eve::zero); }, else_reference );
 
     s_t scalar_zero {(std::uint8_t) 0, (T) 0, (double) 0};
     w_t wide_zeroes { scalar_zero };
