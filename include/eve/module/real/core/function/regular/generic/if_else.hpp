@@ -27,13 +27,7 @@ namespace eve::detail
   template<value T, kumi::product_type V>
   EVE_FORCEINLINE auto if_else_(EVE_SUPPORTS(cpu_), T const& cond, V const& t, V const& f )
   {
-    return V{ kumi::map ( [&](auto const& v, auto const& f)
-                        {
-                          return if_else(cond,v,f);
-                        }
-                        , t, f
-                        )
-            };
+    return V{ kumi::map([&](auto const& v, auto const& f) { return if_else(cond,v,f); }, t, f) };
   }
 
   template<scalar_value T, value U, value V>
@@ -75,19 +69,27 @@ namespace eve::detail
   template<conditional_expr C, typename U, typename V>
   EVE_FORCEINLINE auto if_else_(EVE_SUPPORTS(cpu_), C const& cond, U const& t, V const& f )
   requires(    compatible_values<U, V>
+            || (kumi::product_type<U> && std::is_invocable_v<V, as<kumi::element_t<0,U>>>)
+            || (kumi::product_type<U> && std::is_invocable_v<U, as<kumi::element_t<0,V>>>)
             || (value<U> && std::is_invocable_v<V, as<U>>)
             || (value<V> && std::is_invocable_v<U, as<V>>)
           )
   {
-    using r_t = std::conditional_t< simd_value<U>, U, V>;
+    using r_t = std::conditional< simd_value<U>, U, V>;
 
     if constexpr( C::is_complete )
     {
-      if constexpr(C::is_inverted) return r_t(t); else return r_t(f);
+      using v_t = typename r_t::type;
+      if constexpr(C::is_inverted) return v_t(t); else return v_t(f);
     }
     else
     {
-      auto const condition  = cond.mask(eve::as<r_t>());
+      using mask_t = std::conditional_t < kumi::product_type<U>
+                                        , kumi::element<0, typename r_t::type>
+                                        , r_t
+                                        >;
+
+      auto const condition  = cond.mask(eve::as<typename mask_t::type>());
       if constexpr( C::is_inverted )  { return if_else(condition, f, t ); }
       else                            { return if_else(condition, t, f ); }
     }
@@ -96,7 +98,9 @@ namespace eve::detail
   //------------------------------------------------------------------------------------------------
   // Optimizes if_else(c,t,constant)
   template<value T, value U, typename Constant>
-  requires( std::is_invocable_v<Constant, as<U>> )
+  requires( ( kumi::product_type<U> && std::is_invocable_v<Constant, as<kumi::element_t<0,U>>> )
+          || std::is_invocable_v<Constant, as<U>>
+          )
   EVE_FORCEINLINE constexpr auto if_else_ ( EVE_SUPPORTS(cpu_)
                                           , T const& cond, U const& u, Constant const& v
                                           ) noexcept
@@ -105,6 +109,18 @@ namespace eve::detail
 
           if constexpr(scalar_value<T>)       return static_cast<bool>(cond) ? u : v(tgt{});
     else  if constexpr(current_api >= avx512) return if_else(cond, u, v(tgt{}));
+    else  if constexpr( kumi::product_type<U> )
+    {
+      if constexpr( tag_dispatchable<tag::if_else_,T,U,Constant> )
+      {
+        return tagged_dispatch(tag::if_else_{}, cond, u, v);
+      }
+      else
+      {
+        auto cst = U{ kumi::map([&]<typename M>(M const& e) { return v(as(e)); }, u) };
+        return if_else(cond, u, cst);
+      }
+    }
     else
     {
       using cvt = as<as_logical_t<element_type_t<U>>>;
@@ -142,7 +158,9 @@ namespace eve::detail
   //------------------------------------------------------------------------------------------------
   // Optimizes if_else(c,constant, t)
   template<value T, value U, typename Constant>
-  requires( std::is_invocable_v<Constant, as<U>> )
+  requires( ( kumi::product_type<U> && std::is_invocable_v<Constant, as<kumi::element_t<0,U>>> )
+          || std::is_invocable_v<Constant, as<U>>
+          )
   EVE_FORCEINLINE constexpr auto if_else_ ( EVE_SUPPORTS(cpu_)
                                           , T const& cond, Constant const& v, U const& u
                                           ) noexcept
@@ -151,6 +169,18 @@ namespace eve::detail
 
           if constexpr(scalar_value<T>)       return static_cast<bool>(cond) ? v(tgt{}) : u;
     else  if constexpr(current_api >= avx512) return if_else(cond, v(tgt{}), u);
+    else  if constexpr( kumi::product_type<U> )
+    {
+      if constexpr( tag_dispatchable<tag::if_else_,T,Constant,U> )
+      {
+        return tagged_dispatch(tag::if_else_{}, cond, v, u);
+      }
+      else
+      {
+        auto cst = U{ kumi::map([&]<typename M>(M const& e) { return v(as(e)); }, u) };
+        return if_else(cond, cst, u);
+      }
+    }
     else
     {
       using cvt = as<as_logical_t<element_type_t<U>>>;
