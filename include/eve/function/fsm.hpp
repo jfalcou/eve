@@ -14,17 +14,17 @@ namespace eve
   //================================================================================================
   //! @addtogroup arithmetic
   //! @{
-  //! @var fam
+  //! @var fsm
   //!
-  //! @brief Callable object computing the fused add-multiply operation.
+  //! @brief Callable object computing the fused sub-multiply operation.
   //!
-  //! **Required header:** `#include <eve/function/fam.hpp>`
+  //! **Required header:** `#include <eve/function/fsm.hpp>`
   //!
   //! #### Members Functions
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the fused add-multiply operation                           |
+  //! | `operator()` | the fused sub-multiply operation   |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
@@ -41,13 +41,13 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!The call `fam(x, y, z)` is similar to `x+y*z` as if calculated to infinite precision and rounded once
+  //!The call `fsm(x, y, z)` is similar to `-x+y*z` as if calculated to infinite precision and rounded once
   //!to fit the result as much as supported by the hardware.
   //!
   //!The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
   //!
   //!@warning Note
-  //!    This `fam` implementation provides those properties for all [real integral values](../../concepts.html#integral_value)
+  //!    This `fsm` implementation provides those properties for all [real integral values](../../concepts.html#integral_value)
   //!     and when possible for [real floating values](../../concepts.html#value).
   //!
   //! ---
@@ -56,7 +56,7 @@ namespace eve
   //!  auto operator[]( conditional_expression auto cond ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //!  Higher-order function generating a masked version of eve::fam
+  //!  Higher-order function generating a masked version of eve::fsm
   //!
   //!  **Parameters**
   //!
@@ -64,7 +64,7 @@ namespace eve
   //!
   //!  **Return value**
   //!
-  //!  A Callable object so that the expression `fam[cond](x, ...)` is equivalent to `if_else(cond,fam(x, ...),x)`
+  //!  A Callable object so that the expression `fsm[cond](x, ...)` is equivalent to `if_else(cond,fsm(x, ...),x)`
   //!
   //! ---
   //!
@@ -72,46 +72,46 @@ namespace eve
   //!
   //!  * `pedantic`
   //!
-  //!     **Required header:** #include <eve/function/pedantic/fam.hpp>
+  //!     **Required header:** #include <eve/function/pedantic/fsm.hpp>
   //!
-  //!     The call `pedantic(fam)(x,y,z)` ensures the one rounding property. This can be very expensive if the
+  //!     The call `pedantic(fsm)(x,y,z)` ensures the one rounding property. This can be very expensive if the
   //!      system has no hardware capability.
   //!  * `numeric`
   //!
-  //!     **Required header:** #include <eve/function/numeric/fam.hpp>
+  //!     **Required header:** #include <eve/function/numeric/fsm.hpp>
   //!
-  //!     The call `numeric(fam)(x,y,z)` ensures the full compliance to fam properties. This can be very expensive if the
+  //!     The call `numeric(fsm)(x,y,z)` ensures the full compliance to fsm properties. This can be very expensive if the
   //!      system has no hardware capability.
   //!
   //!  * `diff`
   //!
-  //!     **Required header:** #include <eve/function/diff/fam.hpp>
+  //!     **Required header:** #include <eve/function/diff/fsm.hpp>
   //!
-  //!     The expression `diff_1st(fam)(x,y,z)`, `diff_2nd(fam)(x,y,z)` and `diff_3rd(fam)(x,y,z)` compute the partial
-  //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y,z) \rightarrow \ x+y z\f$.
+  //!     The expression `diff_1st(fsm)(x,y,z)`, `diff_2nd(fsm)(x,y,z)` and `diff_3rd(fsm)(x,y,z)` compute the partial
+  //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y,z) \rightarrow \ -x+y z\f$.
   //!
   //! #### Example
   //!
   //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
   //!
-  //! @include{lineno} doc/core/fam.cpp
+  //! @include{lineno} doc/core/fsm.cpp
   //!
   //!  @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(fam_, fam);
+  EVE_MAKE_CALLABLE(fsm_, fsm);
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/real/core/function/regular/generic/fam.hpp>
+#include <eve/module/real/core/function/regular/generic/fsm.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/fam.hpp>
+#  include <eve/module/real/core/function/regular/simd/x86/fsm.hpp>
 #endif
 
-// #if defined(EVE_INCLUDE_POWERPC_HEADER)
-// #  include <eve/module/real/core/function/regular/simd/ppc/fam.hpp>
-// #endif
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
+#  include <eve/module/real/core/function/regular/simd/ppc/fsm.hpp>
+#endif
 
-// #if defined(EVE_INCLUDE_ARM_HEADER)
-// #  include <eve/module/real/core/function/regular/simd/arm/neon/fam.hpp>
-// #endif
+#if defined(EVE_INCLUDE_ARM_HEADER)
+#  include <eve/module/real/core/function/regular/simd/arm/neon/fsm.hpp>
+#endif

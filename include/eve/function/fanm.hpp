@@ -14,17 +14,17 @@ namespace eve
   //================================================================================================
   //! @addtogroup arithmetic
   //! @{
-  //! @var fam
+  //! @var fanm
   //!
-  //! @brief Callable object computing the fused add-multiply operation.
+  //! @brief Callable object computing the fused add-negate-multiply operation.
   //!
-  //! **Required header:** `#include <eve/function/fam.hpp>`
+  //! **Required header:** `#include <eve/function/fanm.hpp>`
   //!
   //! #### Members Functions
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the fused add-multiply operation                           |
+  //! | `operator()` | the fused add-negate-multiply operation                    |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
@@ -41,13 +41,13 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!The call `fam(x, y, z)` is similar to `x+y*z` as if calculated to infinite precision and rounded once
+  //!The call `fanm(x, y, z)` is similar to `x-y*z` as if calculated to infinite precision and rounded once
   //!to fit the result as much as supported by the hardware.
   //!
   //!The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
   //!
   //!@warning Note
-  //!    This `fam` implementation provides those properties for all [real integral values](../../concepts.html#integral_value)
+  //!    This `fanm` implementation provides those properties for all [real integral values](../../concepts.html#integral_value)
   //!     and when possible for [real floating values](../../concepts.html#value).
   //!
   //! ---
@@ -56,7 +56,7 @@ namespace eve
   //!  auto operator[]( conditional_expression auto cond ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //!  Higher-order function generating a masked version of eve::fam
+  //!  Higher-order function generating a masked version of eve::fanm
   //!
   //!  **Parameters**
   //!
@@ -64,7 +64,7 @@ namespace eve
   //!
   //!  **Return value**
   //!
-  //!  A Callable object so that the expression `fam[cond](x, ...)` is equivalent to `if_else(cond,fam(x, ...),x)`
+  //!  A Callable object so that the expression `fanm[cond](x, ...)` is equivalent to `if_else(cond,fanm(x, ...),x)`
   //!
   //! ---
   //!
@@ -72,46 +72,46 @@ namespace eve
   //!
   //!  * `pedantic`
   //!
-  //!     **Required header:** #include <eve/function/pedantic/fam.hpp>
+  //!     **Required header:** #include <eve/function/pedantic/fanm.hpp>
   //!
-  //!     The call `pedantic(fam)(x,y,z)` ensures the one rounding property. This can be very expensive if the
+  //!     The call `pedantic(fanm)(x,y,z)` ensures the one rounding property. This can be very expensive if the
   //!      system has no hardware capability.
   //!  * `numeric`
   //!
-  //!     **Required header:** #include <eve/function/numeric/fam.hpp>
+  //!     **Required header:** #include <eve/function/numeric/fanm.hpp>
   //!
-  //!     The call `numeric(fam)(x,y,z)` ensures the full compliance to fam properties. This can be very expensive if the
+  //!     The call `numeric(fanm)(x,y,z)` ensures the full compliance to fanm properties. This can be very expensive if the
   //!      system has no hardware capability.
   //!
   //!  * `diff`
   //!
-  //!     **Required header:** #include <eve/function/diff/fam.hpp>
+  //!     **Required header:** #include <eve/function/diff/fanm.hpp>
   //!
-  //!     The expression `diff_1st(fam)(x,y,z)`, `diff_2nd(fam)(x,y,z)` and `diff_3rd(fam)(x,y,z)` compute the partial
-  //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y,z) \rightarrow \ x+y z\f$.
+  //!     The expression `diff_1st(fanm)(x,y,z)`, `diff_2nd(fanm)(x,y,z)` and `diff_3rd(fanm)(x,y,z)` compute the partial
+  //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y,z) \rightarrow \ x-y z\f$.
   //!
   //! #### Example
   //!
   //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
   //!
-  //! @include{lineno} doc/core/fam.cpp
+  //! @include{lineno} doc/core/fanm.cpp
   //!
   //!  @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(fam_, fam);
+  EVE_MAKE_CALLABLE(fanm_, fanm);
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/real/core/function/regular/generic/fam.hpp>
+#include <eve/module/real/core/function/regular/generic/fanm.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/fam.hpp>
+#  include <eve/module/real/core/function/regular/simd/x86/fanm.hpp>
 #endif
 
-// #if defined(EVE_INCLUDE_POWERPC_HEADER)
-// #  include <eve/module/real/core/function/regular/simd/ppc/fam.hpp>
-// #endif
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
+#  include <eve/module/real/core/function/regular/simd/ppc/fanm.hpp>
+#endif
 
-// #if defined(EVE_INCLUDE_ARM_HEADER)
-// #  include <eve/module/real/core/function/regular/simd/arm/neon/fam.hpp>
-// #endif
+#if defined(EVE_INCLUDE_ARM_HEADER)
+#  include <eve/module/real/core/function/regular/simd/arm/neon/fanm.hpp>
+#endif
