@@ -17,6 +17,7 @@
 #include <eve/function/is_nan.hpp>
 #include <eve/function/is_not_greater_equal.hpp>
 #include <eve/function/minabs.hpp>
+#include <eve/function/minus.hpp>
 #include <eve/traits/common_compatible.hpp>
 
 #include <type_traits>
@@ -34,7 +35,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto negminabs_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
   requires has_native_abi_v<T>
   {
-    return  -minabs(a, b);
+    return  minus(minabs(a, b));
   }
 
   //================================================================================================
@@ -61,6 +62,6 @@ namespace eve::detail
   template<real_value T0, real_value T1, real_value ...Ts>
   common_compatible_t<T0,T1,Ts...> negminabs_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
   {
-    return -eve::minabs(a0, a1, args...) ;
+    return minus(eve::minabs(a0, a1, args...));
   }
 }

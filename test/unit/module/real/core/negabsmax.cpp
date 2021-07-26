@@ -28,6 +28,10 @@ EVE_TEST_TYPES( "Check return types of negabsmax"
 <typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
+  TTS_EXPR_IS( eve::negabsmax(T(), T()  )  , T);
+  TTS_EXPR_IS( eve::negabsmax(T(), v_t())  , T);
+  TTS_EXPR_IS( eve::negabsmax(v_t(), T())  , T);
+  TTS_EXPR_IS( eve::negabsmax(v_t(), v_t()) ,v_t );
 
   TTS_EXPR_IS( eve::negabsmax(T(), T(), T()  )  , T);
   TTS_EXPR_IS( eve::negabsmax(T(), v_t(), T())  , T);
