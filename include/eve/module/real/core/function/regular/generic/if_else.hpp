@@ -100,12 +100,12 @@ namespace eve::detail
     using tgt = as<U>;
 
           if constexpr(scalar_value<T>)       return static_cast<bool>(cond) ? u : v(tgt{});
-    else  if constexpr(current_api >= avx512) return if_else(cond, u, v(tgt{}));
     else  if constexpr( kumi::product_type<U> )
     {
       auto cst = U{ kumi::map([&]<typename M>(M const& e) { return v(as(e)); }, u) };
       return if_else(cond, u, cst);
     }
+    else  if constexpr(current_api >= avx512) return if_else(cond, u, v(tgt{}));
     else
     {
       using cvt = as<as_logical_t<element_type_t<U>>>;
@@ -153,12 +153,12 @@ namespace eve::detail
     using tgt = as<U>;
 
           if constexpr(scalar_value<T>)       return static_cast<bool>(cond) ? v(tgt{}) : u;
-    else  if constexpr(current_api >= avx512) return if_else(cond, v(tgt{}), u);
     else  if constexpr( kumi::product_type<U> )
     {
       auto cst = U{ kumi::map([&]<typename M>(M const& e) { return v(as(e)); }, u) };
       return if_else(cond, cst, u);
     }
+    else  if constexpr(current_api >= avx512) return if_else(cond, v(tgt{}), u);
     else
     {
       using cvt = as<as_logical_t<element_type_t<U>>>;
