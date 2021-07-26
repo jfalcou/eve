@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/concept/compatible.hpp>
-#include <eve/detail/concepts.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/detail/apply_over.hpp>
@@ -32,6 +31,8 @@
 #include <eve/function/regular.hpp>
 #include <eve/function/raw.hpp>
 #include <eve/function/sign.hpp>
+
+#include <concepts>
 #include <type_traits>
 
 namespace eve::detail

@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/concept/compatible.hpp>
-#include <eve/detail/concepts.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/constant/mone.hpp>
 #include <eve/constant/nan.hpp>
@@ -31,6 +30,8 @@
 #include <eve/function/rec.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/abs.hpp>
+
+#include <concepts>
 
 namespace eve::detail
 {

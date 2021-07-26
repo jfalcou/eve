@@ -11,7 +11,6 @@
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
-#include <eve/detail/concepts.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/decorator.hpp>
@@ -20,6 +19,8 @@
 #include <eve/function/sub.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/concept/range.hpp>
+
+#include <concepts>
 #include <iterator>
 #include <initializer_list>
 

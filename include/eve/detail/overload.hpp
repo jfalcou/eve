@@ -10,10 +10,11 @@
 #include <eve/arch/spec.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/concepts.hpp>
 #include <eve/detail/function/to_logical.hpp>
 #include <eve/concept/conditional.hpp>
 #include <eve/concept/value.hpp>
+
+#include <concepts>
 #include <type_traits>
 #include <utility>
 #include <ostream>

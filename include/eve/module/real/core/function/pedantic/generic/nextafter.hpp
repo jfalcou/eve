@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/concept/compatible.hpp>
-#include <eve/detail/concepts.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/constant/allbits.hpp>
 #include <eve/detail/implementation.hpp>
@@ -18,6 +17,8 @@
 #include <eve/function/next.hpp>
 #include <eve/function/prev.hpp>
 #include <eve/function/pedantic.hpp>
+
+#include <concepts>
 #include <type_traits>
 
 namespace eve::detail

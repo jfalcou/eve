@@ -161,7 +161,7 @@ EVE_TEST_TYPES("Check preprocess_range for eve ptr iterators", algo_test::select
   run_test(arr.cbegin(), arr.cend());
 };
 
-EVE_TEST_TYPES("contigious ranges", algo_test::selected_types)
+EVE_TEST_TYPES("contiguous ranges", algo_test::selected_types)
 <typename T>(eve::as<T>)
 {
   using e_t = eve::element_type_t<T>;
