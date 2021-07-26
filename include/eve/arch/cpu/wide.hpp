@@ -148,6 +148,15 @@ inline namespace EVE_ABI_NAMESPACE
                                 )             )
     {}
 
+    //! Constructs a eve::wide from a sequence of SIMD product type values
+    template<simd_value S0, simd_value... Ss>
+    EVE_FORCEINLINE wide( S0 v0, Ss... vs) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires requires { storage_base(kumi::make_tuple(v0,vs...)); }
+#endif
+            : storage_base(kumi::make_tuple(v0,vs...))
+    {}
+
     //==============================================================================================
     //! @brief Constructs a eve::wide from a @callable.
     //!
