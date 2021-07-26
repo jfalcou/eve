@@ -152,7 +152,7 @@ inline namespace EVE_ABI_NAMESPACE
     template<simd_value S0, simd_value... Ss>
     explicit EVE_FORCEINLINE wide( S0 v0, Ss... vs) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-    requires requires { storage_base(kumi::make_tuple(v0,vs...)); }
+    requires kumi::sized_product_type<Type,1+sizeof...(Ss)>
 #endif
             : storage_base(kumi::make_tuple(v0,vs...))
     {}
