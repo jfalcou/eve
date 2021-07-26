@@ -14,17 +14,17 @@ namespace eve
   //================================================================================================
   //! @addtogroup arithmetic
   //! @{
-  //! @var fma
+  //! @var fsm
   //!
-  //! @brief Callable object computing the fused multiply-add operation.
+  //! @brief Callable object computing the fused sub-multiply operation.
   //!
-  //! **Required header:** `#include <eve/function/fma.hpp>`
+  //! **Required header:** `#include <eve/function/fsm.hpp>`
   //!
   //! #### Members Functions
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the fused multiply-add operation                           |
+  //! | `operator()` | the fused sub-multiply operation   |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
@@ -41,13 +41,13 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!The call `fma(x, y, z)` is similar to `x*y+z` as if calculated to infinite precision and rounded once
+  //!The call `fsm(x, y, z)` is similar to `-x+y*z` as if calculated to infinite precision and rounded once
   //!to fit the result as much as supported by the hardware.
   //!
   //!The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
   //!
   //!@warning Note
-  //!    This `fma` implementation provides those properties for all [real integral values](../../concepts.html#integral_value)
+  //!    This `fsm` implementation provides those properties for all [real integral values](../../concepts.html#integral_value)
   //!     and when possible for [real floating values](../../concepts.html#value).
   //!
   //! ---
@@ -56,7 +56,7 @@ namespace eve
   //!  auto operator[]( conditional_expression auto cond ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //!  Higher-order function generating a masked version of eve::fma
+  //!  Higher-order function generating a masked version of eve::fsm
   //!
   //!  **Parameters**
   //!
@@ -64,7 +64,7 @@ namespace eve
   //!
   //!  **Return value**
   //!
-  //!  A Callable object so that the expression `fma[cond](x, ...)` is equivalent to `if_else(cond,fma(x, ...),x)`
+  //!  A Callable object so that the expression `fsm[cond](x, ...)` is equivalent to `if_else(cond,fsm(x, ...),x)`
   //!
   //! ---
   //!
@@ -72,46 +72,38 @@ namespace eve
   //!
   //!  * `pedantic`
   //!
-  //!     **Required header:** #include <eve/function/pedantic/fma.hpp>
+  //!     **Required header:** #include <eve/function/pedantic/fsm.hpp>
   //!
-  //!     The call `pedantic(fma)(x,y,z)` ensures the one rounding property. This can be very expensive if the
+  //!     The call `pedantic(fsm)(x,y,z)` ensures the one rounding property. This can be very expensive if the
   //!      system has no hardware capability.
   //!  * `numeric`
   //!
-  //!     **Required header:** #include <eve/function/numeric/fma.hpp>
+  //!     **Required header:** #include <eve/function/numeric/fsm.hpp>
   //!
-  //!     The call `numeric(fma)(x,y,z)` ensures the full compliance to fma properties. This can be very expensive if the
+  //!     The call `numeric(fsm)(x,y,z)` ensures the full compliance to fsm properties. This can be very expensive if the
   //!      system has no hardware capability.
   //!
   //!  * `diff`
   //!
-  //!     **Required header:** #include <eve/function/diff/fma.hpp>
+  //!     **Required header:** #include <eve/function/diff/fsm.hpp>
   //!
-  //!     The expression `diff_1st(fma)(x,y,z)`, `diff_2nd(fma)(x,y,z)` and `diff_3rd(fma)(x,y,z)` compute the partial
-  //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y,z) \rightarrow \ xy+z\f$.
+  //!     The expression `diff_1st(fsm)(x,y,z)`, `diff_2nd(fsm)(x,y,z)` and `diff_3rd(fsm)(x,y,z)` compute the partial
+  //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y,z) \rightarrow \ -x+y z\f$.
   //!
   //! #### Example
   //!
   //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
   //!
-  //! @include{lineno} doc/core/fma.cpp
+  //! @include{lineno} doc/core/fsm.cpp
   //!
   //!  @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(fma_, fma);
+  EVE_MAKE_CALLABLE(fsm_, fsm);
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/real/core/function/regular/generic/fma.hpp>
+#include <eve/module/real/core/function/regular/generic/fsm.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/fma.hpp>
-#endif
-
-#if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/real/core/function/regular/simd/ppc/fma.hpp>
-#endif
-
-#if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/real/core/function/regular/simd/arm/neon/fma.hpp>
+#  include <eve/module/real/core/function/regular/simd/x86/fsm.hpp>
 #endif

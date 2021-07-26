@@ -64,12 +64,16 @@ namespace eve::detail
       {
         if constexpr(c == category::float32x16) return _mm512_mask_fnmadd_ps   (v,m,w,x);
         else  if constexpr(c == category::float64x8 ) return _mm512_mask_fnmadd_pd   (v,m,w,x);
-        else  return if_else(cx,eve::fnma(v, w, x),v);
+        else  if constexpr(c == category::float32x8)  return _mm256_mask_fnmadd_ps(v,m,w,x);
+        else  if constexpr(c == category::float64x4 ) return _mm256_mask_fnmadd_pd(v,m,w,x);
+        else  if constexpr(c == category::float32x4)  return _mm_mask_fnmadd_ps   (v,m,w,x);
+        else  if constexpr(c == category::float64x2 ) return _mm_mask_fnmadd_pd   (v,m,w,x);
+        else  return fnma_(EVE_RETARGET(cpu_),cx,v,w,x);
       }
       else
       {
         auto src  = alternative(cx,v,as<wide<T, N>>{});
-        return if_else(cx,eve::fnma(v, w, x),src);
+        return fnma_(EVE_RETARGET(cpu_),cx,v,w,x);
       }
     }
   }
