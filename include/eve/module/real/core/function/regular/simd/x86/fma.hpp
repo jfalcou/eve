@@ -60,7 +60,7 @@ namespace eve::detail
   // Masked case
   template<conditional_expr C, real_scalar_value T, typename N>
   EVE_FORCEINLINE
-  wide<T, N> fma_(EVE_SUPPORTS(sse2_), C const &cx, wide<T, N> const &v
+  wide<T, N> fma_(EVE_SUPPORTS(avx512_), C const &cx, wide<T, N> const &v
                  , wide<T, N> const &w
                  , wide<T, N> const &x) noexcept
   requires x86_abi<abi_t<T, N>>
@@ -77,14 +77,18 @@ namespace eve::detail
 
       if constexpr(!C::has_alternative)
       {
-        if constexpr(c == category::float32x16) return _mm512_mask_fmadd_ps   (v,m,w,x);
-        else  if constexpr(c == category::float64x8 ) return _mm512_mask_fmadd_pd   (v,m,w,x);
+              if constexpr(c == category::float32x16) return _mm512_mask_fmadd_ps(v,m,w,x);
+        else  if constexpr(c == category::float64x8 ) return _mm512_mask_fmadd_pd(v,m,w,x);
+        else  if constexpr(c == category::float32x8)  return _mm256_mask_fmadd_ps(v,m,w,x);
+        else  if constexpr(c == category::float64x4 ) return _mm256_mask_fmadd_pd(v,m,w,x);
+        else  if constexpr(c == category::float32x4)  return _mm_mask_fmadd_ps   (v,m,w,x);
+        else  if constexpr(c == category::float64x2 ) return _mm_mask_fmadd_pd   (v,m,w,x);
         else  return if_else(cx,eve::fma(v, w, x),v);
       }
       else
       {
         auto src  = alternative(cx,v,as<wide<T, N>>{});
-        return if_else(cx,eve::fma(v, w, x),src);
+        return  fma_(EVE_RETARGET(cpu_),cx,v,w,x);
       }
     }
   }

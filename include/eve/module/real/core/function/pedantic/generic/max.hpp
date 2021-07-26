@@ -69,4 +69,17 @@ namespace eve::detail
       }
     }
   }
+
+  //================================================================================================
+  //N parameters
+  //================================================================================================
+   template<real_value T0, real_value T1, real_value ...Ts>
+  auto max_(EVE_SUPPORTS(cpu_), pedantic_type const &, T0 a0, T1 a1, Ts... args)
+  {
+    auto m = pedantic(max);
+    using r_t = common_compatible_t<T0,T1,Ts...>;
+    r_t that(m(r_t(a0),r_t(a1)));
+    ((that = m(that,r_t(args))),...);
+    return that;
+  }
 }

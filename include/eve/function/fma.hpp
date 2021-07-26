@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the fused multiply-add operation   |
+  //! | `operator()` | the fused multiply-add operation                           |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---

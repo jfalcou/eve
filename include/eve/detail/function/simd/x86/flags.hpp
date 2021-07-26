@@ -28,6 +28,22 @@ namespace eve::detail
     return static_cast<std::int32_t>(a) | static_cast<std::int32_t>(b);
   }
 
+  enum class range_ctrl { min = 0b00
+                        , max = 0b01
+                        , absolute_min= 0b10
+                        , absolute_max= 0b11
+                        , sign_from_first = 0b0000
+                        , sign_from_cmp = 0b0100
+                        , sign_clear= 0b1000
+                        , sign_set= 0b1100
+                        };
+
+  EVE_FORCEINLINE constexpr int operator|(range_ctrl a,  range_ctrl b) noexcept
+  {
+    return static_cast<int>(a) | static_cast<int>(b);
+  }
+
+
   // X86 Flags for FP comparisons
   enum class cmp_flt
   { eq_oq     = 0x00 // equal (ordered, non-signaling)

@@ -54,9 +54,10 @@ EVE_TEST( "Check behavior of maxmag on all types full range"
         , eve::test::generate (  eve::test::randoms(eve::valmin, eve::valmax)
                               ,  eve::test::randoms(eve::valmin, eve::valmax)
                               ,  eve::test::randoms(eve::valmin, eve::valmax)
+                              ,  eve::test::logicals(0, 3)
                               )
         )
-<typename T>(  T const& a0, T const& a1, T const& a2)
+<typename T, typename M>(  T const& a0, T const& a1, T const& a2, M const & t)
 {
   using eve::maxmag;
   using eve::detail::map;
@@ -73,6 +74,7 @@ EVE_TEST( "Check behavior of maxmag on all types full range"
   TTS_ULP_EQUAL(eve::diff_1st(maxmag)((a0), (a1), (a2)), map(dm1, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::diff_2nd(maxmag)((a0), (a1), (a2)), map(dm2, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::diff_3rd(maxmag)((a0), (a1), (a2)), map(dm3, a0, a1, a2), 2);
+  TTS_IEEE_EQUAL(maxmag[t](a0, a1), eve::if_else(t, maxmag(a0, a1), a0));
 };
 
 EVE_TEST_TYPES( "Check values of maxmag"

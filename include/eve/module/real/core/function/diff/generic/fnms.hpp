@@ -9,6 +9,7 @@
 
 #include <eve/constant/mone.hpp>
 #include <eve/function/derivative.hpp>
+#include <eve/function/minus.hpp>
 
 namespace eve::detail
 {
@@ -31,8 +32,8 @@ namespace eve::detail
                             , T const &c) noexcept
   requires(has_native_abi_v<T>)
   {
-    if constexpr(N == 1) return -b;
-    else if constexpr(N == 2) return -a;
+    if constexpr(N == 1) return minus(b);
+    else if constexpr(N == 2) return minus(a);
     else if constexpr(N == 3) return mone(as(c));
   }
 }
