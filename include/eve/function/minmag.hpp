@@ -105,3 +105,7 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/minmag.hpp>
+
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/module/real/core/function/regular/simd/x86/minmag.hpp>
+#endif

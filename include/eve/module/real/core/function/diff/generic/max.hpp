@@ -9,6 +9,8 @@
 
 #include <eve/function/derivative.hpp>
 #include <eve/function/max.hpp>
+#include <eve/function/sign.hpp>
+#include <eve/constant/one.hpp>
 #include <eve/module/real/core/function/diff/detail/minmax_kernel.hpp>
 
 namespace eve::detail
@@ -17,6 +19,7 @@ namespace eve::detail
   auto max_(EVE_SUPPORTS(cpu_), diff_type<N>
            , T0 arg0, T1 arg1, Ts... args) noexcept
   {
-    return minmax_kernel<N>(eve::max, arg0, arg1, args...);
+    auto o = [](auto m){return eve::one(as(m)); };
+    return minmax_kernel<N>(eve::max, o, arg0, arg1, args...);
   }
 }

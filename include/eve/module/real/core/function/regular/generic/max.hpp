@@ -10,6 +10,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_less.hpp>
+#include <eve/function/max.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/detail/apply_over.hpp>
@@ -57,15 +58,6 @@ namespace eve::detail
   //================================================================================================
   //N parameters
   //================================================================================================
-  template<decorator D, real_value T0, real_value T1, real_value ...Ts>
-  auto max_(EVE_SUPPORTS(cpu_), D const &, T0 a0, T1 a1, Ts... args)
-  {
-    using r_t = common_compatible_t<T0,T1,Ts...>;
-    r_t that(D()(max)(r_t(a0),r_t(a1)));
-    ((that = D()(max)(that,r_t(args))),...);
-    return that;
-  }
-
   template<real_value T0, real_value T1, real_value ...Ts>
   auto max_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
   {

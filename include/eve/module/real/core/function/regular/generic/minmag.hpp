@@ -46,6 +46,16 @@ namespace eve::detail
   }
 
   //================================================================================================
+  // Masked case
+  //================================================================================================
+  template<conditional_expr C, real_value U, real_value V>
+  EVE_FORCEINLINE auto minmag_(EVE_SUPPORTS(cpu_), C const &cond, U const &t, V const &f) noexcept
+      requires compatible_values<U, V>
+  {
+    return mask_op(  cond, eve::minmag, t, f);
+  }
+
+  //================================================================================================
   //N parameters
   //================================================================================================
   template<decorator D, real_value T0, real_value T1, real_value ...Ts>
