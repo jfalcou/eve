@@ -15,7 +15,7 @@ using tuple_t = kumi::tuple<std::int8_t,T,double>;
 //==================================================================================================
 // Operator==
 //==================================================================================================
-EVE_TEST_TYPES( "Check eve::wide<tuple>operator== behavior", eve::test::scalar::all_types)
+EVE_TEST_TYPES( "Check eve::wide<tuple>operator==", eve::test::scalar::all_types)
 <typename T>(eve::as<T>)
 {
   using s_t = tuple_t<T>;
@@ -42,7 +42,7 @@ EVE_TEST_TYPES( "Check eve::wide<tuple>operator== behavior", eve::test::scalar::
 //==================================================================================================
 // Operator!=
 //==================================================================================================
-EVE_TEST_TYPES( "Check eve::wide<tuple>operator!= behavior", eve::test::scalar::all_types)
+EVE_TEST_TYPES( "Check eve::wide<tuple>operator!=", eve::test::scalar::all_types)
 <typename T>(eve::as<T>)
 {
   using s_t = tuple_t<T>;
