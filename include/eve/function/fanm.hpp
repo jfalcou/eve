@@ -107,11 +107,3 @@ namespace eve
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/real/core/function/regular/simd/x86/fanm.hpp>
 #endif
-
-#if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/real/core/function/regular/simd/ppc/fanm.hpp>
-#endif
-
-#if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/real/core/function/regular/simd/arm/neon/fanm.hpp>
-#endif
