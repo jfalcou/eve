@@ -24,6 +24,18 @@
 
 namespace eve::detail
 {
+  template<value T, kumi::product_type V>
+  EVE_FORCEINLINE auto if_else_(EVE_SUPPORTS(cpu_), T const& cond, V const& t, V const& f )
+  {
+    return V{ kumi::map ( [&](auto const& v, auto const& f)
+                        {
+                          return if_else(cond,v,f);
+                        }
+                        , t, f
+                        )
+            };
+  }
+
   template<scalar_value T, value U, value V>
   EVE_FORCEINLINE auto if_else_(EVE_SUPPORTS(cpu_), T const & cond, U const & t, V const & f )
   requires compatible_values<U, V>
