@@ -97,14 +97,18 @@ namespace eve::detail
 
       if constexpr(!C::has_alternative)
       {
-        if constexpr(c == category::float32x16) return _mm512_mask_fnmsub_ps   (v,m,w,x);
-        else  if constexpr(c == category::float64x8 ) return _mm512_mask_fnmsub_pd   (v,m,w,x);
-        else  return if_else(cx,eve::fnms(v, w, x),v);
+              if constexpr(c == category::float32x16) return _mm512_mask_fnmsub_ps(v,m,w,x);
+        else  if constexpr(c == category::float64x8 ) return _mm512_mask_fnmsub_pd(v,m,w,x);
+        else  if constexpr(c == category::float32x8)  return _mm256_mask_fnmsub_ps(v,m,w,x);
+        else  if constexpr(c == category::float64x4 ) return _mm256_mask_fnmsub_pd(v,m,w,x);
+        else  if constexpr(c == category::float32x4)  return _mm_mask_fnmsub_ps(v,m,w,x);
+        else  if constexpr(c == category::float64x2 ) return _mm_mask_fnmsub_pd(v,m,w,x);
+        else  return fnms_(EVE_RETARGET(cpu_),cx,v,w,x);
       }
       else
       {
         auto src  = alternative(cx,v,as<wide<T, N>>{});
-        return if_else(cx,eve::fnms(v, w, x),src);
+        return  fnms_(EVE_RETARGET(cpu_),cx,v,w,x);
       }
     }
   }
