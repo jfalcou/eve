@@ -20,7 +20,6 @@
 namespace eve
 {
   EVE_REGISTER_CALLABLE(is_equal_)
-  EVE_REGISTER_CALLABLE(is_not_equal_)
 }
 
 namespace eve::detail
@@ -180,9 +179,9 @@ namespace eve::detail
   EVE_FORCEINLINE auto self_neq(Wide const& v,Wide const& w) noexcept
   requires( kumi::product_type<element_type_t<Wide>> )
   {
-    if constexpr( detail::tag_dispatchable<tag::is_not_equal_,Wide,Wide> )
+    if constexpr( detail::tag_dispatchable<tag::is_equal_,Wide,Wide> )
     {
-      return tagged_dispatch(tag::is_not_equal_{}, v, w);
+      return !tagged_dispatch(tag::is_equal_{}, v, w);
     }
     else
     {

@@ -37,5 +37,5 @@ TTS_CASE("Check eve::wide<udt> operator!=")
   eve::logical<eve::wide<int>> checks = [&](auto i, auto) { return lhs.get(i) != rhs.get(i); };
 
   TTS_EQUAL( (lhs != rhs), checks );
-  TTS_EQUAL( udt::grid2d::neq_counter, 1);
+  TTS_EQUAL( udt::grid2d::eq_counter, 1);
 };

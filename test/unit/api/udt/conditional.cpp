@@ -32,7 +32,7 @@ TTS_CASE("Check eve::wide<udt> if_else")
   eve::wide<udt::grid2d> ref_0f = [&](int i, int) { return mask.get(i) ? udt::grid2d{0,0} : rhs.get(i) ; };
   TTS_EQUAL( eve::if_else(mask, eve::zero, rhs), ref_0f );
 
-  TTS_EQUAL( udt::grid2d::if_else_counter, 6);
+  TTS_EQUAL( udt::grid2d::if_else_counter, 3);
 };
 
 //==================================================================================================
@@ -50,5 +50,5 @@ TTS_CASE("Check eve::wide<udt> replace_ignored")
   eve::wide<udt::grid2d> ref_0 = [&](int i, int c) { return i < c/2 ? lhs.get(i) : udt::grid2d{0,0}; };
   TTS_EQUAL( eve::replace_ignored(lhs, eve::ignore_last(lhs.size()/2), eve::zero), ref_0 );
 
-  TTS_EQUAL( udt::grid2d::if_else_counter, 3);
+  TTS_EQUAL( udt::grid2d::if_else_counter, 2);
 };

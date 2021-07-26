@@ -150,7 +150,7 @@ inline namespace EVE_ABI_NAMESPACE
 
     //! Constructs a eve::wide from a sequence of SIMD product type values
     template<simd_value S0, simd_value... Ss>
-    EVE_FORCEINLINE wide( S0 v0, Ss... vs) noexcept
+    explicit EVE_FORCEINLINE wide( S0 v0, Ss... vs) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
     requires requires { storage_base(kumi::make_tuple(v0,vs...)); }
 #endif
@@ -897,25 +897,11 @@ inline namespace EVE_ABI_NAMESPACE
       return v == wide{w};
     }
 
-    template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator==(wide const& v, S w) noexcept
-            requires(detail::tag_dispatchable<tag::is_equal_,wide,S>)
-    {
-      return tagged_dispatch(tag::is_equal_{}, v, w);
-    }
-
     //! @brief Element-wise equality comparison of a scalar value and a eve::wide
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator==(S v, wide const& w) noexcept
     {
       return w == v;
-    }
-
-    template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator==(S v, wide const& w) noexcept
-            requires(detail::tag_dispatchable<tag::is_equal_,S,wide>)
-    {
-      return tagged_dispatch(tag::is_equal_{}, v, w);
     }
 
     //! @brief Element-wise inequality comparison of two eve::wide
@@ -931,25 +917,11 @@ inline namespace EVE_ABI_NAMESPACE
       return v != wide{w};
     }
 
-    template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator!=(wide const& v, S w) noexcept
-            requires(detail::tag_dispatchable<tag::is_not_equal_,wide,S>)
-    {
-      return tagged_dispatch(tag::is_not_equal_{}, v, w);
-    }
-
     //! @brief Element-wise inequality comparison of a scalar value and a eve::wide
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator!=(S v, wide const& w) noexcept
     {
       return w != v;
-    }
-
-    template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator!=(S v, wide const& w) noexcept
-            requires(detail::tag_dispatchable<tag::is_not_equal_,S,wide>)
-    {
-      return tagged_dispatch(tag::is_not_equal_{}, v, w);
     }
 
     //! @brief Element-wise less-than comparison between eve::wide
