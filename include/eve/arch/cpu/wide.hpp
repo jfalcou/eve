@@ -88,8 +88,11 @@ inline namespace EVE_ABI_NAMESPACE
     //! @{
     //==============================================================================================
 
-    //! Default constructor
-    EVE_FORCEINLINE wide() = default;
+    //! @brief Default constructor
+    //! This operation is a no-op unless `Type` satisfies eve::product_type and has a non trivial
+    //! default constructor.
+    EVE_FORCEINLINE wide() requires( std::is_trivially_constructible_v<Type>)                 {}
+    EVE_FORCEINLINE wide() requires(!std::is_trivially_constructible_v<Type>) : wide(Type{})  {}
 
     //! Constructs from ABI-specific storage
     EVE_FORCEINLINE wide(storage_type const &r) noexcept : storage_base(r) {}
@@ -129,7 +132,7 @@ inline namespace EVE_ABI_NAMESPACE
     //! Constructs a eve::wide by splatting a scalar value in all lanes
     template<scalar_value S>
     EVE_FORCEINLINE explicit  wide(S const& v)  noexcept
-                            : storage_base(detail::make(eve::as<wide>{}, v))
+                            : storage_base(detail::make(eve::as<wide>{}, static_cast<Type>(v)))
     {}
 
     //! Constructs a eve::wide from a sequence of scalar values of proper size
@@ -138,7 +141,20 @@ inline namespace EVE_ABI_NAMESPACE
 #if !defined(EVE_DOXYGEN_INVOKED)
     requires( card_base::size() == 2 + sizeof...(vs) )
 #endif
-                  : storage_base(detail::make(eve::as<wide>{}, v0, v1, vs...))
+                  : storage_base(detail::make ( eve::as<wide>{}
+                                              , static_cast<Type>(v0)
+                                              , static_cast<Type>(v1)
+                                              , static_cast<Type>(vs)...
+                                )             )
+    {}
+
+    //! Constructs a eve::wide from a sequence of SIMD product type values
+    template<simd_value S0, simd_value... Ss>
+    explicit EVE_FORCEINLINE wide( S0 v0, Ss... vs) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires kumi::sized_product_type<Type,1+sizeof...(Ss)>
+#endif
+            : storage_base(kumi::make_tuple(v0,vs...))
     {}
 
     //==============================================================================================
@@ -869,41 +885,41 @@ inline namespace EVE_ABI_NAMESPACE
     // Logical operations
     //==============================================================================================
     //! @brief Element-wise equality comparison of two eve::wide
-    friend EVE_FORCEINLINE logical<wide> operator==(wide v, wide w) noexcept
+    friend  EVE_FORCEINLINE auto operator==(wide v, wide w) noexcept
     {
       return detail::self_eq(v,w);
     }
 
     //! @brief Element-wise equality comparison of a eve::wide and a scalar value
     template<scalar_value S>
-    friend EVE_FORCEINLINE logical<wide> operator==(wide v, S w) noexcept
+    friend EVE_FORCEINLINE auto operator==(wide v, S w) noexcept
     {
       return v == wide{w};
     }
 
     //! @brief Element-wise equality comparison of a scalar value and a eve::wide
     template<scalar_value S>
-    friend EVE_FORCEINLINE logical<wide> operator==(S v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator==(S v, wide w) noexcept
     {
       return w == v;
     }
 
     //! @brief Element-wise inequality comparison of two eve::wide
-    friend EVE_FORCEINLINE logical<wide> operator!=(wide v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator!=(wide v, wide w) noexcept
     {
       return detail::self_neq(v,w);
     }
 
     //! @brief Element-wise inequality comparison of a eve::wide and a scalar value
     template<scalar_value S>
-    friend EVE_FORCEINLINE logical<wide> operator!=(wide v, S w) noexcept
+    friend EVE_FORCEINLINE auto operator!=(wide v, S w) noexcept
     {
       return v != wide{w};
     }
 
     //! @brief Element-wise inequality comparison of a scalar value and a eve::wide
     template<scalar_value S>
-    friend EVE_FORCEINLINE logical<wide> operator!=(S v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator!=(S v, wide w) noexcept
     {
       return w != v;
     }
@@ -995,11 +1011,22 @@ inline namespace EVE_ABI_NAMESPACE
     }
 
     //! Inserts a eve::wide into a output stream
-    friend std::ostream &operator<<(std::ostream &os, wide const &p)
+    friend std::ostream &operator<<(std::ostream &os, wide p)
     {
       if constexpr( kumi::product_type<Type> )
       {
-        return os << p.storage();
+        if constexpr( requires(Type t) { os << t; } )
+        {
+          // If said product_type is streamable, we stream each parts
+          os << '(' << p.get(0);
+          for(size_type i = 1; i != p.size(); ++i) os << ", " << p.get(i);
+          return os << ')';
+        }
+        else
+        {
+          // Else we just stream the internal tuple
+          return os << p.storage();
+        }
       }
       else
       {

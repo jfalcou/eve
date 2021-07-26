@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/detail/function/friends.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
@@ -83,7 +84,7 @@ namespace eve
   namespace tag { struct is_equal_; }
   template<> struct supports_conditional<tag::is_equal_> : std::false_type {};
   
-  EVE_MAKE_CALLABLE(is_equal_, is_equal);
+  EVE_IMPLEMENT_CALLABLE(is_equal_, is_equal);
 
   namespace detail
   {

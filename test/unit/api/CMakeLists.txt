@@ -19,3 +19,4 @@ add_dependencies(unit.api.simd.exe  unit.api.tuple.exe    )
 
 add_subdirectory(regular)
 add_subdirectory(tuple)
+add_subdirectory(udt)

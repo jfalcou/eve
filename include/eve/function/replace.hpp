@@ -23,10 +23,11 @@ namespace eve
     //================================================================================================
     // Helper function - Replace ignored value with an alternative
     //================================================================================================
-    template <simd_value Wide, conditional_expr Ignore, value Other>
-    EVE_FORCEINLINE Wide replace_ignored_ ( EVE_SUPPORTS(cpu_)
+    template <simd_value Wide, conditional_expr Ignore, typename Other>
+    EVE_FORCEINLINE auto replace_ignored_ ( EVE_SUPPORTS(cpu_)
                                           , Wide x, Ignore ignore, Other with
-                                            ) noexcept
+                                          ) noexcept
+                    -> decltype( eve::if_else[ignore](x, with) )
     {
       return eve::if_else[ignore](x, with);
     }

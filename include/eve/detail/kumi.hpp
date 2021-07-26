@@ -204,22 +204,22 @@ namespace kumi
   //================================================================================================
   // KUMI element type access - Rip straight from the definition
   //================================================================================================
-  template<std::size_t I, product_type T> struct element              : std::tuple_element<I,T> {};
-  template<std::size_t I, product_type T> struct element<I,T&>        : element<I,T> {};
-  template<std::size_t I, product_type T> struct element<I,T&&>       : element<I,T> {};
-  template<std::size_t I, product_type T> struct element<I,T const&>  : element<I,T> {};
-  template<std::size_t I, product_type T> struct element<I,T const&&> : element<I,T> {};
-  template<std::size_t I, product_type T> using  element_t = typename element<I,T>::type;
+  template<std::size_t I, typename T> struct element              : std::tuple_element<I,T> {};
+  template<std::size_t I, typename T> struct element<I,T&>        : element<I,T> {};
+  template<std::size_t I, typename T> struct element<I,T&&>       : element<I,T> {};
+  template<std::size_t I, typename T> struct element<I,T const&>  : element<I,T> {};
+  template<std::size_t I, typename T> struct element<I,T const&&> : element<I,T> {};
+  template<std::size_t I, typename T> using  element_t = typename element<I,T>::type;
 
   //================================================================================================
   // KUMI member type access - Type returned by a call to get<I>(T) with al qualifiers
   //================================================================================================
-  template<std::size_t I, product_type T> struct member
+  template<std::size_t I, typename T> struct member
   {
     using type = decltype( get<I>(std::declval<T&>()));
   };
 
-  template<std::size_t I, product_type T> using  member_t = typename member<I,T>::type;
+  template<std::size_t I, typename T> using  member_t = typename member<I,T>::type;
 
   //================================================================================================
   // Concept machinery to make our algorithms SFINAE friendly
