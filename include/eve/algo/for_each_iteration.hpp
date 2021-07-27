@@ -38,6 +38,25 @@ namespace eve::algo
         return false;
       }
 
+      template <typename I, std::ptrdiff_t step, typename Delegate>
+      struct small_steps_lambda
+      {
+          bool& should_break;
+          I& f;
+          I& l;
+          Delegate& delegate;
+
+          template <int i>
+          EVE_FORCEINLINE bool operator()(std::integral_constant<int, i>)
+          {
+            if (f == l) return true;
+
+            should_break = delegate.step(f, eve::ignore_none, eve::index<i>);
+            f += step;
+            return should_break;
+          }
+      };
+
       template<typename Traits, typename I, typename Delegate>
       EVE_FORCEINLINE bool main_loop(Traits, I &f, I l, Delegate &delegate) const
           requires(get_unrolling<Traits>() > 1)
@@ -51,19 +70,11 @@ namespace eve::algo
         // not doing the full unrolling can be helpful.
         while( true )
         {
-          bool reached_end  = false;
+          // single steps
           bool should_break = false;
 
-          // single steps
-          if( eve::detail::for_until_<0, 1, unrolling>([&](auto idx) mutable {
-                reached_end = (f == l);
-                if( reached_end )
-                  return true;
-
-                should_break = delegate.step(f, eve::ignore_none, eve::index<decltype(idx){}()>);
-                f += step;
-                return should_break;
-              }) )
+          if( eve::detail::for_until_<0, 1, unrolling>(
+                  small_steps_lambda<I, step, Delegate> {should_break, f, l, delegate}) )
           {
             return should_break;
           }
