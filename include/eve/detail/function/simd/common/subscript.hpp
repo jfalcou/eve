@@ -66,10 +66,12 @@ namespace eve::detail
   {
     if constexpr( has_bundle_abi_v<Wide> )
     {
-      // Constructs piecewise so we don't have to ask for special ctor
-      typename Wide::value_type that;
-      kumi::for_each( [i](auto m, auto& d) { d = m.get(i); }, p, that);
-      return that;
+      return kumi::apply( [=](auto const&... m)
+                          {
+                            return typename Wide::value_type{ at_begin(m)[i]... };
+                          }
+                          , p.storage()
+                        );
     }
     else
     {
