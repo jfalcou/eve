@@ -15,7 +15,6 @@
 #include <eve/concept/memory.hpp>
 #include <eve/concept/range.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/concepts.hpp>
 #include <eve/detail/function/combine.hpp>
 #include <eve/detail/function/compounds.hpp>
 #include <eve/detail/function/fill.hpp>
@@ -28,6 +27,7 @@
 #include <eve/detail/function/subscript.hpp>
 #include <eve/detail/function/swizzle.hpp>
 
+#include <concepts>
 #include <ostream>
 #include <type_traits>
 #include <utility>

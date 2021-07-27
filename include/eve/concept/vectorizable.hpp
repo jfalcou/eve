@@ -7,11 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/concepts.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/forward.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/is_logical.hpp>
+
+#include <concepts>
 #include <type_traits>
 #include <utility>
 
@@ -66,4 +67,3 @@ namespace eve
   template<typename T> concept floating_real_scalar_value     = real_scalar_value<T> && std::floating_point<detail::value_type_t<T>>;
   template<typename T> concept integral_real_scalar_value     = real_scalar_value<T> && std::integral<detail::value_type_t<T>>;
 }
-

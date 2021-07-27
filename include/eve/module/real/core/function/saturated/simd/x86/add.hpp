@@ -7,10 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/concepts.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/saturated.hpp>
+
+#include <concepts>
 
 namespace eve::detail
 {
@@ -47,7 +48,7 @@ namespace eve::detail
       else if constexpr ( std::same_as<abi_t<T, N>, x86_128_> ) return _mm_adds_epu16   (v0, v1);
     }
   }
- 
+
  // -----------------------------------------------------------------------------------------------
   // Masked case
   template<conditional_expr C, real_scalar_value T, typename N>
@@ -82,5 +83,5 @@ namespace eve::detail
       else                                                                  return if_else(cx,eve::add(st, v, w),src);
     }
   }
- 
+
 }

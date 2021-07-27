@@ -9,7 +9,6 @@
 
 
 #include <eve/concept/compatible.hpp>
-#include <eve/detail/concepts.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/constant/mhalf.hpp>
 #include <eve/constant/mone.hpp>
@@ -43,6 +42,8 @@
 #include <eve/function/modf.hpp>
 #include <eve/function/converter.hpp>
 #include <eve/function/pedantic.hpp>
+
+#include <concepts>
 
 namespace eve::detail
 {

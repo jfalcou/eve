@@ -327,7 +327,7 @@ namespace eve::detail
       // On top of this we don't care about the 2 last elements.
       // So we have 3 pairs ^ 3 options = 27 variations.
       //
-      // Those variations can be contigious, if we interpret these 0, 1, 2 as a base3 number.
+      // Those variations can be contiguous, if we interpret these 0, 1, 2 as a base3 number.
 
       using u_t = eve::as_integer_t<T, unsigned>;
 

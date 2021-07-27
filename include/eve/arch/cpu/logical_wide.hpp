@@ -17,7 +17,6 @@
 #include <eve/concept/range.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/alias.hpp>
-#include <eve/detail/concepts.hpp>
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/function/bitmask.hpp>
 #include <eve/detail/function/combine.hpp>
@@ -33,6 +32,7 @@
 #include <eve/traits/as_integer.hpp>
 
 #include <cstring>
+#include <concepts>
 #include <type_traits>
 #include <ostream>
 

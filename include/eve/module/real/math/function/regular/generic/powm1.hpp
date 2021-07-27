@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/concept/compatible.hpp>
-#include <eve/detail/concepts.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/function/pow.hpp>
 #include <eve/function/abs.hpp>
@@ -19,6 +18,8 @@
 #include <eve/function/is_odd.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/skeleton_calls.hpp>
+
+#include <concepts>
 
 namespace eve::detail
 {

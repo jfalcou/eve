@@ -7,10 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <cstddef>
-#include <eve/detail/concepts.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/spy.hpp>
+
+#include <cstddef>
+#include <concepts>
 
 namespace eve
 {
