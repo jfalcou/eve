@@ -9,6 +9,8 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/traits/as_logical.hpp>
+#include <eve/constant/false.hpp>
+#include <eve/function/logical_and.hpp>
 #include <eve/concept/value.hpp>
 
 namespace eve
@@ -56,11 +58,11 @@ namespace eve
   //!  * `definitely`
   //!
   //!     **Required header:**  #include <eve/function/fuzzy/is_less.hpp>
-  //!  
+  //!
   //!     The expression `definitely(is_less)(x, y, t)` where `x` and `y` must be
   //!      floating point values, evals to true if and only if and only if `x` is definitely less than `y`.
   //!      This means that:
-  //!  
+  //!
   //!      - if `t` is a floating_value then  \f$(x < y - t \max(|x|, |y|))\f$
   //!      - if `t` is a positive integral_value then \f$(x < \mbox{prev}(y, t)\f$;
   //!      - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
@@ -73,10 +75,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
-  namespace tag { struct is_less_; }
-  template<> struct supports_conditional<tag::is_less_> : std::false_type {};
-  
+
+//   namespace tag { struct is_less_; }
+//   template<> struct supports_conditional<tag::is_less_> : std::false_type {};
+
   EVE_MAKE_CALLABLE(is_less_, is_less);
 
   namespace detail
@@ -87,5 +89,21 @@ namespace eve
       if constexpr( scalar_value<T> && scalar_value<U> )  return as_logical_t<T>(a < b);
       else                                                return a < b;
     }
+
+    // -----------------------------------------------------------------------------------------------
+    // Masked case
+    template<conditional_expr C, real_value U, real_value V>
+    EVE_FORCEINLINE auto is_less_(EVE_SUPPORTS(cpu_), C const &cond, U const &u, V const &v) noexcept
+    {
+      using r_t =  decltype(is_less(u, v)); 
+      return logical_and(is_less(u, v), cond.mask(eve::as<r_t>()));
+    }
+
   }
 }
+
+//#include <eve/module/real/core/function/regular/generic/is_less.hpp>
+
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/module/real/core/function/regular/simd/x86/is_less.hpp>
+#endif
