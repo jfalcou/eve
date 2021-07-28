@@ -61,7 +61,3 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/regular/generic/is_lez.hpp>
-
-#if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/is_lez.hpp>
-#endif
