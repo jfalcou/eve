@@ -11,6 +11,7 @@
 #include <eve/function/is_not_equal.hpp>
 #include <eve/function/numeric/is_not_equal.hpp>
 #include <eve/function/fuzzy/is_not_equal.hpp>
+#include <eve/constant/false.hpp>
 #include <eve/constant/eps.hpp>
 #include <eve/constant/mindenormal.hpp>
 #include <eve/logical.hpp>
@@ -66,6 +67,7 @@ EVE_TEST( "Check behavior of eve::is_not_equal(simd)"
   TTS_EQUAL(eve::is_not_equal(a0, v_t(1)), map([](auto e) -> eve::logical<v_t> { return e != v_t(1); }, a0));
   TTS_EQUAL(eve::is_not_equal(v_t(14), a1), map([](auto e) -> eve::logical<v_t> { return e != v_t(14); }, a1));
   TTS_EQUAL(eve::is_not_equal(l0, l1), map([](auto e, auto f) -> eve::logical<v_t> { return e != f; }, l0, l1));
+  TTS_EQUAL(eve::is_not_equal[l0](a0, a1), eve::if_else(l0, eve::is_not_equal(a0, a1), eve::false_(eve::as(a0))));
 
 };
 

@@ -80,10 +80,7 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
-  namespace tag { struct is_equal_; }
-  template<> struct supports_conditional<tag::is_equal_> : std::false_type {};
-  
+
   EVE_IMPLEMENT_CALLABLE(is_equal_, is_equal);
 
   namespace detail
@@ -94,5 +91,18 @@ namespace eve
       if constexpr( scalar_value<T> && scalar_value<U> )  return as_logical_t<T>(a == b);
       else                                                return a == b;
     }
+
+    // -----------------------------------------------------------------------------------------------
+    // logical masked case
+    template<conditional_expr C, real_value U, real_value V>
+    EVE_FORCEINLINE auto is_equal_(EVE_SUPPORTS(cpu_), C const &cond, U const &u, V const &v) noexcept
+    {
+      using r_t =  decltype(is_equal(u, v));
+      return logical_and(is_equal(u, v), cond.mask(eve::as<r_t>()));
+    }
   }
 }
+
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/module/real/core/function/regular/simd/x86/is_equal.hpp>
+#endif

@@ -18,25 +18,22 @@
 
 namespace eve::detail
 {
-
-
   // -----------------------------------------------------------------------------------------------
   // masked  implementation
   template<conditional_expr C, real_scalar_value T, typename N>
   EVE_FORCEINLINE
-  auto is_less_(EVE_SUPPORTS(avx512_), C const &cx, wide<T, N> const &v, wide<T, N> const &w)  noexcept
+  as_logical_t<wide<T, N>> is_less_(EVE_SUPPORTS(avx512_), C const &cx, wide<T, N> const &v, wide<T, N> const &w)  noexcept
       requires x86_abi<abi_t<T, N>>
   {
     using r_t =  as_logical<wide<T, N>>;
     constexpr auto c = categorize<wide<T, N>>();
 
-    if constexpr( C::is_complete || abi_t<T, N>::is_wide_logical )
+    if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical )
     {
       return is_less_(EVE_RETARGET(cpu_),cx,v, w);
     }
     else
     {
-      auto src  = alternative(cx,v,as<wide<T, N>>{});
       auto m    = expand_mask(cx,as<wide<T, N>>{}).storage().value;
       constexpr auto f = to_integer(cmp_flt::lt_oq);
 
@@ -53,11 +50,11 @@ namespace eve::detail
       else  if constexpr(c == category::int32x8   ) return mask8 {_mm256_mask_cmplt_epi32_mask(m,v,w)};
       else  if constexpr(c == category::int32x4   ) return mask8 {_mm_mask_cmplt_epi32_mask(m,v,w)};
       else  if constexpr(c == category::int16x32  ) return mask32{_mm512_mask_cmplt_epi16_mask(m,v,w)};
-      else  if constexpr(c == category::int16x16  ) return mask64{_mm256_mask_cmplt_epi16_mask(m,v,w)};
+      else  if constexpr(c == category::int16x16  ) return mask16{_mm256_mask_cmplt_epi16_mask(m,v,w)};
       else  if constexpr(c == category::int16x8   ) return mask8 {_mm_mask_cmplt_epi16_mask(m,v,w)};
       else  if constexpr(c == category::int8x64   ) return mask64{_mm512_mask_cmplt_epi8_mask(m,v,w)};
       else  if constexpr(c == category::int8x32   ) return mask32{_mm256_mask_cmplt_epi8_mask(m,v,w)};
-      else  if constexpr(c == category::int8x16   ) return mask8 {_mm_mask_cmplt_epi8_mask(m,v,w)};
+      else  if constexpr(c == category::int8x16   ) return mask16{_mm_mask_cmplt_epi8_mask(m,v,w)};
       else  if constexpr(c == category::uint64x8  ) return mask8 {_mm512_mask_cmplt_epu64_mask(m,v,w)};
       else  if constexpr(c == category::uint64x4  ) return mask8 {_mm256_mask_cmplt_epu64_mask(m,v,w)};
       else  if constexpr(c == category::uint64x2  ) return mask8 {_mm_mask_cmplt_epu64_mask(m,v,w)};

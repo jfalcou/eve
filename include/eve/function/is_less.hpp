@@ -76,9 +76,6 @@ namespace eve
   //!  @}
   //================================================================================================
 
-//   namespace tag { struct is_less_; }
-//   template<> struct supports_conditional<tag::is_less_> : std::false_type {};
-
   EVE_MAKE_CALLABLE(is_less_, is_less);
 
   namespace detail
@@ -91,18 +88,16 @@ namespace eve
     }
 
     // -----------------------------------------------------------------------------------------------
-    // Masked case
+    // logical masked case
     template<conditional_expr C, real_value U, real_value V>
     EVE_FORCEINLINE auto is_less_(EVE_SUPPORTS(cpu_), C const &cond, U const &u, V const &v) noexcept
     {
-      using r_t =  decltype(is_less(u, v)); 
+      using r_t =  decltype(is_less(u, v));
       return logical_and(is_less(u, v), cond.mask(eve::as<r_t>()));
     }
 
   }
 }
-
-//#include <eve/module/real/core/function/regular/generic/is_less.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/real/core/function/regular/simd/x86/is_less.hpp>
