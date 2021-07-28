@@ -21,6 +21,7 @@ namespace eve
 {
   EVE_REGISTER_CALLABLE(is_equal_)
   EVE_REGISTER_CALLABLE(is_not_equal_)
+  EVE_REGISTER_CALLABLE(is_less_)
 }
 
 namespace eve::detail
@@ -217,15 +218,50 @@ namespace eve::detail
   }
 
   //================================================================================================
-  template<real_simd_value Wide>
+  template<simd_value Wide>
   EVE_FORCEINLINE auto self_less(Wide const& v,Wide const& w) noexcept
+  requires( kumi::product_type<element_type_t<Wide>> )
+  {
+    if constexpr( detail::tag_dispatchable<tag::is_less_,Wide,Wide> )
+    {
+      return tagged_dispatch(tag::is_less_{}, v, w);
+    }
+    else
+    {
+      // lexicographical order is defined as
+      // (v0 < w0) || ... andnot(wi < vi, vi+1 < wi+1) ... || andnot(wn-1 < vn-1, vn < wn);
+      auto res = get<0>(v) < get<0>(w);
+      for_<1,1,std::tuple_size<Wide>::value>
+      (
+        [&]<typename Index>(Index)
+        {
+          auto y_less_x_prev = get<Index::value-1>(w) < get<Index::value - 1>(v);
+          auto x_less_y = get<Index::value>(v) < get<Index::value>(w);
+          res = res || (x_less_y && !y_less_x_prev);
+        }
+      );
+
+      return res;
+    }
+  }
+
+  template<simd_value Wide>
+  EVE_FORCEINLINE auto self_less(Wide const& v,Wide const& w) noexcept
+  requires( !kumi::product_type<element_type_t<Wide>> )
   {
     constexpr auto lt = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e < f); };
     return apply_over(lt, v, w);
   }
 
   //================================================================================================
-  template<real_simd_value Wide>
+  template<simd_value Wide>
+  EVE_FORCEINLINE auto self_leq(Wide const& v,Wide const& w) noexcept
+  requires( kumi::product_type<element_type_t<Wide>> )
+  {
+    return (v < w) || (v == w);
+  }
+
+  template<simd_value Wide>
   EVE_FORCEINLINE auto self_leq(Wide const& v,Wide const& w) noexcept
   {
     constexpr auto ge = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e <= f); };
@@ -233,7 +269,14 @@ namespace eve::detail
   }
 
   //================================================================================================
-  template<real_simd_value Wide>
+  template<simd_value Wide>
+  EVE_FORCEINLINE auto self_greater(Wide const& v,Wide const& w) noexcept
+  requires( kumi::product_type<element_type_t<Wide>> )
+  {
+    return !(v <= w);
+  }
+
+  template<simd_value Wide>
   EVE_FORCEINLINE auto self_greater(Wide const& v,Wide const& w) noexcept
   {
     constexpr auto gt = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e > f); };
@@ -241,7 +284,14 @@ namespace eve::detail
   }
 
   //================================================================================================
-  template<real_simd_value Wide>
+  template<simd_value Wide>
+  EVE_FORCEINLINE auto self_geq(Wide const& v,Wide const& w) noexcept
+  requires( kumi::product_type<element_type_t<Wide>> )
+  {
+    return !(v < w);
+  }
+
+  template<simd_value Wide>
   EVE_FORCEINLINE auto self_geq(Wide const& v,Wide const& w) noexcept
   {
     constexpr auto ge = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e >= f); };

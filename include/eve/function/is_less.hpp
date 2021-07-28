@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/detail/function/friends.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
@@ -89,8 +90,7 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-
-  EVE_MAKE_CALLABLE(is_less_, is_less);
+  EVE_IMPLEMENT_CALLABLE(is_less_, is_less);
 
   namespace detail
   {
