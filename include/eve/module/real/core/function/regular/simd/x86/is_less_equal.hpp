@@ -25,7 +25,6 @@ namespace eve::detail
   as_logical_t<wide<T, N>> is_less_equal_(EVE_SUPPORTS(avx512_), C const &cx, wide<T, N> const &v, wide<T, N> const &w)  noexcept
       requires x86_abi<abi_t<T, N>>
   {
-    using r_t =  as_logical<wide<T, N>>;
     constexpr auto c = categorize<wide<T, N>>();
 
     if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical )

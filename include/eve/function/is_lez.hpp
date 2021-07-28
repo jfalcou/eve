@@ -56,11 +56,12 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
-  namespace tag { struct is_lez_; }
-  template<> struct supports_conditional<tag::is_lez_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(is_lez_, is_lez);
 }
 
 #include <eve/module/real/core/function/regular/generic/is_lez.hpp>
+
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/module/real/core/function/regular/simd/x86/is_lez.hpp>
+#endif
