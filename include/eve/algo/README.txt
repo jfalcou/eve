@@ -123,12 +123,31 @@ For example, using `std::reduce` on a small array to compute a sum will no be ef
 since it will generate instructions that can be executed in parallel.
 `array_reduce` will.
 
+### converting_iterator
+
+* `converting_iterator`
+* `convert`
+
+An iterator on top of a different iterator that applies a convertion to a different type.
+Cardinal stays the same.
+In the future this should use some more efficient platform loads.
+
+convert is a helper function to get a converting iterator.
+
+### zip_iterator
+
+`zip_iterator`
+
+A tuple of iterators with the same cardinal.
+
 ### ptr_iterator
 
 * `aligned_ptr_iterator`
 * `unaligned_ptr_iterator`
 
 A pointer + cardinal with the `iterator` interface.
+
+
 
 ### preprocess_range
 

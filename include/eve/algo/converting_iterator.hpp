@@ -58,14 +58,13 @@ namespace eve::algo
       return base <=> x.base;
     }
 
-    template <typename I2>
+    converting_iterator&  operator+=(std::ptrdiff_t n) { base += n; return *this; }
+
+    template <sentinel_for<I> I2>
     std::ptrdiff_t operator-(converting_iterator<I2, T> const & x) const
     {
       return base - x.base;
     }
-
-    converting_iterator&  operator+=(std::ptrdiff_t n) { base += n; return *this; }
-    friend std::ptrdiff_t operator-(converting_iterator x, converting_iterator y) { return x.base - y.base; }
 
     template< relative_conditional_expr C, decorator S, typename Pack>
     friend auto tagged_dispatch ( eve::tag::load_, C const& c, S const& s

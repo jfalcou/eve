@@ -48,7 +48,7 @@ namespace eve::algo
 
     template< relative_conditional_expr C, decorator S, typename Pack>
     friend auto tagged_dispatch ( eve::tag::load_, C const& c, S const& s
-                                , eve::as<Pack> const& , unaligned_ptr_iterator self
+                                , eve::as<Pack> const&, unaligned_ptr_iterator self
                                 )
     {
       return eve::load(c, s, self.ptr, Cardinal{});
