@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/forward.hpp>
+#include <eve/detail/kumi.hpp>
 
 namespace eve
 {
@@ -28,6 +29,12 @@ namespace eve
   {
     using type = logical<T>;
   };
+
+
+  template<typename T>
+  requires( kumi::product_type<T> )
+  struct as_logical<T> : as_logical< kumi::element_t<0,T> >
+  {};
 
   template<typename T>
   using as_logical_t = typename as_logical<T>::type;

@@ -367,6 +367,15 @@ namespace eve::detail
   struct as_trait : as_trait_impl<Concept, types<T...>>
   {};
 
+  // Get the first element of something
+  template<typename T> struct first_of { using type = T; };
+
+  template<typename T>
+  requires(kumi::product_type<T>) struct first_of<T> : kumi::element<0,T>
+  {};
+
+  template<typename T> using first_of_t = typename first_of<T>::type;
+
   // Tuple free apply
   template<std::size_t Count, typename Func> EVE_FORCEINLINE decltype(auto) apply(Func &&f)
   {
