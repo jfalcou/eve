@@ -55,15 +55,26 @@ namespace eve::detail
       using e_t = element_type_t<common_compatible_t<U, V>>;
       using r_t = as_wide_t<e_t, cardinal_t<T>>;
 
-      if constexpr(kumi::product_type<U> || kumi::product_type<V>)
-      {
-        return tuple_select(cond,t,f);
-      }
-      else  if constexpr(has_emulated_abi_v<T>  ) return map(if_else, cond, r_t(t), r_t(f));
+            if constexpr(has_emulated_abi_v<T>  ) return map(if_else, cond, r_t(t), r_t(f));
       else  if constexpr(has_aggregated_abi_v<T>) return aggregate(if_else, cond, r_t(t), r_t(f));
       else  if constexpr(std::same_as<logical<e_t>,element_type_t<T>>)
       {
-        if constexpr( std::same_as<U,V> ) return  bit_select(cond.mask(),r_t(t), r_t(f));
+        if constexpr( std::same_as<U,V> )
+        {
+          if constexpr(kumi::product_type<U> || kumi::product_type<V>)
+          {
+            if constexpr( detail::tag_dispatchable<tag::if_else_,T,U,V> )
+            {
+              return tagged_dispatch(tag::if_else_{}, cond, t, f);
+            }
+            else
+            {
+              using   w_t = std::conditional_t< simd_value<U>, U, V>;
+              return  w_t{ kumi::map([&](auto v, auto f) { return if_else(cond,v,f); }, t, f) };
+            }
+          }
+          else                            return  bit_select(cond.mask(),r_t(t), r_t(f));
+        }
         else                              return  if_else(cond, r_t(t), r_t(f));
       }
       else return  if_else(convert(cond, as<as_logical_t<e_t>>()), r_t(t), r_t(f));
@@ -104,7 +115,7 @@ namespace eve::detail
     else  if constexpr( kumi::product_type<U> )
     {
       auto cst = U{ kumi::map([&]<typename M>(M const& e) { return v(as(e)); }, u) };
-      return tuple_select(cond, u, cst);
+      return if_else(cond, u, cst);
     }
     else  if constexpr(current_api >= avx512) return if_else(cond, u, v(tgt{}));
     else
@@ -155,7 +166,7 @@ namespace eve::detail
     else  if constexpr( kumi::product_type<U> )
     {
       auto cst = U{ kumi::map([&]<typename M>(M const& e) { return v(as(e)); }, u) };
-      return tuple_select(cond, cst, u);
+      return if_else(cond, cst, u);
     }
     else  if constexpr(current_api >= avx512) return if_else(cond, v(tgt{}), u);
     else
