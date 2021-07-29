@@ -57,11 +57,19 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
-  namespace tag { struct is_eqz_; }
-  template<> struct supports_conditional<tag::is_eqz_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(is_eqz_, is_eqz);
+
+  namespace detail
+  {
+    // -----------------------------------------------------------------------------------------------
+    // logical masked case
+    template<conditional_expr C, real_value U, real_value V>
+    EVE_FORCEINLINE auto is_eqz_(EVE_SUPPORTS(cpu_), C const &cond, U const &u) noexcept
+    {
+      return lmask_op(cond, is_eqz, u);
+    }
+  }
 }
 
 #include <eve/module/real/core/function/regular/generic/is_eqz.hpp>

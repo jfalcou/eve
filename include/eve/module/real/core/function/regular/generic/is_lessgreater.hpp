@@ -37,5 +37,12 @@ namespace eve::detail
   {
     return  (is_not_equal(a, b) && is_ordered(a, b));
   }
-}
 
+  // -----------------------------------------------------------------------------------------------
+  // logical masked case
+  template<conditional_expr C, real_value U, real_value V>
+  EVE_FORCEINLINE auto is_lessgreater_(EVE_SUPPORTS(cpu_), C const &cond, U const &u, V const &v) noexcept
+  {
+    return lmask_op(cond, is_lessgreater, u, v);
+  }
+}

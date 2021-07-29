@@ -47,4 +47,3 @@ EVE_TEST( "Check behavior of eve::is_lessgreater(simd)"
   TTS_EQUAL(eve::is_lessgreater(a0, v_t(1)), map([](auto e) -> eve::logical<v_t> { return (e < v_t(1)) || (e > v_t(1)); }, a0));
   TTS_EQUAL(eve::is_lessgreater[t](a0, a1), eve::if_else(t, eve::is_lessgreater(a0, a1), eve::false_(eve::as(a0))));
 };
-};

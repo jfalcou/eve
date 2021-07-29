@@ -79,8 +79,7 @@ namespace eve
     template<conditional_expr C, real_value U, real_value V>
     EVE_FORCEINLINE auto is_less_equal_(EVE_SUPPORTS(cpu_), C const &cond, U const &u, V const &v) noexcept
     {
-      using r_t =  decltype(is_less(u, v));
-      return logical_and(is_less_equal(u, v), cond.mask(eve::as<r_t>()));
+      return lmask_op(cond, is_less_equal, u, v);
     }
   }
 }
