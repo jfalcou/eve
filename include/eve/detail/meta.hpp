@@ -9,6 +9,7 @@
 
 #include <eve/detail/abi.hpp>
 #include <eve/detail/kumi.hpp>
+#include <eve/as.hpp>
 #include <type_traits>
 #include <utility>
 #include <cstdint>
@@ -367,14 +368,31 @@ namespace eve::detail
   struct as_trait : as_trait_impl<Concept, types<T...>>
   {};
 
-  // Get the first element of something
-  template<typename T> struct first_of { using type = T; };
-
-  template<typename T>
-  requires(kumi::product_type<T>) struct first_of<T> : kumi::element<0,T>
+  // Can I pass Type to a constant ?
+  template<typename Constant, typename Type>
+  struct is_generator : std::is_invocable<Constant,as<Type>>
   {};
 
-  template<typename T> using first_of_t = typename first_of<T>::type;
+  template<typename Constant, typename Type, typename Index>
+  struct  is_generator_impl;
+
+  template<typename Constant, typename Type, std::size_t... I>
+  struct  is_generator_impl<Constant,Type,std::index_sequence<I...>>
+        : std::conjunction<is_generator<Constant, std::tuple_element_t<I,Type>>...>
+  {};
+
+  template<typename Constant, typename Type>
+  requires kumi::product_type<Type>
+  struct  is_generator<Constant,Type>
+        : is_generator_impl<Constant,Type,std::make_index_sequence<std::tuple_size<Type>::value>>
+  {};
+
+
+  template<typename Constant, typename Type>
+  using is_generator_t = typename is_generator<Constant,Type>::type;
+
+  template<typename Constant, typename Type>
+  inline constexpr bool is_generator_v = is_generator<Constant,Type>::value;
 
   // Tuple free apply
   template<std::size_t Count, typename Func> EVE_FORCEINLINE decltype(auto) apply(Func &&f)

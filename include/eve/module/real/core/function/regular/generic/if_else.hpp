@@ -43,7 +43,8 @@ namespace eve::detail
   }
 
   template<simd_value T, value U, value V>
-  EVE_FORCEINLINE auto if_else_(EVE_SUPPORTS(cpu_), T const & cond, U const & t, V const & f )
+  EVE_FORCEINLINE as_wide_t<element_type_t<common_compatible_t<U, V>>, cardinal_t<T>>
+  if_else_(EVE_SUPPORTS(cpu_), T const & cond, U const & t, V const & f )
   requires compatible_values<U, V>
   {
     if constexpr( !is_logical_v<T> )
@@ -57,24 +58,10 @@ namespace eve::detail
 
             if constexpr(has_emulated_abi_v<T>  ) return map(if_else, cond, r_t(t), r_t(f));
       else  if constexpr(has_aggregated_abi_v<T>) return aggregate(if_else, cond, r_t(t), r_t(f));
+      else  if constexpr(kumi::product_type<U> || kumi::product_type<V>) return tuple_select(cond,t,f);
       else  if constexpr(std::same_as<logical<e_t>,element_type_t<T>>)
       {
-        if constexpr( std::same_as<U,V> )
-        {
-          if constexpr(kumi::product_type<U> || kumi::product_type<V>)
-          {
-            if constexpr( detail::tag_dispatchable<tag::if_else_,T,U,V> )
-            {
-              return tagged_dispatch(tag::if_else_{}, cond, t, f);
-            }
-            else
-            {
-              using   w_t = std::conditional_t< simd_value<U>, U, V>;
-              return  w_t{ kumi::map([&](auto v, auto f) { return if_else(cond,v,f); }, t, f) };
-            }
-          }
-          else                            return  bit_select(cond.mask(),r_t(t), r_t(f));
-        }
+        if constexpr( std::same_as<U,V> ) return  bit_select(cond.mask(),r_t(t), r_t(f));
         else                              return  if_else(cond, r_t(t), r_t(f));
       }
       else return  if_else(convert(cond, as<as_logical_t<e_t>>()), r_t(t), r_t(f));
@@ -84,7 +71,8 @@ namespace eve::detail
   //------------------------------------------------------------------------------------------------
   // Supports if_else(conditional_expr,a,b)
   template<conditional_expr C, typename U, typename V>
-  EVE_FORCEINLINE auto if_else_(EVE_SUPPORTS(cpu_), C const& cond, U const& t, V const& f )
+  EVE_FORCEINLINE std::conditional_t< simd_value<U>, U, V>
+  if_else_(EVE_SUPPORTS(cpu_), C const& cond, U const& t, V const& f )
   requires( compatible_values<U, V> || value<U> || value<V> )
   {
     using r_t = std::conditional_t< simd_value<U>, U, V>;
@@ -104,7 +92,7 @@ namespace eve::detail
   //------------------------------------------------------------------------------------------------
   // Optimizes if_else(c,t,constant)
   template<value T, value U, typename Constant>
-  requires( !kumi::product_type<Constant> && std::invocable<Constant, as<first_of_t<U>>> )
+  requires( !kumi::product_type<Constant> && is_generator_v<Constant,U> )
   EVE_FORCEINLINE constexpr auto if_else_ ( EVE_SUPPORTS(cpu_)
                                           , T const& cond, U const& u, Constant const& v
                                           ) noexcept
@@ -155,7 +143,7 @@ namespace eve::detail
   //------------------------------------------------------------------------------------------------
   // Optimizes if_else(c,constant, t)
   template<value T, value U, typename Constant>
-  requires( !kumi::product_type<Constant> && std::invocable<Constant, as<first_of_t<U>>> )
+  requires( !kumi::product_type<Constant> && is_generator_v<Constant,U> )
   EVE_FORCEINLINE constexpr auto if_else_ ( EVE_SUPPORTS(cpu_)
                                           , T const& cond, Constant const& v, U const& u
                                           ) noexcept
