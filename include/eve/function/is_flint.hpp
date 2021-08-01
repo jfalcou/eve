@@ -69,10 +69,7 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
-  namespace tag { struct is_flint_; }
-  template<> struct supports_conditional<tag::is_flint_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(is_flint_, is_flint);
 }
 

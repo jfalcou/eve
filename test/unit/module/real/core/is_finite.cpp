@@ -10,7 +10,11 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>
+#include <eve/constant/inf.hpp>
+#include <eve/constant/inf.hpp>
 #include <eve/function/is_finite.hpp>
+#include <eve/function/is_eqz.hpp>
+#include <eve/function/if_else.hpp>
 #include <eve/logical.hpp>
 
 //==================================================================================================
@@ -27,6 +31,24 @@ EVE_TEST_TYPES( "Check return types of eve::is_finite(simd)"
   TTS_EXPR_IS( eve::is_finite(v_t())                  , logical<v_t> );
 };
 
+
+//==================================================================================================
+// Tests for eve::is_finite
+//==================================================================================================
+
+EVE_TEST( "Check behavior of eve::is_finite(simd)"
+        , eve::test::simd::ieee_reals
+        , eve::test::generate ( eve::test::ramp(0)
+                              , eve::test::logicals(0, 3))
+        )
+<typename T, typename M>(T  a0,  M const & t)
+{
+  using eve::detail::map;
+  using v_t = eve::element_type_t<T>;
+  a0 = eve::if_else(eve::is_eqz(a0), eve::inf(eve::as<v_t>()), eve::zero);
+  TTS_EQUAL(eve::is_finite(a0), map([](auto e) -> eve::logical<v_t> { return e-e == 0; }, a0));
+  TTS_EQUAL(eve::is_finite[t](a0), eve::if_else(t, eve::is_finite(a0), eve::false_(eve::as(a0))));
+};
 
 //==================================================================================================
 // Test cases values

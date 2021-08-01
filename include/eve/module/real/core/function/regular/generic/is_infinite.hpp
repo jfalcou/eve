@@ -24,4 +24,12 @@ namespace eve::detail
     else  if constexpr(has_native_abi_v<T>) return (eve::abs(a) == inf(eve::as(a)));
     else                                    return apply_over(is_infinite, a);
   }
+
+  // -----------------------------------------------------------------------------------------------
+  // logical masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto is_infinite_(EVE_SUPPORTS(cpu_), C const &cond, U const &u) noexcept
+  {
+    return lmask_op(cond, is_infinite, u);
+  }
 }

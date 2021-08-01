@@ -45,10 +45,11 @@ auto mf2 = []<typename T>(eve::as<T> const & tgt)
 
 EVE_TEST( "Check behavior of eve::is_flint(simd)"
         , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                              , eve::test::randoms(mfo2, mf2))
+        , eve::test::generate ( eve::test::randoms(mfo2, mf2)
+                              , eve::test::randoms(mfo2, mf2)
+                              , eve::test::logicals(0, 3))
         )
-<typename T>(T const& a0,  T const a1)
+<typename T, typename M>(T const& a0, T const& a1,  M const & t)
 {
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
@@ -56,4 +57,5 @@ EVE_TEST( "Check behavior of eve::is_flint(simd)"
   auto aa1 =  eve::trunc(a1)/2;
   TTS_EQUAL(eve::is_flint(aa0), map([](auto e) -> eve::logical<v_t> { return  e == std::trunc(e); }, aa0));
   TTS_EQUAL(eve::pedantic(eve::is_flint)(aa1), map([](auto e) -> eve::logical<v_t> { return  (e == std::trunc(e)) && (e <= eve::maxflint(eve::as(e))); }, aa1));
+  TTS_EQUAL(eve::is_flint[t](a0), eve::if_else(t, eve::is_flint(a0), eve::false_(eve::as(a0))));
 };

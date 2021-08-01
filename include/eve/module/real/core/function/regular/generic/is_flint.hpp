@@ -24,4 +24,12 @@ namespace eve::detail
     else if constexpr(has_native_abi_v<T>) return is_eqz(frac(a));
     else                                   return apply_over(is_flint, a);
   }
+
+  // -----------------------------------------------------------------------------------------------
+  // logical masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto is_flint_(EVE_SUPPORTS(cpu_), C const &cond, U const &u) noexcept
+  {
+    return lmask_op(cond, is_flint, u);
+  }
 }
