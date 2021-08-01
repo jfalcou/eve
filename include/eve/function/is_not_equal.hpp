@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/detail/function/friends.hpp>
+#include <eve/function/logical_and.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>

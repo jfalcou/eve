@@ -9,6 +9,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/to_logical.hpp>
+#include <eve/function/is_not_equal.hpp>
 #include <eve/detail/overload.hpp>
 
 namespace eve
@@ -59,10 +60,7 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
-  namespace tag { struct is_nez_; }
-  template<> struct supports_conditional<tag::is_nez_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(is_nez_, is_nez);
 }
 
@@ -72,5 +70,14 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto is_nez_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   {
     return detail::to_logical(a);
+  }
+
+
+  // -----------------------------------------------------------------------------------------------
+  // logical masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto is_nez_(EVE_SUPPORTS(cpu_), C const &cond, U const &u) noexcept
+  {
+    return is_not_equal[cond](u, zero(as(u)));
   }
 }
