@@ -43,8 +43,7 @@ namespace eve::detail
   }
 
   template<simd_value T, value U, value V>
-  EVE_FORCEINLINE as_wide_t<element_type_t<common_compatible_t<U, V>>, cardinal_t<T>>
-  if_else_(EVE_SUPPORTS(cpu_), T const & cond, U const & t, V const & f )
+  EVE_FORCEINLINE auto if_else_(EVE_SUPPORTS(cpu_), T const & cond, U const & t, V const & f )
   requires compatible_values<U, V>
   {
     if constexpr( !is_logical_v<T> )
@@ -56,9 +55,9 @@ namespace eve::detail
       using e_t = element_type_t<common_compatible_t<U, V>>;
       using r_t = as_wide_t<e_t, cardinal_t<T>>;
 
-            if constexpr(has_emulated_abi_v<T>  ) return map(if_else, cond, r_t(t), r_t(f));
+            if constexpr(kumi::product_type<U> || kumi::product_type<V>) return tuple_select(cond,t,f);
+      else  if constexpr(has_emulated_abi_v<T>  ) return map(if_else, cond, r_t(t), r_t(f));
       else  if constexpr(has_aggregated_abi_v<T>) return aggregate(if_else, cond, r_t(t), r_t(f));
-      else  if constexpr(kumi::product_type<U> || kumi::product_type<V>) return tuple_select(cond,t,f);
       else  if constexpr(std::same_as<logical<e_t>,element_type_t<T>>)
       {
         if constexpr( std::same_as<U,V> ) return  bit_select(cond.mask(),r_t(t), r_t(f));
@@ -71,7 +70,7 @@ namespace eve::detail
   //------------------------------------------------------------------------------------------------
   // Supports if_else(conditional_expr,a,b)
   template<conditional_expr C, typename U, typename V>
-  EVE_FORCEINLINE std::conditional_t< simd_value<U>, U, V>
+  EVE_FORCEINLINE auto
   if_else_(EVE_SUPPORTS(cpu_), C const& cond, U const& t, V const& f )
   requires( compatible_values<U, V> || value<U> || value<V> )
   {
