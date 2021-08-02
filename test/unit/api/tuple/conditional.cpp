@@ -42,10 +42,12 @@ EVE_TEST_TYPES( "Check eve::wide<tuple> if_else", eve::test::scalar::all_types)
   TTS_EQUAL( eve::if_else(mask, lhs,rhs), ref_mask );
 
   w_t ref_t0 = [&](int i, int) { return mask.get(i) ? lhs.get(i) : s_t{0,0,0}; };
-  TTS_EQUAL( eve::if_else(mask, lhs, eve::zero), ref_t0 );
+  TTS_EQUAL( eve::if_else(mask, lhs, eve::zero ), ref_t0 );
+  TTS_EQUAL( eve::if_else(mask, lhs, s_t{0,0,0}), ref_t0 );
 
   w_t ref_0f = [&](int i, int) { return mask.get(i) ? s_t{0,0,0} : rhs.get(i) ; };
-  TTS_EQUAL( eve::if_else(mask, eve::zero, rhs), ref_0f );
+  TTS_EQUAL( eve::if_else(mask, eve::zero , rhs), ref_0f );
+  TTS_EQUAL( eve::if_else(mask, s_t{0,0,0}, rhs), ref_0f );
 };
 
 //==================================================================================================
@@ -74,4 +76,5 @@ EVE_TEST_TYPES( "Check eve::wide<tuple> replace_ignored", eve::test::scalar::all
 
   w_t ref_0 = [&](int i, int c) { return i < c/2 ? lhs.get(i) : s_t{0,0,0}; };
   TTS_EQUAL( eve::replace_ignored(lhs, eve::ignore_last(lhs.size()/2), eve::zero), ref_0 );
+  TTS_EQUAL( eve::replace_ignored(lhs, eve::ignore_last(lhs.size()/2), s_t{0,0,0}), ref_0 );
 };

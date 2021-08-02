@@ -9,6 +9,7 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/concept/compatible.hpp>
+#include <eve/concept/generator.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/constant/allbits.hpp>
 #include <eve/constant/mone.hpp>
@@ -24,10 +25,12 @@
 
 namespace eve::detail
 {
-  template<value T, kumi::product_type V>
-  EVE_FORCEINLINE auto if_else_(EVE_SUPPORTS(cpu_), T const& cond, V const& t, V const& f )
+  // Local helper for product_type if_else implementation
+  template<typename T, kumi::product_type U, kumi::product_type V>
+  EVE_FORCEINLINE auto tuple_select(T const& cond, U const& t, V const& f )
   {
-    return V{ kumi::map([&](auto const& v, auto const& f) { return if_else(cond,v,f); }, t, f) };
+    using r_t = std::conditional_t< simd_value<U>, U, V>;
+    return r_t{ kumi::map([&](auto const& v, auto const& f) { return if_else(cond,v,f); }, t, f) };
   }
 
   template<scalar_value T, value U, value V>
@@ -53,8 +56,9 @@ namespace eve::detail
       using e_t = element_type_t<common_compatible_t<U, V>>;
       using r_t = as_wide_t<e_t, cardinal_t<T>>;
 
-            if constexpr(has_emulated_abi_v<T>)    return map(if_else, cond, r_t(t), r_t(f));
-      else  if constexpr(has_aggregated_abi_v<T>)  return aggregate(if_else, cond, r_t(t), r_t(f));
+            if constexpr(kumi::product_type<U> && kumi::product_type<V>) return tuple_select(cond,t,f);
+      else  if constexpr(has_emulated_abi_v<T>  ) return map(if_else, cond, r_t(t), r_t(f));
+      else  if constexpr(has_aggregated_abi_v<T>) return aggregate(if_else, cond, r_t(t), r_t(f));
       else  if constexpr(std::same_as<logical<e_t>,element_type_t<T>>)
       {
         if constexpr( std::same_as<U,V> ) return  bit_select(cond.mask(),r_t(t), r_t(f));
@@ -67,21 +71,19 @@ namespace eve::detail
   //------------------------------------------------------------------------------------------------
   // Supports if_else(conditional_expr,a,b)
   template<conditional_expr C, typename U, typename V>
-  EVE_FORCEINLINE auto if_else_(EVE_SUPPORTS(cpu_), C const& cond, U const& t, V const& f )
+  EVE_FORCEINLINE auto
+  if_else_(EVE_SUPPORTS(cpu_), C const& cond, U const& t, V const& f )
   requires( compatible_values<U, V> || value<U> || value<V> )
   {
-    using r_t = std::conditional< simd_value<U>, U, V>;
-    using v_t = typename r_t::type;
+    using r_t = std::conditional_t< simd_value<U>, U, V>;
 
     if constexpr( C::is_complete )
     {
-      if constexpr(C::is_inverted) return v_t(t); else return v_t(f);
+      if constexpr(C::is_inverted) return r_t(t); else return r_t(f);
     }
     else
     {
-      using m_t = std::conditional_t< kumi::product_type<v_t>, kumi::element<0,v_t>, r_t>;
-
-      auto const condition  = cond.mask(eve::as<typename m_t::type>());
+      auto const condition  = cond.mask(eve::as<r_t>());
       if constexpr( C::is_inverted )  { return if_else(condition, f, t ); }
       else                            { return if_else(condition, t, f ); }
     }
@@ -89,10 +91,7 @@ namespace eve::detail
 
   //------------------------------------------------------------------------------------------------
   // Optimizes if_else(c,t,constant)
-  template<value T, value U, typename Constant>
-  requires( ( kumi::product_type<U> && std::is_invocable_v<Constant, as<kumi::element_t<0,U>>> )
-          || std::is_invocable_v<Constant, as<U>>
-          )
+  template<value T, value U, generator<U> Constant>
   EVE_FORCEINLINE constexpr auto if_else_ ( EVE_SUPPORTS(cpu_)
                                           , T const& cond, U const& u, Constant const& v
                                           ) noexcept
@@ -142,10 +141,7 @@ namespace eve::detail
 
   //------------------------------------------------------------------------------------------------
   // Optimizes if_else(c,constant, t)
-  template<value T, value U, typename Constant>
-  requires( ( kumi::product_type<U> && std::is_invocable_v<Constant, as<kumi::element_t<0,U>>> )
-          || std::is_invocable_v<Constant, as<U>>
-          )
+  template<value T, value U, generator<U> Constant>
   EVE_FORCEINLINE constexpr auto if_else_ ( EVE_SUPPORTS(cpu_)
                                           , T const& cond, Constant const& v, U const& u
                                           ) noexcept

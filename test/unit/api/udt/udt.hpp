@@ -22,16 +22,15 @@ namespace udt
     int x = +1, y = -1;
     friend constexpr auto operator<=>(grid2d,grid2d) = default;
 
-    static int eq_counter, neq_counter, if_else_counter;
+    static int eq_counter, neq_counter;
     static void reset()
     {
-      eq_counter = neq_counter = if_else_counter = 0;
+      eq_counter = neq_counter = 0;
     }
   };
 
   int grid2d::eq_counter      = 0;
   int grid2d::neq_counter     = 0;
-  int grid2d::if_else_counter = 0;
 
   // Adapt as a bindable type for eve::product_type
   template<std::size_t I> constexpr int& get( grid2d& p) noexcept
@@ -68,15 +67,6 @@ namespace udt
   {
     grid2d::neq_counter++;
     return (get<0>(a) != get<0>(b)) || (get<1>(a) != get<1>(b));
-  }
-
-  template<typename Mask, eve::same_value_type<grid2d> T>
-  auto tagged_dispatch( eve::tag::if_else_, Mask m, T const& a, T const& b )
-  {
-    grid2d::if_else_counter++;
-    return T{ eve::if_else(m, get<0>(a), get<0>(b))
-            , eve::if_else(m, get<1>(a), get<1>(b))
-            };
   }
 }
 
