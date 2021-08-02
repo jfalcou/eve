@@ -81,4 +81,40 @@ namespace eve::algo
   }
 
   inline constexpr algo::traits default_simple_algo_traits{algo::unroll<4>};
+  inline constexpr algo::traits no_traits{};
+
+  // Function helper
+  namespace detail
+  {
+    template <template<typename> typename F, typename Traits>
+    struct supports_traits
+    {
+      using traits_type = Traits;
+      constexpr Traits get_traits() const { return tr_; }
+
+      constexpr supports_traits() {}
+      constexpr explicit supports_traits(Traits tr) : tr_(tr) {}
+
+
+      template <typename Settings>
+      constexpr auto operator[](traits<Settings> tr) const
+      {
+        auto sum = algo::default_to(tr, tr_);
+        using rebound_t = supports_traits<F, decltype(sum)>;
+        return F<rebound_t>{rebound_t{sum}};
+      }
+
+      template <typename Trait>
+      constexpr auto operator[](Trait one_tr) const
+      {
+        return operator[](eve::algo::traits(one_tr));
+      }
+
+      private:
+        Traits tr_;
+      };
+  }
+
+  template <template<typename> typename F>
+  constexpr auto function_with_traits = F<detail::supports_traits<F, decltype(no_traits)>>{};
 }

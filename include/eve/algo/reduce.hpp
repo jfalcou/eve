@@ -21,19 +21,10 @@
 
 namespace eve::algo
 {
-  template <instance_of<algo::traits> Traits>
-  struct reduce_
+  template <typename TraitsSupport>
+  struct reduce_ : TraitsSupport
   {
-    Traits tr_;
-
-    constexpr explicit reduce_(Traits tr) : tr_(tr) {}
-
-    template <typename Settings>
-    constexpr auto operator[](algo::traits<Settings> tr) const
-    {
-      auto sum = default_to(tr, tr_);
-      return reduce_<decltype(sum)>{sum};
-    }
+    using traits_type = typename TraitsSupport::traits_type;
 
     template <typename Op, typename Wide>
     struct delegate
@@ -41,7 +32,7 @@ namespace eve::algo
       Op op;
       Wide zero;
 
-      std::array<Wide, get_unrolling<Traits>()> sums;
+      std::array<Wide, get_unrolling<traits_type>()> sums;
 
       delegate(Op op, Wide zero, Wide init) : op(op), zero(zero) {
         sums.fill(zero);
@@ -74,7 +65,7 @@ namespace eve::algo
     EVE_FORCEINLINE U operator()(Rng&& rng, std::pair<Op, T> op_zero, U init) const
     {
       auto processed = preprocess_range(
-        algo::default_to(tr_, eve::algo::traits(common_with_types<U>)),
+        algo::default_to(TraitsSupport::get_traits(), eve::algo::traits(common_with_types<U>)),
         std::forward<Rng>(rng));
 
       using I = decltype(processed.begin());
@@ -100,5 +91,5 @@ namespace eve::algo
     }
   };
 
-  inline constexpr reduce_ reduce{default_simple_algo_traits};
+  inline constexpr auto reduce = function_with_traits<reduce_>[default_simple_algo_traits];
 }

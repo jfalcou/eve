@@ -57,3 +57,32 @@ TTS_CASE("eve.algo defaulting")
     TTS_TYPE_IS(decltype(expected), decltype(actual));
   }
 }
+
+// Funciton with traits support
+
+template <typename TraitsSupport>
+struct func_ : TraitsSupport
+{
+  using traits_type = typename TraitsSupport::traits_type;
+
+  constexpr std::ptrdiff_t get_unrolling() const
+  {
+    return eve::algo::get_unrolling<traits_type>();
+  }
+
+  constexpr bool is_divisible_by_cardinal() const
+  {
+    return traits_type::contains(eve::algo::divisible_by_cardinal);
+  }
+};
+
+inline constexpr auto func = eve::algo::function_with_traits<func_>;
+
+TTS_CASE("eve.algo.support_traits") {
+  constexpr auto unroll = func[eve::algo::traits{eve::algo::unroll<2>}];
+  TTS_CONSTEXPR_EQUAL(unroll.get_unrolling(), 2);
+
+  constexpr auto is_divisible = unroll[eve::algo::divisible_by_cardinal];
+  TTS_CONSTEXPR_EXPECT(is_divisible.is_divisible_by_cardinal());
+  TTS_CONSTEXPR_EQUAL(is_divisible.get_unrolling(), 2);
+}
