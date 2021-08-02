@@ -9,6 +9,7 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/concept/compatible.hpp>
+#include <eve/concept/generator.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/constant/allbits.hpp>
 #include <eve/constant/mone.hpp>
@@ -90,8 +91,7 @@ namespace eve::detail
 
   //------------------------------------------------------------------------------------------------
   // Optimizes if_else(c,t,constant)
-  template<value T, value U, typename Constant>
-  requires( !kumi::product_type<Constant> && is_generator_v<Constant,U> )
+  template<value T, value U, generator<U> Constant>
   EVE_FORCEINLINE constexpr auto if_else_ ( EVE_SUPPORTS(cpu_)
                                           , T const& cond, U const& u, Constant const& v
                                           ) noexcept
@@ -141,8 +141,7 @@ namespace eve::detail
 
   //------------------------------------------------------------------------------------------------
   // Optimizes if_else(c,constant, t)
-  template<value T, value U, typename Constant>
-  requires( !kumi::product_type<Constant> && is_generator_v<Constant,U> )
+  template<value T, value U, generator<U> Constant>
   EVE_FORCEINLINE constexpr auto if_else_ ( EVE_SUPPORTS(cpu_)
                                           , T const& cond, Constant const& v, U const& u
                                           ) noexcept
