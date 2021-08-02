@@ -143,14 +143,13 @@ void all_test_cases(eve::as<T> tgt, Alg basic_reduce)
 
   // no unroll, precise tgt
   {
-    auto tr = eve::algo::traits(eve::algo::unroll<1>, eve::algo::force_cardinal<T::size()>);
-    reduce_generic_test_page_ends(tgt, e_t{10}, basic_reduce[tr]);
+    auto alg = basic_reduce[eve::algo::unroll<1>][eve::algo::force_cardinal<T::size()>];
+    reduce_generic_test_page_ends(tgt, e_t{10}, alg);
   }
 
   // unroll 3
   {
-    auto tr = eve::algo::traits{eve::algo::unroll<4>};
-    reduce_generic_test_page_ends(native_tgt, e_t{10}, basic_reduce[tr]);
+    reduce_generic_test_page_ends(native_tgt, e_t{10}, basic_reduce[eve::algo::unroll<3>]);
   }
 }
 
