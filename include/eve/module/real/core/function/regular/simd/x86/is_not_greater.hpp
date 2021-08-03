@@ -46,7 +46,7 @@ namespace eve::detail
   }
 
 
- // -----------------------------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------------------------
   // masked  implementation
   template<conditional_expr C, real_scalar_value T, typename N>
   EVE_FORCEINLINE
@@ -71,7 +71,7 @@ namespace eve::detail
       else  if constexpr(c == category::float64x4 ) return mask8 {_mm256_mask_cmp_pd_mask(m,v,w,f)};
       else  if constexpr(c == category::float32x4 ) return mask8 {_mm_mask_cmp_ps_mask(m,v,w,f)};
       else  if constexpr(c == category::float64x2 ) return mask8 {_mm_mask_cmp_pd_mask(m,v,w,f)};
-      else  return is_less_equal[cx](w, v);
+      else  return is_less_equal[cx](v, w);
     }
   }
 }
