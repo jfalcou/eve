@@ -25,6 +25,7 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the computation of the is_unordered logical value   |
+  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -50,6 +51,23 @@ namespace eve
   //!if   constexpr(floating_real_value<T>) r = is_nan(x) || is_nan(y);
   //!else constexpr(integral_real_value<T>) r = False<T>();
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::is_less
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `is_unordered[cond](x, y)` is equivalent to
+  //! `if_else(cond,is_unordered(x, y),false(as(is_unordered(x, y))))`
   //!
   //! ---
   //!

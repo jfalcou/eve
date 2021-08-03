@@ -27,6 +27,7 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the "greater or equal to" predicate   |
+  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -48,6 +49,22 @@ namespace eve
   //!@warning
   //!   Although the infix notation with `>=` is supported, the `>=` operator on
   //!   standard scalar types is the original one and so returns bool result, not `logical`.
+  //!
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::is_less
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `is_greater_equal[cond](x, y)` is equivalent to
+  //! `if_else(cond,is_greater_equal(x, y),false(as(is_greater_equal(x, y))))`
   //!
   //! ---
   //!

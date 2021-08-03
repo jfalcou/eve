@@ -25,6 +25,7 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the "not greater or equal to" predicate   |
+  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -40,6 +41,23 @@ namespace eve
   //!
   //!Returns the logical value containing the [element-wise](../../../glossary.html#value) comparison test result
   //!between `x` and `y`.
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::is_less
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `is_not_greater_equal[cond](x, y)` is equivalent to
+  //! `if_else(cond,is_not_greater_equal(x, y),false(as(is_not_greater_equal(x, y))))`
   //!
   //! ---
   //!
