@@ -65,10 +65,7 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
-  namespace tag { struct is_ordered_; }
-  template<> struct supports_conditional<tag::is_ordered_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(is_ordered_, is_ordered);
 }
 

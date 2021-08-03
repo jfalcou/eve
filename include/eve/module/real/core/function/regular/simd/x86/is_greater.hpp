@@ -24,7 +24,8 @@ namespace eve::detail
   // masked  implementation
   template<conditional_expr C, real_scalar_value T, typename N>
   EVE_FORCEINLINE
-  auto is_greater_(EVE_SUPPORTS(avx512_), C const &cx, wide<T, N> const &v, wide<T, N> const &w)  noexcept -> decltype(is_greater(v, w))
+  auto is_greater_(EVE_SUPPORTS(avx512_), C const &cx, wide<T, N> const &v, wide<T, N> const &w)
+    noexcept -> decltype(is_greater(v, w))
       requires x86_abi<abi_t<T, N>>
   {
 //    using r_t =  decltype(is_greater(u, v);
