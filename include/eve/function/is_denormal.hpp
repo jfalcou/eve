@@ -83,9 +83,6 @@ namespace eve
   //!  @}
   //================================================================================================
 
-  namespace tag { struct is_denormal_; }
-  template<> struct supports_conditional<tag::is_denormal_> : std::false_type {};
-
   EVE_MAKE_CALLABLE(is_denormal_, is_denormal);
 }
 
