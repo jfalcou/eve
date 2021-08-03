@@ -35,5 +35,12 @@ namespace eve::detail
     }
     else                                     return apply_over(is_nlez, a);
   }
-}
 
+  // -----------------------------------------------------------------------------------------------
+  // logical masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto is_nlez_(EVE_SUPPORTS(cpu_), C const &cond, U const &u) noexcept
+  {
+    return is_not_less_equal[cond](u, zero(as(u)));
+  }
+}

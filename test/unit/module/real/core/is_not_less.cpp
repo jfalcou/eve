@@ -52,9 +52,10 @@ EVE_TEST_TYPES( "Check return types of eve::is_not_less(simd)"
 EVE_TEST( "Check behavior of eve::is_not_less(simd)"
         , eve::test::simd::all_types
         , eve::test::generate ( eve::test::ramp(0)
-                              , eve::test::reverse_ramp(4, 2))
+                              , eve::test::reverse_ramp(4, 2)
+                              , eve::test::logicals(0, 3))
         )
-<typename T>(T const& a0, T const& a1)
+<typename T, typename M>(T const& a0, T const& a1,  M const & t)
 {
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
@@ -62,6 +63,7 @@ EVE_TEST( "Check behavior of eve::is_not_less(simd)"
   TTS_EQUAL(eve::is_not_less(a0, a1), map([](auto e, auto f) -> eve::logical<v_t> { return  e >=  f; }, a0, a1));
   TTS_EQUAL(eve::is_not_less(a0, a0), map([](auto e, auto f) -> eve::logical<v_t> { return  e >= f; }, a0, a0));
   TTS_EQUAL(eve::is_not_less(a0, v_t(1)), map([](auto e) -> eve::logical<v_t> { return  e >= v_t(1); }, a0));
+  TTS_EQUAL(eve::is_not_less[t](a0, a1), eve::if_else(t, eve::is_not_less(a0, a1), eve::false_(eve::as(a0))));
 };
 
 //==================================================================================================

@@ -73,5 +73,4 @@ namespace eve::detail
       else  return is_less_equal[cx](w, v);
     }
   }
-
 }

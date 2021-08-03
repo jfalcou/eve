@@ -38,7 +38,7 @@ namespace eve::detail
     else  if constexpr(c == category::float32x8  ) return l_t(_mm256_cmp_ps   (a, b, m) );
     else  if constexpr(c == category::float64x2  ) return l_t(_mm_cmpnge_pd   (a, b) );
     else  if constexpr(c == category::float32x4  ) return l_t(_mm_cmpnge_ps   (a, b) );
-    else  return is_less_equal(b, a);
+    else  return is_less(b, a);
   }
 
 
