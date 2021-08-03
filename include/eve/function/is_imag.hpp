@@ -25,6 +25,8 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the computation of the is_imag logical value   |
+  //! | `operator[]` | Construct a conditional version of current function object |
+  //!
   //!
   //! ---
   //!
@@ -45,6 +47,23 @@ namespace eve
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //!is semantically  equivalent to: `auto r = real(x) ==  x;`
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::is_less
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `is_imag[cond](x)` is equivalent to
+  //! `if_else(cond,is_imag(x),false(as(is_imag(x))))`
   //!
   //! ---
   //!

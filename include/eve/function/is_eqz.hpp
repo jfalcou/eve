@@ -25,6 +25,7 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the equality to zero predicate   |
+  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -42,6 +43,23 @@ namespace eve
   //!between `x` and 0.
   //!
   //!The result type is `logical< T >`.
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::is_less
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `is_eqz[cond](x)` is equivalent to
+  //! `if_else(cond,is_eqz(x),false(as(is_eqz(x))))`
   //!
   //! ---
   //!
