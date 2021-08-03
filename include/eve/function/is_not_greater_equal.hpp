@@ -48,15 +48,15 @@ namespace eve
   //!  * `definitely`
   //!
   //!     **Required header:**  #include <eve/function/fuzzy/is_not_greater_equal.hpp>
-  //!  
+  //!
   //!     The expression `definitely(is_not_greater_equal)(x, y, t)` where `x` and `y` must be
   //!      floating point values, evals to true if and only if and only if `x` is definitely not greater or equal to `y`.
   //!      This means that the pair `x, y` is unordered or:
-  //!  
+  //!
   //!      - if `t` is a floating_value then  \f$(x \le y - t \max(|x|, |y|))\f$
   //!      - if `t` is a positive integral_value then \f$(x \le \mbox{prev}(y, t)\f$;
   //!      - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
-  //!  
+  //!
   //!  The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
   //!
   //! #### Example
@@ -67,10 +67,7 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
-  namespace tag { struct is_not_greater_equal_; }
-  template<> struct supports_conditional<tag::is_not_greater_equal_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(is_not_greater_equal_, is_not_greater_equal);
 }
 

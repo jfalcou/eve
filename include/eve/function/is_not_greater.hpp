@@ -50,15 +50,15 @@ namespace eve
   //!  * `almost`
   //!
   //!     **Required header:**  #include <eve/function/fuzzy/is_not_greater.hpp>
-  //!  
+  //!
   //!     The expression `almost(is_not_greater)(x, y, t)` where `x` and `y` must be
   //!      floating point values, evals to true if and only if and only if `x` is not almost greater than `y`.
   //!      This means that:
-  //!  
+  //!
   //!      - if `t` is a floating_value then  \f$(x < y + t \max(|x|, |y|))\f$
   //!      - if `t` is a positive integral_value then \f$(x < \mbox{next}(y, t)\f$;
   //!      - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
-  //!  
+  //!
   //!  The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
   //!
   //! #### Example
@@ -69,10 +69,7 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
-  namespace tag { struct is_not_greater_; }
-  template<> struct supports_conditional<tag::is_not_greater_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(is_not_greater_, is_not_greater);
 }
 
