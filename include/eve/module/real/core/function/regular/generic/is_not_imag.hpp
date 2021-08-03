@@ -22,5 +22,11 @@ namespace eve::detail
     if constexpr(has_native_abi_v<T>) return is_nez(a);
     else                    return apply_over(is_not_imag, a);
   }
+  // -----------------------------------------------------------------------------------------------
+  // logical masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto is_not_imag_(EVE_SUPPORTS(cpu_), C const &cond, U const &u) noexcept
+  {
+    return lmask_op(cond, is_not_imag, u);
+  }
 }
-

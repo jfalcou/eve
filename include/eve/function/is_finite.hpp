@@ -69,7 +69,7 @@ namespace eve
   //! `if_else(cond,is_finite(x),false(as(is_finite(x))))`
   //!
   //! ---
-   //!
+  //!
   //! #### Supported decorators
   //!
   //!  no decorators are supported

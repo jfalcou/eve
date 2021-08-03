@@ -21,5 +21,11 @@ namespace eve::detail
   {
     return false_(eve::as(a));
   }
+  // -----------------------------------------------------------------------------------------------
+  // logical masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto is_not_real_(EVE_SUPPORTS(cpu_), C const &cond, U const &u) noexcept
+  {
+    return lmask_op(cond, is_not_real, u);
+  }
 }
-
