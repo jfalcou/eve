@@ -20,20 +20,9 @@
 
 namespace eve::algo
 {
-  template <instance_of<algo::traits> Traits>
-  struct find_if_
+  template <typename TraitsSupport>
+  struct find_if_ : TraitsSupport
   {
-    Traits tr_;
-
-    constexpr explicit find_if_(Traits tr) : tr_(tr) {}
-
-    template <typename Settings>
-    constexpr auto operator[](algo::traits<Settings> tr) const
-    {
-      auto sum = default_to(tr, tr_);
-      return find_if_<decltype(sum)>{sum};
-    }
-
     template <typename UnalignedI, typename P>
     struct delegate
     {
@@ -78,7 +67,7 @@ namespace eve::algo
     template <typename Rng, typename P>
     EVE_FORCEINLINE auto operator()(Rng&& rng, P p) const
     {
-      auto processed = preprocess_range(tr_, std::forward<Rng>(rng));
+      auto processed = preprocess_range(TraitsSupport::get_traits(), std::forward<Rng>(rng));
       if (processed.begin() == processed.end())
       {
         return processed.to_output_iterator(processed.begin());
@@ -91,5 +80,6 @@ namespace eve::algo
       return processed.to_output_iterator(d.found);
     }
   };
-  inline constexpr find_if_ find_if{default_simple_algo_traits};
+
+  inline constexpr auto find_if = function_with_traits<find_if_>[default_simple_algo_traits];
 }

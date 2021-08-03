@@ -20,20 +20,9 @@
 
 namespace eve::algo
 {
-  template <instance_of<algo::traits> Traits>
-  struct any_of_
+  template <typename TraitsSupport>
+  struct any_of_ : TraitsSupport
   {
-    Traits tr_;
-
-    constexpr explicit any_of_(Traits tr) : tr_(tr) {}
-
-    template <typename Settings>
-    constexpr auto operator[](algo::traits<Settings> tr) const
-    {
-      auto sum = default_to(tr, tr_);
-      return any_of_<decltype(sum)>{sum};
-    }
-
     template <typename P>
     struct delegate
     {
@@ -62,7 +51,7 @@ namespace eve::algo
     template <typename Rng, typename P>
     EVE_FORCEINLINE bool operator()(Rng&& rng, P p) const
     {
-      auto processed = preprocess_range(tr_, std::forward<Rng>(rng));
+      auto processed = preprocess_range(TraitsSupport::get_traits(), std::forward<Rng>(rng));
 
       if (processed.begin() == processed.end()) return false;
 
@@ -71,5 +60,5 @@ namespace eve::algo
       return d.res;
     }
   };
-  inline constexpr any_of_ any_of{default_simple_algo_traits};
+  inline constexpr auto any_of = function_with_traits<any_of_>[default_simple_algo_traits];
 }

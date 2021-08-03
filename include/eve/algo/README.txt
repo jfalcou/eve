@@ -90,12 +90,62 @@ However for some algorithms, like `reverse` and maybe `partition` it's not a goo
 ### traits
 
 * `traits`
-* `unroll`
-* `no_aligning`
-* `divisible_by_cardinal`
+* `function_with_traits`
 
-traits is a way to customise the behaviour of the algorithm.
+* `common_with_types`
+* `divisible_by_cardinal`
+* `force_cardinal`
+* `no_aligning`
+* `unroll`
+
+Traits is a way to customise the behaviour of the algorithm.
 Different algorithms support different customizations.
+
+The easiest way to enable a function to support traits.
+
+```
+template <typename TraitsSupport>
+struct func_ : TraitsSupport
+{
+  // Your code here
+  auto operator()( /*params*/ ) {}
+};
+
+inline constexpr auto func = eve::algo::function_with_traits<func_>[defaults];
+```
+TraitsSupport baseclass exposes: `traits_type` to get the type and `get_traits()` for a variable;
+
+Then the user get:
+
+```
+// opt1
+func[eve::algo::unroll<1>][eve::algo::no_aligning](/*params*/)
+
+// opt2
+eve::algo::traits in = /*external source*/
+func[in](/*params*/)
+```
+
+#### Individual traits.
+
+common_with_types
+converts iteration type to a type that is a common with a given one.
+
+divisible_by_cardinal
+you know for a fact that the range is divisible by cardinal
+
+force_cardinal
+ignore default cardinal deduction and try to force smth.
+Currently might fail compilation if you try to increase the cardinal, for example if you fail the alignment requirement.
+
+no_aligning
+By default we will try to find previous aligned address if  the iterators allow.
+Maybe you don't want this.
+
+unrolling
+You can control how much the algorithm will be unrolled. There default one
+assumes that the operation supplied is equivalent to the default one, so if you are doing something expensive,
+makes sense to set to one.
 
 ### concepts
 
@@ -146,7 +196,6 @@ A tuple of iterators with the same cardinal.
 * `unaligned_ptr_iterator`
 
 A pointer + cardinal with the `iterator` interface.
-
 
 
 ### preprocess_range
