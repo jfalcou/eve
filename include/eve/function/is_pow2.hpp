@@ -46,7 +46,7 @@ namespace eve
   //!  auto operator[]( conditional_expression auto cond ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //!  Higher-order function generating a masked version of eve::is_less
+  //!  Higher-order function generating a masked version of eve::is_pow2
   //!
   //!  **Parameters**
   //!

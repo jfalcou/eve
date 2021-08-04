@@ -48,7 +48,7 @@ namespace eve
   //!  auto operator[]( conditional_expression auto cond ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //!  Higher-order function generating a masked version of eve::is_less
+  //!  Higher-order function generating a masked version of eve::is_nlez
   //!
   //!  **Parameters**
   //!
@@ -58,6 +58,8 @@ namespace eve
   //!
   //!  A Callable object so that the expression `is_nlez[cond](x)` is equivalent to
   //! `if_else(cond,is_nlez(x),false(as(is_nlez(x))))`
+  //!
+  //! ---
   //!
   //! #### Supported decorators
   //!
