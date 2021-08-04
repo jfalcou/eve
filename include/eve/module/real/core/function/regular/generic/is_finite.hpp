@@ -34,6 +34,6 @@ namespace eve::detail
   template<conditional_expr C, real_value U>
   EVE_FORCEINLINE auto is_finite_(EVE_SUPPORTS(cpu_), C const &cond, U const &u) noexcept
   {
-    return lmask_op(cond, is_finite, u);
+    return logical_mask_op(cond, is_finite, u);
   }
 }

@@ -44,6 +44,6 @@ namespace eve::detail
   template<conditional_expr C, real_value U, real_value V>
   EVE_FORCEINLINE auto is_not_greater_(EVE_SUPPORTS(cpu_), C const &cond, U const &u, V const &v) noexcept
   {
-    return lmask_op(cond, is_not_greater, u, v);
+    return logical_mask_op(cond, is_not_greater, u, v);
   }
 }

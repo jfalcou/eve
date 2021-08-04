@@ -85,7 +85,7 @@ namespace eve
     template<conditional_expr C, real_value U, real_value V>
     EVE_FORCEINLINE auto is_eqz_(EVE_SUPPORTS(cpu_), C const &cond, U const &u) noexcept
     {
-      return lmask_op(cond, is_eqz, u);
+      return logical_mask_op(cond, is_eqz, u);
     }
   }
 }

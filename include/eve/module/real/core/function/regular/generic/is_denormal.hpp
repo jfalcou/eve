@@ -33,6 +33,6 @@ namespace eve::detail
   template<conditional_expr C, real_value U>
   EVE_FORCEINLINE auto is_denormal_(EVE_SUPPORTS(cpu_), C const &cond, U const &u) noexcept
   {
-    return lmask_op(cond, is_denormal, u);
+    return logical_mask_op(cond, is_denormal, u);
   }
 }

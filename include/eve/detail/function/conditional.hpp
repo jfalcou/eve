@@ -66,7 +66,7 @@ namespace eve::detail
   // What's the logical alternative for this case ?
   //================================================================================================
   template<conditional_expr C, typename Target>
-  EVE_FORCEINLINE auto lalternative(C const& c, as<Target> const&)
+  EVE_FORCEINLINE auto logical_alternative(C const& c, as<Target> const&)
   {
     if constexpr( C::has_alternative )  return Target{c.alternative};
     else                                return false_(as<Target>());
@@ -76,20 +76,20 @@ namespace eve::detail
   // Handle the basic logical return type if/if_else cases
   //================================================================================================
   template<conditional_expr C, typename Op, typename Arg0, typename... Args>
-  EVE_FORCEINLINE auto lmask_op( C const& c
-                               , [[maybe_unused]] Op f
-                               , [[maybe_unused]] Arg0 const& a0
-                               , [[maybe_unused]] Args const&... as
-                               )
+  EVE_FORCEINLINE auto logical_mask_op( C const& c
+                                      , [[maybe_unused]] Op f
+                                      , [[maybe_unused]] Arg0 const& a0
+                                      , [[maybe_unused]] Args const&... as
+                                      )
   {
     using r_t       = decltype(f(a0,as...));
     auto const cond = c.mask(eve::as<r_t>());
 
-          if constexpr( C::is_complete && !C::is_inverted ) return lalternative(c,eve::as<r_t>{});
+          if constexpr( C::is_complete && !C::is_inverted ) return logical_alternative(c,eve::as<r_t>{});
     else  if constexpr( C::is_complete &&  C::is_inverted ) return f(a0,as...);
     else                                                    return if_else( cond
                                                                           , f(a0,as...)
-                                                                          , lalternative(c, eve::as<r_t>{})
+                                                                          , logical_alternative(c, eve::as<r_t>{})
                                                                           );
   }
 
