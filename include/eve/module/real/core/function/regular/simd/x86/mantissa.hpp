@@ -14,6 +14,8 @@
 #include <eve/forward.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
+#include <eve/function/is_finite.hpp>
+#include <eve/function/is_nez.hpp>
 
 namespace eve::detail
 {
@@ -21,16 +23,7 @@ template<floating_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N> mantissa_(EVE_SUPPORTS(avx512_), wide<T, N> a0) noexcept
       requires x86_abi<abi_t<T, N>>
   {
-    constexpr auto c = categorize<wide<T, N>>();
-    constexpr auto interval = _MM_MANT_NORM_1_2;
-    constexpr auto sign     = _MM_MANT_SIGN_src;
-
-         if constexpr ( c == category::float64x8  ) return _mm512_getmant_pd(a0,interval,sign);
-    else if constexpr ( c == category::float32x16 ) return _mm512_getmant_ps(a0,interval,sign);
-    else if constexpr ( c == category::float64x4  ) return _mm256_getmant_pd(a0,interval,sign);
-    else if constexpr ( c == category::float32x8  ) return _mm256_getmant_ps(a0,interval,sign);
-    else if constexpr ( c == category::float64x2  ) return _mm_getmant_pd(a0,interval,sign);
-    else if constexpr ( c == category::float32x4  ) return _mm_getmant_ps(a0,interval,sign);
+    return  mantissa[is_nez(a0) && is_finite(a0)](a0);
   }
 
   // -----------------------------------------------------------------------------------------------
