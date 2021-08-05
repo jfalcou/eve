@@ -25,6 +25,7 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the "less or greater to" predicate   |
+  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -45,6 +46,23 @@ namespace eve
   //!
   //! ---
   //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::is_lessgreater
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `is_lessgreater[cond](x, y)` is equivalent to
+  //! `if_else(cond,is_lessgreater(x, y),false(as(is_lessgreater(x, y))))`
+  //!
+  //! ---
+  //!
   //! #### Supported decorators
   //!
   //!  no decorators are supported
@@ -57,10 +75,7 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
-  namespace tag { struct is_lessgreater_; }
-  template<> struct supports_conditional<tag::is_lessgreater_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(is_lessgreater_, is_lessgreater);
 }
 

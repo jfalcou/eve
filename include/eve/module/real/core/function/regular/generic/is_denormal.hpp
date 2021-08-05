@@ -28,5 +28,11 @@ namespace eve::detail
     else if constexpr(has_native_abi_v<T>)    return is_nez(a) && (abs(a) < smallestposval(eve::as<T>()));
     else                            return apply_over(is_denormal, a);
   }
+  // -----------------------------------------------------------------------------------------------
+  // logical masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto is_denormal_(EVE_SUPPORTS(cpu_), C const &cond, U const &u) noexcept
+  {
+    return logical_mask_op(cond, is_denormal, u);
+  }
 }
-

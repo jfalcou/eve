@@ -36,9 +36,10 @@ EVE_TEST_TYPES( "Check return types of eve::is_negative(simd)"
 
 EVE_TEST( "Check behavior of eve::is_negative(simd)"
         , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::ramp(0.0))
+        , eve::test::generate ( eve::test::ramp(0.0)
+                              , eve::test::logicals(0, 3))
         )
-<typename T>(T const& a0)
+<typename T, typename M>(T  a0,  M const & t)
 {
   using eve::detail::map;
   using eve::one;
@@ -49,6 +50,7 @@ EVE_TEST( "Check behavior of eve::is_negative(simd)"
 
   TTS_EQUAL(eve::is_negative(a0), map([](auto e) -> eve::logical<v_t> { return   bit_or(bitofsign(e), one(as(e))) < v_t(0); }, a0));
   TTS_EQUAL(eve::is_negative(-a0), map([](auto e) -> eve::logical<v_t> { return  bit_or(bitofsign(e), one(as(e))) < v_t(0); }, -a0));
+  TTS_EQUAL(eve::is_negative[t](a0), eve::if_else(t, eve::is_negative(a0), eve::false_(eve::as(a0))));
 };
 
 

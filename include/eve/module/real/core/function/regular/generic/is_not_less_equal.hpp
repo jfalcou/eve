@@ -35,5 +35,12 @@ namespace eve::detail
     if constexpr(integral_value<T>) return is_greater(a, b);
     else                            return is_greater(a, b) || is_unordered(a, b);
   }
-}
 
+  // -----------------------------------------------------------------------------------------------
+  // logical masked case
+  template<conditional_expr C, real_value U, real_value V>
+  EVE_FORCEINLINE auto is_not_less_equal_(EVE_SUPPORTS(cpu_), C const &cond, U const &u, V const &v) noexcept
+  {
+    return logical_mask_op(cond, is_not_less_equal, u, v);
+  }
+}

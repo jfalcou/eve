@@ -27,6 +27,7 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the "less than" predicate   |
+  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -51,16 +52,33 @@ namespace eve
   //!
   //! ---
   //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::is_less
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `is_less[cond](x, y)` is equivalent to
+  //! `if_else(cond,is_less(x, y),false(as(is_less(x, y))))`
+  //!
+  //! ---
+  //!
   //! #### Supported decorators
   //!
   //!  * `definitely`
   //!
   //!     **Required header:**  #include <eve/function/fuzzy/is_less.hpp>
-  //!  
+  //!
   //!     The expression `definitely(is_less)(x, y, t)` where `x` and `y` must be
   //!      floating point values, evals to true if and only if and only if `x` is definitely less than `y`.
   //!      This means that:
-  //!  
+  //!
   //!      - if `t` is a floating_value then  \f$(x < y - t \max(|x|, |y|))\f$
   //!      - if `t` is a positive integral_value then \f$(x < \mbox{prev}(y, t)\f$;
   //!      - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
@@ -73,10 +91,7 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
-  namespace tag { struct is_less_; }
-  template<> struct supports_conditional<tag::is_less_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(is_less_, is_less);
 
   namespace detail
@@ -86,6 +101,14 @@ namespace eve
     {
       if constexpr( scalar_value<T> && scalar_value<U> )  return as_logical_t<T>(a < b);
       else                                                return a < b;
+    }
+
+    // -----------------------------------------------------------------------------------------------
+    // logical masked case
+    template<conditional_expr C, real_value U, real_value V>
+    EVE_FORCEINLINE auto is_less_(EVE_SUPPORTS(cpu_), C const &cond, U const &u, V const &v) noexcept
+    {
+      return logical_mask_op(cond, is_less, u, v);
     }
   }
 }

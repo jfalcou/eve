@@ -24,6 +24,7 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the computation of the is_even logical value   |
+  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -52,6 +53,23 @@ namespace eve
   //!
   //! ---
   //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::is_even
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `is_even[cond](x)` is equivalent to
+  //! `if_else(cond,is_even(x),false(as(is_even(x))))`
+  //!
+  //! ---
+  //!
   //! #### Supported decorators
   //!
   //!  no decorators are supported
@@ -64,10 +82,7 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
-  namespace tag { struct is_even_; }
-  template<> struct supports_conditional<tag::is_even_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(is_even_, is_even);
 }
 

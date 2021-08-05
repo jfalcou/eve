@@ -27,6 +27,7 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the "greater than" predicate   |
+  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -48,6 +49,23 @@ namespace eve
   //!@warning
   //!   Although the infix notation with `>` is supported, the `>` operator on
   //!   standard scalar types is the original one and so returns bool result, not `logical`.
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::is_greater
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `is_greater[cond](x, y)` is equivalent to
+  //! `if_else(cond,is_greater(x, y),false(as(is_greater(x, y))))`
   //!
   //! ---
   //!
@@ -73,10 +91,7 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
-  namespace tag { struct is_greater_; }
-  template<> struct supports_conditional<tag::is_greater_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(is_greater_, is_greater);
 
   namespace detail
@@ -87,5 +102,17 @@ namespace eve
       if constexpr( scalar_value<T> && scalar_value<U> )  return as_logical_t<T>(a > b);
       else                                                return a > b;
     }
+
+    // -----------------------------------------------------------------------------------------------
+    // logical masked case
+    template<conditional_expr C, real_value U, real_value V>
+    EVE_FORCEINLINE auto is_greater_(EVE_SUPPORTS(cpu_), C const &cond, U const &u, V const &v) noexcept
+    {
+      return logical_mask_op(cond, is_greater, u, v);
+    }
   }
 }
+
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/module/real/core/function/regular/simd/x86/is_greater.hpp>
+#endif

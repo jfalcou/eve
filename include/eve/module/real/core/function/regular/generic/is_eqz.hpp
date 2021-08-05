@@ -12,6 +12,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/logical_not.hpp>
+#include <eve/function/is_equal.hpp>
 #include <eve/traits/as_logical.hpp>
 
 namespace eve::detail
@@ -26,5 +27,13 @@ namespace eve::detail
       else                                             return (a == zero(eve::as(a)));
     }
     else                                               return apply_over(is_eqz, a);
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  // logical masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto is_eqz_(EVE_SUPPORTS(cpu_), C const &cond, U const &u) noexcept
+  {
+    return is_equal[cond](u, zero(as(u)));
   }
 }

@@ -33,14 +33,16 @@ EVE_TEST_TYPES( "Check return types of eve::is_nan(simd)"
 
 EVE_TEST( "Check behavior of eve::is_nan(simd)"
         , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::ramp(0))
+        , eve::test::generate ( eve::test::ramp(0)
+                              , eve::test::logicals(0, 3))
         )
-<typename T>(T const& a0)
+<typename T, typename M>(T  a0,  M const & t)
 {
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
   TTS_EQUAL(eve::is_nan(a0), map([](auto e) -> eve::logical<v_t> { return  (e != e); }, a0));
+  TTS_EQUAL(eve::is_nan[t](a0), eve::if_else(t, eve::is_nan(a0), eve::false_(eve::as(a0))));
 };
 
 //==================================================================================================

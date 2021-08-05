@@ -35,5 +35,12 @@ namespace eve::detail
     }
     else                                     return apply_over(is_ngtz, a);
   }
-}
 
+  // -----------------------------------------------------------------------------------------------
+  // logical masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto is_ngtz_(EVE_SUPPORTS(cpu_), C const &cond, U const &u) noexcept
+  {
+    return is_not_greater[cond](u, zero(as(u)));
+  }
+}

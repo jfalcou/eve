@@ -25,6 +25,7 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the greater or equal to zero predicate   |
+  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -44,6 +45,23 @@ namespace eve
   //!
   //! ---
   //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::is_lez
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `is_lez[cond](x)` is equivalent to
+  //! `if_else(cond,is_lez(x),false(as(is_lez(x))))`
+  //!
+  //! ---
+  //!
   //! #### Supported decorators
   //!
   //!  no decorators are supported
@@ -56,10 +74,7 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
-  namespace tag { struct is_lez_; }
-  template<> struct supports_conditional<tag::is_lez_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(is_lez_, is_lez);
 }
 

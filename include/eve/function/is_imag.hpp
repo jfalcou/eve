@@ -25,6 +25,8 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the computation of the is_imag logical value   |
+  //! | `operator[]` | Construct a conditional version of current function object |
+  //!
   //!
   //! ---
   //!
@@ -48,6 +50,23 @@ namespace eve
   //!
   //! ---
   //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::is_imag
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `is_imag[cond](x)` is equivalent to
+  //! `if_else(cond,is_imag(x),false(as(is_imag(x))))`
+  //!
+  //! ---
+  //!
   //! #### Supported decorators
   //!
   //!  no decorators are supported
@@ -60,10 +79,7 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
-  namespace tag { struct is_imag_; }
-  template<> struct supports_conditional<tag::is_imag_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(is_imag_, is_imag);
 }
 

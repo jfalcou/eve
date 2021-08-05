@@ -25,6 +25,7 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the "not greater than" predicate   |
+  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -45,20 +46,37 @@ namespace eve
   //!
   //! ---
   //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::is_not_greater
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `is_not_greater[cond](x, y)` is equivalent to
+  //! `if_else(cond,is_not_greater(x, y),false(as(is_not_greater(x, y))))`
+  //!
+  //! ---
+  //!
   //! #### Supported decorators
   //!
   //!  * `almost`
   //!
   //!     **Required header:**  #include <eve/function/fuzzy/is_not_greater.hpp>
-  //!  
+  //!
   //!     The expression `almost(is_not_greater)(x, y, t)` where `x` and `y` must be
   //!      floating point values, evals to true if and only if and only if `x` is not almost greater than `y`.
   //!      This means that:
-  //!  
+  //!
   //!      - if `t` is a floating_value then  \f$(x < y + t \max(|x|, |y|))\f$
   //!      - if `t` is a positive integral_value then \f$(x < \mbox{next}(y, t)\f$;
   //!      - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
-  //!  
+  //!
   //!  The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
   //!
   //! #### Example
@@ -69,10 +87,7 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
-  namespace tag { struct is_not_greater_; }
-  template<> struct supports_conditional<tag::is_not_greater_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(is_not_greater_, is_not_greater);
 }
 

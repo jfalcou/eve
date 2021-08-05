@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/detail/function/friends.hpp>
+#include <eve/function/logical_and.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
@@ -28,6 +29,7 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the equality predicate   |
+  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -52,22 +54,39 @@ namespace eve
   //!
   //! ---
   //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::is_not_equal
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `is_not_equal[cond](x, y)` is equivalent to
+  //! `if_else(cond,is_not_equal(x, y),false(as(is_not_equal(x, y))))`
+  //!
+  //! ---
+  //!
   //! #### Supported decorators
   //!
   //!  * `numeric`
   //!
   //!     **Required header:**  #include <eve/function/numeric/is_not_equal.hpp>
-  //!  
+  //!
   //!     The expression `numeric(is_not_equal)(x,y)` considers that Nan values are equal.
-  //!  
+  //!
   //!  * `definitely`
   //!
   //!     **Required header:**  #include <eve/function/fuzzy/is_not_equal.hpp>
-  //!  
+  //!
   //!     The expression `definitely(is_not_equal)(x, y, t)` where `x` and `y` must be floating point values, evals
   //!      to true if and only if `x` is definitely not equal to `y`.
   //!      This means that the pair `x,y` is unordered or:
-  //!  
+  //!
   //!      - if `t` is a floating_value then the relative error of confusing is `x` and `y` is greater than `t` \f$|x-y| > t \max(|x|, |y|)\f$.
   //!      - if `t` is an integral_value then there at least `t` values of the type of `x` representable in the interval \f$[x,y[\f$.
   //!      - if `t` is omitted then the tolerance `t` is taken to 3 times the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
@@ -80,10 +99,7 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
-  namespace tag { struct is_not_equal_; }
-  template<> struct supports_conditional<tag::is_not_equal_> : std::false_type {};
-  
+
   EVE_IMPLEMENT_CALLABLE(is_not_equal_, is_not_equal);
 
   namespace detail
@@ -94,5 +110,19 @@ namespace eve
       if constexpr( scalar_value<T> && scalar_value<U> )  return as_logical_t<T>(a != b);
       else                                                return a != b;
     }
+
+    // -----------------------------------------------------------------------------------------------
+    // logical masked case
+    template<conditional_expr C, real_value U, real_value V>
+    EVE_FORCEINLINE auto is_not_equal_(EVE_SUPPORTS(cpu_), C const &cond, U const &u, V const &v) noexcept
+    {
+      using r_t =  decltype(is_not_equal(u, v));
+      return logical_and(is_not_equal(u, v), cond.mask(eve::as<r_t>()));
+    }
+
   }
 }
+
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/module/real/core/function/regular/simd/x86/is_not_equal.hpp>
+#endif

@@ -28,5 +28,13 @@ namespace eve::detail
     }
     else                              return apply_over(is_gez, a);
   }
+
+  // -----------------------------------------------------------------------------------------------
+  // logical masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto is_gez_(EVE_SUPPORTS(cpu_), C const &cond, U const &u) noexcept
+  {
+    return is_greater_equal[cond](u, zero(as(u)));
+  }
 }
 

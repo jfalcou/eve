@@ -28,6 +28,23 @@ EVE_TEST_TYPES( "Check return types of eve::is_infinite(simd)"
 };
 
 //==================================================================================================
+// Tests for eve::is_infinite
+//==================================================================================================
+
+EVE_TEST( "Check behavior of eve::is_infinite(simd)"
+        , eve::test::simd::ieee_reals
+        , eve::test::generate ( eve::test::ramp(0)
+                              , eve::test::logicals(0, 3))
+        )
+<typename T, typename M>(T  a0,  M const & t)
+{
+  using eve::detail::map;
+  using v_t = eve::element_type_t<T>;
+  a0 = eve::if_else(eve::is_eqz(a0), eve::inf(eve::as<v_t>()), eve::zero);
+  TTS_EQUAL(eve::is_infinite(a0), map([](auto e) -> eve::logical<v_t> { return e-e != 0 && e == e; }, a0));
+  TTS_EQUAL(eve::is_infinite[t](a0), eve::if_else(t, eve::is_infinite(a0), eve::false_(eve::as(a0))));
+};
+//==================================================================================================
 // Test cases values
 //==================================================================================================
 EVE_TEST( "Check corner-cases behavior of eve::is_infinite on wide"

@@ -21,5 +21,11 @@ namespace eve::detail
   {
     return !eve::is_infinite(a);
   }
+  // -----------------------------------------------------------------------------------------------
+  // logical masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto is_not_infinite_(EVE_SUPPORTS(cpu_), C const &cond, U const &u) noexcept
+  {
+    return logical_mask_op(cond, is_not_infinite, u);
+  }
 }
-

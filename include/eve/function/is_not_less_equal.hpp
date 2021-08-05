@@ -24,6 +24,7 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the "not less or equal to" predicate   |
+  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -41,6 +42,23 @@ namespace eve
   //!between `x` and `y`. The infix notation `x > y` can also be used.
   //!
   //!The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::is_not_less_equal
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `is_not_less_equal[cond](x, y)` is equivalent to
+  //! `if_else(cond,is_not_less_equal(x, y),false(as(is_not_less_equal(x, y))))`
   //!
   //! ---
   //!
@@ -66,10 +84,7 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
-  namespace tag { struct is_not_less_equal_; }
-  template<> struct supports_conditional<tag::is_not_less_equal_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(is_not_less_equal_, is_not_less_equal);
 }
 

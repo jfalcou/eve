@@ -25,6 +25,19 @@ EVE_TEST_TYPES( "Check return types of eve::is_not_finite(simd)"
   TTS_EXPR_IS( eve::is_not_finite(v_t())                  , logical<v_t> );
 };
 
+EVE_TEST( "Check behavior of eve::is_not_finite(simd)"
+        , eve::test::simd::ieee_reals
+        , eve::test::generate ( eve::test::ramp(0)
+                              , eve::test::logicals(0, 3))
+        )
+<typename T, typename M>(T const& a0,  M const & t)
+{
+  using eve::detail::map;
+  using v_t = eve::element_type_t<T>;
+
+  TTS_EQUAL(eve::is_not_finite(a0), map([](auto e) -> eve::logical<v_t> { return  e - e != 0; }, a0));
+  TTS_EQUAL(eve::is_not_finite[t](a0), eve::if_else(t, eve::is_not_finite(a0), eve::false_(eve::as(a0))));
+};
 
 //==================================================================================================
 // Test cases values
