@@ -43,4 +43,12 @@ namespace eve::detail
     else return apply_over(exponent, a);
   }
 
+  //================================================================================================
+  // Masked case
+  //================================================================================================
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto exponent_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
+  {
+    return conv_mask_op(  cond, eve::exponent, t);
+  }
 }
