@@ -16,6 +16,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/function/is_finite.hpp>
 #include <eve/function/is_nez.hpp>
+#include <eve/function/logical_and.hpp>
 
 namespace eve::detail
 {
@@ -30,7 +31,7 @@ template<floating_scalar_value T, typename N>
   // Masked case
   template<conditional_expr C, floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE
-  wide<T, N> mantissa_(EVE_SUPPORTS(sse2_), C const &cx, wide<T, N> const &v) noexcept
+  wide<T, N> mantissa_(EVE_SUPPORTS(avx512_), C const &cx, wide<T, N> const &v) noexcept
       requires x86_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();
@@ -42,7 +43,9 @@ template<floating_scalar_value T, typename N>
     else
     {
       auto src  = alternative(cx,v,as<wide<T, N>>{});
-      auto m    = expand_mask(cx,as<wide<T, N>>{}).storage().value;
+      auto  mm    = expand_mask(cx,as<wide<T, N>>{});
+      mm = logical_and(mm,is_nez(v) && is_finite(v));
+      auto m = mm.storage().value;
       constexpr auto interval = _MM_MANT_NORM_1_2;
       constexpr auto sign     = _MM_MANT_SIGN_src;
 
