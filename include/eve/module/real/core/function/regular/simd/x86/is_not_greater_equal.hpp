@@ -67,9 +67,7 @@ namespace eve::detail
       else  if constexpr(c == category::float64x4 ) return mask8 {_mm256_mask_cmp_pd_mask(m,v,w,f)};
       else  if constexpr(c == category::float32x4 ) return mask8 {_mm_mask_cmp_ps_mask(m,v,w,f)};
       else  if constexpr(c == category::float64x2 ) return mask8 {_mm_mask_cmp_pd_mask(m,v,w,f)};
-      else {
-        std::cout << "icitte" << std::endl;
-        return is_less[cx](v, w);
-    }    }
+      else  return is_less[cx](v, w);
+    }
   }
 }
