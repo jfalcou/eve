@@ -24,3 +24,7 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/pedantic/generic/ldexp.hpp>
+
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/module/real/core/function/pedantic/simd/x86/ldexp.hpp>
+#endif
