@@ -18,22 +18,24 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  template<relative_conditional_expr Cond, real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
-  T* compress_store_impl_aggregated(wide<T, N> v,
+  T* compress_store_impl_aggregated(Cond c,
+                                    wide<T, N> v,
                                     logical<wide<T, N>> mask,
                                     Ptr ptr)
   {
     auto [l, h] = v.slice();
     auto [ml, mh] = mask.slice();
 
-    T* ptr1 = compress_store_impl(l, ml, ptr);
-    return compress_store_impl(h, mh, ptr1);
+    T* ptr1 = compress_store_impl(c, l, ml, ptr);
+    return compress_store_impl(c, h, mh, ptr1);
   }
 
-  template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  template<relative_conditional_expr Cond, real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
   T* compress_store_impl_(EVE_SUPPORTS(cpu_),
+                          Cond c,
                           wide<T, N> v,
                           logical<wide<T, N>> mask,
                           Ptr ptr) noexcept
@@ -47,7 +49,7 @@ namespace eve::detail
     }
     else if constexpr ( !has_emulated_abi_v<wide<T, N>> && N() > 2 )
     {
-      return compress_store_impl_aggregated(v, mask, ptr);
+      return compress_store_impl_aggregated(c, v, mask, ptr);
     }
     else
     {

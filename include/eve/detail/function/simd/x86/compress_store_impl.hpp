@@ -111,9 +111,10 @@ namespace eve::detail
   // The idea from: https://gist.github.com/aqrit/6e73ca6ff52f72a2b121d584745f89f3#file-despace-cpp-L141
   // Was shown to me by: @aqrit
   // Stack Overflow discussion: https://chat.stackoverflow.com/rooms/212510/discussion-between-denis-yaroshevskiy-and-peter-cordes
-  template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  template<relative_conditional_expr Cond, real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
   T* compress_store_impl_(EVE_SUPPORTS(ssse3_),
+                          Cond c,
                           wide<T, N> v,
                           logical<wide<T, N>> mask,
                           Ptr ptr) noexcept
@@ -121,7 +122,7 @@ namespace eve::detail
   {
     if constexpr ( N() == 4 && sizeof(T) == 8 && current_api == avx  )
     {
-      return compress_store_impl_aggregated(v, mask, ptr);
+      return compress_store_impl_aggregated(c, v, mask, ptr);
     }
     else if constexpr ( N() == 4 && sizeof(T) == 8 )
     {
@@ -144,7 +145,7 @@ namespace eve::detail
       auto  i_v = eve::bit_cast(v, eve::as<wide<i_t, N>>{});
       auto  i_m = eve::bit_cast(mask, eve::as<eve::logical<wide<i_t, N>>>{});
 
-      i_t* stored = compress_store_impl(i_v, i_m, i_p);
+      i_t* stored = compress_store_impl(c, i_v, i_m, i_p);
       return (T*) stored;
     }
     else
@@ -301,9 +302,10 @@ namespace eve::detail
     return res;
   }
 
-  template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  template<relative_conditional_expr Cond, real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
   T* compress_store_impl_(EVE_SUPPORTS(ssse3_),
+                          Cond,
                           wide<T, N> v,
                           logical<wide<T, N>> mask,
                           Ptr ptr) noexcept
@@ -349,9 +351,10 @@ namespace eve::detail
     }
   }
 
-  template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  template<relative_conditional_expr Cond, real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
   T* compress_store_impl_(EVE_SUPPORTS(ssse3_),
+                          Cond,
                           wide<T, N> v,
                           logical<wide<T, N>> mask,
                           Ptr ptr) noexcept
