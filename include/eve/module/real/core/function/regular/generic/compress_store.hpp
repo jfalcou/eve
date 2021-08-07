@@ -15,12 +15,32 @@ namespace eve::detail
   EVE_FORCEINLINE
   T* compress_store_(EVE_SUPPORTS(cpu_),
                     C c,
+                    safe_type,
+                    wide<T, N> v,
+                    logical<wide<T, N>> mask,
+                    Ptr ptr) noexcept
+  {
+    wide<T, N> buffer;
+    T* up_to = compress_store_impl(c, v, mask, buffer.begin());
+    std::ptrdiff_t n = up_to - buffer.begin();
+
+    // TODO: we can do this slightly better.
+    auto* out = as_raw_pointer(ptr) + c.offset(as(mask));
+    store[eve::keep_first(n)](buffer, out);
+    return out + n;
+  }
+
+  template<relative_conditional_expr C, real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  EVE_FORCEINLINE
+  T* compress_store_(EVE_SUPPORTS(cpu_),
+                    C c,
                     unsafe_type,
                     wide<T, N> v,
                     logical<wide<T, N>> mask,
                     Ptr ptr) noexcept
   {
-    return compress_store_impl(c, v, mask, ptr);
+    if (!C::is_complete) return safe(compress_store[c])(v, mask, ptr);
+    else                 return compress_store_impl(c, v, mask, ptr);
   }
 
   template<relative_conditional_expr C, decorator Decorator, real_scalar_value T, typename N, simd_compatible_ptr<logical<wide<T, N>>> Ptr>

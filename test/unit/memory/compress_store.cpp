@@ -15,6 +15,34 @@
 
 namespace
 {
+
+template <typename T, typename L, typename C>
+void ignore_test(T x, L m, C c)
+{
+  using e_t = eve::element_type_t<T>;
+  using arr = std::array<e_t, T::size()>;
+
+  arr expected;
+  expected.fill(e_t{});
+
+  std::int8_t f_i = c.offset(eve::as(x));
+  std::int8_t l_i = f_i + c.count(eve::as(x));
+  std::int8_t o = f_i;
+
+  for (std::int8_t i = f_i; i != l_i; ++i) {
+    if (!m.get(i)) continue;
+    expected[o++] = x.get(i);
+  }
+
+  alignas(sizeof(arr)) arr actual;
+  actual.fill(e_t{});
+
+  e_t* out = eve::unsafe(eve::compress_store[c])(x, m, actual.begin());
+  TTS_EQUAL((out - actual.begin()), o);
+
+  TTS_EQUAL(T(expected.begin()), T(actual.begin()));
+}
+
 template <bool all_options, typename T, typename L>
 void one_test(T x, L m)
 {
@@ -45,6 +73,7 @@ void one_test(T x, L m)
   {
     using ap_t = eve::aligned_ptr<e_t, eve::cardinal_t<T>>;
 
+    actual.fill(e_t{});
     out = eve::unsafe(eve::compress_store)(x, m, ap_t{actual.begin()});
 
     TTS_EQUAL((out - actual.begin()), o);
@@ -116,6 +145,7 @@ void all_tests_for_v(T x)
 
 }
 
+/*
 EVE_TEST( "Check compress store behavior"
         , eve::test::simd::all_types
         , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
@@ -124,4 +154,15 @@ EVE_TEST( "Check compress store behavior"
 {
   all_tests_for_v<eve::logical<T>>(data);
   smaller_test_v<L>(logical_data);
+};
+*/
+
+EVE_TEST( "Check compress store ignore"
+        , eve::test::simd::all_types
+        , eve::test::generate(eve::test::ramp(1))
+        )
+<typename T>(T data)
+{
+  eve::logical<T> m ([](int i, int) { return i % 2 == 0; });
+  ignore_test(data, m, eve::ignore_first(1));
 };

@@ -18,24 +18,22 @@
 
 namespace eve::detail
 {
-  template<relative_conditional_expr Cond, real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
-  T* compress_store_impl_aggregated(Cond c,
-                                    wide<T, N> v,
+  T* compress_store_impl_aggregated(wide<T, N> v,
                                     logical<wide<T, N>> mask,
                                     Ptr ptr)
   {
     auto [l, h] = v.slice();
     auto [ml, mh] = mask.slice();
 
-    T* ptr1 = compress_store_impl(c, l, ml, ptr);
-    return compress_store_impl(c, h, mh, ptr1);
+    T* ptr1 = compress_store_impl(l, ml, ptr);
+    return compress_store_impl(h, mh, ptr1);
   }
 
-  template<relative_conditional_expr Cond, real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
   T* compress_store_impl_(EVE_SUPPORTS(cpu_),
-                          Cond c,
                           wide<T, N> v,
                           logical<wide<T, N>> mask,
                           Ptr ptr) noexcept
@@ -49,7 +47,7 @@ namespace eve::detail
     }
     else if constexpr ( !has_emulated_abi_v<wide<T, N>> && N() > 2 )
     {
-      return compress_store_impl_aggregated(c, v, mask, ptr);
+      return compress_store_impl_aggregated(v, mask, ptr);
     }
     else
     {
@@ -59,6 +57,35 @@ namespace eve::detail
         *ptr_ = v.get(idx());
         ptr_ += mask.get(idx());
       });
+      return ptr_;
+    }
+  }
+
+  template<relative_conditional_expr C, real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  EVE_FORCEINLINE
+  T* compress_store_impl_(EVE_SUPPORTS(cpu_),
+                          C c,
+                          wide<T, N> v,
+                          logical<wide<T, N>> mask,
+                          Ptr ptr) noexcept
+  {
+         if ( C::is_complete && !C::is_inverted ) return as_raw_pointer(ptr);
+    else if ( C::is_complete )                    return compress_store_impl(v, mask, ptr);
+    else if ( !has_emulated_abi_v<wide<T, N>> )
+    {
+      mask = mask && c.mask(as(mask));
+      return compress_store_impl(v, mask, ptr);
+    }
+    else
+    {
+      auto offset = c.offset(as(v));
+      auto count  = c.count(as(v));
+      auto* ptr_ = as_raw_pointer(ptr);
+
+      for (int idx = offset; idx != offset + count; ++idx) {
+        if (mask.get(idx)) *ptr_++ = v.get(idx);
+      }
+
       return ptr_;
     }
   }
