@@ -122,12 +122,12 @@ CMAKE configurations
 |emulated                | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake -DEVE_OPTIONS='-DEVE_NO_SIMD' |
 |x86_sse2                | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake -DEVE_OPTIONS='-msse2' |
 |x86_sse2-asan           | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.asan.cmake -DEVE_OPTIONS='-msse2' |
-|x86_sse4                | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=./cmake/toolchain/clang.x86.cmake  -DEVE_OPTIONS='-msse4' |
-|x86_avx                 | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=./cmake/toolchain/clang.x86.cmake  -DEVE_OPTIONS='-mavx' |
-|x86_avx2                | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=./cmake/toolchain/clang.x86.cmake  -DEVE_OPTIONS='-mavx2' |
-|x86_fma                 | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=./cmake/toolchain/clang.x86.cmake  -DEVE_OPTIONS='-mavx2 -mfma' |
-|x86_avx512              | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=./cmake/toolchain/clang.x86.cmake  -DEVE_OPTIONS='-march=skylake-avx512' |
-|x86_avx512_no_native    | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=./cmake/toolchain/clang.x86.sde.cmake  -DEVE_OPTIONS='-march=skylake-avx512' |
+|x86_sse4                | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake  -DEVE_OPTIONS='-msse4' |
+|x86_avx                 | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake  -DEVE_OPTIONS='-mavx' |
+|x86_avx2                | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake  -DEVE_OPTIONS='-mavx2' |
+|x86_fma                 | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake  -DEVE_OPTIONS='-mavx2 -mfma' |
+|x86_avx512              | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake  -DEVE_OPTIONS='-march=skylake-avx512' |
+|x86_avx512_no_native    | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.sde.cmake  -DEVE_OPTIONS='-march=skylake-avx512' |
 |tiny (sse2)             | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake -DEVE_TEST_TYPE=tiny_wide |
 |small (sse2)            | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake -DEVE_TEST_TYPE=small_wide |
 |extra (sse2)            | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake -DEVE_TEST_TYPE=extra_wide |
