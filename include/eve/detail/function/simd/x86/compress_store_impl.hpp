@@ -113,16 +113,15 @@ namespace eve::detail
   // Stack Overflow discussion: https://chat.stackoverflow.com/rooms/212510/discussion-between-denis-yaroshevskiy-and-peter-cordes
   template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
-  T* compress_store_(EVE_SUPPORTS(ssse3_),
-                     unsafe_type,
-                     wide<T, N> v,
-                     logical<wide<T, N>> mask,
-                     Ptr ptr) noexcept
+  T* compress_store_impl_(EVE_SUPPORTS(ssse3_),
+                          wide<T, N> v,
+                          logical<wide<T, N>> mask,
+                          Ptr ptr) noexcept
     requires x86_abi<abi_t<T, N>> && ( N() == 4 )
   {
     if constexpr ( N() == 4 && sizeof(T) == 8 && current_api == avx  )
     {
-      return compress_store_aggregated_unsafe(v, mask, ptr);
+      return compress_store_impl_aggregated(v, mask, ptr);
     }
     else if constexpr ( N() == 4 && sizeof(T) == 8 )
     {
@@ -145,7 +144,7 @@ namespace eve::detail
       auto  i_v = eve::bit_cast(v, eve::as<wide<i_t, N>>{});
       auto  i_m = eve::bit_cast(mask, eve::as<eve::logical<wide<i_t, N>>>{});
 
-      i_t* stored = unsafe(compress_store)(i_v, i_m, i_p);
+      i_t* stored = compress_store_impl(i_v, i_m, i_p);
       return (T*) stored;
     }
     else
@@ -304,14 +303,13 @@ namespace eve::detail
 
   template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
-  T* compress_store_(EVE_SUPPORTS(ssse3_),
-                     unsafe_type,
-                     wide<T, N> v,
-                     logical<wide<T, N>> mask,
-                     Ptr ptr) noexcept
+  T* compress_store_impl_(EVE_SUPPORTS(ssse3_),
+                          wide<T, N> v,
+                          logical<wide<T, N>> mask,
+                          Ptr ptr) noexcept
     requires x86_abi<abi_t<T, N>> && (current_api <= avx2) && ( N() == 8 )
   {
-    if constexpr ( sizeof(T) == 4 && current_api == avx ) return compress_store_aggregated_unsafe(v, mask, ptr);
+    if constexpr ( sizeof(T) == 4 && current_api == avx ) return compress_store_impl_aggregated(v, mask, ptr);
     else
     {
       // First let's reduce the variability in each pair
@@ -353,11 +351,10 @@ namespace eve::detail
 
   template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
-  T* compress_store_(EVE_SUPPORTS(ssse3_),
-                     unsafe_type,
-                     wide<T, N> v,
-                     logical<wide<T, N>> mask,
-                     Ptr ptr) noexcept
+  T* compress_store_impl_(EVE_SUPPORTS(ssse3_),
+                          wide<T, N> v,
+                          logical<wide<T, N>> mask,
+                          Ptr ptr) noexcept
     requires x86_abi<abi_t<T, N>> && (current_api <= avx2) && ( N() == 16 )
   {
     using half_wide = wide<T, eve::fixed<8>>;
