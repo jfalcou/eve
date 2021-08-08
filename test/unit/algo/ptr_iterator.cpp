@@ -49,6 +49,8 @@ EVE_TEST_TYPES("Check ptr_iterator", algo_test::selected_types)
     {
       algo_test::writeable_readable_iterator(a_f, values, replace);
       algo_test::writeable_readable_iterator(u_f, values, replace);
+      algo_test::iterator_supports_compress(a_f, values, replace);
+      algo_test::iterator_supports_compress(u_f, values, replace);
     }
   };
 

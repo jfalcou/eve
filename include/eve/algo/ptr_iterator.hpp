@@ -68,6 +68,12 @@ namespace eve::algo
       eve::store(v, self.ptr);
     }
 
+    template <relative_conditional_expr C, decorator Decorator>
+    friend auto tagged_dispatch( eve::tag::compress_store_, C c, Decorator d, wide_value_type v, logical<wide_value_type> m, unaligned_ptr_iterator self)
+    {
+      return unaligned_ptr_iterator{eve::compress_store(c, d, v, m, self.ptr)};
+    }
+
     T* ptr;
   };
 
@@ -122,6 +128,12 @@ namespace eve::algo
       requires ( !std::is_const_v<T> )
     {
       return eve::store(v, self.ptr);
+    }
+
+    template <relative_conditional_expr C, decorator Decorator>
+    friend auto tagged_dispatch( eve::tag::compress_store_, C c, Decorator d, wide_value_type v, logical<wide_value_type> m, aligned_ptr_iterator self)
+    {
+      return unaligned_ptr_iterator<T, Cardinal>{eve::compress_store(c, d, v, m, self.ptr)};
     }
 
     aligned_ptr_type ptr;
