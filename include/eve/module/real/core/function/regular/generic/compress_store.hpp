@@ -7,71 +7,76 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/function/count_true.hpp>
-#include <eve/function/slide_left.hpp>
-#include <eve/function/store.hpp>
-#include <eve/function/unsafe.hpp>
-#include <eve/memory/pointer.hpp>
+#include <eve/detail/function/compress_store_impl.hpp>
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
-  EVE_FORCEINLINE
-  T* compress_store_aggregated_unsafe(wide<T, N> v,
-                                      logical<wide<T, N>> mask,
-                                      Ptr ptr)
-  {
-    auto [l, h] = v.slice();
-    auto [ml, mh] = mask.slice();
-
-    T* ptr1 = eve::unsafe(eve::compress_store)(l, ml, ptr);
-    return eve::unsafe(eve::compress_store)(h, mh, ptr1);
-  }
-
-  template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  template<relative_conditional_expr C, real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
   T* compress_store_(EVE_SUPPORTS(cpu_),
+                    C c,
+                    safe_type,
+                    wide<T, N> v,
+                    logical<wide<T, N>> mask,
+                    Ptr ptr) noexcept
+  {
+    alignas(sizeof(v)) std::array<element_type_t<T>, N{}()> buffer;
+    T* up_to = compress_store_impl(c, v, mask, buffer.begin());
+    std::ptrdiff_t n = up_to - buffer.begin();
+
+    auto* out = as_raw_pointer(ptr) + c.offset(as(mask));
+
+    wide<T, N> compressed{aligned_ptr<T, N>{buffer.begin()}};
+
+    store[keep_first(n)](compressed, out);
+    return out + n;
+  }
+
+  template<relative_conditional_expr C, real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  EVE_FORCEINLINE
+  T* compress_store_(EVE_SUPPORTS(cpu_),
+                    C c,
                     unsafe_type,
                     wide<T, N> v,
                     logical<wide<T, N>> mask,
                     Ptr ptr) noexcept
   {
-    if constexpr ( !has_emulated_abi_v<wide<T, N>> && N() == 2 )
-    {
-      auto to_left     = eve::slide_left( v, eve::index<1> );
-      auto compressed  = eve::if_else[mask]( v, to_left );
-      eve::store(compressed, ptr);
-      return as_raw_pointer(ptr) + eve::count_true(mask);
-    }
-    else if constexpr ( !has_emulated_abi_v<wide<T, N>> && N() > 2 )
-    {
-      return compress_store_aggregated_unsafe(v, mask, ptr);
-    }
-    else
-    {
-      auto* ptr_ = as_raw_pointer(ptr);
-      detail::for_<0,1, N{}()>([&](auto idx) mutable
-      {
-        *ptr_ = v.get(idx());
-        ptr_ += mask.get(idx());
-      });
-      return ptr_;
-    }
+    if (!C::is_complete) return safe(compress_store[c])(v, mask, ptr);
+    else                 return compress_store_impl(c, v, mask, ptr);
   }
 
-  template<real_scalar_value T, typename N, simd_compatible_ptr<logical<wide<T, N>>> Ptr>
+  template<relative_conditional_expr C, decorator Decorator, real_scalar_value T, typename N, simd_compatible_ptr<logical<wide<T, N>>> Ptr>
   EVE_FORCEINLINE
   logical<T>*  compress_store_(EVE_SUPPORTS(cpu_),
-                               unsafe_type,
+                               C c,
+                               Decorator d,
                                logical<wide<T, N>> v,
                                logical<wide<T, N>> mask,
                                Ptr ptr) noexcept
   {
-    auto* raw_ptr =
-      unsafe(compress_store)(v.mask(), mask, ptr_cast<typename logical<T>::mask_type>(ptr));
+    auto* raw_ptr = compress_store(c, d, v.mask(), mask, ptr_cast<typename logical<T>::mask_type>(ptr));
     return (logical<T> *)raw_ptr;
+  }
+
+  template <decorator Decorator, simd_value T, simd_compatible_ptr<T> Ptr>
+  EVE_FORCEINLINE
+  auto compress_store_(EVE_SUPPORTS(cpu_),
+                       Decorator d,
+                       T v,
+                       logical<T> mask,
+                       Ptr ptr) noexcept
+  {
+    return compress_store(ignore_none, d, v, mask, ptr);
+  }
+
+  template <decorator Decorator, simd_value T, simd_compatible_ptr<T> Ptr>
+  EVE_FORCEINLINE
+  auto compress_store_(EVE_SUPPORTS(cpu_),
+                       Decorator d,
+                       logical<T> v,
+                       logical<T> mask,
+                       Ptr ptr) noexcept
+  {
+    return compress_store(ignore_none, d, v, mask, ptr);
   }
 }

@@ -7,12 +7,22 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/function/convert.hpp>
+
 #include <array>
 #include <bit>
 
+/*
+  NOTE:
+    We have 3 implementations: 4 elements, 8 elements and 16 elements.
+    For 4 elements we can process ignore better, utilizing top_bits.
+    For every other case since we do a shift + & we have to use the mask => we use the base case.
+
+    At the moment we don't have an avx-512 implementation, since the logical is different.
+*/
+
 namespace eve::detail
 {
-
   EVE_FORCEINLINE constexpr std::uint32_t add_popcount(std::uint32_t idx, std::uint32_t count)
   {
     return count << 4 | idx;
@@ -111,31 +121,32 @@ namespace eve::detail
   // The idea from: https://gist.github.com/aqrit/6e73ca6ff52f72a2b121d584745f89f3#file-despace-cpp-L141
   // Was shown to me by: @aqrit
   // Stack Overflow discussion: https://chat.stackoverflow.com/rooms/212510/discussion-between-denis-yaroshevskiy-and-peter-cordes
-  template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  template<relative_conditional_expr C, real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
-  T* compress_store_(EVE_SUPPORTS(ssse3_),
-                     unsafe_type,
-                     wide<T, N> v,
-                     logical<wide<T, N>> mask,
-                     Ptr ptr) noexcept
+  T* compress_store_impl_(EVE_SUPPORTS(ssse3_),
+                          C c,
+                          wide<T, N> v,
+                          logical<wide<T, N>> mask,
+                          Ptr ptr) noexcept
     requires x86_abi<abi_t<T, N>> && ( N() == 4 )
   {
-    if constexpr ( N() == 4 && sizeof(T) == 8 && current_api == avx  )
+         if ( C::is_complete && !C::is_inverted ) return as_raw_pointer(ptr);
+    else if constexpr ( N() == 4 && sizeof(T) == 8 && current_api == avx  )
     {
-      return compress_store_aggregated_unsafe(v, mask, ptr);
+      return compress_store_impl_(EVE_RETARGET(cpu_), c, v, mask, ptr);
     }
     else if constexpr ( N() == 4 && sizeof(T) == 8 )
     {
       alignas(sizeof(T) * N()) auto patterns = pattern_4_elements(idx_dwords<std::uint64_t>);
 
-      top_bits mmask{mask};
+      top_bits mmask{mask, c};
       aligned_ptr<std::uint64_t, eve::fixed<4>> pattern_ptr{patterns[mmask.as_int() & 7].data()};
       wide<std::uint32_t, eve::fixed<8>> pattern{ptr_cast<std::uint32_t>(pattern_ptr)};
 
       wide<T, N> shuffled = permvar8(v, pattern);
 
       store(shuffled, ptr);
-      int popcount = eve::count_true(mask);
+      int popcount = count_true(mmask);
       return as_raw_pointer(ptr) + popcount;
     }
     else if constexpr ( std::floating_point<T> )
@@ -145,7 +156,7 @@ namespace eve::detail
       auto  i_v = eve::bit_cast(v, eve::as<wide<i_t, N>>{});
       auto  i_m = eve::bit_cast(mask, eve::as<eve::logical<wide<i_t, N>>>{});
 
-      i_t* stored = unsafe(compress_store)(i_v, i_m, i_p);
+      i_t* stored = compress_store_impl(c, i_v, i_m, i_p);
       return (T*) stored;
     }
     else
@@ -159,11 +170,12 @@ namespace eve::detail
       auto mmask = [&] {
         if constexpr ( sizeof(T) == 2 && abi_t<T, N>::is_wide_logical )
         {
-          return _mm_movemask_epi8(_mm_packs_epi16(mask, mask));
+          auto shrink_bytes = eve::convert(mask, eve::as<eve::logical<std::uint8_t>>{});
+          return top_bits{shrink_bytes, c}.as_int();
         }
         else
         {
-          return top_bits{mask}.as_int();
+          return top_bits{mask, c}.as_int();
         }
       }();
 
@@ -176,6 +188,21 @@ namespace eve::detail
       int popcount = get_popcount(pattern.get(0)) + (bool)(mmask & 8);
       return as_raw_pointer(ptr) + popcount;
     }
+  }
+
+  template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  EVE_FORCEINLINE
+  T* compress_store_impl_(EVE_SUPPORTS(ssse3_),
+                          wide<T, N> v,
+                          logical<wide<T, N>> mask,
+                          Ptr ptr) noexcept
+    requires x86_abi<abi_t<T, N>> && ( N() == 4 )
+  {
+    if constexpr ( N() == 4 && sizeof(T) == 8 && current_api == avx  )
+    {
+      return compress_store_impl_aggregated(v, mask, ptr);
+    }
+    else return compress_store_impl[eve::ignore_none](v, mask, ptr);
   }
 
   /*
@@ -304,14 +331,13 @@ namespace eve::detail
 
   template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
-  T* compress_store_(EVE_SUPPORTS(ssse3_),
-                     unsafe_type,
-                     wide<T, N> v,
-                     logical<wide<T, N>> mask,
-                     Ptr ptr) noexcept
+  T* compress_store_impl_(EVE_SUPPORTS(ssse3_),
+                          wide<T, N> v,
+                          logical<wide<T, N>> mask,
+                          Ptr ptr) noexcept
     requires x86_abi<abi_t<T, N>> && (current_api <= avx2) && ( N() == 8 )
   {
-    if constexpr ( sizeof(T) == 4 && current_api == avx ) return compress_store_aggregated_unsafe(v, mask, ptr);
+    if constexpr ( sizeof(T) == 4 && current_api == avx ) return compress_store_impl_aggregated(v, mask, ptr);
     else
     {
       // First let's reduce the variability in each pair
@@ -353,11 +379,10 @@ namespace eve::detail
 
   template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
-  T* compress_store_(EVE_SUPPORTS(ssse3_),
-                     unsafe_type,
-                     wide<T, N> v,
-                     logical<wide<T, N>> mask,
-                     Ptr ptr) noexcept
+  T* compress_store_impl_(EVE_SUPPORTS(ssse3_),
+                          wide<T, N> v,
+                          logical<wide<T, N>> mask,
+                          Ptr ptr) noexcept
     requires x86_abi<abi_t<T, N>> && (current_api <= avx2) && ( N() == 16 )
   {
     using half_wide = wide<T, eve::fixed<8>>;

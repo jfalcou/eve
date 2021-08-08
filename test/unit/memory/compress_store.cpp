@@ -15,6 +15,94 @@
 
 namespace
 {
+
+template <typename T, typename L, typename C>
+void ignore_test(T x, L m, C c)
+{
+  using e_t = eve::element_type_t<T>;
+  using arr = std::array<e_t, T::size()>;
+
+  // gcc bug workaround
+  arr x_arr;
+  eve::store(x, x_arr.data());
+
+  arr expected;
+  expected.fill(e_t{0});
+
+  std::int8_t f_i = c.offset(eve::as(x));
+  std::int8_t l_i = f_i + c.count(eve::as(x));
+  std::int8_t o = f_i;
+
+  for (std::int8_t i = f_i; i != l_i; ++i) {
+    if (!m.get(i)) continue;
+    expected[o++] = x_arr[i];
+  }
+
+  alignas(sizeof(arr)) arr actual;
+  actual.fill(e_t{0});
+
+  e_t* out = eve::unsafe(eve::compress_store[c])(x, m, actual.begin());
+  TTS_EQUAL((out - actual.begin()), o);
+  TTS_EQUAL(T(expected.begin()), T(actual.begin()));
+
+  using ap_t = eve::aligned_ptr<e_t, eve::cardinal_t<T>>;
+  actual.fill(e_t{0});
+
+  out = eve::unsafe(eve::compress_store[c])(x, m, ap_t{actual.begin()});
+  TTS_EQUAL((out - actual.begin()), o);
+  TTS_EQUAL(T(expected.begin()), T(actual.begin()));
+}
+
+template <typename T, typename L>
+void all_ignore_tests(T x, L m)
+{
+  if (x.size() < 16)
+  {
+    for (std::int8_t i = 0; i != x.size() + 1; ++i) {
+      for (std::int8_t j = 0; j <= x.size() - i; ++j) {
+        ignore_test(x, m, eve::ignore_extrema{i, j});
+      }
+    }
+  }
+  else
+  {
+    for (std::int8_t i = 0; i != x.size() + 1; ++i) {
+      ignore_test(x, m, eve::ignore_first(i));
+      ignore_test(x, m, eve::ignore_last(i));
+    }
+  }
+}
+
+template < typename L, typename T>
+void precise_tests(T x)
+{
+  using e_t = eve::element_type_t<T>;
+
+  // ignore all
+  {
+    e_t data;
+    eve::unsafe(eve::compress_store[eve::ignore_all])(x, L{}, &data + 1);
+    eve::safe(eve::compress_store[eve::ignore_all])(x, L{}, &data + 1);
+  }
+
+  // writing exactly,
+  if constexpr ( T::size() >= eve::expected_cardinal_v<e_t> )  // FIX-816
+  {
+    e_t data[2] = { e_t{0}, e_t{5}} ;
+    L mask{false};
+    mask.set(T::size() - 1, true);
+    eve::safe(eve::compress_store)(x, mask, &data[0]);
+    TTS_EQUAL(data[0], x.back());
+    TTS_EQUAL(data[1], e_t{5});
+
+    // unsafe with ignore still acts as safe
+    data[0] = e_t{0};
+    eve::unsafe(eve::compress_store[eve::ignore_first(0)])(x, mask, &data[0]);
+    TTS_EQUAL(data[0], x.back());
+    TTS_EQUAL(data[1], e_t{5});
+  }
+}
+
 template <bool all_options, typename T, typename L>
 void one_test(T x, L m)
 {
@@ -22,7 +110,7 @@ void one_test(T x, L m)
   using arr = std::array<e_t, T::size()>;
 
   arr expected;
-  expected.fill(e_t{});
+  expected.fill(e_t{0});
 
   std::int8_t o = 0;
   for (std::int8_t i = 0; i != T::size(); ++i) {
@@ -31,7 +119,7 @@ void one_test(T x, L m)
   }
 
   alignas(sizeof(arr)) arr actual;
-  actual.fill(e_t{});
+  actual.fill(e_t{0});
 
   e_t* out = eve::unsafe(eve::compress_store)(x, m, actual.begin());
   TTS_EQUAL((out - actual.begin()), o);
@@ -45,12 +133,18 @@ void one_test(T x, L m)
   {
     using ap_t = eve::aligned_ptr<e_t, eve::cardinal_t<T>>;
 
+    actual.fill(e_t{0});
     out = eve::unsafe(eve::compress_store)(x, m, ap_t{actual.begin()});
 
     TTS_EQUAL((out - actual.begin()), o);
 
     std::copy(&expected[o], expected.end(), &actual[o]);
     TTS_EQUAL(T(expected.begin()), T(actual.begin()));
+  }
+
+  if constexpr (all_options)
+  {
+    all_ignore_tests(x, m);
   }
 }
 
@@ -102,6 +196,9 @@ template<typename L, typename T> void smaller_test_v(T x)
 
     for( int i = 0; i < 1000; ++i ) { one_test<true>(x, random_l()); }
   }
+
+  // precise
+  precise_tests<L>(x);
 }
 
 template <typename L, typename T>
