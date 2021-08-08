@@ -22,6 +22,10 @@ void ignore_test(T x, L m, C c)
   using e_t = eve::element_type_t<T>;
   using arr = std::array<e_t, T::size()>;
 
+  // gcc bug workaround
+  arr x_arr;
+  eve::store(x, x_arr.data());
+
   arr expected;
   expected.fill(e_t{0});
 
@@ -31,7 +35,7 @@ void ignore_test(T x, L m, C c)
 
   for (std::int8_t i = f_i; i != l_i; ++i) {
     if (!m.get(i)) continue;
-    expected[o++] = x.get(i);
+    expected[o++] = x_arr[i];
   }
 
   alignas(sizeof(arr)) arr actual;
