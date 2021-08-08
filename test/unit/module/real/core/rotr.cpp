@@ -34,10 +34,10 @@ EVE_TEST_TYPES( "Check return types of rotr"
  TTS_EXPR_IS(rotr(T(), si_t()) , T);
  TTS_EXPR_IS(rotr(T(), std::int32_t())  , T);
 
-//  TTS_EXPR_IS( rotr(v_t(), u_t())  , T);
-//  TTS_EXPR_IS( rotr(v_t(), i_t())  , T);
-//  TTS_EXPR_IS( rotr(v_t(), su_t())  , v_t);
-//  TTS_EXPR_IS( rotr(v_t(), si_t())  , v_t);
+ TTS_EXPR_IS( rotr(v_t(), u_t())  , T);
+ TTS_EXPR_IS( rotr(v_t(), i_t())  , T);
+ TTS_EXPR_IS( rotr(v_t(), su_t())  , v_t);
+ TTS_EXPR_IS( rotr(v_t(), si_t())  , v_t);
 };
 
 
@@ -71,6 +71,6 @@ EVE_TEST( "Check behavior of rotr on wide"
   TTS_EQUAL( rotr(a0, 1u), map([](auto e){return std::rotr(e, 1u);}, a0));
   using v_t = eve::element_type_t<T>;
   auto ua1 = eve::int_(a1);
-  TTS_EQUAL( rotr(a0, a1), map([](auto e, auto f) -> v_t {return std::rotr(e, f);}, a0, ua1));
+  TTS_EQUAL( rotr(a0, a1), map([](auto e, auto f) -> v_t {return std::rotr(e, f);}, a0, a1));
   TTS_EQUAL( rotr(a0, ua1), map([](auto e, auto f) -> v_t {return std::rotr(e, f);}, a0, ua1));
 };
