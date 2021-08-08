@@ -20,5 +20,10 @@ namespace eve::detail
     return rotl(a0, U(-n));
   }
 
+  template<conditional_expr C, unsigned_value T0, integral_real_value T1>
+  auto rotr_(EVE_SUPPORTS(cpu_), C const &cond, T0 a0, T1 a1)
+  {
+   return mask_op(  cond, eve::rotr, a0, a1);
+  } 
 }
 

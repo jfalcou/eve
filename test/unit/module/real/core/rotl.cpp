@@ -9,6 +9,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
+#include <eve/constant/one.hpp>
 #include <eve/function/rotl.hpp>
 #include <eve/function/converter.hpp>
 #include <bit>
@@ -42,13 +43,13 @@ EVE_TEST_TYPES( "Check return types of rotl"
 
 
 //==================================================================================================
-// Specific generator - valmin or valmin+1 if T is signed
+//  Specific generator - valmin or valmin+1 if T is signed
 //==================================================================================================
-auto mini = []<typename T>(eve::as<T> const & )
-{
-  using v_t = eve::element_type_t<T>;
-  return -sizeof(v_t)*8+1;
-};
+// auto mini = []<typename T>(eve::as<T> const & )
+// {
+//   using v_t = eve::element_type_t<T>;
+//   return -sizeof(v_t)*8+1;
+// };
 
 auto maxi = []<typename T>(eve::as<T> const & )
 {
@@ -57,20 +58,27 @@ auto maxi = []<typename T>(eve::as<T> const & )
 };
 
 //==================================================================================================
-// rotl  tests
+//== rotl  tests
 //==================================================================================================
 EVE_TEST( "Check behavior of rotl on wide"
-        , eve::test::simd::unsigned_integers
+        , eve::test::simd::uints_16//unsigned_integers
         , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax)
-                             , eve::test::randoms(mini, maxi))
+                             , eve::test::randoms(0, maxi))
         )
   <typename T>(T a0, T a1)
 {
   using eve::rotl;
-  TTS_EQUAL( rotl(a0, 0u), a0);
-  TTS_EQUAL( rotl(a0, 1u), map([](auto e){return std::rotl(e, 1u);}, a0));
+//   TTS_EQUAL( rotl(a0, 0u), a0);
+//   TTS_EQUAL( rotl(a0, 1u), map([](auto e){return std::rotl(e, 1u);}, a0));
   using v_t = eve::element_type_t<T>;
+  a0 = eve::one(eve::as(a0));
+  a1 = eve::detail::linear_ramp(eve::as(a0));
+  a1 = a1 % (sizeof(v_t)*8);
   auto ua1 = eve::int_(a1);
-  TTS_EQUAL( rotl(a0, a1), map([](auto e, auto f) -> v_t {return std::rotl(e, f);}, a0, ua1));
+  std::cout << "a0 " << a0 << std::endl;
+  std::cout << "a1 " << a1 << std::endl;
+  std::cout << "ua1 " << ua1 << std::endl;
+  std::cout << "rotl(a0, a1) " << rotl(a0, a1) << std::endl;
+  TTS_EQUAL( rotl(a0, a1), map([](auto e, auto f) -> v_t {return std::rotl(e, f);}, a0, a1));
   TTS_EQUAL( rotl(a0, ua1), map([](auto e, auto f) -> v_t {return std::rotl(e, f);}, a0, ua1));
 };
