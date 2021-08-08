@@ -23,7 +23,7 @@ void ignore_test(T x, L m, C c)
   using arr = std::array<e_t, T::size()>;
 
   arr expected;
-  expected.fill(e_t{});
+  expected.fill(e_t{0});
 
   std::int8_t f_i = c.offset(eve::as(x));
   std::int8_t l_i = f_i + c.count(eve::as(x));
@@ -35,12 +35,38 @@ void ignore_test(T x, L m, C c)
   }
 
   alignas(sizeof(arr)) arr actual;
-  actual.fill(e_t{});
+  actual.fill(e_t{0});
 
   e_t* out = eve::unsafe(eve::compress_store[c])(x, m, actual.begin());
   TTS_EQUAL((out - actual.begin()), o);
-
   TTS_EQUAL(T(expected.begin()), T(actual.begin()));
+
+  using ap_t = eve::aligned_ptr<e_t, eve::cardinal_t<T>>;
+  actual.fill(e_t{0});
+
+  out = eve::unsafe(eve::compress_store[c])(x, m, ap_t{actual.begin()});
+  TTS_EQUAL((out - actual.begin()), o);
+  TTS_EQUAL(T(expected.begin()), T(actual.begin()));
+}
+
+template <typename T, typename L>
+void all_ignore_tests(T x, L m)
+{
+  if (x.size() < 16)
+  {
+    for (std::int8_t i = 0; i != x.size() + 1; ++i) {
+      for (std::int8_t j = 0; j <= x.size() - i; ++j) {
+        ignore_test(x, m, eve::ignore_extrema{i, j});
+      }
+    }
+  }
+  else
+  {
+    for (std::int8_t i = 0; i != x.size() + 1; ++i) {
+      ignore_test(x, m, eve::ignore_first(i));
+      ignore_test(x, m, eve::ignore_last(i));
+    }
+  }
 }
 
 template <bool all_options, typename T, typename L>
@@ -50,7 +76,7 @@ void one_test(T x, L m)
   using arr = std::array<e_t, T::size()>;
 
   arr expected;
-  expected.fill(e_t{});
+  expected.fill(e_t{0});
 
   std::int8_t o = 0;
   for (std::int8_t i = 0; i != T::size(); ++i) {
@@ -59,7 +85,7 @@ void one_test(T x, L m)
   }
 
   alignas(sizeof(arr)) arr actual;
-  actual.fill(e_t{});
+  actual.fill(e_t{0});
 
   e_t* out = eve::unsafe(eve::compress_store)(x, m, actual.begin());
   TTS_EQUAL((out - actual.begin()), o);
@@ -73,13 +99,18 @@ void one_test(T x, L m)
   {
     using ap_t = eve::aligned_ptr<e_t, eve::cardinal_t<T>>;
 
-    actual.fill(e_t{});
+    actual.fill(e_t{0});
     out = eve::unsafe(eve::compress_store)(x, m, ap_t{actual.begin()});
 
     TTS_EQUAL((out - actual.begin()), o);
 
     std::copy(&expected[o], expected.end(), &actual[o]);
     TTS_EQUAL(T(expected.begin()), T(actual.begin()));
+  }
+
+  if constexpr (all_options)
+  {
+    all_ignore_tests(x, m);
   }
 }
 
@@ -145,7 +176,7 @@ void all_tests_for_v(T x)
 
 }
 
-/*
+
 EVE_TEST( "Check compress store behavior"
         , eve::test::simd::all_types
         , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
@@ -154,15 +185,4 @@ EVE_TEST( "Check compress store behavior"
 {
   all_tests_for_v<eve::logical<T>>(data);
   smaller_test_v<L>(logical_data);
-};
-*/
-
-EVE_TEST( "Check compress store ignore"
-        , eve::test::simd::all_types
-        , eve::test::generate(eve::test::ramp(1))
-        )
-<typename T>(T data)
-{
-  eve::logical<T> m ([](int i, int) { return i % 2 == 0; });
-  ignore_test(data, m, eve::ignore_first(1));
 };

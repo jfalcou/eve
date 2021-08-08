@@ -18,7 +18,7 @@
     For 4 elements we can process ignore better, utilizing top_bits.
     For every other case since we do a shift + & we have to use the mask => we use the base case.
 
-    At the moment we don't have avx-512 implementation, since the logical is different.
+    At the moment we don't have an avx-512 implementation, since the logical is different.
 */
 
 namespace eve::detail
@@ -133,7 +133,7 @@ namespace eve::detail
          if ( C::is_complete && !C::is_inverted ) return as_raw_pointer(ptr);
     else if constexpr ( N() == 4 && sizeof(T) == 8 && current_api == avx  )
     {
-      return compress_store_impl_(EVE_RETARGET(cpu_), v, mask, ptr);
+      return compress_store_impl_(EVE_RETARGET(cpu_), c, v, mask, ptr);
     }
     else if constexpr ( N() == 4 && sizeof(T) == 8 )
     {
