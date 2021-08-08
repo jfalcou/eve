@@ -34,10 +34,10 @@ EVE_TEST_TYPES( "Check return types of rotr"
  TTS_EXPR_IS(rotr(T(), si_t()) , T);
  TTS_EXPR_IS(rotr(T(), std::int32_t())  , T);
 
- TTS_EXPR_IS( rotr(v_t(), u_t())  , T);
- TTS_EXPR_IS( rotr(v_t(), i_t())  , T);
- TTS_EXPR_IS( rotr(v_t(), su_t())  , v_t);
- TTS_EXPR_IS( rotr(v_t(), si_t())  , v_t);
+//  TTS_EXPR_IS( rotr(v_t(), u_t())  , T);
+//  TTS_EXPR_IS( rotr(v_t(), i_t())  , T);
+//  TTS_EXPR_IS( rotr(v_t(), su_t())  , v_t);
+//  TTS_EXPR_IS( rotr(v_t(), si_t())  , v_t);
 };
 
 
