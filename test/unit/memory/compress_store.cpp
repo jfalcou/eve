@@ -73,6 +73,36 @@ void all_ignore_tests(T x, L m)
   }
 }
 
+template < typename L, typename T>
+void precise_tests(T x)
+{
+  using e_t = eve::element_type_t<T>;
+
+  // ignore all
+  {
+    e_t data;
+    eve::unsafe(eve::compress_store[eve::ignore_all])(x, L{}, &data + 1);
+    eve::safe(eve::compress_store[eve::ignore_all])(x, L{}, &data + 1);
+  }
+
+  // writing exactly,
+  if constexpr ( T::size() >= eve::expected_cardinal_v<e_t> )  // FIX-816
+  {
+    e_t data[2] = { e_t{0}, e_t{5}} ;
+    L mask{false};
+    mask.set(T::size() - 1, true);
+    eve::safe(eve::compress_store)(x, mask, &data[0]);
+    TTS_EQUAL(data[0], x.back());
+    TTS_EQUAL(data[1], e_t{5});
+
+    // unsafe with ignore still acts as safe
+    data[0] = e_t{0};
+    eve::unsafe(eve::compress_store[eve::ignore_first(0)])(x, mask, &data[0]);
+    TTS_EQUAL(data[0], x.back());
+    TTS_EQUAL(data[1], e_t{5});
+  }
+}
+
 template <bool all_options, typename T, typename L>
 void one_test(T x, L m)
 {
@@ -166,6 +196,9 @@ template<typename L, typename T> void smaller_test_v(T x)
 
     for( int i = 0; i < 1000; ++i ) { one_test<true>(x, random_l()); }
   }
+
+  // precise
+  precise_tests<L>(x);
 }
 
 template <typename L, typename T>
@@ -179,7 +212,6 @@ void all_tests_for_v(T x)
 }
 
 }
-
 
 EVE_TEST( "Check compress store behavior"
         , eve::test::simd::all_types
