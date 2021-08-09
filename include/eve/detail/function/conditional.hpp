@@ -11,6 +11,7 @@
 #include <eve/as.hpp>
 #include <eve/conditional.hpp>
 #include <eve/constant/false.hpp>
+#include <eve/function/convert.hpp>
 #include <eve/function/if_else.hpp>
 
 namespace eve::detail
@@ -93,4 +94,22 @@ namespace eve::detail
                                                                           );
   }
 
+  template<conditional_expr C, typename Op, typename Arg0, typename... Args>
+  EVE_FORCEINLINE auto conv_mask_op( C const& c
+                              , [[maybe_unused]] Op f
+                              , [[maybe_unused]] Arg0 const& a0
+                              , [[maybe_unused]] Args const&... as
+                              )
+  {
+    using r_t       = decltype(f(a0,as...));
+    auto const cond = c.mask(eve::as<r_t>());
+    using sr_t = eve::element_type_t<r_t>;
+
+    if constexpr( C::is_complete && !C::is_inverted ) return convert(alternative(c,a0,eve::as<r_t>{}, eve::as<sr_t>()));
+    else  if constexpr( C::is_complete &&  C::is_inverted ) return f(a0,as...);
+    else                                                    return if_else( cond
+                                                                          , f(a0,as...)
+                                                                          , convert(alternative(c,a0,eve::as<r_t>{}), eve::as<sr_t>())
+                                                                          );
+  }
 }
