@@ -11,6 +11,7 @@
 #include <iterator>
 #include <type_traits>
 #include <eve/function/load.hpp>
+#include <eve/function/compress_store.hpp>
 
 namespace eve::algo
 {

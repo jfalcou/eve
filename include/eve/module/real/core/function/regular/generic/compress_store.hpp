@@ -58,24 +58,26 @@ namespace eve::detail
     return (logical<T> *)raw_ptr;
   }
 
-  template <decorator Decorator, simd_value T, simd_compatible_ptr<T> Ptr>
+  template <decorator Decorator, simd_value T, typename Ptr>
   EVE_FORCEINLINE
   auto compress_store_(EVE_SUPPORTS(cpu_),
                        Decorator d,
                        T v,
                        logical<T> mask,
                        Ptr ptr) noexcept
+    -> decltype(compress_store(ignore_none, d, v, mask, ptr))
   {
     return compress_store(ignore_none, d, v, mask, ptr);
   }
 
-  template <decorator Decorator, simd_value T, simd_compatible_ptr<T> Ptr>
+  template <decorator Decorator, simd_value T, typename Ptr>
   EVE_FORCEINLINE
   auto compress_store_(EVE_SUPPORTS(cpu_),
                        Decorator d,
                        logical<T> v,
                        logical<T> mask,
                        Ptr ptr) noexcept
+    -> decltype(compress_store(ignore_none, d, v, mask, ptr))
   {
     return compress_store(ignore_none, d, v, mask, ptr);
   }

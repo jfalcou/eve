@@ -139,4 +139,28 @@ namespace algo_test
       writeable_readable_iterator(f.unaligned(), v, replace);
     }
   }
+
+  template <typename I, typename T, typename ReplaceIgnored>
+  void iterator_supports_compress(I f, T v, ReplaceIgnored replace)
+  {
+    auto or_ = replace(v, eve::ignore_all);
+    eve::store(or_, f);
+
+    T expected = or_;
+    expected.set(0, v.back());
+
+    eve::logical<T> mask{false};
+    mask.set(T::size() - 1, true);
+    eve::algo::unaligned_t<I> res = eve::safe(eve::compress_store)(v, mask, f);
+    TTS_EQUAL(eve::load(f), expected);
+    TTS_EQUAL((res - f), 1);
+
+    eve::store(or_, f);
+
+    res = eve::unsafe(eve::compress_store[eve::ignore_first(0)])(v, mask, f);
+    TTS_EQUAL(eve::load(f), expected);
+    TTS_EQUAL((res - f), 1);
+
+    eve::store(v, f);
+  }
 }
