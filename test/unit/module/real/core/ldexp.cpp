@@ -13,6 +13,7 @@
 #include <eve/function/ldexp.hpp>
 #include <eve/function/is_negative.hpp>
 #include <eve/function/is_positive.hpp>
+#include <eve/function/trunc.hpp>
 #include <type_traits>
 
 //==================================================================================================
@@ -54,6 +55,23 @@ EVE_TEST_TYPES( "Check return types of ldexp"
   TTS_EXPR_IS( pedantic(ldexp)(v_t(), T())  , T);
 };
 
+//==================================================================================================
+//ldexp  simd tests
+//==================================================================================================
+EVE_TEST( "Check behavior of ldexps on floatings"
+        , eve::test::simd::ieee_reals
+        , eve::test::generate(eve::test::randoms(-50, +50)
+                             , eve::test::randoms(-50, +50)
+                             , eve::test::logicals(0, 3))
+        )
+  <typename T, typename U>(T const& a0, T const& a11, U const & t)
+{
+  using v_t = eve::element_type_t<T>;
+  auto a1 = eve::trunc(a11);
+  TTS_EQUAL( eve::ldexp(a0, a1), map([](auto e, auto f) { return v_t(std::ldexp(e, int(f))); }, a0, a1));
+  TTS_EQUAL( eve::ldexp[t](a0, a1), eve::if_else(t, eve::ldexp(a0, a1), a0));
+  TTS_EQUAL( eve::pedantic(eve::ldexp[t])(a0, a1), eve::if_else(t, eve::pedantic(eve::ldexp)(a0, a1), a0));
+};
 //==================================================================================================
 // ldexp  tests
 //==================================================================================================
