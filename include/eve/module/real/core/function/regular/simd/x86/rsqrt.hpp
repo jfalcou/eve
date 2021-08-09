@@ -135,4 +135,46 @@ namespace eve::detail
       return _mm256_rsqrt_ps(a0);
     }
   }
+
+  //------------------------------------------------------------------------------------------------
+  // avx512 bits raw rsqrt
+  template<floating_real_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N> rsqrt_(EVE_SUPPORTS(avx512_), raw_type, wide<T, N> a0) noexcept
+  {
+    constexpr auto c = categorize<wide<T, N>>();
+
+          if constexpr(c == category::float32x16) return _mm512_rsqrt_ps   (a0);
+    else  if constexpr(c == category::float64x8 ) return _mm512_rsqrt14_pd (a0);
+    else  if constexpr(c == category::float32x8 ) return _mm256_rsqrt_ps   (a0);
+    else  if constexpr(c == category::float64x4 ) return _mm256_rsqrt14_pd (a0);
+    else  if constexpr(c == category::float32x4 ) return _mm_rsqrt_ps      (a0);
+    else  if constexpr(c == category::float64x2 ) return _mm_rsqrt14_pd    (a0);
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, floating_real_scalar_value T, typename N>
+  EVE_FORCEINLINE
+  wide<T, N> rsqrt_(EVE_SUPPORTS(avx512_), C const &cx, raw_type const &, wide<T, N> const &v) noexcept
+  {
+    constexpr auto c = categorize<wide<T, N>>();
+
+    if constexpr( C::is_complete || abi_t<T, N>::is_wide_logical )
+    {
+      return rsqrt_(EVE_RETARGET(cpu_),cx,v);
+    }
+    else
+    {
+      auto src  = alternative(cx,v,as<wide<T, N>>{});
+      auto m    = expand_mask(cx,as<wide<T, N>>{}).storage().value;
+
+            if constexpr(c == category::float32x16) return _mm512_mask_rsqrt_ps   (src,m,v);
+      else  if constexpr(c == category::float64x8 ) return _mm512_mask_rsqrt14_pd (src,m,v);
+      else  if constexpr(c == category::float32x16) return _mm256_mask_rsqrt_ps   (src,m,v);
+      else  if constexpr(c == category::float64x8 ) return _mm256_mask_rsqrt14_pd (src,m,v);
+      else  if constexpr(c == category::float32x16) return _mm_mask_rsqrt_ps      (src,m,v);
+      else  if constexpr(c == category::float64x8 ) return _mm_mask_rsqrt14_pd    (src,m,v);
+   }
+  }
+
 }
