@@ -34,14 +34,16 @@ EVE_TEST_TYPES( "Check return types of mantissa"
 //==================================================================================================
 EVE_TEST( "Check behavior of mantissa on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
+        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax)
+                              , eve::test::logicals(0,3))
         )
-<typename T>(T const& a0 )
+<typename T,  typename M>(T const& a0,  M const & t)
 {
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   auto m =  [](auto x) -> v_t {int n; return std::frexp(x, &n)*2; };
   TTS_EQUAL( eve::mantissa(a0), map(m, a0));
+  TTS_EQUAL( eve::mantissa[t](a0), eve::if_else(t, eve::mantissa(a0), a0));
 };
 
 EVE_TEST_TYPES( "Check behavior of mantissa on wide"

@@ -30,6 +30,6 @@ int main()
             << "<- xf                                  = " << xf << '\n'
             << "-> convert(xf, int_64())               = " << eve::convert(xf, int_64()) << '\n'
             << "<- xi                                  = " << xi << '\n'
-            << "-> convert(xi, as(eve::as<double>()))  = " << eve::convert(xi, eve::as<double>()) << '\n';
+            << "-> convert(xi, eve::as<double>())      = " << eve::convert(xi, eve::as<double>()) << '\n';
   return 0;
 }
