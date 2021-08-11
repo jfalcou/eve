@@ -10,6 +10,7 @@
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/ldexp.hpp>
+#include <eve/function/is_infinite.hpp>
 #include <eve/function/round.hpp>
 #include <eve/concept/value.hpp>
 
@@ -28,7 +29,7 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-      return a0-ldexp(nearest(ldexp(a0, scale)), -scale);
+      return if_else(is_infinite(a0), zero, a0-ldexp(nearest(ldexp(a0, scale)), -scale));
     }
     else
     {
@@ -53,7 +54,7 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-      return a0-ldexp(D()(round)(ldexp(a0, scale)), -scale);
+      return if_else(is_infinite(a0), zero, a0-ldexp(D()(round)(ldexp(a0, scale)), -scale));
     }
     else
     {
