@@ -59,8 +59,8 @@ EVE_TEST( "Check behavior of roundscale[cond](wide) on  floating types"
 {
   using eve::roundscale;
 
-  TTS_EQUAL( roundscale(a0, 4), eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4));
   std::integral_constant<int, 4> four;
+  TTS_EQUAL( roundscale(a0, 4), eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4));
   TTS_EQUAL( eve::to_nearest(roundscale)(a0, 4), eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4));
   TTS_EQUAL( eve::upward(roundscale)(a0, 4),     eve::ldexp(eve::ceil(   eve::ldexp(a0, 4)), -4));
   TTS_EQUAL( eve::downward(roundscale)(a0, 4),   eve::ldexp(eve::floor(  eve::ldexp(a0, 4)), -4));

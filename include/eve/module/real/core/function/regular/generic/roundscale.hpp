@@ -12,6 +12,7 @@
 #include <eve/function/ldexp.hpp>
 #include <eve/function/round.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/detail/skeleton_calls.hpp>
 
 namespace eve::detail
 {
@@ -26,7 +27,6 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr T roundscale_(EVE_SUPPORTS(cpu_)
                                   , T const &a0, int scale) noexcept
   {
-    std::cout << "zut" << std::endl;
     if constexpr(has_native_abi_v<T>)
     {
       return ldexp(nearest(ldexp(a0, scale)), -scale);
@@ -58,7 +58,7 @@ namespace eve::detail
     }
     else
     {
-      return apply_over(roundscale, D(), a0, scale);
+      return apply_over(D()(roundscale), a0, scale);
     }
   }
 
@@ -76,8 +76,7 @@ namespace eve::detail
   //================================================================================================
   template<conditional_expr C, decorator D, real_value T>
   EVE_FORCEINLINE T roundscale_(EVE_SUPPORTS(cpu_), C const &cond, D const &, T a, int scale) noexcept
-  requires  has_native_abi_v<T>
-  && (is_one_of<D>(types<toward_zero_type, downward_type, to_nearest_type, upward_type> {}))
+  (is_one_of<D>(types<toward_zero_type, downward_type, to_nearest_type, upward_type> {}))
   {
     return mask_op( cond, D()(eve::roundscale), a, scale);
   }

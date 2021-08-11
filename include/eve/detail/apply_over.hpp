@@ -18,7 +18,7 @@
 namespace eve::detail
 {
 
- // -----------------------------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------------------------
   // N parameters apply_over
   template<typename Obj, value T0, value ... T>
   EVE_FORCEINLINE  auto apply_over(Obj f

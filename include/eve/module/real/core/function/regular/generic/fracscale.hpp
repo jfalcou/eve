@@ -57,7 +57,7 @@ namespace eve::detail
     }
     else
     {
-      return apply_over(fracscale, D(), a0, scale);
+      return apply_over( D()(fracscale), a0, scale);
     }
   }
 
@@ -69,14 +69,12 @@ namespace eve::detail
     return mask_op(  cond, eve::fracscale, t, scale);
   }
 
-
   //================================================================================================
   // Rounded masked case
   //================================================================================================
   template<conditional_expr C, decorator D, real_value T>
   EVE_FORCEINLINE T fracscale_(EVE_SUPPORTS(cpu_), C const &cond, D const &, T a, int scale) noexcept
-  requires  has_native_abi_v<T>
-  && (is_one_of<D>(types<toward_zero_type, downward_type, to_nearest_type, upward_type> {}))
+  (is_one_of<D>(types<toward_zero_type, downward_type, to_nearest_type, upward_type> {}))
   {
     return mask_op( cond, D()(eve::fracscale), a, scale);
   }

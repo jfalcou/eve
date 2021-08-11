@@ -102,6 +102,6 @@ namespace eve
 #include <eve/arch.hpp>
 #include <eve/module/real/core/function/regular/generic/fracscale.hpp>
 
-// #if defined(EVE_INCLUDE_X86_HEADER)
-// #  include <eve/module/real/core/function/regular/simd/x86/fracscale.hpp>
-// #endif
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/module/real/core/function/regular/simd/x86/fracscale.hpp>
+#endif
