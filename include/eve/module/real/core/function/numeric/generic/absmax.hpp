@@ -13,6 +13,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/abs.hpp>
+#include <eve/function/max.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_nan.hpp>
 #include <eve/function/numeric.hpp>

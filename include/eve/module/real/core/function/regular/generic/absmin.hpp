@@ -16,7 +16,7 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_nan.hpp>
 #include <eve/function/is_not_greater_equal.hpp>
-#include <eve/function/max.hpp>
+#include <eve/function/min.hpp>
 #include <eve/traits/common_compatible.hpp>
 
 #include <type_traits>
