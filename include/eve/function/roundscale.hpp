@@ -37,6 +37,7 @@ namespace eve
   //! **Parameters**
   //!
   //!`x`:      [floating real value](../../concepts.html#value).
+  //!
   //!`scale` : int or std::integral_constant of int type limited to the range [0, 15].
   //!
   //! **Return value**
@@ -66,8 +67,8 @@ namespace eve
   //! #### Supported decorators
   //!
   //!  * `to_nearest, toward_zero, upward,  downward`
-  //!     If xxx is one of these 4 decorators
-  //!     The call `xxx(roundscale)(x)`, call is equivalent to  `ldexp(xxx(round)(ldexp(a0,scale), -scale))`
+  //!     If d is one of these 4 decorators
+  //!     The call `d(roundscale)(x)`, call is equivalent to  `ldexp(d(round)(ldexp(a0,scale), -scale))`
   //!
   //! #### Example
   //!
