@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
+#include <eve/assert.hpp>
 #include <type_traits>
 
 namespace eve
@@ -17,7 +18,7 @@ namespace eve
   //! @{
   //! @var roundscale
   //!
-  //! @brief Callable object computing the square root.
+  //! @brief Callable object computing the scaled rouding.
   //!
   //! **Required header:** `#include <eve/function/roundscale.hpp>`
   //!

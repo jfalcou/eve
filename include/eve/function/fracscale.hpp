@@ -9,6 +9,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <type_traits>
+#include <eve/assert.hpp>
 
 namespace eve
 {
@@ -17,7 +18,7 @@ namespace eve
   //! @{
   //! @var fracscale
   //!
-  //! @brief Callable object computing the square root.
+  //! @brief Callable object computing the fractional scaled part.
   //!
   //! **Required header:** `#include <eve/function/fracscale.hpp>`
   //!
