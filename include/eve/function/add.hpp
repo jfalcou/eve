@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the absolute value of its parameter               |
+  //! | `operator()` | Computes the sum of its parameter                          |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---

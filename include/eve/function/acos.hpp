@@ -52,7 +52,7 @@ namespace eve
   //! #### Supported decorators
   //!
   //!  * `raw`
-  //!     The call `raw(rsqrt)(x)`, call a faster implementation which can be slightly less accurate near \f$\pi\f$..
+  //!     The call `raw(acos)(x)`, call a faster implementation which can be slightly less accurate near 1.
   //!
   //!  * `diff`
   //!
@@ -68,10 +68,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
+
   namespace tag { struct acos_; }
   template<> struct supports_conditional<tag::acos_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(acos_, acos);
 }
 
