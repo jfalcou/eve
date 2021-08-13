@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the all value   |
+  //! | `operator()` | the computation of the all value                           |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!A bool value
+  //!A bool value which is true if and only if all elements of `x` are not zero.
   //!
   //! ---
   //!
@@ -55,7 +55,7 @@ namespace eve
   //!
   //!  **Return value**
   //!
-  //!  A Callable object so that the expression `all[cond](x, ...)` is equivalent to `if_else(cond,all(x, ...),x)`
+  //!  A Callable object so that the expression `all[cond](x)` is equivalent to `if_else(cond,all(x),false)`
   //!
   //! ---
   //!
