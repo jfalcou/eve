@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the betainc operation   |
+  //! | `operator()` | the betainc operation                                      |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!  return values NOT FOUND
+  //!  return the incomplete beta function value.
   //!
   //! ---
   //!

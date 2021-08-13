@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) $\displaystyle \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}$.
+  //!Returns [element-wise](../../../glossary.html#value) \f$\displaystyle \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}\f$.
   //!
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
   //!
@@ -46,7 +46,7 @@ namespace eve
   //!:   **Required header:** **<script type="preformatted">` #include <eve/function/diff/beta.hpp>`</script>
   //!
   //!:   The expression `diff_1st(beta)(x,y)` and `diff_2nd(beta)(x,y)` computes the partial
-  //!    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ \mbox{B}(x,y)$.
+  //!    derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \mbox{B}(x,y)\f$.
   //!
   //! ---
   //!
