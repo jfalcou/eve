@@ -20,8 +20,8 @@ int main()
             << "<- pf                        = " << pf << '\n'
             << "<- qf                        = " << qf << '\n'
             << "-> absmax(pf, qf)            = " << eve::absmax(pf, qf) << '\n'
-            << "-> pedantic(absmax)(pf, qf) = " << eve::pedantic(eve::absmax)(pf, qf) << '\n'
-            << "-> numeric(absmax)(pf, qf)  = " << eve::numeric(eve::absmax)(pf, qf) << '\n';
+            << "-> pedantic(absmax)(pf, qf)  = " << eve::pedantic(eve::absmax)(pf, qf) << '\n'
+            << "-> numeric(absmax)(pf, qf)   = " << eve::numeric(eve::absmax)(pf, qf) << '\n';
 
   float xf = -4.0f;
   float yf = 1.0f;
@@ -30,7 +30,7 @@ int main()
             << "<- xf                        = " << xf << '\n'
             << "<- yf                        = " << yf << '\n'
             << "-> absmax(xf, yf)            = " << eve::absmax(xf, yf) << '\n'
-            << "-> pedantic(absmax)(xf, yf) = " << eve::pedantic(eve::absmax)(xf, yf) << '\n'
-            << "-> numeric(absmax)(xf, yf)  = " << eve::numeric(eve::absmax)(xf, yf) << '\n';
+            << "-> pedantic(absmax)(xf, yf)  = " << eve::pedantic(eve::absmax)(xf, yf) << '\n'
+            << "-> numeric(absmax)(xf, yf)   = " << eve::numeric(eve::absmax)(xf, yf) << '\n';
    return 0;
 }
