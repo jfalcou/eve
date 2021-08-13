@@ -36,4 +36,12 @@ namespace eve::detail
       return map(pedantic(rsqrt), a0);
     }
   }
+
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto rsqrt_(EVE_SUPPORTS(cpu_), C const &cond, pedantic_type const &, U const &t) noexcept
+  {
+    return mask_op( cond, pedantic(eve::rsqrt), t);
+  }
 }
