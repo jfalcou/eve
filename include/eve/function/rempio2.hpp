@@ -41,7 +41,7 @@ namespace eve
   //! **Return value**
   //!
   //!A tuple consisting of an flint value  designing the quadrant an two floating values of type T giving
-  //!the remainder of `x` modulo $\pi/2$ and a corrective to the rounding erreor on the first result.
+  //!the remainder of `x` modulo \f$\pi/2\f$ and a corrective to the rounding erreor on the first result.
   //!
   //! ---
   //!
