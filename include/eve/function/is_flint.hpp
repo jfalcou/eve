@@ -73,7 +73,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `pedantic`
+  //!  * eve::pedantic
   //!     Pedantically speaking flint stands for floating integer. The call `pedantic(is_flint)(x)` considers
   //!      that integral typed values are not floating and so `pedantic(is_flint)(x)` returns false for all elements of this types. Moreover a
   //!      floating point value is pedantically deemed as flint only is the next representable value is not flint, so

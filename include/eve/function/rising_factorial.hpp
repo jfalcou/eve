@@ -68,7 +68,7 @@ namespace eve
   //!     The expression `raw(rising_factorial)(a,x)` uses the crude formula with all its limitations and
   //!      inacurracies and return a Nan if `a` and `a+x` are not both positive
   //!
-  //!  * `pedantic`
+  //!  * eve::pedantic
   //!
   //!     **Required header:** `#include <eve/function/pedantic/rising_factorial.hpp>`
   //!
