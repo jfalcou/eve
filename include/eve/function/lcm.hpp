@@ -35,7 +35,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`p`, `n`:   [values](@ref eve::value).
+  //!`p`, `n`:   [real values](@ref eve::value).
   //!
   //! **Return value**
   //!
