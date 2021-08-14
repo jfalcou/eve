@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) `y` such that `erf(y)==x`
+  //!Returns [element-wise](@ref glossary_elementwise) `y` such that `erf(y)==x`
   //!
   //! The result type is of the same type as the  parameter.
   //! The function returns Nan outside of the interval \f$[-1,1]\f$.

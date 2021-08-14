@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) cotangent of the input.
+  //!Returns the [element-wise](@ref glossary_elementwise) cotangent of the input.
   //!
   //!In particular:
   //!

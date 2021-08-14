@@ -36,11 +36,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value).
+  //!`x`:   [value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) \f$\displaystyle \Gamma(x)=\int_0^\infty t^{x-1}e^{-t}\mbox{d}t\f$
+  //!Returns [element-wise](@ref glossary_elementwise) \f$\displaystyle \Gamma(x)=\int_0^\infty t^{x-1}e^{-t}\mbox{d}t\f$
   //!
   //! The result type is of the same type as the  parameter.
   //!

@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](../../../glossary.html#elment-wise) the never zero sign of `x`.
+  //!Computes  [element-wise](@ref glossary_elementwise) the never zero sign of `x`.
   //!
   //!For [real value](../../concepts.html#value) `x` is semantically equivalent to:
   //!  * If x is positive, 1 is returned.

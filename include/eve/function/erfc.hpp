@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) \f$\displaystyle \mbox{erfc}(x)=\frac{2}{\sqrt\pi}\int_{x}^{\infty} e^{-t^2}\mbox{d}t\f$
+  //!Returns [element-wise](@ref glossary_elementwise) \f$\displaystyle \mbox{erfc}(x)=\frac{2}{\sqrt\pi}\int_{x}^{\infty} e^{-t^2}\mbox{d}t\f$
   //!
   //! The result type is of the same type as the  parameter.
   //!

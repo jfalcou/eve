@@ -40,7 +40,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) square root  of the input.
+  //!Returns the [element-wise](@ref glossary_elementwise) square root  of the input.
   //!
   //! ---
   //!

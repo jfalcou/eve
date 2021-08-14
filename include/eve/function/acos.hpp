@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) arc cosine of the
+  //!Returns the [element-wise](@ref glossary_elementwise) arc cosine of the
   //!input in the range \f$[0 , \pi]\f$.
   //!
   //!In particular:

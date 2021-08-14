@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) cosine of the input expressed in degrees.
+  //!Returns the [element-wise](@ref glossary_elementwise) cosine of the input expressed in degrees.
   //!
   //!In particular:
   //!

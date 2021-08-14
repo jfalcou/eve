@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](../../../glossary.html#elment-wise) the square of `x`.
+  //!Computes  [element-wise](@ref glossary_elementwise) the square of `x`.
   //!
   //!@warning
   //!   For  [real integral signed values](../../concepts.html#value)   if `saturated(abs)(x)`

@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) pair of values containing the hyperbolic sine and
+  //!Returns the [element-wise](@ref glossary_elementwise) pair of values containing the hyperbolic sine and
   //!the hyperbolic cosine of the input.
   //!
   //! ---

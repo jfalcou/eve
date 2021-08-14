@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) sine of the input times \f$\pi\f$  divided by the input times \f$\pi\f$.
+  //!Returns the [element-wise](@ref glossary_elementwise) sine of the input times \f$\pi\f$  divided by the input times \f$\pi\f$.
   //!
   //!In particular:
   //!

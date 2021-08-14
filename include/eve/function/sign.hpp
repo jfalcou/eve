@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](../../../glossary.html#elment-wise) the sign of `x`.
+  //!Computes  [element-wise](@ref glossary_elementwise) the sign of `x`.
   //!
   //!For [real value](../../concepts.html#value) `x` is semantically equivalent to:
   //!  * If x is greater than 0, 1 is returned.

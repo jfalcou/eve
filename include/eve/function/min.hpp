@@ -71,7 +71,7 @@ namespace eve
   //!     **Required header:** `#include <eve/function/pedantic/min.hpp>`
   //!  
   //!     The call `pedantic(min)(x, args, ...)`  ensures the conformity to the standard behaviour, that is
-  //!      for two parameters (on an  [element-wise](../../../glossary.html#value) basis) semanticaly equivalent to:
+  //!      for two parameters (on an  [element-wise](@ref glossary_elementwise) basis) semanticaly equivalent to:
   //!      `(x < y) ? x : y` and this behaviour is also ensured on n parameters calls as if this scheme
   //!      was recursively used.
   //!  

@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) cosecant of the input expressed in \f$\pi\f$ multiples.
+  //!Returns the [element-wise](@ref glossary_elementwise) cosecant of the input expressed in \f$\pi\f$ multiples.
   //!
   //!The call `cscpi(x)` is semantically equivalent to \f$\csc(\pi x)\f$.
   //!In particular:

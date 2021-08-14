@@ -45,7 +45,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes the [element-wise](../../../glossary.html#element-wise) arithmetic left/right shift of the first parameter by the second one.
+  //!Computes the [element-wise](@ref glossary_elementwise) arithmetic left/right shift of the first parameter by the second one.
   //!
   //!the call `rshl(x, n)` is equivalent to `if_else(n>0, shl(x, n), shr(x, n))` if `x`  is an  [simd value](../../concepts.html#value).
   //!

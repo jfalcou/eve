@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) hyperbolic secant of the input.
+  //!Returns the [element-wise](@ref glossary_elementwise) hyperbolic secant of the input.
   //!
   //!In particular:
   //!

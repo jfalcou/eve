@@ -54,7 +54,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) the value of polynomial function(s)
+  //!Returns [element-wise](@ref glossary_elementwise) the value of polynomial function(s)
   //!represented by the coefficients in decreasing power order at `x`.
   //!
   //!The result type is of the compatibility type of the  coefficients and the evaluation value `x`.

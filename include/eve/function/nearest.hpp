@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](../../../glossary.html#elment-wise) the integer nearest to `x`.
+  //!Computes  [element-wise](@ref glossary_elementwise) the integer nearest to `x`.
   //!
   //!If `x` is an exact half-integer the rouding is made to the nearest even integer.
   //!
