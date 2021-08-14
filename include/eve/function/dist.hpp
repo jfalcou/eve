@@ -83,7 +83,7 @@ namespace eve
   //!
   //!  * eve::diff
   //!
-  //!     **Required header:** #include <eve/function/diff/dist.hpp>
+  //!     **Required header:** `#include <eve/function/diff/dist.hpp>`
   //!
   //!     The expression `diff_1st(dist)(x,y)` and `diff_2nd(dist)(x,y)` compute the partial
   //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ |x-y|\f$.
