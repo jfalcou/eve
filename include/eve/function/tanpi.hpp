@@ -54,7 +54,7 @@ namespace eve
   //!  As all direct trigonometric functions, `tanpi` supports the restricted, small, medium and big decorators. Click
   //!  to see the [properties and rationale](../trigonometric.html)
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
   //!     **Required header:** `#include <eve/function/diff/tanpi.hpp>`
   //!

@@ -80,7 +80,7 @@ namespace eve
   //!      [`eve::Valmax(as(x))`](../../constants/limits/valmax.html) as soon as `saturated(abs)(x)`
   //!      is greater than [`eve::Sqrtvalmax(as(x))`](../../constants/limits/sqrtvalmax.html).
   //!  
-  //!  * `diff`
+  //!  * eve::diff
   //!
   //!     **Required header:** `#include <eve/function/diff/sqr.hpp>`
   //!  

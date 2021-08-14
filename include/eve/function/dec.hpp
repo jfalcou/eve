@@ -69,7 +69,7 @@ namespace eve
   //!     The call `saturated(dec)(x)` computes the saturated opposite of `x`. The only interest of this behaviour is that
   //!      for integral type T  `saturated(dec)(Valmin< T >())` returns `Valmin< T >()`.
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
   //!     **Required header:** `#include <eve/function/diff/dec.hpp>`
   //!

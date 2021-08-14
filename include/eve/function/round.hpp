@@ -77,7 +77,7 @@ namespace eve
   //!  * `toward_zero`
   //!     The expression `toward_zero(round)(x)` is equivalent to `trunc(x)`.
   //!  
-  //!  * `diff`
+  //!  * eve::diff
   //!
   //!     **Required header:** `#include <eve/function/diff/round.hpp>`
   //!  

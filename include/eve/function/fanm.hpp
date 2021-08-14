@@ -83,7 +83,7 @@ namespace eve
   //!     The call `numeric(fanm)(x,y,z)` ensures the full compliance to fanm properties. This can be very expensive if the
   //!      system has no hardware capability.
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
   //!     **Required header:** #include <eve/function/diff/fanm.hpp>
   //!

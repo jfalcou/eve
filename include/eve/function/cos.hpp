@@ -53,7 +53,7 @@ namespace eve
   //!  As all direct trigonometric functions, `cos` supports the restricted, small, medium and big decorators. Click
   //!  to see the [properties and rationale](../trigonometric.html)
   //!  
-  //!  * `diff`
+  //!  * eve::diff
   //!
   //!     **Required header:** `#include <eve/function/diff/cos.hpp>`
   //!  
