@@ -42,7 +42,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) \sqrt{2 \pi} x^{x-\frac12} e^{-x} ( 1 + \frac1{x} P(\frac1{x}))$
+  //!Returns [element-wise](../../../glossary.html#value) \f$\sqrt{2 \pi} x^{x-\frac12} e^{-x} ( 1 + \frac1{x} P(\frac1{x}))\f$
   //!
   //! ---
   //!
