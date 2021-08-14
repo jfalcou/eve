@@ -77,7 +77,7 @@ namespace eve
   //!
   //!     **Required header:** `#include <eve/function/diff/add.hpp>`
   //!
-  //!     The expression `eve::diff<N>(eve::add)(xs...)` computes the derivative of the sum
+  //!     The expression `eve::diff_nth<N>(eve::add)(xs...)` computes the derivative of the sum
   //!     of `xs...` over the Nth parameters.
   //!
   //! #### Example

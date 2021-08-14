@@ -102,7 +102,7 @@ namespace eve
   //!
   //!     **Required header:** `#include <eve/function/diff/div.hpp>`
   //!
-  //!     The expression `eve::diff<N>(eve::div)(x, xs...)` computes the derivative of the division
+  //!     The expression `eve::diff_nth<N>(eve::div)(x, xs...)` computes the derivative of the division
   //!     over the Nth parameter.
   //!
   //! #### Example
