@@ -72,20 +72,20 @@ namespace eve
   //!
   //!  * eve::pedantic
   //!
-  //!     **Required header:** #include <eve/function/pedantic/fma.hpp>
+  //!     **Required header:** `#include <eve/function/pedantic/fma.hpp>`
   //!
   //!     The call `pedantic(fma)(x,y,z)` ensures the one rounding property. This can be very expensive if the
   //!      system has no hardware capability.
   //!  * eve::numeric
   //!
-  //!     **Required header:** #include <eve/function/numeric/fma.hpp>
+  //!     **Required header:** `#include <eve/function/numeric/fma.hpp>`
   //!
   //!     The call `numeric(fma)(x,y,z)` ensures the full compliance to fma properties. This can be very expensive if the
   //!      system has no hardware capability.
   //!
   //!  * eve::diff
   //!
-  //!     **Required header:** #include <eve/function/diff/fma.hpp>
+  //!     **Required header:** `#include <eve/function/diff/fma.hpp>`
   //!
   //!     The expression `diff_1st(fma)(x,y,z)`, `diff_2nd(fma)(x,y,z)` and `diff_3rd(fma)(x,y,z)` compute the partial
   //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y,z) \rightarrow \ xy+z\f$.

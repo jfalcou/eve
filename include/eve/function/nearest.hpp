@@ -48,11 +48,6 @@ namespace eve
   //!
   //!The call to `nearest(a)` is equivalent to the call `round(a, to_nearest)`.
   //!
-  //![`diff`](../decorators.html#diff)
-  //!:   **Required header:** **<script type="preformatted">` #include <eve/function/diff/nearest.hpp>`</script>
-  //!
-  //!:   The expression `diff(nearest)(x)` computes the derivative of the function at `x`.
-  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

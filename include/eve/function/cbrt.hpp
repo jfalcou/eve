@@ -63,7 +63,7 @@ namespace eve
   //!
   //!  * eve::diff
   //!
-  //!     **Required header:** #include <eve/function/diff/cbrt.hpp>
+  //!     **Required header:** `#include <eve/function/diff/cbrt.hpp>`
   //!
   //!     The expression `diff(cbrt)(x)` computes the derivative of the function at `x`.
   //!

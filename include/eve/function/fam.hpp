@@ -72,20 +72,20 @@ namespace eve
   //!
   //!  * eve::pedantic
   //!
-  //!     **Required header:** #include <eve/function/pedantic/fam.hpp>
+  //!     **Required header:** `#include <eve/function/pedantic/fam.hpp>`
   //!
   //!     The call `pedantic(fam)(x,y,z)` ensures the one rounding property. This can be very expensive if the
   //!      system has no hardware capability.
   //!  * eve::numeric
   //!
-  //!     **Required header:** #include <eve/function/numeric/fam.hpp>
+  //!     **Required header:** `#include <eve/function/numeric/fam.hpp>`
   //!
   //!     The call `numeric(fam)(x,y,z)` ensures the full compliance to fam properties. This can be very expensive if the
   //!      system has no hardware capability.
   //!
   //!  * eve::diff
   //!
-  //!     **Required header:** #include <eve/function/diff/fam.hpp>
+  //!     **Required header:** `#include <eve/function/diff/fam.hpp>`
   //!
   //!     The expression `diff_1st(fam)(x,y,z)`, `diff_2nd(fam)(x,y,z)` and `diff_3rd(fam)(x,y,z)` compute the partial
   //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y,z) \rightarrow \ x+y z\f$.
