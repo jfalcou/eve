@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`, `y`, `z`:   [floating values](../../concepts.html#value).
+  //!`x`, `y`, `z`:   [floating values](@ref eve::value).
   //!
   //!  This computes the Carlson's elliptic integral
   //!

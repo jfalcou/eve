@@ -35,7 +35,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [values](../../concepts.html#value).
+  //!`x`:   [values](@ref eve::value).
   //!
   //! **Return value**
   //!

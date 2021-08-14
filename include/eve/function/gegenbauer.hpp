@@ -35,11 +35,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`n`:   [integral values](../../concepts.html#value).
+  //!`n`:   [integral values](@ref eve::value).
   //!
-  //!`l`:   [floating values](../../concepts.html#value), elements must be greater than \f$-\frac12\f$.
+  //!`l`:   [floating values](@ref eve::value), elements must be greater than \f$-\frac12\f$.
   //!
-  //!`x`:   [floating values](../../concepts.html#value).
+  //!`x`:   [floating values](@ref eve::value).
   //!
   //! **Return value**
   //!

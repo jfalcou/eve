@@ -34,7 +34,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value).
+  //!`x`:   [value](@ref eve::value).
   //!
   //! **Return value**
   //!
@@ -42,8 +42,8 @@ namespace eve
   //!if and only if the bit of sign (most significant bit) is set.
   //!
   //!@warning
-  //!   this function coincides with `is_ltz` on [integral real values](../../concepts.html#value),
-  //!   but for [floating real values](../../concepts.html#value) `T`, `is_negative(mzero<`T`>)` is true and
+  //!   this function coincides with `is_ltz` on [integral real values](@ref eve::value),
+  //!   but for [floating real values](@ref eve::value) `T`, `is_negative(mzero<`T`>)` is true and
   //!   if `n` is a Nan the result depends of the bit of sign of `n` which can be out of control although
   //!   not undefined.
   //!

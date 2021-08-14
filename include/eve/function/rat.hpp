@@ -37,8 +37,8 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating_real_value](../../concepts.html#value).
-  //!`tol`:   [floating_real_value](../../concepts.html#value).
+  //!`x`:   [floating_real_value](@ref eve::value).
+  //!`tol`:   [floating_real_value](@ref eve::value).
   //!
   //! **Return values**
   //!

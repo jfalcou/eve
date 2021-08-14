@@ -35,7 +35,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`, `y`:   [floating real value](../../concepts.html#value).
+  //!`x`, `y`:   [floating real value](@ref eve::value).
   //!
   //! **Return value**
   //!

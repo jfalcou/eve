@@ -35,13 +35,13 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value).
+  //!`x`:   [value](@ref eve::value).
   //!
   //! **Return value**
   //!
   //!Computes  [element-wise](@ref glossary_elementwise) the inverse of `x`.
   //!
-  //!For [real integral value](../../concepts.html#value) `x` is semantically equivalent to:
+  //!For [real integral value](@ref eve::value) `x` is semantically equivalent to:
   //!  * If x==1 or x==-1, x is returned.
   //!  * If x==0,  [the greatest representable positive value](../../constants.html#valmax) is returned.
   //!  * Otherwise 0 is returned.

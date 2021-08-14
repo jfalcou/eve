@@ -38,9 +38,9 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value x](../../concepts.html#value).
+  //!`x`:   [value x](@ref eve::value).
   //!
-  //!`c`, `n``:   [values ](../../concepts.html#value) Range containing the coefficients
+  //!`c`, `n``:   [values ](@ref eve::value) Range containing the coefficients
   //!
   //!`firstcoef`, `sentinel`,`firstnode`:   std::input_iterator conforming pair of iterators through the coefficients and start of the nodes
   //!

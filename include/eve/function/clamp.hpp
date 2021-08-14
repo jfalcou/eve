@@ -39,9 +39,9 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:    [value](../../concepts.html#value) to clamp.
+  //!`x`:    [value](@ref eve::value) to clamp.
   //!
-  //!`lo`, `hi`:    the boundary [values](../../concepts.html#value) to clamp `x` to.
+  //!`lo`, `hi`:    the boundary [values](@ref eve::value) to clamp `x` to.
   //!
   //! **Return value**
   //!

@@ -37,13 +37,13 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value) to convert.
+  //!`x`:   [value](@ref eve::value) to convert.
   //!
   //!`t`:   [Type wrapper](../types/as.html#as_) instance embedding the type to convert `x` to.
   //!
   //! **Return value**
   //!
-  //!For a [value](../../concepts.html#value) `x` and any type `Target` the expression:
+  //!For a [value](@ref eve::value) `x` and any type `Target` the expression:
   //!
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
   //!auto r = convert(x, as_<Target>{});

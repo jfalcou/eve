@@ -37,16 +37,16 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`, `args`:   [values](../../concepts.html#value).
+  //!`x`, `args`:   [values](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Return the multiplication of the [values](../../concepts.html#value).
+  //!Return the multiplication of the [values](@ref eve::value).
   //!
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
   //!
   //! The call `mul(x, args, ...)` is equivalent to `(x * args * ...)` if `x` or one of the `args`
-  //! is an  [simd value](../../concepts.html#value).
+  //! is an  [simd value](@ref eve::value).
   //!
   //!@warning
   //!   Although the infix notation with `*` is supported for two parameters, the `*` operator on

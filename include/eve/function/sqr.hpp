@@ -35,14 +35,14 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value).
+  //!`x`:   [value](@ref eve::value).
   //!
   //! **Return value**
   //!
   //!Computes  [element-wise](@ref glossary_elementwise) the square of `x`.
   //!
   //!@warning
-  //!   For  [real integral signed values](../../concepts.html#value)   if `saturated(abs)(x)`
+  //!   For  [real integral signed values](@ref eve::value)   if `saturated(abs)(x)`
   //!   is greater than [`eve::Sqrtvalmax(as(x))`](../../constants/limits/sqrtvalmax.html) the corresponding element result is undefined .
   //!
   //! ---
