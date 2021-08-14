@@ -75,7 +75,7 @@ namespace eve
   //!      `(x < y) ? y : x` and this behaviour is also ensured on n parameters calls as if this scheme
   //!      was recursively used.
   //!  
-  //!  * `numeric`
+  //!  * eve::numeric
   //!
   //!     **Required header:** `#include <eve/function/numeric/max.hpp>`
   //!  

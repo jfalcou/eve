@@ -70,7 +70,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `numeric`
+  //!  * eve::numeric
   //!
   //!     **Required header:** `#include <eve/function/numeric/is_equal.hpp>`
   //!

@@ -76,7 +76,7 @@ namespace eve
   //!
   //!     The call `pedantic(fnms)(x,y,z)` ensures the one rounding property. This can be very expensive if the
   //!      system has no hardware capability.
-  //!  * `numeric`
+  //!  * eve::numeric
   //!
   //!     **Required header:** `#include <eve/function/numeric/fnms.hpp>`
   //!

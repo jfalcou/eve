@@ -81,7 +81,7 @@ namespace eve
   //!
   //!     The behaviour is the same except that if  `|x| == |y|`, `pedantic(max)` is used.
   //!
-  //!  * `numeric`
+  //!  * eve::numeric
   //!
   //!     **Required header:** `#include <eve/function/numeric/minabs.hpp>`
   //!
