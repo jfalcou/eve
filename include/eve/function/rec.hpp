@@ -66,7 +66,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `raw`
+  //!  * eve::raw
   //!     The call `raw(rec)(x)`, call a proper system intrinsic if one exists, but with possibly very poor accuracy in return.
   //!      Otherwise it uses the [`regular`](../decorators.html#regular) call.
   //!  
