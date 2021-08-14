@@ -37,7 +37,7 @@ namespace eve
   //!
   //!`x`:   An instance of a \ref eve::value.
   //!
-  //!`n`:   An instance of an \ref eve::integral_value.
+  //!`n`:   An instance of an [integral_value](@ref eve::value).
   //!
   //! **Return value**
   //!
