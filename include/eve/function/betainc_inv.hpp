@@ -46,7 +46,7 @@ namespace eve
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
   //!
   //![`diff`](../decorators.html#diff)
-  //!:   **Required header:** **<script type="preformatted">` #include <eve/function/diff/betainc_inv.hpp>`</script>
+  //!:   **Required header:** `#include <eve/function/diff/betainc_inv.hpp>`
   //!
   //!:   The expression `diff(betainc_inv)(s,x,y)` computes the partial
   //!    diff of \f$f\f$, where \f$f\f$ is the function \f$s \rightarrow \ \mbox{B}(s,x,y)\f$.

@@ -35,9 +35,9 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   An instance of a \tref{eve::value, value}.
+  //!`x`:   An instance of a \ref eve::value.
   //!
-  //!`n`:   An instance of an \tref{eve::value, integral_value}.
+  //!`n`:   An instance of an \ref eve::integral_value.
   //!
   //! **Return value**
   //!
@@ -47,7 +47,7 @@ namespace eve
   //!the call `bit_shl(x, n)` is equivalent to `x << n` if `x`  is an  \link eve::simd_value simd value\endlink.
   //!
   //!The types must share the same cardinal or be scalar and if \f$N\f$ is the size in bits  of the element type of `T`,
-  //!all   \link elements element \endlink of n must belong to the
+  //!all elements of n must belong to the
   //!interval: \f$[0, N[\f$ or the result is undefined.
   //!
   //! ---
