@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](../../../glossary.html#elment-wise) the greatest integer not greater than `x`.
+  //!Computes  [element-wise](@ref glossary_elementwise) the greatest integer not greater than `x`.
   //!
   //! ---
   //!

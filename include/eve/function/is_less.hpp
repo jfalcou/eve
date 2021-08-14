@@ -41,7 +41,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the logical value containing the [element-wise](../../../glossary.html#value) comparison test result
+  //!Returns the logical value containing the [element-wise](@ref glossary_elementwise) comparison test result
   //!between `x` and `y`. The infix notation `x < y` can also be used.
   //!
   //!The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.

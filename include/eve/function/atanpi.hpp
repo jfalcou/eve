@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) arc cotangent of the
+  //!Returns the [element-wise](@ref glossary_elementwise) arc cotangent of the
   //!input in the range \f$[-\frac12, \frac12]\f$.
   //!
   //!In particular:

@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) the value  the logarithmic diff
+  //!Returns [element-wise](@ref glossary_elementwise) the value  the logarithmic diff
   //!of the \f$\Gamma\f$ function.
   //!
   //! The result type is of the same type as the  parameter.

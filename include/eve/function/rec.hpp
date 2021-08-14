@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](../../../glossary.html#elment-wise) the inverse of `x`.
+  //!Computes  [element-wise](@ref glossary_elementwise) the inverse of `x`.
   //!
   //!For [real integral value](../../concepts.html#value) `x` is semantically equivalent to:
   //!  * If x==1 or x==-1, x is returned.

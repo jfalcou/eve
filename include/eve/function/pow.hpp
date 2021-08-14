@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) \f$x^y\f$.
+  //!Returns [element-wise](@ref glossary_elementwise) \f$x^y\f$.
   //!
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
   //! In paticular we have (IEC 60559):

@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#value) `!(x >= 0)`.
+  //!Returns the [element-wise](@ref glossary_elementwise) `!(x >= 0)`.
   //!
   //!The result type is `logical< T >`.
   //!
@@ -59,7 +59,7 @@ namespace eve
   //!  A Callable object so that the expression `is_ngez[cond](x)` is equivalent to
   //! `if_else(cond,is_ngez(x),false(as(is_ngez(x))))`
   //!
-   //!
+  //!
   //! #### Supported decorators
   //!
   //!  no decorators are supported

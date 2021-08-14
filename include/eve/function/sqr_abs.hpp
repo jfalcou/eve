@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](../../../glossary.html#elment-wise) the square of the absolute value of `x`.
+  //!Computes  [element-wise](@ref glossary_elementwise) the square of the absolute value of `x`.
   //!
   //! ---
   //!

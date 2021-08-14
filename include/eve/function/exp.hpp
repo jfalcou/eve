@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) exponential of the input.
+  //!Returns the [element-wise](@ref glossary_elementwise) exponential of the input.
   //!In partucular:
   //!
   //!   * If the element is \f$\pm0\f$, \f$1\f$ is returned

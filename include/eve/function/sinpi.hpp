@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) sinine of the input expressed in \f$\pi\f$ multiples.
+  //!Returns the [element-wise](@ref glossary_elementwise) sinine of the input expressed in \f$\pi\f$ multiples.
   //!
   //!The call `sinpi(x)` is semantically equivalent to \f$\sin(\pi x)\f$.
   //!In particular:

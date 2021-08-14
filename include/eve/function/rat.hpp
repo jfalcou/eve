@@ -42,7 +42,7 @@ namespace eve
   //!
   //! **Return values**
   //!
-  //!Two values with the same type as `x` containing the [element-wise](../../../glossary.html#value) numerator and denominator of the rational number
+  //!Two values with the same type as `x` containing the [element-wise](@ref glossary_elementwise) numerator and denominator of the rational number
   //!
   //! #### Supported decorators
   //!

@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](../../../glossary.html#elment-wise) `1-x` with the type of `x`.
+  //!Computes  [element-wise](@ref glossary_elementwise) `1-x` with the type of `x`.
   //!
   //!@warning
   //!    If an  [element](../../../glossary.html#element_) of the expected result is not representable in

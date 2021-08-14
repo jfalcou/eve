@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!For signed types The call `is_negative(x)` [element-wise](../../../glossary.html#value) returns true
+  //!For signed types The call `is_negative(x)` [element-wise](@ref glossary_elementwise) returns true
   //!if and only if the bit of sign (most significant bit) is set.
   //!
   //!@warning

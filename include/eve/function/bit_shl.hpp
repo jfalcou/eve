@@ -41,7 +41,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes the [element-wise](../../../glossary.html#element-wise) logical left shift of the first parameter
+  //!Computes the [element-wise](@ref glossary_elementwise) logical left shift of the first parameter
   //!by the second one.
   //!
   //!the call `bit_shl(x, n)` is equivalent to `x << n` if `x`  is an  \link eve::simd_value simd value\endlink.

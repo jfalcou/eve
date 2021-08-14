@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](../../../glossary.html#elment-wise) the smallest integer not less than `x`.
+  //!Computes  [element-wise](@ref glossary_elementwise) the smallest integer not less than `x`.
   //!
   //! ---
   //!

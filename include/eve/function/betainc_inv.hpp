@@ -40,7 +40,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) the value of the inverse of incomplete beta function
+  //!Returns [element-wise](@ref glossary_elementwise) the value of the inverse of incomplete beta function
   //!relative to the first parameter.
   //!
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.

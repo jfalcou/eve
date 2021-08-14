@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) inverse hyperbolic cosine of the input.
+  //!Returns the [element-wise](@ref glossary_elementwise) inverse hyperbolic cosine of the input.
   //!For values in the domain `x>1`, the inverse hyperbolic cosine is semantically equivalent to \f$\log(x+\sqrt{x^2-1})\f$.
   //!
   //!In particular:

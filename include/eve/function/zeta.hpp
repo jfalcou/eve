@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) \f$\displaystyle \zeta(s)=\sum_{n=0}^\infty \frac1{n^s}\f$
+  //!Returns [element-wise](@ref glossary_elementwise) \f$\displaystyle \zeta(s)=\sum_{n=0}^\infty \frac1{n^s}\f$
   //!
   //!For negative entries the computation is made using the reflection formula.
   //!

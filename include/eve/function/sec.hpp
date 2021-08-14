@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) secant of the input.
+  //!Returns the [element-wise](@ref glossary_elementwise) secant of the input.
   //!
   //!In particular:
   //!

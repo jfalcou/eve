@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) arc secant of the
+  //!Returns the [element-wise](@ref glossary_elementwise) arc secant of the
   //!input in \f$\pi\f$ mutiples in the range \f$[0, 1]\f$.
   //!
   //!In particular:
