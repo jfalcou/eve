@@ -51,10 +51,10 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `raw`
+  //!  * eve::raw
   //!     The call `raw(acos)(x)`, call a faster implementation which can be slightly less accurate near 1.
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
   //!     **Required header:**  #include <eve/function/diff/acos.hpp>
   //!

@@ -35,19 +35,20 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value).
+  //!`x`:   An instance of a \tref{eve::value, value}.
   //!
-  //!`n`:   [integral value](../../concepts.html#value).
+  //!`n`:   An instance of an \tref{eve::value, integral_value}.
   //!
   //! **Return value**
   //!
-  //!Computes the [element-wise](../../../glossary.html#element-wise) logical left shift of the first parameter by the second one.
+  //!Computes the [element-wise](../../../glossary.html#element-wise) logical left shift of the first parameter
+  //!by the second one.
   //!
-  //!the call `bit_shl(x, n)` is equivalent to `x << n` if `x`  is an  [simd value](../../concepts.html#value).
+  //!the call `bit_shl(x, n)` is equivalent to `x << n` if `x`  is an  \link eve::simd_value simd value\endlink.
   //!
-  //!The types must share the same cardinal or be scalar and if $N$ is the size in bits  of the element type of `T`,
-  //!all  [elements](../../../glossary.html#element) of n must belong to the
-  //!interval: `[0, N[` or the result is undefined.
+  //!The types must share the same cardinal or be scalar and if \f$N\f$ is the size in bits  of the element type of `T`,
+  //!all   \link elements element \endlink of n must belong to the
+  //!interval: \f$[0, N[\f$ or the result is undefined.
   //!
   //! ---
   //!

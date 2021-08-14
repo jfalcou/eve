@@ -28,6 +28,19 @@ namespace eve
   //! - `eve::logical<eve::wide<char>>`
   //! - `float`
   //! - `eve::wide<int, eve::fixed<1>>`
+  //!
+  //! the concept can be refined in :
+  //!  -  integral_value
+  //!  -  signed_value
+  //!  -  unsigned_value
+  //!  -  signed_integral_value
+  //!  -  floating_value
+  //!  -  real_value
+  //!  -  floating_real_value
+  //!  -  integral_real_value
+  //!  -  logical_value
+  //!
+  //! with obvious meanings
   //! @}
   //================================================================================================
   template<typename T> concept value                 = simd_value<T> || scalar_value<T>;

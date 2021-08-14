@@ -37,7 +37,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`mx`:   mask [value](../../concepts.html#value)
+  //!`m`:   mask [value](../../concepts.html#value)
   //!
   //!`y`, `z`:   selection [values](../../concepts.html#value)
   //!
