@@ -56,7 +56,7 @@ namespace eve
   //!
   //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/acos.hpp>
+  //!     **Required header:** `#include <eve/function/diff/acos.hpp>`
   //!
   //!     The expression `diff(acos)(x)` computes the derivative of the function at `x`.
   //!

@@ -77,19 +77,19 @@ namespace eve
   //!
   //!  * `pedantic`
   //!
-  //!     **Required header:**  #include <eve/function/pedantic/negminabs.hpp>
+  //!     **Required header:** `#include <eve/function/pedantic/negminabs.hpp>`
   //!
   //!     The behaviour is the same except that if  `|x|` or `|y|` is a nan, `pedantic(max)` is used.
   //!
   //!  * `numeric`
   //!
-  //!     **Required header:**  #include <eve/function/numeric/negminabs.hpp>
+  //!     **Required header:** `#include <eve/function/numeric/negminabs.hpp>`
   //!
   //!      The behaviour is the same except that if   `|x|` or `|y|` is a nan, `numeric(max)` is used.
   //!
   //!  * `diff`
   //!
-  //!     **Required header:**  #include <eve/function/diff/negminabs.hpp>
+  //!     **Required header:** `#include <eve/function/diff/negminabs.hpp>`
   //!
   //!     The expression `diff< N >(negminabs)(x,args,...)` computes the partial
   //!      derivative relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and

@@ -69,7 +69,7 @@ namespace eve
   //!
   //!  * `diff`
   //!
-  //!     **Required header:**  #include <eve/function/diff/coth.hpp>
+  //!     **Required header:** `#include <eve/function/diff/coth.hpp>`
   //!
   //!     The expression `diff(coth)(x)` computes the derivative of the function at `x`.
   //!

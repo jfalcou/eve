@@ -54,7 +54,7 @@ namespace eve
   //!
   //!  * `diff`
   //!
-  //!     **Required header:**  #include <eve/function/diff/asec.hpp>
+  //!     **Required header:** `#include <eve/function/diff/asec.hpp>`
   //!  
   //!     The expression `diff(asec)(x)` computes the derivative of the function at `x`.
   //!

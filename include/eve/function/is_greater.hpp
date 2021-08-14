@@ -73,7 +73,7 @@ namespace eve
   //!
   //!  * `definitely`
   //!
-  //!     **Required header:**  #include <eve/function/fuzzy/is_greater.hpp>
+  //!     **Required header:** `#include <eve/function/fuzzy/is_greater.hpp>`
   //!
   //!     The expression `definitely(is_greater)(x, y, t)` where `x` and `y` must be
   //!      floating point values, evals to true if and only if `x` is definitely greater than `y`.

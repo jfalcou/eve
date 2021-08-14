@@ -77,19 +77,19 @@ namespace eve
   //!
   //!  * `pedantic`
   //!
-  //!     **Required header:**  #include <eve/function/pedantic/minabs.hpp>
+  //!     **Required header:** `#include <eve/function/pedantic/minabs.hpp>`
   //!
   //!     The behaviour is the same except that if  `|x| == |y|`, `pedantic(max)` is used.
   //!
   //!  * `numeric`
   //!
-  //!     **Required header:**  #include <eve/function/numeric/minabs.hpp>
+  //!     **Required header:** `#include <eve/function/numeric/minabs.hpp>`
   //!
   //!      The behaviour is the same except that if  `|x| == |y|`, `numeric(max)` is used.
   //!
   //!  * `diff`
   //!
-  //!     **Required header:**  #include <eve/function/diff/minabs.hpp>
+  //!     **Required header:** `#include <eve/function/diff/minabs.hpp>`
   //!
   //!     The expression `diff< N >(minabs)(x,args,...)` computes the partial
   //!      derivative relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and

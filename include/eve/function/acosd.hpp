@@ -53,7 +53,7 @@ namespace eve
   //!
   //!  * `diff`
   //!
-  //!     **Required header:**  #include <eve/function/diff/acosd.hpp>
+  //!     **Required header:** `#include <eve/function/diff/acosd.hpp>`
   //!
   //!     The expression `diff(acosd)(x)` computes the derivative of the function at `x`.
   //!

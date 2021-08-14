@@ -55,7 +55,7 @@ namespace eve
   //!  
   //!  * `diff`
   //!
-  //!     **Required header:**  #include <eve/function/diff/cosd.hpp>
+  //!     **Required header:** `#include <eve/function/diff/cosd.hpp>`
   //!  
   //!     The expression `diff(cosd)(x)` computes the derivative of the function at `x`.
   //!

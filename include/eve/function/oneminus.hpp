@@ -67,14 +67,14 @@ namespace eve
   //!
   //!  * `saturated`
   //!
-  //!     **Required header:**  #include <eve/function/saturated/oneminus.hpp>
+  //!     **Required header:** `#include <eve/function/saturated/oneminus.hpp>`
   //!  
   //!     The call `saturated(oneminus)(x)` is semantically equivalent to `saturated(sub)(One(as(x)), x)`
   //!      and is never undefined.
   //!  
   //!  * `diff`
   //!
-  //!     **Required header:**  #include <eve/function/diff/oneminus.hpp>
+  //!     **Required header:** `#include <eve/function/diff/oneminus.hpp>`
   //!  
   //!     The expression `diff(oneminus)(x)` computes the derivative of the function at `x`.
   //!

@@ -69,7 +69,7 @@ namespace eve
   //!
   //!  * `diff`
   //!
-  //!     **Required header:**  #include <eve/function/diff/tanh.hpp>
+  //!     **Required header:** `#include <eve/function/diff/tanh.hpp>`
   //!
   //!     The expression `diff(tanh)(x)` computes the derivative of the function at `x`.
   //!

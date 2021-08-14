@@ -66,7 +66,7 @@ namespace eve
   //!
   //!  * `diff`
   //!
-  //!     **Required header:**  #include <eve/function/diff/lgamma.hpp>
+  //!     **Required header:** `#include <eve/function/diff/lgamma.hpp>`
   //!
   //!     The expression `diff(lgamma)(x)` computes the derivative of the function at `x`.
   //!

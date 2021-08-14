@@ -52,7 +52,7 @@ namespace eve
   //!
   //!  * `diff`
   //!
-  //!     **Required header:**  #include <eve/function/diff/sinpic.hpp>
+  //!     **Required header:** `#include <eve/function/diff/sinpic.hpp>`
   //!  
   //!     The expression `diff(sinpic)(x)` computes the derivative of the function at `x`.
   //!

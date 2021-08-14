@@ -55,7 +55,7 @@ namespace eve
   //!  
   //!  * `diff`
   //!
-  //!     **Required header:**  #include <eve/function/diff/sind.hpp>
+  //!     **Required header:** `#include <eve/function/diff/sind.hpp>`
   //!  
   //!     The expression `diff(sind)(x)` computes the derivative of the function at `x`.
   //!

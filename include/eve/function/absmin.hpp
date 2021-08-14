@@ -71,19 +71,19 @@ namespace eve
   //!
   //!  * `pedantic`
   //!
-  //!     **Required header:**  #include <eve/function/pedantic/absmin.hpp>
+  //!     **Required header:** `#include <eve/function/pedantic/absmin.hpp>`
   //!
   //!     The call `pedantic(absmin)(x, args...)` is equivalent to `abs(pedantic(min)(x, args...))`
   //!
   //!  * `numeric`
   //!
-  //!     **Required header:**  #include <eve/function/numeric/absmin.hpp>
+  //!     **Required header:** `#include <eve/function/numeric/absmin.hpp>`
   //!
   //!     The call `numeric(absmin)(x, args...) is equivalent to `abs(numeric(min)(x, args...))`
   //!
   //!  * `diff`
   //!
-  //!     **Required header:**  #include <eve/function/diff/absmin.hpp>
+  //!     **Required header:** `#include <eve/function/diff/absmin.hpp>`
   //!
   //!     The expression `diff< N >(absmin)(x,args,...)` computes the partial
   //!      derivative relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and

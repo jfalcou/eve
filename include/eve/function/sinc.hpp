@@ -52,7 +52,7 @@ namespace eve
   //!
   //!  * `diff`
   //!
-  //!     **Required header:**  #include <eve/function/diff/sinc.hpp>
+  //!     **Required header:** `#include <eve/function/diff/sinc.hpp>`
   //!  
   //!     The expression `diff(sinc)(x)` computes the derivative of the function at `x`.
   //!

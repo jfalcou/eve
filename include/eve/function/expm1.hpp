@@ -68,7 +68,7 @@ namespace eve
   //!
   //!  * `diff`
   //!
-  //!     **Required header:**  #include <eve/function/diff/expm1.hpp>
+  //!     **Required header:** `#include <eve/function/diff/expm1.hpp>`
   //!
   //!     The expression `diff(expm1)(x)` computes the derivative of the function at `x`.
   //!
