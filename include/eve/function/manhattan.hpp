@@ -62,7 +62,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `pedantic`
+  //!  * eve::pedantic
   //!
   //!     **Required header:** `#include <eve/function/pedantic/manhattan.hpp>`
   //!

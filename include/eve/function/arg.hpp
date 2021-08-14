@@ -65,7 +65,7 @@ namespace eve
   //! #### Supported decorators
   //!
   //!  <span class="smallskip"></span>
-  //!  * `pedantic`
+  //!  * eve::pedantic
   //!
   //!     **Required header:** `#include <eve/function/pedantic/arg.hpp>`
   //!
