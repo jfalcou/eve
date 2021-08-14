@@ -70,7 +70,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
   //!     **Required header:** `#include <eve/function/diff/log1p.hpp>`
   //!

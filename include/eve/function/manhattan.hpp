@@ -69,7 +69,7 @@ namespace eve
   //!     The call `pedantic(manhattan)(x,args...`  computes the sum of the absolute values of its parameters
   //!      returning \f$\infty\f$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
   //!     **Required header:** `#include <eve/function/diff/manhattan.hpp>`
   //!

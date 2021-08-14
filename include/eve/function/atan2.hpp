@@ -76,7 +76,7 @@ namespace eve
   //!       -  If `x` is \f$\pm0\f$ and `y` is \f$\pm-0\f$, \f$-\frac\pi2\f$ is returned
   //!       -  If `x` is \f$\pm0\f$ and `y` is \f$\pm+0\f$, \f$+\frac\pi2\f$  is returned
   //!  
-  //!  * `diff`
+  //!  * eve::diff
   //!
   //!     **Required header:** `#include <eve/function/diff/atan2.hpp>`
   //!  

@@ -87,7 +87,7 @@ namespace eve
   //!
   //!      The behaviour is the same except that if   `|x|` or `|y|` is a nan, `numeric(max)` is used.
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
   //!     **Required header:** `#include <eve/function/diff/negabsmin.hpp>`
   //!

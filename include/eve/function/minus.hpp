@@ -75,7 +75,7 @@ namespace eve
   //!     The call `saturated(minus)(x)` computes the saturated opposite of `x`. The only interest of this behaviour is that
   //!      for integral signed type T  `saturated(minus)(Valmin< T >())` returns `Valmax< T >()` and is not u.b.
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
   //!     **Required header:** `#include <eve/function/diff/minus.hpp>`
   //!

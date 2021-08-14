@@ -83,7 +83,7 @@ namespace eve
   //!     The call `numeric(fnms)(x,y,z)` ensures the full compliance to fnms properties. This can be very expensive if the
   //!      system has no hardware capability.
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
   //!     **Required header:** `#include <eve/function/diff/fnms.hpp>`
   //!

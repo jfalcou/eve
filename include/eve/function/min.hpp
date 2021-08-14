@@ -82,7 +82,7 @@ namespace eve
   //!     The call `numeric(max)(x,args,...)`  ensures that  if any element of the inputs is not a `Nan`, the corresponding
   //!      output element will not be a `Nan`.
   //!  
-  //!  * `diff`
+  //!  * eve::diff
   //!
   //!     **Required header:** `#include <eve/function/diff/min.hpp>`
   //!  

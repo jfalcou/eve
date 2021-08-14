@@ -80,7 +80,7 @@ namespace eve
   //!     [compatibility result](../../concept.html#compatibility) of the N parameters. The computation is done as if all arguments were
   //!     converted to this type and the saturated multiplication applied recursively on all parameters. No overflow occurs.
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
   //!     **Required header:** `#include <eve/function/diff/mul.hpp>`
   //!
