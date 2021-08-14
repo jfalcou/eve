@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var tgamma
   //!
-  //! @brief Callable object computing the (true) $\Gamma$ function:
+  //! @brief Callable object computing the (true) \f$\Gamma\f$ function:
   //!        \f$\displaystyle \Gamma(x)=\int_0^\infty t^{x-1}e^{-t}\mbox{d}t\f$
   //!
   //! **Required header:** `#include <eve/function/tgamma.hpp>`

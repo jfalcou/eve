@@ -17,7 +17,7 @@ namespace eve
   //!
   //! @brief Callable object computing an approximation of the
   //!        \f$\Gamma\f$ function by \f$\displaystyle \Gamma(x) \approx \sqrt{2 \pi} x^{x-\frac12} e^{-x} ( 1 + \frac1{x} P(\frac1{x}))\f$,
-  //!        where $\fP\f$ is a polynomial.
+  //!        where \f$\fP\f\f$ is a polynomial.
   //!
   //! **Required header:** `#include <eve/function/stirling.hpp>`
   //!
