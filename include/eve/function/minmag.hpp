@@ -79,7 +79,7 @@ namespace eve
   //!
   //!     The behaviour is the same except that if  `|x| == |y|`, `pedantic(min)` is used.
   //!
-  //!  * `numeric`
+  //!  * eve::numeric
   //!
   //!     **Required header:** `#include <eve/function/numeric/minmag.hpp>`
   //!

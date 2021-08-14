@@ -75,7 +75,7 @@ namespace eve
   //!
   //!     The call `pedantic(absmin)(x, args...)` is equivalent to `abs(pedantic(min)(x, args...))`
   //!
-  //!  * `numeric`
+  //!  * eve::numeric
   //!
   //!     **Required header:** `#include <eve/function/numeric/absmin.hpp>`
   //!
