@@ -55,7 +55,7 @@ namespace eve
   //!  
   //!  * `diff`
   //!
-  //!     **Required header:**  #include <eve/function/diff/sin.hpp>
+  //!     **Required header:** `#include <eve/function/diff/sin.hpp>`
   //!  
   //!     The expression `diff(sin)(x)` computes the derivative of the function at `x`.
   //!

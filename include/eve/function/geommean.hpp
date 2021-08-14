@@ -75,7 +75,7 @@ namespace eve
   //!
   //!  * `diff_nth`
   //!
-  //!     **Required header:**  #include <eve/function/diff/geommean.hpp>
+  //!     **Required header:** `#include <eve/function/diff/geommean.hpp>`
   //!
   //!     The expression `diff_nth< N >(geommean)(x,args...)` computes the partial
   //!      derivative of the function relative to its Nth parameter. The returned value is 0 if N is

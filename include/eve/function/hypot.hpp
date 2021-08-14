@@ -64,7 +64,7 @@ namespace eve
   //!
   //!  * `pedantic`
   //!
-  //!     **Required header:**  #include <eve/function/pedantic/hypot.hpp>
+  //!     **Required header:** `#include <eve/function/pedantic/hypot.hpp>`
   //!
   //!     The call `pedantic(hypot)(x,args...)`  computes the square root of the sum of the parameters
   //!      without undue overflow or underflow at intermediate stages of the computation
@@ -74,7 +74,7 @@ namespace eve
   //!
   //!  * `diff`
   //!
-  //!     **Required header:**  #include <eve/function/diff/hypot.hpp>
+  //!     **Required header:** `#include <eve/function/diff/hypot.hpp>`
   //!
   //!     The expression `diff_< N >(hypot)(x,args...)` computes the partial
   //!      derivativ of the function relative to its Nth parameter. The returned value is 0 if N is

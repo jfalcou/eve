@@ -71,7 +71,7 @@ namespace eve
   //!
   //!  * `diff`
   //!
-  //!     **Required header:**  #include <eve/function/diff/sign.hpp>
+  //!     **Required header:** `#include <eve/function/diff/sign.hpp>`
   //!
   //!     The expression `diff(sign)(x)` computes the derivative of the function at `x`.
   //!

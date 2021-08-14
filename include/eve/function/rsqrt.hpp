@@ -67,7 +67,7 @@ namespace eve
   //!
   //!  * `diff`
   //!
-  //!     **Required header:**  #include <eve/function/diff/rsqrt.hpp>
+  //!     **Required header:** `#include <eve/function/diff/rsqrt.hpp>`
   //!
   //!     The expression `diff(rsqrt)(x)` computes the derivative of the function at `x`.
   //!

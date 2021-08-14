@@ -75,7 +75,7 @@ namespace eve
   //!
   //!  * `saturated`
   //!
-  //!     **Required header:**  #include <eve/function/saturated/dist.hpp>
+  //!     **Required header:** `#include <eve/function/saturated/dist.hpp>`
   //!
   //!     The call `saturated(dist)(x, y)` computes a saturated distance. Contrary to the [regular case](../decorator/regular.html), it guarantees
   //!      that the result is always defined. If \f$|x-y|\f$ is not representable

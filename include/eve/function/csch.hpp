@@ -69,7 +69,7 @@ namespace eve
   //!
   //!  * `diff`
   //!
-  //!     **Required header:**  #include <eve/function/diff/csch.hpp>
+  //!     **Required header:** `#include <eve/function/diff/csch.hpp>`
   //!
   //!     The expression `diff(csch)(x)` computes the derivative of the function at `x`.
   //!

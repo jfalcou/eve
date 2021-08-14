@@ -71,7 +71,7 @@ namespace eve
   //!
   //!  * `diff`
   //!
-  //!     **Required header:**  #include <eve/function/diff/acosh.hpp>
+  //!     **Required header:** `#include <eve/function/diff/acosh.hpp>`
   //!
   //!     The expression `diff(acosh)(x)` computes the derivative of the function at `x`.
   //!

@@ -64,7 +64,7 @@ namespace eve
   //!
   //!  * `diff`
   //!
-  //!     **Required header:**  #include <eve/function/diff/pow.hpp>
+  //!     **Required header:** `#include <eve/function/diff/pow.hpp>`
   //!
   //!     The expression `diff_1st(powm1)(x,y)` and `diff_2nd(powm1)(x,y)` computes the partial
   //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ x^y-1\f$.
