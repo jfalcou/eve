@@ -66,7 +66,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `raw`
+  //!  * eve::raw
   //!
   //!     **Required header:**  #include <eve/function/diff/nthroot.hpp>
   //!

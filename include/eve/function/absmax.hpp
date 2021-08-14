@@ -70,23 +70,23 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `pedantic`
+  //!  * eve::pedantic
   //!
-  //!     **Required header:**  #include <eve/function/pedantic/absmax.hpp>
+  //!     **Required header:**  `#include <eve/function/pedantic/absmax.hpp>`
   //!
-  //!     The call `pedantic(absmax)(x, args...)` is equivalent to `abs(pedantic(max)(x, args...))`
+  //!     The call `eve::pedantic(eve::absmax)(x, args...)` is equivalent to `eve::abs(eve::pedantic(eve::max)(x, args...))`
   //!
-  //!  * `numeric`
+  //!  * eve::numeric
   //!
-  //!     **Required header:**  #include <eve/function/numeric/absmax.hpp>
+  //!     **Required header:**  `#include <eve/function/numeric/absmax.hpp>`
   //!
-  //!     The call `numeric(absmax)(x, args...) is equivalent to `abs(numeric(max)(x, args...))`
+  //!     The call `eve::numeric(eve::absmax)(x, args...) is equivalent to `eve::abs(eve::numeric(eve::max)(x, args...))`
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/absmax.hpp>
+  //!     **Required header:** ` #include <eve/function/diff/absmax.hpp>`
   //!
-  //!     The expression `diff< N >(absmax)(x,args,...)` computes the partial
+  //!     The expression `diff_nth<N>(absmax)(x,args,...)` computes the partial
   //!      derivative relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and
   //!      their absmax is \f$m\f$, the value returned is elementwise \f$\mathrm{sign}(x_N)\f$ if \f$m\f$ is equal to \f$|x_N|\f$ else 0.
   //!
