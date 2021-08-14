@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | unsigned integral factorial   |
+  //! | `operator()` | unsigned integral factorial                                |
   //!
   //! ---
   //!
@@ -34,7 +34,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`n`:   [value](@ref eve::value).
+  //!`n`:   [unsigned value](@ref eve::value).
   //!
   //! **Return value**
   //!

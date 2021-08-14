@@ -34,7 +34,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`n`:   [value](@ref eve::value).
+  //!`n`:   [unsigned value](@ref eve::value).
   //!
   //! **Return value**
   //!
@@ -59,10 +59,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
+
   namespace tag { struct bernouilli_; }
   template<> struct supports_conditional<tag::bernouilli_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(bernouilli_, bernouilli);
 }
 

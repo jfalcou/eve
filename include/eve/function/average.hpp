@@ -76,7 +76,8 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::diff}<br>
+  //!  * eve::diff
+  //!
   //!     **Required header:** `#include <eve/function/diff/average.hpp>`
   //!
   //!     The expression `diff_nth< N >(average)(x,args...)` computes the partial
@@ -85,7 +86,8 @@ namespace eve
   //!
   //!      This is only available for floating point entries.
   //!
-  //!  * eve::raw<br>
+  //!  * eve::raw
+  //!
   //!     when `raw(average)(x, args, ...)` is used, no provision is made to avoid overflows for more than 2 parameters.
   //!
   //! #### Example
