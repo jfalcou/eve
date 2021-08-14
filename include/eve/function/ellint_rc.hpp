@@ -36,7 +36,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`, `y`:   [floating values](../../concepts.html#value).
+  //!`x`, `y`:   [floating values](@ref eve::value).
   //!
   //!  This computes the degenerate Carlson's elliptic integral
   //!

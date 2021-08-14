@@ -37,7 +37,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`, `y`, `z`:   [values](../../concepts.html#value)
+  //!`x`, `y`, `z`:   [values](@ref eve::value)
   //!
   //! **Return value**
   //!
@@ -48,7 +48,7 @@ namespace eve
   //!
   //!@warning Note
   //!    This `fms` implementation provides those properties for all [real integral values](../../concepts.html#integral_value)
-  //!     and when possible for [real floating values](../../concepts.html#value).
+  //!     and when possible for [real floating values](@ref eve::value).
   //!
   //! ---
   //!

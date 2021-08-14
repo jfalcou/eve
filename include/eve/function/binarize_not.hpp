@@ -35,8 +35,8 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`c`:   [logical value](../../concepts.html#value).
-  //!`v`:   [scalar value](../../concepts.html#value) defaulting to 1.
+  //!`c`:   [logical value](@ref eve::value).
+  //!`v`:   [scalar value](@ref eve::value) defaulting to 1.
   //!
   //! **Return value**
   //!

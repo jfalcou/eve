@@ -33,7 +33,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [unsigned value](../../concepts.html#value).
+  //!`x`:   [unsigned value](@ref eve::value).
   //!
   //! **Return value**
   //!

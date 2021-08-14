@@ -34,7 +34,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`, `y`:   [values](../../concepts.html#value).
+  //!`x`, `y`:   [values](@ref eve::value).
   //!
   //! **Return value**
   //!
@@ -42,7 +42,7 @@ namespace eve
   //![logical operations semantic](../../../glossary.html#Logical).
   //!
   //!the call `logical_andnot(x, y)` is semantically equivalent to `x && !y`
-  //!if `x` or  `y` is an  [simd value](../../concepts.html#value).
+  //!if `x` or  `y` is an  [simd value](@ref eve::value).
   //!
   //! ---
   //!

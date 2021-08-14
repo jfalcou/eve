@@ -36,9 +36,9 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`a`:   [value](../../concepts.html#value).`a` must be positive or the result is Nan
+  //!`a`:   [value](@ref eve::value).`a` must be positive or the result is Nan
   //!
-  //!`x`:   [floating value](../../concepts.html#value). `a+x` must be positive or the result is Nan
+  //!`x`:   [floating value](@ref eve::value). `a+x` must be positive or the result is Nan
   //!
   //! **Return value**
   //!

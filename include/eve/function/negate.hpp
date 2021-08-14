@@ -35,9 +35,9 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value) to negate.
+  //!`x`:   [value](@ref eve::value) to negate.
   //!
-  //!`y`:   [value](../../concepts.html#value) whose sign will be used to negate `x`.
+  //!`y`:   [value](@ref eve::value) whose sign will be used to negate `x`.
   //!
   //! **Return value**
   //!

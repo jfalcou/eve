@@ -38,7 +38,7 @@ namespace eve
   //! **Parameters**
   //!
   //!`x`, `y` or `x`, `args`, ...
-  //!:   [values](../../concepts.html#value).
+  //!:   [values](@ref eve::value).
   //!
   //! **Return value**
   //!
@@ -49,7 +49,7 @@ namespace eve
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
   //!
   //!@warning
-  //!    If `x` and `y` are [real integral values](../../concepts.html#value) and the sum is odd, the result
+  //!    If `x` and `y` are [real integral values](@ref eve::value) and the sum is odd, the result
   //!    is a rounded value at a distance guaranteed
   //!    to be less than or equal to 0.5 of the average floating value, but may differ
   //!    by unity from the truncation given by `(x+y)/2`. Moreover, as some architectures provide
