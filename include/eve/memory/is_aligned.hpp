@@ -52,7 +52,7 @@ namespace eve
   //! @brief Checks if a pointer satisfy an alignment constraint.
   //!
   //! @param  ptr   Pointer to check
-  //! @tparam  Lanes Alignment constraint to verify expressed as a SIMD register number of lanes.
+  //! @param  lanes Alignment constraint to verify expressed as a SIMD register number of lanes.
   //!
   //! @return `true` if `ptr` is aligned over the alignment implied by `Lanes`, `false` otherwise.
   //================================================================================================
