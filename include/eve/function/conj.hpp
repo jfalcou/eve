@@ -35,7 +35,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:  the [value](@ref eve::value) to conjugate
+  //!`x`:  the [floating value](@ref eve::value) to conjugate
   //!
   //! **Return value**
   //!
