@@ -44,7 +44,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  As all direct trigonometric functions, `sinpicospi` supports the restricted, small, medium and big decorators. Click
+  //!  As all direct trigonometric functions, `sinpicospi` supports the eve::restricted, eve::small, eve::medium and eve::big decorators. Click
   //!  to see the [properties and rationale](../trigonometric.html)
   //!
   //! #### Example
