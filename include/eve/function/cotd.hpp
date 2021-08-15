@@ -50,8 +50,9 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  As all direct trigonometric functions, `cotd` supports the eve::restricted, eve::small, eve::medium and eve::big decorators. Click
-  //!  to see the [properties and rationale](../trigonometric.html)
+  //!  * eve::restricted, eve::small, eve::medium, eve::big
+  //!
+  //!     provide a balance between speed and range limitation.
   //!  
   //!  * eve::diff
   //!

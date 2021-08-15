@@ -50,9 +50,9 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  As all direct trigonometric functions, `cos` supports the
-  //!  eve::restricted, eve::small, eve::medium and eve::big decorators. Click
-  //!  to see the [properties and rationale](../trigonometric.html)
+  //!  * eve::restricted, eve::small, eve::medium and eve::big decorators.
+  //!
+  //!     provide a balance between speed and range limitation.
   //!
   //!  * eve::diff
   //!
