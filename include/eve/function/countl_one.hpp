@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value auto x) const noexcept;
+  //!  auto operator()(unsigned_value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -39,7 +39,8 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the number of consecutive 1 ("one") bits in the value of `x`, starting from the most significant bit ("left").
+  //!Returns the number of consecutive 1 ("one") bits in the value of `x`, starting
+  //!from the most significant bit ("left"), with same type as `x`.
   //!
   //! ---
   //!
@@ -55,7 +56,8 @@ namespace eve
   //!
   //!  **Return value**
   //!
-  //!  A Callable object so that the expression `countl_one[cond](x, ...)` is equivalent to `if_else(cond,countl_one(x, ...),x)`
+  //!  A Callable object so that the expression `countl_one[cond](x, ...)`
+  //!  is equivalent to `if_else(cond,countl_one(x, ...),x)`
   //!
   //! ---
   //!
