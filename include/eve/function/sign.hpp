@@ -46,7 +46,7 @@ namespace eve
   //!  * If x is less than 0,  -1 is returned.
   //!  * If x is zero, x is returned.
   //!
-  //!Moreover for  [floating real value](@ref eve::value)
+  //!Moreover for  [floating real value](@ref eve::floating_real_value)
   //!if x is `Nan`, the result is `Nan`
   //!
   //! ---
