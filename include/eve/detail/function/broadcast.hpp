@@ -46,7 +46,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! If `x` is an instance of a \ref simd_value `T`, the call is equivalent to `T{x.get(I)}`.
+  //! If `x` is an instance of an [SIMD value](@ref simd_value) `T`, the call is equivalent to `T{x.get(I)}`.
   //!
   //! ---
   //!
