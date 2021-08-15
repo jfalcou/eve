@@ -50,7 +50,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  As all direct trigonometric functions, `cot` supports the restricted, small, medium and big decorators. Click
+  //!  As all direct trigonometric functions, `cot` supports the eve::restricted, eve::small, eve::medium and eve::big decorators. Click
   //!  to see the [properties and rationale](../trigonometric.html)
   //!  
   //!  * eve::diff
