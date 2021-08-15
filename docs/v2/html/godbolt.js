@@ -12,6 +12,7 @@ $( document ).ready(function() {
       var node        = document.getElementById('godbolt');
       var textContent = node.textContent;
           textContent = textContent.slice(0,textContent.lastIndexOf('}')+1);
+          textContent = textContent.trim();
 
       // Prepare a CE ClientState using the example code + our setup
       let data = {
