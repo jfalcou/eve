@@ -44,7 +44,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!For an  `x` of [real value](@ref eve::value) `Target`, the expression:
+  //!For an  `x` of [real value](@ref eve::real_value) `Target`, the expression:
   //!
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
   //!T  r = saturate(x, as_<Target>{});

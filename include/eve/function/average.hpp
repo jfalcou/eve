@@ -37,8 +37,9 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`, `y` or `x`, `args`, ...
-  //!:   [values](@ref eve::value).
+  //!`x`, `y`:   [values](@ref eve::value).
+  //!
+  //!`x`, `args`, ...:   [floating values](@ref eve::floating_value).
   //!
   //! **Return value**
   //!
@@ -49,8 +50,8 @@ namespace eve
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
   //!
   //!@warning
-  //!    If `x` and `y` are [real integral values](@ref eve::value) and the sum is odd, the result
-  //!    is a rounded value at a distance guaranteed
+  //!    If `x` and `y` are [integral values](@ref eve::integral_value) and the sum is odd, the result
+  //!    is a rounded value at a distance guaranted
   //!    to be less than or equal to 0.5 of the average floating value, but may differ
   //!    by unity from the truncation given by `(x+y)/2`. Moreover, as some architectures provide
   //!    simd intrinsics to perform the operation, the scalar results may differ by one unit from

@@ -41,7 +41,7 @@ namespace eve
   //!
   //!Computes  [element-wise](@ref glossary_elementwise) the never zero sign of `x`.
   //!
-  //!For [real value](@ref eve::value) `x` is semantically equivalent to:
+  //!For [real value](@ref eve::real_value) `x` is semantically equivalent to:
   //!  * If x is positive, 1 is returned.
   //!  * If x is negative  -1 is returned.
   //!  * If x is `Nan`, the result is `Nan`.
