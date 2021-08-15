@@ -47,6 +47,15 @@ namespace eve
   //! in \f$[-\pi/4, +\pi/4]\f$ and a quadrant value in\f$[0, 3]\f$.
   //!
   //!  @}
+  //================================================================================================
+  // rnge limitation decorator objects for direct trigonometric functions
+  struct restricted_
+  {
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
+  };
+
+  //================================================================================================
+  //! @addtogroup trigonometric
   //! @{
   //! @var small
   //!
@@ -80,6 +89,14 @@ namespace eve
   //! in \f$[-\pi/4, +\pi/4]\f$ and a quadrant value in\f$[0, 3]\f$.
   //!
   //!  @}
+  //================================================================================================
+  struct small_
+  {
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
+  };
+
+  //================================================================================================
+  //! @addtogroup trigonometric
   //! @{
   //! @var medium
   //!
@@ -114,6 +131,14 @@ namespace eve
   //! in \f$[-\pi/4, +\pi/4]\f$ and a quadrant value in\f$[0, 3]\f$.
   //!
   //!  @}
+  //================================================================================================
+   struct medium_
+  {
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
+  };
+
+  //================================================================================================
+  //! @addtogroup trigonometric
   //! @var big
   //!
   //! @brief  Higher-order @callable imbuing a direct computation semantic onto other @callable{s}.
@@ -144,25 +169,6 @@ namespace eve
   //! in \f$[-\pi/4, +\pi/4]\f$ and a quadrant value in\f$[0, 3]\f$.
   //!
   //!  @}
-  //================================================================================================
-
-  //================================================================================================
-  // rnge limitation decorator objects for direct trigonometric functions
-  struct restricted_
-  {
-    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
-  };
-
-  struct small_
-  {
-    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
-  };
-
-  struct medium_
-  {
-    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
-  };
-
   struct big_
   {
     template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
