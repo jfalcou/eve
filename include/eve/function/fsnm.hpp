@@ -47,8 +47,8 @@ namespace eve
   //!The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
   //!
   //!@warning Note
-  //!    This `fsnm` implementation provides those properties for all [real integral values](../../concepts.html#integral_value)
-  //!     and when possible for [real floating values](@ref eve::value).
+  //!    This `fsnm` implementation provides those properties for all [integral real value](@ref eve::integral_real_value)
+  //!     and when possible for [floating real value](@ref eve::floating_real_value).
   //!
   //! ---
   //!
