@@ -48,6 +48,10 @@ namespace eve
   //! A @callable performing the same kind of operation but while taking care of saturating
   //! its return value so that it always fit into the input type range.
   //!
+  //! saturated is currently supported by eve::abs, eve::add, eve::convert,
+  //! eve::dec, eve::div, eve::inc, eve::mul, eve::sub, eve::oneminus, eve::next, eve::prev
+  //! and eve::sqr object functions.
+  //!
   //!  @}
   //================================================================================================
   inline constexpr saturated_type const saturated = {};

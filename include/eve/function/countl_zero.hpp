@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value auto x) const noexcept;
+  //!  auto operator()(unsigned_value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -39,7 +39,8 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the number of consecutive 0 ("zero") bits in the value of `x`, starting from the most significant bit ("left").
+  //!Returns the number of consecutive 0 ("zero") bits in the value of `x`,
+  //!starting from the most significant bit ("left"), with same type as `x`..
   //!
   //! ---
   //!
