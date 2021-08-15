@@ -77,7 +77,7 @@ namespace eve
   //!       for all real `a` and `x`, and in fact computes the logarithm of the absolute value of the Pochammer
   //!       symbol \f$\log\left|\frac{\Gamma(x+a)}{\Gamma(x)}\right|\f$ returning nan if the result in really undefined.
   //!
-  //!  * eve::diff
+  //!  * eve::diff_1st, eve::diff_2nd
   //!
   //!     **Required header:** `#include <eve/function/diff/lrising_factorial.hpp>`
   //!

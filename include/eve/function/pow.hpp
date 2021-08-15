@@ -87,7 +87,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::diff
+  //!  * eve::diff_1st, eve::diff_2nd
   //!
   //!     **Required header:** `#include <eve/function/diff/pow.hpp>`
   //!

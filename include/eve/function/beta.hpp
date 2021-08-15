@@ -42,12 +42,6 @@ namespace eve
   //!
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
   //!
-  //![`diff`](../decorators.html#diff)
-  //!:   **Required header:** `#include <eve/function/diff/beta.hpp>`
-  //!
-  //!:   The expression `diff_1st(beta)(x,y)` and `diff_2nd(beta)(x,y)` computes the partial
-  //!    derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \mbox{B}(x,y)\f$.
-  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
@@ -68,7 +62,12 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  no decorators are supported
+  //! * eve::diff_1st, eve::diff_2nd
+  //!
+  //!:   **Required header:** `#include <eve/function/diff/beta.hpp>`
+  //!
+  //!:   The expression `diff_1st(beta)(x,y)` and `diff_2nd(beta)(x,y)` computes the partial
+  //!    derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \mbox{B}(x,y)\f$.
   //!
   //! #### Example
   //!
