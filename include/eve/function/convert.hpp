@@ -88,8 +88,11 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ### [`saturated`](../../decorators.html#saturated)
-  //!  The expression `saturated(convert)(x,t)` computes a saturated conversion of `x` to the type wrapped by `t`.
+  //!   * eve::saturated
+  //!
+  //!     **Required header:** `#include <eve/function/saturated/convert.hpp>`
+  //!
+  //!     The expression `saturated(convert)(x,t)` computes a saturated conversion of `x` to the type wrapped by `t`.
   //!
   //! #### Example
   //!
