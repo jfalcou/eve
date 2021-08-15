@@ -153,10 +153,7 @@ namespace eve::detail
     }
     else
     {
-      auto zipped = kumi::zip(v.storage(),w.storage());
-      return kumi::fold_right ( [](auto acc , auto e) { return acc && ( get<0>(e) == get<1>(e) ); }
-                              , zipped, true
-                              );
+      return v.storage() == w.storage();
     }
   }
 
@@ -184,7 +181,7 @@ namespace eve::detail
     if constexpr( detail::tag_dispatchable<tag::is_not_equal_,Wide,Wide> )
     {
       static_assert ( detail::tag_dispatchable<tag::is_equal_,Wide,Wide>
-                    , "[EVE] User defined type defines != but not == specialisation."
+                    , "[EVE] User defined type defines != but no == specialization."
                     );
       return tagged_dispatch(tag::is_not_equal_{}, v, w);
     }
@@ -194,10 +191,7 @@ namespace eve::detail
     }
     else
     {
-      auto zipped = kumi::zip(v.storage(),w.storage());
-      return kumi::fold_right ( [](auto acc , auto e) { return acc || ( get<0>(e) != get<1>(e) ); }
-                              , zipped, false
-                              );
+      return v.storage() != w.storage();
     }
   }
 
@@ -224,24 +218,14 @@ namespace eve::detail
   {
     if constexpr( detail::tag_dispatchable<tag::is_less_,Wide,Wide> )
     {
+      static_assert ( detail::tag_dispatchable<tag::is_equal_,Wide,Wide>
+                    , "[EVE] User defined type defines < but no == specialization."
+                    );
       return tagged_dispatch(tag::is_less_{}, v, w);
     }
     else
     {
-      // lexicographical order is defined as
-      // (v0 < w0) || ... andnot(wi < vi, vi+1 < wi+1) ... || andnot(wn-1 < vn-1, vn < wn);
-      auto res = get<0>(v) < get<0>(w);
-      for_<1,1,std::tuple_size<Wide>::value>
-      (
-        [&]<typename Index>(Index)
-        {
-          auto y_less_x_prev = get<Index::value-1>(w) < get<Index::value - 1>(v);
-          auto x_less_y = get<Index::value>(v) < get<Index::value>(w);
-          res = res || (x_less_y && !y_less_x_prev);
-        }
-      );
-
-      return res;
+      return v.storage() < w.storage();
     }
   }
 

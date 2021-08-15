@@ -57,4 +57,7 @@ TTS_CASE("Check eve::wide<udt> ordering")
   std::cout << (v00 <= v01) << "\n";
   std::cout << (v00  > v01) << "\n";
   std::cout << (v00 >= v01) << "\n";
+
+  TTS_EQUAL( udt::grid2d::order_counter , 4);
+  TTS_EQUAL( udt::grid2d::eq_counter    , 2);
 };

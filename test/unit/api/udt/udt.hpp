@@ -76,7 +76,7 @@ namespace udt
                       )
   {
     grid2d::order_counter++;
-    return a.storage() < b.storage();
+    return kumi::to_tuple(a) < kumi::to_tuple(b);
   }
 }
 
