@@ -84,9 +84,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/Wevnjdb8n)
-  //!
-  //! @include{lineno} doc/core/abs.cpp
+  //! @godbolt{doc/core/abs.cpp}
   //!
   //!  @}
   //================================================================================================
