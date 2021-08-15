@@ -76,7 +76,7 @@ namespace eve
   //!       -  If `x` is \f$\pm0\f$ and `y` is \f$\pm-0\f$, \f$-90\f$ is returned
   //!       -  If `x` is \f$\pm0\f$ and `y` is \f$\pm+0\f$, \f$+90\f$  is returned
   //!
-  //!  * eve::diff
+  //!  * eve::diff_1st, eve::diff_2nd
   //!
   //!     **Required header:** `#include <eve/function/diff/atan2d.hpp>`
   //!

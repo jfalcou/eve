@@ -81,7 +81,7 @@ namespace eve
   //!      that the result is always defined. If \f$|x-y|\f$ is not representable
   //!      [the greatest representable positive value](../../constants.html#valmax) is returned
   //!
-  //!  * eve::diff
+  //!  * eve::diff_1st, eve::diff_2nd
   //!
   //!     **Required header:** `#include <eve/function/diff/dist.hpp>`
   //!
