@@ -42,7 +42,7 @@ namespace eve
   //![logical operations semantic](../../../glossary.html#Logical).
   //!
   //!the call `logical_andnot(x, y)` is semantically equivalent to `x && !y`
-  //!if `x` or  `y` is an  [simd value](@ref eve::value).
+  //!if `x` or  `y` is an  [simd value](@ref eve::simd_value).
   //!
   //! ---
   //!

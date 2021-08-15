@@ -43,7 +43,7 @@ namespace eve
   //!
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
   //!
-  //! The call `rem(x, y)` is equivalent to `x % y` if `x` or  `y` is an  [simd value](@ref eve::value).
+  //! The call `rem(x, y)` is equivalent to `x % y` if `x` or  `y` is an  [simd value](@ref eve::simd_value).
   //!
   //!@warning
   //!   Although the infix notation with `%` is supported, the `%` operator on

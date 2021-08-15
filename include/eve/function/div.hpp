@@ -45,7 +45,7 @@ namespace eve
   //! [elementwise](@ref glossary_elementwise) division of `x` by all `xs`.
   //! The result is semantically equivalent to `x/mul(xs...)`
   //!
-  //! With two parameters, the call `div(x, y)` is equivalent to `x / y` if `x` or  `y` is an  [simd value](@ref eve::value).
+  //! With two parameters, the call `div(x, y)` is equivalent to `x / y` if `x` or  `y` is an  [simd value](@ref eve::simd_value).
   //!
   //!@warning
   //!   Although the infix notation with `/` is supported, the `/` operator on

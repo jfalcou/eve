@@ -46,7 +46,7 @@ namespace eve
   //!
   //!Computes the [element-wise](@ref glossary_elementwise) arithmetic right shift of the first parameter by the second one.
   //!
-  //!the call `shr(x, n)` is equivalent to `x << n` if `x`  is an  [simd value](@ref eve::value).
+  //!the call `shr(x, n)` is equivalent to `x << n` if `x`  is an  [simd value](@ref eve::simd_value).
   //!
   //!The types must share the same cardinal or be scalar and if `N` is the size in bits  of the element type of `T`,
   //!all  [elements](../../../glossary.html#element) of n must belong to the

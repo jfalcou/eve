@@ -44,7 +44,7 @@ namespace eve
   //![logical operations semantic](../../../glossary.html#Logical).
   //!
   //!the call `logical_and(x, y)` is semantically equivalent to `x && y`
-  //!if `x` or  `y` is an  [simd value](@ref eve::value) and does not shortcut.
+  //!if `x` or  `y` is an  [simd value](@ref eve::simd_value) and does not shortcut.
   //!
   //! ---
   //!

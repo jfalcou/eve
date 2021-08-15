@@ -46,7 +46,7 @@ namespace eve
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
   //!
   //! The call `mul(x, args, ...)` is equivalent to `(x * args * ...)` if `x` or one of the `args`
-  //! is an  [simd value](@ref eve::value).
+  //! is an  [simd value](@ref eve::simd_value).
   //!
   //!@warning
   //!   Although the infix notation with `*` is supported for two parameters, the `*` operator on

@@ -42,7 +42,7 @@ namespace eve
   //![element-wise operations semantic](../../../glossary.html#Logicalwise).
   //!
   //!the call `logical_notand(x, y)` is semantically equivalent to `!x && y`
-  //!if `x` or  `y` is an  [simd value](@ref eve::value).
+  //!if `x` or  `y` is an  [simd value](@ref eve::simd_value).
   //!
   //! ---
   //!
