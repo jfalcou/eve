@@ -82,7 +82,7 @@ namespace eve
   //!
   //!     The call `eve::numeric(eve::absmax)(x, args...) is equivalent to `eve::abs(eve::numeric(eve::max)(x, args...))`
   //!
-  //!  * eve::diff
+  //!  * eve::diff_nth
   //!
   //!     **Required header:** ` #include <eve/function/diff/absmax.hpp>`
   //!

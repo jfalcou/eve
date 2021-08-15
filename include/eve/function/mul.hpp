@@ -72,7 +72,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `saturated`
+  //!  * eve::saturated
   //!
   //!     **Required header:** `#include <eve/function/saturated/mul.hpp>`
   //!
@@ -80,7 +80,7 @@ namespace eve
   //!     [compatibility result](../../concept.html#compatibility) of the N parameters. The computation is done as if all arguments were
   //!     converted to this type and the saturated multiplication applied recursively on all parameters. No overflow occurs.
   //!
-  //!  * eve::diff
+  //!  * eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/mul.hpp>`
   //!

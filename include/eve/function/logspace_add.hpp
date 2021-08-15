@@ -66,7 +66,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `diff_nth`
+  //!  * eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/logspace_add.hpp>`
   //!

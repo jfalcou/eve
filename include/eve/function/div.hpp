@@ -98,7 +98,7 @@ namespace eve
   //!   * `to_nearest`
   //!     The call `to_nearest(div)(x, y)`  computes  `nearest(div(x,y))`.
   //!
-  //!   * eve::diff
+  //!   * eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/div.hpp>`
   //!

@@ -44,7 +44,7 @@ namespace eve
   //!Computes the [element-wise](@ref glossary_elementwise) logical left shift of the first parameter
   //!by the second one.
   //!
-  //!the call `bit_shl(x, n)` is equivalent to `x << n` if `x`  is an  \link eve::simd_value simd value\endlink.
+  //!the call `bit_shl(x, n)` is equivalent to `x << n` if `x`  is an [simd value](@ref eve::simd_value).
   //!
   //!The types must share the same cardinal or be scalar and if \f$N\f$ is the size in bits  of the element type of `T`,
   //!all elements of n must belong to the

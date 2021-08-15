@@ -73,7 +73,7 @@ namespace eve
   //!
   //!     The expression `eve::saturated(eve::add)(xs...)` computes the saturated sum of all `xs`.
   //!
-  //!   * eve::diff
+  //!   * eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/add.hpp>`
   //!
