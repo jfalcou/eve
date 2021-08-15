@@ -17,8 +17,7 @@
 
 namespace eve::detail
 {
-
- // -----------------------------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------------------------
   // N parameters apply_over
   template<typename Obj, value T0, value ... T>
   EVE_FORCEINLINE  auto apply_over(Obj f
@@ -28,7 +27,7 @@ namespace eve::detail
   {
     constexpr bool any_aggregated = has_aggregated_abi_v<T0> || (has_aggregated_abi_v<T> || ...);
     constexpr bool any_emulated   = has_emulated_abi_v<T0>   || (has_emulated_abi_v<T>   || ...);
-         if constexpr(any_aggregated) return aggregate(f, arg0, args...);
+    if constexpr(any_aggregated) return aggregate(f, arg0, args...);
     else if constexpr(any_emulated)   return map(f, arg0, args...);
     else                              return f(arg0, args...);
 
@@ -37,7 +36,7 @@ namespace eve::detail
   template<typename Obj, simd_value T>
   EVE_FORCEINLINE auto apply_over(Obj f, T const & v)
   {
-         if constexpr(has_aggregated_abi_v<T>) return aggregate(f, v);
+    if constexpr(has_aggregated_abi_v<T>) return aggregate(f, v);
     else if constexpr(has_emulated_abi_v<T>)   return map(f, v);
     else                                       return f(v);
   }
