@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!    Computes the [element-wise](../../../glossary.html#element-wise_) ieee frexp of the floating value,
+  //!    Computes the [elementwise](@ref glossary_elementwise) ieee frexp of the floating value,
   //!    returning a pair {m,e} of values of the same type of `x` which are related by
   //!    \f$x =  m\times 2^e\f$, with  \f$|m| \in [0.5, 1.5[\f$.
   //!

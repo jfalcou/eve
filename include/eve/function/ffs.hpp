@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes [element-wise](../../../glossary.html#element-wise_) the index or position of the least
+  //!Computes [elementwise](@ref glossary_elementwise) the index or position of the least
   //!significant bit set to one in the word counting from the least significant bit position. The result
   //!is undefined for a zero input if the pedantic decorator is not used.
   //!

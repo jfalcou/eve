@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!    Computes the [element-wise](../../../glossary.html#element-wise_) higher half of the  value,
+  //!    Computes the [elementwise](@ref glossary_elementwise) higher half of the  value,
   //!    returning each element as an unsigned integer of half the size of the input element.
   //!
   //!    If you also need the lower part `lohi` is more efficient.

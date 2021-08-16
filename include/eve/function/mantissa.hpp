@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!    Computes the [element-wise](../../../glossary.html#element-wise_) ieee mantissa of the floating value.
+  //!    Computes the [elementwise](@ref glossary_elementwise) ieee mantissa of the floating value.
   //!
   //!    The mantissa \f$e\f$ and mantissa \f$m\f$ of a floating point entry \f$x\f$ are related by
   //!    \f$x =  m\times 2^e\f$, with  \f$|m| \in [1, 2[\f$ (except for \f$x = \pm0, \pm\infty\f$ or is a Nan,

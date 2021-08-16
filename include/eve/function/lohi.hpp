@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!    Computes the [element-wise](../../../glossary.html#element-wise_) the lower and higher parts of
+  //!    Computes the [elementwise](@ref glossary_elementwise) the lower and higher parts of
   //!    the input values, as a pair of unsigned integers
   //!
   //! ---
