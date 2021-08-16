@@ -21,22 +21,14 @@ $( document ).ready(function() {
                         "id": 1,
                         "language": "c++",
                         "source": textContent,
-                        "compilers": [],
+                        "compilers":  [],
                         "executors": [
                                       {
                                         "compiler":
                                         {
-                                            "id": "g112",
-                                            "libs": [ {"id": "eve", "version": "trunk"}],
-                                            "options": "-O3 -std=c++20 -msse4.2"
-                                        }
-                                      }
-                                      ,{
-                                        "compiler":
-                                        {
                                             "id": "clang1201",
                                             "libs": [ {"id": "eve", "version": "trunk"}],
-                                            "options": "-O3 -std=c++20 -msse4.2"
+                                            "options": "-O3 -std=c++20 -mavx2"
                                         }
                                       }
                                     ]
