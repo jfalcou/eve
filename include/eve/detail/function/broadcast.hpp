@@ -40,7 +40,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //! `x`:  An instance of an [simdvalue](@ref simd_value)
+  //! `x`:  An instance of an [simd value](@ref simd_value)
   //!
   //! `i`:  An eve::index indicating which lane of `x` to broadcast
   //!

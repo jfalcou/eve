@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!For each  [elementwise](@ref glossary_elementwise) of the input the phase angle is returned:
+  //!For each  [element](@ref glossary_element) of the input the phase angle is returned:
   //!
   //!  *  if the bit of sign of the entry [element](@ref glossary_elementwise) is not set, \f$0\f$ is returned.
   //!  *  if the bit of sign of the entry [element](@ref glossary_elementwise) is set, \f$\pi\f$ is returned.
