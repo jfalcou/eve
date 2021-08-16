@@ -40,7 +40,7 @@ namespace eve
   //! **Return value**
   //!
   //! The value returned is of same type as `a0` and follows the
-  //! [bitwise operations semantic](../../../glossary.html#Bitwise).
+  //! [bitwise operations semantic](@ref glossary_bitwise).
   //! * For two parameters it computes the  bitwise ORNOT of the two parameters
   //! * For more than two parameters the call is  semantically equivalent to to `bit_ornot(a0, bit_or(xs...))`
   //!
