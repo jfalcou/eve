@@ -36,7 +36,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!`x`:   [floating value](@ref eve::floating_value).
   //!
   //! **Return value**
   //!
