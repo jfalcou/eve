@@ -34,11 +34,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating real value](../../concepts.html#value).
+  //!`x`:   [floating real value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) arc secant of the
+  //!Returns the [element-wise](@ref glossary_elementwise) arc secant of the
   //!input in \f$\pi\f$ mutiples in the range \f$[0, 1]\f$.
   //!
   //!In particular:
@@ -52,9 +52,9 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/asecpi.hpp>
+  //!     **Required header:** `#include <eve/function/diff/asecpi.hpp>`
   //!  
   //!     The expression `diff(asecpi)(x)` computes the derivative of the function at `x`.
   //!

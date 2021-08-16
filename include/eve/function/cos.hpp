@@ -34,11 +34,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating real value](../../concepts.html#value).
+  //!`x`:   [floating real value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) cosine of the input.
+  //!Returns the [element-wise](@ref glossary_elementwise) cosine of the input.
   //!
   //!In particular:
   //!
@@ -50,13 +50,14 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  As all direct trigonometric functions, `cos` supports the restricted, small, medium and big decorators. Click
-  //!  to see the [properties and rationale](../trigonometric.html)
-  //!  
-  //!  * `diff`
+  //!  * eve::restricted, eve::small, eve::medium and eve::big decorators.
   //!
-  //!     **Required header:**  #include <eve/function/diff/cos.hpp>
-  //!  
+  //!     provide a balance between speed and range limitation.
+  //!
+  //!  * eve::diff
+  //!
+  //!     **Required header:** `#include <eve/function/diff/cos.hpp>`
+  //!
   //!     The expression `diff(cos)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
@@ -67,10 +68,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
+
   namespace tag { struct cos_; }
   template<> struct supports_conditional<tag::cos_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(cos_, cos);
 }
 

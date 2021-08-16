@@ -34,11 +34,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value).
+  //!`x`:   [value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!A pair of values containing respectively the [element-wise](../../../glossary.html#value) fractional and integral parts of `x`,
+  //!A pair of values containing respectively the [element-wise](@ref glossary_elementwise) fractional and integral parts of `x`,
   //!each having the type and sign of `x`.
   //!
   //!In particular:
@@ -49,9 +49,9 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `pedantic`
+  //!  * eve::pedantic
   //!
-  //!     **Required header:**  #include <eve/function/pedantic/modf.hpp>
+  //!     **Required header:** `#include <eve/function/pedantic/modf.hpp>`
   //!
   //!     The call `pedantic(modf)(x)` ensures standard conformity : if `x` is infinite, `{0, x}` is returned.
   //!

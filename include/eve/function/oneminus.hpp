@@ -35,11 +35,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value).
+  //!`x`:   [value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](../../../glossary.html#elment-wise) `1-x` with the type of `x`.
+  //!Computes  [element-wise](@ref glossary_elementwise) `1-x` with the type of `x`.
   //!
   //!@warning
   //!    If an  [element](../../../glossary.html#element_) of the expected result is not representable in
@@ -67,14 +67,14 @@ namespace eve
   //!
   //!  * `saturated`
   //!
-  //!     **Required header:**  #include <eve/function/saturated/oneminus.hpp>
+  //!     **Required header:** `#include <eve/function/saturated/oneminus.hpp>`
   //!  
   //!     The call `saturated(oneminus)(x)` is semantically equivalent to `saturated(sub)(One(as(x)), x)`
   //!      and is never undefined.
   //!  
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/oneminus.hpp>
+  //!     **Required header:** `#include <eve/function/diff/oneminus.hpp>`
   //!  
   //!     The expression `diff(oneminus)(x)` computes the derivative of the function at `x`.
   //!

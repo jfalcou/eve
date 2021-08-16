@@ -71,11 +71,11 @@ namespace eve
   //!     The expression `eve::saturated(eve::sub)(xs...)` computes the saturated difference of
   //!     all `xs`.
   //!
-  //!   * eve::diff
+  //!   * eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/sub.hpp>`
   //!
-  //!     The expression `eve::diff<N>(eve::sub)(xs...)` computes the derivative of the difference
+  //!     The expression `eve::diff_nth<N>(eve::sub)(xs...)` computes the derivative of the difference
   //!     of `xs...` over the Nth parameters.
   //!
   //! #### Example

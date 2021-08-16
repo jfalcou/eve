@@ -37,16 +37,16 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`, `args`:   [values](../../concepts.html#value).
+  //!`x`, `args`:   [values](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Return the multiplication of the [values](../../concepts.html#value).
+  //!Return the multiplication of the [values](@ref eve::value).
   //!
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
   //!
   //! The call `mul(x, args, ...)` is equivalent to `(x * args * ...)` if `x` or one of the `args`
-  //! is an  [simd value](../../concepts.html#value).
+  //! is an  [simd value](@ref eve::simd_value).
   //!
   //!@warning
   //!   Although the infix notation with `*` is supported for two parameters, the `*` operator on
@@ -72,17 +72,17 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `saturated`
+  //!  * eve::saturated
   //!
-  //!     **Required header:**  #include <eve/function/saturated/mul.hpp>
+  //!     **Required header:** `#include <eve/function/saturated/mul.hpp>`
   //!
   //!     The call `saturated(mul)(x, args...)` computes the saturated  multiplication of `x` and `args...`. The saturation is obtained in the
   //!     [compatibility result](../../concept.html#compatibility) of the N parameters. The computation is done as if all arguments were
   //!     converted to this type and the saturated multiplication applied recursively on all parameters. No overflow occurs.
   //!
-  //!  * `diff`
+  //!  * eve::diff_nth
   //!
-  //!     **Required header:**  #include <eve/function/diff/mul.hpp>
+  //!     **Required header:** `#include <eve/function/diff/mul.hpp>`
   //!
   //!     The expression `diff_< N >(mul)(x,args,...)` computes the partial
   //!      diff of the function relative to the Nth parameter.

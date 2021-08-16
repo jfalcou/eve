@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the any value   |
+  //! | `operator()` | the computation of the any value                           |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
@@ -35,11 +35,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value).
+  //!`x`:   [value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!A bool value
+  //!A bool value which is true if and only if any of elements of `x` is not zero.
   //!
   //! ---
   //!
@@ -55,7 +55,7 @@ namespace eve
   //!
   //!  **Return value**
   //!
-  //!  A Callable object so that the expression `any[cond](x, ...)` is equivalent to `if_else(cond,any(x, ...),x)`
+  //!  A Callable object so that the expression `any[cond](x)` is equivalent to `if_else(cond,any(x),false)`
   //!
   //! ---
   //!

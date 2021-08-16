@@ -35,11 +35,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`, `y`:   [values](../../concepts.html#value).
+  //!`x`, `y`:   [values](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) \f$x^y\f$.
+  //!Returns [element-wise](@ref glossary_elementwise) \f$x^y\f$.
   //!
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
   //! In paticular we have (IEC 60559):
@@ -87,9 +87,9 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `diff`
+  //!  * eve::diff_1st, eve::diff_2nd
   //!
-  //!     **Required header:**  #include <eve/function/diff/pow.hpp>
+  //!     **Required header:** `#include <eve/function/diff/pow.hpp>`
   //!
   //!     The expression `diff_1st(pow)(x,y)` and `diff_2nd(pow)(x,y)` computes the partial
   //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ x^y\f$.

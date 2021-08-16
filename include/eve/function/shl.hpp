@@ -39,15 +39,15 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value).
+  //!`x`:   [value](@ref eve::value).
   //!
-  //!`n`:   [integral value](../../concepts.html#value).
+  //!`n`:   [integral value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Computes the [element-wise](../../../glossary.html#element-wise) arithmetic left shift of the first parameter by the second one.
+  //!Computes the [element-wise](@ref glossary_elementwise) arithmetic left shift of the first parameter by the second one.
   //!
-  //!the call `shl(x, n)` is equivalent to `x << n` if `x`  is an  [simd value](../../concepts.html#value).
+  //!the call `shl(x, n)` is equivalent to `x << n` if `x`  is an  [simd value](@ref eve::simd_value).
   //!
   //!The types must share the same cardinal or be scalar and if `N` is the size in bits  of the element type of `T`,
   //!all  [elements](../../../glossary.html#element) of n must belong to the

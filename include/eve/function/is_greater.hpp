@@ -37,11 +37,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`, `y`:   [values](../../concepts.html#value).
+  //!`x`, `y`:   [values](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Returns the logical value containing the [element-wise](../../../glossary.html#value) comparison test result
+  //!Returns the logical value containing the [element-wise](@ref glossary_elementwise) comparison test result
   //!between `x` and `y`. The infix notation `x > y` can also be used.
   //!
   //!The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
@@ -73,7 +73,7 @@ namespace eve
   //!
   //!  * `definitely`
   //!
-  //!     **Required header:**  #include <eve/function/fuzzy/is_greater.hpp>
+  //!     **Required header:** `#include <eve/function/fuzzy/is_greater.hpp>`
   //!
   //!     The expression `definitely(is_greater)(x, y, t)` where `x` and `y` must be
   //!      floating point values, evals to true if and only if `x` is definitely greater than `y`.

@@ -46,7 +46,7 @@ namespace eve
   //!
   //!@warning
   //!  the call `bit_notand(x, y)` is semantically equivalent to `~x & y` if `x` or  `y`
-  //!  is an  [simd value](../../concepts.html#value), but the pure scalar calls imply the original C++ operators
+  //!  is an  [simd value](@ref eve::simd_value), but the pure scalar calls imply the original C++ operators
   //!  an may not exist due to C++ limitations.<br> Moreover if an hardware intrinsic exists,  the infix syntax
   //!  will not be able to use it.
   //!

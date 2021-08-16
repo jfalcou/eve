@@ -35,11 +35,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [unsigned value](../../concepts.html#value).
+  //!`x`:   [unsigned value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!If `x` is not zero, computes [element-wise](../../../glossary.html#element-wise)  the largest integral power of two that is not greater than `x`.
+  //!If `x` is not zero, computes [element-wise](@ref glossary_elementwise)  the largest integral power of two that is not greater than `x`.
   //!If an  [element](../../../glossary.html#element) of `x` is zero, the corresponding result  [element](../../../glossary.html#element) is zero.
   //!
   //! ---

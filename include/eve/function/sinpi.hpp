@@ -34,11 +34,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating real value](../../concepts.html#value).
+  //!`x`:   [floating real value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) sinine of the input expressed in \f$\pi\f$ multiples.
+  //!Returns the [element-wise](@ref glossary_elementwise) sinine of the input expressed in \f$\pi\f$ multiples.
   //!
   //!The call `sinpi(x)` is semantically equivalent to \f$\sin(\pi x)\f$.
   //!In particular:
@@ -51,12 +51,13 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  As all direct trigonometric functions, `sinpi` supports the restricted, small, medium and big decorators. Click
-  //!  to see the [properties and rationale](../trigonometric.html)
+  //!  * eve::restricted, eve::small, eve::medium, eve::big
   //!
-  //!  * `diff`
+  //!     provide a balance between speed and range limitation.
   //!
-  //!     **Required header:**  #include <eve/function/diff/sinpi.hpp>
+  //!  * eve::diff
+  //!
+  //!     **Required header:** `#include <eve/function/diff/sinpi.hpp>`
   //!
   //!     The expression `diff(sinpi)(x)` computes the derivative of the function at `x`.
   //!

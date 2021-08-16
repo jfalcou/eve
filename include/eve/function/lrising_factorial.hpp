@@ -36,9 +36,9 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`a`:   [value](../../concepts.html#value).`a` must be positive or the result is Nan
+  //!`a`:   [value](@ref eve::value).`a` must be positive or the result is Nan
   //!
-  //!`x`:   [floating value](../../concepts.html#value). `a+x` must be positive or the result is Nan
+  //!`x`:   [floating value](@ref eve::value). `a+x` must be positive or the result is Nan
   //!
   //! **Return value**
   //!
@@ -62,24 +62,24 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `raw`
+  //!  * eve::raw
   //!
-  //!     **Required header:**  #include <eve/function/lrising_factorial.hpp>
+  //!     **Required header:** `#include <eve/function/lrising_factorial.hpp>`
   //!
   //!     The expression `raw(lrising_factorial)(a,x)` uses the crude formula with all its limitations and
   //!      inacurracies and return a Nan if `a` and `a+x` are not both positive
   //!
-  //!  * `pedantic`
+  //!  * eve::pedantic
   //!
-  //!     **Required header:**  #include <eve/function/pedantic/lrising_factorial.hpp>
+  //!     **Required header:** `#include <eve/function/pedantic/lrising_factorial.hpp>`
   //!
   //!     The expression `pedantic(lrising_factorial)(a,x)` uses reflection tricks and computes the function
   //!       for all real `a` and `x`, and in fact computes the logarithm of the absolute value of the Pochammer
   //!       symbol \f$\log\left|\frac{\Gamma(x+a)}{\Gamma(x)}\right|\f$ returning nan if the result in really undefined.
   //!
-  //!  * `diff`
+  //!  * eve::diff_1st, eve::diff_2nd
   //!
-  //!     **Required header:**  #include <eve/function/diff/lrising_factorial.hpp>
+  //!     **Required header:** `#include <eve/function/diff/lrising_factorial.hpp>`
   //!
   //!     The expression `diff_1st(lrising_factorial)(a,x)` and `diff_2nd(lrising_factorial)(a,x)` computes
   //!      the derivative of the function relative to the first or second parameter respectively.

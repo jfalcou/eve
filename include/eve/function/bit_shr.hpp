@@ -26,7 +26,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the logical right shift operation   |
+  //! | `operator()` | the logical right shift operation                          |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
@@ -37,19 +37,19 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value).
+  //!`x`:   [value](@ref eve::value).
   //!
-  //!`n`:   [integral value](../../concepts.html#value).
+  //!`n`:   [integral value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Computes the [element-wise](../../../glossary.html#element-wise) logical right shift of the first parameter by the second one.
+  //!Computes the [element-wise](@ref glossary_elementwise) logical right shift of the first parameter by the second one.
   //!
-  //!the call `bit_shr(x, n)` is equivalent to `x >> n` if `x`  is an  [simd value](../../concepts.html#value).
+  //!the call `bit_shr(x, n)` is equivalent to `x >> n` if `x`  is an  [simd value](@ref eve::simd_value).
   //!
-  //!The types must share the same cardinal or be scalar and if $N$ is the size in bits  of the element type of `T`,
+  //!The types must share the same cardinal or be scalar and if \f$N\f$ is the size in bits  of the element type of `T`,
   //!all  [elements](../../../glossary.html#element) of n must belong to the
-  //!interval: `[0, N[` or the result is undefined.
+  //!interval: \f$[0, N[\f$ or the result is undefined.
   //!
   //! ---
   //!

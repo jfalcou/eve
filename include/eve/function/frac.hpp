@@ -35,11 +35,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value).
+  //!`x`:   [value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Returns a value with the same type as `x`  containing the [element-wise](../../../glossary.html#value) fractional part of `x` with the same sign as `x`.
+  //!Returns a value with the same type as `x`  containing the [element-wise](@ref glossary_elementwise) fractional part of `x` with the same sign as `x`.
   //!
   //!In particular:
   //! * If an [element](../../../glossary.html#value) of `x` is \f$\pm0\f$,  \f$\pm0\f$ is returned.
@@ -65,9 +65,9 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/frac.hpp>
+  //!     **Required header:** `#include <eve/function/diff/frac.hpp>`
   //!
   //!     The expression `diff(frac)(x)` computes the derivative of the function at `x`.
   //!

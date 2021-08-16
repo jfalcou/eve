@@ -35,11 +35,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value).
+  //!`x`:   [value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) `y` such that `erf(y)==x`
+  //!Returns [element-wise](@ref glossary_elementwise) `y` such that `erf(y)==x`
   //!
   //! The result type is of the same type as the  parameter.
   //! The function returns Nan outside of the interval \f$[-1,1]\f$.
@@ -64,9 +64,9 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/erf_inv.hpp>
+  //!     **Required header:** `#include <eve/function/diff/erf_inv.hpp>`
   //!
   //!     The expression `diff(erf_inv)(x)` computes the derivative of the function at `x`.
   //!

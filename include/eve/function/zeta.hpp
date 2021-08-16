@@ -35,11 +35,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating_value](../../concepts.html#value).
+  //!`x`:   [floating_value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) $\displaystyle \zeta(s)=\sum_{n=0}^\infty \frac1{n^s}$
+  //!Returns [element-wise](@ref glossary_elementwise) \f$\displaystyle \zeta(s)=\sum_{n=0}^\infty \frac1{n^s}\f$
   //!
   //!For negative entries the computation is made using the reflection formula.
   //!

@@ -35,13 +35,13 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value).
+  //!`x`:   [value](@ref eve::value).
   //!
-  //!`y`:   [real value](../../concepts.html#value).
+  //!`y`:   [real value](@ref eve::real_value).
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) \f$|x|^y\f$.
+  //!Returns [element-wise](@ref glossary_elementwise) \f$|x|^y\f$.
   //!
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
   //! In particular we have (IEC 60559):
@@ -82,13 +82,13 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `raw`
+  //!  * eve::raw
   //!     The expression `raw(pow_abs)(x,y)` merely returns `exp(y*log(|x|)` which is must faster way to compute the result
   //!      than the regular implemention, but does not fullfill all the boundary requisites of IEC 60559 and has not always a good accuracy.
   //!
-  //!  * `diff`
+  //!  * eve::diff_1st, eve::diff_2nd
   //!
-  //!     **Required header:**  #include <eve/function/diff/pow.hpp>
+  //!     **Required header:** `#include <eve/function/diff/pow.hpp>`
   //!
   //!     The expression `diff_1st(pow_abs)(x,y)` and `diff_2nd(pow_abs)(x,y)` computes the partial
   //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ |x|^y\f$.

@@ -34,11 +34,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [unsigned value](../../concepts.html#value).
+  //!`x`:   [unsigned value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Checks [element-wise](../../../glossary.html#element-wise) if `x` is an integral power of two.
+  //!Checks [element-wise](@ref glossary_elementwise) if `x` is an integral power of two.
   //!
   //! ---
  //!

@@ -37,12 +37,12 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating_real_value](../../concepts.html#value).
-  //!`tol`:   [floating_real_value](../../concepts.html#value).
+  //!`x`:   [floating_real_value](@ref eve::value).
+  //!`tol`:   [floating_real_value](@ref eve::value).
   //!
   //! **Return values**
   //!
-  //!Two values with the same type as `x` containing the [element-wise](../../../glossary.html#value) numerator and denominator of the rational number
+  //!Two values with the same type as `x` containing the [element-wise](@ref glossary_elementwise) numerator and denominator of the rational number
   //!
   //! #### Supported decorators
   //!

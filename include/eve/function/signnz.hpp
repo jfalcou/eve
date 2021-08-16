@@ -35,18 +35,18 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value).
+  //!`x`:   [value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](../../../glossary.html#elment-wise) the never zero sign of `x`.
+  //!Computes  [element-wise](@ref glossary_elementwise) the never zero sign of `x`.
   //!
-  //!For [real value](../../concepts.html#value) `x` is semantically equivalent to:
+  //!For [real value](@ref eve::real_value) `x` is semantically equivalent to:
   //!  * If x is positive, 1 is returned.
   //!  * If x is negative  -1 is returned.
   //!  * If x is `Nan`, the result is `Nan`.
   //!
-  //! For   [floating real value](../../concepts.html#value) the positivity is only here based on the bit of sign.
+  //! For   [floating real value](@ref eve::floating_real_value) the positivity is only here based on the bit of sign.
   //! In particular -0.0 is negative and +0.0 is positive.
   //!
   //! ---
@@ -69,9 +69,9 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/signnz.hpp>
+  //!     **Required header:** `#include <eve/function/diff/signnz.hpp>`
   //!
   //!     The expression `diff(sign)(x)` computes the derivative of the function at `x`.
   //!

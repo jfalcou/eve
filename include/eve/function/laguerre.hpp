@@ -35,13 +35,13 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`n`:   [integral valuex](../../concepts.html#value).
+  //!`n`:   [integral valuex](@ref eve::value).
   //!
-  //!`x`:   [floating valuex](../../concepts.html#value).
+  //!`x`:   [floating valuex](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) the value of the 'physicists' laguerre polynomial of order `n` at `x`:
+  //!Returns [element-wise](@ref glossary_elementwise) the value of the 'physicists' laguerre polynomial of order `n` at `x`:
   //!
   //!The result type is of the compatibility type of the  parameters.
   //!
@@ -65,9 +65,9 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/laguerre.hpp>
+  //!     **Required header:** `#include <eve/function/diff/laguerre.hpp>`
   //!
   //!     The expression `diff(laguerre)(n,x)` computes the derivative of the function relative to `x`.
   //!

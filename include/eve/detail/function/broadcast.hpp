@@ -40,12 +40,13 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //! `x`:  An instance of eve::simd_value
+  //! `x`:  An instance of an \ref simd_value
+  //!
   //! `i`:  An eve::index indicating which lane of `x` to broadcast
   //!
   //! **Return value**
   //!
-  //! If `x` is an instance of a eve::simd_value`T`, the return value is equivalent to `T{x.get(I)}`.
+  //! If `x` is an instance of an [SIMD value](@ref simd_value) `T`, the call is equivalent to `T{x.get(I)}`.
   //!
   //! ---
   //!

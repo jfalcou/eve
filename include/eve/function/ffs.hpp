@@ -35,7 +35,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [unsigned value](../../concepts.html#value).
+  //!`x`:   [unsigned value](@ref eve::value).
   //!
   //! **Return value**
   //!
@@ -63,9 +63,9 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `pedantic`
+  //!  * eve::pedantic
   //!
-  //!     **Required header:**  #include <eve/function/pedantic/abs.hpp>
+  //!     **Required header:** `#include <eve/function/pedantic/abs.hpp>`
   //!  
   //!     The expression `pedantic(ffs)(x)` returns the size of the element type (an out of range index) if
   //!      the input is zero.

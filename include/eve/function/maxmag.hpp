@@ -36,7 +36,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`, `args`:   [values](../../concepts.html#value)
+  //!`x`, `args`:   [values](@ref eve::value)
   //!
   //! **Return value**
   //!
@@ -75,21 +75,21 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `pedantic`
+  //!  * eve::pedantic
   //!
-  //!     **Required header:**  #include <eve/function/pedantic/maxmag.hpp>
+  //!     **Required header:** `#include <eve/function/pedantic/maxmag.hpp>`
   //!
   //!     The behaviour is the same except that if  `|x| == |y|`, `pedantic(max)` is used.
   //!
-  //!  * `numeric`
+  //!  * eve::numeric
   //!
-  //!     **Required header:**  #include <eve/function/numeric/maxmag.hpp>
+  //!     **Required header:** `#include <eve/function/numeric/maxmag.hpp>`
   //!
   //!      The behaviour is the same except that if  `|x| == |y|`, `numeric(max)` is used.
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/maxmag.hpp>
+  //!     **Required header:** `#include <eve/function/diff/maxmag.hpp>`
   //!
   //!     The expression `diff< N >(maxmag)(x,args,...)` computes the partial
   //!      derivative relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and

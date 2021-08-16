@@ -34,12 +34,12 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating value](../../concepts.html#value).
-  //!`n`:   [integral value](../../concepts.html#value).
+  //!`x`:   [floating value](@ref eve::value).
+  //!`n`:   [integral value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](../../../glossary.html#elment-wise) the rounding to n significants digits of `x`.
+  //!Computes  [element-wise](@ref glossary_elementwise) the rounding to n significants digits of `x`.
   //!With null n the result is a nan.
   //!
   //!@warning

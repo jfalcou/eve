@@ -54,7 +54,7 @@ namespace eve
   //! @param  ptr   Pointer to check
   //! @param  lanes Alignment constraint to verify expressed as a SIMD register number of lanes.
   //!
-  //! @return `true` if `ptr` is aligned over the alignment implid by `lanes`, `false` otherwise.
+  //! @return `true` if `ptr` is aligned over the alignment implied by `Lanes`, `false` otherwise.
   //================================================================================================
   template<typename T, typename Lanes>
   constexpr bool is_aligned(T *ptr, Lanes) noexcept

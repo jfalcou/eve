@@ -40,7 +40,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`, `n`:   [values](../../concepts.html#value).
+  //!`x`, `n`:   [values](@ref eve::value).
   //!
   //! **Return value**
   //!
@@ -67,9 +67,9 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `pedantic`
+  //!  * eve::pedantic
   //!
-  //!     **Required header:**  #include <eve/function/pedantic/prev.hpp>
+  //!     **Required header:** `#include <eve/function/pedantic/prev.hpp>`
   //!
   //!     The call `pedantic(prev)(x)` distinguish -0.0 and +0.0 for floating point point inputs and so `pedantic(prev)(0.0)` is -0.0.
   //!

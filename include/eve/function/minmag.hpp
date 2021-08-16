@@ -36,7 +36,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`, `y`:   [values](../../concepts.html#value)
+  //!`x`, `y`:   [values](@ref eve::value)
   //!
   //! **Return value**
   //!
@@ -73,21 +73,21 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `pedantic`
+  //!  * eve::pedantic
   //!
-  //!     **Required header:**  #include <eve/function/pedantic/minmag.hpp>
+  //!     **Required header:** `#include <eve/function/pedantic/minmag.hpp>`
   //!
   //!     The behaviour is the same except that if  `|x| == |y|`, `pedantic(min)` is used.
   //!
-  //!  * `numeric`
+  //!  * eve::numeric
   //!
-  //!     **Required header:**  #include <eve/function/numeric/minmag.hpp>
+  //!     **Required header:** `#include <eve/function/numeric/minmag.hpp>`
   //!
   //!     The behaviour is the same except that if  `|x| == |y|`, `numeric(min)` is used.
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/minmag.hpp>
+  //!     **Required header:** `#include <eve/function/diff/minmag.hpp>`
   //!
   //!     The expression `diff< N >(minmag)(x,args,...)` computes the partial
   //!      derivative relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and

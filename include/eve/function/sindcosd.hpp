@@ -34,7 +34,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating real value](../../concepts.html#value).
+  //!`x`:   [floating real value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
@@ -44,8 +44,9 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  As all direct trigonometric functions, `sindcosd` supports the restricted, small, medium and big decorators. Click
-  //!  to see the [properties and rationale](../trigonometric.html)
+  //!  * eve::restricted, eve::small, eve::medium, eve::big
+  //!
+  //!     provide a balance between speed and range limitation.
   //!
   //! #### Example
   //!

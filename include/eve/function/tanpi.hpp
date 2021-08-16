@@ -34,11 +34,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating real value](../../concepts.html#value).
+  //!`x`:   [floating real value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) tangent of the input expressed in \f$\pi\f$ multiples.
+  //!Returns the [element-wise](@ref glossary_elementwise) tangent of the input expressed in \f$\pi\f$ multiples.
   //!
   //!The call `tanpi(x)` is semantically equivalent to \f$\tan(\pi x)\f$.
   //!In particular:
@@ -51,12 +51,13 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  As all direct trigonometric functions, `tanpi` supports the restricted, small, medium and big decorators. Click
-  //!  to see the [properties and rationale](../trigonometric.html)
+  //!  * eve::restricted, eve::small, eve::medium, eve::big
   //!
-  //!  * `diff`
+  //!     provide a balance between speed and range limitation.
   //!
-  //!     **Required header:**  #include <eve/function/diff/tanpi.hpp>
+  //!  * eve::diff
+  //!
+  //!     **Required header:** `#include <eve/function/diff/tanpi.hpp>`
   //!
   //!     The expression `diff(tanpi)(x)` computes the derivative of the function at `x`.
   //!

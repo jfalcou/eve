@@ -34,7 +34,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`n`:   [value](../../concepts.html#value).
+  //!`n`:   [unsigned value](@ref eve::value).
   //!
   //! **Return value**
   //!
@@ -60,10 +60,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
+
   namespace tag { struct double_factorial_; }
   template<> struct supports_conditional<tag::double_factorial_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(double_factorial_, double_factorial);
 }
 

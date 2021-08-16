@@ -37,13 +37,13 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value) to convert.
+  //!`x`:   [value](@ref eve::value) to convert.
   //!
   //!`t`:   [Type wrapper](../types/as.html#as_) instance embedding the type to convert `x` to.
   //!
   //! **Return value**
   //!
-  //!For a [value](../../concepts.html#value) `x` and any type `Target` the expression:
+  //!For a [value](@ref eve::value) `x` and any type `Target` the expression:
   //!
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
   //!auto r = convert(x, as_<Target>{});
@@ -88,8 +88,11 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  ### [`saturated`](../../decorators.html#saturated)
-  //!  The expression `saturated(convert)(x,t)` computes a saturated conversion of `x` to the type wrapped by `t`.
+  //!   * eve::saturated
+  //!
+  //!     **Required header:** `#include <eve/function/saturated/convert.hpp>`
+  //!
+  //!     The expression `saturated(convert)(x,t)` computes a saturated conversion of `x` to the type wrapped by `t`.
   //!
   //! #### Example
   //!

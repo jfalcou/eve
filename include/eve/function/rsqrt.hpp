@@ -35,11 +35,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating real value](../../concepts.html#value).
+  //!`x`:   [floating real value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) inverse of the square root  of the input.
+  //!Returns the [element-wise](@ref glossary_elementwise) inverse of the square root  of the input.
   //!
   //! ---
   //!
@@ -61,13 +61,13 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `raw`
+  //!  * eve::raw
   //!     The call `raw(rsqrt)(x)`, call a proper system intrinsic if one exists, but with possibly very poor accuracy in return.
   //!      Otherwise it uses the [`regular`](../decorators.html#regular) call.
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/rsqrt.hpp>
+  //!     **Required header:** `#include <eve/function/diff/rsqrt.hpp>`
   //!
   //!     The expression `diff(rsqrt)(x)` computes the derivative of the function at `x`.
   //!

@@ -35,11 +35,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [values](../../concepts.html#value).
+  //!`x`:   [values](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Returns the logical value containing the [element-wise](../../../glossary.html#value) equality test result
+  //!Returns the logical value containing the [element-wise](@ref glossary_elementwise) equality test result
   //!between `x` and 0.
   //!
   //!The result type is `logical< T >`.

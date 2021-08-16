@@ -39,9 +39,9 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:    [value](../../concepts.html#value) to clamp.
+  //!`x`:    [value](@ref eve::value) to clamp.
   //!
-  //!`lo`, `hi`:    the boundary [values](../../concepts.html#value) to clamp `x` to.
+  //!`lo`, `hi`:    the boundary [values](@ref eve::value) to clamp `x` to.
   //!
   //! **Return value**
   //!
@@ -75,9 +75,9 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `diff`
+  //!  * eve::diff_1st, eve::diff_2nd, eve::diff_3rd
   //!
-  //!     **Required header:** #include <eve/function/diff/clamp.hpp>
+  //!     **Required header:** `#include <eve/function/diff/clamp.hpp>`
   //!
   //!     The expression `diff_1st(clamp)(x,y,z)`, `diff_2nd(clam)(x,y,z)` and `diff_3rd(clam)(x,y,z)` computes the partial
   //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y,z) \rightarrow \ \mbox{clamp}(x,y,z)\f$.

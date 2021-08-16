@@ -35,11 +35,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value).
+  //!`x`:   [value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) the value of the dawson function.
+  //!Returns [element-wise](@ref glossary_elementwise) the value of the dawson function.
   //!
   //! The result type is of the same type as the  parameter.
   //!
@@ -63,9 +63,9 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/dawson.hpp>
+  //!     **Required header:** `#include <eve/function/diff/dawson.hpp>`
   //!
   //!     The expression `diff(dawson)(x)` computes the derivative of the function at `x`.
   //!

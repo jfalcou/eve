@@ -45,7 +45,7 @@ namespace eve
   //! [elementwise](@ref glossary_elementwise) division of `x` by all `xs`.
   //! The result is semantically equivalent to `x/mul(xs...)`
   //!
-  //! With two parameters, the call `div(x, y)` is equivalent to `x / y` if `x` or  `y` is an  [simd value](../../concepts.html#value).
+  //! With two parameters, the call `div(x, y)` is equivalent to `x / y` if `x` or  `y` is an  [simd value](@ref eve::simd_value).
   //!
   //!@warning
   //!   Although the infix notation with `/` is supported, the `/` operator on
@@ -98,11 +98,11 @@ namespace eve
   //!   * `to_nearest`
   //!     The call `to_nearest(div)(x, y)`  computes  `nearest(div(x,y))`.
   //!
-  //!   * eve::diff
+  //!   * eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/div.hpp>`
   //!
-  //!     The expression `eve::diff<N>(eve::div)(x, xs...)` computes the derivative of the division
+  //!     The expression `eve::diff_nth<N>(eve::div)(x, xs...)` computes the derivative of the division
   //!     over the Nth parameter.
   //!
   //! #### Example

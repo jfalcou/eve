@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the ceil operation   |
+  //! | `operator()` | the ceil operation                                         |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
@@ -35,11 +35,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value).
+  //!`x`:   [value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](../../../glossary.html#elment-wise) the smallest integer not less than `x`.
+  //!Computes  [element-wise](@ref glossary_elementwise) the smallest integer not less than `x`.
   //!
   //! ---
   //!
@@ -61,20 +61,20 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `tolerant`
+  //!  * eve::tolerant
   //!
-  //!     **Required header:**  #include <eve/function/tolerant/ceil.hpp>
-  //!  
+  //!     **Required header:** `#include <eve/function/tolerant/ceil.hpp>`
+  //!
   //!     The expression `tolerant(ceil)(x, tol)` computes a tolerant ceil value for `x`, where `x` must be a floating value.
-  //!  
+  //!
   //!      - If `tol` is a floating_value computes the floor with a tolerance `tol` using Hagerty's FL5 function.
   //!      - If `tol` is an integral_value n compute the floor of the next nth representable value in the `x` type.
   //!      - If `tol` is omitted the tolerance is taken to 3 times the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
-  //!  
-  //!  * `diff`
   //!
-  //!     **Required header:**  #include <eve/function/diff/ceil.hpp>
-  //!  
+  //!  * eve::diff
+  //!
+  //!     **Required header:** `#include <eve/function/diff/ceil.hpp>`
+  //!
   //!     The expression `diff(ceil)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example

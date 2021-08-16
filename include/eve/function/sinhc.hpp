@@ -35,11 +35,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating real value](../../concepts.html#value).
+  //!`x`:   [floating real value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) hyperbolic sine of the input divided by the input.
+  //!Returns the [element-wise](@ref glossary_elementwise) hyperbolic sine of the input divided by the input.
   //!
   //!In particular:
   //!
@@ -67,9 +67,9 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/sinhc.hpp>
+  //!     **Required header:** `#include <eve/function/diff/sinhc.hpp>`
   //!
   //!     The expression `diff(sinhc)(x)` computes the derivative of the function at `x`.
   //!

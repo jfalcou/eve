@@ -37,7 +37,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`, `y`, `z`:   [values](../../concepts.html#value)
+  //!`x`, `y`, `z`:   [values](@ref eve::value)
   //!
   //! **Return value**
   //!
@@ -47,8 +47,8 @@ namespace eve
   //!The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
   //!
   //!@warning Note
-  //!    This `fms` implementation provides those properties for all [real integral values](../../concepts.html#integral_value)
-  //!     and when possible for [real floating values](../../concepts.html#value).
+  //!    This `fms` implementation provides those properties for all [integral real value](@ref eve::integral_real_value)
+  //!     and when possible for [floating real value](@ref eve::floating_real_value).
   //!
   //! ---
   //!
@@ -70,22 +70,22 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `pedantic`
+  //!  * eve::pedantic
   //!
-  //!     **Required header:**  #include <eve/function/pedantic/fms.hpp>
+  //!     **Required header:** `#include <eve/function/pedantic/fms.hpp>`
   //!
   //!     The call `pedantic(fms)(x,y,z)` ensures the one rounding property. This can be very expensive if the
   //!      system has no hardware capability.
-  //!  * `numeric`
+  //!  * eve::numeric
   //!
-  //!     **Required header:**  #include <eve/function/numeric/fms.hpp>
+  //!     **Required header:** `#include <eve/function/numeric/fms.hpp>`
   //!
   //!     The call `numeric(fms)(x,y,z)` ensures the full compliance to fms properties. This can be very expensive if the
   //!      system has no hardware capability.
   //!
-  //!  * `diff`
+  //!  * eve::diff_1st, eve::diff_2nd, eve::diff_3rd
   //!
-  //!     **Required header:**  #include <eve/function/diff/fms.hpp>
+  //!     **Required header:** `#include <eve/function/diff/fms.hpp>`
   //!
   //!     The expression `diff_1st(fms)(x,y,z)`, `diff_2nd(fms)(x,y,z)` and `diff_3rd(fms)(x,y,z)` compute the partial
   //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y,z) \rightarrow \ xy-z\f$.

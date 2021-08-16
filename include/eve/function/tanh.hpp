@@ -35,11 +35,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating real value](../../concepts.html#value).
+  //!`x`:   [floating real value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) hyperbolic tangent of the input.
+  //!Returns the [element-wise](@ref glossary_elementwise) hyperbolic tangent of the input.
   //!
   //!In particular:
   //!
@@ -67,9 +67,9 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/tanh.hpp>
+  //!     **Required header:** `#include <eve/function/diff/tanh.hpp>`
   //!
   //!     The expression `diff(tanh)(x)` computes the derivative of the function at `x`.
   //!

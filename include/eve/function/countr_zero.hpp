@@ -30,16 +30,17 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value auto x) const noexcept;
+  //!  auto operator()(unsigned_value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`:   [unsigned value](../../concepts.html#value).
+  //!`x`:   [unsigned value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Returns the number of consecutive 0 ("zero") bits in the value of `x`, starting from the most significant bit ("right").
+  //!Returns the number of consecutive 0 ("zero") bits in the value of `x`,
+  //!starting from the most significant bit ("right"), with same type as `x`..
   //!
   //! ---
   //!

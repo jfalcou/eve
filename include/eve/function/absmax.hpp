@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the absmax operation   |
+  //! | `operator()` | the absmax operation                                       |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
@@ -36,19 +36,14 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`, `args`:   [values](../../concepts.html#value)
+  //!`x`, `args`:   [values](@ref eve::value)
   //!
   //! **Return value**
   //!
-  //!the greatest absolute value is returned.
+  //!the absolute value of the maximum is returned.
   //!
-  //!For instance for two elemnts:
+  //! The call `absmax(x, args...)` is equivalent to `abs(max(x, args...))`
   //!
-  //!  * If `x >  y`,  `|x|` is returned.
-  //!  * If `x <  y`,  `|y|` is returned.
-  //!  * Otherwise `max(|x|, |y|)` is returned.
-  //!
-  //!For n parameters the result is computed as if this scheme was recursively used.
   //!
   //!The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
   //!
@@ -75,23 +70,23 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `pedantic`
+  //!  * eve::pedantic
   //!
-  //!     **Required header:**  #include <eve/function/pedantic/absmax.hpp>
+  //!     **Required header:**  `#include <eve/function/pedantic/absmax.hpp>`
   //!
-  //!     The behaviour is the same except that if  `|x|` or `|y|` is a nan, `pedantic(max)` is used.
+  //!     The call `eve::pedantic(eve::absmax)(x, args...)` is equivalent to `eve::abs(eve::pedantic(eve::max)(x, args...))`
   //!
-  //!  * `numeric`
+  //!  * eve::numeric
   //!
-  //!     **Required header:**  #include <eve/function/numeric/absmax.hpp>
+  //!     **Required header:**  `#include <eve/function/numeric/absmax.hpp>`
   //!
-  //!      The behaviour is the same except that if   `|x|` or `|y|` is a nan, `numeric(max)` is used.
+  //!     The call `eve::numeric(eve::absmax)(x, args...) is equivalent to `eve::abs(eve::numeric(eve::max)(x, args...))`
   //!
-  //!  * `diff`
+  //!  * eve::diff_nth
   //!
-  //!     **Required header:**  #include <eve/function/diff/absmax.hpp>
+  //!     **Required header:** ` #include <eve/function/diff/absmax.hpp>`
   //!
-  //!     The expression `diff< N >(absmax)(x,args,...)` computes the partial
+  //!     The expression `diff_nth<N>(absmax)(x,args,...)` computes the partial
   //!      derivative relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and
   //!      their absmax is \f$m\f$, the value returned is elementwise \f$\mathrm{sign}(x_N)\f$ if \f$m\f$ is equal to \f$|x_N|\f$ else 0.
   //!

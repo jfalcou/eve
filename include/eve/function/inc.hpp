@@ -35,11 +35,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value).
+  //!`x`:   [value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](../../../glossary.html#elment-wise) a value with the same type as `x`.
+  //!Computes  [element-wise](@ref glossary_elementwise) a value with the same type as `x`.
   //!The result is `x+1`.
   //!
   //! ---

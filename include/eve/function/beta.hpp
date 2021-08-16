@@ -34,19 +34,13 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`, `y`:   [values](../../concepts.html#value).
+  //!`x`, `y`:   [values](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) $\displaystyle \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}$.
+  //!Returns [element-wise](@ref glossary_elementwise) \f$\displaystyle \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}\f$.
   //!
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
-  //!
-  //![`diff`](../decorators.html#diff)
-  //!:   **Required header:** **<script type="preformatted">` #include <eve/function/diff/beta.hpp>`</script>
-  //!
-  //!:   The expression `diff_1st(beta)(x,y)` and `diff_2nd(beta)(x,y)` computes the partial
-  //!    derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ \mbox{B}(x,y)$.
   //!
   //! ---
   //!
@@ -68,7 +62,12 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  no decorators are supported
+  //! * eve::diff_1st, eve::diff_2nd
+  //!
+  //!:   **Required header:** `#include <eve/function/diff/beta.hpp>`
+  //!
+  //!:   The expression `diff_1st(beta)(x,y)` and `diff_2nd(beta)(x,y)` computes the partial
+  //!    derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \mbox{B}(x,y)\f$.
   //!
   //! #### Example
   //!

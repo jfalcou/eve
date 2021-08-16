@@ -35,11 +35,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating real value](../../concepts.html#value).
+  //!`x`:   [floating real value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) exponential input minus one, with good accuracy, even for small values of `x`.
+  //!Returns the [element-wise](@ref glossary_elementwise) exponential input minus one, with good accuracy, even for small values of `x`.
   //!
   //!   * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned
   //!   * If the element is \f$-\infty\f$, \f$-1\f$ is returned
@@ -66,9 +66,9 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/expm1.hpp>
+  //!     **Required header:** `#include <eve/function/diff/expm1.hpp>`
   //!
   //!     The expression `diff(expm1)(x)` computes the derivative of the function at `x`.
   //!

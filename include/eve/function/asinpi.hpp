@@ -34,11 +34,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating real value](../../concepts.html#value).
+  //!`x`:   [floating real value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) arc sine of the
+  //!Returns the [element-wise](@ref glossary_elementwise) arc sine of the
   //!input in the range \f$[-\frac12, \frac12]\f$.
   //!
   //!In particular:
@@ -51,9 +51,9 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/asinpi.hpp>
+  //!     **Required header:** `#include <eve/function/diff/asinpi.hpp>`
   //!  
   //!     The expression `diff(asinpi)(x)` computes the derivative of the function at `x`.
   //!

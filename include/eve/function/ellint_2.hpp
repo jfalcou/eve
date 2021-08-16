@@ -37,7 +37,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`phi`, `k`:   [floating values](../../concepts.html#value).
+  //!`phi`, `k`:   [floating values](@ref eve::value).
   //!
   //! computes the complete and incomplete elliptic integrals of the second kind :
   //!
@@ -57,7 +57,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns  [element-wise](../../../glossary.html#value) the elliptic integral of the first kind.
+  //!Returns  [element-wise](@ref glossary_elementwise) the elliptic integral of the first kind.
   //!
   //! The result type is of the compatibility type of the three parameters.
   //!

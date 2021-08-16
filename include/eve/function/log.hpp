@@ -36,11 +36,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating real value](../../concepts.html#value).
+  //!`x`:   [floating real value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) the natural logarithm  of `x`: \f$\log x\f$..
+  //!Returns the [element-wise](@ref glossary_elementwise) the natural logarithm  of `x`: \f$\log x\f$..
   //!
   //!   * If the element is \f$\pm0\f$, \f$-\infty\f$ is returned.
   //!   * If the element is \f$1\f$, \f$+0\f$ is returned.
@@ -67,9 +67,9 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/log.hpp>
+  //!     **Required header:** `#include <eve/function/diff/log.hpp>`
   //!
   //!     The expression `diff(log)(x)` computes the derivative of the function at `x`.
   //!

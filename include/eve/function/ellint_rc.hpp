@@ -36,7 +36,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`, `y`:   [floating values](../../concepts.html#value).
+  //!`x`, `y`:   [floating values](@ref eve::value).
   //!
   //!  This computes the degenerate Carlson's elliptic integral
   //!
@@ -49,7 +49,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) the Carlson's integral.
+  //!Returns [element-wise](@ref glossary_elementwise) the Carlson's integral.
   //!
   //! The result type is of the compatibility type of the three parameters.
   //!

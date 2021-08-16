@@ -14,7 +14,7 @@ int main()
             << "<- pf       = " << pf << '\n'
             << "-> all(pf)  = " << eve::all(pf) << '\n'
             << "<- qi       = " << qi << '\n'
-            << "-> all(qi) = " << eve::all(qi) << '\n';
+            << "-> all(qi)  = " << eve::all(qi) << '\n';
 
   float        xf = -0.0f;
   float        yf = -3.0f;

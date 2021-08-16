@@ -36,7 +36,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`, `args`:   [value](../../concepts.html#value)
+  //!`x`, `args`:   [value](@ref eve::value)
   //!
   //! **Return value**
   //!
@@ -62,16 +62,16 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `pedantic`
+  //!  * eve::pedantic
   //!
-  //!     **Required header:**  #include <eve/function/pedantic/manhattan.hpp>
+  //!     **Required header:** `#include <eve/function/pedantic/manhattan.hpp>`
   //!
   //!     The call `pedantic(manhattan)(x,args...`  computes the sum of the absolute values of its parameters
   //!      returning \f$\infty\f$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/manhattan.hpp>
+  //!     **Required header:** `#include <eve/function/diff/manhattan.hpp>`
   //!
   //!     The expression `diff_< N >(manhattan)(x,args...)` computes the partial
   //!      derivative of the function relative to its Nth parameter. The returned value is 0 if N is

@@ -37,9 +37,9 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`mx`:   mask [value](../../concepts.html#value)
+  //!`m`:   mask [value](@ref eve::value)
   //!
-  //!`y`, `z`:   selection [values](../../concepts.html#value)
+  //!`y`, `z`:   selection [values](@ref eve::value)
   //!
   //! **Return value**
   //!
@@ -59,7 +59,7 @@ namespace eve
   //!composed of the bits of `x` for which the corresponding bit of `m` is set
   //!and the bits of  `y` for which the corresponding bit of `m` is unset.
   //!
-  //!If `T` or `U` is an [simd value](../../concepts.html#value), the type of the result has the element type
+  //!If `T` or `U` is an [simd value](@ref eve::simd_value), the type of the result has the element type
   //! of `T` and the maximum of the cardinals of `M` and `T`, otherwise it is `T`.
   //!
   //! ---

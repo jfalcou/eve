@@ -34,19 +34,19 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`, `y`:   [values](../../concepts.html#value).
+  //!`x`, `y`:   [values](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) $\displaystyle \log[\frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}}$.
+  //!Returns [element-wise](@ref glossary_elementwise) \f$\displaystyle \log\left(\frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}\right)\f$.
   //!
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
   //!
   //![`derivative`](../decorators.html#derivative)
-  //!:   **Required header:** **<script type="preformatted">` #include <eve/function/diff/lbeta.hpp>`</script>
+  //!:   **Required header:** `#include <eve/function/diff/lbeta.hpp>`
   //!
   //!:   The expression `derivative_1st(lbeta)(x,y)` and `derivative_2nd(lbeta)(x,y)` computes the partial
-  //!derivatives of $f$, where $f$ is the function $(x,y) \rightarrow \ \log(\mbox{B}(x,y))$.
+  //!derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \log(\mbox{B}(x,y))\f$.
   //!
   //! ---
   //!

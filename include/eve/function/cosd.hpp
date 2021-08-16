@@ -34,11 +34,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating real value](../../concepts.html#value).
+  //!`x`:   [floating real value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) cosine of the input expressed in degrees.
+  //!Returns the [element-wise](@ref glossary_elementwise) cosine of the input expressed in degrees.
   //!
   //!In particular:
   //!
@@ -50,12 +50,13 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  As all direct trigonometric functions, `cosd` supports the restricted, small, medium and big decorators. Click
-  //!  to see the [properties and rationale](../trigonometric.html)
-  //!  
-  //!  * `diff`
+  //!  * eve::restricted, eve::small, eve::medium, eve::big
   //!
-  //!     **Required header:**  #include <eve/function/diff/cosd.hpp>
+  //!     provide a balance between speed and range limitation.
+  //!  
+  //!  * eve::diff
+  //!
+  //!     **Required header:** `#include <eve/function/diff/cosd.hpp>`
   //!  
   //!     The expression `diff(cosd)(x)` computes the derivative of the function at `x`.
   //!

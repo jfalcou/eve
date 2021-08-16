@@ -25,7 +25,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the betainc_inv operation   |
+  //! | `operator()` | the betainc_inv operation                                  |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
@@ -36,19 +36,20 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`, `y`:   [values](../../concepts.html#value).
+  //!`x`, `y`:   [values](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) the value of the incomplete beta function.
+  //!Returns [element-wise](@ref glossary_elementwise) the value of the inverse of incomplete beta function
+  //!relative to the first parameter.
   //!
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
   //!
   //![`diff`](../decorators.html#diff)
-  //!:   **Required header:** **<script type="preformatted">` #include <eve/function/diff/betainc_inv.hpp>`</script>
+  //!:   **Required header:** `#include <eve/function/diff/betainc_inv.hpp>`
   //!
   //!:   The expression `diff(betainc_inv)(s,x,y)` computes the partial
-  //!    diff of $f$, where $f$ is the function $s \rightarrow \ \mbox{B}(s,x,y)$.
+  //!    diff of \f$f\f$, where \f$f\f$ is the function \f$s \rightarrow \ \mbox{B}(s,x,y)\f$.
   //!
   //! ---
   //!

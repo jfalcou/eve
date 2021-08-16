@@ -34,11 +34,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value).
+  //!`x`:   [value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](../../../glossary.html#elment-wise) `+x` which generally is a no-op.
+  //!Computes  [element-wise](@ref glossary_elementwise) `+x` which generally is a no-op.
   //!
   //!@warning
   //!   Although the operator notation with `+` is supported, the `+` operator on

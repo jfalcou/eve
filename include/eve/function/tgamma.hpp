@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var tgamma
   //!
-  //! @brief Callable object computing the (true) $\Gamma$ function:
+  //! @brief Callable object computing the (true) \f$\Gamma\f$ function:
   //!        \f$\displaystyle \Gamma(x)=\int_0^\infty t^{x-1}e^{-t}\mbox{d}t\f$
   //!
   //! **Required header:** `#include <eve/function/tgamma.hpp>`
@@ -36,11 +36,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value).
+  //!`x`:   [value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) \f$\displaystyle \Gamma(x)=\int_0^\infty t^{x-1}e^{-t}\mbox{d}t\f$
+  //!Returns [element-wise](@ref glossary_elementwise) \f$\displaystyle \Gamma(x)=\int_0^\infty t^{x-1}e^{-t}\mbox{d}t\f$
   //!
   //! The result type is of the same type as the  parameter.
   //!
@@ -64,9 +64,9 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/tgamma.hpp>
+  //!     **Required header:** `#include <eve/function/diff/tgamma.hpp>`
   //!
   //!     The expression `diff(tgamma)(x)` computes the derivative of the function at `x`.
   //!

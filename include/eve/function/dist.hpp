@@ -35,7 +35,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`, `y`:   [values](../../concepts.html#value)
+  //!`x`, `y`:   [values](@ref eve::value)
   //!
   //! **Return value**
   //!
@@ -75,15 +75,15 @@ namespace eve
   //!
   //!  * `saturated`
   //!
-  //!     **Required header:**  #include <eve/function/saturated/dist.hpp>
+  //!     **Required header:** `#include <eve/function/saturated/dist.hpp>`
   //!
   //!     The call `saturated(dist)(x, y)` computes a saturated distance. Contrary to the [regular case](../decorator/regular.html), it guarantees
   //!      that the result is always defined. If \f$|x-y|\f$ is not representable
   //!      [the greatest representable positive value](../../constants.html#valmax) is returned
   //!
-  //!  * `diff`
+  //!  * eve::diff_1st, eve::diff_2nd
   //!
-  //!     **Required header:** #include <eve/function/diff/dist.hpp>
+  //!     **Required header:** `#include <eve/function/diff/dist.hpp>`
   //!
   //!     The expression `diff_1st(dist)(x,y)` and `diff_2nd(dist)(x,y)` compute the partial
   //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ |x-y|\f$.

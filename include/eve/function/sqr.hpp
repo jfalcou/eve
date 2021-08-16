@@ -35,14 +35,14 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value).
+  //!`x`:   [value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](../../../glossary.html#elment-wise) the square of `x`.
+  //!Computes  [element-wise](@ref glossary_elementwise) the square of `x`.
   //!
   //!@warning
-  //!   For  [real integral signed values](../../concepts.html#value)   if `saturated(abs)(x)`
+  //!   For  [real integral signed values](@ref eve::value)   if `saturated(abs)(x)`
   //!   is greater than [`eve::Sqrtvalmax(as(x))`](../../constants/limits/sqrtvalmax.html) the corresponding element result is undefined .
   //!
   //! ---
@@ -67,7 +67,7 @@ namespace eve
   //!
   //!  * `saturated`
   //!
-  //!     **Required header:**  #include <eve/function/saturated/sqr.hpp>
+  //!     **Required header:** `#include <eve/function/saturated/sqr.hpp>`
   //!  
   //!     The expression `saturated(abs)(x)` computes a saturated square of `x`. Contrary to the [regular case](../decorator/regular.html), this guarantees
   //!      that the result is [`element-wise`](../../../glossary.html#element-wise) greater or equal than 0. More specifically, for any signed integer value
@@ -80,9 +80,9 @@ namespace eve
   //!      [`eve::Valmax(as(x))`](../../constants/limits/valmax.html) as soon as `saturated(abs)(x)`
   //!      is greater than [`eve::Sqrtvalmax(as(x))`](../../constants/limits/sqrtvalmax.html).
   //!  
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/sqr.hpp>
+  //!     **Required header:** `#include <eve/function/diff/sqr.hpp>`
   //!  
   //!     The expression `diff(sqr)(x)` computes the derivative of the function at `x`.
   //!

@@ -38,15 +38,15 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value x](../../concepts.html#value).
+  //!`x`:   [value x](@ref eve::value).
   //!
-  //!`c`, `n``:   [values ](../../concepts.html#value) Range containing the coefficients
+  //!`c`, `n``:   [values ](@ref eve::value) Range containing the coefficients
   //!
   //!`firstcoef`, `sentinel`,`firstnode`:   std::input_iterator conforming pair of iterators through the coefficients and start of the nodes
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) the value of polynomial function(s)
+  //!Returns [element-wise](@ref glossary_elementwise) the value of polynomial function(s)
   //!represented in newton form by the coefficients and the nodes.
   //!
   //!The result type is of the compatibility type of the  coefficients and the evaluation value `x`.
@@ -76,16 +76,16 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `pedantic`
+  //!  * eve::pedantic
   //!
-  //!     **Required header:**  #include <eve/function/pedantic/newton.hpp>
+  //!     **Required header:** `#include <eve/function/pedantic/newton.hpp>`
   //!
   //!     The expression `pedantic(newton)(...)` computes the result using `pedantic(fma)(a,x,b)` for `a*x+b` instead of
   //!      `fma(a,x,b)`.
   //!
-  //!  * `numeric`
+  //!  * eve::numeric
   //!
-  //!     **Required header:**  #include <eve/function/numeric/newton.hpp>
+  //!     **Required header:** `#include <eve/function/numeric/newton.hpp>`
   //!
   //!     The expression `numeric(newton)(...)` computes the result using `numeric(fma)(a,x,b)` for `a*x+b` instead of
   //!      `fma(a,x,b)`.

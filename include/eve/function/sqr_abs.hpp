@@ -34,19 +34,19 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating value](../../concepts.html#value).
+  //!`x`:   [floating value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](../../../glossary.html#elment-wise) the square of the absolute value of `x`.
+  //!Computes  [element-wise](@ref glossary_elementwise) the square of the absolute value of `x`.
   //!
   //! ---
   //!
   //! #### Supported decorators
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/sqr_abs.hpp>
+  //!     **Required header:** `#include <eve/function/diff/sqr_abs.hpp>`
   //!
   //!     The expression `diff(sqr_abs)(x)` computes the derivative of the function at `x`.
   //!

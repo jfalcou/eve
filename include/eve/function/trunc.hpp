@@ -35,11 +35,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value).
+  //!`x`:   [value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](../../../glossary.html#elment-wise) the integral part of `x` with the same sign as  `x`.
+  //!Computes  [element-wise](@ref glossary_elementwise) the integral part of `x` with the same sign as  `x`.
   //!
   //!The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `FE_UPWARD`, `FE_TOWARDZERO`.
   //!    This function object implements the `FE_TOWARDZERO` version.
@@ -68,7 +68,7 @@ namespace eve
   //!
   //!  * `tolerant`
   //!
-  //!     **Required header:**  #include <eve/function/tolerant/trunc.hpp>
+  //!     **Required header:** `#include <eve/function/tolerant/trunc.hpp>`
   //!  
   //!     The expression `tolerant(trunc)(x, tol)` computes a tolerant truncated value for `x`, where `x` must be a floating value.
   //!  
@@ -76,9 +76,9 @@ namespace eve
   //!      - If `tol` is an integral_value n compute the floor of the next nth representable value in the `x` type.
   //!      - If `tol` is omitted the tolerance is taken to 3 times the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
   //!  
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/trunc.hpp>
+  //!     **Required header:** `#include <eve/function/diff/trunc.hpp>`
   //!  
   //!     The expression `diff(trunc)(x)` computes the derivative of the function at `x` .
   //!

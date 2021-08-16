@@ -35,13 +35,13 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`n`:   [value](../../concepts.html#value).
+  //!`n`:   [value](@ref eve::value).
   //!
-  //!`x`:   [floating value](../../concepts.html#value).
+  //!`x`:   [floating value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) exponential integral
+  //!Returns [element-wise](@ref glossary_elementwise) exponential integral
   //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
   //!If the first parameter inot an integral value it must be a flint, otherwise the result is Nan.
   //!
@@ -65,9 +65,9 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/exp_int.hpp>
+  //!     **Required header:** `#include <eve/function/diff/exp_int.hpp>`
   //!
   //!     The expression `diff(exp_int)(n,x)` computes the derivative (relative to the second parameter)
   //!      of the function at `x`.

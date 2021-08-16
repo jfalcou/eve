@@ -35,11 +35,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value).
+  //!`x`:   [value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](../../../glossary.html#elment-wise) the integer nearest to `x`.
+  //!Computes  [element-wise](@ref glossary_elementwise) the integer nearest to `x`.
   //!
   //!If `x` is an exact half-integer the rouding is made to the nearest even integer.
   //!
@@ -77,9 +77,9 @@ namespace eve
   //!  * `toward_zero`
   //!     The expression `toward_zero(round)(x)` is equivalent to `trunc(x)`.
   //!  
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/round.hpp>
+  //!     **Required header:** `#include <eve/function/diff/round.hpp>`
   //!  
   //!     The expression `diff(round)(x)` computes the derivative of the function at `x` (it is the same as `nearest`).
   //!

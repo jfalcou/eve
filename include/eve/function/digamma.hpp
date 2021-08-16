@@ -35,11 +35,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value).
+  //!`x`:   [value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) the value  the logarithmic diff
+  //!Returns [element-wise](@ref glossary_elementwise) the value  the logarithmic diff
   //!of the \f$\Gamma\f$ function.
   //!
   //! The result type is of the same type as the  parameter.
@@ -64,9 +64,9 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/digamma.hpp>
+  //!     **Required header:** `#include <eve/function/diff/digamma.hpp>`
   //!
   //!     The expression `diff(digamma)(x)` computes the derivative of the function at `x`.
   //!

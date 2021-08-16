@@ -36,11 +36,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value).
+  //!`x`:   [value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) \f$\displaystyle \log(|\Gamma(x)|)\f$
+  //!Returns [element-wise](@ref glossary_elementwise) \f$\displaystyle \log(|\Gamma(x)|)\f$
   //!
   //! The result type is of the same type as the  parameter.
   //!
@@ -64,9 +64,9 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/lgamma.hpp>
+  //!     **Required header:** `#include <eve/function/diff/lgamma.hpp>`
   //!
   //!     The expression `diff(lgamma)(x)` computes the derivative of the function at `x`.
   //!

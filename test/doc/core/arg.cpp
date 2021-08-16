@@ -18,7 +18,7 @@ wide_ft pf = {0.0f, -0.0f, -1.0f, -2.0f, 2.0f,
   std::cout << "---- simd" << '\n'
             << "<- pf                      = " << pf << '\n'
             << "-> arg(pf)                 = " << eve::arg(pf) << '\n'
-            << "-> pedantic(eve::arg)(pf) = " << eve::pedantic(eve::arg)(pf) << '\n';
+            << "-> pedantic(eve::arg)(pf)  = " << eve::pedantic(eve::arg)(pf) << '\n';
 
   float xf = 1.0f;
   float yf = eve::nan(eve::as<float>());
@@ -28,6 +28,6 @@ wide_ft pf = {0.0f, -0.0f, -1.0f, -2.0f, 2.0f,
             << "-> arg(xf)                 = " << eve::arg(xf) << '\n'
             << "<- yf                      = " << yf << '\n'
             << "-> arg(yf)                 = " << eve::arg(yf) << '\n'
-            << "-> pedantic(eve::arg)(yf) = " << eve::pedantic(eve::arg)(yf) << '\n';
+            << "-> pedantic(eve::arg)(yf)  = " << eve::pedantic(eve::arg)(yf) << '\n';
   return 0;
 }

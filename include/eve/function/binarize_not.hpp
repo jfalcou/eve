@@ -35,8 +35,8 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`c`:   [logical value](../../concepts.html#value).
-  //!`v`:   [scalar value](../../concepts.html#value) defaulting to 1.
+  //!`c`:   [logical value](@ref eve::value).
+  //!`v`:   [scalar value](@ref eve::value) defaulting to 1.
   //!
   //! **Return value**
   //!
@@ -49,7 +49,7 @@ namespace eve
   //!is semantically  equivalent to:
   //!
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!T r = if_else(c, T(0), T(v);
+  //!T r = if_else(c, T(0), T(v));
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! ---

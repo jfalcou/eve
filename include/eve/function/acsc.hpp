@@ -34,11 +34,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating real value](../../concepts.html#value).
+  //!`x`:   [floating real value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) arc cosecant of the
+  //!Returns the [element-wise](@ref glossary_elementwise) arc cosecant of the
   //!input in the range \f$[-\pi/2 , \pi/2]\f$.
   //!
   //!In particular:
@@ -52,9 +52,9 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/acsc.hpp>
+  //!     **Required header:** `#include <eve/function/diff/acsc.hpp>`
   //!  
   //!     The expression `diff(acsc)(x)` computes the derivative of the function at `x`.
   //!

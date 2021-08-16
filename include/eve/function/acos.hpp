@@ -34,11 +34,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating real value](../../concepts.html#value).
+  //!`x`:   [floating real value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](../../../glossary.html#elment-wise) arc cosine of the
+  //!Returns the [element-wise](@ref glossary_elementwise) arc cosine of the
   //!input in the range \f$[0 , \pi]\f$.
   //!
   //!In particular:
@@ -51,12 +51,12 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `raw`
-  //!     The call `raw(rsqrt)(x)`, call a faster implementation which can be slightly less accurate near \f$\pi\f$..
+  //!  * eve::raw
+  //!     The call `raw(acos)(x)`, call a faster implementation which can be slightly less accurate near 1.
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/acos.hpp>
+  //!     **Required header:** `#include <eve/function/diff/acos.hpp>`
   //!
   //!     The expression `diff(acos)(x)` computes the derivative of the function at `x`.
   //!
@@ -68,10 +68,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
+
   namespace tag { struct acos_; }
   template<> struct supports_conditional<tag::acos_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(acos_, acos);
 }
 

@@ -35,13 +35,13 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`n`:   [integral valuex](../../concepts.html#value).
+  //!`n`:   [integral valuex](@ref eve::value).
   //!
-  //!`x`:   [floating valuex](../../concepts.html#value).
+  //!`x`:   [floating valuex](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) the value of the first kind Legendre polynomial of order `n` at `x`.
+  //!Returns [element-wise](@ref glossary_elementwise) the value of the first kind Legendre polynomial of order `n` at `x`.
   //!By choice returns a nan if x is outside of \f$[-1,1]\f$.
   //!
   //!The result type is of the compatibility type of the  parameters.
@@ -66,9 +66,9 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/legendre.hpp>
+  //!     **Required header:** `#include <eve/function/diff/legendre.hpp>`
   //!
   //!     The expression `diff(legendre)(n,x)` computes the derivative of the function relative to `x`.
   //!

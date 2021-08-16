@@ -36,7 +36,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`, `args`:   [values](../../concepts.html#value)
+  //!`x`, `args`:   [values](@ref eve::value)
   //!
   //! **Return value**
   //!
@@ -65,26 +65,26 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `pedantic`
+  //!  * eve::pedantic
   //!
-  //!     **Required header:**  #include <eve/function/pedantic/max.hpp>
+  //!     **Required header:** `#include <eve/function/pedantic/max.hpp>`
   //!  
   //!     The call `pedantic(max)(x,args,...)`  ensures the conformity to the standard behaviour, that is
-  //!      for two parameters  (on an  [element-wise](../../../glossary.html#value) basis)
+  //!      for two parameters  (on an  [element-wise](@ref glossary_elementwise) basis)
   //!      to be semanticaly equivalent to:
   //!      `(x < y) ? y : x` and this behaviour is also ensured on n parameters calls as if this scheme
   //!      was recursively used.
   //!  
-  //!  * `numeric`
+  //!  * eve::numeric
   //!
-  //!     **Required header:**  #include <eve/function/numeric/max.hpp>
+  //!     **Required header:** `#include <eve/function/numeric/max.hpp>`
   //!  
   //!     The call `numeric(max)(x,args,...)`  ensures that  if any element of the inputs is not a `Nan`, the corresponding
   //!      output element will not be a `Nan`.
   //!  
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/max.hpp>
+  //!     **Required header:** `#include <eve/function/diff/max.hpp>`
   //!  
   //!     The expression `diff< N >(max)(x,args,...)` computes the partial
   //!      derivative relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and

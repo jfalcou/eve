@@ -38,7 +38,7 @@ namespace eve
   //! **Parameters**
   //!
   //!`arg0`, `arg1`, `args`, ...
-  //!:   [values](../../concepts.html#value).
+  //!:   [values](@ref eve::value).
   //!
   //! **Return value**
   //!
@@ -67,9 +67,9 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `diff`
+  //!  * eve::diff_nth
   //!
-  //!     **Required header:**  #include <eve/function/diff/logspace_sub.hpp>
+  //!     **Required header:** `#include <eve/function/diff/logspace_sub.hpp>`
   //!
   //!     The expression `diff_nth< N >(logspace_sub)(arg0,arg1,args...)` computes the partial
   //!      diff of the function relative to its Nth parameter. The returned value is 0 if N is

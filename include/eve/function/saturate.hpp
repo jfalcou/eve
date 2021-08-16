@@ -38,13 +38,13 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value) to saturate.
+  //!`x`:   [value](@ref eve::value) to saturate.
   //!
   //!`t`:   [Type wrapper](../types/as.html#as_) instance embedding the type to saturate `x` to.
   //!
   //! **Return value**
   //!
-  //!For an  `x` of [real value](../../concepts.html#value) `T` and any   [real scalar value](../../concepts.html#value) `Target`, the expression:
+  //!For an  `x` of [real value](@ref eve::real_value) `Target`, the expression:
   //!
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
   //!T  r = saturate(x, as_<Target>{});

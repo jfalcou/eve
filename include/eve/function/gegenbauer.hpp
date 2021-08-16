@@ -35,15 +35,15 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`n`:   [integral values](../../concepts.html#value).
+  //!`n`:   [integral values](@ref eve::value).
   //!
-  //!`l`:   [floating values](../../concepts.html#value), elements must be greater than \f$-\frac12\f$.
+  //!`l`:   [floating values](@ref eve::value), elements must be greater than \f$-\frac12\f$.
   //!
-  //!`x`:   [floating values](../../concepts.html#value).
+  //!`x`:   [floating values](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](../../../glossary.html#value) the value of the gegenbauer polynomial of order `n` at `l`, `x`:
+  //!Returns [element-wise](@ref glossary_elementwise) the value of the gegenbauer polynomial of order `n` at `l`, `x`:
   //!
   //!The result type is of the compatibility type of the  parameters.
   //!
@@ -67,9 +67,9 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `diff`
+  //!  * eve::diff
   //!
-  //!     **Required header:**  #include <eve/function/diff/gegenbauer.hpp>
+  //!     **Required header:** `#include <eve/function/diff/gegenbauer.hpp>`
   //!
   //!     The expression `diff(gegenbauer)(n,l,x)` computes the derivative of the function relative to `x`.
   //!

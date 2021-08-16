@@ -34,16 +34,16 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](../../concepts.html#value).
+  //!`x`:   [value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!For signed types The call `is_positive(x)` [element-wise](../../../glossary.html#value) returns true
+  //!For signed types The call `is_positive(x)` [element-wise](@ref glossary_elementwise) returns true
   //!if and only if the bit of sign (most significant bit) is unset.
   //!
   //!@warning
-  //!   this function coincides with `is_gez` on [integral real values](../../concepts.html#value),
-  //!   but for [floating real values](../../concepts.html#value) `T`, `is_positive(Mzero<`T`>)` is false and
+  //!   this function coincides with `is_gez` on [integral real values](@ref eve::value),
+  //!   but for [floating real values](@ref eve::value) `T`, `is_positive(Mzero<`T`>)` is false and
   //!   if `x` is a Nan the result depends of the bit of sign of `x` which can be out of control although
   //!   not undefined.
   //!
