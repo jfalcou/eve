@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!computes [`element-wise`](../../../glossary.html#element-wise), representable value next to `x` in the direction of `y`.
+  //!computes [elementwise](@ref glossary_elementwise), representable value next to `x` in the direction of `y`.
   //!
   //! ---
   //!

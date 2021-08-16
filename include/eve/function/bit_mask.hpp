@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!For each [`element`](../../../glossary.html#element-wise) of `x`:
+  //!For each [elementwise](@ref glossary_elementwise) of `x`:
   //!
   //!  *  if the [element](../../../glossary.html#elment-wise) is zero, an element with all bits unset is returned.
   //!  *  else an element of the type with all bits set is returned.

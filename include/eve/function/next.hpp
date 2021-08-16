@@ -45,7 +45,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!computes [`element-wise`](../../../glossary.html#element-wise), the `n`th  representable value greater than `x`.
+  //!computes [elementwise](@ref glossary_elementwise), the `n`th  representable value greater than `x`.
   //!If `n` is zero returns `x`.
   //!
   //! ---

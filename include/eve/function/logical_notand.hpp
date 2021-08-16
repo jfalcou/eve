@@ -39,7 +39,7 @@ namespace eve
   //! **Return value**
   //!
   //!Computes  element-wise NOTAND of the two parameters following the
-  //![element-wise operations semantic](../../../glossary.html#Logicalwise).
+  //![logical operations semantic](@ref glossary_logical).
   //!
   //!the call `logical_notand(x, y)` is semantically equivalent to `!x && y`
   //!if `x` or  `y` is an  [simd value](@ref eve::simd_value).
@@ -58,10 +58,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
+
   namespace tag { struct logical_notand_; }
   template<> struct supports_conditional<tag::logical_notand_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(logical_notand_, logical_notand);
 }
 

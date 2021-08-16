@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [`element-wise`](../../../glossary.html#element-wise) product of the first parameter by the never zero sign of the second.
+  //!Returns the [elementwise](@ref glossary_elementwise) product of the first parameter by the never zero sign of the second.
   //!
   //! ---
   //!

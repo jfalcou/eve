@@ -70,7 +70,7 @@ namespace eve
   //!     **Required header:** `#include <eve/function/saturated/sqr.hpp>`
   //!  
   //!     The expression `saturated(abs)(x)` computes a saturated square of `x`. Contrary to the [regular case](../decorator/regular.html), this guarantees
-  //!      that the result is [`element-wise`](../../../glossary.html#element-wise) greater or equal than 0. More specifically, for any signed integer value
+  //!      that the result is [elementwise](@ref glossary_elementwise) greater or equal than 0. More specifically, for any signed integer value
   //!      `x`, the expression:
   //!  
   //!      `saturated(sqr)(x)`
