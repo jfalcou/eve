@@ -62,9 +62,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/cos.cpp
+  //! @godbolt{doc/core/cos.cpp}
   //!
   //!  @}
   //================================================================================================

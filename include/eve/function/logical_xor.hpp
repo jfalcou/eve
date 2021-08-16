@@ -51,9 +51,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/logical_xor.cpp
+  //! @godbolt{doc/core/logical_xor.cpp}
   //!
   //!  @}
   //================================================================================================

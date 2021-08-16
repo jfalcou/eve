@@ -96,9 +96,7 @@ namespace eve::detail
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/lookup.cpp
+  //! @godbolt{doc/core/lookup.cpp}
   //!
   //!  @}
   //================================================================================================z

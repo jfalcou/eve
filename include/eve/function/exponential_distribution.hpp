@@ -68,9 +68,7 @@
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/exponential_distribution.cpp
+  //! @godbolt{doc/core/exponential_distribution.cpp}
   //!
   //!  @}
   //================================================================================================z

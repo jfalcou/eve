@@ -59,9 +59,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/acosd.cpp
+  //! @godbolt{doc/core/acosd.cpp}
   //!
   //!  @}
   //================================================================================================

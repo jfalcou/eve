@@ -86,9 +86,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/hypot.cpp
+  //! @godbolt{doc/core/hypot.cpp}
   //!
   //!  @}
   //================================================================================================

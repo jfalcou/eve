@@ -97,9 +97,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/negminabs.cpp
+  //! @godbolt{doc/core/negminabs.cpp}
   //!
   //!  @}
   //================================================================================================

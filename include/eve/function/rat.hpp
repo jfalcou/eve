@@ -50,9 +50,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/rat.cpp
+  //! @godbolt{doc/core/rat.cpp}
   //!
   //!  @}
   //================================================================================================

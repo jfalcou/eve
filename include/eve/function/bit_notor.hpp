@@ -72,9 +72,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/bit_notor.cpp
+  //! @godbolt{doc/core/bit_notor.cpp}
   //!
   //!  @}
   //================================================================================================

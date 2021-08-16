@@ -68,9 +68,7 @@
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/lognormal_distribution.cpp
+  //! @godbolt{doc/core/lognormal_distribution.cpp}
   //!
   //!  @}
   //================================================================================================z

@@ -77,9 +77,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/rshr.cpp
+  //! @godbolt{doc/core/rshr.cpp}
   //!
   //!  @}
   //================================================================================================

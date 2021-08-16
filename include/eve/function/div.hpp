@@ -107,9 +107,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/4M9PrKGWE)
-  //!
-  //! @include{lineno} doc/core/div.cpp
+  //! @godbolt{doc/core/div.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -68,9 +68,7 @@
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/poisson_distribution.cpp
+  //! @godbolt{doc/core/poisson_distribution.cpp}
   //!
   //!  @}
   //================================================================================================z

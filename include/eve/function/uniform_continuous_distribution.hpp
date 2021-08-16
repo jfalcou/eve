@@ -68,9 +68,7 @@
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/uniform_continuous_distribution.cpp
+  //! @godbolt{doc/core/uniform_continuous_distribution.cpp}
   //!
   //!  @}
   //================================================================================================z

@@ -100,9 +100,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/rem.cpp
+  //! @godbolt{doc/core/rem.cpp}
   //!
   //!  @}
   //================================================================================================

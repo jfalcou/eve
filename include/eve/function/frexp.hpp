@@ -55,9 +55,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/frexp.cpp
+  //! @godbolt{doc/core/frexp.cpp}
   //!
   //!  @}
   //================================================================================================

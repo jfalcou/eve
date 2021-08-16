@@ -75,9 +75,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/gamma_p_inv.cpp
+  //! @godbolt{doc/core/gamma_p_inv.cpp}
   //!
   //!  @}
   //================================================================================================

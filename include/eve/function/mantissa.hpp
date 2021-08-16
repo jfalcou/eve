@@ -69,9 +69,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/mantissa.cpp
+  //! @godbolt{doc/core/mantissa.cpp}
   //!
   //!  @}
   //================================================================================================

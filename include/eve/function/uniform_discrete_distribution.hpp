@@ -68,9 +68,7 @@
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/uniform_discrete_distribution.cpp
+  //! @godbolt{doc/core/uniform_discrete_distribution.cpp}
   //!
   //!  @}
   //================================================================================================z
