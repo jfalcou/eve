@@ -268,9 +268,11 @@ namespace eve
     //! @see eve::pattern
     //==============================================================================================
     template<std::ptrdiff_t... I>
-    EVE_FORCEINLINE auto operator[](pattern_t<I...>) const noexcept
 #if !defined (EVE_DOXYGEN_INVOKED)
+    EVE_FORCEINLINE auto operator[](pattern_t<I...>) const noexcept
     requires(pattern_t<I...>{}.validate(Cardinal::value))
+#else
+    EVE_FORCEINLINE auto operator[](pattern_t<I...> p) const noexcept
 #endif
     {
       constexpr auto swizzler = detail::find_optimized_pattern<Cardinal::value,I...>();

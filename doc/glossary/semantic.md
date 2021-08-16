@@ -29,8 +29,7 @@ return f(TU(x), TU(y));
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the same way, the expression `f(x,y,z)` has an **arithmetic operations semantic**
-if `T`, `U` and `V` are mutually [compatible](../../concepts/compatible.html)
-[values](../../concepts/value.html) and the call is semantically equivalent to:
+if `T`, `U` and `V` are mutually [compatible](@ref eve::common_compatible) [values](@ref eve::value) and the call is semantically equivalent to:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 using TU  = std::conditional< scalar_value<T> , U, T >;

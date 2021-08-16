@@ -32,10 +32,16 @@
 #include <type_traits>
 #include <utility>
 
+#if !defined(EVE_DOXYGEN_INVOKED)
 namespace eve
 {
 inline namespace EVE_ABI_NAMESPACE
 {
+#else
+namespace eve
+{
+#endif
+
   //================================================================================================
   //! @addtogroup simd
   //! @{
@@ -1057,7 +1063,11 @@ inline namespace EVE_ABI_NAMESPACE
   //================================================================================================
   //! @}
   //================================================================================================
+#if !defined(EVE_DOXYGEN_INVOKED)
 } }
+#else
+}
+#endif
 
 //================================================================================================
 // Product type Support
