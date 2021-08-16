@@ -10,6 +10,7 @@
   <!--<link href="tabs.css" rel="stylesheet" type="text/css"/> REMOVED BY DOXYSTRAP -->
   <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="dynsections.js"></script>
+  <script type="text/javascript" src="godbolt.js"></script>
   <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -158,10 +159,10 @@ Element-wise operation</h1>
 <h1><a class="anchor" id="glossary_arithmetic"></a>
 Arithmetic operations semantic</h1>
 <p>Let <code>x</code>, <code>y</code> and <code>z</code> be three values of respective types <code>T, U, V</code>.</p>
-<p>For any callable object <code>f</code>, the expression <code>f(x,y)</code> has an <b>arithmetic operations semantic</b> if <code>T</code> and <code>U</code> are compatible values and the call is semantically equivalent to:</p>
+<p>For any callable object <code>f</code>, the expression <code>f(x,y)</code> has an <b>arithmetic operations semantic</b> if <code>T</code> and <code>U</code> are <a class="el" href="structeve_1_1common__compatible.html">compatible</a> <a class="el" href="group__concepts_ga19be3db9960e555ea9ee279846facacd.html#ga19be3db9960e555ea9ee279846facacd">values</a> and the call is semantically equivalent to:</p>
 <div class="fragment"><div class="line">using TU = std::conditional&lt; scalar_value&lt;T&gt;, U, T&gt;;</div>
 <div class="line">return f(TU(x), TU(y));</div>
-</div><!-- fragment --><p>In the same way, the expression <code>f(x,y,z)</code> has an <b>arithmetic operations semantic</b> if <code>T</code>, <code>U</code> and <code>V</code> are mutually <a href="../../concepts/compatible.html">compatible</a> <a href="../../concepts/value.html">values</a> and the call is semantically equivalent to:</p>
+</div><!-- fragment --><p>In the same way, the expression <code>f(x,y,z)</code> has an <b>arithmetic operations semantic</b> if <code>T</code>, <code>U</code> and <code>V</code> are mutually <a class="el" href="structeve_1_1common__compatible.html">compatible</a> <a class="el" href="group__concepts_ga19be3db9960e555ea9ee279846facacd.html#ga19be3db9960e555ea9ee279846facacd">values</a> and the call is semantically equivalent to:</p>
 <div class="fragment"><div class="line">using TU  = std::conditional&lt; scalar_value&lt;T&gt; , U, T &gt;;</div>
 <div class="line">using TUV = std::conditional&lt; scalar_value&lt;TU&gt;, V, TU&gt;;</div>
 <div class="line">return f(TUV(x), TUV(y),TUV(z));</div>
@@ -203,7 +204,7 @@ Logical operations semantic</h1>
 </div> <!-- DOXYSTRAP RELATED -->
 </div> <!-- DOXYSTRAP RELATED -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 7 2021 21:34:47 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Aug 16 2021 23:10:51 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

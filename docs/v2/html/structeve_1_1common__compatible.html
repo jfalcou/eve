@@ -10,6 +10,7 @@
   <!--<link href="tabs.css" rel="stylesheet" type="text/css"/> REMOVED BY DOXYSTRAP -->
   <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="dynsections.js"></script>
+  <script type="text/javascript" src="godbolt.js"></script>
   <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -157,7 +158,7 @@ struct eve::common_compatible&lt; Ts &gt;</h3>
   </table>
   </dd>
 </dl>
-<h4><a class="anchor" id="autotoc_md1879"></a>
+<h4><a class="anchor" id="autotoc_md1764"></a>
 Member types</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -167,13 +168,13 @@ Member types</h4>
 </table>
 <p><br  />
  </p>
-<h4><a class="anchor" id="autotoc_md1880"></a>
+<h4><a class="anchor" id="autotoc_md1765"></a>
 Helper types</h4>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Ts...&gt;</div>
 <div class="line"><span class="keyword">using</span> common_compatible_t = <span class="keyword">typename</span> common_compatible&lt;Ts...&gt;::type;</div>
 </div><!-- fragment --><p><br  />
  </p>
-<h4><a class="anchor" id="autotoc_md1881"></a>
+<h4><a class="anchor" id="autotoc_md1766"></a>
 Example</h4>
 <p><a href="https://godbolt.org/z/h8eePWxn3"><b>See it live on Compiler Explorer</b></a></p>
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -183,7 +184,7 @@ Example</h4>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keywordtype">int</span> main()</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;{</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;  <span class="keyword">using</span> float_type      = <a class="code" href="structeve_1_1common__compatible.html">eve::common_compatible&lt;float,float,float&gt;::type</a>;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;  <span class="keyword">using</span> wide_float_type = <a class="code" href="structeve_1_1common__compatible.html">eve::common_compatible&lt;eve::wide&lt;float&gt;</a>,<a class="code" href="structeve_1_1cpu__abi__v0_1_1wide.html">eve::wide&lt;float&gt;</a>&gt;::type;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;  <span class="keyword">using</span> wide_float_type = <a class="code" href="structeve_1_1common__compatible.html">eve::common_compatible&lt;eve::wide&lt;float&gt;</a>,<a class="code" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a>&gt;::type;</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;  <span class="keyword">using</span> mixed_type      = <a class="code" href="structeve_1_1common__compatible.html">eve::common_compatible&lt;int, eve::wide&lt;float&gt;</a>, <span class="keywordtype">double</span>&gt;::type;</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;  std::cout &lt;&lt; std::boolalpha</div>
@@ -191,9 +192,9 @@ Example</h4>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;            &lt;&lt; std::is_same&lt;wide_float_type, eve::wide&lt;float&gt;&gt;<a class="code" href="group__concepts_ga19be3db9960e555ea9ee279846facacd.html#ga19be3db9960e555ea9ee279846facacd">::value</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;            &lt;&lt; std::is_same&lt;mixed_type, eve::wide&lt;float&gt;&gt;<a class="code" href="group__concepts_ga19be3db9960e555ea9ee279846facacd.html#ga19be3db9960e555ea9ee279846facacd">::value</a>      &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;}</div>
-<div class="ttc" id="agroup__concepts_ga19be3db9960e555ea9ee279846facacd_html_ga19be3db9960e555ea9ee279846facacd"><div class="ttname"><a href="group__concepts_ga19be3db9960e555ea9ee279846facacd.html#ga19be3db9960e555ea9ee279846facacd">eve::value</a></div><div class="ttdeci">concept value</div><div class="ttdef"><b>Definition:</b> value.hpp:33</div></div>
+<div class="ttc" id="agroup__concepts_ga19be3db9960e555ea9ee279846facacd_html_ga19be3db9960e555ea9ee279846facacd"><div class="ttname"><a href="group__concepts_ga19be3db9960e555ea9ee279846facacd.html#ga19be3db9960e555ea9ee279846facacd">eve::value</a></div><div class="ttdeci">concept value</div><div class="ttdef"><b>Definition:</b> value.hpp:34</div></div>
 <div class="ttc" id="astructeve_1_1common__compatible_html"><div class="ttname"><a href="structeve_1_1common__compatible.html">eve::common_compatible</a></div><div class="ttdoc">Computes the type compatible with a list of values.</div><div class="ttdef"><b>Definition:</b> common_compatible.hpp:101</div></div>
-<div class="ttc" id="astructeve_1_1cpu__abi__v0_1_1wide_html"><div class="ttname"><a href="structeve_1_1cpu__abi__v0_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:57</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.20-->
 <!-- start footer part -->
@@ -203,7 +204,7 @@ Example</h4>
 </div> <!-- DOXYSTRAP RELATED -->
 </div> <!-- DOXYSTRAP RELATED -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 7 2021 21:34:48 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Aug 16 2021 23:10:52 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

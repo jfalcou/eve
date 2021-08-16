@@ -10,6 +10,7 @@
   <!--<link href="tabs.css" rel="stylesheet" type="text/css"/> REMOVED BY DOXYSTRAP -->
   <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="dynsections.js"></script>
+  <script type="text/javascript" src="godbolt.js"></script>
   <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -175,7 +176,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
           <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a049a2ae3f1793d4feb76a05f0982bd36">operator==</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a7c5d69f2a08afb6849c50c473b0b61aa">operator==</a></td></tr>
           <tr><td class="navtabHL"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4_a76f1ddeec815e55b6d52d0842953f8d9.html#a76f1ddeec815e55b6d52d0842953f8d9">operator[]</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4_a2ce9aaf13dcdd08a43849f8decce3426.html#a2ce9aaf13dcdd08a43849f8decce3426">operator[]</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4_a8bd0437f26de008df000dc33588253ac.html#a8bd0437f26de008df000dc33588253ac">operator[]</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4_a9c1b736b8def0af8a8f928e7cf016356.html#a9c1b736b8def0af8a8f928e7cf016356">operator[]</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a708a9f1ae953dc610bd21e27b2bc1ef0">operator||</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ae2ffc3a3b598538dfef3cbcc3f130eaa">operator||</a></td></tr>
@@ -208,9 +209,9 @@ template&lt;typename Index &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="structeve_1_1logical.html">eve::logical</a>&lt; <a class="el" href="structeve_1_1cpu__abi__v0_1_1wide.html">wide</a>&lt; Type, Cardinal &gt; &gt;::operator[] </td>
+          <td class="memname">auto <a class="el" href="structeve_1_1logical.html">eve::logical</a>&lt; <a class="el" href="structeve_1_1wide.html">wide</a>&lt; Type, Cardinal &gt; &gt;::operator[] </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structeve_1_1cpu__abi__v0_1_1wide.html">wide</a>&lt; Index, Cardinal &gt; const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="structeve_1_1wide.html">wide</a>&lt; Index, Cardinal &gt; const &amp;&#160;</td>
           <td class="paramname"><em>idx</em></td><td>)</td>
           <td> const</td>
         </tr>
@@ -223,15 +224,15 @@ template&lt;typename Index &gt; </div>
 </div><div class="memdoc">
 
 <p>Dynamic lookup via lane indexing. </p>
-<p>Generate a new <a class="el" href="structeve_1_1cpu__abi__v0_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> which is an arbitrary shuffling of current <a class="el" href="structeve_1_1cpu__abi__v0_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> lanes. The values of <code>idx</code> must be integer between 0 and <code><a class="el" href="group__details.html#gae1eceedc7fc52c9f33893e6ce7b1b2a9" title="Size of the wide in number of lanes.">size()</a>-1</code> or equal to <a class="el" href="group__simd.html#ga11b65eff854b205c9f9ef8dbd559bb9b" title="Tag for zeroing swizzle index.">eve::na_</a> to indicate the value at this lane must be replaced by zero.</p>
+<p>Generate a new <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> which is an arbitrary shuffling of current <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> lanes. The values of <code>idx</code> must be integer between 0 and <code><a class="el" href="group__details.html#gae1eceedc7fc52c9f33893e6ce7b1b2a9" title="Size of the wide in number of lanes.">size()</a>-1</code> or equal to <a class="el" href="group__simd.html#ga11b65eff854b205c9f9ef8dbd559bb9b" title="Tag for zeroing swizzle index.">eve::na_</a> to indicate the value at this lane must be replaced by zero.</p>
 <p>Does not participate in overload resolution if <code>idx</code> is not an integral register.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">idx</td><td><a class="el" href="structeve_1_1cpu__abi__v0_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> of integral indexes </td></tr>
+    <tr><td class="paramname">idx</td><td><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> of integral indexes </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="structeve_1_1cpu__abi__v0_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> constructed as <code>wide{ get(idx.get(0)), ..., get(idx.get(<a class="el" href="group__details.html#gae1eceedc7fc52c9f33893e6ce7b1b2a9" title="Size of the wide in number of lanes.">size()</a>-1))}</code>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> constructed as <code>wide{ get(idx.get(0)), ..., get(idx.get(<a class="el" href="group__details.html#gae1eceedc7fc52c9f33893e6ce7b1b2a9" title="Size of the wide in number of lanes.">size()</a>-1))}</code>. </dd></dl>
 
 </div>
 </div>
@@ -247,7 +248,7 @@ template&lt;typename Index &gt; </div>
 </div> <!-- DOXYSTRAP RELATED -->
 </div> <!-- DOXYSTRAP RELATED -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 7 2021 21:34:48 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Aug 16 2021 23:10:52 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

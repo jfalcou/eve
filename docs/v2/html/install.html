@@ -10,6 +10,7 @@
   <!--<link href="tabs.css" rel="stylesheet" type="text/css"/> REMOVED BY DOXYSTRAP -->
   <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="dynsections.js"></script>
+  <script type="text/javascript" src="godbolt.js"></script>
   <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -136,18 +137,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md1889">Retrieving the source</a></li>
-<li class="level1"><a href="#autotoc_md1890">Installing</a></li>
-<li class="level1"><a href="#autotoc_md1891">Quick Start</a><ul><li class="level2"><a href="#autotoc_md1892">Compilation</a></li>
-<li class="level2"><a href="#autotoc_md1893">Instruction Set Selection</a></li>
-<li class="level2"><a href="#autotoc_md1894">Execution</a></li>
+<ul><li class="level1"><a href="#autotoc_md1774">Retrieving the source</a></li>
+<li class="level1"><a href="#autotoc_md1775">Installing</a></li>
+<li class="level1"><a href="#autotoc_md1776">Quick Start</a><ul><li class="level2"><a href="#autotoc_md1777">Compilation</a></li>
+<li class="level2"><a href="#autotoc_md1778">Instruction Set Selection</a></li>
+<li class="level2"><a href="#autotoc_md1779">Execution</a></li>
 </ul>
 </li>
-<li class="level1"><a href="#autotoc_md1895">Advanced options</a></li>
+<li class="level1"><a href="#autotoc_md1780">Advanced options</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md__large_hdd_dev_project_eve_doc_page01_install"></a></p>
-<h1><a class="anchor" id="autotoc_md1889"></a>
+<h1><a class="anchor" id="autotoc_md1774"></a>
 Retrieving the source</h1>
 <p><b>EVE</b> is available on GitHub and can be retrieved via the following command:</p>
 <div class="fragment"><div class="line">$ git clone -b main https://github.com/jfalcou/eve.git</div>
@@ -155,7 +156,7 @@ Retrieving the source</h1>
 <div class="fragment"><div class="line">$ cd eve</div>
 <div class="line">$ ls</div>
 <div class="line">  benchmarks  cmake  CMakeLists.txt  docs include  LICENSE.md  README.md  test  tools</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1890"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1775"></a>
 Installing</h1>
 <p>Create a <code>build</code> directory here and enter it. Once in the <code>build</code> directory, you can use <b>CMake</b> to generate the build system for <b>EVE</b>. We recommend using Ninja but any build system is fine.</p>
 <div class="fragment"><div class="line">$ mkdir build</div>
@@ -166,9 +167,9 @@ Installing</h1>
 </div><!-- fragment --><p>You can select an alternative installation path by specifying the <code>CMAKE_INSTALL_PREFIX</code> option at configuration time.</p>
 <div class="fragment"><div class="line">$ cmake .. -G Ninja -DCMAKE_INSTALL_PREFIX=path/to/install</div>
 <div class="line">$ ninja install</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1891"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1776"></a>
 Quick Start</h1>
-<h2><a class="anchor" id="autotoc_md1892"></a>
+<h2><a class="anchor" id="autotoc_md1777"></a>
 Compilation</h2>
 <p>Once installed, you can compile the following code to check if everything is alright.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -177,25 +178,25 @@ Compilation</h2>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  <a class="code" href="structeve_1_1cpu__abi__v0_1_1wide.html">eve::wide&lt;float&gt;</a> x( [](<span class="keyword">auto</span> i, <span class="keyword">auto</span>) { <span class="keywordflow">return</span> 1.f+i; } );</div>
+<div class="line">  <a class="code" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> x( [](<span class="keyword">auto</span> i, <span class="keyword">auto</span>) { <span class="keywordflow">return</span> 1.f+i; } );</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;x     = &quot;</span> &lt;&lt; x &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;2*x   = &quot;</span> &lt;&lt; x + x &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;x^0.5 = &quot;</span> &lt;&lt; <a class="code" href="group__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a>(x) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7_html_ga6745422ee3727af1a6e34182e8efbcb7"><div class="ttname"><a href="group__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a></div><div class="ttdeci">constexpr callable_sqrt_ sqrt</div><div class="ttdoc">Callable object performing the computation of the square root.</div><div class="ttdef"><b>Definition:</b> sqrt.hpp:111</div></div>
-<div class="ttc" id="astructeve_1_1cpu__abi__v0_1_1wide_html"><div class="ttname"><a href="structeve_1_1cpu__abi__v0_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:57</div></div>
+<div class="ttc" id="agroup__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7_html_ga6745422ee3727af1a6e34182e8efbcb7"><div class="ttname"><a href="group__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a></div><div class="ttdeci">constexpr callable_sqrt_ sqrt</div><div class="ttdoc">Callable object computing the square root.</div><div class="ttdef"><b>Definition:</b> sqrt.hpp:98</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --><p>To do so, use your C++20 aware favorite compiler, for example g++.</p>
 <div class="fragment"><div class="line">$ g++-10 test.cpp -std=c++20  -march=native -O3 -DNDEBUG -I/path/to/install/include -o output</div>
 </div><!-- fragment --><p>Don't forget the <code>--std=c++20</code> option to be sure to activate C++20 support. If you use a different compiler, check your compiler user's manual to use the proper option.</p>
 <p>You can notice we use the <code>-O3 -DNEDBUG</code> options. This is required if you want to be sure to get the best performance out of <b>EVE</b>.</p>
 <p>The <code>-DNDEBUG</code> setting can be omitted but then asserts will be inserted into the code to prevent logic errors.</p>
-<h2><a class="anchor" id="autotoc_md1893"></a>
+<h2><a class="anchor" id="autotoc_md1778"></a>
 Instruction Set Selection</h2>
 <p>The SIMD instruction sets that <b>EVE</b> uses is decided at compile time. You can use <code>-march=native</code> if you're sure your code won't be executed anywhere else. You can also select a specific instructions set by using the proper option(s) from your compiler. For example, let's compile for exactly SSE4.1.</p>
 <div class="fragment"><div class="line">$ g++-10 test.cpp -std=c++20  -msse4.1 -O3 -DNDEBUG -I/path/to/install/include -o output</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1894"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1779"></a>
 Execution</h2>
 <p>Once done, execute the binary. If you compiled for SSE4.1 for example, you'll end up with the following results:</p>
 <div class="fragment"><div class="line">$ ./output</div>
@@ -203,7 +204,7 @@ Execution</h2>
 <div class="line"> 2*x   = (2, 4, 6, 8)</div>
 <div class="line"> x^0.5 = (1, 1.41421, 1.73205, 2)</div>
 </div><!-- fragment --><p>That's it, <b>EVE</b> is properly installed and ready to use.</p>
-<h1><a class="anchor" id="autotoc_md1895"></a>
+<h1><a class="anchor" id="autotoc_md1780"></a>
 Advanced options</h1>
 <p>If you want to dig a bit further, you can pass additional options to <code>cmake</code> to activate additional features.</p>
 <table class="markdownTable">
@@ -231,7 +232,7 @@ Advanced options</h1>
 </div> <!-- DOXYSTRAP RELATED -->
 </div> <!-- DOXYSTRAP RELATED -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 7 2021 21:34:47 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Aug 16 2021 23:10:51 for E.V.E by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>
