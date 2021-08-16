@@ -51,7 +51,7 @@ namespace eve
   //!   If an  [element](@ref glossary_element) of the expected result is not representable in
   //!   the result type, the corresponding result [element](@ref glossary_element) is undefined.
   //!
-  //!   The result type is the [compatibility result](../../../glossary.html#compatibility) of the two parameters.
+  //!   The result type is the [common compatible type](@ref common_compatible) of the two parameters.
   //!
   //! ---
   //!
