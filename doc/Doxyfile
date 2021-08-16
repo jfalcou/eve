@@ -17,6 +17,16 @@ STRIP_FROM_INC_PATH    = ../include
 INHERIT_DOCS           = YES
 SEPARATE_MEMBER_PAGES  = YES
 TAB_SIZE               = 2
+
+#---------------------------------------------------------------------------
+# Layout aliases
+#---------------------------------------------------------------------------
+ALIASES += ce="@htmlonly <a id=\"godbolt-link\" href=\"#\">See it live on Compiler Explorer</a> <div id=\"godbolt\">@endhtmlonly"
+ALIASES += ce{1}="@htmlonly <a id=\"godbolt-link\" href=\"#\"> \1 </a> <div id=\"godbolt\">@endhtmlonly"
+ALIASES += endce="@htmlonly</div>@endhtmlonly"
+ALIASES += godbolt{1}="@ce \n @include \1 \n @endce"
+ALIASES += godbolt{2}="@ce{\1} \n @include \2 \n @endce"
+
 #---------------------------------------------------------------------------
 # Singular aliases
 #---------------------------------------------------------------------------
