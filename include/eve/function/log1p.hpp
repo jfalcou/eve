@@ -40,7 +40,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) the natural log1parithm  of `1+x`
+  //!Returns the [elementwise](@ref glossary_elementwise) the natural log1parithm  of `1+x`
   //!This function is more precise than the expression `log(1+x)` if arg is close to zero.
   //!
   //!In partucular, for floating inputs:

@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the logical value containing the [element-wise](@ref glossary_elementwise) comparison test result
+  //!Returns the logical value containing the [elementwise](@ref glossary_elementwise) comparison test result
   //!between `x` and `y`.
   //!
   //!The result type is the [common compatible type](@ref common_compatible) of the two parameters.

@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!A pair of values containing respectively the [element-wise](@ref glossary_elementwise) fractional and integral parts of `x`,
+  //!A pair of values containing respectively the [elementwise](@ref glossary_elementwise) fractional and integral parts of `x`,
   //!each having the type and sign of `x`.
   //!
   //!In particular:

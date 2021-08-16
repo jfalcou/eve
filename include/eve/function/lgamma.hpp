@@ -40,7 +40,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](@ref glossary_elementwise) \f$\displaystyle \log(|\Gamma(x)|)\f$
+  //!Returns [elementwise](@ref glossary_elementwise) \f$\displaystyle \log(|\Gamma(x)|)\f$
   //!
   //! The result type is of the same type as the  parameter.
   //!

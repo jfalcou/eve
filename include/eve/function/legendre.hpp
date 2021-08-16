@@ -41,7 +41,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](@ref glossary_elementwise) the value of the first kind Legendre polynomial of order `n` at `x`.
+  //!Returns [elementwise](@ref glossary_elementwise) the value of the first kind Legendre polynomial of order `n` at `x`.
   //!By choice returns a nan if x is outside of \f$[-1,1]\f$.
   //!
   //!The result type is of the compatibility type of the  parameters.

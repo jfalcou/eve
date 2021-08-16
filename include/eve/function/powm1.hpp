@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) power minus one, with good accuracy,
+  //!Returns the [elementwise](@ref glossary_elementwise) power minus one, with good accuracy,
   //!even when `y` is very small, or when `x` is close to 1.
   //!
   //! ---

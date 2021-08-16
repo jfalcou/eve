@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the logical value containing the [element-wise](@ref glossary_elementwise) equality test result
+  //!Returns the logical value containing the [elementwise](@ref glossary_elementwise) equality test result
   //!between `x` and 0.
   //!
   //!The result type is `logical< T >`.

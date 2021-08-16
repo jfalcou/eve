@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](@ref glossary_elementwise) `+x` which generally is a no-op.
+  //!Computes  [elementwise](@ref glossary_elementwise) `+x` which generally is a no-op.
   //!
   //!@warning
   //!   Although the operator notation with `+` is supported, the `+` operator on

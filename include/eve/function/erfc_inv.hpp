@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](@ref glossary_elementwise) `y` such that `erfc(y)==x`
+  //!Returns [elementwise](@ref glossary_elementwise) `y` such that `erfc(y)==x`
   //!
   //! The result type is of the same type as the  parameter.
   //! The function returns Nan outside of the interval \f$[0,2]\f$.

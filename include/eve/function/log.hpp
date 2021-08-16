@@ -40,7 +40,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) the natural logarithm  of `x`: \f$\log x\f$..
+  //!Returns the [elementwise](@ref glossary_elementwise) the natural logarithm  of `x`: \f$\log x\f$..
   //!
   //!   * If the element is \f$\pm0\f$, \f$-\infty\f$ is returned.
   //!   * If the element is \f$1\f$, \f$+0\f$ is returned.

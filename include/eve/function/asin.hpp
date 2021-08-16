@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) arc sine of the
+  //!Returns the [elementwise](@ref glossary_elementwise) arc sine of the
   //!input in the range \f$[-\frac\pi2 , \frac\pi2]\f$.
   //!
   //!In particular:

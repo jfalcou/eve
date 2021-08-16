@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) value in degrees of the arc cosine of the
+  //!Returns the [elementwise](@ref glossary_elementwise) value in degrees of the arc cosine of the
   //!input in the range \f$[0 , 180]\f$.
   //!
   //!In particular:

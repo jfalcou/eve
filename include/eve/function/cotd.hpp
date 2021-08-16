@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) cotangent of the input expressed in degrees.
+  //!Returns the [elementwise](@ref glossary_elementwise) cotangent of the input expressed in degrees.
   //!
   //!In particular:
   //!

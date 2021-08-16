@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) arc cosecant in degrees of the
+  //!Returns the [elementwise](@ref glossary_elementwise) arc cosecant in degrees of the
   //!input in the range \f$[-\frac12, \frac12]\f$.
   //!
   //!In particular:

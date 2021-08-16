@@ -43,7 +43,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes the [element-wise](@ref glossary_elementwise) logical right shift of the first parameter by the second one.
+  //!Computes the [elementwise](@ref glossary_elementwise) logical right shift of the first parameter by the second one.
   //!
   //!the call `bit_shr(x, n)` is equivalent to `x >> n` if `x`  is an  [simd value](@ref eve::simd_value).
   //!

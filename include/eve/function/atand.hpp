@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) arc cotangent of the
+  //!Returns the [elementwise](@ref glossary_elementwise) arc cotangent of the
   //!input in the range \f$[-90, 90]\f$.
   //!
   //!In particular:

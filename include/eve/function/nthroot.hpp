@@ -41,7 +41,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](@ref glossary_elementwise) the value of \f$x^{1/n}\f$.
+  //!Returns [elementwise](@ref glossary_elementwise) the value of \f$x^{1/n}\f$.
   //!For negative `x` the value returned is a Nan as soon as `n` is not an odd integer.
   //!
   //! The result type is of the compatibility type of the  parameters.

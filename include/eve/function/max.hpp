@@ -70,7 +70,7 @@ namespace eve
   //!     **Required header:** `#include <eve/function/pedantic/max.hpp>`
   //!  
   //!     The call `pedantic(max)(x,args,...)`  ensures the conformity to the standard behaviour, that is
-  //!      for two parameters  (on an  [element-wise](@ref glossary_elementwise) basis)
+  //!      for two parameters  (on an  [elementwise](@ref glossary_elementwise) basis)
   //!      to be semanticaly equivalent to:
   //!      `(x < y) ? y : x` and this behaviour is also ensured on n parameters calls as if this scheme
   //!      was recursively used.

@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](@ref glossary_elementwise) the value of the dawson function.
+  //!Returns [elementwise](@ref glossary_elementwise) the value of the dawson function.
   //!
   //! The result type is of the same type as the  parameter.
   //!

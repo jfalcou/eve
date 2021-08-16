@@ -57,7 +57,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns  [element-wise](@ref glossary_elementwise) the elliptic integral of the first kind.
+  //!Returns  [elementwise](@ref glossary_elementwise) the elliptic integral of the first kind.
   //!
   //! The result type is of the compatibility type of the three parameters.
   //!

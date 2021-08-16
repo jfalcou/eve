@@ -43,7 +43,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](@ref glossary_elementwise) the value of the gegenbauer polynomial of order `n` at `l`, `x`:
+  //!Returns [elementwise](@ref glossary_elementwise) the value of the gegenbauer polynomial of order `n` at `l`, `x`:
   //!
   //!The result type is of the compatibility type of the  parameters.
   //!

@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) sine of the input.
+  //!Returns the [elementwise](@ref glossary_elementwise) sine of the input.
   //!
   //!In particular:
   //!

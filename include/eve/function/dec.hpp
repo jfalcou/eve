@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](@ref glossary_elementwise) a value with the same type as `x`.
+  //!Computes  [elementwise](@ref glossary_elementwise) a value with the same type as `x`.
   //!The result is `x-1`.
   //!
   //! ---

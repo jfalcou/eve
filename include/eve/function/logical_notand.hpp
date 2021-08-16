@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var logical_notand
   //!
-  //! @brief Callable object computing the element-wise NOTAND operation.
+  //! @brief Callable object computing the elementwise NOTAND operation.
   //!
   //! **Required header:** `#include <eve/function/logical_notand.hpp>`
   //!
@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the element-wise NOTAND operation   |
+  //! | `operator()` | the elementwise NOTAND operation   |
   //!
   //! ---
   //!
@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes  element-wise NOTAND of the two parameters following the
+  //!Computes  elementwise NOTAND of the two parameters following the
   //![logical operations semantic](@ref glossary_logical).
   //!
   //!the call `logical_notand(x, y)` is semantically equivalent to `!x && y`

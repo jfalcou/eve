@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](@ref glossary_elementwise) the integral part of `x` with the same sign as  `x`.
+  //!Computes  [elementwise](@ref glossary_elementwise) the integral part of `x` with the same sign as  `x`.
   //!
   //!The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `FE_UPWARD`, `FE_TOWARDZERO`.
   //!    This function object implements the `FE_TOWARDZERO` version.

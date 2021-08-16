@@ -41,7 +41,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](@ref glossary_elementwise) the value of the 'physicists' laguerre polynomial of order `n` at `x`:
+  //!Returns [elementwise](@ref glossary_elementwise) the value of the 'physicists' laguerre polynomial of order `n` at `x`:
   //!
   //!The result type is of the compatibility type of the  parameters.
   //!

@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) cosine of the input expressed in \f$\pi\f$ multiples.
+  //!Returns the [elementwise](@ref glossary_elementwise) cosine of the input expressed in \f$\pi\f$ multiples.
   //!
   //!The call `cospi(x)` is semantically equivalent to \f$\cos(\pi x)\f$.
   //!In particular:

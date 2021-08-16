@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns a value with the same type as `x`  containing the [element-wise](@ref glossary_elementwise) fractional part of `x` with the same sign as `x`.
+  //!Returns a value with the same type as `x`  containing the [elementwise](@ref glossary_elementwise) fractional part of `x` with the same sign as `x`.
   //!
   //!In particular:
   //! * If an [element](@ref glossary_element) of `x` is \f$\pm0\f$,  \f$\pm0\f$ is returned.

@@ -41,7 +41,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](@ref glossary_elementwise) \f$|x|^y\f$.
+  //!Returns [elementwise](@ref glossary_elementwise) \f$|x|^y\f$.
   //!
   //! The result type is the [common compatible type](@ref common_compatible) of the two parameters.
   //! In particular we have (IEC 60559):

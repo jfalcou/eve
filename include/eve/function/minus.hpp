@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](@ref glossary_elementwise) a value with the same type as `x`.
+  //!Computes  [elementwise](@ref glossary_elementwise) a value with the same type as `x`.
   //!The result is  the opposite of `x` if this value is representable in the type of `x`.
   //!More specifically, for signed integers the opposite value of [their lowest finite value](../../constants.html#valmin)
   //!is not representable and the result is undefined behaviour.

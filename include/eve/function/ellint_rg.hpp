@@ -53,7 +53,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns  [element-wise](@ref glossary_elementwise) Carlson's integral.
+  //!Returns  [elementwise](@ref glossary_elementwise) Carlson's integral.
   //!
   //! The result type is of the compatibility type of the three parameters.
   //!

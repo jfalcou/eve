@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) tangent of the input expressed in \f$\pi\f$ multiples.
+  //!Returns the [elementwise](@ref glossary_elementwise) tangent of the input expressed in \f$\pi\f$ multiples.
   //!
   //!The call `tanpi(x)` is semantically equivalent to \f$\tan(\pi x)\f$.
   //!In particular:

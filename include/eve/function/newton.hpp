@@ -46,7 +46,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](@ref glossary_elementwise) the value of polynomial function(s)
+  //!Returns [elementwise](@ref glossary_elementwise) the value of polynomial function(s)
   //!represented in newton form by the coefficients and the nodes.
   //!
   //!The result type is of the compatibility type of the  coefficients and the evaluation value `x`.

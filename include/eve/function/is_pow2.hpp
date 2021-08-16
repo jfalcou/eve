@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Checks [element-wise](@ref glossary_elementwise) if `x` is an integral power of two.
+  //!Checks [elementwise](@ref glossary_elementwise) if `x` is an integral power of two.
   //!
   //! ---
  //!

@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) `x <= 0`.
+  //!Returns the [elementwise](@ref glossary_elementwise) `x <= 0`.
   //!
   //!The result type is `logical< T >`.
   //!
