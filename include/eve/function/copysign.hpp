@@ -40,7 +40,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!   Returns the [elementwise](../../../glossary.html#regular) composition of a value with the magnitude of `x`
+  //!   Returns the [elementwise](@ref glossary_elementwise) composition of a value with the magnitude of `x`
   //!   and the bit of sign of `y`.
   //!
   //! ---
