@@ -46,7 +46,7 @@ namespace eve
   //!
   //!For more than two parameters \f$\sqrt[n]{x_1x_2...x_n}\f$
   //!
-  //! The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
+  //! The result type is the [common compatible type](@ref common_compatible) of the parameters.
   //!
   //!@warning
   //!    for real_floating_value input types
@@ -83,9 +83,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/geommean.cpp
+  //! @godbolt{doc/core/geommean.cpp}
   //!
   //!  @}
   //================================================================================================

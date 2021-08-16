@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!computes [element-wise](../../../glossary.html#element-wise_) a pair of values `[a,e]` such that:
+  //!computes [elementwise](@ref glossary_elementwise) a pair of values `[a,e]` such that:
   //!
   //!* `a` is `x*y`
   //!* `e` is a value such that `a`\f$\oplus\f$`e` is equal to `x`\f$\otimes\f$`y`
@@ -69,9 +69,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/two_prod.cpp
+  //! @godbolt{doc/core/two_prod.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -41,7 +41,7 @@ namespace eve
   //! **Return value**
   //!
   //!Computes  logical NOT of the two parameters following the
-  //![logical operations semantic](../../../glossary.html#Logical).
+  //![logical operations semantic](@ref glossary_logical).
   //!
   //!the call `logical_not(x)` is semantically equivalent to `is_eqz(x)` . Infix notation can be used with `!x`
   //!
@@ -52,9 +52,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/logical_not.cpp
+  //! @godbolt{doc/core/logical_not.cpp}
   //!
   //!  @}
   //================================================================================================

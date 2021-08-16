@@ -40,7 +40,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the  [element-wise](@ref glossary_elementwise) positive difference between `x` and `y`:
+  //!Returns the  [elementwise](@ref glossary_elementwise) positive difference between `x` and `y`:
   //! * if `x>y`,   x-y is returned
   //! * if `x<=y`,  +0 is returned
   //! * otherwise a `Nan` is returned
@@ -73,9 +73,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/fdim.cpp
+  //! @godbolt{doc/core/fdim.cpp}
   //!
   //!  @}
   //================================================================================================

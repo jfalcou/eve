@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](@ref glossary_elementwise) the sign of `x`.
+  //!Computes  [elementwise](@ref glossary_elementwise) the sign of `x`.
   //!
   //!For [real value](@ref eve::real_value) `x` is semantically equivalent to:
   //!  * If x is greater than 0, 1 is returned.
@@ -69,7 +69,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/sign.hpp>`
   //!
@@ -77,9 +77,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/sign.cpp
+  //! @godbolt{doc/core/sign.cpp}
   //!
   //!  @}
   //================================================================================================

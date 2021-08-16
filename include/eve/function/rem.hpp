@@ -41,7 +41,7 @@ namespace eve
   //!
   //!Return the remainderafter division division of `x` by `y`.
   //!
-  //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+  //! The result type is the [common compatible type](@ref common_compatible) of the two parameters.
   //!
   //! The call `rem(x, y)` is equivalent to `x % y` if `x` or  `y` is an  [simd value](@ref eve::simd_value).
   //!
@@ -100,9 +100,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/rem.cpp
+  //! @godbolt{doc/core/rem.cpp}
   //!
   //!  @}
   //================================================================================================

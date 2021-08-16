@@ -58,7 +58,7 @@ namespace eve
   //!     but not more absurd than the IEEE choices and allows to simplify (and speed) the implementation.
   //!     In all other cases, the result is standard conformant.
   //!
-  //!The result type is the [compatibility result](../../concept.html#compatibilit`y`) of the two parameters.
+  //!The result type is the [common compatible type](@ref common_compatible) of the two parameters.
   //!
   //! ---
   //!
@@ -76,7 +76,7 @@ namespace eve
   //!       -  If `x` is \f$\pm0\f$ and `y` is \f$\pm-0\f$, \f$-\frac\pi2\f$ is returned
   //!       -  If `x` is \f$\pm0\f$ and `y` is \f$\pm+0\f$, \f$+\frac\pi2\f$  is returned
   //!
-  //!  * eve::diff_1st, eve::diff_2nd
+  //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/atan2.hpp>`
   //!
@@ -85,9 +85,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/atan2.cpp
+  //! @godbolt{doc/core/atan2.cpp}
   //!
   //!  @}
   //================================================================================================

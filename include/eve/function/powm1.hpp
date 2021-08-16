@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) power minus one, with good accuracy,
+  //!Returns the [elementwise](@ref glossary_elementwise) power minus one, with good accuracy,
   //!even when `y` is very small, or when `x` is close to 1.
   //!
   //! ---
@@ -62,7 +62,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::diff_1st, eve::diff_2nd
+  //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/pow.hpp>`
   //!
@@ -71,9 +71,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/powm1.cpp
+  //! @godbolt{doc/core/powm1.cpp}
   //!
   //!  @}
   //================================================================================================

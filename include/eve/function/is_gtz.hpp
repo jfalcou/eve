@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) `x > 0`.
+  //!Returns the [elementwise](@ref glossary_elementwise) `x > 0`.
   //!
   //!The result type is `logical< T >`.
   //!
@@ -68,9 +68,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/is_gtz.cpp
+  //! @godbolt{doc/core/is_gtz.cpp}
   //!
   //!  @}
   //================================================================================================

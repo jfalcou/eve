@@ -73,7 +73,7 @@ namespace eve
   //!
   //!     The expression `eve::saturated(eve::add)(xs...)` computes the saturated sum of all `xs`.
   //!
-  //!   * eve::diff_nth
+  //!   * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/add.hpp>`
   //!
@@ -82,9 +82,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/h6YKzz5jc)
-  //!
-  //! @include{lineno} doc/core/add.cpp
+  //! @godbolt{doc/core/add.cpp}
   //!
   //!  @}
   //================================================================================================

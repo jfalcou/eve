@@ -40,16 +40,10 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](@ref glossary_elementwise) the value of the inverse of incomplete beta function
+  //!Returns [elementwise](@ref glossary_elementwise) the value of the inverse of incomplete beta function
   //!relative to the first parameter.
   //!
-  //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
-  //!
-  //![`diff`](../decorators.html#diff)
-  //!:   **Required header:** `#include <eve/function/diff/betainc_inv.hpp>`
-  //!
-  //!:   The expression `diff(betainc_inv)(s,x,y)` computes the partial
-  //!    diff of \f$f\f$, where \f$f\f$ is the function \f$s \rightarrow \ \mbox{B}(s,x,y)\f$.
+  //! The result type is the [common compatible type](@ref common_compatible) of the two parameters.
   //!
   //! ---
   //!
@@ -71,13 +65,16 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  no decorators are supported
+  //! * eve::diff, eve::diff_1st, eve::diff_nth
+  //!
+  //!:   **Required header:** `#include <eve/function/diff/betainc_inv.hpp>`
+  //!
+  //!:   The expression `diff(betainc_inv)(s,x,y)` computes the partial
+  //!    diff of \f$f\f$, where \f$f\f$ is the function \f$s \rightarrow \ \mbox{B}(s,x,y)\f$.
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/betainc_inv.cpp
+  //! @godbolt{doc/core/betainc_inv.cpp}
   //!
   //!  @}
   //================================================================================================

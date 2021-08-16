@@ -47,7 +47,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](@ref glossary_elementwise) computes the inverse of normalized lower incomplete \f$\Gamma\f$ function :
+  //!Returns [elementwise](@ref glossary_elementwise) computes the inverse of normalized lower incomplete \f$\Gamma\f$ function :
   //! \f$\displaystyle \frac{1}{\Gamma(x)}\int_0^{y} t^{x-1}e^{-t}\mbox{d}t\f$
   //!
   //! The result type is of the same type as the  parameter.
@@ -75,9 +75,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/gamma_p_inv.cpp
+  //! @godbolt{doc/core/gamma_p_inv.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) cosine of the input.
+  //!Returns the [elementwise](@ref glossary_elementwise) cosine of the input.
   //!
   //!In particular:
   //!
@@ -54,7 +54,7 @@ namespace eve
   //!
   //!     provide a balance between speed and range limitation.
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/cos.hpp>`
   //!
@@ -62,9 +62,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/cos.cpp
+  //! @godbolt{doc/core/cos.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -41,7 +41,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! The result type is the [compatibility result](../../concept.html#compatibility) of the two first parameters,
+  //! The result type is the [common compatible type](@ref common_compatible) of the two first parameters,
   //! vectorized with the cardinality of the third one if necessary.
   //!
   //! The recurrence formula defining the fibonacci sequence is:
@@ -76,9 +76,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/fibonacci.cpp
+  //! @godbolt{doc/core/fibonacci.cpp}
   //!
   //!  @}
   //================================================================================================

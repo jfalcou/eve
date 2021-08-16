@@ -39,11 +39,11 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](@ref glossary_elementwise) the square of `x`.
+  //!Computes  [elementwise](@ref glossary_elementwise) the square of `x`.
   //!
   //!@warning
   //!   For  [real integral signed values](@ref eve::value)   if `saturated(abs)(x)`
-  //!   is greater than [`eve::Sqrtvalmax(as(x))`](../../constants/limits/sqrtvalmax.html) the corresponding element result is undefined .
+  //!   is greater than [`eve::Sqrtvalmax(as(x))`](eve::sqrtvalmax) the corresponding element result is undefined .
   //!
   //! ---
   //!
@@ -68,29 +68,27 @@ namespace eve
   //!  * `saturated`
   //!
   //!     **Required header:** `#include <eve/function/saturated/sqr.hpp>`
-  //!  
-  //!     The expression `saturated(abs)(x)` computes a saturated square of `x`. Contrary to the [regular case](../decorator/regular.html), this guarantees
-  //!      that the result is [`element-wise`](../../../glossary.html#element-wise) greater or equal than 0. More specifically, for any signed integer value
+  //!
+  //!     The expression `saturated(abs)(x)` computes a saturated square of `x`. Contrary to the non-decorated case, this guarantees
+  //!      that the result is [elementwise](@ref glossary_elementwise) greater or equal than 0. More specifically, for any signed integer value
   //!      `x`, the expression:
-  //!  
+  //!
   //!      `saturated(sqr)(x)`
-  //!  
+  //!
   //!      evaluates to:
-  //!  
-  //!      [`eve::Valmax(as(x))`](../../constants/limits/valmax.html) as soon as `saturated(abs)(x)`
-  //!      is greater than [`eve::Sqrtvalmax(as(x))`](../../constants/limits/sqrtvalmax.html).
-  //!  
-  //!  * eve::diff
+  //!
+  //!      [`eve::Valmax(as(x))`](@ref eve::valmax) as soon as `saturated(abs)(x)`
+  //!      is greater than [`eve::Sqrtvalmax(as(x))`](@ref eve::sqrtvalmax.html).
+  //!
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/sqr.hpp>`
-  //!  
+  //!
   //!     The expression `diff(sqr)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/sqr.cpp
+  //! @godbolt{doc/core/sqr.cpp}
   //!
   //!  @}
   //================================================================================================

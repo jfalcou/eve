@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes [element-wise](@ref glossary_elementwise) the smallest integral power of two that is not smaller than `x`.
+  //!Computes [elementwise](@ref glossary_elementwise) the smallest integral power of two that is not smaller than `x`.
   //!If that value is not representable in `T`, the behavior is undefined.
   //!
   //! ---
@@ -66,9 +66,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/bit_ceil.cpp
+  //! @godbolt{doc/core/bit_ceil.cpp}
   //!
   //!  @}
   //================================================================================================

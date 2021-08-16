@@ -40,7 +40,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
+  //!The result type is the [common compatible type](@ref common_compatible) of the parameters.
   //!
   //! ---
   //!
@@ -68,11 +68,11 @@ namespace eve
   //!
   //!     The call `pedantic(lpnorm)(x,args...)`  computes the \f$l_p\f$ norm
   //!      without undue overflow or underflow at intermediate stages of the computation
-  //!      and can be more accurate than the [`regular`](../decorators.html#regular) call.
+  //!      and can be more accurate than the non decorated call.
   //!
   //!      Morever it returns \f$\infty\f$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/lpnorm.hpp>`
   //!
@@ -83,9 +83,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/lpnorm.cpp
+  //! @godbolt{doc/core/lpnorm.cpp}
   //!
   //!  @}
   //================================================================================================

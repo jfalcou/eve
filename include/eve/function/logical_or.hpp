@@ -41,7 +41,7 @@ namespace eve
   //! **Return value**
   //!
   //!Computes  logical OR of the two parameters following the
-  //![logical operations semantic](../../../glossary.html#Logical).
+  //![logical operations semantic](@ref glossary_logical).
   //!
   //!the call `logical_or(x, y)` is semantically equivalent to `x || y`
   //!if `x` or  `y` is an  [simd value](@ref eve::simd_value) and does not shortcut.
@@ -54,9 +54,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/logical_or.cpp
+  //! @godbolt{doc/core/logical_or.cpp}
   //!
   //!  @}
   //================================================================================================

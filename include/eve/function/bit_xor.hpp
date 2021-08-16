@@ -41,7 +41,7 @@ namespace eve
   //!
   //! A value of the same type as a0 containing the
   //! [elementwise](@ref glossary_elementwise) bitwise XOR of a0 and all `xs` following the
-  //! [bitwise operations semantic](../../../glossary.html#Bitwise).
+  //! [bitwise operations semantic](@ref glossary_bitwise).
   //!
   //!@warning
   //!   Although the infix notation with `^` is supported for two parameters, the `^` operator on
@@ -72,9 +72,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/bit_xor.cpp
+  //! @godbolt{doc/core/bit_xor.cpp}
   //!
   //!  @}
   //================================================================================================

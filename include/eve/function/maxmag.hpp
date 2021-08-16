@@ -50,7 +50,7 @@ namespace eve
   //!
   //!For n parameters the result is computed as if this scheme was recursively used.
   //!
-  //!The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
+  //!The result type is the [common compatible type](@ref common_compatible) of the parameters.
   //!
   //!@warning
   //!   If any element of the inputs is a `Nan`, the corresponding output element is system-dependent.
@@ -87,7 +87,7 @@ namespace eve
   //!
   //!      The behaviour is the same except that if  `|x| == |y|`, `numeric(max)` is used.
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/maxmag.hpp>`
   //!
@@ -97,9 +97,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/maxmag.cpp
+  //! @godbolt{doc/core/maxmag.cpp}
   //!
   //!  @}
   //================================================================================================

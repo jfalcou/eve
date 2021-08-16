@@ -29,16 +29,16 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(floating_value auto x) const noexcept;
+  //!  auto operator()(integral_value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating_real_value](@ref eve::value).
+  //!`x`:   [integral_value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!    Computes the [element-wise](../../../glossary.html#element-wise_) the lower and higher parts of
+  //!    Computes the [elementwise](@ref glossary_elementwise) the lower and higher parts of
   //!    the input values, as a pair of unsigned integers
   //!
   //! ---
@@ -65,9 +65,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/lohi.cpp
+  //! @godbolt{doc/core/lohi.cpp}
   //!
   //!  @}
   //================================================================================================

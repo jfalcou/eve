@@ -41,8 +41,8 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](@ref glossary_elementwise) exponential integral
-  //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+  //!Returns [elementwise](@ref glossary_elementwise) exponential integral
+  //! The result type is the [common compatible type](@ref common_compatible) of the two parameters.
   //!If the first parameter inot an integral value it must be a flint, otherwise the result is Nan.
   //!
   //! ---
@@ -65,7 +65,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/exp_int.hpp>`
   //!
@@ -74,9 +74,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/exp_int.cpp
+  //! @godbolt{doc/core/exp_int.cpp}
   //!
   //!  @}
   //================================================================================================

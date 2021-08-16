@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) pair of values containing the hyperbolic sine and
+  //!Returns the [elementwise](@ref glossary_elementwise) pair of values containing the hyperbolic sine and
   //!the hyperbolic cosine of the input.
   //!
   //! ---
@@ -66,9 +66,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/sinhcosh.cpp
+  //! @godbolt{doc/core/sinhcosh.cpp}
   //!
   //!  @}
   //================================================================================================

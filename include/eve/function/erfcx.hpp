@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](@ref glossary_elementwise) \f$\displaystyle \mbox{erfcx}(x)=\frac{2e^{x^2}}{\sqrt\pi}\int_{x}^{\infty} e^{-t^2}\mbox{d}t\f$
+  //!Returns [elementwise](@ref glossary_elementwise) \f$\displaystyle \mbox{erfcx}(x)=\frac{2e^{x^2}}{\sqrt\pi}\int_{x}^{\infty} e^{-t^2}\mbox{d}t\f$
   //!
   //! The result type is of the same type as the  parameter.
   //!
@@ -63,7 +63,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/erfcx.hpp>`
   //!
@@ -71,9 +71,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/erfcx.cpp
+  //! @godbolt{doc/core/erfcx.cpp}
   //!
   //!  @}
   //================================================================================================

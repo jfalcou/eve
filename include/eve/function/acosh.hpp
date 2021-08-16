@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) inverse hyperbolic cosine of the input.
+  //!Returns the [elementwise](@ref glossary_elementwise) inverse hyperbolic cosine of the input.
   //!For values in the domain `x>1`, the inverse hyperbolic cosine is semantically equivalent to \f$\log(x+\sqrt{x^2-1})\f$.
   //!
   //!In particular:
@@ -69,7 +69,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/acosh.hpp>`
   //!
@@ -77,9 +77,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/acosh.cpp
+  //! @godbolt{doc/core/acosh.cpp}
   //!
   //!  @}
   //================================================================================================

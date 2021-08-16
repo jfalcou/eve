@@ -40,7 +40,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
+  //!The result type is the [common compatible type](@ref common_compatible) of the three parameters.
   //!
   //! ---
   //!
@@ -68,11 +68,11 @@ namespace eve
   //!
   //!     The call `pedantic(hypot)(x,args...)`  computes the square root of the sum of the parameters
   //!      without undue overflow or underflow at intermediate stages of the computation
-  //!      and can be more accurate than the [`regular`](../decorators.html#regular) call.
+  //!      and can be more accurate than the non-decorated call.
   //!
   //!      Morever it returns \f$\infty\f$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/hypot.hpp>`
   //!
@@ -86,9 +86,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/hypot.cpp
+  //! @godbolt{doc/core/hypot.cpp}
   //!
   //!  @}
   //================================================================================================

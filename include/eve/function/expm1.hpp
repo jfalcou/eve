@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) exponential input minus one, with good accuracy, even for small values of `x`.
+  //!Returns the [elementwise](@ref glossary_elementwise) exponential input minus one, with good accuracy, even for small values of `x`.
   //!
   //!   * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned
   //!   * If the element is \f$-\infty\f$, \f$-1\f$ is returned
@@ -66,7 +66,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/expm1.hpp>`
   //!
@@ -74,9 +74,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/expm1.cpp
+  //! @godbolt{doc/core/expm1.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -45,7 +45,7 @@ namespace eve
   //! The call `logspace_sub(arg0, arg1, args...)` is semantically equivalent to
   //!`log(exp(arg0) - exp(arg1) - exp(args)...)`;.
   //!
-  //! The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
+  //! The result type is the [common compatible type](@ref common_compatible) of the parameters.
   //!
   //! ---
   //!
@@ -67,7 +67,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::diff_nth
+  //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/logspace_sub.hpp>`
   //!

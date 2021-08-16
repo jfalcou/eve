@@ -41,7 +41,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes the [element-wise](@ref glossary_elementwise) logical left shift of the first parameter
+  //!Computes the [elementwise](@ref glossary_elementwise) logical left shift of the first parameter
   //!by the second one.
   //!
   //!the call `bit_shl(x, n)` is equivalent to `x << n` if `x`  is an [simd value](@ref eve::simd_value).
@@ -74,9 +74,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/bit_shl.cpp
+  //! @godbolt{doc/core/bit_shl.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -44,7 +44,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) exponential of base 2 of the input.
+  //!Returns the [elementwise](@ref glossary_elementwise) exponential of base 2 of the input.
   //!In partucular, for floating inputs:
   //!
   //!   * If the element is \f$\pm0\f$, \f$1\f$ is returned
@@ -72,7 +72,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/exp2.hpp>`
   //!
@@ -80,9 +80,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/exp2.cpp
+  //! @godbolt{doc/core/exp2.cpp}
   //!
   //!  @}
   //================================================================================================

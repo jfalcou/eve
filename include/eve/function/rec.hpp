@@ -39,11 +39,11 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](@ref glossary_elementwise) the inverse of `x`.
+  //!Computes  [elementwise](@ref glossary_elementwise) the inverse of `x`.
   //!
   //!For [real integral value](@ref eve::value) `x` is semantically equivalent to:
   //!  * If x==1 or x==-1, x is returned.
-  //!  * If x==0,  [the greatest representable positive value](../../constants.html#valmax) is returned.
+  //!  * If x==0,  [the greatest representable positive value](@ref eve::valmax) is returned.
   //!  * Otherwise 0 is returned.
   //!
   //! ---
@@ -68,19 +68,17 @@ namespace eve
   //!
   //!  * eve::raw
   //!     The call `raw(rec)(x)`, call a proper system intrinsic if one exists, but with possibly very poor accuracy in return.
-  //!      Otherwise it uses the [`regular`](../decorators.html#regular) call.
-  //!  
-  //!  * eve::diff
+  //!      Otherwise it uses the non decorated call.
+  //!
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/rec.hpp>`
-  //!  
+  //!
   //!     The expression `diff(rec)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/rec.cpp
+  //! @godbolt{doc/core/rec.cpp}
   //!
   //!  @}
   //================================================================================================

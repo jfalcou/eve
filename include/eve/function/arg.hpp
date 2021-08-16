@@ -39,10 +39,10 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!For each  [`element`](../../../glossary.html#element-wise) of the input the phase angle is returned:
+  //!For each  [element](@ref glossary_element) of the input the phase angle is returned:
   //!
-  //!  *  if the bit of sign of the entry [element](../../../glossary.html#elment-wise) is not set, \f$0\f$ is returned.
-  //!  *  if the bit of sign of the entry [element](../../../glossary.html#elment-wise) is set, \f$\pi\f$ is returned.
+  //!  *  if the bit of sign of the entry [element](@ref glossary_elementwise) is not set, \f$0\f$ is returned.
+  //!  *  if the bit of sign of the entry [element](@ref glossary_elementwise) is set, \f$\pi\f$ is returned.
   //!
   //! ---
   //!
@@ -71,7 +71,7 @@ namespace eve
   //!
   //!     With this decorator the function returns a Nan element for each corresponding Nan entry element.
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/arg.hpp>`
   //!
@@ -79,9 +79,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/arg.cpp
+  //! @godbolt{doc/core/arg.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -37,7 +37,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the number of bit set in each [`element`](../../../glossary.html#element-wise) of the parameter.
+  //!Returns the number of bit set in each [elementwise](@ref glossary_elementwise) of the parameter.
   //!
   //! ---
   //!
@@ -47,9 +47,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/popcount.cpp
+  //! @godbolt{doc/core/popcount.cpp}
   //!
   //!  @}
   //================================================================================================

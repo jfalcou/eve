@@ -47,7 +47,7 @@ namespace eve
   //!
   //!For more than two parameters only floating entries are allowed and overflow is avoided.
   //!
-  //! The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
+  //! The result type is the [common compatible type](@ref common_compatible) of the parameters.
   //!
   //!@warning
   //!    If `x` and `y` are [integral values](@ref eve::integral_value) and the sum is odd, the result
@@ -77,7 +77,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::diff_nth
+  //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/average.hpp>`
   //!
@@ -93,9 +93,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/average.cpp
+  //! @godbolt{doc/core/average.cpp}
   //!
   //!  @}
   //================================================================================================

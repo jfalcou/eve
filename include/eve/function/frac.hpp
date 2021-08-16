@@ -39,11 +39,11 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns a value with the same type as `x`  containing the [element-wise](@ref glossary_elementwise) fractional part of `x` with the same sign as `x`.
+  //!Returns a value with the same type as `x`  containing the [elementwise](@ref glossary_elementwise) fractional part of `x` with the same sign as `x`.
   //!
   //!In particular:
-  //! * If an [element](../../../glossary.html#value) of `x` is \f$\pm0\f$,  \f$\pm0\f$ is returned.
-  //! * If an [element](../../../glossary.html#value) of `x` is \f$\pm\infty\f$ or `Nan`, a `Nan` is returned.
+  //! * If an [element](@ref glossary_element) of `x` is \f$\pm0\f$,  \f$\pm0\f$ is returned.
+  //! * If an [element](@ref glossary_element) of `x` is \f$\pm\infty\f$ or `Nan`, a `Nan` is returned.
   //!
   //! ---
   //!
@@ -65,7 +65,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/frac.hpp>`
   //!
@@ -73,9 +73,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/frac.cpp
+  //! @godbolt{doc/core/frac.cpp}
   //!
   //!  @}
   //================================================================================================

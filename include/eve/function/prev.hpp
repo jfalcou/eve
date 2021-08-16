@@ -44,7 +44,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!computes [`element-wise`](../../../glossary.html#element-wise), the `n`th  representable value less than `x`.
+  //!computes [elementwise](@ref glossary_elementwise), the `n`th  representable value less than `x`.
   //!If `n` is zero returns `x`.
   //!
   //! ---
@@ -75,9 +75,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/prev.cpp
+  //! @godbolt{doc/core/prev.cpp}
   //!
   //!  @}
   //================================================================================================

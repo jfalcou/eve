@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](@ref glossary_elementwise) the rounding to n significants digits of `x`.
+  //!Computes  [elementwise](@ref glossary_elementwise) the rounding to n significants digits of `x`.
   //!With null n the result is a nan.
   //!
   //!@warning
@@ -70,9 +70,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/significants.cpp
+  //! @godbolt{doc/core/significants.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) arc secant of the
+  //!Returns the [elementwise](@ref glossary_elementwise) arc secant of the
   //!input in \f$\pi\f$ mutiples in the range \f$[0, 1]\f$.
   //!
   //!In particular:
@@ -52,7 +52,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/asecpi.hpp>`
   //!  
@@ -60,9 +60,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/asecpi.cpp
+  //! @godbolt{doc/core/asecpi.cpp}
   //!
   //!  @}
   //================================================================================================

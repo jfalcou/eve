@@ -45,12 +45,12 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes the [element-wise](@ref glossary_elementwise) arithmetic left shift of the first parameter by the second one.
+  //!Computes the [elementwise](@ref glossary_elementwise) arithmetic left shift of the first parameter by the second one.
   //!
   //!the call `shl(x, n)` is equivalent to `x << n` if `x`  is an  [simd value](@ref eve::simd_value).
   //!
   //!The types must share the same cardinal or be scalar and if `N` is the size in bits  of the element type of `T`,
-  //!all  [elements](../../../glossary.html#element) of n must belong to the
+  //!all  [elements](@ref glossary_element) of n must belong to the
   //!interval: `[0, N[` or the result is undefined.
   //!
   //!  @warning
@@ -82,9 +82,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/shl.cpp
+  //! @godbolt{doc/core/shl.cpp}
   //!
   //!  @}
   //================================================================================================

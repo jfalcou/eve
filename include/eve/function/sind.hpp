@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) sine of the input expressed in degrees.
+  //!Returns the [elementwise](@ref glossary_elementwise) sine of the input expressed in degrees.
   //!
   //!In particular:
   //!
@@ -54,7 +54,7 @@ namespace eve
   //!
   //!     provide a balance between speed and range limitation.
   //!  
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/sind.hpp>`
   //!  
@@ -62,9 +62,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/sind.cpp
+  //! @godbolt{doc/core/sind.cpp}
   //!
   //!  @}
   //================================================================================================

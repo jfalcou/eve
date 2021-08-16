@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the logical value containing the [element-wise](@ref glossary_elementwise) comparison test result
+  //!Returns the logical value containing the [elementwise](@ref glossary_elementwise) comparison test result
   //!between `x` and `y`.
   //!
   //! ---
@@ -75,13 +75,11 @@ namespace eve
   //!      - if `t` is a positive integral_value then \f$(x \le \mbox{prev}(y, t)\f$;
   //!      - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
   //!
-  //!  The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+  //!  The result type is the [common compatible type](@ref common_compatible) of the two parameters.
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/is_not_greater_equal.cpp
+  //! @godbolt{doc/core/is_not_greater_equal.cpp}
   //!
   //!  @}
   //================================================================================================

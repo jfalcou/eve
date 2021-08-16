@@ -39,8 +39,8 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!If `x` is not zero, computes [element-wise](@ref glossary_elementwise)  the largest integral power of two that is not greater than `x`.
-  //!If an  [element](../../../glossary.html#element) of `x` is zero, the corresponding result  [element](../../../glossary.html#element) is zero.
+  //!If `x` is not zero, computes [elementwise](@ref glossary_elementwise)  the largest integral power of two that is not greater than `x`.
+  //!If an  [element](@ref glossary_element) of `x` is zero, the corresponding result  [element](@ref glossary_element) is zero.
   //!
   //! ---
   //!
@@ -66,9 +66,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/bit_floor.cpp
+  //! @godbolt{doc/core/bit_floor.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!For signed types The call `is_negative(x)` [element-wise](@ref glossary_elementwise) returns true
+  //!For signed types The call `is_negative(x)` [elementwise](@ref glossary_elementwise) returns true
   //!if and only if the bit of sign (most significant bit) is set.
   //!
   //!@warning
@@ -72,9 +72,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/is_negative.cpp
+  //! @godbolt{doc/core/is_negative.cpp}
   //!
   //!  @}
   //================================================================================================

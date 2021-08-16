@@ -54,7 +54,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](@ref glossary_elementwise) the value of polynomial function(s)
+  //!Returns [elementwise](@ref glossary_elementwise) the value of polynomial function(s)
   //!represented by the coefficients in decreasing power order at `x`.
   //!
   //!The result type is of the compatibility type of the  coefficients and the evaluation value `x`.
@@ -100,9 +100,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/horner.cpp
+  //! @godbolt{doc/core/horner.cpp}
   //!
   //!  @}
   //================================================================================================

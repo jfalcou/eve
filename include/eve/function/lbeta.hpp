@@ -38,15 +38,9 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](@ref glossary_elementwise) \f$\displaystyle \log\left(\frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}\right)\f$.
+  //!Returns [elementwise](@ref glossary_elementwise) \f$\displaystyle \log\left(\frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}\right)\f$.
   //!
-  //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
-  //!
-  //![`derivative`](../decorators.html#derivative)
-  //!:   **Required header:** `#include <eve/function/diff/lbeta.hpp>`
-  //!
-  //!:   The expression `derivative_1st(lbeta)(x,y)` and `derivative_2nd(lbeta)(x,y)` computes the partial
-  //!derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \log(\mbox{B}(x,y))\f$.
+  //! The result type is the [common compatible type](@ref common_compatible) of the two parameters.
   //!
   //! ---
   //!
@@ -68,13 +62,17 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  no decorators are supported
+  //!
+  //!  *  eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_nth
+  //!
+  //!:   **Required header:** `#include <eve/function/diff/lbeta.hpp>`
+  //!
+  //!:   The expression `derivative_1st(lbeta)(x,y)` and `derivative_2nd(lbeta)(x,y)` computes the partial
+  //!    derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \log(\mbox{B}(x,y))\f$.
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/lbeta.cpp
+  //! @godbolt{doc/core/lbeta.cpp}
   //!
   //!  @}
   //================================================================================================

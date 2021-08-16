@@ -39,9 +39,9 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!For each [`element`](../../../glossary.html#element-wise) of `x`:
+  //!For each [elementwise](@ref glossary_elementwise) of `x`:
   //!
-  //!  *  if the [element](../../../glossary.html#elment-wise) is zero, an element with all bits unset is returned.
+  //!  *  if the [element](@ref glossary_element) is zero, an element with all bits unset is returned.
   //!  *  else an element of the type with all bits set is returned.
   //!
   //! ---
@@ -68,9 +68,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/bit_mask.cpp
+  //! @godbolt{doc/core/bit_mask.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -44,7 +44,7 @@ namespace eve
   //!
   //! The call `absmin(x, args...)` is equivalent to `abs(min(x, args...))`
   //!
-  //!The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
+  //!The result type is the [common compatible type](@ref common_compatible) of the parameters.
   //!
   //!@warning
   //!   If any element of the inputs is a `Nan`, the corresponding output element is system-dependent.
@@ -81,7 +81,7 @@ namespace eve
   //!
   //!     The call `numeric(absmin)(x, args...) is equivalent to `abs(numeric(min)(x, args...))`
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/absmin.hpp>`
   //!
@@ -91,9 +91,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/absmin.cpp
+  //! @godbolt{doc/core/absmin.cpp}
   //!
   //!  @}
   //================================================================================================

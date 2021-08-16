@@ -81,10 +81,10 @@ namespace eve
   //!     if the denominator is 0.
   //!
   //!     The relevant cases are just in fact  the division by 0 for integral types in which case the result
-  //!     is [`eve::Valmin(as(x))`](../../constants/limits/valmin.html) or
-  //!     [`eve::Valmax(as(x))`](../../constants/limits/valmax.html) according to the dividend sign, and
-  //!     the division of [`eve::Valmin(as(x))`](../../constants/limits/valmin.html)
-  //!     by -1 that produces [`eve::Valmax(as(x))`](../../constants/limits/valmax.html).
+  //!     is [`eve::Valmin(as(x))`](@ref eve::valmin) or
+  //!     [`eve::Valmax(as(x))`](ref eve::valmax) according to the dividend sign, and
+  //!     the division of [`eve::Valmin(as(x))`](@ref eve::valmin)
+  //!     by -1 that produces [`eve::Valmax(as(x))`](@ref eve::valmax).
   //!
   //!   * `toward_zero`
   //!     The call `toward_zero(div)(x, y)`  computes  `trunc(div(x, y))`.
@@ -98,7 +98,7 @@ namespace eve
   //!   * `to_nearest`
   //!     The call `to_nearest(div)(x, y)`  computes  `nearest(div(x,y))`.
   //!
-  //!   * eve::diff_nth
+  //!   * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/div.hpp>`
   //!
@@ -107,9 +107,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/4M9PrKGWE)
-  //!
-  //! @include{lineno} doc/core/div.cpp
+  //! @godbolt{doc/core/div.cpp}
   //!
   //!  @}
   //================================================================================================

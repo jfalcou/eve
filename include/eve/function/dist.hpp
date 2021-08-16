@@ -48,10 +48,10 @@ namespace eve
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
   //!auto r = abs(x-y);
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!   If an  [element](../../../glossary.html#element_) of the expected result is not representable in
-  //!   the result type, the corresponding result [element](../../../glossary.html#element_) is undefined.
+  //!   If an  [element](@ref glossary_element) of the expected result is not representable in
+  //!   the result type, the corresponding result [element](@ref glossary_element) is undefined.
   //!
-  //!   The result type is the [compatibility result](../../../glossary.html#compatibility) of the two parameters.
+  //!   The result type is the [common compatible type](@ref common_compatible) of the two parameters.
   //!
   //! ---
   //!
@@ -77,11 +77,11 @@ namespace eve
   //!
   //!     **Required header:** `#include <eve/function/saturated/dist.hpp>`
   //!
-  //!     The call `saturated(dist)(x, y)` computes a saturated distance. Contrary to the [regular case](../decorator/regular.html), it guarantees
+  //!     The call `saturated(dist)(x, y)` computes a saturated distance. Contrary to the non decorated case, it guarantees
   //!      that the result is always defined. If \f$|x-y|\f$ is not representable
-  //!      [the greatest representable positive value](../../constants.html#valmax) is returned
+  //!      [the greatest representable positive value](@ref eve::valmax) is returned
   //!
-  //!  * eve::diff_1st, eve::diff_2nd
+  //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/dist.hpp>`
   //!
@@ -90,9 +90,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/dist.cpp
+  //! @godbolt{doc/core/dist.cpp}
   //!
   //!  @}
   //================================================================================================

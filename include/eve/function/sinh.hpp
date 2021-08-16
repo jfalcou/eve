@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) hyperbolic sine of the input.
+  //!Returns the [elementwise](@ref glossary_elementwise) hyperbolic sine of the input.
   //!
   //!In particular:
   //!
@@ -67,7 +67,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/sinh.hpp>`
   //!
@@ -75,9 +75,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/sinh.cpp
+  //! @godbolt{doc/core/sinh.cpp}
   //!
   //!  @}
   //================================================================================================

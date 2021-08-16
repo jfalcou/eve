@@ -40,7 +40,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
+  //!The result type is the [common compatible type](@ref common_compatible) of the three parameters.
   //!
   //! ---
   //!
@@ -69,7 +69,7 @@ namespace eve
   //!     The call `pedantic(manhattan)(x,args...`  computes the sum of the absolute values of its parameters
   //!      returning \f$\infty\f$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/manhattan.hpp>`
   //!
@@ -82,9 +82,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/manhattan.cpp
+  //! @godbolt{doc/core/manhattan.cpp}
   //!
   //!  @}
   //================================================================================================

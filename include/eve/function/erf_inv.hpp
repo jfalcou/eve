@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](@ref glossary_elementwise) `y` such that `erf(y)==x`
+  //!Returns [elementwise](@ref glossary_elementwise) `y` such that `erf(y)==x`
   //!
   //! The result type is of the same type as the  parameter.
   //! The function returns Nan outside of the interval \f$[-1,1]\f$.
@@ -64,7 +64,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/erf_inv.hpp>`
   //!
@@ -72,9 +72,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/erf_inv.cpp
+  //! @godbolt{doc/core/erf_inv.cpp}
   //!
   //!  @}
   //================================================================================================

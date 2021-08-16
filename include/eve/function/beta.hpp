@@ -38,9 +38,9 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](@ref glossary_elementwise) \f$\displaystyle \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}\f$.
+  //!Returns [elementwise](@ref glossary_elementwise) \f$\displaystyle \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}\f$.
   //!
-  //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+  //! The result type is the [common compatible type](@ref common_compatible) of the two parameters.
   //!
   //! ---
   //!
@@ -62,7 +62,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //! * eve::diff_1st, eve::diff_2nd
+  //! * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_nth
   //!
   //!:   **Required header:** `#include <eve/function/diff/beta.hpp>`
   //!
@@ -71,9 +71,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/beta.cpp
+  //! @godbolt{doc/core/beta.cpp}
   //!
   //!  @}
   //================================================================================================

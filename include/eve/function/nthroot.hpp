@@ -37,11 +37,11 @@ namespace eve
   //!
   //!`x`:   [floating real value](@ref eve::floating_real_value).
   //!
-  //!`n`:   [integral_value](@ref eve::value). Actually `n` can be a flint.
+  //!`n`:   [integral_value](@ref eve::integral_value). Actually `n` can be a flint.
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](@ref glossary_elementwise) the value of \f$x^{1/n}\f$.
+  //!Returns [elementwise](@ref glossary_elementwise) the value of \f$x^{1/n}\f$.
   //!For negative `x` the value returned is a Nan as soon as `n` is not an odd integer.
   //!
   //! The result type is of the compatibility type of the  parameters.
@@ -73,7 +73,7 @@ namespace eve
   //!     The expression `raw(nthroot)(x,n)` does not care about limiting values and gives less accurate values.
   //!      for instance `nthroot(64.0,3)` is not exactly four but is `3.9999999999999991118` with a 0.5ulp error.
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/nthroot.hpp>`
   //!
@@ -82,9 +82,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/nthroot.cpp
+  //! @godbolt{doc/core/nthroot.cpp}
   //!
   //!  @}
   //================================================================================================

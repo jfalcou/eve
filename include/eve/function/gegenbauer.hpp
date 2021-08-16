@@ -43,7 +43,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](@ref glossary_elementwise) the value of the gegenbauer polynomial of order `n` at `l`, `x`:
+  //!Returns [elementwise](@ref glossary_elementwise) the value of the gegenbauer polynomial of order `n` at `l`, `x`:
   //!
   //!The result type is of the compatibility type of the  parameters.
   //!
@@ -67,7 +67,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/gegenbauer.hpp>`
   //!
@@ -75,9 +75,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/gegenbauer.cpp
+  //! @godbolt{doc/core/gegenbauer.cpp}
   //!
   //!  @}
   //================================================================================================

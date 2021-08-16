@@ -37,13 +37,13 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:      [floating real value](../../concepts.html#value).
+  //!`x`:      [floating real value](@ref floating_real_value).
   //!
   //!`scale` : int or std::integral_constant of int type limited to the range [0, 15].
   //!
   //! **Return value**
   //!
-  //! Returns the [element-wise](../../../glossary.html#elment-wise) reduced part of the scaled input.
+  //! Returns the [elementwise](@ref glossary_elment wise) reduced part of the scaled input.
   //! The number of fraction bits retained is specified by scale. By default the internal rounding after scaling is done to nearest integral.
   //! The call is equivalent to `a0-roundscale(a0, scale)`
   //!
@@ -73,9 +73,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/fracscale.cpp
+  //! @godbolt{doc/core/fracscale.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -38,13 +38,13 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](@ref glossary_elementwise) the square of the absolute value of `x`.
+  //!Computes  [elementwise](@ref glossary_elementwise) the square of the absolute value of `x`.
   //!
   //! ---
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/sqr_abs.hpp>`
   //!
@@ -52,9 +52,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/sqr_abs.cpp
+  //! @godbolt{doc/core/sqr_abs.cpp}
   //!
   //!  @}
   //================================================================================================

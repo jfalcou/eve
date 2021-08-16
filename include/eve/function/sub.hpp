@@ -71,7 +71,7 @@ namespace eve
   //!     The expression `eve::saturated(eve::sub)(xs...)` computes the saturated difference of
   //!     all `xs`.
   //!
-  //!   * eve::diff_nth
+  //!   * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/sub.hpp>`
   //!
@@ -80,9 +80,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/bb7vc5bWd)
-  //!
-  //! @include{lineno} doc/core/sub.cpp
+  //! @godbolt{doc/core/sub.cpp}
   //!
   //!  @}
   //================================================================================================

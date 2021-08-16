@@ -76,7 +76,7 @@ namespace eve
   //!      and in fact computes the Pochammer symbol  \f$x^{\overline a}=\frac{\Gamma(x+a)}{\Gamma(a)}\f$
   //!      returning nan if the result in really undefined.
   //!
-  //!  * eve::diff_1st, eve::diff_2nd
+  //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/rising_factorial.hpp>`
   //!
@@ -91,9 +91,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/rising_factorial.cpp
+  //! @godbolt{doc/core/rising_factorial.cpp}
   //!
   //!  @}
   //================================================================================================

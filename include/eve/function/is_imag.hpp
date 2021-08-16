@@ -36,7 +36,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!`x`:   [floating value](@ref eve::floating_value).
   //!
   //! **Return value**
   //!
@@ -73,9 +73,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/is_imag.cpp
+  //! @godbolt{doc/core/is_imag.cpp}
   //!
   //!  @}
   //================================================================================================

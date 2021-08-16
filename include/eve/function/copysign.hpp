@@ -40,7 +40,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!   Returns the [element-wise](../../../glossary.html#regular) composition of a value with the magnitude of `x`
+  //!   Returns the [elementwise](@ref glossary_elementwise) composition of a value with the magnitude of `x`
   //!   and the bit of sign of `y`.
   //!
   //! ---
@@ -67,9 +67,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/copysign.cpp
+  //! @godbolt{doc/core/copysign.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!    Computes the [element-wise](../../../glossary.html#element-wise_) ieee exponent of the floating value.
+  //!    Computes the [elementwise](@ref glossary_elementwise) ieee exponent of the floating value.
   //!
   //!    The exponent \f$e\f$ and mantissa \f$m\f$ of a floating point entry \f$x\f$ are related by
   //!    \f$x =  m\times 2^e\f$, with  \f$|m| \in [1, 2[\f$.
@@ -69,9 +69,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/exponent.cpp
+  //! @godbolt{doc/core/exponent.cpp}
   //!
   //!  @}
   //================================================================================================

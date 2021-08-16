@@ -41,9 +41,9 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](@ref glossary_elementwise) \f$|x|^y\f$.
+  //!Returns [elementwise](@ref glossary_elementwise) \f$|x|^y\f$.
   //!
-  //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+  //! The result type is the [common compatible type](@ref common_compatible) of the two parameters.
   //! In particular we have (IEC 60559):
   //!
   //!  *  pow_abs(\f$\pm0\f$, y), where y is a negative odd integer, returns \f$+\infty\f$.
@@ -86,7 +86,7 @@ namespace eve
   //!     The expression `raw(pow_abs)(x,y)` merely returns `exp(y*log(|x|)` which is must faster way to compute the result
   //!      than the regular implemention, but does not fullfill all the boundary requisites of IEC 60559 and has not always a good accuracy.
   //!
-  //!  * eve::diff_1st, eve::diff_2nd
+  //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/pow.hpp>`
   //!
@@ -95,9 +95,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/pow_abs.cpp
+  //! @godbolt{doc/core/pow_abs.cpp}
   //!
   //!  @}
   //================================================================================================

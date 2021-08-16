@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](@ref glossary_elementwise) a value with the same type as `x`.
+  //!Computes  [elementwise](@ref glossary_elementwise) a value with the same type as `x`.
   //!The result is `x-1`.
   //!
   //! ---
@@ -69,7 +69,7 @@ namespace eve
   //!     The call `saturated(dec)(x)` computes the saturated opposite of `x`. The only interest of this behaviour is that
   //!      for integral type T  `saturated(dec)(Valmin< T >())` returns `Valmin< T >()`.
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/dec.hpp>`
   //!
@@ -77,9 +77,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/dec.cpp
+  //! @godbolt{doc/core/dec.cpp}
   //!
   //!  @}
   //================================================================================================

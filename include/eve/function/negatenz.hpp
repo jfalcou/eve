@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [`element-wise`](../../../glossary.html#element-wise) product of the first parameter by the never zero sign of the second.
+  //!Returns the [elementwise](@ref glossary_elementwise) product of the first parameter by the never zero sign of the second.
   //!
   //! ---
   //!
@@ -61,7 +61,8 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!    [`diff`](../decorators.html#diff)
+  //!   * eve::diff, eve::diff_1st, eve::diff_nth
+  //!
   //!:   **Required header:** `#include <eve/function/diff/negatenz.hpp>`
   //!
   //!    The expression `diff(negatenz)(x)` computes the derivative of the function relative to `x`.
@@ -70,9 +71,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/negatenz.cpp
+  //! @godbolt{doc/core/negatenz.cpp}
   //!
   //!  @}
   //================================================================================================

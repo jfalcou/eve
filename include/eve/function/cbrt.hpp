@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) cubic root value of the input.
+  //!Returns the [elementwise](@ref glossary_elementwise) cubic root value of the input.
   //!
   //! ---
   //!
@@ -61,7 +61,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/cbrt.hpp>`
   //!
@@ -69,9 +69,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/cbrt.cpp
+  //! @godbolt{doc/core/cbrt.cpp}
   //!
   //!  @}
   //================================================================================================

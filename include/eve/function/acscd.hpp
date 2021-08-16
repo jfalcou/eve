@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) arc cosecant in degrees of the
+  //!Returns the [elementwise](@ref glossary_elementwise) arc cosecant in degrees of the
   //!input in the range \f$[-90, 90]\f$.
   //!
   //!In particular:
@@ -52,7 +52,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/acscd.hpp>`
   //!  
@@ -60,9 +60,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/acscd.cpp
+  //! @godbolt{doc/core/acscd.cpp}
   //!
   //!  @}
   //================================================================================================

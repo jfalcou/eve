@@ -30,16 +30,16 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< real_value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()( integral_value auto x ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`:   [real value](@ref eve::real_value).
+  //!`x`:   [integral value](@ref eve::integral_value).
   //!
   //! **Return value**
   //!
-  //!    Computes the [element-wise](../../../glossary.html#element-wise_) higher half of the  value,
+  //!    Computes the [elementwise](@ref glossary_elementwise) higher half of the  value,
   //!    returning each element as an unsigned integer of half the size of the input element.
   //!
   //!    If you also need the lower part `lohi` is more efficient.
@@ -52,9 +52,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/hi.cpp
+  //! @godbolt{doc/core/hi.cpp}
   //!
   //!  @}
   //================================================================================================

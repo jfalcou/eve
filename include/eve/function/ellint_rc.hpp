@@ -49,7 +49,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](@ref glossary_elementwise) the Carlson's integral.
+  //!Returns [elementwise](@ref glossary_elementwise) the Carlson's integral.
   //!
   //! The result type is of the compatibility type of the three parameters.
   //!
@@ -77,9 +77,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/ellint_rc.cpp
+  //! @godbolt{doc/core/ellint_rc.cpp}
   //!
   //!  @}
   //================================================================================================

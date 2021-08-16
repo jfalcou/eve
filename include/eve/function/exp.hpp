@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) exponential of the input.
+  //!Returns the [elementwise](@ref glossary_elementwise) exponential of the input.
   //!In partucular:
   //!
   //!   * If the element is \f$\pm0\f$, \f$1\f$ is returned
@@ -67,7 +67,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/exp.hpp>`
   //!
@@ -75,9 +75,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/exp.cpp
+  //! @godbolt{doc/core/exp.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](@ref glossary_elementwise) the smallest integer not less than `x`.
+  //!Computes  [elementwise](@ref glossary_elementwise) the smallest integer not less than `x`.
   //!
   //! ---
   //!
@@ -71,7 +71,7 @@ namespace eve
   //!      - If `tol` is an integral_value n compute the floor of the next nth representable value in the `x` type.
   //!      - If `tol` is omitted the tolerance is taken to 3 times the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/ceil.hpp>`
   //!
@@ -79,9 +79,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/ceil.cpp
+  //! @godbolt{doc/core/ceil.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -38,10 +38,10 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the logical value containing the [element-wise](@ref glossary_elementwise) comparison test result
+  //!Returns the logical value containing the [elementwise](@ref glossary_elementwise) comparison test result
   //!between `x` and `y`. The infix notation `x > y` can also be used.
   //!
-  //!The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+  //!The result type is the [common compatible type](@ref common_compatible) of the two parameters.
   //!
   //! ---
   //!
@@ -78,9 +78,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/is_not_less_equal.cpp
+  //! @godbolt{doc/core/is_not_less_equal.cpp}
   //!
   //!  @}
   //================================================================================================

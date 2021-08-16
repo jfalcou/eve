@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) inverse of the square root  of the input.
+  //!Returns the [elementwise](@ref glossary_elementwise) inverse of the square root  of the input.
   //!
   //! ---
   //!
@@ -63,9 +63,9 @@ namespace eve
   //!
   //!  * eve::raw
   //!     The call `raw(rsqrt)(x)`, call a proper system intrinsic if one exists, but with possibly very poor accuracy in return.
-  //!      Otherwise it uses the [`regular`](../decorators.html#regular) call.
+  //!      Otherwise it uses the non-decorated call.
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/rsqrt.hpp>`
   //!
@@ -73,9 +73,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/rsqrt.cpp
+  //! @godbolt{doc/core/rsqrt.cpp}
   //!
   //!  @}
   //================================================================================================

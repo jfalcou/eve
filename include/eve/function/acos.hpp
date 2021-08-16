@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) arc cosine of the
+  //!Returns the [elementwise](@ref glossary_elementwise) arc cosine of the
   //!input in the range \f$[0 , \pi]\f$.
   //!
   //!In particular:
@@ -54,7 +54,7 @@ namespace eve
   //!  * eve::raw
   //!     The call `raw(acos)(x)`, call a faster implementation which can be slightly less accurate near 1.
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/acos.hpp>`
   //!
@@ -62,9 +62,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/acos.cpp
+  //! @godbolt{doc/core/acos.cpp}
   //!
   //!  @}
   //================================================================================================

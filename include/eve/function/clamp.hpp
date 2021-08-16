@@ -45,12 +45,12 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Each [element](../../../glossary.html#regular)  of the result contains:
+  //!Each [element](@ref glossary_element)  of the result contains:
   //!   -  `lo`, if `x` is less than `lo`.
   //!   -  `hi`, if `hi` is less than `x`.
   //!   -  otherwise `x`.
   //!
-  //!The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
+  //!The result type is the [common compatible type](@ref common_compatible) of the three parameters.
   //!
   //!@warning
   //!    Contrary to the standard implementation `clamp` does not return a reference.
@@ -75,7 +75,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::diff_1st, eve::diff_2nd, eve::diff_3rd
+  //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/clamp.hpp>`
   //!
@@ -84,9 +84,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/clamp.cpp
+  //! @godbolt{doc/core/clamp.cpp}
   //!
   //!  @}
   //================================================================================================

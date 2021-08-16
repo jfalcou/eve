@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!computes [element-wise](../../../glossary.html#element-wise_) the 'units in the last place' distance betwween `x` and `y`.
+  //!computes [elementwise](@ref glossary_elementwise) the 'units in the last place' distance betwween `x` and `y`.
   //!This is semantically equivalent to:`
   //!
   //!* if is_ordered(x,y), nb_values(x,y)/2.0 is returned
@@ -52,9 +52,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/ulpdist.cpp
+  //! @godbolt{doc/core/ulpdist.cpp}
   //!
   //!  @}
   //================================================================================================

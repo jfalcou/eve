@@ -39,7 +39,7 @@ namespace eve
   //!
   //!`m`:   mask [value](@ref eve::value)
   //!
-  //!`y`, `z`:   selection [values](@ref eve::value)
+  //!`y`, `z`:   selection [real values](@ref eve::real_value)
   //!
   //! **Return value**
   //!
@@ -70,9 +70,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/bit_select.cpp
+  //! @godbolt{doc/core/bit_select.cpp}
   //!
   //!  @}
   //================================================================================================

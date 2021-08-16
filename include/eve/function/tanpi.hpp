@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) tangent of the input expressed in \f$\pi\f$ multiples.
+  //!Returns the [elementwise](@ref glossary_elementwise) tangent of the input expressed in \f$\pi\f$ multiples.
   //!
   //!The call `tanpi(x)` is semantically equivalent to \f$\tan(\pi x)\f$.
   //!In particular:
@@ -55,7 +55,7 @@ namespace eve
   //!
   //!     provide a balance between speed and range limitation.
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/tanpi.hpp>`
   //!
@@ -63,9 +63,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/tanpi.cpp
+  //! @godbolt{doc/core/tanpi.cpp}
   //!
   //!  @}
   //================================================================================================

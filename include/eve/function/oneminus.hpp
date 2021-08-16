@@ -39,11 +39,11 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](@ref glossary_elementwise) `1-x` with the type of `x`.
+  //!Computes  [elementwise](@ref glossary_elementwise) `1-x` with the type of `x`.
   //!
   //!@warning
-  //!    If an  [element](../../../glossary.html#element_) of the expected result is not representable in
-  //!    the result type, the corresponding result [element](../../../glossary.html#element_) is undefined.
+  //!    If an  [element](@ref glossary_element) of the expected result is not representable in
+  //!    the result type, the corresponding result [element](@ref glossary_element) is undefined.
   //!
   //! ---
   //!
@@ -72,7 +72,7 @@ namespace eve
   //!     The call `saturated(oneminus)(x)` is semantically equivalent to `saturated(sub)(One(as(x)), x)`
   //!      and is never undefined.
   //!  
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/oneminus.hpp>`
   //!  
@@ -80,9 +80,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/oneminus.cpp
+  //! @godbolt{doc/core/oneminus.cpp}
   //!
   //!  @}
   //================================================================================================

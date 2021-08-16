@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](@ref glossary_elementwise) \f$\displaystyle \zeta(s)=\sum_{n=0}^\infty \frac1{n^s}\f$
+  //!Returns [elementwise](@ref glossary_elementwise) \f$\displaystyle \zeta(s)=\sum_{n=0}^\infty \frac1{n^s}\f$
   //!
   //!For negative entries the computation is made using the reflection formula.
   //!
@@ -69,9 +69,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/zeta.cpp
+  //! @godbolt{doc/core/zeta.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes  [element-wise](@ref glossary_elementwise) the integer nearest to `x`.
+  //!Computes  [elementwise](@ref glossary_elementwise) the integer nearest to `x`.
   //!
   //!If `x` is an exact half-integer the rouding is made to the nearest even integer.
   //!
@@ -72,9 +72,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/nearest.cpp
+  //! @godbolt{doc/core/nearest.cpp}
   //!
   //!  @}
   //================================================================================================

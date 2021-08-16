@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [element-wise](@ref glossary_elementwise) value in \f$pi\f$ multiples of the arc cosine of the
+  //!Returns the [elementwise](@ref glossary_elementwise) value in \f$pi\f$ multiples of the arc cosine of the
   //!input in the range \f$[0, 1]\f$.
   //!
   //!In particular:
@@ -51,7 +51,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/acospi.hpp>`
   //!  
@@ -59,9 +59,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/acospi.cpp
+  //! @godbolt{doc/core/acospi.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -40,7 +40,7 @@ namespace eve
   //!
   //!`x`:   [floating real value](@ref eve::floating_real_value).
   //!
-  //!`n`:   [integral real value](@ref eve::value).
+  //!`n`:   [integral real value](@ref eve::integral_value).
   //!
   //! **Return value**
   //!
@@ -70,9 +70,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/ldexp.cpp
+  //! @godbolt{doc/core/ldexp.cpp}
   //!
   //!  @}
   //================================================================================================

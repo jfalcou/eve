@@ -41,7 +41,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
+  //!The result type is the [common compatible type](@ref common_compatible) of the parameters.
   //!
   //!@warning
   //!   If any element of the inputs is a `Nan`, the corresponding output element is system-dependent.
@@ -71,7 +71,7 @@ namespace eve
   //!     **Required header:** `#include <eve/function/pedantic/min.hpp>`
   //!  
   //!     The call `pedantic(min)(x, args, ...)`  ensures the conformity to the standard behaviour, that is
-  //!      for two parameters (on an  [element-wise](@ref glossary_elementwise) basis) semanticaly equivalent to:
+  //!      for two parameters (on an  [elementwise](@ref glossary_elementwise) basis) semanticaly equivalent to:
   //!      `(x < y) ? x : y` and this behaviour is also ensured on n parameters calls as if this scheme
   //!      was recursively used.
   //!  
@@ -82,7 +82,7 @@ namespace eve
   //!     The call `numeric(max)(x,args,...)`  ensures that  if any element of the inputs is not a `Nan`, the corresponding
   //!      output element will not be a `Nan`.
   //!  
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/min.hpp>`
   //!  
@@ -92,9 +92,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/min.cpp
+  //! @godbolt{doc/core/min.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -41,7 +41,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [element-wise](@ref glossary_elementwise) the value of the first kind Legendre polynomial of order `n` at `x`.
+  //!Returns [elementwise](@ref glossary_elementwise) the value of the first kind Legendre polynomial of order `n` at `x`.
   //!By choice returns a nan if x is outside of \f$[-1,1]\f$.
   //!
   //!The result type is of the compatibility type of the  parameters.
@@ -66,7 +66,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/legendre.hpp>`
   //!
@@ -74,9 +74,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/legendre.cpp
+  //! @godbolt{doc/core/legendre.cpp}
   //!
   //!  @}
   //================================================================================================

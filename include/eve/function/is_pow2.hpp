@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Checks [element-wise](@ref glossary_elementwise) if `x` is an integral power of two.
+  //!Checks [elementwise](@ref glossary_elementwise) if `x` is an integral power of two.
   //!
   //! ---
  //!
@@ -65,9 +65,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/is_pow2.cpp
+  //! @godbolt{doc/core/is_pow2.cpp}
   //!
   //!  @}
   //================================================================================================

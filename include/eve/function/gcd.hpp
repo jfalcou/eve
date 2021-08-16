@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+  //! The result type is the [common compatible type](@ref common_compatible) of the two parameters.
   //!
   //!@warning
   //!    `p` and `n` can be of any [real values](@ref eve::value) type, but when the types are not integral
@@ -75,9 +75,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/TODO)
-  //!
-  //! @include{lineno} doc/core/gcd.cpp
+  //! @godbolt{doc/core/gcd.cpp}
   //!
   //!  @}
   //================================================================================================
