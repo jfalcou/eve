@@ -45,12 +45,6 @@ namespace eve
   //!
   //! The result type is the [common compatible type](@ref common_compatible) of the two parameters.
   //!
-  //![`diff`](../decorators.html#diff)
-  //!:   **Required header:** `#include <eve/function/diff/betainc_inv.hpp>`
-  //!
-  //!:   The expression `diff(betainc_inv)(s,x,y)` computes the partial
-  //!    diff of \f$f\f$, where \f$f\f$ is the function \f$s \rightarrow \ \mbox{B}(s,x,y)\f$.
-  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
@@ -71,7 +65,12 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  no decorators are supported
+  //! * eve::diff
+  //!
+  //!:   **Required header:** `#include <eve/function/diff/betainc_inv.hpp>`
+  //!
+  //!:   The expression `diff(betainc_inv)(s,x,y)` computes the partial
+  //!    diff of \f$f\f$, where \f$f\f$ is the function \f$s \rightarrow \ \mbox{B}(s,x,y)\f$.
   //!
   //! #### Example
   //!

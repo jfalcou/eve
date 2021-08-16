@@ -42,8 +42,8 @@ namespace eve
   //!Computes  [element-wise](@ref glossary_elementwise) `1-x` with the type of `x`.
   //!
   //!@warning
-  //!    If an  [element](../../../glossary.html#element_) of the expected result is not representable in
-  //!    the result type, the corresponding result [element](../../../glossary.html#element_) is undefined.
+  //!    If an  [element](@ref glossary_element) of the expected result is not representable in
+  //!    the result type, the corresponding result [element](@ref glossary_element) is undefined.
   //!
   //! ---
   //!

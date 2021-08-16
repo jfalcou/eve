@@ -50,7 +50,7 @@ namespace eve
   //!the call `rshr(x, n)` is equivalent to `if_else(n>0, shl(x, n), shr(x, n))` if `x`  is an  [simd value](@ref eve::simd_value).
   //!
   //!The types must share the same cardinal or be scalar and if `N` is the size in bits  of the element type of `T`,
-  //!all  [elements](../../../glossary.html#element) of n must belong to the
+  //!all  [elements](@ref glossary_element) of n must belong to the
   //!interval: `[-N, N[` or the result is undefined.
   //!
   //! ---

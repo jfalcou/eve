@@ -42,8 +42,8 @@ namespace eve
   //!Returns a value with the same type as `x`  containing the [element-wise](@ref glossary_elementwise) fractional part of `x` with the same sign as `x`.
   //!
   //!In particular:
-  //! * If an [element](../../../glossary.html#value) of `x` is \f$\pm0\f$,  \f$\pm0\f$ is returned.
-  //! * If an [element](../../../glossary.html#value) of `x` is \f$\pm\infty\f$ or `Nan`, a `Nan` is returned.
+  //! * If an [element](@ref glossary_element) of `x` is \f$\pm0\f$,  \f$\pm0\f$ is returned.
+  //! * If an [element](@ref glossary_element) of `x` is \f$\pm\infty\f$ or `Nan`, a `Nan` is returned.
   //!
   //! ---
   //!

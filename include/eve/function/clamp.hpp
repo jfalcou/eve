@@ -45,7 +45,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Each [element](../../../glossary.html#regular)  of the result contains:
+  //!Each [element](@ref glossary_element)  of the result contains:
   //!   -  `lo`, if `x` is less than `lo`.
   //!   -  `hi`, if `hi` is less than `x`.
   //!   -  otherwise `x`.
