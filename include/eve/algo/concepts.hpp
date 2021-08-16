@@ -13,6 +13,8 @@
 #include <eve/function/load.hpp>
 #include <eve/function/compress_store.hpp>
 
+#include <eve/algo/unalign.hpp>
+
 namespace eve::algo
 {
   namespace detail
@@ -26,16 +28,6 @@ namespace eve::algo
     template <typename T>
     concept is_fixed_v = is_fixed<T>::value;
   }
-
-  template <typename T>
-  using unaligned_t = decltype(std::declval<T>().unaligned());
-
-  // Do the other way around to the normal one, otherwise there is a compilation issue.
-  template <typename T>
-  struct unaligned
-  {
-    using type = unaligned_t<T>;
-  };
 
   template <typename T>
   using partially_aligned_t = decltype(std::declval<T>().previous_partially_aligned());
