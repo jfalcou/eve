@@ -43,7 +43,7 @@ namespace eve
   //!Returns [element-wise](@ref glossary_elementwise) the value of the inverse of incomplete beta function
   //!relative to the first parameter.
   //!
-  //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+  //! The result type is the [common compatible type](@ref common_compatible) of the two parameters.
   //!
   //![`diff`](../decorators.html#diff)
   //!:   **Required header:** `#include <eve/function/diff/betainc_inv.hpp>`

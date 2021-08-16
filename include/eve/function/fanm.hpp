@@ -44,7 +44,7 @@ namespace eve
   //!The call `fanm(x, y, z)` is similar to `x-y*z` as if calculated to infinite precision and rounded once
   //!to fit the result as much as supported by the hardware.
   //!
-  //!The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
+  //!The result type is the [common compatible type](@ref common_compatible) of the three parameters.
   //!
   //!@warning Note
   //!    This `fanm` implementation provides those properties for all [integral real value](@ref eve::integral_real_value)

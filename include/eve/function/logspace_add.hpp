@@ -44,7 +44,7 @@ namespace eve
   //! The call `logspace_add(arg0, arg1, args...)` is semantically equivalent to
   //!`log(exp(arg0) + exp(arg1) + exp(args)...)`;.
   //!
-  //! The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
+  //! The result type is the [common compatible type](@ref common_compatible) of the parameters.
   //!
   //! ---
   //!

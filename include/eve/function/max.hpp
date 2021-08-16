@@ -40,7 +40,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
+  //!The result type is the [common compatible type](@ref common_compatible) of the parameters.
   //!
   //!@warning
   //!   If any element of the inputs is a `Nan`, the corresponding output element is system-dependent.

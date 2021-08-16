@@ -58,7 +58,7 @@ namespace eve
   //!     but not more absurd than the IEEE choices and allows to simplify (and speed) the implementation.
   //!     In all other cases, the result is standard conformant.
   //!
-  //!The result type is the [compatibility result](../../concept.html#compatibilit`y`) of the two parameters.
+  //!The result type is the [common compatible type](@ref common_compatible) of the two parameters.
   //!
   //! ---
   //!

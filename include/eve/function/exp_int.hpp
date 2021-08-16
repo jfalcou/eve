@@ -42,7 +42,7 @@ namespace eve
   //! **Return value**
   //!
   //!Returns [element-wise](@ref glossary_elementwise) exponential integral
-  //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+  //! The result type is the [common compatible type](@ref common_compatible) of the two parameters.
   //!If the first parameter inot an integral value it must be a flint, otherwise the result is Nan.
   //!
   //! ---

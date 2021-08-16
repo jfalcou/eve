@@ -47,7 +47,7 @@ namespace eve
   //!
   //!For more than two parameters only floating entries are allowed and overflow is avoided.
   //!
-  //! The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
+  //! The result type is the [common compatible type](@ref common_compatible) of the parameters.
   //!
   //!@warning
   //!    If `x` and `y` are [integral values](@ref eve::integral_value) and the sum is odd, the result

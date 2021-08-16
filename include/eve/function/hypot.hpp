@@ -40,7 +40,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
+  //!The result type is the [common compatible type](@ref common_compatible) of the three parameters.
   //!
   //! ---
   //!

@@ -43,7 +43,7 @@ namespace eve
   //!
   //!Return the multiplication of the [values](@ref eve::value).
   //!
-  //! The result type is the [compatibility result](../../concept.html#compatibility) of the parameters.
+  //! The result type is the [common compatible type](@ref common_compatible) of the parameters.
   //!
   //! The call `mul(x, args, ...)` is equivalent to `(x * args * ...)` if `x` or one of the `args`
   //! is an  [simd value](@ref eve::simd_value).
@@ -77,7 +77,7 @@ namespace eve
   //!     **Required header:** `#include <eve/function/saturated/mul.hpp>`
   //!
   //!     The call `saturated(mul)(x, args...)` computes the saturated  multiplication of `x` and `args...`. The saturation is obtained in the
-  //!     [compatibility result](../../concept.html#compatibility) of the N parameters. The computation is done as if all arguments were
+  //!     [common compatible type](@ref common_compatible) of the N parameters. The computation is done as if all arguments were
   //!     converted to this type and the saturated multiplication applied recursively on all parameters. No overflow occurs.
   //!
   //!  * eve::diff_nth

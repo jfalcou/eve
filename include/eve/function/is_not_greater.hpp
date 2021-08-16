@@ -42,7 +42,7 @@ namespace eve
   //!Returns the logical value containing the [element-wise](@ref glossary_elementwise) comparison test result
   //!between `x` and `y`.
   //!
-  //!The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+  //!The result type is the [common compatible type](@ref common_compatible) of the two parameters.
   //!
   //! ---
   //!
@@ -77,7 +77,7 @@ namespace eve
   //!      - if `t` is a positive integral_value then \f$(x < \mbox{next}(y, t)\f$;
   //!      - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
   //!
-  //!  The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+  //!  The result type is the [common compatible type](@ref common_compatible) of the two parameters.
   //!
   //! #### Example
   //!

@@ -43,7 +43,7 @@ namespace eve
   //!
   //!Returns [element-wise](@ref glossary_elementwise) \f$|x|^y\f$.
   //!
-  //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+  //! The result type is the [common compatible type](@ref common_compatible) of the two parameters.
   //! In particular we have (IEC 60559):
   //!
   //!  *  pow_abs(\f$\pm0\f$, y), where y is a negative odd integer, returns \f$+\infty\f$.

@@ -40,7 +40,7 @@ namespace eve
   //!
   //!Returns [element-wise](@ref glossary_elementwise) \f$\displaystyle \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}\f$.
   //!
-  //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+  //! The result type is the [common compatible type](@ref common_compatible) of the two parameters.
   //!
   //! ---
   //!

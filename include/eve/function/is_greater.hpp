@@ -44,7 +44,7 @@ namespace eve
   //!Returns the logical value containing the [element-wise](@ref glossary_elementwise) comparison test result
   //!between `x` and `y`. The infix notation `x > y` can also be used.
   //!
-  //!The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+  //!The result type is the [common compatible type](@ref common_compatible) of the two parameters.
   //!
   //!@warning
   //!   Although the infix notation with `>` is supported, the `>` operator on

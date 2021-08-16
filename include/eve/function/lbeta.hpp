@@ -40,7 +40,7 @@ namespace eve
   //!
   //!Returns [element-wise](@ref glossary_elementwise) \f$\displaystyle \log\left(\frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}\right)\f$.
   //!
-  //! The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+  //! The result type is the [common compatible type](@ref common_compatible) of the two parameters.
   //!
   //![`derivative`](../decorators.html#derivative)
   //!:   **Required header:** `#include <eve/function/diff/lbeta.hpp>`
