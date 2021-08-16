@@ -32,42 +32,72 @@ namespace eve
 {
   template<typename T> concept arithmetic = std::is_arithmetic_v<T>;
 
-  // Find proper ABI for wide
-  template<typename Type, typename Size> struct abi {};
+  //================================================================================================
+  //! @addtogroup traits
+  //! @{
+  //!
+  //! @struct abi
+  //! @brief Find proper ABI for Type/Lanes pair
+  //!
+  //! Computes the best ABI to use to efficiently store `Lanes` elements of type `Type` in
+  //! order to use SIMD implementations.
+  //!
+  //! @tparam Type  Type of the element to store
+  //! @tparam Lanes Number of elements to store
+  //!
+  //! #### Member types
+  //!
+  //! |Name   | Definition                                                  |
+  //! |:------|:------------------------------------------------------------|
+  //! |`type` | The tag for the ABI to use for current Type/lanes selection |
+  //!
+  //! <br/>
+  //! #### Helper types
+  //!
+  //! @code{.cpp}
+  //! template<typename Type, typename Lanes>
+  //! using abi_t = typename abi<Type,Lanes>::type;
+  //! @endcode
+  //!
+  //! @}
+  //================================================================================================
+  template<typename Type, typename Lanes> struct abi {};
 
-  template<typename Type, typename Size>
-  requires( arithmetic<Type> && detail::require_aggregation<Type, Size> )
-  struct abi<Type, Size>
+#if !defined(EVE_DOXYGEN_INVOKED)
+  template<typename Type, typename Lanes>
+  requires( arithmetic<Type> && detail::require_aggregation<Type, Lanes> )
+  struct abi<Type, Lanes>
   {
     using type = eve::aggregated_;
   };
 
-  template<typename Type, typename Size>
+  template<typename Type, typename Lanes>
   requires( kumi::product_type<Type> )
-  struct abi<Type, Size>
+  struct abi<Type, Lanes>
   {
     using type = eve::bundle_;
   };
 
-  template<typename Type, typename Size>
-  requires( arithmetic<Type> && !detail::require_aggregation<Type, Size> )
-  struct abi<Type, Size> : abi_of<Type, Size::value>
+  template<typename Type, typename Lanes>
+  requires( arithmetic<Type> && !detail::require_aggregation<Type, Lanes> )
+  struct abi<Type, Lanes> : abi_of<Type, Lanes::value>
   {};
 
   // Wrapper for SIMD registers holding logical type
-  template<typename Type, typename Size>
-  requires( arithmetic<Type> && detail::require_aggregation<Type, Size> )
-  struct abi<logical<Type>, Size>
+  template<typename Type, typename Lanes>
+  requires( arithmetic<Type> && detail::require_aggregation<Type, Lanes> )
+  struct abi<logical<Type>, Lanes>
   {
     using type = eve::aggregated_;
   };
 
-  template<typename Type, typename Size>
-  requires( arithmetic<Type> && !detail::require_aggregation<Type, Size> )
-  struct abi<logical<Type>, Size> : abi_of<logical<Type>, Size::value>
+  template<typename Type, typename Lanes>
+  requires( arithmetic<Type> && !detail::require_aggregation<Type, Lanes> )
+  struct abi<logical<Type>, Lanes> : abi_of<logical<Type>, Lanes::value>
   {};
+#endif
 
   // Type short-cut
-  template<typename Type, typename Size>
-  using abi_t = typename abi<Type, Size>::type;
+  template<typename Type, typename Lanes>
+  using abi_t = typename abi<Type, Lanes>::type;
 }
