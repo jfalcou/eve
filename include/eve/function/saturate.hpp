@@ -40,7 +40,7 @@ namespace eve
   //!
   //!`x`:   [value](@ref eve::value) to saturate.
   //!
-  //!`t`:   [Type wrapper](../types/as.html#as_) instance embedding the type to saturate `x` to.
+  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type to saturate `x` to.
   //!
   //! **Return value**
   //!

@@ -77,9 +77,9 @@ namespace eve
   //!
   //!     **Required header:** `#include <eve/function/saturated/dist.hpp>`
   //!
-  //!     The call `saturated(dist)(x, y)` computes a saturated distance. Contrary to the [regular case](../decorator/regular.html), it guarantees
+  //!     The call `saturated(dist)(x, y)` computes a saturated distance. Contrary to the non decorated case, it guarantees
   //!      that the result is always defined. If \f$|x-y|\f$ is not representable
-  //!      [the greatest representable positive value](../../constants.html#valmax) is returned
+  //!      [the greatest representable positive value](@ref eve::valmax) is returned
   //!
   //!  * eve::diff_1st, eve::diff_2nd
   //!

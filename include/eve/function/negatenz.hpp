@@ -61,7 +61,8 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!    [`diff`](../decorators.html#diff)
+  //!   * eve::diff
+  //!
   //!:   **Required header:** `#include <eve/function/diff/negatenz.hpp>`
   //!
   //!    The expression `diff(negatenz)(x)` computes the derivative of the function relative to `x`.

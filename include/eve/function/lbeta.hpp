@@ -42,12 +42,6 @@ namespace eve
   //!
   //! The result type is the [common compatible type](@ref common_compatible) of the two parameters.
   //!
-  //![`derivative`](../decorators.html#derivative)
-  //!:   **Required header:** `#include <eve/function/diff/lbeta.hpp>`
-  //!
-  //!:   The expression `derivative_1st(lbeta)(x,y)` and `derivative_2nd(lbeta)(x,y)` computes the partial
-  //!derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \log(\mbox{B}(x,y))\f$.
-  //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
@@ -68,7 +62,13 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  no decorators are supported
+  //!
+  //!  *  eve::diff_1st, eve::diff_2nd
+  //!
+  //!:   **Required header:** `#include <eve/function/diff/lbeta.hpp>`
+  //!
+  //!:   The expression `derivative_1st(lbeta)(x,y)` and `derivative_2nd(lbeta)(x,y)` computes the partial
+  //!    derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \log(\mbox{B}(x,y))\f$.
   //!
   //! #### Example
   //!

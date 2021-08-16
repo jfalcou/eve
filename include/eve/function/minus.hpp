@@ -41,7 +41,7 @@ namespace eve
   //!
   //!Computes  [elementwise](@ref glossary_elementwise) a value with the same type as `x`.
   //!The result is  the opposite of `x` if this value is representable in the type of `x`.
-  //!More specifically, for signed integers the opposite value of [their lowest finite value](../../constants.html#valmin)
+  //!More specifically, for signed integers the opposite value of [their lowest finite value](@ref eve::valmin)
   //!is not representable and the result is undefined behaviour.
   //!
   //!@warning
@@ -73,7 +73,7 @@ namespace eve
   //!     **Required header:** `#include <eve/function/saturated/minus.hpp>`
   //!
   //!     The call `saturated(minus)(x)` computes the saturated opposite of `x`. The only interest of this behaviour is that
-  //!      for integral signed type T  `saturated(minus)(Valmin< T >())` returns `Valmax< T >()` and is not u.b.
+  //!      for integral signed type T  `saturated(minus)(eve::valmin< T >())` returns `eve::valmax< T >()` and is not u.b.
   //!
   //!  * eve::diff
   //!

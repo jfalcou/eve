@@ -35,7 +35,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`v`:   [simd_value](../../concepts.html#simd_value) to reduce.
+  //!`v`:   [simd value](@ref eve::simd_value) to reduce.
   //!
   //!`binary_op`:   Binary callable object that perform a binary, associative operation.
   //!

@@ -64,12 +64,12 @@ namespace eve
   //!
   //!  * eve::raw
   //!     The call `raw(sqrt)(x)`, call a proper system intrinsic if one exists, but with possibly very poor accuracy in return.
-  //!      Otherwise it uses the [`regular`](../decorators.html#regular) call.
-  //!  
+  //!      Otherwise it uses the non-decorated call.
+  //!
   //!  * eve::diff
   //!
   //!     **Required header:** `#include <eve/function/diff/sqrt.hpp>`
-  //!  
+  //!
   //!     The expression `diff(sqrt)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example

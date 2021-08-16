@@ -68,11 +68,11 @@ namespace eve
   //!
   //!     The call `pedantic(hypot)(x,args...)`  computes the square root of the sum of the parameters
   //!      without undue overflow or underflow at intermediate stages of the computation
-  //!      and can be more accurate than the [`regular`](../decorators.html#regular) call.
+  //!      and can be more accurate than the non-decorated call.
   //!
   //!      Morever it returns \f$\infty\f$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
   //!
-  //!  * eve::diff
+  //!  * eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/hypot.hpp>`
   //!

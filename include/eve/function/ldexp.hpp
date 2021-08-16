@@ -40,7 +40,7 @@ namespace eve
   //!
   //!`x`:   [floating real value](@ref eve::floating_real_value).
   //!
-  //!`n`:   [integral real value](@ref eve::value).
+  //!`n`:   [integral real value](@ref eve::integral_value).
   //!
   //! **Return value**
   //!

@@ -39,7 +39,7 @@ namespace eve
   //!
   //!`m`:   mask [value](@ref eve::value)
   //!
-  //!`y`, `z`:   selection [values](@ref eve::value)
+  //!`y`, `z`:   selection [real values](@ref eve::real_value)
   //!
   //! **Return value**
   //!

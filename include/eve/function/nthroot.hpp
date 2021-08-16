@@ -37,7 +37,7 @@ namespace eve
   //!
   //!`x`:   [floating real value](@ref eve::floating_real_value).
   //!
-  //!`n`:   [integral_value](@ref eve::value). Actually `n` can be a flint.
+  //!`n`:   [integral_value](@ref eve::integral_value). Actually `n` can be a flint.
   //!
   //! **Return value**
   //!

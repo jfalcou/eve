@@ -39,7 +39,7 @@ namespace eve
   //!
   //!`x`:   [value](@ref eve::value) to convert.
   //!
-  //!`t`:   [Type wrapper](../types/as.html#as_) instance embedding the type to convert `x` to.
+  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type to convert `x` to.
   //!
   //! **Return value**
   //!

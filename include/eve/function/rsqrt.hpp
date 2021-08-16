@@ -63,7 +63,7 @@ namespace eve
   //!
   //!  * eve::raw
   //!     The call `raw(rsqrt)(x)`, call a proper system intrinsic if one exists, but with possibly very poor accuracy in return.
-  //!      Otherwise it uses the [`regular`](../decorators.html#regular) call.
+  //!      Otherwise it uses the non-decorated call.
   //!
   //!  * eve::diff
   //!

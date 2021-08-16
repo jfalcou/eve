@@ -14,6 +14,17 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup constant
+  //! @{
+  //! @var valmax
+  //!
+  //! @brief Callable object computing the greatest positive value.
+  //!
+  //! **Required header:** `#include <eve/function/valmax.hpp>`
+  //! @}
+  //================================================================================================
+
   EVE_MAKE_CALLABLE(valmax_, valmax);
 
   namespace detail
