@@ -16,8 +16,8 @@ namespace eve
   //! @var stirling
   //!
   //! @brief Callable object computing an approximation of the
-  //!        \f$\Gamma\f$ function by \f$\displaystyle \Gamma(x) \approx \sqrt{2 \pi} x^{x-\frac12} e^{-x} ( 1 + \frac1{x} P(\frac1{x}))\f$,
-  //!        where \f$\fP\f\f$ is a polynomial.
+  //!        \f$\Gamma\f$ function by \f$\displaystyle \Gamma(x) \approx \sqrt{2 \pi} x^{x-\frac12} e^{-x} \left( 1 + \frac1{x} P(\frac1{x})\right)\f$,
+  //!        where \f$P\f$ is a polynomial.
   //!
   //! **Required header:** `#include <eve/function/stirling.hpp>`
   //!
@@ -36,13 +36,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`n`:   [value](@ref eve::value).
-  //!
-  //!`x`:   [floating value](@ref eve::value).
+  //!`x`:   [floating real value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
-  //!Returns [elementwise](@ref glossary_elementwise) \f$\sqrt{2 \pi} x^{x-\frac12} e^{-x} ( 1 + \frac1{x} P(\frac1{x}))\f$
+  //!Returns [elementwise](@ref glossary_elementwise) \f$\sqrt{2 \pi} x^{x-\frac12} e^{-x} \left( 1 + \frac1{x} P(\frac1{x})\right)\f$
   //!
   //! ---
   //!
