@@ -73,7 +73,7 @@ namespace eve
   //!     The expression `raw(nthroot)(x,n)` does not care about limiting values and gives less accurate values.
   //!      for instance `nthroot(64.0,3)` is not exactly four but is `3.9999999999999991118` with a 0.5ulp error.
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/nthroot.hpp>`
   //!

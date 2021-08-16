@@ -85,7 +85,7 @@ namespace eve
   //!
   //!     The behaviour is the same except that if  `|x| == |y|`, `numeric(min)` is used.
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/minmag.hpp>`
   //!

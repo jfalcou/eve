@@ -65,7 +65,7 @@ namespace eve
   //!     The call `raw(rsqrt)(x)`, call a proper system intrinsic if one exists, but with possibly very poor accuracy in return.
   //!      Otherwise it uses the non-decorated call.
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/rsqrt.hpp>`
   //!

@@ -54,7 +54,7 @@ namespace eve
   //!
   //!     provide a balance between speed and range limitation.
   //!  
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/sin.hpp>`
   //!  

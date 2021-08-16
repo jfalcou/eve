@@ -71,7 +71,7 @@ namespace eve
   //!
   //!     With this decorator the function returns a Nan element for each corresponding Nan entry element.
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/arg.hpp>`
   //!

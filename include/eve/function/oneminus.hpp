@@ -72,7 +72,7 @@ namespace eve
   //!     The call `saturated(oneminus)(x)` is semantically equivalent to `saturated(sub)(One(as(x)), x)`
   //!      and is never undefined.
   //!  
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/oneminus.hpp>`
   //!  

@@ -81,7 +81,7 @@ namespace eve
   //!
   //!     The call `numeric(absmin)(x, args...) is equivalent to `abs(numeric(min)(x, args...))`
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/absmin.hpp>`
   //!

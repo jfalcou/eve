@@ -83,7 +83,7 @@ namespace eve
   //!     The call `numeric(fsm)(x,y,z)` ensures the full compliance to fsm properties. This can be very expensive if the
   //!      system has no hardware capability.
   //!
-  //!  * eve::diff
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/fsm.hpp>`
   //!

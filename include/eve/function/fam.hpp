@@ -83,7 +83,7 @@ namespace eve
   //!     The call `numeric(fam)(x,y,z)` ensures the full compliance to fam properties. This can be very expensive if the
   //!      system has no hardware capability.
   //!
-  //!  * eve::diff_1st, eve::diff_2nd, eve::diff_3rd
+  //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/fam.hpp>`
   //!

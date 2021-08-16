@@ -76,7 +76,7 @@ namespace eve
   //!     More specifically, for any signed integer value `x`, the expression
   //!     `eve::saturated(eve::abs)(eve::valmin(as(x)))` evaluates to `eve::valmax(as(x))`.
   //!
-  //!   * eve::diff
+  //!   * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/abs.hpp>`
   //!
