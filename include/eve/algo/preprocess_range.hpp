@@ -12,8 +12,6 @@
 #include <eve/algo/ptr_iterator.hpp>
 #include <eve/algo/traits.hpp>
 
-#include <eve/detail/overload.hpp>
-
 #include <iterator>
 #include <type_traits>
 #include <utility>

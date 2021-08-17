@@ -38,7 +38,7 @@ namespace eve::algo
     template <typename _Cardinal>
     auto cardinal_cast(_Cardinal) const { return unaligned_ptr_iterator<T, _Cardinal>{ptr}; }
 
-    value_type& operator*() const { return *ptr; }
+    auto& operator*() const { return *ptr; }
 
     unaligned_ptr_iterator& operator+=(std::ptrdiff_t n) { ptr += n; return *this; }
     friend std::ptrdiff_t   operator-(unaligned_ptr_iterator x, unaligned_ptr_iterator y) { return x.ptr - y.ptr; }
@@ -94,7 +94,7 @@ namespace eve::algo
       return unaligned_ptr_iterator<T, Cardinal>{ptr.get()};
     }
 
-    value_type& operator*() const { return *ptr; }
+    auto& operator*() const { return *ptr; }
     auto get() const { return ptr.get(); }
     auto unaligned() const { return unaligned_ptr_iterator<T, Cardinal>{ptr.get()}; }
     auto previous_partially_aligned() const { return *this; }

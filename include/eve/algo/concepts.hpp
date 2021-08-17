@@ -101,13 +101,4 @@ namespace eve::algo
 
   template <typename T, template <typename ...> class Templ>
   concept instance_of = detail::instance_of_impl<T, Templ>::value;
-
-  namespace detail
-  {
-    template <typename I>
-    auto value_type_impl() {
-      if constexpr ( std::is_pointer_v<I> ) return typename std::iterator_traits<I>::value_type{};
-      else                                  return typename I::value_type{};
-    }
-  }
 }
