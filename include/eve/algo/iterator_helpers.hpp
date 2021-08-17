@@ -20,5 +20,19 @@ namespace eve::algo
     friend auto& operator-=(std::derived_from<operations_with_distance> auto& x, std::ptrdiff_t n) { x += -n; return x; }
     friend auto  operator+ (std::derived_from<operations_with_distance> auto x, std::ptrdiff_t n)  { x += n; return x; }
     friend auto  operator- (std::derived_from<operations_with_distance> auto x, std::ptrdiff_t n)  { x -= n; return x; }
+
+    friend auto& operator++(std::derived_from<operations_with_distance> auto& x)  { x += 1; return x; }
+    friend auto  operator++(std::derived_from<operations_with_distance> auto& x, int)  {
+      auto tmp = x;
+      ++x;
+      return tmp;
+    }
+
+    friend auto& operator--(std::derived_from<operations_with_distance> auto& x)  { x -= 1; return x; }
+    friend auto  operator--(std::derived_from<operations_with_distance> auto& x, int)  {
+      auto tmp = x;
+      --x;
+      return tmp;
+    }
   };
 }

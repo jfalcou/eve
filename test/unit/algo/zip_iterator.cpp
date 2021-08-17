@@ -14,6 +14,50 @@
 
 #include "iterator_concept_test.hpp"
 
+#include <algorithm>
+
+TTS_CASE("zip_light_iterator")
+{
+  std::array<std::uint8_t, 4> c {1, 2, 3, 4};
+  std::vector<int> v{1, 2, 3};
+  std::array<float, 4> f { 1, 2, 3, 4};
+  using u_f = eve::algo::unaligned_ptr_iterator<float, eve::fixed<4>>;
+
+  eve::algo::zip_iterator zf{ c.begin(), v.begin(), u_f{f.begin()} };
+  eve::algo::zip_iterator zl{ c.end(), v.end(), u_f{f.end()} };
+
+  kumi::tuple twos{std::uint8_t{2}, int{2}, float{2.0}};
+
+  // pointer checks
+
+  TTS_EQUAL(&c[0], &get<0>(*zf));
+  TTS_EQUAL(&v[0], &get<1>(*zf));
+  TTS_EQUAL(&f[0], &get<2>(*zf));
+
+  // std::fill won't work
+  for (auto i = zf; i != zf; ++i) {
+    *i = twos;
+  }
+
+  for (auto i = zf; i != zf; ++i) {
+    TTS_EQUAL(*i, twos);
+  }
+
+  // ++/-- etc
+  {
+    auto i = zf;
+    ++i;
+    TTS_EQUAL((i - zf), 1);
+    --i;
+    TTS_EQUAL(i, zf);
+
+    TTS_EQUAL(i++, zf);
+    TTS_EQUAL((i - zf), 1);
+    TTS_EQUAL((i-- - zf), 1);
+    TTS_EQUAL(i, zf);
+  }
+}
+
 TTS_CASE("zip_iterator, sanity check, types test")
 {
   using unaligned_float = eve::algo::unaligned_ptr_iterator<float, eve::fixed<8>>;
@@ -79,10 +123,7 @@ TTS_CASE("zip_iterator, sanity check, types test")
   }
 }
 
-inline constexpr eve::detail::types<
-      eve::wide<std::uint8_t>> some_type;
-
-EVE_TEST_TYPES("Check zip_iterator", some_type)
+EVE_TEST_TYPES("Check zip_iterator", algo_test::selected_types)
 <typename T>(eve::as<T>)
 {
   using t1 = std::int8_t;
