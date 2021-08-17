@@ -15,6 +15,40 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup constant
+  //! @{
+  //! @var twoopi
+  //!
+  //! @brief Callable object computing the greatest positive value.
+  //!
+  //! **Required header:** `#include <eve/function/twoopi.hpp>`
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | Computes the twoopi constant                               |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  tempate < value T > T operator()( as < Target > const & t) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!
+  //! **Return value**
+  //!
+  //! the call `eve::twoopi(as<T>())` is semantically equivalent to  `TO DO`
+  //!
+  //! ---
+  //!
+  //! #### Example
+  //!  //! @godbolt{doc/core/twoopi.cpp}
+  //!
+  //! @}
+  //================================================================================================
   EVE_MAKE_CALLABLE(twoopi_, twoopi);
 
   namespace detail

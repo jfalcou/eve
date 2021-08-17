@@ -16,6 +16,40 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup constant
+  //! @{
+  //! @var minexponent
+  //!
+  //! @brief Callable object computing the greatest positive value.
+  //!
+  //! **Required header:** `#include <eve/function/minexponent.hpp>`
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | Computes the minexponent constant                               |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  tempate < value T > T operator()( as < Target > const & t) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!
+  //! **Return value**
+  //!
+  //! the call `eve::minexponent(as<T>())` is semantically equivalent to  `TO DO`
+  //!
+  //! ---
+  //!
+  //! #### Example
+  //!  //! @godbolt{doc/core/minexponent.cpp}
+  //!
+  //! @}
+  //================================================================================================
   EVE_MAKE_CALLABLE(minexponent_, minexponent);
 
   namespace detail

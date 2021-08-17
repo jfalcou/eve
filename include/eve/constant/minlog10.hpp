@@ -16,6 +16,40 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup constant
+  //! @{
+  //! @var minlog10
+  //!
+  //! @brief Callable object computing the greatest positive value.
+  //!
+  //! **Required header:** `#include <eve/function/minlog10.hpp>`
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | Computes the minlog10 constant                               |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  tempate < value T > T operator()( as < Target > const & t) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!
+  //! **Return value**
+  //!
+  //! the call `eve::minlog10(as<T>())` is semantically equivalent to  `TO DO`
+  //!
+  //! ---
+  //!
+  //! #### Example
+  //!  //! @godbolt{doc/core/minlog10.cpp}
+  //!
+  //! @}
+  //================================================================================================
   EVE_MAKE_CALLABLE(minlog10_, minlog10);
 
   namespace detail

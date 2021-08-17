@@ -31,11 +31,10 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < value T > T operator()( as < Target > const &  ) const noexcept;
+  //!  tempate < value T > T operator()( as < Target > const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
-  //!
   //!
   //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
   //!
