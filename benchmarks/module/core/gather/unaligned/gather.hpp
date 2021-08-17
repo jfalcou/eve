@@ -1,9 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #include <eve/function/gather.hpp>
 #include <eve/memory/aligned_ptr.hpp>

@@ -1,9 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #include <eve/function/expm1.hpp>
 #include <eve/constant/minlog.hpp>
