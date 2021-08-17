@@ -21,7 +21,7 @@ namespace eve
   //! @{
   //! @var sqrt_2
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the square root of 2 value.
   //!
   //! **Required header:** `#include <eve/function/sqrt_2.hpp>`
   //!
@@ -32,7 +32,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < value T > T operator()( as < Target > const & t) const noexcept;
+  //!  tempate < flozting_value T > T operator()( as<T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -41,12 +41,13 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::sqrt_2(as<T>())` is semantically equivalent to  `TO DO`
+  //! the call `eve::sqrt_2(as<T>())` is semantically equivalent to  `eve::sqrt(T(2))`
   //!
   //! ---
   //!
   //! #### Example
-  //!  //! @godbolt{doc/core/sqrt_2.cpp}
+  //!
+  //! @godbolt{doc/core/sqrt_2.cpp}
   //!
   //! @}
   //================================================================================================

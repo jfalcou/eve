@@ -20,7 +20,7 @@ namespace eve
   //! @{
   //! @var twopi
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the \f$2\pi\f$ value.
   //!
   //! **Required header:** `#include <eve/function/twopi.hpp>`
   //!
@@ -31,7 +31,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < value T > T operator()( as < Target > const & t) const noexcept;
+  //!  tempate < value T > T operator()( as<T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -40,12 +40,14 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::twopi(as<T>())` is semantically equivalent to  `TO DO`
+  //! the call `eve::twopi(as<T>())` is semantically equivalent
+  //! to `8*eve::atan(T(1))`
   //!
   //! ---
   //!
   //! #### Example
-  //!  //! @godbolt{doc/core/twopi.cpp}
+  //!
+  //! @godbolt{doc/core/twopi.cpp}
   //!
   //! @}
   //================================================================================================

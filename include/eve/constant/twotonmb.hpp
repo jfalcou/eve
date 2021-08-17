@@ -21,7 +21,7 @@ namespace eve
   //! @{
   //! @var twotonmb
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the the 2 power of the number of mantissa bits.
   //!
   //! **Required header:** `#include <eve/function/twotonmb.hpp>`
   //!
@@ -41,12 +41,14 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::twotonmb(as<T>())` is semantically equivalent to  `TO DO`
+  //! the call `eve::twotonmb(as<T>())` is semantically equivalent to
+  //! `eve::exp2(T(eve::nbmantissabits(as<eve::element_type_t<T>>())))`
   //!
   //! ---
   //!
   //! #### Example
-  //!  //! @godbolt{doc/core/twotonmb.cpp}
+  //!
+  //! @godbolt{doc/core/twotonmb.cpp}
   //!
   //! @}
   //================================================================================================

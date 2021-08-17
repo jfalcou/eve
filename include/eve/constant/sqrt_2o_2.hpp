@@ -20,7 +20,7 @@ namespace eve
   //! @{
   //! @var sqrt_2o_2
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the halfed square root of 2 value.
   //!
   //! **Required header:** `#include <eve/function/sqrt_2o_2.hpp>`
   //!
@@ -31,7 +31,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < value T > T operator()( as < Target > const & t) const noexcept;
+  //!  tempate < value T > T operator()(as<T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -40,7 +40,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::sqrt_2o_2(as<T>())` is semantically equivalent to  `TO DO`
+  //! the call `eve::sqrt_2o_2(as<T>())` is semantically equivalent to  `eve::sqrt(T(2)/2`
   //!
   //! ---
   //!

@@ -16,20 +16,20 @@ namespace eve
   //================================================================================================
   //! @addtogroup constant
   //! @{
-  //! @var true
+  //! @var true_
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the logical true_ value.
   //!
   //! **Required header:** `#include <eve/function/true.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the true constant                               |
+  //! | `operator()` | Computes the true_ constant                                |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < value T > T operator()( as < Target > const & t) const noexcept;
+  //!  tempate < value T > T operator()( as<T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -38,7 +38,8 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::true(as<T>())` is semantically equivalent to  `TO DO`
+  //! the call `eve::true_(as<T>())` returns [elementwise](@ref glossary_elementwise), the false
+  //! logical value.
   //!
   //! ---
   //!

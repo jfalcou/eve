@@ -21,7 +21,7 @@ namespace eve
   //! @{
   //! @var pio_4
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the \f$\pi/4\f$ value.
   //!
   //! **Required header:** `#include <eve/function/pio_4.hpp>`
   //!
@@ -32,7 +32,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < value T > T operator()( as < Target > const & t) const noexcept;
+  //!  tempate < value T > T operator()( as <T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -41,12 +41,13 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::pio_4(as<T>())` is semantically equivalent to  `TO DO`
+  //! the call `eve::pio_4(as<T>())` is semantically equivalent to  `eve::atan(T(1))`
   //!
   //! ---
   //!
   //! #### Example
-  //!  //! @godbolt{doc/core/pio_4.cpp}
+  //!
+  //! @godbolt{doc/core/pio_4.cpp}
   //!
   //! @}
   //================================================================================================

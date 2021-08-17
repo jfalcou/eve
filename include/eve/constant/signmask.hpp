@@ -21,18 +21,18 @@ namespace eve
   //! @{
   //! @var signmask
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the sign mask value.
   //!
   //! **Required header:** `#include <eve/function/signmask.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the signmask constant                               |
+  //! | `operator()` | Computes the signmask constant                             |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < value T > T operator()( as < Target > const & t) const noexcept;
+  //!  tempate < value T > T operator()( as <T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -41,12 +41,14 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::signmask(as<T>())` is semantically equivalent to  `TO DO`
+  //! the call `eve::signmask(as<T>())` is a value of type T for which each element has
+  //! all its bits unset except the highest.
   //!
   //! ---
   //!
   //! #### Example
-  //!  //! @godbolt{doc/core/signmask.cpp}
+  //!
+  //! @godbolt{doc/core/signmask.cpp}
   //!
   //! @}
   //================================================================================================

@@ -20,18 +20,18 @@ namespace eve
   //! @{
   //! @var smallestposval
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the smallest normal positive value.
   //!
   //! **Required header:** `#include <eve/function/smallestposval.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the smallestposval constant                               |
+  //! | `operator()` | Computes the smallestposval constant                       |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < value T > T operator()( as < Target > const & t) const noexcept;
+  //!  tempate < value T > T operator()( as<T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -40,12 +40,18 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::smallestposval(as<T>())` is semantically equivalent to  `TO DO`
+  //! the call `eve::smallestposval(as<T>())` is semantically equivalent to:
+  //!   - T(1) if eve::element_type_t<T> is integral
+  //!   - T(1.1754944e-38f)if eve::element_type_t<T> is float
+  //!   - T(2.225073858507201e-308) if eve::element_type_t<T> is double
+  //!
+   //! the call `eve::smallestposval(as<T>())` is semantically equivalent to  `TO DO`
   //!
   //! ---
   //!
   //! #### Example
-  //!  //! @godbolt{doc/core/smallestposval.cpp}
+  //!
+  //! @godbolt{doc/core/smallestposval.cpp}
   //!
   //! @}
   //================================================================================================

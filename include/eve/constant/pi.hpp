@@ -21,18 +21,18 @@ namespace eve
   //! @{
   //! @var pi
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the \f$\pi\f$ value.
   //!
   //! **Required header:** `#include <eve/function/pi.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the pi constant                               |
+  //! | `operator()` | Computes the pi constant                                   |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < value T > T operator()( as < Target > const & t) const noexcept;
+  //!  tempate < floating_value T > T operator()( as<T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -41,7 +41,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::pi(as<T>())` is semantically equivalent to  `TO DO`
+  //! the call `eve::pi(as<T>())` is semantically equivalent to  `4*eve::atan(T(1))`
   //!
   //! ---
   //!

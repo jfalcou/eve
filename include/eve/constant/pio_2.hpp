@@ -21,18 +21,18 @@ namespace eve
   //! @{
   //! @var pio_2
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the f$\pi/2\f$.
   //!
   //! **Required header:** `#include <eve/function/pio_2.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the pio_2 constant                               |
+  //! | `operator()` | Computes the pio_2 constant                                |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < value T > T operator()( as < Target > const & t) const noexcept;
+  //!  tempate < value T > T operator()( as<T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -41,12 +41,13 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::pio_2(as<T>())` is semantically equivalent to  `TO DO`
+  //! the call `eve::pio_2(as<T>())` is semantically equivalent to  `2*eve::atan(T(1))`
   //!
   //! ---
   //!
   //! #### Example
-  //!  //! @godbolt{doc/core/pio_2.cpp}
+  //!
+  //! @godbolt{doc/core/pio_2.cpp}
   //!
   //! @}
   //================================================================================================

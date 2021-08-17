@@ -19,7 +19,7 @@ namespace eve
   //! @{
   //! @var sqrteps
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the square root of the machine epsilon value.
   //!
   //! **Required header:** `#include <eve/function/sqrteps.hpp>`
   //!
@@ -39,12 +39,13 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::sqrteps(as<T>())` is semantically equivalent to  `TO DO`
+  //! the call `eve::sqrteps(as<T>())` is semantically equivalent to  `eve::sqrt(eve::eps(as<T>()))`
   //!
   //! ---
   //!
   //! #### Example
-  //!  //! @godbolt{doc/core/sqrteps.cpp}
+  //!
+  //! @godbolt{doc/core/sqrteps.cpp}
   //!
   //! @}
   //================================================================================================

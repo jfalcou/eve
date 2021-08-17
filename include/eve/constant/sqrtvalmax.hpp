@@ -15,12 +15,13 @@
 
 namespace eve
 {
-   //================================================================================================
+  //================================================================================================
   //! @addtogroup constant
   //! @{
   //! @var sqrtvalmax
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the greatest value less
+  //! than the square root of the greatest value.
   //!
   //! **Required header:** `#include <eve/function/sqrtvalmax.hpp>`
   //!
@@ -31,7 +32,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < value T > T operator()( as < Target > const & t) const noexcept;
+  //!  tempate < value T > T operator()( as<T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -40,7 +41,8 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::sqrtvalmax(as<T>())` is semantically equivalent to  `T(floor(sqrt(eve::valmax(as<T>())))`
+  //! the call `eve::sqrtvalmax(as<T>())` is semantically equivalent to
+  //! `T(floor(sqrt(eve::valmax(as<T>())))`
   //!
   //! ---
   //!
