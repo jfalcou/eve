@@ -15,6 +15,43 @@
 
 namespace eve
 {
+   //================================================================================================
+  //! @addtogroup constant
+  //! @{
+  //! @var sqrtvalmax
+  //!
+  //! @brief Callable object computing the greatest positive value.
+  //!
+  //! **Required header:** `#include <eve/function/sqrtvalmax.hpp>`
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | Computes the sqrtvalmax constant                           |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  tempate < value T > T operator()( as < Target > const &  ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!
+  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!
+  //! **Return value**
+  //!
+  //! the call `eve::sqrtvalmax(as<T>())` is semantically equivalent to  `T(floor(sqrt(eve::valmax(as<T>())))`
+  //!
+  //! ---
+  //!
+  //! #### Example
+  //!
+  //! @godbolt{doc/core/sqrtvalmax.cpp}
+  //!
+  //! @}
+  //================================================================================================
+
   EVE_MAKE_CALLABLE(sqrtvalmax_, sqrtvalmax);
 
   namespace detail
