@@ -21,7 +21,7 @@ namespace eve
   //! @{
   //! @var logeps
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the logaritm of the machine epsilon.
   //!
   //! **Required header:** `#include <eve/function/logeps.hpp>`
   //!
@@ -41,7 +41,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::logeps(as<T>())` is semantically equivalent to  `TO DO`
+  //! the call `eve::logeps(as<T>())` is semantically equivalent to `eve::log(eve::eps(as<T>()))`
   //!
   //! ---
   //!

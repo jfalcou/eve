@@ -18,7 +18,7 @@ namespace eve
   //! @{
   //! @var false_
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the logical false_ value.
   //!
   //! **Required header:** `#include <eve/function/false.hpp>`
   //!

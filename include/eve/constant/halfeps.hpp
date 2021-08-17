@@ -21,7 +21,7 @@ namespace eve
   //! @{
   //! @var halfeps
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the the half of the machine epsilon.
   //!
   //! **Required header:** `#include <eve/function/halfeps.hpp>`
   //!

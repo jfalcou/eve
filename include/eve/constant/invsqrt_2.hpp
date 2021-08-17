@@ -21,7 +21,7 @@ namespace eve
   //! @{
   //! @var invsqrt_2
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing \f$2^{-1/2}\f$.
   //!
   //! **Required header:** `#include <eve/function/invsqrt_2.hpp>`
   //!

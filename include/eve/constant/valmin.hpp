@@ -19,7 +19,7 @@ namespace eve
   //! @{
   //! @var valmin
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the lowest representable value.
   //!
   //! **Required header:** `#include <eve/function/valmin.hpp>`
   //!

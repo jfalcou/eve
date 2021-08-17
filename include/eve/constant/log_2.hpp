@@ -21,7 +21,7 @@ namespace eve
   //! @{
   //! @var log_2
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing \f$\\log 2\f$.
   //!
   //! **Required header:** `#include <eve/function/log_2.hpp>`
   //!
@@ -41,7 +41,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::log_2(as<T>())` is semantically equivalent to  `TO DO`
+  //! the call `eve::log_2(as<T>())` is semantically equivalent to  `eve::log(T(2.0)`.
   //!
   //! ---
   //!

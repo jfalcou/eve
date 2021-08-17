@@ -19,7 +19,7 @@ namespace eve
   //! @{
   //! @var valmax
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the greatest representable value.
   //!
   //! **Required header:** `#include <eve/function/valmax.hpp>`
   //!

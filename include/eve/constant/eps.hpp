@@ -21,7 +21,7 @@ namespace eve
   //! @{
   //! @var eps
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the machine epsilon.
   //!
   //! **Required header:** `#include <eve/function/eps.hpp>`
   //!

@@ -21,7 +21,7 @@ namespace eve
   //! @{
   //! @var maxexponentm1
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the greatest exponent value minus one.
   //!
   //! **Required header:** `#include <eve/function/maxexponentm1.hpp>`
   //!
@@ -32,7 +32,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < value T > T operator()( as < Target > const & t) const noexcept;
+  //!  tempate < floating_real_value T > Tautooperator()( as<T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -41,7 +41,9 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::maxexponentm1(as<T>())` is semantically equivalent to  `TO DO`
+  //! the call `eve::limitexponent(as<T>())` is semantically equivalent to
+  //!   - as_integer_t<T>(126) if eve::element_type_t<T> is float
+  //!   - as_integer_t<T>(1022) if eve::element_type_t<T> is double
   //!
   //! ---
   //!

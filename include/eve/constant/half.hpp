@@ -1,9 +1,9 @@
 //==================================================================================================
-/*
+/**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-*/
+**/
 //==================================================================================================
 #pragma once
 
@@ -27,12 +27,12 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the half constant                               |
+  //! | `operator()` | Computes the half constant                                 |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < value T > T operator()( as < Target > const & t) const noexcept;
+  //!  tempate < floating_value T > T operator()( as < Target > const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -41,7 +41,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::half(as<T>())` is semantically equivalent to  `TO DO`
+  //! the call `eve::half(as<T>())` is semantically equivalent to T(0.5)
   //!
   //! ---
   //!

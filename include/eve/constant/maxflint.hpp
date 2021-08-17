@@ -21,7 +21,8 @@ namespace eve
   //! @{
   //! @var maxflint
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the greatest real n representing an integer and
+  //! such that n != n+1.
   //!
   //! **Required header:** `#include <eve/function/maxflint.hpp>`
   //!
@@ -41,7 +42,9 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::maxflint(as<T>())` is semantically equivalent to  `TO DO`
+  //! the call `eve::maxflint(as<T>())` is semantically equivalent to
+  //!   - T(TODO) if eve::element_type_t<T> is float
+  //!   - T(TODO) if eve::element_type_t<T> is double
   //!
   //! ---
   //!

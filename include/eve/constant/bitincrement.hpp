@@ -20,7 +20,7 @@ namespace eve
   //! @{
   //! @var bitincrement
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the bit increment.
   //!
   //! **Required header:** `#include <eve/function/bitincrement.hpp>`
   //!

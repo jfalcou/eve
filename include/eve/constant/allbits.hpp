@@ -20,7 +20,7 @@ namespace eve
   //! @{
   //! @var allbits
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the allbits value.
   //!
   //! **Required header:** `#include <eve/function/allbits.hpp>`
   //!

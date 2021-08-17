@@ -21,7 +21,7 @@ namespace eve
   //! @{
   //! @var invlog_10
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing 1/log(10).
   //!
   //! **Required header:** `#include <eve/function/invlog_10.hpp>`
   //!

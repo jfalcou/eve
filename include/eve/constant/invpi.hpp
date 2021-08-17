@@ -21,7 +21,7 @@ namespace eve
   //! @{
   //! @var invpi
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing \f$\pi^{-1}\f$.
   //!
   //! **Required header:** `#include <eve/function/invpi.hpp>`
   //!
