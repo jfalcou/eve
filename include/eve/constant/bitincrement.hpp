@@ -40,13 +40,14 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::allbits(as<T>())` returns a value of type T such as each element has all
+  //! the call `eve::bitincrement(as<T>())` returns a value of type T such as each element has all
   //! bits exept the lowest set to zero.
   //!
   //! ---
   //!
   //! #### Example
-  //!  //! @godbolt{doc/core/bitincrement.cpp}
+  //!
+  //! @godbolt{doc/core/bitincrement.cpp}
   //!
   //! @}
   //================================================================================================
