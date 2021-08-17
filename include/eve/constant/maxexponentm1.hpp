@@ -48,7 +48,8 @@ namespace eve
   //! ---
   //!
   //! #### Example
-  //!  //! @godbolt{doc/core/maxexponentm1.cpp}
+  //!
+  //! @godbolt{doc/core/maxexponentm1.cpp}
   //!
   //! @}
   //================================================================================================

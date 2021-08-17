@@ -48,7 +48,8 @@ namespace eve
   //! ---
   //!
   //! #### Example
-  //!  //! @godbolt{doc/core/exponentmask.cpp}
+  //!
+  //! @godbolt{doc/core/exponentmask.cpp}
   //!
   //! @}
   //================================================================================================

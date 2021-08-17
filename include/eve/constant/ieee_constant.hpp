@@ -46,7 +46,8 @@ namespace eve
   //! ---
   //!
   //! #### Example
-  //!  //! @godbolt{doc/core/ieee_constant.cpp}
+  //!
+  //! @godbolt{doc/core/ieee_constant.cpp}
   //!
   //! @}
   //================================================================================================

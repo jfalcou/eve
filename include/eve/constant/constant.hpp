@@ -46,7 +46,8 @@ namespace eve
   //! ---
   //!
   //! #### Example
-  //!  //! @godbolt{doc/core/constant.cpp}
+  //!
+  //! @godbolt{doc/core/constant.cpp}
   //!
   //! @}
   //================================================================================================
@@ -75,4 +76,3 @@ namespace eve
     }
   }
 }
-
