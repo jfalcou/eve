@@ -1,9 +1,9 @@
 //==================================================================================================
-/**
+/*
   RABERU - Fancy Parameters Library
   Copyright : OFW Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 #include <type_traits>

@@ -1,9 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #ifndef BENCHMARKS_GENERATORS_HPP
 #define BENCHMARKS_GENERATORS_HPP
