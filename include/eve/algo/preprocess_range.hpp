@@ -12,6 +12,8 @@
 #include <eve/algo/ptr_iterator.hpp>
 #include <eve/algo/traits.hpp>
 
+#include <eve/detail/overload.hpp>
+
 #include <iterator>
 #include <type_traits>
 #include <utility>
@@ -81,6 +83,12 @@ namespace eve::algo
         operator()(traits_, it{raw_f}, it{raw_l}),
         [f, raw_f](it i) { return f + (i.ptr - raw_f); }
       );
+    }
+
+    template <typename Traits, typename I, typename S>
+      requires eve::detail::tag_dispatchable<preprocess_range_, Traits, I, S>
+    auto operator()(Traits traits, I f, S l) const {
+      return tagged_dispatch(*this, traits, f, l);
     }
 
     template <typename Traits, typename Rng>

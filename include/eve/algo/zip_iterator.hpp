@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/algo/iterator_helpers.hpp>
+#include <eve/algo/preprocess_range.hpp>
 
 #include <eve/function/load.hpp>
 #include <eve/function/store.hpp>
@@ -19,7 +20,7 @@
 namespace eve::algo
 {
   template <typename ...Is>
-  struct  zip_iterator;
+  struct zip_iterator;
 
   namespace detail
   {
@@ -33,6 +34,34 @@ namespace eve::algo
     template<typename U>
     concept derived_from_zip_iterator_common =
         decltype(derived_from_zip_iterator_common_impl(std::declval<U>()))::value;
+
+    // This is very much a prototype
+    template<typename Ranges> struct preprocessed_zip_result
+    {
+      Ranges ranges;
+
+      auto traits() const { return get<0>(ranges).traits(); }
+
+      auto begin() const
+      {
+        return zip_iterator(kumi::map([](auto r) { return r.begin(); }, ranges));
+      }
+
+      auto end() const
+      {
+        return zip_iterator(kumi::map([](auto r) { return r.end(); }, ranges));
+      }
+
+      template<typename I_> auto to_output_iterator(I_ i) const
+      {
+        return zip_iterator(
+            kumi::map([](auto r_i, auto i_i) { return r_i.to_output_iterator(i_i); }, ranges, i));
+      }
+    };
+
+    template <typename Ranges>
+    preprocessed_zip_result(Ranges) -> preprocessed_zip_result<Ranges>;
+
 
     template<typename... Is> struct zip_iterator_common : operations_with_distance
     {
@@ -93,6 +122,20 @@ namespace eve::algo
       template<typename... Is2> std::ptrdiff_t operator-(zip_iterator_common<Is2...> const &x) const
       {
         return get<0>(*this) - get<0>(x);
+      }
+
+      template<typename Traits, typename Self, typename S>
+        requires std::derived_from<std::remove_cvref_t<Self>, zip_iterator_common<Is...>>
+      friend auto tagged_dispatch(preprocess_range_, Traits traits, Self self, S l)
+      {
+        std::ptrdiff_t distance = l - get<0>(self);
+        auto real_l = self.unaligned() + distance;
+
+        auto ranges = kumi::map([traits](auto f_, auto l_) {
+          return preprocess_range(traits, f_, l_);
+        }, self, real_l);
+
+        return preprocessed_zip_result{ranges};
       }
 
       tuple_type storage;
@@ -170,7 +213,10 @@ namespace eve::algo
   };
 
   template <typename ...Is>
-  zip_iterator(Is ... is) -> zip_iterator<Is...>;
+  zip_iterator(kumi::tuple<Is...>) -> zip_iterator<Is...>;
+
+  template <typename ...Is>
+  zip_iterator(Is ... ) -> zip_iterator<Is...>;
 }  // namespace eve::algo
 
 // tuple opt in

@@ -16,7 +16,7 @@
 
 #include <algorithm>
 
-TTS_CASE("zip_light_iterator")
+TTS_CASE("zip_iterator for not eve iterators")
 {
   std::array<std::uint8_t, 4> c {1, 2, 3, 4};
   std::vector<int> v{1, 2, 3};
