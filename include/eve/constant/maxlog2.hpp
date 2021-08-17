@@ -22,7 +22,8 @@ namespace eve
   //! @{
   //! @var maxlog2
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the greatest positive value for which eve::exp2
+  //! returns a finite result.
   //!
   //! **Required header:** `#include <eve/function/maxlog2.hpp>`
   //!
@@ -42,12 +43,15 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::maxlog2(as<T>())` is semantically equivalent to  `TO DO`
+  //! the call `eve::maxlog2(as<T>())` is semantically equivalent to:
+  //!   - T(127.0f) if eve::element_type_t<T> is float
+  //!   - T(1023.0) if eve::element_type_t<T> is double
   //!
   //! ---
   //!
   //! #### Example
-  //!  //! @godbolt{doc/core/maxlog2.cpp}
+  //!
+  //! @godbolt{doc/core/maxlog2.cpp}
   //!
   //! @}
   //================================================================================================

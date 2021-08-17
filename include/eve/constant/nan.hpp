@@ -19,18 +19,18 @@ namespace eve
   //! @{
   //! @var nan
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the nan value.
   //!
   //! **Required header:** `#include <eve/function/nan.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the nan constant                               |
+  //! | `operator()` | Computes the nan constant                                  |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < value T > T operator()( as < Target > const & t) const noexcept;
+  //!  tempate < floating_value T > T operator()( as<T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -39,12 +39,13 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::nan(as<T>())` is semantically equivalent to  `TO DO`
+  //! the call `eve::nan(as<T>())` is semantically equivalent to  `T(0.0/0.0)`
   //!
   //! ---
   //!
   //! #### Example
-  //!  //! @godbolt{doc/core/nan.cpp}
+  //!
+  //! @godbolt{doc/core/nan.cpp}
   //!
   //! @}
   //================================================================================================

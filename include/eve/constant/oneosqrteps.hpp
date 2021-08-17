@@ -21,18 +21,18 @@ namespace eve
   //! @{
   //! @var oneosqrteps
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the inverse of the square root of the machine epsilon.
   //!
   //! **Required header:** `#include <eve/function/oneosqrteps.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the oneosqrteps constant                               |
+  //! | `operator()` | Computes the oneosqrteps constant                          |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < value T > T operator()( as < Target > const & t) const noexcept;
+  //!  tempate < floating_value T > T operator()( as<T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -41,12 +41,14 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::oneosqrteps(as<T>())` is semantically equivalent to  `TO DO`
+  //! the call `eve::oneosqrteps(as<T>())` is semantically equivalent to
+  //! `eve::rec(eve::sqrt(eve::eps(as<T>())))`
   //!
   //! ---
   //!
   //! #### Example
-  //!  //! @godbolt{doc/core/oneosqrteps.cpp}
+  //!
+  //! @godbolt{doc/core/oneosqrteps.cpp}
   //!
   //! @}
   //================================================================================================

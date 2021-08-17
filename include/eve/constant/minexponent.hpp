@@ -21,18 +21,18 @@ namespace eve
   //! @{
   //! @var minexponent
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the least exponent value.
   //!
   //! **Required header:** `#include <eve/function/minexponent.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the minexponent constant                               |
+  //! | `operator()` | Computes the minexponent constant                          |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < value T > T operator()( as < Target > const & t) const noexcept;
+  //!  tempate < floating_value T > auto operator()( as<T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -41,12 +41,15 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::minexponent(as<T>())` is semantically equivalent to  `TO DO`
+  //! the call `eve::maxlog(as<T>())` is semantically equivalent to:
+  //!   - as_integer_t<T>(-126) if eve::element_type_t<T> is float
+  //!   - as_integer_t<T>(-1022) if eve::element_type_t<T> is double
   //!
   //! ---
   //!
   //! #### Example
-  //!  //! @godbolt{doc/core/minexponent.cpp}
+  //!
+  //! @godbolt{doc/core/minexponent.cpp}
   //!
   //! @}
   //================================================================================================

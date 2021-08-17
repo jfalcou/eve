@@ -19,7 +19,7 @@ namespace eve
   //! @{
   //! @var mzero
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the negative zero value.
   //!
   //! **Required header:** `#include <eve/function/mzero.hpp>`
   //!
@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < value T > T operator()( as < Target > const & t) const noexcept;
+  //!  tempate < floating_value T > T operator()( as<T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::mzero(as<T>())` is semantically equivalent to  `TO DO`
+  //! the call `eve::mzero(as<T>())` is semantically equivalent to `T(-0.0)`
   //!
   //! ---
   //!

@@ -21,7 +21,7 @@ namespace eve
   //! @{
   //! @var minf
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the negative infinity value.
   //!
   //! **Required header:** `#include <eve/function/minf.hpp>`
   //!
@@ -41,12 +41,14 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::minf(as<T>())` is semantically equivalent to  `TO DO`
+  //! the call `eve::minf(as<T>())` is semantically equivalent to
+  //! `T(-std::numeric_limits<t_t>::infinity())`
   //!
   //! ---
   //!
   //! #### Example
-  //!  //! @godbolt{doc/core/minf.cpp}
+  //!
+  //! @godbolt{doc/core/minf.cpp}
   //!
   //! @}
   //================================================================================================

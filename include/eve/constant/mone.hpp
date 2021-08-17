@@ -19,7 +19,7 @@ namespace eve
   //! @{
   //! @var mone
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing -1 value.
   //!
   //! **Required header:** `#include <eve/function/mone.hpp>`
   //!
@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < value T > T operator()( as < Target > const & t) const noexcept;
+  //!  tempate < value T > T operator()( as<T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -39,12 +39,13 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::mone(as<T>())` is semantically equivalent to  `TO DO`
+  //! the call `eve::mone(as<T>())` is semantically equivalent to  `T(-1)`
   //!
   //! ---
   //!
   //! #### Example
-  //!  //! @godbolt{doc/core/mone.cpp}
+  //!
+  //! @godbolt{doc/core/mone.cpp}
   //!
   //! @}
   //================================================================================================

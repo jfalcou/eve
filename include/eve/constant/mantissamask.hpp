@@ -50,7 +50,8 @@ namespace eve
   //! ---
   //!
   //! #### Example
-  //!  //! @godbolt{doc/core/mantissamask.cpp}
+  //!
+  //! @godbolt{doc/core/mantissamask.cpp}
   //!
   //! @}
   //================================================================================================

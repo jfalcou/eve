@@ -20,7 +20,7 @@ namespace eve
   //! @{
   //! @var mhalf
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the  value negated half value.
   //!
   //! **Required header:** `#include <eve/function/mhalf.hpp>`
   //!
@@ -40,12 +40,13 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::mhalf(as<T>())` is semantically equivalent to  `TO DO`
+  //! the call `eve::mhalf(as<T>())` is semantically equivalent to  `T(-0.5)`.
   //!
   //! ---
   //!
   //! #### Example
-  //!  //! @godbolt{doc/core/mhalf.cpp}
+  //!
+  //! @godbolt{doc/core/mhalf.cpp}
   //!
   //! @}
   //================================================================================================

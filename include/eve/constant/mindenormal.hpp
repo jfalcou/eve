@@ -21,13 +21,13 @@ namespace eve
   //! @{
   //! @var mindenormal
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the least denormal positive value.
   //!
   //! **Required header:** `#include <eve/function/mindenormal.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the mindenormal constant                               |
+  //! | `operator()` | Computes the mindenormal constant                          |
   //!
   //! ---
   //!
@@ -41,12 +41,15 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::mindenormal(as<T>())` is semantically equivalent to  `TO DO`
+  //! the call `eve::mindenormal(as<T>())` is semantically equivalent to:
+  //!   - T(1.4013e-45f) if eve::element_type_t<T> is float
+  //!   - T(4.94066e-324) if eve::element_type_t<T> is double
   //!
   //! ---
   //!
   //! #### Example
-  //!  //! @godbolt{doc/core/mindenormal.cpp}
+  //!
+  //! @godbolt{doc/core/mindenormal.cpp}
   //!
   //! @}
   //================================================================================================

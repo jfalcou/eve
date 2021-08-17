@@ -21,7 +21,8 @@ namespace eve
   //! @{
   //! @var minlog10denormal
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing the least value for which eve::exp
+  //! returns a non denormal result.
   //!
   //! **Required header:** `#include <eve/function/minlog10denormal.hpp>`
   //!
@@ -41,12 +42,15 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::minlog10denormal(as<T>())` is semantically equivalent to  `TO DO`
+  //! the call `eve::minlog10denormal(as<T>())` is semantically equivalent to:
+  //!   - T(-45.1545f) if eve::element_type_t<T> is float
+  //!   - T(-323.607) if eve::element_type_t<T> is double
   //!
   //! ---
   //!
   //! #### Example
-  //!  //! @godbolt{doc/core/minlog10denormal.cpp}
+  //!
+  //! @godbolt{doc/core/minlog10denormal.cpp}
   //!
   //! @}
   //================================================================================================
