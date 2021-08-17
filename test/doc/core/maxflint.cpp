@@ -1,6 +1,7 @@
 #include <eve/constant/maxflint.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
+#include <iomanip>
 
 using wide_ft = eve::wide<float>;
 
@@ -15,8 +16,8 @@ int main()
   double       xf;
 
   std::cout << "---- scalar" << std::endl
-            << "-> maxflint(as<float>())         = " << eve::maxflint(eve::as(float())) << std::endl
-            << "-> maxflint(as<xf))              = " << eve::maxflint(eve::as(xf)) << std::endl;
+            << "-> maxflint(as<float>())         = " << std::setprecision(17) << eve::maxflint(eve::as(float())) << std::endl
+            << "-> maxflint(as<xf))              = " << std::setprecision(17) << eve::maxflint(eve::as(xf)) << std::endl;
 
   return 0;
 }
