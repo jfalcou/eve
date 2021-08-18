@@ -14,7 +14,6 @@
 #include <eve/as.hpp>
 #include <type_traits>
 
-// TODO A METTRE DANS MANTISSABITS
 namespace eve
 {
   //================================================================================================
@@ -22,7 +21,7 @@ namespace eve
   //! @{
   //! @var mantissamask
   //!
-  //! @brief Callable object computing the gmanttissa bit mask.
+  //! @brief Callable object computing the mantissa bit mask.
   //!
   //! **Required header:** `#include <eve/function/mantissamask.hpp>`
   //!
