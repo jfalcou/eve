@@ -24,6 +24,9 @@ namespace eve
     static constexpr bool         is_wide_logical  = Logical;
 
     template<typename Type>
+    static constexpr bool is_full = ((Type::size() * sizeof(typename Type::value_type)) >= 16);
+
+    template<typename Type>
     static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
   };
 
