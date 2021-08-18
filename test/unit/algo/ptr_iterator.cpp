@@ -15,7 +15,10 @@
 #include <array>
 #include <numeric>
 
-EVE_TEST_TYPES("Check ptr_iterator", algo_test::selected_types)
+  inline constexpr eve::detail::types<
+      eve::wide<std::int8_t, eve::fixed<1>>> some_types;
+
+EVE_TEST_TYPES("Check ptr_iterator", some_types)
 <typename T>(eve::as<T>)
 {
   alignas(sizeof(T)) std::array<eve::element_type_t<T>, T::size()> data;

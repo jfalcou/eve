@@ -162,7 +162,6 @@ makes sense to set to one.
 ### iterator helpers
 
 * `operations_with_distance` -> provides boilerplate distance operations.
-* `forward_to_unaligned` -> provides boilerplate operations using `unaligned()`
 
 ### array_utils
 
@@ -220,3 +219,14 @@ _TODO_ `step_unrolled(iterator)` if the `unroll` trait is bigger than 1.
 `iterator` type from steps is not guarantied to match `decltype(f)` (for when we know we can align the input for example).
 
 `step` returns `true` if it wants to break or `false` to continue.
+
+### unaligned
+
+`unalign`
+`uunaligned/unaligned_t`
+
+
+A small helper.
+For contigious iterators -> returns themselves
+For aligned_ptr -> returns a raw ptr
+For everything else -> returns .unaligned()

@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/algo/iterator_helpers.hpp>
+#include <eve/algo/preprocess_range.hpp>
 
 #include <eve/function/load.hpp>
 #include <eve/function/store.hpp>
@@ -18,47 +19,146 @@
 
 namespace eve::algo
 {
-  template <typename I, typename ... Is>
-  struct zip_iterator : operations_with_distance
+  template <typename ...Is>
+  struct zip_iterator;
+
+  namespace detail
   {
+    template<typename... Is> struct zip_iterator_common;
+
+    template<typename... Is>
+    std::true_type derived_from_zip_iterator_common_impl(zip_iterator_common<Is...> const &);
+
+    std::false_type derived_from_zip_iterator_common_impl(...);
+
+    template<typename U>
+    concept derived_from_zip_iterator_common =
+        decltype(derived_from_zip_iterator_common_impl(std::declval<U>()))::value;
+
+    // This is very much a prototype
+    template<typename Ranges> struct preprocessed_zip_result
+    {
+      Ranges ranges;
+
+      auto traits() const { return get<0>(ranges).traits(); }
+
+      auto begin() const
+      {
+        return zip_iterator(kumi::map([](auto r) { return r.begin(); }, ranges));
+      }
+
+      auto end() const
+      {
+        return zip_iterator(kumi::map([](auto r) { return r.end(); }, ranges));
+      }
+
+      template<typename I_> auto to_output_iterator(I_ i) const
+      {
+        return zip_iterator(
+            kumi::map([](auto r_i, auto i_i) { return r_i.to_output_iterator(i_i); }, ranges, i));
+      }
+    };
+
+    template <typename Ranges>
+    preprocessed_zip_result(Ranges) -> preprocessed_zip_result<Ranges>;
+
+
+    template<typename... Is> struct zip_iterator_common : operations_with_distance
+    {
+      using value_type = kumi::tuple<typename pointer_traits<Is>::value_type...>;
+      using tuple_type = kumi::tuple<Is...>;
+
+      // tuple opt in
+      using is_product_type = void;
+
+      template<std::size_t idx, typename Self>
+      requires std::derived_from<std::remove_cvref_t<Self>, zip_iterator_common<Is...>>
+      friend decltype(auto) get(Self &&self) { return get<idx>(std::forward<Self>(self).storage); }
+      // ~tuple opt in
+
+      zip_iterator_common() = default;
+
+      explicit zip_iterator_common(tuple_type const &x) : storage(x) {}
+
+      explicit zip_iterator_common(Is... is) : storage {is...} {}
+
+      auto operator*() const
+      {
+        using res_t = kumi::tuple<decltype(*std::declval<Is>())...>;
+        return [&]<std::size_t... idx>(std::index_sequence<idx...>)
+        {
+          return res_t {*kumi::get<idx>(storage)...};
+        }
+        (std::index_sequence_for<Is...> {});
+      }
+
+      operator zip_iterator<unaligned_t<Is>...>() const
+      {
+        return zip_iterator<unaligned_t<Is>...> {
+            kumi::map([](auto x) { return unalign(x); }, *this)};
+      }
+
+      auto unaligned() const { return zip_iterator<unaligned_t<Is>...>(*this); }
+
+      template<typename... Is2>
+      friend bool operator==(zip_iterator_common const &x, zip_iterator_common<Is2...> const &y)
+      {
+        return get<0>(x) == get<0>(y);
+      }
+
+      template<typename... Is2> auto operator<=>(zip_iterator_common<Is2...> const &x) const
+      {
+        return get<0>(*this) <=> get<0>(x);
+      }
+
+      template<typename Self>
+      requires std::derived_from<std::remove_cvref_t<Self>, zip_iterator_common<Is...>>
+      friend Self &operator+=(Self &x, std::ptrdiff_t n)
+      {
+        kumi::for_each([&](auto &m) { m += n; }, x);
+        return x;
+      }
+
+      template<typename... Is2> std::ptrdiff_t operator-(zip_iterator_common<Is2...> const &x) const
+      {
+        return get<0>(*this) - get<0>(x);
+      }
+
+      template<typename Traits, typename Self, typename S>
+        requires std::derived_from<std::remove_cvref_t<Self>, zip_iterator_common<Is...>>
+      friend auto tagged_dispatch(preprocess_range_, Traits traits, Self self, S l)
+      {
+        std::ptrdiff_t distance = l - get<0>(self);
+        auto real_l = self.unaligned() + distance;
+
+        auto ranges = kumi::map([traits](auto f_, auto l_) {
+          return preprocess_range(traits, f_, l_);
+        }, self, real_l);
+
+        return preprocessed_zip_result{ranges};
+      }
+
+      tuple_type storage;
+    };
+  }
+
+  template <typename ... Is>
+  struct zip_iterator : detail::zip_iterator_common<Is...>
+  {
+    using base = detail::zip_iterator_common<Is...>;
+    using base::base;
+  };
+
+  template <iterator I, iterator ... Is>
+  struct zip_iterator<I, Is...> : detail::zip_iterator_common<I, Is...>
+  {
+    using base = detail::zip_iterator_common<I, Is...>;
     using cardinal = typename I::cardinal;
-
-    // data_source requirement
-    using value_type = kumi::tuple<typename I::value_type, typename Is::value_type...>;
-
-    using wide_value_type = eve::wide<value_type, cardinal>;
-    using tuple_type = kumi::tuple<I, Is...>;
+    using wide_value_type = eve::wide<typename base::value_type, cardinal>;
 
     static_assert((std::same_as<cardinal, typename Is::cardinal> && ...));
 
-    // tuple opt in
-    using is_product_type = void;
-
-    template <std::size_t idx, typename Self>
-    requires std::same_as<zip_iterator, std::remove_cvref_t<Self>>
-    friend decltype(auto) get(Self&& self) { return get<idx>(std::forward<Self>(self).storage); }
-    // ~tuple opt in
-
-    zip_iterator() = default;
-
-    explicit zip_iterator(tuple_type const& x) : storage(x) {}
-
-    explicit zip_iterator(I i, Is ... is)
-      : storage{i, is...}
-    {}
-
-    operator zip_iterator<unaligned_t<I>, unaligned_t<Is> ...>() const
-      requires (!unaligned_iterator<I>) || ((!unaligned_iterator<Is>) || ...)
-    {
-      return unaligned();
-    }
-
-    auto unaligned() const
-    {
-      return zip_iterator<unaligned_t<I>, unaligned_t<Is>...> {
-        kumi::map([](auto x) { return x.unaligned(); }, storage)
-      };
-    }
+    using base::base;
 
     auto previous_partially_aligned() const
     {
@@ -68,15 +168,15 @@ namespace eve::algo
       {
         using res_t = zip_iterator<partially_aligned_t<I>, Is...>;
 
-        auto partially_aligned_first = get<0>(storage).previous_partially_aligned();
-        std::ptrdiff_t offset = get<0>(storage) - partially_aligned_first;
+        auto partially_aligned_first = get<0>(*this).previous_partially_aligned();
+        std::ptrdiff_t offset = get<0>(*this) - partially_aligned_first;
 
         res_t res;
         get<0>(res.storage) = partially_aligned_first;
 
         [&]<std::size_t... idx>(std::index_sequence<idx...>)
         {
-          ((kumi::get<idx + 1>(res.storage) = kumi::get<idx + 1>(storage) - offset), ...);
+          ((kumi::get<idx + 1>(res.storage) = kumi::get<idx + 1>(this->storage) - offset), ...);
         }(std::index_sequence_for<Is...>{});
 
         return res;
@@ -87,41 +187,8 @@ namespace eve::algo
     auto cardinal_cast(_Cardinal N) const
     {
       return zip_iterator<decltype(I{}.cardinal_cast(N)), decltype(Is{}.cardinal_cast(N))...> {
-        kumi::map([&](auto x) { return x.cardinal_cast(N); }, storage)
+        kumi::map([&](auto x) { return x.cardinal_cast(N); }, *this)
       };
-    }
-
-    // data_source requirement
-    auto operator*() const
-    {
-      return kumi::map( [](auto p) { return *p; }, storage );
-    }
-
-    template <sentinel_for<I> I2, typename ... Is2>
-    //  requires (sentinel_for<Is, Is2> && ...), this breaks on gcc
-    friend bool operator==(zip_iterator const& x, zip_iterator<I2, Is2...> const& y)
-    {
-      return get<0>(x) == get<0>(y);
-    }
-
-    template <sentinel_for<I> I2, typename... Is2>
-      requires (sentinel_for<Is, Is2> && ...)
-    auto operator<=>(zip_iterator<I2, Is2...> const& x) const
-    {
-      return get<0>(*this) <=> get<0>(x);
-    }
-
-    zip_iterator& operator+=(std::ptrdiff_t n)
-    {
-      kumi::for_each([&](auto& m) { m += n; }, storage);
-      return *this;
-    }
-
-    template <sentinel_for<I> I2, typename ... Is2>
-      requires (sentinel_for<Is, Is2> && ...)
-    std::ptrdiff_t operator-(zip_iterator<I2, Is2...> const& x) const
-    {
-      return get<0>(*this) - get<0>(x);
     }
 
     template< relative_conditional_expr C, decorator S>
@@ -143,23 +210,25 @@ namespace eve::algo
     {
       eve::store(v, self.storage);
     }
-
-    tuple_type storage;
   };
 
+  template <typename ...Is>
+  zip_iterator(kumi::tuple<Is...>) -> zip_iterator<Is...>;
+
+  template <typename ...Is>
+  zip_iterator(Is ... ) -> zip_iterator<Is...>;
 }  // namespace eve::algo
 
 // tuple opt in
 namespace std
 {
-  template<std::size_t I, typename... Ts>
-  struct  tuple_element<I, eve::algo::zip_iterator<Ts...>>
-        : tuple_element<I, typename eve::algo::zip_iterator<Ts...>::tuple_type>
+  template<std::size_t I, eve::algo::detail::derived_from_zip_iterator_common U>
+  struct  tuple_element<I, U> : tuple_element<I, typename U::tuple_type>
   {
   };
 
-  template<typename... Ts>
-  struct tuple_size<eve::algo::zip_iterator<Ts...>> : std::integral_constant<std::size_t, sizeof...(Ts)>
+  template<eve::algo::detail::derived_from_zip_iterator_common U>
+  struct tuple_size<U> : std::tuple_size<typename U::tuple_type>
   {
   };
 }

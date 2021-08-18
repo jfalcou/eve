@@ -38,7 +38,7 @@ namespace eve::algo
     template <typename _Cardinal>
     auto cardinal_cast(_Cardinal) const { return unaligned_ptr_iterator<T, _Cardinal>{ptr}; }
 
-    value_type& operator*() const { return *ptr; }
+    auto& operator*() const { return *ptr; }
 
     unaligned_ptr_iterator& operator+=(std::ptrdiff_t n) { ptr += n; return *this; }
     friend std::ptrdiff_t   operator-(unaligned_ptr_iterator x, unaligned_ptr_iterator y) { return x.ptr - y.ptr; }
@@ -79,7 +79,7 @@ namespace eve::algo
   };
 
   template <typename T, typename Cardinal>
-  struct aligned_ptr_iterator : operations_with_distance, forward_to_unaligned
+  struct aligned_ptr_iterator : operations_with_distance
   {
     using cardinal          = Cardinal;
     using value_type        = std::remove_const_t<T>;
@@ -94,7 +94,7 @@ namespace eve::algo
       return unaligned_ptr_iterator<T, Cardinal>{ptr.get()};
     }
 
-    value_type& operator*() const { return *ptr; }
+    auto& operator*() const { return *ptr; }
     auto get() const { return ptr.get(); }
     auto unaligned() const { return unaligned_ptr_iterator<T, Cardinal>{ptr.get()}; }
     auto previous_partially_aligned() const { return *this; }
@@ -108,6 +108,49 @@ namespace eve::algo
     }
 
     aligned_ptr_iterator& operator+=(std::ptrdiff_t n) { ptr += n; return *this; }
+
+    template <typename T1, typename N1>
+    bool operator==(aligned_ptr_iterator<T1, N1> y) const
+    {
+      return unaligned() == y.unaligned();
+    }
+
+    template <typename T1, typename N1>
+    bool operator==(unaligned_ptr_iterator<T1, N1> y) const
+    {
+      return unaligned() == y;
+    }
+
+    template <typename T1, typename N1>
+    auto operator<=>(aligned_ptr_iterator<T1, N1> y) const
+    {
+      return unaligned() <=> y.unaligned();
+    }
+
+    template <typename T1, typename N1>
+    auto operator<=>(unaligned_ptr_iterator<T1, N1> y) const
+    {
+      return unaligned() <=> y;
+    }
+
+    template <typename T1, typename N1>
+    std::ptrdiff_t operator-(aligned_ptr_iterator<T1, N1> y) const
+    {
+      return unaligned() - y.unaligned();
+    }
+
+    template <typename T1, typename N1>
+    std::ptrdiff_t operator-(unaligned_ptr_iterator<T1, N1> y) const
+    {
+      return unaligned() - y;
+    }
+
+    template <typename T1, typename N1>
+    friend std::ptrdiff_t operator-(unaligned_ptr_iterator<T1, N1> x, aligned_ptr_iterator y)
+    {
+      return x - y.unaligned();
+    }
+
 
     template< relative_conditional_expr C, decorator S, typename Pack>
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::load_, C const& c, S const& s
