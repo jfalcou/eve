@@ -18,8 +18,10 @@ make_unit("unit.algo" array_utils.cpp)
 make_unit("unit.algo" converting_iterator.cpp)
 make_unit("unit.algo" for_each_iteration.cpp)
 make_unit("unit.algo" preprocess_range.cpp)
+make_unit("unit.algo" preprocess_zip_range.cpp)
 make_unit("unit.algo" ptr_iterator.cpp)
 make_unit("unit.algo" traits.cpp)
+make_unit("unit.algo" unalign.cpp)
 make_unit("unit.algo" zip_iterator.cpp)
 
 # Algorithms
