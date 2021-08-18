@@ -87,7 +87,7 @@ namespace eve::algo
         using res_t = kumi::tuple<decltype(*std::declval<Is>())...>;
         return [&]<std::size_t... idx>(std::index_sequence<idx...>)
         {
-          return res_t {*get<idx>(*this)...};
+          return res_t {*kumi::get<idx>(storage)...};
         }
         (std::index_sequence_for<Is...> {});
       }
@@ -172,11 +172,11 @@ namespace eve::algo
         std::ptrdiff_t offset = get<0>(*this) - partially_aligned_first;
 
         res_t res;
-        get<0>(res) = partially_aligned_first;
+        get<0>(res.storage) = partially_aligned_first;
 
         [&]<std::size_t... idx>(std::index_sequence<idx...>)
         {
-          ((get<idx + 1>(res) = get<idx + 1>(*this) - offset), ...);
+          ((kumi::get<idx + 1>(res.storage) = kumi::get<idx + 1>(this->storage) - offset), ...);
         }(std::index_sequence_for<Is...>{});
 
         return res;
