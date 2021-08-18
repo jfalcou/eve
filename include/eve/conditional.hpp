@@ -18,6 +18,7 @@
 #include <bitset>
 #include <compare>
 #include <ostream>
+#include <type_traits>
 
 namespace eve
 {
@@ -182,10 +183,21 @@ namespace eve
       }
       else
       {
-        using i_t = as_integer_t<typename type::mask_type>;
-        auto const m = detail::linear_ramp(eve::as<i_t>()) < i_t(count_);
+        using i_t   = as_integer_t<typename type::mask_type>;
 
-        return bit_cast(m, as<type>());
+        if constexpr(eve::use_complete_storage<type>)
+        {
+          return bit_cast(detail::linear_ramp(eve::as<i_t>()) < i_t(count_), as<type>());
+        }
+        else
+        {
+          // Use the most full type to be sure to fill outside values of small wide with false
+          using e_t   = eve::element_type_t<i_t>;
+          using abi_t = typename i_t::abi_type;
+          using w_t   = eve::wide<e_t, eve::expected_cardinal_t<e_t, abi_t> >;
+
+          return bit_cast(detail::linear_ramp(eve::as<w_t>()) < w_t(count_), as<type>());
+        }
       }
     }
 
@@ -288,12 +300,24 @@ namespace eve
       }
       else
       {
-        using i_t = as_integer_t<typename type::mask_type>;
+        using i_t   = as_integer_t<typename type::mask_type>;
         constexpr std::ptrdiff_t card = cardinal_v<T>;
 
-        auto const m = detail::linear_ramp(eve::as<i_t>()) >= i_t(card-count_);
+        if constexpr(eve::use_complete_storage<type>)
+        {
+          return bit_cast(detail::linear_ramp(eve::as<i_t>()) >= i_t(card-count_), as<type>());
+        }
+        else
+        {
+          // Use the most full type to be sure to fill outside values of small wide with false
+          using e_t   = eve::element_type_t<i_t>;
+          using abi_t = typename i_t::abi_type;
+          using w_t   = eve::wide<e_t, eve::expected_cardinal_t<e_t, abi_t> >;
 
-        return bit_cast(m, as<type>());
+          auto i = detail::linear_ramp(eve::as<w_t>());
+
+          return bit_cast((i >= w_t(card-count_)) && (i < card), as<type>());
+        }
       }
     }
 
@@ -400,10 +424,22 @@ namespace eve
       else
       {
         using i_t = as_integer_t<typename type::mask_type>;
-        auto const i = detail::linear_ramp(eve::as<i_t>());
-        auto const m = (i >= begin_) && (i < end_);
 
-        return bit_cast(m, as<type>());
+        if constexpr(eve::use_complete_storage<type>)
+        {
+          auto const i = detail::linear_ramp(eve::as<i_t>());
+          return bit_cast((i >= begin_) && (i < end_), as<type>());
+        }
+        else
+        {
+          // Use the most full type to be sure to fill outside values of small wide with false
+          using e_t   = eve::element_type_t<i_t>;
+          using abi_t = typename i_t::abi_type;
+          using w_t   = eve::wide<e_t, eve::expected_cardinal_t<e_t, abi_t> >;
+
+          auto const i = detail::linear_ramp(eve::as<w_t>());
+          return bit_cast((i >= begin_) && (i < end_), as<type>());
+        }
       }
     }
 

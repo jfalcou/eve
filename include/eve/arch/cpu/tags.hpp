@@ -45,12 +45,14 @@ namespace eve
     {
       using parent = cpu_;
       static constexpr bool is_wide_logical = true;
+      template<typename> static constexpr bool is_full = true;
     };
 
     struct bundle_ : cpu_
     {
       using parent = cpu_;
       static constexpr bool is_wide_logical = true;
+      template<typename> static constexpr bool is_full = true;
     };
   }
 
@@ -60,12 +62,14 @@ namespace eve
     {
       using parent = cpu_;
       static constexpr bool is_wide_logical = false;
+      template<typename> static constexpr bool is_full = true;
     };
 
     struct bundle_ : cpu_
     {
       using parent = cpu_;
       static constexpr bool is_wide_logical = false;
+      template<typename> static constexpr bool is_full = true;
     };
   }
 
@@ -82,6 +86,8 @@ namespace eve
     static constexpr std::size_t bytes                    = 16;
     static constexpr bool        is_wide_logical = true;
 
+    template<typename> static constexpr bool is_full = true;
+
     template<typename Type>
     static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
   };
@@ -91,6 +97,11 @@ namespace eve
 
   template<typename T>
   concept native_abi = !detail::is_one_of<T>(detail::types<aggregated_, emulated_, bundle_> {});
+
+  //================================================================================================
+  // Checks if a type fills all its storage
+  template<typename Type>
+  inline constexpr bool use_complete_storage = Type::abi_type::template is_full<Type>;
 
   //================================================================================================
   // Checks for logical status in ABI

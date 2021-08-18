@@ -43,11 +43,26 @@ EVE_TEST_TYPES( "ignore_all behavior", eve::test::simd::all_types)
   TTS_EXPR_IS(ignore_all.mask( as<type>() ), logical<type> );
 
   TTS_EQUAL( ignore_all.mask( as<type>() )           , eve::false_( as<type>()) );
-  TTS_EQUAL( (if_else(ignore_all,type(42), type(69))) , type(69)                  );
+  TTS_EQUAL( (if_else(ignore_all,type(42), type(69))) , type(69)                );
 
 #if defined(SPY_SIMD_IS_X86_AVX512)
   TTS_EQUAL( ignore_all.mask(as<type>()).storage().value, 0U );
 #endif
+
+  // For small wide, checks we don't have spurious true in the outside values
+  using abi = typename type::abi_type;
+  if constexpr( abi::is_wide_logical && !eve::use_complete_storage<type> )
+  {
+    using e_t   = eve::element_type_t<type>;
+    using abi_t = typename type::abi_type;
+    using w_t   = eve::wide<e_t, eve::expected_cardinal_t<e_t, abi_t> >;
+
+    eve::logical<w_t> values = eve::bit_cast( ignore_all.mask(as<type>())
+                                            , eve::as<eve::logical<w_t>>()
+                                            );
+
+    TTS_EQUAL(values, eve::false_(as(values)));
+  }
 };
 
 EVE_TEST_TYPES( "ignore_none behavior", eve::test::simd::all_types)
@@ -72,6 +87,21 @@ EVE_TEST_TYPES( "ignore_none behavior", eve::test::simd::all_types)
             , eve::detail::set_lower_n_bits<m_t>(type::size())
             );
 #endif
+
+  // For small wide, checks we don't have spurious true in the outside values
+  using abi = typename type::abi_type;
+  if constexpr( abi::is_wide_logical && !eve::use_complete_storage<type> )
+  {
+    using e_t   = eve::element_type_t<type>;
+    using abi_t = typename type::abi_type;
+    using w_t   = eve::wide<e_t, eve::expected_cardinal_t<e_t, abi_t> >;
+
+    eve::logical<w_t> values = eve::bit_cast( ignore_none.mask(as<type>())
+                                            , eve::as<eve::logical<w_t>>()
+                                            );
+
+    TTS_EQUAL(values, eve::true_(as(values)));
+  }
 };
 
 EVE_TEST_TYPES( "keep_first behavior", eve::test::simd::all_types)
@@ -99,15 +129,32 @@ EVE_TEST_TYPES( "keep_first behavior", eve::test::simd::all_types)
 
     TTS_EQUAL( keep_first(i).mask(as<type>()).bits(), mref.bits() );
     TTS_EQUAL( (if_else(keep_first(i),value, type(69))), ref);
-
   }
 
   TTS_EQUAL( keep_first(0).mask(as<type>()).bits(), eve::false_(as<type>()).bits());
-  TTS_EQUAL( (if_else(keep_first(0),value, type(69))) , type(69)                    );
+  TTS_EQUAL( (if_else(keep_first(0),value, type(69))) , type(69)                  );
 
 #if defined(SPY_SIMD_IS_X86_AVX512)
   check_conditional_bits<type, keep_first>();
 #endif
+
+  // For small wide, checks we don't have spurious true in the outside values
+  if constexpr( type::abi_type::is_wide_logical && !eve::use_complete_storage<type> )
+  {
+    for(std::ptrdiff_t i = 0;i <= type::size();i++)
+    {
+      using e_t   = eve::element_type_t<type>;
+      using abi_t = typename type::abi_type;
+      using w_t   = eve::wide<e_t, eve::expected_cardinal_t<e_t, abi_t> >;
+
+      eve::logical<w_t> values = eve::bit_cast( keep_first(i).mask(as<type>())
+                                                , eve::as<eve::logical<w_t>>()
+                                                );
+      eve::logical<w_t> mask_ref = [=](auto n, auto) { return n<i; };
+
+      TTS_EQUAL(values, mask_ref);
+    }
+  }
 };
 
 EVE_TEST_TYPES( "ignore_last behavior", eve::test::simd::all_types)
@@ -143,6 +190,24 @@ EVE_TEST_TYPES( "ignore_last behavior", eve::test::simd::all_types)
 #if defined(SPY_SIMD_IS_X86_AVX512)
   check_conditional_bits<type, ignore_last>();
 #endif
+
+  // For small wide, checks we don't have spurious true in the outside values
+  if constexpr( type::abi_type::is_wide_logical && !eve::use_complete_storage<type> )
+  {
+    for(std::ptrdiff_t i = 0;i <= type::size();i++)
+    {
+      using e_t   = eve::element_type_t<type>;
+      using abi_t = typename type::abi_type;
+      using w_t   = eve::wide<e_t, eve::expected_cardinal_t<e_t, abi_t> >;
+
+      eve::logical<w_t> values = eve::bit_cast( ignore_last(i).mask(as<type>())
+                                              , eve::as<eve::logical<w_t>>()
+                                              );
+      eve::logical<w_t> mask_ref = [=](auto n, auto) { return n<(type::size()-i); };
+
+      TTS_EQUAL(values, mask_ref);
+    }
+  }
 };
 
 EVE_TEST_TYPES( "keep_last behavior", eve::test::simd::all_types)
@@ -178,6 +243,26 @@ EVE_TEST_TYPES( "keep_last behavior", eve::test::simd::all_types)
 #if defined(SPY_SIMD_IS_X86_AVX512)
   check_conditional_bits<type, keep_last>();
 #endif
+
+  // For small wide, checks we don't have spurious true in the outside values
+  if constexpr( type::abi_type::is_wide_logical && !eve::use_complete_storage<type> )
+  {
+    for(std::ptrdiff_t i = 0;i <= type::size();i++)
+    {
+      using e_t   = eve::element_type_t<type>;
+      using abi_t = typename type::abi_type;
+      using w_t   = eve::wide<e_t, eve::expected_cardinal_t<e_t, abi_t> >;
+
+      eve::logical<w_t> values = eve::bit_cast( keep_last(i).mask(as<type>())
+                                              , eve::as<eve::logical<w_t>>()
+                                              );
+      eve::logical<w_t> mask_ref = [=](auto n, auto)  { return    n>=(type::size()-i)
+                                                              &&  n < type::size();
+                                                      };
+
+      TTS_EQUAL(values, mask_ref);
+    }
+  }
 };
 
 EVE_TEST_TYPES( "ignore_first behavior", eve::test::simd::all_types)
@@ -213,6 +298,26 @@ EVE_TEST_TYPES( "ignore_first behavior", eve::test::simd::all_types)
 #if defined(SPY_SIMD_IS_X86_AVX512)
   check_conditional_bits<type,ignore_first>();
 #endif
+
+  // For small wide, checks we don't have spurious true in the outside values
+  if constexpr( type::abi_type::is_wide_logical && !eve::use_complete_storage<type> )
+  {
+    for(std::ptrdiff_t i = 0;i <= type::size();i++)
+    {
+      using e_t   = eve::element_type_t<type>;
+      using abi_t = typename type::abi_type;
+      using w_t   = eve::wide<e_t, eve::expected_cardinal_t<e_t, abi_t> >;
+
+      eve::logical<w_t> values = eve::bit_cast( ignore_first(i).mask(as<type>())
+                                              , eve::as<eve::logical<w_t>>()
+                                              );
+      eve::logical<w_t> mask_ref = [=](auto n, auto)  { return    n>= i
+                                                              &&  n < type::size();
+                                                      };
+
+      TTS_EQUAL(values, mask_ref);
+    }
+  }
 };
 
 EVE_TEST_TYPES( "keep_between behavior", eve::test::simd::all_types)
@@ -249,6 +354,30 @@ EVE_TEST_TYPES( "keep_between behavior", eve::test::simd::all_types)
         auto ignore_mask = keep_between(fi,li).mask(eve::as<type>()).storage().value;
         TTS_EQUAL( m_t(ignore_mask & bits_mask), m_t(0) );
 #endif
+      }
+    }
+  }
+
+  // For small wide, checks we don't have spurious true in the outside values
+  if constexpr( type::abi_type::is_wide_logical && !eve::use_complete_storage<type> )
+  {
+    for(std::ptrdiff_t i = 0;i <= type::size();i++)
+    {
+      for(std::ptrdiff_t j = 0;j <= type::size();j++)
+      {
+        using e_t   = eve::element_type_t<type>;
+        using abi_t = typename type::abi_type;
+        using w_t   = eve::wide<e_t, eve::expected_cardinal_t<e_t, abi_t> >;
+
+        if(i<=j)
+        {
+          eve::logical<w_t> values = eve::bit_cast( keep_between(i,j).mask(as<type>())
+                                                  , eve::as<eve::logical<w_t>>()
+                                                  );
+          eve::logical<w_t> mask_ref = [=](auto n, auto) { return n >= i && n < j; };
+
+          TTS_EQUAL(values, mask_ref);
+        }
       }
     }
   }
@@ -290,6 +419,31 @@ EVE_TEST_TYPES( "ignore_first/last behavior", eve::test::simd::all_types)
         auto ignore_mask = (ignore_first(fi) && ignore_last(li)).mask(eve::as<type>()).storage().value;
         TTS_EQUAL( m_t(ignore_mask & bits_mask), m_t(0) );
 #endif
+      }
+    }
+  }
+
+
+  // For small wide, checks we don't have spurious true in the outside values
+  if constexpr( type::abi_type::is_wide_logical && !eve::use_complete_storage<type> )
+  {
+    for(std::ptrdiff_t i = 0;i <= type::size();i++)
+    {
+      for(std::ptrdiff_t j = 0;j <= type::size();j++)
+      {
+        using e_t   = eve::element_type_t<type>;
+        using abi_t = typename type::abi_type;
+        using w_t   = eve::wide<e_t, eve::expected_cardinal_t<e_t, abi_t> >;
+
+        if(i+j <= type::size())
+        {
+          eve::logical<w_t> values = eve::bit_cast( (ignore_first(i) && ignore_last(j)).mask(as<type>())
+                                                  , eve::as<eve::logical<w_t>>()
+                                                  );
+          eve::logical<w_t> mask_ref = [=](auto n, auto) { return n >= i && n < (type::size()-j); };
+
+          TTS_EQUAL(values, mask_ref);
+        }
       }
     }
   }

@@ -21,17 +21,11 @@ EVE_TEST_TYPES("Check remove_if basics", algo_test::selected_types)
 {
   using e_t = eve::element_type_t<T>;
 
-  auto alg = [] {
-    // FIX-816
-    if constexpr (T::size() < eve::expected_cardinal_v<e_t>) return eve::algo::remove_if;
-    else return eve::algo::remove_if[eve::algo::force_cardinal<T::size()>];
-  }();
-
   std::vector<e_t> v(100u, e_t{15});
 
   v[3] = v[15] = v[72] = e_t{5};
 
-  v.erase(alg(v, [](auto x) { return x < 10; }), v.end());
+  v.erase(eve::algo::remove_if[eve::algo::force_cardinal<T::size()>](v, [](auto x) { return x < 10; }), v.end());
 
   TTS_EQUAL(v.size(), 97u);
   TTS_EXPECT(std::all_of(v.begin(), v.end(), [](auto x) { return x > 10; }));
