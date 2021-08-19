@@ -102,7 +102,7 @@ namespace eve
   //! @{
   //! @var float32
   //!
-  //! @brief  convert a eve:value to a float32 based eve::value.
+  //! @brief  convert a eve::real_value to a float32 based eve::real_value.
   //!
   //! #### Members Functions
   //!
@@ -125,7 +125,7 @@ namespace eve
   //! @{
   //! @var float64
   //!
-  //! @brief  convert a eve:value to a float64 based eve::value.
+  //! @brief  convert a eve::real_value to a float64 based eve::real_value.
   //!
   //! #### Members Functions
   //!
@@ -148,7 +148,7 @@ namespace eve
   //! @{
   //! @var uint8
   //!
-  //! @brief  convert a eve:value to a uint8 based eve::value.
+  //! @brief  convert a eve::real_value to a uint8 based eve::real_value.
   //!
   //! #### Members Functions
   //!
@@ -171,7 +171,7 @@ namespace eve
   //! @{
   //! @var uint16
   //!
-  //! @brief  convert a eve:value to a uint16 based eve::value.
+  //! @brief  convert a eve::real_value to a uint16 based eve::real_value.
   //!
   //! #### Members Functions
   //!
@@ -194,7 +194,7 @@ namespace eve
   //! @{
   //! @var uint32
   //!
-  //! @brief  convert a eve:value to a uint32 based eve::value.
+  //! @brief  convert a eve::real_value to a uint32 based eve::real_value.
   //!
   //! #### Members Functions
   //!
@@ -217,7 +217,7 @@ namespace eve
   //! @{
   //! @var uint64
   //!
-  //! @brief  convert a eve:value to a uint64 based eve::value.
+  //! @brief  convert a eve::real_value to a uint64 based eve::real_value.
   //!
   //! #### Members Functions
   //!
@@ -240,7 +240,7 @@ namespace eve
   //! @{
   //! @var int8
   //!
-  //! @brief  convert a eve:value to a int8 based eve::value.
+  //! @brief  convert a eve::real_value to a int8 based eve::real_value.
   //!
   //! #### Members Functions
   //!
@@ -263,7 +263,7 @@ namespace eve
   //! @{
   //! @var int16
   //!
-  //! @brief  convert a eve:value to a int16 based eve::value.
+  //! @brief  convert a eve::real_value to a int16 based eve::real_value.
   //!
   //! #### Members Functions
   //!
@@ -286,7 +286,7 @@ namespace eve
   //! @{
   //! @var int32
   //!
-  //! @brief  convert a eve:value to a int32 based eve::value.
+  //! @brief  convert a eve::real_value to a int32 based eve::real_value.
   //!
   //! #### Members Functions
   //!
@@ -309,7 +309,7 @@ namespace eve
   //! @{
   //! @var int64
   //!
-  //! @brief  convert a eve:value to a int64 based eve::value.
+  //! @brief  convert a eve::real_value to a int64 based eve::real_value.
   //!
   //! #### Members Functions
   //!
@@ -336,7 +336,7 @@ namespace eve
   //! @{
   //! @var int_
   //!
-  //! @brief  convert a eve:value to a signed integral based eve::value of same size.
+  //! @brief  convert a eve::real_value to a signed integral based eve::real_value of same size.
   //!
   //! #### Members Functions
   //!
@@ -361,7 +361,7 @@ namespace eve
   //! @{
   //! @var uint_
   //!
-  //! @brief  convert a eve:value to a unsigned integral based eve::value of same size.
+  //! @brief  convert a eve::real_value to a unsigned integral based eve::real_value of same size.
   //!
   //! #### Members Functions
   //!
@@ -386,7 +386,7 @@ namespace eve
   //! @{
   //! @var floating__
   //!
-  //! @brief  convert a eve:value to a floating point based eve::value of same size.
+  //! @brief  convert a eve::real_value to a floating point based eve::real_value of same size.
   //!
   //! #### Members Functions
   //!
@@ -411,7 +411,7 @@ namespace eve
   //! @{
   //! @var upgrade_
   //!
-  //! @brief  convert a eve:value to a signed integral based eve::value of the upgraded base type.
+  //! @brief  convert a eve::real_value to a signed integral based eve::real_value of the upgraded base type.
   //!
   //! #### Members Functions
   //!
