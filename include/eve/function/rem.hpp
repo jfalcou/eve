@@ -70,7 +70,8 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `toward_zero`
+  //!  * eve::toward_zero
+  //!
   //!     The call `toward_zero(rem)(x, y)`  computes  `x-towardzero_(div)(x, y)*y`.
   //!      For floating point entries this call is similar to std::fmod. In particular:
   //!
@@ -80,14 +81,17 @@ namespace eve
   //!      * If `y` is  \f$\pm\infty\f$ and `x` is finite, `x` is returned.
   //!      * If either argument is a Nan, NaN is returned.
   //!
-  //!  * `downward`
+  //!  * eve::downward
+  //!
   //!     The call `downward(rem)(x, y)`  computes  `x-downward(div)(x, y)*y`.
   //!
-  //!  * `upward`
+  //!  * eve::upward
+  //!
   //!     The call `upward(rem)(x, y)`  computes  `x-upward(div)(x, y)*y`.
   //!      It is not defined for unsigned values as the result can be negative.
   //!
-  //!  * `to_nearest`
+  //!  * eve::to_nearest
+  //!
   //!     The call `to_nearest(rem)(x, y)`  computes  `x-to_nearest(div)(x,y)*y`.
   //!      It is not defined for unsigned values as the result can be negative.
   //!      For floating point entries this call is similar to std::remainder.

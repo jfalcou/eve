@@ -86,16 +86,20 @@ namespace eve
   //!     the division of [`eve::Valmin(as(x))`](@ref eve::valmin)
   //!     by -1 that produces [`eve::Valmax(as(x))`](@ref eve::valmax).
   //!
-  //!   * `toward_zero`
+  //!   * eve::toward_zero
+  //!
   //!     The call `toward_zero(div)(x, y)`  computes  `trunc(div(x, y))`.
   //!
-  //!   * `downward`
+  //!   * eve::downward
+  //!
   //!     The call `downward(div)(x, y)`  computes  `floor(div(x, y))`.
   //!
-  //!   * `upward`
+  //!   * eve::upward
+  //!
   //!     The call `upward(div)(x, y)`  computes  `ceil(div(x, y))`.
   //!
-  //!   * `to_nearest`
+  //!   * eve::to_nearest
+  //!
   //!     The call `to_nearest(div)(x, y)`  computes  `nearest(div(x,y))`.
   //!
   //!   * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth

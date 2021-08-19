@@ -67,7 +67,8 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `to_nearest, toward_zero, upward,  downward`
+  //!  * eve::to_nearest, eve::toward_zero, eve::upward,  eve::downward
+  //!
   //!     If d is one of these 4 decorators
   //!     The call `d(fracscale)(x)`, call is equivalent to  `a0-d(roundscale)(a0, scale)`
   //!

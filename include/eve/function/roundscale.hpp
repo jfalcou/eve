@@ -67,9 +67,10 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `to_nearest, toward_zero, upward,  downward`
+  //!  * eve::to_nearest, eve::toward_zero, eve::upward,  eve::downward
+  //!
   //!     If d is one of these 4 decorators
-  //!     The call `d(roundscale)(x)`, call is equivalent to  `ldexp(d(round)(ldexp(a0,scale), -scale))`
+  //!     The call `d(roundscale)(x)`, call is equivalent to  `eve::ldexp(d(``eve::round``)(``eve::ldexp``(a0,scale), -scale))`
   //!
   //! #### Example
   //!

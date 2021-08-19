@@ -65,23 +65,27 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * `downward`
+  //!  * eve::downward
+  //!
   //!     The expression `downward(round)(x)` is equivalent to `floor(x)`.
-  //!  
-  //!  * `upward`
+  //!
+  //!  * eve::upward
+  //!
   //!     The expression `upward(round)(x)` is equivalent to `ceil(x)`.
-  //!  
-  //!  * `to_nearest`
+  //!
+  //!  * eve::to_nearest
+  //!
   //!     The expression `to_nearest(round)(x)` is equivalent to `nearest(x)`.
-  //!  
-  //!  * `toward_zero`
+  //!
+  //!  * eve::toward_zero
+  //!
   //!     The expression `toward_zero(round)(x)` is equivalent to `trunc(x)`.
-  //!  
+  //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/round.hpp>`
-  //!  
-  //!     The expression `diff(round)(x)` computes the derivative of the function at `x` (it is the same as `nearest`).
+  //!
+  //!     The expression `diff(round)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
   //!
