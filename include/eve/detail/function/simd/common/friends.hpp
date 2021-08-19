@@ -14,6 +14,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/is_native.hpp>
+#include <eve/product_type.hpp>
 #include <eve/forward.hpp>
 
 // Register tag here so we can use them in tagged_dispatch situation
@@ -21,7 +22,6 @@ namespace eve
 {
   EVE_REGISTER_CALLABLE(is_equal_)
   EVE_REGISTER_CALLABLE(is_not_equal_)
-  EVE_REGISTER_CALLABLE(is_less_)
 }
 
 namespace eve::detail
@@ -212,37 +212,12 @@ namespace eve::detail
   }
 
   //================================================================================================
+  // Ordering operators
   template<simd_value Wide>
   EVE_FORCEINLINE auto self_less(Wide const& v,Wide const& w) noexcept
-  requires( kumi::product_type<element_type_t<Wide>> )
-  {
-    if constexpr( detail::tag_dispatchable<tag::is_less_,Wide,Wide> )
-    {
-      static_assert ( detail::tag_dispatchable<tag::is_equal_,Wide,Wide>
-                    , "[EVE] User defined type defines < but no == specialization."
-                    );
-      return tagged_dispatch(tag::is_less_{}, v, w);
-    }
-    else
-    {
-      return v.storage() < w.storage();
-    }
-  }
-
-  template<simd_value Wide>
-  EVE_FORCEINLINE auto self_less(Wide const& v,Wide const& w) noexcept
-  requires( !kumi::product_type<element_type_t<Wide>> )
   {
     constexpr auto lt = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e < f); };
     return apply_over(lt, v, w);
-  }
-
-  //================================================================================================
-  template<simd_value Wide>
-  EVE_FORCEINLINE auto self_leq(Wide const& v,Wide const& w) noexcept
-  requires( kumi::product_type<element_type_t<Wide>> )
-  {
-    return (v < w) || (v == w);
   }
 
   template<simd_value Wide>
@@ -252,27 +227,11 @@ namespace eve::detail
     return apply_over(ge, v, w);
   }
 
-  //================================================================================================
-  template<simd_value Wide>
-  EVE_FORCEINLINE auto self_greater(Wide const& v,Wide const& w) noexcept
-  requires( kumi::product_type<element_type_t<Wide>> )
-  {
-    return !(v <= w);
-  }
-
   template<simd_value Wide>
   EVE_FORCEINLINE auto self_greater(Wide const& v,Wide const& w) noexcept
   {
     constexpr auto gt = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e > f); };
     return apply_over(gt, v, w);
-  }
-
-  //================================================================================================
-  template<simd_value Wide>
-  EVE_FORCEINLINE auto self_geq(Wide const& v,Wide const& w) noexcept
-  requires( kumi::product_type<element_type_t<Wide>> )
-  {
-    return !(v < w);
   }
 
   template<simd_value Wide>

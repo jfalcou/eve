@@ -10,20 +10,20 @@
 #include <eve/wide.hpp>
 #include <utility>
 
+using l_t = eve::as_logical_t<eve::wide<udt::grid2d>>;
+
 //==================================================================================================
 // Operator==
 //==================================================================================================
 TTS_CASE("Check eve::wide<udt> operator==")
 {
-  udt::grid2d::reset();
   eve::wide<udt::grid2d> lhs = [](int i, int) { return udt::grid2d{i%2, i%5 ? -1 : 1}; };
   eve::wide<udt::grid2d> rhs = [](int i, int) { return udt::grid2d{i%3, i%3 ? -1 : 1}; };
 
-  eve::logical<eve::wide<int>> checks = [&](auto i, auto) { return lhs.get(i) == rhs.get(i); };
+  l_t checks = [&](auto i, auto) { return lhs.get(i) == rhs.get(i); };
 
-  TTS_EQUAL( (lhs == rhs), checks );
-  TTS_EQUAL( udt::grid2d::eq_counter , 1);
-  TTS_EQUAL( udt::grid2d::neq_counter, 0);
+  TTS_EQUAL( (lhs == rhs)           , checks );
+  TTS_EQUAL( eve::is_equal(lhs, rhs), checks );
 };
 
 //==================================================================================================
@@ -31,15 +31,13 @@ TTS_CASE("Check eve::wide<udt> operator==")
 //==================================================================================================
 TTS_CASE("Check eve::wide<udt> operator!=")
 {
-  udt::grid2d::reset();
   eve::wide<udt::grid2d> lhs = [](int i, int) { return udt::grid2d{i%2, i%5 ? -1 : 1}; };
   eve::wide<udt::grid2d> rhs = [](int i, int) { return udt::grid2d{i%3, i%3 ? -1 : 1}; };
 
-  eve::logical<eve::wide<int>> checks = [&](auto i, auto) { return lhs.get(i) != rhs.get(i); };
+  l_t checks = [&](auto i, auto) { return lhs.get(i) != rhs.get(i); };
 
-  TTS_EQUAL( (lhs != rhs), checks );
-  TTS_EQUAL( udt::grid2d::eq_counter , 0);
-  TTS_EQUAL( udt::grid2d::neq_counter, 1);
+  TTS_EQUAL( (lhs != rhs)               , checks );
+  TTS_EQUAL( eve::is_not_equal(lhs, rhs), checks );
 };
 
 //==================================================================================================
@@ -47,17 +45,23 @@ TTS_CASE("Check eve::wide<udt> operator!=")
 //==================================================================================================
 TTS_CASE("Check eve::wide<udt> ordering")
 {
-  using ug = udt::grid2d;
+  eve::wide<udt::grid2d> lhs = [](int i, int) { return udt::grid2d{i%2, i%5 ? -1 : 1}; };
+  eve::wide<udt::grid2d> rhs = [](int i, int) { return udt::grid2d{i%3, i%3 ? -1 : 1}; };
 
-  udt::grid2d::reset();
-  eve::wide<udt::grid2d,eve::fixed<4>> v00{ug{0,1}, ug{0,1}, ug{1,6 }, ug{2,6}};
-  eve::wide<udt::grid2d,eve::fixed<4>> v01{ug{1,2}, ug{0,4}, ug{0,10}, ug{2,0}};
+  l_t clt = [&](auto i, auto) { return lhs.get(i) <  rhs.get(i); };
+  l_t cle = [&](auto i, auto) { return lhs.get(i) <= rhs.get(i); };
+  l_t cgt = [&](auto i, auto) { return lhs.get(i) >  rhs.get(i); };
+  l_t cge = [&](auto i, auto) { return lhs.get(i) >= rhs.get(i); };
 
-  std::cout << (v00  < v01) << "\n";
-  std::cout << (v00 <= v01) << "\n";
-  std::cout << (v00  > v01) << "\n";
-  std::cout << (v00 >= v01) << "\n";
+  TTS_EQUAL( (lhs <  rhs), clt );
+  TTS_EQUAL( eve::is_less(lhs, rhs), clt );
 
-  TTS_EQUAL( udt::grid2d::order_counter , 4);
-  TTS_EQUAL( udt::grid2d::eq_counter    , 2);
+  TTS_EQUAL( (lhs <= rhs), cle );
+  TTS_EQUAL( eve::is_less_equal(lhs, rhs), cle );
+
+  TTS_EQUAL( (lhs >  rhs), cgt );
+  TTS_EQUAL( eve::is_greater(lhs, rhs), cgt );
+
+  TTS_EQUAL( (lhs >= rhs), cge );
+  TTS_EQUAL( eve::is_greater_equal(lhs, rhs), cge );
 };
