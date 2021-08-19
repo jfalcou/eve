@@ -13,9 +13,9 @@
 //! @defgroup ieee754 Ieee754
 //!
 //! These functions provide scalar and SIMD version of functions related to the representation of
-//! floting point values.
+//! floating point values.
 //!
-//! **Convenience header:** @code{.cpp} #include <eve/function/bit.hpp> @endcode
+//! **Convenience header:** @code{.cpp} #include <eve/function/ieee_754.hpp> @endcode
 //!
 //!@}
 //================================================================================================
