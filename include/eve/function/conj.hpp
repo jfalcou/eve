@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(eve::floating_value auto x ) const noexcept;
+  //!  auto operator()(floating_value auto x ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
