@@ -16,6 +16,43 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup constant
+  //! @{
+  //! @var maxexponentm1
+  //!
+  //! @brief Callable object computing the greatest exponent value minus one.
+  //!
+  //! **Required header:** `#include <eve/function/maxexponentm1.hpp>`
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | Computes the maxexponentm1 constant                               |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  tempate < floating_real_value T > Tautooperator()( as<T> const & t) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!
+  //! **Return value**
+  //!
+  //! the call `eve::limitexponent(as<T>())` is semantically equivalent to
+  //!   - as_integer_t<T>(126) if eve::element_type_t<T> is float
+  //!   - as_integer_t<T>(1022) if eve::element_type_t<T> is double
+  //!
+  //! ---
+  //!
+  //! #### Example
+  //!
+  //! @godbolt{doc/core/maxexponentm1.cpp}
+  //!
+  //! @}
+  //================================================================================================
   EVE_MAKE_CALLABLE(maxexponentm1_, maxexponentm1);
 
   namespace detail

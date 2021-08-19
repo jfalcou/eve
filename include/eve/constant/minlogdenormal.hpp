@@ -16,6 +16,44 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup constant
+  //! @{
+  //! @var minlogdenormal
+  //!
+  //! @brief Callable object computing the least value for which eve::exp
+  //! returns a non zero result
+  //!
+  //! **Required header:** `#include <eve/function/minlogdenormal.hpp>`
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | Computes the minlogdenormal constant                               |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  tempate < floating_value T > T operator()( as<T> const & t) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!
+  //! **Return value**
+  //!
+  //! the call `eve::minlog(as<T>())` is semantically equivalent to:
+  //!   - T(-103.972f) if eve::element_type_t<T> is float
+  //!   - T(-745.133) if eve::element_type_t<T> is double
+  //!
+  //! ---
+  //!
+  //! #### Example
+  //!
+  //! @godbolt{doc/core/minlogdenormal.cpp}
+  //!
+  //! @}
+  //================================================================================================
   EVE_MAKE_CALLABLE(minlogdenormal_, minlogdenormal);
 
   namespace detail

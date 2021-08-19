@@ -16,6 +16,43 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup constant
+  //! @{
+  //! @var limitexponent
+  //!
+  //! @brief Callable object computing the greatest exponent value plus one.
+  //!
+  //! **Required header:** `#include <eve/function/limitexponent.hpp>`
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | Computes the limitexponent constant                               |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  tempate < floating_real_value T > auto operator()( as<T> const & t) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!
+  //! **Return value**
+  //!
+  //! the call `eve::limitexponent(as<T>())` is semantically equivalent to
+  //!   - as_integer_t<T>(128) if eve::element_type_t<T> is float
+  //!   - as_integer_t<T>(1024) if eve::element_type_t<T> is double
+  //!
+  //! ---
+  //!
+  //! #### Example
+  //!
+  //! @godbolt{doc/core/limitexponent.cpp}
+  //!
+  //! @}
+  //================================================================================================
   EVE_MAKE_CALLABLE(limitexponent_, limitexponent);
 
   namespace detail

@@ -17,6 +17,44 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup constant
+  //! @{
+  //! @var maxlog2
+  //!
+  //! @brief Callable object computing the greatest positive value for which eve::exp2
+  //! returns a finite result.
+  //!
+  //! **Required header:** `#include <eve/function/maxlog2.hpp>`
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | Computes the maxlog2 constant                               |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  tempate < floating_value T > T operator()( as<T> const & t) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!
+  //! **Return value**
+  //!
+  //! the call `eve::maxlog2(as<T>())` is semantically equivalent to:
+  //!   - T(127.0f) if eve::element_type_t<T> is float
+  //!   - T(1023.0) if eve::element_type_t<T> is double
+  //!
+  //! ---
+  //!
+  //! #### Example
+  //!
+  //! @godbolt{doc/core/maxlog2.cpp}
+  //!
+  //! @}
+  //================================================================================================
   EVE_MAKE_CALLABLE(maxlog2_, maxlog2);
 
   namespace detail

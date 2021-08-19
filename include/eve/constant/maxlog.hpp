@@ -16,6 +16,44 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup constant
+  //! @{
+  //! @var maxlog
+  //!
+  //! @brief Callable object computing the greatest positive value for which eve::exp
+  //! returns a finite result
+  //!
+  //! **Required header:** `#include <eve/function/maxlog.hpp>`
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | Computes the maxlog constant                               |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  tempate < floating_value T > T operator()( as<T> const & t) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!
+  //! **Return value**
+  //!
+  //! the call `eve::maxlog(as<T>())` is semantically equivalent to:
+  //!   - T(88.37630f) if eve::element_type_t<T> is float
+  //!   - T(709.436) if eve::element_type_t<T> is double
+  //!
+  //! ---
+  //!
+  //! #### Example
+  //!
+  //! @godbolt{doc/core/maxlog.cpp}
+  //!
+  //! @}
+  //================================================================================================
   EVE_MAKE_CALLABLE(maxlog_, maxlog);
 
   namespace detail
@@ -28,6 +66,5 @@ namespace eve
       if constexpr(std::is_same_v<t_t, float>) return Constant<T,  0x42b0c0a5U>();
       else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0x40862b7d369a5aa7ULL>();
     }
-    //          0x40862e42fefa39efULL>(); // 709.43613930310391
   }
 }

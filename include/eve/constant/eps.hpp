@@ -16,6 +16,47 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup constant
+  //! @{
+  //! @var eps
+  //!
+  //! @brief Callable object computing the machine epsilon.
+  //!
+  //! **Required header:** `#include <eve/function/eps.hpp>`
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | Computes the eps constant                               |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  tempate < real_value T > T operator()( as<T> const & t) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!
+  //! **Return value**
+  //!
+  //! the call `eve::eps(as<T>())` returns [elementwise](@ref glossary_elementwise), the smallest
+  //! positive value `x` of the type such that `1+x !=  x`.
+  //!
+  //!  * If T is an [integral value](@ref integral_value) the elements returned are equal to one
+  //!  * If T is a  [floating real value](@ref floating_real_value) the elements returned are equal to
+  //!        - 2.220446049250313e-16 if the [elements type](@ref eve::element_type_t) is float
+  //!        - 1.1920929e-07f        if the [elements type](@ref eve::element_type_t) is double
+  //!
+  //! ---
+  //!
+  //! #### Example
+  //!
+  //! @godbolt{doc/core/eps.cpp}
+  //!
+  //! @}
+  //================================================================================================
   EVE_MAKE_CALLABLE(eps_, eps);
 
   namespace detail
