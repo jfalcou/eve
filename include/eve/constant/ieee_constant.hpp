@@ -19,35 +19,43 @@ namespace eve
   //================================================================================================
   //! @addtogroup constant
   //! @{
-  //! @var ieee_constant
+  //! @var Ieee_constant
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing a floating constant from its scalar hexadecimal integral representations |
   //!
   //! **Required header:** `#include <eve/function/ieee_constant.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the values of an a flooating ieee_constant        |
+  //! | `operator()` | generates a floating constant from its scalar hexadecimal integral representations |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < BitsPatternfloat, BitsPatterndouble, value T > T operator()( as<T> const & t) const noexcept;
+  //!  tempate <floating_real_value T BitsPatternfloat, BitsPatterndouble > T operator()() const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! **Parameters**
+  //! **template Parameters**
   //!
-  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!`BitsPatternfloat': hexadecimal integral representation of the float scalar constant
+  //!
+  //!`BitsPatterndouble': hexadecimal integral representation of the double scalar constant
   //!
   //! **Return value**
   //!
-  //! the call `eve::ieee_constant(as<T>())` is semantically equivalent to  `TO DO`
+  //! the call `eve::ieee_constant(as<T>()) < T, BitsPatternfloat, BitsPatterndouble>`
+  //! is semantically equivalent to :
   //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  using t_t = detail::value_type_t<T>;
+  //!  if constexpr(std::same_as<t_t, float>) return eve::constant<T, BitsPatternfloat>();
+  //!  else                                   return eve::constant<T, BitsPatterndouble>();
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //! ---
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/ieee_constant.cpp}
+  //! godbolt{doc/core/ieee_constant.cpp}
   //!
   //! @}
   //================================================================================================

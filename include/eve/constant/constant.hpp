@@ -19,29 +19,30 @@ namespace eve
   //================================================================================================
   //! @addtogroup constant
   //! @{
-  //! @var constant
+  //! @var Constant
   //!
-  //! @brief Callable object computing the greatest positive value.
+  //! @brief Callable object computing a floating constant from its scalar hexadecimal integral representation |
   //!
   //! **Required header:** `#include <eve/function/constant.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the constant constant                               |
+  //! | `operator()` | generates a floating constant from its scalar hexadecimal integral representation |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < value T > T operator()( as<T> const & t) const noexcept;
+  //!  tempate < floating_real_value T, auto BitsPattern > T operator()( as<T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! **Parameters**
-  //!
-  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //! @tparam
+  //! `T`:   type of the output constant
+  //! `BitsPattern': hexadecimal integral representation of the floating scalar constant
   //!
   //! **Return value**
   //!
-  //! the call `eve::constant(as<T>())` is semantically equivalent to  `TO DO`
+  //! the call `eve::Constant<T, Bitpattern>()` is semantically equivalent to
+  //! T(eve::bit_cast(Bitpattern, `as<value_type_t<T>>()))`
   //!
   //! ---
   //!
@@ -51,6 +52,7 @@ namespace eve
   //!
   //! @}
   //================================================================================================
+
   template<typename T, auto BitsPattern>
   EVE_FORCEINLINE auto Constant(eve::as<T> const & = {})
   {
