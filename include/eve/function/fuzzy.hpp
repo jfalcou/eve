@@ -31,7 +31,7 @@ namespace eve
   //! @{
   //! @var definitely
   //!
-  //! @brief  Higher-order @callable imbuing more standard semantic onto other @callable{s}.
+  //! @brief  Higher-order @callable imbuing more srict semantic onto other @callable{s}.
   //!
   //! #### Synopsis
   //!
@@ -61,7 +61,7 @@ namespace eve
   //! @{
   //! @var almost
   //!
-  //! @brief  Higher-order @callable imbuing more standard semantic onto other @callable{s}.
+  //! @brief  Higher-order @callable imbuing a toerant to little errors semantic onto other @callable{s}.
   //!
   //! #### Synopsis
   //!
@@ -90,7 +90,7 @@ namespace eve
   //! @{
   //! @var tolerant
   //!
-  //! @brief  Higher-order @callable imbuing more standard semantic onto other @callable{s}.
+  //! @brief  Higher-order @callable imbuing a less strict semantic onto other @callable{s}.
   //!
   //! #### Synopsis
   //!
