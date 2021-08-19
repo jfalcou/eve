@@ -6,316 +6,346 @@
 */
 //==================================================================================================
 #pragma once
+#include <ostream>
+#include <string_view>
 #include <type_traits>
 #include <utility>
 
 #define RBR_FWD(...) static_cast<decltype(__VA_ARGS__) &&>(__VA_ARGS__)
 
+namespace rbr::detail
+{
+  // Lightweight container of value in alternatives
+  template<typename T, typename V> struct type_or_ { V value; };
+
+  // Type -> String converter
+  template<typename T> struct type_name
+  {
+    static constexpr auto value() noexcept
+    {
+  #if defined(_MSC_VER )
+      std::string_view data(__FUNCSIG__);
+      auto i = data.find('<') + 1;
+      auto j = data.find(">::value");
+      return data.substr(i, j - i);
+  #else
+      std::string_view data(__PRETTY_FUNCTION__);
+      auto i = data.find('=') + 2;
+      auto j = data.find_last_of(']');
+      return data.substr(i, j - i);
+  #endif
+    }
+  };
+
+  // Helpers for working on list of keys as unique lists - needed by merge and some contains_*
+  template<typename... Ks> struct keys {};
+
+  template<typename K, typename Ks> struct contains;
+
+  template<typename... Ks, typename K>
+  struct  contains<K, keys<Ks...>> : std::bool_constant<(std::same_as<K,Ks> || ...)>
+  {};
+
+  template<typename K, typename Ks, bool>  struct append_if_impl;
+
+  template<typename... Ks, typename K> struct append_if_impl<K,keys<Ks...>,true>
+  {
+    using type = keys<Ks...>;
+  };
+
+  template<typename... Ks, typename K> struct append_if_impl<K,keys<Ks...>,false>
+  {
+    using type = keys<Ks...,K>;
+  };
+
+  template<typename K, typename Ks> struct append_if;
+
+  template<typename K, typename Ks>
+  struct append_if : append_if_impl<K,Ks, contains<K, Ks>::value>
+  {};
+
+  template<typename K1, typename K2> struct uniques;
+
+  template<typename K1s, typename K2, typename... K2s>
+  struct  uniques<K1s, keys<K2,K2s...>>
+        : uniques< typename append_if<K2,K1s>::type, keys<K2s...> >
+  {};
+
+  template<typename K1s> struct  uniques<K1s, keys<>> { using type = K1s; };
+
+  template<typename K1, typename K2> struct contain_all;
+
+  template<typename K1s, typename... K2s>
+  struct  contain_all<K1s, keys<K2s...>> : std::bool_constant<(contains<K2s,K1s>::value && ...)>
+  {};
+
+  template<typename K1s>  struct  contain_all<K1s   , keys<>>  : std::false_type {};
+  template<typename K2s>  struct  contain_all<keys<>, K2s   >  : std::false_type {};
+  template<>              struct  contain_all<keys<>,keys<>>   : std::true_type  {};
+
+  template<typename K1, typename K2>
+  struct is_equivalent : std::bool_constant<contain_all<K2,K1>::value && contain_all<K2,K1>::value>
+  {};
+}
+
 namespace rbr
 {
-  // Lightweight container of value
-  template<typename T, typename V> struct type_or_
+  namespace concepts
   {
-    V value;
+    // Keyword concept
+    template<typename K> concept keyword = requires( K k )
+    {
+      typename K::tag_type;
+      { K::template accept<int>() } -> std::same_as<bool>;
+    };
+
+    // Option concept
+    template<typename O> concept option = requires( O const& o )
+    {
+      { o(typename std::remove_cvref_t<O>::keyword_type{}) }
+          -> std::same_as<typename std::remove_cvref_t<O>::value_type>;
+    };
+
+    // Type checker concept
+    template<typename C> concept type_checker = requires( C const& )
+    {
+      typename C::template apply<int>::type;
+    };
+
+    // keyword parameter exact match
+    template<typename Option, auto Keyword>
+    concept exactly = std::same_as< typename Option::keyword_type
+                                  , std::remove_cvref_t<decltype(Keyword)>
+                                  >;
+  }
+
+  // Option implementation
+  template<concepts::keyword Keyword, typename Value> struct option
+  {
+    using value_type    = Value;
+    using keyword_type  = Keyword;
+
+    constexpr value_type operator()(keyword_type const&) const noexcept { return contents; }
+    Value contents;
   };
 
-  template<typename... KWs> struct either_
+  // checked_keyword implementation
+  template<typename Tag, typename Traits> struct checked_keyword
   {
-  };
+    using tag_type  = Tag;
 
-  // Basic checker for keyword constraints
-  struct any_type
-  {
-    template<typename T> struct check : std::true_type {};
-  };
+    constexpr checked_keyword() {}
+    constexpr checked_keyword(Tag, Traits) {}
 
-  // Turn any type into a RegularType info carrier
-  template<typename T, typename C = any_type> struct keyword_t
-  {
-    using type  = keyword_t<T,C>;
-
-    constexpr keyword_t() =default;
-    constexpr keyword_t(T const&) {}
-    constexpr keyword_t(T const&, C const&) {}
-
-    template<typename V>
-    requires( C::template check<V>::value )
-    constexpr auto operator=(V &&v) const noexcept;
-
-    template<typename V> constexpr auto operator|(V &&value) const noexcept
+    template<typename T> static constexpr bool accept()
     {
-      return type_or_<type, V> {RBR_FWD(value)};
+      return Traits::template apply<std::remove_cvref_t<T>>::value;
     }
 
-    template<typename U, typename K> constexpr auto operator|(keyword_t<U,K>) const noexcept
+    template<typename Type>
+    constexpr auto operator=(Type&& v) const noexcept requires( accept<Type>() )
     {
-      return either_<keyword_t<T,C>, keyword_t<U,K>> {};
+      return option<checked_keyword,std::remove_cvref_t<Type>>{RBR_FWD(v)};
     }
 
-    template<typename... Kws>
-    friend constexpr auto operator|(either_<Kws...>, keyword_t) noexcept
+    template<typename Type>
+    constexpr auto operator|(Type&& v) const noexcept requires( accept<Type>() )
     {
-      return either_<Kws..., keyword_t<T,C>> {};
+      return detail::type_or_<checked_keyword,std::remove_cvref_t<Type>>{RBR_FWD(v)};
     }
 
-    template<typename... Kws>
-    friend constexpr auto operator|(keyword_t, either_<Kws...>) noexcept
+    template<typename Type>
+    constexpr auto operator|(Type&& v) const noexcept requires std::invocable<Type>
     {
-      return either_<keyword_t<T,C>, Kws...> {};
+      return detail::type_or_<checked_keyword,Type>{RBR_FWD(v)};
     }
   };
 
-  // CTAD for keyword_t
-  template<typename ID> keyword_t(ID const&) -> keyword_t<ID>;
-  template<typename ID, typename C> keyword_t(ID const&, C const&) -> keyword_t<ID,C>;
-
-  // keyword_t generator
-  template<typename T, typename C = any_type>
-  inline constexpr const keyword_t<T,C> keyword = {};
-
-  // Flag-like keyword parameter
-  template<typename T> struct flag_type
+  // Keyword accepting a precise type as input
+  template<typename Tag, typename Value> struct typed_keyword
   {
-    static constexpr bool is_parameter_type     = true;
-    using key_type                              = flag_type<T>;
-    using type                                  = flag_type<T>;
+    using tag_type  = Tag;
 
-    constexpr flag_type() =default;
-    constexpr flag_type(T const&) {}
+    template<typename T> static constexpr bool accept() { return std::is_same_v<T,Value>; }
 
-    template<typename V> constexpr auto operator=(V&&) const noexcept
+    template<typename Type>
+    constexpr auto operator=(Type&& v) const noexcept requires( accept<Type>() )
+    {
+      return option<typed_keyword,std::remove_cvref_t<Type>>{RBR_FWD(v)};
+    }
+
+    template<typename Type>
+    constexpr auto operator|(Type&& v) const noexcept requires( accept<Type>() )
+    {
+      return detail::type_or_<typed_keyword,std::remove_cvref_t<Type>>{RBR_FWD(v)};
+    }
+
+    template<typename Type>
+    constexpr auto operator|(Type&& v) const noexcept requires std::invocable<Type>
+    {
+      return detail::type_or_<typed_keyword,Type>{RBR_FWD(v)};
+    }
+  };
+
+  // Keyword accepting any type as input
+  template<typename Tag> struct any_keyword
+  {
+    using tag_type  = Tag;
+
+    template<typename T> static constexpr bool accept()
+    {
+      return !std::invocable<std::remove_cvref_t<T>>;
+    }
+
+    template<typename Type>
+    constexpr auto operator=(Type&& v) const noexcept requires( accept<Type>() )
+    {
+      return option<any_keyword,std::remove_cvref_t<Type>>{RBR_FWD(v)};
+    }
+
+    template<typename Type>
+    constexpr auto operator|(Type&& v) const noexcept requires( accept<Type>() )
+    {
+      return detail::type_or_<any_keyword,std::remove_cvref_t<Type>>{RBR_FWD(v)};
+    }
+
+    template<typename Type>
+    constexpr auto operator|(Type&& v) const noexcept requires std::invocable<std::remove_cvref_t<Type>>
+    {
+      return detail::type_or_<any_keyword,Type>{RBR_FWD(v)};
+    }
+  };
+
+  // Flags are keyword/options which value is given by its sole presence
+  template<typename Keyword> struct flag_keyword
+  {
+    constexpr flag_keyword() {}
+    constexpr flag_keyword(Keyword const&) {}
+
+    template<typename T> static constexpr bool accept()
+    {
+      return std::is_same_v<std::true_type, T>;
+    }
+
+    using tag_type      = Keyword;
+    using keyword_type  = flag_keyword;
+    using value_type    = std::true_type;
+
+    template<typename Type>
+    constexpr auto operator=(Type&&) const noexcept
     {
       return *this;
     }
 
-    template<typename V> constexpr auto operator|(V &&value) const noexcept
+    template<typename Type>
+    constexpr auto operator|(Type&& v) const noexcept
     {
-      return type_or_<type, V> {RBR_FWD(value)};
+      return detail::type_or_<flag_keyword,std::remove_cvref_t<Type>>{RBR_FWD(v)};
     }
 
-    template<typename U> constexpr auto operator|(flag_type<U>) const noexcept
+    template<typename Type>
+    constexpr auto operator|(Type&& v) const noexcept requires std::invocable<Type>
     {
-      return either_<flag_type<T>, flag_type<U>> {};
+      return detail::type_or_<flag_keyword,Type>{RBR_FWD(v)};
     }
 
-    template<typename... Kws>
-    friend constexpr auto operator|(either_<Kws...>, flag_type) noexcept
-    {
-      return either_<Kws..., flag_type<T>> {};
-    }
-
-    template<typename... Kws>
-    friend constexpr auto operator|(flag_type, either_<Kws...>) noexcept
-    {
-      return either_<flag_type<T>, Kws...> {};
-    }
-
-    constexpr std::true_type operator()(flag_type<T> const&) noexcept { return {}; }
+    constexpr std::true_type operator()(keyword_type const&) const noexcept { return {}; }
   };
 
-  // CTAD for flag_type
-  template<typename ID> flag_type(ID const&) -> flag_type<ID>;
+  // Keyword builder
+  template<typename Tag> constexpr flag_keyword<Tag>  flag(Tag) noexcept { return {}; }
+  template<typename Tag> constexpr any_keyword<Tag>   keyword(Tag) noexcept { return {}; }
 
-  // flag_type generator
-  template<typename T> inline constexpr const flag_type<T> flag = {};
+  template<typename Type, typename Tag>
+  constexpr typed_keyword<Tag, Type> keyword(Tag) noexcept { return {}; }
 
-  namespace detail
+  template<concepts::type_checker Checker, typename Tag>
+  constexpr checked_keyword<Tag,Checker> keyword(Tag) noexcept { return {}; }
+
+  // Tag for when something is not found in an aggregator
+  struct unknown_key {};
+
+  // Option calls aggregator
+  template<concepts::option... Ts> struct aggregator : Ts...
   {
-    // Turn a Type+Value pair into a Callable
-    template<typename Key, typename Callable> struct linked_value : Callable
+    constexpr aggregator(Ts const&...t) noexcept : Ts(t)... {}
+    using Ts::operator()...;
+
+    template<concepts::keyword K> constexpr auto operator()(K const &) const noexcept
     {
-      static constexpr bool is_parameter_type = true;
-      using key_type                          = Key;
-
-      constexpr linked_value(Key, Callable f) noexcept : Callable(f) {}
-      using Callable::operator();
-    };
-  }
-
-  // keyword parameter concept
-  template<typename T> concept keyword_parameter = std::remove_cvref_t<T>::is_parameter_type;
-
-  // Type notifying that we can't find a given key
-  struct unknown_key
-  {
-    template<typename... T> unknown_key(T &&...) {}
+      return unknown_key {};
+    }
   };
 
-  namespace detail
+  // Settings is a group of options
+  template<concepts::option... Opts> struct settings
   {
-    // Build the type->value lambda capture
-    template<typename Key, typename T> constexpr auto link(T &&v) noexcept
+    using base = aggregator<Opts...>;
+    constexpr settings(Opts const&... opts) : content_(opts...) {}
+
+    static constexpr std::ptrdiff_t size() noexcept { return sizeof...(Opts); }
+
+    template<concepts::keyword Key>
+    static constexpr auto contains(Key const &) noexcept
     {
-      if constexpr( keyword_parameter<std::decay_t<T>> )
+      using found = decltype((std::declval<base>())(Key{}));
+      return std::bool_constant<!std::same_as<found, unknown_key> >{};
+    }
+
+    template<concepts::keyword... Keys>
+    static constexpr auto contains_any(Keys... ks) noexcept { return (contains(ks) || ...); }
+
+    template<concepts::keyword... Keys>
+    static constexpr auto contains_only(Keys const&...) noexcept
+    {
+      using current_keys    = detail::keys<typename Opts::keyword_type...>;
+      using acceptable_keys = detail::keys<Keys...>;
+      using unique_set      = typename detail::uniques<current_keys,acceptable_keys>::type;
+      return  detail::is_equivalent<unique_set, acceptable_keys>::value;
+    }
+
+    template<concepts::keyword... Keys>
+    static constexpr auto contains_none(Keys... ks) noexcept { return !contains_any(ks...); }
+
+    template<concepts::keyword Key> constexpr auto operator[](Key const& k) const noexcept
+    {
+      return content_(k);
+    }
+
+    template<typename Keyword>
+    constexpr auto operator[](flag_keyword<Keyword> const&) const noexcept
+    {
+      return contains(flag_keyword<Keyword>{});
+    }
+
+    template<concepts::keyword Key, typename Value>
+    constexpr auto operator[](detail::type_or_<Key, Value> const & tgt) const
+    {
+            if constexpr( contains(Key{}) ) return (*this)[Key{}];
+      else  if constexpr( std::is_invocable_v<Value> ) return tgt.value();
+      else                                             return tgt.value;
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, settings const& s)
+    {
+      auto show = [&]<typename T>(T t) -> std::ostream&
       {
-        return RBR_FWD(v);
-      }
-      else if constexpr( std::is_lvalue_reference_v<T> )
-      {
-        return linked_value(
-            Key {}, [&v](Key const &) constexpr->decltype(auto) { return v; });
-      }
-      else
-      {
-        return linked_value(
-            Key {}, [w = std::move(v)](Key const &) constexpr->T const & { return w; });
-      }
+        if constexpr( requires(T t) { t.show(os); } ) return t.show(os);
+        else                                          return os << detail::type_name<T>::value();
+      };
+
+      ( ( show(typename Opts::keyword_type::tag_type{}) << " : " << s[typename Opts::keyword_type{}]
+          << " (" << detail::type_name<typename Opts::value_type>::value() << ")\n"
+        ),...);
+
+      return os;
     }
 
-    // Check if the key we used is correct
-    template<typename T> inline constexpr bool is_unknown_v              = false;
-    template<> inline constexpr bool           is_unknown_v<unknown_key> = true;
-
-    // Aggregate lambdas and give them a operator(Key)-like interface
-    template<typename... Ts> struct aggregator : Ts...
-    {
-      constexpr aggregator(Ts &&...t) noexcept : Ts(RBR_FWD(t))... {}
-      using Ts::operator()...;
-
-      template<typename K, typename C>
-      constexpr auto operator()(keyword_t<K,C> const &) const noexcept
-      {
-        // If not found before, return the unknown_key value
-        return unknown_key {};
-      }
-
-      template<typename K> constexpr auto operator()(flag_type<K> const &) const noexcept
-      {
-        // If not found before, return the unknown_key value
-        return unknown_key {};
-      }
-    };
-  }
-
-  // Build a key-value from an option object
-  template<typename T, typename C>
-  template<typename V>
-  requires( C::template check<V>::value )
-  constexpr auto keyword_t<T,C>::operator=(V &&v) const noexcept
-  {
-    return detail::link<keyword_t<T,C>>(RBR_FWD(v));
-  }
-
-  // Extract tag from an Option
-  template<typename O> struct tag
-  {
-    using type = keyword_t<O>;
+    base content_;
   };
 
-  template<typename O, typename C> struct tag<keyword_t<O,C>>
-  {
-    using type = keyword_t<O,C>;
-  };
-
-  template<typename O> struct tag<flag_type<O>>
-  {
-    using type = flag_type<O>;
-  };
-
-  template<typename K, typename C> struct tag<detail::linked_value<K, C>>
-  {
-    using type = K;
-  };
-
-  template<typename O> using tag_t = typename tag<O>::type;
-
-  template<typename...> struct keys
-  {
-  };
-  template<typename...> struct links
-  {
-  };
-
-  // settings is an unordered set of values accessible via their types
-  template<typename Keys, typename Links> struct settings;
-
-  template<typename... Ks, typename... Ts> struct settings<keys<Ks...>, links<Ts...>>
-  {
-    using keys_type  = keys<Ks...>;
-    using links_type = links<Ks...>;
-    using parent     = detail::aggregator<Ts...>;
-
-    template<typename... Vs>
-    constexpr settings(Vs &&...v) : content_(detail::link<Ks>(RBR_FWD(v))...)
-    {
-    }
-
-    constexpr settings(settings const&  v) : content_(v.content_) {}
-    constexpr settings(settings &&      v) : content_(std::move(v.content_)) {}
-
-    static constexpr std::ptrdiff_t size() noexcept { return sizeof...(Ts); }
-
-    // Named options interface
-    template<typename T, typename C>
-    static constexpr auto contains(keyword_t<T,C> const &) noexcept
-    {
-      using found = decltype(std::declval<parent>()(tag_t<T> {}));
-      return std::bool_constant<!detail::is_unknown_v<found>>{};
-    }
-
-    template<typename T> static constexpr auto contains(flag_type<T> const &) noexcept
-    {
-      using found = decltype(std::declval<parent>()(flag_type<T> {}));
-      return std::bool_constant<!detail::is_unknown_v<found>>{};
-    }
-
-    template<typename T, typename C>
-    constexpr decltype(auto) operator[](keyword_t<T,C> const &tgt) const noexcept
-    {
-      return content_(tgt);
-    }
-
-    template<typename T>
-    constexpr auto operator[](flag_type<T> const &tgt) const noexcept
-    {
-      return contains(tgt);
-    }
-
-    template<typename T, typename V>
-    constexpr decltype(auto) operator[](type_or_<T, V> const &tgt) const
-    {
-            if constexpr( contains(T{}) )             return (*this)[T{}];
-      else  if constexpr( std::is_invocable_v<V, T> ) return tgt.value(T{});
-      else                                            return tgt.value;
-    }
-
-    // Pattern matcher
-    template<typename... KW> static inline constexpr bool validate(either_<KW...> const &) noexcept
-    {
-      auto is_ok = []<typename K>(K) { return (std::same_as<K, KW> || ... || false); };
-      return (is_ok(Ks {}) && ... && true);
-    }
-
-    template<typename K, typename C>
-    static inline constexpr bool validate(keyword_t<K,C> const &) noexcept
-    {
-      return (std::same_as<Ks, keyword_t<K>> && ... && true);
-    }
-
-    template<typename K> static inline constexpr bool validate(flag_type<K> const &) noexcept
-    {
-      return (std::same_as<Ks, flag_type<K>> && ... && true);
-    }
-
-    parent content_;
-  };
-
-  template<typename... Vs>
-  settings(Vs &&...v)
-      -> settings<keys<tag_t<std::decay_t<Vs>>...>,
-                  links<decltype(detail::link<tag_t<std::decay_t<Vs>>>(RBR_FWD(v)))...>>;
-
-  // Pattern matcher entry point
-  template<typename... Args> struct match
-  {
-    template<typename Pattern> static inline constexpr bool with(Pattern p)
-    {
-      return decltype(rbr::settings {std::declval<Args>()...})::validate(p);
-    }
-  };
-
-  // keyword parameter exact match concept
-  template<typename Param, auto Keyword> concept exactly = rbr::match<Param>::with(Keyword);
+  template<concepts::option... Opts>
+  settings(Opts&&... opts) -> settings<std::remove_cvref_t<Opts>...>;
 
   // Traits to fetch type of an option from the type of a Settings
   template<typename Settings, auto Keyword, typename Default = unknown_key>
@@ -335,61 +365,24 @@ namespace rbr
   using get_type_t = typename get_type<Settings,Keyword,Default>::type;
 
   // Merge settings
-  namespace detail
+  template<concepts::option... K1s, concepts::option... K2s>
+  constexpr auto merge(settings<K1s...> const& opts, settings<K2s...> const& defs) noexcept
   {
-    template<typename K, typename Ks>        struct contains;
+    auto selector = []<typename K, typename Opts>(K const&, Opts const& o, auto const& d)
+                    {
+                      constexpr K key;
+                      if constexpr( Opts::contains(key) ) return (key = o[key]);
+                      else                                return (key = d[key]);
+                    };
 
-    template<typename... Ks, typename K>
-    struct  contains<K, keys<Ks...>> : std::bool_constant<(std::same_as<K,Ks> || ...)>
-    {};
-
-    template<typename K, typename Ks, bool>  struct append_if_impl;
-
-    template<typename... Ks, typename K> struct append_if_impl<K,keys<Ks...>,true>
+    auto select = [&]<typename... Ks>(detail::keys<Ks...> const&, auto const& os, auto const& ds)
     {
-      using type = keys<Ks...>;
+      return settings(selector(Ks{},os,ds)...);
     };
 
-    template<typename... Ks, typename K> struct append_if_impl<K,keys<Ks...>,false>
-    {
-      using type = keys<Ks...,K>;
-    };
-
-    template<typename K, typename Ks>        struct append_if;
-
-    template<typename K, typename Ks>
-    struct append_if : append_if_impl<K,Ks, contains<K, Ks>::value>
-    {};
-
-    template<typename K1, typename K2> struct uniques;
-
-    template<typename K1s, typename K2, typename... K2s>
-    struct  uniques<K1s, keys<K2,K2s...>>
-          : uniques< typename append_if<K2,K1s>::type, keys<K2s...> >
-    {};
-
-    template<typename K1s> struct  uniques<K1s, keys<>> { using type = K1s; };
-  }
-
-  template<typename... K1s, typename L1, typename... K2s, typename L2>
-  constexpr auto merge( settings<keys<K1s...>, L1> const& opts
-            , settings<keys<K2s...>, L2> const& defs
-            ) noexcept
-  {
-    auto select = []<typename... Ks>(keys<Ks...>, auto const& os, auto const& ds)
-    {
-      [[maybe_unused]]
-      auto selector = []<typename K, typename Opts>(keys<K>, Opts const& o, auto const& d)
-                      {
-                        constexpr K key;
-                        if constexpr( Opts::contains(key) ) return (key = o[key]);
-                        else                                return (key = d[key]);
-                      };
-
-      return settings(selector(keys<Ks>{},os,ds)...);
-    };
-
-    return select(typename detail::uniques<keys<K1s...>,keys<K2s...>>::type{},opts,defs);
+    return select(typename detail::uniques<detail::keys<typename K1s::keyword_type...>
+                                          ,detail::keys<typename K2s::keyword_type...>
+                                          >::type{},opts,defs);
   }
 }
 

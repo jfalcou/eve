@@ -19,35 +19,53 @@ namespace eve::algo
   template <typename Settings>
   struct traits : Settings
   {
-    template <rbr::keyword_parameter... Options>
+    template <rbr::concepts::option... Options>
     constexpr explicit traits(Options && ... options) : Settings(std::forward<Options>(options) ...) {}
 
     template <typename... Options>
     constexpr traits(rbr::settings<Options...> const& options) : Settings(options) {}
   };
 
-  template <rbr::keyword_parameter ... Options>
+  template <rbr::concepts::option ... Options>
   traits(Options&& ... options) -> traits<decltype(rbr::settings(std::forward<Options>(options) ...))>;
 
-  inline constexpr auto unroll_key = rbr::keyword<struct unroll_key>;
+  struct unroll_key_t : rbr::any_keyword<unroll_key_t>
+  {
+    template<typename Value> constexpr auto operator=(Value const&) const noexcept
+    {
+      return rbr::option<unroll_key_t,Value>{};
+    }
 
-  template<int N>
-  inline constexpr auto unroll = (unroll_key = eve::index<N>);
+    std::ostream& show(std::ostream& os) const { return os << "Unroll factor"; }
+  };
 
-  inline constexpr auto force_cardinal_key = rbr::keyword<struct force_cardinal_key>;
+  inline constexpr unroll_key_t unroll_key = {};
+  template<int N> inline constexpr auto unroll = (unroll_key = eve::index<N>);
 
-  template <int N>
-  inline constexpr auto force_cardinal = (force_cardinal_key = eve::fixed<N>{});
+  struct force_cardinal_key_t : rbr::any_keyword<force_cardinal_key_t>
+  {
+    template<typename Value> constexpr auto operator=(Value const&) const noexcept
+    {
+      return rbr::option<force_cardinal_key_t,Value>{};
+    }
 
-  inline constexpr auto common_with_type_key = rbr::keyword<struct common_with_type_key>;
+    std::ostream& show(std::ostream& os) const { return os << "Expected Cardinal"; }
+  };
+
+  inline constexpr force_cardinal_key_t force_cardinal_key = {};
+  template<int N> inline constexpr auto force_cardinal = (force_cardinal_key = eve::fixed<N>{});
+
+  struct common_with_type_key_t {};
+  inline constexpr auto common_with_type_key = ::rbr::keyword( common_with_type_key_t{} );
 
   template <typename ...Ts>
   inline constexpr auto common_with_types = (common_with_type_key = std::common_type<Ts...>{});
 
-  inline constexpr auto divisible_by_cardinal = rbr::flag<struct divisible_by_cardinal_tag>;
+  struct divisible_by_cardinal_tag {};
+  inline constexpr auto divisible_by_cardinal = ::rbr::flag( divisible_by_cardinal_tag{} );
 
-  inline constexpr auto no_aligning = rbr::flag<struct disable_aligning_tag>;
-
+  struct disable_aligning_tag {};
+  inline constexpr auto no_aligning = ::rbr::flag( disable_aligning_tag{} );
 
   template <typename Traits>
   constexpr std::ptrdiff_t get_unrolling() {
