@@ -218,7 +218,6 @@ namespace eve
   //! @var uint64
   //!
   //! @brief  convert a eve::real_value to a uint64 based eve::integral_real_value.
-  //! @brief  convert a eve:value to a uint64 based eve::value.
   //!
   //! #### Members Functions
   //!
