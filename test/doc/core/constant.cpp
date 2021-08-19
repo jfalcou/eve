@@ -1,29 +1,20 @@
 #include <eve/constant/constant.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
+#include <iomanip>
 
 using wide_ft = eve::wide<float>;
-using wide_it = eve::wide<std::int16_t>;
+using wide_dt = eve::wide<double>;
 
 int main()
 {
-  wide_ft wxf;
-  wide_it wxi;
-
-  std::cout << "---- simd"  << std::endl
-            << "-> constant(as<wide_ft>())  = " << eve::constant(eve::as<wide_ft>()) << std::endl
-            << "-> constant(as<wide_it>())  = " << eve::constant(eve::as<wide_it>()) << std::endl
-            << "-> constant(as(wxf))        = " << eve::constant(eve::as(wxf))       << std::endl
-            << "-> constant(as(wxi))        = " << eve::constant(eve::as(wxi))       << std::endl;
-
-  double       xf;
-  std::int16_t xi;
+  std::cout << "---- simd" << std::setprecision(15) << std::endl
+            << "-> Constant<wide_ft, 0X3F1DE9E7U>()           " << eve::Constant<wide_ft, 0X3F1DE9E7U>()<< std::endl
+            << "-> Constant<wide_dt, 0x3FE3BD3CC9BE45DEULL>() " << eve::Constant<wide_dt, 0x3FE3BD3CC9BE45DEULL>()<< std::endl;
 
   std::cout << "---- scalar" << std::endl
-            << "-> constant(as<float>())         = " << eve::constant(eve::as(float())) << std::endl
-            << "-> constant(as<std::int16_t>())  = " << eve::constant(eve::as(std::int16_t())) << std::endl
-            << "-> constant(as<xf))              = " << eve::constant(eve::as(xf)) << std::endl
-            << "-> constant(as<xi))              = " << eve::constant(eve::as(xi)) << std::endl;
+            << "-> Constant<float, 0X3F1DE9E7U>()             " << eve::Constant<float, 0X3F1DE9E7U>()<< std::endl
+            << "-> Constant<double, 0x3FE3BD3CC9BE45DEULL>()  " << eve::Constant<double, 0x3FE3BD3CC9BE45DEULL>()<< std::endl;
 
   return 0;
 }
