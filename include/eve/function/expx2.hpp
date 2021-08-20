@@ -15,7 +15,7 @@ namespace eve
   //================================================================================================
   //! @addtogroup exponential
   //! @{
-  //! @var exp
+  //! @var expx2
   //!
   //! @brief Callable object computing \f$e^{\pm x^2}\f$.
   //!
