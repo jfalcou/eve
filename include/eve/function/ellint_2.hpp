@@ -31,13 +31,13 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_value T>                   auto operator()(T k) const noexcept;
-  //!  template< floating_value T, floating_value U> auto operator()(T phi, U k) const noexcept;
+  //!  auto operator()(floating_real_value auto k) const noexcept;
+  //!  auto operator()(floating_real_value auto phi, floating_real_value auto k) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`phi`, `k`:   [floating values](@ref eve::value).
+  //!`phi`, `k`:   [floating real values](@ref eve::floating_real_value).
   //!
   //! computes the complete and incomplete elliptic integrals of the second kind :
   //!
@@ -51,7 +51,7 @@ namespace eve
   //!
   //!  In any other case the result is nan.
   //!
-  //!!!! WARNING
+  //!@warning
   //!  Be aware that as \f$\pi/2\f$ is not exactly represented by floating point values the result of the incomplete
   //!  function with a \f$\phi\f$ value near \f$\pi/2\f$ can differ a lot with the result of the complete call.
   //!

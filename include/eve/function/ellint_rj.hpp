@@ -25,19 +25,21 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the ellint_rj operation   |
+  //! | `operator()` | the ellint_rj operation                                    |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_value T, floating_value U, floating_scalar_value V, floating_scalar_value W>
-  //!  auto operator()(T x, U y, V z,W p) const noexcept;
+  //!  auto operator()( floating_real_value auto x
+  //!                 , floating_real_value auto y
+  //!                 , floating_real_value auto z
+  //!                 , floating_real_value auto p) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`, `y`, `z`, `p`:   [floating values](@ref eve::value).
+  //!`x`, `y`, `z`, `p`:   [floating real values](@ref eve::floating_real_value).
   //!
   //!  This computes the Carlson's elliptic integral
   //!
