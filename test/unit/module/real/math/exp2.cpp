@@ -98,10 +98,12 @@ EVE_TEST_TYPES("Check float64 & float32(eve::exp2) behavior"
   <typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
+  using fl_t =  eve::as_floating_point_t<T>;
   if constexpr(eve::scalar_value<T> )
   {
     TTS_EXPR_IS(eve::float64(eve::exp2)(T(0)), double);
     TTS_EXPR_IS(eve::float32(eve::exp2)(T(0)), float);
+    TTS_EXPR_IS(eve::floating_(eve::exp2)(T(0)), fl_t);
     TTS_IEEE_EQUAL(eve::float32(eve::exp2)(T(37)), exp2(float(37)));
     TTS_IEEE_EQUAL(eve::float32(eve::exp2)(T(126)), exp2(float(126)));
     if constexpr(sizeof(v_t) > 1 || std::is_unsigned_v<v_t>)
@@ -125,6 +127,7 @@ EVE_TEST_TYPES("Check float64 & float32(eve::exp2) behavior"
     using f_t = eve::wide<float, eve::cardinal_t<T>>;
     TTS_EXPR_IS(eve::float64(eve::exp2)(T(0)), d_t);
     TTS_EXPR_IS(eve::float32(eve::exp2)(T(0)), f_t);
+    TTS_EXPR_IS(eve::floating_(eve::exp2)(T(0)), fl_t);
     TTS_IEEE_EQUAL(eve::float32(eve::exp2)(T(37)), eve::exp2(f_t(37)));
     TTS_IEEE_EQUAL(eve::float32(eve::exp2)(T(126)), eve::exp2(f_t(126)));
     if constexpr(sizeof(v_t) > 1 || std::is_unsigned_v<v_t>)

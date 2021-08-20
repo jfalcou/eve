@@ -23,6 +23,7 @@
 #include <eve/function/converter.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_or.hpp>
+#include <eve/function/clamp.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/inc.hpp>
@@ -41,6 +42,7 @@
 #include <eve/function/sqr.hpp>
 #include <eve/module/real/core/detail/generic/horn.hpp>
 #include <type_traits>
+#include <iostream>
 
 namespace eve::detail
 {
@@ -110,26 +112,32 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto exp2_(EVE_SUPPORTS(cpu_), D const &, T xx) noexcept
   requires(is_one_of<D>(types<converter_type<float>
                              , converter_type<double>
+                             , floating_converter
                              , pedantic_type
                              , raw_type
                              , regular_type>{}))
   {
     if constexpr( has_native_abi_v<T> )
     {
-      if constexpr(is_one_of<D>(types<converter_type<float>, converter_type<double>>{}))
+      if constexpr(is_one_of<D>(types<converter_type<float>, converter_type<double>, floating_converter>{}))
       {
-        using vd_t = value_type_t<typename D::base_type>;
+        using b_t = std::conditional_t < std::is_same_v< D, floating_converter >
+                                      , eve::as_floating_point_t<T>
+                                      , typename D::base_type >;
+        using vd_t = value_type_t<b_t>;
         using i_t  = as_integer_t<vd_t>;
         auto x = to_<i_t>(xx);
         auto z = is_nez(x);
         auto zz =  eve::min(x+maxexponent(eve::as<vd_t>()), 2*maxexponent(eve::as<vd_t>())+1) & z.mask();
         zz = zz << nbmantissabits(eve::as<vd_t>());
         using r_t   = std::conditional_t<scalar_value<T>, vd_t, wide<vd_t, cardinal_t<T>>>;
-        return bit_cast(zz, as<r_t>());
+        return if_else(z, bit_cast(zz, as<r_t>()), one);
       }
       else
       {
-        auto tmp =  if_else(is_ltz(xx), eve::zero, shl(one(eve::as(xx)), xx));
+        size_t constexpr siz = sizeof(element_type_t<T>)*8-1;
+        auto test = is_ltz(xx) || (xx > siz);
+        auto tmp =  if_else(test, eve::zero, shl(one(eve::as(xx)), eve::clamp(xx, 0u, siz)));
         if constexpr(std::is_same_v<D, saturated_type>)
         {
           using elt_t =  element_type_t<T>;

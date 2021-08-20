@@ -43,7 +43,7 @@ namespace eve
   //!Returns the [elementwise](@ref glossary_elementwise) the natural log1parithm  of `1+x`
   //!This function is more precise than the expression `log(1+x)` if arg is close to zero.
   //!
-  //!In partucular, for floating inputs:
+  //!In particular, for floating inputs:
   //!
   //!   * If the element is \f$-1\f$, \f$-\infty\f$ is returned.
   //!   * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.

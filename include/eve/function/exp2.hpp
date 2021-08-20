@@ -29,23 +29,23 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the  computation of exp2   |
+  //! | `operator()` | the  computation of exp2                                   |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< real_value T> auto operator()( T x ) const noexcept;
+  //!  auto operator()( real_value x ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating real value](@ref eve::floating_real_value).
+  //!`x`:   [real value](@ref eve::real_value).
   //!
   //! **Return value**
   //!
   //!Returns the [elementwise](@ref glossary_elementwise) exponential of base 2 of the input.
-  //!In partucular, for floating inputs:
+  //!In particular, for floating inputs:
   //!
   //!   * If the element is \f$\pm0\f$, \f$1\f$ is returned
   //!   * If the element is \f$-\infty\f$, \f$+0\f$ is returned
@@ -70,7 +70,19 @@ namespace eve
   //!
   //! ---
   //!
+  //! #### Supported converters
+  //!
+  //!  * eve::float_,  eve::double_, eve::floating_
+  //!
+  //!     The expression `d(exp2)(x)` where d in one of these 3 converters is supported if x is an
+  //!     [integral value](@ref eve::integral_value) and produce a floating point output.
+  //!
   //! #### Supported decorators
+  //!
+  //!  * eve::saturated
+  //!
+  //!     The expression `saturated(exp2)(x)` saturate the output if `x`
+  //!     is an [integral value](@ref eve::integral_value).
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
