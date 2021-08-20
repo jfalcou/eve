@@ -23,7 +23,6 @@
 #include <eve/function/converter.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_or.hpp>
-#include <eve/function/clamp.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/inc.hpp>
@@ -137,7 +136,8 @@ namespace eve::detail
       {
         size_t constexpr siz = sizeof(element_type_t<T>)*8-1;
         auto test = is_ltz(xx) || (xx > siz);
-        auto tmp =  if_else(test, eve::zero, shl(one(eve::as(xx)), eve::clamp(xx, 0u, siz)));
+        xx = if_else(test, zero, xx);
+        auto tmp =  if_else(test, eve::zero, shl(one(eve::as(xx)), xx));
         if constexpr(std::is_same_v<D, saturated_type>)
         {
           using elt_t =  element_type_t<T>;
