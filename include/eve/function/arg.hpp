@@ -30,19 +30,21 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template<real_floating_value T> auto operator()(T x) const noexcept;
+  //!  template<floating_value T> auto operator()(T x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating real value](@ref eve::floating_real_value).
+  //!`x`:   [floating value](@ref eve::floating_value).
   //!
   //! **Return value**
   //!
   //!For each  [element](@ref glossary_element) of the input the phase angle is returned:
   //!
-  //!  *  if the bit of sign of the entry [element](@ref glossary_elementwise) is not set, \f$0\f$ is returned.
-  //!  *  if the bit of sign of the entry [element](@ref glossary_elementwise) is set, \f$\pi\f$ is returned.
+  //!  If the input type is a [floating real value](@ref eve::floating_real_value):
+  //!
+  //!    *  if the bit of sign of the entry [element](@ref glossary_elementwise) is not set, \f$0\f$ is returned.
+  //!    *  if the bit of sign of the entry [element](@ref glossary_elementwise) is set, \f$\pi\f$ is returned.
   //!
   //! ---
   //!
