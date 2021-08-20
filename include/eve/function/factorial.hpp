@@ -29,7 +29,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< unsigned_value T > auto operator()( T n ) const noexcept;
+  //!  auto operator()( nsigned_value auto n ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! The result element type is always double to try to avoid overflow
+  //! The result [element type](eve::element_type_t) is always double to try to avoid overflow
   //! and its cardinal is the same as the entry in case of an simd call.
   //!
   //!@warning
@@ -56,10 +56,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
+
   namespace tag { struct factorial_; }
   template<> struct supports_conditional<tag::factorial_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(factorial_, factorial);
 }
 

@@ -30,12 +30,12 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< unsigned_value T > auto operator()( T x ) const noexcept;
+  //!  auto operator()( unsigned_value auto x ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`:   [unsigned value](@ref eve::value).
+  //!`x`:   [unsigned value](@ref eve::unsigned_value).
   //!
   //! **Return value**
   //!
