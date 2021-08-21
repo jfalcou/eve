@@ -29,7 +29,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the  computation of exp2                                   |
+  //! | `operator()` | computes the base 2 exponential                            |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---

@@ -25,7 +25,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the  computation of expx2                                  |
+  //! | `operator()` | computes the exponential of the squared input              |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---

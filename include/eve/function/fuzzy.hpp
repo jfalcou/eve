@@ -31,7 +31,7 @@ namespace eve
   //! @{
   //! @var definitely
   //!
-  //! @brief  Higher-order @callable imbuing more srict semantic onto other @callable{s}.
+  //! @brief  Higher-order @callable imbuing a tolerant to small errors semantic onto other @callable{s}.
   //!
   //! #### Synopsis
   //!
