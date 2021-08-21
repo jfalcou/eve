@@ -17,7 +17,7 @@ namespace eve
   //! @{
   //! @var convert
   //!
-  //! @brief Callable object computing   //!  description NOT FOUND.
+  //! @brief Callable object converting a value to another type.
   //!
   //! **Required header:** `#include <eve/function/convert.hpp>`
   //!
@@ -25,8 +25,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` |   //!  description NOT FOUND   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //! | `operator()` |  converts a value to a value of another type               |
   //!
   //! ---
   //!
@@ -65,24 +64,9 @@ namespace eve
   //!}
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //!@warning Note
-  //!   Conversion operated by [eve::convert](#eve::convert) follows the regular rules of C++ type conversion, including the cases leading to Undefined Behaviors.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::convert
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `convert[cond](x, ...)` is equivalent to `if_else(cond,convert(x, ...),x)`
+  //!@warning
+  //!   Conversion operated by [eve::convert](#eve::convert) follows the regular rules of
+  //!   C++ type conversion, including the cases leading to Undefined Behaviors.
   //!
   //! ---
   //!
