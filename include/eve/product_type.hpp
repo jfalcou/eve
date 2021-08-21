@@ -41,11 +41,7 @@ namespace eve
   //!   @tparam Type  Type to register as supporting ordering operators
   //! @}
   //================================================================================================
-  template<typename Type> struct supports_ordering : std::false_type
-  {};
-
-  template<typename... Ts>
-  struct supports_ordering<kumi::tuple<Ts...>> : std::true_type
+  template<typename Type> struct supports_ordering : std::true_type
   {};
 
   //================================================================================================
@@ -71,20 +67,20 @@ namespace eve
   EVE_FORCEINLINE auto operator<= ( LHS const& a, RHS const& b) noexcept
   requires( same_value_type<LHS,RHS> && ordered_structure<LHS> && ordered_structure<RHS> )
   {
-    return (a < b) || (a == b);
+    return kumi::to_tuple(a) <= kumi::to_tuple(b);
   }
 
   template<typename LHS, typename RHS>
   EVE_FORCEINLINE auto operator> ( LHS const& a, RHS const& b) noexcept
   requires( same_value_type<LHS,RHS> && ordered_structure<LHS> && ordered_structure<RHS> )
   {
-    return !(a <= b);
+    return kumi::to_tuple(a) > kumi::to_tuple(b);
   }
 
   template<typename LHS, typename RHS>
   EVE_FORCEINLINE auto operator>= ( LHS const& a, RHS const& b) noexcept
   requires( same_value_type<LHS,RHS> && ordered_structure<LHS> && ordered_structure<RHS> )
   {
-    return !(a < b);
+    return kumi::to_tuple(a) >= kumi::to_tuple(b);
   }
 }
