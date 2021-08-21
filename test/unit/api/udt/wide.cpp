@@ -15,15 +15,22 @@
 //==================================================================================================
 TTS_CASE("Check User Defined Type properties with respect to SIMDification")
 {
-  TTS_CONSTEXPR_EXPECT    ( eve::product_type         <udt::grid2d> );
-  TTS_CONSTEXPR_EXPECT    ( eve::scalar_value         <udt::grid2d> );
-  TTS_CONSTEXPR_EXPECT_NOT( eve::integral_scalar_value<udt::grid2d> );
+  TTS_CONSTEXPR_EXPECT    ( eve::product_type         <udt::grid2d>         );
+  TTS_CONSTEXPR_EXPECT    ( eve::product_type         <udt::label_position> );
+  TTS_CONSTEXPR_EXPECT    ( eve::scalar_value         <udt::grid2d>         );
+  TTS_CONSTEXPR_EXPECT    ( eve::scalar_value         <udt::label_position> );
+  TTS_CONSTEXPR_EXPECT_NOT( eve::integral_scalar_value<udt::grid2d>         );
+  TTS_CONSTEXPR_EXPECT_NOT( eve::integral_scalar_value<udt::label_position> );
 
-  TTS_CONSTEXPR_EXPECT    ( eve::simd_value<eve::wide <udt::grid2d>>);
-  TTS_CONSTEXPR_EXPECT_NOT( eve::integral_simd_value  <udt::grid2d> );
+  TTS_CONSTEXPR_EXPECT    ( eve::simd_value<eve::wide <udt::grid2d>>        );
+  TTS_CONSTEXPR_EXPECT    ( eve::simd_value<eve::wide <udt::label_position>>);
+  TTS_CONSTEXPR_EXPECT_NOT( eve::integral_simd_value  <udt::grid2d>         );
+  TTS_CONSTEXPR_EXPECT_NOT( eve::integral_simd_value  <udt::label_position> );
 
-  TTS_CONSTEXPR_EXPECT( eve::value<udt::grid2d>            );
-  TTS_CONSTEXPR_EXPECT( eve::value<eve::wide <udt::grid2d>>);
+  TTS_CONSTEXPR_EXPECT( eve::value<udt::grid2d>                     );
+  TTS_CONSTEXPR_EXPECT( eve::value<udt::label_position>             );
+  TTS_CONSTEXPR_EXPECT( eve::value<eve::wide <udt::grid2d>>         );
+  TTS_CONSTEXPR_EXPECT( eve::value<eve::wide <udt::label_position>> );
 };
 
 //==================================================================================================
@@ -49,6 +56,14 @@ TTS_CASE( "Check eve::wide<udt> splat constructor")
 
   TTS_EQUAL(get<0>(vp), eve::wide<int>(+6));
   TTS_EQUAL(get<1>(vp), eve::wide<int>(-9));
+
+  eve::wide<udt::label_position> wp{ udt::label_position{42.69f, 'Z'} };
+
+  using pos_t   = std::tuple_element_t<0,eve::wide<udt::label_position>>;
+  using label_t = std::tuple_element_t<1,eve::wide<udt::label_position>>;
+
+  TTS_EQUAL(position(wp), pos_t(42.69f) );
+  TTS_EQUAL(label(wp)   , label_t('Z')  );
 };
 
 //==================================================================================================
@@ -60,6 +75,17 @@ TTS_CASE("Check eve::wide<udt> Lambda construction")
 
   TTS_EQUAL(get<0>(vp), eve::wide<int>([](int i, int  ) { return i;    } ));
   TTS_EQUAL(get<1>(vp), eve::wide<int>([](int i, int c) { return c-i-1;} ));
+
+  eve::wide<udt::label_position> wp = [](int i, int )
+  {
+    return udt::label_position{1.f/(1+i),std::uint8_t('A'+i)};
+  };
+
+  using pos_t   = std::tuple_element_t<0,eve::wide<udt::label_position>>;
+  using label_t = std::tuple_element_t<1,eve::wide<udt::label_position>>;
+
+  TTS_EQUAL(position(wp), pos_t  ([](int i, int  ) { return 1.f/(i+1);            }) );
+  TTS_EQUAL(label(wp)   , label_t([](int i, int  ) { return std::uint8_t('A'+i);  }) );
 };
 
 //==================================================================================================

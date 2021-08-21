@@ -47,5 +47,33 @@ template<>              struct eve::is_product_type<udt::grid2d>    : std::true_
 template<>              struct std::tuple_size<udt::grid2d>         : std::integral_constant<std::size_t, 2> {};
 template<std::size_t I> struct std::tuple_element<I,udt::grid2d>    { using type = int; };
 
-// Opt-in for SIMD < > <= >= operators
-template<>  struct eve::supports_ordering<udt::grid2d>  : std::true_type {};
+namespace udt
+{
+  //------------------------------------------------------------------------------------------------
+  // This test UDT is made to be a placeholder for easier case where one just inherits from
+  // kumi::tuple and adapt its interface
+  //------------------------------------------------------------------------------------------------
+  struct label_position : kumi::tuple<float, std::uint8_t>
+  {
+    friend auto&& position(eve::same_value_type<label_position> auto&& self) noexcept
+    {
+      return get<0>(std::forward<decltype(self)>(self));
+    }
+
+    friend auto&& label(eve::same_value_type<label_position> auto&& self) noexcept
+    {
+      return get<1>(std::forward<decltype(self)>(self));
+    }
+  };
+
+  // Stream insertion is also on your behalf
+  std::ostream& operator<<( std::ostream& os, label_position const& p)
+  {
+    return os << "'" << label(p) << "'@( " << position(p) << " )";
+  }
+}
+
+// Opt-in for eve::product_type + adaptation
+template<>  struct std::tuple_size<udt::label_position>       : std::integral_constant<std::size_t, 2> {};
+template<>  struct std::tuple_element<0,udt::label_position>  { using type = float; };
+template<>  struct std::tuple_element<1,udt::label_position>  { using type = std::uint8_t; };
