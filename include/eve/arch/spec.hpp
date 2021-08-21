@@ -25,7 +25,11 @@ namespace eve
   inline constexpr auto current_api     = spy::undefined_simd_;
   inline constexpr bool supports_simd   = false;
 # else
+#   if !defined(EVE_INCOMPLETE_AVX512_SUPPORT)
   inline constexpr auto current_api   = spy::simd_instruction_set;
+#   else
+  inline constexpr auto current_api   = spy::avx2_;
+#   endif
   inline constexpr bool supports_simd = true;
 # endif
 }
