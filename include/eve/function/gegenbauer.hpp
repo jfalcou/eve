@@ -29,9 +29,13 @@ namespace eve
   //!
   //! ---
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template<integral_value N, floating_value T, floating_value U > auto operator()( N n, T l, U x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator()( integral_value auto n
+  //!                 , floating_value auto l
+  //!                 , floating_value auto x) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! ---
   //!
   //! **Parameters**
   //!
@@ -45,7 +49,8 @@ namespace eve
   //!
   //!Returns [elementwise](@ref glossary_elementwise) the value of the gegenbauer polynomial of order `n` at `l`, `x`:
   //!
-  //!The result type is of the compatibility type of the  parameters.
+  //!The result type is of the [common compatible type](@ref common_compatible) of the two last parameters,
+  //!if necessary with the [cardinality](@ref eve::cardinal_t) of the first.
   //!
   //! ---
   //!

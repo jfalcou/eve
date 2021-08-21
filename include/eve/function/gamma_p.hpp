@@ -31,19 +31,19 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_value T,floating_value U > auto operator()( T x, U y) const noexcept;
+  //!  auto operator()( floating_real_value auto x, floating_real_value auto y) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating value](@ref eve::value).
+  //!`x`, `y`:   [floating real value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
   //!Returns [elementwise](@ref glossary_elementwise) computes the normalized lower incomplete \f$\Gamma\f$ function :
   //! \f$\displaystyle \frac{1}{\Gamma(x)}\int_0^{y} t^{x-1}e^{-t}\mbox{d}t\f$
   //!
-  //! The result type is of the same type as the  parameter.
+  //! The result type is the [common compatible type](@ref common_compatible) of the two parameters.
   //!
   //! ---
   //!
