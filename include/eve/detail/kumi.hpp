@@ -512,13 +512,13 @@ namespace kumi
     template<product_type Other>
     friend constexpr auto operator<=(tuple const &lhs, Other const &rhs) noexcept
     {
-      return (lhs < rhs) || (lhs == rhs);
+      return !(rhs < lhs);
     }
 
     template<product_type Other>
     friend constexpr auto operator>(tuple const &lhs, Other const &rhs) noexcept
     {
-      return !(lhs <= rhs);
+      return rhs < lhs;
     }
 
     template<product_type Other>
