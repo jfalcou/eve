@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! The result [element type](eve::element_type_t) is always double to try to avoid overflow
+  //! The result [element type](eve::element_type) is always double to try to avoid overflow
   //! and its cardinal is the same as the entry in case of an simd call.
   //!
   //!@warning
