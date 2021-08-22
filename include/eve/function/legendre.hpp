@@ -24,20 +24,20 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the legendre operation   |
+  //! | `operator()` | the legendre operation                                     |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< integral_value N, floating_value T > auto operator()( N n, T x) const noexcept;
+  //!  auto operator()( integral_value n, floating_value x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`n`:   [integral valuex](@ref eve::value).
+  //!`n`:   [integral valuex](@ref eve::integral_value).
   //!
-  //!`x`:   [floating valuex](@ref eve::value).
+  //!`x`:   [floating valuex](@ref eve::floating_value).
   //!
   //! **Return value**
   //!

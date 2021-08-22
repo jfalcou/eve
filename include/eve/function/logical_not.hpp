@@ -31,19 +31,18 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T > auto operator()( T x ) const noexcept;
+  //!  auto operator()( value auto x ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`:   [values](@ref eve::value).
+  //!`x`:   [value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Computes  logical NOT of the two parameters following the
-  //![logical operations semantic](@ref glossary_logical).
+  //!Computes  the logical NOT of the parameter.
   //!
-  //!the call `logical_not(x)` is semantically equivalent to `is_eqz(x)` . Infix notation can be used with `!x`
+  //!the call `logical_not(x)` is semantically equivalent to `is_eqz(x)`. Infix notation can be used with `!x`
   //!
   //!
   //! #### Supported decorators
@@ -56,10 +55,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
+
   namespace tag { struct logical_not_; }
   template<> struct supports_conditional<tag::logical_not_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(logical_not_, logical_not);
 }
 

@@ -39,8 +39,9 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!The result type is the [common compatible type](@ref common_compatible) of the  parameters and its equal to
-  //!the square root of the sum of the squares of the parameters.
+  //!The square root of the sum of the squared absolute values of the parameters.
+  //!
+  //!The result type is the [common compatible type](@ref common_compatible) of the three parameters.
   //!
   //! ---
   //!

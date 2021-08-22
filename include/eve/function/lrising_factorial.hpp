@@ -25,7 +25,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | lrising_factorial operation  |
+  //! | `operator()` | lrising_factorial operation                                |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
@@ -36,9 +36,9 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`a`:   [value](@ref eve::value).`a` must be positive or the result is Nan
+  //!`a`:   [real_value](@ref eve::real_value).`a` must be positive or the result is Nan
   //!
-  //!`x`:   [floating value](@ref eve::value). `a+x` must be positive or the result is Nan
+  //!`x`:   [floating real value](@ref eve::value). `a+x` must be positive or the result is Nan
   //!
   //! **Return value**
   //!
@@ -75,7 +75,7 @@ namespace eve
   //!
   //!     The expression `pedantic(lrising_factorial)(a,x)` uses reflection tricks and computes the function
   //!       for all real `a` and `x`, and in fact computes the logarithm of the absolute value of the Pochammer
-  //!       symbol \f$\log\left|\frac{\Gamma(x+a)}{\Gamma(x)}\right|\f$ returning nan if the result in really undefined.
+  //!       symbol \f$\log\left|\frac{\Gamma(x+a)}{\Gamma(x)}\right|\f$ returning nan if the result is really undefined.
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_nth
   //!

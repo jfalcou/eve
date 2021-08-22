@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the lower part of the values   |
+  //! | `operator()` | the computation of the lower part of the values            |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
@@ -40,7 +40,7 @@ namespace eve
   //! **Return value**
   //!
   //!    Computes the [elementwise](@ref glossary_elementwise) lower half of the  value,
-  //!    returning each elemnet as an unsigned integer of half the size of the input element.
+  //!    returning each element as an unsigned integer of half the size of the input element.
   //!
   //!    If you also need the higher part `lohi` is more efficient.
   //!

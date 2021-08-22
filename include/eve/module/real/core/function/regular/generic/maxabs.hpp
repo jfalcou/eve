@@ -16,7 +16,9 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_nan.hpp>
 #include <eve/function/is_not_greater_equal.hpp>
-#include <eve/function/max.hpp>
+#include <eve/function/maxabs.hpp>
+#include <eve/function/pedantic/maxabs.hpp>
+#include <eve/function/numeric/maxabs.hpp>
 #include <eve/traits/common_compatible.hpp>
 
 #include <type_traits>
@@ -61,9 +63,10 @@ namespace eve::detail
   template<decorator D, real_value T0, real_value T1, real_value ...Ts>
   auto maxabs_(EVE_SUPPORTS(cpu_), D const &, T0 a0, T1 a1, Ts... args)
   {
+    auto dma = D()(maxabs);
     using r_t = common_compatible_t<T0,T1,Ts...>;
-    r_t that(D()(maxabs)(r_t(a0),r_t(a1)));
-    ((that = D()(maxabs)(that,r_t(args))),...);
+    r_t that(dma(r_t(a0),r_t(a1)));
+    ((that = dma(that,r_t(args))),...);
     return that;
   }
 
