@@ -168,4 +168,12 @@ namespace eve::detail
     else
       return apply_over(erfc_inv, a0);
   }
+
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto erfc_inv_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
+  {
+    return mask_op( cond, eve::erfc_inv, t);
+  }
 }

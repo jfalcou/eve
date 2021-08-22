@@ -40,6 +40,8 @@ namespace eve
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!  must be included.
   //!
+  //!  diff is an alias of [diff_1st](eve::diff_1st) and [diff_nth<1>](eve::diff_nth)
+  //!
   //! #### Members Functions
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
@@ -70,6 +72,8 @@ namespace eve
   //!  #include <eve/function/diff/fname.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!  must be included.
+  //!
+  //!  diff_1st is an alias of [diff](eve::diff) and [diff_nth<1>](eve::diff_nth)
   //!
   //! #### Members Functions
   //!
@@ -102,6 +106,8 @@ namespace eve
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!  must be included.
   //!
+  //!  diff_2nd is an alias of [diff_nth<2>](eve::diff_nth)
+  //!
   //! #### Members Functions
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
@@ -132,6 +138,8 @@ namespace eve
   //!  #include <eve/function/diff/fname.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!  must be included.
+  //!
+  //!  diff_3rd is an alias of [diff_nth<3>](eve::diff_nth)
   //!
   //! #### Members Functions
   //!

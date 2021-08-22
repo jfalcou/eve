@@ -35,12 +35,12 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating real value](@ref eve::floating_real_value).
+  //!`x`:   [floating value](@ref eve::floating_value).
   //!
   //! **Return value**
   //!
   //!Returns the [elementwise](@ref glossary_elementwise) exponential of the input.
-  //!In partucular:
+  //!In particular:
   //!
   //!   * If the element is \f$\pm0\f$, \f$1\f$ is returned
   //!   * If the element is \f$-\infty\f$, \f$+0\f$ is returned

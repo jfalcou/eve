@@ -33,12 +33,14 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_value T, floating_value U, floating_scalar_value V> auto operator()(T x, U y, V z) const noexcept;
+  //!  auto operator()(floating_real_value auto  x
+  //!                , floating_real_value auto y)
+  //!                , floating_real_value auto zconst noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`, `y`, `z`:   [floating values](@ref eve::value).
+  //!`x`, `y`, `z`:   [floating real values](@ref eve::floating_real_value).
   //!
   //!  This computes the Carlson's elliptic integral
   //!

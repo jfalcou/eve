@@ -49,7 +49,7 @@ namespace eve
   //! The result type is the [common compatible type](@ref common_compatible) of the parameters.
   //!
   //!@warning
-  //!    for real_floating_value input types
+  //!    for floating_real_value input types
   //!    * if the number of parameters is even and the product of the parameters is srictly negative the result is a Nan.
   //!    * if the number of parameters is odd the result has the sign of the product of the parameters
   //!
