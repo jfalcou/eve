@@ -17,7 +17,6 @@
 //==================================================================================================
 TTS_CASE("Check eve::wide<udt> if_else")
 {
-  udt::grid2d::reset();
   eve::wide<udt::grid2d> lhs = [](int i, int) { return udt::grid2d{ i%6, i%5 ? -1 :  1}; };
   eve::wide<udt::grid2d> rhs = [](int i, int) { return udt::grid2d{-i%3, i%3 ? +3 : -3}; };
 
@@ -40,7 +39,6 @@ TTS_CASE("Check eve::wide<udt> if_else")
 //==================================================================================================
 TTS_CASE("Check eve::wide<udt> replace_ignored")
 {
-  udt::grid2d::reset();
   eve::wide<udt::grid2d> lhs = [](int i, int) { return udt::grid2d{ i%6, i%5 ? -1 :  1}; };
   eve::wide<udt::grid2d> rhs = [](int i, int) { return udt::grid2d{-i%3, i%3 ? +3 : -3}; };
 
