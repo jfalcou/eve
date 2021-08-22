@@ -8,6 +8,7 @@
 #pragma once
 #include <concepts>
 #include <iosfwd>
+#include <type_traits>
 #include <utility>
 
 #if defined(__clang__)
@@ -465,7 +466,7 @@ namespace kumi
     //==============================================================================================
     // Comparison operators
     //==============================================================================================
-    template<sized_product_type<sizeof...(Ts)> Other>
+    template<product_type Other>
     friend constexpr auto operator==(tuple const &self, Other const &other) noexcept
     {
       return [&]<std::size_t... I>(std::index_sequence<I...>)
@@ -475,7 +476,7 @@ namespace kumi
       (std::make_index_sequence<sizeof...(Ts)>());
     }
 
-    template<sized_product_type<sizeof...(Ts)> Other>
+    template<product_type Other>
     friend constexpr auto operator!=(tuple const &self, Other const &other) noexcept
     {
       return [&]<std::size_t... I>(std::index_sequence<I...>)
@@ -483,6 +484,47 @@ namespace kumi
         return ((get<I>(self) != get<I>(other)) || ...);
       }
       (std::make_index_sequence<sizeof...(Ts)>());
+    }
+
+    template<product_type Other>
+    friend constexpr auto operator<(tuple const &lhs, Other const &rhs) noexcept
+    {
+      // lexicographical order is defined as
+      // (v0 < w0) || ... andnot(wi < vi, vi+1 < wi+1) ... || andnot(wn-1 < vn-1, vn < wn);
+      auto res = get<0>(lhs) < get<0>(rhs);
+
+      auto const order = [&]<typename Index>(Index i)
+      {
+        auto y_less_x_prev  = rhs[i]  < lhs[i];
+        auto x_less_y       = lhs[index_t<Index::value+1>{}] < rhs[index_t<Index::value+1>{}];
+        res                 = res || (x_less_y && !y_less_x_prev);
+      };
+
+      [&]<std::size_t... I>(std::index_sequence<I...>)
+      {
+        (order(index_t<I>{}),...);
+      }
+      (std::make_index_sequence<sizeof...(Ts)-1>());
+
+      return res;
+    }
+
+    template<product_type Other>
+    friend constexpr auto operator<=(tuple const &lhs, Other const &rhs) noexcept
+    {
+      return !(rhs < lhs);
+    }
+
+    template<product_type Other>
+    friend constexpr auto operator>(tuple const &lhs, Other const &rhs) noexcept
+    {
+      return rhs < lhs;
+    }
+
+    template<product_type Other>
+    friend constexpr auto operator>=(tuple const &lhs, Other const &rhs) noexcept
+    {
+      return !(lhs < rhs);
     }
 
     //==============================================================================================
@@ -543,6 +585,15 @@ namespace kumi
   {
     return [&]<std::size_t... I>(std::index_sequence<I...>) { return Type {get<I>(t)...}; }
     (std::make_index_sequence<sizeof...(Ts)>());
+  }
+
+  //==============================================================================================
+  // Conversion to an actual kumi::tuple
+  //==============================================================================================
+  template<product_type Type>
+  [[nodiscard]] inline constexpr auto to_tuple(Type&& that)
+  {
+    return apply([](auto &&...elems) { return tuple{elems...}; }, std::forward<Type>(that));
   }
 
   //================================================================================================

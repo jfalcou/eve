@@ -407,7 +407,7 @@ namespace eve::detail
     using type = decltype(Begin);
     auto body = [&]<typename N>(N)
                 {
-                  return f(std::integral_constant<type, N::value*Step>{} );
+                  return f(std::integral_constant<type, Begin + N::value*Step>{} );
                 };
 
     [&]<auto... Iter>( std::integer_sequence<type,Iter...> )
@@ -423,7 +423,7 @@ namespace eve::detail
 
     return [&]<auto... Iter>( std::integer_sequence<type,Iter...> )
     {
-      return ( f(std::integral_constant<type, Iter * Step>{} ) || ...);
+      return ( f(std::integral_constant<type, Begin + Iter * Step>{} ) || ...);
     }( std::make_integer_sequence<type,End - Begin>{});
   }
 }

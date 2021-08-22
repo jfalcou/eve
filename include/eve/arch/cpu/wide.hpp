@@ -26,6 +26,7 @@
 #include <eve/detail/function/slice.hpp>
 #include <eve/detail/function/subscript.hpp>
 #include <eve/detail/function/swizzle.hpp>
+#include <eve/product_type.hpp>
 
 #include <concepts>
 #include <ostream>
@@ -891,7 +892,7 @@ namespace eve
     // Logical operations
     //==============================================================================================
     //! @brief Element-wise equality comparison of two eve::wide
-    friend  EVE_FORCEINLINE auto operator==(wide v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator==(wide v, wide w) noexcept
     {
       return detail::self_eq(v,w);
     }
@@ -911,7 +912,7 @@ namespace eve
     }
 
     //! @brief Element-wise inequality comparison of two eve::wide
-    friend EVE_FORCEINLINE auto operator!=(wide v, wide w) noexcept
+    friend EVE_FORCEINLINE  auto operator!=(wide v, wide w) noexcept
     {
       return detail::self_neq(v,w);
     }
@@ -931,81 +932,117 @@ namespace eve
     }
 
     //! @brief Element-wise less-than comparison between eve::wide
-    friend EVE_FORCEINLINE logical<wide> operator<(wide v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator<(wide v, wide w) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires( supports_ordering_v<Type> )
+#endif
     {
       return detail::self_less(v,w);
     }
 
     //! @brief Element-wise less-than comparison between a eve::wide and a scalar
     template<scalar_value S>
-    friend EVE_FORCEINLINE logical<wide> operator<(wide v, S w) noexcept
+    friend EVE_FORCEINLINE auto operator<(wide v, S w) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires( supports_ordering_v<Type> )
+#endif
     {
       return v < wide{w};
     }
 
     //! @brief Element-wise less-than comparison between a scalar and a eve::wide
     template<scalar_value S>
-    friend EVE_FORCEINLINE logical<wide> operator<(S v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator<(S v, wide w) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires( supports_ordering_v<Type> )
+#endif
     {
       return wide{v} < w;
     }
 
     //! @brief Element-wise greater-than comparison between eve::wide
-    friend EVE_FORCEINLINE logical<wide> operator>(wide v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator>(wide v, wide w) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires( supports_ordering_v<Type> )
+#endif
     {
       return detail::self_greater(v,w);
     }
 
     //! @brief Element-wise greater-than comparison between a eve::wide and a scalar
     template<scalar_value S>
-    friend EVE_FORCEINLINE logical<wide> operator>(wide v, S w) noexcept
+    friend EVE_FORCEINLINE auto operator>(wide v, S w) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires( supports_ordering_v<Type> )
+#endif
     {
       return v > wide{w};
     }
 
     //! @brief Element-wise greater-than comparison between a scalar and a eve::wide
     template<scalar_value S>
-    friend EVE_FORCEINLINE logical<wide> operator>(S v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator>(S v, wide w) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires( supports_ordering_v<Type> )
+#endif
     {
       return wide{v} > w;
     }
 
     //! @brief Element-wise greater-or-equal comparison between eve::wide
-    friend EVE_FORCEINLINE logical<wide> operator>=(wide v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator>=(wide v, wide w) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires( supports_ordering_v<Type> )
+#endif
     {
       return detail::self_geq(v,w);
     }
 
     //! @brief Element-wise greater-or-equal comparison between a eve::wide and a scalar
     template<scalar_value S>
-    friend EVE_FORCEINLINE logical<wide> operator>=(wide v, S w) noexcept
+    friend EVE_FORCEINLINE auto operator>=(wide v, S w) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires( supports_ordering_v<Type> )
+#endif
     {
       return v >= wide{w};
     }
 
     //! @brief Element-wise greater-or-equal comparison between a scalar and a eve::wide
     template<scalar_value S>
-    friend EVE_FORCEINLINE logical<wide> operator>=(S v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator>=(S v, wide w) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires( supports_ordering_v<Type> )
+#endif
     {
       return wide{v} >= w;
     }
 
     //! @brief Element-wise less-or-equal comparison between eve::wide
-    friend EVE_FORCEINLINE logical<wide> operator<=(wide v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator<=(wide v, wide w) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires( supports_ordering_v<Type> )
+#endif
     {
       return detail::self_leq(v,w);
     }
 
     //! @brief Element-wise less-or-equal comparison between a eve::wide and a scalar
     template<scalar_value S>
-    friend EVE_FORCEINLINE logical<wide> operator<=(wide v, S w) noexcept
+    friend EVE_FORCEINLINE auto operator<=(wide v, S w) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires( supports_ordering_v<Type> )
+#endif
     {
       return v <= wide{w};
     }
 
     //! @brief Element-wise less-or-equal comparison between a scalar and a eve::wide
     template<scalar_value S>
-    friend EVE_FORCEINLINE logical<wide> operator<=(S v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator<=(S v, wide w) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires( supports_ordering_v<Type> )
+#endif
     {
       return wide{v} <= w;
     }
@@ -1044,25 +1081,25 @@ namespace eve
         return os << ')';
       }
     }
-
-    //==============================================================================================
-    // Product type Support
-    //==============================================================================================
-    template<std::size_t I> friend EVE_FORCEINLINE auto& get(wide& w) noexcept
-    requires( kumi::product_type<Type> )
-    {
-      return kumi::get<I>(w.storage());
-    }
-
-    template<std::size_t I> friend EVE_FORCEINLINE auto get(wide const& w) noexcept
-    requires( kumi::product_type<Type> )
-    {
-      return kumi::get<I>(w.storage());
-    }
   };
   //================================================================================================
   //! @}
   //================================================================================================
+
+  //==============================================================================================
+  // Product type Support
+  //==============================================================================================
+  template<std::size_t I, typename T, typename N> EVE_FORCEINLINE auto& get(wide<T,N>& w) noexcept
+  requires( kumi::product_type<T> )
+  {
+    return kumi::get<I>(w.storage());
+  }
+
+  template<std::size_t I, typename T, typename N> EVE_FORCEINLINE auto get(wide<T,N> const& w) noexcept
+  requires( kumi::product_type<T> )
+  {
+    return kumi::get<I>(w.storage());
+  }
 #if !defined(EVE_DOXYGEN_INVOKED)
 } }
 #else
