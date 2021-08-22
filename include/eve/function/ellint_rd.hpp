@@ -25,18 +25,20 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the ellint_rd operation   |
+  //! | `operator()` | the ellint_rd operation                                    |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_value T, floating_value U, floating_scalar_value V> auto operator()(T x, U y, V z) const noexcept;
+  //!  auto operator()( floating_real_value auto x
+  //!                 , floating_real_value auto y
+  //!                 , floating_real_value auto z) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`, `y`, `z`:   [floating values](@ref eve::value).
+  //!`x`, `y`, `z`:   [floating real values](@ref eve::floating_real_value).
   //!
   //!  This computes the Carlson's elliptic integral
   //!
@@ -44,7 +46,8 @@ namespace eve
   //!
   //!  as described in  Carlson, Numerische Mathematik, vol 33, 1 (1979)
   //!
-  //!  Parameters `x` and `y`must be non-negative and at most one ot them  zero. Parameter `z` must be greater than 0.
+  //!  Parameters `x` and `y`must be non-negative and at most one ot them  zero.
+  //!  Parameter `z` must be greater than 0.
   //!  In any other case the result is nan.
   //!
   //! **Return value**

@@ -45,7 +45,7 @@ namespace eve
   //! **Return value**
   //!
   //!Returns the [elementwise](@ref glossary_elementwise) exponential of base 10 of the input.
-  //!In partucular, for floating inputs:
+  //!In particular, for floating inputs:
   //!
   //!   * If the element is \f$\pm0\f$, \f$1\f$ is returned
   //!   * If the element is \f$-\infty\f$, \f$+0\f$ is returned

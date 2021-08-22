@@ -136,4 +136,11 @@ namespace eve::detail
     return erfcx(regular_type(), x);
   }
 
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto erfcx_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
+  {
+    return mask_op( cond, eve::erfcx, t);
+  }
 }

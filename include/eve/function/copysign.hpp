@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< real_floating_value T, real_floating_value U > auto operator()( T x, U y ) const noexcept
+  //!  template< floating_real_value T, floating_real_value U > auto operator()( T x, U y ) const noexcept
   //!  requires compatible< T, U >;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
