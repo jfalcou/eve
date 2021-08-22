@@ -26,6 +26,7 @@
 #include <eve/detail/function/slice.hpp>
 #include <eve/detail/function/subscript.hpp>
 #include <eve/detail/function/swizzle.hpp>
+#include <eve/product_type.hpp>
 
 #include <concepts>
 #include <ostream>
@@ -932,7 +933,9 @@ namespace eve
 
     //! @brief Element-wise less-than comparison between eve::wide
     friend EVE_FORCEINLINE auto operator<(wide v, wide w) noexcept
-    requires( !kumi::product_type<Type> )
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires( supports_ordering_v<Type> )
+#endif
     {
       return detail::self_less(v,w);
     }
@@ -940,7 +943,9 @@ namespace eve
     //! @brief Element-wise less-than comparison between a eve::wide and a scalar
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator<(wide v, S w) noexcept
-    requires( !kumi::product_type<Type> )
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires( supports_ordering_v<Type> )
+#endif
     {
       return v < wide{w};
     }
@@ -948,14 +953,18 @@ namespace eve
     //! @brief Element-wise less-than comparison between a scalar and a eve::wide
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator<(S v, wide w) noexcept
-    requires( !kumi::product_type<Type> )
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires( supports_ordering_v<Type> )
+#endif
     {
       return wide{v} < w;
     }
 
     //! @brief Element-wise greater-than comparison between eve::wide
     friend EVE_FORCEINLINE auto operator>(wide v, wide w) noexcept
-    requires( !kumi::product_type<Type> )
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires( supports_ordering_v<Type> )
+#endif
     {
       return detail::self_greater(v,w);
     }
@@ -963,7 +972,9 @@ namespace eve
     //! @brief Element-wise greater-than comparison between a eve::wide and a scalar
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator>(wide v, S w) noexcept
-    requires( !kumi::product_type<Type> )
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires( supports_ordering_v<Type> )
+#endif
     {
       return v > wide{w};
     }
@@ -971,14 +982,18 @@ namespace eve
     //! @brief Element-wise greater-than comparison between a scalar and a eve::wide
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator>(S v, wide w) noexcept
-    requires( !kumi::product_type<Type> )
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires( supports_ordering_v<Type> )
+#endif
     {
       return wide{v} > w;
     }
 
     //! @brief Element-wise greater-or-equal comparison between eve::wide
     friend EVE_FORCEINLINE auto operator>=(wide v, wide w) noexcept
-    requires( !kumi::product_type<Type> )
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires( supports_ordering_v<Type> )
+#endif
     {
       return detail::self_geq(v,w);
     }
@@ -986,7 +1001,9 @@ namespace eve
     //! @brief Element-wise greater-or-equal comparison between a eve::wide and a scalar
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator>=(wide v, S w) noexcept
-    requires( !kumi::product_type<Type> )
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires( supports_ordering_v<Type> )
+#endif
     {
       return v >= wide{w};
     }
@@ -994,14 +1011,18 @@ namespace eve
     //! @brief Element-wise greater-or-equal comparison between a scalar and a eve::wide
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator>=(S v, wide w) noexcept
-    requires( !kumi::product_type<Type> )
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires( supports_ordering_v<Type> )
+#endif
     {
       return wide{v} >= w;
     }
 
     //! @brief Element-wise less-or-equal comparison between eve::wide
     friend EVE_FORCEINLINE auto operator<=(wide v, wide w) noexcept
-    requires( !kumi::product_type<Type> )
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires( supports_ordering_v<Type> )
+#endif
     {
       return detail::self_leq(v,w);
     }
@@ -1009,7 +1030,9 @@ namespace eve
     //! @brief Element-wise less-or-equal comparison between a eve::wide and a scalar
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator<=(wide v, S w) noexcept
-    requires( !kumi::product_type<Type> )
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires( supports_ordering_v<Type> )
+#endif
     {
       return v <= wide{w};
     }
@@ -1017,7 +1040,9 @@ namespace eve
     //! @brief Element-wise less-or-equal comparison between a scalar and a eve::wide
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator<=(S v, wide w) noexcept
-    requires( !kumi::product_type<Type> )
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires( supports_ordering_v<Type> )
+#endif
     {
       return wide{v} <= w;
     }

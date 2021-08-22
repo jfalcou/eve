@@ -216,28 +216,56 @@ namespace eve::detail
   template<simd_value Wide>
   EVE_FORCEINLINE auto self_less(Wide const& v,Wide const& w) noexcept
   {
-    constexpr auto lt = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e < f); };
-    return apply_over(lt, v, w);
+    if constexpr( product_type<Wide> )
+    {
+      return kumi::to_tuple(v) < kumi::to_tuple(w);
+    }
+    else
+    {
+      constexpr auto lt = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e < f); };
+      return apply_over(lt, v, w);
+    }
   }
 
   template<simd_value Wide>
   EVE_FORCEINLINE auto self_leq(Wide const& v,Wide const& w) noexcept
   {
-    constexpr auto ge = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e <= f); };
-    return apply_over(ge, v, w);
+    if constexpr( product_type<Wide> )
+    {
+      return kumi::to_tuple(v) <= kumi::to_tuple(w);
+    }
+    else
+    {
+      constexpr auto ge = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e <= f); };
+      return apply_over(ge, v, w);
+    }
   }
 
   template<simd_value Wide>
   EVE_FORCEINLINE auto self_greater(Wide const& v,Wide const& w) noexcept
   {
-    constexpr auto gt = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e > f); };
-    return apply_over(gt, v, w);
+    if constexpr( product_type<Wide> )
+    {
+      return kumi::to_tuple(v) > kumi::to_tuple(w);
+    }
+    else
+    {
+      constexpr auto gt = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e > f); };
+      return apply_over(gt, v, w);
+    }
   }
 
   template<simd_value Wide>
   EVE_FORCEINLINE auto self_geq(Wide const& v,Wide const& w) noexcept
   {
-    constexpr auto ge = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e >= f); };
-    return apply_over(ge, v, w);
+    if constexpr( product_type<Wide> )
+    {
+      return kumi::to_tuple(v) >= kumi::to_tuple(w);
+    }
+    else
+    {
+      constexpr auto ge = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e >= f); };
+      return apply_over(ge, v, w);
+    }
   }
 }
