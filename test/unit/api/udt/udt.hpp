@@ -6,7 +6,6 @@
 */
 //==================================================================================================
 #include <eve/product_type.hpp>
-#include <eve/function/is_equal.hpp>
 #include <type_traits>
 
 namespace udt
@@ -20,19 +19,12 @@ namespace udt
   struct grid2d
   {
     int x = +1, y = -1;
-    friend constexpr auto operator<=>(grid2d,grid2d) = default;
 
-    static int eq_counter, neq_counter;
-    static void reset()
-    {
-      eq_counter = neq_counter = 0;
-    }
+    // You're still responsible for your non-SIMD ordering
+    friend constexpr auto operator<=>(grid2d,grid2d) = default;
   };
 
-  int grid2d::eq_counter      = 0;
-  int grid2d::neq_counter     = 0;
-
-  // Adapt as a bindable type for eve::product_type
+  // Adapt as a structured bindings compatible type for eve::product_type
   template<std::size_t I> constexpr int& get( grid2d& p) noexcept
   {
     if constexpr(I==0) return p.x; else if constexpr(I==1) return p.y;
@@ -43,34 +35,45 @@ namespace udt
     if constexpr(I==0) return p.x; else if constexpr(I==1) return p.y;
   }
 
+  // Stream insertion is also on your behalf
   std::ostream& operator<<( std::ostream& os, grid2d const& p)
   {
     return os << "[x: " << p.x << " - y: " << p.y << "]";
   }
+}
 
-  //------------------------------------------------------------------------------------------------
-  // Functions and operators are externally defined using tagged_dispatch
-  //------------------------------------------------------------------------------------------------
-  auto tagged_dispatch( eve::tag::is_equal_
-                      , eve::same_value_type<grid2d> auto a
-                      , eve::same_value_type<grid2d> auto b
-                      )
-  {
-    grid2d::eq_counter++;
-    return (get<0>(a) == get<0>(b)) &&(get<1>(a) == get<1>(b));
-  }
+// Opt-in for eve::product_type + adaptation
+template<>              struct eve::is_product_type<udt::grid2d>    : std::true_type {};
+template<>              struct std::tuple_size<udt::grid2d>         : std::integral_constant<std::size_t, 2> {};
+template<std::size_t I> struct std::tuple_element<I,udt::grid2d>    { using type = int; };
 
-  auto tagged_dispatch( eve::tag::is_not_equal_
-                      , eve::same_value_type<grid2d> auto a
-                      , eve::same_value_type<grid2d> auto b
-                      )
+namespace udt
+{
+  //------------------------------------------------------------------------------------------------
+  // This test UDT is made to be a placeholder for easier case where one just inherits from
+  // kumi::tuple and adapt its interface
+  //------------------------------------------------------------------------------------------------
+  struct label_position : kumi::tuple<float, std::uint8_t>
   {
-    grid2d::neq_counter++;
-    return (get<0>(a) != get<0>(b)) || (get<1>(a) != get<1>(b));
+    friend auto&& position(eve::same_value_type<label_position> auto&& self) noexcept
+    {
+      return get<0>(std::forward<decltype(self)>(self));
+    }
+
+    friend auto&& label(eve::same_value_type<label_position> auto&& self) noexcept
+    {
+      return get<1>(std::forward<decltype(self)>(self));
+    }
+  };
+
+  // Stream insertion is also on your behalf
+  std::ostream& operator<<( std::ostream& os, label_position const& p)
+  {
+    return os << "'" << label(p) << "'@( " << position(p) << " )";
   }
 }
 
 // Opt-in for eve::product_type + adaptation
-template<>              struct eve::is_product_type<udt::grid2d>  : std::true_type {};
-template<>              struct std::tuple_size<udt::grid2d>       : std::integral_constant<std::size_t, 2> {};
-template<std::size_t I> struct std::tuple_element<I,udt::grid2d> { using type = int; };
+template<>  struct std::tuple_size<udt::label_position>       : std::integral_constant<std::size_t, 2> {};
+template<>  struct std::tuple_element<0,udt::label_position>  { using type = float; };
+template<>  struct std::tuple_element<1,udt::label_position>  { using type = std::uint8_t; };
