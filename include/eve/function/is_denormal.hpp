@@ -48,7 +48,7 @@ namespace eve
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
   //!logical<T> r;
   //!if   constexpr(floating_real_value<T>) r = (abs(x) < Smallestposval(as(x))) && is_nez(x);
-  //!else constexpr(integral_real_value<T>) r = false_(as<T>());
+  //!else constexpr(integral_real_value<T>) r = false_(as(x));
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! ---

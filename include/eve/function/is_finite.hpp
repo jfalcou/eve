@@ -48,7 +48,7 @@ namespace eve
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
   //!logical<T> r;
   //!if   constexpr(floating_real_value<T>) r = is_not_nan(x-x);
-  //!else constexpr(integral_real_value<T>) r = true_(as<T>());
+  //!else constexpr(integral_real_value<T>) r = true_(as(x));
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! ---
