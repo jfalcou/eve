@@ -24,21 +24,21 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the mid-point operation   |
+  //! | `operator()` | the mid-point operation                                    |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_value T, floating_value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
-  //!  template< floating_value T, floating_value ...Ts> auto operator()( T x, Ts... args ) const noexcept
-  //!            requires (compatiblevalues< T, Ts > && ...);
+  //!  auto operator()( floating_value auto x, floating_value auto y ) const noexcept;
+  //!  auto operator()( floating_value auto x, floating_value auto... args ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+ //! ---
   //!
   //! **Parameters**
   //!
-  //!`x`, `y` or `x`, `args`, ...
-  //!:   [floating values](@ref eve::value).
+  //!`x`, `y` or `x`, `args ...`:   [floating values](@ref eve::floating_value).
   //!
   //! **Return value**
   //!
