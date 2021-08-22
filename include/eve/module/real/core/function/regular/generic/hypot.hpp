@@ -26,10 +26,10 @@ namespace eve::detail
     using r_t = common_compatible_t<T0,Ts...>;
     if constexpr(has_native_abi_v<r_t>)
     {
-      r_t that(sqr_abs(a0));
+      r_t that(sqr_abs(r_t(a0)));
       auto addsqrabs = [](auto that, auto next)->r_t{
-        auto an =  eve::abs(next);
-        that = fma(an, an, that);
+        auto anext =  eve::abs(next);
+        that = fma(anext, anext, that);
         return that;
       };
       ((that = addsqrabs(that,args)),...);
