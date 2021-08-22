@@ -24,18 +24,18 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the horner operation   |
+  //! | `operator()` | evaluate a polynomial using the horner algorithm           |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T0, value... Ts>                                    auto operator()(T0 x, Ts... args) const noexcept;
-  //!  template< value T0, range R>                                        auto operator()(T0 x, R r) const noexcept;
-  //!  template< value T0, std::inputiterator IT, std::inputiterator IT>   auto operator()(T0 x, IT first, IT sentinel) const noexcept;
-  //!  template< value T0, value... Ts>                                    auto operator()(T0 x, callable_one_ const & o, Ts... args) const noexcept;
-  //!  template< value T0, range R>                                        auto operator()(T0 x, callable_one_ const & o, R r) const noexcept;
-  //!  template< value T0, std::inputiterator IT, std::inputiterator IT>   auto operator()(T0 x, callable_one_ const & o, IT first, IT sentinel) const noexcept;
+  //!  auto operator()(value auto x, value auto... args) const noexcept;
+  //!  auto operator()(value auto x, range auto r) const noexcept;
+  //!  auto operator()(value auto x, std::inputiterator auto first, std::inputiterator auto sentinel) const noexcept;
+  //!  auto operator()(value auto x, callable_one_ const & o, value auto... args) const noexcept;
+  //!  auto operator()(value auto x, callable_one_ const & o, range auto r) const noexcept;
+  //!  auto operator()(value auto x, callable_one_ const & o, std::inputiterator auto first, std::inputiterator auto sentinel) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! ---
