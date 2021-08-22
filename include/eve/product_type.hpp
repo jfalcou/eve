@@ -41,6 +41,14 @@ namespace eve
   //!
   //!   @tparam Type  Type to register as supporting ordering operators
   //!
+  //!   By default, instances of `eve::wide<T>` where `T` is an User-Defined Product Type supports
+  //!   ordering. However, one can specialize `eve::supports_ordering` for a given type to evaluates
+  //!   to `false` in order to disable ordering for this type.
+  //!
+  //!   Alternatively, any type `T` providing an internal `eve_disable_ordering` type will be
+  //!   treated as if `eve::supports_ordering<T>::value` evaluates to `false`, thus disabling
+  //!   ordering operators for `eve::wide<T>`.
+  //!
   //!   ### Helper variable template
   //!
   //!   @code
@@ -51,6 +59,11 @@ namespace eve
   //! @}
   //================================================================================================
   template<typename Type> struct supports_ordering : std::true_type
+  {};
+
+  template<typename Type>
+  requires requires(Type t) { typename Type::eve_disable_ordering; }
+  struct supports_ordering<Type> : std::false_type
   {};
 
   template<typename Type>
