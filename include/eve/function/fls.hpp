@@ -31,12 +31,12 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< unsigned_value T > auto operator()( T x ) const noexcept;
+  //!  auto operator()( unsigned_value auto x ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`:   [unsigned value](@ref eve::value).
+  //!`x`:   [unsigned value](@ref eve::unsigned_value).
   //!
   //! **Return value**
   //!
@@ -67,7 +67,7 @@ namespace eve
   //!  * eve::pedantic
   //!
   //!     **Required header:** `#include <eve/function/pedantic/abs.hpp>`
-  //!  
+  //!
   //!     The expression `pedantic(fls)(x)` returns the size of the element type (an out of range index) if
   //!      the input is zero.
   //!
