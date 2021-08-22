@@ -30,20 +30,20 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template<integral_value N, floating_value T > auto operator()( N n, T x) const noexcept;
+  //!   auto operator()( integral_real_value auto n, floating_value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`n`:   [integral valuex](@ref eve::value).
+  //!`n`:   [integral real valuex](@ref eve::integral_real_value).
   //!
-  //!`x`:   [floating valuex](@ref eve::value).
+  //!`x`:   [floating valuex](@ref eve::floating_value).
   //!
   //! **Return value**
   //!
   //!Returns [elementwise](@ref glossary_elementwise) the value of the 'physicists' hermite polynomial of order `n` at `x`:
   //!
-  //!The result type is of the compatibility type of the  parameters.
+  //!The result type is of the [common compatible type](@ref common_compatible) of the  parameters.
   //!
   //! ---
   //!

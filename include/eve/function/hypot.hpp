@@ -24,23 +24,23 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the hypot operation   |
+  //! | `operator()` | the hypot operation                                        |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_value T, floating_value ...Ts> auto operator()( T x,Ts... args ) const noexcept
-  //!                                                    requires (compatiblevalues< T, Ts > && ...);
+  //!  auto operator()( floating_real_value auto x, floating_real_value auto... args ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`, `args`:   [value](@ref eve::value)
+  //!`x`, `args`:   [floating real values](@ref eve::floating_real_value)
   //!
   //! **Return value**
   //!
-  //!The result type is the [common compatible type](@ref common_compatible) of the three parameters.
+  //!The result type is the [common compatible type](@ref common_compatible) of the  parameters and its equal to
+  //!the square root of the sum of the squares of the parameters.
   //!
   //! ---
   //!
@@ -66,7 +66,7 @@ namespace eve
   //!
   //!     **Required header:** `#include <eve/function/pedantic/hypot.hpp>`
   //!
-  //!     The call `pedantic(hypot)(x,args...)`  computes the square root of the sum of the parameters
+  //!     The call `pedantic(hypot)(x,args...)`  computes the square root of the sum of the squares of the parameters
   //!      without undue overflow or underflow at intermediate stages of the computation
   //!      and can be more accurate than the non-decorated call.
   //!
