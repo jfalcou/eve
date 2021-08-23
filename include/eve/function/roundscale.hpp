@@ -44,8 +44,8 @@ namespace eve
   //! **Return value**
   //!
   //! Returns the [elementwise](@ref eve::glossary_elmentwise) rounding of the scaled input.
-  //! The number of fraction bits retained is specified by scale. By default the internal rounding after scaling is done to nearest integral.
-  //! The call is equivalent to `ldexp(round(ldexp(a0,scale), -scale))`
+  //! The number of fraction bits retained is specified by scale. By default the internal rounding after scaling is done to nearest integer.
+  //! The call is equivalent to `ldexp(round(ldexp(a0,scale),-scale))`
   //!
   //! ---
   //!

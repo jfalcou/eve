@@ -30,7 +30,7 @@ namespace eve
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  auto operator()(floating_value auto x) const noexcept;
-  //!  template< floating_real_value T, floating_real_value S> auto operator()( T x, S tol) const noexcept;
+  //!  auto operator()( floating_value auto x, floating_value auto tol) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! ---
@@ -38,11 +38,13 @@ namespace eve
   //! **Parameters**
   //!
   //!`x`:   [floating_real_value](@ref eve::value).
-  //!`tol`:   [floating_real_value](@ref eve::value).
+  //!`tol`: [floating_real_value](@ref eve::value) default to T(1.0e-6)*eve::abs(x).
   //!
   //! **Return values**
   //!
-  //!Two values with the same type as `x` containing the [elementwise](@ref glossary_elementwise) numerator and denominator of the rational number
+  //!Two values with the same type as `x` containing the [elementwise](@ref glossary_elementwise)
+  //! numerator and denominator of the rational number approximating `x`.
+  //!
   //!
   //! #### Supported decorators
   //!
@@ -54,10 +56,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
+
   namespace tag { struct rat_; }
   template<> struct supports_conditional<tag::rat_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(rat_, rat);
 }
 
