@@ -39,8 +39,8 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!The call `ifnot_else(x, y, z)` is performs a choice between the elements of `y` and `z` according to the truth value
-  //!of the elements of `x`. It is merely syntaxic sugar for `if_else(x, z, y)`
+  //!The call `eve::ifnot_else``(x, y, z)`  performs a choice between the elements of `y` and `z` according to the truth value
+  //!of the elements of `x`. It is merely syntaxic sugar for `eve::if_else``(x, z, y)`
   //!
   //! ---
   //!
@@ -54,10 +54,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
+
   namespace tag { struct ifnot_else_; }
   template<> struct supports_conditional<tag::ifnot_else_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(ifnot_else_, ifnot_else);
 }
 
