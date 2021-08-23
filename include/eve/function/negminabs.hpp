@@ -42,7 +42,7 @@ namespace eve
   //!
   //!the greatest absolute value is returned.
   //!
-  //!For instance for two elemnts:
+  //!For instance for two elements:
   //!
   //!  * If `x >  y`,  `-|x|` is returned.
   //!  * If `x <  y`,  `-|y|` is returned.

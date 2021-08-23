@@ -40,9 +40,9 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!the least absolute value is returned.
+  //!the [elementwise](@ref glossary_elementwise) element of least absolute value is returned.
   //!
-  //!For instance for two elemnts:
+  //!For instance for two elements:
   //!
   //!  * If `|x| >  |y|`,  `y` is returned.
   //!  * If `|x| <  |y|`,  `x` is returned.

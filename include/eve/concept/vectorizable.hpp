@@ -55,15 +55,122 @@ namespace eve::detail
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup concepts
+  //! @{
+  //! @var scalar_value
+  //! The concept `scalar_value<T>` is satisfied if and only if it is arithmetic or a product type
+  //!
+  //! #### Examples
+  //! - `float`
+  //! - `std::int32_t`
+  //! @}
+  //================================================================================================
   template<typename T> concept scalar_value                   = detail::is_scalar_value<T>::value;
 
+  //================================================================================================
+  //! @addtogroup concepts
+  //! @{
+  //! @var integral_scalar_value
+  //! The concept `integral_scalar_value<T>` is satisfied if and only if T is integral and scalar_value
+  //!
+  //! #### Examples
+  //! - `std::int32_t`
+  //! @}
+  //================================================================================================
   template<typename T> concept integral_scalar_value          = scalar_value<T> && std::integral<T>;
+  //================================================================================================
+  //! @addtogroup concepts
+  //! @{
+  //! @var signed_scalar_value
+  //! The concept `signed_scalar_value<T>` is satisfied if and only if T is signed and scalar_value
+  //!
+  //! #### Examples
+  //! - `std::int32_t`
+  //! - `float`
+  //! @}
+  //================================================================================================
   template<typename T> concept signed_scalar_value            = scalar_value<T> && std::is_signed_v<T>;
+  //================================================================================================
+  //! @addtogroup concepts
+  //! @{
+  //! @var unsigned_scalar_value
+  //! The concept `unsigned_scalar_value<T>` is satisfied if and only if T is unsigned and scalar_value
+  //!
+  //! #### Examples
+  //! - `std::uint32_t`
+  //! @}
+  //================================================================================================
   template<typename T> concept unsigned_scalar_value          = scalar_value<T> && std::unsigned_integral<T>;
+  //================================================================================================
+  //! @addtogroup concepts
+  //! @{
+  //! @var signed_integral_scalar_value
+  //! The concept `unsigned_integral_scalar_value<T>` is satisfied if and only if T is signed,  integral and scalar_value
+  //!
+  //! #### Examples
+  //! - `std::int32_t`
+  //! @}
+  //================================================================================================
   template<typename T> concept signed_integral_scalar_value   = scalar_value<T> && std::signed_integral<T>;
+  //================================================================================================
+  //! @addtogroup concepts
+  //! @{
+  //! @var floating_scalar_value
+  //! The concept `floating_scalar_value<T>` is satisfied if and only if T is floating_point and scalar_value
+  //!
+  //! #### Examples
+  //! - `float`
+  //! - `double`
+  //! @}
+  //================================================================================================
   template<typename T> concept floating_scalar_value          = scalar_value<T> && std::floating_point<T>;
+  //================================================================================================
+  //! @addtogroup concepts
+  //! @{
+  //! @var logical_scalar_value
+  //! The concept `logical_scalar_value<T>` is satisfied if and only if T is logical and scalar_value
+  //!
+  //! #### Examples
+  //! - `logical<float>`
+  //! - `logical<int>`
+  //! @}
+  //================================================================================================
   template<typename T> concept logical_scalar_value           = scalar_value<T> && is_logical_v<T>;
+  //================================================================================================
+  //! @addtogroup concepts
+  //! @{
+  //! @var real_scalar_value
+  //! The concept `real_scalar_value<T>` is satisfied if and only if T is scalar_value and real_value
+  //!
+  //! #### Examples
+  //! - `float`
+  //! - `int`
+  //! @}
+  //================================================================================================
   template<typename T> concept real_scalar_value              = scalar_value<T> && std::same_as< detail::value_type_t<T>, element_type_t<T>>;
+  //================================================================================================
+  //! @addtogroup concepts
+  //! @{
+  //! @var floating_real_scalar_value
+  //! The concept `floating_real_scalar_value<T>` is satisfied if and only if T is scalar_value and floating_real_value
+  //!
+  //! #### Examples
+  //! - `float`
+  //! - `double`
+  //! @}
+  //================================================================================================
   template<typename T> concept floating_real_scalar_value     = real_scalar_value<T> && std::floating_point<detail::value_type_t<T>>;
+  //================================================================================================
+  //! @addtogroup concepts
+  //! @{
+  //! @var integral_real_scalar_value
+  //! The concept `integral_real_scalar_value<T>` is satisfied if and only if T is scalar_value and integral_real_value
+  //!
+  //! #### Examples
+  //! - `int`
+  //! - `unsigned int`
+  //! @}
+  //================================================================================================
   template<typename T> concept integral_real_scalar_value     = real_scalar_value<T> && std::integral<detail::value_type_t<T>>;
 }
