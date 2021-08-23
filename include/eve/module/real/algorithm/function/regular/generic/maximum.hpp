@@ -11,8 +11,10 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/reduce.hpp>
 #include <eve/function/splat.hpp>
+#include <eve/function/if_else.hpp>
 #include <eve/function/max.hpp>
 #include <eve/function/any.hpp>
+#include <eve/constant/valmin.hpp>
 
 namespace eve::detail
 {
@@ -62,4 +64,21 @@ namespace eve::detail
   {
     return eve::any(v);
   }
+
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto maximum_(EVE_SUPPORTS(cpu_), C const &cond
+                               , U const &t) noexcept
+  {
+    return maximum(if_else(cond, t, eve::valmin));
+  }
+
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto maximum_(EVE_SUPPORTS(cpu_), C const &cond
+                               , splat_type const&, U const &t) noexcept
+  {
+    return splat(maximum)(if_else(cond, t, eve::valmin));
+  }
+
 }
