@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the higher part of the values   |
+  //! | `operator()` | the computation of the higher part of the values           |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---

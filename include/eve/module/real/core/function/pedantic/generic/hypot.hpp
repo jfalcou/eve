@@ -30,14 +30,21 @@ namespace eve::detail
     if constexpr(has_native_abi_v<r_t>)
     {
       auto e = -maxmag(exponent(r_t(a0)), exponent(r_t(args))...);
-      r_t that(sqr(pedantic(ldexp)(r_t(a0), e)));
+      r_t that(sqr_abs(pedantic(ldexp)(r_t(a0), e)));
       auto inf_found = is_infinite(that);
-      auto addsqr = [&inf_found, e](auto that, auto next)->r_t{
+      auto addsqrabs = [&inf_found, e](auto that, auto next)->r_t{
         inf_found = inf_found || is_infinite(next);
         next = pedantic(ldexp)(r_t(next), e);
-        return fma(next, next, that);
+        if constexpr(real_value < r_t>)
+        {
+          return fma(next, next, that);
+        }
+        else
+        {
+          return sqr_abs(next)+ that;
+        }
       };
-      ((that = addsqr(that,r_t(args))),...);
+      ((that = addsqrabs(that,r_t(args))),...);
       return if_else(inf_found, inf(as<r_t>()), pedantic(ldexp)(eve::sqrt(that), -e));
     }
     else

@@ -15,7 +15,7 @@
 #include <eve/function/max.hpp>
 #include <eve/function/hypot.hpp>
 #include <eve/function/manhattan.hpp>
-#include <eve/function/max.hpp>
+#include <eve/function/maxabs.hpp>
 #include <eve/function/pow_abs.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/concept/value.hpp>
@@ -43,7 +43,7 @@ namespace eve::detail
       {
         if (eve::all(p == P(2))) return hypot(r_t(a0), r_t(a1), r_t(args)...);
         else if (eve::all(p == P(1))) return manhattan(r_t(a0), r_t(a1), r_t(args)...);
-        else if (eve::all(p == eve::inf(as(p)))) return eve::max(eve::abs(r_t(a0)), eve::abs(r_t(a1)), eve::abs(r_t(args))...);
+        else if (eve::all(p == eve::inf(as(p)))) return eve::maxabs(r_t(a0), r_t(a1), r_t(args)...);
         else
         {
           auto rp =  r_t(p);

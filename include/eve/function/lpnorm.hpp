@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var lpnorm
   //!
-  //! @brief Callable object computing the lpnorm operation \f$ \left(\sum_{i = 0}^n x_i^p\right)^{\frac1p} \f$.
+  //! @brief Callable object computing the lpnorm operation \f$ \left(\sum_{i = 0}^n |x_i|^p\right)^{\frac1p} \f$.
   //!
   //! **Required header:** `#include <eve/function/lpnorm.hpp>`
   //!
@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the lpnorm operation   |
+  //! | `operator()` | the lpnorm operation                                       |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
@@ -36,7 +36,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`p`, `x`, `args`:   [floating value](@ref eve::value)
+  //!`p`, `x`, `args`:   [floating values](@ref eve::floating_value)
   //!
   //! **Return value**
   //!

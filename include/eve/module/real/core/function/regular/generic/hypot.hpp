@@ -10,6 +10,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/sqr.hpp>
+#include <eve/function/sqr_abs.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/sqrt.hpp>
 #include <eve/concept/value.hpp>
@@ -25,12 +26,13 @@ namespace eve::detail
     using r_t = common_compatible_t<T0,Ts...>;
     if constexpr(has_native_abi_v<r_t>)
     {
-      r_t that(sqr(eve::abs(a0)));
-      auto addsqr = [](auto that, auto next)->r_t{
-        that = fma(next, next, that);
+      r_t that(sqr_abs(r_t(a0)));
+      auto addsqrabs = [](auto that, auto next)->r_t{
+        auto anext =  eve::abs(next);
+        that = fma(anext, anext, that);
         return that;
       };
-      ((that = addsqr(that,args)),...);
+      ((that = addsqrabs(that,args)),...);
       return eve::sqrt(that);
     }
     else

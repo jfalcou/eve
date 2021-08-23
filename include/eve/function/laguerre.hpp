@@ -24,20 +24,20 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the laguerre operation   |
+  //! | `operator()` | the laguerre operation                                     |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template<integral_value N, floating_value T > auto operator()( N n, T x) const noexcept;
+  //!  auto operator()( integral_value auto n, floating_value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`n`:   [integral valuex](@ref eve::value).
+  //!`n`:   [integral value](@ref eve::integral_value).
   //!
-  //!`x`:   [floating valuex](@ref eve::value).
+  //!`x`:   [floating value](@ref eve::floating_value).
   //!
   //! **Return value**
   //!

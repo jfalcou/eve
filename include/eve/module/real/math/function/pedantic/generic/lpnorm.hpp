@@ -12,7 +12,7 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/numeric/max.hpp>
-#include <eve/function/maxmag.hpp>
+#include <eve/function/maxabs.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/function/pedantic/manhattan.hpp>
 #include <eve/function/pedantic/hypot.hpp>
@@ -44,7 +44,7 @@ namespace eve::detail
       {
         if (eve::all(p == P(2))) return pedantic(hypot)(r_t(a0), r_t(a1), r_t(args)...);
         else if (eve::all(p == P(1))) return pedantic(manhattan)(r_t(a0), r_t(a1), r_t(args)...);
-        else if (eve::all(p == eve::inf(as(p)))) return numeric(max)(abs(r_t(a0)), r_t(a1), abs(r_t(args))...);
+        else if (eve::all(p == eve::inf(as(p)))) return numeric(maxabs)(r_t(a0), r_t(a1), r_t(args)...);
         else
         {
           auto rp =  r_t(p);
@@ -61,7 +61,7 @@ namespace eve::detail
           auto isinfp = is_infinite(rp);
           if (eve::any(isinfp))
           {
-            auto r = numeric(max)(abs(r_t(a0)), abs(r_t(a1)), abs(r_t(args))...);
+            auto r = numeric(maxabs)(r_t(a0), r_t(a1), r_t(args)...);
             if (eve::all(isinfp)) return r;
             ((that = addppow(that,r_t(args))),...);
             return if_else(isinfp, r,  if_else(inf_found, inf(as<r_t>()),
