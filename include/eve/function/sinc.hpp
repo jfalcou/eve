@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var sinc
   //!
-  //! @brief Callable object computing sinc.
+  //! @brief Callable object computing sinc,  the sine cardinal.
   //!
   //! **Required header:** `#include <eve/function/sinc.hpp>`
   //!
@@ -34,7 +34,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating real value](@ref eve::floating_real_value).
+  //!`x`:   [floating value](@ref eve::floating_value).
   //!
   //! **Return value**
   //!
@@ -53,7 +53,7 @@ namespace eve
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/sinc.hpp>`
-  //!  
+  //!
   //!     The expression `diff(sinc)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
@@ -62,10 +62,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
+
   namespace tag { struct sinc_; }
   template<> struct supports_conditional<tag::sinc_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(sinc_, sinc);
 }
 

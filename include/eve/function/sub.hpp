@@ -41,7 +41,8 @@ namespace eve
   //! **Return value**
   //!
   //! A value of the [common compatible type](@ref common_compatible) of all `xs` containing the
-  //! [elementwise](@ref glossary_elementwise) difference of all `xs`.
+  //! [elementwise](@ref glossary_elementwise) difference of all `xs`: `sub(x0, x1, ...,  xn)` is
+  //! semantically equivalent to `sub(x0, add(x1, ...,  xn))`.
   //!
   //! ---
   //!

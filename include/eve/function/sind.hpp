@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the  computation of sind   |
+  //! | `operator()` | the  computation of sind                                   |
   //!
   //! ---
   //!
