@@ -69,21 +69,21 @@ namespace eve
   //!  }
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //!  if `U`, `V` and `T` are scalar the result or if `U` or `V` are simd_values the result is of type `UV`.
-  //!  Otherwise it is of type  `wide< UV, cardinal_t< T >>`.
+  //!  if `U`, `V` and `T` are scalar or if `U` or `V` are simd_values the result is of type `UV`,
+  //!  otherwise it is of type  `wide< UV, cardinal_t< T >>`.
   //!
   //! #### Possible optimizations
   //!
   //! The following calls where `x`, `y` and `z` are values can be optimized:
   //!
-  //!   * `if_else(x, y, Allbits< T >()) ` writing: `if_else(x, y, eve::allbits_)`
-  //!   * `if_else(x, y, One< T >()    ) ` writing: `if_else(x, y, eve::one_    )`
-  //!   * `if_else(x, y, Mone< T >()   ) ` writing: `if_else(x, y, eve::mone_   )`
-  //!   * `if_else(x, y, Zero< T >()   ) ` writing: `if_else(x, y, eve::zero_   )`
-  //!   * `if_else(x, Allbits< T >(), z) ` writing: `if_else(x, eve::allbits_, z)`
-  //!   * `if_else(x, One< T >(), z    ) ` writing: `if_else(x, eve::one_, z    )`
-  //!   * `if_else(x, Mone< T >(), z   ) ` writing: `if_else(x, eve::mone_, z   )`
-  //!   * `if_else(x, Zero< T >(), z   ) ` writing: `if_else(x, eve::zero_, z   )`
+  //!   * `if_else(x, y, allbits< T >()) ` writing: `if_else(x, y, eve::allbits_)`
+  //!   * `if_else(x, y, one< T >()    ) ` writing: `if_else(x, y, eve::one_    )`
+  //!   * `if_else(x, y, mone< T >()   ) ` writing: `if_else(x, y, eve::mone_   )`
+  //!   * `if_else(x, y, zero< T >()   ) ` writing: `if_else(x, y, eve::zero_   )`
+  //!   * `if_else(x, allbits< T >(), z) ` writing: `if_else(x, eve::allbits_, z)`
+  //!   * `if_else(x, one< T >(), z    ) ` writing: `if_else(x, eve::one_, z    )`
+  //!   * `if_else(x, mone< T >(), z   ) ` writing: `if_else(x, eve::mone_, z   )`
+  //!   * `if_else(x, zero< T >(), z   ) ` writing: `if_else(x, eve::zero_, z   )`
   //!
   //! #### Supported decorators
   //!
