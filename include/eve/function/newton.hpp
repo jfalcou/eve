@@ -30,8 +30,8 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T0, range Rc,range Rn>                                auto operator()(T0 x, Rc c, Rn n) const noexcept;
-  //!  template< value T0, std::inputiterator ITc, std::inputiterator ITn>   auto operator()(T0 x, ITc firstcoef, ITc sentinel,ITn firstnode) const noexcept;
+  //!  auto operator()(value auto x, range auto c, range auto n) const noexcept;
+  //!  auto operator()(value x, std::inputiterator auto firstcoef, std::inputiterator auto sentinel, std::inputiterator auto firstnode) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! ---
