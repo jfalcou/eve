@@ -21,7 +21,7 @@ namespace eve
   //! @{
   //! @var pio_2
   //!
-  //! @brief Callable object computing the f$\pi/2\f$.
+  //! @brief Callable object computing the \f$\pi/2\f$ value.
   //!
   //! **Required header:** `#include <eve/function/pio_2.hpp>`
   //!
@@ -32,7 +32,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < floating_value T > T operator()( as<T> const & t) const noexcept;
+  //!  tempate < floating_value T > T operator()( as <T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -41,7 +41,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::pio_2(as<T>())` is semantically equivalent to  `2*eve::atan(T(1))`
+  //! the call `eve::pio_2(as<T>())` is semantically equivalent to  `eve::atan(T(1))`
   //!
   //! ---
   //!
