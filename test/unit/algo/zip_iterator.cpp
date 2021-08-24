@@ -58,6 +58,17 @@ TTS_CASE("zip_iterator for not eve iterators")
   }
 }
 
+TTS_CASE("zip_iterator for not eve iterators, unaligned")
+{
+  using a_p = eve::aligned_ptr<int>;
+  using u_p = int*;
+
+  using expected = eve::algo::zip_iterator<u_p, u_p>;
+  using actual   = eve::algo::unaligned_t<eve::algo::zip_iterator<a_p, u_p>>;
+  TTS_TYPE_IS(expected, actual);
+}
+
+
 TTS_CASE("zip_iterator, sanity check, types test")
 {
   using unaligned_float = eve::algo::unaligned_ptr_iterator<float, eve::fixed<8>>;
