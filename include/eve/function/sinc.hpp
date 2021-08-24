@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var sinc
   //!
-  //! @brief Callable object computing sinc,  the sine cardinal.
+  //! @brief Callable object computing the sine cardinal.
   //!
   //! **Required header:** `#include <eve/function/sinc.hpp>`
   //!
@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the  computation of sinc   |
+  //! | `operator()` | the  computation of sinc                                   |
   //!
   //! ---
   //!
