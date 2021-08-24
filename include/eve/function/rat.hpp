@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the rational approximation   |
+  //! | `operator()` | the computation of the rational approximation              |
   //!
   //! ---
   //!
@@ -38,7 +38,7 @@ namespace eve
   //! **Parameters**
   //!
   //!`x`:   [floating_real_value](@ref eve::value).
-  //!`tol`: [floating_real_value](@ref eve::value) default to T(1.0e-6)*eve::abs(x).
+  //!`tol`: [floating_real_value](@ref eve::value). By  default `tol` is equal to `T(1.0e-6)*eve::abs(x)`.
   //!
   //! **Return values**
   //!
