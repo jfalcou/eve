@@ -60,6 +60,7 @@ namespace eve
   //! @{
   //! @var scalar_value
   //! The concept `scalar_value<T>` is satisfied if and only if it is arithmetic or a product type
+  //! which types satisfies scalar_valeu themselves.
   //!
   //! #### Examples
   //! - `float`
