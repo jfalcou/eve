@@ -93,7 +93,8 @@ namespace eve
   //!
   //!     The expression `diff< N >(negmaxabs)(x,args,...)` computes the partial
   //!      derivative relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and
-  //!      their negmaxabs is \f$m\f$, the value returned is elementwise \f$\-mathrm{sign}(x_N)\f$ if \f$m\f$ is equal to \f$|x_N|\f$ else 0.
+  //!      their negmaxabs is \f$m\f$, the value returned is elementwise \f$-\mathrm{sign}(x_N)\f$ if \f$m\f$
+  //!      is equal to \f$|x_N|\f$ else 0.
   //!
   //! #### Example
   //!

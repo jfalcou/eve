@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!computes [elementwise](@ref glossary_elementwise), representable value next to `x` in the direction of `y`.
+  //!computes [elementwise](@ref glossary_elementwise) the representable value next to `x` in the direction of `y`.
   //!
   //! ---
   //!
@@ -52,10 +52,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
+
   namespace tag { struct nextafter_; }
   template<> struct supports_conditional<tag::nextafter_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(nextafter_, nextafter);
 }
 
