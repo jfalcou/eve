@@ -131,7 +131,6 @@ EVE_TEST( "Check corner-cases behavior of eve::div variants on wide"
   using type = typename T::type;
   using eve::div;
   using eve::saturated;
-
   TTS_EQUAL     ( saturated(div)(cases.valmin, type(-1)) , cases.valmax);
   TTS_EQUAL     ( saturated(div)(type(3)     , type(0))  , cases.valmax);
   TTS_EQUAL     ( saturated(div)(type(-3)    , type(0))  , cases.valmin);

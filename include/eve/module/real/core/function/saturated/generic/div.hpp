@@ -60,9 +60,10 @@ namespace eve::detail
       if constexpr( scalar_value<T> )
       {
         // case valmin/-1 is treated here
-        if(b != 0)    return (a + !(inc(b) | add(a, eve::valmin(eve::as(a)))))/ b;
+        if(b == -1 && a == eve::valmin(eve::as(a))) return eve::valmax(eve::as(a));
+        if(b != 0) return div(a, b);
         // negative -> valmin,  positive -> valmax
-        else          return bit_xor(eve::valmax(eve::as(a)), shr(a, shft));
+        else       return bit_xor(eve::valmax(eve::as(a)), shr(a, shft));
       }
       else if constexpr( simd_value<T> )
       {
@@ -76,7 +77,10 @@ namespace eve::detail
     }
     else if constexpr( unsigned_value<T> )
     {
-      if constexpr( scalar_value<T> )    return b ? a / b : eve::valmax(as(a));
+      if constexpr( scalar_value<T> )  {
+        if (b != 0) return a / b;
+        return eve::valmax(as(a));
+      }
       else if constexpr( simd_value<T> ) return if_else(is_nez(b), div(a, b), allbits);
     }
   }
