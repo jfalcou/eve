@@ -49,8 +49,5 @@ namespace eve::algo
         kumi::map([traits](auto rng) { return preprocess_range(traits, rng); }, rngs)
       };
     }
-
-
   }
-
 }

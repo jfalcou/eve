@@ -9,6 +9,7 @@
 #include "algo_test.hpp"
 
 #include <eve/algo/zip_iterator.hpp>
+#include <eve/algo/zip.hpp>
 
 #include <eve/algo/as_range.hpp>
 #include <eve/algo/traits.hpp>
@@ -106,14 +107,16 @@ TTS_CASE("missmatch prototype")
   std::vector<int> v1{1, 2, 3, 4};
   std::vector<int> v2{1, 2, 4, 5};
 
-  eve::algo::zip_iterator zf {v1.begin(), v2.begin()};
-
-  auto found = eve::algo::find_if(eve::algo::as_range(zf, v1.end()), [](auto x1_x2) {
+  auto found = eve::algo::find_if(eve::algo::zip(v1, v2), [](auto x1_x2) {
     auto [x1, x2] = x1_x2;
     return x1 != x2;
   });
 
-  TTS_EQUAL((found - zf), 2);
-  TTS_EQUAL(get<0>(*found), 3);
-  TTS_EQUAL(get<1>(*found), 4);
+  auto [r1, r2] = found;
+
+  TTS_EQUAL((r1 - v1.begin()), 2);
+  TTS_EQUAL((r2 - v2.begin()), 2);
+
+  TTS_EQUAL(*r1, 3);
+  TTS_EQUAL(*r2, 4);
 }

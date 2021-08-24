@@ -23,6 +23,7 @@ make_unit("unit.algo" ptr_iterator.cpp)
 make_unit("unit.algo" traits.cpp)
 make_unit("unit.algo" unalign.cpp)
 make_unit("unit.algo" zip_iterator.cpp)
+make_unit("unit.algo" zip.cpp)
 
 # Algorithms
 make_unit("unit.algo" any_of.cpp)
