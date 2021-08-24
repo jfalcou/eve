@@ -37,7 +37,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the number of bit set in each [elementwise](@ref glossary_elementwise) of the parameter.
+  //!Returns the number of bit set in each element of the parameter.
   //!
   //! ---
   //!
