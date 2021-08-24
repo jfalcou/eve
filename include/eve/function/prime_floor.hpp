@@ -64,6 +64,13 @@ namespace eve
   //!
   //! ---
   //!
+  //! #### Supported converters
+  //!
+  //!  * eve::float_,  eve::double_, eve::floating_
+  //!
+  //!     The expression `d(prime_floor)(x)` where d in one of these 3 converters is supported
+  //!     and produce a floating point output.
+  //!
   //! #### Supported decorators
   //!
   //!  no decorators are supported

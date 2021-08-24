@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the none value   |
+  //! | `operator()` | the computation of the none value                          |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---

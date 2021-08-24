@@ -33,14 +33,14 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!`x`:   [real_value](@ref eve::real_value).
   //!
   //! **Return value**
   //!
   //!return a value of the same type as `x` containing the quadrant number where `x` (supposed an integer) lies.
   //!
   //!@warning
-  //!   the input `x` must be an integral or floating integral value.
+  //!   the input `x` must be an integral or a flint value.
   //!
   //! ---
   //!
@@ -54,10 +54,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
+
   namespace tag { struct quadrant_; }
   template<> struct supports_conditional<tag::quadrant_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(quadrant_, quadrant);
 }
 

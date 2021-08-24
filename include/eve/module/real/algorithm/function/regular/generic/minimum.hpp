@@ -11,6 +11,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/reduce.hpp>
 #include <eve/function/splat.hpp>
+#include <eve/function/if_else.hpp>
 #include <eve/function/min.hpp>
 #include <eve/function/all.hpp>
 
@@ -61,5 +62,20 @@ namespace eve::detail
   EVE_FORCEINLINE auto minimum_(EVE_SUPPORTS(cpu_), logical<T> const &v) noexcept
   {
     return eve::all(v);
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto minimum_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
+  {
+    return minimum(if_else(cond, t, eve::valmax));
+  }
+
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto minimum_(EVE_SUPPORTS(cpu_), C const &cond
+                               , splat_type const&, U const &t) noexcept
+  {
+    return splat(minimum)(if_else(cond, t, eve::valmax));
   }
 }

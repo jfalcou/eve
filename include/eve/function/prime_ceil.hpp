@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var prime_ceil
   //!
-  //! @brief Callable object computing the least prime greter or equal to the input.
+  //! @brief Callable object computing the least prime greater or equal to the input.
   //!
   //! **Required header:** `#include <eve/function/prime_ceil.hpp>`
   //!
@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | unsigned integral prime_ceil   |
+  //! | `operator()` | unsigned integral prime_ceil                               |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
@@ -41,7 +41,7 @@ namespace eve
   //!
   //! The result element type is the same as the input one unless a converter is applied.
   //!
-  //! A binary search is performed using nth_prime.
+  //! A binary search is performed using eve::nth_prime.
   //!
   //!@warning
   //!    this function will return 0 (or nan) as soon as the input is greater than 104729.
@@ -63,6 +63,13 @@ namespace eve
   //!  A Callable object so that the expression `prime_ceil[cond](x, ...)` is equivalent to `if_else(cond,prime_ceil(x, ...),x)`
   //!
   //! ---
+  //!
+  //! #### Supported converters
+  //!
+  //!  * eve::float_,  eve::double_, eve::floating_
+  //!
+  //!     The expression `d(prime_ceil)(x)` where d in one of these 3 converters is supported
+  //!     and produce a floating point output.
   //!
   //! #### Supported decorators
   //!
