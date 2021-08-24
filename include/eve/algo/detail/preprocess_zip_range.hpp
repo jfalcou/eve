@@ -16,38 +16,26 @@ namespace eve::algo
 
   namespace detail
   {
-    template<typename Ranges>
-    struct preprocessed_zip_result
-    {
-      Ranges ranges;
-
-      auto traits() const { return get<0>(ranges).traits(); }
-
-      auto begin() const
-      {
-        return zip_iterator(kumi::map([](auto r) { return r.begin(); }, ranges));
-      }
-
-      auto end() const
-      {
-        return zip_iterator(kumi::map([](auto r) { return r.end(); }, ranges));
-      }
-
-      template<typename I> auto to_output_iterator(I i) const
-      {
-        return zip_iterator(
-            kumi::map([](auto r_i, auto i_i) { return r_i.to_output_iterator(i_i); }, ranges, i));
-      }
-    };
-
-    template <typename Ranges>
-    preprocessed_zip_result(Ranges) -> preprocessed_zip_result<Ranges>;
-
     template <typename Traits, typename ...Rngs>
-    auto preprocess_zip_range(Traits traits, kumi::tuple<Rngs...> rngs) {
-      return preprocessed_zip_result{
-        kumi::map([traits](auto rng) { return preprocess_range(traits, rng); }, rngs)
-      };
+    auto preprocess_zip_range(Traits tr, kumi::tuple<Rngs...> rngs) {
+      using value_type = kumi::tuple<std::remove_reference_t<decltype(*std::declval<Rngs>().begin())>...>;
+      using N = forced_cardinal_t<Traits, value_type>;
+
+      auto tr_with_cardinal = default_to(tr, traits{force_cardinal<N{}()>});
+
+      auto processed_components = kumi::map([tr_with_cardinal](auto rng) { return preprocess_range(tr_with_cardinal, rng); }, rngs);
+
+      auto f = zip_iterator(kumi::map([](auto r) { return r.begin(); }, processed_components));
+      auto l = zip_iterator(kumi::map([](auto r) { return r.end(); }, processed_components));
+
+      auto as_eve_its = preprocess_eve_it_sentinel(tr, f, l);
+
+      return enhance_to_output(as_eve_its, [processed_components](auto i) {
+          return zip_iterator{
+            kumi::map([](auto r_i, auto i_i) { return r_i.to_output_iterator(i_i);},
+            processed_components, i)
+          };
+        });
     }
   }
 }
