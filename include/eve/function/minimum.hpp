@@ -15,7 +15,7 @@ namespace eve
   //! @{
   //! @var minimum
   //!
-  //! @brief Callable object computing **TODO: FILL THIS BLANK**.
+  //! @brief Callable object computing minimal element.
   //!
   //! **Required header:** `#include <eve/function/minimum.hpp>`
   //!
@@ -23,45 +23,22 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | **TODO: FILL THIS BLANK**   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //! | `operator()` | computes the minimal element of a real value               |
+  //! | `operator[]` | Construct a masked version of current function object      |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template<**TODO: FILL THIS BLANK**>
-  //!  auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+  //!  auto operator()( real_value x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`:   **TODO: FILL THIS BLANK**
-  //!
-  //!OTHER PARAMETERS
-  //!:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
+  //!`x`:   a [real value](@ref real_value)
   //!
   //! **Return value**
   //!
-  //!For **TODO: FILL THIS BLANK**:
-  //!
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!auto r = minimum(**TODO: FILL THIS BLANK**);
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!is semantically equivalent to:
-  //!
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!Target r;
-  //!
-  //!if constexpr( scalar_value<T> )
-  //!{
-  //!  **TODO: FILL THIS BLANK**
-  //!}
-  //!else if constexpr( simd_value<T> )
-  //!{
-  //!  **TODO: FILL THIS BLANK**
-  //!}
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!returns a [scalar value](@ref scalar_value) containing the minimal element
   //!
   //! ---
   //!
@@ -77,7 +54,7 @@ namespace eve
   //!
   //!  **Return value**
   //!
-  //!  A Callable object so that the expression `minimum[cond](x, ...)` is equivalent to `if_else(cond,minimum(x, ...),x)`
+  //!  A Callable object so that the expression `minimum[cond](x)` is equivalent to `minimum(if_else(cond, x, valmax(as(x))))`
   //!
   //! ---
   //!
@@ -91,7 +68,7 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(minimum_, minimum);
+ EVE_MAKE_CALLABLE(minimum_, minimum);
 }
 
 #include <eve/arch.hpp>

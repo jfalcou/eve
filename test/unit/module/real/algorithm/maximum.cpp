@@ -7,6 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 #include <eve/function/maximum.hpp>
+#include <eve/function/if_else.hpp>
 
 //==================================================================================================
 // Types tests
@@ -23,7 +24,7 @@ EVE_TEST_TYPES( "Check return types of eve::maximum(wide)", eve::test::simd::all
 };
 
 //==================================================================================================
-// Tests for eve::abs
+// Tests for eve::maximum
 //==================================================================================================
 EVE_TEST( "Check behavior of eve::maximum(eve::wide)"
         , eve::test::simd::all_types
@@ -42,4 +43,7 @@ EVE_TEST( "Check behavior of eve::maximum(eve::wide)"
 
   TTS_EQUAL(eve::maximum(l0)            , true    );
   TTS_EQUAL(eve::splat(eve::maximum)(l0), L(true) );
+  
+  TTS_EQUAL(eve::maximum[l0](a0)            , eve::maximum(eve::if_else(l0, a0, eve::valmin(eve::as(a0))))   );
+  TTS_EQUAL(eve::splat(eve::maximum[l0])(a0), T(eve::maximum(eve::if_else(l0, a0, eve::valmin(eve::as(a0))))));
 };

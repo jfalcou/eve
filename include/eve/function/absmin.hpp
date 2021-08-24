@@ -40,7 +40,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!the absolute value of the minimum is returned.
+  //!the [elementwise](@ref glossary_elementwise) absolute value of the minimum is returned.
   //!
   //! The call `absmin(x, args...)` is equivalent to `abs(min(x, args...))`
   //!
