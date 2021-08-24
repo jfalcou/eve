@@ -40,7 +40,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!the absolute value of the maximum is returned.
+  //!the [elementwise](@ref glossary_elementwise) absolute value of the maximum is returned.
   //!
   //! The call `absmax(x, args...)` is equivalent to `abs(max(x, args...))`
   //!

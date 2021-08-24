@@ -40,6 +40,8 @@ namespace eve
   //!
   //! **Return value**
   //!
+  //!Computes the [elementwise](@ref glossary_elementwise) maximum of the parameters.
+  //!
   //!The result type is the [common compatible type](@ref common_compatible) of the parameters.
   //!
   //!@warning
@@ -68,24 +70,24 @@ namespace eve
   //!  * eve::pedantic
   //!
   //!     **Required header:** `#include <eve/function/pedantic/max.hpp>`
-  //!  
+  //!
   //!     The call `pedantic(max)(x,args,...)`  ensures the conformity to the standard behaviour, that is
   //!      for two parameters  (on an  [elementwise](@ref glossary_elementwise) basis)
   //!      to be semanticaly equivalent to:
   //!      `(x < y) ? y : x` and this behaviour is also ensured on n parameters calls as if this scheme
   //!      was recursively used.
-  //!  
+  //!
   //!  * eve::numeric
   //!
   //!     **Required header:** `#include <eve/function/numeric/max.hpp>`
-  //!  
+  //!
   //!     The call `numeric(max)(x,args,...)`  ensures that  if any element of the inputs is not a `Nan`, the corresponding
   //!      output element will not be a `Nan`.
-  //!  
+  //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/max.hpp>`
-  //!  
+  //!
   //!     The expression `diff< N >(max)(x,args,...)` computes the partial
   //!      derivative relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and
   //!      their maximum is \f$m\f$, the value returned is 1 if \f$m\f$ is equal to \f$x_N\f$ and otherwise 0.

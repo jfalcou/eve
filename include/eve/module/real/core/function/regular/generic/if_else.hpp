@@ -15,6 +15,8 @@
 #include <eve/constant/mone.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/zero.hpp>
+#include <eve/constant/valmax.hpp>
+#include <eve/constant/valmin.hpp>
 #include <eve/function/bit_andnot.hpp>
 #include <eve/function/bit_mask.hpp>
 #include <eve/function/bit_ornot.hpp>
@@ -22,6 +24,7 @@
 #include <eve/function/minus.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/traits/common_compatible.hpp>
+#include <type_traits>
 
 namespace eve::detail
 {
@@ -109,11 +112,11 @@ namespace eve::detail
     {
       using cvt = as<as_logical_t<element_type_t<U>>>;
 
-      if constexpr( std::same_as<Constant, callable_zero_> )
+      if constexpr( std::same_as<Constant, callable_zero_> || (std::is_unsigned_v<U> && std::same_as<Constant, callable_valmin_>))
       {
         return bit_and(u, bit_mask(convert(cond, cvt{})));
       }
-      else if constexpr( std::same_as<Constant, callable_allbits_> )
+      else if constexpr( std::same_as<Constant, callable_allbits_>  || (std::is_unsigned_v<U> && std::same_as<Constant, callable_valmax_>))
       {
         return bit_ornot(u, bit_mask(convert(cond, cvt{})));
       }
@@ -159,11 +162,13 @@ namespace eve::detail
     {
       using cvt = as<as_logical_t<element_type_t<U>>>;
 
-      if constexpr( std::same_as<Constant, callable_zero_> )
+      if constexpr( std::same_as<Constant, callable_zero_>  || (std::is_unsigned_v<U> && std::same_as<Constant, callable_valmin_>))
+      //valmin is zero in this case
       {
         return bit_andnot(u, bit_mask(convert(cond, cvt{})));
       }
-      else if constexpr( std::same_as<Constant, callable_allbits_> )
+      else if constexpr( std::same_as<Constant, callable_allbits_>  || (std::is_unsigned_v<U> && std::same_as<Constant, callable_valmax_>))
+      //valmax is allbits in this case
       {
         return bit_or(u, bit_mask(convert(cond, cvt{})));
       }

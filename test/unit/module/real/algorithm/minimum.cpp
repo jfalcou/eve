@@ -23,7 +23,7 @@ EVE_TEST_TYPES( "Check return types of eve::minimum(wide)", eve::test::simd::all
 };
 
 //==================================================================================================
-// Tests for eve::abs
+// Tests for eve::minimum
 //==================================================================================================
 EVE_TEST( "Check behavior of eve::minimum(eve::wide)"
         , eve::test::simd::all_types
@@ -42,4 +42,7 @@ EVE_TEST( "Check behavior of eve::minimum(eve::wide)"
 
   TTS_EQUAL(eve::minimum(l0)            , (l0.size() == 1)  );
   TTS_EQUAL(eve::splat(eve::minimum)(l0), L(l0.size() == 1) );
+
+  TTS_EQUAL(eve::minimum[l0](a0)            , eve::minimum(eve::if_else(l0, a0, eve::valmax(eve::as(a0))))   );
+  TTS_EQUAL(eve::splat(eve::minimum[l0])(a0), T(eve::minimum(eve::if_else(l0, a0, eve::valmax(eve::as(a0))))));
 };
