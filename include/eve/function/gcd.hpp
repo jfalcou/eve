@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | greater common divisor operation   |
+  //! | `operator()` | greater common divisor operation                           |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
@@ -43,12 +43,12 @@ namespace eve
   //!
   //!@warning
   //!    `p` and `n` can be of any [real values](@ref eve::value) type, but when the types are not integral
-  //!    the greatest common divisor is defined only if `p` and `n` element are flint. If it is not the
+  //!    the greatest common divisor is defined only if `p` and `n` element are [flint](@ref eve::is_flint). If it is not the
   //!    case the corresponding result will be Nan.
   //!
   //! #### Supported decorators
   //!
-  //!If the user calls the function with floating parameters, he can enforce the fact that all parameters are flint
+  //!If the user calls the function with floating parameters, he can enforce the fact that all parameters are [flint](@ref eve::is_flint)
   //!using one of the  [roundings](./../decorator.html#roundings) decorators on the object function. Namely:
   //!
   //!   `deco(gcd)(a,b)` is equivalent to `gcd(deco(round)(a),deco(round)(b))`
