@@ -34,7 +34,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating real value](@ref eve::floating_real_value).
+  //!`x`:   [floating value](@ref eve::floating_value).
   //!
   //! **Return value**
   //!
@@ -53,11 +53,11 @@ namespace eve
   //!  * eve::restricted, eve::small, eve::medium, eve::big
   //!
   //!     provide a balance between speed and range limitation.
-  //!  
+  //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/tan.hpp>`
-  //!  
+  //!
   //!     The expression `diff(tan)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
@@ -66,10 +66,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
+
   namespace tag { struct tan_; }
   template<> struct supports_conditional<tag::tan_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(tan_, tan);
 }
 

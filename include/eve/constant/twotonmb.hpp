@@ -27,7 +27,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the twotonmb constant                               |
+  //! | `operator()` | Computes the twotonmb constant                             |
   //!
   //! ---
   //!
