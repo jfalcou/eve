@@ -15,8 +15,6 @@
 #include <eve/algo/traits.hpp>
 #include <eve/algo/ptr_iterator.hpp>
 
-#include <eve/algo/find.hpp>
-
 #include <array>
 #include <vector>
 
@@ -233,25 +231,4 @@ TTS_CASE("preprocess zip range, traits")
     TTS_TYPE_IS(decltype(processed.begin()), zip_conv_float);
     TTS_TYPE_IS(decltype(processed.end()), zip_conv_float);
   }
-}
-
-TTS_CASE("missmatch prototype")
-{
-  std::vector<std::int8_t> syms{'b', 'c', 'd', 'e'};
-  std::vector<int>  offsets{1, 2, 4, 4};
-
-  auto found = eve::algo::find_if(
-      eve::algo::zip[eve::algo::common_type](syms, offsets.begin()),
-      [](auto sym_offset) {
-        auto [sym, offset] = sym_offset;
-        return (sym - std::int8_t{'a'}) != offset;
-      });
-
-  auto [r_sym, r_offset] = found;
-
-  TTS_EQUAL((r_sym - syms.begin()), 2);
-  TTS_EQUAL((r_offset - offsets.begin()), 2);
-
-  TTS_EQUAL(*r_sym, 'd');
-  TTS_EQUAL(*r_offset, 4);
 }
