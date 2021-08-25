@@ -49,8 +49,8 @@ namespace eve
     EVE_FORCEINLINE  constexpr  uint128(integral_scalar_value auto v) noexcept
     requires (sizeof(v) <= 8)
       : lo_{static_cast<std::uint64_t>(v)}, hi_{0} {}
-    EVE_FORCEINLINE constexpr  uint128( integral_scalar_value auto lo
-                                           , integral_scalar_value auto hi) noexcept
+    EVE_FORCEINLINE constexpr  uint128( integral_scalar_value auto hi
+                                      , integral_scalar_value auto lo) noexcept
     requires (sizeof(lo_) <= 8)&&(sizeof(hi_) <= 8)
       : lo_{static_cast<std::uint64_t>(lo)}, hi_{static_cast<std::uint64_t>(hi)} {}
 
@@ -285,23 +285,18 @@ namespace eve
     }
 
 friend EVE_FORCEINLINE uint128 operator+(uint128 lhs, uint128 rhs) {
-// #if defined(ABSL_HAVE_INTRINSIC_INT128)
-//   return static_cast<unsigned __int128>(lhs) +
-//          static_cast<unsigned __int128>(rhs);
-// #else
-  std::cout << "lhs "<< lhs << std::endl;
-  std::cout << "rhs "<< rhs << std::endl;
-  std::cout << "lhs "<< lhs.hi_ << "--"<< lhs.lo_ << std::endl;
-  std::cout << "rhs "<< rhs.hi_ << "--"<< rhs.lo_ << std::endl;
+//   std::cout << "lhs "<< lhs << std::endl;
+//   std::cout << "rhs "<< rhs << std::endl;
+//   std::cout << "lhs "<< lhs.hi_ << "--"<< lhs.lo_ << std::endl;
+//   std::cout << "rhs "<< rhs.hi_ << "--"<< rhs.lo_ << std::endl;
   auto tmp = uint128(lhs.hi_ + rhs.hi_, lhs.lo_ + rhs.lo_);
-  std::cout << "tmp "<< tmp << std::endl;
-  auto res = AddResult(tmp, lhs);
-   std::cout << "res "<< res << std::endl;
+//  std::cout << "tmp "<< tmp << std::endl;
+//  auto res = AddResult(tmp, lhs);
+//   std::cout << "res "<< res << std::endl;
 
   return AddResult(
     uint128(lhs.hi_ + rhs.hi_, lhs.lo_ + rhs.lo_)
     , lhs);
-//#endif
 }
 
 friend EVE_FORCEINLINE constexpr uint128 operator-(uint128 lhs, uint128 rhs) {
@@ -494,7 +489,7 @@ friend EVE_FORCEINLINE constexpr uint128 operator-(uint128 lhs, uint128 rhs) {
         quotient <<= 1;
         if (dividend >= denominator) {
           dividend -= denominator;
-          quotient |= uint128(1);
+          quotient |= 1;
         }
         denominator >>= 1;
       }
@@ -504,7 +499,11 @@ friend EVE_FORCEINLINE constexpr uint128 operator-(uint128 lhs, uint128 rhs) {
     }
 
 
-    static std::string Uint128ToFormattedString(uint128 v, std::ios_base::fmtflags flags) {
+    static std::string Uint128ToFormattedString(uint128 v, std::ios_base::fmtflags flags)
+    {
+//       std::cout << std::endl << " === " << std::endl;
+//       std::cout << "v " << v.hi_ <<  " -- " << v.lo_ << std::endl;
+//       std::cout  << " --- " << std::endl;
       // Select a divisor which is the largest power of the base < 2^64.
       uint128 div;
       int div_base_log;
@@ -515,14 +514,33 @@ friend EVE_FORCEINLINE constexpr uint128 operator-(uint128 lhs, uint128 rhs) {
         break;
       case std::ios::oct:
         div = 01000000000000000000000;  // 8^21
-        div_base_log = 21;
+        div_base_log = 21; //21;
         break;
       default:  // std::ios::dec
         div = 10000000000000000000u;  // 10^19
         div_base_log = 19;
         break;
       }
-
+      if (div_base_log == 15)
+      {
+        std::ostringstream os;
+        std::ios_base::fmtflags copy_mask =
+          std::ios::basefield | std::ios::showbase | std::ios::uppercase;
+        os.setf(flags & copy_mask, copy_mask);
+        if(v.hi_) os << v.hi_;
+        os <<  std::noshowbase << std::setfill('0') << std::setw(div_base_log)<< v.lo_;
+        return os.str();
+      }
+//       else if (div_base_log == 31)
+//       {
+//         std::ostringstream os;
+//         std::ios_base::fmtflags copy_mask =
+//           std::ios::basefield | std::ios::showbase | std::ios::uppercase;
+//         os.setf(flags & copy_mask, copy_mask);
+//         if(v.hi_) os << v.hi_;
+//         os <<  std::noshowbase << std::setfill('0') << std::setw(div_base_log)<< v.lo_;
+//         return os.str();
+//       }
       // Now piece together the uint128 representation from three chunks of the
       // original value, each less than "div" and therefore representable as a
       // uint64_t.
@@ -535,12 +553,15 @@ friend EVE_FORCEINLINE constexpr uint128 operator-(uint128 lhs, uint128 rhs) {
       DivModImpl(high, div, &high, &low);
       uint128 mid;
       DivModImpl(high, div, &high, &mid);
-      if (high.lo_ != 0) {
+      if (high.lo_ != 0)
+      {
         os << (high.lo_);
         os << std::noshowbase << std::setfill('0') << std::setw(div_base_log);
         os << (mid.lo_);
         os << std::setw(div_base_log);
-      } else if (mid.lo_ != 0) {
+      }
+      else if (mid.lo_ != 0)
+      {
         os << (mid.lo_);
         os << std::noshowbase << std::setfill('0') << std::setw(div_base_log);
       }
