@@ -225,8 +225,24 @@ _TODO_ `step_unrolled(iterator)` if the `unroll` trait is bigger than 1.
 `unalign`
 `uunaligned/unaligned_t`
 
-
 A small helper.
 For contigious iterators -> returns themselves
 For aligned_ptr -> returns a raw ptr
 For everything else -> returns .unaligned()
+
+### zip
+
+`zip`
+`zip[common_type]`
+`zip[divisible_by_cardinal]`
+`zip[common_with_types<double>]`
+
+`zip` is an entry point for everything over parallel arrays.
+You can `zip` multiple `relaxed_iterator` which will give you a `zip_iterator` of them.
+You can also `zip` multiple `relaxed_range` with some traits - this gives you a `zip_range`.
+It's also OK to `zip` iterators and ranges together, which will give you a range (we will compute the end based on the range length).
+All ranges passed to `zip` have to have the same length.
+
+The traits supported are `common_type` - converts all the individual iterators to the biggest type.
+`common_with_types<types...>` - same as common_type only will take the listed types into account.
+`divisible_by_cardinal` - just if you know that this range is `divisible` - this will be propagated up.
