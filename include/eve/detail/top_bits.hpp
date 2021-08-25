@@ -47,20 +47,15 @@ struct top_bits
   static constexpr bool is_aggregated = has_aggregated_abi_v<logical_type> || is_emulated_aggregated;
   static constexpr bool is_avx512_logical = !abi_type::is_wide_logical;
   static constexpr std::ptrdiff_t bits_per_element = typename decltype(movemask(logical_type{}))::second_type{}();
+  static constexpr std::ptrdiff_t static_bits_size = static_size * bits_per_element;
 
   using half_logical = logical<wide<scalar_type, eve::fixed<static_size / 2>>>;
 
   private:
     EVE_FORCEINLINE static auto storage_type_impl()
     {
-      if constexpr ( is_aggregated )
-      {
-        return std::array<top_bits<half_logical>, 2>{};
-      }
-      else
-      {
-        return movemask(logical_type{}).first;
-      }
+      if constexpr ( is_aggregated )  return std::array<top_bits<half_logical>, 2>{};
+      else                            return movemask(logical_type{}).first;
     }
 
     static constexpr bool is_cheap_impl()
@@ -101,73 +96,102 @@ struct top_bits
 
     EVE_FORCEINLINE explicit top_bits(const logical_type& p)
     {
-        if constexpr ( is_aggregated )
-        {
-          auto [l, h] = p.slice();
+      if constexpr ( is_aggregated )
+      {
+        auto [l, h] = p.slice();
 
-          storage = {{ top_bits<half_logical>(l), top_bits<half_logical>(h) }};
-        }
-        else
-        {
-          storage = movemask(p).first;
-          operator&=(top_bits(ignore_none_{}));
-        }
+        storage = {{ top_bits<half_logical>(l), top_bits<half_logical>(h) }};
+      }
+      else
+      {
+        storage = movemask(p).first;
+        operator&=(top_bits(ignore_none_{}));
+      }
     }
 
     // -- constructor(ignore)
 
-    EVE_FORCEINLINE constexpr explicit top_bits(ignore_none_)
+    EVE_FORCEINLINE constexpr explicit top_bits(ignore_none_ i)
     {
-      if constexpr( !is_aggregated ) storage = set_lower_n_bits<storage_type>(static_size * bits_per_element);
-      else
-      {
-        top_bits<half_logical> half {ignore_none_{}};
-        storage[0] = half;
-        storage[1] = half;
-      }
+      if constexpr( !is_aggregated )  storage = set_lower_n_bits<storage_type>(static_bits_size);
+      else                            storage[0] = storage[1] = top_bits<half_logical>{i};
     }
 
-    EVE_FORCEINLINE constexpr explicit top_bits(ignore_all_)
+    EVE_FORCEINLINE constexpr explicit top_bits(ignore_all_ i)
     {
-      if constexpr( !is_aggregated ) storage = storage_type{0};
-      else
-      {
-        top_bits<half_logical> half {ignore_all_{}};
-        storage[0] = half;
-        storage[1] = half;
-      }
+      if constexpr( !is_aggregated )  storage = storage_type{0};
+      else                            storage[0] = storage[1] = top_bits<half_logical>{i};
     }
 
-    EVE_FORCEINLINE constexpr explicit top_bits(ignore_extrema ignore)
+    EVE_FORCEINLINE constexpr explicit top_bits(keep_last ignore)
     {
       if constexpr( !is_aggregated )
       {
-        storage = ~set_lower_n_bits<storage_type>(ignore.first_count_ * bits_per_element);
-        storage &= set_lower_n_bits<storage_type>((static_size - ignore.last_count_) * bits_per_element);
+        storage = ~set_lower_n_bits<storage_type>((static_size - ignore.count_) * bits_per_element);
+        storage &= set_lower_n_bits<storage_type>(static_bits_size);
         operator&=(top_bits(ignore_none));
       }
       else
       {
-        if (ignore.first_count_ >= static_size / 2)
-        {
-          ignore.first_count_ -= static_size / 2;
-          storage = { top_bits<half_logical>(ignore_all), top_bits<half_logical>(ignore) };
-          return;
-        }
-
-        if (ignore.last_count_ >= static_size / 2)
-        {
-          ignore.last_count_ -= static_size / 2;
-          storage = { top_bits<half_logical>(ignore), top_bits<half_logical>(ignore_all) };
-          return;
-        }
-
-        storage = {
-          top_bits<half_logical>(ignore_first(ignore.first_count_)),
-          top_bits<half_logical>(ignore_last(ignore.last_count_))
-        };
+        constexpr std::ptrdiff_t card = half_logical::size();
+        constexpr std::ptrdiff_t z    = 0;
+        storage[0] = top_bits<half_logical>{ keep_last{std::max(z   ,ignore.count_ - card )} };
+        storage[1] = top_bits<half_logical>{ keep_last{std::min(card,ignore.count_        )} };
       }
     }
+
+    EVE_FORCEINLINE constexpr explicit  top_bits(keep_first ignore)
+    {
+      if constexpr( !is_aggregated )
+      {
+        storage = ~set_lower_n_bits<storage_type>(0);
+        storage &= set_lower_n_bits<storage_type>(ignore.count_ * bits_per_element);
+        operator&=(top_bits(ignore_none));
+      }
+      else
+      {
+        constexpr std::ptrdiff_t card = half_logical::size();
+        constexpr std::ptrdiff_t z    = 0;
+        storage[0] = top_bits<half_logical>{ keep_first{std::min(card,ignore.count_        )} };
+        storage[1] = top_bits<half_logical>{ keep_first{std::max(z   ,ignore.count_ - card )} };
+      }
+    }
+
+    EVE_FORCEINLINE constexpr explicit  top_bits(ignore_first ignore)
+                                      : top_bits( keep_last{static_size - ignore.count_} )
+    {}
+
+    EVE_FORCEINLINE constexpr explicit top_bits(ignore_last ignore)
+                                      : top_bits( keep_first{static_size - ignore.count_} )
+    {}
+
+    EVE_FORCEINLINE constexpr explicit top_bits(keep_between ignore)
+    {
+      if constexpr( !is_aggregated )
+      {
+        storage  = top_bits(ignore_first(ignore.begin_)).storage;
+        storage &= top_bits(ignore_last(static_size - ignore.end_)).storage;
+        operator&=(top_bits(ignore_none));
+      }
+      else
+      {
+        constexpr std::ptrdiff_t card = half_logical::size();
+        using tb_t = top_bits<half_logical>;
+        constexpr std::ptrdiff_t z    = 0;
+        storage[0] = tb_t { keep_between{ std::min(ignore.begin_,card)
+                                        , std::min(card,ignore.end_ )
+                                        }
+                          };
+        storage[1] = tb_t { keep_between{ std::max(z,ignore.begin_ - card)
+                                        , std::max(z,ignore.end_   - card)
+                                        }
+                          };
+      }
+    }
+
+    EVE_FORCEINLINE constexpr explicit top_bits(ignore_extrema ignore)
+                  : top_bits( keep_between( ignore.first_count_, static_size-ignore.last_count_))
+    {}
 
     template <relative_conditional_expr Ignore>
       requires(Ignore::is_complete && !Ignore::is_inverted)
@@ -176,15 +200,6 @@ struct top_bits
     template <relative_conditional_expr Ignore>
       requires(Ignore::is_complete && Ignore::is_inverted)
     EVE_FORCEINLINE constexpr explicit top_bits(Ignore) : top_bits{ignore_none} {}
-
-    template <relative_conditional_expr Ignore>
-    EVE_FORCEINLINE constexpr explicit top_bits(Ignore ignore):
-      top_bits{
-        ignore_extrema(
-          ignore.offset(eve::as<logical_type>{}),
-          ignore.roffset(eve::as<logical_type>{}))
-      }
-    {}
 
     // -- constructor: logical + ignore
 
