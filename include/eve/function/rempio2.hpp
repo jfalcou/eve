@@ -36,11 +36,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!`x`:   [floating real value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
-  //!A tuple consisting of an flint value  designing the quadrant an two floating values of type T giving
+  //!A tuple consisting of an [flint](@ref eve::is_flint) value designing the quadrant an two floating values of type T giving
   //!the remainder of `x` modulo \f$\pi/2\f$ and a corrective to the rounding erreor on the first result.
   //!
   //! ---
@@ -67,10 +67,10 @@ namespace eve
     }
  }
 
-     
+
   namespace tag { struct rempio2_; }
   template<> struct supports_conditional<tag::rempio2_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(rempio2_, rempio2);
 }
 
