@@ -16,24 +16,48 @@ namespace eve::algo
 
   namespace detail
   {
+    template <typename Rng>
+    using rng_value_type = std::remove_reference_t<decltype(*std::declval<Rng>().begin())>;
+
     template <typename Traits, typename ZipTraits, typename ...Rngs>
     auto preprocess_zip_range_traits_support(Traits tr, ZipTraits, kumi::tuple<Rngs...>)
     {
-      using value_type = kumi::tuple<std::remove_reference_t<decltype(*std::declval<Rngs>().begin())>...>;
+      using value_type = kumi::tuple<rng_value_type<Rngs>...>;
       using N = forced_cardinal_t<decltype(tr), value_type>;
 
-      auto tr_external = [&] {
-        if constexpr (ZipTraits::contains(eve::algo::divisible_by_cardinal))
+      auto force_cardinal = algo::traits{algo::force_cardinal<N{}()>};
+
+      auto divisible_by_cardinal = [&] {
+        if constexpr (ZipTraits::contains(algo::divisible_by_cardinal))
         {
-          return default_to(tr, eve::algo::traits(eve::algo::divisible_by_cardinal));
+          return default_to(tr, algo::traits(algo::divisible_by_cardinal));
         }
         else
         {
-          return tr;
+          return eve::algo::traits{};
         }
       }();
 
-      auto tr_internal = default_to(tr_external, eve::algo::traits{force_cardinal<N{}()>});
+      auto common_with_types = [&] {
+        if constexpr (ZipTraits::contains(common_with_type_key))
+        {
+          using Param = rbr::get_type_t<ZipTraits, common_with_type_key>;
+          return []<typename... ParamTypes, typename... ZipTypes>(std::common_type<ParamTypes...>,
+                                                                  std::common_type<ZipTypes...>)
+          {
+            return algo::traits {algo::common_with_types<ParamTypes..., ZipTypes...>};
+          }
+          (Param {}, std::common_type<rng_value_type<Rngs>...> {});
+        }
+        else
+        {
+          return eve::algo::traits{};
+        }
+      }();
+
+      auto tr_external = default_to(tr, divisible_by_cardinal);
+
+      auto tr_internal = default_to(default_to(tr_external, force_cardinal), common_with_types);
 
       return std::pair{tr_external, tr_internal};
     }

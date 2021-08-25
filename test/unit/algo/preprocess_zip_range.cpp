@@ -206,23 +206,52 @@ TTS_CASE("preprocess zip range, traits")
       TTS_TYPE_IS(decltype(processed.traits()), decltype(tr));
     }
   }
+
+  // common_type (does not propagate)
+  {
+    using conv_uc_it = eve::algo::converting_iterator<uc_it, std::uint32_t>;
+    using zip_common_it = eve::algo::zip_iterator<conv_uc_it, ui_it>;
+
+    auto zipped = eve::algo::zip[eve::algo::common_type](c, i);
+    auto processed = eve::algo::preprocess_range(eve::algo::traits{}, zipped);
+    TTS_TYPE_IS(decltype(processed.traits()), decltype(eve::algo::traits{}));
+    TTS_TYPE_IS(decltype(processed.begin()), zip_common_it);
+    TTS_TYPE_IS(decltype(processed.end()), zip_common_it);
+  }
+
+  // common_with_types
+  {
+    // using float to ease off the N counting.
+    // Should reduce the N() for doubles but that's tested in common_with_types itself
+    using conv_uc_it = eve::algo::converting_iterator<uc_it, float>;
+    using conv_ui_it = eve::algo::converting_iterator<ui_it, float>;
+    using zip_conv_float = eve::algo::zip_iterator<conv_uc_it, conv_ui_it>;
+
+    auto zipped = eve::algo::zip[eve::algo::common_with_types<float>](c, i);
+    auto processed = eve::algo::preprocess_range(eve::algo::traits{}, zipped);
+    TTS_TYPE_IS(decltype(processed.traits()), decltype(eve::algo::traits{}));
+    TTS_TYPE_IS(decltype(processed.begin()), zip_conv_float);
+    TTS_TYPE_IS(decltype(processed.end()), zip_conv_float);
+  }
 }
 
 TTS_CASE("missmatch prototype")
 {
-  std::vector<int> v1{1, 2, 3, 4};
-  std::vector<int> v2{1, 2, 4, 5};
+  std::vector<char> syms{'b', 'c', 'd', 'e'};
+  std::vector<int>  offsets{1, 2, 4, 4};
 
-  auto found = eve::algo::find_if(eve::algo::zip(v1, v2), [](auto x1_x2) {
-    auto [x1, x2] = x1_x2;
-    return x1 != x2;
-  });
+  auto found = eve::algo::find_if(
+      eve::algo::zip[eve::algo::common_type](syms, offsets.begin()),
+      [](auto sym_offset) {
+        auto [sym, offset] = sym_offset;
+        return (sym - 'a') != offset;
+      });
 
-  auto [r1, r2] = found;
+  auto [r_sym, r_offset] = found;
 
-  TTS_EQUAL((r1 - v1.begin()), 2);
-  TTS_EQUAL((r2 - v2.begin()), 2);
+  TTS_EQUAL((r_sym - syms.begin()), 2);
+  TTS_EQUAL((r_offset - offsets.begin()), 2);
 
-  TTS_EQUAL(*r1, 3);
-  TTS_EQUAL(*r2, 4);
+  TTS_EQUAL(*r_sym, 'd');
+  TTS_EQUAL(*r_offset, 4);
 }

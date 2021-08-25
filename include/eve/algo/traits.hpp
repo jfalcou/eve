@@ -61,6 +61,8 @@ namespace eve::algo
   template <typename ...Ts>
   inline constexpr auto common_with_types = (common_with_type_key = std::common_type<Ts...>{});
 
+  inline constexpr auto common_type = common_with_types<>;
+
   struct divisible_by_cardinal_tag {};
   inline constexpr auto divisible_by_cardinal = ::rbr::flag( divisible_by_cardinal_tag{} );
 
