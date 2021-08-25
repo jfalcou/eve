@@ -18,9 +18,10 @@
 
 namespace eve::algo
 {
-  template <typename ...Rngs>
+  template <typename ZipTraits, typename ...Rngs>
   struct zip_range
   {
+    ZipTraits zip_tr;
     kumi::tuple<Rngs...> ranges;
 
     auto begin() const
@@ -34,14 +35,14 @@ namespace eve::algo
     }
 
     template <typename Traits>
-    friend auto tagged_dispatch(preprocess_range_, Traits traits, zip_range self)
+    friend auto tagged_dispatch(preprocess_range_, Traits tr, zip_range self)
     {
-      return preprocess_zip_range(traits, self.ranges);
+      return preprocess_zip_range(tr, self.zip_tr, self.ranges);
     }
   };
 
-  template <typename ...Rngs>
-  zip_range(kumi::tuple<Rngs...>) -> zip_range<Rngs...>;
+  template <typename ZipTraits, typename ...Rngs>
+  zip_range(ZipTraits zip_tr, kumi::tuple<Rngs...>) -> zip_range<ZipTraits, Rngs...>;
 
   namespace detail
   {
@@ -117,7 +118,7 @@ namespace eve::algo
       else
       {
         std::ptrdiff_t distance = compute_distance(components...);
-        return zip_range{perform_replacements(distance, components...)};
+        return zip_range{TraitsSupport::get_traits(), perform_replacements(distance, components...)};
       }
     }
   };

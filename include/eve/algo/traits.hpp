@@ -55,11 +55,13 @@ namespace eve::algo
   inline constexpr force_cardinal_key_t force_cardinal_key = {};
   template<int N> inline constexpr auto force_cardinal = (force_cardinal_key = eve::fixed<N>{});
 
-  struct common_with_type_key_t {};
-  inline constexpr auto common_with_type_key = ::rbr::keyword( common_with_type_key_t{} );
+  struct common_with_types_key_t {};
+  inline constexpr auto common_with_types_key = ::rbr::keyword( common_with_types_key_t{} );
 
   template <typename ...Ts>
-  inline constexpr auto common_with_types = (common_with_type_key = std::common_type<Ts...>{});
+  inline constexpr auto common_with_types = (common_with_types_key = std::common_type<Ts...>{});
+
+  inline constexpr auto common_type = common_with_types<>;
 
   struct divisible_by_cardinal_tag {};
   inline constexpr auto divisible_by_cardinal = ::rbr::flag( divisible_by_cardinal_tag{} );
@@ -79,10 +81,10 @@ namespace eve::algo
   {
     template <typename Traits, typename I>
     auto iterator_type_impl() {
-      if constexpr (!Traits::contains(common_with_type_key)) return typename I::value_type{};
+      if constexpr (!Traits::contains(common_with_types_key)) return typename I::value_type{};
       else
       {
-        using Param = typename rbr::get_type_t<Traits, common_with_type_key>::type;
+        using Param = typename rbr::get_type_t<Traits, common_with_types_key>::type;
         return std::common_type_t<Param, typename I::value_type>{};
       }
     }

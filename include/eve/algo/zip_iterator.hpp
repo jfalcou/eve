@@ -125,7 +125,7 @@ namespace eve::algo
           return as_range(f_, l_);
         }, self, other);
 
-        return preprocess_zip_range(traits, ranges);
+        return preprocess_zip_range(traits, eve::algo::traits(), ranges);
       }
 
       template<typename Traits, std::derived_from<zip_iterator_common> Self,
