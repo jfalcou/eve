@@ -172,7 +172,7 @@ namespace eve
 
     constexpr friend bool operator>(uint128 lhs, uint128 rhs) { return rhs < lhs; }
 
-    constexpr friend bool operator<=(uint128 lhs, uint128 rhs) { return !(rhs < lhs); }
+    constexpr friend bool operator<=(uint128 lhs, uint128 rhs) { return !(rhs > lhs); }
 
     constexpr friend bool operator>=(uint128 lhs, uint128 rhs) { return !(lhs < rhs); }
 
@@ -284,11 +284,20 @@ namespace eve
 //#endif
     }
 
-friend EVE_FORCEINLINE constexpr uint128 operator+(uint128 lhs, uint128 rhs) {
+friend EVE_FORCEINLINE uint128 operator+(uint128 lhs, uint128 rhs) {
 // #if defined(ABSL_HAVE_INTRINSIC_INT128)
 //   return static_cast<unsigned __int128>(lhs) +
 //          static_cast<unsigned __int128>(rhs);
 // #else
+  std::cout << "lhs "<< lhs << std::endl;
+  std::cout << "rhs "<< rhs << std::endl;
+  std::cout << "lhs "<< lhs.hi_ << "--"<< lhs.lo_ << std::endl;
+  std::cout << "rhs "<< rhs.hi_ << "--"<< rhs.lo_ << std::endl;
+  auto tmp = uint128(lhs.hi_ + rhs.hi_, lhs.lo_ + rhs.lo_);
+  std::cout << "tmp "<< tmp << std::endl;
+  auto res = AddResult(tmp, lhs);
+   std::cout << "res "<< res << std::endl;
+
   return AddResult(
     uint128(lhs.hi_ + rhs.hi_, lhs.lo_ + rhs.lo_)
     , lhs);
@@ -425,7 +434,24 @@ friend EVE_FORCEINLINE constexpr uint128 operator-(uint128 lhs, uint128 rhs) {
       return os << rep;
     }
 
-    private:
+   private:
+
+    static EVE_FORCEINLINE uint128 AddResult(uint128 result, uint128 lhs)
+    {
+      // check for carry
+      return (result.lo_ < lhs.lo_)
+             ? uint128(result.hi_ + 1, result.lo_)
+             : result;
+    }
+
+    static EVE_FORCEINLINE uint128 SubResult(uint128 result, uint128 lhs, uint128 rhs) {
+      // check for augment
+      return (lhs.lo_ < rhs.lo_)
+             ? uint128(result.hi_ - 1, result.lo_)
+             : result;
+    }
+
+  public:
 
     // Long division/modulo for uint128 implemented using the shift-subtract
     // division algorithm adapted from:
@@ -477,20 +503,6 @@ friend EVE_FORCEINLINE constexpr uint128 operator-(uint128 lhs, uint128 rhs) {
       *remainder_ret = dividend;
     }
 
-    static EVE_FORCEINLINE uint128 AddResult(uint128 result, uint128 lhs)
-    {
-      // check for carry
-      return (result.lo_ < lhs.lo_)
-             ? uint128(result.hi_ + 1, result.lo_)
-             : result;
-    }
-
-    static EVE_FORCEINLINE uint128 SubResult(uint128 result, uint128 lhs, uint128 rhs) {
-      // check for augment
-      return (lhs.lo_ < rhs.lo_)
-             ? uint128(result.hi_ - 1, result.lo_)
-             : result;
-    }
 
     static std::string Uint128ToFormattedString(uint128 v, std::ios_base::fmtflags flags) {
       // Select a divisor which is the largest power of the base < 2^64.
