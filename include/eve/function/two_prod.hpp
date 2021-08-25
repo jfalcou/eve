@@ -47,22 +47,6 @@ namespace eve
   //!
   //! ---
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::two_prod
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `two_prod[cond](x, ...)` is equivalent to `if_else(cond,two_prod(x, ...),x)`
-  //!
-  //! ---
-  //!
   //! #### Supported decorators
   //!
   //!  no decorators are supported
@@ -73,10 +57,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
+
   namespace tag { struct two_prod_; }
   template<> struct supports_conditional<tag::two_prod_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(two_prod_, two_prod);
 }
 
