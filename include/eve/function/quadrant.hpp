@@ -40,7 +40,7 @@ namespace eve
   //!return a value of the same type as `x` containing the quadrant number where `x` (supposed an integer) lies.
   //!
   //!@warning
-  //!   the input `x` must be an integral or a flint value.
+  //!   the input `x` must be an integral or a [flint](@ref eve::is_flint) value.
   //!
   //! ---
   //!
