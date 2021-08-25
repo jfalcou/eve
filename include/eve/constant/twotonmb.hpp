@@ -21,13 +21,13 @@ namespace eve
   //! @{
   //! @var twotonmb
   //!
-  //! @brief Callable object computing the the 2 power of the number of mantissa bits.
+  //! @brief Callable object computing the 2 power of the number of mantissa bits.
   //!
   //! **Required header:** `#include <eve/function/twotonmb.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the twotonmb constant                               |
+  //! | `operator()` | Computes the two to the nbmantissabits power               |
   //!
   //! ---
   //!

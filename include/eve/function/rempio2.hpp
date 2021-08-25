@@ -26,7 +26,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the rempio2 value   |
+  //! | `operator()` | the computation of the rempio2 value                       |
   //!
   //! ---
   //!
@@ -40,8 +40,9 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!A tuple consisting of an [flint](@ref eve::is_flint) value designing the quadrant an two floating values of type T giving
-  //!the remainder of `x` modulo \f$\pi/2\f$ and a corrective to the rounding erreor on the first result.
+  //! A tuple consisting of an [flint](@ref eve::is_flint) value designing the quadrant and two
+  //! floating values of type `T` giving the remainder of `x` modulo \f$\pi/2\f$ and a corrective
+  //! to the rounding error on the first result.
   //!
   //! ---
   //!

@@ -82,6 +82,7 @@ namespace eve::detail
         auto test = is_negative(z) && is_positive(a);
         if constexpr(scalar_value<T> && scalar_value<U>)
         {
+          if (is_nan(a)) return a;
           return test ? (nz == 0 ? T(-0.) : bitfloating(nz)) : z;
         }
         else

@@ -44,8 +44,8 @@ namespace eve
   //! **Return value**
   //!
   //! Returns the [elementwise](@ref glossary_elementwise) reduced part of the scaled input.
-  //! The number of fraction bits retained is specified by scale. By default the internal rounding after scaling is done to nearest integral.
-  //! The call is equivalent to `a0-roundscale(a0, scale)`
+  //! The number of fraction bits retained is specified by scale. By default the internal rounding after scaling is done to nearest integer.
+  //! The call is equivalent to `a0-roundscale(a0,scale)`
   //!
   //! ---
   //!
