@@ -237,14 +237,14 @@ TTS_CASE("preprocess zip range, traits")
 
 TTS_CASE("missmatch prototype")
 {
-  std::vector<char> syms{'b', 'c', 'd', 'e'};
+  std::vector<std::int8_t> syms{'b', 'c', 'd', 'e'};
   std::vector<int>  offsets{1, 2, 4, 4};
 
   auto found = eve::algo::find_if(
       eve::algo::zip[eve::algo::common_type](syms, offsets.begin()),
       [](auto sym_offset) {
         auto [sym, offset] = sym_offset;
-        return (sym - 'a') != offset;
+        return (sym - std::int8_t{'a'}) != offset;
       });
 
   auto [r_sym, r_offset] = found;
