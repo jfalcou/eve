@@ -140,6 +140,12 @@ namespace eve::algo
     }
 
     template <typename Traits, typename Rng>
+      requires eve::detail::tag_dispatchable<preprocess_range_, Traits, Rng>
+    auto operator()(Traits traits_, Rng&& rng) const {
+      return tagged_dispatch(*this, traits_, std::forward<Rng>(rng));
+    }
+
+    template <typename Traits, typename Rng>
     auto operator()(Traits traits_, Rng&& rng) const {
       return operator()(traits_, rng.begin(), rng.end());
     }

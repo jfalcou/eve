@@ -178,6 +178,34 @@ TTS_CASE("preprocess zip range, traits")
     TTS_TYPE_IS(decltype(processed.end()), zip_ac_it_ui_it);
   }
 
+  // force cardinal (not supported by zip itself)
+  {
+    eve::algo::traits tr{ eve::algo::force_cardinal<2> };
+
+    auto zipped = eve::algo::zip(c, i);
+    auto processed = eve::algo::preprocess_range(tr, zipped);
+    TTS_TYPE_IS(decltype(processed.traits()), decltype(tr));
+    TTS_TYPE_IS(decltype(processed.begin())::cardinal, eve::fixed<2>);
+  }
+
+  // divisible by cardinal (propagates)
+  {
+    eve::algo::traits tr{ eve::algo::divisible_by_cardinal };
+
+    {
+      auto zipped = eve::algo::zip(c, i);
+
+      auto processed = eve::algo::preprocess_range(tr, zipped);
+      TTS_TYPE_IS(decltype(processed.traits()), decltype(tr));
+    }
+
+    {
+      auto zipped = eve::algo::zip[eve::algo::divisible_by_cardinal](c, i);
+
+      auto processed = eve::algo::preprocess_range(eve::algo::traits{}, zipped);
+      TTS_TYPE_IS(decltype(processed.traits()), decltype(tr));
+    }
+  }
 }
 
 TTS_CASE("missmatch prototype")
