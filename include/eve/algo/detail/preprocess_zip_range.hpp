@@ -39,9 +39,9 @@ namespace eve::algo
       }();
 
       auto common_with_types = [&] {
-        if constexpr (ZipTraits::contains(common_with_type_key))
+        if constexpr (ZipTraits::contains(common_with_types_key))
         {
-          using Param = rbr::get_type_t<ZipTraits, common_with_type_key>;
+          using Param = rbr::get_type_t<ZipTraits, common_with_types_key>;
           return []<typename... ParamTypes, typename... ZipTypes>(std::common_type<ParamTypes...>,
                                                                   std::common_type<ZipTypes...>)
           {
@@ -54,6 +54,8 @@ namespace eve::algo
           return eve::algo::traits{};
         }
       }();
+
+      static_assert(!Traits::contains(algo::common_with_types_key), "FIX-#880");
 
       auto tr_external = default_to(tr, divisible_by_cardinal);
 
