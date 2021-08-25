@@ -51,7 +51,7 @@ namespace eve
   //!
   //!The types must share the same cardinal or be scalar and if `N` is the size in bits  of the element type of `T`,
   //!all  [elements](@ref glossary_element) of n must belong to the
-  //!interval: `[-N, N[` or the result is undefined.
+  //!interval: `]-N, N[` or the result is undefined.
   //!
   //! ---
   //!

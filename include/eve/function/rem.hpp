@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the rem operation   |
+  //! | `operator()` | the rem operation                                          |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
@@ -39,7 +39,8 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Return the remainderafter division division of `x` by `y`.
+  //!Return the remainder after division division of `x` by `y` and is
+  //!semantically equivalent to  `x-eve::trunc(eve:div(x, y))*y`.
   //!
   //! The result type is the [common compatible type](@ref common_compatible) of the two parameters.
   //!
