@@ -15,6 +15,7 @@
 #include <cmath>
 #include <cassert>
 #include <bit>
+#include <eve/function/lohi.hpp>
 
 namespace eve
 {
@@ -85,6 +86,19 @@ namespace eve
     //==============================================================================================
     //! Assign another uint128
     EVE_FORCEINLINE constexpr uint128 &operator=(uint128 const& v)  noexcept =  default;
+
+
+    //==============================================================================================
+    //! @}
+    //==============================================================================================
+    //==============================================================================================
+    //! @name lo,  hi
+    //! @{
+    //==============================================================================================
+    EVE_FORCEINLINE constexpr std::uint64_t & lo()  {return lo_; };
+    EVE_FORCEINLINE constexpr std::uint64_t & hi()  {return hi_; };
+    EVE_FORCEINLINE constexpr std::uint64_t lo() const {return lo_; };
+    EVE_FORCEINLINE constexpr std::uint64_t hi() const {return hi_; };
 
 
     //==============================================================================================
@@ -176,7 +190,7 @@ namespace eve
 
     constexpr friend bool operator>=(uint128 lhs, uint128 rhs) { return !(lhs < rhs); }
 
-    //arithmetic operation
+    //arithmetic operations
 //#if !defined(ABSL_HAVE_INTRINSIC_INT128)
     friend uint128 operator/(uint128 lhs, uint128 rhs) {
       uint128 quotient = 0;
@@ -284,30 +298,40 @@ namespace eve
 //#endif
     }
 
-friend EVE_FORCEINLINE uint128 operator+(uint128 lhs, uint128 rhs) {
-//   std::cout << "lhs "<< lhs << std::endl;
-//   std::cout << "rhs "<< rhs << std::endl;
-//   std::cout << "lhs "<< lhs.hi_ << "--"<< lhs.lo_ << std::endl;
-//   std::cout << "rhs "<< rhs.hi_ << "--"<< rhs.lo_ << std::endl;
-  auto tmp = uint128(lhs.hi_ + rhs.hi_, lhs.lo_ + rhs.lo_);
-//  std::cout << "tmp "<< tmp << std::endl;
-//  auto res = AddResult(tmp, lhs);
-//   std::cout << "res "<< res << std::endl;
+    friend EVE_FORCEINLINE uint128 operator+(uint128 lhs, eve::unsigned_value auto rhs) { return lhs+uint128(rhs); }
+    friend EVE_FORCEINLINE uint128 operator+(eve::unsigned_value auto lhs, uint128 rhs) { return rhs+lhs; }
 
-  return AddResult(
-    uint128(lhs.hi_ + rhs.hi_, lhs.lo_ + rhs.lo_)
-    , lhs);
-}
+    friend EVE_FORCEINLINE uint128 operator+(uint128 lhs, uint128 rhs) {
+// #if defined(ABSL_HAVE_INTRINSIC_INT128)
+//   return static_cast<unsigned __int128>(lhs) +
+//          static_cast<unsigned __int128>(rhs);
+// #else
+      return AddResult(
+        uint128(lhs.hi_ + rhs.hi_, lhs.lo_ + rhs.lo_)
+        , lhs);
+//#endif
+    }
 
-friend EVE_FORCEINLINE constexpr uint128 operator-(uint128 lhs, uint128 rhs) {
+    friend EVE_FORCEINLINE uint128 operator-(uint128 lhs, eve::unsigned_value auto rhs) { return lhs-uint128(rhs); }
+    friend EVE_FORCEINLINE uint128 operator-(eve::unsigned_value auto lhs, uint128 rhs) { return uint128(lhs)-rhs; }
+    friend EVE_FORCEINLINE constexpr uint128 operator-(uint128 lhs, uint128 rhs) {
 // #if defined(ABSL_HAVE_INTRINSIC_INT128)
 //   return static_cast<unsigned __int128>(lhs) -
 //          static_cast<unsigned __int128>(rhs);
 // #else
-  return SubResult(
-      uint128(lhs.hi_ - rhs.hi_, lhs.lo_ - rhs.lo_),
-      lhs, rhs);
+      return SubResult(
+        uint128(lhs.hi_ - rhs.hi_, lhs.lo_ - rhs.lo_),
+        lhs, rhs);
 //#endif
+    }
+
+    friend EVE_FORCEINLINE uint128 operator*(uint128 lhs, unsigned_scalar_value auto rhs)
+    {
+      return uint128(rhs)*lhs;
+    }
+     friend EVE_FORCEINLINE uint128 operator*(unsigned_scalar_value auto lhs, uint128 rhs)
+    {
+      return rhs*lhs;
     }
 
     friend EVE_FORCEINLINE uint128 operator*(uint128 lhs, uint128 rhs)
@@ -328,16 +352,14 @@ friend EVE_FORCEINLINE constexpr uint128 operator-(uint128 lhs, uint128 rhs) {
       uint64_t a00 = lhs.lo_ & 0xffffffff;
       uint64_t b32 = rhs.lo_ >> 32;
       uint64_t b00 = rhs.lo_ & 0xffffffff;
-      uint128 result =
-        uint128(lhs.hi_ * rhs.lo_ +
-                lhs.lo_ * rhs.hi_ + a32 * b32,
-                a00 * b00);
+      uint128 result(lhs.hi_ * rhs.lo_ + lhs.lo_ * rhs.hi_ + a32 * b32, a00 * b00);
       result += uint128(a32 * b00) << 32;
       result += uint128(a00 * b32) << 32;
-      return result;
+     return result;
 //#endif  // ABSL_HAVE_INTRINSIC128
         }
-    //==============================================================================================
+
+     //==============================================================================================
     //shift operators
     //==============================================================================================
     friend EVE_FORCEINLINE constexpr uint128 operator<<(uint128 lhs, int amount) {
@@ -403,7 +425,7 @@ friend EVE_FORCEINLINE constexpr uint128 operator-(uint128 lhs, uint128 rhs) {
 //#endif
     }
 
-//==============================================================================================
+    //==============================================================================================
     // Stream insertion operator
     //==============================================================================================
     friend EVE_FORCEINLINE std::ostream& operator<<(std::ostream& os, uint128 v) {
@@ -521,16 +543,16 @@ friend EVE_FORCEINLINE constexpr uint128 operator-(uint128 lhs, uint128 rhs) {
         div_base_log = 19;
         break;
       }
-      if (div_base_log == 15)
-      {
-        std::ostringstream os;
-        std::ios_base::fmtflags copy_mask =
-          std::ios::basefield | std::ios::showbase | std::ios::uppercase;
-        os.setf(flags & copy_mask, copy_mask);
-        if(v.hi_) os << v.hi_;
-        os <<  std::noshowbase << std::setfill('0') << std::setw(div_base_log)<< v.lo_;
-        return os.str();
-      }
+//       if (div_base_log == 15)
+//       {
+//         std::ostringstream os;
+//         std::ios_base::fmtflags copy_mask =
+//           std::ios::basefield | std::ios::showbase | std::ios::uppercase;
+//         os.setf(flags & copy_mask, copy_mask);
+//         if(v.hi_) os << v.hi_;
+//         os <<  std::noshowbase << std::setfill('0') << std::setw(div_base_log)<< v.lo_;
+//         return os.str();
+//       }
 //       else if (div_base_log == 31)
 //       {
 //         std::ostringstream os;
@@ -573,6 +595,38 @@ friend EVE_FORCEINLINE constexpr uint128 operator-(uint128 lhs, uint128 rhs) {
   //================================================================================================
   //! @}
   //================================================================================================
+
+  class hl
+  {
+  public:
+    hl(uint128 n) : n_ (n) {}
+    std::ostream &operator()(std::ostream & out) const
+    {
+      std::ios_base::fmtflags flags = out.flags();
+      std::string m;
+      switch (flags & std::ios::basefield) {
+      case std::ios::hex:
+        m = "0x";
+        break;
+      case std::ios::oct:
+        m = "0";
+        break;
+      default:  // std::ios::dec
+        m = "";
+        break;
+      }
+      out << '(' << m << n_.hi() << ", " << m << n_.lo() << ')';
+      return out;
+    }
+  private:
+    uint128 n_;
+  };
+
+  std::ostream &operator <<(std::ostream &out, hl n)
+  {
+    return n(out);
+  }
+
 }
 // Specialized numeric_limits for uint128.
 namespace std {

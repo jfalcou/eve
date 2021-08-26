@@ -198,6 +198,7 @@ make_unit("unit.real.core"  sqrt.cpp                 )
 make_unit("unit.real.core"  sub.cpp                  )
 make_unit("unit.real.core"  trunc.cpp                )
 make_unit("unit.real.core"  two_split.cpp            )
+make_unit("unit.real.core"  uint128.cpp              )
 make_unit("unit.real.core"  ulpdist.cpp              )
 
 make_unit("unit.real.core"  convert/to_double.cpp    )
