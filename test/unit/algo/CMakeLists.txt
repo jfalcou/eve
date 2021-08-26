@@ -28,5 +28,6 @@ make_unit("unit.algo" zip.cpp)
 # Algorithms
 make_unit("unit.algo" any_of.cpp)
 make_unit("unit.algo" find.cpp)
+make_unit("unit.algo" mismatch.cpp)
 make_unit("unit.algo" reduce.cpp)
 make_unit("unit.algo" remove.cpp)

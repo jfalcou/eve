@@ -11,7 +11,6 @@
 #include <eve/algo/reduce.hpp>
 
 #include <eve/algo/as_range.hpp>
-#include <eve/memory/aligned_allocator.hpp>
 
 #include <vector>
 
@@ -37,81 +36,44 @@ void specific_tests(eve::as<T>, Algo alg)
   }
 }
 
-template <typename T, typename U, typename Init, typename Expected, typename Algo>
-void reduce_one_ptr_test(eve::as<T>, U* f, U* l, Init init, Expected expected, Algo alg)
+template <typename Algo, typename Init>
+struct reduce_ptr_test
 {
-  // unaligned
+  Init ini;
+  Algo alg;
+
+  reduce_ptr_test(Init ini, Algo alg) : ini(ini), alg(alg) {}
+
+  void init(auto*, auto* f, auto* l, auto*) const
   {
-    auto res = alg(eve::algo::as_range(f, l), init);
-    TTS_EQUAL(res, expected);
-    TTS_TYPE_IS(decltype(res), Expected);
+    std::iota(f, l, 0);
   }
 
-  static constexpr std::ptrdiff_t alignment = T::size() * sizeof(U);
-  using a_p = eve::aligned_ptr<U, eve::fixed<T::size()>>;
-
-  if (eve::is_aligned<alignment>(f))
+  auto run(auto rng) const
   {
-    auto f_ = a_p(f);
-    auto res = alg(eve::algo::as_range(f_, l), init);
+    auto f = eve::algo::unalign(rng.begin());
+    auto l = eve::algo::unalign(rng.end());
+    auto expected = std::reduce(f, l, ini);
+    auto res = alg(rng, ini);
+
     TTS_EQUAL(res, expected);
+    TTS_TYPE_IS(decltype(res), decltype(expected));
     if (res != expected) std::terminate();
-    TTS_TYPE_IS(decltype(res), Expected);
-
-    if (eve::is_aligned<alignment>(l))
-    {
-      auto l_ = a_p(l);
-      auto res = alg(eve::algo::as_range(f_, l_), init);
-      TTS_EQUAL(res, expected);
-    }
   }
-}
+
+  void adjust(auto*, auto* f, auto* l, auto* page_end) const
+  {
+    *f = 1;
+    if (l != page_end) *l = 1;
+  }
+};
 
 template <typename T, typename Init,  typename Algo>
 void reduce_generic_test_page_ends(eve::as<T> tgt, Init init, Algo alg)
 {
   specific_tests(tgt, alg);
 
-  using e_t     = eve::element_type_t<T>;
-  using card_t  = eve::fixed<4096/ sizeof(e_t)>;
-  std::vector<e_t, eve::aligned_allocator<e_t, card_t>> page(card_t::value, e_t{0});
-
-  constexpr int elements_to_test  = std::min( int(T::size() * 10), 300);
-
-  auto f = page.data();
-  auto l = f + elements_to_test;
-
-  auto run = [&] {
-    // iota from f to l
-    for (auto* it = f; it < l; ++it) {
-      reduce_one_ptr_test(tgt, it, l, init, std::reduce(it, l, init), alg);
-    }
-  };
-
-
-  std::iota(f, l, 0);
-  // from the beginning
-  while (f < l) {
-    run();
-    if (l != (page.data() + page.size())) { *l = 1; }
-    --l;
-    *f = 1;
-    ++f;
-  }
-
-  l = page.data() + page.size();
-  f = l - elements_to_test;
-
-  std::iota(f, l, 0);
-
-  // from the end
-  while (f < l) {
-    run();
-    if (l != (page.data() + page.size())) { *l = 1; }
-    --l;
-    *f = 1;
-    ++f;
-  }
+  algo_test::page_ends_test(tgt, reduce_ptr_test{init, alg});
 }
 
 template <typename T, typename Alg>

@@ -19,72 +19,47 @@
 
 namespace algo_test
 {
-  template <typename T, typename U, typename Algo, typename Check>
-  void find_one_ptr_test(eve::as<T>, U* f, U* l, U* res, Algo alg, Check check)
+  template <typename Algo, typename Check>
+  struct find_ptr_test
   {
-    auto pred = [](auto x) { return x != 0; };
-    check(f, l, res, alg(eve::algo::as_range(f, l), pred));
+    Algo alg;
+    Check check;
 
-    static constexpr std::ptrdiff_t alignment = T::size() * sizeof(U);
-    using a_p = eve::aligned_ptr<U, eve::fixed<T::size()>>;
+    find_ptr_test(Algo alg, Check check) : alg(alg), check(check) {}
 
-    if (eve::is_aligned<alignment>(f))
+    void init(auto* page_begin, auto* f, auto* l, auto* page_end) const
     {
-      auto f_ = a_p(f);
-      check(f_, l, res, alg(eve::algo::as_range(f_, l), pred));
+      std::fill(page_begin, page_end, 1);
+      std::fill(f, l, 0);
+    }
 
-      if (eve::is_aligned<alignment>(l))
+    void run(auto rng) const
+    {
+      auto* f = eve::algo::unalign(rng.begin());
+      auto* l = eve::algo::unalign(rng.end());
+
+      auto pred = [](auto x) { return x != 0; };
+
+      for (auto* it = f; it != l; ++it)
       {
-        auto l_ = a_p(l);
-        check(f_, l_, res, alg(eve::algo::as_range(f_, l_), pred));
+        check(f, l, l, alg(rng, pred));
+        *it = 1;
+        check(f, l, it, alg(rng, pred));
+        *it = 0;
       }
     }
-  }
+
+    void adjust(auto*, auto* f, auto* l, auto* page_end) const
+    {
+      *f = 1;
+      if (l != page_end) *l = 1;
+    }
+  };
 
   template <typename T, typename Algo, typename Check>
   void find_generic_test_page_ends(eve::as<T> tgt, Algo alg, Check check)
   {
-    using e_t     = eve::element_type_t<T>;
-    using card_t  = eve::fixed<4096/ sizeof(e_t)>;
-    std::vector<e_t, eve::aligned_allocator<e_t, card_t>> page(card_t::value, e_t{0});
-
-    constexpr int elements_to_test  = std::min(int(T::size() * 10), 300);
-
-    auto f = page.data();
-    auto l = f + elements_to_test;
-
-    auto run = [&] {
-      for (auto it = f; it < l; ++it) {
-        find_one_ptr_test(tgt, f, l, l, alg, check);
-        *it = 1;
-
-        find_one_ptr_test(tgt, f, l, it, alg, check);
-        *it = 0;
-      }
-    };
-
-    // from the beginning
-    while (f < l) {
-      run();
-      if (l != (page.data() + page.size())) { *l = 1; }
-      --l;
-      *f = 1;
-      ++f;
-    }
-
-    std::fill(page.begin(), page.end(), 0);
-
-    l = page.data() + page.size();
-    f = l - elements_to_test;
-
-    // from the end
-    while (f < l) {
-      run();
-      if (l != (page.data() + page.size())) { *l = 1; }
-      --l;
-      *f = 1;
-      ++f;
-    }
+    algo_test::page_ends_test(tgt, find_ptr_test{alg, check});
   }
 
   template <typename T, typename Algo, typename Check>
