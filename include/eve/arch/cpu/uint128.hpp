@@ -55,15 +55,15 @@ namespace eve
     requires (sizeof(lo_) <= 8)&&(sizeof(hi_) <= 8)
       : lo_{static_cast<std::uint64_t>(lo)}, hi_{static_cast<std::uint64_t>(hi)} {}
 
-#ifdef ABSL_HAVE_INTRINSIC_INT128
-    constexpr uint128(__int128 v) noexcept
-    : lo_{static_cast<uint64_t>(v & ~uint64_t{0})},
-      hi_{static_cast<uint64_t>(static_cast<unsigned __int128>(v) >> 64)} {};
+// #ifdef ABSL_HAVE_INTRINSIC_INT128
+//     constexpr uint128(__int128 v) noexcept
+//     : lo_{static_cast<uint64_t>(v & ~uint64_t{0})},
+//       hi_{static_cast<uint64_t>(static_cast<unsigned __int128>(v) >> 64)} {};
 
-    constexpr uint128(unsigned __int128 v) noexcept;
-    : lo_{static_cast<uint64_t>(v & ~uint64_t{0})},
-        hi_{static_cast<uint64_t>(v >> 64)} {}
-#endif
+//     constexpr uint128(unsigned __int128 v) noexcept;
+//     : lo_{static_cast<uint64_t>(v & ~uint64_t{0})},
+//         hi_{static_cast<uint64_t>(v >> 64)} {}
+// #endif
 
  //   constexpr uint128(int128 v) noexcept
 //    : lo_{v.lo_}, hi_{static_cast<uint64_t>(v.hi_)} {}
@@ -155,6 +155,12 @@ namespace eve
     //==============================================================================================
     // Comparison operators
     //==============================================================================================
+    constexpr friend bool operator==(uint128 lhs, eve::integral_scalar_value auto rhs) {
+      return uint128(rhs) == lhs;
+    }
+    constexpr friend bool operator==(eve::integral_scalar_value auto lhs, uint128 rhs) {
+      return uint128(lhs) == rhs;
+    }
     constexpr friend bool operator==(uint128 lhs, uint128 rhs) {
 // #if defined(ABSL_HAVE_INTRINSIC_INT128)
 //       return static_cast<unsigned __int128>(lhs) ==
@@ -164,7 +170,13 @@ namespace eve
 //#endif
       }
 
-      constexpr friend bool operator!=(uint128 lhs, uint128 rhs) {
+    constexpr friend bool operator!=(uint128 lhs, eve::integral_scalar_value auto rhs) {
+      return uint128(rhs) != lhs;
+    }
+    constexpr friend bool operator!=(eve::integral_scalar_value auto lhs, uint128 rhs) {
+      return uint128(lhs) != rhs;
+    }
+    constexpr friend bool operator!=(uint128 lhs, uint128 rhs) {
 // #if defined(ABSL_HAVE_INTRINSIC_INT128)
 //         return static_cast<unsigned __int128>(lhs) !=
 //           static_cast<unsigned __int128>(rhs);
@@ -172,6 +184,14 @@ namespace eve
       return (lhs.lo_ != rhs.lo_) || (lhs.hi_ != rhs.hi_);
 //#endif
       }
+
+    constexpr friend bool operator!(uint128 val) {
+// #if defined(ABSL_HAVE_INTRINSIC_INT128)
+//       return !static_cast<unsigned __int128>(val);
+// #else
+      return !val.lo_ && !val.hi_;
+// #endif
+    }
 
     constexpr  friend bool operator<(uint128 lhs, uint128 rhs) {
 // #ifdef ABSL_HAVE_INTRINSIC_INT128
@@ -186,11 +206,23 @@ namespace eve
 
     constexpr friend bool operator>(uint128 lhs, uint128 rhs) { return rhs < lhs; }
 
-    constexpr friend bool operator<=(uint128 lhs, uint128 rhs) { return !(rhs > lhs); }
+    constexpr friend bool operator<=(uint128 lhs, uint128 rhs)
+    {
+      return !(lhs > rhs);
+    }
 
-    constexpr friend bool operator>=(uint128 lhs, uint128 rhs) { return !(lhs < rhs); }
+     constexpr friend bool operator>=(uint128 lhs, uint128 rhs) {
+      return !(lhs < rhs);
+    }
 
     //arithmetic operations
+    friend uint128 operator/(uint128 lhs, eve::integral_scalar_value auto rhs) {
+      return lhs/uint128(rhs);
+    }
+    friend uint128 operator/(eve::integral_scalar_value auto lhs, uint128 rhs ) {
+      return uint128(lhs)/rhs;
+    }
+
 //#if !defined(ABSL_HAVE_INTRINSIC_INT128)
     friend uint128 operator/(uint128 lhs, uint128 rhs) {
       uint128 quotient = 0;
@@ -238,6 +270,31 @@ namespace eve
     }
 
     EVE_FORCEINLINE uint128& operator%=(uint128 other) {
+      *this = *this % other;
+      return *this;
+    }
+
+     EVE_FORCEINLINE uint128& operator+=(eve::unsigned_value auto other) {
+      *this = *this + other;
+      return *this;
+    }
+
+    EVE_FORCEINLINE uint128& operator-=(eve::unsigned_value auto other) {
+      *this = *this - other;
+      return *this;
+    }
+
+    EVE_FORCEINLINE uint128& operator*=(eve::unsigned_value auto other) {
+      *this = *this * other;
+      return *this;
+    }
+
+    EVE_FORCEINLINE uint128& operator/=(eve::unsigned_value auto other) {
+      *this = *this / other;
+      return *this;
+    }
+
+    EVE_FORCEINLINE uint128& operator%=(eve::unsigned_value auto other) {
       *this = *this % other;
       return *this;
     }
@@ -298,8 +355,8 @@ namespace eve
 //#endif
     }
 
-    friend EVE_FORCEINLINE uint128 operator+(uint128 lhs, eve::unsigned_value auto rhs) { return lhs+uint128(rhs); }
-    friend EVE_FORCEINLINE uint128 operator+(eve::unsigned_value auto lhs, uint128 rhs) { return rhs+lhs; }
+    friend EVE_FORCEINLINE uint128 operator+(uint128 lhs, eve::integral_scalar_value auto rhs) { return lhs+uint128(rhs); }
+    friend EVE_FORCEINLINE uint128 operator+(eve::integral_scalar_value auto lhs, uint128 rhs) { return rhs+lhs; }
 
     friend EVE_FORCEINLINE uint128 operator+(uint128 lhs, uint128 rhs) {
 // #if defined(ABSL_HAVE_INTRINSIC_INT128)
@@ -312,8 +369,8 @@ namespace eve
 //#endif
     }
 
-    friend EVE_FORCEINLINE uint128 operator-(uint128 lhs, eve::unsigned_value auto rhs) { return lhs-uint128(rhs); }
-    friend EVE_FORCEINLINE uint128 operator-(eve::unsigned_value auto lhs, uint128 rhs) { return uint128(lhs)-rhs; }
+    friend EVE_FORCEINLINE uint128 operator-(uint128 lhs, eve::integral_scalar_value auto rhs) { return lhs-uint128(rhs); }
+    friend EVE_FORCEINLINE uint128 operator-(eve::integral_scalar_value auto lhs, uint128 rhs) { return uint128(lhs)-rhs; }
     friend EVE_FORCEINLINE constexpr uint128 operator-(uint128 lhs, uint128 rhs) {
 // #if defined(ABSL_HAVE_INTRINSIC_INT128)
 //   return static_cast<unsigned __int128>(lhs) -

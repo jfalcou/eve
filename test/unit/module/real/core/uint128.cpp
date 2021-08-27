@@ -15,7 +15,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check  eve::uin128 lo and hi", eve::test::scalar::all_types)
+EVE_TEST_TYPES( "Check  eve::uin128 lo and hi", eve::test::scalar:: uints_64)
 <typename T>(eve::as<T>)
 {
   TTS_EXPR_IS( eve::uint128(T())            , eve::uint128 );
@@ -30,7 +30,7 @@ EVE_TEST_TYPES( "Check  eve::uin128 lo and hi", eve::test::scalar::all_types)
 
 };
 
-EVE_TEST_TYPES( "Check  eve::uin128 lo and hi", eve::test::scalar::unsigned_types)
+EVE_TEST_TYPES( "Check  eve::uin128 + - < > & |", eve::test::scalar::uints_64)
 <typename T>(eve::as<T>)
 {
   using eve::uint128;
@@ -40,7 +40,7 @@ EVE_TEST_TYPES( "Check  eve::uin128 lo and hi", eve::test::scalar::unsigned_type
   uint128 one = 1;
   uint128 one_2arg(0, 1);
   uint128 two = 2;
-//  uint128 three = 3;
+  uint128 three = 3;
   uint128 big(2000, 2);
   uint128 big_minus_one(2000, 1);
   uint128 bigger(2001, 1);
@@ -52,41 +52,41 @@ EVE_TEST_TYPES( "Check  eve::uin128 lo and hi", eve::test::scalar::unsigned_type
   TTS_EXPECT(one < big);
   TTS_EXPECT(one < big);
   TTS_EQUAL(one, one_2arg);
-  //  EXPECT_NE(one, two);
-  //   EXPECT_GT(big, one);
-//   EXPECT_GE(big, two);
-//   EXPECT_GE(big, big_minus_one);
-//   EXPECT_GT(big, big_minus_one);
-//   EXPECT_LT(big_minus_one, big);
-//   EXPECT_LE(big_minus_one, big);
-//   EXPECT_NE(big_minus_one, big);
-//   EXPECT_LT(big, biggest);
-//   EXPECT_LE(big, biggest);
-//   EXPECT_GT(biggest, big);
-//   EXPECT_GE(biggest, big);
+  TTS_EXPECT(one < two);
+  TTS_EXPECT(big > one);
+  TTS_EXPECT(big >= two);
+  TTS_EXPECT(big >= big_minus_one);
+  TTS_EXPECT(big > big_minus_one);
+  TTS_EXPECT(big_minus_one < big);
+  TTS_EXPECT(big_minus_one <= big);
+  TTS_EXPECT(big_minus_one != big);
+  TTS_EXPECT(big < biggest);
+  TTS_EXPECT(big <= biggest);
+  TTS_EXPECT(biggest > big);
+  TTS_EXPECT(biggest >= big);
   TTS_EQUAL(big, ~~big);
-//   TTS_EQUAL(one, one | one);
-//   TTS_EQUAL(big, big | big);
-//   TTS_EQUAL(one, one | zero);
-//   TTS_EQUAL(one, one & one);
-//   TTS_EQUAL(big, big & big);
-//   TTS_EQUAL(zero, one & zero);
-//   TTS_EQUAL(zero, big & ~big);
-//   TTS_EQUAL(zero, one ^ one);
-//   TTS_EQUAL(zero, big ^ big);
-//   TTS_EQUAL(one, one ^ zero);
+  TTS_EQUAL(one, (one | one));
+  TTS_EQUAL(big, (big | big));
+  TTS_EQUAL(one, (one | zero));
+  TTS_EQUAL(one, (one & one));
+  TTS_EQUAL(big, (big & big));
+  TTS_EQUAL(zero, (one & zero));
+  TTS_EQUAL(zero, (big & ~big));
+  TTS_EQUAL(zero, (one ^ one));
+  TTS_EQUAL(zero, (big ^ big));
+  TTS_EQUAL(one, (one ^ zero));
 
-//   // Shift operators.
+   // Shift operators.
   TTS_EQUAL(big, big << 0);
   TTS_EQUAL(big, big >> 0);
-//   EXPECT_GT(big << 1, big);
-//   EXPECT_LT(big >> 1, big);
-  TTS_EQUAL(big, (big << 10) >> 10);
-  TTS_EQUAL(big, (big >> 1) << 1);
-  TTS_EQUAL(one, (one << 80) >> 80);
-  TTS_EQUAL(zero, (one >> 80) << 80);
+  TTS_EXPECT((big << 1) > big);
+  TTS_EXPECT((big >> 1) < big);
+  TTS_EQUAL(big, ((big << 10) >> 10));
+  TTS_EQUAL(big, ((big >> 1) << 1));
+  TTS_EQUAL(one, ((one << 80) >> 80));
+  TTS_EQUAL(zero, ((one >> 80) << 80));
 
-//   // Shift assignments.
+  // Shift assignments.
   uint128 big_copy = big;
   big_copy <<= 0;
   TTS_EQUAL((big << 0), big_copy);
@@ -99,20 +99,24 @@ EVE_TEST_TYPES( "Check  eve::uin128 lo and hi", eve::test::scalar::unsigned_type
   big_copy = big;
   big_copy >>=  1;
   TTS_EQUAL((big >> 1), big_copy);
-//   big_copy = big;
-//  TTS_EQUAL(big << 10, big_copy <<= 10);
-//   big_copy = big;
-//  TTS_EQUAL(big >> 10, big_copy >>= 10);
-//   big_copy = big;
-//  TTS_EQUAL(big << 64, big_copy <<= 64);
-//   big_copy = big;
-//  TTS_EQUAL(big >> 64, big_copy >>= 64);
-   big_copy = big;
-   big_copy <<= 73;
-   TTS_EQUAL((big << 73), big_copy);
-   big_copy = big;
-   big_copy >>= 73;
-   TTS_EQUAL((big >> 73), big_copy);
+  big_copy = big;
+  big_copy <<= 10;
+  TTS_EQUAL((big << 10), big_copy);
+  big_copy = big;
+  big_copy >>= 10;
+  TTS_EQUAL((big >> 10), big_copy);
+  big_copy = big;
+  big_copy <<= 64;
+  TTS_EQUAL((big << 64), big_copy);
+  big_copy = big;
+  big_copy >>= 64;
+  TTS_EQUAL((big >> 64), big_copy);
+  big_copy = big;
+  big_copy <<= 73;
+  TTS_EQUAL((big << 73), big_copy);
+  big_copy = big;
+  big_copy >>= 73;
+  TTS_EQUAL((big >> 73), big_copy);
 
   TTS_EQUAL(biggest.lo(), vm);
   TTS_EQUAL(biggest.hi(), vm);
@@ -137,31 +141,37 @@ EVE_TEST_TYPES( "Check  eve::uin128 lo and hi", eve::test::scalar::unsigned_type
   TTS_EQUAL(!one, false);
   TTS_EQUAL(!high_low, false);
   TTS_EQUAL(!zero,  true);
-//  TTS_EQUAL(zero == 0u,  true);
-//  TTS_EQUAL(zero != 0), false;
-//  TTS_EQUAL(one == 0, false);
-//  TTS_EQUAL(one != 0u,  true);
-//  TTS_EQUAL(high_low == 0, false);
-//  TTS_EQUAL(high_low != 0u,  true);
+  TTS_EQUAL((zero == 0u),  true);
+  TTS_EQUAL((zero != 0), false);
+  TTS_EQUAL((one == 0), false);
+  TTS_EQUAL((one != 0u),  true);
+  TTS_EQUAL((high_low == 0), false);
+  TTS_EQUAL((high_low != 0),  true);
 
   uint128 test = zero;
   TTS_EQUAL(++test, one);
   TTS_EQUAL(test, one);
   TTS_EQUAL(test++, one);
   TTS_EQUAL(test, two);
-  //TTS_EQUAL((test -= 2u), zero);
-  //TTS_EQUAL(test, zero);
-  //TTS_EQUAL(test += 2u, two);
+  test -= 2u;
+  TTS_EQUAL(test, zero);
+  test += 2u;
+  TTS_EQUAL(test, two);
   TTS_EQUAL(test, two);
   TTS_EQUAL(--test, one);
   TTS_EQUAL(test, one);
   TTS_EQUAL(test--, one);
   TTS_EQUAL(test, zero);
-//  TTS_EQUAL(test |= three, three);
-//   TTS_EQUAL(test &= one, one);
-//   TTS_EQUAL(test ^= three, two);
-//   TTS_EQUAL(test >>= 1, one);
-//   TTS_EQUAL(test <<= 1, two);
+  test |= three;
+  TTS_EQUAL(test, three);
+  test &= one;
+  TTS_EQUAL(test, one);
+  test ^= three;
+  TTS_EQUAL(test, two);
+  test >>= 1;
+  TTS_EQUAL(test, one);
+  test <<= 1;
+  TTS_EQUAL(test, two);
 
   TTS_EQUAL(big, +big);
   TTS_EQUAL(two, +two);
@@ -174,3 +184,153 @@ EVE_TEST_TYPES( "Check  eve::uin128 lo and hi", eve::test::scalar::unsigned_type
   TTS_EQUAL(zero, -zero);
 
 };
+
+EVE_TEST_TYPES( "Check  eve::uin128 multiply", eve::test::scalar:: uints_64)
+<typename T>(eve::as<T>)
+{
+  using eve::uint128;
+  uint128 a, b, c;
+
+  // Zero test.
+  a = 0;
+  b = 0;
+  c = a * b;
+  TTS_EQUAL(0, c);
+
+  // Max carries.
+  a = uint128(0) - 1u;
+  b = uint128(0) - 1u;
+  c = a * b;
+  TTS_EQUAL(1, c);
+
+  // Self-operation with max carries.
+  c = uint128(0) - 1u;
+  c *= c;
+  TTS_EQUAL(1, c);
+
+  // 1-bit x 1-bit.
+  for (int i = 0; i < 64; ++i) {
+    for (int j = 0; j < 64; ++j) {
+      a = uint128(1) << i;
+      b = uint128(1) << j;
+      c = a * b;
+      TTS_EQUAL((uint128(1) << (i + j)), c);
+    }
+  }
+
+  // Verified with dc.
+  a = uint128(0xffffeeeeddddcccc, 0xbbbbaaaa99998888);
+  b = uint128(0x7777666655554444, 0x3333222211110000);
+  c = a * b;
+  TTS_EQUAL(uint128(0x530EDA741C71D4C3, 0xBF25975319080000), c);
+  TTS_EQUAL(0, c - b * a);
+  TTS_EQUAL((a*a - b*b), ((a+b) * (a-b)));
+
+  // Verified with dc.
+  a = uint128(0x0123456789abcdef, 0xfedcba9876543210);
+  b = uint128(0x02468ace13579bdf, 0xfdb97531eca86420);
+  c = a * b;
+  TTS_EQUAL(uint128(0x97a87f4f261ba3f2, 0x342d0bbf48948200), c);
+  TTS_EQUAL(0, c - b * a);
+  TTS_EQUAL((a*a - b*b), ((a+b) * (a-b)));
+};
+
+EVE_TEST_TYPES( "alias test", eve::test::scalar:: uints_64)
+<typename T>(eve::as<T>)
+{
+  using eve::uint128;
+  uint128 x1 = uint128(1, 2);
+  uint128 x2 = uint128(2, 4);
+  x1 += x1;
+  TTS_EQUAL(x2, x1);
+
+  uint128 x3 = uint128(1, static_cast<std::uint64_t>(1) << 63);
+  uint128 x4 = uint128(3, 0);
+  x3 += x3;
+  TTS_EQUAL(x4, x3);
+};
+
+EVE_TEST_TYPES( "divide and rem test", eve::test::scalar:: uints_64)
+<typename T>(eve::as<T>)
+{
+  using eve::uint128;
+  using std::swap;
+
+  // a := q * b + r
+  uint128 a, b, q, r;
+
+  // Zero test.
+  a = 0;
+  b = 123;
+  q = a / b;
+  r = a % b;
+  TTS_EQUAL(0, q);
+  TTS_EQUAL(0, r);
+
+  a = uint128(0x530eda741c71d4c3, 0xbf25975319080000);
+  q = uint128(0x4de2cab081, 0x14c34ab4676e4bab);
+  b = uint128(0x1110001);
+  r = uint128(0x3eb455);
+  TTS_EQUAL(a, q * b + r);  // Sanity-check.
+
+  uint128 result_q, result_r;
+  result_q = a / b;
+  result_r = a % b;
+  TTS_EQUAL(q, result_q);
+  TTS_EQUAL(r, result_r);
+
+  // Try the other way around.
+  swap(q, b);
+  result_q = a / b;
+  result_r = a % b;
+  TTS_EQUAL(q, result_q);
+  TTS_EQUAL(r, result_r);
+  // Restore.
+  swap(b, q);
+
+  // Dividend < divisor; result should be q:0 r:<dividend>.
+  swap(a, b);
+  result_q = a / b;
+  result_r = a % b;
+  TTS_EQUAL(0, result_q);
+  TTS_EQUAL(a, result_r);
+  // Try the other way around.
+  swap(a, q);
+  result_q = a / b;
+  result_r = a % b;
+  TTS_EQUAL(0, result_q);
+  TTS_EQUAL(a, result_r);
+  // Restore.
+  swap(q, a);
+  swap(b, a);
+
+  // Try a large remainder.
+  b = a / 2 + 1;
+  uint128 expected_r =
+      uint128(0x29876d3a0e38ea61, 0xdf92cba98c83ffff);
+  // Sanity checks.
+  TTS_EQUAL((a / 2 - 1), expected_r);
+  TTS_EQUAL(a, b + expected_r);
+  result_q = a / b;
+  result_r = a % b;
+  TTS_EQUAL(1, result_q);
+  TTS_EQUAL(expected_r, result_r);
+};
+
+// TEST(Uint128, DivideAndModRandomInputs) {
+//   const int kNumIters = 1 << 18;
+//   std::minstd_rand random(testing::UnitTest::GetInstance()->random_seed());
+//   std::uniform_int_distribution<uint64_t> uniform_uint64;
+//   for (int i = 0; i < kNumIters; ++i) {
+//     const uint128 a =
+//         uint128(uniform_uint64(random), uniform_uint64(random));
+//     const uint128 b =
+//         uint128(uniform_uint64(random), uniform_uint64(random));
+//     if (b == 0) {
+//       continue;  // Avoid a div-by-zero.
+//     }
+//     const uint128 q = a / b;
+//     const uint128 r = a % b;
+//     TTS_EQUAL(a, b * q + r);
+//   }
+// }
