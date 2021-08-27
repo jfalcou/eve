@@ -588,6 +588,12 @@ namespace spy::literal
 #endif
 namespace spy::supports
 {
+#if defined(__SIZEOF_INT128__)
+#  define SPY_SIMD_SUPPORTS_INT128
+  constexpr inline auto int128_ = true;
+#else
+  constexpr inline auto int128_ = false;
+#endif
 #if defined(__FMA__)
 #  define SPY_SIMD_SUPPORTS_FMA
   constexpr inline auto fma_ = true;

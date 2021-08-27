@@ -15,7 +15,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check  eve::uin128 lo and hi", eve::test::scalar:: uints_64)
+EVE_TEST_TYPES( "Check  eve::uint128 lo and hi", eve::test::scalar:: uints_64)
 <typename T>(eve::as<T>)
 {
   TTS_EXPR_IS( eve::uint128(T())            , eve::uint128 );
@@ -30,7 +30,7 @@ EVE_TEST_TYPES( "Check  eve::uin128 lo and hi", eve::test::scalar:: uints_64)
 
 };
 
-EVE_TEST_TYPES( "Check  eve::uin128 + - < > & |", eve::test::scalar::uints_64)
+EVE_TEST_TYPES( "Check  eve::uint128 + - < > & |", eve::test::scalar::uints_64)
 <typename T>(eve::as<T>)
 {
   using eve::uint128;
@@ -185,7 +185,7 @@ EVE_TEST_TYPES( "Check  eve::uin128 + - < > & |", eve::test::scalar::uints_64)
 
 };
 
-EVE_TEST_TYPES( "Check  eve::uin128 multiply", eve::test::scalar:: uints_64)
+EVE_TEST_TYPES( "Check  eve::uint128 multiply", eve::test::scalar:: uints_64)
 <typename T>(eve::as<T>)
 {
   using eve::uint128;
@@ -317,20 +317,22 @@ EVE_TEST_TYPES( "divide and rem test", eve::test::scalar:: uints_64)
   TTS_EQUAL(expected_r, result_r);
 };
 
-// TEST(Uint128, DivideAndModRandomInputs) {
-//   const int kNumIters = 1 << 18;
-//   std::minstd_rand random(testing::UnitTest::GetInstance()->random_seed());
-//   std::uniform_int_distribution<uint64_t> uniform_uint64;
-//   for (int i = 0; i < kNumIters; ++i) {
-//     const uint128 a =
-//         uint128(uniform_uint64(random), uniform_uint64(random));
-//     const uint128 b =
-//         uint128(uniform_uint64(random), uniform_uint64(random));
-//     if (b == 0) {
-//       continue;  // Avoid a div-by-zero.
-//     }
-//     const uint128 q = a / b;
-//     const uint128 r = a % b;
-//     TTS_EQUAL(a, b * q + r);
-//   }
-// }
+#ifdef SPY_SIMD_SUPPORTS_INT128
+EVE_TEST_TYPES( "Check  __int128 support", eve::test::scalar:: uints_64)
+<typename T>(eve::as<T>)
+{
+  using eve::uint128;
+  if constexpr(spy::supports::int128_)
+  {
+    __int128 v = 1;
+    uint128 a(v);
+    TTS_EQUAL(a, 1);
+    uint128 b(1, 1);
+    __int128 w(b);
+    uint128 c(w);
+    TTS_EQUAL(c, b);
+  }
+  else
+    TTS_PASS("__int128 not supported");
+};
+#endif

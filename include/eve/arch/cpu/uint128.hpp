@@ -17,6 +17,12 @@
 #include <bit>
 #include <eve/function/lohi.hpp>
 
+#define EVE_EMULATE_INT128
+
+#ifdef EVE_EMULATE_INT128
+# undef SPY_SIMD_SUPPORTS_INT128
+#endif
+
 namespace eve
 {
   //================================================================================================
@@ -55,15 +61,17 @@ namespace eve
     requires (sizeof(lo_) <= 8)&&(sizeof(hi_) <= 8)
       : lo_{static_cast<std::uint64_t>(lo)}, hi_{static_cast<std::uint64_t>(hi)} {}
 
-// #ifdef ABSL_HAVE_INTRINSIC_INT128
-//     constexpr uint128(__int128 v) noexcept
-//     : lo_{static_cast<uint64_t>(v & ~uint64_t{0})},
-//       hi_{static_cast<uint64_t>(static_cast<unsigned __int128>(v) >> 64)} {};
+    #ifdef SPY_SIMD_SUPPORTS_INT128// constexpr(spy::supports::int128_)
 
-//     constexpr uint128(unsigned __int128 v) noexcept;
-//     : lo_{static_cast<uint64_t>(v & ~uint64_t{0})},
-//         hi_{static_cast<uint64_t>(v >> 64)} {}
-// #endif
+      constexpr uint128(__int128 v) noexcept
+        : lo_{static_cast<uint64_t>(v & ~uint64_t{0})}
+      , hi_{static_cast<uint64_t>(static_cast<unsigned __int128>(v) >> 64)} {};
+
+      constexpr uint128(unsigned __int128 v) noexcept
+      : lo_{static_cast<uint64_t>(v & ~uint64_t{0})}
+      , hi_{static_cast<uint64_t>(v >> 64)} {}
+
+    #endif
 
  //   constexpr uint128(int128 v) noexcept
 //    : lo_{v.lo_}, hi_{static_cast<uint64_t>(v.hi_)} {}
@@ -87,7 +95,6 @@ namespace eve
     //! Assign another uint128
     EVE_FORCEINLINE constexpr uint128 &operator=(uint128 const& v)  noexcept =  default;
 
-
     //==============================================================================================
     //! @}
     //==============================================================================================
@@ -100,6 +107,8 @@ namespace eve
     EVE_FORCEINLINE constexpr std::uint64_t lo() const {return lo_; };
     EVE_FORCEINLINE constexpr std::uint64_t hi() const {return hi_; };
 
+    EVE_FORCEINLINE constexpr friend std::uint64_t lo(uint128 v)  {return v.lo_; };
+    EVE_FORCEINLINE constexpr friend std::uint64_t hi(uint128 v)  {return v.hi_; };
 
     //==============================================================================================
     //! @}
@@ -118,15 +127,17 @@ namespace eve
     EVE_FORCEINLINE constexpr operator std::int32_t()  const noexcept { return static_cast<std::uint32_t>(lo_);}
     EVE_FORCEINLINE constexpr operator std::int16_t()  const noexcept { return static_cast<std::uint16_t>(lo_);}
     EVE_FORCEINLINE constexpr operator std::int8_t()   const noexcept { return static_cast<std::uint8_t>(lo_); }
-// #ifdef ABSL_HAVE_INTRINSIC_INT128
-//     EVE_FORCEINLINE constexpr explicit operator __int128() const noexcept {
-//       return (static_cast<__int128>(hi_) << 64) + lo_;
-//     }
 
-//     EVE_FORCEINLINE constexpr explicit operator unsigned __int128() noexcept const {
-//       return (static_cast<unsigned __int128>(hi_) << 64) + lo_;
-//     }
-// #endif
+#ifdef SPY_SIMD_SUPPORTS_INT128
+    EVE_FORCEINLINE constexpr explicit operator __int128() const noexcept {
+      return (static_cast<__int128>(hi_) << 64) + lo_;
+    }
+
+    EVE_FORCEINLINE constexpr explicit operator unsigned __int128() const noexcept {
+      return (static_cast<unsigned __int128>(hi_) << 64) + lo_;
+    }
+#endif
+
     EVE_FORCEINLINE operator float() const noexcept {
       return static_cast<float>(lo_) + std::ldexp(static_cast<float>(hi_), 64);
     }
@@ -134,14 +145,7 @@ namespace eve
     EVE_FORCEINLINE operator double() const noexcept {
       return static_cast<double>(lo_) + std::ldexp(static_cast<double>(hi_), 64);
     }
-//    EVE_FORCEINLINE constexpr auto bits()       const noexcept { return value_; }
 
-//     EVE_FORCEINLINE constexpr auto mask() const noexcept
-//     {
-//       value_type that;
-//       std::memcpy(&that, &value_, sizeof(value_type));
-//       return that;
-//     }
     void swap( uint128& other )
     {
       std::swap(lo_,other.lo_);
@@ -158,16 +162,17 @@ namespace eve
     constexpr friend bool operator==(uint128 lhs, eve::integral_scalar_value auto rhs) {
       return uint128(rhs) == lhs;
     }
+
     constexpr friend bool operator==(eve::integral_scalar_value auto lhs, uint128 rhs) {
       return uint128(lhs) == rhs;
     }
+
     constexpr friend bool operator==(uint128 lhs, uint128 rhs) {
-// #if defined(ABSL_HAVE_INTRINSIC_INT128)
-//       return static_cast<unsigned __int128>(lhs) ==
-//         static_cast<unsigned __int128>(rhs);
-// #else
+#if defined(SPY_SIMD_SUPPORTS_INT128)
+      return static_cast<unsigned __int128>(lhs) == static_cast<unsigned __int128>(rhs);
+#else
       return (lhs.lo_ == rhs.lo_) && (lhs.hi_ == rhs.hi_);
-//#endif
+#endif
       }
 
     constexpr friend bool operator!=(uint128 lhs, eve::integral_scalar_value auto rhs) {
@@ -177,67 +182,69 @@ namespace eve
       return uint128(lhs) != rhs;
     }
     constexpr friend bool operator!=(uint128 lhs, uint128 rhs) {
-// #if defined(ABSL_HAVE_INTRINSIC_INT128)
-//         return static_cast<unsigned __int128>(lhs) !=
-//           static_cast<unsigned __int128>(rhs);
-// #else
+#if defined(SPY_SIMD_SUPPORTS_INT128)
+        return static_cast<unsigned __int128>(lhs) !=
+          static_cast<unsigned __int128>(rhs);
+#else
       return (lhs.lo_ != rhs.lo_) || (lhs.hi_ != rhs.hi_);
-//#endif
+#endif
       }
 
     constexpr friend bool operator!(uint128 val) {
-// #if defined(ABSL_HAVE_INTRINSIC_INT128)
-//       return !static_cast<unsigned __int128>(val);
-// #else
+#if defined(SPY_SIMD_SUPPORTS_INT128)
+      return !static_cast<unsigned __int128>(val);
+#else
       return !val.lo_ && !val.hi_;
-// #endif
+#endif
     }
 
-    constexpr  friend bool operator<(uint128 lhs, uint128 rhs) {
-// #ifdef ABSL_HAVE_INTRINSIC_INT128
-//   return static_cast<unsigned __int128>(lhs) <
-//          static_cast<unsigned __int128>(rhs);
-// #else
+    constexpr  friend bool operator<(uint128 lhs, uint128 rhs)
+    {
+#ifdef SPY_SIMD_SUPPORTS_INT128
+      return static_cast<unsigned __int128>(lhs) <
+        static_cast<unsigned __int128>(rhs);
+#else
       return (lhs.hi_ == rhs.hi_)
         ? (lhs.lo_ < rhs.lo_)
         : (lhs.hi_ < rhs.hi_);
-//#endif
-        }
+#endif
+    }
 
     constexpr friend bool operator>(uint128 lhs, uint128 rhs) { return rhs < lhs; }
-
-    constexpr friend bool operator<=(uint128 lhs, uint128 rhs)
-    {
-      return !(lhs > rhs);
-    }
-
-     constexpr friend bool operator>=(uint128 lhs, uint128 rhs) {
-      return !(lhs < rhs);
-    }
+    constexpr friend bool operator<=(uint128 lhs, uint128 rhs){ return !(lhs > rhs);}
+    constexpr friend bool operator>=(uint128 lhs, uint128 rhs) { return !(lhs < rhs);  }
 
     //arithmetic operations
-    friend uint128 operator/(uint128 lhs, eve::integral_scalar_value auto rhs) {
+    friend uint128 operator/(uint128 lhs, eve::integral_scalar_value auto rhs)
+    {
       return lhs/uint128(rhs);
     }
-    friend uint128 operator/(eve::integral_scalar_value auto lhs, uint128 rhs ) {
+    friend uint128 operator/(eve::integral_scalar_value auto lhs, uint128 rhs )
+    {
       return uint128(lhs)/rhs;
     }
 
-//#if !defined(ABSL_HAVE_INTRINSIC_INT128)
     friend uint128 operator/(uint128 lhs, uint128 rhs) {
+#if defined(SPY_SIMD_SUPPORTS_INT128)
+      return static_cast<uint128>(static_cast<unsigned __int128>(lhs)/static_cast<unsigned __int128>(rhs));
+#else
       uint128 quotient = 0;
       uint128 remainder = 0;
       DivModImpl(lhs, rhs, &quotient, &remainder);
       return quotient;
-    }
+#endif
+     }
 
     friend uint128 operator%(uint128 lhs, uint128 rhs) {
+#if defined(SPY_SIMD_SUPPORTS_INT128)
+      return static_cast<uint128>(static_cast<unsigned __int128>(lhs)%static_cast<unsigned __int128>(rhs));
+#else
       uint128 quotient = 0;
       uint128 remainder = 0;
       DivModImpl(lhs, rhs, &quotient, &remainder);
       return remainder;
+#endif
     }
-//#endif  // !defined(ABSL_HAVE_INTRINSIC_INT128)
 
     EVE_FORCEINLINE uint128& operator<<=(int amount) {
       *this = *this << amount;
@@ -346,40 +353,40 @@ namespace eve
     }
 
     friend EVE_FORCEINLINE constexpr uint128 operator-(uint128 val) {
-// #if defined(ABSL_HAVE_INTRINSIC_INT128)
-//       return -static_cast<unsigned __int128>(val);
-// #else
+#if defined(SPY_SIMD_SUPPORTS_INT128)
+      return -static_cast<unsigned __int128>(val);
+#else
       return uint128(
         ~val.hi_ + static_cast<std::uint64_t>(val.lo_ == 0),
         ~val.lo_ + 1);
-//#endif
+#endif
     }
 
     friend EVE_FORCEINLINE uint128 operator+(uint128 lhs, eve::integral_scalar_value auto rhs) { return lhs+uint128(rhs); }
     friend EVE_FORCEINLINE uint128 operator+(eve::integral_scalar_value auto lhs, uint128 rhs) { return rhs+lhs; }
 
     friend EVE_FORCEINLINE uint128 operator+(uint128 lhs, uint128 rhs) {
-// #if defined(ABSL_HAVE_INTRINSIC_INT128)
-//   return static_cast<unsigned __int128>(lhs) +
-//          static_cast<unsigned __int128>(rhs);
-// #else
+#if defined(SPY_SIMD_SUPPORTS_INT128)
+  return static_cast<unsigned __int128>(lhs) +
+         static_cast<unsigned __int128>(rhs);
+#else
       return AddResult(
         uint128(lhs.hi_ + rhs.hi_, lhs.lo_ + rhs.lo_)
         , lhs);
-//#endif
+#endif
     }
 
     friend EVE_FORCEINLINE uint128 operator-(uint128 lhs, eve::integral_scalar_value auto rhs) { return lhs-uint128(rhs); }
     friend EVE_FORCEINLINE uint128 operator-(eve::integral_scalar_value auto lhs, uint128 rhs) { return uint128(lhs)-rhs; }
     friend EVE_FORCEINLINE constexpr uint128 operator-(uint128 lhs, uint128 rhs) {
-// #if defined(ABSL_HAVE_INTRINSIC_INT128)
-//   return static_cast<unsigned __int128>(lhs) -
-//          static_cast<unsigned __int128>(rhs);
-// #else
+#if defined(SPY_SIMD_SUPPORTS_INT128)
+  return static_cast<unsigned __int128>(lhs) -
+         static_cast<unsigned __int128>(rhs);
+#else
       return SubResult(
         uint128(lhs.hi_ - rhs.hi_, lhs.lo_ - rhs.lo_),
         lhs, rhs);
-//#endif
+#endif
     }
 
     friend EVE_FORCEINLINE uint128 operator*(uint128 lhs, unsigned_scalar_value auto rhs)
@@ -393,18 +400,13 @@ namespace eve
 
     friend EVE_FORCEINLINE uint128 operator*(uint128 lhs, uint128 rhs)
     {
-// #if defined(ABSL_HAVE_INTRINSIC_INT128)
-//       // TODO(strel) Remove once alignment issues are resolved and unsigned __int128
-//       // can be used for uint128 storage.
-//       return static_cast<unsigned __int128>(lhs) *
-//         static_cast<unsigned __int128>(rhs);
-// #elif defined(_MSC_VER) && defined(_M_X64)
-//   uint64_t carry;
-//   uint64_t low = _umul128(Uint128Low64(lhs), Uint128Low64(rhs), &carry);
-//   return MakeUint128(Uint128Low64(lhs) * Uint128High64(rhs) +
-//                          Uint128High64(lhs) * Uint128Low64(rhs) + carry,
-//                      low);
-// #else   // ABSL_HAVE_INTRINSIC128
+#if defined(SPY_SIMD_SUPPORTS_INT128)
+      return static_cast<unsigned __int128>(lhs) * static_cast<unsigned __int128>(rhs);
+#elif defined(_MSC_VER) && defined(_M_X64)
+      uint64_t carry;
+      uint64_t low = _umul128(Uint128Low64(lhs), Uint128Low64(rhs), &carry);
+      return uint128(lo(lhs) * hi(rhs) + hi(lhs) * lo(rhs) + carry, low);
+#else
       uint64_t a32 = lhs.lo_ >> 32;
       uint64_t a00 = lhs.lo_ & 0xffffffff;
       uint64_t b32 = rhs.lo_ >> 32;
@@ -412,74 +414,74 @@ namespace eve
       uint128 result(lhs.hi_ * rhs.lo_ + lhs.lo_ * rhs.hi_ + a32 * b32, a00 * b00);
       result += uint128(a32 * b00) << 32;
       result += uint128(a00 * b32) << 32;
-     return result;
-//#endif  // ABSL_HAVE_INTRINSIC128
-        }
+      return result;
+#endif
+    }
 
-     //==============================================================================================
+    //==============================================================================================
     //shift operators
     //==============================================================================================
     friend EVE_FORCEINLINE constexpr uint128 operator<<(uint128 lhs, int amount) {
-// #ifdef ABSL_HAVE_INTRINSIC_INT128
-//       return static_cast<unsigned __int128>(lhs) << amount;
-// #else
+#ifdef SPY_SIMD_SUPPORTS_INT128
+      return static_cast<unsigned __int128>(lhs) << amount;
+#else
       // uint64_t shifts of >= 64 are undefined, so we will need some
       // special-casing.
       return amount >= 64 ? uint128(lhs.lo_ << (amount - 64), 0)
         : amount == 0 ? lhs
         : uint128((lhs.hi_ << amount) | (lhs.lo_ >> (64 - amount)),
-                      lhs.lo_ << amount);
-//#endif
-        }
+                  lhs.lo_ << amount);
+#endif
+    }
 
     friend EVE_FORCEINLINE constexpr uint128 operator>>(uint128 lhs, int amount) {
-// #ifdef ABSL_HAVE_INTRINSIC_INT128
-//       return static_cast<unsigned __int128>(lhs) >> amount;
-// #else
+#ifdef SPY_SIMD_SUPPORTS_INT128
+      return static_cast<unsigned __int128>(lhs) >> amount;
+#else
       // uint64_t shifts of >= 64 are undefined, so we will need some
       // special-casing.
       return amount >= 64 ? uint128(0, lhs.hi_ >> (amount - 64))
         : amount == 0 ? lhs
         : uint128(lhs.hi_ >> amount,
-                      (lhs.lo_ >> amount) | (lhs.hi_ << (64 - amount)));
-//#endif
-        }
+                  (lhs.lo_ >> amount) | (lhs.hi_ << (64 - amount)));
+#endif
+    }
 
    // bitwise operators.
 
     friend EVE_FORCEINLINE  uint128 operator~(uint128 val) {
-// #if defined(ABSL_HAVE_INTRINSIC_INT128)
-//       return ~static_cast<unsigned __int128>(val);
-// #else
+#if defined(SPY_SIMD_SUPPORTS_INT128)
+      return ~static_cast<unsigned __int128>(val);
+#else
       return uint128(~val.hi_, ~val.lo_);
-//#endif
+#endif
     }
 
     friend EVE_FORCEINLINE  uint128 operator|(uint128 lhs, uint128 rhs) {
-// #if defined(ABSL_HAVE_INTRINSIC_INT128)
-//       return static_cast<unsigned __int128>(lhs) |
-//         static_cast<unsigned __int128>(rhs);
-// #else
+#if defined(SPY_SIMD_SUPPORTS_INT128)
+      return static_cast<unsigned __int128>(lhs) |
+        static_cast<unsigned __int128>(rhs);
+#else
       return uint128(lhs.hi_ | rhs.hi_, lhs.lo_ | rhs.lo_);
-//#endif
+#endif
     }
 
     friend EVE_FORCEINLINE  uint128 operator&(uint128 lhs, uint128 rhs) {
-// #if defined(ABSL_HAVE_INTRINSIC_INT128)
-//       return static_cast<unsigned __int128>(lhs) &
-//         static_cast<unsigned __int128>(rhs);
-// #else
+#if defined(SPY_SIMD_SUPPORTS_INT128)
+      return static_cast<unsigned __int128>(lhs) &
+        static_cast<unsigned __int128>(rhs);
+#else
       return uint128(lhs.hi_ & rhs.hi_, lhs.lo_ & rhs.lo_);
-//#endif
+#endif
     }
 
     friend EVE_FORCEINLINE  uint128 operator^(uint128 lhs, uint128 rhs) {
-// #if defined(ABSL_HAVE_INTRINSIC_INT128)
-//       return static_cast<unsigned __int128>(lhs) ^
-//         static_cast<unsigned __int128>(rhs);
-// #else
+#if defined(SPY_SIMD_SUPPORTS_INT128)
+      return static_cast<unsigned __int128>(lhs) ^
+        static_cast<unsigned __int128>(rhs);
+#else
       return uint128(lhs.hi_ ^ rhs.hi_, lhs.lo_ ^ rhs.lo_);
-//#endif
+#endif
     }
 
     //==============================================================================================
@@ -508,21 +510,21 @@ namespace eve
       return os << rep;
     }
 
-   private:
+  private:
 
     static EVE_FORCEINLINE uint128 AddResult(uint128 result, uint128 lhs)
     {
       // check for carry
       return (result.lo_ < lhs.lo_)
-             ? uint128(result.hi_ + 1, result.lo_)
-             : result;
+        ? uint128(result.hi_ + 1, result.lo_)
+        : result;
     }
 
     static EVE_FORCEINLINE uint128 SubResult(uint128 result, uint128 lhs, uint128 rhs) {
       // check for augment
       return (lhs.lo_ < rhs.lo_)
-             ? uint128(result.hi_ - 1, result.lo_)
-             : result;
+        ? uint128(result.hi_ - 1, result.lo_)
+        : result;
     }
 
   public:
@@ -531,7 +533,7 @@ namespace eve
     // division algorithm adapted from:
     // https://stackoverflow.com/questions/5386377/division-without-using
     static EVE_FORCEINLINE void DivModImpl(uint128 dividend, uint128 divisor, uint128* quotient_ret,
-                                  uint128* remainder_ret) {
+                                           uint128* remainder_ret) {
       assert(divisor.lo_ != 0 || divisor.hi_ != 0);
 
       if (divisor > dividend) {
@@ -580,9 +582,6 @@ namespace eve
 
     static std::string Uint128ToFormattedString(uint128 v, std::ios_base::fmtflags flags)
     {
-//       std::cout << std::endl << " === " << std::endl;
-//       std::cout << "v " << v.hi_ <<  " -- " << v.lo_ << std::endl;
-//       std::cout  << " --- " << std::endl;
       // Select a divisor which is the largest power of the base < 2^64.
       uint128 div;
       int div_base_log;
@@ -600,26 +599,7 @@ namespace eve
         div_base_log = 19;
         break;
       }
-//       if (div_base_log == 15)
-//       {
-//         std::ostringstream os;
-//         std::ios_base::fmtflags copy_mask =
-//           std::ios::basefield | std::ios::showbase | std::ios::uppercase;
-//         os.setf(flags & copy_mask, copy_mask);
-//         if(v.hi_) os << v.hi_;
-//         os <<  std::noshowbase << std::setfill('0') << std::setw(div_base_log)<< v.lo_;
-//         return os.str();
-//       }
-//       else if (div_base_log == 31)
-//       {
-//         std::ostringstream os;
-//         std::ios_base::fmtflags copy_mask =
-//           std::ios::basefield | std::ios::showbase | std::ios::uppercase;
-//         os.setf(flags & copy_mask, copy_mask);
-//         if(v.hi_) os << v.hi_;
-//         os <<  std::noshowbase << std::setfill('0') << std::setw(div_base_log)<< v.lo_;
-//         return os.str();
-//       }
+
       // Now piece together the uint128 representation from three chunks of the
       // original value, each less than "div" and therefore representable as a
       // uint64_t.
@@ -711,11 +691,11 @@ namespace std {
     static constexpr int min_exponent10 = 0;
     static constexpr int max_exponent = 0;
     static constexpr int max_exponent10 = 0;
-#ifdef ABSL_HAVE_INTRINSIC_INT128
+#ifdef SPY_SIMD_SUPPORTS_INT128
     static constexpr bool traps = numeric_limits<unsigned __int128>::traps;
-#else   // ABSL_HAVE_INTRINSIC_INT128
+#else
     static constexpr bool traps = numeric_limits<uint64_t>::traps;
-#endif  // ABSL_HAVE_INTRINSIC_INT128
+#endif
     static constexpr bool tinyness_before = false;
 
     static constexpr eve::uint128 (min)() { return 0; }

@@ -18,22 +18,22 @@ int main()
   std::cout << std::oct << "n1   =   0" << n1 << std::endl;
   std::cout << std::hex << "n1   =  0x" << n1 << std::endl;
   std::cout << std::dec << "n1   =    " << n1 << std::endl;
-  std::cout << std::dec << "n1   =    " << eve::raw(n1) << std::endl;
+  std::cout << std::dec << "n1   =    " << eve::hl(n1) << std::endl;
 
   std::cout << std::oct << "n2   =   0" << n2 << std::endl;
   std::cout << std::hex << "n2   =  0x" << n2 << std::endl;
   std::cout << std::dec << "n2   =    " << n2 << std::endl;
-  std::cout << std::hex << "n2   =    " << eve::raw(n2) << std::endl;
+  std::cout << std::hex << "n2   =    " << eve::hl(n2) << std::endl;
 
   std::cout << std::oct << "n3   =   0" << n3 << std::endl;
   std::cout << std::hex << "n3   =  0x" << n3 << std::endl;
   std::cout << std::dec << "n3   =    " << n3 << std::endl;
-  std::cout << std::oct << "n3   =   " << eve::raw(n3) << std::endl;
+  std::cout << std::oct << "n3   =   " << eve::hl(n3) << std::endl;
 
   std::cout << std::oct << "n4   =   0" << n4 << std::endl;
   std::cout << std::hex << "n4   =  0x" << n4 << std::endl;
   std::cout << std::dec << "n4   =    " << n4 << std::endl;
-  std::cout << std::oct << "n4   =   " << eve::raw(n4) << std::endl;
+  std::cout << std::oct << "n4   =   " << eve::hl(n4) << std::endl;
 
   uint128 a(0xffffeeeeddddcccc, 0xbbbbaaaa99998888);
   uint128 b(0x7777666655554444, 0x3333222211110000);
@@ -59,36 +59,29 @@ int main()
 //   std::cout << std::oct << "m1   =   0" << m1 << std::endl;
 //   std::cout << std::hex << "m1   =  0x" << m1 << std::endl;
 //   std::cout << std::dec << "m1   =    " << m1 << std::endl;
-//   std::cout << std::dec << "m1   =    " << eve::raw(m1) << std::endl;
+//   std::cout << std::dec << "m1   =    " << eve::hl(m1) << std::endl;
 
 //   std::cout << std::oct << "m2   =   0" << m2 << std::endl;
 //   std::cout << std::hex << "m2   =  0x" << m2 << std::endl;
 //   std::cout << std::dec << "m2   =    " << m2 << std::endl;
-//   std::cout << std::dec << "m2   =    " << eve::raw(m2) << std::endl;
+//   std::cout << std::dec << "m2   =    " << eve::hl(m2) << std::endl;
 //   std::cout << (m2-m1 == m1)<< std::endl;
 //   std::cout << uint128(2u) << std::endl;
-//   std::cout << std::hex << eve::raw(uint128(2u)) << std::endl;
-//   std::cout << eve::raw(uint128(1, 0))<< std::endl;
-//   std::cout << eve::raw(2u*uint128(1, 0))<< std::endl;
+//   std::cout << std::hex << eve::hl(uint128(2u)) << std::endl;
+//   std::cout << eve::hl(uint128(1, 0))<< std::endl;
+//   std::cout << eve::hl(2u*uint128(1, 0))<< std::endl;
 
 
-  uint64_t aa = eve::valmax(eve::as< uint64_t>());
-  uint64_t bb = 2;
-  std::cout << "aa " << aa << std::endl;
-  std::cout << "bb " << bb << std::endl;
-  std::cout << uint128::mul(aa, bb) << std::endl;
-  std::cout << eve::raw(uint128::mul(aa, bb)) << std::endl;
-  std::cout << (uint128::mul(aa, bb)-uint128(aa) == uint128(aa)) <<  std::endl;
-  std::cout <<std::endl;
 
   uint128 aaa = eve::valmax(eve::as< uint64_t>());
   uint128 bbb = 2;
   std::cout << "aaa " << aaa << std::endl;
   std::cout << "bbb " << bbb << std::endl;
   std::cout << aaa*bbb << std::endl;
-  std::cout << eve::raw(aaa*bbb) << std::endl;
+  std::cout << eve::hl(aaa*bbb) << std::endl;
   std::cout << (aaa*bbb-aaa == aaa) <<  std::endl;
-
+  std::cout << spy::supports::int128_ << std::endl;
+  std::cout << std::dec << __SIZEOF_INT128__ <<  std::endl;
 
   return 0;
 }
