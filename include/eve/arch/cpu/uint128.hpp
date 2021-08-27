@@ -39,11 +39,24 @@ namespace eve
   //!
   //================================================================================================
 //  struct int128;
-  struct uint128 //little endian
+  struct
+#if defined(SPY_SIMD_SUPPORTS_INT128)
+  alignas(unsigned __int128)
+#else
+    alignas((sizeof(std::uint64_t) * 2))
+#endif
+    uint128 //little endian
   {
+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
     std::uint64_t lo_;
     std::uint64_t hi_;
- //    using endianess =  std::endian::native; //== std::endian::little;
+#elif __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+    std::uint64_t hi_;
+    std::uint64_t lo_;
+#else  // byte order
+#error "Unsupported byte order: must be little-endian or big-endian."
+#endif  // byte order
+
     //==============================================================================================
     //! @name Constructors
     //! @{
@@ -74,7 +87,7 @@ namespace eve
     #endif
 
  //   constexpr uint128(int128 v) noexcept
-//    : lo_{v.lo_}, hi_{static_cast<uint64_t>(v.hi_)} {}
+//    : lo_{low(v)}, hi_{static_cast<uint64_t>(hig(v))} {}
 
 
     explicit constexpr uint128(float v) noexcept;
@@ -107,8 +120,8 @@ namespace eve
     EVE_FORCEINLINE constexpr std::uint64_t lo() const {return lo_; };
     EVE_FORCEINLINE constexpr std::uint64_t hi() const {return hi_; };
 
-    EVE_FORCEINLINE constexpr friend std::uint64_t lo(uint128 v)  {return v.lo_; };
-    EVE_FORCEINLINE constexpr friend std::uint64_t hi(uint128 v)  {return v.hi_; };
+    EVE_FORCEINLINE constexpr friend std::uint64_t low(uint128 v)  {return v.lo_; };
+    EVE_FORCEINLINE constexpr friend std::uint64_t high(uint128 v)  {return v.hi_; };
 
     //==============================================================================================
     //! @}
@@ -171,7 +184,7 @@ namespace eve
 #if defined(SPY_SIMD_SUPPORTS_INT128)
       return static_cast<unsigned __int128>(lhs) == static_cast<unsigned __int128>(rhs);
 #else
-      return (lhs.lo_ == rhs.lo_) && (lhs.hi_ == rhs.hi_);
+      return (low(lhs) == low(rhs)) && (high(lhs) == high(rhs));
 #endif
       }
 
@@ -186,7 +199,7 @@ namespace eve
         return static_cast<unsigned __int128>(lhs) !=
           static_cast<unsigned __int128>(rhs);
 #else
-      return (lhs.lo_ != rhs.lo_) || (lhs.hi_ != rhs.hi_);
+      return (low(lhs) != low(rhs)) || (high(lhs) != high(rhs));
 #endif
       }
 
@@ -194,7 +207,7 @@ namespace eve
 #if defined(SPY_SIMD_SUPPORTS_INT128)
       return !static_cast<unsigned __int128>(val);
 #else
-      return !val.lo_ && !val.hi_;
+      return !low(val) && !high(val);
 #endif
     }
 
@@ -204,9 +217,9 @@ namespace eve
       return static_cast<unsigned __int128>(lhs) <
         static_cast<unsigned __int128>(rhs);
 #else
-      return (lhs.hi_ == rhs.hi_)
-        ? (lhs.lo_ < rhs.lo_)
-        : (lhs.hi_ < rhs.hi_);
+      return (high(lhs) == high(rhs))
+        ? (low(lhs) < low(rhs))
+        : (high(lhs) < high(rhs));
 #endif
     }
 
@@ -357,8 +370,8 @@ namespace eve
       return -static_cast<unsigned __int128>(val);
 #else
       return uint128(
-        ~val.hi_ + static_cast<std::uint64_t>(val.lo_ == 0),
-        ~val.lo_ + 1);
+        ~high(val) + static_cast<std::uint64_t>(low(val) == 0),
+        ~low(val) + 1);
 #endif
     }
 
@@ -371,7 +384,7 @@ namespace eve
          static_cast<unsigned __int128>(rhs);
 #else
       return AddResult(
-        uint128(lhs.hi_ + rhs.hi_, lhs.lo_ + rhs.lo_)
+        uint128(high(lhs) + high(rhs), low(lhs) + low(rhs))
         , lhs);
 #endif
     }
@@ -384,7 +397,7 @@ namespace eve
          static_cast<unsigned __int128>(rhs);
 #else
       return SubResult(
-        uint128(lhs.hi_ - rhs.hi_, lhs.lo_ - rhs.lo_),
+        uint128(high(lhs) - high(rhs), low(lhs) - low(rhs)),
         lhs, rhs);
 #endif
     }
@@ -407,11 +420,11 @@ namespace eve
       uint64_t low = _umul128(Uint128Low64(lhs), Uint128Low64(rhs), &carry);
       return uint128(lo(lhs) * hi(rhs) + hi(lhs) * lo(rhs) + carry, low);
 #else
-      uint64_t a32 = lhs.lo_ >> 32;
-      uint64_t a00 = lhs.lo_ & 0xffffffff;
-      uint64_t b32 = rhs.lo_ >> 32;
-      uint64_t b00 = rhs.lo_ & 0xffffffff;
-      uint128 result(lhs.hi_ * rhs.lo_ + lhs.lo_ * rhs.hi_ + a32 * b32, a00 * b00);
+      uint64_t a32 = low(lhs) >> 32;
+      uint64_t a00 = low(lhs) & 0xffffffff;
+      uint64_t b32 = low(rhs) >> 32;
+      uint64_t b00 = low(rhs) & 0xffffffff;
+      uint128 result(high(lhs) * low(rhs) + low(lhs) * high(rhs) + a32 * b32, a00 * b00);
       result += uint128(a32 * b00) << 32;
       result += uint128(a00 * b32) << 32;
       return result;
@@ -427,10 +440,10 @@ namespace eve
 #else
       // uint64_t shifts of >= 64 are undefined, so we will need some
       // special-casing.
-      return amount >= 64 ? uint128(lhs.lo_ << (amount - 64), 0)
+      return amount >= 64 ? uint128(low(lhs) << (amount - 64), 0)
         : amount == 0 ? lhs
-        : uint128((lhs.hi_ << amount) | (lhs.lo_ >> (64 - amount)),
-                  lhs.lo_ << amount);
+        : uint128((high(lhs) << amount) | (low(lhs) >> (64 - amount)),
+                  low(lhs) << amount);
 #endif
     }
 
@@ -440,10 +453,10 @@ namespace eve
 #else
       // uint64_t shifts of >= 64 are undefined, so we will need some
       // special-casing.
-      return amount >= 64 ? uint128(0, lhs.hi_ >> (amount - 64))
+      return amount >= 64 ? uint128(0, high(lhs) >> (amount - 64))
         : amount == 0 ? lhs
-        : uint128(lhs.hi_ >> amount,
-                  (lhs.lo_ >> amount) | (lhs.hi_ << (64 - amount)));
+        : uint128(high(lhs) >> amount,
+                  (low(lhs) >> amount) | (high(lhs) << (64 - amount)));
 #endif
     }
 
@@ -453,7 +466,7 @@ namespace eve
 #if defined(SPY_SIMD_SUPPORTS_INT128)
       return ~static_cast<unsigned __int128>(val);
 #else
-      return uint128(~val.hi_, ~val.lo_);
+      return uint128(~high(val), ~low(val));
 #endif
     }
 
@@ -462,7 +475,7 @@ namespace eve
       return static_cast<unsigned __int128>(lhs) |
         static_cast<unsigned __int128>(rhs);
 #else
-      return uint128(lhs.hi_ | rhs.hi_, lhs.lo_ | rhs.lo_);
+      return uint128(high(lhs) | high(rhs), low(lhs) | low(rhs));
 #endif
     }
 
@@ -471,7 +484,7 @@ namespace eve
       return static_cast<unsigned __int128>(lhs) &
         static_cast<unsigned __int128>(rhs);
 #else
-      return uint128(lhs.hi_ & rhs.hi_, lhs.lo_ & rhs.lo_);
+      return uint128(high(lhs) & high(rhs), low(lhs) & low(rhs));
 #endif
     }
 
@@ -480,7 +493,7 @@ namespace eve
       return static_cast<unsigned __int128>(lhs) ^
         static_cast<unsigned __int128>(rhs);
 #else
-      return uint128(lhs.hi_ ^ rhs.hi_, lhs.lo_ ^ rhs.lo_);
+      return uint128(high(lhs) ^ high(rhs), low(lhs) ^ low(rhs));
 #endif
     }
 
@@ -499,7 +512,7 @@ namespace eve
           rep.append(width - rep.size(), os.fill());
         } else if (adjustfield == std::ios::internal &&
                    (flags & std::ios::showbase) &&
-                   (flags & std::ios::basefield) == std::ios::hex && (v.lo_  || v.hi_) ) //TODO
+                   (flags & std::ios::basefield) == std::ios::hex && (low(v)  || high(v)) ) //TODO
         {
           rep.insert(2, width - rep.size(), os.fill());
         } else {
@@ -515,14 +528,14 @@ namespace eve
     static EVE_FORCEINLINE uint128 AddResult(uint128 result, uint128 lhs)
     {
       // check for carry
-      return (result.lo_ < lhs.lo_)
+      return (result.lo_ < low(lhs))
         ? uint128(result.hi_ + 1, result.lo_)
         : result;
     }
 
     static EVE_FORCEINLINE uint128 SubResult(uint128 result, uint128 lhs, uint128 rhs) {
       // check for augment
-      return (lhs.lo_ < rhs.lo_)
+      return (low(lhs) < low(rhs))
         ? uint128(result.hi_ - 1, result.lo_)
         : result;
     }
@@ -663,6 +676,73 @@ namespace eve
   {
     return n(out);
   }
+
+  inline namespace literals {
+    namespace impl_ {
+      template<char _Ch, int _Rad>
+      struct static_digit : std::integral_constant<int,
+                                                   '0' <= _Ch && _Ch <= '9' ? _Ch - '0' :
+      'a' <= _Ch && _Ch <= 'z' ? _Ch - 'a' + 10 :
+      'A' <= _Ch && _Ch <= 'Z' ? _Ch - 'A' + 10 : _Rad> {
+        static_assert(_Rad > static_digit::value, "character not a digit");
+      };
+
+      template<class, int, char ...>
+      struct int128_literal_radix;
+
+      template<class _Tp, int _Rad, char _Ch>
+      struct int128_literal_radix<_Tp, _Rad, _Ch> {
+        constexpr operator _Tp() const { return _Tp(static_digit<_Ch, _Rad>::value); } // NOLINT explicit
+
+        constexpr _Tp operator()(_Tp v) const { return v * _Tp(_Rad) + *this; }
+      };
+
+      template<class _Tp, int _Rad, char _Ch, char ..._Args>
+      struct int128_literal_radix<_Tp, _Rad, _Ch, _Args...> {
+        int128_literal_radix<_Tp, _Rad, _Ch> _Cur;
+        int128_literal_radix<_Tp, _Rad, _Args...> _Tgt;
+
+        constexpr operator _Tp() const { return _Tgt(_Cur); }; // NOLINT explicit
+
+        constexpr _Tp operator()(_Tp v) const { return _Tgt(_Cur(v)); };
+      };
+
+      template<class _Tp, char ..._Args>
+      struct int128_literal : int128_literal_radix<_Tp, 10, _Args...> {
+      };
+      template<class _Tp>
+      struct int128_literal<_Tp, '0'> : int128_literal_radix<_Tp, 10, '0'> {
+      };
+      template<class _Tp, char ..._Args>
+      struct int128_literal<_Tp, '0', _Args...> : int128_literal_radix<_Tp, 8, _Args...> {
+      };
+      template<class _Tp, char ..._Args>
+      struct int128_literal<_Tp, '0', 'x', _Args...> : int128_literal_radix<_Tp, 16, _Args...> {
+      };
+      template<class _Tp, char ..._Args>
+      struct int128_literal<_Tp, '0', 'X', _Args...> : int128_literal_radix<_Tp, 16, _Args...> {
+      };
+      template<class _Tp, char ..._Args>
+      struct int128_literal<_Tp, '0', 'b', _Args...> : int128_literal_radix<_Tp, 2, _Args...> {
+      };
+      template<class _Tp, char ..._Args>
+      struct int128_literal<_Tp, '0', 'B', _Args...> : int128_literal_radix<_Tp, 2, _Args...> {
+      };
+    }
+
+    template<char ..._Args>
+    constexpr uint128 operator "" _u128() { return impl_::int128_literal<uint128, _Args...>(); }
+
+//    template<char ..._Args>
+//     constexpr int128 operator "" _l128() { return impl_::int128_literal<int128, _Args...>(); }
+
+    template<char ..._Args>
+    constexpr uint128 operator "" _U128() { return impl_::int128_literal<uint128, _Args...>(); }
+
+//     template<char ..._Args>
+//     constexpr int128 operator "" _L128() { return impl_::int128_literal<int128, _Args...>(); }
+  }
+
 
 }
 // Specialized numeric_limits for uint128.

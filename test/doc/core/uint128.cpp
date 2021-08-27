@@ -82,6 +82,10 @@ int main()
   std::cout << (aaa*bbb-aaa == aaa) <<  std::endl;
   std::cout << spy::supports::int128_ << std::endl;
   std::cout << std::dec << __SIZEOF_INT128__ <<  std::endl;
-
+  using namespace eve::literals;
+  uint128 aaaa = 2000000000000000000000_U128;
+  std::cout << aaaa << std::endl;
+  uint128 bbbb = 0xf0000000000_U128;
+  std::cout << std::hex << bbbb << std::endl;
   return 0;
 }
