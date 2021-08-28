@@ -24,7 +24,7 @@ namespace eve::detail
     }
     else if constexpr( has_native_abi_v<T> )
     {
-      return map(countl_one, v); // TO DO
+      return countl_zero(~v); 
     }
     else
       return apply_over(countl_one, v);

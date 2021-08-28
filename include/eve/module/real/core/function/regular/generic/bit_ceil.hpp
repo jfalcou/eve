@@ -50,15 +50,8 @@ namespace eve::detail
       {
         auto tmp =  bit_floor(v);
         auto tmpltv = tmp < v;
-        if constexpr(scalar_value<T>)  return T(tmpltv ? tmp*2:  tmp);
-        else
-        {
-
-          auto res = if_else(vle1, one(eve::as(v)) //TODO Optimize with one_ ?
-                        , if_else(tmpltv, tmp*2,  tmp));
-          return res;
-        }
-
+        if constexpr(scalar_value<T>) return T(tmpltv ? tmp*2:  tmp);
+        else                          return if_else(vle1, one, if_else(tmpltv, tmp*2,  tmp));
       }
     }
     else return apply_over(bit_ceil, v);
