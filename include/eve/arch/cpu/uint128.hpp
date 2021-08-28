@@ -196,12 +196,12 @@ namespace eve
     }
     constexpr friend bool operator!=(uint128 lhs, uint128 rhs) {
 #if defined(SPY_SIMD_SUPPORTS_INT128)
-        return static_cast<unsigned __int128>(lhs) !=
-          static_cast<unsigned __int128>(rhs);
+      return static_cast<unsigned __int128>(lhs) !=
+        static_cast<unsigned __int128>(rhs);
 #else
       return (low(lhs) != low(rhs)) || (high(lhs) != high(rhs));
 #endif
-      }
+    }
 
     constexpr friend bool operator!(uint128 val) {
 #if defined(SPY_SIMD_SUPPORTS_INT128)
