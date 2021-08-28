@@ -10,6 +10,8 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/function/countl_zero.hpp>
+
 
 #include <bit>
 #include <type_traits>
@@ -24,7 +26,7 @@ namespace eve::detail
     }
     else if constexpr( has_native_abi_v<T> )
     {
-      return countl_zero(~v); 
+      return countl_zero(~v);
     }
     else
       return apply_over(countl_one, v);
