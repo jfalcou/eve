@@ -22,7 +22,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr T laguerre_(EVE_SUPPORTS(cpu_)
                                   , diff_type<1> const &
                                   , N const & n
-                                  , T const &x) noexcept
+                                       , T const &x) noexcept
   requires index_compatible_values<N, T>
   {
     return -laguerre(1, n, x);
@@ -30,12 +30,12 @@ namespace eve::detail
 
   template<integral_real_value M, integral_real_value N, floating_value T>
   EVE_FORCEINLINE constexpr T laguerre_(EVE_SUPPORTS(cpu_)
-                                  , diff_type<1> const &
-                                  , M const & m
-                                  , N const & n
-                                  , T const &x) noexcept
+                                       , diff_type<1> const &
+                                       , M const & m
+                                       , N const & n
+                                       , T const &x) noexcept
   requires index_compatible_values<N, T> && index_compatible_values<M, T>
   {
-    return if_else(is_eqz(n), zero, cospi(m)*laguerre(inc(m), saturated(dec)(n), x);
+    return if_else(is_eqz(n), zero, cospi(m)*laguerre(inc(m), saturated(dec)(n), x));
   }
 }
