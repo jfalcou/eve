@@ -20,6 +20,22 @@
 
 namespace eve::algo
 {
+  namespace detail
+  {
+    // needed to forceinline
+    struct find_branchless_lambda
+    {
+      std::optional<std::ptrdiff_t> *match;
+
+      EVE_FORCEINLINE bool operator()(auto test) const
+      {
+        auto _m = eve::first_true(test);
+        if( _m ) *match = _m;
+        return _m.has_value();
+      }
+    };
+  }
+
   template <typename TraitsSupport>
   struct find_if_ : TraitsSupport
   {
@@ -49,11 +65,7 @@ namespace eve::algo
         // TODO: this might not be ideal, see: #764
         std::optional<std::ptrdiff_t> match;
         std::size_t pos = find_branchless(tests,
-          [&](auto test) {
-            auto _m = eve::first_true(test);
-            if (_m) match = _m;
-            return _m.has_value();
-        });
+          detail::find_branchless_lambda{&match});
         constexpr std::ptrdiff_t lanes = typename I::cardinal{}();
         found = arr[0].unaligned() + (pos * lanes) + *match;
 

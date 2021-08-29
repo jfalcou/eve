@@ -20,7 +20,7 @@ namespace eve::algo
     using rng_value_type = std::remove_reference_t<decltype(*std::declval<Rng>().begin())>;
 
     template <typename Traits, typename ZipTraits, typename ...Rngs>
-    auto preprocess_zip_range_traits_support(Traits tr, ZipTraits, kumi::tuple<Rngs...>)
+    EVE_FORCEINLINE auto preprocess_zip_range_traits_support(Traits tr, ZipTraits, kumi::tuple<Rngs...>)
     {
       using value_type = kumi::tuple<rng_value_type<Rngs>...>;
       using N = forced_cardinal_t<decltype(tr), value_type>;
@@ -65,7 +65,7 @@ namespace eve::algo
     }
 
     template <typename Traits, typename ZipTraits, typename ...Rngs>
-    auto preprocess_zip_range(Traits tr, ZipTraits zip_tr, kumi::tuple<Rngs...> rngs) {
+    EVE_FORCEINLINE auto preprocess_zip_range(Traits tr, ZipTraits zip_tr, kumi::tuple<Rngs...> rngs) {
       auto tr_pair = preprocess_zip_range_traits_support(tr, zip_tr, rngs);
       // Bindings don't work with captures
       auto tr_external = tr_pair.first;
