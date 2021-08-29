@@ -25,7 +25,7 @@ namespace eve::detail
 {
   template<unsigned_value T>
   EVE_FORCEINLINE auto popcount_(EVE_SUPPORTS(cpu_)
-                                , T const &x) noexcept
+                                , T x) noexcept
   {
     using r_t = as_integer_t<T, unsigned>;
     if constexpr(has_native_abi_v<T>)
