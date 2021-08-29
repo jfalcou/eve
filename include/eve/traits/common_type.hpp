@@ -43,7 +43,7 @@ namespace eve
   //!
   //! @}
   //================================================================================================
-  template<typename T, typename ...Ts> struct common_type;
+  template<typename ...Ts> struct common_type;
 
   template<typename ...Ts>
   using common_type_t = typename common_type<Ts...>::type;
@@ -120,7 +120,11 @@ namespace eve::detail
 
 namespace eve
 {
-  template<typename T, typename ...Ts> struct common_type :
+  template <> struct common_type<>
+  {
+  };
+
+  template<typename T, typename ...Ts> struct common_type<T, Ts...> :
     decltype((detail::common_type_reduction<T>{} + ... + as<Ts>{}))
   {
   };

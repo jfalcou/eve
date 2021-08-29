@@ -22,9 +22,12 @@
 
 #include <eve/traits/alignment.hpp>
 #include <eve/traits/as_arithmetic.hpp>
+#include <eve/traits/as_floating_point.hpp>
+#include <eve/traits/as_integer.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/traits/as_wide.hpp>
 #include <eve/traits/cardinal.hpp>
+#include <eve/traits/common_compatible.hpp>
+#include <eve/traits/common_type.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/is_logical.hpp>
-
