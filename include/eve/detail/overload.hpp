@@ -165,14 +165,23 @@ namespace eve
       return Decoration::combine(d);
     }
 
+    template <typename Function>
+    struct fwding_lamda
+    {
+      Function f;
+
+      template <typename... X>
+      constexpr EVE_FORCEINLINE auto operator()(X&&... x)
+      {
+        return f(decorated{}, std::forward<X>(x)...);
+      }
+    };
+
     template<typename Function>
     constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
     {
       if constexpr( requires{ Decoration{}(f); } )  return Decoration{}(f);
-      else
-      {
-        return [f]<typename... X>(X&&... x) { return f(decorated{}, std::forward<X>(x)...); };
-      }
+      else                                          return fwding_lamda<Function>{f};
     }
   };
 

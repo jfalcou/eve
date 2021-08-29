@@ -416,14 +416,17 @@ namespace eve::detail
     }( std::make_integer_sequence<type,End - Begin>{});
   }
 
+  // Can't use a lambda because need to force inline
+  template <auto Begin, auto Step, decltype(Begin) ... Iter, typename Func>
+  EVE_FORCEINLINE constexpr bool for_until_impl_(
+    std::integer_sequence<decltype(Begin), Iter...>, Func& f)
+  {
+    return ( f(std::integral_constant<decltype(Begin), Begin + Iter * Step>{} ) || ...);
+  }
+
   template<auto Begin, auto Step, auto End, typename Func>
   EVE_FORCEINLINE constexpr bool for_until_(Func f)
   {
-    using type = decltype(Begin);
-
-    return [&]<auto... Iter>( std::integer_sequence<type,Iter...> )
-    {
-      return ( f(std::integral_constant<type, Begin + Iter * Step>{} ) || ...);
-    }( std::make_integer_sequence<type,End - Begin>{});
+    return for_until_impl_<Begin, Step>(std::make_integer_sequence<decltype(Begin),(End - Begin) / Step>{}, f);
   }
 }

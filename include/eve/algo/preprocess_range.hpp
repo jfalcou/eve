@@ -42,11 +42,11 @@ namespace eve::algo
       S end()   const { return l_; }
 
       template <typename I_>
-      auto to_output_iterator(I_ it) const { return to_output_(it); }
+      EVE_FORCEINLINE auto to_output_iterator(I_ it) const { return to_output_(it); }
     };
 
     template <typename Traits, typename I, typename S, typename ToOutput, typename Update>
-    auto enhance_to_output(preprocess_range_result<Traits, I, S, ToOutput> prev, Update update )
+    EVE_FORCEINLINE auto enhance_to_output(preprocess_range_result<Traits, I, S, ToOutput> prev, Update update )
     {
       return preprocess_range_result(
         prev.traits(),
@@ -58,7 +58,7 @@ namespace eve::algo
 
     // Base case. Should validate that I, S are a valid iterator pair
     template <typename Traits, iterator I, sentinel_for<I> S>
-    auto preprocess_eve_it_sentinel(Traits traits_, I f, S l)
+    EVE_FORCEINLINE auto preprocess_eve_it_sentinel(Traits traits_, I f, S l)
     {
       if constexpr ( !std::same_as<typename I::value_type, iteration_type_t<Traits, I>> )
       {
@@ -113,7 +113,7 @@ namespace eve::algo
   struct preprocess_range_
   {
     template <typename Traits, std::contiguous_iterator I, typename S>
-    auto operator()(Traits traits_, I f, S l) const
+    EVE_FORCEINLINE auto operator()(Traits traits_, I f, S l) const
     {
       using T = std::remove_reference_t<decltype(*f)>;
       using it = unaligned_ptr_iterator<T, forced_cardinal_t<Traits, typename std::iterator_traits<I>::value_type>>;
@@ -135,23 +135,23 @@ namespace eve::algo
 
     template <typename Traits, typename I, typename S>
       requires eve::detail::tag_dispatchable<preprocess_range_, Traits, I, S>
-    auto operator()(Traits traits, I f, S l) const {
+    EVE_FORCEINLINE auto operator()(Traits traits, I f, S l) const {
       return tagged_dispatch(*this, traits, f, l);
     }
 
     template <typename Traits, typename Rng>
       requires eve::detail::tag_dispatchable<preprocess_range_, Traits, Rng>
-    auto operator()(Traits traits_, Rng&& rng) const {
+    EVE_FORCEINLINE auto operator()(Traits traits_, Rng&& rng) const {
       return tagged_dispatch(*this, traits_, std::forward<Rng>(rng));
     }
 
     template <typename Traits, typename Rng>
-    auto operator()(Traits traits_, Rng&& rng) const {
+    EVE_FORCEINLINE auto operator()(Traits traits_, Rng&& rng) const {
       return operator()(traits_, rng.begin(), rng.end());
     }
 
     template <typename Traits, typename T>
-    auto operator()(Traits traits_, aligned_enough_ptr<Traits, T> f, T* l) const
+    EVE_FORCEINLINE auto operator()(Traits traits_, aligned_enough_ptr<Traits, T> f, T* l) const
     {
       using N            = forced_cardinal_t<Traits, T>;
       using aligned_it   = aligned_ptr_iterator<T, N>;
@@ -164,7 +164,7 @@ namespace eve::algo
     }
 
     template <typename Traits, typename T>
-    auto operator()(Traits traits_, aligned_enough_ptr<Traits, T> f, aligned_enough_ptr<Traits, T> l) const
+    EVE_FORCEINLINE auto operator()(Traits traits_, aligned_enough_ptr<Traits, T> f, aligned_enough_ptr<Traits, T> l) const
     {
       using aligned_it   = aligned_ptr_iterator<T, forced_cardinal_t<Traits, T>>;
 
@@ -176,7 +176,7 @@ namespace eve::algo
 
     // Base case. Should validate that I, S are a valid iterator pair
     template <typename Traits, iterator I, sentinel_for<I> S>
-    auto operator()(Traits traits_, I f, S l) const
+    EVE_FORCEINLINE auto operator()(Traits traits_, I f, S l) const
     {
       return detail::preprocess_eve_it_sentinel(traits_, f, l);
     }

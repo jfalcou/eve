@@ -56,16 +56,34 @@ namespace eve::algo
     return detail::array_reduce_impl<0, N>(x, op);
   }
 
-  template <typename T, std::size_t N, typename Op>
-  EVE_FORCEINLINE constexpr std::size_t find_branchless(std::array<T, N> x, Op op) {
-    return [&]<std::size_t ...i> ( std::index_sequence<i...> ) {
+  struct
+  {
+    template <typename T, std::size_t N, typename Op>
+    struct cmov_if_lambda
+    {
+      std::array<T, N>* x;
+      Op* op;
+      std::size_t* res;
+
+      EVE_FORCEINLINE constexpr void operator()(std::size_t j) const
+      {
+        if ((*op)((*x)[j])) *res = j;
+      }
+    };
+
+
+    template <typename T, std::size_t N, typename Op, std::size_t...i>
+    EVE_FORCEINLINE constexpr std::size_t impl(std::array<T, N> x, Op op, std::index_sequence<i...>) const {
       std::size_t res = N;
-      auto update_res_if = [&](std::size_t j) mutable {
-        if (op(x[j])) res = j;  // should generate cmov
-      };
+      cmov_if_lambda<T, N, Op> update_res_if {&x, &op, &res };
       (update_res_if(N - i - 1), ...);
       return res;
-    }(std::make_index_sequence<N>{});
-  }
+    }
 
+    template <typename T, std::size_t N, typename Op, std::size_t...idxs>
+    EVE_FORCEINLINE constexpr std::size_t operator()(std::array<T, N> x, Op op) const
+    {
+      return impl(x, op, std::make_index_sequence<N>{});
+    }
+  } inline constexpr find_branchless;
 }

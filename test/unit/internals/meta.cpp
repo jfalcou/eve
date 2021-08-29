@@ -32,4 +32,14 @@ TTS_CASE("eve::detail::for_until_") {
     TTS_EXPECT(res);
     TTS_EXPECT(i == 4);
   }
+  {
+    int i = 0;
+    bool res = eve::detail::for_until_<0, 2, 8>([&](auto j) mutable {
+      TTS_EXPECT(i == j());
+      i += 2;
+      return false;
+    });
+    TTS_EXPECT_NOT(res);
+    TTS_EXPECT(i == 8);
+  }
 }
