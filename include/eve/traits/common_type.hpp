@@ -25,15 +25,15 @@ namespace eve
   //!
   //! **Required header:** `#include <eve/traits/common_type.hpp>`
   //!
-  //! Similar to std::common_type.
+  //! Similar to `std::common_type`.
   //!
-  //! We cannot use std::common_type because it tends to return a bigger type:
+  //! We cannot use `std::common_type` because it tends to return a bigger type:
   //!   For example: `std::int16_t`, `std::int8_t` will return `std::int32_t`: https://godbolt.org/z/vjf9c45E5
   //!
   //! We also do not follow standard promotion rules:
-  //!      std::common_type_t<std::int16_t, std::uint16_t> is std::int32_t
-  //! BUT: std::common_type_t<std::int32_t, std::uint32_t> is std::uint32_t
-  //! We always do like 32 bit one: - eve::common_type_t<std::int16_t, std::uint16_t> is std::uint16_t
+  //!      `std::common_type_t<std::int16_t, std::uint16_t>` is `std::int32_t`
+  //! BUT: `std::common_type_t<std::int32_t, std::uint32_t>` is `std::uint32_t`
+  //! We always do like 32 bit one: - `eve::common_type_t<std::int16_t, std::uint16_t>` is `std::uint16_t`
   //!
   //! *NOTE:* for signed unsigned of the same size we return unsigned of this size (same as std).
   //!
@@ -78,7 +78,6 @@ namespace eve::detail
   {
     using type = common_type_reduction<kumi::tuple<eve::common_type_t<Ts, Us> ...>>;
   };
-
 
   template <typename T>
   struct common_type_reduction
