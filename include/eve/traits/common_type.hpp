@@ -51,7 +51,7 @@ namespace eve
   // We don't care for not default constructible types.
   template <typename ...Ts>
   concept have_common_type = requires (Ts...) {
-    { common_type_t<Ts...>{} };
+    { typename common_type<Ts...>::type{} };
   };
 }
 
@@ -73,6 +73,7 @@ namespace eve::detail
   };
 
   template <typename ...Ts, typename ...Us>
+    requires (sizeof...(Ts) == sizeof...(Us))
   struct common_kumi_tuple<kumi::tuple<Ts...>, kumi::tuple<Us...>>
   {
     using type = common_type_reduction<kumi::tuple<eve::common_type_t<Ts, Us> ...>>;
@@ -119,10 +120,8 @@ namespace eve::detail
 
 namespace eve
 {
-  template<typename T, typename ...Ts> struct common_type
+  template<typename T, typename ...Ts> struct common_type :
+    decltype((detail::common_type_reduction<T>{} + ... + as<Ts>{}))
   {
-    using type = typename decltype(
-                    (detail::common_type_reduction<T>{} + ... + as<Ts>{}))
-                  ::type;
   };
 }
