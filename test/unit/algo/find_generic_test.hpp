@@ -7,12 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include "test.hpp"
+#include "algo_test.hpp"
 
 #include <eve/algo/as_range.hpp>
 #include <eve/algo/traits.hpp>
-
-#include <eve/memory/aligned_allocator.hpp>
+#include <eve/algo/unalign.hpp>
 
 #include <algorithm>
 #include <vector>

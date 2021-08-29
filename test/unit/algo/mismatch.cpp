@@ -10,6 +10,10 @@
 
 #include <eve/algo/mismatch.hpp>
 
+#include "mismatch_generic_test.hpp"
+
+#include <set>
+#include <random>
 #include <vector>
 
 TTS_CASE("Mismatch example, use previous result") {
@@ -54,3 +58,12 @@ TTS_CASE("Mismatch example, first point not within a radius")
   TTS_EQUAL(*found_x_y, (kumi::tuple{10, -10}));
   TTS_EQUAL(*found_r, 10.1);
 }
+
+EVE_TEST_TYPES("Check generic", algo_test::selected_pairs_types)
+<typename T>(eve::as<T> tgt)
+{
+  algo_test::mismatch_generic_test(tgt, eve::algo::mismatch,
+    [](auto zip_f, auto /*zip_l*/, auto expected, auto actual) {
+     TTS_EQUAL((expected - zip_f), (actual - zip_f));
+  });
+};
