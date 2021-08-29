@@ -10,7 +10,9 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/function/is_eqz.hpp>
 #include <eve/function/is_nez.hpp>
+#include <eve/function/inc.hpp>
 
 #include <bit>
 #include <type_traits>
