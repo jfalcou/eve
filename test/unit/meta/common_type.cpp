@@ -10,6 +10,8 @@
 
 #include <eve/traits/common_type.hpp>
 
+#include <tuple>
+
 TTS_CASE("eve::common_type, small integrals")
 {
   // Explanation
@@ -60,3 +62,29 @@ EVE_TEST_TYPES("eve::common_type matches std::common_type", eve::test::scalar::a
     float       , double
   >{});
 };
+
+using i32_u32_f64 = kumi::tuple<std::int32_t, std::uint32_t, double>;
+using i32_i32_i32 = kumi::tuple<std::int32_t, std::int32_t,  std::int32_t>;
+
+struct product : i32_u32_f64 {};
+template<>              struct eve::is_product_type<product> : std::true_type {};
+template<>              struct std::tuple_size<product>      : std::tuple_size<i32_u32_f64> {};
+template<std::size_t I> struct std::tuple_element<I,product> : std::tuple_element<I, i32_u32_f64> {};
+
+struct smaller_product : i32_i32_i32 {};
+template<>              struct eve::is_product_type<smaller_product> : std::true_type {};
+template<>              struct std::tuple_size<smaller_product>      : std::tuple_size<i32_i32_i32> {};
+template<std::size_t I> struct std::tuple_element<I,smaller_product> : std::tuple_element<I, i32_i32_i32> {};
+
+
+TTS_CASE("eve::common_type, product type")
+{
+  TTS_TYPE_IS(
+    (eve::common_type_t<i32_u32_f64, i32_i32_i32>), i32_u32_f64);
+
+  TTS_TYPE_IS((eve::common_type_t<product, i32_i32_i32>), product);
+  TTS_TYPE_IS((eve::common_type_t<i32_i32_i32, product>), product);
+  TTS_TYPE_IS((eve::common_type_t<product, smaller_product>), product);
+  TTS_TYPE_IS((eve::common_type_t<smaller_product, product>), product);
+
+}
