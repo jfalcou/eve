@@ -36,6 +36,6 @@ namespace eve::detail
                                        , T const &x) noexcept
   requires index_compatible_values<N, T> && index_compatible_values<M, T>
   {
-    return if_else(is_eqz(n), zero, cospi(m)*laguerre(inc(m), saturated(dec)(n), x);
+    return if_else(is_eqz(n), zero, cospi(m)*laguerre(inc(m), saturated(dec)(n), x));
   }
 }
