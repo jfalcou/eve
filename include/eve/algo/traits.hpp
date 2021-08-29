@@ -10,6 +10,7 @@
 #include <eve/detail/raberu.hpp>
 
 #include <eve/arch/cardinals.hpp>
+#include <eve/traits.hpp>
 
 #include <type_traits>
 #include <utility>
@@ -59,7 +60,7 @@ namespace eve::algo
   inline constexpr auto common_with_types_key = ::rbr::keyword( common_with_types_key_t{} );
 
   template <typename ...Ts>
-  inline constexpr auto common_with_types = (common_with_types_key = std::common_type<Ts...>{});
+  inline constexpr auto common_with_types = (common_with_types_key = eve::common_type<Ts...>{});
 
   inline constexpr auto common_type = common_with_types<>;
 
@@ -85,7 +86,7 @@ namespace eve::algo
       else
       {
         using Param = typename rbr::get_type_t<Traits, common_with_types_key>::type;
-        return std::common_type_t<Param, typename I::value_type>{};
+        return eve::common_type_t<Param, typename I::value_type>{};
       }
     }
   }

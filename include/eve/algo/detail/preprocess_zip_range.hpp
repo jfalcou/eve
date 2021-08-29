@@ -42,12 +42,12 @@ namespace eve::algo
         if constexpr (ZipTraits::contains(common_with_types_key))
         {
           using Param = rbr::get_type_t<ZipTraits, common_with_types_key>;
-          return []<typename... ParamTypes, typename... ZipTypes>(std::common_type<ParamTypes...>,
-                                                                  std::common_type<ZipTypes...>)
+          return []<typename... ParamTypes, typename... ZipTypes>(eve::common_type<ParamTypes...>,
+                                                                  eve::common_type<ZipTypes...>)
           {
             return algo::traits {algo::common_with_types<ParamTypes..., ZipTypes...>};
           }
-          (Param {}, std::common_type<rng_value_type<Rngs>...> {});
+          (Param {}, eve::common_type<rng_value_type<Rngs>...> {});
         }
         else
         {
