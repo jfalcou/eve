@@ -24,7 +24,7 @@ namespace eve::detail
   template<int N, real_value I, floating_real_value T, typename D>
   auto rising_factorial_(EVE_SUPPORTS(cpu_), decorated<diff_<N>(D)> const &
              , I a, T x) noexcept
-  requires(is_one_of<D>(types<raw_, pedantic_> {}))
+  requires(is_one_of<D>(types<raw_type, pedantic_type> {}))
   {
     using elt_t = element_type_t<T>;
     using r_t = as_wide_t<elt_t, cardinal_t<I>>;
