@@ -11,6 +11,7 @@
 #include <eve/algo/preprocess_range.hpp>
 
 #include <eve/algo/ptr_iterator.hpp>
+#include <eve/algo/unalign.hpp>
 
 #include <array>
 #include <vector>
@@ -21,7 +22,7 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
   using e_t = eve::element_type_t<T>;
   using N = eve::fixed<eve::expected_cardinal_v<e_t>>;
 
-  alignas(sizeof(eve::wide<e_t, N>)) std::array<e_t, N{}()> arr{};
+  alignas(sizeof(eve::wide<e_t, N>) * 2) std::array<e_t, N{}()> arr{};
 
   std::vector<e_t> vec(100u, 0);
 
@@ -31,7 +32,7 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
     TTS_TYPE_IS(decltype(processed.begin()), decltype(expected_f_type));
     TTS_TYPE_IS(decltype(processed.end()), decltype(expected_l_type));
 
-    TTS_EQUAL((processed.end() - processed.begin()), (l - f));
+    TTS_EQUAL((processed.end() - processed.begin()), (eve::algo::unalign(l) - eve::algo::unalign(f)));
 
     auto back_to_f = processed.to_output_iterator(processed.begin().unaligned());
     TTS_EQUAL(back_to_f, f);
@@ -66,7 +67,6 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
     TTS_CONSTEXPR_EXPECT(decltype(processed.traits())::contains(eve::algo::no_aligning));
   }
 
-
   // const aligned_pointer
   {
     auto processed = common_test(
@@ -97,6 +97,43 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
     );
     TTS_CONSTEXPR_EXPECT(decltype(processed.traits())::contains(eve::algo::no_aligning));
     TTS_CONSTEXPR_EXPECT(decltype(processed.traits())::contains(eve::algo::divisible_by_cardinal));
+  }
+
+  // unaligned/aligned
+  {
+    common_test(
+      arr.begin(), eve::aligned_ptr<e_t>{arr.end()},
+      eve::algo::unaligned_ptr_iterator<e_t, N>{},
+      eve::algo::unaligned_ptr_iterator<e_t, N>{}
+    );
+    common_test(
+      arr.cbegin(), eve::aligned_ptr<e_t const>{arr.cend()},
+      eve::algo::unaligned_ptr_iterator<e_t const, N>{},
+      eve::algo::unaligned_ptr_iterator<e_t const, N>{}
+    );
+  }
+
+  // Not aligned enough
+  if constexpr (N{}() > 1) {
+    common_test(
+      arr.begin(), eve::aligned_ptr<e_t, eve::fixed<1>>{arr.end()},
+      eve::algo::unaligned_ptr_iterator<e_t, N>{},
+      eve::algo::unaligned_ptr_iterator<e_t, N>{}
+    );
+    common_test(
+      eve::aligned_ptr<e_t, eve::fixed<1>>{arr.begin()}, eve::aligned_ptr<e_t, eve::fixed<1>>{arr.end()},
+      eve::algo::unaligned_ptr_iterator<e_t, N>{},
+      eve::algo::unaligned_ptr_iterator<e_t, N>{}
+    );
+  }
+
+  // over aligned
+  {
+    common_test(
+      eve::aligned_ptr<e_t, eve::fixed<N{}() * 2>>{arr.begin()}, eve::aligned_ptr<e_t>{arr.end()},
+      eve::algo::aligned_ptr_iterator<e_t, N>{},
+      eve::algo::aligned_ptr_iterator<e_t, N>{}
+    );
   }
 
   // vector::iterator
