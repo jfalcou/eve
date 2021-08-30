@@ -132,6 +132,11 @@ TTS_CASE("zip_iterator, sanity check, types test")
     eve::algo::readable_iterator auto a_u_test = zip_a_u{};
     (void) a_u_test;
   }
+
+
+  // sentinel for mismatching
+  TTS_CONSTEXPR_EXPECT((eve::algo::sentinel_for<zip_a_u, zip_u_a>));
+  TTS_CONSTEXPR_EXPECT((eve::algo::sentinel_for<zip_u_a, zip_a_u>));
 }
 
 EVE_TEST_TYPES("Check zip_iterator", algo_test::selected_types)

@@ -240,5 +240,13 @@ namespace std
   struct tuple_size<U> : std::tuple_size<typename U::tuple_type>
   {
   };
+
+  // I'm so not sure I'm doing this right
+  template< typename ...Is, typename ZipI2, template<class> class TQual, template<class> class UQual >
+    requires eve::algo::compatible_zip_iterators<eve::algo::zip_iterator<Is...>, ZipI2>
+  struct basic_common_reference<eve::algo::zip_iterator<Is...>, ZipI2, TQual, UQual>
+  {
+    using type = eve::algo::unaligned_t<ZipI2>;
+  };
 }
 // ~tuple opt in
