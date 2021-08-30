@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/algo/iterator_helpers.hpp>
+#include <eve/algo/detail/convert.hpp>
 
 #include <eve/function/convert.hpp>
 #include <eve/function/load.hpp>
@@ -98,14 +99,4 @@ namespace eve::algo
 
     I base;
   };
-
-  struct {
-    template <iterator I, typename T>
-    auto operator()(I it, eve::as<T> tgt) const
-    {
-           if constexpr ( std::same_as<typename I::value_type, T> )  return it;
-      else if constexpr ( instance_of<I, converting_iterator>     )  return operator()(it.base, tgt);
-      else                                                           return converting_iterator<I, T>{it};
-    }
-  } inline constexpr convert;
 }

@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/algo/array_utils.hpp>
+#include <eve/algo/concepts.hpp>
 #include <eve/algo/for_each_iteration.hpp>
 #include <eve/algo/preprocess_range.hpp>
 #include <eve/algo/traits.hpp>
@@ -45,7 +46,7 @@ namespace eve::algo
       P p;
     };
 
-    template <typename Rng, typename P>
+    template <relaxed_range Rng, typename P>
     EVE_FORCEINLINE auto operator()(Rng&& rng, P p) const
     {
       auto processed = preprocess_range(TraitsSupport::get_traits(), std::forward<Rng>(rng));
@@ -67,7 +68,7 @@ namespace eve::algo
   template <typename TraitsSupport>
   struct remove_ : TraitsSupport
   {
-    template <typename Rng, typename T>
+    template <relaxed_range Rng, typename T>
     EVE_FORCEINLINE auto operator()(Rng&& rng, T v) const
     {
       return remove_if[TraitsSupport::get_traits()](rng, [v](auto x) { return x == v; });

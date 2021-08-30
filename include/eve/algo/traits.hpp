@@ -116,7 +116,6 @@ namespace eve::algo
       constexpr supports_traits() {}
       constexpr explicit supports_traits(Traits tr) : tr_(tr) {}
 
-
       template <typename Settings>
       constexpr auto operator[](traits<Settings> tr) const
       {
@@ -125,7 +124,7 @@ namespace eve::algo
         return F<rebound_t>{rebound_t{sum}};
       }
 
-      template <typename Trait>
+      template <rbr::concepts::option Trait>
       constexpr auto operator[](Trait one_tr) const
       {
         return operator[](eve::algo::traits(one_tr));

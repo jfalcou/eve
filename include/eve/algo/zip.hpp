@@ -8,9 +8,12 @@
 #pragma once
 
 #include <eve/algo/as_range.hpp>
+#include <eve/algo/concepts/relaxed.hpp>
 #include <eve/algo/preprocess_range.hpp>
 #include <eve/algo/traits.hpp>
 #include <eve/algo/zip_iterator.hpp>
+
+#include <eve/algo/concepts/detail.hpp>
 
 #include <eve/algo/detail/preprocess_zip_range.hpp>
 
@@ -18,42 +21,12 @@
 
 namespace eve::algo
 {
-  template <typename ZipTraits, typename ...Rngs>
-  struct zip_range
-  {
-    ZipTraits zip_tr;
-    kumi::tuple<Rngs...> ranges;
-
-    EVE_FORCEINLINE auto begin() const
-    {
-      return zip_iterator(kumi::map([](auto r) { return r.begin(); }, ranges));
-    }
-
-    EVE_FORCEINLINE auto end() const
-    {
-      return zip_iterator(kumi::map([](auto r) { return r.end(); }, ranges));
-    }
-
-    template <typename Traits>
-    EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, Traits tr, zip_range self)
-    {
-      return preprocess_zip_range(tr, self.zip_tr, self.ranges);
-    }
-  };
-
-  template <typename ZipTraits, typename ...Rngs>
-  zip_range(ZipTraits zip_tr, kumi::tuple<Rngs...>) -> zip_range<ZipTraits, Rngs...>;
+  template <typename ZipTraits, relaxed_range ...Rngs>
+  struct zip_range;
 
   namespace detail
   {
-    // FIX-874: we should do this proper
-    template <typename Rng>
-    concept light_range = requires (Rng& rng) {
-      { rng.begin() };
-      { rng.end() };
-    };
-
-    template <light_range Rng>
+    template <relaxed_range Rng>
     struct rng_ref
     {
       Rng* rng;
@@ -80,7 +53,7 @@ namespace eve::algo
      {
        std::ptrdiff_t res = -1;
        auto process_one = [&]<typename C>(C const& c) mutable {
-         if constexpr (detail::light_range<C>)
+         if constexpr (relaxed_range<C>)
          {
            std::ptrdiff_t cur = c.end() - c.begin();
            if (res == -1) res = cur;
@@ -99,9 +72,11 @@ namespace eve::algo
          [&]<typename C>(C&& c)
          {
            using no_ref = std::remove_reference_t<C>;
-                if constexpr (instance_of<no_ref, detail::rng_ref>) return c;
-           else if constexpr (detail::light_range<no_ref>         ) return detail::rng_ref<no_ref>{&c};
-           else                                                     return as_range(c, unalign(c) + distance);
+                if constexpr (detail::instance_of<no_ref, detail::rng_ref>) return c;
+           // We need to handle `range_pair` separately, because we create it here
+           else if constexpr (detail::instance_of<no_ref, range_pair>     ) return c;
+           else if constexpr (relaxed_range<no_ref>                       ) return detail::rng_ref<no_ref>{&c};
+           else                                                             return as_range(c, unalign(c) + distance);
          }(components)...
        };
      }
@@ -109,9 +84,10 @@ namespace eve::algo
    public:
 
     template <typename ...Components>
+      requires ((relaxed_range<Components> || relaxed_iterator<Components>) && ...)
     EVE_FORCEINLINE auto operator()(Components&& ... components) const
     {
-      if constexpr ((!detail::light_range<Components> && ... ))
+      if constexpr ((relaxed_iterator<Components> && ... ))
       {
         return zip_iterator{components...};
       }
@@ -124,4 +100,65 @@ namespace eve::algo
   };
 
   inline constexpr auto zip = function_with_traits<zip_>;
+
+  template <typename ZipTraits, relaxed_range ...Rngs>
+  struct zip_range : kumi::tuple<Rngs...>
+  {
+    ZipTraits zip_tr;
+
+    EVE_FORCEINLINE zip_range(ZipTraits zip_tr, kumi::tuple<Rngs...> ranges):
+      kumi::tuple<Rngs...>(ranges),
+      zip_tr(zip_tr)
+    {
+    }
+
+    // Traits support
+    template<typename Settings>
+    EVE_FORCEINLINE auto operator[](traits<Settings> tr) const
+    {
+      return kumi::apply([&](Rngs... rngs) { return zip[zip_tr][tr](rngs...); }, *this);
+    }
+
+    template <rbr::concepts::option Trait>
+    EVE_FORCEINLINE auto operator[](Trait one_tr) const
+    {
+      return operator[](eve::algo::traits(one_tr));
+    }
+
+    ZipTraits get_traits() const
+    {
+      return zip_tr;
+    }
+
+    EVE_FORCEINLINE auto begin() const
+    {
+      return zip_iterator(kumi::map([](auto r) { return r.begin(); }, *this));
+    }
+
+    EVE_FORCEINLINE auto end() const
+    {
+      return zip_iterator(kumi::map([](auto r) { return r.end(); }, *this));
+    }
+
+    template <typename Traits>
+    EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, Traits tr, zip_range self)
+    {
+      return detail::preprocess_zip_range(tr, self.zip_tr, self);
+    }
+  };
+}
+
+namespace std
+{
+  template <typename Traits, typename ...Ranges>
+  struct tuple_size<eve::algo::zip_range<Traits, Ranges...>> :
+    std::tuple_size<kumi::tuple<Ranges...>>
+  {
+  };
+
+  template <std::size_t I, typename Traits, typename ...Ranges>
+  struct tuple_element<I, eve::algo::zip_range<Traits, Ranges...>> :
+    std::tuple_element<I, kumi::tuple<Ranges...>>
+  {
+  };
 }
