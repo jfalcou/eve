@@ -73,6 +73,8 @@ namespace eve::algo
          {
            using no_ref = std::remove_reference_t<C>;
                 if constexpr (detail::instance_of<no_ref, detail::rng_ref>) return c;
+           // We need to handle `range_pair` separately, because we create it here
+           else if constexpr (detail::instance_of<no_ref, range_pair>     ) return c;
            else if constexpr (relaxed_range<no_ref>                       ) return detail::rng_ref<no_ref>{&c};
            else                                                             return as_range(c, unalign(c) + distance);
          }(components)...
@@ -141,7 +143,7 @@ namespace eve::algo
     template <typename Traits>
     EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, Traits tr, zip_range self)
     {
-      return preprocess_zip_range(tr, self.zip_tr, self);
+      return detail::preprocess_zip_range(tr, self.zip_tr, self);
     }
   };
 }
@@ -149,13 +151,13 @@ namespace eve::algo
 namespace std
 {
   template <typename Traits, typename ...Ranges>
-  struct std::tuple_size<eve::algo::zip_range<Traits, Ranges...>> :
+  struct tuple_size<eve::algo::zip_range<Traits, Ranges...>> :
     std::tuple_size<kumi::tuple<Ranges...>>
   {
   };
 
   template <std::size_t I, typename Traits, typename ...Ranges>
-  struct std::tuple_element<I, eve::algo::zip_range<Traits, Ranges...>> :
+  struct tuple_element<I, eve::algo::zip_range<Traits, Ranges...>> :
     std::tuple_element<I, kumi::tuple<Ranges...>>
   {
   };
