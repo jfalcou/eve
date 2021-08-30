@@ -49,3 +49,28 @@ TTS_CASE("zip range, decomposition")
   TTS_EQUAL(ref_c.begin(),  c.begin());
   TTS_EQUAL(ref_c.end(),    c.end());
 }
+
+TTS_CASE("zip/zip_range, traits")
+{
+  std::vector<int> const   v{1, 2, 3, 4};
+  std::vector<std::int8_t> c{'a', 'b', 'c', 'd'};
+
+  eve::algo::traits expected{eve::algo::common_type};
+
+  {
+    auto zipped = eve::algo::zip[eve::algo::common_type](v, c);
+    TTS_TYPE_IS(decltype(zipped.get_traits()), decltype(expected));
+  }
+
+  {
+    auto zipped = eve::algo::zip(v, c);
+    auto with_traits = zipped[eve::algo::common_type];
+    TTS_TYPE_IS(decltype(with_traits.get_traits()), decltype(expected));
+  }
+
+  {
+    auto zipped = eve::algo::zip(v, c);
+    auto with_traits = zipped[expected];
+    TTS_TYPE_IS(decltype(with_traits.get_traits()), decltype(expected));
+  }
+}

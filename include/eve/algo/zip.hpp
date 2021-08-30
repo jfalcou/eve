@@ -19,32 +19,7 @@
 namespace eve::algo
 {
   template <typename ZipTraits, typename ...Rngs>
-  struct zip_range : kumi::tuple<Rngs...>
-  {
-    ZipTraits zip_tr;
-
-    zip_range(ZipTraits zip_tr, kumi::tuple<Rngs...> ranges):
-      kumi::tuple<Rngs...>(ranges),
-      zip_tr(zip_tr)
-    {
-    }
-
-    EVE_FORCEINLINE auto begin() const
-    {
-      return zip_iterator(kumi::map([](auto r) { return r.begin(); }, *this));
-    }
-
-    EVE_FORCEINLINE auto end() const
-    {
-      return zip_iterator(kumi::map([](auto r) { return r.end(); }, *this));
-    }
-
-    template <typename Traits>
-    EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, Traits tr, zip_range self)
-    {
-      return preprocess_zip_range(tr, self.zip_tr, self);
-    }
-  };
+  struct zip_range;
 
   namespace detail
   {
@@ -126,6 +101,52 @@ namespace eve::algo
   };
 
   inline constexpr auto zip = function_with_traits<zip_>;
+
+  template <typename ZipTraits, typename ...Rngs>
+  struct zip_range : kumi::tuple<Rngs...>
+  {
+    ZipTraits zip_tr;
+
+    EVE_FORCEINLINE zip_range(ZipTraits zip_tr, kumi::tuple<Rngs...> ranges):
+      kumi::tuple<Rngs...>(ranges),
+      zip_tr(zip_tr)
+    {
+    }
+
+    // Traits support
+    template<typename Settings>
+    EVE_FORCEINLINE auto operator[](traits<Settings> tr) const
+    {
+      return kumi::apply([&](Rngs... rngs) { return zip[zip_tr][tr](rngs...); }, *this);
+    }
+
+    template <rbr::concepts::option Trait>
+    EVE_FORCEINLINE auto operator[](Trait one_tr) const
+    {
+      return operator[](eve::algo::traits(one_tr));
+    }
+
+    ZipTraits get_traits() const
+    {
+      return zip_tr;
+    }
+
+    EVE_FORCEINLINE auto begin() const
+    {
+      return zip_iterator(kumi::map([](auto r) { return r.begin(); }, *this));
+    }
+
+    EVE_FORCEINLINE auto end() const
+    {
+      return zip_iterator(kumi::map([](auto r) { return r.end(); }, *this));
+    }
+
+    template <typename Traits>
+    EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, Traits tr, zip_range self)
+    {
+      return preprocess_zip_range(tr, self.zip_tr, self);
+    }
+  };
 }
 
 namespace std
