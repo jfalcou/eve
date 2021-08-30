@@ -28,3 +28,4 @@
 #include <eve/function/trigo_tags.hpp>
 #include <eve/function/converter.hpp>
 #include <eve/function/roundings.hpp>
+#include <eve/function/successor.hpp>
