@@ -19,30 +19,32 @@
 namespace eve::algo
 {
   template <typename ZipTraits, typename ...Rngs>
-  struct zip_range
+  struct zip_range : kumi::tuple<Rngs...>
   {
     ZipTraits zip_tr;
-    kumi::tuple<Rngs...> ranges;
+
+    zip_range(ZipTraits zip_tr, kumi::tuple<Rngs...> ranges):
+      kumi::tuple<Rngs...>(ranges),
+      zip_tr(zip_tr)
+    {
+    }
 
     EVE_FORCEINLINE auto begin() const
     {
-      return zip_iterator(kumi::map([](auto r) { return r.begin(); }, ranges));
+      return zip_iterator(kumi::map([](auto r) { return r.begin(); }, *this));
     }
 
     EVE_FORCEINLINE auto end() const
     {
-      return zip_iterator(kumi::map([](auto r) { return r.end(); }, ranges));
+      return zip_iterator(kumi::map([](auto r) { return r.end(); }, *this));
     }
 
     template <typename Traits>
     EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, Traits tr, zip_range self)
     {
-      return preprocess_zip_range(tr, self.zip_tr, self.ranges);
+      return preprocess_zip_range(tr, self.zip_tr, self);
     }
   };
-
-  template <typename ZipTraits, typename ...Rngs>
-  zip_range(ZipTraits zip_tr, kumi::tuple<Rngs...>) -> zip_range<ZipTraits, Rngs...>;
 
   namespace detail
   {
@@ -124,4 +126,19 @@ namespace eve::algo
   };
 
   inline constexpr auto zip = function_with_traits<zip_>;
+}
+
+namespace std
+{
+  template <typename Traits, typename ...Ranges>
+  struct std::tuple_size<eve::algo::zip_range<Traits, Ranges...>> :
+    std::tuple_size<kumi::tuple<Ranges...>>
+  {
+  };
+
+  template <std::size_t I, typename Traits, typename ...Ranges>
+  struct std::tuple_element<I, eve::algo::zip_range<Traits, Ranges...>> :
+    std::tuple_element<I, kumi::tuple<Ranges...>>
+  {
+  };
 }

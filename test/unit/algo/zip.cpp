@@ -36,3 +36,16 @@ TTS_CASE("zip iterators")
   rng_test(eve::algo::zip(v, c.begin()));
   rng_test(eve::algo::zip(v.begin(), c));
 }
+
+TTS_CASE("zip range, decomposition")
+{
+  std::vector<int> const   v{1, 2, 3, 4};
+  std::vector<std::int8_t> c{'a', 'b', 'c', 'd'};
+
+  auto zipped = eve::algo::zip(v, c);
+  auto [cref_v, ref_c] = zipped;
+  TTS_EQUAL(cref_v.begin(), v.begin());
+  TTS_EQUAL(cref_v.end(),   v.end());
+  TTS_EQUAL(ref_c.begin(),  c.begin());
+  TTS_EQUAL(ref_c.end(),    c.end());
+}
