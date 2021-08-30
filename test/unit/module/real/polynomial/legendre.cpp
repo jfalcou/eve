@@ -67,7 +67,7 @@ EVE_TEST( "Check behavior of legendre p on wide"
 //==================================================================================================
 EVE_TEST( "Check behavior of legendre q on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::between(-01.0, 1.0), eve::test::as_integer(eve::test::ramp(0)))
+        , eve::test::generate(eve::test::between(-1.0, 1.0), eve::test::as_integer(eve::test::ramp(0)))
         )
   <typename T, typename I>(T const& a0,I const & i0)
 {
@@ -78,8 +78,8 @@ EVE_TEST( "Check behavior of legendre q on wide"
     auto boost_legendre =  [&](auto i, auto) { return boost::math::legendre_q(n, a0.get(i)); };
     TTS_ULP_EQUAL(eve__legendrev(n, a0), T(boost_legendre), 100);
   }
- auto boost_legendrev =  [&](auto i, auto) { return boost::math::legendre_q(i0.get(i), a0.get(i)); };
- TTS_ULP_EQUAL(eve__legendrev(i0    , a0), T(boost_legendrev), 100);
+  auto boost_legendrev =  [&](auto i, auto) { return boost::math::legendre_q(i0.get(i), a0.get(i)); };
+  TTS_ULP_EQUAL(eve__legendrev(i0    , a0), T(boost_legendrev), 100);
   for(unsigned int j=0; j < eve::cardinal_v<T>; ++j)
   {
     auto boost_legendre2 =  [&](auto i, auto) { return boost::math::legendre_q(i0.get(i), a0.get(j)); };
@@ -123,6 +123,41 @@ EVE_TEST( "Check behavior of diff(legendre) on wide"
     for(unsigned int n=0; n < eve::cardinal_v<T>; ++n)
     {
       TTS_ULP_EQUAL(eve__legendrev(i0.get(j) , a0.get(n)), v_t(boost::math::legendre_p_prime(i0.get(j), a0.get(n))), 100);
+    }
+  }
+};
+
+   /////////////associated p legendre
+   EVE_TEST( "Check behavior of legendre q on wide"
+           , eve::test::simd::ieee_reals
+           , eve::test::generate(eve::test::between(-1.0, 1.0), eve::test::as_integer(eve::test::ramp(0)))
+           )
+     <typename T, typename I>(T const& a0,I const & )
+{
+  using v_t = eve::element_type_t<T>;
+  auto eve__legendrev  =  [](auto m, auto n, auto x) { return eve::legendre(m, n, x); };
+  //   for(unsigned int n=0; n < 5; ++n)
+  //   {
+  //     auto boost_legendre =  [&](auto i, auto) { return boost::math::legendre_q(n, a0.get(i)); };
+  //     TTS_ULP_EQUAL(eve__legendrev(n, a0), T(boost_legendre), 100);
+  //   }
+  //  auto boost_legendrev =  [&](auto i, auto) { return boost::math::legendre_q(i0.get(i), a0.get(i)); };
+  //  TTS_ULP_EQUAL(eve__legendrev(i0    , a0), T(boost_legendrev), 100);
+  //   for(unsigned int j=0; j < eve::cardinal_v<T>; ++j)
+  //   {
+  //     auto boost_legendre2 =  [&](auto i, auto) { return boost::math::legendre_q(i0.get(i), a0.get(j)); };
+  //     TTS_ULP_EQUAL(eve__legendrev(i0 , a0.get(j)), T(boost_legendre2), 100);
+  //   }
+  for(unsigned int i=0; i < 5u; ++i)
+  {
+    for(unsigned int j=0; j < 5u; ++j)
+    {
+      for(unsigned int n=0; n < eve::cardinal_v<T>; ++n)
+      {
+        std::cout << "a0 = " << a0.get(n) << " -- i = " << i << " -- j = " << j << std::endl;
+        TTS_ULP_EQUAL(eve__legendrev(i/*0.get(j), i0.get(j)*/, j, a0.get(n))
+                     , v_t(boost::math::legendre_p(i/*0.get(j), i0.get(j)*/, j, a0.get(n))), 100);
+      }
     }
   }
 };
