@@ -77,6 +77,7 @@ make_unit("unit.real.math"  nthroot.cpp               )
 make_unit("unit.real.math"  pow.cpp                   )
 make_unit("unit.real.math"  pow_abs.cpp               )
 make_unit("unit.real.math"  powm1.cpp                 )
+make_unit("unit.real.math"  pow1p.cpp                 )
 make_unit("unit.real.math"  radindeg.cpp              )
 make_unit("unit.real.math"  radinpi.cpp               )
 
