@@ -15,11 +15,13 @@
 #include <eve/constant/nan.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/pow1p.hpp>
+#include <eve/function/dec.hpp>
 #include <eve/function/diff/pow1p.hpp>
+#include <eve/function/log1p.hpp>
 #include <cmath>
 
 //==================================================================================================
-// Types tests
+//=== Types tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of pow1p"
             , eve::test::simd::ieee_reals
@@ -31,11 +33,11 @@ EVE_TEST_TYPES( "Check return types of pow1p"
   TTS_EXPR_IS( eve::pow1p(T(), T())  , T);
   TTS_EXPR_IS( eve::pow1p(v_t(), v_t()), v_t);
   TTS_EXPR_IS( eve::pow1p(T(), v_t()), T);
-//  TTS_EXPR_IS( eve::pow1p(v_t(), T()), T);
+ TTS_EXPR_IS( eve::pow1p(v_t(), T()), T);
 };
 
 //==================================================================================================
-// pow1p  tests
+//=== pow1p  tests
 //==================================================================================================
 EVE_TEST( "Check behavior of pow1p on wide"
         , eve::test::simd::ieee_reals
@@ -49,12 +51,12 @@ EVE_TEST( "Check behavior of pow1p on wide"
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
-  TTS_ULP_EQUAL(eve::pow1p(a0, a1)      , map([](auto e, auto f) -> v_t { return std::pow(double(e), double(f))-1; }, a0, a1), 2);
-  TTS_ULP_EQUAL(eve::pow1p(a2, a3)      , map([](auto e, auto f) -> v_t { return std::pow(double(e), double(f))-1; }, a2, a3), 5);
-//   TTS_ULP_EQUAL(eve::diff_1st(eve::pow1p)(a0, a1), eve::pow(a0, eve::dec(a1))*a1, 2);
-//   TTS_ULP_EQUAL(eve::diff_1st(eve::pow1p)(a2, a3), eve::pow(a2, eve::dec(a3))*a3, 2);
-//   TTS_ULP_EQUAL(eve::diff_2nd(eve::pow1p)(a0, a1), eve::pow(a0, a1)*eve::log(a0), 2);
-//   TTS_ULP_EQUAL(eve::diff_2nd(eve::pow1p)(a2, a3), eve::pow(a2, a3)*eve::log(a2), 2);
+  TTS_ULP_EQUAL(eve::pow1p(a0, a1)      , map([](auto e, auto f) -> v_t { return std::pow(double(e+1), double(f)); }, a0, a1), 2);
+  TTS_ULP_EQUAL(eve::pow1p(a2, a3)      , map([](auto e, auto f) -> v_t { return std::pow(double(e+1), double(f)); }, a2, a3), 5);
+  TTS_ULP_EQUAL(eve::diff(eve::pow1p)(a0, a1), eve::pow1p(a0, eve::dec(a1))*a1, 2);
+  TTS_ULP_EQUAL(eve::diff(eve::pow1p)(a2, a3), eve::pow1p(a2, eve::dec(a3))*a3, 2);
+  TTS_ULP_EQUAL(eve::diff_2nd(eve::pow1p)(a0, a1), eve::pow1p(a0, a1)*eve::log1p(a0), 2);
+  TTS_ULP_EQUAL(eve::diff_2nd(eve::pow1p)(a2, a3), eve::pow1p(a2, a3)*eve::log1p(a2), 2);
 };
 
 
@@ -65,29 +67,21 @@ EVE_TEST_TYPES( "Check  pow1p"
 {
   using eve::dec;
   TTS_IEEE_EQUAL(eve::pow1p( T(-1)          ,  T(-1)          )          , eve::inf(eve::as<T>()) );
-  TTS_IEEE_EQUAL(eve::pow1p(-T(-1)          ,  T(-1)          )          , eve::minf(eve::as<T>()));
-  TTS_IEEE_EQUAL(eve::pow1p(-T(-1)          ,  T(-2)          )          , eve::inf(eve::as<T>()) );
   TTS_IEEE_EQUAL(eve::pow1p( T(-1)          ,  T(-2)          )          , eve::inf(eve::as<T>()) );
-  TTS_IEEE_EQUAL(eve::pow1p( T(-1)          ,  eve::minf(eve::as<T>()) ) , eve::inf(eve::as<T>()) );
-  TTS_IEEE_EQUAL(eve::pow1p(-T(-1)          ,  eve::minf(eve::as<T>()) ) , eve::inf(eve::as<T>()) );
-  TTS_IEEE_EQUAL(eve::pow1p(-T(0)          ,  eve::minf(eve::as<T>()) ) , T(1)          );
-  TTS_IEEE_EQUAL(eve::pow1p(-T(0)          ,  eve::inf(eve::as<T>())  ) , T(1)          );
-  TTS_IEEE_EQUAL(eve::pow1p( T(0)          ,  eve::nan(eve::as<T>())  ) , T(1)          );
-  TTS_IEEE_EQUAL(eve::pow1p( eve::nan(eve::as<T>()) ,  T(0)           ) , T(1)          );
-  TTS_IEEE_EQUAL(eve::pow1p( eve::nan(eve::as<T>()) , -T(0)           ) , T(1)          );
+  TTS_IEEE_EQUAL(eve::pow1p( T(-1)          ,  T(-2)          )          , eve::inf(eve::as<T>()) );
   TTS_IEEE_EQUAL(eve::pow1p( T(-0.5)        ,  eve::inf(eve::as<T>())  ) , T(0 )        );
-  TTS_IEEE_EQUAL(eve::pow1p( T(1)          ,  eve::inf(eve::as<T>())  ) , eve::inf(eve::as<T>()) );
+  TTS_IEEE_EQUAL(eve::pow1p( T(1)           ,  eve::inf(eve::as<T>())  ) , eve::inf(eve::as<T>()) );
   TTS_IEEE_EQUAL(eve::pow1p( T(-0.5)        ,  eve::minf(eve::as<T>()) ) , eve::inf(eve::as<T>()) );
-  TTS_IEEE_EQUAL(eve::pow1p( T(1)          ,  eve::minf(eve::as<T>()) ) , T(0 )        );
-  TTS_IEEE_EQUAL(eve::pow1p(-T(-0.5)        ,  eve::inf(eve::as<T>())  ) , T(0 )        );
-  TTS_IEEE_EQUAL(eve::pow1p(-T(1)          ,  eve::inf(eve::as<T>())  ) , eve::inf(eve::as<T>()) );
-  TTS_IEEE_EQUAL(eve::pow1p(-T(-0.5)        ,  eve::minf(eve::as<T>()) ) , eve::inf(eve::as<T>()) );
-  TTS_IEEE_EQUAL(eve::pow1p(-T(1)          ,  eve::minf(eve::as<T>()) ) , T(0)        );
+  TTS_IEEE_EQUAL(eve::pow1p( T(1)           ,  eve::minf(eve::as<T>()) ) , T(0 )        );
+  TTS_IEEE_EQUAL(eve::pow1p( T(0.5)         ,  eve::inf(eve::as<T>())  ) , eve::inf(eve::as<T>())  );
+  TTS_IEEE_EQUAL(eve::pow1p( T(-3)          ,  eve::inf(eve::as<T>())  ) , eve::inf(eve::as<T>()) );
+  TTS_IEEE_EQUAL(eve::pow1p( T(0.5)         ,  eve::minf(eve::as<T>()) ) , T(0));
+  TTS_IEEE_EQUAL(eve::pow1p( T(-1)          ,  eve::minf(eve::as<T>()) ) , eve::inf(eve::as<T>()) );
   TTS_IEEE_EQUAL(eve::pow1p( eve::minf(eve::as<T>()), -T(3)           ) , T(0)        );
   TTS_IEEE_EQUAL(eve::pow1p( eve::minf(eve::as<T>()), -T(4)           ) , T(0)        );
   TTS_IEEE_EQUAL(eve::pow1p( eve::inf(eve::as<T>()) ,  T(4)           ) , eve::inf(eve::as<T>()) );
   TTS_IEEE_EQUAL(eve::pow1p( eve::inf(eve::as<T>()) , -T(4)           ) , T( 0)        );
-  TTS_IEEE_EQUAL(eve::pow1p( eve::eps(eve::as<T>()) , T(4)           ) , 4*eve::eps(eve::as<T>())       );
+  TTS_IEEE_EQUAL(eve::pow1p( eve::eps(eve::as<T>()) , T(4)            ) , 1+4*eve::eps(eve::as<T>())       );
 
 
   using v_t =  eve::element_type_t<T>;
@@ -96,9 +90,9 @@ EVE_TEST_TYPES( "Check  pow1p"
   {
     w8_t a(-1.0, -1.0,-1.0,-1.0,-2.0,-2.0, -Inf, -Inf);
     w8_t b(-Inf, -3.0,-4.0,-4.5,-Inf, Inf, -3.0, -4.0);
-    w8_t r( Inf, -Inf, Inf, Inf, 1.0, 1.0, -0.0,  0.0);
+    w8_t r( Inf, Inf, Inf, Inf, 1.0, 1.0, -0.0,  0.0);
     w8_t c = (eve::pow1p)(a, b);
-    TTS_ULP_EQUAL(c ,dec(r),2);
+    TTS_ULP_EQUAL(c , r, 2);
   }
   {
     using w4_t =  eve::wide<v_t, eve::fixed<4>>;

@@ -40,7 +40,7 @@ namespace eve
   //! **Return value**
   //!
   //!Returns the [elementwise](@ref glossary_elementwise) power(1+x, y), with good accuracy,
-  //!even when `x` is very small.
+  //!even when `x` is  small.
   //!
   //! ---
   //!
@@ -67,7 +67,7 @@ namespace eve
   //!     **Required header:** `#include <eve/function/diff/pow.hpp>`
   //!
   //!     The expression `diff_1st(pow1p)(x,y)` and `diff_2nd(pow1p)(x,y)` computes the partial
-  //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ x^y-1\f$.
+  //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ (1+x)^y\f$.
   //!
   //! #### Example
   //!
