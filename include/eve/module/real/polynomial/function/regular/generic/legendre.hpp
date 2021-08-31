@@ -23,6 +23,7 @@
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/pow_abs.hpp>
+#include <eve/function/pow1p.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/sqrt.hpp>
 #include <eve/function/tgamma.hpp>
@@ -150,13 +151,16 @@ namespace eve::detail
   template<integral_scalar_value L, integral_scalar_value M, floating_value T>
   EVE_FORCEINLINE auto legendre_(EVE_SUPPORTS(cpu_), L l, M m, T x) noexcept
   {
-    if(eve::abs(x) > one(as(x)))return nan(as(x));
+    if(eve::abs(x) > one(as(x))) return nan(as(x));
     // Handle negative arguments first:
-    T sin_theta_power = eve::pow_abs(oneminus(sqr(x)), T(eve::abs(m))/2); //TODO
+    T sin_theta_power = eve::pow1p(-sqr(x), T(eve::abs(m))/2);
     if(l < 0)                   return legendre(-l-1, m, x);
     if ((l == L(0)) && (m == M(-1)))  return eve::sqrt(oneminus(x)/(inc(x)));
     if ((l == L(1)) && (m == M(0)))   return x;
-    if (-m == l) return pow((1 - x * x) / 4, T(l) / 2) / eve::tgamma(T(inc(l))); //TODO factorial
+    if (-m == l)
+    {
+      return pow((1 - x * x) / 4, T(l) / 2) / eve::tgamma(T(inc(l))); //TODO factorial and 1-x*x
+    }
     if(m < 0)  {
       auto tgr = [](auto a,  auto b){ return tgamma(a)/tgamma(b); };
       int sign = (m&M(1)) ? -1 : 1;
@@ -181,47 +185,100 @@ namespace eve::detail
     return p1;
   }
 
-//   template<integral_simd_value M, integral_simd_value N, floating_scalar_value T>
-//   EVE_FORCEINLINE auto legendre_(EVE_SUPPORTS(cpu_), N nn,  M mm, T x) noexcept
-//   {
-//    if (has_native_abi_v<T>)
-//     {
-//       auto iseqzm = is_eqz(mm);
-//       if(eve::all(iseqzm)) [[unlikely]]
-//       {
-//         return legendre(nn, x);
-//       }
-//       else [[likely]]
-//       {
-//         using elt_t = element_type_t<T>;
-//         auto p0 = one(as(x));
-//         auto iseqzn = is_eqz(nn);
-//         if(eve::all(iseqzn)) [[unlikely]]
-//         {
-//           return p0;
-//         }
-//         else [[likely]]
-//         {
-//           auto m =  convert(mm, as<elt_t>());
-//           auto p1 = inc(m) - x;
+  template<integral_simd_value M, integral_simd_value L, floating_scalar_value T>
+  EVE_FORCEINLINE auto legendre_(EVE_SUPPORTS(cpu_), L l,  M m, T x) noexcept
+  {
+   if (has_native_abi_v<T>)
+    {
+      auto iseqzm = is_eqz(mm);
+      if(eve::all(iseqzm)) [[unlikely]]
+      {
+        return legendre(nn, x);
+      }
+      else [[likely]]
+      {
+        auto lneg = is_ltz(l);
+        auto mneg = is_ltz(m);
 
-//           auto n =  convert(nn, as<elt_t>());
-//           auto c = one(as(n));;
-//           auto test = c < n;
-//           while(eve::any(test))
-//           {
-//             auto p = p0;
-//             p0 = p1;
-//             p1 = if_else(test, successor(legendre)(c, m, x, p0, p), p1);
-//             c = inc(c);
-//             test = c < n;
-//           }
-//           return  if_else(iseqzn, one, if_else(iseqzm,  legendre(n, x), p1));
-//         }
-//       }
-//     }
-//     else
-//       return apply_over(legendre, nn, mm, x);
-//   }
-  ////////////////////////////////////////////////////////////////////////////////
+        auto notdone = (eve::abs(x) <= one(as(x))) 
+        auto r = if_else(m > l, zero, nan(as(x)));
+        if (eve::any(notdone && (lneg || mneg))
+        {
+          auto lneg_case = [](auto l, auto m, auto x) {
+            return legendre(-l-1, m, x);
+          };
+          auto t1_case = [](auto l, auto m, auto x) {  //is_eqz(l) && (m == mone(as(m))); 
+            return eve::sqrt(oneminus(x)/(inc(x)));
+          };
+
+          auto t2_case = [](auto l, auto m, auto x) {  // (-m == l)
+            return pow((1 - x * x) / 4, T(l) / 2) / eve::tgamma(T(inc(l))); //TODO factorial and 1-x*x
+          };
+
+          auto t3_case = [](auto l, auto m, auto x) {  //(l == one(as(l)) && iseqz(m));
+            return x; 
+          };
+          
+          auto t4_case = [](auto l, auto m, auto x) {  //(m > l); 
+            return zero(as(x)); 
+          };
+
+          auto t5_case = [](auto l, auto x) {  //(m == 0); 
+            return legendre(l, x)
+          };
+
+          notdone = next_interval(lneg_case,  notdone, lneg, r, l, m, x);
+          if( eve::any(notdone) )
+          {
+            auto t1 = is_eqz(l) && (m == mone(as(m))); 
+            notdone = next_interval(t1_case,  notdone, t1, r, l, m, x);
+            if( eve::any(notdone) )
+            {
+              auto t2 = -m == l; //m is < 0
+              notdone = next_interval(t2_case,  notdone, t2, r, l, m, x);             
+              if( eve::any(notdone) )
+              {
+                auto t3 = (l == one(as(l)) && iseqz(m));
+                notdone = next_interval(t3_case,  notdone, t3, r, l, m, x);
+                if( eve::any(notdone) )
+                {
+                  auto t4 = (m > l);
+                  notdone = next_interval(t4_case,  notdone, t4, r, l, m, x);             
+                  if( eve::any(notdone) )
+                  {
+                    auto t5 = (m == 0);
+                    notdone = next_interval(t5_case,  notdone, t5, r, l, x);             
+                    if( eve::any(notdone) )
+                    {
+                      notdone = last_interval(t6_case,  notdone, r, l, x);             
+                    }
+                  }
+                }                
+              }
+            }            
+          }
+          return r; 
+        }
+
+        
+        else if( eve::any(notdone) )
+        {
+          auto test0 = ;
+          notdone = next_interval(case0,  notdone, test0, r, a, x);
+          if( eve::any(notdone) )
+          {
+            auto test1 =  (10*ax <= a) && (a > T(15));
+            notdone = next_interval(lr1,  notdone, test1, r, a, x);
+            if( eve::any(notdone) )
+            {
+              notdone = last_interval(lr2,  notdone, r, a, x);
+            }
+          }
+        }
+      }
+    }
+    else
+      return apply_over(legendre, nn, mm, x);
+  }
+
 }
