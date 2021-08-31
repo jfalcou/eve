@@ -19,7 +19,7 @@ int main()
   auto arg00 = eve::bench::random_<EVE_VALUE>(0, 1);
   auto arg0 = eve::bench::random_<L_VALUE>(0, 1);
   auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
-  auto arg2 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg2 = eve::bench::random_<EVE_VALUE>(EVE_VALUE(1),lmax);
 
   auto eve__div =  [](auto x,  auto y,  auto z){ return eve::saturated(eve::div[x])(y, z); };
 

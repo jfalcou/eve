@@ -16,7 +16,7 @@ int main()
   auto lmax = eve::valmax(eve::as<EVE_VALUE>());
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
-  auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg1 = eve::bench::random_<EVE_VALUE>(EVE_VALUE(1),lmax);
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(pedantic(eve::rem)) , xp, eve::pedantic(eve::rem), arg0, arg1);

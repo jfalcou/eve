@@ -18,7 +18,7 @@ int main()
     if constexpr(eve::floating_value<EVE_VALUE>) return eve::oneotwoeps(eve::as<EVE_VALUE>());
     else return eve::valmax(eve::as<EVE_VALUE>());
   }();
-  auto lmin = EVE_VALUE(0);
+  auto lmin = EVE_VALUE(1);
 
   auto const std__rec = [](EVE_VALUE x) { return EVE_VALUE(1/x); };
 
