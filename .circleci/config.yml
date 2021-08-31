@@ -147,8 +147,6 @@ bench_jobs: &bench_jobs
     - compile:
         targets: "../cmake/toolchain/benchmarks.targets.json"
         cpu:  2
-    - ctest:
-        targets: "../cmake/toolchain/benchmarks.targets.json"
 
 ##==================================================================================================
 ## Jobs list
