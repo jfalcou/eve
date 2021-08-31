@@ -138,13 +138,22 @@ EVE_TEST( "Check behavior of legendre q on wide"
      <typename T, typename I>(T const& a0,I const & i0,I const & j0)
 {
   auto eve__legendrev  =  [](auto m, auto n, auto x) { return eve::legendre(m, n, x); };
+  auto boost_legendrev =  [](auto m, auto n, auto x) { return boost::math::legendre_p(m, n, x); };
+  TTS_ULP_EQUAL(eve__legendrev(i0.get(1), j0.get(1), a0.get(1)), boost_legendrev(i0.get(1), j0.get(1), a0.get(1)), 100);
+  for(unsigned int j=0; j < eve::cardinal_v<T>; ++j)
+  {
+    for(unsigned int n=0; n < eve::cardinal_v<T>; ++n)
+    {
+      TTS_ULP_EQUAL(eve__legendrev(i0 , j0, a0), map(boost_legendrev, i0, j0, a0), 100);
+    }
+  }
   //   for(unsigned int n=0; n < 5; ++n)
   //   {
   //     auto boost_legendre =  [&](auto i, auto) { return boost::math::legendre_q(n, a0.get(i)); };
   //     TTS_ULP_EQUAL(eve__legendrev(n, a0), T(boost_legendre), 100);
   //   }
-    auto boost_legendrev =  [&](auto i, auto) { return boost::math::legendre_p(i0.get(i), j0.get(i), a0.get(i)); };
-    TTS_ULP_EQUAL(eve__legendrev(i0, j0, a0), T(boost_legendrev), 100);
+//    auto boost_legendrev =  [&](auto i, auto) { return boost::math::legendre_p(i0.get(i), j0.get(i), a0.get(i)); };
+//    TTS_ULP_EQUAL(eve__legendrev(i0, j0, a0), T(boost_legendrev), 100);
   //   using v_t = eve::element_type_t<T>;
   //   for(unsigned int j=0; j < eve::cardinal_v<T>; ++j)
   //   {
@@ -163,4 +172,6 @@ EVE_TEST( "Check behavior of legendre q on wide"
 //       }
 //     }
 //   }
+
+
 };
