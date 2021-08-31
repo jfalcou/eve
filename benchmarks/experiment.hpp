@@ -150,8 +150,7 @@ namespace eve::bench
 
       auto loader = []<typename Tgt>(auto* ptr, as<Tgt> const& )
       {
-        constexpr auto algt = eve::alignment_v<Tgt>;
-        if constexpr( simd_value<Tgt> ) return Tgt( eve::as_aligned<algt>(ptr) );
+        if constexpr( simd_value<Tgt> ) return Tgt( eve::as_aligned(ptr, eve::cardinal_t<Tgt>{}) );
         else                            return *ptr;
       };
 

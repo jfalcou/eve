@@ -20,8 +20,7 @@ namespace eve::detail
   template<typename U, integral_scalar_value T, typename N>
   EVE_FORCEINLINE auto gather_(EVE_SUPPORTS(cpu_), U const *ptr, wide<T, N> const &v) noexcept
   {
-    wide<U, N> that;
-    apply<N::value>([&](auto... I) { (that.set(I,ptr[v.get(I)]),...); });
+    wide<U, N> that = [=](auto i, auto) { return ptr[v.get(i)]; };
     return that;
   }
 

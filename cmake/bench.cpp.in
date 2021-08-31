@@ -9,7 +9,7 @@
 #include <cstddef>
 #include <eve/wide.hpp>
 
-using EVE_TYPE  = eve::wide<${target}, eve::fixed<256/sizeof(${target})> >;
+using EVE_TYPE  = eve::wide<${target}, eve::fixed<64/sizeof(${target})> >;
 using EVE_VALUE = ${target};
 
 #include "generators.hpp"

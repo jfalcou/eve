@@ -8,7 +8,7 @@
 #include <eve/function/pow_abs.hpp>
 #include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
   auto const eve_rpow_abs = [](auto x, auto y) { return eve::raw(eve::pow_abs)(x, y); };
   auto const std_rpow_abs = [](auto x, auto y) { return std::exp(std::log(std::abs(x))*y); };

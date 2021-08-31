@@ -15,7 +15,7 @@ int main()
   auto lmin = eve::valmin(eve::as<EVE_VALUE>());
   auto lmax = eve::valmax(eve::as<EVE_VALUE>());
 
-  auto const std__is_not_nan = [](EVE_VALUE x) -> eve::logical<EVE_VALUE>  { return x == x; };
+  auto const std__is_not_nan = [](EVE_VALUE x) -> eve::logical<EVE_VALUE>  { return !std::isnan(x); };
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 

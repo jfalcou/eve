@@ -126,6 +126,28 @@ random_jobs: &random_jobs
     - ctest:
         targets: "../cmake/toolchain/random.targets.json"
 
+bench_jobs: &bench_jobs
+  docker:
+    - image: jfalcou/compilers:latest
+  parameters:
+    tool:
+      type: string
+    options:
+      type: string
+      default: ""
+    setup:
+      type: string
+      default: ""
+  steps:
+    - checkout
+    - configure_toolchain:
+        tool:     << parameters.tool >>
+        options:  << parameters.options >>
+        setup:    << parameters.setup >>
+    - compile:
+        targets: "../cmake/toolchain/benchmarks.targets.json"
+        cpu:  2
+
 ##==================================================================================================
 ## Jobs list
 ##==================================================================================================
@@ -140,6 +162,8 @@ jobs:
     <<: *random_jobs
   random_arm:
     <<: *random_jobs
+  bench_avx2:
+    <<: *bench_jobs
 
 ##==================================================================================================
 ## Workflow & dependencies
@@ -184,6 +208,16 @@ workflows:
           tool:     "../cmake/toolchain/gcc.aarch64.cmake"
           options:  "-Wno-psabi"
           setup:    "-DEVE_BUILD_RANDOM=ON"
+          filters:
+            branches:
+              ignore: develop
+    ##==============================================================================================
+    ## Benchmarks compilations
+    ##==============================================================================================
+      - bench_avx2:
+          tool:     "../cmake/toolchain/gcc.x86.opt.cmake"
+          options:  "-mavx2"
+          setup:    "-DEVE_BUILD_BENCHMARKS=ON"
           filters:
             branches:
               ignore: develop

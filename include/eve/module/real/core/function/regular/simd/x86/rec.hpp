@@ -23,22 +23,22 @@ namespace eve::detail
     else  if constexpr(c == category::float64x8  )  return _mm512_rcp14_pd(v);
     else  if constexpr(c == category::float32x8  )
     {
-      if constexpr(current_api >= avx2 )            return _mm256_rcp14_ps(v);
+      if constexpr(current_api >= avx512 )          return _mm256_rcp14_ps(v);
       else                                          return _mm256_rcp_ps(v);
     }
     else  if constexpr(c == category::float64x4 )
     {
-      if constexpr(current_api >= avx2 )            return _mm256_rcp14_pd(v);
+      if constexpr(current_api >= avx512 )          return _mm256_rcp14_pd(v);
       else                                          return _mm256_cvtps_pd(_mm_rcp_ps(_mm256_cvtpd_ps(v)));
     }
     else  if constexpr(c == category::float32x4  )
     {
-      if constexpr(current_api >= avx2 )            return _mm_rcp14_ps(v);
+      if constexpr(current_api >= avx512 )          return _mm_rcp14_ps(v);
       else                                          return _mm_rcp_ps(v);
     }
     else  if constexpr(c == category::float64x2 )
     {
-      if constexpr(current_api >= avx2 )            return _mm_rcp14_pd(v);
+      if constexpr(current_api >= avx512 )          return _mm_rcp14_pd(v);
       else                                          return _mm_cvtps_pd(_mm_rcp_ps(_mm_cvtpd_ps(v)));
     }
   }
