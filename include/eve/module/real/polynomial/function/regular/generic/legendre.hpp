@@ -251,6 +251,7 @@ namespace eve::detail
             using r_t =  decltype(x*l*m);
             auto sin_theta_power = eve::pow1p(-sqr(x), eve::abs(m)/2);
             r_t p0 = convert(eve::double_factorial(uint_(2*mm-1)), as<elt_t>()) * sin_theta_power;
+            p0 = if_else(is_odd(m), -p0, p0);
             auto p00 = p0;
             auto p1 = x * (2 * m + 1) * p0;
             auto n = inc(m);
