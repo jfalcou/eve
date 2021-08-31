@@ -22,6 +22,7 @@
 #include <eve/function/fma.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/is_odd.hpp>
+#include <eve/function/minus.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/pow_abs.hpp>
 #include <eve/function/pow1p.hpp>
@@ -223,12 +224,12 @@ namespace eve::detail
             return pow((1 - x * x) / 4, T(l) / 2) / eve::tgamma(T(inc(l))); //TODO factorial and 1-x*x
           };
 
-          auto mneg_case = [](auto ll, auto mm, auto x) {  // (m < 0)
+          auto mneg_case = [mneg](auto ll, auto mm, auto x) {  // (m < 0)
             using elt_t =  element_type_t<T>;
             auto l = convert(ll, as<elt_t>());
             auto m = convert(mm, as<elt_t>());
             auto sign = if_else(is_odd(m), mone, one(as(m)));
-            return sign * tgamma(l+m+1)/tgamma(l+1-m) * legendre(ll, -mm, x);
+            return sign * tgamma(l+m+1)/tgamma(l+1-m) * legendre(ll, minus[mneg](mm), x);
           };
 
           auto t3_case = [](auto x) {  //(l == one(as(l)) && iseqz(m));
