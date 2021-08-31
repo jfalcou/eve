@@ -157,7 +157,7 @@ make_all_benchs(ROOT bench.core NAME reduce                TYPES ${real_types}  
 make_all_benchs(ROOT bench.core NAME reduce_fast           TYPES ${real_types}    )
 make_all_benchs(ROOT bench.core NAME reduce_large          TYPES ${real_types}    )
 make_all_benchs(ROOT bench.core NAME reduce_medium         TYPES ${real_types}    )
-make_all_benchs(ROOT bench.core NAME rem                   TYPES ${signed_types}  )
+make_all_benchs(ROOT bench.core NAME rem                   TYPES ${integral_types}  )
 make_all_benchs(ROOT bench.core NAME rotl                  TYPES ${uint_types}    )
 make_all_benchs(ROOT bench.core NAME rotr                  TYPES ${uint_types}    )
 make_all_benchs(ROOT bench.core NAME round                 TYPES ${all_types}     )
