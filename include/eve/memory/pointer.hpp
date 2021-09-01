@@ -43,11 +43,6 @@ namespace eve
     using type = typename T::cardinal;
   };
 
-/*  template<typename... Ptr>
-  struct pointer_cardinal<kumi::tuple<Ptr...>> : expected_cardinal<kumi::tuple<Ptr...>>
-  {
-  };*/
-
   template<typename Type, typename Lanes>
   struct  pointer_cardinal<eve::aligned_ptr<Type, Lanes>> : expected_cardinal<Type>
   {};
@@ -55,23 +50,12 @@ namespace eve
 
 namespace eve::detail
 {
+
   template<typename Ptr>
-  concept behaves_as_ptr = requires(Ptr p)
+  concept data_source = requires(Ptr p)
   {
     typename pointer_traits<Ptr>::value_type;
-    { *p };
   };
-
-  template<typename Ptr>
-  struct is_data_source : std::bool_constant<behaves_as_ptr<Ptr>>
-  {};
-
-  template<typename... Ptrs>
-  struct is_data_source<kumi::tuple<Ptrs...>> : std::bool_constant<(behaves_as_ptr<Ptrs> && ...)>
-  {};
-
-  template<typename Ptr>
-  concept data_source = is_data_source<Ptr>::value;
 
   template<typename T, typename Ptr> struct dereference_as;
 
