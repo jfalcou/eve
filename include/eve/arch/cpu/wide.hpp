@@ -130,7 +130,7 @@ namespace eve
     {}
 
     //! Constructs a eve::wide from a SIMD compatible pointer
-    template<detail::behaves_as_ptr... Ptr>
+    template<detail::data_source... Ptr>
     requires(kumi::product_type<Type>)
     EVE_FORCEINLINE explicit  wide(kumi::tuple<Ptr...> ptr) noexcept
                             : storage_base(load(ptr, Cardinal{}))
