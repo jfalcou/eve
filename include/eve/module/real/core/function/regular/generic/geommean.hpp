@@ -21,7 +21,6 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/concept/value.hpp>
-#include <iostream>
 
 namespace eve::detail
 {
