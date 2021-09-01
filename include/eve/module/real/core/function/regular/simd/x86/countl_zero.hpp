@@ -14,18 +14,18 @@
 namespace eve::detail
 {
   template<unsigned_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N> countl_zero_(EVE_SUPPORTS(avx512_), wide<T, N> a0) noexcept
+  EVE_FORCEINLINE wide<T, N> countl_zero_(EVE_SUPPORTS(sse2_), wide<T, N> a0) noexcept
   {
-    using r_t = wide<T, N>;
-    constexpr auto c = categorize<r_t>();
-
-         if constexpr ( c == category::uint64x8  ) return r_t(_mm512_lzcnt_epi64(a0));
-    else if constexpr ( c == category::uint32x16 ) return r_t(_mm512_lzcnt_epi32(a0));
-    else if constexpr ( c == category::uint64x4  ) return r_t(_mm256_lzcnt_epi64(a0));
-    else if constexpr ( c == category::uint32x8  ) return r_t(_mm256_lzcnt_epi32(a0));
-    else if constexpr ( c == category::uint64x2  ) return r_t(_mm_lzcnt_epi64(a0));
-    else if constexpr ( c == category::uint32x4  ) return r_t(_mm_lzcnt_epi32(a0));
-    else return countl_zero_(EVE_RETARGET(cpu_), a0);
+//     using r_t = wide<T, N>;
+//     constexpr auto c = categorize<r_t>();
+     return map(countl_zero, a0);
+//     if constexpr(current_api <  avx512 || sizeof(T) < 4) return map(countl_zero, a0);
+//     else if constexpr ( c == category::uint64x8  ) return r_t(_mm512_lzcnt_epi64(a0));
+//     else if constexpr ( c == category::uint32x16 ) return r_t(_mm512_lzcnt_epi32(a0));
+//     else if constexpr ( c == category::uint64x4  ) return r_t(_mm256_lzcnt_epi64(a0));
+//     else if constexpr ( c == category::uint32x8  ) return r_t(_mm256_lzcnt_epi32(a0));
+//     else if constexpr ( c == category::uint64x2  ) return r_t(_mm_lzcnt_epi64(a0));
+//     else if constexpr ( c == category::uint32x4  ) return r_t(_mm_lzcnt_epi32(a0));
   }
 
   // -----------------------------------------------------------------------------------------------
