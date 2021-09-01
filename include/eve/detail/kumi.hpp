@@ -156,15 +156,18 @@ namespace kumi
   template<typename T> struct size<T const &>   : size<T> {};
   template<typename T> struct size<T const &&>  : size<T> {};
 
-  template<typename T> concept std_tuple_compatible = requires( T const &t )
+  template<typename T> concept non_empty_tuple = requires( T const &t )
   {
-    typename std::tuple_element<0,T>::type;
-    typename std::tuple_size<T>::type;
+    typename std::tuple_element<0,std::remove_cvref_t<T>>::type;
+    typename std::tuple_size<std::remove_cvref_t<T>>::type;
   };
 
+  template<typename T> concept empty_tuple = (std::tuple_size<std::remove_cvref_t<T>>::value == 0);
+
+  template<typename T> concept std_tuple_compatible = empty_tuple<T> || non_empty_tuple<T>;
+
   template<typename T>
-  concept product_type =    std_tuple_compatible<std::remove_cvref_t<T>>
-                        &&  is_product_type<std::remove_cvref_t<T>>::value;
+  concept product_type = std_tuple_compatible<T> && is_product_type<std::remove_cvref_t<T>>::value;
 
   template<typename T, std::size_t N>
   concept sized_product_type = product_type<T> && (size<T>::value == N);
@@ -250,11 +253,15 @@ namespace kumi
   template<typename Function, product_type Tuple>
   constexpr decltype(auto) apply(Function &&f, Tuple &&t)
   {
-    return [&]<std::size_t... I>(std::index_sequence<I...>)
+    if constexpr(sized_product_type<Tuple,0>) return  KUMI_FWD(f)();
+    else
     {
-      return KUMI_FWD(f)(get<I>(KUMI_FWD(t))...);
+      return [&]<std::size_t... I>(std::index_sequence<I...>)
+      {
+        return KUMI_FWD(f)(get<I>(KUMI_FWD(t))...);
+      }
+      (std::make_index_sequence<size<Tuple>::value>());
     }
-    (std::make_index_sequence<size<Tuple>::value>());
   }
 
   //================================================================================================
@@ -264,38 +271,46 @@ namespace kumi
   constexpr void for_each(Function f, Tuple&& t, Tuples&&... ts)
   requires detail::applicable<Function, Tuple, Tuples...>
   {
-    [&]<std::size_t... I>(std::index_sequence<I...>)
+    if constexpr(sized_product_type<Tuple,0>) return;
+    else
     {
-      // clang needs this for some reason
-      using std::get;
-      [[maybe_unused]] auto call = [&]<typename M>(M)
-                                      { f ( get<M::value>(KUMI_FWD(t))
-                                          , get<M::value>(KUMI_FWD(ts))...
-                                          );
-                                      };
+      [&]<std::size_t... I>(std::index_sequence<I...>)
+      {
+        // clang needs this for some reason
+        using std::get;
+        [[maybe_unused]] auto call = [&]<typename M>(M)
+                                        { f ( get<M::value>(KUMI_FWD(t))
+                                            , get<M::value>(KUMI_FWD(ts))...
+                                            );
+                                        };
 
-      ( call(std::integral_constant<std::size_t, I>{}), ... );
+        ( call(std::integral_constant<std::size_t, I>{}), ... );
+      }
+      (std::make_index_sequence<size<Tuple>::value>());
     }
-    (std::make_index_sequence<size<Tuple>::value>());
   }
 
   template<typename Function, product_type Tuple, product_type... Tuples>
   constexpr void for_each_index(Function f, Tuple&& t, Tuples&&... ts)
   {
-    [&]<std::size_t... I>(std::index_sequence<I...>)
+    if constexpr(sized_product_type<Tuple,0>) return;
+    else
     {
-      // clang needs this for some reason
-      using std::get;
-      [[maybe_unused]] auto call = [&]<typename M>(M idx)
-                                      { f ( idx
-                                          , get<M::value>(KUMI_FWD(t))
-                                          , get<M::value>(KUMI_FWD(ts))...
-                                          );
-                                      };
+      [&]<std::size_t... I>(std::index_sequence<I...>)
+      {
+        // clang needs this for some reason
+        using std::get;
+        [[maybe_unused]] auto call = [&]<typename M>(M idx)
+                                        { f ( idx
+                                            , get<M::value>(KUMI_FWD(t))
+                                            , get<M::value>(KUMI_FWD(ts))...
+                                            );
+                                        };
 
-      ( call(std::integral_constant<std::size_t, I>{}), ... );
+        ( call(std::integral_constant<std::size_t, I>{}), ... );
+      }
+      (std::make_index_sequence<size<Tuple>::value>());
     }
-    (std::make_index_sequence<size<Tuple>::value>());
   }
 
   //================================================================================================
@@ -466,27 +481,35 @@ namespace kumi
     //==============================================================================================
     // Comparison operators
     //==============================================================================================
-    template<product_type Other>
+    template<sized_product_type<sizeof...(Ts)> Other>
     friend constexpr auto operator==(tuple const &self, Other const &other) noexcept
     {
-      return [&]<std::size_t... I>(std::index_sequence<I...>)
+      if constexpr(sized_product_type<tuple,0>) return true;
+      else
       {
-        return ((get<I>(self) == get<I>(other)) && ...);
+        return [&]<std::size_t... I>(std::index_sequence<I...>)
+        {
+          return ((get<I>(self) == get<I>(other)) && ...);
+        }
+        (std::make_index_sequence<sizeof...(Ts)>());
       }
-      (std::make_index_sequence<sizeof...(Ts)>());
     }
 
-    template<product_type Other>
+    template<sized_product_type<sizeof...(Ts)> Other>
     friend constexpr auto operator!=(tuple const &self, Other const &other) noexcept
     {
-      return [&]<std::size_t... I>(std::index_sequence<I...>)
+      if constexpr(sized_product_type<tuple,0>) return false;
+      else
       {
-        return ((get<I>(self) != get<I>(other)) || ...);
+        return [&]<std::size_t... I>(std::index_sequence<I...>)
+        {
+          return ((get<I>(self) != get<I>(other)) || ...);
+        }
+        (std::make_index_sequence<sizeof...(Ts)>());
       }
-      (std::make_index_sequence<sizeof...(Ts)>());
     }
 
-    template<product_type Other>
+    template<sized_product_type<sizeof...(Ts)> Other>
     friend constexpr auto operator<(tuple const &lhs, Other const &rhs) noexcept
     {
       // lexicographical order is defined as
@@ -635,14 +658,18 @@ namespace kumi
       Tuple const &t0,
       Tuples const &...others) requires detail::applicable<Function, Tuple, Tuples...>
   {
-    return [&]<std::size_t... I>(std::index_sequence<I...>)
+    if constexpr(sized_product_type<Tuple,0>) return Tuple{};
+    else
     {
-      auto call = [&]<std::size_t N>(index_t<N>, auto const &...args) {
-        return f(get<N>(args)...);
-      };
-      return kumi::make_tuple(call(index<I>, t0, others...)...);
+      return [&]<std::size_t... I>(std::index_sequence<I...>)
+      {
+        auto call = [&]<std::size_t N>(index_t<N>, auto const &...args) {
+          return f(get<N>(args)...);
+        };
+        return kumi::make_tuple(call(index<I>, t0, others...)...);
+      }
+      (std::make_index_sequence<size<Tuple>::value>());
     }
-    (std::make_index_sequence<size<Tuple>::value>());
   }
 
   //================================================================================================
@@ -651,21 +678,29 @@ namespace kumi
   template<typename Function, product_type Tuple, typename Value>
   [[nodiscard]] constexpr auto fold_left(Function f, Tuple const &t, Value init)
   {
-    return [&]<std::size_t... I>(std::index_sequence<I...>)
+    if constexpr(sized_product_type<Tuple,0>) return init;
+    else
     {
-      return (detail::foldable {f, get<I>(t)} >> ... >> detail::foldable {f, init}).value;
+      return [&]<std::size_t... I>(std::index_sequence<I...>)
+      {
+        return (detail::foldable {f, get<I>(t)} >> ... >> detail::foldable {f, init}).value;
+      }
+      (std::make_index_sequence<size<Tuple>::value>());
     }
-    (std::make_index_sequence<size<Tuple>::value>());
   }
 
   template<typename Function, product_type Tuple, typename Value>
   [[nodiscard]] constexpr auto fold_right(Function f, Tuple const &t, Value init)
   {
-    return [&]<std::size_t... I>(std::index_sequence<I...>)
+    if constexpr(size<Tuple>::value ==0) return init;
+    else
     {
-      return (detail::foldable {f, init} << ... << detail::foldable {f, get<I>(t)}).value;
+      return [&]<std::size_t... I>(std::index_sequence<I...>)
+      {
+        return (detail::foldable {f, init} << ... << detail::foldable {f, get<I>(t)}).value;
+      }
+      (std::make_index_sequence<size<Tuple>::value>());
     }
-    (std::make_index_sequence<size<Tuple>::value>());
   }
 
   //================================================================================================
@@ -673,12 +708,18 @@ namespace kumi
   //================================================================================================
   template<product_type T, product_type U> [[nodiscard]] constexpr auto cat(T const &t, U const &u)
   {
-    return [&]<std::size_t... TI, std::size_t... UI>(std::index_sequence<TI...>,
-                                                     std::index_sequence<UI...>)
+          if constexpr(sized_product_type<T,0> && sized_product_type<U,0>) return t;
+    else  if constexpr(sized_product_type<T,0>) return u;
+    else  if constexpr(sized_product_type<U,0>) return t;
+    else
     {
-      return kumi::make_tuple(get<TI>(t)..., get<UI>(u)...);
+      return [&]<std::size_t... TI, std::size_t... UI>(std::index_sequence<TI...>,
+                                                       std::index_sequence<UI...>)
+      {
+        return kumi::make_tuple(get<TI>(t)..., get<UI>(u)...);
+      }
+      (std::make_index_sequence<size<T>::value>(), std::make_index_sequence<size<U>::value>());
     }
-    (std::make_index_sequence<size<T>::value>(), std::make_index_sequence<size<U>::value>());
   }
 
   template<product_type T, product_type... Tuples>
@@ -699,28 +740,36 @@ namespace kumi
   //================================================================================================
   template<product_type Tuple> [[nodiscard]] constexpr auto flatten(Tuple const &ts)
   {
-    return kumi::fold_right(
-        []<typename M>(auto acc, M const &m) {
-          if constexpr( product_type<M> )
-            return cat(acc, m);
-          else
-            return cat(acc, kumi::tuple {m});
-        },
-        ts,
-        kumi::tuple {});
+    if constexpr(sized_product_type<Tuple,0>) return ts;
+    else
+    {
+      return kumi::fold_right(
+          []<typename M>(auto acc, M const &m) {
+            if constexpr( product_type<M> )
+              return cat(acc, m);
+            else
+              return cat(acc, kumi::tuple {m});
+          },
+          ts,
+          kumi::tuple {});
+    }
   }
 
   template<product_type Tuple> [[nodiscard]] constexpr auto flatten_all(Tuple const &ts)
   {
-    return kumi::fold_right(
-        []<typename M>(auto acc, M const &m) {
-          if constexpr( product_type<M> )
-            return cat(acc, flatten(m));
-          else
-            return cat(acc, kumi::tuple {m});
-        },
-        ts,
-        kumi::tuple {});
+    if constexpr(sized_product_type<Tuple,0>) return ts;
+    else
+    {
+      return kumi::fold_right(
+          []<typename M>(auto acc, M const &m) {
+            if constexpr( product_type<M> )
+              return cat(acc, flatten(m));
+            else
+              return cat(acc, kumi::tuple {m});
+          },
+          ts,
+          kumi::tuple {});
+    }
   }
 
   //================================================================================================
@@ -740,15 +789,19 @@ namespace kumi
   //================================================================================================
   template<product_type Tuple> [[nodiscard]] constexpr auto transpose(Tuple const &t)
   {
-    return [&]<std::size_t... I>(std::index_sequence<I...>)
+    if constexpr(sized_product_type<Tuple,0>) return t;
+    else
     {
-      constexpr auto uz = []<typename N>(N const &, auto const &u) {
-        return apply([](auto const &...m) { return kumi::make_tuple(get<N::value>(m)...); }, u);
-      };
+      return [&]<std::size_t... I>(std::index_sequence<I...>)
+      {
+        constexpr auto uz = []<typename N>(N const &, auto const &u) {
+          return apply([](auto const &...m) { return kumi::make_tuple(get<N::value>(m)...); }, u);
+        };
 
-      return kumi::make_tuple(uz(index_t<I> {}, t)...);
+        return kumi::make_tuple(uz(index_t<I> {}, t)...);
+      }
+      (std::make_index_sequence<size<element_t<0,Tuple>>::value>());
     }
-    (std::make_index_sequence<size<element_t<0,Tuple>>::value>());
   }
 
   //================================================================================================
