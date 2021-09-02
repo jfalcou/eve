@@ -63,22 +63,43 @@ namespace eve::algo
    public:
 
     template <typename ...Components>
-      requires ((relaxed_range<Components> || relaxed_iterator<Components>) && ...)
-    EVE_FORCEINLINE auto operator()(Components&& ... components) const
-    {
-      if constexpr ((relaxed_iterator<Components> && ... ))
-      {
-        return zip_iterator{components...};
-      }
-      else
-      {
-        std::ptrdiff_t distance = compute_distance(components...);
-        return zip_range{TraitsSupport::get_traits(), perform_replacements(distance, components...)};
-      }
-    }
+    auto operator()(Components&& ... components) const
+      requires ((relaxed_range<Components> || relaxed_iterator<Components>) && ...);
   };
 
   inline constexpr auto zip = function_with_traits<zip_>;
+
+  template <typename TraitsSupport>
+  template<typename... Components>
+  EVE_FORCEINLINE auto zip_<TraitsSupport>::operator()(Components &&...components) const
+    requires((relaxed_range<Components> || relaxed_iterator<Components>)&&...)
+  {
+    if constexpr( TraitsSupport::contains(common_with_types_key) )
+    {
+      auto common_type = []<typename... ParamTypes>(eve::common_type<ParamTypes...>)
+      {
+        return eve::common_type<ParamTypes..., value_type_t<std::remove_cvref_t<Components>>...> {};
+      }
+      (TraitsSupport::get_traits()[common_with_types_key]);
+
+      auto next_tr = drop(TraitsSupport::get_traits(), common_with_types_key);
+
+      auto tgt = eve::as<typename decltype(common_type)::type> {};
+
+      return zip[next_tr](convert(components, tgt)...);
+    }
+    else if constexpr( (relaxed_iterator<Components> && ...) )
+    {
+      TraitsSupport::legality_check();
+      return zip_iterator {components...};
+    }
+    else
+    {
+      TraitsSupport::legality_check(divisible_by_cardinal);
+      std::ptrdiff_t distance = compute_distance(components...);
+      return zip_range {TraitsSupport::get_traits(), perform_replacements(distance, components...)};
+    }
+  }
 
   template <typename ZipTraits, relaxed_range ...Rngs>
   struct zip_range : kumi::tuple<Rngs...>

@@ -101,6 +101,15 @@ namespace eve::algo
     return traits<settings_t>{rbr::merge(user, defaults)};
   }
 
+  template <typename Settings>
+  constexpr auto drop(traits<Settings>, decltype(common_with_types_key))
+  {
+    static_assert(Settings::contains_only(divisible_by_cardinal, common_with_types_key));
+
+    if constexpr (Settings::contains(divisible_by_cardinal)) return traits{divisible_by_cardinal};
+    else                                                     return traits{};
+  }
+
   inline constexpr algo::traits default_simple_algo_traits{algo::unroll<4>};
   inline constexpr algo::traits no_traits{};
 
@@ -112,6 +121,11 @@ namespace eve::algo
     {
       using traits_type = Traits;
       constexpr Traits get_traits() const { return tr_; }
+
+      template <typename Trait>
+      static constexpr bool contains(Trait key) {
+        return Traits::contains(key);
+      }
 
       constexpr supports_traits() {}
       constexpr explicit supports_traits(Traits tr) : tr_(tr) {}
@@ -128,6 +142,12 @@ namespace eve::algo
       constexpr auto operator[](Trait one_tr) const
       {
         return operator[](eve::algo::traits(one_tr));
+      }
+
+      template <typename... Legal>
+      static constexpr void legality_check(Legal... legal)
+      {
+        static_assert(Traits::contains_only(legal...));
       }
 
       private:

@@ -55,10 +55,15 @@ namespace eve::algo
 
     EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, auto tr, converting_range self)
     {
-      auto traits_internal = traits.default_to(eve::algo::traits(force_type<T>));
+      auto tr_internal = tr.default_to(eve::algo::traits(force_type<T>));
       auto processed = preprocess_range(traits_internal, self.base);
       // drop from processed traits force_type. FIX-906
-      return processed;
+      return detail::preprocess_range_result(
+        eve::algo::traits{},
+        processed.begin(),
+        processed.end(),
+        [processed](auto i) { return processed.to_output(i);  }
+      );
     }
   };
   */
