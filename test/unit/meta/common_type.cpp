@@ -66,6 +66,10 @@ EVE_TEST_TYPES("eve::common_type matches std::common_type", eve::test::scalar::a
 using i32_u32_f64 = kumi::tuple<std::int32_t, std::uint32_t, double>;
 using i32_i32_i32 = kumi::tuple<std::int32_t, std::int32_t,  std::int32_t>;
 
+using i32_x2    = kumi::tuple<std::int32_t, std::int32_t>;
+using i32_x4    = kumi::tuple<std::int32_t, std::int32_t, std::int32_t, std::int32_t>;
+using i32_x2_x2 = kumi::tuple<i32_x2, i32_x2>;
+
 struct product : i32_u32_f64 {};
 template<>              struct eve::is_product_type<product> : std::true_type {};
 template<>              struct std::tuple_size<product>      : std::tuple_size<i32_u32_f64> {};
@@ -76,6 +80,19 @@ template<>              struct eve::is_product_type<smaller_product> : std::true
 template<>              struct std::tuple_size<smaller_product>      : std::tuple_size<i32_i32_i32> {};
 template<std::size_t I> struct std::tuple_element<I,smaller_product> : std::tuple_element<I, i32_i32_i32> {};
 
+struct point : i32_x2 {};
+template<>              struct eve::is_product_type<point> : std::true_type {};
+template<>              struct std::tuple_size<point>      : std::tuple_size<i32_x2> {};
+template<std::size_t I> struct std::tuple_element<I,point> : std::tuple_element<I, i32_x2> {};
+
+using point_x2 = kumi::tuple<point, point>;
+
+struct line : point_x2 {};
+
+template<>              struct eve::is_product_type<line> : std::true_type {};
+template<>              struct std::tuple_size<line>      : std::tuple_size<point_x2> {};
+template<std::size_t I> struct std::tuple_element<I,line> : std::tuple_element<I, point_x2> {};
+
 
 TTS_CASE("eve::common_type, product type")
 {
@@ -84,8 +101,21 @@ TTS_CASE("eve::common_type, product type")
 
   TTS_TYPE_IS((eve::common_type_t<product, i32_i32_i32>), product);
   TTS_TYPE_IS((eve::common_type_t<i32_i32_i32, product>), product);
+
+  TTS_TYPE_IS((eve::common_type_t<product, i32_u32_f64>), product);
+  TTS_TYPE_IS((eve::common_type_t<i32_u32_f64, product>), product);
+
   TTS_TYPE_IS((eve::common_type_t<product, smaller_product>), product);
   TTS_TYPE_IS((eve::common_type_t<smaller_product, product>), product);
+
+  TTS_TYPE_IS((eve::common_type_t<point_x2, line>), line);
+  TTS_TYPE_IS((eve::common_type_t<line, point_x2>), line);
+
+  TTS_TYPE_IS((eve::common_type_t<line, i32_x4>), line);
+  TTS_TYPE_IS((eve::common_type_t<i32_x4, line>), line);
+
+  TTS_TYPE_IS((eve::common_type_t<line, i32_x2_x2>), line);
+  TTS_TYPE_IS((eve::common_type_t<i32_x2_x2, line>), line);
 }
 
 TTS_CASE("eve::common_type, have_common_type")
