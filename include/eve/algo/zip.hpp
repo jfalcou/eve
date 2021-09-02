@@ -10,6 +10,7 @@
 #include <eve/algo/as_range.hpp>
 #include <eve/algo/concepts/relaxed.hpp>
 #include <eve/algo/preprocess_range.hpp>
+#include <eve/algo/range_ref.hpp>
 #include <eve/algo/traits.hpp>
 #include <eve/algo/zip_iterator.hpp>
 
@@ -23,25 +24,6 @@ namespace eve::algo
 {
   template <typename ZipTraits, relaxed_range ...Rngs>
   struct zip_range;
-
-  namespace detail
-  {
-    template <relaxed_range Rng>
-    struct rng_ref
-    {
-      Rng* rng;
-
-      // FIX-874: non member ones should be used
-      auto begin() const { return rng->begin(); }
-      auto end()   const { return rng->end(); }
-
-      template <typename Traits>
-      EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, Traits traits, rng_ref self)
-      {
-        return preprocess_range(traits, *self.rng);
-      }
-    };
-  }
 
   template <typename TraitsSupport>
   // this is zip traits, not algo traits.
@@ -72,11 +54,8 @@ namespace eve::algo
          [&]<typename C>(C&& c)
          {
            using no_ref = std::remove_reference_t<C>;
-                if constexpr (detail::instance_of<no_ref, detail::rng_ref>) return c;
-           // We need to handle `range_pair` separately, because we create it here
-           else if constexpr (detail::instance_of<no_ref, range_pair>     ) return c;
-           else if constexpr (relaxed_range<no_ref>                       ) return detail::rng_ref<no_ref>{&c};
-           else                                                             return as_range(c, unalign(c) + distance);
+           if constexpr ( relaxed_range<no_ref> ) return take_range_ref(c);
+           else                                   return as_range(c, unalign(c) + distance);
          }(components)...
        };
      }

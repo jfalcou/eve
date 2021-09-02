@@ -15,6 +15,9 @@ namespace eve::algo
   template <typename I, typename T>
   struct converting_iterator;
 
+  template <typename R, typename T>
+  struct converting_range;
+
   struct convert_ {
     template <iterator I, typename T>
     auto operator()(I it, eve::as<T> tgt) const

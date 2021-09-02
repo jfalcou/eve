@@ -17,6 +17,8 @@ namespace eve::algo
     I f;
     S l;
 
+    using is_non_owning = int;
+
     I begin() const { return f; }
     S end  () const { return l; }
   };

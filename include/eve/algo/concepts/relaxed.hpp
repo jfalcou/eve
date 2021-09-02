@@ -15,6 +15,10 @@ namespace eve::algo
   concept relaxed_iterator =
     std::invocable<preprocess_range_, decltype(eve::algo::traits{}), I, I>;
 
+  template <typename I, typename S>
+  concept relaxed_iterator_sentinel =
+    std::invocable<preprocess_range_, decltype(eve::algo::traits{}), I, S>;
+
   namespace detail
   {
     template <typename R>
