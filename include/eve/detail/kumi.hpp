@@ -264,6 +264,18 @@ namespace kumi
     }
   }
 
+  namespace result
+  {
+    template<typename Function, product_type Tuple>
+    struct apply
+    {
+      using type = decltype(kumi::apply(std::declval<Function>(), std::declval<Tuple>()));
+    };
+
+    template<typename Function, product_type Tuple>
+    using apply_t = typename apply<Function,Tuple>::type;
+  }
+
   //================================================================================================
   // Apply f to each element of tuple and returns a continuation
   //================================================================================================
@@ -599,6 +611,17 @@ namespace kumi
     return kumi::make_tuple(extract(index<0>, index<I0>), extract(index<I0>));
   }
 
+  namespace result
+  {
+    template<product_type T, std::size_t I0> struct split
+    {
+      using type = decltype ( std::declval<T>().split(kumi::index_t<I0>{}) );
+    };
+
+    template<product_type T, std::size_t I0> using split_t = typename split<T,I0>::type;
+  }
+
+
   //================================================================================================
   // Conversions to arbitrary types
   //================================================================================================
@@ -672,6 +695,22 @@ namespace kumi
     }
   }
 
+  namespace result
+  {
+    template<typename Function, product_type T, sized_product_type<size<T>::value>... Ts>
+    struct map
+    {
+      using type = decltype ( kumi::map ( std::declval<Function>()
+                                        , std::declval<T>()
+                                        , std::declval<Ts>()...
+                                        )
+                            );
+    };
+
+    template<typename Function, product_type T, sized_product_type<size<T>::value>... Ts>
+    using map_t = typename map<Function,T,Ts...>::type;
+  }
+
   //================================================================================================
   // Generalized sums
   //================================================================================================
@@ -701,6 +740,35 @@ namespace kumi
       }
       (std::make_index_sequence<size<Tuple>::value>());
     }
+  }
+
+  namespace result
+  {
+    template<typename Function, product_type Tuple, typename Value>
+    struct fold_right
+    {
+      using type = decltype ( kumi::fold_right( std::declval<Function>()
+                                              , std::declval<Tuple>()
+                                              , std::declval<Value>()
+                                              )
+                            );
+    };
+
+    template<typename Function, product_type Tuple, typename Value>
+    struct fold_left
+    {
+      using type = decltype ( kumi::fold_left ( std::declval<Function>()
+                                              , std::declval<Tuple>()
+                                              , std::declval<Value>()
+                                              )
+                            );
+    };
+
+    template<typename Function, product_type Tuple, typename Value>
+    using fold_right_t = typename fold_right<Function,Tuple,Value>::type;
+
+    template<typename Function, product_type Tuple, typename Value>
+    using fold_left_t = typename fold_left<Function,Tuple,Value>::type;
   }
 
   //================================================================================================
@@ -733,6 +801,16 @@ namespace kumi
   [[nodiscard]] constexpr auto operator|(T1 &&t1, T2 &&t2)
   {
     return kumi::cat(KUMI_FWD(t1), KUMI_FWD(t2));
+  }
+
+  namespace result
+  {
+    template<product_type T, product_type... Tuples> struct cat
+    {
+      using type = decltype( kumi::cat( std::declval<T>(), std::declval<Tuples>()... ) );
+    };
+
+    template<product_type T, product_type... Tuples> using cat_t  = typename cat<T,Tuples...>::type;
   }
 
   //================================================================================================
@@ -772,6 +850,22 @@ namespace kumi
     }
   }
 
+  namespace result
+  {
+    template<product_type Tuple> struct flatten
+    {
+      using type = decltype( kumi::flatten( std::declval<Tuple>() ) );
+    };
+
+    template<product_type Tuple> struct flatten_all
+    {
+      using type = decltype( kumi::flatten_all( std::declval<Tuple>() ) );
+    };
+
+    template<product_type Tuple> using flatten_t      = typename flatten<Tuple>::type;
+    template<product_type Tuple> using flatten_all_t  = typename flatten_all<Tuple>::type;
+  }
+
   //================================================================================================
   // Zip multiple tuples contents
   //================================================================================================
@@ -782,6 +876,18 @@ namespace kumi
     return kumi::map([](auto const &m0, auto const &...ms) { return kumi::make_tuple(m0, ms...); },
                      t0,
                      tuples...);
+  }
+
+  namespace result
+  {
+    template<product_type T0, product_type... Ts>
+    struct zip
+    {
+      using type = decltype( kumi::zip( std::declval<T0>(), std::declval<Ts>()... ) );
+    };
+
+    template<product_type T0, product_type... Ts>
+    using zip_t = typename zip<T0,Ts...>::type;
   }
 
   //================================================================================================
@@ -804,6 +910,18 @@ namespace kumi
     }
   }
 
+  namespace result
+  {
+    template<product_type Tuple>
+    struct transpose
+    {
+      using type = decltype( kumi::transpose( std::declval<Tuple>() ) );
+    };
+
+    template<product_type Tuple>
+    using transpose_t = typename transpose<Tuple>::type;
+  }
+
   //================================================================================================
   // Reorder elements of a tuple
   //================================================================================================
@@ -811,6 +929,18 @@ namespace kumi
   requires((Idx < size<Tuple>::value) && ...) [[nodiscard]] constexpr auto reorder(Tuple &&t)
   {
     return kumi::make_tuple(KUMI_FWD(t)[index<Idx>]...);
+  }
+
+  namespace result
+  {
+    template<product_type Tuple, std::size_t... Idx>
+    struct reorder
+    {
+      using type = decltype( kumi::reorder<Idx...>( std::declval<Tuple>() ) );
+    };
+
+    template<product_type Tuple, std::size_t... Idx>
+    using reorder_t = typename reorder<Tuple,Idx...>::type;
   }
 
   //================================================================================================
