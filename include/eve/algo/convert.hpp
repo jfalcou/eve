@@ -8,30 +8,60 @@
 #pragma once
 
 #include <eve/algo/detail/convert.hpp>
-#include <eve/algo/preprocess_range.hpp>
+
+#include <eve/algo/detail/preprocess_range.hpp>
+#include <eve/algo/concepts/value_type.hpp>
+#include <eve/algo/range_ref.hpp>
 
 namespace eve::algo
 {
-  template <is_range_ref<range_ref> R, typename T>
+  template <typename I, typename T>
+  struct converting_iterator;
+
+  template <non_owning_range R, typename T>
+  struct converting_range;
+
+  template <typename Wrapped, typename T>
+  EVE_FORCEINLINE auto convert_::operator()(Wrapped&& wrapped, eve::as<T> tgt) const
+  {
+    using no_ref = std::remove_reference_t<Wrapped>;
+    using no_cvref = std::remove_cvref_t<Wrapped>;
+
+         if constexpr ( relaxed_range<no_ref> && !non_owning_range<no_cvref> ) return take_range_ref(std::forward<Wrapped>(wrapped));
+    else if constexpr ( std::same_as<value_type_t<no_cvref>, T>              ) return wrapped;
+    else if constexpr ( detail::instance_of<no_cvref, converting_range>      ) return operator()(wrapped.base, tgt);
+    else if constexpr ( detail::instance_of<no_cvref, converting_iterator>   ) return operator()(wrapped.base, tgt);
+    else if constexpr ( non_owning_range<no_cvref>                           ) return converting_range<no_cvref, T>{wrapped};
+    else                                                                       return converting_iterator<no_cvref, T>{wrapped};
+  }
+
+/*
+  template <non_owning_range R, typename T>
   struct converting_range
   {
-    R rng;
+    R base;
 
-    EVE_FORCEINLINE explicit converting_range(R r) : r(r) {}
+    EVE_FORCEINLINE explicit converting_range(R r) : base(r) {}
 
     EVE_FORCEINLINE auto begin() const
     {
-      return convert(r.begin(), eve::as<T>);
+      return convert(base.begin(), eve::as<T>{});
     }
 
     EVE_FORCEINLINE auto end() const
     {
-      return convert(r.end(), eve::as<T>);
+      return convert(base.end(), eve::as<T>{});
     }
 
-    EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, converting_range self)
+    EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, auto tr, converting_range self)
     {
-      return convert(preprocess_range(self.r), eve::as<T>{});
+      auto traits_internal = traits.default_to(eve::algo::traits(force_type<T>));
+      auto processed = preprocess_range(traits_internal, self.base);
+      // drop from processed traits force_type. FIX-906
+      return processed;
     }
   };
+  */
 }
+
+#include <eve/algo/converting_iterator.hpp>

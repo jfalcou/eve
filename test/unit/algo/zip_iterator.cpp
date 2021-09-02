@@ -30,17 +30,22 @@ TTS_CASE("zip_iterator for not eve iterators")
 
   // pointer checks
 
-  TTS_EQUAL(&c[0], &get<0>(*zf));
-  TTS_EQUAL(&v[0], &get<1>(*zf));
-  TTS_EQUAL(&f[0], &get<2>(*zf));
+  TTS_EQUAL(&c[0], &*get<0>(zf));
+  TTS_EQUAL(&v[0], &*get<1>(zf));
+  TTS_EQUAL(&f[0], &*get<2>(zf));
 
   // std::fill won't work
+  // Replace with load store scalar interface
   for (auto i = zf; i != zf; ++i) {
-    *i = twos;
+    kumi::for_each([](auto where, auto what) {
+        *where = what;
+    }, i, twos);
   }
 
   for (auto i = zf; i != zf; ++i) {
-    TTS_EQUAL(*i, twos);
+    kumi::for_each([](auto where, auto what) {
+      TTS_EQUAL(*where, what);
+    }, i, twos);
   }
 
   // ++/-- etc

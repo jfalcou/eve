@@ -43,8 +43,14 @@ namespace eve::algo
     unaligned_ptr_iterator& operator+=(std::ptrdiff_t n) { ptr += n; return *this; }
     friend std::ptrdiff_t   operator-(unaligned_ptr_iterator x, unaligned_ptr_iterator y) { return x.ptr - y.ptr; }
 
-    auto operator<=>(unaligned_ptr_iterator const&) const = default;
-
+    bool operator==(unaligned_ptr_iterator const& x) const
+    {
+      return ptr == x.ptr;
+    }
+    auto operator<=>(unaligned_ptr_iterator const& x) const
+    {
+      return ptr <=> x.ptr;
+    }
 
     template< relative_conditional_expr C, decorator S, typename Pack>
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::load_, C const& c, S const& s

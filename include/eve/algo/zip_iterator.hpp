@@ -75,16 +75,6 @@ namespace eve::algo
 
       explicit zip_iterator_common(Is... is) : storage {is...} {}
 
-      auto operator*() const
-      {
-        using res_t = kumi::tuple<decltype(*std::declval<Is>())...>;
-        return [&]<std::size_t... idx>(std::index_sequence<idx...>)
-        {
-          return res_t {*kumi::get<idx>(storage)...};
-        }
-        (std::index_sequence_for<Is...> {});
-      }
-
       operator zip_iterator<unaligned_t<Is>...>() const
       {
         return zip_iterator<unaligned_t<Is>...> {

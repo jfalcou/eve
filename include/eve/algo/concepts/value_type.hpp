@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/algo/concepts/relaxed.hpp>
+#include <eve/algo/concepts/detail.hpp>
 
 #include <eve/traits.hpp>
 
@@ -20,7 +20,7 @@ namespace eve::algo
     template <typename T>
     constexpr auto value_type_impl()
     {
-           if constexpr ( relaxed_range<T>            ) return value_type_impl<decltype(std::declval<T>().begin())>();
+           if constexpr ( has_begin_end<T>            ) return value_type_impl<decltype(std::declval<T>().begin())>();
       else if constexpr ( std::contiguous_iterator<T> ) return std::type_identity<typename std::iterator_traits<T>::value_type>{};
       else                                              return std::type_identity<typename eve::pointer_traits<T>::value_type>{};
     }

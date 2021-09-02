@@ -36,7 +36,7 @@ namespace eve::algo
   };
 
   template <typename T>
-  concept non_owning_range = requires {
+  concept non_owning_range = relaxed_range<T> && requires {
     { typename T::is_non_owning{} };
   };
 

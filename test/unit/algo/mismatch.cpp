@@ -52,8 +52,10 @@ TTS_CASE("Mismatch example, first point not within a radius")
   );
 
   auto [found_x_y, found_r] = found;
+  auto [found_x, found_y] = found_x_y;
   TTS_EQUAL((found_x_y - x_y.begin()), 3);
-  TTS_EQUAL(*found_x_y, (kumi::tuple{10, -10}));
+  TTS_EQUAL(*found_x, 10);
+  TTS_EQUAL(*found_y, -10);
   TTS_EQUAL(*found_r, 10.1);
 }
 
@@ -71,8 +73,12 @@ TTS_CASE("Mismatch example, zip<zip>")
     }
   );
 
-  TTS_EQUAL(*get<0>(found), (kumi::tuple<float, float>{3, 2}));
-  TTS_EQUAL(*get<1>(found), 4.9);
+  auto [found_x_y, found_z] = found;
+  auto [found_x, found_y] = found_x_y;
+
+  TTS_EQUAL(*found_x, 3);
+  TTS_EQUAL(*found_y, 2);
+  TTS_EQUAL(*found_z, 4.9);
 
 }
 
