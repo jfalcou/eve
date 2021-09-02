@@ -15,6 +15,7 @@ add_custom_target(unit.algo.simd.exe  )
 
 # Components
 make_unit("unit.algo" array_utils.cpp)
+make_unit("unit.algo" concepts.cpp)
 make_unit("unit.algo" converting_iterator.cpp)
 make_unit("unit.algo" for_each_iteration.cpp)
 make_unit("unit.algo" preprocess_range.cpp)

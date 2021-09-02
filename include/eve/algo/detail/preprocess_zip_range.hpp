@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/algo/concepts/value_type.hpp>
 #include <eve/detail/kumi.hpp>
 
 namespace eve::algo
@@ -16,14 +17,10 @@ namespace eve::algo
 
   namespace detail
   {
-    template <typename Rng>
-    using rng_value_type = std::remove_reference_t<decltype(*std::declval<Rng>().begin())>;
-
     template <typename Traits, typename ZipTraits, typename ...Rngs>
     EVE_FORCEINLINE auto preprocess_zip_range_traits_support(Traits tr, ZipTraits, kumi::tuple<Rngs...>)
     {
-      using value_type = kumi::tuple<rng_value_type<Rngs>...>;
-      using N = forced_cardinal_t<decltype(tr), value_type>;
+      using N = forced_cardinal_t<decltype(tr), kumi::tuple<value_type_t<Rngs>...>>;
 
       auto force_cardinal = algo::traits{algo::force_cardinal<N{}()>};
 
@@ -47,7 +44,7 @@ namespace eve::algo
           {
             return algo::traits {algo::common_with_types<ParamTypes..., ZipTypes...>};
           }
-          (Param {}, eve::common_type<rng_value_type<Rngs>...> {});
+          (Param {}, eve::common_type<value_type_t<Rngs>...> {});
         }
         else
         {
