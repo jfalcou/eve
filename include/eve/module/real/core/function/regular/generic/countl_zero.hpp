@@ -26,6 +26,7 @@ namespace eve::detail
     }
     else if constexpr( has_native_abi_v<T> )
     {
+      std::cout << "ici" << std::endl; 
 //      return map(countl_zero, v); // TO DO
       constexpr auto siz = sizeof(eve::element_type_t<T>)*8;
       using elt_t = element_type_t<T>;
