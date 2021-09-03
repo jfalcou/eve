@@ -73,7 +73,7 @@ namespace eve::algo
       auto f = zip_iterator(kumi::map([](auto r) { return r.begin(); }, processed_components));
       auto l = zip_iterator(kumi::map([](auto r) { return r.end(); }, processed_components));
 
-      auto as_eve_its = preprocess_eve_it_sentinel(tr_external, f, l);
+      auto as_eve_its = preprocess_range(tr_external, f, l);
 
       return enhance_to_output(as_eve_its, [processed_components](auto i) {
           return zip_iterator{

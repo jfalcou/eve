@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/algo/concepts/detail.hpp>
-#include <eve/algo/preprocess_range.hpp>
+#include <eve/algo/detail/preprocess_range.hpp>
 
 namespace eve::algo
 {

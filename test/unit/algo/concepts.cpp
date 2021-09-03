@@ -29,3 +29,10 @@ TTS_CASE("concepts, value type")
   TTS_TYPE_IS((eve::algo::value_type_t<decltype(eve::algo::zip(v1, v2))>),
                (kumi::tuple<int, int>));
 }
+
+TTS_CASE("concepts, relaxed")
+{
+  TTS_CONSTEXPR_EXPECT(eve::algo::relaxed_iterator<int*>);
+  TTS_CONSTEXPR_EXPECT_NOT(eve::algo::relaxed_range<int*>);
+  TTS_CONSTEXPR_EXPECT(eve::algo::relaxed_range<std::vector<int>>);
+}

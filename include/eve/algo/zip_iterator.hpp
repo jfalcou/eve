@@ -118,16 +118,6 @@ namespace eve::algo
         return get<0>(x) - get<0>(y);
       }
 
-      template<typename Traits, std::derived_from<zip_iterator_common> Self, compatible_zip_iterators<Self> Other>
-      friend auto tagged_dispatch(preprocess_range_, Traits traits, Self self, Other other)
-      {
-        auto ranges = kumi::map([](auto f_, auto l_) {
-          return as_range(f_, l_);
-        }, self, other);
-
-        return preprocess_zip_range(traits, eve::algo::traits(), ranges);
-      }
-
       template<typename Traits, std::derived_from<zip_iterator_common> Self,
                std::equality_comparable_with<std::tuple_element_t<0, tuple_type>> S>
       friend auto tagged_dispatch(preprocess_range_, Traits traits, Self self, S l)
@@ -156,6 +146,16 @@ namespace eve::algo
   {
     using base = detail::zip_iterator_common<Is...>;
     using base::base;
+
+    template<typename Traits, compatible_zip_iterators<zip_iterator<Is...>> Other>
+    friend auto tagged_dispatch(preprocess_range_, Traits traits, zip_iterator<Is...> self, Other other)
+    {
+      auto ranges = kumi::map([](auto f_, auto l_) {
+        return as_range(f_, l_);
+      }, self, other);
+
+      return detail::preprocess_zip_range(traits, eve::algo::traits(), ranges);
+    }
   };
 
   template <iterator I, iterator ... Is>
