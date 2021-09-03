@@ -20,4 +20,10 @@ namespace eve::algo::detail
 
   template <typename T, template <typename ...> class Templ>
   concept instance_of = detail::instance_of_impl<T, Templ>::value;
+
+  template <typename R>
+  concept has_begin_end = requires (R&& r) {
+      { r.begin() };
+      { r.end() };
+  };
 }

@@ -7,22 +7,14 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/algo/preprocess_range.hpp>
+#include <eve/algo/concepts/detail.hpp>
+#include <eve/algo/detail/preprocess_range.hpp>
 
 namespace eve::algo
 {
   template <typename I>
   concept relaxed_iterator =
     std::invocable<preprocess_range_, decltype(eve::algo::traits{}), I, I>;
-
-  namespace detail
-  {
-    template <typename R>
-    concept has_begin_end = requires (R&& r) {
-        { r.begin() };
-        { r.end() };
-    };
-  }
 
   template <typename R>
   concept relaxed_range =
