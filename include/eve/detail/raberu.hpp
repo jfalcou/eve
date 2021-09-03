@@ -90,6 +90,29 @@ namespace rbr::detail
 
 namespace rbr
 {
+  // ID user defined literals
+  namespace literals
+  {
+    template<std::size_t N> struct str_
+    {
+      char data[N] = {};
+
+      template <std::size_t... Is>
+      constexpr str_(const char (&str)[N + 1], std::index_sequence<Is...>) :data{str[Is]...} {}
+      constexpr str_(const char (&str)[N + 1]) : str_{str, std::make_index_sequence<N>{}} {}
+      std::ostream& show(std::ostream& os) const { for(auto e : data) os << e; return os; }
+    };
+
+    template<std::size_t N> str_(const char (&str)[N]) -> str_<N - 1>;
+  }
+
+  template<literals::str_ ID> struct id_ {};
+
+  namespace literals
+  {
+    template<str_ ID> constexpr auto operator""_id() noexcept { return id_<ID>{}; }
+  }
+
   namespace concepts
   {
     // Keyword concept
@@ -103,7 +126,7 @@ namespace rbr
     template<typename O> concept option = requires( O const& o )
     {
       { o(typename std::remove_cvref_t<O>::keyword_type{}) }
-          -> std::same_as<typename std::remove_cvref_t<O>::value_type>;
+      -> std::same_as<typename std::remove_cvref_t<O>::value_type>;
     };
 
     // Type checker concept
@@ -262,6 +285,16 @@ namespace rbr
   template<concepts::type_checker Checker, typename Tag>
   constexpr checked_keyword<Tag,Checker> keyword(Tag) noexcept { return {}; }
 
+  // Keyword/Flag-type user defined literals
+  namespace literals
+  {
+    template<str_ ID>
+    constexpr auto operator""_kw() noexcept { return any_keyword<id_<ID>>{}; }
+
+    template<str_ ID>
+    constexpr auto operator""_fl() noexcept { return flag_keyword<id_<ID>>{}; }
+  }
+
   // Tag for when something is not found in an aggregator
   struct unknown_key {};
 
@@ -383,6 +416,43 @@ namespace rbr
     return select(typename detail::uniques<detail::keys<typename K1s::keyword_type...>
                                           ,detail::keys<typename K2s::keyword_type...>
                                           >::type{},opts,defs);
+  }
+
+  // Drop keyword from settings
+  namespace detail
+  {
+    template<typename K, concepts::keyword... Kept>
+    struct filter
+    {
+      using type = detail::keys<Kept...>;
+
+      template<typename T> constexpr auto operator+(keys<T> const&) const
+      {
+        using kw_t = typename T::keyword_type;
+        if constexpr(!std::same_as<K, typename kw_t::tag_type>)  return filter<K, Kept..., kw_t>{};
+        else                                            return *this;
+      }
+    };
+
+    template< typename K, typename S> struct select_keys;
+
+    template< typename K, concepts::option... Os>
+    struct  select_keys<K,rbr::settings<Os...>>
+          : decltype((filter<typename K::tag_type>{}  + ... +  detail::keys<Os>{}))
+    {
+    };
+  }
+
+  template<concepts::keyword K, concepts::option... Os>
+  constexpr auto drop(K const&, settings<Os...> const& os)
+  {
+    using selected_keys_t = typename detail::select_keys<K,settings<Os...>>::type;
+
+    return [&]<typename ... Ks>( detail::keys<Ks...> )
+    {
+      // Rebuild a new settings by going over the keys that we keep
+      return rbr::settings{ (Ks{} = os[Ks{}] )...};
+    }(selected_keys_t{});
   }
 }
 
