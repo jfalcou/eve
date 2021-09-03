@@ -77,7 +77,7 @@ namespace eve::algo
       return preprocess_range(traits_, f_, l_);
     }
     else if constexpr( typename I::cardinal {}()
-                       > forced_cardinal_t<Traits, typename I::value_type> {}() )
+                       != forced_cardinal_t<Traits, typename I::value_type> {}() )
     {
       using N = forced_cardinal_t<Traits, typename I::value_type>;
       auto f_ = f.cardinal_cast(N {});

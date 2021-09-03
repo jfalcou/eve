@@ -142,13 +142,12 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
     eve::algo::unaligned_ptr_iterator<e_t const, N>{}, eve::algo::unaligned_ptr_iterator<e_t const, N>{});
 };
 
-
 EVE_TEST_TYPES("Check preprocess_range for eve ptr iterators", algo_test::selected_types)
 <typename T>(eve::as<T>)
 {
   using e_t = eve::element_type_t<T>;
   using N = eve::fixed<T::size()>;
-  using expected_N = eve::fixed<std::min(T::size(), eve::expected_cardinal_v<e_t>)>;
+  using expected_N = eve::fixed<eve::expected_cardinal_v<e_t>>;
 
   alignas(sizeof(T)) std::array<e_t, T::size()> arr;
 
@@ -179,8 +178,16 @@ EVE_TEST_TYPES("Check preprocess_range for eve ptr iterators", algo_test::select
 
     run_one_test(u_f, u_l, eve::algo::traits(eve::algo::unroll<2>));
     run_one_test(u_f, a_l, eve::algo::traits(eve::algo::unroll<2>));
-    run_one_test(a_f, a_l, eve::algo::traits(eve::algo::unroll<2>, eve::algo::no_aligning, eve::algo::divisible_by_cardinal));
-    run_one_test(a_f, u_l, eve::algo::traits(eve::algo::unroll<2>, eve::algo::no_aligning));
+    if constexpr ( N{}() >= expected_N{}())
+    {
+      run_one_test(a_f, a_l, eve::algo::traits(eve::algo::unroll<2>, eve::algo::no_aligning, eve::algo::divisible_by_cardinal));
+      run_one_test(a_f, u_l, eve::algo::traits(eve::algo::unroll<2>, eve::algo::no_aligning));
+    }
+    else
+    {
+      run_one_test(a_f, a_l, eve::algo::traits(eve::algo::unroll<2>));
+      run_one_test(a_f, u_l, eve::algo::traits(eve::algo::unroll<2>));
+    }
   };
 
   run_test(arr.begin(), arr.end());
