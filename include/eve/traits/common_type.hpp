@@ -37,9 +37,8 @@ namespace eve
   //!
   //! *NOTE:* for signed unsigned of the same size we return unsigned of this size (same as std).
   //!
-  //! For product types will compute the common type by field.
-  //! If the result matches one of the specified types, we will return that one.
-  //! Otherwise we'll return a `kumi::tuple` of the result.
+  //! For product types TODO: FIX-#905
+  //! Right now we have some simplified logic.
   //!
   //! @}
   //================================================================================================
@@ -62,6 +61,15 @@ namespace eve::detail
     template <typename U>
     friend constexpr auto operator+(no_common_type, U) { return no_common_type{}; }
   };
+
+  template <typename T>
+  struct is_kumi_tuple : std::false_type {};
+
+  template <typename ...Ts>
+  struct is_kumi_tuple<kumi::tuple<Ts...>> : std::true_type {};
+
+  template <typename T>
+  concept is_kumi_tuple_v = is_kumi_tuple<T>::value;
 
   template <typename T>
   struct common_type_reduction;
@@ -99,17 +107,35 @@ namespace eve::detail
       }
       else if constexpr ( kumi::product_type<T> && kumi::product_type<U> )
       {
-        using t_as_tuple = typename kumi::as_tuple<T>::type;
-        using u_as_tuple = typename kumi::as_tuple<U>::type;
-        using tuple_res = typename common_kumi_tuple<t_as_tuple, u_as_tuple>::type;
+        using t_as_tuple = kumi::as_tuple_t<T>;
+        using u_as_tuple = kumi::as_tuple_t<U>;
+        using tuple_res  = typename common_kumi_tuple<t_as_tuple, u_as_tuple>::type;
 
-        if constexpr ( std::same_as<no_common_type, tuple_res> ) return tuple_res{};
-        else
+        if constexpr ( !std::same_as<no_common_type, tuple_res> )
         {
           using type = typename tuple_res::type;
-               if constexpr ( std::same_as<type, t_as_tuple> ) return self;
-          else if constexpr ( std::same_as<type, u_as_tuple> ) return other;
-          else                                                 return tuple_res{};
+
+               if constexpr ( std::same_as<type, t_as_tuple> && !is_kumi_tuple_v<T> ) return self;
+          else if constexpr ( std::same_as<type, u_as_tuple> && !is_kumi_tuple_v<U> ) return other;
+          else                                                                        return tuple_res{};
+        }
+        else
+        {
+          using t_flat = kumi::result::flatten_all_t<T>;
+          using u_flat = kumi::result::flatten_all_t<U>;
+          using flat_res = typename common_kumi_tuple<t_flat, u_flat>::type;
+
+          if constexpr ( std::same_as<no_common_type, flat_res> ) return flat_res{};
+          else
+          {
+            using type = typename flat_res::type;
+
+                 if constexpr ( std::same_as<type, t_flat> && !is_kumi_tuple_v<T> ) return self;
+            else if constexpr ( std::same_as<type, u_flat> && !is_kumi_tuple_v<U> ) return other;
+            else if constexpr ( std::same_as<type, t_flat>                        ) return self;
+            else if constexpr ( std::same_as<type, u_flat>                        ) return other;
+            else                                                                    return flat_res{};
+          }
         }
       }
       else return no_common_type{};
