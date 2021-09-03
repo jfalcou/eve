@@ -38,9 +38,6 @@ TTS_CASE("zip_iterator, preprocess range, scalar end")
   zip_ui processed_l = processed.end();
 
   TTS_EQUAL((processed_l - processed_f), 3);
-
-  zip_vi back_zf = processed.to_output_iterator(processed_f);
-  TTS_EQUAL(back_zf, zf);
 }
 
 TTS_CASE("zip_iterator, preprocess range, zip end")

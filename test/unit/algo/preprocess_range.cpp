@@ -34,13 +34,8 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
 
     TTS_EQUAL((processed.end() - processed.begin()), (eve::algo::unalign(l) - eve::algo::unalign(f)));
 
-    auto back_to_f = processed.to_output_iterator(processed.begin().unaligned());
-    TTS_EQUAL(back_to_f, f);
-
     auto processed_empty = eve::algo::preprocess_range(eve::algo::traits(eve::algo::unroll<2>), f, f);
     TTS_EQUAL(processed_empty.begin(), processed_empty.end());
-    back_to_f = processed_empty.to_output_iterator(processed_empty.begin().unaligned());
-    TTS_EQUAL(back_to_f, f);
 
     return processed;
   };
@@ -169,14 +164,8 @@ EVE_TEST_TYPES("Check preprocess_range for eve ptr iterators", algo_test::select
     TTS_EQUAL(processed.begin(), f_);
     TTS_EQUAL(processed.end(), l_);
 
-    auto back_to_f = processed.to_output_iterator(processed.begin().unaligned());
-    TTS_TYPE_IS(decltype(back_to_f), eve::algo::unaligned_t<I>);
-    TTS_EQUAL(back_to_f, f);
-
     auto processed_empty = eve::algo::preprocess_range(eve::algo::traits(eve::algo::unroll<2>), f, f);
     TTS_EQUAL(processed_empty.begin(), processed_empty.end());
-    back_to_f = processed_empty.to_output_iterator(processed_empty.begin().unaligned());
-    TTS_EQUAL(back_to_f, f);
   };
 
   auto run_test = [&] <typename U>(U* f, U* l) {
@@ -214,10 +203,6 @@ EVE_TEST_TYPES("contiguous ranges", algo_test::selected_types)
     TTS_TYPE_IS(decltype(processed.begin()), u_it);
     TTS_TYPE_IS(decltype(processed.end()), u_it);
     TTS_EQUAL(processed.begin(), processed.end());
-
-    auto back_to_f = processed.to_output_iterator(processed.begin().unaligned());
-    TTS_TYPE_IS(decltype(back_to_f), typename std::vector<e_t>::iterator);
-    TTS_EQUAL(back_to_f, v.begin());
   }
 
   auto non_empty_range_test = [](auto&& rng) {
@@ -229,10 +214,6 @@ EVE_TEST_TYPES("contiguous ranges", algo_test::selected_types)
     TTS_TYPE_IS(decltype(processed.traits()), decltype(eve::algo::traits()));
     TTS_TYPE_IS(decltype(processed.begin()), u_it);
     TTS_TYPE_IS(decltype(processed.end()), u_it);
-
-    auto back_to_f = processed.to_output_iterator(processed.begin().unaligned());
-    TTS_TYPE_IS(decltype(back_to_f), decltype(std::begin(rng)));
-    TTS_EQUAL(back_to_f, std::begin(rng));
   };
 
   {

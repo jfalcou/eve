@@ -12,6 +12,7 @@
 #include <eve/algo/ptr_iterator.hpp>
 
 #include <iterator>
+#include <memory>
 #include <type_traits>
 #include <utility>
 
@@ -20,22 +21,16 @@ namespace eve::algo
   template<typename Traits, std::contiguous_iterator I, typename S>
   EVE_FORCEINLINE auto preprocess_range_::operator()(Traits traits_, I f, S l) const
   {
-    using T  = std::remove_reference_t<decltype(*f)>;
+    auto* raw_f = std::to_address(f);
+    auto* raw_l = raw_f + (l - f);
+
+    using T = typename std::iterator_traits<I>::value_type;
+
     using it = unaligned_ptr_iterator<
-        T,
-        forced_cardinal_t<Traits, typename std::iterator_traits<I>::value_type>>;
+        std::remove_reference_t<decltype(*raw_f)>,
+        forced_cardinal_t<Traits, T>>;
 
-    T *raw_f = nullptr;
-    T *raw_l = raw_f;
-
-    if( f != l )
-    {
-      raw_f = &*f;
-      raw_l = raw_f + (l - f);
-    }
-
-    return enhance_to_output(operator()(traits_, it {raw_f}, it {raw_l}),
-                             [f, raw_f](it i) { return f + (i.ptr - raw_f); });
+    return operator()(traits_, it {raw_f}, it {raw_l});
   }
 
   template<typename Traits, typename T, typename A>
@@ -50,8 +45,7 @@ namespace eve::algo
       using aligned_it   = aligned_ptr_iterator<T, N>;
       using unaligned_it = unaligned_ptr_iterator<T, N>;
 
-      return enhance_to_output(operator()(traits_, aligned_it(f), unaligned_it(l)),
-                               [](unaligned_it i) { return i.ptr; });
+      return operator()(traits_, aligned_it(f), unaligned_it(l));
     }
   }
 
@@ -67,8 +61,7 @@ namespace eve::algo
     {
       using aligned_it = aligned_ptr_iterator<T, forced_cardinal_t<Traits, T>>;
 
-      return enhance_to_output(operator()(traits_, aligned_it(f), aligned_it(l)),
-                               [](unaligned_t<aligned_it> i) { return i.ptr; });
+      return operator()(traits_, aligned_it(f), aligned_it(l));
     }
   }
 
@@ -81,18 +74,14 @@ namespace eve::algo
       using T = iteration_type_t<Traits, I>;
       auto f_ = convert(f, eve::as<T> {});
       auto l_ = convert(l, eve::as<T> {});
-      return enhance_to_output(preprocess_range(traits_, f_, l_),
-                               [](unaligned_t<decltype(f_)> i)
-                               { return convert(i, eve::as<typename I::value_type> {}); });
+      return preprocess_range(traits_, f_, l_);
     }
     else if constexpr( typename I::cardinal {}()
                        > forced_cardinal_t<Traits, typename I::value_type> {}() )
     {
       using N = forced_cardinal_t<Traits, typename I::value_type>;
       auto f_ = f.cardinal_cast(N {});
-      return enhance_to_output(preprocess_range(traits_, f_, l.cardinal_cast(N {})),
-                               [](unaligned_t<decltype(f_)> i)
-                               { return i.cardinal_cast(typename I::cardinal {}); });
+      return preprocess_range(traits_, f_, l.cardinal_cast(N {}));
     }
     else
     {
@@ -109,8 +98,7 @@ namespace eve::algo
         }
       }();
 
-      return preprocess_range_result {
-          default_to(traits_, deduced), f, l, [](unaligned_t<I> i) { return i; }};
+      return preprocess_range_result { default_to(traits_, deduced), f, l};
     }
   }
 }

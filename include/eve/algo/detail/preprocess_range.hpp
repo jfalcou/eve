@@ -52,21 +52,19 @@ namespace eve::algo
 
   inline constexpr preprocess_range_ preprocess_range;
 
-  template<typename Traits, typename I, typename S, typename ToOutput>
+  template<typename Traits, typename I, typename S>
   struct preprocess_range_result
   {
     private:
     Traits   traits_;
     I        f_;
     S        l_;
-    ToOutput to_output_;
 
     public:
-    preprocess_range_result(Traits traits, I f, S l, ToOutput to_output)
+    preprocess_range_result(Traits traits, I f, S l)
         : traits_(traits)
         , f_(f)
         , l_(l)
-        , to_output_(to_output)
     {
     }
 
@@ -74,21 +72,5 @@ namespace eve::algo
 
     I begin() const { return f_; }
     S end() const { return l_; }
-
-    template<typename I_> EVE_FORCEINLINE auto to_output_iterator(I_ it) const
-    {
-      return to_output_(it);
-    }
   };
-
-  template<typename Traits, typename I, typename S, typename ToOutput, typename Update>
-  EVE_FORCEINLINE auto enhance_to_output(preprocess_range_result<Traits, I, S, ToOutput> prev,
-                                         Update                                          update)
-  {
-    return preprocess_range_result(prev.traits(),
-                                   prev.begin(),
-                                   prev.end(),
-                                   [update, prev](auto it)
-                                   { return update(prev.to_output_iterator(it)); });
-  }
 }
