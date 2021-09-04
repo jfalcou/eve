@@ -46,29 +46,6 @@ namespace eve::detail
 #endif
 
   //================================================================================================
-  // SCALAR
-  //================================================================================================
-  template<data_source Ptr>
-  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), Ptr p, scalar_cardinal const&) noexcept
-  {
-    return *p;
-  }
-
-  template<data_source Ptr, scalar_value Target>
-  EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_), Ptr p, as<Target> const&) noexcept
-  {
-    return static_cast<Target>(*p);
-  }
-
-  template<data_source Ptr, scalar_value T>
-  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_)
-                            , decorated<convert_to_<T>()> const&, Ptr p, scalar_cardinal const&
-                            ) noexcept
-  {
-    return load(p, as<T>{});
-  }
-
-  //================================================================================================
   // Load from pointer - Conditional load
   //================================================================================================
   template<relative_conditional_expr C, data_source Ptr, typename Pack>

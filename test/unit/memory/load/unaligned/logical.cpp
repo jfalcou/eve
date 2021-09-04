@@ -13,21 +13,6 @@
 #include <list>
 
 //==================================================================================================
-// Load into scalars
-//==================================================================================================
-EVE_TEST_TYPES( "Check load to scalar values", eve::test::scalar::all_types)
-<typename T>(eve::as<T>)
-{
-  auto [data,idx]        = logical_page<T, eve::scalar_cardinal>();
-  auto* ptr               = &data[idx];
-  auto* uptr              = ptr - 1;
-  auto const* uconst_ptr  = uptr;
-
-  TTS_EQUAL((eve::load(uptr       , eve::scalar)) , *uptr       );
-  TTS_EQUAL((eve::load(uconst_ptr , eve::scalar)) , *uconst_ptr );
-};
-
-//==================================================================================================
 // Load into wide from a (non-contiguous) range
 //==================================================================================================
 EVE_TEST( "Check load to wides from non-contiguous range"
