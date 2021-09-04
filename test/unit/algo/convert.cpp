@@ -19,6 +19,7 @@ TTS_CASE("eve::algo::convert, vector basics")
 
   eve::algo::relaxed_range auto converted = eve::algo::convert(v, eve::as<double>{});
   (void) converted;
+  TTS_PASS("all types ok");
 }
 
 TTS_CASE("eve.algo.convert to/from")

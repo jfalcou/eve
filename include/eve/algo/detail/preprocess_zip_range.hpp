@@ -20,7 +20,7 @@ namespace eve::algo
     template <typename Traits, typename ZipTraits, typename ...Rngs>
     EVE_FORCEINLINE auto preprocess_zip_range_traits_support(Traits tr, ZipTraits, kumi::tuple<Rngs...>)
     {
-      using N = forced_cardinal_t<decltype(tr), kumi::tuple<value_type_t<Rngs>...>>;
+      using N = iteration_cardinal_t<decltype(tr), kumi::tuple<value_type_t<Rngs>...>>;
 
       auto force_cardinal = algo::traits{algo::force_cardinal<N{}()>};
 
