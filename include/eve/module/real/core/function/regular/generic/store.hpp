@@ -17,22 +17,6 @@
 namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
-  // scalar Regular case
-  template<scalar_value T>
-  EVE_FORCEINLINE auto store_(EVE_SUPPORTS(cpu_), T value, T *ptr) noexcept
-  {
-    *ptr = value;
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // scalar Aligned case
-  template<scalar_value T, typename Lanes>
-  EVE_FORCEINLINE auto store_(EVE_SUPPORTS(cpu_), T value, aligned_ptr<T, Lanes> ptr) noexcept
-  {
-    *ptr = value;
-  }
-
-  // -----------------------------------------------------------------------------------------------
   // simd Tuple case
   template<kumi::product_type T, typename S, kumi::sized_product_type<T::size()> Ptr>
   EVE_FORCEINLINE void
