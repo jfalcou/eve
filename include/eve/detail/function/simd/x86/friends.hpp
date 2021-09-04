@@ -136,7 +136,7 @@ namespace eve::detail
       else
       {
         constexpr auto use_avx2 = current_api >= avx2;
-        constexpr auto eq = []<typename E>(E e, E f) { return as_logical_t<E>(e == f); };
+        constexpr auto eq = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e == f); };
 
               if constexpr(use_avx2 && c == category::int64x4  )  return _mm256_cmpeq_epi64(v,w);
         else  if constexpr(use_avx2 && c == category::uint64x4 )  return _mm256_cmpeq_epi64(v,w);
@@ -146,11 +146,23 @@ namespace eve::detail
         else  if constexpr(use_avx2 && c == category::uint16x16)  return _mm256_cmpeq_epi16(v,w);
         else  if constexpr(use_avx2 && c == category::int8x32  )  return _mm256_cmpeq_epi8 (v,w);
         else  if constexpr(use_avx2 && c == category::uint8x32 )  return _mm256_cmpeq_epi8 (v,w);
-        else  if constexpr( c == category::int64x2  )             return map(eq,v,w);
+        else  if constexpr( c == category::int64x2  )
+        {
+          if constexpr(N::value == 2)
+            return as_logical_t<wide<T, N>>{ v.get(0) == w.get(0), v.get(1) == w.get(1) };
+          else
+            return as_logical_t<wide<T, N>>{ v.get(0) == w.get(0) };
+        }
         else  if constexpr( c == category::int32x4  )             return _mm_cmpeq_epi32(v,w);
         else  if constexpr( c == category::int16x8  )             return _mm_cmpeq_epi16(v,w);
         else  if constexpr( c == category::int8x16  )             return _mm_cmpeq_epi8 (v,w);
-        else  if constexpr( c == category::uint64x2 )             return map(eq,v,w);
+        else  if constexpr( c == category::uint64x2 )
+        {
+          if constexpr(N::value == 2)
+            return as_logical_t<wide<T, N>>{ v.get(0) == w.get(0), v.get(1) == w.get(1) };
+          else
+            return as_logical_t<wide<T, N>>{ v.get(0) == w.get(0) };
+        }
         else  if constexpr( c == category::uint32x4 )             return _mm_cmpeq_epi32(v,w);
         else  if constexpr( c == category::uint16x8 )             return _mm_cmpeq_epi16(v,w);
         else  if constexpr( c == category::uint8x16 )             return _mm_cmpeq_epi8 (v,w);
