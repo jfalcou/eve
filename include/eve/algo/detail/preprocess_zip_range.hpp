@@ -17,53 +17,25 @@ namespace eve::algo
 
   namespace detail
   {
-    template <typename Traits, typename ZipTraits, typename ...Rngs>
-    EVE_FORCEINLINE auto preprocess_zip_range_traits_support(Traits tr, ZipTraits, kumi::tuple<Rngs...>)
+    template <typename Traits, typename ...Rngs>
+    EVE_FORCEINLINE auto preprocess_zip_range_traits_support(Traits tr, kumi::tuple<Rngs...>)
     {
       using N = iteration_cardinal_t<decltype(tr), kumi::tuple<value_type_t<Rngs>...>>;
 
       auto force_cardinal = algo::traits{algo::force_cardinal<N{}()>};
 
-      auto divisible_by_cardinal = [&] {
-        if constexpr (ZipTraits::contains(algo::divisible_by_cardinal))
-        {
-          return default_to(tr, algo::traits(algo::divisible_by_cardinal));
-        }
-        else
-        {
-          return eve::algo::traits{};
-        }
-      }();
-
-      auto common_with_types = [&] {
-        if constexpr (ZipTraits::contains(common_with_types_key))
-        {
-          using Param = rbr::get_type_t<ZipTraits, common_with_types_key>;
-          return []<typename... ParamTypes, typename... ZipTypes>(eve::common_type<ParamTypes...>,
-                                                                  eve::common_type<ZipTypes...>)
-          {
-            return algo::traits {algo::common_with_types<ParamTypes..., ZipTypes...>};
-          }
-          (Param {}, eve::common_type<value_type_t<Rngs>...> {});
-        }
-        else
-        {
-          return eve::algo::traits{};
-        }
-      }();
-
       static_assert(!Traits::contains(algo::common_with_types_key), "FIX-#880");
 
-      auto tr_external = default_to(tr, divisible_by_cardinal);
+      auto tr_external = tr;
 
-      auto tr_internal = default_to(default_to(tr_external, force_cardinal), common_with_types);
+      auto tr_internal = default_to(tr_external, force_cardinal);
 
       return std::pair{tr_external, tr_internal};
     }
 
-    template <typename Traits, typename ZipTraits, typename ...Rngs>
-    EVE_FORCEINLINE auto preprocess_zip_range(Traits tr, ZipTraits zip_tr, kumi::tuple<Rngs...> rngs) {
-      auto tr_pair = preprocess_zip_range_traits_support(tr, zip_tr, rngs);
+    template <typename Traits, typename ...Rngs>
+    EVE_FORCEINLINE auto preprocess_zip_range(Traits tr, kumi::tuple<Rngs...> rngs) {
+      auto tr_pair = preprocess_zip_range_traits_support(tr, rngs);
       // Bindings don't work with captures
       auto tr_external = tr_pair.first;
       auto tr_internal = tr_pair.second;

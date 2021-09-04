@@ -36,7 +36,9 @@ namespace eve::algo
     template <zipped_range_pair R>
     EVE_FORCEINLINE auto operator()(R&& r) const
     {
-      return operator()(r[common_type], eve::is_equal);
+      auto rezipped = r[common_type];
+      auto rezipped_res = operator()(rezipped, eve::is_equal);
+      return unalign(r.begin()) + (rezipped_res - rezipped.begin());
     }
 
     template <typename R1, typename R2, typename P>

@@ -173,7 +173,7 @@ TTS_CASE("preprocess zip range, traits")
     TTS_TYPE_IS(decltype(processed.end()), zip_ac_it_ui_it);
   }
 
-  // force cardinal (not supported by zip itself)
+  // force cardinal
   {
     eve::algo::traits tr{ eve::algo::force_cardinal<2> };
 
@@ -183,7 +183,7 @@ TTS_CASE("preprocess zip range, traits")
     TTS_TYPE_IS(decltype(processed.begin())::cardinal, eve::fixed<2>);
   }
 
-  // divisible by cardinal (propagates)
+  // divisible by cardinal
   {
     eve::algo::traits tr{ eve::algo::divisible_by_cardinal };
 
@@ -193,39 +193,44 @@ TTS_CASE("preprocess zip range, traits")
       auto processed = eve::algo::preprocess_range(tr, zipped);
       TTS_TYPE_IS(decltype(processed.traits()), decltype(tr));
     }
-
-    {
-      auto zipped = eve::algo::zip[eve::algo::divisible_by_cardinal](c, i);
-
-      auto processed = eve::algo::preprocess_range(eve::algo::traits{}, zipped);
-      TTS_TYPE_IS(decltype(processed.traits()), decltype(tr));
-    }
   }
+}
 
-  // common_type (does not propagate)
+TTS_CASE("preprocess zip range, common_type")
+{
+
+  std::array<std::int8_t,   64> c;
+  std::array<std::uint32_t, 64> i;
+
   {
-    using conv_uc_it = eve::algo::converting_iterator<uc_it, std::uint32_t>;
-    using zip_common_it = eve::algo::zip_iterator<conv_uc_it, ui_it>;
+    using N           = eve::fixed<eve::expected_cardinal_v<std::uint32_t>>;
+    using uc_it       = eve::algo::unaligned_ptr_iterator<std::int8_t, N>;
+    using ui_it       = eve::algo::unaligned_ptr_iterator<std::uint32_t, N>;
+    using conv_uc_it  = eve::algo::converting_iterator<uc_it, std::uint32_t>;
+    using expected_it = eve::algo::zip_iterator<conv_uc_it, ui_it>;
 
     auto zipped = eve::algo::zip[eve::algo::common_type](c, i);
+
     auto processed = eve::algo::preprocess_range(eve::algo::traits{}, zipped);
-    TTS_TYPE_IS(decltype(processed.traits()), decltype(eve::algo::traits{}));
-    TTS_TYPE_IS(decltype(processed.begin()), zip_common_it);
-    TTS_TYPE_IS(decltype(processed.end()), zip_common_it);
+
+    TTS_TYPE_IS(decltype(processed.begin()), expected_it);
+    TTS_TYPE_IS(decltype(processed.end()), expected_it);
   }
 
-  // common_with_types
   {
-    // using float to ease off the N counting.
-    // Should reduce the N() for doubles but that's tested in common_with_types itself
-    using conv_uc_it = eve::algo::converting_iterator<uc_it, float>;
-    using conv_ui_it = eve::algo::converting_iterator<ui_it, float>;
-    using zip_conv_float = eve::algo::zip_iterator<conv_uc_it, conv_ui_it>;
+    using N           = eve::fixed<2>;
+    using uc_it       = eve::algo::unaligned_ptr_iterator<std::int8_t, N>;
+    using ui_it       = eve::algo::unaligned_ptr_iterator<std::uint32_t, N>;
+    using conv_uc_it  = eve::algo::converting_iterator<uc_it, float>;
+    using conv_ui_it  = eve::algo::converting_iterator<ui_it, float>;
+    using expected_it = eve::algo::zip_iterator<conv_uc_it, conv_ui_it>;
 
-    auto zipped = eve::algo::zip[eve::algo::common_with_types<float>](c, i);
-    auto processed = eve::algo::preprocess_range(eve::algo::traits{}, zipped);
-    TTS_TYPE_IS(decltype(processed.traits()), decltype(eve::algo::traits{}));
-    TTS_TYPE_IS(decltype(processed.begin()), zip_conv_float);
-    TTS_TYPE_IS(decltype(processed.end()), zip_conv_float);
+    auto zipped = eve::algo::zip[eve::algo::force_type<float>](c, i);
+
+    auto processed = eve::algo::preprocess_range(eve::algo::traits{eve::algo::force_cardinal<2>}, zipped);
+
+    TTS_TYPE_IS(decltype(processed.begin()), expected_it);
+    TTS_TYPE_IS(decltype(processed.end()), expected_it);
   }
+
 }

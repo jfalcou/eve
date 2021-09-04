@@ -98,8 +98,8 @@ namespace eve::algo
     }
   }
 
-  template <typename Traits, typename I>
-  using iteration_type_t = typename decltype(detail::iterator_type_impl<Traits, I>())::type;
+  template <typename Traits, typename T>
+  using iteration_type_t = typename decltype(detail::iterator_type_impl<Traits, T>())::type;
 
 template <typename Traits, typename T>
   using iteration_cardinal_t =

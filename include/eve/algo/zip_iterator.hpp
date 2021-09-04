@@ -154,7 +154,7 @@ namespace eve::algo
         return as_range(f_, l_);
       }, self, other);
 
-      return detail::preprocess_zip_range(traits, eve::algo::traits(), ranges);
+      return detail::preprocess_zip_range(traits, ranges);
     }
   };
 

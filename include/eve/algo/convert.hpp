@@ -60,9 +60,6 @@ namespace eve::algo
       if constexpr (has_type_overrides_v<Traits> ) return preprocess_range(tr, self.base);
       else
       {
-        using N = iteration_cardinal_t<Traits, T>;
-        static_assert(N{}() <= eve::expected_cardinal_v<value_type_t<R>>, "FIX-#913");
-
         auto processed = preprocess_range(default_to(tr, traits {common_with_types<T>}), self.base);
         return preprocess_range_result {drop_key(common_with_types_key, processed.traits()),
                                         processed.begin(),
