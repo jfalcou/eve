@@ -101,6 +101,13 @@ namespace eve::algo
     return traits<settings_t>{rbr::merge(user, defaults)};
   }
 
+  template <typename K, typename Traits>
+  constexpr auto drop_key(K k, Traits tr)
+  {
+    using settings_t = decltype(rbr::drop(k, tr));
+    return traits<settings_t>(rbr::drop(k, tr));
+  }
+
   template <typename Traits>
   constexpr bool has_type_overrides_v = Traits::contains(common_with_types_key);
 

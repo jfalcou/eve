@@ -9,7 +9,7 @@
 
 #include <eve/algo/as_range.hpp>
 #include <eve/algo/iterator_helpers.hpp>
-#include <eve/algo/detail/convert.hpp>
+#include <eve/algo/convert.hpp>
 #include <eve/algo/detail/preprocess_range.hpp>
 #include <eve/algo/concepts/eve_iterator.hpp>
 #include <eve/algo/concepts/relaxed.hpp>
@@ -61,13 +61,13 @@ namespace eve::algo
 
       friend auto operator<=>(converting_iterator<I, T> const & x, converting_iterator<I, T> const & y)
       {
-        return x.base <=> y.base;
+        return spaceship_helper(x.base, y.base);
       }
 
       friend auto operator<=>(converting_iterator<I, T> const & x, converting_iterator<unaligned_t<I>, T> const & y)
         requires (!std::same_as<I, unaligned_t<I>>)
       {
-        return x.base <=> y.base;
+        return spaceship_helper(x.base, y.base);
       }
 
       friend auto& operator+=(converting_iterator<I, T>& x, std::ptrdiff_t n)
@@ -90,26 +90,26 @@ namespace eve::algo
   }
 
   template <typename I, typename T>
-  struct converting_iterator
+  struct converting_iterator : detail::converting_iterator_common<I, T>
   {
     using _base_t = detail::converting_iterator_common<I, T>;
     using _base_t::_base_t;
 
-/*
     template <typename Traits>
-    friend auto tagged_dispatch(preprocess_range_, Traits tr, converting_iterator<I, T> self, converting_iterator<I, T> other)
+    friend auto tagged_dispatch(preprocess_range_, Traits tr,
+     converting_iterator<I, T> self, converting_iterator<I, T> other)
     {
       return preprocess_range(tr, convert(as_range(self.base, other.base), as<T>{}));
     }
 
     template <typename Traits>
-    friend auto tagged_dispatch(preprocess_range_, Traits tr, converting_iterator<I, T> self,
+    friend auto tagged_dispatch(preprocess_range_, Traits tr,
+                                converting_iterator<I, T> self,
                                 converting_iterator<unaligned_t<I>, T> other)
       requires (!std::same_as<I, unaligned_t<I>>)
     {
       return preprocess_range(tr, convert(as_range(self.base, other.base), as<T>{}));
     }
-*/
   };
 
   template <iterator I, typename T>

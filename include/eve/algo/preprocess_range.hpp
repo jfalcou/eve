@@ -10,7 +10,7 @@
 #include <eve/algo/detail/preprocess_range.hpp>
 
 #include <eve/algo/concepts/value_type.hpp>
-#include <eve/algo/converting_iterator.hpp>
+#include <eve/algo/convert.hpp>
 #include <eve/algo/ptr_iterator.hpp>
 
 #include <iterator>

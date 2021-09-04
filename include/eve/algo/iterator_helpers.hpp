@@ -7,7 +7,11 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/algo/concepts/detail.hpp>
+
+#include <concepts>
 #include <compare>
+#include <memory>
 
 namespace eve::algo
 {
@@ -31,4 +35,10 @@ namespace eve::algo
       return tmp;
     }
   };
+
+  template <typename T, typename U>
+  auto spaceship_helper(T x, U y) {
+         if constexpr ( detail::supports_spaceship<T, U>                  ) return x <=> y;
+    else if constexpr ( std::contiguous_iterator<T> && std::same_as<T, U> ) return std::to_address(x) <=> std::to_address(y);
+  }
 }
