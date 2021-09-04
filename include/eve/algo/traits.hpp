@@ -101,6 +101,9 @@ namespace eve::algo
     return traits<settings_t>{rbr::merge(user, defaults)};
   }
 
+  template <typename Traits>
+  constexpr bool has_type_overrides_v = Traits::contains(common_with_types_key);
+
   inline constexpr algo::traits default_simple_algo_traits{algo::unroll<4>};
   inline constexpr algo::traits no_traits{};
 
