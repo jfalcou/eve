@@ -44,6 +44,7 @@ namespace eve::algo
     EVE_FORCEINLINE auto operator()(non_owning_range auto r) const { return r; }
 
     template<relaxed_range R>
+      requires (!non_owning_range<R>)  // gcc concepts bug
     EVE_FORCEINLINE auto operator()(R& r) const { return range_ref_wrapper{r}; }
   };
 
