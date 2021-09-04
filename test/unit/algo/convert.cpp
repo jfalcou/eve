@@ -13,13 +13,67 @@
 
 #include <vector>
 
-TTS_CASE("eve::algo::convert, vector basics")
+TTS_CASE("eve::algo::convert, preprocess test")
 {
-  std::vector<int> v;
+  auto common_test = []<typename R, typename T,
+                        typename ExpectedRawF,
+                        typename ExpectedRawS,
+                        typename ExpectedTraits>
+      (R&& r, eve::as<T> tgt, auto input_tr, ExpectedRawF, ExpectedRawS, ExpectedTraits) {
+    eve::algo::relaxed_range auto converted = eve::algo::convert(std::forward<R>(r), tgt);
+    auto processed = eve::algo::preprocess_range(input_tr, converted);
 
-  eve::algo::relaxed_range auto converted = eve::algo::convert(v, eve::as<double>{});
-  (void) converted;
-  TTS_PASS("all types ok");
+    using I = eve::algo::converting_iterator<ExpectedRawF, T>;
+    using S = eve::algo::converting_iterator<ExpectedRawS, T>;
+
+    TTS_TYPE_IS(decltype(processed.traits()), ExpectedTraits);
+    TTS_TYPE_IS(decltype(processed.begin()), I);
+    TTS_TYPE_IS(decltype(processed.end()), S);
+
+    // Two converting iterators is mostly the same thing, except for when the range has more info
+    auto cf = eve::algo::convert(r.begin(), tgt);
+    auto cl = eve::algo::convert(r.end(), tgt);
+    auto as_iterators = eve::algo::preprocess_range(input_tr, eve::algo::as_range(cf, cl));
+    TTS_TYPE_IS(decltype(processed.traits()), decltype(as_iterators.traits()));
+    TTS_TYPE_IS(decltype(processed.begin()),  decltype(as_iterators.begin()));
+    TTS_TYPE_IS(decltype(processed.end()),    decltype(as_iterators.end()));
+  };
+
+  {
+    using u_it = eve::algo::unaligned_ptr_iterator<int, eve::fixed<eve::expected_cardinal_v<double>>>;
+
+    std::vector<int> v;
+    common_test(v, eve::as<double>{}, eve::algo::traits{}, u_it{}, u_it{}, eve::algo::traits{});
+    common_test(eve::algo::as_range(v.data(), v.data()),
+                eve::as<double>{}, eve::algo::traits{}, u_it{}, u_it{}, eve::algo::traits{});
+    common_test(eve::algo::as_range(u_it{}, u_it{}),
+                eve::as<double>{}, eve::algo::traits{}, u_it{}, u_it{}, eve::algo::traits{});
+
+    common_test(v, eve::as<double>{}, eve::algo::traits{eve::algo::no_aligning},
+               u_it{}, u_it{},        eve::algo::traits{eve::algo::no_aligning});
+  }
+  {
+    using u_it = eve::algo::unaligned_ptr_iterator<int const, eve::fixed<eve::expected_cardinal_v<double>>>;
+
+    const std::vector<int> v;
+    common_test(v, eve::as<double>{}, eve::algo::traits{}, u_it{}, u_it{}, eve::algo::traits{});
+    common_test(eve::algo::as_range(v.data(), v.data()),
+                eve::as<double>{}, eve::algo::traits{}, u_it{}, u_it{}, eve::algo::traits{});
+    common_test(eve::algo::as_range(u_it{}, u_it{}),
+                eve::as<double>{}, eve::algo::traits{}, u_it{}, u_it{}, eve::algo::traits{});
+  }
+  {
+    using a_it = eve::algo::aligned_ptr_iterator  <int, eve::fixed<eve::expected_cardinal_v<double>>>;
+    using u_it = eve::algo::unaligned_ptr_iterator<int, eve::fixed<eve::expected_cardinal_v<double>>>;
+
+    eve::aligned_ptr<int> f;
+    int* l = nullptr;
+
+    common_test(eve::algo::as_range(f, l),
+                eve::as<double>{}, eve::algo::traits{}, a_it{}, u_it{},
+                eve::algo::traits{eve::algo::no_aligning});
+  }
+
 }
 
 TTS_CASE("eve.algo.convert to/from")
