@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/algo/concepts/eve_iterator.hpp>
+#include <eve/algo/concepts/detail.hpp>
 #include <eve/algo/detail/convert.hpp>
 #include <eve/algo/traits.hpp>
 
@@ -17,9 +18,24 @@
 
 namespace eve::algo
 {
+  namespace detail
+  {
+    template <typename I, typename S>
+    concept pointer_iterator_sentinel =
+      (std::is_pointer_v<I> || detail::instance_of<I, aligned_ptr>) &&
+      (std::is_pointer_v<S> || detail::instance_of<S, aligned_ptr>) &&
+      std::same_as<typename eve::pointer_traits<I>::value_type,
+                   typename eve::pointer_traits<S>::value_type>;
+  }
+
   struct preprocess_range_
   {
+    template <typename Traits, typename I, typename S>
+      requires  detail::pointer_iterator_sentinel<I, S>
+    EVE_FORCEINLINE auto operator()(Traits traits_, I f, S l) const;
+
     template <typename Traits, std::contiguous_iterator I, typename S>
+      requires ( !std::is_pointer_v<I> )
     EVE_FORCEINLINE auto operator()(Traits traits_, I f, S l) const;
 
     template <typename Traits, typename I, typename S>
@@ -38,13 +54,6 @@ namespace eve::algo
     EVE_FORCEINLINE auto operator()(Traits traits_, Rng&& rng) const {
       return operator()(traits_, rng.begin(), rng.end());
     }
-
-    template <typename Traits, typename T, typename A>
-    EVE_FORCEINLINE auto operator()(Traits traits_, eve::aligned_ptr<T, A> f, T* l) const;
-
-    template <typename Traits, typename T, typename A1, typename A2>
-    EVE_FORCEINLINE auto operator()(Traits traits_, eve::aligned_ptr<T, A1> f, eve::aligned_ptr<T, A2> l) const;
-
     // Base case. Should validate that I, S are a valid iterator pair
     template <typename Traits, iterator I, sentinel_for<I> S>
     EVE_FORCEINLINE auto operator()(Traits traits_, I f, S l) const;
