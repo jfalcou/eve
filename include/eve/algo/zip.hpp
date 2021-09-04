@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/algo/as_range.hpp>
+#include <eve/algo/range_ref.hpp>
 #include <eve/algo/concepts/relaxed.hpp>
 #include <eve/algo/preprocess_range.hpp>
 #include <eve/algo/traits.hpp>
@@ -71,12 +72,8 @@ namespace eve::algo
        return kumi::tuple{
          [&]<typename C>(C&& c)
          {
-           using no_ref = std::remove_reference_t<C>;
-                if constexpr (detail::instance_of<no_ref, detail::rng_ref>) return c;
-           // We need to handle `range_pair` separately, because we create it here
-           else if constexpr (detail::instance_of<no_ref, range_pair>     ) return c;
-           else if constexpr (relaxed_range<no_ref>                       ) return detail::rng_ref<no_ref>{&c};
-           else                                                             return as_range(c, unalign(c) + distance);
+           if constexpr (relaxed_range<C>) return range_ref(std::forward<C>(c));
+           else                            return as_range(c, unalign(c) + distance);
          }(components)...
        };
      }
