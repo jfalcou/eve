@@ -88,13 +88,13 @@ namespace algo_test
     TTS_TYPE_IS(typename decltype(res)::cardinal, eve::fixed<1>);
   }
 
-  // void is_relaxed_test(eve::algo::relaxed_iterator auto, eve::algo::relaxed_iterator auto) {}
+  void is_relaxed_test(eve::algo::relaxed_iterator auto, eve::algo::relaxed_iterator auto) {}
 
   template <eve::algo::readable_iterator I, eve::algo::sentinel_for<I> S, typename T, typename ReplaceIgnored>
   void iterator_sentinel_test(I f, S l, T v, ReplaceIgnored replace)
   {
     eve::algo::preprocess_range(eve::algo::traits{}, f, f);
-    // is_relaxed_test(f, l);
+    is_relaxed_test(f, l);
     iterator_sentinel_test_one_pair(f, l, v, replace);
     unaligned_iteration_test(f.unaligned(), l);
 

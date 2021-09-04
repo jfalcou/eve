@@ -7,110 +7,102 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/algo/converting_iterator.hpp>
 #include <eve/algo/detail/preprocess_range.hpp>
+
+#include <eve/algo/concepts/value_type.hpp>
+#include <eve/algo/converting_iterator.hpp>
 #include <eve/algo/ptr_iterator.hpp>
 
 #include <iterator>
+#include <memory>
 #include <type_traits>
 #include <utility>
 
 namespace eve::algo
 {
+  namespace detail
+  {
+    template <typename T, typename A>
+    EVE_FORCEINLINE auto ptr_to_iterator(eve::aligned_ptr<T, A> ptr)
+    {
+      return aligned_ptr_iterator<T, A>{ptr};
+    }
+
+    template <typename T>
+    EVE_FORCEINLINE auto ptr_to_iterator(T* ptr)
+    {
+      using N          = eve::fixed<eve::expected_cardinal_v<std::remove_const_t<T>>>;
+      return unaligned_ptr_iterator<T, N>{ptr};
+    }
+
+    template <typename Traits, typename I>
+    EVE_FORCEINLINE auto fix_up_type_and_cardinal(Traits traits_, I i)
+    {
+      if constexpr( !std::same_as<typename I::value_type, iteration_type_t<Traits, I>> )
+      {
+        using T = iteration_type_t<Traits, I>;
+        auto i_ = convert(i, eve::as<T> {});
+        return fix_up_type_and_cardinal(traits_, i_);
+      }
+      else if constexpr( typename I::cardinal {}() !=
+                         forced_cardinal_t<Traits, typename I::value_type> {}() )
+      {
+        using N = forced_cardinal_t<Traits, typename I::value_type>;
+        auto i_ = i.cardinal_cast(N {});
+        return fix_up_type_and_cardinal(traits_, i_);
+      }
+      else
+      {
+        return i;
+      }
+    }
+  }
+
+  template <typename Traits, typename I_, typename S_>
+    requires detail::pointer_iterator_sentinel<I_, S_>
+  EVE_FORCEINLINE auto preprocess_range_::operator()(Traits traits_, I_ f_, S_ l_) const
+  {
+    // We have to force cardinal here, because iterators
+    // with different cardinals don't form a valid range.
+    auto f = detail::fix_up_type_and_cardinal(traits_, detail::ptr_to_iterator(f_));
+    auto l = detail::fix_up_type_and_cardinal(traits_, detail::ptr_to_iterator(l_));
+
+    return operator()(traits_, f, l);
+  }
+
   template<typename Traits, std::contiguous_iterator I, typename S>
+    requires ( !std::is_pointer_v<I> )
   EVE_FORCEINLINE auto preprocess_range_::operator()(Traits traits_, I f, S l) const
   {
-    using T  = std::remove_reference_t<decltype(*f)>;
-    using it = unaligned_ptr_iterator<
-        T,
-        forced_cardinal_t<Traits, typename std::iterator_traits<I>::value_type>>;
+    auto* raw_f = std::to_address(f);
+    auto* raw_l = raw_f + (l - f);
 
-    T *raw_f = nullptr;
-    T *raw_l = raw_f;
-
-    if( f != l )
-    {
-      raw_f = &*f;
-      raw_l = raw_f + (l - f);
-    }
-
-    return enhance_to_output(operator()(traits_, it {raw_f}, it {raw_l}),
-                             [f, raw_f](it i) { return f + (i.ptr - raw_f); });
-  }
-
-  template<typename Traits, typename T, typename A>
-  EVE_FORCEINLINE auto
-  preprocess_range_::operator()(Traits traits_, eve::aligned_ptr<T, A> f, T *l) const
-  {
-    using N = forced_cardinal_t<Traits, T>;
-
-    if constexpr( N {}() > A {}() ) return operator()(traits_, f.get(), l);
-    else
-    {
-      using aligned_it   = aligned_ptr_iterator<T, N>;
-      using unaligned_it = unaligned_ptr_iterator<T, N>;
-
-      return enhance_to_output(operator()(traits_, aligned_it(f), unaligned_it(l)),
-                               [](unaligned_it i) { return i.ptr; });
-    }
-  }
-
-  template<typename Traits, typename T, typename A1, typename A2>
-  EVE_FORCEINLINE auto
-  preprocess_range_::operator()(Traits traits_, eve::aligned_ptr<T, A1> f, eve::aligned_ptr<T, A2> l) const
-  {
-    using N = forced_cardinal_t<Traits, T>;
-
-         if constexpr( N {}() > A2 {}() ) return operator()(traits_, f, l.get());
-    else if constexpr( N {}() > A1 {}() ) return operator()(traits_, f.get(), l);
-    else
-    {
-      using aligned_it = aligned_ptr_iterator<T, forced_cardinal_t<Traits, T>>;
-
-      return enhance_to_output(operator()(traits_, aligned_it(f), aligned_it(l)),
-                               [](unaligned_t<aligned_it> i) { return i.ptr; });
-    }
+    return operator()(traits_, raw_f, raw_l);
   }
 
   // Base case. Should validate that I, S are a valid iterator pair
-  template<typename Traits, iterator I, sentinel_for<I> S>
-  EVE_FORCEINLINE auto preprocess_range_::operator()(Traits traits_, I f, S l) const
+  template<typename Traits, iterator I_, sentinel_for<I_> S_>
+  EVE_FORCEINLINE auto preprocess_range_::operator()(Traits traits_, I_ f_, S_ l_) const
   {
-    if constexpr( !std::same_as<typename I::value_type, iteration_type_t<Traits, I>> )
-    {
-      using T = iteration_type_t<Traits, I>;
-      auto f_ = convert(f, eve::as<T> {});
-      auto l_ = convert(l, eve::as<T> {});
-      return enhance_to_output(preprocess_range(traits_, f_, l_),
-                               [](unaligned_t<decltype(f_)> i)
-                               { return convert(i, eve::as<typename I::value_type> {}); });
-    }
-    else if constexpr( typename I::cardinal {}()
-                       > forced_cardinal_t<Traits, typename I::value_type> {}() )
-    {
-      using N = forced_cardinal_t<Traits, typename I::value_type>;
-      auto f_ = f.cardinal_cast(N {});
-      return enhance_to_output(preprocess_range(traits_, f_, l.cardinal_cast(N {})),
-                               [](unaligned_t<decltype(f_)> i)
-                               { return i.cardinal_cast(typename I::cardinal {}); });
-    }
-    else
-    {
-      auto deduced = []
-      {
-        if constexpr( !partially_aligned_iterator<I> )
-          return traits {};
-        else
-        {
-          if constexpr( std::same_as<I, S> && !always_aligned_iterator<I> )
-            return algo::traits(no_aligning, divisible_by_cardinal);
-          else
-            return algo::traits(no_aligning);
-        }
-      }();
+    auto f = detail::fix_up_type_and_cardinal(traits_, f_);
+    auto l = detail::fix_up_type_and_cardinal(traits_, l_);
 
-      return preprocess_range_result {
-          default_to(traits_, deduced), f, l, [](unaligned_t<I> i) { return i; }};
-    }
+    using I = decltype(f);
+    using S = decltype(l);
+
+    auto deduced = []
+    {
+      if constexpr( !partially_aligned_iterator<I> )
+        return traits {};
+      else
+      {
+        if constexpr( std::same_as<I, S> && !always_aligned_iterator<I> )
+          return algo::traits(no_aligning, divisible_by_cardinal);
+        else
+          return algo::traits(no_aligning);
+      }
+    }();
+
+    return preprocess_range_result { default_to(traits_, deduced), f, l};
   }
 }

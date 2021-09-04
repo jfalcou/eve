@@ -100,11 +100,15 @@ namespace eve::algo
     auto previous_partially_aligned() const { return *this; }
 
     template <typename _Cardinal>
-    auto cardinal_cast(_Cardinal) const
+    auto cardinal_cast(_Cardinal c) const
     {
-      using other_it  = aligned_ptr_iterator<T, _Cardinal>;
-      using other_ptr = typename other_it::aligned_ptr_type;
-      return other_it{other_ptr{ptr.get()}};
+      if constexpr (_Cardinal{}() > Cardinal{}()) return unaligned().cardinal_cast(c);
+      else
+      {
+        using other_it  = aligned_ptr_iterator<T, _Cardinal>;
+        using other_ptr = typename other_it::aligned_ptr_type;
+        return other_it{other_ptr{ptr.get()}};
+      }
     }
 
     aligned_ptr_iterator& operator+=(std::ptrdiff_t n) { ptr += n; return *this; }

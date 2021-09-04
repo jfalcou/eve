@@ -12,6 +12,7 @@
 #include <eve/algo/for_each_iteration.hpp>
 #include <eve/algo/preprocess_range.hpp>
 #include <eve/algo/traits.hpp>
+#include <eve/algo/unalign.hpp>
 
 #include <eve/function/any.hpp>
 #include <eve/function/first_true.hpp>
@@ -80,17 +81,15 @@ namespace eve::algo
     template <relaxed_range Rng, typename P>
     EVE_FORCEINLINE auto operator()(Rng&& rng, P p) const
     {
+      if (rng.begin() == rng.end()) return unalign(rng.begin());
+
       auto processed = preprocess_range(TraitsSupport::get_traits(), std::forward<Rng>(rng));
-      if (processed.begin() == processed.end())
-      {
-        return processed.to_output_iterator(processed.begin());
-      }
 
       auto l = processed.begin().unaligned() + (processed.end() - processed.begin());
 
       delegate<unaligned_t<decltype(processed.begin())>, P> d{l, p};
       algo::for_each_iteration(processed.traits(), processed.begin(), processed.end())(d);
-      return processed.to_output_iterator(d.found);
+      return unalign(rng.begin()) + (d.found - processed.begin());
     }
   };
 

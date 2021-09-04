@@ -12,6 +12,7 @@
 #include <eve/algo/for_each_iteration.hpp>
 #include <eve/algo/preprocess_range.hpp>
 #include <eve/algo/traits.hpp>
+#include <eve/algo/unalign.hpp>
 
 #include <eve/function/compress_store.hpp>
 
@@ -49,17 +50,15 @@ namespace eve::algo
     template <relaxed_range Rng, typename P>
     EVE_FORCEINLINE auto operator()(Rng&& rng, P p) const
     {
+      if (rng.begin() == rng.end()) return unalign(rng.begin());
+
       auto processed = preprocess_range(TraitsSupport::get_traits(), std::forward<Rng>(rng));
-      if (processed.begin() == processed.end())
-      {
-        return processed.to_output_iterator(processed.begin());
-      }
 
       auto iteration = algo::for_each_iteration(processed.traits(), processed.begin(), processed.end());
       auto out = iteration.base;
       delegate<unaligned_t<decltype(out)>, P> d{out.unaligned(), p};
       iteration(d);
-      return processed.to_output_iterator(d.out);
+      return unalign(rng.begin()) + (d.out - processed.begin());
     }
   };
 
