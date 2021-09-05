@@ -10,6 +10,8 @@
 #include <concepts>
 #include <iterator>
 #include <type_traits>
+#include <eve/function/read.hpp>
+#include <eve/function/write.hpp>
 #include <eve/function/load.hpp>
 #include <eve/function/compress_store.hpp>
 
@@ -55,6 +57,7 @@ namespace eve::algo
     std::totally_ordered_with<I, unaligned_t<I>> &&
     std::totally_ordered_with<I, partially_aligned_t<I>> &&
     requires(I i, std::ptrdiff_t n) {
+       { std::declval<typename I::value_type>() };
        { i += n } -> std::same_as<I&>;
        { i - i }  -> std::same_as<std::ptrdiff_t>;
        { i.unaligned() } -> detail::unaligned_check;
@@ -64,6 +67,7 @@ namespace eve::algo
   template <typename I>
   concept readable_iterator = iterator<I> &&
     requires(I i) {
+      { eve::read(i) };
       { eve::load(i) };
       { eve::load[eve::ignore_first(1)](i) };
       { eve::load[eve::ignore_extrema(1, 0)](i) };
