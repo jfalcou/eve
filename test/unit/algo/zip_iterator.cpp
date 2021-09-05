@@ -18,7 +18,7 @@
 
 TTS_CASE("zip_iterator for not eve iterators")
 {
-  std::array<std::uint8_t, 4> c {1, 2, 3, 4};
+  std::vector<std::uint8_t> c {1, 2, 3, 4};
   std::vector<int> v{1, 2, 3};
   std::array<float, 4> f { 1, 2, 3, 4};
   using u_f = eve::algo::unaligned_ptr_iterator<float, eve::fixed<4>>;
@@ -27,6 +27,11 @@ TTS_CASE("zip_iterator for not eve iterators")
   eve::algo::zip_iterator zl{ c.end(), v.end(), u_f{f.end()} };
 
   kumi::tuple twos{std::uint8_t{2}, int{2}, float{2.0}};
+
+  // comparisons
+
+  TTS_LESS      (zf, zl);
+  TTS_LESS_EQUAL(zf, zl);
 
   // pointer checks
 

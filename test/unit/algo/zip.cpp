@@ -50,27 +50,74 @@ TTS_CASE("zip range, decomposition")
   TTS_EQUAL(ref_c.end(),    c.end());
 }
 
-TTS_CASE("zip/zip_range, traits")
+TTS_CASE("zip common_type")
 {
   std::vector<int> const   v{1, 2, 3, 4};
   std::vector<std::int8_t> c{'a', 'b', 'c', 'd'};
 
-  eve::algo::traits expected{eve::algo::common_type};
+  auto expected = eve::algo::zip(v, eve::algo::convert(c, eve::as<int>{}));
+
+  auto expected_f = expected.begin();
 
   {
     auto zipped = eve::algo::zip[eve::algo::common_type](v, c);
-    TTS_TYPE_IS(decltype(zipped.get_traits()), decltype(expected));
+    TTS_TYPE_IS(decltype(zipped), decltype(expected));
+
+    auto zipped_f = eve::algo::zip[eve::algo::common_type](v.begin(), c.begin());
+    TTS_EQUAL(zipped_f, expected_f);
   }
 
   {
-    auto zipped = eve::algo::zip(v, c);
-    auto with_traits = zipped[eve::algo::common_type];
-    TTS_TYPE_IS(decltype(with_traits.get_traits()), decltype(expected));
+    auto zipped = eve::algo::zip(v, c)[eve::algo::common_type];
+    TTS_TYPE_IS(decltype(zipped), decltype(expected));
+  }
+}
+
+TTS_CASE("zip common_with_types")
+{
+  std::vector<int> const   v{1, 2, 3, 4};
+  std::vector<std::int8_t> c{'a', 'b', 'c', 'd'};
+
+  auto expected = eve::algo::zip(eve::algo::convert(v, eve::as<double>{}),
+                                 eve::algo::convert(c, eve::as<double>{}));
+
+  auto expected_f = expected.begin();
+
+  {
+    auto zipped = eve::algo::zip[eve::algo::common_with_types<double>](v, c);
+    TTS_TYPE_IS(decltype(zipped), decltype(expected));
+
+    auto zipped_f = eve::algo::zip[eve::algo::common_with_types<double>](v.begin(), c.begin());
+    TTS_EQUAL(zipped_f, expected_f);
   }
 
   {
-    auto zipped = eve::algo::zip(v, c);
-    auto with_traits = zipped[expected];
-    TTS_TYPE_IS(decltype(with_traits.get_traits()), decltype(expected));
+    auto zipped = eve::algo::zip(v, c)[eve::algo::common_with_types<double>];
+    TTS_TYPE_IS(decltype(zipped), decltype(expected));
+  }
+}
+
+
+TTS_CASE("zip force_type")
+{
+  std::vector<int> const   v{1, 2, 3, 4};
+  std::vector<std::int8_t> c{'a', 'b', 'c', 'd'};
+
+  auto expected = eve::algo::zip(eve::algo::convert(v, eve::as<char>{}),
+                                 eve::algo::convert(c, eve::as<char>{}));
+
+  auto expected_f = expected.begin();
+
+  {
+    auto zipped = eve::algo::zip[eve::algo::force_type<char>](v, c);
+    TTS_TYPE_IS(decltype(zipped), decltype(expected));
+
+    auto zipped_f = eve::algo::zip[eve::algo::force_type<char>](v.begin(), c.begin());
+    TTS_EQUAL(zipped_f, expected_f);
+  }
+
+  {
+    auto zipped = eve::algo::zip(v, c)[eve::algo::force_type<char>];
+    TTS_TYPE_IS(decltype(zipped), decltype(expected));
   }
 }

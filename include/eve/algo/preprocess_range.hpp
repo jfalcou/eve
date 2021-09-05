@@ -10,7 +10,7 @@
 #include <eve/algo/detail/preprocess_range.hpp>
 
 #include <eve/algo/concepts/value_type.hpp>
-#include <eve/algo/converting_iterator.hpp>
+#include <eve/algo/convert.hpp>
 #include <eve/algo/ptr_iterator.hpp>
 
 #include <iterator>
@@ -38,16 +38,16 @@ namespace eve::algo
     template <typename Traits, typename I>
     EVE_FORCEINLINE auto fix_up_type_and_cardinal(Traits traits_, I i)
     {
-      if constexpr( !std::same_as<typename I::value_type, iteration_type_t<Traits, I>> )
+      using T = iteration_type_t<Traits, value_type_t<I>>;
+
+      if constexpr( !std::same_as<value_type_t<I>, T> )
       {
-        using T = iteration_type_t<Traits, I>;
         auto i_ = convert(i, eve::as<T> {});
         return fix_up_type_and_cardinal(traits_, i_);
       }
-      else if constexpr( typename I::cardinal {}() !=
-                         forced_cardinal_t<Traits, typename I::value_type> {}() )
+      else if constexpr( typename I::cardinal {}() != iteration_cardinal_t<Traits, T> {}() )
       {
-        using N = forced_cardinal_t<Traits, typename I::value_type>;
+        using N = iteration_cardinal_t<Traits, T>;
         auto i_ = i.cardinal_cast(N {});
         return fix_up_type_and_cardinal(traits_, i_);
       }

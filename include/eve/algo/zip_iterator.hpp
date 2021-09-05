@@ -102,7 +102,7 @@ namespace eve::algo
       template<std::derived_from<zip_iterator_common> Self, compatible_zip_iterators<Self> Other>
       friend auto operator<=>(Self const& x, Other const &y)
       {
-        return get<0>(x) <=> get<0>(y);
+        return spaceship_helper(get<0>(x), get<0>(y));
       }
 
       template<std::derived_from<zip_iterator_common> Self>
@@ -154,7 +154,7 @@ namespace eve::algo
         return as_range(f_, l_);
       }, self, other);
 
-      return detail::preprocess_zip_range(traits, eve::algo::traits(), ranges);
+      return detail::preprocess_zip_range(traits, ranges);
     }
   };
 

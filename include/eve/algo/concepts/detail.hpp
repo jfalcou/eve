@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <compare>
 #include <concepts>
 #include <type_traits>
 
@@ -25,5 +26,10 @@ namespace eve::algo::detail
   concept has_begin_end = requires (R&& r) {
       { r.begin() };
       { r.end() };
+  };
+
+  template <typename T, typename U>
+  concept supports_spaceship = requires (T x, U y) {
+    { std::declval<T>() <=> std::declval<U>() };
   };
 }

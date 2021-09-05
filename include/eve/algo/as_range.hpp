@@ -9,23 +9,19 @@
 
 namespace eve::algo
 {
-  struct preprocess_range_;
-
   template <typename I, typename S>
-  struct range_pair
+  struct as_range
   {
     I f;
     S l;
 
+    as_range() = default;
+
+    as_range(I f, S l) : f(f), l(l) {}
+
+    using is_non_owning = void;
+
     I begin() const { return f; }
     S end  () const { return l; }
   };
-
-  template <typename I, typename S>
-  range_pair(I f, S l) -> range_pair<I, S>;
-
-  template <typename I, typename S>
-  auto as_range(I f, S l) {
-    return range_pair{f, l};
-  }
 }
