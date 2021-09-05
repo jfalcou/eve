@@ -13,6 +13,25 @@
 
 #include <vector>
 
+TTS_CASE("eve::algo::convert, read/write")
+{
+  std::vector<int> v{1, 2, 3, 4};
+
+  auto as_doubles = eve::algo::convert(v, eve::as<double>{});
+
+  int i = 0;
+  for (auto f = as_doubles.begin(); f != as_doubles.end(); ++f)
+  {
+    TTS_TYPE_IS(decltype(eve::read(f)), double);
+    TTS_EQUAL(eve::read(f), v[i]);
+
+    eve::write(f, 0.0);
+
+    TTS_EQUAL(v[i], 0);
+    ++i;
+  }
+}
+
 TTS_CASE("eve::algo::convert, preprocess test")
 {
   using From = float;

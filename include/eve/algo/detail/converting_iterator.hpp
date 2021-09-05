@@ -8,13 +8,16 @@
 #pragma once
 
 #include <eve/algo/as_range.hpp>
-#include <eve/algo/iterator_helpers.hpp>
-#include <eve/algo/convert.hpp>
-#include <eve/algo/detail/preprocess_range.hpp>
 #include <eve/algo/concepts/eve_iterator.hpp>
 #include <eve/algo/concepts/relaxed.hpp>
+#include <eve/algo/concepts/value_type.hpp>
+#include <eve/algo/convert.hpp>
+#include <eve/algo/detail/preprocess_range.hpp>
+#include <eve/algo/iterator_helpers.hpp>
 
 #include <eve/function/convert.hpp>
+#include <eve/function/read.hpp>
+#include <eve/function/write.hpp>
 #include <eve/function/load.hpp>
 #include <eve/function/store.hpp>
 
@@ -44,6 +47,16 @@ namespace eve::algo
         requires (!std::same_as<I, unaligned_t<I>>)
       {
         return unaligned();
+      }
+
+      EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::read_, converting_iterator<I, T> self)
+      {
+        return eve::convert(eve::read(self.base), eve::as<T>{});
+      }
+
+      EVE_FORCEINLINE friend void tagged_dispatch(eve::tag::write_, converting_iterator<I, T> self, T v)
+      {
+        eve::write(self.base, eve::convert(v, eve::as<value_type_t<I>>{}));
       }
 
       T operator*() const { return static_cast<T>(*base); }
