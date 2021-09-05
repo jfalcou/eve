@@ -15,6 +15,10 @@
 
 TTS_CASE("eve::algo::convert, preprocess test")
 {
+  using From = float;
+  using To   = int;
+  using N    = eve::fixed<eve::expected_cardinal_v<To>>;
+
   auto common_test = []<typename R, typename T,
                         typename ExpectedRawF,
                         typename ExpectedRawS,
@@ -40,37 +44,37 @@ TTS_CASE("eve::algo::convert, preprocess test")
   };
 
   {
-    using u_it = eve::algo::unaligned_ptr_iterator<int, eve::fixed<eve::expected_cardinal_v<double>>>;
+    using u_it = eve::algo::unaligned_ptr_iterator<From, N>;
 
-    std::vector<int> v;
-    common_test(v, eve::as<double>{}, eve::algo::traits{}, u_it{}, u_it{}, eve::algo::traits{});
+    std::vector<From> v;
+    common_test(v, eve::as<To>{}, eve::algo::traits{}, u_it{}, u_it{}, eve::algo::traits{});
     common_test(eve::algo::as_range(v.data(), v.data()),
-                eve::as<double>{}, eve::algo::traits{}, u_it{}, u_it{}, eve::algo::traits{});
+                eve::as<To>{}, eve::algo::traits{}, u_it{}, u_it{}, eve::algo::traits{});
     common_test(eve::algo::as_range(u_it{}, u_it{}),
-                eve::as<double>{}, eve::algo::traits{}, u_it{}, u_it{}, eve::algo::traits{});
+                eve::as<To>{}, eve::algo::traits{}, u_it{}, u_it{}, eve::algo::traits{});
 
-    common_test(v, eve::as<double>{}, eve::algo::traits{eve::algo::no_aligning},
-               u_it{}, u_it{},        eve::algo::traits{eve::algo::no_aligning});
+    common_test(v, eve::as<To>{}, eve::algo::traits{eve::algo::no_aligning},
+               u_it{}, u_it{},    eve::algo::traits{eve::algo::no_aligning});
   }
   {
-    using u_it = eve::algo::unaligned_ptr_iterator<int const, eve::fixed<eve::expected_cardinal_v<double>>>;
+    using u_it = eve::algo::unaligned_ptr_iterator<From const, N>;
 
-    const std::vector<int> v;
-    common_test(v, eve::as<double>{}, eve::algo::traits{}, u_it{}, u_it{}, eve::algo::traits{});
+    const std::vector<From> v;
+    common_test(v, eve::as<To>{}, eve::algo::traits{}, u_it{}, u_it{}, eve::algo::traits{});
     common_test(eve::algo::as_range(v.data(), v.data()),
-                eve::as<double>{}, eve::algo::traits{}, u_it{}, u_it{}, eve::algo::traits{});
+                eve::as<To>{}, eve::algo::traits{}, u_it{}, u_it{}, eve::algo::traits{});
     common_test(eve::algo::as_range(u_it{}, u_it{}),
-                eve::as<double>{}, eve::algo::traits{}, u_it{}, u_it{}, eve::algo::traits{});
+                eve::as<To>{}, eve::algo::traits{}, u_it{}, u_it{}, eve::algo::traits{});
   }
   {
-    using a_it = eve::algo::aligned_ptr_iterator  <int, eve::fixed<eve::expected_cardinal_v<double>>>;
-    using u_it = eve::algo::unaligned_ptr_iterator<int, eve::fixed<eve::expected_cardinal_v<double>>>;
+    using a_it = eve::algo::aligned_ptr_iterator  <From, N>;
+    using u_it = eve::algo::unaligned_ptr_iterator<From, N>;
 
-    eve::aligned_ptr<int> f;
-    int* l = nullptr;
+    eve::aligned_ptr<From> f;
+    From* l = nullptr;
 
     common_test(eve::algo::as_range(f, l),
-                eve::as<double>{}, eve::algo::traits{}, a_it{}, u_it{},
+                eve::as<To>{}, eve::algo::traits{}, a_it{}, u_it{},
                 eve::algo::traits{eve::algo::no_aligning});
   }
 
