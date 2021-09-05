@@ -106,12 +106,13 @@ template <typename Traits, typename T>
     rbr::get_type_t<Traits, force_cardinal_key,
     eve::expected_cardinal_t<iteration_type_t<Traits, T>>>;
 
-  template <typename User, typename Default>
-  constexpr auto default_to(traits<User> const& user, traits<Default> const& defaults)
+
+  inline constexpr auto default_to =
+     []<typename User, typename Default>(traits<User> const& user, traits<Default> const& defaults)
   {
     using settings_t = decltype(rbr::merge(user, defaults));
     return traits<settings_t>{rbr::merge(user, defaults)};
-  }
+  };
 
   template <typename K, typename Traits>
   constexpr auto drop_key(K k, Traits tr)
