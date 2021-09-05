@@ -36,7 +36,7 @@ namespace eve::algo
 
   template <typename T>
   concept non_owning_range = relaxed_range<T> && requires {
-    { std::declval<typename T::is_non_owning>() };
+    typename T::is_non_owning;
   };
 
   struct range_ref_

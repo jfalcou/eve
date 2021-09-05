@@ -22,8 +22,8 @@ namespace eve::algo
   {
     struct for_each_iteration_common
     {
-      template<typename Traits, typename I, typename Delegate>
-      EVE_FORCEINLINE bool main_loop(Traits, I &f, I l, Delegate &delegate) const
+      template<typename Traits, typename I, typename S, typename Delegate>
+      EVE_FORCEINLINE bool main_loop(Traits, I &f, S l, Delegate &delegate) const
           requires(get_unrolling<Traits>() == 1)
       {
         static constexpr std::ptrdiff_t step = typename I::cardinal {}();
@@ -38,12 +38,12 @@ namespace eve::algo
         return false;
       }
 
-      template <typename I, std::ptrdiff_t step, typename Delegate>
+      template <typename I, typename S, std::ptrdiff_t step, typename Delegate>
       struct small_steps_lambda
       {
           bool& should_break;
           I& f;
-          I& l;
+          S& l;
           Delegate& delegate;
 
           template <int i>
@@ -57,8 +57,8 @@ namespace eve::algo
           }
       };
 
-      template<typename Traits, typename I, typename Delegate>
-      EVE_FORCEINLINE bool main_loop(Traits, I &f, I l, Delegate &delegate) const
+      template<typename Traits, typename I, typename S, typename Delegate>
+      EVE_FORCEINLINE bool main_loop(Traits, I &f, S l, Delegate &delegate) const
           requires(get_unrolling<Traits>() > 1)
       {
         static constexpr std::ptrdiff_t step      = typename I::cardinal {}();
@@ -74,7 +74,7 @@ namespace eve::algo
           bool should_break = false;
 
           if( eve::detail::for_until_<0, 1, unrolling>(
-                  small_steps_lambda<I, step, Delegate> {should_break, f, l, delegate}) )
+                  small_steps_lambda<I, S, step, Delegate> {should_break, f, l, delegate}) )
           {
             return should_break;
           }

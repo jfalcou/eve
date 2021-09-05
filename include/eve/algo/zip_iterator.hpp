@@ -75,14 +75,14 @@ namespace eve::algo
 
       explicit zip_iterator_common(Is... is) : storage {is...} {}
 
-      auto operator*() const
+      EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::read_, zip_iterator<Is...> self)
       {
-        using res_t = kumi::tuple<decltype(*std::declval<Is>())...>;
-        return [&]<std::size_t... idx>(std::index_sequence<idx...>)
-        {
-          return res_t {*kumi::get<idx>(storage)...};
-        }
-        (std::index_sequence_for<Is...> {});
+        return kumi::map(eve::read, self.storage);
+      }
+
+      EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::write_, zip_iterator<Is...> self, value_type v)
+      {
+        kumi::for_each(eve::write, self.storage, v);
       }
 
       operator zip_iterator<unaligned_t<Is>...>() const

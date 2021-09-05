@@ -51,19 +51,18 @@ namespace eve::algo
 
     using is_non_owning = void;
 
-    auto begin() const { return convert(base.begin(), eve::as<T>{}); }
-    auto end()   const { return convert(base.end(),   eve::as<T>{}); }
+    EVE_FORCEINLINE auto begin() const { return convert(base.begin(), eve::as<T>{}); }
+    EVE_FORCEINLINE auto end()   const { return convert(base.end(),   eve::as<T>{}); }
 
     template <typename Traits>
-    friend auto tagged_dispatch(preprocess_range_, Traits tr, converting_range self)
+    EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, Traits tr, converting_range self)
     {
       if constexpr (has_type_overrides_v<Traits> ) return preprocess_range(tr, self.base);
       else
       {
-        auto processed = preprocess_range(default_to(tr, traits {common_with_types<T>}), self.base);
-        return preprocess_range_result {drop_key(common_with_types_key, processed.traits()),
-                                        processed.begin(),
-                                        processed.end()};
+        auto processed = preprocess_range(default_to(tr, traits {force_type<T>}), self.base);
+        return preprocess_range_result {
+            drop_key(force_type_key, processed.traits()), processed.begin(), processed.end()};
       }
     }
   };

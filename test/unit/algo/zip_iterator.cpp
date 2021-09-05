@@ -33,19 +33,13 @@ TTS_CASE("zip_iterator for not eve iterators")
   TTS_LESS      (zf, zl);
   TTS_LESS_EQUAL(zf, zl);
 
-  // pointer checks
-
-  TTS_EQUAL(&c[0], &get<0>(*zf));
-  TTS_EQUAL(&v[0], &get<1>(*zf));
-  TTS_EQUAL(&f[0], &get<2>(*zf));
-
   // std::fill won't work
   for (auto i = zf; i != zf; ++i) {
-    *i = twos;
+    eve::write(i, twos);
   }
 
   for (auto i = zf; i != zf; ++i) {
-    TTS_EQUAL(*i, twos);
+    TTS_EQUAL(eve::read(i), twos);
   }
 
   // ++/-- etc

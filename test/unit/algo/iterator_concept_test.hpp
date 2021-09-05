@@ -35,6 +35,11 @@ namespace algo_test
     TTS_TYPE_IS(typename I::cardinal, decltype(cardinal));
     TTS_TYPE_IS(decltype(l - f), std::ptrdiff_t);
 
+    // read test
+    {
+      TTS_EQUAL(eve::read(f), eve::load(f).get(0));
+    }
+
     {
       I next = f;
       next += cardinal();
@@ -116,6 +121,13 @@ namespace algo_test
     TTS_EQUAL(eve::load(f), or_);
 
     eve::store(v, f);
+
+    // write
+    {
+      eve::write(f, or_.get(0));
+      TTS_EQUAL(eve::read(f), or_.get(0));
+      eve::store(v, f);
+    }
 
     auto ignore_test = [&](auto ignore)
     {
