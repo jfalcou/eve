@@ -140,11 +140,11 @@ EVE_TEST( "Check behavior of legendre q on wide"
   auto eve__legendrev  =  [](auto m, auto n, auto x) { return eve::legendre(m, n, x); };
   auto boost_legendrev =  [](auto m, auto n, auto x) { return boost::math::legendre_p(m, n, x); };
   TTS_ULP_EQUAL(eve__legendrev(i0.get(1), j0.get(1), a0.get(1)), boost_legendrev(i0.get(1), j0.get(1), a0.get(1)), 100);
-  for(unsigned int j=0; j < eve::cardinal_v<T>; ++j)
+  for(unsigned int j=0; j < 5; ++j)
   {
-    for(unsigned int n=0; n < eve::cardinal_v<T>; ++n)
+    for(unsigned int n=0; n < 5; ++n)
     {
-      TTS_ULP_EQUAL(eve__legendrev(i0 , j0, a0), map(boost_legendrev, i0, j0, a0), 100);
+      TTS_ULP_EQUAL(eve__legendrev(j , n, a0), map(boost_legendrev, j, n, a0), 100);
     }
   }
   //   for(unsigned int n=0; n < 5; ++n)
