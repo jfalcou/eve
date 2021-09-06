@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/function/load.hpp>
+#include <eve/conditional.hpp>
 
 namespace eve::algo
 {
@@ -47,6 +48,19 @@ namespace eve::algo
     EVE_FORCEINLINE auto operator()(auto it) const
     {
       return op(eve::load(it));
+    }
+  };
+
+  template <typename Delegate>
+  struct call_single_step
+  {
+    Delegate* delegate;
+
+    explicit call_single_step(Delegate* delegate) : delegate(delegate) {}
+
+    EVE_FORCEINLINE bool operator()(auto it) const
+    {
+      return delegate->step(it, eve::ignore_none, eve::index<0>);
     }
   };
 
