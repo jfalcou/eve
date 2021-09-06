@@ -11,6 +11,7 @@
 #include <eve/algo/all_of.hpp>
 #include <eve/algo/any_of.hpp>
 #include <eve/algo/find.hpp>
+#include <eve/algo/equal.hpp>
 #include <eve/algo/mismatch.hpp>
 #include <eve/algo/none_of.hpp>
 
@@ -44,7 +45,6 @@ TTS_CASE("eve.algo.all/any/none/find_if, empty")
     (std::find(v.begin(), v.end(), 1))
   );
 }
-
 
 TTS_CASE("eve.algo.find value")
 {
@@ -112,4 +112,37 @@ TTS_CASE("eve.algo.mismatch example, zip<zip>")
 
   TTS_EQUAL(eve::read(get<0>(found)), (kumi::tuple<float, float>{3, 2}));
   TTS_EQUAL(eve::read(get<1>(found)), 4.9);
+}
+
+TTS_CASE("eve.algo.equal/mismatch by key")
+{
+  std::vector<int        > k_1 {1,     2,   3,   4};
+  std::vector<std::int8_t> v_1 {'a', 'b', 'c', 'd'};
+  auto map_1 = eve::algo::zip(k_1, v_1);
+
+  std::vector<int        > k_2 = k_1;
+  std::vector<double     > v_2 = {0.1, 0.2, 0.3, 0.4};
+  auto map_2 = eve::algo::zip(k_2, v_2);
+
+  auto compare_key = [](auto m1, auto m2) { return get<0>(m1) == get<0>(m2); };
+
+  // do equal
+  {
+    TTS_EXPECT(eve::algo::equal(map_1, map_2, compare_key));
+
+    auto mmatch = eve::algo::mismatch(map_1, map_2, compare_key);
+    TTS_EQUAL(get<0>(mmatch), map_1.end());
+  }
+
+  // do not equal
+  {
+    int offset = 2;
+    k_2[offset] = -1;
+
+    TTS_EXPECT_NOT(eve::algo::equal(map_1, map_2, compare_key));
+
+    auto mmatch = eve::algo::mismatch(map_1, map_2, compare_key);
+    TTS_NOT_EQUAL(get<0>(mmatch), map_1.end());
+    TTS_EQUAL    (get<0>(mmatch), map_1.begin() + offset);
+  }
 }
