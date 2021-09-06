@@ -8,13 +8,52 @@
 
 #include "algo_test.hpp"
 
+#include <eve/algo/all_of.hpp>
+#include <eve/algo/any_of.hpp>
+#include <eve/algo/find.hpp>
+#include <eve/algo/equal.hpp>
 #include <eve/algo/mismatch.hpp>
+#include <eve/algo/none_of.hpp>
 
-#include "mismatch_generic_test.hpp"
-
+#include <algorithm>
 #include <vector>
 
-TTS_CASE("Mismatch example, use previous result") {
+
+TTS_CASE("eve.algo.all/any/none/find_if, empty")
+{
+  std::vector<int> v;
+  auto p = [](auto x) { return x > 3; };
+
+  TTS_EQUAL(
+    (eve::algo::all_of(v, p)),
+    (std::all_of(v.begin(), v.end(), p))
+  );
+  TTS_EQUAL(
+    (eve::algo::any_of(v, p)),
+    (std::any_of(v.begin(), v.end(), p))
+  );
+  TTS_EQUAL(
+    (eve::algo::none_of(v, p)),
+    (std::none_of(v.begin(), v.end(), p))
+  );
+  TTS_EQUAL(
+    (eve::algo::find_if(v, p)),
+    (std::find_if(v.begin(), v.end(), p))
+  );
+  TTS_EQUAL(
+    (eve::algo::find(v, 1)),
+    (std::find(v.begin(), v.end(), 1))
+  );
+}
+
+TTS_CASE("eve.algo.find value")
+{
+  std::vector<int> const v{1, 2, 3, 4};
+  std::vector<int>::const_iterator found = eve::algo::find[eve::algo::no_aligning](v, 3);
+  TTS_EQUAL((found - v.begin()), 2);
+}
+
+TTS_CASE("eve.algo.mismatch example, use previous result") {
   std::vector<int> const a{1, 2, 3, 4, 5, 6, 6, 8};
   std::vector<int> const b{1, 2, 2, 4, 5, 6, 7, 8};
 
@@ -36,7 +75,7 @@ TTS_CASE("Mismatch example, use previous result") {
   TTS_EQUAL(ra_rb, eve::algo::zip(a.end(), b.end()));
 }
 
-TTS_CASE("Mismatch example, first point not within a radius")
+TTS_CASE("eve.algo.mismatch example, first point not within a radius")
 {
   std::vector<int>    x      { 1,   3,    -5,  10,    1};
   std::vector<int>    y      { 2,   1,     4, -10,    3};
@@ -57,7 +96,7 @@ TTS_CASE("Mismatch example, first point not within a radius")
   TTS_EQUAL(eve::read(found_r), 10.1);
 }
 
-TTS_CASE("Mismatch example, zip<zip>")
+TTS_CASE("eve.algo.mismatch example, zip<zip>")
 {
   std::vector<float>  x { 1,      2,   3,   4};
   std::vector<float>  y { 4,      3,   2,   1};
@@ -73,14 +112,37 @@ TTS_CASE("Mismatch example, zip<zip>")
 
   TTS_EQUAL(eve::read(get<0>(found)), (kumi::tuple<float, float>{3, 2}));
   TTS_EQUAL(eve::read(get<1>(found)), 4.9);
-
 }
 
-EVE_TEST_TYPES("Check generic", algo_test::selected_pairs_types)
-<typename T>(eve::as<T> tgt)
+TTS_CASE("eve.algo.equal/mismatch by key")
 {
-  algo_test::mismatch_generic_test(tgt, eve::algo::mismatch,
-    [](auto zip_f, auto /*zip_l*/, auto expected, auto actual) {
-     TTS_EQUAL((expected - zip_f), (actual - zip_f));
-  });
-};
+  std::vector<int        > k_1 {1,     2,   3,   4};
+  std::vector<std::int8_t> v_1 {'a', 'b', 'c', 'd'};
+  auto map_1 = eve::algo::zip(k_1, v_1);
+
+  std::vector<int        > k_2 = k_1;
+  std::vector<double     > v_2 = {0.1, 0.2, 0.3, 0.4};
+  auto map_2 = eve::algo::zip(k_2, v_2);
+
+  auto compare_key = [](auto m1, auto m2) { return get<0>(m1) == get<0>(m2); };
+
+  // do equal
+  {
+    TTS_EXPECT(eve::algo::equal(map_1, map_2, compare_key));
+
+    auto mmatch = eve::algo::mismatch(map_1, map_2, compare_key);
+    TTS_EQUAL(get<0>(mmatch), map_1.end());
+  }
+
+  // do not equal
+  {
+    int offset = 2;
+    k_2[offset] = -1;
+
+    TTS_EXPECT_NOT(eve::algo::equal(map_1, map_2, compare_key));
+
+    auto mmatch = eve::algo::mismatch(map_1, map_2, compare_key);
+    TTS_NOT_EQUAL(get<0>(mmatch), map_1.end());
+    TTS_EQUAL    (get<0>(mmatch), map_1.begin() + offset);
+  }
+}

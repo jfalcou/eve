@@ -70,7 +70,7 @@ namespace eve::algo
     template <relaxed_range Rng, typename T>
     EVE_FORCEINLINE auto operator()(Rng&& rng, T v) const
     {
-      return remove_if[TraitsSupport::get_traits()](rng, [v](auto x) { return x == v; });
+      return remove_if[TraitsSupport::get_traits()](std::forward<Rng>(rng), [v](auto x) { return x == v; });
     }
   };
 
