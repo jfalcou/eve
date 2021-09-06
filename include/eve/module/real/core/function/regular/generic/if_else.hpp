@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/top_bits.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/generator.hpp>
 #include <eve/concept/value.hpp>
