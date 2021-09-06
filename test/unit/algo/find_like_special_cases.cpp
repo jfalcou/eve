@@ -8,10 +8,42 @@
 
 #include "algo_test.hpp"
 
+#include <eve/algo/all_of.hpp>
+#include <eve/algo/any_of.hpp>
 #include <eve/algo/find.hpp>
 #include <eve/algo/mismatch.hpp>
+#include <eve/algo/none_of.hpp>
 
+#include <algorithm>
 #include <vector>
+
+
+TTS_CASE("eve.algo.all/any/none/find_if, empty")
+{
+  std::vector<int> v;
+  auto p = [](auto x) { return x > 3; };
+
+  TTS_EQUAL(
+    (eve::algo::all_of(v, p)),
+    (std::all_of(v.begin(), v.end(), p))
+  );
+  TTS_EQUAL(
+    (eve::algo::any_of(v, p)),
+    (std::any_of(v.begin(), v.end(), p))
+  );
+  TTS_EQUAL(
+    (eve::algo::none_of(v, p)),
+    (std::none_of(v.begin(), v.end(), p))
+  );
+  TTS_EQUAL(
+    (eve::algo::find_if(v, p)),
+    (std::find_if(v.begin(), v.end(), p))
+  );
+  TTS_EQUAL(
+    (eve::algo::find(v, 1)),
+    (std::find(v.begin(), v.end(), 1))
+  );
+}
 
 
 TTS_CASE("eve.algo.find value")

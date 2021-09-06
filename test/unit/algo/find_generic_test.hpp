@@ -61,6 +61,15 @@ namespace algo_test
     algo_test::page_ends_test(tgt, find_ptr_test{alg, check});
   }
 
+  template <typename Algo>
+  void traits_setting(Algo alg)
+  {
+    // Check that we didn't forget to inherit or smth.
+    auto tr = eve::algo::traits{eve::algo::force_cardinal<4>};
+    auto get_set = alg[tr].get_traits();
+    TTS_TYPE_IS(decltype(get_set), decltype(tr));
+  }
+
   template <typename T, typename Algo, typename Check>
   void find_generic_test(eve::as<T> as_t, Algo alg, Check check)
   {
