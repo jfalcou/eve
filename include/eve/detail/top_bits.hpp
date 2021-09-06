@@ -357,10 +357,14 @@ EVE_FORCEINLINE Logical to_logical(top_bits<Logical> mmask)
     using bits_wide = typename Logical::bits_type;
     using bits_et   = element_type_t<bits_wide>;
 
+    //  Use the most full type to be sure to fill outside values of small wide with false
+    using abi_t     = typename bits_wide::abi_type;
+    using fit_wide  = wide<bits_et, expected_cardinal_t<bits_et, abi_t>>;
+
     static constexpr auto bits_per_element = top_bits<Logical>::bits_per_element;
     static constexpr auto element_mask = set_lower_n_bits<bits_et>(bits_per_element);
 
-    bits_wide true_mmask([&](int i, int) {
+    fit_wide true_mmask([&](int i, int) {
       int shift = 0;
 
       shift += (i >= 8);   // only true for short on avx (second uint16_t) and chars (second uint8_t)
@@ -372,7 +376,7 @@ EVE_FORCEINLINE Logical to_logical(top_bits<Logical> mmask)
       return (bits_et)(element_mask << (i * bits_per_element));
     });
 
-    bits_wide actual_mmask([&](int i, int) {
+    fit_wide actual_mmask([&](int i, int) {
       int shift = 0;
 
       shift += (i >= 8);  // second uint16_t or uint8_t
@@ -384,31 +388,30 @@ EVE_FORCEINLINE Logical to_logical(top_bits<Logical> mmask)
       return (bits_et)(mmask.storage >> shift);
     });
 
-    bits_wide test = actual_mmask & true_mmask;
-    auto      res  = test == true_mmask;
-
-    //  Use the most full type to be sure to fill outside values of small wide with false
-    using abi_t     = typename bits_wide::abi_type;
-    using fit_wide  = logical<wide<bits_et, expected_cardinal_t<bits_et, abi_t>>>;
-
-    if constexpr(bits_wide::size() < fit_wide::size())
-    {
-      fit_wide card_mmask([&](int i, int) { return i < bits_wide::size(); });
-      fit_wide r = res.storage();
-      r = r && card_mmask;
-      res = r.storage();
-    }
+    auto test = actual_mmask & true_mmask;
+    auto res  = test == true_mmask;
 
     return bit_cast( res, as<Logical>{} );
   }
   else
   {
     // For arm and power we can likely do better, but we didn't care thus far.
-    Logical res;
-    for (std::ptrdiff_t i = 0; i != Logical::size(); ++i) {
-      res.set(i, mmask.get(i));
+    //  Use the most full type to be sure to fill outside values of small wide with false
+    using bits_wide = typename Logical::bits_type;
+    using abi_t     = typename bits_wide::abi_type;
+
+    if constexpr ( !is_native_v<abi_t> )
+    {
+      Logical mask([&](int i, int) { return i < Logical::size() ? mmask.get(i) : false; });
+      return mask;
     }
-    return res;
+    else
+    {
+      using bits_et   = element_type_t<bits_wide>;
+      using fit_wide  = logical<wide<bits_et, expected_cardinal_t<bits_et, abi_t>>>;
+      fit_wide mask([&](int i, int) { return i < Logical::size() ? mmask.get(i) : false; });
+      return bit_cast( mask, as<Logical>{} );
+    }
   }
 }
 
