@@ -107,4 +107,16 @@ namespace eve::algo
   };
 
   inline constexpr auto find = function_with_traits<find_>[find_if.get_traits()];
+
+  template <typename TraitsSupport>
+  struct find_if_not_ : TraitsSupport
+  {
+    template <relaxed_range Rng, typename P>
+    EVE_FORCEINLINE auto operator()(Rng&& rng, P p) const
+    {
+      return find_if[TraitsSupport::get_traits()](std::forward<Rng>(rng), not_p{p});
+    }
+  };
+
+  inline constexpr auto find_if_not = function_with_traits<find_if_not_>[find_if.get_traits()];
 }

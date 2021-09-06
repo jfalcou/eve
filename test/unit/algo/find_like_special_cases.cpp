@@ -41,6 +41,10 @@ TTS_CASE("eve.algo.all/any/none/find_if, empty")
     (std::find_if(v.begin(), v.end(), p))
   );
   TTS_EQUAL(
+    (eve::algo::find_if_not(v, p)),
+    (std::find_if_not(v.begin(), v.end(), p))
+  );
+  TTS_EQUAL(
     (eve::algo::find(v, 1)),
     (std::find(v.begin(), v.end(), 1))
   );
@@ -51,6 +55,22 @@ TTS_CASE("eve.algo.find value")
   std::vector<int> const v{1, 2, 3, 4};
   std::vector<int>::const_iterator found = eve::algo::find[eve::algo::no_aligning](v, 3);
   TTS_EQUAL((found - v.begin()), 2);
+}
+
+TTS_CASE("eve.algo.find_if not in radius")
+{
+  std::vector<int> x {1, -1, 2, -10};
+  std::vector<int> y {0,  1, 2,   5};
+
+  int r = 6;
+
+  auto within_radius = [r_square = r * r](auto x_y) {
+    auto [x, y] = x_y;
+    return x * x + y * y <= r_square;
+  };
+
+  auto found = eve::algo::find_if_not(eve::algo::zip(x, y), within_radius);
+  TTS_EQUAL(eve::read(found), (kumi::tuple{-10, 5}));
 }
 
 TTS_CASE("eve.algo.mismatch example, use previous result") {
