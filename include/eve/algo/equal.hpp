@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/algo/concepts.hpp>
-#include <eve/algo/find.hpp>
+#include <eve/algo/all_of.hpp>
 #include <eve/algo/traits.hpp>
 #include <eve/algo/zip.hpp>
 
@@ -19,30 +19,27 @@
 namespace eve::algo
 {
   template <typename TraitsSupport>
-  struct mismatch_ : TraitsSupport
+  struct equal_ : TraitsSupport
   {
     template <zipped_range_pair R, typename P>
-    EVE_FORCEINLINE auto operator()(R&& r, P p) const
+    EVE_FORCEINLINE bool operator()(R&& r, P p) const
     {
-      return algo::find_if[TraitsSupport::get_traits()]
-        (std::forward<R>(r), [p](auto x_y) {
-          auto [x, y] = x_y;
-          return !p(x, y);
-        }
-      );
+      return algo::all_of[TraitsSupport::get_traits()]
+       (std::forward<R>(r), [p](auto x_y) {
+         auto [x, y] = x_y;
+         return p(x, y);
+       });
     }
 
     template <zipped_range_pair R>
-    EVE_FORCEINLINE auto operator()(R&& r) const
+    EVE_FORCEINLINE bool operator()(R&& r) const
     {
-      auto rezipped = r[common_type];
-      auto rezipped_res = operator()(rezipped, eve::is_equal);
-      return unalign(r.begin()) + (rezipped_res - rezipped.begin());
+      return operator()(r[common_type], eve::is_equal);
     }
 
     template <typename R1, typename R2, typename P>
       requires zip_to_range<R1, R2>
-    EVE_FORCEINLINE auto operator()(R1&& r1, R2&& r2, P p) const
+    EVE_FORCEINLINE bool operator()(R1&& r1, R2&& r2, P p) const
     {
       return operator()(zip(std::forward<R1>(r1), std::forward<R2>(r2)), p);
     }
@@ -55,5 +52,5 @@ namespace eve::algo
     }
   };
 
-  inline constexpr auto mismatch = function_with_traits<mismatch_>[find_if.get_traits()];
+  inline constexpr auto equal = function_with_traits<equal_>[all_of.get_traits()];
 }

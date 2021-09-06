@@ -105,5 +105,5 @@ namespace eve::algo
     }
   };
 
-  inline constexpr auto find = function_with_traits<find_>[default_simple_algo_traits];
+  inline constexpr auto find = function_with_traits<find_>[find_if.get_traits()];
 }

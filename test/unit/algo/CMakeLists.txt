@@ -29,12 +29,18 @@ make_unit("unit.algo" zip_iterator.cpp)
 make_unit("unit.algo" zip.cpp)
 
 # Algorithms
+# find like -------------
 make_unit("unit.algo" all_of_generic.cpp)
 make_unit("unit.algo" any_of_generic.cpp)
 make_unit("unit.algo" none_of_generic.cpp)
+
 make_unit("unit.algo" find_if_generic.cpp)
+
+make_unit("unit.algo" equal_generic.cpp)
 make_unit("unit.algo" mismatch_generic.cpp)
+
 make_unit("unit.algo" find_like_special_cases.cpp)
 
+# other ------------------
 make_unit("unit.algo" reduce.cpp)
 make_unit("unit.algo" remove.cpp)
