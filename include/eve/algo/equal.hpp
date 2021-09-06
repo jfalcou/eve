@@ -7,8 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/algo/concepts.hpp>
 #include <eve/algo/all_of.hpp>
+#include <eve/algo/common_forceinline_lambdas.hpp>
+#include <eve/algo/concepts.hpp>
 #include <eve/algo/traits.hpp>
 #include <eve/algo/zip.hpp>
 
@@ -24,11 +25,8 @@ namespace eve::algo
     template <zipped_range_pair R, typename P>
     EVE_FORCEINLINE bool operator()(R&& r, P p) const
     {
-      return algo::all_of[TraitsSupport::get_traits()]
-       (std::forward<R>(r), [p](auto x_y) {
-         auto [x, y] = x_y;
-         return p(x, y);
-       });
+      return algo::all_of[TraitsSupport::get_traits()](std::forward<R>(r),
+                                                       apply_to_zip_pair{p});
     }
 
     template <zipped_range_pair R>

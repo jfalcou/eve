@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/algo/array_utils.hpp>
+#include <eve/algo/common_forceinline_lambdas.hpp>
 #include <eve/algo/concepts.hpp>
 #include <eve/algo/for_each_iteration.hpp>
 #include <eve/algo/preprocess_range.hpp>
@@ -59,7 +60,7 @@ namespace eve::algo
       template <typename I, std::size_t size>
       EVE_FORCEINLINE bool unrolled_step(std::array<I, size> arr)
       {
-        auto tests = array_map(arr, [&](I it) { return p(eve::load(it)); });
+        auto tests = array_map(arr, load_and_apply{p});
 
         auto overall = array_reduce(tests, eve::logical_or);
         if (!eve::any(overall)) return false;
@@ -101,7 +102,7 @@ namespace eve::algo
     template <relaxed_range Rng, typename T>
     EVE_FORCEINLINE auto operator()(Rng&& rng, T v) const
     {
-      return find_if[TraitsSupport::get_traits()](std::forward<Rng>(rng), [v](auto x) { return x == v; });
+      return find_if[TraitsSupport::get_traits()](std::forward<Rng>(rng), equal_to{v});
     }
   };
 

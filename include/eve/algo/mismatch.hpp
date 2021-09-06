@@ -25,11 +25,7 @@ namespace eve::algo
     EVE_FORCEINLINE auto operator()(R&& r, P p) const
     {
       return algo::find_if[TraitsSupport::get_traits()]
-        (std::forward<R>(r), [p](auto x_y) {
-          auto [x, y] = x_y;
-          return !p(x, y);
-        }
-      );
+        (std::forward<R>(r), apply_to_zip_pair{not_p{p}});
     }
 
     template <zipped_range_pair R>
