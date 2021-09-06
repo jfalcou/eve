@@ -385,7 +385,21 @@ EVE_FORCEINLINE Logical to_logical(top_bits<Logical> mmask)
     });
 
     bits_wide test = actual_mmask & true_mmask;
-    return bit_cast( test == true_mmask, as<Logical>{} );
+    auto      res  = test == true_mmask;
+
+    //  Use the most full type to be sure to fill outside values of small wide with false
+    using abi_t     = typename bits_wide::abi_type;
+    using fit_wide  = logical<wide<bits_et, expected_cardinal_t<bits_et, abi_t>>>;
+
+    if constexpr(bits_wide::size() < fit_wide::size())
+    {
+      fit_wide card_mmask([&](int i, int) { return i < bits_wide::size(); });
+      fit_wide r = res.storage();
+      r = r && card_mmask;
+      res = r.storage();
+    }
+
+    return bit_cast( res, as<Logical>{} );
   }
   else
   {
