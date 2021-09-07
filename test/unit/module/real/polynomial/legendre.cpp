@@ -132,7 +132,7 @@
 
 /////////////associated p legendre
 EVE_TEST( "Check behavior of associated legendre p on wide"
-        , eve::test::simd::ieee_doubles
+        , eve::test::simd::ieee_reals
         , eve::test::generate(eve::test::between(-1.0, 1.0)
                              , eve::test::as_integer(eve::test::ramp(0))
                              , eve::test::as_integer(eve::test::reverse_ramp(0)))
@@ -149,11 +149,11 @@ EVE_TEST( "Check behavior of associated legendre p on wide"
     {
       for(unsigned int p=0; p < eve::cardinal_v < I > ; ++p)
       {
-        TTS_ULP_EQUAL(eve__legendrev(n, p, a0.get(k)), std_assoc(n, p, a0.get(k)), 10);
-        TTS_ULP_EQUAL(cse__legendrev(n, p, a0.get(k)), boost_legendrev(n, p, a0.get(k)), 10);
+        TTS_ULP_EQUAL(eve__legendrev(n, p, a0.get(k)), std_assoc(n, p, a0.get(k)), 100);
+        TTS_ULP_EQUAL(cse__legendrev(n, p, a0.get(k)), boost_legendrev(n, p, a0.get(k)), 100);
       }
     }
   }
-  TTS_ULP_EQUAL(eve__legendrev(j0, i0, a0), map(std_assoc, j0, i0, a0), 10);
-  TTS_ULP_EQUAL(cse__legendrev(i0, j0, a0), map(boost_legendrev, i0, j0, a0), 10);
+  TTS_ULP_EQUAL(eve__legendrev(j0, i0, a0), map(std_assoc, j0, i0, a0), 100);
+  TTS_ULP_EQUAL(cse__legendrev(i0, j0, a0), map(boost_legendrev, i0, j0, a0), 100);
 };
