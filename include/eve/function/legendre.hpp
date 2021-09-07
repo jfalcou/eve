@@ -25,7 +25,6 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the legendre operation                                     |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -36,7 +35,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`l`, `m`:   [real value](@ref eve::real_value). `l` and `m` must be [flint](eve::is_flint) or the result is U.B.
+  //!`l`, `m`:   [real values](@ref eve::real_value). `l` and `m` must be [flint](eve::is_flint) or the result is U.B.
   //!
   //!`x`:   [floating real value](@ref eve::floating_real_value). `x` must be in the \f$[-1, 1]\f$ interval or the result is nan.
   //!
@@ -50,22 +49,6 @@ namespace eve
   //!
   //!@warning
   //! using float based inputs (instead of double) may introduce inaccuracies (peculiarly in the associated polynomials computation).
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::legendre
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `legendre[cond](x, ...)` is equivalent to `if_else(cond,legendre(x, ...),x)`
   //!
   //! ---
   //!
@@ -87,14 +70,15 @@ namespace eve
   //!  * eve::successor
   //!
   //!     The expression `successor(legendre)(l, x, ln, lnm1)` (or `successor(legendre)(l, m, x, ln, lnm1)`)
-  //!     implements the three term recurrence relation for the Legendre polynomials,
-  //!     \f$\displaystyle \mbox{P}_{n+1} = \left((2l+1)\mbox{P}_{n}(x)-l\mbox{P}_{n-1}(x)\right)/(l+1)\f$
+  //!     implements the three term recurrence relation for the (associated) Legendre polynomials,
+  //!     \f$\displaystyle \mbox{P}^m_{l+1} = \left((2l+1)\mbox{P}^m_{l}(x)-l\mbox{P}^m_{l-1}(x)\right)/(l+m+1)\f$
   //!     This object function can be used to create a sequence of values evaluated at the same `x` and for rising `l`.
+  //!     (  \f$m = 0\f$ and no \f$m\f$ in call are equivalent here).
   //!
   //!  * eve::condon_shortley
   //!
   //!     The expression `condon_shortley(legendre)(l, m, x)` multiplies the associated legendre polynomial value by the Condon-Shortley phase \f$(-1)^m\f$
-  //!     to match the definition given by Abramowitz and Stegun (8.6.6).
+  //!     to match the definition given by Abramowitz and Stegun (8.6.6). This is currently the version implemented in boost::math.
   //!
   //! #### Example
   //!
