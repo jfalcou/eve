@@ -30,20 +30,26 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( integral_value n, floating_value x) const noexcept;
+  //!  auto operator()( integral_value l, floating_value x) const noexcept;
+  //!  auto operator()( integral_value l, integral_value m, floating_value x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`n`:   [real value](@ref eve::real_value). `n` must be a [flint](eve::is_flint) or the result is U.B.
+  //!`l`, `m`:   [real value](@ref eve::real_value). `l` and `m` must be [flint](eve::is_flint) or the result is U.B.
   //!
   //!`x`:   [floating real value](@ref eve::floating_real_value). `x` must be in the \f$[-1, 1]\f$ interval or the result is nan.
   //!
   //! **Return value**
   //!
-  //!Returns [elementwise](@ref glossary_elementwise) the value of the first kind Legendre polynomial of order `n` at `x`.
+  //!With two parameters returns [elementwise](@ref glossary_elementwise) the value of the first kind Legendre polynomial of order `l` at `x`.
+  //!
+  //!With three parameters returns [elementwise](@ref glossary_elementwise) the value of the associated Legendre "polynomial" of order (`l`, `m`) at `x`.
   //!
   //!The result type is of the [index compatible type](@ref index_compatible) type of the  parameters.
+  //!
+  //!@warning
+  //! using float based inputs (instead of double) may introduce inaccuracies (peculiarly in the associated polynomials computation).
   //!
   //! ---
   //!
@@ -80,9 +86,15 @@ namespace eve
   //!
   //!  * eve::successor
   //!
-  //!     The expression `successor(legendre)(l, x, ln, lnm1)` implements the three term recurrence relation for the Legendre polynomials,
+  //!     The expression `successor(legendre)(l, x, ln, lnm1)` (or `successor(legendre)(l, m, x, ln, lnm1)`)
+  //!     implements the three term recurrence relation for the Legendre polynomials,
   //!     \f$\displaystyle \mbox{P}_{n+1} = \left((2l+1)\mbox{P}_{n}(x)-l\mbox{P}_{n-1}(x)\right)/(l+1)\f$
   //!     This object function can be used to create a sequence of values evaluated at the same `x` and for rising `l`.
+  //!
+  //!  * eve::condon_shortley
+  //!
+  //!     The expression `condon_shortley(legendre)(l, m, x)` multiplies the associated legendre polynomial value by the Condon-Shortley phase \f$(-1)^m\f$
+  //!     to match the definition given by Abramowitz and Stegun (8.6.6).
   //!
   //! #### Example
   //!
