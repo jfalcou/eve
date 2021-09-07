@@ -9,6 +9,7 @@
 
 #include <eve/algo/array_utils.hpp>
 #include <eve/algo/concepts.hpp>
+#include <eve/algo/common_forceinline_lambdas.hpp>
 #include <eve/algo/for_each_iteration.hpp>
 #include <eve/algo/preprocess_range.hpp>
 #include <eve/algo/traits.hpp>
@@ -39,7 +40,7 @@ namespace eve::algo
       template <typename I, std::size_t size>
       EVE_FORCEINLINE bool unrolled_step(std::array<I, size> arr)
       {
-        array_map(arr, [&](auto it) { return step(it, eve::ignore_none, eve::index<0>); });
+        array_map(arr, call_single_step(this));
         return false;
       }
 
@@ -70,7 +71,7 @@ namespace eve::algo
     template <relaxed_range Rng, typename T>
     EVE_FORCEINLINE auto operator()(Rng&& rng, T v) const
     {
-      return remove_if[TraitsSupport::get_traits()](std::forward<Rng>(rng), [v](auto x) { return x == v; });
+      return remove_if[TraitsSupport::get_traits()](std::forward<Rng>(rng), equal_to{v});
     }
   };
 
