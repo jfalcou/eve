@@ -22,6 +22,11 @@
 
 namespace eve
 {
+  namespace detail
+  {
+    template <logical_simd_value Logical> struct top_bits;
+  }
+
   //================================================================================================
   // Helper structure to encode conditional expression with alternative
   //================================================================================================
@@ -175,16 +180,11 @@ namespace eve
 
       if constexpr( !abi_t::is_wide_logical )
       {
-        constexpr auto sz = cardinal_v<T> < 8 ? 8 : cardinal_v<T>;
-        using m_t = detail::make_integer_t<sz/8,unsigned>;
-        m_t mask = (count_ >= sz) ? m_t(~0ULL) : m_t((1ULL << count_) - 1);
-
-        return typename type::storage_type{mask};
+        return detail::top_bits<type>(*this).storage;
       }
       else
       {
         using i_t   = as_integer_t<typename type::mask_type>;
-
         if constexpr(eve::use_complete_storage<type>)
         {
           return bit_cast(detail::linear_ramp(eve::as<i_t>()) < i_t(count_), as<type>());
@@ -195,7 +195,6 @@ namespace eve
           using e_t   = eve::element_type_t<i_t>;
           using abi_t = typename i_t::abi_type;
           using w_t   = eve::wide<e_t, eve::expected_cardinal_t<e_t, abi_t> >;
-
           return bit_cast(detail::linear_ramp(eve::as<w_t>()) < w_t(count_), as<type>());
         }
       }
@@ -287,22 +286,14 @@ namespace eve
     {
       using abi_t = typename T::abi_type;
       using type  = as_logical_t<T>;
-
       if constexpr( !abi_t::is_wide_logical )
       {
-        constexpr auto card = cardinal_v<T>;
-        using m_t = detail::make_integer_t<(card < 8 ? 8 : card)/8,unsigned>;
-
-        m_t mask = (count_ > 0) ? m_t(~0ULL << (card - count_)) : 0;
-            mask &= eve::detail::set_lower_n_bits<m_t>(T::size());
-
-        return typename type::storage_type{mask};
+        return detail::top_bits<type>(*this).storage;
       }
       else
       {
         using i_t   = as_integer_t<typename type::mask_type>;
         constexpr std::ptrdiff_t card = cardinal_v<T>;
-
         if constexpr(eve::use_complete_storage<type>)
         {
           return bit_cast(detail::linear_ramp(eve::as<i_t>()) >= i_t(card-count_), as<type>());
@@ -313,9 +304,7 @@ namespace eve
           using e_t   = eve::element_type_t<i_t>;
           using abi_t = typename i_t::abi_type;
           using w_t   = eve::wide<e_t, eve::expected_cardinal_t<e_t, abi_t> >;
-
           auto i = detail::linear_ramp(eve::as<w_t>());
-
           return bit_cast((i >= w_t(card-count_)) && (i < card), as<type>());
         }
       }
@@ -413,13 +402,7 @@ namespace eve
 
       if constexpr( !abi_t::is_wide_logical )
       {
-        constexpr auto sz = cardinal_v<T> < 8 ? 8 : cardinal_v<T>;
-        auto const cnt = end_ - begin_;
-
-        using m_t = detail::make_integer_t<sz/8,unsigned>;
-        m_t mask = (cnt >= sz) ? m_t(~0ULL) : m_t((1ULL << cnt) - 1);
-
-        return typename type::storage_type{static_cast<m_t>(mask << begin_)};
+        return detail::top_bits<type>(*this).storage;
       }
       else
       {
