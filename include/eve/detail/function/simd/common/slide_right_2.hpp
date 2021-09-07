@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/abi.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/detail/function/slide_right.hpp>
 #include <eve/function/combine.hpp>
 
@@ -27,7 +27,7 @@ namespace eve::detail
 
       constexpr std::ptrdiff_t half = Wide::size() / 2;
 
-      if constexpr ( Shift <= half ) // [bccd]
+      if constexpr ( Shift <= half )
       {
         auto s = index<Shift>;
         return Wide{ slide_right_2(bb, cc, s), slide_right_2(cc, dd, s) };
