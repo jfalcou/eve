@@ -85,4 +85,14 @@ namespace eve::detail
   {
     return bit_cast(slide_right(v.bits(),s), as<logical<Wide>>{});
   }
+
+  template<simd_value Wide, std::ptrdiff_t Shift>
+  EVE_FORCEINLINE auto slide_right_(EVE_SUPPORTS(cpu_)
+                                   , logical<Wide> x
+                                   , logical<Wide> y
+                                   , index_t<Shift> s) noexcept
+  requires(Shift <= Wide::size() )
+  {
+    return bit_cast(slide_right(x.bits(), y.bits(), s), as<logical<Wide>>{});
+  }
 }

@@ -276,12 +276,33 @@ namespace eve::detail
     else  if constexpr(Shift == Wide::size()) return logical<Wide>{false};
     else
     {
-      // We use >> for slide_right due to x86 endianness of SIMD register
+      // We use << for slide_right due to x86 endianness of SIMD register
       auto mask = v.bitmap();
       mask <<= Shift;
 
       using s_t = typename logical<Wide>::storage_type;
       return s_t{static_cast<typename s_t::type>(mask.to_ulong())};
+    }
+  }
+
+  template<simd_value Wide, std::ptrdiff_t Shift>
+  EVE_FORCEINLINE logical<Wide>
+  slide_right_(EVE_SUPPORTS(avx512_), logical<Wide> x, logical<Wide> y, index_t<Shift>) noexcept
+  requires(Shift <= Wide::size() )
+  {
+         if constexpr ( Shift == 0            ) return y;
+    else if constexpr ( Shift == Wide::size() ) return x;
+    else
+    {
+      auto xmask = x.bitmap();
+      auto ymask = y.bitmap();
+
+      // Shifts invert due to the endianness
+      xmask >>= Wide::size() - Shift;
+      ymask <<= Shift;
+
+      using s_t = typename logical<Wide>::storage_type;
+      return s_t{static_cast<typename s_t::type>((xmask | ymask).to_ulong())};
     }
   }
 }

@@ -19,11 +19,23 @@ EVE_TEST_TYPES("Check behavior of slide_right shuffle", eve::test::simd::all_typ
   T x{[](int i, int size) { return i - size; }};
   T y{[](int i, int     ) { return i; }};
 
+  eve::logical<T> lx = x < -3;
+  eve::logical<T> ly = y < 4;
+
   eve::detail::for_<0, 1, T::size()>(
     [&]<int Shift>(std::integral_constant<int, Shift>) {
       T expected([](int i, int) { return i - Shift; });
       T actual = eve::slide_right(x, y, eve::index<Shift>);
       TTS_EQUAL(expected, actual);
+
+      eve::logical<T> lexpected([](int i, int) {
+        int full_i = i - Shift;
+        if (full_i < 0) return full_i < -3;
+        else            return full_i < 4;
+      });
+      eve::logical<T> lactual = eve::slide_right(lx, ly, eve::index<Shift>);
+
+      TTS_EQUAL(lexpected, lactual);
     }
   );
 };
