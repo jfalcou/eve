@@ -52,6 +52,8 @@ EVE_TEST( "Check behavior of slide_right swizzle"
   );
 };
 
+#ifndef EVE_NO_SIMD
+
 TTS_CASE( "Check behavior of smaller 8bytes with garbage" )
 {
   using full_t = eve::wide<std::uint8_t, eve::fixed<8>>;
@@ -64,3 +66,5 @@ TTS_CASE( "Check behavior of smaller 8bytes with garbage" )
   small_t actual   = eve::slide_right(cast_down, eve::index<1>);
   TTS_EQUAL(expected, actual);
 }
+
+#endif  // EVE_NO_SIMD
