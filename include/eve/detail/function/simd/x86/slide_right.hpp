@@ -190,12 +190,12 @@ namespace eve::detail
       }
       else if constexpr ( shifted_bytes % 8 == 0 )
       {
-        using f_t = typename wide<T,N>::template rebind<float>;
-        f_t ab = bit_cast(x, as<f_t>{});
-        f_t cd = bit_cast(y, as<f_t>{});
-        f_t bc = _mm256_permute2f128_ps(cd, ab, 0x03);
+        using d_t = typename wide<T,N>::template rebind<double>;
+        d_t ab = bit_cast(x, as<d_t>{});
+        d_t cd = bit_cast(y, as<d_t>{});
+        d_t bc = _mm256_permute2f128_pd(cd, ab, 0x03);
 
-        f_t res;
+        d_t res;
 
              if constexpr ( shifted_bytes == 4 * 2 ) res = _mm256_shuffle_pd(bc, cd, 0b0101);
         else if constexpr ( shifted_bytes == 4 * 4 ) res = bc;
