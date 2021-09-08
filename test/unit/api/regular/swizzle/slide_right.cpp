@@ -51,3 +51,16 @@ EVE_TEST( "Check behavior of slide_right swizzle"
   }
   );
 };
+
+TTS_CASE( "Check behavior of smaller 8bytes with garbage" )
+{
+  using full_t = eve::wide<std::uint8_t, eve::fixed<8>>;
+  using small_t = eve::wide<std::uint8_t, eve::fixed<2>>;
+
+  full_t  full ([](int i, int) { return i > 2 ? 255 : 5 - i; });
+  small_t cast_down = eve::bit_cast(full, eve::as<small_t>{});
+
+  small_t expected{0, 5};
+  small_t actual   = eve::slide_right(cast_down, eve::index<1>);
+  TTS_EQUAL(expected, actual);
+}

@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/concept/abi.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/pattern.hpp>
 
