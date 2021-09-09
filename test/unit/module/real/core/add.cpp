@@ -12,7 +12,6 @@
 #include <eve/function/add.hpp>
 #include <eve/function/saturated/add.hpp>
 #include <eve/function/diff/add.hpp>
-#include <eve/function/is_gtz.hpp>
 
 //==================================================================================================
 // Types tests
@@ -43,13 +42,13 @@ EVE_TEST_TYPES( "Check return types of add"
   TTS_EXPR_IS( eve::add[eve::logical<v_t>()](T(), T()  ) , T);
   TTS_EXPR_IS( eve::add[eve::logical<v_t>()](T(), v_t()) , T);
   TTS_EXPR_IS( eve::add[eve::logical<v_t>()](v_t(), T()) , T);
+
   TTS_EXPR_IS( eve::saturated(eve::add[eve::logical<T>()])(T(), T()  ) , T);
   TTS_EXPR_IS( eve::saturated(eve::add[eve::logical<T>()])(T(), v_t()) , T);
   TTS_EXPR_IS( eve::saturated(eve::add[eve::logical<T>()])(v_t(), T()) , T);
   TTS_EXPR_IS( eve::saturated(eve::add[eve::logical<v_t>()])(T(), T()  ) , T);
   TTS_EXPR_IS( eve::saturated(eve::add[eve::logical<v_t>()])(T(), v_t()) , T);
   TTS_EXPR_IS( eve::saturated(eve::add[eve::logical<v_t>()])(v_t(), T()) , T);
-
 
   //multi
   TTS_EXPR_IS( eve::add(T(), T(), T()  )  , T);
@@ -105,13 +104,13 @@ EVE_TEST( "Check behavior of add on wide"
   TTS_EQUAL( saturated(add)(a0, a2), map([&](auto e, auto f) { return saturated(add)(e, f); }, a0, a2));
   TTS_EQUAL( add(a0, a1, a2), map([&](auto e, auto f, auto g) { return add(add(e, f), g); }, a0, a1, a2));
   TTS_EQUAL( saturated(add)(a0, a1, a2), map([&](auto e, auto f, auto g) { return saturated(add)(saturated(add)(e, f), g); }, a0, a1, a2));
+
   if constexpr(eve::floating_value<T>)
   {
     TTS_EQUAL( eve::diff_1st(add)(a0, a2), eve::one(eve::as(a0)));
     TTS_EQUAL( eve::diff_2nd(add)(a0, a2), eve::one(eve::as(a0)));
     TTS_EQUAL( eve::diff_3rd(add)(a0, a1, a2), eve::one(eve::as(a0)));
   }
-
 };
 
 //==================================================================================================

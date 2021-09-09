@@ -40,7 +40,7 @@ namespace eve::detail
   //================================================================================================
   // saturated case
   //================================================================================================
-  template<real_value T, real_value U>
+  template<typename T, typename U>
   EVE_FORCEINLINE auto
   add_(EVE_SUPPORTS(cpu_), saturated_type const &, T const &a, U const &b) noexcept
       requires compatible_values<T, U>
@@ -110,12 +110,11 @@ namespace eve::detail
   //================================================================================================
   // Masked case
   //================================================================================================
-  template<conditional_expr C, real_value U, real_value V>
+  template<conditional_expr C, typename U, typename V>
   EVE_FORCEINLINE auto
   add_(EVE_SUPPORTS(cpu_), C const &cond, saturated_type const &, U const &t, V const &f) noexcept
       requires compatible_values<U, V>
   {
-    return mask_op(  cond, saturated(add), t, f);
+    return mask_op( cond, saturated(add), t, f);
   }
-
 }

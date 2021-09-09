@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/detail/callable.hpp>
 #include <eve/detail/assert_utils.hpp>
 #include <eve/assert.hpp>
 #include <type_traits>
@@ -86,23 +86,47 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-  namespace tag { struct shl_; }
+  namespace tag { struct shl_ {}; }
 
   namespace detail
   {
-    template<typename T, typename S>
-    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::shl_), T const&, [[maybe_unused]] S const& s)
+    struct callable_shl_  : callable<tag::shl_,callable_shl_>
     {
-      EVE_ASSERT( assert_good_shift<T>(s),
-                  "[eve::shl] Shifting by " << s
-                                            << " is out of the range [0, "
-                                            << sizeof(value_type_t<T>) * 8
-                                            << "[."
-                );
-    }
+      template<typename T, typename U>
+      static EVE_FORCEINLINE void check(T const&, [[maybe_unused]] U const& s)
+      {
+        EVE_ASSERT( assert_good_shift<T>(s),
+                    "[eve::shl] Shifting by " << s
+                                              << " is out of the range [0, "
+                                              << sizeof(value_type_t<T>) * 8
+                                              << "[."
+                  );
+      }
+
+      // Proceed to the actual computation
+      template<typename T, typename S>
+      static EVE_FORCEINLINE constexpr auto evaluate(T a, S s) noexcept
+      {
+              if constexpr(scalar_value<T> && scalar_value<S>) return static_cast<T>(a << s);
+        else  if constexpr(scalar_value<T>)               return as_wide_t<T, cardinal_t<S>>(a) << s;
+        else                                              return a << s;
+      }
+
+      template<typename C, typename T, typename S>
+      static EVE_FORCEINLINE constexpr auto evaluate(C const& c, T a, S s) noexcept
+      {
+        return mask_op(c, callable_shl_{}, a, s);
+      }
+
+      // Provide the concept-based interface
+      template<value T, integral_real_value S>
+      EVE_FORCEINLINE constexpr auto operator()(T a, S s) const noexcept
+      {
+        check(a,s);
+        return callable<tag::shl_, callable_shl_>::dispatch(a,s);
+      }
+    };
   }
 
-  EVE_MAKE_CALLABLE(shl_, shl);
+  EVE_BUILD_CALLABLE(shl_, shl);
 }
-
-#include <eve/module/real/core/function/regular/generic/shl.hpp>

@@ -7,11 +7,15 @@
 //==================================================================================================
 #pragma once
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// This file will go at the end of all the changes
+////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <eve/arch/spec.hpp>
-#include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/detail/meta.hpp>
 #include <eve/detail/function/to_logical.hpp>
 #include <eve/concept/conditional.hpp>
+#include <eve/concept/callable_object.hpp>
 #include <eve/concept/value.hpp>
 
 #include <concepts>
@@ -147,6 +151,25 @@ namespace tag { struct TAG {}; }                                                
 
 namespace eve
 {
+  namespace detail
+  {
+    template<typename Decorator, typename Tag, typename Caller>
+    struct decorated_callable
+    {
+      using tag_type    = Tag;
+      using caller_type = typename Caller::caller_type;
+
+      template<typename... Args>
+      EVE_FORCEINLINE constexpr auto operator()(Args &&... args) noexcept
+      -> decltype( std::declval<caller_type>()(std::forward<Args>(args)...) )
+      {
+        return func(std::forward<Args>(args)...);
+      }
+
+      Caller func;
+    };
+  }
+
   //================================================================================================
   // decorator definition, detection, combination and application to callables
   //================================================================================================
@@ -177,11 +200,27 @@ namespace eve
       }
     };
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    /*
+      Changes here are temporary as overload.hpp will go.
+      This ensures both new and old school decorator works at the same time, thus letting us
+      upgrade code without mammoth PRs.
+    */
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     template<typename Function>
+    requires( !callable_object<Function> )
     constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
     {
       if constexpr( requires{ Decoration{}(f); } )  return Decoration{}(f);
       else                                          return fwding_lamda<Function>{f};
+    }
+
+    template<callable_object Function>
+    EVE_FORCEINLINE constexpr auto operator()(Function func) const noexcept
+    {
+      using caller_type = std::remove_cvref_t<Function>;
+      using tag_type    = typename caller_type::tag_type;
+      return detail::decorated_callable<decorated<Decoration()>,tag_type,caller_type>{func};
     }
   };
 
