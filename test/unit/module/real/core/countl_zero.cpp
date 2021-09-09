@@ -42,8 +42,6 @@ EVE_TEST( "Check behavior of countl_zero(wide) on unsigned integral "
   for(v_t i = 0;  i < sizeof(v_t)*8-1; ++i)
   {
     auto j = T(v_t(1) << i);
-    std::cout << "j " << j << " count " << eve::countl_zero(j) << std::endl;
     TTS_EQUAL( eve::countl_zero(j), map([](auto e) ->v_t{ return std::countl_zero(e); }, j));
-
   }
 };

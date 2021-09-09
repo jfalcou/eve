@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <type_traits>
-#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
@@ -17,17 +17,16 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> countl_zero_(EVE_SUPPORTS(sse2_), wide<T, N> a0) noexcept
       requires x86_abi<abi_t<T, N>>
  {
-//     std::cout << "la donc" << std::endl;
-//     using r_t = wide<T, N>;
-//     constexpr auto c = categorize<r_t>();
-     return map(countl_zero, a0);
-//     if constexpr(current_api <  avx512 || sizeof(T) < 4) return map(countl_zero, a0);
-//     else if constexpr ( c == category::uint64x8  ) return r_t(_mm512_lzcnt_epi64(a0));
-//     else if constexpr ( c == category::uint32x16 ) return r_t(_mm512_lzcnt_epi32(a0));
-//     else if constexpr ( c == category::uint64x4  ) return r_t(_mm256_lzcnt_epi64(a0));
-//     else if constexpr ( c == category::uint32x8  ) return r_t(_mm256_lzcnt_epi32(a0));
-//     else if constexpr ( c == category::uint64x2  ) return r_t(_mm_lzcnt_epi64(a0));
-//     else if constexpr ( c == category::uint32x4  ) return r_t(_mm_lzcnt_epi32(a0));
+    using r_t = wide<T, N>;
+    constexpr auto c = categorize<r_t>();
+
+    if constexpr (current_api < avx512 || sizeof(T) < 4)  return countl_zero_(EVE_RETARGET(cpu_), a0);
+    else  if constexpr ( c == category::uint64x8  )       return r_t(_mm512_lzcnt_epi64(a0));
+    else  if constexpr ( c == category::uint32x16 )       return r_t(_mm512_lzcnt_epi32(a0));
+    else  if constexpr ( c == category::uint64x4  )       return r_t(_mm256_lzcnt_epi64(a0));
+    else  if constexpr ( c == category::uint32x8  )       return r_t(_mm256_lzcnt_epi32(a0));
+    else  if constexpr ( c == category::uint64x2  )       return r_t(_mm_lzcnt_epi64(a0));
+    else  if constexpr ( c == category::uint32x4  )       return r_t(_mm_lzcnt_epi32(a0));
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -58,6 +57,4 @@ namespace eve::detail
       else return countl_zero_(EVE_RETARGET(cpu_), a0);
     }
   }
-
-
 }
