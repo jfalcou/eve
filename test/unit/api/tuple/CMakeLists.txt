@@ -8,6 +8,7 @@
 ## Wide API tests
 make_unit("unit.api.tuple"  comparison.cpp                    )
 make_unit("unit.api.tuple"  conditional.cpp                   )
+make_unit("unit.api.tuple"  algorithm/scan.cpp                )
 make_unit("unit.api.tuple"  swizzle/broadcast.cpp             )
 make_unit("unit.api.tuple"  swizzle/broadcast_group.cpp       )
 make_unit("unit.api.tuple"  swizzle/identity.cpp              )
