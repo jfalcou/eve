@@ -25,9 +25,9 @@
 namespace eve::detail
 {
   template<real_value I, floating_real_value T, decorator D>
-  EVE_FORCEINLINE auto rising_factorial_(EVE_SUPPORTS(cpu_)
-                                        , D const & d
-                                        , I n,  T x) noexcept
+  EVE_FORCEINLINE  common_compatible_t<I, T> rising_factorial_(EVE_SUPPORTS(cpu_)
+                                                              , D const & d
+                                                              , I n,  T x) noexcept
   {
     if constexpr(integral_simd_value<I>)
     {
