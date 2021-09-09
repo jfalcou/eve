@@ -52,9 +52,11 @@ namespace eve
   namespace detail
   {
     template<typename T>
-    EVE_FORCEINLINE auto zero_(EVE_SUPPORTS(cpu_), eve::as<T> const &) noexcept
+    EVE_FORCEINLINE T zero_(EVE_SUPPORTS(cpu_), eve::as<T> const &) noexcept
     {
-      return T(0);
+      // This better inline.
+      if constexpr ( product_type<T> ) return T{kumi::map([](auto m) { return zero(as(m)); }, T{})};
+      else return T(0);
     }
   }
 }
