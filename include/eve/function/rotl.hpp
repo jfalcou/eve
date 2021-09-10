@@ -23,7 +23,7 @@ namespace eve
     template<typename T, typename S>
     EVE_FORCEINLINE void check(EVE_MATCH_CALL(regular_type, eve::tag::rotl_), T const& , [[ maybe_unused ]] S const& s)
     {
-      constexpr int l = sizeof(value_type_t<T>) * 8;
+      constexpr int l [[ maybe_unused ]] = sizeof(value_type_t<T>) * 8;
       EVE_ASSERT( assert_good_shift<T>(eve::abs(s)),
                   "[eve::rotl] Rotating by " << s
                                              << " is out of the range ]"

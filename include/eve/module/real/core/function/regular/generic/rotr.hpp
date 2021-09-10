@@ -15,8 +15,7 @@
 namespace eve::detail
 {
   template<unsigned_value T, integral_value U>
-  [[nodiscard]] EVE_FORCEINLINE auto rotr_(EVE_SUPPORTS(cpu_), T a0, U n)
-    noexcept
+  EVE_FORCEINLINE auto rotr_(EVE_SUPPORTS(cpu_), T a0, U n)  noexcept
   {
     return rotl(a0, U(-n));
   }

@@ -25,7 +25,6 @@ namespace eve::detail
     if( nn == 0 )  return a0;
     constexpr U width = sizeof(T) * 8 - 1;
     int n = nn & width;
-    //   std::cout << "icotte" << std::endl;
     if( n > 0 )
     {
       a0 = (a0 << n) | (a0 >> (-n & width));
@@ -65,7 +64,7 @@ namespace eve::detail
   }
 
   template<unsigned_scalar_value T, integral_simd_value U>
-  [[nodiscard]] EVE_FORCEINLINE auto rotl_(EVE_SUPPORTS(cpu_), T a0, U n) noexcept
+  EVE_FORCEINLINE auto rotl_(EVE_SUPPORTS(cpu_), T a0, U n) noexcept
   {
     if constexpr( has_native_abi_v<U> )
     {
