@@ -17,7 +17,8 @@
 
 namespace eve::detail
 {
-  template <product_type IN, product_type OUT>
+  template<product_type IN, product_type OUT>
+  requires(kumi::result::flatten_all_t<IN>::size() == kumi::result::flatten_all_t<OUT>::size())
   EVE_FORCEINLINE auto convert_(EVE_SUPPORTS(cpu_), IN const& v0, eve::as<OUT>)
   {
     if constexpr(std::same_as<element_type_t<IN>, OUT>)

@@ -210,6 +210,7 @@ make_unit("unit.real.core"  convert/to_uint64.cpp    )
 make_unit("unit.real.core"  convert/to_uint32.cpp    )
 make_unit("unit.real.core"  convert/to_uint16.cpp    )
 make_unit("unit.real.core"  convert/to_uint8.cpp     )
+make_unit("unit.real.core"  convert/to_tuple.cpp     )
 
 ##==================================================================================================
 ## Other tests
