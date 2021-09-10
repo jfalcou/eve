@@ -22,6 +22,6 @@ namespace eve::detail
                                   , T const &x) noexcept
   requires index_compatible_values<N, T>
   {
-    return fma(2*x, hermite(n, x), -hermite(inc(n), x));
+    return fma(x+x, hermite(n, x), -hermite(inc(n), x));
   }
 }

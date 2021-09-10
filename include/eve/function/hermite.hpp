@@ -25,7 +25,6 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the hermite operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
@@ -35,7 +34,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`n`:   [integral real valuex](@ref eve::integral_real_value).
+  //!`n`:   [integral real valuex](@ref eve::integral_real_value) or integral constant.
   //!
   //!`x`:   [floating valuex](@ref eve::floating_value).
   //!
@@ -47,22 +46,6 @@ namespace eve
   //!
   //! ---
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::hermite
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `hermite[cond](x, ...)` is equivalent to `if_else(cond,hermite(x, ...),x)`
-  //!
-  //! ---
-  //!
   //! #### Supported decorators
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
@@ -70,6 +53,13 @@ namespace eve
   //!     **Required header:** `#include <eve/function/diff/hermite.hpp>`
   //!
   //!     The expression `diff(hermite)(n,x)` computes the derivative of the function relative to `x`.
+  //!
+  //!  * eve::successor
+  //!
+  //!     The expression `successor(hermite)(n, x, Hn, Hnm1)` implements the three terms recurrence relation for the Hermite polynomials,
+  //!     \f$\displaystyle \mbox{H}_{n+1} = (2*x)\mbox{H}_{n}-2*n\mbox{H}_{n-1}\f$
+  //!
+  //!     These object functions can be used to create a sequence of values evaluated at the same `x`, and for rising `n`.
   //!
   //! #### Example
   //!
