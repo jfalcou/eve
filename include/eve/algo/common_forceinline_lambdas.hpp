@@ -11,6 +11,8 @@
 #include <eve/function/store.hpp>
 #include <eve/conditional.hpp>
 
+#include <utility>
+
 namespace eve::algo
 {
   template <typename Op>
@@ -92,6 +94,23 @@ namespace eve::algo
     EVE_FORCEINLINE static auto store(Ignore ignore, V v, I i)
     {
       eve::store[ignore](v, i);
+    }
+  };
+
+  struct to_load_store
+  {
+    template<typename Ignore, typename I>
+    EVE_FORCEINLINE static auto load(Ignore ignore, I i)
+    {
+      return eve::load[ignore](get<0>(i));
+    }
+
+    template<typename I> using read_value_type = algo::value_type_t<std::tuple_element_t<0, I>>;
+
+    template<typename Ignore, typename V, typename I>
+    EVE_FORCEINLINE static auto store(Ignore ignore, V v, I i)
+    {
+      eve::store[ignore](v, get<1>(i));
     }
   };
 }

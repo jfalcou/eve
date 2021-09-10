@@ -38,7 +38,7 @@ namespace algo_test
       eve::wide<kumi::tuple<std::int8_t, std::int16_t>, eve::fixed<1>>
     , eve::wide<kumi::tuple<std::uint8_t, std::uint8_t>>
     , eve::wide<kumi::tuple<std::int32_t, std::int32_t>>
-    , eve::wide<kumi::tuple<std::int32_t, std::uint32_t>>
+    , eve::wide<kumi::tuple<std::int32_t, std::uint16_t>>
     , eve::wide<kumi::tuple<float, double>, eve::fixed<2>>
     , eve::wide<kumi::tuple<float, double>>
 #if !defined(SPY_SIMD_IS_X86_AVX512)
@@ -122,6 +122,23 @@ namespace algo_test
     run_f_l();
   }
 
+  template <typename N>
+  auto select_offsets() {
+    if constexpr ( N{}() <= 8 )
+    {
+      std::array<int, N{}()> res;
+      std::iota(res.begin(), res.end(), 0);
+      return res;
+    }
+    else
+    {
+      std::array<int, 8> res;
+      std::iota(res.begin(), res.end(), 0);
+      res.back() = N{}();
+      return res;
+    }
+  }
+
   template <typename WideTU, typename Test>
   void two_ranges_test(eve::as<WideTU>, Test& test)
   {
@@ -140,14 +157,16 @@ namespace algo_test
     auto* f1_base = page_1.data();
     auto* f2_base = page_2.data();
 
-    for (int offset_1 = 0; offset_1 != N{}(); ++offset_1) {
-      for (int offset_2 = 0; offset_2 != N{}(); ++offset_2) {
+    for (int offset_1 : select_offsets<N>()) {
+      for (int offset_2 : select_offsets<N>()) {
         auto* f1 = f1_base + offset_1;
         auto* f2 = f2_base + offset_2;
 
         for (int size = 0; size < elements_to_test; size += 3) {
           auto* l1 = f1 + size;
           auto* l2 = f2 + size;
+
+          test.generate_answer(f1, l1, f2, l2);
 
           auto one_test = [&test](auto f1_, auto l1_, auto f2_, auto l2_) {
             test.run(eve::algo::as_range(f1_, l1_), f2_                         );

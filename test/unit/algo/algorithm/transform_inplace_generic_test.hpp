@@ -5,6 +5,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#pragma once
 
 #include "unit/algo/algo_test.hpp"
 

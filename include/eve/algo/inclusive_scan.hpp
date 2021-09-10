@@ -77,7 +77,6 @@ namespace eve::algo
   template <typename TraitsSupport>
   struct inclusive_scan_inplace_ : TraitsSupport
   {
-
     template <relaxed_range Rng, typename Op, typename Zero, typename U>
     EVE_FORCEINLINE void operator()(Rng&& rng, std::pair<Op, Zero> op_zero, U init) const
     {
@@ -93,4 +92,37 @@ namespace eve::algo
   };
 
   inline constexpr auto inclusive_scan_inplace = function_with_traits<inclusive_scan_inplace_>[no_traits];
+
+  template <typename TraitsSupport>
+  struct inclusive_scan_to_ : TraitsSupport
+  {
+    template <zipped_range_pair R, typename Op, typename Zero, typename U>
+    EVE_FORCEINLINE void operator()(R r, std::pair<Op, Zero> op_zero, U init) const
+    {
+      detail::inclusive_scan_common<to_load_store>{}(
+        TraitsSupport::get_traits(), r[common_type], op_zero, init);
+    }
+
+    template <zipped_range_pair R, typename U>
+    EVE_FORCEINLINE auto operator()(R r, U init) const
+    {
+      operator()(r, std::pair{eve::plus, eve::zero}, init);
+    }
+
+    template <typename R1, typename R2, typename Op, typename Zero, typename U>
+      requires zip_to_range<R1, R2>
+    EVE_FORCEINLINE auto operator()(R1&& r1, R2&& r2, std::pair<Op, Zero> op_zero, U init) const
+    {
+      operator()(zip(std::forward<R1>(r1), std::forward<R2>(r2)), op_zero, init);
+    }
+
+    template <typename R1, typename R2, typename U>
+      requires zip_to_range<R1, R2>
+    EVE_FORCEINLINE auto operator()(R1&& r1, R2&& r2, U init) const
+    {
+      return operator()(zip(std::forward<R1>(r1), std::forward<R2>(r2)), init);
+    }
+  };
+
+  inline constexpr auto inclusive_scan_to = function_with_traits<inclusive_scan_to_>[no_traits];
 }

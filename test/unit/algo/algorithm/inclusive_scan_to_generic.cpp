@@ -10,21 +10,24 @@
 
 #include <eve/algo/inclusive_scan.hpp>
 
-#include "transform_inplace_generic_test.hpp"
+#include "transform_to_generic_test.hpp"
 
 #include <algorithm>
 #include <functional>
 #include <vector>
 
-EVE_TEST_TYPES("Check inlclusive_scan_inplace", algo_test::selected_types)
+EVE_TEST_TYPES("Check inlclusive_scan_to", algo_test::selected_pairs_types)
 <typename T>(eve::as<T> tgt)
 {
-  algo_test::transform_inplace_generic_test(
+  using e_t = eve::element_type_t<T>;
+  using init_t = eve::common_type_t<std::tuple_element_t<0,e_t>, std::tuple_element_t<1,e_t>>;
+
+  algo_test::transform_to_generic_test(
     tgt,
-    eve::algo::inclusive_scan_inplace,
+    eve::algo::inclusive_scan_to,
     [](auto f, auto l, auto o, auto init) {
       std::inclusive_scan(f, l, o, std::plus<>{}, init);
     },
-    eve::element_type_t<T>{10}
+    init_t{10}
   );
 };

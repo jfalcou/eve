@@ -34,6 +34,9 @@ namespace algo_test
       std::fill(page_1.begin(), page_1.end(), 1);
     }
 
+    void generate_answer(auto*, auto*, auto*, auto*)
+    {}
+
     void run(auto range1, auto range2)
     {
       auto zipped_range = eve::algo::zip(range1, range2);
