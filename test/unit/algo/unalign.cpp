@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 
-#include "algo_test.hpp"
+#include "unit/algo/algo_test.hpp"
 
 
 #include <eve/memory/aligned_ptr.hpp>

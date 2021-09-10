@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include "algo_test.hpp"
+#include "unit/algo/algo_test.hpp"
 
 #include <eve/algo/unalign.hpp>
 #include <eve/algo/zip.hpp>

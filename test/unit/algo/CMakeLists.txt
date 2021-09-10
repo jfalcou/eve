@@ -30,18 +30,18 @@ make_unit("unit.algo" zip.cpp)
 
 # Algorithms
 # find like -------------
-make_unit("unit.algo" all_of_generic.cpp)
-make_unit("unit.algo" any_of_generic.cpp)
-make_unit("unit.algo" none_of_generic.cpp)
+make_unit("unit.algo" algorithm/all_of_generic.cpp)
+make_unit("unit.algo" algorithm/any_of_generic.cpp)
+make_unit("unit.algo" algorithm/none_of_generic.cpp)
 
-make_unit("unit.algo" find_if_generic.cpp)
-make_unit("unit.algo" find_if_not_generic.cpp)
+make_unit("unit.algo" algorithm/find_if_generic.cpp)
+make_unit("unit.algo" algorithm/find_if_not_generic.cpp)
 
-make_unit("unit.algo" equal_generic.cpp)
-make_unit("unit.algo" mismatch_generic.cpp)
+make_unit("unit.algo" algorithm/equal_generic.cpp)
+make_unit("unit.algo" algorithm/mismatch_generic.cpp)
 
-make_unit("unit.algo" find_like_special_cases.cpp)
+make_unit("unit.algo" algorithm/find_like_special_cases.cpp)
 
 # other ------------------
-make_unit("unit.algo" reduce.cpp)
-make_unit("unit.algo" remove.cpp)
+make_unit("unit.algo" algorithm/reduce.cpp)
+make_unit("unit.algo" algorithm/remove.cpp)
