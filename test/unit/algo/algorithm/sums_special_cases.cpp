@@ -43,3 +43,36 @@ TTS_CASE("eve.algo.reduce sum complex numbers")
 }
 
 #endif
+
+TTS_CASE("eve.algo.inclusive_scan a vector")
+{
+  std::vector<int> v        { 0, 1, 2, 3, 4 };
+
+  std::vector<int> expected(v.size());
+  std::inclusive_scan(v.begin(), v.end(), expected.begin(), std::plus<>{}, -1);
+
+  eve::algo::inclusive_scan_inplace(v, -1);
+  TTS_EQUAL(v, expected);
+}
+
+TTS_CASE("eve.algo.inclusive_scan complex numbers")
+{
+  std::vector<float> real = { 0.0,  0.1,  0.2,  0.3 };
+  std::vector<float> img  = { 0.0, -0.1, -0.2, -0.3 };
+
+  using cmplx = kumi::tuple<float, float>;
+
+  auto plus = [](eve::same_value_type<cmplx> auto x,
+                 eve::same_value_type<cmplx> auto y) {
+    get<0>(x) += get<0>(y);
+    get<1>(x) += get<1>(y);
+    return x;
+  };
+
+  eve::algo::inclusive_scan_inplace(eve::algo::zip(real, img), std::pair{plus, eve::zero}, eve::zero);
+
+  std::vector<float> expected_real = { 0.0,  0.1,  0.3,  0.6 };
+  std::vector<float> expected_img  = { 0.0, -0.1, -0.3, -0.6 };
+  TTS_EQUAL(expected_real, real);
+  TTS_EQUAL(expected_img,  img);
+}
