@@ -42,6 +42,9 @@ make_unit("unit.algo" algorithm/mismatch_generic.cpp)
 
 make_unit("unit.algo" algorithm/find_like_special_cases.cpp)
 
-# other ------------------
-make_unit("unit.algo" algorithm/reduce.cpp)
+# sums ------------------
+make_unit("unit.algo" algorithm/reduce_generic.cpp)
+make_unit("unit.algo" algorithm/sums_special_cases.cpp)
+
+# shuffles
 make_unit("unit.algo" algorithm/remove.cpp)
