@@ -31,7 +31,7 @@ EVE_TEST_TYPES( "Check behavior of scan", eve::test::scalar::all_types)
   w_t actual_1 = eve::scan(x, plus, eve::zero);
   TTS_EQUAL(expected, actual_1);
 
-  w_t actual_2 = eve::scan(x, plus, s_t{0});
+  w_t actual_2 = eve::scan(x, plus, s_t{0, 0, 0});
   TTS_EQUAL(expected, actual_2);
 
   w_t actual_3 = eve::scan(x, plus, eve::zero(eve::as<w_t>{}));
@@ -60,7 +60,7 @@ EVE_TEST_TYPES( "Check behavior of scan, same type", eve::test::scalar::all_type
   w_t actual_1 = eve::scan(x, plus, eve::zero);
   TTS_EQUAL(expected, actual_1);
 
-  w_t actual_2 = eve::scan(x, plus, s_t{0});
+  w_t actual_2 = eve::scan(x, plus, s_t{0, 0, 0});
   TTS_EQUAL(expected, actual_2);
 
   w_t actual_3 = eve::scan(x, plus, eve::zero(eve::as<w_t>{}));
