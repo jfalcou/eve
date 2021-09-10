@@ -200,6 +200,17 @@ make_unit("unit.real.core"  trunc.cpp                )
 make_unit("unit.real.core"  two_split.cpp            )
 make_unit("unit.real.core"  ulpdist.cpp              )
 
+make_unit("unit.real.core"  convert/to_double.cpp    )
+make_unit("unit.real.core"  convert/to_float.cpp     )
+make_unit("unit.real.core"  convert/to_int64.cpp     )
+make_unit("unit.real.core"  convert/to_int32.cpp     )
+make_unit("unit.real.core"  convert/to_int16.cpp     )
+make_unit("unit.real.core"  convert/to_int8.cpp      )
+make_unit("unit.real.core"  convert/to_uint64.cpp    )
+make_unit("unit.real.core"  convert/to_uint32.cpp    )
+make_unit("unit.real.core"  convert/to_uint16.cpp    )
+make_unit("unit.real.core"  convert/to_uint8.cpp     )
+
 ##==================================================================================================
 ## Other tests
 ##==================================================================================================
@@ -208,31 +219,10 @@ add_subdirectory(failure)
 ##==================================================================================================
 ## Elementwise function unit tests
 ##==================================================================================================
-make_all_units(ROOT unit.real.core NAME convert               ARCH scalar simd TYPES ${all_types}     )
-##make_all_units(ROOT unit.real.core NAME div                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME gather                ARCH        simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME iceil                 ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME ifloor                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME inearest              ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME iround                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.real.core NAME itrunc                ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT unit.real.core NAME count_true                ARCH scalar simd TYPES ${all_types}     )
-
-make_all_units(ROOT unit.real.core NAME nb_values             ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT unit.real.core NAME negate                ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT unit.real.core NAME negatenz              ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT unit.real.core NAME next                  ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT unit.real.core NAME nextafter             ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT unit.real.core NAME none                  ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT unit.real.core NAME oneminus              ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT unit.real.core NAME plus                  ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT unit.real.core NAME popcount              ARCH scalar simd TYPES ${integral_types})
-make_all_units(ROOT unit.real.core NAME prev                  ARCH scalar simd TYPES ${all_types}     )
-
-make_all_units(ROOT unit.real.core NAME reduce                ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.core NAME reduce_fast           ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.core NAME reduce_large          ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.real.core NAME reduce_medium         ARCH scalar simd TYPES ${real_types}    )
-
-##make_all_units(ROOT unit.real.core NAME rsqrt                 ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.real.core NAME saturate              ARCH scalar simd TYPES ${all_types}     )
