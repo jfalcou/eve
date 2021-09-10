@@ -8,9 +8,12 @@
 
 #include "unit/algo/algo_test.hpp"
 
+#include <eve/algo/inclusive_scan.hpp>
 #include <eve/algo/reduce.hpp>
 #include <eve/algo/zip.hpp>
 
+#include <algorithm>
+#include <functional>
 #include <vector>
 
 #if 0  // FIX-#880, FIX-#896"

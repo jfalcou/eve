@@ -16,7 +16,6 @@
 #include <eve/function/convert.hpp>
 #include <eve/function/reduce.hpp>
 
-#include <algorithm>
 #include <utility>
 
 namespace eve::algo
@@ -41,7 +40,6 @@ namespace eve::algo
 
       EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto idx)
       {
-        // TODO: FIX-#802 use a non-zero sum.
         sums[idx()] = op(sums[idx()], eve::load[ignore.else_(zero)](it));
         return false;
       }
