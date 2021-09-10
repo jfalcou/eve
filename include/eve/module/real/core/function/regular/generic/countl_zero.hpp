@@ -16,18 +16,10 @@
 
 namespace eve::detail
 {
-  template<unsigned_value T> EVE_FORCEINLINE T countl_zero_(EVE_SUPPORTS(cpu_), T const &v) noexcept
+  template<unsigned_value T> EVE_FORCEINLINE T countl_zero_(EVE_SUPPORTS(cpu_), T x) noexcept
   {
-    if constexpr( scalar_value<T> )
-    {
-      return T(std::countl_zero(v));
-    }
-    else if constexpr( has_native_abi_v<T> )
-    {
-      return map(countl_zero, v); // TO DO
-    }
-    else
-      return apply_over(countl_zero, v);
+    if constexpr( scalar_value<T> ) return T(std::countl_zero(x));
+    else                            return map(countl_zero, x);
   }
 
   // -----------------------------------------------------------------------------------------------

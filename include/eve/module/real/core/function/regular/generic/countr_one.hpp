@@ -10,6 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/function/countr_zero.hpp>
 
 #include <bit>
 #include <type_traits>
@@ -24,7 +25,7 @@ namespace eve::detail
     }
     else if constexpr( has_native_abi_v<T> )
     {
-      return map(countr_one, v); // TO DO
+      return countr_zero(~v); 
     }
     else
       return apply_over(countr_one, v);

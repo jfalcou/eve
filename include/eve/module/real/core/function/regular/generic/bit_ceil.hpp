@@ -39,26 +39,19 @@ namespace eve::detail
         auto tmpltv = tmp < v;
         if constexpr(scalar_value<T>)
         {
-          return tmpltv ? tmp*2 : tmp;
+          return tmpltv ? tmp+tmp : tmp;
         }
         else
         {
-          return if_else(vle1, one(eve::as(v)), if_else(tmpltv,  tmp*2, tmp));
+          return if_else(vle1, one(eve::as(v)), if_else(tmpltv,  tmp+tmp, tmp));
         }
       }
       else
       {
         auto tmp =  bit_floor(v);
         auto tmpltv = tmp < v;
-        if constexpr(scalar_value<T>)  return T(tmpltv ? tmp*2:  tmp);
-        else
-        {
-
-          auto res = if_else(vle1, one(eve::as(v)) //TODO Optimize with one_ ?
-                        , if_else(tmpltv, tmp*2,  tmp));
-          return res;
-        }
-
+        if constexpr(scalar_value<T>) return T(tmpltv ? tmp+tmp:  tmp);
+        else                          return if_else(vle1, one, if_else(tmpltv, tmp+tmp,  tmp));
       }
     }
     else return apply_over(bit_ceil, v);
