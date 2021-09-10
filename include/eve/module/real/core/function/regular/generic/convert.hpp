@@ -17,6 +17,15 @@
 
 namespace eve::detail
 {
+  struct convert_lambda
+  {
+    template<typename T, typename M>
+    EVE_FORCEINLINE constexpr void operator()(T const& in, M* res_m) const noexcept
+    {
+      *res_m = eve::convert(in, eve::as<element_type_t<M>>{});
+    }
+  };
+
   template<product_type IN, product_type OUT>
   requires(kumi::result::flatten_all_t<IN>::size() == kumi::result::flatten_all_t<OUT>::size())
   EVE_FORCEINLINE auto convert_(EVE_SUPPORTS(cpu_), IN const& v0, eve::as<OUT>)
@@ -33,12 +42,7 @@ namespace eve::detail
       auto outs = kumi::flatten_all(res, [](auto& m) { return &m; });
       auto ins  = kumi::flatten_all(v0);
 
-      kumi::for_each( []<typename M>(auto const& in, M* res_m)
-                      {
-                        *res_m = eve::convert(in, eve::as<element_type_t<M>>{});
-                      }
-                    , ins, outs
-                    );
+      kumi::for_each( convert_lambda{}, ins, outs );
 
       return res;
     }
