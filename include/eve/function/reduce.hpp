@@ -20,7 +20,7 @@ namespace eve
   //!
   //! **Required header:** `#include <eve/function/reduce.hpp>`
   //!
-  //! #### Members Functions
+  //! #### Member Functions
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

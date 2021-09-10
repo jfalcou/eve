@@ -17,6 +17,16 @@ namespace eve::detail
   inline constexpr
   auto slide_right_pattern = fix_pattern<N>( [](auto i, auto ){ return i<Shift ? na_ : i-Shift;} );
 
+
+  template <std::ptrdiff_t Shift>
+  struct slide_right_lambda
+  {
+    EVE_FORCEINLINE auto operator()(auto ... xs) const
+    {
+      return slide_right(xs..., index<Shift>);
+    }
+  };
+
   template<simd_value Wide, std::ptrdiff_t Shift>
   EVE_FORCEINLINE auto slide_right_(EVE_SUPPORTS(cpu_), Wide v, index_t<Shift>) noexcept
   requires(Shift <= Wide::size() )
@@ -32,7 +42,7 @@ namespace eve::detail
     }
     else if constexpr( is_bundle_v<typename Wide::abi_type> )
     {
-      return Wide( kumi::map ( []<typename T>(T m) { return slide_right(m,index<Shift>); }, v) );
+      return Wide( kumi::map ( slide_right_lambda<Shift>{}, v) );
     }
     else
     {
@@ -48,7 +58,7 @@ namespace eve::detail
     else if constexpr ( Shift == Wide::size()      ) return x;
     else if constexpr( is_bundle_v<typename Wide::abi_type> )
     {
-      return Wide( kumi::map ( []<typename T>(T mx, T my) { return slide_right(mx, my, index<Shift>); }, x, y) );
+      return Wide( kumi::map ( slide_right_lambda<Shift>{}, x, y) );
     }
     else if constexpr ( has_aggregated_abi_v<Wide> )
     {
