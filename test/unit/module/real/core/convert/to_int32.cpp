@@ -5,6 +5,7 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
+#include "test.hpp"
 #include <eve/function/convert.hpp>
 #include <eve/function/converter.hpp>
 #include <eve/function/saturated/convert.hpp>
