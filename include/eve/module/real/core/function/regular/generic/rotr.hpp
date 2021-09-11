@@ -14,11 +14,15 @@
 
 namespace eve::detail
 {
-  template<integral_value T, integral_value U>
-  [[nodiscard]] EVE_FORCEINLINE auto rotr_(EVE_SUPPORTS(cpu_), T const &a0, U const &n) noexcept
+  template<unsigned_value T, integral_value U>
+  EVE_FORCEINLINE auto rotr_(EVE_SUPPORTS(cpu_), T a0, U n)  noexcept
   {
     return rotl(a0, U(-n));
   }
 
+  template<conditional_expr C, unsigned_value T0, integral_real_value T1>
+  auto rotr_(EVE_SUPPORTS(cpu_), C const &cond, T0 a0, T1 a1)
+  {
+   return mask_op(  cond, eve::rotr, a0, a1);
+  }
 }
-

@@ -71,6 +71,6 @@ EVE_TEST( "Check behavior of rotr on wide"
   TTS_EQUAL( rotr(a0, 1u), map([](auto e){return std::rotr(e, 1u);}, a0));
   using v_t = eve::element_type_t<T>;
   auto ua1 = eve::int_(a1);
-  TTS_EQUAL( rotr(a0, a1), map([](auto e, auto f) -> v_t {return std::rotr(e, f);}, a0, ua1));
+  TTS_EQUAL( rotr(a0, a1), map([](auto e, auto f) -> v_t {return std::rotr(e, f);}, a0, a1));
   TTS_EQUAL( rotr(a0, ua1), map([](auto e, auto f) -> v_t {return std::rotr(e, f);}, a0, ua1));
 };
