@@ -152,6 +152,10 @@ namespace eve
   //================================================================================================
   struct decorator_ {};
   template<typename ID> concept decorator = std::derived_from<ID,decorator_>;
+  template<typename D, typename F> concept specific_decorator = requires(D d, F f)
+  {
+    { d(f) };
+  };
 
   template<typename Decoration> struct decorated;
   template<typename Decoration, typename... Args>
@@ -180,7 +184,7 @@ namespace eve
     template<typename Function>
     constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
     {
-      if constexpr( requires{ Decoration{}(f); } )  return Decoration{}(f);
+      if constexpr( specific_decorator<Decoration,Function> )  return Decoration{}(f);
       else                                          return fwding_lamda<Function>{f};
     }
   };
