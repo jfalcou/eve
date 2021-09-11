@@ -547,7 +547,7 @@ namespace tts::detail
   {
     static constexpr auto value() noexcept
     {
-  #if defined(_MSC_VER )
+  #if defined(_MSC_VER ) && !defined(__clang__)
       std::string_view data(__FUNCSIG__);
       auto i = data.find('<') + 1,
         j = data.find(">::value");
