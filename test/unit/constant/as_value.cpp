@@ -10,9 +10,10 @@
 
 #include <eve/constant/as_value.hpp>
 #include <eve/constant/true.hpp>
+#include <eve/constant/valmax.hpp>
 #include <eve/constant/zero.hpp>
 
-EVE_TEST_TYPES( "Check behavior of as_value for wides", eve::test::simd::all_types)
+EVE_TEST_TYPES( "Check behavior of as_value", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   {
@@ -55,6 +56,31 @@ EVE_TEST_TYPES( "Check behavior of as_value for wides", eve::test::simd::all_typ
     actual = eve::as_value(true, eve::as<U>{});
     TTS_EQUAL(expected, actual);
     actual = eve::as_value(expected, eve::as<U>{});
+    TTS_EQUAL(expected, actual);
+  }
+};
+
+EVE_TEST_TYPES( "Check behavior of as_value, val max for wides", eve::test::simd::all_types)
+<typename T>(eve::as<T>)
+{
+  using e_t = eve::element_type_t<T>;
+  e_t max_value = std::numeric_limits<e_t>::max();
+
+  {
+    T expected{max_value};
+    T actual = eve::as_value(eve::valmax, eve::as<T>{});
+    TTS_EQUAL(expected, actual);
+    actual = eve::as_value(max_value, eve::as<T>{});
+    TTS_EQUAL(expected, actual);
+    actual = eve::as_value(expected, eve::as<T>{});
+    TTS_EQUAL(expected, actual);
+  }
+
+  {
+    e_t expected{max_value};
+    e_t actual = eve::as_value(eve::valmax, eve::as<e_t>{});
+    TTS_EQUAL(expected, actual);
+    actual = eve::as_value(max_value, eve::as<e_t>{});
     TTS_EQUAL(expected, actual);
   }
 };
