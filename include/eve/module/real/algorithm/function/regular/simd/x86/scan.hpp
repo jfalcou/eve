@@ -9,6 +9,7 @@
 
 #include <eve/detail/implementation.hpp>
 
+#include <eve/constant/as_value.hpp>
 #include <eve/function/broadcast.hpp>
 
 namespace eve::detail
@@ -80,9 +81,7 @@ EVE_FORCEINLINE auto scan_(EVE_SUPPORTS(avx2_), Wide v, Op op, Zero z_)
 {
   if constexpr ( decltype(use_scan_in_lanes(v))::value )
   {
-    Wide z;
-    if constexpr ( std::same_as<Zero, callable_zero_> ) z = z_(as<Wide>{});
-    else                                                z = z_;
+    Wide z = as_value(z_, eve::as<Wide>{});
 
     v = scan_in_lanes<Wide::size() / 2>(v, op, z);
     Wide left_sum = broadcast(v, index<Wide::size() / 2 - 1>);

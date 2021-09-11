@@ -16,6 +16,8 @@ Main eve supports it's callables for scalars. We don't do that for algorithms. T
 * mismatch
 
 * reduce
+* inclusive_scan_inplace/inclusive_scan_to
+
 * remove/remove_if
 
 # Helpers

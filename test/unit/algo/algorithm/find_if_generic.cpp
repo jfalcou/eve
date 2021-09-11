@@ -6,17 +6,17 @@
 **/
 //==================================================================================================
 
-#include "algo_test.hpp"
+#include "unit/algo/algo_test.hpp"
 
-#include <eve/algo/none_of.hpp>
+#include <eve/algo/find.hpp>
 
 #include "find_generic_test.hpp"
 
-EVE_TEST_TYPES("eve.algo.none_of generic", algo_test::selected_types)
+EVE_TEST_TYPES("Check find_if", algo_test::selected_types)
 <typename T>(eve::as<T> as_t)
 {
-  algo_test::find_generic_test(as_t, eve::algo::none_of,
-  [](auto, auto l, auto expected, bool actual) {
-    TTS_EQUAL(actual, (expected == l));
+  algo_test::find_generic_test(as_t, eve::algo::find_if,
+  [](auto, auto, auto expected, auto actual) {
+    TTS_EQUAL(actual, expected);
   });
 };

@@ -35,7 +35,10 @@ EVE_TEST( "Check behavior of eve::minimum(eve::wide)"
 {
   using v_t = eve::element_type_t<T>;
 
-  v_t min_value = *std::min_element(a0.begin(),a0.end());
+  v_t min_value = a0.front();
+  for (int i = 1; i != T::size(); ++i) {
+    min_value = std::max(min_value, a0.get(i));
+  }
 
   TTS_EQUAL(eve::minimum(a0)            , min_value   );
   TTS_EQUAL(eve::splat(eve::minimum)(a0), T(min_value));

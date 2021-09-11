@@ -21,7 +21,7 @@ namespace eve
   //! @{
   //! @var inf
   //!
-  //! @brief Callable object computing the infinity ieee  value.
+  //! @brief Callable object computing the infinity ieee value.
   //!
   //! **Required header:** `#include <eve/function/inf.hpp>`
   //!

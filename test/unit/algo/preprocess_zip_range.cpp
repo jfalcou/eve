@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 
-#include "algo_test.hpp"
+#include "unit/algo/algo_test.hpp"
 
 #include <eve/algo/zip_iterator.hpp>
 #include <eve/algo/zip.hpp>

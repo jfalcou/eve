@@ -36,14 +36,17 @@ EVE_TEST( "Check behavior of eve::maximum(eve::wide)"
 {
   using v_t = eve::element_type_t<T>;
 
-  v_t max_value = *std::max_element(a0.begin(),a0.end());
+  v_t max_value = a0.front();
+  for (int i = 1; i != T::size(); ++i) {
+    max_value = std::max(max_value, a0.get(i));
+  }
 
   TTS_EQUAL(eve::maximum(a0)            , max_value   );
   TTS_EQUAL(eve::splat(eve::maximum)(a0), T(max_value));
 
   TTS_EQUAL(eve::maximum(l0)            , true    );
   TTS_EQUAL(eve::splat(eve::maximum)(l0), L(true) );
-  
+
   TTS_EQUAL(eve::maximum[l0](a0)            , eve::maximum(eve::if_else(l0, a0, eve::valmin(eve::as(a0))))   );
   TTS_EQUAL(eve::splat(eve::maximum[l0])(a0), T(eve::maximum(eve::if_else(l0, a0, eve::valmin(eve::as(a0))))));
 };

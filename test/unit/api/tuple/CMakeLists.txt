@@ -9,6 +9,7 @@
 make_unit("unit.api.tuple"  comparison.cpp                    )
 make_unit("unit.api.tuple"  conditional.cpp                   )
 make_unit("unit.api.tuple"  algorithm/scan.cpp                )
+make_unit("unit.api.tuple"  constant/as_value.cpp             )
 make_unit("unit.api.tuple"  constant/zero.cpp                 )
 make_unit("unit.api.tuple"  swizzle/broadcast.cpp             )
 make_unit("unit.api.tuple"  swizzle/broadcast_group.cpp       )

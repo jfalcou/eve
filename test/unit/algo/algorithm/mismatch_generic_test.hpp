@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include "algo_test.hpp"
+#include "unit/algo/algo_test.hpp"
 
 #include <eve/algo/unalign.hpp>
 #include <eve/algo/zip.hpp>
@@ -33,6 +33,9 @@ namespace algo_test
     {
       std::fill(page_1.begin(), page_1.end(), 1);
     }
+
+    void generate_answer(auto*, auto*, auto*, auto*)
+    {}
 
     void run(auto range1, auto range2)
     {
