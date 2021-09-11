@@ -56,8 +56,8 @@ EVE_TEST( "Check behavior of bit_width(wide) on unsigned integrals"
 {
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
-  for(auto a: a0)
-  {
+  for (int i = 0; i != T::size(); ++i) {
+    auto a = a0.get(i);
     TTS_EQUAL( eve::bit_width(a), v_t(std::bit_width(a)));
   }
 };

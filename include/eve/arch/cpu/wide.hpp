@@ -116,7 +116,7 @@ namespace eve
     template<detail::range Range>
     EVE_FORCEINLINE explicit  wide(Range &&r) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-    requires(!std::same_as<storage_type, Range>)
+    requires(!std::same_as<storage_type, std::remove_reference_t<Range>>)
 #endif
                             : wide( std::begin(std::forward<Range>(r))
                                   , std::end  (std::forward<Range>(r))
@@ -239,22 +239,6 @@ namespace eve
     //==============================================================================================
     //! @}
     //==============================================================================================
-
-    //==============================================================================================
-    //! @name Sequence interface
-    //! @{
-    //==============================================================================================
-    //! Returns an iterator to the beginning
-    EVE_FORCEINLINE auto  begin()       noexcept { return detail::at_begin(*this); }
-
-    //! Returns an iterator to the beginning
-    EVE_FORCEINLINE auto  begin() const noexcept { return detail::at_begin(*this); }
-
-    //! Returns an iterator to the end
-    EVE_FORCEINLINE auto  end()        noexcept { return begin() + card_base::size(); }
-
-    //! Returns an iterator to the end
-    EVE_FORCEINLINE auto  end() const  noexcept { return begin() + card_base::size(); }
 
     //! Set the value of a given lane
     EVE_FORCEINLINE void set(std::size_t i, scalar_value auto v) noexcept

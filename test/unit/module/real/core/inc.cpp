@@ -100,6 +100,8 @@ EVE_TEST( "Check behavior of saturated(inc)(wide) on integral types"
 <typename T>(T const& a0 )
 {
   using v_t = typename T::value_type;
-  for (auto a : a0)
-  TTS_EQUAL( eve::saturated(eve::inc)(a), v_t(a == eve::valmax(eve::as(a)) ? a : a+1));
+  for (int i = 0; i != T::size(); ++i) {
+    auto a = a0.get(i);
+    TTS_EQUAL( eve::saturated(eve::inc)(a), v_t(a == eve::valmax(eve::as(a)) ? a : a+1));
+  }
 };

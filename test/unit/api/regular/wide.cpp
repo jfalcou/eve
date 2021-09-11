@@ -79,10 +79,6 @@ EVE_TEST( "Check eve::wide raw storage handling"
 
   TTS_EQUAL(logical_data.front(), false           );
   TTS_EQUAL(logical_data.back() , (L::size() != 1));
-
-  T copy;
-  std::copy( data.begin(), data.end(), copy.begin() );
-  TTS_EQUAL(data, copy);
 };
 
 //==================================================================================================
