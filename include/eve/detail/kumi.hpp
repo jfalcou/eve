@@ -678,18 +678,18 @@ namespace kumi
   template<product_type Tuple, typename Function, sized_product_type<size<Tuple>::value>... Tuples>
   constexpr auto
   map(Function     f,
-      Tuple const &t0,
-      Tuples const &...others) requires detail::applicable<Function, Tuple, Tuples...>
+      Tuple  &&t0,
+      Tuples &&...others) requires detail::applicable<Function, Tuple&&, Tuples&&...>
   {
-    if constexpr(sized_product_type<Tuple,0>) return Tuple{};
+    if constexpr(sized_product_type<Tuple,0>) return std::remove_cvref_t<Tuple>{};
     else
     {
       return [&]<std::size_t... I>(std::index_sequence<I...>)
       {
-        auto call = [&]<std::size_t N>(index_t<N>, auto const &...args) {
+        auto call = [&]<std::size_t N>(index_t<N>, auto &&...args) {
           return f(get<N>(args)...);
         };
-        return kumi::make_tuple(call(index<I>, t0, others...)...);
+        return kumi::make_tuple(call(index<I>, KUMI_FWD(t0), KUMI_FWD(others)...)...);
       }
       (std::make_index_sequence<size<Tuple>::value>());
     }
@@ -715,28 +715,28 @@ namespace kumi
   // Generalized sums
   //================================================================================================
   template<typename Function, product_type Tuple, typename Value>
-  [[nodiscard]] constexpr auto fold_left(Function f, Tuple const &t, Value init)
+  [[nodiscard]] constexpr auto fold_left(Function f, Tuple&& t, Value init)
   {
     if constexpr(sized_product_type<Tuple,0>) return init;
     else
     {
       return [&]<std::size_t... I>(std::index_sequence<I...>)
       {
-        return (detail::foldable {f, get<I>(t)} >> ... >> detail::foldable {f, init}).value;
+        return (detail::foldable {f, get<I>(KUMI_FWD(t))} >> ... >> detail::foldable {f, init}).value;
       }
       (std::make_index_sequence<size<Tuple>::value>());
     }
   }
 
   template<typename Function, product_type Tuple, typename Value>
-  [[nodiscard]] constexpr auto fold_right(Function f, Tuple const &t, Value init)
+  [[nodiscard]] constexpr auto fold_right(Function f, Tuple&& t, Value init)
   {
     if constexpr(size<Tuple>::value ==0) return init;
     else
     {
       return [&]<std::size_t... I>(std::index_sequence<I...>)
       {
-        return (detail::foldable {f, init} << ... << detail::foldable {f, get<I>(t)}).value;
+        return (detail::foldable {f, init} << ... << detail::foldable {f, get<I>(KUMI_FWD(t))}).value;
       }
       (std::make_index_sequence<size<Tuple>::value>());
     }
@@ -774,7 +774,7 @@ namespace kumi
   //================================================================================================
   // Concatenates tuples
   //================================================================================================
-  template<product_type T, product_type U> [[nodiscard]] constexpr auto cat(T const &t, U const &u)
+  template<product_type T, product_type U> [[nodiscard]] constexpr auto cat(T &&t, U &&u)
   {
           if constexpr(sized_product_type<T,0> && sized_product_type<U,0>) return t;
     else  if constexpr(sized_product_type<T,0>) return u;
@@ -784,17 +784,17 @@ namespace kumi
       return [&]<std::size_t... TI, std::size_t... UI>(std::index_sequence<TI...>,
                                                        std::index_sequence<UI...>)
       {
-        return kumi::make_tuple(get<TI>(t)..., get<UI>(u)...);
+        return kumi::make_tuple(get<TI>(KUMI_FWD(t))..., get<UI>(KUMI_FWD(u))...);
       }
       (std::make_index_sequence<size<T>::value>(), std::make_index_sequence<size<U>::value>());
     }
   }
 
   template<product_type T, product_type... Tuples>
-  [[nodiscard]] constexpr auto cat(T const &t, Tuples const &...us)
+  [[nodiscard]] constexpr auto cat(T&& t, Tuples&&... us)
   {
-    auto const cc = [](auto const &a, auto const &b) { return cat(a, b); };
-    return (detail::foldable {cc, t} << ... << detail::foldable {cc, us}).value;
+    auto const cc = [](auto&& a, auto&& b) { return cat(KUMI_FWD(a), KUMI_FWD(b)); };
+    return (detail::foldable {cc, KUMI_FWD(t)} << ... << detail::foldable {cc, KUMI_FWD(us)}).value;
   }
 
   template<product_type T1, product_type T2>
@@ -833,37 +833,62 @@ namespace kumi
     }
   }
 
-  template<product_type Tuple> [[nodiscard]] constexpr auto flatten_all(Tuple const &ts)
+  template<product_type Tuple> [[nodiscard]] constexpr auto flatten_all(Tuple&& ts)
   {
     if constexpr(sized_product_type<Tuple,0>) return ts;
     else
     {
       return kumi::fold_right(
-          []<typename M>(auto acc, M const &m) {
+          []<typename M>(auto acc, M&& m) {
             if constexpr( product_type<M> )
-              return cat(acc, flatten(m));
+              return cat(acc, flatten_all(KUMI_FWD(m)));
             else
-              return cat(acc, kumi::tuple {m});
+              return cat(acc, kumi::tuple{KUMI_FWD(m)});
           },
-          ts,
+          KUMI_FWD(ts),
+          kumi::tuple {});
+    }
+  }
+
+  template<product_type Tuple, typename Func>
+  [[nodiscard]] constexpr auto flatten_all(Tuple&& ts, Func&& f)
+  {
+    if constexpr(sized_product_type<Tuple,0>) return KUMI_FWD(ts);
+    else
+    {
+      return kumi::fold_right(
+          [&]<typename M>(auto acc, M&& m) {
+            if constexpr( product_type<M> )
+              return cat(acc, flatten_all(KUMI_FWD(m),KUMI_FWD(f)));
+            else
+              return cat(acc, kumi::tuple{ KUMI_FWD(f)(KUMI_FWD(m)) });
+          },
+          KUMI_FWD(ts),
           kumi::tuple {});
     }
   }
 
   namespace result
   {
-    template<product_type Tuple> struct flatten
+    template<product_type Tuple, typename Func = void> struct flatten
     {
       using type = decltype( kumi::flatten( std::declval<Tuple>() ) );
     };
 
-    template<product_type Tuple> struct flatten_all
+    template<product_type Tuple, typename Func = void> struct flatten_all
+    {
+      using type = decltype( kumi::flatten_all( std::declval<Tuple>(), std::declval<Func>() ) );
+    };
+
+    template<product_type Tuple> struct flatten_all<Tuple>
     {
       using type = decltype( kumi::flatten_all( std::declval<Tuple>() ) );
     };
 
     template<product_type Tuple> using flatten_t      = typename flatten<Tuple>::type;
-    template<product_type Tuple> using flatten_all_t  = typename flatten_all<Tuple>::type;
+
+    template<product_type Tuple, typename Func = void>
+    using flatten_all_t  = typename flatten_all<Tuple, Func>::type;
   }
 
   //================================================================================================

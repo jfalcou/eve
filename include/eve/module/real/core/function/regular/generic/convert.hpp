@@ -13,11 +13,44 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/has_abi.hpp>
 #include <eve/function/combine.hpp>
+#include <eve/product_type.hpp>
 #include <eve/traits/as_wide.hpp>
 
 namespace eve::detail
 {
+  struct convert_lambda
+  {
+    template<typename T, typename M>
+    EVE_FORCEINLINE constexpr void operator()(T const& in, M* res_m) const noexcept
+    {
+      *res_m = eve::convert(in, eve::as<element_type_t<M>>{});
+    }
+  };
+
+  template<product_type IN, product_type OUT>
+  requires(kumi::result::flatten_all_t<IN>::size() == kumi::result::flatten_all_t<OUT>::size())
+  EVE_FORCEINLINE auto convert_(EVE_SUPPORTS(cpu_), IN const& v0, eve::as<OUT>)
+  {
+    if constexpr(std::same_as<element_type_t<IN>, OUT>)
+    {
+      return v0;
+    }
+    else
+    {
+      using out_t = std::conditional_t<scalar_value<IN>, OUT, as_wide_t<OUT, cardinal_t<IN>>>;
+      out_t res;
+
+      auto outs = kumi::flatten_all(res, [](auto& m) { return &m; });
+      auto ins  = kumi::flatten_all(v0);
+
+      kumi::for_each( convert_lambda{}, ins, outs );
+
+      return res;
+    }
+  }
+
   template<value IN, scalar_value OUT>
+  requires( !product_type<IN> && !product_type<OUT>)
   EVE_FORCEINLINE auto convert_(EVE_SUPPORTS(cpu_), IN const &v0, as<OUT> const &tgt) noexcept
   {
     if constexpr(std::same_as<element_type_t<IN>, OUT>)
