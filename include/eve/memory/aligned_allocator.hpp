@@ -8,8 +8,13 @@
 #pragma once
 
 #include <eve/memory/align.hpp>
+#include <eve/detail/spy.hpp>
 #include <cstddef>
 #include <bit>
+
+#if defined(SPY_COMPILER_IS_MSVC)
+#include <malloc.h>
+#endif
 
 namespace eve
 {
@@ -63,7 +68,14 @@ namespace eve
     value_type *allocate(std::size_t n)
     {
       auto nbelem = align(n * sizeof(value_type), over{alignment()});
-      return static_cast<value_type *>( std::aligned_alloc(alignment(), nbelem) );
+
+      #if defined(SPY_COMPILER_IS_MSVC)
+      void *result = _aligned_malloc(nbelem,alignment());
+      #else
+      void *result = std::aligned_alloc(alignment(), nbelem);
+      #endif
+
+      return static_cast<value_type*>(result);
     }
 
     //! @brief Deallocates aligned storage

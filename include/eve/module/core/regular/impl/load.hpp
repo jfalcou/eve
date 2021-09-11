@@ -110,7 +110,7 @@ namespace eve::detail
 
 #if defined(SPY_COMPILER_IS_CLANG) or defined(SPY_COMPILER_IS_GCC)
 #define DISABLE_SANITIZERS __attribute__((no_sanitize_address)) __attribute__((no_sanitize_thread))
-#elif defined(SPY_COMPILER_IS_MSVC)
+#elif defined(SPY_COMPILER_IS_MSVC) and !defined(__clang__)
 #define DISABLE_SANITIZERS __declspec(no_sanitize_address)
 #else
 #define DISABLE_SANITIZERS
