@@ -25,9 +25,7 @@
 
 // Force a lambda function to be inline
 #if !defined(EVE_LAMBDA_FORCEINLINE)
-#  if defined(_MSC_VER)
-#    define EVE_LAMBDA_FORCEINLINE __forceinline
-#  elif defined(__GNUC__) && __GNUC__ > 3
+#  if defined(__GNUC__) && __GNUC__ > 3
 #    define EVE_LAMBDA_FORCEINLINE __attribute__((__always_inline__))
 #  else
 #    define EVE_LAMBDA_FORCEINLINE
