@@ -33,18 +33,19 @@ EVE_TEST( "Check behavior of broadcast_groups swizzle"
   eve::detail::for_<0,1,ssz>
   ( [&]<typename Group>(Group g)
   {
-    constexpr auto grp = (T::size()/(1<<g));
     eve::detail::for_<0,1,(1<<Group::value)>
     ( [&]<typename Index>(Index)
     {
       T ref = [=](auto i, auto c)
               {
+                constexpr auto grp = (T::size()/(1<<g));
                 constexpr auto p = broadcast_group_n<grp,Index::value,T::size()>;
                 return simd.get(p(i,c));
               };
 
       L lref  = [=](auto i, auto c)
                 {
+                  constexpr auto grp = (T::size()/(1<<g));
                   constexpr auto p = broadcast_group_n<grp,Index::value,T::size()>;
                   return logicals.get(p(i,c));
                 };
