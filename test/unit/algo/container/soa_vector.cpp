@@ -266,3 +266,29 @@ TTS_CASE("Check types")
   TTS_TYPE_IS(v::iterator_aligned,       (eve::algo::converting_iterator<v::pointer_aligned,       T>));
   TTS_TYPE_IS(v::const_iterator_aligned, (eve::algo::converting_iterator<v::const_pointer_aligned, T>));
 }
+
+TTS_CASE("erase(pos)")
+{
+  using grids = eve::algo::soa_vector<udt::grid2d>;
+  grids v {
+    udt::grid2d{0, 0}, udt::grid2d{1, 1}, udt::grid2d{2, 2},
+  };
+
+  grids expected { v.get(0), v.get(2) };
+
+  grids::iterator actual_pos = v.erase(v.cbegin() + 1);
+  TTS_EQUAL(v, expected);
+  TTS_EQUAL((actual_pos - v.begin()), 1);
+
+  expected.pop_back();
+  actual_pos = v.erase(v.begin() + 1);
+  TTS_EQUAL(v, expected);
+  TTS_EQUAL((actual_pos - v.begin()), 1);
+
+  expected.pop_back();
+
+  // We might want to return a iterator_aligned here but w/e
+  actual_pos = v.erase(v.begin_aligned());
+  TTS_EQUAL(v, expected);
+  TTS_EQUAL((actual_pos - v.begin()), 0);
+}

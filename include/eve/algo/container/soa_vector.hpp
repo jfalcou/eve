@@ -16,6 +16,8 @@
 #include <eve/function/read.hpp>
 #include <eve/function/write.hpp>
 #include <eve/product_type.hpp>
+
+#include <memory>
 #include <vector>
 
 namespace eve::algo
@@ -134,10 +136,14 @@ namespace eve::algo
     //! @name Modifiers
     //! @{
     //==============================================================================================
-    //! @brief Clear the contents of the container
+    //! @brief Clear the contents of the container.
     void clear() { kumi::for_each([&](auto& m) { m.clear(); }, storage); }
 
-
+    //! @brief Removes an element from the container.
+    //! Has the same invalidation semantics as std::vector.
+    //! end() iterator is not a valid pos.
+    iterator erase(iterator       pos) { return erase_impl(begin(),  pos); }
+    iterator erase(const_iterator pos) { return erase_impl(cbegin(), pos); }
 
     //! @brief Appends the given element value to the end of the container.
     //! If the new size() is greater than capacity() then all iterators and references (including
@@ -294,6 +300,13 @@ namespace eve::algo
     }
 
     private:
+
+    auto erase_impl(auto base, auto pos) {
+      std::ptrdiff_t distance = pos - base;
+      kumi::for_each([&](auto& m) { return m.erase(m.begin() + distance); }, storage);
+      return begin() + distance;
+    }
+
     storage_type storage;
   };
 }
