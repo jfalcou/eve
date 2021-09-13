@@ -10,6 +10,8 @@
 
 #include <eve/traits/common_type.hpp>
 
+#include <eve/constant/zero.hpp>
+
 #include <tuple>
 
 TTS_CASE("eve::common_type, small integrals")
@@ -134,5 +136,17 @@ TTS_CASE("eve::common_type, reduction")
   TTS_TYPE_IS(
     (eve::common_type_t<std::int32_t, std::int16_t, std::int8_t>),
     std::int32_t
+  );
+}
+
+TTS_CASE("eve::common_type, generic constants")
+{
+  TTS_TYPE_IS(
+    (eve::common_type_t<int, decltype(eve::zero)>),
+    int
+  );
+  TTS_TYPE_IS(
+    (eve::common_type_t<decltype(eve::zero), int>),
+    int
   );
 }

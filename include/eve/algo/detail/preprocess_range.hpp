@@ -9,7 +9,6 @@
 
 #include <eve/algo/concepts/eve_iterator.hpp>
 #include <eve/algo/concepts/detail.hpp>
-#include <eve/algo/detail/convert.hpp>
 #include <eve/algo/traits.hpp>
 
 #include <iterator>

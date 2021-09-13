@@ -10,6 +10,7 @@
 
 #include <eve/algo/preprocess_range.hpp>
 
+#include <eve/algo/convert.hpp>
 #include <eve/algo/ptr_iterator.hpp>
 #include <eve/algo/unalign.hpp>
 
@@ -273,7 +274,8 @@ EVE_TEST_TYPES("cardinal/type manipulation", algo_test::selected_types)
 
   {
     auto processed = eve::algo::preprocess_range(
-      eve::algo::traits(eve::algo::common_with_types<double, char>), v);
+      eve::algo::traits(),
+      eve::algo::convert(v, eve::as<eve::common_type_t<double, char>>{}));
 
     using I = decltype(processed.begin());
     TTS_TYPE_IS(typename I::value_type, double);
@@ -282,9 +284,8 @@ EVE_TEST_TYPES("cardinal/type manipulation", algo_test::selected_types)
 
   {
     auto processed = eve::algo::preprocess_range(
-      eve::algo::traits(eve::algo::force_cardinal<T::size()>,
-                        eve::algo::common_with_types<double>),
-      v);
+      eve::algo::traits(eve::algo::force_cardinal<T::size()>),
+      eve::algo::convert(v, eve::as<double>{}));
 
     using I = decltype(processed.begin());
     TTS_CONSTEXPR_EXPECT((std::same_as<

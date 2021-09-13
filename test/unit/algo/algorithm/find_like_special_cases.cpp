@@ -15,6 +15,8 @@
 #include <eve/algo/mismatch.hpp>
 #include <eve/algo/none_of.hpp>
 
+#include "unit/algo/udt.hpp"
+
 #include <algorithm>
 #include <vector>
 
@@ -55,6 +57,20 @@ TTS_CASE("eve.algo.find value")
   std::vector<int> const v{1, 2, 3, 4};
   std::vector<int>::const_iterator found = eve::algo::find[eve::algo::no_aligning](v, 3);
   TTS_EQUAL((found - v.begin()), 2);
+}
+
+TTS_CASE("eve.algo.find point")
+{
+  std::vector<int> x{1, 2, 3, 4};
+  std::vector<int> y{0, 0, 1, 1};
+
+  auto as_points = eve::algo::convert(
+    eve::algo::zip(x, y), eve::as<udt::point2D>{});
+
+  auto found = eve::algo::find_if(as_points,
+    [](eve::wide<udt::point2D> points) { return get_y(points) != 0; });
+
+  TTS_EQUAL(eve::read(found), (udt::point2D{3, 1}));
 }
 
 TTS_CASE("eve.algo.find_if not in radius")

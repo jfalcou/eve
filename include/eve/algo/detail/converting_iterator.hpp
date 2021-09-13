@@ -11,7 +11,7 @@
 #include <eve/algo/concepts/eve_iterator.hpp>
 #include <eve/algo/concepts/relaxed.hpp>
 #include <eve/algo/concepts/value_type.hpp>
-#include <eve/algo/convert.hpp>
+#include <eve/algo/detail/convert.hpp>
 #include <eve/algo/detail/preprocess_range.hpp>
 #include <eve/algo/iterator_helpers.hpp>
 
@@ -58,8 +58,6 @@ namespace eve::algo
       {
         eve::write(self.base, eve::convert(v, eve::as<value_type_t<I>>{}));
       }
-
-      T operator*() const { return static_cast<T>(*base); }
 
       EVE_FORCEINLINE friend bool operator==(converting_iterator<I, T> const & x, converting_iterator<I, T> const & y)
       {

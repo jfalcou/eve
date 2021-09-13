@@ -8,9 +8,9 @@
 #pragma once
 
 #include <eve/algo/concepts/value_type.hpp>
+#include <eve/conditional.hpp>
 #include <eve/function/load.hpp>
 #include <eve/function/store.hpp>
-#include <eve/conditional.hpp>
 
 #include <utility>
 

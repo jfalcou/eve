@@ -11,6 +11,7 @@
 #include <type_traits>
 
 #include <eve/as.hpp>
+#include <eve/concept/value.hpp>
 #include <eve/detail/kumi.hpp>
 
 namespace eve
@@ -34,6 +35,9 @@ namespace eve
   //!      `std::common_type_t<std::int16_t, std::uint16_t>` is `std::int32_t`
   //! BUT: `std::common_type_t<std::int32_t, std::uint32_t>` is `std::uint32_t`
   //! We always do like 32 bit one: - `eve::common_type_t<std::int16_t, std::uint16_t>` is `std::uint16_t`
+  //!
+  //! For functors from eve/constant support is incomplete: FIX-#941.
+  //! For now, we just skip them.
   //!
   //! *NOTE:* for signed unsigned of the same size we return unsigned of this size (same as std).
   //!
@@ -105,6 +109,8 @@ namespace eve::detail
         else if constexpr ( std::unsigned_integral<U>                         ) return other;
         else                                                                    return self;
       }
+      else if constexpr ( !value<T>                                      ) return other;
+      else if constexpr ( !value<U>                                      ) return self;
       else if constexpr ( kumi::product_type<T> && kumi::product_type<U> )
       {
         using t_as_tuple = kumi::as_tuple_t<T>;

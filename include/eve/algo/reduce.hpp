@@ -12,9 +12,12 @@
 #include <eve/algo/preprocess_range.hpp>
 #include <eve/algo/traits.hpp>
 
+#include <eve/constant/as_value.hpp>
+#include <eve/constant/zero.hpp>
 #include <eve/function/add.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/function/reduce.hpp>
+#include <eve/traits.hpp>
 
 #include <utility>
 
@@ -25,22 +28,23 @@ namespace eve::algo
   {
     using traits_type = typename TraitsSupport::traits_type;
 
-    template <typename Op, typename Wide>
+    template <typename Op, typename Zero, typename Wide>
     struct delegate
     {
       Op op;
-      Wide zero;
+      Zero zero;
 
       std::array<Wide, get_unrolling<traits_type>()> sums;
 
-      delegate(Op op, Wide zero, Wide init) : op(op), zero(zero) {
-        sums.fill(zero);
+      delegate(Op op, Zero zero, Wide init) : op(op), zero(zero) {
+        sums.fill(as_value(zero, as<Wide>{}));
         sums[0] = op(sums[0], init);
       }
 
       EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto idx)
       {
-        sums[idx()] = op(sums[idx()], eve::load[ignore.else_(zero)](it));
+        auto ignore_else_0 = ignore.else_(as_value(zero, as<Wide>{}));
+        sums[idx()] = op(sums[idx()], eve::load[ignore_else_0](it));
         return false;
       }
 
@@ -59,24 +63,24 @@ namespace eve::algo
       }
     };
 
-    template <typename Rng, typename Op, typename T, typename U>
-    EVE_FORCEINLINE U operator()(Rng&& rng, std::pair<Op, T> op_zero, U init) const
+    template <typename Rng, typename Op, typename Zero, typename U>
+    EVE_FORCEINLINE U operator()(Rng&& rng, std::pair<Op, Zero> op_zero, U init) const
     {
-      auto processed = preprocess_range(
-        algo::default_to(TraitsSupport::get_traits(), eve::algo::traits(common_with_types<U>)),
-        std::forward<Rng>(rng));
+      // FIX-#938: this should not be a common type actually, should just be U.
+      using T = common_type_t<value_type_t<std::remove_cvref_t<Rng>>, U>;
+
+      auto cvt_rng = eve::algo::convert(std::forward<Rng>(rng), as<T>{});
+      auto processed = preprocess_range(TraitsSupport::get_traits(), cvt_rng);
 
       using I = decltype(processed.begin());
 
       if (processed.begin() == processed.end()) return init;
 
-      auto op = op_zero.first;
       using wide_t = typename I::wide_value_type;
-      wide_t zero(op_zero.second);
-      wide_t init_as_wide{zero};
+      wide_t init_as_wide = eve::as_value(op_zero.second, as<wide_t>{});
       init_as_wide.set(0, init);
 
-      delegate<decltype(op), wide_t> d{op, zero, init_as_wide};
+      delegate<Op, Zero, wide_t> d{op_zero.first, op_zero.second, init_as_wide};
 
       algo::for_each_iteration(processed.traits(), processed.begin(), processed.end())(d);
       return eve::convert(d.finish(), eve::as<U>{});
@@ -85,7 +89,7 @@ namespace eve::algo
     template <typename Rng, typename U>
     EVE_FORCEINLINE U operator()(Rng&& rng, U init) const
     {
-      return operator()(std::forward<Rng>(rng), std::pair{eve::add, 0}, init);
+      return operator()(std::forward<Rng>(rng), std::pair{eve::add, eve::zero}, init);
     }
   };
 

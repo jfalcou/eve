@@ -51,6 +51,7 @@ namespace eve::algo
   };
   inline constexpr force_cardinal_key_t force_cardinal_key;
   template<int N> inline constexpr auto force_cardinal = (force_cardinal_key = eve::fixed<N>{});
+  template <typename T> inline constexpr auto force_cardinal_as = force_cardinal<eve::expected_cardinal_v<T>>;
 
   struct force_type_key_t {};
   inline constexpr auto force_type_key = ::rbr::keyword( force_type_key_t{} );
@@ -78,34 +79,10 @@ namespace eve::algo
     return rbr::get_type_t<Traits, unroll_key, eve::fixed<1>>{}();
   }
 
-  namespace detail
-  {
-    template <typename Traits, typename T>
-    auto iterator_type_impl() {
-      if constexpr (Traits::contains(force_type_key))
-      {
-        return rbr::get_type_t<Traits, force_type_key>{};
-      }
-      else if constexpr (Traits::contains(common_with_types_key))
-      {
-        using Param = typename rbr::get_type_t<Traits, common_with_types_key>::type;
-        return eve::common_type<Param, T>{};
-      }
-      else
-      {
-        return std::type_identity<T>{};
-      }
-    }
-  }
-
   template <typename Traits, typename T>
-  using iteration_type_t = typename decltype(detail::iterator_type_impl<Traits, T>())::type;
-
-template <typename Traits, typename T>
   using iteration_cardinal_t =
     rbr::get_type_t<Traits, force_cardinal_key,
-    eve::expected_cardinal_t<iteration_type_t<Traits, T>>>;
-
+    expected_cardinal_t<T>>;
 
   inline constexpr auto default_to =
      []<typename User, typename Default>(traits<User> const& user, traits<Default> const& defaults)
@@ -115,14 +92,24 @@ template <typename Traits, typename T>
   };
 
   template <typename K, typename Traits>
-  constexpr auto drop_key(K k, Traits tr)
+  EVE_FORCEINLINE constexpr auto drop_key(K k, Traits tr)
   {
     using settings_t = decltype(rbr::drop(k, tr));
     return traits<settings_t>(rbr::drop(k, tr));
   }
 
+  template <bool cond, typename K, typename Traits>
+  EVE_FORCEINLINE constexpr auto drop_key_if(K k, Traits tr)
+  {
+    if constexpr( cond ) return drop_key(k, tr);
+    else                 return tr;
+  }
+
   template <typename Traits>
   constexpr bool has_type_overrides_v = Traits::contains(force_type_key) || Traits::contains(common_with_types_key);
+
+  template <typename Traits>
+  constexpr bool has_cardinal_overrides_v = Traits::contains(force_cardinal_key);
 
   inline constexpr algo::traits default_simple_algo_traits{algo::unroll<4>};
   inline constexpr algo::traits no_traits{};

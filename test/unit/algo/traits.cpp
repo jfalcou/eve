@@ -62,23 +62,11 @@ TTS_CASE("eve.algo.traits, type and cardinal")
 {
   {
     eve::algo::traits tr;
-    TTS_TYPE_IS((eve::algo::iteration_type_t<decltype(tr), int>), int);
     TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr), int>), eve::fixed<eve::expected_cardinal_v<int>>);
   }
   {
     eve::algo::traits tr{eve::algo::force_cardinal<2>};
-    TTS_TYPE_IS((eve::algo::iteration_type_t<decltype(tr), int>), int);
     TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr), int>), eve::fixed<2>);
-  }
-  {
-    eve::algo::traits tr{eve::algo::force_type<char>};
-    TTS_TYPE_IS((eve::algo::iteration_type_t<decltype(tr), int>), char);
-    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr), int>), eve::fixed<eve::expected_cardinal_v<char>>);
-  }
-  {
-    eve::algo::traits tr{eve::algo::common_with_types<char>};
-    TTS_TYPE_IS((eve::algo::iteration_type_t<decltype(tr), int>), int);
-    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr), int>), eve::fixed<eve::expected_cardinal_v<int>>);
   }
 }
 

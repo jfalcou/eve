@@ -23,8 +23,7 @@ namespace eve::algo
   struct converting_range;
 
   template <typename Wrapped, typename T>
-    // we don't allow to sfinae on convert because it's difficult
-  EVE_FORCEINLINE auto convert_::operator()(Wrapped&& wrapped, eve::as<T> tgt) const
+  EVE_FORCEINLINE auto convert_::no_tagged_dispatch(Wrapped&& wrapped, eve::as<T> tgt) const
   {
     if constexpr (relaxed_range<Wrapped>)
     {
@@ -44,6 +43,17 @@ namespace eve::algo
     }
   }
 
+  template <typename Wrapped, typename T>
+    // we don't allow to sfinae on convert because it's difficult
+  EVE_FORCEINLINE auto convert_::operator()(Wrapped&& wrapped, as<T> tgt) const
+  {
+    if constexpr (eve::detail::tag_dispatchable<convert_, decltype(std::forward<Wrapped>(wrapped)), as<T>>)
+    {
+      return tagged_dispatch(*this, std::forward<Wrapped>(wrapped), tgt);
+    }
+    else return no_tagged_dispatch( std::forward<Wrapped>(wrapped), tgt);
+  }
+
   template <non_owning_range R, typename T>
   struct converting_range
   {
@@ -54,16 +64,18 @@ namespace eve::algo
     EVE_FORCEINLINE auto begin() const { return convert(base.begin(), eve::as<T>{}); }
     EVE_FORCEINLINE auto end()   const { return convert(base.end(),   eve::as<T>{}); }
 
-    template <typename Traits>
+    template<typename Traits>
     EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, Traits tr, converting_range self)
     {
-      if constexpr (has_type_overrides_v<Traits> ) return preprocess_range(tr, self.base);
-      else
-      {
-        auto processed = preprocess_range(default_to(tr, traits {force_type<T>}), self.base);
-        return preprocess_range_result {
-            drop_key(force_type_key, processed.traits()), processed.begin(), processed.end()};
-      }
+      auto tr_with_cardinal = default_to(tr, traits {force_cardinal_as<T>});
+      auto processed        = preprocess_range(tr_with_cardinal, self.base);
+
+      auto ret_tr =
+          drop_key_if<!has_cardinal_overrides_v<Traits>>(force_cardinal_key, processed.traits());
+
+      return preprocess_range_result {
+          ret_tr, convert(processed.begin(), as<T>{}), convert(processed.end(), as<T>{})
+      };
     }
   };
 }
