@@ -49,18 +49,6 @@ namespace eve::algo::detail
 
       EVE_FORCEINLINE auto data()       { return eve::algo::unalign(data_aligned()); }
       EVE_FORCEINLINE auto data() const { return eve::algo::unalign(data_aligned()); }
-
-      EVE_FORCEINLINE auto begin_aligned()        { return eve::algo::convert(data_aligned(), eve::as<Type>{}); }
-      EVE_FORCEINLINE auto begin_aligned()  const { return eve::algo::convert(data_aligned(), eve::as<Type>{}); }
-      EVE_FORCEINLINE auto cbegin_aligned() const { return eve::algo::convert(data_aligned(), eve::as<Type>{}); }
-
-      EVE_FORCEINLINE auto begin()        { return eve::algo::convert(data(), eve::as<Type>{}); }
-      EVE_FORCEINLINE auto begin()  const { return eve::algo::convert(data(), eve::as<Type>{}); }
-      EVE_FORCEINLINE auto cbegin() const { return begin(); }
-
-      EVE_FORCEINLINE auto end()  { return begin() + size(); }
-      EVE_FORCEINLINE auto end()  const { return begin() + size(); }
-      EVE_FORCEINLINE auto cend() const { return end(); }
   };
 }
 

@@ -42,7 +42,30 @@ namespace eve::algo
     using value_type = Type;
 
     using storage_type = detail::soa_storage<Type>;
-    using iterator     = decltype(storage_type{}.begin());
+
+    //!=============================================================================================
+    //! @name Pointers and Iterators
+    //! @{
+    //==============================================================================================
+    //!   @brief pointer and iterator types.
+    //!   pointer*  - are eve::algo::zip_iterator over fields (no conversion to type, just flat fields)
+    //!   iterator* - are a pointer, converter to the Type.
+    //!   They all safisfy eve::algo::relaxed_iterator but not std::iterator
+
+    using pointer               = decltype(storage_type{}.data());
+    using const_pointer         = decltype(std::declval<storage_type const>().data());
+    using pointer_aligned       = decltype(storage_type{}.data_aligned());
+    using const_pointer_aligned = decltype(std::declval<storage_type const>().data_aligned());
+
+    using iterator               = decltype(eve::algo::convert(pointer{}              , as<value_type>{}));
+    using const_iterator         = decltype(eve::algo::convert(const_pointer{}        , as<value_type>{}));
+    using iterator_aligned       = decltype(eve::algo::convert(pointer_aligned{}      , as<value_type>{}));
+    using const_iterator_aligned = decltype(eve::algo::convert(const_pointer_aligned{}, as<value_type>{}));
+
+    //==============================================================================================
+    //! @}
+    //==============================================================================================
+
 
     //==============================================================================================
     //! @name Constructors
@@ -206,31 +229,31 @@ namespace eve::algo
     //! @{
     //==============================================================================================
     //! Returns an aligned iterator to the beginning
-    EVE_FORCEINLINE auto begin_aligned()  { return storage.begin_aligned(); }
+    EVE_FORCEINLINE auto begin_aligned() -> iterator_aligned { return eve::algo::convert(data_aligned(), eve::as<Type>{}); }
 
     //! Returns an aligned iterator to the beginning
-    EVE_FORCEINLINE auto begin_aligned()  const { return storage.begin_aligned(); }
+    EVE_FORCEINLINE auto begin_aligned()  const -> const_iterator_aligned { return eve::algo::convert(data_aligned(), eve::as<Type>{}); }
 
     //! Returns a constant aligned iterator to the beginning
-    EVE_FORCEINLINE auto cbegin_aligned() const { return begin_aligned(); }
+    EVE_FORCEINLINE auto cbegin_aligned() const -> const_iterator_aligned { return begin_aligned(); }
 
     //! Returns an iterator to the beginning
-    EVE_FORCEINLINE auto begin()  { return storage.begin(); }
+    EVE_FORCEINLINE auto begin() -> iterator { return eve::algo::convert(data(), eve::as<Type>{}); }
 
     //! Returns an iterator to the beginning
-    EVE_FORCEINLINE auto begin()  const { return storage.begin(); }
+    EVE_FORCEINLINE auto begin()  const -> const_iterator { return eve::algo::convert(data(), eve::as<Type>{}); }
 
     //! Returns a constant iterator to the beginning
-    EVE_FORCEINLINE auto cbegin() const { return begin(); }
+    EVE_FORCEINLINE auto cbegin() const -> const_iterator { return begin(); }
 
     //! Returns an iterator to the end
-    EVE_FORCEINLINE auto end()  { return begin() + size(); }
+    EVE_FORCEINLINE auto end()  -> iterator  { return begin() + size(); }
 
     //! Returns an iterator to the end
-    EVE_FORCEINLINE auto end()  const { return begin() + size(); }
+    EVE_FORCEINLINE auto end()  const -> const_iterator { return begin() + size(); }
 
     //! Returns a constant iterator to the end
-    EVE_FORCEINLINE auto cend() const { return end(); }
+    EVE_FORCEINLINE auto cend() const -> const_iterator { return end(); }
 
     //==============================================================================================
     //! @}

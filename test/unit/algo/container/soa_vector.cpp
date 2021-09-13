@@ -248,3 +248,21 @@ TTS_CASE("Check soa_vector::begin/end behavior")
   while(uv_begin != uv_end)
     TTS_EQUAL( eve::read(uv_begin++), uv.get(i++));
 }
+
+TTS_CASE("Check types")
+{
+  using T        = udt::grid2d;
+  using ap       = eve::aligned_ptr<int,       eve::fixed<64 / sizeof(int)>>;
+  using const_ap = eve::aligned_ptr<int const, eve::fixed<64 / sizeof(int)>>;
+
+  using v = eve::algo::soa_vector<udt::grid2d>;
+  TTS_TYPE_IS(v::pointer,               (eve::algo::zip_iterator<int*,       int*>));
+  TTS_TYPE_IS(v::const_pointer,         (eve::algo::zip_iterator<int const*, int const*>));
+  TTS_TYPE_IS(v::pointer_aligned,       (eve::algo::zip_iterator<ap,   ap>));
+  TTS_TYPE_IS(v::const_pointer_aligned, (eve::algo::zip_iterator<const_ap,   const_ap>));
+
+  TTS_TYPE_IS(v::iterator,               (eve::algo::converting_iterator<v::pointer,               T>));
+  TTS_TYPE_IS(v::const_iterator,         (eve::algo::converting_iterator<v::const_pointer,         T>));
+  TTS_TYPE_IS(v::iterator_aligned,       (eve::algo::converting_iterator<v::pointer_aligned,       T>));
+  TTS_TYPE_IS(v::const_iterator_aligned, (eve::algo::converting_iterator<v::const_pointer_aligned, T>));
+}
