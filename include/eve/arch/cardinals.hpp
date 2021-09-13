@@ -58,4 +58,12 @@ namespace eve
   // Template inline object for passing index within a wide
   //================================================================================================
   template<std::ptrdiff_t N> inline constexpr auto index = index_t<N>{};
+
+  //================================================================================================
+  // Hardware-agnostic cardinal
+  //================================================================================================
+  namespace detail
+  {
+    template<typename T> using cache_line_cardinal = fixed<64 / sizeof(T)>;
+  }
 }
