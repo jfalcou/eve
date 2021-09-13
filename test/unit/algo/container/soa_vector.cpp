@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/memory/soa_vector.hpp>
+#include <eve/algo/container/soa_vector.hpp>
 #include "unit/api/udt/udt.hpp"
 #include <memory>
 
@@ -14,8 +14,8 @@ using t_t = kumi::tuple<int,float,char>;
 
 TTS_CASE("Check soa_vector default ctor")
 {
-  eve::soa_vector<t_t>          empty_tuple;
-  eve::soa_vector<udt::grid2d>  empty_udt;
+  eve::algo::soa_vector<t_t>          empty_tuple;
+  eve::algo::soa_vector<udt::grid2d>  empty_udt;
 
   TTS_EQUAL ( empty_tuple.size() , 0ULL );
   TTS_EXPECT( empty_tuple.empty()       );
@@ -26,8 +26,8 @@ TTS_CASE("Check soa_vector default ctor")
 
 TTS_CASE("Check soa_vector sized ctor")
 {
-  eve::soa_vector<t_t>          tuple_vector( 37 );
-  eve::soa_vector<udt::grid2d>  udt_vector( 37 );
+  eve::algo::soa_vector<t_t>          tuple_vector( 37 );
+  eve::algo::soa_vector<udt::grid2d>  udt_vector( 37 );
 
   TTS_EQUAL     ( tuple_vector.size() , 37ULL );
   TTS_EXPECT_NOT( tuple_vector.empty()        );
@@ -42,29 +42,29 @@ TTS_CASE("Check soa_vector sized ctor")
 
 TTS_CASE("Check soa_vector sized ctor with default value")
 {
-  eve::soa_vector<t_t>          tuple_vector( 69, t_t{13,3.7f,'Z'} );
-  eve::soa_vector<udt::grid2d>  udt_vector  ( 69, udt::grid2d{4,20} );
+  eve::algo::soa_vector<t_t>          tuple_vector( 71, t_t{13,3.7f,'Z'} );
+  eve::algo::soa_vector<udt::grid2d>  udt_vector  ( 71, udt::grid2d{4,19} );
 
-  TTS_EQUAL     ( tuple_vector.size() , 69ULL   );
+  TTS_EQUAL     ( tuple_vector.size() , 71ULL   );
   TTS_EXPECT_NOT( tuple_vector.empty()          );
   TTS_EQUAL( get<0>(tuple_vector.get(0)), 13    );
   TTS_EQUAL( get<1>(tuple_vector.get(0)), 3.7f  );
   TTS_EQUAL( get<2>(tuple_vector.get(0)), 'Z'   );
 
-  TTS_EQUAL ( udt_vector.size(), 69ULL);
+  TTS_EQUAL ( udt_vector.size(), 71ULL);
   TTS_EXPECT_NOT( udt_vector.empty()  );
   TTS_EQUAL( get<0>(udt_vector.get(0)), 4 );
-  TTS_EQUAL( get<1>(udt_vector.get(0)), 20);
+  TTS_EQUAL( get<1>(udt_vector.get(0)), 19);
 }
 
 TTS_CASE("Check soa_vector initializer list ctor")
 {
-  eve::soa_vector<t_t>          tuple_vector  = { t_t{1,2.3f  ,'4'}
+  eve::algo::soa_vector<t_t>          tuple_vector  = { t_t{1,2.3f  ,'4'}
                                                 , t_t{5,6.7f  ,'8'}
                                                 , t_t{9,10.11f,'X'}
                                                 };
 
-  eve::soa_vector<udt::grid2d>  udt_vector    = { udt::grid2d{1,2}
+  eve::algo::soa_vector<udt::grid2d>  udt_vector    = { udt::grid2d{1,2}
                                                 , udt::grid2d{3,4}
                                                 , udt::grid2d{5,8}
                                                 };
@@ -81,10 +81,10 @@ TTS_CASE("Check soa_vector initializer list ctor")
 
 TTS_CASE("Check soa_vector::clear behavior")
 {
-  eve::soa_vector<t_t>          tuple_vector(69);
-  eve::soa_vector<udt::grid2d>  udt_vector  (69);
+  eve::algo::soa_vector<t_t>          tuple_vector(71);
+  eve::algo::soa_vector<udt::grid2d>  udt_vector  (71);
 
-  TTS_EQUAL     ( tuple_vector.size() , 69ULL   );
+  TTS_EQUAL     ( tuple_vector.size() , 71ULL   );
   TTS_EXPECT_NOT( tuple_vector.empty()          );
 
   tuple_vector.clear();
@@ -92,7 +92,7 @@ TTS_CASE("Check soa_vector::clear behavior")
   TTS_EQUAL     ( tuple_vector.size() , 0ULL  );
   TTS_EXPECT    ( tuple_vector.empty()        );
 
-  TTS_EQUAL     ( udt_vector.size(), 69ULL);
+  TTS_EQUAL     ( udt_vector.size(), 71ULL);
   TTS_EXPECT_NOT( udt_vector.empty()  );
 
   udt_vector.clear();
@@ -103,13 +103,13 @@ TTS_CASE("Check soa_vector::clear behavior")
 
 TTS_CASE("Check soa_vector::swap behavior")
 {
-  eve::soa_vector<t_t>          tv1  =  { t_t{1,2.3f  ,'4'}
+  eve::algo::soa_vector<t_t>          tv1  =  { t_t{1,2.3f  ,'4'}
                                         , t_t{5,6.7f  ,'8'}
                                         , t_t{9,10.11f,'X'}
                                         }
                               , tv2;
 
-  eve::soa_vector<udt::grid2d>  uv1 = { udt::grid2d{1,2}
+  eve::algo::soa_vector<udt::grid2d>  uv1 = { udt::grid2d{1,2}
                                       , udt::grid2d{3,4}
                                       , udt::grid2d{5,8}
                                       }
@@ -142,13 +142,13 @@ TTS_CASE("Check soa_vector::swap behavior")
 
 TTS_CASE("Check soa_vector::push_back behavior")
 {
-  eve::soa_vector<t_t>          tvref  =  { t_t{1,2.3f  ,'4'}
+  eve::algo::soa_vector<t_t>          tvref  =  { t_t{1,2.3f  ,'4'}
                                           , t_t{5,6.7f  ,'8'}
                                           , t_t{9,10.11f,'X'}
                                           }
                               , tv;
 
-  eve::soa_vector<udt::grid2d>  uvref = { udt::grid2d{1,2}
+  eve::algo::soa_vector<udt::grid2d>  uvref = { udt::grid2d{1,2}
                                         , udt::grid2d{3,4}
                                         , udt::grid2d{5,8}
                                         }
@@ -173,13 +173,13 @@ TTS_CASE("Check soa_vector::push_back behavior")
 
 TTS_CASE("Check soa_vector::pop behavior")
 {
-  eve::soa_vector<t_t>          tv  = { t_t{1,2.3f  ,'4'}
+  eve::algo::soa_vector<t_t>          tv  = { t_t{1,2.3f  ,'4'}
                                       , t_t{5,6.7f  ,'8'}
                                       , t_t{9,10.11f,'X'}
                                       }
                               , tvref;
 
-  eve::soa_vector<udt::grid2d>  uv = { udt::grid2d{1,2}
+  eve::algo::soa_vector<udt::grid2d>  uv = { udt::grid2d{1,2}
                                      , udt::grid2d{3,4}
                                      , udt::grid2d{5,8}
                                      }
@@ -204,12 +204,12 @@ TTS_CASE("Check soa_vector::pop behavior")
 
 TTS_CASE("Check soa_vector::data behavior")
 {
-  eve::soa_vector<t_t>          tv  = { t_t{1,2.3f  ,'4'}
+  eve::algo::soa_vector<t_t>          tv  = { t_t{1,2.3f  ,'4'}
                                       , t_t{5,6.7f  ,'8'}
                                       , t_t{9,10.11f,'X'}
                                       };
 
-  eve::soa_vector<udt::grid2d>  uv = { udt::grid2d{1,2}
+  eve::algo::soa_vector<udt::grid2d>  uv = { udt::grid2d{1,2}
                                      , udt::grid2d{3,4}
                                      , udt::grid2d{5,8}
                                      };
@@ -225,12 +225,12 @@ TTS_CASE("Check soa_vector::data behavior")
 
 TTS_CASE("Check soa_vector::begin/end behavior")
 {
-  eve::soa_vector<t_t>          tv  = { t_t{1,2.3f  ,'4'}
+  eve::algo::soa_vector<t_t>          tv  = { t_t{1,2.3f  ,'4'}
                                       , t_t{5,6.7f  ,'8'}
                                       , t_t{9,10.11f,'X'}
                                       };
 
-  eve::soa_vector<udt::grid2d>  uv = { udt::grid2d{1,2}
+  eve::algo::soa_vector<udt::grid2d>  uv = { udt::grid2d{1,2}
                                      , udt::grid2d{3,4}
                                      , udt::grid2d{5,8}
                                      };

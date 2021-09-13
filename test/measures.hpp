@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/wide.hpp>
-#include <eve/memory/soa_vector.hpp>
 #include <eve/detail/top_bits.hpp>
 
 namespace eve
@@ -36,19 +35,6 @@ namespace eve
   {
     std::ostringstream str;
     str << l;
-    return str.str();
-  }
-
-  template<typename T>
-  inline std::string to_string(soa_vector<T> const &l)
-  {
-    std::ostringstream str;
-
-    str << "{ ";
-    for(std::size_t i=0;i<l.size();++i)
-      str << l.get(i) << " ";
-    str << '}';
-
     return str.str();
   }
 

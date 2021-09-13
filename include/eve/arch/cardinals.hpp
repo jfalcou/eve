@@ -64,6 +64,6 @@ namespace eve
   //================================================================================================
   namespace detail
   {
-    template<typename T> using common_cardinal = fixed<64 / sizeof(T)>;
+    template<typename T> using cache_line_cardinal = fixed<64 / sizeof(T)>;
   }
 }

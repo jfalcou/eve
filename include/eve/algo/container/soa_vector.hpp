@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/algo/equal.hpp>
 #include <eve/algo/zip.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/function/read.hpp>
@@ -15,7 +16,7 @@
 #include <eve/product_type.hpp>
 #include <vector>
 
-namespace eve
+namespace eve::algo
 {
   //================================================================================================
   //! @addtogroup memory
@@ -36,7 +37,7 @@ namespace eve
     private:
     template<typename T> struct soa_storage
     {
-      using type = std::vector<T, aligned_allocator<T,detail::common_cardinal<T>>>;
+      using type = std::vector<T, aligned_allocator<T,eve::detail::cache_line_cardinal<T>>>;
     };
 
     public:
@@ -84,6 +85,12 @@ namespace eve
 
     //! Returns the number of elements that the container has currently allocated space for
     EVE_FORCEINLINE std::size_t capacity()  const noexcept { return kumi::get<0>(storage).capacity(); }
+
+    //! Requests the removal of unused capacity.
+    EVE_FORCEINLINE void shrink_to_fit() noexcept
+    {
+      kumi::for_each([](auto& m) { m.shrink_to_fit(); }, storage);
+    }
 
     //! Checks if the container has no elements
     EVE_FORCEINLINE bool empty() const noexcept { return size() == 0ULL; }
@@ -165,10 +172,10 @@ namespace eve
     private:
     template<typename T> static auto as_aligned_pointer(T* ptr)
     {
-      return eve::as_aligned(ptr, detail::common_cardinal<T>{});
+      return eve::as_aligned(ptr, eve::detail::cache_line_cardinal<T>{});
     }
 
-    template<typename Self> static auto aligned_begin_impl(Self& self)
+    template<typename Self> static auto begin_aligned_impl(Self& self)
     {
        auto ptrs    = kumi::map([](auto& m) { return as_aligned_pointer(m.data()); }, self.storage);
        auto zipped  = kumi::apply(eve::algo::zip, ptrs);
@@ -183,16 +190,16 @@ namespace eve
     //! @{
     //==============================================================================================
     //! Returns an aligned pointer to the beginning
-    EVE_FORCEINLINE auto aligned_data()  { return aligned_begin_impl(*this); }
+    EVE_FORCEINLINE auto data_aligned()  { return begin_aligned_impl(*this); }
 
     //! Returns an aligned pointer to the beginning
-    EVE_FORCEINLINE auto aligned_data()  const { return aligned_begin_impl(*this); }
+    EVE_FORCEINLINE auto data_aligned()  const { return begin_aligned_impl(*this); }
 
     //! Returns a pointer to the beginning
-    EVE_FORCEINLINE auto data()  { return eve::algo::unalign(aligned_begin()); }
+    EVE_FORCEINLINE auto data()  { return eve::algo::unalign(begin_aligned()); }
 
     //! Returns a constant pointer to the beginning
-    EVE_FORCEINLINE auto data()  const { return eve::algo::unalign(aligned_begin()); }
+    EVE_FORCEINLINE auto data()  const { return eve::algo::unalign(begin_aligned()); }
 
     //! @brief Returns the value of the `i`th element of the container
     //! @param i Index of the value to retrieve
@@ -215,19 +222,19 @@ namespace eve
     //! @{
     //==============================================================================================
     //! Returns an aligned iterator to the beginning
-    EVE_FORCEINLINE auto aligned_begin()  { return aligned_begin_impl(*this); }
+    EVE_FORCEINLINE auto begin_aligned()  { return begin_aligned_impl(*this); }
 
     //! Returns an aligned iterator to the beginning
-    EVE_FORCEINLINE auto aligned_begin()  const { return aligned_begin_impl(*this); }
+    EVE_FORCEINLINE auto begin_aligned()  const { return begin_aligned_impl(*this); }
 
     //! Returns a constant aligned iterator to the beginning
-    EVE_FORCEINLINE auto aligned_cbegin() const { return aligned_begin(); }
+    EVE_FORCEINLINE auto cbegin_aligned() const { return begin_aligned(); }
 
     //! Returns an iterator to the beginning
-    EVE_FORCEINLINE auto begin()  { return eve::algo::unalign(aligned_begin()); }
+    EVE_FORCEINLINE auto begin()  { return eve::algo::unalign(begin_aligned()); }
 
     //! Returns an iterator to the beginning
-    EVE_FORCEINLINE auto begin()  const { return eve::algo::unalign(aligned_begin()); }
+    EVE_FORCEINLINE auto begin()  const { return eve::algo::unalign(begin_aligned()); }
 
     //! Returns a constant iterator to the beginning
     EVE_FORCEINLINE auto cbegin() const { return begin(); }
@@ -249,17 +256,34 @@ namespace eve
     //! @name Comparisons and ordering
     //! @{
     //==============================================================================================
-    friend auto operator<=>(soa_vector const& lhs, soa_vector const& rhs) = default;
+    friend bool operator==(soa_vector const& lhs, soa_vector const& rhs)
+    {
+      if( lhs.size() != rhs.size() ) return false;
+      return eve::algo::equal( lhs, rhs.begin_aligned());
+    }
+
+    friend bool operator!=(soa_vector const& lhs, soa_vector const& rhs)
+    {
+      return !(lhs == rhs);
+    }
 
     //==============================================================================================
     //! @}
     //==============================================================================================
 
+    friend std::ostream& operator<<(std::ostream& os, soa_vector const& v)
+    {
+      os << "{ ";
+      for(std::size_t i=0;i<v.size();++i) os << v.get(i) << " ";
+      os << '}';
+      return os;
+    }
+
     template <typename Traits, typename Self>
     requires std::same_as<std::remove_reference_t<Self>, soa_vector>
     EVE_FORCEINLINE friend auto tagged_dispatch(algo::preprocess_range_, Traits tr, Self& self)
     {
-      return algo::preprocess_range(tr, algo::as_range(self.aligned_begin(), self.end()));
+      return algo::preprocess_range(tr, algo::as_range(self.begin_aligned(), self.end()));
     }
 
     private:

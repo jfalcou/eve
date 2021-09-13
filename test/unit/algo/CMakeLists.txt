@@ -28,6 +28,9 @@ make_unit("unit.algo" unalign.cpp)
 make_unit("unit.algo" zip_iterator.cpp)
 make_unit("unit.algo" zip.cpp)
 
+# Containers
+make_unit( "unit.algo" container/soa_vector.cpp )
+
 # Algorithms
 # find like -------------
 make_unit("unit.algo" algorithm/all_of_generic.cpp)
