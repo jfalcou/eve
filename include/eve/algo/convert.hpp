@@ -23,8 +23,7 @@ namespace eve::algo
   struct converting_range;
 
   template <typename Wrapped, typename T>
-    // we don't allow to sfinae on convert because it's difficult
-  EVE_FORCEINLINE auto convert_::operator()(Wrapped&& wrapped, eve::as<T> tgt) const
+  EVE_FORCEINLINE auto convert_::no_tagged_dispatch(Wrapped&& wrapped, eve::as<T> tgt) const
   {
     if constexpr (relaxed_range<Wrapped>)
     {
@@ -42,6 +41,17 @@ namespace eve::algo
       else if constexpr (detail::instance_of<I, converting_iterator>) return convert(wrapped.base, tgt);
       else                                                            return converting_iterator<I, T>{wrapped};
     }
+  }
+
+  template <typename Wrapped, typename T>
+    // we don't allow to sfinae on convert because it's difficult
+  EVE_FORCEINLINE auto convert_::operator()(Wrapped&& wrapped, as<T> tgt) const
+  {
+    if constexpr (eve::detail::tag_dispatchable<convert_, decltype(std::forward<Wrapped>(wrapped)), as<T>>)
+    {
+      return tagged_dispatch(*this, std::forward<Wrapped>(wrapped), tgt);
+    }
+    else return no_tagged_dispatch( std::forward<Wrapped>(wrapped), tgt);
   }
 
   template <non_owning_range R, typename T>

@@ -20,8 +20,6 @@ namespace eve::algo
     template <typename Traits, typename ...Rngs>
     EVE_FORCEINLINE auto preprocess_zip_range(Traits tr, kumi::tuple<Rngs...> rngs) {
       auto tr_internal = [&]{
-        static_assert(!has_type_overrides_v<Traits>, "FIX-#880, FIX-#896");
-
         using N = iteration_cardinal_t<Traits, kumi::tuple<value_type_t<Rngs>...>>;
         auto force_cardinal = algo::traits{algo::force_cardinal<N{}()>};
 

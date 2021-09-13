@@ -25,25 +25,6 @@ namespace eve::algo
   template <relaxed_range ...Rngs>
   struct zip_range;
 
-  namespace detail
-  {
-    template <relaxed_range Rng>
-    struct rng_ref
-    {
-      Rng* rng;
-
-      // FIX-874: non member ones should be used
-      auto begin() const { return rng->begin(); }
-      auto end()   const { return rng->end(); }
-
-      template <typename Traits>
-      EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, Traits traits, rng_ref self)
-      {
-        return preprocess_range(traits, *self.rng);
-      }
-    };
-  }
-
   template <typename TraitsSupport>
   // this is zip traits, not algo traits.
   struct zip_ : TraitsSupport
@@ -140,6 +121,8 @@ namespace eve::algo
   template <relaxed_range ...Rngs>
   struct zip_range : kumi::tuple<Rngs...>
   {
+    using is_non_owning = void;
+
     EVE_FORCEINLINE zip_range(kumi::tuple<Rngs...> ranges):
       kumi::tuple<Rngs...>(ranges)
     {
@@ -173,6 +156,12 @@ namespace eve::algo
     {
       return detail::preprocess_zip_range(tr, self);
     }
+
+    template <typename T>
+    EVE_FORCEINLINE friend auto tagged_dispatch(convert_, zip_range self, eve::as<T> tgt)
+    {
+      return detail::convert_zipped(self, tgt);
+    }
   };
 }
 
@@ -189,4 +178,31 @@ namespace std
     std::tuple_element<I, kumi::tuple<Ranges...>>
   {
   };
+}
+
+namespace eve::algo::detail
+{
+  template<typename T>
+  struct print_type;
+
+  template<std::size_t, std::size_t>
+  struct print_size;
+
+  template<typename Self, typename T>
+  EVE_FORCEINLINE auto convert_zipped(Self self, eve::as<T> tgt)
+  {
+    if constexpr( std::same_as<value_type_t<Self>, T> ) return self;
+    else
+    {
+      // FIX-918: reconstruct the original components.
+      //          support converting components inside zip.
+      auto make_as = []<typename M>(M) { return as<M> {}; };
+      using t_flat = kumi::result::map_t<decltype(make_as), kumi::result::flatten_all_t<T>>;
+
+      auto self_flat = kumi::flatten_all(self);
+
+      auto flat_cvt = kumi::apply(zip, kumi::map(convert, self_flat, t_flat {}));
+      return convert.no_tagged_dispatch(flat_cvt, tgt);
+    }
+  }
 }

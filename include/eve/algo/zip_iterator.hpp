@@ -38,7 +38,6 @@ namespace eve::algo
     };
   }
 
-
   template <typename T, typename U>
   concept compatible_zip_iterators = detail::compatible_zip_iterators_impl<T, U>::value;
 
@@ -135,6 +134,12 @@ namespace eve::algo
         }(std::index_sequence_for<Is...>{});
 
         return preprocess_range(traits, self, real_l);
+      }
+
+      template <typename T>
+      EVE_FORCEINLINE friend auto tagged_dispatch(convert_, zip_iterator<Is...> self, eve::as<T> tgt)
+      {
+        return detail::convert_zipped(self, tgt);
       }
 
       tuple_type storage;

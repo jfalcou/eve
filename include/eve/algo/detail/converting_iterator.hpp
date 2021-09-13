@@ -59,8 +59,6 @@ namespace eve::algo
         eve::write(self.base, eve::convert(v, eve::as<value_type_t<I>>{}));
       }
 
-      T operator*() const { return static_cast<T>(*base); }
-
       EVE_FORCEINLINE friend bool operator==(converting_iterator<I, T> const & x, converting_iterator<I, T> const & y)
       {
         return x.base == y.base;

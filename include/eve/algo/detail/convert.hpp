@@ -16,6 +16,15 @@ namespace eve::algo
 
   struct convert_ {
     template <typename Wrapped, typename T>
+    auto no_tagged_dispatch(Wrapped&& wrapped, eve::as<T> tgt) const;
+
+    template <typename Wrapped, typename T>
     auto operator()(Wrapped&& wrapped, eve::as<T> tgt) const;
   } inline constexpr convert;
+
+  namespace detail
+  {
+    template <typename Self, typename T>
+    auto convert_zipped(Self self, eve::as<T> tgt);
+  }
 }
