@@ -30,6 +30,7 @@ make_unit("unit.algo" zip_iterator.cpp)
 make_unit("unit.algo" zip.cpp)
 
 # Containers
+make_unit( "unit.algo" container/erase_remove.cpp )
 make_unit( "unit.algo" container/soa_vector.cpp )
 
 # Algorithms

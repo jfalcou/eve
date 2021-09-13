@@ -38,6 +38,7 @@ TTS_CASE("Check soa_vector sized ctor")
   // grid2d has some specific default
   TTS_EQUAL( get<0>(udt_vector.get(0)), +1  );
   TTS_EQUAL( get<1>(udt_vector.get(0)), -1  );
+  TTS_EQUAL( udt_vector.get(0), udt::grid2d{});
 }
 
 TTS_CASE("Check soa_vector sized ctor with default value")

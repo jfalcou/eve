@@ -9,10 +9,12 @@
 
 #include <eve/algo/equal.hpp>
 #include <eve/algo/zip.hpp>
+#include <eve/algo/convert.hpp>
+
+#include <eve/algo/container/detail/soa_storage.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/function/read.hpp>
 #include <eve/function/write.hpp>
-#include <eve/memory/aligned_allocator.hpp>
 #include <eve/product_type.hpp>
 #include <vector>
 
@@ -34,18 +36,13 @@ namespace eve::algo
   //================================================================================================
   template<eve::product_type Type> struct soa_vector
   {
-    private:
-    template<typename T> struct soa_storage
-    {
-      using type = std::vector<T, aligned_allocator<T,eve::detail::cache_line_cardinal<T>>>;
-    };
-
     public:
 
     //! Type of data stored in the container
     using value_type = Type;
 
-    using storage_type = kumi::as_tuple_t<kumi::result::flatten_all_t<Type>, soa_storage>;
+    using storage_type = detail::soa_storage<Type>;
+    using iterator     = decltype(storage_type{}.begin());
 
     //==============================================================================================
     //! @name Constructors
@@ -117,6 +114,8 @@ namespace eve::algo
     //! @brief Clear the contents of the container
     void clear() { kumi::for_each([&](auto& m) { m.clear(); }, storage); }
 
+
+
     //! @brief Appends the given element value to the end of the container.
     //! If the new size() is greater than capacity() then all iterators and references (including
     //! the past-the-end iterator) are invalidated. Otherwise only the past-the-end iterator is
@@ -169,37 +168,22 @@ namespace eve::algo
     //! @}
     //==============================================================================================
 
-    private:
-    template<typename T> static auto as_aligned_pointer(T* ptr)
-    {
-      return eve::as_aligned(ptr, eve::detail::cache_line_cardinal<T>{});
-    }
-
-    template<typename Self> static auto begin_aligned_impl(Self& self)
-    {
-       auto ptrs    = kumi::map([](auto& m) { return as_aligned_pointer(m.data()); }, self.storage);
-       auto zipped  = kumi::apply(eve::algo::zip, ptrs);
-
-       /* todo: add eve::algo::convert(zipped, eve::as<Type>{}) */
-       return zipped;
-    }
-
     public:
     //==============================================================================================
     //! @name Element access
     //! @{
     //==============================================================================================
-    //! Returns an aligned pointer to the beginning
-    EVE_FORCEINLINE auto data_aligned()  { return begin_aligned_impl(*this); }
+    //! Returns a zipped aligned pointer to the beginning
+    EVE_FORCEINLINE auto data_aligned()  { return storage.data_aligned(); }
 
-    //! Returns an aligned pointer to the beginning
-    EVE_FORCEINLINE auto data_aligned()  const { return begin_aligned_impl(*this); }
+    //! Returns a zipped aligned pointer to the beginning
+    EVE_FORCEINLINE auto data_aligned()  const { return storage.data_aligned(); }
 
-    //! Returns a pointer to the beginning
-    EVE_FORCEINLINE auto data()  { return eve::algo::unalign(begin_aligned()); }
+    //! Returns a zipped pointer to the beginning
+    EVE_FORCEINLINE auto data()  { return storage.data(); }
 
-    //! Returns a constant pointer to the beginning
-    EVE_FORCEINLINE auto data()  const { return eve::algo::unalign(begin_aligned()); }
+    //! Returns a constant zipped pointer to the beginning
+    EVE_FORCEINLINE auto data()  const { return storage.data(); }
 
     //! @brief Returns the value of the `i`th element of the container
     //! @param i Index of the value to retrieve
@@ -222,19 +206,19 @@ namespace eve::algo
     //! @{
     //==============================================================================================
     //! Returns an aligned iterator to the beginning
-    EVE_FORCEINLINE auto begin_aligned()  { return begin_aligned_impl(*this); }
+    EVE_FORCEINLINE auto begin_aligned()  { return storage.begin_aligned(); }
 
     //! Returns an aligned iterator to the beginning
-    EVE_FORCEINLINE auto begin_aligned()  const { return begin_aligned_impl(*this); }
+    EVE_FORCEINLINE auto begin_aligned()  const { return storage.begin_aligned(); }
 
     //! Returns a constant aligned iterator to the beginning
     EVE_FORCEINLINE auto cbegin_aligned() const { return begin_aligned(); }
 
     //! Returns an iterator to the beginning
-    EVE_FORCEINLINE auto begin()  { return eve::algo::unalign(begin_aligned()); }
+    EVE_FORCEINLINE auto begin()  { return storage.begin(); }
 
     //! Returns an iterator to the beginning
-    EVE_FORCEINLINE auto begin()  const { return eve::algo::unalign(begin_aligned()); }
+    EVE_FORCEINLINE auto begin()  const { return storage.begin(); }
 
     //! Returns a constant iterator to the beginning
     EVE_FORCEINLINE auto cbegin() const { return begin(); }
