@@ -182,12 +182,6 @@ namespace std
 
 namespace eve::algo::detail
 {
-  template<typename T>
-  struct print_type;
-
-  template<std::size_t, std::size_t>
-  struct print_size;
-
   template<typename Self, typename T>
   EVE_FORCEINLINE auto convert_zipped(Self self, eve::as<T> tgt)
   {

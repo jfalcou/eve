@@ -74,7 +74,8 @@ namespace eve::algo
           drop_key_if<!has_cardinal_overrides_v<Traits>>(force_cardinal_key, processed.traits());
 
       return preprocess_range_result {
-          ret_tr, convert(processed.begin(), as<T> {}), convert(processed.end(), as<T> {})};
+          ret_tr, convert(processed.begin(), as<T>{}), convert(processed.end(), as<T>{})
+      };
     }
   };
 }
