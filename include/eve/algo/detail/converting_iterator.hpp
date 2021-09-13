@@ -11,7 +11,7 @@
 #include <eve/algo/concepts/eve_iterator.hpp>
 #include <eve/algo/concepts/relaxed.hpp>
 #include <eve/algo/concepts/value_type.hpp>
-#include <eve/algo/convert.hpp>
+#include <eve/algo/detail/convert.hpp>
 #include <eve/algo/detail/preprocess_range.hpp>
 #include <eve/algo/iterator_helpers.hpp>
 

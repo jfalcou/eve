@@ -36,20 +36,13 @@ namespace eve::algo
     }
 
     template <typename Traits, typename I>
-    EVE_FORCEINLINE auto fix_up_type_and_cardinal(Traits traits_, I i)
+    EVE_FORCEINLINE auto fix_up_cardinal(Traits, I i)
     {
-      using T = iteration_type_t<Traits, value_type_t<I>>;
-
-      if constexpr( !std::same_as<value_type_t<I>, T> )
+      if constexpr( typename I::cardinal {}() != iteration_cardinal_t<Traits, value_type_t<I>> {}() )
       {
-        auto i_ = convert(i, eve::as<T> {});
-        return fix_up_type_and_cardinal(traits_, i_);
-      }
-      else if constexpr( typename I::cardinal {}() != iteration_cardinal_t<Traits, T> {}() )
-      {
-        using N = iteration_cardinal_t<Traits, T>;
+        using N = iteration_cardinal_t<Traits, value_type_t<I>>;
         auto i_ = i.cardinal_cast(N {});
-        return fix_up_type_and_cardinal(traits_, i_);
+        return i_;
       }
       else
       {
@@ -64,8 +57,8 @@ namespace eve::algo
   {
     // We have to force cardinal here, because iterators
     // with different cardinals don't form a valid range.
-    auto f = detail::fix_up_type_and_cardinal(traits_, detail::ptr_to_iterator(f_));
-    auto l = detail::fix_up_type_and_cardinal(traits_, detail::ptr_to_iterator(l_));
+    auto f = detail::fix_up_cardinal(traits_, detail::ptr_to_iterator(f_));
+    auto l = detail::fix_up_cardinal(traits_, detail::ptr_to_iterator(l_));
 
     return operator()(traits_, f, l);
   }
@@ -84,8 +77,8 @@ namespace eve::algo
   template<typename Traits, iterator I_, sentinel_for<I_> S_>
   EVE_FORCEINLINE auto preprocess_range_::operator()(Traits traits_, I_ f_, S_ l_) const
   {
-    auto f = detail::fix_up_type_and_cardinal(traits_, f_);
-    auto l = detail::fix_up_type_and_cardinal(traits_, l_);
+    auto f = detail::fix_up_cardinal(traits_, f_);
+    auto l = detail::fix_up_cardinal(traits_, l_);
 
     using I = decltype(f);
     using S = decltype(l);

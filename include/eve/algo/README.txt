@@ -102,14 +102,18 @@ However for some algorithms, like `reverse` and maybe `partition` it's not a goo
 * `traits`
 * `function_with_traits`
 
-* `common_with_types`
+algorithm traits
 * `divisible_by_cardinal`
 * `force_cardinal`
 * `no_aligning`
 * `unroll`
 
-Traits is a way to customise the behaviour of the algorithm.
-Different algorithms support different customizations.
+zip traits
+* `common_with_types`
+* `common_type`
+
+Traits is a way to customise the behaviour of algorithms and functions
+Different functions support different customizations.
 
 The easiest way to enable a function to support traits.
 
@@ -138,8 +142,9 @@ func[in](/*params*/)
 
 #### Individual traits.
 
-common_with_types
-converts iteration type to a type that is a common with a given one.
+common_type/common_with_types
+For zip makes all the individual components convert to a common_type
+(common_with_types allows to add to the list).
 
 divisible_by_cardinal
 you know for a fact that the range is divisible by cardinal

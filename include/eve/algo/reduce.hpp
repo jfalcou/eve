@@ -89,7 +89,7 @@ namespace eve::algo
     template <typename Rng, typename U>
     EVE_FORCEINLINE U operator()(Rng&& rng, U init) const
     {
-      return operator()(std::forward<Rng>(rng), std::pair{eve::add, 0}, init);
+      return operator()(std::forward<Rng>(rng), std::pair{eve::add, eve::zero}, init);
     }
   };
 

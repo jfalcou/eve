@@ -79,34 +79,10 @@ namespace eve::algo
     return rbr::get_type_t<Traits, unroll_key, eve::fixed<1>>{}();
   }
 
-  namespace detail
-  {
-    template <typename Traits, typename T>
-    auto iterator_type_impl() {
-      if constexpr (Traits::contains(force_type_key))
-      {
-        return rbr::get_type_t<Traits, force_type_key>{};
-      }
-      else if constexpr (Traits::contains(common_with_types_key))
-      {
-        using Param = typename rbr::get_type_t<Traits, common_with_types_key>::type;
-        return eve::common_type<Param, T>{};
-      }
-      else
-      {
-        return std::type_identity<T>{};
-      }
-    }
-  }
-
-  template <typename Traits, typename T>
-  using iteration_type_t = typename decltype(detail::iterator_type_impl<Traits, T>())::type;
-
   template <typename Traits, typename T>
   using iteration_cardinal_t =
     rbr::get_type_t<Traits, force_cardinal_key,
-    eve::expected_cardinal_t<iteration_type_t<Traits, T>>>;
-
+    expected_cardinal_t<T>>;
 
   inline constexpr auto default_to =
      []<typename User, typename Default>(traits<User> const& user, traits<Default> const& defaults)

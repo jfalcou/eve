@@ -54,23 +54,17 @@ namespace eve::algo
     EVE_FORCEINLINE auto begin() const { return convert(base.begin(), eve::as<T>{}); }
     EVE_FORCEINLINE auto end()   const { return convert(base.end(),   eve::as<T>{}); }
 
-    template <typename Traits>
+    template<typename Traits>
     EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, Traits tr, converting_range self)
     {
-      if constexpr ( has_type_overrides_v<Traits>     ) return preprocess_range(tr, self.base);
-      else
-      {
-        auto tr_with_cardinal = default_to(tr, traits {force_cardinal_as<T>});
-        auto processed        = preprocess_range(tr_with_cardinal, self.base);
+      auto tr_with_cardinal = default_to(tr, traits {force_cardinal_as<T>});
+      auto processed        = preprocess_range(tr_with_cardinal, self.base);
 
-        auto ret_tr = drop_key_if<!has_cardinal_overrides_v<Traits>>(force_cardinal_key, processed.traits());
+      auto ret_tr =
+          drop_key_if<!has_cardinal_overrides_v<Traits>>(force_cardinal_key, processed.traits());
 
-        return preprocess_range_result {
-            ret_tr,
-            convert(processed.begin(), as<T>{}),
-            convert(processed.end(),   as<T>{})
-        };
-      }
+      return preprocess_range_result {
+          ret_tr, convert(processed.begin(), as<T> {}), convert(processed.end(), as<T> {})};
     }
   };
 }
