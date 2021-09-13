@@ -57,12 +57,19 @@ namespace eve::algo
     template <typename Traits>
     EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, Traits tr, converting_range self)
     {
-      if constexpr (has_type_overrides_v<Traits> ) return preprocess_range(tr, self.base);
+      if constexpr ( has_type_overrides_v<Traits>     ) return preprocess_range(tr, self.base);
       else
       {
-        auto processed = preprocess_range(default_to(tr, traits {force_type<T>}), self.base);
+        auto tr_with_cardinal = default_to(tr, traits {force_cardinal_as<T>});
+        auto processed        = preprocess_range(tr_with_cardinal, self.base);
+
+        auto ret_tr = drop_key_if<!has_cardinal_overrides_v<Traits>>(force_cardinal_key, processed.traits());
+
         return preprocess_range_result {
-            drop_key(force_type_key, processed.traits()), processed.begin(), processed.end()};
+            ret_tr,
+            convert(processed.begin(), as<T>{}),
+            convert(processed.end(), as<T>{})
+        };
       }
     }
   };
