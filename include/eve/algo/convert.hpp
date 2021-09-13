@@ -68,7 +68,7 @@ namespace eve::algo
         return preprocess_range_result {
             ret_tr,
             convert(processed.begin(), as<T>{}),
-            convert(processed.end(), as<T>{})
+            convert(processed.end(),   as<T>{})
         };
       }
     }
