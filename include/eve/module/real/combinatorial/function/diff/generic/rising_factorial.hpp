@@ -21,19 +21,16 @@
 
 namespace eve::detail
 {
-  template<int N, real_simd_value I, floating_real_value T, typename D>
-  auto rising_factorial_(EVE_SUPPORTS(cpu_), decorated<diff_<N>(D)> const &
+  template<int N, real_simd_value I, floating_real_value T>
+  auto rising_factorial_(EVE_SUPPORTS(cpu_), decorated<diff_<N>(pedantic_)> const &
              , I a, T x) noexcept
-  requires(is_one_of<D>(types<raw_type, pedantic_type> {}))
   {
-    std::cout << "simd I " << std::endl;
     using elt_t = element_type_t<T>;
     using r_t = as_wide_t<elt_t, cardinal_t<I>>;
-    using d_t = decorated<D()>;
     auto aa = convert(a, as(elt_t()));
     if constexpr(N <= 2)
     {
-      auto tmp = d_t()(rising_factorial)(aa, x);
+      auto tmp = pedantic(rising_factorial)(aa, x);
       return diff_type<N>()(lrising_factorial)(aa, x)*tmp;
     }
     else
@@ -43,13 +40,10 @@ namespace eve::detail
   template<int N, real_scalar_value I, floating_real_value T, typename D>
   auto rising_factorial_(EVE_SUPPORTS(cpu_), decorated<diff_<N>(D)> const &
              , I a, T x) noexcept
-  requires(is_one_of<D>(types<raw_type, pedantic_type> {}))
   {
-    std::cout << "scalar I " << std::endl;
-    using d_t = decorated<D()>;
     if constexpr(N <= 2)
     {
-      auto tmp = d_t()(rising_factorial)(T(a), x);
+      auto tmp = pedantic(rising_factorial)(T(a), x);
       return diff_type<N>()(lrising_factorial)(T(a), x)*tmp;
     }
     else
@@ -61,7 +55,6 @@ namespace eve::detail
                         , diff_type<N> const & d
                         , I a, T x) noexcept
   {
-    std::cout << "regular" << std::endl;
     using elt_t = element_type_t<T>;
     using r_t = as_wide_t<elt_t, cardinal_t<I>>;
     auto aa = convert(a, as(elt_t()));

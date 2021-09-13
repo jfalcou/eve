@@ -28,23 +28,23 @@
 namespace eve::detail
 {
 
-  template<floating_real_value T>
-  EVE_FORCEINLINE auto rising_factorial_(EVE_SUPPORTS(cpu_)
-                                        , pedantic_type const &
-                                        , T a,  T x) noexcept
-  {
-     if constexpr(has_native_abi_v<T>)
-     {
-       auto sgnrf = [](auto a ,  auto x)
-         {
-           auto sga = if_else(is_flint(a), one, signgam(a));
-           auto sgapx = if_else(is_flint(a+x), one, signgam(a+x));
-           return sga*sgapx;
-         };
-       auto lrn = pedantic(lrising_factorial)(a, x);
-       return exp(lrn)*sgnrf(a, x);
-     }
-    else
-      return apply_over(pedantic(rising_factorial), a, x);
-  }
+//   template<floating_real_value T>
+//   EVE_FORCEINLINE auto rising_factorial_(EVE_SUPPORTS(cpu_)
+//                                         , pedantic_type const &
+//                                         , T a,  T x) noexcept
+//   {
+//      if constexpr(has_native_abi_v<T>)
+//      {
+//        auto sgnrf = [](auto a ,  auto x)
+//          {
+//            auto sga = if_else(is_flint(a), one, signgam(a));
+//            auto sgapx = if_else(is_flint(a+x), one, signgam(a+x));
+//            return sga*sgapx;
+//          };
+//        auto lrn = pedantic(lrising_factorial)(a, x);
+//        return exp(lrn)*sgnrf(a, x);
+//      }
+//     else
+//       return apply_over(pedantic(rising_factorial), a, x);
+//   }
 }
