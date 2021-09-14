@@ -90,7 +90,7 @@ namespace eve::algo
       auto ptr = l.begin();
       for(std::size_t i = 0;i < size(); ++i)
       {
-        kumi::for_each( [&](auto m, auto& v) { v[i] = m; }, *ptr++, storage );
+        kumi::for_each( [&](auto m, auto& v) { v[i] = m; }, kumi::flatten_all(*ptr++), storage );
       }
     }
 
