@@ -351,7 +351,7 @@ TTS_CASE("erase(f, l)")
   // all
   {
     pos = v.erase(v.begin_aligned(), v.end());
-    TTS_EQUAL(v.size(), 0);
+    TTS_EQUAL(v.size(), 0u);
     TTS_EQUAL(pos, v.begin());
   }
 }
