@@ -48,18 +48,10 @@ namespace eve::detail
     }
   }
 
-  // regular wrapping : no decorator
-  template<real_value I,floating_real_value T>
-  EVE_FORCEINLINE auto rising_factorial_(EVE_SUPPORTS(cpu_)
-                                         , I a,  T x) noexcept
-  {
-    return rising_factorial(regular_type(), a, x);
-  }
-
   // regular  nan if a+x or x is nnegative,  better computation than raw
   template<floating_real_value T>
   EVE_FORCEINLINE auto rising_factorial_(EVE_SUPPORTS(cpu_)
-                                        , regular_type const &
+                                         // , regular_type const &
                                         , T a,  T x) noexcept
   {
      if constexpr(has_native_abi_v<T>)
@@ -68,7 +60,21 @@ namespace eve::detail
        return eve::exp(lrn);
      }
     else
-      return apply_over(regular_type()(rising_factorial), a, x);
+      return apply_over(rising_factorial, a, x);
+  }
+
+  // regular wrapping : no decorator
+  template<real_value I,floating_real_value T>
+  EVE_FORCEINLINE auto rising_factorial_(EVE_SUPPORTS(cpu_)
+                                         , I a,  T x) noexcept
+  {
+    if constexpr(std::is_integral_v<element_type_t<I>>)
+      return regular(rising_factorial)(convert(a, as(element_type_t<T>())), x);
+    else
+    {
+      using r_t =  common_compatible_t<T, I>;
+      return rising_factorial(r_t(a), r_t(x));
+    }
   }
 
   // raw
@@ -85,23 +91,4 @@ namespace eve::detail
       return apply_over(regular_type()(rising_factorial), a, x);
   }
 
-  template<floating_real_value T>
-  EVE_FORCEINLINE auto rising_factorial_(EVE_SUPPORTS(cpu_)
-                                        , pedantic_type const &
-                                        , T a,  T x) noexcept
-  {
-     if constexpr(has_native_abi_v<T>)
-     {
-       auto sgnrf = [](auto a ,  auto x)
-         {
-           auto sga = if_else(is_flint(a), one, signgam(a));
-           auto sgapx = if_else(is_flint(a+x), one, signgam(a+x));
-           return sga*sgapx;
-         };
-       auto lrn = pedantic(lrising_factorial)(a, x);
-       return exp(lrn)*sgnrf(a, x);
-     }
-    else
-      return apply_over(pedantic(rising_factorial), a, x);
-  }
 }
