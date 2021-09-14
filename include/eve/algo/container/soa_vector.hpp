@@ -145,6 +145,11 @@ namespace eve::algo
     iterator erase(iterator       pos) { return erase_impl(begin(),  pos); }
     iterator erase(const_iterator pos) { return erase_impl(cbegin(), pos); }
 
+    //! @brief Removes the elements in the range [first, last)
+    //! Empty range is OK, does nothing
+    iterator erase(iterator       f,       iterator l) { return erase_impl(begin(),  f, l); }
+    iterator erase(const_iterator f, const_iterator l) { return erase_impl(cbegin(), f, l); }
+
     //! @brief Appends the given element value to the end of the container.
     //! If the new size() is greater than capacity() then all iterators and references (including
     //! the past-the-end iterator) are invalidated. Otherwise only the past-the-end iterator is
@@ -306,6 +311,14 @@ namespace eve::algo
       kumi::for_each([&](auto& m) { return m.erase(m.begin() + distance); }, storage);
       return begin() + distance;
     }
+
+    auto erase_impl(auto base, auto pos_f, auto pos_l) {
+      std::ptrdiff_t distance_f = pos_f - base;
+      std::ptrdiff_t distance_l = pos_l - base;
+      kumi::for_each([&](auto& m) {
+        return m.erase(m.begin() + distance_f, m.begin() + distance_l); }, storage);
+      return begin() + distance_f;
+    };
 
     storage_type storage;
   };

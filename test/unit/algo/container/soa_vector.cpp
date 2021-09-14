@@ -276,19 +276,82 @@ TTS_CASE("erase(pos)")
 
   grids expected { v.get(0), v.get(2) };
 
-  grids::iterator actual_pos = v.erase(v.cbegin() + 1);
+  grids::iterator pos = v.erase(v.begin() + 1);
   TTS_EQUAL(v, expected);
-  TTS_EQUAL((actual_pos - v.begin()), 1);
+  TTS_EQUAL((pos - v.begin()), 1);
 
   expected.pop_back();
-  actual_pos = v.erase(v.begin() + 1);
+  pos = v.erase(v.cbegin() + 1);
   TTS_EQUAL(v, expected);
-  TTS_EQUAL((actual_pos - v.begin()), 1);
+  TTS_EQUAL((pos - v.begin()), 1);
 
   expected.pop_back();
 
   // We might want to return a iterator_aligned here but w/e
-  actual_pos = v.erase(v.begin_aligned());
+  pos = v.erase(v.begin_aligned());
   TTS_EQUAL(v, expected);
-  TTS_EQUAL((actual_pos - v.begin()), 0);
+  TTS_EQUAL((pos - v.begin()), 0);
+
+  v.push_back({1, 1});
+
+  pos = v.erase(v.begin_aligned());
+  TTS_EQUAL(v, expected);
+  TTS_EQUAL((pos - v.begin()), 0);
+}
+
+TTS_CASE("erase(f, l)")
+{
+  using grids = eve::algo::soa_vector<udt::grid2d>;
+  grids v {
+    udt::grid2d{0, 0}, udt::grid2d{1, 1},
+    udt::grid2d{2, 2}, udt::grid2d{3, 3},
+  };
+
+  grids::iterator pos;
+
+  // empty range
+  {
+    pos = v.erase(v.begin(), v.begin());
+    TTS_EQUAL(v.size(), 4u);
+    TTS_EQUAL(pos, v.begin());
+
+    pos = v.erase(v.cbegin(), v.cbegin());
+    TTS_EQUAL(v.size(), 4u);
+    TTS_EQUAL(pos, v.begin());
+
+    pos = v.erase(v.begin_aligned(), v.begin());
+    TTS_EQUAL(v.size(), 4u);
+    TTS_EQUAL(pos, v.begin());
+
+    pos = v.erase(v.cbegin_aligned(), v.cbegin());
+    TTS_EQUAL(v.size(), 4u);
+    TTS_EQUAL(pos, v.begin());
+  }
+
+  // last 2
+  {
+    grids expected { udt::grid2d{0, 0}, udt::grid2d{1, 1} };
+
+    pos = v.erase(v.cbegin() + 2, v.cend());
+    TTS_EQUAL(expected, v);
+    TTS_EQUAL(pos, v.end());
+  }
+
+  v.push_back(udt::grid2d{2, 2});
+
+  // middle
+  {
+    grids expected { udt::grid2d{0, 0}, udt::grid2d{2, 2} };
+
+    pos = v.erase(v.begin() + 1, v.begin() + 2);
+    TTS_EQUAL(expected, v);
+    TTS_EQUAL(pos, v.begin() + 1);
+  }
+
+  // all
+  {
+    pos = v.erase(v.begin_aligned(), v.end());
+    TTS_EQUAL(v.size(), 0);
+    TTS_EQUAL(pos, v.begin());
+  }
 }
