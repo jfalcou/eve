@@ -41,7 +41,8 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::oneotwoeps(as<T>())` is semantically equivalent to  `eve::rec(2*eve::epsas<T>())`
+  //! the call `eve::oneotwoeps(``eve::as<T>())` is semantically equivalent to
+  //! `eve::rec(2*eve::eps(``eve::as<T>()))`
   //!
   //! ---
   //!

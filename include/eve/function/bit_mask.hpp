@@ -41,7 +41,7 @@ namespace eve
   //!
   //!For each [elementwise](@ref glossary_elementwise) of `x`:
   //!
-  //!  *  if the [element](@ref glossary_element) is zero, an element with all bits unset is returned.
+  //!  *  if the [element](@ref glossary_elementwise) is zero, an element with all bits unset is returned.
   //!  *  else an element of the type with all bits set is returned.
   //!
   //! ---

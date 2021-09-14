@@ -47,7 +47,7 @@ namespace eve
   //!   to `false` in order to disable ordering for this type.
   //!
   //!   Alternatively, any type `T` providing an internal `eve_disable_ordering` type will be
-  //!   treated as if `eve::supports_ordering<T>::value` evaluates to `false`, thus disabling
+  //!   treated as if `eve::supports_ordering<T>::``value` evaluates to `false`, thus disabling
   //!   ordering operators for `eve::wide<T>`.
   //!
   //!   ### Helper variable template

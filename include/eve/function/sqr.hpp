@@ -78,7 +78,7 @@ namespace eve
   //!      evaluates to:
   //!
   //!      [`eve::Valmax(as(x))`](@ref eve::valmax) as soon as `saturated(abs)(x)`
-  //!      is greater than [`eve::Sqrtvalmax(as(x))`](@ref eve::sqrtvalmax.html).
+  //!      is greater than [`eve::Sqrtvalmax(as(x))`](@ref eve::sqrtvalmax).
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!

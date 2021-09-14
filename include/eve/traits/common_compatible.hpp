@@ -60,7 +60,7 @@ namespace eve
   //!
   //! @struct common_compatible
   //!
-  //! @brief Computes the type compatible with a list of [values](@ref value)
+  //! @brief Computes the type compatible with a list of [values](@ref eve::value)
   //!
   //! **Required header:** `#include <eve/traits/common_compatible.hpp>`
   //!

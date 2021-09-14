@@ -10,11 +10,11 @@
 //! @addtogroup functions
 //! @{
 //! @defgroup reduction Reduction
-//!
 //! These functions provide reduction functions.
-//!
 //! **Convenience header:** @code{.cpp} #include <eve/function/reduction.hpp> @endcode
 //!
+//! @defgroup scan Scan
+//! These functions provide scan functions.
 //!@}
 //================================================================================================
 

@@ -29,41 +29,11 @@ namespace eve
   //================================================================================================
   //! @addtogroup decorator
   //! @{
-  //! @var definitely
-  //!
-  //! @brief  Higher-order @callable imbuing a tolerant to small errors semantic onto other @callable{s}.
-  //!
-  //! #### Synopsis
-  //!
-  //!  if definitely(eve::fname) is to be called then
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/fuzzy/fname.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!  must be included.
-  //!
-  //! #### Members Functions
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(eve::callable auto const& f ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //! @param f
-  //! An instance of eve::callable
-  //!
-  //! @return
-  //! A @callable performing the same kind of operation but while insuring that a small error on the
-  //! parameters will not affect the result.
-  //!
-  //! definitely is currently supported by eve::is_greater, eve::is_less,
-  //! eve::is_not_greater_equal, eve::is_not_less_equal and eve::is_not_equal
-  //! object functions.
-  //!
-  //!  @}
-  //! @{
   //! @var almost
   //!
-  //! @brief  Higher-order @callable imbuing a toerant to little errors semantic onto other @callable{s}.
+  //! @brief  Higher-order @callable imbuing a tolerant to little errors semantic onto other @callable{s}.
   //!
-  //! #### Synopsis
+  //! @groupheader{Synopsis}
   //!
   //!  if almost(eve::fname) is to be called then
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
@@ -71,7 +41,7 @@ namespace eve
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!  must be included.
   //!
-  //! #### Members Functions
+  //! @groupheader{Members Functions}
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  auto operator()(eve::callable auto const& f ) const noexcept;
@@ -87,37 +57,7 @@ namespace eve
   //! eve::is_not_greater, eve::is_not_less and eve::is_equal
   //! object functions.
   //!  @}
-  //! @{
-  //! @var tolerant
-  //!
-  //! @brief  Higher-order @callable imbuing a less strict semantic onto other @callable{s}.
-  //!
-  //! #### Synopsis
-  //!
-  //!  if tolerant(eve::fname) is to be called then
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/fuzzy/fname.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!  must be included.
-  //!
-  //! #### Members Functions
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(eve::callable auto const& f ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //! @param f
-  //! An instance of eve::callable
-  //!
-  //! @return
-  //! A @callable performing the same kind of operation but while insuring that a small error on the
-  //! parameters will not affect the result.
-  //!
-  //! tolerant is currently supported by eve::ceil, eve::floor and eve::trunc object functions.
-  //!
   //================================================================================================
-
-  //================================================================================================
-  // Function decorator - almost mode
   inline constexpr almost_type const almost = {};
 
   //================================================================================================
@@ -135,9 +75,39 @@ namespace eve
   };
 
   //================================================================================================
-  // Function decorator - definitely mode
+  //! @addtogroup decorator
+  //! @{
+  //! @var definitely
+  //!
+  //! @brief  Higher-order @callable imbuing a tolerant to small errors semantic onto other @callable{s}.
+  //!
+  //! @groupheader{Synopsis}
+  //!
+  //!  if definitely(eve::fname) is to be called then
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  #include <eve/function/fuzzy/fname.hpp>
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  must be included.
+  //!
+  //! @groupheader{Members Functions}
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator()(eve::callable auto const& f ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! @param f
+  //! An instance of eve::callable
+  //!
+  //! @return
+  //! A @callable performing the same kind of operation but while insuring that a small error on the
+  //! parameters will not affect the result.
+  //!
+  //! eve::definitely is currently supported by eve::is_greater, eve::is_less,
+  //! eve::is_not_greater_equal, eve::is_not_less_equal and eve::is_not_equal
+  //! object functions.
+  //!
+  //!  @}
+  //================================================================================================
   inline constexpr definitely_type const definitely = {};
-
 
   //================================================================================================
   // Function decorators mark-up used in function overloads
@@ -154,6 +124,35 @@ namespace eve
   };
 
   //================================================================================================
-  // Function decorator - tolerant mode
+  //! @addtogroup decorator
+  //! @{
+  //! @var tolerant
+  //!
+  //! @brief  Higher-order @callable imbuing a less strict semantic onto other @callable{s}.
+  //!
+  //! @groupheader{Synopsis}
+  //!
+  //!  if tolerant(eve::fname) is to be called then
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  #include <eve/function/fuzzy/fname.hpp>
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  must be included.
+  //!
+  //! @groupheader{Members Functions}
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator()(eve::callable auto const& f ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! @param f
+  //! An instance of eve::callable
+  //!
+  //! @return
+  //! A @callable performing the same kind of operation but while insuring that a small error on the
+  //! parameters will not affect the result.
+  //!
+  //! eve::tolerant is currently supported by eve::ceil, eve::floor and eve::trunc object functions.
+  //!
+  //!  @}
+  //================================================================================================
   inline constexpr tolerant_type const tolerant = {};
 }

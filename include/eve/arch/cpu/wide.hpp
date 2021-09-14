@@ -98,8 +98,17 @@ namespace eve
     //! @brief Default constructor
     //! This operation is a no-op unless `Type` satisfies eve::product_type and has a non trivial
     //! default constructor.
-    EVE_FORCEINLINE wide() requires( std::is_trivially_constructible_v<Type>)                 {}
-    EVE_FORCEINLINE wide() requires(!std::is_trivially_constructible_v<Type>) : wide(Type{})  {}
+    EVE_FORCEINLINE wide()
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires( std::is_trivially_constructible_v<Type>)
+    {}
+
+    EVE_FORCEINLINE wide()
+    requires(!std::is_trivially_constructible_v<Type>) : wide(Type{})
+    {}
+#else
+    {}
+#endif
 
     //! Constructs from ABI-specific storage
     EVE_FORCEINLINE wide(storage_type const &r) noexcept : storage_base(r) {}
@@ -240,6 +249,10 @@ namespace eve
     //! @}
     //==============================================================================================
 
+    //==============================================================================================
+    //! @name Modifiers
+    //! @{
+    //==============================================================================================
     //! Set the value of a given lane
     EVE_FORCEINLINE void set(std::size_t i, scalar_value auto v) noexcept
     {
@@ -329,14 +342,6 @@ namespace eve
       return detail::slice(*this, s);
     }
 
-    //==============================================================================================
-    //! @}
-    //==============================================================================================
-
-    //==============================================================================================
-    //! @name Modifiers
-    //! @{
-    //==============================================================================================
     //! Exchange this value with another eve::wide
     void swap( wide& other ) { std::swap(this->storage(), other.storage()); }
 

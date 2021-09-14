@@ -139,6 +139,7 @@ namespace eve
 
   //================================================================================================
   //! @addtogroup trigonometric
+  //! @{
   //! @var big
   //!
   //! @brief  Higher-order @callable imbuing a direct computation semantic onto other @callable{s}.

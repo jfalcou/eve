@@ -43,8 +43,8 @@ namespace eve
   //!
   //! the call `eve::mantissamask(as<T>())` returns [elementwise](@ref glossary_elementwise), the
   //! integral mask to extract the exponent bits of an ieee floating value. The element values are:
-  //!        - 0x807FFFFFU if the [element type](@ref eve::element_type_t) is float
-  //!        - 0x800FFFFFFFFFFFFFULL if the [element type](@ref eve::element_type_t) is double
+  //!        - 0x807FFFFFU if the [element type](@ref eve::element_type) is float
+  //!        - 0x800FFFFFFFFFFFFFULL if the [element type](@ref eve::element_type) is double
   //!
   //! ---
   //!

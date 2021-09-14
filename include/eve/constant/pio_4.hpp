@@ -41,7 +41,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::pio_4(as<T>())` is semantically equivalent to  `eve::atan(T(1))`
+  //! the call `eve::pio_4(as<T>())` is semantically equivalent to  `eve::atan``(T(1))`
   //!
   //! ---
   //!

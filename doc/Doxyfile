@@ -26,6 +26,7 @@ ALIASES += ce{1}="@htmlonly <a id=\"godbolt-link\" href=\"#\"> \1 </a> <div id=\
 ALIASES += endce="@htmlonly</div>@endhtmlonly"
 ALIASES += godbolt{1}="@ce \n @include \1 \n @endce"
 ALIASES += godbolt{2}="@ce{\1} \n @include \2 \n @endce"
+ALIASES += groupheader{1}="<h2 class=\"groupheader\"> \1 </h2>"
 
 #---------------------------------------------------------------------------
 # Singular aliases

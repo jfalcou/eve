@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::valmin(as<T>())` is semantically equivalent to  `T(std::numeric_limits<element_type_t<T>>::lowest())`
+  //! the call `eve::valmin(as<T>())` is semantically equivalent to  `T(std::numeric_limits<element_type_t<T>>::``lowest())`
   //!
   //! ---
   //!

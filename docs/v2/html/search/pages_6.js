@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['the_20expressive_20vector_20engine_946',['The Expressive Vector Engine',['../index.html',1,'']]],
-  ['tutorials_947',['Tutorials',['../tutorials.html',1,'']]]
+  ['the_20expressive_20vector_20engine_0',['The Expressive Vector Engine',['../index.html',1,'']]],
+  ['tutorials_1',['Tutorials',['../tutorials.html',1,'']]]
 ];

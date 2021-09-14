@@ -35,13 +35,13 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`v`:   [simd value](@ref eve::simd_value) to reduce.
+  //! `v`:   [SIMD value](@ref eve::simd_value) to reduce.
   //!
-  //!`binary_op`:   Binary callable object that perform a binary, associative operation.
+  //! `binary_op`:   Binary callable object that perform a binary, associative and commutative operation.
   //!
   //! **Return value**
   //!
-  //!Generalized fold of `v.get(0)`, `v.get(1)`, ... `v.get(v.size()-1)` over `binary_op`,
+  //! Generalized fold of `v.get(0)`, `v.get(1)`, ... `v.get(v.size()-1)` over `binary_op`,
   //!
   //! ---
   //!
@@ -63,7 +63,13 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  no decorators are supported
+  //!   * eve::splat
+  //!
+  //!     **Required header:** `#include <eve/function/reduce.hpp>`
+  //!
+  //!     The expression `eve::splat(eve::reduce)(v,binary_op)` computes the reduction of `v`
+  //!     using `binary_op` but returns a [SIMD value](@ref eve::simd_value) containing the result
+  //!     in all lanes.
   //!
   //! #### Example
   //!

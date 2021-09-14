@@ -58,47 +58,62 @@ namespace eve
   //================================================================================================
   //! @addtogroup concepts
   //! @{
-  //! @var scalar_value
+  //! @concept scalar_value
+  //! @brief Specify that a type represents a scalar value
+  //!
   //! The concept `scalar_value<T>` is satisfied if and only if it is arithmetic or a product type
   //! which types satisfies scalar_value themselves.
   //!
-  //! #### Examples
+  //! @groupheader{Examples}
   //! - `float`
   //! - `std::int32_t`
   //! @}
   //================================================================================================
-  template<typename T> concept scalar_value                   = detail::is_scalar_value<T>::value;
+  template<typename T>
+  concept scalar_value = detail::is_scalar_value<T>::value;
 
   //================================================================================================
   //! @addtogroup concepts
   //! @{
-  //! @var integral_scalar_value
-  //! The concept `integral_scalar_value<T>` is satisfied if and only if T is integral and scalar_value
+  //! @concept integral_scalar_value
+  //! @brief Specify that a type represents an integral scalar value
   //!
-  //! #### Examples
+  //! The concept `integral_scalar_value<T>` is satisfied if and only if T satisfies
+  //! `eve::scalar_value<T>` and `std::integral<T>`.
+  //!
+  //! @groupheader{Examples}
   //! - `std::int32_t`
   //! @}
   //================================================================================================
-  template<typename T> concept integral_scalar_value          = scalar_value<T> && std::integral<T>;
+  template<typename T>
+  concept integral_scalar_value  = scalar_value<T> && std::integral<T>;
+
   //================================================================================================
   //! @addtogroup concepts
   //! @{
-  //! @var signed_scalar_value
-  //! The concept `signed_scalar_value<T>` is satisfied if and only if T is signed and scalar_value
+  //! @concept signed_scalar_value
+  //! @brief Specify that a type represents a signed scalar value
   //!
-  //! #### Examples
+  //! The concept `signed_scalar_value<T>` is satisfied if and only if T  satisfies
+  //! `eve::scalar_value<T>` and `std::integral<T>`.
+  //!
+  //! @groupheader{Examples}
   //! - `std::int32_t`
   //! - `float`
   //! @}
   //================================================================================================
-  template<typename T> concept signed_scalar_value            = scalar_value<T> && std::is_signed_v<T>;
+  template<typename T>
+  concept signed_scalar_value  = scalar_value<T> && std::is_signed_v<T>;
+
   //================================================================================================
   //! @addtogroup concepts
   //! @{
-  //! @var unsigned_scalar_value
+  //! @concept unsigned_scalar_value
+  //! @brief Specify that a type represents a scalar value
+  //!
   //! The concept `unsigned_scalar_value<T>` is satisfied if and only if T is unsigned and scalar_value
   //!
-  //! #### Examples
+  //! @groupheader{Examples}
   //! - `std::uint32_t`
   //! @}
   //================================================================================================
@@ -106,10 +121,12 @@ namespace eve
   //================================================================================================
   //! @addtogroup concepts
   //! @{
-  //! @var signed_integral_scalar_value
+  //! @concept signed_integral_scalar_value
+  //! @brief Specify that a type represents a scalar value
+  //!
   //! The concept `unsigned_integral_scalar_value<T>` is satisfied if and only if T is signed,  integral and scalar_value
   //!
-  //! #### Examples
+  //! @groupheader{Examples}
   //! - `std::int32_t`
   //! @}
   //================================================================================================
@@ -117,10 +134,12 @@ namespace eve
   //================================================================================================
   //! @addtogroup concepts
   //! @{
-  //! @var floating_scalar_value
+  //! @concept floating_scalar_value
+  //! @brief Specify that a type represents a scalar value
+  //!
   //! The concept `floating_scalar_value<T>` is satisfied if and only if T is floating_point and scalar_value
   //!
-  //! #### Examples
+  //! @groupheader{Examples}
   //! - `float`
   //! - `double`
   //! @}
@@ -129,10 +148,12 @@ namespace eve
   //================================================================================================
   //! @addtogroup concepts
   //! @{
-  //! @var logical_scalar_value
+  //! @concept logical_scalar_value
+  //! @brief Specify that a type represents a scalar value
+  //!
   //! The concept `logical_scalar_value<T>` is satisfied if and only if T is logical and scalar_value
   //!
-  //! #### Examples
+  //! @groupheader{Examples}
   //! - `logical<float>`
   //! - `logical<int>`
   //! @}
@@ -141,10 +162,12 @@ namespace eve
   //================================================================================================
   //! @addtogroup concepts
   //! @{
-  //! @var real_scalar_value
+  //! @concept real_scalar_value
+  //! @brief Specify that a type represents a scalar value
+  //!
   //! The concept `real_scalar_value<T>` is satisfied if and only if T is scalar_value and real_value
   //!
-  //! #### Examples
+  //! @groupheader{Examples}
   //! - `float`
   //! - `int`
   //! @}
@@ -153,10 +176,12 @@ namespace eve
   //================================================================================================
   //! @addtogroup concepts
   //! @{
-  //! @var floating_real_scalar_value
+  //! @concept floating_real_scalar_value
+  //! @brief Specify that a type represents a scalar value
+  //!
   //! The concept `floating_real_scalar_value<T>` is satisfied if and only if T is scalar_value and floating_real_value
   //!
-  //! #### Examples
+  //! @groupheader{Examples}
   //! - `float`
   //! - `double`
   //! @}
@@ -165,10 +190,12 @@ namespace eve
   //================================================================================================
   //! @addtogroup concepts
   //! @{
-  //! @var integral_real_scalar_value
+  //! @concept integral_real_scalar_value
+  //! @brief Specify that a type represents a scalar value
+  //!
   //! The concept `integral_real_scalar_value<T>` is satisfied if and only if T is scalar_value and integral_real_value
   //!
-  //! #### Examples
+  //! @groupheader{Examples}
   //! - `int`
   //! - `unsigned int`
   //! @}

@@ -39,8 +39,8 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Return the remainder after division division of `x` by `y` and is
-  //!semantically equivalent to  `x-eve::trunc(eve:div(x, y))*y`.
+  //! Return the remainder after division division of `x` by `y` and is
+  //! semantically equivalent to  `x-eve::trunc(``eve:div(x, y))*y`.
   //!
   //! The result type is the [common compatible type](@ref common_compatible) of the two parameters.
   //!

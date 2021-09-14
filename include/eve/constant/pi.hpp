@@ -41,7 +41,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::pi(as<T>())` is semantically equivalent to  `4*eve::atan(T(1))`
+  //! the call `eve::pi(as<T>())` is semantically equivalent to  `4*eve::atan``(T(1))`
   //!
   //! ---
   //!

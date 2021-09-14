@@ -40,8 +40,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::twopi(as<T>())` is semantically equivalent
-  //! to `8*eve::atan(T(1))`
+  //! `eve::twopi(as<T>())` is semantically equivalent to `8*eve::atan``(T(1))`
   //!
   //! ---
   //!

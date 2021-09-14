@@ -44,10 +44,10 @@ namespace eve
   //! the call `eve::eps(as<T>())` returns [elementwise](@ref glossary_elementwise), the smallest
   //! positive value `x` of the type such that `1+x !=  x`.
   //!
-  //!  * If T is an [integral value](@ref integral_value) the elements returned are equal to one
-  //!  * If T is a  [floating real value](@ref floating_real_value) the elements returned are equal to
-  //!        - 2.220446049250313e-16 if the [elements type](@ref eve::element_type_t) is float
-  //!        - 1.1920929e-07f        if the [elements type](@ref eve::element_type_t) is double
+  //!  * If T is an [integral value](@ref eve::integral_value) the elements returned are equal to one
+  //!  * If T is a  [floating real value](@ref eve::floating_real_value) the elements returned are equal to
+  //!        - 2.220446049250313e-16 if the [elements type](@ref eve::element_type) is float
+  //!        - 1.1920929e-07f        if the [elements type](@ref eve::element_type) is double
   //!
   //! ---
   //!

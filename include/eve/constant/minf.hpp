@@ -42,7 +42,7 @@ namespace eve
   //! **Return value**
   //!
   //! the call `eve::minf(as<T>())` is semantically equivalent to
-  //! `T(-std::numeric_limits<t_t>::infinity())`
+  //! `T(-std::numeric_limits<t_t>::``infinity())`
   //!
   //! ---
   //!

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['quadrant_370',['quadrant',['../group__trigonometric_gaf3716c407dc2f76f32b48455c1f6189f.html#gaf3716c407dc2f76f32b48455c1f6189f',1,'eve']]]
+  ['quadrant_0',['quadrant',['../group__trigonometric_gaf3716c407dc2f76f32b48455c1f6189f.html#gaf3716c407dc2f76f32b48455c1f6189f',1,'eve']]]
 ];

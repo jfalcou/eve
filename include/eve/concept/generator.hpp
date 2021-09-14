@@ -38,12 +38,12 @@ namespace eve
   //================================================================================================
   //! @addtogroup concepts
   //! @{
-  //! @var generator
-  //! The concept `genertor<Constant,Type>` is satisfied if  `Constant{}( eve::as<type>() )` is
-  //! well formed.
+  //!   @concept generator
+  //!   The concept `generator<Constant,Type>` is satisfied if `Constant{}( eve::as<type>() )` is
+  //!   well formed.
   //!
-  //! #### Examples
-  //! - `eve::callable_one_`
+  //!   @groupheader{Examples}
+  //!     - `eve::callable_one_`
   //! @}
   //================================================================================================
   template<typename Constant, typename Type>

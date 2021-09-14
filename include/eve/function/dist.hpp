@@ -48,8 +48,8 @@ namespace eve
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
   //!auto r = abs(x-y);
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!   If an  [element](@ref glossary_element) of the expected result is not representable in
-  //!   the result type, the corresponding result [element](@ref glossary_element) is undefined.
+  //!   If an  [element](@ref glossary_elementwise) of the expected result is not representable in
+  //!   the result type, the corresponding result [element](@ref glossary_elementwise) is undefined.
   //!
   //!   The result type is the [common compatible type](@ref common_compatible) of the two parameters.
   //!

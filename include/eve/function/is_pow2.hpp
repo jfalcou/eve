@@ -34,14 +34,14 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [unsigned value](@ref eve::value).
+  //! `x`:   [unsigned value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!Checks [elementwise](@ref glossary_elementwise) if `x` is an integral power of two.
+  //! Checks [elementwise](@ref glossary_elementwise) if `x` is an integral power of two.
   //!
   //! ---
- //!
+  //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  auto operator[]( conditional_expression auto cond ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

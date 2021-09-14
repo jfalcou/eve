@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['logical_923',['Logical',['../group__logical.html',1,'']]]
+  ['logical_0',['Logical',['../group__logical.html',1,'']]]
 ];

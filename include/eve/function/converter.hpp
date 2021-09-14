@@ -96,7 +96,6 @@ namespace eve
   //================================================================================================
   template<scalar_value T> using converter_type = decorated<convert_to_<T>()>;
 
-  inline constexpr converter_type<float>              const float32  = {};
   //================================================================================================
   //! @addtogroup converter
   //! @{
@@ -119,7 +118,8 @@ namespace eve
   //!   * if x is a supported callable a call to float32(x)(...) is semantically equivalent to float32(x(...))
   //!  @}
   //================================================================================================
-  inline constexpr converter_type<double>             const float64  = {};
+  inline constexpr converter_type<float>              const float32  = {};
+
   //================================================================================================
   //! @addtogroup converter
   //! @{
@@ -142,7 +142,8 @@ namespace eve
   //!   * if x is a supported callable a call to float64(x)(...) is semantically equivalent to float64(x(...))
   //!  @}
   //================================================================================================
-  inline constexpr converter_type<std::uint8_t >      const uint8    = {};
+  inline constexpr converter_type<double>             const float64  = {};
+
   //================================================================================================
   //! @addtogroup converter
   //! @{
@@ -165,7 +166,8 @@ namespace eve
   //!   * if x is a supported callable a call to uint8(x)(...) is semantically equivalent to uint8(x(...))
   //!  @}
   //================================================================================================
-  inline constexpr converter_type<std::uint16_t>      const uint16   = {};
+  inline constexpr converter_type<std::uint8_t >      const uint8    = {};
+
   //================================================================================================
   //! @addtogroup converter
   //! @{
@@ -188,7 +190,8 @@ namespace eve
   //!   * if x is a supported callable a call to uint16(x)(...) is semantically equivalent to uint16(x(...))
   //!  @}
   //================================================================================================
-  inline constexpr converter_type<std::uint32_t>      const uint32   = {};
+  inline constexpr converter_type<std::uint16_t>      const uint16   = {};
+
   //================================================================================================
   //! @addtogroup converter
   //! @{
@@ -211,7 +214,8 @@ namespace eve
   //!   * if x is a supported callable a call to uint32(x)(...) is semantically equivalent to uint32(x(...))
   //!  @}
   //================================================================================================
-  inline constexpr converter_type<std::uint64_t>      const uint64   = {};
+  inline constexpr converter_type<std::uint32_t>      const uint32   = {};
+
   //================================================================================================
   //! @addtogroup converter
   //! @{
@@ -234,7 +238,8 @@ namespace eve
   //!   * if x is a supported callable a call to uint64(x)(...) is semantically equivalent to uint64(x(...))
   //!  @}
   //================================================================================================
-  inline constexpr converter_type<std::int8_t >       const int8     = {};
+  inline constexpr converter_type<std::uint64_t>      const uint64   = {};
+
   //================================================================================================
   //! @addtogroup converter
   //! @{
@@ -257,7 +262,8 @@ namespace eve
   //!   * if x is a supported callable a call to int8(x)(...) is semantically equivalent to int8(x(...))
   //!  @}
   //================================================================================================
-  inline constexpr converter_type<std::int16_t>       const int16    = {};
+  inline constexpr converter_type<std::int8_t >       const int8     = {};
+
   //================================================================================================
   //! @addtogroup converter
   //! @{
@@ -280,7 +286,8 @@ namespace eve
   //!   * if x is a supported callable a call to int16(x)(...) is semantically equivalent to int16(x(...))
   //!  @}
   //================================================================================================
-  inline constexpr converter_type<std::int32_t>       const int32    = {};
+  inline constexpr converter_type<std::int16_t>       const int16    = {};
+
   //================================================================================================
   //! @addtogroup converter
   //! @{
@@ -303,7 +310,8 @@ namespace eve
   //!   * if x is a supported callable a call to int32(x)(...) is semantically equivalent to int32(x(...))
   //!  @}
   //================================================================================================
-  inline constexpr converter_type<std::int64_t>       const int64    = {};
+  inline constexpr converter_type<std::int32_t>       const int32    = {};
+
   //================================================================================================
   //! @addtogroup converter
   //! @{
@@ -326,6 +334,7 @@ namespace eve
   //!   * if x is a supported callable a call to int64(x)(...) is semantically equivalent to int64(x(...))
   //!  @}
   //================================================================================================
+  inline constexpr converter_type<std::int64_t>       const int64    = {};
 
   template<typename T>
   inline constexpr converter_type<element_type_t<T>>  const to_ = {};
@@ -355,6 +364,8 @@ namespace eve
   //!  where i_t is eve::as_integral_t<eve::element_type_t<T>>
   //!  @}
   //================================================================================================
+  inline constexpr int_converter      const int_      = {};
+
   using uint_converter      = decorated<convert_by_<as_uinteger>()>;
   //================================================================================================
   //! @addtogroup converter
@@ -380,11 +391,13 @@ namespace eve
   //!  where i_t is eve::as_integral_t<eve::element_type_t<T>, unsigned>
   //!  @}
   //================================================================================================
+  inline constexpr uint_converter     const uint_     = {};
+
   using floating_converter  = decorated<convert_by_<as_floating_point>()>;
   //================================================================================================
   //! @addtogroup converter
   //! @{
-  //! @var floating__
+  //! @var floating_
   //!
   //! @brief  convert a eve::real_value to a floating point based eve::floating_real_value of same size.
   //!
@@ -405,6 +418,8 @@ namespace eve
   //!  where i_t is eve::as_floating_point_t<eve::element_type_t<T>>
   //!  @}
   //================================================================================================
+  inline constexpr floating_converter const floating_ = {};
+
   using upgrade_converter   = decorated<convert_by_<detail::upgrade,false>()>;
   //================================================================================================
   //! @addtogroup converter
@@ -430,9 +445,5 @@ namespace eve
   //!  where i_t is eve::as_integral_t<eve::element_type_t<T>>
   //!  @}
   //================================================================================================
-
-  inline constexpr int_converter      const int_      = {};
-  inline constexpr uint_converter     const uint_     = {};
-  inline constexpr floating_converter const floating_ = {};
   inline constexpr upgrade_converter  const upgrade_  = {};
 }

@@ -41,7 +41,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::inf(as<T>())` is semantically equivalent to  `T(std::numeric_limits<eve::element_type_t<T>>::infinity())`
+  //! the call `eve::inf(as<T>())` is semantically equivalent to  `T(std::numeric_limits<eve::element_type_t<T>>::``infinity())`
   //!
   //! ---
   //!

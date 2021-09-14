@@ -47,10 +47,10 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [elementwise](@ref glossary_elementwise) the value of the gegenbauer polynomial of order `n` at `l`, `x`:
+  //! Returns [elementwise](@ref glossary_elementwise) the value of the gegenbauer polynomial of order `n` at `l`, `x`:
   //!
-  //!The result type is of the [common compatible type](@ref common_compatible) of the two last parameters,
-  //!if necessary with the [cardinality](@ref eve::cardinal_t) of the first.
+  //! The result type is of the [common compatible type](@ref common_compatible) of the two last parameters,
+  //! if necessary with the [cardinal](@ref eve::cardinal) of the first.
   //!
   //! ---
   //!

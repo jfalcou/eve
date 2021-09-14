@@ -40,7 +40,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::twoopi(as<T>())` is semantically equivalent to  `eve::rec(2*eve::atan(T(1)))`
+  //! the call `eve::twoopi(as<T>())` is semantically equivalent to  `eve::rec(2*eve::atan``(T(1)))`
   //!
   //! ---
   //!

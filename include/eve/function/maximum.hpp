@@ -34,11 +34,11 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   a [real value](@ref real_value)
+  //!`x`:   a [real value](@ref eve::real_value)
   //!
   //! **Return value**
   //!
-  //!returns a [scalar value](@ref scalar_value) containing the maximal element
+  //!returns a [scalar value](@ref eve::scalar_value) containing the maximal element
   //!
   //! ---
   //!

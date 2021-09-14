@@ -39,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!For each  [element](@ref glossary_element) of the input the phase angle is returned:
+  //!For each  [element](@ref glossary_elementwise) of the input the phase angle is returned:
   //!
   //!  If the input type is a [floating real value](@ref eve::floating_real_value):
   //!
