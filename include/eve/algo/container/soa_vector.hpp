@@ -9,11 +9,15 @@
 
 #include <eve/algo/equal.hpp>
 #include <eve/algo/zip.hpp>
+#include <eve/algo/convert.hpp>
+
+#include <eve/algo/container/detail/soa_storage.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/function/read.hpp>
 #include <eve/function/write.hpp>
-#include <eve/memory/aligned_allocator.hpp>
 #include <eve/product_type.hpp>
+
+#include <memory>
 #include <vector>
 
 namespace eve::algo
@@ -34,18 +38,36 @@ namespace eve::algo
   //================================================================================================
   template<eve::product_type Type> struct soa_vector
   {
-    private:
-    template<typename T> struct soa_storage
-    {
-      using type = std::vector<T, aligned_allocator<T,eve::detail::cache_line_cardinal<T>>>;
-    };
-
     public:
 
     //! Type of data stored in the container
     using value_type = Type;
 
-    using storage_type = kumi::as_tuple_t<kumi::result::flatten_all_t<Type>, soa_storage>;
+    using storage_type = detail::soa_storage<Type>;
+
+    //!=============================================================================================
+    //! @name Pointers and Iterators
+    //! @{
+    //==============================================================================================
+    //!   @brief pointer and iterator types.
+    //!   pointer*  - are eve::algo::zip_iterator over fields (no conversion to type, just flat fields)
+    //!   iterator* - are a pointer, converter to the Type.
+    //!   They all safisfy eve::algo::relaxed_iterator but not std::iterator
+
+    using pointer               = decltype(storage_type{}.data());
+    using const_pointer         = decltype(std::declval<storage_type const>().data());
+    using pointer_aligned       = decltype(storage_type{}.data_aligned());
+    using const_pointer_aligned = decltype(std::declval<storage_type const>().data_aligned());
+
+    using iterator               = decltype(eve::algo::convert(pointer{}              , as<value_type>{}));
+    using const_iterator         = decltype(eve::algo::convert(const_pointer{}        , as<value_type>{}));
+    using iterator_aligned       = decltype(eve::algo::convert(pointer_aligned{}      , as<value_type>{}));
+    using const_iterator_aligned = decltype(eve::algo::convert(const_pointer_aligned{}, as<value_type>{}));
+
+    //==============================================================================================
+    //! @}
+    //==============================================================================================
+
 
     //==============================================================================================
     //! @name Constructors
@@ -68,7 +90,7 @@ namespace eve::algo
       auto ptr = l.begin();
       for(std::size_t i = 0;i < size(); ++i)
       {
-        kumi::for_each( [&](auto m, auto& v) { v[i] = m; }, *ptr++, storage );
+        kumi::for_each( [&](auto m, auto& v) { v[i] = m; }, kumi::flatten_all(*ptr++), storage );
       }
     }
 
@@ -114,8 +136,19 @@ namespace eve::algo
     //! @name Modifiers
     //! @{
     //==============================================================================================
-    //! @brief Clear the contents of the container
+    //! @brief Clear the contents of the container.
     void clear() { kumi::for_each([&](auto& m) { m.clear(); }, storage); }
+
+    //! @brief Removes an element from the container.
+    //! Has the same invalidation semantics as std::vector.
+    //! end() iterator is not a valid pos.
+    iterator erase(iterator       pos) { return erase_impl(begin(),  pos); }
+    iterator erase(const_iterator pos) { return erase_impl(cbegin(), pos); }
+
+    //! @brief Removes the elements in the range [first, last)
+    //! Empty range is OK, does nothing
+    iterator erase(iterator       f,       iterator l) { return erase_impl(begin(),  f, l); }
+    iterator erase(const_iterator f, const_iterator l) { return erase_impl(cbegin(), f, l); }
 
     //! @brief Appends the given element value to the end of the container.
     //! If the new size() is greater than capacity() then all iterators and references (including
@@ -169,37 +202,22 @@ namespace eve::algo
     //! @}
     //==============================================================================================
 
-    private:
-    template<typename T> static auto as_aligned_pointer(T* ptr)
-    {
-      return eve::as_aligned(ptr, eve::detail::cache_line_cardinal<T>{});
-    }
-
-    template<typename Self> static auto begin_aligned_impl(Self& self)
-    {
-       auto ptrs    = kumi::map([](auto& m) { return as_aligned_pointer(m.data()); }, self.storage);
-       auto zipped  = kumi::apply(eve::algo::zip, ptrs);
-
-       /* todo: add eve::algo::convert(zipped, eve::as<Type>{}) */
-       return zipped;
-    }
-
     public:
     //==============================================================================================
     //! @name Element access
     //! @{
     //==============================================================================================
-    //! Returns an aligned pointer to the beginning
-    EVE_FORCEINLINE auto data_aligned()  { return begin_aligned_impl(*this); }
+    //! Returns a zipped aligned pointer to the beginning
+    EVE_FORCEINLINE auto data_aligned()  { return storage.data_aligned(); }
 
-    //! Returns an aligned pointer to the beginning
-    EVE_FORCEINLINE auto data_aligned()  const { return begin_aligned_impl(*this); }
+    //! Returns a zipped aligned pointer to the beginning
+    EVE_FORCEINLINE auto data_aligned()  const { return storage.data_aligned(); }
 
-    //! Returns a pointer to the beginning
-    EVE_FORCEINLINE auto data()  { return eve::algo::unalign(begin_aligned()); }
+    //! Returns a zipped pointer to the beginning
+    EVE_FORCEINLINE auto data()  { return storage.data(); }
 
-    //! Returns a constant pointer to the beginning
-    EVE_FORCEINLINE auto data()  const { return eve::algo::unalign(begin_aligned()); }
+    //! Returns a constant zipped pointer to the beginning
+    EVE_FORCEINLINE auto data()  const { return storage.data(); }
 
     //! @brief Returns the value of the `i`th element of the container
     //! @param i Index of the value to retrieve
@@ -222,31 +240,31 @@ namespace eve::algo
     //! @{
     //==============================================================================================
     //! Returns an aligned iterator to the beginning
-    EVE_FORCEINLINE auto begin_aligned()  { return begin_aligned_impl(*this); }
+    EVE_FORCEINLINE auto begin_aligned() -> iterator_aligned { return eve::algo::convert(data_aligned(), eve::as<Type>{}); }
 
     //! Returns an aligned iterator to the beginning
-    EVE_FORCEINLINE auto begin_aligned()  const { return begin_aligned_impl(*this); }
+    EVE_FORCEINLINE auto begin_aligned()  const -> const_iterator_aligned { return eve::algo::convert(data_aligned(), eve::as<Type>{}); }
 
     //! Returns a constant aligned iterator to the beginning
-    EVE_FORCEINLINE auto cbegin_aligned() const { return begin_aligned(); }
+    EVE_FORCEINLINE auto cbegin_aligned() const -> const_iterator_aligned { return begin_aligned(); }
 
     //! Returns an iterator to the beginning
-    EVE_FORCEINLINE auto begin()  { return eve::algo::unalign(begin_aligned()); }
+    EVE_FORCEINLINE auto begin() -> iterator { return eve::algo::convert(data(), eve::as<Type>{}); }
 
     //! Returns an iterator to the beginning
-    EVE_FORCEINLINE auto begin()  const { return eve::algo::unalign(begin_aligned()); }
+    EVE_FORCEINLINE auto begin()  const -> const_iterator { return eve::algo::convert(data(), eve::as<Type>{}); }
 
     //! Returns a constant iterator to the beginning
-    EVE_FORCEINLINE auto cbegin() const { return begin(); }
+    EVE_FORCEINLINE auto cbegin() const -> const_iterator { return begin(); }
 
     //! Returns an iterator to the end
-    EVE_FORCEINLINE auto end()  { return begin() + size(); }
+    EVE_FORCEINLINE auto end()  -> iterator  { return begin() + size(); }
 
     //! Returns an iterator to the end
-    EVE_FORCEINLINE auto end()  const { return begin() + size(); }
+    EVE_FORCEINLINE auto end()  const -> const_iterator { return begin() + size(); }
 
     //! Returns a constant iterator to the end
-    EVE_FORCEINLINE auto cend() const { return end(); }
+    EVE_FORCEINLINE auto cend() const -> const_iterator { return end(); }
 
     //==============================================================================================
     //! @}
@@ -287,6 +305,21 @@ namespace eve::algo
     }
 
     private:
+
+    auto erase_impl(auto base, auto pos) {
+      std::ptrdiff_t distance = pos - base;
+      kumi::for_each([&](auto& m) { return m.erase(m.begin() + distance); }, storage);
+      return begin() + distance;
+    }
+
+    auto erase_impl(auto base, auto pos_f, auto pos_l) {
+      std::ptrdiff_t distance_f = pos_f - base;
+      std::ptrdiff_t distance_l = pos_l - base;
+      kumi::for_each([&](auto& m) {
+        return m.erase(m.begin() + distance_f, m.begin() + distance_l); }, storage);
+      return begin() + distance_f;
+    };
+
     storage_type storage;
   };
 }

@@ -38,6 +38,7 @@ TTS_CASE("Check soa_vector sized ctor")
   // grid2d has some specific default
   TTS_EQUAL( get<0>(udt_vector.get(0)), +1  );
   TTS_EQUAL( get<1>(udt_vector.get(0)), -1  );
+  TTS_EQUAL( udt_vector.get(0), udt::grid2d{});
 }
 
 TTS_CASE("Check soa_vector sized ctor with default value")
@@ -246,4 +247,111 @@ TTS_CASE("Check soa_vector::begin/end behavior")
   i = 0;
   while(uv_begin != uv_end)
     TTS_EQUAL( eve::read(uv_begin++), uv.get(i++));
+}
+
+TTS_CASE("Check types")
+{
+  using T        = udt::grid2d;
+  using ap       = eve::aligned_ptr<int,       eve::fixed<64 / sizeof(int)>>;
+  using const_ap = eve::aligned_ptr<int const, eve::fixed<64 / sizeof(int)>>;
+
+  using v = eve::algo::soa_vector<udt::grid2d>;
+  TTS_TYPE_IS(v::pointer,               (eve::algo::zip_iterator<int*,       int*>));
+  TTS_TYPE_IS(v::const_pointer,         (eve::algo::zip_iterator<int const*, int const*>));
+  TTS_TYPE_IS(v::pointer_aligned,       (eve::algo::zip_iterator<ap,   ap>));
+  TTS_TYPE_IS(v::const_pointer_aligned, (eve::algo::zip_iterator<const_ap,   const_ap>));
+
+  TTS_TYPE_IS(v::iterator,               (eve::algo::converting_iterator<v::pointer,               T>));
+  TTS_TYPE_IS(v::const_iterator,         (eve::algo::converting_iterator<v::const_pointer,         T>));
+  TTS_TYPE_IS(v::iterator_aligned,       (eve::algo::converting_iterator<v::pointer_aligned,       T>));
+  TTS_TYPE_IS(v::const_iterator_aligned, (eve::algo::converting_iterator<v::const_pointer_aligned, T>));
+}
+
+TTS_CASE("erase(pos)")
+{
+  using grids = eve::algo::soa_vector<udt::grid2d>;
+  grids v {
+    udt::grid2d{0, 0}, udt::grid2d{1, 1}, udt::grid2d{2, 2},
+  };
+
+  grids expected { v.get(0), v.get(2) };
+
+  grids::iterator pos = v.erase(v.begin() + 1);
+  TTS_EQUAL(v, expected);
+  TTS_EQUAL((pos - v.begin()), 1);
+
+  expected.pop_back();
+  pos = v.erase(v.cbegin() + 1);
+  TTS_EQUAL(v, expected);
+  TTS_EQUAL((pos - v.begin()), 1);
+
+  expected.pop_back();
+
+  // We might want to return a iterator_aligned here but w/e
+  pos = v.erase(v.begin_aligned());
+  TTS_EQUAL(v, expected);
+  TTS_EQUAL((pos - v.begin()), 0);
+
+  v.push_back({1, 1});
+
+  pos = v.erase(v.begin_aligned());
+  TTS_EQUAL(v, expected);
+  TTS_EQUAL((pos - v.begin()), 0);
+}
+
+TTS_CASE("erase(f, l)")
+{
+  using grids = eve::algo::soa_vector<udt::grid2d>;
+  grids v {
+    udt::grid2d{0, 0}, udt::grid2d{1, 1},
+    udt::grid2d{2, 2}, udt::grid2d{3, 3},
+  };
+
+  grids::iterator pos;
+
+  // empty range
+  {
+    pos = v.erase(v.begin(), v.begin());
+    TTS_EQUAL(v.size(), 4u);
+    TTS_EQUAL(pos, v.begin());
+
+    pos = v.erase(v.cbegin(), v.cbegin());
+    TTS_EQUAL(v.size(), 4u);
+    TTS_EQUAL(pos, v.begin());
+
+    pos = v.erase(v.begin_aligned(), v.begin());
+    TTS_EQUAL(v.size(), 4u);
+    TTS_EQUAL(pos, v.begin());
+
+    pos = v.erase(v.cbegin_aligned(), v.cbegin());
+    TTS_EQUAL(v.size(), 4u);
+    TTS_EQUAL(pos, v.begin());
+  }
+
+  // last 2
+  {
+    grids expected { udt::grid2d{0, 0}, udt::grid2d{1, 1} };
+
+    pos = v.erase(v.cbegin() + 2, v.cend());
+    TTS_EQUAL(expected, v);
+    TTS_EQUAL(pos, v.end());
+  }
+
+  v.push_back(udt::grid2d{2, 2});
+
+  // middle
+  {
+    grids expected { udt::grid2d{0, 0}, udt::grid2d{2, 2} };
+
+    pos = v.erase(v.begin() + 1, v.begin() + 2);
+    TTS_EQUAL(expected, v);
+    TTS_EQUAL(pos, v.begin() + 1);
+  }
+
+  // all
+  {
+    pos = v.erase(v.begin_aligned(), v.end());
+    TTS_EQUAL(v.size(), 0u);
+    TTS_EQUAL(pos, v.begin());
+  }
 }

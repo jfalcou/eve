@@ -21,7 +21,11 @@ struct point2D : i32_x2 {
 
 using points2D_2 = kumi::tuple<point2D, point2D>;
 
-struct line2D: points2D_2 {};
+struct line2D: points2D_2
+{
+  friend decltype(auto) get_start(eve::same_value_type<line2D> auto&& self) { return get<0>(std::forward<decltype(self)>(self)); }
+  friend decltype(auto) get_end  (eve::same_value_type<line2D> auto&& self) { return get<1>(std::forward<decltype(self)>(self)); }
+};
 
 }
 
