@@ -18,10 +18,12 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  template< real_scalar_value T, real_scalar_value U
+          , typename N, simd_compatible_ptr<wide<T, N>> Ptr
+          >
   EVE_FORCEINLINE
   T* compress_store_impl_aggregated(wide<T, N> v,
-                                    logical<wide<T, N>> mask,
+                                    logical<wide<U, N>> mask,
                                     Ptr ptr)
   {
     auto [l, h] = v.slice();
@@ -31,11 +33,13 @@ namespace eve::detail
     return compress_store_impl(h, mh, ptr1);
   }
 
-  template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  template< real_scalar_value T, real_scalar_value U
+          , typename N, simd_compatible_ptr<wide<T, N>> Ptr
+          >
   EVE_FORCEINLINE
   T* compress_store_impl_(EVE_SUPPORTS(cpu_),
                           wide<T, N> v,
-                          logical<wide<T, N>> mask,
+                          logical<wide<U, N>> mask,
                           Ptr ptr) noexcept
   {
     if constexpr ( !has_emulated_abi_v<wide<T, N>> && N() == 2 )
@@ -61,12 +65,14 @@ namespace eve::detail
     }
   }
 
-  template<relative_conditional_expr C, real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  template< relative_conditional_expr C, real_scalar_value T, real_scalar_value U
+          , typename N, simd_compatible_ptr<wide<T, N>> Ptr
+          >
   EVE_FORCEINLINE
   T* compress_store_impl_(EVE_SUPPORTS(cpu_),
                           C c,
                           wide<T, N> v,
-                          logical<wide<T, N>> mask,
+                          logical<wide<U, N>> mask,
                           Ptr ptr) noexcept
   {
          if ( C::is_complete && !C::is_inverted ) return as_raw_pointer(ptr);
