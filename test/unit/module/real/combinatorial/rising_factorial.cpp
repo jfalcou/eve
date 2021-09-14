@@ -23,7 +23,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::fibonacci"
+EVE_TEST_TYPES( "Check return types of eve::rising_factorial"
               , eve::test::simd::ieee_reals)
 <typename T>(eve::as<T>)
 {
@@ -34,7 +34,7 @@ EVE_TEST_TYPES( "Check return types of eve::fibonacci"
 //==================================================================================================
 // Test for corner-cases values
 //==================================================================================================
-EVE_TEST_TYPES( "Check corner-cases behavior of eve::fibonacci on wide"
+EVE_TEST_TYPES( "Check corner-cases behavior of eve::rising_factorial wide"
         , eve::test::simd::ieee_reals
          )
   <typename T>(eve::as<T>)
@@ -78,7 +78,9 @@ EVE_TEST_TYPES( "Check corner-cases behavior of eve::fibonacci on wide"
   TTS_ULP_EQUAL(eve::diff_2nd(eve::rising_factorial)(T( 20),   T(2.0))   , T(1.288620076741702e+03), ulp);
   TTS_ULP_EQUAL(eve::diff_1st(eve::rising_factorial)(T( 20),   T(2.0))   , T(4.100000000000004e+01), ulp);
   TTS_ULP_EQUAL(eve::pedantic(eve::diff_2nd)(eve::rising_factorial)(T( 20),   T(2.0))   , T(1.288620076741702e+03), ulp);
+  TTS_ULP_EQUAL(               eve::diff_2nd(eve::rising_factorial)(T( 20),   T(2.0))   , T(1.288620076741702e+03), ulp);
   TTS_ULP_EQUAL(eve::pedantic(eve::diff_1st)(eve::rising_factorial)(T( 20),   T(2.0))   , T(4.100000000000004e+01), ulp);
+  TTS_ULP_EQUAL(eve::pedantic(eve::diff_1st)(eve::rising_factorial)(T(20.0), T(2.0)) , T(4.100000000000004e+01), ulp);
   TTS_ULP_EQUAL(eve::pedantic(eve::diff_1st)(eve::rising_factorial)(T(-20.2),   T(2.0))   , T(-39.399999999999522515), ulp);
-  TTS_ULP_EQUAL(eve::diff_1st(eve::rising_factorial)(T(-20.2),   T(2.0))   , eve::nan(eve::as<T>()), ulp);  
+  TTS_ULP_EQUAL(eve::diff_1st(eve::rising_factorial)(T(-20.2),   T(2.0))   , eve::nan(eve::as<T>()), ulp);
 };

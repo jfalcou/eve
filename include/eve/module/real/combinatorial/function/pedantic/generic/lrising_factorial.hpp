@@ -41,6 +41,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/traits/common_compatible.hpp>
 #include <eve/detail/hz_device.hpp>
+#include <eve/module/real/combinatorial/detail/lrising_factorial.hpp>
 
 namespace eve::detail
 {
@@ -62,13 +63,13 @@ namespace eve::detail
 
       auto lrpos = [](auto a, auto x)
         {
-          return lrising_factorial(a, x, std::true_type());
+          return inner_lrising_factorial(a, x);
         };
 
       auto lrnegint = [](auto a,  auto x)
         // a and a+x are negative integers uses reflection.
         {
-          auto r = lrising_factorial(-a, -x, std::true_type());
+          auto r = inner_lrising_factorial(-a, -x);
           return -eve::log1p(x/a)-r;
         };
 
@@ -90,7 +91,7 @@ namespace eve::detail
           auto oma = oneminus(a);
           auto spioma = sinpi(oma);
           auto spiomamx = sinpi(oma-x);
-          auto r = lrising_factorial(oma, -x, std::true_type());
+          auto r = inner_lrising_factorial(oma, -x);
           auto lnterm = eve::log(eve::abs(spioma/spiomamx));
           return if_else(is_nez(spiomamx*spioma), lnterm - r, allbits);
         };

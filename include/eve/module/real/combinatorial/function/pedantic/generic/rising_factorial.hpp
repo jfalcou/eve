@@ -28,6 +28,20 @@
 namespace eve::detail
 {
 
+   template<real_value I, floating_real_value T>
+  EVE_FORCEINLINE auto rising_factorial_(EVE_SUPPORTS(cpu_)
+                                        , pedantic_type const &
+                                        , I a,  T x) noexcept
+  {
+    if constexpr(std::is_integral_v<element_type_t<I>>)
+      return pedantic(rising_factorial)(convert(a, as(element_type_t<T>())), x);
+    else
+    {
+      using r_t =  common_compatible_t<T, I>;
+      return pedantic(rising_factorial)(r_t(a), r_t(x));
+    }
+  }
+
   template<floating_real_value T>
   EVE_FORCEINLINE auto rising_factorial_(EVE_SUPPORTS(cpu_)
                                         , pedantic_type const &

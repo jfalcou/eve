@@ -20,8 +20,8 @@ namespace eve::detail
 
   template<integral_real_value N, floating_value T>
   EVE_FORCEINLINE constexpr T laguerre_(EVE_SUPPORTS(cpu_)
-                                  , diff_type<1> const &
-                                  , N const & n
+                                       , diff_type<1> const &
+                                       , N const & n
                                        , T const &x) noexcept
   requires index_compatible_values<N, T>
   {
