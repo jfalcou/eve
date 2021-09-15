@@ -45,6 +45,7 @@ include(config/pch)
 
 if( EVE_BUILD_TEST )
   add_subdirectory(${PROJECT_SOURCE_DIR}/test/)
+  add_subdirectory(${PROJECT_SOURCE_DIR}/examples/)
 endif()
 
 if( EVE_BUILD_BENCHMARKS )
