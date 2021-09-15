@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/function/convert.hpp>
+#include <eve/detail/count_mask.hpp>
 
 #include <array>
 #include <bit>
@@ -167,17 +168,7 @@ namespace eve::detail
 
       alignas(sizeof(T) * 4) const auto patterns = add_popcounts(pattern_4_elements(idxs_bytes<u_t>));
 
-      auto mmask = [&] {
-        if constexpr ( sizeof(T) == 2 && abi_t<T, N>::is_wide_logical )
-        {
-          auto shrink_bytes = eve::convert(mask, eve::as<eve::logical<std::uint8_t>>{});
-          return top_bits{shrink_bytes, c}.as_int();
-        }
-        else
-        {
-          return top_bits{mask, c}.as_int();
-        }
-      }();
+      auto mmask = count_mask(mask, c);
 
       using a_p = aligned_ptr<u_t const, N>;
       bytes_t pattern(ptr_cast<std::uint8_t const>( a_p(patterns[mmask & 7].data()) ));
