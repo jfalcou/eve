@@ -218,4 +218,11 @@ EVE_TEST( "Check compress store behavior"
 {
   all_tests_for_v<eve::logical<T>>(data);
   smaller_test_v<L>(logical_data);
+
+  using v_t = eve::element_type_t<T>;
+  using l_t = std::conditional_t< std::integral<v_t>, double, short>;
+  using c_t = eve::cardinal_t<T>;
+
+  all_tests_for_v<eve::logical<eve::wide<l_t,c_t>>>(data);
+  smaller_test_v<eve::logical<eve::wide<l_t,c_t>>>(logical_data);
 };
