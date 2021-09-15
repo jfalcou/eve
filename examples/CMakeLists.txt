@@ -4,4 +4,4 @@
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 
-make_unit( "doc.tutorial.strlen" strlen.cpp  )
+make_unit( "examples" strlen.cpp )
