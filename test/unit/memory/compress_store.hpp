@@ -5,6 +5,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#pragma once
 #include "test.hpp"
 
 #include <eve/function/compress_store.hpp>
@@ -209,43 +210,3 @@ void all_tests_for_v(T x)
 }
 
 }
-
-EVE_TEST( "Check compress store behavior for arithmetic"
-        , eve::test::simd::all_types
-        , eve::test::generate(eve::test::ramp(1))
-        )
-<typename T> (T data)
-{
-  all_tests_for_v<eve::logical<T>>(data);
-};
-
-EVE_TEST( "Check compress store behavior for logical"
-        , eve::test::simd::all_types
-        , eve::test::generate(eve::test::logicals(1,2))
-        )
-<typename L> (L logical_data)
-{
-  smaller_test_v<L>(logical_data);
-};
-
-EVE_TEST( "Check compress store behavior arithmetic - uneven logical type"
-        , eve::test::simd::all_types
-        , eve::test::generate(eve::test::ramp(1))
-        )
-<typename T> (T data)
-{
-  smaller_test_v<eve::logical<eve::wide<std::uint8_t, eve::fixed<T::size()>>>>(data);
-  smaller_test_v<eve::logical<eve::wide<std::uint16_t, eve::fixed<T::size()>>>>(data);
-  smaller_test_v<eve::logical<eve::wide<std::uint32_t, eve::fixed<T::size()>>>>(data);
-  smaller_test_v<eve::logical<eve::wide<std::uint64_t, eve::fixed<T::size()>>>>(data);
-};
-
-EVE_TEST( "Check compress store behavior logical - uneven logical type"
-        , eve::test::simd::all_types
-        , eve::test::generate(eve::test::logicals(1,2))
-        )
-<typename L> (L logical_data)
-{
-  smaller_test_v<eve::logical<eve::wide<std::uint8_t, eve::fixed<L::size()>>>>(logical_data);
-  smaller_test_v<eve::logical<eve::wide<std::uint64_t, eve::fixed<L::size()>>>>(logical_data);
-};
