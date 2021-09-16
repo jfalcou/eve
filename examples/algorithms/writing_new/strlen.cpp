@@ -6,7 +6,7 @@
 */
 //==================================================================================================
 
-// In this tutorial we will have a look at how some of the eve's concepts
+// In this example we will have a look at how some of the eve's concepts
 // come together to implement strlen.
 //
 // This strlen implementation:

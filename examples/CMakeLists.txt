@@ -4,4 +4,5 @@
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 
+make_unit( "examples" algorithms/writing_new/collect_indexes.cpp )
 make_unit( "examples" algorithms/writing_new/strlen.cpp )
