@@ -10,7 +10,7 @@
 // In this example we will have a look at a problem from this blog post:
 //   https://maxdemarzi.com/2021/08/30/lets-build-something-outrageous-part-13-finding-things-faster/
 // This is a slightly modified version of what they posted.
-// Accroding to the author, the number of requests per second went up 5.75 times, after using eve.
+// According to the author, the number of requests per second went up 5.75 times, after using eve.
 // (My understanding is that `avx2` implementation kicked in).
 //
 // Goal: you have a vector and a predicate. You need to return a vector of all indexes,
@@ -66,6 +66,10 @@ void collect_indexes(R&& r, P p, std::vector<IdxType, Alloc>& res)
   // Otherwise either the compressing of the output or applying the predicate will be weird.
   constexpr std::ptrdiff_t step = std::min(eve::expected_cardinal_v<T>,
                                            eve::expected_cardinal_v<IdxType>);
+
+  // ^ Computation of the step is why the requirements on the predicate are difficult.
+  // It has to be `invocable<eve::wide<T, eve::fixed<step>>` but we didn't have the step
+  // before this point.
 
   // This converts the input to eve's understanding of a range:
   // unwraps vector::iterator to pointers, things like that.

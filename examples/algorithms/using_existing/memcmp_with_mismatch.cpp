@@ -60,15 +60,21 @@ int memcmp_( void const* lhs, void const* rhs, std::size_t count )
 
 TTS_CASE("against std::memcmp")
 {
-  auto test = [](std::vector<std::uint8_t> const& a,
+  auto postprocess_res = [](int r) {
+    if (r < 0)  return -1;
+    if (r == 0) return 0;
+    return 1;
+  };
+
+  auto test = [&](std::vector<std::uint8_t> const& a,
                  std::vector<std::uint8_t> const& b) {
     TTS_EQUAL(
-      (std::memcmp(a.data(), b.data(), a.size())),
-      (memcmp_(a.data(), b.data(), a.size()))
+      postprocess_res(std::memcmp(a.data(), b.data(), a.size())),
+      postprocess_res(memcmp_(a.data(), b.data(), a.size()))
     );
     TTS_EQUAL(
-      (std::memcmp(b.data(), a.data(), a.size())),
-      (memcmp_(b.data(), a.data(), a.size()))
+      postprocess_res(std::memcmp(b.data(), a.data(), a.size())),
+      postprocess_res(memcmp_(b.data(), a.data(), a.size()))
     );
   };
 

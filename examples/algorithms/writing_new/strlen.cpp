@@ -99,9 +99,9 @@ std::size_t strlen_(const char* s_) {
 
 TTS_CASE( "Check strlen, basic")
 {
-  TTS_EQUAL(strlen_("abc"), 3);
-  TTS_EQUAL(strlen_(""), 0);
-  TTS_EQUAL(strlen_("0000"), 4);
+  TTS_EQUAL(strlen_("abc"), 3u);
+  TTS_EQUAL(strlen_(""), 0u);
+  TTS_EQUAL(strlen_("0000"), 4u);
 }
 
 TTS_CASE( "Check strlen_ example exchaustive" )
