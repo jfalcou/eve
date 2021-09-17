@@ -9,12 +9,17 @@
 //
 // Writing custom cmplx numbers.
 //
-// NOTE: we will definetly have a proper `eve::compelx` but we don't have one yet.
+// NOTE: we will definetly have a proper `eve::complex` but we don't have one yet.
 //
 // This example will demonstrate the basics of how you can write code that looks like
 // it uses objects but actally utilizes parallel arrays and simd under the hood.
 //
 // Related termins are: SOA (structure of arrays) and ECS - entity component system.
+//
+// NOTE:
+//   You might also want to have a look at:
+//   examples/algorithms/using_existing/inclusive_scan_zip__using_zip_with_algorithms.cpp
+//   where we don't declare an object for complex numbers and just deal with tuples.
 //
 
 #include <eve/eve.hpp>
