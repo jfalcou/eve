@@ -121,7 +121,7 @@ namespace eve::detail
   // <<=
   //================================================================================================
   template<integral_real_scalar_value T, typename N, integral_real_scalar_value U>
-  EVE_FORCEINLINE auto self_shl(wide<T,N>& v, U s) noexcept
+  EVE_FORCEINLINE decltype(auto) self_shl(wide<T,N>& v, U s) noexcept
       requires x86_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();

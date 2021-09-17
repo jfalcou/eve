@@ -33,7 +33,6 @@ namespace eve
                                || element_bit_compatible_to<T, U>
                                || element_bit_compatible_to<U, T>;
 
-
   template<typename T, typename U>
   concept size_compatible_to = scalar_value<T>
                             || std::same_as<cardinal_t<T>, cardinal_t<U>>;
