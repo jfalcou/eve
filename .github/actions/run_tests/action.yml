@@ -17,9 +17,5 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: pwd
-      shell: bash
-    - run: ls
-      shell: bash
     - run: .github/actions/run_tests/entrypoint.sh ${{ inputs.options }} ${{ inputs.cmake-options }} ${{ inputs.status }}
       shell: bash
