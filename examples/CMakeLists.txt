@@ -5,9 +5,9 @@
 ##==================================================================================================
 
 
-make_unit( "examples" algorithms/using_existing/memcmp_with_mismatch.cpp )
+make_unit( "examples" algorithms/using_existing/memcmp__two_range_algorithms_interface_specifics.cpp )
 
-make_unit( "examples" algorithms/writing_new/collect_indexes.cpp )
-make_unit( "examples" algorithms/writing_new/strlen.cpp )
+make_unit( "examples" algorithms/writing_new/collect_indexes__complicated_real_example.cpp )
+make_unit( "examples" algorithms/writing_new/strlen__showing_basic_conepts.cpp )
 
-make_unit( "examples" oop/complex_numbers_simple.cpp )
+make_unit( "examples" oop/complex_numbers__declaring_an_object_type.cpp )
