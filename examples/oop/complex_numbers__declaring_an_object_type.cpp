@@ -73,12 +73,11 @@ struct cmplx : kumi::tuple<float, float>  // Inheriting from a tuple to provide 
     return self;
   }
 
-  // eve will always use the += but if you want the operation to be provided for scalars
-  // you should provide this.
-  EVE_FORCEINLINE friend auto operator+(eve::same_value_type<cmplx> auto self, eve::same_value_type<cmplx> auto other)
+  // eve will always use the += but we also want + to work for cmplx type itself.
+  EVE_FORCEINLINE friend auto operator+(cmplx x, cmplx y)
   {
-    self += other;
-    return self;
+    x += y;
+    return x;
   }
 
   // The ostream operator you don't need to customise for wide, it will do the right thing.
