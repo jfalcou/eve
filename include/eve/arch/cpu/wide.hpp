@@ -346,10 +346,10 @@ namespace eve
     void swap( wide& other ) { std::swap(this->storage(), other.storage()); }
 
     //! Pre-incrementation operator
-    EVE_FORCEINLINE wide &operator++()    noexcept  { return detail::self_add(*this, wide{1}); }
+    EVE_FORCEINLINE wide &operator++()    noexcept  { return *this += wide{1}; }
 
     //! Pre-decrementation operator
-    EVE_FORCEINLINE wide &operator--()    noexcept  { return detail::self_sub(*this, wide{1}); }
+    EVE_FORCEINLINE wide &operator--()    noexcept  { return *this -= wide{1}; }
 
     //! Post-incrementation operator
     EVE_FORCEINLINE wide operator++(int)  noexcept  { auto that(*this); operator++(); return that; }
@@ -512,6 +512,10 @@ namespace eve
 
     //! Perform a bitwise complement on all the wide lanes
     friend EVE_FORCEINLINE auto operator~(wide const& v) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+                          requires( !kumi::product_type<Type> )
+#endif
+
     {
       return detail::self_bitnot(v);
     }
@@ -520,7 +524,7 @@ namespace eve
     template<value V>
     friend  EVE_FORCEINLINE auto operator&=(wide& w, V o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-                        ->  decltype(detail::self_bitand(w, o))
+    requires( !kumi::product_type<Type> && bit_compatible_values<wide,V> )
 #endif
     {
       return detail::self_bitand(w, o);
@@ -531,7 +535,7 @@ namespace eve
     template<scalar_value U,typename M>
     friend EVE_FORCEINLINE    auto operator&(wide const& v, wide<U,M> const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-                          ->  std::decay_t<decltype(std::declval<wide&>() &= w)>
+    requires( !kumi::product_type<Type> && bit_compatible_values<wide,wide<U,M>> )
 #endif
     {
       auto    that  = v;
@@ -543,7 +547,7 @@ namespace eve
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator&(wide const& v, S w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-    requires (sizeof(w) == sizeof(Type))
+    requires( !kumi::product_type<Type> && bit_compatible_values<wide,S> )
 #endif
     {
       auto    that  = v;
@@ -555,7 +559,7 @@ namespace eve
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator&(S v, wide const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-    requires (sizeof(v) == sizeof(Type))
+    requires( !kumi::product_type<Type> && bit_compatible_values<wide,S> )
 #endif
     {
       auto    u  = bit_cast(w, as<typename wide::template rebind<S,Cardinal>>());
@@ -563,9 +567,10 @@ namespace eve
     }
 
     //! Perform a Compound bitwise or on all the wide lanes and assign the result to the current one
-    friend  EVE_FORCEINLINE auto operator|=(wide& w, value auto o) noexcept
+    template<value V>
+    friend  EVE_FORCEINLINE auto operator|=(wide& w, V o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-                        ->  decltype(detail::self_bitor(w, o))
+    requires( !kumi::product_type<Type> && bit_compatible_values<wide,V> )
 #endif
     {
       return detail::self_bitor(w, o);
@@ -576,7 +581,7 @@ namespace eve
     template<scalar_value U,typename M>
     friend EVE_FORCEINLINE    auto operator|(wide const& v, wide<U,M> const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-                          ->  std::decay_t<decltype(std::declval<wide&>() |= w)>
+    requires( !kumi::product_type<Type> && bit_compatible_values<wide,wide<U,M>> )
 #endif
     {
       wide    that  = v;
@@ -588,7 +593,7 @@ namespace eve
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator|(wide const& v, S w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-    requires (sizeof(w) == sizeof(Type))
+    requires( !kumi::product_type<Type> && bit_compatible_values<wide,S> )
 #endif
     {
       auto    that  = v;
@@ -600,7 +605,7 @@ namespace eve
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator|(S v, wide const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-    requires (sizeof(v) == sizeof(Type))
+    requires( !kumi::product_type<Type> && bit_compatible_values<wide,S> )
 #endif
     {
       auto    u  = bit_cast(w, as<typename wide::template rebind<S,Cardinal>>());
@@ -608,9 +613,10 @@ namespace eve
     }
 
     //! Perform a bitwise xor on all the wide lanes and assign the result to the current one
-    friend  EVE_FORCEINLINE auto operator^=(wide& w, value auto o) noexcept
+    template<value V>
+    friend  EVE_FORCEINLINE auto operator^=(wide& w, V o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-                        ->  decltype(detail::self_bitxor(w, o))
+     requires( !kumi::product_type<Type> && bit_compatible_values<wide,V> )
 #endif
     {
       return detail::self_bitxor(w, o);
@@ -621,7 +627,7 @@ namespace eve
     template<scalar_value U, typename M>
     friend EVE_FORCEINLINE    auto operator^(wide const& v, wide<U,M> const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-                          ->  std::decay_t<decltype(std::declval<wide&>() |= w)>
+     requires( !kumi::product_type<Type> && bit_compatible_values<wide,wide<U,M>> )
 #endif
     {
       auto    that  = v;
@@ -633,7 +639,7 @@ namespace eve
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator^(wide const& v, S w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-    requires (sizeof(w) == sizeof(Type))
+     requires( !kumi::product_type<Type> && bit_compatible_values<wide,S> )
 #endif
     {
       auto    that  = v;
@@ -645,7 +651,7 @@ namespace eve
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator^(S v, wide const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-    requires (sizeof(v) == sizeof(Type))
+     requires( !kumi::product_type<Type> && bit_compatible_values<wide,S> )
 #endif
     {
       auto    u  = bit_cast(w, as<typename wide::template rebind<S,Cardinal>>());
@@ -659,14 +665,18 @@ namespace eve
     friend EVE_FORCEINLINE auto operator+(wide const& v) noexcept { return v; }
 
     //! Unary minus operator. See also: eve::unary_minus
-    friend EVE_FORCEINLINE auto operator-(wide const& v) noexcept { return self_negate(v); }
+    friend EVE_FORCEINLINE auto operator-(wide const& v) noexcept
+    requires( !kumi::product_type<Type> )
+    {
+      return self_negate(v);
+    }
 
     //! @brief Perform the compound addition on all the wide lanes and assign the result
     //! to the current one. See also: eve::add
     template<value V>
-    friend  EVE_FORCEINLINE auto operator+=(wide& w, V v) noexcept
+    friend  EVE_FORCEINLINE auto& operator+=(wide& w, V v) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-                        ->  decltype(detail::self_add(w, v))
+    requires( !kumi::product_type<Type> )
 #endif
     {
       return detail::self_add(w, v);
@@ -699,9 +709,9 @@ namespace eve
     //! @brief Perform the compound difference on all the wide lanes and assign
     //! the result to the current one. See also: eve::sub
     template<value V>
-    friend  EVE_FORCEINLINE auto operator-=(wide& w, V v) noexcept
+    friend  EVE_FORCEINLINE auto& operator-=(wide& w, V v) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-                        ->  decltype(detail::self_sub(w, v))
+    requires( !kumi::product_type<Type> )
 #endif
     {
       return detail::self_sub(w, v);
@@ -731,9 +741,9 @@ namespace eve
 
     //! @brief Perform the compound product on all the wide lanes and assign
     //! the result to the current one. See also: eve::mul
-    friend  EVE_FORCEINLINE auto operator*=(wide& w, value auto o) noexcept
+    friend  EVE_FORCEINLINE auto& operator*=(wide& w, value auto o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-                        ->  decltype(detail::self_mul(w, o))
+    requires( !kumi::product_type<Type> )
 #endif
     {
       return detail::self_mul(w, o);
@@ -764,9 +774,9 @@ namespace eve
 
     //! @brief Perform the compound division on all the wide lanes and assign
     //! the result to the current one. See also: eve::div
-    friend  EVE_FORCEINLINE auto operator/=(wide& w, value auto o) noexcept
+    friend  EVE_FORCEINLINE auto& operator/=(wide& w, value auto o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-                        ->  decltype(detail::self_div(w, o))
+    requires( !kumi::product_type<Type> )
 #endif
     {
       return detail::self_div(w, o);
@@ -799,9 +809,10 @@ namespace eve
     //! @brief Perform the compound modulo on all the wide lanes and assign
     //! the result to the current one. Does not participate in overload resolution
     //! if `Type` does not models integral_scalar_value
-    friend  EVE_FORCEINLINE auto operator%=(wide& w, value auto o) noexcept
+    template<integral_value V>
+    friend  EVE_FORCEINLINE auto& operator%=(wide& w, V o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-                        ->  decltype(detail::self_rem(w, o))
+    requires( !kumi::product_type<Type> && integral_scalar_value<Type>)
 #endif
     {
       return detail::self_rem(w, o);
@@ -811,7 +822,7 @@ namespace eve
     //! Does not participate in overload resolution if `Type` does not models integral_scalar_value
     friend EVE_FORCEINLINE  auto operator%(wide const& v, wide const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-                            requires( integral_scalar_value<Type> )
+    requires( integral_scalar_value<Type> )
 #endif
     {
       auto that = v;
@@ -823,7 +834,7 @@ namespace eve
     template<integral_scalar_value S>
     friend EVE_FORCEINLINE  auto operator%(S s, wide const& v) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-                            requires( integral_scalar_value<Type> )
+    requires( integral_scalar_value<Type> )
 #endif
     {
       return wide(s) % v;
@@ -833,7 +844,7 @@ namespace eve
     //! Does not participate in overload resolution if `Type` does not models integral_scalar_value
     friend EVE_FORCEINLINE  auto operator%(wide const& v, integral_scalar_value auto s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-                            requires( integral_scalar_value<Type> )
+    requires( integral_scalar_value<Type> )
 #endif
     {
       return v % wide(s);
@@ -842,9 +853,9 @@ namespace eve
     //! @brief Perform the compound left-shift on all the eve::wide lanes and assign
     //! the result to current one.
     template<integral_value S>
-    friend  EVE_FORCEINLINE auto operator<<=(wide& w, S s) noexcept
+    friend  EVE_FORCEINLINE auto& operator<<=(wide& w, S s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-                        ->  decltype(detail::self_shl(w, s))
+    requires( !kumi::product_type<Type> )
 #endif
     {
       return detail::self_shl(w, s);
@@ -861,9 +872,9 @@ namespace eve
     //! @brief Perform the compound right-shift on all the eve::wide lanes and assign
     //! the result to current one.
     template<integral_value S>
-    friend  EVE_FORCEINLINE auto operator>>=(wide& w, S s) noexcept
+    friend  EVE_FORCEINLINE auto& operator>>=(wide& w, S s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-                        ->  decltype(detail::self_shr(w, s))
+    requires( !kumi::product_type<Type> )
 #endif
     {
       return detail::self_shr(w, s);
@@ -1038,6 +1049,9 @@ namespace eve
 
     //! Computes the logical complement of its parameter
     friend EVE_FORCEINLINE logical<wide> operator!(wide v) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+    requires( !kumi::product_type<Type> )
+#endif
     {
       return detail::self_lognot(v);
     }

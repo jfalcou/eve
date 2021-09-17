@@ -50,7 +50,7 @@ namespace eve::detail
   }
 
   template<integral_real_scalar_value T, typename N, integral_real_scalar_value U>
-  EVE_FORCEINLINE auto self_shl(wide<T,N>& v, U s) noexcept
+  EVE_FORCEINLINE decltype(auto) self_shl(wide<T,N>& v, U s) noexcept
       requires arm_abi<abi_t<T, N>>
   {
     using i_t = typename wide<T,N>::template rebind <as_integer_t<T, signed>,N>;
@@ -69,7 +69,7 @@ namespace eve::detail
   }
 
   template<integral_real_scalar_value T, typename N, integral_real_scalar_value U>
-  EVE_FORCEINLINE auto self_shr(wide<T,N>& v, U s) noexcept
+  EVE_FORCEINLINE decltype(auto) self_shr(wide<T,N>& v, U s) noexcept
       requires arm_abi<abi_t<T, N>>
   {
     return self_shl(v, -s);
