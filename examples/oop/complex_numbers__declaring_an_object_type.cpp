@@ -44,7 +44,7 @@
 // So we recommend writing EVE_FORCEINLINE on all functions that are not the outside loop.
 //
 
-struct cmplx : eve::product_type_base<cmplx, float, float>
+struct cmplx : eve::struct_support<cmplx, float, float>
 {
   // Instead of normal getters/setters we suggest to write ADL friend functions.
   // This will also be accessible for `eve::wide<cmplx>`.

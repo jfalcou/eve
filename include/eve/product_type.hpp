@@ -104,7 +104,7 @@ namespace eve
   //================================================================================================
   //! @addtogroup struct
   //! @{
-  //!   @struct product_type_base<Self, ...Fields>
+  //!   @struct struct_support<Self, ...Fields>
   //!   @brief  a helper CRTP base to declare user defined types easier
   //!
   //!   It will generate a member wise equality.
@@ -116,23 +116,23 @@ namespace eve
   //!
   //! @}
   template <typename Self, typename ... Fields>
-  struct product_type_base;
+  struct struct_support;
 
   namespace detail
   {
-    std::false_type derived_from_product_type_base_impl(...);
+    std::false_type derived_from_struct_support_impl(...);
 
     template <typename Self, typename ... Fields>
-    std::true_type derived_from_product_type_base_impl(product_type_base<Self, Fields...> const&);
+    std::true_type derived_from_struct_support_impl(struct_support<Self, Fields...> const&);
 
     template <typename Type>
-    concept derived_from_product_type_base = decltype(derived_from_product_type_base_impl(Type{}))::value;
+    concept derived_from_struct_support = decltype(derived_from_struct_support_impl(Type{}))::value;
   }
 
   template <typename Self, typename ... Fields>
-  struct product_type_base : kumi::tuple<Fields...>
+  struct struct_support : kumi::tuple<Fields...>
   {
-    using tuple = kumi::tuple<Fields...>;
+    using tuple_type = kumi::tuple<Fields...>;
 
     EVE_FORCEINLINE friend auto operator+(eve::like<Self> auto x, eve::like<Self> auto y) requires requires { x += y; }
     {
@@ -164,6 +164,24 @@ namespace eve
       return x;
     }
 
+    EVE_FORCEINLINE friend auto operator^(eve::like<Self> auto x, eve::like<Self> auto y) requires requires { x ^= y; }
+    {
+      x ^= y;
+      return x;
+    }
+
+    EVE_FORCEINLINE friend auto operator&(eve::like<Self> auto x, eve::like<Self> auto y) requires requires { x &= y; }
+    {
+      x &= y;
+      return x;
+    }
+
+    EVE_FORCEINLINE friend auto operator|(eve::like<Self> auto x, eve::like<Self> auto y) requires requires { x |= y; }
+    {
+      x |= y;
+      return x;
+    }
+
     EVE_FORCEINLINE friend auto operator<<(eve::like<Self> auto x, integral_value auto s) requires requires { x <<= s; }
     {
       x <<= s;
@@ -183,8 +201,8 @@ namespace eve
   };
 }
 
-template <eve::detail::derived_from_product_type_base Type>
-struct std::tuple_size<Type> : std::tuple_size<typename Type::tuple> {};
+template <eve::detail::derived_from_struct_support Type>
+struct std::tuple_size<Type> : std::tuple_size<typename Type::tuple_type> {};
 
-template <std::size_t I, eve::detail::derived_from_product_type_base Type>
-struct std::tuple_element<I, Type> : std::tuple_element<I, typename Type::tuple> {};
+template <std::size_t I, eve::detail::derived_from_struct_support Type>
+struct std::tuple_element<I, Type> : std::tuple_element<I, typename Type::tuple_type> {};

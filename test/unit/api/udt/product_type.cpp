@@ -27,7 +27,7 @@ TTS_CASE("like concet")
 }
 
 struct supports_all_ops :
-  eve::product_type_base<supports_all_ops, int, std::int64_t>
+  eve::struct_support<supports_all_ops, int, std::int64_t>
 {
   friend decltype(auto) m0(eve::like<supports_all_ops> auto&& self)
   {
@@ -74,6 +74,27 @@ struct supports_all_ops :
     return self;
   }
 
+  friend auto& operator^=(eve::like<supports_all_ops> auto& self,
+                          eve::like<supports_all_ops> auto const& other) {
+    m0(self) ^= m0(other);
+    m1(self) ^= m1(other);
+    return self;
+  }
+
+  friend auto& operator&=(eve::like<supports_all_ops> auto& self,
+                          eve::like<supports_all_ops> auto const& other) {
+    m0(self) &= m0(other);
+    m1(self) &= m1(other);
+    return self;
+  }
+
+  friend auto& operator|=(eve::like<supports_all_ops> auto& self,
+                          eve::like<supports_all_ops> auto const& other) {
+    m0(self) |= m0(other);
+    m1(self) |= m1(other);
+    return self;
+  }
+
   friend auto& operator<<=(eve::like<supports_all_ops> auto& self,
                           eve::integral_value auto s) {
     m0(self) <<= s;
@@ -89,7 +110,7 @@ struct supports_all_ops :
   }
 };
 
-struct supports_no_ops : eve::product_type_base<supports_no_ops, int, std::int64_t>
+struct supports_no_ops : eve::struct_support<supports_no_ops, int, std::int64_t>
 {
   using eve_disable_ordering = void;
 
@@ -116,6 +137,12 @@ concept operators_test = requires(T x, T y) {
   { x / y   } -> std::same_as<T>;
   { x %= y  } -> std::same_as<T&>;
   { x % y   } -> std::same_as<T>;
+  { x ^= y  } -> std::same_as<T&>;
+  { x ^ y   } -> std::same_as<T>;
+  { x &= y  } -> std::same_as<T&>;
+  { x & y   } -> std::same_as<T>;
+  { x |= y  } -> std::same_as<T&>;
+  { x | y   } -> std::same_as<T>;
   { x <<= 1 } -> std::same_as<T&>;
   { x << 1  } -> std::same_as<T>;
 };
@@ -135,7 +162,7 @@ concept supports_plus_test = requires(T x, T y) {
   { x + y };
 };
 
-TTS_CASE("product_type_base")
+TTS_CASE("struct_support")
 {
   { eve::product_type    auto _ = supports_all_ops{}; (void)_; }
   { operators_test       auto _ = supports_all_ops{}; (void)_; }
