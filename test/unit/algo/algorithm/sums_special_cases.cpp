@@ -23,8 +23,8 @@ TTS_CASE("eve.algo.reduce sum complex numbers")
 
   using cmplx = kumi::tuple<float, float>;
 
-  auto plus = [](eve::same_value_type<cmplx> auto x,
-                 eve::same_value_type<cmplx> auto y) {
+  auto plus = [](eve::like<cmplx> auto x,
+                 eve::like<cmplx> auto y) {
     get<0>(x) += get<0>(y);
     get<1>(x) += get<1>(y);
     return x;
@@ -59,8 +59,8 @@ TTS_CASE("eve.algo.inclusive_scan complex numbers")
 
   using cmplx = kumi::tuple<float, float>;
 
-  auto plus = [](eve::same_value_type<cmplx> auto x,
-                 eve::same_value_type<cmplx> auto y) {
+  auto plus = [](eve::like<cmplx> auto x,
+                 eve::like<cmplx> auto y) {
     get<0>(x) += get<0>(y);
     get<1>(x) += get<1>(y);
     return x;

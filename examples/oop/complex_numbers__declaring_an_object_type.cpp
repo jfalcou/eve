@@ -106,7 +106,7 @@ struct cmplx : eve::product_type_base<cmplx, float, float>
   // We find it useful but you do it at your own risk, we are quite likely to break you.
   // Alternatively - use your own functions.
 
-  EVE_FORCEINLINE friend auto tagged_dispatch( eve::tag::abs_, eve::same_value_type<cmplx> auto self)
+  EVE_FORCEINLINE friend auto tagged_dispatch( eve::tag::abs_, eve::like<cmplx> auto self)
   {
     // NOTE: We think this can be done more efficiently, but this is an example.
     return eve::sqrt(re(self) * re(self) + im(self) * im(self));
@@ -140,7 +140,7 @@ void inclusive_scan_complex_components(std::vector<float>& re_parts, std::vector
 
 #include <sstream>
 
-bool rougly_equal(eve::same_value_type<cmplx> auto x, eve::same_value_type<cmplx> auto y)
+bool rougly_equal(eve::like<cmplx> auto x, eve::like<cmplx> auto y)
 {
   auto re_test = eve::abs(re(x) - re(y)) < 0.00001;
   auto im_test = eve::abs(im(x) - im(y)) < 0.00001;

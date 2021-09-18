@@ -55,12 +55,12 @@ namespace udt
   //------------------------------------------------------------------------------------------------
   struct label_position : kumi::tuple<float, std::uint8_t>
   {
-    friend auto&& position(eve::same_value_type<label_position> auto&& self) noexcept
+    friend auto&& position(eve::like<label_position> auto&& self) noexcept
     {
       return get<0>(std::forward<decltype(self)>(self));
     }
 
-    friend auto&& label(eve::same_value_type<label_position> auto&& self) noexcept
+    friend auto&& label(eve::like<label_position> auto&& self) noexcept
     {
       return get<1>(std::forward<decltype(self)>(self));
     }
