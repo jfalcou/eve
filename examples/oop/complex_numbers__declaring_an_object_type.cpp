@@ -40,18 +40,22 @@
 // However, that's not doable in modern C++.
 // So your struct has to expose some reflection mechanism.
 //
+// On forceinline: time and time again we stumble apon the compiler not inlining simd code very well.
+// So we recommend writing EVE_FORCEINLINE on all functions that are not the outside loop.
+//
 
-struct cmplx : kumi::tuple<float, float>  // Inheriting from a tuple to provide `get<I>`
+struct cmplx : eve::product_type_base<cmplx, float, float>
 {
   // Instead of normal getters/setters we suggest to write ADL friend functions.
   // This will also be accessible for `eve::wide<cmplx>`.
+  // `eve::like` concept will make sure that this won't kick in for anything that did not opt in.
 
-  EVE_FORCEINLINE friend decltype(auto) re(eve::same_value_type<cmplx> auto&& self)
+  EVE_FORCEINLINE friend decltype(auto) re(eve::like<cmplx> auto&& self)
   {
     return get<0>(std::forward<decltype(self)>(self));
   }
 
-  EVE_FORCEINLINE friend decltype(auto) im(eve::same_value_type<cmplx> auto&& self)
+  EVE_FORCEINLINE friend decltype(auto) im(eve::like<cmplx> auto&& self)
   {
     return get<1>(std::forward<decltype(self)>(self));
   }
@@ -64,20 +68,30 @@ struct cmplx : kumi::tuple<float, float>  // Inheriting from a tuple to provide 
 
   // Opt out of the </<=/>/>= generation.
   // You can also specialize eve::supports_ordering<cmplx>
+  //
+  // The operator+/operator- will be generated from operator+=/operator-=,
+  // however -= will not be generated from += and unary -, we want to tap into a special instruction optimization
   using eve_disable_ordering = void;
 
-  EVE_FORCEINLINE friend auto& operator+=(eve::same_value_type<cmplx> auto& self, eve::same_value_type<cmplx> auto other)
+  EVE_FORCEINLINE friend auto& operator+=(eve::like<cmplx> auto& self, eve::like<cmplx> auto other)
   {
     re(self) += re(other);
     im(self) += im(other);
     return self;
   }
 
-  // eve will always use the += but we also want + to work for cmplx type itself.
-  EVE_FORCEINLINE friend auto operator+(cmplx x, cmplx y)
+  EVE_FORCEINLINE friend auto operator-(eve::like<cmplx> auto self)
   {
-    x += y;
-    return x;
+    re(self) = -re(self);
+    im(self) = -im(self);
+    return self;
+  }
+
+  EVE_FORCEINLINE friend auto& operator-=(eve::like<cmplx> auto& self, eve::like<cmplx> auto other)
+  {
+    re(self) -= re(other);
+    im(self) -= im(other);
+    return self;
   }
 
   // The ostream operator you don't need to customise for wide, it will do the right thing.
@@ -98,12 +112,6 @@ struct cmplx : kumi::tuple<float, float>  // Inheriting from a tuple to provide 
     return eve::sqrt(re(self) * re(self) + im(self) * im(self));
   }
 };
-
-// You need these opt-ins
-// We have a story to simplify this process: FIX-888
-template<>              struct eve::is_product_type<cmplx> : std::true_type {};
-template<>              struct std::tuple_size<cmplx>      : std::tuple_size<kumi::tuple<float, float>> {};
-template<std::size_t I> struct std::tuple_element<I,cmplx> : std::tuple_element<I, kumi::tuple<float, float>> {};
 
 // ------------------
 // Using
@@ -151,6 +159,25 @@ TTS_CASE("wide works")
     TTS_EXPECT(rougly_equal(expected, actual));
   }
 
+  // negate
+  {
+    eve::wide<cmplx> x {cmplx {0.0, 0.1}};
+
+    eve::wide<cmplx> expected {cmplx {0.0, -0.1}};
+    eve::wide<cmplx> actual = -x;
+    TTS_EXPECT(rougly_equal(expected, actual));
+  }
+
+  // -
+  {
+    eve::wide<cmplx> x {cmplx {0.0, 0.1}};
+    eve::wide<cmplx> y {cmplx {0.1, 0.0}};
+
+    eve::wide<cmplx> expected {cmplx {-0.1, 0.1}};
+    eve::wide<cmplx> actual = x - y;
+    TTS_EXPECT(rougly_equal(expected, actual));
+  }
+
   // abs
   {
     eve::wide<cmplx> x{cmplx{3.0, 4.0}};
@@ -169,6 +196,25 @@ TTS_CASE("scalar works")
 
     cmplx expected {0.1, 0.1};
     cmplx actual = x + y;
+    TTS_EXPECT(rougly_equal(expected, actual));
+  }
+
+  // negate
+  {
+    cmplx x {0.0, 0.1};
+
+    cmplx expected {0.0, -0.1};
+    cmplx actual = -x;
+    TTS_EXPECT(rougly_equal(expected, actual));
+  }
+
+  // -
+  {
+    cmplx x {0.0, 0.1};
+    cmplx y {0.1, 0.0};
+
+    cmplx expected {-0.1, 0.1};
+    cmplx actual = x - y;
     TTS_EXPECT(rougly_equal(expected, actual));
   }
 
