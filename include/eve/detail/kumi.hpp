@@ -797,12 +797,6 @@ namespace kumi
     return (detail::foldable {cc, KUMI_FWD(t)} << ... << detail::foldable {cc, KUMI_FWD(us)}).value;
   }
 
-  template<product_type T1, product_type T2>
-  [[nodiscard]] constexpr auto operator|(T1 &&t1, T2 &&t2)
-  {
-    return kumi::cat(KUMI_FWD(t1), KUMI_FWD(t2));
-  }
-
   namespace result
   {
     template<product_type T, product_type... Tuples> struct cat

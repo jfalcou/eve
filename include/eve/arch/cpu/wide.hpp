@@ -80,6 +80,9 @@ namespace eve
     //! Type for indexing element in a eve::wide
     using size_type     = typename card_base::size_type;
 
+    //! Opt-in for like concept
+    using is_like = value_type;
+
     //! @brief Generates a eve::wide from a different type `T` and cardinal `N`.
     //! If unspecified, `N` is computed as `expected_cardinal_t<T>`.
     template<typename T, typename N = expected_cardinal_t<T>> using rebind = wide<T,N>;
