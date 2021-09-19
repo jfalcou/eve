@@ -3,7 +3,7 @@
   <!-- Navigation index tabs for HTML output -->
   <navindex>
     <tab type="mainpage" visible="yes" title="Index"/>
-    <tab type="pages" visible="yes" title="Tutorials" intro=""/>
+    <tab type="pages" visible="yes" title="Documentation" intro=""/>
     <tab type="modules" visible="yes" title="Components" intro=""/>
     <tab type="classindex" visible="$ALPHABETICAL_INDEX" title="Types Reference"/>
     <tab type="namespacemembers" visible="yes" title="Functions Reference" intro=""/>
