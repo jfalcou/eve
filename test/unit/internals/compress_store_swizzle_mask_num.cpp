@@ -120,6 +120,12 @@ EVE_TEST_TYPES("compress_store_swizzle_mask_num 16 elements",
 {
   using mask_t = eve::logical<eve::wide<T, eve::fixed<16>>>;
 
+  if (eve::current_api == eve::avx512 && eve::has_aggregated_abi_v<eve::wide<T, eve::fixed<16>>>)
+  {
+    TTS_PASS("aggregated on avx512");
+    return;
+  }
+
   std::array<int, 1000> test_cases;
 
   std::mt19937 gen;
