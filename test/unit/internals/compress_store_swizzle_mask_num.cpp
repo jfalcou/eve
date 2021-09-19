@@ -26,22 +26,34 @@ EVE_TEST_TYPES("compress_store_swizzle_mask_num 4 elements",
     return res;
   };
 
-  for (bool m0 : {false, true}) {
-    for (bool m1 : {false, true}) {
-      for (bool m2 : {false, true}) {
-        for (bool m3 : {false, true}) {
-          mask_t mask{m0, m1, m2, m3};
+  auto run = [&](auto ignore)
+  {
+    for( bool m0 : {false, true} ) {
+      for( bool m1 : {false, true} ) {
+        for( bool m2 : {false, true} ) {
+          for( bool m3 : {false, true} ) {
+            mask_t mask {m0, m1, m2, m3};
 
-          auto [actual_num, actual_4th] = eve::detail::compress_store_swizzle_mask_num(mask);
+            auto [actual_num, actual_4th] = eve::detail::compress_store_swizzle_mask_num(ignore, mask);
 
-          int expected_num = expected_shuffle_num(mask);
+            int expected_num = expected_shuffle_num(mask && ignore.mask(eve::as(mask)));
 
-          TTS_EQUAL(expected_num, actual_num);
-          TTS_EQUAL(m3, actual_4th);
+            TTS_EQUAL(expected_num, actual_num);
+
+            if (ignore.roffset(eve::as(mask)) == 0) TTS_EQUAL(m3, actual_4th);
+            else                                    TTS_EQUAL(false, actual_4th);
+          }
         }
       }
     }
-  }
+  };
+
+  run(eve::ignore_none);
+  run(eve::ignore_all);
+  run(eve::ignore_first(2));
+  run(eve::ignore_extrema(1, 1));
+  run(eve::ignore_extrema(0, 2));
+  run(eve::ignore_last(2));
 };
 
 EVE_TEST_TYPES("compress_store_swizzle_mask_num 8 elements",
