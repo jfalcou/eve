@@ -214,10 +214,10 @@ workflows:
     ##==============================================================================================
     ## Benchmarks compilations
     ##==============================================================================================
-      - bench_avx2:
-          tool:     "../cmake/toolchain/gcc.x86.opt.cmake"
-          options:  "-mavx2"
-          setup:    "-DEVE_BUILD_BENCHMARKS=ON"
-          filters:
-            branches:
-              ignore: develop
+      # - bench_avx2:
+      #     tool:     "../cmake/toolchain/gcc.x86.opt.cmake"
+      #     options:  "-mavx2"
+      #     setup:    "-DEVE_BUILD_BENCHMARKS=ON"
+      #     filters:
+      #       branches:
+      #         ignore: develop

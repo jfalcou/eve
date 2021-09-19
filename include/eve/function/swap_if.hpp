@@ -20,10 +20,10 @@ namespace eve
   //!
   //! **Required header:** `#include <eve/function/swap_if.hpp>`
   //!
-  //! Swaps the [SIMD values](@ref eve::simd_value) `lhs` and `rhs` wherever `mask` evaluates to
-  //! `true`.
+  //! Swaps the [values](@ref eve::value) `lhs` and `rhs` wherever `mask` evaluates to
+  //! `true` or not.
   //!
-  //! @params mask      Mask to apply over the swap operation.
+  //! @params mask      Logical mask to apply over the swap operation.
   //! @params lhs, rhs  Values to swap.
   //!
   //! @groupheader{Example}
@@ -32,11 +32,26 @@ namespace eve
   //!
   //! @}
   //================================================================================================
-  template<logical_value Mask, simd_value Value>
+  template<logical_value Mask, value Value>
   void swap_if(Mask const& mask, Value& lhs, Value& rhs) noexcept
   {
-    auto tmp  = lhs;
-    lhs       = if_else(mask, rhs, lhs);
-    rhs       = if_else(mask, tmp  , rhs );
+    if constexpr( scalar_value<Mask> )
+    {
+      using std::swap;
+      if( static_cast<bool>(mask) ) swap(lhs,rhs);
+    }
+    else
+    {
+      auto tmp  = lhs;
+      lhs       = if_else(mask, rhs, lhs);
+      rhs       = if_else(mask, tmp  , rhs );
+    }
+  }
+
+  template<value Value>
+  void swap_if(bool mask, Value& lhs, Value& rhs) noexcept
+  {
+    using std::swap;
+    if( static_cast<bool>(mask) ) swap(lhs,rhs);
   }
 }
