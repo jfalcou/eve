@@ -27,10 +27,11 @@ namespace eve::detail
     requires (current_api < avx512)
   {
     // aggregated
-    if constexpr ( sizeof(T) == 8 )
+    if constexpr ( eve::has_aggregated_abi_v<wide<T, fixed<8>>> )
     {
-      auto to_u32 = eve::convert(mask, eve::as<logical<std::uint32_t>>{});
-      return compress_store_swizzle_mask_num(to_u32);
+      using half_t = make_integer_t<sizeof(T) / 2, unsigned>;
+      auto half = eve::convert(mask, eve::as<logical<half_t>>{});
+      return compress_store_swizzle_mask_num(half);
     }
     else if constexpr ( sizeof(T) == 4 )
     {
@@ -93,7 +94,7 @@ namespace eve::detail
       auto to_bytes = eve::convert(mask, eve::as<eve::logical<std::uint8_t>>{});
       return compress_store_swizzle_mask_num(to_bytes);
     }
-    else if constexpr ( sizeof(T) == 1)
+    else if constexpr ( sizeof(T) == 1 )
     {
       __m128i sad_mask = _mm_set_epi64x(0x8080898983838181, 0x8080898983838181);
       __m128i sum      = _mm_sad_epu8(_mm_andnot_si128(mask, sad_mask), sad_mask);
