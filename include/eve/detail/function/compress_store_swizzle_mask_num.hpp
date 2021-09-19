@@ -25,6 +25,7 @@
 // 4 elements
 // ================
 // For 4 elements we do a complete shuffle of the first 3 elements
+// 4 elements version also accepts ignore (none of the others do).
 // the last one is always written.
 // We also return a bool if the last element is set.
 // (compiler will optimize that computation away,
