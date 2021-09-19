@@ -21,8 +21,8 @@
 
 namespace eve
 {
-  EVE_REGISTER_CALLABLE(compress_store_impl_)
-  EVE_DECLARE_CALLABLE(compress_store_impl_, compress_store_impl)
+  EVE_REGISTER_CALLABLE(compress_store_impl_);
+  EVE_DECLARE_CALLABLE(compress_store_impl_, compress_store_impl);
 
   namespace detail
   {

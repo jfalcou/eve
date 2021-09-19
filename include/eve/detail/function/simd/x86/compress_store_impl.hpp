@@ -8,6 +8,8 @@
 #pragma once
 
 #include <eve/function/convert.hpp>
+#include <eve/detail/function/compress_store_swizzle_mask_num.hpp>
+#include <eve/function/count_true.hpp>
 
 #include <array>
 #include <bit>
@@ -139,15 +141,14 @@ namespace eve::detail
     {
       alignas(sizeof(T) * N()) auto patterns = pattern_4_elements(idx_dwords<std::uint64_t>);
 
-      top_bits mmask{mask, c};
-      aligned_ptr<std::uint64_t, eve::fixed<4>> pattern_ptr{patterns[mmask.as_int() & 7].data()};
+      auto [num, _] = compress_store_swizzle_mask_num[c](mask);
+      aligned_ptr<std::uint64_t, eve::fixed<4>> pattern_ptr{patterns[num].data()};
       wide<std::uint32_t, eve::fixed<8>> pattern{ptr_cast<std::uint32_t>(pattern_ptr)};
 
       wide<T, N> shuffled = permvar8(v, pattern);
 
       store(shuffled, ptr);
-      int popcount = count_true(mmask);
-      return as_raw_pointer(ptr) + popcount;
+      return as_raw_pointer(ptr) + eve::count_true[c](mask);
     }
     else if constexpr ( std::floating_point<T> )
     {
@@ -167,25 +168,15 @@ namespace eve::detail
 
       alignas(sizeof(T) * 4) const auto patterns = add_popcounts(pattern_4_elements(idxs_bytes<u_t>));
 
-      auto mmask = [&] {
-        if constexpr ( sizeof(T) == 2 && abi_t<T, N>::is_wide_logical )
-        {
-          auto shrink_bytes = eve::convert(mask, eve::as<eve::logical<std::uint8_t>>{});
-          return top_bits{shrink_bytes, c}.as_int();
-        }
-        else
-        {
-          return top_bits{mask, c}.as_int();
-        }
-      }();
+      auto [num, is_last_set] = compress_store_swizzle_mask_num[c](mask);
 
       using a_p = aligned_ptr<u_t const, N>;
-      bytes_t pattern(ptr_cast<std::uint8_t const>( a_p(patterns[mmask & 7].data()) ));
+      bytes_t pattern(ptr_cast<std::uint8_t const>( a_p(patterns[num].data()) ));
 
       wide<T, N> shuffled = _mm_shuffle_epi8(v, pattern);
       store(shuffled, ptr);
 
-      int popcount = get_popcount(pattern.get(0)) + (bool)(mmask & 8);
+      int popcount = get_popcount(pattern.get(0)) + is_last_set;
       return as_raw_pointer(ptr) + popcount;
     }
   }
@@ -203,96 +194,6 @@ namespace eve::detail
       return compress_store_impl_aggregated(v, mask, ptr);
     }
     else return compress_store_impl[eve::ignore_none](v, mask, ptr);
-  }
-
-  /*
-    Credit again goes to @aqrit.
-
-    See comment in compress store for 8 elements first.
-    00 should become 0, 10|01 -> 1, 11 -> 2.
-    This is adding digigts.
-
-    We have 3 pairs, so the first 1 should correspond to power 0, second to 1, third 3 - 2
-
-    So we should & with [1, 1, 3, 3, 9, 9] and then reduce.
-
-    Now, the problem is there is not really a good instruction to reduce 8 numbers.
-    The closest we come is `_mm_sad_epu8`.
-    However, it sums absolute differences for bytes.
-    We could use a zero mask.
-    But instead we can use the same mask we got to mask the 1, 3, 9.
-    In order to get the result in the correct order, we need to use `andnot` instead of `and`.
-    For 8 integers we can use a popcount + some math.
-
-    Example:
-    (true, false, true, true, true, false, false, false)
-     1             3    3      9
-     reduced is 16
-
-    NOTE: we could also use mmx intrinsics but tend to not use them.
-  */
-  template <real_scalar_value T, typename N>
-  EVE_FORCEINLINE
-  std::pair<std::uint32_t, std::uint16_t>
-  base_3_mask_8_elements(eve::logical<eve::wide<T, N>> m) {
-    if constexpr ( sizeof(T) == 4 && current_api == avx2 )
-    {
-      std::uint32_t mmask = _mm256_movemask_epi8(
-         eve::bit_cast(m, eve::as<logical<eve::wide<std::uint32_t, N>>>{})
-      );
-
-      // sum from popcount:   [ 1, 1, 3, 3, 4, 1]
-      // sum from extra mask: [ 0, 0, 0, 0, 5, 8]
-      std::uint32_t idx_base_3 = std::popcount(mmask & 0x001f7711);
-      std::uint32_t extra_mask = (mmask >> 17) & 0b1'101;
-      idx_base_3 += extra_mask;
-
-      return {idx_base_3, std::popcount(mmask) / 4};
-    }
-    else if constexpr ( sizeof(T) <= 2 )
-    {
-      // Alternative for shorts is to compute both halves
-      // But that implies using _mm_extract_epi16 which has latency 3
-      // as oppose to latency 1 for _mm_packs_epi16
-      __m128i raw = [&] () -> __m128i {
-        if constexpr ( sizeof(T) == 2 ) return _mm_packs_epi16(m, m);
-        else                            return m;
-      }();
-
-      __m128i sad_mask = _mm_set_epi64x(0, 0x8080898983838181);
-      __m128i sum      = _mm_sad_epu8(_mm_andnot_si128(raw, sad_mask), sad_mask);
-
-      std::uint32_t desc       = _mm_cvtsi128_si32(sum);
-      std::uint32_t idx_base_3 = desc & 0x1f;
-      std::uint32_t popcount   = desc >> 7;
-
-      return {idx_base_3, popcount};
-    }
-  }
-
-  template <real_scalar_value T, typename N>
-  EVE_FORCEINLINE
-  auto base_3_mask_16_elements(eve::logical<eve::wide<T, N>> m) {
-    struct res {
-      std::uint32_t lo_idx;
-      std::uint32_t lo_count;
-      std::uint32_t hi_idx;
-      std::uint32_t hi_count;
-    };
-
-    __m128i raw      = eve::convert(m, eve::as<logical<std::uint8_t>>{});
-    __m128i sad_mask = _mm_set_epi64x(0x8080898983838181, 0x8080898983838181);
-    __m128i sum      = _mm_sad_epu8(_mm_andnot_si128(raw, sad_mask), sad_mask);
-
-    std::uint32_t desc_lo = _mm_cvtsi128_si32(sum);
-    std::uint32_t desc_hi = _mm_extract_epi16(sum, 4);
-
-    return res {
-      desc_lo  & 0x1f,
-      desc_lo >> 7,
-      desc_hi & 0x1f,
-      desc_hi >> 7
-    };
   }
 
   // See base_3_mask for explanation
@@ -362,7 +263,7 @@ namespace eve::detail
         else                            return pattern_8_elements(idxs_bytes<u_t>);
       }();
 
-      auto [pattern_idx, popcount] = base_3_mask_8_elements(mask);
+      auto [pattern_idx, popcount] = compress_store_swizzle_mask_num(mask);
 
       auto         pattern_ptr = eve::as_aligned(patterns[pattern_idx].data(), N());
       wide<u_t, N> pattern {pattern_ptr};
@@ -392,10 +293,8 @@ namespace eve::detail
       auto [l, h] = [&] {
         if constexpr ( current_api == avx2 )
         {
-          wide<T, N> to_left =
-            _mm256_shufflelo_epi16(
-              _mm256_shufflehi_epi16(v, _MM_SHUFFLE(0, 3, 2, 1)),
-              _MM_SHUFFLE(0, 3, 2, 1));
+          wide<T, N> to_left =  _mm256_shufflehi_epi16(v,       _MM_SHUFFLE(0, 3, 2, 1));
+                     to_left =  _mm256_shufflelo_epi16(to_left, _MM_SHUFFLE(0, 3, 2, 1));
           v = eve::if_else[mask](v, to_left);
           return v.slice();
         }
@@ -414,7 +313,7 @@ namespace eve::detail
       alignas(16) const auto patterns = pattern_8_elements(idxs_bytes<std::uint16_t>);
       using pattern8 = typename wide<T, N>::template rebind<std::uint16_t, eve::fixed<8>>;
 
-      auto [lo_idx, lo_count, hi_idx, hi_count] = base_3_mask_16_elements(mask);
+      auto [lo_idx, lo_count, hi_idx, hi_count] = compress_store_swizzle_mask_num(mask);
 
       auto lo_shuffle_ptr = eve::as_aligned(patterns[lo_idx].data(), eve::lane<8>);
       auto hi_shuffle_ptr = eve::as_aligned(patterns[hi_idx].data(), eve::lane<8>);
@@ -437,7 +336,7 @@ namespace eve::detail
       eve::wide<T, N> to_left = _mm_bsrli_si128(v, 1);
       v = eve::if_else[mask]( v, to_left );
 
-      auto [lo_idx, lo_count, hi_idx, hi_count] = base_3_mask_16_elements(mask);
+      auto [lo_idx, lo_count, hi_idx, hi_count] = compress_store_swizzle_mask_num(mask);
 
       const auto patterns = pattern_8_elements(idxs_bytes<std::uint8_t>);
 
