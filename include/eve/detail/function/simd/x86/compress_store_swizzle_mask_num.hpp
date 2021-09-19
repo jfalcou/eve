@@ -13,7 +13,7 @@ namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE std::pair<int, bool>
-  compress_store_swizzle_mask_num_(EVE_SUPPORTS(cpu_), logical<wide<T, fixed<4>>> mask)
+  compress_store_swizzle_mask_num_(EVE_SUPPORTS(sse2_), logical<wide<T, fixed<4>>> mask)
     requires (current_api < avx512) && (sizeof(T) == 2)
   {
     static_assert(top_bits<logical<wide<T, fixed<4>>>>::bits_per_element == 2);
@@ -23,7 +23,7 @@ namespace eve::detail
 
   template<typename T>
   EVE_FORCEINLINE std::pair<int, int>
-  compress_store_swizzle_mask_num_(EVE_SUPPORTS(cpu_), logical<wide<T, fixed<8>>> mask)
+  compress_store_swizzle_mask_num_(EVE_SUPPORTS(sse2_), logical<wide<T, fixed<8>>> mask)
     requires (current_api < avx512)
   {
     // aggregated
@@ -81,4 +81,40 @@ namespace eve::detail
       return {num, popcount};
     }
   }
+
+  template<typename T>
+  EVE_FORCEINLINE auto
+  compress_store_swizzle_mask_num_(EVE_SUPPORTS(sse2_), logical<wide<T, fixed<16>>> mask)
+    requires (current_api < avx512) && x86_abi<abi_t<T, fixed<16>>> // For aggregated 16 elements
+                                                                    // just do the base case.
+  {
+    if constexpr ( sizeof(T) == 2 )
+    {
+      auto to_bytes = eve::convert(mask, eve::as<eve::logical<std::uint8_t>>{});
+      return compress_store_swizzle_mask_num(to_bytes);
+    }
+    else if constexpr ( sizeof(T) == 1)
+    {
+      __m128i sad_mask = _mm_set_epi64x(0x8080898983838181, 0x8080898983838181);
+      __m128i sum      = _mm_sad_epu8(_mm_andnot_si128(mask, sad_mask), sad_mask);
+
+      int desc_lo = _mm_cvtsi128_si32(sum);
+      int desc_hi = _mm_extract_epi16(sum, 4);
+
+      struct res {
+        int l_num;
+        int l_count;
+        int h_num;
+        int h_count;
+      };
+
+      return res {
+        desc_lo  & 0x1f,
+        desc_lo >> 7,
+        desc_hi & 0x1f,
+        desc_hi >> 7
+      };
+    }
+  }
+
 }

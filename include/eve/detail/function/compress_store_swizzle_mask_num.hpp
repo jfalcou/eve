@@ -22,6 +22,8 @@
 // Depending on the number of elements, this is a different number
 // and a different extra information.
 //
+// 4 elements
+// ================
 // For 4 elements we do a complete shuffle of the first 3 elements
 // the last one is always written.
 // We also return a bool if the last element is set.
@@ -34,11 +36,11 @@
 //   the number of the shuffle is 0100 -> 2
 //   is last set:     false
 //
-// For 8 elements.
-// Credit goes to @aqrit.
-//
-// We << 1 && 1.
-// Whih means last 2 elements are OK to store.
+// 8 elements.
+// ==================
+// In compress store we first do << 1 and if_else(mask, x, slide_left(x, 1));
+// This reduces variativity.
+// Last 2 elements are OK to store.
 // For all previous pairs we reduce the number of options from 4 to 3.
 // [0, 0], [1, 0] and [0, 1], [1, 1].
 //
@@ -47,6 +49,11 @@
 // as a base3 number: each 2 elements are a base 3 digit.
 // This is a popcount for 2 elements.
 // We also return popcount.
+//
+// 16 elements
+// ==================
+// 16 elements are twice 8 but sometimes we can do them faster.
+// Returns {num, count} twice for both halves.
 //
 
 

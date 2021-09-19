@@ -49,4 +49,22 @@ namespace eve::detail
     sum += 9 * mask.get(5);
     return std::pair{sum, eve::count_true(mask)};
   }
+
+  template<typename T>
+  EVE_FORCEINLINE auto
+  compress_store_swizzle_mask_num_(EVE_SUPPORTS(cpu_), logical<wide<T, fixed<16>>> mask)
+  {
+    auto [l, h] = mask.slice();
+    auto [l_num, l_count] = compress_store_swizzle_mask_num(l);
+    auto [h_num, h_count] = compress_store_swizzle_mask_num(h);
+
+    struct res {
+      int l_num;
+      int l_count;
+      int h_num;
+      int h_count;
+    };
+
+    return res{l_num, l_count, h_num, h_count};
+  }
 }
