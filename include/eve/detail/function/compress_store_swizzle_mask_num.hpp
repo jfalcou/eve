@@ -12,6 +12,10 @@
 
 // compress_store_swizzle_mask_num
 //
+// The idea from: https://gist.github.com/aqrit/6e73ca6ff52f72a2b121d584745f89f3#file-despace-cpp-L141
+// Was shown to me by: @aqrit
+// Stack Overflow discussion: https://chat.stackoverflow.com/rooms/212510/discussion-between-denis-yaroshevskiy-and-peter-cordes
+//
 // For compress stores implemented as a swizzle, extracted logic
 // to compute a number of the mask.
 //
@@ -24,13 +28,27 @@
 // (compiler will optimize that computation away,
 // if the caller just calls popcount and not use it).
 //
-//
 // Example:
 //   mask:            [ false, true, false, false]
 //   shuffle we want: [     1,    3,     _,     _]
 //   the number of the shuffle is 0100 -> 2
 //   is last set:     false
 //
+// For 8 elements.
+// Credit goes to @aqrit.
+//
+// We << 1 && 1.
+// Whih means last 2 elements are OK to store.
+// For all previous pairs we reduce the number of options from 4 to 3.
+// [0, 0], [1, 0] and [0, 1], [1, 1].
+//
+// This means we have 3 * 3 * 3 options.
+// The easiest way to convert from a mask to a 27 options is to interpet it
+// as a base3 number: each 2 elements are a base 3 digit.
+// This is a popcount for 2 elements.
+// We also return popcount.
+//
+
 
 namespace eve
 {
