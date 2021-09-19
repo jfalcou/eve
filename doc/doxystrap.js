@@ -4,8 +4,17 @@ $( document ).ready(function() {
   $("div.title").addClass("h1");
 
   $('li > a[href="index.html"] > span').before("<i class='fa fa-home'></i> ");
-  $('li > a[href="pages.html"] > span').before("<i class='fa fa-cog'></i> ");
+  $('li > a[href="pages.html"] > span').before("<i class='fa fa-gears'></i> ");
+  $('li > a[href="tutorials.html"] > span').before("<i class='fa fa-map-o'></i> ");
+  $('li > a[href="glossary.html"] > span').before("<i class='fa fa-book'></i> ");
   $('li > a[href="modules.html"] > span').before("<i class='fa fa-sitemap'></i> ");
+  $('li > a[href="group__simd.html"] > span').before("<i class='fa fa-magnet'></i> ");
+  $('li > a[href="group__functions.html"] > span').before("<i class='fa fa-superscript'></i> ");
+  $('li > a[href="group__constant.html"] > span').before("<i class='fa fa-bar-chart'></i> ");
+  $('li > a[href="group__utility.html"] > span').before("<i class='fa fa-scissors'></i> ");
+  $('li > a[href="group__details.html"] > span').before("<i class='fa fa-terminal'></i> ");
+  $('li > a[href="concepts.html"] > span').before("<i class='fa fa-cubes'></i> ");
+  $('li > a[href="namespaces.html"] > span').before("<i class='fa fa-braille'></i> ");
   $('li > a[href="namespacemembers.html"] > span').before("<i class='fa fa-bars'></i> ");
   $('li > a[href="annotated.html"] > span').before("<i class='fa fa-list-ul'></i> ");
   $('li > a[href="files.html"] > span').before("<i class='fa fa-folder-open'></i> ");
@@ -24,7 +33,6 @@ $( document ).ready(function() {
   $("ul.tablist").addClass("nav nav-pills nav-justified");
   $("ul.tablist").css("margin-top", "0.5em");
   $("ul.tablist").css("margin-bottom", "0.5em");
-  $("li.current").addClass("active");
   $("iframe").attr("scrolling", "yes");
 
   $("#nav-path > ul").addClass("breadcrumb");

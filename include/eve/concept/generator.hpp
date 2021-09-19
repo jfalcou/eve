@@ -28,23 +28,19 @@ namespace eve
           : std::bool_constant<(is_generator<Constant, std::tuple_element_t<I,Type>>::value && ...)>
     {};
 
-    template<typename Constant, typename Type>
-    requires kumi::product_type<Type>
+    template<typename Constant, kumi::product_type Type>
     struct  is_generator<Constant,Type>
           : is_generator_impl<Constant,Type,std::make_index_sequence<std::tuple_size<Type>::value>>
     {};
   }
 
   //================================================================================================
-  //! @addtogroup concepts
-  //! @{
-  //!   @concept generator
-  //!   The concept `generator<Constant,Type>` is satisfied if `Constant{}( eve::as<type>() )` is
-  //!   well formed.
+  //! @concept generator
+  //! The concept `generator<Constant,Type>` is satisfied if `Constant{}( eve::as<type>() )` is
+  //! well formed.
   //!
-  //!   @groupheader{Examples}
-  //!     - `eve::callable_one_`
-  //! @}
+  //! @groupheader{Examples}
+  //!   - `eve::callable_one_`
   //================================================================================================
   template<typename Constant, typename Type>
   concept generator = !kumi::product_type<Constant> && detail::is_generator<Constant,Type>::value;
