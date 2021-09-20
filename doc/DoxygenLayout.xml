@@ -13,7 +13,7 @@
       <tab type="user" visible="yes" title="Types &amp; Wrappers" url="group__simd.html"  intro=""/>
       <tab type="user" visible="yes" title="Functions" url="@ref functions"  intro=""/>
       <tab type="user" visible="yes" title="Constants" url="@ref constant"  intro=""/>
-      <tab type="user" visible="yes" title="Miscellaneous" url="@ref utility"  intro=""/>
+      <tab type="user" visible="yes" title="Traits" url="@ref traits"  intro=""/>
       <tab type="user" visible="yes" title="Internals" url="@ref details"  intro=""/>
     </tab>
     <tab type="namespaces" visible="yes" title="References">
@@ -164,7 +164,6 @@
   <group>
     <briefdescription visible="yes"/>
     <groupgraph visible="$GROUP_GRAPHS"/>
-    <detaileddescription title=""/>
     <memberdecl>
       <nestedgroups visible="yes" title=""/>
       <dirs visible="yes" title=""/>

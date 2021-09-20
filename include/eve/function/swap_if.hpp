@@ -16,19 +16,20 @@ namespace eve
   //================================================================================================
   //! @addtogroup arithmetic
   //! @{
-  //! @brief Conditional swap
+  //!   @fn swap_if(Mask const& mask, Value& lhs, Value& rhs)
+  //!   @brief Conditional swap
   //!
-  //! **Required header:** `#include <eve/function/swap_if.hpp>`
+  //!   **Required header:** `#include <eve/function/swap_if.hpp>`
   //!
-  //! Swaps the [values](@ref eve::value) `lhs` and `rhs` wherever `mask` evaluates to
-  //! `true` or not.
+  //!   Swaps the [SIMD values](@ref eve::simd_value) `lhs` and `rhs` wherever `mask` evaluates to
+  //!   `true`.
   //!
-  //! @params mask      Logical mask to apply over the swap operation.
-  //! @params lhs, rhs  Values to swap.
+  //!   @param mask      Mask to apply over the swap operation.
+  //!   @param lhs, rhs  Values to swap.
   //!
-  //! @groupheader{Example}
+  //!   @groupheader{Example}
   //!
-  //! @godbolt{doc/core/swap_if.cpp}
+  //!   @godbolt{doc/core/swap_if.cpp}
   //!
   //! @}
   //================================================================================================
