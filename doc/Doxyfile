@@ -264,8 +264,8 @@ TAB_SIZE               = 2
 ALIASES                = "ce=@htmlonly <a id=\"godbolt-link\" href=\"#\">See it live on Compiler Explorer</a> <div id=\"godbolt\">@endhtmlonly" \
                          "ce{1}=@htmlonly <a id=\"godbolt-link\" href=\"#\"> \1 </a> <div id=\"godbolt\">@endhtmlonly" \
                          endce=@htmlonly</div>@endhtmlonly \
-                         "godbolt{1}=@ce \n @include \1 \n @endce" \
-                         "godbolt{2}=@ce{\1} \n @include \2 \n @endce" \
+                         "godbolt{1}=@ce @include \1 \n @endce" \
+                         "godbolt{2}=@ce{\1} @include \2 \n @endce" \
                          "groupheader{1}=<h2 class=\"groupheader\"> \1 </h2>" \
                          nullable=[NullablePointer](https://en.cppreference.com/w/cpp/named_req/NullablePointer) \
                          "callable=[Callable Object](https://en.cppreference.com/w/cpp/named_req/Callable)" \
@@ -1014,7 +1014,7 @@ EXCLUDE_SYMBOLS        = spy* \
 # command).
 
 EXAMPLE_PATH           = ../test/doc \
-                         ../docs/reference/out
+                         ../examples
 
 # If the value of the EXAMPLE_PATH tag contains directories, you can use the
 # EXAMPLE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp and
