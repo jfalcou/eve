@@ -9,8 +9,6 @@
 
 #include <eve/detail/function/compress_store_impl.hpp>
 
-#include <eve/function/convert.hpp>
-
 namespace eve::detail
 {
   template<relative_conditional_expr C,
@@ -25,7 +23,7 @@ namespace eve::detail
                     Ptr ptr) noexcept
   {
     alignas(sizeof(v)) std::array<element_type_t<T>, N{}()> buffer;
-    T* up_to = compress_store_impl(c, v, convert(mask, as<logical<T>>{}), buffer.begin());
+    T* up_to = compress_store_impl(c, v, mask, buffer.begin());
     std::ptrdiff_t n = up_to - buffer.begin();
 
     auto* out = as_raw_pointer(ptr) + c.offset(as(mask));
@@ -48,7 +46,7 @@ namespace eve::detail
                     Ptr ptr) noexcept
   {
     if (!C::is_complete) return safe(compress_store[c])(v, mask, ptr);
-    else                 return compress_store_impl(c, v, convert(mask, as<logical<T>>{}), ptr);
+    else                 return compress_store_impl(c, v, mask, ptr);
   }
 
   template<relative_conditional_expr C, decorator Decorator,

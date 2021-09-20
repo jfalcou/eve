@@ -123,12 +123,12 @@ namespace eve::detail
   // The idea from: https://gist.github.com/aqrit/6e73ca6ff52f72a2b121d584745f89f3#file-despace-cpp-L141
   // Was shown to me by: @aqrit
   // Stack Overflow discussion: https://chat.stackoverflow.com/rooms/212510/discussion-between-denis-yaroshevskiy-and-peter-cordes
-  template<relative_conditional_expr C, real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  template<relative_conditional_expr C, typename T, typename U, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
   T* compress_store_impl_(EVE_SUPPORTS(ssse3_),
                           C c,
                           wide<T, N> v,
-                          logical<wide<T, N>> mask,
+                          logical<wide<U, N>> mask,
                           Ptr ptr) noexcept
     requires x86_abi<abi_t<T, N>> && ( N() == 4 )
   {
@@ -155,9 +155,8 @@ namespace eve::detail
       using i_t = eve::as_integer_t<T>;
       auto  i_p = ptr_cast<i_t>(ptr);
       auto  i_v = eve::bit_cast(v, eve::as<wide<i_t, N>>{});
-      auto  i_m = eve::bit_cast(mask, eve::as<eve::logical<wide<i_t, N>>>{});
 
-      i_t* stored = compress_store_impl(c, i_v, i_m, i_p);
+      i_t* stored = compress_store_impl(c, i_v, mask, i_p);
       return (T*) stored;
     }
     else
@@ -181,11 +180,11 @@ namespace eve::detail
     }
   }
 
-  template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  template<typename T, typename U, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
   T* compress_store_impl_(EVE_SUPPORTS(ssse3_),
                           wide<T, N> v,
-                          logical<wide<T, N>> mask,
+                          logical<wide<U, N>> mask,
                           Ptr ptr) noexcept
     requires x86_abi<abi_t<T, N>> && ( N() == 4 )
   {
@@ -230,11 +229,11 @@ namespace eve::detail
     return res;
   }
 
-  template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  template<typename T, typename U, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
   T* compress_store_impl_(EVE_SUPPORTS(ssse3_),
                           wide<T, N> v,
-                          logical<wide<T, N>> mask,
+                          logical<wide<U, N>> mask,
                           Ptr ptr) noexcept
     requires x86_abi<abi_t<T, N>> && (current_api <= avx2) && ( N() == 8 )
   {
@@ -278,11 +277,11 @@ namespace eve::detail
     }
   }
 
-  template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  template<typename T, typename U, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
   T* compress_store_impl_(EVE_SUPPORTS(ssse3_),
                           wide<T, N> v,
-                          logical<wide<T, N>> mask,
+                          logical<wide<U, N>> mask,
                           Ptr ptr) noexcept
     requires x86_abi<abi_t<T, N>> && (current_api <= avx2) && ( N() == 16 )
   {
