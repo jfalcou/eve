@@ -13,9 +13,6 @@
 #include <array>
 #include <random>
 
-namespace
-{
-
 template <typename T, typename L, typename C>
 void ignore_test(T x, L m, C c)
 {
@@ -182,7 +179,8 @@ template<typename L, typename T> void smaller_test_v(T x)
 
   // bunch of randoms
   {
-    std::mt19937                         g;
+    constexpr auto seed = sizeof(eve::element_type_t<L>) + sizeof(eve::element_type_t<T>) + T::size();
+    std::mt19937                         g(seed);
     std::uniform_int_distribution<short> d(0, 1);
 
     auto random_l = [&]() mutable {
@@ -191,7 +189,7 @@ template<typename L, typename T> void smaller_test_v(T x)
       return m;
     };
 
-    for( int i = 0; i < 1000; ++i ) { one_test<true>(x, random_l()); }
+    for( int i = 0; i < 100; ++i ) { one_test<false>(x, random_l()); }
   }
 
   // precise
@@ -201,21 +199,9 @@ template<typename L, typename T> void smaller_test_v(T x)
 template <typename L, typename T>
 void all_tests_for_v(T x)
 {
-  if constexpr (T::size() <= 16)
+  if constexpr (T::size() <= 8)
   {
     go_through_everything<L>(x);
   }
   smaller_test_v<L>(x);
 }
-
-}
-
-EVE_TEST( "Check compress store behavior"
-        , eve::test::simd::all_types
-        , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
-        )
-<typename T, typename L> (T data, L logical_data)
-{
-  all_tests_for_v<eve::logical<T>>(data);
-  smaller_test_v<L>(logical_data);
-};
