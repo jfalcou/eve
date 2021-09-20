@@ -158,42 +158,52 @@ void go_through_everything(T x)
   test(test, 0);
 }
 
-template<typename L, typename T> void smaller_test_v(T x)
+template<typename L, typename T>
+void smaller_test_v(T x)
 {
-  // even elements
+  if constexpr ( eve::current_api == eve::avx512 && (eve::has_aggregated_abi_v<T> || eve::has_aggregated_abi_v<L>))
   {
-    L m {false};
-
-    for( std::ptrdiff_t i = 0; i < T::size(); i += 2 )
+    TTS_PASS("aggregated on avx512");
+    return;
+  }
+  else
+  {
+    // even elements
     {
-      m.set(i, true);
-      one_test<true>(x, m);
-    }
-  }
-
-  // all/none
-  {
-    one_test<true>(x, L {true});
-    one_test<true>(x, L {false});
-  }
-
-  // bunch of randoms
-  {
-    constexpr auto seed = sizeof(eve::element_type_t<L>) + sizeof(eve::element_type_t<T>) + T::size();
-    std::mt19937                         g(seed);
-    std::uniform_int_distribution<short> d(0, 1);
-
-    auto random_l = [&]() mutable {
       L m {false};
-      for( int i = 0; i != L::size(); ++i ) { m.set(i, d(g) == 1); }
-      return m;
-    };
 
-    for( int i = 0; i < 100; ++i ) { one_test<false>(x, random_l()); }
+      for( std::ptrdiff_t i = 0; i < T::size(); i += 2 )
+      {
+        m.set(i, true);
+        one_test<true>(x, m);
+      }
+    }
+
+    // all/none
+    {
+      one_test<true>(x, L {true});
+      one_test<true>(x, L {false});
+    }
+    // bunch of randoms
+    {
+      constexpr auto seed =
+          sizeof(eve::element_type_t<L>) + sizeof(eve::element_type_t<T>) + T::size();
+      std::mt19937                         g(seed);
+      std::uniform_int_distribution<short> d(0, 1);
+
+      auto random_l = [&]() mutable
+      {
+        L m {false};
+        for( int i = 0; i != L::size(); ++i ) { m.set(i, d(g) == 1); }
+        return m;
+      };
+
+      for( int i = 0; i < 100; ++i ) { one_test<false>(x, random_l()); }
+    }
+
+    // precise
+    precise_tests<L>(x);
   }
-
-  // precise
-  precise_tests<L>(x);
 }
 
 template <typename L, typename T>
