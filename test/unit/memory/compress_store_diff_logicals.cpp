@@ -20,10 +20,4 @@ EVE_TEST( "Check compress store behavior"
   smaller_test_v<eve::logical<eve::wide<std::uint16_t, N>>>(data);
   smaller_test_v<eve::logical<eve::wide<std::uint32_t, N>>>(data);
   smaller_test_v<eve::logical<eve::wide<std::uint64_t, N>>>(data);
-
-  //smaller_test_v<L>(logical_data);
-  // smaller_test_v<eve::logical<eve::wide<std::uint8_t,  N>>>(logical_data);
-  // smaller_test_v<eve::logical<eve::wide<std::uint16_t, N>>>(logical_data);
-  // smaller_test_v<eve::logical<eve::wide<std::uint32_t, N>>>(logical_data);
-  // smaller_test_v<eve::logical<eve::wide<std::uint64_t, N>>>(logical_data);
 };
