@@ -33,6 +33,7 @@ $( document ).ready(function() {
   $("ul.tablist").addClass("nav nav-pills nav-justified");
   $("ul.tablist").css("margin-top", "0.5em");
   $("ul.tablist").css("margin-bottom", "0.5em");
+  $("li.current").addClass("active");
   $("iframe").attr("scrolling", "yes");
 
   $("#nav-path > ul").addClass("breadcrumb");

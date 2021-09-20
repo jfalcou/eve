@@ -12,10 +12,16 @@
 //! @{
 //! @defgroup bits Bits
 //!
-//! These functions provide scalar and SIMD version of basic bitwise functions.
+//! @brief Scalar and SIMD version of basic bitwise functions.
 //!
-//! To keep the results homogeneous and coherent between SIMD and scalar mode, the types usable
-//! in those functions are generally required to satisfy `eve::bit_compatible_values`
+//! These functions provide scalar and SIMD version of bit operations. These operations are extended
+//! to work on any [value](@ref eve::value) types by considering the bitwise operation to apply
+//! on the value bit patterns while retaining its original types, thus following the @ref glossary_bitwise
+//! semantic.
+//!
+//! If a bitwise operation implies a negation -- as in `bit_andnot`-- the position of the
+//! negation in the function's name matches the position of the negated parameter. For example,
+//! `bit_andnot(x,y)` is semantically equivalent to `bit_and(x,bit_not(y))` but may be optimized.
 //!
 //! **Convenience header:** @code{.cpp} #include <eve/function/bits.hpp> @endcode
 //!

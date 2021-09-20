@@ -3,77 +3,95 @@ Semantic of EVE functions {#glossary_semantic}
 
 @tableofcontents
 
-@section glossary_elementwise Element-wise operation
+**EVE** provides a lot of function that operates on similar premises. This page gather the general
+behaviors **EVE** functions can exhibit.
 
-For any [values](@ref eve::value) `x1`, ..., `xn` of types `T1`, ..., `Tn` so that the expression
-`using C = eve::common_compatible_t<T1,...,Tn>` is valid, a Callable Object `f` is said to have
-an **element-wise semantic** if the expression `C r = f(x1, ...,xn)` is semantically equivalent to:
+@section glossary_op_classes Operations Classification
 
-  - if C models eve::simd_value: `C r = [](auto i, auto) { return f(x_1.get(i),  ..., x_n.get(i)); }`
-  - if C models eve::scalar_value:  `C r = return f(x_1.get(i),  ..., x_n.get(i))`
+@subsection glossary_access Generalized Element Access
+
+**EVE** functions' semantics rely on a generic way to access an element of a [value](@ref eve::value)
+in a generic way, be it [scalar](@ref eve::scalar_value) or [SIMD](@ref eve::simd_value).
+
+To do so, we define a synthetic function `at(v,i)` that retrieve the `i`th element of a value `v`.
+
+@code{.cpp}
+template<eve::value V, std::integral I> auto at(V const& v,  I i)
+{
+  if constexpr( eve::simd_value<V>)   return v.get(i);
+  else                                return v;
+}
+@endcode
 
 ---
-<!-- TO REMASTER -->
 
-@section glossary_arithmetic Arithmetic operations semantic
+@subsection glossary_elementwise Elementwise Operations
 
-Let `x`, `y` and `z` be three values of respective types `T, U, V`.
+Elementwise operations in **EVE** describe functions that operates in a regular pattern over each
+and every element of its input and generates a return value with the same cardinal as its inputs.
 
-For any callable object `f`, the expression `f(x,y)` has an **arithmetic operations semantic**
-if `T` and `U`  are [compatible](@ref eve::common_compatible) [values](@ref eve::value)
-and the call is semantically equivalent to:
+For any [values](@ref eve::value) `x1`, ..., `xn` of types `T1`, ..., `Tn`, a Callable Object `f`
+returning a [value](@ref eve::value) of type `R` is said to be **Elementwise** if the expression
+`R r = f(x1, ...,xn)` is semantically equivalent to:
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-using TU = std::conditional< scalar_value<T>, U, T>;
-return f(TU(x), TU(y));
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  - if `R` models eve::simd_value:    `R r = [](auto i, auto) { return f(at(x1,i),  ..., at(xn,i)); }`
+  - if `R` models eve::scalar_value:  `R r = return f(x1,  ..., xn)`
 
-In the same way, the expression `f(x,y,z)` has an **arithmetic operations semantic**
-if `T`, `U` and `V` are mutually [compatible](@ref eve::common_compatible) [values](@ref eve::value) and the call is semantically equivalent to:
+@note No constraints are required on either the input or output types.
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-using TU  = std::conditional< scalar_value<T> , U, T >;
-using TUV = std::conditional< scalar_value<TU>, V, TU>;
-return f(TUV(x), TUV(y),TUV(z));
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---
 
-In each case the return type is the compatibility result of the types of the three parameters.
+@subsection glossary_reduction Reductions
 
-These definition can easily be extended to the N parameters case.
+Elementwise operations in **EVE** describe functions that operates over all elements of a given
+[value](@ref eve::value) to produce a single [scalar result](@ref eve::scalar_value).
 
-@section glossary_bitwise Bitwise operations semantic
-Let `x`, `y` be two values of respective types `T` and `U`.
+For any [value](@ref eve::value) `x` of type `T`, a Callable Object `f` returning a
+[scalar value](@ref eve::scalar_value) of type `eve::elemet_type<T>` is said to be a **Reduction**.
 
-When invoking the function-call operator of an object `f`,  the calls `f(x,y)`
-will be reputed to respond to the **bitwise operations semantic**
-if the two types are bit_compatible and the call is semantically equivalent to:
+@section glossary_function_semantic Function Semantic
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-if constexpr(scalar_value<T> && simd_value<U>)
-{
-  using r_t = wide<element_type<T>>,cardinal_t<U>)
-  r_t xx(bit_cast(x, as<element_type<T>()>);
-  r_t yy(bit_cast(y, as<r_t>()));
-  return f(xx, yy);
-}
-else if  constexpr(simd_value<T> && scalar_value<U>)
-{
-  auto yy = bit_cast(y, as<element_type<T>()>);
-  return f(x, yy);
-}
-else
-{
-  auto yy = bit_cast(y, as<T>()>);
-  return f(x, yy);
-}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+@subsection glossary_arithmetic Arithmetic Functions
 
-The return type always has `T` as element type.
+For any [values](@ref eve::value) `x1`, ..., `xn` of types `T1`, ..., `Tn` so that the expression
+`using C = eve::common_compatible_t<T1,...,Tn>` is valid, a Callable Object `f` is said to be
+an **Arithmetic Function** if the expression `C r = f(x1, ...,xn)` is semantically equivalent to:
 
-@section glossary_logical Logical operations semantic
+  - if `C` models eve::simd_value: `C r = [](auto i, auto) { return f(at(C(x1),i),  ..., at(C(xn),i)); }`
+  - if `C` models eve::scalar_value:  `C r = return f(C(x1),  ..., C(xn))`
 
-Let `x`, `y` be two values of respective types `T` and `U`.
+In a less formal way, **EVE** @ref glossary_arithmetic generalizes the notion of native C++
+arithmetic operations.
 
-When invoking the function-call operator of an object `f`,  the calls `f(x,y)`
-will be reputed to respond to the **logical operations semantic**
-if the two types are ... TODO
+@note A large majority of @ref glossary_arithmetic are _de facto_ @ref glossary_elementwise .
+
+---
+
+@subsection glossary_bitwise Bitwise Functions
+
+For any [values](@ref eve::value) `x1`, ..., `xn` of types `T1`, ..., `Tn`so that the expression
+`eve::bit_compatible_values<T1,...,Tn>` evaluates to `true`, a Callable Object `f` is said to be
+a **Bitwise Function** if the expression `T1 r = f(x1, ..., xn)` is semantically equivalent to:
+
+  - if `T1` models eve::simd_value:     `T1 r = [](auto i, auto) { return f(at(x1,i),... at(``eve::bit_cast(xn,``eve::as(x1)``),i); }`
+  - if `T1` models eve::scalar_value:   `T1 r = return f(x1,...``eve::bit_cast(xn,``eve::as(x1)``))`
+
+In a less formal way, **EVE** @ref glossary_bitwise can be applied to any pair of types, the first
+acting as the value type and the second as a type-less source of bits.
+
+@note A large majority of @ref glossary_bitwise are _de facto_ @ref glossary_elementwise .
+
+---
+
+@subsection glossary_logical Logical Functions
+
+**EVE** @ref glossary_logical are @ref glossary_arithmetic that can only be applied to
+[logical values][@ref eve::logical_value) `L1`,... `Ln` that verify that either
+`eve::cardinal``<L1>::value == ``eve::cardinal``<Ln>::value` or that, for a given `n`, the
+expression `std::same_as<``eve::cardinal``<Ln>, ``eve::scalar_cardinal``>` evaluates to `true`.
+
+In a less formal way, **EVE** @ref glossary_logical can be applied to set of
+[logical values](@ref eve::logical_value) as long as they all share the same [number of lanes](@ref eve::cardinal),
+except for any potential logical scalar values.
+
+@note A large majority of @ref glossary_logical are _de facto_ @ref glossary_elementwise .
