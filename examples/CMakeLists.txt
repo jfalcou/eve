@@ -3,9 +3,6 @@
 ##  Copyright : EVE Contributors & Maintainers
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
-make_unit( "examples" quick-start/sanity-check.cpp )
-make_unit( "examples" quick-start/constant.cpp )
-
 make_unit( "examples" algorithms/using_existing/memcmp__two_range_algorithms_interface_specifics.cpp )
 make_unit( "examples" algorithms/using_existing/inclusive_scan_zip__using_zip_with_algorithms.cpp )
 
