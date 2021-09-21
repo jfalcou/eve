@@ -11,7 +11,7 @@
 #include <eve/wide.hpp>
 
 EVE_TEST( "Check detail::to_logical"
-        , eve::test::simd::all_types
+        , eve::test::simd::restricted::all_types
         , eve::test::generate( eve::test::randoms(0,2) )
         )
 <typename T>(T mixed_values)
