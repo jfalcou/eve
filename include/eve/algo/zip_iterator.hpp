@@ -13,6 +13,7 @@
 
 #include <eve/algo/detail/preprocess_zip_range.hpp>
 
+#include <eve/function/compress_store.hpp>
 #include <eve/function/load.hpp>
 #include <eve/function/store.hpp>
 
@@ -84,42 +85,42 @@ namespace eve::algo
         kumi::for_each(eve::write, self.storage, v);
       }
 
-      operator zip_iterator<unaligned_t<Is>...>() const
+      EVE_FORCEINLINE operator zip_iterator<unaligned_t<Is>...>() const
       {
         return zip_iterator<unaligned_t<Is>...> {
             kumi::map([](auto x) { return unalign(x); }, *this)};
       }
 
-      auto unaligned() const { return zip_iterator<unaligned_t<Is>...>(*this); }
+      EVE_FORCEINLINE auto unaligned() const { return zip_iterator<unaligned_t<Is>...>(*this); }
 
       template<std::derived_from<zip_iterator_common> Self, compatible_zip_iterators<Self> Other>
-      friend bool operator==(Self const &x, Other const &y)
+      EVE_FORCEINLINE friend bool operator==(Self const &x, Other const &y)
       {
         return get<0>(x) == get<0>(y);
       }
 
       template<std::derived_from<zip_iterator_common> Self, compatible_zip_iterators<Self> Other>
-      friend auto operator<=>(Self const& x, Other const &y)
+      EVE_FORCEINLINE friend auto operator<=>(Self const& x, Other const &y)
       {
         return spaceship_helper(get<0>(x), get<0>(y));
       }
 
       template<std::derived_from<zip_iterator_common> Self>
-      friend Self &operator+=(Self &x, std::ptrdiff_t n)
+      EVE_FORCEINLINE friend Self &operator+=(Self &x, std::ptrdiff_t n)
       {
         kumi::for_each([&](auto &m) { m += n; }, x);
         return x;
       }
 
       template<std::derived_from<zip_iterator_common> Self, compatible_zip_iterators<Self> Other>
-      friend std::ptrdiff_t operator-(Self const& x, Other const& y)
+      EVE_FORCEINLINE friend std::ptrdiff_t operator-(Self const& x, Other const& y)
       {
         return get<0>(x) - get<0>(y);
       }
 
       template<typename Traits, std::derived_from<zip_iterator_common> Self,
                std::equality_comparable_with<std::tuple_element_t<0, tuple_type>> S>
-      friend auto tagged_dispatch(preprocess_range_, Traits traits, Self self, S l)
+      EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, Traits traits, Self self, S l)
       {
         std::ptrdiff_t distance = l - get<0>(self);
 
@@ -153,7 +154,7 @@ namespace eve::algo
     using base::base;
 
     template<typename Traits, compatible_zip_iterators<zip_iterator<Is...>> Other>
-    friend auto tagged_dispatch(preprocess_range_, Traits traits, zip_iterator<Is...> self, Other other)
+    EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, Traits traits, zip_iterator<Is...> self, Other other)
     {
       auto ranges = kumi::map([](auto f_, auto l_) {
         return as_range(f_, l_);
@@ -174,7 +175,7 @@ namespace eve::algo
 
     using base::base;
 
-    auto previous_partially_aligned() const
+    EVE_FORCEINLINE auto previous_partially_aligned() const
     {
       // FIX-#809: always aligned support
       if constexpr ((partially_aligned_iterator<I> || ... || partially_aligned_iterator<Is> )) return *this;
@@ -198,7 +199,7 @@ namespace eve::algo
     }
 
     template <typename _Cardinal>
-    auto cardinal_cast(_Cardinal N) const
+    EVE_FORCEINLINE auto cardinal_cast(_Cardinal N) const
     {
       return zip_iterator<decltype(I{}.cardinal_cast(N)), decltype(Is{}.cardinal_cast(N))...> {
         kumi::map([&](auto x) { return x.cardinal_cast(N); }, *this)
@@ -206,7 +207,7 @@ namespace eve::algo
     }
 
     template< relative_conditional_expr C, decorator S>
-    friend auto tagged_dispatch ( eve::tag::load_, C const& c, S const& s
+    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::load_, C const& c, S const& s
                                 , auto const& pack, zip_iterator self
                                 )
     {
@@ -214,15 +215,25 @@ namespace eve::algo
     }
 
     template <relative_conditional_expr C>
-    friend void tagged_dispatch(
+    EVE_FORCEINLINE friend void tagged_dispatch(
       eve::tag::store_, C cond, wide_value_type v, zip_iterator self )
     {
       eve::store[cond](v, self.storage);
     }
 
-    friend void tagged_dispatch( eve::tag::store_, wide_value_type v, zip_iterator self )
+    EVE_FORCEINLINE friend void tagged_dispatch( eve::tag::store_, wide_value_type v, zip_iterator self )
     {
       eve::store(v, self.storage);
+    }
+
+    template <relative_conditional_expr C, decorator Decorator, typename U>
+    EVE_FORCEINLINE friend auto tagged_dispatch( eve::tag::compress_store_,
+      C c, Decorator d, wide_value_type v,
+      eve::logical<eve::wide<U, cardinal>> m,
+      zip_iterator self)
+    {
+      auto raw_res = d(eve::compress_store[c])(v, m, self.storage);
+      return unaligned_t<zip_iterator>{raw_res};
     }
   };
 

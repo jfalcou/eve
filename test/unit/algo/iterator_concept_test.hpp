@@ -165,7 +165,7 @@ namespace algo_test
     T expected = or_;
     expected.set(0, v.back());
 
-    eve::logical<T> mask{false};
+    eve::logical<eve::wide<std::uint16_t, eve::fixed<T::size()>>> mask{false};
     mask.set(T::size() - 1, true);
     eve::algo::unaligned_t<I> res = eve::safe(eve::compress_store)(v, mask, f);
     TTS_EQUAL(eve::load(f), expected);
