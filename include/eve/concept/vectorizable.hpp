@@ -56,8 +56,6 @@ namespace eve::detail
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup concepts
-  //! @{
   //! @concept scalar_value
   //! @brief Specify that a type represents a scalar value
   //!
@@ -67,14 +65,11 @@ namespace eve
   //! @groupheader{Examples}
   //! - `float`
   //! - `std::int32_t`
-  //! @}
   //================================================================================================
   template<typename T>
   concept scalar_value = detail::is_scalar_value<T>::value;
 
   //================================================================================================
-  //! @addtogroup concepts
-  //! @{
   //! @concept integral_scalar_value
   //! @brief Specify that a type represents an integral scalar value
   //!
@@ -83,14 +78,11 @@ namespace eve
   //!
   //! @groupheader{Examples}
   //! - `std::int32_t`
-  //! @}
   //================================================================================================
   template<typename T>
   concept integral_scalar_value  = scalar_value<T> && std::integral<T>;
 
   //================================================================================================
-  //! @addtogroup concepts
-  //! @{
   //! @concept signed_scalar_value
   //! @brief Specify that a type represents a signed scalar value
   //!
@@ -100,14 +92,11 @@ namespace eve
   //! @groupheader{Examples}
   //! - `std::int32_t`
   //! - `float`
-  //! @}
   //================================================================================================
   template<typename T>
   concept signed_scalar_value  = scalar_value<T> && std::is_signed_v<T>;
 
   //================================================================================================
-  //! @addtogroup concepts
-  //! @{
   //! @concept unsigned_scalar_value
   //! @brief Specify that a type represents a scalar value
   //!
@@ -115,12 +104,10 @@ namespace eve
   //!
   //! @groupheader{Examples}
   //! - `std::uint32_t`
-  //! @}
   //================================================================================================
   template<typename T> concept unsigned_scalar_value          = scalar_value<T> && std::unsigned_integral<T>;
+
   //================================================================================================
-  //! @addtogroup concepts
-  //! @{
   //! @concept signed_integral_scalar_value
   //! @brief Specify that a type represents a scalar value
   //!
@@ -128,12 +115,10 @@ namespace eve
   //!
   //! @groupheader{Examples}
   //! - `std::int32_t`
-  //! @}
   //================================================================================================
   template<typename T> concept signed_integral_scalar_value   = scalar_value<T> && std::signed_integral<T>;
+
   //================================================================================================
-  //! @addtogroup concepts
-  //! @{
   //! @concept floating_scalar_value
   //! @brief Specify that a type represents a scalar value
   //!
@@ -142,12 +127,10 @@ namespace eve
   //! @groupheader{Examples}
   //! - `float`
   //! - `double`
-  //! @}
   //================================================================================================
   template<typename T> concept floating_scalar_value          = scalar_value<T> && std::floating_point<T>;
+
   //================================================================================================
-  //! @addtogroup concepts
-  //! @{
   //! @concept logical_scalar_value
   //! @brief Specify that a type represents a scalar value
   //!
@@ -156,12 +139,10 @@ namespace eve
   //! @groupheader{Examples}
   //! - `logical<float>`
   //! - `logical<int>`
-  //! @}
   //================================================================================================
   template<typename T> concept logical_scalar_value           = scalar_value<T> && is_logical_v<T>;
+
   //================================================================================================
-  //! @addtogroup concepts
-  //! @{
   //! @concept real_scalar_value
   //! @brief Specify that a type represents a scalar value
   //!
@@ -170,12 +151,10 @@ namespace eve
   //! @groupheader{Examples}
   //! - `float`
   //! - `int`
-  //! @}
   //================================================================================================
   template<typename T> concept real_scalar_value              = scalar_value<T> && std::same_as< detail::value_type_t<T>, element_type_t<T>>;
+
   //================================================================================================
-  //! @addtogroup concepts
-  //! @{
   //! @concept floating_real_scalar_value
   //! @brief Specify that a type represents a scalar value
   //!
@@ -184,12 +163,10 @@ namespace eve
   //! @groupheader{Examples}
   //! - `float`
   //! - `double`
-  //! @}
   //================================================================================================
   template<typename T> concept floating_real_scalar_value     = real_scalar_value<T> && std::floating_point<detail::value_type_t<T>>;
+
   //================================================================================================
-  //! @addtogroup concepts
-  //! @{
   //! @concept integral_real_scalar_value
   //! @brief Specify that a type represents a scalar value
   //!
@@ -198,7 +175,6 @@ namespace eve
   //! @groupheader{Examples}
   //! - `int`
   //! - `unsigned int`
-  //! @}
   //================================================================================================
   template<typename T> concept integral_real_scalar_value     = real_scalar_value<T> && std::integral<detail::value_type_t<T>>;
 }

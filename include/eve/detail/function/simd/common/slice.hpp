@@ -28,7 +28,7 @@ namespace eve
   using lower_slice_t = slice_t<0>;
 
   //================================================================================================
-  //! @addtogroup utility
+  //! @addtogroup simd
   //! @{
   //================================================================================================
   //! @brief Tag to select the upper slice of a simd_value

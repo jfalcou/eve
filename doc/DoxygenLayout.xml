@@ -3,11 +3,34 @@
   <!-- Navigation index tabs for HTML output -->
   <navindex>
     <tab type="mainpage" visible="yes" title="Index"/>
-    <tab type="pages" visible="yes" title="Tutorials" intro=""/>
-    <tab type="modules" visible="yes" title="Components" intro=""/>
-    <tab type="classindex" visible="$ALPHABETICAL_INDEX" title="Types Reference"/>
-    <tab type="namespacemembers" visible="yes" title="Functions Reference" intro=""/>
+    <tab type="pages" visible="yes" title="Documentation">
+      <tab type="pages" visible="yes" title="Documentation"/>
+      <tab type="user" visible="yes" title="Tutorials" url="tutorials.html"/>
+      <tab type="user" visible="yes" title="Glossary" url="glossary.html"/>
+    </tab>
+    <tab type="modules" visible="yes" title="Modules">
+      <tab type="modules" visible="yes" title="Modules"  intro=""/>
+      <tab type="user" visible="yes" title="Types &amp; Wrappers" url="group__simd.html"  intro=""/>
+      <tab type="user" visible="yes" title="Functions" url="@ref functions"  intro=""/>
+      <tab type="user" visible="yes" title="Constants" url="@ref constant"  intro=""/>
+      <tab type="user" visible="yes" title="Traits" url="@ref traits"  intro=""/>
+      <tab type="user" visible="yes" title="Internals" url="@ref details"  intro=""/>
+    </tab>
+    <tab type="namespaces" visible="yes" title="References">
+      <tab type="namespaces" visible="yes" title="" intro=""/>
+      <tab type="concepts" visible="yes" title="Concepts" intro=""/>
+      <tab type="classindex" visible="$ALPHABETICAL_INDEX" title="Types" intro=""/>
+      <tab type="namespacemembers" visible="yes" title="Complete Index" intro=""/>
+    </tab>
   </navindex>
+
+  <!-- Layout definition for a concept page -->
+  <concept>
+    <includes visible="$SHOW_HEADERFILE"/>
+    <definition visible="yes" title=""/>
+    <detaileddescription title=""/>
+    <authorsection visible="yes"/>
+  </concept>
 
   <!-- Layout definition for a class page -->
   <class>
@@ -79,6 +102,7 @@
       <classes visible="yes" title=""/>
       <structs visible="yes" title=""/>
       <exceptions visible="yes" title=""/>
+      <concepts visible="yes" title=""/>
       <typedefs title=""/>
       <sequences title=""/>
       <dictionaries title=""/>
@@ -146,6 +170,7 @@
       <dirs visible="yes" title=""/>
       <files visible="yes" title=""/>
       <namespaces visible="yes" title=""/>
+      <concepts visible="yes" title=""/>
       <classes visible="yes" title=""/>
       <defines title=""/>
       <typedefs title=""/>

@@ -14,9 +14,10 @@
 #include <type_traits>
 
 //==================================================================================================
-//! @addtogroup utility
+//! @addtogroup simd
 //! @{
 //! @defgroup struct Structured Types Management
+//! @brief Traits and functions to handle user defined types in SIMD registers
 //!
 //! **EVE** provides various elements to simplify the management of user-defined structures
 //! as vectorized types.

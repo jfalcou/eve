@@ -97,6 +97,18 @@ namespace eve
   template<scalar_value T> using converter_type = decorated<convert_to_<T>()>;
 
   //================================================================================================
+  //! @addtogroup conversion
+  //! @{
+  //! @defgroup converter Conversion decorators
+  //!
+  //! These functions imbues other functions with conversion semantic
+  //!
+  //! **Convenience header:** @code{.cpp} #include <eve/function/converter.hpp> @endcode
+  //!
+  //!@}
+  //================================================================================================
+
+  //================================================================================================
   //! @addtogroup converter
   //! @{
   //! @var float32

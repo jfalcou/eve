@@ -17,8 +17,6 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup concepts
-  //! @{
   //!   @concept simd_value
   //!   @brief    Specifies that a type a SIMD type
   //!
@@ -29,14 +27,11 @@ namespace eve
   //!    - `eve::logical<eve::wide<char>>`
   //!    - `eve::wide<float>`
   // !   - `eve::wide<int, eve::fixed<1>>`
-  //! @}
   //================================================================================================
   template<typename T>
   concept simd_value = !std::same_as<eve::cardinal_t<T>, scalar_cardinal>;
 
   //================================================================================================
-  //! @addtogroup concepts
-  //! @{
   //!   @concept integral_simd_value
   //!   @brief    Specifies that a type a SIMD type with integral elements
   //!
@@ -46,7 +41,6 @@ namespace eve
   //!    @groupheader{Examples}
   //!    - `eve::logical<eve::wide<char>>`
   //!    - `eve::wide<int, eve::fixed<1>>`
-  //! @}
   //================================================================================================
   template<typename T>
   concept integral_simd_value        = simd_value<T> && std::integral<detail::value_type_t<T>>;

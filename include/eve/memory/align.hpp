@@ -15,7 +15,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup utility
+  //! @addtogroup memory
   //! @{
   //! @enum over
   //! **Required header:**
@@ -44,7 +44,7 @@ namespace eve
   constexpr inline  std::size_t to_integer(over n)  noexcept { return static_cast<std::size_t>(n); }
 
   //================================================================================================
-  //! @addtogroup utility
+  //! @addtogroup memory
   //! @{
   //! @enum under
   //! **Required header:**

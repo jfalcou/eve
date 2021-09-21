@@ -10,7 +10,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup utility
+  //! @addtogroup traits
   //! @{
   //! @struct as
   //! @brief Lightweight type-wrapper
