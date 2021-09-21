@@ -1,19 +1,13 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
 #include "test.hpp"
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
-#include <tts/tests/types.hpp>
-#include <tuple>
-#include <string>
 
 TTS_CASE("Check validation of the scalar_value concept" )
 {
@@ -29,13 +23,12 @@ TTS_CASE("Check validation of the scalar_value concept" )
   TTS_EXPECT( eve::scalar_value<logical<short>>);
   TTS_EXPECT( eve::scalar_value<logical<float>>);
 
-  TTS_EXPECT( (eve::scalar_value<std::pair<int,float>>) );
-  TTS_EXPECT( (eve::scalar_value<std::tuple<double,char,logical<float>>>) );
+  TTS_EXPECT( (eve::scalar_value<kumi::tuple<int,float>>) );
 
   TTS_EXPECT_NOT( (eve::scalar_value<wide<int>>           ) );
   TTS_EXPECT_NOT( (eve::scalar_value<logical<wide<int>>>  ) );
   TTS_EXPECT_NOT( (eve::scalar_value<wide<char,fixed<16>>>) );
-  TTS_EXPECT_NOT( (eve::scalar_value<std::pair<wide<int>,wide<float>>>) );
+  TTS_EXPECT_NOT( (eve::scalar_value<wide<kumi::tuple<int,float>>>) );
 }
 
 TTS_CASE("Check validation of the simd_value" )
@@ -52,11 +45,10 @@ TTS_CASE("Check validation of the simd_value" )
   TTS_EXPECT_NOT( eve::simd_value<logical<short>>);
   TTS_EXPECT_NOT( eve::simd_value<logical<float>>);
 
-  TTS_EXPECT_NOT( (eve::simd_value<std::pair<int,float>>) );
-  TTS_EXPECT_NOT( (eve::simd_value<std::tuple<double,char,logical<float>>>) );
+  TTS_EXPECT_NOT( (eve::simd_value<kumi::tuple<int,float>>) );
 
   TTS_EXPECT( (eve::simd_value<wide<int>>           ) );
   TTS_EXPECT( (eve::simd_value<logical<wide<int>>>  ) );
   TTS_EXPECT( (eve::simd_value<wide<char,fixed<16>>>) );
-  TTS_EXPECT( (eve::simd_value<std::pair<wide<int>,wide<float>>>) );
+  TTS_EXPECT( (eve::simd_value<wide<kumi::tuple<int,float>>>) );
 }

@@ -1,14 +1,11 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
-#include <eve/function/atan2.hpp>
+#include <eve/function/pedantic/atan2.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <cmath>
@@ -24,7 +21,7 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__atan2) , xp, std__atan2 , arg0, arg1);
-  run<EVE_VALUE>(EVE_NAME(pedantic_(eve::atan2)) , xp, eve::pedantic_(eve::atan2) , arg0, arg1);
-  run<EVE_TYPE> (EVE_NAME(pedantic_(eve::atan2)) , xp, eve::pedantic_(eve::atan2) , arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(pedantic(eve::atan2)) , xp, eve::pedantic(eve::atan2) , arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(pedantic(eve::atan2)) , xp, eve::pedantic(eve::atan2) , arg0, arg1);
 
 }

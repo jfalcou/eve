@@ -1,36 +1,69 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
 
 namespace eve
 {
   //================================================================================================
   // Function decorators mark-up used in function overloads
-  struct saturated_type : decorator_
+  struct saturated_
   {
-    template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
-    {
-      return  [f](auto&&... args)
-              {
-                return f(saturated_type{}, std::forward<decltype(args)>(args)...);
-              };
-    }
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
   };
 
-  //================================================================================================
-  // Function decorator - saturated mode
-  inline constexpr saturated_type const saturated_ = {};
-}
+  using saturated_type = decorated<saturated_()>;
 
+  //================================================================================================
+  //! @addtogroup decorator
+  //! @{
+  //! @var saturated
+  //!
+  //! @brief  Higher-order @callable imbuing saturation semantic onto other @callable{s}.
+  //!
+  //! #### Synopsis
+  //!
+  //!  if saturated(eve::fname) is to be called then
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  #include <eve/function/saturated/fname.hpp>
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  must be included.
+  //!
+  //! #### Members Functions
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator()(eve::callable auto const& f ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! @param f
+  //! An instance of eve::callable
+  //!
+  //! @return
+  //! A @callable performing the same kind of operation but while taking care of saturating
+  //! its return value so that it always fit into the input type range.
+  //!
+  //! saturated is currently supported by
+  //!
+  //!   - eve::abs,
+  //!   - eve::add,
+  //!   - eve::convert,
+  //!   - eve::dec,
+  //!   - eve::div,
+  //!   - eve::inc,
+  //!   - eve::mul,
+  //!   - eve::sub,
+  //!   - eve::oneminus,
+  //!   - eve::next,
+  //!   - eve::prev
+  //!   - eve::sqr.
+  //!
+  //!  @}
+  //================================================================================================
+  inline constexpr saturated_type const saturated = {};
+}

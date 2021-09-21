@@ -1,20 +1,115 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
 #include <eve/arch.hpp>
+#include <eve/as.hpp>
 #include <eve/conditional.hpp>
-#include <eve/detail/function/simd/common/conditional.hpp>
+#include <eve/constant/false.hpp>
+#include <eve/function/convert.hpp>
+#include <eve/function/if_else.hpp>
 
-#if defined(EVE_HW_X86)
-// TODO: AVX512 will probably uses special optimisation for the ignore conditional
-//#  include <eve/detail/function/simd/x86/conditional.hpp>
-#endif
+namespace eve::detail
+{
+  //================================================================================================
+  // What's the alternative for this case ?
+  //================================================================================================
+  template<conditional_expr C, typename Target, typename Arg>
+  EVE_FORCEINLINE auto alternative(C const& c, Arg a0, as<Target> const&)
+  {
+    if constexpr( C::has_alternative )  return Target{c.alternative};
+    else                                return a0;
+  }
+
+  //================================================================================================
+  // Turn a conditional into a mask
+  //================================================================================================
+  template<conditional_expr C, typename Target>
+  EVE_FORCEINLINE auto expand_mask(C const& c, as<Target> const&)
+  {
+    auto m = [](auto cx)
+    {
+      auto msk = cx.mask( as<Target>{} );
+      return as_wide_t<decltype(msk), cardinal_t<Target>>(msk);
+    }(c);
+
+    if constexpr( C::is_inverted ) m = !m;
+    return m;
+  }
+
+  //================================================================================================
+  // Handle the basic if/if_else cases
+  //================================================================================================
+  template<conditional_expr C, typename Op, typename Arg0, typename... Args>
+  EVE_FORCEINLINE auto mask_op( C const& c
+                              , [[maybe_unused]] Op f
+                              , [[maybe_unused]] Arg0 const& a0
+                              , [[maybe_unused]] Args const&... as
+                              )
+  {
+    using r_t       = decltype(f(a0,as...));
+    auto const cond = c.mask(eve::as<r_t>());
+
+          if constexpr( C::is_complete && !C::is_inverted ) return alternative(c,a0,eve::as<r_t>{});
+    else  if constexpr( C::is_complete &&  C::is_inverted ) return f(a0,as...);
+    else                                                    return if_else( cond
+                                                                          , f(a0,as...)
+                                                                          , alternative(c,a0,eve::as<r_t>{})
+                                                                          );
+  }
+
+  //================================================================================================
+  // What's the logical alternative for this case ?
+  //================================================================================================
+  template<conditional_expr C, typename Target>
+  EVE_FORCEINLINE auto logical_alternative(C const& c, as<Target> const&)
+  {
+    if constexpr( C::has_alternative )  return Target{c.alternative};
+    else                                return false_(as<Target>());
+  }
+
+  //================================================================================================
+  // Handle the basic logical return type if/if_else cases
+  //================================================================================================
+  template<conditional_expr C, typename Op, typename Arg0, typename... Args>
+  EVE_FORCEINLINE auto logical_mask_op( C const& c
+                                      , [[maybe_unused]] Op f
+                                      , [[maybe_unused]] Arg0 const& a0
+                                      , [[maybe_unused]] Args const&... as
+                                      )
+  {
+    using r_t       = decltype(f(a0,as...));
+    auto const cond = c.mask(eve::as<r_t>());
+
+          if constexpr( C::is_complete && !C::is_inverted ) return logical_alternative(c,eve::as<r_t>{});
+    else  if constexpr( C::is_complete &&  C::is_inverted ) return f(a0,as...);
+    else                                                    return if_else( cond
+                                                                          , f(a0,as...)
+                                                                          , logical_alternative(c, eve::as<r_t>{})
+                                                                          );
+  }
+
+  template<conditional_expr C, typename Op, typename Arg0, typename... Args>
+  EVE_FORCEINLINE auto conv_mask_op( C const& c
+                              , [[maybe_unused]] Op f
+                              , [[maybe_unused]] Arg0 const& a0
+                              , [[maybe_unused]] Args const&... as
+                              )
+  {
+    using r_t       = decltype(f(a0,as...));
+    auto const cond = c.mask(eve::as<r_t>());
+    using sr_t = eve::element_type_t<r_t>;
+
+    if constexpr( C::is_complete && !C::is_inverted ) return convert(alternative(c,a0,eve::as<r_t>{}, eve::as<sr_t>()));
+    else  if constexpr( C::is_complete &&  C::is_inverted ) return f(a0,as...);
+    else                                                    return if_else( cond
+                                                                          , f(a0,as...)
+                                                                          , convert(alternative(c,a0,eve::as<r_t>{}), eve::as<sr_t>())
+                                                                          );
+  }
+}

@@ -1,36 +1,53 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
 
 namespace eve
 {
   //================================================================================================
+  //================================================================================================
   // Function decorators mark-up used in function overloads
-  struct numeric_type : decorator_
+  struct numeric_
   {
-    template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
-    {
-      return  [f](auto&&... args)
-              {
-                return f(numeric_type{}, std::forward<decltype(args)>(args)...);
-              };
-    }
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
   };
 
+  using numeric_type = decorated<numeric_()>;
   //================================================================================================
-  // Function decorator - numeric mode
-  inline constexpr numeric_type const numeric_ = {};
+  //! @addtogroup decorator
+  //! @{
+  //! @var numeric
+  //!
+  //! @brief  Higher-order @callable imbuing non invalid return  preference semantic onto other @callable{s}.
+  //!
+  //! #### Synopsis
+  //!
+  //!  if numeric(eve::fname) is to be called then
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  #include <eve/function/numeric/fname.hpp>
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  must be included.
+  //!
+  //! #### Members Functions
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator()(eve::callable auto const& f ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! @param f
+  //! An instance of eve::callable
+  //!
+  //! @return
+  //! A @callable performing the same kind of operation but while insuring a preference to return
+  //! numeric values instead of Nans, whenever possible.
+  //!
+  //!  @}
+  //================================================================================================
+  inline constexpr numeric_type const numeric = {};
 }
-

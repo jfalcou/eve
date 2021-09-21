@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -17,12 +14,47 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup constant
+  //! @{
+  //! @var mone
+  //!
+  //! @brief Callable object computing -1 value.
+  //!
+  //! **Required header:** `#include <eve/function/mone.hpp>`
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | Computes the mone constant                               |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  tempate < value T > T operator()( as<T> const & t) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!
+  //! **Return value**
+  //!
+  //! the call `eve::mone(as<T>())` is semantically equivalent to  `T(-1)`
+  //!
+  //! ---
+  //!
+  //! #### Example
+  //!
+  //! @godbolt{doc/core/mone.cpp}
+  //!
+  //! @}
+  //================================================================================================
   EVE_MAKE_CALLABLE(mone_, mone);
 
   namespace detail
   {
     template<typename T>
-    EVE_FORCEINLINE constexpr auto mone_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    EVE_FORCEINLINE constexpr auto mone_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
     {
       return T(-1);
     }

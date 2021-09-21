@@ -35,8 +35,11 @@
 # Setup
 .idea/
 *.sublime-*
+.vscode/*
 
 # Potential local build repository
 *build*/
 Testing/*
 *.vscode/*
+doc/docs/*
+.cache/

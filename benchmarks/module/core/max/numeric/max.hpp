@@ -1,14 +1,11 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
-#include <eve/function/max.hpp>
+#include <eve/function/numeric/max.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <numeric>
@@ -25,6 +22,6 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__max) , xp, std__max, arg0, arg1);
-  run<EVE_VALUE>(EVE_NAME(numeric_(eve::max)) , xp, eve::numeric_(eve::max), arg0, arg1);
-  run<EVE_TYPE> (EVE_NAME(numeric_(eve::max)) , xp, eve::numeric_(eve::max), arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(numeric(eve::max)) , xp, eve::numeric(eve::max), arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(numeric(eve::max)) , xp, eve::numeric(eve::max), arg0, arg1);
 }

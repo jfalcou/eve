@@ -4,6 +4,7 @@
 #include <eve/constant/nan.hpp>
 #include <eve/constant/mindenormal.hpp>
 #include <eve/wide.hpp>
+#include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 

@@ -1,5 +1,6 @@
 #include <eve/function/iround.hpp>
 #include <eve/wide.hpp>
+#include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 
@@ -10,19 +11,19 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                       = " << pf << '\n'
             << "-> iround(pf)               = " << eve::iround(pf) << '\n'
-            << "-> upward_(iround)(pf)      = " << eve::upward_(eve::iround)(pf) << '\n'
-            << "-> downward_(iround)(pf)    = " << eve::downward_(eve::iround)(pf) << '\n'
-            << "-> to_nearest_(iround)(pf)  = " << eve::to_nearest_(eve::iround)(pf) << '\n'
-            << "-> toward_zero_(iround)(pf) = " << eve::toward_zero_(eve::iround)(pf) << '\n';
+            << "-> upward(iround)(pf)      = " << eve::upward(eve::iround)(pf) << '\n'
+            << "-> downward(iround)(pf)    = " << eve::downward(eve::iround)(pf) << '\n'
+            << "-> to_nearest(iround)(pf)  = " << eve::to_nearest(eve::iround)(pf) << '\n'
+            << "-> toward_zero(iround)(pf) = " << eve::toward_zero(eve::iround)(pf) << '\n';
 
   float xf = -32.768f;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf                       = " << xf << '\n'
             << "-> iround(xf)               = " << eve::iround(xf) << '\n'
-            << "-> upward_(iround)(xf)      = " << eve::upward_(eve::iround)(xf) << '\n'
-            << "-> downward_(iround)(xf)    = " << eve::downward_(eve::iround)(xf) << '\n'
-            << "-> to_nearest_(iround)(xf)  = " << eve::to_nearest_(eve::iround)(xf) << '\n'
-            << "-> toward_zero_(iround)(xf) = " << eve::toward_zero_(eve::iround)(xf) << '\n';
+            << "-> upward(iround)(xf)      = " << eve::upward(eve::iround)(xf) << '\n'
+            << "-> downward(iround)(xf)    = " << eve::downward(eve::iround)(xf) << '\n'
+            << "-> to_nearest(iround)(xf)  = " << eve::to_nearest(eve::iround)(xf) << '\n'
+            << "-> toward_zero(iround)(xf) = " << eve::toward_zero(eve::iround)(xf) << '\n';
   return 0;
 }

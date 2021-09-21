@@ -1,14 +1,11 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
-#include <eve/module/core/detail/generic/horn.hpp>
+#include <eve/module/real/core/detail/generic/horn.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/zero.hpp>
 
@@ -17,7 +14,7 @@ int main()
   using EVE_VALUE = eve::element_type_t<EVE_TYPE>;
   if constexpr(std::is_same_v<EVE_VALUE, double>)
   {
-   using i_t = eve::detail::as_integer_t<EVE_VALUE>;
+   using i_t = eve::as_integer_t<EVE_VALUE>;
     auto eve__horn = []<typename T>(T z) -> T{
       return eve::detail::horn<T,
       i_t(0x403c896240f3081dll),
@@ -36,7 +33,7 @@ int main()
   }
   else if constexpr(std::is_same_v<EVE_VALUE, float>)
   {
-     using i_t = eve::detail::as_integer_t<EVE_VALUE>;
+     using i_t = eve::as_integer_t<EVE_VALUE>;
     auto eve__horn = []<typename T>(T z) -> T{
       return eve::detail::horn<T,
       i_t(0x3e2aaae4u),

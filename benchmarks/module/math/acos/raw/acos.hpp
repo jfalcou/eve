@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #include <eve/function/acos.hpp>
 #include <cmath>
@@ -22,7 +19,7 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__acos) , xp, std__acos , arg0);
-  run<EVE_VALUE>(EVE_NAME(raw_(eve::acos)) , xp, eve::raw_(eve::acos) , arg0);
-  run<EVE_TYPE> (EVE_NAME(raw_(eve::acos)) , xp, eve::raw_(eve::acos) , arg0);
+  run<EVE_VALUE>(EVE_NAME(raw(eve::acos)) , xp, eve::raw(eve::acos) , arg0);
+  run<EVE_TYPE> (EVE_NAME(raw(eve::acos)) , xp, eve::raw(eve::acos) , arg0);
 
 }

@@ -1,4 +1,4 @@
-#include <eve/function/predicates.hpp>
+#include <eve/function/predicate.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

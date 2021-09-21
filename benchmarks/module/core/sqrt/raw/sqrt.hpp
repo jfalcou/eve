@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #include <eve/function/sqrt.hpp>
 #include <eve/concept/value.hpp>
@@ -29,6 +26,6 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE> (EVE_NAME(std__sqrt) , xp, std__sqrt, arg0);
-  run<EVE_VALUE> (EVE_NAME(eve::raw_(eve::sqrt)) , xp, eve::raw_(eve::sqrt), arg0);
-  run<EVE_TYPE>  (EVE_NAME(eve::raw_(eve::sqrt)) , xp, eve::raw_(eve::sqrt), arg0);
+  run<EVE_VALUE> (EVE_NAME(eve::raw(eve::sqrt)) , xp, eve::raw(eve::sqrt), arg0);
+  run<EVE_TYPE>  (EVE_NAME(eve::raw(eve::sqrt)) , xp, eve::raw(eve::sqrt), arg0);
 }

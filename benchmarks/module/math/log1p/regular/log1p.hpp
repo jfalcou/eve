@@ -1,21 +1,20 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #include <eve/function/log1p.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/constant/maxflint.hpp>
 #include <cmath>
 
 int main()
 {
-  auto lmin = EVE_VALUE(0);
-  auto lmax = EVE_VALUE(eve::valmax(eve::as<EVE_VALUE>()));
+  auto lmin = EVE_VALUE(-1);
+//  auto lmax = EVE_VALUE(eve::valmax(eve::as<EVE_VALUE>()));
+  auto lmax = EVE_VALUE(eve::maxflint(eve::as<EVE_VALUE>()));
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto std__log1p = [](auto x){return std::log1p(x);};

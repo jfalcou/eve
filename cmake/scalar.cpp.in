@@ -1,19 +1,16 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-
 #include "test.hpp"
 #include <eve/traits/cardinal.hpp>
 #include <eve/traits/element_type.hpp>
 
-using EVE_TYPE  = ${target};
-inline constexpr auto EVE_CARDINAL = 1;
+#define EVE_TYPE      ${target}
+#define EVE_VALUE     ::eve::element_type_t<T>
+inline constexpr      auto EVE_CARDINAL = 1;
 
 #include "${header}.hpp"

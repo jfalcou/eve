@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -19,12 +16,47 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup constant
+  //! @{
+  //! @var pi
+  //!
+  //! @brief Callable object computing the \f$\pi\f$ value.
+  //!
+  //! **Required header:** `#include <eve/function/pi.hpp>`
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | Computes the pi constant                                   |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  tempate < floating_value T > T operator()( as<T> const & t) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!
+  //! **Return value**
+  //!
+  //! the call `eve::pi(as<T>())` is semantically equivalent to  `4*eve::atan``(T(1))`
+  //!
+  //! ---
+  //!
+  //! #### Example
+  //!
+  //! @godbolt{doc/core/pi.cpp}
+  //!
+  //! @}
+  //================================================================================================
   EVE_MAKE_CALLABLE(pi_, pi);
 
   namespace detail
   {
     template<floating_value T>
-    EVE_FORCEINLINE constexpr auto pi_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    EVE_FORCEINLINE constexpr auto pi_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
     {
       using t_t           = detail::value_type_t<T>;
 

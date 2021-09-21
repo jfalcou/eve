@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -30,9 +27,9 @@ namespace eve
 // PPC SIMD ABI
 # if !defined(EVE_CURRENT_API) && defined(SPY_SIMD_IS_PPC)
 
-#  ifndef EVE_NO_DENORMALS
-#    define EVE_NO_DENORMALS
-#  endif
+// #  ifndef EVE_NO_DENORMALS
+// #    define EVE_NO_DENORMALS
+// #  endif
 
 #  if !defined(__APPLE_CC__) || __APPLE_CC__ <= 1 || __GNUC__ >= 4
 #    include <altivec.h>
@@ -57,11 +54,12 @@ namespace eve
 #  if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_PPC_VMX)
 #   define EVE_CURRENT_ABI ::eve::ppc_
 #   define EVE_CURRENT_API ::eve::vmx_
+#   define EVE_ABI_NAMESPACE ppc_abi_v0
 #  elif !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_PPC_VSX)
 #   define EVE_CURRENT_ABI ::eve::ppc_
 #   define EVE_CURRENT_API ::eve::vsx_
+#   define EVE_ABI_NAMESPACE ppc_abi_v0
 #  endif
 # endif
 
 #endif
-

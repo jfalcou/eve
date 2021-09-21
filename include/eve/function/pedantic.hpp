@@ -1,36 +1,57 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
 
 namespace eve
 {
+  template<auto Param> struct diff_;
+  //================================================================================================
   //================================================================================================
   // Function decorators mark-up used in function overloads
-  struct pedantic_type : decorator_
+  struct pedantic_
   {
-    template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
+    template<auto N> static constexpr auto combine( decorated<diff_<N>()> const& ) noexcept
     {
-      return  [f](auto&&... args)
-              {
-                return f(pedantic_type{}, std::forward<decltype(args)>(args)...);
-              };
+      return decorated<diff_<N>(pedantic_)>{};
     }
   };
 
+  using pedantic_type = decorated<pedantic_()>;
   //================================================================================================
-  // Function decorator - pedantic mode
-  inline constexpr pedantic_type const pedantic_ = {};
+  //! @addtogroup decorator
+  //! @{
+  //! @var pedantic
+  //!
+  //! @brief  Higher-order @callable imbuing more standard semantic onto other @callable{s}.
+  //!
+  //! #### Synopsis
+  //!
+  //!  if pedantic(eve::fname) is to be called then
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  #include <eve/function/pedantic/fname.hpp>
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  must be included.
+  //!
+  //! #### Members Functions
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator()(eve::callable auto const& f ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! @param f
+  //! An instance of eve::callable
+  //!
+  //! @return
+  //! A @callable performing the same kind of operation but while insuring compatibility with
+  //! the standard in corner cases, whenever possible.
+  //!
+  //!  @}
+  //================================================================================================
+  [[maybe_unused]] inline constexpr pedantic_type const pedantic = {};
 }
-

@@ -1,6 +1,7 @@
 #include <eve/function/bit_xor.hpp>
 #include <eve/literals.hpp>
 #include <eve/wide.hpp>
+#include <iostream>
 
 int main()
 {

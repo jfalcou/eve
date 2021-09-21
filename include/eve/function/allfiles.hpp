@@ -1,11 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 // **=======================================================
@@ -50,7 +48,6 @@
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_ceil.hpp>
 #include <eve/function/bit_floor.hpp>
-#include <eve/function/bit.hpp>
 #include <eve/function/bit_mask.hpp>
 #include <eve/function/bit_notand.hpp>
 #include <eve/function/bit_not.hpp>
@@ -98,7 +95,6 @@
 #include <eve/function/exp.hpp>
 #include <eve/function/expm1.hpp>
 #include <eve/function/exponent.hpp>
-#include <eve/function/extract.hpp>
 #include <eve/function/fdim.hpp>
 #include <eve/function/firstbitset.hpp>
 #include <eve/function/firstbitunset.hpp>
@@ -109,7 +105,6 @@
 #include <eve/function/fnms.hpp>
 #include <eve/function/frac.hpp>
 #include <eve/function/frexp.hpp>
-#include <eve/function/gamma.hpp>
 #include <eve/function/gather.hpp>
 #include <eve/function/gcd.hpp>
 #include <eve/function/has_single_bit.hpp>
@@ -195,7 +190,7 @@
 #include <eve/function/modf.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/function/musl.hpp>
-#include <eve/function/nbtrue.hpp>
+#include <eve/function/count_true.hpp>
 #include <eve/function/nb_values.hpp>
 #include <eve/function/nearest.hpp>
 #include <eve/function/negate.hpp>
@@ -219,7 +214,6 @@
 #include <eve/function/radinpi.hpp>
 #include <eve/function/raw.hpp>
 #include <eve/function/rec.hpp>
-#include <eve/function/refine_rec.hpp>
 #include <eve/function/regular.hpp>
 #include <eve/function/reldist.hpp>
 #include <eve/function/rem.hpp>
@@ -238,8 +232,6 @@
 #include <eve/function/sech.hpp>
 #include <eve/function/sec.hpp>
 #include <eve/function/secpi.hpp>
-#include <eve/function/shl.hpp>
-#include <eve/function/shr.hpp>
 #include <eve/function/shuffle.hpp>
 #include <eve/function/sign.hpp>
 #include <eve/function/signnz.hpp>
@@ -269,6 +261,7 @@
 #include <eve/function/tanh.hpp>
 #include <eve/function/tan.hpp>
 #include <eve/function/tanpi.hpp>
+#include <eve/function/tgamma.hpp>
 #include <eve/function/trigonometric.hpp>
 #include <eve/function/trigo_tags.hpp>
 #include <eve/function/trunc.hpp>

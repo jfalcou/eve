@@ -2,6 +2,7 @@
 #include <eve/constant/eps.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/wide.hpp>
+#include <iostream>
 #include <iomanip>
 
 int main()

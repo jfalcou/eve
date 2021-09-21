@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -14,8 +11,57 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup ieee754
+  //! @{
+  //! @var two_add
+  //!
+  //! @brief Callable object computing the two_add operation.
+  //!
+  //! **Required header:** `#include <eve/function/two_add.hpp>`
+  //!
+  //! #### Members Functions
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | the two_add operation                                      |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`x`, `y`:   [values](@ref eve::value).
+  //!
+  //! **Return value**
+  //!
+  //!computes [elementwise](@ref glossary_elementwise) a pair of values `[a,e]` such that:
+  //!
+  //!* `a` is `x+y`
+  //!* `e` is a value such that `a`\f$\oplus\f$`e` is equal to `x`\f$\oplus\f$`y`
+  //!
+  //!where \f$\oplus\f$ adds its two parameters with infinite precision.
+  //!
+  //! ---
+  //!
+  //! #### Supported decorators
+  //!
+  //!  no decorators are supported
+  //!
+  //! #### Example
+  //!
+  //! @godbolt{doc/core/two_add.cpp}
+  //!
+  //!  @}
+  //================================================================================================
+
+  namespace tag { struct two_add_; }
+  template<> struct supports_conditional<tag::two_add_> : std::false_type {};
+
   EVE_MAKE_CALLABLE(two_add_, two_add);
 }
 
-#include <eve/module/core/function/generic/two_add.hpp>
-
+#include <eve/module/real/core/function/regular/generic/two_add.hpp>

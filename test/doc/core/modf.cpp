@@ -1,9 +1,11 @@
 #include <eve/function/modf.hpp>
+#include <eve/function/pedantic/modf.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/mindenormal.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/nan.hpp>
+#include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 
@@ -13,14 +15,14 @@ int main()
                 eve::nan(eve::as<float>()), 0.678f,   -0.678f};
 
   auto [m, e]    = eve::modf(pf);
-  auto [mp, ep]  = eve::pedantic_(eve::modf)(pf);
+  auto [mp, ep]  = eve::pedantic(eve::modf)(pf);
   std::cout << "---- simd" << '\n'
             << "<- pf                  = " << pf << '\n'
             << "-> modf(pf)            = [" << '\n'
             << "                          " << m << ", \n"
             << "                          " << e << '\n'
             << "                         ]\n"
-            << "-> pedantic_(modf)(pf) = [" << '\n'
+            << "-> pedantic(modf)(pf) = [" << '\n'
             << "                          " << mp << ", \n"
             << "                          " << ep << '\n'
             << "                         ]\n";

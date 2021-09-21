@@ -1,14 +1,11 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
-#include <eve/function/maxmag.hpp>
+#include <eve/function/pedantic/maxmag.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <numeric>
@@ -22,6 +19,6 @@ int main()
   auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
   eve::bench::experiment xp;
-  run<EVE_VALUE>(EVE_NAME(pedantic_(eve::maxmag)) , xp, eve::pedantic_(eve::maxmag), arg0, arg1);
-  run<EVE_TYPE> (EVE_NAME(pedantic_(eve::maxmag)) , xp, eve::pedantic_(eve::maxmag), arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(pedantic(eve::maxmag)) , xp, eve::pedantic(eve::maxmag), arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(pedantic(eve::maxmag)) , xp, eve::pedantic(eve::maxmag), arg0, arg1);
 }

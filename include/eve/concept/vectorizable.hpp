@@ -1,63 +1,180 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
+#include <eve/detail/kumi.hpp>
 #include <eve/forward.hpp>
-#include <eve/concept/rebindable.hpp>
-#include <eve/detail/is_wide.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/is_logical.hpp>
 
-#include <eve/detail/concepts.hpp>
+#include <concepts>
 #include <type_traits>
+#include <utility>
 
 namespace eve::detail
 {
-  //==============================================================================================
+  //================================================================================================
   // Check if something is a scalar_value
-  //==============================================================================================
+  //================================================================================================
+
+  //================================================================================================
+  // Case #1 - it is arithmetic
+  //================================================================================================
   template<typename T> struct is_scalar_value : std::is_arithmetic<T>
   {};
 
+  //================================================================================================
+  // Case #2 - it is a product_type of arithmetic
+  //================================================================================================
+  template<typename T>
+  static constexpr bool check_tuple()
+  {
+    return []<std::size_t... I>( std::index_sequence<I...> )
+    {
+      return ( is_scalar_value<kumi::element_t<I,T>>::value && ... && true );
+    }(std::make_index_sequence<kumi::size<T>::value>{});
+  }
+
+  template<typename T>
+  requires( kumi::product_type<T> )
+  struct  is_scalar_value<T> : std::bool_constant< check_tuple<T>() >
+  {};
+
+  //================================================================================================
+  // Case #3 - it is a logical
+  //================================================================================================
   template<typename T>
   struct is_scalar_value<eve::logical<T>> : std::is_arithmetic<T>
   {};
-
-  template<typename Type>
-  requires( rebindable<Type> && !detail::is_wide<Type>::value )
-  struct is_scalar_value<Type>
-  {
-    template<typename Idx>      struct eval_n;
-    template<std::size_t... N>  struct eval_n<std::index_sequence<N...>>
-    {
-      static constexpr bool value = (is_scalar_value<std::tuple_element_t<N,Type>>::value && ...);
-    };
-
-    using size = std::tuple_size<Type>;
-    static constexpr bool value = eval_n<std::make_index_sequence<size::value>>::value;
-  };
 }
 
 namespace eve
 {
-  template<typename T> concept scalar_value                   = detail::is_scalar_value<T>::value;
+  //================================================================================================
+  //! @concept scalar_value
+  //! @brief Specify that a type represents a scalar value
+  //!
+  //! The concept `scalar_value<T>` is satisfied if and only if it is arithmetic or a product type
+  //! which types satisfies scalar_value themselves.
+  //!
+  //! @groupheader{Examples}
+  //! - `float`
+  //! - `std::int32_t`
+  //================================================================================================
+  template<typename T>
+  concept scalar_value = detail::is_scalar_value<T>::value;
 
-  template<typename T> concept integral_scalar_value          = scalar_value<T> && std::integral<T>;
-  template<typename T> concept signed_scalar_value            = scalar_value<T> && std::is_signed_v<T>;
+  //================================================================================================
+  //! @concept integral_scalar_value
+  //! @brief Specify that a type represents an integral scalar value
+  //!
+  //! The concept `integral_scalar_value<T>` is satisfied if and only if T satisfies
+  //! `eve::scalar_value<T>` and `std::integral<T>`.
+  //!
+  //! @groupheader{Examples}
+  //! - `std::int32_t`
+  //================================================================================================
+  template<typename T>
+  concept integral_scalar_value  = scalar_value<T> && std::integral<T>;
+
+  //================================================================================================
+  //! @concept signed_scalar_value
+  //! @brief Specify that a type represents a signed scalar value
+  //!
+  //! The concept `signed_scalar_value<T>` is satisfied if and only if T  satisfies
+  //! `eve::scalar_value<T>` and `std::integral<T>`.
+  //!
+  //! @groupheader{Examples}
+  //! - `std::int32_t`
+  //! - `float`
+  //================================================================================================
+  template<typename T>
+  concept signed_scalar_value  = scalar_value<T> && std::is_signed_v<T>;
+
+  //================================================================================================
+  //! @concept unsigned_scalar_value
+  //! @brief Specify that a type represents a scalar value
+  //!
+  //! The concept `unsigned_scalar_value<T>` is satisfied if and only if T is unsigned and scalar_value
+  //!
+  //! @groupheader{Examples}
+  //! - `std::uint32_t`
+  //================================================================================================
   template<typename T> concept unsigned_scalar_value          = scalar_value<T> && std::unsigned_integral<T>;
+
+  //================================================================================================
+  //! @concept signed_integral_scalar_value
+  //! @brief Specify that a type represents a scalar value
+  //!
+  //! The concept `unsigned_integral_scalar_value<T>` is satisfied if and only if T is signed,  integral and scalar_value
+  //!
+  //! @groupheader{Examples}
+  //! - `std::int32_t`
+  //================================================================================================
   template<typename T> concept signed_integral_scalar_value   = scalar_value<T> && std::signed_integral<T>;
+
+  //================================================================================================
+  //! @concept floating_scalar_value
+  //! @brief Specify that a type represents a scalar value
+  //!
+  //! The concept `floating_scalar_value<T>` is satisfied if and only if T is floating_point and scalar_value
+  //!
+  //! @groupheader{Examples}
+  //! - `float`
+  //! - `double`
+  //================================================================================================
   template<typename T> concept floating_scalar_value          = scalar_value<T> && std::floating_point<T>;
+
+  //================================================================================================
+  //! @concept logical_scalar_value
+  //! @brief Specify that a type represents a scalar value
+  //!
+  //! The concept `logical_scalar_value<T>` is satisfied if and only if T is logical and scalar_value
+  //!
+  //! @groupheader{Examples}
+  //! - `logical<float>`
+  //! - `logical<int>`
+  //================================================================================================
   template<typename T> concept logical_scalar_value           = scalar_value<T> && is_logical_v<T>;
+
+  //================================================================================================
+  //! @concept real_scalar_value
+  //! @brief Specify that a type represents a scalar value
+  //!
+  //! The concept `real_scalar_value<T>` is satisfied if and only if T is scalar_value and real_value
+  //!
+  //! @groupheader{Examples}
+  //! - `float`
+  //! - `int`
+  //================================================================================================
   template<typename T> concept real_scalar_value              = scalar_value<T> && std::same_as< detail::value_type_t<T>, element_type_t<T>>;
+
+  //================================================================================================
+  //! @concept floating_real_scalar_value
+  //! @brief Specify that a type represents a scalar value
+  //!
+  //! The concept `floating_real_scalar_value<T>` is satisfied if and only if T is scalar_value and floating_real_value
+  //!
+  //! @groupheader{Examples}
+  //! - `float`
+  //! - `double`
+  //================================================================================================
   template<typename T> concept floating_real_scalar_value     = real_scalar_value<T> && std::floating_point<detail::value_type_t<T>>;
+
+  //================================================================================================
+  //! @concept integral_real_scalar_value
+  //! @brief Specify that a type represents a scalar value
+  //!
+  //! The concept `integral_real_scalar_value<T>` is satisfied if and only if T is scalar_value and integral_real_value
+  //!
+  //! @groupheader{Examples}
+  //! - `int`
+  //! - `unsigned int`
+  //================================================================================================
   template<typename T> concept integral_real_scalar_value     = real_scalar_value<T> && std::integral<detail::value_type_t<T>>;
 }
-

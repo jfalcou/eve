@@ -1,17 +1,16 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
 // Force a function to be inline
-#if !defined(EVE_FORCEINLINE)
+#if defined(EVE_NO_FORCEINLINE)
+#  define EVE_FORCEINLINE inline
+#else
 #  if defined(_MSC_VER)
 #    define EVE_FORCEINLINE __forceinline
 #  elif defined(__GNUC__) && __GNUC__ > 3
@@ -59,4 +58,3 @@
 #  define EVE_NO_NANS
 #  define EVE_NO_INFINITIES
 #endif
-

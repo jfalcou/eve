@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -17,6 +14,6 @@ namespace eve
   EVE_MAKE_CALLABLE(swapbytes_, swapbytes);
 }
 
-#include <eve/module/core/function/scalar/swapbytes.hpp>
-//#include <eve/module/core/function/simd/swapbytes.hpp>
+#include <eve/module/real/core/function/scalar/swapbytes.hpp>
+//#include <eve/module/real/core/function/regular/simd/swapbytes.hpp>
 

@@ -1,4 +1,4 @@
-#include <eve/function/fma.hpp>
+#include <eve/function/bit_select.hpp>
 #include <eve/constant/eps.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/wide.hpp>

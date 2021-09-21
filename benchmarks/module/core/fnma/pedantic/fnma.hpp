@@ -1,14 +1,11 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
-#include <eve/function/fnma.hpp>
+#include <eve/function/pedantic/fnma.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <numeric>
@@ -26,6 +23,6 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__fnma) , xp, std__fnma, arg0, arg1, arg2);
-  run<EVE_VALUE>(EVE_NAME(pedantic_(eve::fnma)) , xp, eve::pedantic_(eve::fnma), arg0, arg1, arg2);
-  run<EVE_TYPE> (EVE_NAME(pedantic_(eve::fnma)) , xp, eve::pedantic_(eve::fnma), arg0, arg1, arg2);
+  run<EVE_VALUE>(EVE_NAME(pedantic(eve::fnma)) , xp, eve::pedantic(eve::fnma), arg0, arg1, arg2);
+  run<EVE_TYPE> (EVE_NAME(pedantic(eve::fnma)) , xp, eve::pedantic(eve::fnma), arg0, arg1, arg2);
 }

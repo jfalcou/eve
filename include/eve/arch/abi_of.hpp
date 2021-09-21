@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -30,8 +27,9 @@ namespace eve
 
         if constexpr( spy::simd_instruction_set == spy::x86_simd_ )
         {
-               if constexpr( width <= 16) return sse_{};
-          else if constexpr( width == 32) return avx_{};
+               if constexpr( width <= 16) return x86_128_{};
+          else if constexpr( width == 32) return x86_256_{};
+          else if constexpr( width == 64) return x86_512_{};
           else                            return aggregated_{};
         }
         else if constexpr( spy::simd_instruction_set == spy::vmx_ )
@@ -46,16 +44,16 @@ namespace eve
         }
         else if constexpr( spy::simd_instruction_set == spy::arm_simd_ )
         {
-          if constexpr( spy::supports::aarch64_ )
+          if constexpr( spy::simd_instruction_set == spy::asimd_ )
           {
-            if constexpr(width <= 8)       return neon64_{};
-            else if constexpr(width == 16) return neon128_{};
+            if constexpr(width <= 8)       return arm_64_{};
+            else if constexpr(width == 16) return arm_128_{};
             else                           return emulated_{};
           }
           else
           {
-            if constexpr(!f64 && width <= 8)       return neon64_{};
-            else if constexpr(!f64 && width == 16) return neon128_{};
+            if constexpr(!f64 && width <= 8)       return arm_64_{};
+            else if constexpr(!f64 && width == 16) return arm_128_{};
             else                                   return emulated_{};
           }
         }
@@ -83,4 +81,3 @@ namespace eve
   template<typename Type, int Cardinal>
   using abi_of_t = typename abi_of<Type, Cardinal>::type;
 }
-

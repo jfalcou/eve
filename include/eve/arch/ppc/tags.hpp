@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -22,9 +19,12 @@ namespace eve
   //================================================================================================
   struct ppc_
   {
-    static constexpr std::size_t bits           = 128;
-    static constexpr std::size_t bytes          = 16;
-    static constexpr bool        is_bit_logical = true;
+    static constexpr std::size_t bits                     = 128;
+    static constexpr std::size_t bytes                    = 16;
+    static constexpr bool        is_wide_logical = true;
+
+    template<typename Type>
+    static constexpr bool is_full = ((Type::size() * sizeof(typename Type::value_type)) >= 16);
 
     template<typename Type>
     static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
@@ -43,31 +43,6 @@ namespace eve
   inline constexpr auto vsx = spy::vsx_;
 
   // clang-format on
-  //================================================================================================
-  // Runtime detection of CPU support
-  //================================================================================================
-  template<auto Version> inline bool is_supported(spy::ppc_simd_info<Version> const &) noexcept
-  {
-    #if defined( SPY_SIMD_IS_PPC )
-    if constexpr( Version == vmx_.version )
-    {
-      static const bool detected = (__builtin_cpu_supports( "altivec" ) != 0);
-      return detected;
-    }
-    else if constexpr( Version == vsx_.version )
-    {
-      static const bool detected = (__builtin_cpu_supports( "vsx" ) != 0);
-      return detected;
-    }
-    else
-    {
-      return false;
-    }
-    #else
-      return false;
-    #endif
-  }
-
   //================================================================================================
   // PPC ABI concept
   //================================================================================================

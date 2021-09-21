@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -14,24 +11,25 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/function/slice.hpp>
 #include <eve/detail/has_abi.hpp>
+#include <eve/detail/kumi.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/as_wide.hpp>
 #include <eve/traits/cardinal.hpp>
 #include <algorithm>
+#include <type_traits>
 #include <utility>
-#include <tuple>
 
 namespace eve::detail
 {
   // Value extraction from RandomAccessRange
   template<typename T> EVE_FORCEINLINE
-  constexpr decltype(auto) at(T &&t, std::size_t i) noexcept requires(has_random_access<T>)
+  constexpr decltype(auto) at(T &&t, std::size_t i) noexcept requires(has_indexed_get<T>)
   {
-    return std::forward<T>(t)[ i ];
+    return std::forward<T>(t).get(i);
   }
 
   template<typename T> EVE_FORCEINLINE
-  constexpr decltype(auto) at(T &&t, std::size_t) noexcept requires(!has_random_access<T>)
+  constexpr decltype(auto) at(T &&t, std::size_t) noexcept requires(!has_indexed_get<T>)
   {
     return std::forward<T>(t);
   }
@@ -41,7 +39,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto upper(T &&t) noexcept
   {
     using u_t = std::remove_cvref_t<T>;
-    if constexpr(simd_value<u_t>) return eve::detail::slice(std::forward<T>(t), upper_);
+    if constexpr(simd_value<u_t>) return std::forward<T>(t).slice(upper_);
     else                          return std::forward<T>(t);
   }
 
@@ -50,7 +48,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto lower(T &&t) noexcept
   {
     using u_t = std::remove_cvref_t<T>;
-    if constexpr(simd_value<u_t>) return eve::detail::slice(std::forward<T>(t), lower_);
+    if constexpr(simd_value<u_t>) return std::forward<T>(t).slice(lower_);
     else                          return std::forward<T>(t);
   }
 
@@ -61,25 +59,29 @@ namespace eve::detail
     static constexpr std::size_t card_v = std::max({eve::cardinal_v<std::decay_t<Ts>>...});
     using value_t                       = decltype(std::declval<F>()(at(std::declval<Ts>(), 0)...));
     using fixed_t                       = fixed<card_v>;
-    using type                          = as_wide_t<value_t, fixed_t>;
+
+    template<typename S> struct widen : as_wide<S, fixed_t> {};
+
+    using base  = std::conditional_t< kumi::product_type<value_t>
+                                    , kumi::as_tuple<value_t,widen>
+                                    , as_wide<value_t, fixed_t>
+                                    >;
+    using type = typename base::type;
   };
 
   // MAP skeleton used to emulate SIMD operations
   template<typename Out, typename... Bs>
   EVE_FORCEINLINE auto rebuild( Bs const&... ps) noexcept
   {
-    static constexpr auto sz = count_v<Out>;
-
-    auto const inside = [&](auto const& I)
+    auto const inside = [&]<typename I>(I)
     {
-      using idx_t = std::decay_t<decltype(I)>;
-      return std::tuple_element_t<idx_t::value,Out>(std::get<idx_t::value>(ps)...);
+      return std::tuple_element_t<I::value,Out>(kumi::get<I::value>(ps)...);
     };
 
-    return detail::apply<sz>( [&]( auto const&... I)
+    return detail::apply<kumi::size<Out>::value>( [&]( auto const&... I)
     {
       Out that;
-      ((std::get<std::decay_t<decltype(I)>::value>(that) = inside(I)),...);
+      ((kumi::get<std::decay_t<decltype(I)>::value>(that) = inside(I)),...);
       return that;
     }
     );
@@ -100,21 +102,27 @@ namespace eve::detail
   {
     using w_t = typename wide_result<Fn, Ts...>::type;
 
-    auto impl = [&](auto... I)
+    if constexpr( kumi::product_type<element_type_t<w_t>> )
     {
-      static constexpr auto sz = count_v<element_type_t<w_t>>;
-
-      if constexpr( sz != 0 )
-      {
-        return rebuild<w_t>(map_{}(std::forward<Fn>(f), I, std::forward<Ts>(ts)...)...);
-      }
-      else
-      {
-        return w_t{map_{}(std::forward<Fn>(f), I, std::forward<Ts>(ts)...)...};
-      }
-    };
-
-    return apply<cardinal_v<w_t>>(impl);
+      return  apply<cardinal_v<std::tuple_element_t<0,w_t>>>
+              ( [&](auto... I)
+                {
+                  return rebuild<w_t>(map_{}(std::forward<Fn>(f), I, std::forward<Ts>(ts)...)...);
+                }
+              );
+    }
+    else
+    {
+      return apply<cardinal_v<w_t>> ( [&](auto... I)
+                                      {
+                                        return w_t{ map_{}( std::forward<Fn>(f)
+                                                          , I
+                                                          , std::forward<Ts>(ts)...
+                                                          )...
+                                                  };
+                                      }
+                                    );
+    }
   }
 
   // AGGREGATE skeleton used to emulate SIMD operations on aggregated wide
@@ -148,7 +156,7 @@ namespace eve::detail
     }
   };
 
-  // Extract th e# of registers used by a wide (0 if T is scalar)
+  // Extract the # of registers used by a wide (0 if T is scalar)
   template<typename T> constexpr auto replication() noexcept
   {
     if constexpr( scalar_value<T> )             return 0;
@@ -208,4 +216,3 @@ namespace eve::detail
     }
   }
 }
-

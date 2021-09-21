@@ -1,9 +1,11 @@
 #include <eve/function/frexp.hpp>
+#include <eve/function/pedantic/frexp.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/mindenormal.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/nan.hpp>
+#include <iostream>
 
 using wide_ft = eve::wide<double, eve::fixed<8>>;
 
@@ -13,14 +15,14 @@ int main()
                eve::inf(eve::as<double>()), eve::minf(eve::as<double>()), eve::nan(eve::as<double>())};
 
   auto [m, e]    = eve::frexp(pf);
-  auto [mp, ep]  = eve::pedantic_(eve::frexp)(pf);
+  auto [mp, ep]  = eve::pedantic(eve::frexp)(pf);
   std::cout << "---- simd" << '\n'
             << "<- pf                   = " << pf << '\n'
             << "-> frexp(pf)            = [" << '\n'
             << "                          " << m << ", \n"
             << "                          " << e << '\n'
             << "                          ]\n"
-            << "-> pedantic_(frexp)(pf) = [" << '\n'
+            << "-> pedantic(frexp)(pf) = [" << '\n'
             << "                          " << mp << ", \n"
             << "                          " << ep << '\n'
             << "                          ]\n";

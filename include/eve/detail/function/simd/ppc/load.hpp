@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -15,11 +12,16 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/spy.hpp>
 #include <eve/memory/aligned_ptr.hpp>
+#include <eve/memory/pointer.hpp>
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE auto load(eve::as_<wide<T, N>> const &tgt, eve::ppc_ const &, T const* ptr) noexcept
+  template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T,N>> Ptr>
+  EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(vmx_)
+                                  , ignore_none_ const&, safe_type const&
+                                  , eve::as<wide<T, N>> const& tgt, Ptr ptr
+                                  )
+  requires ppc_abi<abi_t<T, N>>
   {
     if constexpr( N::value * sizeof(T) >= ppc_::bytes )
     {
@@ -49,15 +51,19 @@ namespace eve::detail
     }
     else
     {
-      typename wide<T, N>::storage_type that;
+      typename wide<T, N>::storage_type that{};
       std::memcpy(&that, ptr, N::value * sizeof(T));
       return that;
     }
   }
 
-  template<real_scalar_value T, typename N, std::size_t Align>
-  EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N>> const &tgt, eve::ppc_ const &mode, aligned_ptr<T const, Align> ptr) noexcept
+  template<real_scalar_value T, real_scalar_value U, typename N, typename Lanes>
+  EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(vmx_)
+                                  , ignore_none_ const&, safe_type const&
+                                  , eve::as<wide<T, N>> const& tgt
+                                  , aligned_ptr<U, Lanes> ptr
+                                  )
+  requires ppc_abi<abi_t<T, N>> && simd_compatible_ptr<aligned_ptr<U, Lanes>,wide<T, N>>
   {
     if constexpr( N::value * sizeof(T) >= ppc_::bytes )
     {
@@ -65,14 +71,8 @@ namespace eve::detail
       {
         if constexpr( sizeof(T) <= 8 )
         {
-          if constexpr( Align >= 16 )
-          {
-            return vec_ld(0, ptr.get());
-          }
-          else
-          {
-            return load(tgt, mode, ptr.get());
-          }
+          if constexpr( aligned_ptr<T, Lanes>::alignment() >= 16 )  return vec_ld(0, ptr.get());
+          else                                                      return load(tgt, ptr.get());
         }
       }
       else if constexpr( current_api == spy::vsx_ )
@@ -90,17 +90,9 @@ namespace eve::detail
     }
     else
     {
-      typename wide<T, N>::storage_type that;
+      typename wide<T, N>::storage_type that{};
       std::memcpy(&that, ptr.get(), N::value * sizeof(T));
       return that;
     }
   }
-
-  template<real_scalar_value T, typename N, std::size_t Align>
-  EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N>> const &tgt, eve::ppc_ const & mode, aligned_ptr<T, Align>  ptr) noexcept
-  {
-    return load(tgt, mode, aligned_ptr<T const, Align>(ptr));
-  }
 }
-

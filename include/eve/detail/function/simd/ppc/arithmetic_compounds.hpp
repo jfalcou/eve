@@ -1,20 +1,18 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/concepts.hpp>
 #include <eve/detail/function/bit_cast.hpp>
+
+#include <concepts>
 
 namespace eve::detail
 {
@@ -22,10 +20,10 @@ namespace eve::detail
   // +=
   //================================================================================================
   template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_add( wide<T,N,ppc_>& self, U const& other )
-  requires( scalar_value<U> || std::same_as<wide<T,N,ppc_>,U> )
+  EVE_FORCEINLINE decltype(auto) self_add( wide<T, N>& self, U const& other )
+  requires( scalar_value<U> || std::same_as<wide<T, N>, U> ) && ppc_abi<abi_t<T, N>>
   {
-    using type = wide<T, N, ppc_>;
+    using type = wide<T, N>;
 
     if constexpr( scalar_value<U> )
     {
@@ -43,10 +41,10 @@ namespace eve::detail
   // -=
   //================================================================================================
   template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_sub( wide<T,N,ppc_>& self, U const& other )
-  requires( scalar_value<U> || std::same_as<wide<T,N,ppc_>,U> )
+  EVE_FORCEINLINE decltype(auto) self_sub( wide<T,N>& self, U const& other )
+  requires( scalar_value<U> || std::same_as<wide<T, N>,U> ) && ppc_abi<abi_t<T, N>>
   {
-    using type = wide<T, N, ppc_>;
+    using type = wide<T, N>;
 
     if constexpr( scalar_value<U> )
     {
@@ -64,10 +62,10 @@ namespace eve::detail
   // *=
   //================================================================================================
   template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_mul( wide<T,N,ppc_>& self, U const& other )
-  requires( scalar_value<U> || std::same_as<wide<T,N,ppc_>,U> )
+  EVE_FORCEINLINE decltype(auto) self_mul( wide<T,N>& self, U const& other )
+  requires( scalar_value<U> || std::same_as<wide<T, N>,U> ) && ppc_abi<abi_t<T, N>>
   {
-    using type = wide<T, N, ppc_>;
+    using type = wide<T, N>;
 
     if constexpr( scalar_value<U> )
     {
@@ -85,10 +83,10 @@ namespace eve::detail
   // /=
   //================================================================================================
   template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_div( wide<T,N,ppc_>& self, U const& other )
-  requires( scalar_value<U> || std::same_as<wide<T,N,ppc_>,U> )
+  EVE_FORCEINLINE decltype(auto) self_div( wide<T, N>& self, U const& other )
+  requires( scalar_value<U> || std::same_as<wide<T, N>,U> ) && ppc_abi<abi_t<T, N>>
   {
-    using type = wide<T, N, ppc_>;
+    using type = wide<T, N>;
 
     if constexpr( scalar_value<U> )
     {
@@ -102,4 +100,3 @@ namespace eve::detail
     return self;
   }
 }
-

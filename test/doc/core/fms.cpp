@@ -1,4 +1,6 @@
 #include <eve/function/fms.hpp>
+#include <eve/function/pedantic/fms.hpp>
+#include <eve/function/numeric/fms.hpp>
 #include <eve/constant/eps.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/wide.hpp>
@@ -21,8 +23,8 @@ int main()
             << " <- oi                                =    " << oi << '\n'
             << " <- pi                                =    " << pi << '\n'
             << " <- qi                                =    " << qi << '\n'
-            << " -> pedantic_(fms)(oi, pi, qi)        =    " << eve::pedantic_(eve::fms)(oi, pi, qi) << '\n'
-            << " -> numeric_(fms)(oi, pi, qi)         =    " << eve::numeric_(eve::fms)(oi, pi, qi) << '\n'
+//             << " -> pedantic(fms)(oi, pi, qi)         =    " << eve::pedantic(eve::fms)(oi, pi, qi) << '\n'
+//             << " -> numeric(fms)(oi, pi, qi)          =    " << eve::numeric(eve::fms)(oi, pi, qi) << '\n'
             << " -> fms(oi, pi, qi)                   =    " << eve::fms(oi, pi, qi) << '\n'
             << "\n if the last fms result ends by '0, inf}', it is because\n"
             << " the system has no simd fms family intrinsics\n"
@@ -30,13 +32,13 @@ int main()
 
   std::cout << "---- scalar" << std::setprecision(10) << '\n'
             << " <- vm                                = " << vm << '\n'
-            << " -> pedantic_(fms)(vm, 2.0f, vm)      = " << eve::pedantic_(eve::fms)(vm, 2.0f, -vm) << '\n'
-            << " -> numeric_(fms)(vm, 2.0f, vm)       = " << eve::numeric_(eve::fms)(vm, 2.0f, -vm) << '\n'
+//             << " -> pedantic(fms)(vm, 2.0f, vm)       = " << eve::pedantic(eve::fms)(vm, 2.0f, -vm) << '\n'
+//             << " -> numeric(fms)(vm, 2.0f, vm)        = " << eve::numeric(eve::fms)(vm, 2.0f, -vm) << '\n'
             << " -> fms(vm, 2.0f, vm)                 = " << eve::fms(vm, 2.0f, -vm) << '\n'
             << " <- esm1                              = " << esm1 << '\n'
             << " <- esp1                              = " << esp1 << '\n'
-            << " -> pedantic_(fms)(esp1, esm1, -1.0f) = " << eve::pedantic_(eve::fms)(esp1, esm1, -1.0f) << '\n'
-            << " -> numeric_(fms)(esp1, esm1, -1.0f)  = " << eve::numeric_(eve::fms)(esp1, esm1, -1.0f) << '\n'
+//             << " -> pedantic(fms)(esp1, esm1, -1.0f)  = " << eve::pedantic(eve::fms)(esp1, esm1, -1.0f) << '\n'
+//             << " -> numeric(fms)(esp1, esm1, -1.0f)   = " << eve::numeric(eve::fms)(esp1, esm1, -1.0f) << '\n'
             << " -> fms(esp1, esm1, -1.0f)            = " << eve::fms(esp1, esm1, -1.0f) << '\n';
   return 0;
 }

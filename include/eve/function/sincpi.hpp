@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -17,4 +14,4 @@ namespace eve
   EVE_MAKE_CALLABLE(sincpi_, sincpi);
 }
 
-#include <eve/module/mayh/function/generic/sincpi.hpp>
+#include <eve/module/real/mayh/function/regular/generic/sincpi.hpp>

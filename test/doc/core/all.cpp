@@ -1,5 +1,6 @@
 #include <eve/function/all.hpp>
 #include <eve/wide.hpp>
+#include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;
 using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;
@@ -13,7 +14,7 @@ int main()
             << "<- pf       = " << pf << '\n'
             << "-> all(pf)  = " << eve::all(pf) << '\n'
             << "<- qi       = " << qi << '\n'
-            << "-> all(qi) = " << eve::all(qi) << '\n';
+            << "-> all(qi)  = " << eve::all(qi) << '\n';
 
   float        xf = -0.0f;
   float        yf = -3.0f;

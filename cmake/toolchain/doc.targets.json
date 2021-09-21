@@ -1,0 +1,2 @@
+{ "doc.exe": "^doc\\..*\\.exe" }
+{ "examples.exe": "^examples\\..*\\.exe" }

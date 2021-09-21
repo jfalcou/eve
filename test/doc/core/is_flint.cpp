@@ -1,4 +1,5 @@
 #include <eve/function/is_flint.hpp>
+#include <eve/function/pedantic/is_flint.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/maxflint.hpp>
@@ -17,7 +18,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                      = " << pf << '\n'
             << "-> is_flint(pf)            = " << eve::is_flint(pf) << '\n'
-            << "-> pedantic_(is_flint)(pf) = " << eve::pedantic_(eve::is_flint)(pf) << '\n'  ;
+            << "-> pedantic(is_flint)(pf) = " << eve::pedantic(eve::is_flint)(pf) << '\n'  ;
 
   float xf = 1.0f;
 

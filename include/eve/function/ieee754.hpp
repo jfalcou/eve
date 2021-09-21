@@ -1,18 +1,26 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
-// **=======================================================
-// helper file to include all ieee754 related functions
+
+//================================================================================================
+//! @addtogroup functions
+//! @{
+//! @defgroup ieee754 Ieee754
+//!
+//! These functions provide scalar and SIMD version of functions related to the representation of
+//! floating point values.
+//!
+//! **Convenience header:** @code{.cpp} #include <eve/function/ieee_754.hpp> @endcode
+//!
+//!@}
+//================================================================================================
+
 #include <eve/function/bitofsign.hpp>
-#include <eve/function/bit_exponent.hpp>
-#include <eve/function/bit_mantisaa.hpp>
 #include <eve/function/exponent.hpp>
 #include <eve/function/frexp.hpp>
 #include <eve/function/ifrexp.hpp>
@@ -24,4 +32,5 @@
 #include <eve/function/prev.hpp>
 #include <eve/function/two_add.hpp>
 #include <eve/function/two_prod.hpp>
+#include <eve/function/two_split.hpp>
 #include <eve/function/ulpdist.hpp>

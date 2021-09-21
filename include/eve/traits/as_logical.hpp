@@ -1,17 +1,14 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
 #include <eve/forward.hpp>
-#include <eve/logical.hpp>
+#include <eve/detail/kumi.hpp>
 
 namespace eve
 {
@@ -32,6 +29,12 @@ namespace eve
   {
     using type = logical<T>;
   };
+
+
+  template<typename T>
+  requires( kumi::product_type<T> )
+  struct as_logical<T> : as_logical< kumi::element_t<0,T> >
+  {};
 
   template<typename T>
   using as_logical_t = typename as_logical<T>::type;

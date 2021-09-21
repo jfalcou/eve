@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #include <eve/function/frexp.hpp>
 #include <eve/constant/valmin.hpp>
@@ -21,6 +18,6 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   eve::bench::experiment xp;
 
-  run<EVE_VALUE> (EVE_NAME(raw_(eve::frexp)) , xp, eve::raw_(eve::frexp), arg0);
-  run<EVE_TYPE>  (EVE_NAME(raw_(eve::frexp)) , xp, eve::raw_(eve::frexp), arg0);
+  run<EVE_VALUE> (EVE_NAME(raw(eve::frexp)) , xp, eve::raw(eve::frexp), arg0);
+  run<EVE_TYPE>  (EVE_NAME(raw(eve::frexp)) , xp, eve::raw(eve::frexp), arg0);
 }

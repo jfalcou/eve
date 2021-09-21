@@ -1,14 +1,11 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
-#include <eve/function/is_flint.hpp>
+#include <eve/function/pedantic/is_flint.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
@@ -27,6 +24,6 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE> (EVE_NAME(std__is_flint) , xp, std__is_flint, arg0);
-  run<EVE_VALUE> (EVE_NAME(pedantic_(eve::is_flint)) , xp, eve::pedantic_(eve::is_flint), arg0);
-  run<EVE_TYPE>  (EVE_NAME(pedantic_(eve::is_flint)) , xp, eve::pedantic_(eve::is_flint), arg0);
+  run<EVE_VALUE> (EVE_NAME(pedantic(eve::is_flint)) , xp, eve::pedantic(eve::is_flint), arg0);
+  run<EVE_TYPE>  (EVE_NAME(pedantic(eve::is_flint)) , xp, eve::pedantic(eve::is_flint), arg0);
 }

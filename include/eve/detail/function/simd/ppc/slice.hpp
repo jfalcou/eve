@@ -1,25 +1,19 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
-
-#include <cstddef>
+#include <eve/detail/implementation.hpp>
 
 namespace eve::detail
 {
   template<typename T, typename N, typename Slice>
-  EVE_FORCEINLINE auto slice(wide<T, N, ppc_> const &a, Slice const &) noexcept
-      requires(N::value > 1)
+  EVE_FORCEINLINE auto slice(wide<T, N> const &a, Slice const &) noexcept
+    requires ppc_abi<abi_t<T, N>>
   {
     if constexpr( Slice::value )
     {
@@ -42,10 +36,10 @@ namespace eve::detail
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE auto slice(wide<T, N, ppc_> const &a) noexcept requires(N::value > 1)
+  EVE_FORCEINLINE auto slice(wide<T, N> const &a) noexcept
+    requires ppc_abi<abi_t<T, N>>
   {
-    std::array<wide<T, typename N::split_type>, 2> that {slice(a, lower_), slice(a, upper_)};
+    std::array<wide<T, typename N::split_type>, 2> that{slice(a, lower_), slice(a, upper_)};
     return that;
   }
 }
-

@@ -1,8 +1,10 @@
-<img src="https://github.com/jfalcou/eve/raw/develop/docs/logo.png" alt="" data-canonical-src="https://github.com/jfalcou/eve/raw/develop/docs/logo.png" align="left"  width="15%" height="15%" />
+<img src="https://github.com/jfalcou/eve/raw/develop/doc/logo.png" alt="" data-canonical-src="https://github.com/jfalcou/eve/raw/develop/doc/logo.png" align="left"  width="15%" height="15%" />
 
 # EVE - the Expressive Vector Engine
 
-[![CircleCI](https://circleci.com/gh/jfalcou/eve/tree/develop.svg?style=svg&circle-token=341ef01f38a05865882565127a64f692f650fc7b)](https://circleci.com/gh/jfalcou/eve/tree/develop)
+[![E.V.E CI](https://github.com/jfalcou/eve/actions/workflows/main.yml/badge.svg)](https://github.com/jfalcou/eve/actions/workflows/main.yml)
+[![Licence](https://img.shields.io/github/license/jfalcou/eve?style=plastic)](https://img.shields.io/github/license/jfalcou/eve?style=plastic) 
+[![Discord](https://img.shields.io/discord/692734675726237696?style=plastic)](https://discord.com/channels/692734675726237696/692735259204124692) 
 
 ## Purpose
 
@@ -16,45 +18,37 @@ change API and baseline compiler required until the first official 0.1 release. 
 to minimize disruption. Semantic versioning will ensure API retro-compatibility if anything huge
 needs to change.
 
-## Bibliographic References
+## Getting Started
 
-If you want to refers to EVE, you can currently use those papers (by order of preference in citation). 
-A new, more up-to-date EVE specific journal paper is in the work atm.
-
- - **Modern Generative Programming for Optimizing Small Matrix-Vector Multiplication**, Jules Penuchot, Joel Falcou, Amal Khabou in *HPCS 2018*
- - **Boost. simd: generic programming for portable simdization**, Pierre Estérie, Joel Falcou, Mathias Gaunard, Jean-Thierry Lapresté, *PACT 2012*
- - **EVE, an object oriented SIMD library**, Joel Falcou, Jocelyn Serot in *Scalable Computing: Practice and Experience 6 (4)*
+ - [Installing and using the library](https://jfalcou.github.io/eve/html/install.html)
+ - [References Documentation](https://jfalcou.github.io/eve/html/modules.html)
 
 ## Current status - Advanced BETA
 
-EVE is considered in **advanced beta**: it's usable, has an almost complete feature sets for a sensible amount of instructions sets but it's possible some values or performances issues may be possible. Don't hesitate to report any funky code-gen or bad optimizations so we can deliver the best performance around.
-
-### Main remaining works:
-
-- [ ] Complete optimized implementations of multi-register shuffles
-- [ ] Reduction (sum, prod, etc) operations
-- [ ] Fix potential performance or codegen issues
-- [ ] Implement algorithms à la std over SIMD-izable ranges
-- [ ] Complete the documentations with bite-size tutorials
+EVE is considered in **advanced beta**: it's usable, has an almost complete feature sets for a sensible amount of instructions sets but it's possible some values or performances issues may still remain. Don't hesitate to report any funky code-gen or bad optimizations so we can deliver the best performance around.
 
 ### Current roaster of supported Instructions Sets
 
+Full support with tests:
  - **Intel**
    - SSE2, SSSE3, SSE3, SSE4.1, SSE4.2
    - AVX, AVX2, FMA4
+   - AVX512 Skymake style (F,CD,DQ,BW,VL)
+ - **ARM**
+   - NEON (64 & 128 bits)
+   - AARCH64
+
+Partial/In-progress support with minimal checks:
  - **AMD**
    - XOP, FMA3
  - **PowerPC**
    - VMX
    - VSX
- - **ARM**
-   - NEON (64 & 128 bits)
-   - AARCH64 
-   
+
  - We **do not support** ARM SVE as the execution model makes no sense and the current compiler support is not adequate for us.
- - We **do not support** GPGPU, this is the job for another tool. 
- 
-### Current roaster of suypported compiler
+ - We **do not support** GPGPU, this is the job for another tool.
+
+### Current roaster of supported compiler
 
 EVE requires a C++ 20 compliant compiler. The main features from C++17/20 we require are:
  - Concepts and requires
@@ -63,13 +57,13 @@ EVE requires a C++ 20 compliant compiler. The main features from C++17/20 we req
  - Non-Type Template Parameters
  - `if constexpr`
  - Functions from `<bits>`
- 
+
 Here is the current minimal compiler version supported:
- 
+
 | Compiler       | Version       |
 | -------------- | ------------- |
-| g++            | 10.2 or above |
-| clang++        | 10   or above |
+| g++            | 11 or above   |
+| clang++        | 12 or above   |
 | Visual Studio  | *TBD*         |
 
 Visual Studio support is currently being added. Help on the front of setting up appveyor properly is also welcome.
@@ -79,7 +73,7 @@ Visual Studio support is currently being added. Help on the front of setting up 
  - **Why C++20 ?** Because we want to be able to use modern design components like Concepts, and later on, Modules. C++14 is for 2014.
    We fully know it may hinders adoption in some situation, but we're not running a race. We value proper design and API choice over
    complex retro-compatibility.
- 
+
  - **Why this instead of std::simd or any other libraries?** EVE is a playground for testing proper
    design and implementation decisions for such libraries. Vc and its standard version are fine pieces
    of work but we aim at pushing the envelop in term of API and implementation without any standard
@@ -94,13 +88,21 @@ Visual Studio support is currently being added. Help on the front of setting up 
    We would also value input (even harsh ones) on how we use our CI infrastructure or how our CMake looks.
    We tried our best but those elements are complex all by themselves.
 
+## Bibliographic References
+
+If you want to refer to EVE, you can currently use those papers (by order of preference in citation).
+A new, more up-to-date EVE specific journal paper is in the work atm.
+
+ - **Modern Generative Programming for Optimizing Small Matrix-Vector Multiplication**, Jules Penuchot, Joel Falcou, Amal Khabou in *HPCS 2018*
+ - **Boost. simd: generic programming for portable simdization**, Pierre Estérie, Joel Falcou, Mathias Gaunard, Jean-Thierry Lapresté, *PACT 2012*
+ - **EVE, an object oriented SIMD library**, Joel Falcou, Jocelyn Serot in *Scalable Computing: Practice and Experience 6 (4)*
+
  ## License
 
-  ```
-  MIT License
+```
+MIT License
 
-Copyright (c) 2018-2020 Joel FALCOU
-Copyright (c) 2018-2020 Jean-Thierry LAPRESTE
+Copyright : EVE Contributors & Maintainers
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

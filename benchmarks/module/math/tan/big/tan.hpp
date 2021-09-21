@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #include <eve/function/tan.hpp>
 #include <eve/constant/valmin.hpp>
@@ -23,7 +20,7 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__tan) , xp, std__tan , arg0);
-  run<EVE_VALUE>(EVE_NAME(big_(eve::tan)) , xp, eve::big_(eve::tan) , arg0);
-  run<EVE_TYPE> (EVE_NAME(big_(eve::tan)) , xp, eve::big_(eve::tan) , arg0);
+  run<EVE_VALUE>(EVE_NAME(big(eve::tan)) , xp, eve::big(eve::tan) , arg0);
+  run<EVE_TYPE> (EVE_NAME(big(eve::tan)) , xp, eve::big(eve::tan) , arg0);
 
 }

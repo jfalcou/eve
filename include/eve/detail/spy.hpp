@@ -1,36 +1,36 @@
 //==================================================================================================
 /*
-  SPY - C++ Informations Broker
-  Copyright 2020 Joel FALCOU
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  EVE - Expressive Vector Engine
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
- */
+*/
 //==================================================================================================
-#pragma once
-#include <iostream>
+#ifndef SPY_SPY_HPP_INCLUDED
+#define SPY_SPY_HPP_INCLUDED
+#include <ostream>
 namespace spy::detail
 {
   enum class archs  { undefined_  = -1
                     , x86_ = 10, amd64_ = 11
                     , ppc_ = 20, arm_ = 30
                     };
-  template<archs ARCH> struct arch_info
+  template<archs Arch> struct arch_info
   {
-    static constexpr archs  vendor  = ARCH;
+    static constexpr archs  vendor  = Arch;
     inline constexpr operator bool() const noexcept;
     template<archs A2>
-    constexpr bool operator==(arch_info<A2> const& ) const noexcept
+    constexpr bool operator==(arch_info<A2> const&) const noexcept
     {
       return A2 == vendor;
     }
   };
-  template<archs ARCH>
-  std::ostream& operator<<(std::ostream& os, arch_info<ARCH> const&)
+  template<archs Arch>
+  std::ostream& operator<<(std::ostream& os, arch_info<Arch> const&)
   {
-    if(ARCH == archs::x86_  ) return os << "X86";
-    if(ARCH == archs::amd64_) return os << "AMD64";
-    if(ARCH == archs::ppc_  ) return os << "PowerPC";
-    if(ARCH == archs::arm_  ) return os << "ARM";
+    if(Arch == archs::x86_  ) return os << "X86";
+    if(Arch == archs::amd64_) return os << "AMD64";
+    if(Arch == archs::ppc_  ) return os << "PowerPC";
+    if(Arch == archs::arm_  ) return os << "ARM";
     return os << "Undefined Architecture";
   }
 }
@@ -61,8 +61,8 @@ namespace spy
 }
 namespace spy::detail
 {
-  template<archs ARCH>
-  inline constexpr arch_info<ARCH>::operator bool() const noexcept
+  template<archs Arch>
+  inline constexpr arch_info<Arch>::operator bool() const noexcept
   {
     return *this == spy::architecture;
   }
@@ -75,7 +75,7 @@ namespace spy
   constexpr inline auto arm_    = detail::arch_info<detail::archs::arm_>{};
 }
 #include <iosfwd>
-#include <iostream>
+#include <ostream>
 namespace spy::detail
 {
   template<char... c> constexpr int find(int i0)
@@ -281,25 +281,25 @@ namespace spy::literal
 #include <iosfwd>
 namespace spy::detail
 {
-  template<int SS, int SI, int SL, int SPTR>
+  template<int Short, int Integer, int Long, int Pointer>
   struct data_model_info
   {
     inline constexpr operator bool() const noexcept;
-    template<int SS2, int SI2, int SL2, int SPTR2>
-    constexpr bool operator==(data_model_info<SS2, SI2, SL2, SPTR2> const&) const noexcept
+    template<int Short2, int Integer2, int Long2, int Pointer2>
+    constexpr bool operator==(data_model_info<Short2, Integer2, Long2, Pointer2> const& ) const noexcept
     {
-      return (SS==SS2) && (SI == SI2) && (SL == SL2) && (SPTR == SPTR2);
+      return (Short==Short2) && (Integer == Integer2) && (Long == Long2) && (Pointer == Pointer2);
     }
   };
-  template<int SS, int SI, int SL, int SPTR>
-  std::ostream& operator<<(std::ostream& os, data_model_info<SS, SI, SL, SPTR> const&)
+  template<int Short, int Integer, int Long, int Pointer>
+  std::ostream& operator<<(std::ostream& os, data_model_info<Short, Integer, Long, Pointer> const&)
   {
-          if constexpr(SPTR == 4 && SI == 4) return os << "ILP32";
-    else  if constexpr(SPTR == 4 && SI == 2) return os << "LP32";
-    else  if constexpr(SPTR == 8 && SL == 8 && SI == 8 && SS == 8)  return os << "SILP64";
-    else  if constexpr(SPTR == 8 && SS == 8 && SI == 8 && SS == 2)  return os << "ILP64";
-    else  if constexpr(SPTR == 8 && SL == 4 && SI == 8 && SS == 2)  return os << "LLP64";
-    else  if constexpr(SPTR == 8 && SL == 8 && SI == 4 && SS == 2)  return os << "LP64";
+          if constexpr(Pointer == 4 && Integer == 4) return os << "ILP32";
+    else  if constexpr(Pointer == 4 && Integer == 2) return os << "LP32";
+    else  if constexpr(Pointer == 8 && Long == 8 && Integer == 8 && Short == 8)  return os << "IntegerLP64";
+    else  if constexpr(Pointer == 8 && Short == 8 && Integer == 8 && Short == 2)  return os << "ILP64";
+    else  if constexpr(Pointer == 8 && Long == 4 && Integer == 8 && Short == 2)  return os << "LLP64";
+    else  if constexpr(Pointer == 8 && Long == 8 && Integer == 4 && Short == 2)  return os << "LP64";
     else  return os << "Unknown data model";
   }
 }
@@ -312,8 +312,8 @@ namespace spy
 }
 namespace spy::detail
 {
-  template<int SS, int SI, int SL, int SPTR>
-  inline constexpr data_model_info<SS, SI, SL, SPTR>::operator bool() const noexcept
+  template<int Short, int Integer, int Long, int Pointer>
+  inline constexpr data_model_info<Short, Integer, Long, Pointer>::operator bool() const noexcept
   {
     return *this == spy::data_model;
   }
@@ -338,7 +338,7 @@ namespace spy::detail
     static constexpr version_id<M,N,P>  version = {};
     inline constexpr operator bool() const noexcept;
     template<libC C2>
-    constexpr bool operator==(libc_info<C2,-1,0,0> const& ) const noexcept
+    constexpr bool operator==(libc_info<C2,-1,0,0> const&) const noexcept
     {
       return C2 == vendor;
     }
@@ -441,21 +441,21 @@ namespace spy::detail
     static constexpr version_id<M,N,P>  version = {};
     inline constexpr operator bool() const noexcept;
     template<stdlib C2>
-    constexpr bool operator==(stdlib_info<C2,-1,0,0> const& ) const noexcept
+    constexpr bool operator==(stdlib_info<C2,-1,0,0> const&) const noexcept
     {
       return C2 == vendor;
     }
     SPY_VERSION_COMPARISONS_OPERATOR(stdlib,stdlib_info)
   };
-  template<stdlib SLIB, int M, int N, int P>
-  std::ostream& operator<<(std::ostream& os, stdlib_info<SLIB, M, N, P> const&)
+  template<stdlib SLib, int M, int N, int P>
+  std::ostream& operator<<(std::ostream& os, stdlib_info<SLib, M, N, P> const&)
   {
-    if(SLIB == stdlib::libcpp_) return os << "libc++ Standard C++ Library";
-    if(SLIB == stdlib::gnucpp_) return os << "GNU Standard C++ Library";
+    if(SLib == stdlib::libcpp_) return os << "libc++ Standard C++ Library";
+    if(SLib == stdlib::gnucpp_) return os << "GNU Standard C++ Library";
     return os << "Undefined Standard C++ Library";
   }
-  template<int M, int N, int P> using libcpp_t        = stdlib_info<stdlib::libcpp_,M,N,P>;
-  template<int M, int N, int P> using gnucpp_t        = stdlib_info<stdlib::gnucpp_,M,N,P>;
+  template<int M, int N, int P> using libcpp_t = stdlib_info<stdlib::libcpp_,M,N,P>;
+  template<int M, int N, int P> using gnucpp_t = stdlib_info<stdlib::gnucpp_,M,N,P>;
 }
 namespace spy
 {
@@ -475,8 +475,8 @@ namespace spy
 }
 namespace spy::detail
 {
-  template<stdlib SLIB, int M, int N, int P>
-  inline constexpr stdlib_info<SLIB,M,N,P>::operator bool() const noexcept
+  template<stdlib SLib, int M, int N, int P>
+  inline constexpr stdlib_info<SLib,M,N,P>::operator bool() const noexcept
   {
     return *this == spy::stdlib;
   }
@@ -497,73 +497,57 @@ namespace spy::literal
     return detail::literal_wrap<detail::gnucpp_t,c...>();
   }
 }
-#include <iostream>
+#include <ostream>
 #if !defined(SPY_SIMD_DETECTED) && defined(__AVX512F__)
 #  define SPY_SIMD_IS_X86_AVX512
 #  define SPY_SIMD_DETECTED ::spy::detail::simd_version::avx512_
 #if defined(__AVX512BW__)
 #  define SPY_SIMD_IS_X86_AVX512_BW
-#  define SPY_SIMD_X86_AVX512_SUB 0x0001
 #endif
 #if defined(__AVX512CD__)
 #  define SPY_SIMD_IS_X86_AVX512_CD
-#  define SPY_SIMD_X86_AVX512_SUB 0x0002
 #endif
 #if defined(__AVX512DQ__)
 #  define SPY_SIMD_IS_X86_AVX512_DQ
-#  define SPY_SIMD_X86_AVX512_SUB 0x0004
 #endif
 #if defined(__AVX512ER__)
 #  define SPY_SIMD_IS_X86_AVX512_ER
-#  define SPY_SIMD_X86_AVX512_SUB 0x0008
 #endif
 #if defined(__AVX512IFMA__)
 #  define SPY_SIMD_IS_X86_AVX512_IFMA
-#  define SPY_SIMD_X86_AVX512_SUB 0x0010
 #endif
 #if defined(__AVX512PF__)
 #  define SPY_SIMD_IS_X86_AVX512_PF
-#  define SPY_SIMD_X86_AVX512_SUB 0x0020
 #endif
 #if defined(__AVX512VL__)
 #  define SPY_SIMD_IS_X86_AVX512_VL
-#  define SPY_SIMD_X86_AVX512_SUB 0x0040
 #endif
 #if defined(__AVX512VPOPCNTDQ__)
 #  define SPY_SIMD_IS_X86_AVX512_POPCNTDQ
-#  define SPY_SIMD_X86_AVX512_SUB 0x0080
 #endif
 #if defined(__AVX5124FMAPS__)
 #  define SPY_SIMD_IS_X86_AVX512_4FMAPS
-#  define SPY_SIMD_X86_AVX512_SUB 0x0100
 #endif
 #if defined(__AVX5124VNNIW__)
 #  define SPY_SIMD_IS_X86_AVX512_VNNIW
-#  define SPY_SIMD_X86_AVX512_SUB 0x0200
 #endif
 #if defined(__AVX512VBMI__)
 #  define SPY_SIMD_IS_X86_AVX512_VBMI
-#  define SPY_SIMD_X86_AVX512_SUB 0x0400
 #endif
 #if defined(__AVX512BF16__)
 #  define SPY_SIMD_IS_X86_AVX512_BF16
-#  define SPY_SIMD_X86_AVX512_SUB 0x0800
 #endif
 #if defined(__AVX512BITALG__)
 #  define SPY_SIMD_IS_X86_AVX512_BITALG
-#  define SPY_SIMD_X86_AVX512_SUB 0x1000
 #endif
 #if defined(__AVX512VBMI2__)
 #  define SPY_SIMD_IS_X86_AVX512_VBMI2
-#  define SPY_SIMD_X86_AVX512_SUB 0x2000
 #endif
 #if defined(__AVX512VNNI__)
 #  define SPY_SIMD_IS_X86_AVX512_VNNI
-#  define SPY_SIMD_X86_AVX512_SUB 0x4000
 #endif
 #if defined(__AVX512VP2INTERSECT__)
 #  define SPY_SIMD_IS_X86_AVX512_VP2INTERSECT
-#  define SPY_SIMD_X86_AVX512_SUB 0x8000
 #endif
 #endif
 #if !defined(SPY_SIMD_DETECTED) && defined(__AVX2__)
@@ -722,7 +706,11 @@ namespace avx512
 #endif
 }
 }
-#if !defined(SPY_SIMD_DETECTED) && (defined(__ARM_NEON__) || defined(_M_ARM) || defined(__aarch64__))
+#if !defined(SPY_SIMD_DETECTED) && defined(__aarch64__)
+#  define SPY_SIMD_IS_ARM_ASIMD
+#  define SPY_SIMD_DETECTED ::spy::detail::simd_version::asimd_
+#endif
+#if !defined(SPY_SIMD_DETECTED) && ((defined(__ARM_NEON__) || defined(_M_ARM)) && (__ARM_ARCH == 7))
 #  define SPY_SIMD_IS_ARM_NEON
 #  define SPY_SIMD_DETECTED ::spy::detail::simd_version::neon_
 #endif
@@ -730,15 +718,6 @@ namespace avx512
 #  define SPY_SIMD_IS_ARM
 #  define SPY_SIMD_VENDOR ::spy::detail::simd_isa::arm_
 #endif
-namespace spy::supports
-{
-#if defined(__aarch64__)
-#  define SPY_SIMD_SUPPORTS_AARCH64
-  constexpr inline auto aarch64_ = true;
-#else
-  constexpr inline auto aarch64_ = false;
-#endif
-}
 #if !defined(SPY_SIMD_DETECTED) && defined(__VSX__)
 #  define SPY_SIMD_IS_PPC_VSX
 #  define SPY_SIMD_DETECTED ::spy::detail::simd_version::vsx_
@@ -759,67 +738,67 @@ namespace spy::detail
                           , sse41_  = 1141, sse42_ = 1142, avx_  = 1201, avx2_  = 1202
                           , avx512_ = 1300
                           , vmx_    = 2001, vsx_   = 2002
-                          , neon_   = 3001
+                          , neon_   = 3001, asimd_ = 3002
                           };
-  template<simd_isa ISA = simd_isa::undefined_, simd_version VERSION = simd_version::undefined_>
+  template<simd_isa InsSetArch = simd_isa::undefined_, simd_version Version = simd_version::undefined_>
   struct simd_info
   {
-    static constexpr auto isa     = ISA;
-    static constexpr auto version = VERSION;
+    static constexpr auto isa     = InsSetArch;
+    static constexpr auto version = Version;
     friend std::ostream& operator<<(std::ostream& os, simd_info const&)
     {
-            if constexpr ( VERSION == simd_version::sse1_   ) os << "X86 SSE";
-      else  if constexpr ( VERSION == simd_version::sse2_   ) os << "X86 SSE2";
-      else  if constexpr ( VERSION == simd_version::sse3_   ) os << "X86 SSE3";
-      else  if constexpr ( VERSION == simd_version::ssse3_  ) os << "X86 SSSE3";
-      else  if constexpr ( VERSION == simd_version::sse41_  ) os << "X86 SSE4.1";
-      else  if constexpr ( VERSION == simd_version::sse42_  ) os << "X86 SSE4.2";
-      else  if constexpr ( VERSION == simd_version::avx_    ) os << "X86 AVX";
-      else  if constexpr ( VERSION == simd_version::avx2_   ) os << "X86 AVX2";
-      else  if constexpr ( VERSION == simd_version::avx512_ ) os << "X86 AVX512";
-      else  if constexpr ( VERSION == simd_version::vmx_    ) os << "PPC VMX";
-      else  if constexpr ( VERSION == simd_version::vsx_    ) os << "PPC VSX";
-      else  if constexpr ( VERSION == simd_version::neon_   ) os << "ARM NEON";
+            if constexpr ( Version == simd_version::sse1_   ) os << "X86 SSE";
+      else  if constexpr ( Version == simd_version::sse2_   ) os << "X86 SSE2";
+      else  if constexpr ( Version == simd_version::sse3_   ) os << "X86 SSE3";
+      else  if constexpr ( Version == simd_version::ssse3_  ) os << "X86 SSSE3";
+      else  if constexpr ( Version == simd_version::sse41_  ) os << "X86 SSE4.1";
+      else  if constexpr ( Version == simd_version::sse42_  ) os << "X86 SSE4.2";
+      else  if constexpr ( Version == simd_version::avx_    ) os << "X86 AVX";
+      else  if constexpr ( Version == simd_version::avx2_   ) os << "X86 AVX2";
+      else  if constexpr ( Version == simd_version::avx512_ ) os << "X86 AVX512";
+      else  if constexpr ( Version == simd_version::vmx_    ) os << "PPC VMX";
+      else  if constexpr ( Version == simd_version::vsx_    ) os << "PPC VSX";
+      else  if constexpr ( Version == simd_version::neon_   ) os << "ARM NEON";
+      else  if constexpr ( Version == simd_version::asimd_  ) os << "ARM ASIMD";
       else return os << "Undefined SIMD instructions set";
-      if constexpr (spy::supports::aarch64_) os << " (with AARCH64 support)";
       if constexpr (spy::supports::fma_)     os << " (with FMA3 support)";
       if constexpr (spy::supports::fma4_)    os << " (with FMA4 support)";
       if constexpr (spy::supports::xop_)     os << " (with XOP support)";
       return os;
     }
-    template<simd_isa OISA>
-    constexpr bool operator==(simd_info<OISA> const&) const noexcept { return OISA == ISA; }
-    template<simd_isa OISA>
-    constexpr bool operator!=(simd_info<OISA> const&) const noexcept { return OISA != ISA; }
-    template<simd_isa OISA, simd_version OVERSION>
-    constexpr bool operator==(simd_info<OISA,OVERSION> const&) const noexcept
+    template<simd_isa OInsSetArch>
+    constexpr bool operator==(simd_info<OInsSetArch> const&) const noexcept { return OInsSetArch == InsSetArch; }
+    template<simd_isa OInsSetArch>
+    constexpr bool operator!=(simd_info<OInsSetArch> const&) const noexcept { return OInsSetArch != InsSetArch; }
+    template<simd_isa OInsSetArch, simd_version OVersion>
+    constexpr bool operator==(simd_info<OInsSetArch,OVersion> const&) const noexcept
     {
-      return (VERSION == OVERSION) && (OISA == ISA);
+      return (Version == OVersion) && (OInsSetArch == InsSetArch);
     }
-    template<simd_isa OISA, simd_version OVERSION>
-    constexpr bool operator!=(simd_info<OISA,OVERSION> const&) const noexcept
+    template<simd_isa OInsSetArch, simd_version OVersion>
+    constexpr bool operator!=(simd_info<OInsSetArch,OVersion> const&) const noexcept
     {
-      return (VERSION != OVERSION) || (OISA != ISA);
+      return (Version != OVersion) || (OInsSetArch != InsSetArch);
     }
-    template<simd_isa OISA, simd_version OVERSION>
-    constexpr bool operator<(simd_info<OISA,OVERSION> const&) const noexcept
+    template<simd_isa OInsSetArch, simd_version OVersion>
+    constexpr bool operator<(simd_info<OInsSetArch,OVersion> const&) const noexcept
     {
-      return (VERSION < OVERSION) && (OISA == ISA);
+      return (Version < OVersion) && (OInsSetArch == InsSetArch);
     }
-    template<simd_isa OISA, simd_version OVERSION>
-    constexpr bool operator>(simd_info<OISA,OVERSION> const&) const noexcept
+    template<simd_isa OInsSetArch, simd_version OVersion>
+    constexpr bool operator>(simd_info<OInsSetArch,OVersion> const&) const noexcept
     {
-      return (VERSION > OVERSION) && (OISA == ISA);
+      return (Version > OVersion) && (OInsSetArch == InsSetArch);
     }
-    template<simd_isa OISA, simd_version OVERSION>
-    constexpr bool operator<=(simd_info<OISA,OVERSION> const&) const noexcept
+    template<simd_isa OInsSetArch, simd_version OVersion>
+    constexpr bool operator<=(simd_info<OInsSetArch,OVersion> const&) const noexcept
     {
-      return (VERSION <= OVERSION) && (OISA == ISA);
+      return (Version <= OVersion) && (OInsSetArch == InsSetArch);
     }
-    template<simd_isa OISA, simd_version OVERSION>
-    constexpr bool operator>=(simd_info<OISA,OVERSION> const&) const noexcept
+    template<simd_isa OInsSetArch, simd_version OVersion>
+    constexpr bool operator>=(simd_info<OInsSetArch,OVersion> const&) const noexcept
     {
-      return (VERSION >= OVERSION) && (OISA == ISA);
+      return (Version >= OVersion) && (OInsSetArch == InsSetArch);
     }
   };
 }
@@ -852,6 +831,7 @@ namespace spy
   using arm_simd_info = detail::simd_info<detail::simd_isa::arm_,V>;
   constexpr inline auto arm_simd_ = arm_simd_info<>{};
   constexpr inline auto neon_     = arm_simd_info<detail::simd_version::neon_ >{};
+  constexpr inline auto asimd_    = arm_simd_info<detail::simd_version::asimd_>{};
 }
 #include <iosfwd>
 #if defined(__APPLE__) || defined(__APPLE_CC__) || defined(macintosh)
@@ -862,27 +842,27 @@ namespace spy::detail
   enum class systems  { undefined_  = - 1
                       , android_, bsd_, cygwin_, ios_, linux_, macos_, unix_, windows_
                       };
-  template<systems OS> struct os_info
+  template<systems OpSys> struct os_info
   {
-    static constexpr systems            vendor  = OS;
+    static constexpr systems            vendor  = OpSys;
     inline constexpr operator bool() const noexcept;
     template<systems C2>
-    constexpr bool operator==(os_info<C2> const& ) const noexcept
+    constexpr bool operator==(os_info<C2> const&) const noexcept
     {
       return C2 == vendor;
     }
   };
-  template<systems OS>
-  std::ostream& operator<<(std::ostream& os, os_info<OS> const&)
+  template<systems OpSys>
+  std::ostream& operator<<(std::ostream& os, os_info<OpSys> const&)
   {
-    if(OS == systems::android_ ) return os << "Android";
-    if(OS == systems::bsd_     ) return os << "BSD";
-    if(OS == systems::cygwin_  ) return os << "Cygwin";
-    if(OS == systems::ios_     ) return os << "iOS";
-    if(OS == systems::linux_   ) return os << "Linux";
-    if(OS == systems::macos_   ) return os << "MacOS";
-    if(OS == systems::unix_    ) return os << "UNIX";
-    if(OS == systems::windows_ ) return os << "Windows";
+    if(OpSys == systems::android_ ) return os << "Android";
+    if(OpSys == systems::bsd_     ) return os << "BSD";
+    if(OpSys == systems::cygwin_  ) return os << "Cygwin";
+    if(OpSys == systems::ios_     ) return os << "iOs";
+    if(OpSys == systems::linux_   ) return os << "Linux";
+    if(OpSys == systems::macos_   ) return os << "MacOs";
+    if(OpSys == systems::unix_    ) return os << "UNIX";
+    if(OpSys == systems::windows_ ) return os << "Windows";
     return os << "Undefined Operating System";
   }
 }
@@ -946,3 +926,4 @@ namespace spy::supports
   constexpr inline auto posix_ = false;
 #endif
 }
+#endif

@@ -1,24 +1,21 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/traits/as_integer.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
-#include <tts/tests/types.hpp>
 #include <type_traits>
 
 TTS_CASE_TPL( "Check as_integer on integral scalar",
               TTS_SIGNED_INTEGRAL_TYPES, TTS_UNSIGNED_INTEGRAL_TYPES
             )
 {
-  using eve::detail::as_integer_t;
+  using eve::as_integer_t;
 
   TTS_TYPE_IS((as_integer_t<T>          ) , T                       );
   TTS_TYPE_IS((as_integer_t<T, unsigned>) , std::make_unsigned_t<T> );
@@ -27,7 +24,7 @@ TTS_CASE_TPL( "Check as_integer on integral scalar",
 
 TTS_CASE("Check as_integer on floating-point scalar")
 {
-  using eve::detail::as_integer_t;
+  using eve::as_integer_t;
 
   TTS_TYPE_IS((as_integer_t<float>)          , std::int32_t  );
   TTS_TYPE_IS((as_integer_t<float, unsigned>), std::uint32_t );
@@ -42,7 +39,7 @@ TTS_CASE_TPL( "Check as_integer on logical scalar",
               TTS_SIGNED_NUMERIC_TYPES, TTS_UNSIGNED_NUMERIC_TYPES
             )
 {
-  using eve::detail::as_integer_t;
+  using eve::as_integer_t;
   using eve::logical;
 
   TTS_TYPE_IS((as_integer_t<logical<T>>)           , (logical<as_integer_t<T>>          ));
@@ -54,7 +51,7 @@ TTS_CASE_TPL( "Check as_integer on integral wide",
               TTS_SIGNED_INTEGRAL_TYPES, TTS_UNSIGNED_INTEGRAL_TYPES
             )
 {
-  using eve::detail::as_integer_t;
+  using eve::as_integer_t;
   using eve::wide;
 
   if constexpr( std::is_same_v<T,char> )
@@ -72,7 +69,7 @@ TTS_CASE_TPL( "Check as_integer on integral wide",
 
 TTS_CASE("Check as_integer on floating-point wide")
 {
-  using eve::detail::as_integer_t;
+  using eve::as_integer_t;
   using eve::wide;
 
   TTS_TYPE_IS((as_integer_t<wide<float>>)          , wide<std::int32_t>  );
@@ -88,7 +85,7 @@ TTS_CASE_TPL( "Check as_integer on logical wide",
               TTS_SIGNED_NUMERIC_TYPES, TTS_UNSIGNED_NUMERIC_TYPES
             )
 {
-  using eve::detail::as_integer_t;
+  using eve::as_integer_t;
   using eve::logical;
   using eve::wide;
 

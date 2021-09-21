@@ -1,15 +1,11 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <tts/tests/types.hpp>
 #include <eve/function/musl.hpp>
 #include <eve/function/plain.hpp>
 #include <eve/function/numeric.hpp>
@@ -44,4 +40,3 @@ TTS_CASE("Checck that decorators satisfies decorator" )
   TTS_EXPECT( eve::decorator<eve::toward_zero_type> );
   TTS_EXPECT( eve::decorator<eve::upward_type>      );
 }
-

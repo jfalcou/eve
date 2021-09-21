@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #ifndef BENCHMARKS_GENERATORS_HPP
 #define BENCHMARKS_GENERATORS_HPP
@@ -24,7 +21,7 @@ namespace eve::bench
 {
   inline std::mt19937 pRNG = {};
 
-  template<typename T> using alloc = eve::aligned_allocator<T,eve::limits<EVE_CURRENT_API>::bytes>;
+  template<typename T> using alloc = eve::aligned_allocator<T,fixed<64/sizeof(T)>>;
   template<typename T> inline const auto optimal_size = 92*1024/sizeof(T);
 
   // -------------------------------------------------------------------------------------------------
@@ -55,8 +52,6 @@ namespace eve::bench
                   );
     return data;
   }
-
-
 }
 
 #endif

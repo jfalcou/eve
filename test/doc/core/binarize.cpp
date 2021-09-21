@@ -1,6 +1,7 @@
 #include <eve/function/binarize.hpp>
-#include <eve/wide.hpp>
+#include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>
+#include <eve/wide.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide <float, eve::fixed<4>>;

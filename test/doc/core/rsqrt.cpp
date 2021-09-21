@@ -1,6 +1,7 @@
 #include <eve/function/rsqrt.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/wide.hpp>
+#include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;
 
@@ -11,7 +12,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf               = " << pf << '\n'
             << "-> rsqrt(pf)        = " << eve::rsqrt(pf) << '\n'
-            << "-> raw_(rsqrt)(pf)  = " << eve::raw_(eve::rsqrt)(pf) << '\n';
+            << "-> raw(rsqrt)(pf)  = " << eve::raw(eve::rsqrt)(pf) << '\n';
 
 
   float xf = 32.768f;

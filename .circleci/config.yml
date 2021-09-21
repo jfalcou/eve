@@ -1,203 +1,223 @@
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
-##  Copyright 2019 Joel FALCOU
-##  Copyright 2019 Jean-Thierry LAPRESTE
-##
-##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+##  Copyright : EVE Contributors & Maintainers
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 version: 2.1
 
 ##==================================================================================================
-## Docker images
+## Custom commands
 ##==================================================================================================
-docker_gcc: &docker_gcc
-  docker:
-    - image: compilaction/gcc-dev:latest
-      environment:
-        COMPILER: g++
-docker_clang: &docker_clang
-  docker:
-    - image: compilaction/clang-dev:latest
-      environment:
-        COMPILER: clang++
-docker_aarch64: &docker_aarch64
-  docker:
-    - image: compilaction/gcc-dev:latest
-      environment:
-        RUN_COMMAND: qemu-aarch64
-        COMPILER: aarch64-linux-gnu-g++
+commands:
+  configure_toolchain:
+    description: "Configure tests from a CMake Toolchain"
+    parameters:
+      tool:
+        type: string
+      options:
+        type: string
+        default: ""
+      setup:
+        type: string
+        default: ""
+    steps:
+      - run:
+          name: Configuring toolchain << parameters.tool >>
+          command:                                                                                    |
+            mkdir -p build && cd build                                                                &&
+            cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=<< parameters.tool >> -DEVE_OPTIONS="<< parameters.options >>" << parameters.setup >>
+
+  compile:
+    description: "Compile tests from a list of target"
+    parameters:
+      targets:
+        type: string
+      cpu:
+        type: integer
+        default: 2
+    steps:
+      - run:
+          name: Compiling << parameters.targets >> at -j << parameters.cpu >>
+          command:                                                                                    |
+            cd build                                                                                  &&
+            for i in `../cmake/toolchain/filter.sh << parameters.targets >> keys`; do ninja $i -j << parameters.cpu >> ; done;
+
+  ctest:
+    description: "Perform tests from a list of target"
+    parameters:
+      targets:
+        type: string
+    steps:
+      - run:
+          name: Run tests for << parameters.targets >>
+          command:                                                                                    |
+            cd build                                                                                  &&
+            for i in `../cmake/toolchain/filter.sh << parameters.targets >> values`; do ctest -R $i -j 8 ; done;
 
 ##==================================================================================================
-## Build configurations
+## Jobs setup
 ##==================================================================================================
-config_gcc_x86: &config_gcc_x86
-  <<: *docker_gcc
-config_clang_x86: &config_clang_x86
-  <<: *docker_clang
-config_aarch64: &config_aarch64
- <<: *docker_aarch64
+base_jobs: &base_jobs
+  docker:
+    - image: jfalcou/compilers:latest
+  parameters:
+    tool:
+      type: string
+    options:
+      type: string
+      default: ""
+    setup:
+      type: string
+      default: ""
+  steps:
+    - checkout
+    - configure_toolchain:
+        tool:     << parameters.tool >>
+        options:  << parameters.options >>
+        setup:    << parameters.setup >>
+    - compile:
+        targets: "../cmake/toolchain/arch.targets.json"
+        cpu:  2
+    - ctest:
+        targets: "../cmake/toolchain/arch.targets.json"
+    - run:
+        name: Pre-compiling large swizzle functions
+        command: cd build && ninja unit.api.regular.swizzle.exe  -k 0 -j 1
+    - compile:
+        targets: "../cmake/toolchain/api.targets.json"
+        cpu:  2
+    - ctest:
+        targets: "../cmake/toolchain/api.targets.json"
+    - compile:
+        targets: "../cmake/toolchain/doc.targets.json"
+        cpu:  2
+    - ctest:
+        targets: "../cmake/toolchain/doc.targets.json"
+    - run:
+        name: Pre-compiling large math function
+        command: cd build && ninja unit.real.math.heavy.exe  -k 0 -j 2
+    - compile:
+        targets: "../cmake/toolchain/real.targets.json"
+        cpu:  2
+    - ctest:
+        targets: "../cmake/toolchain/real.targets.json"
+
+random_jobs: &random_jobs
+  docker:
+    - image: jfalcou/compilers:latest
+  parameters:
+    tool:
+      type: string
+    options:
+      type: string
+      default: ""
+    setup:
+      type: string
+      default: ""
+  steps:
+    - checkout
+    - configure_toolchain:
+        tool:     << parameters.tool >>
+        options:  << parameters.options >>
+        setup:    << parameters.setup >>
+    - compile:
+        targets: "../cmake/toolchain/random.targets.json"
+        cpu:  2
+    - ctest:
+        targets: "../cmake/toolchain/random.targets.json"
+
+bench_jobs: &bench_jobs
+  docker:
+    - image: jfalcou/compilers:latest
+  parameters:
+    tool:
+      type: string
+    options:
+      type: string
+      default: ""
+    setup:
+      type: string
+      default: ""
+  steps:
+    - checkout
+    - configure_toolchain:
+        tool:     << parameters.tool >>
+        options:  << parameters.options >>
+        setup:    << parameters.setup >>
+    - compile:
+        targets: "../cmake/toolchain/benchmarks.targets.json"
+        cpu:  2
 
 ##==================================================================================================
 ## Jobs list
 ##==================================================================================================
 jobs:
-  ##================================================================================================
-  ## Non-SIMD tests
-  ##================================================================================================
-  gcc_x86:
-    <<: *config_gcc_x86
-    steps:
-      - checkout
-      - run:
-          name: Running Basic Tests - Emulation
-          command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3" . ./.circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - SSE2
-          command: VARIANT="sse2" OPTIONS="-O3 -msse2" . .circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - SSE4
-          command: VARIANT="sse4" OPTIONS="-O3 -msse4" . .circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - AVX
-          command: VARIANT="avx" OPTIONS="-O3 -mavx" . .circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - FMA3
-          command: VARIANT="fma" OPTIONS="-O3 -mavx2 -mfma" . .circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - AVX2
-          command: VARIANT="avx2" OPTIONS="-O3 -mavx2" . .circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - Scalar
-          command: VARIANT="scalar" OPTIONS="-O3" . ./.circleci/perform_scalar.sh
+  x86_gcc_avx512:
+    <<: *base_jobs
+  x86_clang_avx512:
+    <<: *base_jobs
+  random_sse2:
+    <<: *random_jobs
+  random_avx2:
+    <<: *random_jobs
+  random_arm:
+    <<: *random_jobs
+  bench_avx2:
+    <<: *bench_jobs
 
-  clang_x86:
-    <<: *config_clang_x86
-    steps:
-      - checkout
-      - run:
-          name: Running Basic Tests - Emulation
-          command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3" . ./.circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - SSE2
-          command: VARIANT="sse2" OPTIONS="-O3 -msse2" . .circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - SSE4
-          command: VARIANT="sse4" OPTIONS="-O3 -msse4" . .circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - AVX
-          command: VARIANT="avx" OPTIONS="-O3 -mavx" . .circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - FMA3
-          command: VARIANT="fma" OPTIONS="-O3 -mavx2 -mfma" . .circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - AVX2
-          command: VARIANT="avx2" OPTIONS="-O3 -mavx2" . .circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - Scalar
-          command: VARIANT="scalar" OPTIONS="-O3" . ./.circleci/perform_scalar.sh
-
-  arm_aarch64:
-    <<: *config_aarch64
-    steps:
-      - checkout
-      - run:
-          name: Running Basic Tests - Emulation
-          command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3 -Wno-psabi" . .circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - AARCH64 NEON
-          command: VARIANT="aarch64" OPTIONS="-O3 -Wno-psabi" . .circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - Scalar
-          command: VARIANT="scalar" OPTIONS="-O3" . ./.circleci/perform_scalar.sh
-
-  ##================================================================================================
-  ## SIMD tests
-  ##================================================================================================
-  x86_emulation:
-    <<: *config_gcc_x86
-    steps:
-      - checkout
-      - run:
-          name: Running SIMD Tests - Emulation
-          command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3" . ./.circleci/perform_simd.sh
-
-  x86_sse2:
-    <<: *config_gcc_x86
-    steps:
-      - checkout
-      - run:
-          name: Running SIMD Tests - SSE2
-          command: VARIANT="sse2" OPTIONS="-msse2 -O3" . ./.circleci/perform_simd.sh
-
-  x86_sse4:
-    <<: *config_gcc_x86
-    steps:
-      - checkout
-      - run:
-          name: Running SIMD Tests - SSE4
-          command: VARIANT="sse4" OPTIONS="-msse4 -O3" . ./.circleci/perform_simd.sh
-
-  x86_avx:
-    <<: *config_gcc_x86
-    steps:
-      - checkout
-      - run:
-          name: Running SIMD Tests - AVX
-          command: VARIANT="avx" OPTIONS="-mavx -O3" . ./.circleci/perform_simd.sh
-
-  x86_fma:
-    <<: *config_gcc_x86
-    steps:
-      - checkout
-      - run:
-          name: Running SIMD Tests - FMA
-          command: VARIANT="fma" OPTIONS="-mavx2 -mfma -O3" . ./.circleci/perform_simd.sh
-
-  x86_avx2:
-    <<: *config_gcc_x86
-    steps:
-      - checkout
-      - run:
-          name: Running SIMD Tests - AVX2
-          command: VARIANT="avx2" OPTIONS="-mavx2 -O3" . ./.circleci/perform_simd.sh
-
-  arm_aarch64_neon:
-    <<: *config_aarch64
-    steps:
-      - checkout
-      - run:
-          name: Running SIMD Tests - AARCH64 NEON
-          command: VARIANT="aarch64" OPTIONS="-O3 -Wno-psabi" . .circleci/perform_simd.sh
-
+##==================================================================================================
+## Workflow & dependencies
+##==================================================================================================
 workflows:
   version: 2
   build_and_test:
     jobs:
     ##==============================================================================================
-    ## All tests
+    ## X86 - 512 bits
     ##==============================================================================================
-      - gcc_x86
-      - clang_x86
-      - arm_aarch64
-      - arm_aarch64_neon:
-          requires:
-            - arm_aarch64
-      - x86_sse2:
-          requires:
-            - gcc_x86
-      - x86_sse4:
-          requires:
-            - gcc_x86
-      - x86_avx:
-          requires:
-            - gcc_x86
-      - x86_avx2:
-          requires:
-            - gcc_x86
-      - x86_fma:
-          requires:
-            - gcc_x86
-      - x86_emulation:
-          requires:
-            - gcc_x86
+      - x86_gcc_avx512:
+          tool:     "../cmake/toolchain/gcc.x86.cmake"
+          options:  "-march=skylake-avx512"
+          filters:
+            branches:
+              ignore: develop
+      - x86_clang_avx512:
+          tool:     "../cmake/toolchain/clang.x86.cmake"
+          options:  "-march=skylake-avx512"
+          filters:
+            branches:
+              ignore: develop
+    ##==============================================================================================
+    ## Random tests
+    ##==============================================================================================
+      - random_sse2:
+          tool:     "../cmake/toolchain/gcc.x86.cmake"
+          options:  "-msse2"
+          setup:    "-DEVE_BUILD_RANDOM=ON"
+          filters:
+            branches:
+              ignore: develop
+      - random_avx2:
+          tool:     "../cmake/toolchain/gcc.x86.cmake"
+          options:  "-mavx2"
+          setup:    "-DEVE_BUILD_RANDOM=ON"
+          filters:
+            branches:
+              ignore: develop
+      - random_arm:
+          tool:     "../cmake/toolchain/gcc.aarch64.cmake"
+          options:  "-Wno-psabi"
+          setup:    "-DEVE_BUILD_RANDOM=ON"
+          filters:
+            branches:
+              ignore: develop
+    ##==============================================================================================
+    ## Benchmarks compilations
+    ##==============================================================================================
+      # - bench_avx2:
+      #     tool:     "../cmake/toolchain/gcc.x86.opt.cmake"
+      #     options:  "-mavx2"
+      #     setup:    "-DEVE_BUILD_BENCHMARKS=ON"
+      #     filters:
+      #       branches:
+      #         ignore: develop

@@ -1,13 +1,9 @@
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
-##  Copyright 2018 Joel FALCOU
-##
-##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+##  Copyright : EVE Contributors & Maintainers
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
-include(download)
-include(generate_benchmark)
-include(add_parent_target)
+include(target/generate_benchmark)
 
 ##==================================================================================================
 ## Common variables
@@ -20,7 +16,7 @@ set(_BenchSrcDir     "${PROJECT_BINARY_DIR}/tmp-src")
 ##==================================================================================================
 function(make_bench root)
   foreach(file ${ARGN})
-    generate_test(${root} "" "" ${file})
+    generate_test(${root} "" "" ${file} )
   endforeach()
 endfunction()
 
@@ -44,19 +40,21 @@ function(make_all_benchs)
 
     if(EXISTS "${header}.hpp")
 
-      # Locate relative path for simpler autogen file paths
+    # Locate relative path for simpler autogen file paths
       file(RELATIVE_PATH base_file ${CMAKE_CURRENT_SOURCE_DIR} ${variant})
 
       # Generate test for each arch
       foreach(type ${GEN_TEST_TYPES})
         to_std("${type}" target)
+
         set(file_to_compile "${_BenchSrcDir}/bench/${GEN_TEST_ROOT}.${base_file}.${type}.cpp")
 
         configure_file( "${_BenchCurrentDir}/bench.cpp.in" "${file_to_compile}" )
 
-        generate_bench( "" "${_BenchSrcDir}/bench/" "${GEN_TEST_ROOT}.bench"
+        generate_bench( "" "${_BenchSrcDir}/bench/" "${GEN_TEST_ROOT}.exe"
                         "${GEN_TEST_ROOT}.${base_file}.${type}.cpp"
                       )
+
       endforeach()
     endif()
 
@@ -67,5 +65,3 @@ endfunction()
 ## Setup our tests
 ##==================================================================================================
 add_custom_target(bench)
-
-add_subdirectory(${PROJECT_SOURCE_DIR}/benchmarks/)

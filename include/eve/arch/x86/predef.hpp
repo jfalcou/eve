@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -47,5 +44,19 @@
 #if defined(SPY_SIMD_IS_X86) && !defined(EVE_NO_SIMD)
 #  define EVE_SUPPORTS_NATIVE_SIMD
 #  define EVE_HW_X86
-#endif
+#  define EVE_INCLUDE_X86_HEADER
 
+// Don't trigger AVX512 if we don't have at least Skylake support
+#  if defined(SPY_SIMD_IS_X86_AVX512)
+#   if !(   defined(__AVX512BW__) && defined(__AVX512CD__)  \
+        &&  defined(__AVX512DQ__) && defined(__AVX512VL__)  \
+        &&  defined(__AVX512DQ__) && defined(__AVX512VL__)  )
+#    undef SPY_SIMD_IS_X86_AVX512
+#    undef SPY_SIMD_DETECTED ::spy::detail::simd_version::avx512_
+#    define EVE_INCOMPLETE_AVX512_SUPPORT
+#    define SPY_SIMD_IS_X86_AVX2
+#    define SPY_SIMD_DETECTED ::spy::detail::simd_version::avx2_
+#   endif
+#  endif
+
+#endif

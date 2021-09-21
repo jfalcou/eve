@@ -1,24 +1,26 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #include <eve/function/signnz.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/constant/one.hpp>
 #include <cmath>
 
 int main()
 {
   auto lmin = eve::valmin(eve::as<EVE_VALUE>());
   auto lmax = eve::valmax(eve::as<EVE_VALUE>());
-
-  auto const std__signnz = [](EVE_VALUE x) { return EVE_VALUE((0 <= x)-(0 > x)); };
+  auto const std__signnz = [](EVE_VALUE x) {
+    if constexpr(eve::signed_value<EVE_VALUE>)
+       return EVE_VALUE((0 <= x)-(0 > x));
+    else
+      return eve::one(eve::as(x));
+  };
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 

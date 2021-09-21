@@ -1,36 +1,44 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
 
 namespace eve
 {
   //================================================================================================
+  //================================================================================================
   // Function decorators mark-up used in function overloads
-  struct raw_type : decorator_
+  struct raw_
   {
-    template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
-    {
-      return  [f](auto&&... args)
-              {
-                return f(raw_type{}, std::forward<decltype(args)>(args)...);
-              };
-    }
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
   };
 
+  using raw_type = decorated<raw_()>;
   //================================================================================================
-  // Function decorator - raw mode
-  inline constexpr raw_type const raw_ = {};
+  //! @addtogroup decorator
+  //! @{
+  //! @var raw
+  //!
+  //! @brief  Higher-order @callable imbuing quick and dirty behaviour onto other @callable{s}.
+  //!
+  //! #### Synopsis
+  //!
+  //! @param f
+  //! An instance of eve::callable
+  //!
+  //! @return
+  //! A @callable performing the same kind of operation but using quick and dirty version whenever
+  //! available.
+  //!
+  //! @warning using this decorator can imply loss of accuracy.
+  //!
+  //!  @}
+  //================================================================================================
+  inline constexpr raw_type const raw = {};
 }
-

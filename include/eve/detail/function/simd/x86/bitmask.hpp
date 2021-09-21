@@ -1,82 +1,147 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
 #include <eve/detail/abi.hpp>
-#include <eve/detail/function/bit_cast.hpp>
-#include <eve/detail/meta.hpp>
 #include <bitset>
 
 namespace eve::detail
 {
   //================================================================================================
-  // Logical to Bitmap - use movemask variant
+  // Logical to Bits
   //================================================================================================
-  template<typename T, typename N, x86_abi ABI>
-  EVE_FORCEINLINE auto to_bitmap( sse2_ const&, logical<wide<T, N, ABI>> const& p ) noexcept
+  template<typename T, typename N>
+  EVE_FORCEINLINE auto to_bits( sse2_ const&, logical<wide<T, N>> const& p ) noexcept
+      requires x86_abi<abi_t<T, N>>
   {
-    using type = std::bitset<N::value>;
+    using type = typename logical<wide<T, N>>::bits_type;
+    return bit_cast(p.mask(), as<type>{});
+  }
 
-    if constexpr( std::is_same_v<ABI, sse_>)
+  //================================================================================================
+  // Logical to Mask
+  //================================================================================================
+  template<typename T, typename N>
+  EVE_FORCEINLINE wide<T, N> to_mask(sse2_ const&, logical<wide<T, N>> const& p ) noexcept
+      requires x86_abi<abi_t<T, N>>
+  {
+    if constexpr( current_api >= avx512 )
     {
-            if constexpr( std::is_same_v<T, float > ) return type(_mm_movemask_ps(p.mask()));
-      else  if constexpr( std::is_same_v<T, double> ) return type(_mm_movemask_pd(p.mask()));
-      else  if constexpr( std::is_integral_v<T> )
+      auto z = wide<T, N>(0);
+      auto a = allbits(as<wide<T, N>>());
+      auto m = p.storage().value;
+
+      if constexpr( std::same_as<abi_t<T, N>,x86_128_>)
       {
-
-              if constexpr( sizeof(T) == 1 ) return type(_mm_movemask_epi8(p.mask()));
-        else  if constexpr( sizeof(T) == 2 )
+              if constexpr( std::same_as<T,double > ) return _mm_mask_blend_pd(m,z,a);
+        else  if constexpr( std::same_as<T,float  > ) return _mm_mask_blend_ps(m,z,a);
+        else  if constexpr( sizeof(T) == 8          ) return _mm_mask_blend_epi64(m,z,a);
+        // g++ intrinsics for those two behaves strangely in O0
+        else  if constexpr( sizeof(T) == 4          )
         {
-          if constexpr( current_api >= ssse3 )
-          {
-            __m128i mask =  _mm_setr_epi8 ( 0x01,0x03,0x05,0x07,0x09,0x0B,0x0D,0x0F
-                                          , -128,-128,-128,-128,-128,-128,-128,-128
-                                          );
-
-            return type( _mm_movemask_epi8(_mm_shuffle_epi8(p.storage(),mask)) );
-          }
-          else
-          {
-            return to_bitmap( cpu_{}, p );
-          }
+          return _mm_mask_blend_epi32(m,z.storage(),a.storage());
         }
-        else  if constexpr( sizeof(T) >= 4 )
+        else  if constexpr( sizeof(T) == 2          )
         {
-          using tgt = logical<wide<as_floating_point_t<T>, N>>;
-          return bit_cast(p,as_<tgt>()).bitmap();
+          return _mm_mask_blend_epi16(m,z.storage(),a.storage());
+        }
+        else  if constexpr( sizeof(T) == 1          )
+        {
+          return _mm_mask_blend_epi8(m,z.storage(),a.storage());
+        }
+      }
+      else if constexpr( std::same_as<abi_t<T, N>,x86_256_>)
+      {
+              if constexpr( std::same_as<T,double > ) return _mm256_mask_blend_pd(m,z,a);
+        else  if constexpr( std::same_as<T,float  > ) return _mm256_mask_blend_ps(m,z,a);
+        else  if constexpr( sizeof(T) == 8          ) return _mm256_mask_blend_epi64(m,z,a);
+        // g++ intrinsics for those two behaves strangely in O0
+        else  if constexpr( sizeof(T) == 4          )
+        {
+          return _mm256_mask_blend_epi32(m,z.storage(),a.storage());
+        }
+        else  if constexpr( sizeof(T) == 2          )
+        {
+          return _mm256_mask_blend_epi16(m,z.storage(),a.storage());
+        }
+        else  if constexpr( sizeof(T) == 1          )
+        {
+          return _mm256_mask_blend_epi8(m,z.storage(),a.storage());
+        }
+      }
+      else if constexpr( std::same_as<abi_t<T, N>,x86_512_>)
+      {
+              if constexpr( std::same_as<T,double > ) return _mm512_mask_blend_pd(m,z,a);
+        else  if constexpr( std::same_as<T,float  > ) return _mm512_mask_blend_ps(m,z,a);
+        else  if constexpr( sizeof(T) == 8          ) return _mm512_mask_blend_epi64(m,z,a);
+        else  if constexpr( sizeof(T) == 4          ) return _mm512_mask_blend_epi32(m,z,a);
+        // g++ intrinsics for those two behaves strangely in O0
+        else  if constexpr( sizeof(T) == 2          )
+        {
+          return _mm512_mask_blend_epi16(m,z.storage(),a.storage());
+        }
+        else  if constexpr( sizeof(T) == 1          )
+        {
+          return _mm512_mask_blend_epi8(m,z.storage(),a.storage());
         }
       }
     }
-    else if constexpr( std::is_same_v<ABI, avx_>)
+    else
     {
-            if constexpr( std::is_same_v<T, float > ) return type(_mm256_movemask_ps(p.mask()));
-      else  if constexpr( std::is_same_v<T, double> ) return type(_mm256_movemask_pd(p.mask()));
-      else  if constexpr( sizeof(T) >= 4 )
+      return p.storage();
+    }
+  }
+
+  //================================================================================================
+  // Logical to Bitmap - use movemask variant
+  //================================================================================================
+  template<typename T, typename N> EVE_FORCEINLINE
+  std::bitset<N::value> to_bitmap(sse2_ const&, logical<wide<T, N>> const& p ) noexcept
+      requires x86_abi<abi_t<T, N>>
+  {
+    if constexpr( !abi_t<T, N>::is_wide_logical )
+    {
+      return p.storage().value;
+    }
+    else if constexpr( std::same_as<abi_t<T, N>,x86_128_>)
+    {
+            if constexpr(std::is_same_v<T, float >) return _mm_movemask_ps(p.storage());
+      else  if constexpr(std::is_same_v<T, double>) return _mm_movemask_pd(p.storage());
+      else  if constexpr(sizeof(T) == 8)            return _mm_movemask_pd((__m128d)p.storage());
+      else  if constexpr(sizeof(T) == 4)            return _mm_movemask_ps((__m128)p.storage());
+      else  if constexpr(sizeof(T) == 2)
       {
-        using type = logical<wide<as_floating_point_t<T>, N>>;
-        return bit_cast(p,as_<type>()).bitmap();
+        return _mm_movemask_epi8(_mm_packs_epi16(p.storage(), _mm_setzero_si128()));
       }
-      else  if constexpr( current_api >= avx2 )
+      else  if constexpr(sizeof(T) == 1)            return _mm_movemask_epi8(p.storage());
+    }
+    else if constexpr( std::same_as<abi_t<T, N>,x86_256_>)
+    {
+            if constexpr(std::is_same_v<T, float >) return _mm256_movemask_ps(p.storage());
+      else  if constexpr(std::is_same_v<T, double>) return _mm256_movemask_pd(p.storage());
+      else  if constexpr(sizeof(T) == 8)            return _mm256_movemask_pd((__m256d)p.storage());
+      else  if constexpr(sizeof(T) == 4)            return _mm256_movemask_ps((__m256)p.storage());
+      else  if constexpr(sizeof(T) == 2)
       {
-        if constexpr( sizeof(T) == 1 ) return type(_mm256_movemask_epi8(p.mask()));
+        auto [l, h] = p.slice();
+        return  _mm_movemask_epi8(_mm_packs_epi16(l, h)) ;
+      }
+      else  if constexpr( sizeof(T) == 1 )
+      {
+        if constexpr( current_api >= avx2 )
+        {
+          return _mm256_movemask_epi8(p.mask());
+        }
         else
         {
           auto [l, h] = p.slice();
-          return type( (h.bitmap().to_ullong() << h.size()) | l.bitmap().to_ullong() );
+          return (h.bitmap().to_ullong() << h.size()) | l.bitmap().to_ullong();
         }
-      }
-      else
-      {
-        auto [l, h] = p.slice();
-        return type( (h.bitmap().to_ullong() << h.size()) | l.bitmap().to_ullong() );
       }
     }
   }

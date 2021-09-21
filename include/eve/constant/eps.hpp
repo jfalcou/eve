@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -19,12 +16,53 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup constant
+  //! @{
+  //! @var eps
+  //!
+  //! @brief Callable object computing the machine epsilon.
+  //!
+  //! **Required header:** `#include <eve/function/eps.hpp>`
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | Computes the eps constant                               |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  tempate < real_value T > T operator()( as<T> const & t) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!
+  //! **Return value**
+  //!
+  //! the call `eve::eps(as<T>())` returns [elementwise](@ref glossary_elementwise), the smallest
+  //! positive value `x` of the type such that `1+x !=  x`.
+  //!
+  //!  * If T is an [integral value](@ref eve::integral_value) the elements returned are equal to one
+  //!  * If T is a  [floating real value](@ref eve::floating_real_value) the elements returned are equal to
+  //!        - 2.220446049250313e-16 if the [elements type](@ref eve::element_type) is float
+  //!        - 1.1920929e-07f        if the [elements type](@ref eve::element_type) is double
+  //!
+  //! ---
+  //!
+  //! #### Example
+  //!
+  //! @godbolt{doc/core/eps.cpp}
+  //!
+  //! @}
+  //================================================================================================
   EVE_MAKE_CALLABLE(eps_, eps);
 
   namespace detail
   {
     template<typename T>
-    EVE_FORCEINLINE constexpr auto eps_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    EVE_FORCEINLINE constexpr auto eps_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
     {
       using t_t           = detail::value_type_t<T>;
 

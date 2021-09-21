@@ -1,35 +1,44 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
 #include <eve/arch/cpu/tags.hpp>
 #include <eve/arch/x86/predef.hpp>
-#include <eve/detail/cpuid.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/detail/spy.hpp>
 
 namespace eve
 {
-  // clang-format off
   //================================================================================================
-  // ABI tag for all X86 128 bits SIMD registers
+  // ABI tags for all X86 bits SIMD registers
   //================================================================================================
-  struct sse_
+  template<std::size_t Size, bool Logical> struct x86_abi_
   {
-    static constexpr std::size_t bits           = 128;
-    static constexpr std::size_t bytes          = 16;
-    static constexpr bool        is_bit_logical = true;
+    static constexpr std::size_t  bits                      = Size;
+    static constexpr std::size_t  bytes                     = Size/8;
+    static constexpr bool         is_wide_logical  = Logical;
+
+    template<typename Type>
+    static constexpr bool is_full = ((Type::size() * sizeof(typename Type::value_type)) >= 16);
 
     template<typename Type>
     static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
   };
+
+# if defined(SPY_SIMD_IS_X86_AVX512)
+  struct x86_128_ : x86_abi_<128, false> {};
+  struct x86_256_ : x86_abi_<256, false> {};
+# else
+  struct x86_128_ : x86_abi_<128, true> {};
+  struct x86_256_ : x86_abi_<256, true> {};
+# endif
+
+  struct x86_512_ : x86_abi_<512, false> {};
 
   //================================================================================================
   // Dispatching tag for SSE* SIMD implementation
@@ -39,26 +48,9 @@ namespace eve
   struct ssse3_   : sse3_   {};
   struct sse4_1_  : ssse3_  {};
   struct sse4_2_  : sse4_1_ {};
-
-  struct avx_     : sse4_2_
-  {
-    static constexpr std::size_t bits           = 256;
-    static constexpr std::size_t bytes          = 32;
-    static constexpr bool        is_bit_logical = true;
-
-    template<typename Type>
-    static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
-  };
-
-  struct avx2_    : avx_
-  {
-    static constexpr std::size_t bits           = 512;
-    static constexpr std::size_t bytes          = 64;
-    static constexpr bool        is_bit_logical = true;
-
-    template<typename Type>
-    static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
-  };
+  struct avx_     : sse4_2_ {};
+  struct avx2_    : avx_    {};
+  struct avx512_  : avx2_   {};
 
   //================================================================================================
   // SSE* extension tag objects - Forwarded from SPY
@@ -70,6 +62,7 @@ namespace eve
   inline constexpr auto sse4_2 = spy::sse42_;
   inline constexpr auto avx    = spy::avx_;
   inline constexpr auto avx2   = spy::avx2_;
+  inline constexpr auto avx512 = spy::avx512_;
 
   //================================================================================================
   // Specific ISA tags
@@ -83,28 +76,8 @@ namespace eve
   inline constexpr auto fma4   = fma4_{};
 
   //================================================================================================
-  // Runtime detection of CPU support
-  //================================================================================================
-  template<auto Version> inline bool is_supported(spy::x86_simd_info<Version> const &) noexcept
-  {
-          if constexpr( Version == sse2.version   ) return detail::cpuid_states.supports_sse2();
-    else  if constexpr( Version == sse3.version   ) return detail::cpuid_states.supports_sse3();
-    else  if constexpr( Version == ssse3.version  ) return detail::cpuid_states.supports_ssse3();
-    else  if constexpr( Version == sse4_1.version ) return detail::cpuid_states.supports_sse4_1();
-    else  if constexpr( Version == sse4_2.version ) return detail::cpuid_states.supports_sse4_2();
-    else  if constexpr( Version == avx.version    ) return detail::cpuid_states.supports_avx();
-    else  if constexpr( Version == avx2.version   ) return detail::cpuid_states.supports_avx2();
-    else                                            return false;
-  }
-
-  inline bool is_supported(xop_ const &)  noexcept  { return detail::cpuid_states.supports_xop(); }
-  inline bool is_supported(fma3_ const &) noexcept  { return detail::cpuid_states.supports_fma3();}
-  inline bool is_supported(fma4_ const &) noexcept  { return detail::cpuid_states.supports_fma4();}
-
-  //================================================================================================
   // x86 ABI concept
   //================================================================================================
   template<typename T>
-  concept x86_abi = detail::is_one_of<T>(detail::types<sse_, avx_> {});
+  concept x86_abi = detail::is_one_of<T>(detail::types<x86_128_, x86_256_, x86_512_> {});
 }
-

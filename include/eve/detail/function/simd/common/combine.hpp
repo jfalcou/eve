@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -18,17 +15,17 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N, typename ABI>
+  template<typename T, typename N>
   EVE_FORCEINLINE auto
-  combine(cpu_ const &, wide<T, N, ABI> const &l, wide<T, N, ABI> const &h) noexcept
+  combine(cpu_ const &, wide<T, N> const &l, wide<T, N> const &h) noexcept
   {
     using that_t = wide<T, typename N::combined_type>;
 
-    if constexpr( is_emulated_v<ABI> )
+    if constexpr( is_emulated_v<abi_t<T, N>> )
     {
-      return apply<N::value>([&](auto... I) { return that_t {l[I]..., h[I]...}; });
+      return apply<N::value>([&](auto... I) { return that_t {l.get(I)..., h.get(I)...}; });
     }
-    else if constexpr( is_aggregated_v<ABI> )
+    else if constexpr( has_aggregated_abi_v<that_t> )
     {
       that_t that;
 
@@ -37,19 +34,23 @@ namespace eve::detail
 
       return that;
     }
+    else if constexpr( is_bundle_v<abi_t<T, N>> )
+    {
+      return that_t ( kumi::map ( eve::combine, l.storage(), h.storage() ) );
+    }
   }
 
-  template<typename T, typename N, typename ABI>
+  template<typename T, typename N>
   EVE_FORCEINLINE auto
-  combine(cpu_ const &, logical<wide<T, N, ABI>> const &l, logical<wide<T, N, ABI>> const &h) noexcept
+  combine(cpu_ const &, logical<wide<T, N>> const &l, logical<wide<T, N>> const &h) noexcept
   {
     using that_t = logical<wide<T, typename N::combined_type>>;
 
-    if constexpr( is_emulated_v<ABI> )
+    if constexpr( is_emulated_v<abi_t<T, N>> )
     {
-      return apply<N::value>([&](auto... I) { return that_t {l[I]..., h[I]...}; });
+      return apply<N::value>([&](auto... I) { return that_t {l.get(I)..., h.get(I)...}; });
     }
-    else if constexpr( is_aggregated_v<ABI> )
+    else if constexpr( has_aggregated_abi_v<that_t> )
     {
       that_t that;
 
@@ -61,8 +62,7 @@ namespace eve::detail
     else
     {
       wide<T, typename N::combined_type> cb(l.mask(),h.mask());
-      return bit_cast(cb, as_<that_t>());
+      return bit_cast(cb, as<that_t>());
     }
   }
 }
-

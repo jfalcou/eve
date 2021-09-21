@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -14,8 +11,52 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup ieee754
+  //! @{
+  //! @var nb_values
+  //!
+  //! @brief Callable object computing the nb_values operation.
+  //!
+  //! **Required header:** `#include <eve/function/nb_values.hpp>`
+  //!
+  //! #### Members Functions
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | the nb_values operation   |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`x`, `y`:   [values](@ref eve::value).
+  //!
+  //! **Return value**
+  //!
+  //!computes the number of values representable in the type in the interval `[x, y[`
+  //!
+  //! ---
+  //!
+  //! #### Supported decorators
+  //!
+  //!  no decorators are supported
+  //!
+  //! #### Example
+  //!
+  //! @godbolt{doc/core/nb_values.cpp}
+  //!
+  //!  @}
+  //================================================================================================
+     
+  namespace tag { struct nb_values_; }
+  template<> struct supports_conditional<tag::nb_values_> : std::false_type {};
+  
   EVE_MAKE_CALLABLE(nb_values_, nb_values);
 }
 
-#include <eve/module/core/function/generic/nb_values.hpp>
-
+#include <eve/module/real/core/function/regular/generic/nb_values.hpp>

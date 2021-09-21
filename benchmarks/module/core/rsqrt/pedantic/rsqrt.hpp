@@ -1,14 +1,11 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
-#include <eve/function/rsqrt.hpp>
+#include <eve/function/pedantic/rsqrt.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/constant/oneotwoeps.hpp>
 #include <eve/constant/valmax.hpp>
@@ -29,6 +26,6 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE> (EVE_NAME(std__rsqrt) , xp, std__rsqrt, arg0);
-  run<EVE_VALUE> (EVE_NAME(eve::pedantic_(eve::rsqrt)) , xp, eve::pedantic_(eve::rsqrt), arg0);
-  run<EVE_TYPE>  (EVE_NAME(eve::pedantic_(eve::rsqrt)) , xp, eve::pedantic_(eve::rsqrt), arg0);
+  run<EVE_VALUE> (EVE_NAME(eve::pedantic(eve::rsqrt)) , xp, eve::pedantic(eve::rsqrt), arg0);
+  run<EVE_TYPE>  (EVE_NAME(eve::pedantic(eve::rsqrt)) , xp, eve::pedantic(eve::rsqrt), arg0);
 }

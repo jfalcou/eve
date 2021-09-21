@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -18,12 +15,47 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup constant
+  //! @{
+  //! @var twopi
+  //!
+  //! @brief Callable object computing the \f$2\pi\f$ value.
+  //!
+  //! **Required header:** `#include <eve/function/twopi.hpp>`
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | Computes the twopi constant                               |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  tempate < floating_value T > T operator()( as<T> const & t) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!
+  //! **Return value**
+  //!
+  //! `eve::twopi(as<T>())` is semantically equivalent to `8*eve::atan``(T(1))`
+  //!
+  //! ---
+  //!
+  //! #### Example
+  //!
+  //! @godbolt{doc/core/twopi.cpp}
+  //!
+  //! @}
+  //================================================================================================
   EVE_MAKE_CALLABLE(twopi_, twopi);
 
   namespace detail
   {
     template<floating_value T>
-    EVE_FORCEINLINE auto twopi_(EVE_SUPPORTS(cpu_), eve::as_<T> const & = {}) noexcept
+    EVE_FORCEINLINE auto twopi_(EVE_SUPPORTS(cpu_), eve::as<T> const & = {}) noexcept
     {
       using t_t = detail::value_type_t<T>;
 

@@ -1,6 +1,7 @@
 #include <eve/function/bit_and.hpp>
 #include <eve/literals.hpp>
 #include <eve/wide.hpp>
+#include <iostream>
 
 int main()
 {
@@ -22,5 +23,9 @@ int main()
             << " <- xi                = " << xi << '\n'
             << " <- mask              = " << mask << '\n'
             << " -> bit_and(xi, mask) = " << eve::bit_and(xi, mask) << '\n';
+
+  std::cout << "---- multi parameters" << '\n'
+            << " -> bit_and(pi, qi, 3, 5)                = " << eve::bit_and(pi, qi, 3, 5) << '\n';
+
   return 0;
 }

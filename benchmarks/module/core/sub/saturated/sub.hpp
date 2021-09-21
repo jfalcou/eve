@@ -1,14 +1,11 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
-#include <eve/function/sub.hpp>
+#include <eve/function/saturated/sub.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <cmath>
@@ -22,6 +19,6 @@ int main()
   auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
   eve::bench::experiment xp;
-  run<EVE_VALUE>(EVE_NAME(saturated_(eve::sub)) , xp, eve::saturated_(eve::sub), arg0, arg1);
-  run<EVE_TYPE> (EVE_NAME(saturated_(eve::sub)) , xp, eve::saturated_(eve::sub), arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(saturated(eve::sub)) , xp, eve::saturated(eve::sub), arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(saturated(eve::sub)) , xp, eve::saturated(eve::sub), arg0, arg1);
 }

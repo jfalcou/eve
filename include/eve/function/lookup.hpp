@@ -1,12 +1,8 @@
-//==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -22,3 +18,85 @@ namespace eve::detail
     return (i == static_cast<I>(-1)) ? 0 : a;
   }
 }
+
+  //================================================================================================
+  //! @addtogroup swar
+  //! @{
+  //! @var lookup
+  //!
+  //! @brief Callable object computing **TODO: FILL THIS BLANK**.
+  //!
+  //! **Required header:** `#include <eve/function/lookup.hpp>`
+  //!
+  //! #### Members Functions
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | **TODO: FILL THIS BLANK**   |
+  //! | `operator[]` | Construct a conditional version of current function object |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  template<**TODO: FILL THIS BLANK**>
+  //!  auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`x`:   **TODO: FILL THIS BLANK**
+  //!
+  //!OTHER PARAMETERS
+  //!:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
+  //!
+  //! **Return value**
+  //!
+  //!For **TODO: FILL THIS BLANK**:
+  //!
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+  //!auto r = lookup(**TODO: FILL THIS BLANK**);
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!is semantically equivalent to:
+  //!
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+  //!Target r;
+  //!
+  //!if constexpr( scalar_value<T> )
+  //!{
+  //!  **TODO: FILL THIS BLANK**
+  //!}
+  //!else if constexpr( simd_value<T> )
+  //!{
+  //!  **TODO: FILL THIS BLANK**
+  //!}
+  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::lookup
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `lookup[cond](x, ...)` is equivalent to `if_else(cond,lookup(x, ...),x)`
+  //!
+  //! ---
+  //!
+  //! #### Supported decorators
+  //!
+  //!  no decorators are supported
+  //!
+  //! #### Example
+  //!
+  //! @godbolt{doc/core/lookup.cpp}
+  //!
+  //!  @}
+  //================================================================================================z

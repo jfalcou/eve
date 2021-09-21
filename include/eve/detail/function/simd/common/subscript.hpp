@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -14,83 +11,98 @@
 #include <eve/detail/alias.hpp>
 #include <eve/detail/has_abi.hpp>
 #include <eve/traits/element_type.hpp>
+#include <eve/as.hpp>
 
 namespace eve::detail
 {
   //================================================================================================
   // Extract value
   //================================================================================================
-  template<typename Storage, typename Wide>
-  EVE_FORCEINLINE auto at_begin ( cpu_ const&, as_<Wide> const&, Storage const& p ) noexcept
+  template<typename Wide>
+  EVE_FORCEINLINE auto at_begin ( Wide const& p ) noexcept
   {
     using type = element_type_t<Wide>;
 
     if constexpr( has_aggregated_abi_v<Wide> )
     {
-      return reinterpret_cast<detail::alias_t<type> const *>(&p.segments[0]);
+      return reinterpret_cast<detail::alias_t<type> const *>(&p.storage().segments[0]);
     }
     else if constexpr( has_emulated_abi_v<Wide> )
     {
-      return p.data();
+      return p.storage().data();
     }
     else
     {
+      [[maybe_unused]] auto const& s = p.storage();
       return reinterpret_cast<detail::alias_t<type> const *>(&p);
     }
   }
 
-  template<typename Storage, typename Wide>
-  EVE_FORCEINLINE auto at_begin ( cpu_ const&, as_<Wide> const&, Storage & p ) noexcept
+  template<typename Wide>
+  EVE_FORCEINLINE auto at_begin ( Wide& p ) noexcept
   {
     using type = element_type_t<Wide>;
 
     if constexpr( has_aggregated_abi_v<Wide> )
     {
-      return reinterpret_cast<detail::alias_t<type> *>(&p.segments[0]);
+      return reinterpret_cast<detail::alias_t<type> *>(&p.storage().segments[0]);
     }
     else if constexpr( has_emulated_abi_v<Wide> )
     {
-      return p.data();
+      return p.storage().data();
     }
     else
     {
-      return reinterpret_cast<detail::alias_t<type> *>(&p);
+      [[maybe_unused]] auto& s = p.storage();
+      return reinterpret_cast<detail::alias_t<type> *>(&s);
     }
   }
 
   //================================================================================================
   // Extract value
   //================================================================================================
-  template<typename Storage, typename Wide>
-  EVE_FORCEINLINE element_type_t<Wide> extract( cpu_ const& arch, as_<Wide> const& tgt
-                                              , Storage const& p, std::size_t i
-                                              ) noexcept
+  template<typename Wide>
+  EVE_FORCEINLINE auto extract(Wide const& p, std::size_t i) noexcept
   {
-    return at_begin(arch,tgt,p)[i];
+    if constexpr( has_bundle_abi_v<Wide> )
+    {
+      return kumi::apply( [=](auto const&... m)
+                          {
+                            return typename Wide::value_type{ at_begin(m)[i]... };
+                          }
+                          , p.storage()
+                        );
+    }
+    else
+    {
+      return at_begin(p)[i];
+    }
   }
 
   //================================================================================================
   // Insert value
   //================================================================================================
-  template<typename Storage, typename Wide, typename Value>
-  EVE_FORCEINLINE void insert ( cpu_ const&, as_<Wide> const&
-                              , Storage& p, std::size_t i, Value v
-                              ) noexcept
+  template<typename Wide, typename Value>
+  EVE_FORCEINLINE void insert(Wide& p, std::size_t i, Value v) noexcept
   {
     using type = element_type_t<Wide>;
 
     if constexpr( has_aggregated_abi_v<Wide> )
     {
-      auto ptr = reinterpret_cast<detail::alias_t<type>*>(&p.segments[0]);
+      auto ptr = reinterpret_cast<detail::alias_t<type>*>(&p.storage().segments[0]);
       ptr[i] = v;
     }
     else if constexpr( has_emulated_abi_v<Wide> )
     {
-      p[i] = v;
+      p.storage()[i] = v;
+    }
+    else if constexpr( has_bundle_abi_v<Wide> )
+    {
+      kumi::for_each( [i](auto& m, auto w) { m.set(i,w); }, p.storage(), v);
     }
     else
     {
-      auto ptr = reinterpret_cast<detail::alias_t<type>*>(&p);
+      auto ptr = reinterpret_cast<detail::alias_t<type>*>(&p.storage());
       ptr[i] = v;
     }
   }

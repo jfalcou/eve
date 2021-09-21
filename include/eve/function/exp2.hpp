@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -19,6 +16,86 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup exponential
+  //! @{
+  //! @var exp2
+  //!
+  //! @brief Callable object computing \f$2^x\f$.
+  //!
+  //! **Required header:** `#include <eve/function/exp2.hpp>`
+  //!
+  //! #### Members Functions
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | computes the base 2 exponential                            |
+  //! | `operator[]` | Construct a conditional version of current function object |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator()( real_value x ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`x`:   [real value](@ref eve::real_value).
+  //!
+  //! **Return value**
+  //!
+  //!Returns the [elementwise](@ref glossary_elementwise) exponential of base 2 of the input.
+  //!In particular, for floating inputs:
+  //!
+  //!   * If the element is \f$\pm0\f$, \f$1\f$ is returned
+  //!   * If the element is \f$-\infty\f$, \f$+0\f$ is returned
+  //!   * If the element is \f$\infty\f$, \f$\infty\f$ is returned
+  //!   * If the element is a `NaN`, `NaN` is returned
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::exp2
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `exp2[cond](x, ...)` is equivalent to `if_else(cond,exp2(x, ...),x)`
+  //!
+  //! ---
+  //!
+  //! #### Supported converters
+  //!
+  //!  * eve::float_,  eve::double_, eve::floating_
+  //!
+  //!     The expression `d(exp2)(x)` where d in one of these 3 converters is supported if x is an
+  //!     [integral value](@ref eve::integral_value) and produce a floating point output.
+  //!
+  //! #### Supported decorators
+  //!
+  //!  * eve::saturated
+  //!
+  //!     The expression `saturated(exp2)(x)` saturate the output if `x`
+  //!     is an [integral value](@ref eve::integral_value).
+  //!
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
+  //!
+  //!     **Required header:** `#include <eve/function/diff/exp2.hpp>`
+  //!
+  //!     The expression `diff(exp2)(x)` computes the derivative of the function at `x`.
+  //!
+  //! #### Example
+  //!
+  //! @godbolt{doc/core/exp2.cpp}
+  //!
+  //!  @}
+  //================================================================================================
   namespace tag { struct exp2_; }
 
   template<>
@@ -32,10 +109,10 @@ namespace eve
       using vt_t = value_type_t<T>;
       if constexpr(std::is_integral_v<vt_t>)
       {
-        EVE_ASSERT( all(is_gez(s)),
+        EVE_ASSERT( eve::all(is_gez(s)),
                     "[eve::exp2] - with integral entries the parameter element(s) must be greater than 0"
                   );
-        EVE_ASSERT( all(is_less(s, sizeof(vt_t)*8-std::is_signed_v<vt_t>)),
+        EVE_ASSERT( eve::all(is_less(s, sizeof(vt_t)*8-std::is_signed_v<vt_t>)),
                     "[eve::exp2]  - overflow caused by too large integral entry"
                   );
       }
@@ -45,4 +122,4 @@ namespace eve
   EVE_MAKE_CALLABLE(exp2_, exp2);
 }
 
-#include <eve/module/math/function/generic/exp2.hpp>
+#include <eve/module/real/math/function/regular/generic/exp2.hpp>

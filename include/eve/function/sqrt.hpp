@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -15,6 +12,72 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup arithmetic
+  //! @{
+  //! @var sqrt
+  //!
+  //! @brief Callable object computing the square root.
+  //!
+  //! **Required header:** `#include <eve/function/sqrt.hpp>`
+  //!
+  //! #### Members Functions
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | the  computation of the square root                        |
+  //! | `operator[]` | Construct a conditional version of current function object |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator()(floating_value auto x) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`x`:   [floating value](@ref eve::floating_value).
+  //!
+  //! **Return value**
+  //!
+  //!Returns the [elementwise](@ref glossary_elementwise) square root  of the input.
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::sqrt
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `sqrt[cond](x, ...)` is equivalent to `if_else(cond,sqrt(x, ...),x)`
+  //!
+  //! ---
+  //!
+  //! #### Supported decorators
+  //!
+  //!  * eve::raw
+  //!     The call `raw(sqrt)(x)`, call a proper system intrinsic if one exists, but with possibly very poor accuracy in return.
+  //!      Otherwise it uses the non-decorated call.
+  //!
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
+  //!
+  //!     **Required header:** `#include <eve/function/diff/sqrt.hpp>`
+  //!
+  //!     The expression `diff(sqrt)(x)` computes the derivative of the function at `x`.
+  //!
+  //! #### Example
+  //!
+  //! @godbolt{doc/core/sqrt.cpp}
+  //!
+  //!  @}
+  //================================================================================================
   namespace tag
   {
     struct sqrt_;
@@ -36,16 +99,16 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/function/generic/sqrt.hpp>
+#include <eve/module/real/core/function/regular/generic/sqrt.hpp>
 
-#if defined(EVE_HW_X86)
-#  include <eve/module/core/function/simd/x86/sqrt.hpp>
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/module/real/core/function/regular/simd/x86/sqrt.hpp>
 #endif
 
-#if defined(EVE_HW_POWERPC)
-#  include <eve/module/core/function/simd/ppc/sqrt.hpp>
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
+#  include <eve/module/real/core/function/regular/simd/ppc/sqrt.hpp>
 #endif
 
-#if defined(EVE_HW_ARM)
-#  include <eve/module/core/function/simd/arm/neon/sqrt.hpp>
+#if defined(EVE_INCLUDE_ARM_HEADER)
+#  include <eve/module/real/core/function/regular/simd/arm/neon/sqrt.hpp>
 #endif

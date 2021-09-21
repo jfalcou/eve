@@ -1,4 +1,4 @@
-#include <eve/function/predicates.hpp>
+#include <eve/function/predicate.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
@@ -30,8 +30,8 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf =                  " << pf << '\n'
             << "<- qf =                  " << qf << '\n'
-            << "-> eve::numeric_(eve::is_not_equal)(pf, qf) = "
-            << eve::numeric_(eve::is_not_equal)(pf, qf) << '\n';
+            << "-> eve::numeric(eve::is_not_equal)(pf, qf) = "
+            << eve::numeric(eve::is_not_equal)(pf, qf) << '\n';
 
   float xf1 = 1.0f;
   float xf2 = eve::nan(eve::as<float>());
@@ -41,9 +41,9 @@ int main()
             << "<- xf1 =                  " << xf1 << '\n'
             << "<- xf2 =                  " << xf2 << '\n'
             << "<- yf =                   " << yf << '\n'
-            << "-> eve::numeric_(eve::is_not_equal)(xf1, yf) = "
-            << eve::numeric_(eve::is_not_equal)(xf1, yf) << '\n'
-            << "-> eve::numeric_(eve::is_not_equal)(xf2, yf) = "
-            << eve::numeric_(eve::is_not_equal)(xf2, yf) << '\n';
+            << "-> eve::numeric(eve::is_not_equal)(xf1, yf) = "
+            << eve::numeric(eve::is_not_equal)(xf1, yf) << '\n'
+            << "-> eve::numeric(eve::is_not_equal)(xf2, yf) = "
+            << eve::numeric(eve::is_not_equal)(xf2, yf) << '\n';
   return 0;
 }

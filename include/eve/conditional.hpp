@@ -1,76 +1,61 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
 #include <eve/as.hpp>
+#include <eve/assert.hpp>
+#include <eve/concept/conditional.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/function/iota.hpp>
-#include <eve/traits.hpp>
-#include <iosfwd>
+#include <eve/detail/bits.hpp>
+#include <eve/function/bit_cast.hpp>
+#include <eve/traits/cardinal.hpp>
+#include <bitset>
+#include <compare>
+#include <ostream>
+#include <type_traits>
 
 namespace eve
 {
-  //================================================================================================
-  // Concept for conditional expression
-  //================================================================================================
-  template<typename T> concept conditional_expr = requires(T a)
+  namespace detail
   {
-    { T::has_alternative  };
-    { T::is_inverted      };
-    { T::is_complete      };
-    { a.mask(eve::as_<int>())  };
-  };
+    template <logical_simd_value Logical> struct top_bits;
+  }
 
   //================================================================================================
   // Helper structure to encode conditional expression with alternative
   //================================================================================================
-  template<typename C, typename V> struct if_or_
+  template<typename C, typename V> struct or_ : C
   {
     static constexpr bool has_alternative = true;
-    static constexpr bool is_inverted     = false;
-    static constexpr bool is_complete     = false;
+    using alternative_type = V;
 
-    if_or_(C const& c, V const& v) : condition_(c), alternative(v) {}
+    or_(C const& c, V const& v) : C(c), alternative(v) {}
 
-    template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&)  const { return condition_; }
-
-    friend std::ostream& operator<<(std::ostream& os, if_or_ const& c)
+    template<typename T> auto rebase(T v) const
     {
-      return os << "if( " << c.condition_ << " ) else ( " << c.alternative << " )";
+      return or_<C,T>{static_cast<C const&>(*this), v};
+    }
+
+    auto map_alternative(auto op) const
+    {
+      auto mapped = op(alternative);
+      C c = *this;
+      return or_<C, decltype(mapped)>{c, mapped};
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, or_ const& c)
+    {
+      os << static_cast<C const&>(c);
+      return os << " else ( " << c.alternative << " )";
     }
 
     V alternative;
-    C condition_;
-  };
-
-  //================================================================================================
-  // Helper structure to encode negated conditional expression with alternative
-  //================================================================================================
-  template<typename C, typename V> struct if_not_or_
-  {
-    static constexpr bool has_alternative = true;
-    static constexpr bool is_inverted     = true;
-    static constexpr bool is_complete     = false;
-
-    if_not_or_(C const& c, V const& v) : condition_(c), alternative(v) {}
-
-    template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const { return condition_;  }
-
-    friend std::ostream& operator<<(std::ostream& os, if_not_or_ const& c)
-    {
-      return os << "if( !" << c.condition_ << " ) else ( " << c.alternative << " )";
-    }
-
-    V alternative;
-    C condition_;
   };
 
   //================================================================================================
@@ -82,36 +67,14 @@ namespace eve
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
-    if_(C const& c) : condition_(c) {}
+    if_(C c) : condition_(c) {}
 
-    template<typename V> EVE_FORCEINLINE auto else_(V v) const { return if_or_(condition_,v); }
-    template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&)  const { return condition_; }
+    template<typename V> EVE_FORCEINLINE auto else_(V const& v) const  {  return or_(*this,v);  }
+    template<typename T> EVE_FORCEINLINE auto mask(eve::as<T> const&)  const { return condition_; }
 
     friend std::ostream& operator<<(std::ostream& os, if_ const& c)
     {
       return os << "if( " << c.condition_ << " )";
-    }
-
-    C condition_;
-  };
-
-  //================================================================================================
-  // Helper structure to encode negated conditional expression without alternative
-  //================================================================================================
-  template<typename C> struct if_not_
-  {
-    static constexpr bool has_alternative = false;
-    static constexpr bool is_inverted     = true;
-    static constexpr bool is_complete     = false;
-
-    if_not_(C const& c) : condition_(c) {}
-
-    template<typename V> EVE_FORCEINLINE auto else_(V v) const { return if_not_or_(condition_,v); }
-    template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&)  const { return condition_;  }
-
-    friend std::ostream& operator<<(std::ostream& os, if_not_ const& c)
-    {
-      return os << "if( !" << c.condition_ << " )";
     }
 
     C condition_;
@@ -126,15 +89,35 @@ namespace eve
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = true;
 
-    template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
+    template<typename V> EVE_FORCEINLINE auto else_(V const& v) const  {  return or_(*this,v);  }
+
+    template<typename T> EVE_FORCEINLINE auto mask(eve::as<T> const&) const
     {
       return eve::as_logical_t<T>(false);
     }
+
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const
+    {
+      return 0;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> const&) const
+    {
+      return cardinal_v<T>;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> const&) const
+    {
+      return 0ULL;
+    }
+
+    constexpr bool friend operator==(ignore_all_ const&, ignore_all_ const&) = default;
 
     friend std::ostream& operator<<(std::ostream& os, ignore_all_ const&)
     {
       return os << "ignore_all";
     }
+
   };
 
   inline constexpr ignore_all_ ignore_all  = {};
@@ -145,10 +128,29 @@ namespace eve
     static constexpr bool is_inverted     = true;
     static constexpr bool is_complete     = true;
 
-    template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
+    template<typename V> EVE_FORCEINLINE auto else_(V) const  {  return *this;  }
+
+    template<typename T> EVE_FORCEINLINE auto mask(eve::as<T> const&) const
     {
       return eve::as_logical_t<T>(true);
     }
+
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const
+    {
+      return 0;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> const&) const
+    {
+      return 0;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> const&) const
+    {
+      return cardinal_v<T>;
+    }
+
+    constexpr bool friend operator==(ignore_none_ const&, ignore_none_ const&) = default;
 
     friend std::ostream& operator<<(std::ostream& os, ignore_none_ const&)
     {
@@ -159,82 +161,217 @@ namespace eve
   inline constexpr ignore_none_  ignore_none = {};
 
   //================================================================================================
-  // Helper structure to encode ignoring the last N elements
+  // Helper structure to encode keep the first N elements
   //================================================================================================
-  struct ignore_last_
+  struct keep_first
   {
     static constexpr bool has_alternative = false;
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
-    constexpr ignore_last_(std::ptrdiff_t n) noexcept : count_(n) {}
+    constexpr explicit EVE_FORCEINLINE keep_first(std::ptrdiff_t n) noexcept : count_(n) {}
 
-    template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
+    template<typename V> EVE_FORCEINLINE auto else_(V const& v) const  {  return or_(*this,v);  }
+
+    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const&) const
     {
-      constexpr std::ptrdiff_t card = cardinal_v<T>;
-      return detail::linear_ramp(eve::as_<T>()) < (card-count_);
+      using abi_t = typename T::abi_type;
+      using type  = as_logical_t<T>;
+
+      if constexpr( !abi_t::is_wide_logical )
+      {
+        return detail::top_bits<type>(*this).storage;
+      }
+      else
+      {
+        using i_t   = as_integer_t<typename type::mask_type>;
+        if constexpr(eve::use_complete_storage<type>)
+        {
+          return bit_cast(detail::linear_ramp(eve::as<i_t>()) < i_t(count_), as<type>());
+        }
+        else
+        {
+          // Use the most full type to be sure to fill outside values of small wide with false
+          using e_t   = eve::element_type_t<i_t>;
+          using abi_t = typename i_t::abi_type;
+          using w_t   = eve::wide<e_t, eve::expected_cardinal_t<e_t, abi_t> >;
+          return bit_cast(detail::linear_ramp(eve::as<w_t>()) < w_t(count_), as<type>());
+        }
+      }
     }
 
-    friend std::ostream& operator<<(std::ostream& os, ignore_last_ const& c)
+    constexpr bool friend operator==(keep_first const&, keep_first const&) = default;
+
+    friend std::ostream& operator<<(std::ostream& os, keep_first const& c)
+    {
+      return os << "keep_first( " << c.count_ << " )";
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const
+    {
+      return 0;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> const&) const
+    {
+      return cardinal_v<T> - count_;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> const&) const
+    {
+      return count_;
+    }
+
+    std::ptrdiff_t count_;
+  };
+
+  //================================================================================================
+  // Helper structure to encode ignoring the last N elements
+  //================================================================================================
+  struct ignore_last
+  {
+    static constexpr bool has_alternative = false;
+    static constexpr bool is_inverted     = false;
+    static constexpr bool is_complete     = false;
+
+    constexpr explicit EVE_FORCEINLINE ignore_last(std::ptrdiff_t n) noexcept : count_(n) {}
+
+    template<typename V> EVE_FORCEINLINE auto else_(V const& v) const  {  return or_(*this,v);  }
+
+    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const& tgt) const
+    {
+      constexpr auto card = cardinal_v<T>;
+      return keep_first{card-count_}.mask(tgt);
+    }
+
+    constexpr bool friend operator==(ignore_last const&, ignore_last const&) = default;
+
+    friend std::ostream& operator<<(std::ostream& os, ignore_last const& c)
     {
       return os << "ignore_last( " << c.count_ << " )";
     }
 
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const
+    {
+      return 0;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> const&) const
+    {
+      return count_;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> const&) const
+    {
+      return cardinal_v<T> - count_;
+    }
+
     std::ptrdiff_t count_;
   };
-
-  EVE_FORCEINLINE ignore_last_ ignore_last(std::ptrdiff_t n) noexcept
-  {
-    return {n};
-  }
 
   //================================================================================================
   // Helper structure to encode keeping the last N elements
   //================================================================================================
-  struct keep_last_
+  struct keep_last
   {
     static constexpr bool has_alternative = false;
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
-    constexpr EVE_FORCEINLINE keep_last_(std::ptrdiff_t n) noexcept : count_(n) {}
+    constexpr explicit EVE_FORCEINLINE keep_last(std::ptrdiff_t n) noexcept : count_(n) {}
 
-    template<typename T> auto mask(eve::as_<T> const&) const
+    template<typename V> EVE_FORCEINLINE auto else_(V const& v) const  {  return or_(*this,v);  }
+
+    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const&) const
     {
-      constexpr std::ptrdiff_t card = cardinal_v<T>;
-      return detail::linear_ramp(eve::as_<T>()) >= (card-count_);
+      using abi_t = typename T::abi_type;
+      using type  = as_logical_t<T>;
+      if constexpr( !abi_t::is_wide_logical )
+      {
+        return detail::top_bits<type>(*this).storage;
+      }
+      else
+      {
+        using i_t   = as_integer_t<typename type::mask_type>;
+        constexpr std::ptrdiff_t card = cardinal_v<T>;
+        if constexpr(eve::use_complete_storage<type>)
+        {
+          return bit_cast(detail::linear_ramp(eve::as<i_t>()) >= i_t(card-count_), as<type>());
+        }
+        else
+        {
+          // Use the most full type to be sure to fill outside values of small wide with false
+          using e_t   = eve::element_type_t<i_t>;
+          using abi_t = typename i_t::abi_type;
+          using w_t   = eve::wide<e_t, eve::expected_cardinal_t<e_t, abi_t> >;
+          auto i = detail::linear_ramp(eve::as<w_t>());
+          return bit_cast((i >= w_t(card-count_)) && (i < card), as<type>());
+        }
+      }
     }
 
-    friend std::ostream& operator<<(std::ostream& os, keep_last_ const& c)
+    constexpr bool friend operator==(keep_last const&, keep_last const&) = default;
+
+    friend std::ostream& operator<<(std::ostream& os, keep_last const& c)
     {
       return os << "keep_last( " << c.count_ << " )";
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const
+    {
+      return cardinal_v<T> - count_;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> const&) const
+    {
+      return 0;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> const&) const
+    {
+      return count_;
     }
 
     std::ptrdiff_t count_;
   };
 
-  EVE_FORCEINLINE keep_last_ keep_last(std::ptrdiff_t n) noexcept
-  {
-    return {n};
-  }
-
   //================================================================================================
   // Helper structure to encode ignoring the first N elements
   //================================================================================================
-  struct ignore_first_
+  struct ignore_first
   {
     static constexpr bool has_alternative = false;
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
-    constexpr ignore_first_(std::ptrdiff_t n) noexcept : count_(n) {}
+    constexpr explicit EVE_FORCEINLINE ignore_first(std::ptrdiff_t n) noexcept : count_(n) {}
 
-    template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
+    template<typename V> EVE_FORCEINLINE auto else_(V const& v) const  {  return or_(*this,v);  }
+
+    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const& tgt) const
     {
-      return detail::linear_ramp(eve::as_<T>()) >= count_;
+      constexpr auto card = cardinal_v<T>;
+      return keep_last{card-count_}.mask(tgt);
     }
 
-    friend std::ostream& operator<<(std::ostream& os, ignore_first_ const& c)
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const
+    {
+      return count_;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> const&) const
+    {
+      return 0;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> const&) const
+    {
+      return cardinal_v<T> - count_;
+    }
+
+    constexpr bool friend operator==(ignore_first const&, ignore_first const&) = default;
+
+    friend std::ostream& operator<<(std::ostream& os, ignore_first const& c)
     {
       return os << "ignore_first( " << c.count_ << " )";
     }
@@ -242,88 +379,71 @@ namespace eve
     std::ptrdiff_t count_;
   };
 
-  EVE_FORCEINLINE ignore_first_ ignore_first(std::ptrdiff_t n) noexcept
-  {
-    return {n};
-  }
-
-  //================================================================================================
-  // Helper structure to encode keep the first N elements
-  //================================================================================================
-  struct keep_first_
-  {
-    static constexpr bool has_alternative = false;
-    static constexpr bool is_inverted     = false;
-    static constexpr bool is_complete     = false;
-
-    constexpr keep_first_(std::ptrdiff_t n) noexcept : count_(n) {}
-
-    template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
-    {
-      return detail::linear_ramp(eve::as_<T>()) < count_;
-    }
-
-    friend std::ostream& operator<<(std::ostream& os, keep_first_ const& c)
-    {
-      return os << "keep_first( " << c.count_ << " )";
-    }
-
-    std::ptrdiff_t count_;
-  };
-
-  EVE_FORCEINLINE keep_first_ keep_first(std::ptrdiff_t n) noexcept
-  {
-    return {n};
-  }
-
-  //================================================================================================
-  // Helper structure to encode ignoring elements in between two index
-  //================================================================================================
-  struct ignore_between_
-  {
-    static constexpr bool has_alternative = false;
-    static constexpr bool is_inverted     = false;
-    static constexpr bool is_complete     = false;
-
-    constexpr ignore_between_(std::ptrdiff_t b, std::ptrdiff_t e) noexcept : begin_(b), end_(e) {}
-
-    template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
-    {
-      auto const i = detail::linear_ramp(eve::as_<T>());
-      return (i < begin_) || (i > end_);
-    }
-
-    friend std::ostream& operator<<(std::ostream& os, ignore_between_ const& c)
-    {
-      return os << "ignore_between( " << c.begin_ << ", " << c.end_ << " )";
-    }
-
-    std::ptrdiff_t begin_, end_;
-  };
-
-  EVE_FORCEINLINE ignore_between_ ignore_between(std::ptrdiff_t b, std::ptrdiff_t e)
-  {
-    return {b,e};
-  }
-
   //================================================================================================
   // Helper structure to encode keeping elements in between two index and ignoring the rest
   //================================================================================================
-  struct keep_between_
+  struct keep_between
   {
     static constexpr bool has_alternative = false;
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
-    constexpr keep_between_(std::ptrdiff_t b, std::ptrdiff_t e) noexcept : begin_(b), end_(e) {}
-
-    template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
+    constexpr EVE_FORCEINLINE keep_between(std::ptrdiff_t b, std::ptrdiff_t e) noexcept : begin_(b), end_(e)
     {
-      auto const i = detail::linear_ramp(eve::as_<T>());
-      return (i >= begin_) && (i <= end_);
+      EVE_ASSERT(b<=e, "[eve::keep_between] Index mismatch for begin/end");
     }
 
-    friend std::ostream& operator<<(std::ostream& os, keep_between_ const& c)
+    template<typename V> EVE_FORCEINLINE auto else_(V const& v) const  {  return or_(*this,v);  }
+
+    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const&) const
+    {
+      using abi_t = typename T::abi_type;
+      using type  = as_logical_t<T>;
+
+      if constexpr( !abi_t::is_wide_logical )
+      {
+        return detail::top_bits<type>(*this).storage;
+      }
+      else
+      {
+        using i_t = as_integer_t<typename type::mask_type>;
+
+        if constexpr(eve::use_complete_storage<type>)
+        {
+          auto const i = detail::linear_ramp(eve::as<i_t>());
+          return bit_cast((i >= begin_) && (i < end_), as<type>());
+        }
+        else
+        {
+          // Use the most full type to be sure to fill outside values of small wide with false
+          using e_t   = eve::element_type_t<i_t>;
+          using abi_t = typename i_t::abi_type;
+          using w_t   = eve::wide<e_t, eve::expected_cardinal_t<e_t, abi_t> >;
+
+          auto const i = detail::linear_ramp(eve::as<w_t>());
+          return bit_cast((i >= begin_) && (i < end_), as<type>());
+        }
+      }
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const
+    {
+      return begin_;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> const&) const
+    {
+      return cardinal_v<T> - end_;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> const&) const
+    {
+      return end_ - begin_;
+    }
+
+    constexpr bool friend operator==(keep_between const&, keep_between const&) = default;
+
+    friend std::ostream& operator<<(std::ostream& os, keep_between const& c)
     {
       return os << "keep_between( " << c.begin_ << ", " << c.end_ << " )";
     }
@@ -331,32 +451,48 @@ namespace eve
     std::ptrdiff_t begin_, end_;
   };
 
-  EVE_FORCEINLINE keep_between_ keep_between(std::ptrdiff_t b, std::ptrdiff_t e)
-  {
-    return {b,e};
-  }
-
   //================================================================================================
   // Helper structure to encode ignoring N elements on both extrema.
   //================================================================================================
-  struct ignore_extrema_
+  struct ignore_extrema
   {
     static constexpr bool has_alternative = false;
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
-    constexpr ignore_extrema_(std::ptrdiff_t b, std::ptrdiff_t e) noexcept
+    constexpr EVE_FORCEINLINE ignore_extrema(std::ptrdiff_t b, std::ptrdiff_t e) noexcept
             : first_count_(b), last_count_(e)
     {}
 
-    template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
+    template<typename V> EVE_FORCEINLINE auto else_(V const& v) const  {  return or_(*this,v);  }
+
+    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const& tgt) const
     {
-      auto const i = detail::linear_ramp(eve::as_<T>());
-      constexpr std::ptrdiff_t card = cardinal_v<T>;
-      return (i >= first_count_) && (i < (card-last_count_));
+      EVE_ASSERT( (first_count_ + last_count_) <= cardinal_v<T>
+                , "[eve::ignore_extrema] Index mismatch for first/last"
+                );
+
+      return keep_between(first_count_, cardinal_v<T>-last_count_).mask(tgt);
     }
 
-    friend std::ostream& operator<<(std::ostream& os, ignore_extrema_ const& c)
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const
+    {
+      return first_count_;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> const&) const
+    {
+      return last_count_;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> const&) const
+    {
+      return cardinal_v<T> - last_count_ - first_count_;
+    }
+
+    constexpr bool friend operator==(ignore_extrema const&, ignore_extrema const&) = default;
+
+    friend std::ostream& operator<<(std::ostream& os, ignore_extrema const& c)
     {
       return os << "ignore( first(" << c.first_count_ << "), last(" << c.last_count_ << ") )";
     }
@@ -364,8 +500,19 @@ namespace eve
     std::ptrdiff_t first_count_, last_count_;
   };
 
-  constexpr EVE_FORCEINLINE ignore_extrema_ operator&&( ignore_first_ a, ignore_last_ b) noexcept
+  constexpr EVE_FORCEINLINE ignore_extrema operator&&( ignore_first a, ignore_last b) noexcept
   {
     return {a.count_, b.count_};
+  }
+
+  constexpr EVE_FORCEINLINE ignore_extrema operator&&( ignore_last b, ignore_first a) noexcept
+  {
+    return a && b;
+  }
+
+  template <eve::relative_conditional_expr C>
+  auto map_alternative(C c, auto map) {
+    if constexpr (!C::has_alternative) return c;
+    else                               return c.map_alternative(map);
   }
 }

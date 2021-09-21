@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -15,6 +12,7 @@
 
 namespace eve
 {
+  //================================================================================================
   //================================================================================================
   // Function decorators mark-up used in function overloads
   struct regular_type : decorator_
@@ -30,7 +28,30 @@ namespace eve
   };
 
   //================================================================================================
-  // Function decorator - regular mode
-  inline constexpr regular_type const regular_ = {};
+  //! @addtogroup decorator
+  //! @{
+  //! @var regular
+  //!
+  //! @brief  Higher-order @callable having identity semantic onto other @callable{s}.
+  //!
+  //! #### Synopsis
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  #include <eve/function/regular.hpp>
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! #### Members Functions
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator()(eve::callable auto const& f ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //! @param f
+  //! An instance of eve::callable
+  //!
+  //! @return
+  //! The same @callable as input.
+  //!
+  //!  @}
+  //================================================================================================
+  inline constexpr regular_type const regular = {};
 }
-

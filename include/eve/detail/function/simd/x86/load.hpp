@@ -1,137 +1,128 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
 #include <eve/as.hpp>
+#include <eve/concept/memory.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/memory/aligned_ptr.hpp>
+#include <eve/detail/category.hpp>
+#include <eve/detail/function/to_logical.hpp>
 
 namespace eve::detail
 {
   //================================================================================================
-  // 128 bits loads
+  // Regular loads
   //================================================================================================
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE auto load(eve::as_<wide<T, N>> const &, eve::sse_ const &, T const* p)
+  template<typename T, typename N, simd_compatible_ptr<wide<T,N>> Ptr >
+  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_)
+                            , ignore_none_ const&, safe_type const&
+                            , eve::as<wide<T, N>> const &, Ptr p
+                            )
+  requires dereference_as<T, Ptr>::value && x86_abi<abi_t<T, N>>
   {
-    if constexpr( N::value * sizeof(T) == sse_::bytes )
+    constexpr auto cat = categorize<wide<T, N>>();
+    constexpr bool isfull512 = N::value*sizeof(T) == x86_512_::bytes;
+    constexpr bool isfull256 = N::value*sizeof(T) == x86_256_::bytes;
+    constexpr bool isfull128 = N::value*sizeof(T) == x86_128_::bytes;
+
+    if constexpr( !std::is_pointer_v<Ptr> )
     {
-      if constexpr( std::is_same_v<T, double> )
+      if constexpr( isfull512 )
       {
-        return _mm_loadu_pd(p);
+              if constexpr( cat == category::float64x8 )   return _mm512_load_pd(p.get());
+        else  if constexpr( cat == category::float32x16 )  return _mm512_load_ps(p.get());
+        else return _mm512_load_si512((__m512i *)p.get());
       }
-      else if constexpr( std::is_same_v<T, float> )
+      else if constexpr( isfull256 )
       {
-        return _mm_loadu_ps(p);
+              if constexpr( cat == category::float64x4 )  return _mm256_load_pd(p.get());
+        else  if constexpr( cat == category::float32x8 )  return _mm256_load_ps(p.get());
+        else return _mm256_load_si256((__m256i *)p.get());
       }
-      else if constexpr( std::is_integral_v<T> )
+      else if constexpr( isfull128 )
       {
-        return _mm_loadu_si128((__m128i *)p);
+              if constexpr( cat == category::float64x2 )  return _mm_load_pd(p.get());
+        else  if constexpr( cat == category::float32x4 )  return _mm_load_ps(p.get());
+        else  return _mm_load_si128((__m128i *)p.get());
+      }
+      else
+      {
+        typename wide<T, N>::storage_type that{};
+        std::memcpy(&that, p.get(), N::value * sizeof(T));
+        return that;
       }
     }
     else
     {
-      typename wide<T, N>::storage_type that;
-      std::memcpy(&that, p, N::value * sizeof(T));
-      return that;
+      if constexpr( isfull512 )
+      {
+              if constexpr( cat == category::float64x8 )   return _mm512_loadu_pd(p);
+        else  if constexpr( cat == category::float32x16 )  return _mm512_loadu_ps(p);
+        else return _mm512_loadu_si512((__m512i *)p);
+      }
+      else if constexpr( isfull256 )
+      {
+              if constexpr( cat == category::float64x4 )  return _mm256_loadu_pd(p);
+        else  if constexpr( cat == category::float32x8 )  return _mm256_loadu_ps(p);
+        else return _mm256_loadu_si256((__m256i *)p);
+      }
+      else if constexpr( isfull128 )
+      {
+              if constexpr( cat == category::float64x2 )  return _mm_loadu_pd(p);
+        else  if constexpr( cat == category::float32x4 )  return _mm_loadu_ps(p);
+        else  return _mm_loadu_si128((__m128i *)p);
+      }
+      else
+      {
+        typename wide<T, N>::storage_type that{};
+        std::memcpy(&that, p, N::value * sizeof(T));
+        return that;
+      }
     }
   }
 
-  template<real_scalar_value T, typename N, std::size_t A>
-  EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N>> const &tgt, eve::sse_ const &mode, aligned_ptr<T const, A> p) noexcept
-  {
-    if constexpr( A >= 16 && N::value * sizeof(T) == sse_::bytes )
-    {
-      if constexpr( std::is_same_v<T, double> )
-      {
-        return _mm_load_pd(p.get());
-      }
-      else if constexpr( std::is_same_v<T, float> )
-      {
-        return _mm_load_ps(p.get());
-      }
-      else if constexpr( std::is_integral_v<T> )
-      {
-        return _mm_load_si128((__m128i *)p.get());
-      }
-    }
-    else
-    {
-      return load(tgt, mode, p.get());
-    }
-  }
-
-  template<real_scalar_value T, typename N, std::size_t A>
-  EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N>> const &tgt, eve::sse_ const & mode, aligned_ptr<T, A> p) noexcept
-  {
-    return load(tgt,mode, aligned_ptr<T const, A>(p));
-  }
-
-  //------------------------------------------------------------------------------------------------
-  // 256 bits loads
   //================================================================================================
-  // 256 bits loads
+  // logical loads require some specific setup
   //================================================================================================
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE auto load(eve::as_<wide<T, N>> const &, eve::avx_ const &, T const* p) noexcept
+  template<typename T, typename N, typename Ptr>
+  EVE_FORCEINLINE logical<wide<T, N>> load_ ( EVE_SUPPORTS(cpu_)
+                                            , ignore_none_ const&, safe_type const&
+                                            , eve::as<logical<wide<T, N>>> const& tgt
+                                            , Ptr p
+                                            )
+
+  requires dereference_as<logical<T>, Ptr>::value && x86_abi<abi_t<T, N>>
   {
-    if constexpr( std::is_same_v<T, double> )
+    auto block = [&]() -> wide<T, N>
     {
-      return _mm256_loadu_pd(p);
-    }
-    else if constexpr( std::is_same_v<T, float> )
-    {
-      return _mm256_loadu_ps(p);
-    }
-    else if constexpr( std::is_integral_v<T> )
-    {
-      return _mm256_loadu_si256((__m256i *)p);
-    }
+      using wtg = eve::as<wide<T, N>>;
+      return load(ignore_none, safe, wtg{}, ptr_cast<T const>(p));
+    }();
+
+    if constexpr( current_api >= avx512 ) return to_logical(block);
+    else                                  return bit_cast(block, tgt);
   }
 
-  template<real_scalar_value T, typename N, std::size_t A>
-  EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N>> const &tgt, eve::avx_ const &mode, aligned_ptr<T const, A> p) noexcept
+  template<typename Iterator, typename T, typename N>
+  EVE_FORCEINLINE logical<wide<T, N>> load_ ( EVE_SUPPORTS(cpu_)
+                                            , ignore_none_ const&, safe_type const&
+                                            , eve::as<logical<wide<T, N>>> const &
+                                            , Iterator b, Iterator e
+                                            ) noexcept
+  requires x86_abi<abi_t<T, N>>
   {
-    if constexpr( A >= 32 )
+    auto block = [&]() -> wide<T, N>
     {
-      if constexpr( std::is_same_v<T, double> )
-      {
-        return _mm256_load_pd(p.get());
-      }
-      else if constexpr( std::is_same_v<T, float> )
-      {
-        return _mm256_load_ps(p.get());
-      }
-      else if constexpr( std::is_integral_v<T> )
-      {
-        return _mm256_load_si256((__m256i *)p.get());
-      }
-    }
-    else
-    {
-      return load(tgt, mode, p.get());
-    }
-  }
+      using tgt = eve::as<wide<T, N>>;
+      return load(ignore_none, safe, tgt(), b, e);
+    }();
 
-  template<real_scalar_value T, typename N, std::size_t A>
-  EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N>> const &tgt, eve::avx_ const & mode, aligned_ptr<T, A> p) noexcept
-  {
-    return load(tgt, mode, aligned_ptr<T const, A>(p));
+    return to_logical(block);
   }
-
 }
-

@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -18,12 +15,47 @@
 #include <type_traits>
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup constant
+  //! @{
+  //! @var mhalf
+  //!
+  //! @brief Callable object computing the  value negated half value.
+  //!
+  //! **Required header:** `#include <eve/function/mhalf.hpp>`
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | Computes the mhalf constant                               |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  tempate < floating_value T > T operator()( as<T> const & t) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!
+  //! **Return value**
+  //!
+  //! the call `eve::mhalf(as<T>())` is semantically equivalent to  `T(-0.5)`.
+  //!
+  //! ---
+  //!
+  //! #### Example
+  //!
+  //! @godbolt{doc/core/mhalf.cpp}
+  //!
+  //! @}
+  //================================================================================================
   EVE_MAKE_CALLABLE(mhalf_, mhalf);
 
   namespace detail
   {
     template<floating_value T>
-    EVE_FORCEINLINE constexpr auto mhalf_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    EVE_FORCEINLINE constexpr auto mhalf_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
     {
       using t_t           = detail::value_type_t<T>;
 

@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -19,8 +16,45 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup constant
+  //! @{
+  //! @var Constant
+  //!
+  //! @brief Callable object computing a floating constant from its scalar hexadecimal integral representation |
+  //!
+  //! **Required header:** `#include <eve/function/constant.hpp>`
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | generates a floating constant from its scalar hexadecimal integral representation |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  tempate < floating_real_value T, auto BitsPattern > T operator()( as<T> const & t) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! @tparam
+  //! `T`:   type of the output constant
+  //! `BitsPattern': hexadecimal integral representation of the floating scalar constant
+  //!
+  //! **Return value**
+  //!
+  //! the call `eve::Constant<T, Bitpattern>()` is semantically equivalent to
+  //! T(eve::bit_cast(Bitpattern, `as<value_type_t<T>>()))`
+  //!
+  //! ---
+  //!
+  //! #### Example
+  //!
+  //! @godbolt{doc/core/constant.cpp}
+  //!
+  //! @}
+  //================================================================================================
+
   template<typename T, auto BitsPattern>
-  EVE_FORCEINLINE auto Constant(eve::as_<T> const & = {})
+  EVE_FORCEINLINE auto Constant(eve::as<T> const & = {})
   {
     using t_t = detail::value_type_t<T>;
 
@@ -39,9 +73,8 @@ namespace eve
       }
       else
       {
-        return static_cast<T>(bit_cast(BitsPattern,as_<t_t>{}));
+        return static_cast<T>(bit_cast(BitsPattern,as<t_t>{}));
       }
     }
   }
 }
-

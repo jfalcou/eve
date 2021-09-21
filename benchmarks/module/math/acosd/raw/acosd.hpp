@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #include <eve/function/acosd.hpp>
 #include <eve/function/radindeg.hpp>
@@ -23,7 +20,7 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__acosd) , xp, std__acosd , arg0);
-  run<EVE_VALUE>(EVE_NAME(raw_(eve::acosd)) , xp, eve::raw_(eve::acosd) , arg0);
-  run<EVE_TYPE> (EVE_NAME(raw_(eve::acosd)) , xp, eve::raw_(eve::acosd) , arg0);
+  run<EVE_VALUE>(EVE_NAME(raw(eve::acosd)) , xp, eve::raw(eve::acosd) , arg0);
+  run<EVE_TYPE> (EVE_NAME(raw(eve::acosd)) , xp, eve::raw(eve::acosd) , arg0);
 
 }

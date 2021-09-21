@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #include <eve/function/sin.hpp>
 #include <eve/constant/pio_4.hpp>
@@ -21,6 +18,6 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__sin) , xp, std__sin , arg0);
-  run<EVE_VALUE>(EVE_NAME(restricted_(eve::sin)) , xp, eve::restricted_(eve::sin) , arg0);
-  run<EVE_TYPE> (EVE_NAME(restricted_(eve::sin)) , xp, eve::restricted_(eve::sin) , arg0);
+  run<EVE_VALUE>(EVE_NAME(restricted(eve::sin)) , xp, eve::restricted(eve::sin) , arg0);
+  run<EVE_TYPE> (EVE_NAME(restricted(eve::sin)) , xp, eve::restricted(eve::sin) , arg0);
 }

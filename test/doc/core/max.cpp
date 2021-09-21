@@ -1,4 +1,6 @@
 #include <eve/function/max.hpp>
+#include <eve/function/pedantic/max.hpp>
+#include <eve/function/numeric/max.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
@@ -6,7 +8,7 @@
 #include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
-using eve::pedantic_;
+using eve::pedantic;
 
 int main()
 {
@@ -20,8 +22,8 @@ int main()
             << "<- pf                     = " << pf << '\n'
             << "<- qf                     = " << qf << '\n'
             << "-> max(pf, qf)            = " << eve::max(pf, qf) << '\n'
-            << "-> pedantic_(max)(pf, qf) = " << eve::pedantic_(eve::max)(pf, qf) << '\n'
-            << "-> numeric_(max)(pf, qf)  = " << eve::numeric_(eve::max)(pf, qf) << '\n';
+            << "-> pedantic(max)(pf, qf) = " << eve::pedantic(eve::max)(pf, qf) << '\n'
+            << "-> numeric(max)(pf, qf)  = " << eve::numeric(eve::max)(pf, qf) << '\n';
 
   float xf = 1.0f;
   float yf = eve::nan(eve::as<float>());
@@ -30,7 +32,7 @@ int main()
             << "<- xf                     = " << xf << '\n'
             << "<- yf                     = " << yf << '\n'
             << "-> max(xf, yf) =          = " << eve::max(xf, yf) << '\n'
-            << "-> pedantic_(max)(xf, yf) = " << eve::pedantic_(eve::max)(xf, yf) << '\n'
-            << "-> numeric_(max)(xf, yf)  = " << eve::numeric_(eve::max)(xf, yf) << '\n';
+            << "-> pedantic(max)(xf, yf) = " << eve::pedantic(eve::max)(xf, yf) << '\n'
+            << "-> numeric(max)(xf, yf)  = " << eve::numeric(eve::max)(xf, yf) << '\n';
   return 0;
 }

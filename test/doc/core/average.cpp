@@ -1,6 +1,18 @@
 #include <eve/function/average.hpp>
 #include <eve/literals.hpp>
 #include <eve/wide.hpp>
+#include <vector>
+#include <iostream>
+
+float mean(std::vector<float>  ary) {
+  float avg = 0;
+  int t = 1;
+  for (float x : ary) {
+    avg += (x - avg) / t;
+    ++t;
+  }
+  return avg;
+}
 
 int main()
 {
@@ -18,5 +30,13 @@ int main()
             << " xi                 = " << xi << '\n'
             << " yi                 = " << yi << '\n'
             << " -> average(xi, yi) = " << eve::average(xi, yi) << '\n';
+
+  using w_ft = eve::wide<float, eve::fixed<4>>;
+  w_ft pf = {3, 4, 3, 10}, qf = {4, 1, 1, 15};;
+  std::cout << "---- multi" << '\n'
+            << " <- pf                               = " << pf << '\n'
+            << " <- qf                               = " << qf << '\n'
+            << " -> average(pf, 0.0f, qf, pf, 11.0f) = " << eve::average(pf, 0.0f, qf, pf, 11.0f) <<  '\n';
+
   return 0;
 }

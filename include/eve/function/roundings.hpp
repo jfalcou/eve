@@ -1,74 +1,164 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/abi.hpp>
+#include <eve/detail/overload.hpp>
 
 namespace eve
 {
   //================================================================================================
-  // Rounding decorator types
-  struct upward_type : decorator_
+  // Rounding decorator objects
+  struct upward_
   {
-    template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
-    {
-      return  [f](auto&&... args)
-              {
-                return f(upward_type{}, std::forward<decltype(args)>(args)...);
-              };
-    }
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
+    static const  auto value = 0x02 | 0x08; //_MM_FROUND_TO_POS_INF | _MM_FROUND_NO_EXC;
   };
 
-  struct downward_type : decorator_
+  struct downward_
   {
-    template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
-    {
-      return  [f](auto&&... args)
-              {
-                return f(downward_type{}, std::forward<decltype(args)>(args)...);
-              };
-    }
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
+     static const auto value = 0x01 | 0x08; //_MM_FROUND_TO_NEG_INF | _MM_FROUND_NO_EXC;
   };
 
-  struct to_nearest_type : decorator_
+  struct to_nearest_
   {
-    template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
-    {
-      return  [f](auto&&... args)
-              {
-                return f(to_nearest_type{}, std::forward<decltype(args)>(args)...);
-              };
-    }
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
+    static const auto value = 0x00 | 0x08; // _MM_FROUND_TO_NEAREST_INT | _MM_FROUND_NO_EXC;
   };
 
-  struct toward_zero_type : decorator_
+  struct toward_zero_
   {
-    template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
-    {
-      return  [f](auto&&... args)
-              {
-                return f(toward_zero_type{}, std::forward<decltype(args)>(args)...);
-              };
-    }
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
+    static const auto value = 0x03 | 0x08; // _MM_FROUND_TO_ZERO |_MM_FROUND_NO_EXC;
   };
 
   //================================================================================================
-  // Rounding decorator objects
-  inline constexpr upward_type      const upward_       = {};
-  inline constexpr downward_type    const downward_     = {};
-  inline constexpr to_nearest_type  const to_nearest_   = {};
-  inline constexpr toward_zero_type const toward_zero_  = {};
-}
+  //! @addtogroup decorator
+  //! @{
+  //! @var upward
+  //!
+  //! @brief  Higher-order @callable imbuing upward rounding semantic onto other @callable{s}.
+  //!
+  //! #### Members Functions
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator()(eve::callable auto const& f ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! @param f
+  //! An instance of eve::callable
+  //!
+  //! @return
+  //! A @callable performing the same kind of operation but rounding the result upward
+  //! or, in other words, to positive infinity
+  //!
+  //!
+  //!   - eve::div,
+  //!   - eve::fracscale
+  //!   - eve::rem
+  //!   - eve::round,
+  //!   - eve::roundscale.
+  //!
+  //!  @}
+  //================================================================================================
+  using upward_type      = decorated<upward_()>;
 
+  //================================================================================================
+  //! @addtogroup decorator
+  //! @{
+  //! @var downward
+  //!
+  //! @brief  Higher-order @callable imbuing rounding downard semantic onto other @callable{s}.
+  //!
+  //! #### Members Functions
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator()(eve::callable auto const& f ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! @param f
+  //! An instance of eve::callable
+  //!
+  //! @return
+  //! A @callable performing the same kind of operation but rounding the result upward
+  //! or,  in other words, to negative infinity
+  //!
+  //!   - eve::div,
+  //!   - eve::fracscale
+  //!   - eve::rem
+  //!   - eve::round,
+  //!   - eve::roundscale.
+  //!
+  //!  @}
+  //================================================================================================
+  using downward_type    = decorated<downward_()>;
+
+  //! @addtogroup decorator
+  //! @{
+  //! @var to_nearest
+  //!
+  //! @brief  Higher-order @callable imbuing rounding to nearest semantic onto other @callable{s}.
+  //!
+  //! #### Members Functions
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator()(eve::callable auto const& f ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! @param f
+  //! An instance of eve::callable
+  //!
+  //! @return
+  //! A @callable performing the same kind of operation but rounding the result to the nearest integer
+  //! (half integers are rounded to even)
+  //!
+  //!   - eve::div,
+  //!   - eve::fracscale
+  //!   - eve::rem
+  //!   - eve::round,
+  //!   - eve::roundscale.
+  //!
+  //!  @}
+  //================================================================================================
+  using to_nearest_type  = decorated<to_nearest_()>;
+
+  //================================================================================================
+  //! @addtogroup decorator
+  //! @{
+  //! @var toward_zero
+  //!
+  //! @brief  Higher-order @callable imbuing rounding toward zero semantic onto other @callable{s}.
+  //!
+  //! #### Members Functions
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator()(eve::callable auto const& f ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! @param f
+  //! An instance of eve::callable
+  //!
+  //! @return
+  //! A @callable performing the same kind of operation but truncating the result
+  //! or,  in other words, rounding toward zero
+  //!
+  //!   - eve::div,
+  //!   - eve::fracscale
+  //!   - eve::rem
+  //!   - eve::round,
+  //!   - eve::roundscale.
+  //!
+  //!  @}
+  //================================================================================================
+  using toward_zero_type = decorated<toward_zero_()>;
+
+  inline constexpr upward_type      const upward       = {};
+  inline constexpr downward_type    const downward     = {};
+  inline constexpr to_nearest_type  const to_nearest   = {};
+  inline constexpr toward_zero_type const toward_zero  = {};
+}

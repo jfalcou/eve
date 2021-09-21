@@ -1,15 +1,13 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
+#include <eve/arch/cardinals.hpp>
 #include <eve/arch/wide.hpp>
 #include <type_traits>
 #include <cstddef>
@@ -32,10 +30,15 @@ namespace eve::detail
 namespace eve::literal
 {
   // integral constants
-  template<char... c>
-  constexpr auto operator"" _c()
+  template<char... c> constexpr auto operator"" _c()
   {
     return detail::idx_<detail::parse<c...>()>{};
+  }
+
+  // constexpr index within a wide
+  template<char... c> constexpr auto operator"" _idx()
+  {
+    return index<detail::parse<c...>()>;
   }
 
   // wide generator
@@ -50,4 +53,3 @@ namespace eve::literal
   inline auto operator""_wu16(unsigned long long int d) noexcept { return wide<std::uint16_t>(d); }
   inline auto operator""_wu8(unsigned long long int d) noexcept { return wide<std::uint8_t>(d); }
 }
-

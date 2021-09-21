@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #include <eve/function/rec.hpp>
 #include <eve/concept/value.hpp>
@@ -21,7 +18,7 @@ int main()
     if constexpr(eve::floating_value<EVE_VALUE>) return eve::oneotwoeps(eve::as<EVE_VALUE>());
     else return eve::valmax(eve::as<EVE_VALUE>());
   }();
-  auto lmin = EVE_VALUE(0);
+  auto lmin = EVE_VALUE(1);
 
   auto const std__rec = [](EVE_VALUE x) { return EVE_VALUE(1/x); };
 
@@ -29,6 +26,6 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE> (EVE_NAME(std__rec) , xp, std__rec, arg0);
-  run<EVE_VALUE> (EVE_NAME(eve:rec) , xp, eve::raw_(eve::rec), arg0);
-  run<EVE_TYPE>  (EVE_NAME(eve:rec) , xp, eve::raw_(eve::rec), arg0);
+  run<EVE_VALUE> (EVE_NAME(eve:rec) , xp, eve::raw(eve::rec), arg0);
+  run<EVE_TYPE>  (EVE_NAME(eve:rec) , xp, eve::raw(eve::rec), arg0);
 }

@@ -1,13 +1,9 @@
-
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #undef EVE_ASSERT
 #undef EVE_VERIFY
@@ -19,19 +15,20 @@
 
 #else
 
-#  include <cstdlib>
 #  include <iostream>
 
-#  define EVE_ASSERT(cond, ...)                                                                    \
-    do                                                                                             \
-    {                                                                                              \
-      if(!(cond))                                                                                  \
-      {                                                                                            \
-        std::cerr << "Assertion '" << #cond << "' failed in " << __FILE__ << ":" << __LINE__       \
-                  << " - " << __VA_ARGS__ << std::endl;                                            \
-        std::abort();                                                                              \
-      }                                                                                            \
-    } while(0) /**/
+#  define EVE_ASSERT(cond, ...)                                                                     \
+    do                                                                                              \
+    {                                                                                               \
+      if(!(cond))                                                                                   \
+      {                                                                                             \
+        std::cerr << "[EVE] - Assertion '" << #cond                                                 \
+                  << "' failed !\nIn file " << __FILE__ << ", line " << __LINE__                    \
+                  << "\nBecause:\n" << __VA_ARGS__ << "\n";                                         \
+        std::abort();                                                                               \
+      }                                                                                             \
+    } while(0)                                                                                      \
+/**/
 
 #  define EVE_VERIFY(cond, ...) EVE_ASSERT(cond, __VA_ARGS__)
 

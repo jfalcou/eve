@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #include <eve/function/saturate.hpp>
 #include <eve/constant/valmin.hpp>
@@ -18,7 +15,7 @@ int main()
   auto lmin = eve::valmin(eve::as<EVE_VALUE>());
   auto lmax = eve::valmax(eve::as<EVE_VALUE>());
 
-  auto const eve__saturate = [](auto x) { return eve::saturate(x, eve::as_<std::int16_t>()); };
+  auto const eve__saturate = [](auto x) { return eve::saturate(x, eve::as<std::int16_t>()); };
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 

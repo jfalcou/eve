@@ -1,7 +1,9 @@
 #include <eve/function/prev.hpp>
+#include <eve/function/pedantic/prev.hpp>
 #include <eve/constant/bitincrement.hpp>
 #include <eve/constant/eps.hpp>
 #include <eve/wide.hpp>
+#include <iostream>
 #include <iomanip>
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;
@@ -15,7 +17,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                  =" << std::setprecision(12) << pf << '\n'
             << "-> prev(pf)            =" << eve::prev(pf) << '\n'
-            << "-> pedantic_(prev)(pf) =" << eve::pedantic_(eve::prev)(pf) << '\n'
+            << "-> pedantic(prev)(pf) =" << eve::pedantic(eve::prev)(pf) << '\n'
             << "<- pi                  =" << pi << '\n'
             << "-> prev(pi)            =" << eve::prev(pi) << '\n';
 

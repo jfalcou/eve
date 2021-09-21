@@ -1,17 +1,15 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/rebindable.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/detail/kumi.hpp>
+#include <eve/as.hpp>
 #include <type_traits>
 #include <utility>
 #include <cstdint>
@@ -19,13 +17,60 @@
 
 namespace eve::detail
 {
+  // Values list helper
+  template<auto... Values>
+  struct values
+  {
+    static constexpr auto size = sizeof...(Values);
+  };
+
   // Types list helper
   template<typename... Types>
   struct types
   {
+    template<typename... Us> constexpr types<Types...,Us...> operator+( types<Us...> const&) const;
   };
 
-  // Check if a type is contained in a types list
+  // Concatenate types lists
+  template<typename... Ls> struct concatenate
+  {
+    using type = decltype( (Ls{} + ...) );
+  };
+
+  template<typename... Ls>
+  using concatenate_t = typename concatenate<Ls...>::type;
+
+  // Return the first type in a type list matching a trait
+  template<bool Done, template<typename> typename Pred, typename TL>
+  struct first_with_impl;
+
+  template<template<typename> typename Pred, typename TL>
+  struct first_with;
+
+  template<template<typename> typename Pred,typename T>
+  struct first_with<Pred,types<T>> : std::conditional< Pred<T>::value, T, struct no_type_>
+  {};
+
+  template<template<typename> typename Pred,typename T>
+  using first_with_t = typename first_with<Pred,T>::type;
+
+  template<template<typename> typename Pred,typename T,typename... Ts>
+  struct first_with_impl<true,Pred,types<T,Ts...>>
+  {
+    using type = T;
+  };
+
+  template<template<typename> typename Pred,typename T,typename... Ts>
+  struct first_with_impl<false,Pred,types<T,Ts...>>
+    : first_with<Pred,types<Ts...>>
+  {};
+
+  template<template<typename> typename Pred,typename T,typename... Ts>
+  struct  first_with<Pred,types<T,Ts...>>
+    : first_with_impl<Pred<T>::value,Pred,types<T,Ts...>>
+  {};
+
+// Check if a type is contained in a types list
   template<typename T, typename... Ts>
   constexpr bool is_one_of(types<Ts...> const&) noexcept
   {
@@ -127,13 +172,13 @@ namespace eve::detail
   // Upgrade a type (u)int(xx) -> (u)int(min(2xx, 64)
   //                float -> double,  double -> double
   template < typename T, bool is = std::is_integral_v<T>>
-  struct upgrade
+  struct upgrader
   {
     using type = T;
   };
 
   template < typename T>
-  struct upgrade < T, true>
+  struct upgrader < T, true>
   {
     template<std::size_t Size, bool Sign, typename Dummy = void>
     struct fetch;
@@ -186,13 +231,97 @@ namespace eve::detail
   };
 
   template < typename T>
-  struct upgrade < T, false>
+  struct upgrader< T, false>
   {
     using type = double;
   };
 
   template<typename T>
+  struct upgrade : upgrader<T>
+  {
+  };
+
+  template<typename T>
   using upgrade_t = typename upgrade<T>::type;
+
+
+  //////////////////////////////////////////////////////
+  // Downgrade a type (u)int(xx) -> (u)int(max(xx/2, 8)
+  //                double -> float,  float -> float
+  template < typename T, bool is = std::is_integral_v<T>>
+  struct downgrader
+  {
+    using type = T;
+  };
+
+  template < typename T>
+  struct downgrader < T, true>
+  {
+    template<std::size_t Size, bool Sign, typename Dummy = void>
+    struct fetch;
+
+    template<typename Dummy>
+    struct fetch<1, true, Dummy>
+    {
+      using type = std::int8_t;
+    };
+    template<typename Dummy>
+    struct fetch<2, true, Dummy>
+    {
+      using type = std::int8_t;
+    };
+    template<typename Dummy>
+    struct fetch<4, true, Dummy>
+    {
+      using type = std::int16_t;
+    };
+    template<typename Dummy>
+    struct fetch<8, true, Dummy>
+    {
+      using type = std::int32_t;
+    };
+
+    template<typename Dummy>
+    struct fetch<1, false, Dummy>
+    {
+      using type = std::uint8_t;
+    };
+    template<typename Dummy>
+    struct fetch<2, false, Dummy>
+    {
+      using type = std::uint8_t;
+    };
+    template<typename Dummy>
+    struct fetch<4, false, Dummy>
+    {
+      using type = std::uint16_t;
+    };
+    template<typename Dummy>
+    struct fetch<8, false, Dummy>
+    {
+      using type = std::uint32_t;
+    };
+
+    using sel = fetch<sizeof(T), std::is_signed_v<T>>;
+    using type = typename sel::type;
+
+  };
+
+//   template < typename T>
+//   struct downgrader< T, false>
+//   {
+//     using type = float;
+//   };
+
+  template<typename T>
+  struct downgrade : downgrader<T>
+  {
+  };
+
+  template<typename T>
+  using downgrade_t = typename downgrade<T>::type;
+
+  ///////////////////////////////////////////////////////////////////
 
   // Extract the sign of a type
   template<typename T>
@@ -202,16 +331,6 @@ namespace eve::detail
 
   template<typename T>
   using sign_of_t = typename sign_of<T>::type;
-
-  // Turn a type into an integer one
-  template<typename T, typename Sign = sign_of_t<T>>
-  struct as_integer
-  {
-    using type = make_integer_t<sizeof(T), Sign>;
-  };
-
-  template<typename T, typename Sign = sign_of_t<T>>
-  using as_integer_t = typename as_integer<T, Sign>::type;
 
   // Generate integral types from sign + size
   template<std::size_t Size>
@@ -232,16 +351,6 @@ namespace eve::detail
   template<std::size_t Size>
   using make_floating_point_t = typename make_floating_point<Size>::type;
 
-  // Turn a type into an floating_point point one
-  template<typename T>
-  struct as_floating_point
-  {
-    using type = make_floating_point_t<(sizeof(T) < 4) ? 4: sizeof(T)>;
-  };
-
-  template<typename T>
-  using as_floating_point_t = typename as_floating_point<T>::type;
-
   // false_ value with dependent type
   template<typename... T>
   inline constexpr bool wrong = false;
@@ -259,18 +368,6 @@ namespace eve::detail
   struct as_trait : as_trait_impl<Concept, types<T...>>
   {};
 
-  // How many items in tuple-like things ? 0 means non-tuple
-  template<typename T>
-  struct count : std::integral_constant<std::size_t,0>
-  {};
-
-  template<typename T> requires( rebindable<T> )
-  struct count<T> : std::tuple_size<T>
-  {};
-
-  template<typename T>
-  inline constexpr auto count_v = count<T>::value;
-
   // Tuple free apply
   template<std::size_t Count, typename Func> EVE_FORCEINLINE decltype(auto) apply(Func &&f)
   {
@@ -280,5 +377,56 @@ namespace eve::detail
     };
 
     return impl(std::make_index_sequence<Count>{});
+  }
+
+  // Tuple free apply from generator data
+  template<template<auto...> class Generator, auto... I, typename Func>
+  EVE_FORCEINLINE decltype(auto) apply(Func &&f, Generator<I...> const& g)
+  {
+    const auto impl = [&](Generator<I...> const &)
+    {
+      return std::forward<Func>(f)(std::integral_constant<std::size_t, I>{}...);
+    };
+
+    return impl(g);
+  }
+
+  // Find the index of the first Ps equals to p
+  template<typename P, typename... Ps>
+  consteval std::ptrdiff_t find_index(P p, kumi::tuple<Ps...> )
+  {
+    bool checks[] = { (Ps{} == p)...};
+    for(std::size_t i=0;i<sizeof...(Ps);++i) if(checks[i]) return i;
+    return -1;
+  }
+
+  // Reusable for-loop like meta-function
+  template<auto Begin, auto Step, auto End, typename Func>
+  EVE_FORCEINLINE constexpr void for_(Func f)
+  {
+    using type = decltype(Begin);
+    auto body = [&]<typename N>(N)
+                {
+                  return f(std::integral_constant<type, Begin + N::value*Step>{} );
+                };
+
+    [&]<auto... Iter>( std::integer_sequence<type,Iter...> )
+    {
+      ( body( std::integral_constant<type,Iter>{} ), ...);
+    }( std::make_integer_sequence<type,End - Begin>{});
+  }
+
+  // Can't use a lambda because need to force inline
+  template <auto Begin, auto Step, decltype(Begin) ... Iter, typename Func>
+  EVE_FORCEINLINE constexpr bool for_until_impl_(
+    std::integer_sequence<decltype(Begin), Iter...>, Func& f)
+  {
+    return ( f(std::integral_constant<decltype(Begin), Begin + Iter * Step>{} ) || ...);
+  }
+
+  template<auto Begin, auto Step, auto End, typename Func>
+  EVE_FORCEINLINE constexpr bool for_until_(Func f)
+  {
+    return for_until_impl_<Begin, Step>(std::make_integer_sequence<decltype(Begin),(End - Begin) / Step>{}, f);
   }
 }

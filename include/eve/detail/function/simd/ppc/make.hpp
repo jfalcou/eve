@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -20,19 +17,22 @@ namespace eve::detail
   //================================================================================================
   // arithmetic cases
   //================================================================================================
-  template<real_scalar_value T, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as_<T> const &, eve::ppc_ const &, Vs... vs) noexcept
+  template<real_scalar_value T, typename N, typename... Vs>
+  EVE_FORCEINLINE auto make(eve::as<wide<T, N>> const &, Vs... vs) noexcept
+    requires ppc_abi<abi_t<T, N>>
   {
-    using type = as_register_t<T, fixed<sizeof...(vs)>, eve::ppc_>;
+    using type = as_register_t<T, N, ppc_>;
     type that  = {static_cast<T>(vs)...};
     return that;
   }
 
-  template<real_scalar_value T, typename V>
-  EVE_FORCEINLINE auto make(eve::as_<T> const &, eve::ppc_ const &, V v) noexcept
+  template<real_scalar_value T, typename N, typename V>
+  EVE_FORCEINLINE auto make(eve::as<wide<T, N>> const &, V v) noexcept
+    requires ppc_abi<abi_t<T, N>>
   {
-    auto impl = [&](auto... I) {
-      using type = as_register_t<T, expected_cardinal_t<T>, eve::ppc_>;
+    auto impl = [&](auto... I)
+    {
+      using type = as_register_t<T, N, ppc_>;
 
       auto u   = static_cast<T>(v);
       auto val = [](auto vv, auto const &) { return vv; };
@@ -46,22 +46,24 @@ namespace eve::detail
   //================================================================================================
   // logical cases
   //================================================================================================
-  template<real_scalar_value T, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as_<logical<T>> const &, eve::ppc_ const &, Vs... vs) noexcept
+  template<real_scalar_value T, typename N, typename... Vs>
+  EVE_FORCEINLINE auto make(eve::as<logical<wide<T, N>>> const &, Vs... vs) noexcept
+    requires ppc_abi<abi_t<T, N>>
   {
-    using type = as_register_t<logical<T>, fixed<sizeof...(vs)>, eve::ppc_>;
+    using type = as_logical_register_t<T, N, ppc_>;
     type that  = {logical<T>(vs).bits()...};
     return that;
   }
 
-  template<real_scalar_value T, typename V>
-  EVE_FORCEINLINE auto make(eve::as_<logical<T>> const &, eve::ppc_ const &, V v) noexcept
+  template<real_scalar_value T, typename N, typename V>
+  EVE_FORCEINLINE auto make(eve::as<logical<wide<T, N>>> const &, V v) noexcept
+    requires ppc_abi<abi_t<T, N>>
   {
-    using ltype = logical<T>;
-    auto impl   = [&](auto... I) {
-      using type = as_register_t<ltype, expected_cardinal_t<ltype>, eve::ppc_>;
+    auto impl   = [&](auto... I)
+    {
+      using type = as_logical_register_t<T, N, ppc_>;
 
-      auto u   = ltype(v).bits();
+      auto u   = logical<T>(v).bits();
       auto val = [](auto vv, auto const &) { return vv; };
 
       return type {val(u, I)...};
@@ -70,4 +72,3 @@ namespace eve::detail
     return apply<expected_cardinal_v<T>>(impl);
   }
 }
-

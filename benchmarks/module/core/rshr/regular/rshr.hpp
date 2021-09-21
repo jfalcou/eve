@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #include <eve/function/rshr.hpp>
 #include <eve/constant/valmin.hpp>
@@ -15,9 +12,9 @@
 
 int main()
 {
-  using I_TYPE    = eve::detail::as_integer_t<EVE_TYPE, signed>;
+  using I_TYPE    = eve::as_integer_t<EVE_TYPE, signed>;
   using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  using I_VALUE   = eve::detail::as_integer_t<EVE_VALUE, signed>;
+  using I_VALUE   = eve::as_integer_t<EVE_VALUE, signed>;
   auto lmin = eve::valmin(eve::as<EVE_VALUE>());
   auto lmax = eve::valmax(eve::as<EVE_VALUE>());
   auto smax = I_VALUE(sizeof(EVE_VALUE)-1);

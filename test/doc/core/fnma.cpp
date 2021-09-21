@@ -1,42 +1,37 @@
-#include <eve/function/fnma.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/function/diff/fnma.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
-#include <iomanip>
 
-using wide_t = eve::wide<float, eve::fixed<4>>;
+using wide_ft = eve::wide <float, eve::fixed<4>>;
 
 int main()
 {
-  float es  = eve::eps(eve::as<float>());
-  float esm1 = es-1.0f;
-  float esp1 = es+1.0f;
-  float vm  = eve::valmax(eve::as<float>());
-  wide_t oi = {2, -3, esp1,  vm};
-  wide_t pi = {3, -2, esm1,  2 };
-  wide_t qi = {4, -1, -1.0f, vm};
+  wide_ft pf = { 0.0f, 1.0f, -1.0f, -0.5f};
+  wide_ft qf = { 1.0f, -1.0f, -0.5f, 0.0f};
+  wide_ft rf = { 1.0f, 2.0f, -5.0f, 0.1f};
 
-  std::cout << "---- simd" << '\n'
-            << " <- oi                                 = " << oi << '\n'
-            << " <- pi                                 = " << pi << '\n'
-            << " <- qi                                 = " << qi << '\n'
-            << " -> pedantic_(fnma)(oi, pi, qi)        = " << eve::pedantic_(eve::fnma)(oi, pi, qi) << '\n'
-            << " -> numeric_(fnma)(oi, pi, qi)         = " << eve::numeric_(eve::fnma)(oi, pi, qi) << '\n'
-            << " -> fnma(oi, pi, qi)                   = " << eve::fnma(oi, pi, qi) << '\n'
-            << "\n if the last fnma result ends by '0, -inf}', it means that\n"
-            << " the system has no simd fnma family intrinsics\n"
-            << " or is not configured to use them.\n\n";
+  std::cout
+    << "---- simd" << '\n'
+    << "<- pf                          = " << pf << '\n'
+    << "<- qf                          = " << qf << '\n'
+    << "<- rf                          = " << rf << '\n'
+    << "-> fnma(pf, qf, rf)            = " << eve::fnma(pf, qf, rf) << '\n'
+    << "-> diff_1st(fnma)(pf, qf, rf)  = " << eve::diff_1st(eve::fnma)(pf, qf, rf) << '\n'
+    << "-> diff_2nd(fnma)(pf, qf, rf)  = " << eve::diff_2nd(eve::fnma)(pf, qf, rf) << '\n'
+    << "-> diff_3rd(fnma)(pf, qf, rf)  = " << eve::diff_3rd(eve::fnma)(pf, qf, rf) << '\n';
 
-  std::cout << "---- scalar" << std::setprecision(10) << '\n'
-            << " <- vm =                                " << vm << '\n'
-            << " -> pedantic_(fnma)(vm, 2.0f, -vm)     = " << eve::pedantic_(eve::fnma)(vm, 2.0f, -vm) << '\n'
-            << " -> numeric_(fnma)(vm, 2.0f, -vm)      = " << eve::numeric_(eve::fnma)(vm, 2.0f, -vm) << '\n'
-            << " -> fnma(vm, 2.0f, -vm)                = " << eve::fnma(vm, 2.0f, -vm) << '\n'
-            << " <- esm1                               = " << esm1 << '\n'
-            << " <- esp1                               = " << esp1 << '\n'
-            << " -> pedantic_(fnma)(esp1, esm1, -1.0f) = " << eve::pedantic_(eve::fnma)(esp1, esm1,-1.0f) << '\n'
-            << " -> numeric_(fnma)(esp1, esm1, -1.0f)  = " << eve::numeric_(eve::fnma)(esp1, esm1, -1.0f) << '\n'
-            << " -> fnma(esp1, esm1, -1.0f)            = " << eve::fnma(esp1, esm1, -1.0f) << '\n';
+
+  float xf = 0.5f;
+  float yf = 0.5f;
+  float zf = 0.1f;
+  std::cout
+    << "---- scalar"  << '\n'
+    << "<- xf                         = " << xf << '\n'
+    << "<- yf                         = " << yf << '\n'
+    << "<- zf                         = " << yf << '\n'
+    << "-> fnma(xf, yf, zf)           = " << eve::fnma(xf, yf, zf) << '\n'
+    << "-> diff_1st(fnma)(xf, yf, zf) = " << eve::diff_1st(eve::fnma)(xf, yf, zf) << '\n'
+    << "-> diff_2nd(fnma)(xf, yf, zf) = " << eve::diff_2nd(eve::fnma)(xf, yf, zf) << '\n'
+    << "-> diff_3rd(fnma)(xf, yf, zf) = " << eve::diff_3rd(eve::fnma)(xf, yf, zf) << '\n';
   return 0;
 }

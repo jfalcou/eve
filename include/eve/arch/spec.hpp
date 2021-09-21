@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -24,11 +21,15 @@ namespace eve
 {
   //================================================================================================
   // Local renaming for spy SIMD detector
-  inline constexpr auto current_api = spy::simd_instruction_set;
-
 # if defined(EVE_NO_SIMD)
-  inline constexpr bool supports_simd = false;
+  inline constexpr auto current_api     = spy::undefined_simd_;
+  inline constexpr bool supports_simd   = false;
 # else
+#   if !defined(EVE_INCOMPLETE_AVX512_SUPPORT)
+  inline constexpr auto current_api   = spy::simd_instruction_set;
+#   else
+  inline constexpr auto current_api   = spy::avx2_;
+#   endif
   inline constexpr bool supports_simd = true;
 # endif
 }

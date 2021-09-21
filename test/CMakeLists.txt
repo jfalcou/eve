@@ -1,25 +1,15 @@
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
-##  Copyright 2018 Joel FALCOU
-##
-##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+##  Copyright : EVE Contributors & Maintainers
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
-
-##==================================================================================================
-## Find Boost
-##==================================================================================================
-find_package(Boost 1.65.0 QUIET)
-
-if(Boost_FOUND)
-  set(EVE_USE_BOOST 1)
-  message( STATUS "[eve] Boost found in ${Boost_INCLUDE_DIRS} - Boost dependent tests activated")
-  string(REPLACE "/usr/include" "" Boost_INCLUDE_DIRS ${Boost_INCLUDE_DIRS})
-else()
-  set(Boost_INCLUDE_DIRS "")
-endif()
+include(test)
 
 add_subdirectory(doc)
-add_subdirectory(exhaustive)
-add_subdirectory(random)
+# add_subdirectory(exhaustive)
+
+if( EVE_BUILD_RANDOM )
+  add_subdirectory(random)
+endif()
+
 add_subdirectory(unit)

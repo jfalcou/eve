@@ -1,4 +1,5 @@
 #include <eve/function/oneminus.hpp>
+#include <eve/function/saturated/oneminus.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
@@ -16,7 +17,7 @@ int main()
     << "---- simd" << '\n'
     << "<- pi                       = " << pi << '\n'
     << "-> oneminus(pi)             = " << eve::oneminus(pi) << '\n'
-    << "-> saturated_(oneminus(pi)) = " << eve::saturated_(eve::oneminus)(pi) << '\n';
+    << "-> saturated(oneminus(pi)) = " << eve::saturated(eve::oneminus)(pi) << '\n';
 
 
   float xf = 2.0f;

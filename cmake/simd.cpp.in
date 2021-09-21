@@ -1,10 +1,7 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
@@ -12,33 +9,29 @@
 #include <eve/traits/cardinal.hpp>
 #include <eve/traits/element_type.hpp>
 
+template<typename T>
+using extra_wide = eve::wide<T,eve::fixed<2*eve::expected_cardinal_v<T>>>;
+
+template<typename T>
+inline constexpr auto small_size  = (eve::expected_cardinal_v<T>/2 !=0 )
+                                  ? eve::expected_cardinal_v<T>/2 : 1;
+
+template<typename T>
+inline constexpr auto smaller_size  = (eve::expected_cardinal_v<T>/4 !=0 )
+                                    ? eve::expected_cardinal_v<T>/4 : 1;
+
+template<typename T>
+using small_wide = eve::wide<T,eve::fixed<small_size<T>>>;
+
+template<typename T>
+using smaller_wide = eve::wide<T,eve::fixed<smaller_size<T>>>;
+
+template<typename T>
+using tiny_wide = eve::wide<T,eve::fixed<1>>;
+
 #define EVE_SIMD_TESTS
+#define EVE_TYPE      ${target}
+#define EVE_CARDINAL  ::eve::cardinal_v<T>
+#define EVE_VALUE     ::eve::element_type_t<T>
 
-#define EVE_VALUE ${target}
-#define EVE_BASE eve::wide<${target}>
-
-#if !defined(EVE_CUSTOM_CARDINAL)
-inline constexpr auto base_cardinal   = EVE_BASE::static_size;
-inline constexpr auto large_cardinal  = 2*base_cardinal;
-inline constexpr auto small_cardinal  = (base_cardinal>1) ? base_cardinal/2 : 1;
-
-#define EVE_CARDINAL ::eve::cardinal_v<T>
-
-// Native size test
-#define EVE_TYPE  eve::wide<${target},eve::fixed<1>>, eve::wide<${target},eve::fixed<small_cardinal>> \
-                , eve::wide<${target}>              , eve::wide<${target},eve::fixed<large_cardinal>> \
-/**/
 #include "${header}.hpp"
-
-#else
-
-#if EVE_CUSTOM_CARDINAL > 0
-#define EVE_TYPE eve::wide<EVE_VALUE,eve::fixed<EVE_CUSTOM_CARDINAL>>
-#else
-#define EVE_TYPE eve::wide<EVE_VALUE>
-#endif
-
-// Specific  EVE_CARDINAL test
-#include "${header}.hpp"
-
-#endif

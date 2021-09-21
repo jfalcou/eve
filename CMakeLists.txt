@@ -1,11 +1,10 @@
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
-##  Copyright 2018 Joel FALCOU
-##
-##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+##  Copyright : EVE Contributors & Maintainers
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 cmake_minimum_required(VERSION 3.2)
+
 ## =================================================================================================
 ## Setup project
 ## =================================================================================================
@@ -21,27 +20,34 @@ if (${PROJECT_SOURCE_DIR} STREQUAL ${PROJECT_BINARY_DIR})
 endif()
 
 ## =================================================================================================
-## Options
+## Configuration
 ## =================================================================================================
-option( EVE_BUILD_TEST        "Build tests for eve"         ON  )
-option( EVE_BUILD_BENCHMARKS  "Build benchmarks for eve"    OFF )
+include(config/options)
+include(config/install)
+include(config/dependencies)
 
-message( STATUS "[eve] Building ${CMAKE_BUILD_TYPE} mode with: ${CMAKE_CXX_FLAGS}")
-
 ## =================================================================================================
-## Install target
+## Documentation target
 ## =================================================================================================
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/include DESTINATION .)
+if( EVE_BUILD_DOCUMENTATION )
+  include(config/doxygen)
+endif()
 
 ## =================================================================================================
 ## Test and Benchmarks target
 ## =================================================================================================
 include(CTest)
+include(target/add_parent_target)
+include(target/targets)
+include(config/compiler)
+include(config/types)
+include(config/pch)
 
 if( EVE_BUILD_TEST )
-  include(test)
+  add_subdirectory(${PROJECT_SOURCE_DIR}/test/)
+  add_subdirectory(${PROJECT_SOURCE_DIR}/examples/)
 endif()
 
 if( EVE_BUILD_BENCHMARKS )
-  include(benchmark)
+  add_subdirectory(${PROJECT_SOURCE_DIR}/benchmarks/)
 endif()

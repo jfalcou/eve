@@ -1,17 +1,12 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/rebindable.hpp>
-#include <eve/detail/is_wide.hpp>
 #include <eve/forward.hpp>
 #include <cstddef>
 
@@ -20,14 +15,49 @@ namespace eve
   template<std::ptrdiff_t Cardinal> struct fixed;
   struct  scalar_cardinal;
 
+  //================================================================================================
+  //! @addtogroup traits
+  //! @{
+  //!   @struct cardinal
+  //!   @brief Computes the cardinal of a given type
+  //!
+  //!   **Required header:** `#include <eve/traits/cardinal.hpp>`
+  //!
+  //!   For a given type `T`, computes the type of its cardinal.
+  //!
+  //!   @tparam T Type to process
+  //!
+  //!   #### Member types
+  //!
+  //!   |Name   | Definition               |
+  //!   |:------|:-------------------------|
+  //!   |`type` | The cardinal type of `T` |
+  //!
+  //!    <br/>
+  //!
+  //!   @groupheader{Helper types}
+  //!
+  //!   @code{.cpp}
+  //!   template<typename Type>
+  //!   using cardinal_t = typename cardinal<Type>::type;
+  //!   @endcode
+  //!
+  //!   @groupheader{Helper variable template}
+  //!
+  //!   @code{.cpp}
+  //!   template<typenale Type>
+  //!   inline constexpr auto cardinal_v = cardinal<T>::value;
+  //!   @endcode
+  //! @}
+  //================================================================================================
   template<typename Type>
   struct cardinal : scalar_cardinal
   {
     using type = scalar_cardinal;
   };
 
-  template<typename Type, typename Size, typename ABI>
-  struct cardinal<wide<Type, Size, ABI>> : Size
+  template<typename Type, typename Size>
+  struct cardinal<wide<Type, Size>> : Size
   {
      using type = Size;
   };
@@ -38,15 +68,8 @@ namespace eve
   };
 
   template<typename Type>
-  requires( rebindable<Type> )
-  struct cardinal<Type> : cardinal<std::tuple_element_t<0,Type>>
-  {
-  };
-
-  template<typename Type>
   using cardinal_t = typename cardinal<Type>::type;
 
   template<typename Type>
   inline constexpr auto cardinal_v = cardinal<Type>::value;
 }
-

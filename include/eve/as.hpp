@@ -1,30 +1,36 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/abi.hpp>
-#include <type_traits>
-#include <cstdint>
-
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup traits
+  //! @{
+  //! @struct as
+  //! @brief Lightweight type-wrapper
+  //!
+  //! **Required header:** `#include <eve/as.hpp>`
+  //!
+  //! Wraps type into a constexpr, trivially constructible empty class to optimize passing type
+  //! parameters via object instead of via template parameters
+  //!
+  //! @tparam T Type to wrap
+  //!
+  //! @}
+  //================================================================================================
   template<typename T>
-  struct as_
+  struct as
   {
+    //! @brief Wrapped type
     using type = T;
-  };
 
-  template<typename T>
-  EVE_FORCEINLINE constexpr as_<std::decay_t<T>> as(T && = {}) noexcept
-  {
-    return {};
-  }
+    constexpr as()          noexcept {}
+    constexpr as(T const&)  noexcept {}
+  };
 }

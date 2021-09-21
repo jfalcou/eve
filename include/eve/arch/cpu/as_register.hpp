@@ -1,20 +1,18 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
-#include <eve/traits/as_wide.hpp>
 #include <eve/arch/expected_cardinal.hpp>
-#include <eve/detail/has_abi.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/detail/has_abi.hpp>
+#include <eve/detail/kumi.hpp>
 #include <eve/forward.hpp>
+#include <eve/traits/as_wide.hpp>
 #include <array>
 
 namespace eve
@@ -23,12 +21,42 @@ namespace eve
   struct as_register;
 
   template<typename Type, typename Cardinal, typename ABI>
+  struct as_logical_register;
+
+  template<typename Type, typename Cardinal, typename ABI>
   using as_register_t = typename as_register<Type, Cardinal, ABI>::type;
+
+  template<typename Type, typename Cardinal, typename ABI>
+  using as_logical_register_t = typename as_logical_register<Type, Cardinal, ABI>::type;
 
   template<typename Type, typename Cardinal>
   struct as_register<Type, Cardinal, eve::emulated_>
   {
     using type = std::array<Type, Cardinal::value>;
+  };
+
+  template<typename Type, typename Cardinal>
+  struct as_logical_register<Type, Cardinal, eve::emulated_>
+  {
+    using type = std::array<logical<Type>, Cardinal::value>;
+  };
+
+  //================================================================================================
+  // Special case : product_type
+  //================================================================================================
+  namespace detail
+  {
+    template<typename Cardinal> struct apply_as_wide
+    {
+      template<typename T> using type = as_wide<T,Cardinal>;
+    };
+  }
+
+  template<typename Type, typename Cardinal>
+  requires( kumi::product_type<Type> )
+  struct  as_register<Type, Cardinal, eve::bundle_>
+        : kumi::as_tuple<Type, detail::apply_as_wide<Cardinal>::template type>
+  {
   };
 
   namespace detail
@@ -126,5 +154,10 @@ namespace eve
   {
     using type = detail::blob<Type,Cardinal>;
   };
-}
 
+  template<typename Type, typename Cardinal>
+  struct as_logical_register<Type, Cardinal, eve::aggregated_>
+  {
+    using type = detail::blob<logical<Type>,Cardinal>;
+  };
+}

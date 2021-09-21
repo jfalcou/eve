@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -15,6 +12,22 @@
 
 namespace eve
 {
+  //================================================================================================
+  // Check for bundle_ ABI
+  //================================================================================================
+  template<typename T> struct has_bundle_abi    : std::false_type {};
+
+  template<typename T>
+  requires requires { typename T::abi_type; }
+  struct has_bundle_abi<T> : std::is_same<typename T::abi_type, bundle_>
+  {};
+
+  template<typename T>
+  inline constexpr bool has_bundle_abi_v = has_bundle_abi<T>::value;
+
+  template<typename T>
+  using has_bundle_abi_t = typename has_bundle_abi<T>::type;
+
   //================================================================================================
   // Check for emulated_ ABI
   //================================================================================================

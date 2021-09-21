@@ -1,24 +1,20 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/meta.hpp>
 #include <eve/arch/arm/predef.hpp>
+#include <eve/traits/as_integer.hpp>
 #include <type_traits>
 
 namespace eve
 {
   template<typename T>
   struct logical;
-  struct neon64_;
   struct neon128_;
 }
 
@@ -27,7 +23,7 @@ namespace eve
 {
   // ---------------------------------------------------------------------------------------------
   // NEON 64
-  template<typename T, typename Size> struct as_register<T, Size, eve::neon64_>
+  template<typename T, typename Size> struct as_register<T, Size, eve::arm_64_>
   {
     static constexpr auto find()
     {
@@ -37,8 +33,11 @@ namespace eve
       }
       else if constexpr( std::is_same_v<T,double> && Size::value <= 1 )
       {
-        if constexpr(spy::supports::aarch64_) return float64x1_t{};
-        else                                  return emulated_{};
+        #if defined(SPY_SIMD_IS_ARM_ASIMD)
+        return float64x1_t{};
+        #else
+        return emulated_{};
+        #endif
       }
       else if constexpr( std::is_integral_v<T> )
       {
@@ -62,7 +61,7 @@ namespace eve
   // ---------------------------------------------------------------------------------------------
   // NEON 128
   template<typename T, typename Size>
-  struct as_register<T, Size, eve::neon128_>
+  struct as_register<T, Size, eve::arm_128_>
   {
     static constexpr auto find()
     {
@@ -72,8 +71,11 @@ namespace eve
       }
       else if constexpr( std::is_same_v<T,double> )
       {
-        if constexpr(spy::supports::aarch64_) return float64x2_t{};
-        else                                  return emulated_{};
+        #if defined(SPY_SIMD_IS_ARM_ASIMD)
+        return float64x2_t{};
+        #else
+        return emulated_{};
+        #endif
       }
       else if constexpr( std::is_integral_v<T> )
       {
@@ -95,15 +97,9 @@ namespace eve
 
   // ---------------------------------------------------------------------------------------------
   // logical cases
-  template<typename T, typename Size>
-  struct as_register<logical<T>, Size, eve::neon128_>
-      : as_register<detail::as_integer_t<T, unsigned>, Size, eve::neon128_>
-  {};
-
-  template<typename T, typename Size>
-  struct as_register<logical<T>, Size, eve::neon64_>
-      : as_register<detail::as_integer_t<T, unsigned>, Size, eve::neon64_>
+  template<typename T, typename Size, arm_abi ABI>
+  struct  as_logical_register<T, Size, ABI>
+        : as_register<as_integer_t<T, unsigned>, Size, ABI>
   {};
 }
 #endif
-

@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #include <eve/function/ceil.hpp>
 #include <eve/constant/valmin.hpp>
@@ -17,7 +14,7 @@ int main()
 {
   auto lmin = eve::valmin(eve::as<EVE_VALUE>());
   auto lmax = eve::valmax(eve::as<EVE_VALUE>());
-  using I_VALUE = eve::detail::as_integer_t<EVE_VALUE>;
+  using I_VALUE = eve::as_integer_t<EVE_VALUE>;
 
   auto const std__iceil = [](EVE_VALUE x) { return static_cast<I_VALUE>(std::ceil(x)); };
 

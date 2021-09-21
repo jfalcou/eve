@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -30,9 +27,15 @@ namespace eve
 // NEON SIMD ABI
 # if !defined(EVE_CURRENT_API) && defined(SPY_SIMD_IS_ARM)
 #  include <arm_neon.h>
+#  if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_ARM_ASIMD)
+#   define EVE_CURRENT_ABI ::eve::arm_128_
+#   define EVE_CURRENT_API ::eve::asimd_
+#   define EVE_ABI_NAMESPACE arm_abi_v0
+#  endif
 #  if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_ARM_NEON)
-#   define EVE_CURRENT_ABI ::eve::neon128_
+#   define EVE_CURRENT_ABI ::eve::arm_128_
 #   define EVE_CURRENT_API ::eve::neon128_
+#   define EVE_ABI_NAMESPACE arm_abi_v0
 #  endif
 # endif
 
@@ -43,4 +46,3 @@ namespace eve
 # endif
 
 #endif
-

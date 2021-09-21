@@ -1,12 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -14,73 +11,42 @@
 #include <eve/arch/cpu/tags.hpp>
 #include <eve/detail/meta.hpp>
 
-#if defined( SPY_SIMD_IS_ARM )
-  #if defined( SPY_OS_IS_LINUX )
-    #include <asm/hwcap.h>
-    #include <sys/auxv.h>
-  #endif
-#endif
-
 namespace eve
 {
   // clang-format off
   //================================================================================================
-  // Dispatching tag for VMX SIMD implementation
+  // ABI tags for all ARM bits SIMD registers
   //================================================================================================
-  struct neon64_  : simd_
+  template<std::size_t Size, bool Logical> struct arm_abi_
   {
-    static constexpr std::size_t bits           = 64;
-    static constexpr std::size_t bytes          = 8;
-    static constexpr bool        is_bit_logical = true;
+    static constexpr std::size_t bits                     = Size;
+    static constexpr std::size_t bytes                    = Size/8;
+    static constexpr bool        is_wide_logical = Logical;
+
+    template<typename Type>
+    static constexpr bool is_full = ((Type::size() * sizeof(typename Type::value_type)) >= 8);
 
     template<typename Type>
     static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
   };
 
-  struct neon128_ : simd_
-  {
-    static constexpr std::size_t bits           = 128;
-    static constexpr std::size_t bytes          = 16;
-    static constexpr bool        is_bit_logical = true;
+  struct arm_64_  : arm_abi_<64,true> {};
+  struct arm_128_ : arm_abi_<128,true> {};
 
-    template<typename Type>
-    static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
-  };
+  //================================================================================================
+  // Dispatching tag for ARM SIMD implementation
+  //================================================================================================
+  struct neon128_ : simd_     {};
+  struct asimd_   : neon128_  {};
 
   //================================================================================================
   // NEON extension tag objects
   //================================================================================================
-  inline constexpr auto neon = spy::neon_;
-
-  struct aarch64_   {};
-  inline constexpr auto aarch64 = aarch64_{};
-
-  //================================================================================================
-  // Runtime detection of CPU support
-  //================================================================================================
-  inline bool is_supported(spy::arm_simd_info<spy::detail::simd_version::neon_ > const &) noexcept
-  {
-    #if defined( SPY_SIMD_IS_ARM )
-    auto hwcaps = getauxval(AT_HWCAP);
-    return (hwcaps & (1 << 12)) != 0;
-    #else
-      return false;
-    #endif
-  }
-
-  inline bool is_supported(aarch64_ const &) noexcept
-  {
-    #if defined( SPY_SIMD_IS_ARM )
-    auto hwcaps = getauxval(AT_HWCAP);
-    return (hwcaps & HWCAP_ASIMD) != 0;
-    #else
-      return false;
-    #endif
-  }
+  inline constexpr auto neon  = spy::neon_;
+  inline constexpr auto asimd = spy::asimd_;
 
   //================================================================================================
   // ARM ABI concept
   //================================================================================================
-  template<typename T> concept arm_abi = detail::is_one_of<T>(detail::types<neon128_, neon64_> {});
+  template<typename T> concept arm_abi = detail::is_one_of<T>(detail::types<arm_64_,arm_128_> {});
 }
-
