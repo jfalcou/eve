@@ -12,9 +12,9 @@
 namespace eve::detail
 {
   template<real_scalar_value T, typename N, std::ptrdiff_t Shift>
-  EVE_FORCEINLINE wide<T,N> slide_right_ ( EVE_SUPPORTS(sse2_)
-                                            , wide<T,N> v, index_t<Shift>
-                                            ) noexcept
+  EVE_FORCEINLINE wide<T,N> slide_right_( EVE_SUPPORTS(sse2_)
+                                        , wide<T,N> v, index_t<Shift>
+                                        ) noexcept
   requires(Shift <= N::value) && x86_abi<abi_t<T, N>>
   {
           if constexpr(Shift == 0)        return v;
@@ -270,7 +270,7 @@ namespace eve::detail
   template<simd_value Wide, std::ptrdiff_t Shift>
   EVE_FORCEINLINE logical<Wide>
   slide_right_(EVE_SUPPORTS(avx512_), logical<Wide> v, index_t<Shift>) noexcept
-  requires(Shift <= Wide::size() )
+  requires(Shift <= Wide::size())  && native_simd_for_abi<Wide, x86_512_>
   {
           if constexpr(Shift == 0)            return v;
     else  if constexpr(Shift == Wide::size()) return logical<Wide>{false};
@@ -288,7 +288,7 @@ namespace eve::detail
   template<simd_value Wide, std::ptrdiff_t Shift>
   EVE_FORCEINLINE logical<Wide>
   slide_right_(EVE_SUPPORTS(avx512_), logical<Wide> x, logical<Wide> y, index_t<Shift>) noexcept
-  requires(Shift <= Wide::size() )
+  requires(Shift <= Wide::size()) && native_simd_for_abi<Wide, x86_512_>
   {
          if constexpr ( Shift == 0            ) return y;
     else if constexpr ( Shift == Wide::size() ) return x;
