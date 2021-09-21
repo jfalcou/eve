@@ -13,6 +13,7 @@
 #include "unit/algo/udt.hpp"
 
 /*
+FIX-#971
 TTS_CASE("erase/remove idiom in eve")
 {
   eve::algo::soa_vector<udt::line2D> lines {
