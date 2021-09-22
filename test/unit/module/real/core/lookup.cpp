@@ -13,7 +13,7 @@
 // arithmetic types
 //==================================================================================================
 EVE_TEST( "Check eve::lookup behavior on arithmetic wide"
-        , eve::test::simd::all_types
+        , eve::test::simd::restricted::all_types
         , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
         )
 <typename T, typename L>(T data, L logical_data)

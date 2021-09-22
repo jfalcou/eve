@@ -19,7 +19,7 @@
 // Types tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of fracscale"
-            , eve::test::simd::ieee_reals
+            , eve::test::simd::restricted::ieee_reals
             )
 <typename T>(eve::as<T>)
 {
@@ -33,7 +33,7 @@ EVE_TEST_TYPES( "Check return types of fracscale"
 //== fracscale simd tests
 //==================================================================================================
 EVE_TEST( "Check behavior of fracscale(wide) and diff on  floating types"
-            , eve::test::simd::ieee_reals
+            , eve::test::simd::restricted::ieee_reals
             , eve::test::generate ( eve::test::randoms(-100.0, 100.0))
             )
 <typename T>(T const& a0 )
@@ -51,7 +51,7 @@ EVE_TEST( "Check behavior of fracscale(wide) and diff on  floating types"
 // fracscale[cond](simd) tests
 //==================================================================================================
 EVE_TEST( "Check behavior of fracscale[cond](wide) on  floating types"
-        , eve::test::simd::ieee_reals
+        , eve::test::simd::restricted::ieee_reals
         , eve::test::generate ( eve::test::randoms(0.0, 100.0)
                               , eve::test::logicals(0, 3))
         )

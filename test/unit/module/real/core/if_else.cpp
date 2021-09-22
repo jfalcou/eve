@@ -22,7 +22,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::if_else", eve::test::simd::all_types)
+EVE_TEST_TYPES( "Check return types of eve::if_else", eve::test::simd::restricted::all_types)
 <typename T>(eve::as<T>)
 {
   using sT =  eve::element_type_t<T>;
@@ -70,7 +70,7 @@ EVE_TEST_TYPES( "Check return types of eve::if_else", eve::test::simd::all_types
 };
 
 EVE_TEST( "Check behavior of eve::if_else(logical,logical,logical) and eve::if_else(logical,wide,wide)"
-        , eve::test::simd::all_types
+        , eve::test::simd::restricted::all_types
         , eve::test::generate ( eve::test::randoms(-10, +10)
                               , eve::test::randoms(-10, +10)
                               , eve::test::logicals(0,3)
@@ -131,7 +131,7 @@ EVE_TEST( "Check behavior of eve::if_else(logical,logical,logical) and eve::if_e
 };
 
 EVE_TEST( "Check behavior of eve::if_else(conditional, a, b)"
-        , eve::test::simd::uints_8
+        , eve::test::simd::restricted::uints_8
         , eve::test::generate ( eve::test::randoms(-10, +10), eve::test::logicals(0,3) )
         )
 <typename T, typename L>( T const &a, L const& l )
