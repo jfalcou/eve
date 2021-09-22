@@ -32,7 +32,7 @@ EVE_TEST_TYPES( "Check return types of eve::is_odd(simd)"
 //==================================================================================================
 
 EVE_TEST( "Check behavior of eve::is_odd(simd)"
-        , eve::test::simd::ieee_reals
+        , eve::test::simd::restricted::ieee_reals
         , eve::test::generate ( eve::test::ramp(0)
                               , eve::test::logicals(0, 3))
         )

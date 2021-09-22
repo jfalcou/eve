@@ -17,7 +17,7 @@
 // Types tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of eve::is_not_denormal(simd)"
-              , eve::test::simd::ieee_reals
+              , eve::test::simd::restricted::ieee_reals
               )
 <typename T>(eve::as<T>)
 {
@@ -35,7 +35,7 @@ auto mini = []<typename T>(eve::as<T> const & tgt)
   return 2*eve::smallestposval(tgt);
 };
 EVE_TEST( "Check behavior of eve::is_not_denormal(simd)"
-        , eve::test::simd::ieee_reals
+        , eve::test::simd::restricted::ieee_reals
         , eve::test::generate ( eve::test::randoms(eve::smallestposval, mini)
                               , eve::test::randoms(eve::zero, eve::mindenormal)
                               , eve::test::randoms(eve::zero, mini)

@@ -44,7 +44,7 @@ auto mf2 = []<typename T>(eve::as<T> const & tgt)
 };
 
 EVE_TEST( "Check behavior of eve::is_flint(simd)"
-        , eve::test::simd::ieee_reals
+        , eve::test::simd::restricted::ieee_reals
         , eve::test::generate ( eve::test::randoms(mfo2, mf2)
                               , eve::test::randoms(mfo2, mf2)
                               , eve::test::logicals(0, 3))

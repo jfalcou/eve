@@ -37,7 +37,7 @@ EVE_TEST_TYPES( "Check return types of eve::is_finite(simd)"
 //==================================================================================================
 
 EVE_TEST( "Check behavior of eve::is_finite(simd)"
-        , eve::test::simd::ieee_reals
+        , eve::test::simd::restricted::ieee_reals
         , eve::test::generate ( eve::test::ramp(0)
                               , eve::test::logicals(0, 3))
         )
@@ -54,7 +54,7 @@ EVE_TEST( "Check behavior of eve::is_finite(simd)"
 // Test cases values
 //==================================================================================================
 EVE_TEST( "Check corner-cases behavior of eve::is_finite on wide"
-        , eve::test::simd::ieee_reals
+        , eve::test::simd::restricted::ieee_reals
         , eve::test::generate(eve::test::limits())
         )
 <typename T>(T const& cases)
