@@ -17,7 +17,7 @@
  //== Types tests
  //==================================================================================================
  EVE_TEST_TYPES( "Check return types of legendre on wide"
-         , eve::test::simd::ieee_reals
+         , eve::test::simd::restricted::ieee_reals
 
          )
  <typename T>(eve::as<T>)
@@ -36,7 +36,7 @@
  //== legendre tests
  //==================================================================================================
  EVE_TEST( "Check behavior of legendre p on wide"
-         , eve::test::simd::ieee_reals
+         , eve::test::simd::restricted::ieee_reals
          , eve::test::generate(eve::test::between(-1, 1), eve::test::as_integer(eve::test::ramp(0)))
          )
    <typename T, typename I>(T const& a0,I const & i0)
@@ -68,7 +68,7 @@
  //== legendre tests
  //==================================================================================================
  EVE_TEST( "Check behavior of legendre q on wide"
-         , eve::test::simd::ieee_reals
+         , eve::test::simd::restricted::ieee_reals
          , eve::test::generate(eve::test::between(-1.0, 1.0), eve::test::as_integer(eve::test::ramp(0)))
          )
    <typename T, typename I>(T const& a0,I const & i0)
@@ -99,7 +99,7 @@
  };
 
  EVE_TEST( "Check behavior of diff(legendre) on wide"
-         , eve::test::simd::ieee_reals
+         , eve::test::simd::restricted::ieee_reals
          , eve::test::generate(eve::test::between(-1, 1), eve::test::as_integer(eve::test::ramp(0)))
          )
    <typename T, typename I>(T const& a0,I const & i0)
