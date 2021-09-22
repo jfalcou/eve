@@ -33,6 +33,8 @@ EVE_TEST_TYPES("Check converting_iterator", algo_test::selected_types)
   auto run_test_writeable = [&](auto f) {
     algo_test::writeable_readable_iterator(
       eve::algo::convert(f, eve::as<char>{}), char_values, replace);
+    algo_test::iterator_supports_compress(
+      eve::algo::convert(f, eve::as<char>{}), char_values, replace);
   };
 
   auto run_test = [&] <typename U>(U* f, U* l) {

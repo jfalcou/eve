@@ -96,16 +96,13 @@ void collect_indexes(R&& r, P p, std::vector<IdxType, Alloc>& res)
 
   while (f != precise_l) {
     auto test     = p(eve::load(f));  // apply the predicate
-    auto idx_test =
-      eve::convert(test, eve::as<eve::logical<IdxType>>{});  // At the moment we need to convert
-                                                             // the logical types. We plan on fixing this.
 
     // Compress store is the working horse of `remove`. It get's values, mask and where to store.
     // Writes all of the elements, for which mask is true.
     // Returns a pointer to after the last stored.
     // `unsafe` refers to the fact that it's allowed to store up to the whole register,
     // as long as the first elements are fine.
-    out = eve::unsafe(eve::compress_store)(wide_i, idx_test, out);
+    out = eve::unsafe(eve::compress_store)(wide_i, test, out);
 
     wide_i += step;  // ++i
     f      += step;  // ++f
@@ -116,11 +113,10 @@ void collect_indexes(R&& r, P p, std::vector<IdxType, Alloc>& res)
     auto ignore   = eve::keep_first(l - f);  // elements after l should not be touched
     auto test     = p(eve::load[ignore](f)); // This will safely load the partial register.
                                              // The last elements that correspond to after l will be garbage.
-    auto idx_test = eve::convert(test, eve::as<eve::logical<IdxType>>{});
 
     // We have overallocated the output, but we still need to mask out garbage elements
-    idx_test = idx_test && ignore.mask(eve::as(idx_test));
-    out = eve::unsafe(eve::compress_store)(wide_i, idx_test, out);
+    test = test && ignore.mask(eve::as(test));
+    out = eve::unsafe(eve::compress_store)(wide_i, test, out);
   }
 
   // Clean up the vector

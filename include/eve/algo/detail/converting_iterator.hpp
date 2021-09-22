@@ -18,6 +18,7 @@
 #include <eve/function/convert.hpp>
 #include <eve/function/read.hpp>
 #include <eve/function/write.hpp>
+#include <eve/function/compress_store.hpp>
 #include <eve/function/load.hpp>
 #include <eve/function/store.hpp>
 
@@ -174,6 +175,18 @@ namespace eve::algo
     EVE_FORCEINLINE friend void tagged_dispatch( eve::tag::store_, wide_value_type v, converting_iterator self )
     {
       eve::store(eve::convert(v, eve::as<typename I::value_type>{}), self.base);
+    }
+
+    template <relative_conditional_expr C, decorator Decorator, typename U>
+    EVE_FORCEINLINE
+    friend auto tagged_dispatch(eve::tag::compress_store_,
+      C c, Decorator d, wide_value_type v,
+      eve::logical<eve::wide<U, cardinal>> m,
+      converting_iterator self )
+    {
+      // No alternative support in compress_store
+      auto raw_res = d(eve::compress_store[c])(eve::convert(v, eve::as<typename I::value_type>{}), m, self.base);
+      return unaligned_t<converting_iterator>{raw_res};
     }
   };
 }

@@ -9,6 +9,8 @@
 
 #include <eve/detail/function/compress_store_impl.hpp>
 
+#include <eve/detail/kumi.hpp>
+
 namespace eve::detail
 {
   template<relative_conditional_expr C,
@@ -39,15 +41,33 @@ namespace eve::detail
            simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
   T* compress_store_(EVE_SUPPORTS(cpu_),
-                    C c,
-                    unsafe_type,
-                    wide<T, N> v,
-                    logical<wide<U, N>> mask,
-                    Ptr ptr) noexcept
+                     C c,
+                     unsafe_type,
+                     wide<T, N> v,
+                     logical<wide<U, N>> mask,
+                     Ptr ptr) noexcept
   {
     if (!C::is_complete) return safe(compress_store[c])(v, mask, ptr);
     else                 return compress_store_impl(c, v, mask, ptr);
   }
+
+  template< relative_conditional_expr C, decorator Decorator
+          , kumi::product_type T, real_scalar_value U, typename N
+          , data_source Ptr
+          >
+  EVE_FORCEINLINE
+  auto compress_store_(EVE_SUPPORTS(cpu_),
+                       C c,
+                       Decorator d,
+                       wide<T, N> vs,
+                       logical<wide<U, N>> mask,
+                       Ptr ptrs) noexcept
+  {
+    return kumi::map ( [&] (auto v, auto p) {
+      return compress_store(c, d, v, mask, p);
+    }, vs.storage(), ptrs);
+  }
+
 
   template<relative_conditional_expr C, decorator Decorator,
            real_scalar_value T, real_scalar_value U, typename N,

@@ -171,6 +171,7 @@ EVE_TEST_TYPES("Check zip_iterator", algo_test::selected_types)
     eve::algo::zip_iterator l = f + (l1 - f1);
     algo_test::iterator_sentinel_test(f, l, values, replace);
     algo_test::writeable_readable_iterator(f, values, replace);
+    algo_test::iterator_supports_compress(f, values, replace);
   };
 
   eve::algo::unaligned_ptr_iterator<t1, N> u_f_1{data_1.begin()};
