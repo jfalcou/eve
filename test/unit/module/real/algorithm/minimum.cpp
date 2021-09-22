@@ -26,7 +26,7 @@ EVE_TEST_TYPES( "Check return types of eve::minimum(wide)", eve::test::simd::all
 // Tests for eve::minimum
 //==================================================================================================
 EVE_TEST( "Check behavior of eve::minimum(eve::wide)"
-        , eve::test::simd::all_types
+        , eve::test::simd::restricted::all_types
         , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmin)
                               , eve::test::logicals(0,3)
                               )

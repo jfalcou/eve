@@ -132,7 +132,7 @@
 
 /////////////associated p legendre
 EVE_TEST( "Check behavior of associated legendre p on wide"
-        , eve::test::simd::ieee_doubles
+        , eve::test::simd::restricted::ieee_doubles
         , eve::test::generate(eve::test::between(-1.0, 1.0)
                              , eve::test::as_integer(eve::test::ramp(0))
                              , eve::test::as_integer(eve::test::reverse_ramp(0)))

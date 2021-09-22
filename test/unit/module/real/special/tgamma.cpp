@@ -43,7 +43,7 @@ EVE_TEST( "Check behavior of tgamma on wide"
   using v_t = eve::element_type_t<T>;
   using eve::tgamma;
 #if defined(__cpp_lib_math_special_functions)
-  TTS_ULP_EQUAL( tgamma(a0),  map([&](auto e) -> v_t{ return std::tgamma(e); }, a0), 2);
+  TTS_ULP_EQUAL( tgamma(a0),  map([&](auto e) -> v_t{ return std::tgamma(e); }, a0), 4);
 #endif  // __cpp_lib_math_special_functions
 
   if constexpr( eve::platform::supports_invalids )

@@ -78,7 +78,7 @@ EVE_TEST( "Check behavior of cotd on wide"
   TTS_ULP_EQUAL(cotd(a3)                       , map(ref, a3), 2);
   auto dinr = 1.7453292519943295769236907684886127134428718885417e-2l;
 
-  TTS_ULP_EQUAL(diff(cotd)(a0), map([dinr](auto e) -> v_t { return  -dinr*eve::sqr(eve::cscd(e)); }, a0), 2);
+  TTS_ULP_EQUAL(diff(cotd)(a0), map([dinr](auto e) -> v_t { return  -dinr*eve::sqr(eve::cscd(e)); }, a0), 4);
 };
 
 EVE_TEST_TYPES( "Check return types of cotd"
