@@ -19,7 +19,7 @@
 // Types tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of eve::is_not_flint(simd)"
-              , eve::test::simd::all_types
+              , eve::test::simd::restricted::all_types
               )
 <typename T>(eve::as<T>)
 {
