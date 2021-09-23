@@ -149,7 +149,7 @@ namespace eve::algo
 
     template< relative_conditional_expr C, decorator S, typename Pack>
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::load_, C const& c, S const& s
-                                , eve::as<Pack> const& tgt, converting_iterator self
+                                , eve::as<Pack> const&, converting_iterator self
                                 )
     {
       auto c1 = map_alternative(
@@ -157,7 +157,9 @@ namespace eve::algo
         [](auto alt) { return eve::convert(alt, eve::as<typename I::value_type>{}); }
       );
 
-      return eve::convert(eve::load(c1, s, tgt, self.base), eve::as<T>{});
+      return eve::convert ( eve::load(c1, s, eve::as<typename I::wide_value_type>{}, self.base)
+                          , eve::as<T>{}
+                          );
     }
 
     template <relative_conditional_expr C>

@@ -12,8 +12,6 @@
 
 #include "unit/algo/udt.hpp"
 
-/*
-FIX-#971
 TTS_CASE("erase/remove idiom in eve")
 {
   eve::algo::soa_vector<udt::line2D> lines {
@@ -23,9 +21,12 @@ TTS_CASE("erase/remove idiom in eve")
     udt::line2D{ udt::point2D{6, 2}, udt::point2D{-1, -1} }
   };
 
-  udt::point2D bad_start{0, 1};
+  eve::algo::soa_vector<udt::line2D> expected {
+    udt::line2D{ udt::point2D{1, 3}, udt::point2D{2,   2} },
+    udt::line2D{ udt::point2D{6, 2}, udt::point2D{-1, -1} }
+  };
 
-  TTS_PASS("FIX-#868, then test");
+  udt::point2D bad_start{0, 1};
 
   lines.erase(
     eve::algo::remove_if(lines, [&](eve::wide<udt::line2D> l) {
@@ -33,8 +34,9 @@ TTS_CASE("erase/remove idiom in eve")
     }),
     lines.end()
   );
+
+  TTS_EQUAL(expected, lines);
 }
-*/
 
 TTS_CASE("erase/remove idiom in eve")
 {
@@ -47,7 +49,6 @@ TTS_CASE("erase/remove idiom in eve")
   eve::algo::soa_vector<udt::point2D> expected {
     points.get(1), points.get(2)
   };
-
 
   points.erase(
     eve::algo::remove_if(points, [&](eve::wide<udt::point2D> p) {
