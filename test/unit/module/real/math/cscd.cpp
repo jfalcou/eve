@@ -44,7 +44,7 @@ auto mmed   = []<typename T>(eve::as<T> const & ){  return -5000; };
 auto med    = []<typename T>(eve::as<T> const & ){  return  5000; };
 
 EVE_TEST( "Check behavior of cscd on wide"
-        , eve::test::simd::ieee_reals
+        , eve::test::simd::restricted::ieee_reals
         , eve::test::generate( eve::test::randoms(mrest, rest)
                              , eve::test::randoms(msmall, small)
                              , eve::test::randoms(mmed, med))

@@ -48,7 +48,7 @@ auto mmed   = []<typename T>(eve::as<T> const & ){  return -5000; };
 auto med    = []<typename T>(eve::as<T> const & ){  return  5000; };
 
 EVE_TEST( "Check behavior of cotd on wide"
-        , eve::test::simd::ieee_reals
+        , eve::test::simd::restricted::ieee_reals
         , eve::test::generate( eve::test::randoms(mrest, rest)
                              , eve::test::randoms(msmall, small)
                              , eve::test::randoms(mmed, med)
@@ -81,7 +81,7 @@ EVE_TEST( "Check behavior of cotd on wide"
   TTS_ULP_EQUAL(diff(cotd)(a0), map([dinr](auto e) -> v_t { return  -dinr*eve::sqr(eve::cscd(e)); }, a0), 4);
 };
 
-EVE_TEST_TYPES( "Check return types of cotd"
+EVE_TEST_TYPES( "Check corner cases of cotd"
             , eve::test::simd::ieee_reals
             )
 <typename T>(eve::as<T>)
