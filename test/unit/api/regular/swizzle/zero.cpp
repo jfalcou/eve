@@ -16,7 +16,7 @@ template<int N> inline constexpr auto n_zeros = eve::fix_pattern<N>( [](int, int
 // Zero test
 //==================================================================================================
 EVE_TEST( "Check behavior of zeroes swizzle"
-        , eve::test::simd::all_types
+        , eve::test::simd::restricted::all_types
         , eve::test::generate ( eve::test::randoms(-50, 50)
                               , eve::test::logicals(1, 2)
                               )
