@@ -88,6 +88,29 @@ struct func_ : TraitsSupport
   }
 };
 
+TTS_CASE("eve.algo.traits consider types")
+{
+  eve::algo::traits expected{ eve::algo::consider_types<double, int, char> };
+  {
+    eve::algo::traits tr;
+    eve::algo::traits def{eve::algo::consider_types<double, int, char>};
+    auto actual = eve::algo::default_to(tr, def);
+    TTS_TYPE_IS(decltype(expected), decltype(actual));
+  }
+  {
+    eve::algo::traits tr{eve::algo::consider_types<double, int, char>};
+    eve::algo::traits def;
+    auto actual = eve::algo::default_to(tr, def);
+    TTS_TYPE_IS(decltype(expected), decltype(actual));
+  }
+  {
+    eve::algo::traits tr{eve::algo::consider_types<double>};
+    eve::algo::traits def{eve::algo::consider_types<int, char>};
+    auto actual = eve::algo::default_to(tr, def);
+    TTS_TYPE_IS(decltype(expected), decltype(actual));
+  }
+}
+
 inline constexpr auto func = eve::algo::function_with_traits<func_>;
 
 TTS_CASE("eve.algo.support_traits") {

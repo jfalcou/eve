@@ -53,6 +53,10 @@ namespace eve::algo
   template<int N> inline constexpr auto force_cardinal = (force_cardinal_key = eve::fixed<N>{});
   template <typename T> inline constexpr auto force_cardinal_as = force_cardinal<eve::expected_cardinal_v<T>>;
 
+  struct consider_types_key_t {};
+  inline constexpr auto consider_types_key = ::rbr::keyword( consider_types_key_t{} );
+  template <typename ...Ts> auto consider_types = ( consider_types_key = kumi::tuple<Ts...>{} );
+
   struct force_type_key_t {};
   inline constexpr auto force_type_key = ::rbr::keyword( force_type_key_t{} );
   template <typename T> auto force_type = (force_type_key = std::type_identity<T>{});
@@ -87,8 +91,21 @@ namespace eve::algo
   inline constexpr auto default_to =
      []<typename User, typename Default>(traits<User> const& user, traits<Default> const& defaults)
   {
-    using settings_t = decltype(rbr::merge(user, defaults));
-    return traits<settings_t>{rbr::merge(user, defaults)};
+    if constexpr ( User::contains(consider_types_key) &&
+                   Default::contains(consider_types_key) )
+    {
+      auto consider_all_types = kumi::result::cat_t<rbr::get_type_t<User,    consider_types_key>,
+                                                    rbr::get_type_t<Default, consider_types_key>>{};
+      auto settings = rbr::merge(rbr::merge(rbr::settings(consider_types_key = consider_all_types),
+                                            user),
+                                 defaults);
+      return traits<decltype(settings)>{settings};
+    }
+    else
+    {
+      using settings_t = decltype(rbr::merge(user, defaults));
+      return traits<settings_t>{rbr::merge(user, defaults)};
+    }
   };
 
   template <typename K, typename Traits>
