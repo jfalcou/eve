@@ -125,7 +125,7 @@ namespace eve::detail
                                 , eve::as<Pack> const& tgt, Ptr ptr
                                 ) noexcept
   {
-    if constexpr(sanitizers_are_on && !kumi::product_type<Ptr>)
+    if constexpr(sanitizers_are_on)
     {
       Pack that;
 
