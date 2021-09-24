@@ -3,7 +3,7 @@
 compile_target()
 {
   echo "::group::Compiling $1" ;
-  ninja -v $1;
+  ninja -v $1 -j 16;
   compile=$?;
   echo "::endgroup::" ;
 
@@ -28,7 +28,7 @@ compile_targets()
 test_target()
 {
   echo "::group::Running $1 tests" ;
-  ctest --output-on-failure -R $1;
+  ctest --output-on-failure -R $1 -j 16;
   tested=$?;
   echo "::endgroup::" ;
 
