@@ -15,7 +15,9 @@ inputs:
     required: false
     default: '1'
 runs:
-  using: "composite"
-  steps:
-    - run: .github/actions/run_tests/entrypoint.sh ${{ inputs.options }} ${{ inputs.cmake-options }} ${{ inputs.status }}
-      shell: bash
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.options }}
+    - ${{ inputs.cmake-options }}
+    - ${{ inputs.status }}
