@@ -19,7 +19,7 @@ void reverse_test(T x) {
 }
 
 EVE_TEST( "Check behavior of reverse"
-        , eve::test::simd::all_types
+        , eve::test::simd::restricted::all_types
         , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
                               , eve::test::logicals(0,3))
         )

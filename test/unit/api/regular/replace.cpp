@@ -11,7 +11,7 @@
 #include <eve/function/replace.hpp>
 
 EVE_TEST( "Check behavior of replace_ignored(ignore_all/ignore_none)"
-        , eve::test::simd::all_types
+        , eve::test::simd::restricted::all_types
         , eve::test::generate ( eve::test::ramp(0), eve::test::ramp(10))
         )
 <typename T>(T data, T replacement)
@@ -22,9 +22,9 @@ EVE_TEST( "Check behavior of replace_ignored(ignore_all/ignore_none)"
   TTS_EQUAL( eve::replace_ignored(data,ignore_all , replacement), replacement );
   TTS_EQUAL( eve::replace_ignored(data,ignore_none, replacement), data        );
 };
-
+/*
 EVE_TEST( "Check behavior of replace_ignored(ignore_last)"
-        , eve::test::simd::all_types
+        , eve::test::simd::restricted::all_types
         , eve::test::generate ( eve::test::ramp(0) )
         )
 <typename T>(T data)
@@ -41,7 +41,7 @@ EVE_TEST( "Check behavior of replace_ignored(ignore_last)"
 };
 
 EVE_TEST( "Check behavior of replace_ignored(keep_last)"
-        , eve::test::simd::all_types
+        , eve::test::simd::restricted::all_types
         , eve::test::generate ( eve::test::ramp(0), eve::test::ramp(100) )
         )
 <typename T>(T data, T replacement)
@@ -57,9 +57,10 @@ EVE_TEST( "Check behavior of replace_ignored(keep_last)"
 
   TTS_EQUAL( eve::replace_ignored(data,keep_last(T::size()),replacement), data );
 };
-
+*/
+/*
 EVE_TEST( "Check behavior of replace_ignored(ignore_first)"
-        , eve::test::simd::all_types
+        , eve::test::simd::restricted::all_types
         , eve::test::generate ( eve::test::ramp(0) )
         )
 <typename T>(T data)
@@ -77,7 +78,7 @@ EVE_TEST( "Check behavior of replace_ignored(ignore_first)"
 };
 
 EVE_TEST( "Check behavior of replace_ignored(keep_first)"
-        , eve::test::simd::all_types
+        , eve::test::simd::restricted::all_types
         , eve::test::generate ( eve::test::ramp(0), eve::test::ramp(100) )
         )
 <typename T>(T data, T replacement)
@@ -94,7 +95,7 @@ EVE_TEST( "Check behavior of replace_ignored(keep_first)"
 };
 
 EVE_TEST( "Check behavior of replace_ignored(keep_between)"
-        , eve::test::simd::all_types
+        , eve::test::simd::restricted::all_types
         , eve::test::generate ( eve::test::ramp(0) )
         )
 <typename T>(T data)
@@ -113,3 +114,4 @@ EVE_TEST( "Check behavior of replace_ignored(keep_between)"
     }
   }
 };
+*/

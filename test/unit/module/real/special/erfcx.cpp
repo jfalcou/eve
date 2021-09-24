@@ -49,7 +49,7 @@ EVE_TEST( "Check behavior of erfcx on wide"
   using v_t = eve::element_type_t<T>;
   using eve::erfcx;
   using eve::as;
-  TTS_ULP_EQUAL( erfcx(a0),  map([&](auto e) -> v_t{ return std::exp(e*e)*std::erfc(e); }, a0), 4);
+  TTS_ULP_EQUAL( erfcx(a0),  map([&](auto e) -> v_t{ return std::exp(e*e)*std::erfc(e); }, a0), 8);
   auto derfcx = [](auto e){return  eve::fms(2*e, erfcx(e), v_t(1.1283791670955125738961589));};
   TTS_ULP_EQUAL( eve::diff(erfcx)(a0),  map(derfcx, a0), 13);
   TTS_ULP_EQUAL(erfcx(T(-0.0)), T(1), 0);

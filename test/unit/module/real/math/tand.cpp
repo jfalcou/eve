@@ -68,14 +68,14 @@ EVE_TEST( "Check behavior of tand on wide"
   TTS_ULP_EQUAL(eve::small(tand)(a1)           , map(ref, a1), 50);
   TTS_ULP_EQUAL(eve::medium(tand)(a0)          , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::medium(tand)(a1)          , map(ref, a1), 50);
-  TTS_ULP_EQUAL(eve::medium(tand)(a2)          , map(ref, a2), 300);
+  TTS_ULP_EQUAL(eve::medium(tand)(a2)          , map(ref, a2), 1024);
   TTS_ULP_EQUAL(eve::big(tand)(a0)             , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::big(tand)(a1)             , map(ref, a1), 50);
-  TTS_ULP_EQUAL(eve::big(tand)(a2)             , map(ref, a2), 300);
+  TTS_ULP_EQUAL(eve::big(tand)(a2)             , map(ref, a2), 1024);
   TTS_ULP_EQUAL(eve::big(tand)(a3)             , map(ref, a3), 2);
   TTS_ULP_EQUAL(tand(a0)                       , map(ref, a0), 2);
   TTS_ULP_EQUAL(tand(a1)                       , map(ref, a1), 50);
-  TTS_ULP_EQUAL(tand(a2)                       , map(ref, a2), 300);
+  TTS_ULP_EQUAL(tand(a2)                       , map(ref, a2), 1024);
   TTS_ULP_EQUAL(tand(a3)                       , map(ref, a3), 2);
   auto dinr = 1.7453292519943295769236907684886127134428718885417e-2l;
 

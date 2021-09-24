@@ -32,7 +32,7 @@ EVE_TEST_TYPES( "Check return types of eve::rat(scalar)"
 // Tests for eve::rat
 //==================================================================================================
 EVE_TEST( "Check behavior of eve::rat(simd)"
-        , eve::test::simd::ieee_reals
+        , eve::test::simd::restricted::ieee_reals
         , eve::test::generate ( eve::test::ramp(1.0))
         )
 <typename T>(T const& a0)

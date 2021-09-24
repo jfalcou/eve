@@ -82,6 +82,10 @@ EVE_TEST( "Check store behavior with pointer of different alignment"
       eve::store[eve::ignore_none](d, ptr);
       TTS_EQUAL(D{f}, d);
     }
+    else
+    {
+      TTS_PASS("No test for this size");
+    }
   };
 
   for (auto* f = ref.begin();f != ref.end() - T::size() + 1;++f)

@@ -63,7 +63,7 @@ EVE_TEST_TYPES( "Check return types of rem"
 auto mini = [] < typename T > (eve::as<T> const &){ return std::is_signed_v<eve::element_type_t<T>> ? -100 : 0;};
 
 EVE_TEST( "Check behavior of rem on wide"
-        , eve::test::simd::ieee_reals//all_types
+        , eve::test::simd::restricted::ieee_reals//all_types
         , eve::test::generate ( eve::test::randoms(mini, 100)
                               , eve::test::randoms(mini, 100)
                               )
@@ -73,9 +73,9 @@ EVE_TEST( "Check behavior of rem on wide"
   using eve::rem;
   using eve::pedantic;
   using eve::detail::map;
-  TTS_ULP_EQUAL( pedantic(rem)(a0, a1), map([](auto e, auto f) { return eve::rem(e, f); }, a0, a1), 30);//fma not avail scalar double it seems
+  TTS_ULP_EQUAL( pedantic(rem)(a0, a1), map([](auto e, auto f) { return eve::rem(e, f); }, a0, a1), 32);//fma not avail scalar double it seems
   a1 =  eve::if_else(eve::is_eqz(a1), eve::one, a1);
-  TTS_ULP_EQUAL( rem(a0, a1), map([](auto e, auto f) { return eve::rem(e, f); }, a0, a1), 30);
+  TTS_ULP_EQUAL( rem(a0, a1), map([](auto e, auto f) { return eve::rem(e, f); }, a0, a1), 32);
 };
 
 
@@ -136,9 +136,9 @@ EVE_TEST( "Check behavior of rem on signed types"
   using eve::is_nez;
   using eve::pedantic;
   using eve::detail::map;
-  TTS_ULP_EQUAL( pedantic(rem[is_nez(a2)])(a0, a2), map([](auto e, auto f) {return is_nez(f) ? rem(e, f) : e ; }, a0, a2), 10);
+  TTS_ULP_EQUAL( pedantic(rem[is_nez(a2)])(a0, a2), map([](auto e, auto f) {return is_nez(f) ? rem(e, f) : e ; }, a0, a2), 48);
   a2 = eve::if_else(a2 >= 0, eve::one, a2);
-  TTS_ULP_EQUAL( rem[is_nez(a2)](a0, a2), map([](auto e, auto f) {return rem(e, f); }, a0, a2), 2);
+  TTS_ULP_EQUAL( rem[is_nez(a2)](a0, a2), map([](auto e, auto f) {return rem(e, f); }, a0, a2), 48);
 
   TTS_ULP_EQUAL( rem[a2 > T(64)](a0, a1), map([](auto e, auto f, auto g) {return g > 64 ? rem(e, f) : e ; }, a0, a1, a2), 2);
   a1 =  eve::if_else(eve::is_eqz(a1), eve::one, a1);

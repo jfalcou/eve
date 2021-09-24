@@ -19,7 +19,7 @@
 // Types tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of eve::is_not_flint(simd)"
-              , eve::test::simd::all_types
+              , eve::test::simd::restricted::all_types
               )
 <typename T>(eve::as<T>)
 {
@@ -45,7 +45,7 @@ auto mf2 = []<typename T>(eve::as<T> const & tgt)
 };
 
 EVE_TEST( "Check behavior of eve::is_not_flint(simd)"
-        , eve::test::simd::ieee_reals
+        , eve::test::simd::restricted::ieee_reals
         , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
                               , eve::test::randoms(mfo2, mf2)
                               , eve::test::logicals(0, 3))

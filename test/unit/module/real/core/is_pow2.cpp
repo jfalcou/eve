@@ -17,7 +17,7 @@
 // Types tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of is_pow2 on wide"
-            , eve::test::simd::unsigned_integers
+            , eve::test::simd::restricted::unsigned_integers
             )
 <typename T>(eve::as<T>)
 {
@@ -32,7 +32,7 @@ EVE_TEST_TYPES( "Check return types of is_pow2 on wide"
 // is_pow2(simd) tests
 //==================================================================================================
 EVE_TEST( "Check behavior of is_pow2(wide) on unsigned integral "
-        , eve::test::simd::unsigned_integers
+        , eve::test::simd::restricted::unsigned_integers
         , eve::test::generate(eve::test::ramp(1))
         )
 <typename T>(T const& a0)

@@ -16,7 +16,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check eve::convert return type", eve::test::simd::all_types)
+EVE_TEST_TYPES( "Check eve::convert return type", eve::test::simd::restricted::all_types)
 <typename T>(eve::as<T>)
 {
   using t_t = eve::wide<double, eve::cardinal_t<T>>;
@@ -29,7 +29,7 @@ EVE_TEST_TYPES( "Check eve::convert return type", eve::test::simd::all_types)
 //==================================================================================================
 // Value tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check eve::convert arithmetic behavior", eve::test::simd::all_types)
+EVE_TEST_TYPES( "Check eve::convert arithmetic behavior", eve::test::simd::restricted::all_types)
 <typename T>(eve::as<T>)
 {
   using t_t = eve::wide<double, eve::cardinal_t<T>>;
@@ -45,7 +45,7 @@ EVE_TEST_TYPES( "Check eve::convert arithmetic behavior", eve::test::simd::all_t
   TTS_EQUAL(eve::convert(eve::valmax(eve::as<T>()), tgt), static_cast<t_t>(eve::valmax(eve::as<v_t>())) );
 };
 
-EVE_TEST_TYPES( "Check saturated eve::convert arithmetic behavior", eve::test::simd::all_types)
+EVE_TEST_TYPES( "Check saturated eve::convert arithmetic behavior", eve::test::simd::restricted::all_types)
 <typename T>(eve::as<T>)
 {
   using t_t = eve::wide<double, eve::cardinal_t<T>>;
@@ -58,7 +58,7 @@ EVE_TEST_TYPES( "Check saturated eve::convert arithmetic behavior", eve::test::s
   TTS_EQUAL(eve::saturated(eve::convert)(eve::valmax(eve::as<T>()), tgt), static_cast<t_t>(eve::valmax(eve::as<v_t>())) );
 };
 
-EVE_TEST_TYPES( "Check eve::convert logical behavior", eve::test::simd::all_types)
+EVE_TEST_TYPES( "Check eve::convert logical behavior", eve::test::simd::restricted::all_types)
 <typename T>(eve::as<T>)
 {
   using t_t  = eve::logical<eve::wide<double, eve::cardinal_t<T>>>;

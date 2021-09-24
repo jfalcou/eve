@@ -37,7 +37,7 @@ EVE_TEST_TYPES( "Check return types of powm1"
 // powm1  tests
 //==================================================================================================
 EVE_TEST( "Check behavior of powm1 on wide"
-        , eve::test::simd::ieee_reals
+        , eve::test::simd::restricted::ieee_reals
         , eve::test::generate( eve::test::randoms(0, eve::valmax)
                              , eve::test::randoms(eve::valmin, eve::valmax)
                              , eve::test::randoms(0.0, 1.0)

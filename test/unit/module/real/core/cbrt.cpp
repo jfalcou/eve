@@ -51,7 +51,7 @@ EVE_TEST( "Check behavior of cbrt(wide) and diff on  floating types"
   using eve::sqr;
   using eve::rec;
   TTS_ULP_EQUAL( eve::cbrt(a0), map([&](auto e) { return std::cbrt(e); }, a0), 2);
-  TTS_ULP_EQUAL( diff(eve::cbrt)(a0), map([&](auto e) { return rec(sqr(std::cbrt(e))*3); }, a0), 2.5);
+  TTS_ULP_EQUAL( diff(eve::cbrt)(a0), map([&](auto e) { return rec(sqr(std::cbrt(e))*3); }, a0), 3);
 };
 
 //==================================================================================================

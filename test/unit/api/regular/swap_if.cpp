@@ -36,7 +36,7 @@ EVE_TEST_TYPES( "Check behavior of swap_if - scalar values"
 };
 
 EVE_TEST( "Check behavior of swap_if - wide arithmetic"
-        , eve::test::simd::all_types
+        , eve::test::simd::restricted::all_types
         , eve::test::generate ( eve::test::ramp(0), eve::test::ramp(10), eve::test::logicals(1,2) )
         )
 <typename T, typename L>(T lhs, T rhs, L mask)
@@ -67,7 +67,7 @@ EVE_TEST( "Check behavior of swap_if - wide arithmetic"
 };
 
 EVE_TEST( "Check behavior of swap_if - logical"
-        , eve::test::simd::all_types
+        , eve::test::simd::restricted::all_types
         , eve::test::generate ( eve::test::logicals(1,2), eve::test::logicals(0,3), eve::test::logicals(1,2) )
         )
 <typename L>(L lhs, L rhs, L mask)
