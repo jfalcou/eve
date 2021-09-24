@@ -11,6 +11,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/constant/false.hpp>
+#include <eve/function/is_less.hpp>
 
 namespace eve::detail
 {
