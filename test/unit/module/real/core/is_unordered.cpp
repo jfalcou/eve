@@ -13,7 +13,7 @@
 //== Types tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of eve::is_unordered(simd)"
-              , eve::test::simd::restricted::ieee_reals
+              , eve::test::simd::ieee_reals
               )
 <typename T>(eve::as<T>)
 {
@@ -29,7 +29,7 @@ EVE_TEST_TYPES( "Check return types of eve::is_unordered(simd)"
 //== Tests for eve::is_unordered
 //==================================================================================================
 EVE_TEST( "Check behavior of eve::is_unordered(simd)"
-        , eve::test::simd::restricted::ieee_reals
+        , eve::test::simd::ieee_reals
         , eve::test::generate ( eve::test::ramp(0)
                               , eve::test::reverse_ramp(4, 2)
                               , eve::test::logicals(0, 3))
@@ -49,7 +49,7 @@ EVE_TEST( "Check behavior of eve::is_unordered(simd)"
 //== Tests for eve::is_unordered corner cases for floating
 //==================================================================================================
 EVE_TEST( "Check behavior of eve::is_unordered(simd)"
-        , eve::test::simd::restricted::ieee_reals
+        , eve::test::simd::ieee_reals
         , eve::test::generate(eve::test::limits())
         )
 <typename aT>(aT const& cases)

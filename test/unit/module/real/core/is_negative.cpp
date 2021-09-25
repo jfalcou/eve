@@ -20,7 +20,7 @@
 // Types tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of eve::is_negative(simd)"
-              , eve::test::simd::restricted::all_types
+              , eve::test::simd::all_types
               )
 <typename T>(eve::as<T>)
 {
@@ -35,7 +35,7 @@ EVE_TEST_TYPES( "Check return types of eve::is_negative(simd)"
 //==================================================================================================
 
 EVE_TEST( "Check behavior of eve::is_negative(simd)"
-        , eve::test::simd::restricted::all_types
+        , eve::test::simd::all_types
         , eve::test::generate ( eve::test::ramp(0.0)
                               , eve::test::logicals(0, 3))
         )

@@ -17,7 +17,7 @@ inline constexpr auto broadcast = eve::fix_pattern<N>( [](int, int){ return I; }
 // Broadcast test
 //==================================================================================================
 EVE_TEST( "Check behavior of broadcast swizzle"
-        , eve::test::simd::restricted::all_types
+        , eve::test::simd::all_types
         , eve::test::generate ( eve::test::randoms(-50, 50)
                               , eve::test::logicals(1, 2)
                               )

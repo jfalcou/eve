@@ -17,7 +17,7 @@
 //== Types tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of eve::is_not_less(simd)"
-              , eve::test::simd::restricted::all_types
+              , eve::test::simd::all_types
               )
 <typename T>(eve::as<T>)
 {
@@ -50,7 +50,7 @@ EVE_TEST_TYPES( "Check return types of eve::is_not_less(simd)"
 //== Tests for eve::is_not_less
 //==================================================================================================
 EVE_TEST( "Check behavior of eve::is_not_less(simd)"
-        , eve::test::simd::restricted::all_types
+        , eve::test::simd::all_types
         , eve::test::generate ( eve::test::ramp(0)
                               , eve::test::reverse_ramp(4, 2)
                               , eve::test::logicals(0, 3))

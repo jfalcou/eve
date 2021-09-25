@@ -16,7 +16,7 @@
 // Types tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of eve::is_not_imag(simd)"
-              , eve::test::simd::restricted::ieee_reals
+              , eve::test::simd::ieee_reals
               )
 <typename T>(eve::as<T>)
 {
@@ -31,7 +31,7 @@ EVE_TEST_TYPES( "Check return types of eve::is_not_imag(simd)"
 //==================================================================================================
 
 EVE_TEST( "Check behavior of eve::is_not_imag(simd)"
-        , eve::test::simd::restricted::ieee_reals
+        , eve::test::simd::ieee_reals
         , eve::test::generate ( eve::test::ramp(0)
                               , eve::test::logicals(0, 3))
         )
