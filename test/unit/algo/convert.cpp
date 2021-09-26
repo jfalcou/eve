@@ -34,9 +34,10 @@ TTS_CASE("eve::algo::convert, read/write")
 
 TTS_CASE("eve::algo::convert, preprocess test")
 {
-  using From = float;
-  using To   = int;
-  using N    = eve::fixed<eve::expected_cardinal_v<To>>;
+  using From      = float;
+  using To        = int;
+  using SmallerTo = short;
+  using N         = eve::fixed<eve::expected_cardinal_v<To>>;
 
   auto common_test = []<typename R, typename T,
                         typename ExpectedRawF,
@@ -71,6 +72,8 @@ TTS_CASE("eve::algo::convert, preprocess test")
                 eve::as<To>{}, eve::algo::traits{}, u_it{}, u_it{}, eve::algo::traits{});
     common_test(eve::algo::as_range(u_it{}, u_it{}),
                 eve::as<To>{}, eve::algo::traits{}, u_it{}, u_it{}, eve::algo::traits{});
+    common_test(eve::algo::as_range(u_it{}, u_it{}),
+                eve::as<SmallerTo>{}, eve::algo::traits{}, u_it{}, u_it{}, eve::algo::traits{});
 
     common_test(v, eve::as<To>{}, eve::algo::traits{eve::algo::no_aligning},
                u_it{}, u_it{},    eve::algo::traits{eve::algo::no_aligning});
@@ -96,7 +99,6 @@ TTS_CASE("eve::algo::convert, preprocess test")
                 eve::as<To>{}, eve::algo::traits{}, a_it{}, u_it{},
                 eve::algo::traits{eve::algo::no_aligning});
   }
-
 }
 
 TTS_CASE("eve.algo.convert to/from")

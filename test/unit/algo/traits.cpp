@@ -58,36 +58,6 @@ TTS_CASE("eve.algo defaulting")
   }
 }
 
-TTS_CASE("eve.algo.traits, type and cardinal")
-{
-  {
-    eve::algo::traits tr;
-    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr), int>), eve::fixed<eve::expected_cardinal_v<int>>);
-  }
-  {
-    eve::algo::traits tr{eve::algo::force_cardinal<2>};
-    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr), int>), eve::fixed<2>);
-  }
-}
-
-// Funciton with traits support
-
-template <typename TraitsSupport>
-struct func_ : TraitsSupport
-{
-  using traits_type = typename TraitsSupport::traits_type;
-
-  constexpr std::ptrdiff_t get_unrolling() const
-  {
-    return eve::algo::get_unrolling<traits_type>();
-  }
-
-  constexpr bool is_divisible_by_cardinal() const
-  {
-    return traits_type::contains(eve::algo::divisible_by_cardinal);
-  }
-};
-
 TTS_CASE("eve.algo.traits consider types")
 {
   eve::algo::traits expected{ eve::algo::consider_types<double, int, char> };
@@ -109,7 +79,49 @@ TTS_CASE("eve.algo.traits consider types")
     auto actual = eve::algo::default_to(tr, def);
     TTS_TYPE_IS(decltype(expected), decltype(actual));
   }
+  {
+    eve::algo::traits tr;
+    TTS_TYPE_IS((eve::algo::get_types_to_consider_for<decltype(tr), int*>), kumi::tuple<int>);
+  }
+  {
+    eve::algo::traits tr{eve::algo::consider_types<double>};
+    TTS_TYPE_IS((eve::algo::get_types_to_consider_for<decltype(tr), int*>), (kumi::tuple<double, int>));
+  }
 }
+
+TTS_CASE("eve.algo.traits, type and cardinal")
+{
+  {
+    eve::algo::traits tr;
+    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr), int*>), eve::fixed<eve::expected_cardinal_v<int>>);
+  }
+  {
+    eve::algo::traits tr{eve::algo::force_cardinal<2>};
+    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr), int*>), eve::fixed<2>);
+  }
+  {
+    eve::algo::traits tr{eve::algo::consider_types<double>};
+    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr), int*>), eve::fixed<eve::expected_cardinal_v<double>>);
+  }
+}
+
+// Funciton with traits support
+
+template <typename TraitsSupport>
+struct func_ : TraitsSupport
+{
+  using traits_type = typename TraitsSupport::traits_type;
+
+  constexpr std::ptrdiff_t get_unrolling() const
+  {
+    return eve::algo::get_unrolling<traits_type>();
+  }
+
+  constexpr bool is_divisible_by_cardinal() const
+  {
+    return traits_type::contains(eve::algo::divisible_by_cardinal);
+  }
+};
 
 inline constexpr auto func = eve::algo::function_with_traits<func_>;
 

@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/algo/concepts/value_type.hpp>
+#include <eve/algo/concepts/types_to_consider.hpp>
 
 #include <eve/detail/raberu.hpp>
 
@@ -83,10 +84,18 @@ namespace eve::algo
     return rbr::get_type_t<Traits, unroll_key, eve::fixed<1>>{}();
   }
 
-  template <typename Traits, typename T>
+  template <typename Traits>
+  using extra_types_to_consider = rbr::get_type_t<Traits, consider_types_key, kumi::tuple<>>;
+
+  template <typename Traits, typename RorI>
+  using get_types_to_consider_for =
+    kumi::result::cat_t<extra_types_to_consider<Traits>, types_to_consider_for_t<RorI>>;
+
+  template <typename Traits, typename RorI>
   using iteration_cardinal_t =
     rbr::get_type_t<Traits, force_cardinal_key,
-    expected_cardinal_t<T>>;
+                    expected_cardinal_t<get_types_to_consider_for<Traits, RorI>>
+                   >;
 
   inline constexpr auto default_to =
      []<typename User, typename Default>(traits<User> const& user, traits<Default> const& defaults)
