@@ -66,10 +66,7 @@ namespace eve::algo
     template <typename Rng, typename Op, typename Zero, typename U>
     EVE_FORCEINLINE U operator()(Rng&& rng, std::pair<Op, Zero> op_zero, U init) const
     {
-      // FIX-#938: this should not be a common type actually, should just be U.
-      using T = common_type_t<value_type_t<std::remove_cvref_t<Rng>>, U>;
-
-      auto cvt_rng = eve::algo::convert(std::forward<Rng>(rng), as<T>{});
+      auto cvt_rng = eve::algo::convert(std::forward<Rng>(rng), as<U>{});
       auto processed = preprocess_range(TraitsSupport::get_traits(), cvt_rng);
 
       using I = decltype(processed.begin());
@@ -83,7 +80,7 @@ namespace eve::algo
       delegate<Op, Zero, wide_t> d{op_zero.first, op_zero.second, init_as_wide};
 
       algo::for_each_iteration(processed.traits(), processed.begin(), processed.end())(d);
-      return eve::convert(d.finish(), eve::as<U>{});
+      return d.finish();
     }
 
     template <typename Rng, typename U>

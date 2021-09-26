@@ -69,13 +69,15 @@ TTS_CASE("eve.algo.inclusive_scan complex numbers")
   std::vector<float> real_copy = real;
   std::vector<float> img_copy  = img;
 
+  kumi::tuple<float, float> init{0.0, 0.0};
+
   eve::algo::inclusive_scan_to(
     eve::algo::zip(real, img),
     eve::algo::zip(real_copy, img_copy),
     std::pair{plus, eve::zero},
-    eve::zero);
+    init);
 
-  eve::algo::inclusive_scan_inplace(eve::algo::zip(real, img), std::pair{plus, eve::zero}, eve::zero);
+  eve::algo::inclusive_scan_inplace(eve::algo::zip(real, img), std::pair{plus, eve::zero}, init);
 
   std::vector<float> expected_real = { 0.0,  0.1,  0.3,  0.6 };
   std::vector<float> expected_img  = { 0.0, -0.1, -0.3, -0.6 };
