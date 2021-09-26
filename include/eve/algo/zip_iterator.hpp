@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/algo/as_range.hpp>
+#include <eve/algo/concepts/types_to_consider.hpp>
 #include <eve/algo/iterator_helpers.hpp>
 #include <eve/algo/preprocess_range.hpp>
 
@@ -58,8 +59,9 @@ namespace eve::algo
     template<typename... Is>
     struct zip_iterator_common : operations_with_distance
     {
-      using value_type = kumi::tuple<typename pointer_traits<Is>::value_type...>;
-      using tuple_type = kumi::tuple<Is...>;
+      using value_type        = kumi::tuple<typename pointer_traits<Is>::value_type...>;
+      using tuple_type        = kumi::tuple<Is...>;
+      using types_to_consider = kumi::result::cat_t<types_to_consider_for_t<Is>...>;
 
       // tuple opt in
       using is_product_type = void;

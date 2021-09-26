@@ -34,6 +34,7 @@ namespace eve::algo
     {
       I base;
       using value_type = T;
+      using types_to_consider = kumi::result::cat_t<kumi::tuple<T>, types_to_consider_for_t<I>>;
 
       converting_iterator_common() = default;
 

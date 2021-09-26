@@ -10,6 +10,7 @@
 #include <eve/algo/detail/convert.hpp>
 
 #include <eve/algo/concepts/relaxed.hpp>
+#include <eve/algo/concepts/types_to_consider.hpp>
 #include <eve/algo/concepts/value_type.hpp>
 #include <eve/algo/detail/converting_iterator.hpp>
 #include <eve/algo/range_ref.hpp>
@@ -60,6 +61,9 @@ namespace eve::algo
     R base;
 
     using is_non_owning = void;
+
+    using types_to_consider = kumi::result::cat_t<
+      kumi::tuple<T>, types_to_consider_for_t<R>>;
 
     EVE_FORCEINLINE auto begin() const { return convert(base.begin(), eve::as<T>{}); }
     EVE_FORCEINLINE auto end()   const { return convert(base.end(),   eve::as<T>{}); }
