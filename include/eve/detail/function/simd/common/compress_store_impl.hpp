@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
+#include <eve/detail/function/compress_store_unsafe_switch.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/function/count_true.hpp>
@@ -45,6 +46,10 @@ namespace eve::detail
       eve::store(compressed, ptr);
       return as_raw_pointer(ptr) + eve::count_true(mask);
     }
+    else if constexpr ( !has_emulated_abi_v<wide<T, N>> && N() == 4 )
+    {
+      return compress_store_unsafe_switch(v, mask, ptr);
+    }
     else if constexpr ( !has_emulated_abi_v<wide<T, N>> && N() > 2 )
     {
       return compress_store_impl_aggregated(v, mask, ptr);
@@ -71,7 +76,11 @@ namespace eve::detail
   {
          if ( C::is_complete && !C::is_inverted ) return as_raw_pointer(ptr);
     else if ( C::is_complete )                    return compress_store_impl(v, mask, ptr);
-    else if ( !has_emulated_abi_v<wide<T, N>> )
+    else if constexpr ( !has_emulated_abi_v<wide<T, N>> && N() == 4 )
+    {
+      return compress_store_unsafe_switch[c](v, mask, ptr);
+    }
+    else if constexpr ( !has_emulated_abi_v<wide<T, N>> )
     {
       mask = mask && c.mask(as(mask));
       return compress_store_impl(v, mask, ptr);
