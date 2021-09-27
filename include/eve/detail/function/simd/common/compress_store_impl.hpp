@@ -69,9 +69,9 @@ namespace eve::detail
                           logical<wide<U, N>> mask,
                           Ptr ptr) noexcept
   {
-         if ( C::is_complete && !C::is_inverted ) return as_raw_pointer(ptr);
-    else if ( C::is_complete )                    return compress_store_impl(v, mask, ptr);
-    else if ( !has_emulated_abi_v<wide<T, N>> )
+         if constexpr ( C::is_complete && !C::is_inverted ) return as_raw_pointer(ptr);
+    else if constexpr ( C::is_complete )                    return compress_store_impl(v, mask, ptr);
+    else if constexpr ( !has_emulated_abi_v<wide<T, N>> )
     {
       mask = mask && c.mask(as(mask));
       return compress_store_impl(v, mask, ptr);
