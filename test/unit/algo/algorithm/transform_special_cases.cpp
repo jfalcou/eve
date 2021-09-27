@@ -32,8 +32,3 @@ TTS_CASE("eve.algo.transform different type works")
   eve::algo::transform_to(in, out, eve::sqrt);
   TTS_EQUAL(out, expected);
 }
-
-TTS_CASE("eve.algo.transform points into lines")
-{
-
-}

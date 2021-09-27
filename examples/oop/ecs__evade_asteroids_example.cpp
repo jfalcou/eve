@@ -27,7 +27,9 @@
 #include <eve/eve.hpp>
 #include <eve/product_type.hpp>
 
+#include <eve/algo/any_of.hpp>
 #include <eve/algo/transform.hpp>
+#include <eve/algo/remove.hpp>
 
 // Geometry ---------------------------------
 
@@ -175,7 +177,7 @@ struct game
   bool is_game_over()
   {
     // Disable unrolling because the predicate is pretty big.
-    eve::algo::any_of[eve::algo::unroll<1>](asteroids, [](auto ast)
+    return eve::algo::any_of[eve::algo::unroll<1>](asteroids, [&](auto ast)
     {
       return geometry::circles_intersect(circle(ast), circle(player));
     });
@@ -191,7 +193,7 @@ struct game
     laps_to_garbage_collect = garbage_collect_each_steps;
 
     eve::algo::remove_if(asteroids, [](auto ast) {
-      auto pos = center(ast);
+      auto pos = center(circle(ast));
       return x(pos) > x_max || x(pos) < 0 || y(pos) > y_max || y(pos) < 0;
     });
   }
