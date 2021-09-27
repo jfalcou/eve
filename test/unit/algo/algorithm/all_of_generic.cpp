@@ -23,7 +23,7 @@ struct any_with_all_ : TraitsSupport
   }
 };
 
-inline constexpr auto any_with_all = eve::algo::function_with_traits<any_with_all_>;
+inline constexpr auto any_with_all = eve::algo::function_with_traits<any_with_all_>[eve::algo::all_of.get_traits()];
 
 EVE_TEST_TYPES("eve.algo.all_of generic", algo_test::selected_types)
 <typename T>(eve::as<T> as_t)

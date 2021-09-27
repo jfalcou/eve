@@ -8,22 +8,21 @@
 
 #include "unit/algo/algo_test.hpp"
 
-#include <eve/algo/inclusive_scan.hpp>
+#include <eve/algo/transform.hpp>
 
 #include "transform_inplace_generic_test.hpp"
 
 #include <algorithm>
-#include <functional>
 
-EVE_TEST_TYPES("Check inlclusive_scan_inplace", algo_test::selected_types)
+EVE_TEST_TYPES("Check transform_inplace", algo_test::selected_types)
 <typename T>(eve::as<T> tgt)
 {
   algo_test::transform_inplace_generic_test(
     tgt,
-    eve::algo::inclusive_scan_inplace,
-    [](auto f, auto l, auto o, auto init) {
-      std::inclusive_scan(f, l, o, std::plus<>{}, init);
+    eve::algo::transform_inplace,
+    [](auto f, auto l, auto o, auto op) {
+      std::transform(f, l, o, op);
     },
-    eve::element_type_t<T>{10}
+    [](auto x) { return x + x; }
   );
 };

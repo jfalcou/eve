@@ -23,7 +23,8 @@ struct find_if_with_find_if_not_ : TraitsSupport
   }
 };
 
-inline constexpr auto find_if_with_find_if_not = eve::algo::function_with_traits<find_if_with_find_if_not_>;
+inline constexpr auto find_if_with_find_if_not =
+  eve::algo::function_with_traits<find_if_with_find_if_not_>[eve::algo::find_if_not.get_traits()];
 
 EVE_TEST_TYPES("eve.algo.find_if generic", algo_test::selected_types)
 <typename T>(eve::as<T> as_t)
