@@ -83,35 +83,15 @@ namespace eve::algo
 
   struct inplace_load_store
   {
-    template<typename Ignore, typename I>
-    EVE_FORCEINLINE static auto load(Ignore ignore, I i)
-    {
-      return eve::load[ignore](i);
-    }
+    EVE_FORCEINLINE static auto load_it(auto i) { return i; }
 
-    template<typename I> using read_value_type = algo::value_type_t<I>;
-
-    template<typename Ignore, typename V, typename I>
-    EVE_FORCEINLINE static auto store(Ignore ignore, V v, I i)
-    {
-      eve::store[ignore](v, i);
-    }
+    EVE_FORCEINLINE static auto store_it(auto i) { return i; }
   };
 
   struct to_load_store
   {
-    template<typename Ignore, typename I>
-    EVE_FORCEINLINE static auto load(Ignore ignore, I i)
-    {
-      return eve::load[ignore](get<0>(i));
-    }
+    EVE_FORCEINLINE static auto load_it(auto i) { return get<0>(i); }
 
-    template<typename I> using read_value_type = algo::value_type_t<std::tuple_element_t<0, I>>;
-
-    template<typename Ignore, typename V, typename I>
-    EVE_FORCEINLINE static auto store(Ignore ignore, V v, I i)
-    {
-      eve::store[ignore](v, get<1>(i));
-    }
+    EVE_FORCEINLINE static auto store_it(auto i) { return get<1>(i); }
   };
 }

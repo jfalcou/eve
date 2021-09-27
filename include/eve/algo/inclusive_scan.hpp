@@ -38,11 +38,15 @@ namespace eve::algo
 
         EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto /*idx*/)
         {
-          auto xs     = LoadStore::load(ignore.else_(eve::as_value(zero, as<Wide> {})), it);
-          xs          = eve::scan(xs, op, zero);
-          xs          = op(xs, running_sum);
+          auto load_it  = LoadStore::load_it(it);
+          auto store_it = LoadStore::store_it(it);
+
+          auto xs = eve::load[ignore.else_(eve::as_value(zero, as<Wide> {}))](load_it);
+          xs      = eve::scan(xs, op, zero);
+          xs      = op(xs, running_sum);
           running_sum = Wide(xs.back());
-          LoadStore::store(ignore, xs, it);
+
+          eve::store[ignore](xs, store_it);
           return false;
         }
 
@@ -61,8 +65,7 @@ namespace eve::algo
         if( processed.begin() == processed.end() ) return;
 
         using I      = decltype(processed.begin());
-        using T      = typename LoadStore::template read_value_type<I>;
-        using wide_t = eve::wide<T, typename I::cardinal>;
+        using wide_t = eve::wide<U, typename I::cardinal>;
 
         wide_t wide_init = eve::as_value(init, eve::as<wide_t> {});
 
