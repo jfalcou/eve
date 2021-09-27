@@ -23,7 +23,7 @@ auto slide_left_pattern = eve::fix_pattern<N> ( [](auto i, auto c)
 // slide_left test
 //==================================================================================================
 EVE_TEST( "Check behavior of slide_left swizzle"
-        , eve::test::simd::restricted::all_types
+        , eve::test::simd::all_types
         , eve::test::generate ( eve::test::randoms(-50, 50)
                               , eve::test::logicals(0, 1)
                               )
