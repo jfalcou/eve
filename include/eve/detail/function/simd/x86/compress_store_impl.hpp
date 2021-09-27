@@ -31,14 +31,14 @@ namespace eve::detail
     int count;
 
     switch (num) {
-      case 0: { count = 0; v = v[pattern<3, 0, 0, 0>]; break; } // 000
-      case 1: { count = 1; v = v[pattern<0, 3, 0, 0>]; break; } // 001
-      case 2: { count = 1; v = v[pattern<1, 3, 0, 0>]; break; } // 010
-      case 3: { count = 2; v = v[pattern<0, 1, 3, 0>]; break; } // 011
-      case 4: { count = 1; v = v[pattern<2, 3, 0, 0>]; break; } // 100
-      case 5: { count = 2; v = v[pattern<0, 2, 3, 0>]; break; } // 101
-      case 6: { count = 2; v = v[pattern<1, 2, 3, 0>]; break; } // 110
-      case 7: { count = 3;                             break; } // 111
+      case 0b000: { count = 0; v = v[pattern<3, 0, 0, 0>]; break; }
+      case 0b001: { count = 1; v = v[pattern<0, 3, 0, 0>]; break; }
+      case 0b010: { count = 1; v = v[pattern<1, 3, 0, 0>]; break; }
+      case 0b011: { count = 2; v = v[pattern<0, 1, 3, 0>]; break; }
+      case 0b100: { count = 1; v = v[pattern<2, 3, 0, 0>]; break; }
+      case 0b101: { count = 2; v = v[pattern<0, 2, 3, 0>]; break; }
+      case 0b110: { count = 2; v = v[pattern<1, 2, 3, 0>]; break; }
+      case 0b111: { count = 3;                             break; }
       #if defined(SPY_COMPILER_IS_CLANG) or defined(SPY_COMPILER_IS_GCC)
       default: __builtin_unreachable();
       #endif
