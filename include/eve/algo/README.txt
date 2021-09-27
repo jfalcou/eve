@@ -107,6 +107,7 @@ algorithm traits
 * `force_cardinal`
 * `no_aligning`
 * `unroll`
+* `consider_types`
 
 zip traits
 * `common_with_types`

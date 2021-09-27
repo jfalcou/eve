@@ -59,40 +59,33 @@ void collect_indexes(R&& r, P p, std::vector<IdxType, Alloc>& res)
   // somewheere in valid memory, even if we ignore everything.
   if (r.begin() == r.end()) return;
 
-  using T = eve::algo::value_type_t<std::remove_cvref_t<R>>;
-
-  // As a step we should use the minimum cardinal between what T and IdxType.
-  // (at least by default).
-  // Otherwise either the compressing of the output or applying the predicate will be weird.
-  constexpr std::ptrdiff_t step = std::min(eve::expected_cardinal_v<T>,
-                                           eve::expected_cardinal_v<IdxType>);
-
-  // ^ Computation of the step is why the requirements on the predicate are difficult.
-  // It has to be `invocable<eve::wide<T, eve::fixed<step>>` but we didn't have the step
-  // before this point.
-
   // This converts the input to eve's understanding of a range:
   // unwraps vector::iterator to pointers, things like that.
+  // This is also where all of our dealing with traits happen,
+  // passing `consider_types<IdxType>` will make sure that we choose the cardinal (width)
+  // appropriate for both range type and index type.
   auto processed = eve::algo::preprocess_range(
-    eve::algo::traits{eve::algo::force_cardinal<step>},
-    std::forward<R>(r)
+    eve::algo::traits{eve::algo::consider_types<IdxType>}, std::forward<R>(r)
   );
 
   // Here we would normally use `for_each_iteration` but it's good to understand what's
   // happening inside.
   auto f         = processed.begin();
   auto l         = processed.end();
-  auto precise_l = f + (l - f) / step * step;
+  using cardinal = typename decltype(f)::cardinal;
+  // ^ Because this is the first place where we get the cardinal,
+  //   we couldn't specify the requirement on the predicate
 
-  // We are going to overallocate the output so that we can don't have to store partial
-  // registers
-  res.resize(l - f + step);
+  auto precise_l = f + (l - f) / cardinal{}() * cardinal{}();
 
-  IdxType* out = res.data();  // where will we write the data
+  // We are going to overallocate the output so that we can don't
+  // have to store partial registers.
+  res.resize(l - f + cardinal{}());
+  IdxType* out = res.data();
 
   // In a normal loop this would be i from for (i = 0; i != ...)
   // The lambda constructor will fill in (0, 1, 2, ...);
-  eve::wide<IdxType, eve::fixed<step>> wide_i{[](int i, int) { return i; }};
+  eve::wide<IdxType, cardinal> wide_i{[](int i, int) { return i; }};
 
   while (f != precise_l) {
     auto test     = p(eve::load(f));  // apply the predicate
@@ -104,8 +97,8 @@ void collect_indexes(R&& r, P p, std::vector<IdxType, Alloc>& res)
     // as long as the first elements are fine.
     out = eve::unsafe(eve::compress_store)(wide_i, test, out);
 
-    wide_i += step;  // ++i
-    f      += step;  // ++f
+    wide_i += cardinal{}();  // ++i
+    f      += cardinal{}();  // ++f
   }
 
   // Deal with tail

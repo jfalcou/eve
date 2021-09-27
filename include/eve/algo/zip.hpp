@@ -8,9 +8,10 @@
 #pragma once
 
 #include <eve/algo/as_range.hpp>
-#include <eve/algo/range_ref.hpp>
 #include <eve/algo/concepts/relaxed.hpp>
+#include <eve/algo/concepts/types_to_consider.hpp>
 #include <eve/algo/preprocess_range.hpp>
+#include <eve/algo/range_ref.hpp>
 #include <eve/algo/traits.hpp>
 #include <eve/algo/zip_iterator.hpp>
 
@@ -122,6 +123,7 @@ namespace eve::algo
   struct zip_range : kumi::tuple<Rngs...>
   {
     using is_non_owning = void;
+    using types_to_consider = kumi::result::cat_t<types_to_consider_for_t<Rngs>...>;
 
     EVE_FORCEINLINE zip_range(kumi::tuple<Rngs...> ranges):
       kumi::tuple<Rngs...>(ranges)

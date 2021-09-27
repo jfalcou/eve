@@ -58,15 +58,50 @@ TTS_CASE("eve.algo defaulting")
   }
 }
 
+TTS_CASE("eve.algo.traits consider types")
+{
+  eve::algo::traits expected{ eve::algo::consider_types<double, int, char> };
+  {
+    eve::algo::traits tr;
+    eve::algo::traits def{eve::algo::consider_types<double, int, char>};
+    auto actual = eve::algo::default_to(tr, def);
+    TTS_TYPE_IS(decltype(expected), decltype(actual));
+  }
+  {
+    eve::algo::traits tr{eve::algo::consider_types<double, int, char>};
+    eve::algo::traits def;
+    auto actual = eve::algo::default_to(tr, def);
+    TTS_TYPE_IS(decltype(expected), decltype(actual));
+  }
+  {
+    eve::algo::traits tr{eve::algo::consider_types<double>};
+    eve::algo::traits def{eve::algo::consider_types<int, char>};
+    auto actual = eve::algo::default_to(tr, def);
+    TTS_TYPE_IS(decltype(expected), decltype(actual));
+  }
+  {
+    eve::algo::traits tr;
+    TTS_TYPE_IS((eve::algo::get_types_to_consider_for<decltype(tr), int*>), kumi::tuple<int>);
+  }
+  {
+    eve::algo::traits tr{eve::algo::consider_types<double>};
+    TTS_TYPE_IS((eve::algo::get_types_to_consider_for<decltype(tr), int*>), (kumi::tuple<double, int>));
+  }
+}
+
 TTS_CASE("eve.algo.traits, type and cardinal")
 {
   {
     eve::algo::traits tr;
-    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr), int>), eve::fixed<eve::expected_cardinal_v<int>>);
+    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr), int*>), eve::fixed<eve::expected_cardinal_v<int>>);
   }
   {
     eve::algo::traits tr{eve::algo::force_cardinal<2>};
-    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr), int>), eve::fixed<2>);
+    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr), int*>), eve::fixed<2>);
+  }
+  {
+    eve::algo::traits tr{eve::algo::consider_types<double>};
+    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr), int*>), eve::fixed<eve::expected_cardinal_v<double>>);
   }
 }
 

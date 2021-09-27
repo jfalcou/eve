@@ -264,12 +264,13 @@ EVE_TEST_TYPES("cardinal/type manipulation", algo_test::selected_types)
   using e_t = eve::element_type_t<T>;
 
   std::vector<e_t> v;
+  std::vector<double> v_d;
   {
     auto processed = eve::algo::preprocess_range(
     eve::algo::traits(eve::algo::force_cardinal<T::size()>), v);
 
     using I = decltype(processed.begin());
-    TTS_CONSTEXPR_EXPECT((std::same_as<typename I::wide_value_type, T>));
+    TTS_TYPE_IS(typename I::wide_value_type, T);
   }
 
   {
@@ -288,9 +289,25 @@ EVE_TEST_TYPES("cardinal/type manipulation", algo_test::selected_types)
       eve::algo::convert(v, eve::as<double>{}));
 
     using I = decltype(processed.begin());
-    TTS_CONSTEXPR_EXPECT((std::same_as<
-      typename I::wide_value_type,
-      eve::wide<double, eve::fixed<T::size()>>
-    >));
+    TTS_TYPE_IS(typename I::wide_value_type,
+                (eve::wide<double, eve::fixed<T::size()>>));
+  }
+
+  {
+    auto processed = eve::algo::preprocess_range(
+      eve::algo::traits(eve::algo::consider_types<double>), v);
+
+    using I = decltype(processed.begin());
+    TTS_TYPE_IS(typename I::wide_value_type,
+                (eve::wide<e_t, eve::fixed<eve::expected_cardinal_v<double>>>));
+  }
+
+  {
+    auto processed = eve::algo::preprocess_range(
+      eve::algo::traits{}, eve::algo::convert(v_d, eve::as<e_t>{}));
+
+    using I = decltype(processed.begin());
+    TTS_TYPE_IS(typename I::wide_value_type,
+                (eve::wide<e_t, eve::fixed<eve::expected_cardinal_v<double>>>));
   }
 };

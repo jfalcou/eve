@@ -10,6 +10,7 @@
 #include <eve/algo/detail/convert.hpp>
 
 #include <eve/algo/concepts/relaxed.hpp>
+#include <eve/algo/concepts/types_to_consider.hpp>
 #include <eve/algo/concepts/value_type.hpp>
 #include <eve/algo/detail/converting_iterator.hpp>
 #include <eve/algo/range_ref.hpp>
@@ -61,17 +62,19 @@ namespace eve::algo
 
     using is_non_owning = void;
 
+    using types_to_consider = kumi::result::cat_t<
+      kumi::tuple<T>, types_to_consider_for_t<R>>;
+
     EVE_FORCEINLINE auto begin() const { return convert(base.begin(), eve::as<T>{}); }
     EVE_FORCEINLINE auto end()   const { return convert(base.end(),   eve::as<T>{}); }
 
     template<typename Traits>
     EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, Traits tr, converting_range self)
     {
-      auto tr_with_cardinal = default_to(tr, traits {force_cardinal_as<T>});
+      auto tr_with_cardinal = default_to(tr, traits {consider_types<T>});
       auto processed        = preprocess_range(tr_with_cardinal, self.base);
 
-      auto ret_tr =
-          drop_key_if<!has_cardinal_overrides_v<Traits>>(force_cardinal_key, processed.traits());
+      auto ret_tr = drop_key(consider_types_key, processed.traits());
 
       return preprocess_range_result {
           ret_tr, convert(processed.begin(), as<T>{}), convert(processed.end(), as<T>{})
