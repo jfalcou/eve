@@ -17,7 +17,7 @@
 // Types tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of eve::is_infinite(simd)"
-              , eve::test::simd::restricted::all_types
+              , eve::test::simd::all_types
               )
 <typename T>(eve::as<T>)
 {
@@ -30,9 +30,20 @@ EVE_TEST_TYPES( "Check return types of eve::is_infinite(simd)"
 //==================================================================================================
 // Tests for eve::is_infinite
 //==================================================================================================
+EVE_TEST( "Check behavior of eve::is_infinite(simd) integrals"
+        , eve::test::simd::integers
+        , eve::test::generate ( eve::test::ramp(0)
+                              , eve::test::logicals(0, 3))
+        )
+<typename T, typename M>(T  a0,  M const & t)
+{
+  using eve::detail::map;
+  TTS_EQUAL(eve::is_infinite(a0), eve::false_(eve::as(a0)));
+  TTS_EQUAL(eve::is_infinite[t](a0), eve::if_else(t, eve::is_infinite(a0), eve::false_(eve::as(a0))));
+};
 
-EVE_TEST( "Check behavior of eve::is_infinite(simd)"
-        , eve::test::simd::restricted::ieee_reals
+EVE_TEST( "Check behavior of eve::is_infinite(simd) IEEE"
+        , eve::test::simd::ieee_reals
         , eve::test::generate ( eve::test::ramp(0)
                               , eve::test::logicals(0, 3))
         )
@@ -44,11 +55,12 @@ EVE_TEST( "Check behavior of eve::is_infinite(simd)"
   TTS_EQUAL(eve::is_infinite(a0), map([](auto e) -> eve::logical<v_t> { return e-e != 0 && e == e; }, a0));
   TTS_EQUAL(eve::is_infinite[t](a0), eve::if_else(t, eve::is_infinite(a0), eve::false_(eve::as(a0))));
 };
+
 //==================================================================================================
 // Test cases values
 //==================================================================================================
 EVE_TEST( "Check corner-cases behavior of eve::is_infinite on wide"
-        , eve::test::simd::restricted::ieee_reals
+        , eve::test::simd::ieee_reals
         , eve::test::generate(eve::test::limits())
         )
 <typename T>(T const& cases)

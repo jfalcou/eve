@@ -27,7 +27,7 @@ EVE_TEST_TYPES( "Check return types of eve::maximum(wide)", eve::test::simd::all
 // Tests for eve::maximum
 //==================================================================================================
 EVE_TEST( "Check behavior of eve::maximum(eve::wide)"
-        , eve::test::simd::restricted::all_types
+        , eve::test::simd::all_types
         , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
                               , eve::test::logicals(0,3)
                               )

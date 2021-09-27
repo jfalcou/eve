@@ -64,6 +64,8 @@ namespace eve::detail
   template<typename Wide>
   EVE_FORCEINLINE auto extract(Wide const& p, std::size_t i) noexcept
   {
+    using abi_t = typename Wide::abi_type;
+
     if constexpr( has_bundle_abi_v<Wide> )
     {
       return kumi::apply( [=](auto const&... m)
@@ -72,6 +74,12 @@ namespace eve::detail
                           }
                           , p.storage()
                         );
+    }
+    else if constexpr( has_aggregated_abi_v<Wide> && !abi_t::is_wide_logical )
+    {
+      constexpr auto sz = Wide::size()/2;
+      if(i<sz)  return extract(p.slice(lower_),i);
+      else      return extract(p.slice(upper_),i-sz);
     }
     else
     {
@@ -89,8 +97,23 @@ namespace eve::detail
 
     if constexpr( has_aggregated_abi_v<Wide> )
     {
-      auto ptr = reinterpret_cast<detail::alias_t<type>*>(&p.storage().segments[0]);
-      ptr[i] = v;
+      using abi_t = typename Wide::abi_type;
+
+      if constexpr( abi_t::is_wide_logical )
+      {
+        auto ptr = reinterpret_cast<detail::alias_t<type>*>(&p.storage().segments[0]);
+        ptr[i] = v;
+      }
+      else
+      {
+        constexpr auto sz = Wide::size() / 2;
+        auto[l,h] = p.slice();
+
+        if(i<sz)  insert(l,i,v);
+        else      insert(h,i-sz,v);
+
+        p = Wide{l,h};
+      }
     }
     else if constexpr( has_emulated_abi_v<Wide> )
     {

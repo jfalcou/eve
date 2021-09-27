@@ -31,12 +31,13 @@ EVE_TEST_TYPES( "Check return types of logical operators on wide", eve::test::si
 // wide (*) wide tests
 //==================================================================================================
 EVE_TEST( "Check behavior of bitwise operators on eve::wide"
-        , eve::test::simd::restricted::all_types
+        , eve::test::simd::all_types
         , eve::test::generate ( eve::test::logicals(0,2)
                               , eve::test::logicals(0,2)
                               )
         )
 <typename T>(T a0, T a1)
+
 {
   TTS_IEEE_EQUAL( (a0 && a1), T([&](auto i, auto) { return eve::logical_and(a0.get(i), a1.get(i)); }));
   TTS_IEEE_EQUAL( (a0 || a1), T([&](auto i, auto) { return eve::logical_or (a0.get(i), a1.get(i)); }));
@@ -47,7 +48,7 @@ EVE_TEST( "Check behavior of bitwise operators on eve::wide"
 // scalar (*) wide tests
 //==================================================================================================
 EVE_TEST( "Check behavior of bitwise operators on wide and scalar"
-        , eve::test::simd::restricted::all_types
+        , eve::test::simd::all_types
         , eve::test::generate ( eve::test::logicals(0,2) )
         )
 <typename T>(T a0)

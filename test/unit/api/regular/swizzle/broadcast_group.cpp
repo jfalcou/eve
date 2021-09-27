@@ -20,7 +20,7 @@ inline constexpr auto broadcast_group_n = eve::fix_pattern<N>( [](auto i, auto) 
 // SWAG test
 //==================================================================================================
 EVE_TEST( "Check behavior of broadcast_groups swizzle"
-        , eve::test::simd::restricted::all_types
+        , eve::test::simd::all_types
         , eve::test::generate ( eve::test::randoms(-50, 50)
                               , eve::test::logicals(1, 2)
                               )

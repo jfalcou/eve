@@ -16,7 +16,7 @@
 // Types tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of eve::is_nltz(simd)"
-              , eve::test::simd::restricted::all_types
+              , eve::test::simd::all_types
               )
 <typename T>(eve::as<T>)
 {
@@ -31,7 +31,7 @@ EVE_TEST_TYPES( "Check return types of eve::is_nltz(simd)"
 //==================================================================================================
 
 EVE_TEST( "Check behavior of eve::is_nltz(simd)"
-        , eve::test::simd::restricted::all_types
+        , eve::test::simd::all_types
         , eve::test::generate ( eve::test::ramp(-1.0)
                              ,  eve::test::ramp(1.0, -1.0)
                               , eve::test::logicals(0, 3))

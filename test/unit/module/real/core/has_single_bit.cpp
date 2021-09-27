@@ -32,7 +32,7 @@ EVE_TEST_TYPES( "Check return types of has_single_bit on wide"
 // has_single_bit(simd) tests
 //==================================================================================================
 EVE_TEST( "Check behavior of has_single_bit(wide) on unsigned integral "
-        , eve::test::simd::restricted::unsigned_integers
+        , eve::test::simd::unsigned_integers
         , eve::test::generate(eve::test::ramp(1))
         )
 <typename T>(T const& a0)

@@ -39,7 +39,7 @@ template <typename T, std::size_t N> bool expect_array(const std::array<T, N>&) 
 //==================================================================================================
 // Check the raw type of top_bits' storage
 //==================================================================================================
-EVE_TEST_TYPES( "Check top bits raw type", eve::test::simd::restricted::all_types)
+EVE_TEST_TYPES( "Check top bits raw type", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   using v_t         = eve::element_type_t<T>;
@@ -70,7 +70,7 @@ EVE_TEST_TYPES( "Check top bits raw type", eve::test::simd::restricted::all_type
 //==================================================================================================
 // Check the raw type of top_bits' storage
 //==================================================================================================
-EVE_TEST_TYPES("Check top bits from logical", eve::test::simd::restricted::all_types)
+EVE_TEST_TYPES("Check top bits from logical", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   using logical = eve::logical<T>;
@@ -87,7 +87,7 @@ EVE_TEST_TYPES("Check top bits from logical", eve::test::simd::restricted::all_t
   }
 };
 
-EVE_TEST_TYPES("Check top bits from logical+ignore", eve::test::simd::restricted::all_types)
+EVE_TEST_TYPES("Check top bits from logical+ignore", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   using logical = eve::logical<T>;
@@ -97,7 +97,7 @@ EVE_TEST_TYPES("Check top bits from logical+ignore", eve::test::simd::restricted
   TTS_EQUAL(expected, eve::detail::to_logical(actual));
 };
 
-EVE_TEST_TYPES("Check top bits to_logical", eve::test::simd::restricted::all_types)
+EVE_TEST_TYPES("Check top bits to_logical", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   test_over_top_bits<T>([&](auto x)
@@ -110,7 +110,7 @@ EVE_TEST_TYPES("Check top bits to_logical", eve::test::simd::restricted::all_typ
 //==================================================================================================
 // Check the raw type of top_bits' storage
 //==================================================================================================
-EVE_TEST_TYPES( "Check top_bits::set", eve::test::simd::restricted::all_types)
+EVE_TEST_TYPES( "Check top_bits::set", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   using logical = eve::logical<T>;
@@ -137,7 +137,7 @@ EVE_TEST_TYPES( "Check top_bits::set", eve::test::simd::restricted::all_types)
 //==================================================================================================
 // Check the raw type of top_bits' storage
 //==================================================================================================
-EVE_TEST_TYPES("Check top_bits endianess", eve::test::simd::restricted::all_types)
+EVE_TEST_TYPES("Check top_bits endianess", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   using logical = eve::logical<T>;
@@ -159,7 +159,7 @@ EVE_TEST_TYPES("Check top_bits endianess", eve::test::simd::restricted::all_type
 //==================================================================================================
 // Check the behavior of top_bits all()/any()
 //==================================================================================================
-EVE_TEST_TYPES("Check all(top_bits)", eve::test::simd::restricted::all_types)
+EVE_TEST_TYPES("Check all(top_bits)", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   using logical = eve::logical<T>;
@@ -176,7 +176,7 @@ EVE_TEST_TYPES("Check all(top_bits)", eve::test::simd::restricted::all_types)
   }
 };
 
-EVE_TEST_TYPES("Check any(top_bits)", eve::test::simd::restricted::all_types)
+EVE_TEST_TYPES("Check any(top_bits)", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   using logical = eve::logical<T>;
@@ -196,7 +196,7 @@ EVE_TEST_TYPES("Check any(top_bits)", eve::test::simd::restricted::all_types)
 //==================================================================================================
 // Check the behavior of top_bits first_true/count_true
 //==================================================================================================
-EVE_TEST_TYPES("Check first_true(top_bits)", eve::test::simd::restricted::all_types)
+EVE_TEST_TYPES("Check first_true(top_bits)", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   using logical = eve::logical<T>;
@@ -221,7 +221,7 @@ EVE_TEST_TYPES("Check first_true(top_bits)", eve::test::simd::restricted::all_ty
   TTS_EXPECT_NOT(eve::detail::first_true(top_bits(x)));
 };
 
-EVE_TEST_TYPES("Check count_true(top_bits)", eve::test::simd::restricted::all_types)
+EVE_TEST_TYPES("Check count_true(top_bits)", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   test_over_top_bits<T>([&](auto x) {
@@ -236,7 +236,7 @@ EVE_TEST_TYPES("Check count_true(top_bits)", eve::test::simd::restricted::all_ty
 //==================================================================================================
 // Check the behavior of top_bits over ignore masks
 //==================================================================================================
-EVE_TEST_TYPES("Check top_bits from ignore_*", eve::test::simd::restricted::all_types)
+EVE_TEST_TYPES("Check top_bits from ignore_*", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   using logical = eve::logical<T>;
@@ -299,7 +299,7 @@ EVE_TEST_TYPES("Check top_bits from ignore_*", eve::test::simd::restricted::all_
 //==================================================================================================
 // Check the behavior of top_bits bitwise operators
 //==================================================================================================
-EVE_TEST_TYPES("Check top_bits bitwise operators", eve::test::simd::restricted::all_types)
+EVE_TEST_TYPES("Check top_bits bitwise operators", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   using logical = eve::logical<T>;

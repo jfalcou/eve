@@ -16,7 +16,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check eve::convert return type", eve::test::simd::restricted::all_types)
+EVE_TEST_TYPES( "Check eve::convert return type", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   using t_t = eve::wide<float, eve::cardinal_t<T>>;
@@ -29,7 +29,7 @@ EVE_TEST_TYPES( "Check eve::convert return type", eve::test::simd::restricted::a
 //==================================================================================================
 // Value tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check eve::convert arithmetic behavior", eve::test::simd::restricted::all_types)
+EVE_TEST_TYPES( "Check eve::convert arithmetic behavior", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   using t_t = eve::wide<float, eve::cardinal_t<T>>;
@@ -49,7 +49,7 @@ EVE_TEST_TYPES( "Check eve::convert arithmetic behavior", eve::test::simd::restr
   }
 };
 
-EVE_TEST_TYPES( "Check saturated eve::convert arithmetic behavior", eve::test::simd::restricted::all_types)
+EVE_TEST_TYPES( "Check saturated eve::convert arithmetic behavior", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   using t_t = eve::wide<float, eve::cardinal_t<T>>;
@@ -74,7 +74,7 @@ EVE_TEST_TYPES( "Check saturated eve::convert arithmetic behavior", eve::test::s
   TTS_EQUAL(eve::saturated(eve::convert)((T(42.69)), tgt), static_cast<t_t>(v_t(42.69)) );
 };
 
-EVE_TEST_TYPES( "Check eve::convert logical behavior", eve::test::simd::restricted::all_types)
+EVE_TEST_TYPES( "Check eve::convert logical behavior", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   using t_t  = eve::logical<eve::wide<float, eve::cardinal_t<T>>>;
