@@ -16,12 +16,14 @@ namespace eve::detail
 {
   template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N> fracscale_(EVE_SUPPORTS(avx512_), wide<T, N> a0, int s) noexcept
+  requires x86_abi<abi_t<T, N>>
   {
     return to_nearest(fracscale)(a0, s);
   }
 
   template<int S,floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N> fracscale_(EVE_SUPPORTS(avx512_), wide<T, N> a0, std::integral_constant<int, S> s) noexcept
+  requires x86_abi<abi_t<T, N>>
   {
     return to_nearest(fracscale)(a0, s);
   }
@@ -30,14 +32,18 @@ namespace eve::detail
   // Rouding case
   template<decorator D, floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N> fracscale_(EVE_SUPPORTS(avx512_), D const &, wide<T, N> a0, int s) noexcept
-  requires(is_one_of<D>(types<toward_zero_type, downward_type, to_nearest_type, upward_type> {}))
+  requires(   is_one_of<D>(types<toward_zero_type, downward_type, to_nearest_type, upward_type> {})
+          &&  x86_abi<abi_t<T, N>>
+          )
   {
     return D()(fracscale[true_(as(a0))])(a0, s);
   }
 
   template<int S,decorator D, floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N> fracscale_(EVE_SUPPORTS(avx512_), D const &, wide<T, N> a0, std::integral_constant<int, S> s) noexcept
-  requires(is_one_of<D>(types<toward_zero_type, downward_type, to_nearest_type, upward_type> {}))
+  requires(   is_one_of<D>(types<toward_zero_type, downward_type, to_nearest_type, upward_type> {})
+          &&  x86_abi<abi_t<T, N>>
+          )
   {
     return D()(fracscale[true_(as(a0))])(a0, s);
   }
@@ -47,6 +53,7 @@ namespace eve::detail
   template<int S, conditional_expr C, floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE
   wide<T, N> fracscale_(EVE_SUPPORTS(avx512_), C const &cx, wide<T, N> const &a0, std::integral_constant<int, S> s) noexcept
+  requires x86_abi<abi_t<T, N>>
   {
     return to_nearest(fracscale[cx])(a0, s);
   }
@@ -82,14 +89,15 @@ namespace eve::detail
   template<conditional_expr C, floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE
   wide<T, N> fracscale_(EVE_SUPPORTS(avx512_), C const &cx, wide<T, N> const &a0, int s) noexcept
+  requires x86_abi<abi_t<T, N>>
   {
     return to_nearest(fracscale[cx])(a0, s);
   }
 
   template<decorator D, conditional_expr C, floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE
-  wide<T, N> fracscale_(EVE_SUPPORTS(avx512_), C const &cx, D const &, wide<T, N> const &a0
-                        , int s) noexcept
+  wide<T, N> fracscale_(EVE_SUPPORTS(avx512_), C const &cx, D const &, wide<T, N> const &a0, int s) noexcept
+  requires x86_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();
 
@@ -117,6 +125,7 @@ namespace eve::detail
   EVE_FORCEINLINE
   wide<T, N> fracscale_(EVE_SUPPORTS(avx512_), C const &cx, D const &, wide<T, N> const &a0
                         , std::integral_constant<int, S> ) noexcept
+  requires x86_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();
 

@@ -18,7 +18,7 @@
 // Types tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of rotl"
-            , eve::test::simd::restricted::unsigned_integers
+            , eve::test::simd::unsigned_integers
             )
 <typename T>(eve::as<T>)
 {
@@ -52,7 +52,7 @@ auto maxi = []<typename T>(eve::as<T> const & )
 //== rotl  tests
 //==================================================================================================
 EVE_TEST( "Check behavior of rotl on wide"
-        , eve::test::simd::restricted::unsigned_integers
+        , eve::test::simd::unsigned_integers
         , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax)
                              , eve::test::randoms(0, maxi))
         )
