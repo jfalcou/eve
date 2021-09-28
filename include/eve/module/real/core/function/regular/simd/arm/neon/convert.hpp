@@ -163,6 +163,7 @@ namespace eve::detail
     else if constexpr( catin == category::int8x8 )
     {
            if constexpr( catou == category::int16x8 ) return vmovl_s8(v0);
+      else if constexpr( catou == category::int16x8 ) return vget_low_s16(vmovl_s8(v0));
       else                                            return convert_(EVE_RETARGET(simd_), v0, tgt);
     }
     //==============================================================================================
@@ -170,6 +171,7 @@ namespace eve::detail
     else if constexpr( catin == category::uint8x8 )
     {
            if constexpr( catou == category::uint16x8 )  return vmovl_u8(v0);
+      else if constexpr( catou == category::uint16x8 )  return vget_low_u16(vmovl_u8(v0));
       else if constexpr( catou == category::int8x8 )    return vreinterpret_s8_u8(v0);
       else                                              return convert_(EVE_RETARGET(simd_), v0, tgt);
     }
