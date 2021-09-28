@@ -37,7 +37,7 @@ EVE_TEST_TYPES( "Check return types of powm1"
 // powm1  tests
 //==================================================================================================
 EVE_TEST( "Check behavior of powm1 on wide"
-        , eve::test::simd::ieee_doubles
+        , eve::test::simd::ieee_reals
         , eve::test::generate( eve::test::randoms(0, eve::valmax)
                              , eve::test::randoms(eve::valmin, eve::valmax)
                              , eve::test::randoms(0.0, 1.0)
@@ -48,9 +48,9 @@ EVE_TEST( "Check behavior of powm1 on wide"
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
-  TTS_RELATIVE_EQUAL(eve::powm1(a0, a1)      , map([](auto e, auto f) -> v_t { return eve::pow(double(e), double(f))-1; }, a0, a1), 100*eve::eps(eve::as<v_t>()));
-  TTS_RELATIVE_EQUAL(eve::powm1(a2, a3)      , map([](auto e, auto f) -> v_t { return eve::pow(double(e), double(f))-1; }, a2, a3), 100*eve::eps(eve::as<v_t>()));
-//  TTS_ULP_EQUAL(eve::diff_1st(eve::powm1)(a0, a1), eve::pow(a0, eve::dec(a1))*a1, 2);
+  TTS_RELATIVE_EQUAL(eve::powm1(a0, a1)      , map([](auto e, auto f) -> v_t { return eve::pow(double(e), double(f))-1; }, a0, a1), 1000*eve::eps(eve::as<v_t>()));
+  TTS_RELATIVE_EQUAL(eve::powm1(a2, a3)      , map([](auto e, auto f) -> v_t { return eve::pow(double(e), double(f))-1; }, a2, a3), 1000*eve::eps(eve::as<v_t>()));
+  TTS_ULP_EQUAL(eve::diff_1st(eve::powm1)(a0, a1), eve::pow(a0, eve::dec(a1))*a1, 2);
   TTS_ULP_EQUAL(eve::diff_1st(eve::powm1)(a2, a3), eve::pow(a2, eve::dec(a3))*a3, 2);
   TTS_ULP_EQUAL(eve::diff_2nd(eve::powm1)(a0, a1), eve::pow(a0, a1)*eve::log(a0), 2);
   TTS_ULP_EQUAL(eve::diff_2nd(eve::powm1)(a2, a3), eve::pow(a2, a3)*eve::log(a2), 2);
