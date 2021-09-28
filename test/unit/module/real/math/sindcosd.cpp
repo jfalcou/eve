@@ -20,7 +20,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of cos"
+EVE_TEST_TYPES( "Check return types of sindcosd"
             , eve::test::simd::ieee_reals
             )
 <typename T>(eve::as<T>)
@@ -32,17 +32,17 @@ EVE_TEST_TYPES( "Check return types of cos"
 };
 
 //==================================================================================================
-// cos  tests
+// sindcosd  tests
 //==================================================================================================
 auto mrest  = []<typename T>(eve::as<T> const & ){  return T(-45); };
 auto rest   = []<typename T>(eve::as<T> const & ){  return T( 45); };
 auto msmall = []<typename T>(eve::as<T> const & ){  return T(-90 ); };
 auto small  = []<typename T>(eve::as<T> const & ){  return T( 90 ); };
-auto mmed   = []<typename T>(eve::as<T> const & ){  return -5000; };
-auto med    = []<typename T>(eve::as<T> const & ){  return  5000; };
+auto mmed   = []<typename T>(eve::as<T> const & ){  return T(-360); };
+auto med    = []<typename T>(eve::as<T> const & ){  return T( 360); };
 
-EVE_TEST( "Check behavior of cos on wide"
-        , eve::test::simd::restricted::ieee_reals
+EVE_TEST( "Check behavior of sindcosd on wide"
+        , eve::test::simd::ieee_reals
         , eve::test::generate( eve::test::randoms(mrest, rest)
                              , eve::test::randoms(msmall, small)
                              , eve::test::randoms(mmed, med)
@@ -77,8 +77,8 @@ EVE_TEST( "Check behavior of cos on wide"
     TTS_ULP_EQUAL(s1      , map(refs, a1), 2);
     TTS_ULP_EQUAL(c1      , map(refc, a1), 30);
     auto [s2, c2] = eve::medium(sindcosd)(a2);
-    TTS_ULP_EQUAL(s2      , map(refs, a2), 2);
-    TTS_ULP_EQUAL(c2      , map(refc, a2), 2);
+    TTS_ULP_EQUAL(s2      , map(refs, a2), 51);
+    TTS_ULP_EQUAL(c2      , map(refc, a2), 51);
   }
   {
     auto [s, c] = eve::big(sindcosd)(a0);
@@ -88,8 +88,8 @@ EVE_TEST( "Check behavior of cos on wide"
     TTS_ULP_EQUAL(s1      , map(refs, a1), 2);
     TTS_ULP_EQUAL(c1      , map(refc, a1), 30);
     auto [s2, c2] = eve::big(sindcosd)(a2);
-    TTS_ULP_EQUAL(s2      , map(refs, a2), 2);
-    TTS_ULP_EQUAL(c2      , map(refc, a2), 2);
+    TTS_ULP_EQUAL(s2      , map(refs, a2), 51);
+    TTS_ULP_EQUAL(c2      , map(refc, a2), 51);
     auto [s3, c3] = eve::big(sindcosd)(a3);
     TTS_ULP_EQUAL(s3      , map(refs, a3), 2);
     TTS_ULP_EQUAL(c3      , map(refc, a3), 2);
@@ -102,8 +102,8 @@ EVE_TEST( "Check behavior of cos on wide"
     TTS_ULP_EQUAL(s1      , map(refs, a1), 2);
     TTS_ULP_EQUAL(c1      , map(refc, a1), 30);
     auto [s2, c2] = sindcosd(a2);
-    TTS_ULP_EQUAL(s2      , map(refs, a2), 2);
-    TTS_ULP_EQUAL(c2      , map(refc, a2), 2);
+    TTS_ULP_EQUAL(s2      , map(refs, a2), 51);
+    TTS_ULP_EQUAL(c2      , map(refc, a2), 51);
     auto [s3, c3] = sindcosd(a3);
     TTS_ULP_EQUAL(s3      , map(refs, a3), 2);
     TTS_ULP_EQUAL(c3      , map(refc, a3), 2);
