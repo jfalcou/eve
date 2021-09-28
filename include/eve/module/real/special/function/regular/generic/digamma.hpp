@@ -39,7 +39,7 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
     {
       auto dlarge = (std::is_same_v<elt_t, double>) ? 20: 10;
-      auto br_1_2s = [](auto x, auto result)
+      auto br_1_2 = [](auto x, auto result)
         {
           // computes digamma(a0)/a0 for double or double vectors
           // xx is sqr(a0) and 0 <= abs(a0) <= 3.25
@@ -157,7 +157,7 @@ namespace eve::detail
           result = -1/x;
           x      += 1;
         }
-        return br_1_2s(x, result);
+        return br_1_2(x, result);
       }
       else // simd
       {
@@ -192,13 +192,13 @@ namespace eve::detail
               cond = x > T(2);
             }
             cond = x < T(1);
-            while( eve::any(cond) ) 
+            while( eve::any(cond) )
             {
               result = add[cond]( result, -rec(x));
               x =  inc[cond](x);
               cond = x < T(1);
             }
-            notdone = last_interval(br_1_2s,  notdone, r, x, result);
+            notdone = last_interval(br_1_2,  notdone, r, x, result);
           }
         }
         return r;
