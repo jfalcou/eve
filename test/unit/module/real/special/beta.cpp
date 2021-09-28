@@ -41,7 +41,7 @@ EVE_TEST_TYPES( "Check return types of beta"
 // beta  tests
 //==================================================================================================
 EVE_TEST( "Check behavior of beta on wide"
-        , eve::test::simd::restricted::ieee_reals
+        , eve::test::simd::ieee_reals
         , eve::test::generate(eve::test::randoms(0.0, 10.0)
                              , eve::test::randoms(0.0,10.0))
         )

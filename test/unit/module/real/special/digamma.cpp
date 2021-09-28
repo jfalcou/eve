@@ -40,7 +40,7 @@ EVE_TEST_TYPES( "Check return types of digamma"
 // digamma  tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check behavior of digamma on wide"
-              , eve::test::simd::ieee_reals
+              , eve::test::simd::ieee_floats
               )
   <typename T>(eve::as<T> )
 {
@@ -63,6 +63,8 @@ EVE_TEST_TYPES( "Check behavior of digamma on wide"
   TTS_ULP_EQUAL(digamma(T(22)), T(3.0681430398611966699248760264450329818421699570581L), ulp);
   TTS_ULP_EQUAL(digamma(T(50)), T(3.9019896734278921969539597028823666609284424880275L), ulp);
   TTS_ULP_EQUAL(digamma(T(500)), T(6.2136077650889917423827750552855712637776544784569L), ulp);
+  TTS_ULP_EQUAL(digamma(T(3.193317413330078125)), T(digamma(3.193317413330078125)), ulp);
+  TTS_ULP_EQUAL(digamma(T(3.193317413330078125)), T(9.963879482071649e-01), ulp);
   //
   // negative values:
   //
@@ -70,4 +72,13 @@ EVE_TEST_TYPES( "Check behavior of digamma on wide"
   TTS_ULP_EQUAL(digamma(T(-10.125)), T(9.9480538258660761287008034071425343357982429855241L), ulp);
   TTS_ULP_EQUAL(digamma(T(-10.875)), T(-5.1527360383841562620205965901515879492020193154231L), ulp);
   TTS_ULP_EQUAL(digamma(T(-1.5)), T(0.70315664064524318722569033366791109947350706200623L), ulp);
+};
+
+EVE_TEST( "Check behavior of digamma on wide"
+        , eve::test::simd::ieee_floats
+        , eve::test::generate(eve::test::randoms(0.4, 4.0))
+        )
+<typename T>(T const& a0)
+{
+  TTS_ULP_EQUAL(eve::digamma(a0), T(map(eve::digamma, a0)), 2);
 };
