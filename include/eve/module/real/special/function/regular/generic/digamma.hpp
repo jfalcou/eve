@@ -39,7 +39,7 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
     {
       auto dlarge = (std::is_same_v<elt_t, double>) ? 20: 10;
-      auto br_1_2 = [](auto x, auto )
+      auto br_1_2s = [](auto x, auto result)
         {
           // computes digamma(a0)/a0 for double or double vectors
           // xx is sqr(a0) and 0 <= abs(a0) <= 3.25
@@ -72,7 +72,7 @@ namespace eve::detail
               0x3f616fc90a0a1908ll,
               0xbea2b84f95bbf448ll
               >(x);
-            return fma(g, y, g * r);
+            return fma(g, y, g * r)+result;
           }
           else
           {
@@ -94,31 +94,31 @@ namespace eve::detail
             0x3b0b7e48,
             0xb515c27d
             >(x);
-            return fma(g, y, g * r);
+            return fma(g, y, g * r)+result;
           }
         };
 
-      auto br_large = [](auto x, auto )
+      auto br_large = [](auto x,  auto result)  {
+        //if we're above the lower-limit for the asymptotic expansion then use it:
+        x = dec(x);
+        result += log(x);
+        result += rec(x+x);
+        auto z = rec(sqr(x));
+        T y(0);
+        if constexpr(std::is_same_v < elt_t, double>)
         {
-          //if we're above the lower-limit for the asymptotic expansion then use it:
-          x = dec(x);
-          auto result = log(x);
-          result += rec(x+x);
-          auto z = rec(sqr(x));
-          T y(0);
-          if constexpr(std::is_same_v < elt_t, double>)
-          {
-            y = horn<T, 0x3fb5555555555555ll,  0xbf81111111111111ll,  0x3f70410410410410ll, 0xbf71111111111111ll
-              , 0x3f7f07c1f07c1f08ll,0xbf95995995995996ll,0x3fb5555555555555ll,0xbfdc5e5e5e5e5e5ell> (z);
-          }
-          else
-          {
-            y = horn<T,0x3daaaaab, 0xbc088889,0x3b820821, 0xbb888889,
-            0x3bf83e10,0xbcaccacd,0x3daaaaab,0xbee2f2f3>(z);
-          }
-          result -= z * y;
-          return result;
-        };
+          y = horn<T, 0x3fb5555555555555ll,  0xbf81111111111111ll,  0x3f70410410410410ll, 0xbf71111111111111ll
+            , 0x3f7f07c1f07c1f08ll,0xbf95995995995996ll,0x3fb5555555555555ll,0xbfdc5e5e5e5e5e5ell> (z);
+        }
+        else
+        {
+          y = horn<T,0x3daaaaab, 0xbc088889,0x3b820821, 0xbb888889,
+          0x3bf83e10,0xbcaccacd,0x3daaaaab,0xbee2f2f3>(z);
+        }
+        result -= z * y;
+        return result;
+      };
+
       if constexpr(scalar_value<T>)
       {
         auto result = zero(as(x));
@@ -143,7 +143,7 @@ namespace eve::detail
         }
         if(x >= dlarge)
         { // If we're above the lower-limit for the asymptotic expansion then use it:
-          return br_large(x, result)+result;
+          return br_large(x, result);
         }
         // If x > 2 reduce to the interval [1,2]:
         while(x > 2)
@@ -157,7 +157,7 @@ namespace eve::detail
           result = -1/x;
           x      += 1;
         }
-        return br_1_2(x, result)+result;
+        return br_1_2s(x, result);
       }
       else // simd
       {
@@ -179,28 +179,29 @@ namespace eve::detail
         auto r = nan(as<T>()); //nan case treated here
         if( eve::any(notdone) )
         {
-          notdone = next_interval(br_large,  notdone, x > dlarge, r, x, result);
+          notdone = next_interval(br_large,  notdone, x >= dlarge, r, x, result);
           if( eve::any(notdone) )
           {
             // If x > 2 reduce to the interval [1,2]:
             x = if_else(x > dlarge, one, x);
-            auto cond = x > 2;
+            auto cond = x > T(2);
             while( eve::any(cond) )
             {
               x =  dec[cond](x);
               result = add[cond](result,rec(x));
-              cond = x > 2;
+              cond = x > T(2);
             }
-            cond = x < 1;
-            if( eve::any(cond) ) // back one step
+            cond = x < T(1);
+            while( eve::any(cond) ) 
             {
-              result = add[cond](-rec(x), result);
+              result = add[cond]( result, -rec(x));
               x =  inc[cond](x);
+              cond = x < T(1);
             }
-            notdone = last_interval(br_1_2,  notdone, r, x, result);
+            notdone = last_interval(br_1_2s,  notdone, r, x, result);
           }
         }
-        return r+result;
+        return r;
       }
     }
     else
