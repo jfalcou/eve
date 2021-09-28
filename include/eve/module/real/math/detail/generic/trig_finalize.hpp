@@ -92,7 +92,6 @@ namespace eve::detail
   {
     if constexpr(scalar_value<T>)
     {
-      std::cout << "cos_finalize xr "  << std::setprecision(20) << "  " << xr << std::endl;
       using i_t =  as_integer_t<T, signed>;
       i_t n = i_t(fn);
       i_t swap_bit = n&i_t(1);
@@ -120,7 +119,6 @@ namespace eve::detail
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto sincos_finalize( T a0, T fn, T xr, T dxr = T(0)) noexcept
   {
-    std::cout << "sincos_finalize xr "  << std::setprecision(20)<< a0 << "  " << xr << std::endl;
     auto z = sqr(xr);
     auto  se0 = sin_eval(z, xr);
     auto  ce0 = cos_eval(z);
@@ -157,7 +155,6 @@ namespace eve::detail
                                              , T xr
                                              , T dxr = T(0)) noexcept
   {
-    std::cout << "sin_finalize xr " << std::setprecision(20) << a0 << "  " << xr << std::endl;
     if constexpr(scalar_value<T>)
     {
       using i_t =  as_integer_t<T, signed>;
