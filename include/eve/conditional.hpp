@@ -29,7 +29,6 @@ namespace eve
     template<typename T, relative_conditional_expr C>
     EVE_FORCEINLINE as_logical_t<T> to_logical(C cond, eve::as<T> const&)
     {
-      using abi_t = typename T::abi_type;
       using type  = as_logical_t<T>;
 
       auto value = detail::top_bits<type>(cond).storage;
