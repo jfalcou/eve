@@ -171,7 +171,10 @@ namespace eve
     template<simd_value S0, simd_value... Ss>
     explicit EVE_FORCEINLINE wide( S0 v0, Ss... vs) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-    requires kumi::sized_product_type<Type,1+sizeof...(Ss)>
+    requires    kumi::sized_product_type<Type,1+sizeof...(Ss)>
+            &&  (   std::same_as<cardinal_t<S0>,Cardinal> &&  ...
+                &&  std::same_as<cardinal_t<Ss>,Cardinal>
+                )
 #endif
             : storage_base(kumi::make_tuple(v0,vs...))
     {}
@@ -1106,6 +1109,7 @@ namespace eve
   {
     return kumi::get<I>(w.storage());
   }
+
 #if !defined(EVE_DOXYGEN_INVOKED)
 } }
 #else
