@@ -27,7 +27,7 @@ namespace eve
     template <logical_simd_value Logical> struct top_bits;
 
     template<typename T, relative_conditional_expr C>
-    EVE_FORCEINLINE as_logical_t<T> to_logical(C cond, eve::as<T> const&)
+    EVE_FORCEINLINE as_logical_t<T> to_non_wide_logical(C cond, eve::as<T> const&)
     {
       using type  = as_logical_t<T>;
 
@@ -198,7 +198,7 @@ namespace eve
 
       if constexpr( !abi_t::is_wide_logical )
       {
-        return detail::to_logical(*this, as<T>());
+        return detail::to_non_wide_logical(*this, as<T>());
       }
       else
       {
@@ -306,7 +306,7 @@ namespace eve
       using type  = as_logical_t<T>;
       if constexpr( !abi_t::is_wide_logical )
       {
-        return detail::to_logical(*this, as<T>());
+        return detail::to_non_wide_logical(*this, as<T>());
       }
       else
       {
@@ -420,7 +420,7 @@ namespace eve
 
       if constexpr( !abi_t::is_wide_logical )
       {
-        return detail::to_logical(*this, as<T>());
+        return detail::to_non_wide_logical(*this, as<T>());
       }
       else
       {
