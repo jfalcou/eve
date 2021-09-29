@@ -25,6 +25,25 @@ namespace eve
   namespace detail
   {
     template <logical_simd_value Logical> struct top_bits;
+
+    template<typename T, relative_conditional_expr C>
+    EVE_FORCEINLINE as_logical_t<T> to_logical(C cond, eve::as<T> const&)
+    {
+      using abi_t = typename T::abi_type;
+      using type  = as_logical_t<T>;
+
+      auto value = detail::top_bits<type>(cond).storage;
+
+      if constexpr(has_aggregated_abi_v<T>)
+      {
+        using sub_t = typename type::template rescale<typename cardinal_t<T>::split_type>;
+        return type( sub_t(value[0].storage), sub_t(value[1].storage));
+      }
+      else
+      {
+        return type{value};
+      }
+    }
   }
 
   //================================================================================================
@@ -180,7 +199,7 @@ namespace eve
 
       if constexpr( !abi_t::is_wide_logical )
       {
-        return detail::top_bits<type>(*this).storage;
+        return detail::to_logical(*this, as<T>());
       }
       else
       {
@@ -288,7 +307,7 @@ namespace eve
       using type  = as_logical_t<T>;
       if constexpr( !abi_t::is_wide_logical )
       {
-        return detail::top_bits<type>(*this).storage;
+        return detail::to_logical(*this, as<T>());
       }
       else
       {
@@ -402,7 +421,7 @@ namespace eve
 
       if constexpr( !abi_t::is_wide_logical )
       {
-        return detail::top_bits<type>(*this).storage;
+        return detail::to_logical(*this, as<T>());
       }
       else
       {
