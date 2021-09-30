@@ -58,16 +58,19 @@ namespace eve
 
 namespace eve::detail
 {
-  template<simd_value... Ws, kumi::product_type Target>
-  EVE_FORCEINLINE auto zip_(EVE_SUPPORTS(cpu_), as<Target> const&, Ws... ws) noexcept
-  requires (sizeof...(Ws) == std::tuple_size<Target>::value)
+  template<kumi::product_type Target, simd_value W0, simd_value... Ws>
+  EVE_FORCEINLINE auto zip_(EVE_SUPPORTS(cpu_), as<Target> const&, W0 w0, Ws... ws) noexcept
+  requires  (   (sizeof...(Ws) + 1 == std::tuple_size<Target>::value)
+            &&  (std::same_as<cardinal_t<W0>,cardinal_t<Ws>> &&  ... )
+            )
   {
-    return wide<Target>{ws...};
+    return wide<Target>{w0,ws...};
   }
 
-  template<simd_value... Ws>
-  EVE_FORCEINLINE auto zip_(EVE_SUPPORTS(cpu_),  Ws... ws) noexcept
+  template<simd_value W0, simd_value... Ws>
+  EVE_FORCEINLINE auto zip_(EVE_SUPPORTS(cpu_),  W0 w0, Ws... ws) noexcept
+    requires( (std::same_as<cardinal_t<W0>,cardinal_t<Ws>> &&  ... ) )
   {
-    return wide<kumi::tuple<eve::element_type_t<Ws>...>>{ws...};
+    return wide<kumi::tuple<eve::element_type_t<W0>,eve::element_type_t<Ws>...>>{w0, ws...};
   }
 }
