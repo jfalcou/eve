@@ -141,7 +141,7 @@ namespace eve::detail
       store(value, eve::aligned_ptr<e_t, typename T::cardinal_type>(storage.begin()));
 
       auto offset = cond.offset( as<T>{} );
-      auto count = cond.count( as<T>{} );
+      auto count  = cond.count( as<T>{} );
       std::memcpy((void*)(ptr + offset), (void*)(storage.begin() + offset), sizeof(e_t) * count);
     }
   }
