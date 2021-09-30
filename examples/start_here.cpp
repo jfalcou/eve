@@ -85,6 +85,21 @@ void polar_to_cartesian_vectors(
     });
 }
 
+// -------------------------
+// remove numbers outside of treshold
+
+#include <eve/algo/remove.hpp>
+#include <eve/function/is_even.hpp>
+
+void erase_remove_numbers_outisde_of_treshold(
+  std::vector<int>& v, int low, int up)
+{
+  v.erase(
+    eve::algo::remove_if(v, [&](auto x) { return x < low || x > up; }),
+    v.end()
+  );
+}
+
 // --------------------------------------------
 
 #include "test.hpp"
@@ -149,4 +164,14 @@ TTS_CASE("polar_to_cartesian, vectors")
     TTS_RELATIVE_EQUAL(expected_x[i], actual_x[i], 0.00001);
     TTS_RELATIVE_EQUAL(expected_y[i], actual_y[i], 0.00001);
   }
+}
+
+TTS_CASE("remove_numbers_outisde_of_treshold")
+{
+  std::vector<int> in      {-1, 5, 2, -3, 10, 1, -18};
+  std::vector<int> expected{5, 2, 1};
+
+  erase_remove_numbers_outisde_of_treshold(in, 0, 9);
+
+  TTS_EQUAL(expected, in);
 }
