@@ -7,6 +7,10 @@ on:
     branches:
       - develop
 
+concurrency:
+  group: ${{ github.head_ref }}
+  cancel-in-progress: true
+
 jobs:
   arch-x86:
     runs-on: self-hosted
