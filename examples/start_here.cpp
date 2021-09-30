@@ -34,6 +34,7 @@ int const* find_negative_number(int const* f, int const* l)
 #include <eve/function/atan.hpp>
 #include <eve/function/cos.hpp>
 #include <eve/function/sin.hpp>
+#include <eve/function/zip.hpp>
 
 #include <eve/product_type.hpp>
 
@@ -55,8 +56,7 @@ void polar_to_cartesian(
       auto x = r * eve::cos(angle_d);
       auto y = r * eve::sin(angle_d);
 
-      // FIX-983: use a make tuple like thingy
-      return eve::wide<cartesian>(x, y);
+      return eve::zip(x, y);
     });
 }
 
@@ -81,11 +81,9 @@ void polar_to_cartesian_vectors(
       auto x = r * eve::cos(angle_d);
       auto y = r * eve::sin(angle_d);
 
-      // FIX-983: use a make tuple like thingy
-      return eve::wide<cartesian>(x, y);
+      return eve::zip(x, y);
     });
 }
-
 
 // --------------------------------------------
 

@@ -14,6 +14,7 @@
 #include <eve/algo/zip.hpp>
 
 #include <eve/function/convert.hpp>
+#include <eve/function/zip.hpp>
 #include <vector>
 
 TTS_CASE("transform points into vertical lines")
@@ -43,8 +44,7 @@ TTS_CASE("transform points into vertical lines")
       auto [start, l] = start_l;
       auto end = start;
       get_y(end) -= l;
-      // FIX-#983: we need a `make_tuple` like thingy.
-      return eve::wide<udt::line2D>{start, end};
+      return eve::zip(start, end);
   });
 
   TTS_EQUAL(expected, actual);
