@@ -64,7 +64,7 @@ namespace eve::detail
             &&  (std::same_as<cardinal_t<W0>,cardinal_t<Ws>> &&  ... )
             )
   {
-    return wide<Target>{w0,ws...};
+    return wide<Target,cardinal_t<W0>>{w0,ws...};
   }
 
   template<simd_value W0, simd_value... Ws>
