@@ -44,7 +44,7 @@ using polar     = kumi::tuple<double, float>;
 
 struct
 {
-  EVE_FORCEINLINE auto operator()(eve::like<cartesian> auto c)
+  EVE_FORCEINLINE auto operator()(eve::like<cartesian> auto c) const
   {
     auto [x, y] = c;
     auto r      = eve::sqrt(x * x + y * y);
@@ -56,12 +56,13 @@ struct
 
 struct
 {
-  EVE_FORCEINLINE auto operator()(eve::like<polar> auto p)
+  EVE_FORCEINLINE auto operator()(eve::like<polar> auto p) const
   {
     auto [r, angle_f] = p;
     auto angle_d = eve::convert(angle_f, eve::as<double>{});
 
-    auto [sin, cos] = eve::sincos(angle_d);
+    // medium covers -pi tp pi range
+    auto [sin, cos] = eve::medium(eve::sincos)(angle_d);
 
     return eve::zip(r * cos, r * sin);
   }
@@ -150,7 +151,7 @@ TTS_CASE("polar/cartesian")
     cartesian {4, 3}
   };
 
-  eve::algo::soa_vector<cartesian> actual_cart(5u);
+  eve::algo::soa_vector<cartesian> actual_cart(cart.size());
   polar_to_cartesian(pol, actual_cart);
 
   for (std::size_t i = 0; i < cart.size(); ++i)
@@ -161,7 +162,7 @@ TTS_CASE("polar/cartesian")
     TTS_RELATIVE_EQUAL(ey, ay, 0.00001);
   }
 
-  eve::algo::soa_vector<polar> actual_pol(5u);
+  eve::algo::soa_vector<polar> actual_pol(pol.size());
   cartesian_to_polar(cart, actual_pol);
 
   for (std::size_t i = 0; i < cart.size(); ++i)
@@ -170,6 +171,16 @@ TTS_CASE("polar/cartesian")
     auto [ar, aphi] = actual_pol.get(i);
     TTS_RELATIVE_EQUAL(er,     ar, 0.00001);
     TTS_RELATIVE_EQUAL(ephi, aphi, 0.00001);
+  }
+
+  // almost -pi
+  {
+    cartesian cart{-0.999, -0.1};
+
+    auto pol = convert_cartesian_to_polar(cart);
+    TTS_GREATER(get<0>(pol), 0.999);
+    TTS_LESS   (get<1>(pol), -3 * pi / 4);
+    TTS_GREATER(get<1>(pol), -pi);
   }
 }
 

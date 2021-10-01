@@ -8,7 +8,6 @@
 #include "test.hpp"
 #include "unit/api/udt/udt.hpp"
 #include <eve/wide.hpp>
-#include <eve/function/zip.hpp>
 #include <utility>
 
 //==================================================================================================
@@ -103,28 +102,6 @@ TTS_CASE( "Check eve::wide<udt> enumerating constructor" )
 
   TTS_EQUAL(get<0>(vp), eve::wide<int>([](int i, int  ) { return i;    } ));
   TTS_EQUAL(get<1>(vp), eve::wide<int>([](int i, int c) { return c-i-1;} ));
-};
-
-//==================================================================================================
-// Construct from multiple existing wides
-//==================================================================================================
-EVE_TEST_TYPES( "Check eve::wide tuple like constructor", eve::test::scalar::all_types)
-<typename T>(eve::as<T>)
-{
-  constexpr auto sz = eve::wide<udt::grid2d>::size();
-
-  auto vp = [&]<std::size_t... N>(std::index_sequence<N...>)
-            {
-              return eve::wide<udt::grid2d>( udt::grid2d{N,sz-N-1}...);
-            }( std::make_index_sequence<sz>());
-
-  using w0_t = std::tuple_element_t<0, eve::wide<udt::grid2d>>;
-  using w1_t = std::tuple_element_t<1, eve::wide<udt::grid2d>>;
-
-  w0_t wx = [](auto i, auto  ) { return i;      };
-  w1_t wy = [](auto i, auto c) { return c-1-i;  };
-
-  TTS_EQUAL(vp, eve::zip(eve::as<udt::grid2d>(),wx,wy) );
 };
 
 //==================================================================================================

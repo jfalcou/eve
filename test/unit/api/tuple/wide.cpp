@@ -7,7 +7,6 @@
 //==================================================================================================
 #include "test.hpp"
 #include <eve/wide.hpp>
-#include <eve/function/zip.hpp>
 #include <utility>
 
 template<typename T>
@@ -108,26 +107,6 @@ EVE_TEST_TYPES( "Check eve::wide splat constructor", eve::test::scalar::all_type
   TTS_EQUAL ( w_t(tuple_t<T>{ 'z', T{69}, 13.37 })
             , w_t([](auto, auto) { return tuple_t<T>{ 'z', T{69}, 13.37 }; } )
             );
-};
-
-//==================================================================================================
-// Construct from multiple existing wides
-//==================================================================================================
-EVE_TEST_TYPES( "Check eve::wide tuple like constructor", eve::test::scalar::all_types)
-<typename T>(eve::as<T>)
-{
-  using w_t = eve::wide<tuple_t<T>>;
-  using s_t = typename eve::wide<tuple_t<T>>::storage_type;
-  using w0_t = std::tuple_element_t<0, s_t>;
-  using w1_t = std::tuple_element_t<1, s_t>;
-  using w2_t = std::tuple_element_t<2, s_t>;
-
-  w0_t w8{'z'};
-  w1_t wt{T{69}};
-  w2_t wd{13.37};
-
-  TTS_EQUAL(w_t(tuple_t<T>{ 'z', T{69}, 13.37 }), eve::zip(eve::as<tuple_t<T>>(), w8,wt,wd));
-  TTS_EQUAL(w_t(tuple_t<T>{ 'z', T{69}, 13.37 }), eve::zip(w8,wt,wd));
 };
 
 //==================================================================================================
