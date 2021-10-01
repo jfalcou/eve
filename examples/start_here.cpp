@@ -42,21 +42,37 @@ int const* find_negative_number(int const* f, int const* l)
 using cartesian = kumi::tuple<double, double>;
 using polar     = kumi::tuple<double, float>;
 
+struct
+{
+  EVE_FORCEINLINE auto operator()(eve::like<cartesian> auto c)
+  {
+    auto [x, y] = c;
+    auto r      = eve::sqrt(x * x + y * y);
+    auto phi    = eve::atan2(y, x);
+
+    return eve::zip(r, phi);
+  }
+} inline constexpr convert_cartesian_to_polar;
+
+struct
+{
+  EVE_FORCEINLINE auto operator()(eve::like<polar> auto p)
+  {
+    auto [r, angle_f] = p;
+    auto angle_d = eve::convert(angle_f, eve::as<double>{});
+
+    auto [sin, cos] = eve::sincos(angle_d);
+
+    return eve::zip(r * cos, r * sin);
+  }
+} inline constexpr convert_polar_to_cartesian;
+
 void polar_to_cartesian(
   eve::algo::soa_vector<polar> const & pol,
   eve::algo::soa_vector<cartesian>   & cart
 )
 {
-  eve::algo::transform_to[eve::algo::unroll<1>](pol, cart,
-    [](eve::wide<polar> p)
-    {
-      auto [r, angle_f] = p;
-      auto angle_d = eve::convert(angle_f, eve::as<double>{});
-
-      auto [sin, cos] = eve::sincos(angle_d);
-
-      return eve::zip(r * cos, r * sin);
-    });
+  eve::algo::transform_to[eve::algo::unroll<1>](pol, cart, convert_polar_to_cartesian);
 }
 
 void cartesian_to_polar(
@@ -64,15 +80,7 @@ void cartesian_to_polar(
   eve::algo::soa_vector<polar>           & pol
 )
 {
-  eve::algo::transform_to[eve::algo::unroll<1>](cart, pol,
-  [](eve::like<cartesian> auto c)
-  {
-    auto [x, y] = c;
-    auto r      = eve::sqrt(x * x + y * y);
-    auto phi    = eve::atan2(y, x);
-
-    return eve::zip(r, phi);
-  });
+  eve::algo::transform_to[eve::algo::unroll<1>](cart, pol, convert_cartesian_to_polar);
 }
 
 // Same function but if you use std::vectors.
@@ -89,15 +97,8 @@ void polar_to_cartesian_vectors(
   (
     eve::algo::zip(radius, angle),
     eve::algo::zip(x, y),
-    [](eve::wide<polar> p)
-    {
-      auto [r, angle_f] = p;
-      auto angle_d = eve::convert(angle_f, eve::as<double>{});
-
-      auto [sin, cos] = eve::sincos(angle_d);
-
-      return eve::zip(r * cos, r * sin);
-    });
+    convert_polar_to_cartesian
+  );
 }
 
 // -------------------------
