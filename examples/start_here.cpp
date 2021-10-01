@@ -131,7 +131,7 @@ TTS_CASE("find_negative_number")
   TTS_EQUAL((found - v.data()), 2);
 }
 
-TTS_CASE("polar_to_cartesian")
+TTS_CASE("polar/cartesian")
 {
   float pi = eve::pi(eve::as<float> {});
 
@@ -139,16 +139,18 @@ TTS_CASE("polar_to_cartesian")
       polar {1, 0},
       polar {2, 0},
       polar {1, pi},
+      polar {1, -pi/2},
       polar {5, eve::atan2(3.0f, 4.0f)}};
 
   eve::algo::soa_vector<cartesian> cart {
     cartesian {1,  0},
     cartesian {2,  0},
     cartesian {-1, 0},
+    cartesian {0, -1},
     cartesian {4, 3}
   };
 
-  eve::algo::soa_vector<cartesian> actual_cart(4u);
+  eve::algo::soa_vector<cartesian> actual_cart(5u);
   polar_to_cartesian(pol, actual_cart);
 
   for (std::size_t i = 0; i < cart.size(); ++i)
@@ -159,15 +161,15 @@ TTS_CASE("polar_to_cartesian")
     TTS_RELATIVE_EQUAL(ey, ay, 0.00001);
   }
 
-  eve::algo::soa_vector<polar> actual_pol(4u);
+  eve::algo::soa_vector<polar> actual_pol(5u);
   cartesian_to_polar(cart, actual_pol);
 
   for (std::size_t i = 0; i < cart.size(); ++i)
   {
-    auto [ex, ey] = pol.get(i);
-    auto [ax, ay] = actual_pol.get(i);
-    TTS_RELATIVE_EQUAL(ex, ax, 0.00001);
-    TTS_RELATIVE_EQUAL(ey, ay, 0.00001);
+    auto [er, ephi] = pol.get(i);
+    auto [ar, aphi] = actual_pol.get(i);
+    TTS_RELATIVE_EQUAL(er,     ar, 0.00001);
+    TTS_RELATIVE_EQUAL(ephi, aphi, 0.00001);
   }
 }
 
