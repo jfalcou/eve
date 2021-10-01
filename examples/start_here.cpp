@@ -31,9 +31,9 @@ int const* find_negative_number(int const* f, int const* l)
 #include <eve/algo/transform.hpp>
 #include <eve/algo/zip.hpp>
 
-#include <eve/function/atan.hpp>
-#include <eve/function/cos.hpp>
-#include <eve/function/sin.hpp>
+#include <eve/function/atan2.hpp>
+#include <eve/function/sincos.hpp>
+#include <eve/function/sqrt.hpp>
 #include <eve/function/zip.hpp>
 
 #include <eve/product_type.hpp>
@@ -53,11 +53,26 @@ void polar_to_cartesian(
       auto [r, angle_f] = p;
       auto angle_d = eve::convert(angle_f, eve::as<double>{});
 
-      auto x = r * eve::cos(angle_d);
-      auto y = r * eve::sin(angle_d);
+      auto [sin, cos] = eve::sincos(angle_d);
 
-      return eve::zip(x, y);
+      return eve::zip(r * cos, r * sin);
     });
+}
+
+void cartesian_to_polar(
+  eve::algo::soa_vector<cartesian> const & cart,
+  eve::algo::soa_vector<polar>           & pol
+)
+{
+  eve::algo::transform_to[eve::algo::unroll<1>](cart, pol,
+  [](eve::like<cartesian> auto c)
+  {
+    auto [x, y] = c;
+    auto r      = eve::sqrt(x * x + y * y);
+    auto phi    = eve::atan2(y, x);
+
+    return eve::zip(r, phi);
+  });
 }
 
 // Same function but if you use std::vectors.
@@ -70,7 +85,8 @@ void polar_to_cartesian_vectors(
   std::vector<double>       & y
 )
 {
-  eve::algo::transform_to[eve::algo::unroll<1>](
+  eve::algo::transform_to[eve::algo::unroll<1>][eve::algo::no_aligning]
+  (
     eve::algo::zip(radius, angle),
     eve::algo::zip(x, y),
     [](eve::wide<polar> p)
@@ -78,10 +94,9 @@ void polar_to_cartesian_vectors(
       auto [r, angle_f] = p;
       auto angle_d = eve::convert(angle_f, eve::as<double>{});
 
-      auto x = r * eve::cos(angle_d);
-      auto y = r * eve::sin(angle_d);
+      auto [sin, cos] = eve::sincos(angle_d);
 
-      return eve::zip(x, y);
+      return eve::zip(r * cos, r * sin);
     });
 }
 
@@ -123,22 +138,33 @@ TTS_CASE("polar_to_cartesian")
       polar {1, 0},
       polar {2, 0},
       polar {1, pi},
-      polar {5, eve::atan(3.0f / 4.0f)}};
+      polar {5, eve::atan2(3.0f, 4.0f)}};
 
-  eve::algo::soa_vector<cartesian> expected {
+  eve::algo::soa_vector<cartesian> cart {
     cartesian {1,  0},
     cartesian {2,  0},
     cartesian {-1, 0},
     cartesian {4, 3}
   };
 
-  eve::algo::soa_vector<cartesian> actual(4u);
-  polar_to_cartesian(pol, actual);
+  eve::algo::soa_vector<cartesian> actual_cart(4u);
+  polar_to_cartesian(pol, actual_cart);
 
-  for (std::size_t i = 0; i < expected.size(); ++i)
+  for (std::size_t i = 0; i < cart.size(); ++i)
   {
-    auto [ex, ey] = expected.get(i);
-    auto [ax, ay] = actual.get(i);
+    auto [ex, ey] = cart.get(i);
+    auto [ax, ay] = actual_cart.get(i);
+    TTS_RELATIVE_EQUAL(ex, ax, 0.00001);
+    TTS_RELATIVE_EQUAL(ey, ay, 0.00001);
+  }
+
+  eve::algo::soa_vector<polar> actual_pol(4u);
+  cartesian_to_polar(cart, actual_pol);
+
+  for (std::size_t i = 0; i < cart.size(); ++i)
+  {
+    auto [ex, ey] = pol.get(i);
+    auto [ax, ay] = actual_pol.get(i);
     TTS_RELATIVE_EQUAL(ex, ax, 0.00001);
     TTS_RELATIVE_EQUAL(ey, ay, 0.00001);
   }
@@ -149,7 +175,7 @@ TTS_CASE("polar_to_cartesian, vectors")
   float pi = eve::pi(eve::as<float> {});
 
   std::vector<double> radius {1, 2, 1, 5};
-  std::vector<float>  angle  {0, 0, pi, eve::atan(3.0f / 4.0f)};
+  std::vector<float>  angle  {0, 0, pi, eve::atan2(3.0f, 4.0f)};
 
   std::vector<double> expected_x = {1, 2, -1, 4};
   std::vector<double> expected_y = {0, 0,  0, 3};
