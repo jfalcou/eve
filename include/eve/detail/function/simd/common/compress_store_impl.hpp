@@ -96,6 +96,14 @@ namespace eve::detail
     return res;
   }();
 
+  template <std::unsigned_integral T>
+  constexpr auto pattern_4_elements_bytes_v alignas(sizeof(T) * 4) =
+    pattern_4_elements(idxs_bytes<T>);
+
+  template <std::unsigned_integral T>
+  constexpr auto pattern_8_elements_bytes_v alignas(sizeof(T) * 8) =
+    pattern_8_elements(idxs_bytes<T>);
+
   // generic impl ------------------
 
   template<real_scalar_value T, typename N, typename U, simd_compatible_ptr<wide<T, N>> Ptr>

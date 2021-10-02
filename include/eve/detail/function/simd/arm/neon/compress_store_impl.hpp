@@ -42,12 +42,10 @@ namespace eve::detail
     using u_t   = eve::as_integer_t<T, unsigned>;
     using bytes = typename wide<T, N>::template rebind<std::uint8_t, fixed<sizeof(T) * 4>>;
 
-    alignas(sizeof(T) * 4) constexpr auto patterns = pattern_4_elements(idxs_bytes<u_t>);
-
     auto [num, count] = compress_store_swizzle_mask_num[ignore_none](mask);
 
     // load pattern
-    u_t const* pattern_p = patterns[num].data();
+    u_t const* pattern_p = pattern_4_elements_bytes_v<u_t>[num].data();
     auto     * bytes_p   = (std::uint8_t const*) (pattern_p);
     auto       bytes_ap  = eve::as_aligned(bytes_p, eve::fixed<bytes::size()>{});
     bytes pattern{bytes_ap};
@@ -77,11 +75,9 @@ namespace eve::detail
     v = eve::if_else[mask]( v, to_left );
 
     // Find pattern
-    alignas(sizeof(T) * 8) constexpr auto patterns = pattern_8_elements(idxs_bytes<u_t>);
-
     auto [num, count] = compress_store_swizzle_mask_num(mask);
 
-    u_t const* pattern_p = patterns[num].data();
+    u_t const* pattern_p = pattern_8_elements_bytes_v<u_t>[num].data();
     auto     * bytes_p   = (std::uint8_t const*) (pattern_p);
     auto       bytes_ap  = eve::as_aligned(bytes_p, eve::fixed<bytes::size()>{});
     bytes pattern{bytes_ap};
