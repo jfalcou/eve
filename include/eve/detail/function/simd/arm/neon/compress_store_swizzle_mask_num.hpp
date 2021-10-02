@@ -90,10 +90,10 @@ namespace eve::detail
 
   template<eve::relative_conditional_expr C, typename T>
   EVE_FORCEINLINE std::pair<int, bool>
-  compress_store_swizzle_mask_num_(EVE_SUPPORTS(neon128_), C c, logical<wide<T, fixed<4>>> mask)
+  compress_store_swizzle_mask_num_partial_(EVE_SUPPORTS(neon128_), C c, logical<wide<T, fixed<4>>> mask)
   {
          if constexpr ( C::is_complete && !C::is_inverted ) return {0, false};
-    else if constexpr ( !C::is_complete                   ) return compress_store_swizzle_mask_num(ignore_none, mask && c.mask(as(mask)));
+    else if constexpr ( !C::is_complete                   ) return compress_store_swizzle_mask_num_partial(ignore_none, mask && c.mask(as(mask)));
     else
     {
       using l_t = logical<wide<T, fixed<4>>>;
