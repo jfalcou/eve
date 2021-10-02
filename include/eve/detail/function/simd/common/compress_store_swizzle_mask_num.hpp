@@ -46,7 +46,7 @@ namespace eve::detail
     // can only be for 64 bit numbers on 128 bit register
     if constexpr (has_aggregated_abi_v<w_t>)
     {
-      return compress_store_swizzle_mask_num_partial(c, convert(mask, as<logical<std::uint32_t>>{}));
+      return compress_store_swizzle_mask_num(c, convert(mask, as<logical<std::uint32_t>>{}));
     }
     else
     {
