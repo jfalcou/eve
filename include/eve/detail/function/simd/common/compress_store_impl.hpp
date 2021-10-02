@@ -18,6 +18,52 @@
 
 namespace eve::detail
 {
+  // permutation masks ------------------
+
+  template <std::unsigned_integral T>
+  EVE_FORCEINLINE constexpr auto pattern_4_elements(std::array<T, 8> idxs)
+  {
+    using row = std::array<T, 4>;
+
+    return std::array {
+      row{ idxs[3],       0,       0,       0 },  // 000
+      row{ idxs[0], idxs[3],       0,       0 },  // 001
+      row{ idxs[1], idxs[3],       0,       0 },  // 010
+      row{ idxs[0], idxs[1], idxs[3],       0 },  // 011
+      row{ idxs[2], idxs[3],       0,       0 },  // 100
+      row{ idxs[0], idxs[2], idxs[3],       0 },  // 101
+      row{ idxs[1], idxs[2], idxs[3],       0 },  // 110
+      row{ idxs[0], idxs[1], idxs[2], idxs[3] },  // 111
+    };
+  }
+
+  template <std::unsigned_integral T>
+  constexpr auto idxs_bytes = [] {
+    std::array<T, 8> res = {};
+
+    for (unsigned i = 0; i != 8; ++i)
+    {
+      unsigned byte_idx = i * sizeof(T);
+
+      if constexpr ( sizeof(T) == 4 )
+      {
+        res[i] = (byte_idx + 3) << 24 | (byte_idx + 2) << 16 | (byte_idx + 1) << 8 | byte_idx;
+      }
+      else if constexpr ( sizeof(T) == 2 )
+      {
+        res[i] = (byte_idx + 1) << 8 | byte_idx;
+      }
+      else if constexpr ( sizeof(T) == 1 )
+      {
+        res[i] = byte_idx;
+      }
+    }
+
+    return res;
+  }();
+
+  // generic impl ------------------
+
   template<real_scalar_value T, typename N, typename U, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
   T* compress_store_impl_aggregated(wide<T, N> v,

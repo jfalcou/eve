@@ -103,48 +103,6 @@ namespace eve::detail
   }
 
   template <std::unsigned_integral T>
-  EVE_FORCEINLINE constexpr auto pattern_4_elements(std::array<T, 8> idxs)
-  {
-    using row = std::array<T, 4>;
-
-    return std::array {
-      row{ idxs[3],       0,       0,       0 },  // 000
-      row{ idxs[0], idxs[3],       0,       0 },  // 001
-      row{ idxs[1], idxs[3],       0,       0 },  // 010
-      row{ idxs[0], idxs[1], idxs[3],       0 },  // 011
-      row{ idxs[2], idxs[3],       0,       0 },  // 100
-      row{ idxs[0], idxs[2], idxs[3],       0 },  // 101
-      row{ idxs[1], idxs[2], idxs[3],       0 },  // 110
-      row{ idxs[0], idxs[1], idxs[2], idxs[3] },  // 111
-    };
-  }
-
-  template <std::unsigned_integral T>
-  constexpr auto idxs_bytes = [] {
-    std::array<T, 8> res = {};
-
-    for (unsigned i = 0; i != 8; ++i)
-    {
-      unsigned byte_idx = i * sizeof(T);
-
-      if constexpr ( sizeof(T) == 4 )
-      {
-        res[i] = (byte_idx + 3) << 24 | (byte_idx + 2) << 16 | (byte_idx + 1) << 8 | byte_idx;
-      }
-      else if constexpr ( sizeof(T) == 2 )
-      {
-        res[i] = (byte_idx + 1) << 8 | byte_idx;
-      }
-      else if constexpr ( sizeof(T) == 1 )
-      {
-        res[i] = byte_idx;
-      }
-    }
-
-    return res;
-  }();
-
-  template <std::unsigned_integral T>
   constexpr auto idx_dwords = [] {
     std::array<T, 8> res = {};
 
@@ -209,14 +167,14 @@ namespace eve::detail
     {
       alignas(sizeof(T) * N()) auto patterns = pattern_4_elements(idx_dwords<std::uint64_t>);
 
-      auto [num, _] = compress_store_swizzle_mask_num[c](mask);
+      auto [num, count] = compress_store_swizzle_mask_num[c](mask);
       aligned_ptr<std::uint64_t, eve::fixed<4>> pattern_ptr{patterns[num].data()};
       wide<std::uint32_t, eve::fixed<8>> pattern{ptr_cast<std::uint32_t>(pattern_ptr)};
 
       wide<T, N> shuffled = permvar8(v, pattern);
 
       store(shuffled, ptr);
-      return as_raw_pointer(ptr) + eve::count_true[c](mask);
+      return as_raw_pointer(ptr) + count;
     }
     else if constexpr ( std::floating_point<T> )
     {
@@ -235,7 +193,7 @@ namespace eve::detail
 
       alignas(sizeof(T) * 4) const auto patterns = add_popcounts(pattern_4_elements(idxs_bytes<u_t>));
 
-      auto [num, is_last_set] = compress_store_swizzle_mask_num[c](mask);
+      auto [num, is_last_set] = compress_store_swizzle_mask_num_partial[c](mask);
 
       using a_p = aligned_ptr<u_t const, N>;
       bytes_t pattern(ptr_cast<std::uint8_t const>( a_p(patterns[num].data()) ));
