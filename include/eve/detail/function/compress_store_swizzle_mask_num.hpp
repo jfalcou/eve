@@ -22,7 +22,7 @@
 // Depending on the number of elements, this is a different number
 // and a different extra information.
 //
-// 4 elements
+// 4 elements (partial)
 // ================
 // For 4 elements we do a complete shuffle of the first 3 elements
 // 4 elements version also accepts ignore (none of the others do).
@@ -61,13 +61,18 @@
 namespace eve
 {
   EVE_REGISTER_CALLABLE(compress_store_swizzle_mask_num_);
+  EVE_REGISTER_CALLABLE(compress_store_swizzle_mask_num_partial_);
+
   EVE_DECLARE_CALLABLE(compress_store_swizzle_mask_num_, compress_store_swizzle_mask_num);
+  EVE_DECLARE_CALLABLE(compress_store_swizzle_mask_num_partial_, compress_store_swizzle_mask_num_partial);
 
   namespace detail
   {
     EVE_ALIAS_CALLABLE(compress_store_swizzle_mask_num_, compress_store_swizzle_mask_num);
+    EVE_ALIAS_CALLABLE(compress_store_swizzle_mask_num_partial_, compress_store_swizzle_mask_num_partial);
   }
 
+  EVE_CALLABLE_API(compress_store_swizzle_mask_num_partial_, compress_store_swizzle_mask_num_partial)
   EVE_CALLABLE_API(compress_store_swizzle_mask_num_, compress_store_swizzle_mask_num)
 }
 

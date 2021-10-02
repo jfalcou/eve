@@ -34,7 +34,7 @@ EVE_TEST_TYPES("compress_store_swizzle_mask_num 4 elements",
           for( bool m3 : {false, true} ) {
             mask_t mask {m0, m1, m2, m3};
 
-            auto [actual_num, actual_4th] = eve::detail::compress_store_swizzle_mask_num(ignore, mask);
+            auto [actual_num, actual_4th] = eve::detail::compress_store_swizzle_mask_num_partial(ignore, mask);
 
             int expected_num = expected_shuffle_num(mask && ignore.mask(eve::as(mask)));
 

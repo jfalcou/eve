@@ -18,7 +18,7 @@ namespace eve::detail
 {
   template<eve::relative_conditional_expr C, typename T>
   EVE_FORCEINLINE std::pair<int, bool>
-  compress_store_swizzle_mask_num_(EVE_SUPPORTS(cpu_), C c, logical<wide<T, fixed<4>>> mask)
+  compress_store_swizzle_mask_num_partial_(EVE_SUPPORTS(cpu_), C c, logical<wide<T, fixed<4>>> mask)
   {
     using w_t = wide<T, fixed<4>>;
     using l_t = logical<wide<T>>;
