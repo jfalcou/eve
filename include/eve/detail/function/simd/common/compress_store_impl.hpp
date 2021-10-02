@@ -37,6 +37,40 @@ namespace eve::detail
     };
   }
 
+  // See compress_store_num for explanation
+  template <std::unsigned_integral T>
+  EVE_FORCEINLINE constexpr auto pattern_8_elements(std::array<T, 8> idxs)
+  {
+    using row = std::array<T, 8>;
+
+    std::array<row, 27> res = {};
+
+    for (unsigned i = 0; i != 27; ++i)
+    {
+      unsigned number_of_9s = 0, number_of_3s = 0, number_of_1s = 0;
+      unsigned base_3_value = i;
+
+      if (base_3_value >= 9) ++number_of_9s, base_3_value -= 9;
+      if (base_3_value >= 9) ++number_of_9s, base_3_value -= 9;
+      if (base_3_value >= 3) ++number_of_3s, base_3_value -= 3;
+      if (base_3_value >= 3) ++number_of_3s, base_3_value -= 3;
+      if (base_3_value >= 1) ++number_of_1s, base_3_value -= 1;
+      if (base_3_value >= 1) ++number_of_1s, base_3_value -= 1;
+
+      auto* it = res[i].begin();
+      if (number_of_1s) *it++ = idxs[0], --number_of_1s;
+      if (number_of_1s) *it++ = idxs[1], --number_of_1s;
+      if (number_of_3s) *it++ = idxs[2], --number_of_3s;
+      if (number_of_3s) *it++ = idxs[3], --number_of_3s;
+      if (number_of_9s) *it++ = idxs[4], --number_of_9s;
+      if (number_of_9s) *it++ = idxs[5], --number_of_9s;
+      *it++ = idxs[6];
+      *it++ = idxs[7];
+    }
+
+    return res;
+  }
+
   template <std::unsigned_integral T>
   constexpr auto idxs_bytes = [] {
     std::array<T, 8> res = {};
