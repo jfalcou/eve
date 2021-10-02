@@ -13,6 +13,8 @@
 #include <eve/constant/ieee_constant.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/pio_4.hpp>
+#include <eve/constant/pio_2.hpp>
+#include <eve/constant/pi.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/as.hpp>
 
@@ -27,9 +29,13 @@ namespace eve::detail
       {
         return pio_4(eve::as<T>());
       }
-      if constexpr(std::is_same_v<D, small_type>)
+      else if constexpr(std::is_same_v<D, small_type>)
       {
-        return Ieee_constant<T, 0x42f00000U, 0X419921FB38000000ULL>(); //120, 105414350
+        return pio_2(eve::as<T>());
+      }
+      else if constexpr(std::is_same_v<D, circle_type>)
+      {
+        return pi(eve::as<T>());
       }
       else  if constexpr(std::is_same_v<D, medium_type>)
       {

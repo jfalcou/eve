@@ -100,21 +100,21 @@ namespace eve::detail
       return apply_over(small(tan), a0);
   }
 
-  /////////////////////////////////////////////////////////////////////////////////////////////////
-  // medium,  big
   template<decorator D, floating_real_value T>
   EVE_FORCEINLINE constexpr auto tan_(EVE_SUPPORTS(cpu_), D const &, T a0) noexcept
+  requires(is_one_of<D>(types<circle_type, medium_type, big_type> {}))
   {
     if constexpr( has_native_abi_v<T> )
     {
+      auto x         = abs(a0);
+      auto xnlelim   = is_not_less_equal(x, Rempio2_limit(D(), as(a0)));
       if constexpr( scalar_value<T> )
       {
-        if( is_not_finite(a0) )
-          return nan(eve::as<T>());
-        if( is_eqz(a0) )
-          return a0;
+        if( xnlelim ) return nan(eve::as<T>());
+        if( is_eqz(a0) ) return a0;
       }
-      auto x             = abs(a0);
+      else
+        x = if_else(xnlelim, allbits, x);
       auto [fn, xr, dxr] = D()(rempio2)(x);
       return tan_finalize(a0, fn, xr, dxr);
     }
@@ -128,11 +128,13 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
     {
       auto x = abs(a0);
-      if( eve::all(x <= pio_4(eve::as(x))) )
+       if( eve::all(x <= Rempio2_limit(restricted_type(), as(a0))))
         return restricted(tan)(a0);
-      else if( eve::all(x <= pio_2(eve::as(x))) )
+      else if( eve::all(x <= Rempio2_limit(small_type(), as(a0))))
         return small(tan)(a0);
-      else if( eve::all(x <= Rempio2_limit(medium_type(), as(a0))) )
+      else if( eve::all(x <=  Rempio2_limit(circle_type(), as(a0))))
+        return circle(tan)(a0);
+      else if( eve::all(x <= Rempio2_limit(medium_type(), as(a0))))
         return medium(tan)(a0);
       else
         return big(tan)(a0);

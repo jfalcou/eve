@@ -103,21 +103,20 @@ namespace eve::detail
       return apply_over(small(cot), a0);
   }
 
-  //////////////////////////////////////////////////////////////////
-  /// medium,  big
-  // why the hell the typename can not be typename as in cos ?
   template<decorator D, floating_real_value T>
   EVE_FORCEINLINE constexpr T cot_(EVE_SUPPORTS(cpu_), D const &, T a0) noexcept
+  requires(is_one_of<D>(types<circle_type, medium_type, big_type> {}))
   {
     if constexpr( has_native_abi_v<T> )
     {
+      auto x         = abs(a0);
+      auto xnlelim   = is_not_less_equal(x, Rempio2_limit(D(), as(a0)));
       if constexpr( scalar_value<T> )
-        if( is_not_finite(a0) )
-          return nan(eve::as<T>());
-      const T x = abs(a0);
-      if constexpr( scalar_value<T> )
-        if( x < eps(as<T>()) )
-          return rec(a0);
+      {
+        if( xnlelim ) return nan(eve::as<T>());
+      }
+      else
+        x = if_else(xnlelim, allbits, x);
       auto [fn, xr, dxr] = D()(rempio2)(x);
       return cot_finalize(a0, fn, xr, dxr);
     }
@@ -131,11 +130,13 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
     {
       auto x = eve::abs(a0);
-      if( eve::all(x <= pio_4(eve::as(x))) )
+      if( eve::all(x <= Rempio2_limit(restricted_type(), as(a0))))
         return restricted(cot)(a0);
-      else if( eve::all(x <= pio_2(eve::as(x))) )
+      else if( eve::all(x <= Rempio2_limit(small_type(), as(a0))))
         return small(cot)(a0);
-      else if( eve::all(x <= Rempio2_limit(eve::medium_type(), as(a0))) )
+      else if( eve::all(x <=  Rempio2_limit(circle_type(), as(a0))))
+        return circle(cot)(a0);
+      else if( eve::all(x <= Rempio2_limit(medium_type(), as(a0))))
         return medium(cot)(a0);
       else
         return big(cot)(a0);
