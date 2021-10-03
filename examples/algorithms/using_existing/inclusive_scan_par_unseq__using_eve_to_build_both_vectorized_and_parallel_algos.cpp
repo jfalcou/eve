@@ -206,7 +206,6 @@ namespace _inclusive_scan_par_unseq
   }
 }
 
-
 void inclusive_scan_par_unseq(uptr_range r, T init)
 {
   // First we split into subranges that we are going to process in parallel

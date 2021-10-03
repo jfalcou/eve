@@ -34,10 +34,6 @@ make_unit( "unit.algo" container/erase_remove.cpp )
 make_unit( "unit.algo" container/soa_vector.cpp )
 make_unit( "unit.algo" container/transform_points_into_lines.cpp )
 
-# Other
-
-make_unit( "unit.algo" split_for_parallel_execution.cpp)
-
 # Algorithms
 # find like -------------
 make_unit("unit.algo" algorithm/all_of_generic.cpp)
