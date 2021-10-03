@@ -66,7 +66,7 @@ struct update
 
     // Compute the bounced ball case
     speed(bounced)    *= -elasticity(bounced);
-    count(bounced)++;
+    ++count(bounced);
 
     // Select the proper one based on position
     return eve::if_else(  count(b) < max_bounce
