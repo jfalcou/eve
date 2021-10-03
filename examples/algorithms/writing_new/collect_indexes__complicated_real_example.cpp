@@ -76,7 +76,7 @@ void collect_indexes(R&& r, P p, std::vector<IdxType, Alloc>& res)
   // ^ Because this is the first place where we get the cardinal,
   //   we couldn't specify the requirement on the predicate
 
-  auto precise_l = f + (l - f) / cardinal{}() * cardinal{}();
+  auto precise_l = f + ((l - f) / cardinal{}()) * cardinal{}();
 
   // We are going to overallocate the output so that we can don't
   // have to store partial registers.
@@ -88,7 +88,7 @@ void collect_indexes(R&& r, P p, std::vector<IdxType, Alloc>& res)
   eve::wide<IdxType, cardinal> wide_i{[](int i, int) { return i; }};
 
   while (f != precise_l) {
-    auto test     = p(eve::load(f));  // apply the predicate
+    auto test = p(eve::load(f));  // apply the predicate
 
     // Compress store is the working horse of `remove`. It get's values, mask and where to store.
     // Writes all of the elements, for which mask is true.
@@ -103,13 +103,13 @@ void collect_indexes(R&& r, P p, std::vector<IdxType, Alloc>& res)
 
   // Deal with tail
   if (f != l) {
-    auto ignore   = eve::keep_first(l - f);  // elements after l should not be touched
-    auto test     = p(eve::load[ignore](f)); // This will safely load the partial register.
-                                             // The last elements that correspond to after l will be garbage.
+    auto ignore = eve::keep_first(l - f);  // elements after l should not be touched
+    auto test   = p(eve::load[ignore](f)); // This will safely load the partial register.
+                                           // The last elements that correspond to after l will be garbage.
 
     // We have overallocated the output, but we still need to mask out garbage elements
     test = test && ignore.mask(eve::as(test));
-    out = eve::unsafe(eve::compress_store)(wide_i, test, out);
+    out  = eve::unsafe(eve::compress_store)(wide_i, test, out);
   }
 
   // Clean up the vector
