@@ -18,6 +18,26 @@ namespace eve::detail
 {
   template<eve::relative_conditional_expr C, typename T>
   EVE_FORCEINLINE std::pair<int, bool>
+  compress_store_swizzle_mask_num_partial_(EVE_SUPPORTS(cpu_), C c, logical<wide<T, fixed<4>>> mask)
+  {
+    using w_t = wide<T, fixed<4>>;
+    using l_t = logical<wide<T>>;
+
+    // can only be for 64 bit numbers on 128 bit register
+    if constexpr (has_aggregated_abi_v<w_t>)
+    {
+      return compress_store_swizzle_mask_num_partial(c, convert(mask, as<logical<std::uint32_t>>{}));
+    }
+    else
+    {
+      static_assert(top_bits<l_t>::bits_per_element == 1);
+      int mmask = top_bits{mask, c}.as_int();
+      return {(mmask & 7), (mmask & 8)};
+    }
+  }
+
+  template<eve::relative_conditional_expr C, typename T>
+  EVE_FORCEINLINE std::pair<int, int>
   compress_store_swizzle_mask_num_(EVE_SUPPORTS(cpu_), C c, logical<wide<T, fixed<4>>> mask)
   {
     using w_t = wide<T, fixed<4>>;
@@ -32,7 +52,7 @@ namespace eve::detail
     {
       static_assert(top_bits<l_t>::bits_per_element == 1);
       int mmask = top_bits{mask, c}.as_int();
-      return {(mmask & 7), (mmask & 8)};
+      return {(mmask & 7), std::popcount(static_cast<std::uint32_t>(mmask))};
     }
   }
 
