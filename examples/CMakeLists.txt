@@ -13,4 +13,4 @@ make_unit( "examples" algorithms/writing_new/collect_indexes__complicated_real_e
 make_unit( "examples" algorithms/writing_new/strlen__showing_basic_conepts.cpp )
 
 make_unit( "examples" oop/complex_numbers__declaring_an_object_type.cpp )
-make_unit( "examples" oop/ecs__evade_asteroids_example.cpp              )
+make_unit( "examples" oop/data_driven_physics.cpp                       )
