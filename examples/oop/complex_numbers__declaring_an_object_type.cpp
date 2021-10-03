@@ -24,7 +24,7 @@
 
 #include <eve/eve.hpp>
 #include <eve/function/abs.hpp>
-#include <eve/function/sqrt.hpp>
+#include <eve/function/hypot.hpp>
 #include <eve/product_type.hpp>
 
 #include <eve/algo/container/soa_vector.hpp>
@@ -108,8 +108,7 @@ struct cmplx : eve::struct_support<cmplx, float, float>
 
   EVE_FORCEINLINE friend auto tagged_dispatch( eve::tag::abs_, eve::like<cmplx> auto self)
   {
-    // NOTE: We think this can be done more efficiently, but this is an example.
-    return eve::sqrt(re(self) * re(self) + im(self) * im(self));
+    return eve::hypot(re(self), im(self));
   }
 };
 
