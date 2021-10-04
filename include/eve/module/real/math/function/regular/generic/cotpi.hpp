@@ -60,6 +60,7 @@ namespace eve::detail
   // medium,  big,  small
   template<decorator D, floating_real_value T>
   EVE_FORCEINLINE constexpr auto cotpi_(EVE_SUPPORTS(cpu_), D const &, T a0) noexcept
+  requires(is_one_of<D>(types<small_type, circle_type, medium_type, big_type> {}))
   {
     if constexpr( has_native_abi_v<T> )
     {

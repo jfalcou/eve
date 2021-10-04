@@ -11,6 +11,10 @@
 
 namespace eve
 {
+  struct circle_
+  {
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
+  };
   //================================================================================================
   //! @addtogroup trigonometric
   //! @{
@@ -35,7 +39,7 @@ namespace eve
   //! restricted is currently supported only by direct trigonometric object functions
   //! This decorator leads to the fastest algorithm at full precision.
   //!
-  //! Beside the call with no decorator, direct trigonometric object functions have
+  //! Generally speaking, beside the call with no decorator, direct trigonometric object functions have
   //! three other decorator flavours eve::small,  eve::medium,  eve::big
   //!
   //! Without any decorator the call to a direct trigonometric object function
@@ -44,11 +48,12 @@ namespace eve
   //!
   //! The rationale to provide these flavours is that the more costly part of the computation of a
   //! trigonometric function from the radian angle is the reduction of the angle to an angle
-  //! in \f$[-\pi/4, +\pi/4]\f$ and a quadrant value in\f$[0, 3]\f$.
+  //! in \f$[-\pi/4, +\pi/4]\f$ in radian (resp. \f$[-45, +45]\f$ in degrees or \f$[-0.25, +0.25]\f$ in \pi multiples)
+  //! and a quadrant value in\f$[0, 3]\f$.
   //!
   //!  @}
   //================================================================================================
-  // rnge limitation decorator objects for direct trigonometric functions
+  // range limitation decorator objects for direct trigonometric functions
   struct restricted_
   {
     template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
@@ -86,7 +91,8 @@ namespace eve
   //!
   //! The rationale to provide these flavours is that the more costly part of the computation of a
   //! trigonometric function from the radian angle is the reduction of the angle to an angle
-  //! in \f$[-\pi/4, +\pi/4]\f$ and a quadrant value in\f$[0, 3]\f$.
+  //! in \f$[-\pi/4, +\pi/4]\f$ in radian (resp. \f$[-45, +45]\f$ in degrees or \f$[-0.25, +0.25]\f$ in \pi multiples)
+  //! and a quadrant value in\f$[0, 3]\f$.
   //!
   //!  @}
   //================================================================================================
@@ -114,8 +120,7 @@ namespace eve
   //! A @callable performing the same kind of operation,
   //! but  gives the correct result for \f$|x| < 536870912.0f\f$ (float) or  \f$ |x| < 2.0e14 \f$ (double)
   //! (\f$x\f$ in radian) and degrades gently for greater values.
-  //! (the bounds are to be converted if the input is in degrees or
-  //! \f$\pi\f$ multiples)
+  //! (the bounds are to be converted if the input is  \f$\pi\f$ multiples, and in degrees the call is currently equivalent to big)
   //!
   //! medium is currently supported only by direct trigonometric object functions
   //!
@@ -128,7 +133,10 @@ namespace eve
   //!
   //! The rationale to provide these flavours is that the more costly part of the computation of a
   //! trigonometric function from the radian angle is the reduction of the angle to an angle
-  //! in \f$[-\pi/4, +\pi/4]\f$ and a quadrant value in\f$[0, 3]\f$.
+  //! in \f$[-\pi/4, +\pi/4]\f$ in radian (resp. \f$[-45, +45]\f$ in degrees or \f$[-0.25, +0.25]\f$ in \pi multiples)
+  //! and a quadrant value in\f$[0, 3]\f$.
+  //!
+  //! medium use a relaxed reduction scheme that can provide degraded precision results for very large inputs
   //!
   //!  @}
   //================================================================================================
@@ -167,7 +175,10 @@ namespace eve
   //!
   //! The rationale to provide these flavours is that the more costly part of the computation of a
   //! trigonometric function from the radian angle is the reduction of the angle to an angle
-  //! in \f$[-\pi/4, +\pi/4]\f$ and a quadrant value in\f$[0, 3]\f$.
+  //! in \f$[-\pi/4, +\pi/4]\f$ in radian (resp. \f$[-45, +45]\f$ in degrees or \f$[-0.25, +0.25]\f$ in \pi multiples)
+  //! and a quadrant value in\f$[0, 3]\f$.
+  //!
+  //! big use the heaviest reduction scheme in all situations
   //!
   //!  @}
   struct big_
@@ -175,11 +186,13 @@ namespace eve
     template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
   };
 
+  using circle_type     = decorated<circle_()>;
   using restricted_type = decorated<restricted_()>;
   using small_type      = decorated<small_()>;
   using medium_type     = decorated<medium_()>;
   using big_type        = decorated<big_()>;
 
+  inline constexpr circle_type      const circle      = {};
   inline constexpr restricted_type  const restricted  = {};
   inline constexpr small_type       const small       = {};
   inline constexpr medium_type      const medium      = {};

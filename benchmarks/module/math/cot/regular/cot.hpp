@@ -16,7 +16,7 @@ int main()
   auto lmax = EVE_VALUE(eve::valmax(eve::as<EVE_VALUE>()));
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
-  auto std__cot = [](auto x){return std::tan(1/x);};
+  auto std__cot = [](auto x){return 1/std::tan(x);};
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__cot) , xp, std__cot , arg0);

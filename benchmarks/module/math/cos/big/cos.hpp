@@ -9,11 +9,12 @@
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <cmath>
+#include <eve/module/real/math/detail/constant/rempio2_limits.hpp>
 
 int main()
 {
-  auto lmin = EVE_VALUE(eve::valmin(eve::as<EVE_VALUE>()));
-  auto lmax = EVE_VALUE(eve::valmax(eve::as<EVE_VALUE>()));
+  auto lmin = EVE_VALUE(eve::valmin(eve::as<EVE_VALUE>())/2); // seems there is a bug in bench for valmin her when type is double
+  auto lmax = EVE_VALUE(eve::valmax(eve::as<EVE_VALUE>())/2);
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto std__cos = [](auto x){return std::cos(x);};

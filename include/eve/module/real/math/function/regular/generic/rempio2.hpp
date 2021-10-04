@@ -33,6 +33,10 @@ namespace eve::detail
       {
         return rempio2_small(xx);
       }
+      if constexpr( std::is_same_v<D, eve::circle_type> )
+      {
+        return rempio2_circle(xx);
+      }
       else if constexpr( std::is_same_v<D, eve::medium_type> )
       {
         return rempio2_medium(xx);
@@ -57,6 +61,8 @@ namespace eve::detail
     {
       if( eve::all(x <= Rempio2_limit(restricted_type(), as(x))) )
         return {T(0), x, T(0)};
+      else if( eve::all(x <= Rempio2_limit(circle_type(), as(x))) )
+        return circle(rempio2)(x);
       else if( eve::all(x <= Rempio2_limit(small_type(), as(x))) )
         return small(rempio2)(x);
       else if( eve::all(x <= Rempio2_limit(medium_type(), as(x))) )
