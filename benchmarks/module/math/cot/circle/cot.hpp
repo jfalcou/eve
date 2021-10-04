@@ -6,11 +6,13 @@
 */
 //==================================================================================================
 #include <eve/function/cot.hpp>
-#include <eve/constant/pio_4.hpp>
+#include <eve/module/real/math/detail/constant/rempio2_limits.hpp>
+#include <eve/constant/valmax.hpp>
+#include <cmath>
 
 int main()
 {
-  auto lmax = eve::pio_4(eve::as<EVE_VALUE>());
+  auto lmax = eve::detail::Rempio2_limit(eve::circle_type(), eve::as<EVE_VALUE>());
   auto lmin = -lmax;
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
@@ -18,6 +20,7 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__cot) , xp, std__cot , arg0);
-  run<EVE_VALUE>(EVE_NAME(restricted(eve::cot)) , xp, eve::restricted(eve::cot) , arg0);
-  run<EVE_TYPE> (EVE_NAME(restricted(eve::cot)) , xp, eve::restricted(eve::cot) , arg0);
+  run<EVE_VALUE>(EVE_NAME(circle(eve::cot)) , xp, eve::circle(eve::cot) , arg0);
+  run<EVE_TYPE> (EVE_NAME(circle(eve::cot)) , xp, eve::circle(eve::cot) , arg0);
+
 }

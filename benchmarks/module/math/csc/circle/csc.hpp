@@ -5,22 +5,22 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/cot.hpp>
+#include <eve/function/csc.hpp>
 #include <eve/module/real/math/detail/constant/rempio2_limits.hpp>
 #include <eve/constant/valmax.hpp>
 #include <cmath>
 
 int main()
 {
-  auto lmax = eve::detail::Rempio2_limit(eve::small_type(), eve::as<EVE_VALUE>());
+  auto lmax = eve::detail::Rempio2_limit(eve::circle_type(), eve::as<EVE_VALUE>());
   auto lmin = -lmax;
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
-  auto std__cot = [](auto x){return 1/std::tan(x);};
+  auto std__csc = [](auto x){return 1/std::sin(x);};
 
   eve::bench::experiment xp;
-  run<EVE_VALUE>(EVE_NAME(std__cot) , xp, std__cot , arg0);
-  run<EVE_VALUE>(EVE_NAME(small(eve::cot)) , xp, eve::small(eve::cot) , arg0);
-  run<EVE_TYPE> (EVE_NAME(small(eve::cot)) , xp, eve::small(eve::cot) , arg0);
+  run<EVE_VALUE>(EVE_NAME(std__csc) , xp, std__csc , arg0);
+  run<EVE_VALUE>(EVE_NAME(circle(eve::csc)) , xp, eve::circle(eve::csc) , arg0);
+  run<EVE_TYPE> (EVE_NAME(circle(eve::csc)) , xp, eve::circle(eve::csc) , arg0);
 
 }
