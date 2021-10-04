@@ -18,7 +18,7 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
   eve::bench::experiment xp;
-  run<EVE_VALUE>(EVE_NAME(small(eve::sind)) , xp, eve::small(eve::sind) , arg0);
-  run<EVE_TYPE> (EVE_NAME(small(eve::sind)) , xp, eve::small(eve::sind) , arg0);
+  run<EVE_VALUE>(EVE_NAME(half_circle(eve::sind)) , xp, eve::half_circle(eve::sind) , arg0);
+  run<EVE_TYPE> (EVE_NAME(half_circle(eve::sind)) , xp, eve::half_circle(eve::sind) , arg0);
 
 }

@@ -22,34 +22,34 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-// EVE_TEST_TYPES( "Check return types of cos"
-//             , eve::test::simd::ieee_reals
-//             )
-// <typename T>(eve::as<T>)
-// {
-//   using v_t = eve::element_type_t<T>;
+EVE_TEST_TYPES( "Check return types of cos"
+            , eve::test::simd::ieee_reals
+            )
+<typename T>(eve::as<T>)
+{
+  using v_t = eve::element_type_t<T>;
 
-//   TTS_EXPR_IS( eve::cos(T())  , T);
-//   TTS_EXPR_IS( eve::cos(v_t()), v_t);
-// };
+  TTS_EXPR_IS( eve::cos(T())  , T);
+  TTS_EXPR_IS( eve::cos(v_t()), v_t);
+};
 
 //==================================================================================================
 // cos  tests
 //==================================================================================================
-auto mrest  = []<typename T>(eve::as<T> const & tgt){  return -eve::pio_4(tgt); };
-auto rest   = []<typename T>(eve::as<T> const & tgt){  return  eve::pio_4(tgt); };
-auto msmall = []<typename T>(eve::as<T> const & tgt){  return -eve::pio_2(tgt); };
-auto small  = []<typename T>(eve::as<T> const & tgt){  return  eve::pio_2(tgt); };
-auto mfull_circle= []<typename T>(eve::as<T> const & tgt){  return -eve::pi(tgt);    };
-auto full_circle = []<typename T>(eve::as<T> const & tgt){  return  eve::pi(tgt);    };
+auto mhalf_c  = []<typename T>(eve::as<T> const & tgt){  return -eve::pio_4(tgt); };
+auto half_c   = []<typename T>(eve::as<T> const & tgt){  return  eve::pio_4(tgt); };
+auto mhalf_c = []<typename T>(eve::as<T> const & tgt){  return -eve::pio_2(tgt); };
+auto half_c  = []<typename T>(eve::as<T> const & tgt){  return  eve::pio_2(tgt); };
+auto mfull_c= []<typename T>(eve::as<T> const & tgt){  return -eve::pi(tgt);    };
+auto full_c = []<typename T>(eve::as<T> const & tgt){  return  eve::pi(tgt);    };
 auto mmed   = []<typename T>(eve::as<T> const & tgt){  return -eve::detail::Rempio2_limit(eve::medium_type(), tgt); };
 auto med    = []<typename T>(eve::as<T> const & tgt){  return  eve::detail::Rempio2_limit(eve::medium_type(), tgt); };
 
 EVE_TEST( "Check behavior of cos on wide"
         , eve::test::simd::ieee_floats//reals
-        , eve::test::generate( eve::test::randoms(mrest, rest)
-                             , eve::test::randoms(msmall, small)
-                             , eve::test::randoms(mfull_circle, full_circle)
+        , eve::test::generate( eve::test::randoms(mquarter_c, quarter_c)
+                             , eve::test::randoms(mhalf_c, half_c)
+                             , eve::test::randoms(mfull_c, full_c)
                              , eve::test::randoms(mmed, med)
                              , eve::test::randoms(eve::valmin, eve::valmax))
                              )
@@ -60,26 +60,17 @@ EVE_TEST( "Check behavior of cos on wide"
   using eve::diff;
   using v_t = eve::element_type_t<T>;
   auto ref = [](auto e) -> v_t { return std::cos(e); };
-  TTS_ULP_EQUAL(eve::quarter_circle(cos)(a0)      , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::small(cos)(a0)           , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::small(cos)(a1)           , map(ref, a1), 2);
+  TTS_ULP_EQUAL(eve::quarter_circle(cos)(a0)       , map(ref, a0), 2);
+  TTS_ULP_EQUAL(eve::half_circle(cos)(a0)          , map(ref, a0), 2);
+  TTS_ULP_EQUAL(eve::half_circle(cos)(a1)          , map(ref, a1), 2);
   TTS_ULP_EQUAL(eve::full_circle(cos)(a0)          , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::full_circle(cos)(a1)          , map(ref, a1), 2);
   TTS_ULP_EQUAL(eve::full_circle(cos)(a2)          , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::medium(cos)(a0)          , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::medium(cos)(a1)          , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::medium(cos)(a2)          , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::medium(cos)(a3)          , map(ref, a3), 2);
-  TTS_ULP_EQUAL(eve::big(cos)(a0)             , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::big(cos)(a1)             , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::big(cos)(a2)             , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::big(cos)(a3)             , map(ref, a3), 2);
-  TTS_ULP_EQUAL(eve::big(cos)(a4)             , map(ref, a4), 2);
-  TTS_ULP_EQUAL(cos(a0)                       , map(ref, a0), 2);
-  TTS_ULP_EQUAL(cos(a1)                       , map(ref, a1), 2);
-  TTS_ULP_EQUAL(cos(a2)                       , map(ref, a2), 2);
-  TTS_ULP_EQUAL(cos(a3)                       , map(ref, a3), 2);
-  TTS_ULP_EQUAL(cos(a4)                       , map(ref, a4), 2);
+  TTS_ULP_EQUAL(cos(a0)                            , map(ref, a0), 2);
+  TTS_ULP_EQUAL(cos(a1)                            , map(ref, a1), 2);
+  TTS_ULP_EQUAL(cos(a2)                            , map(ref, a2), 2);
+  TTS_ULP_EQUAL(cos(a3)                            , map(ref, a3), 2);
+  TTS_ULP_EQUAL(cos(a4)                            , map(ref, a4), 2);
   TTS_ULP_EQUAL(diff(cos)(a0), map([](auto e) -> v_t { return  -std::sin(e); }, a0), 2);
 
 

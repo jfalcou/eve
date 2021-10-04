@@ -40,17 +40,17 @@ EVE_TEST_TYPES( "Check return types of cotd"
 //==================================================================================================
 // cotd  tests
 //==================================================================================================
-auto mrest  = []<typename T>(eve::as<T> const & ){  return T(-45); };
-auto rest   = []<typename T>(eve::as<T> const & ){  return T( 45); };
-auto msmall = []<typename T>(eve::as<T> const & ){  return T(-90 ); };
-auto small  = []<typename T>(eve::as<T> const & ){  return T( 90 ); };
+auto mhalf_c  = []<typename T>(eve::as<T> const & ){  return T(-45); };
+auto half_c   = []<typename T>(eve::as<T> const & ){  return T( 45); };
+auto mhalf_c = []<typename T>(eve::as<T> const & ){  return T(-90 ); };
+auto half_c  = []<typename T>(eve::as<T> const & ){  return T( 90 ); };
 auto mmed   = []<typename T>(eve::as<T> const & ){  return -5000; };
 auto med    = []<typename T>(eve::as<T> const & ){  return  5000; };
 
 EVE_TEST( "Check behavior of cotd on wide"
         , eve::test::simd::restricted::ieee_reals
-        , eve::test::generate( eve::test::randoms(mrest, rest)
-                             , eve::test::randoms(msmall, small)
+        , eve::test::generate( eve::test::randoms(mquarter_c, quarter_c)
+                             , eve::test::randoms(mhalf_c, half_c)
                              , eve::test::randoms(mmed, med)
                              , eve::test::randoms(eve::valmin, eve::valmax))
                              )
@@ -63,8 +63,8 @@ EVE_TEST( "Check behavior of cotd on wide"
   using v_t = eve::element_type_t<T>;
   auto ref = [](auto e) -> v_t { auto d = eve::sind(e); return d ? eve::cosd(e)/eve::sind(e): eve::nan(eve::as(e)); };
   TTS_ULP_EQUAL(eve::quarter_circle(cotd)(a0)      , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::small(cotd)(a0)           , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::small(cotd)(a1)           , map(ref, a1), 40);
+  TTS_ULP_EQUAL(eve::half_circle(cotd)(a0)           , map(ref, a0), 2);
+  TTS_ULP_EQUAL(eve::half_circle(cotd)(a1)           , map(ref, a1), 40);
   TTS_ULP_EQUAL(eve::medium(cotd)(a0)          , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::medium(cotd)(a1)          , map(ref, a1), 40);
   TTS_ULP_EQUAL(eve::medium(cotd)(a2)          , map(ref, a2), 300);

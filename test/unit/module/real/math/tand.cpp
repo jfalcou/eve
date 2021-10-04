@@ -41,17 +41,17 @@ EVE_TEST_TYPES( "Check return types of tand"
 //==================================================================================================
 // tand  tests
 //==================================================================================================
-auto mrest  = []<typename T>(eve::as<T> const & ){  return T(-45); };
-auto rest   = []<typename T>(eve::as<T> const & ){  return T( 45); };
-auto msmall = []<typename T>(eve::as<T> const & ){  return T(-90 ); };
-auto small  = []<typename T>(eve::as<T> const & ){  return T( 90 ); };
+auto mhalf_c  = []<typename T>(eve::as<T> const & ){  return T(-45); };
+auto half_c   = []<typename T>(eve::as<T> const & ){  return T( 45); };
+auto mhalf_c = []<typename T>(eve::as<T> const & ){  return T(-90 ); };
+auto half_c  = []<typename T>(eve::as<T> const & ){  return T( 90 ); };
 auto mmed   = []<typename T>(eve::as<T> const & ){  return -5000; };
 auto med    = []<typename T>(eve::as<T> const & ){  return  5000; };
 
 EVE_TEST( "Check behavior of tand on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate( eve::test::randoms(mrest, rest)
-                             , eve::test::randoms(msmall, small)
+        , eve::test::generate( eve::test::randoms(mquarter_c, quarter_c)
+                             , eve::test::randoms(mhalf_c, half_c)
                              , eve::test::randoms(mmed, med)
                              , eve::test::randoms(eve::valmin, eve::valmax))
                              )
@@ -64,8 +64,8 @@ EVE_TEST( "Check behavior of tand on wide"
   using v_t = eve::element_type_t<T>;
   auto ref = [](auto e) -> v_t { auto d = eve::cosd(e); return d ? eve::sind(e)/d: eve::nan(eve::as(e)); };
   TTS_ULP_EQUAL(eve::quarter_circle(tand)(a0)      , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::small(tand)(a0)           , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::small(tand)(a1)           , map(ref, a1), 50);
+  TTS_ULP_EQUAL(eve::half_circle(tand)(a0)           , map(ref, a0), 2);
+  TTS_ULP_EQUAL(eve::half_circle(tand)(a1)           , map(ref, a1), 50);
   TTS_ULP_EQUAL(eve::medium(tand)(a0)          , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::medium(tand)(a1)          , map(ref, a1), 50);
   TTS_ULP_EQUAL(eve::medium(tand)(a2)          , map(ref, a2), 1024);

@@ -20,7 +20,7 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__tan) , xp, std__tan , arg0);
-  run<EVE_VALUE>(EVE_NAME(small(eve::tan)) , xp, eve::small(eve::tan) , arg0);
-  run<EVE_TYPE> (EVE_NAME(small(eve::tan)) , xp, eve::small(eve::tan) , arg0);
+  run<EVE_VALUE>(EVE_NAME(half_circle(eve::tan)) , xp, eve::half_circle(eve::tan) , arg0);
+  run<EVE_TYPE> (EVE_NAME(half_circle(eve::tan)) , xp, eve::half_circle(eve::tan) , arg0);
 
 }

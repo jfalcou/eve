@@ -46,7 +46,7 @@ namespace eve::detail
 {
  // up to 255*pi/4 ~200
   template<floating_real_value T> EVE_FORCEINLINE kumi::tuple<T, T, T>
-  rempio2_small(T const &xx) noexcept
+  rempio2_half_circle(T const &xx) noexcept
   {
     using elt_t             = element_type_t<T>;
     if constexpr( std::is_same_v<elt_t, double> )
@@ -117,7 +117,7 @@ namespace eve::detail
       auto dfa = float32((a - float64(fa)) + da);
       if( eve::any(fa >= pio_4(eve::as<float>()) || fa < -pio_4(eve::as<float>())) )
       {
-        auto [n1, fa1, dfa1] = rempio2_small(fa);
+        auto [n1, fa1, dfa1] = rempio2_half_circle(fa);
         n                     = quadrant(n + n1);
 
         return kumi::make_tuple(n, fa1, dfa1);
@@ -168,7 +168,7 @@ namespace eve::detail
     auto xlerfl = (xx <= Rempio2_limit(half_circle_type(), as<elt_t>()));
     if( eve::all(xlerfl) )
     {
-      return rempio2_small(xx);
+      return rempio2_half_circle(xx);
     }
     if( eve::all(xx < Rempio2_limit(full_circle_type(), as(xx))) )
     {

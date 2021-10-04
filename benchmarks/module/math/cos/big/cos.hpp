@@ -23,5 +23,7 @@ int main()
   run<EVE_VALUE>(EVE_NAME(std__cos) , xp, std__cos , arg0);
   run<EVE_VALUE>(EVE_NAME(big(eve::cos)) , xp, eve::big(eve::cos) , arg0);
   run<EVE_TYPE> (EVE_NAME(big(eve::cos)) , xp, eve::big(eve::cos) , arg0);
+  run<EVE_VALUE>(EVE_NAME(eve::cos)      , xp, eve::cos           , arg0);
+  run<EVE_TYPE >(EVE_NAME(eve::cos)      , xp, eve::cos           , arg0);
 
 }

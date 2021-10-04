@@ -20,7 +20,7 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__cot) , xp, std__cot , arg0);
-  run<EVE_VALUE>(EVE_NAME(small(eve::cot)) , xp, eve::small(eve::cot) , arg0);
-  run<EVE_TYPE> (EVE_NAME(small(eve::cot)) , xp, eve::small(eve::cot) , arg0);
+  run<EVE_VALUE>(EVE_NAME(half_circle(eve::cot)) , xp, eve::half_circle(eve::cot) , arg0);
+  run<EVE_TYPE> (EVE_NAME(half_circle(eve::cot)) , xp, eve::half_circle(eve::cot) , arg0);
 
 }

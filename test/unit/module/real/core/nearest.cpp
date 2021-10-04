@@ -39,9 +39,9 @@ EVE_TEST_TYPES( "Check return types of nearest"
 
 
 //==================================================================================================
-// nearest signed tests
+// neahalf_c signed tests
 //==================================================================================================
-EVE_TEST( "Check behavior of nearest on wide"
+EVE_TEST( "Check behavior of neahalf_c on wide"
         , eve::test::simd::all_types
         , eve::test::generate(eve::test::randoms( -50, +50))
         )

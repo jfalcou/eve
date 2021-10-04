@@ -20,7 +20,7 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__csc) , xp, std__csc , arg0);
-  run<EVE_VALUE>(EVE_NAME(small(eve::csc)) , xp, eve::small(eve::csc) , arg0);
-  run<EVE_TYPE> (EVE_NAME(small(eve::csc)) , xp, eve::small(eve::csc) , arg0);
+  run<EVE_VALUE>(EVE_NAME(half_circle(eve::csc)) , xp, eve::half_circle(eve::csc) , arg0);
+  run<EVE_TYPE> (EVE_NAME(half_circle(eve::csc)) , xp, eve::half_circle(eve::csc) , arg0);
 
 }

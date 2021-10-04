@@ -32,17 +32,17 @@ EVE_TEST_TYPES( "Check return types of cos"
 //==================================================================================================
 // cos  tests
 //==================================================================================================
-auto mrest  = []<typename T>(eve::as<T> const & tgt){  return -eve::pio_4(tgt); };
-auto rest   = []<typename T>(eve::as<T> const & tgt){  return  eve::pio_4(tgt); };
-auto msmall = []<typename T>(eve::as<T> const & tgt){  return -eve::pio_2(tgt); };
-auto small  = []<typename T>(eve::as<T> const & tgt){  return  eve::pio_2(tgt); };
+auto mhalf_c  = []<typename T>(eve::as<T> const & tgt){  return -eve::pio_4(tgt); };
+auto half_c   = []<typename T>(eve::as<T> const & tgt){  return  eve::pio_4(tgt); };
+auto mhalf_c = []<typename T>(eve::as<T> const & tgt){  return -eve::pio_2(tgt); };
+auto half_c  = []<typename T>(eve::as<T> const & tgt){  return  eve::pio_2(tgt); };
 auto mmed   = []<typename T>(eve::as<T> const & tgt){  return -eve::detail::Rempio2_limit(eve::medium_type(), tgt); };
 auto med    = []<typename T>(eve::as<T> const & tgt){  return  eve::detail::Rempio2_limit(eve::medium_type(), tgt); };
 
 EVE_TEST( "Check behavior of cos on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate( eve::test::randoms(mrest, rest)
-                             , eve::test::randoms(msmall, small)
+        , eve::test::generate( eve::test::randoms(mquarter_c, quarter_c)
+                             , eve::test::randoms(mhalf_c, half_c)
                              , eve::test::randoms(mmed, med)
                              , eve::test::randoms(eve::valmin, eve::valmax))
                              )
@@ -63,11 +63,11 @@ EVE_TEST( "Check behavior of cos on wide"
     TTS_ULP_EQUAL(dx0     , sdx0, 2);
   }
   {
-    auto [n0, x0, dx0] = eve::small(rempio2)(a0);
+    auto [n0, x0, dx0] = eve::half_circle(rempio2)(a0);
     TTS_ULP_EQUAL(n0      , sn0, 2);
     TTS_ULP_EQUAL(x0      , sx0, 2);
     TTS_ULP_EQUAL(dx0     , sdx0, 2);
-    auto [n1, x1, dx1] = eve::small(rempio2)(a1);
+    auto [n1, x1, dx1] = eve::half_circle(rempio2)(a1);
     TTS_ULP_EQUAL(n1      , sn1, 2);
     TTS_ULP_EQUAL(x1      , sx1, 2);
     TTS_ULP_EQUAL(dx1     , sdx1, 2);

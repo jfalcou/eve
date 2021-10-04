@@ -36,17 +36,17 @@ EVE_TEST_TYPES( "Check return types of secd"
 //==================================================================================================
 // secd  tests
 //==================================================================================================
-auto mrest  = []<typename T>(eve::as<T> const & ){  return T(-45); };
-auto rest   = []<typename T>(eve::as<T> const & ){  return T( 45); };
-auto msmall = []<typename T>(eve::as<T> const & ){  return T(-90 ); };
-auto small  = []<typename T>(eve::as<T> const & ){  return T( 90 ); };
+auto mhalf_c  = []<typename T>(eve::as<T> const & ){  return T(-45); };
+auto half_c   = []<typename T>(eve::as<T> const & ){  return T( 45); };
+auto mhalf_c = []<typename T>(eve::as<T> const & ){  return T(-90 ); };
+auto half_c  = []<typename T>(eve::as<T> const & ){  return T( 90 ); };
 auto mmed   = []<typename T>(eve::as<T> const & ){  return -5000; };
 auto med    = []<typename T>(eve::as<T> const & ){  return  5000; };
 
 EVE_TEST( "Check behavior of secd on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate( eve::test::randoms(mrest, rest)
-                             , eve::test::randoms(msmall, small)
+        , eve::test::generate( eve::test::randoms(mquarter_c, quarter_c)
+                             , eve::test::randoms(mhalf_c, half_c)
                              , eve::test::randoms(mmed, med))
         )
 <typename T>(T const& a0, T const& a1, T const& a2)
@@ -59,8 +59,8 @@ EVE_TEST( "Check behavior of secd on wide"
   auto ref = [](auto e) -> v_t { return 1.0l/boost::math::cos_pi(e/180.0l); };
 
   TTS_ULP_EQUAL(eve::quarter_circle(secd)(a0)      , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::small(secd)(a0)           , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::small(secd)(a1)           , map(ref, a1), 50);
+  TTS_ULP_EQUAL(eve::half_circle(secd)(a0)           , map(ref, a0), 2);
+  TTS_ULP_EQUAL(eve::half_circle(secd)(a1)           , map(ref, a1), 50);
   TTS_ULP_EQUAL(eve::medium(secd)(a0)          , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::medium(secd)(a1)          , map(ref, a1), 50);
   TTS_ULP_EQUAL(eve::medium(secd)(a2)          , map(ref, a2), 500);

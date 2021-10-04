@@ -31,7 +31,7 @@ namespace eve::detail
     {
       if constexpr( std::is_same_v<D, eve::half_circle_type> )
       {
-        return rempio2_small(xx);
+        return rempio2_half_circle(xx);
       }
       if constexpr( std::is_same_v<D, eve::full_circle_type> )
       {
@@ -64,7 +64,7 @@ namespace eve::detail
       else if( eve::all(x <= Rempio2_limit(full_circle_type(), as(x))) )
         return full_circle(rempio2)(x);
       else if( eve::all(x <= Rempio2_limit(half_circle_type(), as(x))) )
-        return small(rempio2)(x);
+        return half_circle(rempio2)(x);
       else if( eve::all(x <= Rempio2_limit(medium_type(), as(x))) )
         return medium(rempio2)(x);
       else

@@ -38,17 +38,17 @@ EVE_TEST_TYPES( "Check return types of tanpi"
 //==================================================================================================
 // tanpi  tests
 //==================================================================================================
-auto mrest  = []<typename T>(eve::as<T> const & ){  return T(-0.25); };
-auto rest   = []<typename T>(eve::as<T> const & ){  return T( 0.25); };
-auto msmall = []<typename T>(eve::as<T> const & ){  return T(-0.5 ); };
-auto small  = []<typename T>(eve::as<T> const & ){  return T( 0.5 ); };
+auto mhalf_c  = []<typename T>(eve::as<T> const & ){  return T(-0.25); };
+auto half_c   = []<typename T>(eve::as<T> const & ){  return T( 0.25); };
+auto mhalf_c = []<typename T>(eve::as<T> const & ){  return T(-0.5 ); };
+auto half_c  = []<typename T>(eve::as<T> const & ){  return T( 0.5 ); };
 auto mmed   = []<typename T>(eve::as<T> const & tgt){  return -eve::detail::Rempio2_limit(eve::medium_type(), tgt)*eve::invpi(tgt); };
 auto med    = []<typename T>(eve::as<T> const & tgt){  return  eve::detail::Rempio2_limit(eve::medium_type(), tgt)*eve::invpi(tgt); };
 
 EVE_TEST( "Check behavior of tanpi on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate( eve::test::randoms(mrest, rest)
-                             , eve::test::randoms(msmall, small)
+        , eve::test::generate( eve::test::randoms(mquarter_c, quarter_c)
+                             , eve::test::randoms(mhalf_c, half_c)
                              , eve::test::randoms(mmed, med)
                              , eve::test::randoms(eve::valmin, eve::valmax))
                              )
@@ -63,8 +63,8 @@ EVE_TEST( "Check behavior of tanpi on wide"
   long double ldpi = 3.1415926535897932384626433832795028841971693993751;
   auto ref = [](auto e) -> v_t { auto d = boost::math::cos_pi(e); return d ? boost::math::sin_pi(e)/d : eve::nan(eve::as(e)); };
   TTS_ULP_EQUAL(eve::quarter_circle(tanpi)(a0)      , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::small(tanpi)(a0)           , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::small(tanpi)(a1)           , map(ref, a1), 2);
+  TTS_ULP_EQUAL(eve::half_circle(tanpi)(a0)           , map(ref, a0), 2);
+  TTS_ULP_EQUAL(eve::half_circle(tanpi)(a1)           , map(ref, a1), 2);
   TTS_ULP_EQUAL(eve::medium(tanpi)(a0)          , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::medium(tanpi)(a1)          , map(ref, a1), 2);
   TTS_ULP_EQUAL(eve::medium(tanpi)(a2)          , map(ref, a2), 2);

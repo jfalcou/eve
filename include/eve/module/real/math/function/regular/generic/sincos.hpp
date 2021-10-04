@@ -114,7 +114,7 @@ namespace eve::detail
     }
     else
     {
-      return apply_over2(small(sincos), a0);
+      return apply_over2(half_circle(sincos), a0);
     }
   }
 
@@ -152,7 +152,7 @@ namespace eve::detail
       if( eve::all(x <= Rempio2_limit(quarter_circle_type(), as(a0))))
         return quarter_circle(sincos)(a0);
       else if( eve::all(x <= Rempio2_limit(half_circle_type(), as(a0))))
-        return small(sincos)(a0);
+        return half_circle(sincos)(a0);
       else if( eve::all(x <=  Rempio2_limit(full_circle_type(), as(a0))))
         return full_circle(sincos)(a0);
       else if( eve::all(x <= Rempio2_limit(medium_type(), as(a0))))

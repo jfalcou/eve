@@ -34,17 +34,17 @@ EVE_TEST_TYPES( "Check return types of sindcosd"
 //==================================================================================================
 // sindcosd  tests
 //==================================================================================================
-auto mrest  = []<typename T>(eve::as<T> const & ){  return T(-45); };
-auto rest   = []<typename T>(eve::as<T> const & ){  return T( 45); };
-auto msmall = []<typename T>(eve::as<T> const & ){  return T(-90 ); };
-auto small  = []<typename T>(eve::as<T> const & ){  return T( 90 ); };
+auto mhalf_c  = []<typename T>(eve::as<T> const & ){  return T(-45); };
+auto half_c   = []<typename T>(eve::as<T> const & ){  return T( 45); };
+auto mhalf_c = []<typename T>(eve::as<T> const & ){  return T(-90 ); };
+auto half_c  = []<typename T>(eve::as<T> const & ){  return T( 90 ); };
 auto mmed   = []<typename T>(eve::as<T> const & ){  return T(-360); };
 auto med    = []<typename T>(eve::as<T> const & ){  return T( 360); };
 
 EVE_TEST( "Check behavior of sindcosd on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate( eve::test::randoms(mrest, rest)
-                             , eve::test::randoms(msmall, small)
+        , eve::test::generate( eve::test::randoms(mquarter_c, quarter_c)
+                             , eve::test::randoms(mhalf_c, half_c)
                              , eve::test::randoms(mmed, med)
                              , eve::test::randoms(eve::valmin, eve::valmax))
                              )
@@ -62,10 +62,10 @@ EVE_TEST( "Check behavior of sindcosd on wide"
     TTS_ULP_EQUAL(c      , map(refc, a0), 2);
   }
   {
-    auto [s, c] = eve::small(sindcosd)(a0);
+    auto [s, c] = eve::half_circle(sindcosd)(a0);
     TTS_ULP_EQUAL(s      , map(refs, a0), 2);
     TTS_ULP_EQUAL(c      , map(refc, a0), 2);
-    auto [s1, c1] = eve::small(sindcosd)(a1);
+    auto [s1, c1] = eve::half_circle(sindcosd)(a1);
     TTS_ULP_EQUAL(s1      , map(refs, a1), 2);
     TTS_ULP_EQUAL(c1      , map(refc, a1), 30);
   }

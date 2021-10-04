@@ -18,5 +18,5 @@ TTS_CASE_TPL("wide random check on csc", EVE_TYPE)
   auto std_csc = tts::vectorize<T>( [](auto e) { return eve::rec(std::sin(double(e))); } );
 
   eve::exhaustive_producer<T> p(-eve::pio_2(eve::as<v_t>()), eve::pio_2(eve::as<v_t>()));
-  TTS_RANGE_CHECK(p, std_csc, eve::small(eve::csc));
+  TTS_RANGE_CHECK(p, std_csc, eve::half_circle(eve::csc));
 }

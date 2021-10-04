@@ -154,7 +154,7 @@ EVE_TEST_TYPES( "Check eve::wide::slice behavior", eve::test::scalar::all_types)
   }
   else
   {
-    TTS_PASS("Type is too small to be split.");
+    TTS_PASS("Type is too half_c to be split.");
   }
 };
 

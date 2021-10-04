@@ -97,7 +97,7 @@ namespace eve::detail
       }
     }
     else
-      return apply_over(small(cos), a0);
+      return apply_over(half_circle(cos), a0);
   }
 
   template<decorator D, floating_real_value T>
@@ -130,7 +130,7 @@ namespace eve::detail
       if( eve::all(x <= Rempio2_limit(quarter_circle_type(), as(a0))))
         return quarter_circle(cos)(a0);
       else if( eve::all(x <= Rempio2_limit(half_circle_type(), as(a0))))
-        return small(cos)(a0);
+        return half_circle(cos)(a0);
       else if( eve::all(x <=  Rempio2_limit(full_circle_type(), as(a0))))
         return full_circle(cos)(a0);
       else if( eve::all(x <= Rempio2_limit(medium_type(), as(a0))))
