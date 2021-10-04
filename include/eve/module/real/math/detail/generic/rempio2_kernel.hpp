@@ -158,7 +158,7 @@ namespace eve::detail
   }
 
   template<floating_real_value T> EVE_FORCEINLINE  kumi::tuple<T, T, T>
-  rempio2_big(T const &xx) noexcept
+  rempio2_big(T xx) noexcept
   {
     using elt_t             = element_type_t<T>;
     if ( eve::all(xx < Rempio2_limit(restricted_type(), as(xx))) )
@@ -169,6 +169,10 @@ namespace eve::detail
     if( eve::all(xlerfl) )
     {
       return rempio2_small(xx);
+    }
+    if( eve::all(xx < Rempio2_limit(circle_type(), as(xx))) )
+    {
+      return rempio2_circle(xx);
     }
     if ( eve::all(xx < Rempio2_limit(medium_type(), as(xx))) )
     {
@@ -321,7 +325,7 @@ namespace eve::detail
         0x2757d1f5, 0x57d1f534, 0xd1f534dd, 0xf534ddc0, 0x34ddc0db, 0xddc0db62,
         0xc0db6295, 0xdb629599, 0x6295993c, 0x95993c43, 0x993c4390, 0x3c439041};
       constexpr const double pi63 = 0x1.921FB54442D18p-62; /* 2PI * 2^-64.  */
-      auto [sn, sr, dsr]          = rempio2_small(xx);
+      auto [sn, sr, dsr]          = rempio2_circle(xx);
       auto xi                     = bit_cast(xx, as<ui_t>());
       auto index                  = ((xi >> 26) & 15);
       auto arr0 = gather(eve::as_aligned(&__inv_pio4[0], cardinal_t<T>{}), index);
@@ -351,7 +355,8 @@ namespace eve::detail
       auto br   = if_else(xlerfl, sr, sr1);
       auto dbr  = if_else(xlerfl, dsr, dsr1);
       br        = if_else(is_not_finite(xx), eve::allbits, br);
-      return {bn, br, dbr};
+      auto test = xx <= Rempio2_limit(circle_type(), as(xx));
+      return {if_else(test, sn, bn), if_else(test, sr, br), if_else(test, dsr, dbr)};
     }
   }
 }
