@@ -80,24 +80,5 @@ EVE_TEST( "Check behavior of cos on wide"
   TTS_ULP_EQUAL(cos(a2)                       , map(ref, a2), 2);
   TTS_ULP_EQUAL(cos(a3)                       , map(ref, a3), 2);
   TTS_ULP_EQUAL(cos(a4)                       , map(ref, a4), 2);
-
-
-//   TTS_ULP_EQUAL(diff(cos)(a0), map([](auto e) -> v_t { return  -std::sin(e); }, a0), 2);
-//  std::cout << std::hexfloat << 1.0/180 << std::endl;
-//   __float128 a = 1.0Q/180;
-//   std::cout << std::hexfloat << double(a) << std::endl;
-//   std::cout << std::hexfloat << double(a-double(a))<< std::endl;
-
-//   double z = 0x1.6c16c16c16c16p-8;
-//   std::cout << std::hexfloat << double(a-z)<< std::endl;
-
-//   double a = 1.0/180;
-//   std::cout << std::hexfloat << a << std::endl;
-//   auto af = float(a);
-//   auto a2f = float(a-af);
-//   std::cout << std::hexfloat << af<< std::endl;
-//   std::cout << std::hexfloat << a2f<< std::endl;
-//   double z = double(af)+double(a2f);
-// //   double z = 0x1.6c16c16c16c16p-8;
-//    std::cout << std::hexfloat << z<< std::endl;
+  TTS_ULP_EQUAL(diff(cos)(a0), map([](auto e) -> v_t { return  -std::sin(e); }, a0), 2);
 };
