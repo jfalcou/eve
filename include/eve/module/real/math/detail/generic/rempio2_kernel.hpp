@@ -138,22 +138,23 @@ namespace eve::detail
       mp1 = -0x1.921FB58000000p0;   /*  -1.5707963407039642     */
       mp2 =  0x1.DDE973C000000p-27; /*  1.3909067564377153e-08  */
       mp3 = -0x1.CB3B399D747F2p-55; /* -4.9789962505147994e-17  */
+      auto xn  = nearest(x * twoopi(eve::as<elt_t>()));
+      auto y    = fma (xn, mp2, fma (xn, mp1, x));
+      auto n    = quadrant(xn);
+      auto da   = xn * mp3;
+      auto  a   = y - da;
+      da        = (y - a) - da;
+      return {n, a, da};
     }
     else
     {
       mp1 = -0x1.921fb0p+00f;        /* -1.57079601e+00 // pio2_high */
       mp2 = -0x1.5110b4p-22f;        /* -3.13916473e-07 // pio2_mid  */
       mp3 = -0x1.846988p-48f;        /* -5.39030253e-15 // pio2_low */
+      auto xn  = nearest(x * twoopi(eve::as<elt_t>()));
+      auto y    = fma (xn, mp3, fma (xn, mp2, fma (xn, mp1, x)));
+      return {quadrant(xn), y, zero(as(y))};
     }
-    auto xn  = nearest(x * twoopi(eve::as<elt_t>()));
-    auto y    = fma (xn, mp2, fma (xn, mp1, x));
-    auto n    = quadrant(xn);
-    auto da   = xn * mp3;
-    auto  a   = y - da;
-    da        = (y - a) - da;
-    return {n, a, da};
-//       r = fma (xn, mp3, r);
-//       return {quadrant(xn), r, zero(as(r))};
   }
 
   template<floating_real_value T> EVE_FORCEINLINE  kumi::tuple<T, T, T>

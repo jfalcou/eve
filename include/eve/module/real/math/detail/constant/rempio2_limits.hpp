@@ -35,7 +35,7 @@ namespace eve::detail
       }
       else if constexpr(std::is_same_v<D, circle_type>)
       {
-        return pi(eve::as<T>());
+        return 10000*pi(eve::as<T>());
       }
       else  if constexpr(std::is_same_v<D, medium_type>)
       {
