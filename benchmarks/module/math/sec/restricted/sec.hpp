@@ -18,6 +18,6 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__sec) , xp, std__sec , arg0);
-  run<EVE_VALUE>(EVE_NAME(restricted(eve::sec)) , xp, eve::restricted(eve::sec) , arg0);
-  run<EVE_TYPE> (EVE_NAME(restricted(eve::sec)) , xp, eve::restricted(eve::sec) , arg0);
+  run<EVE_VALUE>(EVE_NAME(quarter_circle(eve::sec)) , xp, eve::quarter_circle(eve::sec) , arg0);
+  run<EVE_TYPE> (EVE_NAME(quarter_circle(eve::sec)) , xp, eve::quarter_circle(eve::sec) , arg0);
 }

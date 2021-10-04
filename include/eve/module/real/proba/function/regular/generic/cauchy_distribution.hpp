@@ -221,7 +221,7 @@ namespace eve
       else
         tmp = tanpi(x-half(as(x)));
 
-      // as x is restricted to [0,  1] limits values at 0 and 1 are properly defined
+      // as x is quarter_circle to [0,  1] limits values at 0 and 1 are properly defined
       tmp = if_else(is_eqz(x), minf(as(x)), tmp);
       tmp = if_else(x == one(as(x)), inf(as(x)), tmp);
       return if_else(is_ltz(x) || x > one(as(x)), allbits, tmp);

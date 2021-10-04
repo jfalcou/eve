@@ -57,7 +57,7 @@ EVE_TEST( "Check behavior of cscd on wide"
   using eve::deginrad;
   using v_t = eve::element_type_t<T>;
   auto ref = [](auto e) -> v_t { auto d = eve::sind(e);return d ? 1.0/d : eve::nan(eve::as(e)); };
-  TTS_ULP_EQUAL(eve::restricted(cscd)(a0)      , map(ref, a0), 2);
+  TTS_ULP_EQUAL(eve::quarter_circle(cscd)(a0)      , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::small(cscd)(a0)           , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::small(cscd)(a1)           , map(ref, a1), 2);
   TTS_ULP_EQUAL(eve::medium(cscd)(a0)          , map(ref, a0), 2);

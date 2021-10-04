@@ -12,7 +12,7 @@
 
 int main()
 {
-  auto lmax = eve::detail::Rempio2_limit(eve::circle_type(), eve::as<EVE_VALUE>());
+  auto lmax = eve::detail::Rempio2_limit(eve::full_circle_type(), eve::as<EVE_VALUE>());
   auto lmin = -lmax;
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
@@ -20,7 +20,7 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__sin) , xp, std__sin , arg0);
-  run<EVE_VALUE>(EVE_NAME(circle(eve::sin)) , xp, eve::circle(eve::sin) , arg0);
-  run<EVE_TYPE> (EVE_NAME(circle(eve::sin)) , xp, eve::circle(eve::sin) , arg0);
+  run<EVE_VALUE>(EVE_NAME(full_circle(eve::sin)) , xp, eve::full_circle(eve::sin) , arg0);
+  run<EVE_TYPE> (EVE_NAME(full_circle(eve::sin)) , xp, eve::full_circle(eve::sin) , arg0);
 
 }

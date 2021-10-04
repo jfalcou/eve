@@ -62,7 +62,7 @@ EVE_TEST( "Check behavior of cotd on wide"
   using eve::deginrad;
   using v_t = eve::element_type_t<T>;
   auto ref = [](auto e) -> v_t { auto d = eve::sind(e); return d ? eve::cosd(e)/eve::sind(e): eve::nan(eve::as(e)); };
-  TTS_ULP_EQUAL(eve::restricted(cotd)(a0)      , map(ref, a0), 2);
+  TTS_ULP_EQUAL(eve::quarter_circle(cotd)(a0)      , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::small(cotd)(a0)           , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::small(cotd)(a1)           , map(ref, a1), 40);
   TTS_ULP_EQUAL(eve::medium(cotd)(a0)          , map(ref, a0), 2);

@@ -63,7 +63,7 @@ EVE_TEST( "Check behavior of tand on wide"
   using eve::deginrad;
   using v_t = eve::element_type_t<T>;
   auto ref = [](auto e) -> v_t { auto d = eve::cosd(e); return d ? eve::sind(e)/d: eve::nan(eve::as(e)); };
-  TTS_ULP_EQUAL(eve::restricted(tand)(a0)      , map(ref, a0), 2);
+  TTS_ULP_EQUAL(eve::quarter_circle(tand)(a0)      , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::small(tand)(a0)           , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::small(tand)(a1)           , map(ref, a1), 50);
   TTS_ULP_EQUAL(eve::medium(tand)(a0)          , map(ref, a0), 2);

@@ -13,8 +13,8 @@
 TTS_CASE_TPL("wide random check on sec", EVE_TYPE)
 {
   auto std_sec = [](auto e) -> EVE_VALUE { return 1/std::cos(double(e)); };
-  auto l = eve::detail::Rempio2_limit(eve::circle_type(), eve::as<EVE_VALUE>());
+  auto l = eve::detail::Rempio2_limit(eve::full_circle_type(), eve::as<EVE_VALUE>());
 
   eve::uniform_prng<EVE_VALUE>  p(-l, l);
-  TTS_RANGE_CHECK(p, std_sec, eve::circle(eve::sec));
+  TTS_RANGE_CHECK(p, std_sec, eve::full_circle(eve::sec));
 }

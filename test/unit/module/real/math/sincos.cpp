@@ -39,8 +39,8 @@ auto mrest  = []<typename T>(eve::as<T> const & tgt){  return -eve::pio_4(tgt); 
 auto rest   = []<typename T>(eve::as<T> const & tgt){  return  eve::pio_4(tgt); };
 auto msmall = []<typename T>(eve::as<T> const & tgt){  return -eve::pio_2(tgt); };
 auto small  = []<typename T>(eve::as<T> const & tgt){  return  eve::pio_2(tgt); };
-auto mcircle= []<typename T>(eve::as<T> const & tgt){  return -eve::pi(tgt);    };
-auto circle = []<typename T>(eve::as<T> const & tgt){  return  eve::pi(tgt);    };
+auto mfull_circle= []<typename T>(eve::as<T> const & tgt){  return -eve::pi(tgt);    };
+auto full_circle = []<typename T>(eve::as<T> const & tgt){  return  eve::pi(tgt);    };
 auto mmed   = []<typename T>(eve::as<T> const & tgt){  return -eve::detail::Rempio2_limit(eve::medium_type(), tgt); };
 auto med    = []<typename T>(eve::as<T> const & tgt){  return  eve::detail::Rempio2_limit(eve::medium_type(), tgt); };
 
@@ -48,7 +48,7 @@ EVE_TEST( "Check behavior of cos on wide"
         , eve::test::simd::ieee_reals
         , eve::test::generate( eve::test::randoms(mrest, rest)
                              , eve::test::randoms(msmall, small)
-                             , eve::test::randoms(mcircle, circle)
+                             , eve::test::randoms(mfull_circle, full_circle)
                              , eve::test::randoms(mmed, med)
                              , eve::test::randoms(eve::valmin, eve::valmax))
                              )
@@ -61,7 +61,7 @@ EVE_TEST( "Check behavior of cos on wide"
   auto refc = [](auto e) -> v_t { return std::cos(e); };
   auto refs = [](auto e) -> v_t { return std::sin(e); };
   {
-    auto [s, c] = eve::restricted(sincos)(a0);
+    auto [s, c] = eve::quarter_circle(sincos)(a0);
     TTS_ULP_EQUAL(s      , map(refs, a0), 2);
     TTS_ULP_EQUAL(c      , map(refc, a0), 2);
   }
@@ -74,13 +74,13 @@ EVE_TEST( "Check behavior of cos on wide"
     TTS_ULP_EQUAL(c1      , map(refc, a1), 2);
   }
   {
-    auto [s, c] = eve::circle(sincos)(a0);
+    auto [s, c] = eve::full_circle(sincos)(a0);
     TTS_ULP_EQUAL(s      , map(refs, a0), 2);
     TTS_ULP_EQUAL(c      , map(refc, a0), 2);
-    auto [s1, c1] = eve::circle(sincos)(a1);
+    auto [s1, c1] = eve::full_circle(sincos)(a1);
     TTS_ULP_EQUAL(s1      , map(refs, a1), 2);
     TTS_ULP_EQUAL(c1      , map(refc, a1), 2);
-    auto [s2, c2] = eve::circle(sincos)(a2);
+    auto [s2, c2] = eve::full_circle(sincos)(a2);
     TTS_ULP_EQUAL(s2      , map(refs, a2), 2);
     TTS_ULP_EQUAL(c2      , map(refc, a2), 2);
   }

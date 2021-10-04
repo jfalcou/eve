@@ -29,14 +29,14 @@ namespace eve::detail
 {
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto
-  cscpi_(EVE_SUPPORTS(cpu_), restricted_type const &, T const &a0) noexcept
+  cscpi_(EVE_SUPPORTS(cpu_), quarter_circle_type const &, T const &a0) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return restricted(csc)(a0 * pi(eve::as<T>()));
+      return quarter_circle(csc)(a0 * pi(eve::as<T>()));
     }
     else
-      return apply_over(restricted(cscpi), a0);
+      return apply_over(quarter_circle(cscpi), a0);
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -71,7 +71,7 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
     {
       if( eve::all(eve::abs(a0) <= T(0.25)) )
-        return restricted(cscpi)(a0);
+        return quarter_circle(cscpi)(a0);
       else
         return big(cscpi)(a0);
     }

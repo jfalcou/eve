@@ -28,21 +28,21 @@
 namespace eve::detail
 {
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr auto tanpi_(EVE_SUPPORTS(cpu_), restricted_type const &, T x) noexcept
+  EVE_FORCEINLINE constexpr auto tanpi_(EVE_SUPPORTS(cpu_), quarter_circle_type const &, T x) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return eve::restricted(tan)(x * pi(eve::as<T>()));
+      return eve::quarter_circle(tan)(x * pi(eve::as<T>()));
     }
     else
-      return apply_over(restricted(tanpi), x);
+      return apply_over(quarter_circle(tanpi), x);
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////////////
-  // medium,  big, circle, small
+  // medium,  big, full_circle, small
   template<decorator D, floating_real_value T>
   EVE_FORCEINLINE constexpr auto tanpi_(EVE_SUPPORTS(cpu_), D const &, T a0) noexcept
-  requires(is_one_of<D>(types<small_type, circle_type, medium_type, big_type> {}))
+  requires(is_one_of<D>(types<half_circle_type, full_circle_type, medium_type, big_type> {}))
   {
     if constexpr( has_native_abi_v<T> )
     {
@@ -75,7 +75,7 @@ namespace eve::detail
     {
       auto x = abs(a0);
       if( eve::all(eve::abs(x) <= T(0.25)) )
-        return restricted(tanpi)(a0);
+        return quarter_circle(tanpi)(a0);
       else
         return big(tanpi)(a0);
     }

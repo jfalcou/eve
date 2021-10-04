@@ -17,6 +17,6 @@ TTS_CASE_TPL("wide random check on tanpi", EVE_TYPE)
 
   TTS_RANGE_CHECK ( eve::uniform_prng<EVE_VALUE>(-0.25, 0.25)
                   , my_stdtanpi
-                  , eve::restricted(eve::tanpi)
+                  , eve::quarter_circle(eve::tanpi)
                   );
 }

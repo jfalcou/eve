@@ -61,7 +61,7 @@ EVE_TEST( "Check behavior of cscpi on wide"
   using v_t = eve::element_type_t<T>;
   long double ldpi = 3.1415926535897932384626433832795028841971693993751;
   auto ref = [](auto e) -> v_t {auto d = eve::sinpi(double(e));  return d ? 1.0/d :eve::nan(eve::as(e)); };
-  TTS_ULP_EQUAL(eve::restricted(cscpi)(a0)      , map(ref, a0), 2);
+  TTS_ULP_EQUAL(eve::quarter_circle(cscpi)(a0)      , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::small(cscpi)(a0)           , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::small(cscpi)(a1)           , map(ref, a1), 2);
   TTS_ULP_EQUAL(eve::medium(cscpi)(a0)          , map(ref, a0), 2);

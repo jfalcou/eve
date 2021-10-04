@@ -56,7 +56,7 @@ EVE_TEST( "Check behavior of cos on wide"
   auto refc = [](auto e) -> v_t { return eve::cospi(e); };
   auto refs = [](auto e) -> v_t { return eve::sinpi(e); };
   {
-    auto [s, c] = eve::restricted(sinpicospi)(a0);
+    auto [s, c] = eve::quarter_circle(sinpicospi)(a0);
     TTS_ULP_EQUAL(s      , map(refs, a0), 2);
     TTS_ULP_EQUAL(c      , map(refc, a0), 2);
   }

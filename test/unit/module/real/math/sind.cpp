@@ -57,7 +57,7 @@ EVE_TEST( "Check behavior of sind on wide"
   using v_t = eve::element_type_t<T>;
   auto ref = [](auto e) -> v_t { return boost::math::sin_pi(e/180.0l); };
 
-  TTS_ULP_EQUAL(eve::restricted(sind)(a0)      , map(ref, a0), 2);
+  TTS_ULP_EQUAL(eve::quarter_circle(sind)(a0)      , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::small(sind)(a0)           , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::small(sind)(a1)           , map(ref, a1), 30);
   TTS_ULP_EQUAL(eve::medium(sind)(a0)          , map(ref, a0), 2);

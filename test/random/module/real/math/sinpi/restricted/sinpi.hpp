@@ -15,5 +15,5 @@ TTS_CASE_TPL("wide random check on sinpi", EVE_TYPE)
   auto my_stdsinpi = [](auto x){return boost::math::sin_pi(x); };
 
   eve::uniform_prng<EVE_VALUE> p(-0.25, 0.25);
-  TTS_RANGE_CHECK(p, my_stdsinpi, eve::restricted(eve::sinpi));
+  TTS_RANGE_CHECK(p, my_stdsinpi, eve::quarter_circle(eve::sinpi));
 }

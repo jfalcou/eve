@@ -25,15 +25,15 @@ namespace eve::detail
   {
     if constexpr(floating_value<T>)
     {
-      if constexpr(std::is_same_v<D, restricted_type>)
+      if constexpr(std::is_same_v<D, quarter_circle_type>)
       {
         return pio_4(eve::as<T>());
       }
-      else if constexpr(std::is_same_v<D, small_type>)
+      else if constexpr(std::is_same_v<D, half_circle_type>)
       {
         return pio_2(eve::as<T>());
       }
-      else if constexpr(std::is_same_v<D, circle_type>)
+      else if constexpr(std::is_same_v<D, full_circle_type>)
       {
         return pi(eve::as<T>());
       }

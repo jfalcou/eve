@@ -60,7 +60,7 @@ EVE_TEST( "Check behavior of cospi on wide"
   using v_t = eve::element_type_t<T>;
   long double ldpi = 3.1415926535897932384626433832795028841971693993751;
   auto ref = [](auto e) -> v_t { return boost::math::cos_pi(e); };
-  TTS_ULP_EQUAL(eve::restricted(cospi)(a0)      , map(ref, a0), 2);
+  TTS_ULP_EQUAL(eve::quarter_circle(cospi)(a0)      , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::small(cospi)(a0)           , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::small(cospi)(a1)           , map(ref, a1), 2);
   TTS_ULP_EQUAL(eve::medium(cospi)(a0)          , map(ref, a0), 2);

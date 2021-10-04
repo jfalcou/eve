@@ -62,7 +62,7 @@ EVE_TEST( "Check behavior of tanpi on wide"
   using v_t = eve::element_type_t<T>;
   long double ldpi = 3.1415926535897932384626433832795028841971693993751;
   auto ref = [](auto e) -> v_t { auto d = boost::math::cos_pi(e); return d ? boost::math::sin_pi(e)/d : eve::nan(eve::as(e)); };
-  TTS_ULP_EQUAL(eve::restricted(tanpi)(a0)      , map(ref, a0), 2);
+  TTS_ULP_EQUAL(eve::quarter_circle(tanpi)(a0)      , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::small(tanpi)(a0)           , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::small(tanpi)(a1)           , map(ref, a1), 2);
   TTS_ULP_EQUAL(eve::medium(tanpi)(a0)          , map(ref, a0), 2);

@@ -56,7 +56,7 @@ EVE_TEST( "Check behavior of csc on wide"
   using eve::diff;
   using v_t = eve::element_type_t<T>;
   auto ref = [](auto e) -> v_t { return 1.0/std::sin(double(e)); };
-  TTS_ULP_EQUAL(eve::restricted(csc)(a0)      , map(ref, a0), 2);
+  TTS_ULP_EQUAL(eve::quarter_circle(csc)(a0)      , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::small(csc)(a0)           , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::small(csc)(a1)           , map(ref, a1), 2);
   TTS_ULP_EQUAL(eve::medium(csc)(a0)          , map(ref, a0), 2);

@@ -18,5 +18,5 @@ TTS_CASE_TPL("wide random check on tan", EVE_TYPE)
   auto std_tan = tts::vectorize<T>( [](auto e) { return std::tan(e); } );
 
   eve::exhaustive_producer<T> p(-eve::pio_4(eve::as<v_t>()), eve::pio_4(eve::as<v_t>()));
-  TTS_RANGE_CHECK(p, std_tan, eve::restricted(eve::tan));
+  TTS_RANGE_CHECK(p, std_tan, eve::quarter_circle(eve::tan));
 }

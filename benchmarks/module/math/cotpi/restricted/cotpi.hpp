@@ -16,6 +16,6 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
   eve::bench::experiment xp;
-  run<EVE_VALUE>(EVE_NAME(restricted(eve::cotpi)) , xp, eve::restricted(eve::cotpi) , arg0);
-  run<EVE_TYPE> (EVE_NAME(restricted(eve::cotpi)) , xp, eve::restricted(eve::cotpi) , arg0);
+  run<EVE_VALUE>(EVE_NAME(quarter_circle(eve::cotpi)) , xp, eve::quarter_circle(eve::cotpi) , arg0);
+  run<EVE_TYPE> (EVE_NAME(quarter_circle(eve::cotpi)) , xp, eve::quarter_circle(eve::cotpi) , arg0);
 }

@@ -57,7 +57,7 @@ EVE_TEST( "Check behavior of sindcosd on wide"
   auto refc = [](auto e) -> v_t { return eve::cosd(e); };
   auto refs = [](auto e) -> v_t { return eve::sind(e); };
   {
-    auto [s, c] = eve::restricted(sindcosd)(a0);
+    auto [s, c] = eve::quarter_circle(sindcosd)(a0);
     TTS_ULP_EQUAL(s      , map(refs, a0), 2);
     TTS_ULP_EQUAL(c      , map(refc, a0), 2);
   }

@@ -57,7 +57,7 @@ EVE_TEST( "Check behavior of cosd on wide"
   using v_t = eve::element_type_t<T>;
   auto ref = [](auto e) -> v_t { return boost::math::cos_pi(e/180.0l); };
 
-  TTS_ULP_EQUAL(eve::restricted(cosd)(a0)      , map(ref, a0), 2);
+  TTS_ULP_EQUAL(eve::quarter_circle(cosd)(a0)      , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::small(cosd)(a0)           , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::small(cosd)(a1)           , map(ref, a1), 30);
   TTS_ULP_EQUAL(eve::medium(cosd)(a0)          , map(ref, a0), 2);

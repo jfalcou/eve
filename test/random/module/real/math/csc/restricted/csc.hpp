@@ -18,11 +18,11 @@ TTS_CASE_TPL("wide random check on csc", EVE_TYPE)
   if constexpr(eve::platform::supports_denormals)
   {
     eve::uniform_prng<EVE_VALUE> p(-eve::pio_4(eve::as<EVE_VALUE>()), eve::pio_4(eve::as<EVE_VALUE>()));
-    TTS_RANGE_CHECK(p, std_csc, eve::restricted(eve::csc));
+    TTS_RANGE_CHECK(p, std_csc, eve::quarter_circle(eve::csc));
   }
   else
   {
     eve::uniform_prng<EVE_VALUE>  p(eve::smallestposval(eve::as<EVE_VALUE>()), eve::pio_4(eve::as<EVE_VALUE>()));
-    TTS_RANGE_CHECK(p, std_csc, eve::restricted(eve::csc));
+    TTS_RANGE_CHECK(p, std_csc, eve::quarter_circle(eve::csc));
   }
 }

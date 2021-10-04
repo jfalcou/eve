@@ -55,7 +55,7 @@ EVE_TEST( "Check behavior of sec on wide"
   using eve::diff;
   using v_t = eve::element_type_t<T>;
   auto ref = [](auto e) -> v_t { return 1/std::cos(e); };
-  TTS_ULP_EQUAL(eve::restricted(sec)(a0)      , map(ref, a0), 2);
+  TTS_ULP_EQUAL(eve::quarter_circle(sec)(a0)      , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::small(sec)(a0)           , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::small(sec)(a1)           , map(ref, a1), 2);
   TTS_ULP_EQUAL(eve::medium(sec)(a0)          , map(ref, a0), 2);

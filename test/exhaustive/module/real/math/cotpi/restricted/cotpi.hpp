@@ -23,5 +23,5 @@ TTS_CASE_TPL("wide random check on cotpi", EVE_TYPE)
                                         );
 
   eve::exhaustive_producer<T> p(-0.25, 0.25);
-  TTS_RANGE_CHECK(p, my_stdcotpi, eve::restricted(eve::cotpi));
+  TTS_RANGE_CHECK(p, my_stdcotpi, eve::quarter_circle(eve::cotpi));
 }

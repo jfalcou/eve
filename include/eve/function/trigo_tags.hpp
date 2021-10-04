@@ -11,14 +11,14 @@
 
 namespace eve
 {
-  struct circle_
+  struct full_circle_
   {
     template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
   };
   //================================================================================================
   //! @addtogroup trigonometric
   //! @{
-  //! @var restricted
+  //! @var quarter_circle
   //!
   //! @brief  Higher-order @callable imbuing a limited range semantic onto other @callable{s}.
   //!
@@ -36,7 +36,7 @@ namespace eve
   //! in \f$[-\pi/4, +\pi/4]\f$ only and Nan outside. (respectively \f$[-45, +45]\f$ if
   //! the input in in degrees,  \f$[-0.25, +0.25]\f$ if the input in in \f$\pi\f$ multiples)
   //!
-  //! restricted is currently supported only by direct trigonometric object functions
+  //! quarter_circle is currently supported only by direct trigonometric object functions
   //! This decorator leads to the fastest algorithm at full precision.
   //!
   //! Generally speaking, beside the call with no decorator, direct trigonometric object functions have
@@ -54,7 +54,7 @@ namespace eve
   //!  @}
   //================================================================================================
   // range limitation decorator objects for direct trigonometric functions
-  struct restricted_
+  struct quarter_circle_
   {
     template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
   };
@@ -83,7 +83,7 @@ namespace eve
   //! small is currently supported only by direct trigonometric object functions
   //!
   //! Beside the call with no decorator, direct trigonometric object functions have
-  //! three other decorator flavours eve::restricted,  eve::medium,  eve::big
+  //! three other decorator flavours eve::quarter_circle,  eve::medium,  eve::big
   //!
   //! Without any decorator the call to a direct trigonometric object function
   //! tests the input value to choose among the decorated ones the best fit.
@@ -125,7 +125,7 @@ namespace eve
   //! medium is currently supported only by direct trigonometric object functions
   //!
   //! Beside the call with no decorator, direct trigonometric object functions have
-  //! three other decorator flavours eve::restricted,  eve::small,  eve::big
+  //! three other decorator flavours eve::quarter_circle,  eve::small,  eve::big
   //!
   //! Without any decorator the call to a direct trigonometric object function
   //! tests the input value to choose among the decorated ones the best fit.
@@ -167,7 +167,7 @@ namespace eve
   //! big is currently supported only by direct trigonometric object functions
   //!
   //! Beside the call with no decorator, direct trigonometric object functions have
-  //! three other decorator flavours eve::restricted,  eve::small,  eve::medium
+  //! three other decorator flavours eve::quarter_circle,  eve::small,  eve::medium
   //!
   //! Without any decorator the call to a direct trigonometric object function
   //! tests the input value to choose among the decorated ones the best fit.
@@ -186,15 +186,15 @@ namespace eve
     template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
   };
 
-  using circle_type     = decorated<circle_()>;
-  using restricted_type = decorated<restricted_()>;
-  using small_type      = decorated<small_()>;
+  using full_circle_type     = decorated<full_circle_()>;
+  using quarter_circle_type = decorated<quarter_circle_()>;
+  using half_circle_type      = decorated<small_()>;
   using medium_type     = decorated<medium_()>;
   using big_type        = decorated<big_()>;
 
-  inline constexpr circle_type      const circle      = {};
-  inline constexpr restricted_type  const restricted  = {};
-  inline constexpr small_type       const small       = {};
+  inline constexpr full_circle_type      const full_circle      = {};
+  inline constexpr quarter_circle_type  const quarter_circle  = {};
+  inline constexpr half_circle_type       const small       = {};
   inline constexpr medium_type      const medium      = {};
   inline constexpr big_type         const big         = {};
 }

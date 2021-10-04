@@ -18,8 +18,9 @@
 //!
 //!   The possible decorators are:
 //!
-//!    * restricted: the fastest but gives the correct result in \f$[-\pi/4, +\pi/4]\f$ only and Nan outside.
-//!    * small: gives the correct result for \f$[-\pi/2, +\pi/2]\f$ only and Nan outside.
+//!    * quarter_circle: the fastest but gives the correct result in \f$[-\pi/4, +\pi/4]\f$ only and Nan outside.
+//!    * half_circle: gives the correct result for \f$[-\pi/2, +\pi/2]\f$ only and Nan outside.
+//!    * full_circle: gives the correct result for \f$[-\pi, +\pi]\f$ only and Nan outside.
 //!    * medium:  gives the correct result for \f$|x| < 536870912.0f\f$ (float) or  \f$ |x| < 2.0e14 \f$ (double)
 //!    * big: gives the correct result in the whole range.
 //!

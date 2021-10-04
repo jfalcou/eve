@@ -16,5 +16,5 @@ TTS_CASE_TPL("wide random check on cscpi", EVE_TYPE)
   auto my_stdcscpi  = [](auto x) { return  eve::rec(boost::math::sin_pi(x)); };
 
   eve::uniform_prng<EVE_VALUE> p(-0.25, 0.25);
-  TTS_RANGE_CHECK_WITH(p, my_stdcscpi, eve::restricted(eve::cscpi), 4);
+  TTS_RANGE_CHECK_WITH(p, my_stdcscpi, eve::quarter_circle(eve::cscpi), 4);
 }

@@ -57,7 +57,7 @@ EVE_TEST( "Check behavior of cos on wide"
   auto [sn2, sx2, sdx2] = eve::rem_pio2(a2);
   auto [sn3, sx3, sdx3] = eve::rem_pio2(a3);
   {
-    auto [n0, x0, dx0] = eve::restricted(rempio2)(a0);
+    auto [n0, x0, dx0] = eve::quarter_circle(rempio2)(a0);
     TTS_ULP_EQUAL(n0      , sn0, 2);
     TTS_ULP_EQUAL(x0      , sx0, 2);
     TTS_ULP_EQUAL(dx0     , sdx0, 2);
