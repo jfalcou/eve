@@ -16,6 +16,7 @@
 #include <eve/algo/any_of.hpp>
 #include <eve/algo/container/soa_vector.hpp>
 #include <eve/algo/transform.hpp>
+#include <eve/algo/remove.hpp>
 #include <eve/product_type.hpp>
 #include <eve/eve.hpp>
 
@@ -101,8 +102,11 @@ TTS_CASE("Run a ball simulation")
   std::vector<double> times;
   double current_time = 0;
 
+  // Update callable
+  update behavior{1.f/time, gravity,max_bounce};
+
   // Run the simulation once everyone made the maximum amount of bounce ---------------------------
-  while( eve::algo::any_of(balls, [max_bounce](auto b) { return count(b) < max_bounce; } ) )
+  while( !balls.empty() )
   {
     display screen(202, render_size+2);
 
@@ -111,16 +115,13 @@ TTS_CASE("Run a ball simulation")
     for(int l=1;l<render_size+1;++l) screen.line(l,' ','|');
     screen.line(render_size+1,'=','#');
 
-    // Update
-    update behavior{1.f/time, gravity,max_bounce};
-
     auto now = std::chrono::steady_clock::now();
     eve::algo::transform_inplace[eve::algo::unroll<2>](balls, behavior);
     auto then = std::chrono::steady_clock::now();
 
     // Display 200 balls
     for(std::size_t i=0;i<200;i++)
-      screen.put( 'A' + count(balls.get(i))%63
+      screen.put( 'A' + count(balls.get(i))%27
                 , 1+i
                 , std::max(1, render_size - static_cast<int>(resolution*position(balls.get(i))))
                 );
@@ -137,10 +138,13 @@ TTS_CASE("Run a ball simulation")
       times.clear();
     }
 
+    // Remove ball that bounced
+    balls.erase(eve::algo::remove_if(balls, [max_bounce](auto b) { return count(b) < max_bounce; }) );
+
     // Render
-    screen.header() << "\x1B[2J\x1B[H> Step: " << s++
-                    << " @ " << std::setprecision(3) << nb_balls/current_time << " Gballs/s"
-                    << " => " << std::setprecision(3) << (nb_balls/current_time)*sizeof(ball)*2 << " GB/s\n";
+    screen.header() << "\x1B[2J\x1B[H> Step: " << s++ << " - # of balls: " << balls.size()
+                    << " @ " << std::setprecision(3) << balls.size()/current_time << " Gballs/s"
+                    << " => " << std::setprecision(3) << (balls.size()/current_time)*sizeof(ball)*2 << " GB/s\n";
 
     std::cout << screen.render();
   }
