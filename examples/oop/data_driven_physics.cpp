@@ -67,13 +67,10 @@ struct update
 
     // Compute the bounced ball case
     speed(bounced)    *= -elasticity(bounced);
-    count(bounced)++;
+    ++count(bounced);
 
     // Select the proper one based on position
-    return eve::if_else(  count(b) < max_bounce
-                        , eve::if_else( position(falling) <= 1e-4, bounced, falling)
-                        , b
-                        );
+    return eve::if_else( position(falling) <= 1e-4, bounced, falling);
   }
 
   float dt,g;
