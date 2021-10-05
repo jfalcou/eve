@@ -274,6 +274,15 @@ EVE_TEST_TYPES("cardinal/type manipulation", algo_test::selected_types)
   }
 
   {
+    using cardinal_n = eve::detail::cache_line_cardinal<e_t>;
+    auto processed = eve::algo::preprocess_range(
+    eve::algo::traits(eve::algo::force_cardinal<cardinal_n{}()>), v);
+
+    using I = decltype(processed.begin());
+    TTS_TYPE_IS(typename I::cardinal, cardinal_n);
+  }
+
+  {
     auto processed = eve::algo::preprocess_range(
       eve::algo::traits(),
       eve::algo::convert(v, eve::as<eve::common_type_t<double, char>>{}));

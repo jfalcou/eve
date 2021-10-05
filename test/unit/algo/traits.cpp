@@ -103,6 +103,12 @@ TTS_CASE("eve.algo.traits, type and cardinal")
     eve::algo::traits tr{eve::algo::consider_types<double>};
     TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr), int*>), eve::fixed<eve::expected_cardinal_v<double>>);
   }
+  {
+    eve::algo::traits tr;
+    eve::algo::traits big_step{eve::algo::force_cardinal<64>};
+    eve::algo::traits tr2 = eve::algo::default_to(tr, big_step);
+    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr2), char*>), eve::fixed<64>);
+  }
 }
 
 // Funciton with traits support
