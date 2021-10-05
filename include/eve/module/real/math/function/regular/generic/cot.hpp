@@ -38,7 +38,7 @@
 namespace eve::detail
 {
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr auto cot_(EVE_SUPPORTS(cpu_), restricted_type const &, T a0) noexcept
+  EVE_FORCEINLINE constexpr auto cot_(EVE_SUPPORTS(cpu_), quarter_circle_type const &, T a0) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {
@@ -53,11 +53,11 @@ namespace eve::detail
       }
     }
     else
-      return apply_over(restricted(cot), a0);
+      return apply_over(quarter_circle(cot), a0);
   }
 
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr auto cot_(EVE_SUPPORTS(cpu_), small_type const &, T a0) noexcept
+  EVE_FORCEINLINE constexpr auto cot_(EVE_SUPPORTS(cpu_), half_circle_type const &, T a0) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {
@@ -100,12 +100,12 @@ namespace eve::detail
       }
     }
     else
-      return apply_over(small(cot), a0);
+      return apply_over(half_circle(cot), a0);
   }
 
   template<decorator D, floating_real_value T>
   EVE_FORCEINLINE constexpr T cot_(EVE_SUPPORTS(cpu_), D const &, T a0) noexcept
-  requires(is_one_of<D>(types<circle_type, medium_type, big_type> {}))
+  requires(is_one_of<D>(types<full_circle_type, medium_type, big_type> {}))
   {
     if constexpr( has_native_abi_v<T> )
     {
@@ -130,12 +130,12 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
     {
       auto x = eve::abs(a0);
-      if( eve::all(x <= Rempio2_limit(restricted_type(), as(a0))))
-        return restricted(cot)(a0);
-      else if( eve::all(x <= Rempio2_limit(small_type(), as(a0))))
-        return small(cot)(a0);
-      else if( eve::all(x <=  Rempio2_limit(circle_type(), as(a0))))
-        return circle(cot)(a0);
+      if( eve::all(x <= Rempio2_limit(quarter_circle_type(), as(a0))))
+        return quarter_circle(cot)(a0);
+      else if( eve::all(x <= Rempio2_limit(half_circle_type(), as(a0))))
+        return half_circle(cot)(a0);
+      else if( eve::all(x <=  Rempio2_limit(full_circle_type(), as(a0))))
+        return full_circle(cot)(a0);
       else if( eve::all(x <= Rempio2_limit(medium_type(), as(a0))))
         return medium(cot)(a0);
       else

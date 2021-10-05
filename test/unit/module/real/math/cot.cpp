@@ -37,20 +37,20 @@ EVE_TEST_TYPES( "Check return types of cot"
 //==================================================================================================
 // cot  tests
 //==================================================================================================
-auto mrest  = []<typename T>(eve::as<T> const & tgt){  return -eve::pio_4(tgt); };
-auto rest   = []<typename T>(eve::as<T> const & tgt){  return  eve::pio_4(tgt); };
-auto msmall = []<typename T>(eve::as<T> const & tgt){  return -eve::pio_2(tgt); };
-auto mcircle= []<typename T>(eve::as<T> const & tgt){  return -eve::pi(tgt);    };
-auto circle = []<typename T>(eve::as<T> const & tgt){  return  eve::pi(tgt);    };
-auto small  = []<typename T>(eve::as<T> const & tgt){  return  eve::pio_2(tgt); };
-auto mmed   = []<typename T>(eve::as<T> const & tgt){  return -eve::detail::Rempio2_limit(eve::medium_type(), tgt); };
-auto med    = []<typename T>(eve::as<T> const & tgt){  return  eve::detail::Rempio2_limit(eve::medium_type(), tgt); };
+auto mquarter_c  = []<typename T>(eve::as<T> const & tgt){  return -eve::pio_4(tgt); };
+auto quarter_c   = []<typename T>(eve::as<T> const & tgt){  return  eve::pio_4(tgt); };
+auto mhalf_c = []<typename T>(eve::as<T> const & tgt){  return -eve::pio_2(tgt); };
+auto mfull_c =[]<typename T>(eve::as<T> const & tgt){  return -eve::pi(tgt);    };
+auto full_c =[]<typename T>(eve::as<T> const & tgt){  return  eve::pi(tgt);    };
+auto half_c  = []<typename T>(eve::as<T> const & tgt){  return  eve::pio_2(tgt); };
+auto mmed   = []<typename T>(eve::as<T> const & tgt){  return -eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt); };
+auto med    = []<typename T>(eve::as<T> const & tgt){  return  eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt); };
 
 EVE_TEST( "Check behavior of cot on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate( eve::test::randoms(mrest, rest)
-                             , eve::test::randoms(msmall, small)
-                             , eve::test::randoms(mcircle, circle)
+        , eve::test::generate( eve::test::randoms(mquarter_c, quarter_c)
+                             , eve::test::randoms(mhalf_c, half_c)
+                             , eve::test::randoms(mfull_c ,full_c)
                              , eve::test::randoms(mmed, med)
                              , eve::test::randoms(eve::valmin, eve::valmax))
                              )
@@ -61,21 +61,12 @@ EVE_TEST( "Check behavior of cot on wide"
   using eve::diff;
   using v_t = eve::element_type_t<T>;
   auto ref = [](auto e) -> v_t { return 1/std::tan(double(e)); };
-  TTS_ULP_EQUAL(eve::restricted(cot)(a0)      , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::small(cot)(a0)           , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::small(cot)(a1)           , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::circle(cot)(a0)          , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::circle(cot)(a1)          , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::circle(cot)(a2)          , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::medium(cot)(a0)          , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::medium(cot)(a1)          , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::medium(cot)(a2)          , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::medium(cot)(a3)          , map(ref, a3), 2);
-  TTS_ULP_EQUAL(eve::big(cot)(a0)             , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::big(cot)(a1)             , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::big(cot)(a2)             , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::big(cot)(a3)             , map(ref, a3), 2);
-  TTS_ULP_EQUAL(eve::big(cot)(a4)             , map(ref, a4), 2);
+  TTS_ULP_EQUAL(eve::quarter_circle(cot)(a0)      , map(ref, a0), 2);
+  TTS_ULP_EQUAL(eve::half_circle(cot)(a0)           , map(ref, a0), 2);
+  TTS_ULP_EQUAL(eve::half_circle(cot)(a1)           , map(ref, a1), 2);
+  TTS_ULP_EQUAL(eve::full_circle(cot)(a0)          , map(ref, a0), 2);
+  TTS_ULP_EQUAL(eve::full_circle(cot)(a1)          , map(ref, a1), 2);
+  TTS_ULP_EQUAL(eve::full_circle(cot)(a2)          , map(ref, a2), 2);
   TTS_ULP_EQUAL(cot(a0)                       , map(ref, a0), 2);
   TTS_ULP_EQUAL(cot(a1)                       , map(ref, a1), 2);
   TTS_ULP_EQUAL(cot(a2)                       , map(ref, a2), 2);

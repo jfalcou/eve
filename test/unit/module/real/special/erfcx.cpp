@@ -65,12 +65,12 @@ EVE_TEST( "Check behavior of erfcx on wide"
   TTS_ULP_EQUAL(erfcx(T(5)), T(0.110704637733068626370212086492), 0.5);      //    1.5);
   TTS_ULP_EQUAL(erfcx(T(27)), T(0.0208816079904209406740944901929), 0.5);    //     4);
   TTS_ULP_EQUAL(erfcx(T(100)), T(0.00564161378298943290355645700695), 0.5);  //   36.5);
-  auto big = [](auto x){ return eve::rsqrt(eve::pi(as<T>()))/x;};
+  auto asympt = [](auto x){ return eve::rsqrt(eve::pi(as<T>()))/x;};
 
-  TTS_ULP_EQUAL(erfcx(eve::valmax(as<T>()))                   ,big(eve::valmax(as<T>())), 0.5);
-  TTS_ULP_EQUAL(erfcx(eve::prev(eve::valmax(as<T>()), 3))     ,big(eve::prev(eve::valmax(as<T>()), 3)), 0.5);
-  TTS_ULP_EQUAL(erfcx(eve::prev(eve::valmax(as<T>()), 2))     ,big(eve::prev(eve::valmax(as<T>()), 2)), 0.5);
-  TTS_ULP_EQUAL(erfcx(eve::prev(eve::valmax(as<T>()), 1))     ,big(eve::prev(eve::valmax(as<T>()), 1)), 0.5);
+  TTS_ULP_EQUAL(erfcx(eve::valmax(as<T>()))                   ,asympt(eve::valmax(as<T>())), 0.5);
+  TTS_ULP_EQUAL(erfcx(eve::prev(eve::valmax(as<T>()), 3))     ,asympt(eve::prev(eve::valmax(as<T>()), 3)), 0.5);
+  TTS_ULP_EQUAL(erfcx(eve::prev(eve::valmax(as<T>()), 2))     ,asympt(eve::prev(eve::valmax(as<T>()), 2)), 0.5);
+  TTS_ULP_EQUAL(erfcx(eve::prev(eve::valmax(as<T>()), 1))     ,asympt(eve::prev(eve::valmax(as<T>()), 1)), 0.5);
   TTS_ULP_EQUAL(erfcx(T(1.0E30)), eve::rsqrt(eve::pi(as<T>()))/T(1.0E30), 0.5);
   TTS_ULP_EQUAL(erfcx(-eve::halfeps(as<T>())), T(1.00000000000000012527525318168), 0.5);
   TTS_ULP_EQUAL(erfcx(-T(0.25))          , T(1.3586423701047221152100420169489882200138085022721), 0.5);
@@ -82,7 +82,7 @@ EVE_TEST( "Check behavior of erfcx on wide"
   TTS_ULP_EQUAL(erfcx(-T(27))            , eve::inf(as<T>()), 0);
   TTS_ULP_EQUAL(erfcx(-T(100))           , eve::inf(as<T>()), 0);
   TTS_ULP_EQUAL(erfcx(-eve::valmax(as<T>())) , eve::inf(as<T>()), 0);
-  TTS_ULP_EQUAL(erfcx(eve::valmax(as<T>())/2)     ,big(eve::valmax(as<T>())/2), 0.5);
+  TTS_ULP_EQUAL(erfcx(eve::valmax(as<T>())/2)     ,asympt(eve::valmax(as<T>())/2), 0.5);
 
   if constexpr( eve::platform::supports_invalids )
   {

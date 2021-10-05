@@ -14,7 +14,7 @@
 
 #include <tuple>
 
-TTS_CASE("eve::common_type, small integrals")
+TTS_CASE("eve::common_type, half_c integrals")
 {
   // Explanation
   TTS_TYPE_IS((std::common_type_t<std::int32_t,  std::uint32_t>), std::uint32_t);

@@ -50,7 +50,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::restricted, eve::small, eve::medium and eve::big decorators.
+  //!  * eve::quarter_circle, eve::half_circle, eve::full_circle
   //!
   //!     provide a balance between speed and range limitation.
   //!

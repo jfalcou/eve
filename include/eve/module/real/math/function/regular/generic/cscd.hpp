@@ -25,7 +25,7 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      if constexpr( std::is_same_v<D, restricted_type> )
+      if constexpr( std::is_same_v<D, quarter_circle_type> )
       {
         return rec(D()(sind)(a0));
       }
