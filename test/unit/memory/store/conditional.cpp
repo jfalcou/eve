@@ -40,12 +40,12 @@ void store_ignore_test_pass(T what, eve::element_type_t<T> garbage_value, eve::e
     TTS_EQUAL(data, what.front());
   }
 
-  // ignore doesn't write garbage values
+  // ignore doesn't write garbarge values
   {
     std::array<e_t, 2 * T::size()> data;
     const T filler{garbage_value};
 
-    auto run_one_case = [&,what](auto ptr, auto ignore)
+    auto run_one_case = [&](auto ptr, auto ignore)
     {
       eve::store(filler, ptr);
       eve::store[ignore](what, ptr);
@@ -62,18 +62,13 @@ void store_ignore_test_pass(T what, eve::element_type_t<T> garbage_value, eve::e
 
     auto run_all_ignores = [&](auto ptr)
     {
-      constexpr auto sz = std::min(T::size()/2,std::ptrdiff_t{8});
-
-      for (int i = 0; i != sz + 1; ++i)
+      for (int i = 0; i != T::size() + 1; ++i)
       {
         run_one_case(ptr, eve::ignore_first(i));
         run_one_case(ptr, eve::ignore_last(i));
-        run_one_case(ptr, eve::ignore_first(sz-1-i));
-        run_one_case(ptr, eve::ignore_last(sz-i-i));
 
-        for (int j = i; j != -1; --j)
+        for (int j = T::size() - i; j != -1; --j)
         {
-          std::cout << "cond: " << eve::ignore_extrema(i, j) << "\n";
           run_one_case(ptr, eve::ignore_extrema(i, j));
         }
       }
@@ -81,7 +76,6 @@ void store_ignore_test_pass(T what, eve::element_type_t<T> garbage_value, eve::e
 
     for (e_t* f = data.begin(); f != data.end() - T::size(); ++f)
     {
-      std::cout << "Test @" << (void*)(f) << "\n";
       run_all_ignores(f);
 
       if (!eve::is_aligned(f,eve::cardinal_t<T>{})) continue;
@@ -96,7 +90,7 @@ void store_ignore_test_pass(T what, eve::element_type_t<T> garbage_value, eve::e
 }
 
 EVE_TEST( "Check store behavior with ignore"
-        , eve::test::simd::all_types
+        , eve::test::simd::restricted::all_types
         , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
         )
 <typename T, typename L>(T data, L logical_data)
