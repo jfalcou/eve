@@ -85,37 +85,6 @@ EVE_TEST( "Check behavior of cos on wide"
     TTS_ULP_EQUAL(c2      , map(refc, a2), 2);
   }
   {
-    auto [s, c] = eve::medium(sincos)(a0);
-    TTS_ULP_EQUAL(s      , map(refs, a0), 2);
-    TTS_ULP_EQUAL(c      , map(refc, a0), 2);
-    auto [s1, c1] = eve::medium(sincos)(a1);
-    TTS_ULP_EQUAL(s1      , map(refs, a1), 2);
-    TTS_ULP_EQUAL(c1      , map(refc, a1), 2);
-    auto [s2, c2] = eve::medium(sincos)(a2);
-    TTS_ULP_EQUAL(s2      , map(refs, a2), 2);
-    TTS_ULP_EQUAL(c2      , map(refc, a2), 2);
-    auto [s3, c3] = eve::medium(sincos)(a3);
-    TTS_ULP_EQUAL(s3      , map(refs, a3), 2);
-    TTS_ULP_EQUAL(c3      , map(refc, a3), 2);
-   }
-  {
-    auto [s, c] = eve::big(sincos)(a0);
-    TTS_ULP_EQUAL(s      , map(refs, a0), 2);
-    TTS_ULP_EQUAL(c      , map(refc, a0), 2);
-    auto [s1, c1] = eve::big(sincos)(a1);
-    TTS_ULP_EQUAL(s1      , map(refs, a1), 2);
-    TTS_ULP_EQUAL(c1      , map(refc, a1), 2);
-    auto [s2, c2] = eve::big(sincos)(a2);
-    TTS_ULP_EQUAL(s2      , map(refs, a2), 2);
-    TTS_ULP_EQUAL(c2      , map(refc, a2), 2);
-    auto [s3, c3] = eve::big(sincos)(a3);
-    TTS_ULP_EQUAL(s3      , map(refs, a3), 2);
-    TTS_ULP_EQUAL(c3      , map(refc, a3), 2);
-    auto [s4, c4] = eve::big(sincos)(a4);
-    TTS_ULP_EQUAL(s4      , map(refs, a4), 2);
-    TTS_ULP_EQUAL(c4      , map(refc, a4), 2);
-  }
-  {
     auto [s, c] = sincos(a0);
     TTS_ULP_EQUAL(s      , map(refs, a0), 2);
     TTS_ULP_EQUAL(c      , map(refc, a0), 2);

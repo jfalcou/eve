@@ -73,38 +73,6 @@ EVE_TEST( "Check behavior of cos on wide"
     TTS_ULP_EQUAL(dx1     , sdx1, 2);
   }
   {
-    auto [n0, x0, dx0] = eve::medium(rempio2)(a0);
-    TTS_ULP_EQUAL(n0      , sn0, 2);
-    TTS_ULP_EQUAL(x0      , sx0, 2);
-    TTS_ULP_EQUAL(dx0     , sdx0, 2);
-    auto [n1, x1, dx1] = eve::medium(rempio2)(a1);
-    TTS_ULP_EQUAL(n1      , sn1, 2);
-    TTS_ULP_EQUAL(x1      , sx1, 2);
-    TTS_ULP_EQUAL(dx1     , sdx1, 2);
-    auto [n2, x2, dx2] = eve::medium(rempio2)(a2);
-    TTS_ULP_EQUAL(n2      , sn2, 2);
-    TTS_ULP_EQUAL(x2      , sx2, 2);
-    TTS_ULP_EQUAL(dx2     , sdx2, 2);
-  }
-  {
-    auto [n0, x0, dx0] = eve::big(rempio2)(a0);
-    TTS_ULP_EQUAL(n0      , sn0, 2);
-    TTS_ULP_EQUAL(x0      , sx0, 2);
-    TTS_ULP_EQUAL(dx0     , sdx0, 2);
-    auto [n1, x1, dx1] = eve::big(rempio2)(a1);
-    TTS_ULP_EQUAL(n1      , sn1, 2);
-    TTS_ULP_EQUAL(x1      , sx1, 2);
-    TTS_ULP_EQUAL(dx1     , sdx1, 2);
-    auto [n2, x2, dx2] = eve::big(rempio2)(a2);
-    TTS_ULP_EQUAL(n2      , sn2, 2);
-    TTS_ULP_EQUAL(x2      , sx2, 2);
-    TTS_ULP_EQUAL(dx2     , sdx2, 2);
-    auto [n3, x3, dx3] = eve::big(rempio2)(a3);
-    TTS_ULP_EQUAL(n3      , sn3, 2);
-    TTS_ULP_EQUAL(x3      , sx3, 2);
-    TTS_ULP_EQUAL(dx3     , sdx3, 2);
-  }
-  {
     auto [n0, x0, dx0] = eve::rempio2(a0);
     TTS_ULP_EQUAL(n0      , sn0, 2);
     TTS_ULP_EQUAL(x0      , sx0, 2);

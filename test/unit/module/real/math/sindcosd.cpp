@@ -70,31 +70,6 @@ EVE_TEST( "Check behavior of sindcosd on wide"
     TTS_ULP_EQUAL(c1      , map(refc, a1), 30);
   }
   {
-    auto [s, c] = eve::medium(sindcosd)(a0);
-    TTS_ULP_EQUAL(s      , map(refs, a0), 2);
-    TTS_ULP_EQUAL(c      , map(refc, a0), 2);
-    auto [s1, c1] = eve::medium(sindcosd)(a1);
-    TTS_ULP_EQUAL(s1      , map(refs, a1), 2);
-    TTS_ULP_EQUAL(c1      , map(refc, a1), 30);
-    auto [s2, c2] = eve::medium(sindcosd)(a2);
-    TTS_ULP_EQUAL(s2      , map(refs, a2), 51);
-    TTS_ULP_EQUAL(c2      , map(refc, a2), 51);
-  }
-  {
-    auto [s, c] = eve::big(sindcosd)(a0);
-    TTS_ULP_EQUAL(s      , map(refs, a0), 2);
-    TTS_ULP_EQUAL(c      , map(refc, a0), 2);
-    auto [s1, c1] = eve::big(sindcosd)(a1);
-    TTS_ULP_EQUAL(s1      , map(refs, a1), 2);
-    TTS_ULP_EQUAL(c1      , map(refc, a1), 30);
-    auto [s2, c2] = eve::big(sindcosd)(a2);
-    TTS_ULP_EQUAL(s2      , map(refs, a2), 51);
-    TTS_ULP_EQUAL(c2      , map(refc, a2), 51);
-    auto [s3, c3] = eve::big(sindcosd)(a3);
-    TTS_ULP_EQUAL(s3      , map(refs, a3), 2);
-    TTS_ULP_EQUAL(c3      , map(refc, a3), 2);
-  }
-  {
     auto [s, c] = sindcosd(a0);
     TTS_ULP_EQUAL(s      , map(refs, a0), 2);
     TTS_ULP_EQUAL(c      , map(refc, a0), 2);

@@ -60,12 +60,6 @@ EVE_TEST( "Check behavior of cscd on wide"
   TTS_ULP_EQUAL(eve::quarter_circle(cscd)(a0)      , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(cscd)(a0)           , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(cscd)(a1)           , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::medium(cscd)(a0)          , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::medium(cscd)(a1)          , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::medium(cscd)(a2)          , map(ref, a2), 300);
-  TTS_ULP_EQUAL(eve::big(cscd)(a0)             , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::big(cscd)(a1)             , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::big(cscd)(a2)             , map(ref, a2), 300);
   TTS_ULP_EQUAL(cscd(a0)                       , map(ref, a0), 2);
   TTS_ULP_EQUAL(cscd(a1)                       , map(ref, a1), 2);
   TTS_ULP_EQUAL(cscd(a2)                       , map(ref, a2), 300);

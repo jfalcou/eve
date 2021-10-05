@@ -63,13 +63,6 @@ EVE_TEST( "Check behavior of sinpi on wide"
   TTS_ULP_EQUAL(eve::quarter_circle(sinpi)(a0)      , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(sinpi)(a0)           , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(sinpi)(a1)           , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::medium(sinpi)(a0)          , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::medium(sinpi)(a1)          , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::medium(sinpi)(a2)          , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::big(sinpi)(a0)             , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::big(sinpi)(a1)             , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::big(sinpi)(a2)             , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::big(sinpi)(a3)             , map(ref, a3), 2);
   TTS_ULP_EQUAL(sinpi(a0)                       , map(ref, a0), 2);
   TTS_ULP_EQUAL(sinpi(a1)                       , map(ref, a1), 2);
   TTS_ULP_EQUAL(sinpi(a2)                       , map(ref, a2), 2);

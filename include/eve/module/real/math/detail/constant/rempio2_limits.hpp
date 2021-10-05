@@ -10,6 +10,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/trigo_tags.hpp>
+#include <eve/function/next.hpp>
 #include <eve/constant/ieee_constant.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/pio_4.hpp>
@@ -21,7 +22,7 @@
 namespace eve::detail
 {
   template <typename D, typename T>
-  EVE_FORCEINLINE auto Rempio2_limit(D const &, as<T> const &) noexcept
+  EVE_FORCEINLINE T Rempio2_limit(D const &, as<T> const &) noexcept
   {
     if constexpr(floating_value<T>)
     {
@@ -35,7 +36,7 @@ namespace eve::detail
       }
       else if constexpr(std::is_same_v<D, full_circle_type>)
       {
-        return pi(eve::as<T>());
+        return T(pi(eve::as<float>())); // this to ensure that converting from float to double will preserve belonging to the interval
       }
       else  if constexpr(std::is_same_v<D, medium_type>)
       {

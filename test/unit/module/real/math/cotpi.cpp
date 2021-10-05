@@ -64,13 +64,6 @@ EVE_TEST( "Check behavior of cotpi on wide"
   TTS_ULP_EQUAL(eve::quarter_circle(cotpi)(a0)      , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(cotpi)(a0)           , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(cotpi)(a1)           , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::medium(cotpi)(a0)          , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::medium(cotpi)(a1)          , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::medium(cotpi)(a2)          , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::big(cotpi)(a0)             , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::big(cotpi)(a1)             , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::big(cotpi)(a2)             , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::big(cotpi)(a3)             , map(ref, a3), 2);
   TTS_ULP_EQUAL(cotpi(a0)                       , map(ref, a0), 2);
   TTS_ULP_EQUAL(cotpi(a1)                       , map(ref, a1), 2);
   TTS_ULP_EQUAL(cotpi(a2)                       , map(ref, a2), 2);

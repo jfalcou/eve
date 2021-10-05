@@ -60,12 +60,6 @@ EVE_TEST( "Check behavior of sind on wide"
   TTS_ULP_EQUAL(eve::quarter_circle(sind)(a0)      , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(sind)(a0)           , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(sind)(a1)           , map(ref, a1), 30);
-  TTS_ULP_EQUAL(eve::medium(sind)(a0)          , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::medium(sind)(a1)          , map(ref, a1), 30);
-  TTS_ULP_EQUAL(eve::medium(sind)(a2)          , map(ref, a2), 1024);
-  TTS_ULP_EQUAL(eve::big(sind)(a0)             , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::big(sind)(a1)             , map(ref, a1), 30);
-  TTS_ULP_EQUAL(eve::big(sind)(a2)             , map(ref, a2), 1024);
   TTS_ULP_EQUAL(sind(a0)                       , map(ref, a0), 2);
   TTS_ULP_EQUAL(sind(a1)                       , map(ref, a1), 30);
   TTS_ULP_EQUAL(sind(a2)                       , map(ref, a2), 1024);
@@ -79,12 +73,6 @@ EVE_TEST_TYPES( "Check return types of sind"
             )
 <typename T>(eve::as<T>)
 {
-  TTS_ULP_EQUAL(eve::big(eve::sind)( T(1)    ) , T(1.745240643728351281941897851631619247225272030714e-2)  , 4.0);
-  TTS_ULP_EQUAL(eve::big(eve::sind)(-T(1)    ) , T(-1.745240643728351281941897851631619247225272030714e-2) , 4.0);
-  TTS_ULP_EQUAL(eve::big(eve::sind)( T(45.0) ) , T(0.70710678118654752440084436210484903928483593768847)   , 4.0);
-  TTS_ULP_EQUAL(eve::big(eve::sind)(-T(45.0) ) , T(-0.70710678118654752440084436210484903928483593768847)  , 4.0);
-  TTS_ULP_EQUAL(eve::big(eve::sind)( T(500.0)) , T(0.64278760968653932632264340990726343290755988420567)   , 4.0);
-  TTS_ULP_EQUAL(eve::big(eve::sind)(-T(500.0)) , T(-0.64278760968653932632264340990726343290755988420567)  , 4.0);
   TTS_ULP_EQUAL(eve::sind( T(1)    ) , T(1.745240643728351281941897851631619247225272030714e-2)  , 4.0);
   TTS_ULP_EQUAL(eve::sind(-T(1)    ) , T(-1.745240643728351281941897851631619247225272030714e-2) , 4.0);
   TTS_ULP_EQUAL(eve::sind( T(45.0) ) , T(0.70710678118654752440084436210484903928483593768847)   , 4.0);

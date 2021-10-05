@@ -65,13 +65,6 @@ EVE_TEST( "Check behavior of secpi on wide"
   TTS_ULP_EQUAL(eve::quarter_circle(secpi)(a0)      , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(secpi)(a0)           , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(secpi)(a1)           , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::medium(secpi)(a0)          , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::medium(secpi)(a1)          , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::medium(secpi)(a2)          , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::big(secpi)(a0)             , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::big(secpi)(a1)             , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::big(secpi)(a2)             , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::big(secpi)(a3)             , map(ref, a3), 2);
   TTS_ULP_EQUAL(secpi(a0)                       , map(ref, a0), 2);
   TTS_ULP_EQUAL(secpi(a1)                       , map(ref, a1), 2);
   TTS_ULP_EQUAL(secpi(a2)                       , map(ref, a2), 2);

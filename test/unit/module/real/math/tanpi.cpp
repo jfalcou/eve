@@ -65,13 +65,6 @@ EVE_TEST( "Check behavior of tanpi on wide"
   TTS_ULP_EQUAL(eve::quarter_circle(tanpi)(a0)      , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(tanpi)(a0)           , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(tanpi)(a1)           , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::medium(tanpi)(a0)          , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::medium(tanpi)(a1)          , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::medium(tanpi)(a2)          , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::big(tanpi)(a0)             , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::big(tanpi)(a1)             , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::big(tanpi)(a2)             , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::big(tanpi)(a3)             , map(ref, a3), 2);
   TTS_ULP_EQUAL(tanpi(a0)                       , map(ref, a0), 2);
   TTS_ULP_EQUAL(tanpi(a1)                       , map(ref, a1), 2);
   TTS_ULP_EQUAL(tanpi(a2)                       , map(ref, a2), 2);

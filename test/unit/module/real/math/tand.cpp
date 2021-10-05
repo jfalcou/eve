@@ -66,13 +66,6 @@ EVE_TEST( "Check behavior of tand on wide"
   TTS_ULP_EQUAL(eve::quarter_circle(tand)(a0)      , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(tand)(a0)           , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(tand)(a1)           , map(ref, a1), 50);
-  TTS_ULP_EQUAL(eve::medium(tand)(a0)          , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::medium(tand)(a1)          , map(ref, a1), 50);
-  TTS_ULP_EQUAL(eve::medium(tand)(a2)          , map(ref, a2), 1024);
-  TTS_ULP_EQUAL(eve::big(tand)(a0)             , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::big(tand)(a1)             , map(ref, a1), 50);
-  TTS_ULP_EQUAL(eve::big(tand)(a2)             , map(ref, a2), 1024);
-  TTS_ULP_EQUAL(eve::big(tand)(a3)             , map(ref, a3), 2);
   TTS_ULP_EQUAL(tand(a0)                       , map(ref, a0), 2);
   TTS_ULP_EQUAL(tand(a1)                       , map(ref, a1), 50);
   TTS_ULP_EQUAL(tand(a2)                       , map(ref, a2), 1024);
@@ -88,21 +81,7 @@ EVE_TEST_TYPES( "Check return types of tand"
 <typename T>(eve::as<T>)
 {
   using eve::tand;
-  TTS_ULP_EQUAL(eve::big(eve::tand)( T(  1)) , T(1.74550649282175857651288952197278243141015888398755e-2) , 3 );
-  TTS_ULP_EQUAL(eve::big(eve::tand)(-T(  1)) , T(-1.74550649282175857651288952197278243141015888398755e-2) , 3 );
-  TTS_ULP_EQUAL(eve::big(eve::tand)( T( 45)) , T(1)  , 3 );
-  TTS_ULP_EQUAL(eve::big(eve::tand)(-T( 45)) , T(-1) , 3 );
-  TTS_ULP_EQUAL(eve::big(eve::tand)( T(500)) , T(-0.83909963117728001176312729812318136468743428301234)   , 10 );
-  TTS_ULP_EQUAL(eve::big(eve::tand)(-T(500)) , T(0.83909963117728001176312729812318136468743428301234)    , 10 );
   auto z = eve::maxflint(eve::as<T>())*180;
-  TTS_ULP_EQUAL(eve::big(eve::tand)(z) , T(0) , 0.5);
 
-  TTS_ULP_EQUAL(eve::medium(eve::tand)( T(  1)) , T(1.74550649282175857651288952197278243141015888398755e-2) , 3 );
-  TTS_ULP_EQUAL(eve::medium(eve::tand)(-T(  1)) , T(-1.74550649282175857651288952197278243141015888398755e-2) , 3 );
-  TTS_ULP_EQUAL(eve::medium(eve::tand)( T( 45)) , T(1)  , 3 );
-  TTS_ULP_EQUAL(eve::medium(eve::tand)(-T( 45)) , T(-1) , 3 );
-  TTS_ULP_EQUAL(eve::medium(eve::tand)( T(500)) , T(-0.83909963117728001176312729812318136468743428301234)   , 10 );
-  TTS_ULP_EQUAL(eve::medium(eve::tand)(-T(500)) , T(0.83909963117728001176312729812318136468743428301234)    , 10 );
-  TTS_ULP_EQUAL(eve::medium(eve::tand)(z) , T(0) , 0.5);
 
 };

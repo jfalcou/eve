@@ -63,15 +63,6 @@ EVE_TEST( "Check behavior of sin on wide"
   TTS_ULP_EQUAL(eve::full_circle(sin)(a0)          , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::full_circle(sin)(a1)          , map(ref, a1), 2);
   TTS_ULP_EQUAL(eve::full_circle(sin)(a2)          , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::medium(sin)(a0)          , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::medium(sin)(a1)          , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::medium(sin)(a2)          , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::medium(sin)(a3)          , map(ref, a3), 2);
-  TTS_ULP_EQUAL(eve::big(sin)(a0)             , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::big(sin)(a1)             , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::big(sin)(a2)             , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::big(sin)(a3)             , map(ref, a3), 2);
-  TTS_ULP_EQUAL(eve::big(sin)(a4)             , map(ref, a4), 2);
   TTS_ULP_EQUAL(sin(a0)                       , map(ref, a0), 2);
   TTS_ULP_EQUAL(sin(a1)                       , map(ref, a1), 2);
   TTS_ULP_EQUAL(sin(a2)                       , map(ref, a2), 2);

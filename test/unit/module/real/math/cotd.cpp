@@ -65,13 +65,6 @@ EVE_TEST( "Check behavior of cotd on wide"
   TTS_ULP_EQUAL(eve::quarter_circle(cotd)(a0)      , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(cotd)(a0)           , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(cotd)(a1)           , map(ref, a1), 40);
-  TTS_ULP_EQUAL(eve::medium(cotd)(a0)          , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::medium(cotd)(a1)          , map(ref, a1), 40);
-  TTS_ULP_EQUAL(eve::medium(cotd)(a2)          , map(ref, a2), 300);
-  TTS_ULP_EQUAL(eve::big(cotd)(a0)             , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::big(cotd)(a1)             , map(ref, a1), 40);
-  TTS_ULP_EQUAL(eve::big(cotd)(a2)             , map(ref, a2), 300);
-  TTS_ULP_EQUAL(eve::big(cotd)(a3)             , map(ref, a3), 2);
   TTS_ULP_EQUAL(cotd(a0)                       , map(ref, a0), 2);
   TTS_ULP_EQUAL(cotd(a1)                       , map(ref, a1), 40);
   TTS_ULP_EQUAL(cotd(a2)                       , map(ref, a2), 300);
@@ -94,18 +87,6 @@ EVE_TEST_TYPES( "Check corner cases of cotd"
   TTS_ULP_EQUAL(cotd( T(500.0)) , T(-1.19175359259420995870530807186041933693070040770853)  , 6);
   TTS_ULP_EQUAL(cotd(-T(500.0)) , T(1.19175359259420995870530807186041933693070040770853)   , 6);
 
-  TTS_ULP_EQUAL(eve::big(cotd)( T(  1))   , T(57.289961630759424687278147537112577980217522235144)    , 6);
-  TTS_ULP_EQUAL(eve::big(cotd)(-T(  1))   , T(-57.289961630759424687278147537112577980217522235144)   , 6);
-  TTS_ULP_EQUAL(eve::big(cotd)( T( 45))   , T(1)                                                      , 6);
-  TTS_ULP_EQUAL(eve::big(cotd)(-T( 45))   , T(-1)                                                     , 6);
-  TTS_ULP_EQUAL(eve::big(cotd)( T(500.0)) , T(-1.19175359259420995870530807186041933693070040770853)  , 6);
-  TTS_ULP_EQUAL(eve::big(cotd)(-T(500.0)) , T(1.19175359259420995870530807186041933693070040770853)   , 6);
 
-  TTS_ULP_EQUAL(eve::medium(cotd)( T(  1))   , T(57.289961630759424687278147537112577980217522235144)    , 6);
-  TTS_ULP_EQUAL(eve::medium(cotd)(-T(  1))   , T(-57.289961630759424687278147537112577980217522235144)   , 6);
-  TTS_ULP_EQUAL(eve::medium(cotd)( T( 45))   , T(1)                                                      , 6);
-  TTS_ULP_EQUAL(eve::medium(cotd)(-T( 45))   , T(-1)                                                     , 6);
-  TTS_ULP_EQUAL(eve::medium(cotd)( T(500.0)) , T(-1.19175359259420995870530807186041933693070040770853)  , 6);
-  TTS_ULP_EQUAL(eve::medium(cotd)(-T(500.0)) , T(1.19175359259420995870530807186041933693070040770853)   , 6);
 
 };

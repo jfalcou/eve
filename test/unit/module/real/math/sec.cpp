@@ -58,13 +58,6 @@ EVE_TEST( "Check behavior of sec on wide"
   TTS_ULP_EQUAL(eve::quarter_circle(sec)(a0)      , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(sec)(a0)           , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(sec)(a1)           , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::medium(sec)(a0)          , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::medium(sec)(a1)          , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::medium(sec)(a2)          , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::big(sec)(a0)             , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::big(sec)(a1)             , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::big(sec)(a2)             , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::big(sec)(a3)             , map(ref, a3), 2);
   TTS_ULP_EQUAL(sec(a0)                       , map(ref, a0), 2);
   TTS_ULP_EQUAL(sec(a1)                       , map(ref, a1), 2);
   TTS_ULP_EQUAL(sec(a2)                       , map(ref, a2), 2);

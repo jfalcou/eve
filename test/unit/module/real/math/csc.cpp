@@ -59,13 +59,6 @@ EVE_TEST( "Check behavior of csc on wide"
   TTS_ULP_EQUAL(eve::quarter_circle(csc)(a0)      , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(csc)(a0)           , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(csc)(a1)           , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::medium(csc)(a0)          , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::medium(csc)(a1)          , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::medium(csc)(a2)          , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::big(csc)(a0)             , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::big(csc)(a1)             , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::big(csc)(a2)             , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::big(csc)(a3)             , map(ref, a3), 2);
   TTS_ULP_EQUAL(csc(a0)                       , map(ref, a0), 2);
   TTS_ULP_EQUAL(csc(a1)                       , map(ref, a1), 2);
   TTS_ULP_EQUAL(csc(a2)                       , map(ref, a2), 2);

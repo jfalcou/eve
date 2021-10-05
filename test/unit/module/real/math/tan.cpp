@@ -67,15 +67,6 @@ EVE_TEST( "Check behavior of tan on wide"
   TTS_ULP_EQUAL(eve::full_circle(tan)(a0)          , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::full_circle(tan)(a1)          , map(ref, a1), 2);
   TTS_ULP_EQUAL(eve::full_circle(tan)(a2)          , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::medium(tan)(a0)          , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::medium(tan)(a1)          , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::medium(tan)(a2)          , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::medium(tan)(a3)          , map(ref, a3), 2);
-  TTS_ULP_EQUAL(eve::big(tan)(a0)             , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::big(tan)(a1)             , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::big(tan)(a2)             , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::big(tan)(a3)             , map(ref, a3), 2);
-  TTS_ULP_EQUAL(eve::big(tan)(a4)             , map(ref, a4), 2);
   TTS_ULP_EQUAL(tan(a0)                       , map(ref, a0), 2);
   TTS_ULP_EQUAL(tan(a1)                       , map(ref, a1), 2);
   TTS_ULP_EQUAL(tan(a2)                       , map(ref, a2), 2);

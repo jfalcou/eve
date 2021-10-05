@@ -64,13 +64,6 @@ EVE_TEST( "Check behavior of cscpi on wide"
   TTS_ULP_EQUAL(eve::quarter_circle(cscpi)(a0)      , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(cscpi)(a0)           , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(cscpi)(a1)           , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::medium(cscpi)(a0)          , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::medium(cscpi)(a1)          , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::medium(cscpi)(a2)          , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::big(cscpi)(a0)             , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::big(cscpi)(a1)             , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::big(cscpi)(a2)             , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::big(cscpi)(a3)             , map(ref, a3), 2);
   TTS_ULP_EQUAL(cscpi(a0)                       , map(ref, a0), 2);
   TTS_ULP_EQUAL(cscpi(a1)                       , map(ref, a1), 2);
   TTS_ULP_EQUAL(cscpi(a2)                       , map(ref, a2), 2);

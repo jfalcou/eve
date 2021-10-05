@@ -31,6 +31,8 @@ int const* find_negative_number(int const* f, int const* l)
 #include <eve/algo/transform.hpp>
 #include <eve/algo/zip.hpp>
 
+#include <eve/constant/pi.hpp>
+#include <eve/function/abs.hpp>
 #include <eve/function/atan2.hpp>
 #include <eve/function/sincos.hpp>
 #include <eve/function/sqrt.hpp>
@@ -61,8 +63,8 @@ struct
     auto [r, angle_f] = p;
     auto angle_d = eve::convert(angle_f, eve::as<double>{});
 
-    // medium covers -pi tp pi range
-    auto [sin, cos] = eve::medium(eve::sincos)(angle_d);
+    // full_circle covers -pi tp pi range
+    auto [sin, cos] = eve::full_circle(eve::sincos)(angle_d);
 
     return eve::zip(r * cos, r * sin);
   }
