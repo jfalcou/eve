@@ -37,14 +37,14 @@ EVE_TEST_TYPES( "Check return types of tan"
 //==================================================================================================
 // tan  tests
 //==================================================================================================
-auto mhalf_c  = []<typename T>(eve::as<T> const & tgt){  return -eve::pio_4(tgt); };
-auto half_c   = []<typename T>(eve::as<T> const & tgt){  return  eve::pio_4(tgt); };
+auto mquarter_c  = []<typename T>(eve::as<T> const & tgt){  return -eve::pio_4(tgt); };
+auto quarter_c   = []<typename T>(eve::as<T> const & tgt){  return  eve::pio_4(tgt); };
 auto mhalf_c = []<typename T>(eve::as<T> const & tgt){  return -eve::pio_2(tgt); };
 auto half_c  = []<typename T>(eve::as<T> const & tgt){  return  eve::pio_2(tgt); };
 auto mfull_c =[]<typename T>(eve::as<T> const & tgt){  return -eve::pi(tgt);    };
 auto full_c =[]<typename T>(eve::as<T> const & tgt){  return  eve::pi(tgt);    };
-auto mmed   = []<typename T>(eve::as<T> const & tgt){  return -eve::detail::Rempio2_limit(eve::medium_type(), tgt); };
-auto med    = []<typename T>(eve::as<T> const & tgt){  return  eve::detail::Rempio2_limit(eve::medium_type(), tgt); };
+auto mmed   = []<typename T>(eve::as<T> const & tgt){  return -eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt); };
+auto med    = []<typename T>(eve::as<T> const & tgt){  return  eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt); };
 
 EVE_TEST( "Check behavior of tan on wide"
         , eve::test::simd::ieee_reals

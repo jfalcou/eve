@@ -38,12 +38,12 @@ EVE_TEST_TYPES( "Check return types of secpi"
 //==================================================================================================
 // secpi  tests
 //==================================================================================================
-auto mhalf_c  = []<typename T>(eve::as<T> const & ){  return T(-0.25); };
-auto half_c   = []<typename T>(eve::as<T> const & ){  return T( 0.25); };
+auto mquarter_c  = []<typename T>(eve::as<T> const & ){  return T(-0.25); };
+auto quarter_c   = []<typename T>(eve::as<T> const & ){  return T( 0.25); };
 auto mhalf_c = []<typename T>(eve::as<T> const & ){  return T(-0.5 ); };
 auto half_c  = []<typename T>(eve::as<T> const & ){  return T( 0.5 ); };
-auto mmed   = []<typename T>(eve::as<T> const & tgt){  return -eve::detail::Rempio2_limit(eve::medium_type(), tgt)*eve::invpi(tgt); };
-auto med    = []<typename T>(eve::as<T> const & tgt){  return  eve::detail::Rempio2_limit(eve::medium_type(), tgt)*eve::invpi(tgt); };
+auto mmed   = []<typename T>(eve::as<T> const & tgt){  return -eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt)*eve::invpi(tgt); };
+auto med    = []<typename T>(eve::as<T> const & tgt){  return  eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt)*eve::invpi(tgt); };
 
 EVE_TEST( "Check behavior of secpi on wide"
         , eve::test::simd::ieee_reals

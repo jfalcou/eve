@@ -40,8 +40,8 @@ EVE_TEST_TYPES( "Check return types of cotd"
 //==================================================================================================
 // cotd  tests
 //==================================================================================================
-auto mhalf_c  = []<typename T>(eve::as<T> const & ){  return T(-45); };
-auto half_c   = []<typename T>(eve::as<T> const & ){  return T( 45); };
+auto mquarter_c  = []<typename T>(eve::as<T> const & ){  return T(-45); };
+auto quarter_c  = []<typename T>(eve::as<T> const & ){  return T( 45); };
 auto mhalf_c = []<typename T>(eve::as<T> const & ){  return T(-90 ); };
 auto half_c  = []<typename T>(eve::as<T> const & ){  return T( 90 ); };
 auto mmed   = []<typename T>(eve::as<T> const & ){  return -5000; };

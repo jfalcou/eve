@@ -41,8 +41,8 @@ EVE_TEST_TYPES( "Check return types of tand"
 //==================================================================================================
 // tand  tests
 //==================================================================================================
-auto mhalf_c  = []<typename T>(eve::as<T> const & ){  return T(-45); };
-auto half_c   = []<typename T>(eve::as<T> const & ){  return T( 45); };
+auto mquarter_c  = []<typename T>(eve::as<T> const & ){  return T(-45); };
+auto quarter_c   = []<typename T>(eve::as<T> const & ){  return T( 45); };
 auto mhalf_c = []<typename T>(eve::as<T> const & ){  return T(-90 ); };
 auto half_c  = []<typename T>(eve::as<T> const & ){  return T( 90 ); };
 auto mmed   = []<typename T>(eve::as<T> const & ){  return -5000; };
@@ -73,15 +73,4 @@ EVE_TEST( "Check behavior of tand on wide"
   auto dinr = 1.7453292519943295769236907684886127134428718885417e-2l;
 
   TTS_ULP_EQUAL(diff(tand)(a0), map([dinr](auto e) -> v_t { return  dinr*eve::sqr(eve::secd(e)); }, a0), 2);
-};
-
-EVE_TEST_TYPES( "Check return types of tand"
-            , eve::test::simd::ieee_reals
-            )
-<typename T>(eve::as<T>)
-{
-  using eve::tand;
-  auto z = eve::maxflint(eve::as<T>())*180;
-
-
 };
