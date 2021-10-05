@@ -16,6 +16,7 @@
 #include <eve/algo/any_of.hpp>
 #include <eve/algo/container/soa_vector.hpp>
 #include <eve/algo/transform.hpp>
+#include <eve/algo/remove.hpp>
 #include <eve/product_type.hpp>
 #include <eve/eve.hpp>
 
@@ -69,10 +70,7 @@ struct update
     ++count(bounced);
 
     // Select the proper one based on position
-    return eve::if_else(  count(b) < max_bounce
-                        , eve::if_else( position(falling) <= 1e-4, bounced, falling)
-                        , b
-                        );
+    return eve::if_else( position(falling) <= 1e-4, bounced, falling);
   }
 
   float dt,g;
@@ -85,12 +83,12 @@ TTS_CASE("Run a ball simulation")
   eve::algo::soa_vector<ball> balls;
 
   // Some options from the command line ---------------------------------
-  auto gravity    = ::tts::arguments.value_or<float>(9.81f, "-g");
-  auto time       = ::tts::arguments.value_or<int>(100, "-t");
-  auto max_elast  = ::tts::arguments.value_or<float>(0.9f, "-e");
-  auto resolution = ::tts::arguments.value_or<int>(1, "-z");
-  auto max_bounce = ::tts::arguments.value_or<int>(20, "-b");
-  auto nb_balls   = ::tts::arguments.value_or<int>(200, "-s");
+  auto gravity    = ::tts::arguments.value_or<float>(9.81f, "--gravity");
+  auto time       = ::tts::arguments.value_or<int>(100, "--time_step");
+  auto max_elast  = ::tts::arguments.value_or<float>(0.9f, "--elasticity");
+  auto resolution = ::tts::arguments.value_or<int>(1, "--resolution");
+  auto max_bounce = ::tts::arguments.value_or<int>(20, "--bounce");
+  auto nb_balls   = ::tts::arguments.value_or<int>(200, "--size");
   auto render_size = 16 * resolution;
 
   // Generates the balls ---------------------------------
@@ -102,7 +100,7 @@ TTS_CASE("Run a ball simulation")
   double current_time = 0;
 
   // Run the simulation once everyone made the maximum amount of bounce ---------------------------
-  while( eve::algo::any_of(balls, [max_bounce](auto b) { return count(b) < max_bounce; } ) )
+  while( !balls.empty() )
   {
     display screen(202, render_size+2);
 
@@ -111,7 +109,7 @@ TTS_CASE("Run a ball simulation")
     for(int l=1;l<render_size+1;++l) screen.line(l,' ','|');
     screen.line(render_size+1,'=','#');
 
-    // Update
+    // Update callable
     update behavior{1.f/time, gravity,max_bounce};
 
     auto now = std::chrono::steady_clock::now();
@@ -120,10 +118,13 @@ TTS_CASE("Run a ball simulation")
 
     // Display 200 balls
     for(std::size_t i=0;i<200;i++)
-      screen.put( 'A' + count(balls.get(i))%63
-                , 1+i
-                , std::max(1, render_size - static_cast<int>(resolution*position(balls.get(i))))
-                );
+    {
+      if(i < balls.size())
+        screen.put( 'A' + count(balls.get(i))%27
+                  , 1+i
+                  , std::max(1, render_size - static_cast<int>(resolution*position(balls.get(i))))
+                  );
+    }
 
     auto duration = std::chrono::duration<double,std::nano>(then-now).count();
     times.push_back(duration);
@@ -137,12 +138,17 @@ TTS_CASE("Run a ball simulation")
       times.clear();
     }
 
-    // Render
-    screen.header() << "\x1B[2J\x1B[H> Step: " << s++
-                    << " @ " << std::setprecision(3) << nb_balls/current_time << " Gballs/s"
-                    << " => " << std::setprecision(3) << (nb_balls/current_time)*sizeof(ball)*2 << " GB/s\n";
+    // Remove ball that bounced
+    balls.erase ( eve::algo::remove_if(balls, [max_bounce](auto const& b) { return count(b) >= max_bounce; })
+                , balls.end()
+                );
 
-    std::cout << screen.render();
+    // Render
+    screen.header() << "\x1B[2J\x1B[H> Step: " << s++ << " - # of balls: " << balls.size()
+                    << " @ " << std::setprecision(3) << balls.size()/current_time << " Gballs/s"
+                    << " => " << std::setprecision(3) << (balls.size()/current_time)*sizeof(ball)*2 << " GB/s\n";
+
+    if(::tts::verbose_status) std::cout << screen.render();
   }
 
   TTS_PASS("Simulation completed");
