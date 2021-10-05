@@ -142,8 +142,9 @@ TTS_CASE("Run a ball simulation")
     }
 
     // Remove ball that bounced
-    auto it = eve::algo::remove_if(balls, [max_bounce](auto const& b) { return count(b) >= max_bounce; });
-    if(it != balls.end()) balls.erase( it );
+    balls.erase ( eve::algo::remove_if(balls, [max_bounce](auto const& b) { return count(b) >= max_bounce; })
+                , balls.end()
+                );
 
     // Render
     screen.header() << "\x1B[2J\x1B[H> Step: " << s++ << " - # of balls: " << balls.size()
