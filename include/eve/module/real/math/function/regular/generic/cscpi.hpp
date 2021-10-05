@@ -39,8 +39,6 @@ namespace eve::detail
       return apply_over(quarter_circle(cscpi), a0);
   }
 
-  /////////////////////////////////////////////////////////////////////////////////////////////////
-  // medium,  big,  small
   template<decorator D, floating_real_value T>
   EVE_FORCEINLINE constexpr auto cscpi_(EVE_SUPPORTS(cpu_), D const &, T a0) noexcept
   {

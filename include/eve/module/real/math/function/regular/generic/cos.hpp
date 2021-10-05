@@ -100,6 +100,26 @@ namespace eve::detail
       return apply_over(half_circle(cos), a0);
   }
 
+//   template<decorator D, floating_real_value T>
+//   EVE_FORCEINLINE constexpr auto cos_(EVE_SUPPORTS(cpu_), full_circle_type const &, T a0) noexcept
+//   {
+//     if constexpr( has_native_abi_v<T> )
+//     {
+//       auto x         = abs(a0);
+//       auto xnlelim   = is_not_less_equal(x, Rempio2_limit(full_circle_type(), as(a0)));
+//       if constexpr( scalar_value<T> )
+//       {
+//         if( xnlelim ) return nan(eve::as<T>());
+//       }
+//       else
+//         x = if_else(xnlelim, allbits, x);
+//       auto [fn, xr, dxr] = full_circle(rempio2)(x);
+//       return cos_finalize(fn, xr, dxr);
+//     }
+//     else
+//       return apply_over(full_circle(cos), a0);
+//   }
+
   template<decorator D, floating_real_value T>
   EVE_FORCEINLINE constexpr auto cos_(EVE_SUPPORTS(cpu_), D const &, T a0) noexcept
   requires(is_one_of<D>(types<full_circle_type, medium_type, big_type> {}))
@@ -120,6 +140,7 @@ namespace eve::detail
     else
       return apply_over(D()(cos), a0);
   }
+
 
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto cos_(EVE_SUPPORTS(cpu_), T const &a0) noexcept

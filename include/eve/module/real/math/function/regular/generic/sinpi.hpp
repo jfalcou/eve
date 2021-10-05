@@ -37,8 +37,6 @@ namespace eve::detail
       return apply_over(quarter_circle(sinpi), x);
   }
 
-  /////////////////////////////////////////////////////////////////////////////////////////////////
-  // medium,  big,  full_circle, small
   template<decorator D, floating_real_value T>
   EVE_FORCEINLINE constexpr auto sinpi_(EVE_SUPPORTS(cpu_), D const &, T a0) noexcept
   requires(is_one_of<D>(types<half_circle_type, full_circle_type, medium_type, big_type> {}))

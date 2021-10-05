@@ -37,11 +37,11 @@ namespace eve::detail
       {
         return rempio2_full_circle(xx);
       }
-      else if constexpr( std::is_same_v<D, eve::medium_type> )
+      else if constexpr( std::is_same_v<D, eve::detail::medium_type> )
       {
         return rempio2_medium(xx);
       }
-      else if constexpr( std::is_same_v<D, eve::big_type> )
+      else if constexpr( std::is_same_v<D, eve::detail::big_type> )
       {
         return rempio2_big(xx);
       }

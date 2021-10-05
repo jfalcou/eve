@@ -67,15 +67,6 @@ EVE_TEST( "Check behavior of cot on wide"
   TTS_ULP_EQUAL(eve::full_circle(cot)(a0)          , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::full_circle(cot)(a1)          , map(ref, a1), 2);
   TTS_ULP_EQUAL(eve::full_circle(cot)(a2)          , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::medium(cot)(a0)          , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::medium(cot)(a1)          , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::medium(cot)(a2)          , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::medium(cot)(a3)          , map(ref, a3), 2);
-  TTS_ULP_EQUAL(eve::big(cot)(a0)             , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::big(cot)(a1)             , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::big(cot)(a2)             , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::big(cot)(a3)             , map(ref, a3), 2);
-  TTS_ULP_EQUAL(eve::big(cot)(a4)             , map(ref, a4), 2);
   TTS_ULP_EQUAL(cot(a0)                       , map(ref, a0), 2);
   TTS_ULP_EQUAL(cot(a1)                       , map(ref, a1), 2);
   TTS_ULP_EQUAL(cot(a2)                       , map(ref, a2), 2);

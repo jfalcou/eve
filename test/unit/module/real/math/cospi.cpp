@@ -63,13 +63,6 @@ EVE_TEST( "Check behavior of cospi on wide"
   TTS_ULP_EQUAL(eve::quarter_circle(cospi)(a0)      , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(cospi)(a0)           , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(cospi)(a1)           , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::medium(cospi)(a0)          , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::medium(cospi)(a1)          , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::medium(cospi)(a2)          , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::big(cospi)(a0)             , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::big(cospi)(a1)             , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::big(cospi)(a2)             , map(ref, a2), 2);
-  TTS_ULP_EQUAL(eve::big(cospi)(a3)             , map(ref, a3), 2);
   TTS_ULP_EQUAL(cospi(a0)                       , map(ref, a0), 2);
   TTS_ULP_EQUAL(cospi(a1)                       , map(ref, a1), 2);
   TTS_ULP_EQUAL(cospi(a2)                       , map(ref, a2), 2);

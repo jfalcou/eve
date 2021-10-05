@@ -44,7 +44,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::quarter_circle, eve::small, eve::medium, eve::big
+  //!  * eve::quarter_circle, eve::half_circle, eve::full_circle, 
   //!
   //!     provide a balance between speed and range limitation.
   //!
