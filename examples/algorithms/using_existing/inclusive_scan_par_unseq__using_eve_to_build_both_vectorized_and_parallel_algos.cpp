@@ -309,6 +309,7 @@ TTS_CASE("inclusive_scan")
             T{3});
 }
 
+#if !defined(EVE_HW_POWERPC) // calling std::async crashes in our quemu run.
 TTS_CASE("inclusive_scan_par_unseq")
 {
   {
@@ -325,3 +326,4 @@ TTS_CASE("inclusive_scan_par_unseq")
     TTS_EQUAL(expected, v);
   }
 }
+#endif
