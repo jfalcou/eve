@@ -99,11 +99,11 @@ namespace eve::detail
       }
       else if constexpr( is_aggregated_v<abi_u> )
       {
-        that = storage_t{v.storage().value & bit_cast(w.storage(),as<u_t>())};
+        that.value = v.storage().value & bit_cast(w.storage(),as<u_t>());
       }
       else
       {
-        that = storage_t{v.storage().value & w.storage().value};
+        that.value = v.storage().value & w.storage().value;
       }
 
       return logical<wide<T, N>>(that);
@@ -155,11 +155,11 @@ namespace eve::detail
       }
       else if constexpr( is_aggregated_v<abi_u> )
       {
-        that = storage_t{v.storage().value | bit_cast(w.storage(),as<u_t>())};
+        that.value = v.storage().value | bit_cast(w.storage(),as<u_t>());
       }
       else
       {
-        that = storage_t{v.storage().value | w.storage().value};
+        that.value = v.storage().value | w.storage().value;
       }
 
       return logical<wide<T, N>>(that);
