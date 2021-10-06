@@ -110,7 +110,7 @@ namespace eve::detail
     }
     else
     {
-      if constexpr( !is_aggregated_v<abi_t> && !is_aggregated_v<abi_u> )
+      if constexpr( !is_aggregated_v<abi_t> && !is_aggregated_v<abi_u> && (sizeof(T) == sizeof(U)) )
       {
         return bit_cast ( v.bits() & w.bits(), as(v) );
       }
@@ -166,7 +166,7 @@ namespace eve::detail
     }
     else
     {
-      if constexpr( !is_aggregated_v<abi_t> || !is_aggregated_v<abi_u> )
+      if constexpr( !is_aggregated_v<abi_t> && !is_aggregated_v<abi_u>  && (sizeof(T) == sizeof(U)))
       {
         return bit_cast ( v.bits() | w.bits(), as(v) );
       }
