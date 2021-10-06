@@ -15,7 +15,7 @@
 //== Types tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of eve::logical_or(simd)"
-              , eve::test::simd::restricted::all_types
+              , eve::test::simd::all_types
               )
 <typename T>(eve::as<T>)
 {
@@ -36,7 +36,7 @@ EVE_TEST_TYPES( "Check return types of eve::logical_or(simd)"
 //== Tests for eve::logical_or
 //==================================================================================================
 EVE_TEST( "Check behavior of eve::logical_or(simd)"
-        , eve::test::simd::restricted::all_types
+        , eve::test::simd::all_types
         , eve::test::generate (eve::test::logicals(0, 3)
                               , eve::test::logicals(1, 2)
                               , eve::test::randoms(0, 2))

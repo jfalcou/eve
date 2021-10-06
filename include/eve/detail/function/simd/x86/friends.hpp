@@ -22,7 +22,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto self_logand( sse2_ const&
                                   , logical<wide<T,N>> v, logical<wide<U,N>> w
                                   ) noexcept
-      requires x86_abi<abi_t<T, N>>
+  requires( x86_abi<abi_t<T, N>> && x86_abi<abi_t<U, N>> )
   {
     if constexpr( !use_is_wide_logical<abi_t<T, N>>::value )
     {
@@ -42,7 +42,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto self_logor ( sse2_ const&
                                   , logical<wide<T,N>> v, logical<wide<U,N>> w
                                   ) noexcept
-      requires x86_abi<abi_t<T, N>>
+  requires( x86_abi<abi_t<T, N>> && x86_abi<abi_t<U, N>> )
   {
     if constexpr( !use_is_wide_logical<abi_t<T, N>>::value )
     {
