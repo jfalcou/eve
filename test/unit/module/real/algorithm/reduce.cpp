@@ -8,6 +8,7 @@
 #include "test.hpp"
 #include <eve/function/reduce.hpp>
 #include <eve/function/plus.hpp>
+#include <eve/function/add.hpp>
 
 //==================================================================================================
 // Types tests
@@ -16,7 +17,9 @@ EVE_TEST_TYPES( "Check return types of eve::reduce(wide)", eve::test::simd::all_
 <typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
+  TTS_EXPR_IS( (eve::reduce(T{})                       ) , v_t  );
   TTS_EXPR_IS( (eve::reduce(T{}, eve::plus)            ) , v_t  );
+  TTS_EXPR_IS( (eve::splat(eve::reduce)(T{})           ) , T    );
   TTS_EXPR_IS( (eve::splat(eve::reduce)(T{}, eve::plus)) , T    );
 };
 
@@ -32,8 +35,13 @@ EVE_TEST( "Check behavior of eve::reduce(eve::wide)"
   using v_t = eve::element_type_t<T>;
   auto ref = (a0.size()*(a0.size()+1))/2;
 
-  TTS_EQUAL(eve::reduce(a0, [](auto a, auto b) { return a+b; })            , v_t(ref) );
-  TTS_EQUAL(eve::splat(eve::reduce)(a0, [](auto a, auto b) { return a+b; }), T(ref)   );
+  TTS_EQUAL(eve::reduce(a0, [](auto a, auto b) { return a+b; }) , v_t(ref) );
+  TTS_EQUAL(eve::reduce(a0, eve::add)                           , v_t(ref) );
+  TTS_EQUAL(eve::reduce(a0)                                     , v_t(ref) );
+
+  TTS_EQUAL(eve::splat(eve::reduce)(a0, [](auto a, auto b) { return a+b; }), T(ref) );
+  TTS_EQUAL(eve::splat(eve::reduce)(a0, eve::add)                          , T(ref) );
+  TTS_EQUAL(eve::splat(eve::reduce)(a0 )                                   , T(ref) );
 };
 
 //==================================================================================================
@@ -47,4 +55,5 @@ EVE_TEST( "Check behavior of eve::reduce(eve::wide)"
 {
   TTS_EQUAL(eve::reduce(a0, eve::logical_and), eve::all(a0) );
   TTS_EQUAL(eve::reduce(a0, eve::logical_or ), eve::any(a0) );
+  TTS_EQUAL(eve::reduce(a0, eve::add)        , eve::any(a0) );
 };
