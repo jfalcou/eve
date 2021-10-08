@@ -26,11 +26,7 @@ namespace eve
 #include <eve/detail/function/simd/common/sum.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-//#  include <eve/detail/function/simd/x86/sum.hpp>
-#endif
-
-#if defined(EVE_INCLUDE_POWERPC_HEADER)
-//#  include <eve/detail/function/simd/ppc/sum.hpp>
+#  include <eve/detail/function/simd/x86/sum.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
