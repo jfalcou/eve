@@ -18,8 +18,11 @@ namespace eve::detail
   {
     constexpr auto c = categorize<wide<T, N>>();
 
-    // We don't use AVX512 compound intrinsic _mm512_reduce_* as it generates worse code than us
+    // Most of those implementations derives from:
+    // https://stackoverflow.com/questions/6996764/fastest-way-to-do-horizontal-sse-vector-sum-or-other-reduction
 
+    // We don't use AVX512 compound intrinsic _mm512_reduce_* as it generates worse code than us
+    // https://stackoverflow.com/questions/60108658/fastest-method-to-calculate-sum-of-all-packed-32-bit-integers-using-avx512-or-av
     if constexpr( N::value == 1  )
     {
       return v.get(0);
@@ -87,14 +90,14 @@ namespace eve::detail
       {
         wide<T,N> s = _mm256_add_epi32(v, _mm256_srli_si256(v , 8));
                   s = _mm256_add_epi32(s, _mm256_srli_si256(s , 4));
-        return    s.get(0) + s.get(1);
+        return    s.get(0) + s.get(4);
       }
       else  if constexpr( c == category::int16x16|| c == category::uint16x16 )
       {
         wide<T,N> s = _mm256_hadd_epi16(v, v);
                   s = _mm256_hadd_epi16(s, s);
                   s = _mm256_hadd_epi16(s, s);
-        return    s.get(0) + s.get(15);
+        return    s.get(0) + s.get(8);
       }
       else  if constexpr( c == category::int8x32 || c == category::uint8x32  )
       {

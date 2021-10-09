@@ -49,10 +49,9 @@ namespace eve::detail
       }
       else
       {
-        auto [l,h] = v.slice();
-        wide<T, typename N::split_type> s = arm_sum_impl(l,h);
-                                        s = splat(eve::detail::sum)(s);
-        return wide<T,N>{s,s};
+        auto [l, h] = v.slice();
+        l = splat(sum)(l+h);
+        return wide<T,N>{l, l};
       }
     }
   }
