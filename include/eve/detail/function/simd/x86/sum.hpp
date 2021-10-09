@@ -37,6 +37,13 @@ namespace eve::detail
     }
     else  if constexpr( c == category::float32x4  )
     {
+      // Clean up garbage if needed
+      if constexpr(N::value == 2) v = bit_cast( slide_right ( bit_cast(v,as<wide<T,fixed<4>>>())
+                                                            , index<2>
+                                                            )
+                                              , as(v)
+                                              );
+
       if constexpr( current_api >= sse3 )
       {
         // movehdup is faster than shuffle in SSE3
@@ -54,6 +61,13 @@ namespace eve::detail
     }
     else  if constexpr( c == category::int32x4 || c == category::uint32x4 )
     {
+      // Clean up garbage if needed
+      if constexpr(N::value == 2) v = bit_cast( slide_right ( bit_cast(v,as<wide<T,fixed<4>>>())
+                                                            , index<2>
+                                                            )
+                                              , as(v)
+                                              );
+
       constexpr auto shuf =  _MM_SHUFFLE(1, 0, 3, 2);
       __m128i sum64;
 
@@ -65,11 +79,21 @@ namespace eve::detail
     }
     else  if constexpr( c == category::uint8x16 || c == category::int8x16 )
     {
+      // Clean up garbage if needed
+      if constexpr(N::value < 16)
+      {
+        v = bit_cast( slide_right ( bit_cast(v,as<wide<T,fixed<16>>>())
+                                  , index<16-N::value>
+                                  )
+                    , as(v)
+                    );
+      }
+
       // https://stackoverflow.com/questions/36998538/fastest-way-to-horizontally-sum-sse-unsigned-byte-vector
       __m128i vsum = _mm_sad_epu8(v, _mm_setzero_si128());
       auto r = _mm_cvtsi128_si32(vsum);
 
-      if constexpr(N::value == 16) r += _mm_extract_epi16(vsum, 4);
+      r += _mm_extract_epi16(vsum, 4);
       return r;
     }
     // AVX/AVX2 -----------------------------------------------------------------------------------
