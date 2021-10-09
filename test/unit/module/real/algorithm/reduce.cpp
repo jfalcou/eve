@@ -26,22 +26,25 @@ EVE_TEST_TYPES( "Check return types of eve::reduce(wide)", eve::test::simd::all_
 //==================================================================================================
 // Arithmetic tests
 //==================================================================================================
-EVE_TEST( "Check behavior of eve::reduce(eve::wide)"
-        , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::ramp(1) )
-        )
-<typename T>(T const& a0)
+EVE_TEST_TYPES( "Check behavior of eve::reduce(eve::wide)"
+              , eve::test::simd::all_types
+              )
+<typename T>(eve::as<T>)
 {
-  using v_t = eve::element_type_t<T>;
-  auto ref = (a0.size()*(a0.size()+1))/2;
+  T data = [](auto i, auto c) { return i<c/2 ? 2*(i+1) : 2*(i+1)+1; };
 
-  TTS_EQUAL(eve::reduce(a0, [](auto a, auto b) { return a+b; }) , v_t(ref) );
-  TTS_EQUAL(eve::reduce(a0, eve::add)                           , v_t(ref) );
-  TTS_EQUAL(eve::reduce(a0)                                     , v_t(ref) );
+  typename T::value_type ref = 0;
+  for(std::ptrdiff_t i=0;i<T::size();++i) ref += data.get(i);
 
-  TTS_EQUAL(eve::splat(eve::reduce)(a0, [](auto a, auto b) { return a+b; }), T(ref) );
-  TTS_EQUAL(eve::splat(eve::reduce)(a0, eve::add)                          , T(ref) );
-  TTS_EQUAL(eve::splat(eve::reduce)(a0 )                                   , T(ref) );
+  TTS_EQUAL(eve::reduce(data, [](auto a, auto b) { return a+b; }) , ref);
+  TTS_EQUAL(eve::reduce(data, eve::plus)                          , ref);
+  TTS_EQUAL(eve::reduce(data, eve::add)                           , ref);
+  TTS_EQUAL(eve::reduce(data)                                     , ref);
+
+  TTS_EQUAL(eve::splat(eve::reduce)(data, [](auto a, auto b) { return a+b; }) , T(ref));
+  TTS_EQUAL(eve::splat(eve::reduce)(data, eve::plus)                          , T(ref));
+  TTS_EQUAL(eve::splat(eve::reduce)(data, eve::add)                           , T(ref));
+  TTS_EQUAL(eve::splat(eve::reduce)(data)                                     , T(ref));
 };
 
 //==================================================================================================
