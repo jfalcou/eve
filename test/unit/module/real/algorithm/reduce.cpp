@@ -58,5 +58,4 @@ EVE_TEST( "Check behavior of eve::reduce(eve::wide)"
 {
   TTS_EQUAL(eve::reduce(a0, eve::logical_and), eve::all(a0) );
   TTS_EQUAL(eve::reduce(a0, eve::logical_or ), eve::any(a0) );
-  TTS_EQUAL(eve::reduce(a0, eve::add)        , eve::any(a0) );
 };

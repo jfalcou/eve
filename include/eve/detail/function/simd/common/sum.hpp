@@ -34,14 +34,6 @@ namespace eve::detail
     else return butterfly_reduction(v, eve::add);
   }
 
-  template<simd_value T>
-  EVE_FORCEINLINE auto sum_ ( EVE_SUPPORTS(cpu_)
-                            , splat_type const&, logical<T> const &v
-                            ) noexcept
-  {
-    return logical<T>(eve::any(v));
-  }
-
   template<real_scalar_value T>
   EVE_FORCEINLINE auto sum_(EVE_SUPPORTS(cpu_), T const &v) noexcept
   {
@@ -67,12 +59,6 @@ namespace eve::detail
       return  sum( l+h );
     }
     else return butterfly_reduction(v, eve::add).get(0);
-  }
-
-  template<simd_value T>
-  EVE_FORCEINLINE auto sum_(EVE_SUPPORTS(cpu_), logical<T> const &v) noexcept
-  {
-    return eve::any(v);
   }
 
   // -----------------------------------------------------------------------------------------------
