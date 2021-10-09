@@ -30,16 +30,13 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T,N> sum_( EVE_SUPPORTS(neon128_), splat_type const&, wide<T,N> v) noexcept
   requires arm_abi<abi_t<T, N>>
   {
-    if constexpr( std::same_as<abi_t<T,N>, arm_64_> )
+         if constexpr(N::value == 1)  return v;
+    else if constexpr( std::same_as<abi_t<T,N>, arm_64_> )
     {
-      if constexpr(N::value == 1)  return v;
-      else
-      {
-        if constexpr(sizeof(T) <= 4)  v = arm_sum_impl(v);
-        if constexpr(sizeof(T) <= 2)  v = arm_sum_impl(v);
-        if constexpr(sizeof(T) <= 1)  v = arm_sum_impl(v);
-        return v;
-      }
+      if constexpr(sizeof(T) <= 4)  v = arm_sum_impl(v);
+      if constexpr(sizeof(T) <= 2)  v = arm_sum_impl(v);
+      if constexpr(sizeof(T) <= 1)  v = arm_sum_impl(v);
+      return v;
     }
     else
     {
@@ -61,17 +58,15 @@ namespace eve::detail
   EVE_FORCEINLINE T sum_( EVE_SUPPORTS(neon128_), wide<T,N> v) noexcept
   requires arm_abi<abi_t<T, N>>
   {
-    if constexpr(current_api >= asimd)
+          if constexpr(N::value == 1)  return v.get(0);
+    else  if constexpr(current_api >= asimd)
     {
         constexpr auto c = categorize<wide<T, N>>();
 
-              if constexpr( c== category::float64x1 ) return v.get(0);
               if constexpr( c== category::float64x2 ) return vaddvq_f64(v);
         else  if constexpr( c== category::float32x2 ) return vaddv_f32(v);
         else  if constexpr( c== category::float32x4 ) return vaddvq_f32(v);
-        else  if constexpr( c== category::uint64x1  ) return v.get(0);
         else  if constexpr( c== category::uint64x2  ) return vaddvq_u64(v);
-        else  if constexpr( c== category::int64x1   ) return v.get(0);
         else  if constexpr( c== category::int64x2   ) return vaddvq_s64(v);
         else  if constexpr( c== category::uint32x2  ) return vaddv_u32(v);
         else  if constexpr( c== category::uint32x4  ) return vaddvq_u32(v);
