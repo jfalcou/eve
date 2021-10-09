@@ -65,10 +65,14 @@ namespace eve::detail
     {
         constexpr auto c = categorize<wide<T, N>>();
 
-              if constexpr( c== category::float64x1 ) return vaddv_f64(v);
+              if constexpr( c== category::float64x1 ) return v.get(0);
               if constexpr( c== category::float64x2 ) return vaddvq_f64(v);
         else  if constexpr( c== category::float32x2 ) return vaddv_f32(v);
         else  if constexpr( c== category::float32x4 ) return vaddvq_f32(v);
+        else  if constexpr( c== category::uint64x1  ) return v.get(0);
+        else  if constexpr( c== category::uint64x2  ) return vaddvq_u64(v);
+        else  if constexpr( c== category::int64x1   ) return v.get(0);
+        else  if constexpr( c== category::int64x2   ) return vaddvq_s64(v);
         else  if constexpr( c== category::uint32x2  ) return vaddv_u32(v);
         else  if constexpr( c== category::uint32x4  ) return vaddvq_u32(v);
         else  if constexpr( c== category::int32x2   ) return vaddv_s32(v);
