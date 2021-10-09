@@ -13,6 +13,23 @@
 namespace eve::detail
 {
   template<typename T, typename N>
+  EVE_FORCEINLINE wide<T,N> arm_cleanup(wide<T,N> v) noexcept
+  {
+    // Clean up potential garbage
+    using ec_t = expected_cardinal_t<T,arm_64_>;
+    if constexpr(N::value < ec_t::value)
+    {
+      v = bit_cast( slide_right ( bit_cast(v,as<wide<T,ec_t>>())
+                                , index<ec_t::value - N::value>
+                                )
+                  , as(v)
+                  );
+    }
+
+    return v;
+  }
+
+  template<typename T, typename N>
   EVE_FORCEINLINE wide<T,N> arm_sum_impl(wide<T,N> v) noexcept
   {
     constexpr auto c = categorize<wide<T, N>>();
@@ -39,6 +56,7 @@ namespace eve::detail
     {
       if constexpr( std::same_as<abi_t<T,N>, arm_64_> )
       {
+        v = arm_cleanup(v);
         if constexpr(sizeof(T) <= 4)  v = arm_sum_impl(v);
         if constexpr(sizeof(T) <= 2)  v = arm_sum_impl(v);
         if constexpr(sizeof(T) <= 1)  v = arm_sum_impl(v);
@@ -66,17 +84,7 @@ namespace eve::detail
     {
       if constexpr(current_api >= asimd)
       {
-        // Clean up potential garbage
-        using ec_t = expected_cardinal_t<T,arm_64_>;
-        if constexpr(N::value < ec_t::value)
-        {
-          v = bit_cast( slide_right ( bit_cast(v,as<wide<T,ec_t>>())
-                                    , index<ec_t::value - N::value>
-                                    )
-                      , as(v)
-                      );
-        }
-
+        v = arm_cleanup(v);
         constexpr auto c = categorize<wide<T, N>>();
 
               if constexpr( c== category::float64x2 ) return vaddvq_f64(v);
@@ -96,7 +104,7 @@ namespace eve::detail
         else  if constexpr( c== category::uint8x16  ) return vaddvq_u8(v);
         else  if constexpr( c== category::int8x8    ) return vaddv_s8(v);
         else  if constexpr( c== category::int8x16   ) return vaddvq_s8(v);
-    }
+      }
       else
       {
               if constexpr( std::same_as<abi_t<T,N>, arm_64_> ) return splat(sum)(v).get(0);
