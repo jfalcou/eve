@@ -18,16 +18,16 @@ namespace eve::detail
   {
     constexpr auto c = categorize<wide<T, N>>();
 
-    // Most of those implementations derives from:
-    // https://stackoverflow.com/questions/6996764/fastest-way-to-do-horizontal-sse-vector-sum-or-other-reduction
-
     // We don't use AVX512 compound intrinsic _mm512_reduce_* as it generates worse code than us
     // https://stackoverflow.com/questions/60108658/fastest-method-to-calculate-sum-of-all-packed-32-bit-integers-using-avx512-or-av
+
     if constexpr( N::value == 1  )
     {
       return v.get(0);
     }
     // SSEx   ------------------------------------------------------------------------------------
+    // Most of those implementations derives from:
+    // https://stackoverflow.com/questions/6996764/fastest-way-to-do-horizontal-sse-vector-sum-or-other-reduction
     else if constexpr( c == category::float64x2  )
     {
       // Limit pressure on the shuffle port by using store port
@@ -55,63 +55,29 @@ namespace eve::detail
     else  if constexpr( c == category::int32x4 || c == category::uint32x4 )
     {
       constexpr auto shuf =  _MM_SHUFFLE(1, 0, 3, 2);
-      __m128i sum64 = _mm_add_epi32(v    , _mm_shuffle_epi32  (v    , shuf));
+      __m128i sum64;
+
+      if constexpr(current_api >= avx)  sum64 = _mm_add_epi32(v, _mm_unpackhi_epi64(v,v));
+      else                              sum64 = _mm_add_epi32(v, _mm_shuffle_epi32(v,shuf));
+
       __m128i sum32 = _mm_add_epi32(sum64, _mm_shufflelo_epi16(sum64, shuf));
       return _mm_cvtsi128_si32(sum32);
     }
-    else  if constexpr( c == category::int16x8 || c == category::uint16x8 )
+    else  if constexpr( c == category::uint8x16 || c == category::int8x16 )
     {
-      // no int16 shuffle, so we optimize using other ways
-      __m128i r = _mm_set1_epi32(0);
-              r = _mm_add_epi32(r, _mm_madd_epi16(v, _mm_set1_epi16(1)));
-              r = _mm_add_epi32(r, _mm_srli_si128(r, 8));
-              r = _mm_add_epi32(r, _mm_srli_si128(r, 4));
+      // https://stackoverflow.com/questions/36998538/fastest-way-to-horizontally-sum-sse-unsigned-byte-vector
+      __m128i vsum = _mm_sad_epu8(v, _mm_setzero_si128());
+      auto r = _mm_cvtsi128_si32(vsum);
 
-      return T(_mm_cvtsi128_si32(r));
+      if constexpr(N::value == 16) r += _mm_extract_epi16(vsum, 4);
+      return r;
     }
-    else  if constexpr( c == category::int8x16 || c == category::uint8x16 )
+    // AVX/AVX2 -----------------------------------------------------------------------------------
+    else if constexpr( current_api >= avx )
     {
-      // no int8 shuffle, so we optimize using other ways
-      __m128i o = _mm_set1_epi16(1);
-      __m128i z = _mm_set1_epi8(0);
-
-      __m128i r = _mm_set1_epi32(0);
-              r = _mm_add_epi32(r, _mm_madd_epi16(_mm_unpacklo_epi8(v, z), o));
-              r = _mm_add_epi32(r, _mm_madd_epi16(_mm_unpackhi_epi8(v, z), o));
-              r = _mm_add_epi32(r, _mm_srli_si128(r, 8));
-              r = _mm_add_epi32(r, _mm_srli_si128(r, 4));
-
-      return T(_mm_cvtsi128_si32(r));
-    }
-    // AVX2 -----------------------------------------------------------------------------------
-    else if constexpr( current_api >= avx2 )
-    {
-      if constexpr( c == category::int32x8 || c == category::uint32x8  )
-      {
-        wide<T,N> s = _mm256_add_epi32(v, _mm256_srli_si256(v , 8));
-                  s = _mm256_add_epi32(s, _mm256_srli_si256(s , 4));
-        return    s.get(0) + s.get(4);
-      }
-      else  if constexpr( c == category::int16x16|| c == category::uint16x16 )
-      {
-        wide<T,N> s = _mm256_hadd_epi16(v, v);
-                  s = _mm256_hadd_epi16(s, s);
-                  s = _mm256_hadd_epi16(s, s);
-        return    s.get(0) + s.get(8);
-      }
-      else  if constexpr( c == category::int8x32 || c == category::uint8x32  )
-      {
-        __m256i z = _mm256_set1_epi8(0);
-        wide<upgrade_t<T>,typename N::split_type> s = _mm256_add_epi16( _mm256_unpacklo_epi8(v, z)
-                                                                      , _mm256_unpackhi_epi8(v, z)
-                                                                      );
-        return static_cast<T>(sum(s));
-      }
-      else
-      {
-        auto[l,h] = v.slice();
-        return sum(l+h);
-      }
+      // Always better or similar than other approach
+      auto[l,h] = v.slice();
+      return sum(l+h);
     }
     // else other types use common cases
     else

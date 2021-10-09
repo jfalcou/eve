@@ -31,7 +31,7 @@ EVE_TEST_TYPES( "Check behavior of eve::reduce(eve::wide)"
               )
 <typename T>(eve::as<T>)
 {
-  T data = [](auto i, auto c) { return i<c/2 ? 2*(i+1) : 2*(i+1)+1; };
+  T data = [](auto i, auto c) { return i<c/2 ? 10*(i+1) : -(10*(i+1)+1); };
 
   typename T::value_type ref = 0;
   for(std::ptrdiff_t i=0;i<T::size();++i) ref += data.get(i);
