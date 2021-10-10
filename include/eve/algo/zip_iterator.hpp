@@ -9,6 +9,7 @@
 
 #include <eve/algo/as_range.hpp>
 #include <eve/algo/concepts/types_to_consider.hpp>
+#include <eve/algo/concepts/iterator_cardinal.hpp>
 #include <eve/algo/iterator_helpers.hpp>
 #include <eve/algo/preprocess_range.hpp>
 
@@ -170,10 +171,9 @@ namespace eve::algo
   struct zip_iterator<I, Is...> : detail::zip_iterator_common<I, Is...>
   {
     using base = detail::zip_iterator_common<I, Is...>;
-    using cardinal = typename I::cardinal;
-    using wide_value_type = eve::wide<typename base::value_type, cardinal>;
+    using wide_value_type = eve::wide<typename base::value_type, iterator_cardinal_t<I>>;
 
-    static_assert((std::same_as<cardinal, typename Is::cardinal> && ...));
+    static_assert((std::same_as<iterator_cardinal_t<I>, iterator_cardinal_t<Is>> && ...));
 
     using base::base;
 
@@ -199,6 +199,8 @@ namespace eve::algo
         return res;
       }
     }
+
+    static iterator_cardinal_t<I> iterator_cardinal() { return{}; }
 
     template <typename _Cardinal>
     EVE_FORCEINLINE auto cardinal_cast(_Cardinal N) const
@@ -231,7 +233,7 @@ namespace eve::algo
     template <relative_conditional_expr C, decorator Decorator, typename U>
     EVE_FORCEINLINE friend auto tagged_dispatch( eve::tag::compress_store_,
       C c, Decorator d, wide_value_type v,
-      eve::logical<eve::wide<U, cardinal>> m,
+      eve::logical<eve::wide<U, iterator_cardinal_t<I>>> m,
       zip_iterator self)
     {
       auto raw_res = d(eve::compress_store[c])(v, m, self.storage);

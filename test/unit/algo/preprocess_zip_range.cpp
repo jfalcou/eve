@@ -180,7 +180,7 @@ TTS_CASE("preprocess zip range, traits")
     auto zipped = eve::algo::zip(c, i);
     auto processed = eve::algo::preprocess_range(tr, zipped);
     TTS_TYPE_IS(decltype(processed.traits()), decltype(tr));
-    TTS_TYPE_IS(decltype(processed.begin())::cardinal, eve::fixed<2>);
+    TTS_TYPE_IS(eve::algo::iterator_cardinal_t<decltype(processed.begin())>, eve::fixed<2>);
   }
 
   // divisible by cardinal

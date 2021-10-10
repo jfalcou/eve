@@ -15,22 +15,12 @@
 #include <eve/function/load.hpp>
 #include <eve/function/compress_store.hpp>
 
+#include <eve/algo/concepts/detail.hpp>
+#include <eve/algo/concepts/iterator_cardinal.hpp>
 #include <eve/algo/unalign.hpp>
 
 namespace eve::algo
 {
-  namespace detail
-  {
-    template <typename>
-    struct is_fixed  : std::false_type {};
-
-    template <std::ptrdiff_t N>
-    struct is_fixed<eve::fixed<N>> : std::true_type {};
-
-    template <typename T>
-    concept is_fixed_v = is_fixed<T>::value;
-  }
-
   template <typename T>
   using partially_aligned_t = decltype(std::declval<T>().previous_partially_aligned());
 
@@ -51,7 +41,7 @@ namespace eve::algo
 
    template <typename I>
   concept iterator =
-    detail::is_fixed_v<typename I::cardinal> &&
+    detail::is_fixed_v<iterator_cardinal_t<I>> &&
     std::regular<I> &&
     std::totally_ordered<I> &&
     std::totally_ordered_with<I, unaligned_t<I>> &&

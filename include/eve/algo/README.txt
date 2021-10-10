@@ -46,8 +46,8 @@ The basic concept for writing algorithms against.
 
 The minimum requirements are:
 * `eve::load` or `eve::store` are defined (returned types are not restricted).
-* `I::cardinal` is defined and is eve::fixed.
-* `I += n`  // `n` is `std::ptrdiff_t` is divisible by `I::cardinal{}()`
+* `iterator_cardinal<I>` is defined and returns `eve::fixed`.
+* `I += n`  // `n` is `std::ptrdiff_t` is divisible by `iterator_cardinal_v<I>`
 * `I - I` - returns the distance between two iterators (in elements).
 * I is totally ordered
 * `I.unaligned()` - returns an `unaligned_iterator` pointing to the same place.
@@ -69,7 +69,7 @@ I and partially_aligned_t<I> are the same.
 
 The main model is `aligned_ptr_iterator`, `zip_iterator<aligned_ptr_iterator, unaligned_ptr_iterator>`
 
-Loading/Storign is more efficient than doing the same from `unaligned`. We can only step in `I::cardinal{}()` divisible steps.
+Loading/Storing is more efficient than doing the same from `unaligned`. We can only step in `iterator_cardinal_v<I>` divisible steps.
 
 ### unaligned_iterator(concept)
 

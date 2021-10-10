@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/algo/concepts/detail.hpp>
+#include <eve/algo/concepts/iterator_cardinal.hpp>
 
 #include <eve/traits.hpp>
 
@@ -15,6 +16,17 @@
 
 namespace eve::algo
 {
+  //================================================================================================
+  //! @addtogroup eve.algo.concepts
+  //! @{
+  //!  @struct value_type
+  //!  @brief for an instance of `eve::algo::relaxed_iterator`, `eve::algo::relaxed_range`
+  //!         compute the value_type.
+  //!
+  //!   **Required header:** `#include <eve/algo/concepts.hpp>`
+  //! @}
+  //================================================================================================
+
   namespace detail
   {
     template <typename T>
@@ -34,4 +46,23 @@ namespace eve::algo
 
   template <typename T>
   using value_type_t = typename value_type<T>::type;
+
+  //================================================================================================
+  //! @addtogroup eve.algo.concepts
+  //! @{
+  //!  @struct wide_value_type
+  //!  @brief for an instance of `eve::algo::iterator` a shortcut: wide<value_type_t<I>, iterator_cardinal_t<I>>
+  //!
+  //!   **Required header:** `#include <eve/algo/concepts.hpp>`
+  //! @}
+  //================================================================================================
+
+  template <typename I>
+  struct wide_value_type
+  {
+    using type = eve::wide<value_type_t<I>, iterator_cardinal_t<I>>;
+  };
+
+  template <typename I>
+  using wide_value_type_t = typename wide_value_type<I>::type;
 }

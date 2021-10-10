@@ -31,8 +31,8 @@ namespace algo_test
     TTS_GREATER      (l, f);
     TTS_GREATER_EQUAL(l, f);
 
-    eve::fixed cardinal = typename I::cardinal{};
-    TTS_TYPE_IS(typename I::cardinal, decltype(cardinal));
+    eve::fixed cardinal = eve::algo::iterator_cardinal_t<I>{};
+    TTS_TYPE_IS(eve::algo::iterator_cardinal_t<I>, decltype(cardinal));
     TTS_TYPE_IS(decltype(l - f), std::ptrdiff_t);
 
     // read test

@@ -130,8 +130,7 @@ namespace eve::algo
   {
     using _base_t = detail::converting_iterator_common<I, T>;
 
-    using cardinal = typename I::cardinal;
-    using wide_value_type = eve::wide<T, cardinal>;
+    using wide_value_type = eve::wide<T, iterator_cardinal_t<I>>;
 
     using _base_t::_base_t;
 
@@ -141,6 +140,8 @@ namespace eve::algo
       return converting_iterator<partially_aligned_t<I>, T>{this->base.previous_partially_aligned()};
     }
 
+    static iterator_cardinal_t<I> iterator_cardinal() { return {}; }
+
     template <typename _Cardinal>
     EVE_FORCEINLINE auto cardinal_cast(_Cardinal N) const
     {
@@ -148,17 +149,17 @@ namespace eve::algo
       return converting_iterator<decltype(new_base), T>{new_base};
     }
 
-    template< relative_conditional_expr C, decorator S, typename Pack>
+    template< relative_conditional_expr C, decorator S>
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::load_, C const& c, S const& s
-                                , eve::as<Pack> const&, converting_iterator self
+                                , eve::as<wide_value_type> const&, converting_iterator self
                                 )
     {
       auto c1 = map_alternative(
         c,
-        [](auto alt) { return eve::convert(alt, eve::as<typename I::value_type>{}); }
+        [](auto alt) { return eve::convert(alt, eve::as<value_type_t<I>>{}); }
       );
 
-      return eve::convert ( eve::load(c1, s, eve::as<typename I::wide_value_type>{}, self.base)
+      return eve::convert ( eve::load(c1, s, eve::as<wide_value_type_t<I>>{}, self.base)
                           , eve::as<T>{}
                           );
     }
@@ -169,26 +170,26 @@ namespace eve::algo
     {
       auto c1 = map_alternative(
         c,
-        [](auto alt) { return eve::convert(alt, eve::as<typename I::value_type>{}); }
+        [](auto alt) { return eve::convert(alt, eve::as<value_type_t<I>>{}); }
       );
 
-      eve::store[c1](eve::convert(v, eve::as<typename I::value_type>{}), self.base);
+      eve::store[c1](eve::convert(v, eve::as<value_type_t<I>>{}), self.base);
     }
 
     EVE_FORCEINLINE friend void tagged_dispatch( eve::tag::store_, wide_value_type v, converting_iterator self )
     {
-      eve::store(eve::convert(v, eve::as<typename I::value_type>{}), self.base);
+      eve::store(eve::convert(v, eve::as<value_type_t<I>>{}), self.base);
     }
 
     template <relative_conditional_expr C, decorator Decorator, typename U>
     EVE_FORCEINLINE
     friend auto tagged_dispatch(eve::tag::compress_store_,
       C c, Decorator d, wide_value_type v,
-      eve::logical<eve::wide<U, cardinal>> m,
+      eve::logical<eve::wide<U, iterator_cardinal_t<I>>> m,
       converting_iterator self )
     {
       // No alternative support in compress_store
-      auto raw_res = d(eve::compress_store[c])(eve::convert(v, eve::as<typename I::value_type>{}), m, self.base);
+      auto raw_res = d(eve::compress_store[c])(eve::convert(v, eve::as<value_type_t<I>>{}), m, self.base);
       return unaligned_t<converting_iterator>{raw_res};
     }
   };

@@ -21,9 +21,8 @@ namespace eve::algo
   template <typename T, typename Cardinal>
   struct unaligned_ptr_iterator : operations_with_distance
   {
-    using cardinal        = Cardinal;
     using value_type      = std::remove_const_t<T>;
-    using wide_value_type = eve::wide<value_type, cardinal>;
+    using wide_value_type = eve::wide<value_type, Cardinal>;
 
     unaligned_ptr_iterator() = default;
     explicit unaligned_ptr_iterator(T* ptr) : ptr(ptr) {}
@@ -32,8 +31,10 @@ namespace eve::algo
 
     auto previous_partially_aligned() const
     {
-      return aligned_ptr_iterator<T, cardinal>{eve::previous_aligned_address(ptr, cardinal{})};
+      return aligned_ptr_iterator<T, Cardinal>{eve::previous_aligned_address(ptr, Cardinal{})};
     }
+
+    static Cardinal iterator_cardinal() { return {}; }
 
     template <typename _Cardinal>
     auto cardinal_cast(_Cardinal) const { return unaligned_ptr_iterator<T, _Cardinal>{ptr}; }
@@ -72,7 +73,7 @@ namespace eve::algo
       requires ( !std::is_const_v<T> )
     EVE_FORCEINLINE friend auto tagged_dispatch(
       eve::tag::compress_store_, C c, Decorator d, wide_value_type v,
-      logical<wide<U, cardinal>> m, unaligned_ptr_iterator self)
+      logical<wide<U, Cardinal>> m, unaligned_ptr_iterator self)
     {
       return unaligned_ptr_iterator{eve::compress_store(c, d, v, m, self.ptr)};
     }
@@ -83,10 +84,9 @@ namespace eve::algo
   template <typename T, typename Cardinal>
   struct aligned_ptr_iterator : operations_with_distance
   {
-    using cardinal          = Cardinal;
     using value_type        = std::remove_const_t<T>;
     using aligned_ptr_type  = eve::aligned_ptr<T, Cardinal>;
-    using wide_value_type   = eve::wide<value_type, cardinal>;
+    using wide_value_type   = eve::wide<value_type, Cardinal>;
 
     aligned_ptr_iterator() = default;
     explicit aligned_ptr_iterator(aligned_ptr_type ptr) : ptr{ptr} {}
@@ -100,6 +100,8 @@ namespace eve::algo
     auto get() const { return ptr.get(); }
     auto unaligned() const { return unaligned_ptr_iterator<T, Cardinal>{ptr.get()}; }
     auto previous_partially_aligned() const { return *this; }
+
+    static Cardinal iterator_cardinal() { return {}; }
 
     template <typename _Cardinal>
     auto cardinal_cast(_Cardinal c) const
@@ -184,7 +186,7 @@ namespace eve::algo
       requires ( !std::is_const_v<T> )
     EVE_FORCEINLINE friend auto tagged_dispatch(
       eve::tag::compress_store_, C c, Decorator d, wide_value_type v,
-      logical<wide<U, cardinal>> m, aligned_ptr_iterator self)
+      logical<wide<U, Cardinal>> m, aligned_ptr_iterator self)
     {
       return unaligned_ptr_iterator<T, Cardinal>{eve::compress_store(c, d, v, m, self.ptr)};
     }

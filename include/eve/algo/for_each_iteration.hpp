@@ -26,19 +26,17 @@ namespace eve::algo
       EVE_FORCEINLINE bool main_loop(Traits, I &f, S l, Delegate &delegate) const
           requires(get_unrolling<Traits>() == 1)
       {
-        static constexpr std::ptrdiff_t step = typename I::cardinal {}();
-
         while( f != l )
         {
           if( delegate.step(f, eve::ignore_none, eve::index<0>) )
             return true;
-          f += step;
+          f += iterator_cardinal_v<I>;
         }
 
         return false;
       }
 
-      template <typename I, typename S, std::ptrdiff_t step, typename Delegate>
+      template <typename I, typename S, typename Delegate>
       struct small_steps_lambda
       {
           bool& should_break;
@@ -52,7 +50,7 @@ namespace eve::algo
             if (f == l) return true;
 
             should_break = delegate.step(f, eve::ignore_none, eve::index<i>);
-            f += step;
+            f += iterator_cardinal_v<I>;
             return should_break;
           }
       };
@@ -61,7 +59,6 @@ namespace eve::algo
       EVE_FORCEINLINE bool main_loop(Traits, I &f, S l, Delegate &delegate) const
           requires(get_unrolling<Traits>() > 1)
       {
-        static constexpr std::ptrdiff_t step      = typename I::cardinal {}();
         static constexpr std::ptrdiff_t unrolling = get_unrolling<Traits>();
 
         // In order to optimise for smaller ranges we not only finish but start with
@@ -74,19 +71,19 @@ namespace eve::algo
           bool should_break = false;
 
           if( eve::detail::for_until_<0, 1, unrolling>(
-                  small_steps_lambda<I, S, step, Delegate> {should_break, f, l, delegate}) )
+                  small_steps_lambda<I, S, Delegate> {should_break, f, l, delegate}) )
           {
             return should_break;
           }
 
-          std::ptrdiff_t big_steps_count = (l - f) / (step * unrolling);
+          std::ptrdiff_t big_steps_count = (l - f) / (iterator_cardinal_v<I> * unrolling);
 
           while( big_steps_count )
           {
             std::array<I, unrolling> arr;
             eve::detail::for_<0, 1, unrolling>([&](auto idx) mutable {
               arr[idx()] = f;
-              f += step;
+              f += iterator_cardinal_v<I>;
             });
             if( delegate.unrolled_step(arr) )
               return true;
@@ -107,12 +104,10 @@ namespace eve::algo
       for_each_iteration_precise_f_l(Traits traits, I f, S l) :
         traits(traits), base(f), f(f), l(l)
       {
-        [[maybe_unused]] static constexpr std::ptrdiff_t step =
-          typename I::cardinal {}();
-        EVE_ASSERT(((l - f) % step == 0),
+        EVE_ASSERT(((l - f) % iterator_cardinal_v<I> == 0),
           " len of the range is no divisible by cardinal " <<
           "when `divisible by cardinal is passed`: " <<
-          "l - f: " << (l - f) << " step: " << step);
+          "l - f: " << (l - f) << " iterator_cardinal_v<I>: " << iterator_cardinal_v<I>);
       }
 
       template <typename Delegate>
@@ -136,9 +131,8 @@ namespace eve::algo
       template <typename Delegate>
       EVE_FORCEINLINE void operator()(Delegate& delegate)
       {
-        static constexpr std::ptrdiff_t step = typename I::cardinal{}();
 
-        I precise_l = f + ((l - f) / step * step);
+        I precise_l = f + (((l - f) / iterator_cardinal_v<I>) * iterator_cardinal_v<I>);
 
         if (main_loop(traits, f, precise_l, delegate)) return;
 
@@ -163,8 +157,6 @@ namespace eve::algo
       template<typename Delegate>
       EVE_FORCEINLINE void operator()(Delegate &delegate)
       {
-        static constexpr std::ptrdiff_t step = typename I::cardinal {}();
-
         auto aligned_f = base;
         auto aligned_l = (f + (l - f)).previous_partially_aligned();
 
@@ -176,7 +168,7 @@ namespace eve::algo
           if( delegate.step(aligned_f, ignore_first, eve::index<0>) )
             return;
           ignore_first = eve::ignore_first {0};
-          aligned_f += step;
+          aligned_f += iterator_cardinal_v<I>;
 
           if( main_loop(traits, aligned_f, aligned_l, delegate) )
             return;
@@ -185,7 +177,7 @@ namespace eve::algo
             return;
         }
 
-        eve::ignore_last ignore_last {aligned_l + step - l};
+        eve::ignore_last ignore_last {aligned_l + iterator_cardinal_v<I> - l};
         delegate.step(aligned_l, ignore_first && ignore_last, eve::index<0>);
       }
     };
