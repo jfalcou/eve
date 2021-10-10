@@ -22,3 +22,4 @@ add_dependencies(random.real.exe random.real.special.exe)
 
 ## make_all_units(ROOT random.real.special NAME tgamma ARCH scalar simd TYPES ${real_types}    )
 ## make_all_units(ROOT random.real.special NAME stirling  ARCH scalar simd TYPES ${real_types}    )
+make_all_units(ROOT random.real.special NAME cyl_bessel_j0  ARCH scalar simd TYPES ${real_types}    )
