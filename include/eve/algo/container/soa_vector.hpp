@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/algo/equal.hpp>
-#include <eve/algo/zip.hpp>
-#include <eve/algo/convert.hpp>
+#include <eve/algo/views/convert.hpp>
+#include <eve/algo/views/zip.hpp>
 
 #include <eve/algo/container/detail/soa_storage.hpp>
 #include <eve/detail/kumi.hpp>
@@ -50,7 +50,7 @@ namespace eve::algo
     //! @{
     //==============================================================================================
     //!   @brief pointer and iterator types.
-    //!   pointer*  - are eve::algo::zip_iterator over fields (no conversion to type, just flat fields)
+    //!   pointer*  - are eve::algo::views::zip_iterator over fields (no conversion to type, just flat fields)
     //!   iterator* - are a pointer, converter to the Type.
     //!   They all safisfy eve::algo::relaxed_iterator but not std::iterator
 
@@ -59,10 +59,10 @@ namespace eve::algo
     using pointer_aligned       = decltype(storage_type{}.data_aligned());
     using const_pointer_aligned = decltype(std::declval<storage_type const>().data_aligned());
 
-    using iterator               = decltype(eve::algo::convert(pointer{}              , as<value_type>{}));
-    using const_iterator         = decltype(eve::algo::convert(const_pointer{}        , as<value_type>{}));
-    using iterator_aligned       = decltype(eve::algo::convert(pointer_aligned{}      , as<value_type>{}));
-    using const_iterator_aligned = decltype(eve::algo::convert(const_pointer_aligned{}, as<value_type>{}));
+    using iterator               = decltype(views::convert(pointer{}              , as<value_type>{}));
+    using const_iterator         = decltype(views::convert(const_pointer{}        , as<value_type>{}));
+    using iterator_aligned       = decltype(views::convert(pointer_aligned{}      , as<value_type>{}));
+    using const_iterator_aligned = decltype(views::convert(const_pointer_aligned{}, as<value_type>{}));
 
     //==============================================================================================
     //! @}
@@ -240,19 +240,19 @@ namespace eve::algo
     //! @{
     //==============================================================================================
     //! Returns an aligned iterator to the beginning
-    EVE_FORCEINLINE auto begin_aligned() -> iterator_aligned { return eve::algo::convert(data_aligned(), eve::as<Type>{}); }
+    EVE_FORCEINLINE auto begin_aligned() -> iterator_aligned { return views::convert(data_aligned(), eve::as<Type>{}); }
 
     //! Returns an aligned iterator to the beginning
-    EVE_FORCEINLINE auto begin_aligned()  const -> const_iterator_aligned { return eve::algo::convert(data_aligned(), eve::as<Type>{}); }
+    EVE_FORCEINLINE auto begin_aligned()  const -> const_iterator_aligned { return views::convert(data_aligned(), eve::as<Type>{}); }
 
     //! Returns a constant aligned iterator to the beginning
     EVE_FORCEINLINE auto cbegin_aligned() const -> const_iterator_aligned { return begin_aligned(); }
 
     //! Returns an iterator to the beginning
-    EVE_FORCEINLINE auto begin() -> iterator { return eve::algo::convert(data(), eve::as<Type>{}); }
+    EVE_FORCEINLINE auto begin() -> iterator { return views::convert(data(), eve::as<Type>{}); }
 
     //! Returns an iterator to the beginning
-    EVE_FORCEINLINE auto begin()  const -> const_iterator { return eve::algo::convert(data(), eve::as<Type>{}); }
+    EVE_FORCEINLINE auto begin()  const -> const_iterator { return views::convert(data(), eve::as<Type>{}); }
 
     //! Returns a constant iterator to the beginning
     EVE_FORCEINLINE auto cbegin() const -> const_iterator { return begin(); }

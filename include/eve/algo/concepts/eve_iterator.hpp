@@ -16,7 +16,6 @@
 #include <eve/function/compress_store.hpp>
 
 #include <eve/algo/concepts/detail.hpp>
-#include <eve/algo/concepts/iterator_cardinal.hpp>
 #include <eve/algo/unalign.hpp>
 
 namespace eve::algo
@@ -41,15 +40,14 @@ namespace eve::algo
 
    template <typename I>
   concept iterator =
-    detail::is_fixed_v<iterator_cardinal_t<I>> &&
-    std::regular<I> &&
-    std::totally_ordered<I> &&
-    std::totally_ordered_with<I, unaligned_t<I>> &&
+    requires(I) {
+      { std::remove_cvref_t<I>::iterator_cardinal() } -> detail::is_fixed_v;
+      typename std::remove_cvref_t<I>::value_type;
+    } &&
     std::totally_ordered_with<I, partially_aligned_t<I>> &&
-    requires(I i, std::ptrdiff_t n) {
-       typename I::value_type;
-       { i += n } -> std::same_as<I&>;
-       { i - i }  -> std::same_as<std::ptrdiff_t>;
+    std::totally_ordered_with<std::remove_cvref_t<I>, unaligned_t<std::remove_cvref_t<I>>> &&
+    detail::iterator_operations<I> &&
+    requires(I i) {
        { i.unaligned() } -> detail::unaligned_check;
        { i.previous_partially_aligned() } -> detail::partially_aligned_check;
     };

@@ -10,21 +10,69 @@
 #include <eve/algo/as_range.hpp>
 #include <eve/algo/concepts/relaxed.hpp>
 #include <eve/algo/concepts/types_to_consider.hpp>
+#include <eve/algo/views/convert.hpp>
 #include <eve/algo/preprocess_range.hpp>
 #include <eve/algo/range_ref.hpp>
 #include <eve/algo/traits.hpp>
-#include <eve/algo/zip_iterator.hpp>
+#include <eve/algo/views/zip_iterator.hpp>
 
 #include <eve/algo/concepts/detail.hpp>
 
-#include <eve/algo/detail/preprocess_zip_range.hpp>
+#include <eve/algo/views/detail/preprocess_zip_range.hpp>
 
 #include <eve/detail/kumi.hpp>
 
-namespace eve::algo
+namespace eve::algo::views
 {
+  //================================================================================================
+  //! @addtogroup eve.algo.views
+  //! @{
+  //!    @struct zip_range
+  //!    @brief  A `relaxed_range` on top of multiple `relaxed_range`.
+  //!            All individual components have to have the same size.
+  //!            Should probably never be created directly, instead use `zip`.
+  //!
+  //!     You can rezip the components with new traits by using `operator[]`:
+  //!     zip_range<Components...>[common_type] will convert all components to a common type
+  //!     between them, for example.
+  //!
+  //!    **Required header:** `#include <eve/algo/views/zip.hpp>`
+  //!
+  //!    Has a shorthand `eve::views::zip_range` in `<eve/views/zip.hpp>`.
+  //! @}
+  //================================================================================================
+
   template <relaxed_range ...Rngs>
   struct zip_range;
+
+  namespace detail
+  {
+    template <typename Self, typename T>
+    auto convert_zipped(Self self, eve::as<T> tgt);
+  }
+
+  //================================================================================================
+  //! @addtogroup eve.algo.views
+  //! @{
+  //!    @var zip
+  //!    @brief  Given relaxed_iterors and relaxed ranges, zips them together
+  //!            (creates a single object).
+  //!            If at least one component is a `relaxed_range` - result
+  //!            is a `zip_range`, otherwise it's `zip_iterator`.
+  //!            All range compinents have to have the same length.
+  //!
+  //!            Supports `zip[eve::algo::force_type<T>]`,
+  //!                     `zip[eve::algo::common_type<T>],
+  //!                     `zip[common_with_types<Ts...>]` traits.
+  //!            `force_type<T>` will convert every component to the type <T>.
+  //!            `common_type` and `common_with_types` will compute the common type (maybe including extra provided),
+  //!             and convert to that.
+  //!
+  //!    **Required header:** `#include <eve/algo/views/zip.hpp>`
+  //!
+  //!    Has a shorthand `eve::views::zip` in `<eve/views/zip.hpp>`.
+  //! @}
+  //================================================================================================
 
   template <typename TraitsSupport>
   // this is zip traits, not algo traits.
@@ -106,7 +154,7 @@ namespace eve::algo
     {
       auto to = type_to_convert_to(std::forward<Components>(components)...);
       using T = typename decltype(to)::type;
-      return zip(algo::convert(std::forward<Components>(components), eve::as<T>{})...);
+      return zip(views::convert(std::forward<Components>(components), eve::as<T>{})...);
     }
     else if constexpr( (relaxed_iterator<Components> && ...) )
     {
@@ -170,19 +218,19 @@ namespace eve::algo
 namespace std
 {
   template <typename ...Ranges>
-  struct tuple_size<eve::algo::zip_range<Ranges...>> :
+  struct tuple_size<eve::algo::views::zip_range<Ranges...>> :
     std::tuple_size<kumi::tuple<Ranges...>>
   {
   };
 
   template <std::size_t I, typename ...Ranges>
-  struct tuple_element<I, eve::algo::zip_range<Ranges...>> :
+  struct tuple_element<I, eve::algo::views::zip_range<Ranges...>> :
     std::tuple_element<I, kumi::tuple<Ranges...>>
   {
   };
 }
 
-namespace eve::algo::detail
+namespace eve::algo::views::detail
 {
   template<typename Self, typename T>
   EVE_FORCEINLINE auto convert_zipped(Self self, eve::as<T> tgt)

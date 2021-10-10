@@ -1,6 +1,6 @@
 #include "unit/algo/algo_test.hpp"
 
-#include <eve/algo/convert.hpp>
+#include <eve/algo/views/convert.hpp>
 #include <eve/algo/ptr_iterator.hpp>
 
 #include "iterator_concept_test.hpp"
@@ -19,22 +19,22 @@ EVE_TEST_TYPES("Check converting_iterator", algo_test::selected_types)
   auto replace = [&](auto v, auto ignore) { return eve::replace_ignored(v, ignore, decltype(v){0}); };
 
   auto run_test_one_pair = [&](auto f, auto l) {
-    algo_test::iterator_sentinel_test(eve::algo::convert(f, eve::as<char>{}),
-                                      eve::algo::convert(l, eve::as<char>{}),
+    algo_test::iterator_sentinel_test(eve::algo::views::convert(f, eve::as<char>{}),
+                                      eve::algo::views::convert(l, eve::as<char>{}),
                                       char_values, replace);
     if constexpr (eve::current_api != eve::avx512 || !eve::has_aggregated_abi_v<decltype(int64_values)>)
     {
-      algo_test::iterator_sentinel_test(eve::algo::convert(f, eve::as<std::uint64_t>{}),
-                                        eve::algo::convert(l, eve::as<std::uint64_t>{}),
+      algo_test::iterator_sentinel_test(eve::algo::views::convert(f, eve::as<std::uint64_t>{}),
+                                        eve::algo::views::convert(l, eve::as<std::uint64_t>{}),
                                         int64_values, replace);
     }
   };
 
   auto run_test_writeable = [&](auto f) {
     algo_test::writeable_readable_iterator(
-      eve::algo::convert(f, eve::as<char>{}), char_values, replace);
+      eve::algo::views::convert(f, eve::as<char>{}), char_values, replace);
     algo_test::iterator_supports_compress(
-      eve::algo::convert(f, eve::as<char>{}), char_values, replace);
+      eve::algo::views::convert(f, eve::as<char>{}), char_values, replace);
   };
 
   auto run_test = [&] <typename U>(U* f, U* l) {

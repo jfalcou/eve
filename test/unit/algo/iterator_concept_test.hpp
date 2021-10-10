@@ -98,6 +98,8 @@ namespace algo_test
   template <eve::algo::readable_iterator I, eve::algo::sentinel_for<I> S, typename T, typename ReplaceIgnored>
   void iterator_sentinel_test(I f, S l, T v, ReplaceIgnored replace)
   {
+    TTS_CONSTEXPR_EXPECT(eve::algo::readable_iterator<I&>);
+
     eve::algo::preprocess_range(eve::algo::traits{}, f, f);
     is_relaxed_test(f, l);
     iterator_sentinel_test_one_pair(f, l, v, replace);

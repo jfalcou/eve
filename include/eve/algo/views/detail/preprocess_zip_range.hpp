@@ -10,7 +10,7 @@
 #include <eve/algo/concepts/value_type.hpp>
 #include <eve/detail/kumi.hpp>
 
-namespace eve::algo
+namespace eve::algo::views
 {
   template <typename ...Is>
   struct zip_iterator;

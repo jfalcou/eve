@@ -64,8 +64,8 @@ TTS_CASE("eve.algo.find point")
   std::vector<int> x{1, 2, 3, 4};
   std::vector<int> y{0, 0, 1, 1};
 
-  auto as_points = eve::algo::convert(
-    eve::algo::zip(x, y), eve::as<udt::point2D>{});
+  auto as_points = eve::algo::views::convert(
+    eve::algo::views::zip(x, y), eve::as<udt::point2D>{});
 
   auto found = eve::algo::find_if(as_points,
     [](eve::wide<udt::point2D> points) { return get_y(points) != 0; });
@@ -85,7 +85,7 @@ TTS_CASE("eve.algo.find_if not in radius")
     return x * x + y * y <= r_square;
   };
 
-  auto found = eve::algo::find_if_not(eve::algo::zip(x, y), within_radius);
+  auto found = eve::algo::find_if_not(eve::algo::views::zip(x, y), within_radius);
   TTS_EQUAL(eve::read(found), (kumi::tuple{-10, 5}));
 }
 
@@ -93,7 +93,7 @@ TTS_CASE("eve.algo.mismatch example, use previous result") {
   std::vector<int> const a{1, 2, 3, 4, 5, 6, 6, 8};
   std::vector<int> const b{1, 2, 2, 4, 5, 6, 7, 8};
 
-  eve::algo::zip_iterator ra_rb = eve::algo::mismatch(a, b);
+  eve::algo::views::zip_iterator ra_rb = eve::algo::mismatch(a, b);
   TTS_EQUAL(ra_rb, eve::algo::mismatch(a, b.begin()));
   TTS_EQUAL(ra_rb, eve::algo::mismatch(a.begin(), b));
 
@@ -108,7 +108,7 @@ TTS_CASE("eve.algo.mismatch example, use previous result") {
   ++ra_rb;
 
   ra_rb = eve::algo::mismatch(eve::algo::as_range(ra, a.end()), rb);
-  TTS_EQUAL(ra_rb, eve::algo::zip(a.end(), b.end()));
+  TTS_EQUAL(ra_rb, eve::algo::views::zip(a.end(), b.end()));
 }
 
 TTS_CASE("eve.algo.mismatch example, first point not within a radius")
@@ -117,7 +117,7 @@ TTS_CASE("eve.algo.mismatch example, first point not within a radius")
   std::vector<int>    y      { 2,   1,     4, -10,    3};
   std::vector<double> within { 5.0, 6.0, 7.6, 10.1, 6.0};
 
-  auto x_y = eve::algo::zip[eve::algo::common_with_types<double>](x, y);
+  auto x_y = eve::algo::views::zip[eve::algo::common_with_types<double>](x, y);
 
   auto found = eve::algo::mismatch(x_y, within,
     [](eve::wide<kumi::tuple<double, double>> x_y, eve::wide<double> r) {
@@ -139,7 +139,7 @@ TTS_CASE("eve.algo.mismatch example, zip<zip>")
   std::vector<double> z { 5.1,  6.1,   4.9, 5};
 
   auto found = eve::algo::mismatch(
-    eve::algo::zip(eve::algo::zip(x, y), z),
+    eve::algo::views::zip(eve::algo::views::zip(x, y), z),
     [](auto x_y, auto z) {
       auto [x, y] = x_y;
       return eve::convert(x + y, eve::as<double>{}) < z;
@@ -154,11 +154,11 @@ TTS_CASE("eve.algo.equal/mismatch by key")
 {
   std::vector<int        > k_1 {1,     2,   3,   4};
   std::vector<std::int8_t> v_1 {'a', 'b', 'c', 'd'};
-  auto map_1 = eve::algo::zip(k_1, v_1);
+  auto map_1 = eve::algo::views::zip(k_1, v_1);
 
   std::vector<int        > k_2 = k_1;
   std::vector<double     > v_2 = {0.1, 0.2, 0.3, 0.4};
-  auto map_2 = eve::algo::zip(k_2, v_2);
+  auto map_2 = eve::algo::views::zip(k_2, v_2);
 
   auto compare_key = [](auto m1, auto m2) { return get<0>(m1) == get<0>(m2); };
 

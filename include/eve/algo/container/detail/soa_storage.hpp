@@ -7,8 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/algo/zip.hpp>
-#include <eve/algo/convert.hpp>
+#include <eve/algo/views/convert.hpp>
+#include <eve/algo/views/zip.hpp>
 
 #include <eve/detail/kumi.hpp>
 #include <eve/memory/aligned_allocator.hpp>
@@ -37,7 +37,7 @@ namespace eve::algo::detail
       EVE_FORCEINLINE static auto data_aligned_impl(Self& self)
       {
         auto ptrs    = kumi::map([](auto& m) { return as_aligned_pointer(m.data()); }, self);
-        return kumi::apply(eve::algo::zip, ptrs);
+        return kumi::apply(eve::algo::views::zip, ptrs);
       }
 
     public:

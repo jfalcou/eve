@@ -12,7 +12,7 @@
 #include <eve/memory/aligned_allocator.hpp>
 
 #include <eve/algo/as_range.hpp>
-#include <eve/algo/zip.hpp>
+#include <eve/algo/views/zip.hpp>
 
 #include <vector>
 

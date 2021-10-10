@@ -31,6 +31,9 @@
 #include <eve/algo/reduce.hpp>
 #include <eve/algo/inclusive_scan.hpp>
 
+#include <eve/views/convert.hpp>
+#include <eve/views/zip.hpp>
+
 #include <optional>
 
 
@@ -126,8 +129,8 @@ void inclusive_scan_complex(eve::algo::soa_vector<cmplx>& v, cmplx init)
 // It is slighlty less efficient than using `soa_vector` but maybe you have the parts from somewhere else.
 void inclusive_scan_complex_components(std::vector<float>& re_parts, std::vector<float>& im_parts, cmplx init)
 {
-  auto rng = eve::algo::convert(
-    eve::algo::zip(re_parts, im_parts),  // zips as a range of `kumi::tuple<float, float>`
+  auto rng = eve::views::convert(
+    eve::views::zip(re_parts, im_parts),  // zips as a range of `kumi::tuple<float, float>`
     eve::as<cmplx>{}                     // convert to a range of `cmplx`
   );
   eve::algo::inclusive_scan_inplace(rng, init);

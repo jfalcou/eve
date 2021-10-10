@@ -14,7 +14,7 @@
 
 #include <eve/algo/as_range.hpp>
 #include <eve/algo/mismatch.hpp>
-#include <eve/algo/zip.hpp>
+#include <eve/views/zip.hpp>
 
 int memcmp_( void const* lhs, void const* rhs, std::size_t count )
 //
@@ -41,8 +41,8 @@ int memcmp_( void const* lhs, void const* rhs, std::size_t count )
   // It can also accept both arguments zipped together, like we use here.
   // In this case it's a matter of taste, but sometimes you want to have access
   // to `zip`, because of it's options like `zip[eve::algo::common_type]`.
-  eve::algo::zip_range    r1_r2 = eve::algo::zip(r1, f2);
-  eve::algo::zip_iterator found = eve::algo::mismatch(r1_r2);
+  eve::views::zip_range    r1_r2 = eve::views::zip(r1, f2);
+  eve::views::zip_iterator found = eve::algo::mismatch(r1_r2);
 
   // Same as with `std` end iterator means nothing is found - no mismatch.
   if (found == r1_r2.end()) return 0;

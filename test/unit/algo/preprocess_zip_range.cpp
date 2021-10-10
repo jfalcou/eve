@@ -8,8 +8,7 @@
 
 #include "unit/algo/algo_test.hpp"
 
-#include <eve/algo/zip_iterator.hpp>
-#include <eve/algo/zip.hpp>
+#include <eve/algo/views/zip.hpp>
 
 #include <eve/algo/as_range.hpp>
 #include <eve/algo/traits.hpp>
@@ -24,11 +23,11 @@ TTS_CASE("zip_iterator, preprocess range, scalar end")
   std::vector<int> v2{1, 2, 4};
 
   using v_i = std::vector<int>::iterator;
-  using zip_vi = eve::algo::zip_iterator<v_i, v_i>;
+  using zip_vi = eve::algo::views::zip_iterator<v_i, v_i>;
 
   using N = eve::fixed<eve::expected_cardinal_v<int>>;
   using ui_it = eve::algo::unaligned_ptr_iterator<int, N>;
-  using zip_ui = eve::algo::zip_iterator<ui_it, ui_it>;
+  using zip_ui = eve::algo::views::zip_iterator<ui_it, ui_it>;
 
   zip_vi zf{v1.begin(), v2.begin()};
 
@@ -44,14 +43,14 @@ TTS_CASE("zip_iterator, preprocess range, zip end")
 {
   using u      = int const*;
   using a      = eve::aligned_ptr<int const>;
-  using zip_au = eve::algo::zip_iterator<a, u>;
-  using zip_uu = eve::algo::zip_iterator<u, u>;
+  using zip_au = eve::algo::views::zip_iterator<a, u>;
+  using zip_uu = eve::algo::views::zip_iterator<u, u>;
 
   using N = eve::fixed<eve::expected_cardinal_v<int>>;
   using a_it = eve::algo::aligned_ptr_iterator  <int const, N>;
   using u_it = eve::algo::unaligned_ptr_iterator<int const, N>;
-  using zip_au_it = eve::algo::zip_iterator<a_it, u_it>;
-  using zip_uu_it = eve::algo::zip_iterator<u_it, u_it>;
+  using zip_au_it = eve::algo::views::zip_iterator<a_it, u_it>;
+  using zip_uu_it = eve::algo::views::zip_iterator<u_it, u_it>;
 
   // au_uu
   {
@@ -106,7 +105,7 @@ TTS_CASE("preprocess zip range, traits")
   using ac_it = eve::algo::aligned_ptr_iterator<std::int8_t, N>;
   using ai_it = eve::algo::aligned_ptr_iterator<std::uint32_t, N>;
 
-  using zip_uc_it_ui_it = eve::algo::zip_iterator<uc_it, ui_it>;
+  using zip_uc_it_ui_it = eve::algo::views::zip_iterator<uc_it, ui_it>;
 
   alignas(sizeof(std::int8_t) * N{}())   std::array<std::int8_t,   N{}()> c;
   alignas(sizeof(std::uint32_t) * N{}()) std::array<std::uint32_t, N{}()> i;
@@ -121,7 +120,7 @@ TTS_CASE("preprocess zip range, traits")
 
   // zip_u_u
   {
-    auto zipped = eve::algo::zip(c, i);
+    auto zipped = eve::algo::views::zip(c, i);
     auto processed = eve::algo::preprocess_range(eve::algo::traits{}, zipped);
 
     eve::algo::traits expected_traits{ };
@@ -133,9 +132,9 @@ TTS_CASE("preprocess zip range, traits")
 
   // first array aligned
   {
-    using zip_ac_it_ui_it = eve::algo::zip_iterator<ac_it, ui_it>;
+    using zip_ac_it_ui_it = eve::algo::views::zip_iterator<ac_it, ui_it>;
 
-    auto zipped = eve::algo::zip(af_ul(c), i);
+    auto zipped = eve::algo::views::zip(af_ul(c), i);
     auto processed = eve::algo::preprocess_range(eve::algo::traits{}, zipped);
 
     eve::algo::traits expected_traits{ eve::algo::no_aligning };
@@ -147,9 +146,9 @@ TTS_CASE("preprocess zip range, traits")
 
   // second array aligned
   {
-    using zip_uc_it_ai_it = eve::algo::zip_iterator<uc_it, ai_it>;
+    using zip_uc_it_ai_it = eve::algo::views::zip_iterator<uc_it, ai_it>;
 
-    auto zipped = eve::algo::zip(c, af_ul(i));
+    auto zipped = eve::algo::views::zip(c, af_ul(i));
     auto processed = eve::algo::preprocess_range(eve::algo::traits{}, zipped);
 
     eve::algo::traits expected_traits{ eve::algo::no_aligning };
@@ -161,9 +160,9 @@ TTS_CASE("preprocess zip range, traits")
 
   // first array, both ends aligned
   {
-    using zip_ac_it_ui_it = eve::algo::zip_iterator<ac_it, ui_it>;
+    using zip_ac_it_ui_it = eve::algo::views::zip_iterator<ac_it, ui_it>;
 
-    auto zipped = eve::algo::zip(af_al(c), i);
+    auto zipped = eve::algo::views::zip(af_al(c), i);
     auto processed = eve::algo::preprocess_range(eve::algo::traits{}, zipped);
 
     eve::algo::traits expected_traits{ eve::algo::no_aligning, eve::algo::divisible_by_cardinal };
@@ -177,7 +176,7 @@ TTS_CASE("preprocess zip range, traits")
   {
     eve::algo::traits tr{ eve::algo::force_cardinal<2> };
 
-    auto zipped = eve::algo::zip(c, i);
+    auto zipped = eve::algo::views::zip(c, i);
     auto processed = eve::algo::preprocess_range(tr, zipped);
     TTS_TYPE_IS(decltype(processed.traits()), decltype(tr));
     TTS_TYPE_IS(eve::algo::iterator_cardinal_t<decltype(processed.begin())>, eve::fixed<2>);
@@ -188,7 +187,7 @@ TTS_CASE("preprocess zip range, traits")
     eve::algo::traits tr{ eve::algo::divisible_by_cardinal };
 
     {
-      auto zipped = eve::algo::zip(c, i);
+      auto zipped = eve::algo::views::zip(c, i);
 
       auto processed = eve::algo::preprocess_range(tr, zipped);
       TTS_TYPE_IS(decltype(processed.traits()), decltype(tr));
@@ -206,10 +205,10 @@ TTS_CASE("preprocess zip range, common_type")
     using N           = eve::fixed<eve::expected_cardinal_v<std::uint32_t>>;
     using uc_it       = eve::algo::unaligned_ptr_iterator<std::int8_t, N>;
     using ui_it       = eve::algo::unaligned_ptr_iterator<std::uint32_t, N>;
-    using conv_uc_it  = eve::algo::converting_iterator<uc_it, std::uint32_t>;
-    using expected_it = eve::algo::zip_iterator<conv_uc_it, ui_it>;
+    using conv_uc_it  = eve::algo::views::converting_iterator<uc_it, std::uint32_t>;
+    using expected_it = eve::algo::views::zip_iterator<conv_uc_it, ui_it>;
 
-    auto zipped = eve::algo::zip[eve::algo::common_type](c, i);
+    auto zipped = eve::algo::views::zip[eve::algo::common_type](c, i);
 
     auto processed = eve::algo::preprocess_range(eve::algo::traits{}, zipped);
 
@@ -221,11 +220,11 @@ TTS_CASE("preprocess zip range, common_type")
     using N           = eve::fixed<2>;
     using uc_it       = eve::algo::unaligned_ptr_iterator<std::int8_t, N>;
     using ui_it       = eve::algo::unaligned_ptr_iterator<std::uint32_t, N>;
-    using conv_uc_it  = eve::algo::converting_iterator<uc_it, float>;
-    using conv_ui_it  = eve::algo::converting_iterator<ui_it, float>;
-    using expected_it = eve::algo::zip_iterator<conv_uc_it, conv_ui_it>;
+    using conv_uc_it  = eve::algo::views::converting_iterator<uc_it, float>;
+    using conv_ui_it  = eve::algo::views::converting_iterator<ui_it, float>;
+    using expected_it = eve::algo::views::zip_iterator<conv_uc_it, conv_ui_it>;
 
-    auto zipped = eve::algo::zip[eve::algo::force_type<float>](c, i);
+    auto zipped = eve::algo::views::zip[eve::algo::force_type<float>](c, i);
 
     auto processed = eve::algo::preprocess_range(eve::algo::traits{eve::algo::force_cardinal<2>}, zipped);
 

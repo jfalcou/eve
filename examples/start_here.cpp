@@ -29,7 +29,7 @@ int const* find_negative_number(int const* f, int const* l)
 
 #include <eve/algo/container/soa_vector.hpp>
 #include <eve/algo/transform.hpp>
-#include <eve/algo/zip.hpp>
+#include <eve/views/zip.hpp>
 
 #include <eve/constant/pi.hpp>
 #include <eve/function/abs.hpp>
@@ -98,8 +98,8 @@ void polar_to_cartesian_vectors(
 {
   eve::algo::transform_to[eve::algo::unroll<1>][eve::algo::no_aligning]
   (
-    eve::algo::zip(radius, angle),
-    eve::algo::zip(x, y),
+    eve::views::zip(radius, angle),
+    eve::views::zip(x, y),
     convert_polar_to_cartesian
   );
 }

@@ -8,16 +8,16 @@
 
 #include "unit/algo/algo_test.hpp"
 
-#include <eve/algo/convert.hpp>
+#include <eve/algo/views/convert.hpp>
 #include <eve/algo/ptr_iterator.hpp>
 
 #include <vector>
 
-TTS_CASE("eve::algo::convert, read/write")
+TTS_CASE("eve::algo::views::convert, read/write")
 {
   std::vector<int> v{1, 2, 3, 4};
 
-  auto as_doubles = eve::algo::convert(v, eve::as<double>{});
+  auto as_doubles = eve::algo::views::convert(v, eve::as<double>{});
 
   int i = 0;
   for (auto f = as_doubles.begin(); f != as_doubles.end(); ++f)
@@ -32,7 +32,7 @@ TTS_CASE("eve::algo::convert, read/write")
   }
 }
 
-TTS_CASE("eve::algo::convert, preprocess test")
+TTS_CASE("eve::algo::views::convert, preprocess test")
 {
   using From      = float;
   using To        = int;
@@ -44,19 +44,19 @@ TTS_CASE("eve::algo::convert, preprocess test")
                         typename ExpectedRawS,
                         typename ExpectedTraits>
       (R&& r, eve::as<T> tgt, auto input_tr, ExpectedRawF, ExpectedRawS, ExpectedTraits) {
-    eve::algo::relaxed_range auto converted = eve::algo::convert(std::forward<R>(r), tgt);
+    eve::algo::relaxed_range auto converted = eve::algo::views::convert(std::forward<R>(r), tgt);
     auto processed = eve::algo::preprocess_range(input_tr, converted);
 
-    using I = eve::algo::converting_iterator<ExpectedRawF, T>;
-    using S = eve::algo::converting_iterator<ExpectedRawS, T>;
+    using I = eve::algo::views::converting_iterator<ExpectedRawF, T>;
+    using S = eve::algo::views::converting_iterator<ExpectedRawS, T>;
 
     TTS_TYPE_IS(decltype(processed.traits()), ExpectedTraits);
     TTS_TYPE_IS(decltype(processed.begin()), I);
     TTS_TYPE_IS(decltype(processed.end()), S);
 
     // Two converting iterators is mostly the same thing, except for when the range has more info
-    auto cf = eve::algo::convert(r.begin(), tgt);
-    auto cl = eve::algo::convert(r.end(), tgt);
+    auto cf = eve::algo::views::convert(r.begin(), tgt);
+    auto cl = eve::algo::views::convert(r.end(), tgt);
     auto as_iterators = eve::algo::preprocess_range(input_tr, eve::algo::as_range(cf, cl));
     TTS_TYPE_IS(decltype(processed.traits()), decltype(as_iterators.traits()));
     TTS_TYPE_IS(decltype(processed.begin()),  decltype(as_iterators.begin()));
@@ -101,24 +101,24 @@ TTS_CASE("eve::algo::convert, preprocess test")
   }
 }
 
-TTS_CASE("eve.algo.convert to/from")
+TTS_CASE("eve.algo.views.convert to/from")
 {
   // pointer
   {
     using ap = eve::aligned_ptr<char>;
     ap                                        chars{};
-    eve::algo::converting_iterator<ap, int>   ints   = eve::algo::convert(chars,   eve::as<int>{});
-    eve::algo::converting_iterator<ap, short> shorts = eve::algo::convert(ints,    eve::as<short>{});
-    ap                                        chars2 = eve::algo::convert(shorts,  eve::as<char>{});
+    eve::algo::views::converting_iterator<ap, int>   ints   = eve::algo::views::convert(chars,   eve::as<int>{});
+    eve::algo::views::converting_iterator<ap, short> shorts = eve::algo::views::convert(ints,    eve::as<short>{});
+    ap                                        chars2 = eve::algo::views::convert(shorts,  eve::as<char>{});
     (void) chars2;
   }
   // eve::iterator
   {
     using ap_it = eve::algo::aligned_ptr_iterator<char, eve::fixed<4>>;
     ap_it                                        chars{};
-    eve::algo::converting_iterator<ap_it, int>   ints   = eve::algo::convert(chars,  eve::as<int>{});
-    eve::algo::converting_iterator<ap_it, short> shorts = eve::algo::convert(ints,   eve::as<short>{});
-    ap_it                                        chars2 = eve::algo::convert(shorts, eve::as<char>{});
+    eve::algo::views::converting_iterator<ap_it, int>   ints   = eve::algo::views::convert(chars,  eve::as<int>{});
+    eve::algo::views::converting_iterator<ap_it, short> shorts = eve::algo::views::convert(ints,   eve::as<short>{});
+    ap_it                                        chars2 = eve::algo::views::convert(shorts, eve::as<char>{});
     (void)chars2;
   }
   // std::vector
@@ -127,10 +127,10 @@ TTS_CASE("eve.algo.convert to/from")
 
     using ref_vc = eve::algo::range_ref_wrapper<std::vector<char>>;
 
-    ref_vc                                     chars  = eve::algo::convert(chars_v, eve::as<char>{});
-    eve::algo::converting_range<ref_vc, int>   ints   = eve::algo::convert(chars,   eve::as<int>{});
-    eve::algo::converting_range<ref_vc, short> shorts = eve::algo::convert(ints,    eve::as<short>{});
-    ref_vc                                     chars2 = eve::algo::convert(shorts,  eve::as<char>{});
+    ref_vc                                     chars  = eve::algo::views::convert(chars_v, eve::as<char>{});
+    eve::algo::views::converting_range<ref_vc, int>   ints   = eve::algo::views::convert(chars,   eve::as<int>{});
+    eve::algo::views::converting_range<ref_vc, short> shorts = eve::algo::views::convert(ints,    eve::as<short>{});
+    ref_vc                                     chars2 = eve::algo::views::convert(shorts,  eve::as<char>{});
     (void) chars2;
   }
 

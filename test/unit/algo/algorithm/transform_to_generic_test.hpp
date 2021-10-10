@@ -38,7 +38,7 @@ namespace algo_test {
     template <typename R1, typename R2>
     void run(R1 range_or_it1, R2 range_or_it2)
     {
-      auto zipped_range = eve::algo::zip(range_or_it1, range_or_it2);
+      auto zipped_range = eve::algo::views::zip(range_or_it1, range_or_it2);
       // To operate with both ends always
       auto r1 = get<0>(zipped_range);
       auto r2 = get<1>(zipped_range);

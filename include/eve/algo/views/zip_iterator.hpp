@@ -13,7 +13,7 @@
 #include <eve/algo/iterator_helpers.hpp>
 #include <eve/algo/preprocess_range.hpp>
 
-#include <eve/algo/detail/preprocess_zip_range.hpp>
+#include <eve/algo/views/detail/preprocess_zip_range.hpp>
 
 #include <eve/function/compress_store.hpp>
 #include <eve/function/load.hpp>
@@ -23,8 +23,23 @@
 
 #include <concepts>
 
-namespace eve::algo
+namespace eve::algo::views
 {
+  //================================================================================================
+  //! @addtogroup eve.algo.views
+  //! @{
+  //!    @struct zip_iterator
+  //!    @brief  A `relaxed_iterator` on top of multiple `relaxed_iterator`.
+  //!            If all of the components are `iterator` they have to have the same cardinal
+  //!            and the `zip_iterator` will model `iterator`.
+  //!            Should probably never be created directly, use `zip`.
+  //!
+  //!    **Required header:** `#include <eve/algo/views/zip.hpp>`
+  //!
+  //!    Has a shorthand `eve::views::zip_iterator` in `<eve/views/zip.hpp>`.
+  //! @}
+  //================================================================================================
+
   template <typename ...Is>
   struct zip_iterator;
 
@@ -39,6 +54,9 @@ namespace eve::algo
     {
       static constexpr bool value = (std::equality_comparable_with<Is1, Is2> && ...);
     };
+
+    template <typename Self, typename T>
+    auto convert_zipped(Self self, eve::as<T> tgt);
   }
 
   template <typename T, typename U>
@@ -250,20 +268,20 @@ namespace eve::algo
 // tuple opt in
 namespace std
 {
-  template<std::size_t I, eve::algo::detail::derived_from_zip_iterator_common U>
+  template<std::size_t I, eve::algo::views::detail::derived_from_zip_iterator_common U>
   struct  tuple_element<I, U> : tuple_element<I, typename U::tuple_type>
   {
   };
 
-  template<eve::algo::detail::derived_from_zip_iterator_common U>
+  template<eve::algo::views::detail::derived_from_zip_iterator_common U>
   struct tuple_size<U> : std::tuple_size<typename U::tuple_type>
   {
   };
 
   // I'm so not sure I'm doing this right
   template< typename ...Is, typename ZipI2, template<class> class TQual, template<class> class UQual >
-    requires eve::algo::compatible_zip_iterators<eve::algo::zip_iterator<Is...>, ZipI2>
-  struct basic_common_reference<eve::algo::zip_iterator<Is...>, ZipI2, TQual, UQual>
+    requires eve::algo::views::compatible_zip_iterators<eve::algo::views::zip_iterator<Is...>, ZipI2>
+  struct basic_common_reference<eve::algo::views::zip_iterator<Is...>, ZipI2, TQual, UQual>
   {
     using type = eve::algo::unaligned_t<ZipI2>;
   };
