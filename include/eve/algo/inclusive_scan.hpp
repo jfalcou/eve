@@ -65,7 +65,7 @@ namespace eve::algo
         if( processed.begin() == processed.end() ) return;
 
         using I      = decltype(processed.begin());
-        using wide_t = eve::wide<U, typename I::cardinal>;
+        using wide_t = eve::wide<U, iterator_cardinal_t<I>>;
 
         wide_t wide_init = eve::as_value(init, eve::as<wide_t> {});
 

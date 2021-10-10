@@ -270,7 +270,7 @@ EVE_TEST_TYPES("cardinal/type manipulation", algo_test::selected_types)
     eve::algo::traits(eve::algo::force_cardinal<T::size()>), v);
 
     using I = decltype(processed.begin());
-    TTS_TYPE_IS(typename I::wide_value_type, T);
+    TTS_TYPE_IS(eve::algo::wide_value_type_t<I>, T);
   }
 
   {
@@ -279,7 +279,7 @@ EVE_TEST_TYPES("cardinal/type manipulation", algo_test::selected_types)
     eve::algo::traits(eve::algo::force_cardinal<cardinal_n{}()>), v);
 
     using I = decltype(processed.begin());
-    TTS_TYPE_IS(typename I::cardinal, cardinal_n);
+    TTS_TYPE_IS(eve::algo::iterator_cardinal_t<I>, cardinal_n);
   }
 
   {
@@ -289,7 +289,7 @@ EVE_TEST_TYPES("cardinal/type manipulation", algo_test::selected_types)
 
     using I = decltype(processed.begin());
     TTS_TYPE_IS(typename I::value_type, double);
-    TTS_TYPE_IS(typename I::wide_value_type, eve::wide<double>);
+    TTS_TYPE_IS(eve::algo::wide_value_type_t<I>, eve::wide<double>);
   }
 
   {
@@ -298,7 +298,7 @@ EVE_TEST_TYPES("cardinal/type manipulation", algo_test::selected_types)
       eve::algo::convert(v, eve::as<double>{}));
 
     using I = decltype(processed.begin());
-    TTS_TYPE_IS(typename I::wide_value_type,
+    TTS_TYPE_IS(eve::algo::wide_value_type_t<I>,
                 (eve::wide<double, eve::fixed<T::size()>>));
   }
 
@@ -307,7 +307,7 @@ EVE_TEST_TYPES("cardinal/type manipulation", algo_test::selected_types)
       eve::algo::traits(eve::algo::consider_types<double>), v);
 
     using I = decltype(processed.begin());
-    TTS_TYPE_IS(typename I::wide_value_type,
+    TTS_TYPE_IS(eve::algo::wide_value_type_t<I>,
                 (eve::wide<e_t, eve::fixed<eve::expected_cardinal_v<double>>>));
   }
 
@@ -316,7 +316,7 @@ EVE_TEST_TYPES("cardinal/type manipulation", algo_test::selected_types)
       eve::algo::traits{}, eve::algo::convert(v_d, eve::as<e_t>{}));
 
     using I = decltype(processed.begin());
-    TTS_TYPE_IS(typename I::wide_value_type,
+    TTS_TYPE_IS(eve::algo::wide_value_type_t<I>,
                 (eve::wide<e_t, eve::fixed<eve::expected_cardinal_v<double>>>));
   }
 };

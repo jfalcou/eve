@@ -67,10 +67,8 @@ namespace eve::algo
 
         // TODO: this might not be ideal, see: #764
         std::optional<std::ptrdiff_t> match;
-        std::size_t pos = find_branchless(tests,
-          detail::find_branchless_lambda{&match});
-        constexpr std::ptrdiff_t lanes = typename I::cardinal{}();
-        found = arr[0].unaligned() + (pos * lanes) + *match;
+        std::size_t pos = find_branchless(tests, detail::find_branchless_lambda{&match});
+        found = arr[0].unaligned() + (pos * iterator_cardinal_v<I>) + *match;
 
         return true;
       }

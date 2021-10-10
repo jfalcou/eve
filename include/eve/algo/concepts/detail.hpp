@@ -32,4 +32,13 @@ namespace eve::algo::detail
   concept supports_spaceship = requires (T x, U y) {
     { std::declval<T>() <=> std::declval<U>() };
   };
+
+  template <typename>
+  struct is_fixed  : std::false_type {};
+
+  template <std::ptrdiff_t N>
+  struct is_fixed<eve::fixed<N>> : std::true_type {};
+
+  template <typename T>
+  concept is_fixed_v = is_fixed<T>::value;
 }
