@@ -41,16 +41,13 @@ namespace eve::algo
    template <typename I>
   concept iterator =
     requires(I) {
-      { I::iterator_cardinal() } -> detail::is_fixed_v;
-      typename I::value_type;
+      { std::remove_cvref_t<I>::iterator_cardinal() } -> detail::is_fixed_v;
+      typename std::remove_cvref_t<I>::value_type;
     } &&
-    std::regular<I> &&
-    std::totally_ordered<I> &&
-    std::totally_ordered_with<I, unaligned_t<I>> &&
     std::totally_ordered_with<I, partially_aligned_t<I>> &&
-    requires(I i, std::ptrdiff_t n) {
-       { i += n } -> std::same_as<I&>;
-       { i - i }  -> std::same_as<std::ptrdiff_t>;
+    std::totally_ordered_with<std::remove_cvref_t<I>, unaligned_t<std::remove_cvref_t<I>>> &&
+    detail::iterator_operations<I> &&
+    requires(I i) {
        { i.unaligned() } -> detail::unaligned_check;
        { i.previous_partially_aligned() } -> detail::partially_aligned_check;
     };

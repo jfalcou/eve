@@ -115,26 +115,16 @@ namespace eve::algo
       eve::write(self.base, eve::convert(v, eve::as<value_type_t<I>>{}));
     }
 
-    EVE_FORCEINLINE friend bool operator==(converting_iterator const & x, converting_iterator const & y)
+    template <relaxed_sentinel_for<I> I1>
+    EVE_FORCEINLINE bool operator==(converting_iterator<I1, T> y) const
     {
-      return x.base == y.base;
+      return base == y.base;
     }
 
-    EVE_FORCEINLINE friend bool operator==(converting_iterator const & x, unaligned_me const & y)
-      requires (!std::same_as<I, unaligned_t<I>>)
+    template <relaxed_sentinel_for<I> I1>
+    EVE_FORCEINLINE auto operator<=>(converting_iterator<I1, T> y) const
     {
-      return x.base == y.base;
-    }
-
-    EVE_FORCEINLINE friend auto operator<=>(converting_iterator const & x, converting_iterator const & y)
-    {
-      return spaceship_helper(x.base, y.base);
-    }
-
-    EVE_FORCEINLINE friend auto operator<=>(converting_iterator const & x, unaligned_me const & y)
-      requires (!std::same_as<I, unaligned_t<I>>)
-    {
-      return spaceship_helper(x.base, y.base);
+      return spaceship_helper(base, y.base);
     }
 
     EVE_FORCEINLINE auto& operator+=(std::ptrdiff_t n)

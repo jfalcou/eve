@@ -34,6 +34,11 @@ TTS_CASE("concepts, value type")
 TTS_CASE("concepts, relaxed")
 {
   TTS_CONSTEXPR_EXPECT(eve::algo::relaxed_iterator<int*>);
+  TTS_CONSTEXPR_EXPECT(eve::algo::relaxed_iterator<eve::aligned_ptr<int>>);
+  TTS_CONSTEXPR_EXPECT(eve::algo::relaxed_iterator<int const*>);
+  TTS_CONSTEXPR_EXPECT(eve::algo::relaxed_iterator<eve::aligned_ptr<int const>>);
+  TTS_CONSTEXPR_EXPECT(eve::algo::relaxed_iterator<eve::aligned_ptr<int const> const&>);
+
   TTS_CONSTEXPR_EXPECT_NOT(eve::algo::relaxed_range<int*>);
   TTS_CONSTEXPR_EXPECT(eve::algo::relaxed_range<std::vector<int>>);
 }
