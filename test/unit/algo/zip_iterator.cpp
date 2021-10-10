@@ -85,7 +85,7 @@ TTS_CASE("zip_iterator, sanity check, types test")
 
   using zip_a_u_4 = eve::algo::zip_iterator<aligned_float_4, unaligned_short_4>;
 
-  using wide_value_type = eve::wide<kumi::tuple<float, short>, eve::fixed<8>>;
+  using wv_type = eve::wide<kumi::tuple<float, short>, eve::fixed<8>>;
 
   // CTAD
   eve::algo::zip_iterator zi {unaligned_float{}, aligned_short{}};
@@ -115,14 +115,14 @@ TTS_CASE("zip_iterator, sanity check, types test")
   TTS_TYPE_IS(decltype(zip_a_u{} - zip_u_u{}), std::ptrdiff_t);
 
   // Load
-  TTS_TYPE_IS(decltype(eve::load(zip_a_u{})), wide_value_type);
-  TTS_TYPE_IS(decltype(eve::load[eve::ignore_first(2)](zip_a_u{})), wide_value_type);
-  TTS_TYPE_IS(decltype(eve::load[eve::ignore_first(2).else_(wide_value_type{})](zip_a_u{})), wide_value_type);
+  TTS_TYPE_IS(decltype(eve::load(zip_a_u{})), wv_type);
+  TTS_TYPE_IS(decltype(eve::load[eve::ignore_first(2)](zip_a_u{})), wv_type);
+  TTS_TYPE_IS(decltype(eve::load[eve::ignore_first(2).else_(wv_type{})](zip_a_u{})), wv_type);
 
   // Store
-  TTS_TYPE_IS(decltype(eve::store(wide_value_type{}, zip_a_u{})), void);
-  TTS_TYPE_IS(decltype(eve::store[eve::ignore_first(2)](wide_value_type{}, zip_a_u{})), void);
-  TTS_TYPE_IS(decltype(eve::store[eve::ignore_first(2).else_(wide_value_type{})](wide_value_type{}, zip_a_u{})), void);
+  TTS_TYPE_IS(decltype(eve::store(wv_type{}, zip_a_u{})), void);
+  TTS_TYPE_IS(decltype(eve::store[eve::ignore_first(2)](wv_type{}, zip_a_u{})), void);
+  TTS_TYPE_IS(decltype(eve::store[eve::ignore_first(2).else_(wv_type{})](wv_type{}, zip_a_u{})), void);
 
   // Is readable iterator
   {

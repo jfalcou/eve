@@ -130,8 +130,6 @@ namespace eve::algo
   {
     using _base_t = detail::converting_iterator_common<I, T>;
 
-    using wide_value_type = eve::wide<T, iterator_cardinal_t<I>>;
-
     using _base_t::_base_t;
 
     converting_iterator<unaligned_t<I>, T> unaligned() const { return *this; }
@@ -150,8 +148,9 @@ namespace eve::algo
     }
 
     template< relative_conditional_expr C, decorator S>
-    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::load_, C const& c, S const& s
-                                , eve::as<wide_value_type> const&, converting_iterator self
+    EVE_FORCEINLINE friend auto tagged_dispatch (
+      eve::tag::load_, C const& c, S const& s
+      , eve::as<wide_value_type_t<converting_iterator>> const&, converting_iterator self
                                 )
     {
       auto c1 = map_alternative(
@@ -166,7 +165,10 @@ namespace eve::algo
 
     template <relative_conditional_expr C>
     EVE_FORCEINLINE friend void tagged_dispatch(
-      eve::tag::store_, C c, wide_value_type v, converting_iterator self )
+      eve::tag::store_,
+      C c,
+      wide_value_type_t<converting_iterator> v,
+      converting_iterator self )
     {
       auto c1 = map_alternative(
         c,
@@ -176,7 +178,10 @@ namespace eve::algo
       eve::store[c1](eve::convert(v, eve::as<value_type_t<I>>{}), self.base);
     }
 
-    EVE_FORCEINLINE friend void tagged_dispatch( eve::tag::store_, wide_value_type v, converting_iterator self )
+    EVE_FORCEINLINE friend void tagged_dispatch(
+      eve::tag::store_,
+      wide_value_type_t<converting_iterator> v,
+      converting_iterator self )
     {
       eve::store(eve::convert(v, eve::as<value_type_t<I>>{}), self.base);
     }
@@ -184,7 +189,8 @@ namespace eve::algo
     template <relative_conditional_expr C, decorator Decorator, typename U>
     EVE_FORCEINLINE
     friend auto tagged_dispatch(eve::tag::compress_store_,
-      C c, Decorator d, wide_value_type v,
+      C c, Decorator d,
+      wide_value_type_t<converting_iterator> v,
       eve::logical<eve::wide<U, iterator_cardinal_t<I>>> m,
       converting_iterator self )
     {

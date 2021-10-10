@@ -73,7 +73,7 @@ namespace eve::algo
 
       if (processed.begin() == processed.end()) return init;
 
-      using wide_t = typename I::wide_value_type;
+      using wide_t = wide_value_type_t<I>;
       wide_t init_as_wide = eve::as_value(op_zero.second, as<wide_t>{});
       init_as_wide.set(0, init);
 

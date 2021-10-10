@@ -171,7 +171,6 @@ namespace eve::algo
   struct zip_iterator<I, Is...> : detail::zip_iterator_common<I, Is...>
   {
     using base = detail::zip_iterator_common<I, Is...>;
-    using wide_value_type = eve::wide<typename base::value_type, iterator_cardinal_t<I>>;
 
     static_assert((std::same_as<iterator_cardinal_t<I>, iterator_cardinal_t<Is>> && ...));
 
@@ -220,19 +219,19 @@ namespace eve::algo
 
     template <relative_conditional_expr C>
     EVE_FORCEINLINE friend void tagged_dispatch(
-      eve::tag::store_, C cond, wide_value_type v, zip_iterator self )
+      eve::tag::store_, C cond, wide_value_type_t<zip_iterator> v, zip_iterator self )
     {
       eve::store[cond](v, self.storage);
     }
 
-    EVE_FORCEINLINE friend void tagged_dispatch( eve::tag::store_, wide_value_type v, zip_iterator self )
+    EVE_FORCEINLINE friend void tagged_dispatch( eve::tag::store_, wide_value_type_t<zip_iterator> v, zip_iterator self )
     {
       eve::store(v, self.storage);
     }
 
     template <relative_conditional_expr C, decorator Decorator, typename U>
     EVE_FORCEINLINE friend auto tagged_dispatch( eve::tag::compress_store_,
-      C c, Decorator d, wide_value_type v,
+      C c, Decorator d, wide_value_type_t<zip_iterator> v,
       eve::logical<eve::wide<U, iterator_cardinal_t<I>>> m,
       zip_iterator self)
     {

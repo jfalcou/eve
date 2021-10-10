@@ -22,7 +22,7 @@ namespace eve::algo
   struct unaligned_ptr_iterator : operations_with_distance
   {
     using value_type      = std::remove_const_t<T>;
-    using wide_value_type = eve::wide<value_type, Cardinal>;
+    using wv_type = eve::wide<value_type, Cardinal>;
 
     unaligned_ptr_iterator() = default;
     explicit unaligned_ptr_iterator(T* ptr) : ptr(ptr) {}
@@ -57,13 +57,13 @@ namespace eve::algo
 
     template <relative_conditional_expr C>
     EVE_FORCEINLINE friend void tagged_dispatch(
-      eve::tag::store_, C cond, wide_value_type v, unaligned_ptr_iterator self )
+      eve::tag::store_, C cond, wv_type v, unaligned_ptr_iterator self )
       requires (!std::is_const_v<T>)
     {
       eve::store[cond](v, self.ptr);
     }
 
-    EVE_FORCEINLINE friend void tagged_dispatch( eve::tag::store_, wide_value_type v, unaligned_ptr_iterator self )
+    EVE_FORCEINLINE friend void tagged_dispatch( eve::tag::store_, wv_type v, unaligned_ptr_iterator self )
       requires ( !std::is_const_v<T> )
     {
       eve::store(v, self.ptr);
@@ -72,7 +72,7 @@ namespace eve::algo
     template <relative_conditional_expr C, decorator Decorator, typename U>
       requires ( !std::is_const_v<T> )
     EVE_FORCEINLINE friend auto tagged_dispatch(
-      eve::tag::compress_store_, C c, Decorator d, wide_value_type v,
+      eve::tag::compress_store_, C c, Decorator d, wv_type v,
       logical<wide<U, Cardinal>> m, unaligned_ptr_iterator self)
     {
       return unaligned_ptr_iterator{eve::compress_store(c, d, v, m, self.ptr)};
@@ -86,7 +86,7 @@ namespace eve::algo
   {
     using value_type        = std::remove_const_t<T>;
     using aligned_ptr_type  = eve::aligned_ptr<T, Cardinal>;
-    using wide_value_type   = eve::wide<value_type, Cardinal>;
+    using wv_type   = eve::wide<value_type, Cardinal>;
 
     aligned_ptr_iterator() = default;
     explicit aligned_ptr_iterator(aligned_ptr_type ptr) : ptr{ptr} {}
@@ -170,13 +170,13 @@ namespace eve::algo
 
     template <relative_conditional_expr C>
     EVE_FORCEINLINE friend void tagged_dispatch(
-      eve::tag::store_, C cond, wide_value_type v, aligned_ptr_iterator self )
+      eve::tag::store_, C cond, wv_type v, aligned_ptr_iterator self )
       requires ( !std::is_const_v<T> )
     {
       return eve::store[cond](v, self.ptr);
     }
 
-    EVE_FORCEINLINE friend void tagged_dispatch( eve::tag::store_, wide_value_type v, aligned_ptr_iterator self )
+    EVE_FORCEINLINE friend void tagged_dispatch( eve::tag::store_, wv_type v, aligned_ptr_iterator self )
       requires ( !std::is_const_v<T> )
     {
       return eve::store(v, self.ptr);
@@ -185,7 +185,7 @@ namespace eve::algo
     template <relative_conditional_expr C, decorator Decorator, typename U>
       requires ( !std::is_const_v<T> )
     EVE_FORCEINLINE friend auto tagged_dispatch(
-      eve::tag::compress_store_, C c, Decorator d, wide_value_type v,
+      eve::tag::compress_store_, C c, Decorator d, wv_type v,
       logical<wide<U, Cardinal>> m, aligned_ptr_iterator self)
     {
       return unaligned_ptr_iterator<T, Cardinal>{eve::compress_store(c, d, v, m, self.ptr)};
