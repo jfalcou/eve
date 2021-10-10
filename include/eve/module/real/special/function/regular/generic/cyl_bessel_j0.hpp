@@ -131,15 +131,6 @@ namespace eve::detail
         auto rc = evaluate_rational(PC, QC, y2);
         auto rs = evaluate_rational(PS, QS, y2);
         auto factor = rsqrt(pi(as(x))*x);
-        //
-        // What follows is really just:
-        //
-        // T z = x - pi/4;
-        // value = factor * (rc * cos(z) - y * rs * sin(z));
-        //
-        // But using the addition formulae for sin and cos, plus
-        // the special values for sin/cos of pi/4.
-        //
         auto [sx, cx]= sincos(x);
         auto value = factor*fnma(y, rs*(sx-cx), rc*(sx+cx));
         return value;
