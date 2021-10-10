@@ -11,9 +11,8 @@
 
 #include <eve/algo/container/soa_vector.hpp>
 #include <eve/algo/transform.hpp>
-#include <eve/algo/zip.hpp>
+#include <eve/algo/views/zip.hpp>
 
-#include <eve/function/convert.hpp>
 #include <eve/function/zip.hpp>
 #include <vector>
 
@@ -39,7 +38,7 @@ TTS_CASE("transform points into vertical lines")
 
   eve::algo::soa_vector<udt::line2D> actual(starts.size());
 
-  eve::algo::transform_to(eve::algo::zip(starts, lengths), actual,
+  eve::algo::transform_to(eve::algo::views::zip(starts, lengths), actual,
     [](auto start_l) {
       auto [start, l] = start_l;
       auto end = start;

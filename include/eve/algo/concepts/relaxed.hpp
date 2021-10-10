@@ -76,7 +76,6 @@ namespace eve::algo
   //! @}
   //================================================================================================
 
-
   template <typename R>
   concept relaxed_range =
     detail::has_begin_end<R> &&

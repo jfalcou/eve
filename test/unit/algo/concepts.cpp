@@ -10,9 +10,9 @@
 
 #include <eve/algo/concepts.hpp>
 
-#include <eve/algo/convert.hpp>
+#include <eve/algo/views/convert.hpp>
 #include <eve/algo/ptr_iterator.hpp>
-#include <eve/algo/zip.hpp>
+#include <eve/algo/views/zip.hpp>
 
 #include <vector>
 
@@ -27,7 +27,7 @@ TTS_CASE("concepts, value type")
   std::vector<int> v1, v2;
 
   TTS_TYPE_IS(eve::algo::value_type_t<decltype(v1)>, int);
-  TTS_TYPE_IS((eve::algo::value_type_t<decltype(eve::algo::zip(v1, v2))>),
+  TTS_TYPE_IS((eve::algo::value_type_t<decltype(eve::algo::views::zip(v1, v2))>),
                (kumi::tuple<int, int>));
 }
 
@@ -52,21 +52,21 @@ TTS_CASE("concepts, types_to_consider_for")
   std::vector<int>   v_i;
   std::vector<short> v_s;
 
-  auto c_v_i_r = eve::algo::convert(v_i,         eve::as<double>{});
-  auto c_v_i_i = eve::algo::convert(v_i.begin(), eve::as<double>{});
+  auto c_v_i_r = eve::algo::views::convert(v_i,         eve::as<double>{});
+  auto c_v_i_i = eve::algo::views::convert(v_i.begin(), eve::as<double>{});
 
 
   TTS_TYPE_IS(eve::algo::types_to_consider_for_t<decltype(c_v_i_r)>, (kumi::tuple<double, int>));
   TTS_TYPE_IS(eve::algo::types_to_consider_for_t<decltype(c_v_i_i)>, (kumi::tuple<double, int>));
 
 
-  auto zip_s_i_i = eve::algo::zip(v_s, v_i, v_i);
+  auto zip_s_i_i = eve::algo::views::zip(v_s, v_i, v_i);
 
   // This should probably be a type set but w/e
   TTS_TYPE_IS(eve::algo::types_to_consider_for_t<decltype(zip_s_i_i)        >, (kumi::tuple<short, int, int>));
   TTS_TYPE_IS(eve::algo::types_to_consider_for_t<decltype(zip_s_i_i.begin())>, (kumi::tuple<short, int, int>));
 
-  auto zip_c_i_s = eve::algo::zip(c_v_i_r, v_s);
+  auto zip_c_i_s = eve::algo::views::zip(c_v_i_r, v_s);
 
   TTS_TYPE_IS(eve::algo::types_to_consider_for_t<decltype(zip_c_i_s)        >, (kumi::tuple<double, int, short>));
   TTS_TYPE_IS(eve::algo::types_to_consider_for_t<decltype(zip_c_i_s.begin())>, (kumi::tuple<double, int, short>));

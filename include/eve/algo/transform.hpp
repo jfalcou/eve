@@ -10,7 +10,7 @@
 #include <eve/algo/array_utils.hpp>
 #include <eve/algo/common_forceinline_lambdas.hpp>
 #include <eve/algo/concepts.hpp>
-#include <eve/algo/convert.hpp>
+#include <eve/algo/views/convert.hpp>
 #include <eve/algo/for_each_iteration.hpp>
 #include <eve/algo/preprocess_range.hpp>
 #include <eve/algo/traits.hpp>
@@ -38,7 +38,7 @@ namespace eve::algo
           auto processed = op(xs);
 
           using out_t = eve::element_type_t<decltype(processed)>;
-          auto cvt_and_store_it = algo::convert(store_it, as<out_t>{});
+          auto cvt_and_store_it = views::convert(store_it, as<out_t>{});
 
           eve::store[ignore](op(xs), cvt_and_store_it);
           return false;
@@ -90,7 +90,7 @@ namespace eve::algo
       requires zip_to_range<R1, R2>
     EVE_FORCEINLINE void operator()(R1&& r1, R2&& r2, Op op) const
     {
-      operator()(zip(std::forward<R1>(r1), std::forward<R2>(r2)), op);
+      operator()(views::zip(std::forward<R1>(r1), std::forward<R2>(r2)), op);
     }
   };
 

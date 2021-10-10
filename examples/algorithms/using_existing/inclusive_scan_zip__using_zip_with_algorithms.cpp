@@ -20,7 +20,7 @@
 //   showcases zip.
 
 #include <eve/algo/inclusive_scan.hpp>
-#include <eve/algo/zip.hpp>
+#include <eve/views/zip.hpp>
 
 #include <vector>
 
@@ -29,7 +29,7 @@ using cmplx_tuple = kumi::tuple<float, float>;
 void inclusive_scan_complex(std::vector<float>& re, std::vector<float>& im, cmplx_tuple init)
 {
   // Construct a view to both vectors as one range.
-  eve::algo::zip_range zipped = eve::algo::zip(re, im);
+  eve::views::zip_range zipped = eve::views::zip(re, im);
 
 
   // The value type for zip is a wide<tuple<elements...>

@@ -12,6 +12,7 @@
 #include <eve/algo/concepts.hpp>
 #include <eve/algo/for_each_iteration.hpp>
 #include <eve/algo/preprocess_range.hpp>
+#include <eve/algo/views/convert.hpp>
 #include <eve/algo/traits.hpp>
 
 #include <eve/constant/as_value.hpp>
@@ -84,7 +85,7 @@ namespace eve::algo
     EVE_FORCEINLINE void operator()(Rng&& rng, std::pair<Op, Zero> op_zero, U init) const
     {
       detail::inclusive_scan_common<inplace_load_store>{}(
-        TraitsSupport::get_traits(), eve::algo::convert(std::forward<Rng>(rng), eve::as<U>{}), op_zero, init);
+        TraitsSupport::get_traits(), views::convert(std::forward<Rng>(rng), eve::as<U>{}), op_zero, init);
     }
 
     template <relaxed_range Rng, typename U>
@@ -116,14 +117,14 @@ namespace eve::algo
       requires zip_to_range<R1, R2>
     EVE_FORCEINLINE auto operator()(R1&& r1, R2&& r2, std::pair<Op, Zero> op_zero, U init) const
     {
-      operator()(zip(std::forward<R1>(r1), std::forward<R2>(r2)), op_zero, init);
+      operator()(views::zip(std::forward<R1>(r1), std::forward<R2>(r2)), op_zero, init);
     }
 
     template <typename R1, typename R2, typename U>
       requires zip_to_range<R1, R2>
     EVE_FORCEINLINE auto operator()(R1&& r1, R2&& r2, U init) const
     {
-      return operator()(zip(std::forward<R1>(r1), std::forward<R2>(r2)), init);
+      return operator()(views::zip(std::forward<R1>(r1), std::forward<R2>(r2)), init);
     }
   };
 

@@ -21,13 +21,62 @@
 #include <eve/function/load.hpp>
 #include <eve/function/store.hpp>
 
-namespace eve::algo
+namespace eve::algo::views
 {
+  //================================================================================================
+  //! @addtogroup eve.algo.views
+  //! @{
+  //!   @struct converting_iterator
+  //!   @brief An adapter over a `relaxed_iterator` that converts it's values to T.
+  //!   Should be created via `convert`.
+  //!
+  //!    **Required header:** `#include <eve/algo/views/convert.hpp>`
+  //!
+  //!    Has a shorthand `eve::views::convert` in `<eve/views/convert.hpp>`.
+  //! @}
+  //================================================================================================
+
+
   template <relaxed_iterator I, typename T>
   struct converting_iterator;
 
+  //================================================================================================
+  //! @addtogroup eve.algo.views
+  //! @{
+  //!   @struct converting_range
+  //!   @brief An adapter over a `relaxed_range` that converts it's values to T.
+  //!   Should be created via `convert`.
+  //!
+  //!    **Required header:** `#include <eve/algo/views/convert.hpp>`
+  //!
+  //!    Has a shorthand `eve::views::converting_range` in `<eve/views/convert.hpp>`.
+  //! @}
+  //================================================================================================
+
   template <non_owning_range R, typename T>
   struct converting_range;
+
+  //================================================================================================
+  //! @addtogroup eve.algo.views
+  //! @{
+  //!   @var convert
+  //!   @brief Takes an iterator or a range and returns an adapter that has a provided value type.
+  //!
+  //!  @code{.cpp} eve::algo::views::convert(it_or_r, eve::as<int>{}); @endcode
+  //!
+  //!  Behaviour for a specific iterator/range can be customized via tagged dispatch:
+  //!
+  //!  @code{.cpp}
+  //!  template <typename T>
+  //!  EVE_FORCEINLINE friend auto tagged_dispatch(eve::algo::views::convert_, my_rng self, eve::as<T> tgt);
+  //!  @endcode
+  //!
+  //!    **Required header:** `#include <eve/algo/views/convert.hpp>`
+  //!
+  //!    Has a shorthand `eve::views::converting_range` in `<eve/views/convert.hpp>`.
+  //! @}
+  //================================================================================================
+
 
   struct convert_ {
     template<typename Wrapped, typename T>
