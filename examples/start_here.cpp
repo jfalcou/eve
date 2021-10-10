@@ -31,11 +31,9 @@ int const* find_negative_number(int const* f, int const* l)
 #include <eve/algo/transform.hpp>
 #include <eve/views/zip.hpp>
 
-#include <eve/constant/pi.hpp>
-#include <eve/function/abs.hpp>
 #include <eve/function/atan2.hpp>
 #include <eve/function/sincos.hpp>
-#include <eve/function/sqrt.hpp>
+#include <eve/function/hypot.hpp>
 #include <eve/function/zip.hpp>
 
 #include <eve/product_type.hpp>
@@ -49,7 +47,7 @@ struct
   EVE_FORCEINLINE auto operator()(eve::like<cartesian> auto c) const
   {
     auto [x, y] = c;
-    auto r      = eve::sqrt(x * x + y * y);
+    auto r      = eve::hypot(x, y);
     auto phi    = eve::atan2(y, x);
 
     return eve::zip(r, phi);
@@ -124,6 +122,7 @@ void erase_remove_numbers_outisde_of_treshold(
 #include "test.hpp"
 
 #include <eve/constant/pi.hpp>
+#include <eve/function/abs.hpp>
 
 #include <vector>
 
