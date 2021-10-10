@@ -49,7 +49,7 @@ namespace eve::algo::detail
     std::regular<std::remove_cvref_t<I>> &&
     std::totally_ordered<std::remove_cvref_t<I>> &&
     requires(std::remove_cvref_t<I> f, std::remove_cvref_t<I> l, std::ptrdiff_t n) {
-      { l - f }  -> std::same_as<std::ptrdiff_t>;
+      { l - f }  -> std::convertible_to<std::ptrdiff_t>;
       { f += n } -> std::same_as<std::remove_cvref_t<I>&>;
       { f + n } -> std::same_as<std::remove_cvref_t<I>>;
       { n + f } -> std::same_as<std::remove_cvref_t<I>>;
