@@ -39,6 +39,9 @@ namespace eve::algo
     {
       static constexpr bool value = (std::equality_comparable_with<Is1, Is2> && ...);
     };
+
+    template <typename Self, typename T>
+    auto convert_zipped(Self self, eve::as<T> tgt);
   }
 
   template <typename T, typename U>

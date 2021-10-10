@@ -10,6 +10,7 @@
 #include <eve/algo/as_range.hpp>
 #include <eve/algo/concepts/relaxed.hpp>
 #include <eve/algo/concepts/types_to_consider.hpp>
+#include <eve/algo/convert.hpp>
 #include <eve/algo/preprocess_range.hpp>
 #include <eve/algo/range_ref.hpp>
 #include <eve/algo/traits.hpp>
@@ -25,6 +26,12 @@ namespace eve::algo
 {
   template <relaxed_range ...Rngs>
   struct zip_range;
+
+  namespace detail
+  {
+    template <typename Self, typename T>
+    auto convert_zipped(Self self, eve::as<T> tgt);
+  }
 
   template <typename TraitsSupport>
   // this is zip traits, not algo traits.

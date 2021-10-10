@@ -8,10 +8,11 @@
 #pragma once
 
 #include <eve/algo/concepts/detail.hpp>
-#include <eve/algo/concepts/iterator_cardinal.hpp>
 
+#include <eve/memory/pointer.hpp>
 #include <eve/traits.hpp>
 
+#include <concepts>
 #include <type_traits>
 
 namespace eve::algo
@@ -34,7 +35,7 @@ namespace eve::algo
     {
            if constexpr ( has_begin_end<T>            ) return value_type_impl<decltype(std::declval<T>().begin())>();
       else if constexpr ( std::contiguous_iterator<T> ) return std::type_identity<typename std::iterator_traits<T>::value_type>{};
-      else                                              return std::type_identity<typename eve::pointer_traits<T>::value_type>{};
+      else                                              return std::type_identity<typename T::value_type>{};
     }
   }
 
@@ -46,23 +47,4 @@ namespace eve::algo
 
   template <typename T>
   using value_type_t = typename value_type<T>::type;
-
-  //================================================================================================
-  //! @addtogroup eve.algo.concepts
-  //! @{
-  //!  @struct wide_value_type
-  //!  @brief for an instance of `eve::algo::iterator` a shortcut: wide<value_type_t<I>, iterator_cardinal_t<I>>
-  //!
-  //!   **Required header:** `#include <eve/algo/concepts.hpp>`
-  //! @}
-  //================================================================================================
-
-  template <typename I>
-  struct wide_value_type
-  {
-    using type = eve::wide<value_type_t<I>, iterator_cardinal_t<I>>;
-  };
-
-  template <typename I>
-  using wide_value_type_t = typename wide_value_type<I>::type;
 }

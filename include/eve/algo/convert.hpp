@@ -7,53 +7,60 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/algo/detail/convert.hpp>
-
 #include <eve/algo/concepts/relaxed.hpp>
 #include <eve/algo/concepts/types_to_consider.hpp>
 #include <eve/algo/concepts/value_type.hpp>
-#include <eve/algo/detail/converting_iterator.hpp>
+#include <eve/algo/concepts/iterator_cardinal.hpp>
+#include <eve/algo/iterator_helpers.hpp>
 #include <eve/algo/range_ref.hpp>
+
+#include <eve/function/convert.hpp>
+#include <eve/function/read.hpp>
+#include <eve/function/write.hpp>
+#include <eve/function/compress_store.hpp>
+#include <eve/function/load.hpp>
+#include <eve/function/store.hpp>
 
 namespace eve::algo
 {
-  template <typename I, typename T>
+  template <relaxed_iterator I, typename T>
   struct converting_iterator;
 
   template <non_owning_range R, typename T>
   struct converting_range;
 
-  template <typename Wrapped, typename T>
-  EVE_FORCEINLINE auto convert_::no_tagged_dispatch(Wrapped&& wrapped, eve::as<T> tgt) const
-  {
-    if constexpr (relaxed_range<Wrapped>)
+  struct convert_ {
+    template<typename Wrapped, typename T>
+    auto no_tagged_dispatch(Wrapped &&wrapped, eve::as<T> tgt) const
     {
-      auto rng  = range_ref(std::forward<Wrapped>(wrapped));
-      using Rng = decltype(rng);
+      if constexpr( relaxed_range<Wrapped> )
+      {
+        auto rng  = range_ref(std::forward<Wrapped>(wrapped));
+        using Rng = decltype(rng);
 
-           if constexpr (std::same_as<value_type_t<Rng>, T>        ) return rng;
-      else if constexpr (detail::instance_of<Rng, converting_range>) return convert(rng.base, tgt);
-      else                                                           return converting_range<Rng, T>{rng};
+             if constexpr( std::same_as<value_type_t<Rng>, T>         ) return rng;
+        else if constexpr( detail::instance_of<Rng, converting_range> ) return (*this)(rng.base, tgt);
+        else                                                            return converting_range<Rng, T> {rng};
+      }
+      else
+      {
+        using I = std::remove_cvref_t<Wrapped>;
+             if constexpr( std::same_as<value_type_t<I>, T>            ) return wrapped;
+        else if constexpr( detail::instance_of<I, converting_iterator> ) return (*this)(wrapped.base, tgt);
+        else                                                             return converting_iterator<I, T> {wrapped};
+      }
     }
-    else
-    {
-      using I = std::remove_cvref_t<Wrapped>;
-           if constexpr (std::same_as<value_type_t<I>, T>           ) return wrapped;
-      else if constexpr (detail::instance_of<I, converting_iterator>) return convert(wrapped.base, tgt);
-      else                                                            return converting_iterator<I, T>{wrapped};
-    }
-  }
 
-  template <typename Wrapped, typename T>
-    // we don't allow to sfinae on convert because it's difficult
-  EVE_FORCEINLINE auto convert_::operator()(Wrapped&& wrapped, as<T> tgt) const
-  {
-    if constexpr (eve::detail::tag_dispatchable<convert_, decltype(std::forward<Wrapped>(wrapped)), as<T>>)
+    template <typename Wrapped, typename T>
+    auto operator()(Wrapped&& wrapped, eve::as<T> tgt) const
     {
-      return tagged_dispatch(*this, std::forward<Wrapped>(wrapped), tgt);
+      if constexpr (eve::detail::tag_dispatchable<convert_, decltype(std::forward<Wrapped>(wrapped)), as<T>>)
+      {
+        return tagged_dispatch(*this, std::forward<Wrapped>(wrapped), tgt);
+      }
+      else return no_tagged_dispatch( std::forward<Wrapped>(wrapped), tgt);
     }
-    else return no_tagged_dispatch( std::forward<Wrapped>(wrapped), tgt);
-  }
+  } inline constexpr convert;
 
   template <non_owning_range R, typename T>
   struct converting_range
@@ -79,6 +86,165 @@ namespace eve::algo
       return preprocess_range_result {
           ret_tr, convert(processed.begin(), as<T>{}), convert(processed.end(), as<T>{})
       };
+    }
+  };
+
+  template <relaxed_iterator I, typename T>
+  struct converting_iterator : operations_with_distance
+  {
+    I base;
+    using value_type = T;
+    using types_to_consider = kumi::result::cat_t<kumi::tuple<T>, types_to_consider_for_t<I>>;
+    using unaligned_me = converting_iterator<unaligned_t<I>, T>;
+
+    converting_iterator() = default;
+
+    EVE_FORCEINLINE explicit converting_iterator(I base) : base(base) {}
+
+    EVE_FORCEINLINE auto unaligned() const { return convert(unalign(base), as<T>{}); }
+
+    operator unaligned_me() const { return unaligned(); }
+
+    EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::read_, converting_iterator self)
+    {
+      return eve::convert(eve::read(self.base), eve::as<T>{});
+    }
+
+    EVE_FORCEINLINE friend void tagged_dispatch(eve::tag::write_, converting_iterator self, T v)
+    {
+      eve::write(self.base, eve::convert(v, eve::as<value_type_t<I>>{}));
+    }
+
+    EVE_FORCEINLINE friend bool operator==(converting_iterator const & x, converting_iterator const & y)
+    {
+      return x.base == y.base;
+    }
+
+    EVE_FORCEINLINE friend bool operator==(converting_iterator const & x, unaligned_me const & y)
+      requires (!std::same_as<I, unaligned_t<I>>)
+    {
+      return x.base == y.base;
+    }
+
+    EVE_FORCEINLINE friend auto operator<=>(converting_iterator const & x, converting_iterator const & y)
+    {
+      return spaceship_helper(x.base, y.base);
+    }
+
+    EVE_FORCEINLINE friend auto operator<=>(converting_iterator const & x, unaligned_me const & y)
+      requires (!std::same_as<I, unaligned_t<I>>)
+    {
+      return spaceship_helper(x.base, y.base);
+    }
+
+    EVE_FORCEINLINE auto& operator+=(std::ptrdiff_t n)
+    {
+      base += n;
+      return *this;
+    }
+
+    EVE_FORCEINLINE friend std::ptrdiff_t operator-(converting_iterator const & x, converting_iterator const & y)
+    {
+      return x.base - y.base;
+    }
+
+    EVE_FORCEINLINE friend std::ptrdiff_t operator-(converting_iterator const & x, unaligned_me const & y)
+      requires (!std::same_as<I, unaligned_t<I>>)
+    {
+      return x.base - y.base;
+    }
+
+    // not eve::iterator
+
+    template <typename Traits>
+    EVE_FORCEINLINE
+    friend auto tagged_dispatch(preprocess_range_, Traits tr,
+                                converting_iterator f, converting_iterator l)
+      requires (!iterator<I>)
+    {
+      return preprocess_range(tr, convert(as_range(f.base, l.base), as<T>{}));
+    }
+
+    template <typename Traits>
+    EVE_FORCEINLINE
+    friend auto tagged_dispatch(preprocess_range_, Traits tr,
+                                converting_iterator f, unaligned_me l)
+      requires (!iterator<I>) && (!std::same_as<I, unaligned_t<I>>)
+    {
+      return preprocess_range(tr, convert(as_range(f.base, l.base), as<T>{}));
+    }
+
+    // eve::iterator -------------
+    EVE_FORCEINLINE auto previous_partially_aligned() const
+      requires iterator<I>
+    {
+      return convert(base.previous_partially_aligned(), eve::as<T>{});
+    }
+
+    static auto iterator_cardinal() requires iterator<I>
+    { return I::iterator_cardinal(); }
+
+    template <typename _Cardinal>
+    EVE_FORCEINLINE auto cardinal_cast(_Cardinal N) const
+      requires iterator<I>
+    {
+      return convert(base.cardinal_cast(N), eve::as<T>{});
+    }
+
+    template<relative_conditional_expr C, decorator S>
+      requires iterator<I>
+    EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::load_,
+                                                C c,
+                                                S s,
+                                                eve::as<wide_value_type_t<converting_iterator>>,
+                                                converting_iterator self)
+    {
+      auto c1 = map_alternative(
+        c,
+        [](auto alt) { return eve::convert(alt, eve::as<value_type_t<I>>{}); }
+      );
+
+      return eve::convert ( eve::load(c1, s, eve::as<wide_value_type_t<I>>{}, self.base)
+                          , eve::as<T>{}
+                          );
+    }
+
+    template<relative_conditional_expr C>
+    EVE_FORCEINLINE friend void tagged_dispatch(eve::tag::store_,
+                                                C                                      c,
+                                                wide_value_type_t<converting_iterator> v,
+                                                converting_iterator self)
+      requires iterator<I>
+    {
+      auto c1 = map_alternative(
+        c,
+        [](auto alt) { return eve::convert(alt, eve::as<value_type_t<I>>{}); }
+      );
+
+      eve::store[c1](eve::convert(v, eve::as<value_type_t<I>>{}), self.base);
+    }
+
+    EVE_FORCEINLINE friend void tagged_dispatch(eve::tag::store_,
+                                                wide_value_type_t<converting_iterator> v,
+                                                converting_iterator self)
+      requires iterator<I>
+    {
+      eve::store(eve::convert(v, eve::as<value_type_t<I>>{}), self.base);
+    }
+
+    template<relative_conditional_expr C, decorator Decorator, typename U>
+    EVE_FORCEINLINE friend auto
+    tagged_dispatch(eve::tag::compress_store_,
+                    C                                                  c,
+                    Decorator                                          d,
+                    wide_value_type_t<converting_iterator>             v,
+                    eve::logical<eve::wide<U, iterator_cardinal_t<I>>> m,
+                    converting_iterator                                self)
+      requires iterator<I>
+    {
+      // No alternative support in compress_store
+      auto raw_res = d(eve::compress_store[c])(eve::convert(v, eve::as<value_type_t<I>>{}), m, self.base);
+      return unaligned_t<converting_iterator>{raw_res};
     }
   };
 }
