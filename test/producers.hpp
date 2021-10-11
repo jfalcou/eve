@@ -13,13 +13,13 @@
 #include <eve/function/store.hpp>
 
 #define TTS_RANGE_CHECK(Producer, Ref, New)                                                         \
-  do                                                                                                \
+  [&]()                                                                                             \
   {                                                                                                 \
     if constexpr(eve::floating_value<EVE_VALUE>)                                                    \
       TTS_ULP_RANGE_CHECK(Producer, (EVE_VALUE), (T), Ref, New, 2.0);                               \
     else                                                                                            \
       TTS_ULP_RANGE_CHECK(Producer, (EVE_VALUE), (T), Ref, New, 0.0);                               \
-  } while(::tts::detail::done())                                                                    \
+  }()                                                                                               \
 /**/
 
 #define TTS_RANGE_CHECK_WITH(Producer, Ref, New, Ulps)                                              \
