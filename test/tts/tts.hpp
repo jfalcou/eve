@@ -56,16 +56,16 @@ namespace tts::detail
 #else
     static char const* modifier[] =
     {
-      "\033[00m", 
-      "\033[30m", 
-      "\033[34m", 
-      "\033[32m", 
-      "\033[36m", 
-      "\033[31m", 
-      "\033[35m", 
-      "\033[33m", 
-      "\033[37m", 
-      "\033[1m" , 
+      "\033[00m",
+      "\033[30m",
+      "\033[34m",
+      "\033[32m",
+      "\033[36m",
+      "\033[31m",
+      "\033[35m",
+      "\033[33m",
+      "\033[37m",
+      "\033[1m" ,
     };
     return stream << modifier[foreground+1];
 #endif
@@ -1183,3 +1183,20 @@ namespace tts::detail
 #define TTS_TYPE_IS_(T, TYPE)         TTS_TYPE_IS_IMPL(T, TYPE,TTS_FAIL)
 #define TTS_TYPE_IS_REQUIRED(T, TYPE) TTS_TYPE_IS_IMPL(T, TYPE,TTS_FATAL)
 #define TTS_EXPR_IS(EXPR, TYPE, ...)  TTS_TYPE_IS(decltype(TTS_REMOVE_PARENS(EXPR)), TYPE, __VA_ARGS__)
+
+//==================================================================================================
+// List of types list to use in template cases
+//==================================================================================================
+#define TTS_SIGNED_INTEGRAL_TYPES   std::int8_t , std::int16_t , std::int32_t , std::int64_t
+#define TTS_UNSIGNED_INTEGRAL_TYPES std::uint8_t, std::uint16_t, std::uint32_t, std::uint64_t
+
+#define TTS_INTEGRAL_TYPES                                                                         \
+  char, std::int8_t, std::int16_t , std::int32_t , std::int64_t,                                   \
+       std::uint8_t, std::uint16_t, std::uint32_t, std::uint64_t                                   \
+/**/
+
+#define TTS_IEEE_TYPES              float, double
+#define TTS_SIGNED_NUMERIC_TYPES    TTS_IEEE_TYPES, TTS_SIGNED_INTEGRAL_TYPES
+#define TTS_UNSIGNED_NUMERIC_TYPES  TTS_UNSIGNED_INTEGRAL_TYPES
+#define TTS_NUMERIC_TYPES           TTS_IEEE_TYPES, TTS_INTEGRAL_TYPES
+#define TTS_ALL_TYPES               bool, TTS_NUMERIC_TYPES

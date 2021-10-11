@@ -22,7 +22,7 @@ TTS_CASE("Check as_floating_point on scalar")
   TTS_TYPE_IS((as_floating_point_t<double>        ) , double );
   TTS_TYPE_IS((as_floating_point_t<std::int64_t>  ) , double );
   TTS_TYPE_IS((as_floating_point_t<std::uint64_t> ) , double );
-}
+};
 
 TTS_CASE("Check as_floating_point on logical scalar")
 {
@@ -36,7 +36,7 @@ TTS_CASE("Check as_floating_point on logical scalar")
   TTS_TYPE_IS((as_floating_point_t<logical<double>>       ) , logical<double> );
   TTS_TYPE_IS((as_floating_point_t<logical<std::int64_t>> ) , logical<double> );
   TTS_TYPE_IS((as_floating_point_t<logical<std::uint64_t>>) , logical<double> );
-}
+};
 
 TTS_CASE("Check as_floating_point on wide")
 {
@@ -50,7 +50,7 @@ TTS_CASE("Check as_floating_point on wide")
   TTS_TYPE_IS((as_floating_point_t<wide<double>>       ) , wide<double> );
   TTS_TYPE_IS((as_floating_point_t<wide<std::int64_t>> ) , wide<double> );
   TTS_TYPE_IS((as_floating_point_t<wide<std::uint64_t>>) , wide<double> );
-}
+};
 
 TTS_CASE("Check as_floating_point on logical wide")
 {
@@ -65,4 +65,4 @@ TTS_CASE("Check as_floating_point on logical wide")
   TTS_TYPE_IS((as_floating_point_t<logical<wide<double>>>       ) , logical<wide<double>> );
   TTS_TYPE_IS((as_floating_point_t<logical<wide<std::int64_t>>> ) , logical<wide<double>> );
   TTS_TYPE_IS((as_floating_point_t<logical<wide<std::uint64_t>>>) , logical<wide<double>> );
-}
+};

@@ -27,7 +27,7 @@ TTS_CASE( "Check for detection of native ABI")
 
   TTS_EXPECT( eve::has_native_abi_v<float>                           );
   TTS_EXPECT( eve::has_native_abi_v<eve::logical<float>>             );
-}
+};
 
 TTS_CASE( "Check for detection of aggregated ABI")
 {
@@ -46,4 +46,4 @@ TTS_CASE( "Check for detection of aggregated ABI")
 
   TTS_EXPECT_NOT( eve::has_aggregated_abi_v<float>                           );
   TTS_EXPECT_NOT( eve::has_aggregated_abi_v<eve::logical<float>>             );
-}
+};
