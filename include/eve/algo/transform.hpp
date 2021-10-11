@@ -71,6 +71,8 @@ namespace eve::algo
   inline constexpr auto transform_inplace = function_with_traits<transform_inplace_>[default_simple_algo_traits];
 
   //================================================================================================
+  //! @addtogroup eve.algo
+  //! @{
   //!  @var transform_to
   //!
   //!  @brief version of std::transform
