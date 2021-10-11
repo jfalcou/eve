@@ -1,11 +1,9 @@
 //==================================================================================================
-/*
+/**
   TTS - Tiny Test System
-  Copyright 2020 Joel FALCOU
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : TTS Contributors & Maintainers
   SPDX-License-Identifier: MIT
-*/
+**/
 //==================================================================================================
 #pragma once
 
@@ -25,9 +23,9 @@ namespace tts
   template<typename Base> struct adapter
   {
     template<typename U, typename Func>
-    static void run(Base const*& src, U*& dst, Func f)    noexcept  { *dst++ = f(*src++); }
-    static auto retrieve(Base const* src)                 noexcept  { return *src;        }
-    static void display(Base const& v, std::ostream& os)  noexcept  { os << v;            }
+    static void run(Base const*& src, U*& dst, Func f)    noexcept  { *dst++ = f(*src++);       }
+    static auto retrieve(Base const* src)                 noexcept  { return *src;              }
+    static void display(Base const& v, std::ostream& os)  noexcept  { os << tts::as_string(v);  }
   };
 
   template<typename Generator, typename Args>
@@ -81,15 +79,16 @@ namespace tts::detail
 
   template<typename U, typename C, typename R, typename V>
   void results( std::ostream& os
-              , U ulp, C count, R ratio, std::string const& desc, V const& v, bool hexfloat
+              , U ulp, C count, R ratio, std::string const& desc, V const& v
               )
   {
     os  << std::left << std::noshowpos;
     os  << detail::text_field(16,1)   << ulp
         << detail::text_field(16)     << count
         << detail::value_field(16)    << ratio
-        << detail::value_field(16,7)  << desc;
-    os  << (hexfloat ? std::hexfloat : std::scientific) << std::showpos;
+        << detail::value_field(16,7)
+        << ::tts::white << tts::bold << desc << tts::reset;
+    os  << std::showpos;
     adapter<V>::display(v,os);
     os << std::fixed << std::endl;
   }
@@ -140,15 +139,13 @@ namespace tts
   template< typename RefType, typename NewType
           , typename Generator, typename RefFun, typename NewFun
           >
-  double ulp_histogramm ( Generator g, RefFun reference, NewFun challenger
-                        , options const& args
-                        )
+  double ulp_histogram(Generator g, RefFun reference, NewFun challenger)
   {
     using out_type  = std::decay_t<decltype( reference( std::declval<RefType>() ))>;
     using nout_type = std::decay_t<decltype( challenger( std::declval<NewType>() ))>;
 
     //-- Find how many elements in a block
-    std::size_t count = args.value_or(4096ULL, "-b", "--block");
+    std::size_t count = ::tts::arguments.value( "--block", 4096ULL);
 
     //-- Prepare blocks
     std::vector<out_type> ref_out(count), new_out(count);
@@ -157,8 +154,7 @@ namespace tts
     for(std::size_t i=0;i<inputs.size();++i)
       inputs[i] = g(i,count);
 
-    std::size_t repetition  = args.value_or(1ULL, "-l", "--loop");
-    bool hexfloat           = args.is_set("-x","--hex");
+    std::size_t repetition  = ::tts::arguments.value( "--loop", 1ULL);
 
     double max_ulp = 0.;
     std::size_t nb_buckets  = 2+1+16;
@@ -216,15 +212,12 @@ namespace tts
 
         detail::results ( std::cout, ulps , ulp_map[i], ratio
                         , "Input: " , std::get<1>( samples[ i ] )
-                        , hexfloat
                         );
         detail::results ( std::cout, ""   , ""        , ""
                         , "Found: " , std::get<2>( samples[ i ] )
-                        , hexfloat
                         );
         detail::results ( std::cout, ""   , ""        , ""
                         , "instead of: " , std::get<3>( samples[ i ] )
-                        , hexfloat
                         );
 
         std::cout << std::string(80,'-') << std::endl << std::noshowpos;
@@ -237,13 +230,16 @@ namespace tts
   template<typename P>
   void print_producer(P const& producer, const char* alt)
   {
-    if constexpr( tts::detail::has_to_string<P>)
+    if constexpr(   tts::support_std_to_string<P>
+                ||  tts::streamable<P>
+                ||  tts::support_to_string<P>
+                )
     {
-      std::cout << ::tts::cyan() << producer.to_string() << ::tts::reset();
+      std::cout << ::tts::cyan << ::tts::as_string(producer) << ::tts::reset << "\n";
     }
     else
     {
-      std::cout << ::tts::cyan(alt);
+      std::cout << ::tts::cyan << alt << ::tts::reset << "\n";
     }
   }
 
@@ -261,54 +257,53 @@ namespace tts
 // Generate a range based test between two function
 //==================================================================================================
 #define TTS_ULP_RANGE_CHECK(Producer, RefType, NewType, RefFunc, NewFunc, Ulpmax)                   \
-  do                                                                                                \
+  [&]()                                                                                             \
   {                                                                                                 \
-    std::cout << ::tts::magenta("Comparing: ")  << ::tts::cyan(TTS_STRING(RefFunc))                 \
-              << "<" << ::tts::cyan(TTS_STRING(TTS_REMOVE_PARENS(RefType))) << ">"                  \
-              << " with "                       << ::tts::cyan(TTS_STRING(NewFunc))                 \
-              << "<" << ::tts::cyan(TTS_STRING(TTS_REMOVE_PARENS(NewType))) << ">"                  \
-              << " using ";                                                                         \
+    std::cout << ::tts::magenta << "Comparing: " << ::tts::cyan << TTS_STRING(RefFunc)              \
+              << ::tts::reset << "<"                                                                \
+              << ::tts::cyan << TTS_STRING(TTS_REMOVE_PARENS(RefType))                              \
+              << ::tts::reset << ">"                                                                \
+              << " with " << ::tts::cyan << TTS_STRING(NewFunc) << ::tts::reset                     \
+              << "<" << ::tts::cyan << TTS_STRING(TTS_REMOVE_PARENS(NewType))                       \
+              << ::tts::reset << "> using ";                                                        \
                                                                                                     \
     auto generator = TTS_REMOVE_PARENS(Producer);                                                   \
     tts::init_producer(generator,::tts::arguments);                                                 \
-    tts::print_producer(generator,TTS_STRING(Producer));                                            \
-    std::cout << "\n";                                                                              \
+    tts::print_producer(generator, TTS_STRING(Producer) );                                          \
                                                                                                     \
-    auto local_tts_threshold  = ::tts::arguments.value_or<double>(Ulpmax, "-u","--ulpmax"); ;       \
-                                                                                                    \
-    auto local_tts_max_ulp    = ::tts::ulp_histogramm < TTS_REMOVE_PARENS(RefType)                  \
-                                                      , TTS_REMOVE_PARENS(NewType)                  \
-                                                      >                                             \
+    auto local_tts_threshold  = ::tts::arguments.value( "--ulpmax", Ulpmax );                       \
+    auto local_tts_max_ulp    = ::tts::ulp_histogram< TTS_REMOVE_PARENS(RefType)                    \
+                                                    , TTS_REMOVE_PARENS(NewType)                    \
+                                                    >                                               \
                                 ( generator                                                         \
                                 , RefFunc, NewFunc                                                  \
-                                , ::tts::arguments                                                  \
                                 );                                                                  \
                                                                                                     \
     if(local_tts_max_ulp <= local_tts_threshold)                                                    \
     {                                                                                               \
-      TTS_PASS(     "Expecting: "   << ::tts::green(TTS_STRING(NewFunc))                            \
-                <<  " similar to "  << ::tts::green(TTS_STRING(RefFunc))                            \
-                <<  " within "      << std::setprecision(2) << ::tts::green()                       \
+      TTS_PASS(     "Expecting: "   << ::tts::green << TTS_STRING(NewFunc)                          \
+                <<  " similar to "  << ::tts::green << TTS_STRING(RefFunc)                          \
+                <<  " within "      << std::setprecision(2) << ::tts::green                         \
                                     << local_tts_threshold  << ::tts::reset << " ULP"               \
-                <<  " and found: "  << std::setprecision(2) << ::tts::green()                       \
+                <<  " and found: "  << std::setprecision(2) << ::tts::green                         \
                                     << local_tts_max_ulp    << ::tts::reset << " ULP"               \
               );                                                                                    \
     }                                                                                               \
     else                                                                                            \
     {                                                                                               \
-      TTS_FAIL(     "Expecting: "   << ::tts::green(TTS_STRING(NewFunc))                            \
-                <<  " similar to "  << ::tts::green(TTS_STRING(RefFunc))                            \
-                <<  " within "      << std::setprecision(2) << ::tts::green()                       \
+      TTS_FAIL(     "Expecting: "   << ::tts::green << TTS_STRING(NewFunc)                          \
+                <<  " similar to "  << ::tts::green << TTS_STRING(RefFunc)                          \
+                <<  " within "      << std::setprecision(2) << ::tts::green                         \
                                     << local_tts_threshold  << ::tts::reset << " ULP"               \
-                <<  " but found: "  << std::setprecision(2) << ::tts::red()                         \
+                <<  " but found: "  << std::setprecision(2) << ::tts::red                           \
                                     << local_tts_max_ulp    << ::tts::reset << " ULP instead"       \
               );                                                                                    \
     }                                                                                               \
-  } while(::tts::detail::done())                                                                    \
+  }()
 /**/
 
 //==================================================================================================
-// Ready-to-use generators
+// Ready-to-use PRNGs
 //==================================================================================================
 namespace tts
 {
@@ -325,19 +320,18 @@ namespace tts
 
     void init( options const& args )
     {
-      auto s = args.value_or(18102008, "-s", "--seed");
+      std::mt19937::result_type no_seed(-1);
+      seed_ = args.value( "--seed", no_seed );
 
-      if(s == -1 )
+      if(seed_ == no_seed )
       {
         auto now  = std::chrono::high_resolution_clock::now();
-        s = static_cast<unsigned int>(now.time_since_epoch().count());
+        seed_      = static_cast<unsigned int>(now.time_since_epoch().count());
       }
-
-      seed_ = std::mt19937::result_type(s);
       generator_.seed(seed_);
 
-      auto mn = args.value_or(distribution_.min(), "-v", "--valmin");
-      auto mx = args.value_or(distribution_.max(), "-w", "--valmax");
+      auto mn = args.value( "--valmin", distribution_.min() );
+      auto mx = args.value( "--valmax", distribution_.max() );
 
       distribution_.param(param_type(mn, mx));
     }
@@ -347,12 +341,12 @@ namespace tts
       return distribution_(generator_);
     }
 
-    std::string to_string() const
+    friend std::string to_string(prng_generator const& p)
     {
       std::ostringstream txt;
       txt << typename_<Distribution>
-          << "(" << distribution_.min() << ", " << distribution_.max() << ")"
-          << "[seed = " << seed_ << "]";
+          << "(" << p.distribution_.min() << ", " << p.distribution_.max() << ")"
+          << "[seed = " << p.seed_ << "]";
       return txt.str();
     }
 
