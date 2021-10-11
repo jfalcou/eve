@@ -15,26 +15,29 @@
 #include <type_traits>
 
 TTS_CASE_TPL("Check eve::none return type", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   TTS_EXPR_IS( (eve::none(eve::logical<T>())) , bool);
-}
+};
 
 TTS_CASE("Check eve::none bool")
 {
   TTS_EXPR_IS( (eve::none(bool{})) , bool);
   TTS_EXPECT_NOT( (eve::none(true)) );
   TTS_EXPECT    ( (eve::none(false)) );
-}
+};
 
 TTS_CASE_TPL("Check eve::none behavior on logical", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   TTS_EXPECT_NOT(eve::none(eve::true_(eve::as<T>())));
   TTS_EXPECT    (eve::none(eve::false_(eve::as<T>())));
-}
+};
 
 #if defined(EVE_SIMD_TESTS)
 
 TTS_CASE_TPL("Check eve::none[ignore]", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   // complete
   {
@@ -125,6 +128,6 @@ TTS_CASE_TPL("Check eve::none[ignore]", EVE_TYPE)
       }
     }
   }
-}
+};
 
 #endif

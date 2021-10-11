@@ -10,11 +10,13 @@
 #include <type_traits>
 
 TTS_CASE_TPL("Check inearest return type", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   TTS_EXPR_IS(eve::int_(eve::nearest)(T()), eve::as_integer_t<T>);
-}
+};
 
 TTS_CASE_TPL("Check eve::int_(eve::nearest) behavior", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   using i_t = eve::as_integer_t<T>;
 
@@ -43,4 +45,4 @@ TTS_CASE_TPL("Check eve::int_(eve::nearest) behavior", EVE_TYPE)
    TTS_EQUAL(eve::int_(eve::nearest)(T( 2.5)) , i_t( 2));
    TTS_EQUAL(eve::int_(eve::nearest)(T( 2.6)) , i_t( 3));
   }
-}
+};

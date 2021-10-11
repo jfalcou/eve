@@ -14,11 +14,13 @@
 #include <eve/logical.hpp>
 
 TTS_CASE_TPL("Check eve::count_true return type", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   TTS_EXPR_IS( (eve::count_true(eve::logical<T>())) , std::ptrdiff_t);
-}
+};
 
 TTS_CASE_TPL("Check eve::count_true behavior", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   auto cardinal = EVE_CARDINAL;
 
@@ -44,10 +46,11 @@ TTS_CASE_TPL("Check eve::count_true behavior", EVE_TYPE)
     TTS_EQUAL(eve::count_true(rhs4), (cardinal-1)  );
   }
 #endif
-}
+};
 
 #if defined(EVE_SIMD_TESTS)
 TTS_CASE_TPL("Check eve::count_true behavior with ignore", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   eve::logical<T> data(true);
 
@@ -66,5 +69,5 @@ TTS_CASE_TPL("Check eve::count_true behavior with ignore", EVE_TYPE)
   {
     TTS_EQUAL( eve::count_true[eve::ignore_first(1) && eve::ignore_last(1)](data), 0);
   }
-}
+};
 #endif

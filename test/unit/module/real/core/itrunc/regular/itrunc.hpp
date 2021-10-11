@@ -9,11 +9,13 @@
 #include <type_traits>
 
 TTS_CASE_TPL("Check itrunc return type", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   TTS_EXPR_IS(eve::int_(eve::trunc)(T()), eve::as_integer_t<T>);
-}
+};
 
 TTS_CASE_TPL("Check eve::itrunc behavior", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   using i_t = eve::as_integer_t<T>;
 
@@ -36,4 +38,4 @@ TTS_CASE_TPL("Check eve::itrunc behavior", EVE_TYPE)
    TTS_EQUAL(eve::int_(eve::trunc)(T( 1.5)), i_t( 1));
    TTS_EQUAL(eve::int_(eve::trunc)(T( 1.6)), i_t( 1));
   }
-}
+};
