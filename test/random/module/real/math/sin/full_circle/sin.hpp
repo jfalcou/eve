@@ -12,6 +12,7 @@
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on sin", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
 
   auto std_sin = [](auto e) { return std::sin(e); };
@@ -19,4 +20,4 @@ TTS_CASE_TPL("wide random check on sin", EVE_TYPE)
   auto m = eve::one(eve::as(l));
   eve::uniform_prng<EVE_VALUE> p(m, l);
   TTS_RANGE_CHECK(p, std_sin, eve::full_circle(eve::sin));
-}
+};

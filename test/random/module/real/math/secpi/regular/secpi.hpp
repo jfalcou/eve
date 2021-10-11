@@ -20,6 +20,7 @@
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on secpi", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   auto my_stdsecpi  = [](auto x)
                       {
@@ -36,4 +37,4 @@ TTS_CASE_TPL("wide random check on secpi", EVE_TYPE)
 
   eve::uniform_prng<EVE_VALUE> p(-2*eve::maxflint(eve::as<EVE_VALUE>()), 2*eve::maxflint(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, my_stdsecpi, eve::secpi);
-}
+};

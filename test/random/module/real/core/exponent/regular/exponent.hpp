@@ -13,6 +13,7 @@
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on exponent", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   using i_t = eve::as_integer_t<EVE_VALUE>;
 
@@ -22,4 +23,4 @@ TTS_CASE_TPL("wide random check on exponent", EVE_TYPE)
 
   eve::uniform_prng<EVE_VALUE> p(eve::smallestposval(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_exponent, eve::exponent);
-}
+};

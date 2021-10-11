@@ -12,9 +12,10 @@
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on sqrt", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   auto std_sqrt = [](auto e) { return std::sqrt(e); };
 
   eve::uniform_prng<EVE_VALUE> p(EVE_VALUE(0), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_sqrt, eve::sqrt);
-}
+};

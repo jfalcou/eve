@@ -14,9 +14,10 @@
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on cospi", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   auto my_stdcospi = [](auto x) -> EVE_VALUE {return boost::math::cos_pi(x); };
 
   eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, my_stdcospi, eve::cospi);
-}
+};

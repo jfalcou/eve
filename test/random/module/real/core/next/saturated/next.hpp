@@ -14,6 +14,7 @@
 #include <cmath>
 
 TTS_CASE_TPL("wide rng check on next", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   if constexpr(eve::floating_value<T>)
@@ -33,4 +34,4 @@ TTS_CASE_TPL("wide rng check on next", EVE_TYPE)
     eve::uniform_prng<v_t> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_next, eve::saturated(eve::next));
   }
-}
+};

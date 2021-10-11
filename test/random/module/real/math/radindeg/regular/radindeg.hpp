@@ -15,6 +15,7 @@
 #include "producers.hpp"
 
 TTS_CASE_TPL("wide random check on radindeg", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   auto std_indeg =  [](auto e)
     {
@@ -26,4 +27,4 @@ TTS_CASE_TPL("wide random check on radindeg", EVE_TYPE)
 
   eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK_WITH(p, std_indeg, eve::radindeg, 4);
-}
+};

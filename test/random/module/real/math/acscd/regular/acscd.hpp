@@ -15,6 +15,7 @@
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on acscd", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   auto std_acscd = [](auto e) { return eve::radindeg(std::asin(eve::rec(e))); };
 
@@ -23,4 +24,4 @@ TTS_CASE_TPL("wide random check on acscd", EVE_TYPE)
 
   eve::uniform_prng<EVE_VALUE> p2(EVE_VALUE(1), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK_WITH(p2, std_acscd, eve::acscd, 4.);
-}
+};

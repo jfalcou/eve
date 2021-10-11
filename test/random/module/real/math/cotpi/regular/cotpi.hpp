@@ -17,6 +17,7 @@
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on cotpi", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   auto my_stdcotpi  = [](auto x)
                       { return    (x == 0 || !eve::is_flint(x))
@@ -26,4 +27,4 @@ TTS_CASE_TPL("wide random check on cotpi", EVE_TYPE)
 
   eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK_WITH(p, my_stdcotpi, eve::cotpi, 4);
-}
+};

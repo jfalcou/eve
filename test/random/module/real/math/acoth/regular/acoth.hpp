@@ -13,6 +13,7 @@
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on acoth", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   auto std_acoth = [](auto e) { return std::atanh(eve::rec(e)); };
 
@@ -21,4 +22,4 @@ TTS_CASE_TPL("wide random check on acoth", EVE_TYPE)
 
   eve::uniform_prng<EVE_VALUE> p2(eve::valmin(eve::as<EVE_VALUE>()), EVE_VALUE(-1));
   TTS_RANGE_CHECK_WITH(p2, std_acoth, eve::acoth, 64);
-}
+};

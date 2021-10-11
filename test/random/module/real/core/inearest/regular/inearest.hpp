@@ -13,6 +13,7 @@
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on inearest", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
 
   using i_t  = eve::as_integer_t<EVE_VALUE>;
@@ -32,4 +33,4 @@ TTS_CASE_TPL("wide random check on inearest", EVE_TYPE)
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_inearest, eve::int_(eve::nearest));
   }
-}
+};

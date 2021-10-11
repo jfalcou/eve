@@ -12,9 +12,10 @@
 #include "producers.hpp"
 
 TTS_CASE_TPL("wide random check on sinpi", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   auto my_stdsinpi = [](auto x){return boost::math::sin_pi(x); };
 
   eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, my_stdsinpi, eve::sinpi);
-}
+};

@@ -12,6 +12,7 @@
 #include "producers.hpp"
 
 TTS_CASE_TPL("wide random check on tanpi", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   auto my_stdtanpi = [](auto x){return boost::math::sin_pi(x)/boost::math::cos_pi(x); };
 
@@ -19,4 +20,4 @@ TTS_CASE_TPL("wide random check on tanpi", EVE_TYPE)
                   , my_stdtanpi
                   , eve::quarter_circle(eve::tanpi)
                   );
-}
+};

@@ -20,6 +20,7 @@
 #include "producers.hpp"
 
 TTS_CASE_TPL("wide random check on tanpi", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   auto my_stdtanpi  = [](auto x)
                       {
@@ -36,4 +37,4 @@ TTS_CASE_TPL("wide random check on tanpi", EVE_TYPE)
                                                 )
                   , my_stdtanpi, eve::tanpi
                   );
-}
+};

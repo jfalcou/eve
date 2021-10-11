@@ -12,6 +12,7 @@
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on gamma", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   auto std_tgamma = [](auto e) { return std::tgamma(e); };
 
@@ -20,4 +21,4 @@ TTS_CASE_TPL("wide random check on gamma", EVE_TYPE)
                           );
 
   TTS_RANGE_CHECK(p, std_tgamma, eve::pedantic(eve::tgamma));
-}
+};
