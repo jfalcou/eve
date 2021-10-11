@@ -134,7 +134,7 @@ TTS_CASE("collect_indexes, elements equal to 2")
   std::vector<unsigned> actual;
   collect_indexes(input, [](auto x) { return x == 2; }, actual);
   TTS_EQUAL(expected, actual);
-}
+};
 
 TTS_CASE("collect_indexes for objects")
 {
@@ -147,7 +147,7 @@ TTS_CASE("collect_indexes for objects")
   collect_indexes(objects, [](auto x) { return get<0>(x) > 0; }, idxs);
 
   TTS_EQUAL(idxs, expected);
-}
+};
 
 TTS_CASE("collect_indexes clears the result")
 {
@@ -156,7 +156,7 @@ TTS_CASE("collect_indexes clears the result")
   std::vector<unsigned> actual(65u);
   collect_indexes(input, [](auto x) { return x == 2; }, actual);
   TTS_EQUAL(expected, actual);
-}
+};
 
 // ---------------
 // push data through test

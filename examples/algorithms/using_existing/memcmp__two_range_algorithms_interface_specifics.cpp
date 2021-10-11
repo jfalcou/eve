@@ -96,4 +96,4 @@ TTS_CASE("against std::memcmp")
     a[237] = 243;
     test(a, b);
   }
-}
+};

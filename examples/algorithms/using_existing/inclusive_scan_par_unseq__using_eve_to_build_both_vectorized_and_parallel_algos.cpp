@@ -300,14 +300,14 @@ TTS_CASE("subranges_split") {
       (std::ptrdiff_t)std::thread::hardware_concurrency(), job_size);
   }
 
-}
+};
 
 TTS_CASE("inclusive_scan")
 {
   std::vector<T> v;
   TTS_EQUAL(inclusive_scan(eve::algo::as_range(v.data(), v.data() + v.size()), T{3}),
             T{3});
-}
+};
 
 #if !defined(EVE_HW_POWERPC) // calling std::async crashes in our quemu run.
 TTS_CASE("inclusive_scan_par_unseq")
@@ -325,5 +325,5 @@ TTS_CASE("inclusive_scan_par_unseq")
     inclusive_scan_par_unseq(uptr_range(v.data(), v.data() + v.size()), T(5));
     TTS_EQUAL(expected, v);
   }
-}
+};
 #endif

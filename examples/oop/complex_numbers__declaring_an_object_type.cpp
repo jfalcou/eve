@@ -187,7 +187,7 @@ TTS_CASE("wide works")
     eve::wide<float> actual = eve::abs(x);
     TTS_RELATIVE_EQUAL(expected, actual, 0.00001);
   }
-}
+};
 
 TTS_CASE("scalar works")
 {
@@ -227,7 +227,7 @@ TTS_CASE("scalar works")
     float actual = eve::abs(x);
     TTS_RELATIVE_EQUAL(expected, actual, 0.00001);
   }
-}
+};
 
 TTS_CASE("printing")
 {
@@ -237,7 +237,7 @@ TTS_CASE("printing")
   };
   s << x;
   TTS_EQUAL(s.str(), "((0 + -0i), (1 + -1i), (2 + -2i), (3 + -3i))");
-}
+};
 
 TTS_CASE("soa_vector scan")
 {
@@ -253,7 +253,7 @@ TTS_CASE("soa_vector scan")
     cmplx{6.0, 0.6},
   };
   TTS_EQUAL(expected, actual);
-}
+};
 
 TTS_CASE("components scan")
 {
@@ -267,4 +267,4 @@ TTS_CASE("components scan")
 
   TTS_EQUAL(actual_re, expected_re);
   TTS_EQUAL(actual_im, expected_im);
-}
+};
