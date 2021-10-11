@@ -29,7 +29,7 @@ TTS_CASE("concepts, value type")
   TTS_TYPE_IS(eve::algo::value_type_t<decltype(v1)>, int);
   TTS_TYPE_IS((eve::algo::value_type_t<decltype(eve::algo::views::zip(v1, v2))>),
                (kumi::tuple<int, int>));
-}
+};
 
 TTS_CASE("concepts, relaxed")
 {
@@ -41,7 +41,7 @@ TTS_CASE("concepts, relaxed")
 
   TTS_CONSTEXPR_EXPECT_NOT(eve::algo::relaxed_range<int*>);
   TTS_CONSTEXPR_EXPECT(eve::algo::relaxed_range<std::vector<int>>);
-}
+};
 
 TTS_CASE("concepts, types_to_consider_for")
 {
@@ -70,4 +70,4 @@ TTS_CASE("concepts, types_to_consider_for")
 
   TTS_TYPE_IS(eve::algo::types_to_consider_for_t<decltype(zip_c_i_s)        >, (kumi::tuple<double, int, short>));
   TTS_TYPE_IS(eve::algo::types_to_consider_for_t<decltype(zip_c_i_s.begin())>, (kumi::tuple<double, int, short>));
-}
+};

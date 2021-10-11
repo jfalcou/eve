@@ -36,7 +36,7 @@ TTS_CASE("erase/remove idiom in eve")
   );
 
   TTS_EQUAL(expected, lines);
-}
+};
 
 TTS_CASE("erase/remove idiom in eve")
 {
@@ -58,4 +58,4 @@ TTS_CASE("erase/remove idiom in eve")
   );
 
   TTS_EQUAL(expected, points);
-}
+};

@@ -50,14 +50,14 @@ TTS_CASE("eve.algo.all/any/none/find_if, empty")
     (eve::algo::find(v, 1)),
     (std::find(v.begin(), v.end(), 1))
   );
-}
+};
 
 TTS_CASE("eve.algo.find value")
 {
   std::vector<int> const v{1, 2, 3, 4};
   std::vector<int>::const_iterator found = eve::algo::find[eve::algo::no_aligning](v, 3);
   TTS_EQUAL((found - v.begin()), 2);
-}
+};
 
 TTS_CASE("eve.algo.find point")
 {
@@ -71,7 +71,7 @@ TTS_CASE("eve.algo.find point")
     [](eve::wide<udt::point2D> points) { return get_y(points) != 0; });
 
   TTS_EQUAL(eve::read(found), (udt::point2D{3, 1}));
-}
+};
 
 TTS_CASE("eve.algo.find_if not in radius")
 {
@@ -87,7 +87,7 @@ TTS_CASE("eve.algo.find_if not in radius")
 
   auto found = eve::algo::find_if_not(eve::algo::views::zip(x, y), within_radius);
   TTS_EQUAL(eve::read(found), (kumi::tuple{-10, 5}));
-}
+};
 
 TTS_CASE("eve.algo.mismatch example, use previous result") {
   std::vector<int> const a{1, 2, 3, 4, 5, 6, 6, 8};
@@ -109,7 +109,7 @@ TTS_CASE("eve.algo.mismatch example, use previous result") {
 
   ra_rb = eve::algo::mismatch(eve::algo::as_range(ra, a.end()), rb);
   TTS_EQUAL(ra_rb, eve::algo::views::zip(a.end(), b.end()));
-}
+};
 
 TTS_CASE("eve.algo.mismatch example, first point not within a radius")
 {
@@ -130,7 +130,7 @@ TTS_CASE("eve.algo.mismatch example, first point not within a radius")
   TTS_EQUAL((found_x_y - x_y.begin()), 3);
   TTS_EQUAL(eve::read(found_x_y), (kumi::tuple{10, -10}));
   TTS_EQUAL(eve::read(found_r), 10.1);
-}
+};
 
 TTS_CASE("eve.algo.mismatch example, zip<zip>")
 {
@@ -148,7 +148,7 @@ TTS_CASE("eve.algo.mismatch example, zip<zip>")
 
   TTS_EQUAL(eve::read(get<0>(found)), (kumi::tuple<float, float>{3, 2}));
   TTS_EQUAL(eve::read(get<1>(found)), 4.9);
-}
+};
 
 TTS_CASE("eve.algo.equal/mismatch by key")
 {
@@ -181,4 +181,4 @@ TTS_CASE("eve.algo.equal/mismatch by key")
     TTS_NOT_EQUAL(get<0>(mmatch), map_1.end());
     TTS_EQUAL    (get<0>(mmatch), map_1.begin() + offset);
   }
-}
+};

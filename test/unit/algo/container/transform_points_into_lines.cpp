@@ -47,4 +47,4 @@ TTS_CASE("transform points into vertical lines")
   });
 
   TTS_EQUAL(expected, actual);
-}
+};

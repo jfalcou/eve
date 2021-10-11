@@ -55,7 +55,7 @@ TTS_CASE("zip_iterator for not eve iterators")
     TTS_EQUAL((i-- - zf), 1);
     TTS_EQUAL(i, zf);
   }
-}
+};
 
 TTS_CASE("zip_iterator for not eve iterators, unaligned")
 {
@@ -65,8 +65,7 @@ TTS_CASE("zip_iterator for not eve iterators, unaligned")
   using expected = eve::algo::views::zip_iterator<u_p, u_p>;
   using actual   = eve::algo::unaligned_t<eve::algo::views::zip_iterator<a_p, u_p>>;
   TTS_TYPE_IS(expected, actual);
-}
-
+};
 
 TTS_CASE("zip_iterator, sanity check, types test")
 {
@@ -136,7 +135,7 @@ TTS_CASE("zip_iterator, sanity check, types test")
   // sentinel for mismatching
   TTS_CONSTEXPR_EXPECT((eve::algo::sentinel_for<zip_a_u, zip_u_a>));
   TTS_CONSTEXPR_EXPECT((eve::algo::sentinel_for<zip_u_a, zip_a_u>));
-}
+};
 
 EVE_TEST_TYPES("Check zip_iterator", algo_test::selected_types)
 <typename T>(eve::as<T>)

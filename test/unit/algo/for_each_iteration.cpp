@@ -42,50 +42,50 @@ namespace
 }
 
 TTS_CASE("eve.algo for_each_iteration, selection")
+{
+  fixture fix;
+
+  auto f = fix.unaligned_begin() + 3;
+  auto l = f + 40;
+
+  using u_it = decltype(f);
+  using a_it = decltype(fix.aligned_begin());
+
+  // aligning
   {
-    fixture fix;
+    auto tr  = eve::algo::traits();
+    auto sel = eve::algo::for_each_iteration(tr, f, l);
+    TTS_TYPE_IS(decltype(sel),
+                (eve::algo::detail::for_each_iteration_aligning<decltype(tr), u_it, u_it>));
 
-    auto f = fix.unaligned_begin() + 3;
-    auto l = f + 40;
+    TTS_EQUAL(sel.base, fix.aligned_begin());
+    TTS_TYPE_IS(decltype(sel.base), a_it);
+  }
 
-    using u_it = decltype(f);
-    using a_it = decltype(fix.aligned_begin());
+  // precise f, l
+  {
+    auto tr  = eve::algo::traits(eve::algo::no_aligning, eve::algo::divisible_by_cardinal);
+    auto sel = eve::algo::for_each_iteration(tr, f, l);
 
-    // aligning
-    {
-      auto tr  = eve::algo::traits();
-      auto sel = eve::algo::for_each_iteration(tr, f, l);
-      TTS_TYPE_IS(decltype(sel),
-                  (eve::algo::detail::for_each_iteration_aligning<decltype(tr), u_it, u_it>));
+    TTS_TYPE_IS(decltype(sel),
+                (eve::algo::detail::for_each_iteration_precise_f_l<decltype(tr), u_it, u_it>));
 
-      TTS_EQUAL(sel.base, fix.aligned_begin());
-      TTS_TYPE_IS(decltype(sel.base), a_it);
-    }
+    TTS_EQUAL(sel.base, f);
+    TTS_TYPE_IS(decltype(sel.base), u_it);
+  }
 
-    // precise f, l
-    {
-      auto tr  = eve::algo::traits(eve::algo::no_aligning, eve::algo::divisible_by_cardinal);
-      auto sel = eve::algo::for_each_iteration(tr, f, l);
+  // precise f
+  {
+    auto tr  = eve::algo::traits(eve::algo::no_aligning);
+    auto sel = eve::algo::for_each_iteration(tr, f, l);
 
-      TTS_TYPE_IS(decltype(sel),
-                  (eve::algo::detail::for_each_iteration_precise_f_l<decltype(tr), u_it, u_it>));
+    TTS_TYPE_IS(decltype(sel),
+                (eve::algo::detail::for_each_iteration_precise_f<decltype(tr), u_it, u_it>));
 
-      TTS_EQUAL(sel.base, f);
-      TTS_TYPE_IS(decltype(sel.base), u_it);
-    }
-
-    // precise f
-    {
-      auto tr  = eve::algo::traits(eve::algo::no_aligning);
-      auto sel = eve::algo::for_each_iteration(tr, f, l);
-
-      TTS_TYPE_IS(decltype(sel),
-                  (eve::algo::detail::for_each_iteration_precise_f<decltype(tr), u_it, u_it>));
-
-      TTS_EQUAL(sel.base, f);
-      TTS_TYPE_IS(decltype(sel.base), u_it);
-    }
-}
+    TTS_EQUAL(sel.base, f);
+    TTS_TYPE_IS(decltype(sel.base), u_it);
+  }
+};
 
 namespace
 {
@@ -216,7 +216,7 @@ TTS_CASE("eve.algo for_each_iteration border cases, aligning")
       test(f + i, l - i, {{0, eve::ignore_first(i)}, {4, eve::ignore_extrema(0, i)}});
     }
   }
-}
+};
 
 TTS_CASE("eve.algo for_each_iteration border cases, precise")
 {
@@ -276,7 +276,7 @@ TTS_CASE("eve.algo for_each_iteration border cases, precise")
     test(f + 1, l - 2, {{0, eve::ignore_none}, {4, eve::keep_first(1)}});
     test(f + 2, l - 1, {{0, eve::ignore_none}, {4, eve::keep_first(1)}});
   }
-}
+};
 
 TTS_CASE("eve.algo for_each_iteration unrolling, aligning")
 {
@@ -368,7 +368,7 @@ TTS_CASE("eve.algo for_each_iteration unrolling, aligning")
       {80, eve::ignore_extrema(0, 1)}
     }
   );
-}
+};
 
 TTS_CASE("eve.algo for_each_iteration unrolling, precise")
 {
@@ -460,7 +460,7 @@ TTS_CASE("eve.algo for_each_iteration unrolling, precise")
       {64, eve::keep_first(1)},
     }
   );
-}
+};
 
 TTS_CASE("eve.algo for_each_iteration steps indexing")
 {
@@ -493,4 +493,4 @@ TTS_CASE("eve.algo for_each_iteration steps indexing")
     0, 1, 2, // steps finishing
     0, // ignore
   }));
-}
+};

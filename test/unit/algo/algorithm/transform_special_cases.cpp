@@ -31,4 +31,4 @@ TTS_CASE("eve.algo.transform different type works")
   out.resize(4);
   eve::algo::transform_to(in, out, eve::sqrt);
   TTS_EQUAL(out, expected);
-}
+};

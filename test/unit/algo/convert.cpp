@@ -30,7 +30,7 @@ TTS_CASE("eve::algo::views::convert, read/write")
     TTS_EQUAL(v[i], 0);
     ++i;
   }
-}
+};
 
 TTS_CASE("eve::algo::views::convert, preprocess test")
 {
@@ -99,7 +99,7 @@ TTS_CASE("eve::algo::views::convert, preprocess test")
                 eve::as<To>{}, eve::algo::traits{}, a_it{}, u_it{},
                 eve::algo::traits{eve::algo::no_aligning});
   }
-}
+};
 
 TTS_CASE("eve.algo.views.convert to/from")
 {
@@ -135,4 +135,4 @@ TTS_CASE("eve.algo.views.convert to/from")
   }
 
   TTS_PASS("all types ok");
-}
+};
