@@ -108,4 +108,4 @@ TTS_CASE( "explicit test case")
   TTS_EQUAL(out_ints[1], 5);
   TTS_EQUAL(out_bytes[0], 2);
   TTS_EQUAL(out_bytes[1], 6);
-}
+};

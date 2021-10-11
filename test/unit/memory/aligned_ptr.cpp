@@ -18,7 +18,7 @@ TTS_CASE("aligned_ptr exposes proper traits")
 
   TTS_TYPE_IS( it_t::value_type , double);
   TTS_TYPE_IS( cit_t::value_type, double);
-}
+};
 
 TTS_CASE("aligned_ptr constructor from nullptr")
 {
@@ -26,7 +26,7 @@ TTS_CASE("aligned_ptr constructor from nullptr")
 
   TTS_EQUAL(nullptr_constructed_ptr.get() , nullptr);
   TTS_EQUAL(nullptr_constructed_ptr       , nullptr);
-}
+};
 
 TTS_CASE("aligned_ptr factory functions - Default SIMD alignment")
 {
@@ -38,7 +38,7 @@ TTS_CASE("aligned_ptr factory functions - Default SIMD alignment")
   TTS_EQUAL(eve::as_aligned(&values[ 0 ])         , eve::as_aligned(&values[ 0 ]));
   TTS_NOT_EQUAL(eve::as_aligned(&values[ 0 ])     , &values[ 3 ]);
   TTS_NOT_EQUAL(eve::as_aligned(&values[ 0 ])     , eve::as_aligned(&values[ size ]));
-}
+};
 
 TTS_CASE("aligned_ptr factory functions - Specific alignment")
 {
@@ -48,7 +48,7 @@ TTS_CASE("aligned_ptr factory functions - Specific alignment")
   TTS_EQUAL(eve::as_aligned(&values[0], eve::lane<8>)      , eve::as_aligned(&values[0], eve::lane<8>));
   TTS_NOT_EQUAL(eve::as_aligned(&values[0], eve::lane<8>)  , &values[3]);
   TTS_NOT_EQUAL(eve::as_aligned(&values[0], eve::lane<8>)  , eve::as_aligned(&values[8], eve::lane<8>));
-}
+};
 
 TTS_CASE("aligned_ptr ordering")
 {
@@ -64,7 +64,7 @@ TTS_CASE("aligned_ptr ordering")
 
   ptr1--;
   TTS_EXPECT(ptr >  ptr1);
-}
+};
 
 TTS_CASE("aligned_ptr pre/post increment & decrement")
 {
@@ -82,7 +82,7 @@ TTS_CASE("aligned_ptr pre/post increment & decrement")
 
   --ptr;
   TTS_EQUAL(ptr.get(), &values[ 0 ]);
-}
+};
 
 struct type
 {
@@ -185,7 +185,7 @@ TTS_CASE("aligned_ptr provides pointer-like interface")
       TTS_EQUAL((other_ptr - ptr.get()), 1);
     }
   }
-}
+};
 
 TTS_CASE("previous aligned address")
 {
@@ -204,4 +204,4 @@ TTS_CASE("previous aligned address")
     aligned_ptr<short const, lanes> aligned_const = eve::previous_aligned_address((short const*)cur, lanes{});
     TTS_EQUAL(aligned_const.get(), expected);
   }
-}
+};
