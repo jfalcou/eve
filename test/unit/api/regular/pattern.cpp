@@ -24,7 +24,7 @@ TTS_CASE("Check pattern properties checks")
   TTS_CONSTEXPR_EXPECT    ( (eve::pattern< 0,na_, 2,na_>.validate(4)) );
   TTS_CONSTEXPR_EXPECT    ( (eve::pattern< 0, 1, 2, 3>.validate(4)) );
   TTS_CONSTEXPR_EXPECT_NOT( (eve::pattern< 0, 1, 2, 4>.validate(4)) );
-}
+};
 
 TTS_CASE("Check lambda-pattern properties checks")
 {
@@ -39,7 +39,7 @@ TTS_CASE("Check lambda-pattern properties checks")
   TTS_CONSTEXPR_EQUAL ( eve::fix_pattern<8>(f).size(), 8  );
   TTS_CONSTEXPR_EXPECT( eve::fix_pattern<8>(f).has_zeros());
   TTS_CONSTEXPR_EXPECT( eve::fix_pattern<8>(f).validate(8));
-}
+};
 
 TTS_CASE("Check pattern random access behavior")
 {
@@ -49,7 +49,7 @@ TTS_CASE("Check pattern random access behavior")
   TTS_CONSTEXPR_EQUAL(p(1,4), 1);
   TTS_CONSTEXPR_EQUAL(p(2,4), 2);
   TTS_CONSTEXPR_EQUAL(p(3,4), 3);
-}
+};
 
 TTS_CASE("Check lambda-pattern random access behavior")
 {
@@ -61,7 +61,7 @@ TTS_CASE("Check lambda-pattern random access behavior")
   TTS_CONSTEXPR_EQUAL(eve::fix_pattern<4>(f)(0,4), 0);
   TTS_CONSTEXPR_EQUAL(eve::fix_pattern<4>(f)(2,4), 1);
   TTS_CONSTEXPR_EQUAL(eve::fix_pattern<4>(f)(3,4),na_);
-}
+};
 
 TTS_CASE("Check pattern comparison operators")
 {
@@ -71,7 +71,7 @@ TTS_CASE("Check pattern comparison operators")
   TTS_CONSTEXPR_EXPECT    ( (eve::pattern<0,0,1,1,2,2,3,3>  ).under(3)          );
   TTS_CONSTEXPR_EXPECT    ( (eve::pattern<4,5,6,7,8,9,10,11>).strictly_over(2)  );
   TTS_CONSTEXPR_EXPECT    ( (eve::pattern<4,5,6,7,8,9,10,11>).over(4)           );
-}
+};
 
 TTS_CASE("Check lambda-pattern comparison operators")
 {
@@ -86,7 +86,7 @@ TTS_CASE("Check lambda-pattern comparison operators")
 
   TTS_CONSTEXPR_EXPECT( t.strictly_over(2) );
   TTS_CONSTEXPR_EXPECT( t.over(4) );
-}
+};
 
 TTS_CASE("Check pattern_clamp effects")
 {
@@ -96,7 +96,7 @@ TTS_CASE("Check pattern_clamp effects")
   TTS_CONSTEXPR_EQUAL ( eve::pattern_clamp<2>(q), (eve::pattern<0,1>) );
   TTS_CONSTEXPR_EQUAL ( eve::pattern_clamp<4>(q), (eve::pattern<0,1,2,3>) );
   TTS_CONSTEXPR_EQUAL ( eve::pattern_clamp<8>(q), (eve::pattern<0,1,2,3,4,5,6,7>) );
-}
+};
 
 TTS_CASE("Check pattern_view effects")
 {
@@ -115,4 +115,4 @@ TTS_CASE("Check pattern_view effects")
   TTS_CONSTEXPR_EQUAL ( (eve::pattern_view<2,6,8>(q)), (eve::pattern<2,3,4,5>) );
   TTS_CONSTEXPR_EQUAL ( (eve::pattern_view<3,7,8>(q)), (eve::pattern<3,4,5,6>) );
   TTS_CONSTEXPR_EQUAL ( (eve::pattern_view<4,8,8>(q)), (eve::pattern<4,5,6,7>) );
-}
+};
