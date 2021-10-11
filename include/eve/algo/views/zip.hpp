@@ -60,6 +60,7 @@ namespace eve::algo::views
   //!            If at least one component is a `relaxed_range` - result
   //!            is a `zip_range`, otherwise it's `zip_iterator`.
   //!            All range compinents have to have the same length.
+  //!            NOTE: uses `range_ref` inside, so never owns/copies any elements.
   //!
   //!            Supports `zip[eve::algo::force_type<T>]`,
   //!                     `zip[eve::algo::common_type<T>],
