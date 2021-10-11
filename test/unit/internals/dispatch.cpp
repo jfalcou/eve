@@ -82,7 +82,7 @@ TTS_CASE("Check that constant can be externally defined for user-defined types" 
 {
   TTS_EQUAL( eve::valmax( eve::as<use_friend>{}            ), "valmax dispatched via friend" );
   TTS_EQUAL( eve::valmax( eve::as<other_space::use_adl>{}  ), "valmax dispatched via ADL"    );
-}
+};
 
 TTS_CASE("Check that function can be externally defined for user-defined types" )
 {
@@ -92,7 +92,7 @@ TTS_CASE("Check that function can be externally defined for user-defined types" 
   TTS_EQUAL( eve::add(fa, fb) , "add dispatched via friend" );
   TTS_EQUAL( eve::add(aa, ab) , "add dispatched via ADL"    );
   TTS_EQUAL( (aa + ab)        , "add dispatched via ADL"    );
-}
+};
 
 TTS_CASE("Check that function + conditional can be externally defined for user-defined types" )
 {
@@ -101,7 +101,7 @@ TTS_CASE("Check that function + conditional can be externally defined for user-d
 
   TTS_EQUAL( eve::add[true](fa, fb) , "conditional add dispatched via friend" );
   TTS_EQUAL( eve::add[true](aa, ab) , "conditional add dispatched via ADL"    );
-}
+};
 
 TTS_CASE("Check that function + decorator can be externally defined for user-defined types" )
 {
@@ -110,7 +110,7 @@ TTS_CASE("Check that function + decorator can be externally defined for user-def
 
   TTS_EQUAL( eve::pedantic(eve::add)(fa, fb) , "pedantic add dispatched via friend" );
   TTS_EQUAL( eve::pedantic(eve::add)(aa, ab) , "pedantic add dispatched via ADL"    );
-}
+};
 
 TTS_CASE("Check that conditional function + decorator can be externally defined for user-defined types" )
 {
@@ -119,4 +119,4 @@ TTS_CASE("Check that conditional function + decorator can be externally defined 
 
   TTS_EQUAL( eve::pedantic(eve::add[true])(fa, fb) , "conditional pedantic add dispatched via friend" );
   TTS_EQUAL( eve::pedantic(eve::add[true])(aa, ab) , "conditional pedantic add dispatched via ADL"    );
-}
+};

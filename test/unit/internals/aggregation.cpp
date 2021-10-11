@@ -15,7 +15,7 @@ TTS_CASE("Check that aggregated_ ABI differs with architecture specificities" )
 # else
   TTS_EXPECT( eve::aggregated_::is_wide_logical );
 # endif
-}
+};
 
 int aggregation_kind( eve::internal_wide_logical::aggregated_ ) { return +1; }
 int aggregation_kind( eve::internal_bit_logical::aggregated_  ) { return -1; }
@@ -27,4 +27,4 @@ TTS_CASE("Check that aggregated_ ABI participates to function mangling" )
 # else
   TTS_EQUAL( aggregation_kind(eve::aggregated_{}), +1);
 # endif
-}
+};
