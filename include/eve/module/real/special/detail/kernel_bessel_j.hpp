@@ -10,19 +10,106 @@
 #include <eve/constant/eps.hpp>
 #include <eve/constant/pi.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/constant/smallestposval.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/cyl_bessel_j0.hpp>
 #include <eve/function/cyl_bessel_j1.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/function/lgamma.hpp>
+#include <eve/function/tgamma.hpp>
+#include <eve/function/exp.hpp>
+#include <eve/function/log.hpp>
 #include <eve/function/nthroot.hpp>
 #include <eve/function/sincos.hpp>
 #include <eve/function/sinpicospi.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/sqrt.hpp>
 #include <eve/detail/kumi.hpp>
+#include <eve/function/converter.hpp>
 
 namespace eve::detail
 {
+
+  template <class F, class U, class V>
+  inline auto sum_series( F& func
+                         , U factor
+                         , int max_terms
+                         , V init_value) noexcept
+  {
+    using result_type =  typename F::result_type;
+
+    int counter = max_terms;
+
+    result_type result(init_value);
+    result_type next_term;
+    do{
+      next_term = func();
+      result += next_term;
+    }
+    while((abs(factor * result) < eve::abs(next_term)) && --counter);
+
+    // set max_terms to the actual number of terms of the series evaluated:
+    max_terms = max_terms - counter;
+
+    return result;
+  }
+
+  template <class T>
+  struct bessel_j_small_z_series_term
+  {
+    typedef T result_type;
+
+    bessel_j_small_z_series_term(T v_, T x)
+      : N(0), v(v_)
+    {
+      mult = x / 2;
+      mult *= -mult;
+      term = 1;
+    }
+    T operator()()
+    {
+      T r = term;
+      ++N;
+      term *= mult / (N * (N + v));
+      return r;
+    }
+  private:
+    unsigned N;
+    T v;
+    T mult;
+    T term;
+  };
+
+  //
+  // Series evaluation for BesselJ(v, z) as z -> 0.
+  // See http://functions.wolfram.com/Bessel-TypeFunctions/BesselJ/06/01/04/01/01/0003/
+  // Converges rapidly for all z << v.
+  //
+  template <class T>
+  inline T bessel_j_small_z_series(T v, T x)
+  {
+    std::cout << "bessel_j_small_z_series" << std::endl;
+    T prefix;
+    using elt_t = element_type_t<T>;
+    auto max_factorial = (sizeof(elt_t) == 4 ? 34 : 170);
+    if(v < max_factorial)
+    {
+      prefix = eve::pow(x / 2, v) / eve::tgamma(v+1);
+    }
+    else
+    {
+      prefix = v * eve::log(x / 2) - eve::lgamma(v+1);
+      prefix = eve::exp(prefix);
+    }
+    if(0 == prefix)  return prefix;
+    bessel_j_small_z_series_term<T> s(v, x);
+    auto max_iter = 1000000;
+    T result = sum_series(s, eps(as(x)), max_iter, zero(as(x)));
+    return prefix * result;
+  }
+
+
+
 
   template <class T>
   inline T asymptotic_bessel_amplitude(T v, T x)
@@ -136,45 +223,9 @@ namespace eve::detail
     return (eve::max)(T(eve::abs(v)), T(1)) < x * eve::nthroot(eve::eps(as(x)), 8); //sqrt(tools::forth_root_epsilon<T>());
   }
 
-
-
-//   // Evaluate continued fraction fv = J_(v+1) / J_v, see
-//   // Abramowitz and Stegun, Handbook of Mathematical Functions, 1972, 9.1.73
-//   template <typename T>
-//   EVE_FORCEINLINE auto CF1_jy(T v, T x) noexcept
-//   {
-//     T C, D, f, a, b, delta, tiny, tolerance;
-//     unsigned long k;
-//     int s = 1;
-//     // |x| <= |v|, CF1_jy converges rapidly
-//     // |x| > |v|, CF1_jy needs O(|x|) iterations to converge
-
-//     // modified Lentz's method, see
-//     // Lentz, Applied Optics, vol 15, 668 (1976)
-//     tolerance = 2 * eve::eps(as(x));
-//     tiny = eve::sqrt(valmin(as(x)));
-//     C = f = tiny;                           // b0 = 0, replace with tiny
-//     D = 0;
-//     for (k = 1; k < 1000; ++k)//policies::get_max_series_iterations<Policy>() * 100; k++)
-//     {
-//       a = -1;
-//       b = 2 * (v + k) / x;
-//       C = b + a / C;
-//       D = b + a * D;
-//       if (C == 0) { C = tiny; }
-//       if (D == 0) { D = tiny; }
-//       D = rec(D);
-//       delta = C * D;
-//       f *= delta;
-//       if (D < 0) { s = -s; }
-//       if (eve::abs(delta - 1) < tolerance) break;
-//     }
-//     return kumi::tuple<T, T>{-f, s};
-//   }
-
   /////////////////////////////////////////////////////////////////////////
   // bessel_j of integer order
-  template<real_value I, floating_real_value T>
+  template<real_scalar_value I, floating_real_scalar_value T>
   EVE_FORCEINLINE auto   kernel_bessel_j_int (I n, T x) noexcept
   {
     // n < abs(z), forward recurrence stable and usable
@@ -187,8 +238,8 @@ namespace eve::detail
     // Abramowitz and Stegun, Handbook of Mathematical Functions, 1972, 9.1.73
     auto CF1_jy = [](T v, T x) noexcept
       {
-        std::cout << " CF1_jy" << std::endl;
-        T C, D, f, a, b, delta, tiny, tolerance;
+        std::cout << " CF1_jy " << sizeof(T) << std::endl;
+        double C, D, f, a, b, delta, tiny, tolerance;
         unsigned long k;
         T s(1);
         // |x| <= |v|, CF1_jy converges rapidly
@@ -197,24 +248,31 @@ namespace eve::detail
         // modified Lentz's method, see
         // Lentz, Applied Optics, vol 15, 668 (1976)
         tolerance = 2 * eve::eps(as(x));
-        tiny = eve::sqrt(valmin(as(x)));
+        tiny = eve::sqrt(smallestposval(as(x)));
+          std::cout << "tiny     " << tiny << std::endl;
         C = f = tiny;                           // b0 = 0, replace with tiny
+        std::cout << "C " << C << std::endl;
         D = 0;
-        for (k = 1; k < 1000; ++k)//policies::get_max_series_iterations<Policy>() * 100; k++)
+        std::cout << "D " << D << std::endl;
+        for (k = 1; k < 100; ++k)//policies::get_max_series_iterations<Policy>() * 100; k++)
         {
           a = -1;
           b = 2 * (v + k) / x;
           C = b + a / C;
           D = b + a * D;
+          std::cout << "k " << k << std::endl;
+          std::cout << "C " << C << std::endl;
+          std::cout << "D " << D << std::endl;
           C = if_else(is_eqz(C), tiny, C);
           D = if_else(is_eqz(D), tiny, D);
           D = rec(D);
           delta = C * D;
+          std::cout << "delta " << delta << std::endl;
           f *= delta;
           D = if_else (is_ltz(D), -s, s);
           if (eve::all(eve::abs(delta - 1) < tolerance)) break;
         }
-        return kumi::tuple<T, T>{-f, s};
+        return kumi::tuple<T, T>{T(-f), T(s)};
       };
     auto br_large =  [](auto n,  auto x)
       {
@@ -243,10 +301,10 @@ namespace eve::detail
         };
         return value/scale;
       };
-    auto br_small =  [](auto ,  auto x)
+    auto br_small =  [](auto n,  auto x)
       {
         std::cout << "br_small" << std::endl;
-        return x; //bessel_j_small_z_series(T(n), x);
+        return bessel_j_small_z_series(T(n), x);
       };
     auto br_backward =  [CF1_jy, j0](auto n,  auto x)
       {
@@ -254,7 +312,10 @@ namespace eve::detail
         T scale(1);
         // fn = J_(n+1) / J_n
         // |x| <= n, fast convergence for continued fraction CF1
-        auto [fn, s] = CF1_jy(T(n), x);
+       std::cout << "sizeof(T)  " << sizeof(T) << std::endl;
+         auto [fn, s] = CF1_jy(T(n), x);
+        std::cout << "fn " << fn << std::endl;
+        std::cout << "s  " << s  << std::endl;
         ///T fn(0); //, s(0);
         auto prev = fn;
         auto current = one(as(x));
@@ -293,8 +354,8 @@ namespace eve::detail
       if (n == 0)                                   return cyl_bessel_j0(x);
       if (n == 1)                                   return factor*cyl_bessel_j1(x);
       if (is_eqz(x))                                return factor*x;   // as n >= 2
-      if (n < abs(x))                               return br_forward(n, x);      // forward recurrence
-      if ((x < 1) || (n > x * x / 4) || (x < 5))    return factor*br_small(n, x); // serie
+      if (n < eve::abs(x))                          return br_forward(n, x);      // forward recurrence
+      if ((n > x * x / 4) || (x < 5))    return factor*br_small(n, x); // serie
         return br_backward(x, n);     // backward recurrence
     }
     else

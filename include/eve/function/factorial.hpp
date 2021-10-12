@@ -43,6 +43,7 @@ namespace eve
   //!
   //!@warning
   //!    this function will overflow as soon as the input is greater than 171
+  //!    Note that converting to float the result will overflow if is greater than 34
   //!
   //! ---
   //!
