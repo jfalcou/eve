@@ -103,21 +103,21 @@ workflows:
     ## Random tests
     ##==============================================================================================
       - random_sse2:
-          tool:     "../cmake/toolchain/gcc.x86.cmake"
+          tool:     "../cmake/toolchain/gcc.x86.ci.cmake"
           options:  "-msse2"
           setup:    "-DEVE_BUILD_RANDOM=ON"
           filters:
             branches:
               ignore: develop
       - random_avx2:
-          tool:     "../cmake/toolchain/gcc.x86.cmake"
+          tool:     "../cmake/toolchain/gcc.x86.ci.cmake"
           options:  "-mavx2"
           setup:    "-DEVE_BUILD_RANDOM=ON"
           filters:
             branches:
               ignore: develop
       - random_arm:
-          tool:     "../cmake/toolchain/gcc.aarch64.cmake"
+          tool:     "../cmake/toolchain/gcc.aarch64.ci.cmake"
           options:  "-Wno-psabi"
           setup:    "-DEVE_BUILD_RANDOM=ON"
           filters:
