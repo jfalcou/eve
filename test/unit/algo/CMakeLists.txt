@@ -61,3 +61,7 @@ make_unit("unit.algo" algorithm/remove.cpp)
 make_unit("unit.algo" algorithm/transform_inplace_generic.cpp)
 make_unit("unit.algo" algorithm/transform_to_generic.cpp)
 make_unit("unit.algo" algorithm/transform_special_cases.cpp)
+
+# copy
+make_unit("unit.algo" algorithm/copy_generic.cpp)
+make_unit("unit.algo" algorithm/copy_fwd.cpp)

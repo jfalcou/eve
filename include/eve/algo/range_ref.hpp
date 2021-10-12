@@ -11,6 +11,18 @@
 
 namespace eve::algo
 {
+  //================================================================================================
+  //! @addtogroup eve.algo
+  //! @{
+  //!   @struct range_ref_wrapper
+  //!   @brief a non_owning_range wrapper around owning range.
+  //!          Should be created via `range_ref`
+  //!
+  //!   **Required header:** `#include <eve/algo/range_ref.hpp>`
+  //!
+  //! @}
+  //================================================================================================
+
   template<relaxed_range Rng>
   struct range_ref_wrapper
   {
@@ -34,10 +46,35 @@ namespace eve::algo
       }
   };
 
+  //================================================================================================
+  //! @addtogroup eve.algo.concepts
+  //! @{
+  //!    @var non_owning_range
+  //!    @brief a non_owning range is a relaxed_range that does not own it's elements and
+  //!           can be copied without it's contents being affected
+  //!           TODO: FIX-#1017: how is this related to `std::borrowed_range`?
+  //!
+  //!    Can be enabled via: defining 'is_non_owning' internal typedef.
+  //!
+  //!   **Required header:** `#include <eve/algo/range_ref.hpp>`
+  //!
+  //! @}
+  //================================================================================================
+
   template <typename T>
   concept non_owning_range = relaxed_range<T> && requires {
     typename T::is_non_owning;
   };
+
+  //================================================================================================
+  //! @addtogroup eve.algo
+  //! @{
+  //!    @var range_ref
+  //!    @brief for a `non_owning_range` returns it, otherwise returns a `range_ref_wrapper`.
+  //!
+  //!   **Required header:** `#include <eve/algo/range_ref.hpp>`
+  //! @}
+  //================================================================================================
 
   struct range_ref_
   {

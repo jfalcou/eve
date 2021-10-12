@@ -11,58 +11,51 @@
 #include <eve/algo/common_forceinline_lambdas.hpp>
 #include <eve/algo/concepts.hpp>
 #include <eve/algo/views/convert.hpp>
-#include <eve/algo/for_each_iteration.hpp>
-#include <eve/algo/preprocess_range.hpp>
+#include <eve/algo/for_each.hpp>
 #include <eve/algo/traits.hpp>
 
 namespace eve::algo
 {
   namespace detail
   {
-    template<typename LoadStore>
-    struct transform_common
+    template<typename LoadStore, typename Op>
+    struct transform_delegate
     {
-      template <typename Op>
-      struct delegate
+      Op op;
+
+      explicit transform_delegate(Op op) : op(op) {}
+
+      EVE_FORCEINLINE void operator()(auto it, eve::relative_conditional_expr auto ignore)
       {
-        Op op;
+        auto load_it  = LoadStore::load_it(it);
+        auto store_it = LoadStore::store_it(it);
 
-        explicit delegate(Op op) : op(op) {}
+        auto xs        = eve::load[ignore](load_it);
+        auto processed = op(xs);
 
-        EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto /*idx*/)
-        {
-          auto load_it  = LoadStore::load_it(it);
-          auto store_it = LoadStore::store_it(it);
+        using out_t = eve::element_type_t<decltype(processed)>;
+        auto cvt_and_store_it = views::convert(store_it, as<out_t>{});
 
-          auto xs        = eve::load[ignore](load_it);
-          auto processed = op(xs);
-
-          using out_t = eve::element_type_t<decltype(processed)>;
-          auto cvt_and_store_it = views::convert(store_it, as<out_t>{});
-
-          eve::store[ignore](op(xs), cvt_and_store_it);
-          return false;
-        }
-
-        template<typename I, std::size_t size>
-        EVE_FORCEINLINE bool unrolled_step(std::array<I, size> arr)
-        {
-          array_map(arr, call_single_step(this));
-          return false;
-        }
-      };
-
-      template<typename Traits, typename Rng, typename Op>
-      EVE_FORCEINLINE void operator()(Traits tr, Rng &&rng, Op op) const
-      {
-        auto processed = preprocess_range(tr, std::forward<Rng>(rng));
-        if( processed.begin() == processed.end() ) return;
-
-        delegate<Op> d{op};
-        algo::for_each_iteration(processed.traits(), processed.begin(), processed.end())(d);
+        eve::store[ignore](op(xs), cvt_and_store_it);
       }
     };
   }
+
+  //================================================================================================
+  //! @addtogroup eve.algo
+  //! @{
+  //!  @var transform_inplace
+  //!
+  //!  @brief same as;
+  //!  @code{.cpp}
+  //!  eve::algo::tranform_to(eve::views::zip(r, r), op)
+  //!  @endcode
+  //!  but slightly more efficient
+  //!
+  //!   **Required header:** `#include <eve/algo/transform.hpp>`
+  //!
+  //! @}
+  //================================================================================================
 
   template <typename TraitsSupport>
   struct transform_inplace_ : TraitsSupport
@@ -70,12 +63,32 @@ namespace eve::algo
     template <relaxed_range Rng, typename Op>
     EVE_FORCEINLINE void operator()(Rng&& rng, Op op) const
     {
-      detail::transform_common<inplace_load_store>{}(
-        TraitsSupport::get_traits(), std::forward<Rng>(rng), op);
+      detail::transform_delegate<inplace_load_store, Op> d{op};
+      for_each[TraitsSupport::get_traits()](std::forward<Rng>(rng), d);
     }
   };
 
   inline constexpr auto transform_inplace = function_with_traits<transform_inplace_>[default_simple_algo_traits];
+
+  //================================================================================================
+  //! @addtogroup eve.algo
+  //! @{
+  //!  @var transform_to
+  //!
+  //!  @brief version of std::transform
+  //!    * Accepts two things zipping together to range of pair.
+  //!    * Also can accept a `zipped_range_pair`.
+  //!    * returns void.
+  //!    * default unrolling is 4.
+  //!    * will align by default.
+  //!    * the output type of the operation, is not considered in cardinal computation.
+  //!      (otherwise we'd have to require the predicate to be a template).
+  //!    * if the operation output type differs from the output range type, converts.
+  //!
+  //!   **Required header:** `#include <eve/algo/transform.hpp>`
+  //!
+  //! @}
+  //================================================================================================
 
   template <typename TraitsSupport>
   struct transform_to_ : TraitsSupport
@@ -83,7 +96,8 @@ namespace eve::algo
     template <zipped_range_pair R, typename Op>
     EVE_FORCEINLINE void operator()(R r, Op op) const
     {
-      detail::transform_common<to_load_store>{}(TraitsSupport::get_traits(), r, op);
+      detail::transform_delegate<to_load_store, Op> d{op};
+      for_each[TraitsSupport::get_traits()](r, d);
     }
 
     template <typename R1, typename R2, typename Op>

@@ -81,6 +81,11 @@ namespace eve::algo
     }
   };
 
+  struct do_nothing
+  {
+    EVE_FORCEINLINE auto operator()(auto x) const { return x; }
+  };
+
   struct inplace_load_store
   {
     EVE_FORCEINLINE static auto load_it(auto i) { return i; }
