@@ -77,6 +77,26 @@ struct update
   int max_bounce;
 };
 
+// Simulation function -------------------------
+void run_simulation( float gravity , int time, int max_bounce
+                   , eve::algo::soa_vector<ball>& balls
+                   )
+{
+  // Update callable
+  update behavior{1.f/time, gravity,max_bounce};
+  eve::algo::transform_inplace[eve::algo::unroll<2>](balls, behavior);
+
+  // Remove ball that bounced
+  balls.erase ( eve::algo::remove_if(balls
+                                    , [max_bounce](auto const& b)
+                                      {
+                                        return count(b) >= max_bounce;
+                                      }
+                                    )
+              , balls.end()
+              );
+}
+
 // Test driver ---------------------------------
 TTS_CASE("Run a ball simulation")
 {
@@ -95,10 +115,6 @@ TTS_CASE("Run a ball simulation")
   for(int i=0;i<nb_balls;++i)
     balls.push_back( ball{10.f + (i%6),0., std::min(max_elast,std::rand()/(1.f*RAND_MAX)), 0} );
 
-  int s = 0;
-  std::vector<double> times;
-  double current_time = 0;
-
   // Run the simulation once everyone made the maximum amount of bounce ---------------------------
   while( !balls.empty() )
   {
@@ -109,12 +125,8 @@ TTS_CASE("Run a ball simulation")
     for(int l=1;l<render_size+1;++l) screen.line(l,' ','|');
     screen.line(render_size+1,'=','#');
 
-    // Update callable
-    update behavior{1.f/time, gravity,max_bounce};
-
-    auto now = std::chrono::steady_clock::now();
-    eve::algo::transform_inplace[eve::algo::unroll<2>](balls, behavior);
-    auto then = std::chrono::steady_clock::now();
+    // Update simulation
+    run_simulation( gravity, time, max_bounce, balls );
 
     // Display 200 balls
     for(std::size_t i=0;i<200;i++)
@@ -125,28 +137,6 @@ TTS_CASE("Run a ball simulation")
                   , std::max(1, render_size - static_cast<int>(resolution*position(balls.get(i))))
                   );
     }
-
-    auto duration = std::chrono::duration<double,std::nano>(then-now).count();
-    times.push_back(duration);
-
-    // Compute Gballs computed per second
-    if(times.size() == 100)
-    {
-      current_time = 0;
-      for(auto f: times) current_time += f;
-      current_time /= 100;
-      times.clear();
-    }
-
-    // Remove ball that bounced
-    balls.erase ( eve::algo::remove_if(balls, [max_bounce](auto const& b) { return count(b) >= max_bounce; })
-                , balls.end()
-                );
-
-    // Render
-    screen.header() << "\x1B[2J\x1B[H> Step: " << s++ << " - # of balls: " << balls.size()
-                    << " @ " << std::setprecision(3) << balls.size()/current_time << " Gballs/s"
-                    << " => " << std::setprecision(3) << (balls.size()/current_time)*sizeof(ball)*2 << " GB/s\n";
 
     if(::tts::verbose_status) std::cout << screen.render();
   }
