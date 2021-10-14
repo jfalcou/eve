@@ -775,8 +775,7 @@ namespace tts
 
 #define TTS_CONSTEXPR_EXPECT_IMPL(EXPR,FAILURE)                                                     \
 ::tts::logger{}.check                                                                               \
-( TTS_DECOMPOSE(EXPR)                                                                               \
-, [](auto const&) { return std::bool_constant<(EXPR)>::value; }                                     \
+( ((void)(std::bool_constant<(EXPR)>::value), TTS_DECOMPOSE(EXPR))                                  \
 , [](::tts::result const& res)                                                                      \
   {                                                                                                 \
     TTS_PASS( ::tts::green  << TTS_STRING(EXPR) << tts::reset                                       \
@@ -825,8 +824,7 @@ namespace tts
 
 #define TTS_CONSTEXPR_EXPECT_NOT_IMPL(EXPR,FAILURE)                                                 \
 ::tts::logger{}.check                                                                               \
-( TTS_DECOMPOSE(EXPR)                                                                               \
-, [](auto const&) { return std::bool_constant<(EXPR)>::value; }                                     \
+( ((void)(std::bool_constant<(EXPR)>::value), TTS_DECOMPOSE(EXPR))                                  \
 , [](tts::result const& res)                                                                        \
   {                                                                                                 \
     FAILURE ( "Expected: "  << ::tts::green << TTS_STRING(EXPR) << tts::reset                       \
@@ -1031,10 +1029,10 @@ namespace tts
 }
 #define TTS_PRECISION_IMPL(LHS, RHS, N, UNIT, FUNC, FAILURE)                                        \
 ::tts::logger{}.check                                                                               \
-( []<typename M>(auto eval_a, auto eval_b, M maxi)                                                  \
+( []<typename TTS_MAXI>(auto eval_a, auto eval_b, TTS_MAXI maxi)                                    \
   {                                                                                                 \
     auto r = FUNC(eval_a,eval_b);                                                                   \
-    return  ::tts::precision_result<decltype(r),decltype(maxi)>                                     \
+    return  ::tts::precision_result<decltype(r),TTS_MAXI>                                           \
             { TTS_STRING(LHS), TTS_STRING(RHS), ::tts::as_string(eval_a), ::tts::as_string(eval_b)  \
             , r, maxi, r <= maxi                                                                    \
             };                                                                                      \
@@ -1155,25 +1153,35 @@ namespace tts::detail
 #define TTS_ALL_ULP_EQUAL(L,R,N,...)      TTS_ALL_PRECISION(L,R,N,"ULP" ,ulp_distance     , __VA_ARGS__)
 #define TTS_ALL_IEEE_EQUAL(L,R ,...)      TTS_ALL_ULP_EQUAL(L,R,0., __VA_ARGS__)
 #define TTS_ALL_EQUAL(L,R, ...)           TTS_ALL_ABSOLUTE_EQUAL(L,R,0, __VA_ARGS__)
+namespace tts
+{
+  template<typename Type, typename Expected>
+  struct type_result
+  {
+    std::string expr, type, expected;
+    explicit operator bool() const { return std::is_same_v<Type, Expected>; }
+  };
+}
 #define TTS_TYPE_IS_IMPL(T, TYPE, FAILURE)                                                          \
 ::tts::logger{}.check                                                                               \
-( ::tts::result{}                                                                                   \
-, [](auto const&) { return std::is_same_v<TTS_REMOVE_PARENS(TYPE), TTS_REMOVE_PARENS(T)>; }         \
+( ::tts::type_result<TTS_REMOVE_PARENS(TYPE), TTS_REMOVE_PARENS(T)>                                 \
+  { TTS_STRING(TTS_REMOVE_PARENS(T))                                                                \
+  , std::string{tts::typename_<TTS_REMOVE_PARENS(T)>}                                               \
+  , std::string{tts::typename_<TTS_REMOVE_PARENS(TYPE)>}                                            \
+  }                                                                                                 \
 , [](auto const& res)                                                                               \
   {                                                                                                 \
-    TTS_PASS( ::tts::green  << TTS_STRING(TTS_REMOVE_PARENS(T)) << tts::reset                       \
-                            << " evaluates as " << ::tts::green                                     \
-                            << tts::typename_<TTS_REMOVE_PARENS(TYPE)>                              \
+    TTS_PASS( ::tts::green  << res.expr << tts::reset                                               \
+                            << " evaluates as " << ::tts::green << res.type                         \
                             << ::tts::reset << " as expected.");                                    \
     return false;                                                                                   \
   }                                                                                                 \
 , [](auto const& res)                                                                               \
   {                                                                                                 \
-    FAILURE( ::tts::green  << TTS_STRING(TTS_REMOVE_PARENS(T)) << tts::reset                        \
-                            << " evaluates as " << ::tts::red                                       \
-                            << tts::typename_<TTS_REMOVE_PARENS(T)>                                 \
+    FAILURE( ::tts::green  << res.expr << tts::reset                                                \
+                            << " evaluates as " << ::tts::red << res.type                           \
                             << ::tts::reset << " instead of "                                       \
-                            << ::tts::green << tts::typename_<TTS_REMOVE_PARENS(TYPE)>              \
+                            << ::tts::green << res.expected                                         \
             );                                                                                      \
     return ::tts::verbose_status;                                                                   \
   }                                                                                                 \
@@ -1183,20 +1191,3 @@ namespace tts::detail
 #define TTS_TYPE_IS_(T, TYPE)         TTS_TYPE_IS_IMPL(T, TYPE,TTS_FAIL)
 #define TTS_TYPE_IS_REQUIRED(T, TYPE) TTS_TYPE_IS_IMPL(T, TYPE,TTS_FATAL)
 #define TTS_EXPR_IS(EXPR, TYPE, ...)  TTS_TYPE_IS(decltype(TTS_REMOVE_PARENS(EXPR)), TYPE, __VA_ARGS__)
-
-//==================================================================================================
-// List of types list to use in template cases
-//==================================================================================================
-#define TTS_SIGNED_INTEGRAL_TYPES   std::int8_t , std::int16_t , std::int32_t , std::int64_t
-#define TTS_UNSIGNED_INTEGRAL_TYPES std::uint8_t, std::uint16_t, std::uint32_t, std::uint64_t
-
-#define TTS_INTEGRAL_TYPES                                                                         \
-  char, std::int8_t, std::int16_t , std::int32_t , std::int64_t,                                   \
-       std::uint8_t, std::uint16_t, std::uint32_t, std::uint64_t                                   \
-/**/
-
-#define TTS_IEEE_TYPES              float, double
-#define TTS_SIGNED_NUMERIC_TYPES    TTS_IEEE_TYPES, TTS_SIGNED_INTEGRAL_TYPES
-#define TTS_UNSIGNED_NUMERIC_TYPES  TTS_UNSIGNED_INTEGRAL_TYPES
-#define TTS_NUMERIC_TYPES           TTS_IEEE_TYPES, TTS_INTEGRAL_TYPES
-#define TTS_ALL_TYPES               bool, TTS_NUMERIC_TYPES
