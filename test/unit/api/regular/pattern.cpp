@@ -13,7 +13,7 @@ TTS_CASE("Check pattern properties checks")
 {
   using eve::na_;
 
-  TTS_CONSTEXPR_EQUAL ( (eve::pattern<0,1,2,3>.size()), 4 );
+  TTS_CONSTEXPR_EQUAL ( (eve::pattern<0,1,2,3>.size()), 4ull );
 
   TTS_CONSTEXPR_EXPECT    ( (eve::pattern<na_, 1, 2, 3>.has_zeros()));
   TTS_CONSTEXPR_EXPECT    ( (eve::pattern< 0,na_, 2, 3>.has_zeros()));
@@ -32,11 +32,11 @@ TTS_CASE("Check lambda-pattern properties checks")
 
   constexpr auto f = [](auto i, auto) { return i%2 ? na_ : i/2; };
 
-  TTS_CONSTEXPR_EQUAL ( eve::fix_pattern<4>(f).size(), 4   );
+  TTS_CONSTEXPR_EQUAL ( eve::fix_pattern<4>(f).size(), 4ull   );
   TTS_CONSTEXPR_EXPECT( eve::fix_pattern<4>(f).has_zeros() );
   TTS_CONSTEXPR_EXPECT( eve::fix_pattern<4>(f).validate(4) );
 
-  TTS_CONSTEXPR_EQUAL ( eve::fix_pattern<8>(f).size(), 8  );
+  TTS_CONSTEXPR_EQUAL ( eve::fix_pattern<8>(f).size(), 8ull  );
   TTS_CONSTEXPR_EXPECT( eve::fix_pattern<8>(f).has_zeros());
   TTS_CONSTEXPR_EXPECT( eve::fix_pattern<8>(f).validate(8));
 };
