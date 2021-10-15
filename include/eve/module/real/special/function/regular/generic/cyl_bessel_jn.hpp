@@ -65,7 +65,7 @@ namespace eve::detail
   template<integral_simd_value I, floating_real_scalar_value T>
   EVE_FORCEINLINE auto cyl_bessel_jy_(EVE_SUPPORTS(cpu_), I , T x) noexcept
   {
-    std::cout << "sisc" << std::endl;
+//    std::cout << "sisc" << std::endl;
     return x;
 //    using c_t = wide <T, cardinal_t<I>>;
 //    return cyl_bessel_jn(nu, c_t(x));
@@ -75,14 +75,14 @@ namespace eve::detail
   template<integral_scalar_value I, floating_real_scalar_value T>
   EVE_FORCEINLINE auto cyl_bessel_jn_(EVE_SUPPORTS(cpu_), I nu, T x) noexcept
   {
-    std::cout << "scsc" << std::endl;
+//    std::cout << "scsc" << std::endl;
     return kernel_bessel_j_int(nu, x);
   }
   // scalar integral,  floating simd
   template<integral_scalar_value I, floating_real_simd_value T>
   EVE_FORCEINLINE auto cyl_bessel_jn_(EVE_SUPPORTS(cpu_), I nu, T x) noexcept
   {
-    std::cout << "scsi" << std::endl;
+//    std::cout << "scsi" << std::endl;
     return kernel_bessel_j_int(nu, x);
   }
 
@@ -90,7 +90,7 @@ namespace eve::detail
   template<integral_simd_value I, floating_real_simd_value T>
   EVE_FORCEINLINE auto cyl_bessel_jn_(EVE_SUPPORTS(cpu_), I nu, T x) noexcept
   {
-    std::cout << "sisi" << std::endl;
+//    std::cout << "sisi" << std::endl;
     return kernel_bessel_j_int(nu, x);
   }
 

@@ -26,6 +26,7 @@
 #include <eve/function/sqrt.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/function/converter.hpp>
+#include <eve/module/real/special/detail/kernel_bessel_jy.hpp>
 
 namespace eve::detail
 {
@@ -88,7 +89,7 @@ namespace eve::detail
   template <class T>
   inline T bessel_j_small_z_series(T v, T x)
   {
-    std::cout << "bessel_j_small_z_series" << std::endl;
+//    std::cout << "bessel_j_small_z_series" << std::endl;
     T prefix;
     using elt_t = element_type_t<T>;
     auto max_factorial = (sizeof(elt_t) == 4 ? 34 : 170);
@@ -234,54 +235,54 @@ namespace eve::detail
     auto j0 = cyl_bessel_j0(x);
     auto j1 = cyl_bessel_j1(x);
 
-    // Evaluate continued fraction fv = J_(v+1) / J_v, see
-    // Abramowitz and Stegun, Handbook of Mathematical Functions, 1972, 9.1.73
-    auto CF1_jy = [](T v, T x) noexcept
-      {
-        std::cout << " CF1_jy " << sizeof(T) << std::endl;
-        double C, D, f, a, b, delta, tiny, tolerance;
-        unsigned long k;
-        T s(1);
-        // |x| <= |v|, CF1_jy converges rapidly
-        // |x| > |v|, CF1_jy needs O(|x|) iterations to converge
+//     // Evaluate continued fraction fv = J_(v+1) / J_v, see
+//     // Abramowitz and Stegun, Handbook of Mathematical Functions, 1972, 9.1.73
+//     auto CF1_jy = [](T v, T x) noexcept
+//       {
+//         std::cout << " CF1_jy " << sizeof(T) << std::endl;
+//         double C, D, f, a, b, delta, tiny, tolerance;
+//         unsigned long k;
+//         T s(1);
+//         // |x| <= |v|, CF1_jy converges rapidly
+//         // |x| > |v|, CF1_jy needs O(|x|) iterations to converge
 
-        // modified Lentz's method, see
-        // Lentz, Applied Optics, vol 15, 668 (1976)
-        tolerance = 2 * eve::eps(as(x));
-        tiny = eve::sqrt(smallestposval(as(x)));
-          std::cout << "tiny     " << tiny << std::endl;
-        C = f = tiny;                           // b0 = 0, replace with tiny
-        std::cout << "C " << C << std::endl;
-        D = 0;
-        std::cout << "D " << D << std::endl;
-        for (k = 1; k < 100; ++k)//policies::get_max_series_iterations<Policy>() * 100; k++)
-        {
-          a = -1;
-          b = 2 * (v + k) / x;
-          C = b + a / C;
-          D = b + a * D;
-          std::cout << "k " << k << std::endl;
-          std::cout << "C " << C << std::endl;
-          std::cout << "D " << D << std::endl;
-          C = if_else(is_eqz(C), tiny, C);
-          D = if_else(is_eqz(D), tiny, D);
-          D = rec(D);
-          delta = C * D;
-          std::cout << "delta " << delta << std::endl;
-          f *= delta;
-          D = if_else (is_ltz(D), -s, s);
-          if (eve::all(eve::abs(delta - 1) < tolerance)) break;
-        }
-        return kumi::tuple<T, T>{T(-f), T(s)};
-      };
+//         // modified Lentz's method, see
+//         // Lentz, Applied Optics, vol 15, 668 (1976)
+//         tolerance = 2 * eve::eps(as(x));
+//         tiny = eve::sqrt(smallestposval(as(x)));
+//           std::cout << "tiny     " << tiny << std::endl;
+//         C = f = tiny;                           // b0 = 0, replace with tiny
+//         std::cout << "C " << C << std::endl;
+//         D = 0;
+//         std::cout << "D " << D << std::endl;
+//         for (k = 1; k < 100; ++k)//policies::get_max_series_iterations<Policy>() * 100; k++)
+//         {
+//           a = -1;
+//           b = 2 * (v + k) / x;
+//           C = b + a / C;
+//           D = b + a * D;
+//           std::cout << "k " << k << std::endl;
+//           std::cout << "C " << C << std::endl;
+//           std::cout << "D " << D << std::endl;
+//           C = if_else(is_eqz(C), tiny, C);
+//           D = if_else(is_eqz(D), tiny, D);
+//           D = rec(D);
+//           delta = C * D;
+//           std::cout << "delta " << delta << std::endl;
+//           f *= delta;
+//           D = if_else (is_ltz(D), -s, s);
+//           if (eve::all(eve::abs(delta - 1) < tolerance)) break;
+//         }
+//         return kumi::tuple<T, T>{T(-f), T(s)};
+//       };
     auto br_large =  [](auto n,  auto x)
       {
-        std::cout << "br_large" << std::endl;
+        //       std::cout << "br_large" << std::endl;
         return asymptotic_bessel_j_large_x_2(T(n), x);
       };
     auto br_forward =  [j0, j1](auto n,  auto x)
       {
-        std::cout << "br_forward" << std::endl;
+//        std::cout << "br_forward" << std::endl;
         auto prev = j0; //cyl_bessel_j0(x);
         auto current = j1; //cyl_bessel_j1(x);
         T scale(1), value(0);
@@ -303,42 +304,44 @@ namespace eve::detail
       };
     auto br_small =  [](auto n,  auto x)
       {
-        std::cout << "br_small" << std::endl;
+//        std::cout << "br_small" << std::endl;
         return bessel_j_small_z_series(T(n), x);
       };
-    auto br_backward =  [CF1_jy, j0](auto n,  auto x)
+    auto br_backward =  [](auto n,  auto x)
       {
-        std::cout << "br_backward" << std::endl;
-        T scale(1);
-        // fn = J_(n+1) / J_n
-        // |x| <= n, fast convergence for continued fraction CF1
-       std::cout << "sizeof(T)  " << sizeof(T) << std::endl;
-         auto [fn, s] = CF1_jy(T(n), x);
-        std::cout << "fn " << fn << std::endl;
-        std::cout << "s  " << s  << std::endl;
-        ///T fn(0); //, s(0);
-        auto prev = fn;
-        auto current = one(as(x));
-        for (int k = n; k > 0; k--)
-        {
-          T fact = 2 * k / x;
-          if((eve::abs(fact) > 1) && ((valmax(as(x)) - eve::abs(prev)) / eve::abs(fact) < eve::abs(current)))
-          {
-            prev /= current;
-            scale /= current;
-            current = 1;
-          }
-          auto next = fact * current - prev;
-          prev = current;
-          current = next;
-        }
-        auto value = j0 / current;       // normalization
-        return value *scale;
+//        std::cout << "br_backward" << std::endl;
+        auto [a, b, c, d] = bessel_jy(T(n), x);
+        return a;
+  //       T scale(1);
+//         // fn = J_(n+1) / J_n
+//         // |x| <= n, fast convergence for continued fraction CF1
+//        std::cout << "sizeof(T)  " << sizeof(T) << std::endl;
+//          auto [fn, s] = CF1_jy(T(n), x);
+//         std::cout << "fn " << fn << std::endl;
+//         std::cout << "s  " << s  << std::endl;
+//         ///T fn(0); //, s(0);
+//         auto prev = fn;
+//         auto current = one(as(x));
+//         for (int k = n; k > 0; k--)
+//         {
+//           T fact = 2 * k / x;
+//           if((eve::abs(fact) > 1) && ((valmax(as(x)) - eve::abs(prev)) / eve::abs(fact) < eve::abs(current)))
+//           {
+//             prev /= current;
+//             scale /= current;
+//             current = 1;
+//           }
+//           auto next = fact * current - prev;
+//           prev = current;
+//           current = next;
+//         }
+//         auto value = j0 / current;       // normalization
+//         return value *scale;
       };
 
     if constexpr(scalar_value<I> && scalar_value<T>)
     {
-      std::cout << " kernel_bessel_j_int scalar scalar" << std::endl;
+//      std::cout << " kernel_bessel_j_int scalar scalar" << std::endl;
       T factor(1);
       auto isoddn = is_odd(n);
       if (n < 0)
@@ -356,7 +359,7 @@ namespace eve::detail
       if (is_eqz(x))                                return factor*x;   // as n >= 2
       if (n < eve::abs(x))                          return br_forward(n, x);      // forward recurrence
       if ((n > x * x / 4) || (x < 5))    return factor*br_small(n, x); // serie
-        return br_backward(x, n);     // backward recurrence
+      return br_backward(n, x);     // backward recurrence
     }
     else
     {
