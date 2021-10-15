@@ -37,7 +37,7 @@ TTS_CASE("zip_iterator, preprocess range, scalar end")
   zip_ui processed_l = processed.end();
 
   TTS_EQUAL((processed_l - processed_f), 3);
-}
+};
 
 TTS_CASE("zip_iterator, preprocess range, zip end")
 {
@@ -95,7 +95,7 @@ TTS_CASE("zip_iterator, preprocess range, zip end")
     TTS_TYPE_IS(decltype(std::declval<processed>().begin()), zip_au_it);
     TTS_TYPE_IS(decltype(std::declval<processed>().end()),   zip_au_it);
   }
-}
+};
 
 TTS_CASE("preprocess zip range, traits")
 {
@@ -193,7 +193,7 @@ TTS_CASE("preprocess zip range, traits")
       TTS_TYPE_IS(decltype(processed.traits()), decltype(tr));
     }
   }
-}
+};
 
 TTS_CASE("preprocess zip range, common_type")
 {
@@ -231,5 +231,4 @@ TTS_CASE("preprocess zip range, common_type")
     TTS_TYPE_IS(decltype(processed.begin()), expected_it);
     TTS_TYPE_IS(decltype(processed.end()), expected_it);
   }
-
-}
+};

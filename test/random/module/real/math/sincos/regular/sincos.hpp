@@ -13,6 +13,7 @@
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on sincos", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   auto std_sin  = [](auto e) -> EVE_VALUE { return std::sin(double(e)); };
   auto std_cos  = [](auto e) -> EVE_VALUE { return std::cos(double(e)); };
@@ -22,4 +23,4 @@ TTS_CASE_TPL("wide random check on sincos", EVE_TYPE)
   eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_sin, sincos_s);
   TTS_RANGE_CHECK(p, std_cos, sincos_c);
-}
+};

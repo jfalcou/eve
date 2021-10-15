@@ -59,4 +59,4 @@ TTS_CASE("Check behaviour of slide_right, 4 ints")
   TTS_EQUAL(shift_2, (eve::slide_right(x, y, eve::index<2>)));
   TTS_EQUAL(shift_3, (eve::slide_right(x, y, eve::index<3>)));
   TTS_EQUAL(shift_4, (eve::slide_right(x, y, eve::index<4>)));
-}
+};

@@ -8,11 +8,13 @@
 #include <eve/function/floor.hpp>
 
 TTS_CASE_TPL("Check ifloor return type", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   TTS_EXPR_IS((eve::int_(eve::floor)(T())), (eve::as_integer_t<T>));
-}
+};
 
 TTS_CASE_TPL("Check eve::int_(eve::floor) behavior", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   using i_t = eve::as_integer_t<T>;
 
@@ -35,4 +37,4 @@ TTS_CASE_TPL("Check eve::int_(eve::floor) behavior", EVE_TYPE)
    TTS_EQUAL(eve::int_(eve::floor)(T( 1.5)), i_t( 1));
    TTS_EQUAL(eve::int_(eve::floor)(T( 1.6)), i_t( 1));
   }
-}
+};

@@ -131,7 +131,7 @@ TTS_CASE("find_negative_number")
   std::vector<int> v {1, 2, -1, 4};
   int const       *found = find_negative_number(v.data(), v.data() + v.size());
   TTS_EQUAL((found - v.data()), 2);
-}
+};
 
 TTS_CASE("polar/cartesian")
 {
@@ -183,7 +183,7 @@ TTS_CASE("polar/cartesian")
     TTS_LESS   (get<1>(pol), -3 * pi / 4);
     TTS_GREATER(get<1>(pol), -pi);
   }
-}
+};
 
 TTS_CASE("polar_to_cartesian, vectors")
 {
@@ -205,7 +205,7 @@ TTS_CASE("polar_to_cartesian, vectors")
     TTS_RELATIVE_EQUAL(expected_x[i], actual_x[i], 0.00001);
     TTS_RELATIVE_EQUAL(expected_y[i], actual_y[i], 0.00001);
   }
-}
+};
 
 TTS_CASE("remove_numbers_outisde_of_treshold")
 {
@@ -215,4 +215,4 @@ TTS_CASE("remove_numbers_outisde_of_treshold")
   erase_remove_numbers_outisde_of_treshold(in, 0, 9);
 
   TTS_EQUAL(expected, in);
-}
+};

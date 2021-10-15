@@ -35,7 +35,7 @@ TTS_CASE("eve::common_type, half_c integrals")
   // std::int16_t
   TTS_TYPE_IS((eve::common_type_t<std::int16_t, std::int16_t> ), std::int16_t );
   TTS_TYPE_IS((eve::common_type_t<std::int16_t, std::uint16_t>), std::uint16_t);
-}
+};
 
 EVE_TEST_TYPES("eve::common_type for two types comutes", eve::test::scalar::all_types )
 <typename T>(eve::as<T>)
@@ -117,7 +117,7 @@ TTS_CASE("eve::common_type, product type")
 
   TTS_TYPE_IS((eve::common_type_t<line, i32_x2_x2>), line);
   TTS_TYPE_IS((eve::common_type_t<i32_x2_x2, line>), line);
-}
+};
 
 TTS_CASE("eve::common_type, have_common_type")
 {
@@ -125,7 +125,7 @@ TTS_CASE("eve::common_type, have_common_type")
   TTS_CONSTEXPR_EXPECT((eve::have_common_type<product, smaller_product>));
   TTS_CONSTEXPR_EXPECT_NOT((eve::have_common_type<kumi::tuple<int, int>,
                                                   kumi::tuple<int, int, int>>));
-}
+};
 
 TTS_CASE("eve::common_type, reduction")
 {
@@ -137,7 +137,7 @@ TTS_CASE("eve::common_type, reduction")
     (eve::common_type_t<std::int32_t, std::int16_t, std::int8_t>),
     std::int32_t
   );
-}
+};
 
 TTS_CASE("eve::common_type, generic constants")
 {
@@ -149,4 +149,4 @@ TTS_CASE("eve::common_type, generic constants")
     (eve::common_type_t<decltype(eve::zero), int>),
     int
   );
-}
+};

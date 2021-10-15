@@ -23,4 +23,4 @@ TTS_CASE( "Check for element_type")
   TTS_TYPE_IS((eve::element_type_t<eve::wide<tuple_t>>)               , tuple_t);
   TTS_TYPE_IS( eve::element_type_t<eve::logical<int>>                 , eve::logical<int>);
   TTS_TYPE_IS( eve::element_type_t<eve::logical<eve::wide<int>>>      , eve::logical<int>);
-}
+};

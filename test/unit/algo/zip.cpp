@@ -35,7 +35,7 @@ TTS_CASE("zip iterators")
   rng_test(eve::algo::views::zip(v, c));
   rng_test(eve::algo::views::zip(v, c.begin()));
   rng_test(eve::algo::views::zip(v.begin(), c));
-}
+};
 
 TTS_CASE("zip range, decomposition")
 {
@@ -48,7 +48,7 @@ TTS_CASE("zip range, decomposition")
   TTS_EQUAL(cref_v.end(),   v.end());
   TTS_EQUAL(ref_c.begin(),  c.begin());
   TTS_EQUAL(ref_c.end(),    c.end());
-}
+};
 
 TTS_CASE("zip common_type")
 {
@@ -71,7 +71,7 @@ TTS_CASE("zip common_type")
     auto zipped = eve::algo::views::zip(v, c)[eve::algo::common_type];
     TTS_TYPE_IS(decltype(zipped), decltype(expected));
   }
-}
+};
 
 TTS_CASE("zip common_with_types")
 {
@@ -95,8 +95,7 @@ TTS_CASE("zip common_with_types")
     auto zipped = eve::algo::views::zip(v, c)[eve::algo::common_with_types<double>];
     TTS_TYPE_IS(decltype(zipped), decltype(expected));
   }
-}
-
+};
 
 TTS_CASE("zip force_type")
 {
@@ -120,4 +119,4 @@ TTS_CASE("zip force_type")
     auto zipped = eve::algo::views::zip(v, c)[eve::algo::force_type<char>];
     TTS_TYPE_IS(decltype(zipped), decltype(expected));
   }
-}
+};

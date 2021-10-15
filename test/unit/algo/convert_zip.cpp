@@ -58,7 +58,7 @@ TTS_CASE("convert zip iter")
     TTS_TYPE_IS(decltype(actual2), expected);
 #endif
   }
-}
+};
 
 TTS_CASE("convert zip range")
 {
@@ -105,4 +105,4 @@ TTS_CASE("convert zip range")
     TTS_TYPE_IS(decltype(actual2), expected);
 #endif
   }
-}
+};

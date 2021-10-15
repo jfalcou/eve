@@ -30,7 +30,7 @@ TTS_CASE("eve.algo basic traits testing")
       TTS_CONSTEXPR_EXPECT(Traits::contains(eve::algo::divisible_by_cardinal));
     }(divisible_by_cardinal);
   }
-}
+};
 
 TTS_CASE("eve.algo defaulting")
 {
@@ -56,7 +56,7 @@ TTS_CASE("eve.algo defaulting")
 
     TTS_TYPE_IS(decltype(expected), decltype(actual));
   }
-}
+};
 
 TTS_CASE("eve.algo.traits consider types")
 {
@@ -87,7 +87,7 @@ TTS_CASE("eve.algo.traits consider types")
     eve::algo::traits tr{eve::algo::consider_types<double>};
     TTS_TYPE_IS((eve::algo::get_types_to_consider_for<decltype(tr), int*>), (kumi::tuple<double, int>));
   }
-}
+};
 
 TTS_CASE("eve.algo.traits, type and cardinal")
 {
@@ -109,7 +109,7 @@ TTS_CASE("eve.algo.traits, type and cardinal")
     eve::algo::traits tr2 = eve::algo::default_to(tr, big_step);
     TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr2), char*>), eve::fixed<64>);
   }
-}
+};
 
 // Funciton with traits support
 
@@ -131,11 +131,12 @@ struct func_ : TraitsSupport
 
 inline constexpr auto func = eve::algo::function_with_traits<func_>;
 
-TTS_CASE("eve.algo.support_traits") {
+TTS_CASE("eve.algo.support_traits")
+{
   constexpr auto unroll = func[eve::algo::traits{eve::algo::unroll<2>}];
   TTS_CONSTEXPR_EQUAL(unroll.get_unrolling(), 2);
 
   constexpr auto is_divisible = unroll[eve::algo::divisible_by_cardinal];
   TTS_CONSTEXPR_EXPECT(is_divisible.is_divisible_by_cardinal());
   TTS_CONSTEXPR_EQUAL(is_divisible.get_unrolling(), 2);
-}
+};

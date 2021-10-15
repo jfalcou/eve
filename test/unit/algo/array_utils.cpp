@@ -19,7 +19,7 @@ TTS_CASE("eve.algo.array_utils array_map")
   constexpr std::array<int, 4> expected = { 2, 4, 6, 8 };
   constexpr auto actual = eve::algo::array_map(input, [](char x) -> int { return x * 2; });
   TTS_CONSTEXPR_EXPECT(expected == actual);
-}
+};
 
 TTS_CASE("eve.algo.array_utils array_map")
 {
@@ -39,7 +39,7 @@ TTS_CASE("eve.algo.array_utils array_map")
     constexpr int actual = eve::algo::array_reduce(in, std::plus<>{});
     TTS_CONSTEXPR_EXPECT( actual == 1 );
   }
-}
+};
 
 TTS_CASE("eve.algo.array_utils find_branchless")
 {
@@ -49,4 +49,4 @@ TTS_CASE("eve.algo.array_utils find_branchless")
   constexpr std::size_t find_more_10 = eve::algo::find_branchless(in, [](int x) { return x > 10; });
   TTS_CONSTEXPR_EQUAL(find_neg_2, 1u);
   TTS_CONSTEXPR_EQUAL(find_more_10, 3u);
-}
+};

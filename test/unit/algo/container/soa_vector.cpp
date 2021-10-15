@@ -22,7 +22,7 @@ TTS_CASE("Check soa_vector default ctor")
 
   TTS_EQUAL ( empty_udt.size(), 0ULL  );
   TTS_EXPECT( empty_udt.empty()       );
-}
+};
 
 TTS_CASE("Check soa_vector sized ctor")
 {
@@ -39,7 +39,7 @@ TTS_CASE("Check soa_vector sized ctor")
   TTS_EQUAL( get<0>(udt_vector.get(0)), +1  );
   TTS_EQUAL( get<1>(udt_vector.get(0)), -1  );
   TTS_EQUAL( udt_vector.get(0), udt::grid2d{});
-}
+};
 
 TTS_CASE("Check soa_vector sized ctor with default value")
 {
@@ -56,7 +56,7 @@ TTS_CASE("Check soa_vector sized ctor with default value")
   TTS_EXPECT_NOT( udt_vector.empty()  );
   TTS_EQUAL( get<0>(udt_vector.get(0)), 4 );
   TTS_EQUAL( get<1>(udt_vector.get(0)), 19);
-}
+};
 
 TTS_CASE("Check soa_vector initializer list ctor")
 {
@@ -78,7 +78,7 @@ TTS_CASE("Check soa_vector initializer list ctor")
   TTS_EQUAL(udt_vector.get(0), (udt::grid2d{1,2}));
   TTS_EQUAL(udt_vector.get(1), (udt::grid2d{3,4}));
   TTS_EQUAL(udt_vector.get(2), (udt::grid2d{5,8}));
-}
+};
 
 TTS_CASE("Check soa_vector::clear behavior")
 {
@@ -100,7 +100,7 @@ TTS_CASE("Check soa_vector::clear behavior")
 
   TTS_EQUAL     ( udt_vector.size(), 0ULL);
   TTS_EXPECT    ( udt_vector.empty()  );
-}
+};
 
 TTS_CASE("Check soa_vector::swap behavior")
 {
@@ -139,7 +139,7 @@ TTS_CASE("Check soa_vector::swap behavior")
   TTS_EQUAL(uv2.get(0), (udt::grid2d{1,2}));
   TTS_EQUAL(uv2.get(1), (udt::grid2d{3,4}));
   TTS_EQUAL(uv2.get(2), (udt::grid2d{5,8}));
-}
+};
 
 TTS_CASE("Check soa_vector::push_back behavior")
 {
@@ -170,7 +170,7 @@ TTS_CASE("Check soa_vector::push_back behavior")
   uv.push_back( udt::grid2d{5,8} );
 
   TTS_EQUAL(uv, uvref);
-}
+};
 
 TTS_CASE("Check soa_vector::pop behavior")
 {
@@ -201,7 +201,7 @@ TTS_CASE("Check soa_vector::pop behavior")
   uv.pop_back();
 
   TTS_EQUAL(uv, uvref);
-}
+};
 
 TTS_CASE("Check soa_vector::data behavior")
 {
@@ -222,7 +222,7 @@ TTS_CASE("Check soa_vector::data behavior")
   auto uv_data = uv.data();
   for(std::size_t i = 0;i< uv.size();++i)
     TTS_EQUAL( eve::read(uv_data++), uv.get(i));
-}
+};
 
 TTS_CASE("Check soa_vector::begin/end behavior")
 {
@@ -247,7 +247,7 @@ TTS_CASE("Check soa_vector::begin/end behavior")
   i = 0;
   while(uv_begin != uv_end)
     TTS_EQUAL( eve::read(uv_begin++), uv.get(i++));
-}
+};
 
 TTS_CASE("Check types")
 {
@@ -265,7 +265,7 @@ TTS_CASE("Check types")
   TTS_TYPE_IS(v::const_iterator,         (eve::algo::views::converting_iterator<v::const_pointer,         T>));
   TTS_TYPE_IS(v::iterator_aligned,       (eve::algo::views::converting_iterator<v::pointer_aligned,       T>));
   TTS_TYPE_IS(v::const_iterator_aligned, (eve::algo::views::converting_iterator<v::const_pointer_aligned, T>));
-}
+};
 
 TTS_CASE("erase(pos)")
 {
@@ -297,7 +297,7 @@ TTS_CASE("erase(pos)")
   pos = v.erase(v.begin_aligned());
   TTS_EQUAL(v, expected);
   TTS_EQUAL((pos - v.begin()), 0);
-}
+};
 
 TTS_CASE("erase(f, l)")
 {
@@ -354,4 +354,4 @@ TTS_CASE("erase(f, l)")
     TTS_EQUAL(v.size(), 0u);
     TTS_EQUAL(pos, v.begin());
   }
-}
+};

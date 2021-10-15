@@ -13,6 +13,7 @@
 #include "producers.hpp"
 
 TTS_CASE_TPL("wide random check on sinpicospipi", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   auto std_sinpi    = [](auto e) -> EVE_VALUE { return eve::sinpi(double(e)); };
   auto std_cospi    = [](auto e) -> EVE_VALUE { return eve::cospi(double(e)); };
@@ -22,4 +23,4 @@ TTS_CASE_TPL("wide random check on sinpicospipi", EVE_TYPE)
   eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_sinpi, sinpicospi_s);
   TTS_RANGE_CHECK(p, std_cospi, sinpicospi_c);
-}
+};

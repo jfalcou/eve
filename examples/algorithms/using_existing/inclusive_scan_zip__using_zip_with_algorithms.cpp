@@ -79,4 +79,4 @@ TTS_CASE("inclusive_scan_complex")
 
   TTS_EQUAL(actual_re, expected_re);
   TTS_EQUAL(actual_im, expected_im);
-}
+};

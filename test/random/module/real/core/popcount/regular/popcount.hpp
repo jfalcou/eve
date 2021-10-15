@@ -13,6 +13,7 @@
 #include "producers.hpp"
 
 TTS_CASE_TPL("wide rng check on popcount", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   using u_t =  eve::as_integer_t<T, unsigned>;
   using su_t =  eve::element_type_t<u_t>;
@@ -25,4 +26,4 @@ TTS_CASE_TPL("wide rng check on popcount", EVE_TYPE)
                                    return j; };
   eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_popcount, eve::popcount);
-}
+};

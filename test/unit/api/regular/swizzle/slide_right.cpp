@@ -65,6 +65,6 @@ TTS_CASE( "Check behavior of smaller 8bytes with garbage" )
   small_t expected{0, 5};
   small_t actual   = eve::slide_right(cast_down, eve::index<1>);
   TTS_EQUAL(expected, actual);
-}
+};
 
 #endif  // EVE_NO_SIMD

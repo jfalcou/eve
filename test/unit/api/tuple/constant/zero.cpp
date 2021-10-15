@@ -19,7 +19,7 @@ TTS_CASE("zero for different tuples")
 
   TTS_TYPE_IS(udt::grid2d, decltype(eve::zero(eve::as<udt::grid2d>{})));
   TTS_TYPE_IS(eve::wide<udt::grid2d>, decltype(eve::zero(eve::as<eve::wide<udt::grid2d>>{})));
-}
+};
 
 TTS_CASE("copy zero tuple (armv-v7 bug)")
 {
@@ -29,4 +29,4 @@ TTS_CASE("copy zero tuple (armv-v7 bug)")
   w_t src = eve::zero(eve::as<w_t>{});
   w_t cpy{src};
   TTS_EQUAL(src, cpy);
-}
+};

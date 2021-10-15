@@ -14,6 +14,7 @@
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on pow_abs", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   auto std_pow_abs = [](auto e) { return eve::pow_abs(e, EVE_VALUE(10.51)); };
   auto  my_pow_abs = [](auto e) { return (eve::pow_abs)(e,  EVE_VALUE(10.51)); };
@@ -26,4 +27,4 @@ TTS_CASE_TPL("wide random check on pow_abs", EVE_TYPE)
 
   eve::uniform_prng<EVE_VALUE> p1(EVE_VALUE(0.05), EVE_VALUE(10.5));
   TTS_RANGE_CHECK_WITH(p1, std_pow_abs1, my_pow_abs1, 8);
-}
+};

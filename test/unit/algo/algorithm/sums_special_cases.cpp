@@ -39,7 +39,7 @@ TTS_CASE("eve.algo.reduce sum complex numbers")
 
   TTS_RELATIVE_EQUAL(re,  1.6, 0.0001);
   TTS_RELATIVE_EQUAL(im, -1.6, 0.0001);
-}
+};
 
 TTS_CASE("eve.algo.inclusive_scan a vector")
 {
@@ -50,7 +50,7 @@ TTS_CASE("eve.algo.inclusive_scan a vector")
 
   eve::algo::inclusive_scan_inplace(v, -1);
   TTS_EQUAL(v, expected);
-}
+};
 
 TTS_CASE("eve.algo.inclusive_scan complex numbers")
 {
@@ -86,4 +86,4 @@ TTS_CASE("eve.algo.inclusive_scan complex numbers")
 
   TTS_EQUAL(expected_real, real_copy);
   TTS_EQUAL(expected_img,  img_copy);
-}
+};
