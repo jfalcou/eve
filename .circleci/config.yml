@@ -117,7 +117,7 @@ workflows:
             branches:
               ignore: develop
       - random_arm:
-          tool:     "../cmake/toolchain/gcc.aarch64.ci.cmake"
+          tool:     "../cmake/toolchain/gcc.aarch64.cmake"
           options:  "-Wno-psabi"
           setup:    "-DEVE_BUILD_RANDOM=ON"
           filters:
