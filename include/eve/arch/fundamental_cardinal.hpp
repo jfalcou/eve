@@ -21,13 +21,13 @@ namespace eve
   //================================================================================================
   //! @addtogroup arch
   //! @{
-  //!   @struct expected_cardinal
-  //!   @brief Computes the expected cardinal of a given type
+  //!   @struct fundamental_cardinal
+  //!   @brief Computes the fundamental cardinal of a given type
   //!
-  //!   **Required header:** `#include <eve/arch/expected_cardinal.hpp>`
+  //!   **Required header:** `#include <eve/arch/fundamental_cardinal.hpp>`
   //!
-  //!   eve::expected_cardinal computed the cardinal of the  register able to store
-  //!   values of type `Type` for a given SIMD `ABI` as a native register type.
+  //!   eve::fundamental_cardinal computed the cardinal of the smallest register able to store
+  //!   values of type `Type` for a given SIMD `ABI` with no uninitialized lanes.
   //!
   //!   @tparam Type  Type of value to assess
   //!   @tparam ABI   SIMD ABI to use as reference. Must models eve::regular_abi.
@@ -43,7 +43,7 @@ namespace eve
   //!
   //!    @code{.cpp}
   //!    template<typename Type, regular_abi ABI = EVE_CURRENT_ABI>
-  //!    using expected_cardinal_t = typename expected_cardinal<Type, ABI>::type;
+  //!    using fundamental_cardinal_t = typename fundamental_cardinal<Type, ABI>::type;
   //!    @endcode
   //!
   //!    <br/>
@@ -51,52 +51,49 @@ namespace eve
   //!
   //!    @code{.cpp}
   //!    template<typename Type, regular_abi ABI = EVE_CURRENT_ABI>
-  //!    inline constexpr auto expected_cardinal_v = expected_cardinal_t<Type, ABI>::value;
+  //!    inline constexpr auto fundamental_cardinal_v = fundamental_cardinal_t<Type, ABI>::value;
   //!    @endcode
   //!
   //!    @code{.cpp}
   //!    // Cardinal template inline variable to use with functions like eve::load
   //!    template<typename Type, typename ABI = EVE_CURRENT_ABI>
-  //!    inline constexpr expected_cardinal<Type,ABI> const expected = {};
+  //!    inline constexpr fundamental_cardinal<Type,ABI> const fundamental = {};
   //!    @endcode
   //! @}
   //================================================================================================
   template<typename Type, regular_abi ABI = EVE_CURRENT_ABI>
-  struct expected_cardinal
-      : fixed<ABI::template expected_cardinal<Type>>
+  struct fundamental_cardinal
+      : fixed<ABI::template fundamental_cardinal<Type>>
   {
-    using type = fixed<ABI::template expected_cardinal<Type>>;
+    using type = fixed<ABI::template fundamental_cardinal<Type>>;
   };
 
   template<typename Type, regular_abi ABI = EVE_CURRENT_ABI>
-  using expected_cardinal_t = typename expected_cardinal<Type, ABI>::type;
+  using fundamental_cardinal_t = typename fundamental_cardinal<Type, ABI>::type;
 
   template<typename Type, regular_abi ABI = EVE_CURRENT_ABI>
-  constexpr inline auto expected_cardinal_v = expected_cardinal<Type, ABI>::value;
+  constexpr inline auto fundamental_cardinal_v = fundamental_cardinal<Type, ABI>::value;
 
   //================================================================================================
   // product_type special case
   //================================================================================================
   namespace detail
   {
-    template<typename T, regular_abi ABI> struct min_cardinal;
+    template<typename T, regular_abi ABI> struct min_fundamental;
 
     template<typename... T, regular_abi ABI>
-    struct min_cardinal<kumi::tuple<T...>,ABI>
+    struct min_fundamental<kumi::tuple<T...>,ABI>
     {
-      static constexpr std::ptrdiff_t value = std::min({expected_cardinal<T,ABI>::value...});
+      static constexpr std::ptrdiff_t value = std::min({fundamental_cardinal<T,ABI>::value...});
     };
   }
 
   template<kumi::product_type T, regular_abi ABI>
-  struct expected_cardinal<T,ABI> : fixed<detail::min_cardinal<kumi::as_tuple_t<T>,ABI>::value>
+  struct fundamental_cardinal<T,ABI> : fixed<detail::min_fundamental<kumi::as_tuple_t<T>,ABI>::value>
   {
-    using type = fixed<detail::min_cardinal<kumi::as_tuple_t<T>,ABI>::value>;
+    using type = fixed<detail::min_fundamental<kumi::as_tuple_t<T>,ABI>::value>;
   };
 
-  //================================================================================================
-  // Cardinal template inline object for passing cardinal values to functions like load/store
-  //================================================================================================
-  template<typename Type, typename API = EVE_CURRENT_ABI>
-  inline constexpr expected_cardinal<Type,API> const expected = {};
+  template<typename Type, typename ABI = EVE_CURRENT_ABI>
+  inline constexpr fundamental_cardinal<Type,ABI> const fundamental = {};
 }
