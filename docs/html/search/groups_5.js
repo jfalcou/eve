@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['functions_0',['Functions',['../group__functions.html',1,'']]]
+  ['elliptic_0',['Elliptic',['../group__elliptic.html',1,'']]],
+  ['exponential_1',['Exponential',['../group__exponential.html',1,'']]]
 ];

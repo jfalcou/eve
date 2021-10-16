@@ -1,12 +1,24 @@
 var searchData=
 [
-  ['uint16_0',['uint16',['../group__converter_gac0d5d471080fe5537f1ed3d9296ddf77.html#gac0d5d471080fe5537f1ed3d9296ddf77',1,'eve']]],
-  ['uint32_1',['uint32',['../group__converter_ga1dbf1967fa31abbc08b1ce14a8252acb.html#ga1dbf1967fa31abbc08b1ce14a8252acb',1,'eve']]],
-  ['uint64_2',['uint64',['../group__converter_ga6004cbdbfdd5ec747cb4fa7ef28c84df.html#ga6004cbdbfdd5ec747cb4fa7ef28c84df',1,'eve']]],
-  ['uint8_3',['uint8',['../group__converter_gad236d2923e163d4f72970151d9ff0519.html#gad236d2923e163d4f72970151d9ff0519',1,'eve']]],
-  ['uint_5f_4',['uint_',['../group__converter_gafd86a79bb4835bef550be50d5b56b342.html#gafd86a79bb4835bef550be50d5b56b342',1,'eve']]],
-  ['ulpdist_5',['ulpdist',['../group__ieee754_ga40ae299a91e28c9285b6521ca12c3fbf.html#ga40ae299a91e28c9285b6521ca12c3fbf',1,'eve']]],
-  ['under_6',['under',['../structeve_1_1pattern__t.html#aef70581b6e3b30db25467efcc08eff1c',1,'eve::pattern_t::under()'],['../group__memory_ga664bc5b316e0dd3be42aa4c2fd818047.html#ga664bc5b316e0dd3be42aa4c2fd818047',1,'eve::under()']]],
-  ['upgrade_5f_7',['upgrade_',['../group__converter_gaab615cc960ad89710ead478748d6b252.html#gaab615cc960ad89710ead478748d6b252',1,'eve']]],
-  ['upward_8',['upward',['../group__decorator_ga3b3cda8b6305e7d7e0dbc9da29c6be80.html#ga3b3cda8b6305e7d7e0dbc9da29c6be80',1,'eve']]]
+  ['tan_0',['tan',['../group__trigonometric_gaf92ef4ab7d8bd5a527db4d94bcebbdf7.html#gaf92ef4ab7d8bd5a527db4d94bcebbdf7',1,'eve']]],
+  ['tanh_1',['tanh',['../group__hyperbolic_ga32818e7959c1a884302b9f05ba8b8797.html#ga32818e7959c1a884302b9f05ba8b8797',1,'eve']]],
+  ['tanpi_2',['tanpi',['../group__trigonometric_ga18a94fd518b423cd10fbc07e5ac67d26.html#ga18a94fd518b423cd10fbc07e5ac67d26',1,'eve']]],
+  ['tgamma_3',['tgamma',['../group__special_gab6f03be6923b910c56c4b49af92e5ad5.html#gab6f03be6923b910c56c4b49af92e5ad5',1,'eve']]],
+  ['the_20expressive_20vector_20engine_4',['The Expressive Vector Engine',['../index.html',1,'']]],
+  ['to_5fnearest_5',['to_nearest',['../group__decorator_gac2364bc5fee398715edefffe3c260223.html#gac2364bc5fee398715edefffe3c260223',1,'eve']]],
+  ['tolerant_6',['tolerant',['../group__decorator_ga1cef78b42db5aeb88da7c503baed5b4a.html#ga1cef78b42db5aeb88da7c503baed5b4a',1,'eve']]],
+  ['toward_5fzero_7',['toward_zero',['../group__decorator_ga0c470f9154d0e71ce66562f945b01028.html#ga0c470f9154d0e71ce66562f945b01028',1,'eve']]],
+  ['transform_5finplace_8',['transform_inplace',['../group__eve_gabcfe49a76c53b5567df06523ded73cc0.html#gabcfe49a76c53b5567df06523ded73cc0',1,'eve::algo']]],
+  ['transform_5fto_9',['transform_to',['../group__eve_ga023d457444697194cbb8dcf21bcb236e.html#ga023d457444697194cbb8dcf21bcb236e',1,'eve::algo']]],
+  ['trigonometric_10',['Trigonometric',['../group__trigonometric.html',1,'']]],
+  ['true_5f_11',['true_',['../group__constant_gac1255364700394f5b94065c935208f42.html#gac1255364700394f5b94065c935208f42',1,'eve']]],
+  ['trunc_12',['trunc',['../group__rounding_gafde17ae255fef25fc9015dabc599c701.html#gafde17ae255fef25fc9015dabc599c701',1,'eve']]],
+  ['tutorials_13',['Tutorials',['../tutorials.html',1,'']]],
+  ['two_5fadd_14',['two_add',['../group__ieee754_ga300f96ea06042ecfd42f3e3e17787882.html#ga300f96ea06042ecfd42f3e3e17787882',1,'eve']]],
+  ['two_5fprod_15',['two_prod',['../group__ieee754_ga5ef9f1355859ff017142b92d4eb5516f.html#ga5ef9f1355859ff017142b92d4eb5516f',1,'eve']]],
+  ['twoopi_16',['twoopi',['../group__constant_gaa982de3f437f63dd7e92019e186bcb9c.html#gaa982de3f437f63dd7e92019e186bcb9c',1,'eve']]],
+  ['twopi_17',['twopi',['../group__constant_gab83b9743ff1508e1b62af18f170ed576.html#gab83b9743ff1508e1b62af18f170ed576',1,'eve']]],
+  ['twotonmb_18',['twotonmb',['../group__constant_gacefed0e3b9ee16507cf649601408be2a.html#gacefed0e3b9ee16507cf649601408be2a',1,'eve']]],
+  ['type_19',['type',['../structeve_1_1as.html#a904ff0e88e1f435dc24505e3168b52f5',1,'eve::as']]],
+  ['type_20traits_20',['Type traits',['../group__traits.html',1,'']]]
 ];

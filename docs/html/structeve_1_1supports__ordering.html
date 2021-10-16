@@ -152,7 +152,7 @@ struct eve::supports_ordering&lt; Type &gt;</div><p >Register a user-defined typ
 </dl>
 <p>By default, instances of <code><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;T&gt;</code> where <code>T</code> is an User-Defined Product Type supports ordering. However, one can specialize <code><a class="el" href="structeve_1_1supports__ordering.html" title="Register a user-defined type to supports ordering.">eve::supports_ordering</a></code> for a given type to evaluates to <code>false</code> in order to disable ordering for this type.</p>
 <p >Alternatively, any type <code>T</code> providing an internal <code>eve_disable_ordering</code> type will be treated as if <code><a class="el" href="structeve_1_1supports__ordering.html" title="Register a user-defined type to supports ordering.">eve::supports_ordering</a>&lt;T&gt;::</code><code>value</code> evaluates to <code>false</code>, thus disabling ordering operators for <code><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;T&gt;</code>.</p>
-<h3><a class="anchor" id="autotoc_md1990"></a>
+<h3><a class="anchor" id="autotoc_md2000"></a>
 Helper variable template</h3>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Type&gt;</div>
 <div class="line"><span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keywordtype">bool</span> supports_ordering_v = <a class="code hl_struct" href="structeve_1_1supports__ordering.html">eve::supports_ordering&lt;Type&gt;::value</a>;</div>

@@ -1,11 +1,11 @@
 var searchData=
 [
-  ['half_0',['half',['../group__constant_ga8d9cee3337e0a95b596cef102e04e1a5.html#ga8d9cee3337e0a95b596cef102e04e1a5',1,'eve']]],
-  ['halfeps_1',['halfeps',['../group__constant_ga722c967a20debd9ffe04b325134395ba.html#ga722c967a20debd9ffe04b325134395ba',1,'eve']]],
-  ['has_5fzeros_2',['has_zeros',['../structeve_1_1pattern__t.html#adaf1e7da40b7b86a9e00d120044039df',1,'eve::pattern_t']]],
-  ['hermite_3',['hermite',['../group__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25.html#ga7bb3ce7bbd71384fadab1bcdd1905a25',1,'eve']]],
-  ['hi_4',['hi',['../group__ieee754_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524',1,'eve']]],
-  ['horner_5',['horner',['../group__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb',1,'eve']]],
-  ['hyperbolic_6',['Hyperbolic',['../group__hyperbolic.html',1,'']]],
-  ['hypot_7',['hypot',['../group__arithmetic_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9',1,'eve']]]
+  ['gamma_5fp_0',['gamma_p',['../group__special_gae09a3d5ef50adfebd1d42611611cae5a.html#gae09a3d5ef50adfebd1d42611611cae5a',1,'eve']]],
+  ['gamma_5fp_5finv_1',['gamma_p_inv',['../group__special_gaf5fcadaf8004e085bda70f80d2a649fc.html#gaf5fcadaf8004e085bda70f80d2a649fc',1,'eve']]],
+  ['gather_2',['gather',['../group__memory_ga1104bd95e3b6b1a682c2fd9c290034d0.html#ga1104bd95e3b6b1a682c2fd9c290034d0',1,'eve']]],
+  ['gcd_3',['gcd',['../group__combinatorial_gac21a6f747ae2df1d45db58a58cbba588.html#gac21a6f747ae2df1d45db58a58cbba588',1,'eve']]],
+  ['gegenbauer_4',['gegenbauer',['../group__polynomial_gaee731c76b893d8394075aaa0e5a16cf5.html#gaee731c76b893d8394075aaa0e5a16cf5',1,'eve']]],
+  ['geommean_5',['geommean',['../group__arithmetic_gafac2fbecb48c62079c84db6314ddc0e8.html#gafac2fbecb48c62079c84db6314ddc0e8',1,'eve']]],
+  ['get_6',['get',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a7e669e8b662996c0cb3553c33a09dedc',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::get()'],['../structeve_1_1wide.html#a5f47b4c7696ac6bf60ad8641c42f88b4',1,'eve::wide::get()'],['../structeve_1_1aligned__ptr.html#aa6c43a41bc91bdc491818820953f7b4d',1,'eve::aligned_ptr::get()']]],
+  ['glossary_7',['Glossary',['../glossary.html',1,'']]]
 ];

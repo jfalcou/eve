@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hyperbolic_0',['Hyperbolic',['../group__hyperbolic.html',1,'']]]
+  ['functions_0',['Functions',['../group__functions.html',1,'']]]
 ];
