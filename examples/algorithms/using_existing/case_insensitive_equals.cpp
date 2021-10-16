@@ -29,7 +29,8 @@ namespace ascii
 
   bool iequals(std::string_view a, std::string_view b)
   {
-    // if they're not the same size, whay bother converting them both to uppercase and then check?
+    // If they're not the same size, why bother converting them both to uppercase and then check?
+    // btw, it will just crash if the sizes are not equal. You cannot run algo::equal on different sizes.
     if( a.size() != b.size() )
       return false;
 
