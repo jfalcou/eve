@@ -10,7 +10,7 @@
 
 #include <eve/algo/preprocess_range.hpp>
 
-#include <eve/algo/convert.hpp>
+#include <eve/algo/views/convert.hpp>
 #include <eve/algo/ptr_iterator.hpp>
 #include <eve/algo/unalign.hpp>
 
@@ -264,33 +264,59 @@ EVE_TEST_TYPES("cardinal/type manipulation", algo_test::selected_types)
   using e_t = eve::element_type_t<T>;
 
   std::vector<e_t> v;
+  std::vector<double> v_d;
   {
     auto processed = eve::algo::preprocess_range(
     eve::algo::traits(eve::algo::force_cardinal<T::size()>), v);
 
     using I = decltype(processed.begin());
-    TTS_CONSTEXPR_EXPECT((std::same_as<typename I::wide_value_type, T>));
+    TTS_TYPE_IS(eve::algo::wide_value_type_t<I>, T);
+  }
+
+  {
+    using cardinal_n = eve::detail::cache_line_cardinal<e_t>;
+    auto processed = eve::algo::preprocess_range(
+    eve::algo::traits(eve::algo::force_cardinal<cardinal_n{}()>), v);
+
+    using I = decltype(processed.begin());
+    TTS_TYPE_IS(eve::algo::iterator_cardinal_t<I>, cardinal_n);
   }
 
   {
     auto processed = eve::algo::preprocess_range(
       eve::algo::traits(),
-      eve::algo::convert(v, eve::as<eve::common_type_t<double, char>>{}));
+      eve::algo::views::convert(v, eve::as<eve::common_type_t<double, char>>{}));
 
     using I = decltype(processed.begin());
     TTS_TYPE_IS(typename I::value_type, double);
-    TTS_TYPE_IS(typename I::wide_value_type, eve::wide<double>);
+    TTS_TYPE_IS(eve::algo::wide_value_type_t<I>, eve::wide<double>);
   }
 
   {
     auto processed = eve::algo::preprocess_range(
       eve::algo::traits(eve::algo::force_cardinal<T::size()>),
-      eve::algo::convert(v, eve::as<double>{}));
+      eve::algo::views::convert(v, eve::as<double>{}));
 
     using I = decltype(processed.begin());
-    TTS_CONSTEXPR_EXPECT((std::same_as<
-      typename I::wide_value_type,
-      eve::wide<double, eve::fixed<T::size()>>
-    >));
+    TTS_TYPE_IS(eve::algo::wide_value_type_t<I>,
+                (eve::wide<double, eve::fixed<T::size()>>));
+  }
+
+  {
+    auto processed = eve::algo::preprocess_range(
+      eve::algo::traits(eve::algo::consider_types<double>), v);
+
+    using I = decltype(processed.begin());
+    TTS_TYPE_IS(eve::algo::wide_value_type_t<I>,
+                (eve::wide<e_t, eve::fixed<eve::expected_cardinal_v<double>>>));
+  }
+
+  {
+    auto processed = eve::algo::preprocess_range(
+      eve::algo::traits{}, eve::algo::views::convert(v_d, eve::as<e_t>{}));
+
+    using I = decltype(processed.begin());
+    TTS_TYPE_IS(eve::algo::wide_value_type_t<I>,
+                (eve::wide<e_t, eve::fixed<eve::expected_cardinal_v<double>>>));
   }
 };

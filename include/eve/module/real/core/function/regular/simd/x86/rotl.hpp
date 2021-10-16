@@ -29,7 +29,7 @@ namespace eve::detail
   // avx512 implementation
   template<integral_real_scalar_value T, integral_real_scalar_value I, typename N>
   EVE_FORCEINLINE wide<T, N> rotl_(EVE_SUPPORTS(avx512_), wide<T, N> a0,  wide<I, N> a1) noexcept
-  requires(sizeof(T) >= 4)
+  requires(sizeof(T) >= 4 && x86_abi<abi_t<T, N>>)
   {
     using r_t =  wide<T, N>;
     constexpr auto c = categorize<wide<T, N>>();
@@ -51,7 +51,7 @@ namespace eve::detail
   // masked avx512 implementation
   template<conditional_expr C,integral_real_scalar_value T, integral_real_scalar_value I, typename N>
   EVE_FORCEINLINE wide<T, N> rotl_(EVE_SUPPORTS(avx512_), C const &cx, wide<T, N> a0,  wide<I, N> a1) noexcept
-  requires(sizeof(T) >= 4)
+  requires(sizeof(T) >= 4 && x86_abi<abi_t<T, N>>)
   {
     using r_t =  wide<T, N>;
     constexpr auto c = categorize<wide<T, N>>();

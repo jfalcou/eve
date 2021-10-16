@@ -43,20 +43,20 @@ EVE_TEST( "Check behavior of laguerre on wide"
   for(unsigned int n=0; n < 5; ++n)
   {
     auto boost_laguerre =  [&](auto i, auto) { return boost::math::laguerre(n, a0.get(i)); };
-    TTS_ULP_EQUAL(eve__laguerrev(n, a0), T(boost_laguerre), 150);
+    TTS_ULP_EQUAL(eve__laguerrev(n, a0), T(boost_laguerre), 1024);
   }
   auto boost_laguerrev =  [&](auto i, auto) { return boost::math::laguerre(i0.get(i), a0.get(i)); };
-  TTS_ULP_EQUAL(eve__laguerrev(i0    , a0), T(boost_laguerrev), 150);
+  TTS_RELATIVE_EQUAL(eve__laguerrev(i0    , a0), T(boost_laguerrev), 0.01);
   for(unsigned int j=0; j < eve::cardinal_v<T>; ++j)
   {
     auto boost_laguerre2 =  [&](auto i, auto) { return boost::math::laguerre(i0.get(i), a0.get(j)); };
-    TTS_ULP_EQUAL(eve__laguerrev(i0 , a0.get(j)), T(boost_laguerre2), 150);
+    TTS_RELATIVE_EQUAL(eve__laguerrev(i0 , a0.get(j)), T(boost_laguerre2), 0.01);
   }
   for(unsigned int j=0; j < eve::cardinal_v<T>; ++j)
   {
     for(unsigned int n=0; n < eve::cardinal_v<T>; ++n)
     {
-      TTS_ULP_EQUAL(eve__laguerrev(i0.get(j) , a0.get(n)), v_t(boost::math::laguerre(i0.get(j), a0.get(n))), 150);
+      TTS_RELATIVE_EQUAL(eve__laguerrev(i0.get(j) , a0.get(n)), v_t(boost::math::laguerre(i0.get(j), a0.get(n))), 0.01);
     }
   }
 };

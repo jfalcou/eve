@@ -13,6 +13,7 @@
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on average", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   auto std_average = [](auto e) { return std::midpoint(e,  one(eve::as(e))); };
   auto  my_average =  [](auto e) { return eve::average(e,  one(eve::as(e))); };
@@ -27,4 +28,4 @@ TTS_CASE_TPL("wide random check on average", EVE_TYPE)
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_ULP_RANGE_CHECK(p, std_average, my_average, 0.5);
   }
-}
+};

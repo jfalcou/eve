@@ -40,17 +40,17 @@ EVE_TEST_TYPES( "Check return types of cotd"
 //==================================================================================================
 // cotd  tests
 //==================================================================================================
-auto mrest  = []<typename T>(eve::as<T> const & ){  return T(-45); };
-auto rest   = []<typename T>(eve::as<T> const & ){  return T( 45); };
-auto msmall = []<typename T>(eve::as<T> const & ){  return T(-90 ); };
-auto small  = []<typename T>(eve::as<T> const & ){  return T( 90 ); };
+auto mquarter_c  = []<typename T>(eve::as<T> const & ){  return T(-45); };
+auto quarter_c  = []<typename T>(eve::as<T> const & ){  return T( 45); };
+auto mhalf_c = []<typename T>(eve::as<T> const & ){  return T(-90 ); };
+auto half_c  = []<typename T>(eve::as<T> const & ){  return T( 90 ); };
 auto mmed   = []<typename T>(eve::as<T> const & ){  return -5000; };
 auto med    = []<typename T>(eve::as<T> const & ){  return  5000; };
 
 EVE_TEST( "Check behavior of cotd on wide"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate( eve::test::randoms(mrest, rest)
-                             , eve::test::randoms(msmall, small)
+        , eve::test::simd::restricted::ieee_reals
+        , eve::test::generate( eve::test::randoms(mquarter_c, quarter_c)
+                             , eve::test::randoms(mhalf_c, half_c)
                              , eve::test::randoms(mmed, med)
                              , eve::test::randoms(eve::valmin, eve::valmax))
                              )
@@ -62,26 +62,19 @@ EVE_TEST( "Check behavior of cotd on wide"
   using eve::deginrad;
   using v_t = eve::element_type_t<T>;
   auto ref = [](auto e) -> v_t { auto d = eve::sind(e); return d ? eve::cosd(e)/eve::sind(e): eve::nan(eve::as(e)); };
-  TTS_ULP_EQUAL(eve::restricted(cotd)(a0)      , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::small(cotd)(a0)           , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::small(cotd)(a1)           , map(ref, a1), 40);
-  TTS_ULP_EQUAL(eve::medium(cotd)(a0)          , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::medium(cotd)(a1)          , map(ref, a1), 40);
-  TTS_ULP_EQUAL(eve::medium(cotd)(a2)          , map(ref, a2), 300);
-  TTS_ULP_EQUAL(eve::big(cotd)(a0)             , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::big(cotd)(a1)             , map(ref, a1), 40);
-  TTS_ULP_EQUAL(eve::big(cotd)(a2)             , map(ref, a2), 300);
-  TTS_ULP_EQUAL(eve::big(cotd)(a3)             , map(ref, a3), 2);
+  TTS_ULP_EQUAL(eve::quarter_circle(cotd)(a0)      , map(ref, a0), 2);
+  TTS_ULP_EQUAL(eve::half_circle(cotd)(a0)           , map(ref, a0), 2);
+  TTS_ULP_EQUAL(eve::half_circle(cotd)(a1)           , map(ref, a1), 40);
   TTS_ULP_EQUAL(cotd(a0)                       , map(ref, a0), 2);
   TTS_ULP_EQUAL(cotd(a1)                       , map(ref, a1), 40);
   TTS_ULP_EQUAL(cotd(a2)                       , map(ref, a2), 300);
   TTS_ULP_EQUAL(cotd(a3)                       , map(ref, a3), 2);
   auto dinr = 1.7453292519943295769236907684886127134428718885417e-2l;
 
-  TTS_ULP_EQUAL(diff(cotd)(a0), map([dinr](auto e) -> v_t { return  -dinr*eve::sqr(eve::cscd(e)); }, a0), 2);
+  TTS_ULP_EQUAL(diff(cotd)(a0), map([dinr](auto e) -> v_t { return  -dinr*eve::sqr(eve::cscd(e)); }, a0), 4);
 };
 
-EVE_TEST_TYPES( "Check return types of cotd"
+EVE_TEST_TYPES( "Check corner cases of cotd"
             , eve::test::simd::ieee_reals
             )
 <typename T>(eve::as<T>)
@@ -94,18 +87,6 @@ EVE_TEST_TYPES( "Check return types of cotd"
   TTS_ULP_EQUAL(cotd( T(500.0)) , T(-1.19175359259420995870530807186041933693070040770853)  , 6);
   TTS_ULP_EQUAL(cotd(-T(500.0)) , T(1.19175359259420995870530807186041933693070040770853)   , 6);
 
-  TTS_ULP_EQUAL(eve::big(cotd)( T(  1))   , T(57.289961630759424687278147537112577980217522235144)    , 6);
-  TTS_ULP_EQUAL(eve::big(cotd)(-T(  1))   , T(-57.289961630759424687278147537112577980217522235144)   , 6);
-  TTS_ULP_EQUAL(eve::big(cotd)( T( 45))   , T(1)                                                      , 6);
-  TTS_ULP_EQUAL(eve::big(cotd)(-T( 45))   , T(-1)                                                     , 6);
-  TTS_ULP_EQUAL(eve::big(cotd)( T(500.0)) , T(-1.19175359259420995870530807186041933693070040770853)  , 6);
-  TTS_ULP_EQUAL(eve::big(cotd)(-T(500.0)) , T(1.19175359259420995870530807186041933693070040770853)   , 6);
 
-  TTS_ULP_EQUAL(eve::medium(cotd)( T(  1))   , T(57.289961630759424687278147537112577980217522235144)    , 6);
-  TTS_ULP_EQUAL(eve::medium(cotd)(-T(  1))   , T(-57.289961630759424687278147537112577980217522235144)   , 6);
-  TTS_ULP_EQUAL(eve::medium(cotd)( T( 45))   , T(1)                                                      , 6);
-  TTS_ULP_EQUAL(eve::medium(cotd)(-T( 45))   , T(-1)                                                     , 6);
-  TTS_ULP_EQUAL(eve::medium(cotd)( T(500.0)) , T(-1.19175359259420995870530807186041933693070040770853)  , 6);
-  TTS_ULP_EQUAL(eve::medium(cotd)(-T(500.0)) , T(1.19175359259420995870530807186041933693070040770853)   , 6);
 
 };

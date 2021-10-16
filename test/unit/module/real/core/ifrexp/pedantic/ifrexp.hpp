@@ -15,11 +15,13 @@
 #include <tuple>
 
 TTS_CASE_TPL("Check ifrexp return type", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   TTS_EXPR_IS(eve::pedantic(eve::ifrexp)(T()), (kumi::tuple<T,eve::as_integer_t<T,signed>>));
-}
+};
 
 TTS_CASE_TPL("Check eve::pedantic(eve::ifrexp) behavior", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   using i_t = eve::as_integer_t<T,signed>;
   {
@@ -57,4 +59,4 @@ TTS_CASE_TPL("Check eve::pedantic(eve::ifrexp) behavior", EVE_TYPE)
     TTS_ULP_EQUAL (r0, T(0.5), 1);
     TTS_EQUAL     (r1, i_t(eve::minexponent(eve::as<T>())-eve::nbmantissabits(eve::as<T>())+1));
   }
-}
+};

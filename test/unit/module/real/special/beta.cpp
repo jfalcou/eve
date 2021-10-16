@@ -51,7 +51,7 @@ EVE_TEST( "Check behavior of beta on wide"
   using eve::as;
   using elt_t = eve::element_type_t<T>;
 #if defined(__cpp_lib_math_special_functions)
-  TTS_ULP_EQUAL( eve::beta(a0, a1),  map([&](auto e, auto f) -> elt_t{ return std::beta(e, f); }, a0, a1), 22);
+  TTS_ULP_EQUAL( eve::beta(a0, a1),  map([&](auto e, auto f) -> elt_t{ return std::beta(e, f); }, a0, a1), 32);
   auto db = [](auto x,  auto y){ return eve::fnma(eve::digamma(x), std::beta(x, y), eve::digamma(x + y));};
   TTS_ULP_EQUAL( eve::diff_1st(eve::beta)(a0, a1),  map(db, a0, a1), 2);
   TTS_ULP_EQUAL( eve::diff_2nd(eve::beta)(a0, a1),  map(db, a1, a0), 2);

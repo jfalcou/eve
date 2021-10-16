@@ -102,7 +102,7 @@ TTS_CASE( "Check strlen, basic")
   TTS_EQUAL(strlen_("abc"), 3u);
   TTS_EQUAL(strlen_(""), 0u);
   TTS_EQUAL(strlen_("0000"), 4u);
-}
+};
 
 TTS_CASE( "Check strlen_ example exchaustive" )
 {
@@ -137,4 +137,4 @@ TTS_CASE( "Check strlen_ example exchaustive" )
     --l;
     ++f;
   }
-}
+};

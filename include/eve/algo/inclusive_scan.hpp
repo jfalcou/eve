@@ -12,6 +12,7 @@
 #include <eve/algo/concepts.hpp>
 #include <eve/algo/for_each_iteration.hpp>
 #include <eve/algo/preprocess_range.hpp>
+#include <eve/algo/views/convert.hpp>
 #include <eve/algo/traits.hpp>
 
 #include <eve/constant/as_value.hpp>
@@ -38,11 +39,15 @@ namespace eve::algo
 
         EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto /*idx*/)
         {
-          auto xs     = LoadStore::load(ignore.else_(eve::as_value(zero, as<Wide> {})), it);
-          xs          = eve::scan(xs, op, zero);
-          xs          = op(xs, running_sum);
+          auto load_it  = LoadStore::load_it(it);
+          auto store_it = LoadStore::store_it(it);
+
+          auto xs = eve::load[ignore.else_(eve::as_value(zero, as<Wide> {}))](load_it);
+          xs      = eve::scan(xs, op, zero);
+          xs      = op(xs, running_sum);
           running_sum = Wide(xs.back());
-          LoadStore::store(ignore, xs, it);
+
+          eve::store[ignore](xs, store_it);
           return false;
         }
 
@@ -61,8 +66,7 @@ namespace eve::algo
         if( processed.begin() == processed.end() ) return;
 
         using I      = decltype(processed.begin());
-        using T      = typename LoadStore::template read_value_type<I>;
-        using wide_t = eve::wide<T, typename I::cardinal>;
+        using wide_t = eve::wide<U, iterator_cardinal_t<I>>;
 
         wide_t wide_init = eve::as_value(init, eve::as<wide_t> {});
 
@@ -81,7 +85,7 @@ namespace eve::algo
     EVE_FORCEINLINE void operator()(Rng&& rng, std::pair<Op, Zero> op_zero, U init) const
     {
       detail::inclusive_scan_common<inplace_load_store>{}(
-        TraitsSupport::get_traits(), std::forward<Rng>(rng), op_zero, init);
+        TraitsSupport::get_traits(), views::convert(std::forward<Rng>(rng), eve::as<U>{}), op_zero, init);
     }
 
     template <relaxed_range Rng, typename U>
@@ -100,7 +104,7 @@ namespace eve::algo
     EVE_FORCEINLINE void operator()(R r, std::pair<Op, Zero> op_zero, U init) const
     {
       detail::inclusive_scan_common<to_load_store>{}(
-        TraitsSupport::get_traits(), r[common_type], op_zero, init);
+        TraitsSupport::get_traits(), r[force_type<U>], op_zero, init);
     }
 
     template <zipped_range_pair R, typename U>
@@ -113,14 +117,14 @@ namespace eve::algo
       requires zip_to_range<R1, R2>
     EVE_FORCEINLINE auto operator()(R1&& r1, R2&& r2, std::pair<Op, Zero> op_zero, U init) const
     {
-      operator()(zip(std::forward<R1>(r1), std::forward<R2>(r2)), op_zero, init);
+      operator()(views::zip(std::forward<R1>(r1), std::forward<R2>(r2)), op_zero, init);
     }
 
     template <typename R1, typename R2, typename U>
       requires zip_to_range<R1, R2>
     EVE_FORCEINLINE auto operator()(R1&& r1, R2&& r2, U init) const
     {
-      return operator()(zip(std::forward<R1>(r1), std::forward<R2>(r2)), init);
+      return operator()(views::zip(std::forward<R1>(r1), std::forward<R2>(r2)), init);
     }
   };
 

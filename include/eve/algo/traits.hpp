@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/algo/concepts/value_type.hpp>
+#include <eve/algo/concepts/types_to_consider.hpp>
 
 #include <eve/detail/raberu.hpp>
 
@@ -53,6 +54,10 @@ namespace eve::algo
   template<int N> inline constexpr auto force_cardinal = (force_cardinal_key = eve::fixed<N>{});
   template <typename T> inline constexpr auto force_cardinal_as = force_cardinal<eve::expected_cardinal_v<T>>;
 
+  struct consider_types_key_t {};
+  inline constexpr auto consider_types_key = ::rbr::keyword( consider_types_key_t{} );
+  template <typename ...Ts> auto consider_types = ( consider_types_key = kumi::tuple<Ts...>{} );
+
   struct force_type_key_t {};
   inline constexpr auto force_type_key = ::rbr::keyword( force_type_key_t{} );
   template <typename T> auto force_type = (force_type_key = std::type_identity<T>{});
@@ -79,16 +84,37 @@ namespace eve::algo
     return rbr::get_type_t<Traits, unroll_key, eve::fixed<1>>{}();
   }
 
-  template <typename Traits, typename T>
+  template <typename Traits>
+  using extra_types_to_consider = rbr::get_type_t<Traits, consider_types_key, kumi::tuple<>>;
+
+  template <typename Traits, typename RorI>
+  using get_types_to_consider_for =
+    kumi::result::cat_t<extra_types_to_consider<Traits>, types_to_consider_for_t<RorI>>;
+
+  template <typename Traits, typename RorI>
   using iteration_cardinal_t =
     rbr::get_type_t<Traits, force_cardinal_key,
-    expected_cardinal_t<T>>;
+                    expected_cardinal_t<get_types_to_consider_for<Traits, RorI>>
+                   >;
 
   inline constexpr auto default_to =
      []<typename User, typename Default>(traits<User> const& user, traits<Default> const& defaults)
   {
-    using settings_t = decltype(rbr::merge(user, defaults));
-    return traits<settings_t>{rbr::merge(user, defaults)};
+    if constexpr ( User::contains(consider_types_key) &&
+                   Default::contains(consider_types_key) )
+    {
+      auto consider_all_types = kumi::result::cat_t<rbr::get_type_t<User,    consider_types_key>,
+                                                    rbr::get_type_t<Default, consider_types_key>>{};
+      auto settings = rbr::merge(rbr::merge(rbr::settings(consider_types_key = consider_all_types),
+                                            user),
+                                 defaults);
+      return traits<decltype(settings)>{settings};
+    }
+    else
+    {
+      using settings_t = decltype(rbr::merge(user, defaults));
+      return traits<settings_t>{rbr::merge(user, defaults)};
+    }
   };
 
   template <typename K, typename Traits>

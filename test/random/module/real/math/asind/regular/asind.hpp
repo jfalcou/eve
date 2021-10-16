@@ -12,9 +12,10 @@
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on asind", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   auto std_asind = [](auto e) { return eve::radindeg(std::asin(e)); };
 
   eve::uniform_prng<EVE_VALUE> p(-1, 1);
   TTS_RANGE_CHECK(p, std_asind, eve::asind);
-}
+};

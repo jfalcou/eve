@@ -10,6 +10,7 @@
 #include <eve/wide.hpp>
 
 TTS_CASE_TPL("Check as_wide on scalar", TTS_SIGNED_NUMERIC_TYPES, TTS_UNSIGNED_NUMERIC_TYPES  )
+<typename T>(::tts::type<T>)
 {
   using eve::as_wide_t;
   using eve::logical;
@@ -21,9 +22,10 @@ TTS_CASE_TPL("Check as_wide on scalar", TTS_SIGNED_NUMERIC_TYPES, TTS_UNSIGNED_N
   TTS_TYPE_IS ( (as_wide_t<kumi::tuple<T,int,float>, fixed<4>>)
               , (wide<kumi::tuple<T,int,float>,fixed<4>> )
               );
-}
+};
 
 TTS_CASE_TPL("Check as_wide on wide", TTS_SIGNED_NUMERIC_TYPES, TTS_UNSIGNED_NUMERIC_TYPES)
+<typename T>(::tts::type<T>)
 {
   using eve::as_wide_t;
   using eve::logical;
@@ -35,4 +37,4 @@ TTS_CASE_TPL("Check as_wide on wide", TTS_SIGNED_NUMERIC_TYPES, TTS_UNSIGNED_NUM
   TTS_TYPE_IS ( (as_wide_t<wide<kumi::tuple<T,int,float>>, fixed<4>>)
               , (wide<kumi::tuple<T,int,float>,fixed<4>> )
               );
-}
+};

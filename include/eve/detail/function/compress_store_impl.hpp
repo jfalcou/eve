@@ -37,3 +37,7 @@ namespace eve
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/detail/function/simd/x86/compress_store_impl.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_ARM_HEADER)
+#    include <eve/detail/function/simd/arm/neon/compress_store_impl.hpp>
+#endif

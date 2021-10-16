@@ -30,6 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  template<simd_value T> auto operator()( T v ) const noexcept;
   //!  template<simd_value T, Callable F> auto operator()( T v, F binary_op ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
@@ -38,6 +39,7 @@ namespace eve
   //! `v`:   [SIMD value](@ref eve::simd_value) to reduce.
   //!
   //! `binary_op`:   Binary callable object that perform a binary, associative and commutative operation.
+  //!                If unspecified, the sum of all element of `v`is performed.
   //!
   //! **Return value**
   //!

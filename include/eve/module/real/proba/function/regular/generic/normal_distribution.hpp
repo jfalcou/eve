@@ -52,7 +52,7 @@ namespace eve
      auto x1 = detail::urg01(gen, as<R>());
      auto x2 = detail::urg01(gen, as<R>());
      auto rho = eve::sqrt(-2*eve::log1p(-x1));
-     return rho*small(cospi)(2*x2);
+     return rho*half_circle(cospi)(2*x2);
    }
  }
 

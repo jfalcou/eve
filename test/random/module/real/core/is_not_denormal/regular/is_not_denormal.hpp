@@ -12,6 +12,7 @@
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on is_not_denormal", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   if constexpr(eve::floating_value<T>)
   {
@@ -25,4 +26,4 @@ TTS_CASE_TPL("wide random check on is_not_denormal", EVE_TYPE)
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_is_not_denormal, eve::is_not_denormal);
   }
-}
+};

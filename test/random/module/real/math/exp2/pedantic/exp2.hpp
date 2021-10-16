@@ -12,6 +12,7 @@
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on exp2", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   if constexpr(eve::integral_value<T>)
   {
@@ -25,4 +26,4 @@ TTS_CASE_TPL("wide random check on exp2", EVE_TYPE)
     eve::uniform_prng<EVE_VALUE> p(eve::minlog2(eve::as<EVE_VALUE>())+1, eve::maxlog2(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_exp2, eve::exp2);
   }
-}
+};

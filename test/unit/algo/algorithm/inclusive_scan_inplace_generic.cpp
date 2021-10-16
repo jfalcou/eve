@@ -14,7 +14,6 @@
 
 #include <algorithm>
 #include <functional>
-#include <vector>
 
 EVE_TEST_TYPES("Check inlclusive_scan_inplace", algo_test::selected_types)
 <typename T>(eve::as<T> tgt)

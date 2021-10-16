@@ -31,8 +31,8 @@ namespace algo_test
     TTS_GREATER      (l, f);
     TTS_GREATER_EQUAL(l, f);
 
-    eve::fixed cardinal = typename I::cardinal{};
-    TTS_TYPE_IS(typename I::cardinal, decltype(cardinal));
+    eve::fixed cardinal = eve::algo::iterator_cardinal_t<I>{};
+    TTS_TYPE_IS(eve::algo::iterator_cardinal_t<I>, decltype(cardinal));
     TTS_TYPE_IS(decltype(l - f), std::ptrdiff_t);
 
     // read test
@@ -98,6 +98,8 @@ namespace algo_test
   template <eve::algo::readable_iterator I, eve::algo::sentinel_for<I> S, typename T, typename ReplaceIgnored>
   void iterator_sentinel_test(I f, S l, T v, ReplaceIgnored replace)
   {
+    TTS_CONSTEXPR_EXPECT(eve::algo::readable_iterator<I&>);
+
     eve::algo::preprocess_range(eve::algo::traits{}, f, f);
     is_relaxed_test(f, l);
     iterator_sentinel_test_one_pair(f, l, v, replace);
@@ -165,7 +167,9 @@ namespace algo_test
     T expected = or_;
     expected.set(0, v.back());
 
-    eve::logical<T> mask{false};
+    using m_t = std::conditional_t<eve::current_api == eve::avx512, std::uint8_t, std::uint16_t>;
+
+    eve::logical<eve::wide<m_t, eve::fixed<T::size()>>> mask{false};
     mask.set(T::size() - 1, true);
     eve::algo::unaligned_t<I> res = eve::safe(eve::compress_store)(v, mask, f);
     TTS_EQUAL(eve::load(f), expected);

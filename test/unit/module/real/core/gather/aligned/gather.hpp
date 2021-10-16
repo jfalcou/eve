@@ -8,8 +8,8 @@
 #include <eve/function/gather.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 
-
 TTS_CASE_TPL("Check eve::gather behavior with 32 bits indexes", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -24,9 +24,10 @@ TTS_CASE_TPL("Check eve::gather behavior with 32 bits indexes", EVE_TYPE)
   const v_t* cdata = &data[0];
   TTS_EQUAL( ref, eve::gather(eve::as_aligned(cdata   ), maps) );
   TTS_EQUAL( ref, eve::gather(eve::as_aligned(&data[0]), maps) );
-}
+};
 
 TTS_CASE_TPL("Check eve::gather behavior with 64 bits indexes", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -41,4 +42,4 @@ TTS_CASE_TPL("Check eve::gather behavior with 64 bits indexes", EVE_TYPE)
   const v_t* cdata = &data[0];
   TTS_EQUAL( ref, eve::gather(eve::as_aligned(cdata   ), maps) );
   TTS_EQUAL( ref, eve::gather(eve::as_aligned(&data[0]), maps) );
-}
+};

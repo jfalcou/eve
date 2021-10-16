@@ -117,7 +117,7 @@ EVE_TEST( "Check eve::wide::slice behavior"
   }
   else
   {
-    TTS_PASS("Type is too small to be split.");
+    TTS_PASS("Type is too half_c to be split.");
   }
 };
 

@@ -13,6 +13,7 @@
 #include <cmath>
 
 TTS_CASE_TPL( "wide random check on abs", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   if constexpr(eve::floating_value<T>)
   {
@@ -40,4 +41,4 @@ TTS_CASE_TPL( "wide random check on abs", EVE_TYPE)
     auto std_abs = [](auto e) { return e; };
     TTS_RANGE_CHECK( eve::uniform_prng<EVE_VALUE>(vmin,vmax), std_abs, eve::abs );
   }
-}
+};

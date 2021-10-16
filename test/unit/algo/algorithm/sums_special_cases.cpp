@@ -10,7 +10,7 @@
 
 #include <eve/algo/inclusive_scan.hpp>
 #include <eve/algo/reduce.hpp>
-#include <eve/algo/zip.hpp>
+#include <eve/algo/views/zip.hpp>
 
 #include <algorithm>
 #include <functional>
@@ -32,14 +32,14 @@ TTS_CASE("eve.algo.reduce sum complex numbers")
 
 
   auto [re, im] = eve::algo::reduce(
-    eve::algo::zip(real, img),
+    eve::algo::views::zip(real, img),
     std::pair{plus, cmplx{0.0, 0.0} },
     cmplx{1, -1}
   );
 
   TTS_RELATIVE_EQUAL(re,  1.6, 0.0001);
   TTS_RELATIVE_EQUAL(im, -1.6, 0.0001);
-}
+};
 
 TTS_CASE("eve.algo.inclusive_scan a vector")
 {
@@ -50,7 +50,7 @@ TTS_CASE("eve.algo.inclusive_scan a vector")
 
   eve::algo::inclusive_scan_inplace(v, -1);
   TTS_EQUAL(v, expected);
-}
+};
 
 TTS_CASE("eve.algo.inclusive_scan complex numbers")
 {
@@ -69,13 +69,15 @@ TTS_CASE("eve.algo.inclusive_scan complex numbers")
   std::vector<float> real_copy = real;
   std::vector<float> img_copy  = img;
 
-  eve::algo::inclusive_scan_to(
-    eve::algo::zip(real, img),
-    eve::algo::zip(real_copy, img_copy),
-    std::pair{plus, eve::zero},
-    eve::zero);
+  kumi::tuple<float, float> init{0.0, 0.0};
 
-  eve::algo::inclusive_scan_inplace(eve::algo::zip(real, img), std::pair{plus, eve::zero}, eve::zero);
+  eve::algo::inclusive_scan_to(
+    eve::algo::views::zip(real, img),
+    eve::algo::views::zip(real_copy, img_copy),
+    std::pair{plus, eve::zero},
+    init);
+
+  eve::algo::inclusive_scan_inplace(eve::algo::views::zip(real, img), std::pair{plus, eve::zero}, init);
 
   std::vector<float> expected_real = { 0.0,  0.1,  0.3,  0.6 };
   std::vector<float> expected_img  = { 0.0, -0.1, -0.3, -0.6 };
@@ -84,4 +86,4 @@ TTS_CASE("eve.algo.inclusive_scan complex numbers")
 
   TTS_EQUAL(expected_real, real_copy);
   TTS_EQUAL(expected_img,  img_copy);
-}
+};

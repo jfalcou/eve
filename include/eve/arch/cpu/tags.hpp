@@ -90,6 +90,9 @@ namespace eve
 
     template<typename Type>
     static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
+
+    template<typename Type>
+    static constexpr std::size_t fundamental_cardinal = bytes / sizeof(Type);
   };
 
   template<typename T>

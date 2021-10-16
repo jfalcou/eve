@@ -20,4 +20,4 @@ TTS_CASE("eve::algo::unaligned_t")
   TTS_TYPE_IS((eve::algo::unaligned_t<eve::aligned_ptr<const int, eve::fixed<2>>>), const int*);
   TTS_TYPE_IS((eve::algo::unaligned_t<eve::algo::aligned_ptr_iterator<int, eve::fixed<2>>>),
               (eve::algo::unaligned_ptr_iterator<int, eve::fixed<2>>));
-}
+};

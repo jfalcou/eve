@@ -31,7 +31,7 @@ TTS_CASE("is_aligned for integers")
   TTS_EXPECT_NOT(eve::is_aligned<8>(4));
   TTS_EXPECT(eve::is_aligned<8>(8));
   TTS_EXPECT(eve::is_aligned<8>(16));
-}
+};
 
 TTS_CASE("is_aligned for pointers")
 {
@@ -46,7 +46,7 @@ TTS_CASE("is_aligned for pointers")
   TTS_EXPECT(eve::is_aligned<4>(&v32));
   TTS_EXPECT(eve::is_aligned<8>(&v64));
   TTS_EXPECT(eve::is_aligned<8>(&v128));
-}
+};
 
 EVE_TEST_TYPES("is_aligned for pointers with respect to SIMD lanes", eve::test::simd::cardinals)
 <typename Lanes>(eve::as<Lanes>)

@@ -30,9 +30,8 @@ EVE_TEST_TYPES( "Check return types of eve::is_not_nan(simd)"
 //==================================================================================================
 // Tests for eve::is_not_nan
 //==================================================================================================
-
 EVE_TEST( "Check behavior of eve::is_not_nan(simd)"
-        , eve::test::simd::ieee_reals
+        , eve::test::simd::all_types
         , eve::test::generate ( eve::test::ramp(0)
                               , eve::test::logicals(0, 3))
         )

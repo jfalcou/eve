@@ -24,12 +24,15 @@
 
 #include <eve/eve.hpp>
 #include <eve/function/abs.hpp>
-#include <eve/function/sqrt.hpp>
+#include <eve/function/hypot.hpp>
 #include <eve/product_type.hpp>
 
 #include <eve/algo/container/soa_vector.hpp>
 #include <eve/algo/reduce.hpp>
 #include <eve/algo/inclusive_scan.hpp>
+
+#include <eve/views/convert.hpp>
+#include <eve/views/zip.hpp>
 
 #include <optional>
 
@@ -108,8 +111,7 @@ struct cmplx : eve::struct_support<cmplx, float, float>
 
   EVE_FORCEINLINE friend auto tagged_dispatch( eve::tag::abs_, eve::like<cmplx> auto self)
   {
-    // NOTE: We think this can be done more efficiently, but this is an example.
-    return eve::sqrt(re(self) * re(self) + im(self) * im(self));
+    return eve::hypot(re(self), im(self));
   }
 };
 
@@ -127,8 +129,8 @@ void inclusive_scan_complex(eve::algo::soa_vector<cmplx>& v, cmplx init)
 // It is slighlty less efficient than using `soa_vector` but maybe you have the parts from somewhere else.
 void inclusive_scan_complex_components(std::vector<float>& re_parts, std::vector<float>& im_parts, cmplx init)
 {
-  auto rng = eve::algo::convert(
-    eve::algo::zip(re_parts, im_parts),  // zips as a range of `kumi::tuple<float, float>`
+  auto rng = eve::views::convert(
+    eve::views::zip(re_parts, im_parts),  // zips as a range of `kumi::tuple<float, float>`
     eve::as<cmplx>{}                     // convert to a range of `cmplx`
   );
   eve::algo::inclusive_scan_inplace(rng, init);
@@ -185,7 +187,7 @@ TTS_CASE("wide works")
     eve::wide<float> actual = eve::abs(x);
     TTS_RELATIVE_EQUAL(expected, actual, 0.00001);
   }
-}
+};
 
 TTS_CASE("scalar works")
 {
@@ -225,7 +227,7 @@ TTS_CASE("scalar works")
     float actual = eve::abs(x);
     TTS_RELATIVE_EQUAL(expected, actual, 0.00001);
   }
-}
+};
 
 TTS_CASE("printing")
 {
@@ -235,7 +237,7 @@ TTS_CASE("printing")
   };
   s << x;
   TTS_EQUAL(s.str(), "((0 + -0i), (1 + -1i), (2 + -2i), (3 + -3i))");
-}
+};
 
 TTS_CASE("soa_vector scan")
 {
@@ -251,7 +253,7 @@ TTS_CASE("soa_vector scan")
     cmplx{6.0, 0.6},
   };
   TTS_EQUAL(expected, actual);
-}
+};
 
 TTS_CASE("components scan")
 {
@@ -265,4 +267,4 @@ TTS_CASE("components scan")
 
   TTS_EQUAL(actual_re, expected_re);
   TTS_EQUAL(actual_im, expected_im);
-}
+};

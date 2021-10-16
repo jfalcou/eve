@@ -29,15 +29,19 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      if constexpr( std::is_same_v<D, eve::small_type> )
+      if constexpr( std::is_same_v<D, eve::half_circle_type> )
       {
-        return rempio2_small(xx);
+        return rempio2_half_circle(xx);
       }
-      else if constexpr( std::is_same_v<D, eve::medium_type> )
+      if constexpr( std::is_same_v<D, eve::full_circle_type> )
+      {
+        return rempio2_full_circle(xx);
+      }
+      else if constexpr( std::is_same_v<D, eve::detail::medium_type> )
       {
         return rempio2_medium(xx);
       }
-      else if constexpr( std::is_same_v<D, eve::big_type> )
+      else if constexpr( std::is_same_v<D, eve::detail::big_type> )
       {
         return rempio2_big(xx);
       }
@@ -55,10 +59,12 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      if( eve::all(x <= Rempio2_limit(restricted_type(), as(x))) )
+      if( eve::all(x <= Rempio2_limit(quarter_circle_type(), as(x))) )
         return {T(0), x, T(0)};
-      else if( eve::all(x <= Rempio2_limit(small_type(), as(x))) )
-        return small(rempio2)(x);
+      else if( eve::all(x <= Rempio2_limit(full_circle_type(), as(x))) )
+        return full_circle(rempio2)(x);
+      else if( eve::all(x <= Rempio2_limit(half_circle_type(), as(x))) )
+        return half_circle(rempio2)(x);
       else if( eve::all(x <= Rempio2_limit(medium_type(), as(x))) )
         return medium(rempio2)(x);
       else

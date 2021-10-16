@@ -13,6 +13,7 @@
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on geommean", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   auto std_geommean = [](auto e) { return std::midpoint(e,  one(eve::as(e))); };
   auto  my_geommean =  [](auto e) { return eve::geommean(e,  one(eve::as(e))); };
@@ -27,4 +28,4 @@ TTS_CASE_TPL("wide random check on geommean", EVE_TYPE)
     eve::uniform_prng<EVE_VALUE> p(EVE_VALUE(0), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_ULP_RANGE_CHECK(p, std_geommean, my_geommean, 0.5);
   }
-}
+};

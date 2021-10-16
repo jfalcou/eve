@@ -30,7 +30,7 @@
 namespace eve::detail
 {
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr auto cotpi_(EVE_SUPPORTS(cpu_), restricted_type const &, T a0) noexcept
+  EVE_FORCEINLINE constexpr auto cotpi_(EVE_SUPPORTS(cpu_), quarter_circle_type const &, T a0) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {
@@ -53,13 +53,12 @@ namespace eve::detail
       }
     }
     else
-      return apply_over(restricted(cotpi), a0);
+      return apply_over(quarter_circle(cotpi), a0);
   }
 
-  /////////////////////////////////////////////////////////////////////////////////////////////////
-  // medium,  big,  small
   template<decorator D, floating_real_value T>
   EVE_FORCEINLINE constexpr auto cotpi_(EVE_SUPPORTS(cpu_), D const &, T a0) noexcept
+  requires(is_one_of<D>(types<half_circle_type, full_circle_type, medium_type, big_type> {}))
   {
     if constexpr( has_native_abi_v<T> )
     {
@@ -89,7 +88,7 @@ namespace eve::detail
     {
       auto x = abs(a0);
       if( eve::all(eve::abs(x) <= T(0.25)) )
-        return restricted(cotpi)(a0);
+        return quarter_circle(cotpi)(a0);
       else
         return big(cotpi)(a0);
     }

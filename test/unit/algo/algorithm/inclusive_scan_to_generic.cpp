@@ -19,8 +19,7 @@
 EVE_TEST_TYPES("Check inlclusive_scan_to", algo_test::selected_pairs_types)
 <typename T>(eve::as<T> tgt)
 {
-  using e_t = eve::element_type_t<T>;
-  using init_t = eve::common_type_t<std::tuple_element_t<0,e_t>, std::tuple_element_t<1,e_t>>;
+  using init_t = std::tuple_element_t<1, eve::element_type_t<T>>;
 
   algo_test::transform_to_generic_test(
     tgt,

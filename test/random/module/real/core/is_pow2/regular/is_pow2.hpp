@@ -14,6 +14,7 @@
 #include <bit>
 
 TTS_CASE_TPL("wide random check on is_pow2", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   auto std_is_pow2 = [] < typename U > (U e) ->eve::logical<U> {
     using ui_t =  eve::as_integer_t<U, unsigned>;
@@ -22,4 +23,4 @@ TTS_CASE_TPL("wide random check on is_pow2", EVE_TYPE)
 
   eve::uniform_prng<EVE_VALUE> p(eve::zero(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_is_pow2, eve::is_pow2);
-}
+};

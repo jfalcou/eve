@@ -73,16 +73,15 @@ namespace eve::detail
   template<typename Pack, typename V0, typename... Vs>
   EVE_FORCEINLINE Pack make_aggregated(V0 v0, Vs... vs) noexcept
   {
-    using t_t = typename Pack::value_type;
-    Pack that;
+    using sub_t = typename Pack::template rescale<typename Pack::cardinal_type::split_type>;
 
-    that.set(0, static_cast<t_t>(v0));
-    [&]<std::size_t... N>( std::index_sequence<N...> )
-    {
-      (that.set(N+1, static_cast<t_t>(vs)),...);
-    }(std::make_index_sequence<sizeof...(Vs)>{});
+    // Package all values then split in 2 sides
+    auto values = kumi::make_tuple(v0,vs...);
+    auto [ls,hs] = values.split(kumi::index<Pack::size()/2>);
 
-    return that;
+    // Rebuild sub-type with both parts of the pack of values
+    auto constexpr build = [](auto... e) { return sub_t{e...}; };
+    return Pack{ kumi::apply(build,ls), kumi::apply(build,hs) };
   }
 
   template<typename Pack, typename V> EVE_FORCEINLINE Pack make_aggregated( V v) noexcept

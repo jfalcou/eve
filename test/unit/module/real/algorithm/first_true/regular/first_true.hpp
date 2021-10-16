@@ -12,26 +12,29 @@
 #include <eve/conditional.hpp>
 
 TTS_CASE_TPL("Check eve::first_true return type", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   TTS_EXPR_IS( (eve::first_true(eve::logical<T>())), std::optional<std::ptrdiff_t>);
-}
+};
 
 TTS_CASE("Check eve::first_true bool")
 {
   TTS_EXPR_IS( (eve::first_true(bool{})) , std::optional<std::ptrdiff_t>);
   TTS_EQUAL  ( (eve::first_true(true)), 0 );
   TTS_EQUAL  ( (eve::first_true(false)), std::nullopt );
-}
+};
 
 TTS_CASE_TPL("Check eve::first_true behavior on logical", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   TTS_EQUAL(eve::first_true(eve::true_(eve::as<T>())), 0);
   TTS_EQUAL(eve::first_true(eve::false_(eve::as<T>())), std::nullopt);
-}
+};
 
 #if defined(EVE_SIMD_TESTS)
 
 TTS_CASE_TPL("Check eve::first_true", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   using l_t = eve::logical<T>;
 
@@ -105,6 +108,6 @@ TTS_CASE_TPL("Check eve::first_true", EVE_TYPE)
     x = true;
     TTS_EQUAL(eve::first_true[eve::ignore_first(T::size())](x), std::nullopt);
   }
-}
+};
 
 #endif

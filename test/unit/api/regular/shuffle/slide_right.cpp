@@ -13,7 +13,7 @@
 // slide_right test
 //==================================================================================================
 
-EVE_TEST_TYPES("Check behavior of slide_right shuffle", eve::test::simd::all_types)
+EVE_TEST_TYPES("Check behavior of slide_right shuffle", eve::test::simd::restricted::all_types)
 <typename T>(eve::as<T>)
 {
   T x{[](int i, int size) { return i - size; }};
@@ -59,4 +59,4 @@ TTS_CASE("Check behaviour of slide_right, 4 ints")
   TTS_EQUAL(shift_2, (eve::slide_right(x, y, eve::index<2>)));
   TTS_EQUAL(shift_3, (eve::slide_right(x, y, eve::index<3>)));
   TTS_EQUAL(shift_4, (eve::slide_right(x, y, eve::index<4>)));
-}
+};

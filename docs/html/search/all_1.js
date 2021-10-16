@@ -27,8 +27,9 @@ var searchData=
   ['bitincrement_24',['bitincrement',['../group__constant_ga2a7b9727dd6e38b4230d14630abc3adb.html#ga2a7b9727dd6e38b4230d14630abc3adb',1,'eve']]],
   ['bitmap_25',['bitmap',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a53088b65fa4bba929183f9c4d5792dea',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;']]],
   ['bitofsign_26',['bitofsign',['../group__ieee754_ga9614c36358884274b162e473e78c1246.html#ga9614c36358884274b162e473e78c1246',1,'eve']]],
-  ['bits_27',['Bits',['../group__bits.html',1,'']]],
-  ['bits_28',['bits',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a7c2d0acc8ffcbfcc373fa2f6b849a06f',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;']]],
+  ['bits_27',['bits',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a7c2d0acc8ffcbfcc373fa2f6b849a06f',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;']]],
+  ['bits_28',['Bits',['../group__bits.html',1,'']]],
   ['bits_5ftype_29',['bits_type',['../structeve_1_1logical.html#a6c3a677f7954119681e55c6e342188bc',1,'eve::logical::bits_type()'],['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#adb0e98ce3f9d38e138e3055cada7d4e3',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::bits_type()']]],
-  ['broadcast_30',['broadcast',['../group__shuffling_gaa8fb67b18a0c3046d9281ed21953444d.html#gaa8fb67b18a0c3046d9281ed21953444d',1,'eve']]]
+  ['broadcast_30',['broadcast',['../group__shuffling_gaa8fb67b18a0c3046d9281ed21953444d.html#gaa8fb67b18a0c3046d9281ed21953444d',1,'eve']]],
+  ['building_20and_20testing_31',['Building and Testing',['../dev_cmake.html',1,'eve-dev']]]
 ];

@@ -44,6 +44,6 @@ EVE_TEST( "Check behavior of ellint_d on wide"
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
-  TTS_ULP_EQUAL(eve::ellint_d(k)      , map([](auto e) -> v_t { return boost::math::ellint_d(e); }, k), 11);
-  TTS_ULP_EQUAL(eve::ellint_d(phi, k) , map([](auto e, auto f) -> v_t { return boost::math::ellint_d(e, f); }, k, phi), 11);
+  TTS_ULP_EQUAL(eve::ellint_d(k)      , map([](auto e) -> v_t { return boost::math::ellint_d(e); }, k), 24);
+  TTS_ULP_EQUAL(eve::ellint_d(phi, k) , map([](auto e, auto f) -> v_t { return boost::math::ellint_d(e, f); }, k, phi), 24);
 };

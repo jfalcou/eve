@@ -270,7 +270,7 @@ inline bool const TTS_CAT(register_,TTS_FUNCTION) =  ::eve::test::test_setup{   
 [](auto tests)                                                                                      \
   {                                                                                                 \
     auto s = SAMPLES;                                                                               \
-    auto const single_test = [=]<typename T>( eve::as<T> target)                                   \
+    auto const single_test = [=]<typename T>( eve::as<T> target)                                    \
     {                                                                                               \
       [=]<std::size_t... N>(std::index_sequence<N...>)                                              \
       {                                                                                             \
@@ -280,20 +280,20 @@ inline bool const TTS_CAT(register_,TTS_FUNCTION) =  ::eve::test::test_setup{   
           , [=]()                                                                                   \
             {                                                                                       \
               std::mt19937::result_type seed(18102008);                                             \
-              seed = ::tts::arguments.value_or(seed, "-s", "--seed");                               \
+              seed = ::tts::arguments.value({"-s", "--seed"}, seed);                                \
               std::mt19937 gen(seed);                                                               \
                                                                                                     \
               constexpr std::make_index_sequence<sizeof...(N)> size = {};                           \
-              auto data = s(eve::as<T>{}, gen);                                                    \
-              auto args = eve::test::make_args(data, size, eve::as<T>{});                          \
+              auto data = s(eve::as<T>{}, gen);                                                     \
+              auto args = eve::test::make_args(data, size, eve::as<T>{}) ;                          \
               if( ::tts::verbose_status )                                                           \
               {                                                                                     \
-                if(::tts::arguments.is_set("-d","--data"))                                          \
+                if(::tts::arguments[{"-d","--data"}])                                               \
                 {                                                                                   \
                   std::cout << "Input data:\n";                                                     \
-                  ((std::cout << " [" << ::tts::cyan()                                              \
+                  ((std::cout << " [" << ::tts::cyan                                                \
                                       << ::tts::typename_<decltype(std::get<N>(args))>              \
-                                      << ::tts::reset()                                             \
+                                      << ::tts::reset                                               \
                               << "] = "                                                             \
                               << ::tts::as_string(std::get<N>(args))                                \
                               << "\n"),...);                                                        \
@@ -310,7 +310,7 @@ inline bool const TTS_CAT(register_,TTS_FUNCTION) =  ::eve::test::test_setup{   
                                                                                                     \
     [&]<template<class...> class L,typename... Ts>(L<Ts...>)                                        \
     {                                                                                               \
-      (single_test( eve::as<Ts>() ),...);                                                          \
+      (single_test( eve::as<Ts>() ),...);                                                           \
     }( TYPES );                                                                                     \
                                                                                                     \
     return true;                                                                                    \
@@ -321,18 +321,18 @@ inline bool const TTS_CAT(register_,TTS_FUNCTION) =  ::eve::test::test_setup{   
 inline bool const TTS_CAT(register_,TTS_FUNCTION) =  ::eve::test::test_setup{                       \
 [](auto tests)                                                                                      \
   {                                                                                                 \
-    auto const single_test = [=]<typename T>( eve::as<T> )                                         \
+    auto const single_test = [=]<typename T>( eve::as<T> )                                          \
     {                                                                                               \
       ::tts::detail::test::acknowledge(::tts::detail::test                                          \
       {                                                                                             \
           std::string{DESCRIPTION} + " (with T = " + std::string{::tts::typename_<T>} + ")"         \
-        , [=]() {tests(eve::as<T>{}); }                                                            \
+        , [=]() {tests(eve::as<T>{}); }                                                             \
         });                                                                                         \
     };                                                                                              \
                                                                                                     \
     [&]<template<class...> class L,typename... Ts>(L<Ts...>)                                        \
     {                                                                                               \
-      (single_test( eve::as<Ts>() ),...);                                                          \
+      (single_test( eve::as<Ts>() ),...);                                                           \
     }( TYPES );                                                                                     \
                                                                                                     \
     return true;                                                                                    \

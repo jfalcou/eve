@@ -35,4 +35,4 @@ TTS_CASE("as_value for different tuples")
     actual = eve::as_value(expected, eve::as<udt::grid2d>{});
     TTS_EQUAL(expected, actual);
   }
-}
+};

@@ -5,11 +5,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-
 #include "test.hpp"
-
 #include <eve/detail/meta.hpp>
-
 
 TTS_CASE("eve::detail::for_until_") {
   {
@@ -42,4 +39,4 @@ TTS_CASE("eve::detail::for_until_") {
     TTS_EXPECT_NOT(res);
     TTS_EXPECT(i == 8);
   }
-}
+};

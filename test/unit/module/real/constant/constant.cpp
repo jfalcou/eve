@@ -34,7 +34,7 @@ TTS_CASE("Constant generation for scalar")
   TTS_EQUAL((eve::Constant<std::int32_t, 0x11334455>()), 0x11334455);
   TTS_EQUAL((eve::Constant<std::uint64_t, 0xB122334455667788ULL>()), 0xB122334455667788ULL);
   TTS_EQUAL((eve::Constant<std::int64_t, 0x1122334455667788LL>()), 0x1122334455667788LL);
-}
+};
 
 TTS_CASE_TPL("Constant generation for wide",
              fixed<1>,
@@ -44,6 +44,7 @@ TTS_CASE_TPL("Constant generation for wide",
              fixed<16>,
              fixed<32>,
              fixed<64>)
+<typename T>(::tts::type<T>)
 {
   using namespace eve::literal;
 
@@ -73,4 +74,4 @@ TTS_CASE_TPL("Constant generation for wide",
             (eve::wide<std::uint64_t, T>(0xB122334455667788ULL)));
   TTS_EQUAL((eve::Constant<eve::wide<std::int64_t, T>, 0x1122334455667788LL>()),
             (eve::wide<std::int64_t, T>(0x1122334455667788LL)));
-}
+};

@@ -799,12 +799,12 @@ namespace kumi
 
   namespace result
   {
-    template<product_type T, product_type... Tuples> struct cat
+    template<product_type... Tuples> struct cat
     {
-      using type = decltype( kumi::cat( std::declval<T>(), std::declval<Tuples>()... ) );
+      using type = decltype( kumi::cat( std::declval<Tuples>()... ) );
     };
 
-    template<product_type T, product_type... Tuples> using cat_t  = typename cat<T,Tuples...>::type;
+    template<product_type... Tuples> using cat_t  = typename cat<Tuples...>::type;
   }
 
   //================================================================================================

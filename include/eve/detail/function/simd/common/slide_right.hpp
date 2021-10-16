@@ -33,12 +33,26 @@ namespace eve::detail
   {
           if constexpr(Shift == 0)            return v;
     else  if constexpr(Shift == Wide::size()) return Wide{0};
-    else if constexpr( has_aggregated_abi_v<Wide> && Shift >= Wide::size()/2)
+    else if constexpr( has_aggregated_abi_v<Wide>)
     {
-      // We slide so much the lower part is full of zero
-      // and the upper part is a slide of the former higher part
-      auto l = v.slice(lower_);
-      return Wide{ decltype(l){0}, slide_right(l, index<Shift-Wide::size()/2>) };
+      if constexpr(Shift >= Wide::size()/2)
+      {
+        // We slide so much the lower part is full of zero
+        // and the upper part is a slide of the former higher part
+        auto l = v.slice(lower_);
+        return Wide{ decltype(l){0}, slide_right(l, index<Shift-Wide::size()/2>) };
+      }
+      else
+      {
+        auto[l,h] = v.slice();
+        auto lh = slide_left(l,index_t<Wide::size()/2 - Shift>{});
+              h = slide_right(h,index_t<Shift>{});
+              l = slide_right(l,index_t<Shift>{});
+
+        if constexpr( logical_value<Wide> ) h = h || lh;
+        else                                h = h |  lh;
+        return Wide{l,h};
+      }
     }
     else if constexpr( is_bundle_v<typename Wide::abi_type> )
     {
@@ -46,7 +60,14 @@ namespace eve::detail
     }
     else
     {
-      return basic_swizzle(v, slide_right_pattern<Shift,Wide::size()>);
+      if constexpr( logical_value<Wide> && Wide::abi_type::is_wide_logical)
+      {
+        return bit_cast(slide_right(v.bits(),index<Shift>), as<Wide>{});
+      }
+      else
+      {
+        return basic_swizzle(v, slide_right_pattern<Shift,Wide::size()>);
+      }
     }
   }
 
@@ -85,28 +106,18 @@ namespace eve::detail
     }
     else
     {
-      Wide res{ [&](int i, int size) {
-        if (i < Shift) return x.get(size - Shift + i);
-        else           return y.get(i - Shift);
-      }};
-      return res;
+      if constexpr( logical_value<Wide> && Wide::abi_type::is_wide_logical)
+      {
+        return bit_cast(slide_right(x.bits(), y.bits(), index<Shift>), as<Wide>{});
+      }
+      else
+      {
+        Wide res{ [&](int i, int size) {
+          if (i < Shift) return x.get(size - Shift + i);
+          else           return y.get(i - Shift);
+        }};
+        return res;
+      }
     }
-  }
-
-  template<simd_value Wide, std::ptrdiff_t Shift>
-  EVE_FORCEINLINE auto slide_right_(EVE_SUPPORTS(cpu_), logical<Wide> v, index_t<Shift> s) noexcept
-  requires(Shift <= Wide::size() )
-  {
-    return bit_cast(slide_right(v.bits(),s), as<logical<Wide>>{});
-  }
-
-  template<simd_value Wide, std::ptrdiff_t Shift>
-  EVE_FORCEINLINE auto slide_right_(EVE_SUPPORTS(cpu_)
-                                   , logical<Wide> x
-                                   , logical<Wide> y
-                                   , index_t<Shift> s) noexcept
-  requires(Shift <= Wide::size() )
-  {
-    return bit_cast(slide_right(x.bits(), y.bits(), s), as<logical<Wide>>{});
   }
 }

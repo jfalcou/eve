@@ -50,13 +50,13 @@ EVE_TEST( "Check behavior of hermite on wide"
   for(unsigned int j=0; j < eve::cardinal_v<T>; ++j)
   {
     auto boost_hermite2 =  [&](auto i, auto) { return boost::math::hermite(i0.get(i), a0.get(j)); };
-    TTS_ULP_EQUAL(eve__hermitev(i0 , a0.get(j)), T(boost_hermite2), 16);
+    TTS_ULP_EQUAL(eve__hermitev(i0 , a0.get(j)), T(boost_hermite2), 32);
   }
   for(unsigned int j=0; j < eve::cardinal_v<T>; ++j)
   {
     for(unsigned int n=0; n < eve::cardinal_v<T>; ++n)
     {
-      TTS_ULP_EQUAL(eve__hermitev(i0.get(j) , a0.get(n)), v_t(boost::math::hermite(i0.get(j), a0.get(n))), 16);
+      TTS_ULP_EQUAL(eve__hermitev(i0.get(j) , a0.get(n)), v_t(boost::math::hermite(i0.get(j), a0.get(n))), 32);
     }
   }
 };
@@ -85,7 +85,7 @@ EVE_TEST( "Check behavior of diff hermite on wide"
   for(unsigned int j=0; j < eve::cardinal_v<T>; ++j)
   {
     auto boost_hermite2 =  [&](auto i, auto) { return boost_hermderiv(i0.get(i), a0.get(j)); };
-    TTS_ULP_EQUAL(eve__hermitev(i0 , a0.get(j)), T(boost_hermite2), 32);
+    TTS_ULP_EQUAL(eve__hermitev(i0 , a0.get(j)), T(boost_hermite2), 48);
   }
   for(unsigned int j=0; j < eve::cardinal_v<T>; ++j)
   {

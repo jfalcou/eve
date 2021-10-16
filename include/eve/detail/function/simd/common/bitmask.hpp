@@ -20,7 +20,16 @@ namespace eve::detail
   EVE_FORCEINLINE auto to_bits( cpu_ const&, Wide const& p ) noexcept
   {
     using type = typename Wide::bits_type;
-    return bit_cast(p, as<type>{});
+
+    if constexpr ( has_aggregated_abi_v<Wide> )
+    {
+      auto [l, h] = p.slice();
+      return type{l.bits(), h.bits()};
+    }
+    else
+    {
+      return bit_cast(p, as<type>{});
+    }
   }
 
   //================================================================================================

@@ -12,9 +12,10 @@
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on atanh", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   auto std_atanh = [](auto e) { return std::atanh(e); };
 
   eve::uniform_prng<EVE_VALUE> p(-1, 1);
   TTS_RANGE_CHECK(p, std_atanh, eve::atanh);
-}
+};

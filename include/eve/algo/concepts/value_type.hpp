@@ -9,12 +9,25 @@
 
 #include <eve/algo/concepts/detail.hpp>
 
+#include <eve/memory/pointer.hpp>
 #include <eve/traits.hpp>
 
+#include <concepts>
 #include <type_traits>
 
 namespace eve::algo
 {
+  //================================================================================================
+  //! @addtogroup eve.algo.concepts
+  //! @{
+  //!  @struct value_type
+  //!  @brief for an instance of `eve::algo::relaxed_iterator`, `eve::algo::relaxed_range`
+  //!         compute the value_type.
+  //!
+  //!   **Required header:** `#include <eve/algo/concepts.hpp>`
+  //! @}
+  //================================================================================================
+
   namespace detail
   {
     template <typename T>
@@ -22,7 +35,7 @@ namespace eve::algo
     {
            if constexpr ( has_begin_end<T>            ) return value_type_impl<decltype(std::declval<T>().begin())>();
       else if constexpr ( std::contiguous_iterator<T> ) return std::type_identity<typename std::iterator_traits<T>::value_type>{};
-      else                                              return std::type_identity<typename eve::pointer_traits<T>::value_type>{};
+      else                                              return std::type_identity<typename T::value_type>{};
     }
   }
 

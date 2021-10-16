@@ -18,13 +18,16 @@
 #if defined(SPY_SIMD_IS_X86_AVX512)
 template<typename Type, typename Cond> void check_conditional_bits()
 {
-  using m_t = typename eve::logical<Type>::storage_type::type;
-  m_t bits_mask = m_t(~eve::detail::set_lower_n_bits<m_t>(Type::size()));
-
-  for(std::ptrdiff_t i = 0;i <= Type::size();i++)
+  if constexpr( !eve::has_aggregated_abi_v<Type> )
   {
-    auto ignore_mask = Cond(i).mask(eve::as<Type>()).storage().value;
-    TTS_EQUAL( m_t(ignore_mask & bits_mask), m_t(0) );
+    using m_t = typename eve::logical<Type>::storage_type::type;
+    m_t bits_mask = m_t(~eve::detail::set_lower_n_bits<m_t>(Type::size()));
+
+    for(std::ptrdiff_t i = 0;i <= Type::size();i++)
+    {
+      auto ignore_mask = Cond(i).mask(eve::as<Type>()).storage().value;
+      TTS_EQUAL( m_t(ignore_mask & bits_mask), m_t(0) );
+    }
   }
 }
 #endif
@@ -46,10 +49,11 @@ EVE_TEST_TYPES( "ignore_all behavior", eve::test::simd::all_types)
   TTS_EQUAL( (if_else(ignore_all,type(42), type(69))) , type(69)                );
 
 #if defined(SPY_SIMD_IS_X86_AVX512)
-  TTS_EQUAL( ignore_all.mask(as<type>()).storage().value, 0U );
+  if constexpr( !eve::has_aggregated_abi_v<type> )
+    TTS_EQUAL( ignore_all.mask(as<type>()).storage().value, 0U );
 #endif
 
-  // For small wide, checks we don't have spurious true in the outside values
+  // For half_c wide, checks we don't have spurious true in the outside values
   using abi = typename type::abi_type;
   if constexpr( abi::is_wide_logical && !eve::use_complete_storage<type> )
   {
@@ -82,13 +86,16 @@ EVE_TEST_TYPES( "ignore_none behavior", eve::test::simd::all_types)
   TTS_EQUAL( (if_else(ignore_none,type(42), type(69)))  , type(42)                  );
 
 #if defined(SPY_SIMD_IS_X86_AVX512)
-  using m_t = typename eve::logical<type>::storage_type::type;
-  TTS_EQUAL ( ignore_none.mask(as<type>()).storage().value
-            , eve::detail::set_lower_n_bits<m_t>(type::size())
-            );
+  if constexpr( !eve::has_aggregated_abi_v<type> )
+  {
+    using m_t = typename eve::logical<type>::storage_type::type;
+    TTS_EQUAL ( ignore_none.mask(as<type>()).storage().value
+              , eve::detail::set_lower_n_bits<m_t>(type::size())
+              );
+  }
 #endif
 
-  // For small wide, checks we don't have spurious true in the outside values
+  // For half_c wide, checks we don't have spurious true in the outside values
   using abi = typename type::abi_type;
   if constexpr( abi::is_wide_logical && !eve::use_complete_storage<type> )
   {
@@ -138,7 +145,7 @@ EVE_TEST_TYPES( "keep_first behavior", eve::test::simd::all_types)
   check_conditional_bits<type, keep_first>();
 #endif
 
-  // For small wide, checks we don't have spurious true in the outside values
+  // For half_c wide, checks we don't have spurious true in the outside values
   if constexpr( type::abi_type::is_wide_logical && !eve::use_complete_storage<type> )
   {
     for(std::ptrdiff_t i = 0;i <= type::size();i++)
@@ -191,7 +198,7 @@ EVE_TEST_TYPES( "ignore_last behavior", eve::test::simd::all_types)
   check_conditional_bits<type, ignore_last>();
 #endif
 
-  // For small wide, checks we don't have spurious true in the outside values
+  // For half_c wide, checks we don't have spurious true in the outside values
   if constexpr( type::abi_type::is_wide_logical && !eve::use_complete_storage<type> )
   {
     for(std::ptrdiff_t i = 0;i <= type::size();i++)
@@ -244,7 +251,7 @@ EVE_TEST_TYPES( "keep_last behavior", eve::test::simd::all_types)
   check_conditional_bits<type, keep_last>();
 #endif
 
-  // For small wide, checks we don't have spurious true in the outside values
+  // For half_c wide, checks we don't have spurious true in the outside values
   if constexpr( type::abi_type::is_wide_logical && !eve::use_complete_storage<type> )
   {
     for(std::ptrdiff_t i = 0;i <= type::size();i++)
@@ -299,7 +306,7 @@ EVE_TEST_TYPES( "ignore_first behavior", eve::test::simd::all_types)
   check_conditional_bits<type,ignore_first>();
 #endif
 
-  // For small wide, checks we don't have spurious true in the outside values
+  // For half_c wide, checks we don't have spurious true in the outside values
   if constexpr( type::abi_type::is_wide_logical && !eve::use_complete_storage<type> )
   {
     for(std::ptrdiff_t i = 0;i <= type::size();i++)
@@ -348,17 +355,20 @@ EVE_TEST_TYPES( "keep_between behavior", eve::test::simd::all_types)
         TTS_EQUAL( (if_else(keep_between(fi,li),value, type(69))), ref);
 
 #if defined(SPY_SIMD_IS_X86_AVX512)
-        using m_t = typename eve::logical<type>::storage_type::type;
-        m_t bits_mask = m_t(~eve::detail::set_lower_n_bits<m_t>(type::size()));
+  if constexpr( !eve::has_aggregated_abi_v<type> )
+  {
+    using m_t = typename eve::logical<type>::storage_type::type;
+    m_t bits_mask = m_t(~eve::detail::set_lower_n_bits<m_t>(type::size()));
 
-        auto ignore_mask = keep_between(fi,li).mask(eve::as<type>()).storage().value;
-        TTS_EQUAL( m_t(ignore_mask & bits_mask), m_t(0) );
+    auto ignore_mask = keep_between(fi,li).mask(eve::as<type>()).storage().value;
+    TTS_EQUAL( m_t(ignore_mask & bits_mask), m_t(0) );
+  }
 #endif
       }
     }
   }
 
-  // For small wide, checks we don't have spurious true in the outside values
+  // For half_c wide, checks we don't have spurious true in the outside values
   if constexpr( type::abi_type::is_wide_logical && !eve::use_complete_storage<type> )
   {
     for(std::ptrdiff_t i = 0;i <= type::size();i++)
@@ -413,18 +423,21 @@ EVE_TEST_TYPES( "ignore_first/last behavior", eve::test::simd::all_types)
         TTS_EQUAL( (if_else(ignore_first(fi) && ignore_last(li),value, type(69))), ref);
 
 #if defined(SPY_SIMD_IS_X86_AVX512)
-        using m_t = typename eve::logical<type>::storage_type::type;
-        m_t bits_mask = m_t(~eve::detail::set_lower_n_bits<m_t>(type::size()));
+  if constexpr( !eve::has_aggregated_abi_v<type> )
+  {
+    using m_t = typename eve::logical<type>::storage_type::type;
+    m_t bits_mask = m_t(~eve::detail::set_lower_n_bits<m_t>(type::size()));
 
-        auto ignore_mask = (ignore_first(fi) && ignore_last(li)).mask(eve::as<type>()).storage().value;
-        TTS_EQUAL( m_t(ignore_mask & bits_mask), m_t(0) );
+    auto ignore_mask = (ignore_first(fi) && ignore_last(li)).mask(eve::as<type>()).storage().value;
+    TTS_EQUAL( m_t(ignore_mask & bits_mask), m_t(0) );
+  }
 #endif
       }
     }
   }
 
 
-  // For small wide, checks we don't have spurious true in the outside values
+  // For half_c wide, checks we don't have spurious true in the outside values
   if constexpr( type::abi_type::is_wide_logical && !eve::use_complete_storage<type> )
   {
     for(std::ptrdiff_t i = 0;i <= type::size();i++)

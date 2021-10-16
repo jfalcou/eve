@@ -13,6 +13,7 @@
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on is_not_finite", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
 
 
@@ -33,4 +34,4 @@ TTS_CASE_TPL("wide random check on is_not_finite", EVE_TYPE)
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_is_not_finite, eve::is_not_finite);
   }
-}
+};

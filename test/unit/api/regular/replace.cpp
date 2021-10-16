@@ -113,3 +113,24 @@ EVE_TEST( "Check behavior of replace_ignored(keep_between)"
     }
   }
 };
+
+EVE_TEST( "Check behavior of replace_ignored(ignore_extrema)"
+        , eve::test::simd::all_types
+        , eve::test::generate ( eve::test::ramp(0) )
+        )
+<typename T>(T data)
+{
+  using eve::ignore_extrema;
+
+  for(int fi = 0;fi < T::size();fi++)
+  {
+    for(int li = 0;li <= T::size();li++)
+    {
+      if(fi+li <= T::size())
+      {
+        T replacement = [&](auto i, auto) { return (i >= fi && i < (T::size()-li)) ? data.get(i) : 10*i; };
+        TTS_EQUAL( eve::replace_ignored(data,ignore_extrema(fi,li),replacement), replacement );
+      }
+    }
+  }
+};

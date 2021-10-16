@@ -24,7 +24,7 @@ TTS_CASE("like concet")
 
   TTS_CONSTEXPR_EXPECT_NOT((eve::like<wrapper<int>, char>));
   { eve::like<std::int64_t> auto _ = wrapper<int>{}; (void)_; }
-}
+};
 
 struct supports_all_ops :
   eve::struct_support<supports_all_ops, int, std::int64_t>
@@ -179,11 +179,11 @@ TTS_CASE("struct_support")
   TTS_CONSTEXPR_EXPECT_NOT(std::totally_ordered<supports_no_ops>);
   // TTS_CONSTEXPR_EXPECT_NOT(supports_plus_test<eve::wide<supports_no_ops>>);
   TTS_CONSTEXPR_EXPECT_NOT(std::totally_ordered<eve::wide<supports_no_ops>>);
-}
+};
 
 TTS_CASE("product_type construction")
 {
   supports_all_ops a{0, 1};
   TTS_EQUAL(m0(a), 0);
   TTS_EQUAL(m1(a), 1);
-}
+};

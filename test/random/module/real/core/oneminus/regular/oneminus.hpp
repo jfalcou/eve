@@ -11,6 +11,7 @@
 #include "producers.hpp"
 
 TTS_CASE_TPL("wide random check on oneminus", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
 
   if constexpr(std::is_unsigned_v<EVE_VALUE>)
@@ -27,4 +28,4 @@ TTS_CASE_TPL("wide random check on oneminus", EVE_TYPE)
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>())+1, eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_oneminus, eve::oneminus);
   }
-}
+};

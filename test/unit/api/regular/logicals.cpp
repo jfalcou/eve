@@ -37,6 +37,7 @@ EVE_TEST( "Check behavior of bitwise operators on eve::wide"
                               )
         )
 <typename T>(T a0, T a1)
+
 {
   TTS_IEEE_EQUAL( (a0 && a1), T([&](auto i, auto) { return eve::logical_and(a0.get(i), a1.get(i)); }));
   TTS_IEEE_EQUAL( (a0 || a1), T([&](auto i, auto) { return eve::logical_or (a0.get(i), a1.get(i)); }));

@@ -57,51 +57,6 @@ commands:
 ##==================================================================================================
 ## Jobs setup
 ##==================================================================================================
-base_jobs: &base_jobs
-  docker:
-    - image: jfalcou/compilers:latest
-  parameters:
-    tool:
-      type: string
-    options:
-      type: string
-      default: ""
-    setup:
-      type: string
-      default: ""
-  steps:
-    - checkout
-    - configure_toolchain:
-        tool:     << parameters.tool >>
-        options:  << parameters.options >>
-        setup:    << parameters.setup >>
-    - compile:
-        targets: "../cmake/toolchain/arch.targets.json"
-        cpu:  2
-    - ctest:
-        targets: "../cmake/toolchain/arch.targets.json"
-    - run:
-        name: Pre-compiling large swizzle functions
-        command: cd build && ninja unit.api.regular.swizzle.exe  -k 0 -j 1
-    - compile:
-        targets: "../cmake/toolchain/api.targets.json"
-        cpu:  2
-    - ctest:
-        targets: "../cmake/toolchain/api.targets.json"
-    - compile:
-        targets: "../cmake/toolchain/doc.targets.json"
-        cpu:  2
-    - ctest:
-        targets: "../cmake/toolchain/doc.targets.json"
-    - run:
-        name: Pre-compiling large math function
-        command: cd build && ninja unit.real.math.heavy.exe  -k 0 -j 2
-    - compile:
-        targets: "../cmake/toolchain/real.targets.json"
-        cpu:  2
-    - ctest:
-        targets: "../cmake/toolchain/real.targets.json"
-
 random_jobs: &random_jobs
   docker:
     - image: jfalcou/compilers:latest
@@ -126,44 +81,16 @@ random_jobs: &random_jobs
     - ctest:
         targets: "../cmake/toolchain/random.targets.json"
 
-bench_jobs: &bench_jobs
-  docker:
-    - image: jfalcou/compilers:latest
-  parameters:
-    tool:
-      type: string
-    options:
-      type: string
-      default: ""
-    setup:
-      type: string
-      default: ""
-  steps:
-    - checkout
-    - configure_toolchain:
-        tool:     << parameters.tool >>
-        options:  << parameters.options >>
-        setup:    << parameters.setup >>
-    - compile:
-        targets: "../cmake/toolchain/benchmarks.targets.json"
-        cpu:  2
-
 ##==================================================================================================
 ## Jobs list
 ##==================================================================================================
 jobs:
-  x86_gcc_avx512:
-    <<: *base_jobs
-  x86_clang_avx512:
-    <<: *base_jobs
   random_sse2:
     <<: *random_jobs
   random_avx2:
     <<: *random_jobs
   random_arm:
     <<: *random_jobs
-  bench_avx2:
-    <<: *bench_jobs
 
 ##==================================================================================================
 ## Workflow & dependencies
@@ -173,32 +100,17 @@ workflows:
   build_and_test:
     jobs:
     ##==============================================================================================
-    ## X86 - 512 bits
-    ##==============================================================================================
-      - x86_gcc_avx512:
-          tool:     "../cmake/toolchain/gcc.x86.cmake"
-          options:  "-march=skylake-avx512"
-          filters:
-            branches:
-              ignore: develop
-      - x86_clang_avx512:
-          tool:     "../cmake/toolchain/clang.x86.cmake"
-          options:  "-march=skylake-avx512"
-          filters:
-            branches:
-              ignore: develop
-    ##==============================================================================================
     ## Random tests
     ##==============================================================================================
       - random_sse2:
-          tool:     "../cmake/toolchain/gcc.x86.cmake"
+          tool:     "../cmake/toolchain/gcc.x86.ci.cmake"
           options:  "-msse2"
           setup:    "-DEVE_BUILD_RANDOM=ON"
           filters:
             branches:
               ignore: develop
       - random_avx2:
-          tool:     "../cmake/toolchain/gcc.x86.cmake"
+          tool:     "../cmake/toolchain/gcc.x86.ci.cmake"
           options:  "-mavx2"
           setup:    "-DEVE_BUILD_RANDOM=ON"
           filters:
@@ -211,13 +123,3 @@ workflows:
           filters:
             branches:
               ignore: develop
-    ##==============================================================================================
-    ## Benchmarks compilations
-    ##==============================================================================================
-      # - bench_avx2:
-      #     tool:     "../cmake/toolchain/gcc.x86.opt.cmake"
-      #     options:  "-mavx2"
-      #     setup:    "-DEVE_BUILD_BENCHMARKS=ON"
-      #     filters:
-      #       branches:
-      #         ignore: develop

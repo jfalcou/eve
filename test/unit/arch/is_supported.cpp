@@ -58,7 +58,7 @@ TTS_CASE("Static detections of API")
   std::cout << "\n";
 
   TTS_PASS("All static detections - done");
-}
+};
 
 TTS_CASE("Dynamic detections of API")
 {
@@ -89,4 +89,4 @@ TTS_CASE("Dynamic detections of API")
   std::cout << "ASIMD : " << std::boolalpha << eve::is_supported(eve::asimd) << "\n";
 
   TTS_PASS("All dynamic detections - done");
-}
+};

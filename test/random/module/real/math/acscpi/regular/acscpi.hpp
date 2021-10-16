@@ -14,6 +14,7 @@
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on acscpi", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   auto std_acscpi = [](auto e) { return eve::invpi(eve::as<EVE_VALUE>())*std::asin(eve::rec(e)); };
 
@@ -22,4 +23,4 @@ TTS_CASE_TPL("wide random check on acscpi", EVE_TYPE)
 
   eve::uniform_prng<EVE_VALUE> p2(EVE_VALUE(1), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK_WITH(p2, std_acscpi, eve::acscpi, 8.);
-}
+};

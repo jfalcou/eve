@@ -13,6 +13,7 @@
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on csc", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   auto std_csc = [](auto e) -> EVE_VALUE { return 1/std::sin(double(e)); };
 
@@ -26,4 +27,4 @@ TTS_CASE_TPL("wide random check on csc", EVE_TYPE)
     eve::uniform_prng<EVE_VALUE>  p(eve::smallestposval(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_csc, eve::csc);
   }
-}
+};

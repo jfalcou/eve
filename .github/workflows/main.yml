@@ -7,9 +7,13 @@ on:
     branches:
       - develop
 
+concurrency:
+  group: ${{ github.head_ref }}
+  cancel-in-progress: true
+
 jobs:
   arch-x86:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     strategy:
       fail-fast: false
       matrix:
@@ -20,12 +24,14 @@ jobs:
         - { comp: clang, arch: x86    , opts: -mavx                 , status: 1 }
         - { comp: clang, arch: x86    , opts: -mavx2                , status: 1 }
         - { comp: clang, arch: x86    , opts: -DEVE_NO_SIMD         , status: 1 }
+        - { comp: clang, arch: x86_sde, opts: -march=skylake-avx512 , status: 1 }
         - { comp: gcc  , arch: x86    , opts: -msse2                , status: 1 }
         - { comp: gcc  , arch: x86    , opts: -mssse3               , status: 1 }
         - { comp: gcc  , arch: x86    , opts: -msse4.2              , status: 1 }
         - { comp: gcc  , arch: x86    , opts: -mavx                 , status: 1 }
         - { comp: gcc  , arch: x86    , opts: -mavx2                , status: 1 }
         - { comp: gcc  , arch: x86    , opts: -DEVE_NO_SIMD         , status: 1 }
+        - { comp: gcc  , arch: x86_sde, opts: -march=skylake-avx512 , status: 1 }
 
     steps:
       - name: Fetch current branch
@@ -50,7 +56,7 @@ jobs:
       - name: Fetch current branch
         uses: actions/checkout@v2
       - name: Testing EVE with ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-        uses: ./.github/actions/run_tests
+        uses: ./.github/actions/run_docker
         with:
           options:        '${{ matrix.cfg.opts }}'
           cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
@@ -68,7 +74,7 @@ jobs:
       - name: Fetch current branch
         uses: actions/checkout@v2
       - name: Testing EVE with ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-        uses: ./.github/actions/run_tests
+        uses: ./.github/actions/run_docker
         with:
           options:        '${{ matrix.cfg.opts }}'
           cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'

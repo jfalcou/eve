@@ -19,8 +19,8 @@ namespace eve
   //================================================================================================
   template<std::size_t Size, bool Logical> struct x86_abi_
   {
-    static constexpr std::size_t  bits                      = Size;
-    static constexpr std::size_t  bytes                     = Size/8;
+    static constexpr std::size_t  bits             = Size;
+    static constexpr std::size_t  bytes            = Size/8;
     static constexpr bool         is_wide_logical  = Logical;
 
     template<typename Type>
@@ -28,6 +28,9 @@ namespace eve
 
     template<typename Type>
     static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
+
+    template<typename Type>
+    static constexpr std::size_t fundamental_cardinal = 16 / sizeof(Type);
   };
 
 # if defined(SPY_SIMD_IS_X86_AVX512)

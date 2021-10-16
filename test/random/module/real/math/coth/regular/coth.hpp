@@ -14,6 +14,7 @@
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on coth", EVE_TYPE)
+<typename T>(::tts::type<T>)
 {
   auto std_coth = [](auto e) { return eve::rec(std::tanh(e)); };
 
@@ -22,4 +23,4 @@ TTS_CASE_TPL("wide random check on coth", EVE_TYPE)
 
   eve::uniform_prng<EVE_VALUE> p1(EVE_VALUE(1), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p1, std_coth, eve::coth);
-}
+};
