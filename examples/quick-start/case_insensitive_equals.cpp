@@ -13,6 +13,7 @@ namespace ascii
     EVE_FORCEINLINE auto operator()(eve::like<std::uint8_t> auto c) const
     {
       // if C - 'a' is less than 26, then C is uppercased, otherwide it's lowercased
+      // 'a' < c < 'z' is equivalent to (c - 'a') < 26 because of the underflow
       return eve::sub[c - 'a' <= 26](c, ('a' - 'A'));
     }
 
@@ -20,38 +21,30 @@ namespace ascii
 
   bool iequals(std::string_view a, std::string_view b)
   {
-    using namespace eve::algo; // for eve::algo::equals and eve::algo::as_range
+    // if they're not the same size, whay bother converting them both to uppercase and then check?
+    if( a.size() != b.size() )
+      return false;
 
     // converting them to uint8_t; because our to upper algorithm relies on unsigned integers.
     auto *f1 = reinterpret_cast<std::uint8_t const *>(a.begin());
     auto *l1 = reinterpret_cast<std::uint8_t const *>(a.end());
     auto *f2 = reinterpret_cast<std::uint8_t const *>(b.begin());
 
-    return equal(as_range(f1, l1),
-                 f2,
-                 [](eve::wide<std::uint8_t> a, eve::wide<std::uint8_t> b)
-                 {
-                   // convert both to uppercase and then check if they're equal
-                   return our_to_upper(a) == our_to_upper(b);
-                 });
+    return eve::algo::equal(eve::algo::as_range(f1, l1),
+                            f2,
+                            [](eve::wide<std::uint8_t> a, eve::wide<std::uint8_t> b)
+                            {
+                              // convert both to uppercase and then check if they're equal
+                              return our_to_upper(a) == our_to_upper(b);
+                            });
   }
 
 }
 
-int
-main()
+TTS_CASE("IEquals, basics")
 {
-  using namespace std;
-
-  bool t0 = ascii::iequals("123456 onez", "123456 oneZ");
-  bool t1 = ascii::iequals("123456 one", "123456 oNE");
-  bool t2 = ascii::iequals("123456 two", "123456 OnE");
-
-  cout << boolalpha  // activate printing booleans
-       << t0 << '\n' // should be true
-       << t1 << '\n' // should be true too
-       << t2         // should be false
-       << endl;
-
-  return 0;
-}
+  TTS_EQUAL(ascii::iequals("123 One Two aZ", "123 oNe TWo Az"), true);
+  TTS_EQUAL(ascii::iequals("103 One Two aZ", "123 oNe TWo Az"), false);
+  TTS_EQUAL(ascii::iequals("not the same size as", "123 oNe TWo Az"), false);
+  TTS_EQUAL(ascii::iequals("Short", "SHorT"), true);
+};
