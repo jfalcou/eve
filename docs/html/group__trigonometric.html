@@ -148,20 +148,18 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p >These functions provide scalar and SIMD version of trigonometric functions.</p>
-<p >Moreover all trigonometric direct functions (except sinc and sinpic) provide 4 decorators flavours :</p>
+<p >Moreover all trigonometric direct functions (except sinc and sinpic) provide 3 decorators flavours :</p>
 <p >The possible decorators are:</p>
 <ul>
-<li>restricted: the fastest but gives the correct result in \([-\pi/4, +\pi/4]\) only and Nan outside.</li>
-<li>small: gives the correct result for \([-\pi/2, +\pi/2]\) only and Nan outside.</li>
-<li>medium: gives the correct result for \(|x| &lt; 536870912.0f\) (float) or \( |x| &lt; 2.0e14 \) (double)</li>
-<li><p class="startli">big: gives the correct result in the whole range.</p>
+<li>quarter_circle: the fastest but gives the correct result in \([-\pi/4, +\pi/4]\) only and Nan outside.</li>
+<li>half_circle: gives the correct result for \([-\pi/2, +\pi/2]\) only and Nan outside.</li>
+<li><p class="startli">full_circle: gives the correct result for \([-\pi, +\pi]\) only and Nan outside.</p>
 <p class="startli">Without any decorator the call tests the input value to choose among the decorated ones the best fit. Of course, with SIMD parameter the fit is the interval containing all the vector elements.</p>
 <p class="startli">The rationale to provide these flavours is that the more costly part of the computation of a trigonometric function from the radian angle is the reduction of the argument modulo \(\pi/4\) that, to be correct in the full range must use a few hundreds of \(\pi\) decimals:</p>
 </li>
 <li>if \(x \in [-\pi/4, +\pi/4]\) there is no reduction to perform.</li>
-<li>if \(x \in [-\pi, +\pi]\) the work is not a lot heavier.</li>
-<li>if \(x\) in the medium range a simplified scheme can be used.</li>
-<li>for the whole range a quite heavy algorithm is to be used.</li>
+<li>if \(x \in [-\pi/2, +\pi/2]\) or \([-\pi, +\pi]\) the work is not a lot heavier.</li>
+<li>for the whole range a quite heavy algorithm is to be used. However, internally an aleviated algorithm is used if the inputs are all less than 1.76858e+15f for floats and 2.0e14 for doubles.</li>
 </ul>
 <p ><b>Convenience header:</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/function/trigonometric.hpp&gt;</span> </div>
 </div><!-- fragment --> <table class="memberdecls">
@@ -233,18 +231,12 @@ Variables</h2></td></tr>
 <tr class="memitem:ga18a94fd518b423cd10fbc07e5ac67d26"><td class="memItemLeft" align="right" valign="top">constexpr callable_tanpi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__trigonometric_ga18a94fd518b423cd10fbc07e5ac67d26.html#ga18a94fd518b423cd10fbc07e5ac67d26">eve::tanpi</a> = {}</td></tr>
 <tr class="memdesc:ga18a94fd518b423cd10fbc07e5ac67d26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing tanpi.  <a href="group__trigonometric_ga18a94fd518b423cd10fbc07e5ac67d26.html#ga18a94fd518b423cd10fbc07e5ac67d26">More...</a><br /></td></tr>
 <tr class="separator:ga18a94fd518b423cd10fbc07e5ac67d26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7b983b4dbe3eb83c860c87536a02152e"><td class="memItemLeft" align="right" valign="top">constexpr restricted_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__trigonometric_ga7b983b4dbe3eb83c860c87536a02152e.html#ga7b983b4dbe3eb83c860c87536a02152e">eve::restricted</a> = {}</td></tr>
-<tr class="memdesc:ga7b983b4dbe3eb83c860c87536a02152e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing a limited range semantic onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__trigonometric_ga7b983b4dbe3eb83c860c87536a02152e.html#ga7b983b4dbe3eb83c860c87536a02152e">More...</a><br /></td></tr>
-<tr class="separator:ga7b983b4dbe3eb83c860c87536a02152e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaf9af2bcd5b6d700b06e36458ca7c169"><td class="memItemLeft" align="right" valign="top">constexpr small_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__trigonometric_gaaf9af2bcd5b6d700b06e36458ca7c169.html#gaaf9af2bcd5b6d700b06e36458ca7c169">eve::small</a> = {}</td></tr>
-<tr class="memdesc:gaaf9af2bcd5b6d700b06e36458ca7c169"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing a limited range standard semantic onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__trigonometric_gaaf9af2bcd5b6d700b06e36458ca7c169.html#gaaf9af2bcd5b6d700b06e36458ca7c169">More...</a><br /></td></tr>
-<tr class="separator:gaaf9af2bcd5b6d700b06e36458ca7c169"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9bf96bc0229b376992320778389a1c83"><td class="memItemLeft" align="right" valign="top">constexpr medium_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__trigonometric_ga9bf96bc0229b376992320778389a1c83.html#ga9bf96bc0229b376992320778389a1c83">eve::medium</a> = {}</td></tr>
-<tr class="memdesc:ga9bf96bc0229b376992320778389a1c83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing a limited range semantic onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__trigonometric_ga9bf96bc0229b376992320778389a1c83.html#ga9bf96bc0229b376992320778389a1c83">More...</a><br /></td></tr>
-<tr class="separator:ga9bf96bc0229b376992320778389a1c83"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3d661f2dc8e530f4a0f5397d24c2eb69"><td class="memItemLeft" align="right" valign="top">constexpr big_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__trigonometric_ga3d661f2dc8e530f4a0f5397d24c2eb69.html#ga3d661f2dc8e530f4a0f5397d24c2eb69">eve::big</a> = {}</td></tr>
-<tr class="memdesc:ga3d661f2dc8e530f4a0f5397d24c2eb69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing a direct computation semantic onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__trigonometric_ga3d661f2dc8e530f4a0f5397d24c2eb69.html#ga3d661f2dc8e530f4a0f5397d24c2eb69">More...</a><br /></td></tr>
-<tr class="separator:ga3d661f2dc8e530f4a0f5397d24c2eb69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5125fa88aef3909aad8d39e760305c82"><td class="memItemLeft" align="right" valign="top">constexpr quarter_circle_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__trigonometric_ga5125fa88aef3909aad8d39e760305c82.html#ga5125fa88aef3909aad8d39e760305c82">eve::quarter_circle</a> = {}</td></tr>
+<tr class="memdesc:ga5125fa88aef3909aad8d39e760305c82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing a limited range semantic onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__trigonometric_ga5125fa88aef3909aad8d39e760305c82.html#ga5125fa88aef3909aad8d39e760305c82">More...</a><br /></td></tr>
+<tr class="separator:ga5125fa88aef3909aad8d39e760305c82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad7f9ab92c007e0ae6219cd7c5991ffa9"><td class="memItemLeft" align="right" valign="top">constexpr half_circle_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__trigonometric_gad7f9ab92c007e0ae6219cd7c5991ffa9.html#gad7f9ab92c007e0ae6219cd7c5991ffa9">eve::half_circle</a> = {}</td></tr>
+<tr class="memdesc:gad7f9ab92c007e0ae6219cd7c5991ffa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing a limited range standard semantic onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__trigonometric_gad7f9ab92c007e0ae6219cd7c5991ffa9.html#gad7f9ab92c007e0ae6219cd7c5991ffa9">More...</a><br /></td></tr>
+<tr class="separator:gad7f9ab92c007e0ae6219cd7c5991ffa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.20-->

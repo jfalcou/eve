@@ -143,12 +143,49 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div>
 </div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">eve::algo Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >EVE - Expressive Vector Engine Copyright : EVE Contributors &amp; Maintainers SPDX-License-Identifier: MIT </p>
-</div></div><!-- contents -->
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1algo_1_1iterator__cardinal.html">iterator_cardinal</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a cardinal for an <code>eve::algo::iterator</code>  <a href="structeve_1_1algo_1_1iterator__cardinal.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1algo_1_1range__ref__wrapper.html">range_ref_wrapper</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">a non_owning_range wrapper around owning range. Should be created via <code>range_ref</code>  <a href="structeve_1_1algo_1_1range__ref__wrapper.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1algo_1_1value__type.html">value_type</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">for an instance of <code>eve::algo::relaxed_iterator</code>, <code>eve::algo::relaxed_range</code> compute the <a class="el" href="structeve_1_1algo_1_1value__type.html" title="for an instance of eve::algo::relaxed_iterator, eve::algo::relaxed_range compute the value_type.">value_type</a>.  <a href="structeve_1_1algo_1_1value__type.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1algo_1_1wide__value__type.html">wide_value_type</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">for an instance of <code>eve::algo::iterator</code> a shortcut: wide&lt;value_type_t<em>, iterator_cardinal_t<em>&gt; </em></em> <a href="structeve_1_1algo_1_1wide__value__type.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga02000a386a1e19b48cbeb9d21aa57378"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eve_ga02000a386a1e19b48cbeb9d21aa57378.html#ga02000a386a1e19b48cbeb9d21aa57378">copy</a> = function_with_traits&lt;copy_&gt;[default_simple_algo_traits]</td></tr>
+<tr class="memdesc:ga02000a386a1e19b48cbeb9d21aa57378"><td class="mdescLeft">&#160;</td><td class="mdescRight">version of std::copy  <a href="group__eve_ga02000a386a1e19b48cbeb9d21aa57378.html#ga02000a386a1e19b48cbeb9d21aa57378">More...</a><br /></td></tr>
+<tr class="separator:ga02000a386a1e19b48cbeb9d21aa57378"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabc4fab3473dac382f3ad4edc9531aec0"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eve_gabc4fab3473dac382f3ad4edc9531aec0.html#gabc4fab3473dac382f3ad4edc9531aec0">for_each</a> = function_with_traits&lt;for_each_&gt;</td></tr>
+<tr class="memdesc:gabc4fab3473dac382f3ad4edc9531aec0"><td class="mdescLeft">&#160;</td><td class="mdescRight">a basic for_each algorithm.  <a href="group__eve_gabc4fab3473dac382f3ad4edc9531aec0.html#gabc4fab3473dac382f3ad4edc9531aec0">More...</a><br /></td></tr>
+<tr class="separator:gabc4fab3473dac382f3ad4edc9531aec0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga85190bd1728e1754c114f5b18fc5a524"><td class="memItemLeft" align="right" valign="top">constexpr range_ref_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eve_ga85190bd1728e1754c114f5b18fc5a524.html#ga85190bd1728e1754c114f5b18fc5a524">range_ref</a></td></tr>
+<tr class="memdesc:ga85190bd1728e1754c114f5b18fc5a524"><td class="mdescLeft">&#160;</td><td class="mdescRight">for a <code>non_owning_range</code> returns it, otherwise returns a <code><a class="el" href="structeve_1_1algo_1_1range__ref__wrapper.html" title="a non_owning_range wrapper around owning range. Should be created via range_ref">range_ref_wrapper</a></code>.  <a href="group__eve_ga85190bd1728e1754c114f5b18fc5a524.html#ga85190bd1728e1754c114f5b18fc5a524">More...</a><br /></td></tr>
+<tr class="separator:ga85190bd1728e1754c114f5b18fc5a524"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabcfe49a76c53b5567df06523ded73cc0"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eve_gabcfe49a76c53b5567df06523ded73cc0.html#gabcfe49a76c53b5567df06523ded73cc0">transform_inplace</a> = function_with_traits&lt;transform_inplace_&gt;[default_simple_algo_traits]</td></tr>
+<tr class="memdesc:gabcfe49a76c53b5567df06523ded73cc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">same as;  <a href="group__eve_gabcfe49a76c53b5567df06523ded73cc0.html#gabcfe49a76c53b5567df06523ded73cc0">More...</a><br /></td></tr>
+<tr class="separator:gabcfe49a76c53b5567df06523ded73cc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga023d457444697194cbb8dcf21bcb236e"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eve_ga023d457444697194cbb8dcf21bcb236e.html#ga023d457444697194cbb8dcf21bcb236e">transform_to</a> = function_with_traits&lt;transform_to_&gt;[default_simple_algo_traits]</td></tr>
+<tr class="memdesc:ga023d457444697194cbb8dcf21bcb236e"><td class="mdescLeft">&#160;</td><td class="mdescRight">version of std::transform  <a href="group__eve_ga023d457444697194cbb8dcf21bcb236e.html#ga023d457444697194cbb8dcf21bcb236e">More...</a><br /></td></tr>
+<tr class="separator:ga023d457444697194cbb8dcf21bcb236e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+</div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.20-->
 <!-- start footer part -->
 </div> <!-- DOXYSTRAP RELATED -->
