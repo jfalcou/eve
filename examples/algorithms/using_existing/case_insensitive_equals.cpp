@@ -1,8 +1,16 @@
+//==================================================================================================
+/*
+  EVE - Expressive Vector Engine
+  Copyright : EVE Contributors & Maintainers
+  SPDX-License-Identifier: MIT
+*/
+//==================================================================================================
+
+
 #include <eve/algo/equal.hpp>
 #include <eve/function/sub.hpp>
 
 #include <cstdint>
-#include <iostream>
 #include <string_view>
 
 namespace ascii
@@ -40,6 +48,11 @@ namespace ascii
   }
 
 }
+
+
+// -----------------------
+
+#include "test.hpp"
 
 TTS_CASE("IEquals, basics")
 {
