@@ -28,6 +28,9 @@ namespace eve
 
     template<typename Type>
     static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
+
+    template<typename Type>
+    static constexpr std::size_t fundamental_cardinal = 8 / sizeof(Type);
   };
 
   struct arm_64_  : arm_abi_<64,true> {};

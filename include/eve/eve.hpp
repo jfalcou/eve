@@ -27,6 +27,12 @@
 //==================================================================================================
 
 //==================================================================================================
+//! @defgroup   arch    Architecture related Types and Helpers
+//! @brief  This module defines the types and helpers functions to properly handle
+//!         architecture specific components
+//==================================================================================================
+
+//==================================================================================================
 //! @defgroup   simd      SIMD Types and Helpers
 //! @brief  This module defines the types and helpers functions to properly handle SIMD registers
 //==================================================================================================
