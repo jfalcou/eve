@@ -163,7 +163,7 @@ TTS_CASE("pattern test")
 {
   TTS_EQUAL(bgra_to_rgb_pattern_v<4>, (eve::pattern<2, 1, 0, 3>));
   TTS_EQUAL(bgra_to_rgb_pattern_v<8>, (eve::pattern<2, 1, 0, 6, 5, 4, 6, 7>));
-}
+};
 
 TTS_CASE("very simple cases")
 {
@@ -181,7 +181,7 @@ TTS_CASE("very simple cases")
     convert_bgra_to_rgb(in, actual.data());
     TTS_EQUAL(actual, expected);
   }
-}
+};
 
 std::uint8_t*
 convert_bgra_to_rgb_scalar(std::span<std::uint8_t const> in, std::uint8_t* o)
@@ -228,22 +228,6 @@ struct convert_bgra_to_rgb_generic_test
       *l = 1;
   }
 };
-
-//  { 2 1 0 6 5 4 10 9 8 14 13 12 18 17 16 0 0 0 0 0 } ==
-//  { 2 1 0 6 5 4 10 9 8 14 13 12 18 17 16 15 0 0 0 0 }
-
-TTS_CASE("20 elements")
-{
-  std::vector<std::uint8_t> in(20);
-  std::iota(in.begin(), in.end(), 0);
-  std::vector<std::uint8_t> expected(20);
-  std::vector<std::uint8_t> actual(20);
-
-  convert_bgra_to_rgb_scalar(in, expected.data());
-  convert_bgra_to_rgb(in, actual.data());
-
-  TTS_EQUAL(expected, actual);
-}
 
 TTS_CASE("convert_bgra_to_rgb, lots")
 {
