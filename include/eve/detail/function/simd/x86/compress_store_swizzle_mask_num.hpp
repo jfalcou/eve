@@ -26,23 +26,13 @@ namespace eve::detail
   compress_store_swizzle_mask_num_(EVE_SUPPORTS(sse2_), C c, logical<wide<T, fixed<4>>> mask)
     requires (current_api < avx512) && (sizeof(T) <= 2)
   {
-    if constexpr (sizeof(T) == 1)
+    if constexpr (sizeof(T) <= 2)
     {
+      using bits_type = typename logical<wide<T, fixed<4>>>::bits_type;
       mask = mask && c.mask(eve::as(mask));
-      __m128i sad_mask = _mm_set_epi64x(0, 0x80848281);
-      __m128i sum      = _mm_sad_epu8(_mm_andnot_si128(mask, sad_mask), sad_mask);
 
-      int desc     = _mm_cvtsi128_si32(sum);
-      int num      = desc & 0xf;
-      int popcount = desc >> 7;
-
-      return {num, popcount};
-    }
-    else if constexpr (sizeof(T) == 2)
-    {
-      mask = mask && c.mask(eve::as(mask));
-      __m128i sad_mask = _mm_set_epi64x(0, 0x0080'0084'0082'0081);
-      __m128i sum      = _mm_sad_epu8(_mm_andnot_si128(mask, sad_mask), sad_mask);
+      bits_type sad_mask {0x81, 0x82, 0x84, 0x80};
+      bits_type sum = _mm_sad_epu8(_mm_andnot_si128(mask, sad_mask), sad_mask);
 
       int desc     = _mm_cvtsi128_si32(sum);
       int num      = desc & 0xf;
