@@ -27,23 +27,21 @@ namespace eve::detail
                                     logical<wide<U, fixed<4>>> mask
                                     )
   {
-    auto [num, last_set] = compress_store_swizzle_mask_num_partial[c](mask);
-    int count;
+    auto [num, count] = compress_store_swizzle_mask_num[c](mask);
 
     switch (num) {
-      case 0b000: { count = 0; v = v[pattern<3, 0, 0, 0>]; break; }
-      case 0b001: { count = 1; v = v[pattern<0, 3, 0, 0>]; break; }
-      case 0b010: { count = 1; v = v[pattern<1, 3, 0, 0>]; break; }
-      case 0b011: { count = 2; v = v[pattern<0, 1, 3, 0>]; break; }
-      case 0b100: { count = 1; v = v[pattern<2, 3, 0, 0>]; break; }
-      case 0b101: { count = 2; v = v[pattern<0, 2, 3, 0>]; break; }
-      case 0b110: { count = 2; v = v[pattern<1, 2, 3, 0>]; break; }
-      case 0b111: { count = 3;                             break; }
+      case 0b000: { v = v[pattern<3, 0, 0, 0>]; break; }
+      case 0b001: { v = v[pattern<0, 3, 0, 0>]; break; }
+      case 0b010: { v = v[pattern<1, 3, 0, 0>]; break; }
+      case 0b011: { v = v[pattern<0, 1, 3, 0>]; break; }
+      case 0b100: { v = v[pattern<2, 3, 0, 0>]; break; }
+      case 0b101: { v = v[pattern<0, 2, 3, 0>]; break; }
+      case 0b110: { v = v[pattern<1, 2, 3, 0>]; break; }
+      case 0b111: {                             break; }
       #if defined(SPY_COMPILER_IS_CLANG) or defined(SPY_COMPILER_IS_GCC)
       default: __builtin_unreachable();
       #endif
     }
-    count += last_set ? 1 : 0;
 
     return std::pair{v, count};
   }
@@ -171,11 +169,11 @@ namespace eve::detail
     requires x86_abi<abi_t<T, N>> && ( N() == 4 )
   {
          if ( C::is_complete && !C::is_inverted ) return as_raw_pointer(ptr);
-    else if constexpr ( N() == 4 && sizeof(T) == 8 && current_api == avx  )
+    else if constexpr ( sizeof(T) == 8 && current_api == avx  )
     {
       return compress_store_impl_(EVE_RETARGET(cpu_), c, v, mask, ptr);
     }
-    else if constexpr ( N() == 4 && sizeof(T) == 8 )
+    else if constexpr ( sizeof(T) == 8 )
     {
       auto [num, count] = compress_store_swizzle_mask_num[c](mask);
       std::uint64_t const* raw_pattern_ptr = pattern_4_elements_dwords_v<std::uint64_t>[num].data();
@@ -202,17 +200,16 @@ namespace eve::detail
       using bytes_fixed = eve::fixed<N() * sizeof(T)>;
       using bytes_t = typename wide<T, N>::template rebind<std::uint8_t, bytes_fixed>;
 
-      auto [num, is_last_set] = compress_store_swizzle_mask_num_partial[c](mask);
+      auto [num, count] = compress_store_swizzle_mask_num[c](mask);
 
       using a_p = aligned_ptr<u_t const, N>;
-      u_t const* raw_pattern_ptr = pattern_4_elements_bytes_with_popcounts_v<u_t>[num].data();
+      u_t const* raw_pattern_ptr = pattern_4_elements_bytes_v<u_t>[num].data();
       bytes_t pattern(ptr_cast<std::uint8_t const>( a_p(raw_pattern_ptr) ));
 
       wide<T, N> shuffled = _mm_shuffle_epi8(v, pattern);
       store(shuffled, ptr);
 
-      int popcount = get_popcount(pattern.get(0)) + (is_last_set ? 1 : 0);
-      return as_raw_pointer(ptr) + popcount;
+      return as_raw_pointer(ptr) + count;
     }
   }
 
