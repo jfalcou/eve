@@ -24,17 +24,26 @@ namespace eve::detail
   template<eve::relative_conditional_expr C, typename T>
   EVE_FORCEINLINE std::pair<int, int>
   compress_store_swizzle_mask_num_(EVE_SUPPORTS(sse2_), C c, logical<wide<T, fixed<4>>> mask)
-    requires (current_api < avx512) && (sizeof(T) <= 2)
+    requires (current_api < avx512) && (sizeof(T) <= 4)
   {
-    if constexpr (sizeof(T) <= 2)
+    if constexpr (sizeof(T) == 4 && eve::current_api >= sse4_1)
+    {
+      return compress_store_swizzle_mask_num_(EVE_RETARGET(cpu_), c, mask);
+    }
+    else if constexpr (sizeof(T) == 4)
+    {
+      // Alternativatly we can add shorts in scalar but this a very cheap conversion
+      return compress_store_swizzle_mask_num(c, convert(mask, eve::as<logical<std::uint16_t>>{}));
+    }
+    else
     {
       using bits_type = typename logical<wide<T, fixed<4>>>::bits_type;
       mask = mask && c.mask(eve::as(mask));
 
       bits_type sad_mask {0x81, 0x82, 0x84, 0x80};
       bits_type sum = _mm_sad_epu8(_mm_andnot_si128(mask, sad_mask), sad_mask);
+      int desc      = _mm_cvtsi128_si32(sum);
 
-      int desc     = _mm_cvtsi128_si32(sum);
       int num      = desc & 0xf;
       int popcount = desc >> 7;
 
