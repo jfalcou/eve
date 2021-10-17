@@ -90,7 +90,8 @@ namespace eve::detail
   EVE_FORCEINLINE auto cyl_bessel_jn_(EVE_SUPPORTS(cpu_), I nu, T x) noexcept
   {
     std::cout << "sisi" << std::endl;
-    return kernel_bessel_j_int(nu, x);
+    auto n = convert(nu, as<element_type_t<T>>());
+    return kernel_bessel_j_int(n, x);
   }
 
 }
