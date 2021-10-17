@@ -289,6 +289,10 @@ namespace eve::detail
     {
       return  _mm_packs_epi16(v0, v0);
     }
+    else if constexpr ( match(c, category::int32x4, category::uint32x4) && sizeof(Out) == 2 )
+    {
+      return  _mm_packs_epi32(v0, v0);
+    }
     else return convert_(EVE_RETARGET(simd_), v0, tgt);
   }
 }

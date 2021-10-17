@@ -93,15 +93,6 @@ namespace eve::detail
 
 namespace eve::detail
 {
-  EVE_FORCEINLINE constexpr std::uint32_t add_popcount(std::uint32_t idx, std::uint32_t count)
-  {
-    return count << 4 | idx;
-  }
-
-  EVE_FORCEINLINE constexpr std::uint8_t get_popcount(std::uint8_t idx) {
-    return idx >> 4;
-  }
-
   template <std::unsigned_integral T>
   constexpr auto idxs_dwords = [] {
     std::array<T, 8> res = {};
@@ -122,19 +113,6 @@ namespace eve::detail
 
     return res;
   }();
-
-  template <typename Row, std::size_t N>
-  EVE_FORCEINLINE constexpr auto add_popcounts(std::array<Row, N> patterns)
-  {
-    for (std::uint8_t i = 0; i != patterns.size(); ++i) {
-      patterns[i][0] = add_popcount(patterns[i][0], std::popcount(i));
-    }
-    return patterns;
-  }
-
-  template <std::unsigned_integral T>
-  constexpr auto pattern_4_elements_bytes_with_popcounts_v alignas(sizeof(T) * 4) =
-    add_popcounts(pattern_4_elements_bytes_v<T>);
 
   template <std::unsigned_integral T>
   constexpr auto pattern_4_elements_dwords_v alignas(sizeof(T) * 4) =
@@ -163,7 +141,7 @@ namespace eve::detail
   // Stack Overflow discussion: https://chat.stackoverflow.com/rooms/212510/discussion-between-denis-yaroshevskiy-and-peter-cordes
   template<relative_conditional_expr C, typename T, typename U, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
-  T* compress_store_impl_(EVE_SUPPORTS(ssse3_),
+  T* compress_store_impl_(EVE_SUPPORTS(sse4_1_),
                           C c,
                           wide<T, N> v,
                           logical<wide<U, N>> mask,
@@ -171,54 +149,44 @@ namespace eve::detail
     requires x86_abi<abi_t<T, N>> && ( N() == 4 )
   {
          if ( C::is_complete && !C::is_inverted ) return as_raw_pointer(ptr);
-    else if constexpr ( N() == 4 && sizeof(T) == 8 && current_api == avx  )
+    else if constexpr ( sizeof(T) == 8 && current_api == avx  )
     {
       return compress_store_impl_(EVE_RETARGET(cpu_), c, v, mask, ptr);
     }
-    else if constexpr ( N() == 4 && sizeof(T) == 8 )
+    else if constexpr ( std::same_as<T, float> )
     {
-      auto [num, count] = compress_store_swizzle_mask_num[c](mask);
-      std::uint64_t const* raw_pattern_ptr = pattern_4_elements_dwords_v<std::uint64_t>[num].data();
-      aligned_ptr<std::uint64_t const, eve::fixed<4>> pattern_ptr{raw_pattern_ptr};
-      wide<std::uint32_t, eve::fixed<8>> pattern{ptr_cast<std::uint32_t>(pattern_ptr)};
+      auto  u_p = ptr_cast<std::uint32_t>(ptr);
+      auto  u_v = eve::bit_cast(v, eve::as<wide<std::uint32_t, N>>{});
 
-      wide<T, N> shuffled = permvar8(v, pattern);
-
-      store(shuffled, ptr);
-      return as_raw_pointer(ptr) + count;
-    }
-    else if constexpr ( std::floating_point<T> )
-    {
-      using i_t = eve::as_integer_t<T>;
-      auto  i_p = ptr_cast<i_t>(ptr);
-      auto  i_v = eve::bit_cast(v, eve::as<wide<i_t, N>>{});
-
-      i_t* stored = compress_store_impl(c, i_v, mask, i_p);
-      return (T*) stored;
+      std::uint32_t* stored = compress_store_impl(c, u_v, mask, u_p);
+      return (float*) stored;
     }
     else
     {
-      using u_t         = eve::as_integer_t<T, unsigned>;
-      using bytes_fixed = eve::fixed<N() * sizeof(T)>;
-      using bytes_t = typename wide<T, N>::template rebind<std::uint8_t, bytes_fixed>;
+      using u_t = eve::as_integer_t<T, unsigned>;
 
-      auto [num, is_last_set] = compress_store_swizzle_mask_num_partial[c](mask);
+      auto [num, count] = compress_store_swizzle_mask_num[c](mask);
 
-      using a_p = aligned_ptr<u_t const, N>;
-      u_t const* raw_pattern_ptr = pattern_4_elements_bytes_with_popcounts_v<u_t>[num].data();
-      bytes_t pattern(ptr_cast<std::uint8_t const>( a_p(raw_pattern_ptr) ));
+      const auto* raw_pattern_ptr = [](int idx) {
+        if constexpr ( sizeof(T) == 8 ) return pattern_4_elements_dwords_v<u_t>[idx].data();
+        else                            return pattern_4_elements_bytes_v<u_t> [idx].data();
+      }(num);
 
-      wide<T, N> shuffled = _mm_shuffle_epi8(v, pattern);
+      wide<u_t, N> pattern {eve::as_aligned(raw_pattern_ptr, N())};
+
+      wide<T, N> shuffled = [&] {
+        if constexpr ( sizeof(T) == 8 ) return permvar8(v, pattern);
+        else                            return _mm_shuffle_epi8(v, pattern);
+      }();
+
       store(shuffled, ptr);
-
-      int popcount = get_popcount(pattern.get(0)) + (is_last_set ? 1 : 0);
-      return as_raw_pointer(ptr) + popcount;
+      return as_raw_pointer(ptr) + count;
     }
   }
 
   template<typename T, typename U, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
-  T* compress_store_impl_(EVE_SUPPORTS(ssse3_),
+  T* compress_store_impl_(EVE_SUPPORTS(sse4_1_),
                           wide<T, N> v,
                           logical<wide<U, N>> mask,
                           Ptr ptr) noexcept
