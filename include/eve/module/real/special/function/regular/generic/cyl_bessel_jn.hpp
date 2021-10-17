@@ -52,8 +52,8 @@ namespace eve::detail
       else if (eve::none(flint_nu)) return kernel_bessel_j_flt(nu, x);
       else
       {
-        auto nu_int = if_else(flint_nu, x, zero);
-        auto nu_flt = if_else(flint_nu, T(0.5), x);
+        auto nu_int = if_else(flint_nu, nu, zero);
+        auto nu_flt = if_else(flint_nu, T(0.5), nu);
         return if_else(flint_nu, kernel_bessel_j_int(nu_int, x), kernel_bessel_j_flt(nu_flt, x));
       }
     }
@@ -63,26 +63,25 @@ namespace eve::detail
   //////////////////////////////////////////////////////////////////
   // integral simd,  floating scalar -> integral simd, floating simd
   template<integral_simd_value I, floating_real_scalar_value T>
-  EVE_FORCEINLINE auto cyl_bessel_jy_(EVE_SUPPORTS(cpu_), I , T x) noexcept
+  EVE_FORCEINLINE auto cyl_bessel_jn_(EVE_SUPPORTS(cpu_), I nu, T x) noexcept
   {
-//    std::cout << "sisc" << std::endl;
-    return x;
-//    using c_t = wide <T, cardinal_t<I>>;
-//    return cyl_bessel_jn(nu, c_t(x));
+    std::cout << "sisc" << std::endl;
+    using c_t = wide <T, cardinal_t<I>>;
+    return cyl_bessel_jn(nu, c_t(x));
   }
 
   // scalar integral,  floating scalar
   template<integral_scalar_value I, floating_real_scalar_value T>
   EVE_FORCEINLINE auto cyl_bessel_jn_(EVE_SUPPORTS(cpu_), I nu, T x) noexcept
   {
-//    std::cout << "scsc" << std::endl;
+    std::cout << "scsc" << std::endl;
     return kernel_bessel_j_int(nu, x);
   }
   // scalar integral,  floating simd
   template<integral_scalar_value I, floating_real_simd_value T>
   EVE_FORCEINLINE auto cyl_bessel_jn_(EVE_SUPPORTS(cpu_), I nu, T x) noexcept
   {
-//    std::cout << "scsi" << std::endl;
+    std::cout << "scsi" << std::endl;
     return kernel_bessel_j_int(nu, x);
   }
 
@@ -90,7 +89,7 @@ namespace eve::detail
   template<integral_simd_value I, floating_real_simd_value T>
   EVE_FORCEINLINE auto cyl_bessel_jn_(EVE_SUPPORTS(cpu_), I nu, T x) noexcept
   {
-//    std::cout << "sisi" << std::endl;
+    std::cout << "sisi" << std::endl;
     return kernel_bessel_j_int(nu, x);
   }
 
