@@ -355,18 +355,54 @@ namespace eve::detail
     }
   }
 
-  template<floating_real_value I, floating_real_value T>
-  EVE_FORCEINLINE auto  kernel_bessel_j_flt (I , T x) noexcept
+  template<floating_real_value T>
+  EVE_FORCEINLINE auto  kernel_bessel_j_flt (T n, T x) noexcept
   {
     EVE_ASSERT(eve::none(is_flint(nu)); "kernel_bessel_j_flt : some nu are floating integers");
-    if(scalar_value<I>)
-    {
 
+    auto br_large =  [](auto n,  auto x)
+      {
+        std::cout << "br_large" << std::endl;
+        return asymptotic_bessel_j_large_x_2(n, x);
+      };
+
+    auto br_backward =  [](auto n,  auto x)
+      {
+      std::cout << "bessel_jy" << std::endl;
+      auto [a, b, c, d] = bessel_jy(T(n), x);
+      return a;
+      };
+
+    if constexpr(scalar_value<T>)
+    {
+      if(is_ltz(x)||is_ltz(n))                      return nan(as(x));
+      if (x == inf(as(x)))                          return zero(as(x));
+      if (asymptotic_bessel_large_x_limit(n, x))    return br_large(n, x);
+      if (is_eqz(x))                                return zero(as(x));
+      return br_backward(n, x);
     }
     else
     {
+      auto nneg = is_ltz(n);
+      auto xlt0 = is_ltz(x);
+      auto r = nan(as(x));
+      auto isinfx = x == inf(as(x));
+      r = if_else(isinfx, zero(as(x)), allbits);
+      x = if_else(isinfx||nneg||xlt0, allbits, x);
+      auto notdone = is_not_nan(x);
+
+      if( eve::any(notdone) )
+      {
+        //std::cout << "br_large simd" << std::endl;
+        notdone = next_interval(br_large,  notdone, asymptotic_bessel_large_x_limit(n, x), r, n, x);
+        if( eve::any(notdone) )
+        {
+          //std::cout << "br_bacward" << std::endl;
+          notdone = last_interval(br_backward,  notdone, r, n, x);
+        }
+      }
+      return r;
     }
-    return x;
   }
 
 }

@@ -33,7 +33,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto cyl_bessel_jn_(EVE_SUPPORTS(cpu_), I nu, T x) noexcept
   {
     auto flintx = is_flint(nu);
-    return flintx ? kernel_bessel_j_int(nu, x) : kernel_bessel_j_flt(nu, x);
+    return flintx ? kernel_bessel_j_int(nu, x) : kernel_bessel_j_flt(T(nu), x);
   }
 
   template<floating_real_value T>
