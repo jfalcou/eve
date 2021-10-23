@@ -32,10 +32,9 @@ namespace eve::algo::views
   //!
   //!    **Required header:** `#include <eve/algo/views/convert.hpp>`
   //!
-  //!    Has a shorthand `eve::views::convert` in `<eve/views/convert.hpp>`.
+  //!    Has a shorthand `eve::views::converting_iterator` in `<eve/views/convert.hpp>`.
   //! @}
   //================================================================================================
-
 
   template <relaxed_iterator I, typename T>
   struct converting_iterator;

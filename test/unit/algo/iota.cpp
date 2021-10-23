@@ -8,7 +8,7 @@
 
 #include "unit/algo/algo_test.hpp"
 
-#include <eve/algo/views/iota_scaled.hpp>
+#include <eve/algo/views/iota.hpp>
 
 #include "iterator_concept_test.hpp"
 

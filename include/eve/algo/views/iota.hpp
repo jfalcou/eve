@@ -20,8 +20,16 @@ namespace eve::algo::views
   //================================================================================================
   //! @addtogroup eve.algo.views
   //! @{
+  //!    @struct base_plus_offset_iterator
+  //!    @brief An iterator for all values from base to offset.
+  //!    Should be created with `iota_scaled` or `iota`.
+  //!    Not OK to compare two iterators generated from a different base.
   //!
+  //!    **Required header:** `#include <eve/algo/views/iota.hpp>`
+  //!
+  //!    Has a shorthand `eve::views::base_plus_offset_iterator` in `<eve/views/iota.hpp>`.
   //! @}
+  //================================================================================================
 
   template <typename T, typename N>
   struct base_plus_offset_iterator : operations_with_distance
@@ -114,6 +122,20 @@ namespace eve::algo::views
     }
   };
 
+  //================================================================================================
+  //! @addtogroup eve.algo.views
+  //! @{
+  //!    @var iota_scaled
+  //!    @brief A fuction to generate an `iota` scaled by some multiplier.
+  //!    To generate an iterator pass T base, T scale.
+  //!    For a range pass a range size as ptrdiff_t as a 3rd parameter.
+  //!
+  //!    **Required header:** `#include <eve/algo/views/iota.hpp>`
+  //!
+  //!    Has a shorthand `eve::views::iota_scaled` in `<eve/views/iota.hpp>`.
+  //! @}
+  //================================================================================================
+
   struct
   {
     template <typename T>
@@ -131,6 +153,20 @@ namespace eve::algo::views
       return eve::algo::as_range(f, l);
     }
   } inline constexpr iota_scaled;
+
+  //================================================================================================
+  //! @addtogroup eve.algo.views
+  //! @{
+  //!    @var iota
+  //!    @brief A fuction to generate an `iota` iterator/view like (0, 1, 2, 3,...).
+  //!    To generate an iterator pass T base.
+  //!    For a range pass a range size as ptrdiff_t as a 2rd parameter.
+  //!
+  //!    **Required header:** `#include <eve/algo/views/iota.hpp>`
+  //!
+  //!    Has a shorthand `eve::views::iota_scaled` in `<eve/views/iota.hpp>`.
+  //! @}
+  //================================================================================================
 
   struct
   {
