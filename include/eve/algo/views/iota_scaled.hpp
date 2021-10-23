@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/algo/as_range.hpp>
 #include <eve/algo/iterator_helpers.hpp>
 #include <eve/algo/views/convert.hpp>
 
@@ -23,66 +24,79 @@ namespace eve::algo::views
   //! @}
 
   template <typename T, typename N>
-  struct iota_scaled_iterator : operations_with_distance
+  struct base_plus_offset_iterator : operations_with_distance
   {
     using value_type = T;
     using wv_type    = eve::wide<value_type, N>;
 
-    std::ptrdiff_t  i;
+    value_type      base;
     value_type      scale;
+    std::ptrdiff_t  i;
     wv_type         wide_cur;
 
-    iota_scaled_iterator() = default;
+    base_plus_offset_iterator() = default;
 
-    EVE_FORCEINLINE iota_scaled_iterator(std::ptrdiff_t i_, value_type scale) :
-      i(0), scale(scale)
+    EVE_FORCEINLINE base_plus_offset_iterator(value_type base,
+                                              value_type scale,
+                                              std::ptrdiff_t i_) :
+      base(base),
+      scale(scale),
+      i(0)
     {
       wide_cur = wv_type {[&](int j, int) { return j; }};
       wide_cur *= scale;
-      *this += i_;
+      wide_cur += base;
+      operator+=(i_);
     }
 
-    iota_scaled_iterator unaligned() const { return *this; }
-    iota_scaled_iterator previous_partially_aligned() const { return *this; }
+    base_plus_offset_iterator unaligned() const { return *this; }
+    base_plus_offset_iterator previous_partially_aligned() const { return *this; }
 
     static N iterator_cardinal() { return {}; }
 
     template <typename _N>
-    auto cardinal_cast(_N) const { return iota_scaled_iterator<T, _N>{i, scale}; }
+    auto cardinal_cast(_N) const { return base_plus_offset_iterator<T, _N>{base, scale, i}; }
 
-    iota_scaled_iterator& operator+=(std::ptrdiff_t n)
+    base_plus_offset_iterator& operator+=(std::ptrdiff_t n)
     {
       i += n;
       wide_cur += scale * n;
       return *this;
     }
 
-    friend std::ptrdiff_t operator-(iota_scaled_iterator x, iota_scaled_iterator y)
+    friend std::ptrdiff_t operator-(base_plus_offset_iterator x, base_plus_offset_iterator y)
     {
+      EVE_ASSERT(x.base == y.base,   "different base");
       EVE_ASSERT(x.scale == y.scale, "different scale");
       return x.i - y.i;
     }
 
-    bool operator== (iota_scaled_iterator const& x) const
+    bool operator== (base_plus_offset_iterator const& x) const
     {
+      EVE_ASSERT(base  == x.base,   "different base");
       EVE_ASSERT(scale == x.scale, "different scale");
       return i ==  x.i;
     }
-    auto operator<=>(iota_scaled_iterator const& x) const
+    auto operator<=>(base_plus_offset_iterator const& x) const
     {
+      EVE_ASSERT(base  == x.base,   "different base");
       EVE_ASSERT(scale == x.scale, "different scale");
       return i <=> x.i;
     }
 
-    EVE_FORCEINLINE friend T tagged_dispatch(eve::tag::read_, iota_scaled_iterator self)
+    EVE_FORCEINLINE friend T tagged_dispatch(eve::tag::read_, base_plus_offset_iterator self)
     {
-      return self.scale * self.i;
+      return self.base + eve::convert(self.i * self.scale, eve::as<T>{});
     }
 
     template <typename U>
-    EVE_FORCEINLINE friend auto tagged_dispatch(convert_, iota_scaled_iterator self, eve::as<U> tgt)
+    EVE_FORCEINLINE friend auto tagged_dispatch(convert_, base_plus_offset_iterator self, eve::as<U> tgt)
     {
-      return iota_scaled_iterator<U, N>{self.i, eve::convert(self.scale, tgt)};
+      return base_plus_offset_iterator<U, N>{
+        eve::convert(self.base, tgt),
+        eve::convert(self.scale, tgt),
+        self.i
+      };
     }
 
     template<relative_conditional_expr C, decorator S>
@@ -90,7 +104,7 @@ namespace eve::algo::views
                                                    C const & c,
                                                    S const &,
                                                    eve::as<wv_type> const &,
-                                                   iota_scaled_iterator self)
+                                                   base_plus_offset_iterator self)
     {
       if constexpr ( !C::has_alternative ) return self.wide_cur;
       else
@@ -102,16 +116,34 @@ namespace eve::algo::views
 
   struct
   {
-    template <typename T, typename N>
-    EVE_FORCEINLINE auto operator()(std::ptrdiff_t i, T scale, N) const
+    template <typename T>
+    EVE_FORCEINLINE auto operator()(T base, T scale) const
     {
-      return iota_scaled_iterator<T, N>{i, scale};
+      using N = eve::fixed<eve::expected_cardinal_v<T>>;
+      return base_plus_offset_iterator<T, N>{base, scale, 0};
     }
 
     template <typename T>
-    EVE_FORCEINLINE auto operator()(std::ptrdiff_t i, T scale) const
+    EVE_FORCEINLINE auto operator()(T base, T scale, std::ptrdiff_t size) const
     {
-      return operator()(i, scale, eve::lane<eve::expected_cardinal_v<T>>);
+      auto f = operator()(base, scale);
+      auto l = f + size;
+      return eve::algo::as_range(f, l);
     }
-  } inline constexpr iota_scaled_unbound;
+  } inline constexpr iota_scaled;
+
+  struct
+  {
+    template <typename T>
+    EVE_FORCEINLINE auto operator()(T base) const
+    {
+      return iota_scaled(base, T{1});
+    }
+
+    template <typename T>
+    EVE_FORCEINLINE auto operator()(T base, std::ptrdiff_t size) const
+    {
+      return iota_scaled(base, T{1}, size);
+    }
+  } inline constexpr iota;
 }
