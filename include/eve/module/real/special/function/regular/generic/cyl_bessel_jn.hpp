@@ -32,8 +32,12 @@ namespace eve::detail
   template<floating_real_scalar_value I, floating_real_simd_value T>
   EVE_FORCEINLINE auto cyl_bessel_jn_(EVE_SUPPORTS(cpu_), I nu, T x) noexcept
   {
-    auto flintx = is_flint(nu);
-    return flintx ? kernel_bessel_j_int(nu, x) : kernel_bessel_j_flt(T(nu), x);
+    if constexpr(has_native_abi_v<T>)
+    {
+      auto flintx = is_flint(nu);
+      return flintx ? kernel_bessel_j_int(nu, x) : kernel_bessel_j_flt(T(nu), x);
+    }
+    else return apply_over(cyl_bessel_jn, nu, x);
   }
 
   template<floating_real_value T>
@@ -47,15 +51,19 @@ namespace eve::detail
     }
     else //simd
     {
-      auto flint_nu = is_flint(nu);
-           if (eve::all(flint_nu))  return kernel_bessel_j_int(nu, x);
-      else if (eve::none(flint_nu)) return kernel_bessel_j_flt(nu, x);
-      else
+      if constexpr(has_native_abi_v<T>)
       {
-        auto nu_int = if_else(flint_nu, nu, zero);
-        auto nu_flt = if_else(flint_nu, T(0.5), nu);
-        return if_else(flint_nu, kernel_bessel_j_int(nu_int, x), kernel_bessel_j_flt(nu_flt, x));
+        auto flint_nu = is_flint(nu);
+        if (eve::all(flint_nu))  return kernel_bessel_j_int(nu, x);
+        else if (eve::none(flint_nu)) return kernel_bessel_j_flt(nu, x);
+        else
+        {
+          auto nu_int = if_else(flint_nu, nu, zero);
+          auto nu_flt = if_else(flint_nu, T(0.5), nu);
+          return if_else(flint_nu, kernel_bessel_j_int(nu_int, x), kernel_bessel_j_flt(nu_flt, x));
+        }
       }
+      else return apply_over(cyl_bessel_jn, nu, x);
     }
   }
 
@@ -65,7 +73,7 @@ namespace eve::detail
   template<integral_simd_value I, floating_real_scalar_value T>
   EVE_FORCEINLINE auto cyl_bessel_jn_(EVE_SUPPORTS(cpu_), I nu, T x) noexcept
   {
-    std::cout << "sisc" << std::endl;
+//    std::cout << "sisc" << std::endl;
     using c_t = wide <T, cardinal_t<I>>;
     return cyl_bessel_jn(nu, c_t(x));
   }
@@ -74,24 +82,29 @@ namespace eve::detail
   template<integral_scalar_value I, floating_real_scalar_value T>
   EVE_FORCEINLINE auto cyl_bessel_jn_(EVE_SUPPORTS(cpu_), I nu, T x) noexcept
   {
-    std::cout << "scsc" << std::endl;
+//    std::cout << "scsc" << std::endl;
     return kernel_bessel_j_int(nu, x);
   }
   // scalar integral,  floating simd
   template<integral_scalar_value I, floating_real_simd_value T>
   EVE_FORCEINLINE auto cyl_bessel_jn_(EVE_SUPPORTS(cpu_), I nu, T x) noexcept
   {
-    std::cout << "scsi" << std::endl;
-    return kernel_bessel_j_int(nu, x);
+//    std::cout << "scsi" << std::endl;
+    using i_t = wide <I, cardinal_t<T>>;
+    return kernel_bessel_j_int(i_t(nu), x);
   }
 
   // integral simd,  floating scalar
   template<integral_simd_value I, floating_real_simd_value T>
   EVE_FORCEINLINE auto cyl_bessel_jn_(EVE_SUPPORTS(cpu_), I nu, T x) noexcept
   {
-    std::cout << "sisi" << std::endl;
-    auto n = convert(nu, as<element_type_t<T>>());
-    return kernel_bessel_j_int(n, x);
+//    std::cout << "sisi" << std::endl;
+    if constexpr(has_native_abi_v<T>)
+    {
+      auto n = convert(nu, as<element_type_t<T>>());
+      return kernel_bessel_j_int(n, x);
+    }
+    else return apply_over(cyl_bessel_jn, nu, x);
   }
 
 }

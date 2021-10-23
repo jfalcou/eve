@@ -384,7 +384,6 @@ namespace eve::detail
           p = fms(p, c, w*q*s);
           constexpr double sq2opi = .79788456080286535588;
           return p*sq2opi*rsqrt(x);
-//          return if_else(is_infinite(x), zero, p*sq2opi*rsqrt(x));
         };
         if constexpr(scalar_value<T>)
         {
