@@ -47,9 +47,9 @@ namespace eve::algo
     bool operator==(unaligned_ptr_iterator const &x) const { return ptr == x.ptr; }
     auto operator<=>(unaligned_ptr_iterator const &x) const { return ptr <=> x.ptr; }
 
-    template< relative_conditional_expr C, decorator S, typename Pack>
+    template< relative_conditional_expr C, decorator S>
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::load_, C const& c, S const& s
-                                , eve::as<Pack> const&, unaligned_ptr_iterator self
+                                , eve::as<wv_type> const&, unaligned_ptr_iterator self
                                 )
     {
       return eve::load(c, s, self.ptr, Cardinal{});
@@ -160,9 +160,9 @@ namespace eve::algo
     }
 
 
-    template< relative_conditional_expr C, decorator S, typename Pack>
+    template< relative_conditional_expr C, decorator S>
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::load_, C const& c, S const& s
-                                , eve::as<Pack> const&, aligned_ptr_iterator self
+                                , eve::as<wv_type> const&, aligned_ptr_iterator self
                                 )
     {
       return eve::load(c, s, self.ptr, Cardinal{});
