@@ -22,8 +22,7 @@ namespace eve::detail
   {
     constexpr auto cat = categorize<wide<T, N>>();
 
-         if constexpr(  cat == category::float32x2) return  vfma_f32(v2, v1, v0);
-    else if constexpr(  cat == category::float32x4) return vfmaq_f32(v2, v1, v0);
+          if constexpr( cat == category::float32x2) return  vfma_f32(v2, v1, v0);
     else  if constexpr( cat == category::int32x4  ) return vmlaq_s32(v2, v1, v0);
     else  if constexpr( cat == category::int16x8  ) return vmlaq_s16(v2, v1, v0);
     else  if constexpr( cat == category::int8x16  ) return  vmlaq_s8(v2, v1, v0);
@@ -36,12 +35,13 @@ namespace eve::detail
     else  if constexpr( cat == category::uint32x2 ) return  vmla_u32(v2, v1, v0);
     else  if constexpr( cat == category::uint16x4 ) return  vmla_u16(v2, v1, v0);
     else  if constexpr( cat == category::uint8x8  ) return   vmla_u8(v2, v1, v0);
-    else if constexpr( current_api >= asimd )
+    else  if constexpr( current_api >= asimd )
     {
             if constexpr(  cat == category::float64x1)  return  vfma_f64(v2, v1, v0);
       else  if constexpr(  cat == category::float64x2)  return vfmaq_f64(v2, v1, v0);
+      else  if constexpr(  cat == category::float32x4)  return vfmaq_f32(v2, v1, v0);
       else                                              return  map(fma, v0, v1, v2);
     }
-    else  if constexpr( sizeof(T) == 8 )            return  map(fma, v0, v1, v2);
+    else return  map(fma, v0, v1, v2);
   }
 }
