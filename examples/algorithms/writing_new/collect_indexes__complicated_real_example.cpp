@@ -27,6 +27,10 @@
 #include <eve/algo/concepts.hpp>
 #include <eve/algo/preprocess_range.hpp>
 
+#include <eve/algo/for_each.hpp>
+#include <eve/views/iota.hpp>
+#include <eve/views/zip.hpp>
+
 #include <eve/function/compress_store.hpp>
 #include <eve/function/load.hpp>
 
@@ -118,6 +122,40 @@ void collect_indexes(R&& r, P p, std::vector<IdxType, Alloc>& res)
   res.shrink_to_fit();
 }
 
+// option 2, using zip
+template <eve::algo::relaxed_range R, typename P, std::integral IdxType, typename Alloc>
+void collect_indexes_using_zip(R&& r, P p, std::vector<IdxType, Alloc>& res)
+{
+  EVE_ASSERT((r.end() - r.begin() <= std::numeric_limits<IdxType>::max()),
+              "The output type is not big enough to hold potential indexes");
+
+
+  // Prepare the output in case it was not empty.
+  res.clear();
+
+  // Over allocating by cardinal for idxtype.
+  // eve won't go beyond that size.
+  res.resize((r.end() - r.begin()) + eve::expected_cardinal_v<IdxType>);
+  IdxType* out = res.data();
+
+  // iota is going to be an iterator of 0, 1, 2, 3, ...
+  auto idxes = eve::views::iota(IdxType{0});
+  auto r_idx = eve::views::zip(std::forward<R>(r), idxes);
+
+  eve::algo::for_each[eve::algo::no_aligning][eve::algo::unroll<1>](
+      r_idx,
+      [&](auto r_idx_it, auto ignore) mutable
+      {
+        auto [elems, idxs] = eve::load[ignore](r_idx_it);
+        auto test         = p(elems);
+        test              = test && ignore.mask(eve::as(test));
+        out               = eve::unsafe(eve::compress_store)(idxs, test, out);
+      });
+
+  res.resize(out - res.data());
+}
+
+
 // ---------------------------------------------------
 
 #include "test.hpp"
@@ -131,9 +169,12 @@ TTS_CASE("collect_indexes, elements equal to 2")
 {
   std::vector<int>      input    = { 1, 1, 2, -3, 2, 10};
   std::vector<unsigned> expected = { 2, 4 };
-  std::vector<unsigned> actual;
+  std::vector<unsigned> actual, actual2;
   collect_indexes(input, [](auto x) { return x == 2; }, actual);
   TTS_EQUAL(expected, actual);
+
+  collect_indexes_using_zip(input, [](auto x) { return x == 2; }, actual2);
+  TTS_EQUAL(expected, actual2);
 };
 
 TTS_CASE("collect_indexes for objects")
@@ -143,24 +184,32 @@ TTS_CASE("collect_indexes for objects")
   eve::algo::soa_vector<obj> objects {obj{1, 2.0}, obj{-1, 2.0}, obj{1, 1}};
 
   std::vector<std::uint16_t> expected{0, 2};
-  std::vector<std::uint16_t> idxs;
+  std::vector<std::uint16_t> idxs, idxs2;
   collect_indexes(objects, [](auto x) { return get<0>(x) > 0; }, idxs);
 
   TTS_EQUAL(idxs, expected);
+
+  collect_indexes_using_zip(objects, [](auto x) { return get<0>(x) > 0; }, idxs2);
+
+  TTS_EQUAL(idxs2, expected);
 };
 
 TTS_CASE("collect_indexes clears the result")
 {
   std::vector<int>      input;
   std::vector<unsigned> expected;
-  std::vector<unsigned> actual(65u);
+  std::vector<unsigned> actual(65u), actual2(65u);
   collect_indexes(input, [](auto x) { return x == 2; }, actual);
   TTS_EQUAL(expected, actual);
+
+  collect_indexes_using_zip(input, [](auto x) { return x == 2; }, actual2);
+  TTS_EQUAL(expected, actual2);
 };
 
 // ---------------
 // push data through test
 
+template <bool use_zip>
 struct collect_indexes_generic_test
 {
   std::vector<std::int64_t> expected;
@@ -184,7 +233,14 @@ struct collect_indexes_generic_test
     }
 
     std::vector<std::int64_t> actual;
-    collect_indexes(rng, [](auto x) { return x == 1; }, actual);
+    if constexpr (use_zip)
+    {
+      collect_indexes_using_zip(rng, [](auto x) { return x == 1; }, actual);
+    }
+    else
+    {
+      collect_indexes(rng, [](auto x) { return x == 1; }, actual);
+    }
     TTS_EQUAL(expected, actual);
   }
 
@@ -199,5 +255,12 @@ EVE_TEST_TYPES("Check collect indexes, lots", eve::test::scalar::all_types)
 <typename T>(eve::as<T>)
 {
   using tgt_t = eve::wide<T, eve::fixed<eve::expected_cardinal_v<std::int64_t>>>;
-  algo_test::page_ends_test(eve::as<tgt_t>{}, collect_indexes_generic_test{});
+  algo_test::page_ends_test(eve::as<tgt_t>{}, collect_indexes_generic_test<false>{});
+};
+
+EVE_TEST_TYPES("Check collect indexes using zip, lots", eve::test::scalar::all_types)
+<typename T>(eve::as<T>)
+{
+  using tgt_t = eve::wide<T, eve::fixed<eve::expected_cardinal_v<std::int64_t>>>;
+  algo_test::page_ends_test(eve::as<tgt_t>{}, collect_indexes_generic_test<true>{});
 };
