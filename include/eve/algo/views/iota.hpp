@@ -130,6 +130,8 @@ namespace eve::algo::views
   //!    To generate an iterator pass T base, T scale.
   //!    For a range pass a range size as ptrdiff_t as a 3rd parameter.
   //!
+  //!    Example: iota_scaled(0.1, 0.2, 3) is a range [0.1, 0.3, 0.5]
+  //!
   //!    **Required header:** `#include <eve/algo/views/iota.hpp>`
   //!
   //!    Has a shorthand `eve::views::iota_scaled` in `<eve/views/iota.hpp>`.
@@ -158,7 +160,7 @@ namespace eve::algo::views
   //! @addtogroup eve.algo.views
   //! @{
   //!    @var iota
-  //!    @brief A fuction to generate an `iota` iterator/view like (0, 1, 2, 3,...).
+  //!    @brief A fuction to generate an `iota` iterator/view like [0, 1, 2, 3, ...].
   //!    To generate an iterator pass T base.
   //!    For a range pass a range size as ptrdiff_t as a 2rd parameter.
   //!
