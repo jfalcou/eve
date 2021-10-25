@@ -20,13 +20,13 @@ namespace eve::detail
   {
     constexpr auto cat = categorize<wide<T, N>>();
 
-         if constexpr( cat == category::float32x2) return vrnd_f32(v);
-    else if constexpr( current_api >= asimd)
+    if constexpr( current_api >= asimd)
     {
             if constexpr( cat == category::float64x1) return vrnd_f64(v);
       else  if constexpr( cat == category::float64x2) return vrndq_f64(v);
+      else  if constexpr( cat == category::float32x2) return vrnd_f32(v);
       else  if constexpr( cat == category::float32x4) return vrndq_f32(v);
     }
-    else                                           return map(trunc, v);
+    else                                              return map(trunc, v);
   }
 }

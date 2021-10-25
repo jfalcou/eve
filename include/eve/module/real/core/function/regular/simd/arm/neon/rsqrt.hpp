@@ -31,7 +31,7 @@ namespace eve::detail
            if constexpr( cat == category::float64x1) return vrsqrte_f64(v);
       else if constexpr( cat == category::float64x2) return vrsqrteq_f64(v);
     }
-    else                                           return map(rsqrt, v);
+    else                                             return map(rsqrt, v);
   }
 
   template<floating_real_scalar_value T, typename N>
