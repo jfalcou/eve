@@ -21,6 +21,7 @@
 
 #include <eve/detail/kumi.hpp>
 
+#include <array>
 #include <concepts>
 
 namespace eve::algo::views
@@ -45,6 +46,33 @@ namespace eve::algo::views
 
   namespace detail
   {
+    // Don't take always aligned if possible.
+    // Prefer aligned if avaliable.
+    template <typename ...I>
+    constexpr std::size_t main_iterator()
+    {
+      std::array is_aligned        { partially_aligned_iterator<I> ... };
+      std::array is_always_aligned { always_aligned_iterator<I> ... };
+
+      std::size_t res = 0;
+      bool is_selected_always_aligned = is_always_aligned[0];
+
+      for (std::size_t i = 0; i != is_aligned.size(); ++i) {
+        if (is_always_aligned[i]) { continue; }
+        if (is_selected_always_aligned) {
+          res = i;
+          is_selected_always_aligned = false;
+        }
+        if (is_aligned[i])
+        {
+          res = i;
+          break;
+        }
+      }
+
+      return res;
+    }
+
     template <typename, typename>
     struct compatible_zip_iterators_impl : std::false_type {};
 
@@ -82,6 +110,8 @@ namespace eve::algo::views
       using tuple_type        = kumi::tuple<Is...>;
       using types_to_consider = kumi::result::cat_t<types_to_consider_for_t<Is>...>;
 
+      static constexpr std::size_t main_iterator_idx = detail::main_iterator<Is...>();
+
       // tuple opt in
       using is_product_type = void;
 
@@ -117,13 +147,13 @@ namespace eve::algo::views
       template<std::derived_from<zip_iterator_common> Self, compatible_zip_iterators<Self> Other>
       EVE_FORCEINLINE friend bool operator==(Self const &x, Other const &y)
       {
-        return get<0>(x) == get<0>(y);
+        return get<main_iterator_idx>(x) == get<main_iterator_idx>(y);
       }
 
       template<std::derived_from<zip_iterator_common> Self, compatible_zip_iterators<Self> Other>
       EVE_FORCEINLINE friend auto operator<=>(Self const& x, Other const &y)
       {
-        return spaceship_helper(get<0>(x), get<0>(y));
+        return spaceship_helper(get<main_iterator_idx>(x), get<main_iterator_idx>(y));
       }
 
       template<std::derived_from<zip_iterator_common> Self>
@@ -136,13 +166,15 @@ namespace eve::algo::views
       template<std::derived_from<zip_iterator_common> Self, compatible_zip_iterators<Self> Other>
       EVE_FORCEINLINE friend std::ptrdiff_t operator-(Self const& x, Other const& y)
       {
-        return get<0>(x) - get<0>(y);
+        return get<main_iterator_idx>(x) - get<main_iterator_idx>(y);
       }
 
       template<typename Traits, std::derived_from<zip_iterator_common> Self,
                std::equality_comparable_with<std::tuple_element_t<0, tuple_type>> S>
       EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, Traits traits, Self self, S l)
       {
+        // Here we use 0, zip can be distanced only with first range interface.
+        // Main index is for our internal stuff.
         std::ptrdiff_t distance = l - get<0>(self);
 
         auto map_one_it = [&]<std::size_t idx>(auto f, std::integral_constant<std::size_t, idx>)
@@ -196,24 +228,26 @@ namespace eve::algo::views
 
     EVE_FORCEINLINE auto previous_partially_aligned() const
     {
-      // FIX-#809: always aligned support
-      if constexpr ((partially_aligned_iterator<I> || ... || partially_aligned_iterator<Is> )) return *this;
+      if constexpr (partially_aligned_iterator<std::tuple_element_t<base::main_iterator_idx, zip_iterator<I, Is...>>>) return *this;
       else
       {
-        using res_t = zip_iterator<partially_aligned_t<I>, Is...>;
+        // None of the iterators are aligned (while not being always aligned).
+        // Otherwise we'd have a different main_iterator_idx.
 
-        auto partially_aligned_first = get<0>(*this).previous_partially_aligned();
-        std::ptrdiff_t offset = get<0>(*this) - partially_aligned_first;
+        auto aligned_main     = get<base::main_iterator_idx>(*this).previous_partially_aligned();
+        std::ptrdiff_t offset = get<base::main_iterator_idx>(*this) - aligned_main;
 
-        res_t res;
-        get<0>(res.storage) = partially_aligned_first;
+        auto map_one = [&]<std::ptrdiff_t idx>(eve::index_t<idx>) {
+          if constexpr( idx == base::main_iterator_idx ) return aligned_main;
+          else                                           return get<idx>(*this) - offset;
+        };
 
-        [&]<std::size_t... idx>(std::index_sequence<idx...>)
+        return [&]<std::size_t... idxs>(std::index_sequence<idxs...>)
         {
-          ((kumi::get<idx + 1>(res.storage) = kumi::get<idx + 1>(this->storage) - offset), ...);
-        }(std::index_sequence_for<Is...>{});
-
-        return res;
+          return zip_iterator<decltype(map_one(eve::index<static_cast<std::ptrdiff_t>(idxs)>))...> {
+              map_one(eve::index<static_cast<std::ptrdiff_t>(idxs)>)...};
+        }
+        (std::index_sequence_for<I, Is...> {});
       }
     }
 

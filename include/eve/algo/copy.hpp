@@ -28,7 +28,7 @@ namespace eve::algo
   //!    * for copying to the same scalar type consider using `std::memmove` instead.
   //!    * will do conversions if necessary.
   //!
-  //!   **Required header:** `#include <eve/algo/transform.hpp>`
+  //!   **Required header:** `#include <eve/algo/copy.hpp>`
   //!
   //! @}
   //================================================================================================

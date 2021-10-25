@@ -16,6 +16,7 @@ target_link_libraries(examples.algorithms.using_existing.inclusive_scan_par_unse
 
 make_unit( "examples" algorithms/writing_new/bgra_rgb__using_eve_to_shuffle_bytes.cpp )
 make_unit( "examples" algorithms/writing_new/collect_indexes__complicated_real_example.cpp )
+make_unit( "examples" algorithms/writing_new/collect_indexes__writing_custom_loop.cpp )
 make_unit( "examples" algorithms/writing_new/strlen__showing_basic_conepts.cpp )
 
 make_unit( "examples" oop/complex_numbers__declaring_an_object_type.cpp )

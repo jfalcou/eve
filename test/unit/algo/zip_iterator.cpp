@@ -10,6 +10,8 @@
 
 #include <eve/algo/views/zip.hpp>
 
+#include <eve/algo/views/iota.hpp>
+
 #include <eve/algo/ptr_iterator.hpp>
 
 #include "iterator_concept_test.hpp"
@@ -131,10 +133,45 @@ TTS_CASE("zip_iterator, sanity check, types test")
     (void) a_u_test;
   }
 
-
   // sentinel for mismatching
   TTS_CONSTEXPR_EXPECT((eve::algo::sentinel_for<zip_a_u, zip_u_a>));
   TTS_CONSTEXPR_EXPECT((eve::algo::sentinel_for<zip_u_a, zip_a_u>));
+};
+
+TTS_CASE("zip_iterator, main iterator")
+{
+  using unaligned_float = eve::algo::unaligned_ptr_iterator<float, eve::fixed<8>>;
+  using aligned_float   = eve::algo::aligned_ptr_iterator  <float, eve::fixed<8>>;
+  using unaligned_short = eve::algo::unaligned_ptr_iterator<short, eve::fixed<8>>;
+  using aligned_short   = eve::algo::aligned_ptr_iterator  <short, eve::fixed<8>>;
+
+  using iota            = decltype(eve::algo::views::iota(0).cardinal_cast(eve::lane<8>));
+
+  using zip_a_a = eve::algo::views::zip_iterator<aligned_float,   aligned_short>;
+  TTS_CONSTEXPR_EQUAL(zip_a_a::main_iterator_idx, 0u);
+
+  using zip_u_a = eve::algo::views::zip_iterator<unaligned_float, aligned_short>;
+  TTS_CONSTEXPR_EQUAL(zip_u_a::main_iterator_idx, 1u);
+
+  using zip_a_u = eve::algo::views::zip_iterator<aligned_float,   unaligned_short>;
+  TTS_CONSTEXPR_EQUAL(zip_a_u::main_iterator_idx, 0u);
+
+  using zip_u_u = eve::algo::views::zip_iterator<unaligned_float, unaligned_short>;
+  TTS_CONSTEXPR_EQUAL(zip_u_u::main_iterator_idx, 0u);
+
+  using zip_u_i = eve::algo::views::zip_iterator<unaligned_float, iota>;
+  TTS_CONSTEXPR_EQUAL(zip_u_i::main_iterator_idx, 0u);
+
+  using zip_i_u = eve::algo::views::zip_iterator<iota, unaligned_float>;
+  TTS_CONSTEXPR_EQUAL(zip_i_u::main_iterator_idx, 1u);
+
+  using zip_i_a = eve::algo::views::zip_iterator<iota, aligned_float>;
+  TTS_CONSTEXPR_EQUAL(zip_i_a::main_iterator_idx, 1u);
+
+  TTS_TYPE_IS(eve::algo::partially_aligned_t<zip_i_u>, zip_i_a);
+
+  using zip_i_i = eve::algo::views::zip_iterator<iota, iota>;
+  TTS_CONSTEXPR_EQUAL(zip_i_i::main_iterator_idx, 0u);
 };
 
 EVE_TEST_TYPES("Check zip_iterator", algo_test::selected_types)
