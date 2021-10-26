@@ -27,7 +27,7 @@ EVE_TEST_TYPES( "Check ieee754 constants"
   TTS_IEEE_EQUAL(eve::nan(as<T>()),  T(0.0/0.0));
   TTS_EQUAL(eve::signmask(as<T>()), T(eve::bit_cast(eve::one(as<ilt_t>()) << (sizeof(ilt_t)*8-1) , as<elt_t>())));
   TTS_EQUAL(eve::mindenormal(as<T>()), eve::bitincrement(as<T>()));
-  TTS_EQUAL(eve::sqrteps(as<T>()), eve::sqrt(eve::eps(as<T>())));
+  TTS_ULP_EQUAL(eve::sqrteps(as<T>()), eve::sqrt(eve::eps(as<T>())),0.5);
 
   if constexpr(std::is_same_v<elt_t, float>)
   {

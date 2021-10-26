@@ -83,10 +83,15 @@ EVE_TEST( "Check corner-cases behavior of eve::next variants on wide"
     TTS_IEEE_EQUAL(next(cases.nan    ) , cases.nan   );
     TTS_IEEE_EQUAL(next(cases.minf   ) , cases.valmin);
     TTS_IEEE_EQUAL(next(cases.inf    ) , cases.nan   );
-    TTS_EQUAL     (next(cases.mzero  ) , cases.mindenormal);
-    TTS_EQUAL     (next(cases.zero   ) , cases.mindenormal);
-    TTS_EQUAL     (next(-cases.mindenormal ) , cases.mzero);
-    TTS_EQUAL     (next(cases.valmax ) , cases.inf);
+
+    if constexpr(eve::platform::supports_denormals)
+    {
+      TTS_EQUAL     (next(cases.mzero  ) , cases.mindenormal);
+      TTS_EQUAL     (next(cases.zero   ) , cases.mindenormal);
+      TTS_EQUAL     (next(-cases.mindenormal ) , cases.mzero);
+      TTS_EQUAL     (next(cases.valmax ) , cases.inf);
+    }
+
     TTS_EQUAL     (next(type(-1))      , type(-1)+eve::eps(eve::as<type>())/2 );
     TTS_EQUAL     (next(type(1))       , type( 1)+eve::eps(eve::as<type>())   );
 
@@ -94,8 +99,13 @@ EVE_TEST( "Check corner-cases behavior of eve::next variants on wide"
     TTS_IEEE_EQUAL(pedantic(next)(cases.minf   ) , cases.valmin);
     TTS_IEEE_EQUAL(pedantic(next)(cases.inf    ) , cases.nan   );
     TTS_EQUAL     (pedantic(next)(cases.mzero  ) , cases.zero);
-    TTS_EQUAL     (pedantic(next)(cases.zero   ) , cases.mindenormal);
-    TTS_EQUAL     (pedantic(next)(-cases.mindenormal ) , cases.mzero);
+
+    if constexpr(eve::platform::supports_denormals)
+    {
+      TTS_EQUAL     (pedantic(next)(cases.zero   ) , cases.mindenormal);
+      TTS_EQUAL     (pedantic(next)(-cases.mindenormal ) , cases.mzero);
+    }
+
     TTS_EQUAL     (pedantic(next)(cases.valmax ) , cases.inf);
     TTS_EQUAL     (pedantic(next)(type(-1))            , type(-1)+eve::eps(eve::as<type>())/2 );
     TTS_EQUAL     (pedantic(next)(type(1))             , type( 1)+eve::eps(eve::as<type>())   );
@@ -124,9 +134,14 @@ EVE_TEST( "Check corner-cases behavior of eve::next with 2 parameters"
     TTS_IEEE_EQUAL(next(cases.nan,  2) , cases.nan   );
     TTS_IEEE_EQUAL(next(cases.minf, 2) , next(cases.valmin));
     TTS_IEEE_EQUAL(next(cases.inf,  2) , cases.nan   );
-    TTS_EQUAL     (next(cases.mzero,2) , next(cases.mindenormal));
-    TTS_EQUAL     (next(cases.zero, 2) , next(cases.mindenormal));
-    TTS_EQUAL     (next(-cases.mindenormal, 2) , cases.mindenormal);
+
+    if constexpr(eve::platform::supports_denormals)
+    {
+      TTS_EQUAL     (next(cases.mzero,2) , next(cases.mindenormal));
+      TTS_EQUAL     (next(cases.zero, 2) , next(cases.mindenormal));
+      TTS_EQUAL     (next(-cases.mindenormal, 2) , cases.mindenormal);
+    }
+
     TTS_IEEE_EQUAL(next(cases.valmax,2), cases.nan);
     TTS_EQUAL     (next(type(-1),   2) , type(-1)+eve::eps(eve::as<type>()) );
     TTS_EQUAL     (next(type(1),    2) , type( 1)+eve::eps(eve::as<type>())*2   );
@@ -134,9 +149,13 @@ EVE_TEST( "Check corner-cases behavior of eve::next with 2 parameters"
     TTS_IEEE_EQUAL(pedantic(next)(cases.nan,  2) , cases.nan   );
     TTS_IEEE_EQUAL(pedantic(next)(cases.minf, 2) , next(cases.valmin));
     TTS_IEEE_EQUAL(pedantic(next)(cases.inf,  2) , cases.nan   );
-    TTS_EQUAL     (pedantic(next)(cases.mzero,2) , cases.mindenormal);
-    TTS_EQUAL     (pedantic(next)(cases.zero, 2) , next(cases.mindenormal));
-    TTS_EQUAL     (pedantic(next)(-cases.mindenormal,2) , cases.mzero);
+    if constexpr(eve::platform::supports_denormals)
+    {
+      TTS_EQUAL     (pedantic(next)(cases.mzero,2) , cases.mindenormal);
+      TTS_EQUAL     (pedantic(next)(cases.zero, 2) , next(cases.mindenormal));
+      TTS_EQUAL     (pedantic(next)(-cases.mindenormal,2) , cases.mzero);
+    }
+
     TTS_IEEE_EQUAL(pedantic(next)(cases.valmax,2) , cases.nan);
     TTS_EQUAL     (pedantic(next)(type(-1),   2)  , type(-1)+eve::eps(eve::as<type>()) );
     TTS_EQUAL     (pedantic(next)(type(1),    2)  , type( 1)+eve::eps(eve::as<type>())*2   );

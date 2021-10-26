@@ -34,6 +34,7 @@ auto mini = []<typename T>(eve::as<T> const & tgt)
 {
   return 2*eve::smallestposval(tgt);
 };
+
 EVE_TEST( "Check behavior of eve::is_denormal(simd)"
         , eve::test::simd::ieee_reals
         , eve::test::generate ( eve::test::randoms(eve::smallestposval, mini)
@@ -46,8 +47,10 @@ EVE_TEST( "Check behavior of eve::is_denormal(simd)"
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
-  TTS_EQUAL(eve::is_denormal(a0), map([](auto e) -> eve::logical<v_t> { return  std::fpclassify(e) == FP_SUBNORMAL; }, a0));
+
+  TTS_EQUAL(eve::is_denormal(a0), eve::false_(eve::as(a0)));
+  TTS_EQUAL(eve::is_denormal[t](a0), eve::if_else(t, eve::is_denormal(a0), eve::false_(eve::as(a0))));
+
   TTS_EQUAL(eve::is_denormal(a1), map([](auto e) -> eve::logical<v_t> { return  std::fpclassify(e) == FP_SUBNORMAL; }, a1));
   TTS_EQUAL(eve::is_denormal(a2), map([](auto e) -> eve::logical<v_t> { return  std::fpclassify(e) == FP_SUBNORMAL; }, a2));
-  TTS_EQUAL(eve::is_denormal[t](a0), eve::if_else(t, eve::is_denormal(a0), eve::false_(eve::as(a0))));
 };

@@ -101,11 +101,14 @@ EVE_TEST( "Check behavior of eve::is_less_equal(simd)"
   TTS_EQUAL(eve::almost(eve::is_less_equal)(T(3), T(1)  , ui_t(3)), eve::false_(eve::as<T>()));
   TTS_EQUAL(eve::almost(eve::is_less_equal)(T(3), v_t(1), ui_t(3)), eve::false_(eve::as<T>()));
 
-  auto md = eve::mindenormal(eve::as<v_t>());
+  if constexpr(eve::platform::supports_denormals)
+  {
+    auto md = eve::mindenormal(eve::as<v_t>());
 
-  TTS_EQUAL(eve::almost(eve::is_less_equal)(v_t(md)  , T(0) , ui_t(3)), eve::true_(eve::as<T>()) );
-  TTS_EQUAL(eve::almost(eve::is_less_equal)(v_t(2*md), T(0) , ui_t(3)), eve::true_(eve::as<T>()) );
-  TTS_EQUAL(eve::almost(eve::is_less_equal)(v_t(3*md), T(0) , ui_t(3)), eve::true_(eve::as<T>()) );
-  TTS_EQUAL(eve::almost(eve::is_less_equal)(v_t(4*md), T(0) , ui_t(3)), eve::false_(eve::as<T>()) );
-  TTS_EQUAL(eve::almost(eve::is_less_equal)(v_t(1), v_t(1)  , ui_t(3)), eve::true_(eve::as<T>()) );
+    TTS_EQUAL(eve::almost(eve::is_less_equal)(v_t(md)  , T(0) , ui_t(3)), eve::true_(eve::as<T>()) );
+    TTS_EQUAL(eve::almost(eve::is_less_equal)(v_t(2*md), T(0) , ui_t(3)), eve::true_(eve::as<T>()) );
+    TTS_EQUAL(eve::almost(eve::is_less_equal)(v_t(3*md), T(0) , ui_t(3)), eve::true_(eve::as<T>()) );
+    TTS_EQUAL(eve::almost(eve::is_less_equal)(v_t(4*md), T(0) , ui_t(3)), eve::false_(eve::as<T>()) );
+    TTS_EQUAL(eve::almost(eve::is_less_equal)(v_t(1), v_t(1)  , ui_t(3)), eve::true_(eve::as<T>()) );
+  }
 };
