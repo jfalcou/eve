@@ -145,15 +145,15 @@ EVE_TEST( "Check behavior of reverse_horner on wide"
 
     TTS_EQUAL(reverse_horner(a0, one), T(1));
     TTS_EQUAL(reverse_horner(a0, one, 2), fma(a0, 1, 2));
-    TTS_EQUAL(reverse_horner(a0, one, 2, 3), fma(a0, fma(a0, 1, 2), 3));
+    TTS_EQUAL(reverse_horner(a0, one, 3, 2), fma(a0, fma(a0, 1, 2), 3));
 
     TTS_EQUAL(pedantic(reverse_horner)(a0, one), T(1));
     TTS_EQUAL(pedantic(reverse_horner)(a0, one, 2), pedantic(fma)(a0, 1, 2));
-    TTS_EQUAL(pedantic(reverse_horner)(a0, one, 2, 3), pedantic(fma)(a0, pedantic(fma)(a0, 1, 2), 3));
+    TTS_EQUAL(pedantic(reverse_horner)(a0, one, 3, 2), pedantic(fma)(a0, pedantic(fma)(a0, 1, 2), 3));
 
     TTS_EQUAL(numeric(reverse_horner)(a0, one), T(1));
     TTS_EQUAL(numeric(reverse_horner)(a0, one, 2), numeric(fma)(a0, 1, 2));
-    TTS_EQUAL(numeric(reverse_horner)(a0, one, 2, 3), numeric(fma)(a0, numeric(fma)(a0, 1, 2), 3));
+    TTS_EQUAL(numeric(reverse_horner)(a0, one, 3, 2), numeric(fma)(a0, numeric(fma)(a0, 1, 2), 3));
 
   }
   {
