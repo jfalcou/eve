@@ -110,7 +110,6 @@ namespace eve::detail
   template <class T>
   EVE_FORCEINLINE T bessel_j_small_z_series(T v, T x) noexcept
   {
-//    std::cout << "bessel_j_small_z_series" << std::endl;
     T prefix;
     using elt_t = element_type_t<T>;
     auto max_factorial = (sizeof(elt_t) == 4 ? 34 : 170);
@@ -132,7 +131,7 @@ namespace eve::detail
   // Converges rapidly for all z << v.
   ///////////////////////////////////////////////////////////////////////////////
 
-  // Encore incomplet et pe inutile
+  // Encore incomplet et pe inutile attendre fin de yn
 //   template <class T>
 //   struct bessel_y_small_z_series_term_a
 //   {
