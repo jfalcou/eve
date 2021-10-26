@@ -55,39 +55,54 @@ namespace eve::detail
   template<real_value I, floating_real_value T>
   EVE_FORCEINLINE auto   kernel_bessel_j_int_forward (I n, T x, T j0, T j1) noexcept
   {
-    //        std::cout << "br_forward" << std::endl;
+//     if constexpr(scalar_value<I> && simd_value<T>)
+//       return kernel_bessel_j_int_forward(T(n), x, j0, j1);
+            //std::cout << "br_forward inside" << std::endl;
     auto prev = j0; //cyl_bessel_j0(x);
     auto current = j1; //cyl_bessel_j1(x);
     T scale(1), value(0);
-    for (int k = 1; k < eve::maximum(n); k++)
+    auto nn = if_else(n < x, n, zero);
+    //std::cout << maximum(nn) << std::endl;
+
+    for (int k = 1; k < eve::maximum(nn); k++)
     {
+      auto t0 = k < nn;
       T fact = 2 * k / x;
       // rescale if we would overflow or underflow:
-      auto test = (eve::abs(fact) > 1) && ((valmax(as(x)) - eve::abs(prev)) / eve::abs(fact) < eve::abs(current));
+      auto test = (eve::abs(fact) > 1) && ((valmax(as(x)) - eve::abs(prev)) / eve::abs(fact) < eve::abs(current))&&t0;
       if (eve::any(test))
       {
         scale = if_else(test, scale/current, scale);
         prev  = if_else(test, prev/current,  prev);
         current = if_else(test, one, current);
       }
-      value = fms(fact, current, prev);
-      prev = current;
-      current = value;
+      value = if_else(t0, fms(fact, current, prev), value);
+      prev  = if_else(t0, current, prev);
+      current = if_else(t0, value, current);
     };
     return value/scale;
+  }
+
+  template<integral_real_value I, floating_real_value T>
+  EVE_FORCEINLINE auto   kernel_bessel_j_int_forward (I nn, T x, T j0, T j1) noexcept
+  {
+    if constexpr(simd_value<I>)
+      return kernel_bessel_j_int_forward (convert(nn, as<element_type_t<T>>()), x, j0, j1);
+    else
+      return kernel_bessel_j_int_forward (T(nn), x, j0, j1);
   }
 
   template<real_value I, floating_real_value T>
   EVE_FORCEINLINE auto   kernel_bessel_j_int_small (I n, T x) noexcept
   {
-    //        std::cout << "br_small" << std::endl;
+    //        //std::cout << "br_small" << std::endl;
     return bessel_j_small_z_series(T(n), x);
   }
 
   template<real_value I, floating_real_value T>
   EVE_FORCEINLINE auto   kernel_bessel_j_int_medium (I n, T x) noexcept
   {
-    //        std::cout << "br_medium" << std::endl;
+    //        //std::cout << "br_medium" << std::endl;
     auto [j, jp, y, yp] = bessel_jy(T(n), x);
     return j;
   }
@@ -109,6 +124,7 @@ namespace eve::detail
       };
     auto br_forward =  [j0, j1](auto n,  auto x)
       {
+        //std::cout << "forward" << std::endl;
         return kernel_bessel_j_int_forward (n, x, j0, j1);
       };
     auto br_small =  [](auto n,  auto x)
@@ -122,7 +138,7 @@ namespace eve::detail
 
     if constexpr(scalar_value<I> && scalar_value<T>)
     {
-      //      std::cout << " kernel_bessel_j_int scalar scalar" << std::endl;
+      //std::cout << " kernel_bessel_j_int scalar scalar" << std::endl;
       T factor(1);
       auto isoddn = is_odd(n);
       if (n < 0)
@@ -140,10 +156,11 @@ namespace eve::detail
       if (is_eqz(x))                                return factor*x;              // as n >= 2
       if (n < eve::abs(x))                          return br_forward(n, x);      // forward recurrence
       if ((n > x * x / 4) || (x < 5))               return factor*br_small(T(n), x); // serie
-      return br_medium(n, x);     // medium recurrence
+      return br_medium(n, x);                                                     // medium recurrence
     }
     else
     {
+      //std::cout << " kernel_bessel_j_int simd simd" << std::endl;
       using elt_t =  element_type_t<T>;
       T factor(1);
       auto isoddn = is_odd(n);
@@ -174,20 +191,29 @@ namespace eve::detail
       auto nn = convert(n, as<elt_t>());
       if( eve::any(notdone) )
       {
-        //std::cout << "br_large simd" << std::endl;
+        //std::cout << "br_large simd " << notdone << std::endl;
         notdone = next_interval(br_large,  notdone, asymptotic_bessel_large_x_limit(nn, x), r, nn, x);
         if( eve::any(notdone) )
         {
-          //std::cout << "br_forward" << std::endl;
+          //std::cout << "br_forward " << notdone <<  std::endl;
+          //std::cout << "n          " << n       <<  std::endl;
+          //std::cout << "x          " << x       <<  std::endl;
           notdone = next_interval(br_forward,  notdone, nn < x, r, nn, x);
+          //std::cout << "r forward " << r << std::endl;
           if( eve::any(notdone) )
           {
-            //std::cout << "br_small" << std::endl;
+            //std::cout << "br_small " << notdone << std::endl;
+            //std::cout << "n          " << n       <<  std::endl;
+            //std::cout << "x          " << x       <<  std::endl;
             notdone = next_interval(br_small,  notdone, (nn > x * x / 4) || (x < 5), r, nn, x);
+            //std::cout << "r small " << r << std::endl;
             if( eve::any(notdone) )
             {
-              //std::cout << "br_bacward" << std::endl;
+              //std::cout << "br_backward " << notdone << std::endl;
+              //std::cout << "n          " << n       <<  std::endl;
+              //std::cout << "x          " << x       <<  std::endl;
               notdone = last_interval(br_medium,  notdone, r, nn, x);
+              //std::cout << "r backward " << r << std::endl;
             }
           }
         }
@@ -203,13 +229,13 @@ namespace eve::detail
 
     auto br_large =  [](auto n,  auto x)
       {
-//        std::cout << "br_large" << std::endl;
+        //        //std::cout << "br_large" << std::endl;
         return kernel_bessel_j_int_large(n, x);
       };
 
     auto br_medium =  [](auto n,  auto x)
       {
-//      std::cout << "bessel_jy" << std::endl;
+        //      //std::cout << "bessel_jy" << std::endl;
         return  kernel_bessel_j_int_medium(n, x);
       };
 
@@ -233,11 +259,11 @@ namespace eve::detail
 
       if( eve::any(notdone) )
       {
-        //std::cout << "br_large simd" << std::endl;
+        ////std::cout << "br_large simd" << std::endl;
         notdone = next_interval(br_large,  notdone, asymptotic_bessel_large_x_limit(n, x), r, n, x);
         if( eve::any(notdone) )
         {
-          //std::cout << "br_bacward" << std::endl;
+          ////std::cout << "br_bacward" << std::endl;
           notdone = last_interval(br_medium,  notdone, r, n, x);
         }
       }

@@ -279,11 +279,7 @@ namespace eve::detail
           return  p * cos(xn + x);
         };
 
-//         auto xlt2 = x < 2;
-//         if (eve::all(xlt2))        return branch1(x);
-//         else if (none(xlt2))  return branch2(x);
-//         else                  return if_else(xlt2, branch1(x), branch2(x));
-       if constexpr(scalar_value<T>)
+        if constexpr(scalar_value<T>)
         {
           auto s = x < 0 ? -1: 1;
           if (x == 0)          return zero(as(x));   // x is 0
@@ -424,6 +420,6 @@ namespace eve::detail
       }
     }
     else
-      return apply_over(cyl_bessel_j1, a0);
+      return apply_over(eve::cyl_bessel_j1, a0);
   }
 }
