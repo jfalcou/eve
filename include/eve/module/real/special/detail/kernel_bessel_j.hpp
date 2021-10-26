@@ -201,7 +201,7 @@ namespace eve::detail
   template<floating_real_value T>
   EVE_FORCEINLINE auto  kernel_bessel_j_flt (T n, T x) noexcept
   {
-    EVE_ASSERT(eve::none(is_flint(nu)), "kernel_bessel_j_flt : some nu are floating integers");
+    EVE_ASSERT(eve::none(is_flint(n)), "kernel_bessel_j_flt : some nu are floating integers");
 
     auto br_large =  [](auto n,  auto x)
       {
