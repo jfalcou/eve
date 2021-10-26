@@ -31,20 +31,20 @@ EVE_TEST_TYPES( "Check return types of reverse_horner on wide"
 <typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
-// using i_t = eve::as_integer_t<v_t>;
+  using i_t = eve::as_integer_t<v_t>;
   TTS_EXPR_IS( eve::reverse_horner(T(), T())  , T);
   TTS_EXPR_IS( eve::reverse_horner(T(), T(), T())  , T);
   TTS_EXPR_IS( eve::reverse_horner(T(), T(), T())  , T);
   TTS_EXPR_IS( eve::reverse_horner(T(), v_t(), v_t())  , T);
-//   TTS_EXPR_IS( eve::reverse_horner(T(), v_t(), int())  , T);
-//   TTS_EXPR_IS( eve::reverse_horner(T(), v_t(), i_t())  , T);
-   TTS_EXPR_IS( eve::reverse_horner(v_t(), v_t(), v_t()), v_t);
-//   TTS_EXPR_IS( eve::reverse_horner(T(), eve::one, T())  , T);
-//   TTS_EXPR_IS( eve::reverse_horner(T(), eve::one, T(), T())  , T);
-//   TTS_EXPR_IS( eve::reverse_horner(T(), eve::one, v_t(), v_t())  , T);
-//   TTS_EXPR_IS( eve::reverse_horner(T(), eve::one, v_t(), int())  , T);
-//   TTS_EXPR_IS( eve::reverse_horner(T(), eve::one, v_t(), i_t())  , T);
-//   TTS_EXPR_IS( eve::reverse_horner(v_t(), eve::one, v_t(), v_t()), v_t);
+  TTS_EXPR_IS( eve::reverse_horner(T(), v_t(), int())  , T);
+  TTS_EXPR_IS( eve::reverse_horner(T(), v_t(), i_t())  , T);
+  TTS_EXPR_IS( eve::reverse_horner(v_t(), v_t(), v_t()), v_t);
+  TTS_EXPR_IS( eve::reverse_horner(T(), eve::one, T())  , T);
+  TTS_EXPR_IS( eve::reverse_horner(T(), eve::one, T(), T())  , T);
+  TTS_EXPR_IS( eve::reverse_horner(T(), eve::one, v_t(), v_t())  , T);
+  TTS_EXPR_IS( eve::reverse_horner(T(), eve::one, v_t(), int())  , T);
+  TTS_EXPR_IS( eve::reverse_horner(T(), eve::one, v_t(), i_t())  , T);
+  TTS_EXPR_IS( eve::reverse_horner(v_t(), eve::one, v_t(), v_t()), v_t);
 };
 
 //==================================================================================================
@@ -61,7 +61,7 @@ EVE_TEST( "Check behavior of reverse_horner on wide"
   using eve::pedantic;
   using eve::numeric;
   using eve::one;
-//  using v_t = eve::element_type_t<T>;
+  using v_t = eve::element_type_t<T>;
   //============================================================================
   //== variadic
   //============================================================================
