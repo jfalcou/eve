@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
-#include <eve/detail/function/simd/x86/swizzle.hpp>
+#include <eve/detail/function/swizzle.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/pattern.hpp>
 
