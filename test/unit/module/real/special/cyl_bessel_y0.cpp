@@ -5,6 +5,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include "test.hpp"
 #include <eve/function/cyl_bessel_y0.hpp>
 #include <eve/function/prev.hpp>
 #include <eve/constant/inf.hpp>
@@ -24,11 +25,11 @@ EVE_TEST_TYPES( "Check return types of cyl_bessel_y0"
   TTS_EXPR_IS(eve::cyl_bessel_y0(v_t(0)), v_t);
 };
 
- EVE_TEST( "Check behavior of cyl_bessel_y0 on wide"
+EVE_TEST( "Check behavior of cyl_bessel_y0 on wide"
         , eve::test::simd::ieee_reals
         , eve::test::generate(eve::test::randoms(0.0, 20000.0))
-         )
-   <typename T>(T const& a0)
+        )
+  <typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -36,10 +37,10 @@ EVE_TEST_TYPES( "Check return types of cyl_bessel_y0"
   auto std__cyl_bessel_y0 =  [](auto x)->v_t { return boost::math::cyl_neumann(v_t(0), x); };
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_ULP_EQUAL(eve__cyl_bessel_y0(eve::minf(eve::as<v_t>())), eve::zero(eve::as<v_t>()), 0);
+    TTS_ULP_EQUAL(eve__cyl_bessel_y0(eve::minf(eve::as<v_t>())), eve::nan(eve::as<v_t>()), 0);
     TTS_ULP_EQUAL(eve__cyl_bessel_y0(eve::inf(eve::as<v_t>())), v_t(0), 0);
     TTS_ULP_EQUAL(eve__cyl_bessel_y0(eve::nan(eve::as<v_t>())), eve::nan(eve::as<v_t>()), 0);
-    TTS_ULP_EQUAL(eve__cyl_bessel_y0(eve::minf(eve::as< T>())), eve::zero(eve::as< T>()), 0);
+    TTS_ULP_EQUAL(eve__cyl_bessel_y0(eve::minf(eve::as< T>())), eve::nan(eve::as< T>()), 0);
     TTS_ULP_EQUAL(eve__cyl_bessel_y0(eve::inf(eve::as< T>())),  T(0), 0);
     TTS_ULP_EQUAL(eve__cyl_bessel_y0(eve::nan(eve::as< T>())), eve::nan(eve::as< T>()), 0);
   }
@@ -51,7 +52,6 @@ EVE_TEST_TYPES( "Check return types of cyl_bessel_y0"
   TTS_ULP_EQUAL(eve__cyl_bessel_y0(v_t(1.5)),std__cyl_bessel_y0(v_t(1.5)) , 2.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_y0(v_t(0.5)),std__cyl_bessel_y0(v_t(0.5)) , 2.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_y0(v_t(1)),  std__cyl_bessel_y0(v_t(1))   , 2.5);
-  TTS_ULP_EQUAL(eve__cyl_bessel_y0(v_t(-1)),  std__cyl_bessel_y0(v_t(-1))   , 2.5);
   TTS_ULP_EQUAL(eve__cyl_bessel_y0(v_t(0)),  eve::minf(eve::as<v_t>()), 0.0);
 
   TTS_ULP_EQUAL(eve__cyl_bessel_y0( T(1500)), T(std__cyl_bessel_y0(v_t(1500))), 2.0);

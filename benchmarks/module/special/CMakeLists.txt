@@ -18,6 +18,7 @@ make_all_benchs(ROOT bench.special NAME beta               TYPES ${real_types}  
 make_all_benchs(ROOT bench.special NAME cyl_bessel_j0      TYPES ${real_types}    )
 make_all_benchs(ROOT bench.special NAME cyl_bessel_j1      TYPES ${real_types}    )
 make_all_benchs(ROOT bench.special NAME cyl_bessel_jn      TYPES ${real_types}    )
+make_all_benchs(ROOT bench.special NAME cyl_bessel_y0      TYPES ${real_types}    )
 make_all_benchs(ROOT bench.special NAME erf                TYPES ${real_types}    )
 make_all_benchs(ROOT bench.special NAME erfc               TYPES ${real_types}    )
 make_all_benchs(ROOT bench.special NAME erfcx              TYPES ${real_types}    )
