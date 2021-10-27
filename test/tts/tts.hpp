@@ -904,23 +904,10 @@ namespace tts
 #include <cstdint>
 #include <type_traits>
 #include <utility>
-#include <cstring>
 namespace tts::detail
 {
-  inline auto as_int(float a)   noexcept
-  {
-    std::int32_t that;
-    std::memcpy(&that,&a,sizeof(a));
-    return that;
-  }
-
-  inline auto as_int(double a)  noexcept
-  {
-    std::int64_t that;
-    std::memcpy(&that,&a,sizeof(a));
-    return that;
-  }
-
+  inline auto as_int(float a)   noexcept  { return std::bit_cast<std::int32_t>(a); }
+  inline auto as_int(double a)  noexcept  { return std::bit_cast<std::int64_t>(a); }
   template<typename T> inline auto bitinteger(T a) noexcept
   {
     auto ia = as_int(a);
