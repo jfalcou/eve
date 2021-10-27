@@ -5,6 +5,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include "test.hpp"
 #include <eve/function/cyl_bessel_jn.hpp>
 #include <eve/function/prev.hpp>
 #include <eve/constant/inf.hpp>
