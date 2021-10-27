@@ -8,8 +8,10 @@
 #include "test.hpp"
 #include <eve/concept/value.hpp>
 #include <eve/constant/valmin.hpp>
+#include <eve/constant/mindenormal.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/function/radindeg.hpp>
+#include <eve/function/next.hpp>
 #include <eve/function/diff/atan2d.hpp>
 #include <cmath>
 
@@ -32,10 +34,13 @@ EVE_TEST_TYPES( "Check return types of atan2d"
 //==================================================================================================
 // atan2d  tests
 //==================================================================================================
+auto mini = [](auto tgt) { return eve::next(eve::mindenormal(tgt)); };
+auto maxi = [](auto tgt) { return eve::valmax(tgt)/2; };
+
 EVE_TEST( "Check behavior of atan2d on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate( eve::test::randoms(eve::valmin, eve::valmax)
-                             , eve::test::randoms(eve::valmin, eve::valmax)
+        , eve::test::generate( eve::test::randoms(mini, maxi)
+                             , eve::test::randoms(mini, maxi)
                              , eve::test::randoms(-1.0, 1.0)
                              , eve::test::randoms(-1.0, 1.0))
         )

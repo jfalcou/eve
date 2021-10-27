@@ -6,9 +6,6 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
 #include <eve/function/acscd.hpp>
 #include <eve/function/radindeg.hpp>
 #include <eve/function/diff/acscd.hpp>
@@ -33,10 +30,11 @@ EVE_TEST_TYPES( "Check return types of acscd"
 //==================================================================================================
 EVE_TEST( "Check behavior of acscd on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(1.0, 100.0)
-                             , eve::test::randoms(1.0, eve::valmax)
-                             , eve::test::randoms(eve::valmin, -1.0)
-                             , eve::test::randoms(-100.0, -1.0))
+        , eve::test::generate ( eve::test::randoms(1.0, 100.0)
+                              , eve::test::randoms(1.0, 1e20)
+                              , eve::test::randoms(-1e20, -1.0)
+                              , eve::test::randoms(-100.0, -1.0)
+                              )
         )
 <typename T>(T const& a0, T const& a1,T const& a2, T const& a3 )
 {

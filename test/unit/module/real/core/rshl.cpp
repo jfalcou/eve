@@ -42,8 +42,8 @@ EVE_TEST_TYPES( "Check return types of rshl"
 //==================================================================================================
 // rshl tests
 //==================================================================================================
-auto shift_max = []< typename T>(eve::as<T> const &){return sizeof(eve::element_type_t<T>)*8-1;};
-auto shift_min = []< typename T>(eve::as<T> const &){return -sizeof(eve::element_type_t<T>)*8+1;};
+auto shift_max = []< typename T>(eve::as<T> const &){ return static_cast<T>(sizeof(eve::element_type_t<T>))*8-1;};
+auto shift_min = []< typename T>(eve::as<T> const &){ return -static_cast<T>(sizeof(eve::element_type_t<T>))*8+1; };
 
 EVE_TEST( "Check behavior of rshl on integral types"
         , eve::test::simd::unsigned_types

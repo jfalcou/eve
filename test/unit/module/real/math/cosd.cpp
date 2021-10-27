@@ -62,7 +62,7 @@ EVE_TEST( "Check behavior of cosd on wide"
   TTS_ULP_EQUAL(eve::half_circle(cosd)(a1)           , map(ref, a1), 30);
   TTS_ULP_EQUAL(cosd(a0)                       , map(ref, a0), 2);
   TTS_ULP_EQUAL(cosd(a1)                       , map(ref, a1), 30);
-  TTS_ULP_EQUAL(cosd(a2)                       , map(ref, a2), 300);
+  TTS_ULP_EQUAL(cosd(a2)                       , map(ref, a2), 420);
   auto dinr = 1.7453292519943295769236907684886127134428718885417e-2l;
 
   TTS_ULP_EQUAL(diff(cosd)(a0), map([dinr](auto e) -> v_t { return  -dinr*boost::math::sin_pi(e/180.0l); }, a0), 2);

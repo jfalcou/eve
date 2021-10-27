@@ -35,25 +35,28 @@ EVE_TEST_TYPES( "Check return types of exp10"
 //==================================================================================================
 EVE_TEST( "Check behavior of exp10 on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(eve::minlog10, eve::maxlog10)
-                             , eve::test::randoms(-1.0, 1.0))
+        , eve::test::generate ( eve::test::randoms(eve::minlog10, eve::maxlog10)
+                              , eve::test::randoms(-1.0, 1.0)
+                              )
         )
 <typename T>(T const& a0, T const& a1)
 {
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   long double l10 = std::log(10.0l);
-  TTS_ULP_EQUAL(eve::exp10(a0)      , map([l10](auto e) -> v_t { return std::exp(l10*e); }, a0), 30);
-  TTS_ULP_EQUAL(eve::exp10(a1)      , map([l10](auto e) -> v_t { return std::exp(l10*e); }, a1), 2);
+  TTS_ULP_EQUAL(eve::exp10(a0), map([l10](auto e) -> v_t { return std::exp(l10*e); }, a0), 380);
+  TTS_ULP_EQUAL(eve::exp10(a1), map([l10](auto e) -> v_t { return std::exp(l10*e); }, a1), 2);
+
   TTS_ULP_EQUAL(eve::diff(eve::exp10)(a0), l10*eve::exp10(a0), 2);
   TTS_ULP_EQUAL(eve::diff(eve::exp10)(a1), l10*eve::exp10(a1), 2);
-  TTS_ULP_EQUAL(eve::pedantic(eve::exp10)(a0)      , map([l10](auto e) -> v_t { return std::exp(l10*e); }, a0), 30);
-  TTS_ULP_EQUAL(eve::pedantic(eve::exp10)(a1)      , map([l10](auto e) -> v_t { return std::exp(l10*e); }, a1), 2);
+
+  TTS_ULP_EQUAL(eve::pedantic(eve::exp10)(a0), map([l10](auto e) -> v_t { return std::exp(l10*e); }, a0), 380);
+  TTS_ULP_EQUAL(eve::pedantic(eve::exp10)(a1), map([l10](auto e) -> v_t { return std::exp(l10*e); }, a1), 2);
 };
 
-EVE_TEST_TYPES( "Check return types of exp10"
-            , eve::test::simd::ieee_reals
-            )
+EVE_TEST_TYPES( "Check corner-cases of exp10"
+              , eve::test::simd::ieee_reals
+              )
 <typename T>(eve::as<T>)
 {
   TTS_ULP_EQUAL ( eve::pedantic(eve::exp10)(T(1)), T(10), 0.5);

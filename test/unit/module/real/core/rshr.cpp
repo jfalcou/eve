@@ -42,8 +42,8 @@ EVE_TEST_TYPES( "Check return types of rshr"
 //==================================================================================================
 // rshr tests
 //==================================================================================================
-auto shift_max = []< typename T>(eve::as<T> const &){return sizeof(eve::element_type_t<T>)*8-1;};
-auto shift_min = []< typename T>(eve::as<T> const &){return -sizeof(eve::element_type_t<T>)*8+1;};
+auto shift_max = []< typename T>(eve::as<T> const &){ return static_cast<T>(sizeof(eve::element_type_t<T>))*8-1;};
+auto shift_min = []< typename T>(eve::as<T> const &){ return -static_cast<T>(sizeof(eve::element_type_t<T>))*8+1; };
 
 EVE_TEST( "Check behavior of rshr on integral types"
         , eve::test::simd::unsigned_types
@@ -55,6 +55,7 @@ EVE_TEST( "Check behavior of rshr on integral types"
 {
   using eve::rshr;
   TTS_EQUAL( rshr(a0, a1), map([&](auto e, auto f) { return rshr(e, f); }, a0, a1));
+
   auto val = a1.get(0);
   TTS_EQUAL( rshr(a0, val), map([&](auto e) { return rshr(e, val); }, a0));
 };
