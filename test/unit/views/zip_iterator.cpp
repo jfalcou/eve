@@ -7,14 +7,14 @@
 //==================================================================================================
 
 #include "unit/algo/algo_test.hpp"
+#include "unit/algo/iterator_concept_test.hpp"
 
-#include <eve/algo/views/zip.hpp>
+#include <eve/views/zip.hpp>
 
-#include <eve/algo/views/iota.hpp>
+#include <eve/views/iota.hpp>
 
 #include <eve/algo/ptr_iterator.hpp>
 
-#include "iterator_concept_test.hpp"
 
 #include <algorithm>
 
@@ -25,8 +25,8 @@ TTS_CASE("zip_iterator for not eve iterators")
   std::array<float, 4> f { 1, 2, 3, 4};
   using u_f = eve::algo::unaligned_ptr_iterator<float, eve::fixed<4>>;
 
-  eve::algo::views::zip_iterator zf{ c.begin(), v.begin(), u_f{f.begin()} };
-  eve::algo::views::zip_iterator zl{ c.end(), v.end(), u_f{f.end()} };
+  eve::views::zip_iterator zf{ c.begin(), v.begin(), u_f{f.begin()} };
+  eve::views::zip_iterator zl{ c.end(), v.end(), u_f{f.end()} };
 
   kumi::tuple twos{std::uint8_t{2}, int{2}, float{2.0}};
 
@@ -64,8 +64,8 @@ TTS_CASE("zip_iterator for not eve iterators, unaligned")
   using a_p = eve::aligned_ptr<int>;
   using u_p = int*;
 
-  using expected = eve::algo::views::zip_iterator<u_p, u_p>;
-  using actual   = eve::algo::unaligned_t<eve::algo::views::zip_iterator<a_p, u_p>>;
+  using expected = eve::views::zip_iterator<u_p, u_p>;
+  using actual   = eve::algo::unaligned_t<eve::views::zip_iterator<a_p, u_p>>;
   TTS_TYPE_IS(expected, actual);
 };
 
@@ -76,20 +76,20 @@ TTS_CASE("zip_iterator, sanity check, types test")
   using unaligned_short = eve::algo::unaligned_ptr_iterator<short, eve::fixed<8>>;
   using aligned_short   = eve::algo::aligned_ptr_iterator  <short, eve::fixed<8>>;
 
-  using zip_a_a = eve::algo::views::zip_iterator<aligned_float,   aligned_short>;
-  using zip_u_a = eve::algo::views::zip_iterator<unaligned_float, aligned_short>;
-  using zip_a_u = eve::algo::views::zip_iterator<aligned_float,   unaligned_short>;
-  using zip_u_u = eve::algo::views::zip_iterator<unaligned_float, unaligned_short>;
+  using zip_a_a = eve::views::zip_iterator<aligned_float,   aligned_short>;
+  using zip_u_a = eve::views::zip_iterator<unaligned_float, aligned_short>;
+  using zip_a_u = eve::views::zip_iterator<aligned_float,   unaligned_short>;
+  using zip_u_u = eve::views::zip_iterator<unaligned_float, unaligned_short>;
 
   using aligned_float_4   = eve::algo::aligned_ptr_iterator  <float, eve::fixed<4>>;
   using unaligned_short_4 = eve::algo::unaligned_ptr_iterator<short, eve::fixed<4>>;
 
-  using zip_a_u_4 = eve::algo::views::zip_iterator<aligned_float_4, unaligned_short_4>;
+  using zip_a_u_4 = eve::views::zip_iterator<aligned_float_4, unaligned_short_4>;
 
   using wv_type = eve::wide<kumi::tuple<float, short>, eve::fixed<8>>;
 
   // CTAD
-  eve::algo::views::zip_iterator zi {unaligned_float{}, aligned_short{}};
+  eve::views::zip_iterator zi {unaligned_float{}, aligned_short{}};
   TTS_TYPE_IS(decltype(zi), zip_u_a);
 
   // Unaligned
@@ -145,32 +145,32 @@ TTS_CASE("zip_iterator, main iterator")
   using unaligned_short = eve::algo::unaligned_ptr_iterator<short, eve::fixed<8>>;
   using aligned_short   = eve::algo::aligned_ptr_iterator  <short, eve::fixed<8>>;
 
-  using iota            = decltype(eve::algo::views::iota(0).cardinal_cast(eve::lane<8>));
+  using iota            = decltype(eve::views::iota(0).cardinal_cast(eve::lane<8>));
 
-  using zip_a_a = eve::algo::views::zip_iterator<aligned_float,   aligned_short>;
+  using zip_a_a = eve::views::zip_iterator<aligned_float,   aligned_short>;
   TTS_CONSTEXPR_EQUAL(zip_a_a::main_iterator_idx, 0u);
 
-  using zip_u_a = eve::algo::views::zip_iterator<unaligned_float, aligned_short>;
+  using zip_u_a = eve::views::zip_iterator<unaligned_float, aligned_short>;
   TTS_CONSTEXPR_EQUAL(zip_u_a::main_iterator_idx, 1u);
 
-  using zip_a_u = eve::algo::views::zip_iterator<aligned_float,   unaligned_short>;
+  using zip_a_u = eve::views::zip_iterator<aligned_float,   unaligned_short>;
   TTS_CONSTEXPR_EQUAL(zip_a_u::main_iterator_idx, 0u);
 
-  using zip_u_u = eve::algo::views::zip_iterator<unaligned_float, unaligned_short>;
+  using zip_u_u = eve::views::zip_iterator<unaligned_float, unaligned_short>;
   TTS_CONSTEXPR_EQUAL(zip_u_u::main_iterator_idx, 0u);
 
-  using zip_u_i = eve::algo::views::zip_iterator<unaligned_float, iota>;
+  using zip_u_i = eve::views::zip_iterator<unaligned_float, iota>;
   TTS_CONSTEXPR_EQUAL(zip_u_i::main_iterator_idx, 0u);
 
-  using zip_i_u = eve::algo::views::zip_iterator<iota, unaligned_float>;
+  using zip_i_u = eve::views::zip_iterator<iota, unaligned_float>;
   TTS_CONSTEXPR_EQUAL(zip_i_u::main_iterator_idx, 1u);
 
-  using zip_i_a = eve::algo::views::zip_iterator<iota, aligned_float>;
+  using zip_i_a = eve::views::zip_iterator<iota, aligned_float>;
   TTS_CONSTEXPR_EQUAL(zip_i_a::main_iterator_idx, 1u);
 
   TTS_TYPE_IS(eve::algo::partially_aligned_t<zip_i_u>, zip_i_a);
 
-  using zip_i_i = eve::algo::views::zip_iterator<iota, iota>;
+  using zip_i_i = eve::views::zip_iterator<iota, iota>;
   TTS_CONSTEXPR_EQUAL(zip_i_i::main_iterator_idx, 0u);
 };
 
@@ -203,8 +203,8 @@ EVE_TEST_TYPES("Check zip_iterator", algo_test::selected_types)
   auto replace = [&](auto v, auto ignore) { return eve::replace_ignored(v, ignore, zeroes); };
 
   auto run_test_one_pair = [&](auto f1, auto f2, auto f3, auto l1) {
-    eve::algo::views::zip_iterator f {f1, f2, f3};
-    eve::algo::views::zip_iterator l = f + (l1 - f1);
+    eve::views::zip_iterator f {f1, f2, f3};
+    eve::views::zip_iterator l = f + (l1 - f1);
     algo_test::iterator_sentinel_test(f, l, values, replace);
     algo_test::writeable_readable_iterator(f, values, replace);
     algo_test::iterator_supports_compress(f, values, replace);
