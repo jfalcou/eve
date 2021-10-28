@@ -20,6 +20,7 @@
 #include <cmath>
 #include <array>
 #include <vector>
+#include <eve/module/real/core/detail/generic/poleval.hpp>
 
 //==================================================================================================
 //== Types tests
@@ -123,6 +124,12 @@ EVE_TEST( "Check behavior of horner on wide"
     TTS_EQUAL(numeric(horner)(a0, tab1), T(1));
     TTS_EQUAL(numeric(horner)(a0, tab2), (fma)(a0, 1, 2));
     TTS_EQUAL(numeric(horner)(a0, tab3), (fma)(a0, (fma)(a0, 1, 2), 3));
+
+//     TTS_EQUAL((horner)(a0, tab0), eve::detail::poleval(a0, tab0));
+//     TTS_EQUAL((horner)(a0, tab1), eve::detail::poleval(a0, tab1));
+//     TTS_EQUAL((horner)(a0, tab2), eve::detail::poleval(a0, tab2));
+//     TTS_EQUAL((horner)(a0, tab3), eve::detail::poleval(a0, tab3));
+
   }
   {
     //============================================================================
@@ -156,6 +163,10 @@ EVE_TEST( "Check behavior of horner on wide"
     TTS_EQUAL(numeric(horner)(a0, one, 2), numeric(fma)(a0, 1, 2));
     TTS_EQUAL(numeric(horner)(a0, one, 2, 3), numeric(fma)(a0, numeric(fma)(a0, 1, 2), 3));
 
+   TTS_EQUAL((horner)(a0, one, tab1), eve::detail::poleval1(a0, tab1));
+    TTS_EQUAL((horner)(a0, one, tab2), eve::detail::poleval1(a0, tab2));
+    TTS_EQUAL((horner)(a0, one, tab3), eve::detail::poleval1(a0, tab3));
+
   }
   {
     //============================================================================
@@ -188,7 +199,6 @@ EVE_TEST( "Check behavior of horner on wide"
     std::vector<v_t> tab1 = {};// std does not want array of size 0
     std::array<v_t, 1> tab2 = {2};
     std::array<v_t, 2> tab3 = {2, 3};
-
 
     TTS_EQUAL((horner)(a0, one, &tab1[0], &tab1[0]), T(1));
     TTS_EQUAL((horner)(a0, one, &tab2[0], &tab2[1]), (fma)(a0, 1, 2));
