@@ -65,5 +65,5 @@ EVE_TEST( "Check behavior of cyl_bessel_y0 on wide"
   TTS_ULP_EQUAL(eve__cyl_bessel_y0( T(0))  , eve::minf(eve::as< T>()), 0.0);
 
 
-  TTS_ULP_EQUAL(eve__cyl_bessel_y0(a0), map(std__cyl_bessel_y0, a0), 5.0);
+  TTS_RELATIVE_EQUAL(eve__cyl_bessel_y0(a0), map(std__cyl_bessel_y0, a0), 0.001);
 };
