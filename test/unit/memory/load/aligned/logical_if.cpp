@@ -18,7 +18,7 @@
 //==================================================================================================
 // Conditionally load into wide from an aligned pointer
 //==================================================================================================
-EVE_TEST_TYPES( "Check load to wides from aligned pointer", eve::test::simd::restricted::all_types)
+EVE_TEST_TYPES( "Check load to wides from aligned pointer", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   using v_t     = eve::element_type_t<T>;
@@ -121,7 +121,7 @@ EVE_TEST_TYPES( "Check load to wides from aligned pointer", eve::test::simd::res
 //==================================================================================================
 // Realigned load tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check conditional load to wide from realigned pointer", eve::test::simd::restricted::all_types)
+EVE_TEST_TYPES( "Check conditional load to wide from realigned pointer", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   using v_t = eve::logical<eve::element_type_t<T>>;

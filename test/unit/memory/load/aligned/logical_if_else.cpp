@@ -18,7 +18,7 @@
 // Conditionally load into wide from an aligned pointer
 //==================================================================================================
 EVE_TEST( "Check load to logical from aligned pointer with alternatives"
-        , eve::test::simd::restricted::all_types
+        , eve::test::simd::all_types
         , eve::test::generate(eve::test::logicals(1,2))
         )
 <typename T>(T others)
