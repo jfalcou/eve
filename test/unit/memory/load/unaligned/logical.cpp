@@ -16,7 +16,7 @@
 // Load into wide from a (non-contiguous) range
 //==================================================================================================
 EVE_TEST( "Check load to wides from non-contiguous range"
-        , eve::test::simd::restricted::all_types
+        , eve::test::simd::all_types
         , eve::test::generate(eve::test::logicals(1,2))
         )
 <typename T>(T reference)
@@ -37,7 +37,7 @@ EVE_TEST( "Check load to wides from non-contiguous range"
 // Load into wide from an unaligned pointer
 //==================================================================================================
 EVE_TEST( "Check load to wides from unaligned pointer"
-        , eve::test::simd::restricted::all_types
+        , eve::test::simd::all_types
         , eve::test::generate(eve::test::logicals(1,2))
         )
 <typename T>(T reference)

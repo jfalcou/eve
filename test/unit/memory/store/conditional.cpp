@@ -62,14 +62,38 @@ void store_ignore_test_pass(T what, eve::element_type_t<T> garbage_value, eve::e
 
     auto run_all_ignores = [&](auto ptr)
     {
-      for (int i = 0; i != T::size() + 1; ++i)
+      if constexpr( T::size() <= 16 )
       {
-        run_one_case(ptr, eve::ignore_first(i));
-        run_one_case(ptr, eve::ignore_last(i));
-
-        for (int j = T::size() - i; j != -1; --j)
+        for( int i = 0; i != T::size() + 1; ++i )
         {
-          run_one_case(ptr, eve::ignore_extrema(i, j));
+          run_one_case(ptr, eve::ignore_first(i));
+          run_one_case(ptr, eve::ignore_last(i));
+
+          for( int j = T::size() - i; j != -1; --j )
+          {
+            run_one_case(ptr, eve::ignore_extrema(i, j));
+          }
+        }
+      }
+      else
+      {
+        for( int i = 0; i != T::size(); i += 4 )
+        {
+          run_one_case(ptr, eve::ignore_first(i));
+          run_one_case(ptr, eve::ignore_first(i + 1));
+          run_one_case(ptr, eve::ignore_last(i));
+
+          run_one_case(ptr, eve::ignore_extrema(i, T::size() - i));
+          run_one_case(ptr, eve::ignore_extrema(i, 0));
+
+          if (i < T::size() / 2)
+          {
+            run_one_case(ptr, eve::ignore_extrema(i, T::size() / 2 + 1));
+          }
+          else
+          {
+            run_one_case(ptr, eve::ignore_extrema(i, 3));
+          }
         }
       }
     };
@@ -90,7 +114,7 @@ void store_ignore_test_pass(T what, eve::element_type_t<T> garbage_value, eve::e
 }
 
 EVE_TEST( "Check store behavior with ignore"
-        , eve::test::simd::restricted::all_types
+        , eve::test::simd::all_types
         , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
         )
 <typename T, typename L>(T data, L logical_data)
