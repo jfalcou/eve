@@ -16,7 +16,7 @@
 //==================================================================================================
 // Conditionally load into wide from an unaligned pointer
 //==================================================================================================
-EVE_TEST_TYPES( "Check load to wides from unaligned pointer", eve::test::simd::restricted::all_types)
+EVE_TEST_TYPES( "Check load to wides from unaligned pointer", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
