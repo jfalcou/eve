@@ -48,6 +48,16 @@ namespace eve::detail
   EVE_FORCEINLINE auto swap_adjacent_groups_(EVE_SUPPORTS(cpu_), logical<Wide> v, fixed<G> f) noexcept
   requires(G <= Wide::size() )
   {
-    return bit_cast( swap_adjacent_groups(v.mask(),f), as(v));
+    if constexpr( logical_value<Wide> && Wide::abi_type::is_wide_logical)
+    {
+      return bit_cast( swap_adjacent_groups(v.mask(),f), as(v));
+    }
+    else
+    {
+      // Reconstruct mask, swag then turn to mask again
+      auto const m = v.mask();
+      auto const bg = swap_adjacent_groups(m, f);
+      return to_logical(bg);
+    }
   }
 }
