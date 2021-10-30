@@ -93,7 +93,9 @@ EVE_TEST( "Check corner-cases behavior of eve::pedantic(eve::frexp) variants on 
     TTS_EQUAL(x, cases.minf);
     TTS_EQUAL(n, cases.zero);
   }
-   {
+
+  if constexpr(eve::platform::supports_denormals)
+  {
     auto [x, n] = eve::pedantic(eve::frexp)(cases.mindenormal);
     TTS_EQUAL(x, eve::half(eve::as<type>()));
     TTS_EQUAL(n, (eve::minlog2denormal(eve::as<type>())+2));

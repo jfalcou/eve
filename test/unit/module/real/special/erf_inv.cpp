@@ -55,7 +55,14 @@ EVE_TEST( "Check behavior of erf_inv on wide"
 
 
   TTS_ULP_EQUAL(erf_inv(T(0.5)), T(boost::math::erf_inv(v_t(0.5))), 1. );
-  TTS_ULP_EQUAL(erf_inv(T(eve::smallestposval(as<T>()))), T(boost::math::erf_inv(eve::smallestposval(as<v_t>()))), 0.5);
+
+  if constexpr(eve::platform::supports_denormals)
+  {
+    TTS_ULP_EQUAL ( erf_inv(T(eve::smallestposval(as<T>())))
+                  , T(boost::math::erf_inv(eve::smallestposval(as<v_t>())))
+                  , 0.5
+                  );
+  }
 
   if constexpr( eve::platform::supports_invalids )
   {

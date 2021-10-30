@@ -104,10 +104,10 @@ EVE_TEST( "Check behavior of div on wide"
   using eve::mul;
   using eve::saturated;
   using eve::detail::map;
-  TTS_EQUAL( eve::div(a0, a2), map([](auto e, auto f) { return eve::div(e, f); }, a0, a2));
-  TTS_EQUAL( saturated(div)(a0, a2), map([&](auto e, auto f) { return saturated(div)(e, f); }, a0, a2));
-  TTS_EQUAL( div(a0, a1, a2), map([&](auto e, auto f, auto g) { return div(e, mul(f, g)); }, a0, a1, a2));
-  TTS_EQUAL(saturated(div)(a0, a1, a2), map([&](auto e, auto f, auto g) { return saturated(div)(e, saturated(mul)(f, g)); }, a0, a1, a2));
+  TTS_ULP_EQUAL( eve::div(a0, a2), map([](auto e, auto f) { return eve::div(e, f); }, a0, a2), 0.5);
+  TTS_ULP_EQUAL( saturated(div)(a0, a2), map([&](auto e, auto f) { return saturated(div)(e, f); }, a0, a2), 0.5);
+  TTS_ULP_EQUAL( div(a0, a1, a2), map([&](auto e, auto f, auto g) { return div(e, mul(f, g)); }, a0, a1, a2), 0.5);
+  TTS_ULP_EQUAL(saturated(div)(a0, a1, a2), map([&](auto e, auto f, auto g) { return saturated(div)(e, saturated(mul)(f, g)); }, a0, a1, a2), 0.5);
   if constexpr(eve::floating_value<T>)
   {
     TTS_EQUAL( eve::diff_1st(div)(a0, a1), eve::rec(a1));
@@ -156,10 +156,10 @@ EVE_TEST( "Check behavior of div on signed types"
   using eve::is_nez;
   using eve::detail::map;
   a2 = eve::if_else(a2 > 0, eve::zero, a2);
-  TTS_EQUAL( div[is_nez(a2)](a0, a2), map([](auto e, auto f) {return is_nez(f) ? div(e, f) : e ; }, a0, a2));
-  TTS_EQUAL( saturated(div[is_nez(a0)&&is_nez(a2)])(a0, a2), map([](auto e, auto f) { return  is_nez(e)&&is_nez(f) ? saturated(div)(e, f): e; }, a0, a2));
+  TTS_ULP_EQUAL( div[is_nez(a2)](a0, a2), map([](auto e, auto f) {return is_nez(f) ? div(e, f) : e ; }, a0, a2), 0.5);
+  TTS_ULP_EQUAL( saturated(div[is_nez(a0)&&is_nez(a2)])(a0, a2), map([](auto e, auto f) { return  is_nez(e)&&is_nez(f) ? saturated(div)(e, f): e; }, a0, a2), 0.5);
 
   a1 =  eve::if_else(eve::is_eqz(a1), eve::one, a1);
-  TTS_EQUAL( div[a2 > T(64)](a0, a1), map([](auto e, auto f, auto g) {return g > 64 ? div(e, f) : e ; }, a0, a1, a2));
-  TTS_EQUAL( saturated(div[a2 > T(64)])(a0, a1), map([](auto e, auto f, auto g) { return  g > 64 ? saturated(div)(e, f): e; }, a0, a1, a2));
+  TTS_ULP_EQUAL( div[a2 > T(64)](a0, a1), map([](auto e, auto f, auto g) {return g > 64 ? div(e, f) : e ; }, a0, a1, a2), 0.5);
+  TTS_ULP_EQUAL( saturated(div[a2 > T(64)])(a0, a1), map([](auto e, auto f, auto g) { return  g > 64 ? saturated(div)(e, f): e; }, a0, a1, a2), 0.5);
 };

@@ -33,16 +33,13 @@ EVE_TEST_TYPES( "Check return types of acotpi"
 //==================================================================================================
 EVE_TEST( "Check behavior of acotpi on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax)
-                             , eve::test::randoms(1.0, 100.0))
+        , eve::test::generate( eve::test::randoms(-1e20, 1e20) )
         )
-<typename T>(T const& a0, T const& a1  )
+<typename T>(T const& a0)
 {
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
   TTS_ULP_EQUAL(eve::acotpi(a0)      , map([](auto e) -> v_t { return eve::radinpi(std::atan(1/e)); }, a0), 2);
-  TTS_ULP_EQUAL(eve::acotpi(a1)      , map([](auto e) -> v_t { return eve::radinpi(std::atan(1/e)); }, a1), 2);
   TTS_ULP_EQUAL(eve::diff(eve::acotpi)(a0), map([](auto e) -> v_t { return  eve::radinpi(-v_t(1))/(e*e+1); }, a0), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::acotpi)(a1), map([](auto e) -> v_t { return  eve::radinpi(-v_t(1))/(e*e+1); }, a1), 2);
 };

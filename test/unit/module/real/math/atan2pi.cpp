@@ -7,8 +7,9 @@
 //==================================================================================================
 #include "test.hpp"
 #include <eve/concept/value.hpp>
-#include <eve/constant/valmin.hpp>
+#include <eve/constant/mindenormal.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/function/next.hpp>
 #include <eve/function/radinpi.hpp>
 #include <eve/function/diff/atan2pi.hpp>
 #include <cmath>
@@ -17,8 +18,8 @@
 // Types tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of atan2pi"
-            , eve::test::simd::ieee_reals
-            )
+              , eve::test::simd::ieee_reals
+              )
 <typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -32,10 +33,13 @@ EVE_TEST_TYPES( "Check return types of atan2pi"
 //==================================================================================================
 // atan2pi  tests
 //==================================================================================================
+auto mini = [](auto tgt) { return eve::next(eve::mindenormal(tgt)); };
+auto maxi = [](auto tgt) { return eve::valmax(tgt)/2; };
+
 EVE_TEST( "Check behavior of atan2pi on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate( eve::test::randoms(eve::valmin, eve::valmax)
-                             , eve::test::randoms(eve::valmin, eve::valmax)
+        , eve::test::generate( eve::test::randoms(mini, maxi)
+                             , eve::test::randoms(mini, maxi)
                              , eve::test::randoms(-1.0, 1.0)
                              , eve::test::randoms(-1.0, 1.0))
         )

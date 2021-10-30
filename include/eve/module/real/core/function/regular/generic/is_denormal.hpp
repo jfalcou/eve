@@ -24,9 +24,18 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr as_logical_t<T> is_denormal_(EVE_SUPPORTS(cpu_)
                                                        , T const &a) noexcept
   {
-    if constexpr(!floating_value<T>) return false_(eve::as<T>());
-    else if constexpr(has_native_abi_v<T>)    return is_nez(a) && (abs(a) < smallestposval(eve::as<T>()));
-    else                            return apply_over(is_denormal, a);
+    if constexpr(!floating_value<T> || !eve::platform::supports_denormals)
+    {
+      return false_(eve::as<T>());
+    }
+    else if constexpr(has_native_abi_v<T>)
+    {
+      return is_nez(a) && (abs(a) < smallestposval(eve::as<T>()));
+    }
+    else
+    {
+      return apply_over(is_denormal, a);
+    }
   }
   // -----------------------------------------------------------------------------------------------
   // logical masked case

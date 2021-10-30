@@ -7,7 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 #include <eve/concept/value.hpp>
-#include <eve/constant/valmin.hpp>
+#include <eve/constant/mindenormal.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
@@ -16,6 +16,7 @@
 #include <eve/constant/pio_2.hpp>
 #include <eve/constant/pio_4.hpp>
 #include <eve/function/atan2.hpp>
+#include <eve/function/next.hpp>
 #include <eve/function/is_negative.hpp>
 #include <eve/function/is_positive.hpp>
 #include <eve/function/pedantic/atan2.hpp>
@@ -41,10 +42,13 @@ EVE_TEST_TYPES( "Check return types of atan2"
 //==================================================================================================
 // atan2  tests
 //==================================================================================================
+auto mini = [](auto tgt) { return eve::next(eve::mindenormal(tgt)); };
+auto maxi = [](auto tgt) { return eve::valmax(tgt)/2; };
+
 EVE_TEST( "Check behavior of atan2 on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate( eve::test::randoms(eve::valmin, eve::valmax)
-                             , eve::test::randoms(eve::valmin, eve::valmax)
+        , eve::test::generate( eve::test::randoms(mini, maxi)
+                             , eve::test::randoms(mini, maxi)
                              , eve::test::randoms(-1.0, 1.0)
                              , eve::test::randoms(-1.0, 1.0))
         )
@@ -61,10 +65,9 @@ EVE_TEST( "Check behavior of atan2 on wide"
   TTS_ULP_EQUAL(eve::diff_2nd(eve::atan2)(a2, a3), map([](auto e, auto f) -> v_t { return  e/(e*e+f*f); }, a2, a3), 2);
 };
 
-
-EVE_TEST_TYPES( "Check return types of atan2"
-            , eve::test::simd::ieee_reals
-            )
+EVE_TEST_TYPES( "Check behavior of pedantic(atan2)"
+              , eve::test::simd::ieee_reals
+              )
 <typename T>(eve::as<T>)
 {
   using eve::is_negative;

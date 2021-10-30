@@ -50,7 +50,7 @@ jobs:
       matrix:
         cfg:
         - { comp: gcc  , arch: aarch64, opts: -Wno-psabi            , status: 1 }
-        - { comp: gcc  , arch: arm    , opts: -Wno-psabi            , status: 0 }
+        - { comp: gcc  , arch: arm    , opts: -Wno-psabi            , status: 1 }
 
     steps:
       - name: Fetch current branch

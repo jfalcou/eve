@@ -60,7 +60,7 @@ EVE_TEST( "Check behavior of gamma_p on wide"
   TTS_ULP_EQUAL(gamma_p(T(0.25), T(0.25)), T(7.436779447314609e-01), 0.5 );
   TTS_ULP_EQUAL(gamma_p(T(1.0), T(0.25)), T(9.320788679898916e-01), 5.5 );
   TTS_ULP_EQUAL(gamma_p(T(0.25), T(2.0)), T(2.649902116074387e-02), 5.5 );
-  TTS_ULP_EQUAL(gamma_p(T(0.25), T(2.25)), T( 1.460405690340118e-02), 0.5 );
+  TTS_ULP_EQUAL(gamma_p(T(0.25), T(2.25)), T( 1.460405690340118e-02), 1.5 );
   TTS_ULP_EQUAL(gamma_p(T(1.0), T(2.25)), T(2.015171022500710e-01), 3.5 );
   TTS_ULP_EQUAL(gamma_p(T(10.25), T(2.0)), T(9.996022281154329e-01), 2 );
   TTS_ULP_EQUAL(gamma_p(T(10.0), T(2.25)), T(9.991962820874968e-01), 0.5 );

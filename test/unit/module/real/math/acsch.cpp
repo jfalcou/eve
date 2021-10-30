@@ -6,8 +6,6 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/constant/valmax.hpp>
 #include <eve/function/acsch.hpp>
 #include <eve/function/diff/acsch.hpp>
 #include <cmath>
@@ -31,8 +29,9 @@ EVE_TEST_TYPES( "Check return types of acsch"
 //==================================================================================================
 EVE_TEST( "Check behavior of acsch on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax)
-                            , eve::test::randoms(-100.0, 100.0))
+        , eve::test::generate ( eve::test::randoms(-1e20,1e20)
+                              , eve::test::randoms(-100.0, 100.0)
+                              )
         )
 <typename T>(T const& a0, T const& a1)
 {

@@ -33,24 +33,24 @@ EVE_TEST_TYPES( "Check significants"
 <typename T>(eve::as<T>)
 {
   TTS_IEEE_EQUAL(eve::significants(T(1.234567), 0), eve::nan(eve::as<T>()) );
-  TTS_EQUAL(eve::significants(T(1.234567), 1), T(1.) );
-  TTS_EQUAL(eve::significants(T(1.234567), 2), T(1.2) );
-  TTS_EQUAL(eve::significants(T(1.234567), 3), T(1.23) );
-  TTS_EQUAL(eve::significants(T(1.234567), 4), T(1.235) );
-  TTS_EQUAL(eve::significants(T(0.01234567), 1),T(0.01) );
-  TTS_EQUAL(eve::significants(T(0.01234567), 2),T(0.012) );
-  TTS_EQUAL(eve::significants(T(0.01234567), 3),T(0.0123) );
-  TTS_EQUAL(eve::significants(T(0.01234567), 4),T(0.01235) );
+  TTS_ULP_EQUAL(eve::significants(T(1.234567), 1), T(1.) , 0.5);
+  TTS_ULP_EQUAL(eve::significants(T(1.234567), 2), T(1.2) , 0.5);
+  TTS_ULP_EQUAL(eve::significants(T(1.234567), 3), T(1.23) , 0.5);
+  TTS_ULP_EQUAL(eve::significants(T(1.234567), 4), T(1.235) , 0.5);
+  TTS_ULP_EQUAL(eve::significants(T(0.01234567), 1),T(0.01) , 0.5);
+  TTS_ULP_EQUAL(eve::significants(T(0.01234567), 2),T(0.012) , 0.5);
+  TTS_ULP_EQUAL(eve::significants(T(0.01234567), 3),T(0.0123) , 0.5);
+  TTS_ULP_EQUAL(eve::significants(T(0.01234567), 4),T(0.01235) , 0.5);
 
   TTS_IEEE_EQUAL(eve::significants(T(-1.234567), 0), eve::nan(eve::as<T>()) );
-  TTS_EQUAL(eve::significants(T(-1.234567), 1), T(-1.) );
-  TTS_EQUAL(eve::significants(T(-1.234567), 2), T(-1.2) );
-  TTS_EQUAL(eve::significants(T(-1.234567), 3), T(-1.23) );
-  TTS_EQUAL(eve::significants(T(-1.234567), 4), T(-1.235) );
-  TTS_EQUAL(eve::significants(T(-0.01234567), 1),T(-0.01) );
-  TTS_EQUAL(eve::significants(T(-0.01234567), 2),T(-0.012) );
-  TTS_EQUAL(eve::significants(T(-0.01234567), 3),T(-0.0123) );
-  TTS_EQUAL(eve::significants(T(-0.01234567), 4),T(-0.01235) );
+  TTS_ULP_EQUAL(eve::significants(T(-1.234567), 1), T(-1.), 0.5 );
+  TTS_ULP_EQUAL(eve::significants(T(-1.234567), 2), T(-1.2), 0.5 );
+  TTS_ULP_EQUAL(eve::significants(T(-1.234567), 3), T(-1.23), 0.5 );
+  TTS_ULP_EQUAL(eve::significants(T(-1.234567), 4), T(-1.235), 0.5 );
+  TTS_ULP_EQUAL(eve::significants(T(-0.01234567), 1),T(-0.01), 0.5 );
+  TTS_ULP_EQUAL(eve::significants(T(-0.01234567), 2),T(-0.012), 0.5 );
+  TTS_ULP_EQUAL(eve::significants(T(-0.01234567), 3),T(-0.0123), 0.5 );
+  TTS_ULP_EQUAL(eve::significants(T(-0.01234567), 4),T(-0.01235), 0.5 );
 
   TTS_IEEE_EQUAL(eve::significants(T(0), 0), eve::nan(eve::as<T>()));
   TTS_EQUAL(eve::significants(T(0), 1), T(0) );

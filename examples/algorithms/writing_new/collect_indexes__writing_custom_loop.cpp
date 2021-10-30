@@ -35,7 +35,7 @@ template <
 >
 void collect_indexes(R&& r, P p, std::vector<IdxType, Alloc>& res)
 {
-  EVE_ASSERT((r.end() - r.begin() <= std::numeric_limits<IdxType>::max()),
+  EVE_ASSERT((static_cast<std::size_t>(r.end() - r.begin()) <= std::numeric_limits<IdxType>::max()),
               "The output type is not big enough to hold potential indexes");
 
   // Prepare the output in case it was not empty.

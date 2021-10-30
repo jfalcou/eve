@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/valmin.hpp>
+#include <eve/constant/smallestposval.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/diff/rec.hpp>
@@ -43,15 +43,20 @@ EVE_TEST_TYPES( "Check return types of eve::rec", eve::test::simd::all_types)
 //==================================================================================================
 auto minimal = []<typename T>(eve::as<T> const & tgt)
 {
-  constexpr auto sign = std::is_signed_v<T> ? 1 : 0;
-  return eve::valmin(tgt) + sign;
+  return -eve::smallestposval(tgt);
 };
+
+auto maximal = []<typename T>(eve::as<T> const & tgt)
+{
+  return eve::valmax(tgt) / 2;
+};
+
 //==================================================================================================
 // Tests for eve::rec
 //==================================================================================================
 EVE_TEST( "Check behavior of eve::rec(eve::wide)"
         , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::randoms(minimal, eve::valmax)
+        , eve::test::generate ( eve::test::randoms(minimal, maximal)
                               , eve::test::logicals(0,3)
                               )
         )
@@ -60,7 +65,11 @@ EVE_TEST( "Check behavior of eve::rec(eve::wide)"
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
-  TTS_EQUAL(eve::rec(a0)      , map([](auto e) -> v_t { return e ? v_t(1/e) : eve::valmax(eve::as<v_t>()); }, a0) );
+  TTS_ULP_EQUAL ( eve::rec(a0)
+                , map([](auto e) -> v_t { return e ? v_t(1/e) : eve::valmax(eve::as<v_t>()); }, a0)
+                , 0.5
+                );
+
   TTS_EQUAL(eve::rec[mask](a0), eve::if_else(mask,eve::rec(a0),a0));
   if constexpr(eve::floating_real_value<T>)
     TTS_EQUAL ( eve::diff(eve::rec)(a0), -eve::rec(a0*a0));
