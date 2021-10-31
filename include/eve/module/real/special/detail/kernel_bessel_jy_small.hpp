@@ -131,7 +131,6 @@ namespace eve::detail
   // Converges rapidly for all z << v.
   ///////////////////////////////////////////////////////////////////////////////
 
-  // Encore incomplet et pe inutile attendre fin de yn
 //   template <class T>
 //   struct bessel_y_small_z_series_term_a
 //   {
