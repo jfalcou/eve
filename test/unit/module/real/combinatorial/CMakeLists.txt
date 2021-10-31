@@ -27,6 +27,5 @@ make_unit("unit.real.combinatorial"  nth_prime.cpp                    )
 make_unit("unit.real.combinatorial"  prime_floor.cpp                  )
 make_unit("unit.real.combinatorial"  lrising_factorial.cpp            )
 make_unit("unit.real.combinatorial"  rising_factorial.cpp             )
-
-#make_unit("unit.real.combinatorial"  gcd.cpp                          )
-#make_unit("unit.real.combinatorial"  lcm.cpp                          )
+make_unit("unit.real.combinatorial"  gcd.cpp                          )
+make_unit("unit.real.combinatorial"  lcm.cpp                          )

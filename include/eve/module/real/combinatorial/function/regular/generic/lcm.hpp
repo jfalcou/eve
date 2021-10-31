@@ -41,7 +41,7 @@ namespace eve::detail
       }
       else
       {
-        return a* (b / gcd(a, if_else(b, b, eve::mone)));
+        return a* (b / gcd(a, if_else(b, b, eve::one)));
       }
     }
     else
@@ -69,7 +69,7 @@ namespace eve::detail
       }
       else
       {
-        return a*(b / D()(gcd)(a, if_else(b, b, eve::mone)));
+        return a*(b / D()(gcd)(a, if_else(b, b, eve::one)));
       }
     }
     else
@@ -115,5 +115,4 @@ namespace eve::detail
       return lcm(a, b);
     }
   }
-
 }

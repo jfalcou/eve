@@ -13,6 +13,7 @@
 #include <eve/function/binarize_not.hpp>
 #include <eve/function/bitofsign.hpp>
 #include <eve/function/div.hpp>
+#include <eve/function/next.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_nez.hpp>
@@ -53,7 +54,7 @@ namespace eve::detail
                   , allbits
                   , if_else(is_eqz(a)
                            , a
-                           , fnma(b, trunc(div(a,b)), a)
+                           , fnma(b, trunc(next(div(a,b))), a)
                            )
                   );
   }
