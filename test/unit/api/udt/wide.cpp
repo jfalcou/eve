@@ -120,6 +120,36 @@ TTS_CASE( "Check eve::wide<udt> constructor from raw storage")
 };
 
 //==================================================================================================
+// Construct from piecewise construction
+//==================================================================================================
+TTS_CASE( "Check eve::wide<udt> constructor from piecewise data")
+{
+  int data[eve::wide<int>::size()];
+  for(auto& e: data) e = 9;
+
+  eve::wide<udt::grid2d> vls ( [](auto i, auto) { return i; }
+                            , 77
+                            );
+
+  eve::wide<udt::grid2d> vwl( eve::wide<int>{44}
+                            , [](auto i, auto) { return i*2; }
+                            );
+
+  eve::wide<udt::grid2d> vpl( &data[0]
+                            , [](auto i, auto) { return i-1; }
+                            );
+
+  TTS_EQUAL(get<0>(vls), eve::wide<int>([](int i, int  ) { return i;    } ));
+  TTS_EQUAL(get<1>(vls), eve::wide<int>(77 ));
+
+  TTS_EQUAL(get<0>(vwl), eve::wide<int>(44));
+  TTS_EQUAL(get<1>(vwl), eve::wide<int>([](int i, int  ) { return i*2; } ));
+
+  TTS_EQUAL(get<0>(vpl), eve::wide<int>(9));
+  TTS_EQUAL(get<1>(vpl), eve::wide<int>([](int i, int  ) { return i-1; } ));
+};
+
+//==================================================================================================
 // Slice API
 //==================================================================================================
 TTS_CASE( "Check eve::wide<udt> slice behavior")
