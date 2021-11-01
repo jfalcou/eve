@@ -43,8 +43,8 @@ namespace eve
   //!
   //!@warning
   //!    `p` and `n` can be of any [real values](@ref eve::value) type, but when the types are not integral
-  //!    the least common multiple is defined only if `p` and `n` element are [flint](@ref eve::is_flint). If it is not the
-  //!    case the corresponding result will be Nan.
+  //!    the least common multiple is defined only if `p` and `n` element are [flint](@ref eve::is_flint). If any
+  //!    is not flint the result is UB.
   //!
   //! ---
   //!
@@ -61,17 +61,6 @@ namespace eve
   //!  **Return value**
   //!
   //!  A Callable object so that the expression `lcm[cond](x, ...)` is equivalent to `if_else(cond,lcm(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!If the user calls the function with floating parameters, he can enforce the fact that all parameters are flint
-  //!using one of the  [roundings](./../decorator.html#roundings) decorators on the object function. Namely:
-  //!
-  //!   - deco(lcm)(a,b) is equivalent to lcm)(deco(round)(a),deco(round)(b)), but optimized when possible.
-  //!
-  //!where deco is one of: `to_nearest`, `downward`, `upward` or `toward_zero`.
   //!
   //! ---
   //!

@@ -14,12 +14,12 @@
 #include <eve/function/any.hpp>
 #include <eve/function/converter.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/function/is_flint.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/max.hpp>
 #include <eve/function/min.hpp>
 #include <eve/function/rem.hpp>
 #include <eve/function/round.hpp>
-#include <eve/function/if_else.hpp>
 #include <eve/constant/allbits.hpp>
 #include <eve/constant/nan.hpp>
 
@@ -37,15 +37,17 @@ namespace eve::detail
   }
 
   template<integral_scalar_value T>
-  EVE_FORCEINLINE auto gcd_(EVE_SUPPORTS(cpu_), T a, T b) noexcept
+  auto gcd_(EVE_SUPPORTS(cpu_), T a, T b) noexcept
   {
+    a = eve::abs(a);
+    b = eve::abs(b);
     while( b )
     {
       auto r = a % b;
       a   = b;
       b   = r;
     }
-    return eve::abs(a);
+    return a;
   }
 
   template<integral_simd_value T>
@@ -53,6 +55,8 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
+      a = abs(a);
+      b = abs(b);
       using elt_t = element_type_t<T>;
       if constexpr(sizeof(elt_t) == 8)
       {
@@ -66,10 +70,11 @@ namespace eve::detail
           test = test && is_nez(r);
           b = r;
         }
-        return eve::abs(a);
+        return a;
       }
       else if  constexpr(sizeof(elt_t) == 4)
       {
+
         auto r = raw(gcd)(float64(a), float64(b));
         if constexpr(std::is_signed_v < elt_t>)
           return int32(r);
@@ -103,29 +108,25 @@ namespace eve::detail
   }
 
   template<floating_value T>
-  EVE_FORCEINLINE auto gcd_(EVE_SUPPORTS(cpu_), T a, T b) noexcept
+  auto gcd_(EVE_SUPPORTS(cpu_), T a, T b) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {
-      auto valid = is_flint(a) && is_flint(b);
+      a = abs(a);
+      b = abs(b);
+      EVE_ASSERT(all(is_flint(a) && is_flint(b)), "gcd: some entries are not flint");
       if constexpr( scalar_value<T> )
       {
-        if (valid)
+        while( b )
         {
-          while( b )
-          {
-            auto r = rem(a, b);
-            a   = b;
-            b   = r;
-          }
-          return eve::abs(a);
+          auto r = rem(a, b);
+          a   = b;
+          b   = r;
         }
-        else return nan(as(a));
+        return a;
       }
       else
       {
-        a = if_else(valid, a, zero);
-        b = if_else(valid, b, zero);
         auto test = is_nez(b);
         T r(0);
         while (eve::any(test))
@@ -135,7 +136,7 @@ namespace eve::detail
           test = is_nez(r)&&test;
           b = r;
         }
-        return if_else(valid, eve::abs(a), allbits);
+        return a;
       }
     }
     else
@@ -146,10 +147,12 @@ namespace eve::detail
   }
 
   template<floating_value T>
-  EVE_FORCEINLINE auto gcd_(EVE_SUPPORTS(cpu_), raw_type const &, T a, T b) noexcept
+  auto gcd_(EVE_SUPPORTS(cpu_), raw_type const &, T a, T b) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {
+      a =  eve::abs(a);
+      b =  eve::abs(b);
       if constexpr( scalar_value<T> )
       {
         while( b )
@@ -158,7 +161,7 @@ namespace eve::detail
           a   = b;
           b   = r;
         }
-        return eve::abs(a);
+        return a;
       }
       else
       {
@@ -171,7 +174,7 @@ namespace eve::detail
           test = is_nez(r)&&test;
           b = r;
         }
-        return eve::abs(a);
+        return a;
       }
     }
     else
@@ -183,23 +186,6 @@ namespace eve::detail
   template<integral_value T>
   EVE_FORCEINLINE auto gcd_(EVE_SUPPORTS(cpu_), raw_type const &, T a, T b) noexcept
   {
-    return eve::abs(gcd(a, b));
+    return gcd(a, b);
   }
-
-  template<value T, value U, decorator D>
-  EVE_FORCEINLINE auto gcd_(EVE_SUPPORTS(cpu_), D const &, T a, U b) noexcept
-  requires compatible_values<T, U>
-  {
-    return arithmetic_call(D(gcd), eve::abs(a), eve::abs(b));
-  }
-
-  template<value T, decorator D>
-  EVE_FORCEINLINE auto gcd_(EVE_SUPPORTS(cpu_), D const &, T a, T b) noexcept
-  {
-    if constexpr(floating_value<T>)
-      return raw(gcd)(D()(round)(a), D()(round)(b));
-    else
-      return raw(gcd)(a, b);
-  }
-
 }
