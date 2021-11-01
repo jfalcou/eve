@@ -11,6 +11,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/abs.hpp>
+#include <eve/function/all.hpp>
 #include <eve/function/converter.hpp>
 #include <eve/function/gcd.hpp>
 #include <eve/function/if_else.hpp>
@@ -37,7 +38,7 @@ namespace eve::detail
     {
       a = abs(a);
       b = abs(b);
-      EVE_ASSERT(all(is_flint(a) && is_flint(b)), "lcm: some entries are not flint");
+      EVE_ASSERT(eve::all(is_flint(a) && is_flint(b)), "lcm: some entries are not flint");
       if constexpr( scalar_value<T> )
       {
         if( !b || !a ) return T(0);
