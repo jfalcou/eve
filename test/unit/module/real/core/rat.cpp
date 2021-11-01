@@ -26,20 +26,18 @@ EVE_TEST_TYPES( "Check return types of eve::rat(scalar)"
   TTS_EXPR_IS( eve::rat(v_t(), v_t())           , (kumi::tuple<v_t, v_t>)  );
 };
 
-
-
 //==================================================================================================
 // Tests for eve::rat
 //==================================================================================================
 EVE_TEST( "Check behavior of eve::rat(simd)"
-        , eve::test::simd::restricted::ieee_reals
+        , eve::test::simd::ieee_reals
         , eve::test::generate ( eve::test::ramp(1.0))
         )
 <typename T>(T const& a0)
 {
 //   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
-  auto [n, d] = eve::rat(a0/17);
+  auto [n, d] = eve::rat(a0/37);
   TTS_EQUAL(n, map([](auto e) -> v_t { return  e; }, a0));
-  TTS_EQUAL(d, T(17));
+  TTS_EQUAL(d, T(37));
 };
