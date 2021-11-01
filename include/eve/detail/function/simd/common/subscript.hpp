@@ -12,52 +12,10 @@
 #include <eve/detail/has_abi.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/as.hpp>
+#include <cstring>
 
 namespace eve::detail
 {
-  //================================================================================================
-  // Extract value
-  //================================================================================================
-  template<typename Wide>
-  EVE_FORCEINLINE auto at_begin ( Wide const& p ) noexcept
-  {
-    using type = element_type_t<Wide>;
-
-    if constexpr( has_aggregated_abi_v<Wide> )
-    {
-      return reinterpret_cast<detail::alias_t<type> const *>(&p.storage().segments[0]);
-    }
-    else if constexpr( has_emulated_abi_v<Wide> )
-    {
-      return p.storage().data();
-    }
-    else
-    {
-      [[maybe_unused]] auto const& s = p.storage();
-      return reinterpret_cast<detail::alias_t<type> const *>(&p);
-    }
-  }
-
-  template<typename Wide>
-  EVE_FORCEINLINE auto at_begin ( Wide& p ) noexcept
-  {
-    using type = element_type_t<Wide>;
-
-    if constexpr( has_aggregated_abi_v<Wide> )
-    {
-      return reinterpret_cast<detail::alias_t<type> *>(&p.storage().segments[0]);
-    }
-    else if constexpr( has_emulated_abi_v<Wide> )
-    {
-      return p.storage().data();
-    }
-    else
-    {
-      [[maybe_unused]] auto& s = p.storage();
-      return reinterpret_cast<detail::alias_t<type> *>(&s);
-    }
-  }
-
   //================================================================================================
   // Extract value
   //================================================================================================
@@ -70,7 +28,7 @@ namespace eve::detail
     {
       return kumi::apply( [=](auto const&... m)
                           {
-                            return typename Wide::value_type{ at_begin(m)[i]... };
+                            return typename Wide::value_type{ m.get(i)... };
                           }
                           , p.storage()
                         );
@@ -83,7 +41,11 @@ namespace eve::detail
     }
     else
     {
-      return at_begin(p)[i];
+      // g++ need that
+      typename Wide::value_type data[Wide::size()];
+      auto s = p.storage();
+      std::memcpy(&data[0],&s,sizeof(data));
+      return data[i];
     }
   }
 
@@ -125,8 +87,12 @@ namespace eve::detail
     }
     else
     {
-      auto ptr = reinterpret_cast<detail::alias_t<type>*>(&p.storage());
-      ptr[i] = v;
+      // g++ need that
+      typename Wide::value_type data[Wide::size()];
+      auto s = p.storage();
+      std::memcpy(&data[0],&s,sizeof(data));
+      data[i] = v;
+      std::memcpy(&p,&data[0],sizeof(data));
     }
   }
 }
