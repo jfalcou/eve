@@ -16,7 +16,7 @@
 namespace eve::detail
 {
   //================================================================================================
-  // 256 bits ==> 256 bits
+  // 256 bits ==> 256/128 bits
   // We need to care only for AVX-sized input, which means we'll only convert by using a
   // Split/Compute/Combine skeletons (my PHD director would be proud :p).
   // We don't call aggregate cause aggregate wants EVERYTHING to be sliceable.
@@ -29,6 +29,14 @@ namespace eve::detail
     if constexpr( std::is_same_v<In, Out> )
     {
       return v0;
+    }
+    else if constexpr( current_api >= avx2 && (N::value == 4)
+                       && std::is_integral_v<In> && (sizeof(In) == 8)
+                       && std::is_integral_v<Out> && (sizeof(Out) == 4) )
+    {
+      // u64 to u32
+      const auto p = _mm256_permutevar8x32_epi32(v0, _mm256_set_epi32(7, 5, 3, 1, 6, 4, 2, 0));
+      return _mm256_extractf128_si256(p, 0);
     }
     else
     {
