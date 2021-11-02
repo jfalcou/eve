@@ -113,9 +113,9 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
+      EVE_ASSERT(eve::all(is_flint(a) && is_flint(b)), "gcd: some entries are not flint");
       a = abs(a);
       b = abs(b);
-      EVE_ASSERT(eve::all(is_flint(a) && is_flint(b)), "gcd: some entries are not flint");
       if constexpr( scalar_value<T> )
       {
         while( b )

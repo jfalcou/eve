@@ -44,7 +44,7 @@ namespace eve
   //!@warning
   //!    `p` and `n` can be of any [real values](@ref eve::value) type, but when the types are not integral
   //!    the least common multiple is defined only if `p` and `n` element are [flint](@ref eve::is_flint). If any
-  //!    is not flint the result is UB.
+  //!    of the arguments is not flint the result is undefined.
   //!
   //! ---
   //!

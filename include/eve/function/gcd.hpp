@@ -43,8 +43,9 @@ namespace eve
   //!
   //!@warning
   //!    `p` and `n` can be of any [real values](@ref eve::value) type, but when the types are not integral
-  //!    the greatest common divisor is defined only if `p` and `n` element are [flint](@ref eve::is_flint). If any is not flint
-  //!    the function will assert.
+  //!    the greatest common divisor is defined only if `p` and `n` element are [flint](@ref eve::is_flint).
+  //!    If any of the arguments is not flint
+  //!    then the behavior is undefined.
   //!
   //! #### Supported decorators
   //!
