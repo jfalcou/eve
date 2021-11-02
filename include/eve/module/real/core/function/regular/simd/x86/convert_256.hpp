@@ -31,11 +31,11 @@ namespace eve::detail
       return v0;
     }
     else if constexpr( current_api >= avx2 && (N::value == 4)
-                       && std::is_integral_v<In> && (sizeof(In) == 8)
-                       && std::is_integral_v<Out> && (sizeof(Out) == 4) )
+                       && std::integral<In> && (sizeof(In) == 8)
+                       && std::integral<Out> && (sizeof(Out) == 4) )
     {
       // u64 to u32
-      const auto p = _mm256_permutevar8x32_epi32(v0, _mm256_set_epi32(7, 5, 3, 1, 6, 4, 2, 0));
+      auto const p = _mm256_permutevar8x32_epi32(v0, _mm256_set_epi32(7, 5, 3, 1, 6, 4, 2, 0));
       return _mm256_extractf128_si256(p, 0);
     }
     else
