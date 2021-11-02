@@ -44,7 +44,7 @@ namespace eve::detail
       // g++ need that
       typename Wide::value_type data[Wide::size()];
       auto s = p.storage();
-      std::memcpy(&data[0],&s,sizeof(data));
+      std::memcpy((char*)(&data[0]),(char*)(&s),sizeof(data));
       return data[i];
     }
   }
@@ -90,9 +90,9 @@ namespace eve::detail
       // g++ need that
       typename Wide::value_type data[Wide::size()];
       auto s = p.storage();
-      std::memcpy(&data[0],&s,sizeof(data));
+      std::memcpy((char*)(&data[0]),(char*)(&s),sizeof(data));
       data[i] = v;
-      std::memcpy(&p,&data[0],sizeof(data));
+      std::memcpy((char*)(&p),(char*)(&data[0]),sizeof(data));
     }
   }
 }

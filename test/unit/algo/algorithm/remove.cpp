@@ -6,6 +6,13 @@
 **/
 //==================================================================================================
 
+// g++ 11 regression fires __builtin_memmove spurious warnings
+// https://gcc.gnu.org/bugzilla/show_bug.cgi?id=100516
+
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC diagnostic ignored "-Wstringop-overread"
+#endif
+
 #include "unit/algo/algo_test.hpp"
 
 #include <eve/algo/remove.hpp>
