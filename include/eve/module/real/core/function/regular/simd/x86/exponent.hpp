@@ -12,10 +12,10 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/converter.hpp>
-#include <eve/function/is_eqz.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
+#include <eve/function/is_eqz.hpp>
 
 namespace eve::detail
 {
