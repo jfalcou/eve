@@ -36,7 +36,7 @@ namespace eve::detail
     {
       // u64 to u32
       auto const p = _mm256_permutevar8x32_epi32(v0, _mm256_set_epi32(7, 5, 3, 1, 6, 4, 2, 0));
-      return _mm256_extractf128_si256(p, 0);
+      return _mm256_castsi256_si128(p);
     }
     else
     {
