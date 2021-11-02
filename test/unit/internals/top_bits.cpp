@@ -74,16 +74,11 @@ EVE_TEST_TYPES("Check top bits from logical", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   using logical = eve::logical<T>;
-  logical test(false);
-
-  for (std::ptrdiff_t i = 0; i != test.size(); ++i)
+  for (std::ptrdiff_t i = 0; i != T::size(); ++i)
   {
-    test.set(i, true);
-
+    logical test = [=](auto e, auto) { return e == i;};
     top_bits mmask {test};
-    for (std::ptrdiff_t j = 0; j != test.size(); ++j)  TTS_EQUAL(test.get(j), mmask.get(j));
-
-    test.set(i, false);
+    for (std::ptrdiff_t j = 0; j != T::size(); ++j)  TTS_EQUAL(test.get(j), mmask.get(j));
   }
 };
 
@@ -115,20 +110,19 @@ EVE_TEST_TYPES( "Check top_bits::set", eve::test::simd::all_types)
 {
   using logical = eve::logical<T>;
 
-  logical           expected(false);
   top_bits<logical> actual(eve::ignore_all);
 
-  for (std::ptrdiff_t i = 0; i != expected.size(); ++i)
+  for (std::ptrdiff_t i = 0; i != T::size(); ++i)
   {
-    expected.set(i, true);
+    logical expected = [=](auto e, auto) { return e <= i; };
     actual.set(i, true);
 
     TTS_EQUAL(expected, eve::detail::to_logical(actual));
   }
 
-  for (std::ptrdiff_t i = 0; i != expected.size(); ++i)
+  for (std::ptrdiff_t i = 0; i != T::size(); ++i)
   {
-    expected.set(i, false);
+    logical expected = [=](auto e, auto) { return e > i; };
     actual.set(i, false);
     TTS_EQUAL(expected, eve::detail::to_logical(actual));
   }
@@ -163,16 +157,12 @@ EVE_TEST_TYPES("Check all(top_bits)", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   using logical = eve::logical<T>;
+  TTS_EXPECT(eve::detail::all(top_bits(logical(true))));
 
-  logical x(true);
-
-  TTS_EXPECT(eve::detail::all(top_bits(x)));
-
-  for (int i = 0; i != x.size(); ++i)
+  for (int i = 0; i != T::size(); ++i)
   {
-    x.set(i, false);
-    TTS_EXPECT_NOT(eve::detail::all(top_bits(x)));
-    x.set(i, true);
+    logical v([=](auto e, auto) { return e != i; } );
+    TTS_EXPECT_NOT(eve::detail::all(top_bits(v)));
   }
 };
 
@@ -180,16 +170,12 @@ EVE_TEST_TYPES("Check any(top_bits)", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   using logical = eve::logical<T>;
+  TTS_EXPECT_NOT(eve::detail::any(top_bits(logical(false))));
 
-  logical x(false);
-
-  TTS_EXPECT_NOT(eve::detail::any(top_bits(x)));
-
-  for (int i = 0; i != x.size(); ++i)
+  for (int i = 0; i != T::size(); ++i)
   {
-    x.set(i, true);
-    TTS_EXPECT(eve::detail::any(top_bits(x)));
-    x.set(i, false);
+    logical v([=](auto e, auto) { return e == i; } );
+    TTS_EXPECT(eve::detail::any(top_bits(v)));
   }
 };
 
@@ -200,25 +186,19 @@ EVE_TEST_TYPES("Check first_true(top_bits)", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   using logical = eve::logical<T>;
-  logical x(true);
+  TTS_EQUAL(0, eve::detail::first_true(top_bits(logical(true))));
 
-  TTS_EQUAL(0, eve::detail::first_true(top_bits(x)));
-
-  for (int i = 0; i != x.size() - 1; ++i)
+  for (int i = 0; i != T::size() - 1; ++i)
   {
-    x.set(i, false);
-
-    std::optional res = eve::detail::first_true(top_bits(x));
-
+    logical v([=](auto e, auto) { return e > i; } );
+    std::optional res = eve::detail::first_true(top_bits(v));
     TTS_EXPECT(res);
 
     int expected = i + 1;
     TTS_EQUAL(expected, *res);
   }
 
-  x = false;
-
-  TTS_EXPECT_NOT(eve::detail::first_true(top_bits(x)));
+  TTS_EXPECT_NOT(eve::detail::first_true(top_bits(logical(false))));
 };
 
 EVE_TEST_TYPES("Check count_true(top_bits)", eve::test::simd::all_types)

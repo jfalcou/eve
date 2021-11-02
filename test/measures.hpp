@@ -9,18 +9,14 @@
 
 #include <eve/wide.hpp>
 #include <eve/detail/top_bits.hpp>
+#include <eve/function/all.hpp>
 
 namespace eve
 {
   template<typename T, typename N>
   inline bool compare_equal(wide<T, N> const &l, wide<T, N> const &r)
   {
-    auto check = [=]<std::size_t... I>(std::index_sequence<I...> const&)
-    {
-      return (true && ... && (l.get(I) == r.get(I)));
-    };
-
-    return check( std::make_index_sequence<N::value>{});
+    return eve::all(l == r);
   }
 
   template<typename T>
