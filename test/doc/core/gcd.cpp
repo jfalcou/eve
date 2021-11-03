@@ -5,8 +5,8 @@
 
 int main()
 {
-  using w_t = eve::wide<float, eve::fixed<4>>;
-  w_t pi = {93, -25, 32, 368}, qi = {42, 30, 27, 1024};
+  using w_t = eve::wide<int, eve::fixed<4>>;
+  w_t pi = {93, 25, 32, 368}, qi = {42, 30, 27, 1024};
 
   std::cout << "---- simd" << '\n'
             << " <- pi              = " << pi << '\n'
