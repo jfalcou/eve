@@ -39,12 +39,12 @@ namespace eve::detail
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr T exp_(EVE_SUPPORTS(cpu_), T x) noexcept
   {
-    if constexpr(scalar_value<T>)
-    {
-      if constexpr(has_emulated_abi_v<wide<T>>) return std::exp(x);
-      wide<T> xx(x);
-      return exp(xx).get(0);
-    }
+//     if constexpr(scalar_value<T>)
+//     {
+//       if constexpr(has_emulated_abi_v<wide<T>>) return std::exp(x);
+//       wide<T> xx(x);
+//       return exp(xx).get(0);
+//     }
     if constexpr( has_native_abi_v<T> )
     {
       using elt_t       = element_type_t<T>;
