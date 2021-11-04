@@ -39,6 +39,7 @@
 #include <eve/function/converter.hpp>
 
 #include <concepts>
+#include <cmath>
 
 namespace eve::detail
 {
@@ -61,71 +62,56 @@ namespace eve::detail
   template<floating_real_value T>
   EVE_FORCEINLINE auto
   pow_abs_(EVE_SUPPORTS(cpu_), raw_type const &, T a, T b) noexcept
-  requires(has_native_abi_v<T>)
   {
-    return eve::exp(b * eve::log(eve::abs(a)));
+    if constexpr(has_native_abi_v<T>)
+    {
+      return eve::exp(b * eve::log(eve::abs(a)));
+    }
+    else return apply_over(raw(pow_abs), a, b);
   }
 
   template<floating_real_value T>
-  EVE_FORCEINLINE auto pow_abs_(EVE_SUPPORTS(cpu_), T x, T y) noexcept
-  requires has_native_abi_v<T>
+  auto pow_abs_(EVE_SUPPORTS(cpu_), T x, T y) noexcept
   {
-    using i_t = as_integer_t<T, unsigned>;
-    using eli_t = element_type_t<i_t>;
-    auto iseqzx = is_eqz(x);
-    auto ylt0 = y < zero(as(y));
-    auto ax = eve::abs(x);
-    auto ax_is1 = ax == eve::one(as(x));
-    if constexpr(real_scalar_value<T> )
+    if constexpr(scalar_value<T>) return std::pow(eve::abs(x), y);
+    if constexpr(has_native_abi_v<T>)
     {
-      if(iseqzx && ylt0) return inf(as(x));
-      if(is_infinite(ax)) return y == 0 ? T(1) : (ylt0 ? T(0) : inf(as(x)));
-      if(y == minf(as(y)))  return (ax == T(1)) ? T(1) : (ax > T(1)) ? T(0) : inf(as(y));
-      if(ax_is1 || is_eqz(y)) return T(1);
-      if(iseqzx && is_gtz(y)) return T(0);
-    }
-    eli_t const largelimit = (sizeof(eli_t) == 4 ? 31 : 63);
-    auto [yf,  yi] = eve::modf(eve::abs(y));
-    auto test =  yf > T(0.5);
-    yf = dec[test](yf);
-    auto z = eve::exp(yf * eve::log(ax));
-    yi = inc[test](yi);
-    yi = if_else(ax_is1, eve::one, yi);
-    auto large = (yi > T(largelimit));
-    if constexpr(real_scalar_value<T> )
-    {
-      if(large){
-        auto zz =  (ax < one(as(x))) ? T(0) : inf(as(x));
-        return ylt0 ? rec(zz) : zz;
-      }
-    }
-    else
+      using i_t = as_integer_t<T, unsigned>;
+      using eli_t = element_type_t<i_t>;
+      auto iseqzx = is_eqz(x);
+      auto ylt0 = y < zero(as(y));
+      auto ax = eve::abs(x);
+      auto ax_is1 = ax == eve::one(as(x));
+      eli_t const largelimit = (sizeof(eli_t) == 4 ? 31 : 63);
+      auto [yf,  yi] = eve::modf(eve::abs(y));
+      auto test =  yf > T(0.5);
+      yf = dec[test](yf);
+      auto z = eve::exp(yf * eve::log(ax));
+      yi = inc[test](yi);
+      yi = if_else(ax_is1, eve::one, yi);
+      auto large = (yi > T(largelimit));
       yi =  if_else(large, eve::one, yi);
 
-    auto russian = [](T base, i_t expo){
-      T result(1);
-      while( eve::any(to_logical(expo)) )
-      {
-        result *= if_else(is_odd(expo), base, T(1));
-        expo = (expo >> 1);
-        base = sqr(base);
-      }
-      return result;
-    };
-    z *= russian(ax, uint_(yi));
-    if constexpr(!real_scalar_value<T> )
-    {
+      auto russian = [](T base, i_t expo){
+        T result(1);
+        while( eve::any(is_nez(expo)) )
+        {
+          result *= if_else(is_odd(expo), base, T(1));
+          expo = (expo >> 1);
+          base = sqr(base);
+        }
+        return result;
+      };
+      z *= russian(ax, uint_(yi));
       z =  if_else(large, if_else(ax < one(as(x)), zero, inf(as(x))), z);
       z =  if_else(iseqzx && ylt0, zero, z);
       z =  if_else(is_infinite(ax), inf(as(x)), z);
       z =  if_else(ylt0, rec(z), z);
+      z =  if_else(ax_is1 || is_eqz(y), one, z);
+      z =  if_else(iseqzx && is_gtz(y), zero, z);
+      z =  if_else(is_nan(x) && is_nan(y), allbits, z);
+      return z;
     }
-    else
-    {
-      return ylt0 ? rec(z) : z;
-    }
-    z =  if_else(ax_is1 || is_eqz(y), one, z);
-    z =  if_else(iseqzx && is_gtz(y), zero, z);
-    return z;
+    else return apply_over(pow_abs, x, y);
   }
 }
