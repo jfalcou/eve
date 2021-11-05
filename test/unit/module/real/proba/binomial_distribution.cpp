@@ -23,7 +23,7 @@ EVE_TEST_TYPES("Check eve::binomial_distribution behavior"
     TTS_ULP_EQUAL(eve::mean(bino)                 , T(1.0)  , 0);
     TTS_ULP_EQUAL(eve::var(bino)                  , T(0.75)  , 0);
     TTS_ULP_EQUAL(eve::stdev(bino)                , T(8.660254037844386e-01)  , 0);
-    TTS_ULP_EQUAL(eve::cdf(bino, T(0.0))          , T(3.1640625e-01)   , 1.0);
+    TTS_ULP_EQUAL(eve::cdf(bino, T(0.0))          , T(3.1640625e-01)   , 2.0);
     TTS_ULP_EQUAL(eve::pmf(bino, T(1.0))          , T(1.0546875e-3)   , 1.0);
   }
   {
