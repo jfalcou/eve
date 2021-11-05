@@ -15,6 +15,7 @@
 #include <eve/constant/minlogdenormal.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/detail/has_abi.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/meta.hpp>
@@ -41,8 +42,12 @@ namespace eve::detail
   {
     if constexpr(scalar_value<T>)
     {
-      if constexpr(has_emulated_abi_v<wide<T>>) return std::exp(x);
-      else {
+      if constexpr(has_emulated_abi_v<wide<T>>)
+      {
+        return std::exp(x);
+      }
+      else
+      {
         wide<T> xx(x);
         return exp(xx).get(0);
       }

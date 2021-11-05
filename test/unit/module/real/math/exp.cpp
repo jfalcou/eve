@@ -60,7 +60,8 @@ EVE_TEST_TYPES( "Check return types of exp"
 
   TTS_IEEE_EQUAL( eve::exp(T( 0.)), T(1));
   TTS_IEEE_EQUAL( eve::exp(T(-0.)), T(1));
-  TTS_ULP_EQUAL (eve::exp(eve::minlog(eve::as<T>())), T(0), 0.5);
+  if constexpr(!eve::has_emulated_abi_v<eve::wide<eve::element_type_t<T>>>)
+    TTS_ULP_EQUAL (eve::exp(eve::minlog(eve::as<T>())), T(0), 0.5);
 
   if constexpr( eve::platform::supports_invalids )
   {
