@@ -74,14 +74,14 @@ EVE_TEST( "Check behavior of exp_int on wide"
     TTS_ULP_EQUAL(exp_int(T(i), T(0))  , eve::rec(T(i-1)), 0.5);
     TTS_ULP_EQUAL(exp_int(T(i), T(0.5)), T(boost::math::expint(i, 0.5)), 32.0);
     TTS_ULP_EQUAL(exp_int(T(i), T(1))  , T(boost::math::expint(i, 1.0)), 32.0);
-    TTS_ULP_EQUAL(exp_int(T(i), T(10)) , T(boost::math::expint(i, 10.0)), 1.5);
+    TTS_ULP_EQUAL(exp_int(T(i), T(10)) , T(boost::math::expint(i, 10.0)), 32.0);
   }
   for(int i=1; i < 4 ; ++i)
   {
     TTS_ULP_EQUAL(exp_int(i, T(0))  , eve::rec(T(i-1)), 0.5);
     TTS_ULP_EQUAL(exp_int(i, T(0.5)), T(boost::math::expint(i, 0.5)), 32.0);
     TTS_ULP_EQUAL(exp_int(i, T(1))  , T(boost::math::expint(i, 1.0)), 32.0);
-    TTS_ULP_EQUAL(exp_int(i, T(10)) , T(boost::math::expint(i, 10.0)), 1.5);
+    TTS_ULP_EQUAL(exp_int(i, T(10)) , T(boost::math::expint(i, 10.0)), 32.0);
   }
   using elt_t =  eve::element_type_t<T>;
 

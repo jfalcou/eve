@@ -15,6 +15,7 @@
 #include <eve/constant/minlogdenormal.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/detail/has_abi.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/meta.hpp>
@@ -32,13 +33,26 @@
 #include <eve/function/sqr.hpp>
 #include <eve/module/real/core/detail/generic/horn.hpp>
 #include <type_traits>
+#include <cmath>
 
 namespace eve::detail
 {
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr T exp_(EVE_SUPPORTS(cpu_), T x) noexcept
   {
-    if constexpr( has_native_abi_v<T> )
+    if constexpr(scalar_value<T>)
+    {
+      if constexpr(has_emulated_abi_v<wide<T>>)
+      {
+        return std::exp(x);
+      }
+      else
+      {
+        wide<T> xx(x);
+        return exp(xx).get(0);
+      }
+    }
+    else if constexpr( has_native_abi_v<T> )
     {
       using elt_t       = element_type_t<T>;
       auto minlogval = [](){

@@ -52,7 +52,7 @@ namespace eve::detail
   }
 
   template<floating_real_value T>
-  EVE_FORCEINLINE T gamma_p_inv_(EVE_SUPPORTS(cpu_), T p, T k) noexcept
+  T gamma_p_inv_(EVE_SUPPORTS(cpu_), T p, T k) noexcept
   requires has_native_abi_v<T>
   {
     if constexpr(std::is_same_v<T, float>)
@@ -79,6 +79,7 @@ namespace eve::detail
       if (eve::none(notdone)) return x;
       --i;
     }
+
     notdone =  notdone || is_ltz(y);
     x = if_else(notdone, eve::abs(x0), x);
     auto xlo = if_else(notdone, eve::min(x/2, zero(as(x))), x);
@@ -90,7 +91,7 @@ namespace eve::detail
       xhi  = if_else(inl, eve::min(xhi*2, eve::valmax(as(x))), xhi);
       inl = ((gamma_p(xlo, k) > p)||(gamma_p(xhi, k) <  p)) && (xlo !=  xhi);
     }
-    auto xmed = average(xlo, xhi);
+    auto xmed =  average(xlo, xhi);
     while (eve::any(notdone))
     {
       auto test = (gamma_p(xmed, k) <  p);

@@ -39,14 +39,14 @@ namespace eve::detail
   // floating parameters
   /////////////////////////////////////////////////////////////////////////////
   template<floating_real_value T, floating_real_value U>
-  EVE_FORCEINLINE auto pow_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
+  EVE_FORCEINLINE auto pow_(EVE_SUPPORTS(cpu_), T a, U b) noexcept
   requires compatible_values<T, U>
   {
     return arithmetic_call(pow, a, b);
   }
 
   template<floating_real_value T>
-  EVE_FORCEINLINE auto pow_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
+  EVE_FORCEINLINE auto pow_(EVE_SUPPORTS(cpu_), T a, T b) noexcept
   requires has_native_abi_v<T>
   {
     if constexpr(scalar_value<T>)
@@ -60,7 +60,7 @@ namespace eve::detail
   //////////////////////////////////////////////////////////////////////////////////////////
   // raw
   template<real_value T, real_value U>
-  EVE_FORCEINLINE auto pow_(EVE_SUPPORTS(cpu_), raw_type const &, T const &a, U const &b) noexcept
+  EVE_FORCEINLINE auto pow_(EVE_SUPPORTS(cpu_), raw_type const &, T a, U b) noexcept
   {
     if constexpr(has_native_abi_v<T> )
     {
@@ -89,7 +89,7 @@ namespace eve::detail
   }
 
   template<floating_value T, integral_real_scalar_value U>
-  EVE_FORCEINLINE constexpr auto pow_(EVE_SUPPORTS(cpu_), T const &a0, U const &a1) noexcept
+  EVE_FORCEINLINE constexpr auto pow_(EVE_SUPPORTS(cpu_), T a0, U a1) noexcept
   {
     if constexpr( std::is_unsigned_v<U> )
     {
@@ -114,7 +114,7 @@ namespace eve::detail
   }
 
   template<real_simd_value T, integral_real_simd_value U>
-  EVE_FORCEINLINE constexpr auto pow_(EVE_SUPPORTS(cpu_), T const &a0, U const &a1) noexcept
+  EVE_FORCEINLINE constexpr auto pow_(EVE_SUPPORTS(cpu_), T a0, U a1) noexcept
   {
     if constexpr(unsigned_value<U> )
     {
@@ -201,7 +201,7 @@ namespace eve::detail
 
 
   template<floating_real_scalar_value T, integral_real_scalar_value U>
-  EVE_FORCEINLINE constexpr auto pow_(EVE_SUPPORTS(cpu_), T const &a0, U const &a1) noexcept
+  EVE_FORCEINLINE constexpr auto pow_(EVE_SUPPORTS(cpu_), T a0, U a1) noexcept
   {
     if constexpr( std::is_unsigned_v<U> )
     {
