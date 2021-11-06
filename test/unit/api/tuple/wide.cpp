@@ -127,6 +127,32 @@ EVE_TEST_TYPES( "Check eve::wide constructor from raw storage", eve::test::scala
 };
 
 //==================================================================================================
+// Restructure via extract
+//==================================================================================================
+EVE_TEST_TYPES( "Check eve::wide get<Idx...>", eve::test::scalar::all_types)
+<typename T>(eve::as<T>)
+{
+  using w_t = eve::wide<tuple_t<T>>;
+  using c_t = eve::cardinal_t<w_t>;
+
+  auto gen_d  = [](auto i, auto) { return 1./(1+i); };
+  auto gen_t  = [](auto i, auto) { return T(i); };
+  auto gen_i8 = [](auto i, auto) { return std::int8_t('A'+i); };
+
+  w_t w(gen_i8,gen_t,gen_d);
+
+  eve::wide<kumi::tuple<T,double>, c_t>             half(gen_t,gen_d);
+  eve::wide<kumi::tuple<double,T,std::int8_t>, c_t> revert( gen_d, gen_t,gen_i8);
+
+  eve::wide<kumi::tuple<std::int8_t,T,double,T,std::int8_t>, eve::cardinal_t<w_t>>
+  mirror(gen_i8,gen_t,gen_d,gen_t,gen_i8);
+
+  TTS_EQUAL ( half  , (eve::get<1,2>(w)) );
+  TTS_EQUAL ( revert, (eve::get<2,1,0>(w)) );
+  TTS_EQUAL ( mirror, (eve::get<0,1,2,1,0>(w)) );
+};
+
+//==================================================================================================
 // Slice API
 //==================================================================================================
 EVE_TEST_TYPES( "Check eve::wide::slice behavior", eve::test::scalar::all_types)
