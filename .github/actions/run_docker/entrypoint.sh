@@ -1,9 +1,19 @@
 #!/bin/sh -l
 
+delete_artifact()
+{
+  echo "::group::Cleaning up artifacts"
+  cd .. ;
+  ls -al
+  rm -rf build/ ;
+  ls -al
+  return 0;
+}
+
 compile_target()
 {
   echo "::group::Compiling $1" ;
-  ninja -v $1 -j $2;
+  ninja -v $1 -j 16;
   compile=$?;
   echo "::endgroup::" ;
 
@@ -14,7 +24,7 @@ compile_targets()
 {
   for i in `../cmake/toolchain/filter.sh $1 keys`;
   do
-  compile_target $i 3;
+  compile_target $i;
   if [ "$?" -ne "0" ]
   then
     echo "::error $i can not be compiled!" ;
@@ -28,7 +38,7 @@ compile_targets()
 test_target()
 {
   echo "::group::Running $1 tests" ;
-  ctest --output-on-failure -R $1 -j $2;
+  ctest --output-on-failure -R $1 -j 16;
   tested=$?;
   echo "::endgroup::" ;
 
@@ -39,7 +49,7 @@ test_targets()
 {
   for i in `../cmake/toolchain/filter.sh $1 values`;
   do
-    test_target $i 4;
+    test_target $i;
     if [ "$?" -ne "0" ]
     then
       echo "::error $i tests failed!" ;
@@ -59,24 +69,28 @@ echo "::endgroup::"
 compile_targets ../cmake/toolchain/arch.targets.json
 if [ "$?" -eq "1" ]
 then
+  delete_artifact()
   exit 1;
 fi
 
 test_targets    ../cmake/toolchain/arch.targets.json
 if [ "$?" -eq "1" ]
 then
+  delete_artifact()
   exit 1;
 fi
 
 compile_targets ../cmake/toolchain/api.targets.json
 if [ "$?" -eq "1" ]
 then
+  delete_artifact()
   exit 1;
 fi
 
 test_targets    ../cmake/toolchain/api.targets.json
 if [ "$?" -eq "1" ]
 then
+  delete_artifact()
   exit 1;
 fi
 
@@ -86,26 +100,31 @@ then
   compile_targets ../cmake/toolchain/doc.targets.json
   if [ "$?" -eq "1" ]
   then
+    delete_artifact()
     exit 1;
   fi
 
   test_targets    ../cmake/toolchain/doc.targets.json
   if [ "$?" -eq "1" ]
   then
+    delete_artifact()
     exit 1;
   fi
 
   compile_targets ../cmake/toolchain/real.targets.json
   if [ "$?" -eq "1" ]
   then
+    delete_artifact()
     exit 1;
   fi
 
   test_targets    ../cmake/toolchain/real.targets.json
   if [ "$?" -eq "1" ]
   then
+    delete_artifact()
     exit 1;
   fi
 fi
 
+delete_artifact()
 exit 0

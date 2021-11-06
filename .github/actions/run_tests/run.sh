@@ -1,5 +1,15 @@
 #!/bin/sh -l
 
+delete_artifact()
+{
+  echo "::group::Cleaning up artifacts"
+  cd .. ;
+  ls -al
+  rm -rf build/ ;
+  ls -al
+  return 0;
+}
+
 compile_target()
 {
   echo "::group::Compiling $1" ;
@@ -59,24 +69,28 @@ echo "::endgroup::"
 compile_targets ../cmake/toolchain/arch.targets.json
 if [ "$?" -eq "1" ]
 then
+  delete_artifact()
   exit 1;
 fi
 
 test_targets    ../cmake/toolchain/arch.targets.json
 if [ "$?" -eq "1" ]
 then
+  delete_artifact()
   exit 1;
 fi
 
 compile_targets ../cmake/toolchain/api.targets.json
 if [ "$?" -eq "1" ]
 then
+  delete_artifact()
   exit 1;
 fi
 
 test_targets    ../cmake/toolchain/api.targets.json
 if [ "$?" -eq "1" ]
 then
+  delete_artifact()
   exit 1;
 fi
 
@@ -86,26 +100,31 @@ then
   compile_targets ../cmake/toolchain/doc.targets.json
   if [ "$?" -eq "1" ]
   then
+    delete_artifact()
     exit 1;
   fi
 
   test_targets    ../cmake/toolchain/doc.targets.json
   if [ "$?" -eq "1" ]
   then
+    delete_artifact()
     exit 1;
   fi
 
   compile_targets ../cmake/toolchain/real.targets.json
   if [ "$?" -eq "1" ]
   then
+    delete_artifact()
     exit 1;
   fi
 
   test_targets    ../cmake/toolchain/real.targets.json
   if [ "$?" -eq "1" ]
   then
+    delete_artifact()
     exit 1;
   fi
 fi
 
+delete_artifact()
 exit 0
