@@ -1099,16 +1099,27 @@ namespace eve
   //==============================================================================================
   // Product type Support
   //==============================================================================================
-  template<std::size_t I, typename T, typename N> EVE_FORCEINLINE auto& get(wide<T,N>& w) noexcept
-  requires( kumi::product_type<T> )
+  template<std::size_t I, kumi::product_type T, typename N>
+  EVE_FORCEINLINE auto& get(wide<T,N>& w) noexcept
   {
     return kumi::get<I>(w.storage());
   }
 
-  template<std::size_t I, typename T, typename N> EVE_FORCEINLINE auto get(wide<T,N> const& w) noexcept
-  requires( kumi::product_type<T> )
+  template<std::size_t ... Idx, kumi::product_type T, typename N>
+#if !defined(EVE_DOXYGEN_INVOKED)
+  requires( (Idx < kumi::size<T>::value) && ... )
+#endif
+  EVE_FORCEINLINE auto get(eve::wide<T, N> const& w) noexcept
   {
-    return kumi::get<I>(w.storage());
+    if constexpr( sizeof...(Idx) == 1)
+    {
+      return kumi::get<Idx...>(w.storage());
+    }
+    else
+    {
+      using U = kumi::tuple<std::tuple_element_t<Idx, T> ...>;
+      return eve::wide<U, N>( get<Idx>(w) ... );
+    }
   }
 
 #if !defined(EVE_DOXYGEN_INVOKED)
