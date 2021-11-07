@@ -30,6 +30,9 @@ jobs:
           options:        '${{ matrix.cfg.opts }}'
           cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
           status:        '${{ matrix.cfg.status }}'
+      - name: Always execute
+        if: ${{ always() }}
+        uses: ./.github/actions/cleanup
 
   arch-x86:
     runs-on: self-hosted
@@ -60,6 +63,9 @@ jobs:
           options:        '${{ matrix.cfg.opts }}'
           cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
           status:        '${{ matrix.cfg.status }}'
+      - name: Always execute
+        if: ${{ always() }}
+        uses: ./.github/actions/cleanup
 
   arch-ppc:
     runs-on: self-hosted
@@ -78,3 +84,6 @@ jobs:
           options:        '${{ matrix.cfg.opts }}'
           cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
           status:        '${{ matrix.cfg.status }}'
+      - name: Always execute
+        if: ${{ always() }}
+        uses: ./.github/actions/cleanup
