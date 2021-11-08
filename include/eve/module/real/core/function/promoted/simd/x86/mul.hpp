@@ -15,6 +15,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/operators.hpp>
 #include <eve/traits/common_compatible.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/combine.hpp>
 #include <eve/function/converter.hpp>
@@ -24,7 +25,6 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/pattern.hpp>
 #include <concepts>
-#include <bit>
 
 namespace eve::detail
 {
@@ -42,11 +42,11 @@ namespace eve::detail
       constexpr auto slo = eve::fix_pattern<16>([](auto i, auto) { return i&1 ?  -1: i/2; });
       constexpr auto shi = eve::fix_pattern<16>([](auto i, auto) { return i&1 ?  -1: 8+i/2; });
 
-      tmp_t alo = std::bit_cast<tmp_t>(a[slo]);
-      tmp_t blo = std::bit_cast<tmp_t>(b[slo]);
+      tmp_t alo = bit_cast(a[slo], as<tmp_t>());
+      tmp_t blo = bit_cast(b[slo], as<tmp_t>());
       tmp_t lo(_mm512_mul_epu32(alo, blo));
-      tmp_t ahi = std::bit_cast<tmp_t>(a[shi]);
-      tmp_t bhi = std::bit_cast<tmp_t>(b[shi]);
+      tmp_t ahi =  bit_cast(a[shi], as<tmp_t>());
+      tmp_t bhi =  bit_cast(b[shi], as<tmp_t>());
       tmp_t hi(_mm512_mul_epu32(ahi, bhi));
       return eve::combine(lo, hi);
     }
@@ -55,11 +55,11 @@ namespace eve::detail
       using tmp_t = wide < upgrade_t<T>, fixed<4>>;
       constexpr auto slo = eve::fix_pattern<8>([](auto i, auto) { return i&1 ?  -1 : i/2; });
       constexpr auto shi = eve::fix_pattern<8>([](auto i, auto) { return i&1 ?  -1 : 4+i/2; });
-      tmp_t alo = std::bit_cast<tmp_t>(a[slo]);
-      tmp_t blo = std::bit_cast<tmp_t>(b[slo]);
+      tmp_t alo = bit_cast(a[slo], as<tmp_t>());
+      tmp_t blo = bit_cast(b[slo], as<tmp_t>());
       tmp_t lo(_mm256_mul_epu32(alo, blo));
-      tmp_t ahi = std::bit_cast<tmp_t>(a[shi]);
-      tmp_t bhi = std::bit_cast<tmp_t>(b[shi]);
+      tmp_t ahi =  bit_cast(a[shi], as<tmp_t>());
+      tmp_t bhi =  bit_cast(b[shi], as<tmp_t>());
       tmp_t hi(_mm256_mul_epu32(ahi, bhi));
       return eve::combine(lo, hi);
     }
@@ -81,7 +81,7 @@ namespace eve::detail
           in_t lo   = in_t(_mm_unpacklo_epi64(mul0, mul1));
           in_t hi   = in_t(_mm_unpackhi_epi64(mul0, mul1));
           auto res = eve::combine(lo, hi);
-          return std::bit_cast<ou_t>(res);
+          return bit_cast(res, as<ou_t>());
         }
       }
       else if constexpr(N::value == 2)
@@ -104,7 +104,7 @@ namespace eve::detail
       in_t abl(_mm512_mullo_epi16(a, b));
       constexpr auto s = eve::fix_pattern<N::value*2>([](auto i, auto) { return i&1 ?  N::value+i/2 :i/2; });
       auto res = eve::combine(abl, abh)[s];
-      return std::bit_cast<ou_t>(res);
+      return bit_cast(res, as<ou_t>());
     }
     else  if constexpr(c == category::uint16x16 && current_api >= avx2 )
     {
@@ -113,7 +113,7 @@ namespace eve::detail
       auto res = eve::combine(abl, abh);
       constexpr auto s = eve::fix_pattern<N::value*2>([](auto i, auto) { return i&1 ?  N::value+i/2 :i/2; });
       auto r = res[s];
-      return std::bit_cast<ou_t>(r);
+      return bit_cast(r, as<ou_t>());
     }
     else  if constexpr(c == category::uint16x8)
     {
@@ -124,7 +124,7 @@ namespace eve::detail
         auto res = eve::combine(abl, abh);
         constexpr auto s = eve::fix_pattern<N::value*2>([](auto i, auto) { return i&1 ?  N::value+i/2 :i/2; });
         auto r = res[s];
-        return std::bit_cast<ou_t>(r);
+        return bit_cast(r, as<ou_t>());
       }
       else
       {
@@ -151,11 +151,11 @@ namespace eve::detail
       constexpr auto slo = eve::fix_pattern<16>([](auto i, auto) { return i&1 ?  -1: i/2; });
       constexpr auto shi = eve::fix_pattern<16>([](auto i, auto) { return i&1 ?  -1: 8+i/2; });
 
-      tmp_t alo = std::bit_cast<tmp_t>(a[slo]);
-      tmp_t blo = std::bit_cast<tmp_t>(b[slo]);
+      tmp_t alo = bit_cast(a[slo], as<tmp_t>());
+      tmp_t blo = bit_cast(b[slo], as<tmp_t>());
       tmp_t lo(_mm512_mul_epi32(alo, blo));
-      tmp_t ahi = std::bit_cast<tmp_t>(a[shi]);
-      tmp_t bhi = std::bit_cast<tmp_t>(b[shi]);
+      tmp_t ahi =  bit_cast(a[shi], as<tmp_t>());
+      tmp_t bhi =  bit_cast(b[shi], as<tmp_t>());
       tmp_t hi(_mm512_mul_epi32(ahi, bhi));
       return eve::combine(lo, hi);
     }
@@ -164,11 +164,11 @@ namespace eve::detail
       using tmp_t = wide < upgrade_t<T>, fixed<4>>;
       constexpr auto slo = eve::fix_pattern<8>([](auto i, auto) { return i&1 ?  -1 : i/2; });
       constexpr auto shi = eve::fix_pattern<8>([](auto i, auto) { return i&1 ?  -1 : 4+i/2; });
-      tmp_t alo = std::bit_cast<tmp_t>(a[slo]);
-      tmp_t blo = std::bit_cast<tmp_t>(b[slo]);
+      tmp_t alo = bit_cast(a[slo], as<tmp_t>());
+      tmp_t blo = bit_cast(b[slo], as<tmp_t>());
       tmp_t lo(_mm256_mul_epi32(alo, blo));
-      tmp_t ahi = std::bit_cast<tmp_t>(a[shi]);
-      tmp_t bhi = std::bit_cast<tmp_t>(b[shi]);
+      tmp_t ahi =  bit_cast(a[shi], as<tmp_t>());
+      tmp_t bhi =  bit_cast(b[shi], as<tmp_t>());
       tmp_t hi(_mm256_mul_epi32(ahi, bhi));
       return eve::combine(lo, hi);
     }
@@ -190,7 +190,7 @@ namespace eve::detail
           in_t lo   = in_t(_mm_unpacklo_epi64(mul0, mul1));
           in_t hi   = in_t(_mm_unpackhi_epi64(mul0, mul1));
           auto res = eve::combine(lo, hi);
-          return std::bit_cast<ou_t>(res);
+          return bit_cast(res, as<ou_t>());
         }
         else
         {
@@ -217,7 +217,7 @@ namespace eve::detail
       in_t abl(_mm512_mullo_epi16(a, b));
       constexpr auto s = eve::fix_pattern<N::value*2>([](auto i, auto) { return i&1 ?  N::value+i/2 :i/2; });
       auto res = eve::combine(abl, abh)[s];
-      return std::bit_cast<ou_t>(res);
+      return bit_cast(res, as<ou_t>());
     }
     else  if constexpr(c == category::int16x16 && current_api >= avx2 )
     {
@@ -226,7 +226,7 @@ namespace eve::detail
       auto res = eve::combine(abl, abh);
       constexpr auto s = eve::fix_pattern<N::value*2>([](auto i, auto) { return i&1 ?  N::value+i/2 :i/2; });
       auto r = res[s];
-      return std::bit_cast<ou_t>(r);
+      return bit_cast(r, as<ou_t>());
     }
     else if constexpr(c == category::int16x8  && N::value != 1)
     {
@@ -236,7 +236,7 @@ namespace eve::detail
       auto res = eve::combine(abl, abh);
       constexpr auto s = eve::fix_pattern<N::value*2>([](auto i, auto) { return i&1 ?  N::value+i/2 :i/2; });
       auto r = res[s];
-      return std::bit_cast<ou_t>(r);
+      return bit_cast(r, as<ou_t>());
     }
     else
     {
