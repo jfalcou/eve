@@ -69,8 +69,8 @@ namespace eve::detail
       {
         if constexpr(current_api >= avx2 )
         {
-          auto a64 = convert(a, as<int64_t>());
-          auto b64 = convert(b, as<int64_t>());
+          auto a64 = convert(a, as<uint64_t>());
+          auto b64 = convert(b, as<uint64_t>());
           const __m256i ret = _mm256_mul_epu32(a64, b64);
           return ou_t(ret);
         }
@@ -183,7 +183,7 @@ namespace eve::detail
           const __m256i ret = _mm256_mul_epi32(a64, b64);
           return ou_t(ret);
         }
-        else
+        else if constexpr(current_api >= sse4_1 )
         {
           auto mul0 = in_t(_mm_mul_epi32(a, b));
           auto mul1 = in_t(_mm_mul_epi32(a[pattern<1,1,3,3>],b[pattern<1,1,3,3>]));
@@ -192,8 +192,12 @@ namespace eve::detail
           auto res = eve::combine(lo, hi);
           return std::bit_cast<ou_t>(res);
         }
+        else
+        {
+          return mul_(EVE_RETARGET(cpu_),promoted_type(), a, b);
+        }
       }
-      else if constexpr(N::value == 2)
+      else if constexpr(N::value == 2 && current_api >= sse4_1 )
       {
         using tin_t = wide<T, fixed<4>>;
         tin_t ta(a.storage());
