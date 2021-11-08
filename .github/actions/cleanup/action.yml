@@ -1,0 +1,6 @@
+# action.yml
+name: 'Clean-up build folder'
+description: 'Clean-up build folder'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'

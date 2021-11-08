@@ -3,7 +3,7 @@
 compile_target()
 {
   echo "::group::Compiling $1" ;
-  ninja -v $1 -j $2;
+  ninja -v $1 -j 16;
   compile=$?;
   echo "::endgroup::" ;
 
@@ -14,7 +14,7 @@ compile_targets()
 {
   for i in `../cmake/toolchain/filter.sh $1 keys`;
   do
-  compile_target $i 3;
+  compile_target $i;
   if [ "$?" -ne "0" ]
   then
     echo "::error $i can not be compiled!" ;
@@ -28,7 +28,7 @@ compile_targets()
 test_target()
 {
   echo "::group::Running $1 tests" ;
-  ctest --output-on-failure -R $1 -j $2;
+  ctest --output-on-failure -R $1 -j 16;
   tested=$?;
   echo "::endgroup::" ;
 
@@ -39,7 +39,7 @@ test_targets()
 {
   for i in `../cmake/toolchain/filter.sh $1 values`;
   do
-    test_target $i 4;
+    test_target $i;
     if [ "$?" -ne "0" ]
     then
       echo "::error $i tests failed!" ;
