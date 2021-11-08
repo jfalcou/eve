@@ -37,15 +37,32 @@ namespace eve::detail
     using ou_t = wide<upgrade_t<T>, N>;
     constexpr auto c = categorize<in_t>();
     std::cout << "type in: " << tts::typename_of(a) << std::endl;
-    if constexpr(c == category::uint32x8 && current_api >= avx2)
+    if constexpr(c == category::uint32x16 && current_api >= avx512)
+    {
+      std::cout <<  "category::int32x16 && current_api >= avx512" << std::endl;
+      using tmp_t = wide < upgrade_t<T>, fixed<8>>;
+      constexpr auto slo = eve::fix_pattern<16>([](auto i, auto) { return i&1 ?  -1: i/2; });
+      constexpr auto shi = eve::fix_pattern<16>([](auto i, auto) { return i&1 ?  -1: 8+i/2; });
+
+      tmp_t alo = std::bit_cast<tmp_t>(a[slo]);
+      tmp_t blo = std::bit_cast<tmp_t>(b[slo]);
+      tmp_t lo(_mm512_mul_epu32(alo, blo));
+      tmp_t ahi = std::bit_cast<tmp_t>(a[shi]);
+      tmp_t bhi = std::bit_cast<tmp_t>(b[shi]);
+      tmp_t hi(_mm512_mul_epu32(ahi, bhi));
+      return eve::combine(lo, hi);
+    }
+    else if constexpr(c == category::uint32x8 && current_api >= avx2)
     {
       std::cout <<  "category::uint32x8 && current_api >= avx2" << std::endl;
       using tmp_t = wide < upgrade_t<T>, fixed<4>>;
-      tmp_t alo = std::bit_cast<tmp_t>(a[pattern<0, -1, 1, -1, 2, -1, 3, -1>]);
-      tmp_t blo = std::bit_cast<tmp_t>(b[pattern<0, -1, 1, -1, 2, -1, 3, -1>]);
+      constexpr auto slo = eve::fix_pattern<8>([](auto i, auto) { return i&1 ?  -1 : i/2; });
+      constexpr auto shi = eve::fix_pattern<8>([](auto i, auto) { return i&1 ?  -1 : 4+i/2; });
+      tmp_t alo = std::bit_cast<tmp_t>(a[slo]);
+      tmp_t blo = std::bit_cast<tmp_t>(b[slo]);
       tmp_t lo(_mm256_mul_epu32(alo, blo));
-      tmp_t ahi = std::bit_cast<tmp_t>(a[pattern<4, -1, 5, -1, 6, -1, 7, -1>]);
-      tmp_t bhi = std::bit_cast<tmp_t>(b[pattern<4, -1, 5, -1, 6, -1, 7, -1>]);
+      tmp_t ahi = std::bit_cast<tmp_t>(a[shi]);
+      tmp_t bhi = std::bit_cast<tmp_t>(b[shi]);
       tmp_t hi(_mm256_mul_epu32(ahi, bhi));
       return eve::combine(lo, hi);
     }
@@ -96,7 +113,8 @@ namespace eve::detail
       std::cout <<  "category::uint16x32" << std::endl;
       in_t abh(_mm512_mulhi_epu16(a, b));
       in_t abl(_mm512_mullo_epi16(a, b));
-      auto res = eve::combine(abl, abh);
+      constexpr auto s = eve::fix_pattern<N::value*2>([](auto i, auto) { return i&1 ?  N::value+i/2 :i/2; });
+      auto res = eve::combine(abl, abh)[s];
       return std::bit_cast<ou_t>(res);
     }
     else  if constexpr(c == category::uint16x16 && current_api >= avx2 )
@@ -121,16 +139,6 @@ namespace eve::detail
         auto r = res[s];
         return std::bit_cast<ou_t>(r);
       }
-//       else if constexpr(N::value ==  4)
-//       {
-//         std::cout <<  "category::uint16x4 && N::value == 4" << std::endl;
-//         in_t abh(_mm_mulhi_epu16(a, b));
-//         in_t abl(mul(a, b));
-//         auto res = eve::combine(abl, abh);
-//         constexpr auto s = eve::fix_pattern<N::value*2>([](auto i, auto) { return i&1 ?  N::value+i/2 :i/2; });
-//         auto r = res[s];
-//         return std::bit_cast<ou_t>(r);
-//       }
       else
       {
         std::cout <<  "RETARGET 1b " << std::endl;
@@ -152,16 +160,33 @@ namespace eve::detail
     using in_t = wide<T, N>;
     using ou_t = wide<upgrade_t<T>, N>;
     constexpr auto c = categorize<in_t>();
-    std::cout << "type in: " << tts::typename_of(a) << " size " << sizeof(T) << std::endl;
-    if constexpr(c == category::int32x8 && current_api >= avx2)
+    std::cout << "type in: " << tts::typename_of(a) << " size " << sizeof(T) << " N "<< N::value << std::endl;
+    if constexpr(c == category::int32x16 && current_api >= avx512)
+    {
+      std::cout <<  "category::int32x16 && current_api >= avx512" << std::endl;
+      using tmp_t = wide < upgrade_t<T>, fixed<8>>;
+      constexpr auto slo = eve::fix_pattern<16>([](auto i, auto) { return i&1 ?  -1: i/2; });
+      constexpr auto shi = eve::fix_pattern<16>([](auto i, auto) { return i&1 ?  -1: 8+i/2; });
+
+      tmp_t alo = std::bit_cast<tmp_t>(a[slo]);
+      tmp_t blo = std::bit_cast<tmp_t>(b[slo]);
+      tmp_t lo(_mm512_mul_epi32(alo, blo));
+      tmp_t ahi = std::bit_cast<tmp_t>(a[shi]);
+      tmp_t bhi = std::bit_cast<tmp_t>(b[shi]);
+      tmp_t hi(_mm512_mul_epi32(ahi, bhi));
+      return eve::combine(lo, hi);
+    }
+    else if constexpr(c == category::int32x8 && current_api >= avx2)
     {
       std::cout <<  "category::int32x8 && current_api >= avx2" << std::endl;
       using tmp_t = wide < upgrade_t<T>, fixed<4>>;
-      tmp_t alo = std::bit_cast<tmp_t>(a[pattern<0, -1, 1, -1, 2, -1, 3, -1>]);
-      tmp_t blo = std::bit_cast<tmp_t>(b[pattern<0, -1, 1, -1, 2, -1, 3, -1>]);
+      constexpr auto slo = eve::fix_pattern<8>([](auto i, auto) { return i&1 ?  -1 : i/2; });
+      constexpr auto shi = eve::fix_pattern<8>([](auto i, auto) { return i&1 ?  -1 : 4+i/2; });
+      tmp_t alo = std::bit_cast<tmp_t>(a[slo]);
+      tmp_t blo = std::bit_cast<tmp_t>(b[slo]);
       tmp_t lo(_mm256_mul_epi32(alo, blo));
-      tmp_t ahi = std::bit_cast<tmp_t>(a[pattern<4, -1, 5, -1, 6, -1, 7, -1>]);
-      tmp_t bhi = std::bit_cast<tmp_t>(b[pattern<4, -1, 5, -1, 6, -1, 7, -1>]);
+      tmp_t ahi = std::bit_cast<tmp_t>(a[shi]);
+      tmp_t bhi = std::bit_cast<tmp_t>(b[shi]);
       tmp_t hi(_mm256_mul_epi32(ahi, bhi));
       return eve::combine(lo, hi);
     }
@@ -212,7 +237,8 @@ namespace eve::detail
       std::cout <<  "category::int16x32" << std::endl;
       in_t abh(_mm512_mulhi_epi16(a, b));
       in_t abl(_mm512_mullo_epi16(a, b));
-      auto res = eve::combine(abl, abh);
+      constexpr auto s = eve::fix_pattern<N::value*2>([](auto i, auto) { return i&1 ?  N::value+i/2 :i/2; });
+      auto res = eve::combine(abl, abh)[s];
       return std::bit_cast<ou_t>(res);
     }
     else  if constexpr(c == category::int16x16 && current_api >= avx2 )
@@ -227,7 +253,7 @@ namespace eve::detail
     }
     else if constexpr(c == category::int16x8  && N::value != 1)
     {
-      std::cout <<  "category::int16x8 && N::value >= 4" << std::endl;
+
       in_t abh(_mm_mulhi_epi16(a, b));
       in_t abl(mul(a, b));
       auto res = eve::combine(abl, abh);

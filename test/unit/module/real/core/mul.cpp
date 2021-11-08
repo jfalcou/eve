@@ -157,7 +157,7 @@
 //==================================================================================================
 //==  promote mul tests on simd
 //==================================================================================================
-EVE_TEST( "Check behavior of promote mul on signed types"
+EVE_TEST( "Check behavior of promote mul on all types"
         , eve::test::simd::all_types
         , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
                               , eve::test::randoms(eve::valmin, eve::valmax)
@@ -165,7 +165,7 @@ EVE_TEST( "Check behavior of promote mul on signed types"
         )
 <typename T>( T const& a0, T const& a1 )
 {
-  if constexpr (sizeof(eve::element_type_t<T>) < 8& sizeof(eve::element_type_t<T>) !=  1 && eve::cardinal_v<T> !=  1)
+  if constexpr ((sizeof(eve::element_type_t<T>) < 8) && (sizeof(eve::element_type_t<T>) !=  1) && eve::cardinal_v<T> !=  1)
   {
     using eve::mul;
     using eve::detail::map;
