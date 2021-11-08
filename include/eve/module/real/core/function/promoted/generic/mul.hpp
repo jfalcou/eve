@@ -10,36 +10,36 @@
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/function/conditional.hpp>
 #include <eve/detail/function/operators.hpp>
 #include <eve/traits/common_compatible.hpp>
-#include <eve/module/real/core/detail/generic/multi_mul.hpp>
-
 #include <eve/function/converter.hpp>
 #include <eve/function/promoted.hpp>
 #include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
-  //================================================================================================
-  //== Masked case
-  //================================================================================================
-  template<conditional_expr C, real_value U, real_value V>
-  EVE_FORCEINLINE auto mul_(EVE_SUPPORTS(cpu_), C const &cond, U const &t, V const &f) noexcept
-      requires compatible_values<U, V>
-  {
-    return mask_op(  cond, eve::mul, t, f);
-  }
 
   //================================================================================================
-  //==  regular N parameters
+  //== promoted case
   //================================================================================================
-  template<real_value T0, real_value T1, real_value ...Ts>
-  common_compatible_t<T0,T1,Ts...> mul_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
+  template<real_value T,  real_value U>
+  EVE_FORCEINLINE auto mul_(EVE_SUPPORTS(cpu_), promoted_type const &, T a, U b) noexcept
   {
-    using r_t = common_compatible_t<T0,T1,Ts...>;
-    r_t that(mul(r_t(a0),r_t(a1)));
-    ((that = mul(that,r_t(args))),...);
-    return that;
+    return arithmetic_call(promoted(mul), a, b);
+  }
+
+  template<real_value T>
+  EVE_FORCEINLINE auto mul_(EVE_SUPPORTS(cpu_), promoted_type const &, T a, T b) noexcept
+  requires has_native_abi_v<T>
+  {
+    using elt_t = element_type_t<T>;
+    if constexpr(sizeof(elt_t) == 8)
+    {
+      return a*b;
+    }
+    else
+    {
+      return mul(upgrade_(a), upgrade_(b));
+    }
   }
 }
