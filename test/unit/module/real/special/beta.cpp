@@ -45,12 +45,14 @@ EVE_TEST( "Check behavior of beta on wide"
         , eve::test::generate(eve::test::randoms(0.0, 10.0)
                              , eve::test::randoms(0.0,10.0))
         )
-<typename T>(T const& a0, T const& a1 )
+<typename T>([[maybe_unused]] T const& a0, [[maybe_unused]] T const& a1 )
 {
   using eve::beta;
   using eve::as;
-  using elt_t = eve::element_type_t<T>;
+
 #if defined(__cpp_lib_math_special_functions)
+  using elt_t = eve::element_type_t<T>;
+
   TTS_ULP_EQUAL( eve::beta(a0, a1),  map([&](auto e, auto f) -> elt_t{ return std::beta(e, f); }, a0, a1), 32);
   auto db = [](auto x,  auto y){ return eve::fnma(eve::digamma(x), std::beta(x, y), eve::digamma(x + y));};
   TTS_ULP_EQUAL( eve::diff_1st(eve::beta)(a0, a1),  map(db, a0, a1), 2);
@@ -76,6 +78,4 @@ EVE_TEST( "Check behavior of beta on wide"
     TTS_ULP_EQUAL(beta(eve::nan(eve::as<T>()), T(1)), eve::nan(as<T>()), 0);
     TTS_ULP_EQUAL(beta(T(1), eve::nan(eve::as<T>())), eve::nan(as<T>()), 0);
   }
-
-
 };
