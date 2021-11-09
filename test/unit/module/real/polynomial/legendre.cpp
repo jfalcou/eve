@@ -139,22 +139,32 @@ EVE_TEST( "Check behavior of associated legendre p on wide"
         )
  <typename T, typename I>(T a0, I i0, I j0)
 {
-//   using v_t = eve::element_type_t<T>;
-  auto eve__legendrev  =  [](auto m, auto n, auto x) { return eve::legendre(m, n, x); };
   auto cse__legendrev  =  [](auto m, auto n, auto x) { return eve::condon_shortey(eve::legendre)(m, n, x); };
   auto boost_legendrev =  [](auto m, auto n, auto x) { return boost::math::legendre_p(m, n, x); };
+
+#if defined(__cpp_lib_math_special_functions)
+  auto eve__legendrev  =  [](auto m, auto n, auto x) { return eve::legendre(m, n, x); };
   auto std_assoc = [](auto m, auto n, auto x) { return std::assoc_legendre(m, n, x); };
+#endif
+
   for(unsigned int k=0; k < eve::cardinal_v < T > ; ++k)
   {
     for(unsigned int n=0; n < eve::cardinal_v < I > ; ++n)
     {
       for(unsigned int p=0; p < eve::cardinal_v < I > ; ++p)
       {
+#if defined(__cpp_lib_math_special_functions)
         TTS_ULP_EQUAL(eve__legendrev(n, p, a0.get(k)), std_assoc(n, p, a0.get(k)), 100);
+#endif
+
         TTS_RELATIVE_EQUAL(cse__legendrev(n, p, a0.get(k)), boost_legendrev(n, p, a0.get(k)), 0.01);
       }
     }
   }
+
+#if defined(__cpp_lib_math_special_functions)
   TTS_ULP_EQUAL(eve__legendrev(j0, i0, a0), map(std_assoc, j0, i0, a0), 100);
+#endif
+
   TTS_ULP_EQUAL(cse__legendrev(i0, j0, a0), map(boost_legendrev, i0, j0, a0), 100);
 };

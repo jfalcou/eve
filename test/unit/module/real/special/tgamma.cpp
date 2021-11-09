@@ -38,11 +38,13 @@ EVE_TEST( "Check behavior of tgamma on wide"
         , eve::test::simd::ieee_reals
         , eve::test::generate(eve::test::randoms(-10.0, 10.0))
         )
-<typename T>(T const& a0 )
+<typename T>([[maybe_unused]] T const& a0 )
 {
-  using v_t = eve::element_type_t<T>;
   using eve::tgamma;
+
 #if defined(__cpp_lib_math_special_functions)
+  using v_t = eve::element_type_t<T>;
+
   TTS_ULP_EQUAL( tgamma(a0),  map([&](auto e) -> v_t{ return std::tgamma(e); }, a0), 4);
 #endif  // __cpp_lib_math_special_functions
 
