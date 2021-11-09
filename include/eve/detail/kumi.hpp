@@ -639,7 +639,7 @@ namespace kumi
   template<product_type Type>
   [[nodiscard]] inline constexpr auto to_tuple(Type&& that)
   {
-    return apply([](auto &&...elems) { return tuple{elems...}; }, std::forward<Type>(that));
+    return apply([](auto &&...elems) { return tuple{elems...}; }, KUMI_FWD(that));
   }
 
   //================================================================================================

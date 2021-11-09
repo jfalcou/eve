@@ -62,7 +62,7 @@ namespace eve::algo
       template<typename Traits, typename Rng, typename Op, typename Zero, typename U>
       EVE_FORCEINLINE void operator()(Traits tr, Rng &&rng, std::pair<Op, Zero> op_zero, U init) const
       {
-        auto processed = preprocess_range(tr, std::forward<Rng>(rng));
+        auto processed = preprocess_range(tr, EVE_FWD(rng));
         if( processed.begin() == processed.end() ) return;
 
         using I      = decltype(processed.begin());
@@ -85,13 +85,13 @@ namespace eve::algo
     EVE_FORCEINLINE void operator()(Rng&& rng, std::pair<Op, Zero> op_zero, U init) const
     {
       detail::inclusive_scan_common<inplace_load_store>{}(
-        TraitsSupport::get_traits(), views::convert(std::forward<Rng>(rng), eve::as<U>{}), op_zero, init);
+        TraitsSupport::get_traits(), views::convert(EVE_FWD(rng), eve::as<U>{}), op_zero, init);
     }
 
     template <relaxed_range Rng, typename U>
     EVE_FORCEINLINE void operator()(Rng&& rng, U init) const
     {
-      operator()(std::forward<Rng>(rng), std::pair{eve::plus, eve::zero}, init);
+      operator()(EVE_FWD(rng), std::pair{eve::plus, eve::zero}, init);
     }
   };
 
@@ -117,14 +117,14 @@ namespace eve::algo
       requires zip_to_range<R1, R2>
     EVE_FORCEINLINE auto operator()(R1&& r1, R2&& r2, std::pair<Op, Zero> op_zero, U init) const
     {
-      operator()(views::zip(std::forward<R1>(r1), std::forward<R2>(r2)), op_zero, init);
+      operator()(views::zip(EVE_FWD(r1), EVE_FWD(r2)), op_zero, init);
     }
 
     template <typename R1, typename R2, typename U>
       requires zip_to_range<R1, R2>
     EVE_FORCEINLINE auto operator()(R1&& r1, R2&& r2, U init) const
     {
-      return operator()(views::zip(std::forward<R1>(r1), std::forward<R2>(r2)), init);
+      return operator()(views::zip(EVE_FWD(r1), EVE_FWD(r2)), init);
     }
   };
 

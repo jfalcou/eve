@@ -46,7 +46,7 @@ namespace eve::algo
       requires zip_to_range<R1, R2>
     EVE_FORCEINLINE void operator()(R1&& r1, R2&& r2) const
     {
-      operator()(views::zip(std::forward<R1>(r1), std::forward<R2>(r2)));
+      operator()(views::zip(EVE_FWD(r1), EVE_FWD(r2)));
     }
   };
 

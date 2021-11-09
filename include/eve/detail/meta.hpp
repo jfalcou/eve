@@ -373,7 +373,7 @@ namespace eve::detail
   {
     const auto impl = [&]<std::size_t... I>(std::index_sequence<I...> const &)
     {
-      return std::forward<Func>(f)(std::integral_constant<std::size_t, I>{}...);
+      return EVE_FWD(f)(std::integral_constant<std::size_t, I>{}...);
     };
 
     return impl(std::make_index_sequence<Count>{});
@@ -385,7 +385,7 @@ namespace eve::detail
   {
     const auto impl = [&](Generator<I...> const &)
     {
-      return std::forward<Func>(f)(std::integral_constant<std::size_t, I>{}...);
+      return EVE_FWD(f)(std::integral_constant<std::size_t, I>{}...);
     };
 
     return impl(g);

@@ -21,7 +21,7 @@ namespace eve
     {
       return  [f](auto&&... args)
               {
-                return f(almost_type{}, std::forward<decltype(args)>(args)...);
+                return f(almost_type{}, EVE_FWD(args)...);
               };
     }
   };
@@ -69,7 +69,7 @@ namespace eve
     {
       return  [f](auto&&... args)
               {
-                return f(definitely_type{}, std::forward<decltype(args)>(args)...);
+                return f(definitely_type{}, EVE_FWD(args)...);
               };
     }
   };
@@ -118,7 +118,7 @@ namespace eve
     {
       return  [f](auto&&... args)
               {
-                return f(tolerant_type{}, std::forward<decltype(args)>(args)...);
+                return f(tolerant_type{}, EVE_FWD(args)...);
               };
     }
   };

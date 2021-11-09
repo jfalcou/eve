@@ -121,7 +121,7 @@ namespace eve
     //! Construction is done piecewise unless the @iterator{s} extracted from `r` are @raiterator{s}.
     template<detail::range Range>
     EVE_FORCEINLINE explicit logical(Range &&r) noexcept requires(!std::same_as<storage_type, Range>)
-                  : logical(std::begin(std::forward<Range>(r)), std::end(std::forward<Range>(r)))
+                  : logical(std::begin(EVE_FWD(r)), std::end(EVE_FWD(r)))
     {}
 
     //! Constructs a eve::logical from a SIMD compatible pointer
@@ -181,7 +181,7 @@ namespace eve
     //==============================================================================================
     template<std::invocable<size_type,size_type> Generator>
     EVE_FORCEINLINE logical(Generator &&g) noexcept
-                  : storage_base(detail::fill(as<logical>{}, std::forward<Generator>(g)))
+                  : storage_base(detail::fill(as<logical>{}, EVE_FWD(g)))
     {}
 
     //! @brief Constructs a eve::logical by combining two eve::logical of half the current cardinal.

@@ -117,7 +117,7 @@ namespace eve::algo::views
 
       template<std::size_t idx, typename Self>
       requires std::derived_from<std::remove_cvref_t<Self>, zip_iterator_common<Is...>>
-      friend decltype(auto) get(Self &&self) { return get<idx>(std::forward<Self>(self).storage); }
+      friend decltype(auto) get(Self &&self) { return get<idx>(EVE_FWD(self).storage); }
       // ~tuple opt in
 
       zip_iterator_common() = default;

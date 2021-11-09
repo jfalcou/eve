@@ -83,7 +83,7 @@ namespace eve::algo::views
     {
       if constexpr( relaxed_range<Wrapped> )
       {
-        auto rng  = range_ref(std::forward<Wrapped>(wrapped));
+        auto rng  = range_ref(EVE_FWD(wrapped));
         using Rng = decltype(rng);
 
              if constexpr( std::same_as<value_type_t<Rng>, T>         ) return rng;
@@ -102,11 +102,11 @@ namespace eve::algo::views
     template <typename Wrapped, typename T>
     auto operator()(Wrapped&& wrapped, eve::as<T> tgt) const
     {
-      if constexpr (eve::detail::tag_dispatchable<convert_, decltype(std::forward<Wrapped>(wrapped)), as<T>>)
+      if constexpr (eve::detail::tag_dispatchable<convert_, decltype(EVE_FWD(wrapped)), as<T>>)
       {
-        return tagged_dispatch(*this, std::forward<Wrapped>(wrapped), tgt);
+        return tagged_dispatch(*this, EVE_FWD(wrapped), tgt);
       }
-      else return no_tagged_dispatch( std::forward<Wrapped>(wrapped), tgt);
+      else return no_tagged_dispatch( EVE_FWD(wrapped), tgt);
     }
   } inline constexpr convert;
 

@@ -21,7 +21,7 @@ namespace eve::algo
     template <relaxed_range Rng, typename P>
     EVE_FORCEINLINE bool operator()(Rng&& rng, P p) const
     {
-      return !any_of[TraitsSupport::get_traits()](std::forward<Rng>(rng), p);
+      return !any_of[TraitsSupport::get_traits()](EVE_FWD(rng), p);
     }
   };
 

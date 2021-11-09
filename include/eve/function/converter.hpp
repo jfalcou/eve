@@ -37,11 +37,11 @@ namespace eve
       {
         if constexpr( supports_optimized_conversion<typename Function::tag_type>::value )
         {
-          return f(decorated<convert_to_<T>()>(), std::forward<Ts>(args)...);
+          return f(decorated<convert_to_<T>()>(), EVE_FWD(args)...);
         }
         else
         {
-          return convert(f(std::forward<Ts>(args)...), as<T>());
+          return convert(f(EVE_FWD(args)...), as<T>());
         }
       };
     }
@@ -73,19 +73,19 @@ namespace eve
           if constexpr(isDirect)
           {
             return f( decorated<convert_to_<value_type>()>()
-                    , std::forward<T>(arg0), std::forward<Ts>(args)...
+                    , EVE_FWD(arg0), EVE_FWD(args)...
                     );
           }
           else
           {
             return f( decorated<convert_by_<Meta,isDirect>()>()
-                    , std::forward<T>(arg0), std::forward<Ts>(args)...
+                    , EVE_FWD(arg0), EVE_FWD(args)...
                     );
           }
         }
         else
         {
-          return convert(f(std::forward<T>(arg0), std::forward<Ts>(args)...), as<value_type>());
+          return convert(f(EVE_FWD(arg0), EVE_FWD(args)...), as<value_type>());
         }
       };
     }
