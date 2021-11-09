@@ -7,6 +7,9 @@
 //==================================================================================================
 #pragma once
 
+// Faster than std::forward
+#define EVE_FWD(...) static_cast<decltype(__VA_ARGS__) &&>(__VA_ARGS__)
+
 // Force a function to be inline
 #if defined(EVE_NO_FORCEINLINE)
 #  define EVE_FORCEINLINE inline
