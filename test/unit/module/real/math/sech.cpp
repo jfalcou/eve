@@ -53,8 +53,12 @@ EVE_TEST( "Check behavior of sech on wide"
   using eve::sech;
   using eve::cosh;
   using eve::diff;
-  TTS_ULP_EQUAL(sech(a0)      , map([](auto e) -> v_t { return 1/std::cosh(e); }, a0), 2);
-  TTS_ULP_EQUAL(sech(a1)      , map([](auto e) -> v_t { return 1/std::cosh(e); }, a1), 2);
+
+  auto rel  = std::is_same_v<v_t,float> ? 2e-5 : 1e-13;
+
+  TTS_RELATIVE_EQUAL(sech(a0)      , map([](auto e) -> v_t { return 1/std::cosh(e); }, a0), rel);
+  TTS_RELATIVE_EQUAL(sech(a1)      , map([](auto e) -> v_t { return 1/std::cosh(e); }, a1), rel);
+
   TTS_ULP_EQUAL(diff(sech)(a0), map([](auto e) -> v_t { return -sech(e)*eve::tanh(e); }, a0), 2);
   TTS_ULP_EQUAL(diff(sech)(a1), map([](auto e) -> v_t { return -sech(e)*eve::tanh(e); }, a1), 2);
 };
