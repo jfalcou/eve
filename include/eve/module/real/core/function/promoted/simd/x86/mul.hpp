@@ -93,6 +93,12 @@ namespace eve::detail
         tb = tb[pattern < 0, -1, 1, -1>];
         return ou_t(_mm_mul_epu32(ta, tb));
       }
+//       else if constexpr(N::value == 1)
+//       {
+//         std::cout << "icitte" << std::endl;
+//         exit(1); 
+//         return ou_t(uint64_t(a.get(0)*uint64_t(b.get(0)))); 
+//       }
       else
       {
         return mul_(EVE_RETARGET(cpu_),promoted_type(), a, b);
