@@ -130,8 +130,8 @@ namespace eve
 #if !defined(EVE_DOXYGEN_INVOKED)
     requires(!std::same_as<storage_type, std::remove_reference_t<Range>>)
 #endif
-                            : wide( std::begin(std::forward<Range>(r))
-                                  , std::end  (std::forward<Range>(r))
+                            : wide( std::begin(EVE_FWD(r))
+                                  , std::end  (EVE_FWD(r))
                                   )
     {}
 
@@ -214,7 +214,7 @@ namespace eve
     //==============================================================================================
     template<std::invocable<size_type,size_type> Generator>
     EVE_FORCEINLINE wide(Generator &&g) noexcept
-                  : storage_base( detail::fill(eve::as<wide>{}, std::forward<Generator>(g)) )
+                  : storage_base( detail::fill(eve::as<wide>{}, EVE_FWD(g)) )
     {}
 
     //! @brief Constructs a eve::wide by combining two eve::wide of half the current cardinal.

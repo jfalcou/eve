@@ -31,7 +31,7 @@ namespace tag { struct TAG {}; }                                                
     template<typename... Args>                                                                     \
     concept supports_ ## TAG = requires(Args&&... args)                                            \
     {                                                                                              \
-      { TAG( delay_t{}, EVE_CURRENT_API{}, std::forward<Args>(args)...) };                         \
+      { TAG( delay_t{}, EVE_CURRENT_API{}, EVE_FWD(args)...) };                         \
     };                                                                                             \
                                                                                                    \
     template<typename Dummy>                                                                       \
@@ -48,26 +48,26 @@ namespace tag { struct TAG {}; }                                                
         if constexpr( decorator<std::decay_t<Arg>> )                                               \
         {                                                                                          \
           check ( delay_t{}, ::eve::detail::types<std::decay_t<Arg>,tag_type>{},                   \
-                  std::forward<Args>(args)...                                                      \
+                  EVE_FWD(args)...                                                      \
                 );                                                                                 \
         }                                                                                          \
         else                                                                                       \
         {                                                                                          \
-          check ( delay_t{}, ::eve::detail::types<tag_type>{}, std::forward<Arg>(d),               \
-                  std::forward<Args>(args)...                                                      \
+          check ( delay_t{}, ::eve::detail::types<tag_type>{}, EVE_FWD(d),               \
+                  EVE_FWD(args)...                                                      \
                 );                                                                                 \
         }                                                                                          \
                                                                                                    \
         if constexpr( tag_dispatchable<tag_type,Arg,Args...> )                                     \
         {                                                                                          \
           return tagged_dispatch ( tag_type{}                                                      \
-                            , std::forward<Arg>(d), std::forward<Args>(args)...                    \
+                            , EVE_FWD(d), EVE_FWD(args)...                    \
                             );                                                                     \
         }                                                                                          \
         else                                                                                       \
         {                                                                                          \
           return TAG( delay_t{}, EVE_CURRENT_API{}                                                 \
-                    , std::forward<Arg>(d), std::forward<Args>(args)...                            \
+                    , EVE_FWD(d), EVE_FWD(args)...                            \
                     );                                                                             \
         }                                                                                          \
       }                                                                                            \
@@ -173,7 +173,7 @@ namespace eve
       template <typename... X>
       constexpr EVE_FORCEINLINE auto operator()(X&&... x)
       {
-        return f(decorated{}, std::forward<X>(x)...);
+        return f(decorated{}, EVE_FWD(x)...);
       }
     };
 
@@ -205,7 +205,7 @@ namespace eve
     template <typename Tag, typename... Args>
     concept tag_dispatchable = requires(Tag tag, Args&&... args)
     {
-      { tagged_dispatch(tag, std::forward<Args>(args)...) };
+      { tagged_dispatch(tag, EVE_FWD(args)...) };
     };
   }
 

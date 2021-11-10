@@ -61,7 +61,7 @@ namespace eve::algo
     template <relaxed_range Rng, typename Op>
     EVE_FORCEINLINE void operator()(Rng&& rng, Op op) const
     {
-      auto processed = preprocess_range(TraitsSupport::get_traits(), std::forward<Rng>(rng));
+      auto processed = preprocess_range(TraitsSupport::get_traits(), EVE_FWD(rng));
       if( processed.begin() == processed.end() ) return;
 
       delegate<Op> d{op};

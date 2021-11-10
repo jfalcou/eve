@@ -103,7 +103,7 @@ namespace eve::algo::views
        return kumi::tuple{
          [&]<typename C>(C&& c)
          {
-           if constexpr (relaxed_range<C>) return range_ref(std::forward<C>(c));
+           if constexpr (relaxed_range<C>) return range_ref(EVE_FWD(c));
            else                            return as_range(c, unalign(c) + distance);
          }(components)...
        };
@@ -153,9 +153,9 @@ namespace eve::algo::views
 
     if constexpr (has_type_overrides_v<traits_type>)
     {
-      auto to = type_to_convert_to(std::forward<Components>(components)...);
+      auto to = type_to_convert_to(EVE_FWD(components)...);
       using T = typename decltype(to)::type;
-      return zip(views::convert(std::forward<Components>(components), eve::as<T>{})...);
+      return zip(views::convert(EVE_FWD(components), eve::as<T>{})...);
     }
     else if constexpr( (relaxed_iterator<Components> && ...) )
     {

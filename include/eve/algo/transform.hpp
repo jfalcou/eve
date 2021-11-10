@@ -64,7 +64,7 @@ namespace eve::algo
     EVE_FORCEINLINE void operator()(Rng&& rng, Op op) const
     {
       detail::transform_delegate<inplace_load_store, Op> d{op};
-      for_each[TraitsSupport::get_traits()](std::forward<Rng>(rng), d);
+      for_each[TraitsSupport::get_traits()](EVE_FWD(rng), d);
     }
   };
 
@@ -104,7 +104,7 @@ namespace eve::algo
       requires zip_to_range<R1, R2>
     EVE_FORCEINLINE void operator()(R1&& r1, R2&& r2, Op op) const
     {
-      operator()(views::zip(std::forward<R1>(r1), std::forward<R2>(r2)), op);
+      operator()(views::zip(EVE_FWD(r1), EVE_FWD(r2)), op);
     }
   };
 

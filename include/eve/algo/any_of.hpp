@@ -53,7 +53,7 @@ namespace eve::algo
     template <relaxed_range Rng, typename P>
     EVE_FORCEINLINE bool operator()(Rng&& rng, P p) const
     {
-      auto processed = preprocess_range(TraitsSupport::get_traits(), std::forward<Rng>(rng));
+      auto processed = preprocess_range(TraitsSupport::get_traits(), EVE_FWD(rng));
 
       if (processed.begin() == processed.end()) return false;
 

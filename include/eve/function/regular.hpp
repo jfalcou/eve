@@ -22,7 +22,7 @@ namespace eve
     {
       return  [f](auto&&... args)
               {
-                return f(std::forward<decltype(args)>(args)...);
+                return f(EVE_FWD(args)...);
               };
     }
   };

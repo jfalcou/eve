@@ -18,7 +18,7 @@ namespace eve::algo
 {
   template <typename ...Components>
   concept zip_to_range = requires (Components&& ... components) {
-    { views::zip(std::forward<Components>(components)...) } -> relaxed_range;
+    { views::zip(EVE_FWD(components)...) } -> relaxed_range;
   };
 
   template <typename T>

@@ -46,7 +46,7 @@ namespace eve::algo
     template <typename Traits, typename Rng>
       requires eve::detail::tag_dispatchable<preprocess_range_, Traits, Rng>
     EVE_FORCEINLINE auto operator()(Traits traits_, Rng&& rng) const {
-      return tagged_dispatch(*this, traits_, std::forward<Rng>(rng));
+      return tagged_dispatch(*this, traits_, EVE_FWD(rng));
     }
 
     template <typename Traits, typename Rng>
