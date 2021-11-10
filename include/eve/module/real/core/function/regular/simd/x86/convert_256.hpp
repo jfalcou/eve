@@ -30,6 +30,15 @@ namespace eve::detail
     {
       return v0;
     }
+    else if constexpr( current_api >= avx2 && (N::value == 16)
+                       && std::integral<In> && (sizeof(In) == 2)
+                       && std::integral<Out> && (sizeof(Out) == 1) )
+    {
+      // u16 to u8
+      const auto vand   = v0 & wide<In, N> {0xff};
+      const auto [l, h] = vand.slice();
+      return _mm_packus_epi16(l, h);
+    }
     else if constexpr( current_api >= avx2 && (N::value == 4)
                        && std::integral<In> && (sizeof(In) == 8)
                        && std::integral<Out> && (sizeof(Out) == 4) )
