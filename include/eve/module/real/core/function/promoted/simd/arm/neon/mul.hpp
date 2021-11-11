@@ -23,9 +23,9 @@ namespace eve::detail
             wide<T, N> b) noexcept
   requires arm_abi<abi_t<T, N>>
   {
-   constexpr auto c = categorize<wide<T, N>>();
-   using r_t = wide<upgrade_t<T> , N>>;
-          if constexpr(sizeof(T) == 8)            return a*b;
+    constexpr auto c = categorize<wide<T, N>();
+    using r_t = wide<upgrade_t<T> , N>>;
+    if constexpr(sizeof(T) == 8)            return a*b;
     else  if constexpr(c == category::int8x8   )  return r_t(vmull_s8(a, b));
     else  if constexpr(c == category::int16x4  )  return r_t(vmull_s16(a, b));
     else  if constexpr(c == category::int32x2  )  return r_t(vmull_s32(a, b));
