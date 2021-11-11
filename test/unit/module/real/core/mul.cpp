@@ -163,7 +163,7 @@ EVE_TEST( "Check behavior of promote mul on all types"
                               , eve::test::randoms(eve::valmin, eve::valmax)
                               )
         )
-<typename T>( T const& a0, T const& a1 )
+<typename T>( T const& a0, T const& a1)
 {
   using eve::mul;
   using eve::detail::map;

@@ -13,3 +13,8 @@
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/real/core/function/promoted/simd/x86/mul.hpp>
 #endif
+
+
+#if defined(EVE_INCLUDE_ARM_HEADER)
+#  include <eve/module/real/core/function/promoted/simd/arm/neon/mul.hpp>
+#endif

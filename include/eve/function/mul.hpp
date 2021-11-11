@@ -80,6 +80,14 @@ namespace eve
   //!     [common compatible type](@ref common_compatible) of the N parameters. The computation is done as if all arguments were
   //!     converted to this type and the saturated multiplication applied recursively on all parameters. No overflow occurs.
   //!
+  //!  * eve::promoted
+  //!
+  //!     **Required header:** `#include <eve/function/promoted/mul.hpp>`
+  //!
+  //!     The call `promoted(mul)(a, b)` computes the promoted  multiplication of `a` and `b`. The result type is
+  //!     the ugraded type of the common compatible type of the 2 parameters.
+  //!     No overflow can occur.
+  //!
   //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/mul.hpp>`

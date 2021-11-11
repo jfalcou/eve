@@ -12,6 +12,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/operators.hpp>
 #include <eve/traits/common_compatible.hpp>
+#include <eve/function/convert.hpp>
 #include <eve/function/converter.hpp>
 #include <eve/function/promoted.hpp>
 #include <eve/detail/apply_over.hpp>
