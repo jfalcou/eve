@@ -22,6 +22,8 @@
 #include <eve/function/is_infinite.hpp>
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/is_eqz.hpp>
+#include <eve/function/is_ltz.hpp>
+#include <eve/function/is_odd.hpp>
 #include <eve/function/is_nltz.hpp>
 #include <eve/function/lgamma.hpp>
 #include <eve/function/tgamma.hpp>
@@ -56,38 +58,50 @@ namespace eve::detail
   }
 
   template<real_value I, floating_real_value T>
-  EVE_FORCEINLINE auto   kernel_bessel_y_int_forward (I n, T x, T j0, T j1) noexcept
+  EVE_FORCEINLINE auto   kernel_bessel_y_int_forward (I n, T x, T y0, T y1) noexcept
   {
-    auto prev = j0; //cyl_bessel_j0(x);
-    auto current = j1; //cyl_bessel_j1(x);
-    T scale(1), value(0);
-    auto nn = if_else(n < x, n, zero);
-    for (int k = 1; k < eve::maximum(nn); k++)
+    auto prev = y0; //cyl_bessel_y0(x);
+    auto current = y1; //cyl_bessel_y1(x);
+    int k = 1;
+//    BOOST_MATH_ASSERT(k < n);
+    T factor = if_else(is_ltz(n), if_else(is_odd(n), mone, one(as(n))), one);
+    n = eve::abs(n);
+    T mult = 2 * k / x;
+    auto  value = fms(mult, current, prev);
+    prev = current;
+    current = value;
+    ++k;
+    auto test = (mult > 1) && (eve::abs(current) > 1);
+    if(eve::any(test))
     {
-      auto t0 = k < nn;
-      T fact = 2 * k / x;
-      // rescale if we would overflow or underflow:
-      auto test = (eve::abs(fact) > 1) && ((valmax(as(x)) - eve::abs(prev)) / eve::abs(fact) < eve::abs(current))&&t0;
-      if (eve::any(test))
-      {
-        scale = if_else(test, scale/current, scale);
-        prev  = if_else(test, prev/current,  prev);
-        current = if_else(test, one, current);
-      }
-      value = if_else(t0, fms(fact, current, prev), value);
-      prev  = if_else(t0, current, prev);
-      current = if_else(t0, value, current);
-    };
-    return value/scale;
+      prev  = if_else(test, prev/current,  prev);
+      factor = if_else(test, factor/current, factor);
+      value  = if_else(test, value/current,  value);
+      current = if_else(test, one, current);
+    }
+    auto const maxn = maximum(n);
+    while(k < maxn)
+    {
+      auto t0 = k < n;
+      mult = if_else(t0, 2 * k / x, zero);
+      value =if_else(t0, fms(mult, current, prev), value);
+      prev  = current;
+      current = value;
+      ++k;
+    }
+//     if(eve::abs(valmax(as(x)) * factor) < eve::abs(value))
+//           return sign(value) * sign(factor) * policies::raise_overflow_error<T>(function, 0, pol);
+    value /= factor;
+    return value;
   }
 
   template<integral_real_value I, floating_real_value T>
-  EVE_FORCEINLINE auto   kernel_bessel_y_int_forward (I nn, T x, T j0, T j1) noexcept
+  EVE_FORCEINLINE auto   kernel_bessel_y_int_forward (I nn, T x, T y0, T y1) noexcept
   {
     if constexpr(simd_value<I>)
-      return kernel_bessel_y_int_forward (convert(nn, as<element_type_t<T>>()), x, j0, j1);
+      return kernel_bessel_y_int_forward (convert(nn, as<element_type_t<T>>()), x, y0, y1);
     else
-      return kernel_bessel_y_int_forward (T(nn), x, j0, j1);
+      return kernel_bessel_y_int_forward (T(nn), x, y0, y1);
   }
 
   template<real_value I, floating_real_value T>
@@ -122,9 +136,9 @@ namespace eve::detail
       };
     auto br_forward =  [](auto n,  auto x)
       {
-        auto j0 = cyl_bessel_j0(x);
-        auto j1 = cyl_bessel_j1(x);
-        return kernel_bessel_y_int_forward (n, x, j0, j1);
+        auto y0 = cyl_bessel_y0(x);
+        auto y1 = cyl_bessel_y1(x);
+        return kernel_bessel_y_int_forward (n, x, y0, y1);
       };
     auto br_small =  [](auto n,  auto x)
       {

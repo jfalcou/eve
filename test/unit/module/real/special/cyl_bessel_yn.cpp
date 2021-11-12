@@ -57,8 +57,10 @@ EVE_TEST( "Check behavior of cyl_bessel_yn on wide with integral order"
   TTS_ULP_EQUAL(eve__cyl_bessel_yn(3, v_t(1500)), std__cyl_bessel_yn(3, v_t(1500)), 2.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_yn(2, v_t(500)), std__cyl_bessel_yn(2, v_t(500)), 2.0);
   //scalar forward
-  TTS_ULP_EQUAL(eve__cyl_bessel_yn(2, v_t(10)), std__cyl_bessel_yn(2, v_t(10))  , 2.0);
-  TTS_ULP_EQUAL(eve__cyl_bessel_yn(3, v_t(5)),  std__cyl_bessel_yn(3, v_t(5))   , 2.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_yn(0, v_t(10)), std__cyl_bessel_yn(0, v_t(10))  , 2.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_yn(1, v_t(5)),  std__cyl_bessel_yn(1, v_t(5))   , 2.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_yn(2, v_t(10)), std__cyl_bessel_yn(2, v_t(10))  , 20.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_yn(3, v_t(5)),  std__cyl_bessel_yn(3, v_t(5))   , 20.0);
   //scalar serie
 //  TTS_ULP_EQUAL(eve__cyl_bessel_yn(2, v_t(0.1)), std__cyl_bessel_yn(2, v_t(0.1))  , 2.0);
 // TTS_ULP_EQUAL(eve__cyl_bessel_yn(3, v_t(0.2)),  std__cyl_bessel_yn(3, v_t(0.2))   , 2.0);
