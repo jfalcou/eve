@@ -63,9 +63,8 @@ namespace eve::detail
     auto prev = y0; //cyl_bessel_y0(x);
     auto current = y1; //cyl_bessel_y1(x);
     int k = 1;
-//    BOOST_MATH_ASSERT(k < n);
-    T factor = if_else(is_ltz(n), if_else(is_odd(n), mone, one(as(n))), one);
-    n = eve::abs(n);
+    EVE_ASSERT(eve::all(k+1 < n), "some ns are less than 2");
+    T factor(1);
     T mult = 2 * k / x;
     auto  value = fms(mult, current, prev);
     prev = current;
@@ -89,10 +88,7 @@ namespace eve::detail
       current = value;
       ++k;
     }
-//     if(eve::abs(valmax(as(x)) * factor) < eve::abs(value))
-//           return sign(value) * sign(factor) * policies::raise_overflow_error<T>(function, 0, pol);
-    value /= factor;
-    return value;
+    return value /factor;
   }
 
   template<integral_real_value I, floating_real_value T>
@@ -132,20 +128,24 @@ namespace eve::detail
 
     auto br_large =  [](auto n,  auto x)
       {
+        std::cout << "br_large" << std::endl;
         return kernel_bessel_y_large(n, x);
       };
     auto br_forward =  [](auto n,  auto x)
       {
+        std::cout << "br_forward" << std::endl;
         auto y0 = cyl_bessel_y0(x);
         auto y1 = cyl_bessel_y1(x);
         return kernel_bessel_y_int_forward (n, x, y0, y1);
       };
     auto br_small =  [](auto n,  auto x)
       {
+        std::cout << "br_small" << std::endl;
         return kernel_bessel_y_int_small(n, x);
       };
     auto br_medium =  [](auto n,  auto x)
       {
+        std::cout << "br_medium" << std::endl;
         return kernel_bessel_y_medium (n, x);
       };
 
@@ -158,16 +158,13 @@ namespace eve::detail
         factor = T(isoddn ? -1 : 1);  // J_{-n}(z) = (-1)^n J_n(z)
         n = -n;
       }
-//       auto xlt0 = is_ltz(x);
-//       factor *=  T(xlt0 && isoddn ? -1:1);  // J_{n}(-z) = (-1)^n J_n(z)
       if (is_ngez(x))                              return nan(as(x));
       if (is_eqz(x))                                return minf(as(x));
-//      x = if_else(xlt0, -x, x);
       if (x == inf(as(x)))                          return zero(as(x));
       if (asymptotic_bessel_large_x_limit(T(n), x)) return factor*br_large(T(n), x);
       if (n == 0)                                   return cyl_bessel_y0(x);      //cyl_bessel_y0(x);
-      if (n == 1)                                   return cyl_bessel_y1(x);      //cyl_bessel_y1(x);
-      if (n < eve::abs(x))                          return br_forward(n, x);      // forward recurrence
+      if (n == 1)                                   return factor*cyl_bessel_y1(x);      //cyl_bessel_y1(x);
+      if (n < eve::abs(x))                          return factor*br_forward(n, x);      // forward recurrence
       if ((n > x * x / 4) || (x < 5))               return factor*br_small(T(n), x); // serie
       return br_medium(n, x);                                                     // medium recurrence
     }
@@ -257,14 +254,11 @@ namespace eve::detail
     }
     else
     {
-//      auto nneg = is_ltz(n);
-//      auto xlt0 = is_ltz(x);
       auto r = nan(as(x));
       auto isinfx = x == inf(as(x));
       r = if_else(isinfx, zero(as(x)), allbits);
       x = if_else(isinfx, mone, x);
       auto notdone = is_nltz(x);
-
       if( eve::any(notdone) )
       {
         notdone = next_interval(br_large,  notdone, asymptotic_bessel_large_x_limit(n, x), r, n, x);
