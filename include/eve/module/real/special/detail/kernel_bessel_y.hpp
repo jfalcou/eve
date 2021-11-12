@@ -183,7 +183,7 @@ namespace eve::detail
       auto r = nan(as(x));
       auto isinfx = x == inf(as(x));
       r =  if_else(isinfx, zero(as(x)), allbits);
-      x = if_else(isinfx, allbits, x);
+      x = if_else(isinfx, mone, x);
       auto iseqzn = is_eqz(n);
       if (eve::any(iseqzn))
       {
@@ -206,8 +206,9 @@ namespace eve::detail
       }
 
       auto notdone = is_nltz(x);
-      std::cout << "r       " << r << std::endl;
-      std::cout << "notdone " << notdone << std::endl;
+//       std::cout << "x       " << x << std::endl;
+//       std::cout << "r       " << r << std::endl;
+//       std::cout << "notdone " << notdone << std::endl;
       x = if_else(notdone, x, allbits);
       auto nn = convert(n, as<elt_t>());
       if( eve::any(notdone) )
