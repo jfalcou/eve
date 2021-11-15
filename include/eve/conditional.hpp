@@ -53,14 +53,17 @@ namespace eve
     static constexpr bool has_alternative = true;
     using alternative_type = V;
 
-    or_(C const& c, V const& v) : C(c), alternative(v) {}
+    constexpr or_(C const& c, V const& v) : C(c), alternative(v) {}
 
-    template<typename T> auto rebase(T v) const
+    constexpr C base() const { return *this; }
+
+    template<typename T>
+    constexpr auto rebase(T v) const
     {
       return or_<C,T>{static_cast<C const&>(*this), v};
     }
 
-    auto map_alternative(auto op) const
+    constexpr auto map_alternative(auto op) const
     {
       auto mapped = op(alternative);
       C c = *this;
@@ -107,7 +110,8 @@ namespace eve
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = true;
 
-    template<typename V> EVE_FORCEINLINE auto else_(V const& v) const  {  return or_(*this,v);  }
+    template<typename V>
+    EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
     template<typename T> EVE_FORCEINLINE auto mask(eve::as<T> const&) const
     {
@@ -146,7 +150,8 @@ namespace eve
     static constexpr bool is_inverted     = true;
     static constexpr bool is_complete     = true;
 
-    template<typename V> EVE_FORCEINLINE auto else_(V) const  {  return *this;  }
+    template<typename V>
+    EVE_FORCEINLINE constexpr auto else_(V) const  {  return *this;  }
 
     template<typename T> EVE_FORCEINLINE auto mask(eve::as<T> const&) const
     {
@@ -189,7 +194,8 @@ namespace eve
 
     constexpr explicit EVE_FORCEINLINE keep_first(std::ptrdiff_t n) noexcept : count_(n) {}
 
-    template<typename V> EVE_FORCEINLINE auto else_(V const& v) const  {  return or_(*this,v);  }
+    template<typename V>
+    EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const&) const
     {
@@ -254,7 +260,8 @@ namespace eve
 
     constexpr explicit EVE_FORCEINLINE ignore_last(std::ptrdiff_t n) noexcept : count_(n) {}
 
-    template<typename V> EVE_FORCEINLINE auto else_(V const& v) const  {  return or_(*this,v);  }
+    template<typename V>
+    EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const& tgt) const
     {
@@ -298,7 +305,8 @@ namespace eve
 
     constexpr explicit EVE_FORCEINLINE keep_last(std::ptrdiff_t n) noexcept : count_(n) {}
 
-    template<typename V> EVE_FORCEINLINE auto else_(V const& v) const  {  return or_(*this,v);  }
+    template<typename V>
+    EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const&) const
     {
@@ -364,7 +372,8 @@ namespace eve
 
     constexpr explicit EVE_FORCEINLINE ignore_first(std::ptrdiff_t n) noexcept : count_(n) {}
 
-    template<typename V> EVE_FORCEINLINE auto else_(V const& v) const  {  return or_(*this,v);  }
+    template<typename V>
+    EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const& tgt) const
     {
@@ -411,7 +420,8 @@ namespace eve
       EVE_ASSERT(b<=e, "[eve::keep_between] Index mismatch for begin/end");
     }
 
-    template<typename V> EVE_FORCEINLINE auto else_(V const& v) const  {  return or_(*this,v);  }
+    template<typename V>
+    EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const&) const
     {
@@ -482,7 +492,8 @@ namespace eve
             : first_count_(b), last_count_(e)
     {}
 
-    template<typename V> EVE_FORCEINLINE auto else_(V const& v) const  {  return or_(*this,v);  }
+    template<typename V>
+    EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const& tgt) const
     {
@@ -532,5 +543,18 @@ namespace eve
   auto map_alternative(C c, auto map) {
     if constexpr (!C::has_alternative) return c;
     else                               return c.map_alternative(map);
+  }
+
+  template <eve::relative_conditional_expr C, typename T>
+  constexpr auto reverse_conditional(C c, eve::as<T> tgt)
+  {
+         if constexpr ( C::is_complete                  ) return c;
+    else if constexpr ( C::has_alternative              ) return reverse_conditional(c.base(), tgt).else_(c.alternative);
+    else if constexpr ( std::same_as<C, keep_first>     ) return keep_last(c.count_);
+    else if constexpr ( std::same_as<C, ignore_first>   ) return ignore_last(c.count_);
+    else if constexpr ( std::same_as<C, keep_last>      ) return keep_first(c.count_);
+    else if constexpr ( std::same_as<C, ignore_last>    ) return ignore_first(c.count_);
+    else if constexpr ( std::same_as<C, keep_between>   ) return keep_between(T::size() - c.end_, T::size() - c.begin_);
+    else if constexpr ( std::same_as<C, ignore_extrema> ) return ignore_extrema(c.last_count_, c.first_count_);
   }
 }
