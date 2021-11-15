@@ -251,6 +251,31 @@ namespace eve::algo::views
       }
     }
 
+    EVE_FORCEINLINE auto next_partially_aligned() const
+    {
+      if constexpr (partially_aligned_iterator<std::tuple_element_t<base::main_iterator_idx, zip_iterator<I, Is...>>>) return *this;
+      else
+      {
+        // None of the iterators are aligned (while not being always aligned).
+        // Otherwise we'd have a different main_iterator_idx.
+
+        auto aligned_main     = get<base::main_iterator_idx>(*this).next_partially_aligned();
+        std::ptrdiff_t offset = aligned_main - get<base::main_iterator_idx>(*this);
+
+        auto map_one = [&]<std::ptrdiff_t idx>(eve::index_t<idx>) {
+          if constexpr( idx == base::main_iterator_idx ) return aligned_main;
+          else                                           return get<idx>(*this) + offset;
+        };
+
+        return [&]<std::size_t... idxs>(std::index_sequence<idxs...>)
+        {
+          return zip_iterator<decltype(map_one(eve::index<static_cast<std::ptrdiff_t>(idxs)>))...> {
+              map_one(eve::index<static_cast<std::ptrdiff_t>(idxs)>)...};
+        }
+        (std::index_sequence_for<I, Is...> {});
+      }
+    }
+
     static iterator_cardinal_t<I> iterator_cardinal() { return{}; }
 
     template <typename _Cardinal>

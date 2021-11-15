@@ -59,6 +59,7 @@ namespace eve::algo::views
 
     base_plus_offset_iterator unaligned() const { return *this; }
     base_plus_offset_iterator previous_partially_aligned() const { return *this; }
+    base_plus_offset_iterator next_partially_aligned()     const { return *this; }
 
     static N iterator_cardinal() { return {}; }
 
