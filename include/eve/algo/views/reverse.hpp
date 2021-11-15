@@ -15,10 +15,11 @@
 #include <eve/algo/range_ref.hpp>
 
 #include <eve/function/convert.hpp>
-#include <eve/function/read.hpp>
-#include <eve/function/write.hpp>
 #include <eve/function/load.hpp>
+#include <eve/function/read.hpp>
+#include <eve/function/reverse.hpp>
 #include <eve/function/store.hpp>
+#include <eve/function/write.hpp>
 
 namespace eve::algo::views
 {
@@ -106,6 +107,7 @@ namespace eve::algo::views
       return y.base - x.base;
     }
 
+    // not eve::iterator--------------------
     template <typename Traits>
     EVE_FORCEINLINE
     friend auto tagged_dispatch(preprocess_range_, Traits tr,
@@ -122,6 +124,54 @@ namespace eve::algo::views
       requires (!iterator<I>) && (!std::same_as<I, unaligned_t<I>>)
     {
       return preprocess_range(tr, reverse(as_range(l.base, f.base)));
+    }
+
+    // eve::iterator -----------------
+    EVE_FORCEINLINE auto previous_partially_aligned() const
+      requires iterator<I>
+    {
+      return reverse(base.previous_partially_aligned() + iterator_cardinal_v<I>);
+    }
+
+    static auto iterator_cardinal() requires iterator<I>
+    { return I::iterator_cardinal(); }
+
+    template <typename _Cardinal>
+    EVE_FORCEINLINE auto cardinal_cast(_Cardinal N) const
+      requires iterator<I>
+    {
+      return reverse(base.cardinal_cast(N));
+    }
+
+    template<relative_conditional_expr C, decorator S>
+      requires iterator<I>
+    EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::load_,
+                                                C                             c,
+                                                S                             s,
+                                                eve::as<wide_value_type_t<I>> tgt,
+                                                reverse_iterator              self)
+    {
+      return eve::reverse(
+        eve::load( eve::reverse_conditional(c, tgt), s, tgt, self.base - iterator_cardinal_v<I>)
+      );
+    }
+
+    template<relative_conditional_expr C>
+    EVE_FORCEINLINE friend void tagged_dispatch(eve::tag::store_,
+                                                C                    c,
+                                                wide_value_type_t<I> v,
+                                                reverse_iterator     self)
+      requires iterator<I>
+    {
+      eve::store[eve::reverse_conditional(c, eve::as(v))](eve::reverse(v), self.base - iterator_cardinal_v<I>);
+    }
+
+    EVE_FORCEINLINE friend void tagged_dispatch(eve::tag::store_,
+                                                wide_value_type_t<reverse_iterator> v,
+                                                reverse_iterator                    self)
+      requires iterator<I>
+    {
+      eve::store(eve::reverse(v), self.base - iterator_cardinal_v<I>);
     }
   };
 

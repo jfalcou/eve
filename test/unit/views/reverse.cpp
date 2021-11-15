@@ -10,6 +10,7 @@
 
 #include <eve/views/reverse.hpp>
 
+#include <array>
 #include <vector>
 
 TTS_CASE("eve::views::reverse, read/write")
@@ -31,7 +32,6 @@ TTS_CASE("eve::views::reverse, read/write")
 
   TTS_EQUAL(v, (std::vector<int>{4, 3, 2, 1}));
 };
-
 
 TTS_CASE("ve::views::reverse, reverse of reverse")
 {
@@ -65,4 +65,44 @@ TTS_CASE("ve::views::reverse, reverse of reverse")
   }
 
   TTS_PASS("all types ok");
+};
+
+TTS_CASE("eve::views::reverse, preprocess_range")
+{
+  using ap = eve::aligned_ptr<int>;
+  using up = int*;
+  using a_it = eve::algo::aligned_ptr_iterator  <int, eve::fixed<eve::expected_cardinal_v<int>>>;
+  using u_it = eve::algo::unaligned_ptr_iterator<int, eve::fixed<eve::expected_cardinal_v<int>>>;
+
+  {
+    auto processed = eve::algo::preprocess_range(eve::algo::traits{}, eve::views::reverse(eve::algo::as_range(ap{}, up{})));
+    TTS_TYPE_IS(decltype(processed.begin()), eve::views::reverse_iterator<u_it>);
+    TTS_TYPE_IS(decltype(processed.end()),   eve::views::reverse_iterator<a_it>);
+  }
+  {
+    auto processed = eve::algo::preprocess_range(eve::algo::traits{}, eve::views::reverse(eve::algo::as_range(up{}, up{})));
+    TTS_TYPE_IS(decltype(processed.begin()), eve::views::reverse_iterator<u_it>);
+    TTS_TYPE_IS(decltype(processed.end()),   eve::views::reverse_iterator<u_it>);
+  }
+  {
+    auto processed = eve::algo::preprocess_range(eve::algo::traits{}, eve::views::reverse(eve::algo::as_range(up{}, ap{})));
+    TTS_TYPE_IS(decltype(processed.begin()), eve::views::reverse_iterator<a_it>);
+    TTS_TYPE_IS(decltype(processed.end()),   eve::views::reverse_iterator<u_it>);
+  }
+};
+
+TTS_CASE("eve::views::reverse, basic_load_store")
+{
+  std::array<int, eve::expected_cardinal_v<int>> a;
+  a.fill(0);
+
+  eve::wide<int> iota  = [](int i, int) { return i; };
+  eve::wide<int> riota = [](int i, int size) { return size - i - 1; };
+
+  auto processed = eve::algo::preprocess_range(eve::algo::traits{}, eve::views::reverse(a));
+
+  eve::store(iota, processed.begin());
+
+  TTS_EQUAL(riota, eve::wide<int>{a.data()});
+  TTS_EQUAL(iota,  eve::load(processed.begin()));
 };
