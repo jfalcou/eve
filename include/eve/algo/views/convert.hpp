@@ -219,6 +219,12 @@ namespace eve::algo::views
       return convert(base.previous_partially_aligned(), eve::as<T>{});
     }
 
+    EVE_FORCEINLINE auto next_partially_aligned() const
+      requires iterator<I>
+    {
+      return convert(base.next_partially_aligned(), eve::as<T>{});
+    }
+
     static auto iterator_cardinal() requires iterator<I>
     { return I::iterator_cardinal(); }
 

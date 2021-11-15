@@ -87,6 +87,20 @@ namespace algo_test
   }
 
   template <typename I>
+  void previous_next_aligned(I f_)
+  {
+    auto f = f_.unaligned();
+    if (f == f.previous_partially_aligned()) f += 1;
+
+    if (eve::algo::iterator_cardinal_v<I> != 1 && !eve::algo::always_aligned_iterator<I>) {
+      TTS_EQUAL((f.next_partially_aligned() - f.previous_partially_aligned()), eve::algo::iterator_cardinal_v<I>);
+    }
+
+    f = f.previous_partially_aligned();
+    TTS_EQUAL(f.previous_partially_aligned(), f.next_partially_aligned());
+  }
+
+  template <typename I>
   void cardinal_cast_test(I f)
   {
     auto res = f.cardinal_cast(eve::lane<1>);
@@ -108,7 +122,11 @@ namespace algo_test
     TTS_CONSTEXPR_EXPECT(
       eve::algo::partially_aligned_iterator<decltype(f.previous_partially_aligned())>);
     TTS_CONSTEXPR_EXPECT(
+      eve::algo::partially_aligned_iterator<decltype(f.next_partially_aligned())>);
+    TTS_CONSTEXPR_EXPECT(
       eve::algo::unaligned_iterator<decltype(f.unaligned())>);
+
+    previous_next_aligned(f);
 
     iterator_sentinel_test_one_pair(f.unaligned(), l, v, replace);
     iterator_sentinel_test_one_pair(f, l.unaligned(), v, replace);
