@@ -72,7 +72,7 @@ namespace eve::algo::views
   //!
   //!    **Required header:** `#include <eve/algo/views/convert.hpp>`
   //!
-  //!    Has a shorthand `eve::views::converting_range` in `<eve/views/convert.hpp>`.
+  //!    Has a shorthand `eve::views::convert` in `<eve/views/convert.hpp>`.
   //! @}
   //================================================================================================
 

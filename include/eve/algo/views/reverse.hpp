@@ -23,11 +23,54 @@
 
 namespace eve::algo::views
 {
+  //================================================================================================
+  //! @addtogroup eve.algo.views
+  //! @{
+  //!   @struct reverse_iterator
+  //!   @brief An adapter over a `relaxed_iterator` that allows to iterate in the reverse order.
+  //!   Should be created by a call to `eve::algo::views::reverse`.
+  //!
+  //!   NOTE: at this point convert(reverse) will not do anything smart.
+  //!
+  //!    **Required header:** `#include <eve/algo/views/reverse.hpp>`
+  //!
+  //!    Has a shorthand `eve::views::reverse_iterator` in `<eve/views/reverse.hpp>`.
+  //! @}
+  //==================
+
   template <relaxed_iterator I>
   struct reverse_iterator;
 
+  //================================================================================================
+  //! @addtogroup eve.algo.views
+  //! @{
+  //!   @struct reverse_range
+  //!   @brief An adapter over a `reverse_range` that allows to iterate in the reverse order.
+  //!   Should be created by a call to `eve::algo::views::reverse`.
+  //!   NOTE: at this point convert(reverse) will not do anything smart.
+  //!
+  //!    **Required header:** `#include <eve/algo/views/convert.hpp>`
+  //!
+  //!    Has a shorthand `eve::views::reverse_range` in `<eve/views/reverse.hpp>`.
+  //! @}
+  //================================================================================================
+
   template <non_owning_range R>
   struct reverse_range;
+
+  //================================================================================================
+  //! @addtogroup eve.algo.views
+  //! @{
+  //!   @var reverse
+  //!   @brief Takes an iterator or a range and returns an adapter for reverse iteration
+  //!
+  //!  @code{.cpp} eve::algo::views::reverse(it_or_r); @endcode
+  //!
+  //!    **Required header:** `#include <eve/algo/views/reverse.hpp>`
+  //!
+  //!    Has a shorthand `eve::views::reverse` in `<eve/views/reverse.hpp>`.
+  //! @}
+  //================
 
   struct reverse_
   {
