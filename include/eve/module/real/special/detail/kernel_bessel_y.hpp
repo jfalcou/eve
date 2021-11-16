@@ -17,6 +17,8 @@
 #include <eve/function/cyl_bessel_j1.hpp>
 #include <eve/function/cyl_bessel_y0.hpp>
 #include <eve/function/cyl_bessel_y1.hpp>
+#include <eve/function/digamma.hpp>
+#include <eve/function/factorial.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_not_nan.hpp>
 #include <eve/function/is_infinite.hpp>
@@ -113,39 +115,95 @@ namespace eve::detail
     return y;
   }
 
+  template <floating_real_value T>
+  auto kernel_bessel_Yn_small_x(T n, T x)
+  {
+//     std::cout << "x " << x << std::endl;
+//     std::cout << "n " << n << std::endl;
+//     std::cout << "kernel_bessel_Yn_small_x" << std::endl;
+    auto xlt5 = x < T(5);
+    x = if_else(xlt5, x, one);
+    n = if_else(xlt5, n, one);
+//     std::cout << "x " << x << std::endl;
+//     std::cout << "n " << n << std::endl;
+    using elt_t = element_type_t<T>;
+    T y = elt_t(0.25) * sqr(x);
+    T ln_x_2 = eve::log(elt_t(0.5)*x);
+    T ln_nm1_fact = eve::lgamma(n);
+    //   gsl_sf_lnfact_e((unsigned int)(n-1), &ln_nm1_fact);
+
+    T ln_pre1 = -n*ln_x_2 + ln_nm1_fact;
+
+//    if(ln_pre1 > GSL_LOG_DBL_MAX - 3.0) GSL_ERROR ("error", GSL_EOVRFLW);
+
+    T sum1(1);
+    T k_term(1);
+
+    for(int k=1; k < maximum(n); ++k) {
+      auto kltn = k < n;
+      k_term = if_else(kltn, k_term*(y/(k * (n-k))), k_term);
+      sum1   += if_else(kltn, k_term, zero);
+    }
+    T term1 = -eve::exp(ln_pre1) * sum1 *invpi(as(x));
+
+    T pre2 = -exp(n*ln_x_2) *invpi(as(x));
+    T term2(0);
+    if(eve::all(eve::abs(pre2) > 0.0))
+    {
+     constexpr int KMAX = 20;
+      T psi_n = digamma(n);
+      T npk_fact = tgamma(inc(n)); //eve::factorial(n);
+      T yk(1);
+      T k_fact(1);
+      T psi_kp1 = T(-0.57721566490153286060651209008240243104215933593992);
+      T psi_npkp1 = psi_n + rec(n);
+      T sum2 = (psi_kp1 + psi_npkp1 - 2.0*ln_x_2)/npk_fact;
+      for(elt_t k=1; k<KMAX; k = inc(k))
+      {
+        psi_kp1   += rec(k);
+        psi_npkp1 += rec(n+k);
+        k_fact   *= k;
+        npk_fact *= n+k;
+        yk *= -y;
+        k_term = yk*(psi_kp1 + psi_npkp1 - 2*ln_x_2)/(k_fact*npk_fact);
+        sum2 += k_term;
+      }
+      term2 = pre2 * sum2;
+    }
+    return term1+term2;
+  }
+
   /////////////////////////////////////////////////////////////////////////
   // bessel_y of integer order
   template<real_value I, floating_real_value T>
   EVE_FORCEINLINE auto   kernel_bessel_y_int (I n, T x) noexcept
   {
-
-//     auto [j, jp, y, yp] = bessel_jy(convert(n, as(element_type_t<T>())), x);
-//     return y;
-
     // n < abs(z), forward recurrence stable and usable
     // n >= abs(z), forward recurrence unstable, use Miller's algorithm
     EVE_ASSERT(eve::all(is_flint(n)), "kernel_bessel_y_int : somme n are not floating integer");
 
     auto br_large =  [](auto n,  auto x)
       {
-        std::cout << "br_large" << std::endl;
+//        std::cout << "br_large" << std::endl;
         return kernel_bessel_y_large(n, x);
       };
     auto br_forward =  [](auto n,  auto x)
       {
-        std::cout << "br_forward" << std::endl;
+ //        std::cout << "br_forward" << std::endl;
         auto y0 = cyl_bessel_y0(x);
         auto y1 = cyl_bessel_y1(x);
-        return kernel_bessel_y_int_forward (n, x, y0, y1);
+        auto z =  kernel_bessel_y_int_forward (n, x, y0, y1);
+        z = if_else(is_eqz(n), y0, z);
+        return if_else(n == one(as(n)), y1, z);
       };
     auto br_small =  [](auto n,  auto x)
       {
-        std::cout << "br_small" << std::endl;
-        return kernel_bessel_y_int_small(n, x);
+ //        std::cout << "br_small x = " << x << ", n = "<< n << std::endl;
+        return kernel_bessel_Yn_small_x(n, x);
       };
     auto br_medium =  [](auto n,  auto x)
       {
-        std::cout << "br_medium" << std::endl;
+ //        std::cout << "br_medium" << std::endl;
         return kernel_bessel_y_medium (n, x);
       };
 
@@ -165,7 +223,7 @@ namespace eve::detail
       if (n == 0)                                   return cyl_bessel_y0(x);      //cyl_bessel_y0(x);
       if (n == 1)                                   return factor*cyl_bessel_y1(x);      //cyl_bessel_y1(x);
       if (n < eve::abs(x))                          return factor*br_forward(n, x);      // forward recurrence
-      if ((n > x * x / 4) || (x < 5))               return factor*br_small(T(n), x); // serie
+      if (/*(n > x * x / 4) ||*/ (x < 5))               return factor*br_small(T(n), x); // serie
       return br_medium(n, x);                                                     // medium recurrence
     }
     else
@@ -177,27 +235,24 @@ namespace eve::detail
       factor = if_else(nneg, if_else(isoddn, T(-1), T(1)), factor);  // J_{-n}(z) = (-1)^n J_n(z)
       n = if_else(nneg, -n, n);
 
-//      auto xlt0 = is_ltz(x);
-//       factor *=  if_else(xlt0 && isoddn, T(-1), T(1));  // J_{n}(-z) = (-1)^n J_n(z)
-//      x = if_else(xlt0, -x, x);
       auto r = nan(as(x));
       auto isinfx = x == inf(as(x));
       r =  if_else(isinfx, zero(as(x)), allbits);
       x = if_else(isinfx, mone, x);
-      auto iseqzn = is_eqz(n);
-      if (eve::any(iseqzn))
-      {
-        auto y0 = cyl_bessel_y0(x);
-        r = if_else(iseqzn, y0, r);
-//        x = if_else(iseqzn, allbits, x);
-      }
-      auto iseq1n = is_equal(n, one(as(n)));
-      if (eve::any(iseq1n))
-      {
-        auto y1 = cyl_bessel_y1(x);
-        r = if_else(iseq1n, y1, r);
-//        x = if_else(iseq1n, allbits, x);
-      }
+//       auto iseqzn = is_eqz(n);
+//       if (eve::any(iseqzn))
+//       {
+//         auto y0 = cyl_bessel_y0(x);
+//         r = if_else(iseqzn, y0, r);
+// //        x = if_else(iseqzn, allbits, x);
+//       }
+//       auto iseq1n = is_equal(n, one(as(n)));
+//       if (eve::any(iseq1n))
+//       {
+//         auto y1 = cyl_bessel_y1(x);
+//         r = if_else(iseq1n, y1, r);
+// //        x = if_else(iseq1n, allbits, x);
+//       }
       auto iseqzx = is_eqz(x);
       if (eve::any(iseqzx))
       {
@@ -206,24 +261,28 @@ namespace eve::detail
       }
 
       auto notdone = is_nltz(x);
-//       std::cout << "x       " << x << std::endl;
+//       std::cout << std::setprecision(10) << "x       " << x << std::endl;
 //       std::cout << "r       " << r << std::endl;
-//       std::cout << "notdone " << notdone << std::endl;
+//      std::cout << "notdone " << notdone << std::endl;
       x = if_else(notdone, x, allbits);
       auto nn = convert(n, as<elt_t>());
       if( eve::any(notdone) )
       {
         notdone = next_interval(br_large,  notdone, asymptotic_bessel_large_x_limit(nn, x), r, nn, x);
+//      std::cout << "notdone 1" << notdone << std::endl;
         if( eve::any(notdone) )
         {
           notdone = next_interval(br_forward,  notdone, nn < x, r, nn, x);
-          if( eve::any(notdone) )
+//       std::cout << "notdone 2" << notdone << std::endl;
+         if( eve::any(notdone) )
           {
-            notdone = next_interval(br_small,  notdone, (nn > x * x / 4) || (x < 5), r, nn, x);
-            if( eve::any(notdone) )
+            notdone = next_interval(br_small,  notdone, /*(nn > x * x / 4) ||*/ (x < 5), r, nn, x);
+//       std::cout << "notdone 3" << notdone << std::endl;
+           if( eve::any(notdone) )
             {
               notdone = last_interval(br_medium,  notdone, r, nn, x);
-            }
+//       std::cout << "notdone 4" << notdone << std::endl;
+           }
           }
         }
       }
