@@ -17,6 +17,7 @@
 #include <eve/function/cyl_bessel_j1.hpp>
 #include <eve/function/cyl_bessel_y0.hpp>
 #include <eve/function/cyl_bessel_y1.hpp>
+#include <eve/function/dec.hpp>
 #include <eve/function/digamma.hpp>
 #include <eve/function/factorial.hpp>
 #include <eve/function/if_else.hpp>
@@ -27,6 +28,7 @@
 #include <eve/function/is_ltz.hpp>
 #include <eve/function/is_odd.hpp>
 #include <eve/function/is_nltz.hpp>
+#include <eve/function/lfactorial.hpp>
 #include <eve/function/lgamma.hpp>
 #include <eve/function/tgamma.hpp>
 #include <eve/function/exp.hpp>
@@ -129,7 +131,7 @@ namespace eve::detail
     using elt_t = element_type_t<T>;
     T y = elt_t(0.25) * sqr(x);
     T ln_x_2 = eve::log(elt_t(0.5)*x);
-    T ln_nm1_fact = eve::lgamma(n);
+    T ln_nm1_fact = eve::lfactorial(dec(n));
     //   gsl_sf_lnfact_e((unsigned int)(n-1), &ln_nm1_fact);
 
     T ln_pre1 = -n*ln_x_2 + ln_nm1_fact;
@@ -152,7 +154,7 @@ namespace eve::detail
     {
      constexpr int KMAX = 20;
       T psi_n = digamma(n);
-      T npk_fact = tgamma(inc(n)); //eve::factorial(n);
+      T npk_fact = eve::factorial(n);
       T yk(1);
       T k_fact(1);
       T psi_kp1 = T(-0.57721566490153286060651209008240243104215933593992);
