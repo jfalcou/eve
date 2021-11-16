@@ -11,12 +11,11 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/all.hpp>
-#include <eve/function/tgamma.hpp>
 #include <eve/function/gather.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/converter.hpp>
 #include <eve/function/if_else.hpp>
-#include <eve/function/min.hpp>
+#include <eve/function/is_gez.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/valmax.hpp>
 
@@ -205,11 +204,11 @@ namespace eve::detail
     {
       if constexpr(scalar_value<T>)
       {
-        return (n < 171) ? dfactorials[n] : inf(as<double>());
+        return (n < 171u) ? dfactorials[n] : inf(as<double>());
       }
       else
       {
-        auto test = (n < 171);
+        auto test = (n < 171u);
         auto nn = if_else(test, n,  zero);
         auto r =  gather( &dfactorials[0], nn);
         return if_else(test, r, inf(as(r)));
@@ -218,4 +217,24 @@ namespace eve::detail
     else
       return apply_over(factorial, n);
   }
+
+  template<signed_integral_value T>
+  EVE_FORCEINLINE auto factorial_(EVE_SUPPORTS(cpu_), T n) noexcept
+  {
+    EVE_ASSERT(eve::all(is_gez(n) ), "factorial : some entry elements are not positive");
+    return factorial(uint_(n));
+  }
+
+  template<floating_real_value T>
+  EVE_FORCEINLINE auto factorial_(EVE_SUPPORTS(cpu_), T n) noexcept
+  {
+    EVE_ASSERT(eve::all(is_flint(n)), "factorial : some entry elements are not flint");
+    EVE_ASSERT(eve::all(is_gez(n) )  , "factorial : some entry elements are not positive");
+    EVE_ASSERT(eve::all(n <  std::same_as<elt_t, double> ? 171u : 36u )  , "factorial : some entry elements will produce overflow");
+    using elt_t = element_type_t<T>;
+    auto nn = uint_(n);
+    auto r = factorial(nn);
+    if constexpr(std::same_as<elt_t, double>) return r; else return float32(r);
+  }
+
 }
