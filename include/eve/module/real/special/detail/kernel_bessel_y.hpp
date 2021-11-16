@@ -120,14 +120,9 @@ namespace eve::detail
   template <floating_real_value T>
   auto kernel_bessel_Yn_small_x(T n, T x)
   {
-//     std::cout << "x " << x << std::endl;
-//     std::cout << "n " << n << std::endl;
-//     std::cout << "kernel_bessel_Yn_small_x" << std::endl;
     auto xlt5 = x < T(5);
     x = if_else(xlt5, x, one);
     n = if_else(xlt5, n, one);
-//     std::cout << "x " << x << std::endl;
-//     std::cout << "n " << n << std::endl;
     using elt_t = element_type_t<T>;
     T y = elt_t(0.25) * sqr(x);
     T ln_x_2 = eve::log(elt_t(0.5)*x);
@@ -186,12 +181,10 @@ namespace eve::detail
 
     auto br_large =  [](auto n,  auto x)
       {
-//        std::cout << "br_large" << std::endl;
         return kernel_bessel_y_large(n, x);
       };
     auto br_forward =  [](auto n,  auto x)
       {
- //        std::cout << "br_forward" << std::endl;
         auto y0 = cyl_bessel_y0(x);
         auto y1 = cyl_bessel_y1(x);
         auto z =  kernel_bessel_y_int_forward (n, x, y0, y1);
@@ -200,12 +193,10 @@ namespace eve::detail
       };
     auto br_small =  [](auto n,  auto x)
       {
- //        std::cout << "br_small x = " << x << ", n = "<< n << std::endl;
         return kernel_bessel_Yn_small_x(n, x);
       };
     auto br_medium =  [](auto n,  auto x)
       {
- //        std::cout << "br_medium" << std::endl;
         return kernel_bessel_y_medium (n, x);
       };
 
@@ -263,27 +254,20 @@ namespace eve::detail
       }
 
       auto notdone = is_nltz(x);
-//       std::cout << std::setprecision(10) << "x       " << x << std::endl;
-//       std::cout << "r       " << r << std::endl;
-//      std::cout << "notdone " << notdone << std::endl;
       x = if_else(notdone, x, allbits);
       auto nn = convert(n, as<elt_t>());
       if( eve::any(notdone) )
       {
         notdone = next_interval(br_large,  notdone, asymptotic_bessel_large_x_limit(nn, x), r, nn, x);
-//      std::cout << "notdone 1" << notdone << std::endl;
         if( eve::any(notdone) )
         {
           notdone = next_interval(br_forward,  notdone, nn < x, r, nn, x);
-//       std::cout << "notdone 2" << notdone << std::endl;
          if( eve::any(notdone) )
           {
             notdone = next_interval(br_small,  notdone, /*(nn > x * x / 4) ||*/ (x < 5), r, nn, x);
-//       std::cout << "notdone 3" << notdone << std::endl;
            if( eve::any(notdone) )
             {
               notdone = last_interval(br_medium,  notdone, r, nn, x);
-//       std::cout << "notdone 4" << notdone << std::endl;
            }
           }
         }
