@@ -62,10 +62,5 @@ EVE_TEST_TYPES( "Check corner-cases behavior of eve::factorial on wide"
     TTS_EQUAL(eve::factorial(T( 5)) , T(120));
     TTS_EQUAL(eve::factorial(T(0))  , T(1));
     TTS_EQUAL(eve::factorial(T(1))  , T(1));
-    using elt_t = eve::element_type_t<T>;
-    if constexpr(std::same_as<elt_t,double>)
-      TTS_EQUAL(eve::factorial(T(171))  , eve::inf(eve::as<T>()));
-    else if constexpr(std::same_as<elt_t,float>)
-      TTS_EQUAL(eve::factorial(T(35))  , eve::inf(eve::as<T>()));
   }
 };

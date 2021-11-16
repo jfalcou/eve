@@ -231,7 +231,7 @@ namespace eve::detail
     using elt_t = element_type_t<T>;
     EVE_ASSERT(eve::all(is_flint(n)), "factorial : some entry elements are not flint");
     EVE_ASSERT(eve::all(is_gez(n) )  , "factorial : some entry elements are not positive");
-    EVE_ASSERT(eve::all(uint(n) <  (std::same_as<elt_t, double> ? 171u : 35u) )  , "factorial : some entry elements will produce overflow");
+    EVE_ASSERT(eve::all(uint_(n) <  (std::same_as<elt_t, double> ? 171u : 35u) )  , "factorial : some entry elements will produce overflow");
     auto nn = uint_(n);
     auto r = factorial(nn);
     if constexpr(std::same_as<elt_t, double>) return r; else return float32(r);
