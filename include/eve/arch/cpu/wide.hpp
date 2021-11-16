@@ -235,8 +235,6 @@ namespace eve
     //! @name Assignment operators
     //! @{
     //==============================================================================================
-    //! Assignment operator
-    wide& operator=(wide const&) & = default;
 
     //! @brief Assignment of an architecture-specific SIMD register
     wide& operator=(storage_type const &r)
