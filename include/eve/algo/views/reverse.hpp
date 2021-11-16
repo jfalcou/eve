@@ -70,12 +70,12 @@ namespace eve::algo::views
 
     EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::read_, reverse_iterator self)
     {
-      return eve::read(self.base - 1);
+      return eve::read(unalign(self.base) - 1);
     }
 
     EVE_FORCEINLINE friend void tagged_dispatch(eve::tag::write_, reverse_iterator self, value_type v)
     {
-      return eve::write(self.base - 1, v);
+      return eve::write(unalign(self.base) - 1, v);
     }
 
     template <relaxed_sentinel_for<I> I1>
@@ -87,7 +87,7 @@ namespace eve::algo::views
     template <relaxed_sentinel_for<I> I1>
     EVE_FORCEINLINE auto operator<=>(reverse_iterator<I1> y) const
     {
-      return spaceship_helper(base, y.base);
+      return spaceship_helper(y.base, base);
     }
 
     EVE_FORCEINLINE auto& operator+=(std::ptrdiff_t n)
