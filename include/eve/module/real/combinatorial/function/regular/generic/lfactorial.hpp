@@ -51,7 +51,7 @@ namespace eve::detail
     if constexpr(has_native_abi_v<T>)
     {
       using elt_t =  element_type_t<T>;
-      auto max = std::same_as<elt_t, double> ? 171 : 35;
+      constexpr auto max = std::same_as<elt_t, double> ? 171 : 35;
       auto r = eve::log(factorial(n));
       if (eve::all(n < max)) return r;
       else
