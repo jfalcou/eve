@@ -24,6 +24,10 @@ Main eve supports it's callables for scalars. We don't do that for algorithms. T
 
 * remove/remove_if
 
+* iota
+
+* reverse
+
 # Helpers
 
 # as_range
