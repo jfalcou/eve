@@ -30,6 +30,7 @@
 #include <eve/function/is_nltz.hpp>
 #include <eve/function/lfactorial.hpp>
 #include <eve/function/lgamma.hpp>
+#include <eve/function/max.hpp>
 #include <eve/function/tgamma.hpp>
 #include <eve/function/exp.hpp>
 #include <eve/function/log.hpp>
@@ -67,7 +68,10 @@ namespace eve::detail
     auto prev = y0; //cyl_bessel_y0(x);
     auto current = y1; //cyl_bessel_y1(x);
     int k = 1;
-    EVE_ASSERT(eve::all(k+1 < n), "some ns are less than 2");
+//     std::cout << "n avant " << n << std::endl;
+//     n = if_else(k+1 < n, n, I(3));
+//     std::cout << "n apres " << n << std::endl;
+//     EVE_ASSERT(eve::all(k+1 < n), "some ns are less than 2");
     T factor(1);
     T mult = 2 * k / x;
     auto  value = fms(mult, current, prev);
@@ -187,7 +191,7 @@ namespace eve::detail
       {
         auto y0 = cyl_bessel_y0(x);
         auto y1 = cyl_bessel_y1(x);
-        auto z =  kernel_bessel_y_int_forward (n, x, y0, y1);
+       auto z =  kernel_bessel_y_int_forward (n, x, y0, y1);
         z = if_else(is_eqz(n), y0, z);
         return if_else(n == one(as(n)), y1, z);
       };
@@ -261,7 +265,7 @@ namespace eve::detail
         notdone = next_interval(br_large,  notdone, asymptotic_bessel_large_x_limit(nn, x), r, nn, x);
         if( eve::any(notdone) )
         {
-          notdone = next_interval(br_forward,  notdone, nn < x, r, nn, x);
+          notdone = next_interval(br_forward,  notdone, nn < x , r, nn, x);
          if( eve::any(notdone) )
           {
             notdone = next_interval(br_small,  notdone, /*(nn > x * x / 4) ||*/ (x < 5), r, nn, x);
