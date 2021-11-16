@@ -173,8 +173,13 @@ namespace eve::algo::views
     EVE_FORCEINLINE auto previous_partially_aligned() const
       requires iterator<I>
     {
-      if (base.previous_partially_aligned() == base) return reverse(base.previous_partially_aligned());
-      else                                           return reverse(base.previous_partially_aligned() + iterator_cardinal_v<I>);
+      return reverse(base.next_partially_aligned());
+    }
+
+    EVE_FORCEINLINE auto next_partially_aligned() const
+      requires iterator<I>
+    {
+      return reverse(base.previous_partially_aligned());
     }
 
     static auto iterator_cardinal() requires iterator<I>

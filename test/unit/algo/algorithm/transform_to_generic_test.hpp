@@ -61,7 +61,17 @@ namespace algo_test {
       }
       else
       {
-        TTS_EQUAL(ans, actual);
+        if (ans != actual) {
+          std::cout << tts::detail::typename_<decltype(r1.begin())>::value() << std::endl;
+          std::cout << tts::detail::typename_<decltype(r1.end())>::value() << std::endl;
+          std::cout << tts::detail::typename_<decltype(r2.begin())>::value() << std::endl;
+          std::cout << tts::detail::typename_<decltype(r2.end())>::value() << std::endl;
+
+          std::cout << std::hex << (std::int64_t)eve::algo::unalign(r1.begin()) << std::dec << std::endl;
+          TTS_EQUAL(ans, actual);
+          std::terminate();
+        }
+
       }
     }
   };

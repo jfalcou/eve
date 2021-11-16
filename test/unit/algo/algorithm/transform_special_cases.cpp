@@ -37,15 +37,15 @@ TTS_CASE("eve.algo.transform different type works")
 
 TTS_CASE("eve.algo.reverse_copy, different types")
 {
-  std::vector<int>   in {100, 0};
-  std::vector<short> out (in.size() - 1);
+  std::vector<int, eve::aligned_allocator<int>>   in {3, 0};
+  std::vector<short> out (in.size());
 
   std::iota(in.begin(), in.end(), 0);
 
-  eve::algo::reverse_copy(eve::algo::as_range(in.begin() + 1, in.end()), out.begin());
+  eve::algo::reverse_copy(in, out.begin());
 
-  std::vector<short> expected (in.size() - 1);
-  std::iota(expected.rbegin(), expected.rend(), 1);
+  std::vector<short> expected (in.size());
+  std::iota(expected.rbegin(), expected.rend(), 0);
 
   TTS_EQUAL(out, expected);
 };
