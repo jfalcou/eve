@@ -200,8 +200,6 @@ namespace eve
     //! @name Assignment operators
     //! @{
     //==============================================================================================
-    //! Assignment operator
-    logical& operator=(logical const&) & = default;
 
     //! @brief Assignment of a logical value by splatting it in all lanes
     EVE_FORCEINLINE logical& operator=(logical<Type> v) noexcept
