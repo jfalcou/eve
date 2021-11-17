@@ -50,6 +50,7 @@ namespace eve::algo
     requires(I i) {
        { i.unaligned() } -> detail::unaligned_check;
        { i.previous_partially_aligned() } -> detail::partially_aligned_check;
+       { i.next_partially_aligned() } -> detail::partially_aligned_check;
     };
 
   template <typename I>

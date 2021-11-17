@@ -72,7 +72,7 @@ namespace eve::algo::views
   //!
   //!    **Required header:** `#include <eve/algo/views/convert.hpp>`
   //!
-  //!    Has a shorthand `eve::views::converting_range` in `<eve/views/convert.hpp>`.
+  //!    Has a shorthand `eve::views::convert` in `<eve/views/convert.hpp>`.
   //! @}
   //================================================================================================
 
@@ -86,16 +86,16 @@ namespace eve::algo::views
         auto rng  = range_ref(EVE_FWD(wrapped));
         using Rng = decltype(rng);
 
-             if constexpr( std::same_as<value_type_t<Rng>, T>         ) return rng;
-        else if constexpr( detail::instance_of<Rng, converting_range> ) return (*this)(rng.base, tgt);
-        else                                                            return converting_range<Rng, T> {rng};
+             if constexpr( std::same_as<value_type_t<Rng>, T>               ) return rng;
+        else if constexpr( algo::detail::instance_of<Rng, converting_range> ) return (*this)(rng.base, tgt);
+        else                                                                  return converting_range<Rng, T> {rng};
       }
       else
       {
         using I = std::remove_cvref_t<Wrapped>;
-             if constexpr( std::same_as<value_type_t<I>, T>            ) return wrapped;
-        else if constexpr( detail::instance_of<I, converting_iterator> ) return (*this)(wrapped.base, tgt);
-        else                                                             return converting_iterator<I, T> {wrapped};
+             if constexpr( std::same_as<value_type_t<I>, T>                  ) return wrapped;
+        else if constexpr( algo::detail::instance_of<I, converting_iterator> ) return (*this)(wrapped.base, tgt);
+        else                                                                   return converting_iterator<I, T> {wrapped};
       }
     }
 
@@ -217,6 +217,12 @@ namespace eve::algo::views
       requires iterator<I>
     {
       return convert(base.previous_partially_aligned(), eve::as<T>{});
+    }
+
+    EVE_FORCEINLINE auto next_partially_aligned() const
+      requires iterator<I>
+    {
+      return convert(base.next_partially_aligned(), eve::as<T>{});
     }
 
     static auto iterator_cardinal() requires iterator<I>

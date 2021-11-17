@@ -11,6 +11,8 @@
 #include <eve/algo/transform.hpp>
 #include <eve/function/sqrt.hpp>
 
+#include <eve/algo/reverse.hpp>
+
 TTS_CASE("eve.algo.transform different type works")
 {
   std::vector<int>   in{1, 4, 9, 16};
@@ -30,5 +32,20 @@ TTS_CASE("eve.algo.transform different type works")
   out.clear();
   out.resize(4);
   eve::algo::transform_to(in, out, eve::sqrt);
+  TTS_EQUAL(out, expected);
+};
+
+TTS_CASE("eve.algo.reverse_copy, different types")
+{
+  std::vector<int, eve::aligned_allocator<int>>   in {3, 0};
+  std::vector<short> out (in.size());
+
+  std::iota(in.begin(), in.end(), 0);
+
+  eve::algo::reverse_copy(in, out.begin());
+
+  std::vector<short> expected (in.size());
+  std::iota(expected.rbegin(), expected.rend(), 0);
+
   TTS_EQUAL(out, expected);
 };

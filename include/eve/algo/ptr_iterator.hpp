@@ -34,6 +34,11 @@ namespace eve::algo
       return aligned_ptr_iterator<T, Cardinal>{eve::previous_aligned_address(ptr, Cardinal{})};
     }
 
+    auto next_partially_aligned() const
+    {
+      return aligned_ptr_iterator<T, Cardinal>{eve::next_aligned_address(ptr, Cardinal{})};
+    }
+
     static Cardinal iterator_cardinal() { return {}; }
 
     template <typename _Cardinal>
@@ -100,6 +105,7 @@ namespace eve::algo
     auto get() const { return ptr.get(); }
     auto unaligned() const { return unaligned_ptr_iterator<T, Cardinal>{ptr.get()}; }
     auto previous_partially_aligned() const { return *this; }
+    auto next_partially_aligned()     const { return *this; }
 
     static Cardinal iterator_cardinal() { return {}; }
 

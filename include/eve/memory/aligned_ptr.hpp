@@ -455,6 +455,43 @@ namespace eve
   }
 
   //================================================================================================
+  //! @relates eve::aligned_ptr
+  //!
+  //! @brief Computes an address greater or equal to `p` which is satisfy the alignment constraint of
+  //! SIMD registers of size `Lanes`.
+  //!
+  //! @param p      Pointer to realign
+  //! @param width  SIMD cardinal to use as alignment constraint
+  //! @return An aligned_ptr holding the realigned pointer with the proper alignment constraint.
+  //! @see next_aligned_address(T*)
+  //================================================================================================
+  template <typename T, typename Lanes>
+  #if !defined(EVE_DOXYGEN_INVOKED)
+  EVE_FORCEINLINE auto next_aligned_address(T* p, Lanes) noexcept
+  #else
+  EVE_FORCEINLINE auto next_aligned_address(T* p, Lanes width) noexcept
+  #endif
+  {
+    return eve::aligned_ptr<T, Lanes>{ eve::align(p, eve::over{Lanes::value*sizeof(T)}) };
+  }
+
+  //================================================================================================
+  //! @relates eve::aligned_ptr
+  //!
+  //! @brief Computes an address greater or equal to `p` which is satisfy the alignment constraint of
+  //! current architecture's SIMD register.
+  //!
+  //! @param p      Pointer to realign
+  //! @return An aligned_ptr holding the realigned pointer with the proper alignment constraint.
+  //! @see next_aligned_address(T*, Cardinal)
+  //================================================================================================
+  template <typename T>
+  EVE_FORCEINLINE auto next_aligned_address(T* p) noexcept
+  {
+    return next_aligned_address(p, eve::expected_cardinal<std::remove_cvref_t<T>>{});
+  }
+
+  //================================================================================================
   //  Specialisation for pointer_alignment
   //================================================================================================
   template<typename Type, typename Lanes>
