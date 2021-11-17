@@ -51,6 +51,7 @@ make_unit("unit.algo" algorithm/sums_special_cases.cpp)
 
 # shuffles
 make_unit("unit.algo" algorithm/remove.cpp)
+make_unit("unit.algo" algorithm/reverse_generic.cpp)
 
 # transform
 make_unit("unit.algo" algorithm/transform_inplace_generic.cpp)

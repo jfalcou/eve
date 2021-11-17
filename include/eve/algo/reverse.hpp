@@ -7,11 +7,50 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/algo/as_range.hpp>
 #include <eve/algo/copy.hpp>
+#include <eve/algo/preprocess_range.hpp>
+#include <eve/algo/swap_ranges.hpp>
 #include <eve/algo/views/reverse.hpp>
 
 namespace eve::algo
 {
+  //================================================================================================
+  //! @addtogroup eve.algo
+  //! @{
+  //!  @var reverse
+  //!
+  //!  @brief version of std::reverse
+  //!    * default unrolling is 1.
+  //!    * will align by default.
+  //!
+  //!   **Required header:** `#include <eve/algo/reverse.hpp>`
+  //!
+  //! @}
+  //================================================================================================
+
+  template <typename TraitsSupport>
+  struct reverse_ : TraitsSupport
+  {
+    template <relaxed_range Rng>
+    EVE_FORCEINLINE void operator()(Rng&& rng) const
+    {
+      if (rng.begin() == rng.end()) return;
+
+      // To utilize extra information from range prerprocessing.
+      auto processed = eve::algo::preprocess_range(TraitsSupport::get_traits(), EVE_FWD(rng));
+      auto f = processed.begin();
+      auto l = processed.end();
+
+      std::ptrdiff_t n = l - f;
+      auto m = unalign(f) + n / 2;
+
+      swap_ranges[processed.traits()](as_range(f, m), views::reverse(l));
+    }
+  };
+
+  inline constexpr auto reverse = function_with_traits<reverse_>[algo::unroll<1>];
+
   //================================================================================================
   //! @addtogroup eve.algo
   //! @{
