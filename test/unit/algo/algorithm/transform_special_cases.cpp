@@ -13,6 +13,8 @@
 
 #include <eve/algo/reverse.hpp>
 
+#include <eve/algo/swap_ranges.hpp>
+
 TTS_CASE("eve.algo.transform different type works")
 {
   std::vector<int>   in{1, 4, 9, 16};
@@ -37,15 +39,25 @@ TTS_CASE("eve.algo.transform different type works")
 
 TTS_CASE("eve.algo.reverse_copy, different types")
 {
-  std::vector<int, eve::aligned_allocator<int>>   in {3, 0};
+  std::vector<int>   in {1, 2, 3, 4};
   std::vector<short> out (in.size());
 
-  std::iota(in.begin(), in.end(), 0);
+  eve::algo::reverse_copy(in, out);
 
-  eve::algo::reverse_copy(in, out.begin());
-
-  std::vector<short> expected (in.size());
-  std::iota(expected.rbegin(), expected.rend(), 0);
-
+  std::vector<short> expected {4, 3, 2, 1};
   TTS_EQUAL(out, expected);
+};
+
+TTS_CASE("eve.algo.swap_ranges, different types")
+{
+  std::vector<int>   a {  1,  2,  3,  4};
+  std::vector<short> b { -1, -2, -3, -4};
+
+  eve::algo::swap_ranges(a, b);
+
+  std::vector<int>   expected_a { -1, -2, -3, -4};
+  std::vector<short> expected_b {  1,  2,  3,  4};
+
+  TTS_EQUAL(a, expected_a);
+  TTS_EQUAL(b, expected_b);
 };
