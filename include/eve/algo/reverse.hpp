@@ -45,7 +45,10 @@ namespace eve::algo
       std::ptrdiff_t n = l - f;
       auto m = unalign(f) + n / 2;
 
-      swap_ranges[processed.traits()](as_range(f, m), views::reverse(l));
+      // Just because the whole thing is divisible_by_cardinal does not mean
+      // the halve will be.
+      auto tr = drop_key(divisible_by_cardinal, processed.traits());
+      swap_ranges[tr](as_range(f, m), views::reverse(l));
     }
   };
 
