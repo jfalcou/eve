@@ -11,7 +11,7 @@
 #include <eve/constant/nan.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/inc.hpp>
-#include <eve/function/factorial.hpp>
+#include <eve/function/lfactorial.hpp>
 #include <eve/logical.hpp>
 #include <cmath>
 
@@ -20,7 +20,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::factorial"
+EVE_TEST_TYPES( "Check return types of eve::lfactorial"
               , eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
@@ -28,20 +28,20 @@ EVE_TEST_TYPES( "Check return types of eve::factorial"
   using v_t = eve::element_type_t<T>;
   if constexpr(eve::integral_value<T>)
   {
-    TTS_EXPR_IS( eve::factorial(T())                       , d_t);
-    TTS_EXPR_IS( eve::factorial(v_t())                     , double );
+    TTS_EXPR_IS( eve::lfactorial(T())                       , d_t);
+    TTS_EXPR_IS( eve::lfactorial(v_t())                     , double );
   }
   else
   {
-    TTS_EXPR_IS( eve::factorial(T())                       , T);
-    TTS_EXPR_IS( eve::factorial(v_t())                     , v_t );
+    TTS_EXPR_IS( eve::lfactorial(T())                       , T);
+    TTS_EXPR_IS( eve::lfactorial(v_t())                     , v_t );
   }
 };
 
 //==================================================================================================
 // Test for corner-cases values
 //==================================================================================================
-EVE_TEST_TYPES( "Check corner-cases behavior of eve::factorial on wide"
+EVE_TEST_TYPES( "Check corner-cases behavior of eve::lfactorial on wide"
         , eve::test::simd::all_types
 
          )
@@ -51,16 +51,20 @@ EVE_TEST_TYPES( "Check corner-cases behavior of eve::factorial on wide"
   using d_t = eve::wide<double, eve::cardinal_t<T>>;
   if constexpr(eve::integral_value<T>)
   {
-    TTS_EQUAL(eve::factorial(T(10)) , d_t(3628800));
-    TTS_EQUAL(eve::factorial(T( 5)) , d_t(120));
-    TTS_EQUAL(eve::factorial(T(0))  , d_t(1));
-    TTS_EQUAL(eve::factorial(T(1))  , d_t(1));
+  using v_t = eve::element_type_t<T>;
+    TTS_EQUAL(eve::lfactorial(T(10)) , eve::log(d_t(3628800)));
+    TTS_EQUAL(eve::lfactorial(T( 5)) , eve::log(d_t(120)));
+    TTS_EQUAL(eve::lfactorial(T(0))  , eve::log(d_t(1)));
+    TTS_EQUAL(eve::lfactorial(T(1))  , eve::log(d_t(1)));
+    if constexpr(sizeof(v_t) > 1)
+      TTS_EQUAL(eve::lfactorial(T(200)), eve::lgamma(d_t(201)));
   }
   else
   {
-    TTS_EQUAL(eve::factorial(T(10)) , T(3628800));
-    TTS_EQUAL(eve::factorial(T( 5)) , T(120));
-    TTS_EQUAL(eve::factorial(T(0))  , T(1));
-    TTS_EQUAL(eve::factorial(T(1))  , T(1));
+    TTS_EQUAL(eve::lfactorial(T(10)) , eve::log(T(3628800)));
+    TTS_EQUAL(eve::lfactorial(T( 5)) , eve::log(T(120)));
+    TTS_EQUAL(eve::lfactorial(T(0))  , eve::log(T(1)));
+    TTS_EQUAL(eve::lfactorial(T(1))  , eve::log(T(1)));
+    TTS_EQUAL(eve::lfactorial(T(200)), eve::lgamma(T(201)));
   }
 };

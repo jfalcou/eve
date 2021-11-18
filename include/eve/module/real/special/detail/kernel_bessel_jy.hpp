@@ -228,25 +228,6 @@ namespace eve::detail
     return kumi::make_tuple(jnu, jpnu, nnu, npnu);
   }
 
-//   template<real_scalar_value I, floating_real_simd_value T>
-//   EVE_FORCEINLINE auto cyl_bessel_jy_(EVE_SUPPORTS(cpu_), I nu, T x) noexcept
-//   {
-//     return cyl_bessel_jy(T(nu), x);
-//   }
-
-//   template<real_simd_value I, floating_real_simd_value T>
-//   EVE_FORCEINLINE auto cyl_bessel_jy_(EVE_SUPPORTS(cpu_), I nu, T x) noexcept
-//   {
-//     return cyl_bessel_jy(convert(nu, as(element_type_t<T>())), x);
-//   }
-
-//   template<real_simd_value I, floating_real_scalar_value T>
-//   EVE_FORCEINLINE auto cyl_bessel_jy_(EVE_SUPPORTS(cpu_), I nu, T x) noexcept
-//   {
-//     using c_t = wide <T, cardinal_t<I>>;
-//     return cyl_bessel_jy(convert(nu, as(x)), c_t(x));
-//   }
-
   template<floating_real_simd_value T>
   EVE_FORCEINLINE auto bessel_jy(T nu, T x) noexcept
   {
