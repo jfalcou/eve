@@ -1,0 +1,55 @@
+//==================================================================================================
+/**
+  EVE - Expressive Vector Engine
+  Copyright : EVE Contributors & Maintainers
+  SPDX-License-Identifier: MIT
+**/
+//==================================================================================================
+#include "test.hpp"
+
+#include <eve/function/interleave.hpp>
+
+const auto loader = []<std::size_t... N>(auto const& d, auto card, std::index_sequence<N...>)
+{
+  return kumi::make_tuple( eve::load(&d[N*card], card)... );
+};
+
+//==================================================================================================
+// interleave test
+//==================================================================================================
+EVE_TEST_TYPES( "Check behavior of interleave shuffle of pairs"
+              , eve::test::simd::all_types
+              )
+<typename T>(eve::as<T>)
+{
+  [&]<std::size_t... Rs>( std::index_sequence<Rs...>)
+  {
+    auto rep = [&]<std::size_t Replication>( std::integral_constant<std::size_t,Replication> )
+    {
+      // Build and fill data blocks of Replication x T::size() elements for input and reference
+      std::array<typename T::value_type,T::size() * Replication> data, ref;
+
+      std::size_t index = 0;
+      for(std::size_t r = 0; r < Replication; ++r)
+        for(std::ptrdiff_t i = 0; i < T::size();++i)
+          data[index++] = (i+1) + T::size()*r;
+
+      index = 0;
+      for(std::ptrdiff_t i = 0; i < T::size();++i)
+        for(std::size_t r = 0; r < Replication; ++r)
+          ref[index++] = (i+1) + T::size()*r;
+
+      // Load the data & references then interleave
+      using rep_t   = std::make_index_sequence<Replication>;
+      using card_t  = typename T::cardinal_type;
+
+      auto inputs       = loader(data, card_t{}, rep_t{});
+      auto reference    = loader(ref , card_t{}, rep_t{});
+      auto interleaved  = kumi::apply( [](auto... m) { return eve::interleave(m...); }, inputs);
+
+      TTS_EXPECT( eve::all(interleaved == reference) );
+    };
+
+    ((rep( std::integral_constant<std::size_t,Rs>{} )),...);
+  }(std::index_sequence<1,2,3,4,5,8,16>{});
+};

@@ -20,10 +20,10 @@ namespace eve::detail
   // Regular loads
   //================================================================================================
   template<typename T, typename N, simd_compatible_ptr<wide<T,N>> Ptr >
-  EVE_FORCEINLINE auto load_( EVE_SUPPORTS(cpu_)
-                            , ignore_none_ const&, safe_type const&
-                            , eve::as<wide<T, N>> const &, Ptr p
-                            )
+  EVE_FORCEINLINE wide<T,N> load_ ( EVE_SUPPORTS(cpu_)
+                                  , ignore_none_ const&, safe_type const&
+                                  , eve::as<wide<T, N>> const &, Ptr p
+                                  )
   requires dereference_as<T, Ptr>::value && x86_abi<abi_t<T, N>>
   {
     constexpr auto cat = categorize<wide<T, N>>();
