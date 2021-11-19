@@ -92,6 +92,22 @@ namespace algo_test
   }
 
   template <typename T, typename Test>
+  void page_ends_test_special_cases(eve::as<T> tgt,
+                                    eve::element_type_t<T>* f,
+                                    eve::element_type_t<T>* l,
+                                    Test test)
+  {
+    if ((l - f) >= T::size())
+    {
+      ptr_range_test(tgt, f, f + T::size(), test);
+    }
+    if ((l - f) >= T::size() * 3)
+    {
+      ptr_range_test(tgt, f, f + 3 * T::size(), test);
+    }
+  }
+
+  template <typename T, typename Test>
   void page_ends_test(eve::as<T> tgt, Test test)
   {
     auto page = allocate_page<eve::element_type_t<T>>();
@@ -105,6 +121,8 @@ namespace algo_test
 
     auto run_f_l = [&] () mutable {
       test.init(page_begin, f, l, page_end);
+
+      page_ends_test_special_cases(tgt, f, l, test);
 
       while( f < l ) {
         ptr_range_test(tgt, f, l, test);

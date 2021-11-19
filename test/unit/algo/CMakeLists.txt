@@ -51,6 +51,7 @@ make_unit("unit.algo" algorithm/sums_special_cases.cpp)
 
 # shuffles
 make_unit("unit.algo" algorithm/remove.cpp)
+make_unit("unit.algo" algorithm/reverse_generic.cpp)
 
 # transform
 make_unit("unit.algo" algorithm/transform_inplace_generic.cpp)
@@ -61,4 +62,5 @@ make_unit("unit.algo" algorithm/iota_generic.cpp)
 # copy
 make_unit("unit.algo" algorithm/copy_generic.cpp)
 make_unit("unit.algo" algorithm/copy_fwd.cpp)
+make_unit("unit.algo" algorithm/swap_ranges_generic.cpp)
 make_unit("unit.algo" algorithm/reverse_copy_generic.cpp)

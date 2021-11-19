@@ -16,7 +16,7 @@
 #include <functional>
 #include <vector>
 
-EVE_TEST_TYPES("Check inlclusive_scan_to", algo_test::selected_pairs_types)
+EVE_TEST_TYPES("Check inclusive_scan_to", algo_test::selected_pairs_types)
 <typename T>(eve::as<T> tgt)
 {
   using init_t = std::tuple_element_t<1, eve::element_type_t<T>>;

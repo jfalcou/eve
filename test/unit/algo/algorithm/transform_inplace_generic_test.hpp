@@ -41,7 +41,7 @@ namespace algo_test
       if constexpr( std::floating_point<T> )
       {
         for( int i = 0; i != (l - f); ++i ) {
-          TTS_RELATIVE_EQUAL(expected[i], actual[i], 0.0001);
+          TTS_RELATIVE_EQUAL(expected[i], actual[i], 0.0005);
         }
       }
       else
