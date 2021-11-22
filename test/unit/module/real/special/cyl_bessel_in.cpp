@@ -153,7 +153,7 @@
 EVE_TEST( "Check behavior of cyl_bessel_in on wide with non integral order"
         , eve::test::simd::ieee_doubles
         , eve::test::generate(eve::test::randoms(0.0, 10.0)
-        , eve::test::randoms(0.0, 400.0))
+        , eve::test::randoms(0.0, 200.0))
         )
   <typename T>(T n, T a0 )
 {
