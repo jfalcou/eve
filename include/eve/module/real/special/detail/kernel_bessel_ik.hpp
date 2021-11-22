@@ -187,17 +187,17 @@ namespace eve::detail
       T q = c;
       T a = -a1;
       T s = inc(q * delh);
-      std::cout << "debut b  " << b << std::endl;
-      std::cout << "debut d  " << d << std::endl;
-      std::cout << "debut delh  " << delh << std::endl;
-      std::cout << "debut q1  " << q1 << std::endl;
-      std::cout << "debut q2  " << q2 << std::endl;
-      std::cout << "debut a1  " << a1 << std::endl;
-      std::cout << "debut c   " << c  << std::endl;
-      std::cout << "debut q   " << q  << std::endl;
-      std::cout << "debut a   " << a  << std::endl;
-      std::cout << "debut s  " << s << std::endl;
-      std::cout << "debut h  " << h << std::endl;
+//       std::cout << "debut b  " << b << std::endl;
+//       std::cout << "debut d  " << d << std::endl;
+//       std::cout << "debut delh  " << delh << std::endl;
+//       std::cout << "debut q1  " << q1 << std::endl;
+//       std::cout << "debut q2  " << q2 << std::endl;
+//       std::cout << "debut a1  " << a1 << std::endl;
+//       std::cout << "debut c   " << c  << std::endl;
+//       std::cout << "debut q   " << q  << std::endl;
+//       std::cout << "debut a   " << a  << std::endl;
+//       std::cout << "debut s  " << s << std::endl;
+//       std::cout << "debut h  " << h << std::endl;
       {
         int i;
         for (i = 2; i <= max_iter; ++i)
@@ -228,25 +228,25 @@ namespace eve::detail
       h = a1 * h;
       Kmu = eve::sqrt(pio_2(as(x)) / (x)) * eve::exp(-x) / s;
       Knu1 = Kmu * (mu + x + T(0.5) - h) * xi;
-      std::cout << "s  " <<  s << std::endl;
-      std::cout << "h  " <<  h << std::endl;
-      std::cout << "Knu1  " <<  Knu1 << std::endl;
+//       std::cout << "s  " <<  s << std::endl;
+//       std::cout << "h  " <<  h << std::endl;
+//      std::cout << "Knu1  " <<  Knu1 << std::endl;
       return;
     };
 
     T Kmu, Knu1;
     x = if_else(is_nan(x), T(2), x);
     auto xltx_min = x < x_min;
-    std::cout << "xltx_min " << std::setprecision(15) << xltx_min << std::endl;
+//    std::cout << "xltx_min " << std::setprecision(15) << xltx_min << std::endl;
     if (eve::all(xltx_min))
     {
       case_lt(x, Kmu, Knu1);
-      std::cout << "*lKnu1 " << Knu1 << std::endl;
+//      std::cout << "*lKnu1 " << Knu1 << std::endl;
     }
     else if (eve::none(xltx_min))
     {
       case_ge(x, Kmu, Knu1);
-      std::cout << "*gKnu1 " << Knu1 << std::endl;
+//      std::cout << "*gKnu1 " << Knu1 << std::endl;
     }
     else
     {
@@ -258,11 +258,11 @@ namespace eve::detail
       case_ge(mxx, Kmutmp2, Knu1tmp2);
       Kmu  = if_else(xltx_min, Kmutmp1 , Kmutmp2);
       Knu1 = if_else(xltx_min, Knu1tmp1, Knu1tmp2);
-      std::cout << "**Knu1 " << Knu1 << std::endl;
-      std::cout << "**Knu1tmp2 " << Knu1tmp2 << std::endl;
+//      std::cout << "**Knu1 " << Knu1 << std::endl;
+//      std::cout << "**Knu1tmp2 " << Knu1tmp2 << std::endl;
     }
-    std::cout << "Knu  " <<  Knu << std::endl;
-    std::cout << "Knu1  " <<  Knu1 << std::endl;
+//    std::cout << "Knu  " <<  Knu << std::endl;
+//    std::cout << "Knu1  " <<  Knu1 << std::endl;
 
     T Kpmu = fms(mu, xi * Kmu, Knu1);
     T Inumu = xi / fms(f, Kmu, Kpmu);
@@ -430,9 +430,9 @@ namespace eve::detail
       h = a1 * h;
       Kmu = eve::sqrt(pio_2(as(x)) / (x)) * eve::exp(-x) / s;
       Knu1 = Kmu * (mu + x + T(0.5) - h) * xi;
-      std::cout << "s  " <<  s << std::endl;
-      std::cout << "h  " <<  h << std::endl;
-      std::cout << "Knu1  " <<  Knu1 << std::endl;
+//       std::cout << "s  " <<  s << std::endl;
+//       std::cout << "h  " <<  h << std::endl;
+//       std::cout << "Knu1  " <<  Knu1 << std::endl;
     }
     T Kpmu = fms(mu, xi * Kmu, Knu1);
     T Inumu = xi / fms(f, Kmu, Kpmu);

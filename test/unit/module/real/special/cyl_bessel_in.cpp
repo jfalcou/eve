@@ -151,9 +151,9 @@
 //== non integral orders
 //==================================================================================================
 EVE_TEST( "Check behavior of cyl_bessel_in on wide with non integral order"
-        , eve::test::simd::ieee_reals
+        , eve::test::simd::ieee_doubles
         , eve::test::generate(eve::test::randoms(0.0, 10.0)
-        , eve::test::randoms(0.0, 2000.0))
+        , eve::test::randoms(0.0, 400.0))
         )
   <typename T>(T n, T a0 )
 {
@@ -188,7 +188,7 @@ EVE_TEST( "Check behavior of cyl_bessel_in on wide with non integral order"
     TTS_ULP_EQUAL(eve__cyl_bessel_in(T(3.5), eve::nan(eve::as<T>())), eve::nan(eve::as<T>()), 0);
   }
   // large x
-  TTS_ULP_EQUAL(eve__cyl_bessel_in(T(3.5), T(1500)),  T(std__cyl_bessel_in(v_t(3.5), v_t(1500))),  10.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_in(T(3.5), T(700)),  T(std__cyl_bessel_in(v_t(3.5), v_t(700))),  10.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_in(T(2.5), T(500)),   T(std__cyl_bessel_in(v_t(2.5), v_t(500))),   10.0);
   // forward
   TTS_ULP_EQUAL(eve__cyl_bessel_in(T(2.5), T(10)),    T(std__cyl_bessel_in(v_t(2.5), v_t(10)))   , 310.0);
