@@ -100,7 +100,6 @@ namespace eve::detail
         notdone = next_interval(br_half,  notdone, n == T(0.5), r, x);
         if( eve::any(notdone) )
         {
-          notdone = next_interval(br_small,  notdone, x*4 < n, r, n, x);
           if( eve::any(notdone) )
           {
             notdone = last_interval(br_medium,  notdone, r, n, x);
