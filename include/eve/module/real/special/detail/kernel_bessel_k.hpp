@@ -144,7 +144,7 @@ namespace eve::detail
 
     if constexpr(scalar_value<T>)
     {
-      if(is_ltz(x)||is_ltz(n))                      return nan(as(x));
+      if(is_ngez(x)||is_ngez(n))                    return nan(as(x));
       if (x == inf(as(x)))                          return zero(as(x));
       if (is_eqz(x))                                return zero(as(x));
       return br_medium(n, x);
