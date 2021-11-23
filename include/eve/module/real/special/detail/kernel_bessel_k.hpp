@@ -81,7 +81,7 @@ namespace eve::detail
     return k;
   }
 
-/////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////
   // bessel_k of integer order
   template<real_value I, floating_real_value T>
   EVE_FORCEINLINE auto   kernel_bessel_k_int (I n, T x) noexcept
@@ -102,8 +102,7 @@ namespace eve::detail
       if (x == inf(as(x)))                          return inf(as(x));
       if (n == 0)                                   return k0;               //cyl_bessel_k0(x);
       if (n == 1)                                   return k1;               //cyl_bessel_k1(x);
-//      if (x*4 < n)                                  return br_small(n, x);   // serie
-      return br_forward(n, x);                                                // general
+      return br_forward(n, x);                                               // general
     }
     else
     {
@@ -126,46 +125,28 @@ namespace eve::detail
       {
         r = if_else(n == one(as(n)), cyl_bessel_k1(x), r);
       }
-
       auto notdone = is_gez(x) && !(iseqzn || iseq1n) ;
       x = if_else(notdone, x, allbits);
-      if( eve::any(notdone) )
-      {
-        notdone = last_interval(br_forward,  notdone, r, n, x);
-//         notdone = next_interval(br_half,  notdone, n == T(0.5), r, x);
-//         if( eve::any(notdone) )
-//         {
-//           if( eve::any(notdone) )
-//           {
-//             notdone = last_interval(br_medium,  notdone, r, n, x);
-//           }
-//         }
-      }
-      return r;
+      if(eve::any(notdone)) return if_else(notdone, br_forward(n, x), r);
+      else                  return r;
     }
   }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- template<floating_real_value T>
+  template<floating_real_value T>
   EVE_FORCEINLINE auto  kernel_bessel_k_flt (T n, T x) noexcept
   {
     EVE_ASSERT(eve::none(is_flint(n)), "kernel_bessel_k_flt : some nu are floating integers");
 
-//     auto br_large =  [](auto n,  auto x)
-//       {
-//         return n+x; //kernel_bessel_k_int_large(n, x);
-//       };
-
     auto br_medium =  [](auto n,  auto x)
       {
-        return  n+x; //kernel_bessel_k_int_medium(n, x);
+        auto [i, ip, k, kp] = kernel_bessel_ik(T(n), x);
+        return k;
       };
 
     if constexpr(scalar_value<T>)
     {
       if(is_ltz(x)||is_ltz(n))                      return nan(as(x));
       if (x == inf(as(x)))                          return zero(as(x));
-//      if (asymptotic_bessel_large_x_limit(n, x))    return br_large(n, x);
       if (is_eqz(x))                                return zero(as(x));
       return br_medium(n, x);
     }
@@ -178,16 +159,8 @@ namespace eve::detail
       r = if_else(isinfx, zero(as(x)), allbits);
       x = if_else(isinfx||nneg||xlt0, allbits, x);
       auto notdone = is_not_nan(x);
-
-      if( eve::any(notdone) )
-      {
- //        notdone = next_interval(br_large,  notdone, asymptotic_bessel_large_x_limit(n, x), r, n, x);
-//         if( eve::any(notdone) )
-//         {
-          notdone = last_interval(br_medium,  notdone, r, n, x);
-//        }
-      }
-      return r;
+      if(eve::any(notdone)) return if_else(notdone, br_medium(n, x), r);
+      else                  return r;
     }
   }
 
