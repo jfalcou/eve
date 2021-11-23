@@ -27,9 +27,11 @@ EVE_TEST_TYPES( "Check return types of cyl_bessel_i0"
 
  EVE_TEST( "Check behavior of cyl_bessel_i0 on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(0.0, 60.0))
+        , eve::test::generate(eve::test::randoms(0.0, 5.5),
+                              eve::test::randoms(5.5, 9.5),
+                              eve::test::randoms(9.5, 60.0))
          )
-   <typename T>(T const& a0)
+   <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -64,4 +66,6 @@ EVE_TEST_TYPES( "Check return types of cyl_bessel_i0"
 
 
   TTS_ULP_EQUAL(eve__cyl_bessel_i0(a0), map(std__cyl_bessel_i0, a0), 10.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_i0(a1), map(std__cyl_bessel_i0, a1), 10.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_i0(a2), map(std__cyl_bessel_i0, a2), 10.0);
 };

@@ -39,19 +39,16 @@ namespace eve::detail
   {
     auto br_small =  [](auto n,  auto x)
       {
-        std::cout << "br_small" << std::endl;
         return bessel_i_small_z_series(n, x);
       };
 
     auto br_medium =  [](auto n,  auto x)
       {
-        std::cout << "br_medium" << std::endl;
         auto [in, ipn, kn, kpn] = kernel_bessel_ik(n, x);
         return in;
       };
     auto br_half =  [](auto x)
       {
-        std::cout << "br_half" << std::endl;
         if(eve::any(x >= maxlog(as(x))))
         {
           auto ex = eve::exp(x/2);

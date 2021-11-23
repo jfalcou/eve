@@ -91,7 +91,6 @@ namespace eve::detail
     auto k1 = cyl_bessel_k1(x);
     auto br_forward =  [k0, k1](auto n,  auto x)
       {
-        std::cout << "br_forward" << std::endl;
         return kernel_bessel_k_int_forward (n, x, k0, k1);
       };
 
