@@ -32,7 +32,7 @@ EVE_TEST_TYPES( "Check return types of cyl_bessel_i1"
                               eve::test::randoms(9.5, 500.0)
                              )
          )
-   <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
+   <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using v_t = eve::element_type_t<T>;
 
