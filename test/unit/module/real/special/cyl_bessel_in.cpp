@@ -91,7 +91,7 @@ EVE_TEST( "Check behavior of cyl_bessel_in on wide with integral order"
     TTS_ULP_EQUAL(eve__cyl_bessel_in(2, T(0.1)),   T(std__cyl_bessel_in(2, v_t(0.1)))  , 5.0);
     TTS_ULP_EQUAL(eve__cyl_bessel_in(3, T(0.2)),   T(std__cyl_bessel_in(3, v_t(0.2)))  , 5.0);
     //simd medium
-    TTS_ULP_EQUAL(eve__cyl_bessel_in(10, T(8)),   T(std__cyl_bessel_in(10, v_t(8)))   , 5.0);
+    TTS_ULP_EQUAL(eve__cyl_bessel_in(10, T(8)),   T(std__cyl_bessel_in(10, v_t(8)))   , 7.0);
     TTS_ULP_EQUAL(eve__cyl_bessel_in(20, T(8)),   T(std__cyl_bessel_in(20, v_t(8)))   , 5.0);
     TTS_ULP_EQUAL(eve__cyl_bessel_in(2 , T(1.9010021686554)), T(std__cyl_bessel_in(2, v_t(1.9010021686554)))   , 15.0);
     TTS_ULP_EQUAL(eve__cyl_bessel_in(2,  T(244.708321520116)),T(std__cyl_bessel_in(2, v_t(244.708321520116))) , 15.0);
@@ -115,7 +115,7 @@ EVE_TEST( "Check behavior of cyl_bessel_in on wide with integral order"
     TTS_ULP_EQUAL(eve__cyl_bessel_in(T(2), T(0.1)),   T(std__cyl_bessel_in(2, v_t(0.1)))  , 5.0);
     TTS_ULP_EQUAL(eve__cyl_bessel_in(T(3), T(0.2)),   T(std__cyl_bessel_in(3, v_t(0.2)))  , 5.0);
     // besseljy
-    TTS_ULP_EQUAL(eve__cyl_bessel_in(T(10), T(8)),   T(std__cyl_bessel_in(10, v_t(8)))   , 5.0);
+    TTS_ULP_EQUAL(eve__cyl_bessel_in(T(10), T(8)),   T(std__cyl_bessel_in(10, v_t(8)))   , 7.0);
     TTS_ULP_EQUAL(eve__cyl_bessel_in(T(20), T(8)),   T(std__cyl_bessel_in(20, v_t(8)))   , 5.0);
 
   using i_t = eve::as_integer_t<v_t>;
@@ -137,7 +137,7 @@ EVE_TEST( "Check behavior of cyl_bessel_in on wide with integral order"
   TTS_ULP_EQUAL(eve__cyl_bessel_in(I_t(2), T(0.1)),   T(std__cyl_bessel_in(2, v_t(0.1)))  , 5.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_in(I_t(3), T(0.2)),   T(std__cyl_bessel_in(3, v_t(0.2)))  , 5.0);
   // besseljy
-  TTS_ULP_EQUAL(eve__cyl_bessel_in(I_t(10), T(8)),   T(std__cyl_bessel_in(10, v_t(8)))   , 5.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_in(I_t(10), T(8)),   T(std__cyl_bessel_in(10, v_t(8)))   , 7.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_in(I_t(20), T(8)),   T(std__cyl_bessel_in(20, v_t(8)))   , 5.0);
 
   TTS_RELATIVE_EQUAL(eve__cyl_bessel_in(n, a0),   map(std__cyl_bessel_in, n, a0)   , 1.0e-10);
