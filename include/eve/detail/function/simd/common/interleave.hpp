@@ -16,7 +16,7 @@ namespace eve::detail
   // N-ary interleave
   // This is the main one as it is easier to specify optimisation on this interface than on tuple
   //================================================================================================
-  template<simd_value T, simd_value... Ts>
+  template<simd_value T, std::same_as<T>... Ts>
   EVE_FORCEINLINE auto interleave_(EVE_SUPPORTS(cpu_),T v0, Ts... vs) noexcept
   {
     auto const values = kumi::make_tuple(v0,vs...);
@@ -24,6 +24,11 @@ namespace eve::detail
     if constexpr(T::size() == 1)
     {
       return values;
+    }
+    else if constexpr ( logical_value<T>  && T::abi_type::is_wide_logical )
+    {
+      auto that = interleave(v0.mask(),vs.mask()...);
+      return  kumi::map( [](auto m) { return bit_cast(m, as<T>()); }, that);
     }
     else
     {

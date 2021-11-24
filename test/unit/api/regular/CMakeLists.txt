@@ -21,6 +21,7 @@ make_unit("unit.api.regular"  swizzle/slide_right.cpp           )
 make_unit("unit.api.regular"  swizzle/swap_adjacent_groups.cpp  )
 make_unit("unit.api.regular"  swizzle/zero.cpp                  )
 
+make_unit("unit.api.regular"  shuffle/interleave_shuffle.cpp    )
 make_unit("unit.api.regular"  shuffle/slide_right.cpp           )
 
 ##==================================================================================================
