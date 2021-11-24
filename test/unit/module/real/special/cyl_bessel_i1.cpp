@@ -35,7 +35,7 @@ EVE_TEST_TYPES( "Check return types of cyl_bessel_i1"
    <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using v_t = eve::element_type_t<T>;
-  
+
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_ULP_EQUAL(eve__cyl_bessel_i1(eve::inf(eve::as<v_t>())), eve::inf(eve::as<v_t>()), 0);
@@ -50,7 +50,7 @@ EVE_TEST_TYPES( "Check return types of cyl_bessel_i1"
 #else
   auto std__cyl_bessel_i0 =  [](auto x)->v_t { return boost::math::cyl_bessel_i(v_t(1), x); };
 #endif
-  
+
   TTS_IEEE_EQUAL(eve__cyl_bessel_i1(v_t(-1)), eve::nan(eve::as<v_t>()));
   TTS_ULP_EQUAL(eve__cyl_bessel_i1(v_t(500)), std__cyl_bessel_i1(v_t(500)), 6.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_i1(v_t(10)), std__cyl_bessel_i1(v_t(10))  , 6.0);
@@ -60,7 +60,7 @@ EVE_TEST_TYPES( "Check return types of cyl_bessel_i1"
   TTS_ULP_EQUAL(eve__cyl_bessel_i1(v_t(0.5)),std__cyl_bessel_i1(v_t(0.5)) , 6.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_i1(v_t(1)),  std__cyl_bessel_i1(v_t(1))   , 6.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_i1(v_t(0)),  eve::zero(eve::as<v_t>()), 0.0);
-  
+
   TTS_IEEE_EQUAL(eve__cyl_bessel_i1(T(-1)), eve::nan(eve::as<T>()));
   TTS_ULP_EQUAL(eve__cyl_bessel_i1( T(500)),  T(std__cyl_bessel_i1(v_t(500)) ), 6.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_i1( T(10)) ,  T(std__cyl_bessel_i1( v_t(10)) ), 6.0);
@@ -70,8 +70,8 @@ EVE_TEST_TYPES( "Check return types of cyl_bessel_i1"
   TTS_ULP_EQUAL(eve__cyl_bessel_i1( T(0.5)),  T(std__cyl_bessel_i1( v_t(0.5))), 6.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_i1( T(1))  ,  T(std__cyl_bessel_i1( v_t(1))  ), 6.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_i1( T(0))  , eve::zero(eve::as< T>()), 0.0);
-  
-  
+
+
   TTS_ULP_EQUAL(eve__cyl_bessel_i1(a0), map(std__cyl_bessel_i1, a0), 10.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_i1(a1), map(std__cyl_bessel_i1, a1), 10.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_i1(a2), map(std__cyl_bessel_i1, a2), 10.0);
