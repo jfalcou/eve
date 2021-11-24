@@ -29,8 +29,7 @@ EVE_TEST_TYPES( "Check return types of cyl_bessel_i1"
         , eve::test::simd::ieee_reals
         , eve::test::generate(eve::test::randoms(0.0, 5.5),
                               eve::test::randoms(5.5, 9.5),
-                              eve::test::randoms(9.5, 500.0),
-                              eve::test::randoms(500.0, 1000.0)
+                              eve::test::randoms(9.5, 500.0)
                              )
          )
    <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
@@ -70,5 +69,4 @@ EVE_TEST_TYPES( "Check return types of cyl_bessel_i1"
   TTS_ULP_EQUAL(eve__cyl_bessel_i1(a0), map(std__cyl_bessel_i1, a0), 10.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_i1(a1), map(std__cyl_bessel_i1, a1), 10.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_i1(a2), map(std__cyl_bessel_i1, a2), 10.0);
-  TTS_ULP_EQUAL(eve__cyl_bessel_i1(a3), map(std__cyl_bessel_i1, a3), 10.0);
 };
