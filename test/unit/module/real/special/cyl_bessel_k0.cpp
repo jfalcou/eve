@@ -70,5 +70,5 @@ EVE_TEST_TYPES( "Check return types of cyl_bessel_k0"
 
   TTS_ULP_EQUAL(eve__cyl_bessel_k0(a0), map(std__cyl_bessel_k0, a0), 10.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_k0(a1), map(std__cyl_bessel_k0, a1), 10.0);
-  TTS_RELATIVE_EQUAL(eve__cyl_bessel_k0(a2), map(std__cyl_bessel_k0, a2), 0.001;
+  TTS_RELATIVE_EQUAL(eve__cyl_bessel_k0(a2), map(std__cyl_bessel_k0, a2), 0.001);
 };
