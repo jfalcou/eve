@@ -28,160 +28,8 @@
 
 namespace eve::detail
 {
-//   template<floating_real_value T>
-//   EVE_FORCEINLINE T cyl_bessel_j1_(EVE_SUPPORTS(cpu_), T x) noexcept
-//   {
-//     // ensure x > 0 j1 is an odd function
-//     using elt_t =  element_type_t<T>;
-//     auto s = if_else(is_negative(x), mone, one(as(x)));
-//     x = eve::abs(x);
-//     auto br_4 =  [](auto x) // x < 4
-//       {
-//         constexpr std::array<elt_t, 7> P1 = {
-//           -1.4258509801366645672e+11
-//           ,  6.6781041261492395835e+09
-//           , -1.1548696764841276794e+08
-//           ,  9.8062904098958257677e+05
-//           , -4.4615792982775076130e+03
-//           ,  1.0650724020080236441e+01
-//           , -1.0767857011487300348e-02
-//         };
-//         constexpr std::array<elt_t, 7> Q1 = {
-//           4.1868604460820175290e+12
-//           , 4.2091902282580133541e+10
-//           , 2.0228375140097033958e+08
-//           , 5.9117614494174794095e+05
-//           , 1.0742272239517380498e+03
-//           , 1.0
-//           , 0.0
-//         };
-//         constexpr elt_t x1(3.8317059702075123156e+00);
-//         constexpr elt_t x11(9.810e+02);
-//         constexpr elt_t x12(-3.2527979248768438556e-04);
-//         auto y =  sqr(x);
-//         auto r = evaluate_rational(P1, Q1, y);
-//         auto factor = x * (x + x1) * ((x - x11/256) - x12);
-//         auto value = factor * r;
-//         return value;
-//       };
-//     auto br_8 =  [](auto x) // x < 4
-//       {
-//         constexpr std::array<elt_t, 8> P2 = {
-//           -1.7527881995806511112e+16
-//           ,  1.6608531731299018674e+15
-//           , -3.6658018905416665164e+13
-//           ,  3.5580665670910619166e+11
-//           , -1.8113931269860667829e+09
-//           ,  5.0793266148011179143e+06
-//           , -7.5023342220781607561e+03
-//           ,  4.6179191852758252278e+00
-//         };
-//         constexpr std::array<elt_t, 8> Q2 = {
-//           1.7253905888447681194e+18
-//           , 1.7128800897135812012e+16
-//           , 8.4899346165481429307e+13
-//           , 2.7622777286244082666e+11
-//           , 6.4872502899596389593e+08
-//           , 1.1267125065029138050e+06
-//           , 1.3886978985861357615e+03
-//           , 1.0
-//         };
-//         constexpr elt_t x2(7.0155866698156187535e+00);
-//         constexpr elt_t x21(1.7960e+03);
-//         constexpr elt_t x22(-3.8330184381246462950e-05);
-//         auto y = sqr(x);
-//         auto r = evaluate_rational(P2, Q2, y);
-//         auto factor = x * (x + x2) * ((x - x21/256) - x22);
-//         auto value = factor * r;
-//         return value;
-//       };
-//     auto br_large =  [](auto x) // x < 4
-//       {
-//         constexpr std::array<elt_t, 7> PC = {
-//           -4.4357578167941278571e+06
-//           , -9.9422465050776411957e+06
-//           , -6.6033732483649391093e+06
-//           , -1.5235293511811373833e+06
-//           , -1.0982405543459346727e+05
-//           , -1.6116166443246101165e+03
-//           , 0.0
-//         };
-//         constexpr std::array<elt_t, 7> QC = {
-//           -4.4357578167941278568e+06
-//           , -9.9341243899345856590e+06
-//           , -6.5853394797230870728e+06
-//           , -1.5118095066341608816e+06
-//           , -1.0726385991103820119e+05
-//           , -1.4550094401904961825e+03
-//           , 1.0
-//         };
-//         constexpr std::array<elt_t, 7> PS = {
-//           3.3220913409857223519e+04
-//           , 8.5145160675335701966e+04
-//           , 6.6178836581270835179e+04
-//           , 1.8494262873223866797e+04
-//           , 1.7063754290207680021e+03
-//           , 3.5265133846636032186e+01
-//           , 0.0
-//         };
-//         constexpr std::array<elt_t, 7> QS = {
-//           7.0871281941028743574e+05
-//           , 1.8194580422439972989e+06
-//           , 1.4194606696037208929e+06
-//           , 4.0029443582266975117e+05
-//           , 3.7890229745772202641e+04
-//           , 8.6383677696049909675e+02
-//           , 1.0
-//         };
-//         T y = 8*rec(x);
-//         T y2 = sqr(y);
-//         auto rc = evaluate_rational(PC, QC, y2);
-//         auto rs = evaluate_rational(PS, QS, y2);
-//         auto factor = rsqrt(pi(as(x))*x);
-//         auto [sx, cx] = sincos(x);
-//         auto value = factor * fma(y,  rs*(sx+cx), rc*(sx-cx));
-//         return value;
-//       };
-
-//     using elt_t =  element_type_t<T>;
-//     if constexpr(scalar_value<T>)
-//     {
-//       if (x == 0)          return s*zero(as(x));  // x is 0
-//       if (x == inf(as(x))) return s*zero(as(x));    // x is infinite
-//       if (is_nan(x))       return x;              // x is nan
-//       if (x <= 4)          return s*br_4(x);      // x in (0, 4]
-//       if (x <= 8.0)        return s*br_8(x);      // x in (4, 8]
-//       return s*br_large(x);                         // x in (8, \infty)
-//     }
-//     else //simd
-//     {
-//       if constexpr(has_native_abi_v<T>)
-//       {
-//         auto r = nan(as(x));
-//         auto notdone = is_gez(x);
-//         if( eve::any(notdone) )
-//         {
-//           notdone = next_interval(br_4,  notdone, x <= T(4), r, x);
-//           if( eve::any(notdone) )
-//           {
-//             notdone = next_interval(br_8,  notdone, x <= T(8), r, x);
-//             if( eve::any(notdone) )
-//             {
-//               notdone = last_interval(br_large,  notdone, r, x);
-//             }
-//           }
-//         }
-//         r = if_else (is_eqz(x), zero(as(x)), r);
-//         r = if_else ((x == inf(as(x))), zero(as(x)), r);
-//         return s*r;
-//       }
-//       else return apply_over(cyl_bessel_j1, x);
-//     }
-//   }
-
-
   template<floating_real_value T>
-  EVE_FORCEINLINE T cyl_bessel_j1_(EVE_SUPPORTS(cpu_), T a0) noexcept
+  EVE_FORCEINLINE T cyl_bessel_j1_(EVE_SUPPORTS(cpu_), T x) noexcept
   {
     using elt_t =  element_type_t<T>;
     auto br_large =  [](auto x) //TODO specialize for float
@@ -233,7 +81,6 @@ namespace eve::detail
       };
     if constexpr( has_native_abi_v<T> )
     {
-      auto x = eve::abs(a0);
       if constexpr(std::is_same_v<elt_t, float>)
       {
         auto br_2 =  [](auto x){
@@ -282,15 +129,19 @@ namespace eve::detail
         if constexpr(scalar_value<T>)
         {
           auto s = x < 0 ? -1: 1;
+           x = abs(x);
           if (x == 0)          return zero(as(x));   // x is 0
           if (x == inf(as(x))) return zero(as(x));   // x is infinite
           if (is_nan(x))       return x;             // x is nan
           if (x < 2)           return s*br_2(x);     // x in (0, 2]
           if (x < 8)           return s*br_8(x);     // x in (2, 8]
-          return br_large(x);                        // x in (8, \infty)
+          return s*br_large(x);                        // x in (8, \infty)
          }
         else
         {
+          auto xneg = is_ltz(x);
+          x = abs(x);
+          auto s = if_else(xneg, mone, one(as(x)));
           auto r = nan(as(x));
           auto notdone = is_gez(x);
           if( eve::any(notdone) )
@@ -306,7 +157,7 @@ namespace eve::detail
             }
           }
           r = if_else (is_eqz(x) || (x == inf(as(x))), zero, r);
-          return r;
+          return s*r;
         }
       }
       else
@@ -391,15 +242,20 @@ namespace eve::detail
 
         if constexpr(scalar_value<T>)
         {
+          auto s = x < 0 ? -1: 1;
+          x = abs(x);
           if (x == 0)          return zero(as(x)); // x is 0
           if (x == inf(as(x))) return zero(as(x)); // x is infinite
           if (is_nan(x))       return x;           // x is nan
-          if (x < 5)           return br_5(x);     // x in (0, 5]
-          if (x < 8)           return br_8(x);     // x in (5, 8]
-          return br_large(x);                      // x in (8, \infty)
+          if (x < 5)           return s*br_5(x);   // x in (0, 5]
+          if (x < 8)           return s*br_8(x);   // x in (5, 8]
+          return s*br_large(x);                      // x in (8, \infty)
          }
         else
         {
+          auto xneg = is_ltz(x);
+          x = abs(x);
+          auto s = if_else(xneg, mone, one(as(x)));
           auto r = nan(as(x));
           auto notdone = is_gez(x);
           if( eve::any(notdone) )
@@ -415,11 +271,11 @@ namespace eve::detail
             }
           }
           r = if_else (is_eqz(x) || (x == inf(as(x))), zero, r);
-          return r;
+          return s*r;
         }
       }
     }
     else
-      return apply_over(eve::cyl_bessel_j1, a0);
+      return apply_over(eve::cyl_bessel_j1, x);
   }
 }
