@@ -32,14 +32,14 @@ EVE_TEST_TYPES( "Check return types of cyl_bessel_i1"
                               eve::test::randoms(9.5, 500.0)
                              )
          )
-   <typename T>(T const& a0, T const& a1, T const& a2)
+<typename T>(T const& a0, T const& a1, T const& a2)
 {
   using v_t = eve::element_type_t<T>;
   auto eve__cyl_bessel_i1 =  [](auto x) { return eve::cyl_bessel_i1(x); };
 #if defined(__cpp_lib_math_special_functions)
-  auto std__cyl_bessel_i1 =  [](auto x)->v_t { return std::cyl_bessel_i(v_t(1), x); };
+  auto std__cyl_bessel_i1 = [](auto x)->v_t { return std::cyl_bessel_i(v_t(1), x); };
 #else
-  auto std__cyl_bessel_i1 =  [](auto x)->v_t { return boost::math::cyl_bessel_i(v_t(1), x); };
+  auto std__cyl_bessel_i1 = [](auto x)->v_t { return boost::math::cyl_bessel_i(v_t(1), x); };
 #endif
 
   if constexpr( eve::platform::supports_invalids )
