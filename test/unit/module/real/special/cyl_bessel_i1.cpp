@@ -35,7 +35,6 @@ EVE_TEST_TYPES( "Check return types of cyl_bessel_i1"
    <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using v_t = eve::element_type_t<T>;
-#if defined(__cpp_lib_math_special_functions)
   auto eve__cyl_bessel_i1 =  [](auto x) { return eve::cyl_bessel_i1(x); };
 #if defined(__cpp_lib_math_special_functions)
   auto std__cyl_bessel_i0 =  [](auto x)->v_t { return std::cyl_bessel_i(v_t(1), x); };
