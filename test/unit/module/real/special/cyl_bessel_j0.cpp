@@ -73,4 +73,31 @@ EVE_TEST_TYPES( "Check return types of cyl_bessel_j0"
   TTS_ULP_EQUAL(eve__cyl_bessel_j0(a1), map(std__cyl_bessel_j0, a1), 500.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_j0(a2), map(std__cyl_bessel_j0, a2), 500.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_j0(a3), map(std__cyl_bessel_j0, a3), 500.0);
+
+
+  TTS_ULP_EQUAL(eve__cyl_bessel_j0(v_t(-1500)), std__cyl_bessel_j0(v_t(-1500)), 2.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_j0(v_t(-500)), std__cyl_bessel_j0(v_t(-500)), 2.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_j0(v_t(-10)), std__cyl_bessel_j0(v_t(-10))  , 2.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_j0(v_t(-5)),  std__cyl_bessel_j0(v_t(-5))   , 2.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_j0(v_t(-2)),  std__cyl_bessel_j0(v_t(-2))   , 2.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_j0(v_t(-1.5)),std__cyl_bessel_j0(v_t(-1.5)) , 2.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_j0(v_t(-0.5)),std__cyl_bessel_j0(v_t(-0.5)) , 2.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_j0(v_t(-1)),  std__cyl_bessel_j0(v_t(-1))   , 2.5);
+
+
+  TTS_ULP_EQUAL(eve__cyl_bessel_j0( T(-1500)), T(std__cyl_bessel_j0(v_t(-1500))), 2.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_j0( T(-500)),  T(std__cyl_bessel_j0(v_t(-500)) ), 2.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_j0( T(-10)) ,  T(std__cyl_bessel_j0( v_t(-10)) ), 2.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_j0( T(-5))  ,  T(std__cyl_bessel_j0( v_t(-5))  ), 2.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_j0( T(-2))  ,  T(std__cyl_bessel_j0( v_t(-2))  ), 2.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_j0( T(-1.5)),  T(std__cyl_bessel_j0( v_t(-1.5))), 2.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_j0( T(-0.5)),  T(std__cyl_bessel_j0( v_t(-0.5))), 2.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_j0( T(-1))  ,  T(std__cyl_bessel_j0( v_t(-1))  ), 2.0);
+
+
+
+  TTS_ULP_EQUAL(eve__cyl_bessel_j0(-a0), map(std__cyl_bessel_j0, -a0), 500.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_j0(-a1), map(std__cyl_bessel_j0, -a1), 500.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_j0(-a2), map(std__cyl_bessel_j0, -a2), 500.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_j0(-a3), map(std__cyl_bessel_j0, -a3), 500.0);
 };
