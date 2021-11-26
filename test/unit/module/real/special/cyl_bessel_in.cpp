@@ -38,7 +38,8 @@ EVE_TEST_TYPES( "Check return types of cyl_bessel_in"
 //==================================================================================================
 EVE_TEST( "Check behavior of cyl_bessel_in on wide with integral order"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::ramp(0), eve::test::randoms(0.0, 200.0))
+        , eve::test::generate(eve::test::ramp(0),
+                              eve::test::randoms(0.0, 10.0))
         )
   <typename T>(T n , T a0)
 {
@@ -142,7 +143,6 @@ EVE_TEST( "Check behavior of cyl_bessel_in on wide with integral order"
   TTS_ULP_EQUAL(eve__cyl_bessel_in(I_t(10), T(8)),   T(std__cyl_bessel_in(10, v_t(8)))   , 7.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_in(I_t(20), T(8)),   T(std__cyl_bessel_in(20, v_t(8)))   , 5.0);
 
-  TTS_RELATIVE_EQUAL(eve__cyl_bessel_in(n, a0),   map(std__cyl_bessel_in, n, a0)   , 1.0e-10);
   TTS_ULP_EQUAL(map(eve__cyl_bessel_in, n, a0),   map(std__cyl_bessel_in, n, a0)   , 20.0);
 };
 
@@ -152,7 +152,7 @@ EVE_TEST( "Check behavior of cyl_bessel_in on wide with integral order"
 EVE_TEST( "Check behavior of cyl_bessel_in on wide with non integral order"
         , eve::test::simd::ieee_reals
         , eve::test::generate(eve::test::randoms(0.0, 10.0)
-        , eve::test::randoms(0.0, 200.0))
+                             , eve::test::randoms(0.0, 200.0))
         )
   <typename T>(T n, T a0 )
 {

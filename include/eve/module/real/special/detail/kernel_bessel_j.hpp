@@ -215,7 +215,7 @@ namespace eve::detail
 
     if constexpr(scalar_value<T>)
     {
-      if(is_ltz(x)||is_ltz(n))                      return nan(as(x));
+      if(is_ltz(x))                                 return nan(as(x));
       if (x == inf(as(x)))                          return zero(as(x));
       if (asymptotic_bessel_large_x_limit(n, x))    return br_large(n, x);
       if (is_eqz(x))                                return zero(as(x));
