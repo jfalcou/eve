@@ -6,7 +6,7 @@ Conditional operations {#tutorial_if_else}
 When you call a function on one or more [SIMD values](../reference/concepts/simd_value.html#simd_value), you expect the computation to be performed on every elements of its parameters. Sometimes, you may want to make the application of a given function dependent on some condition. Let's explore the functionalities **EVE** provides for this kind of task.
 
 ## Explicit Selection
-Let's say the function we want to write computes the product of two values `a` and `b` if `a` is equal to `b` and their difference otherwise. 
+Let's say the function we want to write computes the product of two values `a` and `b` if `a` is equal to `b` and their difference otherwise.
 
 The scalar code is looking like:
 
@@ -26,7 +26,7 @@ using w_t = eve::wide<float, eve::fixed<4>>;
 
 auto square_or_diff( w_t const& a, w_t const& b )
 {
-  std::cout << a == b << "\n";
+  std::cout << (a == b) << "\n";
   std::cout << a*b    << "\n";
   std::cout << a-b    << "\n";
   return eve::if_else( a == b, a * b, a - b );
@@ -133,7 +133,7 @@ auto safe_sqrt( w_t const& a )
   return f(a);
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    
+
 Conditional Expressions
 ====================================================================================================
 If passing a simple logical expression is the most common use-case of the conditional syntax, one
@@ -311,7 +311,7 @@ using w_t = eve::wide<float, eve::fixed<4>>;
 
 auto sub_not_first_nor_last( w_t const& a, w_t const& b )
 {
-  return eve::sub[ eve::keep_between(eve::ignore_first(1),eve::ignore_last(1)) ](a,b);
+  return eve::sub[ eve::keep_between(1,3) ](a,b);
 }
 
 int main()
