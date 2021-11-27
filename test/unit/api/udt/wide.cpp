@@ -34,6 +34,26 @@ TTS_CASE("Check User Defined Type properties with respect to SIMDification")
 };
 
 //==================================================================================================
+// Sizeof
+//==================================================================================================
+EVE_TEST_TYPES( "Check eve::wide<tuple> binary size", eve::test::scalar::all_types)
+<typename T>(eve::as<T>)
+{
+  using c_t = eve::cardinal_t<eve::wide<udt::grid2d>>;
+  using d_t = eve::cardinal_t<eve::wide<udt::label_position>>;
+
+  TTS_EQUAL ( sizeof(eve::wide<udt::grid2d>)
+            , sizeof(kumi::tuple<eve::wide<int,c_t>,eve::wide<int,c_t>>)
+            , REQUIRED
+            );
+
+  TTS_EQUAL ( sizeof(eve::wide<udt::label_position>)
+            , sizeof(kumi::tuple<eve::wide<float,d_t>,eve::wide<std::uint8_t,d_t>>)
+            , REQUIRED
+            );
+};
+
+//==================================================================================================
 // Default constructors
 //==================================================================================================
 TTS_CASE("Check eve::wide<udt> default constructor")

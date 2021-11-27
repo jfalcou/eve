@@ -66,31 +66,6 @@ namespace eve::detail
     protected:
     Storage data_;
   };
-
-  //================================================================================================
-  //! @brief Cardinal-only element of wide/logical
-  //!
-  //! wide_cardinal acts as a wrapper for the information about the number of lanes in a wide.
-  //! This separate class is meant to limit compile-time by being instantiated
-  //! once even if multiple wide instance requires the cardinal.
-  //!
-  //! @tparam Size Type encoding the cardinal of a wide
-  //================================================================================================
-  template<typename Size> struct wide_cardinal
-  {
-    //! Type describing the number of lanes of current wide
-    using cardinal_type = Size;
-    using size_type     = std::ptrdiff_t;
-
-    //! @brief Size of the wide in number of lanes
-    static EVE_FORCEINLINE constexpr size_type size()     noexcept { return Size::value; }
-
-    //! @brief Maximal number of lanes for a given wide
-    static EVE_FORCEINLINE constexpr size_type max_size() noexcept { return Size::value; }
-
-    //! @brief Check if a wide contains 0 lanes
-    static EVE_FORCEINLINE constexpr bool      empty()    noexcept { return false; }
-  };
 }
 
 #if defined(SPY_COMPILER_IS_GCC)

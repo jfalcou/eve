@@ -13,6 +13,21 @@ template<typename T>
 using tuple_t = kumi::tuple<std::int8_t,T,double>;
 
 //==================================================================================================
+// Sizeof
+//==================================================================================================
+EVE_TEST_TYPES( "Check eve::wide<tuple> binary size", eve::test::scalar::all_types)
+<typename T>(eve::as<T>)
+{
+  using c_t = eve::cardinal_t<eve::wide<tuple_t<T>>>;
+
+  TTS_EQUAL ( sizeof(eve::wide<kumi::tuple<std::int8_t,T,double>>)
+            , sizeof(kumi::tuple<eve::wide<std::int8_t,c_t>,eve::wide<T,c_t>,eve::wide<double,c_t>>)
+            , REQUIRED
+            );
+
+};
+
+//==================================================================================================
 // Structured bindings
 //==================================================================================================
 EVE_TEST_TYPES( "Check eve::wide<tuple> structured binding behavior", eve::test::scalar::all_types)

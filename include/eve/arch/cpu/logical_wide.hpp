@@ -56,10 +56,8 @@ namespace eve
   //================================================================================================
   template<typename Type, typename Cardinal>
   struct  EVE_MAY_ALIAS  logical<wide<Type,Cardinal>>
-        : detail::wide_cardinal<Cardinal>
-        , detail::wide_storage<as_logical_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>
+        : detail::wide_storage<as_logical_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>
   {
-    using card_base     = detail::wide_cardinal<Cardinal>;
     using storage_base  = detail::wide_storage<as_logical_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>;
 
     public:
@@ -72,8 +70,11 @@ namespace eve
     //! The type used for this register storage
     using storage_type  = typename storage_base::storage_type;
 
-    //! Type for indexing element in a eve::logical
-    using size_type     = typename card_base::size_type;
+    //! Type describing the number of lanes of current wide
+    using cardinal_type = Cardinal;
+
+    //! Type representing the size of the current wide
+    using size_type     = std::ptrdiff_t;
 
     //! Type representing the bits of the logical value
     using bits_type = wide<as_integer_t<Type, unsigned>, Cardinal>;
@@ -141,7 +142,7 @@ namespace eve
     EVE_FORCEINLINE logical(T0 const &v0, T1 const &v1, Ts const &... vs) noexcept
           requires(     std::convertible_to<T0,logical<Type>> && std::convertible_to<T0,logical<Type>>
                     &&  (... && std::convertible_to<Ts,logical<Type>>)
-                    &&  (card_base::size() == 2 + sizeof...(Ts))
+                    &&  (Cardinal::value == 2 + sizeof...(Ts))
                   )
         : storage_base(detail::make(eve::as<logical>{}, v0, v1, vs...))
     {}
@@ -191,7 +192,7 @@ namespace eve
                             , logical<wide<Type, Half>> const &h
                             ) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-    requires( card_base::size() == 2 * Half::value )
+    requires( Cardinal::value == 2 * Half::value )
 #endif
                   : storage_base(detail::combine(EVE_CURRENT_API{}, l, h))
     {}
@@ -228,6 +229,15 @@ namespace eve
     //! @name Indexing and reordering
     //! @{
     //==============================================================================================
+
+    //! @brief Size of the wide in number of lanes
+    static EVE_FORCEINLINE constexpr size_type size()     noexcept { return Cardinal::value; }
+
+    //! @brief Maximal number of lanes for a given wide
+    static EVE_FORCEINLINE constexpr size_type max_size() noexcept { return Cardinal::value; }
+
+    //! @brief Check if a wide contains 0 lanes
+    static EVE_FORCEINLINE constexpr bool      empty()    noexcept { return false; }
 
     //==============================================================================================
     //! @brief Dynamic lookup via lane indexing
