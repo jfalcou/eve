@@ -60,10 +60,8 @@ namespace eve
   //================================================================================================
   template<typename Type, typename Cardinal>
   struct  EVE_MAY_ALIAS  wide
-        : detail::wide_cardinal<Cardinal>
-        , detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>
+        : detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>
   {
-    using card_base     = detail::wide_cardinal<Cardinal>;
     using storage_base  = detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>;
 
     public:
@@ -77,8 +75,11 @@ namespace eve
     //! The type used for this register storage
     using storage_type  = typename storage_base::storage_type;
 
-    //! Type for indexing element in a eve::wide
-    using size_type     = typename card_base::size_type;
+    //! Type describing the number of lanes of current wide
+    using cardinal_type = Cardinal;
+
+    //! Type representing the size of the current wide
+    using size_type     = std::ptrdiff_t;
 
     //! Opt-in for like concept
     using is_like = value_type;
@@ -90,8 +91,7 @@ namespace eve
     //! Generates a eve::wide type from a different cardinal `N`.
     template<typename N> using rescale = wide<Type,N>;
 
-    // TODO : REMOVE AFTER MERGE
-    static EVE_FORCEINLINE constexpr auto alignment() noexcept { return sizeof(Type)*Cardinal{}; }
+     static EVE_FORCEINLINE constexpr auto alignment() noexcept { return sizeof(Type)*Cardinal{}; }
 
     //==============================================================================================
     //! @name Constructors
@@ -158,7 +158,7 @@ namespace eve
     template<scalar_value S0, scalar_value S1, scalar_value... Ss>
     EVE_FORCEINLINE wide( S0 v0, S1 v1, Ss... vs) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-    requires( card_base::size() == 2 + sizeof...(vs) )
+    requires( Cardinal::value == 2 + sizeof...(vs) )
 #endif
                   : storage_base(detail::make ( eve::as<wide>{}
                                               , static_cast<Type>(v0)
@@ -222,7 +222,7 @@ namespace eve
     template<typename Half>
     EVE_FORCEINLINE wide( wide<Type, Half> const &l, wide<Type, Half> const &h) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-    requires( card_base::size() == 2 * Half::value )
+    requires( Cardinal::value == 2 * Half::value )
 #endif
                   : storage_base(detail::combine(EVE_CURRENT_API{}, l, h))
     {}
@@ -375,6 +375,15 @@ namespace eve
     //! @name Indexing and reordering
     //! @{
     //=============================================================================================
+
+    //! @brief Size of the wide in number of lanes
+    static EVE_FORCEINLINE constexpr size_type size()     noexcept { return Cardinal::value; }
+
+    //! @brief Maximal number of lanes for a given wide
+    static EVE_FORCEINLINE constexpr size_type max_size() noexcept { return Cardinal::value; }
+
+    //! @brief Check if a wide contains 0 lanes
+    static EVE_FORCEINLINE constexpr bool      empty()    noexcept { return false; }
 
     //==============================================================================================
     //! @brief Dynamic lookup via lane indexing
