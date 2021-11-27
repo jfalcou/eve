@@ -746,7 +746,8 @@ namespace eve
 
     //! @brief Perform the compound product on all the wide lanes and assign
     //! the result to the current one. See also: eve::mul
-    friend  EVE_FORCEINLINE auto& operator*=(wide& w, value auto o) noexcept
+    template<value V>
+    friend  EVE_FORCEINLINE auto& operator*=(wide& w, V o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
     requires( !kumi::product_type<Type> )
 #endif
@@ -765,16 +766,17 @@ namespace eve
     //! @brief Perform the product between a scalar and all lanes of a eve::wide
     //! See also: eve::mul
     template<real_scalar_value S>
-    friend EVE_FORCEINLINE auto operator*(S s, wide const& v) noexcept
+    friend EVE_FORCEINLINE auto operator*(S s, wide v) noexcept
     {
-      return v * wide(s);
+      return v *= s;
     }
 
     //! @brief Perform the product between all lanes of a eve::wide and a scalar
     //! See also: eve::mul
-    friend EVE_FORCEINLINE auto operator*(wide const& v, real_scalar_value auto s) noexcept
+    template<real_scalar_value S>
+    friend EVE_FORCEINLINE auto operator*(wide v, S s) noexcept
     {
-      return v * wide(s);
+      return v *= s;
     }
 
     //! @brief Perform the compound division on all the wide lanes and assign
