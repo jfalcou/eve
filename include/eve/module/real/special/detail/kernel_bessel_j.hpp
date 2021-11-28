@@ -198,6 +198,8 @@ namespace eve::detail
     }
   }
 
+  /////////////////////////////////////////////////////////////////////////
+  // bessel_j of non integer order
   template<floating_real_value T>
   EVE_FORCEINLINE auto  kernel_bessel_j_flt (T n, T x) noexcept
   {
@@ -223,12 +225,11 @@ namespace eve::detail
     }
     else
     {
-      auto nneg = is_ltz(n);
       auto xlt0 = is_ltz(x);
       auto r = nan(as(x));
       auto isinfx = x == inf(as(x));
       r = if_else(isinfx, zero(as(x)), allbits);
-      x = if_else(isinfx||nneg||xlt0, allbits, x);
+      x = if_else(isinfx||xlt0, allbits, x);
       auto notdone = is_not_nan(x);
 
       if( eve::any(notdone) )

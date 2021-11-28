@@ -161,8 +161,8 @@ EVE_TEST( "Check behavior of cyl_bessel_jn on wide with non integral order"
   //scalar large x
   TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(3.5), v_t(1500)), std__cyl_bessel_jn(v_t(3.5), v_t(1500)), 2.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(2.5), v_t( 500)),  std__cyl_bessel_jn(v_t(2.5), v_t( 500)), 2.0);
-  TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(-3.5), v_t(1500)), eve::nan(eve::as<v_t>()), 2.0);
-  TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(-2.5), v_t( 500)), eve::nan(eve::as<v_t>()), 2.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(-3.5), v_t(1500)), std__cyl_bessel_jn(v_t(-3.5), v_t(1500)), 2.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(-2.5), v_t( 500)), std__cyl_bessel_jn(v_t(-2.5), v_t(500)), 2.0);
   //scalar forward
   TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(2.5), v_t(10)), std__cyl_bessel_jn(v_t(2.5), v_t(10))  , 5.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(3.5), v_t(5)),  std__cyl_bessel_jn(v_t(3.5), v_t(5))   , 2.0);
@@ -182,9 +182,6 @@ EVE_TEST( "Check behavior of cyl_bessel_jn on wide with non integral order"
   //scalar large x
    TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(3.5), T(1500)),  T(std__cyl_bessel_jn(v_t(3.5), v_t(1500))),  2.0);
    TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(2.5), T(500)),   T(std__cyl_bessel_jn(v_t(2.5), v_t(500))),   2.0);
-   // reflection to do
-   TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(-3.5), T(1500)), eve::nan(eve::as<T>()), 2.0);
-   TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(-2.5), T(500)),  eve::nan(eve::as<T>()),  2.0);
   //scalar forward
    TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(2.5), T(10)),    T(std__cyl_bessel_jn(v_t(2.5), v_t(10)))   , 5.0);
    TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(3.5), T(5)),     T(std__cyl_bessel_jn(v_t(3.5), v_t(5)))    , 2.0);
@@ -204,8 +201,8 @@ EVE_TEST( "Check behavior of cyl_bessel_jn on wide with non integral order"
   // large x
   TTS_ULP_EQUAL(eve__cyl_bessel_jn(T(3.5), T(1500)),  T(std__cyl_bessel_jn(v_t(3.5), v_t(1500))),  2.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_jn(T(2.5), T(500)),   T(std__cyl_bessel_jn(v_t(2.5), v_t(500))),   2.0);
-  TTS_ULP_EQUAL(eve__cyl_bessel_jn(T(-3.5), T(1500)), eve::nan(eve::as<T>()), 2.0);
-  TTS_ULP_EQUAL(eve__cyl_bessel_jn(T(-2.5), T(500)),  eve::nan(eve::as<T>()),  2.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_jn(T(-3.5), T(1500)), T(std__cyl_bessel_jn(v_t(-3.5), v_t(1500))), 2.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_jn(T(-2.5), T(500)),  T(std__cyl_bessel_jn(v_t(-2.5), v_t( 500))), 2.0);
   // forward
   TTS_ULP_EQUAL(eve__cyl_bessel_jn(T(2.5), T(10)),    T(std__cyl_bessel_jn(v_t(2.5), v_t(10)))   , 5.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_jn(T(3.5), T(5)),     T(std__cyl_bessel_jn(v_t(3.5), v_t(5)))    , 2.0);
@@ -224,8 +221,8 @@ EVE_TEST( "Check behavior of cyl_bessel_jn on wide with non integral order"
   TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(-2.5), v_t(500)),  std__cyl_bessel_jn(v_t(-2.5), v_t(500)), 2.0);
 
   //scalar forward
-  TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(-2.5), v_t(10)), std__cyl_bessel_jn(v_t(-2.5), v_t(10))  , 5.0);
-  TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(-3.5), v_t(5)),  std__cyl_bessel_jn(v_t(-3.5), v_t(5))   , 2.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(-2.5), v_t(10)), std__cyl_bessel_jn(v_t(-2.5), v_t(10))  , 6.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(-3.5), v_t(5)),  std__cyl_bessel_jn(v_t(-3.5), v_t(5))   , 25.0);
   //scalar serie
   TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(-2.5), v_t(0.1)), std__cyl_bessel_jn(v_t(-2.5), v_t(0.1))  , 2.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(-3.5), v_t(0.2)),  std__cyl_bessel_jn(v_t(-3.5), v_t(0.2))   , 2.0);
@@ -238,8 +235,8 @@ EVE_TEST( "Check behavior of cyl_bessel_jn on wide with non integral order"
   TTS_ULP_EQUAL(eve__cyl_bessel_jn(T(-2.5), T(500)),   T(std__cyl_bessel_jn(v_t(-2.5), v_t(500))),   2.0);
 
   // forward
-  TTS_ULP_EQUAL(eve__cyl_bessel_jn(T(-2.5), T(10)),    T(std__cyl_bessel_jn(v_t(-2.5), v_t(10)))   , 5.0);
-  TTS_ULP_EQUAL(eve__cyl_bessel_jn(T(-3.5), T(5)),     T(std__cyl_bessel_jn(v_t(-3.5), v_t(5)))    , 2.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_jn(T(-2.5), T(10)),    T(std__cyl_bessel_jn(v_t(-2.5), v_t(10)))   , 6.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_jn(T(-3.5), T(5)),     T(std__cyl_bessel_jn(v_t(-3.5), v_t(5)))    , 25.0);
   // serie
   TTS_ULP_EQUAL(eve__cyl_bessel_jn(T(-2.5), T(0.1)),   T(std__cyl_bessel_jn(v_t(-2.5), v_t(0.1)))  , 2.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_jn(T(-3.5), T(0.2)),   T(std__cyl_bessel_jn(v_t(-3.5), v_t(0.2)))  , 2.5);
