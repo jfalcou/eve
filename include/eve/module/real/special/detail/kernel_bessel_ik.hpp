@@ -3,6 +3,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/constant/false.hpp>
 #include <eve/constant/inf.hpp>
+#include <eve/constant/invpi.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/eps.hpp>
 #include <eve/constant/nan.hpp>
@@ -74,6 +75,9 @@ namespace eve::detail
     const T fp_min = T(10) * Eps;
     const int max_iter = 15000;
     const T x_min = T(2);
+
+    auto reflect(is_ltz(nu));
+    nu =  eve::abs(nu); // nu is non-negative from here
 
 //    auto  nl = if_else(x < x_min,  trunc(nu + T(0.5)), eve::max(0, trunc(nu - x + T(1.5))));
     auto  nl =                     trunc(nu + T(0.5));
@@ -257,10 +261,16 @@ namespace eve::detail
     Kpnu = fms(nu, xi * Kmu, Knu1);
     Inu = if_else(is_nan(Inu), inf(as(x)), Inu);
     Knu = if_else(is_nan(Knu), inf(as(x)), Knu);
-    return kumi::make_tuple(Inu, Ipnu, Knu, Kpnu);
 
+    if(eve::any(reflect))
+    {
+      auto s = sinpi(nu);
+      Inu += if_else(reflect, invpi(as(x))*2*s*Knu,zero);
+    }
+    return kumi::make_tuple(Inu, Ipnu, Knu, Kpnu);
   }
-/////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////
   template<floating_real_scalar_value T>
   auto  kernel_bessel_ik(T nu, T x) noexcept
   {
@@ -286,6 +296,9 @@ namespace eve::detail
     const T fp_min = T(10) * Eps;
     const int max_iter = 15000;
     const T x_min = T(2);
+
+    auto reflect(is_ltz(nu));
+    nu =  eve::abs(nu); // nu is non-negative from here
 
     const int nl = static_cast<int>(nu + T(0.5L));
 
@@ -420,6 +433,12 @@ namespace eve::detail
     Kpnu = fms(nu, xi * Kmu, Knu1);
     if (is_nan(Inu)) Inu = inf(as(x));
     if (is_nan(Knu)) Knu = inf(as(x));
+
+    if(reflect)
+    {
+      auto s = sinpi(nu);
+      Inu += invpi(as(x))*2*s*Knu;
+    }
     return kumi::make_tuple(Inu, Ipnu, Knu, Kpnu);
   }
 }

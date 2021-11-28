@@ -59,7 +59,7 @@ namespace eve::detail
 
     if constexpr(scalar_value<T>)
     {
-      if (is_ngez(x) || is_ngez(n))                 return nan(as(x));
+      if (is_ngez(x))                               return nan(as(x));
       if (is_eqz(x))                                return (n == 0) ? one(as(x)) : zero(as(x));
       if (x == inf(as(x)))                          return inf(as(x));
       if (n == T(0.5))                              return br_half(x);       //cyl_bessel_i order 0.5
