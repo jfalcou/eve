@@ -7,17 +7,24 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/cyl_bessel_j1.hpp>
+#include <eve/function/cyl_bessel_jn.hpp>
 #include <eve/function/derivative.hpp>
+#include <eve/function/convert.hpp>
 
 namespace eve::detail
 {
 
-  template<floating_real_value T>
+  template<real_value I, floating_real_value T>
   EVE_FORCEINLINE constexpr T cyl_bessel_jn_(EVE_SUPPORTS(cpu_)
-                                  , diff_type<1> const &
-                                  , T const &x) noexcept
+                                            , diff_type<1> const &
+                                            , I n
+                                            , T x) noexcept
   {
-    return -cyl_bessel_j1(x);
-  }
+    if constexpr(has_native_abi_v<T>)
+    {
+      using elt_t = element_type_t<T>;
+      return cyl_bessel_jn(dec(n), x)-convert(n, as(elt_t()))*cyl_bessel_jn(n, x);
+    }
+    else return apply_over(diff(cyl_bessel_jn), n, x);
+   }
 }

@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/function/abs.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/derivative.hpp>
 #include <eve/function/sign.hpp>
