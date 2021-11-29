@@ -43,7 +43,7 @@
 #include <eve/detail/kumi.hpp>
 #include <eve/function/converter.hpp>
 #include <eve/module/real/special/detail/kernel_bessel_jy_large.hpp>
-#include <eve/module/real/special/detail/kernel_bessel_jy_small.hpp>
+#include <eve/module/real/special/detail/kernel_bessel_ij_small.hpp>
 #include <eve/module/real/special/detail/kernel_bessel_jy.hpp>
 
 /////////////////////////////////////////////////////////////////////////////////
