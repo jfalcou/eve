@@ -217,11 +217,7 @@ EVE_TEST( "Check behavior of cyl_bessel_in on wide with negative non integral or
   using v_t = eve::element_type_t<T>;
 
   auto eve__cyl_bessel_in =  [](auto n, auto x) { return eve::cyl_bessel_in(n, x); };
-// #if defined(__cpp_lib_math_special_functions)
-//   auto std__cyl_bessel_in =  [](auto n, auto x)->v_t { return std::cyl_bessel_i(n, x); };
-// #else
   auto std__cyl_bessel_in =  [](auto n, auto x)->v_t { return boost::math::cyl_bessel_i(n, x); };
-//#endif
 
   if constexpr( eve::platform::supports_invalids )
   {

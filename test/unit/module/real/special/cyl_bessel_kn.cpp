@@ -12,7 +12,7 @@
 #include <eve/constant/nan.hpp>
 #include <eve/platform.hpp>
 #include <cmath>
-//#include <boost/math/special_functions/bessel.hpp>
+#include <boost/math/special_functions/bessel.hpp>
 
 //==================================================================================================
 //== Types tests
@@ -47,7 +47,7 @@ EVE_TEST( "Check behavior of cyl_bessel_kn on wide with integral order"
   if constexpr(std::same_as < v_t, double > && eve::cardinal_v < T > == 4)
   {
     auto eve__cyl_bessel_kn =  [](auto n, auto x) { return eve::cyl_bessel_kn(n, x); };
-    auto std__cyl_bessel_kn =  [](auto n, auto x)->v_t { return std::cyl_bessel_k(n, x); };
+    auto std__cyl_bessel_kn =  [](auto n, auto x)->v_t { return boost::math::cyl_bessel_k(n, x); };
     if constexpr( eve::platform::supports_invalids )
     {
       TTS_ULP_EQUAL(eve__cyl_bessel_kn(0, eve::minf(eve::as<v_t>())), eve::nan(eve::as<v_t>()), 0);
