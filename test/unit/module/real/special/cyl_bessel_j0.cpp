@@ -7,6 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 #include <eve/function/cyl_bessel_j0.hpp>
+#include <eve/function/diff/cyl_bessel_j0.hpp>
 #include <eve/function/prev.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
@@ -14,6 +15,7 @@
 #include <eve/platform.hpp>
 #include <cmath>
 #include <boost/math/special_functions/bessel.hpp>
+#include <boost/math/special_functions/bessel_prime.hpp>
 
 EVE_TEST_TYPES( "Check return types of cyl_bessel_j0"
             , eve::test::simd::ieee_reals
@@ -100,4 +102,16 @@ EVE_TEST_TYPES( "Check return types of cyl_bessel_j0"
   TTS_ULP_EQUAL(eve__cyl_bessel_j0(-a1), map(std__cyl_bessel_j0, -a1), 500.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_j0(-a2), map(std__cyl_bessel_j0, -a2), 500.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_j0(-a3), map(std__cyl_bessel_j0, -a3), 500.0);
+};
+
+EVE_TEST( "Check behavior of diff(cyl_bessel_j0) on wide"
+        , eve::test::simd::ieee_reals
+        , eve::test::generate(eve::test::randoms(-60.0, 60.0))
+        )
+  <typename T>(T a0 )
+{
+  using v_t =  eve::element_type_t<T>;
+  auto eve__diff_bessel_j0 =  [](auto x) { return eve::diff(eve::cyl_bessel_j0)(x); };
+  auto std__diff_bessel_j0 =  [](auto x)->v_t { return boost::math::cyl_bessel_j_prime(v_t(0), x); };
+  TTS_RELATIVE_EQUAL(eve__diff_bessel_j0(a0),   map(std__diff_bessel_j0, a0), 1.0e-3);
 };

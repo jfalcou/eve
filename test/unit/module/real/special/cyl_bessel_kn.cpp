@@ -7,12 +7,14 @@
 //==================================================================================================
 #include "test.hpp"
 #include <eve/function/cyl_bessel_kn.hpp>
+#include <eve/function/diff/cyl_bessel_kn.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/platform.hpp>
 #include <cmath>
 #include <boost/math/special_functions/bessel.hpp>
+#include <boost/math/special_functions/bessel_prime.hpp>
 
 //==================================================================================================
 //== Types tests
@@ -202,4 +204,18 @@ EVE_TEST( "Check behavior of cyl_bessel_kn on wide with non integral order"
   TTS_ULP_EQUAL(eve__cyl_bessel_kn(T(10.5), T(8)),   T(std__cyl_bessel_kn(v_t(10.5), v_t(8)))   , 10.0);
 
   TTS_RELATIVE_EQUAL(eve__cyl_bessel_kn(n, a0),   map(std__cyl_bessel_kn, n, a0)   , 1.0e-3);
+};
+
+EVE_TEST( "Check behavior of cyl_bessel_kn on wide with negative non kntegral order"
+        , eve::test::simd::ieee_reals
+        , eve::test::generate(eve::test::randoms(0.0, 10.0)
+                             , eve::test::randoms(0.0, 60.0))
+        )
+  <typename T>(T n, T a0 )
+{
+  using v_t = eve::element_type_t<T>;
+  auto eve__diff_bessel_kn =  [](auto n, auto x) { return eve::diff(eve::cyl_bessel_kn)(n, x); };
+  auto std__diff_bessel_kn =  [](auto n, auto x)->v_t { return boost::math::cyl_bessel_k_prime(n, x); };
+  TTS_RELATIVE_EQUAL(eve__diff_bessel_kn(n, a0),   map(std__diff_bessel_kn, n, a0)   , 1.0e-3);
+
 };

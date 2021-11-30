@@ -54,11 +54,12 @@ namespace eve::detail
   template<real_value I, floating_real_value T>
   EVE_FORCEINLINE auto   kernel_bessel_j_int_forward (I n, T x, T j0, T j1) noexcept
   {
+    EVE_ASSERT(eve::all(is_gez(x)), "some x are negative");
     auto prev = j0; //cyl_bessel_j0(x);
     auto current = j1; //cyl_bessel_j1(x);
-    T scale(1), value(0);
+    T scale(1), value(j0);
     auto nn = if_else(n < x, n, zero);
-    for (int k = 1; k < eve::maximum(nn); k++)
+    for (int k = 1; k < eve::maximum(nn); ++k)
     {
       auto t0 = k < nn;
       T fact = 2 * k / x;
@@ -107,6 +108,8 @@ namespace eve::detail
     // n < abs(z), forward recurrence stable and usable
     // n >= abs(z), forward recurrence unstable, use Miller's algorithm
     EVE_ASSERT(eve::all(is_flint(n)), "kernel_bessel_j_int : somme n are not floating integer");
+    auto xlt0 = is_ltz(x);
+    x = eve::abs(x);
     auto j0 = cyl_bessel_j0(x);
     auto j1 = cyl_bessel_j1(x);
 
@@ -136,9 +139,7 @@ namespace eve::detail
         factor = T(isoddn ? -1 : 1);  // J_{-n}(z) = (-1)^n J_n(z)
         n = -n;
       }
-      auto xlt0 = is_ltz(x);
       factor *=  T(xlt0 && isoddn ? -1:1);  // J_{n}(-z) = (-1)^n J_n(z)
-      x = if_else(xlt0, -x, x);
       if (x == inf(as(x)))                          return zero(as(x));
       if (asymptotic_bessel_large_x_limit(T(n), x)) return factor*br_large(T(n), x);
       if (n == 0)                                   return j0;                    //cyl_bessel_j0(x);
@@ -173,7 +174,7 @@ namespace eve::detail
       auto iseq1n = is_equal(n, one(as(n)));
       if (eve::any(iseq1n))
       {
-        r = if_else(iseq1n, j1, r);
+        r = if_else(iseq1n, factor*j1, r);
         x = if_else(iseq1n, allbits, x);
       }
       auto notdone = is_not_nan(x);

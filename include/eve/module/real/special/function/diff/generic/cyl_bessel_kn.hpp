@@ -10,22 +10,22 @@
 #include <eve/function/average.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/inc.hpp>
-#include <eve/function/cyl_bessel_jn.hpp>
+#include <eve/function/cyl_bessel_kn.hpp>
 #include <eve/function/derivative.hpp>
 
 namespace eve::detail
 {
 
   template<real_value I, floating_real_value T>
-  EVE_FORCEINLINE constexpr T cyl_bessel_jn_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr T cyl_bessel_kn_(EVE_SUPPORTS(cpu_)
                                             , diff_type<1> const &
                                             , I n
                                             , T x) noexcept
   {
     if constexpr(has_native_abi_v<T>)
     {
-      return average(cyl_bessel_jn(dec(n), x), -cyl_bessel_jn(inc(n), x));
+      return -average(cyl_bessel_kn(dec(n), x), cyl_bessel_kn(inc(n), x));
     }
-    else return apply_over(diff(cyl_bessel_jn), n, x);
+    else return apply_over(diff(cyl_bessel_kn), n, x);
    }
 }
