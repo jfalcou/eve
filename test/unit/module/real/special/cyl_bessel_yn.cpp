@@ -191,5 +191,5 @@ EVE_TEST( "Check behavior of cyl_bessel_yn on wide with negative non integral or
   using v_t = eve::element_type_t<T>;
   auto eve__diff_bessel_yn =  [](auto n, auto x) { return eve::diff(eve::cyl_bessel_yn)(n, x); };
   auto std__diff_bessel_yn =  [](auto n, auto x)->v_t { return boost::math::cyl_neumann_prime(n, x); };
-  TTS_RELATIVE_EQUAL(eve__diff_bessel_yn(n, a0),   map(std__diff_bessel_yn, n, a0)   , 1.0e-3);
+  TTS_RELATIVE_EQUAL(eve__diff_bessel_yn(n, a0),   map(std__diff_bessel_yn, n, a0)   , 1.0e-2);
 };

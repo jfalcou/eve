@@ -240,7 +240,7 @@ EVE_TEST( "Check behavior of cyl_bessel_in on wide with negative non integral or
   TTS_ULP_EQUAL(eve__cyl_bessel_in(v_t(-10.5), v_t(8)),    std__cyl_bessel_in(v_t(-10.5), v_t(8))   , 10.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_in(v_t(-10.5), v_t(8)),    std__cyl_bessel_in(v_t(-10.5), v_t(8))   , 10.0);
 
-//   if constexpr( eve::platform::supports_invalids )
+  if constexpr( eve::platform::supports_invalids )
   {
     TTS_ULP_EQUAL(eve__cyl_bessel_in(T(-0.5), eve::minf(eve::as<T>())), eve::nan(eve::as<T>()), 0);
     TTS_ULP_EQUAL(eve__cyl_bessel_in(T(-2.5), eve::inf(eve::as<T>())), eve::inf(eve::as<T>()), 0);
