@@ -54,7 +54,7 @@ namespace eve::detail
   template<real_value I, floating_real_value T>
   EVE_FORCEINLINE auto   kernel_bessel_j_int_forward (I n, T x, T j0, T j1) noexcept
   {
-    EVE_ASSERT(eve::all(is_gez(x)), "some x are negative");
+//    EVE_ASSERT(eve::all(is_gez(x)), "some x are negative");
     auto prev = j0; //cyl_bessel_j0(x);
     auto current = j1; //cyl_bessel_j1(x);
     T scale(1), value(j0);
@@ -75,7 +75,7 @@ namespace eve::detail
       prev  = if_else(t0, current, prev);
       current = if_else(t0, value, current);
     };
-    return value/scale;
+    return if_else(nn == one(as(nn)), j1, value/scale);
   }
 
   template<integral_real_value I, floating_real_value T>
@@ -160,7 +160,6 @@ namespace eve::detail
 
       auto xlt0 = is_ltz(x);
       factor *=  if_else(xlt0 && isoddn, T(-1), T(1));  // J_{n}(-z) = (-1)^n J_n(z)
-      x = if_else(xlt0, -x, x);
       auto r = nan(as(x));
       auto isinfx = x == inf(as(x));
       r =  if_else(isinfx, zero(as(x)), allbits);
@@ -171,12 +170,12 @@ namespace eve::detail
         r = if_else(iseqzn, j0, r);
         x = if_else(iseqzn, allbits, x);
       }
-      auto iseq1n = is_equal(n, one(as(n)));
-      if (eve::any(iseq1n))
-      {
-        r = if_else(iseq1n, factor*j1, r);
-        x = if_else(iseq1n, allbits, x);
-      }
+//       auto iseq1n = is_equal(n, one(as(n)));
+//       if (eve::any(iseq1n))
+//       {
+//         r = if_else(iseq1n, factor*j1, r);
+//         x = if_else(iseq1n, allbits, x);
+//       }
       auto notdone = is_not_nan(x);
       auto nn = convert(n, as<elt_t>());
       if( eve::any(notdone) )
