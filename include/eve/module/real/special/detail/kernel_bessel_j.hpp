@@ -23,6 +23,7 @@
 #include <eve/function/tgamma.hpp>
 #include <eve/function/exp.hpp>
 #include <eve/function/log.hpp>
+#include <eve/function/logical_xor.hpp>
 #include <eve/function/maximum.hpp>
 #include <eve/function/nthroot.hpp>
 #include <eve/function/sincos.hpp>
@@ -54,8 +55,7 @@ namespace eve::detail
   template<real_value I, floating_real_value T>
   EVE_FORCEINLINE auto   kernel_bessel_j_int_forward (I n, T x, T j0, T j1) noexcept
   {
-//    EVE_ASSERT(eve::all(is_gez(x)), "some x are negative");
-    auto prev = j0; //cyl_bessel_j0(x);
+    auto prev = j0;    //cyl_bessel_j0(x);
     auto current = j1; //cyl_bessel_j1(x);
     T scale(1), value(j0);
     auto nn = if_else(n < x, n, zero);
@@ -75,7 +75,7 @@ namespace eve::detail
       prev  = if_else(t0, current, prev);
       current = if_else(t0, value, current);
     };
-    return if_else(nn == one(as(nn)), j1, value/scale);
+    return value/scale;
   }
 
   template<integral_real_value I, floating_real_value T>
@@ -103,13 +103,12 @@ namespace eve::detail
   /////////////////////////////////////////////////////////////////////////
   // bessel_j of integer order
   template<real_value I, floating_real_value T>
-  EVE_FORCEINLINE auto   kernel_bessel_j_int (I n, T x) noexcept
+  EVE_FORCEINLINE auto   kernel_bessel_j_int_pos (I n, T x) noexcept
   {
-    // n < abs(z), forward recurrence stable and usable
-    // n >= abs(z), forward recurrence unstable, use Miller's algorithm
-    EVE_ASSERT(eve::all(is_flint(n)), "kernel_bessel_j_int : somme n are not floating integer");
-    auto xlt0 = is_ltz(x);
-    x = eve::abs(x);
+    // n and x are positive here
+    EVE_ASSERT(eve::all(is_flint(n)), "kernel_bessel_j_int_pos : somme n are not floating integer");
+    EVE_ASSERT(eve::all(is_gez(x)), "kernel_bessel_j_int_pos : somme x are not positive");
+    EVE_ASSERT(eve::all(is_gez(n)), "kernel_bessel_j_int_pos : somme n are not positive");
     auto j0 = cyl_bessel_j0(x);
     auto j1 = cyl_bessel_j1(x);
 
@@ -132,34 +131,18 @@ namespace eve::detail
 
     if constexpr(scalar_value<I> && scalar_value<T>)
     {
-      T factor(1);
-      auto isoddn = is_odd(n);
-      if (n < 0)
-      {
-        factor = T(isoddn ? -1 : 1);  // J_{-n}(z) = (-1)^n J_n(z)
-        n = -n;
-      }
-      factor *=  T(xlt0 && isoddn ? -1:1);  // J_{n}(-z) = (-1)^n J_n(z)
       if (x == inf(as(x)))                          return zero(as(x));
-      if (asymptotic_bessel_large_x_limit(T(n), x)) return factor*br_large(T(n), x);
-      if (n == 0)                                   return j0;                    //cyl_bessel_j0(x);
-      if (n == 1)                                   return factor*j1;             //cyl_bessel_j1(x);
-      if (is_eqz(x))                                return factor*x;              // as n >= 2
-      if (n < eve::abs(x))                          return br_forward(n, x);      // forward recurrence
-      if ((n > x * x / 4) || (x < 5))               return factor*br_small(T(n), x); // serie
-      return br_medium(n, x);                                                     // medium recurrence
+      if (asymptotic_bessel_large_x_limit(T(n), x)) return br_large(T(n), x);
+      if (n == 0)                                   return j0;                //cyl_bessel_j0(x);
+      if (n == 1)                                   return j1;                //cyl_bessel_j1(x);
+      if (is_eqz(x))                                return x;                 // as n >= 2
+      if (n < x)                                    return br_forward(n, x);  // forward recurrence
+      if ((n > x * x / 4) || (x < 5))               return br_small(T(n), x); // serie
+      return br_medium(n, x);                                                 // medium recurrence
     }
     else
     {
       using elt_t =  element_type_t<T>;
-      T factor(1);
-      auto isoddn = is_odd(n);
-      auto nneg = is_ltz(n);
-      factor = if_else(nneg, if_else(isoddn, T(-1), T(1)), factor);  // J_{-n}(z) = (-1)^n J_n(z)
-      n = if_else(nneg, -n, n);
-
-      auto xlt0 = is_ltz(x);
-      factor *=  if_else(xlt0 && isoddn, T(-1), T(1));  // J_{n}(-z) = (-1)^n J_n(z)
       auto r = nan(as(x));
       auto isinfx = x == inf(as(x));
       r =  if_else(isinfx, zero(as(x)), allbits);
@@ -170,12 +153,12 @@ namespace eve::detail
         r = if_else(iseqzn, j0, r);
         x = if_else(iseqzn, allbits, x);
       }
-//       auto iseq1n = is_equal(n, one(as(n)));
-//       if (eve::any(iseq1n))
-//       {
-//         r = if_else(iseq1n, factor*j1, r);
-//         x = if_else(iseq1n, allbits, x);
-//       }
+      auto iseq1n = is_equal(n, one(as(n)));
+      if (eve::any(iseq1n))
+      {
+        r = if_else(iseq1n, j1, r);
+        x = if_else(iseq1n, allbits, x);
+      }
       auto notdone = is_not_nan(x);
       auto nn = convert(n, as<elt_t>());
       if( eve::any(notdone) )
@@ -194,9 +177,21 @@ namespace eve::detail
           }
         }
       }
-      return factor*r;
+      return r;
     }
   }
+  template<real_value I, floating_real_value T>
+  EVE_FORCEINLINE auto   kernel_bessel_j_int (I n, T x) noexcept
+  {
+    auto xlt0 = is_ltz(x);
+    auto nlt0 = is_ltz(n);
+    auto isoddn =  is_odd(n);
+//     T factor = if_else(nlt0 && isoddn, T(-1), T(1));  // J_{-n}(z) = (-1)^n J_n(z)
+//     factor *=  if_else(xlt0 && isoddn, T(-1), T(1));  // J_{n}(-z) = (-1)^n J_n(z)
+    auto j = kernel_bessel_j_int_pos( eve::abs(n), eve::abs(x));
+    return if_else(isoddn && logical_xor(nlt0, xlt0), -j, j);
+  }
+
 
   /////////////////////////////////////////////////////////////////////////
   // bessel_j of non integer order
@@ -243,5 +238,4 @@ namespace eve::detail
       return r;
     }
   }
-
 }
