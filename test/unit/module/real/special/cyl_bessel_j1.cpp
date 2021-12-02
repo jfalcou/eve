@@ -67,7 +67,7 @@ EVE_TEST_TYPES( "Check return types of cyl_bessel_j1"
   TTS_ULP_EQUAL(eve__cyl_bessel_j1( T(0))  ,  T(std__cyl_bessel_j1( v_t(0))  ), 2.0);
 
 
-  TTS_ULP_EQUAL(eve__cyl_bessel_j1(a0), map(std__cyl_bessel_j1, a0), 20.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_j1(a0), map(std__cyl_bessel_j1, a0), 25.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_j1(a1), map(std__cyl_bessel_j1, a1), 120.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_j1(a2), map(std__cyl_bessel_j1, a2), 300.0);
 
@@ -88,7 +88,7 @@ EVE_TEST_TYPES( "Check return types of cyl_bessel_j1"
   TTS_ULP_EQUAL(eve__cyl_bessel_j1( T(-1))  ,  T(std__cyl_bessel_j1( v_t(-1))  ), 2.0);
 
 
-  TTS_ULP_EQUAL(eve__cyl_bessel_j1(-a0), map(std__cyl_bessel_j1, -a0), 20.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_j1(-a0), map(std__cyl_bessel_j1, -a0), 25.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_j1(-a1), map(std__cyl_bessel_j1, -a1), 120.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_j1(-a2), map(std__cyl_bessel_j1, -a2), 300.0);
 
