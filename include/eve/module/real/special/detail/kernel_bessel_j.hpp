@@ -18,6 +18,7 @@
 #include <eve/function/is_not_nan.hpp>
 #include <eve/function/is_infinite.hpp>
 #include <eve/function/is_gtz.hpp>
+#include <eve/function/is_nltz.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/lgamma.hpp>
 #include <eve/function/tgamma.hpp>
@@ -107,8 +108,8 @@ namespace eve::detail
   {
     // n and x are positive here
     EVE_ASSERT(eve::all(is_flint(n)), "kernel_bessel_j_int_pos : somme n are not floating integer");
-    EVE_ASSERT(eve::all(is_gez(x)), "kernel_bessel_j_int_pos : somme x are not positive");
-    EVE_ASSERT(eve::all(is_gez(n)), "kernel_bessel_j_int_pos : somme n are not positive");
+    EVE_ASSERT(eve::all(is_nltz(x)), "kernel_bessel_j_int_pos : somme x are not positive");
+    EVE_ASSERT(eve::all(is_nltz(n)), "kernel_bessel_j_int_pos : somme n are not positive");
     auto j0 = cyl_bessel_j0(x);
     auto j1 = cyl_bessel_j1(x);
 
