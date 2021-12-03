@@ -38,7 +38,11 @@ EVE_TEST_TYPES( "Check return types of cyl_bessel_k0"
   using v_t = eve::element_type_t<T>;
 
   auto eve__cyl_bessel_k0 =  [](auto x) { return eve::cyl_bessel_k0(x); };
+#if defined(__cpp_lib_math_special_functions)
   auto std__cyl_bessel_k0 =  [](auto x)->v_t { return std::cyl_bessel_k(v_t(0), x); };
+#else
+  auto std__cyl_bessel_k0 =  [](auto x)->v_t { return boost::math::cyl_bessel_k(v_t(0), x); };
+#endif
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_ULP_EQUAL(eve__cyl_bessel_k0(eve::inf(eve::as<v_t>())), eve::zero(eve::as<v_t>()), 0);
