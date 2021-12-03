@@ -46,10 +46,8 @@ EVE_TEST( "Check behavior of cyl_bessel_jn on wide with integral order"
   <typename T>(T n, T a0)
 {
   using v_t = eve::element_type_t<T>;
-//   if constexpr((eve::cardinal_v<T> == 4) && std::same_as < v_t, float >)
-//   {
-    auto eve__cyl_bessel_jn =  [](auto n, auto x) { return eve::cyl_bessel_jn(n, x); };
-    auto std__cyl_bessel_jn =  [](auto n, auto x)->v_t { return boost::math::cyl_bessel_j(n, x); };
+  auto eve__cyl_bessel_jn =  [](auto n, auto x) { return eve::cyl_bessel_jn(n, x); };
+  auto std__cyl_bessel_jn =  [](auto n, auto x)->v_t { return boost::math::cyl_bessel_j(n, x); };
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_ULP_EQUAL(eve__cyl_bessel_jn(0, eve::minf(eve::as<v_t>())), eve::zero(eve::as<v_t>()), 0);
@@ -138,23 +136,8 @@ EVE_TEST( "Check behavior of cyl_bessel_jn on wide with integral order"
   TTS_ULP_EQUAL(eve__cyl_bessel_jn(I_t(10), T(8)),   T(std__cyl_bessel_jn(10, v_t(8)))   , 2.0);
 
   TTS_RELATIVE_EQUAL(eve__cyl_bessel_jn(n, a0),   map(std__cyl_bessel_jn, n, a0)   , 0.0015);
-//     auto z1 = eve__cyl_bessel_jn(n, -a0);
-//     auto z2 = map(eve__cyl_bessel_jn, n, -a0);
-//     auto z3 = map(std__cyl_bessel_jn, n, -a0);
-//     std::cout << "n " << n << std::endl;
-//     std::cout << std::setprecision(10) << "-a0 " << -a0 << std::endl;
-//     std::cout << "simd " << z1 << std::endl;
-//     std::cout << "map " << z2 << std::endl;
-//     std::cout << "map " << z3 << std::endl;
-//     std::cout << "13 simd" << eve__cyl_bessel_jn(13, T(-444.2873145))<< std::endl;
-//     std::cout << "13 scal " << eve__cyl_bessel_jn(13, v_t(-444.2873145))<< std::endl;
-//     TTS_RELATIVE_EQUAL(z1, z2, 0.015);
- TTS_RELATIVE_EQUAL(eve__cyl_bessel_jn(n, -a0),   map(std__cyl_bessel_jn, n, -a0)   , 0.0015);
- TTS_RELATIVE_EQUAL(map(eve__cyl_bessel_jn, n, -a0),   map(std__cyl_bessel_jn, n, -a0)   , 0.0015);
-  //////  TTS_RELATIVE_EQUAL(map(eve__cyl_bessel_jn, v_t(1), -a0),   map(std__cyl_bessel_jn, v_t(1), -a0)   , 0.0015);
-//   }
-//   else
-//     TTS_PASS("no test");
+  TTS_RELATIVE_EQUAL(eve__cyl_bessel_jn(n, -a0),   map(std__cyl_bessel_jn, n, -a0)   , 0.0015);
+  TTS_RELATIVE_EQUAL(map(eve__cyl_bessel_jn, n, -a0),   map(std__cyl_bessel_jn, n, -a0)   , 0.0015);
 };
 
 //==================================================================================================
@@ -163,7 +146,7 @@ EVE_TEST( "Check behavior of cyl_bessel_jn on wide with integral order"
 EVE_TEST( "Check behavior of cyl_bessel_jn on wide with non integral order"
         , eve::test::simd::ieee_reals
         , eve::test::generate(eve::test::randoms(0.0, 10.0)
-        , eve::test::randoms(0.0, 2000.0))
+                             , eve::test::randoms(0.0, 2000.0))
         )
   <typename T>(T n, T a0)
 {
@@ -241,7 +224,7 @@ EVE_TEST( "Check behavior of cyl_bessel_jn on wide with non integral order"
 
   //scalar forward
   TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(-2.5), v_t(10)), std__cyl_bessel_jn(v_t(-2.5), v_t(10))  , 6.0);
-  TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(-3.5), v_t(5)),  std__cyl_bessel_jn(v_t(-3.5), v_t(5))   , 25.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(-3.5), v_t(5)),  std__cyl_bessel_jn(v_t(-3.5), v_t(5))   , 35.0);
   //scalar serie
   TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(-2.5), v_t(0.1)), std__cyl_bessel_jn(v_t(-2.5), v_t(0.1))  , 2.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(-3.5), v_t(0.2)),  std__cyl_bessel_jn(v_t(-3.5), v_t(0.2))   , 2.0);
@@ -255,7 +238,7 @@ EVE_TEST( "Check behavior of cyl_bessel_jn on wide with non integral order"
 
   // forward
   TTS_ULP_EQUAL(eve__cyl_bessel_jn(T(-2.5), T(10)),    T(std__cyl_bessel_jn(v_t(-2.5), v_t(10)))   , 6.0);
-  TTS_ULP_EQUAL(eve__cyl_bessel_jn(T(-3.5), T(5)),     T(std__cyl_bessel_jn(v_t(-3.5), v_t(5)))    , 25.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_jn(T(-3.5), T(5)),     T(std__cyl_bessel_jn(v_t(-3.5), v_t(5)))    , 35.0);
   // serie
   TTS_ULP_EQUAL(eve__cyl_bessel_jn(T(-2.5), T(0.1)),   T(std__cyl_bessel_jn(v_t(-2.5), v_t(0.1)))  , 2.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_jn(T(-3.5), T(0.2)),   T(std__cyl_bessel_jn(v_t(-3.5), v_t(0.2)))  , 2.5);

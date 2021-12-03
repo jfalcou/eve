@@ -40,7 +40,7 @@ EVE_TEST_TYPES( "Check return types of cyl_bessel_i0"
 #if defined(__cpp_lib_math_special_functions)
   auto std__cyl_bessel_i0 =  [](auto x)->v_t { return std::cyl_bessel_i(v_t(0), x); };
 #else
-  auto std__cyl_bessel_i0 =  [](auto x)->v_t { return boost::math::cyl_bessel_i(v_t(0), x); };
+  auto std__cyl_bessel_i0 =  [](auto x)->v_t { return boost::math::cyl_bessel_i(double(0), double(x)); };
 #endif
 
   if constexpr( eve::platform::supports_invalids )
@@ -86,7 +86,7 @@ EVE_TEST( "Check behavior of cyl_bessel_i0 on wide with negative non integral or
 {
   using v_t = eve::element_type_t<T>;
   auto eve__diff_bessel_i0 =  [](auto x) { return eve::diff(eve::cyl_bessel_i0)(x); };
-  auto std__diff_bessel_i0 =  [](auto x)->v_t { return boost::math::cyl_bessel_i_prime(0, x); };
+  auto std__diff_bessel_i0 =  [](auto x)->v_t { return boost::math::cyl_bessel_i_prime(double(0), double(x)); };
   TTS_RELATIVE_EQUAL(eve__diff_bessel_i0(a0),   map(std__diff_bessel_i0, a0)   , 1.0e-3);
 
 };

@@ -164,7 +164,7 @@ EVE_TEST( "Check behavior of cyl_bessel_in on wide with non integral order"
 #if defined(__cpp_lib_math_special_functions)
   auto std__cyl_bessel_in =  [](auto n, auto x)->v_t { return std::cyl_bessel_i(n, x); };
 #else
-  auto std__cyl_bessel_in =  [](auto n, auto x)->v_t { return boost::math::cyl_bessel_i(n, x); };
+  auto std__cyl_bessel_in =  [](auto n, auto x)->v_t { return boost::math::cyl_bessel_i(double(n), double(x)); };
 #endif
 
   if constexpr( eve::platform::supports_invalids )
@@ -219,7 +219,7 @@ EVE_TEST( "Check behavior of cyl_bessel_in on wide with negative non integral or
   using v_t = eve::element_type_t<T>;
 
   auto eve__cyl_bessel_in =  [](auto n, auto x) { return eve::cyl_bessel_in(n, x); };
-  auto std__cyl_bessel_in =  [](auto n, auto x)->v_t { return boost::math::cyl_bessel_i(n, x); };
+  auto std__cyl_bessel_in =  [](auto n, auto x)->v_t { return boost::math::cyl_bessel_i(double(n), double(x)); };
 
   if constexpr( eve::platform::supports_invalids )
   {
@@ -271,7 +271,7 @@ EVE_TEST( "Check behavior of cyl_bessel_in on wide with negative non integral or
 {
   using v_t = eve::element_type_t<T>;
   auto eve__diff_bessel_in =  [](auto n, auto x) { return eve::diff(eve::cyl_bessel_in)(n, x); };
-  auto std__diff_bessel_in =  [](auto n, auto x)->v_t { return boost::math::cyl_bessel_i_prime(n, x); };
+  auto std__diff_bessel_in =  [](auto n, auto x)->v_t { return boost::math::cyl_bessel_i_prime(double(n), double(x)); };
   TTS_RELATIVE_EQUAL(eve__diff_bessel_in(n, a0),   map(std__diff_bessel_in, n, a0)   , 1.0e-3);
 
 };
