@@ -167,7 +167,7 @@ EVE_TEST( "Check behavior of cyl_bessel_kn on wide with non integral order"
 {
    using v_t = eve::element_type_t<T>;
    auto eve__cyl_bessel_kn =  [](auto n, auto x) { return eve::cyl_bessel_kn(n, x); };
-   auto std__cyl_bessel_kn =  [](auto n, auto x)->v_t { return std::cyl_bessel_k(n, x); };
+   auto std__cyl_bessel_kn =  [](auto n, auto x)->v_t { return bosst::math::cyl_bessel_k(n, x); };
 
    if constexpr( eve::platform::supports_invalids )
    {
