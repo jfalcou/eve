@@ -219,7 +219,7 @@ EVE_TEST( "Check behavior of cyl_bessel_kn on wide with negative non kntegral or
 {
   using v_t = eve::element_type_t<T>;
   auto eve__diff_bessel_kn =  [](auto n, auto x) { return eve::diff(eve::cyl_bessel_kn)(n, x); };
-  auto std__diff_bessel_kn =  [](auto n, auto x)->v_t { return boost::math::cyl_bessel_k_prime(n, x); };
+  auto std__diff_bessel_kn =  [](auto n, auto x)->v_t { return boost::math::cyl_bessel_k_prime(double(n), double(x)); };
   TTS_RELATIVE_EQUAL(eve__diff_bessel_kn(n, a0),   map(std__diff_bessel_kn, n, a0)   , 1.0e-3);
 
 };

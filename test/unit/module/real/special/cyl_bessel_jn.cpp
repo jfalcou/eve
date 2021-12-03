@@ -47,7 +47,7 @@ EVE_TEST( "Check behavior of cyl_bessel_jn on wide with integral order"
 {
   using v_t = eve::element_type_t<T>;
   auto eve__cyl_bessel_jn =  [](auto n, auto x) { return eve::cyl_bessel_jn(n, x); };
-  auto std__cyl_bessel_jn =  [](auto n, auto x)->v_t { return boost::math::cyl_bessel_j(n, x); };
+  auto std__cyl_bessel_jn =  [](auto n, auto x)->v_t { return boost::math::cyl_bessel_j(double(n), double(x)); };
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_ULP_EQUAL(eve__cyl_bessel_jn(0, eve::minf(eve::as<v_t>())), eve::zero(eve::as<v_t>()), 0);
@@ -153,7 +153,7 @@ EVE_TEST( "Check behavior of cyl_bessel_jn on wide with non integral order"
   using v_t = eve::element_type_t<T>;
 
   auto eve__cyl_bessel_jn =  [](auto n, auto x) { return eve::cyl_bessel_jn(n, x); };
-  auto std__cyl_bessel_jn =  [](auto n, auto x)->v_t { return boost::math::cyl_bessel_j(n, x); };
+  auto std__cyl_bessel_jn =  [](auto n, auto x)->v_t { return boost::math::cyl_bessel_j(double(n), double(x)); };
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(0.5), eve::minf(eve::as<v_t>())), eve::nan(eve::as<v_t>()), 0);
@@ -258,7 +258,7 @@ EVE_TEST( "Check behavior of diff(cyl_bessel_jn) on wide"
 {
   using v_t =  eve::element_type_t<T>;
   auto eve__diff_bessel_jn =  [](auto n, auto x) { return eve::diff(eve::cyl_bessel_jn)(n, x); };
-  auto std__diff_bessel_jn =  [](auto n, auto x)->v_t { return boost::math::cyl_bessel_j_prime(v_t(n), x); };
+  auto std__diff_bessel_jn =  [](auto n, auto x)->v_t { return boost::math::cyl_bessel_j_prime(double(n), double(x)); };
   TTS_RELATIVE_EQUAL(eve__diff_bessel_jn(n, a0),   map(std__diff_bessel_jn, n, a0), 1.0e-3);
   auto nn = eve::trunc(n);
   TTS_RELATIVE_EQUAL(eve__diff_bessel_jn(nn, a0),   map(std__diff_bessel_jn, nn, a0), 2.0e-3);
