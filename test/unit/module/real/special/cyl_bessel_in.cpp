@@ -205,7 +205,7 @@ EVE_TEST( "Check behavior of cyl_bessel_in on wide with non integral order"
   TTS_ULP_EQUAL(eve__cyl_bessel_in(T(10.5), T(8)),   T(std__cyl_bessel_in(v_t(10.5), v_t(8)))   , 10.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_in(T(10.5), T(8)),   T(std__cyl_bessel_in(v_t(10.5), v_t(8)))   , 10.0);
 
-  TTS_RELATIVE_EQUAL(eve__cyl_bessel_in(n, a0),   map(std__cyl_bessel_in, n, a0)   , 1.0e-3);
+  TTS_RELATIVE_EQUAL(eve__cyl_bessel_in(n, a0),   map(std__cyl_bessel_in, double(n), double(a0))   , 1.0e-3);
 };
 
 
@@ -259,7 +259,7 @@ EVE_TEST( "Check behavior of cyl_bessel_in on wide with negative non integral or
   TTS_ULP_EQUAL(eve__cyl_bessel_in(T(-10.5), T(8)),   T(std__cyl_bessel_in(v_t(-10.5), v_t(8)))   , 10.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_in(T(-10.5), T(8)),   T(std__cyl_bessel_in(v_t(-10.5), v_t(8)))   , 10.0);
 
-  TTS_RELATIVE_EQUAL(eve__cyl_bessel_in(-n, a0),   map(std__cyl_bessel_in, -n, a0)   , 1.0e-3);
+  TTS_RELATIVE_EQUAL(eve__cyl_bessel_in(-n, a0),   map(std__cyl_bessel_in, -double(n), double(a0))   , 1.0e-3);
 };
 
 EVE_TEST( "Check behavior of cyl_bessel_in on wide with negative non integral order"
