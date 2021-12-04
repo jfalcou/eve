@@ -50,7 +50,7 @@ EVE_TEST( "Check behavior of cyl_bessel_in on wide with integral order"
 #if defined(__cpp_lib_math_special_functions)
   auto std__cyl_bessel_in =  [](auto n, auto x)->v_t { return std::cyl_bessel_i(n, x); };
 #else
-  auto std__cyl_bessel_in =  [](auto n, auto x)->v_t { return boost::math::cyl_bessel_i(n, x); };
+  auto std__cyl_bessel_in =  [](auto n, auto x)->v_t { return boost::math::cyl_bessel_i(double(n), double(x)); };
 #endif
   if constexpr( eve::platform::supports_invalids )
   {
@@ -154,7 +154,7 @@ EVE_TEST( "Check behavior of cyl_bessel_in on wide with integral order"
 EVE_TEST( "Check behavior of cyl_bessel_in on wide with non integral order"
         , eve::test::simd::ieee_reals
         , eve::test::generate(eve::test::randoms(0.0, 10.0)
-                             , eve::test::randoms(0.0, 30.0))
+                             , eve::test::randoms(0.0, 10.0))
         )
   <typename T>(T n, T a0 )
 {
@@ -265,7 +265,7 @@ EVE_TEST( "Check behavior of cyl_bessel_in on wide with negative non integral or
 EVE_TEST( "Check behavior of diff of cyl_bessel_in on wide"
         , eve::test::simd::ieee_reals
         , eve::test::generate(eve::test::randoms(0.0, 10.0)
-                             , eve::test::randoms(0.0, 60.0))
+                             , eve::test::randoms(0.0, 10.0))
         )
   <typename T>(T n, T a0 )
 {

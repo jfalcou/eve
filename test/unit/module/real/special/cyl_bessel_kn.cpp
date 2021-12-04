@@ -40,7 +40,7 @@ EVE_TEST_TYPES( "Check return types of cyl_bessel_kn"
 //==================================================================================================
 EVE_TEST( "Check behavior of cyl_bessel_kn on wide with integral order"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::ramp(0), eve::test::randoms(0.0, 200.0))
+        , eve::test::generate(eve::test::ramp(0), eve::test::randoms(0.0, 10.0))
         )
   <typename T>(T n , T a0 )
 {
@@ -210,10 +210,10 @@ EVE_TEST( "Check behavior of cyl_bessel_kn on wide with non integral order"
   TTS_RELATIVE_EQUAL(eve__cyl_bessel_kn(n, a0),   map(std__cyl_bessel_kn, n, a0)   , 1.0e-3);
 };
 
-EVE_TEST( "Check behavior of cyl_bessel_kn on wide with negative non kntegral order"
+EVE_TEST( "Check behavior of diff cyl_bessel_kn on wide "
         , eve::test::simd::ieee_reals
         , eve::test::generate(eve::test::randoms(0.0, 10.0)
-                             , eve::test::randoms(0.0, 60.0))
+                             , eve::test::randoms(0.0, 10.0))
         )
   <typename T>(T n, T a0 )
 {
