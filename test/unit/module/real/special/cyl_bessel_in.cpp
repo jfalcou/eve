@@ -59,7 +59,7 @@ EVE_TEST( "Check behavior of cyl_bessel_in on wide with integral order"
     TTS_ULP_EQUAL(eve__cyl_bessel_in(3, eve::nan(eve::as<v_t>())), eve::nan(eve::as<v_t>()), 0);
   }
   //scalar large x
-  TTS_ULP_EQUAL(eve__cyl_bessel_in(3, v_t(1500)), eve::inf(eve::as<T>()), 5.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_in(3, v_t(1500)), eve::inf(eve::as<v_t>()), 5.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_in(2, v_t(50)), std__cyl_bessel_in(2, v_t(50)), 5.0);
   //scalar forward
   TTS_ULP_EQUAL(eve__cyl_bessel_in(0, v_t(10)), std__cyl_bessel_in(0, v_t(10))  , 5.0);
@@ -174,7 +174,7 @@ EVE_TEST( "Check behavior of cyl_bessel_in on wide with non integral order"
     TTS_ULP_EQUAL(eve__cyl_bessel_in(T(3.5), eve::nan(eve::as<T>())), eve::nan(eve::as<T>()), 0);
   }
   // large x
-  TTS_ULP_EQUAL(eve__cyl_bessel_in(v_t(3.5), v_t(1500)),  eve::inf(eve::as<T>()), v_t(1500)),  10.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_in(v_t(3.5), v_t(1500)),  eve::inf(eve::as<v_t>()),  10.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_in(v_t(2.5), v_t(50)),   std__cyl_bessel_in(v_t(2.5), v_t(50)),   10.0);
   // forward
   TTS_ULP_EQUAL(eve__cyl_bessel_in(v_t(2.5), v_t(10)),    std__cyl_bessel_in(v_t(2.5), v_t(10))   , 10.0);
