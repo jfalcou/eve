@@ -86,6 +86,7 @@ namespace eve::detail
   template<real_value I, floating_real_value T>
   EVE_FORCEINLINE auto   kernel_bessel_k_int (I n, T x) noexcept
   {
+    n = eve::abs(n);
     EVE_ASSERT(eve::all(is_flint(n)), "kernel_bessel_j_int : somme n are not floating integer");
     auto k0 = cyl_bessel_k0(x);
     auto k1 = cyl_bessel_k1(x);
@@ -96,7 +97,7 @@ namespace eve::detail
 
     if constexpr(scalar_value<T>)
     {
-      if (is_ngez(x) || is_ngez(n))                 return nan(as(x));
+      if (is_ngez(x))                               return nan(as(x));
       if (is_eqz(x))                                return (n == 0) ? one(as(x)) : zero(as(x));
       if (x == inf(as(x)))                          return inf(as(x));
       if (n == 0)                                   return k0;               //cyl_bessel_k0(x);
@@ -134,6 +135,7 @@ namespace eve::detail
   template<floating_real_value T>
   EVE_FORCEINLINE auto  kernel_bessel_k_flt (T n, T x) noexcept
   {
+    n = eve::abs(n);
     EVE_ASSERT(eve::none(is_flint(n)), "kernel_bessel_k_flt : some nu are floating integers");
 
     auto br_medium =  [](auto n,  auto x)
@@ -144,19 +146,18 @@ namespace eve::detail
 
     if constexpr(scalar_value<T>)
     {
-      if(is_ngez(x)||is_ngez(n))                    return nan(as(x));
+      if(is_ngez(x))                                return nan(as(x));
       if (x == inf(as(x)))                          return zero(as(x));
       if (is_eqz(x))                                return zero(as(x));
       return br_medium(n, x);
     }
     else
     {
-      auto nneg = is_ltz(n);
       auto xlt0 = is_ltz(x);
       auto r = nan(as(x));
       auto isinfx = x == inf(as(x));
       r = if_else(isinfx, zero(as(x)), allbits);
-      x = if_else(isinfx||nneg||xlt0, allbits, x);
+      x = if_else(isinfx||xlt0, allbits, x);
       auto notdone = is_not_nan(x);
       if(eve::any(notdone)) return if_else(notdone, br_medium(n, x), r);
       else                  return r;
