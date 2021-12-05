@@ -11,6 +11,8 @@
 #include <eve/detail/function/compress_store_swizzle_mask_num.hpp>
 #include <eve/function/count_true.hpp>
 
+#include <eve/detail/function/compress_store_impl_switch.hpp>
+
 #include <array>
 #include <bit>
 
@@ -19,35 +21,6 @@
 
 namespace eve::detail
 {
-
-  template<relative_conditional_expr C, typename T, typename U>
-  EVE_FORCEINLINE
-  auto compress_store_impl_switch_4(C c,
-                                    wide<T, fixed<4>> v,
-                                    logical<wide<U, fixed<4>>> mask
-                                    )
-  {
-    auto [num, last_set] = compress_store_swizzle_mask_num_partial[c](mask);
-    int count;
-
-    switch (num) {
-      case 0b000: { count = 0; v = v[pattern<3, 0, 0, 0>]; break; }
-      case 0b001: { count = 1; v = v[pattern<0, 3, 0, 0>]; break; }
-      case 0b010: { count = 1; v = v[pattern<1, 3, 0, 0>]; break; }
-      case 0b011: { count = 2; v = v[pattern<0, 1, 3, 0>]; break; }
-      case 0b100: { count = 1; v = v[pattern<2, 3, 0, 0>]; break; }
-      case 0b101: { count = 2; v = v[pattern<0, 2, 3, 0>]; break; }
-      case 0b110: { count = 2; v = v[pattern<1, 2, 3, 0>]; break; }
-      case 0b111: { count = 3;                             break; }
-      #if defined(SPY_COMPILER_IS_CLANG) or defined(SPY_COMPILER_IS_GCC)
-      default: __builtin_unreachable();
-      #endif
-    }
-    count += last_set ? 1 : 0;
-
-    return std::pair{v, count};
-  }
-
   template<relative_conditional_expr C, typename T, typename U, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
   T* compress_store_impl_(EVE_SUPPORTS(sse2_),
@@ -55,28 +28,10 @@ namespace eve::detail
                           wide<T, N> v,
                           logical<wide<U, N>> mask,
                           Ptr ptr) noexcept
-    requires x86_abi<abi_t<T, N>> && ( N() == 4 ) && (current_api < ssse3)
+    requires (current_api < ssse3)
   {
-    int count;
-    if constexpr ( sizeof(T) == 1 )
-    {
-      // We have to convert to shorts here. Does not optimise well without.
-      auto shorts = convert(v, eve::as<std::uint16_t>{});
-      auto [shuffled, count_] = compress_store_impl_switch_4(c, shorts, mask);
-      v = eve::convert(shuffled, eve::as<T>{});
-      count = count_;
-    }
-    else
-    {
-      auto [shuffled, count_] = compress_store_impl_switch_4(c, v, mask);
-      v = shuffled;
-      count = count_;
-    }
-
-    store(v, ptr);
-    return as_raw_pointer(ptr) + count;
+    return compress_store_impl_switch[c](v, mask, ptr);
   }
-
 }
 
 // ssse3 -> avx2 (no bmi) ---------------------------------------------------------
