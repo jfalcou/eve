@@ -16,6 +16,7 @@
 #include <eve/function/any.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/logical_notand.hpp>
+#include <eve/detail/select_over.hpp>
 
 // This is a help for programming efiicient horizontal branching
 // see dawson .hpp for an example
@@ -28,7 +29,7 @@ namespace eve
   template <typename F, typename L, typename L1, typename R, typename ...Ts>
   auto next_interval(F const & f, L notdone, L1 test, R& r, Ts ... ts) noexcept
   {
-    auto todo = notdone && test;
+   auto todo = notdone && test;
     if constexpr(eve::scalar_value<R>)
     {
       if(todo) { r =  f(ts...); return false_(as(todo)); }
@@ -37,7 +38,7 @@ namespace eve
     {
       if(eve::any(todo))
       {
-        r = if_else(todo, f(ts...), r);
+        r = detail::select_over(todo, f(ts...), r);
         return logical_notand(todo, notdone);
       };
     }
@@ -54,7 +55,7 @@ namespace eve
     }
     else
     {
-      if(eve::any(todo))  r = if_else(todo, f(ts...), r);
+      if(eve::any(todo))  r = detail::select_over(todo, f(ts...), r);
       return eve::false_(as(r));
     }
   }
