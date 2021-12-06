@@ -63,7 +63,7 @@ namespace eve::detail
   {
     using r_t = common_compatible_t<T0, T1, T2, Ts...>;
     auto x =  r_t(xx);
-    std::array<r_t, sizeof...(args)+2> t;
+    std::array<r_t, sizeof...(args)+2> t{};
     int i = t.size()-1;
     t[i] = a;
     t[--i] = b;

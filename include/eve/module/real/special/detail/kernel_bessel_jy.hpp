@@ -26,6 +26,7 @@
 #include <eve/function/copysign.hpp>
 #include <eve/function/fam.hpp>
 #include <eve/function/fma.hpp>
+#include <eve/function/pedantic/rem.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/is_gez.hpp>
 #include <eve/function/log.hpp>
@@ -41,7 +42,6 @@
 
 namespace eve::detail
 {
-
   template<floating_real_scalar_value T>
   EVE_FORCEINLINE auto bessel_jy(T n, T x) noexcept
   {
@@ -64,6 +64,11 @@ namespace eve::detail
         return kumi::make_tuple(T(0), T(0), minf(as(x)), inf(as(x))); //jnu, jpnu, nnu, npnu
       }
     }
+
+    auto reflect(is_ltz(nu));
+    nu =  eve::abs(nu); // v is non-negative from here
+
+
     const T Eps = eve::eps(as(x));
     const T fp_min = eve::sqrt(smallestposval(as(x)));
     constexpr int max_iter = 15000;
@@ -225,12 +230,21 @@ namespace eve::detail
     }
     nnu = nmu;
     npnu = nu * xi * nmu - nnu1;
+
+    if(reflect)
+    {
+      auto [sp, cp] = sinpicospi(nu);
+      jnu = cp*jnu-sp*nnu;
+      nnu = cp*jnu+sp*nnu;
+    }
     return kumi::make_tuple(jnu, jpnu, nnu, npnu);
   }
 
   template<floating_real_simd_value T>
   EVE_FORCEINLINE auto bessel_jy(T nu, T x) noexcept
   {
+    auto reflect(is_ltz(nu));
+    nu =  eve::abs(nu); // v is non-negative from here
     auto iseqzx = is_eqz(x);
     auto isltzx = is_ltz(x);
     x = if_else(isltzx, zero, x);
@@ -396,7 +410,6 @@ namespace eve::detail
     };
 
     T nmu, nnu1, npmu, jmu;
-
     auto xltx_min = x < x_min;
     if (eve::all(xltx_min))
     {
@@ -420,7 +433,6 @@ namespace eve::detail
       nnu1 = if_else(xltx_min, nnu1tmp1, nnu1tmp2);
       jmu  = if_else(xltx_min, jmutmp1 , jmutmp2);
     }
-
     fact = jmu / jnul;
     jnu = fact * jnul1;
     jpnu = fact * jpnu1;
@@ -448,6 +460,12 @@ namespace eve::detail
                    );
       nnu = if_else(iseqzx, minf(as(x)), nnu);
       nnu1= if_else(iseqzx, inf(as(x)), nnu1);
+    }
+    if(eve::any(reflect))
+    {
+      auto [sp, cp] = sinpicospi(nu);
+      jnu = if_else(reflect, cp*jnu-sp*nnu, jnu);
+      nnu = if_else(reflect, cp*jnu+sp*nnu, nnu);
     }
     if (eve::any(isltzx))
     {

@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
-  EVE - Expressive Vector Engine
-  Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+   EVE - Expressive Vector Engine
+   Copyright : EVE Contributors & Maintainers
+   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
 #pragma once
@@ -45,8 +45,8 @@ namespace eve::detail
 {
 
   ///////////////////////////////////////////////////////////////////////////////
-  // small values routines
-  ///////////////////////////////////////////////////////////////////////////////
+// small values routines
+///////////////////////////////////////////////////////////////////////////////
 
   ///////////////////////////////////////////////////////////////////////////////
   // Series summation utility
@@ -83,7 +83,7 @@ namespace eve::detail
 
   template <class T> struct bessel_j_small_z_series_term
   {
-    typedef T result_type;
+    using result_type = T;
 
     bessel_j_small_z_series_term(T v_, T x)
       : N(0), v(v_)
@@ -110,11 +110,10 @@ namespace eve::detail
   template <class T>
   EVE_FORCEINLINE T bessel_j_small_z_series(T v, T x) noexcept
   {
-    T prefix;
     using elt_t = element_type_t<T>;
     auto max_factorial = (sizeof(elt_t) == 4 ? 34 : 170);
     auto test = v < max_factorial;
-    prefix = if_else(test
+    T prefix = if_else(test
                     , eve::pow(x*elt_t(0.5), v) / eve::tgamma(v+1)
                     , eve::exp(v * eve::log(x*elt_t(0.5)) - eve::lgamma(v+1))
                     );
@@ -124,4 +123,46 @@ namespace eve::detail
     T result = sum_series(s, eps(as(x)), max_iter, zero(as(x)));
     return prefix * result;
   }
+
+  template <typename T> struct bessel_i_small_z_series_term
+  {
+    using result_type =  T;
+
+    bessel_i_small_z_series_term(T v_, T z_) : k(0), v(v_), mult(z_*z_/4)
+    {
+      term = 1;
+    }
+
+    T operator()()
+    {
+      T result = term;
+      ++k;
+      term *= mult / k;
+      term /= k + v;
+      return result;
+    }
+  private:
+    unsigned k;
+    T v;
+    T term;
+    T mult;
+  };
+
+  template <floating_real_value T> EVE_FORCEINLINE
+  T bessel_i_small_z_series(T v, T x)
+  {
+    using elt_t = element_type_t<T>;
+    auto max_factorial = (sizeof(elt_t) == 4 ? 34 : 170);
+    auto test = v < max_factorial;
+    T prefix = if_else(test
+                    , eve::pow(x*elt_t(0.5), v) / eve::tgamma(v+1)
+                    , eve::exp(v * eve::log(x*elt_t(0.5)) - eve::lgamma(v+1))
+                    );
+    if(eve::all(is_eqz(prefix)))  return prefix;
+    bessel_i_small_z_series_term<T> s(v, x);
+    auto max_iter = 1000000;
+    T result = sum_series(s, eps(as(x)), max_iter, zero(as(x)));
+    return prefix * result;
+  }
+
 }

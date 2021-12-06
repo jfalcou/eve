@@ -7,7 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 #include <eve/function/cyl_bessel_yn.hpp>
-#include <eve/function/cyl_bessel_y0.hpp>
+#include <eve/function/diff/cyl_bessel_yn.hpp>
 #include <eve/function/prev.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
@@ -15,6 +15,7 @@
 #include <eve/platform.hpp>
 #include <cmath>
 #include <boost/math/special_functions/bessel.hpp>
+#include <boost/math/special_functions/bessel_prime.hpp>
 
 //==================================================================================================
 //== Types tests
@@ -90,7 +91,6 @@ EVE_TEST( "Check behavior of cyl_bessel_yn on wide with integral order"
   TTS_ULP_EQUAL(eve__cyl_bessel_yn(3, T(5)),     T(std__cyl_bessel_yn(3, v_t(5)))    , 35.0);
   //simd small
   TTS_ULP_EQUAL(eve__cyl_bessel_yn(0, T(0.1)),   T(std__cyl_bessel_yn(0, v_t(0.1)))  , 3.0);
-  TTS_ULP_EQUAL(eve::cyl_bessel_y0(T(0.1)), T(std__cyl_bessel_yn(0, v_t(0.1)))  , 3.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_yn(1, T(0.2)),   T(std__cyl_bessel_yn(1, v_t(0.2)))  , 3.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_yn(2, T(0.1)),   T(std__cyl_bessel_yn(2, v_t(0.1)))  , 3.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_yn(3, T(0.2)),   T(std__cyl_bessel_yn(3, v_t(0.2)))  , 3.0);
@@ -179,4 +179,17 @@ EVE_TEST( "Check behavior of cyl_bessel_yn on wide with non integral order"
   TTS_ULP_EQUAL(eve__cyl_bessel_yn(T(10.5), T(8)),   T(std__cyl_bessel_yn(v_t(10.5), v_t(8)))   , 3.0);
 
   TTS_RELATIVE_EQUAL(eve__cyl_bessel_yn(n, a0),   map(std__cyl_bessel_yn, n, a0)   , 0.001);
+};
+
+EVE_TEST( "Check behavior of cyl_bessel_yn on wide with negative non integral order"
+        , eve::test::simd::ieee_reals
+        , eve::test::generate(eve::test::randoms(0.0, 10.0)
+                             , eve::test::randoms(0.0, 60.0))
+        )
+  <typename T>(T n, T a0 )
+{
+  using v_t = eve::element_type_t<T>;
+  auto eve__diff_bessel_yn =  [](auto n, auto x) { return eve::diff(eve::cyl_bessel_yn)(n, x); };
+  auto std__diff_bessel_yn =  [](auto n, auto x)->v_t { return boost::math::cyl_neumann_prime(n, x); };
+  TTS_RELATIVE_EQUAL(eve__diff_bessel_yn(n, a0),   map(std__diff_bessel_yn, n, a0)   , 1.0e-2);
 };

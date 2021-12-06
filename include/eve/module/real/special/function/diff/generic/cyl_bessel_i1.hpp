@@ -7,8 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/cyl_bessel_jn.hpp>
-#include <eve/function/cyl_bessel_j0.hpp>
+#include <eve/function/cyl_bessel_in.hpp>
+#include <eve/function/cyl_bessel_i0.hpp>
 #include <eve/function/average.hpp>
 #include <eve/function/derivative.hpp>
 
@@ -16,16 +16,10 @@ namespace eve::detail
 {
 
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T cyl_bessel_j1_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr T cyl_bessel_i1_(EVE_SUPPORTS(cpu_)
                                   , diff_type<1> const &
-                                  , T x) noexcept
+                                  , T const &x) noexcept
   {
-    if constexpr(has_native_abi_v<T>)
-    {
-      using v_t =  element_type_t<T>;
-      x = abs(x);
-      return average(cyl_bessel_j0(x), -cyl_bessel_jn(v_t(2), x));
-    }
-    else return apply_over(diff(cyl_bessel_j1), x);
+    return average(cyl_bessel_in(T(2), x), cyl_bessel_i0(x));
   }
 }
