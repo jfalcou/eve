@@ -23,14 +23,14 @@ namespace eve::detail
                                  logical<wide<U, N>> mask,
                                  Ptr ptr) noexcept
   {
-    constexpr bool has_aggregation = has_aggregated_abi_v<wide<T, N>> || has_aggregated_abi_v<wide<U, N>> || N() > 8;
+    constexpr bool like_aggregate = has_aggregated_abi_v<wide<T, N>> || has_aggregated_abi_v<wide<U, N>> || N() > 8;
 
          if constexpr ( C::is_complete  && !C::is_inverted ) return as_raw_pointer(ptr);
-    else if constexpr ( has_aggregation && !C::is_complete )
+    else if constexpr ( like_aggregate && !C::is_complete )
     {
       return compress_store_impl_switch(ignore_none, v, mask && c.mask(as(mask)), ptr);
     }
-    else if constexpr ( has_aggregation )
+    else if constexpr ( like_aggregate )
     {
       auto [l, h] = v.slice();
       auto [ml, mh] = mask.slice();
