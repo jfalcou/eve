@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var cyl_bessel_k0
   //!
-  //! @brief Callable object computing the cyl_bessel_k0 function.
+  //! @brief Callable object computing  \f$ K_0(x)=\int_{0}^{\infty}\frac{\cos(x\tau)}{\sqrt{\tau^2+1}}\,\mathrm{d}\tau\f$.
   //!
   //! **Required header:** `#include <eve/function/cyl_bessel_k0.hpp>`
   //!
@@ -24,24 +24,34 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the cyl_bessel_k0 function                                 |
+  //! | `operator()` | the modified cyl_bessel_k0 function of the second kind     |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T > auto operator()( T x ) const noexcept;
+  //!  template< floating_real_value T > auto operator()( T x ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!`x`:   [floating_real_value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
-  //!Computes  [elementwise](@ref glossary_elementwise) the value of \f$ K0(x)\f$.
+  //!Computes  [elementwise](@ref glossary_elementwise) the value of
+  //!  \f$ \displaystyle K_0(x)=\int_{0}^{\infty}\frac{\cos(x\tau)}{\sqrt{\tau^2+1}}\,\mathrm{d}\tau\f$.
+  //!
+  //! It is a solution of \f$ x^{2}y''+xy'-x^2y=0\f$ for which \f$ y(0) = \infty\f$.
   //!
   //! ---
   //!
+  //! #### Supported decorators
+  //!
+  //!   * eve::diff, eve::diff_1st, eve::diff_nth
+  //!
+  //!     **Required header:** `#include <eve/function/diff/cyl_bessel_k0.hpp>`
+  //!
+  //!     The expression `eve::diff(eve::cyl_bessel_k0)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
   //!

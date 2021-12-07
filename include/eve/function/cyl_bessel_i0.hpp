@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var cyl_bessel_i0
   //!
-  //! @brief Callable object computing the cyl_bessel_i0 function.
+  //! @brief Callable object computing \f$ I_0(x)=\frac1{\pi}\int_{0}^{\pi}e^{x\cos\tau}\,\mathrm{d}\tau\f$.
   //!
   //! **Required header:** `#include <eve/function/cyl_bessel_i0.hpp>`
   //!
@@ -24,24 +24,34 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the cyl_bessel_i0 function   |
+  //! | `operator()` | the modified cyl_bessel_i0 function of the first kind      |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T > auto operator()( T x ) const noexcept;
+  //!  template< floating_real_value T > auto operator()( T x ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!`x`:   [floating_real_value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
-  //!Computes  [elementwise](@ref glossary_elementwise) the value of \f$ I0(x)\f$.
+  //!Computes  [elementwise](@ref glossary_elementwise) the value of
+  //!  \f$ \displaystyle I_0(x)=\frac1{\pi}\int_{0}^{\pi}e^{x\cos\tau}\,\mathrm{d}\tau\f$.
+  //!
+  //! It is the solution of \f$ x^{2}y''+xy'-x^2y=0\f$ for which \f$ y(0) = 0\f$.
   //!
   //! ---
   //!
+  //! #### Supported decorators
+  //!
+  //!   * eve::diff, eve::diff_1st, eve::diff_nth
+  //!
+  //!     **Required header:** `#include <eve/function/diff/cyl_bessel_i0.hpp>`
+  //!
+  //!     The expression `eve::diff(eve::cyl_bessel_i0)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
   //!

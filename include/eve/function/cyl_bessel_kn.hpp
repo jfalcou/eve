@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var cyl_bessel_kn
   //!
-  //! @brief Callable object computing the cyl_bessel_kn function.
+  //! @brief Callable object computing the cyl_bessel_kn function, \f$ K(n, x)=\frac{\Gamma(n+1/2)(2x)^n}{\sqrt\pi} \int_{0}^{\infty}\frac{\cos\tau}{(\tau^2+x^2)^{n+1/2}}\,\mathrm{d}\tau\f$.
   //!
   //! **Required header:** `#include <eve/function/cyl_bessel_kn.hpp>`
   //!
@@ -24,23 +24,36 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the cyl_bessel_kn function                                 |
+  //! | `operator()` | the modified cyl_bessel_kn function of second kind         |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T > auto operator()( T x ) const noexcept;
+  //!  template< real_value N, floating_real_value T  > auto operator()( N n, T x ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!`n`:   [real_value](@ref eve::real_value) order of the function (non necessarily integral)
+  //!
+  //!`x`:   [floating_real_value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
-  //!Computes  [elementwise](@ref glossary_elementwise) the value of \f$ KN(x)\f$.
+  //! \f$\displaystyle K(n, x)=\frac{\Gamma(n+1/2)(2x)^n}{\sqrt\pi} \int_{0}^{\infty}\frac{\cos\tau}{(\tau^2+x^2)^{n+1/2}}\,\mathrm{d}\tau\f$.
+  //!
+  //!
+  //! It is the solution of \f$ x^{2}y''+xy'+(x^2-n^2)y=0\f$ for which \f$ y(0) = 0\f$.
   //!
   //! ---
+  //!
+  //! #### Supported decorators
+  //!
+  //!   * eve::diff, eve::diff_1st, eve::diff_nth
+  //!
+  //!     **Required header:** `#include <eve/function/diff/cyl_bessel_kn.hpp>`
+  //!
+  //!     The expression `eve::diff(eve::cyl_bessel_kn)(n, x)` computes the derivative of the function at `x`.
   //!
   //!
   //! #### Example
