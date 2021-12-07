@@ -13,6 +13,7 @@
 #include <eve/constant/zero.hpp>
 #include <eve/detail/hz_device.hpp>
 #include <eve/function/abs.hpp>
+#include <eve/function/cyl_bessel_in.hpp>
 #include <eve/function/cyl_bessel_jn.hpp>
 #include <eve/function/cyl_bessel_kn.hpp>
 #include <eve/function/is_infinite.hpp>
@@ -75,15 +76,6 @@ namespace eve::detail
             }
           }
         }
-        auto my_if_else =  []<typename A>(auto cond, A a,  auto b){
-          if constexpr(kumi::product_type<A>)
-          {
-            auto f = [&cond](auto x, auto y){return eve::if_else(cond, x, y); };
-            return kumi::map(f, a, b);
-          }
-          else
-            return eve::if_else(cond, a, b);
-        };
         r = select_over(is_infinite(x), kumi::tuple<T, T>{zero(as(x)), inf(as(x))}, r);
         get<0>(r) = if_else (x == minf(as(x)), zero, get<0>(r));
         return r;
