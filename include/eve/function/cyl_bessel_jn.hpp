@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var cyl_bessel_jn
   //!
-  //! @brief Callable object computing the cyl_bessel_jn function.
+  //! @brief Callable object computing the cyl_bessel_jn function,  \f$ J_{n}(x)=\sum_{p=0}^{\infty}{\frac{(-1)^p}{p!\,\Gamma (p+n +1)}}{\left({x \over 2}\right)}^{2p+n }\f$.
   //!
   //! **Required header:** `#include <eve/function/cyl_bessel_jn.hpp>`
   //!
@@ -29,20 +29,30 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< real_value N, real_value T  > auto operator()( N n, T x ) const noexcept;
+  //!  template< real_value N, floating_real_value T  > auto operator()( N n, T x ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`n`:   [value](@ref eve::value) order ofthe function (non necessarily integral)
+  //!`n`:   [real_value](@ref eve::real_value) order of the function (non necessarily integral)
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!`x`:   [floating_real_value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
-  //!Computes  [elementwise](@ref glossary_elementwise) the value of \f$ J_n(x)\f$.
+  //! \f$\displaystyle J_{n}(x)=\sum_{p=0}^{\infty}{\frac{(-1)^p}{p!\,\Gamma (p+n +1)}}{\left({x \over 2}\right)}^{2p+n }\f$.
+  //!
+  //! It is the solution of \f$ x^{2}y''+xy'+(x^2-n^2)y=0\f$ for which \f$ y(0) = 0\f$.
   //!
   //! ---
+  //!
+  //! #### Supported decorators
+  //!
+  //!   * eve::diff, eve::diff_1st, eve::diff_nth
+  //!
+  //!     **Required header:** `#include <eve/function/diff/cyl_bessel_jn.hpp>`
+  //!
+  //!     The expression `eve::diff(eve::cyl_bessel_jn)(n, x)` computes the derivative of the function at `x`.
   //!
   //!
   //! #### Example
