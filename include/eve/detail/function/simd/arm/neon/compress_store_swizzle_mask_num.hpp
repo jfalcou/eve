@@ -89,27 +89,6 @@ namespace eve::detail
   }
 
   template<eve::relative_conditional_expr C, typename T>
-  EVE_FORCEINLINE std::pair<int, bool>
-  compress_store_swizzle_mask_num_partial_(EVE_SUPPORTS(neon128_), C c, logical<wide<T, fixed<4>>> mask)
-  {
-         if constexpr ( C::is_complete && !C::is_inverted ) return {0, false};
-    else if constexpr ( !C::is_complete                   ) return compress_store_swizzle_mask_num_partial(ignore_none, mask && c.mask(as(mask)));
-    else
-    {
-      using l_t = logical<wide<T, fixed<4>>>;
-
-      using bits_type = typename l_t::bits_type;
-
-      bits_type bits = mask.bits();
-      bits_type elements_bit{1, 2, 4, 8};
-      bits &= elements_bit;
-
-      auto sum = sum4(bits);
-      return {(sum & 7), (sum & 8)};
-    }
-  }
-
-  template<eve::relative_conditional_expr C, typename T>
   EVE_FORCEINLINE std::pair<int, int>
   compress_store_swizzle_mask_num_(EVE_SUPPORTS(neon128_), C c, logical<wide<T, fixed<4>>> mask)
   {

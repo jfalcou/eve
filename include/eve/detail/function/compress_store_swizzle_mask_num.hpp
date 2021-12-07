@@ -32,7 +32,6 @@
 //
 // The second returned value is:
 //   for a regular one - number of elements selected
-//   for a partial one - a bool if the last element is set.
 //
 // Example:
 //   mask:            [ false, true, false, false]
@@ -61,22 +60,17 @@
 // Returns {num, count} twice for both halves.
 //
 
-
 namespace eve
 {
   EVE_REGISTER_CALLABLE(compress_store_swizzle_mask_num_)
-  EVE_REGISTER_CALLABLE(compress_store_swizzle_mask_num_partial_)
   EVE_DECLARE_CALLABLE(compress_store_swizzle_mask_num_, compress_store_swizzle_mask_num)
-  EVE_DECLARE_CALLABLE(compress_store_swizzle_mask_num_partial_, compress_store_swizzle_mask_num_partial)
 
   namespace detail
   {
     EVE_ALIAS_CALLABLE(compress_store_swizzle_mask_num_, compress_store_swizzle_mask_num);
-    EVE_ALIAS_CALLABLE(compress_store_swizzle_mask_num_partial_, compress_store_swizzle_mask_num_partial);
   }
 
   EVE_CALLABLE_API(compress_store_swizzle_mask_num_, compress_store_swizzle_mask_num)
-  EVE_CALLABLE_API(compress_store_swizzle_mask_num_partial_, compress_store_swizzle_mask_num_partial)
 }
 
 #include <eve/detail/function/simd/common/compress_store_swizzle_mask_num.hpp>
