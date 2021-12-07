@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the cyl_bessel_jn function   |
+  //! | `operator()` | the cyl_bessel_jn function                                 |
   //!
   //! ---
   //!
@@ -36,7 +36,7 @@ namespace eve
   //!
   //!`n`:   [real_value](@ref eve::real_value) order of the function (non necessarily integral)
   //!
-  //!`x`:   [floating_real_value](@ref eve::floating_real_value).
+  //!`x`:   [floating_real_value](@ref eve::floating_real_value). if n is non an integral value, a negative entry will return a Nan.
   //!
   //! **Return value**
   //!

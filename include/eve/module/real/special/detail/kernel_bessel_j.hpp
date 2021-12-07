@@ -187,8 +187,6 @@ namespace eve::detail
     auto xlt0 = is_ltz(x);
     auto nlt0 = is_ltz(n);
     auto isoddn =  is_odd(n);
-//     T factor = if_else(nlt0 && isoddn, T(-1), T(1));  // J_{-n}(z) = (-1)^n J_n(z)
-//     factor *=  if_else(xlt0 && isoddn, T(-1), T(1));  // J_{n}(-z) = (-1)^n J_n(z)
     auto j = kernel_bessel_j_int_pos( eve::abs(n), eve::abs(x));
     return if_else(isoddn && logical_xor(nlt0, xlt0), -j, j);
   }

@@ -36,7 +36,7 @@ namespace eve
   //!
   //!`n`:   [real_value](@ref eve::real_value) order of the function (non necessarily integral)
   //!
-  //!`x`:   [floating_real_value](@ref eve::floating_real_value).
+  //!`x`:   positive [floating_real_value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
