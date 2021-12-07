@@ -24,24 +24,35 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the airy_ai function   |
+  //! | `operator()` | the airy_ai function                                       |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T > auto operator()( T x ) const noexcept;
+  //!  template< floating_real_value T > auto operator()( T x ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!`x`:   [floating_real_value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
-  //!Computes  [elementwise](@ref glossary_elementwise) the value of \f$ Ai(x)\f$.
+  //! Computes  [elementwise](@ref glossary_elementwise) the value of
+  //! \f$ Ai(x)=\frac1{\pi} \int_{0}^{\infty}\cos \left( \frac{t^3}{3}+xt \right) \,dt\f$.
+  //!
+  //!  It is the solution of the differential equation \f$y''-xy = 0\f$ satisfying
+  //! \f$Ai(0) = \frac1{3^{2/3}\Gamma(2/3)}\f$ and \f$Ai'(0) =\frac1{3^{1/3}\Gamma(1/3)}\f$.
   //!
   //! ---
   //!
+  //! #### Supported decorators
+  //!
+  //!   * eve::diff, eve::diff_1st, eve::diff_nth
+  //!
+  //!     **Required header:** `#include <eve/function/diff/airy_ai.hpp>`
+  //!
+  //!     The expression `eve::diff(eve::airy_ai)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
   //!

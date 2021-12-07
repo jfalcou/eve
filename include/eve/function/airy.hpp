@@ -24,21 +24,22 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the airy function   |
+  //! | `operator()` | the airy function                                          |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T > auto operator()( T x ) const noexcept;
+  //!  template< floating_real_value T > auto operator()( T x ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!`x`:   [floating_real_value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
-  //!Computes  [elementwise](@ref glossary_elementwise) the values of \f$ Ai(x)\f$ and \f$ Bi(x)\f$ .
+  //!Computes simultaneously and [elementwise](@ref glossary_elementwise) the values of
+  //!  [airy_ai](@ref airy_ai) and [airy_bi](@ref airy_bi).
   //!
   //! ---
   //!
