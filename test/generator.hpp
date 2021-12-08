@@ -53,10 +53,10 @@ namespace eve::test
       ftype these(data.storage());
 
       // Compute a recognizable filler
-      auto filler = eve::Constant<p_t, static_cast<p_t>(0xDEADBEEFC007BABE)>();
       for(std::ptrdiff_t i=data.size();i<these.size();++i)
       {
-        these.set(i, filler);
+        p_t filler = eve::Constant<p_t, static_cast<p_t>(0xDEADBEEFBABE0000)>() + p_t(i);
+        these.set(i, eve::bit_cast(filler,as<v_t>()) );
       }
 
       return W(these.storage());
