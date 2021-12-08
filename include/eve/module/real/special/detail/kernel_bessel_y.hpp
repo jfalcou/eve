@@ -104,12 +104,6 @@ namespace eve::detail
       return kernel_bessel_y_int_forward (T(nn), x, y0, y1);
   }
 
-//   template<real_value I, floating_real_value T>
-//   EVE_FORCEINLINE auto   kernel_bessel_y_int_small (I , T x) noexcept
-//   {
-//     return x; //bessel_y_small_z_series(T(n), x);
-//   }
-
   template<real_value I, floating_real_value T>
   EVE_FORCEINLINE auto   kernel_bessel_y_medium (I n, T x) noexcept
   {
