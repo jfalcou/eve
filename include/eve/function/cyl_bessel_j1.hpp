@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var cyl_bessel_j1
   //!
-  //! @brief Callable object computing the cyl_bessel_j1 function.
+  //! @brief Callable object computing \f$ J_1(x)=\frac1{\pi }\int _{0}^{\pi}\cos(\tau-x\sin \tau )\,\mathrm {d} \tau \f$.
   //!
   //! **Required header:** `#include <eve/function/cyl_bessel_j1.hpp>`
   //!
@@ -29,19 +29,29 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T > auto operator()( T x ) const noexcept;
+  //!  template< floating_real_value T > auto operator()( T x ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!`x`:   [floating_real_value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
-  //!Computes  [elementwise](@ref glossary_elementwise) the value of \f$ J_1(x)\f$.
+  //!Computes  [elementwise](@ref glossary_elementwise) the value of
+  //! \f$ J_1(x)=\frac1{\pi }\int _{0}^{\pi}\cos(\tau-x\sin \tau )\,\mathrm {d} \tau \f$.
+  //!
+  //! It is the solution of \f$ x^{2}y''+xy'+(x^2-1)y=0\f$ for which \f$ y(0) = 0\f$.
   //!
   //! ---
   //!
+  //! #### Supported decorators
+  //!
+  //!   * eve::diff, eve::diff_1st, eve::diff_nth
+  //!
+  //!     **Required header:** `#include <eve/function/diff/cyl_bessel_j1.hpp>`
+  //!
+  //!     The expression `eve::diff(eve::cyl_bessel_j1)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
   //!
