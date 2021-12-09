@@ -5,6 +5,8 @@
 ##==================================================================================================
 include(benchmark)
 
+add_subdirectory(module/bessel)
+
 add_subdirectory(module/algorithm)
 add_subdirectory(module/core)
 add_subdirectory(module/math)
