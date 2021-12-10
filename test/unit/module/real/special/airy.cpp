@@ -47,12 +47,12 @@ EVE_TEST_TYPES( "Check return types of airy_ai"
   {
     auto [ai, bi]= eve_airy(a0);
     TTS_ABSOLUTE_EQUAL(ai, map(std_airy_ai, a0), abstol);
-    TTS_RELATIVE_EQUAL(bi, map(std_airy_bi, a0), 0.0003);
+    TTS_RELATIVE_EQUAL(bi, map(std_airy_bi, a0), 0.0004);
   }
   {
     auto [ai, bi]= eve_airy(a1);
     TTS_ABSOLUTE_EQUAL(ai, map(std_airy_ai, a1), abstol);
-    TTS_RELATIVE_EQUAL(bi, map(std_airy_bi, a1), 0.0003);
+    TTS_RELATIVE_EQUAL(bi, map(std_airy_bi, a1), 0.0004);
   }
 
 };

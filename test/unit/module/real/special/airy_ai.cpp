@@ -61,7 +61,7 @@ EVE_TEST_TYPES( "Check return types of airy_ai"
   TTS_ULP_EQUAL(eve__airy_ai( T(500)),  T(std__airy_ai(v_t(500)) ), 10.0);
   TTS_ULP_EQUAL(eve__airy_ai( T(10)) ,  T(std__airy_ai( v_t(10)) ), 13.0);
   TTS_ULP_EQUAL(eve__airy_ai( T(5))  ,  T(std__airy_ai( v_t(5))  ), 10.0);
-  TTS_ULP_EQUAL(eve__airy_ai( T(2))  ,  T(std__airy_ai( v_t(2))  ), 36.0);
+  TTS_ULP_EQUAL(eve__airy_ai( T(2))  ,  T(std__airy_ai( v_t(2))  ), 37.0);
   TTS_ULP_EQUAL(eve__airy_ai( T(1.5)),  T(std__airy_ai( v_t(1.5))), 11.0);
   TTS_ULP_EQUAL(eve__airy_ai( T(0.5)),  T(std__airy_ai( v_t(0.5))), 10.0);
   TTS_ULP_EQUAL(eve__airy_ai( T(1))  ,  T(std__airy_ai( v_t(1))  ), 10.0);
@@ -121,7 +121,7 @@ EVE_TEST( "Check behavior of diff(airy_ai) on wide"
   TTS_ULP_EQUAL(eve__airy_ai(v_t(5)),  std__airy_ai(v_t(5))   , 50.0);
   TTS_ULP_EQUAL(eve__airy_ai(v_t(2)),  std__airy_ai(v_t(2))   , 50.0);
   TTS_ULP_EQUAL(eve__airy_ai(v_t(1.5)),std__airy_ai(v_t(1.5)) , 50.0);
-  TTS_ULP_EQUAL(eve__airy_ai(v_t(0.5)),std__airy_ai(v_t(0.5)) , 50.0);
+  TTS_ULP_EQUAL(eve__airy_ai(v_t(0.5)),std__airy_ai(v_t(0.5)) , 51.0);
   TTS_ULP_EQUAL(eve__airy_ai(v_t(1)),  std__airy_ai(v_t(1))   , 50.0);
   TTS_ULP_EQUAL(eve__airy_ai(v_t(0)),  v_t(-0.258819403792807), 0.5);
 
@@ -132,7 +132,7 @@ EVE_TEST( "Check behavior of diff(airy_ai) on wide"
   TTS_ULP_EQUAL(eve__airy_ai( T(5))  ,  T(std__airy_ai( v_t(5))  ),  50.0);
   TTS_ULP_EQUAL(eve__airy_ai( T(2))  ,  T(std__airy_ai( v_t(2))  ),  50.0);
   TTS_ULP_EQUAL(eve__airy_ai( T(1.5)),  T(std__airy_ai( v_t(1.5))),  50.0);
-  TTS_ULP_EQUAL(eve__airy_ai( T(0.5)),  T(std__airy_ai( v_t(0.5))),  50.0);
+  TTS_ULP_EQUAL(eve__airy_ai( T(0.5)),  T(std__airy_ai( v_t(0.5))),  51.0);
   TTS_ULP_EQUAL(eve__airy_ai( T(1))  ,  T(std__airy_ai( v_t(1))  ),  50.0);
   TTS_ULP_EQUAL(eve__airy_ai( T(0))  ,  T(-0.258819403792807), 0.5);
 
