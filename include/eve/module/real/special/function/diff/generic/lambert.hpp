@@ -9,16 +9,26 @@
 
 #include <eve/function/lambert.hpp>
 #include <eve/function/derivative.hpp>
-#include <eve/function/oneminus.hpp>
+#include <eve/function/inc.hpp>
+#include <eve/function/is_eqz.hpp>
+#include <eve/function/is_negative.hpp>
+#include <eve/function/lambert.hpp>
 
 namespace eve::detail
 {
 
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T lambert_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr auto lambert_(EVE_SUPPORTS(cpu_)
                                   , diff_type<1> const &
                                   , T const &x) noexcept
   {
-    return oneminus(2*x*lambert(x));
+    auto [w0, wm1] = lambert(x);
+    auto xeqz = is_eqz(x);
+    auto dw0 = if_else(w0 == mone(as(w0)), inf(as(w0)), w0/(x*inc(w0)));
+    dw0 = if_else(x  == inf(as(x)) || xeqz, zero, dw0);
+    auto dwm1= if_else(wm1 == mone(as(w0)), minf(as(w0)), wm1/(x*inc(wm1)));
+    dwm1= if_else(is_gez(x), dw0, dwm1);
+    dwm1= if_else(xeqz&&is_negative(x), minf(as(wm1)), dwm1);
+    return kumi::make_tuple(dw0, dwm1);
   }
 }
