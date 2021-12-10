@@ -45,12 +45,10 @@ namespace eve::detail
       else
       {
         auto[l,h] = v.slice();
-        auto lh = slide_left(l,index_t<Wide::size()/2 - Shift>{});
-              h = slide_right(h,index_t<Shift>{});
-              l = slide_right(l,index_t<Shift>{});
 
-        if constexpr( logical_value<Wide> ) h = h || lh;
-        else                                h = h |  lh;
+        h = slide_right(l, h, index<Shift>);
+        l = slide_right(l,    index<Shift>);
+
         return Wide{l,h};
       }
     }
