@@ -38,9 +38,10 @@ EVE_TEST( "Check behavior of lambert on wide"
         , eve::test::generate(eve::test::randoms(-0.367879, 0.367879)
                              , eve::test::randoms(-0.367879,0.0)
                              , eve::test::randoms(0, 10.0)
+                             , eve::test::randoms(-0.367879, -0.367879+1.0e-6)
                              )
         )
-  <typename T>(T a0, T a1, T a2 )
+  <typename T>(T a0, T a1, T a2,  T a3)
 {
   if constexpr( eve::platform::supports_invalids )
   {
@@ -103,6 +104,11 @@ EVE_TEST( "Check behavior of lambert on wide"
       auto[w0, wm1] = eve::lambert(a2);
       TTS_ULP_EQUAL(w0, map(std_w0, a2), 3.0);
       TTS_ULP_EQUAL(wm1,map(std_wm1, a2), 3.0);
+    }
+    {
+      auto[w0, wm1] = eve::lambert(a3);
+      TTS_ABSOLUTE_EQUAL(w0, map(std_w0, a3), 0.001);
+      TTS_ABSOLUTE_EQUAL(wm1,map(std_wm1, a3), 0.001);
     }
  }
 };
