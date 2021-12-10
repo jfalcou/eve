@@ -6,6 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/constant/eps.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/mone.hpp>
@@ -18,17 +19,17 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-// EVE_TEST_TYPES( "Check return types of lambert"
-//             , eve::test::simd::ieee_reals
-//             )
-// <typename T>(eve::as<T>)
-// {
-//   using v_t = eve::element_type_t<T>;
-//   using kT  = kumi::tuple<T,T>;
-//   using kv_t= kumi::tuple<v_t, v_t>;
-//   TTS_EXPR_IS( eve::lambert(T())  ,kT);
-//   TTS_EXPR_IS( eve::lambert(v_t()), kv_t);
-// };
+EVE_TEST_TYPES( "Check return types of lambert"
+            , eve::test::simd::ieee_reals
+            )
+<typename T>(eve::as<T>)
+{
+  using v_t = eve::element_type_t<T>;
+  using kT  = kumi::tuple<T,T>;
+  using kv_t= kumi::tuple<v_t, v_t>;
+  TTS_EXPR_IS( eve::lambert(T())  ,kT);
+  TTS_EXPR_IS( eve::lambert(v_t()), kv_t);
+};
 
 //==================================================================================================
 // lambert  tests
@@ -43,6 +44,7 @@ EVE_TEST( "Check behavior of lambert on wide"
         )
   <typename T>(T a0, T a1, T a2,  T a3)
 {
+  using elt_t = eve::element_type_t<T>;
   if constexpr( eve::platform::supports_invalids )
   {
     {
@@ -76,21 +78,6 @@ EVE_TEST( "Check behavior of lambert on wide"
     auto std_w0  = [](auto v)->v_t{return boost::math::lambert_w0(v); };
     auto std_wm1 = [](auto v)->v_t{return eve::is_positive(v) ? boost::math::lambert_w0(v) : boost::math::lambert_wm1(v); };
     {
-      auto aa = eve::min(a0, T(0));
-      std::cout << "eve::min(a0, T(0))  " << aa << std::endl;
-      auto[w0, wm1] = eve::lambert(aa);
-      TTS_ULP_EQUAL(w0, map(std_w0, aa), 10.0);
-      TTS_ULP_EQUAL(wm1,map(std_wm1, aa),10.0);
-    }
-    {
-      auto aa = eve::max(a0, T(0));
-      std::cout << "eve::max(a0, T(0))  " << aa << std::endl;
-      auto[w0, wm1] = eve::lambert(aa);
-      TTS_ULP_EQUAL(w0, map(std_w0, aa), 10.0);
-      TTS_ULP_EQUAL(wm1,map(std_wm1, aa), 10.0);
-    }
-    {
-      std::cout << "a0" << a0 << std::endl;
       auto[w0, wm1] = eve::lambert(a0);
       TTS_ULP_EQUAL(w0, map(std_w0, a0), 10.0);
       TTS_ULP_EQUAL(wm1,map(std_wm1, a0), 10.0);
@@ -106,9 +93,10 @@ EVE_TEST( "Check behavior of lambert on wide"
       TTS_ULP_EQUAL(wm1,map(std_wm1, a2), 3.0);
     }
     {
+      elt_t tol = 5000*eve::eps(eve::as<elt_t>());
       auto[w0, wm1] = eve::lambert(a3);
-      TTS_ABSOLUTE_EQUAL(w0, map(std_w0, a3), 0.001);
-      TTS_ABSOLUTE_EQUAL(wm1,map(std_wm1, a3), 0.001);
+      TTS_ABSOLUTE_EQUAL(w0, map(std_w0, a3), tol);
+      TTS_ABSOLUTE_EQUAL(wm1,map(std_wm1, a3), tol);
     }
  }
 };
