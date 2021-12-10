@@ -40,7 +40,8 @@ namespace eve
   //!
   //!Returns [elementwise](@ref glossary_elementwise) the value of the lambert function.
   //!
-  //! The result type is the kumi pair of the two branches values. If a branch is not defined the return value is a Nan.
+  //! The result type is the kumi pair of the two branches values. The branches are not defined for input less than \f$e^{-1}\f$ in that case they return nan.
+  //! As for input positive only one branch exist the two values returned are equal.
   //!
   //! ---
   //!

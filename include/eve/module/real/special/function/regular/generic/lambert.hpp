@@ -15,6 +15,7 @@
 #include <eve/function/reverse_horner.hpp>
 #include <eve/function/exp.hpp>
 #include <eve/function/fam.hpp>
+#include <eve/function/fms.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/is_gez.hpp>
@@ -24,6 +25,7 @@
 #include <eve/function/is_not_nan.hpp>
 #include <eve/function/is_positive.hpp>
 #include <eve/function/log.hpp>
+#include <eve/function/rec.hpp>
 #include <eve/function/sqrt.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/detail/hz_device.hpp>
