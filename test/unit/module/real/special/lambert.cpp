@@ -212,8 +212,8 @@ EVE_TEST( "Check behavior of lambert diff on wide"
     auto dstd_wm1 = [](auto v)->v_t{return eve::is_positive(v) ? boost::math::lambert_w0_prime(v) : boost::math::lambert_wm1_prime(v); };
     {
       auto[w0, wm1] = diff(eve::lambert)(a0);
-      TTS_RELATIVE_EQUAL(w0, map(dstd_w0, a0), 0.01);
-      TTS_RELATIVE_EQUAL(wm1,map(dstd_wm1, a0), 0.01);
+      TTS_RELATIVE_EQUAL(w0, map(dstd_w0, a0), 0.05);
+      TTS_RELATIVE_EQUAL(wm1,map(dstd_wm1, a0), 0.05);
     }
     {
       auto[w0, wm1] = diff(eve::lambert)(a1);
