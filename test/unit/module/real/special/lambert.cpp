@@ -84,7 +84,7 @@ EVE_TEST( "Check behavior of lambert on wide"
     }
     {
       auto[w0, wm1] = eve::lambert(a1);
-      TTS_ULP_EQUAL(w0, map(std_w0, a1), 10.0);
+      TTS_ULP_EQUAL(w0, map(std_w0, a1), 300.0);
       TTS_ULP_EQUAL(wm1,map(std_wm1, a1), 3.0);
     }
     {
@@ -151,7 +151,7 @@ EVE_TEST( "Check behavior of lambert on wide"
     }
     {
       auto[w0, wm1] = eve::lambert(a1);
-      TTS_ULP_EQUAL(w0, map(std_w0, a1), 10.0);
+      TTS_ULP_EQUAL(w0, map(std_w0, a1), 300.0);
       TTS_ULP_EQUAL(wm1,map(std_wm1, a1), 3.0);
     }
     {
@@ -198,12 +198,12 @@ EVE_TEST( "Check behavior of lambert diff on wide"
   }
   {
     auto[w0, wm1] = diff(eve::lambert)(eve::zero(eve::as<T>()));
-    TTS_IEEE_EQUAL(w0, eve::zero(eve::as<T>()));
-    TTS_IEEE_EQUAL(wm1, eve::zero(eve::as<T>()));
+    TTS_IEEE_EQUAL(w0, eve::one(eve::as<T>()));
+    TTS_IEEE_EQUAL(wm1, eve::one(eve::as<T>()));
   }
   {
     auto[w0, wm1] = diff(eve::lambert)(eve::mzero(eve::as<T>()));
-    TTS_IEEE_EQUAL(w0, eve::zero(eve::as<T>()));
+    TTS_IEEE_EQUAL(w0, eve::one(eve::as<T>()));
     TTS_IEEE_EQUAL(wm1, eve::minf(eve::as<T>()));
   }
   {
@@ -212,13 +212,13 @@ EVE_TEST( "Check behavior of lambert diff on wide"
     auto dstd_wm1 = [](auto v)->v_t{return eve::is_positive(v) ? boost::math::lambert_w0_prime(v) : boost::math::lambert_wm1_prime(v); };
     {
       auto[w0, wm1] = diff(eve::lambert)(a0);
-      TTS_ULP_EQUAL(w0, map(dstd_w0, a0), 10.0);
-      TTS_ULP_EQUAL(wm1,map(dstd_wm1, a0), 10.0);
+      TTS_ULP_EQUAL(w0, map(dstd_w0, a0), 50.0);
+      TTS_ULP_EQUAL(wm1,map(dstd_wm1, a0), 50.0);
     }
     {
       auto[w0, wm1] = diff(eve::lambert)(a1);
-      TTS_ULP_EQUAL(w0, map(dstd_w0, a1), 10.0);
-      TTS_ULP_EQUAL(wm1,map(dstd_wm1, a1),10.0);
+      TTS_ULP_EQUAL(w0, map(dstd_w0, a1), 50.0);
+      TTS_ULP_EQUAL(wm1,map(dstd_wm1, a1),50.0);
     }
     {
       auto[w0, wm1] = diff(eve::lambert)(a2);

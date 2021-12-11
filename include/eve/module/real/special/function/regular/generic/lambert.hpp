@@ -33,10 +33,38 @@
 
 namespace eve::detail
 {
+
+  template<floating_real_value T>
+  EVE_FORCEINLINE constexpr auto lambert_serie_utility(T r) noexcept
+  {
+    using elt_t =  element_type_t<T>;
+    if constexpr(sizeof(elt_t) == 8)
+    {
+      constexpr std::array < elt_t, 3> P = {
+        0.000000000000000000000e+00,
+        2.331643981597117584689e+00,
+        1.931973535237478945863e+00,
+      };
+      constexpr std::array < elt_t, 3> Q= {
+        1.000000000000000000000e+00,
+        1.605803223118019582808e+00,
+        4.174677763382451962312e-01,
+      };
+      return dec(reverse_horner(r, P)/reverse_horner(r, Q));
+    }
+    else
+    {
+      constexpr std::array < elt_t, 2> P= {
+        2.33164314895e+00f,
+        -1.80949529206e+00f,
+      };
+      return fam(mone(as(r)), r, reverse_horner(r, P));
+    }
+  }
+
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto lambert_(EVE_SUPPORTS(cpu_), T x) noexcept
   {
-    using elt_t =  element_type_t<T>;
     auto halley = [](auto x, auto w_i,  auto max_iters)
       {
         auto w = w_i;
@@ -55,33 +83,9 @@ namespace eve::detail
 
     if constexpr( has_native_abi_v<T> )
     {
-      auto serie = [](auto , auto r){
-        if constexpr(sizeof(elt_t) == 8)
-        {
-          constexpr std::array < elt_t, 3> P = {
-            0.000000000000000000000e+00,
-            2.331643981597117584689e+00,
-            1.931973535237478945863e+00,
-          };
-          constexpr std::array < elt_t, 3> Q= {
-            1.000000000000000000000e+00,
-            1.605803223118019582808e+00,
-            4.174677763382451962312e-01,
-          };
-          return dec(reverse_horner(r, P)/reverse_horner(r, Q));
-        }
-        else
-        {
-          constexpr std::array < elt_t, 2> P= {
-            2.33164314895e+00f,
-            -1.80949529206e+00f,
-          };
-          return fam(mone(as(r)), r, reverse_horner(r, P));
-        }
-      };
       T q = x+T(0.367879441171442);
-      auto lambert0_small = [&serie, x](auto q){ //branch 0 q <= 1.0e-3
-        return serie(x, eve::sqrt(q));
+      auto lambert0_small = [](auto q){ //branch 0 q <= 1.0e-3
+        return lambert_serie_utility(eve::sqrt(q));
       };
       auto lambert0_other = [&halley](auto x, auto q){ // branch 0 q <= 1.0e'3
         auto p = eve::sqrt(T(5.436563656918090)*q);
@@ -91,11 +95,11 @@ namespace eve::detail
         auto init =  if_else(x < one(as(x)), w1, w2);
         return halley(x, init, 10);
       };
-      auto lambert1 = [&halley, &serie](auto x, auto q, auto positivex){ // branch 1 q > 0
+      auto lambert1 = [&halley](auto x, auto q, auto positivex){ // branch 1 q > 0
         T r = -eve::sqrt(q);
         auto test = (x < T(-1.0e-6));
         T w1(0);
-        if(eve::any(test)) w1 = serie(x, r);
+        if(eve::any(test)) w1 = lambert_serie_utility(r);
         if(eve::all(test)&&eve::all(q < T(3.0e-3))) return w1;
         T l1 = log(-x);
         T l2 = log(-l1);
