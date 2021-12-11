@@ -15,7 +15,7 @@
 //==================================================================================================
 
 
-EVE_TEST_TYPES("Check behavior of slide_left shuffle", eve::test::simd::restricted::all_types)
+EVE_TEST_TYPES("Check behavior of slide_left shuffle", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   T x{[](int i, int) { return i; }};

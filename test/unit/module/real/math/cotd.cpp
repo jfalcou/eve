@@ -48,7 +48,7 @@ auto mmed   = []<typename T>(eve::as<T> const & ){  return -5000; };
 auto med    = []<typename T>(eve::as<T> const & ){  return  5000; };
 
 EVE_TEST( "Check behavior of cotd on wide"
-        , eve::test::simd::restricted::ieee_reals
+        , eve::test::simd::ieee_reals
         , eve::test::generate( eve::test::randoms(mquarter_c, quarter_c)
                              , eve::test::randoms(mhalf_c, half_c)
                              , eve::test::randoms(mmed, med)
