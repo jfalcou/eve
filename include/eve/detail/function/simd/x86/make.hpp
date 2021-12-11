@@ -11,6 +11,7 @@
 #include <eve/detail/alias.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/spy.hpp>
+#include <eve/arch/fundamental_cardinal.hpp>
 #include <eve/as.hpp>
 
 #if defined(SPY_COMPILER_IS_GCC)
@@ -162,34 +163,44 @@ namespace eve::detail
   // splat make
   //================================================================================================
   template<real_scalar_value T, typename S, typename V>
-  EVE_FORCEINLINE auto make(eve::as<wide<T,S>> const &, V v) noexcept
+  EVE_FORCEINLINE auto make(eve::as<wide<T,S>> const&, V v) noexcept
       requires x86_abi<abi_t<T, S>>
   {
-    constexpr auto c = categorize<wide<T,S>>();
-
-         if constexpr( c == category::float64x8                        ) return _mm512_set1_pd(v);
-    else if constexpr( c == category::float64x4                        ) return _mm256_set1_pd(v);
-    else if constexpr( c == category::float64x2                        ) return _mm_set1_pd(v);
-    else if constexpr( c == category::float32x16                       ) return _mm512_set1_ps(v);
-    else if constexpr( c == category::float32x8                        ) return _mm256_set1_ps(v);
-    else if constexpr( c == category::float32x4                        ) return _mm_set1_ps(v);
-    else if constexpr( match(c,category::int8x64 , category::uint8x64) ) return _mm512_set1_epi8(v);
-    else if constexpr( match(c,category::int8x32 , category::uint8x32) ) return _mm256_set1_epi8(v);
-    else if constexpr( match(c,category::int8x16 , category::uint8x16) ) return _mm_set1_epi8(v);
-    else if constexpr( match(c,category::int16x32, category::uint16x32)) return _mm512_set1_epi16(v);
-    else if constexpr( match(c,category::int16x16, category::uint16x16)) return _mm256_set1_epi16(v);
-    else if constexpr( match(c,category::int16x8 , category::uint16x8) ) return _mm_set1_epi16(v);
-    else if constexpr( match(c,category::int32x16, category::uint32x16)) return _mm512_set1_epi32(v);
-    else if constexpr( match(c,category::int32x8 , category::uint32x8) ) return _mm256_set1_epi32(v);
-    else if constexpr( match(c,category::int32x4 , category::uint32x4) ) return _mm_set1_epi32(v);
-    else if constexpr( match(c,category::int64x8 , category::uint64x8) ) return _mm512_set1_epi64(v);
-    else if constexpr( match(c,category::int64x4 , category::uint64x4) ) return _mm256_set1_epi64x(v);
-    else if constexpr( match(c,category::int64x2 , category::uint64x2) )
+    if constexpr(wide<T,S>::size() < eve::fundamental_cardinal_v<T>)
     {
-      [[maybe_unused]] __m128i that;
-      T *ptr = reinterpret_cast<detail::alias_t<T> *>(&that);
-      ptr[0] = ptr[1] = static_cast<T>(v);
-      return that;
+      return [&]<std::size_t... N>(std::index_sequence<N...> const&)
+      {
+        return make(as<wide<T,fundamental_cardinal_t<T>>>{}, (N<S::value ? v : 0)...);
+      }(std::make_index_sequence<fundamental_cardinal_v<T>>());
+    }
+    else
+    {
+      constexpr auto c = categorize<wide<T,S>>();
+
+           if constexpr( c == category::float64x8                        ) return _mm512_set1_pd(v);
+      else if constexpr( c == category::float64x4                        ) return _mm256_set1_pd(v);
+      else if constexpr( c == category::float64x2                        ) return _mm_set1_pd(v);
+      else if constexpr( c == category::float32x16                       ) return _mm512_set1_ps(v);
+      else if constexpr( c == category::float32x8                        ) return _mm256_set1_ps(v);
+      else if constexpr( c == category::float32x4                        ) return _mm_set1_ps(v);
+      else if constexpr( match(c,category::int8x64 , category::uint8x64) ) return _mm512_set1_epi8(v);
+      else if constexpr( match(c,category::int8x32 , category::uint8x32) ) return _mm256_set1_epi8(v);
+      else if constexpr( match(c,category::int8x16 , category::uint8x16) ) return _mm_set1_epi8(v);
+      else if constexpr( match(c,category::int16x32, category::uint16x32)) return _mm512_set1_epi16(v);
+      else if constexpr( match(c,category::int16x16, category::uint16x16)) return _mm256_set1_epi16(v);
+      else if constexpr( match(c,category::int16x8 , category::uint16x8) ) return _mm_set1_epi16(v);
+      else if constexpr( match(c,category::int32x16, category::uint32x16)) return _mm512_set1_epi32(v);
+      else if constexpr( match(c,category::int32x8 , category::uint32x8) ) return _mm256_set1_epi32(v);
+      else if constexpr( match(c,category::int32x4 , category::uint32x4) ) return _mm_set1_epi32(v);
+      else if constexpr( match(c,category::int64x8 , category::uint64x8) ) return _mm512_set1_epi64(v);
+      else if constexpr( match(c,category::int64x4 , category::uint64x4) ) return _mm256_set1_epi64x(v);
+      else if constexpr( match(c,category::int64x2 , category::uint64x2) )
+      {
+        [[maybe_unused]] __m128i that;
+        T *ptr = reinterpret_cast<detail::alias_t<T> *>(&that);
+        ptr[0] = ptr[1] = static_cast<T>(v);
+        return that;
+      }
     }
   }
 

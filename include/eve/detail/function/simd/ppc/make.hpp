@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/arch/as_register.hpp>
+#include <eve/arch/fundamental_cardinal.hpp>
 #include <eve/as.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
@@ -26,21 +27,16 @@ namespace eve::detail
     return that;
   }
 
-  template<real_scalar_value T, typename N, typename V>
-  EVE_FORCEINLINE auto make(eve::as<wide<T, N>> const &, V v) noexcept
-    requires ppc_abi<abi_t<T, N>>
+  template<real_scalar_value T, typename S, typename V>
+  EVE_FORCEINLINE auto make(eve::as<wide<T, S>> const &, V v) noexcept
+    requires ppc_abi<abi_t<T, S>>
   {
-    auto impl = [&](auto... I)
+    using type = as_register_t<T, S, ppc_>;
+
+    return [&]<std::size_t... N>(std::index_sequence<N...> const&)
     {
-      using type = as_register_t<T, N, ppc_>;
-
-      auto u   = static_cast<T>(v);
-      auto val = [](auto vv, auto const &) { return vv; };
-
-      return type {val(u, I)...};
-    };
-
-    return apply<expected_cardinal_v<T>>(impl);
+      return type { (static_cast<T>(N<S::value ? v : 0))... };
+    }(std::make_index_sequence<fundamental_cardinal_v<T>>());
   }
 
   //================================================================================================
@@ -55,20 +51,21 @@ namespace eve::detail
     return that;
   }
 
-  template<real_scalar_value T, typename N, typename V>
-  EVE_FORCEINLINE auto make(eve::as<logical<wide<T, N>>> const &, V v) noexcept
-    requires ppc_abi<abi_t<T, N>>
+  template<real_scalar_value T, typename S, typename V>
+  EVE_FORCEINLINE auto make(eve::as<logical<wide<T, S>>> const &, V v) noexcept
+    requires ppc_abi<abi_t<T, S>>
   {
-    auto impl   = [&](auto... I)
+    return [&]<std::size_t... N>(std::index_sequence<N...> const&)
     {
-      using type = as_logical_register_t<T, N, ppc_>;
+      using type = as_logical_register_t<T, S, ppc_>;
 
       auto u   = logical<T>(v).bits();
-      auto val = [](auto vv, auto const &) { return vv; };
+      auto z   = logical<T>(false).bits();
+      using t_t = decltype(u);
 
-      return type {val(u, I)...};
-    };
+      auto val = [&](auto vv, auto i) -> t_t { return (i<S::value) ? vv : z; };
 
-    return apply<expected_cardinal_v<T>>(impl);
+      return type {val(u, N)...};
+    }(std::make_index_sequence<fundamental_cardinal_v<T>>());
   }
 }
