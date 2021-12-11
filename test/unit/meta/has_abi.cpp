@@ -47,3 +47,23 @@ TTS_CASE( "Check for detection of aggregated ABI")
   TTS_EXPECT_NOT( eve::has_aggregated_abi_v<float>                           );
   TTS_EXPECT_NOT( eve::has_aggregated_abi_v<eve::logical<float>>             );
 };
+
+TTS_CASE( "Check for detection of aggregated ABI in product type")
+{
+  constexpr auto native = eve::wide<float>::size();
+
+  using tuple_t = kumi::tuple<double, float, std::uint64_t>;
+
+#if defined(EVE_NO_SIMD)
+  TTS_EXPECT_NOT(( eve::has_aggregated_component_v<eve::wide<float, eve::fixed<2*native>>>              ));
+  TTS_EXPECT_NOT(( eve::has_aggregated_component_v<eve::logical<eve::wide<float, eve::fixed<2*native>>>>));
+#else
+  TTS_EXPECT(( eve::has_aggregated_component_v<eve::wide<float, eve::fixed<2*native>>>              ));
+  TTS_EXPECT(( eve::has_aggregated_component_v<eve::logical<eve::wide<float, eve::fixed<2*native>>>>));
+  TTS_EXPECT(( eve::has_aggregated_component_v<eve::wide<tuple_t, eve::fixed<2*native>>> ));
+#endif
+
+  TTS_EXPECT_NOT( eve::has_aggregated_component_v<eve::wide<tuple_t>>             );
+  TTS_EXPECT_NOT( eve::has_aggregated_component_v<eve::wide<float>>               );
+  TTS_EXPECT_NOT( eve::has_aggregated_component_v<eve::logical<eve::wide<float>>> );
+};
