@@ -21,15 +21,6 @@ namespace eve::detail
                                             }
                                           );
 
-  template <std::ptrdiff_t Shift>
-  struct slide_left_lambda
-  {
-    EVE_FORCEINLINE auto operator()(auto ... xs) const
-    {
-      return slide_left(xs..., index<Shift>);
-    }
-  };
-
   template<simd_value Wide, std::ptrdiff_t Shift>
   EVE_FORCEINLINE auto slide_left_(EVE_SUPPORTS(cpu_), Wide v, index_t<Shift>) noexcept
   requires(Shift <= Wide::size() )
@@ -75,50 +66,8 @@ namespace eve::detail
   EVE_FORCEINLINE Wide slide_left_(EVE_SUPPORTS(cpu_), Wide x, Wide y, index_t<Shift>) noexcept
   requires( Shift <= Wide::size() )
   {
-         if constexpr ( Shift == 0            ) return x;
-    else if constexpr ( Shift == Wide::size() ) return y;
-    else if constexpr( is_bundle_v<typename Wide::abi_type> )
-    {
-      return Wide( kumi::map ( slide_left_lambda<Shift>{}, x, y) );
-    }
-    else if constexpr ( has_aggregated_abi_v<Wide> )
-    {
-      // [aa bb] [cc dd] => [abbc], [bccd]
-
-      auto [aa, bb] = x.slice();
-      auto [cc, dd] = y.slice();
-
-      constexpr std::ptrdiff_t half = Wide::size() / 2;
-
-      if constexpr ( Shift <= half )
-      {
-        auto s = index<Shift>;
-        return Wide{ slide_left( aa, bb, s ), slide_left(bb, cc, s) };
-      }
-      else
-      {
-        auto s = index<Shift - half>;
-        return Wide{ slide_left( bb, cc, s ), slide_left(cc, dd, s) };
-      }
-    }
-    else if constexpr ( !native_simd_for_abi<Wide, typename Wide::abi_type> )
-    {
-      return slide_left( eve::combine(x, y), index<Shift>).slice(lower_);
-    }
-    else
-    {
-      if constexpr( logical_value<Wide> && Wide::abi_type::is_wide_logical)
-      {
-        return bit_cast(slide_left(x.bits(), y.bits(), index<Shift>), as<Wide>{});
-      }
-      else
-      {
-        Wide res { [&](int i, int size) {
-          if ( i < size - Shift ) return x.get(i + Shift);
-          else                    return y.get(i + Shift - size);
-        }};
-        return res;
-      }
-    }
+    // [ abcd ], [ 0123 ] slide left  1 => [ bcd0 ]
+    //                    slide right 3 => [ bcd0 ]
+    return slide_right(x, y, index<Wide::size() - Shift>);
   }
 }
