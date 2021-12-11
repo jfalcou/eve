@@ -218,7 +218,7 @@ EVE_TEST( "Check behavior of lambert diff on wide"
     {
       auto[w0, wm1] = diff(eve::lambert)(a1);
       TTS_ULP_EQUAL(w0, map(dstd_w0, a1), 10.0);
-      TTS_ULP_EQUAL(wm1,map(dstd_wm1, a1), 3.0);
+      TTS_ULP_EQUAL(wm1,map(dstd_wm1, a1),10.0);
     }
     {
       auto[w0, wm1] = diff(eve::lambert)(a2);
