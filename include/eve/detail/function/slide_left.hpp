@@ -17,7 +17,7 @@ namespace eve
   EVE_MAKE_CALLABLE(slide_left_, slide_left);
 
   //================================================================================================
-  // Classify a pattern as a swag
+  // Classify a pattern as a slide_left
   template<std::ptrdiff_t... I> inline constexpr std::ptrdiff_t is_slide_left = []()
   {
     constexpr std::ptrdiff_t card   = sizeof...(I);
