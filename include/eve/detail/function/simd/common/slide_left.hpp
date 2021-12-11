@@ -39,12 +39,9 @@ namespace eve::detail
       else
       {
         auto[l,h] = v.slice();
-        auto lh = slide_right(h,index_t<Wide::size()/2 - Shift>{});
-              l = slide_left(l,index_t<Shift>{});
-              h = slide_left(h,index_t<Shift>{});
+        l = slide_left(l, h, index<Shift>);
+        h = slide_left(h, index<Shift>);
 
-        if constexpr( logical_value<Wide> ) l = l || lh;
-        else                                l = l |  lh;
         return Wide{l,h};
       }
     }
@@ -63,5 +60,14 @@ namespace eve::detail
         return basic_swizzle(v, slide_left_pattern<Shift,Wide::size()>);
       }
     }
+  }
+
+  template <simd_value Wide, std::ptrdiff_t Shift>
+  EVE_FORCEINLINE Wide slide_left_(EVE_SUPPORTS(cpu_), Wide x, Wide y, index_t<Shift>) noexcept
+  requires( Shift <= Wide::size() )
+  {
+    // [ abcd ], [ 0123 ] slide left  1 => [ bcd0 ]
+    //                    slide right 3 => [ bcd0 ]
+    return slide_right(x, y, index<Wide::size() - Shift>);
   }
 }
