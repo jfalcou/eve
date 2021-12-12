@@ -130,6 +130,36 @@ namespace eve::detail
     }
   }
 
+  template<scalar_value T, typename N>
+  EVE_FORCEINLINE auto interleave_( EVE_SUPPORTS(sse2_)
+                                  , logical<wide<T,N>> v0, logical<wide<T,N>> v1
+                                  ) noexcept
+  requires (N::value > 1) && x86_abi<abi_t<T,N>>
+  {
+    if constexpr( !abi_t<T,N>::is_wide_logical )
+    {
+      puts("PARALLEL DEPOSIT");
+      using v_t = logical<wide<T,N>>::storage_type::type;
+
+      auto x = v0.storage().value;
+      auto y = v1.storage().value;
+
+      auto z = _pdep_u64(x, 0x5555555555555555) | _pdep_u64(y,0xaaaaaaaaaaaaaaaa);
+
+      constexpr auto          shift = 8*sizeof(T);
+      constexpr std::uint64_t mask  = (~0ULL >> shift);
+
+      typename logical<wide<T,N>>::storage_type l(v_t(z & mask));
+      typename logical<wide<T,N>>::storage_type h(v_t((z>>shift) & mask));
+
+      return kumi::make_tuple(logical<wide<T,N>>(l),logical<wide<T,N>>(h));
+    }
+    else
+    {
+      return interleave_( EVE_RETARGET(cpu_),v0,v1);
+    }
+  }
+
   //================================================================================================
   // Interleave triplets of wides
   //================================================================================================
