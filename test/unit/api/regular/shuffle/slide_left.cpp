@@ -6,19 +6,16 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-
 #include <eve/function/slide_left.hpp>
-
 
 //==================================================================================================
 // slide_left test
 //==================================================================================================
-
-
 EVE_TEST_TYPES("Check behavior of slide_left shuffle", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
-  T x{[](int i, int) { return i; }};
+  using v_t = eve::element_type_t<T>;
+  T x{[](int i, int)      { return i; }};
   T y{[](int i, int size) { return i + size; }};
 
   eve::logical<T> lx = x < 2;
@@ -32,7 +29,7 @@ EVE_TEST_TYPES("Check behavior of slide_left shuffle", eve::test::simd::all_type
 
     eve::logical<T> lexpected([](int i, int size) {
       if ( i < size - Shift ) return (i + Shift) < 2;
-      else                    return (i + Shift) < 6;
+      else                    return v_t(i + Shift) < 6;
     });
     eve::logical<T> lactual = eve::slide_left(lx, ly, eve::index<Shift>);
 
