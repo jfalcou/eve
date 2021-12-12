@@ -73,9 +73,12 @@ EVE_TEST( "Check behavior of rem on wide"
   using eve::rem;
   using eve::pedantic;
   using eve::detail::map;
-  TTS_ULP_EQUAL( pedantic(rem)(a0, a1), map([](auto e, auto f) { return eve::rem(e, f); }, a0, a1), 32);//fma not avail scalar double it seems
+
+  auto thrs = std::same_as<eve::element_type_t<T>,float> ? 5e-4 : 5e-13;
+  TTS_RELATIVE_EQUAL( pedantic(rem)(a0, a1), map([](auto e, auto f) { return eve::rem(e, f); }, a0, a1), thrs);
+
   a1 =  eve::if_else(eve::is_eqz(a1), eve::one, a1);
-  TTS_ULP_EQUAL( rem(a0, a1), map([](auto e, auto f) { return eve::rem(e, f); }, a0, a1), 32);
+  TTS_RELATIVE_EQUAL( rem(a0, a1), map([](auto e, auto f) { return eve::rem(e, f); }, a0, a1), thrs);
 };
 
 

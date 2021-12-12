@@ -62,13 +62,13 @@ EVE_TEST( "Check behavior of cotd on wide"
   using eve::deginrad;
   using v_t = eve::element_type_t<T>;
   auto ref = [](auto e) -> v_t { auto d = eve::sind(e); return d ? eve::cosd(e)/eve::sind(e): eve::nan(eve::as(e)); };
-  TTS_ULP_EQUAL(eve::quarter_circle(cotd)(a0)      , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::half_circle(cotd)(a0)           , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::half_circle(cotd)(a1)           , map(ref, a1), 40);
-  TTS_ULP_EQUAL(cotd(a0)                       , map(ref, a0), 2);
-  TTS_ULP_EQUAL(cotd(a1)                       , map(ref, a1), 40);
-  TTS_ULP_EQUAL(cotd(a2)                       , map(ref, a2), 300);
-  TTS_ULP_EQUAL(cotd(a3)                       , map(ref, a3), 2);
+  TTS_ULP_EQUAL(eve::quarter_circle(cotd)(a0)  , map(ref, a0), 2);
+  TTS_ULP_EQUAL(eve::half_circle(cotd)(a0)     , map(ref, a0), 2);
+  TTS_ULP_EQUAL(eve::half_circle(cotd)(a1)     , map(ref, a1), 40);
+  TTS_ULP_EQUAL(eve::cotd(a0)                  , map(ref, a0), 2);
+  TTS_ULP_EQUAL(eve::cotd(a1)                  , map(ref, a1), 40);
+  TTS_ULP_EQUAL(eve::cotd(a2)                  , map(ref, a2), 1600);
+  TTS_ULP_EQUAL(eve::cotd(a3)                  , map(ref, a3), 2);
   auto dinr = 1.7453292519943295769236907684886127134428718885417e-2l;
 
   TTS_ULP_EQUAL(diff(cotd)(a0), map([dinr](auto e) -> v_t { return  -dinr*eve::sqr(eve::cscd(e)); }, a0), 4);
