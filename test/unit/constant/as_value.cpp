@@ -58,7 +58,7 @@ EVE_TEST_TYPES( "Check behavior of arithmetic as_value", eve::test::simd::all_ty
   }
 };
 
-EVE_TEST_TYPES( "Check behavior of logical as_value", eve::test::simd::restricted::all_types)
+EVE_TEST_TYPES( "Check behavior of logical as_value", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   {
