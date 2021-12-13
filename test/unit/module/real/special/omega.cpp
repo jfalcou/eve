@@ -51,7 +51,7 @@ EVE_TEST( "Check behavior of omega on wide"
     TTS_ULP_EQUAL(eve::omega(eve::inf(eve::as(a0))), eve::inf(eve::as(a0)), 0.0);
     TTS_ULP_EQUAL(eve::omega(T(1)), T(1), 2.0);
     TTS_ULP_EQUAL(eve::omega(eve::zero(eve::as(a0))), T(0.56714329040978384011), 0.0);
-    elt_t tol = 1000*eve::eps(eve::as<elt_t>());
+    elt_t tol = 5000*eve::eps(eve::as<elt_t>());
     {
       auto z = eve::omega(eve::mone(eve::as<elt_t>()));
       auto r = eve::log(z)+z;

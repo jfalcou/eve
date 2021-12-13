@@ -51,7 +51,7 @@ namespace eve::detail
       auto notdone =  is_nan(r);
       if(eve::any(notdone))
       {
-        notdone = next_interval(br_pos, notdone, is_gtz(x), r, x);
+        notdone = next_interval(br_pos, notdone, x >= one(as(x)), r, x);
         if(eve::any(notdone))
         {
           notdone = last_interval(br_neg, notdone, r, x);
