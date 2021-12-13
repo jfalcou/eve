@@ -56,11 +56,11 @@ EVE_TEST( "Check behavior of shift operators on eve::wide"
 //==================================================================================================
 EVE_TEST( "Check behavior of shift operators on wide and scalars"
         , eve::test::simd::integers
-        , eve::test::generate(eve::test::randoms(-50,50), random_bits)
+        , eve::test::generate(eve::test::randoms(eve::valmin,eve::valmax), random_bits)
         )
 <typename T, typename I>(T a0, I s)
 {
   auto val = s.get(0);
-  TTS_EQUAL( (a0 >> val), T([&](auto i, auto) { return eve::shr(a0.get(i), val); }) );
-  TTS_EQUAL( (a0 << val), T([&](auto i, auto) { return eve::shl(a0.get(i), val); }) );
+  TTS_EQUAL( (a0 >> val), T([&](auto i, auto) { return a0.get(i) >> val; }) );
+  TTS_EQUAL( (a0 << val), T([&](auto i, auto) { return a0.get(i) << val; }) );
 };

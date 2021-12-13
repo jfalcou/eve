@@ -107,7 +107,9 @@ EVE_TEST_TYPES( "ignore_none behavior", eve::test::simd::all_types)
                                             , eve::as<eve::logical<w_t>>()
                                             );
 
-    TTS_EQUAL(values, eve::true_(as(values)));
+    eve::logical<w_t> mask_ref = [=](auto i, auto) { return i<type::size(); };
+
+    TTS_EQUAL(values, mask_ref);
   }
 };
 
