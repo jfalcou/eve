@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/airy_bi.hpp>
+#include <eve/module/bessel/regular/airy_bi.hpp>
 #include <eve/module/bessel/diff/impl/airy_bi.hpp>
