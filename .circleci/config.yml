@@ -52,7 +52,7 @@ commands:
           name: Run tests for << parameters.targets >>
           command:                                                                                    |
             cd build                                                                                  &&
-            for i in `../cmake/toolchain/filter.sh << parameters.targets >> values`; do ctest -R $i -j 8 ; done;
+            for i in `../cmake/toolchain/filter.sh << parameters.targets >> values`; do ctest --output-on-failure -R $i -j 8 ; done;
 
 ##==================================================================================================
 ## Jobs setup

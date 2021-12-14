@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/cyl_bessel_yn.hpp>
-#include <eve/module/real/special/function/diff/generic/cyl_bessel_yn.hpp>
+#include <eve/module/bessel/diff/cyl_bessel_yn.hpp>

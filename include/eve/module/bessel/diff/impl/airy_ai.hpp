@@ -10,12 +10,9 @@
 #include <eve/function/airy_ai.hpp>
 #include <eve/function/derivative.hpp>
 #include <eve/function/if_else.hpp>
-#include <boost/math/special_functions/bessel.hpp>
-#include <boost/math/special_functions/airy.hpp>
 
 namespace eve::detail
 {
-
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr T airy_ai_(EVE_SUPPORTS(cpu_)
                                   , diff_type<1> const &
