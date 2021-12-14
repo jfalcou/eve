@@ -29,6 +29,23 @@ EVE_TEST( "Check eve::wide enumerating constructor"
 
   TTS_EQUAL(simd        , ref         );
   TTS_EQUAL(logical_simd, logical_ref );
+
+  // Test smaller size wide for non-garbage
+  using v_t = typename T::value_type;
+  if constexpr( T::size() < eve::fundamental_cardinal_v<v_t> && !eve::has_emulated_abi_v<T> )
+  {
+    using w_t   = eve::as_wide_t<v_t, eve::fundamental_cardinal_t<v_t>>;
+    using wl_t  = eve::as_logical_t<w_t>;
+
+    w_t  fsimd(simd.storage());
+    wl_t flogical(logical_simd.storage());
+
+    for(std::ptrdiff_t i = T::size(); i < w_t::size();++i)
+    {
+      TTS_EQUAL(fsimd.get(i), v_t(0));
+      TTS_EQUAL(flogical.get(i), false);
+    }
+  }
 };
 
 //==================================================================================================
@@ -51,6 +68,24 @@ EVE_TEST_TYPES( "Check eve::wide splat constructor", eve::test::simd::all_types)
   TTS_EQUAL(eve::logical<T>(l_t{false}) , all_false );
   TTS_EQUAL(eve::logical<T>(false)      , all_false );
   TTS_EQUAL(eve::logical<T>(0)          , all_false );
+
+
+  // Test smaller size wide for non-garbage
+  using v_t = typename T::value_type;
+  if constexpr( T::size() < eve::fundamental_cardinal_v<v_t> && !eve::has_emulated_abi_v<T> )
+  {
+    using w_t   = eve::as_wide_t<v_t, eve::fundamental_cardinal_t<v_t>>;
+    using wl_t  = eve::as_logical_t<w_t>;
+
+    w_t  fsimd(T(42).storage());
+    wl_t flogical(eve::logical<T>(true).storage());
+
+    for(std::ptrdiff_t i = T::size(); i < w_t::size();++i)
+    {
+      TTS_EQUAL(fsimd.get(i), v_t(0));
+      TTS_EQUAL(flogical.get(i), false);
+    }
+  }
 };
 
 //==================================================================================================

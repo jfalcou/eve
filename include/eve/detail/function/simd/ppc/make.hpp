@@ -26,21 +26,17 @@ namespace eve::detail
     return that;
   }
 
-  template<real_scalar_value T, typename N, typename V>
-  EVE_FORCEINLINE auto make(eve::as<wide<T, N>> const &, V v) noexcept
-    requires ppc_abi<abi_t<T, N>>
+  template<real_scalar_value T, typename S, typename V>
+  EVE_FORCEINLINE auto make(eve::as<wide<T, S>> const &, V v) noexcept
+    requires ppc_abi<abi_t<T, S>>
   {
-    auto impl = [&](auto... I)
+    using type = as_register_t<T, S, ppc_>;
+
+    return [&]<std::size_t... N>(std::index_sequence<N...> const&)
     {
-      using type = as_register_t<T, N, ppc_>;
-
-      auto u   = static_cast<T>(v);
-      auto val = [](auto vv, auto const &) { return vv; };
-
-      return type {val(u, I)...};
-    };
-
-    return apply<expected_cardinal_v<T>>(impl);
+      auto val = [](auto vv, auto) { return vv; };
+      return type { val(v, N)... };
+    }(std::make_index_sequence<S::value>());
   }
 
   //================================================================================================
@@ -55,20 +51,17 @@ namespace eve::detail
     return that;
   }
 
-  template<real_scalar_value T, typename N, typename V>
-  EVE_FORCEINLINE auto make(eve::as<logical<wide<T, N>>> const &, V v) noexcept
-    requires ppc_abi<abi_t<T, N>>
+  template<real_scalar_value T, typename S, typename V>
+  EVE_FORCEINLINE auto make(eve::as<logical<wide<T, S>>> const &, V v) noexcept
+  requires ppc_abi<abi_t<T, S>>
   {
-    auto impl   = [&](auto... I)
+    using type = as_logical_register_t<T, S, ppc_>;
+
+    return [&]<std::size_t... N>(std::index_sequence<N...> const&)
     {
-      using type = as_logical_register_t<T, N, ppc_>;
-
       auto u   = logical<T>(v).bits();
-      auto val = [](auto vv, auto const &) { return vv; };
-
-      return type {val(u, I)...};
-    };
-
-    return apply<expected_cardinal_v<T>>(impl);
+      auto val = [](auto vv, auto) { return vv; };
+      return type { val(u, N)... };
+    }(std::make_index_sequence<S::value>());
   }
 }

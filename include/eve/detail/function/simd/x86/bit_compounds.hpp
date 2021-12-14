@@ -146,22 +146,35 @@ namespace eve::detail
     else  if constexpr( c == category::uint64x8 ) v = _mm512_slli_epi64(v,s);
     else  if constexpr( c == category::uint32x16) v = _mm512_slli_epi32(v,s);
     else  if constexpr( c == category::uint16x32) v = _mm512_slli_epi16(v,s);
-    else  if constexpr( is_avx2 && c == category::int64x4  ) v = _mm256_slli_epi64(v,s);
-    else  if constexpr( is_avx2 && c == category::int32x8  ) v = _mm256_slli_epi32(v,s);
-    else  if constexpr( is_avx2 && c == category::int16x16 ) v = _mm256_slli_epi16(v,s);
-    else  if constexpr( is_avx2 && c == category::int8x32  ) v = shft(v,s);
-    else  if constexpr( is_avx2 && c == category::uint64x4 ) v = _mm256_slli_epi64(v,s);
-    else  if constexpr( is_avx2 && c == category::uint32x8 ) v = _mm256_slli_epi32(v,s);
-    else  if constexpr( is_avx2 && c == category::uint16x16) v = _mm256_slli_epi16(v,s);
-    else  if constexpr( is_avx2 && c == category::uint8x32 ) v = shft(v,s);
+    else  if constexpr( c == category::int8x16  && N::value != 1) v = shft(v,s);
+    else  if constexpr( c == category::uint8x16 && N::value != 1) v = shft(v,s);
     else  if constexpr( c == category::int64x2  ) v = _mm_slli_epi64(v,s);
-    else  if constexpr( c == category::int32x4  ) v = _mm_slli_epi32(v,s);
-    else  if constexpr( c == category::int16x8  ) v = _mm_slli_epi16(v,s);
-    else  if constexpr( c == category::int8x16  ) v = shft(v,s);
     else  if constexpr( c == category::uint64x2 ) v = _mm_slli_epi64(v,s);
+    else  if constexpr( c == category::int32x4  ) v = _mm_slli_epi32(v,s);
     else  if constexpr( c == category::uint32x4 ) v = _mm_slli_epi32(v,s);
+    else  if constexpr( c == category::int16x8  ) v = _mm_slli_epi16(v,s);
     else  if constexpr( c == category::uint16x8 ) v = _mm_slli_epi16(v,s);
-    else  if constexpr( c == category::uint8x16 ) v = shft(v,s);
+    else  if constexpr( sizeof(v) == 32 )
+    {
+      if constexpr( is_avx2 )
+      {
+              if constexpr( c == category::int64x4  ) v = _mm256_slli_epi64(v,s);
+        else  if constexpr( c == category::int32x8  ) v = _mm256_slli_epi32(v,s);
+        else  if constexpr( c == category::int16x16 ) v = _mm256_slli_epi16(v,s);
+        else  if constexpr( c == category::int8x32  ) v = shft(v,s);
+        else  if constexpr( c == category::uint64x4 ) v = _mm256_slli_epi64(v,s);
+        else  if constexpr( c == category::uint32x8 ) v = _mm256_slli_epi32(v,s);
+        else  if constexpr( c == category::uint16x16) v = _mm256_slli_epi16(v,s);
+        else  if constexpr( c == category::uint8x32 ) v = shft(v,s);
+      }
+      else
+      {
+        auto[la,ha] = v.slice();
+        la <<= s;
+        ha <<= s;
+        v = wide<T,N>{la,ha};
+      }
+    }
     else
     {
       v = map( []<typename V>(V a, auto b) { return static_cast<V>(a << b); }, v, s);
