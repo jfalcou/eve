@@ -29,12 +29,10 @@ namespace eve::detail
     }
     else
     {
-      using type = logical<wide<T, N>>;
+      logical<wide<T>> mm = [](auto i,auto) { return i < N::value; };
+      m &= bit_cast(mm,as<logical<wide<T,N>>>()).bits();
 
-      auto mm = apply<N::value>([](auto... I) { return type {(I < N::value)...}; });
-      m &= mm.bits();
-
-      return vec_any_eq( m.storage(), true_(eve::as(v0)).storage() );
+      return vec_any_eq( m.storage(), true_(eve::as(mm)).storage() );
     }
   }
 }
