@@ -13,8 +13,8 @@
 #include <eve/constant/zero.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/function/newton.hpp>
-#include <eve/function/numeric/newton.hpp>
-#include <eve/function/pedantic/newton.hpp>
+#include <eve/module/polynomial/numeric/newton.hpp>
+#include <eve/module/polynomial/pedantic/newton.hpp>
 #include <eve/logical.hpp>
 #include <type_traits>
 #include <cmath>
