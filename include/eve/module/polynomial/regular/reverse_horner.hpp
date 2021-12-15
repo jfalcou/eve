@@ -100,7 +100,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/reverse_horner.cpp}
+  //! @godbolt{doc/polynomial/reverse_horner.cpp}
   //!
   //!  @}
   //================================================================================================

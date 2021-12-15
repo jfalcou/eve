@@ -82,7 +82,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/legendre.cpp}
+  //! @godbolt{doc/polynomial/legendre.cpp}
   //!
   //!  @}
   //================================================================================================

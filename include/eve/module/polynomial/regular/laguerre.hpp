@@ -87,7 +87,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/laguerre.cpp}
+  //! @godbolt{doc/polynomial/laguerre.cpp}
   //!
   //!  @}
   //================================================================================================

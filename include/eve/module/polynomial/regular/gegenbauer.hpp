@@ -80,7 +80,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/gegenbauer.cpp}
+  //! @godbolt{doc/polynomial/gegenbauer.cpp}
   //!
   //!  @}
   //================================================================================================

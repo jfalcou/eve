@@ -63,7 +63,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/hermite.cpp}
+  //! @godbolt{doc/polynomial/hermite.cpp}
   //!
   //!  @}
   //================================================================================================

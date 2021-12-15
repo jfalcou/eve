@@ -92,7 +92,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/newton.cpp}
+  //! @godbolt{doc/polynomial/newton.cpp}
   //!
   //!  @}
   //================================================================================================
