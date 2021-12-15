@@ -58,7 +58,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/airy_bi.cpp}
+  //! @godbolt{doc/bessel/airy_bi.cpp}
   //!
   //!  @}
   //================================================================================================

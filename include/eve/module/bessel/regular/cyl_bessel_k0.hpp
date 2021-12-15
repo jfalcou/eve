@@ -55,7 +55,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/cyl_bessel_k0.cpp}
+  //! @godbolt{doc/bessel/cyl_bessel_k0.cpp}
   //!
   //!  @}
   //================================================================================================
