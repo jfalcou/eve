@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object evaluating the legendre functions.
   //!
-  //! **Required header:** `#include <eve/legendre.hpp>`
+  //! **Required header:** `#include <eve/function/legendre.hpp>`
   //!
   //! #### Members Functions
   //!

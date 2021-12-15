@@ -14,26 +14,25 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/derivative.hpp>
-#include <eve/function/pedantic/fma.hpp>
 
 namespace eve::detail
 {
 
   template<value T0, value T1>
   EVE_FORCEINLINE constexpr auto reverse_horner_(EVE_SUPPORTS(cpu_)
-                                        , diff_type<1> const &
-                                        , T0 const &, T1 const &) noexcept
-  requires compatible_values<T, U> &&compatible_values<T, V>
+                                                , diff_type<1> const &
+                                                , T0 const &, T1 const &) noexcept
+  requires compatible_values<T0, T1>
   {
-    using r_t = common_compatible_t<T0, T1, T2>;
+    using r_t = common_compatible_t<T0, T1>;
     return zero(as<r_t>());
   }
 
   template<value T0, value T1, value T2>
   EVE_FORCEINLINE constexpr auto reverse_horner_(EVE_SUPPORTS(cpu_)
-                                        , diff_type<1> const &
-                                        , T0 const & b, T1 const &, T2 const &) noexcept
-  requires compatible_values<T, U> &&compatible_values<T, V>
+                                                , diff_type<1> const &
+                                                , T0 const & b, T1 const &, T2 const &) noexcept
+  requires compatible_values<T0, T1> &&compatible_values<T1, T2>
   {
     using r_t = common_compatible_t<T0, T1, T2>;
     return r_t(b);
@@ -48,16 +47,17 @@ namespace eve::detail
            value T2,
            value ...Ts>
            EVE_FORCEINLINE constexpr auto reverse_horner_(EVE_SUPPORTS(cpu_)
-                                                 , diff_type<1> const &
-                                                 , T0 x, T1 a, T2 b, Ts... args) noexcept
-{
-  using r_t = common_compatible_t<T0, T1, T2, Ts...>;
-  auto preverse_horner = pedantic(reverse_horner);
-  auto n = sizeof...(args)+1;
-  r_t that(reverse_horner(n*x, a, b));
-  auto next = [x](auto that, auto arg){
-    return reverse_horner(--n*x, that, arg);
-  };
-  ((that = next(that, args)),...);
-  return that;
+                                                         , diff_type<1> const &
+                                                         , T0 x, T1 a, T2 b, Ts... args) noexcept
+  {
+    using r_t = common_compatible_t<T0, T1, T2, Ts...>;
+    auto preverse_horner = pedantic(reverse_horner);
+    auto n = sizeof...(args)+1;
+    r_t that(preverse_horner(n*x, a, b));
+    auto next = [x, preverse_horner](auto that, auto arg){
+      return preverse_horner(--n*x, that, arg);
+    };
+    ((that = next(that, args)),...);
+    return that;
+  }
 }

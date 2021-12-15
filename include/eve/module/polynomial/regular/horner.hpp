@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the horner operation.
   //!
-  //! **Required header:** `#include <eve/horner.hpp>`
+  //! **Required header:** `#include <eve/function/horner.hpp>`
   //!
   //! #### Members Functions
   //!

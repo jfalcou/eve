@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the newton operation: \f$\sum_{i = 0}^n c_i\prod_{j = 0}^i (x-n_i)\f$.
   //!
-  //! **Required header:** `#include <eve/newton.hpp>`
+  //! **Required header:** `#include <eve/function/newton.hpp>`
   //!
   //! #### Members Functions
   //!

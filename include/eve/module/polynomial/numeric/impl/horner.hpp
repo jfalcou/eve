@@ -11,7 +11,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/function/numeric/fma.hpp>
-#include <eve/module/real/polynomial/detail/horner_impl.hpp>
+#include <eve/module/polynomial/detail/horner_impl.hpp>
 
 namespace eve::detail
 {

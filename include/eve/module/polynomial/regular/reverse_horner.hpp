@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the reverse_horner operation.
   //!
-  //! **Required header:** `#include <eve/reverse_horner.hpp>`
+  //! **Required header:** `#include <eve/function/reverse_horner.hpp>`
   //!
   //! #### Members Functions
   //!

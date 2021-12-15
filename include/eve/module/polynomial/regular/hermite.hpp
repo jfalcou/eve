@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the hermite operation.
   //!
-  //! **Required header:** `#include <eve/hermite.hpp>`
+  //! **Required header:** `#include <eve/function/hermite.hpp>`
   //!
   //! #### Members Functions
   //!

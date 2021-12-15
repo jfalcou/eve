@@ -9,7 +9,6 @@
 
 #include <eve/module/bessel/diff/airy_ai.hpp>
 #include <eve/module/bessel/diff/airy_bi.hpp>
-#include <eve/module/bessel/diff/airy.hpp>
 #include <eve/module/bessel/diff/cyl_bessel_i0.hpp>
 #include <eve/module/bessel/diff/cyl_bessel_i1.hpp>
 #include <eve/module/bessel/diff/cyl_bessel_in.hpp>

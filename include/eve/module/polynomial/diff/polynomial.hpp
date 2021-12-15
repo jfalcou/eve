@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/polynomial/regular/diff/gegenbauer.hpp>
-#include <eve/module/polynomial/regular/diff/hermite.hpp>
-#include <eve/module/polynomial/regular/diff/horner.hpp>
-#include <eve/module/polynomial/regular/diff/laguerre.hpp>
-#include <eve/module/polynomial/regular/diff/legendre.hpp>
-#include <eve/module/polynomial/regular/diff/reverse_horner.hpp>
+#include <eve/module/polynomial/diff/gegenbauer.hpp>
+#include <eve/module/polynomial/diff/hermite.hpp>
+#include <eve/module/polynomial/diff/horner.hpp>
+#include <eve/module/polynomial/diff/laguerre.hpp>
+#include <eve/module/polynomial/diff/legendre.hpp>
+#include <eve/module/polynomial/diff/reverse_horner.hpp>

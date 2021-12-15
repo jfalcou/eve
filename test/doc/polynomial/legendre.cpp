@@ -1,4 +1,5 @@
-#include <eve/function/legendre.hpp>
+//#include <eve/function/legendre.hpp>
+#include <eve/module/polynomial.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
