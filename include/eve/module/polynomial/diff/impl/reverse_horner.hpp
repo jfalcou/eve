@@ -54,7 +54,7 @@ namespace eve::detail
     auto preverse_horner = pedantic(reverse_horner);
     auto n = sizeof...(args)+1;
     r_t that(preverse_horner(n*x, a, b));
-    auto next = [x, preverse_horner](auto that, auto arg){
+    auto next = [&x, &n,  &preverse_horner](auto that, auto arg){
       return preverse_horner(--n*x, that, arg);
     };
     ((that = next(that, args)),...);

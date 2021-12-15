@@ -55,7 +55,7 @@ namespace eve::detail
     auto n = sizeof...(args)+1;
     r_t that(fma(n*x, a, (n-1)*b));
     --n;
-    auto next = [x](auto that, auto arg){
+    auto next = [x, &n](auto that, auto arg){
       return fma(x, that, --n*arg);
     };
     ((that = next(that, args)),...);
