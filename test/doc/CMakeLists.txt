@@ -6,6 +6,7 @@
 
 add_subdirectory(bessel)
 add_subdirectory(polynomial)
+add_subdirectory(special)
 
 add_subdirectory(core)
 add_subdirectory(diff)
