@@ -13,8 +13,8 @@
 #include <eve/constant/zero.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/function/reverse_horner.hpp>
-#include <eve/module/polynomial/numeric/reverse_horner.hpp>
-#include <eve/module/polynomial/pedantic/reverse_horner.hpp>
+#include <eve/function/numeric/reverse_horner.hpp>
+#include <eve/function/pedantic/reverse_horner.hpp>
 #include <eve/logical.hpp>
 #include <type_traits>
 #include <cmath>
