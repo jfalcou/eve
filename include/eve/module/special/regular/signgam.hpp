@@ -74,4 +74,4 @@ namespace eve
   EVE_MAKE_CALLABLE(signgam_, signgam);
 }
 
-#include <eve/eve/module/special/regular/impl/signgam.hpp>
+#include <eve/module/special/regular/impl/signgam.hpp>

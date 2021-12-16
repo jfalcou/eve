@@ -1,9 +1,8 @@
-//#include <iostream>
+//#include <eve/function/gamma_p_inv.hpp>
 #include <eve/module/special.hpp>
-#include <iomanip>
-#include <eve/function/gamma_p_inv.hpp>
-#include <eve/function/gamma_p.hpp>
 #include <eve/wide.hpp>
+#include <iostream>
+#include <iomanip>
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;
 

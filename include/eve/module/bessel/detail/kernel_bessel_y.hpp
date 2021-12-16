@@ -42,9 +42,9 @@
 #include <eve/function/sqrt.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/function/converter.hpp>
-#include <eve/module/real/special/detail/kernel_bessel_jy_large.hpp>
-#include <eve/module/real/special/detail/kernel_bessel_ij_small.hpp>
-#include <eve/module/real/special/detail/kernel_bessel_jy.hpp>
+#include <eve/module/bessel/detail/kernel_bessel_jy_large.hpp>
+#include <eve/module/bessel/detail/kernel_bessel_ij_small.hpp>
+#include <eve/module/bessel/detail/kernel_bessel_jy.hpp>
 
 /////////////////////////////////////////////////////////////////////////////////
 // These routines are detail of the computation of cylindrical bessel functions
@@ -114,7 +114,6 @@ namespace eve::detail
   template <floating_real_value T>
   auto kernel_bessel_yn_small_x(T n, T x)
   {
-    std::cout << n << std::endl;
     n = eve::max(n, T(2));
     EVE_ASSERT(eve::all(is_nltz(dec(n))), " kernel_bessel_yn_small_x : some n are less or equal to 1");
     auto xlt5 = x < T(5);
@@ -123,7 +122,6 @@ namespace eve::detail
     using elt_t = element_type_t<T>;
     T y = elt_t(0.25) * sqr(x);
     T log_xo_2 = eve::log(elt_t(0.5)*x);
-    std::cout << n << std::endl;
     T log_nm1_f = eve::lfactorial(dec(n));
     T log_p1 = -n*log_xo_2 + log_nm1_f;
     T sum1(1);

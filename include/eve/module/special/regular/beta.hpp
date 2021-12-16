@@ -78,4 +78,4 @@ namespace eve
   EVE_MAKE_CALLABLE(beta_, beta);
 }
 
-#include <eve/eve/module/special/regular/impl/beta.hpp>
+#include <eve/module/special/regular/impl/beta.hpp>

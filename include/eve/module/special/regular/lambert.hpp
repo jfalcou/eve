@@ -62,4 +62,4 @@ namespace eve
   EVE_MAKE_CALLABLE(lambert_, lambert);
 }
 
-#include <eve/eve/module/special/regular/impl/lambert.hpp>
+#include <eve/module/special/regular/impl/lambert.hpp>

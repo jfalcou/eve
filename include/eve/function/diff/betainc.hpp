@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/betainc.hpp>
-#include <eve/module/real/special/function/diff/generic/betainc.hpp>
+#include <eve/module/special/diff/betainc.hpp>

@@ -31,7 +31,7 @@
 #include <eve/function/sqrt.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/function/converter.hpp>
-#include <eve/module/real/special/detail/kernel_bessel_jy.hpp>
+#include <eve/module/bessel/detail/kernel_bessel_jy.hpp>
 
 /////////////////////////////////////////////////////////////////////////////////
 // These routines are detail of the computation of cylindrical bessel functions

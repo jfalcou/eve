@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/erf.hpp>
-#include <eve/module/real/special/function/diff/generic/erf.hpp>
+#include <eve/module/special/diff/erf.hpp>

@@ -59,4 +59,4 @@ namespace eve
   EVE_MAKE_CALLABLE(omega_, omega);
 }
 
-#include <eve/eve/module/special/regular/impl/omega.hpp>
+#include <eve/module/special/regular/impl/omega.hpp>

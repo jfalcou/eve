@@ -78,4 +78,4 @@ namespace eve
   EVE_MAKE_CALLABLE(erfc_, erfc);
 }
 
-#include <eve/eve/module/special/regular/impl/erfc.hpp>
+#include <eve/module/special/regular/impl/erfc.hpp>

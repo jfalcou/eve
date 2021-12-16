@@ -21,8 +21,8 @@
 #include <eve/function/sincos.hpp>
 #include <eve/function/sqr.hpp>
 #include <array>
-#include <eve/module/real/special/detail/evaluate_rational.hpp>
-#include <eve/module/real/special/detail/kernel_bessel_y.hpp>
+#include <eve/module/bessel/detail/evaluate_rational.hpp>
+#include <eve/module/bessel/detail/kernel_bessel_y.hpp>
 
 namespace eve::detail
 {

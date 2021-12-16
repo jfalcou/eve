@@ -21,8 +21,7 @@
 #include <eve/function/maximum.hpp>
 #include <eve/function/rsqrt.hpp>
 #include <eve/function/sinh.hpp>
-#include <eve/module/real/special/detail/kernel_bessel_ik.hpp>
-//#include <eve/module/real/special/detail/kernel_bessel_ij_small.hpp>
+#include <eve/module/bessel/detail/kernel_bessel_ik.hpp>
 
 /////////////////////////////////////////////////////////////////////////////////
 // These routines are detail of the computation of modifiesd cylindrical bessel

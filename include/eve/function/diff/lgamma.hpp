@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/lgamma.hpp>
-#include <eve/module/real/special/function/diff/generic/lgamma.hpp>
+#include <eve/module/special/diff/lgamma.hpp>

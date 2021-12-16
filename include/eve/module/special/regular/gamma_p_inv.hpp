@@ -83,4 +83,4 @@ namespace eve
   EVE_MAKE_CALLABLE(gamma_p_inv_, gamma_p_inv);
 }
 
-#include <eve/eve/module/special/regular/impl/gamma_p_inv.hpp>
+#include <eve/module/special/regular/impl/gamma_p_inv.hpp>

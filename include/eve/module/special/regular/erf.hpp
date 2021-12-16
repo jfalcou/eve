@@ -78,4 +78,4 @@ namespace eve
   EVE_MAKE_CALLABLE(erf_, erf);
 }
 
-#include <eve/eve/module/special/regular/impl/erf.hpp>
+#include <eve/module/special/regular/impl/erf.hpp>

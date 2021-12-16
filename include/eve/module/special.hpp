@@ -10,14 +10,14 @@
 //==================================================================================================
 //! @addtogroup functions
 //! @{
-//! @defgroup bessel Bessel function
+//! @defgroup special Special functions
 //!
-//! This module provides implementation for the
-//! [Bessel functions](https://en.wikipedia.org/wiki/Bessel_function) and related operations.
+//! This module provides implementation for various special functions
 //!
-//! **Convenience header:** @code{.cpp} #include <eve/module/bessel.hpp> @endcode
+//! **Convenience header:** @code{.cpp} #include <eve/module/special.hpp> @endcode
 //!
 //! @}
 //==================================================================================================
-#include <eve/module/bessel/regular/bessel.hpp>
-#include <eve/module/bessel/diff/bessel.hpp>
+
+#include <eve/module/special/regular/special.hpp>
+#include <eve/module/special/diff/special.hpp>

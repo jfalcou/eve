@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/tgamma.hpp>
-#include <eve/module/real/special/function/diff/generic/tgamma.hpp>
+#include <eve/module/special/diff/tgamma.hpp>

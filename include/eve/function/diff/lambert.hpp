@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/lambert.hpp>
-#include <eve/module/real/special/function/diff/generic/lambert.hpp>
+#include <eve/module/special/diff/lambert.hpp>

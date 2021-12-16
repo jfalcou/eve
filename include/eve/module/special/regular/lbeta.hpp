@@ -79,4 +79,4 @@ namespace eve
   EVE_MAKE_CALLABLE(lbeta_, lbeta);
 }
 
-#include <eve/eve/module/special/regular/impl/lbeta.hpp>
+#include <eve/module/special/regular/impl/lbeta.hpp>

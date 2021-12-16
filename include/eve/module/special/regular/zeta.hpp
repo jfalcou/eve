@@ -76,4 +76,4 @@ namespace eve
   EVE_MAKE_CALLABLE(zeta_, zeta);
 }
 
-#include <eve/eve/module/special/regular/impl/zeta.hpp>
+#include <eve/module/special/regular/impl/zeta.hpp>

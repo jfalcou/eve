@@ -29,6 +29,5 @@ int main()
             << "-> exp_int(1, xd) = " << eve::exp_int(1, xd) << '\n'
             << "-> exp_int(xd)    = " << eve::exp_int(xd) << '\n';
 
-
   return 0;
 }

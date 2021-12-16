@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/erfc_inv.hpp>
-#include <eve/module/real/special/function/diff/generic/erfc_inv.hpp>
+#include <eve/module/special/diff/erfc_inv.hpp>
