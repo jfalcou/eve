@@ -16,7 +16,6 @@ if(EVE_USE_BOOST)
 add_subdirectory(math)
 add_subdirectory(special)
 add_subdirectory(elliptic)
-add_subdirectory(polynomial)
 add_subdirectory(combinatorial)
 endif()
 

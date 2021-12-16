@@ -66,8 +66,6 @@ make_all_benchs(ROOT bench.core NAME gcd                   TYPES ${integral_type
 make_all_benchs(ROOT bench.core NAME has_single_bit        TYPES ${integral_types})
 make_all_benchs(ROOT bench.core NAME hi                    TYPES ${integral_types})
 make_all_benchs(ROOT bench.core NAME horn                  TYPES ${real_types}    )
-make_all_benchs(ROOT bench.core NAME horner                TYPES ${real_types}    )
-make_all_benchs(ROOT bench.core NAME horner1               TYPES ${real_types}    )
 make_all_benchs(ROOT bench.core NAME horn1                 TYPES ${real_types}    )
 make_all_benchs(ROOT bench.core NAME hypot                 TYPES ${real_types}    )
 make_all_benchs(ROOT bench.core NAME iceil                 TYPES ${all_types}     )

@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/reverse_horner.hpp>
-#include <eve/module/real/polynomial/function/pedantic/generic/reverse_horner.hpp>
+#include <eve/module/polynomial/pedantic/reverse_horner.hpp>

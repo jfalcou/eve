@@ -1,4 +1,5 @@
 {
   "unit.bessel.exe": "^unit.bessel.*.exe"
+  "unit.polynomial.exe": "^unit.polynomial.*.exe"
 , "unit.real.exe": "^unit.real.*.exe"
 }

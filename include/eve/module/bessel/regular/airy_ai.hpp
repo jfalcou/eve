@@ -56,7 +56,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/airy_ai.cpp}
+  //! @godbolt{doc/bessel/airy_ai.cpp}
   //!
   //!  @}
   //================================================================================================
