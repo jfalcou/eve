@@ -1,4 +1,5 @@
-#include <eve/function/dawson.hpp>
+//#include <eve/function/dawson.hpp>
+#include <eve/module/special.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>

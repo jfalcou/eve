@@ -1,4 +1,5 @@
-#include <iostream>
+//#include <iostream>
+#include <eve/module/special.hpp>
 #include <iomanip>
 #include <eve/function/gamma_p_inv.hpp>
 #include <eve/function/gamma_p.hpp>

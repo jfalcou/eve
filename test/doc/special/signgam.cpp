@@ -1,4 +1,5 @@
-#include <eve/function/stirling.hpp>
+//#include <eve/function/gammaln.hpp>
+#include <eve/module/special.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
@@ -11,17 +12,17 @@ int main()
 {
   using eve::pedantic;
 
-wide_ft pf = {0.0f, -0.0f, -1.0f, 10.0f, 20.0f,
+wide_ft pf = {0.5f, -1.5f, -1.0f, 1.0f, 2.0f,
                eve::inf(eve::as<float>()), eve::minf(eve::as<float>()), eve::nan(eve::as<float>())};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf           = " << pf << '\n'
-            << "-> stirling(pf) = " << eve::stirling(pf) << '\n';
+            << "<- pf      = " << pf << '\n'
+            << "-> gammaln(pf) = " << eve::gammaln(pf) << '\n';
 
-  float xf = 1.0f;
+  float xf = 4.0f;
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf           = " << xf << '\n'
-            << "-> stirling(xf) = " << eve::stirling(xf) << '\n';
+            << "<- xf      = " << xf << '\n'
+            << "-> gammaln(xf) = " << eve::gammaln(xf) << '\n';
   return 0;
 }

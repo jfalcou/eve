@@ -1,4 +1,5 @@
-#include <eve/function/zeta.hpp>
+//#include <eve/function/zeta.hpp>
+#include <eve/module/special.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/eps.hpp>
 #include <eve/constant/inf.hpp>

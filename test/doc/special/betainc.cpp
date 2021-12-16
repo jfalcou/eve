@@ -1,4 +1,5 @@
-#include <eve/function/betainc.hpp>
+//#include <eve/function/betainc.hpp>
+#include <eve/module/special.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 
