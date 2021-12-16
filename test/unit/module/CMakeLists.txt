@@ -8,3 +8,4 @@ add_subdirectory(real)
 ## NEw Modules
 add_subdirectory(bessel)
 add_subdirectory(polynomial)
+add_subdirectory(special)
