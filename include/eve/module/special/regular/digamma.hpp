@@ -64,11 +64,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth<1>
-  //!
-  //!     **Required header:** `#include <eve/function/diff/digamma.hpp>`
-  //!
-  //!     The expression `diff(digamma)(x)` computes the derivative of the function at `x`.
+  //!  no decorators are supported
   //!
   //! #### Example
   //!
