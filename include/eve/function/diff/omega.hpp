@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/omega.hpp>
 #include <eve/module/special/diff/omega.hpp>

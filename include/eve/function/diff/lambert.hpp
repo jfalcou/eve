@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/lambert.hpp>
 #include <eve/module/special/diff/lambert.hpp>

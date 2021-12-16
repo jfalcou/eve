@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/betainc.hpp>
 #include <eve/module/special/diff/betainc.hpp>

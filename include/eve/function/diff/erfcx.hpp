@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/erfcx.hpp>
 #include <eve/module/special/diff/erfcx.hpp>

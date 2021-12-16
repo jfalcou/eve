@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/gamma_p.hpp>
 #include <eve/module/special/diff/gamma_p.hpp>
