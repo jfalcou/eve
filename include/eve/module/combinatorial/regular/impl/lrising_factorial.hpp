@@ -43,7 +43,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/traits/common_compatible.hpp>
 #include <eve/detail/hz_device.hpp>
-#include <eve/module/real/combinatorial/detail/lrising_factorial.hpp>
+#include <eve/module/combinatorial/detail/lrising_factorial.hpp>
 namespace eve::detail
 {
   //general case

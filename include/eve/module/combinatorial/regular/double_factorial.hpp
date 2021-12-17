@@ -14,35 +14,37 @@ namespace eve
   //================================================================================================
   //! @addtogroup combinatorial
   //! @{
-  //! @var lfactorial
+  //! @var double_factorial
   //!
-  //! @brief Callable object computing the logarithm unsigned integral lfactorial \f$\displaystyle \log(n!) = \sum_{i=1}^n \log i\f$.
+  //! @brief Callable object computing unsigned integral double_factorial.
   //!
-  //! **Required header:** `#include <eve/function/lfactorial.hpp>`
+  //! **Required header:** `#include <eve/function/double_factorial.hpp>`
   //!
   //! #### Members Functions
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | logarithm of  lfactorial of  unsigned integer               |
+  //! | `operator()` | unsigned integral double_factorial   |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( value auto n ) const noexcept;
+  //!  auto operator()( unsigned_value auto n ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`n`:   [value](@ref eve::value) must be positive and flint (if flaoting point).
+  //!`n`:   [unsigned value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //! If the entry is an [integral_value](eve::integral_value), the result [element type](eve::element_type)
-  //! is always double and its cardinal is the same as the entry in case of an simd call.
+  //!double factorial is defined by \f$\displaystyle (2n)!! = \prod_{i=1}^n (2i)\f$ and \f$\displaystyle (2n+1)!! = \prod_{i=0}^n (2i+1)\f$
   //!
-  //! If the entry is a [floating_point_value](eve::floating_point_value) which must be a flint,
-  //! the result is of the same type as the entry.
+  //! The result element type is always double to try to avoid overflow
+  //! and its cardinal is the same as the entry in case of an simd call.
+  //!
+  //!@warning
+  //!    this function will overflow as soon as the input is greater than 300.
   //!
   //! ---
   //!
@@ -52,15 +54,15 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/lfactorial.cpp}
+  //! @godbolt{doc/combinatorial/double_factorial.cpp}
   //!
   //!  @}
   //================================================================================================
 
-  namespace tag { struct lfactorial_; }
-  template<> struct supports_conditional<tag::lfactorial_> : std::false_type {};
+  namespace tag { struct double_factorial_; }
+  template<> struct supports_conditional<tag::double_factorial_> : std::false_type {};
 
-  EVE_MAKE_CALLABLE(lfactorial_, lfactorial);
+  EVE_MAKE_CALLABLE(double_factorial_, double_factorial);
 }
 
-#include <eve/module/combinatorial/regular/lfactorial.hpp>
+#include <eve/module/combinatorial/regular/impl/double_factorial.hpp>

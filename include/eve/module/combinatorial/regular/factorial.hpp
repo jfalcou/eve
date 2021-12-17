@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var factorial
   //!
-  //! @brief Callable object computing the logarithm unsigned integral factorial \f$\displaystyle \log(n!) = \sum_{i=1}^n \log i\f$.
+  //! @brief Callable object computing factorial of  unsigned integers \f$\displaystyle n! = \prod_{i=1}^n i\f$.
   //!
   //! **Required header:** `#include <eve/function/factorial.hpp>`
   //!
@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | logarithm of  factorial of  unsigned integer               |
+  //! | `operator()` |  factorial of  unsigned integers                           |
   //!
   //! ---
   //!
@@ -34,7 +34,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`n`:   [value](@ref eve::value) must be positive and flint (if flaoting point).
+  //!`n`:   [value](@ref eve::value) must be positive and flint (if floating point).
   //!
   //! **Return value**
   //!
@@ -56,7 +56,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/factorial.cpp}
+  //! @godbolt{doc/combinatorial/factorial.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -67,4 +67,4 @@ namespace eve
   EVE_MAKE_CALLABLE(factorial_, factorial);
 }
 
-#include <eve/module/combinatorial/regular/factorial.hpp>
+#include <eve/module/combinatorial/regular/impl/factorial.hpp>

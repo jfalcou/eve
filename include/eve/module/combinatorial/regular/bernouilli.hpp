@@ -14,35 +14,36 @@ namespace eve
   //================================================================================================
   //! @addtogroup combinatorial
   //! @{
-  //! @var lfactorial
+  //! @var bernouilli
   //!
-  //! @brief Callable object computing the logarithm unsigned integral lfactorial \f$\displaystyle \log(n!) = \sum_{i=1}^n \log i\f$.
+  //! @brief Callable object computing bernouilli numbers sequence.
   //!
-  //! **Required header:** `#include <eve/function/lfactorial.hpp>`
+  //! **Required header:** `#include <eve/function/bernouilli.hpp>`
   //!
   //! #### Members Functions
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | logarithm of  lfactorial of  unsigned integer               |
+  //! | `operator()` | bernouilli numbers sequence   |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( value auto n ) const noexcept;
+  //!  auto operator()( unsigned_value auto n ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`n`:   [value](@ref eve::value) must be positive and flint (if flaoting point).
+  //!`n`:   [unsigned value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //! If the entry is an [integral_value](eve::integral_value), the result [element type](eve::element_type)
-  //! is always double and its cardinal is the same as the entry in case of an simd call.
+  //! The result element type is always double to try to avoid overflow
+  //! and its cardinal is the same as the entry in case of an simd call.
   //!
-  //! If the entry is a [floating_point_value](eve::floating_point_value) which must be a flint,
-  //! the result is of the same type as the entry.
+  //!@warning
+  //!    this function will overflow as soon as the input is even and greater than 260
+  //!    But all odd index values are properly computed as they are all 0 except \f$b_1 = -1/2\f$.
   //!
   //! ---
   //!
@@ -52,15 +53,15 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/lfactorial.cpp}
+  //! @godbolt{doc/combinatorial/bernouilli.cpp}
   //!
   //!  @}
   //================================================================================================
 
-  namespace tag { struct lfactorial_; }
-  template<> struct supports_conditional<tag::lfactorial_> : std::false_type {};
+  namespace tag { struct bernouilli_; }
+  template<> struct supports_conditional<tag::bernouilli_> : std::false_type {};
 
-  EVE_MAKE_CALLABLE(lfactorial_, lfactorial);
+  EVE_MAKE_CALLABLE(bernouilli_, bernouilli);
 }
 
-#include <eve/module/combinatorial/regular/lfactorial.hpp>
+#include <eve/module/combinatorial/regular/impl/bernouilli.hpp>

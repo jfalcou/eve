@@ -15,7 +15,6 @@ add_subdirectory(core)
 if(EVE_USE_BOOST)
 add_subdirectory(math)
 add_subdirectory(elliptic)
-add_subdirectory(combinatorial)
 endif()
 
 add_subdirectory(proba)

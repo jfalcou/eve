@@ -1,4 +1,5 @@
-#include <eve/function/pedantic/rising_factorial.hpp>
+//#include <eve/function/pedantic/rising_factorial.hpp>
+#include <eve/module/combinatorial.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 #include <iomanip>

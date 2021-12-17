@@ -1,4 +1,5 @@
-#include <eve/function/lcm.hpp>
+//#include <eve/function/lcm.hpp>
+#include <eve/module/combinatorial.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

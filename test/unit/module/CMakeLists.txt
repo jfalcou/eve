@@ -10,5 +10,6 @@ add_subdirectory(polynomial)
 
 if(EVE_USE_BOOST)
 add_subdirectory(bessel)
+add_subdirectory(combinatorial)
 add_subdirectory(special)
 endif()
