@@ -72,7 +72,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/erfc_inv.cpp}
+  //! @godbolt{doc/special/erfc_inv.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -68,7 +68,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/digamma.cpp}
+  //! @godbolt{doc/special/digamma.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -30,7 +30,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/exp_int.cpp}
+  //! @godbolt{doc/special/exp_int.cpp}
   //!
   //!  @}
   //================================================================================================

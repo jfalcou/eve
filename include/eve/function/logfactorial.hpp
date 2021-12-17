@@ -67,4 +67,4 @@ namespace eve
   EVE_MAKE_CALLABLE(factorial_, factorial);
 }
 
-#include <eve/module/real/combinatorial/function/regular/generic/factorial.hpp>
+#include <eve/module/combinatorial/regular/factorial.hpp>
