@@ -26,7 +26,7 @@
 #include <eve/function/sincos.hpp>
 #include <eve/function/sqr.hpp>
 #include <array>
-#include <eve/module/real/special/detail/evaluate_rational.hpp>
+#include <eve/module/bessel/detail/evaluate_rational.hpp>
 #include <eve/module/real/core/detail/generic/poleval.hpp>
 
 namespace eve::detail

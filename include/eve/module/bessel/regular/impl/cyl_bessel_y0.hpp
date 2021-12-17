@@ -19,7 +19,7 @@
 #include <eve/function/rsqrt.hpp>
 #include <eve/function/sincos.hpp>
 #include <eve/function/sqr.hpp>
-#include <eve/module/real/special/detail/evaluate_rational.hpp>
+#include <eve/module/bessel/detail/evaluate_rational.hpp>
 #include <array>
 
 namespace eve::detail

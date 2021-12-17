@@ -25,7 +25,7 @@
 #include <eve/function/sincos.hpp>
 #include <eve/function/sqr.hpp>
 #include <array>
-#include <eve/module/real/special/detail/evaluate_rational.hpp>
+#include <eve/module/bessel/detail/evaluate_rational.hpp>
 #include <eve/module/real/core/detail/generic/poleval.hpp>
 
 namespace eve::detail
@@ -150,7 +150,7 @@ namespace eve::detail
 
       if constexpr(scalar_value<T>)
       {
-        if (is_ngez(x))      return nan(as(x)); 
+        if (is_ngez(x))      return nan(as(x));
         if (x == 0)          return zero(as(x)); // x is 0
         if (x == inf(as(x))) return inf(as(x));  // x is infinite
         if (x < T(7.75))     return br_7_75(x);  // x in (0, 7.75]

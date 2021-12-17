@@ -6,5 +6,9 @@
 add_subdirectory(real)
 
 ## NEw Modules
-add_subdirectory(bessel)
 add_subdirectory(polynomial)
+
+if(EVE_USE_BOOST)
+add_subdirectory(bessel)
+add_subdirectory(special)
+endif()
