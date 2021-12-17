@@ -55,7 +55,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/lambert.cpp}
+  //! @godbolt{doc/special/lambert.cpp}
   //!
   //!  @}
   //================================================================================================

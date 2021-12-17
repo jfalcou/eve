@@ -71,7 +71,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/dawson.cpp}
+  //! @godbolt{doc/special/dawson.cpp}
   //!
   //!  @}
   //================================================================================================

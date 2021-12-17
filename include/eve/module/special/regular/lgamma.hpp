@@ -72,7 +72,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/lgamma.cpp}
+  //! @godbolt{doc/special/lgamma.cpp}
   //!
   //!  @}
   //================================================================================================

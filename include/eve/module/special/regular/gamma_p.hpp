@@ -69,7 +69,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/gamma_p.cpp}
+  //! @godbolt{doc/special/gamma_p.cpp}
   //!
   //!  @}
   //================================================================================================

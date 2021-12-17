@@ -67,7 +67,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/signgam.cpp}
+  //! @godbolt{doc/special/signgam.cpp}
   //!
   //!  @}
   //================================================================================================

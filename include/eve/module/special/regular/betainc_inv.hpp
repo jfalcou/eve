@@ -74,7 +74,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/betainc_inv.cpp}
+  //! @godbolt{doc/special/betainc_inv.cpp}
   //!
   //!  @}
   //================================================================================================

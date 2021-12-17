@@ -66,7 +66,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/stirling.cpp}
+  //! @godbolt{doc/special/stirling.cpp}
   //!
   //!  @}
   //================================================================================================

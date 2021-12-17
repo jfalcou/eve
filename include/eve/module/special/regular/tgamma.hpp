@@ -72,7 +72,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/tgamma.cpp}
+  //! @godbolt{doc/special/tgamma.cpp}
   //!
   //!  @}
   //================================================================================================
