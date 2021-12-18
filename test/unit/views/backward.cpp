@@ -43,7 +43,7 @@ TTS_CASE("eve::views::backward, backward of backward")
   }
   // eve::iterator
   {
-    using ap_it = eve::algo::aligned_ptr_iterator<char, eve::fixed<4>>;
+    using ap_it = eve::algo::ptr_iterator<eve::aligned_ptr<char, eve::fixed<4>>, eve::fixed<4>>;
     ap_it                                in;
     eve::views::backward_iterator<ap_it> rev = eve::views::backward(in);
     ap_it                                back = eve::views::backward(rev);

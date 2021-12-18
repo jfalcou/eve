@@ -89,7 +89,7 @@ TTS_CASE("eve::views::convert, preprocess test")
                 eve::as<To>{}, eve::algo::traits{}, u_it{}, u_it{}, eve::algo::traits{});
   }
   {
-    using a_it = eve::algo::aligned_ptr_iterator  <From, N>;
+    using a_it = eve::algo::ptr_iterator<eve::aligned_ptr<From, N>, N>;
     using u_it = eve::algo::ptr_iterator<From*, N>;
 
     eve::aligned_ptr<From> f;
@@ -114,8 +114,8 @@ TTS_CASE("eve.algo.views.convert to/from")
   }
   // eve::iterator
   {
-    using ap_it = eve::algo::aligned_ptr_iterator<char, eve::fixed<4>>;
-    ap_it                                        chars{};
+    using ap_it = eve::algo::ptr_iterator<eve::aligned_ptr<char, eve::fixed<4>>, eve::fixed<4>>;
+    ap_it                                         chars{};
     eve::views::converting_iterator<ap_it, int>   ints   = eve::views::convert(chars,  eve::as<int>{});
     eve::views::converting_iterator<ap_it, short> shorts = eve::views::convert(ints,   eve::as<short>{});
     ap_it                                         chars2 = eve::views::convert(shorts, eve::as<char>{});

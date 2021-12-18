@@ -74,7 +74,7 @@ When we get to unbounded algorithms it will become important.
 
 I and partially_aligned_t<I> are the same.
 
-The main model is `aligned_ptr_iterator`, `zip_iterator<ptr_iterator<aligned_ptr, N>, ptr_iterator<T*, N>>`
+The main model is `ptr_iterator<aligned_ptr, N>`, `zip_iterator<ptr_iterator<aligned_ptr, N>, ptr_iterator<T*, N>>`
 
 Loading/Storing is more efficient than doing the same from `unaligned`. We can only step in `iterator_cardinal_v<I>` divisible steps.
 

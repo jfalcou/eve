@@ -58,9 +58,11 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
 
   // aligned_pointer
   {
+    using ap = eve::aligned_ptr<e_t, N>;
+
     auto processed = common_test(
-      eve::aligned_ptr<e_t>{arr.begin()}, arr.end(),
-      eve::algo::aligned_ptr_iterator<e_t, N>{},
+      ap{arr.begin()}, arr.end(),
+      eve::algo::ptr_iterator<ap, N>{},
       u_it{}
     );
     TTS_CONSTEXPR_EXPECT(decltype(processed.traits())::contains(eve::algo::no_aligning));
@@ -68,9 +70,11 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
 
   // const aligned_pointer
   {
+    using ap = eve::aligned_ptr<e_t const, N>;
+
     auto processed = common_test(
-      eve::aligned_ptr<e_t const>{arr.cbegin()}, arr.cend(),
-      eve::algo::aligned_ptr_iterator<e_t const, N>{},
+      ap{arr.cbegin()}, arr.cend(),
+      eve::algo::ptr_iterator<ap, N>{},
       uc_it{}
     );
     TTS_CONSTEXPR_EXPECT(decltype(processed.traits())::contains(eve::algo::no_aligning));
@@ -78,10 +82,12 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
 
   // two aligned_pointers
   {
+    using ap = eve::aligned_ptr<e_t, N>;
+
     auto processed = common_test(
-      eve::aligned_ptr<e_t>{arr.begin()}, eve::aligned_ptr<e_t>{arr.end()},
-      eve::algo::aligned_ptr_iterator<e_t, N>{},
-      eve::algo::aligned_ptr_iterator<e_t, N>{}
+      ap{arr.begin()}, ap{arr.end()},
+      eve::algo::ptr_iterator<ap, N>{},
+      eve::algo::ptr_iterator<ap, N>{}
     );
     TTS_CONSTEXPR_EXPECT(decltype(processed.traits())::contains(eve::algo::no_aligning));
     TTS_CONSTEXPR_EXPECT(decltype(processed.traits())::contains(eve::algo::divisible_by_cardinal));
@@ -89,10 +95,12 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
 
   // two const aligned_pointers
   {
+    using ap = eve::aligned_ptr<e_t const, N>;
+
     auto processed = common_test(
-      eve::aligned_ptr<e_t const>{arr.cbegin()}, eve::aligned_ptr<e_t const>{arr.cend()},
-      eve::algo::aligned_ptr_iterator<e_t const, N>{},
-      eve::algo::aligned_ptr_iterator<e_t const, N>{}
+      ap{arr.cbegin()}, ap{arr.cend()},
+      eve::algo::ptr_iterator<ap, N>{},
+      eve::algo::ptr_iterator<ap, N>{}
     );
     TTS_CONSTEXPR_EXPECT(decltype(processed.traits())::contains(eve::algo::no_aligning));
     TTS_CONSTEXPR_EXPECT(decltype(processed.traits())::contains(eve::algo::divisible_by_cardinal));
@@ -100,15 +108,18 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
 
   // unaligned/aligned
   {
+    using ap = eve::aligned_ptr<e_t, N>;
+    using acp = eve::aligned_ptr<e_t const, N>;
+
     common_test(
-      arr.begin(), eve::aligned_ptr<e_t>{arr.end()},
+      arr.begin(), ap{arr.end()},
       u_it{},
-      eve::algo::aligned_ptr_iterator<e_t, N>{}
+      eve::algo::ptr_iterator<ap, N>{}
     );
     common_test(
-      arr.cbegin(), eve::aligned_ptr<e_t const>{arr.cend()},
+      arr.cbegin(), acp{arr.cend()},
       uc_it{},
-      eve::algo::aligned_ptr_iterator<e_t const, N>{}
+      eve::algo::ptr_iterator<acp, N>{}
     );
   }
 
@@ -130,8 +141,8 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
   {
     common_test(
       eve::aligned_ptr<e_t, eve::fixed<N{}() * 2>>{arr.begin()}, eve::aligned_ptr<e_t>{arr.end()},
-      eve::algo::aligned_ptr_iterator<e_t, N>{},
-      eve::algo::aligned_ptr_iterator<e_t, N>{}
+      eve::algo::ptr_iterator<eve::aligned_ptr<e_t, N>, N>{},
+      eve::algo::ptr_iterator<eve::aligned_ptr<e_t, N>, N>{}
     );
   }
 
@@ -172,9 +183,7 @@ EVE_TEST_TYPES("Check preprocess_range for eve ptr iterators", algo_test::select
   };
 
   auto run_test = [&] <typename U>(U* f, U* l) {
-    using aligned_it = eve::algo::aligned_ptr_iterator<U, N>;
-    using aligned_p = typename aligned_it::ptr_type;
-
+    using aligned_p = eve::aligned_ptr<U, N>;
 
     eve::algo::ptr_iterator<U*, N>         u_f(f);
     eve::algo::ptr_iterator<U*, N>         u_l(l);
