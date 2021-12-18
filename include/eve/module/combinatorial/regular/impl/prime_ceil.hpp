@@ -27,21 +27,23 @@ namespace eve::detail
   {
     using elt_t =  element_type_t<T>;
     n =  if_else(is_eqz(n), T(2), n);
-    auto max_n = (sizeof(elt_t) == 1) ? T(251) : (sizeof(elt_t) == 2 ? T(65552) : T(104729));
+    auto max_n = (sizeof(elt_t) == 1) ? T(53) : (sizeof(elt_t) == 2 ? T(6541) : T(9999));
     if constexpr(has_native_abi_v<T>)
     {
       auto first = T(0);
-      auto last = sizeof(elt_t) == 1 ? T(53u) : T(10000);
-      n =  if_else(n > max_n, zero, n);
+      auto last = max_n;
+      n =  if_else(n > nth_prime(max_n), zero, n);
       while (eve::any(inc(first) < last))
       {
-        auto mid = average(first, last);
+        T mid = average(first, last);
         auto pmid = nth_prime(mid);
         auto test = pmid >= n;
         last = if_else (test, mid, last);
         first =  if_else (test, first, mid);
       }
-      return nth_prime(last);
+      auto tmp =  nth_prime(first);
+      auto t = tmp >= n;
+      return if_else( t, tmp, nth_prime(last));
     }
     else
       return apply_over(prime_ceil, n);
