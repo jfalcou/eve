@@ -6,8 +6,6 @@
 */
 //==================================================================================================
 #pragma once
-
-#include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
 
-#include <eve/module/real/proba/function/regular/generic/binomial_distribution.hpp>
+#include <eve/module/proba/regular/binomial_distribution.hpp>

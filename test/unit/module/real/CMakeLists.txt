@@ -16,5 +16,3 @@ if(EVE_USE_BOOST)
 add_subdirectory(math)
 add_subdirectory(elliptic)
 endif()
-
-add_subdirectory(proba)
