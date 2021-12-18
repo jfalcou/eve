@@ -151,7 +151,7 @@ namespace eve::algo::views
 
     EVE_FORCEINLINE auto unaligned() const { return convert(unalign(base), as<T>{}); }
 
-    operator unaligned_me() const { return unaligned(); }
+    EVE_FORCEINLINE operator unaligned_me() const { return unaligned(); }
 
     EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::read_, converting_iterator self)
     {

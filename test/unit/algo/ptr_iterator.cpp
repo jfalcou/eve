@@ -33,7 +33,7 @@ EVE_TEST_TYPES("Check ptr_iterator", algo_test::selected_types)
     using N = eve::fixed<T::size()>;
 
     using aligned_it = eve::algo::aligned_ptr_iterator<U, N>;
-    using aligned_p = typename aligned_it::aligned_ptr_type;
+    using aligned_p = typename aligned_it::ptr_type;
 
     eve::algo::unaligned_ptr_iterator<U, N> u_f(f);
     eve::algo::unaligned_ptr_iterator<U, N> u_l(l);
