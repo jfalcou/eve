@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/proba/regular/ev_distribution.hpp>
+#include <eve/module/proba/regular/impl/lognormal_distribution.hpp>
