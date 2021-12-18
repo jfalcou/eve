@@ -33,7 +33,7 @@ TTS_CASE("eve::views::reverse, read/write")
   TTS_EQUAL(v, (std::vector<int>{4, 3, 2, 1}));
 };
 
-TTS_CASE("ve::views::reverse, reverse of reverse")
+TTS_CASE("eve::views::reverse, reverse of reverse")
 {
   // pointer
   {

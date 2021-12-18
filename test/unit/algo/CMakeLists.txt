@@ -60,7 +60,9 @@ make_unit("unit.algo" algorithm/transform_special_cases.cpp)
 make_unit("unit.algo" algorithm/iota_generic.cpp)
 
 # copy
-make_unit("unit.algo" algorithm/copy_generic.cpp)
+make_unit("unit.algo" algorithm/copy_back.cpp)
+make_unit("unit.algo" algorithm/copy_backward_generic.cpp)
 make_unit("unit.algo" algorithm/copy_fwd.cpp)
-make_unit("unit.algo" algorithm/swap_ranges_generic.cpp)
+make_unit("unit.algo" algorithm/copy_generic.cpp)
 make_unit("unit.algo" algorithm/reverse_copy_generic.cpp)
+make_unit("unit.algo" algorithm/swap_ranges_generic.cpp)

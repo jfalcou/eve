@@ -14,7 +14,6 @@
 #include <eve/algo/iterator_helpers.hpp>
 #include <eve/algo/range_ref.hpp>
 
-#include <eve/function/convert.hpp>
 #include <eve/function/load.hpp>
 #include <eve/function/read.hpp>
 #include <eve/function/reverse.hpp>
@@ -36,7 +35,7 @@ namespace eve::algo::views
   //!
   //!    Has a shorthand `eve::views::reverse_iterator` in `<eve/views/reverse.hpp>`.
   //! @}
-  //==================
+  //================================================================================================
 
   template <relaxed_iterator I>
   struct reverse_iterator;
@@ -45,11 +44,11 @@ namespace eve::algo::views
   //! @addtogroup eve.algo.views
   //! @{
   //!   @struct reverse_range
-  //!   @brief An adapter over a `reverse_range` that allows to iterate in the reverse order.
+  //!   @brief An adapter over a `relaxed_range` that allows to iterate in the reverse order.
   //!   Should be created by a call to `eve::algo::views::reverse`.
   //!   NOTE: at this point convert(reverse) will not do anything smart.
   //!
-  //!    **Required header:** `#include <eve/algo/views/convert.hpp>`
+  //!    **Required header:** `#include <eve/algo/views/reverse.hpp>`
   //!
   //!    Has a shorthand `eve::views::reverse_range` in `<eve/views/reverse.hpp>`.
   //! @}

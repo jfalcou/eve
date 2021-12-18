@@ -13,6 +13,8 @@ add_custom_target(unit.views.simd.exe  )
 ##==================================================================================================
 ## VIEWS tests
 
+make_unit("unit.views" backward.cpp)
+make_unit("unit.views" backward_eve_iterator.cpp)
 make_unit("unit.views" convert_zip.cpp)
 make_unit("unit.views" convert.cpp)
 make_unit("unit.views" converting_eve_iterator.cpp)

@@ -19,6 +19,7 @@ Main eve supports it's callables for scalars. We don't do that for algorithms. T
 * inclusive_scan_inplace/inclusive_scan_to
 
 * copy
+* copy_backward
 
 * transform_inplace/transform_to
 
