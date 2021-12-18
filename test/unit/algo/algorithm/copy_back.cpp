@@ -21,7 +21,7 @@ EVE_TEST_TYPES("Check that we can copy to an address after beginning (copy/copy_
   auto page = algo_test::allocate_page<eve::element_type_t<T>>();
   std::iota(page.begin(), page.end(), 0);
 
-  const std::ptrdiff_t r_size = 500;
+  const std::ptrdiff_t r_size = 300;
 
   for (int i = 0; i != T::size(); ++i) {
     for (int j = i; j != T::size() * 2; ++j) {
