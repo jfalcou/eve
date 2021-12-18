@@ -14,7 +14,7 @@
 
 #include <algorithm>
 
-EVE_TEST_TYPES("Check that we can copy to an address before beginning (copy/copy_backward difference)",
+EVE_TEST_TYPES("Check that we can copy to an address after beginning (copy/copy_backward difference)",
                algo_test::selected_types)
 <typename T>(eve::as<T>)
 {
@@ -25,14 +25,15 @@ EVE_TEST_TYPES("Check that we can copy to an address before beginning (copy/copy
 
   for (int i = 0; i != T::size(); ++i) {
     for (int j = i; j != T::size() * 2; ++j) {
-      auto from = page.begin() + j;
+      auto from = page.begin() + i;
+      auto to = page.begin() + j;
       auto r = eve::algo::as_range(from, from + r_size);
 
       std::vector<eve::element_type_t<T>> expected(from, from + r_size);
 
-      eve::algo::copy[eve::algo::force_cardinal<T::size()>](r, page.begin() + i);
+      eve::algo::copy_backward[eve::algo::force_cardinal<T::size()>](r, to);
 
-      std::vector<eve::element_type_t<T>> actual(page.begin() + i, page.begin() + i + r_size);
+      std::vector<eve::element_type_t<T>> actual(to, to + r_size);
 
       TTS_EQUAL(expected, actual);
     }

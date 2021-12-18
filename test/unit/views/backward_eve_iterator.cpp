@@ -33,7 +33,11 @@ EVE_TEST_TYPES("Check backward_iterator", algo_test::selected_types)
   std::iota(data.begin(), data.end(), 0);
 
   T values([](int i, int) { return i; });
-  auto replace = [&](auto v, auto ignore) { return eve::replace_ignored(v, ignore, T{0}); };
+  auto replace = [&](auto v, auto ignore) {
+    return eve::replace_ignored(v,
+                                eve::reverse_conditional(ignore, eve::as(v)),
+                                T{0});
+  };
 
   auto run_test_one_pair = [&](auto f, auto l) {
     auto back = eve::views::backward(eve::algo::as_range(f, l));
