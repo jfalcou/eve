@@ -20,7 +20,7 @@
 
 
 //==================================================================================================
-// Types tests
+//== Types tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of eve::prime_ceil"
               , eve::test::simd::unsigned_integers)
@@ -38,7 +38,7 @@ EVE_TEST_TYPES( "Check return types of eve::prime_ceil"
 };
 
 //==================================================================================================
-// Test for corner-cases values
+//== Test for corner-cases values
 //==================================================================================================
 EVE_TEST( "Check corner-cases behavior of eve::prime_ceil on wide"
         , eve::test::simd::unsigned_integers
@@ -53,7 +53,7 @@ EVE_TEST( "Check corner-cases behavior of eve::prime_ceil on wide"
   using v_t = eve::element_type_t<T>;
   using f_t = eve::wide<float, eve::cardinal_t<T>>;
   using d_t = eve::wide<double, eve::cardinal_t<T>>;
-  TTS_EQUAL(eve::prime_ceil(T(0)),  T(0));
+   TTS_EQUAL(eve::prime_ceil(T(0)),  T(2));
   TTS_IEEE_EQUAL(eve::float32(eve::prime_ceil)(T(0)),  f_t(2));
   TTS_IEEE_EQUAL(eve::float64(eve::prime_ceil)(T(0)),  d_t(2));
   TTS_EQUAL(eve::prime_ceil(v_t(0)),  v_t(2));
@@ -63,18 +63,18 @@ EVE_TEST( "Check corner-cases behavior of eve::prime_ceil on wide"
   TTS_EQUAL(eve::prime_ceil(T(1)),  T(2));
   TTS_IEEE_EQUAL(eve::float32(eve::prime_ceil)(T(1)),  f_t(2));
   TTS_IEEE_EQUAL(eve::float64(eve::prime_ceil)(T(1)),  d_t(2));
-  TTS_EQUAL(eve::prime_ceil(v_t(1)),  v_t(0));
+  TTS_EQUAL(eve::prime_ceil(v_t(1)),  v_t(2));
   TTS_IEEE_EQUAL(eve::float32(eve::prime_ceil)(v_t(1)),  2.0f);
   TTS_IEEE_EQUAL(eve::float64(eve::prime_ceil)(v_t(1)),  2.0);
-  TTS_EQUAL(eve::prime_ceil(T(4)),  T(3));
+  TTS_EQUAL(eve::prime_ceil(T(4)),  T(5));
   TTS_EQUAL(eve::float32(eve::prime_ceil)(T(4)),  f_t(5));
   TTS_EQUAL(eve::float64(eve::prime_ceil)(T(4)),  d_t(5));
-  TTS_EQUAL(eve::prime_ceil(v_t(4)),  v_t(3));
+  TTS_EQUAL(eve::prime_ceil(v_t(4)),  v_t(5));
   TTS_EQUAL(eve::float32(eve::prime_ceil)(v_t(4)),  5.0f);
   TTS_EQUAL(eve::float64(eve::prime_ceil)(v_t(4)),  5.0);
 
   auto constexpr maxi = (sizeof(v_t) == 1) ? (52u) : ((sizeof(v_t) == 2) ? (6540u) : (9999u));
-auto np = eve::nth_prime(dec(maxi));
+  auto np = eve::nth_prime(dec(maxi));
   auto npp= eve::nth_prime(maxi);
   TTS_EQUAL(eve::prime_ceil(T(inc(np))),  T(npp));
   TTS_EQUAL(eve::float32(eve::prime_ceil)(T(inc(np))),  f_t(npp));

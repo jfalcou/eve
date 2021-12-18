@@ -1,7 +1,8 @@
 {
   "unit.bessel.exe": "^unit.bessel.*.exe"
-  "unit.combinatorial.exe": "^unit.combinatorial.*.exe"
-  "unit.polynomial.exe": "^unit.polynomial.*.exe"
-  "unit.special.exe": "^unit.special.*.exe"
+,  "unit.combinatorial.exe": "^unit.combinatorial.*.exe"
+,  "unit.polynomial.exe": "^unit.polynomial.*.exe"
+,  "unit.proba.exe": "^unit.proba.*.exe"
+,  "unit.special.exe": "^unit.special.*.exe"
 , "unit.real.exe": "^unit.real.*.exe"
 }
