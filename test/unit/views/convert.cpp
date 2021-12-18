@@ -64,7 +64,7 @@ TTS_CASE("eve::views::convert, preprocess test")
   };
 
   {
-    using u_it = eve::algo::unaligned_ptr_iterator<From, N>;
+    using u_it = eve::algo::ptr_iterator<From*, N>;
 
     std::vector<From> v;
     common_test(v, eve::as<To>{}, eve::algo::traits{}, u_it{}, u_it{}, eve::algo::traits{});
@@ -79,7 +79,7 @@ TTS_CASE("eve::views::convert, preprocess test")
                u_it{}, u_it{},    eve::algo::traits{eve::algo::no_aligning});
   }
   {
-    using u_it = eve::algo::unaligned_ptr_iterator<From const, N>;
+    using u_it = eve::algo::ptr_iterator<From const*, N>;
 
     const std::vector<From> v;
     common_test(v, eve::as<To>{}, eve::algo::traits{}, u_it{}, u_it{}, eve::algo::traits{});
@@ -90,7 +90,7 @@ TTS_CASE("eve::views::convert, preprocess test")
   }
   {
     using a_it = eve::algo::aligned_ptr_iterator  <From, N>;
-    using u_it = eve::algo::unaligned_ptr_iterator<From, N>;
+    using u_it = eve::algo::ptr_iterator<From*, N>;
 
     eve::aligned_ptr<From> f;
     From* l = nullptr;

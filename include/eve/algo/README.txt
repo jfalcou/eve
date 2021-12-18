@@ -65,7 +65,7 @@ The minimum requirements are:
 
 *TODO*
 
-The main model is `aligned_ptr_iterator`
+The main model is `ptr_iterator<aligned_ptr, N>`
 
 This is a `partially_aligned_iterator` but has an extra feature: we can do `unsafe` load.
 When we get to unbounded algorithms it will become important.
@@ -74,7 +74,7 @@ When we get to unbounded algorithms it will become important.
 
 I and partially_aligned_t<I> are the same.
 
-The main model is `aligned_ptr_iterator`, `zip_iterator<aligned_ptr_iterator, unaligned_ptr_iterator>`
+The main model is `aligned_ptr_iterator`, `zip_iterator<ptr_iterator<aligned_ptr, N>, ptr_iterator<T*, N>>`
 
 Loading/Storing is more efficient than doing the same from `unaligned`. We can only step in `iterator_cardinal_v<I>` divisible steps.
 
@@ -82,7 +82,7 @@ Loading/Storing is more efficient than doing the same from `unaligned`. We can o
 
 I and unaligned_t<I> are the same.
 
-The main model is `unaligned_ptr_iterator`
+The main model is `ptr_iterator<T*, N>`
 
 iterator that can represent any position in the underlying range.
 
@@ -216,8 +216,7 @@ A tuple of iterators with the same cardinal.
 
 ### ptr_iterator
 
-* `aligned_ptr_iterator`
-* `unaligned_ptr_iterator`
+* `ptr_iterator`
 
 A pointer + cardinal with the `iterator` interface.
 

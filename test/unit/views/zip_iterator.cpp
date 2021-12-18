@@ -23,7 +23,7 @@ TTS_CASE("zip_iterator for not eve iterators")
   std::vector<std::uint8_t> c {1, 2, 3, 4};
   std::vector<int> v{1, 2, 3};
   std::array<float, 4> f { 1, 2, 3, 4};
-  using u_f = eve::algo::unaligned_ptr_iterator<float, eve::fixed<4>>;
+  using u_f = eve::algo::ptr_iterator<float*, eve::fixed<4>>;
 
   eve::views::zip_iterator zf{ c.begin(), v.begin(), u_f{f.begin()} };
   eve::views::zip_iterator zl{ c.end(), v.end(), u_f{f.end()} };
@@ -71,18 +71,23 @@ TTS_CASE("zip_iterator for not eve iterators, unaligned")
 
 TTS_CASE("zip_iterator, sanity check, types test")
 {
-  using unaligned_float = eve::algo::unaligned_ptr_iterator<float, eve::fixed<8>>;
-  using aligned_float   = eve::algo::aligned_ptr_iterator  <float, eve::fixed<8>>;
-  using unaligned_short = eve::algo::unaligned_ptr_iterator<short, eve::fixed<8>>;
-  using aligned_short   = eve::algo::aligned_ptr_iterator  <short, eve::fixed<8>>;
+  using uf = float*;
+  using af = eve::aligned_ptr<float, eve::fixed<8>>;
+  using us = short*;
+  using as = eve::aligned_ptr<short, eve::fixed<8>>;
+
+  using unaligned_float = eve::algo::ptr_iterator<uf, eve::fixed<8>>;
+  using aligned_float   = eve::algo::ptr_iterator<af, eve::fixed<8>>;
+  using unaligned_short = eve::algo::ptr_iterator<us, eve::fixed<8>>;
+  using aligned_short   = eve::algo::ptr_iterator<as, eve::fixed<8>>;
 
   using zip_a_a = eve::views::zip_iterator<aligned_float,   aligned_short>;
   using zip_u_a = eve::views::zip_iterator<unaligned_float, aligned_short>;
   using zip_a_u = eve::views::zip_iterator<aligned_float,   unaligned_short>;
   using zip_u_u = eve::views::zip_iterator<unaligned_float, unaligned_short>;
 
-  using aligned_float_4   = eve::algo::aligned_ptr_iterator  <float, eve::fixed<4>>;
-  using unaligned_short_4 = eve::algo::unaligned_ptr_iterator<short, eve::fixed<4>>;
+  using aligned_float_4   = eve::algo::ptr_iterator<eve::aligned_ptr<float, eve::fixed<4>>, eve::fixed<4>>;
+  using unaligned_short_4 = eve::algo::ptr_iterator<short*, eve::fixed<4>>;
 
   using zip_a_u_4 = eve::views::zip_iterator<aligned_float_4, unaligned_short_4>;
 
@@ -140,10 +145,15 @@ TTS_CASE("zip_iterator, sanity check, types test")
 
 TTS_CASE("zip_iterator, main iterator")
 {
-  using unaligned_float = eve::algo::unaligned_ptr_iterator<float, eve::fixed<8>>;
-  using aligned_float   = eve::algo::aligned_ptr_iterator  <float, eve::fixed<8>>;
-  using unaligned_short = eve::algo::unaligned_ptr_iterator<short, eve::fixed<8>>;
-  using aligned_short   = eve::algo::aligned_ptr_iterator  <short, eve::fixed<8>>;
+  using uf = float*;
+  using af = eve::aligned_ptr<float, eve::fixed<8>>;
+  using us = short*;
+  using as = eve::aligned_ptr<short, eve::fixed<8>>;
+
+  using unaligned_float = eve::algo::ptr_iterator<uf, eve::fixed<8>>;
+  using aligned_float   = eve::algo::ptr_iterator<af, eve::fixed<8>>;
+  using unaligned_short = eve::algo::ptr_iterator<us, eve::fixed<8>>;
+  using aligned_short   = eve::algo::ptr_iterator<as, eve::fixed<8>>;
 
   using iota            = decltype(eve::views::iota(0).cardinal_cast(eve::lane<8>));
 
@@ -210,9 +220,9 @@ EVE_TEST_TYPES("Check zip_iterator", algo_test::selected_types)
     algo_test::iterator_supports_compress(f, values, replace);
   };
 
-  eve::algo::unaligned_ptr_iterator<t1, N> u_f_1{data_1.begin()};
-  eve::algo::unaligned_ptr_iterator<t2, N> u_f_2{data_2.begin()};
-  eve::algo::unaligned_ptr_iterator<t3, N> u_f_3{data_3.begin()};
+  eve::algo::ptr_iterator<t1*, N> u_f_1{data_1.begin()};
+  eve::algo::ptr_iterator<t2*, N> u_f_2{data_2.begin()};
+  eve::algo::ptr_iterator<t3*, N> u_f_3{data_3.begin()};
 
   auto u_l_1 = u_f_1 + T::size();
 

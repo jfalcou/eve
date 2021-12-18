@@ -146,8 +146,5 @@ namespace eve::algo
   };
 
   template <typename T, typename Cardinal>
-  using unaligned_ptr_iterator = ptr_iterator<T*, Cardinal>;
-
-  template <typename T, typename Cardinal>
   using aligned_ptr_iterator = ptr_iterator<aligned_ptr<T, Cardinal>, Cardinal>;
 }
