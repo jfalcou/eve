@@ -13,6 +13,13 @@
 
 namespace algo_test
 {
+  template <typename>
+  struct read_to_load_match
+  {
+    static constexpr std::ptrdiff_t value = 0;
+  };
+
+
   template <typename I, typename S, typename T, typename ReplaceIgnored>
   void iterator_sentinel_test_one_pair(I f, S l, T v, ReplaceIgnored replace)
   {
@@ -37,7 +44,7 @@ namespace algo_test
 
     // read test
     {
-      TTS_EQUAL(eve::read(f), eve::load(f).get(0));
+      TTS_EQUAL(eve::read(f), eve::load(f).get(read_to_load_match<I>::value));
     }
 
     {
