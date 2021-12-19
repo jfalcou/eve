@@ -17,5 +17,5 @@ TTS_CASE_TPL("wide random check on cbrt", EVE_TYPE)
   auto std_cbrt = [](auto e) { return std::cbrt(e); };
 
   eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
-  TTS_RANGE_CHECK(p, std_cbrt, eve::cbrt);
+  TTS_RANGE_CHECK_WITH(p, std_cbrt, eve::cbrt, 2.5);
 };
