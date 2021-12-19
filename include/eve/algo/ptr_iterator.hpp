@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/algo/concepts/value_type.hpp>
 #include <eve/algo/iterator_helpers.hpp>
 
 #include <eve/function/load.hpp>
@@ -15,188 +16,132 @@
 
 namespace eve::algo
 {
-  template <typename T, typename Cardinal>
-  struct aligned_ptr_iterator;
+  //================================================================================================
+  //! @addtogroup eve.algo
+  //! @{
+  //!   @struct ptr_iterator
+  //!   @brief An eve iterator on top of pointer or aligned pointer.
+  //!
+  //!   This should not be created directly but rather constructed from preprocess_range.
+  //!
+  //!   When ptr is aligned, the alignment should match the cardinal.
+  //!
+  //!    **Required header:** `#include <eve/algo/ptr_iterator.hpp>`
+  //! @}
+  //================================================================================================
+  template <typename Ptr, typename Cardinal>
+  struct ptr_iterator;
 
-  template <typename T, typename Cardinal>
-  struct unaligned_ptr_iterator : operations_with_distance
+  namespace detail
   {
-    using value_type      = std::remove_const_t<T>;
-    using wv_type = eve::wide<value_type, Cardinal>;
+    template <typename Ptr, typename Cardinal>
+    constexpr bool check_aligned_ptr_validity()
+    {
+      if constexpr (!detail::instance_of<Ptr, aligned_ptr>) return true;
+      else return sizeof(value_type_t<Ptr>) * Cardinal{}() == Ptr::alignment();
+    }
+  }
 
-    unaligned_ptr_iterator() = default;
-    explicit unaligned_ptr_iterator(T* ptr) : ptr(ptr) {}
+  template <typename Ptr, typename Cardinal>
+  struct ptr_iterator : operations_with_distance
+  {
+    static_assert(detail::check_aligned_ptr_validity<Ptr, Cardinal>());
 
-    unaligned_ptr_iterator unaligned() const { return *this; }
+    using value_type = value_type_t<Ptr>;
+    using ptr_type   = Ptr;
+
+    // internal helpers
+    using reference_type = decltype(*Ptr{});
+    using cv_value_type  = std::remove_reference_t<reference_type>;
+    using wv_type        = eve::wide<value_type, Cardinal>;
+    using unaligned_me   = ptr_iterator<unaligned_t<Ptr>, Cardinal>;
+
+    ptr_iterator() = default;
+    explicit ptr_iterator(Ptr ptr) : ptr(ptr) {}
+
+    auto unaligned()        const { return unaligned_me{ unalign(ptr) }; }
+    operator unaligned_me() const { return unaligned(); }
 
     auto previous_partially_aligned() const
     {
-      return aligned_ptr_iterator<T, Cardinal>{eve::previous_aligned_address(ptr, Cardinal{})};
+      if constexpr (detail::instance_of<Ptr, aligned_ptr> ) return *this;
+      else
+      {
+        auto a_ptr = eve::previous_aligned_address(ptr, Cardinal{});
+        return ptr_iterator<decltype(a_ptr), Cardinal>{a_ptr};
+      }
     }
 
     auto next_partially_aligned() const
     {
-      return aligned_ptr_iterator<T, Cardinal>{eve::next_aligned_address(ptr, Cardinal{})};
+      if constexpr (detail::instance_of<Ptr, aligned_ptr> ) return *this;
+      else
+      {
+        auto a_ptr = eve::next_aligned_address(ptr, Cardinal{});
+        return ptr_iterator<decltype(a_ptr), Cardinal>{a_ptr};
+      }
     }
-
-    static Cardinal iterator_cardinal() { return {}; }
-
-    template <typename _Cardinal>
-    auto cardinal_cast(_Cardinal) const { return unaligned_ptr_iterator<T, _Cardinal>{ptr}; }
-
-    auto& operator*() const { return *ptr; }
-
-    unaligned_ptr_iterator& operator+=(std::ptrdiff_t n) { ptr += n; return *this; }
-    friend std::ptrdiff_t   operator-(unaligned_ptr_iterator x, unaligned_ptr_iterator y) { return x.ptr - y.ptr; }
-
-    bool operator==(unaligned_ptr_iterator const &x) const { return ptr == x.ptr; }
-    auto operator<=>(unaligned_ptr_iterator const &x) const { return ptr <=> x.ptr; }
-
-    template< relative_conditional_expr C, decorator S>
-    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::load_, C const& c, S const& s
-                                , eve::as<wv_type> const&, unaligned_ptr_iterator self
-                                )
-    {
-      return eve::load(c, s, self.ptr, Cardinal{});
-    }
-
-    template <relative_conditional_expr C>
-    EVE_FORCEINLINE friend void tagged_dispatch(
-      eve::tag::store_, C cond, wv_type v, unaligned_ptr_iterator self )
-      requires (!std::is_const_v<T>)
-    {
-      eve::store[cond](v, self.ptr);
-    }
-
-    EVE_FORCEINLINE friend void tagged_dispatch( eve::tag::store_, wv_type v, unaligned_ptr_iterator self )
-      requires ( !std::is_const_v<T> )
-    {
-      eve::store(v, self.ptr);
-    }
-
-    template <relative_conditional_expr C, decorator Decorator, typename U>
-      requires ( !std::is_const_v<T> )
-    EVE_FORCEINLINE friend auto tagged_dispatch(
-      eve::tag::compress_store_, C c, Decorator d, wv_type v,
-      logical<wide<U, Cardinal>> m, unaligned_ptr_iterator self)
-    {
-      return unaligned_ptr_iterator{eve::compress_store(c, d, v, m, self.ptr)};
-    }
-
-    T* ptr;
-  };
-
-  template <typename T, typename Cardinal>
-  struct aligned_ptr_iterator : operations_with_distance
-  {
-    using value_type        = std::remove_const_t<T>;
-    using aligned_ptr_type  = eve::aligned_ptr<T, Cardinal>;
-    using wv_type   = eve::wide<value_type, Cardinal>;
-
-    aligned_ptr_iterator() = default;
-    explicit aligned_ptr_iterator(aligned_ptr_type ptr) : ptr{ptr} {}
-
-    // Need this for totally ordered.
-    operator unaligned_ptr_iterator<T, Cardinal>() const {
-      return unaligned_ptr_iterator<T, Cardinal>{ptr.get()};
-    }
-
-    auto& operator*() const { return *ptr; }
-    auto get() const { return ptr.get(); }
-    auto unaligned() const { return unaligned_ptr_iterator<T, Cardinal>{ptr.get()}; }
-    auto previous_partially_aligned() const { return *this; }
-    auto next_partially_aligned()     const { return *this; }
 
     static Cardinal iterator_cardinal() { return {}; }
 
     template <typename _Cardinal>
     auto cardinal_cast(_Cardinal c) const
     {
-      if constexpr (_Cardinal{}() > Cardinal{}()) return unaligned().cardinal_cast(c);
+           if constexpr (!detail::instance_of<Ptr, aligned_ptr> ) return ptr_iterator<Ptr, _Cardinal>(ptr);
+      else if constexpr (_Cardinal{}() > Cardinal{}()           ) return unaligned().cardinal_cast(c);
       else
       {
-        using other_it  = aligned_ptr_iterator<T, _Cardinal>;
-        using other_ptr = typename other_it::aligned_ptr_type;
+        using other_ptr = aligned_ptr<cv_value_type, _Cardinal>;
+        using other_it  = ptr_iterator<other_ptr, _Cardinal>;
         return other_it{other_ptr{ptr.get()}};
       }
     }
 
-    aligned_ptr_iterator& operator+=(std::ptrdiff_t n) { ptr += n; return *this; }
+    auto& operator*() const { return *ptr; }
 
-    template <typename T1, typename N1>
-    bool operator==(aligned_ptr_iterator<T1, N1> y) const
-    {
-      return unaligned() == y.unaligned();
-    }
+    ptr_iterator& operator+=(std::ptrdiff_t n) { ptr += n; return *this; }
 
-    template <typename T1, typename N1>
-    bool operator==(unaligned_ptr_iterator<T1, N1> y) const
-    {
-      return unaligned() == y;
-    }
+    template <typename OtherPtr>
+    friend std::ptrdiff_t operator-(ptr_iterator x, ptr_iterator<OtherPtr, Cardinal> y) { return x.ptr - y.ptr; }
 
-    template <typename T1, typename N1>
-    auto operator<=>(aligned_ptr_iterator<T1, N1> y) const
-    {
-      return unaligned() <=> y.unaligned();
-    }
+    template <typename OtherPtr>
+    bool operator==(ptr_iterator<OtherPtr, Cardinal> const &x) const { return ptr == x.ptr; }
 
-    template <typename T1, typename N1>
-    auto operator<=>(unaligned_ptr_iterator<T1, N1> y) const
-    {
-      return unaligned() <=> y;
-    }
-
-    template <typename T1, typename N1>
-    std::ptrdiff_t operator-(aligned_ptr_iterator<T1, N1> y) const
-    {
-      return unaligned() - y.unaligned();
-    }
-
-    template <typename T1, typename N1>
-    std::ptrdiff_t operator-(unaligned_ptr_iterator<T1, N1> y) const
-    {
-      return unaligned() - y;
-    }
-
-    template <typename T1, typename N1>
-    friend std::ptrdiff_t operator-(unaligned_ptr_iterator<T1, N1> x, aligned_ptr_iterator y)
-    {
-      return x - y.unaligned();
-    }
-
+    template <typename OtherPtr>
+    auto operator<=>(ptr_iterator<OtherPtr, Cardinal> const &x) const { return ptr <=> x.ptr; }
 
     template< relative_conditional_expr C, decorator S>
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::load_, C const& c, S const& s
-                                , eve::as<wv_type> const&, aligned_ptr_iterator self
-                                )
+                                                , eve::as<wv_type> const&, ptr_iterator self
+                                                )
     {
       return eve::load(c, s, self.ptr, Cardinal{});
     }
 
     template <relative_conditional_expr C>
-    EVE_FORCEINLINE friend void tagged_dispatch(
-      eve::tag::store_, C cond, wv_type v, aligned_ptr_iterator self )
-      requires ( !std::is_const_v<T> )
+    EVE_FORCEINLINE friend void tagged_dispatch(eve::tag::store_,
+                                                C cond, wv_type v,
+                                                ptr_iterator self )
+      requires (!std::is_const_v<cv_value_type>)
     {
-      return eve::store[cond](v, self.ptr);
+      eve::store[cond](v, self.ptr);
     }
 
-    EVE_FORCEINLINE friend void tagged_dispatch( eve::tag::store_, wv_type v, aligned_ptr_iterator self )
-      requires ( !std::is_const_v<T> )
+    EVE_FORCEINLINE friend void tagged_dispatch( eve::tag::store_, wv_type v, ptr_iterator self )
+      requires (!std::is_const_v<cv_value_type>)
     {
-      return eve::store(v, self.ptr);
+      eve::store(v, self.ptr);
     }
 
     template <relative_conditional_expr C, decorator Decorator, typename U>
-      requires ( !std::is_const_v<T> )
+      requires (!std::is_const_v<cv_value_type>)
     EVE_FORCEINLINE friend auto tagged_dispatch(
       eve::tag::compress_store_, C c, Decorator d, wv_type v,
-      logical<wide<U, Cardinal>> m, aligned_ptr_iterator self)
+      logical<wide<U, Cardinal>> m, ptr_iterator self)
     {
-      return unaligned_ptr_iterator<T, Cardinal>{eve::compress_store(c, d, v, m, self.ptr)};
+      return unaligned_me{eve::compress_store(c, d, v, m, self.ptr)};
     }
 
-    aligned_ptr_type ptr;
+    Ptr ptr;
   };
 }

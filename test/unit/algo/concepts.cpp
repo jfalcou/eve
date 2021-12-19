@@ -21,7 +21,7 @@ TTS_CASE("concepts, value type")
   TTS_TYPE_IS(eve::algo::value_type_t<int*>, int);
   TTS_TYPE_IS(eve::algo::value_type_t<const int*>, int);
 
-  using u_p = eve::algo::unaligned_ptr_iterator<int const, eve::fixed<2>>;
+  using u_p = eve::algo::ptr_iterator<int const*, eve::fixed<2>>;
   TTS_TYPE_IS(eve::algo::value_type_t<u_p>, int);
 
   std::vector<int> v1, v2;

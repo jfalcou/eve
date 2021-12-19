@@ -28,7 +28,7 @@ TTS_CASE("zip_iterator, preprocess range, scalar end")
   using zip_vi = eve::views::zip_iterator<v_i, v_i>;
 
   using N = eve::fixed<eve::expected_cardinal_v<int>>;
-  using ui_it = eve::algo::unaligned_ptr_iterator<int, N>;
+  using ui_it = eve::algo::ptr_iterator<int*, N>;
   using zip_ui = eve::views::zip_iterator<ui_it, ui_it>;
 
   zip_vi zf{v1.begin(), v2.begin()};
@@ -49,8 +49,8 @@ TTS_CASE("zip_iterator, preprocess range, zip end")
   using zip_uu = eve::views::zip_iterator<u, u>;
 
   using N = eve::fixed<eve::expected_cardinal_v<int>>;
-  using a_it = eve::algo::aligned_ptr_iterator  <int const, N>;
-  using u_it = eve::algo::unaligned_ptr_iterator<int const, N>;
+  using a_it = eve::algo::ptr_iterator<a, N>;
+  using u_it = eve::algo::ptr_iterator<u, N>;
   using zip_au_it = eve::views::zip_iterator<a_it, u_it>;
   using zip_uu_it = eve::views::zip_iterator<u_it, u_it>;
 
@@ -102,10 +102,15 @@ TTS_CASE("zip_iterator, preprocess range, zip end")
 TTS_CASE("preprocess zip range, traits")
 {
   using N = eve::fixed<eve::expected_cardinal_v<std::uint32_t>>;
-  using uc_it = eve::algo::unaligned_ptr_iterator<std::int8_t, N>;
-  using ui_it = eve::algo::unaligned_ptr_iterator<std::uint32_t, N>;
-  using ac_it = eve::algo::aligned_ptr_iterator<std::int8_t, N>;
-  using ai_it = eve::algo::aligned_ptr_iterator<std::uint32_t, N>;
+  using uc = std::int8_t*;
+  using ac = eve::aligned_ptr<std::int8_t, N>;
+  using ui = std::uint32_t*;
+  using ai = eve::aligned_ptr<std::uint32_t>;
+
+  using uc_it = eve::algo::ptr_iterator<uc, N>;
+  using ui_it = eve::algo::ptr_iterator<ui, N>;
+  using ac_it = eve::algo::ptr_iterator<ac, N>;
+  using ai_it = eve::algo::ptr_iterator<ai, N>;
 
   using zip_uc_it_ui_it = eve::views::zip_iterator<uc_it, ui_it>;
 
@@ -205,8 +210,8 @@ TTS_CASE("preprocess zip range, common_type")
 
   {
     using N           = eve::fixed<eve::expected_cardinal_v<std::uint32_t>>;
-    using uc_it       = eve::algo::unaligned_ptr_iterator<std::int8_t, N>;
-    using ui_it       = eve::algo::unaligned_ptr_iterator<std::uint32_t, N>;
+    using uc_it       = eve::algo::ptr_iterator<std::int8_t*, N>;
+    using ui_it       = eve::algo::ptr_iterator<std::uint32_t*, N>;
     using conv_uc_it  = eve::views::converting_iterator<uc_it, std::uint32_t>;
     using expected_it = eve::views::zip_iterator<conv_uc_it, ui_it>;
 
@@ -220,8 +225,8 @@ TTS_CASE("preprocess zip range, common_type")
 
   {
     using N           = eve::fixed<2>;
-    using uc_it       = eve::algo::unaligned_ptr_iterator<std::int8_t, N>;
-    using ui_it       = eve::algo::unaligned_ptr_iterator<std::uint32_t, N>;
+    using uc_it       = eve::algo::ptr_iterator<std::int8_t*, N>;
+    using ui_it       = eve::algo::ptr_iterator<std::uint32_t*, N>;
     using conv_uc_it  = eve::views::converting_iterator<uc_it, float>;
     using conv_ui_it  = eve::views::converting_iterator<ui_it, float>;
     using expected_it = eve::views::zip_iterator<conv_uc_it, conv_ui_it>;

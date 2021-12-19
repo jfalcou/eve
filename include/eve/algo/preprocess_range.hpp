@@ -25,14 +25,14 @@ namespace eve::algo
     template <typename T, typename A>
     EVE_FORCEINLINE auto ptr_to_iterator(eve::aligned_ptr<T, A> ptr)
     {
-      return aligned_ptr_iterator<T, A>{ptr};
+      return ptr_iterator<eve::aligned_ptr<T, A>, A>{ptr};
     }
 
     template <typename T>
     EVE_FORCEINLINE auto ptr_to_iterator(T* ptr)
     {
       using N          = eve::fixed<eve::expected_cardinal_v<std::remove_const_t<T>>>;
-      return unaligned_ptr_iterator<T, N>{ptr};
+      return ptr_iterator<T*, N>{ptr};
     }
 
     template <typename Traits, typename I>
