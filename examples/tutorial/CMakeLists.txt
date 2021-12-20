@@ -1,0 +1,16 @@
+##==================================================================================================
+##  EVE - Expressive Vector Engine
+##  Copyright : EVE Contributors & Maintainers
+##  SPDX-License-Identifier: MIT
+##==================================================================================================
+
+##==================================================================================================
+## Conditionals Tutorial
+##==================================================================================================
+make_unit( "examples.tutorial" safe_sqrt_between.cpp      )
+make_unit( "examples.tutorial" safe_sqrt_else.cpp         )
+make_unit( "examples.tutorial" safe_sqrt_ignore.cpp       )
+make_unit( "examples.tutorial" safe_sqrt_ignore_both.cpp  )
+make_unit( "examples.tutorial" safe_sqrt_op.cpp           )
+make_unit( "examples.tutorial" safe_sqrt.cpp              )
+make_unit( "examples.tutorial" square_or_diff.cpp         )
