@@ -138,19 +138,32 @@ namespace eve::detail
   {
     if constexpr( !abi_t<T,N>::is_wide_logical )
     {
-      puts("PARALLEL DEPOSIT");
-      using v_t = logical<wide<T,N>>::storage_type::type;
+      using s_t = typename logical<wide<T,N>>::storage_type;
+      using v_t = typename s_t::type;
+
+      auto deposit_low = [](auto v)
+      {
+        if constexpr(sizeof(v) <= 4)  return _pdep_u32(v,0x55555555UL);
+        else                          return _pdep_u64(v,0x5555555555555555ULL);
+      };
+
+      auto deposit_high = [](auto v)
+      {
+        if constexpr(sizeof(v) <= 4)  return _pdep_u32(v,0xAAAAAAAAUL);
+        else                          return _pdep_u64(v,0xAAAAAAAAAAAAAAAAULL);
+      };
 
       auto x = v0.storage().value;
       auto y = v1.storage().value;
 
-      auto z = _pdep_u64(x, 0x5555555555555555) | _pdep_u64(y,0xaaaaaaaaaaaaaaaa);
+      auto lx = deposit_low (x);
+      auto ly = deposit_high(y);
+      auto l  = s_t(v_t(lx | ly));
 
-      constexpr auto          shift = 8*sizeof(T);
-      constexpr std::uint64_t mask  = (~0ULL >> shift);
-
-      typename logical<wide<T,N>>::storage_type l(v_t(z & mask));
-      typename logical<wide<T,N>>::storage_type h(v_t((z>>shift) & mask));
+      constexpr auto offset = N::value/2;
+      auto hx = deposit_low (v_t(x >> offset));
+      auto hy = deposit_high(v_t(y >> offset));
+      auto h  = s_t(v_t(hx | hy));
 
       return kumi::make_tuple(logical<wide<T,N>>(l),logical<wide<T,N>>(h));
     }
