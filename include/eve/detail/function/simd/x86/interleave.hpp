@@ -158,12 +158,12 @@ namespace eve::detail
 
       auto lx = deposit_low (x);
       auto ly = deposit_high(y);
-      auto l  = s_t(v_t(lx | ly));
+      auto l  = s_t{v_t(lx | ly)};
 
       constexpr auto offset = N::value/2;
       auto hx = deposit_low (v_t(x >> offset));
       auto hy = deposit_high(v_t(y >> offset));
-      auto h  = s_t(v_t(hx | hy));
+      auto h  = s_t{v_t(hx | hy)};
 
       return kumi::make_tuple(logical<wide<T,N>>(l),logical<wide<T,N>>(h));
     }
