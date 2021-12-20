@@ -17,8 +17,8 @@
 #include <eve/function/is_nltz.hpp>
 #include <eve/function/regular.hpp>
 #include <eve/function/trigo_tags.hpp>
-#include <eve/module/real/math/detail/constant/rempio2_limits.hpp>
-#include <eve/module/real/math/detail/generic/rempio2_kernel.hpp>
+#include <eve/module/math/detail/constant/rempio2_limits.hpp>
+#include <eve/module/math/detail/generic/rempio2_kernel.hpp>
 
 #include <type_traits>
 

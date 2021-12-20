@@ -1,4 +1,5 @@
-#include <eve/function/sinpic.hpp>
+//#include <eve/function/sinpic.hpp>
+#include <eve/module/math.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/pi.hpp>

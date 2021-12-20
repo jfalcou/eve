@@ -21,8 +21,8 @@
 #include <eve/function/inc.hpp>
 #include <eve/function/is_positive.hpp>
 #include <eve/function/rec.hpp>
-#include <eve/module/real/math/detail/constant/rempio2_limits.hpp>
-#include <eve/module/real/math/detail/generic/trig_finalize.hpp>
+#include <eve/module/math/detail/constant/rempio2_limits.hpp>
+#include <eve/module/math/detail/generic/trig_finalize.hpp>
 #include <type_traits>
 
 namespace eve::detail

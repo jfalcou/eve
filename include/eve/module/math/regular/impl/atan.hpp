@@ -12,7 +12,7 @@
 #include <eve/function/bitofsign.hpp>
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/rec.hpp>
-#include <eve/module/real/math/detail/generic/atan_kernel.hpp>
+#include <eve/module/math/detail/generic/atan_kernel.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 

@@ -26,7 +26,7 @@
 #include <eve/function/pedantic.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
-#include <eve/module/real/math/detail/generic/atan_kernel.hpp>
+#include <eve/module/math/detail/generic/atan_kernel.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 

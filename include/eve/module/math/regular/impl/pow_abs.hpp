@@ -33,7 +33,7 @@
 #include <eve/function/logical_andnot.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/sqr.hpp>
-#include <eve/module/real/math/detail/generic/pow_kernel.hpp>
+#include <eve/module/math/detail/generic/pow_kernel.hpp>
 #include <eve/platform.hpp>
 #include <eve/function/modf.hpp>
 #include <eve/function/converter.hpp>

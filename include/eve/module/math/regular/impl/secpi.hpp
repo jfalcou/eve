@@ -21,8 +21,8 @@
 #include <eve/function/rec.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/trigo_tags.hpp>
-#include <eve/module/real/math/detail/generic/rem2.hpp>
-#include <eve/module/real/math/detail/generic/trig_finalize.hpp>
+#include <eve/module/math/detail/generic/rem2.hpp>
+#include <eve/module/math/detail/generic/trig_finalize.hpp>
 
 namespace eve::detail
 {

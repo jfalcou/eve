@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/atan2pi.hpp>
-#include <eve/module/real/math/function/pedantic/generic/atan2pi.hpp>
+#include <eve/module/math/pedantic/atan2pi.hpp>

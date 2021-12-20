@@ -25,8 +25,8 @@
 #include <eve/function/rempio2.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/trigo_tags.hpp>
-#include <eve/module/real/math/detail/constant/rempio2_limits.hpp>
-#include <eve/module/real/math/detail/generic/trig_finalize.hpp>
+#include <eve/module/math/detail/constant/rempio2_limits.hpp>
+#include <eve/module/math/detail/generic/trig_finalize.hpp>
 
 #include <type_traits>
 

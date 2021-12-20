@@ -160,7 +160,7 @@ namespace eve::detail
       }
     }
     else
-      return apply_over(pedantic_type(log), a0);
+      return apply_over(pedantic(log), a0);
   }
 
   template<floating_real_scalar_value T, decorator D>
