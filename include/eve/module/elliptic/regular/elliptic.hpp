@@ -15,10 +15,3 @@
 #include <eve/module/elliptic/regular/ellint_rf.hpp>
 #include <eve/module/elliptic/regular/ellint_rg.hpp>
 #include <eve/module/elliptic/regular/ellint_rj.hpp>
-
-
-
-
-
-
-
