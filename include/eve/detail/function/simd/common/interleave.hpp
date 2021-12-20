@@ -59,6 +59,6 @@ namespace eve::detail
   requires( T::abi_type::is_wide_logical )
   {
     auto that = interleave(v0.mask(),vs.mask()...);
-    return  kumi::map( [](auto m) { return bit_cast(m, as<T>()); }, that);
+    return  kumi::map( [](auto m) { return bit_cast(m, as<logical<T>>()); }, that);
   }
 }
