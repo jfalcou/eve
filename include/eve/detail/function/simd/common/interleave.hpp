@@ -25,11 +25,6 @@ namespace eve::detail
     {
       return values;
     }
-    else if constexpr ( logical_value<T>  && T::abi_type::is_wide_logical )
-    {
-      auto that = interleave(v0.mask(),vs.mask()...);
-      return  kumi::map( [](auto m) { return bit_cast(m, as<T>()); }, that);
-    }
     else
     {
       constexpr auto nb   = 1 + sizeof...(Ts);
@@ -57,5 +52,13 @@ namespace eve::detail
         );
       }( std::make_index_sequence<nb>{});
     }
+  }
+
+  template<simd_value T, std::same_as<T>... Ts>
+  EVE_FORCEINLINE auto interleave_(EVE_SUPPORTS(cpu_),logical<T> v0, logical<Ts>... vs) noexcept
+  requires( T::abi_type::is_wide_logical )
+  {
+    auto that = interleave(v0.mask(),vs.mask()...);
+    return  kumi::map( [](auto m) { return bit_cast(m, as<logical<T>>()); }, that);
   }
 }

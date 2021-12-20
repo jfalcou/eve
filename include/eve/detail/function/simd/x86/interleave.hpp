@@ -130,6 +130,49 @@ namespace eve::detail
     }
   }
 
+  template<scalar_value T, typename N>
+  EVE_FORCEINLINE auto interleave_( EVE_SUPPORTS(sse2_)
+                                  , logical<wide<T,N>> v0, logical<wide<T,N>> v1
+                                  ) noexcept
+  requires (N::value > 1) && x86_abi<abi_t<T,N>>
+  {
+    if constexpr( !abi_t<T,N>::is_wide_logical )
+    {
+      using s_t = typename logical<wide<T,N>>::storage_type;
+      using v_t = typename s_t::type;
+
+      auto deposit_low = [](auto v)
+      {
+        if constexpr(sizeof(v) <= 4)  return _pdep_u32(v,0x55555555UL);
+        else                          return _pdep_u64(v,0x5555555555555555ULL);
+      };
+
+      auto deposit_high = [](auto v)
+      {
+        if constexpr(sizeof(v) <= 4)  return _pdep_u32(v,0xAAAAAAAAUL);
+        else                          return _pdep_u64(v,0xAAAAAAAAAAAAAAAAULL);
+      };
+
+      auto x = v0.storage().value;
+      auto y = v1.storage().value;
+
+      auto lx = deposit_low (x);
+      auto ly = deposit_high(y);
+      auto l  = s_t{v_t(lx | ly)};
+
+      constexpr auto offset = N::value/2;
+      auto hx = deposit_low (v_t(x >> offset));
+      auto hy = deposit_high(v_t(y >> offset));
+      auto h  = s_t{v_t(hx | hy)};
+
+      return kumi::make_tuple(logical<wide<T,N>>(l),logical<wide<T,N>>(h));
+    }
+    else
+    {
+      return interleave_( EVE_RETARGET(cpu_),v0,v1);
+    }
+  }
+
   //================================================================================================
   // Interleave triplets of wides
   //================================================================================================
