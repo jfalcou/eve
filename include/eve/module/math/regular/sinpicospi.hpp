@@ -50,7 +50,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/sinpicospi.cpp}
+  //! @godbolt{doc/math/sinpicospi.cpp}
   //!
   //!  @}
   //================================================================================================

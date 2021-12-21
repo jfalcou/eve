@@ -12,19 +12,19 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup invtrigonometric
+  //! @addtogroup trigonometric
   //! @{
-  //! @var asecd
+  //! @var csc
   //!
-  //! @brief Callable object computing asecd.
+  //! @brief Callable object computing csc.
   //!
-  //! **Required header:** `#include <eve/function/asecd.hpp>`
+  //! **Required header:** `#include <eve/function/csc.hpp>`
   //!
   //! #### Members Functions
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the  computation of asecd   |
+  //! | `operator()` | the  computation of csc   |
   //!
   //! ---
   //!
@@ -38,37 +38,39 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [elementwise](@ref glossary_elementwise) arc secant of the
-  //!input in the range \f$[0, 180]\f$.
+  //!Returns the [elementwise](@ref glossary_elementwise) cosecant of the input.
   //!
   //!In particular:
   //!
-  //!   * If the element is \f$1\f$, \f$+0\f$ is returned.
-  //!   * If the element is \f$0\f$, \f$180\f$ is returned.
-  //!   * If the element \f$|x| < 1\f$, `NaN` is returned.
-  //!   * If the element is a `Nan`, `NaN` is returned.
+  //!   * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
+  //!   * If the element is \f$\pm\infty\f$, Nan is returned.
+  //!   * If the element is a `NaN`, `NaN` is returned.
   //!
   //! ---
   //!
   //! #### Supported decorators
   //!
+  //!  * eve::quarter_circle, eve::half_circle, eve::full_circle,
+  //!
+  //!     provide a balance between speed and range limitation.
+  //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/asecd.hpp>`
-  //!  
-  //!     The expression `diff(asecd)(x)` computes the derivative of the function at `x`.
+  //!     **Required header:** `#include <eve/function/diff/csc.hpp>`
+  //!
+  //!     The expression `diff(csc)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/math/asecd.cpp}
+  //! @godbolt{doc/math/csc.cpp}
   //!
   //!  @}
   //================================================================================================
-     
-  namespace tag { struct asecd_; }
-  template<> struct supports_conditional<tag::asecd_> : std::false_type {};
-  
-  EVE_MAKE_CALLABLE(asecd_, asecd);
+
+  namespace tag { struct csc_; }
+  template<> struct supports_conditional<tag::csc_> : std::false_type {};
+
+    EVE_MAKE_CALLABLE(csc_, csc);
 }
 
-#include <eve/module/math/regular/impl/asecd.hpp>
+#include <eve/module/math/regular/impl/csc.hpp>

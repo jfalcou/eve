@@ -77,7 +77,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/logspace_add.cpp}
+  //! @godbolt{doc/math/logspace_add.cpp}
   //!
   //!  @}
   //================================================================================================

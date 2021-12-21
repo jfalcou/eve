@@ -82,7 +82,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/nthroot.cpp}
+  //! @godbolt{doc/math/nthroot.cpp}
   //!
   //!  @}
   //================================================================================================

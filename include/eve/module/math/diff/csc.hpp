@@ -7,4 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/math/regular/acotd.hpp>
+
+#include <eve/module/math/regular/csc.hpp>
+#include <eve/module/math/diff/impl/csc.hpp>

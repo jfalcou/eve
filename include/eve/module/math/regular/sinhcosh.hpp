@@ -66,7 +66,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/sinhcosh.cpp}
+  //! @godbolt{doc/math/sinhcosh.cpp}
   //!
   //!  @}
   //================================================================================================

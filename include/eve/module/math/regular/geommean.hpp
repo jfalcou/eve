@@ -83,7 +83,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/geommean.cpp}
+  //! @godbolt{doc/math/geommean.cpp}
   //!
   //!  @}
   //================================================================================================

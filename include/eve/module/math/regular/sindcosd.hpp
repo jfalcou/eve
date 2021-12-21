@@ -50,7 +50,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/sindcosd.cpp}
+  //! @godbolt{doc/math/sindcosd.cpp}
   //!
   //!  @}
   //================================================================================================
