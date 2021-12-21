@@ -10,7 +10,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/module/real/math/detail/generic/tancot_kernel.hpp>
+#include <eve/module/math/detail/generic/tancot_kernel.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/binarize.hpp>
 #include <eve/function/if_else.hpp>
