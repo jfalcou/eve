@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/tan.hpp>
-#include <eve/module/real/math/function/diff/generic/tan.hpp>
+#include <eve/module/math/diff/tan.hpp>

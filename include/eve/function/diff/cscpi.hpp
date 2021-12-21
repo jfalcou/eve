@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/cscpi.hpp>
-#include <eve/module/real/math/function/diff/generic/cscpi.hpp>
+#include <eve/module/math/diff/cscpi.hpp>

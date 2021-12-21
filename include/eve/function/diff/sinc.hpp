@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/sinc.hpp>
-#include <eve/module/real/math/function/diff/generic/sinc.hpp>
+#include <eve/module/math/diff/sinc.hpp>

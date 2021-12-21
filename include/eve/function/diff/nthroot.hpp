@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/nthroot.hpp>
-#include <eve/module/real/math/function/diff/generic/nthroot.hpp>
+#include <eve/module/math/diff/nthroot.hpp>

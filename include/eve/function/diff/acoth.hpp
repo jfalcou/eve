@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/acoth.hpp>
-#include <eve/module/real/math/function/diff/generic/acoth.hpp>
+#include <eve/module/math/diff/acoth.hpp>

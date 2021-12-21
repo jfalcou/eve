@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/atan.hpp>
-#include <eve/module/real/math/function/diff/generic/atan.hpp>
+#include <eve/module/math/diff/atan.hpp>

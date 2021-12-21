@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/cosh.hpp>
-#include <eve/module/real/math/function/diff/generic/cosh.hpp>
+#include <eve/module/math/diff/cosh.hpp>

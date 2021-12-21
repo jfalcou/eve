@@ -7,4 +7,5 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/math/regular/log.hpp>
 #include <eve/module/math/pedantic/impl/log.hpp>

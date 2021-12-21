@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/cosd.hpp>
-#include <eve/module/real/math/function/diff/generic/cosd.hpp>
+#include <eve/module/math/diff/cosd.hpp>

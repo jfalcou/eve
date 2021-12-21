@@ -7,12 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
 
-namespace eve
-{
-  EVE_MAKE_CALLABLE(tand_, tand);
-}
+#include <eve/module/math/regular/tand.hpp>
 
-#include <eve/module/math/regular/impl/tand.hpp>
+#include <eve/module/math/diff/impl/tand.hpp>
 

@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/log10.hpp>
-#include <eve/module/real/math/function/diff/generic/log10.hpp>
+#include <eve/module/math/diff/log10.hpp>

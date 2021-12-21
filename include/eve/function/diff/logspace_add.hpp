@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/logspace_add.hpp>
-#include <eve/module/real/math/function/diff/generic/logspace_add.hpp>
+#include <eve/module/math/diff/logspace_add.hpp>

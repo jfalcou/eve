@@ -7,12 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
 
-namespace eve
-{
-  EVE_MAKE_CALLABLE(secd_, secd);
-}
+#include <eve/module/math/regular/secd.hpp>
 
-#include <eve/module/math/regular/impl/secd.hpp>
+#include <eve/module/math/diff/impl/secd.hpp>
 

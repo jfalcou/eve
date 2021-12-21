@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/asinpi.hpp>
-#include <eve/module/real/math/function/diff/generic/asinpi.hpp>
+#include <eve/module/math/diff/asinpi.hpp>

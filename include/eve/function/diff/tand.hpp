@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/tand.hpp>
-#include <eve/module/real/math/function/diff/generic/tand.hpp>
+#include <eve/module/math/diff/tand.hpp>

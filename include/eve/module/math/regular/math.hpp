@@ -34,6 +34,7 @@
 #include <eve/module/math/regular/atanh.hpp>
 #include <eve/module/math/regular/atan.hpp>
 #include <eve/module/math/regular/atanpi.hpp>
+#include <eve/module/math/regular/cbrt.hpp>
 #include <eve/module/math/regular/cosd.hpp>
 #include <eve/module/math/regular/cosh.hpp>
 #include <eve/module/math/regular/cos.hpp>
@@ -50,6 +51,7 @@
 #include <eve/module/math/regular/exp.hpp>
 #include <eve/module/math/regular/expm1.hpp>
 #include <eve/module/math/regular/expx2.hpp>
+#include <eve/module/math/regular/geommean.hpp>
 #include <eve/module/math/regular/log10.hpp>
 #include <eve/module/math/regular/log1p.hpp>
 #include <eve/module/math/regular/log2.hpp>

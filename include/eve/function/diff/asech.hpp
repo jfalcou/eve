@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/asech.hpp>
-#include <eve/module/real/math/function/diff/generic/asech.hpp>
+#include <eve/module/math/diff/asech.hpp>

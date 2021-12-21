@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/acotpi.hpp>
-#include <eve/module/real/math/function/diff/generic/acotpi.hpp>
+#include <eve/module/math/diff/acotpi.hpp>

@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/geommean.hpp>
-#include <eve/module/real/core/function/pedantic/generic/geommean.hpp>
+#include <eve/module/core/pedantic/geommean.hpp>

@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/cot.hpp>
-#include <eve/module/real/math/function/diff/generic/cot.hpp>
+#include <eve/module/math/diff/cot.hpp>

@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/cos.hpp>
-#include <eve/module/real/math/function/diff/generic/cos.hpp>
+#include <eve/module/math/diff/cos.hpp>

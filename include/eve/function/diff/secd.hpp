@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/secd.hpp>
-#include <eve/module/real/math/function/diff/generic/secd.hpp>
+#include <eve/module/math/diff/secd.hpp>

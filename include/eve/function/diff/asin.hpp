@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/asin.hpp>
-#include <eve/module/real/math/function/diff/generic/asin.hpp>
+#include <eve/module/math/diff/asin.hpp>

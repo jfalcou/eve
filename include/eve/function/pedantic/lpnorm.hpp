@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/lpnorm.hpp>
-#include <eve/module/real/math/function/pedantic/generic/lpnorm.hpp>
+#include <eve/module/math/pedantic/impl/lpnorm.hpp>

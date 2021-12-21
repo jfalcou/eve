@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/exp.hpp>
-#include <eve/module/real/math/function/diff/generic/exp.hpp>
+#include <eve/module/math/diff/exp.hpp>

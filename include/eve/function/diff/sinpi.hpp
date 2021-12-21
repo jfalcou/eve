@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/sinpi.hpp>
-#include <eve/module/real/math/function/diff/generic/sinpi.hpp>
+#include <eve/module/math/diff/sinpi.hpp>
