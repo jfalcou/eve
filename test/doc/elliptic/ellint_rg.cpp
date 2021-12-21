@@ -1,4 +1,5 @@
-#include <eve/function/ellint_rf.hpp>
+//#include <eve/include/function/ellint_rg.hpp>
+#include <eve/module/elliptic.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 
@@ -14,7 +15,7 @@ int main()
             << "<- pf                    = " << pf << '\n'
             << "<- qf                    = " << qf << '\n'
             << "<- rf                    = " << rf << '\n'
-            << "-> ellint_rf(pf, qf, rf) = " << eve::ellint_rf(pf, qf, rf) << '\n';
+            << "-> ellint_rg(pf, qf, rf) = " << eve::ellint_rg(pf, qf, rf) << '\n';
 
   float xf = 3.0f;
   float yf = 0.5f;
@@ -24,7 +25,7 @@ int main()
             << "<- xf                    = " << xf << '\n'
             << "<- yf                    = " << yf << '\n'
             << "<- zf                    = " << zf << '\n'
-            << "-> ellint_rf(xf, yf, zf) = " << eve::ellint_rf(xf, yf, zf) << '\n';
+            << "-> ellint_rg(xf, yf, zf) = " << eve::ellint_rg(xf, yf, zf) << '\n';
 
   return 0;
 }

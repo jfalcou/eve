@@ -11,6 +11,7 @@ add_subdirectory(proba)
 
 if(EVE_USE_BOOST)
 add_subdirectory(bessel)
+add_subdirectory(elliptic)
 add_subdirectory(combinatorial)
 add_subdirectory(special)
 endif()
