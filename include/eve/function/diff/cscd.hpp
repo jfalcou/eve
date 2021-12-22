@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/cscd.hpp>
 #include <eve/module/math/diff/cscd.hpp>

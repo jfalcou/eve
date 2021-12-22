@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/asec.hpp>
 #include <eve/module/math/diff/asec.hpp>

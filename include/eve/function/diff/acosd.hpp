@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/acosd.hpp>
 #include <eve/module/math/diff/acosd.hpp>

@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/sinhc.hpp>
 #include <eve/module/math/diff/sinhc.hpp>

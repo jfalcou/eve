@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/atan2d.hpp>
 #include <eve/module/math/pedantic/atan2d.hpp>

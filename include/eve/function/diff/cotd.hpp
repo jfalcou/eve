@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/cotd.hpp>
 #include <eve/module/math/diff/cotd.hpp>

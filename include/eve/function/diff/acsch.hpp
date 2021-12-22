@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/acsch.hpp>
 #include <eve/module/math/diff/acsch.hpp>

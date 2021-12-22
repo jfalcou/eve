@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/expx2.hpp>
 #include <eve/module/math/diff/expx2.hpp>

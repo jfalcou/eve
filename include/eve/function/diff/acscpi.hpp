@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/acscpi.hpp>
 #include <eve/module/math/diff/acscpi.hpp>

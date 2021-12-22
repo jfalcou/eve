@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/csch.hpp>
 #include <eve/module/math/diff/csch.hpp>

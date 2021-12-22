@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/atan.hpp>
 #include <eve/module/math/diff/atan.hpp>

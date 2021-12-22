@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/tanh.hpp>
 #include <eve/module/math/diff/tanh.hpp>

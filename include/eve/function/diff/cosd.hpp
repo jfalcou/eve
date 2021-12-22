@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/cosd.hpp>
 #include <eve/module/math/diff/cosd.hpp>

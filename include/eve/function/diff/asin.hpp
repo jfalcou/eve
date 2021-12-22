@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/asin.hpp>
 #include <eve/module/math/diff/asin.hpp>

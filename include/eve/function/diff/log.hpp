@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/log.hpp>
 #include <eve/module/math/diff/log.hpp>

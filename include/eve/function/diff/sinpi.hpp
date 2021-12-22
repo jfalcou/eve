@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/sinpi.hpp>
 #include <eve/module/math/diff/sinpi.hpp>

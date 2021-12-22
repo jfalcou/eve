@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/secpi.hpp>
 #include <eve/module/math/diff/secpi.hpp>
