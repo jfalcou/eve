@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/atan2d.hpp>
-#include <eve/module/real/math/function/diff/generic/atan2d.hpp>
+#include <eve/module/math/diff/atan2d.hpp>

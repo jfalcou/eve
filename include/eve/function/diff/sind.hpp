@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/sind.hpp>
-#include <eve/module/real/math/function/diff/generic/sind.hpp>
+#include <eve/module/math/diff/sind.hpp>

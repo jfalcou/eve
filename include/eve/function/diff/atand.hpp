@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/atand.hpp>
-#include <eve/module/real/math/function/diff/generic/atand.hpp>
+#include <eve/module/math/diff/atand.hpp>

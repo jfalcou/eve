@@ -27,7 +27,7 @@
 #include <eve/function/sign.hpp>
 #include <eve/function/signnz.hpp>
 #include <eve/function/sqr.hpp>
-#include <eve/module/real/math/detail/generic/erf_kernel.hpp>
+#include <eve/module/math/detail/generic/erf_kernel.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
 
@@ -159,5 +159,5 @@ namespace eve::detail
   EVE_FORCEINLINE auto erf_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
   {
     return mask_op( cond, eve::erf, t);
-  } 
+  }
 }

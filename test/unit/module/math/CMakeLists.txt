@@ -1,0 +1,116 @@
+##==================================================================================================
+##  EVE - Expressive Vector Engine
+##  Copyright : EVE Contributors & Maintainers
+##  SPDX-License-Identifier: MIT
+##==================================================================================================
+
+##==================================================================================================
+## Setup aggregation of tests
+##==================================================================================================
+add_custom_target(unit.math.exe                      )
+
+
+##==================================================================================================
+## new style tests
+##==================================================================================================
+make_unit("unit.math"  acos.cpp                  )
+make_unit("unit.math"  acosd.cpp                 )
+make_unit("unit.math"  acosh.cpp                 )
+make_unit("unit.math"  acospi.cpp                )
+make_unit("unit.math"  acot.cpp                  )
+make_unit("unit.math"  acotd.cpp                 )
+make_unit("unit.math"  acoth.cpp                 )
+make_unit("unit.math"  acotpi.cpp                )
+make_unit("unit.math"  acsc.cpp                  )
+make_unit("unit.math"  acscd.cpp                 )
+make_unit("unit.math"  acsch.cpp                 )
+make_unit("unit.math"  acscpi.cpp                )
+make_unit("unit.math"  asec.cpp                  )
+make_unit("unit.math"  asecd.cpp                 )
+make_unit("unit.math"  asech.cpp                 )
+make_unit("unit.math"  asecpi.cpp                )
+make_unit("unit.math"  asin.cpp                  )
+make_unit("unit.math"  asind.cpp                 )
+make_unit("unit.math"  asinh.cpp                 )
+make_unit("unit.math"  asinpi.cpp                )
+make_unit("unit.math"  atan.cpp                  )
+make_unit("unit.math"  atand.cpp                 )
+make_unit("unit.math"  atanh.cpp                 )
+make_unit("unit.math"  atanpi.cpp                )
+make_unit("unit.math"  atan2.cpp                 )
+make_unit("unit.math"  atan2d.cpp                )
+make_unit("unit.math"  atan2pi.cpp               )
+make_unit("unit.math"  cos.cpp                   )
+make_unit("unit.math"  cosd.cpp                  )
+make_unit("unit.math"  cosh.cpp                  )
+make_unit("unit.math"  cospi.cpp                 )
+make_unit("unit.math"  cot.cpp                   )
+make_unit("unit.math"  cotd.cpp                  )
+make_unit("unit.math"  coth.cpp                  )
+make_unit("unit.math"  cotpi.cpp                 )
+make_unit("unit.math"  csc.cpp                   )
+make_unit("unit.math"  cscd.cpp                  )
+make_unit("unit.math"  csch.cpp                  )
+make_unit("unit.math"  cscpi.cpp                 )
+make_unit("unit.math"  deginrad.cpp              )
+make_unit("unit.math"  exp.cpp                   )
+make_unit("unit.math"  exp10.cpp                 )
+make_unit("unit.math"  exp2.cpp                  )
+make_unit("unit.math"  expm1.cpp                 )
+make_unit("unit.math"  expx2.cpp                 )
+make_unit("unit.math"  log.cpp                   )
+make_unit("unit.math"  log10.cpp                 )
+make_unit("unit.math"  log1p.cpp                 )
+make_unit("unit.math"  log2.cpp                  )
+make_unit("unit.math"  logspace_add.cpp          )
+make_unit("unit.math"  logspace_sub.cpp          )
+make_unit("unit.math"  lpnorm.cpp                )
+make_unit("unit.math"  lpnorm_2.cpp              )
+make_unit("unit.math"  nthroot.cpp               )
+make_unit("unit.math"  pow.cpp                   )
+make_unit("unit.math"  pow_abs.cpp               )
+make_unit("unit.math"  powm1.cpp                 )
+make_unit("unit.math"  pow1p.cpp                 )
+make_unit("unit.math"  radindeg.cpp              )
+make_unit("unit.math"  radinpi.cpp               )
+
+#make_unit("unit.math"  rempio2.cpp               )
+make_unit("unit.math"  sec.cpp                   )
+make_unit("unit.math"  secd.cpp                  )
+make_unit("unit.math"  secpi.cpp                 )
+make_unit("unit.math"  sech.cpp                  )
+make_unit("unit.math"  sin.cpp                   )
+make_unit("unit.math"  sinc.cpp                  )
+make_unit("unit.math"  sincos.cpp                )
+make_unit("unit.math"  sind.cpp                  )
+make_unit("unit.math"  sindcosd.cpp              )
+make_unit("unit.math"  sinh.cpp                  )
+make_unit("unit.math"  sinhc.cpp                 )
+make_unit("unit.math"  sinhcosh.cpp              )
+make_unit("unit.math"  sinpi.cpp                 )
+make_unit("unit.math"  sinpic.cpp                )
+make_unit("unit.math"  sinpicospi.cpp            )
+make_unit("unit.math"  tan.cpp                   )
+make_unit("unit.math"  tand.cpp                  )
+make_unit("unit.math"  tanh.cpp                  )
+make_unit("unit.math"  tanpi.cpp                 )
+
+##==================================================================================================
+## Elementwise function unit tests
+##==================================================================================================
+
+
+## ================================================================================================
+# Targets that require more RAM to compile
+
+# add_custom_target(unit.math.heavy.scalar.exe         )
+# add_custom_target(unit.math.heavy.simd.exe           )
+# add_custom_target(unit.math.heavy.exe                )
+
+# add_dependencies(unit.math.heavy.exe      unit.math.heavy.scalar.exe )
+# add_dependencies(unit.math.heavy.exe      unit.math.heavy.simd.exe   )
+# add_dependencies(unit.math.scalar.exe     unit.math.heavy.scalar.exe )
+# add_dependencies(unit.math.simd.exe       unit.math.heavy.simd.exe   )
+
+##=================================================================================================
+##===================================================================================================

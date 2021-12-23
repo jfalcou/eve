@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/sinpic.hpp>
-#include <eve/module/real/math/function/diff/generic/sinpic.hpp>
+#include <eve/module/math/diff/sinpic.hpp>
