@@ -11,6 +11,7 @@
 //! @addtogroup functions
 //! @{
 //! @defgroup bessel Bessel function
+//! @brief Bessel function
 //!
 //! This module provides implementation for the
 //! [Bessel functions](https://en.wikipedia.org/wiki/Bessel_function) and related operations.

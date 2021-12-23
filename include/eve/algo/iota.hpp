@@ -13,11 +13,11 @@
 namespace eve::algo
 {
   //================================================================================================
-  //! @addtogroup eve.algo
+  //! @addtogroup algo
   //! @{
   //!  @var iota
   //!
-  //!  @brief version of `std::iota`
+  //!  @brief SIMD version of `std::iota`
   //!  For conversion/overflow behaviour, should follow the standard.
   //!
   //!  **Required header:** `#include <eve/algo/iota.hpp>`

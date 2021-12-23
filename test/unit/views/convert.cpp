@@ -101,7 +101,7 @@ TTS_CASE("eve::views::convert, preprocess test")
   }
 };
 
-TTS_CASE("eve.algo.views.convert to/from")
+TTS_CASE("views.convert to/from")
 {
   // pointer
   {

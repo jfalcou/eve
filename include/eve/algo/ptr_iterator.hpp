@@ -17,7 +17,7 @@
 namespace eve::algo
 {
   //================================================================================================
-  //! @addtogroup eve.algo
+  //! @addtogroup algo
   //! @{
   //!   @struct ptr_iterator
   //!   @brief An eve iterator on top of pointer or aligned pointer.

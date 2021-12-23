@@ -15,11 +15,11 @@
 namespace eve::algo
 {
   //================================================================================================
-  //! @addtogroup eve.algo
+  //! @addtogroup algo
   //! @{
   //!  @var swap_ranges
   //!
-  //!  @brief version of std::swap_ranges
+  //!  @brief SIMD version of std::swap_ranges
   //!    * Accepts two things zipping together to range of pair.
   //!    * Also can accept a `zipped_range_pair`.
   //!    * returns void.

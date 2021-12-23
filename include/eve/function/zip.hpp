@@ -38,9 +38,8 @@ namespace eve
   //!  auto operator()(as<Target> t, Ws... ws) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //! @param
-  //! t: Type to construct. By default, it's equal to `kumi::tuple<``eve::element_type`<Ws>::type>`
-  //! ws: Varidiac list of eve::simd_value to zip.
+  //! @param t  Type to construct. By default, it's equal to `kumi::tuple<eve::element_type_t<Ws>...>`
+  //! @param ws Variadic list of eve::simd_value to zip.
   //!
   //! **Return value**
   //!

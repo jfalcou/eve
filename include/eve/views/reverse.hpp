@@ -12,8 +12,9 @@
 namespace eve::views
 {
   //================================================================================================
-  //! @addtogroup eve.views
+  //! @addtogroup views
   //! @{
+  //!
   //!    @var reverse
   //!    @brief a shorthand for `eve::algo::views::reverse`.
   //!
@@ -22,10 +23,9 @@ namespace eve::views
   //!
   //!    @struct reverse_range
   //!    @brief a shorthand for `eve::algo::views::reverse_range`
+  //!
   //! }@
   //================================================================================================
-
-
   using eve::algo::views::reverse;
   using eve::algo::views::reverse_iterator;
   using eve::algo::views::reverse_range;

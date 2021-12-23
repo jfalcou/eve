@@ -27,7 +27,7 @@
 namespace eve::algo::views
 {
   //================================================================================================
-  //! @addtogroup eve.algo.views
+  //! @addtogroup views
   //! @{
   //!    @struct zip_iterator
   //!    @brief  A `relaxed_iterator` on top of multiple `relaxed_iterator`.

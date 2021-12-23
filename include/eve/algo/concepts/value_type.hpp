@@ -18,7 +18,7 @@
 namespace eve::algo
 {
   //================================================================================================
-  //! @addtogroup eve.algo.concepts
+  //! @addtogroup algo_concepts
   //! @{
   //!  @struct value_type
   //!  @brief for an instance of `eve::algo::relaxed_iterator`, `eve::algo::relaxed_range`

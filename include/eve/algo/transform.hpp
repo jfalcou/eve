@@ -42,7 +42,7 @@ namespace eve::algo
   }
 
   //================================================================================================
-  //! @addtogroup eve.algo
+  //! @addtogroup algo
   //! @{
   //!  @var transform_inplace
   //!
@@ -71,11 +71,11 @@ namespace eve::algo
   inline constexpr auto transform_inplace = function_with_traits<transform_inplace_>[default_simple_algo_traits];
 
   //================================================================================================
-  //! @addtogroup eve.algo
+  //! @addtogroup algo
   //! @{
   //!  @var transform_to
   //!
-  //!  @brief version of std::transform
+  //!  @brief SIMD version of std::transform
   //!    * Accepts two things zipping together to range of pair.
   //!    * Also can accept a `zipped_range_pair`.
   //!    * returns void.

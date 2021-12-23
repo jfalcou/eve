@@ -95,7 +95,6 @@ namespace eve
     //! (the bounds are to be converted if the input is  \f$\pi\f$ multiples, and in degrees the call is currently equivalent to big)
     //! medium use a relaxed reduction scheme
     //!
-    //!  @}
     //================================================================================================
     struct medium_
     {
@@ -117,7 +116,6 @@ namespace eve
     //! A @callable performing the same kind of operation,
     //! but  gives the correct result in the whole range,  always using the full reduction algorithm.
     //!
-    //!  @}
     struct big_
     {
       template<typename D> static constexpr auto combine( D const& ) noexcept =delete;

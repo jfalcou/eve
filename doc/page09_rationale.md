@@ -65,7 +65,7 @@ affected by the operations. Those so-called **Masked operations** are accessible
 following protocol:
 
   - Let `func` be an **EVE** object function object that supports masks and let `cond`
-    be a [logical value](@ref eve::logical_value) or a [conditional expression](@ref eve::conditional_expression).
+    be a [logical value](@ref eve::logical_value) or a [conditional expression](@ref eve::conditional_expr).
 
   - Then, for any [value](@ref eve::value) `x`, the expression `func[cond](x, ...)`
     is equivalent to `if_else(cond, func_(x,...), x)`.
@@ -76,6 +76,6 @@ implies that `x` must be convertible to `decltype(func(x))`.
 
 Masks also provide proper alternatives (rather than untouched output) and indexed selection allowing
 to treat only a vector part designation by indexes rather than values
-(see [the masking tutorial](@ref tutorial_if_else) for more details).
+(see [the masking tutorial](@ref conditional) for more details).
 
 The availability of such syntax is indicated explicitly in each function documentation page.

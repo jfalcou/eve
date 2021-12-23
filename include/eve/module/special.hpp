@@ -11,6 +11,7 @@
 //! @addtogroup functions
 //! @{
 //! @defgroup special Special functions
+//! @brief Special functions
 //!
 //! This module provides implementation for various special functions
 //!

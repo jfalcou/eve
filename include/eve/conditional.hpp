@@ -46,19 +46,34 @@ namespace eve
   }
 
   //================================================================================================
-  // Helper structure to encode conditional expression with alternative
+  //! @addtogroup simd
+  //! @{
+  //================================================================================================
+
+  //================================================================================================
+  //! @brief Conditional/Alternative wrapper
+  //!
+  //! **Required header:** `#include <eve/conditional.hpp>`
+  //!
+  //! eve::or_ wraps any eve::conditional_expression with an alternative value to be used whenever
+  //! the conditional value evaluates to `false`.
+  //!
+  //! @tparam C Type of the wrapped eve::conditional_expression value
+  //! @tparam V Type of the wrapped alternative eve::value
   //================================================================================================
   template<typename C, typename V> struct or_ : C
   {
     static constexpr bool has_alternative = true;
     using alternative_type = V;
 
+    //! Wraps a eve::conditional_expression with an alternative value
     constexpr or_(C const& c, V const& v) : C(c), alternative(v) {}
 
+    //! Returns the underlying, alternative-less conditional expression
     constexpr C base() const { return *this; }
 
-    template<typename T>
-    constexpr auto rebase(T v) const
+    //! Creates a eve::conditional_expression with a new alternative value
+    template<typename T> constexpr auto rebase(T v) const
     {
       return or_<C,T>{static_cast<C const&>(*this), v};
     }
@@ -70,17 +85,26 @@ namespace eve
       return or_<C, decltype(mapped)>{c, mapped};
     }
 
+    //! Inserts a conditional expression with alternative into a output stream
     friend std::ostream& operator<<(std::ostream& os, or_ const& c)
     {
       os << static_cast<C const&>(c);
       return os << " else ( " << c.alternative << " )";
     }
 
+    //! Value to use as an alternative
     V alternative;
   };
 
   //================================================================================================
-  // Helper structure to encode conditional expression without alternative
+  //! @brief Extensible wrapper for SIMD conditional
+  //!
+  //! **Required header:** `#include <eve/conditional.hpp>`
+  //!
+  //! eve::if_ wraps a eve::logical value so that it can be either extended with an
+  //! alternative value or help optimize conditional operations evaluation.
+  //!
+  //! @tparam C Type of the wrapped eve::logical value
   //================================================================================================
   template<typename C> struct if_
   {
@@ -88,16 +112,29 @@ namespace eve
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
+    //! Constructs a conditional expression from a eve::logical value
     if_(C c) : condition_(c) {}
 
+    //==============================================================================================
+    //! @brief Extend a conditional expression with an laternative value
+    //!
+    //! By default, conditional operations use their unchanged input whenever the conditional
+    //! evaluates to `false`. By using this member function, operations will use the user provided
+    //! eve::value `v` instead.
+    //!
+    //! @param  v Value to use if the conditional expression evaluates to `false`
+    //! @return An instance of eve::or_ wrapping current conditional expression with `v`.
+    //==============================================================================================
     template<typename V> EVE_FORCEINLINE auto else_(V const& v) const  {  return or_(*this,v);  }
     template<typename T> EVE_FORCEINLINE auto mask(eve::as<T> const&)  const { return condition_; }
 
+    //! Inserts a eve::if_ conditional expression into a output stream
     friend std::ostream& operator<<(std::ostream& os, if_ const& c)
     {
       return os << "if( " << c.condition_ << " )";
     }
 
+    //! Stored logical value
     C condition_;
   };
 
@@ -110,6 +147,16 @@ namespace eve
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = true;
 
+    //==============================================================================================
+    //! @brief Extend a conditional expression with an laternative value
+    //!
+    //! By default, conditional operations use their unchanged input whenever the conditional
+    //! evaluates to `false`. By using this member function, operations will use the user provided
+    //! eve::value `v` instead.
+    //!
+    //! @param  v Value to use if the conditional expression evaluates to `false`
+    //! @return An instance of eve::or_ wrapping current conditional expression with `v`.
+    //==============================================================================================
     template<typename V>
     EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
@@ -150,6 +197,16 @@ namespace eve
     static constexpr bool is_inverted     = true;
     static constexpr bool is_complete     = true;
 
+    //==============================================================================================
+    //! @brief Extend a conditional expression with an laternative value
+    //!
+    //! By default, conditional operations use their unchanged input whenever the conditional
+    //! evaluates to `false`. By using this member function, operations will use the user provided
+    //! eve::value `v` instead.
+    //!
+    //! @param  v Value to use if the conditional expression evaluates to `false`
+    //! @return An instance of eve::or_ wrapping current conditional expression with `v`.
+    //==============================================================================================
     template<typename V>
     EVE_FORCEINLINE constexpr auto else_(V) const  {  return *this;  }
 
@@ -194,6 +251,16 @@ namespace eve
 
     constexpr explicit EVE_FORCEINLINE keep_first(std::ptrdiff_t n) noexcept : count_(n) {}
 
+    //==============================================================================================
+    //! @brief Extend a conditional expression with an laternative value
+    //!
+    //! By default, conditional operations use their unchanged input whenever the conditional
+    //! evaluates to `false`. By using this member function, operations will use the user provided
+    //! eve::value `v` instead.
+    //!
+    //! @param  v Value to use if the conditional expression evaluates to `false`
+    //! @return An instance of eve::or_ wrapping current conditional expression with `v`.
+    //==============================================================================================
     template<typename V>
     EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
@@ -260,6 +327,16 @@ namespace eve
 
     constexpr explicit EVE_FORCEINLINE ignore_last(std::ptrdiff_t n) noexcept : count_(n) {}
 
+    //==============================================================================================
+    //! @brief Extend a conditional expression with an laternative value
+    //!
+    //! By default, conditional operations use their unchanged input whenever the conditional
+    //! evaluates to `false`. By using this member function, operations will use the user provided
+    //! eve::value `v` instead.
+    //!
+    //! @param  v Value to use if the conditional expression evaluates to `false`
+    //! @return An instance of eve::or_ wrapping current conditional expression with `v`.
+    //==============================================================================================
     template<typename V>
     EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
@@ -305,6 +382,16 @@ namespace eve
 
     constexpr explicit EVE_FORCEINLINE keep_last(std::ptrdiff_t n) noexcept : count_(n) {}
 
+    //==============================================================================================
+    //! @brief Extend a conditional expression with an laternative value
+    //!
+    //! By default, conditional operations use their unchanged input whenever the conditional
+    //! evaluates to `false`. By using this member function, operations will use the user provided
+    //! eve::value `v` instead.
+    //!
+    //! @param  v Value to use if the conditional expression evaluates to `false`
+    //! @return An instance of eve::or_ wrapping current conditional expression with `v`.
+    //==============================================================================================
     template<typename V>
     EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
@@ -372,6 +459,16 @@ namespace eve
 
     constexpr explicit EVE_FORCEINLINE ignore_first(std::ptrdiff_t n) noexcept : count_(n) {}
 
+    //==============================================================================================
+    //! @brief Extend a conditional expression with an laternative value
+    //!
+    //! By default, conditional operations use their unchanged input whenever the conditional
+    //! evaluates to `false`. By using this member function, operations will use the user provided
+    //! eve::value `v` instead.
+    //!
+    //! @param  v Value to use if the conditional expression evaluates to `false`
+    //! @return An instance of eve::or_ wrapping current conditional expression with `v`.
+    //==============================================================================================
     template<typename V>
     EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
@@ -420,6 +517,16 @@ namespace eve
       EVE_ASSERT(b<=e, "[eve::keep_between] Index mismatch for begin/end");
     }
 
+    //==============================================================================================
+    //! @brief Extend a conditional expression with an laternative value
+    //!
+    //! By default, conditional operations use their unchanged input whenever the conditional
+    //! evaluates to `false`. By using this member function, operations will use the user provided
+    //! eve::value `v` instead.
+    //!
+    //! @param  v Value to use if the conditional expression evaluates to `false`
+    //! @return An instance of eve::or_ wrapping current conditional expression with `v`.
+    //==============================================================================================
     template<typename V>
     EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
@@ -492,6 +599,16 @@ namespace eve
             : first_count_(b), last_count_(e)
     {}
 
+    //==============================================================================================
+    //! @brief Extend a conditional expression with an laternative value
+    //!
+    //! By default, conditional operations use their unchanged input whenever the conditional
+    //! evaluates to `false`. By using this member function, operations will use the user provided
+    //! eve::value `v` instead.
+    //!
+    //! @param  v Value to use if the conditional expression evaluates to `false`
+    //! @return An instance of eve::or_ wrapping current conditional expression with `v`.
+    //==============================================================================================
     template<typename V>
     EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
@@ -557,4 +674,8 @@ namespace eve
     else if constexpr ( std::same_as<C, keep_between>   ) return keep_between(T::size() - c.end_, T::size() - c.begin_);
     else if constexpr ( std::same_as<C, ignore_extrema> ) return ignore_extrema(c.last_count_, c.first_count_);
   }
+
+  //================================================================================================
+  //! @}
+  //================================================================================================
 }

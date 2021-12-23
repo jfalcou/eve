@@ -18,7 +18,7 @@
 namespace eve::algo::views
 {
   //================================================================================================
-  //! @addtogroup eve.algo.views
+  //! @addtogroup views
   //! @{
   //!    @struct base_plus_offset_iterator
   //!    @brief An iterator for all values from base to offset.
@@ -124,7 +124,7 @@ namespace eve::algo::views
   };
 
   //================================================================================================
-  //! @addtogroup eve.algo.views
+  //! @addtogroup views
   //! @{
   //!    @var iota_scaled
   //!    @brief A fuction to generate an `iota` scaled by some multiplier.
@@ -158,7 +158,7 @@ namespace eve::algo::views
   } inline constexpr iota_scaled;
 
   //================================================================================================
-  //! @addtogroup eve.algo.views
+  //! @addtogroup views
   //! @{
   //!    @var iota
   //!    @brief A fuction to generate an `iota` iterator/view like [0, 1, 2, 3, ...].

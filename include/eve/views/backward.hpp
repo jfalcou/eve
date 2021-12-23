@@ -12,8 +12,9 @@
 namespace eve::views
 {
   //================================================================================================
-  //! @addtogroup eve.views
+  //! @addtogroup views
   //! @{
+  //!
   //!    @var backward
   //!    @brief a shorthand for `eve::algo::views::backward`.
   //!
@@ -22,6 +23,7 @@ namespace eve::views
   //!
   //!    @struct backward_range
   //!    @brief a shorthand for `eve::algo::views::backward_range`
+  //!
   //! }@
   //================================================================================================
 

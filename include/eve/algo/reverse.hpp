@@ -16,11 +16,11 @@
 namespace eve::algo
 {
   //================================================================================================
-  //! @addtogroup eve.algo
+  //! @addtogroup algo
   //! @{
   //!  @var reverse
   //!
-  //!  @brief version of std::reverse
+  //!  @brief SIMD version of std::reverse
   //!    * default unrolling is 1.
   //!    * will align by default.
   //!
@@ -55,11 +55,11 @@ namespace eve::algo
   inline constexpr auto reverse = function_with_traits<reverse_>[algo::unroll<1>];
 
   //================================================================================================
-  //! @addtogroup eve.algo
+  //! @addtogroup algo
   //! @{
   //!  @var reverse_copy
   //!
-  //!  @brief version of std::reverse_copy
+  //!  @brief SIMD version of std::reverse_copy
   //!    * Accepts two things zipping together to range of pair.
   //!    * Also can accept a `zipped_range_pair`.
   //!    * returns void.

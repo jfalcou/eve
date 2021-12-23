@@ -16,11 +16,11 @@
 namespace eve::algo
 {
   //================================================================================================
-  //! @addtogroup eve.algo
+  //! @addtogroup algo
   //! @{
   //!  @var copy
   //!
-  //!  @brief version of std::copy
+  //!  @brief SIMD version of std::copy
   //!    * Accepts two things zipping together to range of pair.
   //!    * Also can accept a `zipped_range_pair`.
   //!    * returns void.

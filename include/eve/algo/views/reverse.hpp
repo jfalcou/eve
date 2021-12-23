@@ -23,7 +23,7 @@
 namespace eve::algo::views
 {
   //================================================================================================
-  //! @addtogroup eve.algo.views
+  //! @addtogroup views
   //! @{
   //!   @struct reverse_iterator
   //!   @brief An adapter over a `relaxed_iterator` that allows to iterate in the reverse order.
@@ -41,7 +41,7 @@ namespace eve::algo::views
   struct reverse_iterator;
 
   //================================================================================================
-  //! @addtogroup eve.algo.views
+  //! @addtogroup views
   //! @{
   //!   @struct reverse_range
   //!   @brief An adapter over a `relaxed_range` that allows to iterate in the reverse order.
@@ -58,7 +58,7 @@ namespace eve::algo::views
   struct reverse_range;
 
   //================================================================================================
-  //! @addtogroup eve.algo.views
+  //! @addtogroup views
   //! @{
   //!   @var reverse
   //!   @brief Takes an iterator or a range and returns an adapter for reverse iteration

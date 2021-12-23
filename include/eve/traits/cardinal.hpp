@@ -46,7 +46,7 @@ namespace eve
   //!
   //!   @code{.cpp}
   //!   template<typenale Type>
-  //!   inline constexpr auto cardinal_v = cardinal<T>::value;
+  //!   inline constexpr auto cardinal_v = cardinal<Type>::value;
   //!   @endcode
   //! @}
   //================================================================================================

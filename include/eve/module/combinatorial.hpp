@@ -10,7 +10,8 @@
 //==================================================================================================
 //! @addtogroup functions
 //! @{
-//! @defgroup combinatorial Combinatorial function
+//! @defgroup combinatorial Combinatorial functions
+//! @brief Combinatorial functions
 //!
 //! This module provides implementation for  scalar and SIMD versions of combinatorial functions
 //! and related operations.

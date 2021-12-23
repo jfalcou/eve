@@ -1137,6 +1137,7 @@ namespace eve
 }
 #endif
 
+#if !defined(EVE_DOXYGEN_INVOKED)
 //================================================================================================
 // Product type Support
 //================================================================================================
@@ -1152,3 +1153,4 @@ struct  std::tuple_element<I, eve::wide<T, N>>
 template<kumi::product_type T, typename N>
 struct std::tuple_size<eve::wide<T, N>> : std::tuple_size<typename eve::wide<T, N>::storage_type>
 {};
+#endif
