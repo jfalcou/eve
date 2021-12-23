@@ -56,11 +56,11 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
+
   namespace tag { struct ulpdist_; }
   template<> struct supports_conditional<tag::ulpdist_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(ulpdist_, ulpdist);
 }
 
-#include <eve/module/ieee/regular/ulpdist.hpp>
+#include <eve/module/ieee/regular/impl/ulpdist.hpp>
