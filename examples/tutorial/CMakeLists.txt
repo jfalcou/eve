@@ -8,6 +8,7 @@
 ## Introductory Tutorial
 ##==================================================================================================
 make_unit( "examples.tutorial" intro-01.cpp      )
+make_unit( "examples.tutorial" intro-02.cpp      )
 
 ##==================================================================================================
 ## Conditionals Tutorial

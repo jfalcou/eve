@@ -53,7 +53,7 @@ void check_polar()
   eve::wide<float> x{4};
 
   // Generates [1.5 3 4.5 ...]
-  eve::wide<float> y{[](auto i, auto c) { return 1.5f*(i+1); }};
+  eve::wide<float> y{[](auto i, auto ) { return 1.5f*(i+1); }};
 
   std::cout << x << " " << y << "\n";
 
