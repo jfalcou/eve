@@ -78,7 +78,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/is_not_flint.cpp}
+  //! @godbolt{doc/ieee/is_not_flint.cpp}
   //!
   //!  @}
   //================================================================================================

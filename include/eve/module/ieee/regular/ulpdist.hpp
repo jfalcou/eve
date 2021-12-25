@@ -52,7 +52,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/ulpdist.cpp}
+  //! @godbolt{doc/ieee/ulpdist.cpp}
   //!
   //!  @}
   //================================================================================================

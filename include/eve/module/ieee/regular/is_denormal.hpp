@@ -76,7 +76,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/is_denormal.cpp}
+  //! @godbolt{doc/ieee/is_denormal.cpp}
   //!
   //!  @}
   //================================================================================================

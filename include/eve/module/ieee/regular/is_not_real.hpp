@@ -66,7 +66,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/is_not_real.cpp}
+  //! @godbolt{doc/ieee/is_not_real.cpp}
   //!
   //!  @}
   //================================================================================================

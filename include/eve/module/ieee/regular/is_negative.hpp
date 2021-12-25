@@ -72,7 +72,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/is_negative.cpp}
+  //! @godbolt{doc/ieee/is_negative.cpp}
   //!
   //!  @}
   //================================================================================================

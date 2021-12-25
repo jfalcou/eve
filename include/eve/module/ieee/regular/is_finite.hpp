@@ -76,7 +76,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/is_finite.cpp}
+  //! @godbolt{doc/ieee/is_finite.cpp}
   //!
   //!  @}
   //================================================================================================

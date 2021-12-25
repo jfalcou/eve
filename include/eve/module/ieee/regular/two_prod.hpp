@@ -53,7 +53,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/two_prod.cpp}
+  //! @godbolt{doc/ieee/two_prod.cpp}
   //!
   //!  @}
   //================================================================================================

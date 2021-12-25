@@ -77,7 +77,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/is_unordered.cpp}
+  //! @godbolt{doc/ieee/is_unordered.cpp}
   //!
   //!  @}
   //================================================================================================

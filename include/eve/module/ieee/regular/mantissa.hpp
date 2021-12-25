@@ -69,7 +69,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/mantissa.cpp}
+  //! @godbolt{doc/ieee/mantissa.cpp}
   //!
   //!  @}
   //================================================================================================

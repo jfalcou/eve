@@ -75,7 +75,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/is_not_nan.cpp}
+  //! @godbolt{doc/ieee/is_not_nan.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -69,7 +69,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/exponent.cpp}
+  //! @godbolt{doc/ieee/exponent.cpp}
   //!
   //!  @}
   //================================================================================================
