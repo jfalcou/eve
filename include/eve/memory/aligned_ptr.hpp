@@ -73,7 +73,7 @@ namespace eve
 
     //! Construct an aligned_ptr from a pointer.
     //! Behavior is undefined if `p` is not aligned on `Lanes`.
-    aligned_ptr(pointer p) noexcept : pointer_(p)
+    explicit aligned_ptr(pointer p) noexcept : pointer_(p)
     {
       EVE_ASSERT( is_aligned<alignment()>(p)
                 , (void *)(p) << " is not aligned on " << Lanes::value
@@ -82,10 +82,14 @@ namespace eve
     }
 
     //! Construct an aligned_ptr from another one with a compatible alignment constraint
-    template<typename L>
-    aligned_ptr(aligned_ptr<Type, L> p) noexcept
+    template<typename UType, typename L>
+    aligned_ptr(aligned_ptr<UType, L> p) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-    requires( L::value >= Lanes::value)
+    requires( L::value >= Lanes::value ) &&
+            (
+              std::same_as<std::remove_const_t<Type>, UType> ||
+              std::same_as<Type, UType>
+            )
 #endif
               : pointer_(p.get())
     {}
@@ -213,7 +217,7 @@ namespace eve
     explicit operator bool() const noexcept { return pointer_ != nullptr; }
 
     //! Returns the pointer to the held object
-    explicit operator pointer() const noexcept { return pointer_; }
+    operator pointer() const noexcept { return pointer_; }
 
     //! Returns the pointer to the held object
     pointer  get() const noexcept { return pointer_; }
@@ -385,7 +389,7 @@ namespace eve
   aligned_ptr<Type, Lanes> as_aligned(Type* ptr, Lanes lanes) noexcept
 #endif
   {
-    return {ptr};
+    return aligned_ptr<Type, Lanes>{ptr};
   }
 
   //================================================================================================
@@ -400,21 +404,21 @@ namespace eve
   template<typename Type>
   aligned_ptr<Type> as_aligned(Type* ptr) noexcept
   {
-    return {ptr};
+    return aligned_ptr<Type>{ptr};
   }
 
   //! @overload
   template<typename Lanes, typename Type>
   aligned_ptr<Type const, Lanes> as_aligned(Type const *ptr, Lanes) noexcept
   {
-    return {ptr};
+    return aligned_ptr<Type const, Lanes>{ptr};
   }
 
   //! @overload
   template<typename Type>
   aligned_ptr<Type const> as_aligned(Type const *ptr) noexcept
   {
-    return {ptr};
+    return aligned_ptr<Type const>{ptr};
   }
 
   //================================================================================================

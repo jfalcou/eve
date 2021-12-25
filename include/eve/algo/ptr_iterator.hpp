@@ -59,8 +59,10 @@ namespace eve::algo
     ptr_iterator() = default;
     explicit ptr_iterator(Ptr ptr) : ptr(ptr) {}
 
-    auto unaligned()        const { return unaligned_me{ unalign(ptr) }; }
-    operator unaligned_me() const { return unaligned(); }
+    template <std::convertible_to<Ptr> UPtr>
+    ptr_iterator(ptr_iterator<UPtr, Cardinal> const& x) : ptr(x.ptr) {}
+
+    auto unaligned() const { return unaligned_me{ unalign(ptr) }; }
 
     auto previous_partially_aligned() const
     {

@@ -58,3 +58,19 @@ EVE_TEST_TYPES("Check ptr_iterator", algo_test::selected_types)
   run_test(data.begin(), data.end());
   run_test(data.cbegin(), data.cend());
 };
+
+
+TTS_CASE("eve.algo non const to const")
+{
+  using N = eve::fixed<4>;
+  using aligned_p  = eve::aligned_ptr<int, N>;
+  using aligned_cp = eve::aligned_ptr<int const, N>;
+
+  using u_it  = eve::algo::ptr_iterator <int*      , N>;
+  using uc_it = eve::algo::ptr_iterator<int const*, N>;
+  using a_it  = eve::algo::ptr_iterator<aligned_p, N>;
+  using ac_it = eve::algo::ptr_iterator<aligned_cp, N>;
+
+  TTS_CONSTEXPR_EXPECT( (std::convertible_to<u_it, uc_it>) );
+  TTS_CONSTEXPR_EXPECT( (std::convertible_to<a_it, ac_it>) );
+};
