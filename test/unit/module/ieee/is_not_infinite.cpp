@@ -35,7 +35,7 @@ EVE_TEST( "Check behavior of eve::is_not_infinite(simd)"
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
-  TTS_EQUAL(eve::is_not_infinite(a0), map([](auto e) -> eve::logical<v_t> { return  e - e == 0 && e != e; }, a0));
+  TTS_EQUAL(eve::is_not_infinite(a0), map([](auto e) -> eve::logical<v_t> { return  e - e == 0 && e == e; }, a0));
   TTS_EQUAL(eve::is_not_infinite[t](a0), eve::if_else(t, eve::is_not_infinite(a0), eve::true_(eve::as(a0))));
 };
 
