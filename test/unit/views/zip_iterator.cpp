@@ -11,10 +11,10 @@
 
 #include <eve/views/zip.hpp>
 
+#include <eve/views/convert.hpp>
 #include <eve/views/iota.hpp>
 
 #include <eve/algo/ptr_iterator.hpp>
-
 
 #include <algorithm>
 
@@ -233,4 +233,15 @@ EVE_TEST_TYPES("Check zip_iterator", algo_test::selected_types)
   run_test_one_pair(u_f_1, u_f_2, u_f_3, u_l_1);
   run_test_one_pair(a_f_1, a_f_2, a_f_3, u_l_1);
   run_test_one_pair(u_f_1, a_f_2, u_f_3, u_l_1);
+};
+
+TTS_CASE("zip iterators const/non-const")
+{
+  using cvt       = eve::views::converting_iterator<char*      , int>;
+  using cvt_const = eve::views::converting_iterator<char const*, int>;
+
+  using from      = eve::views::zip_iterator<int*      , cvt>;
+  using to        = eve::views::zip_iterator<int const*, cvt_const>;
+
+  TTS_CONSTEXPR_EXPECT( (std::convertible_to<from, to>) );
 };

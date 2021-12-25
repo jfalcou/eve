@@ -57,3 +57,11 @@ EVE_TEST_TYPES("Check reverse_iterator", algo_test::selected_types)
   run_test(data.begin(), data.end());
   run_test(data.cbegin(), data.cend());
 };
+
+TTS_CASE("reverse iterators const/non-const")
+{
+  using from = eve::views::reverse_iterator<int*>;
+  using to   = eve::views::reverse_iterator<int const*>;
+
+  TTS_CONSTEXPR_EXPECT( (std::convertible_to<from, to>) );
+};

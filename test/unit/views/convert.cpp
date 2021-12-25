@@ -136,3 +136,13 @@ TTS_CASE("eve.algo.views.convert to/from")
 
   TTS_PASS("all types ok");
 };
+
+TTS_CASE("eve.algo.views.convert_iterator const/non-const")
+{
+  using ap             = eve::aligned_ptr<char>;
+  using acp            = eve::aligned_ptr<char const>;
+  using converting_it  = eve::views::converting_iterator<ap,  int>;
+  using converting_cit = eve::views::converting_iterator<acp, int>;
+
+  TTS_CONSTEXPR_EXPECT( (std::convertible_to<converting_it, converting_cit>) );
+};

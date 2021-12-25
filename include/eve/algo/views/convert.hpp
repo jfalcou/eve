@@ -149,9 +149,10 @@ namespace eve::algo::views
 
     EVE_FORCEINLINE explicit converting_iterator(I base) : base(base) {}
 
-    EVE_FORCEINLINE auto unaligned() const { return convert(unalign(base), as<T>{}); }
+    template <std::convertible_to<I> I1>
+    converting_iterator(converting_iterator<I1, T> x) : base(x.base) {}
 
-    EVE_FORCEINLINE operator unaligned_me() const { return unaligned(); }
+    EVE_FORCEINLINE auto unaligned() const { return convert(unalign(base), as<T>{}); }
 
     EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::read_, converting_iterator self)
     {

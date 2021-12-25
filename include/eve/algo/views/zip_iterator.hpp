@@ -126,6 +126,15 @@ namespace eve::algo::views
 
       explicit zip_iterator_common(Is... is) : storage {is...} {}
 
+      template <typename ...I1s>
+        requires (std::convertible_to<I1s, Is> && ...)
+      zip_iterator_common(zip_iterator<I1s...> x)
+      {
+        storage = kumi::map([]<typename I1, typename I>(I1 from, I) -> I { return from; },
+                            x.storage,
+                            storage);
+      }
+
       EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::read_, zip_iterator<Is...> self)
       {
         return kumi::map(eve::read, self.storage);
