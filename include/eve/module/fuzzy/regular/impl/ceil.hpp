@@ -11,7 +11,7 @@
 #include <eve/function/inc.hpp>
 #include <eve/function/converter.hpp>
 #include <eve/function/fuzzy/floor.hpp>
-#include <eve/function/fuzzy.hpp>
+#include <eve/function/fuzzy_decorators.hpp>
 #include <eve/function/trunc.hpp>
 #include <eve/constant/eps.hpp>
 #include <eve/concept/value.hpp>

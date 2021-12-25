@@ -7,6 +7,7 @@ add_subdirectory(real)
 
 ## New Modules
 add_subdirectory(ieee)
+add_subdirectory(fuzzy)
 add_subdirectory(polynomial)
 add_subdirectory(proba)
 
