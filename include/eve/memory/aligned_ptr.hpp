@@ -234,11 +234,6 @@ namespace eve
     //! Dereferences pointer to the held object
     decltype(auto) operator-> ()        noexcept { return pointer_; }
 
-    //! Indexed array to the underlying array
-    Type const &operator[](std::size_t i) const noexcept { return pointer_[ i ]; }
-
-    //! Indexed array to the underlying array
-    Type &      operator[](std::size_t i)       noexcept { return pointer_[ i ]; }
     //==============================================================================================
     //! @}
     //==============================================================================================
