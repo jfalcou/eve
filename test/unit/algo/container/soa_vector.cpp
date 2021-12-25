@@ -265,6 +265,9 @@ TTS_CASE("Check types")
   TTS_TYPE_IS(v::const_iterator,         (eve::algo::views::converting_iterator<v::const_pointer,         T>));
   TTS_TYPE_IS(v::iterator_aligned,       (eve::algo::views::converting_iterator<v::pointer_aligned,       T>));
   TTS_TYPE_IS(v::const_iterator_aligned, (eve::algo::views::converting_iterator<v::const_pointer_aligned, T>));
+
+  TTS_CONSTEXPR_EXPECT((std::convertible_to<v::iterator, v::const_iterator>));
+  TTS_CONSTEXPR_EXPECT((std::convertible_to<v::pointer,  v::const_pointer>));
 };
 
 TTS_CASE("erase(pos)")
