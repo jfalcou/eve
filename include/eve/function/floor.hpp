@@ -63,7 +63,7 @@ namespace eve
   //!
   //!  * eve::tolerant
   //!
-  //!     **Required header:** `#include <eve/function/tolerant/floor.hpp>`
+  //!     **Required header:** `#include <eve/function/fuzzy/floor.hpp>`
   //!
   //!     The expression `tolerant(floor)(x, tol)` computes a tolerant floor value for `x`, where `x` must be a floating value..
   //!

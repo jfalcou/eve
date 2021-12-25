@@ -68,18 +68,18 @@ namespace eve
   //!
   //!  * `tolerant`
   //!
-  //!     **Required header:** `#include <eve/function/tolerant/trunc.hpp>`
-  //!  
+  //!     **Required header:** `#include <eve/function/fuzzy/trunc.hpp>`
+  //!
   //!     The expression `tolerant(trunc)(x, tol)` computes a tolerant truncated value for `x`, where `x` must be a floating value.
-  //!  
+  //!
   //!      - If `tol` is a floating_value computes the floor with a tolerance `tol` using Hagerty's FL5 function.
   //!      - If `tol` is an integral_value n compute the floor of the next nth representable value in the `x` type.
   //!      - If `tol` is omitted the tolerance is taken to 3 times the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
-  //!  
+  //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!     **Required header:** `#include <eve/function/diff/trunc.hpp>`
-  //!  
+  //!
   //!     The expression `diff(trunc)(x)` computes the derivative of the function at `x` .
   //!
   //! #### Example

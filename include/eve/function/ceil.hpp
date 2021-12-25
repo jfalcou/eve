@@ -63,7 +63,7 @@ namespace eve
   //!
   //!  * eve::tolerant
   //!
-  //!     **Required header:** `#include <eve/function/tolerant/ceil.hpp>`
+  //!     **Required header:** `#include <eve/function/fuzzy/ceil.hpp>`
   //!
   //!     The expression `tolerant(ceil)(x, tol)` computes a tolerant ceil value for `x`, where `x` must be a floating value.
   //!

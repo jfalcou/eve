@@ -3,6 +3,7 @@
 ,  "unit.combinatorial.exe": "^unit.combinatorial.*.exe"
 ,  "unit.elliptic.exe": "^unit.elliptic.*.exe"
 ,  "unit.ieee.exe": "^unit.ieee.*.exe"
+,  "unit.fuzzy.exe": "^unit.fuzzy.*.exe"
 ,  "unit.math.exe": "^unit.math.*.exe"
 ,  "unit.polynomial.exe": "^unit.polynomial.*.exe"
 ,  "unit.proba.exe": "^unit.proba.*.exe"
