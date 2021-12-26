@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/ifrexp.hpp>
-#include <eve/module/real/core/function/pedantic/generic/ifrexp.hpp>
+#include <eve/module/ieee/pedantic/ifrexp.hpp>
