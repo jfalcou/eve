@@ -25,9 +25,11 @@ Main eve supports it's callables for scalars. We don't do that for algorithms. T
 
 * remove/remove_if
 
+* fill
+
 * iota
 
-* reverse
+* reverse/reverse_copy
 
 # Helpers
 

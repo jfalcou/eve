@@ -58,6 +58,7 @@ make_unit("unit.algo" algorithm/transform_inplace_generic.cpp)
 make_unit("unit.algo" algorithm/transform_to_generic.cpp)
 make_unit("unit.algo" algorithm/transform_special_cases.cpp)
 make_unit("unit.algo" algorithm/iota_generic.cpp)
+make_unit("unit.algo" algorithm/fill_generic.cpp)
 
 # copy
 make_unit("unit.algo" algorithm/copy_back.cpp)
