@@ -1,7 +1,7 @@
 #error This file is for documentation only - DO NOT INCLUDE
 /**
 
-@page intro-01 Basic operations
+@page intro-01 SIMD Basic Operations
 
 @tableofcontents
 

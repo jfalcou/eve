@@ -1,85 +1,69 @@
 #error This file is for documentation only - DO NOT INCLUDE
 /**
 
-@page intro-02 Processing Data
+@page intro-02 SIMD Algorithms
 
 @tableofcontents
 
-[In the previous tutorial](@ref intro-01), we managed to convert a scalar function into a function
-processing SIMD data using `eve::wide`. In general, such function is meant to be applied to a large
-set of data instead of a single register. In this tutorial, we'll see how we can write a `for` loop
-to process data from a `std::vector` by performing SIMD-aware iterations.
+[In the previous tutorial](@ref intro-01), we managed to apply a SIMD function over data stored
+into some `std::vector`. The implementation of the loop was rather straightforwad but rewriting
+all those boundaries computations and other preparatory works can be seen as cumbersome.
 
-## Building a SIMD loop
-Let's consider the code from [the previous tutorial](@ref intro-01) is available. We can write a
-short scalar function that will iterate over data and call `to_polar` over each of them.
+As for usual sequential computation, we want to lift ourselves from raw loops and think using
+algorithms. **EVE** provides such ready-to-use SIMD aware algorithms and this tutorial will take
+a look at how to handle them.
 
-@snippet tutorial/intro-02.cpp scalar-loop
+## Simple algorithm transformation
+Before modifying our existing code, let's see how the transition from standard to **EVE** algorithm
+is performed.
 
-The process is classic: we iterate over every indexes of both vectors and compute the results to be
-stored in the pre-allocated output vectors.
+Consider a simple function using `std::transform`:
 
-When moving to a SIMD version of this loops, we have to solve two issues:
-  - Iteration over data using `eve::wide` instead of `float`
-  - Iteration over data which size is not a perfect multiple of SIMD register width
+@snippet tutorial/intro-02.cpp std-transform
 
-The principles behind turning a loop over scalars to a loop over SIMD registers needs 3 steps:
-  - load data from memory into SIMD registers and advance the address by an amount of elements
-    equal to the SIMD register width
-  - perform the SIMD operation over loaded registers
-  - store results back in memory
+Nothing really special here, we apply a given function over some `float` stored in a vector.
+Since C++20, you may be accustomed to the range-based version of this code:
 
-We already see that `eve::wide` has a constructor to read data from memory into itself and the SIMD
-version of our functions. So how do we proceed with the other steps ?
+@snippet tutorial/intro-02.cpp std-transform-range
 
-## Iteration steps
+Very similar code, except for the fact the input data are passed directly without using iterators.
 
-`eve::wide` provides an abstraction for accessing informations about the underlying SIMD register
-type. To access the number of scalar values stored in an instance of `eve::wide`, one
-can use the `size()` class member.
+We can turn this range-based code into a SIMD-aware calls to one of the algorithms defined in
+eve::algo. In a manner similar to [how we turned a function into a SIMD version of itself](@ref intro-01),
+we can convert this code to its SIMD version:
 
-If you need to generically access the more general **cardinal** notion, ie the number of value
-stored in a given type including scalar ones, you can use the `eve::cardinal` traits or its
-helper variable `eve::cardinal_v`.
+@snippet tutorial/intro-02.cpp simd-transform
 
-## Storing data to memory
+All algorithms in **EVE** are range-based, making the transition direct from std code. One may
+notice here that the SIMD algorithm is `eve::algo::transform_to` not just `eve::transform`. This is due
+to the fact that discriminating operation between two distinct ranges and in-place operations leads
+to better code generation and optimization. For transform, `eve::algo::transform_to` is associated with
+`eve::algo::transform_inplace`, its in-place variant.
 
-Loading data from memory fits nicely as a constructor (even if `eve::load` is a thing for more
-complex scenarios), storing data from a `eve::wide` back to memory requires a dedicated function:
-`eve::store`.
+Note how the lambda function passed to `eve::algo::transform_to` can explicitly take an instance of
+`eve::wide`. You can of course use `auto` or template parameter but the 1:1 type substitution works
+right out of the box.
 
-`eve::store` takes two parameters: the value to store to memory and the pointer to where the value
-must be stored.
+## From multiple ranges to zipped ranges
+This first example was tailored made to fit in a single call to one algorithm. But what if we want
+to use **EVE** algorithms to apply our `to_polar` and `to_cartesian` function over a block of data.
+Clearly, we need to have a way to gather the two input vector of data and return a tuple-like
+entity for the results.
 
-The complete SIMD loop then looks this way:
+First, we need to adapt the way we return data from our functions as a `std::tuple` is clearly not
+something you can store directly into a `std::vector<float>`.
 
-@snippet tutorial/intro-02.cpp simd-loop
+@snippet tutorial/intro-02.cpp simd-tuple
 
-## Handling extra-data
-Looks good but an actual issue has been swept under the rug: what if our vector of data contains
-an number of values which is not exactly a multiple of our SIMD register cardinal ?
-
-One strategy is to stop iteration when we loaded the last comple `eve::wide`. This can be done
-by computing the first index multiple of `eve::wide<float>::size()` lesser than the size of the
-vector.
-
-To do so, you can use `eve::align` to compute such a value by requesting an alignment **under** the
-cardinal of the register:
-
-@code
-auto last_simd_index = eve::align(x.size(), eve::under{eve::wide<float>::size()});
-@endcode
-
-Once done, we need to run a second loop dealing with the remaining data in a scalar way.
-The final code then looks like:
-
-@snippet tutorial/intro-02.cpp simd-loop-exact
+@snippet tutorial/intro-02.cpp simd-transform_zip
 
 ## Conclusion
 In this tutorial, we managed to:
-  - write a `for` loop to apply our SIMD function over data stored in a `std::vector`
-  - adapt this first loop to handle left-overs in data
+  - use a simple algorithms from **EVE** algorithms set
+  - use an iterator wrapper to implement a non-trivial transformation
+  - define SIMD version of tuples and how to compute and return them
 
-[In the next tutorial](@ref intro-03), we will use see how to turn this loop in a call to one
-of **EVE** SIMD enabled algorithms.
+[In the next tutorial](@ref intro-03), we will complete this exercise by demonstrating how
+to use all elements seen this far to work directly on user-defined types and SIMD-aware containers
+for such types.
 **/
