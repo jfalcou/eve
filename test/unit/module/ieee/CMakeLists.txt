@@ -51,23 +51,3 @@ make_unit("unit.ieee" prev.cpp                    )
 #make_unit("unit.ieee" two_add.cpp                 )
 #make_unit("unit.ieee" two_prod.cpp                )
 make_unit("unit.ieee" ulpdist.cpp                 )
-
-##==================================================================================================
-## Elementwise function unit tests
-##==================================================================================================
-
-
-## ================================================================================================
-# Targets that require more RAM to compile
-
-# add_custom_target(unit.ieee.heavy.scalar.exe         )
-# add_custom_target(unit.ieee.heavy.simd.exe           )
-# add_custom_target(unit.ieee.heavy.exe                )
-
-# add_dependencies(unit.ieee.heavy.exe      unit.ieee.heavy.scalar.exe )
-# add_dependencies(unit.ieee.heavy.exe      unit.ieee.heavy.simd.exe   )
-# add_dependencies(unit.ieee.scalar.exe     unit.ieee.heavy.scalar.exe )
-# add_dependencies(unit.ieee.simd.exe       unit.ieee.heavy.simd.exe   )
-
-##=================================================================================================
-##===================================================================================================
