@@ -23,6 +23,12 @@ needs to change.
  - [Installing and using the library](https://jfalcou.github.io/eve/html/install.html)
  - [References Documentation](https://jfalcou.github.io/eve/html/modules.html)
 
+## Video materials
+
+### SIMD in C++20: EVE of a new Era - CppCon 2021
+
+[![SIMD in C++20: EVE of a new Era - CppCon 2021](http://img.youtube.com/vi/WZGNCPBMInI/0.jpg)](http://www.youtube.com/watch?v=WZGNCPBMInI "Video Title")
+
 ## Current status - Advanced BETA
 
 EVE is considered in **advanced beta**: it's usable, has an almost complete feature sets for a sensible amount of instructions sets but it's possible some values or performances issues may still remain. Don't hesitate to report any funky code-gen or bad optimizations so we can deliver the best performance around.
