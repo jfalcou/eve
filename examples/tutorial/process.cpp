@@ -9,13 +9,10 @@
 
 //! [empty]
 
+//! [scalar-loop]
+#include <vector>
 #include <cmath>
 #include <tuple>
-#include <eve/wide.hpp>
-#include <eve/function/sqrt.hpp>
-#include <eve/function/sin.hpp>
-#include <eve/function/cos.hpp>
-#include <eve/function/atan2.hpp>
 
 std::tuple<float,float> to_polar(float x, float y)
 {
@@ -23,16 +20,6 @@ std::tuple<float,float> to_polar(float x, float y)
   auto theta  = std::atan2(y, x);
   return { rho, theta };
 }
-
-std::tuple<eve::wide<float>,eve::wide<float>> to_polar(eve::wide<float> x, eve::wide<float> y)
-{
-  auto rho    = eve::sqrt(x * x + y * y);
-  auto theta  = eve::atan2(y, x);
-  return { rho, theta };
-}
-
-//! [scalar-loop]
-#include <vector>
 
 auto to_scalar_polar(std::vector<float> const& x, std::vector<float> const& y)
 {
@@ -65,7 +52,20 @@ void check_scalar()
 //! [scalar-loop-test]
 
 //! [simd-loop]
+#include <eve/wide.hpp>
+#include <eve/function/sin.hpp>
+#include <eve/function/cos.hpp>
+#include <eve/function/atan2.hpp>
+#include <eve/function/sqrt.hpp>
 #include <eve/function/store.hpp>
+#include <tuple>
+
+std::tuple<eve::wide<float>,eve::wide<float>> to_polar(eve::wide<float> x, eve::wide<float> y)
+{
+  auto rho    = eve::sqrt(x * x + y * y);
+  auto theta  = eve::atan2(y, x);
+  return { rho, theta };
+}
 
 auto to_simd_polar(std::vector<float> const& x, std::vector<float> const& y)
 {

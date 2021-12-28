@@ -7,9 +7,10 @@
 ##==================================================================================================
 ## Introductory Tutorial
 ##==================================================================================================
-make_unit( "examples.tutorial" intro-01.cpp      )
-make_unit( "examples.tutorial" intro-02.cpp      )
-make_unit( "examples.tutorial" process.cpp       )
+make_unit( "examples.tutorial" intro-01.cpp )
+make_unit( "examples.tutorial" intro-02.cpp )
+make_unit( "examples.tutorial" intro-03.cpp )
+make_unit( "examples.tutorial" process.cpp  )
 
 ##==================================================================================================
 ## Conditionals Tutorial

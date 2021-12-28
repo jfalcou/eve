@@ -42,17 +42,37 @@ eve::wide provides an abstraction for accessing informations about the underlyin
 type. To access the number of scalar values stored in an instance of eve::wide, one
 can use the `size()` class member.
 
+@code
+using w_t = eve::wide<float>;
+
+for(std::size_t i=0;i<x.size();i += w_t::size())
+{
+  // Operations on i
+}
+@endcode
+
 If you need to generically access the more general **cardinal** notion, ie the number of value
-stored in a given type including scalar ones, you can use the `eve::cardinal` traits or its
-helper variable `eve::cardinal_v`.
+stored in a given type including scalar ones, you can use the eve::cardinal traits or its
+helper variable eve::cardinal_v.
+
+@code
+using w_t = eve::wide<float>;
+
+for(std::size_t i=0;i<x.size();i += eve::cardinal_v<w_t>)
+{
+  // Operations on i
+}
+@endcode
+
+Note that at this point, we don't take care of the tail data not fitting into a SIMD register.
 
 ## Storing data to memory
 
-Loading data from memory fits nicely as a constructor (even if `eve::load` is a thing for more
+Loading data from memory fits nicely as a constructor (even if eve::load is a thing for more
 complex scenarios), storing data from a eve::wide back to memory requires a dedicated function:
-`eve::store`.
+eve::store.
 
-`eve::store` takes two parameters: the value to store to memory and the pointer to where the value
+eve::store takes two parameters: the value to store to memory and the pointer to where the value
 must be stored.
 
 The complete SIMD loop then looks this way:
@@ -67,7 +87,7 @@ One strategy is to stop iteration when we loaded the last comple eve::wide. This
 by computing the first index multiple of `eve::wide<float>::size()` lesser than the size of the
 vector.
 
-To do so, you can use `eve::align` to compute such a value by requesting an alignment **under** the
+To do so, you can use eve::align to compute such a value by requesting an alignment **under** the
 cardinal of the register:
 
 @code
