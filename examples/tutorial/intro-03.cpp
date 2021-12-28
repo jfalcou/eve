@@ -9,8 +9,6 @@
 
 //! [empty]
 
-namespace v1
-{
 //! [scalar-tuple]
 #include <cmath>
 #include <tuple>
@@ -36,20 +34,20 @@ std::tuple<eve::wide<float>,eve::wide<float>> to_polar(eve::wide<float> x, eve::
   return { rho, theta };
 }
 //! [simd-std-tuple]
-}
 
-namespace v2
-{
 //! [simd-kumi-tuple]
 #include <eve/function/sqrt.hpp>
 #include <eve/function/atan2.hpp>
 #include <eve/product_type.hpp>
 
-eve::wide<kumi::tuple<float,float>> to_polar(eve::wide<float> x, eve::wide<float> y)
+namespace simd
 {
-  auto rho    = eve::sqrt(x * x + y * y);
-  auto theta  = eve::atan2(y, x);
-  return { rho, theta };
+  auto to_polar(eve::wide<float> x, eve::wide<float> y)
+  {
+    auto rho    = eve::sqrt(x * x + y * y);
+    auto theta  = eve::atan2(y, x);
+    return eve::wide<kumi::tuple<float,float>>{ rho, theta };
+  }
 }
 //! [simd-kumi-tuple]
 
@@ -59,48 +57,48 @@ eve::wide<kumi::tuple<float,float>> to_polar(eve::wide<float> x, eve::wide<float
 #include <eve/algo/transform.hpp>
 #include <eve/views/zip.hpp>
 
-auto simd_range_to_polar( std::vector<float> const& xs, std::vector<float> const& ys)
+namespace simd
 {
-  std::vector<float> rho(xs.size());
-  std::vector<float> theta(xs.size());
+  auto to_polar( std::vector<float> const& xs, std::vector<float> const& ys)
+  {
+    std::vector<float> rho(xs.size());
+    std::vector<float> theta(xs.size());
 
-  auto ins  = eve::views::zip(xs, ys);
-  auto outs = eve::views::zip(rho, theta);
+    auto ins  = eve::views::zip(xs, ys);
+    auto outs = eve::views::zip(rho, theta);
 
-  eve::algo::transform_to ( ins, outs
-                          , [](auto in) { return to_polar( get<0>(in), get<1>(in)); }
-                          );
+    eve::algo::transform_to ( ins, outs
+                            , [](auto in) { return to_polar( get<0>(in), get<1>(in)); }
+                            );
 
-  return std::make_tuple(rho,theta);
+    return std::make_tuple(rho,theta);
+  }
 }
 //! [simd-transform_zip]
-}
-
-namespace v3
-{
-//! [scalar-udt]
-#include <cmath>
-
-struct polar_coords
-{
-  float rho, theta;
-};
-
-polar_coords to_polar(float x, float y)
-{
-  auto rho    = std::sqrt(x * x + y * y);
-  auto theta  = std::atan2(y, x);
-  return { rho, theta };
-}
-//! [scalar-udt]
-}
 
 #include "test.hpp"
 
-TTS_CASE("Check to_polar")
+namespace check
 {
-  auto [rho,theta] = to_polar(1,1);
+  auto to_polar(std::vector<float> const& x, std::vector<float> const& y)
+  {
+    std::vector<float> rho(x.size()), theta(x.size());
 
-  TTS_ULP_EQUAL(rho   , std::sqrt(2.f), 0.5);
-  TTS_ULP_EQUAL(theta , 0.78539819f   , 0.5);
+    for(std::size_t i=0;i<x.size();++i)
+      std::tie(rho[i], theta[i]) = ::to_polar(x[i],y[i]);
+
+    return std::make_tuple(rho, theta);
+  }
+}
+
+TTS_CASE("Check all_rhos SIMD vs Scalar")
+{
+  std::vector<float> xs{1,0.8,0.6,0.4,0.2,0.1,-0.1,-0.2,-0.4,-0.6,-0.8,-1   };
+  std::vector<float> ys{0,0.1,0.2,0.4,0.6,0.8,   1, 0.8, 0.6, 0.4, 0.2, 0.1 };
+
+  auto [scalar_rho, scalar_theta] = check::to_polar(xs,ys);
+  auto [simd_rho  , simd_theta  ] = simd::to_polar(xs,ys);
+
+  TTS_ALL_ULP_EQUAL(scalar_rho  , simd_rho  , 0.5);
+  TTS_ALL_ULP_EQUAL(scalar_theta, simd_theta, 0.5);
 };

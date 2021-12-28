@@ -10,6 +10,11 @@
 make_unit( "examples.tutorial" intro-01.cpp )
 make_unit( "examples.tutorial" intro-02.cpp )
 make_unit( "examples.tutorial" intro-03.cpp )
+make_unit( "examples.tutorial" intro-04.cpp )
+
+##==================================================================================================
+## Loop Tutorial
+##==================================================================================================
 make_unit( "examples.tutorial" process.cpp  )
 
 ##==================================================================================================
