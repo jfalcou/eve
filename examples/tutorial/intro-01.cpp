@@ -5,95 +5,70 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
+//! [empty]
+
+//! [empty]
+
 //! [scalar-function]
 #include <cmath>
-#include <tuple>
 
-std::tuple<float,float> to_cartesian(float rho, float theta)
+float rho(float x, float y)
 {
-  auto s = std::sin(theta);
-  auto c = std::cos(theta);
-  return { rho * c, rho * s };
+  return std::sqrt(x * x + y * y);
 }
 
-std::tuple<float,float> to_polar(float x, float y)
+float theta(float x, float y)
 {
-  auto rho    = std::sqrt(x * x + y * y);
-  auto theta  = std::atan2(y, x);
-  return { rho, theta };
+  return std::atan2(y, x);
 }
 //! [scalar-function]
 
 //! [simd-function]
 #include <eve/wide.hpp>
 #include <eve/function/sqrt.hpp>
-#include <eve/function/sin.hpp>
-#include <eve/function/cos.hpp>
 #include <eve/function/atan2.hpp>
 
-std::tuple<eve::wide<float>,eve::wide<float>> to_cartesian(eve::wide<float> rho, eve::wide<float> theta)
+eve::wide<float> rho(eve::wide<float> x, eve::wide<float> y)
 {
-  auto s = eve::sin(theta);
-  auto c = eve::cos(theta);
-  return { rho * c, rho * s };
+  return  eve::sqrt(x * x + y * y);
 }
 
-std::tuple<eve::wide<float>,eve::wide<float>> to_polar(eve::wide<float> x, eve::wide<float> y)
+eve::wide<float> theta(eve::wide<float> x, eve::wide<float> y)
 {
-  auto rho    = eve::sqrt(x * x + y * y);
-  auto theta  = eve::atan2(y, x);
-  return { rho, theta };
+  return eve::atan2(y, x);
 }
 //! [simd-function]
 
-//! [simd-test-polar]
+//! [simd-test]
+#include <iostream>
+
 void check_polar()
 {
-  // Generates [4 4 ... 4]
-  eve::wide<float> x{4};
+  eve::wide<float> x1{4};
+  eve::wide<float> y1{[](auto i, auto ) { return 1.5f*(i+1); }};
 
-  // Generates [1.5 3 4.5 ...]
-  eve::wide<float> y{[](auto i, auto ) { return 1.5f*(i+1); }};
+  std::cout << x1 << " " << y1 << " => " << rho(x1,y1) << "\n";
 
-  std::cout << x << " " << y << "\n";
+  float data[] = {1.5f, 3, 4.5f, 6, 7.5f, 9, 10.5f, 12, 13.5, 15, 16.5, 18, 19.5, 21, 22.5, 24};
+  eve::wide<float> y2{&data[0]};
 
-  auto[r,t] = to_polar(x,y);
-  std::cout << r << " " << t << "\n";
+  std::cout << x1 << " " << y2 << " => " << theta(x1,y2) << "\n";
 }
-//! [simd-test-polar]
-
-//! [simd-test-cartesian]
-void check_cartesian()
-{
-  float data[] = {1,2,3,4,5,6,7,8,9,10,11,12};
-
-  // Generates [3 4 5 6]
-  eve::wide<float, eve::fixed<4>> rho{&data[2]};
-
-  // Generates [0 M_PI/6 M_PI/4 M_PI/2]
-  eve::wide<float, eve::fixed<4>> theta{0, M_PI/6, M_PI/4, M_PI/2};
-
-  std::cout << rho << " " << theta << "\n";
-
-  auto[x,y] = to_cartesian(rho,theta);
-  std::cout << x << " " << y << "\n";
-}
-//! [simd-test-cartesian]
+//! [simd-test]
 
 #include "test.hpp"
+#include <eve/constant/sqrt_2.hpp>
 
-TTS_CASE("Check to_polar")
+TTS_CASE("Check scalar to_polar")
 {
-  auto [rho,theta] = to_polar(1,1);
-
-  TTS_ULP_EQUAL(rho   , std::sqrt(2.f), 0.5);
-  TTS_ULP_EQUAL(theta , 0.78539819f   , 0.5);
+  TTS_ULP_EQUAL(rho(1,1)  , std::sqrt(2.f), 0.5);
+  TTS_ULP_EQUAL(theta(1,1), 0.78539819f   , 0.5);
 };
 
-TTS_CASE("Check to_cartesian")
+TTS_CASE("Check SIMD to_polar")
 {
-  auto [x,y] = to_cartesian(2,M_PI/4);
+  eve::wide<float> x{1}, y{1};
 
-  TTS_ULP_EQUAL(x , std::sqrt(2.f), 0.5);
-  TTS_ULP_EQUAL(y , std::sqrt(2.f), 0.5);
+  TTS_ULP_EQUAL(rho(x,y)  , eve::sqrt_2(eve::as(x))       , 0.5);
+  TTS_ULP_EQUAL(theta(x,y), eve::wide<float>{0.78539819f} , 0.5);
 };

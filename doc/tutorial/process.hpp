@@ -6,13 +6,17 @@
 @tableofcontents
 
 [In a previous tutorial](@ref intro-03), we managed to convert a function using standard algorithm
-into a function using SIMD algorithm using `eve::algo`. In general, such function is meant to be applied to a large
-set of data instead of a single register. In this tutorial, we'll see how we can write a `for` loop
-to process data from a `std::vector` by performing SIMD-aware iterations.
+into a function using SIMD algorithm using `eve::algo`. In some rare cases, you may need to use a
+non-conventional loop structure.
+
+In this tutorial, we'll see how we can write a manual loop to process data by performing SIMD-aware
+iterations.
+
+@snippet tutorial/process.cpp empty
 
 ## Building a SIMD loop
-Let's consider the code from [the previous tutorial](@ref intro-01) is available. We can write a
-short scalar function that will iterate over data and call `to_polar` over each of them.
+Let's write a short scalar function that will iterate over data and call `to_polar` over each of
+them.
 
 @snippet tutorial/process.cpp scalar-loop
 
@@ -20,7 +24,7 @@ The process is classic: we iterate over every indexes of both vectors and comput
 stored in the pre-allocated output vectors.
 
 When moving to a SIMD version of this loops, we have to solve two issues:
-  - Iteration over data using `eve::wide` instead of `float`
+  - Iteration over data using eve::wide instead of `float`
   - Iteration over data which size is not a perfect multiple of SIMD register width
 
 The principles behind turning a loop over scalars to a loop over SIMD registers needs 3 steps:
@@ -29,13 +33,13 @@ The principles behind turning a loop over scalars to a loop over SIMD registers 
   - perform the SIMD operation over loaded registers
   - store results back in memory
 
-We already see that `eve::wide` has a constructor to read data from memory into itself and the SIMD
+We already see that eve::wide has a constructor to read data from memory into itself and the SIMD
 version of our functions. So how do we proceed with the other steps ?
 
 ## Iteration steps
 
-`eve::wide` provides an abstraction for accessing informations about the underlying SIMD register
-type. To access the number of scalar values stored in an instance of `eve::wide`, one
+eve::wide provides an abstraction for accessing informations about the underlying SIMD register
+type. To access the number of scalar values stored in an instance of eve::wide, one
 can use the `size()` class member.
 
 If you need to generically access the more general **cardinal** notion, ie the number of value
@@ -45,7 +49,7 @@ helper variable `eve::cardinal_v`.
 ## Storing data to memory
 
 Loading data from memory fits nicely as a constructor (even if `eve::load` is a thing for more
-complex scenarios), storing data from a `eve::wide` back to memory requires a dedicated function:
+complex scenarios), storing data from a eve::wide back to memory requires a dedicated function:
 `eve::store`.
 
 `eve::store` takes two parameters: the value to store to memory and the pointer to where the value
@@ -59,7 +63,7 @@ The complete SIMD loop then looks this way:
 Looks good but an actual issue has been swept under the rug: what if our vector of data contains
 an number of values which is not exactly a multiple of our SIMD register cardinal ?
 
-One strategy is to stop iteration when we loaded the last comple `eve::wide`. This can be done
+One strategy is to stop iteration when we loaded the last comple eve::wide. This can be done
 by computing the first index multiple of `eve::wide<float>::size()` lesser than the size of the
 vector.
 
