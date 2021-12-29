@@ -82,7 +82,7 @@ Visual Studio support is currently being added. Help on the front of setting up 
 
  - **Why this instead of std::simd or any other libraries?** EVE is a playground for testing proper
    design and implementation decisions for such libraries. Vc and its standard version are fine pieces
-   of work but we aim at pushing the envelop in term of API and implementation without any standard
+   of work but we aim at pushing the envelope in term of API and implementation without any standard
    restriction. We will try, however, to keep up with standard naming as much as possible.
 
  - **Is this Boost.SIMD v42.69?** Yes and no. This reimplementation is based on slightly different
