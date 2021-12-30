@@ -25,8 +25,8 @@ already put in place for handling tuple just works with user-defined type. **EVE
 an opt-in system to do just that.
 
 To register `polar_coords` to be usable as a type inside eve::wide, two things are needed:
-  - adapt the structure to be compatible with C++ structured bindings. This includes providing
-    specializations for `std::tuple_size`, `std::tuple_element` and a RAII accessible `get` function.
+  - adapt the structure to be [compatible with C++ structured bindings](https://en.cppreference.com/w/cpp/language/structured_binding).
+    This includes specializations for `std::tuple_size`, `std::tuple_element` and a `get` function.
   - specialize eve::is_product_type to opt-in for product-type behavior
 
 @snippet tutorial/intro-04.cpp simd-udt-adapt
@@ -36,10 +36,23 @@ user defined types without modifying their code, thus allowing for 3rd party typ
 
 We can then just rewrite `to_polar` to use this new UDT.
 
-@snippet tutorial/intro-04.cpp simd-udt-to_polar-new
+@snippet tutorial/intro-04.cpp simd-udt-to_polar
 
 Note how the semantic improved by being able to explicitly states we return a SIMD register made
 of instance of `polar_coords`.
+
+Finally, the reliance on the structured binding protocol makes some standard trivial to adapt to
+SIMD processing, as only the specialization of eve::is_product_type is then required. This is the
+case for `std::array`for example.
+
+@code
+#include <array>
+#include <eve/wide.hpp>
+
+template<typename T, std::size_t N>
+struct eve::is_product_type<std::array<T,N>> : std::true_type
+{};
+@endcode
 
 ## Creating SIMD-aware UDT
 Sometimes however, you may want to do a bit more than just adapting types. You may want to build
@@ -48,18 +61,53 @@ to do just that via the use of the eve::struct_support helper.
 
 @snippet tutorial/intro-04.cpp simd-udt-create
 
-Again, we can then just rewrite `to_polar` to use this new UDT.
+Let's go over the new components introduced here:
 
-@snippet tutorial/intro-04.cpp simd-udt-to_polar-new
+  - eve::struct_support is to be used as a base class for the new user-defined type. It acts as
+    a [CRTP](https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern) base class that
+    gathers the ordered list of the desired members types. Here we want `udt::polar_coords` to be
+    two `float`s. Said data members will then be automatically stored by eve::struct_support and
+    accessible via a tuple-like interface via `get`.
+
+  - By default, inheriting from eve::struct_support provides overloads for equality and inequality
+    operators.
+
+  - `using eve_disable_ordering = void;` is an opt-out for the otherwise automatically generated
+    comparison operators as we don't want to automatically be able to order instances of `polar_coords`.
+
+  - We then define friend functions to access the members of `udt::polar_coords` in a easy way. As the
+    struct thus defined will be usable in both scalar and SIMD context, we use the eve::like
+    concept to overload them. `eve::like<polar_coords>` used as a parameters concept means that the
+    function accepts any type that behaves like a `polar_coords`, i.e `polar_coords` and
+    `eve::wide<polar_coords>`. Such function can also be defined as regular function, but this form
+    is easier and safer.
+
+This is the bare minimum we can do with eve::struct_support. Additional operators can be added along
+with stream insertion. Check eve::struct_support documentation for more informations.
 
 ## Storage and Processing
+The last step in this situation is now to process multiples `udt::polar_coords` using algorithms.
+The most efficient way to do so is to use eve::soa_vector as a container for SIMD-aware types, either
+adapted or created using eve::struct_support.
 
+eve::soa_vector provides a `std::vector`-like interface but perform automatic Structure of Array
+storage optimisation, ensures the best alignment possible for each sub-members and is directly usable
+as **EVE** algorithm input or output.
+
+Let's see how eve::soa_vector can be used as a proper output parameter for out `to_polar` function.
+
+@snippet tutorial/intro-04.cpp simd-soa_vector_out
+
+Now, as a final example, let's a do a `cartesian_coords` SIMD user-defined type and write
+`to_cartesian`.
+
+@snippet tutorial/intro-04.cpp simd-soa_vector_in
 
 ## Conclusion
 In this tutorial, we managed to:
   - adapt existing UDT to be compatible with eve::wide
   - create new UDTs compatible with eve::wide by constrcution
-  - use SIMD-aware storage in place of standard containers
+  - use eve::soa_vector, the SIMD-aware storage in place of standard containers
   - process SIMD-aware storage with **EVE** algorithms
 
 **/

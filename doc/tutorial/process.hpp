@@ -5,7 +5,7 @@
 
 @tableofcontents
 
-[In a previous tutorial](@ref intro-03), we managed to convert a function using standard algorithm
+[In a previous tutorial](@ref intro-02), we managed to convert a function using standard algorithm
 into a function using SIMD algorithm using `eve::algo`. In some rare cases, you may need to use a
 non-conventional loop structure.
 

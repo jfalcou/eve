@@ -52,7 +52,6 @@ namespace simd
 //! [simd-kumi-tuple]
 
 //! [simd-transform_zip]
-#include <cmath>
 #include <vector>
 #include <eve/algo/transform.hpp>
 #include <eve/views/zip.hpp>

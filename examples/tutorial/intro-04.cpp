@@ -75,16 +75,16 @@ namespace adapt
 
 namespace udt
 {
-  struct polar_coordinates : eve::struct_support<polar_coordinates,float,float>
+  struct polar_coords : eve::struct_support<polar_coords,float,float>
   {
     using eve_disable_ordering = void;
 
-    friend decltype(auto) rho(eve::like<polar_coordinates> auto&& self)
+    friend decltype(auto) rho(eve::like<polar_coords> auto&& self)
     {
       return get<0>(std::forward<decltype(self)>(self));
     }
 
-    friend decltype(auto) theta(eve::like<polar_coordinates> auto&& self)
+    friend decltype(auto) theta(eve::like<polar_coords> auto&& self)
     {
       return get<1>(std::forward<decltype(self)>(self));
     }
@@ -92,17 +92,68 @@ namespace udt
 }
 //! [simd-udt-create]
 
-//! [simd-udt-to_polar-new]
+//! [simd-soa_vector_out]
+#include <vector>
+#include <eve/algo/container/soa_vector.hpp>
+#include <eve/algo/transform.hpp>
+#include <eve/views/zip.hpp>
+
 namespace udt
 {
-  eve::wide<polar_coordinates> to_polar(eve::wide<float> x, eve::wide<float> y)
+  auto to_polar( std::vector<float> const& xs, std::vector<float> const& ys)
   {
-    auto rho    = eve::sqrt(x * x + y * y);
-    auto theta  = eve::atan2(y, x);
-    return eve::wide<polar_coordinates>{ rho, theta };
+    eve::algo::soa_vector<polar_coords> outs(xs.size());
+
+    eve::algo::transform_to ( eve::views::zip(xs, ys), outs
+                            , [](auto in) { return to_polar( get<0>(in), get<1>(in) ); }
+                            );
+
+    return outs;
   }
 }
-//! [simd-udt-to_polar-new]
+//! [simd-soa_vector_out]
+
+//! [simd-soa_vector_in]
+#include <vector>
+#include <eve/algo/container/soa_vector.hpp>
+#include <eve/algo/transform.hpp>
+#include <eve/function/cos.hpp>
+#include <eve/function/sin.hpp>
+
+namespace udt
+{
+  struct cartesian_coords : eve::struct_support<cartesian_coords,float,float>
+  {
+    using eve_disable_ordering = void;
+
+    friend decltype(auto) rho(eve::like<cartesian_coords> auto&& self)
+    {
+      return get<0>(std::forward<decltype(self)>(self));
+    }
+
+    friend decltype(auto) theta(eve::like<cartesian_coords> auto&& self)
+    {
+      return get<1>(std::forward<decltype(self)>(self));
+    }
+  };
+
+  auto to_cartesian( eve::algo::soa_vector<polar_coords> const& ins)
+  {
+    eve::algo::soa_vector<cartesian_coords> outs(xs.size());
+
+    eve::algo::transform_to ( ins, outs
+                            , [](auto in)
+                              {
+                                auto r = rho(in);
+                                auto t = theta(in);
+                                return eve::wide<cartesian_coords>{ r * eve::cos(t), r * eve::sin(t) };
+                              }
+                            );
+
+    return outs;
+  }
+}
+//! [simd-soa_vector_in]
 
 #include "test.hpp"
 
