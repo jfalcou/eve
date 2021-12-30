@@ -35,16 +35,19 @@ struct eve::is_product_type<adapt::polar_coords> : std::true_type
 {};
 
 // Standard Structured Bindings adaptation
-template<std::size_t I> constexpr float& get( adapt::polar_coords& p) noexcept
+namespace adapt
 {
-        if constexpr(I==0) return p.rho;
-  else  if constexpr(I==1) return p.theta;
-}
+  template<std::size_t I> constexpr float& get( polar_coords& p) noexcept
+  {
+          if constexpr(I==0) return p.rho;
+    else  if constexpr(I==1) return p.theta;
+  }
 
-template<std::size_t I> constexpr float get( adapt::polar_coords const& p) noexcept
-{
-        if constexpr(I==0) return p.rho;
-  else  if constexpr(I==1) return p.theta;
+  template<std::size_t I> constexpr float get( polar_coords const& p) noexcept
+  {
+          if constexpr(I==0) return p.rho;
+    else  if constexpr(I==1) return p.theta;
+  }
 }
 
 template<>
@@ -59,6 +62,9 @@ struct std::tuple_element<I,adapt::polar_coords>
 //! [simd-udt-adapt]
 
 //! [simd-udt-to_polar]
+#include <eve/function/sqrt.hpp>
+#include <eve/function/atan2.hpp>
+
 namespace adapt
 {
   eve::wide<polar_coords> to_polar(eve::wide<float> x, eve::wide<float> y)
@@ -100,6 +106,13 @@ namespace udt
 
 namespace udt
 {
+  auto to_polar(eve::wide<float> x, eve::wide<float> y)
+  {
+    auto rho    = eve::sqrt(x * x + y * y);
+    auto theta  = eve::atan2(y, x);
+    return eve::wide<kumi::tuple<float,float>>{ rho, theta };
+  }
+
   auto to_polar( std::vector<float> const& xs, std::vector<float> const& ys)
   {
     eve::algo::soa_vector<polar_coords> outs(xs.size());
@@ -139,7 +152,7 @@ namespace udt
 
   auto to_cartesian( eve::algo::soa_vector<polar_coords> const& ins)
   {
-    eve::algo::soa_vector<cartesian_coords> outs(xs.size());
+    eve::algo::soa_vector<cartesian_coords> outs(ins.size());
 
     eve::algo::transform_to ( ins, outs
                             , [](auto in)
@@ -155,12 +168,37 @@ namespace udt
 }
 //! [simd-soa_vector_in]
 
+namespace check
+{
+  auto to_polar(std::vector<float> const& x, std::vector<float> const& y)
+  {
+    std::vector<float> rho(x.size()), theta(x.size());
+
+    for(std::size_t i=0;i<x.size();++i)
+    {
+      auto [r,t] = adapt::to_polar(x[i],y[i]);
+      rho[i]    = r;
+      theta[i]  = t;
+    }
+
+    return std::make_tuple(rho, theta);
+  }
+}
+
 #include "test.hpp"
 
-TTS_CASE("Check to_polar")
+TTS_CASE("Check udt::to_polar")
 {
-  auto [rho,theta] = to_polar(1,1);
+  std::vector<float> xs{1,0.8,0.6,0.4,0.2,0.1,-0.1,-0.2,-0.4,-0.6,-0.8,-1   };
+  std::vector<float> ys{0,0.1,0.2,0.4,0.6,0.8,   1, 0.8, 0.6, 0.4, 0.2, 0.1 };
 
-  TTS_ULP_EQUAL(rho   , std::sqrt(2.f), 0.5);
-  TTS_ULP_EQUAL(theta , 0.78539819f   , 0.5);
+  auto [scalar_rho, scalar_theta] = check::to_polar(xs,ys);
+  auto outs = udt::to_polar(xs,ys);
+
+  for(std::size_t i = 0; i < outs.size();++i)
+  {
+    auto out = outs.get(i);
+    TTS_ULP_EQUAL(scalar_rho[i]   , get<0>(out) , 0.5);
+    TTS_ULP_EQUAL(scalar_theta[i] , get<1>(out) , 0.5);
+  }
 };
