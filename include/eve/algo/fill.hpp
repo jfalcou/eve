@@ -17,7 +17,7 @@ namespace eve::algo
 {
 
   //================================================================================================
-  //! @addtogroup eve.algo
+  //! @addtogroup algo
   //! @{
   //!  @var fill
   //!  @brief a version of `std::fill`
