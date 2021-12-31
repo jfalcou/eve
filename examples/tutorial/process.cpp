@@ -121,8 +121,8 @@ TTS_CASE("Check to_polar SIMD vs Scalar - exact size")
   auto scalar_outs  = to_scalar_polar(xs,ys);
   auto simd_outs    = to_simd_polar(xs,ys);
 
-  TTS_ALL_ULP_EQUAL(get<0>(scalar_outs) , get<0>(simd_outs) , 0.5);
-  TTS_ALL_ULP_EQUAL(get<1>(scalar_outs) , get<1>(simd_outs), 0.5);
+  TTS_ALL_ULP_EQUAL(get<0>(scalar_outs) , get<0>(simd_outs), 1);
+  TTS_ALL_ULP_EQUAL(get<1>(scalar_outs) , get<1>(simd_outs), 1);
 };
 
 TTS_CASE("Check to_polar SIMD vs Scalar - arbitrary size")
@@ -133,6 +133,6 @@ TTS_CASE("Check to_polar SIMD vs Scalar - arbitrary size")
   auto scalar_outs  = to_scalar_polar(xs,ys);
   auto simd_outs    = to_simd_polar_exact(xs,ys);
 
-  TTS_ALL_ULP_EQUAL(get<0>(scalar_outs) , get<0>(simd_outs) , 0.5);
-  TTS_ALL_ULP_EQUAL(get<1>(scalar_outs) , get<1>(simd_outs), 0.5);
+  TTS_ALL_ULP_EQUAL(get<0>(scalar_outs) , get<0>(simd_outs), 1);
+  TTS_ALL_ULP_EQUAL(get<1>(scalar_outs) , get<1>(simd_outs), 1);
 };

@@ -98,6 +98,6 @@ TTS_CASE("Check all_rhos SIMD vs Scalar")
   auto scalar_outs  = check::to_polar(xs,ys);
   auto simd_outs    = simd::to_polar(xs,ys);
 
-  TTS_ALL_ULP_EQUAL(get<0>(scalar_outs) , get<0>(simd_outs) , 0.5);
-  TTS_ALL_ULP_EQUAL(get<1>(scalar_outs) , get<1>(simd_outs), 0.5);
+  TTS_ALL_ULP_EQUAL(get<0>(scalar_outs) , get<0>(simd_outs), 1);
+  TTS_ALL_ULP_EQUAL(get<1>(scalar_outs) , get<1>(simd_outs), 1);
 };

@@ -107,7 +107,7 @@ namespace simd::unrolled
   {
     std::vector<float> out(xs.size());
 
-    eve::algo::transform_to[eve::algo::no_aligning][eve::algo::unroll<8>]
+    eve::algo::transform_to[eve::algo::no_aligning][eve::algo::unroll<1>]
                             ( eve::views::zip(xs, ys), out
                             , [](auto xy)
                               {
@@ -129,9 +129,9 @@ TTS_CASE("Check all_rhos SIMD vs Scalar")
   auto scalar_rho = scalar::all_rhos(xs,ys);
   auto simd_rho   = simd::all_rhos(xs,ys);
 
-  TTS_ALL_ULP_EQUAL(scalar_rho, simd_rho, 0.5);
+  TTS_ALL_ULP_EQUAL(scalar_rho, simd_rho, 1);
 
-  auto simd_rho8   = simd::unrolled::all_rhos(xs,ys);
+  auto simd_rho_unrolled   = simd::unrolled::all_rhos(xs,ys);
 
-  TTS_ALL_ULP_EQUAL(scalar_rho, simd_rho8, 0.5);
+  TTS_ALL_ULP_EQUAL(scalar_rho, simd_rho_unrolled, 1);
 };

@@ -203,7 +203,7 @@ TTS_CASE("Check udt::to_polar")
   for(std::size_t i = 0; i < outs.size();++i)
   {
     auto out = outs.get(i);
-    TTS_ULP_EQUAL(scalar_rho[i]   , get<0>(out) , 0.5);
-    TTS_ULP_EQUAL(scalar_theta[i] , get<1>(out) , 0.5);
+    TTS_ULP_EQUAL(scalar_rho[i]   , get<0>(out) , 1);
+    TTS_ULP_EQUAL(scalar_theta[i] , get<1>(out) , 1);
   }
 };
