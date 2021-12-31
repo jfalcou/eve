@@ -6,21 +6,18 @@
 */
 //==================================================================================================
 //! [snippet]
-#include <eve/function/sub.hpp>
-#include <eve/wide.hpp>
+#include <eve/function/load.hpp>
 
-using w_t = eve::wide<float, eve::fixed<4>>;
-
-auto sub_neither_first_nor_last( w_t const& a, w_t const& b )
+auto load_between( float* ptr )
 {
-  return eve::sub[ eve::ignore_first(1) && eve::ignore_last(1) ](a,b);
+  return eve::load[ (eve::ignore_first(1) && eve::ignore_last(1)).else_(-6.3f) ]( ptr );
 }
 
 int main()
 {
-  w_t v = { 10, 20, 30, 40 };
-  w_t w = {  4,  3,  2,  1 };
+  std::array<float,eve::wide<float>::size()-1> data;
+  for(std::size_t i=0; i < data.size(); ++i) data[i] = 1+i;
 
-  std::cout << sub_neither_first_nor_last(v,w) << "\n";
+  std::cout << load_between(&data[0] - 1) << "\n";
 }
 //! [snippet]

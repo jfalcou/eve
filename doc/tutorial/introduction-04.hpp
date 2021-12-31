@@ -13,8 +13,8 @@ same.
 
 ## Adapting UDT to SIMD processing
 Using tuples as a random bag of values returned from functions is sometime lackluster. Indeed, one
-may need to return data structure with proper semantic or which members have a proper semantic.
-User-defined types with named members is then preferred.
+may need to return data structure with a good level of semantic. User-defined types with named members
+is then preferred.
 
 Following this trend, we can rewrite our scalar `to_polar` function to return a proper structure.
 
@@ -55,7 +55,7 @@ struct eve::is_product_type<std::array<T,N>> : std::true_type
 @endcode
 
 ## Creating SIMD-aware UDT
-Sometimes however, you may want to do a bit more than just adapting types. You may want to build
+All this boilerplate can be overwhelming so instead of adapting existing code, you may want to build
 a new user-defined type directly usable as a SIMD type. **EVE** provides an intrusive protocol
 to do just that via the use of the eve::struct_support helper.
 

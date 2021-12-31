@@ -20,10 +20,10 @@ make_unit( "examples.tutorial" process.cpp  )
 ##==================================================================================================
 ## Conditionals Tutorial
 ##==================================================================================================
-make_unit( "examples.tutorial" safe_sqrt_between.cpp      )
-make_unit( "examples.tutorial" safe_sqrt_else.cpp         )
-make_unit( "examples.tutorial" safe_sqrt_ignore.cpp       )
-make_unit( "examples.tutorial" safe_sqrt_ignore_both.cpp  )
-make_unit( "examples.tutorial" safe_sqrt_op.cpp           )
-make_unit( "examples.tutorial" safe_sqrt.cpp              )
-make_unit( "examples.tutorial" square_or_diff.cpp         )
+make_unit( "examples.tutorial" bound_sqrt_else.cpp  )
+make_unit( "examples.tutorial" bound_sqrt_op.cpp    )
+make_unit( "examples.tutorial" bound_sqrt.cpp       )
+make_unit( "examples.tutorial" load_between.cpp     )
+make_unit( "examples.tutorial" load_ignore.cpp      )
+make_unit( "examples.tutorial" load_ignore_both.cpp )
+make_unit( "examples.tutorial" square_or_diff.cpp   )

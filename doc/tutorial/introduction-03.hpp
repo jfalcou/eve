@@ -30,8 +30,8 @@ is to just return a `std::tuple<eve::wide<float>, eve::wide<float>>`.
 
 @snippet tutorial/intro-03.cpp  simd-std-tuple
 
-This version of the code just works out of the box. eve::wide are just regular types and thus
-interacts normally with other standard component.
+This version of the code just works out of the box. eve::wide is just a C++ type and thus
+interacts normally with other standard components.
 
 ## SIMD register of tuples
 If the previous code is fine, it has the disadvantage to not be compatible of the general SIMD

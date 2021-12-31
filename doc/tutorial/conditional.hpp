@@ -47,10 +47,10 @@ The expected result of this program is:
           before performing its selection even if potential short-cut can be applied later on.
 
 ## Conditional Function Syntax
-Let's define a `safe_sqrt` function that computes the square root of its argument if it's positive
+Let's define a `bound_sqrt` function that computes the square root of its argument if it's positive
 or returns it unchanged otherwise. One can write:
 
-@snippet tutorial/safe_sqrt.cpp snippet
+@snippet tutorial/bound_sqrt.cpp snippet
 
 This code is perfectly valid and will produce the correct result. However, it has some issues:
  - the code looks like the important part is the test
@@ -59,9 +59,9 @@ This code is perfectly valid and will produce the correct result. However, it ha
 To go beyond those limitations, **EVE** functions supports -- whenever it makes sense -- a
 conditional call syntax:
 
-@snippet tutorial/safe_sqrt_op.cpp snippet
+@snippet tutorial/bound_sqrt_op.cpp snippet
 
-The code of `safe_sqrt` now works differently:
+The code of `bound_sqrt` now works differently:
  - the `a >= 0` expression is evaluated
  - the eve::sqrt[a >= 0] expression builds a new callable object that will perform the conditional
    call to eve::sqrt
@@ -76,7 +76,7 @@ requested.
 
 If required, the callable object produced by the conditional syntax can be stored into a variable:
 
-@snippet tutorial/safe_sqrt_op.cpp snippet-alt
+@snippet tutorial/bound_sqrt_op.cpp snippet-alt
 
 ## Conditional Expressions
 If passing a simple logical expression is the most common use-case of the conditional syntax, one
@@ -88,9 +88,9 @@ One may want to use the conditional syntax to call a function but instead of ret
 argument if the condition is false, one may want to return an arbitrary value. This use case is
 handled by the eve::if_ helper by wrapping logical expression so that an alternative value can be specified.
 
-Let's modify `safe_sqrt` so that, if the argument is not positive, 0 is returned instead.
+Let's modify `bound_sqrt` so that, if the argument is not positive, 0 is returned instead.
 
-@snippet tutorial/safe_sqrt_else.cpp snippet
+@snippet tutorial/bound_sqrt_else.cpp snippet
 
 The output is then:
 
@@ -104,20 +104,22 @@ Some algorithms require conditional function calls but use logical expression re
 element index inside a eve::simd_value rather than its value. One may want for example to not
 compute an expression on the first and last element of such eve::simd_value.
 
-Let's write a function that computes the differences between two vectors in multiple scenarios: not
-using the first elements and not using the last elements.
+A frequent example is trying to load data from memory while ignoring trailing garbage or
+out of bounds values:
 
-@snippet tutorial/safe_sqrt_ignore.cpp snippet
+@snippet tutorial/load_ignore.cpp snippet
 
 The output is then:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
-(10, 17, 28, 39)
-(6, 17, 28, 40)
+(99, 1, 2, 3)
+(6, 7, 8, 42)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Here, the eve::ignore_first and eve::ignore_last conditionals take a number of elements
-as parameter that describe which zone of the eve::simd_value won't be affected.
+as parameter that describe which zone of the eve::simd_value won't be affected. As for other
+eve::conditional_expr, we can affix them with an alternative (99 and 42 respectively) to replace
+the not loaded pieces.
 
 But what if we want to apply our operation to every element but the first and last one ? Clearly,
 calling two operations with two different conditional masks is sub-optimal.
@@ -126,23 +128,23 @@ calling two operations with two different conditional masks is sub-optimal.
 
 The first is to use the eve::keep_between helper:
 
-@snippet tutorial/safe_sqrt_between.cpp snippet
+@snippet tutorial/load_between.cpp snippet
 
 The output is then:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
-(10, 17, 28, 40)
+(-6.3, 1, 2, -6.3)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 eve::keep_between uses ad-hoc indexes, which makes the code a bit too size dependent. One can
 also use the same conditional but use a similar interface to eve::ignore_first.
 
-@snippet tutorial/safe_sqrt_ignore_both.cpp snippet
+@snippet tutorial/load_ignore_both.cpp snippet
 
 The output is the same obviously:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
-(10, 17, 28, 40)
+(-6.3, 1, 2, -6.3)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ## Conclusion
