@@ -64,6 +64,7 @@ struct std::tuple_element<I,adapt::polar_coords>
 //! [simd-udt-adapt]
 
 //! [simd-udt-to_polar]
+#include <eve/wide.hpp>
 #include <eve/function/hypot.hpp>
 #include <eve/function/atan2.hpp>
 
