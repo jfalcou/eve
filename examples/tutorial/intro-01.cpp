@@ -39,6 +39,17 @@ eve::wide<float> theta(eve::wide<float> x, eve::wide<float> y)
 }
 //! [simd-function]
 
+
+//! [simd-function]
+#include <eve/wide.hpp>
+#include <eve/function/hypot.hpp>
+
+eve::wide<float> better_rho(eve::wide<float> x, eve::wide<float> y)
+{
+  return  eve::hypot(x, y);
+}
+//! [simd-function]
+
 //! [simd-test]
 #include <iostream>
 

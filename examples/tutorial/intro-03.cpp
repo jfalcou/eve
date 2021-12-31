@@ -15,7 +15,7 @@
 
 std::tuple<float,float> to_polar(float x, float y)
 {
-  auto rho    = std::sqrt(x * x + y * y);
+  auto rho    = std::hypot(x, y);
   auto theta  = std::atan2(y, x);
   return { rho, theta };
 }
@@ -23,20 +23,20 @@ std::tuple<float,float> to_polar(float x, float y)
 
 //! [simd-std-tuple]
 #include <eve/wide.hpp>
-#include <eve/function/sqrt.hpp>
+#include <eve/function/hypot.hpp>
 #include <eve/function/atan2.hpp>
 #include <tuple>
 
 std::tuple<eve::wide<float>,eve::wide<float>> to_polar(eve::wide<float> x, eve::wide<float> y)
 {
-  auto rho    = eve::sqrt(x * x + y * y);
+  auto rho    = eve::hypot(x, y);
   auto theta  = eve::atan2(y, x);
   return { rho, theta };
 }
 //! [simd-std-tuple]
 
 //! [simd-kumi-tuple]
-#include <eve/function/sqrt.hpp>
+#include <eve/function/hypot.hpp>
 #include <eve/function/atan2.hpp>
 #include <eve/product_type.hpp>
 
@@ -44,7 +44,7 @@ namespace simd
 {
   auto to_polar(eve::wide<float> x, eve::wide<float> y)
   {
-    auto rho    = eve::sqrt(x * x + y * y);
+    auto rho    = eve::hypot(x, y);
     auto theta  = eve::atan2(y, x);
     return eve::wide<kumi::tuple<float,float>>{ rho, theta };
   }

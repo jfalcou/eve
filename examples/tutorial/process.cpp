@@ -37,6 +37,8 @@ auto to_scalar_polar(std::vector<float> const& x, std::vector<float> const& y)
 //! [scalar-loop]
 
 //! [scalar-loop-test]
+#include <iostream>
+
 void check_scalar()
 {
   std::vector<float> xs{1,0.8,0.6,0.4,0.2,0.1,-0.1,-0.2,-0.4,-0.6,-0.8,-1   };

@@ -112,6 +112,19 @@ As AVX2 registers are twice as big, the output should now contains 8 values:
 
 As expected, **EVE** code scales naturally with the selected architecture at compile time.
 
+## Mathematical Epilogue
+As stated earlier, we are currently using a slightly brutal computation for \f$\rho\f$. Indeed, if
+the magnitudes of `x` and `y` vary greatly, we may end up with overflow or cancellation, both
+classic IEEE 754 floating-point issues.
+
+Computing the square root of the sum of the squares of x and y, without undue overflow or underflow
+at intermediate stages of the computation is the job of a very specific function: `std::hypot`.
+Quite handily, **EVE** also proposes a SIMD implementation via eve::hypot.
+
+A better implementation is then given as:
+
+@snippet tutorial/intro-01.cpp hypot-variant
+
 ## Conclusion
 In this first tutorial, we managed to:
   - get familiar with eve::wide, the main SIMD enabling type from **EVE**

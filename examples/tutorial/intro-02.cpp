@@ -11,12 +11,12 @@
 
 #include <cmath>
 #include <eve/wide.hpp>
-#include <eve/function/sqrt.hpp>
+#include <eve/function/hypot.hpp>
 #include <eve/function/atan2.hpp>
 
 float rho(float x, float y)
 {
-  return std::sqrt(x * x + y * y);
+  return std::hypot(x, y);
 }
 
 float theta(float x, float y)
@@ -26,7 +26,7 @@ float theta(float x, float y)
 
 eve::wide<float> rho(eve::wide<float> x, eve::wide<float> y)
 {
-  return  eve::sqrt(x * x + y * y);
+  return  eve::hypot(x, y);
 }
 
 eve::wide<float> theta(eve::wide<float> x, eve::wide<float> y)
@@ -46,7 +46,7 @@ namespace scalar
     std::vector<float> out(xs.size());
 
     std::transform( xs.begin(), xs.end(), ys.begin(), out.begin()
-                  , [](float x, float y) { return std::sqrt(x * x + y * y); }
+                  , [](float x, float y) { return std::hypot(x, y); }
                   );
     return out;
   }
@@ -65,7 +65,7 @@ namespace scalar
     std::vector<float> out(xs.size());
 
     std::ranges::transform( xs, ys, out.begin()
-                          , [](float x, float y) { return std::sqrt(x * x + y * y); }
+                          , [](float x, float y) { return std::hypot(x, y); }
                           );
     return out;
   }
@@ -74,7 +74,7 @@ namespace scalar
 
 //! [simd-transform]
 #include <vector>
-#include <eve/function/sqrt.hpp>
+#include <eve/function/hypot.hpp>
 #include <eve/algo/transform.hpp>
 #include <eve/views/zip.hpp>
 
@@ -87,9 +87,7 @@ namespace simd
     eve::algo::transform_to ( eve::views::zip(xs, ys), out
                             , [](auto xy)
                               {
-                                auto x = get<0>(xy);
-                                auto y = get<1>(xy);
-                                return eve::sqrt(x * x + y * y);
+                                return eve::hypot(get<0>(xy), get<1>(xy));
                               }
                             );
     return out;
@@ -99,7 +97,7 @@ namespace simd
 
 //! [simd-transform-traits]
 #include <vector>
-#include <eve/function/sqrt.hpp>
+#include <eve/function/hypot.hpp>
 #include <eve/algo/transform.hpp>
 #include <eve/views/zip.hpp>
 
@@ -113,9 +111,7 @@ namespace simd::unrolled
                             ( eve::views::zip(xs, ys), out
                             , [](auto xy)
                               {
-                                auto x = get<0>(xy);
-                                auto y = get<1>(xy);
-                                return eve::sqrt(x * x + y * y);
+                                return eve::hypot(get<0>(xy), get<1>(xy));
                               }
                             );
     return out;
