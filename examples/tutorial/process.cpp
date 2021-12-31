@@ -115,9 +115,9 @@ TTS_CASE("Check to_polar SIMD vs Scalar")
   std::vector<float> xs{1,0.8,0.6,0.4,0.2,0.1,-0.1,-0.2,-0.4,-0.6,-0.8,-1   };
   std::vector<float> ys{0,0.1,0.2,0.4,0.6,0.8,   1, 0.8, 0.6, 0.4, 0.2, 0.1 };
 
-  auto [scalar_rho, scalar_theta] = to_scalar_polar(xs,ys);
-  auto [simd_rho, simd_theta]     = to_simd_polar(xs,ys);
+  auto scalar_outs  = to_scalar_polar(xs,ys);
+  auto simd_outs    = to_simd_polar(xs,ys);
 
-  TTS_ALL_ULP_EQUAL(scalar_rho, simd_rho, 0.5);
-  TTS_ALL_ULP_EQUAL(scalar_theta, simd_theta, 0.5);
+  TTS_ALL_ULP_EQUAL(get<0>(scalar_outs) , get<0>(simd_outs) , 0.5);
+  TTS_ALL_ULP_EQUAL(get<1>(scalar_outs) , get<1>(simd_outs), 0.5);
 };
