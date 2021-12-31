@@ -5,7 +5,7 @@
 
 @tableofcontents
 
-In the previous tutorials, we built a SIMD function to computes those cartesian-polar conversions
+In the previous tutorials, we built a SIMD function to compute those cartesian-polar conversions
 and we used them in the context of a SIMD algorithm to apply them over an arbitrary set of data.
 While doing so, we introduced the eve::views::zip component that helped us gather multiple ranges
 into a single one. This worked by feeding eve::algo::transform_to's lambda a tuple of eve::wide.
@@ -17,9 +17,9 @@ can help you design SIMD-aware tuple to write higher level SIMD code.
 @snippet tutorial/intro-03.cpp  empty
 
 ## Tuple of SIMD registers
-If we go back to the initial scalar conversion function, we can actually merge both `rho` and
+If we go back to the initial scalar conversion functions, we can actually merge both `rho` and
 `theta` functions in a single `to_polar` function that will return a tuple of float containing
-both result of the conversion.
+both results of the conversion.
 
 @snippet tutorial/intro-03.cpp  scalar-tuple
 
@@ -34,12 +34,12 @@ This version of the code just works out of the box. eve::wide is just a C++ type
 interacts normally with other standard components.
 
 ## SIMD register of tuples
-If the previous code is fine, it has the disadvantage to not be compatible of the general SIMD
+If the previous code is fine, it has the disadvantage of not being compatible to the general SIMD
 principle of **EVE**. Indeed, `std::tuple` is not a eve::simd_value even when it contains eve::wide.
 
 A better model should allow us to use eve::wide of tuples. To do so, we use
 [**kumi::tuple**](https://jfalcou.github.io/kumi/) instead of `std::tuple`. This change is due to the
-higher flexibility of[kumi::tuple](https://jfalcou.github.io/kumi/) and its system of extension.
+higher flexibility of [kumi::tuple](https://jfalcou.github.io/kumi/) and its system of extension.
 [**kumi**](https://jfalcou.github.io/kumi/), as a library is integrated within **EVE** through the
 `eve/product_type.hpp` header file and does not need any special setup.
 
@@ -55,7 +55,7 @@ a [**kumi::tuple**](https://jfalcou.github.io/kumi/) of eve::wide of each tuple'
 words, it performs automatic Array of Structure to Structure of Array conversion.
 
 Now that our function is able to return a type compatible with **EVE** SIMD model, we can amend the
-SIMD algorithm call tu ose eve::views::zip for both the input and output ranges.
+SIMD algorithm call tu use eve::views::zip for both the input and output ranges.
 
 @snippet tutorial/intro-03.cpp  simd-transform_zip
 

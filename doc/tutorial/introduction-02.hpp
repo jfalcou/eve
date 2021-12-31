@@ -43,7 +43,7 @@ Let's unpack all the new components:
     you can replace eve::algo::transform_to by eve::algo::transform_inplace, its in-place variant.
 
   - eve::algo::transform_to takes a single input range. To pass multiple data, we use
-    eve::views::zip that construct a view over multiple range.
+    eve::views::zip that constructs a view over multiple range.
 
   - as we consume a zipped range, the data passed to the lambda function behaves like a tuple.
     We will dive into details of this tuple later but for now just remember you can retrieve the

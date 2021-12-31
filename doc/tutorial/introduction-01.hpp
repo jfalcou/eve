@@ -15,7 +15,7 @@ In a similar way, polar coordinate can be represented as a pair \f$(\rho,\theta)
 \f$\rho\f$ represents the length of the ray and \f$\theta\f$ represents the angle with the X axis.
 
 A bit of geometry in the unit circle leads to a relationship between the cartesian and the polar
-coordinate :
+coordinates :
 
 <center>
 <a  title="WillowW, CC BY-SA 3.0 &lt;https://creativecommons.org/licenses/by-sa/3.0&gt;, via Wikimedia Commons"
@@ -38,7 +38,7 @@ computing \f$\rho\f$ this way is maybe sub-optimal. We will address those concer
 
 ## From scalar to SIMD using eve::wide
 
-The next step is to work a SIMD version of those function. When dealing with SIMD data types,
+The next step is to work a SIMD version of those functions. When dealing with SIMD data types,
 one has to remember that a single operation has to be performed on multiple value. There, we will
 be working on multiple `x`and `y` to computes multiple \f$\rho\f$ and \f$\theta\f$.
 
@@ -53,7 +53,7 @@ As **EVE** provides SIMD implementation of all basic operators and all the commo
   - replacing `float` with `eve::wide<float>`
   - calling function from namespace `eve` instead of `std`.
 
-The SIMD version of our convertion functions are then given by:
+The SIMD version of our conversion functions are then given by:
 
 @snippet tutorial/intro-01.cpp simd-function
 
@@ -67,7 +67,7 @@ for our SIMD cartesian to polar conversion function.
 
 @snippet tutorial/intro-01.cpp simd-test
 
-There, we construct two instances of eve::wide using three different constructors:
+There, we construct three instances of eve::wide using three different constructors:
 
   - `x1` is constructed from a single scalar value. The result is a register with a 4 in every lane.
   - `y1` is constructed from a callable object taking two parameters. The first parameter is the
