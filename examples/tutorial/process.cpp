@@ -92,6 +92,7 @@ auto to_simd_polar_exact(std::vector<float> const& x, std::vector<float> const& 
   std::vector<float> rho(x.size()), theta(x.size());
 
   auto last_simd = eve::align(x.size(), eve::under{w_t::size()});
+
   for(std::size_t i=0;i<last_simd;i += w_t::size())
   {
     auto[r,t] = to_polar(w_t(&x[i]),w_t(&y[i]));
@@ -112,13 +113,25 @@ auto to_simd_polar_exact(std::vector<float> const& x, std::vector<float> const& 
 
 #include "test.hpp"
 
-TTS_CASE("Check to_polar SIMD vs Scalar")
+TTS_CASE("Check to_polar SIMD vs Scalar - exact size")
+{
+  std::vector<float> xs{1,0.8,0.6,0.4,0.2,0.1,-0.1,-0.2,-0.4,-0.6,-0.8,-1,-0.8,-0.6,-0.4,-0.2   };
+  std::vector<float> ys{0,0.1,0.2,0.4,0.6,0.8,   1, 0.8, 0.6, 0.4, 0.2, 0.1,0.,0.1,0.2,0.5 };
+
+  auto scalar_outs  = to_scalar_polar(xs,ys);
+  auto simd_outs    = to_simd_polar(xs,ys);
+
+  TTS_ALL_ULP_EQUAL(get<0>(scalar_outs) , get<0>(simd_outs) , 0.5);
+  TTS_ALL_ULP_EQUAL(get<1>(scalar_outs) , get<1>(simd_outs), 0.5);
+};
+
+TTS_CASE("Check to_polar SIMD vs Scalar - arbitrary size")
 {
   std::vector<float> xs{1,0.8,0.6,0.4,0.2,0.1,-0.1,-0.2,-0.4,-0.6,-0.8,-1   };
   std::vector<float> ys{0,0.1,0.2,0.4,0.6,0.8,   1, 0.8, 0.6, 0.4, 0.2, 0.1 };
 
   auto scalar_outs  = to_scalar_polar(xs,ys);
-  auto simd_outs    = to_simd_polar(xs,ys);
+  auto simd_outs    = to_simd_polar_exact(xs,ys);
 
   TTS_ALL_ULP_EQUAL(get<0>(scalar_outs) , get<0>(simd_outs) , 0.5);
   TTS_ALL_ULP_EQUAL(get<1>(scalar_outs) , get<1>(simd_outs), 0.5);
