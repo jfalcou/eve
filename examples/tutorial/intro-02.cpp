@@ -53,6 +53,7 @@ namespace scalar
 }
 //! [std-transform]
 
+#if (__cpp_lib_ranges >= 201911L)
 //! [std-transform-range]
 #include <cmath>
 #include <vector>
@@ -71,6 +72,7 @@ namespace scalar
   }
 }
 //! [std-transform-range]
+#endif
 
 //! [simd-transform]
 #include <vector>
