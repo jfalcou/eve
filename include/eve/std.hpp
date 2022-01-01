@@ -20,7 +20,7 @@ namespace eve::experimental
 
   template<typename T>
   using native_simd = typename std::conditional_t
-                      < (std::integral<T> && current_api >= avx )
+                      < (std::integral<T> && current_api == avx )
                       , eve::wide<T, eve::fixed<16/sizeof(T)>>
                       , eve::wide<T, eve::fixed<eve::wide<T>::abi_type::bytes/sizeof(T)>>
                       >;
