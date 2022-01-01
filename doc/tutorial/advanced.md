@@ -5,4 +5,3 @@ These tutorials cover topics for improving your usage of SIMD instructions set w
 high level interface
 
 - \subpage conditional
-- \subpage process

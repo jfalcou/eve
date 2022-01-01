@@ -54,10 +54,6 @@ an instance of the [**kumi::tuple**](https://jfalcou.github.io/kumi/). Internall
 a [**kumi::tuple**](https://jfalcou.github.io/kumi/) of eve::wide of each tuple's element. In other
 words, it performs automatic Array of Structure to Structure of Array conversion.
 
-Types like `eve::wide<kumi::tuple<float,float>>` can then be constructed either piecewise by
-providing a callable object returning a tuple for each lane or by aggregating pre-existing instance
-of eve::wide for each member of the tuple.
-
 Now that our function is able to return a type compatible with **EVE** SIMD model, we can amend the
 SIMD algorithm call tu ose eve::views::zip for both the input and output ranges.
 
