@@ -116,7 +116,7 @@ namespace eve
     if_(C c) : condition_(c) {}
 
     //==============================================================================================
-    //! @brief Extend a conditional expression with an laternative value
+    //! @brief Extend a conditional expression with an alternative value
     //!
     //! By default, conditional operations use their unchanged input whenever the conditional
     //! evaluates to `false`. By using this member function, operations will use the user provided
@@ -148,7 +148,7 @@ namespace eve
     static constexpr bool is_complete     = true;
 
     //==============================================================================================
-    //! @brief Extend a conditional expression with an laternative value
+    //! @brief Extend a conditional expression with an alternative value
     //!
     //! By default, conditional operations use their unchanged input whenever the conditional
     //! evaluates to `false`. By using this member function, operations will use the user provided
@@ -198,7 +198,7 @@ namespace eve
     static constexpr bool is_complete     = true;
 
     //==============================================================================================
-    //! @brief Extend a conditional expression with an laternative value
+    //! @brief Extend a conditional expression with an alternative value
     //!
     //! By default, conditional operations use their unchanged input whenever the conditional
     //! evaluates to `false`. By using this member function, operations will use the user provided
@@ -252,7 +252,7 @@ namespace eve
     constexpr explicit EVE_FORCEINLINE keep_first(std::ptrdiff_t n) noexcept : count_(n) {}
 
     //==============================================================================================
-    //! @brief Extend a conditional expression with an laternative value
+    //! @brief Extend a conditional expression with an alternative value
     //!
     //! By default, conditional operations use their unchanged input whenever the conditional
     //! evaluates to `false`. By using this member function, operations will use the user provided
@@ -328,7 +328,7 @@ namespace eve
     constexpr explicit EVE_FORCEINLINE ignore_last(std::ptrdiff_t n) noexcept : count_(n) {}
 
     //==============================================================================================
-    //! @brief Extend a conditional expression with an laternative value
+    //! @brief Extend a conditional expression with an alternative value
     //!
     //! By default, conditional operations use their unchanged input whenever the conditional
     //! evaluates to `false`. By using this member function, operations will use the user provided
@@ -383,7 +383,7 @@ namespace eve
     constexpr explicit EVE_FORCEINLINE keep_last(std::ptrdiff_t n) noexcept : count_(n) {}
 
     //==============================================================================================
-    //! @brief Extend a conditional expression with an laternative value
+    //! @brief Extend a conditional expression with an alternative value
     //!
     //! By default, conditional operations use their unchanged input whenever the conditional
     //! evaluates to `false`. By using this member function, operations will use the user provided
@@ -460,7 +460,7 @@ namespace eve
     constexpr explicit EVE_FORCEINLINE ignore_first(std::ptrdiff_t n) noexcept : count_(n) {}
 
     //==============================================================================================
-    //! @brief Extend a conditional expression with an laternative value
+    //! @brief Extend a conditional expression with an alternative value
     //!
     //! By default, conditional operations use their unchanged input whenever the conditional
     //! evaluates to `false`. By using this member function, operations will use the user provided
@@ -518,7 +518,7 @@ namespace eve
     }
 
     //==============================================================================================
-    //! @brief Extend a conditional expression with an laternative value
+    //! @brief Extend a conditional expression with an alternative value
     //!
     //! By default, conditional operations use their unchanged input whenever the conditional
     //! evaluates to `false`. By using this member function, operations will use the user provided
@@ -600,7 +600,7 @@ namespace eve
     {}
 
     //==============================================================================================
-    //! @brief Extend a conditional expression with an laternative value
+    //! @brief Extend a conditional expression with an alternative value
     //!
     //! By default, conditional operations use their unchanged input whenever the conditional
     //! evaluates to `false`. By using this member function, operations will use the user provided
