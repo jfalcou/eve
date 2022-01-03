@@ -12,7 +12,7 @@
 #include <eve/function/broadcast.hpp>
 #include <eve/function/reverse.hpp>
 #include <eve/function/slide_left.hpp>
-#include <eve/detail/function/slide_right.hpp>
+#include <eve/function/slide_right.hpp>
 #include <eve/function/swap_adjacent_groups.hpp>
 #include <eve/detail/function/simd/common/patterns.hpp>
 

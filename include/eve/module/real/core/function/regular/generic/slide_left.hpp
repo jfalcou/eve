@@ -10,7 +10,7 @@
 #include <eve/concept/vectorized.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/detail/function/slide_right.hpp>
+#include <eve/function/slide_right.hpp>
 #include <eve/pattern.hpp>
 
 namespace eve::detail
