@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
+#include <eve/function/broadcast.hpp>
 #include <eve/pattern.hpp>
 
 namespace eve::detail
