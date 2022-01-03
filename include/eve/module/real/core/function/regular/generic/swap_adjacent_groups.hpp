@@ -20,17 +20,6 @@ namespace eve::detail
 {
   //==============================================================================================
   // Classify a pattern as a swag
-  template<std::ptrdiff_t G, std::ptrdiff_t N>
-  inline constexpr
-  auto swap_adjacent_groups_pattern = fix_pattern<N>( [](auto i, auto)
-                                                    {
-                                                      if(G!=N)
-                                                        return (i+G)%(G*2) + (G*2)*(i/(G*2));
-                                                      else
-                                                        return i;
-                                                    }
-                                                  );
-
   template<std::ptrdiff_t... I> inline constexpr auto is_swag = []()
   {
     // List all possible swags for a current size

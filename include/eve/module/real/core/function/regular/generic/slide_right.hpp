@@ -10,8 +10,6 @@
 #include <eve/concept/abi.hpp>
 #include <eve/concept/vectorized.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/pattern.hpp>
 
 namespace eve::detail
 {
@@ -33,10 +31,6 @@ namespace eve::detail
 
     return found;
   }();
-
-  template<std::ptrdiff_t Shift, std::ptrdiff_t N>
-  inline constexpr
-  auto slide_right_pattern = fix_pattern<N>( [](auto i, auto ){ return i<Shift ? na_ : i-Shift;} );
 
   template <std::ptrdiff_t Shift>
   struct slide_right_lambda

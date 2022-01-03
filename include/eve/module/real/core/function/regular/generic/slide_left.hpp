@@ -34,14 +34,6 @@ namespace eve::detail
     return found;
   }();
 
-  template<std::ptrdiff_t Shift, std::ptrdiff_t N>
-  inline constexpr
-  auto slide_left_pattern = fix_pattern<N>( [](auto i, auto c)
-                                            {
-                                              return (i+Shift) < c ? i+Shift : na_;
-                                            }
-                                          );
-
   template<simd_value Wide, std::ptrdiff_t Shift>
   EVE_FORCEINLINE auto slide_left_(EVE_SUPPORTS(cpu_), Wide v, index_t<Shift>) noexcept
   requires(Shift <= Wide::size() )
