@@ -7,15 +7,23 @@
 //==================================================================================================
 #pragma once
 
-
 #include <eve/detail/abi.hpp>
 #include <eve/function/bit_cast.hpp>
-
 #include <eve/detail/function/swizzle.hpp>
 #include <eve/pattern.hpp>
 
 namespace eve::detail
 {
+  template <int N, int ...I> inline constexpr bool is_reverse = []
+  {
+    std::array idxs {I...};
+    for (int i = 0; i != static_cast<int>(idxs.size()); ++i) {
+      if (idxs[i] != (static_cast<int>(idxs.size()) - i - 1))
+        return false;
+    }
+    return static_cast<int>(idxs.size()) == N;
+  }();
+
   template<simd_value Wide>
   EVE_FORCEINLINE Wide reverse_(EVE_SUPPORTS(cpu_), Wide const& v)
   {

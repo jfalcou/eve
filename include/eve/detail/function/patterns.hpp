@@ -10,10 +10,10 @@
 #include <eve/detail/function/swizzle.hpp>
 #include <eve/function/broadcast_group.hpp>
 #include <eve/function/broadcast.hpp>
+#include <eve/function/reverse.hpp>
 #include <eve/detail/function/swap_adjacent_groups.hpp>
 #include <eve/detail/function/slide_left.hpp>
 #include <eve/detail/function/slide_right.hpp>
-#include <eve/detail/function/reverse.hpp>
 #include <eve/detail/function/simd/common/patterns.hpp>
 
 namespace eve::detail
