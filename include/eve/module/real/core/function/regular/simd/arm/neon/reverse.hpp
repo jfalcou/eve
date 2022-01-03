@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
-#include <eve/detail/function/swap_adjacent_groups.hpp>
+#include <eve/function/swap_adjacent_groups.hpp>
 
 namespace eve::detail
 {
