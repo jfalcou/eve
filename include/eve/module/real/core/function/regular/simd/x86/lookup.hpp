@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/function/simd/lookup_helpers.hpp>
+#include <eve/module/real/core/detail/generic/lookup_helpers.hpp>
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/implementation.hpp>
 #include <cstddef>

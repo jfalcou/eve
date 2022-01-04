@@ -20,7 +20,7 @@
 #include <eve/detail/function/fill.hpp>
 #include <eve/detail/function/friends.hpp>
 #include <eve/detail/function/load.hpp>
-#include <eve/detail/function/lookup.hpp>
+#include <eve/function/lookup.hpp>
 #include <eve/detail/function/make.hpp>
 #include <eve/detail/function/patterns.hpp>
 #include <eve/detail/function/slice.hpp>
