@@ -11,6 +11,10 @@
 
 namespace eve::detail
 {
+  //==============================================================================================
+  // Detects <N,...,N> as a broadcast
+  template<int I0, int... I> inline constexpr bool is_broadcast = ((I0 != na_) && ... && (I0==I));
+
   template<simd_value Wide>
   EVE_FORCEINLINE auto broadcast_(EVE_SUPPORTS(cpu_), Wide v, auto Index) noexcept
   {

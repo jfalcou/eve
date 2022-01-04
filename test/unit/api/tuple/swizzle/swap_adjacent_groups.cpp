@@ -37,11 +37,11 @@ EVE_TEST_TYPES( "Check behavior of slide_right swizzle", eve::test::scalar::all_
               constexpr std::size_t sz = 1ULL << N;
               S ref = [&](auto i, auto c)
               {
-                constexpr auto p = eve::detail::swap_adjacent_groups_pattern<sz,S::size()>;
+                constexpr auto p = eve::swap_adjacent_groups_pattern<sz,S::size()>;
                 return simd.get(p(i,c));
               };
 
-              constexpr auto swags = eve::detail::swap_adjacent_groups_pattern<sz,S::size()>;
+              constexpr auto swags = eve::swap_adjacent_groups_pattern<sz,S::size()>;
               TTS_EQUAL( (simd[swags])                                  , ref);
               TTS_EQUAL( eve::swap_adjacent_groups(simd, eve::lane<sz>) , ref);
             };
