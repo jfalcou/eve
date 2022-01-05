@@ -8,6 +8,7 @@
 #include "test.hpp"
 #include <eve/wide.hpp>
 #include <eve/function/broadcast_group.hpp>
+#include <eve/function/shuffle.hpp>
 #include <bit>
 
 //================================================================================================
@@ -50,7 +51,7 @@ EVE_TEST_TYPES( "Check behavior of broadcast swizzle", eve::test::scalar::all_ty
                 , ref
                 );
 
-      TTS_EQUAL ( (simd[broadcast_group_n<grp,Index::value,eve::wide<s_t>::size()>]), ref );
+      TTS_EQUAL ( eve::shuffle(simd,broadcast_group_n<grp,Index::value,eve::wide<s_t>::size()>), ref );
     }
     );
   }

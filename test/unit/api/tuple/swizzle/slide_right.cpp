@@ -9,6 +9,7 @@
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 #include <eve/function/slide_right.hpp>
+#include <eve/function/shuffle.hpp>
 #include <bit>
 
 template<std::ptrdiff_t Shift, std::ptrdiff_t N>
@@ -41,8 +42,8 @@ EVE_TEST_TYPES( "Check behavior of slide_right swizzle", eve::test::scalar::all_
                             return (i < Shift::value) ? s_t{} : data.get(i-Shift::value);
                           };
 
-    TTS_EQUAL( eve::slide_right(data,eve::index<Shift::value>)       , ref );
-    TTS_EQUAL( (data[slide_right_pattern<Shift::value,w_t::size()>]) , ref );
+    TTS_EQUAL( eve::slide_right(data,eve::index<Shift::value>)                  , ref );
+    TTS_EQUAL( eve::shuffle(data,slide_right_pattern<Shift::value,w_t::size()>) , ref );
   }
   );
 };

@@ -8,6 +8,7 @@
 #include "test.hpp"
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
+#include <eve/function/shuffle.hpp>
 #include <bit>
 
 template<int N>
@@ -34,7 +35,7 @@ EVE_TEST( "Check behavior of identity swizzle"
                 if constexpr(sz <= S::size())
                 {
                   eve::as_wide_t<S,eve::fixed<sz>> ref = [&](auto i, auto) { return simd.get(i); };
-                  TTS_EQUAL(simd[identity<sz>], ref);
+                  TTS_EQUAL(eve::shuffle(simd,identity<sz>), ref);
                 }
               };
 
