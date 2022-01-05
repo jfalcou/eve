@@ -20,12 +20,10 @@
 #include <eve/detail/function/fill.hpp>
 #include <eve/detail/function/friends.hpp>
 #include <eve/detail/function/load.hpp>
-#include <eve/function/lookup.hpp>
 #include <eve/detail/function/make.hpp>
 #include <eve/detail/function/patterns.hpp>
 #include <eve/detail/function/slice.hpp>
 #include <eve/detail/function/subscript.hpp>
-#include <eve/detail/function/swizzle.hpp>
 #include <eve/product_type.hpp>
 
 #include <concepts>
@@ -384,137 +382,6 @@ namespace eve
 
     //! @brief Check if a wide contains 0 lanes
     static EVE_FORCEINLINE constexpr bool      empty()    noexcept { return false; }
-
-    //==============================================================================================
-    //! @brief Dynamic lookup via lane indexing
-    //!
-    //! Generate a new eve::wide which is an arbitrary shuffling of current eve::wide lanes.
-    //! The values of `idx` must be integer between 0 and `size()-1` or equal to eve::na_ to
-    //! indicate the value at this lane must be replaced by zero.
-    //!
-    //! Does not participate in overload resolution if `idx` is not an integral register.
-    //!
-    //! @param idx  eve::wide of integral indexes
-    //! @return     A eve::wide constructed as `wide{ get(idx.get(0)), ..., get(idx.get(size()-1))}`.
-    //!
-    //! **Example:**
-    //!
-    //! [**See it live on Compiler Explorer**](https://godbolt.org/z/z7vndroaz)
-    //!
-    //! @code
-    //! #include <eve/wide.hpp>
-    //! #include <iostream>
-    //!
-    //! int main()
-    //! {
-    //!   // Generates the wide [1 2 4 ... 2^N-1]
-    //!   eve::wide<int> r = [](auto i, auto) { return 1 << i; };
-    //!   std::cout << r << "\n";
-    //!
-    //!   // A re-indexing wide
-    //!   eve::wide<int> l =  [](auto i, auto) { return i%2 ? i : i/2;};
-    //!   std::cout << l    << "\n";
-    //!   std::cout << r[l] << "\n";
-    //! }
-    //! @endcode
-    //==============================================================================================
-    template<integral_scalar_value Index>
-    EVE_FORCEINLINE auto operator[](wide<Index,Cardinal> const& idx) const noexcept
-    {
-      return lookup((*this),idx);
-    }
-
-    //==============================================================================================
-    //! @brief Static lookup via lane indexing
-    //!
-    //! Generate a new eve::wide which is an arbitrary shuffling of current eve::wide lanes.
-    //! `p' is an instance of eve::pattern_t constructed via the eve::pattern template
-    //! variable. Values appearing in the pattern must be between 0 and `size()-1` or equal
-    //! to eve::na_ to indicate the value at this lane must be replaced by zero or this operator
-    //! will not participate in overload resolution.
-    //!
-    //! Note that if the statically generated pattern matches a predefined @ref shuffling function
-    //! the corresponding optimized shuffling functions will be called.
-    //!
-    //! @param p  A eve::pattern defining a shuffling pattern
-    //! @return   A wide constructed as `wide{ get(I), ... }`.
-    //!
-    //! @see eve::pattern_t
-    //! @see eve::pattern
-    //!
-    //! **Example:**
-    //!
-    //! [**See it live on Compiler Explorer**](https://godbolt.org/z/7nohq9h1T)
-    //!
-    //! @code
-    //! #include <eve/wide.hpp>
-    //! #include <iostream>
-    //!
-    //! int main()
-    //! {
-    //!   eve::wide<int, eve::fixed<8>> r{1, 2, 4, 8, 16, 32, 64, 128};
-    //!   std::cout << r << "\n";
-    //!
-    //!   // Reindex r with a static pattern
-    //!   std::cout << r[ eve::pattern<0,0,1,1,2,2,3,3> ] << "\n";
-    //! }
-    //! @endcode
-    //==============================================================================================
-    template<std::ptrdiff_t... I>
-#if !defined (EVE_DOXYGEN_INVOKED)
-    EVE_FORCEINLINE auto operator[](pattern_t<I...> ) const noexcept
-    requires(pattern_t<I...>{}.validate(Cardinal::value))
-#else
-    EVE_FORCEINLINE auto operator[](pattern_t<I...> p) const noexcept
-#endif
-    {
-      constexpr auto swizzler = detail::find_optimized_pattern<Cardinal::value,I...>();
-      return swizzler(*this);
-    }
-
-    //==============================================================================================
-    //! @brief Static lookup via procedural lane indexing
-    //!
-    //! Generate a new eve::wide which is an arbitrary shuffling of current eve::wide lanes.
-    //! `p' is an instance of eve::as_pattern instantiated with a `constexpr` lambda that will be
-    //! used to generate the pattern algorithmically.
-    //! Values returned by the lambda must be between 0 and `size()-1` or equal to eve::na_ to
-    //! indicate the value at this lane must be replaced by zero or this operator
-    //! will not participate in overload resolution.
-    //!
-    //! Note that if the statically generated pattern matches a pre-defined @ref shuffling function
-    //! the corresponding optimized shuffling functions will be called.
-    //!
-    //! @param p  A eve::as_pattern_t defined from a lambda function
-    //! @return   A wide constructed as `wide{ get(p(0,size())), ..., get(p(0,size()-1)) }`.
-    //!
-    //! @see eve::as_pattern
-    //!
-    //! **Example:**
-    //!
-    //! [**See it live on Compiler Explorer**](https://godbolt.org/z/aacf487q1)
-    //!
-    //! @code
-    //! #include <eve/wide.hpp>
-    //! #include <iostream>
-    //!
-    //! int main()
-    //! {
-    //!   eve::wide<int, eve::fixed<8>> r{1, 2, 4, 8, 16, 32, 64, 128};
-    //!   std::cout << r << "\n";
-    //!
-    //!   // Reindex r with a constexpr lambda with two parameters
-    //!   // i : the current index being reordered
-    //!   // c : the cardinal of the value being reordered
-    //!   std::cout << r[ eve::as_pattern{ [](auto i, auto c) { return c-i-1; } } ] << "\n";
-    //! }
-    //! @endcode
-    //==============================================================================================
-    template<typename F>
-    EVE_FORCEINLINE auto operator[](as_pattern<F> p) const noexcept
-    {
-      return (*this)[ fix_pattern<Cardinal::value>(p) ];
-    }
 
     //==============================================================================================
     //! @}
