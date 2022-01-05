@@ -47,10 +47,10 @@ The expected result of this program is:
           before performing its selection even if potential short-cut can be applied later on.
 
 ## Conditional Function Syntax
-Let's define a `bound_sqrt` function that computes the square root of its argument if it's positive
+Let's define a `sqrt_positive` function that computes the square root of its argument if it's positive
 or returns it unchanged otherwise. One can write:
 
-@snippet tutorial/bound_sqrt.cpp snippet
+@snippet tutorial/sqrt_positive.cpp snippet
 
 This code is perfectly valid and will produce the correct result. However, it has some issues:
  - the code looks like the important part is the test
@@ -59,13 +59,13 @@ This code is perfectly valid and will produce the correct result. However, it ha
 To go beyond those limitations, **EVE** functions supports -- whenever it makes sense -- a
 conditional call syntax:
 
-@snippet tutorial/bound_sqrt_op.cpp snippet
+@snippet tutorial/sqrt_positive_op.cpp snippet
 
-The code of `bound_sqrt` now works differently:
+The code of `sqrt_positive` now works differently:
  - the `a >= 0` expression is evaluated
  - the eve::sqrt[a >= 0] expression builds a new callable object that will perform the conditional
    call to eve::sqrt
- - this new callable object is then called over `a`
+ - this bound callable object is then called over `a`
  - Wherever the condition is true, the eve::sqrt function will be applied.
  - Wherever the condition is false, the value of the first argument of the function will be returned.
 
@@ -76,7 +76,7 @@ requested.
 
 If required, the callable object produced by the conditional syntax can be stored into a variable:
 
-@snippet tutorial/bound_sqrt_op.cpp snippet-alt
+@snippet tutorial/sqrt_positive_op.cpp snippet-alt
 
 ## Conditional Expressions
 If passing a simple logical expression is the most common use-case of the conditional syntax, one
@@ -88,9 +88,9 @@ One may want to use the conditional syntax to call a function but instead of ret
 argument if the condition is false, one may want to return an arbitrary value. This use case is
 handled by the eve::if_ helper by wrapping logical expression so that an alternative value can be specified.
 
-Let's modify `bound_sqrt` so that, if the argument is not positive, 0 is returned instead.
+Let's modify `sqrt_positive` so that, if the argument is not positive, 0 is returned instead.
 
-@snippet tutorial/bound_sqrt_else.cpp snippet
+@snippet tutorial/sqrt_positive_else.cpp snippet
 
 The output is then:
 

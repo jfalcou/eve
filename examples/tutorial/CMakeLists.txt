@@ -15,9 +15,9 @@ make_unit( "examples.tutorial" intro-04.cpp )
 ##==================================================================================================
 ## Conditionals Tutorial
 ##==================================================================================================
-make_unit( "examples.tutorial" bound_sqrt_else.cpp  )
-make_unit( "examples.tutorial" bound_sqrt_op.cpp    )
-make_unit( "examples.tutorial" bound_sqrt.cpp       )
+make_unit( "examples.tutorial" sqrt_positive_else.cpp  )
+make_unit( "examples.tutorial" sqrt_positive_op.cpp    )
+make_unit( "examples.tutorial" sqrt_positive.cpp       )
 make_unit( "examples.tutorial" load_between.cpp     )
 make_unit( "examples.tutorial" load_ignore.cpp      )
 make_unit( "examples.tutorial" load_ignore_both.cpp )

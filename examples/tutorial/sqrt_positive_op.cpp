@@ -11,21 +11,23 @@
 
 using w_t = eve::wide<float, eve::fixed<4>>;
 
-auto bound_sqrt( w_t const& a )
+auto sqrt_positive( w_t const& a )
 {
-  return eve::sqrt[ eve::if_(a >= 0) ](a);
-}
-
-auto bound_sqrt_else( w_t const& a )
-{
-  return eve::sqrt[ eve::if_(a >= 0).else_(0) ](a);
+  return eve::sqrt[a >= 0](a);
 }
 
 int main()
 {
   w_t v = { 1, -2, 10, -3.5 };
 
-  std::cout << bound_sqrt(v)       << "\n";
-  std::cout << bound_sqrt_else(v)  << "\n";
+  std::cout << sqrt_positive(v) << "\n";
 }
 //! [snippet]
+
+//! [snippet-alt]
+auto sqrt_positive_temp( w_t const& a )
+{
+  auto const f = eve::sqrt[a >= 0];
+  return f(a);
+}
+//! [snippet-alt]
