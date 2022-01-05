@@ -20,7 +20,7 @@ namespace eve::algo
   //! @{
   //!  @var copy
   //!
-  //!  @brief SIMD version of std::copy
+  //!  @brief version of std::copy
   //!    * Accepts two things zipping together to range of pair.
   //!    * Also can accept a `zipped_range_pair`.
   //!    * returns void.

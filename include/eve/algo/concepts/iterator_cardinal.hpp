@@ -27,7 +27,7 @@ namespace eve::algo
   //!   This is often used as a helper to define iterators and because of how C++ works, it's
   //!   recommended to default to `eve::expected_cardinal`.
   //!
-  //!   @tparam I A type modeling  eve::iterator
+  //!   @tparam I A type modeling eve::algo::iterator
   //!
   //!   @groupheader{Member types}
   //!
