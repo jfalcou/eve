@@ -27,9 +27,6 @@ EVE_TEST( "Check eve::lookup behavior on arithmetic wide"
 
   TTS_EQUAL(eve::lookup(data, indexes)          , ref );
   TTS_EQUAL(eve::lookup(logical_data, indexes)  , lref);
-
-  TTS_EQUAL(data[indexes]         , ref );
-  TTS_EQUAL(logical_data[indexes] , lref);
 };
 
 template<typename T>
@@ -56,5 +53,4 @@ EVE_TEST_TYPES( "Check eve::lookup behavior on product type wide", eve::test::sc
   w_t ref = [&data,indexes](auto i, auto) { return data.get(indexes.get(i)); };
 
   TTS_EQUAL(eve::lookup(data, indexes), ref );
-  TTS_EQUAL(data[indexes]             , ref );
 };

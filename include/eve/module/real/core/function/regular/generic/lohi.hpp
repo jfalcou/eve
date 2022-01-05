@@ -7,13 +7,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/meta.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/kumi.hpp>
+#include <eve/detail/meta.hpp>
 #include <eve/function/bit_cast.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/function/swizzle.hpp>
+#include <eve/function/shuffle.hpp>
 #include <bit>
 
 namespace eve::detail
@@ -45,7 +45,7 @@ namespace eve::detail
                                             return (i < c/2) ? 2 * i : 2 * (i-c/2)+1;
                                           }
                                         );
-          auto z = uia0[p].slice();
+          auto z = eve::shuffle(uia0,p).slice();
 
           if constexpr(endian::native == endian::little)  return kumi::tuple<vi_t, vi_t>{bit_cast(z[0], as<vi_t>()), bit_cast(z[1], as<vi_t>())};
           else                                            return kumi::tuple<vi_t, vi_t>{bit_cast(z[1], as<vi_t>()), bit_cast(z[0], as<vi_t>())};

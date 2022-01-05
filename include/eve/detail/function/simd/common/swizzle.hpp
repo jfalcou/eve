@@ -35,7 +35,7 @@ namespace eve::detail
                                       ) noexcept
   {
     constexpr auto sz = Pattern::size();
-    return bit_cast( v.mask()[p], as<logical<wide<T,fixed<sz>>>>() );
+    return bit_cast( shuffle(v.mask(),p), as<logical<wide<T,fixed<sz>>>>() );
   }
 
   //================================================================================================

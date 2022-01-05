@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/detail/function/patterns.hpp>
+#include <eve/function/shuffle.hpp>
 
 TTS_CASE("Check identity patterns get optimized")
 {
