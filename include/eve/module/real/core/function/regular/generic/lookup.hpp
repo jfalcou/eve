@@ -7,14 +7,20 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/concept/value.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/slice.hpp>
-
 #include <concepts>
 
 namespace eve::detail
 {
+  template<real_scalar_value T, integral_value I>
+  EVE_FORCEINLINE constexpr T lookup_(EVE_SUPPORTS(cpu_), T const &a, I const &i)
+  {
+    return (i == static_cast<I>(-1)) ? 0 : a;
+  }
+
   template<typename T, integral_scalar_value I, typename N>
   EVE_FORCEINLINE auto
   lookup_(EVE_SUPPORTS(cpu_), wide<T, N> const &a, wide<I, N> const &ind) noexcept

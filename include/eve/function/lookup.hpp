@@ -6,97 +6,33 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/function/lookup.hpp>
+//==================================================================================================
+/*
+  EVE - Expressive Vector Engine
+  Copyright : EVE Contributors & Maintainers
+  SPDX-License-Identifier: MIT
+*/
+//==================================================================================================
+#pragma once
 
-namespace eve::detail
+#include <eve/arch.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
 {
-  template<real_scalar_value T, integral_value I>
-  EVE_FORCEINLINE constexpr T lookup_(EVE_SUPPORTS(cpu_), T const &a, I const &i)
-  {
-    return (i == static_cast<I>(-1)) ? 0 : a;
-  }
+  EVE_MAKE_CALLABLE(lookup_, lookup);
 }
 
-  //================================================================================================
-  //! @addtogroup swar
-  //! @{
-  //! @var lookup
-  //!
-  //! @brief Callable object computing **TODO: FILL THIS BLANK**.
-  //!
-  //! **Required header:** `#include <eve/function/lookup.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | **TODO: FILL THIS BLANK**   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template<**TODO: FILL THIS BLANK**>
-  //!  auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   **TODO: FILL THIS BLANK**
-  //!
-  //!OTHER PARAMETERS
-  //!:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
-  //!
-  //! **Return value**
-  //!
-  //!For **TODO: FILL THIS BLANK**:
-  //!
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!auto r = lookup(**TODO: FILL THIS BLANK**);
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!is semantically equivalent to:
-  //!
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!Target r;
-  //!
-  //!if constexpr( scalar_value<T> )
-  //!{
-  //!  **TODO: FILL THIS BLANK**
-  //!}
-  //!else if constexpr( simd_value<T> )
-  //!{
-  //!  **TODO: FILL THIS BLANK**
-  //!}
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::lookup
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `lookup[cond](x, ...)` is equivalent to `if_else(cond,lookup(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/lookup.cpp}
-  //!
-  //!  @}
-  //================================================================================================z
+#include <eve/module/real/core/function/regular/generic/lookup.hpp>
+
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/module/real/core/function/regular/simd/x86/lookup.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
+#  include <eve/module/real/core/function/regular/simd/ppc/lookup.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_ARM_HEADER)
+#  include <eve/module/real/core/function/regular/simd/arm/neon/lookup.hpp>
+#endif
