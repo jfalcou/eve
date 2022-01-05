@@ -6,15 +6,13 @@
 @tableofcontents
 
 In the previous tutorial, we laid out how **EVE** can use SIMD-aware tuple to handle more complex
-cases. In this tutorial, we'll go over how we can design semantic-rich user-defined types to do the
-same.
+cases. In this tutorial, we'll go over how we can design semantically equivalent user-defined types.
 
 @snippet tutorial/intro-04.cpp  empty
 
 ## Adapting UDT to SIMD processing
-Using tuples as a random bag of values returned from functions is sometime lackluster. Indeed, one
-may need to return data structure with a good level of semantic. User-defined types with named members
-is then preferred.
+Using tuples as a random bag of values returned from functions is somewhat lackluster. Indeed, one
+would prefer names over field numbers, thus rising the level of abstraction.
 
 Following this trend, we can rewrite our scalar `to_polar` function to return a proper structure.
 
@@ -41,19 +39,6 @@ We can then just rewrite `to_polar` to use this new UDT.
 Note how the semantic improved by being able to explicitly states we return a SIMD register made
 of instance of `polar_coords`.
 
-Finally, the reliance on the structured binding protocol makes some standard trivial to adapt to
-SIMD processing, as only the specialization of eve::is_product_type is then required. This is the
-case for `std::array`for example.
-
-@code
-#include <array>
-#include <eve/wide.hpp>
-
-template<typename T, std::size_t N>
-struct eve::is_product_type<std::array<T,N>> : std::true_type
-{};
-@endcode
-
 ## Creating SIMD-aware UDT
 All this boilerplate can be overwhelming so instead of adapting existing code, you may want to build
 a new user-defined type directly usable as a SIMD type. **EVE** provides an intrusive protocol
@@ -75,8 +60,8 @@ Let's go over the new components introduced here:
   - `using eve_disable_ordering = void;` is an opt-out for the otherwise automatically generated
     comparison operators as we don't want to automatically be able to order instances of `polar_coords`.
 
-  - We then define friend functions to access the members of `udt::polar_coords` in a easy way. As the
-    struct thus defined will be usable in both scalar and SIMD context, we use the eve::like
+  - We then define friend functions to assign names to numbered fields. As the
+    structure thus defined will be usable in both scalar and SIMD context, we use the eve::like
     concept to overload them. `eve::like<polar_coords>` used as a parameters concept means that the
     function accepts any type that behaves like a `polar_coords`, i.e `polar_coords` and
     `eve::wide<polar_coords>`. Such function can also be defined as regular function, but this form

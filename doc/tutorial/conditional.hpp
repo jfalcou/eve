@@ -117,9 +117,9 @@ The output is then:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Here, the eve::ignore_first and eve::ignore_last conditionals take a number of elements
-as parameter that describe which zone of the eve::simd_value won't be affected. As for other
-eve::conditional_expr, we can affix them with an alternative (99 and 42 respectively) to replace
-the not loaded pieces.
+as parameter that describe which zone of the eve::simd_value won't be affected. By default,
+the value of the not loaded lanes are undefined. As for other eve::conditional_expr, we can
+affix them with an alternative (99 and 42 respectively) to replace the not loaded pieces.
 
 But what if we want to apply our operation to every element but the first and last one ? Clearly,
 calling two operations with two different conditional masks is sub-optimal.
