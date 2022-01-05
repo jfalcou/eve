@@ -1,29 +1,29 @@
 #include <eve/product_type.hpp>
 #include <eve/wide.hpp>
 
-// vector is a product type made of 3 floats
-struct vector : eve::struct_support<vector, float, float, float>
+// vec3 is a product type made of 3 floats
+struct vec3 : eve::struct_support<vec3, float, float, float>
 {
   // To simplify member access, we can wrap access to the product type
   // elements via a named friend accessor.
-  friend decltype(auto) x(eve::like<vector> auto&& self)
+  friend decltype(auto) x(eve::like<vec3> auto&& self)
   {
     return get<0>(std::forward<decltype(self)>(self));
   }
 
-  friend decltype(auto) y(eve::like<vector> auto&& self)
+  friend decltype(auto) y(eve::like<vec3> auto&& self)
   {
     return get<1>(std::forward<decltype(self)>(self));
   }
 
-  friend decltype(auto) z(eve::like<vector> auto&& self)
+  friend decltype(auto) z(eve::like<vec3> auto&& self)
   {
     return get<2>(std::forward<decltype(self)>(self));
   }
 
-  // Defines += over vector to automatically generates +
-  friend auto& operator+= ( eve::like<vector> auto& self
-                          , eve::like<vector> auto const& other
+  // Defines += over vec3 to automatically generates +
+  friend auto& operator+= ( eve::like<vec3> auto& self
+                          , eve::like<vec3> auto const& other
                           )
   {
     x(self) += x(other);
@@ -32,9 +32,9 @@ struct vector : eve::struct_support<vector, float, float, float>
     return self;
   }
 
-  // Defines -= over vector to automatically generates -
-  friend auto& operator-= ( eve::like<vector> auto& self
-                          , eve::like<vector> auto const& other
+  // Defines -= over vec3 to automatically generates -
+  friend auto& operator-= ( eve::like<vec3> auto& self
+                          , eve::like<vec3> auto const& other
                           )
   {
     x(self) -= x(other);
@@ -44,7 +44,7 @@ struct vector : eve::struct_support<vector, float, float, float>
   }
 
   // Defines stream insertion
-  friend std::ostream& operator<<( std::ostream& os, eve::like<vector> auto const& self )
+  friend std::ostream& operator<<( std::ostream& os, eve::like<vec3> auto const& self )
   {
     return os << "{" << x(self) << ", " << y(self) << ", " << z(self) << "}";
   }
@@ -52,9 +52,9 @@ struct vector : eve::struct_support<vector, float, float, float>
 
 int main()
 {
-  eve::wide<vector> p ( [](auto i, auto )
+  eve::wide<vec3> p ( [](auto i, auto )
                           {
-                            return vector{1.f+i,4.f-i,1.f/(1+i)};
+                            return vec3{1.f+i,4.f-i,1.f/(1+i)};
                           }
                         );
   std::cout << p << "\n";
@@ -62,6 +62,6 @@ int main()
   p = p + p;
   std::cout << p << "\n";
 
-  p -= vector{1,1,1};
+  p -= vec3{1,1,1};
   std::cout << p << "\n";
 }

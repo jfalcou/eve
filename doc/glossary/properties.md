@@ -24,5 +24,5 @@ used to represent its value.
 For any [scalar type](@ref eve::scalar_value) `T`, `eve::element_type<T>::type` evaluates to `T`.
 For any [SIMD type](@ref eve::simd_value) `eve::wide<T,N>`, `eve::element_type<eve::wide<T,N>>::type`
 evaluates to `T`.
-For any [logical type](@ref eve::logical_value) `eve::logical<T>`, `eve::element_type<eve::logical<T>::type`
+For any [logical type](@ref eve::logical_value) `eve::logical<T>`, `eve::element_type<eve::logical<T>>::type`
 evaluates to `eve::logical<T>`.

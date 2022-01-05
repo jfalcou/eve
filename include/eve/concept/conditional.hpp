@@ -20,7 +20,7 @@ namespace eve
   //! value was expected.
   //!
   //! @groupheader{Examples}
-  //!   - `eve::if_<eve::logical<eve::wide<char>>>`
+  //!   - `eve::if_`
   //!   - `eve::ignore_all`
   //================================================================================================
   template<typename T> concept conditional_expr = requires(T a)

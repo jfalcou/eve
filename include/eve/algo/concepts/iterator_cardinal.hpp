@@ -17,15 +17,13 @@ namespace eve::algo
   //! @addtogroup algo_concepts
   //! @{
   //!   @struct iterator_cardinal
-  //!   @brief Returns a cardinal for an `eve::algo::iterator`
+  //!   @brief Returns a cardinal for an `eve::algo::relaxed_iterator`
   //!
   //!   **Required header:** `#include <eve/algo/concepts.hpp>`
   //!
-  //!   For a given `eve::algo::iterator` type `I`, returns its associated `eve::cardinal` by
-  //!   computing the resturn type of `I::iterator_cardinal()`.
-  //!
-  //!   This is often used as a helper to define iterators and because of how C++ works, it's
-  //!   recommended to default to `eve::expected_cardinal`.
+  //!   If the `iterator_cardinal()` static method is defined - it evaluates as
+  //!   `decltype(I::iterator_cardinal())`. Otherwise it evaluates as
+  //!   eve::expected_cardinal_t<eve::algo::value_type_t<I>>.
   //!
   //!   @tparam I A type modeling eve::algo::iterator
   //!
