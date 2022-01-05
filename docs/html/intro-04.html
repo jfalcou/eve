@@ -310,12 +310,12 @@ Storage and Processing</h2>
 <div class="line">  {</div>
 <div class="line">    <span class="keyword">using</span> eve_disable_ordering = void;</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">friend</span> <span class="keyword">decltype</span>(<span class="keyword">auto</span>) rho(<a class="code hl_concept" href="concepteve_1_1like.html">eve::like&lt;cartesian_coords&gt;</a> <span class="keyword">auto</span>&amp;&amp; self)</div>
+<div class="line">    <span class="keyword">friend</span> <span class="keyword">decltype</span>(<span class="keyword">auto</span>) x(<a class="code hl_concept" href="concepteve_1_1like.html">eve::like&lt;cartesian_coords&gt;</a> <span class="keyword">auto</span>&amp;&amp; self)</div>
 <div class="line">    {</div>
 <div class="line">      <span class="keywordflow">return</span> get&lt;0&gt;(std::forward&lt;<span class="keyword">decltype</span>(self)&gt;(self));</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">friend</span> <span class="keyword">decltype</span>(<span class="keyword">auto</span>) theta(<a class="code hl_concept" href="concepteve_1_1like.html">eve::like&lt;cartesian_coords&gt;</a> <span class="keyword">auto</span>&amp;&amp; self)</div>
+<div class="line">    <span class="keyword">friend</span> <span class="keyword">decltype</span>(<span class="keyword">auto</span>) y(<a class="code hl_concept" href="concepteve_1_1like.html">eve::like&lt;cartesian_coords&gt;</a> <span class="keyword">auto</span>&amp;&amp; self)</div>
 <div class="line">    {</div>
 <div class="line">      <span class="keywordflow">return</span> get&lt;1&gt;(std::forward&lt;<span class="keyword">decltype</span>(self)&gt;(self));</div>
 <div class="line">    }</div>

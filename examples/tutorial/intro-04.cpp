@@ -144,12 +144,12 @@ namespace udt
   {
     using eve_disable_ordering = void;
 
-    friend decltype(auto) rho(eve::like<cartesian_coords> auto&& self)
+    friend decltype(auto) x(eve::like<cartesian_coords> auto&& self)
     {
       return get<0>(std::forward<decltype(self)>(self));
     }
 
-    friend decltype(auto) theta(eve::like<cartesian_coords> auto&& self)
+    friend decltype(auto) y(eve::like<cartesian_coords> auto&& self)
     {
       return get<1>(std::forward<decltype(self)>(self));
     }
