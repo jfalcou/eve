@@ -12,8 +12,9 @@
 namespace eve::views
 {
   //================================================================================================
-  //! @addtogroup eve.views
+  //! @addtogroup views
   //! @{
+  //!
   //!    @var iota
   //!    @brief a shorthand for `eve::algo::views::iota`.
   //!
@@ -22,9 +23,9 @@ namespace eve::views
   //!
   //!    @struct base_plus_offset_iterator
   //!    @brief a shorthand for `eve::algo::views::base_plus_offset_iterator`
+  //!
   //! }@
   //================================================================================================
-
   using eve::algo::views::iota;
   using eve::algo::views::iota_scaled;
   using eve::algo::views::base_plus_offset_iterator;

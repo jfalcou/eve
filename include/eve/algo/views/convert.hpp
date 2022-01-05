@@ -24,7 +24,7 @@
 namespace eve::algo::views
 {
   //================================================================================================
-  //! @addtogroup eve.algo.views
+  //! @addtogroup views
   //! @{
   //!   @struct converting_iterator
   //!   @brief An adapter over a `relaxed_iterator` that converts it's values to T.
@@ -40,7 +40,7 @@ namespace eve::algo::views
   struct converting_iterator;
 
   //================================================================================================
-  //! @addtogroup eve.algo.views
+  //! @addtogroup views
   //! @{
   //!   @struct converting_range
   //!   @brief An adapter over a `relaxed_range` that converts it's values to T.
@@ -56,7 +56,7 @@ namespace eve::algo::views
   struct converting_range;
 
   //================================================================================================
-  //! @addtogroup eve.algo.views
+  //! @addtogroup views
   //! @{
   //!   @var convert
   //!   @brief Takes an iterator or a range and returns an adapter that has a provided value type.

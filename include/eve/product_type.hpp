@@ -16,14 +16,13 @@
 //==================================================================================================
 //! @addtogroup simd
 //! @{
-//! @defgroup struct Structured Types Management
-//! @brief Traits and functions to handle user defined types in SIMD registers
+//!   @defgroup struct Structured Types Management
+//!   @brief Traits and functions to handle user defined types in SIMD registers
 //!
-//! **EVE** provides various elements to simplify the management of user-defined structures
-//! as vectorized types.
+//!   **EVE** provides various elements to simplify the management of user-defined structures
+//!   as vectorized types.
 //!
-//! **Convenience header:** @code{.cpp} #include <eve/product_type.hpp> @endcode
-//!
+//!   **Convenience header:** @code{.cpp} #include <eve/product_type.hpp> @endcode
 //! @}
 //==================================================================================================
 
@@ -38,27 +37,29 @@ namespace eve
   //================================================================================================
   //! @addtogroup struct
   //! @{
-  //!   @struct supports_ordering
-  //!   @brief  Register a user-defined type to supports ordering
+  //================================================================================================
+
+  //================================================================================================
+  //! @brief  Register a user-defined type to supports ordering
   //!
-  //!   @tparam Type  Type to register as supporting ordering operators
+  //! @tparam Type  Type to register as supporting ordering operators
   //!
-  //!   By default, instances of `eve::wide<T>` where `T` is an User-Defined Product Type supports
-  //!   ordering. However, one can specialize `eve::supports_ordering` for a given type to evaluates
-  //!   to `false` in order to disable ordering for this type.
+  //! **Required header:** `#include <eve/product_type.hpp>`
   //!
-  //!   Alternatively, any type `T` providing an internal `eve_disable_ordering` type will be
-  //!   treated as if `eve::supports_ordering<T>::``value` evaluates to `false`, thus disabling
-  //!   ordering operators for `eve::wide<T>`.
+  //! By default, instances of `eve::wide<T>` where `T` is an User-Defined Product Type supports
+  //! ordering. However, one can specialize `eve::supports_ordering` for a given type to evaluates
+  //! to `false` in order to disable ordering for this type.
   //!
-  //!   ### Helper variable template
+  //! Alternatively, any type `T` providing an internal `eve_disable_ordering` type will be
+  //! treated as if `eve::supports_ordering<T>::``value` evaluates to `false`, thus disabling
+  //! ordering operators for `eve::wide<T>`.
   //!
-  //!   @code
-  //!   template<typename Type>
-  //!   inline constexpr bool supports_ordering_v = eve::supports_ordering<Type>::value;
-  //!   @endcode
+  //! ### Helper variable template
   //!
-  //! @}
+  //! @code
+  //! template<typename Type>
+  //! inline constexpr bool supports_ordering_v = eve::supports_ordering<Type>::value;
+  //! @endcode
   //================================================================================================
   template<typename Type> struct supports_ordering : std::true_type
   {};
@@ -71,25 +72,17 @@ namespace eve
   template<typename Type>
   inline constexpr bool supports_ordering_v = supports_ordering<Type>::value;
 
-   //================================================================================================
-  //! @addtogroup struct
-  //! @{
-  //!   @struct supports_like
-  //!   @concept like
-  //!
-  //!   `like<Wrapper, T>` is a concept that describes a wrapper for which most of the functionality
-  //!   for T should be applicable. T is always like T.
-  //!
-  //!   `like< Wrapper, T>` is true if Wrapper defines a typedef `using is_like = T` or
-  //!   specialises `eve::supports_like`.
-  //!
-  //!   Example: `eve::wide<T>` is `like<T>`.
-  //!
-  //!   This is used to work with custom structs in eve, see `oop` section in `examples`.
-  //! @}
   //================================================================================================
-
-
+  //! @brief Opt-in traits for eve::like concept compliance
+  //!
+  //! **Required header:** `#include <eve/product_type.hpp>`
+  //!
+  //! `eve::supports_like` is meant ot be specialized to indicates that `Wrapper` models
+  //! `eve::like<Wrapper,T>`.
+  //!
+  //! @tparam Wrapper Type to adapt for the eve::like concept
+  //! @tparam Self    Type to
+  //================================================================================================
   template<typename Wrapper, typename Self> struct supports_like : std::false_type {};
 
   template <typename Wrapper, typename Self>
@@ -98,25 +91,53 @@ namespace eve
   std::bool_constant<std::same_as<Self, typename std::remove_cvref_t<Wrapper>::is_like>>
   {};
 
+  //================================================================================================
+  //! @brief Specifies semantic compatibility between wrapper/wrapped types
+  //!
+  //! **Required header:** `#include <eve/product_type.hpp>`
+  //!
+  //! `eve::like<Wrapper, T>` is a concept that indicates that a wrapper type provides most of the
+  //! functionality of another type `T`. By definition `T` always models `eve::like<T>`.
+  //!
+  //! A `Wrapper` models `like< Wrapper, T>` if it either defines an internal type `is_like` that
+  //! evaluates to `T` or `eve::supports_like<Wrapper,T>` is specialized to evaluates to `T`.
+  //!
+  //! @groupheader{Examples}
+  //!  - `eve::wide<T>` models `eve::like<eve::wide<T>,T>`
+  //================================================================================================
   template<typename Wrapper, typename Self>
   concept like = std::same_as<std::remove_cvref_t<Wrapper>, Self> ||
                  supports_like<std::remove_cvref_t<Wrapper>, Self>::value;
 
   //================================================================================================
-  //! @addtogroup struct
-  //! @{
-  //!   @struct struct_support<Self, ...Fields>
-  //!   @brief  a helper CRTP base to declare user defined types easier
+  //! @brief CRTP base-class to declare operators for user-defined product type
   //!
-  //!   It will generate a member wise equality.
-  //!   It will also generate a lexicographical order for your type, unless !supports_ordering_v<Self>
+  //! **Required header:** `#include <eve/product_type.hpp>`
   //!
-  //!   It generated the not mutating operator version from a mutating one (like operator+ from operator+=),
-  //!   however does not go further than that (like operator-= b from operator+= and operator-)
-  //!   since simd has an instruction for `-` and you want `operator-=` to be declared separately.
+  //! `eve::struct_support` is a CRTP based helper class to define product type like user-defined
+  //! type. If `Self`this type that inherits from `eve::struct_supports<Self,Fields...>`, it will
+  //! behave as a structure containing members of type `Fields...` and provides supports for
+  //! operators based on the implementation of `Self`.
   //!
-  //! @}
-  template <typename Self, typename ... Fields>
+  //! Generated operators include:
+  //!   - Member-wise equality is provided by default
+  //!   - Lexicographial order is provided unless `eve::supports_ordering<Self>::value` evaluates to `false`
+  //!   - Binary operators are provided if the corresponding compound assignment operator is provided.
+  //!     E.g `operator+` will be generated if `Self::operator+=` is defined. Note that no operators
+  //!     is generated by combining existing operator (like operator-= b from operator+= and operator-)
+  //!     to maximize optimization opportunities.
+  //!
+  //! `eve::struct_support` also automatically generates the data member for `Self` that are
+  //!  stored within a `kumi::tuple` and accessible via `get<N>(*this)`.
+  //!
+  //! @tparam Self    Type to use as CRTP derived class
+  //! @tparam Fields  Variadic list describing the data member of `Self`
+  //!
+  //! @groupheader{Examples}
+  //!
+  //! @godbolt{doc/traits/struct_support.cpp}
+  //================================================================================================
+  template <typename Self, typename... Fields>
   struct struct_support;
 
   namespace detail
@@ -200,6 +221,9 @@ namespace eve
     friend auto operator> (eve::like<Self> auto x, eve::like<Self> auto y) requires (!supports_ordering_v<Self>) = delete;
     friend auto operator>=(eve::like<Self> auto x, eve::like<Self> auto y) requires (!supports_ordering_v<Self>) = delete;
   };
+  //================================================================================================
+  //! @}
+  //================================================================================================
 }
 
 template <eve::detail::derived_from_struct_support Type>

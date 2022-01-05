@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var omega
   //!
-  //! @brief Callable object computing the Wright \$\omega\f$ function inverse of \$f x-> \log x+x\f$
+  //! @brief Callable object computing the Wright \f$\omega\f$ function inverse of \f$ x-> \log x+x\f$
   //!
   //! **Required header:** `#include <eve/function/omega.hpp>`
   //!
@@ -34,7 +34,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [real_floating_value](@ref eve::real_floating_value).
+  //!`x`:   [floating_real_value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!

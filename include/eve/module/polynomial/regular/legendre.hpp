@@ -45,7 +45,7 @@ namespace eve
   //!
   //!With three parameters returns [elementwise](@ref glossary_elementwise) the value of the associated Legendre "polynomial" of order (`l`, `m`) at `x`.
   //!
-  //!The result type is of the [index compatible type](@ref index_compatible) type of the  parameters.
+  //!The result type is of the [index compatible values](@ref index_compatible_values) type of the  parameters.
   //!
   //!@warning
   //! using float based inputs (instead of double) may introduce inaccuracies (peculiarly in the associated polynomials computation).

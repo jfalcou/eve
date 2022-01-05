@@ -12,7 +12,7 @@
 namespace eve::algo
 {
   //================================================================================================
-  //! @addtogroup eve.algo
+  //! @addtogroup algo
   //! @{
   //!   @struct range_ref_wrapper
   //!   @brief a non_owning_range wrapper around owning range.
@@ -47,7 +47,7 @@ namespace eve::algo
   };
 
   //================================================================================================
-  //! @addtogroup eve.algo.concepts
+  //! @addtogroup algo_concepts
   //! @{
   //!    @var non_owning_range
   //!    @brief a non_owning range is a relaxed_range that does not own it's elements and
@@ -67,7 +67,7 @@ namespace eve::algo
   };
 
   //================================================================================================
-  //! @addtogroup eve.algo
+  //! @addtogroup algo
   //! @{
   //!    @var range_ref
   //!    @brief for a `non_owning_range` returns it, otherwise returns a `range_ref_wrapper`.

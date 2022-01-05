@@ -5,3 +5,4 @@
 ##==================================================================================================
 
 make_unit( "doc.traits" common_compatible.cpp )
+make_unit( "doc.traits" struct_support.cpp    )

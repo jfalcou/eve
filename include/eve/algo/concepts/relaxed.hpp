@@ -16,7 +16,7 @@
 namespace eve::algo
 {
   //================================================================================================
-  //! @addtogroup eve.algo.concepts
+  //! @addtogroup algo_concepts
   //! @{
   //!  @struct relaxed_iterator
   //!  @brief anything that can be reasonably converted to an `iterator`:
@@ -41,7 +41,7 @@ namespace eve::algo
     std::invocable<preprocess_range_, decltype(eve::algo::traits{}), I, I>;
 
   //================================================================================================
-  //! @addtogroup eve.algo.concepts
+  //! @addtogroup algo_concepts
   //! @{
   //!  @struct relaxed_sentinel_for
   //!  @brief Two relaxed iterators form a valid relaxed range pair.
@@ -63,7 +63,7 @@ namespace eve::algo
     };
 
   //================================================================================================
-  //! @addtogroup eve.algo.concepts
+  //! @addtogroup algo_concepts
   //! @{
   //!  @struct relaxed_range
   //!  @brief Any class that has `begin/end` and `end` is a `relaxed_sentinel_for` begin.

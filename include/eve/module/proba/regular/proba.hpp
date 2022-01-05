@@ -7,18 +7,6 @@
 //==================================================================================================
 #pragma once
 
-//==================================================================================================
-//! @addtogroup functions
-//! @{
-//! @defgroup bessel polynomial related functions
-//!
-//! This module provides implementation for
-//! scalar and SIMD versions of polynomial evaluation functions.
-//!
-//! **Convenience header:** @code{.cpp} #include <eve/module/polynomial.hpp> @endcode
-//!
-//! @}
-//==================================================================================================
 #include <eve/module/proba/regular/binomial_distribution.hpp>
 #include <eve/module/proba/regular/cauchy_distribution.hpp>
 #include <eve/module/proba/regular/ev_distribution.hpp>

@@ -1,4 +1,5 @@
 Tutorials {#tutorials}
 =========
 
-- \subpage tutorial_if_else
+- \subpage simd-101
+- \subpage simd-advanced

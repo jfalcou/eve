@@ -25,7 +25,7 @@
 namespace eve::algo::views
 {
   //================================================================================================
-  //! @addtogroup eve.algo.views
+  //! @addtogroup views
   //! @{
   //!    @struct zip_range
   //!    @brief  A `relaxed_range` on top of multiple `relaxed_range`.
@@ -52,7 +52,7 @@ namespace eve::algo::views
   }
 
   //================================================================================================
-  //! @addtogroup eve.algo.views
+  //! @addtogroup views
   //! @{
   //!    @var zip
   //!    @brief  Given relaxed_iterors and relaxed ranges, zips them together

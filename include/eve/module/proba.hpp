@@ -10,12 +10,12 @@
 //==================================================================================================
 //! @addtogroup functions
 //! @{
-//! @defgroup bessel polynomial related functions
+//! @defgroup proba Probability distributions
+//! @brief Probability distributions
 //!
-//! This module provides implementation for
-//! scalar and SIMD versions of polynomial evaluation functions.
+//! This module provides implementation for probability distribution functions and generators.
 //!
-//! **Convenience header:** @code{.cpp} #include <eve/module/polynomial.hpp> @endcode
+//! **Convenience header:** @code{.cpp} #include <eve/module/proba.hpp> @endcode
 //!
 //! @}
 //==================================================================================================

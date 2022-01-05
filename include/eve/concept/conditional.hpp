@@ -13,7 +13,15 @@
 namespace eve
 {
   //================================================================================================
-  // Concept for conditional expression
+  //! @concept conditional_expr
+  //! @brief Specifies that a type is a Conditional Expression
+  //!
+  //! Types verifying `conditional_expr<T>` supports optimisation when evaluated where a logical
+  //! value was expected.
+  //!
+  //! @groupheader{Examples}
+  //!   - `eve::if_`
+  //!   - `eve::ignore_all`
   //================================================================================================
   template<typename T> concept conditional_expr = requires(T a)
   {

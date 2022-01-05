@@ -45,8 +45,8 @@ namespace eve
   //!   @groupheader{Helper variable template}
   //!
   //!   @code{.cpp}
-  //!   template<typenale Type>
-  //!   inline constexpr auto cardinal_v = cardinal<T>::value;
+  //!   template<typename Type>
+  //!   inline constexpr auto cardinal_v = cardinal<Type>::value;
   //!   @endcode
   //! @}
   //================================================================================================

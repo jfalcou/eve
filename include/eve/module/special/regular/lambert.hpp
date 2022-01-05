@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var lambert
   //!
-  //! @brief Callable object computing the lambert function inverse of \$f x-> xe^x\f$
+  //! @brief Callable object computing the lambert function inverse of \f$ x-> xe^x \f$
   //!
   //! **Required header:** `#include <eve/function/lambert.hpp>`
   //!
@@ -34,13 +34,14 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [real_floating_value](@ref eve::real_floating_value).
+  //! `x`:   [floating_real_value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
-  //!Returns [elementwise](@ref glossary_elementwise) the value of the lambert function.
+  //! Returns [elementwise](@ref glossary_elementwise) the value of the lambert function.
   //!
-  //! The result type is the kumi pair of the two branches values. The branches are not defined for input less than \f$e^{-1}\f$ in that case they return nan.
+  //! The result type is the kumi pair of the two branches values. The branches are not defined for
+  //! input less than \f$e^{-1}\f$ in that case they return nan.
   //! As for input positive only one branch exist the two values returned are equal.
   //!
   //! ---
@@ -57,7 +58,7 @@ namespace eve
   //!
   //! @godbolt{doc/special/lambert.cpp}
   //!
-  //!  @}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(lambert_, lambert);
 }
