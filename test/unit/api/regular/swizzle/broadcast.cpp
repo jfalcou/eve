@@ -8,6 +8,7 @@
 #include "test.hpp"
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
+#include <eve/function/shuffle.hpp>
 #include <bit>
 
 template<int I, int N>
@@ -31,8 +32,8 @@ EVE_TEST( "Check behavior of broadcast swizzle"
                 ([&]()
                 {
                   typename S::template rescale<typename S::cardinal_type> ref(simd.get(V));
-                  TTS_EQUAL((simd[broadcast<V,S::size()>])        , ref);
-                  TTS_EQUAL((eve::broadcast(simd, eve::index<V>)) , ref);
+                  TTS_EQUAL(eve::shuffle(simd,broadcast<V,S::size()>) , ref);
+                  TTS_EQUAL((eve::broadcast(simd, eve::index<V>))     , ref);
                 }(), ...);
 
               }( std::make_index_sequence<S::size()>{} );

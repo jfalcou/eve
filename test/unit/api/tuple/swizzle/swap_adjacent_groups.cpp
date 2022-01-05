@@ -9,6 +9,7 @@
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 #include <eve/function/swap_adjacent_groups.hpp>
+#include <eve/function/shuffle.hpp>
 #include <bit>
 
 //==================================================================================================
@@ -42,7 +43,7 @@ EVE_TEST_TYPES( "Check behavior of slide_right swizzle", eve::test::scalar::all_
               };
 
               constexpr auto swags = eve::swap_adjacent_groups_pattern<sz,S::size()>;
-              TTS_EQUAL( (simd[swags])                                  , ref);
+              TTS_EQUAL( eve::shuffle(simd,swags)                       , ref);
               TTS_EQUAL( eve::swap_adjacent_groups(simd, eve::lane<sz>) , ref);
             };
 

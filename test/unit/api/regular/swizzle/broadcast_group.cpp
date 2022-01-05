@@ -9,6 +9,7 @@
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 #include <eve/function/broadcast_group.hpp>
+#include <eve/function/shuffle.hpp>
 #include <bit>
 
 //================================================================================================
@@ -58,8 +59,8 @@ EVE_TEST( "Check behavior of broadcast_groups swizzle"
                                       )
                 , lref
                 );
-      TTS_EQUAL ( (simd[broadcast_group_n<grp,Index::value,T::size()>]), ref );
-      TTS_EQUAL ( (logicals[broadcast_group_n<grp,Index::value,T::size()>]), lref );
+      TTS_EQUAL ( eve::shuffle(simd,broadcast_group_n<grp,Index::value,T::size()>), ref );
+      TTS_EQUAL ( eve::shuffle(logicals,broadcast_group_n<grp,Index::value,T::size()>), lref );
     }
     );
   }
