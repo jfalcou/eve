@@ -168,7 +168,6 @@ make_all_units(ROOT random.real.core NAME rsqrt                 ARCH scalar simd
 make_all_units(ROOT random.real.core NAME saturate              ARCH scalar simd TYPES ${all_types}     )
 ##make_all_units(ROOT random.real.core NAME shl                   ARCH scalar simd TYPES ${integral_types})
 ##make_all_units(ROOT random.real.core NAME shr                   ARCH scalar simd TYPES ${integral_types})
-##make_all_units(ROOT random.real.core NAME shuffle                   ARCH scalar simd TYPES ${integral_types})
 make_all_units(ROOT random.real.core NAME sign                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT random.real.core NAME signnz                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT random.real.core NAME sqr                   ARCH scalar simd TYPES ${all_types}     )

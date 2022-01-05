@@ -9,6 +9,7 @@
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 #include <eve/function/slide_left.hpp>
+#include <eve/function/shuffle.hpp>
 #include <bit>
 
 template<std::ptrdiff_t Shift, std::ptrdiff_t N>
@@ -47,8 +48,8 @@ EVE_SAFE_TEST ( "Check behavior of slide_left swizzle"
     TTS_EQUAL(eve::slide_left(simd,eve::index<Shift::value>)    , ref);
     TTS_EQUAL(eve::slide_left(logicals,eve::index<Shift::value>), lref);
 
-    TTS_EQUAL( (simd[slide_left_pattern<Shift::value,T::size()>])     , ref   );
-    TTS_EQUAL( (logicals[slide_left_pattern<Shift::value,T::size()>]) , lref  );
+    TTS_EQUAL( eve::shuffle(simd,slide_left_pattern<Shift::value,T::size()>)     , ref   );
+    TTS_EQUAL( eve::shuffle(logicals,slide_left_pattern<Shift::value,T::size()>) , lref  );
   }
   );
 };

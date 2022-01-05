@@ -8,14 +8,17 @@
 #include "test.hpp"
 
 #include <eve/function/reverse.hpp>
+#include <eve/function/shuffle.hpp>
 #include <eve/wide.hpp>
 
 namespace {
 
 template <typename T>
-void reverse_test(T x) {
+void reverse_test(T x)
+{
   T expected([&](int i, int size) { return x.get(size - i - 1); });
   TTS_EQUAL(eve::reverse(x), expected);
+  TTS_EQUAL(eve::shuffle(x, eve::as_pattern([](auto i, auto c) { return c-i-1;})), expected);
 }
 
 EVE_TEST( "Check behavior of reverse"
