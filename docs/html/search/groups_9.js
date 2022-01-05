@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['logical_0',['Logical',['../group__logical.html',1,'']]]
+  ['math_20functions_0',['math functions',['../group__math.html',1,'']]],
+  ['memory_20management_1',['Memory Management',['../group__memory.html',1,'']]]
 ];

@@ -11,7 +11,7 @@ var searchData=
   ['negatenz_8',['negatenz',['../group__arithmetic_ga386ab1703063915f4b07a18314626ace.html#ga386ab1703063915f4b07a18314626ace',1,'eve']]],
   ['negmaxabs_9',['negmaxabs',['../group__arithmetic_ga596c156a6748b0fd395fa08f28e66b7f.html#ga596c156a6748b0fd395fa08f28e66b7f',1,'eve']]],
   ['negminabs_10',['negminabs',['../group__arithmetic_ga9014bc919ce5fc1ed1db4775671df597.html#ga9014bc919ce5fc1ed1db4775671df597',1,'eve']]],
-  ['newton_11',['newton',['../group__polynomial_gaa467a68961dec631016333670bfda00f.html#gaa467a68961dec631016333670bfda00f',1,'eve']]],
+  ['newton_11',['newton',['../group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f',1,'eve']]],
   ['next_12',['next',['../group__bits_gabd39aa0f7b4d3220b9af85691fb09a8c.html#gabd39aa0f7b4d3220b9af85691fb09a8c',1,'eve']]],
   ['nextafter_13',['nextafter',['../group__ieee754_gaf1ba6612bfd82759bf6150e2e353e7d3.html#gaf1ba6612bfd82759bf6150e2e353e7d3',1,'eve']]],
   ['none_14',['none',['../group__reduction_ga6bac192090779b76bc7ffe5425fcabc8.html#ga6bac192090779b76bc7ffe5425fcabc8',1,'eve']]],

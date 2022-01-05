@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['polynomial_0',['Polynomial',['../group__polynomial.html',1,'']]],
-  ['predicates_1',['Predicates',['../group__predicates.html',1,'']]],
-  ['proba_2',['Proba',['../group__proba.html',1,'']]]
+  ['reduction_0',['Reduction',['../group__reduction.html',1,'']]],
+  ['related_20functions_1',['related functions',['../group__ieee.html',1,'']]],
+  ['rounding_2',['Rounding',['../group__rounding.html',1,'']]]
 ];

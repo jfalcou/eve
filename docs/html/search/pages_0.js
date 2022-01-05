@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['building_20and_20testing_0',['Building and Testing',['../dev_cmake.html',1,'eve-dev']]]
+  ['advanced_20simd_0',['Advanced SIMD',['../simd-advanced.html',1,'tutorials']]]
 ];
