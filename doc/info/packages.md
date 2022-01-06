@@ -11,7 +11,7 @@ let you access the library.
 **EVE** is available on Arch-Linux via an [**AUR package**](https://aur.archlinux.org/packages/eve-git/).
 
 ```bash
-$ sudo pacman -S eve-git
+$ yay -S eve-git
 ```
 
 ## OS-independent Package Manager
