@@ -26,8 +26,10 @@ var menudata={children:[
 {text:"Index",url:"index.html"},
 {text:"Documentation",url:"pages.html",children:[
 {text:"Documentation",url:"pages.html"},
+{text:"Getting Started",url:"about.html"},
 {text:"Tutorials",url:"tutorials.html"},
-{text:"Glossary",url:"glossary.html"}]},
+{text:"Rationale",url:"rationale.html"},
+{text:"Contributing",url:"eve-dev.html"}]},
 {text:"Modules",url:"modules.html",children:[
 {text:"Modules",url:"modules.html"},
 {text:"Types & Wrappers",url:"group__simd.html"},

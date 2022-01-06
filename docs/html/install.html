@@ -118,8 +118,10 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
       <li class="current"><a href="pages.html"><span>Documentation</span></a></li>
+      <li><a href="about.html"><span>Getting&#160;Started</span></a></li>
       <li><a href="tutorials.html"><span>Tutorials</span></a></li>
-      <li><a href="glossary.html"><span>Glossary</span></a></li>
+      <li><a href="rationale.html"><span>Rationale</span></a></li>
+      <li><a href="eve-dev.html"><span>Contributing</span></a></li>
     </ul>
   </div>
 <!-- window showing the filter options -->
@@ -136,30 +138,34 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="about.html">About EVE</a></li>  </ul>
+</div>
 </div><!-- top -->
 <div><div class="header">
   <div class="headertitle"><div class="title">Installation &amp; Quick Start </div></div>
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md2033">Getting Started</a><ul><li class="level2"><a href="#autotoc_md2034">Retrieving the source</a></li>
-<li class="level2"><a href="#autotoc_md2035">Installing</a></li>
-<li class="level2"><a href="#autotoc_md2036">Building the Documentation</a></li>
+<ul><li class="level1"><a href="#autotoc_md2031">Getting Started</a><ul><li class="level2"><a href="#autotoc_md2032">Retrieving the source</a></li>
+<li class="level2"><a href="#autotoc_md2033">Installing</a></li>
+<li class="level2"><a href="#autotoc_md2034">Building the Documentation</a></li>
 </ul>
 </li>
-<li class="level1"><a href="#autotoc_md2037">Quick Start</a><ul><li class="level2"><a href="#autotoc_md2038">Supported compilers/architectures.</a></li>
-<li class="level2"><a href="#autotoc_md2039">Compilation</a></li>
-<li class="level2"><a href="#autotoc_md2040">Instruction Set Selection</a></li>
-<li class="level2"><a href="#autotoc_md2041">Execution</a></li>
+<li class="level1"><a href="#autotoc_md2035">Quick Start</a><ul><li class="level2"><a href="#autotoc_md2036">Supported compilers/architectures.</a></li>
+<li class="level2"><a href="#autotoc_md2037">Compilation</a></li>
+<li class="level2"><a href="#autotoc_md2038">Instruction Set Selection</a></li>
+<li class="level2"><a href="#autotoc_md2039">Execution</a></li>
 </ul>
 </li>
-<li class="level1"><a href="#autotoc_md2042">Advanced options</a></li>
+<li class="level1"><a href="#autotoc_md2040">Advanced options</a></li>
 </ul>
 </div>
-<div class="textblock"><p ><a class="anchor" id="md_eve_doc_page01_install"></a></p>
-<h1><a class="anchor" id="autotoc_md2033"></a>
+<div class="textblock"><p ><a class="anchor" id="md_eve_doc_info_install"></a></p>
+<h1><a class="anchor" id="autotoc_md2031"></a>
 Getting Started</h1>
-<h2><a class="anchor" id="autotoc_md2034"></a>
+<h2><a class="anchor" id="autotoc_md2032"></a>
 Retrieving the source</h2>
 <p ><b>EVE</b> is available on GitHub and can be retrieved via the following command: <br  />
 </p>
@@ -172,7 +178,7 @@ $ ls
   benchmarks  cmake  CODE_OF_CONDUCT.md  CONTRIBUTORS  LICENSE.md
   README.md   tools  CMakeLists.txt      doc           examples
   include     test
-</pre><h2><a class="anchor" id="autotoc_md2035"></a>
+</pre><h2><a class="anchor" id="autotoc_md2033"></a>
 Installing</h2>
 <p >Create a <code>build</code> directory here and enter it. Once in the <code>build</code> directory, you can use <b>CMake</b> to generate the build system for <b>EVE</b>.</p>
 <p >We recommend using <a href="https://ninja-build.org/">Ninja</a> but any build system is fine.</p>
@@ -184,15 +190,15 @@ $ cmake .. -G Ninja
 </pre><p >You can select an alternative installation path by specifying the <code>CMAKE_INSTALL_PREFIX</code> option at configuration time.</p>
 <pre class="fragment">$ cmake .. -G Ninja -DCMAKE_INSTALL_PREFIX=path/to/install
 $ ninja install
-</pre><h2><a class="anchor" id="autotoc_md2036"></a>
+</pre><h2><a class="anchor" id="autotoc_md2034"></a>
 Building the Documentation</h2>
 <p >You can rebuild <b>EVE</b> documentation if you have the latest version of Doxygen installed using the <code>doxygen</code> target: <br  />
 </p>
 <div class="fragment"><div class="line">ninja doxygen</div>
 </div><!-- fragment --><p >The resulting HTML files will be available in the <code>doc</code> folder.</p>
-<h1><a class="anchor" id="autotoc_md2037"></a>
+<h1><a class="anchor" id="autotoc_md2035"></a>
 Quick Start</h1>
-<h2><a class="anchor" id="autotoc_md2038"></a>
+<h2><a class="anchor" id="autotoc_md2036"></a>
 Supported compilers/architectures.</h2>
 <p ><b>EVE</b> requires a C++20 compliant compiler. Here is the current minimal compiler version supported:</p>
 <center> <table class="markdownTable">
@@ -232,7 +238,7 @@ Supported compilers/architectures.</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2039"></a>
+<h2><a class="anchor" id="autotoc_md2037"></a>
 Compilation</h2>
 <p >Once installed, you can compile the following code to check if everything is alright.</p>
 <p > <a id="godbolt-link" href="#">See it live on Compiler Explorer</a> <div id="godbolt"> </p><div class="fragment"><div class="line"><span class="comment">//==================================================================================================</span></div>
@@ -265,12 +271,12 @@ Compilation</h2>
 </pre><p >Don't forget the <code>--std=c++20</code> option to be sure to activate C++20 support. If you use a different compiler, check your compiler user's manual to use the proper option.</p>
 <p >You can notice we use the <code>-O3 -DNEDBUG</code> options. This is required if you want to be sure to get the best performance out of <b>EVE</b>.</p>
 <p >The <code>-DNDEBUG</code> setting can be omitted but then asserts will be inserted into the code to prevent logic errors.</p>
-<h2><a class="anchor" id="autotoc_md2040"></a>
+<h2><a class="anchor" id="autotoc_md2038"></a>
 Instruction Set Selection</h2>
 <p >The SIMD instruction sets that <b>EVE</b> uses is decided at compile time. You can use <code>-march=native</code> if you're sure your code won't be executed anywhere else.</p>
 <p >You can also select a specific instructions set by using the proper option(s) from your compiler. For example, let's compile for exactly SSE4.1.</p>
 <pre class="fragment">$ g++ test.cpp -std=c++20  -msse4.1 -O3 -DNDEBUG -I/path/to/install/include -o output
-</pre><h2><a class="anchor" id="autotoc_md2041"></a>
+</pre><h2><a class="anchor" id="autotoc_md2039"></a>
 Execution</h2>
 <p >Once done, execute the binary. If you compiled for SSE4.1 for example, you'll end up with the following results:</p>
 <pre class="fragment">$ ./output
@@ -278,7 +284,7 @@ Execution</h2>
  2*x   = (2, 4, 6, 8)
  x^0.5 = (1, 1.41421, 1.73205, 2)
 </pre><p >That's it, <b>EVE</b> is properly installed and ready to use.</p>
-<h1><a class="anchor" id="autotoc_md2042"></a>
+<h1><a class="anchor" id="autotoc_md2040"></a>
 Advanced options</h1>
 <p >If you want to dig a bit further, you can pass additional options to <code>cmake</code> to activate additional features.</p>
 <table class="markdownTable">

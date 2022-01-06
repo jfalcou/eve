@@ -9,7 +9,7 @@ var searchData=
   ['sec_6',['sec',['../group__trigonometric_ga9016964468b90f782aa01ba4be5e44ed.html#ga9016964468b90f782aa01ba4be5e44ed',1,'eve']]],
   ['sech_7',['sech',['../group__hyperbolic_ga4fe32d4bfda35b6d2196488cb036f185.html#ga4fe32d4bfda35b6d2196488cb036f185',1,'eve']]],
   ['secpi_8',['secpi',['../group__trigonometric_ga84c8a10368a87019fd81eb234c3f09da.html#ga84c8a10368a87019fd81eb234c3f09da',1,'eve']]],
-  ['semantic_20of_20eve_20functions_9',['Semantic of EVE functions',['../glossary_semantic.html',1,'glossary']]],
+  ['semantic_20of_20eve_20functions_9',['Semantic of EVE functions',['../glossary_semantic.html',1,'rationale']]],
   ['set_10',['set',['../structeve_1_1wide.html#a0c558b1099d1ab8939c82b766f12355a',1,'eve::wide::set()'],['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a7ba62de53449b225d4ff0686630d2fce',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::set()']]],
   ['shl_11',['shl',['../group__operators_gae5098d24d083fd3e2f9d54135c8a84d8.html#gae5098d24d083fd3e2f9d54135c8a84d8',1,'eve']]],
   ['shr_12',['shr',['../group__operators_gab2208a00c219fcd2f9387d1fefd61d9f.html#gab2208a00c219fcd2f9387d1fefd61d9f',1,'eve']]],
