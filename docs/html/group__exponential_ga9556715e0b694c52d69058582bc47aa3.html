@@ -592,7 +592,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 
 <p>Callable object computing the logspace_add operation: \(\log\left(\sum_{i = 0}^n e^{x_i}\right)\). </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/function/logspace_add.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md1712"></a>
+<h4><a class="anchor" id="autotoc_md1706"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -619,7 +619,7 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>logspace_add[cond](x, ...)</code> is equivalent to <code>if_else(cond,logspace_add(x, ...),x)</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md1716"></a>
+<h4><a class="anchor" id="autotoc_md1710"></a>
 Supported decorators</h4>
 <ul>
 <li><p class="startli"><a class="el" href="group__decorator_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff</a>, <a class="el" href="group__decorator_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_1st</a>, <a class="el" href="group__decorator_ga0f1f689a82eba82d3e7b36b97b8c15e6.html#ga0f1f689a82eba82d3e7b36b97b8c15e6" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_2nd</a>, <a class="el" href="group__decorator_gaa4398b2ef5de81cacafc812406adf5d0.html#gaa4398b2ef5de81cacafc812406adf5d0" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_3rd</a>, <a class="el" href="group__decorator_gaaae38dadc2c9ec57e7431dd23a01350d.html#gaaae38dadc2c9ec57e7431dd23a01350d" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_nth</a></p>
@@ -627,7 +627,7 @@ Supported decorators</h4>
 <p class="startli">The expression <code>diff_nth&lt; N &gt;(logspace_add)(arg0,arg1,args...)</code> computes the partial diff of the function relative to its Nth parameter. The returned value is 0 if N is greater that the actual number of parameters, otherwise if the parameters are \( x_1, ... x_n \) returns \( \displaystyle\frac{e^{x_N}}{e^{x_1} + ... + e^{x_n}} \)</p>
 </li>
 </ul>
-<h4><a class="anchor" id="autotoc_md1717"></a>
+<h4><a class="anchor" id="autotoc_md1711"></a>
 Example</h4>
 <p > <a id="godbolt-link" href="#">See it live on Compiler Explorer</a> <div id="godbolt"> </p><div class="fragment"><div class="line"><span class="comment">//#include &lt;eve/function/logspace_add.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>

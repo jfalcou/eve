@@ -592,7 +592,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 
 <p>Callable object computing the lpnorm operation \( \left(\sum_{i = 0}^n |x_i|^p\right)^{\frac1p} \). </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/function/lpnorm.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md1723"></a>
+<h4><a class="anchor" id="autotoc_md1717"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -618,7 +618,7 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>lpnorm[cond](x, ...)</code> is equivalent to <code>if_else(cond,lpnorm(x, ...),x)</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md1727"></a>
+<h4><a class="anchor" id="autotoc_md1721"></a>
 Supported decorators</h4>
 <ul>
 <li><p class="startli"><a class="el" href="group__decorator_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3" title="Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.">eve::pedantic</a></p>
@@ -631,7 +631,7 @@ Supported decorators</h4>
 <p class="startli">The expression <code>diff_&lt; N &gt;(lpnorm)(x,args...)</code> computes the partial diff of the function relative to its Nth parameter. The returned value is 0 if N is greater that the actual number of parameters, otherwise it is the <code>N</code>th parameter value divided by the <code>lpnorm</code> value.</p>
 </li>
 </ul>
-<h4><a class="anchor" id="autotoc_md1728"></a>
+<h4><a class="anchor" id="autotoc_md1722"></a>
 Example</h4>
 <p > <a id="godbolt-link" href="#">See it live on Compiler Explorer</a> <div id="godbolt"> </p><div class="fragment"><div class="line"><span class="comment">//#include &lt;eve/function/lpnorm.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>

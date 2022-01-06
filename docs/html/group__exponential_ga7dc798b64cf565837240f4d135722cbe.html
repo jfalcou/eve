@@ -592,7 +592,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 
 <p>Callable object computing the pow_abs function \(|x|^y\). </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/function/pow_abs.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md1747"></a>
+<h4><a class="anchor" id="autotoc_md1741"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -635,7 +635,7 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>pow_abs[cond](x, ...)</code> is equivalent to <code>if_else(cond,pow_abs(x, ...),x)</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md1751"></a>
+<h4><a class="anchor" id="autotoc_md1745"></a>
 Supported decorators</h4>
 <ul>
 <li><a class="el" href="group__decorator_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3" title="Higher-order Callable Object imbuing quick and dirty behaviour onto other Callable Objects.">eve::raw</a> The expression <code>raw(pow_abs)(x,y)</code> merely returns <code>exp(y*log(|x|)</code> which is must faster way to compute the result than the regular implemention, but does not fullfill all the boundary requisites of IEC 60559 and has not always a good accuracy.</li>
@@ -644,7 +644,7 @@ Supported decorators</h4>
 <p class="startli">The expression <code>diff_1st(pow_abs)(x,y)</code> and <code>diff_2nd(pow_abs)(x,y)</code> computes the partial derivatives of \(f\), where \(f\) is the function \((x,y) \rightarrow \ |x|^y\).</p>
 </li>
 </ul>
-<h4><a class="anchor" id="autotoc_md1752"></a>
+<h4><a class="anchor" id="autotoc_md1746"></a>
 Example</h4>
 <p > <a id="godbolt-link" href="#">See it live on Compiler Explorer</a> <div id="godbolt"> </p><div class="fragment"><div class="line"><span class="comment">//#include &lt;eve/function/pow_abs.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>

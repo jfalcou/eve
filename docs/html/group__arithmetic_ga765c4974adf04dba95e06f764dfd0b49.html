@@ -627,43 +627,6 @@ Supported decorators</h4>
 </ul>
 <h4><a class="anchor" id="autotoc_md347"></a>
 Example</h4>
-<p > <a id="godbolt-link" href="#">See it live on Compiler Explorer</a> <div id="godbolt"> </p><div class="fragment"></div><!-- fragment --><p> <br  />
-  </div></p>
-<p ><b>Required header:</b> <code>#include &lt;eve/function/cbrt.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md1581"></a>
-Members Functions</h4>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadLeft">Member   </th><th class="markdownTableHeadLeft">Effect    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><code>operator()</code>   </td><td class="markdownTableBodyLeft">the computation of the cubic root    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft"><code>operator[]</code>   </td><td class="markdownTableBodyLeft">Construct a conditional version of current function object   </td></tr>
-</table>
-<hr  />
-<div class="fragment"><div class="line"><span class="keyword">auto</span> operator()(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
-</div><!-- fragment --><p ><b>Parameters</b></p>
-<p ><code>x</code>: <a class="el" href="concepteve_1_1floating__real__value.html">floating real value</a>.</p>
-<p ><b>Return value</b></p>
-<p >Returns the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> cubic root value of the input.</p>
-<hr  />
-<div class="fragment"><div class="line"><span class="keyword">auto</span> operator[]( conditional_expression <span class="keyword">auto</span> cond ) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
-</div><!-- fragment --><p >Higher-order function generating a masked version of <a class="el" href="group__arithmetic_ga765c4974adf04dba95e06f764dfd0b49.html#ga765c4974adf04dba95e06f764dfd0b49" title="Callable object computing the cubic root.">eve::cbrt</a></p>
-<p ><b>Parameters</b></p>
-<p ><code>cond</code> : conditional expression</p>
-<p ><b>Return value</b></p>
-<p >A Callable object so that the expression <code>cbrt[cond](x, ...)</code> is equivalent to <code>if_else(cond,cbrt(x, ...),x)</code></p>
-<hr  />
-<h4><a class="anchor" id="autotoc_md1585"></a>
-Supported decorators</h4>
-<ul>
-<li><p class="startli"><a class="el" href="group__decorator_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff</a>, <a class="el" href="group__decorator_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_1st</a>, <a class="el" href="group__decorator_gaaae38dadc2c9ec57e7431dd23a01350d.html#gaaae38dadc2c9ec57e7431dd23a01350d" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_nth</a></p>
-<p class="startli"><b>Required header:</b> <code>#include &lt;eve/function/diff/cbrt.hpp&gt;</code></p>
-<p class="startli">The expression <code>diff(cbrt)(x)</code> computes the derivative of the function at <code>x</code>.</p>
-</li>
-</ul>
-<h4><a class="anchor" id="autotoc_md1586"></a>
-Example</h4>
 <p > <a id="godbolt-link" href="#">See it live on Compiler Explorer</a> <div id="godbolt"> </p><div class="fragment"><div class="line"><span class="comment">//#include &lt;eve/function/cbrt.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -699,6 +662,72 @@ Example</h4>
 <div class="ttc" id="agroup__constant_gaf750842e89385d68afd663f5a9cd0c08_html_gaf750842e89385d68afd663f5a9cd0c08"><div class="ttname"><a href="group__constant_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a></div><div class="ttdeci">constexpr callable_inf_ inf</div><div class="ttdoc">Callable object computing the infinity ieee value.</div><div class="ttdef"><b>Definition:</b> inf.hpp:54</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
+</div><!-- fragment --><p> <br  />
+  </div></p>
+<p ><b>Required header:</b> <code>#include &lt;eve/function/cbrt.hpp&gt;</code></p>
+<h4><a class="anchor" id="autotoc_md1575"></a>
+Members Functions</h4>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadLeft">Member   </th><th class="markdownTableHeadLeft">Effect    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><code>operator()</code>   </td><td class="markdownTableBodyLeft">the computation of the cubic root    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft"><code>operator[]</code>   </td><td class="markdownTableBodyLeft">Construct a conditional version of current function object   </td></tr>
+</table>
+<hr  />
+<div class="fragment"><div class="line"><span class="keyword">auto</span> operator()(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
+</div><!-- fragment --><p ><b>Parameters</b></p>
+<p ><code>x</code>: <a class="el" href="concepteve_1_1floating__real__value.html">floating real value</a>.</p>
+<p ><b>Return value</b></p>
+<p >Returns the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> cubic root value of the input.</p>
+<hr  />
+<div class="fragment"><div class="line"><span class="keyword">auto</span> operator[]( conditional_expression <span class="keyword">auto</span> cond ) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
+</div><!-- fragment --><p >Higher-order function generating a masked version of <a class="el" href="group__arithmetic_ga765c4974adf04dba95e06f764dfd0b49.html#ga765c4974adf04dba95e06f764dfd0b49" title="Callable object computing the cubic root.">eve::cbrt</a></p>
+<p ><b>Parameters</b></p>
+<p ><code>cond</code> : conditional expression</p>
+<p ><b>Return value</b></p>
+<p >A Callable object so that the expression <code>cbrt[cond](x, ...)</code> is equivalent to <code>if_else(cond,cbrt(x, ...),x)</code></p>
+<hr  />
+<h4><a class="anchor" id="autotoc_md1579"></a>
+Supported decorators</h4>
+<ul>
+<li><p class="startli"><a class="el" href="group__decorator_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff</a>, <a class="el" href="group__decorator_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_1st</a>, <a class="el" href="group__decorator_gaaae38dadc2c9ec57e7431dd23a01350d.html#gaaae38dadc2c9ec57e7431dd23a01350d" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_nth</a></p>
+<p class="startli"><b>Required header:</b> <code>#include &lt;eve/function/diff/cbrt.hpp&gt;</code></p>
+<p class="startli">The expression <code>diff(cbrt)(x)</code> computes the derivative of the function at <code>x</code>.</p>
+</li>
+</ul>
+<h4><a class="anchor" id="autotoc_md1580"></a>
+Example</h4>
+<p > <a id="godbolt-link" href="#">See it live on Compiler Explorer</a> <div id="godbolt"> </p><div class="fragment"><div class="line"><span class="comment">//#include &lt;eve/function/cbrt.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/constant/inf.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/constant/minf.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/constant/nan.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using</span> wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;8&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line"> wide_ft pf = {0.0f, 1.0f, -1.0f, -2.0f, 2.0f,</div>
+<div class="line">               <a class="code hl_variable" href="group__constant_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), <a class="code hl_variable" href="group__constant_gac58acf7f9ac1efeb685eb66d3a49aaf8.html#gac58acf7f9ac1efeb685eb66d3a49aaf8">eve::minf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), <a class="code hl_variable" href="group__constant_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf       = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; cbrt(pf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__arithmetic_ga765c4974adf04dba95e06f764dfd0b49.html#ga765c4974adf04dba95e06f764dfd0b49">eve::cbrt</a>(pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordtype">float</span> xf = 1.0f;</div>
+<div class="line">  <span class="keywordtype">float</span> yf = <a class="code hl_variable" href="group__constant_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>());</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xf       = &quot;</span> &lt;&lt; xf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; cbrt(xf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__arithmetic_ga765c4974adf04dba95e06f764dfd0b49.html#ga765c4974adf04dba95e06f764dfd0b49">eve::cbrt</a>(xf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- yf       = &quot;</span> &lt;&lt; yf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; cbrt(yf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__arithmetic_ga765c4974adf04dba95e06f764dfd0b49.html#ga765c4974adf04dba95e06f764dfd0b49">eve::cbrt</a>(yf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
 </div><!-- fragment --><p> <br  />
   </div> </p>
 

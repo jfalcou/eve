@@ -592,7 +592,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 
 <p>Callable object computing the next operation. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/function/next.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md1408"></a>
+<h4><a class="anchor" id="autotoc_md1402"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -616,7 +616,7 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>next[cond](x, ...)</code> is equivalent to <code>if_else(cond,next(x, ...),x)</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md1412"></a>
+<h4><a class="anchor" id="autotoc_md1406"></a>
 Supported decorators</h4>
 <ul>
 <li><p class="startli"><a class="el" href="group__decorator_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3" title="Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.">eve::pedantic</a></p>
@@ -628,7 +628,7 @@ Supported decorators</h4>
 <p class="startli">The call <code>pedantic(next)(x)</code> ensures for integral enties that <code>next(x, n) &gt;= x</code>. (equality is obtained only if <code>n == 0</code> or <code>x = eve::valmax(as(x))</code>)</p>
 </li>
 </ul>
-<h4><a class="anchor" id="autotoc_md1413"></a>
+<h4><a class="anchor" id="autotoc_md1407"></a>
 Example</h4>
 <p > <a id="godbolt-link" href="#">See it live on Compiler Explorer</a> <div id="godbolt"> </p><div class="fragment"><div class="line"><span class="comment">//#include &lt;eve/function/pedantic/next.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/ieee/pedantic/ieee.hpp&gt;</span></div>
