@@ -18,3 +18,4 @@
 #include <eve/module/math/pedantic/log10.hpp>
 #include <eve/module/math/pedantic/log.hpp>
 #include <eve/module/math/pedantic/lpnorm.hpp>
+#include <eve/module/math/pedantic/rsqrt.hpp>
