@@ -4,7 +4,7 @@ var searchData=
   ['cardinal_5ftype_1',['cardinal_type',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a1c043e9a2264e6257e715022ffbbe9a9',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::cardinal_type()'],['../structeve_1_1wide.html#a920f3e350e21c8f5c217d7e199efc299',1,'eve::wide::cardinal_type()']]],
   ['cbrt_2',['cbrt',['../group__arithmetic_ga765c4974adf04dba95e06f764dfd0b49.html#ga765c4974adf04dba95e06f764dfd0b49',1,'eve']]],
   ['ceil_3',['ceil',['../group__rounding_ga1fd0ebf298c8ca222374b621cf059750.html#ga1fd0ebf298c8ca222374b621cf059750',1,'eve']]],
-  ['change_20log_4',['Change Log',['../changelog.html',1,'']]],
+  ['change_20log_4',['Change Log',['../changelog.html',1,'about']]],
   ['clamp_5',['clamp',['../group__arithmetic_gad1d369116a4c78c29e74a36ee641f02a.html#gad1d369116a4c78c29e74a36ee641f02a',1,'eve']]],
   ['combinatorial_20functions_6',['Combinatorial functions',['../group__combinatorial.html',1,'']]],
   ['combine_7',['combine',['../group__swar_ga6b5426b411f619a1b836eeda12cdc9c0.html#ga6b5426b411f619a1b836eeda12cdc9c0',1,'eve']]],

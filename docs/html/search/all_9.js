@@ -8,7 +8,7 @@ var searchData=
   ['legendre_5',['legendre',['../group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e',1,'eve']]],
   ['lfactorial_6',['lfactorial',['../group__combinatorial_ga5d1501c08a37d8e64135a9ea4f841017.html#ga5d1501c08a37d8e64135a9ea4f841017',1,'eve']]],
   ['lgamma_7',['lgamma',['../group__special_ga9a67ba4913e40836c0c90b1853faa9b5.html#ga9a67ba4913e40836c0c90b1853faa9b5',1,'eve']]],
-  ['licence_8',['Licence',['../licence.html',1,'']]],
+  ['licence_8',['Licence',['../licence.html',1,'about']]],
   ['limitexponent_9',['limitexponent',['../group__constant_ga398c2bd75fec03ae36dc7f220998fbcb.html#ga398c2bd75fec03ae36dc7f220998fbcb',1,'eve']]],
   ['lo_10',['lo',['../group__ieee754_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60',1,'eve']]],
   ['log_11',['log',['../group__exponential_gab1d7c29149e2041dbf869bc56fad863f.html#gab1d7c29149e2041dbf869bc56fad863f',1,'eve']]],

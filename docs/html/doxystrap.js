@@ -4,9 +4,11 @@ $( document ).ready(function() {
   $("div.title").addClass("h1");
 
   $('li > a[href="index.html"] > span').before("<i class='fa fa-home'></i> ");
-  $('li > a[href="pages.html"] > span').before("<i class='fa fa-gears'></i> ");
+  $('li > a[href="pages.html"] > span').before("<i class='fa fa-search' ></i> ");
   $('li > a[href="tutorials.html"] > span').before("<i class='fa fa-map-o'></i> ");
-  $('li > a[href="glossary.html"] > span').before("<i class='fa fa-book'></i> ");
+  $('li > a[href="rationale.html"] > span').before("<i class='fa fa-comments'></i>");
+  $('li > a[href="about.html"] > span').before("<i class='fa fa-book'></i> ");
+  $('li > a[href="eve-dev.html"] > span').before("<i class='fa fa-gears'></i>");
   $('li > a[href="modules.html"] > span').before("<i class='fa fa-sitemap'></i> ");
   $('li > a[href="group__simd.html"] > span').before("<i class='fa fa-magnet'></i> ");
   $('li > a[href="group__functions.html"] > span').before("<i class='fa fa-superscript'></i> ");
