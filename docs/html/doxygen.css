@@ -1,4 +1,4 @@
-/* The standard CSS for doxygen 1.9.3 */
+/* The standard CSS for doxygen 1.9.4 */
 
 body, table, div, p, dl {
 	font: 400 14px/22px Roboto,sans-serif;
@@ -1525,6 +1525,10 @@ span.emoji {
         /* font family used at the site: https://unicode.org/emoji/charts/full-emoji-list.html
          * font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", Times, Symbola, Aegyptus, Code2000, Code2001, Code2002, Musica, serif, LastResort;
          */
+}
+
+span.obfuscator {
+  display: none;
 }
 
 .PageDocRTL-title div.toc li.level1 {
