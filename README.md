@@ -21,6 +21,8 @@ needs to change.
 ## Getting Started
 
  - [Installing and using the library](https://jfalcou.github.io/eve/html/install.html)
+ - [Fetching EVE using your favorite Package Manager](https://jfalcou.github.io/eve/html/packages.html)
+ - [Your first SIMD code using EVE](https://jfalcou.github.io/eve/html/simd-101.html)
  - [References Documentation](https://jfalcou.github.io/eve/html/modules.html)
 
 ## Video materials
@@ -29,16 +31,16 @@ needs to change.
 
 [![SIMD in C++20: EVE of a new Era - CppCon 2021](http://img.youtube.com/vi/WZGNCPBMInI/0.jpg)](http://www.youtube.com/watch?v=WZGNCPBMInI "Video Title")
 
-## Current status - Advanced BETA
+## Current status - Operationnal
 
-EVE is considered in **advanced beta**: it's usable, has an almost complete feature sets for a sensible amount of instructions sets but it's possible some values or performances issues may still remain. Don't hesitate to report any funky code-gen or bad optimizations so we can deliver the best performance around.
+EVE is considered **operationnal**: it's usable, has a large feature sets for a sensible amount of instructions sets but it's possible some values or performances issues may still remain. Don't hesitate to report any funky code-gen or bad optimizations so we can deliver the best performance around.
 
 ### Current roaster of supported Instructions Sets
 
 Full support with tests:
  - **Intel**
    - SSE2, SSSE3, SSE3, SSE4.1, SSE4.2
-   - AVX, AVX2, FMA4
+   - AVX, AVX2, FMA3
    - AVX512 Skymake style (F,CD,DQ,BW,VL)
  - **ARM**
    - NEON (64 & 128 bits)
@@ -46,7 +48,7 @@ Full support with tests:
 
 Partial/In-progress support with minimal checks:
  - **AMD**
-   - XOP, FMA3
+   - XOP, FMA4
  - **PowerPC**
    - VMX
    - VSX
