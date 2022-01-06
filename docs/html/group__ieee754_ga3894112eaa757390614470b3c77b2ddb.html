@@ -592,7 +592,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 
 <p>Callable object computing the frexp pair of values. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/function/frexp.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md1227"></a>
+<h4><a class="anchor" id="autotoc_md1221"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -608,7 +608,7 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >Computes the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> ieee frexp of the floating value, returning a pair {m,e} of values of the same type of <code>x</code> which are related by \(x = m\times 2^e\), with \(|m| \in [0.5, 1.5[\).</p>
 <p >However, the cases \(x = \pm\infty\) or is a Nan or a denormal are undefined.</p>
-<h4><a class="anchor" id="autotoc_md1229"></a>
+<h4><a class="anchor" id="autotoc_md1223"></a>
 Supported decorators</h4>
 <ul>
 <li><p class="startli"><a class="el" href="group__decorator_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3" title="Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.">eve::pedantic</a></p>
@@ -616,7 +616,7 @@ Supported decorators</h4>
 <p class="startli">The call <code>pedantic(frexp)(x)</code> takes also properly care of the cases where \(x = \pm0, \pm\infty\) or is a Nan, where \(m=x\) and \(e=0\) and of the denormal cases.</p>
 </li>
 </ul>
-<h4><a class="anchor" id="autotoc_md1230"></a>
+<h4><a class="anchor" id="autotoc_md1224"></a>
 Example</h4>
 <p > <a id="godbolt-link" href="#">See it live on Compiler Explorer</a> <div id="godbolt"> </p><div class="fragment"><div class="line"><span class="comment">//#include &lt;eve/function/pedantic/frexp.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/ieee.hpp&gt;</span></div>

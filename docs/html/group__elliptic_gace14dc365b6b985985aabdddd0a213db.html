@@ -592,7 +592,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 
 <p>Callable object computing the the Carlson's elliptic integral \(\frac32 \int_{0}^{\infty}\scriptstyle(t+p)^{-1}[(t+x)(t+y)(t+z)]^{-1/2}\scriptstyle\;\mathrm{d}t\). </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/function/ellint_rj.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md1215"></a>
+<h4><a class="anchor" id="autotoc_md1209"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -627,12 +627,53 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>ellint_rj[cond](x, ...)</code> is equivalent to <code>if_else(cond,ellint_rj(x, ...),x)</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md1219"></a>
+<h4><a class="anchor" id="autotoc_md1213"></a>
 Supported decorators</h4>
 <p >no decorators are supported</p>
-<h4><a class="anchor" id="autotoc_md1220"></a>
+<h4><a class="anchor" id="autotoc_md1214"></a>
 Example</h4>
-<p > <a id="godbolt-link" href="#">See it live on Compiler Explorer</a> <div id="godbolt"> </p><div class="fragment"></div><!-- fragment --><p> <br  />
+<p > <a id="godbolt-link" href="#">See it live on Compiler Explorer</a> <div id="godbolt"> </p><div class="fragment"><div class="line"><span class="comment">//#include &lt;eve/include/function/ellint_rj.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using</span> wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line"><span class="comment">//   wide_ft pf = {1.0f, 0.0f, 1.5f, 3.0f};</span></div>
+<div class="line"><span class="comment">//   wide_ft qf = {1.0f, 4.0f, 0.2f, 0.5f};</span></div>
+<div class="line"><span class="comment">//   wide_ft rf = {2.0f, 1.0f, 0.1f, 0.4f};</span></div>
+<div class="line"><span class="comment">//   wide_ft sf = {2.2f, 0.5f, 0.3f, 2.4f};</span></div>
+<div class="line"> </div>
+<div class="line">  wide_ft pf = {0.0f, 0.0f, 0.0f, 3.0f};</div>
+<div class="line">  wide_ft qf = {0.19f, 4.0f, 0.4375f, 0.5f};</div>
+<div class="line">  wide_ft rf = {1.0f, 1.0f, 1.0f, 1.0f};</div>
+<div class="line">  wide_ft sf = {0.19f, 0.5f, 0.87071f, 2.4f};</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                        = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qf                        = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- rf                        = &quot;</span> &lt;&lt; rf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- sf                        = &quot;</span> &lt;&lt; sf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_rj(pf, qf, rf, sf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__elliptic_gace14dc365b6b985985aabdddd0a213db.html#gace14dc365b6b985985aabdddd0a213db">eve::ellint_rj</a>(pf, qf, rf, sf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordtype">float</span> xf = 3.0f;</div>
+<div class="line">  <span class="keywordtype">float</span> yf = 0.5f;</div>
+<div class="line">  <span class="keywordtype">float</span> zf = 1.0f;</div>
+<div class="line">  <span class="keywordtype">float</span> uf = -3.4f;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xf                        = &quot;</span> &lt;&lt; xf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- yf                        = &quot;</span> &lt;&lt; yf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- zf                        = &quot;</span> &lt;&lt; zf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- uf                        = &quot;</span> &lt;&lt; uf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_rj(xf, yf, zf, uf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__elliptic_gace14dc365b6b985985aabdddd0a213db.html#gace14dc365b6b985985aabdddd0a213db">eve::ellint_rj</a>(xf, yf, zf, uf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__elliptic_gace14dc365b6b985985aabdddd0a213db_html_gace14dc365b6b985985aabdddd0a213db"><div class="ttname"><a href="group__elliptic_gace14dc365b6b985985aabdddd0a213db.html#gace14dc365b6b985985aabdddd0a213db">eve::ellint_rj</a></div><div class="ttdeci">constexpr callable_ellint_rj_ ellint_rj</div><div class="ttdoc">Callable object computing the the Carlson's elliptic integral .</div><div class="ttdef"><b>Definition:</b> ellint_rj.hpp:87</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
+</div><!-- fragment --><p> <br  />
   </div> </p>
 
 </div>

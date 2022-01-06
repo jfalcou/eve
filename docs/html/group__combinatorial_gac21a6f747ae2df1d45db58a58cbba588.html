@@ -592,7 +592,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 
 <p>Callable object computing least common multiple. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/function/gcd.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md1125"></a>
+<h4><a class="anchor" id="autotoc_md1119"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -617,11 +617,11 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>gcd[cond](x, ...)</code> is equivalent to <code>if_else(cond,gcd(x, ...),x)</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md1129"></a>
+<h4><a class="anchor" id="autotoc_md1123"></a>
 Type conversion</h4>
 <p >If the input types are integral, the result is succeptible to overflow, but will never be greater than the product of the two input values which will be representable in the upgraded integral type:</p>
 <p >The call <code>upgrade(gcd)(a,b)</code> will then return a correct result in the upgraded type (see example below).</p>
-<h4><a class="anchor" id="autotoc_md1130"></a>
+<h4><a class="anchor" id="autotoc_md1124"></a>
 Example</h4>
 <p > <a id="godbolt-link" href="#">See it live on Compiler Explorer</a> <div id="godbolt"> </p><div class="fragment"><div class="line"><span class="comment">//#include &lt;eve/function/gcd.hpp&gt;</span></div>
 <div class="line">include &lt;<a class="code hl_namespace" href="namespaceeve.html">eve</a>/module/combinatorial.hpp&gt;</div>

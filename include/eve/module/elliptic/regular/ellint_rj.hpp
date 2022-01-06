@@ -80,7 +80,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/ellint_rj.cpp}
+  //! @godbolt{doc/elliptic/ellint_rj.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -1,5 +1,6 @@
 #include <eve/product_type.hpp>
 #include <eve/wide.hpp>
+#include <iostream>
 
 // vec3 is a product type made of 3 floats
 struct vec3 : eve::struct_support<vec3, float, float, float>

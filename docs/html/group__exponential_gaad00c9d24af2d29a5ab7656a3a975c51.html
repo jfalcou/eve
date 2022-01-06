@@ -592,7 +592,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 
 <p>Callable object computing \(2^x\). </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/function/exp2.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md1657"></a>
+<h4><a class="anchor" id="autotoc_md1651"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -623,14 +623,14 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>exp2[cond](x, ...)</code> is equivalent to <code>if_else(cond,exp2(x, ...),x)</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md1661"></a>
+<h4><a class="anchor" id="autotoc_md1655"></a>
 Supported converters</h4>
 <ul>
 <li><p class="startli">eve::float_, eve::double_, <a class="el" href="group__converter_gaed175cd947b502a735e216cd1fce6d90.html#gaed175cd947b502a735e216cd1fce6d90" title="convert a eve::real_value to a floating point based eve::floating_real_value of same size.">eve::floating_</a></p>
 <p class="startli">The expression <code>d(exp2)(x)</code> where d in one of these 3 converters is supported if x is an <a class="el" href="concepteve_1_1integral__value.html">integral value</a> and produce a floating point output.</p>
 </li>
 </ul>
-<h4><a class="anchor" id="autotoc_md1662"></a>
+<h4><a class="anchor" id="autotoc_md1656"></a>
 Supported decorators</h4>
 <ul>
 <li><p class="startli"><a class="el" href="group__decorator_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e" title="Higher-order Callable Object imbuing saturation semantic onto other Callable Objects.">eve::saturated</a></p>
@@ -641,7 +641,7 @@ Supported decorators</h4>
 <p class="startli">The expression <code>diff(exp2)(x)</code> computes the derivative of the function at <code>x</code>.</p>
 </li>
 </ul>
-<h4><a class="anchor" id="autotoc_md1663"></a>
+<h4><a class="anchor" id="autotoc_md1657"></a>
 Example</h4>
 <p > <a id="godbolt-link" href="#">See it live on Compiler Explorer</a> <div id="godbolt"> </p><div class="fragment"><div class="line"><span class="comment">//#include &lt;eve/function/exp2.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>

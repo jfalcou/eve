@@ -69,11 +69,11 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/cbrt.cpp}
+  //! @godbolt{doc/math/cbrt.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(cbrt_, cbrt);
 }
 
-#include <eve/module/real/core/function/regular/generic/cbrt.hpp>
+#include <eve/module/math/regular/impl/cbrt.hpp>
