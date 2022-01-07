@@ -6,7 +6,6 @@
 */
 //==================================================================================================
 #pragma once
- 
-#include <eve/arch.hpp>
- 
-#include <eve/module/ieee/regular/is_not_greater_equal.hpp>
+
+#include <eve/module/arithmetic/regular/is_not_greater_equal.hpp>
+#include <eve/module/arithmetic/fuzzy/impl/is_not_greater_equal.hpp>
