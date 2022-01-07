@@ -53,6 +53,27 @@ namespace eve::algo
 
   inline constexpr auto copy = function_with_traits<copy_>[default_simple_algo_traits];
 
+  //================================================================================================
+  //! @addtogroup algo
+  //! @{
+  //!  @var copy_backward
+  //!
+  //!  @brief version of std::copy_backward
+  //!    * Accepts two things zipping together to range of pair but the optput cannot be an iterator.
+  //!      The restriction on the output is that we'd have to accept first, while the standard accepts last.
+  //!    * Also can accept a `zipped_range_pair`.
+  //!    * returns void.
+  //!    * default unrolling is 4.
+  //!    * will align by default.
+  //!    * for copying to the same scalar type consider using `std::memmove` instead.
+  //!    * will do conversions if necessary.
+  //!
+  //!   **Required header:** `#include <eve/algo/copy.hpp>`
+  //!
+  //! @}
+  //================================================================================================
+
+
   template <typename TraitsSupport>
   struct copy_backward_ : TraitsSupport
   {
@@ -67,6 +88,10 @@ namespace eve::algo
       requires zip_to_range<R1, R2>
     EVE_FORCEINLINE void operator()(R1&& r1, R2&& r2) const
     {
+      static_assert(!relaxed_iterator<R2>, "Behavior of std::copy_backward and eve::algo::copy_backward"
+                                           " would differ for a second parameter iterator."
+                                           " Use eve::algo::copy_backward(zip(r, it))"
+                                           " or pass a range as a second parameter.");
       operator()(views::zip(EVE_FWD(r1), EVE_FWD(r2)));
     }
   };
