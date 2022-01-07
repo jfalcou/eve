@@ -1,3 +1,4 @@
+//==================================================================================================
 /*
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
@@ -5,5 +6,6 @@
 */
 //==================================================================================================
 #pragma once
- 
-#include <eve/module/ieee/regular/is_not_less_equal.hpp>
+
+#include <eve/module/arithmetic/regular/is_not_less_equal.hpp>
+#include <eve/module/arithmetic/fuzzy/impl/is_not_less_equal.hpp>
