@@ -20,9 +20,7 @@
 namespace eve::detail
 {
   //================================================================================================
-  //! @addtogroup details
-  //! @{
-  //================================================================================================
+  //! @struct wide_storage
   //! @brief Storage-only element of wide/logical
   //!
   //! wide_storage acts as a wrapper for the storage and manipulation of the native SIMD register
@@ -38,10 +36,6 @@ namespace eve::detail
     wide_storage() {}
     wide_storage(storage_type const &r) : data_(r) {}
 
-    //==============================================================================================
-    //! @name Interface with architecture-specific intrinsics
-    //! @{
-    //==============================================================================================
     //! @brief Retrieve the architecture-specific storage help by wide
     EVE_FORCEINLINE storage_type const& storage() const & noexcept { return data_; }
 
@@ -59,9 +53,6 @@ namespace eve::detail
 
     //! @brief Implicit conversion to the architecture-specific storage help by wide
     EVE_FORCEINLINE operator storage_type        () &&       noexcept { return data_; }
-    //==============================================================================================
-    //! @}
-    //==============================================================================================
 
     protected:
     Storage data_;
