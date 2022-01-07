@@ -30,7 +30,7 @@ namespace eve::detail
     using r_t = common_compatible_t<T, U>;
     if constexpr(has_native_abi_v<T>&& has_native_abi_v<U>)
     {
-      auto d = pedantic(div)(a,b));
+      auto d = pedantic(div)(a,b);
       if constexpr(floating_real_value<T>)
       {
         auto r = if_else(is_unordered(a, b) || is_infinite(a) || is_eqz(b)
@@ -51,11 +51,4 @@ namespace eve::detail
     else return apply_over2(remdiv, r_t(a), r_t(b));
   }
 
-  template<conditional_expr C, real_value U, real_value V>
-  EVE_FORCEINLINE auto
-  rem_(EVE_SUPPORTS(cpu_), C const &cond, pedantic_type const &, U const &t, V const &f) noexcept
-      requires compatible_values<U, V>
-  {
-    return mask_op(  cond, pedantic(rem), t, f);
-  }
 }

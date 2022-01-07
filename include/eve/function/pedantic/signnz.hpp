@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/signnz.hpp>
-#include <eve/module/real/core/function/pedantic/generic/signnz.hpp>
+#include <eve/module/arithmetic/pedantic/signnz.hpp>

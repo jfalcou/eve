@@ -7,8 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/min.hpp>
-#include <eve/module/real/core/function/pedantic/generic/min.hpp>
+#include <eve/module/arithmetic/pedantic/min.hpp>
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/module/real/core/function/pedantic/simd/arm/neon/min.hpp>

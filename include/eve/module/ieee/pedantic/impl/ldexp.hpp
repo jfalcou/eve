@@ -1,9 +1,9 @@
 //==================================================================================================
-/*
+/**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-*/
+**/
 //==================================================================================================
 #pragma once
 
@@ -128,15 +128,5 @@ namespace eve::detail
       else return ldexp(a, b);
     }
     else  return apply_over(pedantic(ldexp), a, b);
-  }
-
-
-  template<conditional_expr C, floating_real_value T0, real_value T1>
-  auto ldexp_(EVE_SUPPORTS(cpu_), C const &cond
-             , pedantic_type const &
-             , T0 a0, T1 a1)
-  requires floating_value<common_compatible_t<T0, T1>>
-  {
-    return mask_op(  cond, pedantic(eve::ldexp), a0, a1);
   }
 }

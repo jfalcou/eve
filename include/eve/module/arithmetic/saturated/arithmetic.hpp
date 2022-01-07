@@ -11,7 +11,6 @@
 #include <eve/module/arithmetic/regular/absmax.hpp>
 #include <eve/module/arithmetic/regular/absmin.hpp>
 #include <eve/module/arithmetic/regular/add.hpp>
-#include <eve/module/arithmetic/regular/convert.hpp>
 #include <eve/module/arithmetic/regular/dec.hpp>
 #include <eve/module/arithmetic/regular/dist.hpp>
 #include <eve/module/arithmetic/regular/div.hpp>
@@ -26,9 +25,7 @@
 #include <eve/module/arithmetic/regular/negabsmin.hpp>
 #include <eve/module/arithmetic/regular/negmaxabs.hpp>
 #include <eve/module/arithmetic/regular/negminabs.hpp>
-#include <eve/module/arithmetic/regular/next.hpp>
 #include <eve/module/arithmetic/regular/oneminus.hpp>
 #include <eve/module/arithmetic/regular/plus.hpp>
-#include <eve/module/arithmetic/regular/prev.hpp>
 #include <eve/module/arithmetic/regular/sqr.hpp>
 #include <eve/module/arithmetic/regular/sub.hpp>
