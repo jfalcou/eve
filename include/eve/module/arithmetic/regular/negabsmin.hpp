@@ -97,15 +97,15 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/negabsmin.cpp}
+  //! @godbolt{doc/arithmetic/negabsmin.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(negabsmin_, negabsmin);
 }
 
-#include <eve/module/real/core/function/regular/generic/negabsmin.hpp>
+#include <eve/module/arithmetic/regular/impl/negabsmin.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/negabsmin.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/x86/negabsmin.hpp>
 #endif

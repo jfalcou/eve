@@ -52,7 +52,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/logical_ornot.cpp}
+  //! @godbolt{doc/arithmetic/logical_ornot.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -63,4 +63,4 @@ namespace eve
   EVE_MAKE_CALLABLE(logical_ornot_, logical_ornot);
 }
 
-#include <eve/module/real/core/function/regular/generic/logical_ornot.hpp>
+#include <eve/module/arithmetic/regular/impl/logical_ornot.hpp>

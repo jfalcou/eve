@@ -84,7 +84,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/trunc.cpp}
+  //! @godbolt{doc/arithmetic/trunc.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -92,16 +92,16 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/real/core/function/regular/generic/trunc.hpp>
+#include <eve/module/arithmetic/regular/impl/trunc.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/trunc.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/x86/trunc.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/real/core/function/regular/simd/ppc/trunc.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/ppc/trunc.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/real/core/function/regular/simd/arm/neon/trunc.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/arm/neon/trunc.hpp>
 #endif

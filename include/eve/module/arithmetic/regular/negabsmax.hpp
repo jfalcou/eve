@@ -97,15 +97,15 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/negabsmax.cpp}
+  //! @godbolt{doc/arithmetic/negabsmax.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(negabsmax_, negabsmax);
 }
 
-#include <eve/module/real/core/function/regular/generic/negabsmax.hpp>
+#include <eve/module/arithmetic/regular/impl/negabsmax.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/negabsmax.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/x86/negabsmax.hpp>
 #endif

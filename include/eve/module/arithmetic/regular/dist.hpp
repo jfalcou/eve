@@ -90,11 +90,11 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/dist.cpp}
+  //! @godbolt{doc/arithmetic/dist.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(dist_, dist);
 }
 
-#include <eve/module/real/core/function/regular/generic/dist.hpp>
+#include <eve/module/arithmetic/regular/impl/dist.hpp>

@@ -76,7 +76,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/is_odd.cpp}
+  //! @godbolt{doc/arithmetic/is_odd.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -84,4 +84,4 @@ namespace eve
   EVE_MAKE_CALLABLE(is_odd_, is_odd);
 }
 
-#include <eve/module/real/core/function/regular/generic/is_odd.hpp>
+#include <eve/module/arithmetic/regular/impl/is_odd.hpp>

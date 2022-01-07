@@ -51,7 +51,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/logical_xor.cpp}
+  //! @godbolt{doc/arithmetic/logical_xor.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -62,4 +62,4 @@ namespace eve
   EVE_MAKE_CALLABLE(logical_xor_, logical_xor);
 }
 
-#include <eve/module/real/core/function/regular/generic/logical_xor.hpp>
+#include <eve/module/arithmetic/regular/impl/logical_xor.hpp>

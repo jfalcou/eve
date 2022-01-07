@@ -65,11 +65,11 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/is_pow2.cpp}
+  //! @godbolt{doc/arithmetic/is_pow2.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(is_pow2_, is_pow2);
 }
 
-#include <eve/module/real/core/function/regular/generic/is_pow2.hpp>
+#include <eve/module/arithmetic/regular/impl/is_pow2.hpp>

@@ -87,11 +87,11 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/saturate.cpp}
+  //! @godbolt{doc/arithmetic/saturate.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(saturate_, saturate);
 }
 
-#include <eve/module/real/core/function/regular/generic/saturate.hpp>
+#include <eve/module/arithmetic/regular/impl/saturate.hpp>

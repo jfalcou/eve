@@ -82,7 +82,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/shl.cpp}
+  //! @godbolt{doc/arithmetic/shl.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -105,4 +105,4 @@ namespace eve
   EVE_MAKE_CALLABLE(shl_, shl);
 }
 
-#include <eve/module/real/core/function/regular/generic/shl.hpp>
+#include <eve/module/arithmetic/regular/impl/shl.hpp>

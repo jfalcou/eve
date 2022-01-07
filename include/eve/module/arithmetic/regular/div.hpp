@@ -111,7 +111,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/div.cpp}
+  //! @godbolt{doc/arithmetic/div.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -119,16 +119,16 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/real/core/function/regular/generic/div.hpp>
+#include <eve/module/arithmetic/regular/impl/div.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/div.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/x86/div.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/real/core/function/regular/simd/ppc/div.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/ppc/div.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/real/core/function/regular/simd/arm/neon/div.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/arm/neon/div.hpp>
 #endif

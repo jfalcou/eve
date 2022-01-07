@@ -97,15 +97,15 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/maxabs.cpp}
+  //! @godbolt{doc/arithmetic/maxabs.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(maxabs_, maxabs);
 }
 
-#include <eve/module/real/core/function/regular/generic/maxabs.hpp>
+#include <eve/module/arithmetic/regular/impl/maxabs.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/maxabs.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/x86/maxabs.hpp>
 #endif

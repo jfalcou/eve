@@ -71,11 +71,11 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/negatenz.cpp}
+  //! @godbolt{doc/arithmetic/negatenz.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(negatenz_, negatenz);
 }
 
-#include <eve/module/real/core/function/regular/generic/negatenz.hpp>
+#include <eve/module/arithmetic/regular/impl/negatenz.hpp>

@@ -68,7 +68,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/plus.cpp}
+  //! @godbolt{doc/arithmetic/plus.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -79,4 +79,4 @@ namespace eve
   EVE_MAKE_CALLABLE(plus_, plus);
 }
 
-#include <eve/module/real/core/function/regular/generic/plus.hpp>
+#include <eve/module/arithmetic/regular/impl/plus.hpp>

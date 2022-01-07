@@ -73,11 +73,11 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/fdim.cpp}
+  //! @godbolt{doc/arithmetic/fdim.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(fdim_, fdim);
 }
 
-#include <eve/module/real/core/function/regular/generic/fdim.hpp>
+#include <eve/module/arithmetic/regular/impl/fdim.hpp>

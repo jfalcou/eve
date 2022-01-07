@@ -52,7 +52,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/sqr_abs.cpp}
+  //! @godbolt{doc/arithmetic/sqr_abs.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -63,4 +63,4 @@ namespace eve
   EVE_MAKE_CALLABLE(sqr_abs_, sqr_abs);
 }
 
-#include <eve/module/real/core/function/regular/generic/sqr_abs.hpp>
+#include <eve/module/arithmetic/regular/impl/sqr_abs.hpp>

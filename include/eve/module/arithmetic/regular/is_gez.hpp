@@ -68,7 +68,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/is_gez.cpp}
+  //! @godbolt{doc/arithmetic/is_gez.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -76,4 +76,4 @@ namespace eve
   EVE_MAKE_CALLABLE(is_gez_, is_gez);
 }
 
-#include <eve/module/real/core/function/regular/generic/is_gez.hpp>
+#include <eve/module/arithmetic/regular/impl/is_gez.hpp>

@@ -81,7 +81,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/shr.cpp}
+  //! @godbolt{doc/arithmetic/shr.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -104,4 +104,4 @@ namespace eve
   EVE_MAKE_CALLABLE(shr_, shr);
 
 }
-#include <eve/module/real/core/function/regular/generic/shr.hpp>
+#include <eve/module/arithmetic/regular/impl/shr.hpp>

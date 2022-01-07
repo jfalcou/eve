@@ -97,15 +97,15 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/minabs.cpp}
+  //! @godbolt{doc/arithmetic/minabs.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(minabs_, minabs);
 }
 
-#include <eve/module/real/core/function/regular/generic/minabs.hpp>
+#include <eve/module/arithmetic/regular/impl/minabs.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/minabs.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/x86/minabs.hpp>
 #endif

@@ -92,7 +92,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/fanm.cpp}
+  //! @godbolt{doc/arithmetic/fanm.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -100,8 +100,8 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/real/core/function/regular/generic/fanm.hpp>
+#include <eve/module/arithmetic/regular/impl/fanm.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/fanm.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/x86/fanm.hpp>
 #endif

@@ -79,7 +79,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/ceil.cpp}
+  //! @godbolt{doc/arithmetic/ceil.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -87,16 +87,16 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/real/core/function/regular/generic/ceil.hpp>
+#include <eve/module/arithmetic/regular/impl/ceil.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/ceil.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/x86/ceil.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/real/core/function/regular/simd/ppc/ceil.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/ppc/ceil.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/real/core/function/regular/simd/arm/neon/ceil.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/arm/neon/ceil.hpp>
 #endif

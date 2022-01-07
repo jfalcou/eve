@@ -14,4 +14,4 @@ namespace eve
   EVE_MAKE_CALLABLE(fmod_, fmod);
 }
 
-#include <eve/module/real/core/function/regular/generic/fmod.hpp>
+#include <eve/module/arithmetic/regular/impl/fmod.hpp>

@@ -15,12 +15,12 @@ namespace eve
   EVE_MAKE_CALLABLE(reverse_, reverse);
 }
 
-#include <eve/module/real/core/function/regular/generic/reverse.hpp>
+#include <eve/module/arithmetic/regular/impl/reverse.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/reverse.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/x86/reverse.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/real/core/function/regular/simd/arm/neon/reverse.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/arm/neon/reverse.hpp>
 #endif

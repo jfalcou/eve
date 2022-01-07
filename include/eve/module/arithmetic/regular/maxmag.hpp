@@ -97,15 +97,15 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/maxmag.cpp}
+  //! @godbolt{doc/arithmetic/maxmag.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(maxmag_, maxmag);
 }
 
-#include <eve/module/real/core/function/regular/generic/maxmag.hpp>
+#include <eve/module/arithmetic/regular/impl/maxmag.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/maxmag.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/x86/maxmag.hpp>
 #endif

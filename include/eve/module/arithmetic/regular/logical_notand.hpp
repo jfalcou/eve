@@ -52,7 +52,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/logical_notand.cpp}
+  //! @godbolt{doc/arithmetic/logical_notand.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -63,4 +63,4 @@ namespace eve
   EVE_MAKE_CALLABLE(logical_notand_, logical_notand);
 }
 
-#include <eve/module/real/core/function/regular/generic/logical_notand.hpp>
+#include <eve/module/arithmetic/regular/impl/logical_notand.hpp>

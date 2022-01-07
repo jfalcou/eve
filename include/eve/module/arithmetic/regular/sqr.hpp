@@ -88,11 +88,11 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/sqr.cpp}
+  //! @godbolt{doc/arithmetic/sqr.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(sqr_, sqr);
 }
 
-#include <eve/module/real/core/function/regular/generic/sqr.hpp>
+#include <eve/module/arithmetic/regular/impl/sqr.hpp>

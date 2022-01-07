@@ -95,15 +95,15 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/minmag.cpp}
+  //! @godbolt{doc/arithmetic/minmag.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(minmag_, minmag);
 }
 
-#include <eve/module/real/core/function/regular/generic/minmag.hpp>
+#include <eve/module/arithmetic/regular/impl/minmag.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/minmag.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/x86/minmag.hpp>
 #endif

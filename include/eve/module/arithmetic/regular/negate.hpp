@@ -67,7 +67,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/negate.cpp}
+  //! @godbolt{doc/arithmetic/negate.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -75,8 +75,8 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/real/core/function/regular/generic/negate.hpp>
+#include <eve/module/arithmetic/regular/impl/negate.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/negate.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/x86/negate.hpp>
 #endif

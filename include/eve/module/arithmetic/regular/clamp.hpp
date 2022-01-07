@@ -84,7 +84,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/clamp.cpp}
+  //! @godbolt{doc/arithmetic/clamp.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -105,4 +105,4 @@ namespace eve
 
 }
 
-#include <eve/module/real/core/function/regular/generic/clamp.hpp>
+#include <eve/module/arithmetic/regular/impl/clamp.hpp>

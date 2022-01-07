@@ -66,11 +66,11 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/inc.cpp}
+  //! @godbolt{doc/arithmetic/inc.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(inc_, inc);
 }
 
-#include <eve/module/real/core/function/regular/generic/inc.hpp>
+#include <eve/module/arithmetic/regular/impl/inc.hpp>

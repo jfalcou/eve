@@ -68,23 +68,23 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/store.cpp}
+  //! @godbolt{doc/arithmetic/store.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(store_, store);
 }
 
-#include <eve/module/real/core/function/regular/generic/store.hpp>
+#include <eve/module/arithmetic/regular/impl/store.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/store.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/x86/store.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/real/core/function/regular/simd/ppc/store.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/ppc/store.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/real/core/function/regular/simd/arm/neon/store.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/arm/neon/store.hpp>
 #endif

@@ -77,11 +77,11 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/signnz.cpp}
+  //! @godbolt{doc/arithmetic/signnz.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(signnz_, signnz);
 }
 
-#include <eve/module/real/core/function/regular/generic/signnz.hpp>
+#include <eve/module/arithmetic/regular/impl/signnz.hpp>

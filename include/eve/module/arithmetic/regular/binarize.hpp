@@ -76,11 +76,11 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/binarize.cpp}
+  //! @godbolt{doc/arithmetic/binarize.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(binarize_, binarize);
 }
 
-#include <eve/module/real/core/function/regular/generic/binarize.hpp>
+#include <eve/module/arithmetic/regular/impl/binarize.hpp>
