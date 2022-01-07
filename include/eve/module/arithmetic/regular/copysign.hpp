@@ -67,11 +67,11 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/copysign.cpp}
+  //! @godbolt{doc/arithmetic/copysign.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(copysign_, copysign);
 }
 
-#include <eve/module/real/core/function/regular/generic/copysign.hpp>
+#include <eve/module/arithmetic/regular/impl/copysign.hpp>

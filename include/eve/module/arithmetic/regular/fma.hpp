@@ -92,7 +92,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/fma.cpp}
+  //! @godbolt{doc/arithmetic/fma.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -100,16 +100,16 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/real/core/function/regular/generic/fma.hpp>
+#include <eve/module/arithmetic/regular/impl/fma.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/fma.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/x86/fma.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/real/core/function/regular/simd/ppc/fma.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/ppc/fma.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/real/core/function/regular/simd/arm/neon/fma.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/arm/neon/fma.hpp>
 #endif

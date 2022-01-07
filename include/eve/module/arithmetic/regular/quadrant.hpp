@@ -50,7 +50,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/quadrant.cpp}
+  //! @godbolt{doc/arithmetic/quadrant.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -61,4 +61,4 @@ namespace eve
   EVE_MAKE_CALLABLE(quadrant_, quadrant);
 }
 
-#include <eve/module/real/core/function/regular/generic/quadrant.hpp>
+#include <eve/module/arithmetic/regular/impl/quadrant.hpp>

@@ -91,7 +91,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/is_less_equal.cpp}
+  //! @godbolt{doc/arithmetic/is_less_equal.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -118,5 +118,5 @@ namespace eve
 }
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/is_less_equal.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/x86/is_less_equal.hpp>
 #endif

@@ -98,15 +98,15 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/negminabs.cpp}
+  //! @godbolt{doc/arithmetic/negminabs.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(negminabs_, negminabs);
 }
 
-#include <eve/module/real/core/function/regular/generic/negminabs.hpp>
+#include <eve/module/arithmetic/regular/impl/negminabs.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/negminabs.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/x86/negminabs.hpp>
 #endif

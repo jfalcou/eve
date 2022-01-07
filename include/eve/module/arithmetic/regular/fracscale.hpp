@@ -74,7 +74,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/fracscale.cpp}
+  //! @godbolt{doc/arithmetic/fracscale.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -101,8 +101,8 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/real/core/function/regular/generic/fracscale.hpp>
+#include <eve/module/arithmetic/regular/impl/fracscale.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/fracscale.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/x86/fracscale.hpp>
 #endif

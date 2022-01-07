@@ -92,15 +92,15 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/absmax.cpp}
+  //! @godbolt{doc/arithmetic/absmax.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(absmax_, absmax);
 }
 
-#include <eve/module/real/core/function/regular/generic/absmax.hpp>
+#include <eve/module/arithmetic/regular/impl/absmax.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/absmax.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/x86/absmax.hpp>
 #endif

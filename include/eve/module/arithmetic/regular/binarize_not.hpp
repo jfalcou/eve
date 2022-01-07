@@ -76,11 +76,11 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/binarize_not.cpp}
+  //! @godbolt{doc/arithmetic/binarize_not.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(binarize_not_, binarize_not);
 }
 
-#include <eve/module/real/core/function/regular/generic/binarize_not.hpp>
+#include <eve/module/arithmetic/regular/impl/binarize_not.hpp>

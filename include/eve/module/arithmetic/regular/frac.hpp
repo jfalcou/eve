@@ -73,15 +73,15 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/frac.cpp}
+  //! @godbolt{doc/arithmetic/frac.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(frac_, frac);
 }
 
-#include <eve/module/real/core/function/regular/generic/frac.hpp>
+#include <eve/module/arithmetic/regular/impl/frac.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/frac.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/x86/frac.hpp>
 #endif

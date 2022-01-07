@@ -80,11 +80,11 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/oneminus.cpp}
+  //! @godbolt{doc/arithmetic/oneminus.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(oneminus_, oneminus);
 }
 
-#include <eve/module/real/core/function/regular/generic/oneminus.hpp>
+#include <eve/module/arithmetic/regular/impl/oneminus.hpp>

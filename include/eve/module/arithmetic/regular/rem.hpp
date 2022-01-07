@@ -105,11 +105,11 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/rem.cpp}
+  //! @godbolt{doc/arithmetic/rem.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(rem_, rem);
 }
 
-#include <eve/module/real/core/function/regular/generic/rem.hpp>
+#include <eve/module/arithmetic/regular/impl/rem.hpp>

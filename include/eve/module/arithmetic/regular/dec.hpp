@@ -77,11 +77,11 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/dec.cpp}
+  //! @godbolt{doc/arithmetic/dec.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(dec_, dec);
 }
 
-#include <eve/module/real/core/function/regular/generic/dec.hpp>
+#include <eve/module/arithmetic/regular/impl/dec.hpp>

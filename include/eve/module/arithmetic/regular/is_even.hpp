@@ -76,7 +76,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/is_even.cpp}
+  //! @godbolt{doc/arithmetic/is_even.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -84,4 +84,4 @@ namespace eve
   EVE_MAKE_CALLABLE(is_even_, is_even);
 }
 
-#include <eve/module/real/core/function/regular/generic/is_even.hpp>
+#include <eve/module/arithmetic/regular/impl/is_even.hpp>

@@ -52,7 +52,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/logical_notor.cpp}
+  //! @godbolt{doc/arithmetic/logical_notor.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -63,4 +63,4 @@ namespace eve
   EVE_MAKE_CALLABLE(logical_notor_, logical_notor);
 }
 
-#include <eve/module/real/core/function/regular/generic/logical_notor.hpp>
+#include <eve/module/arithmetic/regular/impl/logical_notor.hpp>

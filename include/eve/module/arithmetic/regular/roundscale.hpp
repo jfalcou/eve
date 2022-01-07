@@ -74,7 +74,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/roundscale.cpp}
+  //! @godbolt{doc/arithmetic/roundscale.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -101,8 +101,8 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/real/core/function/regular/generic/roundscale.hpp>
+#include <eve/module/arithmetic/regular/impl/roundscale.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/roundscale.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/x86/roundscale.hpp>
 #endif

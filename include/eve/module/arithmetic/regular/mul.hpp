@@ -96,23 +96,23 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/mul.cpp}
+  //! @godbolt{doc/arithmetic/mul.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(mul_, mul);
 }
 
-#include <eve/module/real/core/function/regular/generic/mul.hpp>
+#include <eve/module/arithmetic/regular/impl/mul.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/mul.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/x86/mul.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/real/core/function/regular/simd/ppc/mul.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/ppc/mul.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/real/core/function/regular/simd/arm/neon/mul.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/arm/neon/mul.hpp>
 #endif

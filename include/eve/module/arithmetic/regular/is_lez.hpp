@@ -68,7 +68,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/is_lez.cpp}
+  //! @godbolt{doc/arithmetic/is_lez.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -76,4 +76,4 @@ namespace eve
   EVE_MAKE_CALLABLE(is_lez_, is_lez);
 }
 
-#include <eve/module/real/core/function/regular/generic/is_lez.hpp>
+#include <eve/module/arithmetic/regular/impl/is_lez.hpp>

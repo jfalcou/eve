@@ -89,11 +89,11 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/round.cpp}
+  //! @godbolt{doc/arithmetic/round.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(round_, round);
 }
 
-#include <eve/module/real/core/function/regular/generic/round.hpp>
+#include <eve/module/arithmetic/regular/impl/round.hpp>

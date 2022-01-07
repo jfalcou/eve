@@ -68,7 +68,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/is_ltz.cpp}
+  //! @godbolt{doc/arithmetic/is_ltz.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -76,4 +76,4 @@ namespace eve
   EVE_MAKE_CALLABLE(is_ltz_, is_ltz);
 }
 
-#include <eve/module/real/core/function/regular/generic/is_ltz.hpp>
+#include <eve/module/arithmetic/regular/impl/is_ltz.hpp>

@@ -14,5 +14,5 @@ namespace eve
   EVE_MAKE_CALLABLE(lerp_, lerp);
 }
 
-#include <eve/module/real/core/function/regular/generic/lerp.hpp>
+#include <eve/module/arithmetic/regular/impl/lerp.hpp>
 

@@ -52,7 +52,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/rat.cpp}
+  //! @godbolt{doc/arithmetic/rat.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -63,4 +63,4 @@ namespace eve
   EVE_MAKE_CALLABLE(rat_, rat);
 }
 
-#include <eve/module/real/core/function/regular/generic/rat.hpp>
+#include <eve/module/arithmetic/regular/impl/rat.hpp>

@@ -83,11 +83,11 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/minus.cpp}
+  //! @godbolt{doc/arithmetic/minus.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(minus_, minus);
 }
 
-#include <eve/module/real/core/function/regular/generic/minus.hpp>
+#include <eve/module/arithmetic/regular/impl/minus.hpp>

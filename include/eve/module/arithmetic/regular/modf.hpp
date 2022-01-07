@@ -57,7 +57,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/modf.cpp}
+  //! @godbolt{doc/arithmetic/modf.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -68,4 +68,4 @@ namespace eve
   EVE_MAKE_CALLABLE(modf_, modf);
 }
 
-#include <eve/module/real/core/function/regular/generic/modf.hpp>
+#include <eve/module/arithmetic/regular/impl/modf.hpp>

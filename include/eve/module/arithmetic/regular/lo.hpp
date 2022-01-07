@@ -52,11 +52,11 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/lo.cpp}
+  //! @godbolt{doc/arithmetic/lo.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(lo_, lo);
 }
 
-#include <eve/module/real/core/function/regular/generic/lo.hpp>
+#include <eve/module/arithmetic/regular/impl/lo.hpp>

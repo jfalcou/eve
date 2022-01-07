@@ -69,7 +69,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/is_eqz.cpp}
+  //! @godbolt{doc/arithmetic/is_eqz.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -88,4 +88,4 @@ namespace eve
   }
 }
 
-#include <eve/module/real/core/function/regular/generic/is_eqz.hpp>
+#include <eve/module/arithmetic/regular/impl/is_eqz.hpp>

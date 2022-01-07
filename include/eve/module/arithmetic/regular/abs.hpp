@@ -84,23 +84,23 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/abs.cpp}
+  //! @godbolt{doc/arithmetic/abs.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(abs_, abs);
 }
 
-#include <eve/module/real/core/function/regular/generic/abs.hpp>
+#include <eve/module/arithmetic/regular/impl/abs.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/abs.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/x86/abs.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/real/core/function/regular/simd/ppc/abs.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/ppc/abs.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/real/core/function/regular/simd/arm/neon/abs.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/arm/neon/abs.hpp>
 #endif

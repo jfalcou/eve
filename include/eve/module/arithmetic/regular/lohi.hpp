@@ -65,11 +65,11 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/lohi.cpp}
+  //! @godbolt{doc/arithmetic/lohi.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(lohi_, lohi);
 }
 
-#include <eve/module/real/core/function/regular/generic/lohi.hpp>
+#include <eve/module/arithmetic/regular/impl/lohi.hpp>

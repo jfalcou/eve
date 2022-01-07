@@ -82,11 +82,11 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/manhattan.cpp}
+  //! @godbolt{doc/arithmetic/manhattan.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(manhattan_, manhattan);
 }
 
-#include <eve/module/real/core/function/regular/generic/manhattan.hpp>
+#include <eve/module/arithmetic/regular/impl/manhattan.hpp>

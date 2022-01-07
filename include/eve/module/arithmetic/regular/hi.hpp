@@ -52,11 +52,11 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/hi.cpp}
+  //! @godbolt{doc/arithmetic/hi.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(hi_, hi);
 }
 
-#include <eve/module/real/core/function/regular/generic/hi.hpp>
+#include <eve/module/arithmetic/regular/impl/hi.hpp>
