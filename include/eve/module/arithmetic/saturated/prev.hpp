@@ -6,5 +6,6 @@
 */
 //==================================================================================================
 #pragma once
- 
-#include <eve/module/ieee/regular/prev.hpp>
+
+#include <eve/module/arithmetic/regular/prev.hpp>
+#include <eve/module/arithmetic/saturated/impl/prev.hpp>
