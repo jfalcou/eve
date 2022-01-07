@@ -1,4 +1,5 @@
 #include <eve/function/fma.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/function/pedantic/fsm.hpp>
 #include <eve/function/numeric/fsm.hpp>
 #include <eve/constant/eps.hpp>

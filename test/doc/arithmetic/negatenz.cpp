@@ -1,4 +1,5 @@
-#include <eve/function/negatenz.hpp>
+//#include <eve/function/negatenz.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

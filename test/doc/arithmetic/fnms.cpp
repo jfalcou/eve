@@ -1,4 +1,5 @@
-#include <eve/function/fnms.hpp>
+//#include <eve/function/fnms.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/function/pedantic/fnms.hpp>
 #include <eve/function/numeric/fnms.hpp>
 #include <eve/constant/eps.hpp>

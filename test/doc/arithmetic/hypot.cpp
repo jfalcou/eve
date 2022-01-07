@@ -1,4 +1,5 @@
-#include <eve/function/hypot.hpp>
+//#include <eve/function/hypot.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/function/pedantic/hypot.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/wide.hpp>

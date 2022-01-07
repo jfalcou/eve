@@ -1,4 +1,5 @@
-#include <eve/function/average.hpp>
+//#include <eve/function/average.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/literals.hpp>
 #include <eve/wide.hpp>
 #include <vector>

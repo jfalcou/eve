@@ -1,4 +1,5 @@
-#include <eve/function/arg.hpp>
+//#include <eve/function/arg.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/function/pedantic/arg.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/inf.hpp>

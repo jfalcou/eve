@@ -1,4 +1,5 @@
-#include <eve/function/fdim.hpp>
+//#include <eve/function/fdim.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>

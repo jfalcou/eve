@@ -1,4 +1,5 @@
-#include <eve/function/negmaxabs.hpp>
+//#include <eve/function/negmaxabs.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/function/pedantic/negmaxabs.hpp>
 #include <eve/function/numeric/negmaxabs.hpp>
 #include <eve/wide.hpp>

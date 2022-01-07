@@ -1,4 +1,5 @@
-#include <eve/function/lohi.hpp>
+//#include <eve/function/lohi.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/mindenormal.hpp>
 #include <eve/constant/minf.hpp>

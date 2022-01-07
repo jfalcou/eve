@@ -1,4 +1,5 @@
-#include <eve/function/min.hpp>
+//#include <eve/function/min.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/function/pedantic/min.hpp>
 #include <eve/function/numeric/min.hpp>
 #include <eve/wide.hpp>
