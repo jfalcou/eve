@@ -708,7 +708,7 @@ namespace eve
   auto map_alternative(C c, auto op)
   {
     if constexpr (!C::has_alternative) return c;
-    else                               return c.op_alternative(map);
+    else                               return c.map_alternative(op);
   }
 
   //================================================================================================
