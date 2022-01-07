@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/ffs.hpp>
-#include <eve/module/real/core/function/pedantic/generic/ffs.hpp>
+#include <eve/module/arithmetic/pedantic/ffs.hpp>

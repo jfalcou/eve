@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/rec.hpp>
-#include <eve/module/real/core/function/diff/generic/rec.hpp>
+#include <eve/module/arithmetic/diff/rec.hpp>

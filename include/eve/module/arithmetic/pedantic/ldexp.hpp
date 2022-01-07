@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/ldexp.hpp>
-#include <eve/module/arithmetic/pedantic/impl/ldexp.hpp>
+#include <eve/module/ieee/regular/ldexp.hpp>
+#include <eve/module/ieee/pedantic/impl/ldexp.hpp>

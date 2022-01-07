@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/sqr.hpp>
-#include <eve/module/real/core/function/diff/generic/sqr.hpp>
+#include <eve/module/arithmetic/diff/sqr.hpp>

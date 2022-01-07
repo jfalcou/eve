@@ -26,3 +26,7 @@ namespace eve::detail
 }
 
 #include <eve/module/ieee/pedantic/impl/ldexp.hpp>
+
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/module/ieee/pedantic/impl/simd/x86/ldexp.hpp>
+#endif
