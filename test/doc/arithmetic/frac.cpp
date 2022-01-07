@@ -1,4 +1,5 @@
-#include <eve/function/frac.hpp>
+//#include <eve/function/frac.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/wide.hpp>

@@ -1,4 +1,5 @@
-#include <eve/function/negabsmax.hpp>
+//#include <eve/function/negabsmax.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/function/pedantic/negabsmax.hpp>
 #include <eve/function/numeric/negabsmax.hpp>
 #include <eve/wide.hpp>

@@ -1,4 +1,5 @@
 #include <eve/function/rem.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

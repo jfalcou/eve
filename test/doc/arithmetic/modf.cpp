@@ -1,4 +1,5 @@
-#include <eve/function/modf.hpp>
+//#include <eve/function/modf.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/function/pedantic/modf.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/mindenormal.hpp>

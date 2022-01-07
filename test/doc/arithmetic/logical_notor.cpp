@@ -1,4 +1,5 @@
-#include <eve/function/logical_notor.hpp>
+//#include <eve/function/logical_notor.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/function/is_odd.hpp>
 #include <eve/function/is_even.hpp>
 #include <eve/wide.hpp>

@@ -1,5 +1,6 @@
 {
-  "unit.bessel.exe": "^unit.bessel.*.exe"
+   "unit.arithmetic.exe": "^unit.arithmetic.*.exe"
+,  "unit.bessel.exe": "^unit.bessel.*.exe"
 ,  "unit.combinatorial.exe": "^unit.combinatorial.*.exe"
 ,  "unit.elliptic.exe": "^unit.elliptic.*.exe"
 ,  "unit.ieee.exe": "^unit.ieee.*.exe"
@@ -7,5 +8,5 @@
 ,  "unit.polynomial.exe": "^unit.polynomial.*.exe"
 ,  "unit.proba.exe": "^unit.proba.*.exe"
 ,  "unit.special.exe": "^unit.special.*.exe"
-, "unit.real.exe": "^unit.real.*.exe"
+,  "unit.real.exe": "^unit.real.*.exe"
 }

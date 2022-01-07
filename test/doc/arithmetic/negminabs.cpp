@@ -1,4 +1,5 @@
-#include <eve/function/negminabs.hpp>
+//#include <eve/function/negminabs.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/function/pedantic/negminabs.hpp>
 #include <eve/function/numeric/negminabs.hpp>
 #include <eve/wide.hpp>

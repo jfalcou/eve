@@ -1,4 +1,5 @@
-#include <eve/function/is_odd.hpp>
+//#include <eve/function/is_odd.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

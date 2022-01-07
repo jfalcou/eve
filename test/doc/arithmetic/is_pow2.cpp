@@ -1,4 +1,5 @@
-#include <eve/function/is_pow2.hpp>
+//#include <eve/function/is_pow2.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 
