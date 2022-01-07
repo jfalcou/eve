@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/math/regular/csc.hpp>
+#include <eve/module/arithmetic/regular/csc.hpp>

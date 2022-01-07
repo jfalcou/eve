@@ -23,10 +23,10 @@
 #include <eve/module/arithmetic/regular/deginrad.hpp>
 #include <eve/module/arithmetic/regular/dist.hpp>
 #include <eve/module/arithmetic/regular/div_180.hpp>
-#include <eve/module/arithmetic/regular/div_downward.hpp>
+//#include <eve/module/arithmetic/regular/div_downward.hpp>
 #include <eve/module/arithmetic/regular/div.hpp>
-#include <eve/module/arithmetic/regular/div_tonearest.hpp>
-#include <eve/module/arithmetic/regular/div_upward.hpp>
+//#include <eve/module/arithmetic/regular/div_tonearest.hpp>
+//#include <eve/module/arithmetic/regular/div_upward.hpp>
 #include <eve/module/arithmetic/regular/epsilon.hpp>
 #include <eve/module/arithmetic/regular/fam.hpp>
 #include <eve/module/arithmetic/regular/fanm.hpp>
@@ -44,7 +44,7 @@
 #include <eve/module/arithmetic/regular/hi.hpp>
 #include <eve/module/arithmetic/regular/hypot.hpp>
 #include <eve/module/arithmetic/regular/inc.hpp>
-#include <eve/module/arithmetic/regular/iround.hpp>
+//#include <eve/module/arithmetic/regular/iround.hpp>
 #include <eve/module/arithmetic/regular/is_eqz.hpp>
 #include <eve/module/arithmetic/regular/is_even.hpp>
 #include <eve/module/arithmetic/regular/is_gez.hpp>
@@ -108,6 +108,5 @@
 #include <eve/module/arithmetic/regular/sqr_abs.hpp>
 #include <eve/module/arithmetic/regular/sqr.hpp>
 #include <eve/module/arithmetic/regular/sqrt.hpp>
-#include <eve/module/arithmetic/regular/store.hpp>
 #include <eve/module/arithmetic/regular/sub.hpp>
 #include <eve/module/arithmetic/regular/trunc.hpp>
