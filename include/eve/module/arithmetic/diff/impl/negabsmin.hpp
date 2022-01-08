@@ -10,7 +10,7 @@
 #include <eve/function/derivative.hpp>
 #include <eve/function/negabsmin.hpp>
 #include <eve/function/sign.hpp>
-#include <eve/module/real/core/function/diff/detail/minmax_kernel.hpp>
+#include <eve/module/arithmetic/diff/detail/minmax_kernel.hpp>
 
 namespace eve::detail
 {

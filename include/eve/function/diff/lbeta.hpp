@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/lbeta.hpp>
-#include <eve/module/real/core/function/diff/generic/lbeta.hpp>
+#include <eve/module/special/diff/impl/lbeta.hpp>

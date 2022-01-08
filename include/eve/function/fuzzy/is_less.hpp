@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/is_less.hpp>
-#include <eve/module/real/core/function/fuzzy/generic/is_less.hpp>
+#include <eve/module/arithmetic/fuzzy/impl/is_less.hpp>

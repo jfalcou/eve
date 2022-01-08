@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/ceil.hpp>
-#include <eve/module/real/core/function/fuzzy/generic/ceil.hpp>
+#include <eve/module/arithmetic/fuzzy/impl/ceil.hpp>
