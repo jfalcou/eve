@@ -10,7 +10,6 @@ make_unit( "unit.meta" as_logical.cpp )
 make_unit( "unit.meta" as_integer.cpp )
 make_unit( "unit.meta" as_uinteger.cpp )
 make_unit( "unit.meta" as_wide.cpp )
-make_unit( "unit.meta" sign_of.cpp )
 
 ##==================================================================================================
 ## Concepts tests
