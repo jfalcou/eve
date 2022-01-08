@@ -122,8 +122,9 @@ namespace eve::detail
         using b_t = std::conditional_t < std::is_same_v< D, floating_converter >
                                       , eve::as_floating_point_t<T>
                                       , typename D::base_type >;
-        using vd_t = value_type_t<b_t>;
+        using vd_t = typename b_t::value_type;
         using i_t  = as_integer_t<vd_t>;
+
         auto x = to_<i_t>(xx);
         auto z = is_nez(x);
         auto zz =  eve::min(x+maxexponent(eve::as<vd_t>()), 2*maxexponent(eve::as<vd_t>())+1) & z.mask();

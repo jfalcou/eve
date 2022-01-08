@@ -91,7 +91,7 @@ namespace eve
     template<typename T, typename S>
     EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::exp10_), T const&, [[maybe_unused]] S const& s)
     {
-      using vt_t = value_type_t<T>;
+      using vt_t = element_type_t<T>;
       if constexpr(std::is_integral_v<vt_t>)
       {
         EVE_ASSERT( eve::all(is_gez(s)),

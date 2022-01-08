@@ -37,7 +37,7 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-      using vt_t = value_type_t<T>;
+      using vt_t = element_type_t<T>;
       T x =  eve::abs(a0);
       if constexpr(scalar_value<T>) if (x < sqrteps(eve::as<T>())) return a0; // scalar early return
       auto x_gt_oneosqrteps = x > oneosqrteps(eve::as<T>());
