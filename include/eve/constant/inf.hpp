@@ -58,7 +58,7 @@ namespace eve
     template<floating_value T>
     EVE_FORCEINLINE constexpr auto inf_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
     {
-      using t_t           = detail::value_type_t<T>;
+      using t_t           = element_type_t<T>;
       return T(std::numeric_limits<t_t>::infinity());
     }
   }

@@ -57,7 +57,7 @@ namespace eve
     template<floating_value T>
     EVE_FORCEINLINE auto twopi_(EVE_SUPPORTS(cpu_), eve::as<T> const & = {}) noexcept
     {
-      using t_t = detail::value_type_t<T>;
+      using t_t = element_type_t<T>;
 
       if constexpr(std::is_same_v<t_t, float>)
       {

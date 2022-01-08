@@ -47,7 +47,7 @@ namespace eve
   //! is semantically equivalent to :
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  using t_t = detail::value_type_t<T>;
+  //!  using t_t = element_type_t<T>;
   //!  if constexpr(std::same_as<t_t, float>) return eve::constant<T, BitsPatternfloat>();
   //!  else                                   return eve::constant<T, BitsPatterndouble>();
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -62,7 +62,7 @@ namespace eve
   template<floating_value T, auto BitsPatternfloat, auto BitsPatterndouble>
   EVE_FORCEINLINE auto Ieee_constant(eve::as<T> const & = {}) noexcept
   {
-    using t_t = detail::value_type_t<T>;
+    using t_t = element_type_t<T>;
 
     if constexpr(std::is_same_v<t_t, float>)
     {
