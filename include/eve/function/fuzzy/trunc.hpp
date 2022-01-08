@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/trunc.hpp>
-#include <eve/module/real/core/function/fuzzy/generic/trunc.hpp>
+#include <eve/module/arithmetic/fuzzy/impl/trunc.hpp>

@@ -11,5 +11,5 @@
 #include <eve/module/arithmetic/saturated/impl/add.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/saturated/simd/x86/add.hpp>
+#  include <eve/module/arithmetic/saturated/impl/simd/x86/add.hpp>
 #endif

@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/is_greater.hpp>
-#include <eve/module/real/core/function/fuzzy/generic/is_greater.hpp>
+#include <eve/module/arithmetic/fuzzy/impl/is_greater.hpp>
