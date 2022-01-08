@@ -154,6 +154,32 @@ namespace eve
       return v.value() == w.value();
     }
 
+    friend EVE_FORCEINLINE logical operator==(logical const& v, real_scalar_value auto w) noexcept
+    {
+      return v.value() == !!w;
+    }
+
+    friend EVE_FORCEINLINE logical operator==(real_scalar_value auto  v, logical const& w) noexcept
+    {
+      return w.value() == !!v;
+    }
+
+    template<scalar_value U>
+    friend EVE_FORCEINLINE logical operator!=(logical const& v, logical<U> const& w) noexcept
+    {
+      return v.value() != w.value();
+    }
+
+    friend EVE_FORCEINLINE logical operator!=(logical const& v, real_scalar_value auto w) noexcept
+    {
+      return v.value() == !w;
+    }
+
+    friend EVE_FORCEINLINE logical operator!=(real_scalar_value auto v, logical const& w) noexcept
+    {
+      return w.value() == !v;
+    }
+
     friend EVE_FORCEINLINE void swap(logical &lhs, logical &rhs) noexcept
     {
       lhs.swap(rhs);
