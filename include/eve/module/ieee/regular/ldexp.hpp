@@ -76,7 +76,7 @@ namespace eve
   //================================================================================================
   namespace tag { struct ldexp_; }
 
-  namespace detail
+  namespace detail 
   {
     template<typename T, typename U>
     EVE_FORCEINLINE void check(EVE_SUPPORTS(eve::tag::ldexp_), T const&, [[maybe_unused]]  U const& b)

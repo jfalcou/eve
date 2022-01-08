@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
-#include <eve/module/real/core/detail/generic/next_kernel.hpp>
+#include <eve/module/ieee/detail/next_kernel.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/sub.hpp>
 #include <eve/function/next.hpp>

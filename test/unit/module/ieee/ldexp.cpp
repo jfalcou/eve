@@ -71,7 +71,7 @@ EVE_TEST( "Check behavior of ldexps on floatings"
   auto a1 = eve::trunc(a11);
   TTS_EQUAL( eve::ldexp(a0, a1), map([](auto e, auto f) { return v_t(std::ldexp(e, int(f))); }, a0, a1));
   TTS_EQUAL( eve::ldexp[t](a0, a1), eve::if_else(t, eve::ldexp(a0, a1), a0));
-  TTS_EQUAL( eve::pedantic(eve::ldexp[t])(a0, a1), eve::if_else(t, eve::pedantic(eve::ldexp)(a0, a1), a0));
+//  TTS_EQUAL( eve::pedantic(eve::ldexp[t])(a0, a1), eve::if_else(t, eve::pedantic(eve::ldexp)(a0, a1), a0));
 };
 
 //==================================================================================================

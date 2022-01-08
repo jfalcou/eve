@@ -13,7 +13,7 @@
 #include <eve/detail/function/conditional.hpp>
 #include <eve/detail/function/operators.hpp>
 #include <eve/traits/common_compatible.hpp>
-#include <eve/module/real/core/detail/generic/multi_mul.hpp>
+#include <eve/module/arithmetic/detail/multi_mul.hpp>
 
 namespace eve::detail
 {

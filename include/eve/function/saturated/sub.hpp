@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/function/sub.hpp>
-#include <eve/module/real/core/function/saturated/generic/sub.hpp>
+#include <eve/module/arithmetic/saturated/impl/sub.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/real/core/function/saturated/simd/x86/sub.hpp>
