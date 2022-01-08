@@ -10,6 +10,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/assert.hpp>
 #include <type_traits>
+#include <eve/module/arithmetic/regular/fracscale.hpp>
 
 namespace eve
 {
