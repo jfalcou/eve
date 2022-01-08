@@ -7,4 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/pedantic/fls.hpp>
+#include <eve/function/fls.hpp>
+#include <eve/module/real/core/function/pedantic/generic/fls.hpp>
