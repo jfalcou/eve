@@ -27,11 +27,12 @@ EVE_TEST_TYPES("Check that we can copy to an address after beginning (copy/copy_
     for (int j = i; j != T::size() * 2; ++j) {
       auto from = page.begin() + i;
       auto to = page.begin() + j;
-      auto r = eve::algo::as_range(from, from + r_size);
+      auto from_r = eve::algo::as_range(from, from + r_size);
+      auto to_r = eve::algo::as_range(to, to + r_size);
 
       std::vector<eve::element_type_t<T>> expected(from, from + r_size);
 
-      eve::algo::copy_backward[eve::algo::force_cardinal<T::size()>](r, to);
+      eve::algo::copy_backward[eve::algo::force_cardinal<T::size()>](from_r, to_r);
 
       std::vector<eve::element_type_t<T>> actual(to, to + r_size);
 
