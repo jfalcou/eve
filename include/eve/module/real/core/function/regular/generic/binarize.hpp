@@ -81,6 +81,6 @@ namespace eve::detail
                            ) noexcept
   {
     if constexpr(integral_value<T>) return  cond.mask();
-    else                            return  eve::binarize(cond,mone(eve::as<value_type_t<T>>()));
+    else                            return  eve::binarize(cond,mone(eve::as<element_type_t<T>>()));
   }
 }

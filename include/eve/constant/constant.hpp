@@ -42,7 +42,7 @@ namespace eve
   //! **Return value**
   //!
   //! the call `eve::Constant<T, Bitpattern>()` is semantically equivalent to
-  //! T(eve::bit_cast(Bitpattern, `as<value_type_t<T>>()))`
+  //! T(eve::bit_cast(Bitpattern, `as<element_type_t<T>>()))`
   //!
   //! ---
   //!

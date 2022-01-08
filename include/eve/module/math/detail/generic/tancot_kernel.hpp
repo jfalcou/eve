@@ -14,7 +14,7 @@
 #include <eve/function/sqr.hpp>
 #include <type_traits>
 #include <eve/module/real/core/detail/generic/horn.hpp>
-#include <eve/module/real/core/detail/generic/horn1.hpp>  
+#include <eve/module/real/core/detail/generic/horn1.hpp>
 
 namespace eve::detail
 {
@@ -22,9 +22,9 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto tancot_eval( const T & z) noexcept
   {
     // here T is float or double and z positive
-    static_assert(std::is_floating_point_v<value_type_t<T>>
-                 , "[detail;:tan_kernel] - entry type is not IEEEValue"); 
-    if constexpr(std::is_same_v<value_type_t<T>, float>)
+    static_assert(std::is_floating_point_v<element_type_t<T>>
+                 , "[detail;:tan_kernel] - entry type is not IEEEValue");
+    if constexpr(std::is_same_v<element_type_t<T>, float>)
     {
       T zz = eve::sqr(z);
       return fma(horn<T
@@ -33,9 +33,9 @@ namespace eve::detail
                 , 0x3d5ac5c9u
                 , 0x3cc821b5u
                 , 0x3b4c779cu
-                , 0x3c19c53bu>(zz), zz*z, z);   
+                , 0x3c19c53bu>(zz), zz*z, z);
     }
-    else if constexpr(std::is_same_v<value_type_t<T>, double>)
+    else if constexpr(std::is_same_v<element_type_t<T>, double>)
     {
       T zz = sqr(z);
       const T num = horn<T,
@@ -50,8 +50,7 @@ namespace eve::detail
         0x40cab8a5eeb36572ull
         //    0x3ff0000000000000ull
         >(zz);
-      return fma(z, (zz*(num/den)), z);   
+      return fma(z, (zz*(num/den)), z);
     }
   }
 }
-
