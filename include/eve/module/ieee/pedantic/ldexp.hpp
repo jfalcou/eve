@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/function/pedantic.hpp>
+#include <eve/module/ieee/regular/ldexp.hpp>
 
 namespace eve
 {
