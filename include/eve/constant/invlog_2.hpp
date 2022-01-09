@@ -58,7 +58,7 @@ namespace eve
     template<floating_value T>
     EVE_FORCEINLINE constexpr auto invlog_2_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
     {
-      using t_t           = detail::value_type_t<T>;
+      using t_t           = element_type_t<T>;
       if constexpr(std::is_same_v<t_t, float>) return Constant<T,  0X3FB8AA3BU>();
       else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0X3FF71547652B82FEULL>();
     }

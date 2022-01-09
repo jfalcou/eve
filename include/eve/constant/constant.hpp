@@ -42,7 +42,7 @@ namespace eve
   //! **Return value**
   //!
   //! the call `eve::Constant<T, Bitpattern>()` is semantically equivalent to
-  //! T(eve::bit_cast(Bitpattern, `as<value_type_t<T>>()))`
+  //! T(eve::bit_cast(Bitpattern, `as<element_type_t<T>>()))`
   //!
   //! ---
   //!
@@ -56,7 +56,7 @@ namespace eve
   template<typename T, auto BitsPattern>
   EVE_FORCEINLINE auto Constant(eve::as<T> const & = {})
   {
-    using t_t = detail::value_type_t<T>;
+    using t_t = element_type_t<T>;
 
     if constexpr(std::is_integral_v<t_t>)
     {

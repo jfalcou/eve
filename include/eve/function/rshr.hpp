@@ -91,9 +91,9 @@ namespace eve
       EVE_ASSERT( assert_good_shift<T>(eve::abs(s)),
                   "[eve::rshr] - Shifting by " << s
                   << " is out of the range ]"
-                  << -sizeof(value_type_t<T>) * 8
+                  << -sizeof(element_type_t<T>) * 8
                   << ", "
-                  << sizeof(value_type_t<T>) * 8
+                  << sizeof(element_type_t<T>) * 8
                   << "[."
                 );
     }

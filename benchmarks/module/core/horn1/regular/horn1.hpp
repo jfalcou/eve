@@ -11,7 +11,7 @@
 
 int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  using EVE_VALUE = eve::element_type_t<EVE_TYPE>;
   if constexpr(std::is_same_v<EVE_VALUE, double>)
   {
     using i_t =  eve::as_integer_t<EVE_VALUE>;

@@ -89,22 +89,6 @@ namespace eve::detail
     using type = T;
   };
 
-  // Extract value_type from type
-  template<typename T> struct value_type
-  {
-    using type = T;
-  };
-
-  template<typename T>
-  requires requires { typename T::value_type; }
-  struct value_type<T>
-  {
-    using type = typename T::value_type;
-  };
-
-  template<typename T>
-  using value_type_t    = typename value_type<T>::type;
-
   // Extract abi_type from type
   template<typename T, typename Enable = void>
   struct abi_type
@@ -322,15 +306,6 @@ namespace eve::detail
   using downgrade_t = typename downgrade<T>::type;
 
   ///////////////////////////////////////////////////////////////////
-
-  // Extract the sign of a type
-  template<typename T>
-  struct sign_of : std::conditional<std::is_signed_v<value_type_t<T>>, signed, unsigned>
-  {
-  };
-
-  template<typename T>
-  using sign_of_t = typename sign_of<T>::type;
 
   // Generate integral types from sign + size
   template<std::size_t Size>

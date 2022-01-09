@@ -73,11 +73,11 @@ namespace eve::detail
   {
     // here T is float or double and z positive
     T zz = eve::sqr(z);
-    if constexpr(std::is_same_v<value_type_t<T>, float>)
+    if constexpr(std::is_same_v<element_type_t<T>, float>)
     {
       return fma(horn<T, 0x3eaaaa6fu, 0x3e0896ddu, 0x3d5ac5c9u, 0x3cc821b5u, 0x3b4c779cu, 0x3c19c53bu>(zz), zz*z, z);
     }
-    else if constexpr(std::is_same_v<value_type_t<T>, double>)
+    else if constexpr(std::is_same_v<element_type_t<T>, double>)
     {
       T num = horn<T,0xc1711fead3299176ull, 0x413199eca5fc9dddull, 0xc0c992d8d24f3f38ull >(zz);
       T den = horn1<T, 0xc189afe03cbe5a31ull, 0x4177d98fc2ead8efull, 0xc13427bc582abc96ull, 0x40cab8a5eeb36572ull>(zz);

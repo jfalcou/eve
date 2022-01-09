@@ -57,7 +57,7 @@ namespace eve
     template<typename T>
     EVE_FORCEINLINE auto valmin_(EVE_SUPPORTS(cpu_),eve::as<T> const &) noexcept
     {
-      using t_t = detail::value_type_t<T>;
+      using t_t = element_type_t<T>;
       return T(std::numeric_limits<t_t>::lowest());
     }
   }

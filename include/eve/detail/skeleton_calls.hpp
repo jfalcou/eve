@@ -58,8 +58,8 @@ namespace eve::detail
                                , U const &b) noexcept
   requires bit_compatible_values<T, U>  && (!std::same_as<U,T>)
   {
-    using vt_t = value_type_t<T>;
-    using vt_u = value_type_t<U>;
+    using vt_t = element_type_t<T>;
+    using vt_u = element_type_t<U>;
     if constexpr(scalar_value<T> && scalar_value<U>)    //both are scalar so of the same bit size
     {
       return op(a, bit_cast(b, as(a)));

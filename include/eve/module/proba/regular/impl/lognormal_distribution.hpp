@@ -270,7 +270,7 @@ namespace eve
         return median(d)*exp(-sqr(d.s));
       else
       {
-        value_type inve = I(0.36787944117144232159552377016146086744581113103176);
+        auto inve = I(0.36787944117144232159552377016146086744581113103176);
         return median(d)**inve;
       }
     }

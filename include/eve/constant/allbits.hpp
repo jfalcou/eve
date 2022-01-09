@@ -58,7 +58,7 @@ namespace eve
     template<typename T>
     EVE_FORCEINLINE constexpr auto allbits_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
     {
-      using t_t           = detail::value_type_t<T>;
+      using t_t           = element_type_t<T>;
       using i_t           = as_integer_t<t_t, unsigned>;
       constexpr auto mask = ~0ULL;
 

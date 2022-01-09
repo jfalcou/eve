@@ -56,7 +56,7 @@ namespace eve
     template<typename T>
     EVE_FORCEINLINE auto sqrteps_(EVE_SUPPORTS(cpu_), eve::as<T> const & ) noexcept
     {
-      using t_t =  detail::value_type_t<T>;
+      using t_t =  element_type_t<T>;
       if constexpr(std::is_same_v<t_t, float>)
       {
         return Constant<T, 0x39B504F3U >();

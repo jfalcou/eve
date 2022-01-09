@@ -64,7 +64,7 @@ namespace eve
     template<typename T>
     EVE_FORCEINLINE constexpr auto eps_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
     {
-      using t_t           = detail::value_type_t<T>;
+      using t_t           = element_type_t<T>;
 
       if constexpr(std::is_integral_v<t_t>) return T(1);
       else if constexpr(std::is_same_v<t_t, float>) return Constant<T, 0X34000000U>();
