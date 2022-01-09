@@ -313,9 +313,11 @@ namespace eve
     {
       if constexpr (floating_value<T> && floating_value<U>)
         return if_else(d.k > one(as(d.k)), dec(d.k)*d.theta, zero);
-      else if constexpr (floating_value<T>)
+      else if constexpr (floating_value<T> && std::same_as<U, eve::callable_one_>)
         return if_else(d.k > one(as(d.k)), dec(d.k), zero);
-      else if constexpr (floating_value<U>)
+      else if constexpr (floating_value<U> && std::same_as<T, eve::callable_one_>)
+        return zero(as<I>());
+      else if constexpr (std::same_as<T, eve::callable_one_> && std::same_as<U, eve::callable_one_>)
         return zero(as<I>());
     }
 

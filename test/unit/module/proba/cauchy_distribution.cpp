@@ -27,6 +27,7 @@ EVE_TEST_TYPES("Check eve::cauchy_distribution behavior"
     TTS_ULP_EQUAL(eve::invcdf(ca, T(1.0))  , inf    , 0.5);
     TTS_ULP_EQUAL(eve::invcdf(ca, T(0.5))  , T(1)    , 0.5);
     TTS_ULP_EQUAL(eve::median(ca)          , T(1.0)  , 0);
+    TTS_ULP_EQUAL(eve::mode(ca)            , T(1.0)  , 0);
     TTS_ULP_EQUAL(eve::scale(ca)           , T(2.0)  , 0);
     TTS_ULP_EQUAL(eve::fisher(ca)          , T(1/8.0)  , 0);
   }
@@ -38,6 +39,7 @@ EVE_TEST_TYPES("Check eve::cauchy_distribution behavior"
     TTS_ULP_EQUAL(eve::invcdf(ca, T(1.0))  , inf    , 0.5);
     TTS_ULP_EQUAL(eve::invcdf(ca, T(0.5))  , T(0)    , 0.5);
     TTS_ULP_EQUAL(eve::median(ca)          , T(0.0)  , 0);
+    TTS_ULP_EQUAL(eve::mode(ca)            , T(0.0)  , 0);
     TTS_ULP_EQUAL(eve::scale(ca)           , T(2.0)  , 0);
     TTS_ULP_EQUAL(eve::fisher(ca)          , T(1/8.0)  , 0);
   }
@@ -49,6 +51,7 @@ EVE_TEST_TYPES("Check eve::cauchy_distribution behavior"
     TTS_ULP_EQUAL(eve::invcdf(ca, T(1.0))  , inf    , 0.5);
     TTS_ULP_EQUAL(eve::invcdf(ca, T(0.5))  , T(2)    , 0.5);
     TTS_ULP_EQUAL(eve::median(ca)          , T(2.0)  , 0);
+    TTS_ULP_EQUAL(eve::mode(ca)            , T(2.0)  , 0);
     TTS_ULP_EQUAL(eve::scale(ca)           , T(1.0)  , 0);
     TTS_ULP_EQUAL(eve::fisher(ca)          , T(0.5)  , 0);
   }
@@ -60,6 +63,7 @@ EVE_TEST_TYPES("Check eve::cauchy_distribution behavior"
     TTS_ULP_EQUAL(eve::invcdf(ca, T(1.0))  , inf    , 0.5);
     TTS_ULP_EQUAL(eve::invcdf(ca, T(0.5))  , T(0.0)  , 0.5);
     TTS_ULP_EQUAL(eve::median(ca)          , T(0.0)  , 0);
+    TTS_ULP_EQUAL(eve::mode(ca)          , T(0.0)  , 0);
     TTS_ULP_EQUAL(eve::scale(ca)           , T(1)  , 0);
     TTS_ULP_EQUAL(eve::fisher(ca)          , T(0.5)  , 0);
   }

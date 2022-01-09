@@ -24,6 +24,7 @@ EVE_TEST_TYPES("Check eve::exponential_distribution behavior"
     auto ex = eve::exponential_distribution{T(2.0)};
     TTS_ULP_EQUAL(eve::median(ex)  , T(eve::log_2(eve::as<T>())/2)  , 0.5);
     TTS_ULP_EQUAL(eve::mean  (ex)  , T(0.5)   , 0.5);
+    TTS_ULP_EQUAL(eve::mode  (ex)  , T(0.0)   , 0.5);
     TTS_ULP_EQUAL(eve::var   (ex)  , T(0.25)   , 0.5);
     TTS_ULP_EQUAL(eve::stdev (ex)  , T(0.5)   , 0.5);
     TTS_ULP_EQUAL(eve::cdf(ex, T(1.0))   , T(8.646647167633873e-01)   , 0.5);
@@ -36,6 +37,7 @@ EVE_TEST_TYPES("Check eve::exponential_distribution behavior"
     auto ex = eve::exponential_distribution{T(2.0)};
     TTS_ULP_EQUAL(eve::median(ex)  , T(eve::log_2(eve::as<T>())/2)  , 0.5);
     TTS_ULP_EQUAL(eve::mean  (ex)  , T(0.5)   , 0.5);
+    TTS_ULP_EQUAL(eve::mode  (ex)  , T(0.0)   , 0.5);
     TTS_ULP_EQUAL(eve::var   (ex)  , T(0.25)   , 0.5);
     TTS_ULP_EQUAL(eve::stdev (ex)  , T(0.5)   , 0.5);
     TTS_ULP_EQUAL(eve::cdf(ex, elt_t(1.0))   , T(8.646647167633873e-01)   , 0.5);
@@ -48,6 +50,7 @@ EVE_TEST_TYPES("Check eve::exponential_distribution behavior"
     auto ex = eve::exponential_distribution_1<T>;
     TTS_ULP_EQUAL(eve::median(ex)  , T(eve::log_2(eve::as<T>()))  , 0.5);
     TTS_ULP_EQUAL(eve::mean  (ex)  , T(1)   , 0.5);
+    TTS_ULP_EQUAL(eve::mode  (ex)  , T(0.0)   , 0.5);
     TTS_ULP_EQUAL(eve::var   (ex)  , T(1)   , 0.5);
     TTS_ULP_EQUAL(eve::stdev (ex)  , T(1)   , 0.5);
     TTS_ULP_EQUAL(eve::cdf(ex, T(1.0))   , T(6.321205588285577e-01)   , 0.5);

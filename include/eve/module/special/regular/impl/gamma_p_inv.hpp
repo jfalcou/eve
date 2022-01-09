@@ -12,7 +12,6 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/normal_distribution.hpp>
-#include <eve/function/lognormal_distribution.hpp>
 #include <eve/function/diff/gamma_p.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/any.hpp>

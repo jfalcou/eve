@@ -23,6 +23,7 @@ EVE_TEST_TYPES("Check eve::ev_distribution behavior"
     auto ev = eve::ev_distribution{T(1.0), T(2.0)};
     TTS_ULP_EQUAL(eve::median(ev)               , T(1.733025841163329)   , 1.0);
     TTS_ULP_EQUAL(eve::mean(ev)                 , T(2.154431329803066)   , 0.5);
+    TTS_ULP_EQUAL(eve::mode(ev)                 , T(1.0)   , 0.5);
     TTS_ULP_EQUAL(eve::var(ev)                  , T(6.579736267392906)   , 0.5);
     TTS_ULP_EQUAL(eve::stdev(ev)                , T(2.565099660323728) , 0.5);
     TTS_ULP_EQUAL(eve::cdf(ev, T(0.0))          , T(4.547607881073950e-01)   , 0.5);
@@ -35,6 +36,7 @@ EVE_TEST_TYPES("Check eve::ev_distribution behavior"
     auto ev = eve::ev_distribution{eve::zero, T(2.0)};
     TTS_ULP_EQUAL(eve::median(ev)               , T(7.330258411633287e-01)  , 0.5);
     TTS_ULP_EQUAL(eve::mean(ev)                 , T(1.154431329803066)  , 0.5);
+    TTS_ULP_EQUAL(eve::mode(ev)                 , T(0.0)   , 0.5);
     TTS_ULP_EQUAL(eve::var(ev)                  , T(6.579736267392906)  , 0.5);
     TTS_ULP_EQUAL(eve::stdev(ev)                , T(2.565099660323728)  , 0.5);
     TTS_ULP_EQUAL(eve::cdf(ev, T(1.0))          , T(8.077043544520350e-01)   , 1);
@@ -47,6 +49,7 @@ EVE_TEST_TYPES("Check eve::ev_distribution behavior"
     auto ev = eve::ev_distribution_01<T>;
     TTS_ULP_EQUAL(eve::median(ev)               , T(3.665129205816643e-01)   , 0.5);
     TTS_ULP_EQUAL(eve::mean(ev)                 , T(0.57721566490153286)     , 0.5);
+    TTS_ULP_EQUAL(eve::mode(ev)                 , T(0.0)   , 0.5);
     TTS_ULP_EQUAL(eve::var(ev)                  , T(1.644934066848226)       , 1.0);
     TTS_ULP_EQUAL(eve::stdev(ev)                , T(1.282549830161864)       , 0.5);
     TTS_ULP_EQUAL(eve::cdf(ev, T(1.0))          , T(9.340119641546875e-01)   , 0.5);
