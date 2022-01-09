@@ -13,15 +13,20 @@
 namespace eve
 {
   //================================================================================================
+  //! @addtogroup conditional
+  //! @{
+  //================================================================================================
+
+  //================================================================================================
   //! @concept conditional_expr
   //! @brief Specifies that a type is a Conditional Expression
   //!
-  //! Types verifying `conditional_expr<T>` supports optimisation when evaluated where a logical
+  //! Types modeling eve::conditional_expr supports optimisation when evaluated where a logical
   //! value was expected.
   //!
   //! @groupheader{Examples}
-  //!   - `eve::if_`
-  //!   - `eve::ignore_all`
+  //!   - eve::if_
+  //!   - eve::ignore_all
   //================================================================================================
   template<typename T> concept conditional_expr = requires(T a)
   {
@@ -30,10 +35,26 @@ namespace eve
     { T::is_complete      };
   };
 
+  //================================================================================================
+  //! @concept relative_conditional_expr
+  //! @brief Specifies that a type is a Conditional Expression using relative mask
+  //!
+  //! Types modeling relative_conditional_expr are eve::conditional_expr that represents masks
+  //! based on relative position of lanes. They provide an API to query the layout of lanes to
+  //! ignore.
+  //!
+  //! @groupheader{Examples}
+  //!   - eve::ignore_first
+  //!   - eve::keep_between
+  //================================================================================================
   template<typename T> concept relative_conditional_expr = conditional_expr<T> && requires(T a)
   {
     { a.count(eve::as<eve::wide<int>>())  };
     { a.offset(eve::as<eve::wide<int>>()) };
     { a.roffset(eve::as<eve::wide<int>>()) };
   };
+
+  //================================================================================================
+  //! @}
+  //================================================================================================
 }

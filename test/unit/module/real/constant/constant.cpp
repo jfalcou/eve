@@ -10,7 +10,7 @@
 #include "test.hpp"
 
 #include <eve/wide.hpp>
-#include <eve/literals.hpp>
+
 #include <eve/constant/constant.hpp>
 #include <eve/constant/nan.hpp>
 
@@ -18,8 +18,6 @@ using eve::fixed;
 
 TTS_CASE("Constant generation for scalar")
 {
-  using namespace eve::literal;
-
   TTS_ULP_EQUAL((eve::Constant<float, 0x3F8E38E3>()), 1.111111f, 0.5);
   TTS_IEEE_EQUAL((eve::Constant<float, 0xFFFFFFFF>()), eve::nan(eve::as<float>()));
 
@@ -46,8 +44,6 @@ TTS_CASE_TPL("Constant generation for wide",
              fixed<64>)
 <typename T>(::tts::type<T>)
 {
-  using namespace eve::literal;
-
   TTS_ULP_EQUAL(
       (eve::Constant<eve::wide<float, T>, 0x3F8E38E3>()), (eve::wide<float, T>(1.111111f)), 0.5);
   TTS_IEEE_EQUAL((eve::Constant<eve::wide<float, T>, 0xFFFFFFFF>()),

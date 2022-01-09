@@ -16,7 +16,6 @@
       <tab type="user" visible="yes" title="Functions" url="@ref functions"  intro=""/>
       <tab type="user" visible="yes" title="Constants" url="@ref constant"  intro=""/>
       <tab type="user" visible="yes" title="Traits" url="@ref traits"  intro=""/>
-      <tab type="user" visible="yes" title="Internals" url="@ref details"  intro=""/>
     </tab>
     <tab type="namespaces" visible="yes" title="References">
       <tab type="namespaces" visible="yes" title="" intro=""/>
