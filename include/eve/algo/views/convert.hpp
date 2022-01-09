@@ -9,7 +9,6 @@
 
 #include <eve/algo/concepts/relaxed.hpp>
 #include <eve/algo/concepts/types_to_consider.hpp>
-#include <eve/algo/concepts/value_type.hpp>
 #include <eve/algo/concepts/iterator_cardinal.hpp>
 #include <eve/algo/iterator_helpers.hpp>
 #include <eve/algo/range_ref.hpp>
@@ -20,6 +19,7 @@
 #include <eve/function/compress_store.hpp>
 #include <eve/function/load.hpp>
 #include <eve/function/store.hpp>
+#include <eve/traits.hpp>
 
 namespace eve::algo::views
 {

@@ -28,7 +28,7 @@ namespace algo_test
       auto f = eve::algo::unalign(rng.begin());
       auto l = eve::algo::unalign(rng.end());
 
-      using T = eve::algo::value_type_t<decltype(rng)>;
+      using T = eve::value_type_t<decltype(rng)>;
 
       std::vector<T> expected(l - f, 0);
 

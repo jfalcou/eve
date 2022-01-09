@@ -27,3 +27,4 @@
 #include <eve/traits/common_type.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/is_logical.hpp>
+#include <eve/traits/value_type.hpp>

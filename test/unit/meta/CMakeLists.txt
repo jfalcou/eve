@@ -23,6 +23,7 @@ make_unit( "unit.meta" cardinal.cpp )
 make_unit( "unit.meta" common_type.cpp )
 make_unit( "unit.meta" has_abi.cpp )
 make_unit( "unit.meta" element_type.cpp )
+make_unit( "unit.meta" value_type.cpp )
 
 ##==================================================================================================
 ## Interoperability tests

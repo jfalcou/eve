@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/algo/concepts/value_type.hpp>
+#include <eve/traits.hpp>
 
 #include <type_traits>
 
@@ -23,7 +23,7 @@ namespace eve::algo
   //!
   //!   If the `iterator_cardinal()` static method is defined - it evaluates as
   //!   `decltype(I::iterator_cardinal())`. Otherwise it evaluates as
-  //!   eve::expected_cardinal_t<eve::algo::value_type_t<I>>.
+  //!   eve::expected_cardinal_t<eve::value_type_t<I>>.
   //!
   //!   @tparam I A type modeling eve::algo::iterator
   //!
