@@ -283,7 +283,7 @@ EVE_TEST_TYPES("cardinal/type manipulation", algo_test::selected_types)
     eve::algo::traits(eve::algo::force_cardinal<T::size()>), v);
 
     using I = decltype(processed.begin());
-    TTS_TYPE_IS(eve::algo::wide_value_type_t<I>, T);
+    TTS_TYPE_IS(eve::wide_value_type_t<I>, T);
   }
 
   {
@@ -302,7 +302,7 @@ EVE_TEST_TYPES("cardinal/type manipulation", algo_test::selected_types)
 
     using I = decltype(processed.begin());
     TTS_TYPE_IS(typename I::value_type, double);
-    TTS_TYPE_IS(eve::algo::wide_value_type_t<I>, eve::wide<double>);
+    TTS_TYPE_IS(eve::wide_value_type_t<I>, eve::wide<double>);
   }
 
   {
@@ -311,7 +311,7 @@ EVE_TEST_TYPES("cardinal/type manipulation", algo_test::selected_types)
       eve::algo::views::convert(v, eve::as<double>{}));
 
     using I = decltype(processed.begin());
-    TTS_TYPE_IS(eve::algo::wide_value_type_t<I>,
+    TTS_TYPE_IS(eve::wide_value_type_t<I>,
                 (eve::wide<double, eve::fixed<T::size()>>));
   }
 
@@ -320,7 +320,7 @@ EVE_TEST_TYPES("cardinal/type manipulation", algo_test::selected_types)
       eve::algo::traits(eve::algo::consider_types<double>), v);
 
     using I = decltype(processed.begin());
-    TTS_TYPE_IS(eve::algo::wide_value_type_t<I>,
+    TTS_TYPE_IS(eve::wide_value_type_t<I>,
                 (eve::wide<e_t, eve::fixed<eve::expected_cardinal_v<double>>>));
   }
 
@@ -329,7 +329,7 @@ EVE_TEST_TYPES("cardinal/type manipulation", algo_test::selected_types)
       eve::algo::traits{}, eve::algo::views::convert(v_d, eve::as<e_t>{}));
 
     using I = decltype(processed.begin());
-    TTS_TYPE_IS(eve::algo::wide_value_type_t<I>,
+    TTS_TYPE_IS(eve::wide_value_type_t<I>,
                 (eve::wide<e_t, eve::fixed<eve::expected_cardinal_v<double>>>));
   }
 };
