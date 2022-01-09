@@ -33,7 +33,7 @@ namespace eve::algo
         decltype(preprocess_range(std::declval<TraitsSupport>().get_traits(),
                  std::declval<Rng>()));
       using I = decltype(std::declval<processed_range>().begin());
-      using N = eve::algo::iterator_cardinal_t<I>;
+      using N = iterator_cardinal_t<I>;
 
       eve::wide<value_type_t<I>, N> wide_value;
 

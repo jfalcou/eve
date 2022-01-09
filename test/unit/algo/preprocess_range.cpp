@@ -292,7 +292,7 @@ EVE_TEST_TYPES("cardinal/type manipulation", algo_test::selected_types)
     eve::algo::traits(eve::algo::force_cardinal<cardinal_n{}()>), v);
 
     using I = decltype(processed.begin());
-    TTS_TYPE_IS(eve::algo::iterator_cardinal_t<I>, cardinal_n);
+    TTS_TYPE_IS(eve::iterator_cardinal_t<I>, cardinal_n);
   }
 
   {

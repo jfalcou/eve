@@ -16,60 +16,6 @@ namespace eve::algo
   //================================================================================================
   //! @addtogroup algo_concepts
   //! @{
-  //!   @struct iterator_cardinal
-  //!   @brief Returns a cardinal for an `eve::algo::relaxed_iterator`
-  //!
-  //!   **Required header:** `#include <eve/algo/concepts.hpp>`
-  //!
-  //!   If the `iterator_cardinal()` static method is defined - it evaluates as
-  //!   `decltype(I::iterator_cardinal())`. Otherwise it evaluates as
-  //!   eve::expected_cardinal_t<eve::value_type_t<I>>.
-  //!
-  //!   @tparam I A type modeling eve::algo::iterator
-  //!
-  //!   @groupheader{Member types}
-  //!
-  //!   |Name   | Definition                                              |
-  //!   |:------|:--------------------------------------------------------|
-  //!   |`type` | A type equivalent to `decltype(I::iterator_cardinal())` |
-  //!
-  //!    @groupheader{Helper types}
-  //!
-  //!    @code{.cpp}
-  //!    template<typename I>
-  //!    using iterator_cardinal_t = typename iterator_cardinal_t<I>::type;
-  //!    @endcode
-  //!
-  //!   @groupheader{Helper variable template}
-  //!
-  //!   @code{.cpp}
-  //!   template<typenale I>
-  //!   inline constexpr auto iterator_cardinal_v = iterator_cardinal<I>::value;
-  //!   @endcode
-  //! @}
-  //================================================================================================
-  template <typename I>
-  struct iterator_cardinal
-  {
-    using type = fixed<expected_cardinal_v<value_type_t<I>>>;
-  };
-
-  template <typename I>
-    requires requires { I::iterator_cardinal(); }
-  struct iterator_cardinal<I>
-  {
-    using type = decltype(I::iterator_cardinal());
-  };
-
-  template <typename I>
-  using iterator_cardinal_t = typename iterator_cardinal<I>::type;
-
-  template <typename I>
-  constexpr std::ptrdiff_t iterator_cardinal_v = iterator_cardinal_t<I>{}();
-
-  //================================================================================================
-  //! @addtogroup algo_concepts
-  //! @{
   //!   @struct wide_value_type
   //!   @brief Computes an eve::simd_value from an iterator
   //!

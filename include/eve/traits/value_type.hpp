@@ -42,7 +42,8 @@ namespace eve
   //!
   //!  @tparam T Type to process
   //!
-  //!  @brief A meta function for getting an associated value_type.
+  //!  @brief A meta function for getting an associated value_type for a relaxed iterator/range.
+  //!
   //!         If T has begin/end - value_type_t for return type of begin
   //!         If T is std::iterator -> returns iterator_traits<T>::value_type
   //!         If T has nested `value_type` -> returns it
