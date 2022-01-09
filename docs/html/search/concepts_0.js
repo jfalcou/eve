@@ -16,13 +16,14 @@ var searchData=
   ['logical_5fvalue_13',['logical_value',['../concepteve_1_1logical__value.html',1,'eve']]],
   ['real_5fscalar_5fvalue_14',['real_scalar_value',['../concepteve_1_1real__scalar__value.html',1,'eve']]],
   ['real_5fvalue_15',['real_value',['../concepteve_1_1real__value.html',1,'eve']]],
-  ['scalar_5fvalue_16',['scalar_value',['../concepteve_1_1scalar__value.html',1,'eve']]],
-  ['signed_5fintegral_5fscalar_5fvalue_17',['signed_integral_scalar_value',['../concepteve_1_1signed__integral__scalar__value.html',1,'eve']]],
-  ['signed_5fintegral_5fvalue_18',['signed_integral_value',['../concepteve_1_1signed__integral__value.html',1,'eve']]],
-  ['signed_5fscalar_5fvalue_19',['signed_scalar_value',['../concepteve_1_1signed__scalar__value.html',1,'eve']]],
-  ['signed_5fvalue_20',['signed_value',['../concepteve_1_1signed__value.html',1,'eve']]],
-  ['simd_5fvalue_21',['simd_value',['../concepteve_1_1simd__value.html',1,'eve']]],
-  ['unsigned_5fscalar_5fvalue_22',['unsigned_scalar_value',['../concepteve_1_1unsigned__scalar__value.html',1,'eve']]],
-  ['unsigned_5fvalue_23',['unsigned_value',['../concepteve_1_1unsigned__value.html',1,'eve']]],
-  ['value_24',['value',['../concepteve_1_1value.html',1,'eve']]]
+  ['relative_5fconditional_5fexpr_16',['relative_conditional_expr',['../concepteve_1_1relative__conditional__expr.html',1,'eve']]],
+  ['scalar_5fvalue_17',['scalar_value',['../concepteve_1_1scalar__value.html',1,'eve']]],
+  ['signed_5fintegral_5fscalar_5fvalue_18',['signed_integral_scalar_value',['../concepteve_1_1signed__integral__scalar__value.html',1,'eve']]],
+  ['signed_5fintegral_5fvalue_19',['signed_integral_value',['../concepteve_1_1signed__integral__value.html',1,'eve']]],
+  ['signed_5fscalar_5fvalue_20',['signed_scalar_value',['../concepteve_1_1signed__scalar__value.html',1,'eve']]],
+  ['signed_5fvalue_21',['signed_value',['../concepteve_1_1signed__value.html',1,'eve']]],
+  ['simd_5fvalue_22',['simd_value',['../concepteve_1_1simd__value.html',1,'eve']]],
+  ['unsigned_5fscalar_5fvalue_23',['unsigned_scalar_value',['../concepteve_1_1unsigned__scalar__value.html',1,'eve']]],
+  ['unsigned_5fvalue_24',['unsigned_value',['../concepteve_1_1unsigned__value.html',1,'eve']]],
+  ['value_25',['value',['../concepteve_1_1value.html',1,'eve']]]
 ];

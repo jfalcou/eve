@@ -65,7 +65,6 @@ namespace eve
     static constexpr bool supports_negative_zero = true;
 #endif
 
-    //! @brief Evaluates to `true` if current platform supports denormal values
     //! @brief Indicates if current platform supports denormal values
     //! If this value evaluates to `true`, implementation of functions will not take any special
     //! provision to handle denormal values input.

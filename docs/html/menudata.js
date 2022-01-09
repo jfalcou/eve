@@ -35,8 +35,7 @@ var menudata={children:[
 {text:"Types & Wrappers",url:"group__simd.html"},
 {text:"Functions",url:"group__functions.html"},
 {text:"Constants",url:"group__constant.html"},
-{text:"Traits",url:"group__traits.html"},
-{text:"Internals",url:"group__details.html"}]},
+{text:"Traits",url:"group__traits.html"}]},
 {text:"References",url:"namespaces.html",children:[
 {text:"Namespace List",url:"namespaces.html"},
 {text:"Concepts",url:"concepts.html"},

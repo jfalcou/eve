@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['wide_0',['wide',['../structeve_1_1wide.html',1,'eve']]],
-  ['wide_3c_20value_5ftype_2c_20n_20_3e_1',['wide&lt; value_type, N &gt;',['../structeve_1_1wide.html',1,'eve']]],
-  ['wide_3c_20value_5ftype_5ft_3c_20i_20_3e_2c_20n_20_3e_2',['wide&lt; value_type_t&lt; I &gt;, N &gt;',['../structeve_1_1wide.html',1,'eve']]],
-  ['wide_5fvalue_5ftype_3',['wide_value_type',['../structeve_1_1algo_1_1wide__value__type.html',1,'eve::algo']]]
+  ['value_5ftype_0',['value_type',['../structeve_1_1algo_1_1value__type.html',1,'eve::algo']]]
 ];

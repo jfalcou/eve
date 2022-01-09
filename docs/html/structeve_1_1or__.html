@@ -136,11 +136,12 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="structeve_1_1or__-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">eve::or_&lt; C, V &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__simd.html">SIMD Types and Helpers</a></div></div></div>
+  <div class="headertitle"><div class="title">eve::or_&lt; C, V &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__simd.html">SIMD Types and Helpers</a> &raquo; <a class="el" href="group__simd__types.html">SIMD related types</a> &raquo; <a class="el" href="group__conditional.html">Conditional Expressions</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -150,10 +151,10 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename C, typename V&gt;<br />
 struct eve::or_&lt; C, V &gt;</div><p >Conditional/Alternative wrapper. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/conditional.hpp&gt;</code></p>
-<p ><a class="el" href="structeve_1_1or__.html" title="Conditional/Alternative wrapper.">eve::or_</a> wraps any eve::conditional_expression with an alternative value to be used whenever the conditional value evaluates to <code>false</code>.</p>
+<p ><a class="el" href="structeve_1_1or__.html" title="Conditional/Alternative wrapper.">eve::or_</a> wraps any <a class="el" href="concepteve_1_1conditional__expr.html" title="Specifies that a type is a Conditional Expression.">eve::conditional_expr</a> with an alternative value to be used whenever the conditional value evaluates to <code>false</code>.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">C</td><td>Type of the wrapped eve::conditional_expression value </td></tr>
+    <tr><td class="paramname">C</td><td>Type of the wrapped <a class="el" href="concepteve_1_1conditional__expr.html" title="Specifies that a type is a Conditional Expression.">eve::conditional_expr</a> value </td></tr>
     <tr><td class="paramname">V</td><td>Type of the wrapped alternative <a class="el" href="concepteve_1_1value.html">eve::value</a> </td></tr>
   </table>
   </dd>
@@ -161,11 +162,18 @@ struct eve::or_&lt; C, V &gt;</div><p >Conditional/Alternative wrapper. </p>
 </div>
 <p>Inherits C.</p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a1ef2b85f1416669f6fdf95cdfe0c9eee"><td class="memItemLeft" align="right" valign="top"><a id="a1ef2b85f1416669f6fdf95cdfe0c9eee" name="a1ef2b85f1416669f6fdf95cdfe0c9eee"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>alternative_type</b> = V</td></tr>
+<tr class="memdesc:a1ef2b85f1416669f6fdf95cdfe0c9eee"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type of the alternative value. <br /></td></tr>
+<tr class="separator:a1ef2b85f1416669f6fdf95cdfe0c9eee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a1ad60d150ff3c184df1c6b99bedfde73"><td class="memItemLeft" align="right" valign="top"><a id="a1ad60d150ff3c184df1c6b99bedfde73" name="a1ad60d150ff3c184df1c6b99bedfde73"></a>
 constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>or_</b> (C const &amp;c, V const &amp;v)</td></tr>
-<tr class="memdesc:a1ad60d150ff3c184df1c6b99bedfde73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wraps a eve::conditional_expression with an alternative value. <br /></td></tr>
+<tr class="memdesc:a1ad60d150ff3c184df1c6b99bedfde73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wraps a <a class="el" href="concepteve_1_1conditional__expr.html" title="Specifies that a type is a Conditional Expression.">eve::conditional_expr</a> with an alternative value. <br /></td></tr>
 <tr class="separator:a1ad60d150ff3c184df1c6b99bedfde73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa7164869090edd22bd724f4c2ef3f8a5"><td class="memItemLeft" align="right" valign="top"><a id="aa7164869090edd22bd724f4c2ef3f8a5" name="aa7164869090edd22bd724f4c2ef3f8a5"></a>
 constexpr C&#160;</td><td class="memItemRight" valign="bottom"><b>base</b> () const</td></tr>
@@ -174,7 +182,7 @@ constexpr C&#160;</td><td class="memItemRight" valign="bottom"><b>base</b> () co
 <tr class="memitem:a2646ba4aeead4382e1a22f58755b7257"><td class="memTemplParams" colspan="2"><a id="a2646ba4aeead4382e1a22f58755b7257" name="a2646ba4aeead4382e1a22f58755b7257"></a>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a2646ba4aeead4382e1a22f58755b7257"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>rebase</b> (T v) const</td></tr>
-<tr class="memdesc:a2646ba4aeead4382e1a22f58755b7257"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a eve::conditional_expression with a new alternative value. <br /></td></tr>
+<tr class="memdesc:a2646ba4aeead4382e1a22f58755b7257"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a <a class="el" href="concepteve_1_1conditional__expr.html" title="Specifies that a type is a Conditional Expression.">eve::conditional_expr</a> with a new alternative value. <br /></td></tr>
 <tr class="separator:a2646ba4aeead4382e1a22f58755b7257"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>

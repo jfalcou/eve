@@ -590,3 +590,10 @@ code {
 .tparams .paramname {
   padding-right: 10px !important;
 }
+
+div.ingroups {
+    font-size: 8pt;
+    width: 50%;
+    text-align: left;
+    margin-top: 1em;
+}
