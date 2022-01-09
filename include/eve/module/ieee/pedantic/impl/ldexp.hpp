@@ -134,7 +134,7 @@ namespace eve::detail
   auto ldexp_(EVE_SUPPORTS(cpu_), C const &cond, pedantic_type const &, T0 a0, T1 a1)
   requires floating_value<common_compatible_t<T0, T1>>
   {
-   return mask_op(  cond, eve::ldexp, a0, a1);
+    return mask_op(  cond, pedantic(eve::ldexp), a0, a1);
   }
 
 }
