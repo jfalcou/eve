@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/concept/range.hpp>
+#include <eve/detail/kumi.hpp>
 
 #include <iterator>
 #include <type_traits>
@@ -28,9 +29,18 @@ namespace eve
       {
         return std::type_identity<typename std::iterator_traits<T>::value_type>{};
       }
-      else
+      else if constexpr ( requires { typename T::value_type; } )
       {
         return std::type_identity<typename T::value_type>{};
+      }
+      // Maybe this should be deleted
+      else if constexpr ( kumi::product_type<T> )
+      {
+        auto mapper = []<typename U>(U) {
+          return typename decltype( value_type_impl<U>() )::type{};
+        };
+
+        return std::type_identity<kumi::result::map_t<decltype(mapper), T>>{};
       }
     }
   }
@@ -47,6 +57,8 @@ namespace eve
   //!         If T has begin/end - value_type_t for return type of begin
   //!         If T is std::iterator -> returns iterator_traits<T>::value_type
   //!         If T has nested `value_type` -> returns it
+  //!         If T is a product type and all elements have value_type_t defined for them -
+  //!            kumi::tuple for the individual product types.
   //!         Otherwise it's undefined.
   //!
   //!   **Required header:** `#include <eve/traits/value_type.hpp>`,
