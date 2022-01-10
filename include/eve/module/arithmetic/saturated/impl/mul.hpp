@@ -128,7 +128,7 @@ namespace eve::detail
       {
         using sup_t = upgrade_t<elt_t>;
         auto z      = mul(to_<sup_t>(a), to_<sup_t>(b));
-        auto s      = saturate(z, as<elt_t>()); // TODO saturated(convert) ?
+        auto s      = saturate(z, as<elt_t>());
         return to_<elt_t>(s);
       }
       else

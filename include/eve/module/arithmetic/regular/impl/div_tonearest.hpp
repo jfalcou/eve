@@ -16,7 +16,7 @@
 #include <eve/function/is_ltz.hpp>
 #include <eve/function/nearest.hpp>
 #include <eve/function/converter.hpp>
-#include <eve/function/saturated/convert.hpp>
+#include <eve/function/saturate.hpp>
 #include <eve/function/saturated/div.hpp>
 #include <eve/function/is_odd.hpp>
 #include <eve/function/all.hpp>
@@ -64,7 +64,7 @@ namespace eve::detail
       }
       else
       {
-        return saturated(convert)(nearest(float64(a) / float64(b)), as<v_t>());
+        return convert(saturate(nearest(float64(a) / float64(b)), as<v_t>(), as<v_t>()));
       }
     }
   }

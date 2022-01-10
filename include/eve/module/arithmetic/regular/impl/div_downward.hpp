@@ -18,7 +18,7 @@
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/is_lez.hpp>
-#include <eve/function/saturated/convert.hpp>
+#include <eve/function/saturate.hpp>
 
 namespace eve::detail
 {
@@ -48,7 +48,7 @@ namespace eve::detail
         }
         else
         {
-          return saturated(convert)(floor(float64(a) / float64(b)), as<elt_t>());
+          return convert(saturate(floor(float64(a) / float64(b)), as<elt_t>(), as<elt_t>()));
         }
       }
       else if constexpr( unsigned_value<T> )

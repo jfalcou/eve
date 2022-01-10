@@ -56,7 +56,6 @@
 #include <eve/module/arithmetic/regular/is_odd.hpp>
 #include <eve/module/arithmetic/regular/is_pow2.hpp>
 #include <eve/module/arithmetic/regular/lerp.hpp>
-#include <eve/module/arithmetic/regular/load.hpp>
 #include <eve/module/arithmetic/regular/logical_andnot.hpp>
 #include <eve/module/arithmetic/regular/logical_notand.hpp>
 #include <eve/module/arithmetic/regular/logical_notor.hpp>
