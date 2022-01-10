@@ -21,7 +21,7 @@ namespace algo_test {
 template <eve::algo::relaxed_iterator I>
 struct read_to_load_match<eve::views::backward_iterator<I>>
 {
-  static constexpr std::ptrdiff_t value = eve::algo::iterator_cardinal_v<I> - 1;
+  static constexpr std::ptrdiff_t value = eve::iterator_cardinal_v<I> - 1;
 };
 
 }

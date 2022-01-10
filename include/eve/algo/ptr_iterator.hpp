@@ -7,12 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/algo/concepts/value_type.hpp>
 #include <eve/algo/iterator_helpers.hpp>
 
 #include <eve/function/load.hpp>
 #include <eve/function/store.hpp>
 #include <eve/memory/aligned_ptr.hpp>
+#include <eve/traits.hpp>
 
 namespace eve::algo
 {

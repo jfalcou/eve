@@ -21,8 +21,12 @@ make_unit( "unit.meta.concept" native_simd_for_abi.cpp )
 ## Traits tests
 make_unit( "unit.meta" cardinal.cpp )
 make_unit( "unit.meta" common_type.cpp )
-make_unit( "unit.meta" has_abi.cpp )
 make_unit( "unit.meta" element_type.cpp )
+make_unit( "unit.meta" has_abi.cpp )
+make_unit( "unit.meta" iterator_cardinal.cpp )
+make_unit( "unit.meta" value_type.cpp )
+make_unit( "unit.meta" wide_value_type.cpp )
+
 
 ##==================================================================================================
 ## Interoperability tests

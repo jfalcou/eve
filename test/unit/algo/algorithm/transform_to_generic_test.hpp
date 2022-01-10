@@ -46,7 +46,7 @@ namespace algo_test {
       auto r2f = eve::algo::unalign(r2.begin());
       auto r2l = eve::algo::unalign(r2.end());
 
-      using U = eve::algo::value_type_t<R2>;
+      using U = eve::value_type_t<R2>;
 
       // Here use what was passed
       kumi::apply(alg, kumi::cat(kumi::tuple{range_or_it1, range_or_it2}, args));

@@ -9,9 +9,8 @@
 
 #include <eve/algo/detail/preprocess_range.hpp>
 
-#include <eve/algo/concepts/iterator_cardinal.hpp>
-#include <eve/algo/concepts/value_type.hpp>
 #include <eve/algo/ptr_iterator.hpp>
+#include <eve/traits.hpp>
 
 #include <iterator>
 #include <memory>

@@ -16,6 +16,7 @@
 
 #include <eve/function/compress_store.hpp>
 #include <eve/function/load.hpp>
+#include <eve/traits.hpp>
 
 #include <concepts>
 #include <type_traits>
@@ -60,7 +61,7 @@ void collect_indexes(R&& r, P p, std::vector<IdxType, Alloc>& res)
   auto  f  = processed.begin();
   auto  l  = processed.end();
   using I  = decltype(f);
-  using N  = eve::algo::iterator_cardinal_t<I>;
+  using N  = eve::iterator_cardinal_t<I>;
   // ^ Because this is the first place where we get the cardinal,
   //   we couldn't specify the requirement on the predicate
 

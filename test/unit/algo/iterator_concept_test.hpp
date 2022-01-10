@@ -38,8 +38,8 @@ namespace algo_test
     TTS_GREATER      (l, f);
     TTS_GREATER_EQUAL(l, f);
 
-    eve::fixed cardinal = eve::algo::iterator_cardinal_t<I>{};
-    TTS_TYPE_IS(eve::algo::iterator_cardinal_t<I>, decltype(cardinal));
+    eve::fixed cardinal = eve::iterator_cardinal_t<I>{};
+    TTS_TYPE_IS(eve::iterator_cardinal_t<I>, decltype(cardinal));
     TTS_TYPE_IS(decltype(l - f), std::ptrdiff_t);
 
     // read test
@@ -99,8 +99,8 @@ namespace algo_test
     auto f = f_.unaligned();
     if (f == f.previous_partially_aligned()) f += 1;
 
-    if (eve::algo::iterator_cardinal_v<I> != 1 && !eve::algo::always_aligned_iterator<I>) {
-      TTS_EQUAL((f.next_partially_aligned() - f.previous_partially_aligned()), eve::algo::iterator_cardinal_v<I>);
+    if (eve::iterator_cardinal_v<I> != 1 && !eve::algo::always_aligned_iterator<I>) {
+      TTS_EQUAL((f.next_partially_aligned() - f.previous_partially_aligned()), eve::iterator_cardinal_v<I>);
     }
 
     f = f.previous_partially_aligned();
