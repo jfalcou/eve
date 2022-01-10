@@ -72,7 +72,7 @@ namespace eve::detail
                            ) noexcept
   {
     if constexpr(integral_value<T>) return  bit_not(cond.mask());
-    else                            return  eve::binarize_not(cond,mone(eve::as<value_type_t<T>>()));
+    else                            return  eve::binarize_not(cond,mone(eve::as<element_type_t<T>>()));
   }
 
 }
