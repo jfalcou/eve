@@ -288,12 +288,10 @@ namespace eve
     EVE_FORCEINLINE  auto mode_(EVE_SUPPORTS(cpu_)
                                , ev_distribution<T,U,I> const & d) noexcept
     {
-      if constexpr (std::same_as<eve::callable_zero_, T>)
-        return zero(as<typename ev_distribution<T,U,I>::value_type>());
-      else if constexpr (std::same_as<eve::callable_one_, T>)
-        return one(as<typename ev_distribution<T,U,I>::value_type>());
+      if constexpr (floating_value<U>)
+        return d.m;
       else
-       return d.m;
+        return T{}(as<typename ev_distribution<T,U,I>::value_type>());
     }
 
     //////////////////////////////////////////////////////
