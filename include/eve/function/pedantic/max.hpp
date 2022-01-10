@@ -11,5 +11,5 @@
 
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/real/core/function/pedantic/simd/arm/neon/max.hpp>
+#  include <eve/module/arithmetic/pedantic/impl/simd/arm/neon/max.hpp>
 #endif

@@ -23,7 +23,8 @@ TTS_CASE_TPL("wide random check on bit_floor", EVE_TYPE)
   }
   else if constexpr(eve::signed_value<T>)
   {
-    auto std_bit_floor = [](auto e) -> EVE_VALUE { return (e == 0)? 0 : ((e <= 1) ? 1 : std::exp2l(std::floor(std::log2l(e)))); };
+    auto std_bit_floor = [](auto e) -> EVE_VALUE { auto z = (e == 0)? 0 : ((e <= 1) ? 1 : std::exp2l(std::floor(std::log2l(e))));
+                                                   return z > e ? z/2 : z; };
     eve::uniform_prng<EVE_VALUE> p(EVE_VALUE(0), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_bit_floor, eve::bit_floor);
   }
