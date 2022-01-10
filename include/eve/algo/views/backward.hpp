@@ -16,6 +16,7 @@
 #include <eve/function/read.hpp>
 #include <eve/function/store.hpp>
 #include <eve/function/write.hpp>
+#include <eve/function/unalign.hpp>
 #include <eve/traits.hpp>
 
 namespace eve::algo::views
@@ -116,7 +117,10 @@ namespace eve::algo::views
     template <std::convertible_to<I> I1>
     EVE_FORCEINLINE backward_iterator(backward_iterator<I1> x) : base(x.base) {}
 
-    EVE_FORCEINLINE auto unaligned() const { return backward(unalign(base)); }
+    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::unalign_, backward_iterator self )
+    {
+      return backward(unalign(self.base));
+    }
 
     EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::read_, backward_iterator self)
     {

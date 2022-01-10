@@ -18,6 +18,7 @@
 #include <eve/function/compress_store.hpp>
 #include <eve/function/load.hpp>
 #include <eve/function/store.hpp>
+#include <eve/function/unalign.hpp>
 #include <eve/traits.hpp>
 
 namespace eve::algo::views
@@ -151,7 +152,10 @@ namespace eve::algo::views
     template <std::convertible_to<I> I1>
     converting_iterator(converting_iterator<I1, T> x) : base(x.base) {}
 
-    EVE_FORCEINLINE auto unaligned() const { return convert(unalign(base), as<T>{}); }
+    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::unalign_, converting_iterator self )
+    {
+      return convert(unalign(self.base), as<T>{});
+    }
 
     EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::read_, converting_iterator self)
     {

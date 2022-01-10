@@ -17,6 +17,7 @@
 #include <eve/function/compress_store.hpp>
 #include <eve/function/load.hpp>
 #include <eve/function/store.hpp>
+#include <eve/function/unalign.hpp>
 
 #include <eve/detail/kumi.hpp>
 
@@ -150,7 +151,10 @@ namespace eve::algo::views
             kumi::map([](auto x) { return unalign(x); }, *this)};
       }
 
-      EVE_FORCEINLINE auto unaligned() const { return zip_iterator<unaligned_t<Is>...>(*this); }
+      EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::unalign_, zip_iterator<Is...> self )
+      {
+        return zip_iterator<unaligned_t<Is>...>(self);
+      }
 
       template<std::derived_from<zip_iterator_common> Self, compatible_zip_iterators<Self> Other>
       EVE_FORCEINLINE friend bool operator==(Self const &x, Other const &y)
@@ -350,7 +354,7 @@ namespace std
     requires eve::algo::views::compatible_zip_iterators<eve::algo::views::zip_iterator<Is...>, ZipI2>
   struct basic_common_reference<eve::algo::views::zip_iterator<Is...>, ZipI2, TQual, UQual>
   {
-    using type = eve::algo::unaligned_t<ZipI2>;
+    using type = eve::unaligned_t<ZipI2>;
   };
 }
 // ~tuple opt in

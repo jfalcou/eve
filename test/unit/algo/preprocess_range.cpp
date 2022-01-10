@@ -12,7 +12,8 @@
 
 #include <eve/algo/views/convert.hpp>
 #include <eve/algo/ptr_iterator.hpp>
-#include <eve/algo/unalign.hpp>
+
+#include <eve/function/unalign.hpp>
 
 #include <array>
 #include <vector>
@@ -36,7 +37,7 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
     TTS_TYPE_IS(decltype(processed.begin()), decltype(expected_f_type));
     TTS_TYPE_IS(decltype(processed.end()), decltype(expected_l_type));
 
-    TTS_EQUAL((processed.end() - processed.begin()), (eve::algo::unalign(l) - eve::algo::unalign(f)));
+    TTS_EQUAL((processed.end() - processed.begin()), (eve::unalign(l) - eve::unalign(f)));
 
     auto processed_empty = eve::algo::preprocess_range(eve::algo::traits(eve::algo::unroll<2>), f, f);
     TTS_EQUAL(processed_empty.begin(), processed_empty.end());

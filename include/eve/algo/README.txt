@@ -59,8 +59,8 @@ The minimum requirements are:
 * `I += n`  // `n` is `std::ptrdiff_t` is divisible by `iterator_cardinal_v<I>`
 * `I - I` - returns the distance between two iterators (in elements).
 * I is totally ordered
-* `I.unaligned()` - returns an `unaligned_iterator` pointing to the same place.
-* `I.unaligned()` and `I` are comparible
+* `eve::unaligned(I)` - returns an `unaligned_iterator` pointing to the same place.
+* `eve::unaligned(I)` and `I` are comparible
 * `I.previous_partially_aligned()` - returns our best attempt to align this iterator.
 
 ### aligned_iterator(concept)
@@ -244,16 +244,6 @@ _TODO_ `step_unrolled(iterator)` if the `unroll` trait is bigger than 1.
 `iterator` type from steps is not guarantied to match `decltype(f)` (for when we know we can align the input for example).
 
 `step` returns `true` if it wants to break or `false` to continue.
-
-### unaligned
-
-`unalign`
-`uunaligned/unaligned_t`
-
-A small helper.
-For contigious iterators -> returns themselves
-For aligned_ptr -> returns a raw ptr
-For everything else -> returns .unaligned()
 
 ### zip
 

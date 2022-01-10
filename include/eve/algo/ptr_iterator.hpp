@@ -11,6 +11,8 @@
 
 #include <eve/function/load.hpp>
 #include <eve/function/store.hpp>
+#include <eve/function/unalign.hpp>
+
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/traits.hpp>
 
@@ -62,7 +64,10 @@ namespace eve::algo
     template <std::convertible_to<Ptr> UPtr>
     ptr_iterator(ptr_iterator<UPtr, Cardinal> const& x) : ptr(x.ptr) {}
 
-    auto unaligned() const { return unaligned_me{ unalign(ptr) }; }
+    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::unalign_, ptr_iterator self )
+    {
+      return unaligned_me{unalign(self.ptr)};
+    }
 
     auto previous_partially_aligned() const
     {
@@ -90,7 +95,7 @@ namespace eve::algo
     auto cardinal_cast(_Cardinal c) const
     {
            if constexpr (!detail::instance_of<Ptr, aligned_ptr> ) return ptr_iterator<Ptr, _Cardinal>(ptr);
-      else if constexpr (_Cardinal{}() > Cardinal{}()           ) return unaligned().cardinal_cast(c);
+      else if constexpr (_Cardinal{}() > Cardinal{}()           ) return unalign(*this).cardinal_cast(c);
       else
       {
         using other_ptr = aligned_ptr<cv_value_type, _Cardinal>;

@@ -34,6 +34,7 @@
 #include <eve/function/compress_store.hpp>
 #include <eve/function/replace.hpp>
 #include <eve/function/load.hpp>
+#include <eve/function/unalign.hpp>
 
 #include <concepts>
 #include <type_traits>
@@ -174,7 +175,7 @@ struct collect_indexes_generic_test
   void run(auto rng)
   {
     expected.clear();
-    for (auto* f = eve::algo::unalign(rng.begin()); f != rng.end(); ++f) {
+    for (auto* f = eve::unalign(rng.begin()); f != rng.end(); ++f) {
       if (*f == 1) expected.push_back(f - rng.begin());
     }
 

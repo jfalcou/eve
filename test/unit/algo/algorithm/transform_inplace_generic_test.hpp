@@ -25,8 +25,8 @@ namespace algo_test
 
     void run(auto rng) const
     {
-      auto f = eve::algo::unalign(rng.begin());
-      auto l = eve::algo::unalign(rng.end());
+      auto f = eve::unalign(rng.begin());
+      auto l = eve::unalign(rng.end());
 
       using T = eve::value_type_t<decltype(rng)>;
 

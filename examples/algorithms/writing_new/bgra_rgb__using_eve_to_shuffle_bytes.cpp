@@ -24,6 +24,7 @@
 #include <eve/eve.hpp>
 #include <eve/function/load.hpp>
 #include <eve/function/store.hpp>
+#include <eve/function/unalign.hpp>
 
 #include <concepts>
 #include <span>
@@ -207,8 +208,8 @@ struct convert_bgra_to_rgb_generic_test
 
   void run(auto rng_)
   {
-    auto                    f = eve::algo::unalign(rng_.begin());
-    auto                    l = f + ((eve::algo::unalign(rng_.end()) - f) / 4) * 4;
+    auto                    f = eve::unalign(rng_.begin());
+    auto                    l = f + ((eve::unalign(rng_.end()) - f) / 4) * 4;
     std::span<std::uint8_t> rng {std::to_address(f), std::to_address(l)};
 
     std::vector<std::uint8_t> expected(rng.end() - rng.begin());
