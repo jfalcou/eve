@@ -7,14 +7,13 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/module/real/core/detail/basic_shuffle.hpp>
 
 namespace eve
 {
   EVE_MAKE_CALLABLE(shuffle_, shuffle);
 }
 
-
+#include <eve/module/real/core/detail/basic_shuffle.hpp>
 #include <eve/module/real/core/detail/generic/find_optimized_shuffle_pattern.hpp>
 
 namespace eve::detail
