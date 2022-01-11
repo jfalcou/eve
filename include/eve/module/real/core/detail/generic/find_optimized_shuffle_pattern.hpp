@@ -106,7 +106,7 @@ namespace eve::detail
   // Look to see if a given pattern is optimizable and returns the optimized function object
   //================================================================================================
   template<std::ptrdiff_t InCardinal, std::ptrdiff_t I0, std::ptrdiff_t... I>
-  consteval auto find_optimized_pattern()
+  consteval auto find_optimized_shuffle_pattern()
   {
     [[maybe_unused]] constexpr auto sz = fixed<1+sizeof...(I)>{};
     [[maybe_unused]] constexpr auto p  = pattern_t<I0,I...>{};

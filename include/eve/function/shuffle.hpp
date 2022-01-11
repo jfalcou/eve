@@ -15,7 +15,7 @@ namespace eve
 }
 
 
-#include <eve/module/real/core/detail/generic/patterns.hpp>
+#include <eve/module/real/core/detail/generic/find_optimized_shuffle_pattern.hpp>
 
 namespace eve::detail
 {
@@ -23,7 +23,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto shuffle_(EVE_SUPPORTS(cpu_), T v, pattern_t<I...>) noexcept
   requires(pattern_t<I...>{}.validate(T::size()))
   {
-    constexpr auto shuffler = detail::find_optimized_pattern<T::size(),I...>();
+    constexpr auto shuffler = detail::find_optimized_shuffle_pattern<T::size(),I...>();
     return shuffler(v);
   }
 
