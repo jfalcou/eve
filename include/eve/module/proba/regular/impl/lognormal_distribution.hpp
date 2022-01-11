@@ -234,14 +234,16 @@ namespace eve
     //////////////////////////////////////////////////////
     /// median
     template<typename T, typename U,  typename I = T>
-    EVE_FORCEINLINE  auto median_(EVE_SUPPORTS(cpu_)
+    EVE_FORCEINLINE auto median_(EVE_SUPPORTS(cpu_)
                                  , lognormal_distribution<T,U,I> const & d) noexcept
     {
       auto [m, s] = d.params();
       if constexpr(floating_value<T> || floating_value<U>)
         return exp(median(normal_distribution(m, s)));
       else
-        return exp(median(normal_distribution_01<I>));
+      {
+         return I(1.0);
+      }
     }
 
 
@@ -270,8 +272,8 @@ namespace eve
         return median(d)*exp(-sqr(d.s));
       else
       {
-        auto inve = I(0.36787944117144232159552377016146086744581113103176);
-        return median(d)**inve;
+        auto inve = I( 0.367879441171442);
+        return median(d)*inve;
       }
     }
 

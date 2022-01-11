@@ -290,8 +290,8 @@ namespace eve
     {
       if constexpr (floating_value<T>)
         return d.m;
-      return
-        zero(as<I>());
+      else
+        return T{}(as<typename ev_distribution<T,U,I>::value_type>());
     }
 
     //////////////////////////////////////////////////////
