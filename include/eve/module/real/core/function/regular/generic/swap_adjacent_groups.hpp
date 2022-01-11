@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
-#include <eve/module/real/core/detail/swizzle.hpp>
+#include <eve/module/real/core/detail/basic_shuffle.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/overload.hpp>
@@ -61,8 +61,8 @@ namespace eve::detail
     }
     else
     {
-      // In this case, we don't have anything special to do so we just swizzle
-      return basic_swizzle(v, swap_adjacent_groups_pattern<G,Wide::size()>);
+      // In this case, we don't have anything special to do so we just shuffle
+      return basic_shuffle(v, swap_adjacent_groups_pattern<G,Wide::size()>);
     }
   }
 

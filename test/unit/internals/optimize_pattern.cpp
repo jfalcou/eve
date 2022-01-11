@@ -441,7 +441,7 @@ TTS_CASE("Check reverse get optimized")
               , (bound<callable_reverse_>)
               );
   TTS_EXPR_IS ( (find_optimized_pattern<16, 3, 2, 1, 0>())
-              , (bound<eve::callable_basic_swizzle_,
+              , (bound<eve::callable_basic_shuffle_,
                        eve::pattern_t<3, 2, 1,0>>)
               );
 };

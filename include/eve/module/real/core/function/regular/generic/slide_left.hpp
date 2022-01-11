@@ -70,7 +70,7 @@ namespace eve::detail
       }
       else
       {
-        return basic_swizzle(v, slide_left_pattern<Shift,Wide::size()>);
+        return basic_shuffle(v, slide_left_pattern<Shift,Wide::size()>);
       }
     }
   }

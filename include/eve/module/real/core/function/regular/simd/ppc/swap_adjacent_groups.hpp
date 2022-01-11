@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
-#include <eve/module/real/core/detail/swizzle.hpp>
+#include <eve/module/real/core/detail/basic_shuffle.hpp>
 #include <eve/pattern.hpp>
 
 namespace eve::detail
@@ -24,7 +24,7 @@ namespace eve::detail
     else
     {
       /// TODO: Maybe there's better than just vec_perm ??
-      return basic_swizzle(v, swap_adjacent_groups_pattern<G,N::value> );
+      return basic_shuffle(v, swap_adjacent_groups_pattern<G,N::value> );
     }
   }
 }

@@ -9,7 +9,7 @@
 
 #include <eve/detail/abi.hpp>
 #include <eve/function/bit_cast.hpp>
-#include <eve/module/real/core/detail/swizzle.hpp>
+#include <eve/module/real/core/detail/basic_shuffle.hpp>
 #include <eve/pattern.hpp>
 
 namespace eve::detail
@@ -40,7 +40,7 @@ namespace eve::detail
     }
     else
     {
-      return basic_swizzle(v, eve::fix_pattern<Wide::size()>([](int i, int size) { return size - i - 1; }));
+      return basic_shuffle(v, eve::fix_pattern<Wide::size()>([](int i, int size) { return size - i - 1; }));
     }
   }
 

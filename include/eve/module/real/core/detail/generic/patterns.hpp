@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/real/core/detail/swizzle.hpp>
+#include <eve/module/real/core/detail/basic_shuffle.hpp>
 #include <eve/function/broadcast_group.hpp>
 #include <eve/function/broadcast.hpp>
 #include <eve/function/reverse.hpp>
@@ -131,6 +131,6 @@ namespace eve::detail
       return bound{slide_right, index<s>};
     }
     else  if constexpr( is_reverse<InCardinal, I0,I...> ) return bound{reverse};
-    else                                                  return bound{basic_swizzle, p};
+    else                                                  return bound{basic_shuffle, p};
   }
 }

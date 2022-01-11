@@ -7,7 +7,7 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/module/real/core/detail/swizzle.hpp>
+#include <eve/module/real/core/detail/basic_shuffle.hpp>
 
 namespace eve
 {
@@ -23,8 +23,8 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto shuffle_(EVE_SUPPORTS(cpu_), T v, pattern_t<I...>) noexcept
   requires(pattern_t<I...>{}.validate(T::size()))
   {
-    constexpr auto swizzler = detail::find_optimized_pattern<T::size(),I...>();
-    return swizzler(v);
+    constexpr auto shuffler = detail::find_optimized_pattern<T::size(),I...>();
+    return shuffler(v);
   }
 
   template<simd_value T, typename F>

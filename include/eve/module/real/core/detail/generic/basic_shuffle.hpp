@@ -15,10 +15,10 @@
 namespace eve::detail
 {
   //================================================================================================
-  // Helper for aggregate swizzle
+  // Helper for aggregate basic_shuffle
   //================================================================================================
   template<typename Wide, shuffle_pattern Pattern>
-  EVE_FORCEINLINE auto aggregate_swizzle(Wide const& v, Pattern p) noexcept
+  EVE_FORCEINLINE auto aggregate_shuffler(Wide const& v, Pattern p) noexcept
   {
     constexpr auto sz = Pattern::size();
     using   that_t    = as_wide_t<Wide,fixed<sz>>;
@@ -29,10 +29,10 @@ namespace eve::detail
   }
 
   //================================================================================================
-  // Unary swizzle - logical
+  // Unary basic shuffle - logical
   //================================================================================================
   template<typename T, typename N, shuffle_pattern Pattern>
-  EVE_FORCEINLINE auto basic_swizzle_ ( EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE auto basic_shuffle_ ( EVE_SUPPORTS(cpu_)
                                       , logical<wide<T,N>> const& v, Pattern p
                                       ) noexcept
   {
@@ -44,7 +44,7 @@ namespace eve::detail
   // Emulation
   //================================================================================================
   template<typename T, typename N, shuffle_pattern Pattern>
-  EVE_FORCEINLINE auto basic_swizzle_(EVE_SUPPORTS(cpu_), wide<T,N> const& v, Pattern const&)
+  EVE_FORCEINLINE auto basic_shuffle_(EVE_SUPPORTS(cpu_), wide<T,N> const& v, Pattern const&)
   {
     constexpr auto cd = N::value;
     constexpr auto sz = Pattern::size();
@@ -52,7 +52,7 @@ namespace eve::detail
 
     constexpr Pattern q = {};
 
-    [[maybe_unused]] auto do_swizzle = [=]<std::ptrdiff_t... I>(pattern_t<I...> const&)
+    [[maybe_unused]] auto do_shuffle = [=]<std::ptrdiff_t... I>(pattern_t<I...> const&)
     {
       return that_t{ (I == na_ ? T{0} : v.get(I))... };
     };
@@ -64,7 +64,7 @@ namespace eve::detail
     }
     else if constexpr( has_aggregated_abi_v<that_t> && !has_aggregated_abi_v<wide<T,N>> )
     {
-      return aggregate_swizzle(v,q);
+      return aggregate_shuffler(v,q);
     }
     // Be sure we can shuffle everything ionside a single vector of ouput
     else if constexpr( !has_aggregated_abi_v<that_t> )
@@ -101,12 +101,12 @@ namespace eve::detail
       }
       else
       {
-        return do_swizzle(q);
+        return do_shuffle(q);
       }
     }
     else
     {
-      return do_swizzle(q);
+      return do_shuffle(q);
     }
   }
 }

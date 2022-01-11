@@ -10,7 +10,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/module/real/core/detail/generic/lookup_helpers.hpp>
 #include <eve/detail/function/bit_cast.hpp>
-#include <eve/module/real/core/detail/swizzle.hpp>
+#include <eve/module/real/core/detail/basic_shuffle.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/pattern.hpp>

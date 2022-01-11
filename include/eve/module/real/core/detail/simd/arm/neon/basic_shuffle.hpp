@@ -15,7 +15,7 @@
 namespace eve::detail
 {
   template<typename T, typename N, shuffle_pattern Pattern>
-  EVE_FORCEINLINE auto basic_swizzle_( EVE_SUPPORTS(neon128_), wide<T,N> const& v, Pattern const&)
+  EVE_FORCEINLINE auto basic_shuffle_( EVE_SUPPORTS(neon128_), wide<T,N> const& v, Pattern const&)
       requires arm_abi<abi_t<T, N>>
   {
     constexpr auto sz = Pattern::size();
@@ -26,7 +26,7 @@ namespace eve::detail
     // We're swizzling so much we aggregate the output
     if constexpr( has_aggregated_abi_v<that_t> )
     {
-      return aggregate_swizzle(v,q);
+      return aggregate_shuffler(v,q);
     }
     else
     {
