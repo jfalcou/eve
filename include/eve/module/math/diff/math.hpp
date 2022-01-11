@@ -51,6 +51,8 @@
 #include <eve/module/math/diff/exp.hpp>
 #include <eve/module/math/diff/expm1.hpp>
 #include <eve/module/math/diff/expx2.hpp>
+#include <eve/module/math/diff/geommean.hpp>
+#include <eve/module/math/diff/hypot.hpp>
 #include <eve/module/math/diff/log10.hpp>
 #include <eve/module/math/diff/log1p.hpp>
 #include <eve/module/math/diff/log2.hpp>

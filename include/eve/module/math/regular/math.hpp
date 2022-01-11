@@ -51,6 +51,7 @@
 #include <eve/module/math/regular/exp.hpp>
 #include <eve/module/math/regular/expm1.hpp>
 #include <eve/module/math/regular/expx2.hpp>
+#include <eve/module/math/regular/hypot.hpp>
 #include <eve/module/math/regular/geommean.hpp>
 #include <eve/module/math/regular/log10.hpp>
 #include <eve/module/math/regular/log1p.hpp>

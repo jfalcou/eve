@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/geommean.hpp>
-#include <eve/module/arithmetic/pedantic/impl/geommean.hpp>
+#include <eve/module/math/regular/hypot.hpp>
+#include <eve/module/math/diff/impl/hypot.hpp>

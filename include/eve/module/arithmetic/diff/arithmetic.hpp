@@ -29,7 +29,6 @@
 #include <eve/module/arithmetic/diff/frac.hpp>
 #include <eve/module/arithmetic/diff/fsm.hpp>
 #include <eve/module/arithmetic/diff/fsnm.hpp>
-#include <eve/module/arithmetic/diff/hypot.hpp>
 #include <eve/module/arithmetic/diff/inc.hpp>
 #include <eve/module/arithmetic/diff/manhattan.hpp>
 #include <eve/module/arithmetic/diff/maxabs.hpp>

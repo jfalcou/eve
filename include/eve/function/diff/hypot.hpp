@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/diff/hypot.hpp>
+#include <eve/module/math/diff/hypot.hpp>

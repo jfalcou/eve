@@ -87,11 +87,11 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/hypot.cpp}
+  //! @godbolt{doc/math/hypot.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(hypot_, hypot);
 }
 
-#include <eve/module/arithmetic/regular/impl/hypot.hpp>
+#include <eve/module/math/regular/impl/hypot.hpp>
