@@ -11,6 +11,7 @@
 #include <eve/function/slide_left.hpp>
 #include <eve/function/count_true.hpp>
 #include <eve/function/unalign.hpp>
+#include <eve/function/shuffle.hpp>
 
 #include <eve/detail/top_bits.hpp>
 
@@ -68,13 +69,13 @@ namespace eve::detail
         int count;
 
         switch (num) {
-          case 0b000: { count = 0; v = v[pattern<3, 0, 0, 0>]; break; }
-          case 0b001: { count = 1; v = v[pattern<0, 3, 0, 0>]; break; }
-          case 0b010: { count = 1; v = v[pattern<1, 3, 0, 0>]; break; }
-          case 0b011: { count = 2; v = v[pattern<0, 1, 3, 0>]; break; }
-          case 0b100: { count = 1; v = v[pattern<2, 3, 0, 0>]; break; }
-          case 0b101: { count = 2; v = v[pattern<0, 2, 3, 0>]; break; }
-          case 0b110: { count = 2; v = v[pattern<1, 2, 3, 0>]; break; }
+          case 0b000: { count = 0; v = shuffle(v,pattern<3, 0, 0, 0>); break; }
+          case 0b001: { count = 1; v = shuffle(v,pattern<0, 3, 0, 0>); break; }
+          case 0b010: { count = 1; v = shuffle(v,pattern<1, 3, 0, 0>); break; }
+          case 0b011: { count = 2; v = shuffle(v,pattern<0, 1, 3, 0>); break; }
+          case 0b100: { count = 1; v = shuffle(v,pattern<2, 3, 0, 0>); break; }
+          case 0b101: { count = 2; v = shuffle(v,pattern<0, 2, 3, 0>); break; }
+          case 0b110: { count = 2; v = shuffle(v,pattern<1, 2, 3, 0>); break; }
           case 0b111: { count = 3;                             break; }
           #if defined(SPY_COMPILER_IS_CLANG) or defined(SPY_COMPILER_IS_GCC)
           default: __builtin_unreachable();
@@ -94,26 +95,26 @@ namespace eve::detail
         int count1, count2;
 
         switch (num1) {
-          case 0b000: { count1 = 0; v = v[pattern<3, 0, 0, 0, 4, 5, 6, 7>]; break; }
-          case 0b001: { count1 = 1; v = v[pattern<0, 3, 0, 0, 4, 5, 6, 7>]; break; }
-          case 0b010: { count1 = 1; v = v[pattern<1, 3, 0, 0, 4, 5, 6, 7>]; break; }
-          case 0b011: { count1 = 2; v = v[pattern<0, 1, 3, 0, 4, 5, 6, 7>]; break; }
-          case 0b100: { count1 = 1; v = v[pattern<2, 3, 0, 0, 4, 5, 6, 7>]; break; }
-          case 0b101: { count1 = 2; v = v[pattern<0, 2, 3, 0, 4, 5, 6, 7>]; break; }
-          case 0b110: { count1 = 2; v = v[pattern<1, 2, 3, 0, 4, 5, 6, 7>]; break; }
+          case 0b000: { count1 = 0; v = shuffle(v,pattern<3, 0, 0, 0, 4, 5, 6, 7>); break; }
+          case 0b001: { count1 = 1; v = shuffle(v,pattern<0, 3, 0, 0, 4, 5, 6, 7>); break; }
+          case 0b010: { count1 = 1; v = shuffle(v,pattern<1, 3, 0, 0, 4, 5, 6, 7>); break; }
+          case 0b011: { count1 = 2; v = shuffle(v,pattern<0, 1, 3, 0, 4, 5, 6, 7>); break; }
+          case 0b100: { count1 = 1; v = shuffle(v,pattern<2, 3, 0, 0, 4, 5, 6, 7>); break; }
+          case 0b101: { count1 = 2; v = shuffle(v,pattern<0, 2, 3, 0, 4, 5, 6, 7>); break; }
+          case 0b110: { count1 = 2; v = shuffle(v,pattern<1, 2, 3, 0, 4, 5, 6, 7>); break; }
           case 0b111: { count1 = 3;                                         break; }
           #if defined(SPY_COMPILER_IS_CLANG) or defined(SPY_COMPILER_IS_GCC)
           default: __builtin_unreachable();
           #endif
         }
         switch (num2) {
-          case 0b000'0000: { count2 = 0; v = v[pattern<0, 1, 2, 3, 7, 7, 7, 7>]; break; }
-          case 0b001'0000: { count2 = 1; v = v[pattern<0, 1, 2, 3, 4, 7, 7, 7>]; break; }
-          case 0b010'0000: { count2 = 1; v = v[pattern<0, 1, 2, 3, 5, 7, 7, 7>]; break; }
-          case 0b011'0000: { count2 = 2; v = v[pattern<0, 1, 2, 3, 4, 5, 7, 7>]; break; }
-          case 0b100'0000: { count2 = 1; v = v[pattern<0, 1, 2, 3, 6, 7, 7, 7>]; break; }
-          case 0b101'0000: { count2 = 2; v = v[pattern<0, 1, 2, 3, 4, 6, 7, 7>]; break; }
-          case 0b110'0000: { count2 = 2; v = v[pattern<0, 1, 2, 3, 5, 6, 7, 7>]; break; }
+          case 0b000'0000: { count2 = 0; v = shuffle(v,pattern<0, 1, 2, 3, 7, 7, 7, 7>); break; }
+          case 0b001'0000: { count2 = 1; v = shuffle(v,pattern<0, 1, 2, 3, 4, 7, 7, 7>); break; }
+          case 0b010'0000: { count2 = 1; v = shuffle(v,pattern<0, 1, 2, 3, 5, 7, 7, 7>); break; }
+          case 0b011'0000: { count2 = 2; v = shuffle(v,pattern<0, 1, 2, 3, 4, 5, 7, 7>); break; }
+          case 0b100'0000: { count2 = 1; v = shuffle(v,pattern<0, 1, 2, 3, 6, 7, 7, 7>); break; }
+          case 0b101'0000: { count2 = 2; v = shuffle(v,pattern<0, 1, 2, 3, 4, 6, 7, 7>); break; }
+          case 0b110'0000: { count2 = 2; v = shuffle(v,pattern<0, 1, 2, 3, 5, 6, 7, 7>); break; }
           case 0b111'0000: { count2 = 3;                                         break; }
           #if defined(SPY_COMPILER_IS_CLANG) or defined(SPY_COMPILER_IS_GCC)
           default: __builtin_unreachable();

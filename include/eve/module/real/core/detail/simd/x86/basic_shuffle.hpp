@@ -114,9 +114,9 @@ namespace eve::detail
           constexpr auto hp = pattern_view<4,8,8>(q);
 
                 if constexpr( lp.strictly_under(4) && hp.over(4))
-                return process_zeros(that_t{v[lp],v[hp]},q);
+                return process_zeros(that_t{shuffle(v,lp),shuffle(v,hp)},q);
           else  if constexpr( hp.strictly_under(4) && lp.over(4))
-                return process_zeros(that_t{v[lp],v[hp]},q);
+                return process_zeros(that_t{shuffle(v,lp),shuffle(v,hp)},q);
           else  return basic_shuffle_(EVE_RETARGET(cpu_),v,q);
         }
       }
