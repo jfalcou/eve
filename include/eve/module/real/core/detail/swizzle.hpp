@@ -23,16 +23,16 @@ namespace eve
   EVE_CALLABLE_API(basic_swizzle_, basic_swizzle)
 }
 
-#include <eve/detail/function/simd/common/swizzle.hpp>
+#include <eve/module/real/core/detail/generic/swizzle.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/detail/function/simd/x86/swizzle.hpp>
+#  include <eve/module/real/core/detail/simd/x86/swizzle.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/detail/function/simd/ppc/swizzle.hpp>
+#  include <eve/module/real/core/detail/simd/ppc/swizzle.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/detail/function/simd/arm/neon/swizzle.hpp>
+#  include <eve/module/real/core/detail/simd/arm/neon/swizzle.hpp>
 #endif

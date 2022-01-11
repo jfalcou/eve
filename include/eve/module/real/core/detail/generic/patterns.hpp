@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/function/swizzle.hpp>
+#include <eve/module/real/core/detail/swizzle.hpp>
 #include <eve/function/broadcast_group.hpp>
 #include <eve/function/broadcast.hpp>
 #include <eve/function/reverse.hpp>

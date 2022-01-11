@@ -7,7 +7,7 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/function/swizzle.hpp>
+#include <eve/module/real/core/detail/swizzle.hpp>
 
 namespace eve
 {

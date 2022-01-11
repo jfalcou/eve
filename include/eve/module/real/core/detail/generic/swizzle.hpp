@@ -23,7 +23,9 @@ namespace eve::detail
     constexpr auto sz = Pattern::size();
     using   that_t    = as_wide_t<Wide,fixed<sz>>;
 
-    return that_t(v[pattern_view<0,sz/2,sz>(p)], v[pattern_view<sz/2,sz,sz>(p)]);
+    return that_t ( shuffle(v,pattern_view<0,sz/2,sz>(p))
+                  , shuffle(v,pattern_view<sz/2,sz,sz>(p))
+                  );
   }
 
   //================================================================================================
@@ -58,7 +60,7 @@ namespace eve::detail
     // We're swizzling so much we aggregate the output
     if constexpr( has_bundle_abi_v<that_t> )
     {
-      return that_t{ kumi::map( [](auto m) { return m[Pattern{}]; }, v ) };
+      return that_t{ kumi::map( [](auto m) { return shuffle(m,Pattern{}); }, v ) };
     }
     else if constexpr( has_aggregated_abi_v<that_t> && !has_aggregated_abi_v<wide<T,N>> )
     {
@@ -70,12 +72,12 @@ namespace eve::detail
       // We're swizzling the first half of an aggregate
       if constexpr( has_aggregated_abi_v<wide<T,N>> && q.strictly_under(cd/2) )
       {
-        return v.slice(lower_)[q];
+        return shuffle(v.slice(lower_),q);
       }
       // We're swizzling the second half of an aggregate
       else if constexpr( has_aggregated_abi_v<wide<T,N>> && q.over(cd/2) )
       {
-        return v.slice(upper_)[ slide_pattern<cd/2,sz>(q) ];
+        return shuffle(v.slice(upper_), slide_pattern<cd/2,sz>(q) );
       }
       // We're swizzling an aggregate in steplock [lo | hi]
       else if constexpr (   has_aggregated_abi_v<wide<T,N>>
@@ -83,7 +85,9 @@ namespace eve::detail
                         && pattern_view<sz/2,sz  ,sz>(q).over(cd/2)
                         )
       {
-        return that_t{ v[pattern_view<0,sz/2,sz>(q)], v[pattern_view<sz/2,sz,sz>(q)] };
+        return that_t { shuffle(v,pattern_view<0,sz/2,sz>(q))
+                      , shuffle(v,pattern_view<sz/2,sz,sz>(q))
+                      };
       }
       // We're swizzling an aggregate in steplock [hi | lo]
       else if constexpr (   has_aggregated_abi_v<wide<T,N>>
@@ -91,7 +95,9 @@ namespace eve::detail
                         && pattern_view<sz/2,sz  ,sz>(q).strictly_under(cd/2)
                         )
       {
-        return that_t{ v[pattern_view<0,sz/2,sz>(q)], v[pattern_view<sz/2,sz,sz>(q)] };
+        return that_t { shuffle(v,pattern_view<0,sz/2,sz>(q))
+                      , shuffle(v,pattern_view<sz/2,sz,sz>(q))
+                      };
       }
       else
       {

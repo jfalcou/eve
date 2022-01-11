@@ -25,6 +25,7 @@
 #include <eve/function/load.hpp>
 #include <eve/function/store.hpp>
 #include <eve/function/unalign.hpp>
+#include <eve/function/shuffle.hpp>
 
 #include <concepts>
 #include <span>
@@ -71,7 +72,7 @@ struct
   EVE_FORCEINLINE void operator()(std::uint8_t const *&f, std::uint8_t *&o, N n) const
   {
     eve::wide<std::uint8_t, N> loaded   = eve::load(f, n);
-    eve::wide<std::uint8_t, N> shuffled = loaded[bgra_to_rgb_pattern_v<n()>];
+    eve::wide<std::uint8_t, N> shuffled = eve::shuffle(loaded,bgra_to_rgb_pattern_v<n()>);
     eve::store(shuffled, o);
 
     f += n();
@@ -89,7 +90,7 @@ struct
                                   N                                   n) const
   {
     eve::wide<std::uint8_t, N> loaded   = eve::load[ignore](f, n);
-    eve::wide<std::uint8_t, N> shuffled = loaded[bgra_to_rgb_pattern_v<n()>];
+    eve::wide<std::uint8_t, N> shuffled = eve::shuffle(loaded,bgra_to_rgb_pattern_v<n()>);
 
     std::ptrdiff_t in_count  = ignore.count(eve::as(loaded));
     std::ptrdiff_t out_count = in_count / 4 * 3;
@@ -118,7 +119,7 @@ std::uint8_t* convert_bgra_to_rgb(std::span<std::uint8_t const> in, std::uint8_t
   }();
 
   // Algorithm works like this:
-  // We shuffle an store a register untill we can both load a full register and store a full
+  // We shuffle an store a register until we can both load a full register and store a full
   // register. Then we have to do masked load/stores in the end.
   //
   // Because the output has less space then the input, we will always do a masked store on the last

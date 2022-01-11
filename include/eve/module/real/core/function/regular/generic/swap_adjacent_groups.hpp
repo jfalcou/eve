@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
-#include <eve/detail/function/swizzle.hpp>
+#include <eve/module/real/core/detail/swizzle.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/overload.hpp>
