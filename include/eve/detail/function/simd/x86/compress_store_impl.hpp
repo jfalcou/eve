@@ -10,6 +10,7 @@
 #include <eve/function/convert.hpp>
 #include <eve/detail/function/compress_store_swizzle_mask_num.hpp>
 #include <eve/function/count_true.hpp>
+#include <eve/function/unalign.hpp>
 
 #include <eve/detail/function/compress_store_impl_switch.hpp>
 
@@ -103,7 +104,7 @@ namespace eve::detail
                           Ptr ptr) noexcept
     requires x86_abi<abi_t<T, N>> && ( N() == 4 )
   {
-         if ( C::is_complete && !C::is_inverted ) return as_raw_pointer(ptr);
+         if ( C::is_complete && !C::is_inverted ) return unalign(ptr);
     else if constexpr ( sizeof(T) == 8 && current_api == avx  )
     {
       return compress_store_impl_(EVE_RETARGET(cpu_), c, v, mask, ptr);
@@ -135,7 +136,7 @@ namespace eve::detail
       }();
 
       store(shuffled, ptr);
-      return as_raw_pointer(ptr) + count;
+      return unalign(ptr) + count;
     }
   }
 
@@ -197,7 +198,7 @@ namespace eve::detail
       }();
 
       store(shuffled, ptr);
-      return as_raw_pointer(ptr) + popcount;
+      return unalign(ptr) + popcount;
     }
   }
 
@@ -247,7 +248,7 @@ namespace eve::detail
       h = _mm_shuffle_epi8(h, hi_shuffle);
       eve::store(l, ptr);
 
-      T* res = as_raw_pointer(ptr) + lo_count;
+      T* res = unalign(ptr) + lo_count;
       eve::store(h, res);
       return res + hi_count;
     }
@@ -264,7 +265,7 @@ namespace eve::detail
       pattern8 hi_shuffle{pattern_8_elements_bytes_v<std::uint8_t>[hi_idx].data()};
       hi_shuffle |= pattern8{0x08};  // adjust higher idxs +8
 
-      T* res = as_raw_pointer(ptr);
+      T* res = unalign(ptr);
       _mm_storel_epi64((__m128i*)res, _mm_shuffle_epi8(v, lo_shuffle));
       res += lo_count;
       _mm_storel_epi64((__m128i*)res, _mm_shuffle_epi8(v, hi_shuffle));

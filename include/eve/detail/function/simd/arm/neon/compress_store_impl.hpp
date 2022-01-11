@@ -55,7 +55,7 @@ namespace eve::detail
     v             = bit_cast(bytes_v, as(v));
 
     store(v, ptr);
-    return as_raw_pointer(ptr) + count;
+    return unalign(ptr) + count;
   }
 
   template <typename T, typename U, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
@@ -89,6 +89,6 @@ namespace eve::detail
 
     // store
     store(v, ptr);
-    return as_raw_pointer(ptr) + count;
+    return unalign(ptr) + count;
   }
 }

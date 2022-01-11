@@ -16,6 +16,7 @@
 #include <eve/function/replace.hpp>
 #include <eve/function/safe.hpp>
 #include <eve/function/unsafe.hpp>
+#include <eve/function/unalign.hpp>
 #include <eve/traits/wide_value_type.hpp>
 
 #include <iterator>
@@ -195,7 +196,7 @@ namespace eve::detail
                                   ) noexcept
   requires simd_compatible_ptr<Ptr,wide<T, N>> && std::same_as<abi_t<T, N>, emulated_>
   {
-    return piecewise_load(tgt, as_raw_pointer(ptr));
+    return piecewise_load(tgt, unalign(ptr));
   }
 
   //================================================================================================

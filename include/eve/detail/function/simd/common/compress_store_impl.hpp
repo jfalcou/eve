@@ -13,6 +13,7 @@
 #include <eve/function/count_true.hpp>
 #include <eve/function/slide_left.hpp>
 #include <eve/function/store.hpp>
+#include <eve/function/unalign.hpp>
 #include <eve/function/unsafe.hpp>
 #include <eve/memory/pointer.hpp>
 
@@ -131,7 +132,7 @@ namespace eve::detail
       auto to_left     = eve::slide_left( v, eve::index<1> );
       auto compressed  = eve::if_else[mask]( v, to_left );
       eve::store(compressed, ptr);
-      return as_raw_pointer(ptr) + eve::count_true(mask);
+      return unalign(ptr) + eve::count_true(mask);
     }
     else if constexpr ( !has_emulated_abi_v<wide<T, N>> && N() > 2 )
     {
@@ -139,7 +140,7 @@ namespace eve::detail
     }
     else
     {
-      auto* ptr_ = as_raw_pointer(ptr);
+      auto* ptr_ = unalign(ptr);
       detail::for_<0,1, N{}()>([&](auto idx) mutable
       {
         *ptr_ = v.get(idx());
@@ -157,7 +158,7 @@ namespace eve::detail
                           logical<wide<U, N>> mask,
                           Ptr ptr) noexcept
   {
-         if constexpr ( C::is_complete && !C::is_inverted ) return as_raw_pointer(ptr);
+         if constexpr ( C::is_complete && !C::is_inverted ) return unalign(ptr);
     else if constexpr ( C::is_complete )                    return compress_store_impl(v, mask, ptr);
     else if constexpr ( !has_emulated_abi_v<wide<T, N>> )
     {
@@ -168,7 +169,7 @@ namespace eve::detail
     {
       auto offset = c.offset(as(v));
       auto count  = c.count(as(v));
-      auto* ptr_ = as_raw_pointer(ptr);
+      auto* ptr_ = unalign(ptr);
 
       for (int idx = offset; idx != offset + count; ++idx) {
         if (mask.get(idx)) *ptr_++ = v.get(idx);
