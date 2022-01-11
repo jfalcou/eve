@@ -13,6 +13,19 @@
 namespace eve
 {
   EVE_MAKE_CALLABLE(reverse_, reverse);
+
+  namespace detail
+  {
+    template <int N, int ...I> inline constexpr bool is_reverse = []
+    {
+      std::array idxs {I...};
+      for (int i = 0; i != static_cast<int>(idxs.size()); ++i) {
+        if (idxs[i] != (static_cast<int>(idxs.size()) - i - 1))
+          return false;
+      }
+      return static_cast<int>(idxs.size()) == N;
+    }();
+  }
 }
 
 #include <eve/module/real/core/function/regular/generic/reverse.hpp>
