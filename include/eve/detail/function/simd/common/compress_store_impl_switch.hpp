@@ -10,6 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/function/slide_left.hpp>
 #include <eve/function/count_true.hpp>
+#include <eve/function/unalign.hpp>
 
 #include <eve/detail/top_bits.hpp>
 
@@ -25,7 +26,7 @@ namespace eve::detail
   {
     constexpr bool like_aggregate = has_aggregated_abi_v<wide<T, N>> || has_aggregated_abi_v<wide<U, N>> || N() > 8;
 
-         if constexpr ( C::is_complete  && !C::is_inverted ) return as_raw_pointer(ptr);
+         if constexpr ( C::is_complete  && !C::is_inverted ) return unalign(ptr);
     else if constexpr ( like_aggregate && !C::is_complete )
     {
       return compress_store_impl_switch(ignore_none, v, mask && c.mask(as(mask)), ptr);
@@ -48,13 +49,13 @@ namespace eve::detail
       if constexpr ( N() == 1 )
       {
         eve::store(v, ptr);
-        return as_raw_pointer(ptr) + mmask;
+        return unalign(ptr) + mmask;
       }
       else if constexpr ( N() == 2 )
       {
         if (mmask == 2) v = eve::slide_left( v, eve::index<1> );
         eve::store(v, ptr);
-        T* res = as_raw_pointer(ptr);
+        T* res = unalign(ptr);
         res += mmask & 1;
         res += (mmask & 2) >> 1;
         return res;
@@ -81,7 +82,7 @@ namespace eve::detail
         }
         count += last_set ? 1 : 0;
         store(v, ptr);
-        return as_raw_pointer(ptr) + count;
+        return unalign(ptr) + count;
       }
       else if constexpr ( N() == 8 )
       {
@@ -120,7 +121,7 @@ namespace eve::detail
         }
 
         eve::store(v, ptr);
-        T* after_first = as_raw_pointer(ptr) + count1 + (last_set1 ? 1 : 0);
+        T* after_first = unalign(ptr) + count1 + (last_set1 ? 1 : 0);
 
         eve::store(v.slice(upper_), after_first);
         return after_first + count2 + (last_set2 ? 1 : 0);

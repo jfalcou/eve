@@ -9,7 +9,7 @@
 
 #include <eve/algo/concepts/detail.hpp>
 #include <eve/algo/detail/preprocess_range.hpp>
-#include <eve/algo/unalign.hpp>
+#include <eve/function/unalign.hpp>
 
 #include <concepts>
 
@@ -23,12 +23,12 @@ namespace eve::algo
   //!         std::contigious_iterator, eve::algo::iterator, aligned_ptr.
   //!         Defined as being totally_ordered, having +/- like an iterator
   //!         And `preprocess_range(eve::algo::traits{}, I, I)` should work.
-  //!         `eve::algo::unalign(I)` should be OK.
+  //!         `eve::unalign(I)` should be OK.
   //!
   //!         +/- with std::ptrdiff_t don't have to work for arbitrary N,
   //!         behaviour along the lines of `eve::aligned_ptr` is sufficient.
   //!
-  //!         result of `eve::algo::unalign(I)` should return an iterator that can
+  //!         result of `eve::unalign(I)` should return an iterator that can
   //!         represent any position.
   //!
   //!   **Required header:** `#include <eve/algo/concepts.hpp>`

@@ -51,8 +51,8 @@ struct reduce_ptr_test
 
   auto run(auto rng) const
   {
-    auto f = eve::algo::unalign(rng.begin());
-    auto l = eve::algo::unalign(rng.end());
+    auto f = eve::unalign(rng.begin());
+    auto l = eve::unalign(rng.end());
     auto expected = std::reduce(f, l, ini);
     auto res = alg(rng, ini);
 

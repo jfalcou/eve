@@ -36,20 +36,20 @@ struct swap_ranges_ptr_test
     auto r1 = get<0>(zipped_range);
     auto r2 = get<1>(zipped_range);
 
-    TTS_EXPECT(std::all_of(eve::algo::unalign(r1.begin()),
-                           eve::algo::unalign(r1.end()),
+    TTS_EXPECT(std::all_of(eve::unalign(r1.begin()),
+                           eve::unalign(r1.end()),
                            [](auto x) { return x == 0; }));
-    TTS_EXPECT(std::all_of(eve::algo::unalign(r2.begin()),
-                           eve::algo::unalign(r2.end()),
+    TTS_EXPECT(std::all_of(eve::unalign(r2.begin()),
+                           eve::unalign(r2.end()),
                            [](auto x) { return x == 1; }));
 
     alg(range_or_it1, range_or_it2);
 
-    TTS_EXPECT(std::all_of(eve::algo::unalign(r1.begin()),
-                           eve::algo::unalign(r1.end()),
+    TTS_EXPECT(std::all_of(eve::unalign(r1.begin()),
+                           eve::unalign(r1.end()),
                            [](auto x) { return x == 1; }));
-    TTS_EXPECT(std::all_of(eve::algo::unalign(r2.begin()),
-                           eve::algo::unalign(r2.end()),
+    TTS_EXPECT(std::all_of(eve::unalign(r2.begin()),
+                           eve::unalign(r2.end()),
                            [](auto x) { return x == 0; }));
 
     alg(range_or_it1, range_or_it2);

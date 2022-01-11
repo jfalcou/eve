@@ -11,7 +11,8 @@
 
 #include <eve/algo/as_range.hpp>
 #include <eve/algo/traits.hpp>
-#include <eve/algo/unalign.hpp>
+
+#include <eve/function/unalign.hpp>
 
 #include <algorithm>
 #include <vector>
@@ -34,8 +35,8 @@ namespace algo_test
 
     void run(auto rng) const
     {
-      auto* f = eve::algo::unalign(rng.begin());
-      auto* l = eve::algo::unalign(rng.end());
+      auto* f = eve::unalign(rng.begin());
+      auto* l = eve::unalign(rng.end());
 
       auto pred = [](auto x) { return x != 0; };
 

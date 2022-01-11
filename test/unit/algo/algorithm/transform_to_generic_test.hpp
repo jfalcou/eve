@@ -43,8 +43,8 @@ namespace algo_test {
       auto r1 = get<0>(zipped_range);
       auto r2 = get<1>(zipped_range);
 
-      auto r2f = eve::algo::unalign(r2.begin());
-      auto r2l = eve::algo::unalign(r2.end());
+      auto r2f = eve::unalign(r2.begin());
+      auto r2l = eve::unalign(r2.end());
 
       using U = eve::value_type_t<R2>;
 

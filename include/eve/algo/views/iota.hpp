@@ -11,9 +11,10 @@
 #include <eve/algo/iterator_helpers.hpp>
 #include <eve/algo/views/convert.hpp>
 
-#include <eve/function/read.hpp>
 #include <eve/function/load.hpp>
+#include <eve/function/read.hpp>
 #include <eve/function/replace.hpp>
+#include <eve/function/unalign.hpp>
 
 namespace eve::algo::views
 {
@@ -57,7 +58,11 @@ namespace eve::algo::views
       operator+=(i_);
     }
 
-    base_plus_offset_iterator unaligned() const { return *this; }
+    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::unalign_, base_plus_offset_iterator self )
+    {
+      return self;
+    }
+
     base_plus_offset_iterator previous_partially_aligned() const { return *this; }
     base_plus_offset_iterator next_partially_aligned()     const { return *this; }
 

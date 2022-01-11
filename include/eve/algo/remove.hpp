@@ -13,7 +13,6 @@
 #include <eve/algo/for_each_iteration.hpp>
 #include <eve/algo/preprocess_range.hpp>
 #include <eve/algo/traits.hpp>
-#include <eve/algo/unalign.hpp>
 
 #include <eve/function/compress_store.hpp>
 
@@ -57,7 +56,7 @@ namespace eve::algo
 
       auto iteration = algo::for_each_iteration(processed.traits(), processed.begin(), processed.end());
       auto out = iteration.base;
-      delegate<unaligned_t<decltype(out)>, P> d{out.unaligned(), p};
+      delegate<unaligned_t<decltype(out)>, P> d{unalign(out), p};
       iteration(d);
       return unalign(rng.begin()) + (d.out - processed.begin());
     }

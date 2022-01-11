@@ -11,6 +11,8 @@
 
 #include <eve/detail/kumi.hpp>
 
+#include <eve/function/unalign.hpp>
+
 namespace eve::detail
 {
   template<relative_conditional_expr C,
@@ -28,7 +30,7 @@ namespace eve::detail
     T* up_to = compress_store_impl(c, v, mask, buffer.begin());
     std::ptrdiff_t n = up_to - buffer.begin();
 
-    auto* out = as_raw_pointer(ptr) + c.offset(as(mask));
+    auto* out = unalign(ptr) + c.offset(as(mask));
 
     wide<T, N> compressed{aligned_ptr<T, N>{buffer.begin()}};
 

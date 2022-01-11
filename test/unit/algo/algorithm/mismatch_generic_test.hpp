@@ -9,7 +9,6 @@
 
 #include "unit/algo/algo_test.hpp"
 
-#include <eve/algo/unalign.hpp>
 #include <eve/algo/views/zip.hpp>
 
 #include <algorithm>
@@ -40,8 +39,8 @@ namespace algo_test
     void run(auto range1, auto range2)
     {
       auto zipped_range = eve::algo::views::zip(range1, range2);
-      auto zip_f = eve::algo::unalign(zipped_range.begin());
-      auto zip_l = eve::algo::unalign(zipped_range.end());
+      auto zip_f = eve::unalign(zipped_range.begin());
+      auto zip_l = eve::unalign(zipped_range.end());
 
       std::uniform_int_distribution<> dis{0, static_cast<int>(zip_l - zip_f)};
 

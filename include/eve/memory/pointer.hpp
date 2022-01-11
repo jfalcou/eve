@@ -81,13 +81,6 @@ namespace eve::detail
     static constexpr bool value = std::same_as<T,base>;
   };
 
-  template <typename T>
-  EVE_FORCEINLINE auto as_raw_pointer(T p)
-  {
-    if constexpr ( !std::is_pointer_v<T> ) return p.get();
-    else                                   return p;
-  }
-
   template <typename U, typename T, typename Lanes>
   EVE_FORCEINLINE auto ptr_cast(eve::aligned_ptr<T, Lanes> p)
   {
