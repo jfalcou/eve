@@ -7,28 +7,32 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/function/patterns.hpp>
-#include <eve/detail/function/swizzle.hpp>
 
 namespace eve
 {
   EVE_MAKE_CALLABLE(shuffle_, shuffle);
+}
 
-  namespace detail
+#include <eve/module/real/core/detail/basic_shuffle.hpp>
+#include <eve/module/real/core/detail/generic/find_optimized_shuffle_pattern.hpp>
+
+namespace eve::detail
+{
+  template<simd_value T, std::ptrdiff_t... I>
+  EVE_FORCEINLINE constexpr auto shuffle_(EVE_SUPPORTS(cpu_), T v, pattern_t<I...>) noexcept
   {
-    template<simd_value T, std::ptrdiff_t... I>
-    EVE_FORCEINLINE constexpr auto shuffle_(EVE_SUPPORTS(cpu_), T v, pattern_t<I...>) noexcept
-    requires(pattern_t<I...>{}.validate(T::size()))
-    {
-      constexpr auto swizzler = detail::find_optimized_pattern<T::size(),I...>();
-      return swizzler(v);
-    }
+    static_assert ( pattern_t<I...>{}.validate(T::size())
+                  , "[eve::shuffle] - Shuffle pattern is invalid. Checks its size or values."
+                  );
 
-    template<simd_value T, typename F>
-    EVE_FORCEINLINE constexpr auto shuffle_(EVE_SUPPORTS(cpu_), T v, as_pattern<F> p) noexcept
-    {
-      return shuffle(v, fix_pattern<T::size()>(p));
-    }
+    constexpr auto shuffler = detail::find_optimized_shuffle_pattern<T::size(),I...>();
+    return shuffler(v);
+  }
+
+  template<simd_value T, typename F>
+  EVE_FORCEINLINE constexpr auto shuffle_(EVE_SUPPORTS(cpu_), T v, as_pattern<F> p) noexcept
+  {
+    return shuffle(v, fix_pattern<T::size()>(p));
   }
 }
 

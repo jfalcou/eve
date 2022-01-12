@@ -12,27 +12,27 @@
 
 namespace eve
 {
-  EVE_REGISTER_CALLABLE(basic_swizzle_)
-  EVE_DECLARE_CALLABLE(basic_swizzle_, basic_swizzle)
+  EVE_REGISTER_CALLABLE(basic_shuffle_)
+  EVE_DECLARE_CALLABLE(basic_shuffle_, basic_shuffle)
 
   namespace detail
   {
-    EVE_ALIAS_CALLABLE(basic_swizzle_, basic_swizzle);
+    EVE_ALIAS_CALLABLE(basic_shuffle_, basic_shuffle);
   }
 
-  EVE_CALLABLE_API(basic_swizzle_, basic_swizzle)
+  EVE_CALLABLE_API(basic_shuffle_, basic_shuffle)
 }
 
-#include <eve/detail/function/simd/common/swizzle.hpp>
+#include <eve/module/real/core/detail/generic/basic_shuffle.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/detail/function/simd/x86/swizzle.hpp>
+#  include <eve/module/real/core/detail/simd/x86/basic_shuffle.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/detail/function/simd/ppc/swizzle.hpp>
+#  include <eve/module/real/core/detail/simd/ppc/basic_shuffle.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/detail/function/simd/arm/neon/swizzle.hpp>
+#  include <eve/module/real/core/detail/simd/arm/neon/basic_shuffle.hpp>
 #endif

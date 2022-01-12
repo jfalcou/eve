@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
+#include <eve/function/shuffle.hpp>
 
 namespace eve::detail
 {
@@ -123,7 +124,7 @@ namespace eve::detail
       else if constexpr( std::same_as<abi_t<T, N>,x86_512_>)
       {
         // Generates vperm + pand, good enough for now
-        return basic_swizzle(v, slide_right_pattern<Shift,N::value>);
+        return basic_shuffle(v, slide_right_pattern<Shift,N::value>);
       }
     }
   }

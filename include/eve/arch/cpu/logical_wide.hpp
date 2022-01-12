@@ -23,12 +23,9 @@
 #include <eve/detail/function/fill.hpp>
 #include <eve/detail/function/friends.hpp>
 #include <eve/detail/function/load.hpp>
-#include <eve/function/lookup.hpp>
 #include <eve/detail/function/make.hpp>
-#include <eve/detail/function/patterns.hpp>
 #include <eve/detail/function/slice.hpp>
 #include <eve/detail/function/subscript.hpp>
-#include <eve/detail/function/swizzle.hpp>
 #include <eve/traits/as_integer.hpp>
 
 #include <cstring>
@@ -239,78 +236,6 @@ namespace eve
     //! @brief Check if a wide contains 0 lanes
     static EVE_FORCEINLINE constexpr bool      empty()    noexcept { return false; }
 
-    //==============================================================================================
-    //! @brief Dynamic lookup via lane indexing
-    //!
-    //! Generate a new eve::wide which is an arbitrary shuffling of current eve::wide lanes.
-    //! The values of `idx` must be integer between 0 and `size()-1` or equal to eve::na_ to
-    //! indicate the value at this lane must be replaced by zero.
-    //!
-    //! Does not participate in overload resolution if `idx` is not an integral register.
-    //!
-    //! @param idx  eve::wide of integral indexes
-    //! @return     A eve::wide constructed as `wide{ get(idx.get(0)), ..., get(idx.get(size()-1))}`.
-    //==============================================================================================
-    template<typename Index>
-    EVE_FORCEINLINE auto operator[](wide<Index,Cardinal> const& idx) const noexcept
-    {
-      return lookup((*this),idx);
-    }
-
-    //==============================================================================================
-    //! @brief Static lookup via lane indexing
-    //!
-    //! Generate a new eve::logical which is an arbitrary shuffling of current eve::logical lanes.
-    //! `p' is an instance of eve::pattern_t constructed via the eve::pattern template
-    //! variable. Values appearing in the pattern must be between 0 and `size()-1` or equal
-    //! to eve::na_ to indicate the value at this lane must be replaced by zero or this operator
-    //! will not participate in overload resolution.
-    //!
-    //! Note that if the statically generated pattern matches a predefined @ref shuffling function
-    //! the corresponding optimized shuffling functions will be called.
-    //!
-    //! @param p  A eve::pattern defining a shuffling pattern
-    //! @return   A logical constructed as `logical{ get(I), ... }`.
-    //!
-    //! @see eve::pattern_t
-    //! @see eve::pattern
-    //==============================================================================================
-    template<std::ptrdiff_t... I>
-#if !defined (EVE_DOXYGEN_INVOKED)
-    EVE_FORCEINLINE auto operator[](pattern_t<I...>) const noexcept
-    requires(pattern_t<I...>{}.validate(Cardinal::value))
-#else
-    EVE_FORCEINLINE auto operator[](pattern_t<I...> p) const noexcept
-#endif
-    {
-      constexpr auto swizzler = detail::find_optimized_pattern<Cardinal::value,I...>();
-      return swizzler((*this));
-    }
-
-
-    //==============================================================================================
-    //! @brief Static lookup via procedural lane indexing
-    //!
-    //! Generate a new eve::logical which is an arbitrary shuffling of current eve::logical lanes.
-    //! `p' is an instance of eve::as_pattern instantiated with a `constexpr` lambda that will be
-    //! used to generate the pattern algorithmically.
-    //! Values returned by the lambda must be between 0 and `size()-1` or equal to eve::na_ to
-    //! indicate the value at this lane must be replaced by zero or this operator
-    //! will not participate in overload resolution.
-    //!
-    //! Note that if the statically generated pattern matches a pre-defined @ref shuffling function
-    //! the corresponding optimized shuffling functions will be called.
-    //!
-    //! @param p  A eve::as_pattern_t defined from a lambda function
-    //! @return   A logical constructed as `logical{ get(p(0,size())), ..., get(p(0,size()-1)) }`.
-    //!
-    //! @see eve::as_pattern
-    //==============================================================================================
-    template<typename F>
-    EVE_FORCEINLINE auto operator[](as_pattern<F> p) const noexcept
-    {
-      return (*this)[ fix_pattern<Cardinal::value>(p) ];
-    }
     //==============================================================================================
     //! @}
     //==============================================================================================

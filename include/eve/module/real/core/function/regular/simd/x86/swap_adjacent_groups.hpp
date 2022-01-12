@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
-#include <eve/detail/function/swizzle.hpp>
+#include <eve/module/real/core/detail/basic_shuffle.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/pattern.hpp>
 
@@ -177,8 +177,8 @@ namespace eve::detail
       }
       else  if constexpr( std::same_as<abi_t<T, N>,x86_512_> )
       {
-        // We have perfect swizzle so LET'S ROCK'N'ROLL
-        return basic_swizzle(v, swap_adjacent_groups_pattern<G,N::value> );
+        // We have perfect shuffle so LET'S ROCK'N'ROLL
+        return basic_shuffle(v, swap_adjacent_groups_pattern<G,N::value> );
       }
     }
   }

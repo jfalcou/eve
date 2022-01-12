@@ -21,6 +21,28 @@ namespace eve
                                               return (i+Shift) < c ? i+Shift : na_;
                                             }
                                           );
+
+  namespace detail
+  {
+    //==============================================================================================
+    // Classify a pattern as a slide_left
+    template<std::ptrdiff_t... I> inline constexpr std::ptrdiff_t is_slide_left = []()
+    {
+      constexpr std::ptrdiff_t card   = sizeof...(I);
+      std::array<std::ptrdiff_t,card> ref = {I...};
+
+      std::ptrdiff_t found = 0;
+      for(std::ptrdiff_t n=1;n<card;++n)
+      {
+        std::array<std::ptrdiff_t,card> cur;
+        for(std::ptrdiff_t i=0;i<card;i++) cur[i] = (i+n < card) ? i+n : -1;
+
+        if(ref == cur) found = n;
+      }
+
+      return found;
+    }();
+  }
 }
 
 #include <eve/module/real/core/function/regular/generic/slide_left.hpp>

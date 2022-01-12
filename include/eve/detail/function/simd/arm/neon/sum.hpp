@@ -9,6 +9,7 @@
 
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
+#include <eve/function/slide_right.hpp>
 
 namespace eve::detail
 {
