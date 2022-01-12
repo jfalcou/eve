@@ -12,7 +12,6 @@
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/convert.hpp>
-#include <eve/function/shuffle.hpp>
 #include <eve/pattern.hpp>
 
 namespace eve::detail
@@ -25,7 +24,7 @@ namespace eve::detail
     if constexpr( std::is_signed_v<I> )
     {
       using utype = wide<make_integer_t<sizeof(I), unsigned>, N>;
-      return shuffle(a,bit_cast(idx, as<utype>()));
+      return lookup(a,bit_cast(idx, as<utype>()));
     }
     else
     {
