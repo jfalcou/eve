@@ -17,7 +17,7 @@
 #include <eve/function/is_gez.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/saturated.hpp>
-#include <eve/function/saturate.hpp>
+#include <eve/function/saturated/convert.hpp>
 #include <eve/function/all.hpp>
 
 namespace eve::detail
@@ -48,7 +48,7 @@ namespace eve::detail
         }
         else
         {
-          return convert(saturate(ceil(float64(a) / float64(b)), as<elt_t>(), as<elt_t>()));
+          return saturated(convert)(ceil(float64(a) / float64(b)), as<elt_t>());
         }
       }
       else if constexpr( unsigned_value<T> )

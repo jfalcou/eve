@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/arg.hpp>
-#include <eve/module/arithmetic/pedantic/impl/arg.hpp>
+#include <eve/module/math/regular/arg.hpp>
+#include <eve/module/math/pedantic/impl/arg.hpp>

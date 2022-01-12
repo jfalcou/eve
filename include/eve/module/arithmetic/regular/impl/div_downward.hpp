@@ -48,7 +48,7 @@ namespace eve::detail
         }
         else
         {
-          return convert(saturate(floor(float64(a) / float64(b)), as<elt_t>(), as<elt_t>()));
+          return saturated(convert)(floor(float64(a) / float64(b)), as<elt_t>());
         }
       }
       else if constexpr( unsigned_value<T> )

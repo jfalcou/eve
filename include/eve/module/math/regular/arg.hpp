@@ -81,11 +81,11 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/arg.cpp}
+  //! @godbolt{doc/math/arg.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(arg_, arg);
 }
 
-#include <eve/module/arithmetic/regular/impl/arg.hpp>
+#include <eve/module/math/regular/impl/arg.hpp>
