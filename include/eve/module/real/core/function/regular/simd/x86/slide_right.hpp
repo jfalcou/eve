@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
+#include <eve/function/shuffle.hpp>
 
 namespace eve::detail
 {

@@ -33,7 +33,7 @@ namespace eve::detail
                                       ) noexcept
       requires x86_abi<abi_t<T, N>>
   {
-    if constexpr( current_api >= avx512 ) return to_logical((v.mask())[p]);
+    if constexpr( current_api >= avx512 ) return to_logical( shuffle(v.mask(),p));
     else                                  return basic_shuffle_(EVE_RETARGET(cpu_),v,p);
   }
 
@@ -154,8 +154,8 @@ namespace eve::detail
       if constexpr(width_out <= 16)       return basic_shuffle_(EVE_RETARGET(cpu_),v,q);
       else if constexpr(width_out == 32)
       {
-              if constexpr( q.strictly_under(cd/2) )  return v.slice(lower_)[q];
-        else  if constexpr( q.over(cd/2) )            return v.slice(upper_)[slide_pattern<cd/2,sz>(q)];
+              if constexpr( q.strictly_under(cd/2) )  return shuffle(v.slice(lower_),q);
+        else  if constexpr( q.over(cd/2) )            return shuffle(v.slice(upper_),slide_pattern<cd/2,sz>(q));
         /// TODO: optimize using SSSE3 + binary shuffle
         else                             return basic_shuffle_(EVE_RETARGET(cpu_),v,q);
       }
@@ -178,8 +178,8 @@ namespace eve::detail
     {
       if constexpr(width_out <= 16)
       {
-              if constexpr( q.strictly_under(cd/2) )  return v.slice(lower_)[ q ];
-        else  if constexpr( q.over(cd/2) )            return v.slice(upper_)[ slide_pattern<cd/2,sz>(q) ];
+              if constexpr( q.strictly_under(cd/2) )  return shuffle(v.slice(lower_),q);
+        else  if constexpr( q.over(cd/2) )            return shuffle(v.slice(upper_),slide_pattern<cd/2,sz>(q));
         /// TODO: optimize using SSSE3 + binary shuffle
         else                              return basic_shuffle_(EVE_RETARGET(cpu_),v,q);
       }
