@@ -68,7 +68,9 @@
 #include <eve/module/math/regular/pow_abs.hpp>
 #include <eve/module/math/regular/pow.hpp>
 #include <eve/module/math/regular/powm1.hpp>
+#include <eve/module/math/regular/quadrant.hpp>
 #include <eve/module/math/regular/radindeg.hpp>
+#include <eve/module/math/regular/radinpi.hpp>
 #include <eve/module/math/regular/rem_pio2.hpp>
 #include <eve/module/math/regular/rempio2.hpp>
 #include <eve/module/math/regular/rsqrt.hpp>

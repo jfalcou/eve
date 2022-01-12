@@ -76,8 +76,6 @@
 #include <eve/module/arithmetic/regular/negminabs.hpp>
 #include <eve/module/arithmetic/regular/oneminus.hpp>
 #include <eve/module/arithmetic/regular/plus.hpp>
-#include <eve/module/arithmetic/regular/quadrant.hpp>
-#include <eve/module/arithmetic/regular/radinpi.hpp>
 #include <eve/module/arithmetic/regular/rat.hpp>
 #include <eve/module/arithmetic/regular/rec.hpp>
 #include <eve/module/arithmetic/regular/refine_rec.hpp>

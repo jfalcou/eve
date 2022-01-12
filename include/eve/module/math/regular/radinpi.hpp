@@ -14,5 +14,4 @@ namespace eve
   EVE_MAKE_CALLABLE(radinpi_, radinpi);
 }
 
-#include <eve/module/arithmetic/regular/impl/radinpi.hpp>
-
+#include <eve/module/math/regular/impl/radinpi.hpp>
