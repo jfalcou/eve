@@ -48,13 +48,13 @@ namespace eve
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  if constexpr(scalar_value< T >)
   //!  {
-  //!    return x ? UV(x) : UV(y);
+  //!    return x ? UV(y) : UV(z);
   //!  }
   //!  else if constexpr(scalar_value< U > && scalar_value< V >)
   //!  {
   //!    for(int i=0; i < cardinal_v< T >; ++i)
   //!    {
-  //!      r[i] = (xx[i]) ? y : z;
+  //!      r[i] = xx[i] ? y : z;
   //!    }
   //!  }
   //!  else
@@ -64,7 +64,7 @@ namespace eve
   //!    UV r;
   //!    for(int i=0; i<cardinal_v< UV >; ++i)
   //!    {
-  //!      r[i] = (xx[i]) ? y[i] : z[i];
+  //!      r[i] = xx[i] ? y[i] : z[i];
   //!    }
   //!  }
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

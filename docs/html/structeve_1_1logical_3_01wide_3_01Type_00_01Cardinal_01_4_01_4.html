@@ -213,6 +213,19 @@ Static Public Member Functions</h2></td></tr>
 static constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>alignment</b> () noexcept</td></tr>
 <tr class="memdesc:a618532fc6332155edaf4aca72b5b93aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the alignment expected to be used to store a <a class="el" href="structeve_1_1logical.html" title="Wrapper for SIMD compatible logical types.">eve::logical</a>. <br /></td></tr>
 <tr class="separator:a618532fc6332155edaf4aca72b5b93aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Indexing and reordering</div></td></tr>
+<tr class="memitem:ad4d0897d94f1786e153dcd05ab059be5"><td class="memItemLeft" align="right" valign="top"><a id="ad4d0897d94f1786e153dcd05ab059be5" name="ad4d0897d94f1786e153dcd05ab059be5"></a>
+static constexpr <a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ad6cf7dc0caa30cc3860f331f683f6c10">size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>size</b> () noexcept</td></tr>
+<tr class="memdesc:ad4d0897d94f1786e153dcd05ab059be5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the wide in number of lanes. <br /></td></tr>
+<tr class="separator:ad4d0897d94f1786e153dcd05ab059be5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a626f66c1c0e65886dda45ba50cac4439"><td class="memItemLeft" align="right" valign="top"><a id="a626f66c1c0e65886dda45ba50cac4439" name="a626f66c1c0e65886dda45ba50cac4439"></a>
+static constexpr <a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ad6cf7dc0caa30cc3860f331f683f6c10">size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>max_size</b> () noexcept</td></tr>
+<tr class="memdesc:a626f66c1c0e65886dda45ba50cac4439"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximal number of lanes for a given wide. <br /></td></tr>
+<tr class="separator:a626f66c1c0e65886dda45ba50cac4439"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbbe1a87460349d94895917816d5577a"><td class="memItemLeft" align="right" valign="top"><a id="abbbe1a87460349d94895917816d5577a" name="abbbe1a87460349d94895917816d5577a"></a>
+static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>empty</b> () noexcept</td></tr>
+<tr class="memdesc:abbbe1a87460349d94895917816d5577a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a wide contains 0 lanes. <br /></td></tr>
+<tr class="separator:abbbe1a87460349d94895917816d5577a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -386,32 +399,6 @@ template&lt;scalar_value S&gt; </td></tr>
 std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;&lt;</b> (std::ostream &amp;os, <a class="el" href="structeve_1_1logical.html">logical</a> const &amp;p)</td></tr>
 <tr class="memdesc:a517ff9e640d1ead16cc41eecdce7fd5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> into a output stream. <br /></td></tr>
 <tr class="separator:a517ff9e640d1ead16cc41eecdce7fd5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader">Indexing and reordering</h2></td></tr>
-<tr class="memitem:ad4d0897d94f1786e153dcd05ab059be5"><td class="memItemLeft" align="right" valign="top"><a id="ad4d0897d94f1786e153dcd05ab059be5" name="ad4d0897d94f1786e153dcd05ab059be5"></a>
-static constexpr <a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ad6cf7dc0caa30cc3860f331f683f6c10">size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>size</b> () noexcept</td></tr>
-<tr class="memdesc:ad4d0897d94f1786e153dcd05ab059be5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the wide in number of lanes. <br /></td></tr>
-<tr class="separator:ad4d0897d94f1786e153dcd05ab059be5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a626f66c1c0e65886dda45ba50cac4439"><td class="memItemLeft" align="right" valign="top"><a id="a626f66c1c0e65886dda45ba50cac4439" name="a626f66c1c0e65886dda45ba50cac4439"></a>
-static constexpr <a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ad6cf7dc0caa30cc3860f331f683f6c10">size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>max_size</b> () noexcept</td></tr>
-<tr class="memdesc:a626f66c1c0e65886dda45ba50cac4439"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximal number of lanes for a given wide. <br /></td></tr>
-<tr class="separator:a626f66c1c0e65886dda45ba50cac4439"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abbbe1a87460349d94895917816d5577a"><td class="memItemLeft" align="right" valign="top"><a id="abbbe1a87460349d94895917816d5577a" name="abbbe1a87460349d94895917816d5577a"></a>
-static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>empty</b> () noexcept</td></tr>
-<tr class="memdesc:abbbe1a87460349d94895917816d5577a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a wide contains 0 lanes. <br /></td></tr>
-<tr class="separator:abbbe1a87460349d94895917816d5577a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a76f1ddeec815e55b6d52d0842953f8d9"><td class="memTemplParams" colspan="2">template&lt;typename Index &gt; </td></tr>
-<tr class="memitem:a76f1ddeec815e55b6d52d0842953f8d9"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4_a76f1ddeec815e55b6d52d0842953f8d9.html#a76f1ddeec815e55b6d52d0842953f8d9">operator[]</a> (<a class="el" href="structeve_1_1wide.html">wide</a>&lt; Index, Cardinal &gt; const &amp;idx) const noexcept</td></tr>
-<tr class="memdesc:a76f1ddeec815e55b6d52d0842953f8d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dynamic lookup via lane indexing.  <a href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4_a76f1ddeec815e55b6d52d0842953f8d9.html#a76f1ddeec815e55b6d52d0842953f8d9">More...</a><br /></td></tr>
-<tr class="separator:a76f1ddeec815e55b6d52d0842953f8d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8bd0437f26de008df000dc33588253ac"><td class="memTemplParams" colspan="2">template&lt;std::ptrdiff_t... I&gt; </td></tr>
-<tr class="memitem:a8bd0437f26de008df000dc33588253ac"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4_a8bd0437f26de008df000dc33588253ac.html#a8bd0437f26de008df000dc33588253ac">operator[]</a> (<a class="el" href="structeve_1_1pattern__t.html">pattern_t</a>&lt; I... &gt; p) const noexcept</td></tr>
-<tr class="memdesc:a8bd0437f26de008df000dc33588253ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static lookup via lane indexing.  <a href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4_a8bd0437f26de008df000dc33588253ac.html#a8bd0437f26de008df000dc33588253ac">More...</a><br /></td></tr>
-<tr class="separator:a8bd0437f26de008df000dc33588253ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9c1b736b8def0af8a8f928e7cf016356"><td class="memTemplParams" colspan="2">template&lt;typename F &gt; </td></tr>
-<tr class="memitem:a9c1b736b8def0af8a8f928e7cf016356"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4_a9c1b736b8def0af8a8f928e7cf016356.html#a9c1b736b8def0af8a8f928e7cf016356">operator[]</a> (<a class="el" href="structeve_1_1as__pattern.html">as_pattern</a>&lt; F &gt; p) const noexcept</td></tr>
-<tr class="memdesc:a9c1b736b8def0af8a8f928e7cf016356"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static lookup via procedural lane indexing.  <a href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4_a9c1b736b8def0af8a8f928e7cf016356.html#a9c1b736b8def0af8a8f928e7cf016356">More...</a><br /></td></tr>
-<tr class="separator:a9c1b736b8def0af8a8f928e7cf016356"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.20-->

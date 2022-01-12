@@ -26,7 +26,7 @@ var searchData=
   ['invpi_23',['invpi',['../group__constant_ga95e24f644925e19a6b356fa1c28f9799.html#ga95e24f644925e19a6b356fa1c28f9799',1,'eve']]],
   ['invsqrt_5f2_24',['invsqrt_2',['../group__constant_ga49667d76f54c0c7753c703215266975f.html#ga49667d76f54c0c7753c703215266975f',1,'eve']]],
   ['invtrigonometric_25',['Invtrigonometric',['../group__invtrigonometric.html',1,'']]],
-  ['iota_26',['iota',['../group__views_gac775cd27d2cf90ff76710e45c8e5e1d5.html#gac775cd27d2cf90ff76710e45c8e5e1d5',1,'eve::algo::views::iota()'],['../group__algo_gaca4936fc6b0b70ef06e72b118dce7c7a.html#gaca4936fc6b0b70ef06e72b118dce7c7a',1,'eve::algo::iota()']]],
+  ['iota_26',['iota',['../group__algo_gaca4936fc6b0b70ef06e72b118dce7c7a.html#gaca4936fc6b0b70ef06e72b118dce7c7a',1,'eve::algo::iota()'],['../group__views_gac775cd27d2cf90ff76710e45c8e5e1d5.html#gac775cd27d2cf90ff76710e45c8e5e1d5',1,'eve::algo::views::iota()']]],
   ['iota_5fscaled_27',['iota_scaled',['../group__views_ga257d82230fde79fc057177a7eb1ab543.html#ga257d82230fde79fc057177a7eb1ab543',1,'eve::algo::views']]],
   ['is_5faligned_28',['is_aligned',['../group__memory_gad05ab928f3e9aa972a7e7146f76cce13.html#gad05ab928f3e9aa972a7e7146f76cce13',1,'eve::is_aligned(aligned_ptr&lt; T, Other &gt; const &amp;ptr) noexcept'],['../group__memory_gab1add731db6f65a080c9ec8b4a125858.html#gab1add731db6f65a080c9ec8b4a125858',1,'eve::is_aligned(T v) noexcept'],['../group__memory_ga25228d751afbdd3a2c7d09aea5f2ae74.html#ga25228d751afbdd3a2c7d09aea5f2ae74',1,'eve::is_aligned(T *ptr) noexcept'],['../group__memory_ga3c06e236e6195d1a36a43e0fcc7c5eca.html#ga3c06e236e6195d1a36a43e0fcc7c5eca',1,'eve::is_aligned(T *ptr, Lanes lanes) noexcept']]],
   ['is_5fdenormal_29',['is_denormal',['../group__predicates_ga6e7a64c2a6bf2fc626451e81cc749c2a.html#ga6e7a64c2a6bf2fc626451e81cc749c2a',1,'eve']]],
@@ -73,5 +73,5 @@ var searchData=
   ['is_5fpow2_70',['is_pow2',['../group__bits_ga97322285148609262baf774000978306.html#ga97322285148609262baf774000978306',1,'eve']]],
   ['is_5freal_71',['is_real',['../group__predicates_ga38314db2a1da99c8bdec146b4ed56c9b.html#ga38314db2a1da99c8bdec146b4ed56c9b',1,'eve']]],
   ['is_5funordered_72',['is_unordered',['../group__predicates_ga2225cc46f46e4f1d12681e8c949e1413.html#ga2225cc46f46e4f1d12681e8c949e1413',1,'eve']]],
-  ['iterator_5fcardinal_73',['iterator_cardinal',['../structeve_1_1algo_1_1iterator__cardinal.html',1,'eve::algo']]]
+  ['iterator_5fcardinal_5ft_73',['iterator_cardinal_t',['../group__tratis_ga1eb720c70448889dec28d1d72973a980.html#ga1eb720c70448889dec28d1d72973a980',1,'eve']]]
 ];

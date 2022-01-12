@@ -140,9 +140,9 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#namespaces">Namespaces</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#concepts">Concepts</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
@@ -156,11 +156,6 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 <div class="textblock"><p >Main EVE namespace. </p>
 <p >EVE - Expressive Vector Engine Copyright : EVE Contributors &amp; Maintainers SPDX-License-Identifier: MIT </p>
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:namespaceeve_1_1algo"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceeve_1_1algo.html">algo</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1abi.html">abi</a></td></tr>
@@ -326,6 +321,24 @@ Concepts</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1like.html">like</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies semantic compatibility between wrapper/wrapped types. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga33eaeb7216e54812993e44457de2c34c"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ga33eaeb7216e54812993e44457de2c34c"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__memory_ga33eaeb7216e54812993e44457de2c34c.html#ga33eaeb7216e54812993e44457de2c34c">unaligned_t</a> = decltype(<a class="el" href="group__memory_gaecf2b55e1403fdb96d6128ede314779a.html#gaecf2b55e1403fdb96d6128ede314779a">unalign</a>(std::declval&lt; T &gt;()))</td></tr>
+<tr class="memdesc:ga33eaeb7216e54812993e44457de2c34c"><td class="mdescLeft">&#160;</td><td class="mdescRight"><b>Required header:</b> <code>#include &lt;eve/function/unalign.hpp&gt;</code>  <a href="group__memory_ga33eaeb7216e54812993e44457de2c34c.html#ga33eaeb7216e54812993e44457de2c34c">More...</a><br /></td></tr>
+<tr class="separator:ga33eaeb7216e54812993e44457de2c34c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1eb720c70448889dec28d1d72973a980"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ga1eb720c70448889dec28d1d72973a980"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__tratis_ga1eb720c70448889dec28d1d72973a980.html#ga1eb720c70448889dec28d1d72973a980">iterator_cardinal_t</a> = decltype(detail::iterator_cardinal_impl&lt; T &gt;())</td></tr>
+<tr class="memdesc:ga1eb720c70448889dec28d1d72973a980"><td class="mdescLeft">&#160;</td><td class="mdescRight">A meta-function that returns a cardinal for a relaxed iterator/range. If T defines a nested static function <code>iterator_cardinal()</code> (which should return <a class="el" href="structeve_1_1fixed.html" title="SIMD register cardinal type.">eve::fixed</a>)  <a href="group__tratis_ga1eb720c70448889dec28d1d72973a980.html#ga1eb720c70448889dec28d1d72973a980">More...</a><br /></td></tr>
+<tr class="separator:ga1eb720c70448889dec28d1d72973a980"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf9ce08c683bb04a9a96e99ddd3edaee2"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:gaf9ce08c683bb04a9a96e99ddd3edaee2"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__tratis_gaf9ce08c683bb04a9a96e99ddd3edaee2.html#gaf9ce08c683bb04a9a96e99ddd3edaee2">value_type_t</a> = typename decltype(detail::value_type_impl&lt; T &gt;())::type</td></tr>
+<tr class="memdesc:gaf9ce08c683bb04a9a96e99ddd3edaee2"><td class="mdescLeft">&#160;</td><td class="mdescRight">A meta function for getting an associated value_type for a relaxed iterator/range.  <a href="group__tratis_gaf9ce08c683bb04a9a96e99ddd3edaee2.html#gaf9ce08c683bb04a9a96e99ddd3edaee2">More...</a><br /></td></tr>
+<tr class="separator:gaf9ce08c683bb04a9a96e99ddd3edaee2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga51d0901c39a489a5d6e0449339291c57"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ga51d0901c39a489a5d6e0449339291c57"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__tratis_ga51d0901c39a489a5d6e0449339291c57.html#ga51d0901c39a489a5d6e0449339291c57">wide_value_type_t</a> = as_wide_t&lt; <a class="el" href="group__tratis_gaf9ce08c683bb04a9a96e99ddd3edaee2.html#gaf9ce08c683bb04a9a96e99ddd3edaee2">value_type_t</a>&lt; T &gt;, <a class="el" href="group__tratis_ga1eb720c70448889dec28d1d72973a980.html#ga1eb720c70448889dec28d1d72973a980">iterator_cardinal_t</a>&lt; T &gt; &gt;</td></tr>
+<tr class="separator:ga51d0901c39a489a5d6e0449339291c57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -1095,6 +1108,9 @@ constexpr <a class="el" href="structeve_1_1ignore__none__.html">ignore_none_</a>
 <tr class="memitem:gafde17ae255fef25fc9015dabc599c701"><td class="memItemLeft" align="right" valign="top">constexpr callable_trunc_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rounding_gafde17ae255fef25fc9015dabc599c701.html#gafde17ae255fef25fc9015dabc599c701">trunc</a> = {}</td></tr>
 <tr class="memdesc:gafde17ae255fef25fc9015dabc599c701"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the trunc operation.  <a href="group__rounding_gafde17ae255fef25fc9015dabc599c701.html#gafde17ae255fef25fc9015dabc599c701">More...</a><br /></td></tr>
 <tr class="separator:gafde17ae255fef25fc9015dabc599c701"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaecf2b55e1403fdb96d6128ede314779a"><td class="memItemLeft" align="right" valign="top">constexpr callable_unalign_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__memory_gaecf2b55e1403fdb96d6128ede314779a.html#gaecf2b55e1403fdb96d6128ede314779a">unalign</a> = {}</td></tr>
+<tr class="memdesc:gaecf2b55e1403fdb96d6128ede314779a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object for computing an unaligned version of a relaxed iterator.  <a href="group__memory_gaecf2b55e1403fdb96d6128ede314779a.html#gaecf2b55e1403fdb96d6128ede314779a">More...</a><br /></td></tr>
+<tr class="separator:gaecf2b55e1403fdb96d6128ede314779a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3914bc9a9604e1c20021fdb28557141d"><td class="memItemLeft" align="right" valign="top">constexpr callable_write_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__memory_ga3914bc9a9604e1c20021fdb28557141d.html#ga3914bc9a9604e1c20021fdb28557141d">write</a> = {}</td></tr>
 <tr class="memdesc:ga3914bc9a9604e1c20021fdb28557141d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object writing single value from memory.  <a href="group__memory_ga3914bc9a9604e1c20021fdb28557141d.html#ga3914bc9a9604e1c20021fdb28557141d">More...</a><br /></td></tr>
 <tr class="separator:ga3914bc9a9604e1c20021fdb28557141d"><td class="memSeparator" colspan="2">&#160;</td></tr>
