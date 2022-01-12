@@ -22,7 +22,6 @@
 #include <eve/module/arithmetic/regular/dec.hpp>
 #include <eve/module/arithmetic/regular/deginrad.hpp>
 #include <eve/module/arithmetic/regular/dist.hpp>
-#include <eve/module/arithmetic/regular/div_180.hpp>
 #include <eve/module/arithmetic/regular/div.hpp>
 #include <eve/module/arithmetic/regular/epsilon.hpp>
 #include <eve/module/arithmetic/regular/fam.hpp>

@@ -46,6 +46,7 @@
 #include <eve/module/math/regular/cscd.hpp>
 #include <eve/module/math/regular/csch.hpp>
 #include <eve/module/math/regular/cscpi.hpp>
+#include <eve/module/math/regular/div_180.cpp>
 #include <eve/module/math/regular/exp10.hpp>
 #include <eve/module/math/regular/exp2.hpp>
 #include <eve/module/math/regular/exp.hpp>
