@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/radindeg.hpp>
+#include <eve/module/math/regular/radindeg.hpp>

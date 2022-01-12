@@ -20,7 +20,6 @@
 #include <eve/module/arithmetic/regular/copysign.hpp>
 #include <eve/module/arithmetic/regular/csc.hpp>
 #include <eve/module/arithmetic/regular/dec.hpp>
-#include <eve/module/arithmetic/regular/deginrad.hpp>
 #include <eve/module/arithmetic/regular/dist.hpp>
 #include <eve/module/arithmetic/regular/div.hpp>
 #include <eve/module/arithmetic/regular/epsilon.hpp>
@@ -78,7 +77,6 @@
 #include <eve/module/arithmetic/regular/oneminus.hpp>
 #include <eve/module/arithmetic/regular/plus.hpp>
 #include <eve/module/arithmetic/regular/quadrant.hpp>
-#include <eve/module/arithmetic/regular/radindeg.hpp>
 #include <eve/module/arithmetic/regular/radinpi.hpp>
 #include <eve/module/arithmetic/regular/rat.hpp>
 #include <eve/module/arithmetic/regular/rec.hpp>

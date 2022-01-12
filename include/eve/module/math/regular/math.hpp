@@ -46,7 +46,8 @@
 #include <eve/module/math/regular/cscd.hpp>
 #include <eve/module/math/regular/csch.hpp>
 #include <eve/module/math/regular/cscpi.hpp>
-#include <eve/module/math/regular/div_180.cpp>
+#include <eve/module/math/regular/deginrad.hpp>
+#include <eve/module/math/regular/div_180.hpp>
 #include <eve/module/math/regular/exp10.hpp>
 #include <eve/module/math/regular/exp2.hpp>
 #include <eve/module/math/regular/exp.hpp>
@@ -67,6 +68,7 @@
 #include <eve/module/math/regular/pow_abs.hpp>
 #include <eve/module/math/regular/pow.hpp>
 #include <eve/module/math/regular/powm1.hpp>
+#include <eve/module/math/regular/radindeg.hpp>
 #include <eve/module/math/regular/rem_pio2.hpp>
 #include <eve/module/math/regular/rempio2.hpp>
 #include <eve/module/math/regular/rsqrt.hpp>

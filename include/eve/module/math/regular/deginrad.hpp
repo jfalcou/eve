@@ -11,8 +11,7 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(radindeg_, radindeg);
+  EVE_MAKE_CALLABLE(deginrad_, deginrad);
 }
 
-#include <eve/module/arithmetic/regular/impl/radindeg.hpp>
-
+#include <eve/module/math/regular/impl/deginrad.hpp>
