@@ -19,6 +19,7 @@
 #include <eve/module/math/diff/acsch.hpp>
 #include <eve/module/math/diff/acsc.hpp>
 #include <eve/module/math/diff/acscpi.hpp>
+#include <eve/module/math/diff/arg.hpp>
 #include <eve/module/math/diff/asecd.hpp>
 #include <eve/module/math/diff/asech.hpp>
 #include <eve/module/math/diff/asec.hpp>
