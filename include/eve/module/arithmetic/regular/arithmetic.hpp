@@ -81,7 +81,6 @@
 #include <eve/module/arithmetic/regular/remainder.hpp>
 #include <eve/module/arithmetic/regular/remdiv.hpp>
 #include <eve/module/arithmetic/regular/rem.hpp>
-#include <eve/module/arithmetic/regular/reverse.hpp>
 #include <eve/module/arithmetic/regular/rotl.hpp>
 #include <eve/module/arithmetic/regular/rotr.hpp>
 #include <eve/module/arithmetic/regular/round.hpp>
