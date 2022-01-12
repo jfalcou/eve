@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/deginrad.hpp>
+#include <eve/module/math/regular/deginrad.hpp>
