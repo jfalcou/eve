@@ -20,8 +20,11 @@ namespace eve::detail
 {
   template<simd_value T, std::ptrdiff_t... I>
   EVE_FORCEINLINE constexpr auto shuffle_(EVE_SUPPORTS(cpu_), T v, pattern_t<I...>) noexcept
-  requires(pattern_t<I...>{}.validate(T::size()))
   {
+    static_assert ( pattern_t<I...>{}.validate(T::size())
+                  , "[eve::shuffle] - Shuffle pattern is invalid. Checks its size or values."
+                  );
+
     constexpr auto shuffler = detail::find_optimized_shuffle_pattern<T::size(),I...>();
     return shuffler(v);
   }
