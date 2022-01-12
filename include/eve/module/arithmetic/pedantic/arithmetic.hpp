@@ -9,7 +9,6 @@
 
 #include <eve/module/arithmetic/pedantic/absmax.hpp>
 #include <eve/module/arithmetic/pedantic/absmin.hpp>
-#include <eve/module/arithmetic/pedantic/arg.hpp>
 #include <eve/module/arithmetic/pedantic/fam.hpp>
 #include <eve/module/arithmetic/pedantic/fanm.hpp>
 #include <eve/module/arithmetic/pedantic/fma.hpp>

@@ -11,7 +11,6 @@
 #include <eve/module/arithmetic/diff/absmax.hpp>
 #include <eve/module/arithmetic/diff/absmin.hpp>
 #include <eve/module/arithmetic/diff/add.hpp>
-#include <eve/module/arithmetic/diff/arg.hpp>
 #include <eve/module/arithmetic/diff/average.hpp>
 #include <eve/module/arithmetic/diff/ceil.hpp>
 #include <eve/module/arithmetic/diff/clamp.hpp>
