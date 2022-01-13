@@ -21,8 +21,6 @@
 namespace eve
 {
   inline constexpr bool supports_fma3               = spy::supports::fma_;
-  inline constexpr bool supports_fma4               = spy::supports::fma4_;
-  inline constexpr bool supports_xop                = spy::supports::xop_;
   inline constexpr bool supports_avx512bw           = spy::supports::avx512::bw_;
   inline constexpr bool supports_avx512cd           = spy::supports::avx512::cd_;
   inline constexpr bool supports_avx512dq           = spy::supports::avx512::dq_;

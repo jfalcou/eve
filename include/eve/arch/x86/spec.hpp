@@ -77,21 +77,3 @@ namespace eve
 #if defined(SPY_SIMD_SUPPORTS_FMA)
 #  include <immintrin.h>
 #endif
-
-#if defined(SPY_SIMD_SUPPORTS_FMA4)
-#  if defined(SPY_COMPILER_IS_MSVC)
-#    include <intrin.h>
-#  else
-#    include <x86intrin.h>
-#    include <fma4intrin.h>
-#  endif
-#endif
-
-#if defined(SPY_SIMD_SUPPORTS_XOP)
-#  if defined(SPY_COMPILER_IS_MSVC)
-#    include <intrin.h>
-#  else
-#    include <x86intrin.h>
-#    include <xopintrin.h>
-#  endif
-#endif

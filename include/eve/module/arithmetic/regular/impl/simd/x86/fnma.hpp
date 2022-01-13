@@ -28,14 +28,12 @@ namespace eve::detail
     if constexpr ( std::is_same_v<T, double> )
     {
            if constexpr ( std::same_as<abi_t<T, N>, x86_512_>                  ) return _mm512_fnmadd_pd(a, b, c);
-      else if constexpr ( std::same_as<abi_t<T, N>, x86_256_> && supports_fma4 ) return _mm256_fnmadd_pd(a, b, c);
       else if constexpr ( std::same_as<abi_t<T, N>, x86_128_> && supports_fma3 ) return _mm_fnmadd_pd   (a, b, c);
       else                                                                       return fnma_           (EVE_RETARGET(cpu_), a, b, c);
     }
     else
     {
            if constexpr ( std::same_as<abi_t<T, N>, x86_512_>                  ) return _mm512_fnmadd_ps(a, b, c);
-      else if constexpr ( std::same_as<abi_t<T, N>, x86_256_> && supports_fma4 ) return _mm256_fnmadd_ps(a, b, c);
       else if constexpr ( std::same_as<abi_t<T, N>, x86_128_> && supports_fma3 ) return _mm_fnmadd_ps   (a, b, c);
       else                                                                       return fnma_           (EVE_RETARGET(cpu_), a, b, c);
     }

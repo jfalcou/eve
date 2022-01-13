@@ -105,10 +105,6 @@ namespace eve
 #include <eve/arch.hpp>
 #include <eve/module/arithmetic/regular/impl/rshr.hpp>
 
-#if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/x86/rshr.hpp>
-#endif
-
 #if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/module/arithmetic/regular/impl/simd/arm/neon/rshr.hpp>
 #endif

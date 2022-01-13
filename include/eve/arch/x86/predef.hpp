@@ -25,14 +25,6 @@
 #    define __SSE4_2__
 #  endif
 
-#  if defined(EVE_ASSUME_XOP)
-#    define __XOP__
-#  endif
-
-#  if defined(EVE_ASSUME_FMA4)
-#    define __FMA4__
-#  endif
-
 #  if defined(EVE_ASSUME_FMA3)
 #    define __FMA3__
 #  endif

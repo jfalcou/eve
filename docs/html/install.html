@@ -105,8 +105,8 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
                onmouseout="return searchBox.OnSearchSelectHide()"
                alt=""/>
           <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onfocus="searchBox.OnSearchFieldFocus(true)"
+               onblur="searchBox.OnSearchFieldFocus(false)"
                onkeyup="searchBox.OnSearchFieldChange(event)"/>
           </span><span class="right">
             <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
@@ -133,7 +133,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
+<iframe src="javascript:void(0)" frameborder="0"
         name="MSearchResults" id="MSearchResults">
 </iframe>
 </div>
@@ -228,10 +228,6 @@ Supported compilers/architectures.</h2>
 </ul>
 <p >The following instructions are tentatively supported (ie code is incomplete and not tested in depth):</p>
 <ul>
-<li><b>AMD</b><ul>
-<li>XOP, FMA4</li>
-</ul>
-</li>
 <li><b>PowerPC</b><ul>
 <li>Altivec for Power7 to 9</li>
 <li>VSX for Power9</li>

@@ -81,7 +81,3 @@ namespace eve
 }
 
 #include <eve/module/arithmetic/regular/impl/frac.hpp>
-
-#if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/x86/frac.hpp>
-#endif

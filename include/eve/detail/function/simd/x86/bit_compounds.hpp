@@ -71,27 +71,7 @@ namespace eve::detail
       return  V{la,ha};
     };
 
-    if constexpr( supports_xop )
-    {
-      using i_t = typename wide<T,N>::template rebind <as_integer_t<T, signed>,N>;
-      auto const si = bit_cast(s,as<i_t>()).storage();
-
-            if constexpr( c == category::int64x2  ) v = _mm_sha_epi64(v,-si);
-      else  if constexpr( c == category::int32x4  ) v = _mm_sha_epi32(v,-si);
-      else  if constexpr( c == category::int16x8  ) v = _mm_sha_epi16(v,-si);
-      else  if constexpr( c == category::int8x16  ) v = _mm_sha_epi8 (v,-si);
-      else  if constexpr( c == category::uint64x2 ) v = _mm_shl_epi64(v,-si);
-      else  if constexpr( c == category::uint32x4 ) v = _mm_shl_epi32(v,-si);
-      else  if constexpr( c == category::uint16x8 ) v = _mm_shl_epi16(v,-si);
-      else  if constexpr( c == category::uint8x16 ) v = _mm_shl_epi8 (v,-si);
-    }
-    else  if constexpr( supports_xop && c == category::int64x4  ) v = shft(v,s);
-    else  if constexpr( supports_xop && c == category::int32x8  ) v = shft(v,s);
-    else  if constexpr( supports_xop && c == category::int16x16 ) v = shft(v,s);
-    else  if constexpr( supports_xop && c == category::uint64x4 ) v = shft(v,s);
-    else  if constexpr( supports_xop && c == category::uint32x8 ) v = shft(v,s);
-    else  if constexpr( supports_xop && c == category::uint16x16) v = shft(v,s);
-    else  if constexpr( is_avx512    && c == category::int64x2  ) v = _mm_srav_epi64(v, s);
+          if constexpr( is_avx512    && c == category::int64x2  ) v = _mm_srav_epi64(v, s);
     else  if constexpr( is_avx2      && c == category::int32x4  ) v = _mm_srav_epi32(v, s);
     else  if constexpr( is_avx512    && c == category::int16x8  ) v = _mm_srav_epi16(v, s);
     else  if constexpr( is_avx2      && c == category::uint64x2 ) v = _mm_srlv_epi64(v, s);
@@ -201,30 +181,16 @@ namespace eve::detail
       return  V{la,ha};
     };
 
-          if constexpr( supports_xop && c == category::int64x2  ) v = _mm_shl_epi64(v,s);
-    else  if constexpr( supports_xop && c == category::int32x4  ) v = _mm_shl_epi32(v,s);
-    else  if constexpr( supports_xop && c == category::int16x8  ) v = _mm_shl_epi16(v,s);
-    else  if constexpr( supports_xop && c == category::int8x16  ) v = _mm_shl_epi8 (v,s);
-    else  if constexpr( supports_xop && c == category::uint64x2 ) v = _mm_shl_epi64(v,s);
-    else  if constexpr( supports_xop && c == category::uint32x4 ) v = _mm_shl_epi32(v,s);
-    else  if constexpr( supports_xop && c == category::uint16x8 ) v = _mm_shl_epi16(v,s);
-    else  if constexpr( supports_xop && c == category::uint8x16 ) v = _mm_shl_epi8 (v,s);
-    else  if constexpr( supports_xop && c == category::int64x4  ) v = shft(v,s);
-    else  if constexpr( supports_xop && c == category::int32x8  ) v = shft(v,s);
-    else  if constexpr( supports_xop && c == category::int16x16 ) v = shft(v,s);
-    else  if constexpr( supports_xop && c == category::uint64x4 ) v = shft(v,s);
-    else  if constexpr( supports_xop && c == category::uint32x8 ) v = shft(v,s);
-    else  if constexpr( supports_xop && c == category::uint16x16) v = shft(v,s);
-    else  if constexpr( is_avx2      && c == category::int64x4  ) v = _mm256_sllv_epi64(v, s);
-    else  if constexpr( is_avx2      && c == category::int32x8  ) v = _mm256_sllv_epi32(v, s);
-    else  if constexpr( is_avx2      && c == category::uint64x4 ) v = _mm256_sllv_epi64(v, s);
-    else  if constexpr( is_avx2      && c == category::uint32x8 ) v = _mm256_sllv_epi32(v, s);
-    else  if constexpr(                 c == category::int64x8  ) v = _mm512_sllv_epi64(v, s);
-    else  if constexpr(                 c == category::int32x16 ) v = _mm512_sllv_epi32(v, s);
-    else  if constexpr(                 c == category::int16x32 ) v = _mm512_sllv_epi16(v, s);
-    else  if constexpr(                 c == category::uint64x8 ) v = _mm512_sllv_epi64(v, s);
-    else  if constexpr(                 c == category::uint32x16) v = _mm512_sllv_epi32(v, s);
-    else  if constexpr(                 c == category::uint16x32) v = _mm512_sllv_epi16(v, s);
+          if constexpr( is_avx2 && c == category::int64x4  ) v = _mm256_sllv_epi64(v, s);
+    else  if constexpr( is_avx2 && c == category::int32x8  ) v = _mm256_sllv_epi32(v, s);
+    else  if constexpr( is_avx2 && c == category::uint64x4 ) v = _mm256_sllv_epi64(v, s);
+    else  if constexpr( is_avx2 && c == category::uint32x8 ) v = _mm256_sllv_epi32(v, s);
+    else  if constexpr(            c == category::int64x8  ) v = _mm512_sllv_epi64(v, s);
+    else  if constexpr(            c == category::int32x16 ) v = _mm512_sllv_epi32(v, s);
+    else  if constexpr(            c == category::int16x32 ) v = _mm512_sllv_epi16(v, s);
+    else  if constexpr(            c == category::uint64x8 ) v = _mm512_sllv_epi64(v, s);
+    else  if constexpr(            c == category::uint32x16) v = _mm512_sllv_epi32(v, s);
+    else  if constexpr(            c == category::uint16x32) v = _mm512_sllv_epi16(v, s);
     else
     {
       v = map( []<typename V>(V a, auto b) { return static_cast<V>(a << b); }, v, s);
