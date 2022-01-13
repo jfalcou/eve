@@ -53,4 +53,21 @@ namespace eve::detail
     else return apply_over(trunc, a0);
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////
+  // return integral types
+
+  template<integral_real_value T, typename D>
+  EVE_FORCEINLINE constexpr auto trunc_(EVE_SUPPORTS(cpu_), D const &, T xx) noexcept
+  requires(is_one_of<D>(types<int_converter, uint_converter>{}))
+  {
+    if constexpr( has_native_abi_v<T> )
+    {
+      return D()(xx);
+    }
+    else
+    {
+      return apply_over(D()(trunc), xx);
+    }
+  }
 }
