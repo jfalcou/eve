@@ -10,6 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/memory/pointer.hpp>
+#include <eve/memory/soa_ptr.hpp>
 
 namespace eve
 {
@@ -57,6 +58,12 @@ namespace eve
     requires requires(Ptr p) { *p; }
     {
       return *ptr;
+    }
+
+    template<typename ...Ptrs>
+    EVE_FORCEINLINE auto read_(EVE_SUPPORTS(cpu_), soa_ptr<Ptrs...> ptr) noexcept
+    {
+      return kumi::map(read, ptr);
     }
   }
 }

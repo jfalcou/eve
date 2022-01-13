@@ -46,3 +46,22 @@ EVE_TEST_TYPES( "Check write to Contiguous Iterators"
   eve::write(begin, T{69});
   TTS_EQUAL( *begin, T{69});
 };
+
+//==================================================================================================
+// Write scalar to soa_ptr
+//==================================================================================================
+EVE_TEST_TYPES( "Check write to soa_ptr"
+              , eve::test::scalar::all_types
+              )
+<typename T>(eve::as<T>)
+{
+  int    x = 0;
+  T      y = T(1);
+  double z = 2.0;
+
+  eve::write(eve::soa_ptr(&x, &y, &z), kumi::tuple{x + 1, y + 1, z + 1});
+
+  TTS_EQUAL(x, 1);
+  TTS_EQUAL(y, 2);
+  TTS_EQUAL(z, 3.0);
+};
