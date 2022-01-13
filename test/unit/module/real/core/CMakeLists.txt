@@ -47,6 +47,7 @@ make_unit("unit.real.core" decorated.div.cpp         )
 make_unit("unit.real.core" decorated.rem.cpp         )
 make_unit("unit.real.core" firstbitset.cpp           )
 make_unit("unit.real.core" firstbitunset.cpp         )
+make_unit("unit.real.core" gather.cpp                )
 make_unit("unit.real.core" has_single_bit.cpp        )
 make_unit("unit.real.core" if_else.cpp               )
 make_unit("unit.real.core" is_pow2.cpp               )
@@ -75,8 +76,3 @@ make_unit("unit.real.core"  saturate/as_uint64.cpp   )
 make_unit("unit.real.core"  saturate/as_uint32.cpp   )
 make_unit("unit.real.core"  saturate/as_uint16.cpp   )
 make_unit("unit.real.core"  saturate/as_uint8.cpp    )
-
-##==================================================================================================
-## Elementwise function unit tests
-##==================================================================================================
-make_all_units(ROOT unit.real.core NAME gather                ARCH        simd TYPES ${all_types}     )
