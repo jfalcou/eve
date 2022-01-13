@@ -71,8 +71,18 @@ make_unit("unit.real.core"  convert/to_uint16.cpp    )
 make_unit("unit.real.core"  convert/to_uint8.cpp     )
 make_unit("unit.real.core"  convert/to_tuple.cpp     )
 
+make_unit("unit.real.core"  saturate/as_double.cpp   )
+make_unit("unit.real.core"  saturate/as_float.cpp    )
+make_unit("unit.real.core"  saturate/as_int64.cpp    )
+make_unit("unit.real.core"  saturate/as_int32.cpp    )
+make_unit("unit.real.core"  saturate/as_int16.cpp    )
+make_unit("unit.real.core"  saturate/as_int8.cpp     )
+make_unit("unit.real.core"  saturate/as_uint64.cpp   )
+make_unit("unit.real.core"  saturate/as_uint32.cpp   )
+make_unit("unit.real.core"  saturate/as_uint16.cpp   )
+make_unit("unit.real.core"  saturate/as_uint8.cpp    )
+
 ##==================================================================================================
 ## Elementwise function unit tests
 ##==================================================================================================
 make_all_units(ROOT unit.real.core NAME gather                ARCH        simd TYPES ${all_types}     )
-make_all_units(ROOT unit.real.core NAME saturate              ARCH scalar simd TYPES ${all_types}     )
