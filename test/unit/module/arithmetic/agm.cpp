@@ -38,7 +38,7 @@ EVE_TEST( "Check behavior of agm(wide)"
 {
   using eve::agm;
   using eve::detail::map;
-  TTS_ULP_EQUAL( agm(a0, a1), ((a0+a1)/eve::ellint_1((a0-a1)/(a0+a1)))*eve::pio_4(eve::as(a0)), 2);
+  TTS_ULP_EQUAL( agm(a0, a1), ((a0+a1)/eve::ellint_1((a0-a1)/(a0+a1)))*eve::pio_4(eve::as(a0)), 5);
 };
 
 
@@ -57,5 +57,5 @@ EVE_TEST( "Check behavior of  agm[cond](wide)"
   using eve::agm;
   using eve::detail::map;
   using v_t =  eve::element_type_t<T>;
-  TTS_ULP_EQUAL( agm[a2 > T(64)](a0, a1), map([](auto e, auto f, auto g) {return g > v_t(64) ? agm(e, f) :e; }, a0, a1, a2), 2);
+  TTS_ULP_EQUAL( agm[a2 > T(64)](a0, a1), map([](auto e, auto f, auto g) {return g > v_t(64) ? agm(e, f) :e; }, a0, a1, a2), 5);
 };
