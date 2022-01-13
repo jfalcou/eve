@@ -13,6 +13,7 @@
 #include <eve/arch/spec.hpp>
 #include <eve/conditional.hpp>
 #include <eve/concept/memory.hpp>
+#include <eve/memory/soa_ptr.hpp>
 #include <eve/concept/range.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/function/combine.hpp>
@@ -141,7 +142,7 @@ namespace eve
     //! Constructs a eve::wide from a SIMD compatible pointer
     template<detail::data_source... Ptr>
     requires(kumi::product_type<Type>)
-    EVE_FORCEINLINE explicit  wide(kumi::tuple<Ptr...> ptr) noexcept
+    EVE_FORCEINLINE explicit  wide(eve::soa_ptr<Ptr...> ptr) noexcept
                             : storage_base(load(ptr, Cardinal{}))
     {}
 

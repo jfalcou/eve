@@ -13,6 +13,7 @@
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/memory/pointer.hpp>
+#include <eve/memory/soa_ptr.hpp>
 #include <eve/function/replace.hpp>
 #include <eve/function/safe.hpp>
 #include <eve/function/unsafe.hpp>
@@ -214,11 +215,11 @@ namespace eve::detail
   //================================================================================================
   // Bundle
   //================================================================================================
-  template<typename T, typename N, relative_conditional_expr C, data_source Ptr>
+  template<typename T, typename N, relative_conditional_expr C, typename ... Ptrs>
   EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(cpu_), C const& c, safe_type const&
-                                  , eve::as<wide<T, N>> const &, Ptr ptr
+                                  , eve::as<wide<T, N>> const &, soa_ptr<Ptrs...> ptr
                                   ) noexcept
-  requires(std::same_as<abi_t<T, N>, bundle_> && kumi::product_type<Ptr>)
+  requires(std::same_as<abi_t<T, N>, bundle_>)
   {
     wide<T, N> that;
     if constexpr ( C::has_alternative )
