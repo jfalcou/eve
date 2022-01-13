@@ -63,7 +63,6 @@ make_all_units(ROOT random.real.math NAME exp                   ARCH scalar simd
 make_all_units(ROOT random.real.math NAME exp10                 ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT random.real.math NAME exp2                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT random.real.math NAME expm1                 ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT random.real.math NAME iceil                 ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT random.real.math NAME log                   ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT random.real.math NAME log10                 ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT random.real.math NAME log1p                 ARCH scalar simd TYPES ${real_types}    )

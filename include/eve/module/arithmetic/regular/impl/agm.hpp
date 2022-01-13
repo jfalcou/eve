@@ -20,6 +20,7 @@
 #include <eve/function/is_infinite.hpp>
 #include <eve/function/is_lez.hpp>
 #include <eve/function/is_unordered.hpp>
+#include <eve/function/ldexp.hpp>
 #include <eve/function/sign.hpp>
 #include <eve/function/sqrt.hpp>
 #include <eve/detail/apply_over.hpp>
