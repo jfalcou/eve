@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/dec.hpp>
-#include <eve/module/real/core/function/saturated/generic/dec.hpp>
+#include <eve/module/arithmetic/saturated/impl/dec.hpp>

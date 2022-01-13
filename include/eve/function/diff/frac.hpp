@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/frac.hpp>
-#include <eve/module/real/core/function/diff/generic/frac.hpp>
+#include <eve/module/arithmetic/diff/frac.hpp>

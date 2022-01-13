@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/hypot.hpp>
-#include <eve/module/real/core/function/pedantic/generic/hypot.hpp>
+#include <eve/module/math/pedantic/hypot.hpp>

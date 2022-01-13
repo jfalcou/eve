@@ -7,11 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-
-namespace eve
-{
-  EVE_MAKE_CALLABLE(remainder_, remainder);
-}
-
-#include <eve/module/real/core/function/regular/generic/remainder.hpp>
+#include <eve/module/arithmetic/regular/remainder.hpp>

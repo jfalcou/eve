@@ -19,6 +19,7 @@
 #include <eve/module/math/regular/acsch.hpp>
 #include <eve/module/math/regular/acsc.hpp>
 #include <eve/module/math/regular/acscpi.hpp>
+#include <eve/module/math/regular/arg.hpp>
 #include <eve/module/math/regular/asecd.hpp>
 #include <eve/module/math/regular/asech.hpp>
 #include <eve/module/math/regular/asec.hpp>
@@ -46,11 +47,14 @@
 #include <eve/module/math/regular/cscd.hpp>
 #include <eve/module/math/regular/csch.hpp>
 #include <eve/module/math/regular/cscpi.hpp>
+#include <eve/module/math/regular/deginrad.hpp>
+#include <eve/module/math/regular/div_180.hpp>
 #include <eve/module/math/regular/exp10.hpp>
 #include <eve/module/math/regular/exp2.hpp>
 #include <eve/module/math/regular/exp.hpp>
 #include <eve/module/math/regular/expm1.hpp>
 #include <eve/module/math/regular/expx2.hpp>
+#include <eve/module/math/regular/hypot.hpp>
 #include <eve/module/math/regular/geommean.hpp>
 #include <eve/module/math/regular/log10.hpp>
 #include <eve/module/math/regular/log1p.hpp>
@@ -65,6 +69,9 @@
 #include <eve/module/math/regular/pow_abs.hpp>
 #include <eve/module/math/regular/pow.hpp>
 #include <eve/module/math/regular/powm1.hpp>
+#include <eve/module/math/regular/quadrant.hpp>
+#include <eve/module/math/regular/radindeg.hpp>
+#include <eve/module/math/regular/radinpi.hpp>
 #include <eve/module/math/regular/rem_pio2.hpp>
 #include <eve/module/math/regular/rempio2.hpp>
 #include <eve/module/math/regular/rsqrt.hpp>

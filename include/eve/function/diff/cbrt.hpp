@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/cbrt.hpp>
-#include <eve/module/real/core/function/diff/generic/cbrt.hpp>
+#include <eve/module/math/diff/impl/cbrt.hpp>

@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/negminabs.hpp>
-#include <eve/module/real/core/function/saturated/generic/negminabs.hpp>
+#include <eve/module/arithmetic/saturated/impl/negminabs.hpp>

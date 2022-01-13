@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/fma.hpp>
-#include <eve/module/real/core/function/diff/generic/fma.hpp>
+#include <eve/module/arithmetic/diff/fma.hpp>

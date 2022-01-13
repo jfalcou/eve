@@ -7,12 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-
-namespace eve
-{
-  EVE_MAKE_CALLABLE(div_180_, div_180);
-}
-
-#include <eve/module/real/core/function/regular/generic/div_180.hpp>
-
+#include <eve/module/math/regular/div_180.hpp>
