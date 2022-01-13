@@ -7,14 +7,7 @@
 ##==================================================================================================
 ## Setup aggregation of tests
 ##==================================================================================================
-add_custom_target(unit.memory.exe       )
-add_custom_target(unit.memory.scalar.exe)
-add_custom_target(unit.memory.simd.exe  )
-
-add_dependencies(unit.scalar.exe  unit.memory.scalar.exe)
-add_dependencies(unit.simd.exe    unit.memory.simd.exe  )
-add_dependencies(unit.memory.exe  unit.memory.scalar.exe)
-add_dependencies(unit.memory.exe  unit.memory.simd.exe  )
+add_custom_target(unit.memory.exe )
 
 ##==================================================================================================
 ## Memory API tests

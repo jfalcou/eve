@@ -9,17 +9,11 @@
 ##==================================================================================================
 add_custom_target(unit.real.core.exe                )
 add_custom_target(unit.real.core.constant.exe       )
-add_custom_target(unit.real.core.constant.scalar.exe)
-add_custom_target(unit.real.core.constant.simd.exe  )
 add_custom_target(unit.real.core.scalar.exe         )
 add_custom_target(unit.real.core.simd.exe           )
 
 add_dependencies(unit.real.scalar.exe        unit.real.core.scalar.exe          )
 add_dependencies(unit.real.simd.exe          unit.real.core.simd.exe            )
-add_dependencies(unit.real.core.constant.exe unit.real.core.constant.scalar.exe )
-add_dependencies(unit.real.core.constant.exe unit.real.core.constant.simd.exe   )
-add_dependencies(unit.real.core.scalar.exe   unit.real.core.constant.scalar.exe )
-add_dependencies(unit.real.core.simd.exe     unit.real.core.constant.simd.exe   )
 add_dependencies(unit.real.core.exe          unit.real.core.constant.exe        )
 add_dependencies(unit.real.core.exe          unit.real.core.scalar.exe          )
 add_dependencies(unit.real.core.exe          unit.real.core.simd.exe            )

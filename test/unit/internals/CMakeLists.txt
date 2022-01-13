@@ -8,7 +8,6 @@
 ## Setup aggregation of tests
 ##==================================================================================================
 add_custom_target(unit.internals.exe )
-add_dependencies(unit.simd.exe unit.internals.exe )
 
 ##==================================================================================================
 ## List internal tests
