@@ -62,6 +62,6 @@ EVE_TEST_TYPES( "Check write to soa_ptr"
   eve::write(eve::soa_ptr(&x, &y, &z), kumi::tuple{x + 1, y + 1, z + 1});
 
   TTS_EQUAL(x, 1);
-  TTS_EQUAL(y, 2);
+  TTS_EQUAL(y, (T)2);
   TTS_EQUAL(z, 3.0);
 };

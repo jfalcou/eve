@@ -17,7 +17,7 @@ TTS_CASE("soa_ptr types")
   using i_s_ptr = eve::soa_ptr<int*, short*>;
 
   TTS_CONSTEXPR_EXPECT(kumi::product_type<i_s_ptr>);
-  TTS_CONSTEXPR_EQUAL(std::tuple_size_v<i_s_ptr>, 2);
+  TTS_CONSTEXPR_EQUAL(std::tuple_size_v<i_s_ptr>, 2u);
   TTS_TYPE_IS((std::tuple_element_t<0, i_s_ptr>), int*);
   TTS_TYPE_IS((std::tuple_element_t<1, i_s_ptr>), short*);
   TTS_TYPE_IS(eve::value_type_t<i_s_ptr>, (kumi::tuple<int, short>));
