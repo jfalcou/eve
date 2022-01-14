@@ -7,12 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/none.hpp>
-#include <eve/function/pow.hpp>
-#include <eve/function/rec.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 #include <eve/function/horner.hpp>
 #include <eve/function/reverse_horner.hpp>
 

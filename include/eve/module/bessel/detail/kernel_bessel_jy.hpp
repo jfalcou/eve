@@ -7,38 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-
-#include <eve/constant/eps.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/invpi.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/pi.hpp>
-#include <eve/constant/smallestposval.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/min.hpp>
-#include <eve/function/max.hpp>
-#include <eve/function/none.hpp>
-#include <eve/function/average.hpp>
-#include <eve/function/copysign.hpp>
-#include <eve/function/fam.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/pedantic/rem.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_gez.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/sinpic.hpp>
-#include <eve/function/sinhc.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/function/sqrt.hpp>
-#include <eve/function/tgamma.hpp>
-
-#include <eve/function/sin.hpp>
-#include <eve/function/cosh.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/ieee.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/special.hpp>
+#include <eve/detail/kumi.hpp>
 
 namespace eve::detail
 {

@@ -1,37 +1,11 @@
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/false.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/invpi.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/pi.hpp>
-#include <eve/constant/pio_2.hpp>
-
-#include <eve/function/abs.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/cosh.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/function/fam.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/fms.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_gez.hpp>
-#include <eve/function/is_ltz.hpp>
-#include <eve/function/is_infinite.hpp>
-#include <eve/function/is_nan.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/sinhc.hpp>
-#include <eve/function/sinpic.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/function/sqrt.hpp>
-#include <eve/function/tgamma.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/ieee.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/special.hpp>
+#include <eve/detail/hz_device.hpp>
+#include <array>
 
 // Written originally by Edward Smith-Rowland.
 //

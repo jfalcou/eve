@@ -7,44 +7,17 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/constant/eps.hpp>
-#include <eve/constant/pi.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/smallestposval.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/cyl_bessel_j0.hpp>
-#include <eve/function/cyl_bessel_j1.hpp>
-#include <eve/function/cyl_bessel_y0.hpp>
-#include <eve/function/cyl_bessel_y1.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/digamma.hpp>
-#include <eve/function/factorial.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_not_nan.hpp>
-#include <eve/function/is_infinite.hpp>
-#include <eve/function/is_gtz.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_ltz.hpp>
-#include <eve/function/is_odd.hpp>
-#include <eve/function/is_nltz.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/ieee.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/special.hpp>
 #include <eve/function/lfactorial.hpp>
-#include <eve/function/lgamma.hpp>
-#include <eve/function/max.hpp>
-#include <eve/function/tgamma.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/maximum.hpp>
-#include <eve/function/nthroot.hpp>
-#include <eve/function/sincos.hpp>
-#include <eve/function/sinpicospi.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/function/sqrt.hpp>
-#include <eve/detail/kumi.hpp>
-#include <eve/function/converter.hpp>
+#include <eve/module/bessel/regular/cyl_bessel_y0.hpp>
+#include <eve/module/bessel/regular/cyl_bessel_y1.hpp>
 #include <eve/module/bessel/detail/kernel_bessel_jy_large.hpp>
 #include <eve/module/bessel/detail/kernel_bessel_ij_small.hpp>
 #include <eve/module/bessel/detail/kernel_bessel_jy.hpp>
+#include <eve/detail/hz_device.hpp>
 
 /////////////////////////////////////////////////////////////////////////////////
 // These routines are detail of the computation of cylindrical bessel functions

@@ -7,18 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/constant/maxlog.hpp>
-#include <eve/constant/pi.hpp>
-#include <eve/constant/pio_2.hpp>
-#include <eve/constant/twopi.hpp>
-#include <eve/function/cyl_bessel_i0.hpp>
-#include <eve/function/cyl_bessel_i1.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_ngez.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/rsqrt.hpp>
-#include <eve/function/sinh.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/ieee.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/bessel/regular/cyl_bessel_i0.hpp>
+#include <eve/module/bessel/regular/cyl_bessel_i1.hpp>
 #include <eve/module/bessel/detail/kernel_bessel_ik.hpp>
 #include <eve/module/bessel/detail/kernel_bessel_ij_small.hpp>
 
