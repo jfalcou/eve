@@ -10,7 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/constant/constant.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/traits/as_integer.hpp>
+#include <eve/detail/meta.hpp>
 #include <eve/as.hpp>
 #include <type_traits>
 
@@ -19,20 +19,21 @@ namespace eve
   //================================================================================================
   //! @addtogroup constant
   //! @{
-  //! @var limitexponent
+  //! @var minlog2
   //!
-  //! @brief Callable object computing the greatest exponent value plus one.
+  //! @brief Callable object computing the least value for which eve::exp2
+  //! returns a non denormal result
   //!
-  //! **Required header:** `#include <eve/function/limitexponent.hpp>`
+  //! **Required header:** `#include <eve/function/minlog2.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the limitexponent constant                               |
+  //! | `operator()` | Computes the minlog2 constant                               |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < floating_real_value T > auto operator()( as<T> const & t) const noexcept;
+  //!  tempate < floating_value T > T operator()( as<T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -41,30 +42,29 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::limitexponent(as<T>())` is semantically equivalent to
-  //!   - as_integer_t<T>(128) if eve::element_type_t<T> is float
-  //!   - as_integer_t<T>(1024) if eve::element_type_t<T> is double
+  //! the call `eve::minlog2(as<T>())` is semantically equivalent to:
+  //!   - T(-127.0f) if eve::element_type_t<T> is float
+  //!   - T(-1022.0) if eve::element_type_t<T> is double
   //!
   //! ---
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/limitexponent.cpp}
+  //! @godbolt{doc/core/minlog2.cpp}
   //!
   //! @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(limitexponent_, limitexponent);
+  EVE_MAKE_CALLABLE(minlog2_, minlog2);
 
   namespace detail
   {
     template<floating_value T>
-    EVE_FORCEINLINE constexpr auto limitexponent_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
+    EVE_FORCEINLINE constexpr auto minlog2_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
     {
-      using t_t = element_type_t<T>;
-      using i_t = as_integer_t<T>;
+      using t_t           = element_type_t<T>;
 
-      if constexpr(std::is_same_v<t_t, float>) return i_t(128);
-      else if constexpr(std::is_same_v<t_t, double >) return i_t(1024);
+      if constexpr(std::is_same_v<t_t, float>)  return Constant<T,  0xc2fe0000U>();
+      else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0xc08ff00000000000ULL>();
     }
   }
 }

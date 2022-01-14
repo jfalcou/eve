@@ -16,8 +16,6 @@
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/converter.hpp>
 #include <eve/function/dec.hpp>
-#include <eve/constant/limitexponent.hpp>
-#include <eve/constant/minexponent.hpp>
 #include <eve/constant/maxexponent.hpp>
 #include <eve/constant/nbmantissabits.hpp>
 #include <eve/constant/smallestposval.hpp>

@@ -10,7 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/constant/exponentmask.hpp>
 #include <eve/constant/half.hpp>
-#include <eve/constant/limitexponent.hpp>
+#include <eve/constant/maxexponentp1.hpp>
 #include <eve/constant/maxexponentm1.hpp>
 #include <eve/constant/nbmantissabits.hpp>
 #include <eve/constant/twotonmb.hpp>
@@ -52,7 +52,7 @@ namespace eve::detail
         e = bit_shr(e,nbmantissabits(eve::as<elt_t>())) - maxexponentm1(eve::as<elt_t>());
         auto r0 = bit_or(half(eve::as<T>()), x);
         auto test0 = is_nez(a0);
-        auto test1 = is_greater(e,limitexponent(eve::as<T>()));
+        auto test1 = is_greater(e,maxexponentp1(eve::as<T>()));
         auto ee = if_else(logical_notand(test1, test0), e, eve::zero);
 
         if constexpr(eve::platform::supports_denormals)
@@ -82,7 +82,7 @@ namespace eve::detail
             }
             T x  = bit_andnot(a0, exponentmask(as<T>()));        // clear exp. in a0
             e = bit_shr(e,nmb)- maxexponentm1(eve::as<T>());         // compute exp.
-            if (e > limitexponent(eve::as<T>())) return kumi::make_tuple(a0, i_t(0));
+            if (e > maxexponentp1(eve::as<T>())) return kumi::make_tuple(a0, i_t(0));
             e -= t;
             return kumi::make_tuple(bit_or(x,half(eve::as<T>())), e);
           }
@@ -90,7 +90,7 @@ namespace eve::detail
           {
             T x  = bit_andnot(a0, exponentmask(as<T>()));        // clear exp. in a0
             e = bit_shr(e,nmb)- maxexponentm1(eve::as<T>());         // compute exp.
-            if (e > limitexponent(eve::as<T>())) return kumi::make_tuple(a0, i_t(0));
+            if (e > maxexponentp1(eve::as<T>())) return kumi::make_tuple(a0, i_t(0));
             return kumi::make_tuple(bit_or(x,half(eve::as<T>())), e);
           }
         }

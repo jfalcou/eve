@@ -10,7 +10,6 @@
 #include <eve/concept/value.hpp>
 #include <eve/constant/exponentmask.hpp>
 #include <eve/constant/half.hpp>
-#include <eve/constant/limitexponent.hpp>
 #include <eve/constant/maxexponentm1.hpp>
 #include <eve/constant/nbmantissabits.hpp>
 #include <eve/constant/twotonmb.hpp>
