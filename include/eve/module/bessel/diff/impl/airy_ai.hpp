@@ -7,9 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/airy_ai.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/if_else.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/bessel/regular/cyl_bessel_jn.hpp>
+#include <eve/module/bessel/regular/cyl_bessel_kn.hpp>
+#include <eve/detail/hz_device.hpp>
 
 namespace eve::detail
 {

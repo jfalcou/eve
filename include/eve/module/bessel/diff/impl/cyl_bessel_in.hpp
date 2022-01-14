@@ -7,11 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/average.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/cyl_bessel_in.hpp>
-#include <eve/function/derivative.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/bessel/regular/cyl_bessel_in.hpp>
 
 namespace eve::detail
 {
