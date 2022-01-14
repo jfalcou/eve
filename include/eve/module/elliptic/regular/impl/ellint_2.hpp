@@ -7,29 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/has_abi.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/pio_2.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/average.hpp>
-#include <eve/function/copysign.hpp>
-#include <eve/function/ellint_rd.hpp>
-#include <eve/function/ellint_rf.hpp>
-#include <eve/function/ellint_rg.hpp>
-#include <eve/function/nearest.hpp>
-#include <eve/function/rem.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_not_less.hpp>
-#include <eve/function/oneminus.hpp>
-#include <eve/function/sincos.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/function/sqrt.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/ieee.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/elliptic/regular/ellint_rd.hpp>
+#include <eve/module/elliptic/regular/ellint_rf.hpp>
+#include <eve/module/elliptic/regular/ellint_rg.hpp>
 
 namespace eve::detail
 {
@@ -40,12 +23,6 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-//      auto notdone = eve::abs(k) < one(as(k));
-
-//     if (abs(k) == 1)
-//     {
-//         return static_cast<T>(1);
-//     }
       auto k2 = sqr(k);
       auto r = 2 * ellint_rg(zero(as(k)), oneminus(k2), one(as(k)));
       return if_else(k2 == one(as(k)), one, r);

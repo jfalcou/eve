@@ -7,19 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/has_abi.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/function/ellint_rd.hpp>
-#include <eve/function/ellint_rf.hpp>
-#include <eve/function/is_nltz.hpp>
-#include <eve/function/sqrt.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 #include <eve/detail/hz_device.hpp>
-
+#include <eve/module/elliptic/regular/ellint_rd.hpp>
+#include <eve/module/elliptic/regular/ellint_rf.hpp>
 
 namespace eve::detail
 {

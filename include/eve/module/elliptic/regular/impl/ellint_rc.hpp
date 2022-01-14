@@ -7,26 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/has_abi.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/pio_2.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/atan.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/atanh.hpp>
-#include <eve/function/mul.hpp>
-#include <eve/function/is_nltz.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/function/max.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/rsqrt.hpp>
-#include <eve/function/sqrt.hpp>
-#include <eve/function/sub.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 #include <eve/detail/hz_device.hpp>
 
 
