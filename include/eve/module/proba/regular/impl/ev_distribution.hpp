@@ -7,27 +7,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/kumi.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/function/expm1.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_gtz.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/log1p.hpp>
-#include <eve/function/normal_distribution.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/ieee.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/special.hpp>
 #include <eve/module/proba/detail/attributes.hpp>
 #include <eve/module/proba/detail/urg01.hpp>
-#include <eve/platform.hpp>
-#include <concepts>
-#include <type_traits>
+#include <eve/function/normal_distribution.hpp>
 
 namespace eve
 {

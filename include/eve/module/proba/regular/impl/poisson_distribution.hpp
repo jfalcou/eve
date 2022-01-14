@@ -7,34 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/platform.hpp>
-#include <type_traits>
-#include <eve/concept/value.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/ieee.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/special.hpp>
 #include <eve/module/proba/detail/attributes.hpp>
 #include <eve/module/proba/detail/urg01.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/div.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/gamma_p.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/function/expm1.hpp>
-#include <eve/function/floor.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/mul.hpp>
-#include <eve/function/pow_abs.hpp>
-#include <eve/function/rsqrt.hpp>
-#include <eve/function/sub.hpp>
-#include <eve/function/tgamma.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_gez.hpp>
-#include <eve/function/is_gtz.hpp>
-#include <eve/function/is_finite.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/zero.hpp>
 
 namespace eve
 {
