@@ -8,8 +8,7 @@
 #pragma once
 
 #include <eve/module/arithmetic.hpp>
-//#include <eve/module/special.hpp>
-#include <eve/module/combinatorial/regular/factorial.hpp>
+#include <eve/module/special/regular/factorial.hpp>
 #include <eve/module/special/regular/tgamma.hpp>
 
 

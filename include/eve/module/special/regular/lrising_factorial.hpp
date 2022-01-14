@@ -14,30 +14,31 @@ namespace eve
   //================================================================================================
   //! @addtogroup combinatorial
   //! @{
-  //! @var rising_factorial
+  //! @var lrising_factorial
   //!
-  //! @brief Callable object computing rising_factorial function i.e. \f$\frac{\Gamma(x+a)}{\Gamma(a)}\f$.
+  //! @brief Callable object computing the lrising_factorial function i.e.
+  //! \f$\log\left(\frac{\Gamma(x+a)}{\Gamma(x)}\right)\f$.
   //!
-  //! **Required header:** `#include <eve/function/rising_factorial.hpp>`
+  //! **Required header:** `#include <eve/function/lrising_factorial.hpp>`
   //!
   //! #### Members Functions
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | rising_factorial operation                                 |
+  //! | `operator()` | lrising_factorial operation                                |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( real_value auto a, floating_real_value x ) const noexcept;
+  //!  template< real_value I, floating_value T > auto operator()( I a, T x ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`a`:   [value](@ref eve::value). `a` must be positive or the result is Nan
+  //!`a`:   [real_value](@ref eve::real_value).`a` must be positive or the result is Nan
   //!
-  //!`x`:   [floating value](@ref eve::value). `a+x` must be positive or the result is Nan
+  //!`x`:   [floating real value](@ref eve::value). `a+x` must be positive or the result is Nan
   //!
   //! **Return value**
   //!
@@ -47,7 +48,7 @@ namespace eve
   //!  auto operator[]( conditional_expression auto cond ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //!  Higher-order function generating a masked version of eve::rising_factorial
+  //!  Higher-order function generating a masked version of eve::lrising_factorial
   //!
   //!  **Parameters**
   //!
@@ -55,7 +56,7 @@ namespace eve
   //!
   //!  **Return value**
   //!
-  //!  A Callable object so that the expression `rising_factorial[cond](x, ...)` is equivalent to `if_else(cond,rising_factorial(x, ...),x)`
+  //!  A Callable object so that the expression `lrising_factorial[cond](x, ...)` is equivalent to `if_else(cond,lrising_factorial(x, ...),x)`
   //!
   //! ---
   //!
@@ -63,39 +64,39 @@ namespace eve
   //!
   //!  * eve::raw
   //!
-  //!     **Required header:** `#include <eve/function/rising_factorial.hpp>`
+  //!     **Required header:** `#include <eve/function/lrising_factorial.hpp>`
   //!
-  //!     The expression `raw(rising_factorial)(a,x)` uses the crude formula with all its limitations and
+  //!     The expression `raw(lrising_factorial)(a,x)` uses the crude formula with all its limitations and
   //!      inacurracies and return a Nan if `a` and `a+x` are not both positive
   //!
   //!  * eve::pedantic
   //!
-  //!     **Required header:** `#include <eve/function/pedantic/rising_factorial.hpp>`
+  //!     **Required header:** `#include <eve/function/pedantic/lrising_factorial.hpp>`
   //!
-  //!     The expression `pedantic(rising_factorial)(a,x)` uses reflection tricks and computes the function for all real `a` and `x`,
-  //!      and in fact computes the Pochammer symbol  \f$x^{\overline a}=\frac{\Gamma(x+a)}{\Gamma(a)}\f$
-  //!      returning nan if the result in really undefined.
+  //!     The expression `pedantic(lrising_factorial)(a,x)` uses reflection tricks and computes the function
+  //!       for all real `a` and `x`, and in fact computes the logarithm of the absolute value of the Pochammer
+  //!       symbol \f$\log\left|\frac{\Gamma(x+a)}{\Gamma(x)}\right|\f$ returning nan if the result is really undefined.
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/rising_factorial.hpp>`
+  //!     **Required header:** `#include <eve/function/diff/lrising_factorial.hpp>`
   //!
-  //!     The expression `diff_1st(rising_factorial)(a,x)` and `diff_2nd(rising_factorial)(a,x)` computes
+  //!     The expression `diff_1st(lrising_factorial)(a,x)` and `diff_2nd(lrising_factorial)(a,x)` computes
   //!      the derivative of the function relative to the first or second parameter respectively.
   //!
   //!      These decorators can be combined to the other available ones : for instance the call
   //!
-  //!         `pedantic(diff_1st)(rising_factorial)(a,x)`
+  //!      `pedantic(diff_1st)(lrising_factorial)(a,x)`
   //!
-  //!      will compute the derivative of `pedantic(rising_factorial)` relative to the first parameter.
+  //!      will compute the derivative of `pedantic(lrising_factorial)` relative to the first parameter.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/combinatorial/rising_factorial.cpp}
+  //! @godbolt{doc/combinatorial/lrising_factorial.cpp}
   //!
   //!  @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(rising_factorial_, rising_factorial);
+  EVE_MAKE_CALLABLE(lrising_factorial_, lrising_factorial);
 }
 
-#include <eve/module/combinatorial/regular/impl/rising_factorial.hpp>
+#include <eve/module/special/regular/impl/lrising_factorial.hpp>

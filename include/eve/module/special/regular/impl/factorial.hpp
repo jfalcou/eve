@@ -7,20 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/gather.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_gez.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/valmax.hpp>
-
-#include <type_traits>
-#include <eve/detail/apply_over.hpp>
+#include <eve/module/arithmetic.hpp>
 
 namespace eve::detail
 {
