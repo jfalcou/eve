@@ -97,23 +97,3 @@ make_unit("unit.math"  tan.cpp                   )
 make_unit("unit.math"  tand.cpp                  )
 make_unit("unit.math"  tanh.cpp                  )
 make_unit("unit.math"  tanpi.cpp                 )
-
-##==================================================================================================
-## Elementwise function unit tests
-##==================================================================================================
-
-
-## ================================================================================================
-# Targets that require more RAM to compile
-
-# add_custom_target(unit.math.heavy.scalar.exe         )
-# add_custom_target(unit.math.heavy.simd.exe           )
-# add_custom_target(unit.math.heavy.exe                )
-
-# add_dependencies(unit.math.heavy.exe      unit.math.heavy.scalar.exe )
-# add_dependencies(unit.math.heavy.exe      unit.math.heavy.simd.exe   )
-# add_dependencies(unit.math.scalar.exe     unit.math.heavy.scalar.exe )
-# add_dependencies(unit.math.simd.exe       unit.math.heavy.simd.exe   )
-
-##=================================================================================================
-##===================================================================================================

@@ -5,18 +5,19 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
+#include "test.hpp"
 #include <eve/function/saturate.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 
-TTS_CASE_TPL("Check eve::saturate return type", EVE_TYPE)
-<typename T>(::tts::type<T>)
+EVE_TEST_TYPES( "Check eve::saturate return type", eve::test::simd::all_types)
+<typename T>(eve::as<T>)
 {
   TTS_EXPR_IS(eve::saturate(T(), eve::as<std::uint32_t>()), T);
 };
 
-TTS_CASE_TPL("Check eve::saturate behavior", EVE_TYPE)
-<typename T>(::tts::type<T>)
+EVE_TEST_TYPES( "Check eve::saturate behavior", eve::test::simd::all_types)
+<typename T>(eve::as<T>)
 {
   TTS_EQUAL(eve::saturate(T(0)    , eve::as<std::uint32_t>()), T(0)     );
   TTS_EQUAL(eve::saturate(T(42.69), eve::as<std::uint32_t>()), T(42.69) );

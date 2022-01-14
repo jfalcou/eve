@@ -8,7 +8,6 @@
 ## Setup aggregation of tests
 ##==================================================================================================
 add_custom_target(unit.constant.exe )
-add_dependencies(unit.simd.exe unit.constant.exe )
 
 ##==================================================================================================
 ## List constants tests

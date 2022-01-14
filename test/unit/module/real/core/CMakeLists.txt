@@ -9,17 +9,11 @@
 ##==================================================================================================
 add_custom_target(unit.real.core.exe                )
 add_custom_target(unit.real.core.constant.exe       )
-add_custom_target(unit.real.core.constant.scalar.exe)
-add_custom_target(unit.real.core.constant.simd.exe  )
 add_custom_target(unit.real.core.scalar.exe         )
 add_custom_target(unit.real.core.simd.exe           )
 
 add_dependencies(unit.real.scalar.exe        unit.real.core.scalar.exe          )
 add_dependencies(unit.real.simd.exe          unit.real.core.simd.exe            )
-add_dependencies(unit.real.core.constant.exe unit.real.core.constant.scalar.exe )
-add_dependencies(unit.real.core.constant.exe unit.real.core.constant.simd.exe   )
-add_dependencies(unit.real.core.scalar.exe   unit.real.core.constant.scalar.exe )
-add_dependencies(unit.real.core.simd.exe     unit.real.core.constant.simd.exe   )
 add_dependencies(unit.real.core.exe          unit.real.core.constant.exe        )
 add_dependencies(unit.real.core.exe          unit.real.core.scalar.exe          )
 add_dependencies(unit.real.core.exe          unit.real.core.simd.exe            )
@@ -53,6 +47,7 @@ make_unit("unit.real.core" decorated.div.cpp         )
 make_unit("unit.real.core" decorated.rem.cpp         )
 make_unit("unit.real.core" firstbitset.cpp           )
 make_unit("unit.real.core" firstbitunset.cpp         )
+make_unit("unit.real.core" gather.cpp                )
 make_unit("unit.real.core" has_single_bit.cpp        )
 make_unit("unit.real.core" if_else.cpp               )
 make_unit("unit.real.core" is_pow2.cpp               )
@@ -71,13 +66,13 @@ make_unit("unit.real.core"  convert/to_uint16.cpp    )
 make_unit("unit.real.core"  convert/to_uint8.cpp     )
 make_unit("unit.real.core"  convert/to_tuple.cpp     )
 
-##==================================================================================================
-## Other tests
-##==================================================================================================
-add_subdirectory(failure)
-
-##==================================================================================================
-## Elementwise function unit tests
-##==================================================================================================
-make_all_units(ROOT unit.real.core NAME gather                ARCH        simd TYPES ${all_types}     )
-make_all_units(ROOT unit.real.core NAME saturate              ARCH scalar simd TYPES ${all_types}     )
+make_unit("unit.real.core"  saturate/as_double.cpp   )
+make_unit("unit.real.core"  saturate/as_float.cpp    )
+make_unit("unit.real.core"  saturate/as_int64.cpp    )
+make_unit("unit.real.core"  saturate/as_int32.cpp    )
+make_unit("unit.real.core"  saturate/as_int16.cpp    )
+make_unit("unit.real.core"  saturate/as_int8.cpp     )
+make_unit("unit.real.core"  saturate/as_uint64.cpp   )
+make_unit("unit.real.core"  saturate/as_uint32.cpp   )
+make_unit("unit.real.core"  saturate/as_uint16.cpp   )
+make_unit("unit.real.core"  saturate/as_uint8.cpp    )

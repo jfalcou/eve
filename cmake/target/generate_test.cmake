@@ -3,7 +3,6 @@
 ##  Copyright : EVE Contributors & Maintainers
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
-include(target/generate_html)
 
 ##==================================================================================================
 ## Setup a test with many option
