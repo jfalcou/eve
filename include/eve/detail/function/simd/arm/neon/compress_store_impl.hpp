@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/detail/function/compress_store_swizzle_mask_num.hpp>
+#include <eve/detail/function/byte_16_runtime_shuffle.hpp>
 
 #include <eve/function/if_else.hpp>
 #include <eve/function/slide_left.hpp>
@@ -16,20 +17,6 @@ namespace eve::detail
 {
   // See comments in compress_store_num and x86 impl
 
-  template <typename N>
-  EVE_FORCEINLINE eve::wide<std::uint8_t, N>
-  byte_shuffle(eve::wide<std::uint8_t, N> what, eve::wide<std::uint8_t, N> pattern)
-  {
-         if constexpr ( N() <= 8 ) return vtbl1_u8  (what, pattern);
-    else if constexpr ( eve::current_api == eve::asimd ) return vqtbl1q_u8(what, pattern);
-    else
-    {
-      uint8x8x2_t lh  = {{ vget_low_u8(what), vget_high_u8(what) }};
-      return vcombine_u8(
-        vtbl2_u8(lh, vget_low_u8(pattern)), vtbl2_u8(lh, vget_high_u8(pattern))
-      );
-    }
-  }
 
   template <typename T, typename U, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
@@ -51,7 +38,7 @@ namespace eve::detail
     bytes pattern{bytes_ap};
 
     bytes bytes_v = bit_cast(v, eve::as<bytes>{});
-    bytes_v       = byte_shuffle(bytes_v, pattern);
+    bytes_v       = byte_16_runtime_shuffle(bytes_v, pattern);
     v             = bit_cast(bytes_v, as(v));
 
     store(v, ptr);
@@ -64,7 +51,7 @@ namespace eve::detail
                           wide<T, N> v,
                           logical<wide<U, N>> mask,
                           Ptr ptr)
-    requires arm_abi<abi_t<T, N>> && ( N() == 8 ) && (sizeof(T) == 2)
+    requires arm_abi<abi_t<T, N>> && ( N() == 8 ) && (sizeof(T) <= 2)
   {
     using u_t   = eve::as_integer_t<T, unsigned>;
     using bytes = typename wide<T, N>::template rebind<std::uint8_t, fixed<sizeof(T) * 8>>;
@@ -84,7 +71,7 @@ namespace eve::detail
 
     // Shuffle
     bytes bytes_v = bit_cast(v, eve::as<bytes>{});
-    bytes_v       = byte_shuffle(bytes_v, pattern);
+    bytes_v       = byte_16_runtime_shuffle(bytes_v, pattern);
     v             = bit_cast(bytes_v, as(v));
 
     // store
