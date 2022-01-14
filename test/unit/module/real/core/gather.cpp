@@ -22,8 +22,8 @@ EVE_TEST_TYPES( "Check eve::gather behavior with 32 bits indexes", eve::test::si
   T ref( [&](auto i, auto) { return data[maps.get(i)]; } );
 
   const v_t* cdata = &data[0];
-  TTS_EQUAL( ref, eve::gather(eve::as_aligned(cdata   ), maps) );
-  TTS_EQUAL( ref, eve::gather(eve::as_aligned(&data[0]), maps) );
+  TTS_EQUAL( ref, eve::gather(eve::as_aligned(cdata   , eve::cardinal_t<T>{} ), maps) );
+  TTS_EQUAL( ref, eve::gather(eve::as_aligned(&data[0], eve::cardinal_t<T>{} ), maps) );
 };
 
 EVE_TEST_TYPES( "Check eve::gather behavior with 64 bits indexes", eve::test::simd::all_types)
@@ -39,8 +39,8 @@ EVE_TEST_TYPES( "Check eve::gather behavior with 64 bits indexes", eve::test::si
   T ref( [&](auto i, auto) { return data[maps.get(i)]; } );
 
   const v_t* cdata = &data[0];
-  TTS_EQUAL( ref, eve::gather(eve::as_aligned(cdata   ), maps) );
-  TTS_EQUAL( ref, eve::gather(eve::as_aligned(&data[0]), maps) );
+  TTS_EQUAL( ref, eve::gather(eve::as_aligned(cdata   , eve::cardinal_t<T>{} ), maps) );
+  TTS_EQUAL( ref, eve::gather(eve::as_aligned(&data[0], eve::cardinal_t<T>{} ), maps) );
 };
 
 EVE_TEST_TYPES( "Check unaligned eve::gather behavior with 32 bits indexes", eve::test::simd::all_types)
