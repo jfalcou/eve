@@ -11,6 +11,7 @@
 #include <eve/function/raw.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/convert.hpp>
+#include <eve/function/converter.hpp>
 #include <eve/function/bitofsign.hpp>
 #include <eve/function/bit_xor.hpp>
 #include <eve/constant/twotonmb.hpp>
@@ -48,6 +49,23 @@ namespace eve::detail
     else
     {
       return apply_over(nearest, a0);
+    }
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////
+  // return integral types
+
+  template<integral_real_value T, typename D>
+  EVE_FORCEINLINE constexpr auto nearest_(EVE_SUPPORTS(cpu_), D const &, T xx) noexcept
+  requires(is_one_of<D>(types<int_converter, uint_converter>{}))
+  {
+    if constexpr( has_native_abi_v<T> )
+    {
+      return D()(nearest(xx));
+    }
+    else
+    {
+      return apply_over(D()(nearest), xx);
     }
   }
 }

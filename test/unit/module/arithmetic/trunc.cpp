@@ -29,6 +29,11 @@ EVE_TEST_TYPES( "Check return types of trunc"
 
   TTS_EXPR_IS( eve::trunc(T())  , T);
   TTS_EXPR_IS( eve::trunc(v_t()), v_t);
+  TTS_EXPR_IS( eve::int_(eve::trunc)(T())  , eve::as_integer_t<T>);
+  TTS_EXPR_IS( eve::int_(eve::trunc)(v_t()), eve::as_integer_t<v_t>);
+  TTS_EXPR_IS( eve::uint_(eve::trunc)(T())  , (eve::as_integer_t<T, unsigned>));
+  TTS_EXPR_IS( eve::uint_(eve::trunc)(v_t()), (eve::as_integer_t<v_t, unsigned>));
+
   if constexpr(eve::floating_real_value<T>)
   {
     TTS_EXPR_IS( eve::tolerant(eve::trunc)(T())  , T);
@@ -67,11 +72,17 @@ EVE_TEST( "Check behavior of trunc on wide"
         )
 <typename T>(T const& a0 )
 {
+  using wi_t = eve::as_integer_t<T>;
+  using uwi_t = eve::as_integer_t<T, unsigned>;
   using v_t = eve::element_type_t<T>;
+  using i_t = eve::as_integer_t<v_t>;
+  using ui_t = eve::as_integer_t<v_t, unsigned>;
   if constexpr(eve::floating_real_value<T>)
   {
     TTS_EQUAL( eve::trunc(a0), T([&](auto i, auto) { return v_t(std::trunc(a0.get(i))); }));
     TTS_EQUAL( eve::diff(eve::trunc)(a0), eve::zero(eve::as(a0)));
+    TTS_EQUAL( eve::int_(eve::trunc)(a0), wi_t([&](auto i, auto) { return i_t(a0.get(i)); }));
+    TTS_EQUAL( eve::uint_(eve::trunc)(eve::abs(a0)), uwi_t([&](auto i, auto) { return ui_t(std::abs(a0.get(i))); }));
   }
   else
   {
