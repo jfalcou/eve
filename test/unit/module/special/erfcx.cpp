@@ -12,6 +12,7 @@
 #include <eve/function/all.hpp>
 #include <eve/function/erfcx.hpp>
 #include <eve/function/rsqrt.hpp>
+#include <eve/function/prev.hpp>
 #include <eve/function/diff/erfcx.hpp>
 #include <type_traits>
 #include <cmath>

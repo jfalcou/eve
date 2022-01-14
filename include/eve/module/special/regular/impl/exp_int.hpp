@@ -7,34 +7,11 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 #include <eve/detail/hz_device.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/add.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/is_flint.hpp>
-#include <eve/function/is_gez.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_odd.hpp>
-#include <eve/function/is_infinite.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/log.hpp>
+#include <eve/module/special/regular/tgamma.hpp>
 #include <eve/function/maximum.hpp>
-#include <eve/function/min.hpp>
-#include <eve/function/pow.hpp>
-#include <eve/function/tgamma.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/constant/ieee_constant.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/halfeps.hpp>
-#include <eve/constant/maxlog.hpp>
-
-#include <type_traits>
 
 namespace eve::detail
 {

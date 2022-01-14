@@ -7,23 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/ieee_constant.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_gez.hpp>
-#include <eve/function/is_less_equal.hpp>
-#include <eve/function/is_ltz.hpp>
-#include <eve/function/pow_abs.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/module/real/core/detail/generic/horn.hpp>
-
-#include <type_traits>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 
 namespace eve::detail
 {

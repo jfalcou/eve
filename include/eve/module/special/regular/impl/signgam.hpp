@@ -7,21 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/binarize.hpp>
-#include <eve/function/bitofsign.hpp>
-#include <eve/function/bit_or.hpp>
-#include <eve/function/floor.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_flint.hpp>
-#include <eve/function/is_infinite.hpp>
-#include <eve/function/is_nan.hpp>
-#include <eve/function/is_ngtz.hpp>
-#include <eve/function/is_odd.hpp>
-#include <eve/function/oneminus.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/ieee.hpp>
 
 namespace eve::detail
 {

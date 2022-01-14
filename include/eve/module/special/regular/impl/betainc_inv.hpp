@@ -7,31 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/function/average.hpp>
-#include <eve/function/betainc.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/is_not_nan.hpp>
-#include <eve/function/is_ltz.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/lbeta.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/log1p.hpp>
-#include <eve/function/lbeta.hpp>
-#include <eve/function/logical_or.hpp>
-#include <eve/function/min.hpp>
-#include <eve/function/maxmag.hpp>
-#include <eve/function/oneminus.hpp>
-#include <eve/function/pow.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/sqrt.hpp>
-#include <eve/constant/allbits.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/concept/value.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/special/regular/betainc.hpp>
+#include <eve/module/special/regular/lbeta.hpp>
+#include <eve/module/special/regular/signgam.hpp>
 #include <eve/detail/hz_device.hpp>
 
 namespace eve::detail

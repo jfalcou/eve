@@ -7,18 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/smallestposval.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/max.hpp>
-#include <eve/function/is_not_greater.hpp>
-#include <eve/function/lambert.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/function/if_else.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/ieee.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/special/regular/lambert.hpp>
 
 namespace eve::detail
 {

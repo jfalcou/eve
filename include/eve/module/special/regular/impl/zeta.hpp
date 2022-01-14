@@ -7,30 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/has_abi.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/pio_2.hpp>
-#include <eve/constant/pi.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/cospi.hpp>
-#include <eve/function/tgamma.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_not_nan.hpp>
-#include <eve/function/ldexp.hpp>
-#include <eve/function/oneminus.hpp>
-#include <eve/function/pow_abs.hpp>
-#include <eve/function/powm1.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/rsqrt.hpp>
-#include <eve/function/sqrt.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 #include <eve/detail/hz_device.hpp>
-
 
 namespace eve::detail
 {
