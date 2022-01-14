@@ -7,24 +7,16 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/traits/common_compatible.hpp>
-#include <eve/concept/compatible.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/add.hpp>
-#include <eve/function/horner.hpp>
-#include <eve/function/pedantic/horner.hpp>
-#include <eve/function/numeric/horner.hpp>
-#include <eve/function/decorator.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/constant/one.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/polynomial/regular/horner.hpp>
+#include <eve/module/polynomial/pedantic/horner.hpp>
+#include <eve/module/polynomial/numeric/horner.hpp>
 #include <eve/concept/range.hpp>
-
 #include <concepts>
 #include <iterator>
 #include <initializer_list>
+
+
 
 namespace eve::detail
 {

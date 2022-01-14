@@ -7,19 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/legendre.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/fms.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_odd.hpp>
-#include <eve/function/none.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/nan.hpp>
-#include <utility>
-#include <eve/detail/apply_over.hpp>
+#include <eve/module/arithmetic.hpp>
 
 namespace eve::detail
 {
