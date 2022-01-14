@@ -11,6 +11,7 @@
 #include <eve/detail/overload.hpp>
 
 #include <eve/memory/aligned_ptr.hpp>
+#include <eve/memory/soa_ptr.hpp>
 
 #include <concepts>
 #include <iterator>
@@ -57,21 +58,19 @@ namespace eve
   namespace detail
   {
 
-    template <typename T>
-    EVE_FORCEINLINE auto unalign_(EVE_SUPPORTS(cpu_), T i) noexcept
-    {
-      if constexpr ( std::contiguous_iterator<T>) return i;
-      else
-      {
-        static_assert(kumi::product_type<T>);
-        return kumi::map(unalign, i);
-      }
-    }
+    template <std::contiguous_iterator I>
+    EVE_FORCEINLINE I unalign_(EVE_SUPPORTS(cpu_), I i) noexcept { return i; }
 
     template <typename T, typename N>
     EVE_FORCEINLINE T* unalign_(EVE_SUPPORTS(cpu_), aligned_ptr<T, N> p) noexcept
     {
       return p.get();
+    }
+
+    template <typename ...Ptrs>
+    EVE_FORCEINLINE auto unalign_(EVE_SUPPORTS(cpu_), soa_ptr<Ptrs...> p) noexcept
+    {
+      return soa_ptr<unaligned_t<Ptrs>...>{ kumi::map(unalign, p) };
     }
   }
 }
