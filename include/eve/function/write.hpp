@@ -10,6 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/concept/vectorizable.hpp>
+#include <eve/memory/soa_ptr.hpp>
 
 namespace eve
 {
@@ -54,6 +55,12 @@ namespace eve
     requires requires(Ptr p, V v) { *p = v; }
     {
       *ptr = v;
+    }
+
+    template <scalar_value V, typename ... Ptrs>
+    EVE_FORCEINLINE void write_(EVE_SUPPORTS(cpu_), soa_ptr<Ptrs...> ptr, V v) noexcept
+    {
+      kumi::for_each(write, ptr, v);
     }
   }
 }

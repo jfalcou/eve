@@ -8,6 +8,7 @@
 #include "test.hpp"
 #include "unit/memory/page.hpp"
 #include <eve/memory/aligned_ptr.hpp>
+#include <eve/memory/soa_ptr.hpp>
 #include <eve/function/load.hpp>
 
 #include <array>
@@ -23,7 +24,7 @@ using tuple_t = kumi::tuple<std::int8_t,T,double>;
 //==================================================================================================
 // Load tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check load behavior with tuple of pointers", eve::test::scalar::all_types)
+EVE_TEST_TYPES( "Check load behavior with soa_ptr", eve::test::scalar::all_types)
 <typename T>(eve::as<T>)
 {
   using s_t   = tuple_t<T>;
@@ -48,7 +49,7 @@ EVE_TEST_TYPES( "Check load behavior with tuple of pointers", eve::test::scalar:
   auto [data1,idx1] = page<T            , typename w8_t::cardinal_type >();
   auto [data2,idx2] = page<double       , typename w8_t::cardinal_type >();
 
-  auto src = kumi::make_tuple ( eve::as_aligned(&data0[idx0],typename w8_t::cardinal_type{})
+  auto src = eve::soa_ptr    ( eve::as_aligned(&data0[idx0],typename w8_t::cardinal_type{})
                               , &data1[idx1] - 1
                               , eve::as_aligned(&data2[idx2],typename w8_t::cardinal_type{})
                               );

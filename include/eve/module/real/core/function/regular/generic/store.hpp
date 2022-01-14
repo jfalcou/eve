@@ -13,27 +13,28 @@
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/replace.hpp>
 #include <eve/memory/aligned_ptr.hpp>
+#include <eve/memory/soa_ptr.hpp>
 
 namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // simd Tuple case
-  template<kumi::product_type T, typename S, kumi::sized_product_type<T::size()> Ptr>
+  template<kumi::product_type T, typename S, typename ...Ptrs>
   EVE_FORCEINLINE void
-  store_(EVE_SUPPORTS(cpu_), wide<T, S> const &value, Ptr ptrs) noexcept
+  store_(EVE_SUPPORTS(cpu_), wide<T, S> const &value, soa_ptr<Ptrs...> ptrs) noexcept
     requires std::same_as<abi_t<T, S>, bundle_>
   {
     kumi::for_each( [](auto v, auto p) { store(v, p); }, value, ptrs );
   }
 
   template< kumi::product_type T, typename S
-          , kumi::sized_product_type<T::size()> Ptr
           , relative_conditional_expr C
+          , typename ...Ptrs
           >
   EVE_FORCEINLINE void store_(EVE_SUPPORTS(cpu_),
                               C const &c,
                               wide<T, S> const &value,
-                              Ptr ptrs) noexcept
+                              soa_ptr<Ptrs...> ptrs) noexcept
   {
     if constexpr ( C::has_alternative )
     {

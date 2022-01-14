@@ -299,32 +299,62 @@ namespace eve::algo::views
     }
 
     template< relative_conditional_expr C, decorator S>
-    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::load_, C const& c, S const& s
-                                , auto const& pack, zip_iterator self
-                                )
+    EVE_FORCEINLINE friend auto tagged_dispatch (
+        eve::tag::load_, C const& c, S const& s
+      , eve::as<wide_value_type_t<zip_iterator>> const&
+      , zip_iterator self
+    )
     {
-      return eve::load(c, s, pack, self.storage);
+      wide_value_type_t<zip_iterator> res;
+      if constexpr ( C::has_alternative )
+      {
+        kumi::for_each([&](auto part_alt, auto i, auto& r) {
+            auto new_c = c.map_alternative([&](auto) { return part_alt; });
+            r = eve::load(new_c, s, as(r), i); }
+          , c.alternative, self.storage, res);
+      }
+      else
+      {
+        kumi::for_each([&](auto i, auto& r) { r = eve::load(c, s, as(r), i); }
+                      , self.storage, res);
+      }
+      return res;
     }
 
     template <relative_conditional_expr C>
     EVE_FORCEINLINE friend void tagged_dispatch(
-      eve::tag::store_, C cond, wide_value_type_t<zip_iterator> v, zip_iterator self )
+      eve::tag::store_, C c, wide_value_type_t<zip_iterator> v, zip_iterator self )
     {
-      eve::store[cond](v, self.storage);
+      if constexpr (C::has_alternative)
+      {
+        v = eve::replace_ignored(v, c, c.alternative);
+        eve::store(v, self);
+      }
+      else
+      {
+        kumi::for_each([&](auto what, auto i) { return  eve::store[c](what, i); },
+                       v, self.storage);
+      }
     }
 
-    EVE_FORCEINLINE friend void tagged_dispatch( eve::tag::store_, wide_value_type_t<zip_iterator> v, zip_iterator self )
+    EVE_FORCEINLINE friend void tagged_dispatch( eve::tag::store_,
+                                                 wide_value_type_t<zip_iterator> v,
+                                                 zip_iterator self )
     {
-      eve::store(v, self.storage);
+      kumi::for_each([&](auto what, auto i) { return  eve::store(what, i); },
+                     v, self.storage);
     }
 
     template <relative_conditional_expr C, decorator Decorator, typename U>
-    EVE_FORCEINLINE friend auto tagged_dispatch( eve::tag::compress_store_,
+    EVE_FORCEINLINE friend auto tagged_dispatch(
+      eve::tag::compress_store_,
       C c, Decorator d, wide_value_type_t<zip_iterator> v,
       eve::logical<eve::wide<U, iterator_cardinal_t<I>>> m,
       zip_iterator self)
     {
-      auto raw_res = d(eve::compress_store[c])(v, m, self.storage);
+      auto raw_res = kumi::map(
+        [&](auto what, auto i) { return d(eve::compress_store[c])(what, m, i); },
+        v, self.storage);
       return unaligned_t<zip_iterator>{raw_res};
     }
   };

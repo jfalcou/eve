@@ -12,6 +12,7 @@
 #include <eve/detail/kumi.hpp>
 
 #include <eve/function/unalign.hpp>
+#include <eve/memory/soa_ptr.hpp>
 
 namespace eve::detail
 {
@@ -55,7 +56,7 @@ namespace eve::detail
 
   template< relative_conditional_expr C, decorator Decorator
           , kumi::product_type T, real_scalar_value U, typename N
-          , data_source Ptr
+          , typename ... Ptrs
           >
   EVE_FORCEINLINE
   auto compress_store_(EVE_SUPPORTS(cpu_),
@@ -63,11 +64,12 @@ namespace eve::detail
                        Decorator d,
                        wide<T, N> vs,
                        logical<wide<U, N>> mask,
-                       Ptr ptrs) noexcept
+                       soa_ptr<Ptrs...> ptrs) noexcept
   {
-    return kumi::map ( [&] (auto v, auto p) {
-      return compress_store(c, d, v, mask, p);
-    }, vs.storage(), ptrs);
+    return soa_ptr<unaligned_t<Ptrs>...>{
+      kumi::map ( [&] (auto v, auto p) { return compress_store(c, d, v, mask, p); },
+                  vs.storage(), ptrs)
+    };
   }
 
 
