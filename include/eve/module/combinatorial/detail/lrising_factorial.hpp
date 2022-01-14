@@ -7,22 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/any.hpp>
-#include <eve/function/lgamma.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/is_nlez.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/digamma.hpp>
-#include <eve/function/dist.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/log1p.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/half.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/ieee.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/special/regular/lgamma.hpp>
+#include <eve/module/special/regular/digamma.hpp>
 #include <eve/detail/hz_device.hpp>
 
 namespace eve::detail

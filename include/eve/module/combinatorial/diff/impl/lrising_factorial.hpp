@@ -7,14 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/derivative.hpp>
-#include <eve/concept/compatible.hpp>
-#include <eve/function/pedantic/lrising_factorial.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/function/digamma.hpp>
-#include <eve/function/regular.hpp>
-#include <eve/function/pedantic.hpp>
-#include <eve/function/raw.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
+#include <eve/detail/hz_device.hpp>
+#include <eve/module/combinatorial/regular/lrising_factorial.hpp>
+#include <eve/module/special/regular/tgamma.hpp>
+#include <eve/module/special/regular/digamma.hpp>
 
 namespace eve::detail
 {

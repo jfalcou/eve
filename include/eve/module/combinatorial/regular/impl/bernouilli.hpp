@@ -7,18 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/gather.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_odd.hpp>
-#include <eve/function/is_even.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/mhalf.hpp>
-#include <eve/constant/one.hpp>
-#include <type_traits>
-#include <eve/detail/apply_over.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <array>
 
 namespace eve::detail

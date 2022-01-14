@@ -7,39 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/digamma.hpp>
-#include <eve/function/tgamma.hpp>
-#include <eve/function/dist.hpp>
-#include <eve/function/floor.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_gtz.hpp>
-#include <eve/function/is_lez.hpp>
-#include <eve/function/is_ltz.hpp>
-#include <eve/function/is_nlez.hpp>
-#include <eve/function/is_nltz.hpp>
-#include <eve/function/is_nan.hpp>
-#include <eve/function/is_not_nan.hpp>
-#include <eve/function/lgamma.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/log1p.hpp>
-#include <eve/function/oneminus.hpp>
-#include <eve/function/pow.hpp>
-#include <eve/function/raw.hpp>
-#include <eve/function/regular.hpp>
-#include <eve/function/sinpi.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/traits/common_compatible.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/ieee.hpp>
+#include <eve/module/special/regular/digamma.hpp>
+#include <eve/module/special/regular/tgamma.hpp>
+#include <eve/module/special/regular/lgamma.hpp>
 #include <eve/detail/hz_device.hpp>
 #include <eve/module/combinatorial/detail/lrising_factorial.hpp>
 
