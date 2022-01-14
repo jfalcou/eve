@@ -7,21 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/function/add.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/fms.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/oneminus.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/function/successor.hpp>
-#include <utility>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/polynomial/regular/successor.hpp>
 
 namespace eve::detail
 {

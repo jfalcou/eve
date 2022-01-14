@@ -7,12 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/gegenbauer.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/detail/apply_over.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/polynomial/regular/gegenbauer.hpp>
 
 namespace eve::detail
 {

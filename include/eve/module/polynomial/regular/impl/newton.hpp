@@ -7,10 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/function/regular.hpp>
-#include <eve/constant/one.hpp>
+
 #include <eve/module/polynomial/detail/newton_impl.hpp>
 
 namespace eve::detail

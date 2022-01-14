@@ -7,10 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/hermite.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/derivative.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/polynomial/regular/hermite.hpp>
 
 namespace eve::detail
 {
