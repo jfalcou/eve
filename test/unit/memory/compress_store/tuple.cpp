@@ -9,6 +9,7 @@
 #include "test.hpp"
 
 #include <eve/function/compress_store.hpp>
+#include <eve/memory/soa_ptr.hpp>
 
 #include <random>
 
@@ -36,7 +37,7 @@ EVE_TEST_TYPES( "Check compress store behaviour with tuples ", eve::test::simd::
   alignas(w_t::size() * sizeof(e_t        )) std::array<e_t        , w_t::size()> data1;
   alignas(w_t::size() * sizeof(double     )) std::array<double     , w_t::size()> data2;
 
-  using u_ptr = kumi::tuple<std::int8_t*, e_t*, double*>;
+  using u_ptr = eve::soa_ptr<std::int8_t*, e_t*, double*>;
 
   auto test = [&](auto ptr, auto mask, auto ignore) {
     data0.fill(0);
@@ -63,8 +64,8 @@ EVE_TEST_TYPES( "Check compress store behaviour with tuples ", eve::test::simd::
     TTS_EQUAL(o, (get<2>(res) - data2.data()));
   };
 
-  kumi::tuple ptr1{ data0.data(), data1.data(), data2.data() };
-  kumi::tuple ptr2{ data0.data(), eve::as_aligned(data1.data(), N{}), data2.data() };
+  eve::soa_ptr ptr1{ data0.data(), data1.data(), data2.data() };
+  eve::soa_ptr ptr2{ data0.data(), eve::as_aligned(data1.data(), N{}), data2.data() };
 
   constexpr auto seed = sizeof(e_t) + T::size();
   std::mt19937 g(seed);
@@ -100,7 +101,7 @@ TTS_CASE( "explicit test case")
 
   eve::logical<eve::wide<std::int16_t, eve::fixed<4>>> m { true, false, true, false};
 
-  auto r = eve::safe(eve::compress_store)(x, m, kumi::tuple{out_ints.data(), out_bytes.data()});
+  auto r = eve::safe(eve::compress_store)(x, m, eve::soa_ptr{out_ints.data(), out_bytes.data()});
   TTS_EQUAL(get<0>(r), out_ints.end());
   TTS_EQUAL(get<1>(r), out_bytes.end());
 
