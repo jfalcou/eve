@@ -7,28 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/is_infinite.hpp>
-#include <eve/function/is_less.hpp>
-#include <eve/function/is_ltz.hpp>
-#include <eve/function/logical_andnot.hpp>
-#include <eve/function/count_true.hpp>
-#include <eve/function/oneminus.hpp>
-#include <eve/function/sign.hpp>
-#include <eve/function/signnz.hpp>
-#include <eve/function/sqr.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 #include <eve/module/math/detail/generic/erf_kernel.hpp>
-#include <eve/platform.hpp>
-#include <type_traits>
 
 namespace eve::detail
 {

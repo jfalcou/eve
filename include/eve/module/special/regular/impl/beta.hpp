@@ -7,12 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/function/lgamma.hpp>
-#include <eve/function/signgam.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/concept/compatible.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/special/regular/lgamma.hpp>
+#include <eve/module/special/regular/signgam.hpp>
+
 
 namespace eve::detail
 {
@@ -26,7 +24,7 @@ namespace eve::detail
   EVE_FORCEINLINE T beta_(EVE_SUPPORTS(cpu_), T a0,  T a1) noexcept
   {
     auto y = a0+a1;
-    auto sign = signgam(a0)*signgam(a1)*signgam(y);
+    auto sign = eve::signgam(a0)*eve::signgam(a1)*eve::signgam(y);
     return sign*exp(lgamma(a0)+lgamma(a1)-lgamma(y));
   }
 }

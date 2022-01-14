@@ -7,29 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/reverse_horner.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/function/fam.hpp>
-#include <eve/function/fms.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/is_gez.hpp>
-#include <eve/function/is_gtz.hpp>
-#include <eve/function/is_nlez.hpp>
-#include <eve/function/is_ngez.hpp>
-#include <eve/function/is_not_nan.hpp>
-#include <eve/function/is_positive.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/sqrt.hpp>
-#include <eve/constant/nan.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/polynomial.hpp>
+#include <eve/module/ieee.hpp>
+#include <eve/module/math.hpp>
 #include <eve/detail/hz_device.hpp>
-#include <array>
 
 namespace eve::detail
 {
