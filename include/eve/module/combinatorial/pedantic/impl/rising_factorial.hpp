@@ -7,23 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_nan.hpp>
-#include <eve/function/pedantic/lrising_factorial.hpp>
-#include <eve/function/pedantic.hpp>
-#include <eve/function/signgam.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/traits/common_compatible.hpp>
-#include <type_traits>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/combinatorial/pedantic/lrising_factorial.hpp>
+#include <eve/module/special/regular/signgam.hpp>
+
 
 namespace eve::detail
 {

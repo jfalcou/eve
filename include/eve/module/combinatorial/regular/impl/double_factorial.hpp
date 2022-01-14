@@ -7,29 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/average.hpp>
-#include <eve/function/ceil.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/factorial.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/pedantic/ldexp.hpp>
-#include <eve/function/tgamma.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/detail/hz_device.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/min.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/mone.hpp>
-#include <eve/constant/one.hpp>
+#include <eve/module/arithmetic.hpp>
+//#include <eve/module/special.hpp>
+#include <eve/module/combinatorial/regular/factorial.hpp>
+#include <eve/module/special/regular/tgamma.hpp>
 
-#include <type_traits>
-#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {

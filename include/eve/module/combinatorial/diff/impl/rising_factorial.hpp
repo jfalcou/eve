@@ -7,17 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/derivative.hpp>
-#include <eve/concept/compatible.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/pedantic/rising_factorial.hpp>
-#include <eve/function/diff/lrising_factorial.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/regular.hpp>
-#include <eve/function/pedantic.hpp>
-#include <eve/function/raw.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/function/digamma.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/combinatorial/pedantic/rising_factorial.hpp>
+#include <eve/module/combinatorial/diff/lrising_factorial.hpp>
+#include <eve/module/special/regular/digamma.hpp>
 
 namespace eve::detail
 {
