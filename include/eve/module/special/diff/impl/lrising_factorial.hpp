@@ -10,7 +10,7 @@
 #include <eve/module/arithmetic.hpp>
 #include <eve/module/math.hpp>
 #include <eve/detail/hz_device.hpp>
-#include <eve/module/combinatorial/regular/lrising_factorial.hpp>
+#include <eve/module/special/regular/lrising_factorial.hpp>
 #include <eve/module/special/regular/tgamma.hpp>
 #include <eve/module/special/regular/digamma.hpp>
 

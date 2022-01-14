@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/combinatorial/pedantic/impl/lrising_factorial.hpp>
+#include <eve/module/special/diff/impl/lrising_factorial.hpp>

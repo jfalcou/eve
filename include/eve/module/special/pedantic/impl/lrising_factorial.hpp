@@ -14,7 +14,7 @@
 #include <eve/module/special/regular/tgamma.hpp>
 #include <eve/module/special/regular/lgamma.hpp>
 #include <eve/detail/hz_device.hpp>
-#include <eve/module/combinatorial/detail/lrising_factorial.hpp>
+#include <eve/module/special/detail/lrising_factorial.hpp>
 
 namespace eve::detail
 {

@@ -1,5 +1,5 @@
 //#include <eve/function/double_factorial.hpp>
-#include <eve/module/combinatorial.hpp>
+#include <eve/module/special.hpp>
 #include <eve/wide.hpp>
 #include <iomanip>
 #include <iostream>

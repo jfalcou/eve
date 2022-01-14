@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/module/arithmetic.hpp>
-#include <eve/module/combinatorial/pedantic/rising_factorial.hpp>
-#include <eve/module/combinatorial/diff/lrising_factorial.hpp>
+#include <eve/module/special/pedantic/rising_factorial.hpp>
+#include <eve/module/special/diff/lrising_factorial.hpp>
 #include <eve/module/special/regular/digamma.hpp>
 
 namespace eve::detail
