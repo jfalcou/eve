@@ -7,37 +7,16 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/platform.hpp>
-#include <type_traits>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/ieee.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/special.hpp>
 #include <eve/module/proba/detail/attributes.hpp>
 #include <eve/module/proba/detail/urg01.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/average.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/function/expm1.hpp>
-#include <eve/function/floor.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/is_finite.hpp>
-#include <eve/function/is_not_flint.hpp>
-#include <eve/function/is_ltz.hpp>
-#include <eve/function/is_gez.hpp>
-#include <eve/function/lerp.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/function/sqrt.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/assert.hpp>
-#include <concepts>
+#include <eve/function/normal_distribution.hpp>
 
 namespace eve
 {
-
   template < typename T, typename U
              , typename V = common_compatible_floating_elt_t<T, U>>
   struct uniform_discrete_distribution{};

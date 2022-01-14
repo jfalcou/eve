@@ -11,7 +11,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/oneminus.hpp>
-#include <eve/function/normal_distribution.hpp>
+#include <eve/function/erfc_inv.hpp>
 #include <eve/function/diff/gamma_p.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/any.hpp>
@@ -38,6 +38,7 @@
 #include <eve/function/nb_values.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/inf.hpp>
+#include <eve/constant/sqrt_2.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -64,7 +65,8 @@ namespace eve::detail
     auto x = if_else(iseq1p, inf(as(p)), if_else(iseqzp, zero(as(p)), allbits));
     logical<T> notdone(is_not_nan(p) && !iseqzp && !iseq1p);
     auto d = rec(9*k);
-    auto y = oneminus(d + invcdf(normal_distribution_01<T>, oneminus(p)) * eve::sqrt(d));
+    auto omp = oneminus(p);
+    auto y = oneminus(d -sqrt_2(as(omp))*erfc_inv(2*omp)* eve::sqrt(d));
 
     x = if_else(notdone, k*sqr(y)*y, x);
     auto x0 = x;
