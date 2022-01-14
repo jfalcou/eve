@@ -26,7 +26,7 @@ namespace eve::detail
                                         wide<T, N> const &c) noexcept
       requires x86_abi<abi_t<T, N>>
   {
-    if constexpr( supports_fma3 || supports_fma4  )
+    if constexpr( supports_fma3 )
     {
       return fma(a, b, c);
     }

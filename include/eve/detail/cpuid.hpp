@@ -117,8 +117,6 @@ namespace
     bool supports_avx512CD() const noexcept { return f7_EBX_[28]; }
 
     bool supports_sse4_a()   const noexcept { return isAMD_ && f81_ECX_[6];                  }
-    bool supports_xop()      const noexcept { return isAMD_ && f1_ECX_[27] && f81_ECX_[11];  }
-    bool supports_fma4()     const noexcept { return isAMD_ && f1_ECX_[27] && f81_ECX_[16];  }
 
     bool isIntel_, isAMD_;
     std::bitset<32> f1_ECX_, f1_EDX_, f7_EBX_, f7_ECX_, f81_ECX_;
@@ -144,8 +142,6 @@ namespace
     bool supports_avx512CD() const noexcept { return false; }
 
     bool supports_sse4_a()   const noexcept { return false;  }
-    bool supports_xop()      const noexcept { return false;  }
-    bool supports_fma4()     const noexcept { return false;  }
   };
 }
 #endif

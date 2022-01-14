@@ -25,13 +25,7 @@ namespace eve::detail
   {
     if constexpr( std::is_integral_v<T> )
     {
-      if constexpr( supports_xop )
-      {
-              if constexpr( sizeof(T) == 2 )  return _mm_msub_epi16(a, b, c);
-        else  if constexpr( sizeof(T) == 4 )  return _mm_msub_epi32(a, b, c);
-        else                                  return fms_(EVE_RETARGET(cpu_), a, b, c);
-      }
-      else                                    return fms_(EVE_RETARGET(cpu_), a, b, c);
+      return fms_(EVE_RETARGET(cpu_), a, b, c);
     }
     else
     {
@@ -45,13 +39,6 @@ namespace eve::detail
         else  if constexpr( cat == category::float64x2  ) return _mm_fmsub_pd(a, b, c);
         else  if constexpr( cat == category::float32x8  ) return _mm256_fmsub_ps(a, b, c);
         else  if constexpr( cat == category::float32x4  ) return _mm_fmsub_ps(a, b, c);
-      }
-      else if constexpr( supports_fma4 )
-      {
-              if constexpr( cat == category::float64x4  ) return _mm256_msub_pd(a, b, c);
-        else  if constexpr( cat == category::float64x2  ) return _mm_msub_pd(a, b, c);
-        else  if constexpr( cat == category::float32x8  ) return _mm256_msub_ps(a, b, c);
-        else  if constexpr( cat == category::float32x4  ) return _mm_msub_ps(a, b, c);
       }
       else                                                return fma(a, b, -c);
     }

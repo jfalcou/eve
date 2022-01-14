@@ -91,8 +91,6 @@ In term of SIMD extension sets, we actively supports (ie code is optimized and r
 
 The following instructions are tentatively supported (ie code is incomplete and not tested in depth):
 
-- **AMD**
-  - XOP, FMA4
 - **PowerPC**
   - Altivec for Power7 to 9
   - VSX for Power9

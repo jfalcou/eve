@@ -29,7 +29,5 @@ namespace eve
     else                                            return false;
   }
 
-  inline bool is_supported(xop_ const &)  noexcept  { return detail::cpuid_states.supports_xop(); }
   inline bool is_supported(fma3_ const &) noexcept  { return detail::cpuid_states.supports_fma3();}
-  inline bool is_supported(fma4_ const &) noexcept  { return detail::cpuid_states.supports_fma4();}
 }
