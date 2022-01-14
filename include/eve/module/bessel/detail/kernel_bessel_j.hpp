@@ -7,35 +7,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/constant/eps.hpp>
-#include <eve/constant/pi.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/smallestposval.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/cyl_bessel_j0.hpp>
-#include <eve/function/cyl_bessel_j1.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_not_nan.hpp>
-#include <eve/function/is_infinite.hpp>
-#include <eve/function/is_gtz.hpp>
-#include <eve/function/is_nltz.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/lgamma.hpp>
-#include <eve/function/tgamma.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/logical_xor.hpp>
-#include <eve/function/maximum.hpp>
-#include <eve/function/nthroot.hpp>
-#include <eve/function/sincos.hpp>
-#include <eve/function/sinpicospi.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/function/sqrt.hpp>
-#include <eve/detail/kumi.hpp>
-#include <eve/function/converter.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/ieee.hpp>
+#include <eve/module/math.hpp>
 #include <eve/module/bessel/detail/kernel_bessel_jy_large.hpp>
 #include <eve/module/bessel/detail/kernel_bessel_ij_small.hpp>
 #include <eve/module/bessel/detail/kernel_bessel_jy.hpp>
+#include <array>
 
 /////////////////////////////////////////////////////////////////////////////////
 // These routines are detail of the computation of cylindrical bessel functions

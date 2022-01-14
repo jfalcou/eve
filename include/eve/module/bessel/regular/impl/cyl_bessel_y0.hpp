@@ -7,78 +7,16 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/hz_device.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/constant/pi.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/cyl_bessel_j0.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/none.hpp>
-#include <eve/function/rsqrt.hpp>
-#include <eve/function/sincos.hpp>
-#include <eve/function/sqr.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/ieee.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/bessel/regular/cyl_bessel_j0.hpp>
 #include <eve/module/bessel/detail/evaluate_rational.hpp>
+#include <eve/detail/hz_device.hpp>
 #include <array>
 
 namespace eve::detail
 {
-
-//  template<floating_real_value T>
-//   EVE_FORCEINLINE T cyl_bessel_y0_(EVE_SUPPORTS(cpu_), T x) noexcept
-//   {
-//     // ensure x > 0 y0 is an even function
-//     using elt_t =  element_type_t<T>;
-//     x = eve::abs(x);
-//     auto Pi = eve::pi(as(x));
-
-//     auto evaluate = [Pi](auto x, auto x1, auto x11, auto x12, auto P, auto Q)
-//       {
-//         T y = sqr(x);
-//         T z = 2 * log(x/x1) * cyl_bessel_j0(x) / Pi;
-//         T r = evaluate_rational(P, Q, y);
-//         T factor = (x + x1) * ((x - x11/256) - x12);
-//         return fma(factor, r, z); //z + factor * r;
-//       };
-
-//     using elt_t =  element_type_t<T>;
-//     if constexpr(scalar_value<T>)
-//     {
-//       if (x == 0)          return minf(as(x)); // x is 0
-//       if (x == inf(as(x))) return zero(as(x)); // x is infinite
-//       if (is_nan(x))       return x;           // x is nan
-//       if (x <= 3)          return br_3(x);     // x in (0, 5.5]
-//       if (x <= 5.5)        return br_5_5(x);   // x in (5.5, 8]
-//       return br_large(x);                      // x in (8, \infty)
-//     }
-//     else //simd
-//     {
-// //       if constexpr(has_native_abi_v<T>)
-// //       {
-// //         auto r = nan(as(x));
-// //         auto notdone = is_gez(x);
-// //         if( eve::any(notdone) )
-// //         {
-// //           notdone = next_interval(br_4,  notdone, x <= T(4), r, x);
-// //           if( eve::any(notdone) )
-// //           {
-// //             notdone = next_interval(br_8,  notdone, x <= T(8), r, x);
-// //             if( eve::any(notdone) )
-// //             {
-// //               notdone = last_interval(br_large,  notdone, r, x);
-// //             }
-// //           }
-// //         }
-// //         r = if_else (is_eqz(x), one(as(x)), r);
-// //         r = if_else (x == inf(as(x)), zero, r);
-// //         return r;
-// //       }
-// //       else return apply_over(cyl_bessel_j0, x);
-//     }
-//   }
-
-
   template<floating_real_value T>
   EVE_FORCEINLINE T cyl_bessel_y0_(EVE_SUPPORTS(cpu_), T x) noexcept
   {

@@ -7,22 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/pi.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/detail/hz_device.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/fnma.hpp>
-#include <eve/function/is_nan.hpp>
-#include <eve/function/oneminus.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/rsqrt.hpp>
-#include <eve/function/sincos.hpp>
-#include <eve/function/sqr.hpp>
-#include <array>
-#include <eve/module/bessel/detail/evaluate_rational.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/ieee.hpp>
+#include <eve/module/math.hpp>
 #include <eve/module/bessel/detail/kernel_bessel_j.hpp>
+#include <eve/module/bessel/detail/evaluate_rational.hpp>
 
 namespace eve::detail
 {

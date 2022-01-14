@@ -7,21 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/hz_device.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/constant/pi.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/cyl_bessel_j1.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_nltz.hpp>
-#include <eve/function/is_ngez.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/none.hpp>
-#include <eve/function/rsqrt.hpp>
-#include <eve/function/sincos.hpp>
-#include <eve/function/sqr.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/ieee.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/bessel/regular/cyl_bessel_j1.hpp>
 #include <eve/module/bessel/detail/evaluate_rational.hpp>
+#include <eve/detail/hz_device.hpp>
 #include <array>
 
 namespace eve::detail

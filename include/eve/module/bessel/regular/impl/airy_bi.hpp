@@ -7,18 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/invpi.hpp>
-#include <eve/constant/zero.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/bessel/regular/cyl_bessel_in.hpp>
+#include <eve/module/bessel/regular/cyl_bessel_jn.hpp>
+#include <eve/module/bessel/regular/cyl_bessel_kn.hpp>
 #include <eve/detail/hz_device.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/cyl_bessel_in.hpp>
-#include <eve/function/cyl_bessel_jn.hpp>
-#include <eve/function/cyl_bessel_kn.hpp>
-#include <eve/function/is_nan.hpp>
-#include <eve/function/is_not_nan.hpp>
-#include <eve/function/sqrt.hpp>
 
 namespace eve::detail
 {
