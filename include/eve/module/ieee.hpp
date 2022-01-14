@@ -19,5 +19,6 @@
 //!
 //! @}
 //==================================================================================================
+#include <eve/module/ieee/constant/ieee.hpp>
 #include <eve/module/ieee/regular/ieee.hpp>
 #include <eve/module/ieee/pedantic/ieee.hpp>

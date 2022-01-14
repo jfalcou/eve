@@ -7,10 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/maxflint.hpp>
-#include <eve/constant/smallestposval.hpp>
-#include <eve/constant/sqrtvalmax.hpp>
+#include <eve/module/real/core/constant/limit.hpp>

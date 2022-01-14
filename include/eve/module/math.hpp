@@ -19,6 +19,7 @@
 //!
 //! @}
 //==================================================================================================
+#include <eve/module/math/constant/math.hpp>
 #include <eve/module/math/regular/math.hpp>
 #include <eve/module/math/pedantic/math.hpp>
 #include <eve/module/math/diff/math.hpp>
