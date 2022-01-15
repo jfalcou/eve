@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/function/shl.hpp>    //SUPPRESS
+#include <eve/function/oneminus.hpp> //SUPPRESS
 #include <eve/constant/mhalf.hpp>  //SUPPRESS
 #include <eve/module/arithmetic.hpp>
 #include <eve/module/ieee.hpp>
