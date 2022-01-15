@@ -6,7 +6,7 @@
 */
 //==================================================================================================
 #pragma once
-
+#include <eve/function/logical_notand.hpp>    // SUPPRESS
 #include <eve/module/ieee/regular/is_denormal.hpp>
 #include <eve/module/ieee/constant/exponentmask.hpp>
 #include <eve/module/ieee/constant/maxexponentp1.hpp>
