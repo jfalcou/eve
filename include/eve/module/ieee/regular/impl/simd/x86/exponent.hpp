@@ -7,7 +7,9 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/function/converter.hpp> // ?? SUPPRESS
 #include <eve/module/arithmetic.hpp>
+
 
 namespace eve::detail
 {
