@@ -7,12 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/constant/true.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/frac.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
+#include <eve/function/frac.hpp>  //?? frac is in arithmetic SUPPRESS
+#include <eve/module/arithmetic.hpp>
 
 namespace eve::detail
 {
@@ -21,7 +17,7 @@ namespace eve::detail
                                           , T const &a) noexcept
   {
     if constexpr(integral_value<T>)        return true_(eve::as<T>());
-    else if constexpr(has_native_abi_v<T>) return is_eqz(frac(a));
+    else if constexpr(has_native_abi_v<T>) return is_eqz(eve::frac(a));
     else                                   return apply_over(is_flint, a);
   }
 

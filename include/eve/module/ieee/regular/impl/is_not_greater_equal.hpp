@@ -7,14 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/is_less.hpp>
-#include <eve/function/is_unordered.hpp>
-#include <eve/function/logical_or.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/concept/compatible.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/skeleton_calls.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/ieee/regular/is_unordered.hpp>
+
 
 namespace eve::detail
 {

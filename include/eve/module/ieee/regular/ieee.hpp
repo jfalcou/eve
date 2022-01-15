@@ -40,6 +40,7 @@
 #include <eve/module/ieee/regular/is_unordered.hpp>
 #include <eve/module/ieee/regular/ldexp.hpp>
 #include <eve/module/ieee/regular/mantissa.hpp>
+#include <eve/module/ieee/regular/nb_values.hpp>
 #include <eve/module/ieee/regular/nextafter.hpp>
 #include <eve/module/ieee/regular/next.hpp>
 #include <eve/module/ieee/regular/prev.hpp>

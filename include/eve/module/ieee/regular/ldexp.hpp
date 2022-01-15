@@ -7,9 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-#include <eve/function/is_flint.hpp>
-#include <eve/function/all.hpp>
+#include <eve/function/all.hpp>  // SUPPRESS
 
 namespace eve
 {
@@ -76,7 +74,7 @@ namespace eve
   //================================================================================================
   namespace tag { struct ldexp_; }
 
-  namespace detail 
+  namespace detail
   {
     template<typename T, typename U>
     EVE_FORCEINLINE void check(EVE_SUPPORTS(eve::tag::ldexp_), T const&, [[maybe_unused]]  U const& b)

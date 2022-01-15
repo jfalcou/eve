@@ -7,11 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/detail/kumi.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/is_infinite.hpp>
 
 namespace eve::detail
 {

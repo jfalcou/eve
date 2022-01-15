@@ -7,12 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/is_finite.hpp>
-#include <eve/function/is_nan.hpp>
-#include <eve/function/logical_not.hpp>
-#include <eve/traits/as_logical.hpp>
-#include <type_traits>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/ieee/regular/is_finite.hpp>
 
 namespace eve::detail
 {

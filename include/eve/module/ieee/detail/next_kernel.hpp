@@ -7,13 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_gez.hpp>
-#include <eve/constant/signmask.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/module/arithmetic.hpp>
 
 namespace eve::detail
 {

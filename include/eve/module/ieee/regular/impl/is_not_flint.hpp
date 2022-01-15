@@ -7,12 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/arithmetic.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/constant/false.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/function/frac.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {

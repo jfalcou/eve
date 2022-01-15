@@ -7,15 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/function/is_gtz.hpp>
-#include <eve/function/is_nan.hpp>
-#include <eve/function/is_not_less_equal.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/traits/as_logical.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/ieee/regular/is_not_less_equal.hpp>
 
 namespace eve::detail
 {

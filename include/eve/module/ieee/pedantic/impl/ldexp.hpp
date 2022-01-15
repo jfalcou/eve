@@ -7,27 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/is_less.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/sub.hpp>
-#include <eve/function/trunc.hpp>
-#include <eve/function/pedantic.hpp>
-#include <eve/function/sub.hpp>
-#include <eve/constant/maxexponentp1.hpp>
-#include <eve/constant/minexponent.hpp>
-#include <eve/constant/maxexponent.hpp>
-#include <eve/constant/nbmantissabits.hpp>
-#include <eve/constant/smallestposval.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/function/ldexp.hpp> // ?? SUPPRESS
+#include <eve/module/ieee/constant/maxexponentp1.hpp>
+#include <eve/module/ieee/constant/minexponent.hpp>
+#include <eve/module/ieee/constant/maxexponent.hpp>
+#include <eve/module/ieee/constant/nbmantissabits.hpp>
 
 namespace eve::detail
 {

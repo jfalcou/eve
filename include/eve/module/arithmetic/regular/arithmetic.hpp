@@ -38,7 +38,6 @@
 #include <eve/module/arithmetic/regular/fsnm.hpp>
 #include <eve/module/arithmetic/regular/hi.hpp>
 #include <eve/module/arithmetic/regular/inc.hpp>
-//#include <eve/module/arithmetic/regular/iround.hpp>
 #include <eve/module/arithmetic/regular/is_eqz.hpp>
 #include <eve/module/arithmetic/regular/is_even.hpp>
 #include <eve/module/arithmetic/regular/is_gez.hpp>

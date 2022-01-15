@@ -7,22 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/convert.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/is_less.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/trunc.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/constant/maxexponent.hpp>
-#include <eve/constant/nbmantissabits.hpp>
-#include <eve/constant/smallestposval.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <string>
+#include <eve/function/trunc.hpp>  // SUPPRESS
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/ieee/constant/maxexponent.hpp>
+#include <eve/module/ieee/constant/nbmantissabits.hpp>
 
 namespace eve::detail
 {
@@ -65,7 +53,7 @@ namespace eve::detail
   {
     using elt_t = element_type_t<T>;
     using i_t =  as_integer_t<elt_t>;
-    i_t bb = convert(trunc(b), as<i_t>());
+    i_t bb = convert(eve::trunc(b), as<i_t>());
     auto ik =  bb+maxexponent(eve::as<T>());
     ik <<= nbmantissabits(eve::as<T>());
     return a*bit_cast(ik, as<T>());

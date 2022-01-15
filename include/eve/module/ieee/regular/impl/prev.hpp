@@ -7,13 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/module/ieee/detail/next_kernel.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/sub.hpp>
-#include <eve/function/next.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {

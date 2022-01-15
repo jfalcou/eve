@@ -7,13 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
 #include <eve/detail/kumi.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/function/pedantic/ifrexp.hpp>
-#include <eve/function/pedantic.hpp>
+#include <eve/module/ieee/pedantic/ifrexp.hpp>
+
 
 namespace eve::detail
 {

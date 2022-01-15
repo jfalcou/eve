@@ -7,11 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/true.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/traits/as_logical.hpp>
-
 namespace eve::detail
 {
   template<floating_real_value T>
@@ -21,4 +16,3 @@ namespace eve::detail
     return true_(eve::as(a));
   }
 }
-

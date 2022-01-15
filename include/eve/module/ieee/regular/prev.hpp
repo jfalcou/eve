@@ -7,12 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/is_gez.hpp>
-#include <eve/assert.hpp>
-#include <eve/function/saturated.hpp>
-#include <type_traits>
+#include <eve/function/all.hpp> // SUPPRESS
+#include <eve/module/arithmetic.hpp>
 
 namespace eve
 {
