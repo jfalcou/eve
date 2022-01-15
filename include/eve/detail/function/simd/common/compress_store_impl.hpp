@@ -21,71 +21,6 @@
 
 namespace eve::detail
 {
-  // generic impl ------------------
-
-  template<real_scalar_value T, typename N, typename U, simd_compatible_ptr<wide<T, N>> Ptr>
-  EVE_FORCEINLINE
-  T* compress_store_impl_aggregated(wide<T, N> v,
-                                    logical<wide<U, N>> mask,
-                                    Ptr ptr)
-  {
-    auto [l, h] = v.slice();
-    auto [ml, mh] = mask.slice();
-
-    T* ptr1 = compress_store_impl(l, ml, ptr);
-    return compress_store_impl(h, mh, ptr1);
-  }
-
-  template<relative_conditional_expr C, typename T, typename U, typename N, typename Ptr>
-  T* compress_store_impl_using_masks(
-                                     C c,
-                                     wide<T, N> v,
-                                     logical<wide<U, N>> mask,
-                                     Ptr ptr) noexcept
-  {
-    auto parts = compress_using_masks[c](v, mask);
-
-    auto uptr = unalign(ptr);
-
-    kumi::for_each([&](auto part_count) mutable {
-      auto [part, count] = part_count;
-      eve::store(part, uptr);
-      uptr += count;
-    }, parts);
-
-    return uptr;
-  }
-
-  template<real_scalar_value T, typename U, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
-  EVE_FORCEINLINE
-  T* compress_store_impl_(EVE_SUPPORTS(cpu_),
-                          wide<T, N> v,
-                          logical<wide<U, N>> mask,
-                          Ptr ptr) noexcept
-  {
-    if constexpr ( !has_emulated_abi_v<wide<T, N>> && N() == 2 )
-    {
-      auto to_left     = eve::slide_left( v, eve::index<1> );
-      auto compressed  = eve::if_else[mask]( v, to_left );
-      eve::store(compressed, ptr);
-      return unalign(ptr) + eve::count_true(mask);
-    }
-    else if constexpr ( !has_emulated_abi_v<wide<T, N>> && N() > 2 )
-    {
-      return compress_store_impl_aggregated(v, mask, ptr);
-    }
-    else
-    {
-      auto* ptr_ = unalign(ptr);
-      detail::for_<0,1, N{}()>([&](auto idx) mutable
-      {
-        *ptr_ = v.get(idx());
-        ptr_ += mask.get(idx());
-      });
-      return ptr_;
-    }
-  }
-
   template<relative_conditional_expr C, typename T, typename U, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
   T* compress_store_impl_(EVE_SUPPORTS(cpu_),
@@ -94,14 +29,7 @@ namespace eve::detail
                           logical<wide<U, N>> mask,
                           Ptr ptr) noexcept
   {
-         if constexpr ( C::is_complete && !C::is_inverted ) return unalign(ptr);
-    else if constexpr ( C::is_complete )                    return compress_store_impl(v, mask, ptr);
-    else if constexpr ( !has_emulated_abi_v<wide<T, N>> )
-    {
-      mask = mask && c.mask(as(mask));
-      return compress_store_impl(v, mask, ptr);
-    }
-    else
+    if constexpr ( has_emulated_abi_v<wide<T, N>> )
     {
       auto offset = c.offset(as(v));
       auto count  = c.count(as(v));
@@ -113,5 +41,29 @@ namespace eve::detail
 
       return ptr_;
     }
+    else
+    {
+      auto parts = compress_using_masks[c](v, mask);
+
+      auto uptr = unalign(ptr);
+
+      kumi::for_each([&](auto part_count) mutable {
+        auto [part, count] = part_count;
+        eve::store(part, uptr);
+        uptr += count;
+      }, parts);
+
+      return uptr;
+    }
+  }
+
+  template<real_scalar_value T, typename U, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  EVE_FORCEINLINE
+  T* compress_store_impl_(EVE_SUPPORTS(cpu_),
+                          wide<T, N> v,
+                          logical<wide<U, N>> mask,
+                          Ptr ptr) noexcept
+  {
+    return compress_store_impl(ignore_none, v, mask, ptr);
   }
 }
