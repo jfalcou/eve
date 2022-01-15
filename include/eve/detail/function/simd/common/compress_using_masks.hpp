@@ -17,6 +17,8 @@
 #include <eve/function/slide_left.hpp>
 #include <eve/function/zip.hpp>
 
+#include <bit>
+
 namespace eve::detail
 {
 // permutation masks ------------------
@@ -76,17 +78,22 @@ namespace eve::detail
   constexpr auto idxs_bytes = [] {
     std::array<T, 8> res = {};
 
+    // ppc is bigendian
+    constexpr bool is_le = std::endian::native == std::endian::little;
+
     for (unsigned i = 0; i != 8; ++i)
     {
       unsigned byte_idx = i * sizeof(T);
 
       if constexpr ( sizeof(T) == 4 )
       {
-        res[i] = (byte_idx + 3) << 24 | (byte_idx + 2) << 16 | (byte_idx + 1) << 8 | byte_idx;
+        if constexpr ( is_le ) res[i] = (byte_idx + 3) << 24 | (byte_idx + 2) << 16 | (byte_idx + 1) << 8 | byte_idx;
+        else                   res[i] = (byte_idx    ) << 24 | (byte_idx + 1) << 16 | (byte_idx + 2) << 8 | (byte_idx + 3);
       }
       else if constexpr ( sizeof(T) == 2 )
       {
-        res[i] = (byte_idx + 1) << 8 | byte_idx;
+        if constexpr ( is_le ) res[i] = (byte_idx + 1) << 8 | (byte_idx    );
+        else                   res[i] = (byte_idx    ) << 8 | (byte_idx + 1);
       }
       else if constexpr ( sizeof(T) == 1 )
       {
