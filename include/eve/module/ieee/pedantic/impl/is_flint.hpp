@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/function/maxflint.hpp>  // SUPPRESS
 #include <eve/module/arithmetic.hpp>
 
 namespace eve::detail
