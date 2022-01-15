@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/arithmetic/saturated/dec.hpp> // SUPPRESS why not found in arithmetic ?
 #include <eve/module/arithmetic.hpp>
 #include <eve/module/ieee/regular/is_negative.hpp>
 #include <eve/module/ieee/regular/is_positive.hpp>

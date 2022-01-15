@@ -9,7 +9,3 @@
 
 #include <eve/module/arithmetic/regular/mul.hpp>
 #include <eve/module/arithmetic/saturated/impl/mul.hpp>
-
-#if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/arithmetic/saturated/impl/simd/x86/mul.hpp>
-#endif

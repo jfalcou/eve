@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/constant/true.hpp> //SUPPRESS
 #include <eve/function/is_greater_equal.hpp> //SUPPRESS
 #include <eve/module/arithmetic.hpp>
 
