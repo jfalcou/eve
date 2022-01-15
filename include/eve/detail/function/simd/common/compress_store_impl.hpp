@@ -35,7 +35,7 @@ namespace eve::detail
       auto count  = c.count(as(v));
       auto* ptr_ = unalign(ptr);
 
-      for (int idx = offset; idx != offset + count; ++idx) {
+      for (int idx = offset; idx != (int)(offset + count); ++idx) {
         if (mask.get(idx)) *ptr_++ = v.get(idx);
       }
 
