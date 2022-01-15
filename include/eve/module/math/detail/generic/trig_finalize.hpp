@@ -7,28 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/mhalf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/signmask.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/function/shl.hpp> //SUPPRESS
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/ieee.hpp>
 #include <eve/detail/kumi.hpp>
-#include <eve/detail/overload.hpp>
-#include <eve/function/binarize.hpp>
-#include <eve/function/bit_xor.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/fnma.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_greater_equal.hpp>
-#include <eve/function/oneminus.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/shl.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/module/real/core/detail/generic/horn.hpp>
-#include <eve/module/real/core/detail/generic/horn1.hpp>
-#include <eve/traits/as_integer.hpp>
-#include <type_traits>
 
 namespace eve::detail
 {

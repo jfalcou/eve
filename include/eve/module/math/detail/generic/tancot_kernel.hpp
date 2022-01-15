@@ -7,14 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/sqr.hpp>
-#include <type_traits>
-#include <eve/module/real/core/detail/generic/horn.hpp>
-#include <eve/module/real/core/detail/generic/horn1.hpp>
+#include <eve/module/arithmetic.hpp>
 
 namespace eve::detail
 {

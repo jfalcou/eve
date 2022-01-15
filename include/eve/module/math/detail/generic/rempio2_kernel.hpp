@@ -7,40 +7,20 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/pio_2.hpp>
-#include <eve/constant/twoopi.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/kumi.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/add.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/bit_and.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/function/bit_or.hpp>
-#include <eve/function/bit_shr.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/function/copysign.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/fnma.hpp>
-#include <eve/function/gather.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/is_not_finite.hpp>
-#include <eve/function/logical_or.hpp>
-#include <eve/function/max.hpp>
-#include <eve/function/nearest.hpp>
-#include <eve/function/quadrant.hpp>
-#include <eve/function/sub.hpp>
+#include <eve/module/arithmetic/regular/nearest.hpp> //SUPPRESS
+#include <eve/module/arithmetic/regular/fnma.hpp>    //SUPPRESS
+#include <eve/function/gather.hpp>                   //SUPPRESS
+
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/ieee.hpp>
+#include <eve/module/math/constant/pio_2.hpp>
+#include <eve/module/math/constant/twoopi.hpp>
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
 #include <eve/module/math/detail/generic/workaround.hpp>
+#include <eve/module/math/regular/quadrant.hpp>
+#include <eve/detail/kumi.hpp>
 #include <eve/traits/alignment.hpp>
-
 #include <bit>
-#include <type_traits>
 
 namespace eve::detail
 {

@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/function/pedantic.hpp> //SUPPRESS
+#include <eve/function/numeric.hpp>  //SUPPRESS
 #include <eve/module/arithmetic.hpp>
 #include <eve/module/ieee/detail/next_kernel.hpp>
 #include <eve/module/ieee/regular/is_unordered.hpp>

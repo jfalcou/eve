@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-
+#include <eve/function/bit_shr.hpp> // SUPPRESS
 #include <eve/module/arithmetic.hpp>
 #include <eve/module/ieee/regular/is_not_finite.hpp>
 #include <eve/module/ieee/constant/exponentmask.hpp>

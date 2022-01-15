@@ -7,25 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/function/bitofsign.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/add.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/pio_2.hpp>
-#include <eve/constant/pio_4.hpp>
-#include <eve/constant/ieee_constant.hpp>
-#include <type_traits>
-#include <eve/module/real/core/detail/generic/horn.hpp>
-#include <eve/module/real/core/detail/generic/horn1.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/constant/pio_2.hpp>
+#include <eve/module/math/constant/pio_4.hpp>
 
 namespace eve::detail
 {

@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/constant/constant.hpp>
-#include <eve/constant/halfeps.hpp>
-#include <eve/constant/inf.hpp>
+#include <eve/module/math/constant/halfeps.hpp>
+#include <eve/ieee.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/rec.hpp>

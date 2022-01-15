@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/arithmetic.hpp>
-#include <eve/function/all.hpp>
+#include <eve/function/all.hpp> // SUPPRESS
 
 namespace eve
 {

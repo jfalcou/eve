@@ -7,15 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/detail/kumi.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/gather.hpp>
-#include <eve/function/is_greater_equal.hpp>
-#include <eve/function/is_less_equal.hpp>
-#include <eve/module/real/core/detail/generic/horn.hpp>
-#include <eve/module/real/core/detail/generic/horn1.hpp>
-#include <type_traits>
 
 namespace eve::detail
 {
