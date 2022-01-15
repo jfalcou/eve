@@ -41,6 +41,8 @@
 #include <eve/module/arithmetic/regular/is_eqz.hpp>
 #include <eve/module/arithmetic/regular/is_even.hpp>
 #include <eve/module/arithmetic/regular/is_gez.hpp>
+#include <eve/module/arithmetic/regular/is_greater_equal.hpp>
+#include <eve/module/arithmetic/regular/is_greater.hpp>
 #include <eve/module/arithmetic/regular/is_gtz.hpp>
 #include <eve/module/arithmetic/regular/is_less_equal.hpp>
 #include <eve/module/arithmetic/regular/is_less.hpp>

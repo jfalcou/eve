@@ -7,14 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/function/is_less_equal.hpp>
-#include <eve/forward.hpp>
-#include <eve/traits/as_logical.hpp>
-#include <eve/concept/value.hpp>
-#include <type_traits>
+#include <eve/module/arithmetic.hpp>
 
 namespace eve::detail
 {
