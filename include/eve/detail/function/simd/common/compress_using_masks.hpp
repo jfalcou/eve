@@ -148,6 +148,25 @@ namespace eve::detail
     }
   }
 
+  template <typename T, typename N>
+  EVE_FORCEINLINE
+  auto compress_using_masks_to_left_(EVE_SUPPORTS(cpu_), wide<T, N> v)
+  {
+    if constexpr ( !kumi::product_type<T> ) return eve::slide_left(v, eve::index<1>);
+    else
+    {
+      return wide<T, N>{ kumi::map(compress_using_masks_to_left, v) };
+    }
+  }
+
+  template <typename T, typename N, typename U>
+  constexpr bool compress_using_masks_should_aggregate()
+  {
+         if constexpr ( max_scalar_size_v<T> * N() <= 16 && N() <= 8 ) return false;
+    else if constexpr ( current_api == avx2              && N() == 4 ) return false;
+    else return true;
+  }
+
   template<relative_conditional_expr C, typename T, typename U, typename N>
   EVE_FORCEINLINE
   auto compress_using_masks_(EVE_SUPPORTS(cpu_),
@@ -155,7 +174,7 @@ namespace eve::detail
                            wide<T, N> v,
                            logical<wide<U, N>> mask) noexcept
   {
-    constexpr bool treat_like_aggregate = max_scalar_size_v<T> * N() > 16 || N() > 8;
+    constexpr bool treat_like_aggregate = compress_using_masks_should_aggregate<T, N, U>();
 
     if constexpr ( C::is_complete && !C::is_inverted )
     {
@@ -170,8 +189,6 @@ namespace eve::detail
     }
     else if constexpr ( treat_like_aggregate )
     {
-      mask = mask && c.mask(as(mask));
-
       auto [l, h] = v.slice();
       auto [ml, mh] = mask.slice();
 
@@ -203,8 +220,7 @@ namespace eve::detail
     {
       // Reduce variations: in each pair from 4 to 3. 10 and 01 become the same.
       // Two last elements don't matter.
-      auto to_left = eve::slide_left(v, eve::index<1>);
-      v = eve::if_else[mask]( v, to_left );
+      v = eve::if_else[mask]( v, compress_using_masks_to_left( v ) );
 
       auto [num, count] = compress_store_swizzle_mask_num(mask);
       kumi::tuple cur { compress_using_masks_shuffle(v, num), count };

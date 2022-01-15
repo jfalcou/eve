@@ -36,6 +36,26 @@ namespace eve::detail
     return compress_store_impl(h, mh, ptr1);
   }
 
+  template<relative_conditional_expr C, typename T, typename U, typename N, typename Ptr>
+  T* compress_store_impl_using_masks(
+                                     C c,
+                                     wide<T, N> v,
+                                     logical<wide<U, N>> mask,
+                                     Ptr ptr) noexcept
+  {
+    auto parts = compress_using_masks[c](v, mask);
+
+    auto uptr = unalign(ptr);
+
+    kumi::for_each([&](auto part_count) mutable {
+      auto [part, count] = part_count;
+      eve::store(part, uptr);
+      uptr += count;
+    }, parts);
+
+    return uptr;
+  }
+
   template<real_scalar_value T, typename U, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
   T* compress_store_impl_(EVE_SUPPORTS(cpu_),

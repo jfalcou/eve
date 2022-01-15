@@ -23,17 +23,6 @@ namespace eve::detail
                           logical<wide<U, N>> mask,
                           Ptr ptr) noexcept
   {
-    auto parts = compress_using_masks[c](v, mask);
-
-    auto uptr = unalign(ptr);
-
-    kumi::for_each([&](auto part_count) mutable {
-      auto [part, count] = part_count;
-      eve::store(part, uptr);
-      uptr += count;
-    }, parts);
-
-    return uptr;
+    return compress_store_impl_using_masks(c, v, mask, ptr);
   }
-
 }
