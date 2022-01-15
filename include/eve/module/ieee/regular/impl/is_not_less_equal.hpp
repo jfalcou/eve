@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/function/is_greater.hpp> // ?? SUPPRESS
 #include <eve/module/arithmetic.hpp>
 #include <eve/module/ieee/regular/is_unordered.hpp>
 
@@ -26,8 +27,8 @@ namespace eve::detail
                                              , T const &a
                                              , T const &b) noexcept
   {
-    if constexpr(integral_value<T>) return (a > b);
-    else                            return (a > b) || is_unordered(a, b);
+    if constexpr(integral_value<T>) return is_greater(a, b);
+    else                            return is_greater(a, b) || is_unordered(a, b);
   }
 
   // -----------------------------------------------------------------------------------------------
