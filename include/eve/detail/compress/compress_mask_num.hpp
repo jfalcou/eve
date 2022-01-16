@@ -80,5 +80,9 @@ namespace eve
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-# include <eve/detail/compress/simd/arm/neon/compress_mask_num.hpp>
+#  include <eve/detail/compress/simd/arm/neon/compress_mask_num.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
+#  include <eve/detail/compress/simd/ppc/compress_mask_num.hpp>
 #endif
