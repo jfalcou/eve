@@ -55,8 +55,8 @@ namespace eve
   EVE_CALLABLE_API(compress_using_masks_to_left_, compress_using_masks_to_left)
 }
 
-#include <eve/detail/function/simd/common/compress_using_masks.hpp>
+#include <eve/detail/compress/simd/common/compress_using_masks.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/detail/function/simd/x86/compress_using_masks.hpp>
+#  include <eve/detail/compress/simd/x86/compress_using_masks.hpp>
 #endif

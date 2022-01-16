@@ -7,7 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 
-#include <eve/detail/compress/mask_num.hpp>
+#include <eve/detail/compress/compress_mask_num.hpp>
 
 #include <bit>
 #include <random>
