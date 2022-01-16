@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/function/derivative.hpp
 #include <eve/module/arithmetic.hpp>
 #include <eve/module/polynomial/regular/reverse_horner.hpp>
 #include <eve/module/polynomial/pedantic/reverse_horner.hpp>   

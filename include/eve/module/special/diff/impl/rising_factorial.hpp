@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/function/derivative.hpp
 #include <eve/module/arithmetic.hpp>
 #include <eve/module/special/pedantic/rising_factorial.hpp>
 #include <eve/module/special/diff/lrising_factorial.hpp>
