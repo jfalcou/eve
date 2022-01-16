@@ -73,12 +73,12 @@ namespace eve
   EVE_CALLABLE_API(compress_store_swizzle_mask_num_, compress_store_swizzle_mask_num)
 }
 
-#include <eve/detail/function/simd/common/compress_store_swizzle_mask_num.hpp>
+#include <eve/detail/compress/simd/common/mask_num.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/detail/function/simd/x86/compress_store_swizzle_mask_num.hpp>
+#  include <eve/detail/compress/simd/x86/mask_num.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-# include <eve/detail/function/simd/arm/neon/compress_store_swizzle_mask_num.hpp>
+# include <eve/detail/compress/simd/arm/neon/mask_num.hpp>
 #endif

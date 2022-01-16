@@ -7,7 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 
-#include <eve/detail/function/compress_store_swizzle_mask_num.hpp>
+#include <eve/detail/compress/mask_num.hpp>
 
 #include <bit>
 #include <random>
