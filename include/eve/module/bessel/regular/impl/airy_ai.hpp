@@ -21,7 +21,7 @@ namespace eve::detail
     auto ax = eve::abs(x);
     T rac = eve::sqrt(ax);
     T p = (ax * rac * 2) / 3;
-    T v = T(0.3333333333333333);
+    T v = T(1.0/3);
     auto br_0 = [v, p, rac]() {
       T j1 = cyl_bessel_jn(v, p);
       T j2 = cyl_bessel_jn(-v, p);

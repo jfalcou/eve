@@ -71,7 +71,7 @@ namespace eve::detail
       };
       auto lambert0_other = [&halley](auto x, auto q){ // branch 0 q <= 1.0e'3
         auto p = eve::sqrt(T(5.436563656918090)*q);
-        auto w1= dec(p*(inc(p*fam(T(-0.333333333333333), p, T(1.388888888888889e-02)))));
+        auto w1= dec(p*(inc(p*fam(T(-1.0/3), p, T(1.0/72)))));
         auto w2= log(x);
         w2 -= if_else(x > 3, zero, log(w2));
         auto init =  if_else(x < one(as(x)), w1, w2);
