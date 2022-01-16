@@ -56,7 +56,10 @@ MathJax.Hub.Config({
   <nav class="navbar navbar-default" role="navigation">
     <div class="container">
       <div class="navbar-header">
-        <a href="index.html" class="navbar-brand">E.V.E 0.1-beta</a>
+      <!--GITHUB RIBBON-->
+      <a id="forkme_banner" href="https://github.com/jfalcou/eve">View on GitHub</a>
+      <!--GITHUB RIBBON-->
+        <a href="index.html" class="navbar-brand">E.V.E v2021.10.0</a>
       </div>
     </div>
   </nav>
@@ -69,12 +72,13 @@ MathJax.Hub.Config({
           <table cellspacing="0" cellpadding="0">
             <tbody>
               <tr style="height: 56px;">
-                <td id="projectlogo"><a href="index.html"><img alt="Logo" src="logo.png" /></a></td>
+                <td id="projectlogo"><a href="index.html"><img alt="Logo" src="logo.png" /></a>
+                </td>
                 <td id="projectalign" style="padding-left: 0.5em;">
                   <div id="projectname">E.V.E
-                    &#160;<span id="projectnumber">0.1-beta</span>
+                    &#160;<span id="projectnumber">v2021.10.0</span>
                   </div>
-                  <!-- BEGIN PROJECT_BRIEF--><div id="projectbrief"></div><!--END PROJECT_BRIEF -->
+                  <!-- BEGIN PROJECT_BRIEF--><div id="projectbrief">The Expressive Vector Engine</div><!--END PROJECT_BRIEF -->
                 </td>
               </tr>
             </tbody>
@@ -243,12 +247,12 @@ template&lt;simd_compatible_ptr&lt; <a class="el" href="structeve_1_1wide.html">
 <tr class="memitem:a9e8f8635331b18d7ce9e1c28019722be"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wide</b> (Ptr ptr) noexcept</td></tr>
 <tr class="memdesc:a9e8f8635331b18d7ce9e1c28019722be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> from a SIMD compatible pointer. <br /></td></tr>
 <tr class="separator:a9e8f8635331b18d7ce9e1c28019722be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab9110df580b0e2c2d3cd240d10989f03"><td class="memTemplParams" colspan="2"><a id="ab9110df580b0e2c2d3cd240d10989f03" name="ab9110df580b0e2c2d3cd240d10989f03"></a>
+<tr class="memitem:afd2944c4f0f54a386e887762385c91ba"><td class="memTemplParams" colspan="2"><a id="afd2944c4f0f54a386e887762385c91ba" name="afd2944c4f0f54a386e887762385c91ba"></a>
 template&lt;detail::data_source... Ptr&gt; <br />
 requires (kumi::product_type&lt;Type&gt;)</td></tr>
-<tr class="memitem:ab9110df580b0e2c2d3cd240d10989f03"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wide</b> (kumi::tuple&lt; Ptr... &gt; ptr) noexcept</td></tr>
-<tr class="memdesc:ab9110df580b0e2c2d3cd240d10989f03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> from a SIMD compatible pointer. <br /></td></tr>
-<tr class="separator:ab9110df580b0e2c2d3cd240d10989f03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd2944c4f0f54a386e887762385c91ba"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wide</b> (<a class="el" href="structeve_1_1soa__ptr.html">eve::soa_ptr</a>&lt; Ptr... &gt; ptr) noexcept</td></tr>
+<tr class="memdesc:afd2944c4f0f54a386e887762385c91ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> from a SIMD compatible pointer. <br /></td></tr>
+<tr class="separator:afd2944c4f0f54a386e887762385c91ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c8db8292774ad2de873023619cf1456"><td class="memTemplParams" colspan="2"><a id="a6c8db8292774ad2de873023619cf1456" name="a6c8db8292774ad2de873023619cf1456"></a>
 template&lt;scalar_value S&gt; </td></tr>
 <tr class="memitem:a6c8db8292774ad2de873023619cf1456"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wide</b> (S const &amp;v) noexcept</td></tr>

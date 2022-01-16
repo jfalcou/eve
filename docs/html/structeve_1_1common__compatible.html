@@ -56,7 +56,10 @@ MathJax.Hub.Config({
   <nav class="navbar navbar-default" role="navigation">
     <div class="container">
       <div class="navbar-header">
-        <a href="index.html" class="navbar-brand">E.V.E 0.1-beta</a>
+      <!--GITHUB RIBBON-->
+      <a id="forkme_banner" href="https://github.com/jfalcou/eve">View on GitHub</a>
+      <!--GITHUB RIBBON-->
+        <a href="index.html" class="navbar-brand">E.V.E v2021.10.0</a>
       </div>
     </div>
   </nav>
@@ -69,12 +72,13 @@ MathJax.Hub.Config({
           <table cellspacing="0" cellpadding="0">
             <tbody>
               <tr style="height: 56px;">
-                <td id="projectlogo"><a href="index.html"><img alt="Logo" src="logo.png" /></a></td>
+                <td id="projectlogo"><a href="index.html"><img alt="Logo" src="logo.png" /></a>
+                </td>
                 <td id="projectalign" style="padding-left: 0.5em;">
                   <div id="projectname">E.V.E
-                    &#160;<span id="projectnumber">0.1-beta</span>
+                    &#160;<span id="projectnumber">v2021.10.0</span>
                   </div>
-                  <!-- BEGIN PROJECT_BRIEF--><div id="projectbrief"></div><!--END PROJECT_BRIEF -->
+                  <!-- BEGIN PROJECT_BRIEF--><div id="projectbrief">The Expressive Vector Engine</div><!--END PROJECT_BRIEF -->
                 </td>
               </tr>
             </tbody>
@@ -154,7 +158,7 @@ struct eve::common_compatible&lt; Ts &gt;</div><p >Computes the type compatible 
   </table>
   </dd>
 </dl>
-<h4><a class="anchor" id="autotoc_md2019"></a>
+<h4><a class="anchor" id="autotoc_md1941"></a>
 Member types</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -164,13 +168,13 @@ Member types</h4>
 </table>
 <p ><br  />
  </p>
-<h4><a class="anchor" id="autotoc_md2020"></a>
+<h4><a class="anchor" id="autotoc_md1942"></a>
 Helper types</h4>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Ts...&gt;</div>
 <div class="line"><span class="keyword">using</span> common_compatible_t = <span class="keyword">typename</span> common_compatible&lt;Ts...&gt;::type;</div>
 </div><!-- fragment --><p ><br  />
  </p>
-<h4><a class="anchor" id="autotoc_md2021"></a>
+<h4><a class="anchor" id="autotoc_md1943"></a>
 Example</h4>
 <p ><a href="https://godbolt.org/z/h8eePWxn3"><b>See it live on Compiler Explorer</b></a></p>
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -189,7 +193,7 @@ Example</h4>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>            &lt;&lt; std::is_same&lt;mixed_type, eve::wide&lt;float&gt;&gt;::value      &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>}</div>
 <div class="ttc" id="astructeve_1_1common__compatible_html"><div class="ttname"><a href="structeve_1_1common__compatible.html">eve::common_compatible</a></div><div class="ttdoc">Computes the type compatible with a list of values.</div><div class="ttdef"><b>Definition:</b> common_compatible.hpp:101</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:61</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.20-->
 <!-- start footer part -->

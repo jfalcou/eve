@@ -56,7 +56,10 @@ MathJax.Hub.Config({
   <nav class="navbar navbar-default" role="navigation">
     <div class="container">
       <div class="navbar-header">
-        <a href="index.html" class="navbar-brand">E.V.E 0.1-beta</a>
+      <!--GITHUB RIBBON-->
+      <a id="forkme_banner" href="https://github.com/jfalcou/eve">View on GitHub</a>
+      <!--GITHUB RIBBON-->
+        <a href="index.html" class="navbar-brand">E.V.E v2021.10.0</a>
       </div>
     </div>
   </nav>
@@ -69,12 +72,13 @@ MathJax.Hub.Config({
           <table cellspacing="0" cellpadding="0">
             <tbody>
               <tr style="height: 56px;">
-                <td id="projectlogo"><a href="index.html"><img alt="Logo" src="logo.png" /></a></td>
+                <td id="projectlogo"><a href="index.html"><img alt="Logo" src="logo.png" /></a>
+                </td>
                 <td id="projectalign" style="padding-left: 0.5em;">
                   <div id="projectname">E.V.E
-                    &#160;<span id="projectnumber">0.1-beta</span>
+                    &#160;<span id="projectnumber">v2021.10.0</span>
                   </div>
-                  <!-- BEGIN PROJECT_BRIEF--><div id="projectbrief"></div><!--END PROJECT_BRIEF -->
+                  <!-- BEGIN PROJECT_BRIEF--><div id="projectbrief">The Expressive Vector Engine</div><!--END PROJECT_BRIEF -->
                 </td>
               </tr>
             </tbody>
@@ -141,7 +145,9 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">Type traits</div></div>
 </div><!--header-->
 <div class="contents">
@@ -173,6 +179,27 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1element__type.html">eve::element_type&lt; T &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts the scalar part of a type.  <a href="structeve_1_1element__type.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga1eb720c70448889dec28d1d72973a980"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ga1eb720c70448889dec28d1d72973a980"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__traits_ga1eb720c70448889dec28d1d72973a980.html#ga1eb720c70448889dec28d1d72973a980">eve::iterator_cardinal_t</a> = decltype(detail::iterator_cardinal_impl&lt; T &gt;())</td></tr>
+<tr class="memdesc:ga1eb720c70448889dec28d1d72973a980"><td class="mdescLeft">&#160;</td><td class="mdescRight">A meta-function that returns a cardinal for a relaxed iterator/range. If T defines a nested static function <code>iterator_cardinal()</code> (which should return <a class="el" href="structeve_1_1fixed.html" title="SIMD register cardinal type.">eve::fixed</a>)  <a href="group__traits_ga1eb720c70448889dec28d1d72973a980.html#ga1eb720c70448889dec28d1d72973a980">More...</a><br /></td></tr>
+<tr class="separator:ga1eb720c70448889dec28d1d72973a980"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf9ce08c683bb04a9a96e99ddd3edaee2"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:gaf9ce08c683bb04a9a96e99ddd3edaee2"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__traits_gaf9ce08c683bb04a9a96e99ddd3edaee2.html#gaf9ce08c683bb04a9a96e99ddd3edaee2">eve::value_type_t</a> = typename decltype(detail::value_type_impl&lt; T &gt;())::type</td></tr>
+<tr class="memdesc:gaf9ce08c683bb04a9a96e99ddd3edaee2"><td class="mdescLeft">&#160;</td><td class="mdescRight">A meta function for getting an associated value_type for a relaxed iterator/range.  <a href="group__traits_gaf9ce08c683bb04a9a96e99ddd3edaee2.html#gaf9ce08c683bb04a9a96e99ddd3edaee2">More...</a><br /></td></tr>
+<tr class="separator:gaf9ce08c683bb04a9a96e99ddd3edaee2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga51d0901c39a489a5d6e0449339291c57"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ga51d0901c39a489a5d6e0449339291c57"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__traits_ga51d0901c39a489a5d6e0449339291c57.html#ga51d0901c39a489a5d6e0449339291c57">eve::wide_value_type_t</a> = as_wide_t&lt; <a class="el" href="group__traits_gaf9ce08c683bb04a9a96e99ddd3edaee2.html#gaf9ce08c683bb04a9a96e99ddd3edaee2">value_type_t</a>&lt; T &gt;, <a class="el" href="group__traits_ga1eb720c70448889dec28d1d72973a980.html#ga1eb720c70448889dec28d1d72973a980">iterator_cardinal_t</a>&lt; T &gt; &gt;</td></tr>
+<tr class="separator:ga51d0901c39a489a5d6e0449339291c57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga66d8722c860708cf70e38ecedac9a94d"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ga66d8722c860708cf70e38ecedac9a94d"><td class="memTemplItemLeft" align="right" valign="top">constexpr std::size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__traits_ga66d8722c860708cf70e38ecedac9a94d.html#ga66d8722c860708cf70e38ecedac9a94d">eve::max_scalar_size_v</a> = detail::max_scalar_size_impl&lt;T&gt;()</td></tr>
+<tr class="memdesc:ga66d8722c860708cf70e38ecedac9a94d"><td class="mdescLeft">&#160;</td><td class="mdescRight">A meta function for getting a maximum size of scalar.  <a href="group__traits_ga66d8722c860708cf70e38ecedac9a94d.html#ga66d8722c860708cf70e38ecedac9a94d">More...</a><br /></td></tr>
+<tr class="separator:ga66d8722c860708cf70e38ecedac9a94d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.20-->

@@ -14,7 +14,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup tratis
+  //! @addtogroup traits
   //! @{
   //!  @typedef wide_value_type_t
   //!

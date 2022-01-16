@@ -5,6 +5,13 @@ The Expressive Vector Engine
 
 It's a research project first and an open source library second. We reserve the right to change API and baseline compiler required until the first official 0.1 release. However, we'll try to minimize disruption. Semantic versioning will ensure API retro-compatibility if anything huge needs to change.
 
+# Getting Started
+
+ - [Installing and using the library](@ref install)
+ - [Fetching EVE using your favorite Package Manager](@ref packages)
+ - [Your first SIMD code using EVE](@ref simd-101)
+ - [**References Documentation**](https://jfalcou.github.io/eve/html/modules.html)
+
 # Video materials
 
 ## SIMD in C++20: EVE of a new Era - CppCon 2021

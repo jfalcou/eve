@@ -23,7 +23,7 @@ namespace eve
   }
 
   //================================================================================================
-  //! @addtogroup tratis
+  //! @addtogroup traits
   //! @{
   //!  @typedef iterator_cardinal_t
   //!

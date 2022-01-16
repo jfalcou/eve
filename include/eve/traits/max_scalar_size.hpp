@@ -12,7 +12,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup tratis
+  //! @addtogroup traits
   //! @{
   //!  @var max_scalar_size_v
   //!

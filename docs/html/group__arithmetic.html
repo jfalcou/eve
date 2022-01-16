@@ -56,7 +56,10 @@ MathJax.Hub.Config({
   <nav class="navbar navbar-default" role="navigation">
     <div class="container">
       <div class="navbar-header">
-        <a href="index.html" class="navbar-brand">E.V.E 0.1-beta</a>
+      <!--GITHUB RIBBON-->
+      <a id="forkme_banner" href="https://github.com/jfalcou/eve">View on GitHub</a>
+      <!--GITHUB RIBBON-->
+        <a href="index.html" class="navbar-brand">E.V.E v2021.10.0</a>
       </div>
     </div>
   </nav>
@@ -69,12 +72,13 @@ MathJax.Hub.Config({
           <table cellspacing="0" cellpadding="0">
             <tbody>
               <tr style="height: 56px;">
-                <td id="projectlogo"><a href="index.html"><img alt="Logo" src="logo.png" /></a></td>
+                <td id="projectlogo"><a href="index.html"><img alt="Logo" src="logo.png" /></a>
+                </td>
                 <td id="projectalign" style="padding-left: 0.5em;">
                   <div id="projectname">E.V.E
-                    &#160;<span id="projectnumber">0.1-beta</span>
+                    &#160;<span id="projectnumber">v2021.10.0</span>
                   </div>
-                  <!-- BEGIN PROJECT_BRIEF--><div id="projectbrief"></div><!--END PROJECT_BRIEF -->
+                  <!-- BEGIN PROJECT_BRIEF--><div id="projectbrief">The Expressive Vector Engine</div><!--END PROJECT_BRIEF -->
                 </td>
               </tr>
             </tbody>
@@ -146,10 +150,16 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
   <div class="headertitle"><div class="title">Arithmetic<div class="ingroups"><a class="el" href="group__functions.html">Functions</a></div></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Arithmetic functions.  
+<a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p >Arithmetic functions. </p>
 <p >These functions provide scalar and SIMD version of basic arithmetic functions.</p>
 <p >To keep the results homogeneous and coherent between SIMD and scalar mode, the types usable in those functions are required to satisfy <code>eve::compatible_values</code></p>
 <p ><b>Convenience header:</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/function/arithmetic.hpp&gt;</span> </div>
+</div><!-- fragment --><p >This module provides implementation for the current basic arithmetic functions.</p>
+<p ><b>Convenience header:</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/bessel.hpp&gt;</span> </div>
 </div><!-- fragment --> <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -169,21 +179,15 @@ Variables</h2></td></tr>
 <tr class="memitem:ga52e358ea1c9b4df51da813110fd09a30"><td class="memItemLeft" align="right" valign="top">constexpr callable_absmin_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arithmetic_ga52e358ea1c9b4df51da813110fd09a30.html#ga52e358ea1c9b4df51da813110fd09a30">eve::absmin</a> = {}</td></tr>
 <tr class="memdesc:ga52e358ea1c9b4df51da813110fd09a30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the absmin operation.  <a href="group__arithmetic_ga52e358ea1c9b4df51da813110fd09a30.html#ga52e358ea1c9b4df51da813110fd09a30">More...</a><br /></td></tr>
 <tr class="separator:ga52e358ea1c9b4df51da813110fd09a30"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0cac72b6f927ba13a67764846899b535"><td class="memItemLeft" align="right" valign="top">constexpr callable_arg_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arithmetic_ga0cac72b6f927ba13a67764846899b535.html#ga0cac72b6f927ba13a67764846899b535">eve::arg</a> = {}</td></tr>
-<tr class="memdesc:ga0cac72b6f927ba13a67764846899b535"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the phase angle (in radians).  <a href="group__arithmetic_ga0cac72b6f927ba13a67764846899b535.html#ga0cac72b6f927ba13a67764846899b535">More...</a><br /></td></tr>
-<tr class="separator:ga0cac72b6f927ba13a67764846899b535"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga897b91acc8d2401c6ba17da4ef03a380"><td class="memItemLeft" align="right" valign="top">constexpr callable_agm_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arithmetic_ga897b91acc8d2401c6ba17da4ef03a380.html#ga897b91acc8d2401c6ba17da4ef03a380">eve::agm</a> = {}</td></tr>
+<tr class="memdesc:ga897b91acc8d2401c6ba17da4ef03a380"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the agm of two floating values.  <a href="group__arithmetic_ga897b91acc8d2401c6ba17da4ef03a380.html#ga897b91acc8d2401c6ba17da4ef03a380">More...</a><br /></td></tr>
+<tr class="separator:ga897b91acc8d2401c6ba17da4ef03a380"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1d52fbcf5ca3bd73745898c1eca2072e"><td class="memItemLeft" align="right" valign="top">constexpr callable_average_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">eve::average</a> = {}</td></tr>
 <tr class="memdesc:ga1d52fbcf5ca3bd73745898c1eca2072e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the average of multiple values.  <a href="group__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">More...</a><br /></td></tr>
 <tr class="separator:ga1d52fbcf5ca3bd73745898c1eca2072e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga765c4974adf04dba95e06f764dfd0b49"><td class="memItemLeft" align="right" valign="top">constexpr callable_cbrt_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arithmetic_ga765c4974adf04dba95e06f764dfd0b49.html#ga765c4974adf04dba95e06f764dfd0b49">eve::cbrt</a> = {}</td></tr>
-<tr class="memdesc:ga765c4974adf04dba95e06f764dfd0b49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the cubic root.  <a href="group__arithmetic_ga765c4974adf04dba95e06f764dfd0b49.html#ga765c4974adf04dba95e06f764dfd0b49">More...</a><br /></td></tr>
-<tr class="separator:ga765c4974adf04dba95e06f764dfd0b49"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad1d369116a4c78c29e74a36ee641f02a"><td class="memItemLeft" align="right" valign="top">constexpr callable_clamp_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arithmetic_gad1d369116a4c78c29e74a36ee641f02a.html#gad1d369116a4c78c29e74a36ee641f02a">eve::clamp</a> = {}</td></tr>
 <tr class="memdesc:gad1d369116a4c78c29e74a36ee641f02a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object clamping a value between two others.  <a href="group__arithmetic_gad1d369116a4c78c29e74a36ee641f02a.html#gad1d369116a4c78c29e74a36ee641f02a">More...</a><br /></td></tr>
 <tr class="separator:gad1d369116a4c78c29e74a36ee641f02a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3da1ad6fd04f08ac14cbe0ff478b6951"><td class="memItemLeft" align="right" valign="top">constexpr callable_conj_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arithmetic_ga3da1ad6fd04f08ac14cbe0ff478b6951.html#ga3da1ad6fd04f08ac14cbe0ff478b6951">eve::conj</a> = {}</td></tr>
-<tr class="memdesc:ga3da1ad6fd04f08ac14cbe0ff478b6951"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the conjugate value.  <a href="group__arithmetic_ga3da1ad6fd04f08ac14cbe0ff478b6951.html#ga3da1ad6fd04f08ac14cbe0ff478b6951">More...</a><br /></td></tr>
-<tr class="separator:ga3da1ad6fd04f08ac14cbe0ff478b6951"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga22a598ef861dbecf0613706ecb60c7fb"><td class="memItemLeft" align="right" valign="top">constexpr callable_copysign_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arithmetic_ga22a598ef861dbecf0613706ecb60c7fb.html#ga22a598ef861dbecf0613706ecb60c7fb">eve::copysign</a> = {}</td></tr>
 <tr class="memdesc:ga22a598ef861dbecf0613706ecb60c7fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object performing the sign copying operation.  <a href="group__arithmetic_ga22a598ef861dbecf0613706ecb60c7fb.html#ga22a598ef861dbecf0613706ecb60c7fb">More...</a><br /></td></tr>
 <tr class="separator:ga22a598ef861dbecf0613706ecb60c7fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -223,9 +227,6 @@ Variables</h2></td></tr>
 <tr class="memitem:ga43ce3760cd377286d328b640fd01549b"><td class="memItemLeft" align="right" valign="top">constexpr callable_fsnm_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arithmetic_ga43ce3760cd377286d328b640fd01549b.html#ga43ce3760cd377286d328b640fd01549b">eve::fsnm</a> = {}</td></tr>
 <tr class="memdesc:ga43ce3760cd377286d328b640fd01549b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the fused sub-negate-multiply operation.  <a href="group__arithmetic_ga43ce3760cd377286d328b640fd01549b.html#ga43ce3760cd377286d328b640fd01549b">More...</a><br /></td></tr>
 <tr class="separator:ga43ce3760cd377286d328b640fd01549b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1f3f9f62c04251ff83111a058c2e64b9"><td class="memItemLeft" align="right" valign="top">constexpr callable_hypot_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arithmetic_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve::hypot</a> = {}</td></tr>
-<tr class="memdesc:ga1f3f9f62c04251ff83111a058c2e64b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the hypot operation.  <a href="group__arithmetic_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">More...</a><br /></td></tr>
-<tr class="separator:ga1f3f9f62c04251ff83111a058c2e64b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaae09e7397cee784b81e66dad3f912cc1"><td class="memItemLeft" align="right" valign="top">constexpr callable_manhattan_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arithmetic_gaae09e7397cee784b81e66dad3f912cc1.html#gaae09e7397cee784b81e66dad3f912cc1">eve::manhattan</a> = {}</td></tr>
 <tr class="memdesc:gaae09e7397cee784b81e66dad3f912cc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the manhattan operation.  <a href="group__arithmetic_gaae09e7397cee784b81e66dad3f912cc1.html#gaae09e7397cee784b81e66dad3f912cc1">More...</a><br /></td></tr>
 <tr class="separator:gaae09e7397cee784b81e66dad3f912cc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -301,9 +302,21 @@ Variables</h2></td></tr>
 <tr class="memitem:ga13ddd05c1c516674e73d2ed018fa5d5a"><td class="memItemLeft" align="right" valign="top">constexpr callable_sub_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a">eve::sub</a> = {}</td></tr>
 <tr class="memdesc:ga13ddd05c1c516674e73d2ed018fa5d5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object performing the difference of multiple values.  <a href="group__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a">More...</a><br /></td></tr>
 <tr class="separator:ga13ddd05c1c516674e73d2ed018fa5d5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0cac72b6f927ba13a67764846899b535"><td class="memItemLeft" align="right" valign="top">constexpr callable_arg_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arithmetic_ga0cac72b6f927ba13a67764846899b535.html#ga0cac72b6f927ba13a67764846899b535">eve::arg</a> = {}</td></tr>
+<tr class="memdesc:ga0cac72b6f927ba13a67764846899b535"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the phase angle (in radians).  <a href="group__arithmetic_ga0cac72b6f927ba13a67764846899b535.html#ga0cac72b6f927ba13a67764846899b535">More...</a><br /></td></tr>
+<tr class="separator:ga0cac72b6f927ba13a67764846899b535"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5520218c452db7b34e883bf0f7a14488"><td class="memItemLeft" align="right" valign="top">constexpr callable_cbrt_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arithmetic_ga5520218c452db7b34e883bf0f7a14488.html#ga5520218c452db7b34e883bf0f7a14488">eve::cbrt</a> = {}</td></tr>
+<tr class="memdesc:ga5520218c452db7b34e883bf0f7a14488"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the cubic root.  <a href="group__arithmetic_ga5520218c452db7b34e883bf0f7a14488.html#ga5520218c452db7b34e883bf0f7a14488">More...</a><br /></td></tr>
+<tr class="separator:ga5520218c452db7b34e883bf0f7a14488"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3da1ad6fd04f08ac14cbe0ff478b6951"><td class="memItemLeft" align="right" valign="top">constexpr callable_conj_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arithmetic_ga3da1ad6fd04f08ac14cbe0ff478b6951.html#ga3da1ad6fd04f08ac14cbe0ff478b6951">eve::conj</a> = {}</td></tr>
+<tr class="memdesc:ga3da1ad6fd04f08ac14cbe0ff478b6951"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the conjugate value.  <a href="group__arithmetic_ga3da1ad6fd04f08ac14cbe0ff478b6951.html#ga3da1ad6fd04f08ac14cbe0ff478b6951">More...</a><br /></td></tr>
+<tr class="separator:ga3da1ad6fd04f08ac14cbe0ff478b6951"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafac2fbecb48c62079c84db6314ddc0e8"><td class="memItemLeft" align="right" valign="top">constexpr callable_geommean_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arithmetic_gafac2fbecb48c62079c84db6314ddc0e8.html#gafac2fbecb48c62079c84db6314ddc0e8">eve::geommean</a> = {}</td></tr>
 <tr class="memdesc:gafac2fbecb48c62079c84db6314ddc0e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the mid-point operation.  <a href="group__arithmetic_gafac2fbecb48c62079c84db6314ddc0e8.html#gafac2fbecb48c62079c84db6314ddc0e8">More...</a><br /></td></tr>
 <tr class="separator:gafac2fbecb48c62079c84db6314ddc0e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1f3f9f62c04251ff83111a058c2e64b9"><td class="memItemLeft" align="right" valign="top">constexpr callable_hypot_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arithmetic_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve::hypot</a> = {}</td></tr>
+<tr class="memdesc:ga1f3f9f62c04251ff83111a058c2e64b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the hypot operation.  <a href="group__arithmetic_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">More...</a><br /></td></tr>
+<tr class="separator:ga1f3f9f62c04251ff83111a058c2e64b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga22a402bb65f6328ecd349368c0f8fe4d"><td class="memItemLeft" align="right" valign="top">constexpr callable_rsqrt_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arithmetic_ga22a402bb65f6328ecd349368c0f8fe4d.html#ga22a402bb65f6328ecd349368c0f8fe4d">eve::rsqrt</a> = {}</td></tr>
 <tr class="memdesc:ga22a402bb65f6328ecd349368c0f8fe4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the inverse of the square root.  <a href="group__arithmetic_ga22a402bb65f6328ecd349368c0f8fe4d.html#ga22a402bb65f6328ecd349368c0f8fe4d">More...</a><br /></td></tr>
 <tr class="separator:ga22a402bb65f6328ecd349368c0f8fe4d"><td class="memSeparator" colspan="2">&#160;</td></tr>

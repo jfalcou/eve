@@ -56,7 +56,10 @@ MathJax.Hub.Config({
   <nav class="navbar navbar-default" role="navigation">
     <div class="container">
       <div class="navbar-header">
-        <a href="index.html" class="navbar-brand">E.V.E 0.1-beta</a>
+      <!--GITHUB RIBBON-->
+      <a id="forkme_banner" href="https://github.com/jfalcou/eve">View on GitHub</a>
+      <!--GITHUB RIBBON-->
+        <a href="index.html" class="navbar-brand">E.V.E v2021.10.0</a>
       </div>
     </div>
   </nav>
@@ -69,12 +72,13 @@ MathJax.Hub.Config({
           <table cellspacing="0" cellpadding="0">
             <tbody>
               <tr style="height: 56px;">
-                <td id="projectlogo"><a href="index.html"><img alt="Logo" src="logo.png" /></a></td>
+                <td id="projectlogo"><a href="index.html"><img alt="Logo" src="logo.png" /></a>
+                </td>
                 <td id="projectalign" style="padding-left: 0.5em;">
                   <div id="projectname">E.V.E
-                    &#160;<span id="projectnumber">0.1-beta</span>
+                    &#160;<span id="projectnumber">v2021.10.0</span>
                   </div>
-                  <!-- BEGIN PROJECT_BRIEF--><div id="projectbrief"></div><!--END PROJECT_BRIEF -->
+                  <!-- BEGIN PROJECT_BRIEF--><div id="projectbrief">The Expressive Vector Engine</div><!--END PROJECT_BRIEF -->
                 </td>
               </tr>
             </tbody>
@@ -148,19 +152,19 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><ul><li class="level2"><a href="#autotoc_md2050">Explicit Selection</a></li>
-<li class="level2"><a href="#autotoc_md2051">Conditional Function Syntax</a></li>
-<li class="level2"><a href="#autotoc_md2052">Conditional Expressions</a><ul><li class="level3"><a href="#autotoc_md2053">Mask with alternative</a></li>
-<li class="level3"><a href="#autotoc_md2054">Context-sensitive mask</a></li>
+<ul><ul><li class="level2"><a href="#autotoc_md1973">Explicit Selection</a></li>
+<li class="level2"><a href="#autotoc_md1974">Conditional Function Syntax</a></li>
+<li class="level2"><a href="#autotoc_md1975">Conditional Expressions</a><ul><li class="level3"><a href="#autotoc_md1976">Mask with alternative</a></li>
+<li class="level3"><a href="#autotoc_md1977">Context-sensitive mask</a></li>
 </ul>
 </li>
-<li class="level2"><a href="#autotoc_md2055">Conclusion</a></li>
+<li class="level2"><a href="#autotoc_md1978">Conclusion</a></li>
 </ul>
 </ul>
 </div>
 <div class="textblock"><p >When you call a function on one or more <a href="../reference/concepts/simd_value.html#simd_value">SIMD values</a>, you expect the computation to be performed on every elements of its parameters. Sometimes, you may want to make the application of a given function dependent on some condition.</p>
 <p >Let's explore the functionalities <b>EVE</b> provides for achieving those results.</p>
-<h2><a class="anchor" id="autotoc_md2050"></a>
+<h2><a class="anchor" id="autotoc_md1973"></a>
 Explicit Selection</h2>
 <p >Let's say the function we want to write computes the product of two values <code>a</code> and <code>b</code> if <code>a</code> is equal to <code>b</code> and their difference otherwise.</p>
 <p >The scalar code is looking like:</p>
@@ -191,7 +195,7 @@ Explicit Selection</h2>
 <div class="line">  std::cout &lt;&lt; square_or_diff(v1,v2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__logical_ga74b9090a23d420d6382270233e66f7ac_html_ga74b9090a23d420d6382270233e66f7ac"><div class="ttname"><a href="group__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac">eve::if_else</a></div><div class="ttdeci">constexpr callable_if_else_ if_else</div><div class="ttdoc">Callable object computing the if_else operation.</div><div class="ttdef"><b>Definition:</b> if_else.hpp:99</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:61</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
 </div><!-- fragment --><p >The <a class="el" href="group__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Callable object computing the if_else operation.">eve::if_else</a> call explicitly requests we pass:</p><ul>
 <li>the condition, i.e the comparison between <code>a</code> and <code>b</code></li>
 <li>the value to use whenever an element of said condition evaluates to <code>true</code>, here the product of <code>a</code> and <code>b</code></li>
@@ -203,7 +207,7 @@ Explicit Selection</h2>
 <div class="line">(0, 4, -7, 0)</div>
 <div class="line">(1, 4, -7, 16)</div>
 </div><!-- fragment --><dl class="section warning"><dt>Warning</dt><dd>Contrary to a <code>if ... else</code> statement, <a class="el" href="group__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Callable object computing the if_else operation.">eve::if_else</a> will evaluates all its arguments before performing its selection even if potential short-cut can be applied later on.</dd></dl>
-<h2><a class="anchor" id="autotoc_md2051"></a>
+<h2><a class="anchor" id="autotoc_md1974"></a>
 Conditional Function Syntax</h2>
 <p >Let's define a <code>sqrt_positive</code> function that computes the square root of its argument if it's positive or returns it unchanged otherwise. One can write:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/function/if_else.hpp&gt;</span></div>
@@ -259,10 +263,10 @@ Conditional Function Syntax</h2>
 <div class="line">  <span class="keyword">auto</span> <span class="keyword">const</span> f = <a class="code hl_variable" href="group__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a>[a &gt;= 0];</div>
 <div class="line">  <span class="keywordflow">return</span> f(a);</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2052"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1975"></a>
 Conditional Expressions</h2>
 <p >If passing a simple logical expression is the most common use-case of the conditional syntax, one may requires more flexibility. To do so, <b>EVE</b> provides various objects to express more interesting conditions.</p>
-<h3><a class="anchor" id="autotoc_md2053"></a>
+<h3><a class="anchor" id="autotoc_md1976"></a>
 Mask with alternative</h3>
 <p >One may want to use the conditional syntax to call a function but instead of returning the first argument if the condition is false, one may want to return an arbitrary value. This use case is handled by the <a class="el" href="structeve_1_1if__.html" title="Extensible wrapper for SIMD conditional.">eve::if_</a> helper by wrapping logical expression so that an alternative value can be specified.</p>
 <p >Let's modify <code>sqrt_positive</code> so that, if the argument is not positive, 0 is returned instead.</p>
@@ -293,7 +297,7 @@ Mask with alternative</h3>
 </div><!-- fragment --><p >The output is then:</p>
 <div class="fragment"><div class="line">(1, -2, 3.16228, -3.5)</div>
 <div class="line">(1, 0, 3.16228, 0)</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md2054"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1977"></a>
 Context-sensitive mask</h3>
 <p >Some algorithms require conditional function calls but use logical expression relative to the element index inside a <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type a SIMD type.">eve::simd_value</a> rather than its value. One may want for example to not compute an expression on the first and last element of such <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type a SIMD type.">eve::simd_value</a>.</p>
 <p >A frequent example is trying to load data from memory while ignoring trailing garbage or out of bounds values:</p>
@@ -364,7 +368,7 @@ Context-sensitive mask</h3>
 <div class="line">}</div>
 </div><!-- fragment --><p >The output is the same obviously:</p>
 <div class="fragment"><div class="line">(-6.3, 1, 2, -6.3)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2055"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1978"></a>
 Conclusion</h2>
 <p >Conditional operations on <a href="../reference/concepts/simd_value.html#simd_value">SIMD values</a> is a good way to keep a high level code over some complex computations. <b>EVE</b> provides different levels of abstraction for such operations as well as various helpers to specify how the conditions can be computed based either on values or indexes. </p>
 </div></div><!-- contents -->

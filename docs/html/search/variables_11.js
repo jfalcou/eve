@@ -9,11 +9,10 @@ var searchData=
   ['toward_5fzero_6',['toward_zero',['../group__decorator_ga0c470f9154d0e71ce66562f945b01028.html#ga0c470f9154d0e71ce66562f945b01028',1,'eve']]],
   ['transform_5finplace_7',['transform_inplace',['../group__algo_gabcfe49a76c53b5567df06523ded73cc0.html#gabcfe49a76c53b5567df06523ded73cc0',1,'eve::algo']]],
   ['transform_5fto_8',['transform_to',['../group__algo_ga023d457444697194cbb8dcf21bcb236e.html#ga023d457444697194cbb8dcf21bcb236e',1,'eve::algo']]],
-  ['true_5f_9',['true_',['../group__constant_gac1255364700394f5b94065c935208f42.html#gac1255364700394f5b94065c935208f42',1,'eve']]],
-  ['trunc_10',['trunc',['../group__rounding_gafde17ae255fef25fc9015dabc599c701.html#gafde17ae255fef25fc9015dabc599c701',1,'eve']]],
-  ['two_5fadd_11',['two_add',['../group__ieee754_ga300f96ea06042ecfd42f3e3e17787882.html#ga300f96ea06042ecfd42f3e3e17787882',1,'eve']]],
-  ['two_5fprod_12',['two_prod',['../group__ieee754_ga5ef9f1355859ff017142b92d4eb5516f.html#ga5ef9f1355859ff017142b92d4eb5516f',1,'eve']]],
-  ['twoopi_13',['twoopi',['../group__constant_gaa982de3f437f63dd7e92019e186bcb9c.html#gaa982de3f437f63dd7e92019e186bcb9c',1,'eve']]],
-  ['twopi_14',['twopi',['../group__constant_gab83b9743ff1508e1b62af18f170ed576.html#gab83b9743ff1508e1b62af18f170ed576',1,'eve']]],
-  ['twotonmb_15',['twotonmb',['../group__constant_gacefed0e3b9ee16507cf649601408be2a.html#gacefed0e3b9ee16507cf649601408be2a',1,'eve']]]
+  ['trunc_9',['trunc',['../group__rounding_gafde17ae255fef25fc9015dabc599c701.html#gafde17ae255fef25fc9015dabc599c701',1,'eve']]],
+  ['two_5fadd_10',['two_add',['../group__ieee754_ga300f96ea06042ecfd42f3e3e17787882.html#ga300f96ea06042ecfd42f3e3e17787882',1,'eve']]],
+  ['two_5fprod_11',['two_prod',['../group__ieee754_ga5ef9f1355859ff017142b92d4eb5516f.html#ga5ef9f1355859ff017142b92d4eb5516f',1,'eve']]],
+  ['twoopi_12',['twoopi',['../group__constant_gaa982de3f437f63dd7e92019e186bcb9c.html#gaa982de3f437f63dd7e92019e186bcb9c',1,'eve']]],
+  ['twopi_13',['twopi',['../group__constant_gab83b9743ff1508e1b62af18f170ed576.html#gab83b9743ff1508e1b62af18f170ed576',1,'eve']]],
+  ['twotonmb_14',['twotonmb',['../group__constant_gacefed0e3b9ee16507cf649601408be2a.html#gacefed0e3b9ee16507cf649601408be2a',1,'eve']]]
 ];

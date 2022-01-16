@@ -597,3 +597,19 @@ div.ingroups {
     text-align: left;
     margin-top: 1em;
 }
+
+#forkme_banner
+{
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 10px;
+  z-index: 10;
+  padding: 10px 50px 10px 10px;
+  color: #fff !important;
+  background: url(blacktocat.png) #38751D no-repeat 95% 50%;
+  font-weight: 500;
+  box-shadow: 0 0 10px rgb(0 0 0 / 50%);
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
