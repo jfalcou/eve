@@ -7,18 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/invpi.hpp>
-#include <eve/constant/zero.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/bessel/regular/cyl_bessel_jn.hpp>
+#include <eve/module/bessel/regular/cyl_bessel_kn.hpp>
 #include <eve/detail/hz_device.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/cyl_bessel_jn.hpp>
-#include <eve/function/cyl_bessel_kn.hpp>
-#include <eve/function/is_infinite.hpp>
-#include <eve/function/is_nan.hpp>
-#include <eve/function/is_not_nan.hpp>
-#include <eve/function/sqrt.hpp>
 
 namespace eve::detail
 {
@@ -28,9 +20,8 @@ namespace eve::detail
     using elt_t =  element_type_t<T>;
     auto ax = eve::abs(x);
     T rac = eve::sqrt(ax);
-//    T racthird = rac*T(0.577350269189626);
     T p = (ax * rac * 2) / 3;
-    T v = T(0.3333333333333333);
+    T v = T(1.0/3);
     auto br_0 = [v, p, rac]() {
       T j1 = cyl_bessel_jn(v, p);
       T j2 = cyl_bessel_jn(-v, p);

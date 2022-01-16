@@ -6,39 +6,14 @@
 */
 //==================================================================================================
 #pragma once
-#include <eve/detail/skeleton_calls.hpp>
+
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/ieee.hpp>
+#include <eve/module/special/regular/gamma_p.hpp>
+#include <eve/module/special/diff/gamma_p.hpp>
+#include <eve/module/special/regular/erfc_inv.hpp>
 #include <eve/detail/hz_device.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/oneminus.hpp>
-#include <eve/function/normal_distribution.hpp>
-#include <eve/function/diff/gamma_p.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/average.hpp>
-#include <eve/function/none.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_not_nan.hpp>
-#include <eve/function/is_lez.hpp>
-#include <eve/function/is_not_less.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/log1p.hpp>
-#include <eve/function/max.hpp>
-#include <eve/function/min.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/function/sqrt.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/function/ulpdist.hpp>
-#include <eve/function/next.hpp>
-#include <eve/function/nb_values.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/inf.hpp>
-#include <type_traits>
 
 namespace eve::detail
 {
@@ -64,7 +39,8 @@ namespace eve::detail
     auto x = if_else(iseq1p, inf(as(p)), if_else(iseqzp, zero(as(p)), allbits));
     logical<T> notdone(is_not_nan(p) && !iseqzp && !iseq1p);
     auto d = rec(9*k);
-    auto y = oneminus(d + invcdf(normal_distribution_01<T>, oneminus(p)) * eve::sqrt(d));
+    auto omp = oneminus(p);
+    auto y = oneminus(d -sqrt_2(as(omp))*erfc_inv(2*omp)* eve::sqrt(d));
 
     x = if_else(notdone, k*sqr(y)*y, x);
     auto x0 = x;

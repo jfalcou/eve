@@ -7,25 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/has_abi.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/average.hpp>
-#include <eve/function/is_nlez.hpp>
-#include <eve/function/is_nltz.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/function/max.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/rsqrt.hpp>
-#include <eve/function/sqrt.hpp>
-#include <eve/function/pow_abs.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/ieee.hpp>
 #include <eve/detail/hz_device.hpp>
-
 
 namespace eve::detail
 {

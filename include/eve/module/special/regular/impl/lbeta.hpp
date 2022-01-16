@@ -7,9 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/function/lgamma.hpp>
-#include <eve/concept/value.hpp>
+#include <eve/module/special/regular/lgamma.hpp>
 
 namespace eve::detail
 {

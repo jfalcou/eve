@@ -7,32 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/has_abi.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/pio_2.hpp>
-#include <eve/constant/pio_4.hpp>
-#include <eve/constant/smallestposval.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/average.hpp>
-#include <eve/function/copysign.hpp>
-#include <eve/function/ellint_rd.hpp>
-#include <eve/function/rem.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_finite.hpp>
-#include <eve/function/is_not_less.hpp>
-#include <eve/function/oneminus.hpp>
-#include <eve/function/sincos.hpp>
-#include <eve/function/asinh.hpp>
-#include <eve/function/tan.hpp>
-
-#include <eve/function/sqr.hpp>
-#include <eve/function/sqrt.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/elliptic/regular/ellint_rd.hpp>
+#include <eve/detail/hz_device.hpp>
 
 namespace eve::detail
 {

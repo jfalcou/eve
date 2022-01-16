@@ -7,21 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/function/tgamma.hpp>
-#include <eve/function/lrising_factorial.hpp>
-#include <eve/function/raw.hpp>
-#include <eve/function/regular.hpp>
-#include <eve/function/signgam.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/traits/common_compatible.hpp>
-#include <type_traits>
-
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
+#include <eve/detail/hz_device.hpp>
+#include <eve/module/special/regular/lrising_factorial.hpp>
+#include <eve/module/special/regular/tgamma.hpp>
+#include <eve/module/special/regular/signgam.hpp>
 
 namespace eve::detail
 {

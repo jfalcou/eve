@@ -7,32 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/ieee_constant.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/invpi.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/floor.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_flint.hpp>
-#include <eve/function/is_infinite.hpp>
-#include <eve/function/is_lez.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/logical_andnot.hpp>
-#include <eve/function/count_true.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/sinpi.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/module/real/core/detail/generic/horn.hpp>
-#include <cstddef>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 
 namespace eve::detail
 {

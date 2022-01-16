@@ -7,13 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/laguerre.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/cospi.hpp>
 #include <eve/function/derivative.hpp>
-#include <eve/detail/apply_over.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/polynomial/regular/hermite.hpp>
+
 
 namespace eve::detail
 {

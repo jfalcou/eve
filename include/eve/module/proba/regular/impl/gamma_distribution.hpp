@@ -7,46 +7,16 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/mhalf.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/sqrt_2.hpp>
-#include <eve/constant/sqrt_2o_2.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/kumi.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/cospi.hpp>
-#include <eve/function/digamma.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/function/exponential_distribution.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/gamma_p.hpp>
-#include <eve/function/gamma_p_inv.hpp>
-#include <eve/function/is_finite.hpp>
-#include <eve/function/is_gtz.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/log1p.hpp>
-#include <eve/function/raw.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/function/sqrt.hpp>
-#include <eve/function/tgamma.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/ieee.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/special.hpp>
 #include <eve/module/proba/detail/attributes.hpp>
 #include <eve/module/proba/detail/urg01.hpp>
-#include <eve/platform.hpp>
-
-#include <concepts>
-#include <type_traits>
+#include <eve/function/exponential_distribution.hpp>
 
 namespace eve
 {
-
-
  template < typename T, typename U, typename Internal = T>
   struct gamma_distribution{};
 

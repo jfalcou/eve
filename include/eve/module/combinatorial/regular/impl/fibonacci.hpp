@@ -7,21 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/pow.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/fms.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_flint.hpp>
-#include <eve/function/nearest.hpp>
-
-#include <type_traits>
-#include <eve/detail/apply_over.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 
 namespace eve::detail
 {

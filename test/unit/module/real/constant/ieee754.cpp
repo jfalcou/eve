@@ -15,6 +15,7 @@
 #include <eve/constant/one.hpp>
 #include <eve/constant/bitincrement.hpp>
 
+
 EVE_TEST_TYPES( "Check ieee754 constants"
             , eve::test::simd::ieee_reals
             )

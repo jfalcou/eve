@@ -65,4 +65,4 @@ namespace eve
   EVE_MAKE_CALLABLE(double_factorial_, double_factorial);
 }
 
-#include <eve/module/combinatorial/regular/impl/double_factorial.hpp>
+#include <eve/module/special/regular/impl/double_factorial.hpp>

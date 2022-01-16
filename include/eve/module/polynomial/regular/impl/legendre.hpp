@@ -7,35 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/add.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/atanh.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/dec.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/polynomial/regular/kind.hpp>
+#include <eve/module/polynomial/regular/successor.hpp>
 #include <eve/function/double_factorial.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/fms.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_odd.hpp>
-#include <eve/function/minus.hpp>
-#include <eve/function/oneminus.hpp>
-#include <eve/function/pow_abs.hpp>
-#include <eve/function/pow1p.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/function/sqrt.hpp>
-#include <eve/function/tgamma.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/mone.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/function/p_kind.hpp>
-#include <eve/function/q_kind.hpp>
-#include <eve/function/successor.hpp>
-#include <utility>
+#include <eve/detail/hz_device.hpp>
 
 namespace eve
 {

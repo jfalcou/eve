@@ -21,5 +21,3 @@
 //! @}
 //==================================================================================================
 #include <eve/module/combinatorial/regular/combinatorial.hpp>
-#include <eve/module/combinatorial/pedantic/combinatorial.hpp>
-#include <eve/module/combinatorial/diff/combinatorial.hpp>

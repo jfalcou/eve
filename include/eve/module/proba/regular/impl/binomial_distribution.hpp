@@ -7,39 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/platform.hpp>
-#include <type_traits>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/ieee.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/special.hpp>
 #include <eve/module/proba/detail/attributes.hpp>
 #include <eve/module/proba/detail/urg01.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/binarize.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/function/exp2.hpp>
-#include <eve/function/is_gez.hpp>
-#include <eve/function/is_gtz.hpp>
-#include <eve/function/is_finite.hpp>
-#include <eve/function/is_flint.hpp>
-#include <eve/function/beta.hpp>
-#include <eve/function/betainc.hpp>
-#include <eve/function/lgamma.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/min.hpp>
-#include <eve/function/max.hpp>
-#include <eve/function/oneminus.hpp>
-#include <eve/function/pow_abs.hpp>
-#include <eve/function/sqrt.hpp>
-#include <eve/function/sub.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/zero.hpp>
 
 namespace eve
 {

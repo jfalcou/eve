@@ -7,26 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/hz_device.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/epsilon.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_infinite.hpp>
-#include <eve/function/is_not_nan.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/fms.hpp>
-#include <eve/function/lgamma.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/max.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/special/regular/lgamma.hpp>
 #include <eve/function/maximum.hpp>
-#include <eve/function/min.hpp>
-#include <eve/function/rsqrt.hpp>
-#include <eve/constant/one.hpp>
-#include <type_traits>
+#include <eve/detail/hz_device.hpp>
 
 namespace eve::detail
 {
@@ -41,7 +26,7 @@ namespace eve::detail
   }
 
   template<floating_real_value T>
-  EVE_FORCEINLINE T gamma_p_(EVE_SUPPORTS(cpu_), T x, T a) noexcept
+  T gamma_p_(EVE_SUPPORTS(cpu_), T x, T a) noexcept
   requires has_native_abi_v<T>
   {
     auto const third = T(1/3.0);

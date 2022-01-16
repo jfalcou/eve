@@ -7,21 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/function/add.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/fms.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/traits/common_compatible.hpp>
-#include <utility>
+#include <eve/module/math.hpp>
 
 namespace eve::detail
 {

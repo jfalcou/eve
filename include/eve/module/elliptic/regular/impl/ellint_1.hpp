@@ -7,30 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/has_abi.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/pio_2.hpp>
-#include <eve/constant/smallestposval.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/average.hpp>
-#include <eve/function/copysign.hpp>
-#include <eve/function/ellint_rf.hpp>
-#include <eve/function/rem.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_not_less.hpp>
-#include <eve/function/oneminus.hpp>
-#include <eve/function/sincos.hpp>
-#include <eve/function/asinh.hpp>
-#include <eve/function/tan.hpp>
-
-#include <eve/function/sqr.hpp>
-#include <eve/function/sqrt.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/ieee.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/elliptic/regular/ellint_rf.hpp>
 
 namespace eve::detail
 {
@@ -63,7 +43,7 @@ namespace eve::detail
   template<floating_real_value T, floating_real_value U>
   EVE_FORCEINLINE common_compatible_t<T, U> ellint_1_(EVE_SUPPORTS(cpu_)
                              , T phi
-                             , U x) noexcept 
+                             , U x) noexcept
   requires compatible_values<T, U>
   {
     return arithmetic_call(ellint_1, phi, x);

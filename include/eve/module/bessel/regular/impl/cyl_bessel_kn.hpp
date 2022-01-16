@@ -7,8 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/function/convert.hpp>
 #include <eve/module/bessel/detail/kernel_bessel_k.hpp>
 
 namespace eve::detail

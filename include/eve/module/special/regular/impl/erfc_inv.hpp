@@ -7,17 +7,9 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 #include <eve/detail/hz_device.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/module/real/core/detail/generic/horn.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/function/copysign.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/oneminus.hpp>
-#include <eve/function/sqrt.hpp>
-
-#include <type_traits>
 
 namespace eve::detail
 {

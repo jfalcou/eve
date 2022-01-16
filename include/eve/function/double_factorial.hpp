@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/combinatorial/regular/double_factorial.hpp>
+#include <eve/module/special/regular/double_factorial.hpp>

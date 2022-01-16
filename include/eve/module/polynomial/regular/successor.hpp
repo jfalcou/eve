@@ -14,18 +14,18 @@ namespace eve
   //================================================================================================
   //================================================================================================
   // Function decorators mark-up used in function overloads
-  struct p_kind_
+  struct successor_
   {
     template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
   };
 
-  using p_kind_type = decorated<p_kind_()>;
+  using successor_type = decorated<successor_()>;
   //================================================================================================
   //! @addtogroup decorator
   //! @{
-  //! @var p_kind
+  //! @var successor
   //!
-  //! @brief  Higher-order @callable imbuing p_kind behaviour onto other @callable{s}.
+  //! @brief  Higher-order @callable imbuing incrementation behaviour onto other @callable{s}.
   //!
   //! #### Synopsis
   //!
@@ -33,9 +33,11 @@ namespace eve
   //! An instance of eve::callable
   //!
   //! @return
-  //! A @callable performing the p_kind algorithm choice
+  //! A @callable performing the same kind of operation but incrementind some parameter(s) v
+  //!
+  //! Actually supported by eve::laguerre
   //!
   //!  @}
   //================================================================================================
-  inline constexpr p_kind_type const p_kind = {};
+  inline constexpr successor_type const successor = {};
 }

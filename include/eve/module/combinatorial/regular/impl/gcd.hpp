@@ -7,26 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_flint.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/function/max.hpp>
-#include <eve/function/min.hpp>
-#include <eve/function/rem.hpp>
-#include <eve/function/round.hpp>
-#include <eve/constant/allbits.hpp>
-#include <eve/constant/nan.hpp>
-
-
-#include <type_traits>
-#include <eve/detail/apply_over.hpp>
+#include <eve/module/arithmetic.hpp>
 
 namespace eve::detail
 {
