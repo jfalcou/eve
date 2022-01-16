@@ -26,7 +26,7 @@ namespace eve::detail
   }
 
   template<floating_real_value T>
-  /*EVE_FORCEINLINE*/ T gamma_p_(EVE_SUPPORTS(cpu_), T x, T a) noexcept
+  T gamma_p_(EVE_SUPPORTS(cpu_), T x, T a) noexcept
   requires has_native_abi_v<T>
   {
     auto const third = T(1/3.0);
