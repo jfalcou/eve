@@ -9,11 +9,11 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/function/reduce.hpp>
 #include <eve/function/splat.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/min.hpp>
-#include <eve/function/all.hpp>
+#include <eve/module/horizontal/regular/reduce.hpp>
+#include <eve/module/horizontal/regular/all.hpp>
 
 namespace eve::detail
 {

@@ -7,13 +7,13 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/horizontal.hpp>
 #include <eve/assert.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/all.hpp>
 #include <eve/function/is_nltz.hpp>
 #include <eve/function/regular.hpp>
 #include <eve/function/trigo_tags.hpp>

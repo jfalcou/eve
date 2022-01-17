@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/horizontal.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/abs.hpp>
-#include <eve/function/all.hpp>
 #include <eve/function/converter.hpp>
 #include <eve/function/is_infinite.hpp>
 #include <eve/function/max.hpp>

@@ -6,8 +6,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/horizontal.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/function/all.hpp>
 #include <eve/function/is_nltz.hpp>
 #include <type_traits>
 

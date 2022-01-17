@@ -7,13 +7,13 @@
 //==================================================================================================
 #pragma once
 
-#include  <eve/module/arithmetic/detail/multi_mul.hpp>
+#include <eve/module/horizontal.hpp>
+#include <eve/module/arithmetic/detail/multi_mul.hpp>
 #include <eve/assert.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/all.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/regular.hpp>

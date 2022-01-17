@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/horizontal.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/constant/pio_2.hpp>
 #include <eve/constant/twoopi.hpp>
@@ -14,8 +15,6 @@
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/add.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/any.hpp>
 #include <eve/function/bit_and.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_or.hpp>

@@ -7,10 +7,10 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/horizontal.hpp>
 #include <eve/constant/maxlog.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/abs.hpp>
-#include <eve/function/all.hpp>
 #include <eve/function/exp.hpp>
 #include <eve/function/expm1.hpp>
 #include <eve/function/inc.hpp>
