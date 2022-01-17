@@ -14,6 +14,6 @@ namespace eve
   EVE_MAKE_CALLABLE(swapbytes_, swapbytes);
 }
 
-#include <eve/module/real/core/function/scalar/swapbytes.hpp>
-//#include <eve/module/real/core/function/regular/simd/swapbytes.hpp>
+#include <eve/module/core/function/scalar/swapbytes.hpp>
+//#include <eve/module/core/function/regular/simd/swapbytes.hpp>
 
