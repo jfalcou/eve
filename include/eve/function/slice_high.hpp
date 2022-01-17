@@ -14,6 +14,6 @@ namespace eve
   EVE_MAKE_CALLABLE(slice_high_, slice_high);
 }
 
-#include <eve/module/real/core/function/scalar/slice_high.hpp>
-//#include <eve/module/real/core/function/regular/simd/slice_high.hpp>
+#include <eve/module/core/function/scalar/slice_high.hpp>
+//#include <eve/module/core/function/regular/simd/slice_high.hpp>
 
