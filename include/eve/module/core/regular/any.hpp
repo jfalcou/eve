@@ -7,44 +7,39 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/function/is_flint.hpp>
 
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup ieee754
+  //! @addtogroup reduction
   //! @{
-  //! @var ldexp
+  //! @var any
   //!
-  //! @brief Callable object computing the ldexp operation: \f$\textstyle x 2^n\f$.
+  //! @brief Callable object computing the any value.
   //!
-  //! **Required header:** `#include <eve/function/ldexp.hpp>`
+  //! **Required header:** `#include <eve/function/any.hpp>`
   //!
   //! #### Members Functions
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the ldexp operation   |
+  //! | `operator()` | the computation of the any value                           |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_value T, integral_real_value U > auto operator()( T x, U n ) const noexcept
-  //!  requires compatible< T, U >;
+  //!  auto operator()(value auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating real value](@ref eve::floating_real_value).
-  //!
-  //!`n`:   [integral real value](@ref eve::integral_value).
+  //!`x`:   [value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!the call `ldexp(x,n)` is semantically equivalent to  \f$\textstyle x 2^n\f$:
+  //!A bool value which is true if and only if any of elements of `x` is not zero.
   //!
   //! ---
   //!
@@ -52,7 +47,7 @@ namespace eve
   //!  auto operator[]( conditional_expression auto cond ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //!  Higher-order function generating a masked version of eve::ldexp
+  //!  Higher-order function generating a masked version of eve::any
   //!
   //!  **Parameters**
   //!
@@ -60,7 +55,7 @@ namespace eve
   //!
   //!  **Return value**
   //!
-  //!  A Callable object so that the expression `ldexp[cond](x, n)` is equivalent to `if_else(cond,ldexp(x, n),x)`
+  //!  A Callable object so that the expression `any[cond](x)` is equivalent to `if_else(cond,any(x),false)`
   //!
   //! ---
   //!
@@ -70,27 +65,20 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/ieee/ldexp.cpp}
+  //! @godbolt{doc/core/any.cpp}
   //!
   //!  @}
   //================================================================================================
-  namespace tag { struct ldexp_; }
-
-  namespace detail
-  {
-    template<typename T, typename U>
-    EVE_FORCEINLINE void check(EVE_SUPPORTS(eve::tag::ldexp_), T const&, [[maybe_unused]]  U const& b)
-    {
-      if constexpr(std::is_floating_point_v<element_type_t<U>>)
-        EVE_ASSERT(eve::all(is_flint(b)), "[eve::ldexp] argument 2 is floating but not a flint");
-    }
-  }
-
-  EVE_MAKE_CALLABLE(ldexp_, ldexp);
+  EVE_MAKE_CALLABLE(any_, any);
 }
 
-#include <eve/module/ieee/regular/impl/ldexp.hpp>
+#include <eve/arch.hpp>
+#include <eve/module/core/regular/impl/any.hpp>
 
-#if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/ieee/regular/impl/simd/x86/ldexp.hpp>
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
+#  include <eve/module/core/regular/impl/simd/ppc/any.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_ARM_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/neon/any.hpp>
 #endif

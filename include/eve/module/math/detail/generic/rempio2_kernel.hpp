@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/horizontal.hpp>
+#include <eve/module/core.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/constant/pio_2.hpp>
 #include <eve/constant/twoopi.hpp>

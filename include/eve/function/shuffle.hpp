@@ -13,8 +13,8 @@ namespace eve
   EVE_MAKE_CALLABLE(shuffle_, shuffle);
 }
 
-#include <eve/module/real/core/detail/basic_shuffle.hpp>
-#include <eve/module/real/core/detail/generic/find_optimized_shuffle_pattern.hpp>
+#include <eve/module/core/detail/basic_shuffle.hpp>
+#include <eve/module/core/detail/generic/find_optimized_shuffle_pattern.hpp>
 
 namespace eve::detail
 {
@@ -35,4 +35,3 @@ namespace eve::detail
     return shuffle(v, fix_pattern<T::size()>(p));
   }
 }
-

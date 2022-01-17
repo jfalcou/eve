@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/horizontal.hpp>
+#include <eve/module/core.hpp>
 #include <eve/function/log_abs.hpp>
 #include <eve/function/diff/log.hpp>
 #include <eve/function/abs.hpp>

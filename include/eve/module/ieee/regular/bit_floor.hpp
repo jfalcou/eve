@@ -7,44 +7,40 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/function/is_flint.hpp>
 
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup ieee754
+  //! @addtogroup bits
   //! @{
-  //! @var ldexp
+  //! @var bit_floor
   //!
-  //! @brief Callable object computing the ldexp operation: \f$\textstyle x 2^n\f$.
+  //! @brief Callable object computing the bit_floor operation.
   //!
-  //! **Required header:** `#include <eve/function/ldexp.hpp>`
+  //! **Required header:** `#include <eve/function/bit_floor.hpp>`
   //!
   //! #### Members Functions
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the ldexp operation   |
+  //! | `operator()` | the bit_floor operation   |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_value T, integral_real_value U > auto operator()( T x, U n ) const noexcept
-  //!  requires compatible< T, U >;
+  //!  template< unsigned_value T > auto operator()( T x ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating real value](@ref eve::floating_real_value).
-  //!
-  //!`n`:   [integral real value](@ref eve::integral_value).
+  //!`x`:   [unsigned value](@ref eve::value).
   //!
   //! **Return value**
   //!
-  //!the call `ldexp(x,n)` is semantically equivalent to  \f$\textstyle x 2^n\f$:
+  //!If `x` is not zero, computes [elementwise](@ref glossary_elementwise)  the largest integral power of two that is not greater than `x`.
+  //!If an  [element](@ref glossary_elementwise) of `x` is zero, the corresponding result  [element](@ref glossary_elementwise) is zero.
   //!
   //! ---
   //!
@@ -52,7 +48,7 @@ namespace eve
   //!  auto operator[]( conditional_expression auto cond ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //!  Higher-order function generating a masked version of eve::ldexp
+  //!  Higher-order function generating a masked version of eve::bit_floor
   //!
   //!  **Parameters**
   //!
@@ -60,7 +56,7 @@ namespace eve
   //!
   //!  **Return value**
   //!
-  //!  A Callable object so that the expression `ldexp[cond](x, n)` is equivalent to `if_else(cond,ldexp(x, n),x)`
+  //!  A Callable object so that the expression `bit_floor[cond](x, ...)` is equivalent to `if_else(cond,bit_floor(x, ...),x)`
   //!
   //! ---
   //!
@@ -70,27 +66,11 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/ieee/ldexp.cpp}
+  //! @godbolt{doc/core/bit_floor.cpp}
   //!
   //!  @}
   //================================================================================================
-  namespace tag { struct ldexp_; }
-
-  namespace detail
-  {
-    template<typename T, typename U>
-    EVE_FORCEINLINE void check(EVE_SUPPORTS(eve::tag::ldexp_), T const&, [[maybe_unused]]  U const& b)
-    {
-      if constexpr(std::is_floating_point_v<element_type_t<U>>)
-        EVE_ASSERT(eve::all(is_flint(b)), "[eve::ldexp] argument 2 is floating but not a flint");
-    }
-  }
-
-  EVE_MAKE_CALLABLE(ldexp_, ldexp);
+  EVE_MAKE_CALLABLE(bit_floor_, bit_floor);
 }
 
-#include <eve/module/ieee/regular/impl/ldexp.hpp>
-
-#if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/ieee/regular/impl/simd/x86/ldexp.hpp>
-#endif
+#include <eve/module/ieee/regular/impl/bit_floor.hpp>

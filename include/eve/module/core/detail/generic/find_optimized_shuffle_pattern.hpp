@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/real/core/detail/basic_shuffle.hpp>
+#include <eve/module/core/detail/basic_shuffle.hpp>
 #include <eve/function/broadcast_group.hpp>
 #include <eve/function/broadcast.hpp>
 #include <eve/function/reverse.hpp>

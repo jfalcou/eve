@@ -27,8 +27,8 @@
 #include <eve/constant/pio_4.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/sqrteps.hpp>
-#include <eve/module/real/core/detail/generic/horn.hpp>
-#include <eve/module/real/core/detail/generic/horn1.hpp>
+#include <eve/module/core/detail/generic/horn.hpp>
+#include <eve/module/core/detail/generic/horn1.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <type_traits>
@@ -103,4 +103,3 @@ namespace eve::detail
     else return apply_over(eve::asin, a0);
   }
 }
-

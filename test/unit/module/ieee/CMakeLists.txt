@@ -13,6 +13,8 @@ add_custom_target(unit.ieee.exe                      )
 ##==================================================================================================
 ## new style tests
 ##==================================================================================================
+make_unit("unit.ieee" bit_ceil.cpp                )
+make_unit("unit.ieee" bit_floor.cpp               )
 make_unit("unit.ieee" exponent.cpp                )
 make_unit("unit.ieee" frexp.cpp                   )
 #make_unit("unit.ieee" ifrexp.cpp                  )
