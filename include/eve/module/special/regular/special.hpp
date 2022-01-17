@@ -24,6 +24,7 @@
 #include <eve/module/special/regular/gamma_p_inv.hpp>
 #include <eve/module/special/regular/lambert.hpp>
 #include <eve/module/special/regular/lbeta.hpp>
+#include <eve/module/special/regular/lfactorial.hpp>
 #include <eve/module/special/regular/lgamma.hpp>
 #include <eve/module/special/regular/lrising_factorial.hpp>
 #include <eve/module/special/regular/omega.hpp>
