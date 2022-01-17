@@ -97,8 +97,6 @@ void precise_tests(T x)
   eve::unsafe(eve::compress_store[eve::ignore_first(0)])(x, mask, &data[0]);
   TTS_EQUAL(data[0], x.back());
   TTS_EQUAL(data[1], e_t{5});
-
-  std::cout << " precise_tests done" << std::endl;
 }
 
 template <bool all_options, typename T, typename L>
@@ -207,7 +205,6 @@ void smaller_test_v(T x)
 
     // precise
     precise_tests<L>(x);
-    std::cout << "after all tests" << std::endl;
   }
 }
 
