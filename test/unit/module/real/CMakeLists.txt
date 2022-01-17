@@ -10,4 +10,3 @@ add_dependencies(unit.simd.exe    unit.real.simd.exe   )
 
 add_subdirectory(algorithm)
 add_subdirectory(constant)
-add_subdirectory(core)

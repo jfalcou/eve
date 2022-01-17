@@ -15,6 +15,7 @@ add_custom_target(unit.ieee.exe                      )
 ##==================================================================================================
 make_unit("unit.ieee" bit_ceil.cpp                )
 make_unit("unit.ieee" bit_floor.cpp               )
+make_unit("unit.ieee" constants.cpp               )
 make_unit("unit.ieee" exponent.cpp                )
 make_unit("unit.ieee" frexp.cpp                   )
 #make_unit("unit.ieee" ifrexp.cpp                  )

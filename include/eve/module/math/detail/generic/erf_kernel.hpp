@@ -7,15 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/constant/constant.hpp>
-#include <eve/constant/halfeps.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/rec.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/constant/math.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
 #include <eve/module/core/detail/generic/horn1.hpp>
-#include <concepts>
 
 namespace eve::detail
 {
