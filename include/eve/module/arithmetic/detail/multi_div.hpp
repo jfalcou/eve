@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/horizontal.hpp>
+#include <eve/module/core.hpp>
 #include <eve/assert.hpp>
 #include <eve/function/div.hpp>
 #include <eve/function/mul.hpp>

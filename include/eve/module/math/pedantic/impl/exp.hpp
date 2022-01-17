@@ -29,7 +29,7 @@
 #include <eve/function/oneminus.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/function/sqr.hpp>
-#include <eve/module/real/core/detail/generic/horn.hpp>
+#include <eve/module/core/detail/generic/horn.hpp>
 #include <type_traits>
 
 namespace eve::detail

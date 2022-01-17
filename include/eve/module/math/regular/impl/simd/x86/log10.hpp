@@ -33,7 +33,7 @@
 #include <eve/function/plain.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/sub.hpp>
-#include <eve/module/real/core/detail/generic/horn.hpp>
+#include <eve/module/core/detail/generic/horn.hpp>
 
 namespace eve::detail
 {

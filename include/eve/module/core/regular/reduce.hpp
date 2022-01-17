@@ -7,44 +7,43 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/function/is_flint.hpp>
 
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup ieee754
+  //! @addtogroup reduction
   //! @{
-  //! @var ldexp
+  //! @var reduce
   //!
-  //! @brief Callable object computing the ldexp operation: \f$\textstyle x 2^n\f$.
+  //! @brief Callable object computing a generalized fold operation.
   //!
-  //! **Required header:** `#include <eve/function/ldexp.hpp>`
+  //! **Required header:** `#include <eve/function/reduce.hpp>`
   //!
-  //! #### Members Functions
+  //! #### Member Functions
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the ldexp operation   |
+  //! | `operator()` | the computation of a generalized fold operation   |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_value T, integral_real_value U > auto operator()( T x, U n ) const noexcept
-  //!  requires compatible< T, U >;
+  //!  template<simd_value T> auto operator()( T v ) const noexcept;
+  //!  template<simd_value T, Callable F> auto operator()( T v, F binary_op ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating real value](@ref eve::floating_real_value).
+  //! `v`:   [SIMD value](@ref eve::simd_value) to reduce.
   //!
-  //!`n`:   [integral real value](@ref eve::integral_value).
+  //! `binary_op`:   Binary callable object that perform a binary, associative and commutative operation.
+  //!                If unspecified, the sum of all element of `v`is performed.
   //!
   //! **Return value**
   //!
-  //!the call `ldexp(x,n)` is semantically equivalent to  \f$\textstyle x 2^n\f$:
+  //! Generalized fold of `v.get(0)`, `v.get(1)`, ... `v.get(v.size()-1)` over `binary_op`,
   //!
   //! ---
   //!
@@ -52,7 +51,7 @@ namespace eve
   //!  auto operator[]( conditional_expression auto cond ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //!  Higher-order function generating a masked version of eve::ldexp
+  //!  Higher-order function generating a masked version of eve::reduce
   //!
   //!  **Parameters**
   //!
@@ -60,37 +59,28 @@ namespace eve
   //!
   //!  **Return value**
   //!
-  //!  A Callable object so that the expression `ldexp[cond](x, n)` is equivalent to `if_else(cond,ldexp(x, n),x)`
+  //!  A Callable object so that the expression `reduce[cond](x, ...)` is equivalent to `if_else(cond,reduce(x, ...),x)`
   //!
   //! ---
   //!
   //! #### Supported decorators
   //!
-  //!  no decorators are supported
+  //!   * eve::splat
+  //!
+  //!     **Required header:** `#include <eve/function/reduce.hpp>`
+  //!
+  //!     The expression `eve::splat(eve::reduce)(v,binary_op)` computes the reduction of `v`
+  //!     using `binary_op` but returns a [SIMD value](@ref eve::simd_value) containing the result
+  //!     in all lanes.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/ieee/ldexp.cpp}
+  //! @godbolt{doc/core/reduce.cpp}
   //!
   //!  @}
   //================================================================================================
-  namespace tag { struct ldexp_; }
-
-  namespace detail
-  {
-    template<typename T, typename U>
-    EVE_FORCEINLINE void check(EVE_SUPPORTS(eve::tag::ldexp_), T const&, [[maybe_unused]]  U const& b)
-    {
-      if constexpr(std::is_floating_point_v<element_type_t<U>>)
-        EVE_ASSERT(eve::all(is_flint(b)), "[eve::ldexp] argument 2 is floating but not a flint");
-    }
-  }
-
-  EVE_MAKE_CALLABLE(ldexp_, ldexp);
+  EVE_MAKE_CALLABLE(reduce_, reduce);
 }
 
-#include <eve/module/ieee/regular/impl/ldexp.hpp>
-
-#if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/ieee/regular/impl/simd/x86/ldexp.hpp>
-#endif
+#include <eve/arch.hpp>
+#include <eve/module/core/regular/impl/reduce.hpp>

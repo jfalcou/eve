@@ -108,7 +108,7 @@
 #include <eve/function/gather.hpp>
 #include <eve/function/gcd.hpp>
 #include <eve/function/has_single_bit.hpp>
-#include <eve/function/horizontal.hpp>
+#include <eve/function/core.hpp>
 #include <eve/function/hyperbolic.hpp>
 #include <eve/function/hypot.hpp>
 #include <eve/function/if_else.hpp>

@@ -7,11 +7,16 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/as.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
+#include <eve/detail/overload.hpp>
 
-#include <type_traits>
+namespace eve
+{
+  EVE_MAKE_CALLABLE(first_true_, first_true);
+}
 
-#include <eve/module/core/regular/impl/simd/x86/convert_128.hpp>
-#include <eve/module/core/regular/impl/simd/x86/convert_256.hpp>
+#include <eve/arch.hpp>
+#include <eve/module/core/regular/impl/first_true.hpp>
+
+#if defined(EVE_INCLUDE_ARM_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/neon/first_true.hpp>
+#endif

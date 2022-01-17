@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
-#include <eve/module/real/core/detail/basic_shuffle.hpp>
+#include <eve/module/core/detail/basic_shuffle.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/overload.hpp>

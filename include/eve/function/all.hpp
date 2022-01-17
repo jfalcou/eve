@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/horizontal/regular/all.hpp>
+#include <eve/module/core/regular/all.hpp>
 

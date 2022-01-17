@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/horizontal/regular/reduce.hpp>
+#include <eve/module/core/regular/reduce.hpp>

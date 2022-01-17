@@ -7,10 +7,10 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/all.hpp>
+#include <eve/module/core/regular/any.hpp>
 #include <eve/module/core/regular/bit_and.hpp>
 #include <eve/module/core/regular/bit_andnot.hpp>
-#include <eve/module/core/regular/bit_ceil.hpp>
-#include <eve/module/core/regular/bit_floor.hpp>
 #include <eve/module/core/regular/bit_mask.hpp>
 #include <eve/module/core/regular/bit_notand.hpp>
 #include <eve/module/core/regular/bit_not.hpp>
@@ -30,17 +30,23 @@
 #include <eve/module/core/regular/countl_zero.hpp>
 #include <eve/module/core/regular/countr_one.hpp>
 #include <eve/module/core/regular/countr_zero.hpp>
+#include <eve/module/core/regular/count_true.hpp>
 #include <eve/module/core/regular/firstbitset.hpp>
 #include <eve/module/core/regular/firstbitunset.hpp>
+#include <eve/module/core/regular/first_true.hpp>
 #include <eve/module/core/regular/gather.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/ifnot_else.hpp>
-#include <eve/module/core/regular/iround.hpp>
 #include <eve/module/core/regular/load.hpp>
 #include <eve/module/core/regular/lookup.hpp>
+#include <eve/module/core/regular/maximum.hpp>
+#include <eve/module/core/regular/minimum.hpp>
 #include <eve/module/core/regular/nb_values.hpp>
+#include <eve/module/core/regular/none.hpp>
 #include <eve/module/core/regular/popcount.hpp>
+#include <eve/module/core/regular/reduce.hpp>
 #include <eve/module/core/regular/reverse.hpp>
+#include <eve/module/core/regular/scan.hpp>
 #include <eve/module/core/regular/slide_left.hpp>
 #include <eve/module/core/regular/slide_right.hpp>
 #include <eve/module/core/regular/store.hpp>

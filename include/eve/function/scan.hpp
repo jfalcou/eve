@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/horizontal/regular/scan.hpp>
+#include <eve/module/core/regular/scan.hpp>

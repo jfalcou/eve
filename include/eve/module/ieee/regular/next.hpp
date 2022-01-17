@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/horizontal.hpp>
+#include <eve/module/core.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/function/is_gez.hpp>
 #include <eve/function/saturated.hpp>

@@ -21,7 +21,7 @@
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/ldexp.hpp>
 #include <eve/function/minus.hpp>
-#include <eve/module/real/core/detail/generic/horn.hpp>
+#include <eve/module/core/detail/generic/horn.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/concept/value.hpp>
