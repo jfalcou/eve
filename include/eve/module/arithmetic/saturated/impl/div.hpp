@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/horizontal.hpp>
 #include  <eve/module/arithmetic/detail/multi_div.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
@@ -16,7 +17,6 @@
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/add.hpp>
-#include <eve/function/all.hpp>
 #include <eve/function/shr.hpp>
 #include <eve/function/saturated/mul.hpp>
 

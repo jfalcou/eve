@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/horizontal.hpp>
 #include <eve/function/log_abs.hpp>
 #include <eve/function/diff/log.hpp>
 #include <eve/function/abs.hpp>
@@ -15,7 +16,6 @@
 #include <eve/function/factorial.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_gtz.hpp>
-#include <eve/function/all.hpp>
 #include <eve/function/pow.hpp>
 #include <eve/function/converter.hpp>
 #include <eve/function/derivative.hpp>

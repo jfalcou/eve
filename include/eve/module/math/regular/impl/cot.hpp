@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/horizontal.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/constant/eps.hpp>
 #include <eve/constant/ieee_constant.hpp>
@@ -18,7 +19,6 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/abs.hpp>
-#include <eve/function/all.hpp>
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fnma.hpp>

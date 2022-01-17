@@ -19,8 +19,8 @@
 #include <eve/function/splat.hpp>
 #include <eve/function/plus.hpp>
 #include <eve/function/add.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/any.hpp>
+#include <eve/module/horizontal/regular/any.hpp>
+#include <eve/module/horizontal/regular/all.hpp>
 
 namespace eve::detail
 {

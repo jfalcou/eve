@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/horizontal.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/ceil.hpp>
@@ -18,7 +19,6 @@
 #include <eve/function/is_nez.hpp>
 #include <eve/function/saturated.hpp>
 #include <eve/function/saturated/convert.hpp>
-#include <eve/function/all.hpp>
 
 namespace eve::detail
 {

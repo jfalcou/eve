@@ -7,8 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/horizontal.hpp>
 #include <eve/assert.hpp>
-#include <eve/function/all.hpp>
 #include <eve/constant/one.hpp>
 
 namespace eve::detail
