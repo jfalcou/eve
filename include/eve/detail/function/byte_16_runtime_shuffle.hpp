@@ -36,3 +36,7 @@ namespace eve
 #if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/detail/function/simd/arm/neon/byte_16_runtime_shuffle.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
+#  include <eve/detail/function/simd/ppc/byte_16_runtime_shuffle.hpp>
+#endif

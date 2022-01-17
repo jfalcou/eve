@@ -86,7 +86,9 @@ void precise_tests(T x)
   e_t data[2] = { e_t{0}, e_t{5}} ;
   L mask{false};
   mask.set(T::size() - 1, true);
+
   eve::safe(eve::compress_store)(x, mask, &data[0]);
+
   TTS_EQUAL(data[0], x.back());
   TTS_EQUAL(data[1], e_t{5});
 

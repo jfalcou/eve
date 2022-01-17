@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/function/convert.hpp>
-#include <eve/detail/function/compress_store_swizzle_mask_num.hpp>
 #include <eve/function/count_true.hpp>
 #include <eve/function/unalign.hpp>
 

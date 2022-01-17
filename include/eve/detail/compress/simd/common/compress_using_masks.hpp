@@ -9,7 +9,7 @@
 
 #include <eve/traits/max_scalar_size.hpp>
 
-#include <eve/detail/function/compress_store_swizzle_mask_num.hpp>
+#include <eve/detail/compress/compress_mask_num.hpp>
 #include <eve/detail/function/byte_16_runtime_shuffle.hpp>
 
 #include <eve/function/count_true.hpp>
@@ -177,9 +177,9 @@ namespace eve::detail
   template<relative_conditional_expr C, typename T, typename U, typename N>
   EVE_FORCEINLINE
   auto compress_using_masks_(EVE_SUPPORTS(cpu_),
-                           C c,
-                           wide<T, N> v,
-                           logical<wide<U, N>> mask) noexcept
+                             C c,
+                             wide<T, N> v,
+                             logical<wide<U, N>> mask) noexcept
   {
     constexpr bool treat_like_aggregate = compress_using_masks_should_aggregate<T, N, U>();
 

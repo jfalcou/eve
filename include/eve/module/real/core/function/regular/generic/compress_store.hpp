@@ -27,16 +27,20 @@ namespace eve::detail
                     logical<wide<U, N>> mask,
                     Ptr ptr) noexcept
   {
-    alignas(sizeof(v)) std::array<element_type_t<T>, N{}()> buffer;
-    T* up_to = compress_store_impl(c, v, mask, buffer.begin());
-    std::ptrdiff_t n = up_to - buffer.begin();
+    if ( C::is_complete && !C::is_inverted ) return unalign(ptr);
+    else
+    {
+      alignas(sizeof(v)) std::array<element_type_t<T>, N{}()> buffer;
+      T* up_to = compress_store_impl(c, v, mask, buffer.begin());
+      std::ptrdiff_t n = up_to - buffer.begin();
 
-    auto* out = unalign(ptr) + c.offset(as(mask));
+      auto* out = unalign(ptr) + c.offset(as(mask));
 
-    wide<T, N> compressed{aligned_ptr<T, N>{buffer.begin()}};
+      wide<T, N> compressed{aligned_ptr<T, N>{buffer.begin()}};
 
-    store[keep_first(n)](compressed, out);
-    return out + n;
+      store[keep_first(n)](compressed, out);
+      return out + n;
+    }
   }
 
   template<relative_conditional_expr C,
@@ -50,8 +54,8 @@ namespace eve::detail
                      logical<wide<U, N>> mask,
                      Ptr ptr) noexcept
   {
-    if (!C::is_complete) return safe(compress_store[c])(v, mask, ptr);
-    else                 return compress_store_impl(c, v, mask, ptr);
+    if ( !C::is_complete || !C::is_inverted ) return safe(compress_store[c])(v, mask, ptr);
+    else                                      return compress_store_impl(c, v, mask, ptr);
   }
 
   template< relative_conditional_expr C, decorator Decorator

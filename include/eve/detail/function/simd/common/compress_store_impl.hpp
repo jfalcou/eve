@@ -17,7 +17,7 @@
 #include <eve/function/unsafe.hpp>
 #include <eve/memory/pointer.hpp>
 
-#include <eve/detail/function/compress_using_masks.hpp>
+#include <eve/detail/compress/compress.hpp>
 
 namespace eve::detail
 {
@@ -43,7 +43,7 @@ namespace eve::detail
     }
     else
     {
-      auto parts = compress_using_masks[c](v, mask);
+      auto parts = compress[c](v, mask);
 
       auto uptr = unalign(ptr);
 

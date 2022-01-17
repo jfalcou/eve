@@ -103,7 +103,7 @@ TTS_CASE( "explicit test case")
 
   auto r = eve::safe(eve::compress_store)(x, m, eve::soa_ptr{out_ints.data(), out_bytes.data()});
   TTS_EQUAL(get<0>(r), out_ints.end());
-  TTS_EQUAL(get<1>(r), out_bytes.end());
+  TTS_EQUAL((std::ptrdiff_t)get<1>(r), (std::ptrdiff_t)out_bytes.end());
 
   TTS_EQUAL(out_ints[0], 1);
   TTS_EQUAL(out_ints[1], 5);

@@ -7,7 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 
-#include <eve/detail/function/compress_store_swizzle_mask_num.hpp>
+#include <eve/detail/compress/compress_mask_num.hpp>
 
 #include <bit>
 #include <random>
@@ -122,12 +122,6 @@ EVE_TEST_TYPES("compress_store_swizzle_mask_num 16 elements",
                eve::test::scalar::all_types)<typename T>(eve::as<T>)
 {
   using mask_t = eve::logical<eve::wide<T, eve::fixed<16>>>;
-
-  if (eve::current_api == eve::avx512 && eve::has_aggregated_abi_v<eve::wide<T, eve::fixed<16>>>)
-  {
-    TTS_PASS("aggregated on avx512");
-    return;
-  }
 
   std::array<int, 1000> test_cases;
 
