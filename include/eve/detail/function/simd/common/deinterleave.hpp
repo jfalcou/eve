@@ -28,10 +28,10 @@ namespace eve::detail
 
 
          if constexpr ( T::size() == 1                    ) return values;
-    else if constexpr ( !has_emulated_abi_v<T> && nb == 2 && T::size() <= 4 )
+    else if constexpr ( !has_emulated_abi_v<T> && nb == 2 )
     {
-           if constexpr ( T::size() == 2 ) return interleave(v0, vs...); // For two elements it's the same logic
-      else if constexpr ( T::size() == 4 ) // basic aggregation logic for 4 elements
+      if constexpr ( T::size() == 2 ) return interleave(v0, vs...); // For two elements it's the same logic
+      else // basic aggregation logic
       {
         auto[a0b0,a1b1] = v0.slice();
         auto[a2b2,a3b3] = get<1>(values).slice();
