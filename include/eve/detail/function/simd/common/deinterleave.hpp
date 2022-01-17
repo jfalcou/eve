@@ -10,6 +10,8 @@
 #include <eve/detail/abi.hpp>
 #include <eve/product_type.hpp>
 
+#include <eve/function/interleave.hpp>
+
 namespace eve::detail
 {
   //================================================================================================
@@ -21,15 +23,26 @@ namespace eve::detail
   {
     auto const values = kumi::make_tuple(v0,vs...);
 
-    if constexpr(T::size() == 1)
+    constexpr auto nb   = 1 + sizeof...(Ts);
+    constexpr auto card = T::size();
+
+
+         if constexpr ( T::size() == 1                    ) return values;
+    else if constexpr ( !has_emulated_abi_v<T> && nb == 2 && T::size() <= 4 )
     {
-      return values;
+           if constexpr ( T::size() == 2 ) return interleave(v0, vs...); // For two elements it's the same logic
+      else if constexpr ( T::size() == 4 ) // basic aggregation logic for 4 elements
+      {
+        auto[a0b0,a1b1] = v0.slice();
+        auto[a2b2,a3b3] = get<1>(values).slice();
+        auto[a0a1,b0b1] = eve::deinterleave(a0b0,a1b1);
+        auto[a2a3,b2b3] = eve::deinterleave(a2b2,a3b3);
+
+        return kumi::make_tuple(T{a0a1, a2a3}, T{b0b1, b2b3});
+      }
     }
     else
     {
-      constexpr auto nb   = 1 + sizeof...(Ts);
-      constexpr auto card = T::size();
-
       return [&]<std::size_t... J>(std::index_sequence<J...>)
       {
         return kumi::make_tuple

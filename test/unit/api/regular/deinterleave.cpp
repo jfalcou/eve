@@ -37,15 +37,15 @@ EVE_TEST_TYPES( "Check behavior of interleave on arithmetic data, two registers"
 
   auto [actual_a, actual_b] = eve::deinterleave(a, b);
 
-
-#if 0
-  std::cerr << std::hex << "A : " << a << std::endl;
-  std::cerr << std::hex << "B : " << b << std::endl;
-  std::cerr << std::hex << "EA: " << expected_a << std::endl;
-  std::cerr << std::hex << "RA: " << actual_a << std::endl;
-  std::cerr << std::hex << "EB: " << expected_b << std::endl;
-  std::cerr << std::hex << "RB: " << actual_b << std::endl;
-#endif
+  if constexpr (std::same_as<eve::element_type_t<T>, double>)
+  {
+    std::cerr << std::hex << "A : " << a << std::endl;
+    std::cerr << std::hex << "B : " << b << std::endl;
+    std::cerr << std::hex << "EA: " << expected_a << std::endl;
+    std::cerr << std::hex << "RA: " << actual_a << std::endl;
+    std::cerr << std::hex << "EB: " << expected_b << std::endl;
+    std::cerr << std::hex << "RB: " << actual_b << std::endl;
+  }
 
   TTS_EQUAL(expected_a, actual_a);
   TTS_EQUAL(expected_b, actual_b);

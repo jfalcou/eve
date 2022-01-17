@@ -16,3 +16,7 @@ namespace eve
 }
 
 #include <eve/detail/function/simd/common/deinterleave.hpp>
+
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/detail/function/simd/x86/deinterleave.hpp>
+#endif
