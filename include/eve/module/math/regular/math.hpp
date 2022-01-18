@@ -64,7 +64,9 @@
 #include <eve/module/math/regular/logspace_add.hpp>
 #include <eve/module/math/regular/logspace_sub.hpp>
 #include <eve/module/math/regular/lpnorm.hpp>
+#include <eve/module/math/regular/musl.hpp>
 #include <eve/module/math/regular/nthroot.hpp>
+#include <eve/module/math/regular/plain.hpp>
 #include <eve/module/math/regular/pow1p.hpp>
 #include <eve/module/math/regular/pow_abs.hpp>
 #include <eve/module/math/regular/pow.hpp>

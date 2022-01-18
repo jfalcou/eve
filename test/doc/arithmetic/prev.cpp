@@ -1,5 +1,5 @@
 //#include <eve/function/pedantic/prev.hpp>
-#include <eve/module/ieee/pedantic/arithmetic.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/constant/bitincrement.hpp>
 #include <eve/constant/eps.hpp>
 #include <eve/wide.hpp>

@@ -7,19 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/function/conditional.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/function/is_nltz.hpp>
-#include <eve/function/max.hpp>
-#include <eve/function/min.hpp>
-#include <eve/function/pedantic.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/sqrt.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/concept/value.hpp>
+#include <eve/module/arithmetic.hpp>
 
 namespace eve::detail
 {

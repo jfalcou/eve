@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/module/arithmetic.hpp>
-#include <eve/function/musl.hpp>  //SUPPRESS
-#include <eve/function/plain.hpp>//SUPPRESS
+#include <eve/module/math/regular/musl.hpp>
+#include <eve/module/math/regular/plain.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
 
 namespace eve::detail

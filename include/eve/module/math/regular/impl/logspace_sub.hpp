@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/module/arithmetic.hpp>
+#include <eve/module/math/constant/log_2.hpp>
 #include <eve/module/math/regular/exp.hpp>
 #include <eve/module/math/regular/expm1.hpp>
 #include <eve/module/math/regular/log.hpp>

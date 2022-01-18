@@ -7,19 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/exponent.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/is_infinite.hpp>
-#include <eve/function/pedantic/ldexp.hpp>
-#include <eve/function/maxmag.hpp>
-#include <eve/function/pedantic.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/function/sqrt.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/traits/common_compatible.hpp>
+#include <eve/module/arithmetic.hpp>
 
 namespace eve::detail
 {
