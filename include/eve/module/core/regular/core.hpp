@@ -43,8 +43,11 @@
 #include <eve/module/core/regular/minimum.hpp>
 #include <eve/module/core/regular/nb_values.hpp>
 #include <eve/module/core/regular/none.hpp>
+#include <eve/module/core/regular/numeric.hpp>
+#include <eve/module/core/regular/pedantic.hpp>
 #include <eve/module/core/regular/popcount.hpp>
 #include <eve/module/core/regular/reduce.hpp>
+#include <eve/module/core/regular/regular.hpp>
 #include <eve/module/core/regular/reverse.hpp>
 #include <eve/module/core/regular/scan.hpp>
 #include <eve/module/core/regular/slide_left.hpp>

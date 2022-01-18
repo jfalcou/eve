@@ -7,17 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/average.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/log_2.hpp>
-#include <type_traits>
-#include <eve/detail/apply_over.hpp>
-#include <eve/concept/value.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/exp.hpp>
 
 namespace eve::detail
 {
@@ -71,4 +62,3 @@ namespace eve::detail
     else return apply_over(cosh, a0);
   }
 }
-

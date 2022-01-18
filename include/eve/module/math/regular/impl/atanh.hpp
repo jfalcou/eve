@@ -7,17 +7,9 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/log1p.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/bit_xor.hpp>
-#include <eve/function/bitofsign.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/is_less.hpp>
-#include <eve/function/log1p.hpp>
-#include <eve/function/oneminus.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {

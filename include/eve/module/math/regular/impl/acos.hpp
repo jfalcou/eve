@@ -7,25 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/ieee_constant.hpp>
-#include <eve/constant/mhalf.hpp>
-#include <eve/constant/pi.hpp>
-#include <eve/constant/pio_2.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/has_abi.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/add.hpp>
-#include <eve/function/asin.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/oneminus.hpp>
-#include <eve/function/raw.hpp>
-#include <eve/function/sqrt.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/constant/math.hpp>
+#include <eve/module/math/regular/asin.hpp>
+
 
 namespace eve::detail
 {

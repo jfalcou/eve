@@ -7,11 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/atan.hpp>
-#include <eve/function/radinpi.hpp>
+#include <eve/module/math/regular/atan.hpp>
+#include <eve/module/math/regular/radinpi.hpp>
 
 namespace eve::detail
 {
@@ -24,4 +21,3 @@ namespace eve::detail
       return apply_over(atanpi, a);
   }
 }
-

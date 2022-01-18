@@ -7,12 +7,8 @@
 //==================================================================================================
 #pragma once
 
-
-#include <eve/detail/implementation.hpp>
-#include <eve/function/sinh.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/concept/value.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/sinh.hpp>
 
 namespace eve::detail
 {
@@ -25,4 +21,3 @@ namespace eve::detail
     else                    return apply_over(csch, a0);
   }
 }
-

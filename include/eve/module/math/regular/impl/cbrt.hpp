@@ -7,26 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/constant/smallestposval.hpp>
-#include <eve/detail/function/conditional.hpp>
-#include <eve/function/add.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/gather.hpp>
-#include <eve/function/ifrexp.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_less.hpp>
-#include <eve/function/is_ltz.hpp>
-#include <eve/function/is_not_finite.hpp>
-#include <eve/function/ldexp.hpp>
-#include <eve/function/minus.hpp>
-#include <eve/module/core/detail/generic/horn.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <type_traits>
+#include <eve/module/arithmetic.hpp>
 
 namespace eve::detail
 {

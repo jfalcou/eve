@@ -94,3 +94,4 @@
 #include <eve/module/math/regular/tanh.hpp>
 #include <eve/module/math/regular/tan.hpp>
 #include <eve/module/math/regular/tanpi.hpp>
+#include <eve/module/math/regular/trigo_tags.hpp>

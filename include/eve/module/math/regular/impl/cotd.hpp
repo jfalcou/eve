@@ -7,15 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/function/cotpi.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/div_180.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_flint.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/cotpi.hpp>
+#include <eve/module/math/regular/div_180.hpp>
 
 namespace eve::detail
 {

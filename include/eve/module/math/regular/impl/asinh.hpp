@@ -7,27 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/constant/math.hpp>
+#include <eve/module/math/regular/log.hpp>
+#include <eve/module/math/regular/log1p.hpp>
+#include <eve/module/math/regular/hypot.hpp>
 #include <eve/detail/branch.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/add.hpp>
-#include <eve/function/average.hpp>
-#include <eve/function/bitofsign.hpp>
-#include <eve/function/bit_xor.hpp>
-#include <eve/function/hypot.hpp>
-#include <eve/function/log1p.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/count_true.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/log_2.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/oneosqrteps.hpp>
-#include <eve/constant/sqrteps.hpp>
-#include <eve/platform.hpp>
-#include <type_traits>
 
 namespace eve::detail
 {

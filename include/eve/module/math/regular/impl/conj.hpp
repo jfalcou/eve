@@ -7,9 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/concept/value.hpp>
-
 namespace eve::detail
 {
   template<floating_real_value T>
@@ -19,4 +16,3 @@ namespace eve::detail
     return a;
   }
 }
-

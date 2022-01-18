@@ -8,8 +8,7 @@
 #pragma once
 
 #include <eve/module/math/constant/math.hpp>
-//#include <eve/module/math/regular/trigo_tags.hpp>
-#include <eve/function/trigo_tags.hpp>
+#include <eve/module/math/regular/trigo_tags.hpp>
 
 namespace eve::detail
 {
