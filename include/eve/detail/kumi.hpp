@@ -256,7 +256,7 @@ namespace kumi
     if constexpr(sized_product_type<Tuple,0>) return  KUMI_FWD(f)();
     else
     {
-      return [&]<std::size_t... I>(std::index_sequence<I...>)
+      return [&]<std::size_t... I>(std::index_sequence<I...>) -> decltype(auto)
       {
         return KUMI_FWD(f)(get<I>(KUMI_FWD(t))...);
       }
@@ -627,7 +627,7 @@ namespace kumi
   //================================================================================================
   template<typename Type, typename... Ts>
   requires(!product_type<Type> && detail::implicit_constructible<Type, Ts...>)
-      [[nodiscard]] constexpr auto tuple_cast(tuple<Ts...> const &t)
+      [[nodiscard]] constexpr auto from_tuple(tuple<Ts...> const &t)
   {
     return [&]<std::size_t... I>(std::index_sequence<I...>) { return Type {get<I>(t)...}; }
     (std::make_index_sequence<sizeof...(Ts)>());
@@ -639,7 +639,7 @@ namespace kumi
   template<product_type Type>
   [[nodiscard]] inline constexpr auto to_tuple(Type&& that)
   {
-    return apply([](auto &&...elems) { return tuple{elems...}; }, KUMI_FWD(that));
+    return apply([](auto &&...elems) { return tuple{elems...}; }, std::forward<Type>(that));
   }
 
   //================================================================================================
@@ -684,14 +684,15 @@ namespace kumi
     if constexpr(sized_product_type<Tuple,0>) return std::remove_cvref_t<Tuple>{};
     else
     {
+      auto const call = [&]<std::size_t N, typename... Ts>(index_t<N>, Ts &&... args)
+      {
+        return f(get<N>(args)...);
+      };
+
       return [&]<std::size_t... I>(std::index_sequence<I...>)
       {
-        auto call = [&]<std::size_t N>(index_t<N>, auto &&...args) {
-          return f(get<N>(args)...);
-        };
         return kumi::make_tuple(call(index<I>, KUMI_FWD(t0), KUMI_FWD(others)...)...);
-      }
-      (std::make_index_sequence<size<Tuple>::value>());
+      }(std::make_index_sequence<size<Tuple>::value>());
     }
   }
 
@@ -960,6 +961,100 @@ namespace kumi
 
     template<product_type Tuple, std::size_t... Idx>
     using reorder_t = typename reorder<Tuple,Idx...>::type;
+  }
+
+  //================================================================================================
+  // Max of properties on tuple types
+  //================================================================================================
+  template<typename T, typename F>
+  constexpr auto max(T const& data, F func) noexcept
+  {
+    if constexpr ( !kumi::product_type<T> ) return func(data);
+    else if constexpr( T::size() == 1 )     return func( get<0>(data) );
+    else
+    {
+      auto base = func( get<0>(data) );
+      return kumi::fold_left( [func]<typename U>(auto cur, U const& u)
+                              {
+                                return cur > func(u) ? cur : func(u);
+                              }
+                            , data, base
+                            );
+    }
+  }
+
+  template<typename T, typename F>
+  constexpr auto max_flat(T const& data, F func) noexcept
+  {
+    if constexpr ( !kumi::product_type<T> ) return func(data);
+    else
+    {
+      auto flat_data = kumi::flatten_all(data);
+      return max(flat_data, func);
+    }
+  }
+
+  namespace result
+  {
+    template<typename T, typename F> struct max
+    {
+      using type = decltype( kumi::max( std::declval<T>(), std::declval<F>() ) );
+    };
+
+    template<typename T, typename F> struct max_flat
+    {
+      using type = decltype( kumi::max_flat( std::declval<T>(), std::declval<F>() ) );
+    };
+
+    template<typename T, typename F> using max_t      = typename max<T,F>::type;
+    template<typename T, typename F> using max_flat_t = typename max_flat<T,F>::type;
+  }
+
+  //================================================================================================
+  // Min of properties on tuple types
+  //================================================================================================
+  template<typename T, typename F>
+  constexpr auto min(T const& data, F func) noexcept
+  {
+    if constexpr ( !kumi::product_type<T> ) return func(data);
+    else if constexpr( T::size() == 1 )     return func( get<0>(data) );
+    else
+    {
+      auto base = func( get<0>(data) );
+      return kumi::fold_left( [func]<typename U>(auto cur, U const& u)
+                              {
+                                return cur < func(u) ? cur : func(u);
+                              }
+                            , data, base
+                            );
+    }
+  }
+
+  template<typename T, typename F>
+  constexpr auto min_flat(T const& data, F func) noexcept
+  {
+    if constexpr ( !kumi::product_type<T> ) return func(data);
+    else
+    {
+      auto flat_data = kumi::flatten_all(data);
+      return min(flat_data, func);
+    }
+  }
+
+  namespace result
+  {
+    template<typename T, typename F> struct min
+    {
+      using type = decltype( kumi::min( std::declval<T>(), std::declval<F>() ) );
+    };
+
+    template<typename T, typename F> struct min_flat
+    {
+      using type = decltype( kumi::min_flat( std::declval<T>(), std::declval<F>() ) );
+    };
+
+    template<typename T, typename F> using min_t      = typename min<T,F>::type;
+    template<typename T, typename F> using min_flat_t = typename min_flat<T,F>::type;
   }
 
   //================================================================================================

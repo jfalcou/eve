@@ -27,45 +27,9 @@ namespace eve
   //!                        `#include <eve/traits.hpp>`
   //! @}
   //================================================================================================
-  namespace detail
-  {
-    template <typename T>
-    constexpr std::size_t max_scalar_size_impl()
-    {
-      if constexpr ( !kumi::product_type<T> ) return sizeof(T);
-      else
-      {
-        using flat_t = kumi::result::flatten_all_t<T>;
-
-        return kumi::fold_left([]<typename U>(std::size_t cur, U) {
-          // Don't want to bring algorithm
-          return cur > sizeof(U) ? cur : sizeof(U);
-        }, flat_t{}, 0u);
-      }
-    }
-  }
+  template <typename T>
+  constexpr std::size_t max_scalar_size_v = kumi::max_flat(T{}, [](auto m) { return sizeof(m); });
 
   template <typename T>
-  constexpr std::size_t max_scalar_size_v = detail::max_scalar_size_impl<T>();
-
-  namespace detail
-  {
-    template <typename T>
-    constexpr std::size_t min_scalar_size_impl()
-    {
-      if constexpr ( !kumi::product_type<T> ) return sizeof(T);
-      else
-      {
-        using flat_t = kumi::result::flatten_all_t<T>;
-
-        return kumi::fold_left([]<typename U>(std::size_t cur, U) {
-          // Don't want to bring algorithm
-          return cur < sizeof(U) ? cur : sizeof(U);
-        }, flat_t{}, 0u);
-      }
-    }
-  }
-
-  template <typename T>
-  constexpr std::size_t min_scalar_size_v = detail::min_scalar_size_impl<T>();
+  constexpr std::size_t min_scalar_size_v = kumi::min_flat(T{}, [](auto m) { return sizeof(m); });
 }
