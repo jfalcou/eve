@@ -7,7 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/math/constant/math.hpp>
+#include <eve/module/math/constant/pi.hpp>
+#include <eve/module/math/constant/pio_2.hpp>
+#include <eve/module/math/constant/pio_4.hpp>
 #include <eve/module/math/regular/trigo_tags.hpp>
 
 namespace eve::detail

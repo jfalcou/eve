@@ -7,17 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_infinite.hpp>
-#include <eve/function/sinpi.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/platform.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/concept/value.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/sinpi.hpp>
+#include <eve/module/math/constant/eps.hpp>
 
 namespace eve::detail
 {

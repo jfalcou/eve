@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/module/arithmetic.hpp>
-#include <eve/module/math/constant/math.hpp>
 #include <eve/module/math/detail/generic/tancot_kernel.hpp>
 
 namespace eve::detail
@@ -26,6 +25,6 @@ namespace eve::detail
     t_t y = tancot_eval(xr);
     y = if_else(test,rec(y),-y);
     y = fma(dxr, fma(y, y, one(eve::as<T>())), y);
-    return if_else(abs(a0) < Eps<t_t>(), pedantic(rec)(a0), bit_xor(y, bitofsign(a0)));
+    return if_else(abs(a0) < eps(as<t_t>()), pedantic(rec)(a0), bit_xor(y, bitofsign(a0)));
   }
 }

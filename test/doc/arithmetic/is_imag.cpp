@@ -1,5 +1,5 @@
 //#include <eve/function/is_imag.hpp>
-#include <eve/module/ieee.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

@@ -7,12 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/has_abi.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/acsc.hpp>
-#include <eve/function/radindeg.hpp>
+#include <eve/module/math/regular/radindeg.hpp>
+#include <eve/module/math/regular/acsc.hpp>
 
 namespace eve::detail
 {
@@ -29,4 +25,3 @@ namespace eve::detail
     }
   }
 }
-

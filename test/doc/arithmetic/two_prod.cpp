@@ -1,5 +1,5 @@
 //#include <eve/function/two_prod.hpp>
-#include <eve/module/ieee.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/eps.hpp>
 #include <iostream>

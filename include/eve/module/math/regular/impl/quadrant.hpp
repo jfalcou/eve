@@ -7,10 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/trunc.hpp>
-#include <eve/function/floor.hpp>
-#include <eve/concept/value.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/arithmetic/regular/floor.hpp> //SUPPRESS
 
 namespace eve::detail
 {

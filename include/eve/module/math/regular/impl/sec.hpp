@@ -7,11 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/cos.hpp>
-#include <eve/function/rec.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/cos.hpp>
 
 namespace eve::detail
 {
@@ -42,4 +39,3 @@ namespace eve::detail
   }
 
 }
-

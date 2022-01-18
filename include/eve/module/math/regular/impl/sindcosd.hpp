@@ -7,13 +7,10 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/arithmetic.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/div_180.hpp>
-#include <eve/function/sinpicospi.hpp>
-
-#include <type_traits>
+#include <eve/module/math/regular/sinpicospi.hpp>
+#include <eve/module/math/regular/div_180.hpp>
 
 namespace eve::detail
 {

@@ -7,16 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/sin.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_infinite.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/platform.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/concept/value.hpp>
+#include <eve/module/arithmetic.hpp>
 
 namespace eve::detail
 {

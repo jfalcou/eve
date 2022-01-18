@@ -7,18 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/twoopi.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/detail/kumi.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/load.hpp>
 #include <eve/module/math/detail/scalar/ieee_754_rem_pio2.hpp>
-#include <eve/traits/alignment.hpp>
-#include <type_traits>
+#include <eve/detail/kumi.hpp>
+#include <array>
 
 // This function object is an old slow version whose only purpose is to test the new version
 // contained in rempio2

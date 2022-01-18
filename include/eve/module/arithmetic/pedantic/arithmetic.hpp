@@ -15,8 +15,12 @@
 #include <eve/module/arithmetic/pedantic/fms.hpp>
 #include <eve/module/arithmetic/pedantic/fnma.hpp>
 #include <eve/module/arithmetic/pedantic/fnms.hpp>
+#include <eve/module/arithmetic/pedantic/frexp.hpp>
 #include <eve/module/arithmetic/pedantic/fsm.hpp>
 #include <eve/module/arithmetic/pedantic/fsnm.hpp>
+#include <eve/module/arithmetic/pedantic/is_flint.hpp>
+#include <eve/module/arithmetic/pedantic/is_not_flint.hpp>
+#include <eve/module/arithmetic/pedantic/ldexp.hpp>
 #include <eve/module/arithmetic/pedantic/lerp.hpp>
 #include <eve/module/arithmetic/pedantic/manhattan.hpp>
 #include <eve/module/arithmetic/pedantic/maxabs.hpp>
@@ -31,6 +35,9 @@
 #include <eve/module/arithmetic/pedantic/negatenz.hpp>
 #include <eve/module/arithmetic/pedantic/negmaxabs.hpp>
 #include <eve/module/arithmetic/pedantic/negminabs.hpp>
+#include <eve/module/arithmetic/pedantic/next.hpp>
+#include <eve/module/arithmetic/pedantic/nextafter.hpp>
+#include <eve/module/arithmetic/pedantic/prev.hpp>
 #include <eve/module/arithmetic/pedantic/remdiv.hpp>
 #include <eve/module/arithmetic/pedantic/rem.hpp>
 #include <eve/module/arithmetic/pedantic/signnz.hpp>

@@ -1,5 +1,5 @@
 //#include <eve/function/is_not_greater_equal.hpp>
-#include <eve/module/ieee.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

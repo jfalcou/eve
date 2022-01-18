@@ -1,5 +1,5 @@
 //#include <eve/function/ulpdist.hpp>
-#include <eve/module/ieee.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/constant/eps.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/smallestposval.hpp>

@@ -7,12 +7,14 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/math/constant/pio_2.hpp>
+#include <eve/module/math/constant/twoopi.hpp>
+#include <eve/module/math/detail/constant/rempio2_limits.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/module/arithmetic.hpp>
 #include <eve/function/fnma.hpp>// SUPPRESS
 #include <eve/function/nearest.hpp>// SUPPRESS
-#include <eve/function/quadrant.hpp>
-#include <eve/module/math/detail/constant/rempio2_limits.hpp>
+#include <eve/function/quadrant.hpp>// SUPPRESS
 #include <eve/module/math/detail/generic/workaround.hpp>
 #include <bit>
 

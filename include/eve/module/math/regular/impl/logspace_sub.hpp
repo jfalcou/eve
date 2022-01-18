@@ -7,19 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/constant/log_2.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/function/expm1.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_nan.hpp>
-#include <eve/function/max.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/log1p.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/concept/value.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/exp.hpp>
+#include <eve/module/math/regular/expm1.hpp>
+#include <eve/module/math/regular/log.hpp>
+#include <eve/module/math/regular/log1p.hpp>
 
 namespace eve::detail
 {

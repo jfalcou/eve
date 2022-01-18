@@ -7,29 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/ieee_constant.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/log_2.hpp>
-#include <eve/constant/logeps.hpp>
-#include <eve/constant/maxlog.hpp>
-#include <eve/constant/nbmantissabits.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/function/fms.hpp>
-#include <eve/function/fnma.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/is_greater_equal.hpp>
-#include <eve/function/is_less_equal.hpp>
-#include <eve/function/ldexp.hpp>
-#include <eve/function/nearest.hpp>
-#include <eve/function/oneminus.hpp>
-#include <eve/function/pedantic.hpp>
-#include <eve/function/regular.hpp>
-#include <eve/function/sqr.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/constant/logeps.hpp>
+#include <eve/module/math/constant/maxlog.hpp>
+#include <eve/module/core/detail/generic/horn.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
 
 namespace eve::detail

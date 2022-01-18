@@ -7,19 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/function/pow.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/expm1.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_ltz.hpp>
-#include <eve/function/is_odd.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-
-#include <concepts>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/expm1.hpp>
+#include <eve/module/math/regular/log.hpp>
+#include <eve/module/math/regular/pow.hpp>
 
 namespace eve::detail
 {

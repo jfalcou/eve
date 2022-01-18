@@ -7,30 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/ieee_constant.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/invlog10_2.hpp>
-#include <eve/constant/maxlog10.hpp>
-#include <eve/constant/minlog10.hpp>
-#include <eve/constant/minlog10denormal.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/fnma.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/is_greater_equal.hpp>
-#include <eve/function/is_less_equal.hpp>
-#include <eve/function/pedantic/ldexp.hpp>
-#include <eve/function/nearest.hpp>
-#include <eve/function/oneminus.hpp>
-#include <eve/function/pedantic.hpp>
-#include <eve/function/regular.hpp>
-#include <eve/function/sqr.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/constant/invlog10_2.hpp>
+#include <eve/module/math/constant/minlog10.hpp>
+#include <eve/module/math/constant/minlog10denormal.hpp>
+#include <eve/module/math/constant/maxlog10.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
 #include <eve/module/core/detail/generic/horn1.hpp>
 

@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/arithmetic.hpp>
-#include <eve/module/math/constant/math.hpp>
+#include <eve/module/math/constant/pio_2.hpp>
 #include <eve/module/math/regular/asin.hpp>
 
 

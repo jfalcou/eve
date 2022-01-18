@@ -7,16 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/function/sqr_abs.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/sqrt.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/concept/compatible.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/traits/common_compatible.hpp>
+#include <eve/module/arithmetic.hpp>
 
 namespace eve::detail
 {

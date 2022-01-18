@@ -7,20 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/cospi.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_finite.hpp>
-#include <eve/function/is_not_finite.hpp>
-#include <eve/function/is_not_less_equal.hpp>
-#include <eve/function/quadrant.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/function/trigo_tags.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/secpi.hpp>
+#include <eve/module/math/regular/cospi.hpp>
 #include <eve/module/math/detail/generic/rem2.hpp>
 #include <eve/module/math/detail/generic/trig_finalize.hpp>
 
@@ -95,5 +84,4 @@ namespace eve::detail
       return apply_over(secpi, a0);
     }
   }
-
 }

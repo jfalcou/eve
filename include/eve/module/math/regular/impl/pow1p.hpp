@@ -7,20 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/function/pow.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/log1p.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_ltz.hpp>
-#include <eve/function/is_odd.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-
-#include <concepts>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/pow.hpp>
+#include <eve/module/math/regular/log1p.hpp>
 
 namespace eve::detail
 {
@@ -33,7 +22,7 @@ namespace eve::detail
   }
 
   template<floating_real_value T>
-  /*EVE_FORCEINLINE*/ auto pow1p_(EVE_SUPPORTS(cpu_),
+  auto pow1p_(EVE_SUPPORTS(cpu_),
                               T const &x, T const &y) noexcept
   {
     if constexpr(has_native_abi_v<T>)

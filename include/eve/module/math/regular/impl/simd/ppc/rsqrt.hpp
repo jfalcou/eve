@@ -7,13 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/concept/value.hpp>
+#include <eve/module/arithmetic.hpp>
 
 namespace eve::detail
 {

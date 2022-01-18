@@ -1,5 +1,5 @@
 //#include <eve/function/pedantic/frexp.hpp>
-#include <eve/module/ieee.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/mindenormal.hpp>
 #include <eve/constant/minf.hpp>

@@ -9,7 +9,7 @@
 
 
 #include <eve/module/arithmetic.hpp>
-#include <eve/module/math/constant/math.hpp>
+#include <eve/module/math/constant/pi.hpp>
 #include <eve/module/math/regular/quadrant.hpp>
 #include <eve/detail/kumi.hpp>
 

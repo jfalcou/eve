@@ -9,7 +9,8 @@
 
 #include <eve/module/arithmetic.hpp>
 #include <eve/module/arithmetic/regular/shl.hpp>  // SUPPRESS
-#include <eve/module/math/constant/math.hpp>
+#include <eve/module/arithmetic/regular/oneminus.hpp> // SUPPRESS
+#include <eve/module/arithmetic/regular/sqr.hpp>      // SUPPRESS
 #include <eve/detail/kumi.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
 #include <eve/module/core/detail/generic/horn1.hpp>

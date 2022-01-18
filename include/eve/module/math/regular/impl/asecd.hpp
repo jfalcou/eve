@@ -7,14 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/has_abi.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/asec.hpp>
-#include <eve/function/radindeg.hpp>
-#include <eve/function/raw.hpp>
-#include <eve/function/regular.hpp>
+#include <eve/module/arithmetic.hpp>
+
+#include <eve/module/math/regular/asec.hpp>
+#include <eve/module/math/regular/radindeg.hpp>
 
 namespace eve::detail
 {
@@ -37,4 +33,3 @@ namespace eve::detail
     return asecd(regular_type(), a);
   }
 }
-

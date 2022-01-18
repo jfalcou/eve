@@ -7,20 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
-#include <eve/assert.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/kumi.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/is_nltz.hpp>
-#include <eve/function/regular.hpp>
-#include <eve/function/trigo_tags.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
 #include <eve/module/math/detail/generic/rempio2_kernel.hpp>
+#include <eve/detail/kumi.hpp>
 
-#include <type_traits>
 
 namespace eve::detail
 {

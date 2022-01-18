@@ -8,7 +8,8 @@
 #pragma once
 
 #include <eve/module/arithmetic.hpp>
-#include <eve/module/math/constant/math.hpp>
+#include <eve/module/math/constant/pio_2.hpp>
+#include <eve/module/math/constant/pio_4.hpp>
 #include <eve/module/math/regular/rempio2.hpp>
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
 #include <eve/module/math/detail/generic/trig_finalize.hpp>

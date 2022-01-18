@@ -7,23 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/maxflint.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/pi.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/is_greater.hpp>
-#include <eve/function/is_not_finite.hpp>
-#include <eve/function/is_not_less_equal.hpp>
-#include <eve/function/is_odd.hpp>
-#include <eve/function/tan.hpp>
-#include <eve/function/trigo_tags.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/constant/pi.hpp>
+#include <eve/module/math/regular/tan.hpp>
+#include <eve/module/math/regular/trigo_tags.hpp>
 #include <eve/module/math/detail/generic/rem2.hpp>
 #include <eve/module/math/detail/generic/trig_finalize.hpp>
-
-#include <type_traits>
 
 namespace eve::detail
 {

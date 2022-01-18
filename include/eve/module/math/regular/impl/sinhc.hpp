@@ -7,21 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/average.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_less.hpp>
-#include <eve/function/is_infinite.hpp>
-#include <eve/function/count_true.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/function/sinh.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/platform.hpp>
-#include <eve/detail/apply_over.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/sinh.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
 #include <eve/module/core/detail/generic/horn1.hpp>

@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/arithmetic.hpp>
-#include <eve/module/math/constant/math.hpp>
+#include <eve/module/math/constant/pi.hpp>
 #include <eve/module/math/regular/cos.hpp>
 #include <eve/module/math/detail/generic/rem2.hpp>
 #include <eve/module/math/detail/generic/trig_finalize.hpp>

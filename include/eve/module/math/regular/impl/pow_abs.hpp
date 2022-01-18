@@ -7,39 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/constant/mhalf.hpp>
-#include <eve/constant/mone.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/function/floor.hpp>
-#include <eve/function/fms.hpp>
-#include <eve/function/frexp.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_flint.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_gtz.hpp>
-#include <eve/function/is_infinite.hpp>
-#include <eve/function/is_nan.hpp>
-#include <eve/function/is_negative.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/function/is_odd.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/logical_andnot.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/sqr.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/exp.hpp>
+#include <eve/module/math/regular/log.hpp>
 #include <eve/module/math/detail/generic/pow_kernel.hpp>
-#include <eve/platform.hpp>
-#include <eve/function/modf.hpp>
-#include <eve/function/converter.hpp>
-
-#include <concepts>
-#include <cmath>
 
 namespace eve::detail
 {

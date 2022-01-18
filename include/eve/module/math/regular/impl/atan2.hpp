@@ -8,8 +8,7 @@
 #pragma once
 
 #include <eve/module/arithmetic.hpp>
-#include <eve/module/arithmetic/regular/is_positive.hpp> //SUPPRESS
-#include <eve/module/math/constant/math.hpp>
+#include <eve/module/math/constant/pi.hpp>
 #include <eve/module/math/detail/generic/atan_kernel.hpp>
 
 namespace eve::detail
