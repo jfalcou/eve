@@ -27,6 +27,13 @@ namespace eve::detail
       return {_mm256_permute2f128_pd(a0a1b0b1, b2b3a2a3, 0x30),
               _mm256_permute2f128_pd(a0a1b0b1, b2b3a2a3, 0x21)};
     }
+    else if constexpr ( match(c,category::int64x2, category::uint64x2) && eve::current_api >= avx2 )
+    {
+      auto a0a1b0b1 = _mm256_permute4x64_epi64 (v0, _MM_SHUFFLE(3, 1, 2, 0));
+      auto b2b3a2a3 = _mm256_permute4x64_epi64 (v1, _MM_SHUFFLE(2, 0, 3, 1));
+      return {_mm256_permute2x128_si256(a0a1b0b1, b2b3a2a3, 0x30),
+              _mm256_permute2x128_si256(a0a1b0b1, b2b3a2a3, 0x21)};
+    }
     else return deinterleave_(EVE_RETARGET(cpu_),v0,v1);
   }
 }
