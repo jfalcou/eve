@@ -6,10 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/function/asind.hpp>
-#include <eve/function/radindeg.hpp>
-#include <eve/function/diff/asind.hpp>
+#include <eve/module/math.hpp>
 #include <cmath>
 
 //==================================================================================================

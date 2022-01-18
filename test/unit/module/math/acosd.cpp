@@ -7,9 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 #include <eve/concept/value.hpp>
-#include <eve/function/acosd.hpp>
-#include <eve/function/radindeg.hpp>
-#include <eve/function/diff/acosd.hpp>
+#include <eve/module/math.hpp>
 #include <cmath>
 
 //==================================================================================================

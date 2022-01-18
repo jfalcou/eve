@@ -7,10 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/diff/atan.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/radinpi.hpp>
-
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/radinpi.hpp>
+#include <eve/module/math/regular/atan.hpp>
 
 namespace eve::detail
 {

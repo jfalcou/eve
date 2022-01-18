@@ -7,9 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/diff/asin.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/radindeg.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/radindeg.hpp>
+#include <eve/module/math/regular/asin.hpp>
+
 
 namespace eve::detail
 {

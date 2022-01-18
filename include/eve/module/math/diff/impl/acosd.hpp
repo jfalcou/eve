@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/diff/acos.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/radindeg.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/radindeg.hpp>
+#include <eve/module/math/regular/acos.hpp>
 
 namespace eve::detail
 {

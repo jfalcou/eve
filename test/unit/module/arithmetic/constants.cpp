@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/module/ieee.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/module/math.hpp>
 
 EVE_TEST_TYPES( "Check ieee754 constants"

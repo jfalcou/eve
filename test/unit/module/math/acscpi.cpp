@@ -6,9 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/function/acscpi.hpp>
-#include <eve/function/radinpi.hpp>
-#include <eve/function/diff/acscpi.hpp>
+#include <eve/module/math.hpp>
 #include <cmath>
 
 //==================================================================================================

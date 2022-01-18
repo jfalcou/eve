@@ -7,11 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/arg.hpp>
-#include <eve/function/is_gtz.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/constant/zero.hpp>
+#include <eve/module/arithmetic.hpp>
 
 namespace eve::detail
 {

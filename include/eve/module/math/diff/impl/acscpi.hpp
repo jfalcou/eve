@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/diff/acsc.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/radinpi.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/radinpi.hpp>
+#include <eve/module/math/regular/acsc.hpp>
 
 namespace eve::detail
 {
