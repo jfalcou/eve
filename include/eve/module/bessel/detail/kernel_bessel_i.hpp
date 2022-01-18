@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/arithmetic.hpp>
-#include <eve/module/ieee.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/bessel/regular/cyl_bessel_i0.hpp>
 #include <eve/module/bessel/regular/cyl_bessel_i1.hpp>

@@ -9,17 +9,13 @@
 
 #include <eve/detail/kumi.hpp>
 #include <eve/module/arithmetic.hpp>
-#include <eve/module/ieee.hpp>
-#include <eve/function/fnma.hpp>
-#include <eve/function/nearest.hpp>
+#include <eve/function/fnma.hpp>// SUPPRESS
+#include <eve/function/nearest.hpp>// SUPPRESS
 #include <eve/function/quadrant.hpp>
-#include <eve/function/sub.hpp>
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
 #include <eve/module/math/detail/generic/workaround.hpp>
-#include <eve/traits/alignment.hpp>
-
 #include <bit>
-#include <type_traits>
+
 
 namespace eve::detail
 {

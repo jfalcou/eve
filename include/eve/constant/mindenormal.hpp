@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/ieee/constant/mindenormal.hpp>
+#include <eve/module/arithmetic/constant/mindenormal.hpp>

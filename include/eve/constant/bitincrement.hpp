@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/ieee/constant/bitincrement.hpp>
+#include <eve/module/arithmetic/constant/bitincrement.hpp>

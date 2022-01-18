@@ -7,17 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/mhalf.hpp>
-#include <eve/constant/pi.hpp>
-#include <eve/detail/abi.hpp>
+
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/constant/math.hpp>
+#include <eve/module/math/regular/quadrant.hpp>
 #include <eve/detail/kumi.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/overload.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/nearest.hpp>
-#include <eve/function/quadrant.hpp>
-#include <eve/function/two_prod.hpp>
 
 namespace eve::detail
 {
@@ -31,4 +25,3 @@ namespace eve::detail
     return kumi::make_tuple(quadrant(xi), xr, dxr);
   }
 }
-

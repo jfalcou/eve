@@ -9,7 +9,7 @@
 
 #include <eve/module/arithmetic.hpp>
 #include <eve/module/math.hpp>
-#include <eve/module/ieee.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/module/special/regular/gamma_p.hpp>
 #include <eve/module/special/diff/gamma_p.hpp>
 #include <eve/module/special/regular/erfc_inv.hpp>

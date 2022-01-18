@@ -1,7 +1,7 @@
 #pragma once
 
 #include <eve/module/arithmetic.hpp>
-#include <eve/module/ieee.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/special.hpp>
 #include <eve/detail/hz_device.hpp>

@@ -8,4 +8,4 @@
 #pragma once
 
 
-#include <eve/module/ieee/regular/bit_ceil.hpp>
+#include <eve/module/arithmetic/regular/bit_ceil.hpp>

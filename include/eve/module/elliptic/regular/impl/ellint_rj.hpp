@@ -9,7 +9,7 @@
 
 #include <eve/module/arithmetic.hpp>
 #include <eve/module/math.hpp>
-#include <eve/module/ieee.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/detail/hz_device.hpp>
 #include <eve/module/elliptic/regular/ellint_rc.hpp>
 #include <eve/module/elliptic/regular/ellint_rd.hpp>

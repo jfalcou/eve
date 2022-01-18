@@ -7,12 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/function/quadrant.hpp>
-#include <eve/function/floor.hpp>
-#include <eve/function/nearest.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <cstdint>
 #include <cmath>
 

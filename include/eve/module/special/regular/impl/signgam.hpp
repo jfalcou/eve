@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/arithmetic.hpp>
-#include <eve/module/ieee.hpp>
+#include <eve/module/arithmetic.hpp>
 
 namespace eve::detail
 {

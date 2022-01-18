@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/ieee/pedantic/is_not_flint.hpp>
+#include <eve/module/arithmetic/pedantic/is_not_flint.hpp>
