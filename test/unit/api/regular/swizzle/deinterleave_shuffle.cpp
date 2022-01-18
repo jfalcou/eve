@@ -12,8 +12,6 @@
 EVE_TEST_TYPES("Check behavior of deinterleave_shuffle swizzle", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
-  std::cout << eve::deinterleave_shuffle_pattern<T::size()> << std::endl;
-
   T field_markers { [](int i, int) { return ((i & 1) ? 0xB : 0xA) << 4; } };
   T in { [](int i, int) {
     int field_marker = (i & 1) ? 0xB : 0xA;

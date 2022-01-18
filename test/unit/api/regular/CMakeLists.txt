@@ -22,6 +22,7 @@ make_unit("unit.api.regular"  swizzle/slide_right.cpp           )
 make_unit("unit.api.regular"  swizzle/swap_adjacent_groups.cpp  )
 make_unit("unit.api.regular"  swizzle/zero.cpp                  )
 
+make_unit("unit.api.regular"  shuffle/deinterleave_shuffle.cpp  )
 make_unit("unit.api.regular"  shuffle/interleave_shuffle.cpp    )
 make_unit("unit.api.regular"  shuffle/slide_left.cpp            )
 make_unit("unit.api.regular"  shuffle/slide_right.cpp           )
@@ -29,8 +30,8 @@ make_unit("unit.api.regular"  shuffle/slide_right.cpp           )
 ##==================================================================================================
 ## Wide related tools
 make_unit( "unit.api.regular" conditional.cpp  )
-make_unit("unit.api.regular"  deinterleave.cpp )
+make_unit( "unit.api.regular" deinterleave.cpp )
 make_unit( "unit.api.regular" pattern.cpp      )
 make_unit( "unit.api.regular" replace.cpp      )
 make_unit( "unit.api.regular" swap_if.cpp      )
-make_unit("unit.api.regular"  interleave.cpp   )
+make_unit( "unit.api.regular" interleave.cpp   )

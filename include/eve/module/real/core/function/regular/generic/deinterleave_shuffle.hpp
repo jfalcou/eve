@@ -58,9 +58,9 @@ namespace eve::detail
     using N = eve::fixed<Wide::size()>;
     using res_t = as_wide_t<T, typename N::combined_type>;
 
-         if constexpr ( native_simd_for_abi<res_t>           ) return deinterleave_shuffle( eve::combine(v0, v1) );
-    else if constexpr ( is_bundle_v<typename Wide::abi_type> ) return res_t(kumi::map(deinterleave_shuffle, v0, v1));
-    else if constexpr ( has_aggregated_abi_v<Wide>           )
+         if constexpr ( res_t::size() <= expected_cardinal_v<T> ) return deinterleave_shuffle( eve::combine(v0, v1) );
+    else if constexpr ( is_bundle_v<typename Wide::abi_type>    ) return res_t(kumi::map(deinterleave_shuffle, v0, v1));
+    else if constexpr ( has_aggregated_abi_v<Wide>              )
     {
       auto [a0b0,a1b1] = v0.slice();
       auto [a2b2,a3b3] = v1.slice();
