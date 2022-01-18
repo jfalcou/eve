@@ -1,5 +1,11 @@
-#include <eve/function/diff/acosh.hpp>
-#include <eve/wide.hpp>
+//==================================================================================================
+/**
+  EVE - Expressive Vector Engine
+  Copyright : EVE Contributors & Maintainers
+  SPDX-License-Identifier: MIT
+**/
+//==================================================================================================
+#include <eve/module/math.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide <float, eve::fixed<4>>;

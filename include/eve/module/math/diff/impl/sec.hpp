@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/sec.hpp>
-#include <eve/function/tan.hpp>
-#include <eve/function/derivative.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/sec.hpp>
+#include <eve/module/math/regular/tan.hpp>
 
 namespace eve::detail
 {

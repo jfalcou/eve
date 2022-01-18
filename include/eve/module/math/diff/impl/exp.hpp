@@ -7,19 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/exp.hpp>
-#include <eve/function/derivative.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/exp.hpp>
 
 namespace eve::detail
 {
-  template<floating_real_value T, unsigned_value N>
-  EVE_FORCEINLINE constexpr T exp_(EVE_SUPPORTS(cpu_)
-                                  , diff_type<1> const &
-                                  , T x,  N ) noexcept
-  {
-    return exp(x);
-   }
-
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr T exp_(EVE_SUPPORTS(cpu_)
                                   , diff_type<1> const &

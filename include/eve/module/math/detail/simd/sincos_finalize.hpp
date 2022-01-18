@@ -8,21 +8,8 @@
 #pragma once
 
 #include <eve/module/arithmetic.hpp>
-// #include <eve/constant/signmask.hpp>
-// #include <eve/detail/abi.hpp>
-// #include <eve/detail/kumi.hpp>
-// #include <eve/detail/meta.hpp>
-// #include <eve/detail/overload.hpp>
-// #include <eve/function/binarize.hpp>
-// #include <eve/function/bit_xor.hpp>
-// #include <eve/function/fma.hpp>
-// #include <eve/function/fnma.hpp>
-// #include <eve/function/is_greater_equal.hpp>
-// #include <eve/function/shl.hpp>
-// #include <eve/function/sqr.hpp>
 #include <eve/module/math/detail/generic/cos_kernel.hpp>
 #include <eve/module/math/detail/generic/sin_kernel.hpp>
-// #include <type_traits>
 #include <utility>
 
 namespace eve::detail

@@ -1,5 +1,11 @@
-#include <eve/function/diff/acos.hpp>
-#include <eve/wide.hpp>
+//==================================================================================================
+/**
+  EVE - Expressive Vector Engine
+  Copyright : EVE Contributors & Maintainers
+  SPDX-License-Identifier: MIT
+**/
+//==================================================================================================
+#include <eve/module/math.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide <float, eve::fixed<4>>;
@@ -18,6 +24,6 @@ int main()
   std::cout
     << "---- scalar"  << '\n'
     << "<- xf                   = " << xf << '\n'
-    << "-> diff(acos)(xf) = " << eve::diff(eve::acos)(xf) << '\n'; 
+    << "-> diff(acos)(xf) = " << eve::diff(eve::acos)(xf) << '\n';
   return 0;
 }

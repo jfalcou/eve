@@ -7,8 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/sinpicospi.hpp>
-#include <eve/function/derivative.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/sinpicospi.hpp>
+#include <eve/module/math/constant/pi.hpp>
 
 
 namespace eve::detail
@@ -21,7 +22,7 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
     {
       auto [s, c] = sinpicospi(x);
-      return {c, -s};
+      return {c*pi(as(x)), -s*pi(as(x))};
     }
     else
     {

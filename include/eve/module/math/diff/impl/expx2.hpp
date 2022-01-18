@@ -7,8 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/expx2.hpp>
-#include <eve/function/derivative.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/expx2.hpp>
 
 namespace eve::detail
 {

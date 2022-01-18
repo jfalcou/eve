@@ -1,5 +1,4 @@
-#include <eve/function/diff/atanpi.hpp>
-#include <eve/wide.hpp>
+#include <eve/module/math.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide <float, eve::fixed<4>>;
@@ -18,6 +17,6 @@ int main()
   std::cout
     << "---- scalar"  << '\n'
     << "<- xf                   = " << xf << '\n'
-    << "-> diff(atanpi)(xf) = " << eve::diff(eve::atanpi)(xf) << '\n'; 
+    << "-> diff(atanpi)(xf) = " << eve::diff(eve::atanpi)(xf) << '\n';
   return 0;
 }

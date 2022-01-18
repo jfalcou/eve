@@ -7,11 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/nthroot.hpp>
-
-#include <eve/function/rec.hpp>
-#include <eve/function/nthroot.hpp>
-#include <eve/function/derivative.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/nthroot.hpp>
 
 namespace eve::detail
 {

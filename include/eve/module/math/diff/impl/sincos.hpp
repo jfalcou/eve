@@ -7,9 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/sincos.hpp>
-#include <eve/function/derivative.hpp>
-
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/sincos.hpp>
 
 namespace eve::detail
 {

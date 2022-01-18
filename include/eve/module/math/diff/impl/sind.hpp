@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/cosd.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/deginrad.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/cosd.hpp>
+#include <eve/module/math/regular/deginrad.hpp>
 
 namespace eve::detail
 {

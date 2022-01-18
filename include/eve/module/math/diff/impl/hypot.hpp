@@ -7,10 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/rec.hpp>
-#include <eve/function/pedantic/hypot.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/concept/compatible.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/hypot.hpp>
 
 namespace eve::detail
 {

@@ -7,10 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/diff/pow1p.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/log1p.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/log1p.hpp>
+#include <eve/module/math/regular/pow.hpp>
+
 
 namespace eve::detail
 {

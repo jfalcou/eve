@@ -7,8 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/diff/log.hpp>
-#include <eve/function/derivative.hpp>
+#include <eve/module/arithmetic.hpp>
 
 namespace eve::detail
 {

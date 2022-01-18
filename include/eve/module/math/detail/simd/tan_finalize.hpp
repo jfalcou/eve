@@ -7,24 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/module/math/detail/generic/tancot_kernel.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/binarize.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_not_finite.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/bitofsign.hpp>
-#include <eve/function/bit_xor.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/eps.hpp>
-#include <type_traits>
-
-
 
 namespace eve::detail
 {
