@@ -20,6 +20,7 @@
 //!
 //! @}
 //==================================================================================================
+#include <eve/module/arithmetic/constant/arithmetic.hpp>
 #include <eve/module/arithmetic/regular/arithmetic.hpp>
 #include <eve/module/arithmetic/diff/arithmetic.hpp>
 #include <eve/module/arithmetic/pedantic/arithmetic.hpp>
