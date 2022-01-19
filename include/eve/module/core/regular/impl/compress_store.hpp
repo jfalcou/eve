@@ -12,6 +12,7 @@
 #include <eve/detail/kumi.hpp>
 
 #include <eve/function/unalign.hpp>
+#include <eve/function/safe.hpp>
 #include <eve/memory/soa_ptr.hpp>
 
 namespace eve::detail

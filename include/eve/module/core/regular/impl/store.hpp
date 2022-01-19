@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/concept/memory.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/kumi.hpp>
