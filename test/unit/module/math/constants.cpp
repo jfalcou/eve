@@ -31,7 +31,6 @@ EVE_TEST_TYPES("Check math constants behavior"
   TTS_EQUAL(eve::valmax(as<T>()), T(std::numeric_limits<elt_t>::max()));
   TTS_EQUAL(eve::valmin(as<T>()), T(std::numeric_limits<elt_t>::lowest()));
   TTS_EQUAL(eve::smallestposval(as<T>()), T(std::numeric_limits<elt_t>::min()));
-  TTS_EQUAL(eve::sqrtvalmax(as<T>()), T(eve::trunc(std::sqrt(eve::valmax(as<elt_t>())))));
 
   if constexpr(std::is_same_v<elt_t, float>)
   {
