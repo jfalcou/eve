@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/arithmetic.hpp>
-#include <eve/module/math/regular/sinh.hpp>
+#include <eve/module/math/regular/cosh.hpp>
 
 namespace eve::detail
 {

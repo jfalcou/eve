@@ -1,8 +1,12 @@
-#include <eve/function/diff/rsqrt.hpp>
-#include <eve/wide.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
+//==================================================================================================
+/*
+  EVE - Expressive Vector Engine
+  Copyright : EVE Contributors & Maintainers
+  SPDX-License-Identifier: MIT
+*/
+//==================================================================================================
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
@@ -14,9 +18,8 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf                                = " << pf << '\n'
-            << "-> eve::diff(eve::rsqrt)(pf)     = " << eve::diff(eve::rsqrt)(pf) << '\n'
-            << "-> eve::diff(eve::rsqrt)(pf, 2u) = " << eve::diff(eve::rsqrt)(pf, 2u) << '\n'
-            << "-> eve::diff(eve::rsqrt)(pf, 3u) = " << eve::diff(eve::rsqrt)(pf, 3u) << '\n';
+            << "-> eve::diff(eve::rsqrt)(pf)     = " << eve::diff(eve::rsqrt)(pf) << '\n';
+
 
   float xf = 1.0f;
 

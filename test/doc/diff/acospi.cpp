@@ -1,5 +1,5 @@
-#include <eve/function/diff/acospi.hpp>
-#include <eve/wide.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide <float, eve::fixed<4>>;

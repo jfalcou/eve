@@ -1,5 +1,5 @@
-#include <eve/function/diff/acotd.hpp>
-#include <eve/wide.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide <float, eve::fixed<4>>;
@@ -18,6 +18,6 @@ int main()
   std::cout
     << "---- scalar"  << '\n'
     << "<- xf                   = " << xf << '\n'
-    << "-> diff(acotd)(xf) = " << eve::diff(eve::acotd)(xf) << '\n'; 
+    << "-> diff(acotd)(xf) = " << eve::diff(eve::acotd)(xf) << '\n';
   return 0;
 }

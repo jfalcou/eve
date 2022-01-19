@@ -1,8 +1,12 @@
-#include <eve/function/diff/exp2.hpp>
-#include <eve/wide.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
+//==================================================================================================
+/*
+  EVE - Expressive Vector Engine
+  Copyright : EVE Contributors & Maintainers
+  SPDX-License-Identifier: MIT
+*/
+//==================================================================================================
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
@@ -15,8 +19,7 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf      = " << pf << '\n'
-            << "-> eve::diff(eve::exp2)(pf)    = " << eve::diff(eve::exp2)(pf) << '\n'
-            << "-> eve::diff(eve::exp2)(pf, 2u) = " << eve::diff(eve::exp2)(pf, 2u) << '\n' ;
+            << "-> eve::diff(eve::exp2)(pf)    = " << eve::diff(eve::exp2)(pf) << '\n';
 
   float xf = 1.0f;
 
