@@ -46,36 +46,45 @@ EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle group size 1, shuf
   TTS_EQUAL(expected, actual);
 };
 
-
-TTS_CASE("Deinterleave special cases")
+EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle all group sizes, shuffle", eve::test::simd::all_types)
+<typename T>(eve::as<T>)
 {
-  using T = eve::wide<std::uint64_t, eve::fixed<8>>;
-  T field_marker { [](int i, int) {
-   switch (i % 4) {
-     case 0: return 0xA << 0x4;
-     case 1: return 0xA << 0x4;
-     case 2: return 0xB << 0x4;
-     case 3: return 0xB << 0x4;
-   }
-   return -1;
+  using res_t = eve::wide<eve::element_type_t<T>, eve::fixed<T::size() * 2>>;
+
+
+  res_t expected { [](int i, int size) {
+    if (i < size / 2) return 0xA0 | (i & 0xf);
+    else              return 0xB0 | ((i - size / 2) & 0xf);
   }};
 
-  T a { 0x0, 0x1, 0x0, 0x1, 0x2, 0x3, 0x2, 0x3 };
-  a += field_marker;
-  T b = a + T::size() / 2;
+  [&]<std::size_t... I>( std::index_sequence<I...>)
+  {
+    auto test = [&]<std::ptrdiff_t G>(eve::fixed<G>)
+    {
+      res_t a_b { [](int i, int) {
+        int group_idx    = i / G;
 
-  auto actual = eve::deinterleave_groups_shuffle(a, b, eve::lane<2>);
+        int marker = (group_idx % 2) ? 0xB0 : 0xA0;
+        int new_i = ( group_idx / 2 ) * (int)G + i % G;
 
-  eve::wide<eve::element_type_t<T>, eve::fixed<T::size() * 2>>
-  expected { [](int i, int size) {
-    if (i < size / 2) return 0xA0 + i;
-    else              return 0xB0 + (i - size / 2);
-  }};
+        return marker | (new_i & 0xf);
+      }};
+      auto [a, b] = a_b.slice();
 
-  std::cout << std::hex << "a : " << a << std::endl;
-  std::cout << std::hex << "b : " << b << std::endl;
-  std::cout << std::hex << "e : " << expected << std::endl;
-  std::cout << std::hex << "r : " << actual << std::endl;
+      auto r = eve::deinterleave_groups_shuffle(a, b, eve::lane<G>);
 
-  TTS_EQUAL(expected, actual);
+#if 0
+      std::cout << "G: "    << G << std::endl;
+      std::cout << std::hex << "a : " << a << std::endl;
+      std::cout << std::hex << "b : " << b << std::endl;
+      std::cout << std::hex << "e : " << expected << std::endl;
+      std::cout << std::hex << "r : " << r << std::endl;
+      std::cout << std::dec << std::endl;
+#endif
+
+      TTS_EQUAL(expected, r);
+    };
+
+    (test( eve::lane<1 << I> ), ... );
+  }( std::make_index_sequence<std::bit_width( std::size_t(T::size()) )>{} );
 };
