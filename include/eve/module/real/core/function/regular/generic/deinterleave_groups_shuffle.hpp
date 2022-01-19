@@ -13,7 +13,6 @@
 #include <eve/module/real/core/detail/basic_shuffle.hpp>
 
 #include <eve/function/combine.hpp>
-#include <eve/function/interleave_shuffle.hpp>
 
 namespace eve::detail
 {
@@ -34,7 +33,6 @@ namespace eve::detail
     }
     else
     {
-      std::cout << "the pattern: " << deinterleave_groups_shuffle_pattern<G, N{}()> << std::endl;
       return basic_shuffle(v, deinterleave_groups_shuffle_pattern<G, N{}()>);
     }
   }
@@ -52,6 +50,20 @@ namespace eve::detail
     {
       return res_t(kumi::map([](auto _v0, auto _v1) { return deinterleave_groups_shuffle(_v0, _v1, lane<G>); }
                 , v0, v1));
+    }
+    else if constexpr ( !has_emulated_abi_v<wide<T, N>> && G == (N() / 2)  )
+    {
+      auto [a0, b0] = v0.slice();
+      auto [a1, b1] = v1.slice();
+      v0 = eve::combine(a0, a1);
+      v1 = eve::combine(b0, b1);
+      return eve::combine(v0, v1);
+    }
+    else if constexpr ( !has_emulated_abi_v<wide<T, N>> )
+    {
+      v0 = deinterleave_groups_shuffle(v0, lane<G>);
+      v1 = deinterleave_groups_shuffle(v1, lane<G>);
+      return deinterleave_groups_shuffle(v0, v1, lane<N() / 2>);
     }
     else
     {
