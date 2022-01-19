@@ -35,12 +35,12 @@ EVE_TEST_TYPES("Check math constants behavior"
 
   if constexpr(std::is_same_v<elt_t, float>)
   {
-    TTS_EQUAL(eve::maxflint(as<T>()), T(16777216.0f));
-    TTS_EQUAL(eve::sqrtvalmax(as<T>()), T(18446741874686296064.0));
+    TTS_ULP_EQUAL(eve::maxflint(as<T>()), T(16777216.0f), 0.5);
+    TTS_ULP_EQUAL(eve::sqrtvalmax(as<T>()), T(18446741874686296064.0), 0.5);
   }
   else if constexpr(std::is_same_v<elt_t, double>)
   {
-    TTS_EQUAL(eve::maxflint(as<T>()), T(9007199254740992.0));
-    TTS_EQUAL(eve::sqrtvalmax(as<T>()), T(1.3407807929942595611e+154));
+    TTS_ULP_EQUAL(eve::maxflint(as<T>()), T(9007199254740992.0), 0.5);
+    TTS_ULP_EQUAL(eve::sqrtvalmax(as<T>()), T(1.3407807929942595611e+154), 0.5);
   }
 };
