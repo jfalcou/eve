@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module:marh/regular/musl.hpp>
+#include <eve/module/math/regular/musl.hpp>
