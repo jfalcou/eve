@@ -1,6 +1,13 @@
-#include <eve/function/lpnorm.hpp>
-#include <eve/function/pedantic/lpnorm.hpp>
-#include <eve/wide.hpp>
+//==================================================================================================
+/**
+  EVE - Expressive Vector Engine
+  Copyright : EVE Contributors & Maintainers
+  SPDX-License-Identifier: MIT
+**/
+//==================================================================================================
+
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 #include <iostream>
 #include <iomanip>
 

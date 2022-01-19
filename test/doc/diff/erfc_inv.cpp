@@ -1,5 +1,13 @@
-#include <eve/function/diff/erfc_inv.hpp>
-#include <eve/wide.hpp>
+//==================================================================================================
+/**
+  EVE - Expressive Vector Engine
+  Copyright : EVE Contributors & Maintainers
+  SPDX-License-Identifier: MIT
+**/
+//==================================================================================================
+
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/special.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide <float, eve::fixed<4>>;
@@ -18,6 +26,6 @@ int main()
   std::cout
     << "---- scalar"  << '\n'
     << "<- xf                   = " << xf << '\n'
-    << "-> diff(erfc_inv)(xf) = " << eve::diff(eve::erfc_inv)(xf) << '\n'; 
+    << "-> diff(erfc_inv)(xf) = " << eve::diff(eve::erfc_inv)(xf) << '\n';
   return 0;
 }

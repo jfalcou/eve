@@ -1,23 +1,32 @@
-#include <eve/function/average.hpp>
+//==================================================================================================
+/**
+  EVE - Expressive Vector Engine
+  Copyright : EVE Contributors & Maintainers
+  SPDX-License-Identifier: MIT
+**/
+//==================================================================================================
 
-#include <eve/wide.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 #include <iostream>
 
 int main()
 {
-  using w_t = eve::wide<std::uint32_t, eve::fixed<4>>;
+  using w_t = eve::wide<float, eve::fixed<4>>;
   w_t pi = {3, 2, 3, 3}, qi = {4, 1, 1, ~0};
 
   std::cout << "---- simd" << '\n'
             << " <- pi              = " << pi << '\n'
             << " <- qi              = " << qi << '\n'
-            << " -> average(pi, qi) = " << eve::average(pi, qi) << '\n';
+            << " -> eve::diff_1st(atan2)(pi, qi)   = " << eve::diff_1st(eve::atan2)(pi, qi) << '\n'
+            << " -> eve::diff_2nd(atan2)(pi, qi)   = " << eve::diff_2nd(eve::atan2)(pi, qi) << '\n';
 
-  std::uint32_t xi = 3, yi = 4;
+  double xi = 3, yi = 4;
 
   std::cout << "---- scalar" << '\n'
             << " xi                 = " << xi << '\n'
             << " yi                 = " << yi << '\n'
-            << " -> average(xi, yi) = " << eve::average(xi, yi) << '\n';
+            << " -> eve::diff_1st(atan2)(xi, yi)   = " << eve::diff_1st(eve::atan2)(xi, yi) << '\n'
+            << " -> eve::diff_2nd(atan2)(xi, yi)   = " << eve::diff_2nd(eve::atan2)(xi, yi) << '\n';
   return 0;
 }

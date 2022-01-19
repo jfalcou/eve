@@ -1,5 +1,12 @@
-#include <eve/function/diff/fnms.hpp>
-#include <eve/wide.hpp>
+//================================================================================================== 
+/** 
+  EVE - Expressive Vector Engine 
+  Copyright : EVE Contributors & Maintainers 
+  SPDX-License-Identifier: MIT 
+**/ 
+//================================================================================================== 
+ 
+#include <eve/module/arithmetic.hpp> 
 #include <iostream>
 
 using wide_ft = eve::wide <float, eve::fixed<4>>;

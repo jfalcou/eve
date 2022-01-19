@@ -1,8 +1,12 @@
-#include <eve/function/diff/ceil.hpp>
-#include <eve/wide.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
+//================================================================================================== 
+/** 
+  EVE - Expressive Vector Engine 
+  Copyright : EVE Contributors & Maintainers 
+  SPDX-License-Identifier: MIT 
+**/ 
+//================================================================================================== 
+ 
+#include <eve/module/arithmetic.hpp> 
 #include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;

@@ -1,7 +1,13 @@
-#include <eve/function/diff/atan2.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/wide.hpp>
+//==================================================================================================
+/**
+  EVE - Expressive Vector Engine
+  Copyright : EVE Contributors & Maintainers
+  SPDX-License-Identifier: MIT
+**/
+//==================================================================================================
+
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide <float, eve::fixed<8>>;
@@ -17,7 +23,7 @@ int main()
     << "---- simd" << '\n'
     << "<- pf                    = " << pf << '\n'
     << "<- qf                    = " << qf << '\n'
-    << "-> diff(atan2)(pf) = " << eve::diff(eve::atan2)(pf, qf) << '\n';
+    << "-> diff(pow_abs)(pf)     = " << eve::diff(eve::pow_abs)(pf, qf) << '\n';
 
   float xf = 1.0f;
   float yf = -1.0f;
@@ -26,6 +32,6 @@ int main()
     << "---- scalar"  << '\n'
     << "<- xf                    = " << xf << '\n'
     << "<- yf                    = " << yf << '\n'
-    << "-> diff(atan2)(xf) = " << eve::diff(eve::atan2)(xf, yf) << '\n';
+    << "-> diff(pow_abs)(xf)     = " << eve::diff(eve::pow_abs)(xf, yf) << '\n';
   return 0;
 }

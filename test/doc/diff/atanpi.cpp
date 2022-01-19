@@ -1,3 +1,12 @@
+//================================================================================================== 
+/** 
+  EVE - Expressive Vector Engine 
+  Copyright : EVE Contributors & Maintainers 
+  SPDX-License-Identifier: MIT 
+**/ 
+//================================================================================================== 
+ 
+#include <eve/module/arithmetic.hpp> 
 #include <eve/module/math.hpp>
 #include <iostream>
 
