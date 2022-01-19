@@ -8,5 +8,4 @@
 ,  "unit.polynomial.exe": "^unit.polynomial.*.exe"
 ,  "unit.proba.exe": "^unit.proba.*.exe"
 ,  "unit.special.exe": "^unit.special.*.exe"
-,  "unit.real.exe": "^unit.real.*.exe"
 }
