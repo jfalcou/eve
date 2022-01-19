@@ -27,8 +27,17 @@ namespace eve::detail
     constexpr auto n  = N() / G;
     using w_t = wide<T, N>;
 
-    // Doing 2 is the most important case since we can deinterleave n / 2 and then deinterleave each half.
-    if constexpr ( n == 2 )
+    // Doing 2 is the most important case since we can deinterleave with G = N() / 2 and then deinterleave each half.
+    // This deinterleaving halves is done in 2 instructions.
+    // So - 2 for this shuffle + shuffle each.
+    // After looking through the intrinsics set, I couldn't find anything that'd do at least 4 groups from each (8 total) before avx512
+
+    if constexpr ( current_api == avx512 && n == 4 )
+    {
+      if constexpr ( g_sz == 16 && !std::floating_point<T> ) return {w_t{_mm512_shuffle_i32x4(v0, v1, 0x88)}, w_t{_mm512_shuffle_i32x4(v0, v1, 0xdd)}};
+      else return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v0, v1, eve::lane<G>);
+    }
+    else if constexpr ( n == 2 )
     {
       // 16 bytes
            if constexpr ( g_sz == 1                           ) return _mm_unpacklo_epi8 (v0, v1);
