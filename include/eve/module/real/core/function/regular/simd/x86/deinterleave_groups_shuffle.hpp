@@ -30,31 +30,15 @@ namespace eve::detail
     // Doing 2 is the most important case since we can deinterleave with G = N() / 2 and then deinterleave each half.
     // This deinterleaving halves is done in 2 instructions.
     // So - 2 for this shuffle + shuffle each.
-    // After looking through the intrinsics set, I couldn't find anything that'd do at least 4 groups from each (8 total) before avx512
-
-    if constexpr ( current_api == avx512 && n == 4 )
-    {
-      if constexpr ( g_sz == 16 && !std::floating_point<T> ) return {w_t{_mm512_shuffle_i32x4(v0, v1, 0x88)}, w_t{_mm512_shuffle_i32x4(v0, v1, 0xdd)}};
-      else return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v0, v1, eve::lane<G>);
-    }
-    else if constexpr ( n == 2 )
+    if constexpr ( n == 2 )
     {
       // 16 bytes
-           if constexpr ( g_sz == 1                           ) return _mm_unpacklo_epi8 (v0, v1);
-      else if constexpr ( g_sz == 2                           ) return _mm_unpacklo_epi16(v0, v1);
-      else if constexpr ( g_sz == 4 && std::floating_point<T> ) return _mm_unpacklo_ps   (v0, v1);
-      else if constexpr ( g_sz == 4                           ) return _mm_unpacklo_epi32(v0, v1);
-      else if constexpr ( g_sz == 8 && std::floating_point<T> )
-      {
-        using doubles  = typename wide<T, N>::template rebind<double,  eve::fixed<2>>;
-
-        auto cast_v0 = eve::bit_cast(v0, eve::as<doubles>{});
-        auto cast_v1 = eve::bit_cast(v1, eve::as<doubles>{});
-        doubles res_l = _mm_unpacklo_pd(cast_v0, cast_v1);
-        doubles res_h = _mm_unpackhi_pd(cast_v0, cast_v1);
-
-        return {eve::bit_cast(res_l, eve::as(v0)), eve::bit_cast(res_h, eve::as(v0))};
-      }
+           if constexpr ( g_sz == 1                             ) return _mm_unpacklo_epi8 (v0, v1);
+      else if constexpr ( g_sz == 2                             ) return _mm_unpacklo_epi16(v0, v1);
+      else if constexpr ( g_sz == 4 && std::floating_point<T>   ) return _mm_unpacklo_ps   (v0, v1);
+      else if constexpr ( g_sz == 4                             ) return _mm_unpacklo_epi32(v0, v1);
+      else if constexpr ( g_sz == 8 && std::same_as<float, T>   ) return deinterleave_groups_shuffle_as_doubles(v0, v1, lane<G>);
+      else if constexpr ( g_sz == 8 && std::same_as<double, T>  ) return {w_t{_mm_unpacklo_pd(v0, v1)}, w_t{_mm_unpackhi_pd(v0, v1)}};
       else if constexpr ( g_sz == 8                             ) return {w_t{_mm_unpacklo_epi64(v0, v1)}, w_t{_mm_unpackhi_epi64(v0, v1)}};
       // avx at least
       else if constexpr ( g_sz == 16 && std::same_as<T, double> ) return {w_t{_mm256_permute2f128_pd   (v0, v1, 0x20)}, w_t{_mm256_permute2f128_pd   (v0, v1, 0x31)}};
@@ -64,6 +48,55 @@ namespace eve::detail
       else if constexpr ( g_sz == 32 && std::same_as<T, double> ) return {w_t{_mm512_shuffle_f64x2(v0, v1, 0x44)}, w_t{_mm512_shuffle_f64x2(v0, v1, 0xee)}};
       else if constexpr ( g_sz == 32 && std::same_as<T, float>  ) return {w_t{_mm512_shuffle_f32x4(v0, v1, 0x44)}, w_t{_mm512_shuffle_f32x4(v0, v1, 0xee)}};
       else if constexpr ( g_sz == 32                            ) return {w_t{_mm512_shuffle_i32x4(v0, v1, 0x44)}, w_t{_mm512_shuffle_i32x4(v0, v1, 0xee)}};
+    }
+    // After looking through the intrinsics set, I couldn't find anything that'd do at least 4 groups before avx512
+    else if constexpr ( current_api == avx512 && g_sz == 16)
+    {
+      static_assert(n == 4);
+           if constexpr ( std::same_as<T, float>  ) return {w_t{_mm512_shuffle_f32x4(v0, v1, 0x88)}, w_t{_mm512_shuffle_f32x4(v0, v1, 0xdd)}};
+      else if constexpr ( std::same_as<T, double> ) return {w_t{_mm512_shuffle_f64x2(v0, v1, 0x88)}, w_t{_mm512_shuffle_f64x2(v0, v1, 0xdd)}};
+      else                                          return {w_t{_mm512_shuffle_i32x4(v0, v1, 0x88)}, w_t{_mm512_shuffle_i32x4(v0, v1, 0xdd)}};
+    }
+    // less than full 16 bytes, only g_sz 2 fits.
+    else if constexpr ( current_api == avx512 && g_sz >= 2 && g_sz * n < 16 )
+    {
+      static_assert(g_sz == 2);
+
+      using idx_t = wide<make_integer_t<g_sz, unsigned>, eve::fixed<n * 2>>;
+      idx_t idx { [] (int i, int size) {
+        if (i < size / 4 ) return i * 2;
+        if (i < size / 2 ) return i * 2 + size / 2;
+        i -= size / 2;
+        if (i < size / 4 ) return i * 2 + 1;
+        else               return i * 2 + 1 + size / 2;
+      }};
+
+      return _mm_permutex2var_epi16(v0, idx, v1);
+    }
+    else if constexpr ( current_api == avx512 && g_sz >= 2 )
+    {
+      using idx_t = wide<make_integer_t<g_sz, unsigned>, eve::fixed<n>>;
+      idx_t lo_idx{ [](int i, int) { return i * 2; }};
+      idx_t hi_idx{ [](int i, int) { return i * 2 + 1; }};
+
+      // These should probably be in basic shuffle for 2 registers when we have one.
+           if constexpr ( g_sz * n == 16 && g_sz == 2                            ) return {w_t{_mm_permutex2var_epi16   (v0, lo_idx, v1)}, w_t{_mm_permutex2var_epi16   (v0, hi_idx, v1)}};
+      else if constexpr ( g_sz * n == 32 && g_sz == 2                            ) return {w_t{_mm256_permutex2var_epi16(v0, lo_idx, v1)}, w_t{_mm256_permutex2var_epi16(v0, hi_idx, v1)}};
+      else if constexpr ( g_sz * n == 64 && g_sz == 2                            ) return {w_t{_mm512_permutex2var_epi16(v0, lo_idx, v1)}, w_t{_mm512_permutex2var_epi16(v0, hi_idx, v1)}};
+      else if constexpr ( g_sz * n == 16 && g_sz == 4 && std::same_as<float, T>  ) return {w_t{_mm_permutex2var_ps      (v0, lo_idx, v1)}, w_t{_mm_permutex2var_ps      (v0, hi_idx, v1)}};
+      else if constexpr ( g_sz * n == 32 && g_sz == 4 && std::same_as<float, T>  ) return {w_t{_mm256_permutex2var_ps   (v0, lo_idx, v1)}, w_t{_mm256_permutex2var_ps   (v0, hi_idx, v1)}};
+      else if constexpr ( g_sz * n == 64 && g_sz == 4 && std::same_as<float, T>  ) return {w_t{_mm512_permutex2var_ps   (v0, lo_idx, v1)}, w_t{_mm512_permutex2var_ps   (v0, hi_idx, v1)}};
+      else if constexpr ( g_sz * n == 16 && g_sz == 4                            ) return {w_t{_mm_permutex2var_epi32   (v0, lo_idx, v1)}, w_t{_mm_permutex2var_ps      (v0, hi_idx, v1)}};
+      else if constexpr ( g_sz * n == 32 && g_sz == 4                            ) return {w_t{_mm256_permutex2var_epi32(v0, lo_idx, v1)}, w_t{_mm256_permutex2var_ps   (v0, hi_idx, v1)}};
+      else if constexpr ( g_sz * n == 64 && g_sz == 4                            ) return {w_t{_mm512_permutex2var_epi32(v0, lo_idx, v1)}, w_t{_mm512_permutex2var_ps   (v0, hi_idx, v1)}};
+      // From this point better use doubles shuffle floats to avoid duplicating constants
+      else if constexpr ( std::same_as<float, T>                                 ) return deinterleave_groups_shuffle_as_doubles(v0, v1, lane<G>);
+      else if constexpr ( g_sz * n == 16 && g_sz == 8 && std::same_as<double, T> ) return {w_t{_mm_permutex2var_pd      (v0, lo_idx, v1)}, w_t{_mm_permutex2var_pd      (v0, hi_idx, v1)}};
+      else if constexpr ( g_sz * n == 32 && g_sz == 8 && std::same_as<double, T> ) return {w_t{_mm256_permutex2var_pd   (v0, lo_idx, v1)}, w_t{_mm256_permutex2var_pd   (v0, hi_idx, v1)}};
+      else if constexpr ( g_sz * n == 64 && g_sz == 8 && std::same_as<double, T> ) return {w_t{_mm512_permutex2var_pd   (v0, lo_idx, v1)}, w_t{_mm512_permutex2var_pd   (v0, hi_idx, v1)}};
+      else if constexpr ( g_sz * n == 16 && g_sz == 8                            ) return {w_t{_mm_permutex2var_epi64   (v0, lo_idx, v1)}, w_t{_mm_permutex2var_pd      (v0, hi_idx, v1)}};
+      else if constexpr ( g_sz * n == 32 && g_sz == 8                            ) return {w_t{_mm256_permutex2var_epi64(v0, lo_idx, v1)}, w_t{_mm256_permutex2var_pd   (v0, hi_idx, v1)}};
+      else if constexpr ( g_sz * n == 64 && g_sz == 8                            ) return {w_t{_mm512_permutex2var_epi64(v0, lo_idx, v1)}, w_t{_mm512_permutex2var_pd   (v0, hi_idx, v1)}};
     }
     // Will aggregate for less than native or deinterleave each and then come back here
     else return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v0, v1, eve::lane<G>);
