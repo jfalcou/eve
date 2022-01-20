@@ -57,7 +57,7 @@ namespace eve::detail
       if constexpr ( g_sz == 4 )
       {
         auto floats = eve::bit_cast(v, eve::as<wide<float, fixed<n>>>{});
-        floats = _mm256_permute_ps(v, _MM_SHUFFLE(3, 1, 2, 0));
+        floats = _mm256_permute_ps(floats, _MM_SHUFFLE(3, 1, 2, 0));
         v = eve::bit_cast(floats, as(v));
         return deinterleave_groups_shuffle(v, lane<N() / 4>);
       }
@@ -143,7 +143,7 @@ namespace eve::detail
     using w_t = wide<T, N>;
 
     // Doing 2 is the most important case since we can deinterleave with G = N() / 2 and then deinterleave each half.
-    // This deinterleaving halves is done in 2 instructions.
+    // This deinterleaving halves is done in 2 instructions (I mean g_sz * n >= 16, less than native reg will aggrgate)
     // So - 2 for this shuffle + shuffle each.
     if constexpr ( n == 2 )
     {
@@ -201,17 +201,17 @@ namespace eve::detail
       else if constexpr ( g_sz * n == 16 && g_sz == 4 && std::same_as<float, T>  ) return {w_t{_mm_permutex2var_ps      (v0, lo_idx, v1)}, w_t{_mm_permutex2var_ps      (v0, hi_idx, v1)}};
       else if constexpr ( g_sz * n == 32 && g_sz == 4 && std::same_as<float, T>  ) return {w_t{_mm256_permutex2var_ps   (v0, lo_idx, v1)}, w_t{_mm256_permutex2var_ps   (v0, hi_idx, v1)}};
       else if constexpr ( g_sz * n == 64 && g_sz == 4 && std::same_as<float, T>  ) return {w_t{_mm512_permutex2var_ps   (v0, lo_idx, v1)}, w_t{_mm512_permutex2var_ps   (v0, hi_idx, v1)}};
-      else if constexpr ( g_sz * n == 16 && g_sz == 4                            ) return {w_t{_mm_permutex2var_epi32   (v0, lo_idx, v1)}, w_t{_mm_permutex2var_ps      (v0, hi_idx, v1)}};
-      else if constexpr ( g_sz * n == 32 && g_sz == 4                            ) return {w_t{_mm256_permutex2var_epi32(v0, lo_idx, v1)}, w_t{_mm256_permutex2var_ps   (v0, hi_idx, v1)}};
-      else if constexpr ( g_sz * n == 64 && g_sz == 4                            ) return {w_t{_mm512_permutex2var_epi32(v0, lo_idx, v1)}, w_t{_mm512_permutex2var_ps   (v0, hi_idx, v1)}};
+      else if constexpr ( g_sz * n == 16 && g_sz == 4                            ) return {w_t{_mm_permutex2var_epi32   (v0, lo_idx, v1)}, w_t{_mm_permutex2var_epi32   (v0, hi_idx, v1)}};
+      else if constexpr ( g_sz * n == 32 && g_sz == 4                            ) return {w_t{_mm256_permutex2var_epi32(v0, lo_idx, v1)}, w_t{_mm256_permutex2var_epi32(v0, hi_idx, v1)}};
+      else if constexpr ( g_sz * n == 64 && g_sz == 4                            ) return {w_t{_mm512_permutex2var_epi32(v0, lo_idx, v1)}, w_t{_mm512_permutex2var_epi32(v0, hi_idx, v1)}};
       // From this point better use doubles shuffle floats to avoid duplicating constants
       else if constexpr ( std::same_as<float, T>                                 ) return deinterleave_groups_shuffle_as_doubles(v0, v1, lane<G>);
       else if constexpr ( g_sz * n == 16 && g_sz == 8 && std::same_as<double, T> ) return {w_t{_mm_permutex2var_pd      (v0, lo_idx, v1)}, w_t{_mm_permutex2var_pd      (v0, hi_idx, v1)}};
       else if constexpr ( g_sz * n == 32 && g_sz == 8 && std::same_as<double, T> ) return {w_t{_mm256_permutex2var_pd   (v0, lo_idx, v1)}, w_t{_mm256_permutex2var_pd   (v0, hi_idx, v1)}};
       else if constexpr ( g_sz * n == 64 && g_sz == 8 && std::same_as<double, T> ) return {w_t{_mm512_permutex2var_pd   (v0, lo_idx, v1)}, w_t{_mm512_permutex2var_pd   (v0, hi_idx, v1)}};
       else if constexpr ( g_sz * n == 16 && g_sz == 8                            ) return {w_t{_mm_permutex2var_epi64   (v0, lo_idx, v1)}, w_t{_mm_permutex2var_pd      (v0, hi_idx, v1)}};
-      else if constexpr ( g_sz * n == 32 && g_sz == 8                            ) return {w_t{_mm256_permutex2var_epi64(v0, lo_idx, v1)}, w_t{_mm256_permutex2var_pd   (v0, hi_idx, v1)}};
-      else if constexpr ( g_sz * n == 64 && g_sz == 8                            ) return {w_t{_mm512_permutex2var_epi64(v0, lo_idx, v1)}, w_t{_mm512_permutex2var_pd   (v0, hi_idx, v1)}};
+      else if constexpr ( g_sz * n == 32 && g_sz == 8                            ) return {w_t{_mm256_permutex2var_epi64(v0, lo_idx, v1)}, w_t{_mm256_permutex2var_epi64(v0, hi_idx, v1)}};
+      else if constexpr ( g_sz * n == 64 && g_sz == 8                            ) return {w_t{_mm512_permutex2var_epi64(v0, lo_idx, v1)}, w_t{_mm512_permutex2var_epi64(v0, hi_idx, v1)}};
     }
     // Will aggregate for less than native or deinterleave each and then come back here
     else return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v0, v1, eve::lane<G>);

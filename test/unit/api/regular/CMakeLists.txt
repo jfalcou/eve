@@ -30,7 +30,6 @@ make_unit("unit.api.regular"  shuffle/slide_right.cpp                  )
 ##==================================================================================================
 ## Wide related tools
 make_unit( "unit.api.regular" conditional.cpp  )
-make_unit( "unit.api.regular" deinterleave.cpp )
 make_unit( "unit.api.regular" pattern.cpp      )
 make_unit( "unit.api.regular" replace.cpp      )
 make_unit( "unit.api.regular" swap_if.cpp      )

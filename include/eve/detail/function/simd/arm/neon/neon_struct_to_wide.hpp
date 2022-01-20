@@ -11,33 +11,39 @@
 
 namespace eve::detail
 {
+  template <typename, typename T, std::ptrdiff_t card>
+  struct neon_struct_to_wide_type_res
+  {
+    using type = T;
+    using N    = fixed<card>;
+  };
 
   template <typename Struct>
   auto neon_struct_to_wide_type()
   {
-         if constexpr ( std::same_as<Struct, int64x1x2_t>   ) return wide<std::int64_t , fixed<1>>{};
-    else if constexpr ( std::same_as<Struct, uint64x1x2_t>  ) return wide<std::uint64_t, fixed<1>>{};
-    else if constexpr ( std::same_as<Struct, float32x2x2_t> ) return wide<float        , fixed<2>>{};
-    else if constexpr ( std::same_as<Struct, int32x2x2_t>   ) return wide<std::int32_t , fixed<2>>{};
-    else if constexpr ( std::same_as<Struct, uint32x2x2_t>  ) return wide<std::uint32_t, fixed<2>>{};
-    else if constexpr ( std::same_as<Struct, int16x4x2_t>   ) return wide<std::int16_t , fixed<4>>{};
-    else if constexpr ( std::same_as<Struct, uint16x4x2_t>  ) return wide<std::uint16_t, fixed<4>>{};
-    else if constexpr ( std::same_as<Struct, int8x8x2_t>    ) return wide<std::int8_t  , fixed<8>>{};
-    else if constexpr ( std::same_as<Struct, uint8x8x2_t>   ) return wide<std::uint8_t , fixed<8>>{};
+         if constexpr ( std::same_as<Struct, int64x1x2_t>   ) return neon_struct_to_wide_type_res<Struct, std::int64_t , 1>{};
+    else if constexpr ( std::same_as<Struct, uint64x1x2_t>  ) return neon_struct_to_wide_type_res<Struct, std::uint64_t, 1>{};
+    else if constexpr ( std::same_as<Struct, float32x2x2_t> ) return neon_struct_to_wide_type_res<Struct, float        , 2>{};
+    else if constexpr ( std::same_as<Struct, int32x2x2_t>   ) return neon_struct_to_wide_type_res<Struct, std::int32_t , 2>{};
+    else if constexpr ( std::same_as<Struct, uint32x2x2_t>  ) return neon_struct_to_wide_type_res<Struct, std::uint32_t, 2>{};
+    else if constexpr ( std::same_as<Struct, int16x4x2_t>   ) return neon_struct_to_wide_type_res<Struct, std::int16_t , 4>{};
+    else if constexpr ( std::same_as<Struct, uint16x4x2_t>  ) return neon_struct_to_wide_type_res<Struct, std::uint16_t, 4>{};
+    else if constexpr ( std::same_as<Struct, int8x8x2_t>    ) return neon_struct_to_wide_type_res<Struct, std::int8_t  , 8>{};
+    else if constexpr ( std::same_as<Struct, uint8x8x2_t>   ) return neon_struct_to_wide_type_res<Struct, std::uint8_t , 8>{};
     // 16 byte
-    else if constexpr ( std::same_as<Struct, int64x2x2_t>   ) return wide<std::int64_t , fixed<2>> {};
-    else if constexpr ( std::same_as<Struct, uint64x2x2_t>  ) return wide<std::uint64_t, fixed<2>> {};
-    else if constexpr ( std::same_as<Struct, float32x4x2_t> ) return wide<float        , fixed<4>> {};
-    else if constexpr ( std::same_as<Struct, int32x4x2_t>   ) return wide<std::int32_t , fixed<4>> {};
-    else if constexpr ( std::same_as<Struct, uint32x4x2_t>  ) return wide<std::uint32_t, fixed<4>> {};
-    else if constexpr ( std::same_as<Struct, int16x8x2_t>   ) return wide<std::int16_t , fixed<8>>{};
-    else if constexpr ( std::same_as<Struct, uint16x8x2_t>  ) return wide<std::uint16_t, fixed<8>>{};
-    else if constexpr ( std::same_as<Struct, int8x16x2_t>   ) return wide<std::int8_t  , fixed<16>>{};
-    else if constexpr ( std::same_as<Struct, uint8x16x2_t>  ) return wide<std::uint8_t , fixed<16>>{};
+    else if constexpr ( std::same_as<Struct, int64x2x2_t>   ) return neon_struct_to_wide_type_res<Struct, std::int64_t , 2> {};
+    else if constexpr ( std::same_as<Struct, uint64x2x2_t>  ) return neon_struct_to_wide_type_res<Struct, std::uint64_t, 2> {};
+    else if constexpr ( std::same_as<Struct, float32x4x2_t> ) return neon_struct_to_wide_type_res<Struct, float        , 4> {};
+    else if constexpr ( std::same_as<Struct, int32x4x2_t>   ) return neon_struct_to_wide_type_res<Struct, std::int32_t , 4> {};
+    else if constexpr ( std::same_as<Struct, uint32x4x2_t>  ) return neon_struct_to_wide_type_res<Struct, std::uint32_t, 4> {};
+    else if constexpr ( std::same_as<Struct, int16x8x2_t>   ) return neon_struct_to_wide_type_res<Struct, std::int16_t , 8> {};
+    else if constexpr ( std::same_as<Struct, uint16x8x2_t>  ) return neon_struct_to_wide_type_res<Struct, std::uint16_t, 8> {};
+    else if constexpr ( std::same_as<Struct, int8x16x2_t>   ) return neon_struct_to_wide_type_res<Struct, std::int8_t  , 16>{};
+    else if constexpr ( std::same_as<Struct, uint8x16x2_t>  ) return neon_struct_to_wide_type_res<Struct, std::uint8_t , 16>{};
     // doubles
 #if defined(SPY_SIMD_IS_ARM_ASIMD)
-    else if constexpr ( std::same_as<Struct, float64x1x2_t> ) return wide<double       , fixed<1>>{};
-    else if constexpr ( std::same_as<Struct, float64x2x2_t> ) return wide<double       , fixed<2>>{};
+    else if constexpr ( std::same_as<Struct, float64x1x2_t> ) return neon_struct_to_wide_type_res<Struct, double, 1>{};
+    else if constexpr ( std::same_as<Struct, float64x2x2_t> ) return neon_struct_to_wide_type_res<Struct, double, 2>{};
 #endif
   }
 
@@ -75,7 +81,8 @@ namespace eve::detail
   EVE_FORCEINLINE
   auto neon_struct_to_wide(Struct s)
   {
-   using half = decltype(neon_struct_to_wide_type<Struct>());
+    using helper = decltype(neon_struct_to_wide_type<Struct>());
+    using half = wide<typename helper::type, typename helper::N>;
    return eve::combine(half(s.val[0]), half(s.val[1]));
   }
 

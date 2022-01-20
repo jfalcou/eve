@@ -26,7 +26,6 @@ namespace eve::detail
     // Split gives 3 instructions at least: split, unzip, combine
     //
     // I also have my suspicions about arm-v7 uzp/zip - where it gives two values as oppose to unzp1 from asimd.
-    // Will still for table lookup there too.
 
     // We need to split for table lookup here anyways
     if constexpr ( sizeof(T) * N() == 16 && current_api < asimd )
@@ -98,7 +97,7 @@ namespace eve::detail
     }
     // ===================================================================================================
     // The equivalent family of intrinsics on arm is uzp.
-    // However, for smaller than 8 bytes we need to make do with others because of zeroes in the top bytes
+    // However, for smaller than 8 bytes we need to make do with others because of garbage in the top bytes
     // ===================================================================================================
     // sizeof(T) == 8, at least asimd ================================
     else if constexpr ( c == category::float64x2 ) return {w_t{vuzp1q_f64(v0, v1)}, w_t{vuzp2q_f64(v0, v1)}};
