@@ -22,6 +22,11 @@ namespace eve::detail
     // we start with 4, 2 groups is a no op
     if constexpr ( n == 4 )
     {
+      // g_sz 16
+      // I can only do in 2 heavy instructions, or rely on a mask in a register.
+      // I picked register - that's done by the basic shuffle.
+
+      // g_sz 8
       // on avx2 there is a perfect shuffle
       if constexpr ( current_api == avx && g_sz == 8 )
       {
