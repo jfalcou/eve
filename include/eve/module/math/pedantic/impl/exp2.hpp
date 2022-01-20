@@ -38,7 +38,7 @@
 #include <eve/function/regular.hpp>
 #include <eve/function/shl.hpp>
 #include <eve/function/sqr.hpp>
-#include <eve/module/real/core/detail/generic/horn.hpp>
+#include <eve/module/core/detail/generic/horn.hpp>
 #include <type_traits>
 
 namespace eve::detail

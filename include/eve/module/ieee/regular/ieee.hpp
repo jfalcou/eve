@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/ieee/regular/bit_ceil.hpp>
+#include <eve/module/ieee/regular/bit_floor.hpp>
 #include <eve/module/ieee/regular/exponent.hpp>
 #include <eve/module/ieee/regular/frexp.hpp>
 #include <eve/module/ieee/regular/ifrexp.hpp>

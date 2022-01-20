@@ -14,6 +14,6 @@ namespace eve
   EVE_MAKE_CALLABLE(sincosd_, sincosd);
 }
 
-#include <eve/module/real/core/function/scalar/sincosd.hpp>
+#include <eve/module/core/function/scalar/sincosd.hpp>
 //#include <eve/module/core/regular/impl/simd/sincosd.hpp>
 

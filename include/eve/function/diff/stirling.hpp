@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/stirling.hpp>
-#include <eve/module/real/core/function/diff/generic/stirling.hpp>
+#include <eve/module/core/function/diff/generic/stirling.hpp>

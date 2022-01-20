@@ -14,6 +14,6 @@ namespace eve
   EVE_MAKE_CALLABLE(slice_low_, slice_low);
 }
 
-#include <eve/module/real/core/function/scalar/slice_low.hpp>
+#include <eve/module/core/function/scalar/slice_low.hpp>
 //#include <eve/module/core/regular/impl/simd/slice_low.hpp>
 
