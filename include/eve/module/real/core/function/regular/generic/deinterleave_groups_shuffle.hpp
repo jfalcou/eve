@@ -16,6 +16,22 @@
 
 namespace eve::detail
 {
+  //==============================================================================================
+  // Classify a pattern as a deinterleave_groups
+  template<std::ptrdiff_t... I> inline constexpr auto is_deinterleave_groups_shuffle = []()
+  {
+    // List all possible patterns for a current size
+    constexpr auto sz = sizeof...(I);
+    constexpr auto x = []<std::size_t... N>( std::index_sequence<N...> )
+    {
+      return kumi::make_tuple(deinterleave_groups_shuffle_pattern<sz/(1<<(N+1)),sz>... );
+    }(std::make_index_sequence<std::bit_width(sz)-1>{});
+
+    // Find the fitting one
+    constexpr auto idx = detail::find_index(pattern<I...>,x);
+    return fixed<sz/(1<<(idx+1))>{};
+  }();
+
   template<typename T, typename N, std::ptrdiff_t G>
   EVE_FORCEINLINE
   auto deinterleave_groups_shuffle_as_doubles(wide<T, N> v, fixed<G>)

@@ -497,3 +497,56 @@ TTS_CASE("Check slide_left get optimized")
               , (bound<callable_slide_left_,index_t<7>>)
               );
 };
+
+
+TTS_CASE("Check slide_right get optimized")
+{
+  using eve::index_t;
+  using eve::detail::find_optimized_shuffle_pattern;
+  using eve::detail::bound;
+  using eve::callable_slide_right_;
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<2,-1,0>())
+              , (bound<callable_slide_right_,index_t<1>>)
+              );
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<4,-1,0,1,2>())
+              , (bound<callable_slide_right_,index_t<1>>)
+              );
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<4,-1,-1,0,1>())
+              , (bound<callable_slide_right_,index_t<2>>)
+              );
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<4,-1,-1,-1,0>())
+              , (bound<callable_slide_right_,index_t<3>>)
+              );
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,-1,0,1,2,3,4,5,6>())
+              , (bound<callable_slide_right_,index_t<1>>)
+              );
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,-1,-1,0,1,2,3,4,5>())
+              , (bound<callable_slide_right_,index_t<2>>)
+              );
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,-1,-1,-1,0,1,2,3,4>())
+              , (bound<callable_slide_right_,index_t<3>>)
+              );
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,-1,-1,-1,-1,0,1,2,3>())
+              , (bound<callable_slide_right_,index_t<4>>)
+              );
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,-1,-1,-1,-1,-1,0,1,2>())
+              , (bound<callable_slide_right_,index_t<5>>)
+              );
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,-1,-1,-1,-1,-1,-1,0,1>())
+              , (bound<callable_slide_right_,index_t<6>>)
+              );
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,-1,-1,-1,-1,-1,-1,-1,0>())
+              , (bound<callable_slide_right_,index_t<7>>)
+              );
+};
