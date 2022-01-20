@@ -9,6 +9,8 @@
 
 #include <eve/function/swap_adjacent_groups.hpp>
 
+#include <eve/detail/function/simd/arm/neon/neon_struct_to_wide.hpp>
+
 namespace eve::detail
 {
   template<typename T, typename N, std::ptrdiff_t G>
@@ -24,20 +26,53 @@ namespace eve::detail
 
     static_assert (sizeof(T) * G <= 8, "only aggregation above anyways");
 
-    if constexpr (G > 1)
+    if constexpr ( G > 1 && current_api < asimd && match(c, category::float32x2, category::float32x4) )
+    {
+      using up_t = std::uint64_t;
+      auto const up0 = bit_cast(v0, as<wide<up_t,typename N::split_type>>());
+      auto const up1 = bit_cast(v1, as<wide<up_t,typename N::split_type>>());
+      return bit_cast(deinterleave_groups_shuffle(up0, up1, fixed<G/2>{}), as<r_t>{});
+    }
+    else if constexpr ( G > 1 )
     {
       using up_t = upgrade_t<T>;
       auto const up0 = bit_cast(v0, as<wide<up_t,typename N::split_type>>());
       auto const up1 = bit_cast(v1, as<wide<up_t,typename N::split_type>>());
       return bit_cast(deinterleave_groups_shuffle(up0, up1, fixed<G/2>{}), as<r_t>{});
     }
-    // res represented by 8 bytes
-    else if constexpr ( N() == 2 && sizeof(T) * N() < 8 && current_api >= asimd )
+    // N = 2 ================================
+    else if constexpr ( sizeof(T) == 8 )
     {
-           if constexpr ( c == category::int16x4  ) return vzip1_s16(v0, v1);
-      else if constexpr ( c == category::uint16x4 ) return vzip1_u16(v0, v1);
-      else if constexpr ( c == category::int8x8   ) return vzip1_s8 (v0, v1);
-      else if constexpr ( c == category::uint8x8  ) return vzip1_u8 (v0, v1);
+      static_assert( N() == 2 );
+
+      if constexpr ( current_api >= asimd )
+      {
+             if constexpr ( c == category::float64x2 ) return {w_t{vzip1q_f64(v0, v1)}, w_t{vzip2q_f64(v0, v1)}};
+        else if constexpr ( c == category::int64x2   ) return {w_t{vzip1q_s64(v0, v1)}, w_t{vzip2q_s64(v0, v1)}};
+        else if constexpr ( c == category::uint64x2  ) return {w_t{vzip1q_u64(v0, v1)}, w_t{vzip2q_u64(v0, v1)}};
+      }
+      // slice and combine, no other way on arm v7
+      else return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v0, v1, eve::lane<G>);
+    }
+    else if constexpr ( N() == 2 )
+    {
+           if constexpr ( c == category::float32x2 ) return neon_stuct_to_wide(vzip_f32 (v0, v1));
+      else if constexpr ( c == category::int32x2   ) return neon_stuct_to_wide(vzip_s32 (v0, v1));
+      else if constexpr ( c == category::uint32x2  ) return neon_stuct_to_wide(vzip_u32 (v0, v1));
+      else if constexpr ( current_api >= asimd )
+      {
+             if constexpr ( c == category::int16x4   ) return vzip1_s16 (v0, v1);
+        else if constexpr ( c == category::uint16x4  ) return vzip1_u16 (v0, v1);
+        else if constexpr ( c == category::int8x8    ) return vzip1_s8  (v0, v1);
+        else if constexpr ( c == category::uint8x8   ) return vzip1_u8  (v0, v1);
+      }
+      else
+      {
+             if constexpr ( c == category::int16x4   ) return vzip_s16 (v0, v1).val[0];
+        else if constexpr ( c == category::uint16x4  ) return vzip_u16 (v0, v1).val[0];
+        else if constexpr ( c == category::int8x8    ) return vzip_s8  (v0, v1).val[0];
+        else if constexpr ( c == category::uint8x8   ) return vzip_u8  (v0, v1).val[0];
+      }
     }
     else return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v0, v1, eve::lane<G>);
   }
