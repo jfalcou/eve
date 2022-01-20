@@ -66,7 +66,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/bit_ceil.cpp}
+  //! @godbolt{doc/ieee/bit_ceil.cpp}
   //!
   //!  @}
   //================================================================================================

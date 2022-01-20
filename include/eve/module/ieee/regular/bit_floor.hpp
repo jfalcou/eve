@@ -64,7 +64,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/bit_floor.cpp}
+  //! @godbolt{doc/ieee/bit_floor.cpp}
   //!
   //!  @}
   //================================================================================================

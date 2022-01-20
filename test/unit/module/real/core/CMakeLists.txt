@@ -24,8 +24,6 @@ add_dependencies(unit.real.core.exe          unit.real.core.simd.exe            
 make_unit("unit.real.core" bit_and.cpp               )
 make_unit("unit.real.core" bit_andnot.cpp            )
 make_unit("unit.real.core" bit_cast.cpp              )
-make_unit("unit.real.core" bit_ceil.cpp              )
-make_unit("unit.real.core" bit_floor.cpp             )
 make_unit("unit.real.core" bit_mask.cpp              )
 make_unit("unit.real.core" bit_notand.cpp            )
 make_unit("unit.real.core" bit_not.cpp               )
