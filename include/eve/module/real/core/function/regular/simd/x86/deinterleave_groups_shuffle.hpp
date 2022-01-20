@@ -7,14 +7,44 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/function/swap_adjacent_groups.hpp>
+
 namespace eve::detail
 {
   template<typename T, typename N, std::ptrdiff_t G>
   EVE_FORCEINLINE
-  auto deinterleave_groups_shuffle_(EVE_SUPPORTS(sse2_), wide<T, N> v, fixed<G>)
+  wide<T, N> deinterleave_groups_shuffle_(EVE_SUPPORTS(sse2_), wide<T, N> v, fixed<G>)
     requires (G * 2 < N()) && x86_abi<abi_t<T, N>>
   {
-    return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v, eve::lane<G>);
+    constexpr auto g_sz = sizeof(T) * G;
+    constexpr auto n  = N() / G;
+
+    // we start with 4, 2 groups is a no op
+    if constexpr ( n == 4 )
+    {
+      // on avx2 there is a perfect shuffle
+      if constexpr ( current_api == avx && g_sz == 8 )
+      {
+        // only double shuffle is avaliable
+        if constexpr ( !std::same_as<double, T> ) return deinterleave_groups_shuffle_as_doubles(v, lane<G>);
+        else
+        {
+          auto swapped = swap_adjacent_groups(v,   lane<G * 2>);
+
+          auto lo      = _mm256_unpacklo_pd  (v,       swapped);
+          auto hi      = _mm256_unpackhi_pd  (swapped, v      );
+          return _mm256_permute2f128_pd(lo, hi, 0x30);
+        }
+      }
+      // g_sz 2 and 4 have a perfect shuffle
+      else if constexpr ( g_sz == 1 )
+      {
+        auto duplicate = _mm_shufflelo_epi16(v, _MM_SHUFFLE(3, 2, 1, 1));
+        return _mm_unpacklo_epi8(v, duplicate);
+      }
+      else return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v, eve::lane<G>);
+    }
+    else return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v, eve::lane<G>);
   }
 
   template<typename T, typename N, std::ptrdiff_t G>

@@ -16,6 +16,19 @@
 
 namespace eve::detail
 {
+  template<typename T, typename N, std::ptrdiff_t G>
+  EVE_FORCEINLINE
+  auto deinterleave_groups_shuffle_as_doubles(wide<T, N> v, fixed<G>)
+  {
+    using doubles = wide<double, fixed<N() * sizeof(T) / 8>>;
+
+    auto cast_v = bit_cast(v, eve::as<doubles>{});
+
+    auto res = deinterleave_groups_shuffle(cast_v, lane<G * sizeof(T) / 8>);
+
+    return bit_cast(res, as(v));
+  }
+
   template<typename N, std::ptrdiff_t G>
   EVE_FORCEINLINE
   auto deinterleave_groups_shuffle_as_doubles(wide<float, N> v0, wide<float, N> v1, fixed<G>)
@@ -29,7 +42,6 @@ namespace eve::detail
 
     return bit_cast(res, as<wide<float, typename N::combined_type>>{});
   }
-
 
   template<typename T, typename N, std::ptrdiff_t G>
   EVE_FORCEINLINE

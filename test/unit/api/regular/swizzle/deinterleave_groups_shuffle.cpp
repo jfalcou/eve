@@ -50,9 +50,66 @@ EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle size 1, swizzle", 
 
   T res = eve::deinterleave_groups_shuffle(in, eve::lane<1>);
 
-  std::cerr << std::hex << "I : " << in << std::endl;
-  std::cerr << std::hex << "E : " << expected << std::endl;
-  std::cerr << std::hex << "R : " << res << std::endl;
+  std::cerr << std::hex << "i : " << in << std::endl;
+  std::cerr << std::hex << "e : " << expected << std::endl;
+  std::cerr << std::hex << "r : " << res << std::endl;
 
   TTS_EQUAL(expected, res);
+};
+
+// This is identity
+EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle G >= N, swizzle", eve::test::simd::all_types)
+<typename T>(eve::as<T>)
+{
+  T expected { [](int i, int) { return i;  }};
+
+  if constexpr ( T::size() != 1)
+  {
+    TTS_EQUAL(expected, (eve::deinterleave_groups_shuffle(expected, eve::lane<T::size() / 2>)));
+  }
+
+  TTS_EQUAL(expected, (eve::deinterleave_groups_shuffle(expected, eve::lane<T::size()>)));
+};
+
+
+EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle swizzle 1 <= G < N, swizzle", eve::test::simd::all_types)
+<typename T>(eve::as<T>)
+{
+  T expected { [](int i, int size) {
+    if (i < size / 2) return 0xA0 | (i & 0xf);
+    else              return 0xB0 | ((i - size / 2) & 0xf);
+  }};
+
+  if constexpr ( T::size() == 1)
+  {
+    TTS_PASS("No G < N");
+    return;
+  }
+
+  [&]<std::size_t... I>( std::index_sequence<I...> )
+  {
+    auto test = [&]<std::ptrdiff_t G>(eve::fixed<G>)
+    {
+      T in { [](int i, int) {
+        int group_idx    = i / G;
+
+        int marker = (group_idx % 2) ? 0xB0 : 0xA0;
+        int new_i = ( group_idx / 2 ) * (int)G + i % G;
+
+        return marker | (new_i & 0xf);
+      }};
+
+      auto r = eve::deinterleave_groups_shuffle(in, eve::lane<G>);
+
+      std::cout << "G: "    << G << std::endl;
+      std::cout << std::hex << "i : " << in << std::endl;
+      std::cout << std::hex << "e : " << expected << std::endl;
+      std::cout << std::hex << "r : " << r << std::endl;
+      std::cout << std::dec << std::endl;
+
+      TTS_EQUAL(expected, r);
+    };
+
+    (test( eve::lane<1 << I> ), ... );
+  }( std::make_index_sequence<std::bit_width( std::size_t(T::size() / 2) )>{} );
 };

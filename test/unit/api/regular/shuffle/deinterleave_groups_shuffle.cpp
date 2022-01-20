@@ -37,20 +37,39 @@ EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle group size 1, shuf
 
   auto actual = eve::deinterleave_groups_shuffle(a, b, eve::lane<1>);
 
+#if 0
   std::cout << std::hex << "a : " << a << std::endl;
   std::cout << std::hex << "b : " << b << std::endl;
   std::cout << std::hex << "e : " << expected << std::endl;
   std::cout << std::hex << "r : " << actual << std::endl;
   std::cout << std::dec << std::endl;
+#endif
 
   TTS_EQUAL(expected, actual);
 };
 
-EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle all group sizes, shuffle", eve::test::simd::all_types)
+// This is identity
+EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle N <= G < 2 * N , shuffle", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   using res_t = eve::wide<eve::element_type_t<T>, eve::fixed<T::size() * 2>>;
 
+  res_t expected { [](int i, int) { return i;  }};
+
+  auto [a, b] = expected.slice();
+
+  res_t actual = eve::deinterleave_groups_shuffle(a, b, eve::lane<T::size()>);
+
+  TTS_EQUAL(expected, actual);
+
+  actual = eve::deinterleave_groups_shuffle(a, b, eve::lane<T::size() * 2>);
+  TTS_EQUAL(expected, actual);
+};
+
+EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle 1 <= G < N, shuffle", eve::test::simd::all_types)
+<typename T>(eve::as<T>)
+{
+  using res_t = eve::wide<eve::element_type_t<T>, eve::fixed<T::size() * 2>>;
 
   res_t expected { [](int i, int size) {
     if (i < size / 2) return 0xA0 | (i & 0xf);
