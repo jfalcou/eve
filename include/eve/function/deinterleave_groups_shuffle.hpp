@@ -13,19 +13,22 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup shuffle
+  //! @{
+  //! @var deinterleave_groups_shuffle
+  //!
+  //! @brief Callable object for a deinterleave groups shuffle
+  //!
+  //! deinterleaves elements from one or two registers
+  //!
+  //! Accepts either a register and a group size or two registers and a group size
+  //! group is how many elements are treated as one chunk, example:
+  //!
+  //! 01234567,  group_size = 1  ==> 02461235
+  //! 0123 4567, group_size = 2  ==> 01452367
+  //! @}
   EVE_MAKE_CALLABLE(deinterleave_groups_shuffle_, deinterleave_groups_shuffle);
-
-  // A => A
-  // AB => AB
-  // ABAB 1 => AABB
-  // AABBAABB 2 => AAAABBBB  01452367
-  // AAAA'BBBB'AAAA'BBBB 4 =>
-  // 0123'4567'89ab'cdef
-  // 0123'89ab'4567'cdef
-
-  // ABAB'ABAB 1 =>
-  // 0123'4567
-  // 0246'1357
 
   template <std::ptrdiff_t G, std::ptrdiff_t N>
     requires (G <= N)
