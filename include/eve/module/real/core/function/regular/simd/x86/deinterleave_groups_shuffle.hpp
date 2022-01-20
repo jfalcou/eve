@@ -101,7 +101,35 @@ namespace eve::detail
       // pshuvb
       else return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v, eve::lane<G>);
     }
-    else return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v, eve::lane<G>);
+    else if constexpr ( g_sz == 2 && current_api == avx512)
+    {
+      // has a permute
+      return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v, eve::lane<G>);
+    }
+    else if constexpr ( (n == 32 || n == 64) && g_sz == 1 )
+    {
+      if constexpr (current_api == avx)
+      {
+        auto [lo, hi] = v.slice();
+
+        lo = deinterleave_groups_shuffle(lo, lane<G>);
+        hi = deinterleave_groups_shuffle(hi, lane<G>);
+
+        return deinterleave_groups_shuffle(lo, hi, lane<N() / 4>);
+      }
+      else
+      {
+        // pshuvb it is
+        using byte_idxs = typename wide<T, N>::template rebind<std::uint8_t, fixed<16>>;
+        byte_idxs pattern = as_indexes<byte_idxs>(deinterleave_groups_shuffle_pattern<1, 16>);
+        auto pattern_twice = eve::combine(pattern, pattern);
+
+        if constexpr ( n == 32 ) v = _mm256_shuffle_epi8(v, pattern_twice);
+        else                     v = _mm512_shuffle_epi8(v, eve::combine(pattern_twice, pattern_twice));
+
+        return deinterleave_groups_shuffle(v, lane<8>);
+      }
+    }
   }
 
   template<typename T, typename N, std::ptrdiff_t G>
