@@ -73,4 +73,4 @@ namespace eve
   EVE_MAKE_CALLABLE(bit_floor_, bit_floor);
 }
 
-#include <eve/module/real/core/function/regular/generic/bit_floor.hpp>
+#include <eve/module/core/regular/impl/bit_floor.hpp>

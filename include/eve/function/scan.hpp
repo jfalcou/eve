@@ -64,8 +64,8 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/real/algorithm/function/regular/generic/scan.hpp>
+#include <eve/module/core/regular/impl/scan.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/algorithm/function/regular/simd/x86/scan.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/scan.hpp>
 #endif

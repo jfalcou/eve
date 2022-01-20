@@ -82,12 +82,12 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/real/core/function/regular/generic/bit_select.hpp>
+#include <eve/module/core/regular/impl/bit_select.hpp>
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/real/core/function/regular/simd/ppc/bit_select.hpp>
+#  include <eve/module/core/regular/impl/simd/ppc/bit_select.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/real/core/function/regular/simd/arm/neon/bit_select.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/neon/bit_select.hpp>
 #endif

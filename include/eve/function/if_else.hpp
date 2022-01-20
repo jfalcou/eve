@@ -100,16 +100,16 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/real/core/function/regular/generic/if_else.hpp>
+#include <eve/module/core/regular/impl/if_else.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/if_else.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/if_else.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/real/core/function/regular/simd/ppc/if_else.hpp>
+#  include <eve/module/core/regular/impl/simd/ppc/if_else.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/real/core/function/regular/simd/arm/neon/if_else.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/neon/if_else.hpp>
 #endif

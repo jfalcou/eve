@@ -27,16 +27,16 @@ namespace eve
                                                   );
 }
 
-#include <eve/module/real/core/function/regular/generic/swap_adjacent_groups.hpp>
+#include <eve/module/core/regular/impl/swap_adjacent_groups.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/swap_adjacent_groups.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/swap_adjacent_groups.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/real/core/function/regular/simd/arm/neon/swap_adjacent_groups.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/neon/swap_adjacent_groups.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/real/core/function/regular/simd/ppc/swap_adjacent_groups.hpp>
+#  include <eve/module/core/regular/impl/simd/ppc/swap_adjacent_groups.hpp>
 #endif

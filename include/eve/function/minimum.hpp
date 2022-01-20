@@ -72,12 +72,12 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/real/algorithm/function/regular/generic/minimum.hpp>
+#include <eve/module/core/regular/impl/minimum.hpp>
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/real/algorithm/function/regular/simd/arm/neon/minimum.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/neon/minimum.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/algorithm/function/regular/simd/x86/minimum.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/minimum.hpp>
 #endif

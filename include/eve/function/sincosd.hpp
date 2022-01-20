@@ -15,5 +15,5 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/scalar/sincosd.hpp>
-//#include <eve/module/real/core/function/regular/simd/sincosd.hpp>
+//#include <eve/module/core/regular/impl/simd/sincosd.hpp>
 

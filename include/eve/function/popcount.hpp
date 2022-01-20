@@ -54,8 +54,8 @@ namespace eve
   EVE_MAKE_CALLABLE(popcount_, popcount);
 }
 
-#include <eve/module/real/core/function/regular/generic/popcount.hpp>
+#include <eve/module/core/regular/impl/popcount.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/popcount.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/popcount.hpp>
 #endif

@@ -83,4 +83,4 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/real/algorithm/function/regular/generic/reduce.hpp>
+#include <eve/module/core/regular/impl/reduce.hpp>

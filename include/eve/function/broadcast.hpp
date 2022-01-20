@@ -61,8 +61,8 @@ namespace eve
   EVE_MAKE_CALLABLE(broadcast_, broadcast);
 }
 
-#include <eve/module/real/core/function/regular/generic/broadcast.hpp>
+#include <eve/module/core/regular/impl/broadcast.hpp>
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/real/core/function/regular/simd/ppc/broadcast.hpp>
+#  include <eve/module/core/regular/impl/simd/ppc/broadcast.hpp>
 #endif

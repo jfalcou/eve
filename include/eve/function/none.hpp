@@ -72,4 +72,4 @@ namespace eve
   EVE_MAKE_CALLABLE(none_, none);
 }
 
-#include <eve/module/real/algorithm/function/regular/generic/none.hpp>
+#include <eve/module/core/regular/impl/none.hpp>

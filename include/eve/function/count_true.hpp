@@ -55,4 +55,4 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/real/algorithm/function/regular/generic/count_true.hpp>
+#include <eve/module/core/regular/impl/count_true.hpp>

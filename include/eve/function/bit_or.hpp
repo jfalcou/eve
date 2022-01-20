@@ -79,8 +79,8 @@ namespace eve
   EVE_MAKE_CALLABLE(bit_or_, bit_or);
 }
 
-#include <eve/module/real/core/function/regular/generic/bit_or.hpp>
+#include <eve/module/core/regular/impl/bit_or.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/bit_or.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/bit_or.hpp>
 #endif

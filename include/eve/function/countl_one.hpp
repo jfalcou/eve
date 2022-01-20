@@ -74,4 +74,4 @@ namespace eve
   EVE_MAKE_CALLABLE(countl_one_, countl_one);
 }
 
-#include <eve/module/real/core/function/regular/generic/countl_one.hpp>
+#include <eve/module/core/regular/impl/countl_one.hpp>

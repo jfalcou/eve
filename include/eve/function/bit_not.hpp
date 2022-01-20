@@ -73,4 +73,4 @@ namespace eve
   EVE_MAKE_CALLABLE(bit_not_, bit_not);
 }
 
-#include <eve/module/real/core/function/regular/generic/bit_not.hpp>
+#include <eve/module/core/regular/impl/bit_not.hpp>

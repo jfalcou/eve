@@ -7,10 +7,10 @@
 #pragma once
 
 #include <eve/detail/function/load.hpp>
-#include <eve/module/real/core/function/regular/generic/load.hpp>
+#include <eve/module/core/regular/impl/load.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/real/core/function/regular/simd/x86/load.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/load.hpp>
 #endif
 
   //================================================================================================

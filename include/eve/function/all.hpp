@@ -73,12 +73,12 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/real/algorithm/function/regular/generic/all.hpp>
+#include <eve/module/core/regular/impl/all.hpp>
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/real/algorithm/function/regular/simd/ppc/all.hpp>
+#  include <eve/module/core/regular/impl/simd/ppc/all.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/real/algorithm/function/regular/simd/arm/neon/all.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/neon/all.hpp>
 #endif

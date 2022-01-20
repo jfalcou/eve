@@ -15,5 +15,5 @@ namespace eve
 }
 
 #include <eve/module/real/core/function/scalar/slice_low.hpp>
-//#include <eve/module/real/core/function/regular/simd/slice_low.hpp>
+//#include <eve/module/core/regular/impl/simd/slice_low.hpp>
 

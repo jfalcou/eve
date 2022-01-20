@@ -94,4 +94,4 @@ namespace eve
   EVE_MAKE_CALLABLE(gather_, gather);
 }
 
-#include <eve/module/real/core/function/regular/simd/gather.hpp>
+#include <eve/module/core/regular/impl/simd/gather.hpp>
