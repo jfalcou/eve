@@ -22,8 +22,8 @@ namespace eve::detail
     else if constexpr ( std::same_as<Struct, uint32x2x2_t>  ) return wide<std::uint32_t, fixed<2>>{};
     else if constexpr ( std::same_as<Struct, int16x4x2_t>   ) return wide<std::int16_t , fixed<4>>{};
     else if constexpr ( std::same_as<Struct, uint16x4x2_t>  ) return wide<std::uint16_t, fixed<4>>{};
-    else if constexpr ( std::same_as<Struct, int8x8x2_t>    ) return wide<std::int8_t  , fixed<4>>{};
-    else if constexpr ( std::same_as<Struct, uint8x8x2_t>   ) return wide<std::uint8_t , fixed<4>>{};
+    else if constexpr ( std::same_as<Struct, int8x8x2_t>    ) return wide<std::int8_t  , fixed<8>>{};
+    else if constexpr ( std::same_as<Struct, uint8x8x2_t>   ) return wide<std::uint8_t , fixed<8>>{};
     // 16 byte
     else if constexpr ( std::same_as<Struct, int64x2x2_t>   ) return wide<std::int64_t , fixed<2>> {};
     else if constexpr ( std::same_as<Struct, uint64x2x2_t>  ) return wide<std::uint64_t, fixed<2>> {};
@@ -32,8 +32,8 @@ namespace eve::detail
     else if constexpr ( std::same_as<Struct, uint32x4x2_t>  ) return wide<std::uint32_t, fixed<4>> {};
     else if constexpr ( std::same_as<Struct, int16x8x2_t>   ) return wide<std::int16_t , fixed<8>>{};
     else if constexpr ( std::same_as<Struct, uint16x8x2_t>  ) return wide<std::uint16_t, fixed<8>>{};
-    else if constexpr ( std::same_as<Struct, int8x16x2_t>   ) return wide<std::int8_t  , fixed<8>>{};
-    else if constexpr ( std::same_as<Struct, uint8x16x2_t>  ) return wide<std::uint8_t , fixed<8>>{};
+    else if constexpr ( std::same_as<Struct, int8x16x2_t>   ) return wide<std::int8_t  , fixed<16>>{};
+    else if constexpr ( std::same_as<Struct, uint8x16x2_t>  ) return wide<std::uint8_t , fixed<16>>{};
     // doubles
 #if defined(SPY_SIMD_IS_ARM_ASIMD)
     else if constexpr ( std::same_as<Struct, float64x1x2_t> ) return wide<double       , fixed<1>>{};
