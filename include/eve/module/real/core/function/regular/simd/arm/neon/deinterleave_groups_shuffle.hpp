@@ -29,7 +29,11 @@ namespace eve::detail
     // no way to shuffle 8 bytes on arm-v7 other than slice and combine
     if constexpr ( sizeof(T) * G == 8 && current_api < asimd )
     {
-      return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v0, v1, eve::lane<G>);
+      auto [a0, b0] = v0.slice();
+      auto [a1, b1] = v1.slice();
+      v0 = w_t{a0, a1};
+      v1 = w_t{b0, b1};
+      return {v0, v1};
     }
     else if constexpr ( G > 1 )
     {
@@ -67,10 +71,11 @@ namespace eve::detail
     else if constexpr ( c == category::uint8x8  && N() == 2 && current_api >= asimd ) return vzip1_u8  (v0, v1);
     else if constexpr ( c == category::int8x8   && N() == 2                         ) return vzip_s8   (v0, v1).val[0];
     else if constexpr ( c == category::uint8x8  && N() == 2                         ) return vzip_u8   (v0, v1).val[0];
-    else if constexpr ( c == category::int8x8   && N() == 8                         ) return neon_struct_to_wide(vuzp_s8 (v0, v1));
-    else if constexpr ( c == category::uint8x8  && N() == 8                         ) return neon_struct_to_wide(vuzp_u8 (v0, v1));
+    // didn't come up with anything for N() == 4 - maybe 2 table lookups but aggregate is probably nicer.
+    else if constexpr ( N() == 4                                                    ) return deinterleave_groups_shuffle(r_t{v0, v1}, lane<G>);
+    else if constexpr ( c == category::int8x8                                       ) return neon_struct_to_wide(vuzp_s8 (v0, v1));
+    else if constexpr ( c == category::uint8x8                                      ) return neon_struct_to_wide(vuzp_u8 (v0, v1));
     else if constexpr ( c == category::int8x16                                      ) return neon_struct_to_wide(vuzpq_s8(v0, v1));
     else if constexpr ( c == category::uint8x16                                     ) return neon_struct_to_wide(vuzpq_u8(v0, v1));
-    else return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v0, v1, eve::lane<G>);
   }
 }
