@@ -550,3 +550,32 @@ TTS_CASE("Check slide_right get optimized")
               , (bound<callable_slide_right_,index_t<7>>)
               );
 };
+
+TTS_CASE("Check slide_right get optimized")
+{
+  using eve::fixed;
+  using eve::detail::find_optimized_shuffle_pattern;
+  using eve::detail::bound;
+  using deinter = eve::callable_deinterleave_groups_shuffle_;
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<4,0,2,1,3>())
+              , (bound<deinter, fixed<1>>)
+              );
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,0,2,4,6,1,3,5,7>())
+              , (bound<deinter, fixed<1>>)
+              );
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,0,1,4,5,2,3,6,7>())
+              , (bound<deinter, fixed<2>>)
+              );
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<16,0,2,4,6,8,10,12,14,1,3,5,7,9,11,13,15>())
+              , (bound<deinter, fixed<1>>)
+              );
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<16,0,1,4,5,8,9,12,13,2,3,6,7,10,11,14,15>())
+              , (bound<deinter, fixed<2>>)
+              );
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<16,0,1,2,3,8,9,10,11,4,5,6,7,12,13,14,15>())
+              , (bound<deinter, fixed<4>>)
+              );
+};
