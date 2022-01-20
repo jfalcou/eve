@@ -51,3 +51,7 @@ namespace eve
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/real/core/function/regular/simd/x86/deinterleave_groups_shuffle.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_ARM_HEADER)
+#  include <eve/module/real/core/function/regular/simd/arm/neon/deinterleave_groups_shuffle.hpp>
+#endif

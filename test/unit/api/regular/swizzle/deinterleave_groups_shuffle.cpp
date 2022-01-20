@@ -88,32 +88,33 @@ EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle swizzle 1 <= G < N
     return;
   }
 
-  [&]<std::size_t... I>( std::index_sequence<I...> )
+  auto test = [&]<std::ptrdiff_t G>(eve::fixed<G>)
   {
-    auto test = [&]<std::ptrdiff_t G>(eve::fixed<G>)
-    {
-      T in { [](int i, int) {
-        int group_idx    = i / G;
+    T in {[](int i, int)
+          {
+            int group_idx = i / G;
 
-        int marker = (group_idx % 2) ? 0xB0 : 0xA0;
-        int new_i = ( group_idx / 2 ) * (int)G + i % G;
+            int marker = (group_idx % 2) ? 0xB0 : 0xA0;
+            int new_i  = (group_idx / 2) * (int)G + i % G;
 
-        return marker | (new_i & 0xf);
-      }};
+            return marker | (new_i & 0xf);
+          }};
 
-      auto r = eve::deinterleave_groups_shuffle(in, eve::lane<G>);
+    auto r = eve::deinterleave_groups_shuffle(in, eve::lane<G>);
 
 #if 0
-      std::cout << "G: "    << G << std::endl;
-      std::cout << std::hex << "i : " << in << std::endl;
-      std::cout << std::hex << "e : " << expected << std::endl;
-      std::cout << std::hex << "r : " << r << std::endl;
-      std::cout << std::dec << std::endl;
+    std::cout << "G: "    << G << std::endl;
+    std::cout << std::hex << "i : " << in << std::endl;
+    std::cout << std::hex << "e : " << expected << std::endl;
+    std::cout << std::hex << "r : " << r << std::endl;
+    std::cout << std::dec << std::endl;
 #endif
 
-      TTS_EQUAL(expected, r);
-    };
+    TTS_EQUAL(expected, r);
+  };
 
+  [&]<std::size_t... I>( std::index_sequence<I...> )
+  {
     (test( eve::lane<1 << I> ), ... );
   }( std::make_index_sequence<std::bit_width( std::size_t(T::size() / 2) )>{} );
 };

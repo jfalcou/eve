@@ -37,16 +37,16 @@ EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle group size 1, shuf
 
   auto actual = eve::deinterleave_groups_shuffle(a, b, eve::lane<1>);
 
-#if 0
   std::cout << std::hex << "a : " << a << std::endl;
   std::cout << std::hex << "b : " << b << std::endl;
   std::cout << std::hex << "e : " << expected << std::endl;
   std::cout << std::hex << "r : " << actual << std::endl;
   std::cout << std::dec << std::endl;
-#endif
 
   TTS_EQUAL(expected, actual);
 };
+
+#if 0
 
 // This is identity
 EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle N <= G < 2 * N , shuffle", eve::test::simd::all_types)
@@ -107,3 +107,4 @@ EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle 1 <= G < N, shuffl
     (test( eve::lane<1 << I> ), ... );
   }( std::make_index_sequence<std::bit_width( std::size_t(T::size()) )>{} );
 };
+#endif
