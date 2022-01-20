@@ -15,6 +15,47 @@ namespace eve::detail
 {
   template<typename T, typename N, std::ptrdiff_t G>
   EVE_FORCEINLINE
+  wide<T, N> deinterleave_groups_shuffle_(EVE_SUPPORTS(neon128_), wide<T, N> v, fixed<G>)
+    requires (N() / G > 2) && arm_abi<abi_t<T, N>>
+  {
+    static_assert(sizeof(T) <= 4);
+    constexpr auto c = categorize<wide<T, N>>();
+
+    // There is no one instruction that I could find.
+    // Decision: if we can do this in 2 instructions without a table prefer that over 1 table lookup.
+    // Split gives 3 instructions at least: split, unzip, combine
+
+    // We need to split for table lookup here anyways
+    if constexpr ( sizeof(T) * N() == 16 && current_api < asimd )
+    {
+      auto [l, h] = v.slice();
+      return deinterleave_groups_shuffle(l, h, lane<G>);
+    }
+    else if constexpr ( G > 1 )
+    {
+      using up_t = upgrade_t<T>;
+      auto const up = bit_cast(v, as<wide<up_t,typename N::split_type>>());
+      return bit_cast(deinterleave_groups_shuffle(up, fixed<G/2>{}), as(v));
+    }
+    // current_api >= asimd
+    else if constexpr ( sizeof(T) * N() == 16 )
+    {
+      // 1 rev instruction
+      auto swapped = swap_adjacent_groups(v, lane<1>);
+
+           if constexpr ( c == category::int32x4   ) return vuzp1q_s32(v, swapped);
+      else if constexpr ( c == category::uint32x4  ) return vuzp1q_u32(v, swapped);
+      else if constexpr ( c == category::float32x4 ) return vuzp1q_f32(v, swapped);
+      else if constexpr ( c == category::int16x8   ) return vuzp1q_s16(v, swapped);
+      else if constexpr ( c == category::uint16x8  ) return vuzp1q_u16(v, swapped);
+      else if constexpr ( c == category::int8x16   ) return vuzp1q_s8 (v, swapped);
+      else if constexpr ( c == category::uint8x16  ) return vuzp1q_u8 (v, swapped);
+    }
+    else return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v, eve::lane<G>);
+  }
+
+  template<typename T, typename N, std::ptrdiff_t G>
+  EVE_FORCEINLINE
   wide<T, typename N::combined_type>
   deinterleave_groups_shuffle_(EVE_SUPPORTS(neon128_), wide<T, N> v0, wide<T, N> v1, fixed<G>)
     requires (G < N()) && arm_abi<abi_t<T, N>>
@@ -71,11 +112,17 @@ namespace eve::detail
     else if constexpr ( c == category::uint8x8  && N() == 2 && current_api >= asimd ) return vzip1_u8  (v0, v1);
     else if constexpr ( c == category::int8x8   && N() == 2                         ) return vzip_s8   (v0, v1).val[0];
     else if constexpr ( c == category::uint8x8  && N() == 2                         ) return vzip_u8   (v0, v1).val[0];
-    // didn't come up with anything for N() == 4 - maybe 2 table lookups but aggregate is probably nicer.
-    else if constexpr ( N() == 4                                                    ) return deinterleave_groups_shuffle(r_t{v0, v1}, lane<G>);
-    else if constexpr ( c == category::int8x8                                       ) return neon_struct_to_wide(vuzp_s8 (v0, v1));
-    else if constexpr ( c == category::uint8x8                                      ) return neon_struct_to_wide(vuzp_u8 (v0, v1));
+    else if constexpr ( c == category::int8x8   && N() == 8                         ) return neon_struct_to_wide(vuzp_s8 (v0, v1));
+    else if constexpr ( c == category::uint8x8  && N() == 8                         ) return neon_struct_to_wide(vuzp_u8 (v0, v1));
     else if constexpr ( c == category::int8x16                                      ) return neon_struct_to_wide(vuzpq_s8(v0, v1));
     else if constexpr ( c == category::uint8x16                                     ) return neon_struct_to_wide(vuzpq_u8(v0, v1));
+    // didn't come up with anything for N() == 4 other than table lookup
+    else if constexpr ( N() == 4 )
+    {
+      r_t idx { 0, 2, 8, 10, 1, 3, 9, 11 };
+      auto s = wide_to_neon_struct(v0, v1);
+           if constexpr ( c == category::int8x8  ) return vtbl2_s8(s, idx);
+      else if constexpr ( c == category::uint8x8 ) return vtbl2_u8(s, idx);
+    }
   }
 }

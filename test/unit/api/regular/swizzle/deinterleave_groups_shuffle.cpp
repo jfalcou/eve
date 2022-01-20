@@ -50,14 +50,14 @@ EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle size 1, swizzle", 
 
   T res = eve::deinterleave_groups_shuffle(in, eve::lane<1>);
 
-#if 0
   std::cerr << std::hex << "i : " << in << std::endl;
   std::cerr << std::hex << "e : " << expected << std::endl;
   std::cerr << std::hex << "r : " << res << std::endl;
-#endif
 
   TTS_EQUAL(expected, res);
 };
+
+#if 0
 
 // This is identity
 EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle G >= N, swizzle", eve::test::simd::all_types)
@@ -118,3 +118,4 @@ EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle swizzle 1 <= G < N
     (test( eve::lane<1 << I> ), ... );
   }( std::make_index_sequence<std::bit_width( std::size_t(T::size() / 2) )>{} );
 };
+#endif
