@@ -13,7 +13,7 @@ namespace eve::detail
 {
 
   template <typename Struct>
-  auto neon_stuct_to_wide_type()
+  auto neon_struct_to_wide_type()
   {
          if constexpr ( std::same_as<Struct, int64x1x2_t>   ) return wide<std::int64_t , fixed<1>>{};
     else if constexpr ( std::same_as<Struct, uint64x1x2_t>  ) return wide<std::uint64_t, fixed<1>>{};
@@ -43,9 +43,9 @@ namespace eve::detail
 
   template <typename Struct>
   EVE_FORCEINLINE
-  auto neon_stuct_to_wide(Struct s)
+  auto neon_struct_to_wide(Struct s)
   {
-   using half = decltype(neon_stuct_to_wide_type<Struct>());
+   using half = decltype(neon_struct_to_wide_type<Struct>());
    return eve::combine(half(s.val[0]), half(s.val[1]));
   }
 }
