@@ -46,7 +46,7 @@ auto mmed   = []<typename T>(eve::as<T> const & tgt){  return -eve::detail::Remp
 auto med    = []<typename T>(eve::as<T> const & tgt){  return  eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt); };
 
 EVE_TEST( "Check behavior of cos on wide"
-        , eve::test::simd::ieee_floats//reals
+        , eve::test::simd::ieee_reals
         , eve::test::generate( eve::test::randoms(mquarter_c, quarter_c)
                              , eve::test::randoms(mhalf_c, half_c)
                              , eve::test::randoms(mfull_c, full_c)
