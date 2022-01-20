@@ -18,12 +18,15 @@ namespace eve::detail
   wide<T, N> deinterleave_groups_shuffle_(EVE_SUPPORTS(neon128_), wide<T, N> v, fixed<G>)
     requires (N() / G > 2) && arm_abi<abi_t<T, N>>
   {
-    static_assert(sizeof(T) <= 4);
+    static_assert(sizeof(T) <= 4 && N() >= 4);
     constexpr auto c = categorize<wide<T, N>>();
 
     // There is no one instruction that I could find.
     // Decision: if we can do this in 2 instructions without a table prefer that over 1 table lookup.
     // Split gives 3 instructions at least: split, unzip, combine
+    //
+    // I also have my suspicions about arm-v7 uzp/zip - where it gives two values as oppose to unzp1 from asimd.
+    // Will still for table lookup there too.
 
     // We need to split for table lookup here anyways
     if constexpr ( sizeof(T) * N() == 16 && current_api < asimd )
@@ -31,27 +34,37 @@ namespace eve::detail
       auto [l, h] = v.slice();
       return deinterleave_groups_shuffle(l, h, lane<G>);
     }
+    // Just always do a table lookup for arm-v7 and 4 chars
+    else if constexpr ( current_api < asimd || (sizeof(T) == 1 && N() == 4) )
+    {
+      return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v, eve::lane<G>);
+    }
     else if constexpr ( G > 1 )
     {
       using up_t = upgrade_t<T>;
       auto const up = bit_cast(v, as<wide<up_t,typename N::split_type>>());
       return bit_cast(deinterleave_groups_shuffle(up, fixed<G/2>{}), as(v));
     }
-    // current_api >= asimd
-    else if constexpr ( sizeof(T) * N() == 16 )
+    else
     {
       // 1 rev instruction
       auto swapped = swap_adjacent_groups(v, lane<1>);
 
-           if constexpr ( c == category::int32x4   ) return vuzp1q_s32(v, swapped);
+      // sizeof(T) == 4 =========================
+           if constexpr ( c == category::float32x4 ) return vuzp1q_f32(v, swapped);
+      else if constexpr ( c == category::int32x4   ) return vuzp1q_s32(v, swapped);
       else if constexpr ( c == category::uint32x4  ) return vuzp1q_u32(v, swapped);
-      else if constexpr ( c == category::float32x4 ) return vuzp1q_f32(v, swapped);
-      else if constexpr ( c == category::int16x8   ) return vuzp1q_s16(v, swapped);
-      else if constexpr ( c == category::uint16x8  ) return vuzp1q_u16(v, swapped);
-      else if constexpr ( c == category::int8x16   ) return vuzp1q_s8 (v, swapped);
-      else if constexpr ( c == category::uint8x16  ) return vuzp1q_u8 (v, swapped);
+      // sizeof(T) == 2 =========================
+      else if constexpr ( c == category::int16x8  ) return vuzp1q_s16(v, swapped);
+      else if constexpr ( c == category::uint16x8 ) return vuzp1q_u16(v, swapped);
+      else if constexpr ( c == category::int16x4  ) return vuzp1_s16 (v, swapped);
+      else if constexpr ( c == category::uint16x4 ) return vuzp1_u16 (v, swapped);
+      // sizeof(T) == 1 =========================
+      else if constexpr ( c == category::int8x16  ) return vuzp1q_s8 (v, swapped);
+      else if constexpr ( c == category::uint8x16 ) return vuzp1q_u8 (v, swapped);
+      else if constexpr ( c == category::int8x8   ) return vuzp1_s8  (v, swapped);
+      else if constexpr ( c == category::uint8x8  ) return vuzp1_u8  (v, swapped);
     }
-    else return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v, eve::lane<G>);
   }
 
   template<typename T, typename N, std::ptrdiff_t G>
