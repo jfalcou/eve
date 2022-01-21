@@ -497,3 +497,85 @@ TTS_CASE("Check slide_left get optimized")
               , (bound<callable_slide_left_,index_t<7>>)
               );
 };
+
+
+TTS_CASE("Check slide_right get optimized")
+{
+  using eve::index_t;
+  using eve::detail::find_optimized_shuffle_pattern;
+  using eve::detail::bound;
+  using eve::callable_slide_right_;
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<2,-1,0>())
+              , (bound<callable_slide_right_,index_t<1>>)
+              );
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<4,-1,0,1,2>())
+              , (bound<callable_slide_right_,index_t<1>>)
+              );
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<4,-1,-1,0,1>())
+              , (bound<callable_slide_right_,index_t<2>>)
+              );
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<4,-1,-1,-1,0>())
+              , (bound<callable_slide_right_,index_t<3>>)
+              );
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,-1,0,1,2,3,4,5,6>())
+              , (bound<callable_slide_right_,index_t<1>>)
+              );
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,-1,-1,0,1,2,3,4,5>())
+              , (bound<callable_slide_right_,index_t<2>>)
+              );
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,-1,-1,-1,0,1,2,3,4>())
+              , (bound<callable_slide_right_,index_t<3>>)
+              );
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,-1,-1,-1,-1,0,1,2,3>())
+              , (bound<callable_slide_right_,index_t<4>>)
+              );
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,-1,-1,-1,-1,-1,0,1,2>())
+              , (bound<callable_slide_right_,index_t<5>>)
+              );
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,-1,-1,-1,-1,-1,-1,0,1>())
+              , (bound<callable_slide_right_,index_t<6>>)
+              );
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,-1,-1,-1,-1,-1,-1,-1,0>())
+              , (bound<callable_slide_right_,index_t<7>>)
+              );
+};
+
+TTS_CASE("Check slide_right get optimized")
+{
+  using eve::fixed;
+  using eve::detail::find_optimized_shuffle_pattern;
+  using eve::detail::bound;
+  using deinter = eve::callable_deinterleave_groups_shuffle_;
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<4,0,2,1,3>())
+              , (bound<deinter, fixed<1>>)
+              );
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,0,2,4,6,1,3,5,7>())
+              , (bound<deinter, fixed<1>>)
+              );
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,0,1,4,5,2,3,6,7>())
+              , (bound<deinter, fixed<2>>)
+              );
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<16,0,2,4,6,8,10,12,14,1,3,5,7,9,11,13,15>())
+              , (bound<deinter, fixed<1>>)
+              );
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<16,0,1,4,5,8,9,12,13,2,3,6,7,10,11,14,15>())
+              , (bound<deinter, fixed<2>>)
+              );
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<16,0,1,2,3,8,9,10,11,4,5,6,7,12,13,14,15>())
+              , (bound<deinter, fixed<4>>)
+              );
+};

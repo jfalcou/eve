@@ -9,6 +9,8 @@
 
 #include <eve/detail/abi.hpp>
 
+#include <eve/function/swap_adjacent_groups.hpp>
+
 namespace eve::detail
 {
   template<real_scalar_value T, typename N>
@@ -77,10 +79,18 @@ namespace eve::detail
     }
     else if constexpr ( eve::current_api == eve::avx )
     {
-      auto [l, h] = v.slice();
-      l = reverse(l);
-      h = reverse(h);
-      return {h, l};
+      if constexpr ( N() == 4 )
+      {
+        v = eve::swap_adjacent_groups(v, eve::lane<2>);
+        return eve::swap_adjacent_groups(v, eve::lane<1>);
+      }
+      else
+      {
+        auto [l, h] = v.slice();
+        l = reverse(l);
+        h = reverse(h);
+        return {h, l};
+      }
     }
     else if constexpr ( std::same_as<abi_t<T, N>, eve::x86_256_> )
     {
