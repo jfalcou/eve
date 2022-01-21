@@ -3,7 +3,7 @@
 ##  Copyright : EVE Contributors & Maintainers
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
-add_subdirectory(real)
+add_subdirectory(core)
 
 ## New Modules
 add_subdirectory(arithmetic)

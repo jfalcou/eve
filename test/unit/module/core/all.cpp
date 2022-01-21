@@ -7,6 +7,8 @@
 //==================================================================================================
 #include <eve/function/all.hpp>
 
+#include "test.hpp"
+#include <eve/function/all.hpp>
 #include <eve/conditional.hpp>
 #include <eve/constant/false.hpp>
 #include <eve/constant/mzero.hpp>
@@ -16,30 +18,19 @@
 #include <eve/platform.hpp>
 #include <type_traits>
 
-TTS_CASE_TPL("Check eve::all return type", EVE_TYPE)
-<typename T>(::tts::type<T>)
+EVE_TEST_TYPES("Check eve::all return type", eve::test::simd::all_types)
+<typename T>(eve::as<T>)
 {
   TTS_EXPR_IS( (eve::all(eve::logical<T>())) , bool);
-};
-
-TTS_CASE("Check eve::all bool")
-{
   TTS_EXPR_IS( (eve::all(bool{})) , bool);
   TTS_EXPECT    ( (eve::all(true)) );
   TTS_EXPECT_NOT( (eve::all(false)) );
-};
-
-TTS_CASE_TPL("Check eve::all behavior on logical", EVE_TYPE)
-<typename T>(::tts::type<T>)
-{
   TTS_EXPECT    (eve::all(eve::true_(eve::as<T>())));
   TTS_EXPECT_NOT(eve::all(eve::false_(eve::as<T>())));
 };
 
-#if defined(EVE_SIMD_TESTS)
-
-TTS_CASE_TPL("Check eve::all[ignore](simd)", EVE_TYPE)
-<typename T>(::tts::type<T>)
+EVE_TEST_TYPES("Check eve::all[ignore](simd)", eve::test::simd::all_types)
+<typename T>(eve::as<T>)
 {
   // complete
   {
@@ -139,5 +130,3 @@ TTS_CASE_TPL("Check eve::all[ignore](simd)", EVE_TYPE)
     }
   }
 };
-
-#endif
