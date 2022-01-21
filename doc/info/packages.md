@@ -64,7 +64,7 @@ Once installed, you can use **EVE** headers directly from your
 
 ### VCPKG
 
-**EVE** can be fetch from [VCPKG](https://vcpkgx.com/details.html?package=eve). Note that, as of
+**EVE** can be fetched from [VCPKG](https://vcpkgx.com/details.html?package=eve). Note that, as of
 now, we still don't support MSVC.
 
 
