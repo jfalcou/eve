@@ -7,11 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-
 namespace eve
 {
   EVE_MAKE_CALLABLE(sincpi_, sincpi);
 }
 
-#include <eve/module/real/mayh/function/regular/generic/sincpi.hpp>
+#include <eve/module/math/regular/sincpi.hpp>

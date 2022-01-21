@@ -25,8 +25,8 @@
 #include <eve/function/rec.hpp>
 #include <eve/function/shl.hpp>
 #include <eve/function/sqr.hpp>
-#include <eve/module/real/core/detail/generic/horn.hpp>
-#include <eve/module/real/core/detail/generic/horn1.hpp>
+#include <eve/module/core/detail/generic/horn.hpp>
+#include <eve/module/core/detail/generic/horn1.hpp>
 #include <eve/traits/as_integer.hpp>
 #include <type_traits>
 

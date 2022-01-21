@@ -30,8 +30,8 @@
 #include <eve/function/oneminus.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/function/sqr.hpp>
-#include <eve/module/real/core/detail/generic/horn.hpp>
-#include <eve/module/real/core/detail/generic/horn1.hpp>
+#include <eve/module/core/detail/generic/horn.hpp>
+#include <eve/module/core/detail/generic/horn1.hpp>
 
 namespace eve::detail
 {

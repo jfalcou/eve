@@ -4,6 +4,8 @@
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 
+make_unit( "doc.ieee" bit_ceil.cpp                )
+make_unit( "doc.ieee" bit_floor.cpp               )
 make_unit( "doc.ieee" exponent.cpp                )
 make_unit( "doc.ieee" frexp.cpp                   )
 make_unit( "doc.ieee" ifrexp.cpp                  )

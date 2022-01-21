@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/real/core/constant/nan.hpp>
+#include <eve/module/core/constant/nan.hpp>
