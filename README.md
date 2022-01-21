@@ -35,7 +35,7 @@ needs to change.
 
 EVE is considered **operationnal**: it's usable, has a large feature sets for a sensible amount of instructions sets but it's possible some values or performances issues may still remain. Don't hesitate to report any funky code-gen or bad optimizations so we can deliver the best performance around.
 
-### Current roaster of supported Instructions Sets
+### Current roster of supported Instructions Sets
 
 Full support with tests:
  - **Intel**
@@ -54,7 +54,7 @@ Partial/In-progress support with minimal checks:
  - We **do not support** ARM SVE as the execution model makes no sense and the current compiler support is not adequate for us.
  - We **do not support** GPGPU, this is the job for another tool.
 
-### Current roaster of supported compiler
+### Current roster of supported compiler
 
 EVE requires a C++ 20 compliant compiler. The main features from C++17/20 we require are:
  - Concepts and requires
