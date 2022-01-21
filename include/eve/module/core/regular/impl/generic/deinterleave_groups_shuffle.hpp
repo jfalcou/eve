@@ -10,7 +10,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/product_type.hpp>
 
-#include <eve/module/real/core/detail/basic_shuffle.hpp>
+#include <eve/module/core/detail/basic_shuffle.hpp>
 
 #include <eve/function/combine.hpp>
 
