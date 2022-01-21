@@ -6,6 +6,8 @@
 */
 //==================================================================================================
 #include <eve/function/first_true.hpp>
+
+#include "test.hpp"
 #include <eve/constant/true.hpp>
 #include <eve/constant/false.hpp>
 
