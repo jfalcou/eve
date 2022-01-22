@@ -104,14 +104,14 @@ base_jobs: &base_jobs
         cpu:  2
     - ctest:
         targets: "../cmake/toolchain/arch.targets.json"
-    - run:
-        name: Pre-compiling large swizzle functions
-        command: cd build && ninja unit.api.regular.swizzle.exe  -k 0 -j 1
-    - compile:
-        targets: "../cmake/toolchain/api.targets.json"
-        cpu:  2
-    - ctest:
-        targets: "../cmake/toolchain/api.targets.json"
+    # - run:
+    #     name: Pre-compiling large swizzle functions
+    #     command: cd build && ninja unit.api.regular.swizzle.exe  -k 0 -j 1
+    # - compile:
+    #     targets: "../cmake/toolchain/api.targets.json"
+    #     cpu:  2
+    # - ctest:
+    #     targets: "../cmake/toolchain/api.targets.json"
     - compile:
         targets: "../cmake/toolchain/doc.targets.json"
         cpu:  2
