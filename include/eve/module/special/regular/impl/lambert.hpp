@@ -9,7 +9,6 @@
 
 #include <eve/module/arithmetic.hpp>
 #include <eve/module/polynomial.hpp>
-#include <eve/module/ieee.hpp>
 #include <eve/module/math.hpp>
 #include <eve/detail/hz_device.hpp>
 

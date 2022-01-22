@@ -9,7 +9,6 @@
 
 #include <eve/module/arithmetic.hpp>
 #include <eve/module/math.hpp>
-#include <eve/module/ieee.hpp>
 #include <eve/module/special/regular/digamma.hpp>
 #include <eve/module/special/regular/tgamma.hpp>
 #include <eve/module/special/regular/lgamma.hpp>

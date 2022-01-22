@@ -7,7 +7,6 @@ add_subdirectory(core)
 
 ## New Modules
 add_subdirectory(arithmetic)
-add_subdirectory(ieee)
 add_subdirectory(polynomial)
 add_subdirectory(proba)
 
