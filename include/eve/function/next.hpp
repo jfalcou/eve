@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
  
-#include <eve/module/ieee/regular/next.hpp>
+#include <eve/module/arithmetic/regular/next.hpp>

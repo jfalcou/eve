@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/ieee/pedantic/nextafter.hpp>
+#include <eve/module/arithmetic/pedantic/nextafter.hpp>

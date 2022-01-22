@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
  
-#include <eve/module/ieee/regular/is_flint.hpp>
+#include <eve/module/arithmetic/regular/is_flint.hpp>

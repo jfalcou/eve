@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/ieee/pedantic/ldexp.hpp>
+#include <eve/module/arithmetic/pedantic/ldexp.hpp>

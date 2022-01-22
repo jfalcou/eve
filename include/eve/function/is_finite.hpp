@@ -6,4 +6,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/ieee/regular/is_finite.hpp>
+#include <eve/module/arithmetic/regular/is_finite.hpp>

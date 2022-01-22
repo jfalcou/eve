@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/ieee/regular/frexp.hpp>
+#include <eve/module/arithmetic/regular/frexp.hpp>
