@@ -5,6 +5,7 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
+#include "test.hpp"
 #include <eve/function/count_true.hpp>
 #include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
@@ -13,22 +14,21 @@
 #include <eve/platform.hpp>
 #include <eve/logical.hpp>
 
-TTS_CASE_TPL("Check eve::count_true return type", EVE_TYPE)
-<typename T>(::tts::type<T>)
+EVE_TEST_TYPES("Check eve::count_true return type", eve::test::simd::all_types)
+<typename T>(eve::as<T>)
 {
   TTS_EXPR_IS( (eve::count_true(eve::logical<T>())) , std::ptrdiff_t);
 };
 
-TTS_CASE_TPL("Check eve::count_true behavior", EVE_TYPE)
-<typename T>(::tts::type<T>)
+EVE_TEST_TYPES("Check eve::count_true behavior", eve::test::simd::all_types)
+<typename T>(eve::as<T>)
 {
-  auto cardinal = EVE_CARDINAL;
+  constexpr auto cardinal = eve::cardinal_v<T>;
 
   TTS_EQUAL(eve::count_true(eve::true_(eve::as<T>())) , cardinal);
   TTS_EQUAL(eve::count_true(eve::false_(eve::as<T>())), 0       );
 
-#if defined(EVE_SIMD_TESTS)
-  for(std::ptrdiff_t j=0; j<cardinal; ++j)
+ for(std::ptrdiff_t j=0; j<cardinal; ++j)
   {
     eve::logical<T> rhs1,rhs2, rhs3, rhs4;
 
@@ -45,29 +45,27 @@ TTS_CASE_TPL("Check eve::count_true behavior", EVE_TYPE)
     TTS_EQUAL(eve::count_true(rhs3), 1             );
     TTS_EQUAL(eve::count_true(rhs4), (cardinal-1)  );
   }
-#endif
 };
 
-#if defined(EVE_SIMD_TESTS)
-TTS_CASE_TPL("Check eve::count_true behavior with ignore", EVE_TYPE)
-<typename T>(::tts::type<T>)
+EVE_TEST_TYPES("Check eve::count_true behavior with ignore", eve::test::simd::all_types)
+<typename T>(eve::as<T>)
 {
   eve::logical<T> data(true);
+  constexpr auto cardinal = eve::cardinal_v<T>;
 
-  TTS_EQUAL( eve::count_true[eve::ignore_none](data)                  , EVE_CARDINAL  );
+  TTS_EQUAL( eve::count_true[eve::ignore_none](data)                  , cardinal  );
   TTS_EQUAL( eve::count_true[eve::ignore_all](data)                   , 0             );
-  TTS_EQUAL( eve::count_true[eve::ignore_first(EVE_CARDINAL-1)](data) , 1             );
-  TTS_EQUAL( eve::count_true[eve::keep_first  (EVE_CARDINAL-1)](data) , EVE_CARDINAL-1);
-  TTS_EQUAL( eve::count_true[eve::ignore_last (EVE_CARDINAL-1)](data) , 1             );
-  TTS_EQUAL( eve::count_true[eve::keep_last   (EVE_CARDINAL-1)](data) , EVE_CARDINAL-1);
+  TTS_EQUAL( eve::count_true[eve::ignore_first(cardinal-1)](data) , 1             );
+  TTS_EQUAL( eve::count_true[eve::keep_first  (cardinal-1)](data) , cardinal-1);
+  TTS_EQUAL( eve::count_true[eve::ignore_last (cardinal-1)](data) , 1             );
+  TTS_EQUAL( eve::count_true[eve::keep_last   (cardinal-1)](data) , cardinal-1);
 
-  if constexpr(EVE_CARDINAL >= 2)
+  if constexpr(cardinal >= 2)
   {
-    TTS_EQUAL( eve::count_true[eve::ignore_first(1) && eve::ignore_last(1)](data), EVE_CARDINAL-2);
+    TTS_EQUAL( eve::count_true[eve::ignore_first(1) && eve::ignore_last(1)](data), cardinal-2);
   }
   else
   {
-    TTS_EQUAL( eve::count_true[eve::ignore_first(1) && eve::ignore_last(1)](data), 0);
+    //   TTS_EQUAL( eve::count_true[eve::ignore_first(1) && eve::ignore_last(1)](data), 0);
   }
 };
-#endif

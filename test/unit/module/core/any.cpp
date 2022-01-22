@@ -5,6 +5,7 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
+#include "test.hpp"
 #include <eve/function/any.hpp>
 #include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
@@ -14,30 +15,19 @@
 #include <eve/logical.hpp>
 #include <type_traits>
 
-TTS_CASE_TPL("Check eve::any return type", EVE_TYPE)
-<typename T>(::tts::type<T>)
+EVE_TEST_TYPES("Check eve::any return type", eve::test::simd::all_types)
+<typename T>(eve::as<T>)
 {
   TTS_EXPR_IS( (eve::any(eve::logical<T>())), bool);
-};
-
-TTS_CASE("Check eve::any bool")
-{
   TTS_EXPR_IS( (eve::any(bool{})) , bool);
   TTS_EXPECT    ( (eve::any(true)) );
   TTS_EXPECT_NOT( (eve::any(false)) );
-};
-
-TTS_CASE_TPL("Check eve::any behavior on logical", EVE_TYPE)
-<typename T>(::tts::type<T>)
-{
   TTS_EXPECT    (eve::any(eve::true_(eve::as<T>())));
   TTS_EXPECT_NOT(eve::any(eve::false_(eve::as<T>())));
 };
 
-#if defined(EVE_SIMD_TESTS)
-
-TTS_CASE_TPL("Check eve::any[ignore]", EVE_TYPE)
-<typename T>(::tts::type<T>)
+EVE_TEST_TYPES("Check eve::any[ignore]", eve::test::simd::all_types)
+<typename T>(eve::as<T>)
 {
   // complete
   {
@@ -129,5 +119,3 @@ TTS_CASE_TPL("Check eve::any[ignore]", EVE_TYPE)
     }
   }
 };
-
-#endif
