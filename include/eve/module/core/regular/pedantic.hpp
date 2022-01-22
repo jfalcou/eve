@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/detail/overload.hpp>
+
 namespace eve
 {
   template<auto Param> struct diff_;
