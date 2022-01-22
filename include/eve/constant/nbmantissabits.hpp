@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/ieee/constant/nbmantissabits.hpp>
+#include <eve/module/arithmetic/constant/nbmantissabits.hpp>

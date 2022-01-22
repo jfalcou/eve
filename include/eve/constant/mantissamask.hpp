@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/ieee/constant/mantissamask.hpp>
+#include <eve/module/arithmetic/constant/mantissamask.hpp>
