@@ -21,7 +21,6 @@
 #include <eve/module/arithmetic/regular/ceil.hpp>
 #include <eve/module/arithmetic/regular/clamp.hpp>
 #include <eve/module/arithmetic/regular/copysign.hpp>
-#include <eve/module/arithmetic/regular/csc.hpp>
 #include <eve/module/arithmetic/regular/dec.hpp>
 #include <eve/module/arithmetic/regular/dist.hpp>
 #include <eve/module/arithmetic/regular/div.hpp>

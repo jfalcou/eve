@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/detail/overload.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
