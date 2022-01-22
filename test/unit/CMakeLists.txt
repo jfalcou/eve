@@ -6,7 +6,6 @@
 add_subdirectory(algo)
 add_subdirectory(api)
 add_subdirectory(arch)
-add_subdirectory(constant)
 add_subdirectory(internals)
 add_subdirectory(memory)
 add_subdirectory(meta)

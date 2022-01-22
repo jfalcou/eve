@@ -13,6 +13,7 @@ add_dependencies(unit.exe unit.core.exe        )
 ##==================================================================================================
 make_unit("unit.core" all.cpp                   )
 make_unit("unit.core" any.cpp                   )
+make_unit("unit.core" as_value.cpp              )
 make_unit("unit.core" bit_and.cpp               )
 make_unit("unit.core" bit_andnot.cpp            )
 make_unit("unit.core" bit_cast.cpp              )
