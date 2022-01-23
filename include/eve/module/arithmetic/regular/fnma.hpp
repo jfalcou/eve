@@ -99,7 +99,6 @@ namespace eve
   EVE_MAKE_CALLABLE(fnma_, fnma);
 }
 
-#include <eve/arch.hpp>
 #include <eve/module/arithmetic/regular/impl/fnma.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)

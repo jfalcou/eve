@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/ieee/constant/minexponent.hpp>
+#include <eve/module/arithmetic/constant/minexponent.hpp>

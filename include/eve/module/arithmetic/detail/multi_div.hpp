@@ -7,12 +7,12 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/assert.hpp>
 #include <eve/function/div.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/function/decorator.hpp>
 #include <eve/assert.hpp>
-#include <eve/function/all.hpp>
 
 namespace eve::detail
 {

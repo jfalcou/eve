@@ -6,4 +6,4 @@
 //==================================================================================================
 #pragma once
  
-#include <eve/module/ieee/regular/is_not_less_equal.hpp>
+#include <eve/module/arithmetic/regular/is_not_less_equal.hpp>

@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/detail/overload.hpp>
 #include <eve/detail/function/friends.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/traits/as_logical.hpp>
@@ -105,7 +106,7 @@ namespace eve
       if constexpr( scalar_value<T> && scalar_value<U> )  return as_logical_t<T>(a == b);
       else                                                return a == b;
     }
-
+    
     // -----------------------------------------------------------------------------------------------
     // logical masked case
     template<conditional_expr C, real_value U, real_value V>
@@ -113,7 +114,7 @@ namespace eve
     {
       return logical_mask_op(cond, is_equal, u, v);
     }
-  }
+  } 
 }
 
 #if defined(EVE_INCLUDE_X86_HEADER)

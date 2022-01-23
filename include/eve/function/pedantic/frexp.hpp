@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/ieee/pedantic/frexp.hpp>
+#include <eve/module/arithmetic/pedantic/frexp.hpp>

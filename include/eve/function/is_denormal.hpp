@@ -6,4 +6,4 @@
 //==================================================================================================
 #pragma once
  
-#include <eve/module/ieee/regular/is_denormal.hpp>
+#include <eve/module/arithmetic/regular/is_denormal.hpp>

@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/ieee/constant/maxexponentm1.hpp>
+#include <eve/module/arithmetic/constant/maxexponentm1.hpp>

@@ -1,9 +1,9 @@
 //==================================================================================================
-/*
+/**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
-*/
+**/
 //==================================================================================================
 #pragma once
 
@@ -20,7 +20,7 @@
 #include <eve/function/trunc.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/function/sub.hpp>
-#include <eve/constant/limitexponent.hpp>
+#include <eve/constant/maxexponentp1.hpp>
 #include <eve/constant/minexponent.hpp>
 #include <eve/constant/maxexponent.hpp>
 #include <eve/constant/nbmantissabits.hpp>
@@ -58,7 +58,7 @@ namespace eve::detail
       {
         b = sub[denormal]( b, decltype(b)(minexponent(eve::as<T>())));
         auto f = if_else(denormal, smallestposval(eve::as<T>()), eve::one);
-        auto test = (b == decltype(b)(limitexponent(eve::as<T>())));
+        auto test = (b == decltype(b)(maxexponentp1(eve::as<T>())));
         f = inc[test](f);
         b = dec[test](b);
         b += maxexponent(eve::as<T>());
@@ -118,7 +118,7 @@ namespace eve::detail
           b = sub[denormal]( b, decltype(b)(minexponent(eve::as<elt_t>())));
           f = if_else(denormal, smallestposval(eve::as<elt_t>()), eve::one);
         }
-        auto test = (b == decltype(b)(limitexponent(eve::as<elt_t>())));
+        auto test = (b == decltype(b)(maxexponentp1(eve::as<elt_t>())));
         f = inc[test](f);
         b = dec[test](b);
         b += maxexponent(eve::as<elt_t>());
@@ -130,13 +130,11 @@ namespace eve::detail
     else  return apply_over(pedantic(ldexp), a, b);
   }
 
-
   template<conditional_expr C, floating_real_value T0, real_value T1>
-  auto ldexp_(EVE_SUPPORTS(cpu_), C const &cond
-             , pedantic_type const &
-             , T0 a0, T1 a1)
+  auto ldexp_(EVE_SUPPORTS(cpu_), C const &cond, pedantic_type const &, T0 a0, T1 a1)
   requires floating_value<common_compatible_t<T0, T1>>
   {
     return mask_op(  cond, pedantic(eve::ldexp), a0, a1);
   }
+
 }

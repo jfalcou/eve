@@ -9,4 +9,4 @@
  
 #include <eve/arch.hpp>
  
-#include <eve/module/ieee/regular/is_not_greater.hpp>
+#include <eve/module/arithmetic/regular/is_not_greater.hpp>
