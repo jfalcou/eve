@@ -6,12 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/nan.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/sqrtvalmax.hpp>
-#include <eve/function/lcm.hpp>
-#include <eve/logical.hpp>
+#include <eve/module/combinatorial.hpp>
 #include <cmath>
 
 
