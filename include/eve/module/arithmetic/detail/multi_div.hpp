@@ -12,6 +12,7 @@
 #include <eve/function/div.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/function/decorator.hpp>
+#include <eve/assert.hpp>
 
 namespace eve::detail
 {

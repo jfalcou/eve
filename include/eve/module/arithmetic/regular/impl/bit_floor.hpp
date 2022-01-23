@@ -21,6 +21,7 @@
 #include <eve/function/ldexp.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
