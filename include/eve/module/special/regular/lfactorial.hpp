@@ -64,4 +64,4 @@ namespace eve
   EVE_MAKE_CALLABLE(lfactorial_, lfactorial);
 }
 
-#include <eve/module/combinatorial/regular/impl/lfactorial.hpp>
+#include <eve/module/special/regular/impl/lfactorial.hpp>
