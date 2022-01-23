@@ -23,5 +23,4 @@
 #include <eve/module/special/diff/lgamma.hpp>
 #include <eve/module/special/diff/omega.hpp>
 #include <eve/module/special/diff/signgam.hpp>
-#include <eve/module/special/diff/stirling.hpp>
 #include <eve/module/special/diff/tgamma.hpp>

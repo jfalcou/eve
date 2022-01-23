@@ -7,11 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/betainc.hpp>
-#include <eve/function/diff/beta.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/pow.hpp>
-#include <eve/function/oneminus.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/special/regular/betainc.hpp>
+#include <eve/module/special/regular/beta.hpp>
+#include <eve/module/special/diff/beta.hpp>
 
 namespace eve::detail
 {

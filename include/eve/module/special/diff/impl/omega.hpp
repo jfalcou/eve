@@ -7,11 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/omega.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/omega.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/special/regular/omega.hpp>
 
 namespace eve::detail
 {

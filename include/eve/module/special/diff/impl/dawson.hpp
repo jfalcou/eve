@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/dawson.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/oneminus.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/special/regular/dawson.hpp>
 
 namespace eve::detail
 {

@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/tgamma.hpp>
-#include <eve/function/digamma.hpp>
-#include <eve/function/derivative.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/special/regular/tgamma.hpp>
+#include <eve/module/special/regular/digamma.hpp>
 
 namespace eve::detail
 {

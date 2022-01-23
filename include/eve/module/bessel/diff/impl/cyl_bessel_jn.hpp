@@ -9,7 +9,7 @@
 
 #include <eve/module/core.hpp>
 #include <eve/module/arithmetic.hpp>
-#include <eve/function/cyl_bessel_jn.hpp>
+#include <eve/module/bessel/regular/cyl_bessel_jn.hpp>
 
 
 namespace eve::detail

@@ -7,12 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/gamma_p.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/lgamma.hpp>
-#include <eve/function/derivative.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/special/regular/gamma_p.hpp>
+#include <eve/module/special/regular/lgamma.hpp>
 
 namespace eve::detail
 {
