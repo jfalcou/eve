@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/assert.hpp>
-#include <eve/function/all.hpp>
-#include <eve/constant/one.hpp>
+#include <eve/module/core.hpp>
+
 
 namespace eve::detail
 {
