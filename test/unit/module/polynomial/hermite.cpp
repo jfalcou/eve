@@ -6,9 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/module/polynomial.hpp>
 #include <boost/math/special_functions/hermite.hpp>
-#include <eve/function/hermite.hpp>
-#include <eve/function/diff/hermite.hpp>
 
 //==================================================================================================
 //== Types tests

@@ -6,17 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/function/horner.hpp>
-#include <eve/function/numeric/horner.hpp>
-#include <eve/function/pedantic/horner.hpp>
-#include <eve/logical.hpp>
-#include <type_traits>
+#include <eve/module/polynomial.hpp>
 #include <cmath>
 #include <array>
 #include <vector>
