@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/function/uniform_continuous_distribution.hpp>
+#include <eve/module/proba.hpp>
 #include <eve/platform.hpp>
 
 EVE_TEST_TYPES("Check eve::uniform_continuous_distribution behavior"
