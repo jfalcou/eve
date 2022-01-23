@@ -6,12 +6,11 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/pio_2.hpp>
-#include <eve/function/ellint_rd.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/elliptic.hpp>
 #include <boost/math/special_functions/ellint_rd.hpp>
-#include <cmath>
 
 //==================================================================================================
 // Types tests
