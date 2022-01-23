@@ -12,6 +12,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/detail/function/simd/common/friends.hpp>
 
 namespace eve
 {
@@ -105,6 +106,14 @@ namespace eve
     {
       if constexpr( scalar_value<T> && scalar_value<U> )  return as_logical_t<T>(a != b);
       else                                                return a != b;
+    }
+
+    // -----------------------------------------------------------------------------------------------
+    // logical masked case
+    template<conditional_expr C, real_value U, real_value V>
+    EVE_FORCEINLINE auto is_not_equal_(EVE_SUPPORTS(cpu_), C const &cond, U const &u, V const &v) noexcept
+    {
+      return logical_mask_op(cond, is_not_equal, u, v);
     }
   }
 }
