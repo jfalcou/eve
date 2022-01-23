@@ -6,16 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/factorial.hpp>
-#include <eve/logical.hpp>
-#include <cmath>
-
-
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/special.hpp>
 
 //==================================================================================================
 // Types tests

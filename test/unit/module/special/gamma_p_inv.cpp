@@ -6,16 +6,9 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/function/gamma_p_inv.hpp>
-#include <type_traits>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/special.hpp>
 #include <cmath>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/platform.hpp>
 #include <boost/math/special_functions/gamma.hpp>
 
 //==================================================================================================
