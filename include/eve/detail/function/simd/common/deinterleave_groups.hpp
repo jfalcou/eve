@@ -20,7 +20,7 @@ namespace eve::detail
     EVE_FORCEINLINE auto select_every_step_from_tuple(T t)
     {
       return [&]<std::size_t ...i>(std::index_sequence<i...>) {
-        return kumi::make_tuple(get<first + i * step>(t) ...);
+        return kumi::reorder<(first + i * step)...>(t);
       }(std::make_index_sequence<std::tuple_size_v<T> / step>{});
     }
 
