@@ -50,13 +50,12 @@ EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle size 1, swizzle", 
 
   T res = eve::deinterleave_groups_shuffle(in, eve::lane<1>);
 
-#if 0
-  std::cerr << std::hex << "i : " << in << std::endl;
-  std::cerr << std::hex << "e : " << expected << std::endl;
-  std::cerr << std::hex << "r : " << res << std::endl;
-#endif
-
-  TTS_EQUAL(expected, res);
+  TTS_EQUAL(expected, res)
+    << std::hex
+    << "\ni : " << in
+    << "\ne : " << expected
+    << "\nr : " << res
+    << '\n' << std::dec;
 };
 
 // This is identity
@@ -102,15 +101,13 @@ EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle swizzle 1 <= G < N
 
     auto r = eve::deinterleave_groups_shuffle(in, eve::lane<G>);
 
-#if 0
-    std::cout << "G: "    << G << std::endl;
-    std::cout << std::hex << "i : " << in << std::endl;
-    std::cout << std::hex << "e : " << expected << std::endl;
-    std::cout << std::hex << "r : " << r << std::endl;
-    std::cout << std::dec << std::endl;
-#endif
-
-    TTS_EQUAL(expected, r);
+    TTS_EQUAL(expected, r)
+      << std::hex
+      << "\nG: "  << G
+      << "\ni : " << in
+      << "\ne : " << expected
+      << "\nr : " << r
+      << '\n' << std::dec;
   };
 
   [&]<std::size_t... I>( std::index_sequence<I...> )
