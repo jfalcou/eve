@@ -88,16 +88,35 @@ void deinterleave_groups_test()
       aos_ts
     );
 
-  TTS_EXPECT( eve::all(soa_ts == res) ) << std::hex
-    <<   "aos: " << aos_ts
+  TTS_EXPECT( eve::all(soa_ts == res) )
+    << "\nG: "    << G
+    << "\nFieldCount: " << FieldCount
+     << std::hex
+    << "\naos: " << aos_ts
     << "\nsoa: " << soa_ts
-    << "\nres: " << res << "\n";
+    << "\nres: " << res << "\n"
+    << std::dec;
 }
 
+// To increase the number of cases,
+// since we don't have any intrinsics code at the moment.
+constexpr eve::detail::wides<
+  eve::detail::types<std::int8_t, std::uint16_t,
+                     std::int32_t, float,
+                     std::uint64_t, double>>::type less_test_types;
+
 EVE_TEST_TYPES( "Check behavior of deinterleave on arithmetic data"
-              , eve::test::simd::all_types
+              , less_test_types
               )
 <typename T>(eve::as<T>)
 {
-  deinterleave_groups_test<1, 2, T>();
+  constexpr std::ptrdiff_t max_fields_count = 5;
+  constexpr unsigned max_group_size = (T::size() >= 64) ? 4 : T::size();
+
+  eve::detail::for_<1, 1, max_fields_count + 1>([](auto fields) {
+   eve::detail::for_<0, 1, std::countr_zero(max_group_size) + 1>([&](auto group_size_log) {
+     deinterleave_groups_test<1 << group_size_log(), fields(), T>();
+
+   });
+  });
 };
